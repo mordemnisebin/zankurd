@@ -867,7 +867,7 @@ class _MasteryRow extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.copyWith(
-                  color: badgeColor,
+                  color: AppColors.onAccentTint(context, badgeColor),
                   fontSize: 10,
                 ),
               ),

@@ -427,7 +427,11 @@ class _LeagueBanner extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: color.withValues(alpha: 0.4)),
               ),
-              child: Icon(tier.icon, color: color, size: 22),
+              child: Icon(
+                tier.icon,
+                color: AppColors.onAccentTint(context, color),
+                size: 22,
+              ),
             ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(

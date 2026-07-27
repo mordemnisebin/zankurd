@@ -318,7 +318,11 @@ class _BenefitRow extends StatelessWidget {
               color: accentColor.withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(AppRadius.badge),
             ),
-            child: Icon(benefit.icon, color: accentColor, size: 18),
+            child: Icon(
+              benefit.icon,
+              color: AppColors.onAccentTint(context, accentColor),
+              size: 18,
+            ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(

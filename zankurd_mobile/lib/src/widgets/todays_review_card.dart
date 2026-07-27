@@ -159,9 +159,9 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                           width: 1.2,
                         ),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         AppIcons.arrowsRotate,
-                        color: _accent,
+                        color: AppColors.onAccentTint(context, _accent),
                         size: 24,
                       ),
                     ),

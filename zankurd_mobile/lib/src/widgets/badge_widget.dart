@@ -128,10 +128,10 @@ class BadgeWidget extends StatelessWidget {
                   const SizedBox(width: 3),
                   Text(
                     isKu ? 'Vekirî' : 'Kazanıldı',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      color: AppTheme.correct,
+                      color: AppColors.onAccentTint(context, AppTheme.correct),
                     ),
                   ),
                 ],

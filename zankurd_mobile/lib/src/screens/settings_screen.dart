@@ -1274,7 +1274,13 @@ class _SettingsIconTitle extends StatelessWidget {
             color: color.withValues(alpha: 0.14),
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
-          child: ExcludeSemantics(child: Icon(icon, color: color, size: 18)),
+          child: ExcludeSemantics(
+            child: Icon(
+              icon,
+              color: AppColors.onAccentTint(context, color),
+              size: 18,
+            ),
+          ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
@@ -1327,7 +1333,11 @@ class _SettingsToggleRow extends StatelessWidget {
                 border: Border.all(color: color.withValues(alpha: 0.14)),
               ),
               child: ExcludeSemantics(
-                child: Icon(icon, color: color, size: 18),
+                child: Icon(
+                  icon,
+                  color: AppColors.onAccentTint(context, color),
+                  size: 18,
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
@@ -1394,7 +1404,11 @@ class _ExpandableSection extends StatelessWidget {
                 color: iconColor.withValues(alpha: 0.14),
                 borderRadius: BorderRadius.circular(AppRadius.sm),
               ),
-              child: Icon(icon, color: iconColor, size: 18),
+              child: Icon(
+                icon,
+                color: AppColors.onAccentTint(context, iconColor),
+                size: 18,
+              ),
             ),
             iconColor: AppTheme.textSubColor(context),
             collapsedIconColor: AppTheme.textMutedColor(context),
@@ -1602,7 +1616,14 @@ class _TtsSlider extends StatelessWidget {
               color: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
               borderRadius: BorderRadius.circular(AppRadius.sm),
             ),
-            child: Icon(icon, color: AppTheme.primaryGradientStart, size: 18),
+            child: Icon(
+              icon,
+              color: AppColors.onAccentTint(
+                context,
+                AppTheme.primaryGradientStart,
+              ),
+              size: 18,
+            ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(

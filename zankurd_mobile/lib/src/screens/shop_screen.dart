@@ -351,7 +351,11 @@ class _ShopScreenState extends State<ShopScreen> {
                   color: item.themeColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
-                child: Icon(item.icon, color: item.themeColor, size: 22),
+                child: Icon(
+                  item.icon,
+                  color: AppColors.onAccentTint(context, item.themeColor),
+                  size: 22,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -619,7 +623,7 @@ class _ShopScreenState extends State<ShopScreen> {
               Text(
                 context.t(K.congrats),
                 style: AppTypography.heading2.copyWith(
-                  color: AppTheme.gold,
+                  color: AppColors.onAccentTint(context, AppTheme.gold),
                   fontWeight: FontWeight.w900,
                 ),
               ),

@@ -885,8 +885,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 context.t(K.categoryPrefix, {
                   'name': CategoryNames.localized(_categoryName!, context.isKu),
                 }),
-                style: const TextStyle(
-                  color: AppTheme.primaryGradientStart,
+                style: TextStyle(
+                  color: AppColors.onAccentTint(
+                    context,
+                    AppTheme.primaryGradientStart,
+                  ),
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),

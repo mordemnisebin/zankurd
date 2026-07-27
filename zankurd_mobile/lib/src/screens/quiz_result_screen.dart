@@ -1386,7 +1386,10 @@ class _MasteryPromotions extends StatelessWidget {
                     ),
                     child: Icon(
                       entry.value.icon,
-                      color: entry.value.badgeColor,
+                      color: AppColors.onAccentTint(
+                        context,
+                        entry.value.badgeColor,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -1453,7 +1456,7 @@ class _ResultRewardChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 14),
+          Icon(icon, color: AppColors.onAccentTint(context, color), size: 14),
           const SizedBox(width: 4),
           Text(
             label,
@@ -1507,7 +1510,10 @@ class _RaceStandingRow extends StatelessWidget {
             ),
             child: Text(
               '$rank',
-              style: TextStyle(color: color, fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: AppColors.onAccentTint(context, color),
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
           const SizedBox(width: 10),

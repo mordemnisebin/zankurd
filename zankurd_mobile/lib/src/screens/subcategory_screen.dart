@@ -447,7 +447,7 @@ class _SubcategoryCard extends StatelessWidget {
                           ),
                           child: Icon(
                             AppIcons.arrowRight,
-                            color: tint,
+                            color: AppColors.onAccentTint(context, tint),
                             size: 17,
                           ),
                         ),

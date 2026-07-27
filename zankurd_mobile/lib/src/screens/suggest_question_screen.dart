@@ -498,7 +498,11 @@ class _SectionHeader extends StatelessWidget {
             color: color.withValues(alpha: 0.14),
             borderRadius: BorderRadius.circular(AppRadius.xs),
           ),
-          child: Icon(icon, color: color, size: 18),
+          child: Icon(
+            icon,
+            color: AppColors.onAccentTint(context, color),
+            size: 18,
+          ),
         ),
         const SizedBox(width: AppSpacing.xs),
         Text(
