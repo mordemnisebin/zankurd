@@ -352,7 +352,9 @@ class _ContestContent extends StatelessWidget {
                         }),
                         textAlign: TextAlign.center,
                         style: AppTypography.caption.copyWith(
-                          color: AppTheme.gold,
+                          // Ham altın kendi tonunun üstünde 2.01:1
+                          // ölçüldü — ödül satırı okunmuyordu (2026-07-27).
+                          color: AppColors.onAccentTint(context, AppTheme.gold),
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -452,12 +454,17 @@ class _BadgeLabel extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppTheme.gold),
+          // Çipin zemini altının %10'luk tonu; ham altın orada 2.04:1.
+          Icon(
+            icon,
+            size: 14,
+            color: AppColors.onAccentTint(context, AppTheme.gold),
+          ),
           const SizedBox(width: 6),
           Text(
             label,
             style: AppTypography.caption.copyWith(
-              color: AppTheme.gold,
+              color: AppColors.onAccentTint(context, AppTheme.gold),
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -584,7 +591,12 @@ class _LeaderboardRow extends StatelessWidget {
             child: Text(
               '${row.score}',
               style: AppTypography.caption.copyWith(
-                color: index < 3 ? highlight : AppTheme.primaryGradientStart,
+                // Puan rozeti de zemini olarak kendi renginin %10'unu
+                // kullanıyor: birincinin altın "1000"i 2.13:1'di.
+                color: AppColors.onAccentTint(
+                  context,
+                  index < 3 ? highlight : AppTheme.primaryGradientStart,
+                ),
                 fontWeight: FontWeight.w800,
               ),
             ),

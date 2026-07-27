@@ -762,7 +762,12 @@ class _LessonCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         // Rozet gradyanın üstünde duruyor: altın altın
                         // üstünde kayboluyordu.
-                        color: Colors.white.withValues(alpha: 0.20),
+                        // Beyaz perde kartı açıyordu ve rozetin beyaz
+                        // metni 3.70:1'e düşüyordu — rozet, üstünde
+                        // durduğu karttan daha az okunur hâle geliyordu.
+                        // Koyu perde ters yönde çalışır: zemin koyulaşır,
+                        // metin belirginleşir (2026-07-27).
+                        color: AppColors.heroScrim(0.18),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: Colors.white.withValues(alpha: 0.45),
