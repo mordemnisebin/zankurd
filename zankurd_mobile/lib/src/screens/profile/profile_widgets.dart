@@ -46,7 +46,12 @@ class _ProfileHeroCard extends StatelessWidget {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        // Süs daireleri kartın iç boşluğunun içine kapatılmıştı: `padding`
+        // Stack'in dışında olduğu için taşan daireler kartın yuvarlak
+        // köşesine değil, iç dikdörtgenin düz kenarına kırpılıyordu ve
+        // kartın üstünde köşeli bir blok gibi duruyordu (2026-07-27).
+        // Daireler artık kartın kendi kenarına kadar uzanır; boşluk yalnız
+        // içeriğe uygulanır.
         child: Stack(
           children: [
             Positioned(
@@ -73,234 +78,252 @@ class _ProfileHeroCard extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
-                    // (2026-07-25 denetimi).
-                    Semantics(
-                      button: true,
-                      label: Tr.forKu(K.editAvatar, ku),
-                      child: InkWell(
-                        key: const ValueKey('profile-avatar-edit'),
-                        customBorder: const CircleBorder(),
-                        onTap: onEditAvatar,
-                        child: Stack(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.88),
-                                  width: 2.5,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.16),
-                                    blurRadius: 14,
-                                    offset: const Offset(0, 6),
-                                    spreadRadius: -4,
-                                  ),
-                                ],
-                              ),
-                              child: PlayerAvatar(
-                                radius: 34,
-                                photoUrl: avatarIdentity.photoUrl,
-                                iconId: avatarIdentity.iconId,
-                                colorHex: avatarIdentity.colorHex,
-                                frameId: avatarIdentity.frameId,
-                                displayName: displayName,
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: Container(
-                                padding: const EdgeInsets.all(6),
+            Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
+                      // (2026-07-25 denetimi).
+                      Semantics(
+                        button: true,
+                        label: Tr.forKu(K.editAvatar, ku),
+                        child: InkWell(
+                          key: const ValueKey('profile-avatar-edit'),
+                          customBorder: const CircleBorder(),
+                          onTap: onEditAvatar,
+                          child: Stack(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(3),
                                 decoration: BoxDecoration(
-                                  gradient: AppTheme.accentGradient,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.92),
-                                    width: 2,
+                                    color: Colors.white.withValues(alpha: 0.88),
+                                    width: 2.5,
                                   ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(
+                                        alpha: 0.16,
+                                      ),
+                                      blurRadius: 14,
+                                      offset: const Offset(0, 6),
+                                      spreadRadius: -4,
+                                    ),
+                                  ],
                                 ),
-                                child: const Icon(
-                                  AppIcons.camera,
-                                  size: 12,
-                                  color: Colors.white,
+                                child: PlayerAvatar(
+                                  radius: 34,
+                                  photoUrl: avatarIdentity.photoUrl,
+                                  iconId: avatarIdentity.iconId,
+                                  colorHex: avatarIdentity.colorHex,
+                                  frameId: avatarIdentity.frameId,
+                                  displayName: displayName,
                                 ),
                               ),
+                              Positioned(
+                                right: 0,
+                                bottom: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    gradient: AppTheme.accentGradient,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.92,
+                                      ),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    AppIcons.camera,
+                                    size: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                displayName,
+                                maxLines: 1,
+                                style: AppTypography.heading2.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              Tr.forKu(K.keepProgress, ku),
+                              style: AppTypography.caption.copyWith(
+                                color: Colors.white.withValues(alpha: 0.74),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            if (showcaseTitle != null)
+                              Container(
+                                margin: const EdgeInsets.only(
+                                  top: AppSpacing.xs,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.sm,
+                                  vertical: 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.pill,
+                                  ),
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.16),
+                                  ),
+                                ),
+                                child: Text(
+                                  showcaseTitle!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.caption.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              )
+                            else
+                              const SizedBox.shrink(),
+
+                            const SizedBox(height: 8),
+                            Builder(
+                              builder: (context) {
+                                final tier = LeagueTier.forRank(rank);
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.heroScrim(),
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.badge,
+                                    ),
+                                    border: Border.all(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.18,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        tier.icon,
+                                        color: Colors.white,
+                                        size: 14,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      // Rozet metni büyük yazıda kartın dışına
+                                      // taşıyordu (2026-07-26).
+                                      Flexible(
+                                        child: Text(
+                                          tier.label(ku),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              displayName,
-                              maxLines: 1,
-                              style: AppTypography.heading2.copyWith(
-                                color: Colors.white,
-                                fontSize: 24,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            Tr.forKu(K.keepProgress, ku),
-                            style: AppTypography.caption.copyWith(
-                              color: Colors.white.withValues(alpha: 0.74),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          if (showcaseTitle != null)
-                            Container(
-                              margin: const EdgeInsets.only(top: AppSpacing.xs),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.sm,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.pill,
-                                ),
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.16),
-                                ),
-                              ),
-                              child: Text(
-                                showcaseTitle!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.caption.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            )
-                          else
-                            const SizedBox.shrink(),
-
-                          const SizedBox(height: 8),
-                          Builder(
-                            builder: (context) {
-                              final tier = LeagueTier.forRank(rank);
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 5,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.heroScrim(),
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.badge,
-                                  ),
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.18),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      tier.icon,
-                                      color: Colors.white,
-                                      size: 14,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    // Rozet metni büyük yazıda kartın dışına
-                                    // taşıyordu (2026-07-26).
-                                    Flexible(
-                                      child: Text(
-                                        tier.label(ku),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppTypography.caption.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Divider(color: Colors.white.withValues(alpha: 0.18), height: 1),
-                const SizedBox(height: AppSpacing.sm),
-                Row(
-                  children: [
-                    const Icon(AppIcons.medal, color: AppTheme.gold, size: 22),
-                    const SizedBox(width: AppSpacing.xxs),
-                    Flexible(
-                      child: Text(
-                        Tr.forKu(K.levelWithNumber, ku, {'level': '$level'}),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Flexible(
-                      child: Text(
-                        '$xpInLevel / $xpNeeded XP',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.end,
-                        style: AppTypography.caption.copyWith(
-                          color: Colors.white.withValues(alpha: 0.74),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.xs),
-                  child: Stack(
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  Divider(
+                    color: Colors.white.withValues(alpha: 0.18),
+                    height: 1,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Row(
                     children: [
-                      Container(
-                        height: 9,
-                        color: Colors.white.withValues(alpha: 0.18),
+                      const Icon(
+                        AppIcons.medal,
+                        color: AppTheme.gold,
+                        size: 22,
                       ),
-                      FractionallySizedBox(
-                        widthFactor: levelProgress.clamp(0.0, 1.0),
-                        child: Container(
-                          height: 9,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFFFFC85C), Color(0xFFF29D31)],
-                            ),
-                            borderRadius: BorderRadius.circular(AppRadius.xs),
+                      const SizedBox(width: AppSpacing.xxs),
+                      Flexible(
+                        child: Text(
+                          Tr.forKu(K.levelWithNumber, ku, {'level': '$level'}),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      Flexible(
+                        child: Text(
+                          '$xpInLevel / $xpNeeded XP',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
+                          style: AppTypography.caption.copyWith(
+                            color: Colors.white.withValues(alpha: 0.74),
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: AppSpacing.xs),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 9,
+                          color: Colors.white.withValues(alpha: 0.18),
+                        ),
+                        FractionallySizedBox(
+                          widthFactor: levelProgress.clamp(0.0, 1.0),
+                          child: Container(
+                            height: 9,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFFFFC85C), Color(0xFFF29D31)],
+                              ),
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

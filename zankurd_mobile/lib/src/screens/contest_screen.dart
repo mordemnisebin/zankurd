@@ -215,7 +215,6 @@ class _ContestContent extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
             key: const ValueKey('contest-hero'),
-            padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -246,6 +245,11 @@ class _ContestContent extends StatelessWidget {
                 ),
               ],
             ),
+            // Süs dairesi kartın iç boşluğunun içine kapatılmıştı:
+            // `padding` Stack'in dışında olduğu için taşan daire kartın
+            // yuvarlak köşesine değil, iç dikdörtgenin düz kenarına
+            // kırpılıyor ve köşeli bir dilim bırakıyordu (2026-07-27).
+            // Boşluk artık yalnız içeriğe uygulanır.
             child: Stack(
               children: [
                 Positioned(
@@ -260,124 +264,131 @@ class _ContestContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 44,
-                          height: 44,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: AppTheme.goldGradient,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppTheme.gold.withValues(alpha: 0.2),
-                                blurRadius: 10,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            AppIcons.trophy,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Expanded(
-                          child: Text(
-                            contest.themeNameFor(isKu: context.isKu),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.heading2.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
+                Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 44,
+                            height: 44,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: AppTheme.goldGradient,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppTheme.gold.withValues(alpha: 0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
                             ),
+                            child: const Icon(
+                              AppIcons.trophy,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: Text(
+                              contest.themeNameFor(isKu: context.isKu),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.heading2.copyWith(
+                                color: AppTheme.textPrimaryColor(context),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if ((contest.themeDescriptionFor(isKu: context.isKu) ??
+                              '')
+                          .isNotEmpty) ...[
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(
+                          contest.themeDescriptionFor(isKu: context.isKu)!,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppTheme.textMutedColor(context),
                           ),
                         ),
                       ],
-                    ),
-                    if ((contest.themeDescriptionFor(isKu: context.isKu) ?? '')
-                        .isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.sm),
+                      Wrap(
+                        spacing: AppSpacing.xs,
+                        runSpacing: AppSpacing.xs,
+                        children: [
+                          _BadgeLabel(
+                            icon: AppIcons.tableCells,
+                            label: categoryLabel,
+                          ),
+                          _BadgeLabel(
+                            icon: AppIcons.gaugeHigh,
+                            label:
+                                '${contest.difficultyMin}-${contest.difficultyMax}',
+                          ),
+                          _BadgeLabel(
+                            icon: AppIcons.question,
+                            label: context.t(K.questionCount, {
+                              'count': '${contest.questionCount}',
+                            }),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppTheme.gold.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: AppTheme.gold.withValues(alpha: 0.18),
+                          ),
+                        ),
+                        child: Text(
+                          context.t(K.contestRewards, {
+                            'join': '${contest.participationReward}',
+                            'first': '${contest.rank1Reward}',
+                          }),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.caption.copyWith(
+                            // Ham altın kendi tonunun üstünde 2.01:1
+                            // ölçüldü — ödül satırı okunmuyordu (2026-07-27).
+                            color: AppColors.onAccentTint(
+                              context,
+                              AppTheme.gold,
+                            ),
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      GeometricGradientButton(
+                        label: starting
+                            ? (context.t(K.preparing))
+                            : (context.t(K.startEvent)),
+                        icon: AppIcons.play,
+                        isLoading: starting,
+                        onPressed: starting ? null : onStart,
+                      ),
+                      const SizedBox(height: AppSpacing.xs),
                       Text(
-                        contest.themeDescriptionFor(isKu: context.isKu)!,
-                        style: AppTypography.bodyMedium.copyWith(
+                        context.t(K.joinAndRank),
+                        textAlign: TextAlign.center,
+                        style: AppTypography.caption.copyWith(
                           color: AppTheme.textMutedColor(context),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
-                    const SizedBox(height: AppSpacing.sm),
-                    Wrap(
-                      spacing: AppSpacing.xs,
-                      runSpacing: AppSpacing.xs,
-                      children: [
-                        _BadgeLabel(
-                          icon: AppIcons.tableCells,
-                          label: categoryLabel,
-                        ),
-                        _BadgeLabel(
-                          icon: AppIcons.gaugeHigh,
-                          label:
-                              '${contest.difficultyMin}-${contest.difficultyMax}',
-                        ),
-                        _BadgeLabel(
-                          icon: AppIcons.question,
-                          label: context.t(K.questionCount, {
-                            'count': '${contest.questionCount}',
-                          }),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.gold.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: AppTheme.gold.withValues(alpha: 0.18),
-                        ),
-                      ),
-                      child: Text(
-                        context.t(K.contestRewards, {
-                          'join': '${contest.participationReward}',
-                          'first': '${contest.rank1Reward}',
-                        }),
-                        textAlign: TextAlign.center,
-                        style: AppTypography.caption.copyWith(
-                          // Ham altın kendi tonunun üstünde 2.01:1
-                          // ölçüldü — ödül satırı okunmuyordu (2026-07-27).
-                          color: AppColors.onAccentTint(context, AppTheme.gold),
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    GeometricGradientButton(
-                      label: starting
-                          ? (context.t(K.preparing))
-                          : (context.t(K.startEvent)),
-                      icon: AppIcons.play,
-                      isLoading: starting,
-                      onPressed: starting ? null : onStart,
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      context.t(K.joinAndRank),
-                      textAlign: TextAlign.center,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
