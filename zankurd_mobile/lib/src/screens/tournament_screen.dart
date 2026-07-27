@@ -879,7 +879,10 @@ class _LobbyView extends StatelessWidget {
                               }),
                               textAlign: TextAlign.center,
                               style: AppTypography.bodyMedium.copyWith(
-                                color: AppTheme.textSubColor(context),
+                                // Kartın altın tonu zemini açtığı için düz
+                                // yüzeye göre seçilen tonlar burada eşiğin
+                                // altına düşüyordu (2026-07-27).
+                                color: AppColors.onTintedSurface(context),
                               ),
                             ),
                             const SizedBox(height: AppSpacing.xxs),
@@ -887,7 +890,10 @@ class _LobbyView extends StatelessWidget {
                               context.t(K.botRaceHint),
                               textAlign: TextAlign.center,
                               style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
+                                color: AppColors.onTintedSurface(
+                                  context,
+                                  secondary: true,
+                                ),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

@@ -43,6 +43,27 @@ class AppColors {
     return hsl.withLightness(0.30).toColor();
   }
 
+  /// Renk tonuyla boyanmış kart üzerinde ikincil metin rengi.
+  ///
+  /// [AppTheme.textSubColor] ve [AppTheme.textMutedColor] düz yüzeye göre
+  /// seçilmiştir. Turnuva kartı gibi yüzeyin üstüne altın tonu seren
+  /// kartlarda gerçek zemin belirgin biçimde açılır ve o iki ton eşiğin
+  /// altına düşer: koyu temada turnuva ipucu satırı ölçümde 3.38:1
+  /// çıkıyordu (2026-07-27). Kusur sessizdi — renkler temadan geliyordu,
+  /// yalnız zemin başka bir zemindi.
+  ///
+  /// Her iki tema da aynı kusuru taşıyordu: açık temada ikincil satır 3.23:1
+  /// ölçülüyordu. Tonlar bir basamak yukarı çekilir — hiyerarşi korunur
+  /// (birincil/ikincil ayrımı sürer), yalnız ikisi de tonlu zeminde okunur.
+  /// `tinted_surface_contrast_test` bunları harmanlanmış gerçek kart
+  /// rengine karşı ölçer.
+  static Color onTintedSurface(BuildContext context, {bool secondary = false}) {
+    if (AppTheme.isLight(context)) {
+      return secondary ? AppTheme.lightTextSub : AppTheme.lightTextPrimary;
+    }
+    return secondary ? const Color(0xFFC9D0D6) : AppTheme.textPrimary;
+  }
+
   /// Marka turuncusu gibi orta tonlu gradyanların üzerinde beyaz metnin AA
   /// eşiğini geçmesi için gereken koyu perde. Beyaz, turuncu üzerinde tek
   /// başına yalnız ~2.2:1 verir; bu perde ile 4.5:1 üstüne çıkar.
