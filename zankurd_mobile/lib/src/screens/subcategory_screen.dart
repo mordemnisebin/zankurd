@@ -337,112 +337,127 @@ class _SubcategoryCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Stack(
-          children: [
-            Positioned(
-              right: -14,
-              bottom: -18,
-              child: Icon(icon, size: 92, color: tint.withValues(alpha: 0.10)),
-            ),
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: onTap,
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                splashColor: tint.withValues(alpha: 0.12),
-                highlightColor: tint.withValues(alpha: 0.06),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          gradient: gradient,
-                          borderRadius: BorderRadius.circular(AppRadius.md),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.22),
-                            width: 1.1,
+        // Filigran ikon kartın dışına taşıyordu: köşeler yuvarlak ama
+        // Stack kırpmıyordu, dolayısıyla dev ikonun bir parçası kartın
+        // kenarından dışarı çıkıp ekranda kopuk soluk lekeler bırakıyordu
+        // — çizim hatası gibi duruyordu (2026-07-27).
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Stack(
+            children: [
+              Positioned(
+                right: -14,
+                bottom: -18,
+                child: Icon(
+                  icon,
+                  size: 92,
+                  color: tint.withValues(alpha: 0.10),
+                ),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: onTap,
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  splashColor: tint.withValues(alpha: 0.12),
+                  highlightColor: tint.withValues(alpha: 0.06),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 52,
+                          height: 52,
+                          decoration: BoxDecoration(
+                            gradient: gradient,
+                            borderRadius: BorderRadius.circular(AppRadius.md),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.22),
+                              width: 1.1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: tint.withValues(alpha: 0.36),
+                                blurRadius: 12,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: tint.withValues(alpha: 0.36),
-                              blurRadius: 12,
-                              offset: const Offset(0, 5),
-                            ),
-                          ],
+                          child: Icon(icon, color: Colors.white, size: 24),
                         ),
-                        child: Icon(icon, color: Colors.white, size: 24),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 16,
-                                height: 1.2,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              desc,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: AppTheme.textMutedColor(context),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Wrap(
-                              spacing: 6,
-                              runSpacing: 4,
-                              children: [
-                                _LevelChip(
-                                  icon: AppIcons.stairs,
-                                  label: isKu ? '5 ast' : '5 seviye',
-                                  tint: tint,
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16,
+                                  height: 1.2,
                                 ),
-                                _LevelChip(
-                                  icon: AppIcons.bolt,
-                                  label: isKu ? 'Pêşbaz' : 'Yarış',
-                                  tint: tint,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                desc,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: AppTheme.textMutedColor(context),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        width: 34,
-                        height: 34,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: tint.withValues(alpha: 0.14),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: tint.withValues(alpha: 0.24),
-                            width: 1,
+                              ),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 6,
+                                runSpacing: 4,
+                                children: [
+                                  _LevelChip(
+                                    icon: AppIcons.stairs,
+                                    label: isKu ? '5 ast' : '5 seviye',
+                                    tint: tint,
+                                  ),
+                                  _LevelChip(
+                                    icon: AppIcons.bolt,
+                                    label: isKu ? 'Pêşbaz' : 'Yarış',
+                                    tint: tint,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        child: Icon(AppIcons.arrowRight, color: tint, size: 17),
-                      ),
-                    ],
+                        const SizedBox(width: 8),
+                        Container(
+                          width: 34,
+                          height: 34,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: tint.withValues(alpha: 0.14),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: tint.withValues(alpha: 0.24),
+                              width: 1,
+                            ),
+                          ),
+                          child: Icon(
+                            AppIcons.arrowRight,
+                            color: tint,
+                            size: 17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
