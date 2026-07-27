@@ -48,12 +48,21 @@ Base the Data Safety form on actual production configuration:
 
 - [ ] Account identifiers: Supabase user ID and optional email if email login is enabled.
 - [ ] User profile data: display name.
+- [ ] Photos: avatar image, only when the player uploads one (`Photos and videos > Photos`).
 - [ ] App activity: quiz scores, leaderboard entries, coin balance, daily spin state, favorites, reported questions.
+- [ ] App interactions: Firebase Analytics events (screen opened, round started/completed, language changed).
+- [ ] Purchases: RevenueCat subscription state, if premium packages are enabled for the release.
 - [ ] Diagnostics: Firebase Crashlytics crash data on supported platforms.
 - [ ] Data is transmitted over HTTPS.
 - [ ] Data deletion is available through the in-app account deletion flow or support email listed in the privacy policy.
 - [ ] No advertising data is collected unless an ad SDK is added later.
-- [ ] No precise location, contacts, SMS, call log, photos, audio, or camera data is collected by the current app.
+- [ ] No precise location, contacts, SMS, call log, audio, or camera data is collected by the current app.
+
+> 2026-07-27 denetimi: bu liste fotoğrafı, analitik olaylarını ve satın
+> alma durumunu saymıyordu — üçünü de uygulama topluyor. Aynı eksik iOS
+> gizlilik bildiriminde ve yayınlanan gizlilik politikasında da vardı;
+> üçü birden düzeltildi. Üçünün **aynı** şeyi söylemesi gerekir: form,
+> bildirim ve politika birbirini yalanlarsa inceleme takılır.
 
 ## 7. Privacy Policy
 
