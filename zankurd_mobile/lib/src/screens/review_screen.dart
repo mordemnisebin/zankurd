@@ -175,12 +175,24 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isCorrect = record.isCorrect;
     final bool isUnanswered = record.isUnanswered;
-    // Override > şablon eleme > yerelleştirme; boşsa açıklama kutusu gizlenir.
-    final String explanationText = resolveRawExplanation(
-      id: record.id,
-      explanation: record.explanation,
-      isKu: context.isKu,
-    );
+    // Yazılmış açıklama > override > şablon eleme > kural motoru.
+    //
+    // Burası doğrudan kural motoruna gidiyordu ve sorunun elle yazılmış
+    // Kurmancî açıklamasını hiç görmüyordu: Kurmancî turda özet
+    // "Şirove: <Türkçe cümle>" gösteriyordu. Motor yedektir, kaynak
+    // değil (2026-07-27).
+    final isKu = context.isKu;
+    final authored = isKu ? record.explanationKu : record.explanationTr;
+    final String explanationText =
+        (authored != null &&
+            authored.trim().isNotEmpty &&
+            !isTemplateExplanation(authored))
+        ? authored
+        : resolveRawExplanation(
+            id: record.id,
+            explanation: record.explanation,
+            isKu: isKu,
+          );
 
     final Color headerColor;
     final IconData headerIcon;

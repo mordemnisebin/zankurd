@@ -1686,11 +1686,26 @@ class _AllExplanationsCard extends StatelessWidget {
     final isKu = context.isKu;
     final entries = <({int index, AnswerRecord record, String explanation})>[];
     for (var i = 0; i < records.length; i++) {
-      final text = resolveRawExplanation(
-        id: records[i].id,
-        explanation: records[i].explanation,
-        isKu: isKu,
-      );
+      // Önce sorunun **yazılmış** açıklaması, sonra kural motoru.
+      //
+      // Burası doğrudan motora gidiyordu ve bankada yazılı Kurmancî
+      // açıklamayı hiç görmüyordu; motor eşleşme bulamayınca ham Türkçe
+      // metni `Şirove: <cümle>` diye sarıyor ve sarmak çevirmek değil.
+      // Açıklamaların **asıl gösterildiği yer** burasıdır: tur boyunca
+      // hiçbir açıklama gösterilmez, hepsi burada toplanır (2026-07-27).
+      final authored = isKu
+          ? records[i].explanationKu
+          : records[i].explanationTr;
+      final text =
+          (authored != null &&
+              authored.trim().isNotEmpty &&
+              !isTemplateExplanation(authored))
+          ? authored
+          : resolveRawExplanation(
+              id: records[i].id,
+              explanation: records[i].explanation,
+              isKu: isKu,
+            );
       if (text.trim().isEmpty) continue;
       entries.add((index: i + 1, record: records[i], explanation: text));
     }

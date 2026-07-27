@@ -1562,6 +1562,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       correctAnswer: question.correctAnswer,
       selectedAnswer: answer,
       explanation: question.explanation,
+      explanationKu: question.explanationKu,
+      explanationTr: question.explanationTr,
       imageUrl: question.imageUrl,
       responseMs: responseMs,
       pointsEarned: pointsEarned,

@@ -530,6 +530,8 @@ void main() {
             correctAnswer: 'su',
             selectedAnswer: 'su',
             explanation: '«av» Türkçede «su» demektir.',
+            explanationKu: '«av» bi Tirkî dibe «su».',
+            explanationTr: '«av» Türkçede «su» demektir.',
           ),
           AnswerRecord(
             id: 'r2',
@@ -539,6 +541,9 @@ void main() {
             correctAnswer: 'Şerefxan',
             selectedAnswer: 'Ehmedê Xanî',
             explanation: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
+            explanationKu: 'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
+                'nivîsandin.',
+            explanationTr: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
           ),
         ],
       ),
@@ -631,6 +636,97 @@ void main() {
   testWidgets('56 öğrenme', (t) async {
     await _pump(t, LearningScreen(repository: repository));
     await _shoot(t, '56_learning');
+  }, tags: ['preview']);
+
+  // ── Kalan ekranların Kurmancî taraması ──
+  //
+  // Karanlık tema taraması bir yerelleştirme kusuru çıkardı (ders adları).
+  // Aynı mantık dil için de geçerli: Kurmancî yalnız altı ekranda
+  // ölçülmüştü.
+  testWidgets('57 öğrenme (Kurmancî)', (t) async {
+    await _pump(t, LearningScreen(repository: repository), ku: true);
+    await _shoot(t, '57_learning_ku');
+  }, tags: ['preview']);
+
+  testWidgets('58 seviye sınavı (Kurmancî)', (t) async {
+    await _pump(t, LevelPlacementScreen(repository: repository), ku: true);
+    await _shoot(t, '58_placement_ku');
+  }, tags: ['preview']);
+
+  testWidgets('59 soru öner (Kurmancî)', (t) async {
+    await _pump(t, SuggestQuestionScreen(repository: repository), ku: true);
+    await _shoot(t, '59_suggest_ku');
+  }, tags: ['preview']);
+
+  testWidgets('60 seviyeler (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      LevelScreen(repository: repository, category: 'Ziman'),
+      ku: true,
+    );
+    await _shoot(t, '60_levels_ku');
+  }, tags: ['preview']);
+
+  testWidgets('61 kategoriler (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      Scaffold(body: CategoriesTab(repository: repository)),
+      ku: true,
+    );
+    await _shoot(t, '61_categories_ku');
+  }, tags: ['preview']);
+
+  testWidgets('62 oda (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      ku: true,
+    );
+    await _shoot(t, '62_room_ku');
+  }, tags: ['preview']);
+
+  testWidgets('63 turnuva (Kurmancî)', (t) async {
+    await _pump(t, TournamentScreen(repository: repository), ku: true);
+    await _shoot(t, '63_tournament_ku');
+  }, tags: ['preview']);
+
+  testWidgets('64 çark (Kurmancî)', (t) async {
+    await _pump(t, SpinWheelScreen(repository: repository), ku: true);
+    await _shoot(t, '64_spin_ku');
+  }, tags: ['preview']);
+
+  testWidgets('65 arkadaşlar (Kurmancî)', (t) async {
+    await _pump(t, FriendsScreen(repository: repository), ku: true);
+    await _shoot(t, '65_friends_ku');
+  }, tags: ['preview']);
+
+  testWidgets('66 rakip arama (Kurmancî)', (t) async {
+    await _pump(t, MatchmakingScreen(repository: repository), ku: true);
+    await _shoot(t, '66_matchmaking_ku');
+  }, tags: ['preview']);
+
+  testWidgets('67 tur özeti (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      ReviewScreen(
+        room: repository.createRoom(),
+        records: const [
+          AnswerRecord(
+            id: 'r1',
+            category: 'Ziman',
+            prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+            answers: ['su', 'ekmek'],
+            correctAnswer: 'su',
+            selectedAnswer: 'ekmek',
+            explanation: '«av» Türkçede «su» demektir.',
+            explanationKu: '«av» bi Tirkî dibe «su».',
+            explanationTr: '«av» Türkçede «su» demektir.',
+          ),
+        ],
+      ),
+      ku: true,
+    );
+    await _shoot(t, '67_review_ku');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {
