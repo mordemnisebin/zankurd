@@ -43,6 +43,23 @@ class AppColors {
     return hsl.withLightness(0.30).toColor();
   }
 
+  /// Düz renkli (dolu) zeminin üstünde okunan metin rengi.
+  ///
+  /// Dolu düğmelerde yazı rengi sabit beyaz yazılıyordu. Beyaz, koyu
+  /// aksanlarda doğru; açık aksanlarda değil: öğrenme ekranındaki "Flaş
+  /// kart" düğmesi altın zeminde 2.30:1, "Dersler" orta yeşilde 3.96:1
+  /// ölçüldü (2026-07-27). Etiket, düğmenin üstünde eriyip gidiyordu.
+  ///
+  /// Karar zemine bağlıdır, düğmeye değil: hangi uç (koyu metin ya da
+  /// beyaz) zeminden daha uzaksa o seçilir. Çarkın rakamları zaten bu
+  /// mantıkla çiziliyordu; burada da aynısı yapılır.
+  static Color onSolid(Color background) {
+    const ink = Color(0xFF1A1D1B);
+    return _contrast(Colors.white, background) >= _contrast(ink, background)
+        ? Colors.white
+        : ink;
+  }
+
   /// Kendi %14'lük tonu üzerine yazılan aksan metnin okunur hâli
   /// (tonal düğmeler: "Odaya çağır", ödül çipleri).
   ///
@@ -413,7 +430,11 @@ class AppTheme {
 
   // Aşağıdaki dört ton geriye dönük ad uyumu için duruyor; artık "oyun modu
   // rengi" değil, nötrleştirilmiş yardımcı aksanlardır.
-  static const playGreen = Color(0xFF3F8F5F);
+  // Dolu düğme zemini olarak kullanıldığında beyaz etiket yalnız 3.96:1
+  // veriyordu; koyu metin de 4.29'da kalıyordu, yani hiçbir yazı rengi
+  // eşiği geçmiyordu — sorun rengin kendisiydi (2026-07-27). Açıklık
+  // 0.40'tan 0.36'ya çekildi: aynı yeşil, beyazla 4.72:1.
+  static const playGreen = Color(0xFF398156);
   static const playPink = Color(0xFFA85A7A); // Muted elegant rose
   static const playCyan = Color(0xFF2F6F62); // Muted elegant teal
   static const playPurple = Color(0xFF6B5AA6); // Muted elegant purple

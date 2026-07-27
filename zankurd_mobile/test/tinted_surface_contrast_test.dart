@@ -83,6 +83,26 @@ void main() {
     }
   });
 
+  test('dolu düğmenin etiketi zemine göre seçilir', () {
+    // 2026-07-27: dolu düğmelerde yazı rengi sabit beyazdı. Beyaz koyu
+    // aksanlarda doğru, açık aksanlarda değil — "Flaş kart" altın zeminde
+    // 2.30:1, "Dersler" orta yeşilde 3.96:1 ölçüldü. Etiket zeminde
+    // eriyordu ve tasarım kararı gibi görünüyordu.
+    for (final (name, background) in [
+      ('altın', AppTheme.gold),
+      ('orta yeşil', AppTheme.playGreen),
+      ('cyan', AppTheme.cyan),
+      ('marka', AppTheme.brand),
+      ('doğru', AppTheme.correct),
+    ]) {
+      expect(
+        _contrast(AppColors.onSolid(background), background),
+        greaterThanOrEqualTo(4.5),
+        reason: '$name zeminde dolu düğme etiketi okunmuyor',
+      );
+    }
+  });
+
   testWidgets('tonlu kart üzerindeki metinler AA eşiğini geçer', (tester) async {
     for (final (label, theme, surface) in [
       ('koyu', AppTheme.dark(), AppTheme.surface),

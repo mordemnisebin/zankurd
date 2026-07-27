@@ -546,9 +546,13 @@ class _LearningModeButton extends StatelessWidget {
           ),
           child: Column(
             children: [
+              // Sabit beyaz, açık aksanlarda (altın, orta yeşil) zeminde
+              // eriyordu: 2.30:1 ve 3.96:1. Renk zemine göre seçilir.
               Icon(
                 icon,
-                color: enabled ? Colors.white : color.withValues(alpha: 0.4),
+                color: enabled
+                    ? AppColors.onSolid(color)
+                    : color.withValues(alpha: 0.4),
                 size: 18,
               ),
               const SizedBox(height: 2),
@@ -558,7 +562,7 @@ class _LearningModeButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.copyWith(
                   color: enabled
-                      ? Colors.white
+                      ? AppColors.onSolid(color)
                       : AppTheme.textPrimaryColor(
                           context,
                         ).withValues(alpha: 0.4),

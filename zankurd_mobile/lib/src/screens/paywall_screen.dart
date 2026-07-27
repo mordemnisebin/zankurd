@@ -255,7 +255,9 @@ class _Benefits extends StatelessWidget {
         title: isKu ? 'Parastina zincîrê' : 'Otomatik seri koruması',
         description: isKu
             ? 'Zincîra te ya rojane bixweber, bê coin tê parastin.'
-            : 'Günlük serin coin harcamadan otomatik korunur.',
+            // Virgülsüz hâlde "serin" sıfat gibi okunuyordu ("günlük serin
+            // coin"); virgül özneyi ayırır (2026-07-27).
+            : 'Günlük serin, coin harcamadan otomatik korunur.',
         color: AppTheme.brand,
       ),
       _Benefit(

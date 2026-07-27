@@ -18,7 +18,10 @@ void main() {
   });
 
   test('yardımcı aksanlar nötr bantta', () {
-    expect(AppTheme.playGreen, const Color(0xFF3F8F5F));
+    // 2026-07-27: #3F8F5F dolu düğme zemini olarak hiçbir yazı rengiyle
+    // AA geçmiyordu (beyaz 3.96:1, koyu metin 4.29:1). Açıklık bir tık
+    // indirildi; renk kimliği aynı yeşil, beyazla 4.72:1.
+    expect(AppTheme.playGreen, const Color(0xFF398156));
     expect(AppTheme.playCyan, const Color(0xFF2F6F62));
     expect(AppTheme.playPurple, const Color(0xFF6B5AA6));
     expect(AppTheme.playPink, const Color(0xFFA85A7A));
