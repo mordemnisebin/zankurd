@@ -161,6 +161,25 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
       tooltipBottom = !showBelow
           ? screenSize.height - highlightRect.top + 16
           : null;
+
+      // Yukarı yerleşimde balonun tepesi serbestti: `bottom` ile
+      // konumlanan bir kutu yüksekliği kadar yukarı uzar ve uzun metinde
+      // durum çubuğunun/başlığın üstüne biner. İlk turda öğretici kart
+      // "Dersê rojane" başlığıyla üst üste geliyordu — yeni kullanıcının
+      // gördüğü ilk quiz ekranıydı (2026-07-27, canlı gezinti).
+      //
+      // Güvenli üst sınır: durum çubuğu + başlık yüksekliği. Balon oraya
+      // sığmıyorsa hedefin altına alınır; iki taraf da dar kalırsa alta
+      // konur, çünkü alt tarafta kaydırılabilir boşluk vardır.
+      if (!showBelow) {
+        final safeTop = MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
+        final bubbleTop =
+            screenSize.height - tooltipBottom! - estimatedBubbleHeight;
+        if (bubbleTop < safeTop) {
+          tooltipTop = highlightRect.bottom + 16;
+          tooltipBottom = null;
+        }
+      }
     }
 
     return Positioned.fill(
