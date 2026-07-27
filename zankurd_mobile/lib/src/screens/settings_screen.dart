@@ -417,9 +417,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 AppIcons.bellSlash,
-                                color: AppTheme.wrong,
+                                color: AppColors.onAccentTint(
+                                  context,
+                                  AppTheme.wrong,
+                                ),
                                 size: 20,
                               ),
                               const SizedBox(width: AppSpacing.sm),
@@ -534,9 +537,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ),
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 AppIcons.gem,
-                                color: AppTheme.gold,
+                                color: AppColors.onAccentTint(
+                                  context,
+                                  AppTheme.gold,
+                                ),
                                 size: 22,
                               ),
                             ),
@@ -721,9 +727,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 AppRadius.badge,
                               ),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               AppIcons.star,
-                              color: AppTheme.accent,
+                              color: AppColors.onAccentTint(
+                                context,
+                                AppTheme.accent,
+                              ),
                               size: 18,
                             ),
                           ),

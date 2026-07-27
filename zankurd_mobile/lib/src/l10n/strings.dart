@@ -468,10 +468,7 @@ class Tr {
       'ku': 'Kûpa, hevrikî û xelat — bi lîstikvanên rastî',
       'tr': 'Kupa, rekabet ve ödül — gerçek oyuncularla',
     },
-    K.botDailyCup: {
-      'ku': 'Kûpa · elemeyî',
-      'tr': 'Eleme kupası',
-    },
+    K.botDailyCup: {'ku': 'Kûpa · elemeyî', 'tr': 'Eleme kupası'},
     K.formatSummary: {
       'ku': '{perMatch} pirs/maç · lîstikvanên rastî',
       'tr': '{perMatch} soru/maç · gerçek oyuncular',

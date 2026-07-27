@@ -1113,10 +1113,10 @@ class _UserMatchCard extends StatelessWidget {
                     color: AppTheme.gold.withValues(alpha: 0.18),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'VS',
                   style: TextStyle(
-                    color: AppTheme.gold,
+                    color: AppColors.onAccentTint(context, AppTheme.gold),
                     fontWeight: FontWeight.w900,
                     fontSize: 12,
                   ),

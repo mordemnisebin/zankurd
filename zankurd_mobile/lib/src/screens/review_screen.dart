@@ -402,9 +402,12 @@ class _ReviewCard extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
+                        Icon(
                           AppIcons.lightbulb,
-                          color: AppTheme.violet,
+                          color: AppColors.onAccentTint(
+                            context,
+                            AppTheme.violet,
+                          ),
                           size: 20,
                         ),
                         const SizedBox(width: 10),

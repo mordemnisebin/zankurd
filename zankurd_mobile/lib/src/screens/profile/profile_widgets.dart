@@ -708,9 +708,12 @@ class _UnifiedRewardsSection extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             AppIcons.star,
-                            color: AppTheme.accent,
+                            color: AppColors.onAccentTint(
+                              context,
+                              AppTheme.accent,
+                            ),
                             size: 18,
                           ),
                           const SizedBox(width: 6),
@@ -905,7 +908,11 @@ class _AchievementChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(achievement.icon, color: AppTheme.gold, size: 18),
+          Icon(
+            achievement.icon,
+            color: AppColors.onAccentTint(context, AppTheme.gold),
+            size: 18,
+          ),
           const SizedBox(width: 6),
           Text(
             achievement.title(isKu),
@@ -1165,7 +1172,10 @@ class _PedagogicalAnalyticsSectionState
                       child: Text(
                         strongestCat,
                         style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.correct,
+                          color: AppColors.onAccentTint(
+                            context,
+                            AppTheme.correct,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

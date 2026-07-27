@@ -120,10 +120,10 @@ class BadgeWidget extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     AppIcons.check,
                     size: 9,
-                    color: AppTheme.correct,
+                    color: AppColors.onAccentTint(context, AppTheme.correct),
                   ),
                   const SizedBox(width: 3),
                   Text(

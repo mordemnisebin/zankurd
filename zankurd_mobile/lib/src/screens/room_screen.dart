@@ -941,9 +941,7 @@ class _PlayerTile extends StatelessWidget {
   /// ekranı aynı adı zaten gösterim anında yerelleştiriyordu, oda ekranı
   /// unutulmuştu (2026-07-26).
   String _displayName(BuildContext context) =>
-      player.name == 'Tu' && player.id == null
-      ? context.t(K.you)
-      : player.name;
+      player.name == 'Tu' && player.id == null ? context.t(K.you) : player.name;
 
   /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
   String _localizedState(String state) {
@@ -1016,7 +1014,10 @@ class _PlayerTile extends StatelessWidget {
                         child: Text(
                           isKu ? 'Mêvandar' : 'Ev sahibi',
                           style: AppTypography.caption.copyWith(
-                            color: AppTheme.gold,
+                            color: AppColors.onAccentTint(
+                              context,
+                              AppTheme.gold,
+                            ),
                             fontSize: 10,
                           ),
                         ),

@@ -609,7 +609,11 @@ class _ShopScreenState extends State<ShopScreen> {
                   color: AppTheme.gold.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(item.icon, color: AppTheme.gold, size: 36),
+                child: Icon(
+                  item.icon,
+                  color: AppColors.onAccentTint(context, AppTheme.gold),
+                  size: 36,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
@@ -697,7 +701,11 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(AppIcons.coins, color: AppTheme.gold, size: 18),
+                    Icon(
+                      AppIcons.coins,
+                      color: AppColors.onAccentTint(context, AppTheme.gold),
+                      size: 18,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       '$_coinBalance coin',
@@ -993,9 +1001,13 @@ class _ShopScreenState extends State<ShopScreen> {
                           alignment: Alignment.center,
                           child: Icon(
                             item.icon,
+                            // Ürün ikonu kendi renginin tonundan yapılmış
+                            // karonun içinde duruyor; ham renk orada
+                            // altında 2.0:1'e kadar iniyordu — VIP elması
+                            // altın karoda eriyip gidiyordu (2026-07-27).
                             color: isPurchased
                                 ? tint.withValues(alpha: 0.5)
-                                : tint,
+                                : AppColors.onAccentTint(context, tint),
                             size: 36,
                           ),
                         ),
@@ -1105,9 +1117,13 @@ class _ShopScreenState extends State<ShopScreen> {
                           alignment: Alignment.center,
                           child: Icon(
                             item.icon,
+                            // Ürün ikonu kendi renginin tonundan yapılmış
+                            // karonun içinde duruyor; ham renk orada
+                            // altında 2.0:1'e kadar iniyordu — VIP elması
+                            // altın karoda eriyip gidiyordu (2026-07-27).
                             color: isPurchased
                                 ? tint.withValues(alpha: 0.5)
-                                : tint,
+                                : AppColors.onAccentTint(context, tint),
                             size: 32,
                           ),
                         ),
@@ -1215,8 +1231,8 @@ class _ShopScreenState extends State<ShopScreen> {
           const SizedBox(width: 4),
           Text(
             context.t(K.ownedLabel),
-            style: const TextStyle(
-              color: AppTheme.correct,
+            style: TextStyle(
+              color: AppColors.onAccentTint(context, AppTheme.correct),
               fontSize: 12,
               fontWeight: FontWeight.w800,
             ),

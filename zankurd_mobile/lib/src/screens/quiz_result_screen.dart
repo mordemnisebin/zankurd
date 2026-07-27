@@ -354,9 +354,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         color: AppTheme.gold.withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         AppIcons.medal,
-                        color: AppTheme.gold,
+                        color: AppColors.onAccentTint(context, AppTheme.gold),
                         size: 50,
                       ),
                     ),
@@ -1287,9 +1287,9 @@ class _AchievementUnlocks extends StatelessWidget {
                     color: AppTheme.gold.withValues(alpha: 0.35),
                   ),
                 ),
-                child: const Icon(
+                child: Icon(
                   AppIcons.medal,
-                  color: AppTheme.gold,
+                  color: AppColors.onAccentTint(context, AppTheme.gold),
                   size: 17,
                 ),
               ),
@@ -1321,7 +1321,7 @@ class _AchievementUnlocks extends StatelessWidget {
                     ),
                     child: Icon(
                       achievement.icon,
-                      color: AppTheme.gold,
+                      color: AppColors.onAccentTint(context, AppTheme.gold),
                       size: 19,
                     ),
                   ),
