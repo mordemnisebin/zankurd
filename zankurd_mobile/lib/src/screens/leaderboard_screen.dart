@@ -819,20 +819,38 @@ class _PodiumSlot extends StatelessWidget {
                   ),
                   border: Border.all(color: color.withValues(alpha: 0.45)),
                 ),
-                child: Text(
-                  '#${entry.rank}',
-                  style: AppTypography.heading2.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: isCenter ? 20 : 16,
-                    shadows: const [
-                      Shadow(
-                        color: Color(0x66000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 1),
+                child: Builder(
+                  builder: (context) {
+                    final pedestal = Color.alphaBlend(
+                      color.withValues(alpha: 0.28),
+                      AppTheme.surfaceColor(context),
+                    );
+                    final ink = AppColors.onSolid(pedestal);
+                    return Text(
+                      '#${entry.rank}',
+                      style: AppTypography.heading2.copyWith(
+                        // Kaidenin üstündeki beyaz "#1" altın zeminde 1.36:1
+                        // ölçüldü — okunabilirliğini yalnız altındaki gölgeye
+                        // borçluydu (2026-07-27). Yazı rengi kaidenin gerçek
+                        // rengine göre seçilir; gradyanın açık ucu (%28) en
+                        // kötü durum olduğu için ölçüt odur.
+                        color: ink,
+                        fontWeight: FontWeight.w900,
+                        fontSize: isCenter ? 20 : 16,
+                        // Gölge yalnız beyaz yazıya destekti; koyu yazının
+                        // altında kirli bir hale bırakıyor.
+                        shadows: ink == Colors.white
+                            ? const [
+                                Shadow(
+                                  color: Color(0x66000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 1),
+                                ),
+                              ]
+                            : null,
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -997,7 +1015,9 @@ class _RankRow extends StatelessWidget {
               child: Text(
                 '${entry.totalScore}',
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.gold,
+                  // Ham altın beyaz kart üstünde 2.30:1; sıralamadaki puan
+                  // okunmuyordu (2026-07-27).
+                  color: AppColors.readableAccent(context, AppTheme.gold),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -1125,7 +1145,7 @@ class _FriendRankRow extends StatelessWidget {
               child: Text(
                 '${friend.totalScore}',
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.cyan,
+                  color: AppColors.readableAccent(context, AppTheme.cyan),
                   fontWeight: FontWeight.w700,
                 ),
               ),
