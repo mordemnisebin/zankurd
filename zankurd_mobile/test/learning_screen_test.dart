@@ -93,7 +93,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Silavkirin'), findsOneWidget);
+    // Arayüz Türkçe: ders adı da Türkçe listelenir. Kurmancî adı
+    // ("Silavkirin") yalnız Kurmancî arayüzde görünür — bkz.
+    // `test/lesson_title_language_test.dart` (2026-07-27).
+    expect(find.text('Selamlaşma'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('learning-path-node-everyday_1')),
       findsOneWidget,
