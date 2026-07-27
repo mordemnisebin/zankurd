@@ -73,12 +73,20 @@ class AppColors {
   /// Renk kimliği (ton ve doygunluk) korunur; yalnız açıklık, AA eşiği
   /// geçilene dek adım adım zeminden uzaklaştırılır. Sabit bir sayı yerine
   /// arama kullanılır ki yeni bir aksan eklendiğinde de doğru kalsın.
-  static Color onAccentTint(BuildContext context, Color accent) {
+  /// [tintAlpha], zeminin aksandan aldığı payı söyler. Varsayılan %14 tipik
+  /// rozet/karo tonudur; kendisi de tonlu bir kartın üstünde duran çipler
+  /// için daha yüksek verilir — yoksa hesap, gerçekte olduğundan koyu bir
+  /// zemin varsayar ve metni gereğinden açık bırakır.
+  static Color onAccentTint(
+    BuildContext context,
+    Color accent, {
+    double tintAlpha = 0.14,
+  }) {
     final surface = AppTheme.isLight(context)
         ? AppTheme.lightSurface
         : AppTheme.surface;
     final background = Color.alphaBlend(
-      accent.withValues(alpha: 0.14),
+      accent.withValues(alpha: tintAlpha),
       surface,
     );
     final darken = background.computeLuminance() > 0.4;

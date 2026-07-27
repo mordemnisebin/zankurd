@@ -870,12 +870,19 @@ class _LobbyView extends StatelessWidget {
                               child: Text(
                                 context.t(K.botDailyCup),
                                 style: AppTypography.caption.copyWith(
-                                  // Altın metin + altın@0.2 zemin açık temada ~2:1
-                                  // kalıyordu; aksan kimliği korunarak okunabilir
-                                  // açıklığa çekilir.
-                                  color: AppColors.readableAccent(
+                                  // Altın metin + altın@0.2 zemin açık temada
+                                  // ~2:1 kalıyordu. `readableAccent` düz
+                                  // yüzeye göre ayarlı olduğu için 3.84'te
+                                  // takılıyordu: bu çip zaten altın tonlu
+                                  // bir kartın üstünde duruyor, yani gerçek
+                                  // zemin daha açık (2026-07-27).
+                                  color: AppColors.onAccentTint(
                                     context,
                                     AppTheme.gold,
+                                    // Çipin kendi %20'si + altındaki kartın
+                                    // altın gradyanı: ölçülen gerçek zemin
+                                    // beyazın üstünde ~%50 altına denk gelir.
+                                    tintAlpha: 0.50,
                                   ),
                                   fontWeight: FontWeight.w800,
                                 ),
