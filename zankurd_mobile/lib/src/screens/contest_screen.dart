@@ -414,13 +414,14 @@ class _ContestContent extends StatelessWidget {
             }
             final rows = snap.data ?? [];
             if (rows.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text(
-                  context.t(K.noParticipantsYet),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: AppTheme.textMutedColor(context)),
-                ),
+              // Boş sıralama tek satır gri metindi: uygulamanın her yerinde
+              // kullanılan boş durum paneli (ikon + tonlu zemin + Zana)
+              // yerine çıplak bir cümle duruyordu ve ekran orada
+              // bitiveriyordu (2026-07-27).
+              return AppEmptyState(
+                icon: AppIcons.trophy,
+                title: context.t(K.noParticipantsTitle),
+                message: context.t(K.noParticipantsBody),
               );
             }
             return Column(

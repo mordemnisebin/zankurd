@@ -772,6 +772,11 @@ class Tr {
       'ku': 'Hîn beşdar tune — yekemîn tu bibe!',
       'tr': 'Henüz katılım yok — ilk sen ol!',
     },
+    K.noParticipantsTitle: {'ku': 'Hîn beşdar tune', 'tr': 'Henüz katılım yok'},
+    K.noParticipantsBody: {
+      'ku': 'Yekemîn beşdar tu bibe — pêşderçûn li vir xuya dibe.',
+      'tr': 'İlk katılan sen ol — sıralama burada görünecek.',
+    },
     K.correctAndScore: {
       'ku': '{correct} rast · {score} pûan',
       'tr': '{correct} doğru · {score} puan',
@@ -1884,6 +1889,8 @@ class K {
   static const rankingWord = 'contest.ranking';
   static const rankingLoadFailed = 'contest.ranking.loadFailed';
   static const noParticipantsYet = 'contest.noParticipants';
+  static const noParticipantsTitle = 'contest.noParticipantsTitle';
+  static const noParticipantsBody = 'contest.noParticipantsBody';
   static const correctAndScore = 'contest.correctAndScore';
   static const wheelTitle = 'wheel.title';
   static const wheelRewardNote = 'wheel.rewardNote';
