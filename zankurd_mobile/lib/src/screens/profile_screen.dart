@@ -287,7 +287,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-              if (_stats == null)
+              // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
+              // 2 soru cevaplamış oyuncu "henüz çevrimiçi geçmişin yok"
+              // görüyor, kendi cevapladığı soru sayısını göremiyordu
+              // (2026-07-27). Kapı sunucu satırına değil, gösterilecek bir
+              // şey olup olmadığına bakmalı; karolar zaten sunucu metriği
+              // yokken "—" gösteriyor.
+              if (_stats == null && _answeredTotal == 0)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

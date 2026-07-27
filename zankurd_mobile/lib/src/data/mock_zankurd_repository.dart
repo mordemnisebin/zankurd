@@ -81,33 +81,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
   int _mockUsedExtraSpins = 0;
   final Set<String> _mockPurchases = {};
 
-  final List<LeaderboardEntry> _mockLeaderboard = [
-    const LeaderboardEntry(
-      rank: 1,
-      playerId: 'player_001',
-      displayName: 'ZanKurd Champion',
-      totalScore: 5000,
-      bestStreak: 25,
-      roomsPlayed: 50,
-    ),
-    const LeaderboardEntry(
-      rank: 2,
-      playerId: 'player_002',
-      displayName: 'Kurmancî Master',
-      totalScore: 4500,
-      bestStreak: 20,
-      roomsPlayed: 45,
-    ),
-    const LeaderboardEntry(
-      rank: 3,
-      playerId: 'player_003',
-      displayName: 'Quiz Legend',
-      totalScore: 4000,
-      bestStreak: 18,
-      roomsPlayed: 40,
-    ),
-  ];
-
   @override
   Future<void> ensureProfile() async {}
 
@@ -127,7 +100,17 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<LeaderboardEntry?> getPlayerStats() async {
-    return _mockLeaderboard.first;
+    // "Benim istatistiğim" olarak tablonun **birincisi** döndürülüyordu:
+    // çevrimdışı açan yeni bir oyuncu, sıralamanın altına sabitlenen kendi
+    // satırında "ZanKurd Champion · 1. · 5000 puan · 50 oda · 25 seri"
+    // görüyordu — aynı ekranda profili "Ast 1 · 0/1000 XP" derken
+    // (2026-07-27, simülatörde görüldü).
+    //
+    // Profil ekranı bu kusuru 2026-07-25'te kendi içinde bir kapıyla
+    // (`_hasServerScore`) örtmüştü; sıralamada öyle bir kapı yoktu ve yalan
+    // olduğu gibi göründü. Kaynağı düzeltmek iki ekranı da düzeltir: hiç
+    // oynamamış oyuncunun sunucu satırı yoktur.
+    return null;
   }
 
   @override
