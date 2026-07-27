@@ -183,7 +183,10 @@ class _MiniProgressRing extends StatelessWidget {
             context.percentRatio(progress),
             style: AppTypography.caption.copyWith(
               fontWeight: FontWeight.w800,
-              color: color,
+              // Halkanın rengi çizgi için doğru, yazı için değil: altın
+              // beyaz yüzeyde 2.30:1 veriyordu ve yüzde okunmuyordu
+              // (2026-07-27). Çizgi rengiyle yazı rengi ayrılır.
+              color: AppColors.readableAccent(context, color),
             ),
           ),
         ],

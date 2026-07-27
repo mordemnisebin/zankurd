@@ -62,7 +62,12 @@ class DailyMission {
     MissionType.completeQuiz => '$target quiz tamamla',
     MissionType.useWildcard => '$target joker kullan',
     MissionType.keepStreak => 'Serisini koru',
-    MissionType.playCategory => '${category ?? '?'} kategorisinde oyna',
+    // Kurmancî etiketi kategoriyi çeviriyordu, Türkçe etiketi ham anahtarı
+    // yazıyordu: görev "Cografya kategorisinde oyna" (ğ'siz), "Muzîk",
+    // "Dîrok" diyordu — yani Türkçe arayüzde kategori adı hem yanlış
+    // yazılıyor hem Kurmancî kalıyordu (2026-07-27).
+    MissionType.playCategory =>
+      '${CategoryNames.localized(category ?? '?', false)} kategorisinde oyna',
   };
 }
 
