@@ -57,10 +57,13 @@
     <li><strong>Oyuncu profili:</strong> Seçtiğin oyuncu adı.</li>
     <li><strong>Oyun verileri:</strong> Yarışma skorların, doğru/yanlış istatistiklerin, coin bakiyen, kaydettiğin ve raporladığın sorular.</li>
     <li><strong>Çökme kayıtları:</strong> Uygulama hatalarında anonim teknik kayıt (cihaz modeli, işletim sistemi sürümü, hata izi) Firebase Crashlytics aracılığıyla toplanır.</li>
+    <li><strong>Kullanım olayları:</strong> Hangi ekranın açıldığı, turun başlaması ve bitmesi gibi olaylar Firebase Analytics aracılığıyla toplanır. Bu veri reklam amacıyla kullanılmaz ve reklam ağlarıyla paylaşılmaz.</li>
+    <li><strong>Satın alma durumu:</strong> Premium aboneliğin varsa abonelik durumun RevenueCat aracılığıyla tutulur. Kart bilgilerin bize hiç ulaşmaz; ödeme App Store/Google Play üzerinden yapılır.</li>
+    <li><strong>Profil fotoğrafı:</strong> Avatar olarak fotoğraf yüklersen o görsel hesabınla birlikte saklanır.</li>
   </ul>
 
   <h2>2. Verilerin nerede saklanıyor?</h2>
-  <p>Hesap ve oyun verilerin <strong>Supabase</strong> altyapısında, çökme kayıtları <strong>Google Firebase</strong> altyapısında saklanır. Veriler şifreli bağlantı (HTTPS) ile iletilir.</p>
+  <p>Hesap ve oyun verilerin <strong>Supabase</strong> altyapısında; çökme kayıtları ve kullanım olayları <strong>Google Firebase</strong> altyapısında; abonelik durumu <strong>RevenueCat</strong> altyapısında saklanır. Veriler şifreli bağlantı (HTTPS) ile iletilir.</p>
 
   <h2>3. Verilerin kimlerle paylaşılıyor?</h2>
   <p>Verilerin satılmaz ve üçüncü taraflarla pazarlama amacıyla paylaşılmaz. Oyuncu adın ve skorların yalnızca liderlik tablosunda diğer oyunculara görünür.</p>
@@ -83,10 +86,13 @@
       <li><strong>Profîla lîstikvan:</strong> Navê lîstikvanê ku te hilbijartiye.</li>
       <li><strong>Daneyên lîstikê:</strong> Pûanên te, statîstîkên rast/şaş, hejmara coinan, pirsên tomarkirî û raporkirî.</li>
       <li><strong>Tomarên hilweşînê:</strong> Di xetayên sepanê de tomarên teknîkî yên anonîm bi rêya Firebase Crashlytics tên berhevkirin.</li>
+      <li><strong>Bûyerên bikaranînê:</strong> Vekirina ekranan, destpêk û dawiya turan bi rêya Firebase Analytics tên berhevkirin. Ev dane ji bo reklaman nayê bikaranîn û bi tora reklaman re nayê parvekirin.</li>
+      <li><strong>Rewşa kirînê:</strong> Heke aboneyê Premium bî, rewşa aboneyê bi rêya RevenueCat tê girtin. Agahiyên qerta te qet nagihîje me; drav bi rêya App Store/Google Play tê dayîn.</li>
+      <li><strong>Wêneyê profîlê:</strong> Heke tu wêneyekê wek avatar bar bikî, ew wêne bi hesabê te re tê tomarkirin.</li>
     </ul>
 
     <h2>2. Daneyên te li ku tên tomarkirin?</h2>
-    <p>Daneyên hesab û lîstikê li ser <strong>Supabase</strong>, tomarên hilweşînê li ser <strong>Google Firebase</strong> tên tomarkirin. Dane bi girêdana şîfrekirî (HTTPS) tên şandin.</p>
+    <p>Daneyên hesab û lîstikê li ser <strong>Supabase</strong>; tomarên hilweşînê û bûyerên bikaranînê li ser <strong>Google Firebase</strong>; rewşa aboneyê li ser <strong>RevenueCat</strong> tên tomarkirin. Dane bi girêdana şîfrekirî (HTTPS) tên şandin.</p>
 
     <h2>3. Dane bi kê re tên parvekirin?</h2>
     <p>Daneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te û pûanên te tenê di tabloya pêşderçûnê de ji lîstikvanên din re xuya dibin.</p>
