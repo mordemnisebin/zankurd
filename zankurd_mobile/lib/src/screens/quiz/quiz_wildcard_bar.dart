@@ -63,7 +63,9 @@ class _WildcardButtonState extends State<WildcardButton> {
     final iconColor = widget.isActive
         ? Colors.white
         : available
-        ? AppColors.readableAccent(context, baseColor)
+        // Çipin zemini rengin kendi tonu; düz yüzeye göre ayarlanan
+        // `readableAccent` orada bir tık yetersiz kalıyordu.
+        ? AppColors.onAccentTint(context, baseColor)
         : AppTheme.textMutedColor(context);
 
     return Tooltip(
@@ -140,7 +142,12 @@ class _WildcardButtonState extends State<WildcardButton> {
                       fontWeight: FontWeight.w600,
                       fontSize: 10,
                       height: 1.05,
-                      color: iconColor.withValues(alpha: 0.75),
+                      // %75 alfa hiyerarşi için kondu ama okunabilirliği
+                      // yiyordu: bedel satırı 2.52-2.96:1 ölçüldü, yani
+                      // oyuncu jokerin kaç coin olduğunu ancak yakından
+                      // görüyordu (2026-07-27). Hiyerarşi zaten punto ve
+                      // ağırlık farkında; alfaya gerek yok.
+                      color: iconColor,
                     ),
                   ),
                 ],
