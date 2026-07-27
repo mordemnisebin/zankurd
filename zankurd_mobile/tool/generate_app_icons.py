@@ -142,6 +142,33 @@ def main() -> None:
         (int(logo.width * scale), int(logo.height * scale)), Image.LANCZOS
     ).save(android_splash)
 
+    # Android 8+ uyarlanabilir simge.
+    # Manifest yalnız eski PNG'yi gösteriyordu; modern Android onu kendi
+    # maskesiyle kırpıp küçültür ve simge sistem içinde bir kutu gibi
+    # durur. Uyarlanabilir simgede ön plan ile zemin ayrı katmandır ve
+    # cihazın maskesi (daire, squircle) doğru uygulanır.
+    #
+    # Ön plan güvenli alanda kalmalı: 108 birimlik tuvalin yalnız ortadaki
+    # 72 birimi her maskede görünür. Amblem bu orana göre yerleştirilir.
+    foreground_scale = 72 / 108
+    for folder, size in ANDROID_ICONS.items():
+        canvas_size = int(size / 48 * 108)
+        canvas = Image.new("RGBA", (canvas_size, canvas_size), (0, 0, 0, 0))
+        inner = int(canvas_size * foreground_scale * 0.86)
+        scale = min(inner / emblem.width, inner / emblem.height)
+        resized = emblem.resize(
+            (int(emblem.width * scale), int(emblem.height * scale)),
+            Image.LANCZOS,
+        )
+        canvas.alpha_composite(
+            resized,
+            ((canvas_size - resized.width) // 2,
+             (canvas_size - resized.height) // 2),
+        )
+        canvas.save(
+            ROOT / "android/app/src/main/res" / folder / "ic_launcher_fg.png"
+        )
+
     for relative, size in WEB_ICONS.items():
         # Maskable simgeler kırpılabilir: içeriden daha fazla pay bırakılır.
         square(emblem, size, ICON_BG).convert("RGB").save(ROOT / relative)

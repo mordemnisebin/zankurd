@@ -10,4 +10,6 @@
 <resources>
     <color name="zk_splash_bg">#F7F4EE</color>
     <color name="zk_splash_bg_dark">#0E1512</color>
+    <!-- Uyarlanabilir simgenin zemini: logonun tasarlandığı beyaz. -->
+    <color name="zk_icon_bg">#FFFFFF</color>
 </resources>
