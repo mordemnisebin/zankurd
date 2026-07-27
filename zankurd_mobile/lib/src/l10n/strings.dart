@@ -445,7 +445,7 @@ class Tr {
       'ku': 'Kûpa nehat barkirin',
       'tr': 'Turnuva yüklenemedi',
     },
-    K.tournamentTitle: {'ku': 'Kûpaya ZanKurd', 'tr': 'ZanKurd Kupası'},
+    K.tournamentTitle: {'ku': 'Kûpaya ZanKurdê', 'tr': 'ZanKurd Kupası'},
     // Kurmancî karşılık "Kûpa"dır; iki dil için aynı metin ("Bot turnuva")
     // yazılmıştı ve Türkçe sözcük Kurmancî arayüze sızıyordu. Terim
     // tutarlılığı testi bunu göç sırasında yakaladı (2026-07-25).
@@ -486,7 +486,7 @@ class Tr {
     K.ongoing: {'ku': 'Berdewam', 'tr': 'Devam'},
     K.status: {'ku': 'Rewş', 'tr': 'Durum'},
     K.championCongrats: {
-      'ku': 'Pîroz be! Tu şampiyonê Kûpaya ZanKurd î!',
+      'ku': 'Pîroz be! Tu şampiyonê Kûpaya ZanKurdê yî!',
       'tr': 'Tebrikler! ZanKurd Kupası şampiyonusun!',
     },
     K.yourMatchRound: {'ku': 'Maça Te · {round}', 'tr': 'Maçın · {round}'},
@@ -499,8 +499,12 @@ class Tr {
 
     // ── Soru öner ekranı ─────────────────────────────────────────────
     K.suggestTitle: {'ku': 'Pirs Pêşniyar Bike', 'tr': 'Soru Öner'},
+    // Kurmancî'de özne ile nesne ters yazılmıştı: "ZanKurd pirsên te
+    // pêşniyar dike" = "ZanKurd senin sorularını öneriyor". Oysa öneren
+    // kullanıcıdır. Türkçesi doğruydu ve kusur ancak ekran Kurmancî
+    // basıldığında görüldü (2026-07-27).
     K.suggestHeader: {
-      'ku': 'ZanKurd pirsên te pêşniyar dike',
+      'ku': 'Ji ZanKurdê re pirsekê pêşniyar bike',
       'tr': 'ZanKurd\'a soru öner',
     },
     K.suggestIntro: {
@@ -1282,7 +1286,7 @@ class Tr {
       'tr': 'Oyuncu adı kaydedilemedi. Tekrar dene.',
     },
     K.nameGateWelcome: {
-      'ku': 'Xweş hatî ZanKurd!',
+      'ku': 'Xweş hatî ZanKurdê!',
       'tr': "ZanKurd'a Hoş Geldin!",
     },
     K.nameGateSubtitle: {

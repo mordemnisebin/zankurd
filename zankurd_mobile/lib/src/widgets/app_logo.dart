@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 ///
 /// [width] < [_wordmarkThreshold] olduğunda tam logo yerine yalnızca
 /// simge (assets/zankurd_icon.webp — Z + güneş + dağ + kitap, "ZANKURD"
-/// yazısı olmadan) gösterilir: küçük boyutlarda ("Xweş hatî ZanKurd!"
+/// yazısı olmadan) gösterilir: küçük boyutlarda ("Xweş hatî ZanKurdê!"
 /// başlığının üstündeki 76-88px kullanım gibi) tam logo + wordmark
 /// birlikte okunaksız bir karmaşaya dönüşüyordu (kullanıcı geri
 /// bildirimi — "kötü duruyor"). Yanındaki başlık metni zaten marka
