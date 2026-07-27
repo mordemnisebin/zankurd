@@ -57,6 +57,10 @@ void main() {
         ('cyan', AppTheme.cyan),
         ('altın', AppTheme.gold),
         ('marka', AppTheme.brand),
+        // Cevap dökümündeki "DOĞRU"/"YANLIŞ" şeritleri aynı kalıbı
+        // kullanıyordu: 2.59:1 ve 3.13:1 (2026-07-27).
+        ('doğru', AppTheme.correct),
+        ('yanlış', AppTheme.wrong),
       ]) {
         await tester.pumpWidget(
           MaterialApp(

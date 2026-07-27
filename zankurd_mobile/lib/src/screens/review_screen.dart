@@ -227,12 +227,18 @@ class _ReviewCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(headerIcon, color: headerColor, size: 20),
+                // Başlık şeridinin zemini rengin kendi %14'lük tonu; ham
+                // renk orada okunmuyordu ("DOĞRU" 2.59:1, "YANLIŞ" 3.13:1).
+                Icon(
+                  headerIcon,
+                  color: AppColors.onAccentTint(context, headerColor),
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   headerText,
                   style: TextStyle(
-                    color: headerColor,
+                    color: AppColors.onAccentTint(context, headerColor),
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,
                   ),
@@ -329,11 +335,16 @@ class _ReviewCard extends StatelessWidget {
 
                   if (isThisCorrect) {
                     bgColor = AppTheme.correct.withValues(alpha: 0.14);
-                    textColor = AppTheme.correct;
+                    // Ham yeşil kendi %14'lük tonunda 2.59:1 ölçüldü;
+                    // doğru şık silik görünüyordu (2026-07-27).
+                    textColor = AppColors.onAccentTint(
+                      context,
+                      AppTheme.correct,
+                    );
                     icon = AppIcons.check;
                   } else if (isThisSelected) {
                     bgColor = AppTheme.wrong.withValues(alpha: 0.14);
-                    textColor = AppTheme.wrong;
+                    textColor = AppColors.onAccentTint(context, AppTheme.wrong);
                     icon = AppIcons.xmark;
                   } else {
                     bgColor = AppTheme.surfaceHiColor(context);
