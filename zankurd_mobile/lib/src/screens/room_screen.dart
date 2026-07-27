@@ -976,7 +976,9 @@ class _PlayerTile extends StatelessWidget {
             child: Text(
               '$rank',
               style: AppTypography.caption.copyWith(
-                color: AppTheme.playCyan,
+                // Sıra rakamı kendi renginin %16'lık dairesinde
+                // yazılıyordu: koyu temada 2.15:1 (2026-07-27).
+                color: AppColors.onAccentTint(context, AppTheme.playCyan),
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
