@@ -20,6 +20,7 @@ import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
 import '../widgets/app_row_card.dart';
 import 'home/daily_missions_card.dart';
+import 'shop_screen.dart';
 import '../data/mastery_store.dart';
 import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -427,6 +428,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         AppIcons.coins,
                         AppTheme.gold,
                         '$_coinBalance',
+                        semanticLabel: context.t(K.shop),
+                        onTap: () async {
+                          await Navigator.of(
+                            context,
+                          ).push(AppRoute.to(ShopScreen(repository: repo)));
+                          if (mounted) await _refreshCoins();
+                        },
                       ),
                     ],
                   );
@@ -499,8 +507,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   /// Başlık rozeti. [text] null ise yalnız ikon çizilir.
-  Widget _buildHeaderBadge(IconData icon, Color iconColor, String? text) {
-    return Container(
+  Widget _buildHeaderBadge(
+    IconData icon,
+    Color iconColor,
+    String? text, {
+    VoidCallback? onTap,
+    String? semanticLabel,
+  }) {
+    final badge = Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.12),
@@ -524,6 +538,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
         ],
+      ),
+    );
+    if (onTap == null) return badge;
+    // Coin rozeti mağazaya götürür. Mağazaya tek giriş profil ekranının
+    // içindeydi: coin kazanan oyuncu onu nerede harcayacağını bulamıyordu
+    // (2026-07-27 denetimi). Rozet zaten bakiyeyi gösterdiği için doğal
+    // giriş noktası burasıdır.
+    //
+    // `InkWell` değil `GestureDetector`: başlık gradyanı `Material`
+    // ağacının dışında çiziliyor ve InkWell orada "No Material widget
+    // found" ile düşüyordu. Dalga efekti bu rozette zaten görünmezdi.
+    return Semantics(
+      button: true,
+      label: semanticLabel,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: badge,
       ),
     );
   }
