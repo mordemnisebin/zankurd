@@ -177,18 +177,36 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               AppSpacing.lg,
             ),
             children: [
-              Text(
-                question.prompt,
-                style: AppTypography.heading1.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  height: 1.25,
+              // Soru düz metin olarak duruyordu: ekran renksiz kalıyor ve
+              // uygulamanın quiz/hikâye kartlarıyla aynı dili konuşmuyordu
+              // (2026-07-27). Sınav da bir sorudur; kartı da öyle olmalı.
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(AppSpacing.md),
+                decoration: BoxDecoration(
+                  color: Color.alphaBlend(
+                    AppTheme.playGreen.withValues(alpha: 0.07),
+                    AppTheme.surfaceHiColor(context),
+                  ),
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  border: Border.all(
+                    color: AppTheme.playGreen.withValues(alpha: 0.26),
+                  ),
+                ),
+                child: Text(
+                  question.prompt,
+                  style: AppTypography.heading1.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    height: 1.25,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              for (final answer in question.displayAnswers)
+              for (final (index, answer) in question.displayAnswers.indexed)
                 Padding(
                   padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                   child: _AnswerButton(
+                    index: index,
                     label: answer,
                     onTap: () => _answer(question, answer),
                   ),
@@ -289,39 +307,69 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   }
 }
 
+/// Sınav şıkkı — quiz şıklarıyla aynı dili konuşur.
+///
+/// Harf rozeti quizdekiyle aynı nötr tonu kullanır: renk burada da bir
+/// ipucu taşımamalı (bkz. `answer_option_color_semantics_test`).
 class _AnswerButton extends StatelessWidget {
-  const _AnswerButton({required this.label, required this.onTap});
+  const _AnswerButton({
+    required this.index,
+    required this.label,
+    required this.onTap,
+  });
 
+  final int index;
   final String label;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final letter = String.fromCharCode(65 + (index % 26));
     return Material(
-      color: AppTheme.surfaceHiColor(context),
-      borderRadius: BorderRadius.circular(AppRadius.sm),
+      color: AppTheme.surfaceColor(context),
+      borderRadius: BorderRadius.circular(AppRadius.md),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.sm),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         child: Container(
-          constraints: const BoxConstraints(minHeight: 52),
-          alignment: Alignment.centerLeft,
+          constraints: const BoxConstraints(minHeight: 62),
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
+            vertical: AppSpacing.md,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
+            borderRadius: BorderRadius.circular(AppRadius.md),
             border: Border.all(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.6),
+              color: AppTheme.borderColor(context).withValues(alpha: 0.8),
+              width: 1.4,
             ),
           ),
-          child: Text(
-            label,
-            style: AppTypography.bodyLarge.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w600,
-            ),
+          child: Row(
+            children: [
+              Container(
+                width: 34,
+                height: 34,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppTheme.answerOptionColors[index % 4],
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                ),
+                child: Text(
+                  letter,
+                  style: AppTypography.heading2.copyWith(color: Colors.white),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

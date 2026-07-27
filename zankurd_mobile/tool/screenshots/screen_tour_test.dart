@@ -24,7 +24,13 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
+import 'package:zankurd_mobile/src/screens/categories_tab.dart';
+import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
+import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
+import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
@@ -354,6 +360,42 @@ void main() {
   testWidgets('19 mağaza', (t) async {
     await _pump(t, ShopScreen(repository: repository));
     await _shoot(t, '19_shop');
+  }, tags: ['preview']);
+
+  // ── Henüz turda olmayan ekranlar ──
+  //
+  // Denetim ancak gördüğü ekranı kapsar; bu altısı hiç basılmamıştı.
+  testWidgets('35 avatar düzenleme', (t) async {
+    await _pump(t, AvatarEditorScreen(repository: repository));
+    await _shoot(t, '35_avatar_editor');
+  }, tags: ['preview']);
+
+  testWidgets('36 kategoriler', (t) async {
+    await _pump(t, Scaffold(body: CategoriesTab(repository: repository)));
+    await _shoot(t, '36_categories');
+  }, tags: ['preview']);
+
+  testWidgets('37 alt kategoriler', (t) async {
+    await _pump(
+      t,
+      SubcategoryScreen(repository: repository, category: 'Ziman'),
+    );
+    await _shoot(t, '37_subcategories');
+  }, tags: ['preview']);
+
+  testWidgets('38 seviyeler', (t) async {
+    await _pump(t, LevelScreen(repository: repository, category: 'Ziman'));
+    await _shoot(t, '38_levels');
+  }, tags: ['preview']);
+
+  testWidgets('39 soru öner', (t) async {
+    await _pump(t, SuggestQuestionScreen(repository: repository));
+    await _shoot(t, '39_suggest_question');
+  }, tags: ['preview']);
+
+  testWidgets('40 seviye sınavı', (t) async {
+    await _pump(t, LevelPlacementScreen(repository: repository));
+    await _shoot(t, '40_placement');
   }, tags: ['preview']);
 
   // ── Karanlık tema ──

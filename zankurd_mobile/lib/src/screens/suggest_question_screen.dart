@@ -99,7 +99,9 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.t(K.suggestTitle))),
+      // Başlık gövdedeki kimlik bloğunda zaten var ("ZanKurd'a soru öner");
+      // AppBar'da tekrarı ekranın tepesinde iki başlık gösteriyordu.
+      appBar: AppBar(),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -246,8 +248,13 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: ['A', 'B', 'C', 'D'].map((letter) {
                       final selected = _correctOption == letter;
-                      final idx = letter.codeUnitAt(0) - 65;
-                      final color = AppTheme.answerOptionColors[idx];
+                      // Seçili daire `answerOptionColors`tan renk alıyordu;
+                      // o dizi quizde bilerek nötr griye çekilmiştir, çünkü
+                      // orada renk cevabı ele verir. Burada durum tersi:
+                      // yazar **doğru cevabı beyan ediyor**, sızıntı yok.
+                      // Nötr gri seçili hâli pasif gösteriyordu; doğru renk
+                      // "doğru" yeşilidir (2026-07-27).
+                      const color = AppTheme.correct;
                       return GestureDetector(
                         onTap: () => setState(() => _correctOption = letter),
                         child: AnimatedContainer(
