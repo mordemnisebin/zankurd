@@ -589,10 +589,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
                     decoration: AppTheme.cardDecoration(context),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           AppIcons.hourglass,
                           size: 16,
-                          color: AppTheme.gold,
+                          color: AppColors.readableAccent(
+                            context,
+                            AppTheme.gold,
+                          ),
                         ),
                         const SizedBox(width: AppSpacing.sm),
                         Expanded(
@@ -837,7 +840,14 @@ class _LobbyView extends StatelessWidget {
                               countdownText,
                               textAlign: TextAlign.center,
                               style: AppTypography.caption.copyWith(
-                                color: AppTheme.gold,
+                                // Ham altın, kartın altın tonlu zemininde
+                                // 1.78:1 veriyordu — turnuvanın ne zaman
+                                // başlayacağını söyleyen satır neredeyse
+                                // görünmüyordu (2026-07-27).
+                                color: AppColors.onAccentTint(
+                                  context,
+                                  AppTheme.gold,
+                                ),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -1020,7 +1030,9 @@ class _StatusCard extends StatelessWidget {
             child: Text(
               '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
               '/${bracket.rounds.length}',
-              style: AppTypography.bodyLarge.copyWith(color: AppTheme.gold),
+              style: AppTypography.bodyLarge.copyWith(
+                color: AppColors.onAccentTint(context, AppTheme.gold),
+              ),
             ),
           ),
         ],
