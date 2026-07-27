@@ -228,13 +228,36 @@ class _StoryScreenState extends State<StoryScreen> {
                     ),
                     child: Row(
                       children: [
+                        // Gövde her zaman Kurmancî cümleyi üstte, çevirisini
+                        // altta gösterir; şıklar ise yalnız arayüz dilini
+                        // gösteriyordu. Türkçe arayüzde öğrenci Kurmancî
+                        // bir cümle okuyup Türkçe şıklardan seçiyordu —
+                        // yani alıştırmanın Kurmancî üretim kısmı hiç
+                        // yoktu (2026-07-27). Şık da gövdeyle aynı biçimi
+                        // alır: Kurmancî önde, çeviri altında.
                         Expanded(
-                          child: Text(
-                            ku ? choice.labelKu : choice.labelTr,
-                            style: AppTypography.bodyLarge.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w600,
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                choice.labelKu,
+                                key: ValueKey(
+                                  'story-choice-ku-${choice.nextNodeId}',
+                                ),
+                                style: AppTypography.bodyLarge.copyWith(
+                                  color: AppTheme.textPrimaryColor(context),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                choice.labelTr,
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.textMutedColor(context),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(width: AppSpacing.sm),
