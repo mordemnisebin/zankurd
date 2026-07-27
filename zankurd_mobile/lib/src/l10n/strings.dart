@@ -373,7 +373,6 @@ class Tr {
       'tr': 'Tamamlanan ders: {completed} / {total}',
     },
     K.recommendedForYou: {'ku': 'Pêşniyara te', 'tr': 'Sana önerilen'},
-    K.continueShort: {'ku': 'Bidomîne', 'tr': 'Devam et'},
     K.categoryMasteryGoal: {
       'ku': 'Armanca mastery ya kategoriyê',
       'tr': 'Kategori mastery hedefi',
@@ -1704,7 +1703,6 @@ class K {
   static const noLessonInCategory = 'learn.noLessonInCategory';
   static const lessonsCompleted = 'learn.lessonsCompleted';
   static const recommendedForYou = 'learn.recommended';
-  static const continueShort = 'common.continueShort';
   static const categoryMasteryGoal = 'learn.categoryMasteryGoal';
   static const noQuestionsForCategory = 'learn.noQuestionsForCategory';
   static const quizLoadFail = 'learn.quizLoadFail';

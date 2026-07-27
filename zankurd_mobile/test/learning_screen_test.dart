@@ -67,7 +67,10 @@ void main() {
     expect(find.text('Bugünkü hedefin'), findsOneWidget);
     expect(find.text('Öğrenme yolları'), findsOneWidget);
     expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
-    expect(find.text('Devam et'), findsOneWidget);
+    // 2026-07-27: rozette iki etiket yan yana duruyor ve tek cümle gibi
+    // okunuyordu ("Sana önerilen Devam et"). Rozet artık yalnız tavsiyeyi
+    // söyler; "devam et" kartın kendisi ve ucundaki oktur.
+    expect(find.text('Sana önerilen'), findsOneWidget);
   });
 
   testWidgets('seçili sekme düz playGreen dolgu taşır', (tester) async {

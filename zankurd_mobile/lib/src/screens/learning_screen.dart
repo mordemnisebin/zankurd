@@ -774,15 +774,13 @@ class _LessonCard extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Text(
+                            // Rozette iki ayrı etiket yan yana duruyordu
+                            // ("Sana önerilen" + "Devam et") ve tek bir
+                            // cümleymiş gibi okunuyordu: "Pêşniyara te
+                            // Bidomîne". Rozetin işi tavsiyeyi söylemek;
+                            // "devam et" zaten kartın kendisi ve ucundaki
+                            // ok (2026-07-27 Kurmancî taraması).
                             context.t(K.recommendedForYou),
-                            style: AppTypography.caption.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 10.5,
-                            ),
-                          ),
-                          Text(
-                            context.t(K.continueShort),
                             style: AppTypography.caption.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w800,
