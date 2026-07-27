@@ -1237,9 +1237,15 @@ class _ShopScreenState extends State<ShopScreen> {
               ? AppTheme.accent
               : AppTheme.surfaceHiColor(context),
           disabledBackgroundColor: AppTheme.surfaceHiColor(context),
+          // Yetersiz bakiyede fiyat "muted" griyle yazılıyordu: açık
+          // yüzeyde 3,7:1 kontrast — yani **fiyat okunmuyordu**. Hiç coini
+          // olmayan yeni kullanıcı mağazadaki bütün fiyatları bu hâlde
+          // görür; ekran baştan sona soluk ve okunmaz duruyordu
+          // (2026-07-27, canlı gezinti). Düğme yine pasif görünür ama
+          // fiyat okunur (5,6:1).
           foregroundColor: canAfford
               ? Colors.white
-              : AppTheme.textMutedColor(context),
+              : AppTheme.textSubColor(context),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -1259,7 +1265,7 @@ class _ShopScreenState extends State<ShopScreen> {
         icon: Icon(
           AppIcons.cartShopping,
           size: 15,
-          color: canAfford ? Colors.white : AppTheme.textMutedColor(context),
+          color: canAfford ? Colors.white : AppTheme.textSubColor(context),
         ),
         // Görünen etiket kısa ("10c"), ekran okuyucuya söylenen ad tam
         // cümle. `ExcludeSemantics` tek başına kullanıldığında düğmenin
