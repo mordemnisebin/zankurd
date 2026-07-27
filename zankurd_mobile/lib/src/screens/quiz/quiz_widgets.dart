@@ -918,9 +918,15 @@ class _ExplanationBox extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
+                    // Ham yeşil beyaz panelde 2.83:1 veriyordu — turun tek
+                    // öğretici anı olan "doğru cevap" satırı soluk
+                    // kalıyordu (2026-07-27).
+                    Icon(
                       AppIcons.lightbulb,
-                      color: AppTheme.correct,
+                      color: AppColors.readableAccent(
+                        context,
+                        AppTheme.correct,
+                      ),
                       size: 22,
                     ),
                     const SizedBox(width: 12),
@@ -932,7 +938,10 @@ class _ExplanationBox extends StatelessWidget {
                           Text(
                             isKu ? 'Bersiva rast' : 'Doğru cevap',
                             style: AppTypography.caption.copyWith(
-                              color: AppTheme.correct,
+                              color: AppColors.readableAccent(
+                                context,
+                                AppTheme.correct,
+                              ),
                               fontWeight: FontWeight.w800,
                             ),
                           ),
