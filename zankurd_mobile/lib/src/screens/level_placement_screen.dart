@@ -168,50 +168,70 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             ],
           ),
         ),
+        // Soru + 4 şık ekranın üst yarısında kalıp altta boş bir bant
+        // bırakıyordu (2026-07-27). Quiz ekranı bunu 2026-07-23'te
+        // çözmüştü: kaydırılabilir alanın en az görünür yükseklik kadar
+        // olmasını şart koş, içeriği dikeyde ortala. İçerik kısaysa
+        // ekrana yayılır, uzunsa normal şekilde kaydırılır.
         Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              AppSpacing.md,
-              AppSpacing.page,
-              AppSpacing.lg,
-            ),
-            children: [
-              // Soru düz metin olarak duruyordu: ekran renksiz kalıyor ve
-              // uygulamanın quiz/hikâye kartlarıyla aynı dili konuşmuyordu
-              // (2026-07-27). Sınav da bir sorudur; kartı da öyle olmalı.
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(AppSpacing.md),
-                decoration: BoxDecoration(
-                  color: Color.alphaBlend(
-                    AppTheme.playGreen.withValues(alpha: 0.07),
-                    AppTheme.surfaceHiColor(context),
-                  ),
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  border: Border.all(
-                    color: AppTheme.playGreen.withValues(alpha: 0.26),
-                  ),
+          child: LayoutBuilder(
+            builder: (context, scrollConstraints) => SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.page,
+                AppSpacing.md,
+                AppSpacing.page,
+                AppSpacing.lg,
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight:
+                      (scrollConstraints.maxHeight -
+                              AppSpacing.md -
+                              AppSpacing.lg)
+                          .clamp(0.0, double.infinity),
                 ),
-                child: Text(
-                  question.prompt,
-                  style: AppTypography.heading1.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    height: 1.25,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Soru düz metin olarak duruyordu: ekran renksiz kalıyor ve
+                    // uygulamanın quiz/hikâye kartlarıyla aynı dili konuşmuyordu
+                    // (2026-07-27). Sınav da bir sorudur; kartı da öyle olmalı.
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      decoration: BoxDecoration(
+                        color: Color.alphaBlend(
+                          AppTheme.playGreen.withValues(alpha: 0.07),
+                          AppTheme.surfaceHiColor(context),
+                        ),
+                        borderRadius: BorderRadius.circular(AppRadius.card),
+                        border: Border.all(
+                          color: AppTheme.playGreen.withValues(alpha: 0.26),
+                        ),
+                      ),
+                      child: Text(
+                        question.prompt,
+                        style: AppTypography.heading1.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          height: 1.25,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    for (final (index, answer)
+                        in question.displayAnswers.indexed)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                        child: _AnswerButton(
+                          index: index,
+                          label: answer,
+                          onTap: () => _answer(question, answer),
+                        ),
+                      ),
+                  ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.lg),
-              for (final (index, answer) in question.displayAnswers.indexed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                  child: _AnswerButton(
-                    index: index,
-                    label: answer,
-                    onTap: () => _answer(question, answer),
-                  ),
-                ),
-            ],
+            ),
           ),
         ),
       ],
