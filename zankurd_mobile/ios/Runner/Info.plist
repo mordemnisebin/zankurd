@@ -26,6 +26,28 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<!--
+	  OAuth geri dönüş şeması.
+	  ~
+	  Google/Apple ile giriş, Supabase'i tarayıcıda açar ve iş bitince
+	  `com.zankurd.app://login-callback/` adresine döner. Bu şema iOS
+	  tarafında hiç kayıtlı değildi (Android'de vardı): tarayıcı açılıyor,
+	  giriş tamamlanıyor ama uygulama geri çağrılmıyordu — yani iOS'ta
+	  sosyal giriş sessizce çalışmıyordu (2026-07-27 denetimi).
+	-->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.zankurd.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.zankurd.app</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ZanKurd, profil fotoğrafınızı seçebilmek için fotoğraf arşivinize erişir.</string>
 	<key>UIApplicationSceneManifest</key>

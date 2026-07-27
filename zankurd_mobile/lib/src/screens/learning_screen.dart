@@ -675,6 +675,21 @@ class _LessonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Önerilen ders kartı `CardType.primary` ile marka gradyanına boyanır;
+    // metinler ise açık zemin için seçilmiş koyu/gri renklerdi. Turuncu
+    // gradyan üzerinde açıklama satırı okunmuyordu ve ok işareti kayboluyordu
+    // — hem de ekranın en önemli kartında (2026-07-27, canlı gezinti).
+    final onGradient = recommended && !completed;
+    final titleColor = onGradient
+        ? Colors.white
+        : AppTheme.textPrimaryColor(context);
+    final subtitleColor = onGradient
+        ? Colors.white.withValues(alpha: 0.86)
+        : AppTheme.textMutedColor(context);
+    final trailingColor = onGradient
+        ? Colors.white.withValues(alpha: 0.9)
+        : AppTheme.textMutedColor(context);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: AppPanel(
@@ -716,7 +731,7 @@ class _LessonCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
+                      color: titleColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -725,9 +740,7 @@ class _LessonCard extends StatelessWidget {
                     lesson.descriptionKu ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                    ),
+                    style: AppTypography.caption.copyWith(color: subtitleColor),
                   ),
                   if (recommended && !completed) ...[
                     const SizedBox(height: 6),
@@ -738,10 +751,12 @@ class _LessonCard extends StatelessWidget {
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: AppTheme.gold.withValues(alpha: 0.16),
+                        // Rozet gradyanın üstünde duruyor: altın altın
+                        // üstünde kayboluyordu.
+                        color: Colors.white.withValues(alpha: 0.20),
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: AppTheme.gold.withValues(alpha: 0.4),
+                          color: Colors.white.withValues(alpha: 0.45),
                         ),
                       ),
                       child: Wrap(
@@ -751,12 +766,12 @@ class _LessonCard extends StatelessWidget {
                           const Icon(
                             AppIcons.star,
                             size: 12,
-                            color: AppTheme.gold,
+                            color: Colors.white,
                           ),
                           Text(
                             context.t(K.recommendedForYou),
                             style: AppTypography.caption.copyWith(
-                              color: AppTheme.gold,
+                              color: Colors.white,
                               fontWeight: FontWeight.w800,
                               fontSize: 10.5,
                             ),
@@ -764,7 +779,7 @@ class _LessonCard extends StatelessWidget {
                           Text(
                             context.t(K.continueShort),
                             style: AppTypography.caption.copyWith(
-                              color: AppTheme.gold,
+                              color: Colors.white,
                               fontWeight: FontWeight.w800,
                               fontSize: 10.5,
                             ),
@@ -798,12 +813,9 @@ class _LessonCard extends StatelessWidget {
                 ),
               )
             else if (locked)
-              Icon(AppIcons.lock, color: AppTheme.textMutedColor(context))
+              Icon(AppIcons.lock, color: trailingColor)
             else
-              Icon(
-                AppIcons.chevronRight,
-                color: AppTheme.textMutedColor(context),
-              ),
+              Icon(AppIcons.chevronRight, color: trailingColor),
           ],
         ),
       ),
