@@ -3869,9 +3869,9 @@
   "prompt": "Meryem Xan di muzîka kurdî de kî ye?",
   "answers": [
    "Dengbêjeke jin a navdar a sedsala 20em",
-   "Nivîskareke roman",
-   "Damezrînera kovarekê",
-   "Lêdera tembûrê ya yekem"
+   "Nivîskareke romanên dîrokî yên sedsala 20em",
+   "Damezrînera kovareke edebî ya Stenbolê",
+   "Lêdera yekem a jin a tembûrê li Amedê"
   ],
   "correctAnswer": "Dengbêjeke jin a navdar a sedsala 20em",
   "explanation": "Meryem Xan (1904-1949) en tanınmış kadın dengbêjlerdendir.",
@@ -6060,12 +6060,12 @@
   "category": "Muzîk",
   "prompt": "Peyva \"kilam\" bi Tirkî bi giştî çi tê wateyê?",
   "answers": [
-   "uzun hava / türkü",
+   "türkü",
    "dans",
    "saz",
    "düğün"
   ],
-  "correctAnswer": "uzun hava / türkü",
+  "correctAnswer": "türkü",
   "explanation": "\"Kilam\", hikâye anlatan uzun ezgilerdir.",
   "explanationKu": "\"Kilam\" stranên dirêj ên çîrokî ne.",
   "explanationTr": "\"Kilam\", hikâye anlatan uzun ezgilerdir.",

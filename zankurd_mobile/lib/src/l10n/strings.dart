@@ -774,7 +774,7 @@ class Tr {
     },
     K.noParticipantsTitle: {'ku': 'Hîn beşdar tune', 'tr': 'Henüz katılım yok'},
     K.noParticipantsBody: {
-      'ku': 'Yekemîn beşdar tu bibe — pêşderçûn li vir xuya dibe.',
+      'ku': 'Bibe beşdarê yekem — pêşderçûn li vir xuya dibe.',
       'tr': 'İlk katılan sen ol — sıralama burada görünecek.',
     },
     K.correctAndScore: {

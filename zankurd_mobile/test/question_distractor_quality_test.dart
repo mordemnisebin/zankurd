@@ -295,6 +295,35 @@ void main() {
     );
   });
 
+  test('hiçbir soruda doğru cevap çeldiricileri 1,5 kat aşmıyor', () {
+    // Oran testi bankanın genel eğilimini ölçer; bu test tek tek en kötü
+    // durumu yasaklar. 2026-07-27'de yedi soruda doğru cevap en uzun
+    // çeldiricinin 1,5 katından uzundu — o kadar açık bir fark ki soruyu
+    // okumaya bile gerek kalmıyordu:
+    //
+    //   Çima şîfreyeke dirêj ji ya kurt bihêztir e?
+    //     ✓ Ji ber ku hejmara kombînasyonan bi dirêjiyê re bi lez zêde dibe
+    //       Ji ber ku bîranîna wê hêsantir e
+    //
+    // Oran testi bunları yakalayamaz: yedi soru 1865 sorunun yanında
+    // yüzdeyi kıpırdatmaz. Bu yüzden ayrı bir bekçi gerekiyor.
+    final offenders = <String>[];
+    for (final q in offlineQuestionBank) {
+      if (q.answers.length < 3) continue;
+      final others = q.answers.where((a) => a != q.correctAnswer);
+      if (others.isEmpty) continue;
+      final longestOther = others
+          .map((a) => a.length)
+          .reduce((a, b) => a > b ? a : b);
+      if (q.correctAnswer.length > 1.5 * longestOther) offenders.add(q.id);
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'doğru cevabı biçimle ele veren sorular: ${offenders.join(", ")}',
+    );
+  });
+
   test('doğru cevap uzunluğuyla ele vermiyor', () {
     // 2026-07-27 ölçümü: çok şıklı soruların **%34,3'ünde en uzun şık
     // doğru şıktı**; rastgele bir bankada bu oran %25 olmalı. Yani hiçbir
@@ -306,9 +335,14 @@ void main() {
     // aynı kategorideki başka soruların doğru cevaplarıyla değiştirildi
     // (`tool/fix_length_leak_distractors.py`) ve oran %30'a indi.
     //
+    // 2026-07-27 ikinci geçiş: otomatik ödünç almanın çözemediği yedi soru
+    // elle yazıldı (`tool/fix_remaining_length_leaks.py`); doğru cevabın
+    // en uzun çeldiricinin 1,5 katından uzun olduğu soru **sıfıra** indi
+    // ve oran %29,5 oldu.
+    //
     // Tavan bir mandal: yeni sorular bu oranı yükseltmemeli. %25'e
     // inmesi beklenmez — bazı sorularda doğru cevap doğal olarak uzundur.
-    const ceilingPercent = 31.0;
+    const ceilingPercent = 30.0;
 
     var considered = 0;
     var longestIsCorrect = 0;

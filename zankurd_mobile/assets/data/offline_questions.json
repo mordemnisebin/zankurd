@@ -23483,14 +23483,14 @@
  {
   "id": "offline_curated_21446",
   "category": "Muzîk",
-  "prompt": "Di nirxandina xwendekaran de, kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê'?",
+  "prompt": "Koma Wetan di muzîka kurdî de bi çi tê nasîn?",
   "answers": [
-   "heyran",
-   "lawik",
-   "tembûr",
-   "Koma Wetan"
+   "Koma yekem a muzîka klasîk a kurdî",
+   "Korek a stranên dînî yên kurdî",
+   "Koma yekem a muzîka jazz a kurdî",
+   "Koma yekem a muzîka rock a kurdî"
   ],
-  "correctAnswer": "Koma Wetan",
+  "correctAnswer": "Koma yekem a muzîka rock a kurdî",
   "explanation": "«Koma Wetan» tê vê wateyê: koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê.",
   "type": "multipleChoice",
   "difficulty": 4,
@@ -27047,10 +27047,10 @@
   "category": "Teknolojî",
   "prompt": "Di sêwirana sepanên mobîl de «widget» bi giştî çi nîşan dide?",
   "answers": [
-   "Database",
+   "Depoya daneyan (DB)",
    "Hêmana dîtbarî (UI)",
-   "Tor",
-   "Algorîtma"
+   "Girêdana torê (net)",
+   "Rêbaza hesabê (algorîtma)"
   ],
   "correctAnswer": "Hêmana dîtbarî (UI)",
   "explanation": "Di Flutter de her hêmaneke dîtbarî û sêwiranê wek 'Widget' tê naskirin.",
@@ -27209,12 +27209,12 @@
   "category": "Çand",
   "prompt": "Tiştoka 'Heta jê nekirî mezin nabe' bersiva wê çi ye?",
   "answers": [
-   "Kolin / Çal",
+   "Kolin",
    "Dîwar",
    "Dar",
    "Rê"
   ],
-  "correctAnswer": "Kolin / Çal",
+  "correctAnswer": "Kolin",
   "explanation": "Ev tiştokeke zekayê ye, bersiva wê 'kolin' an 'çal' (çukur) e.",
   "type": "multipleChoice",
   "difficulty": 2,
@@ -33768,9 +33768,9 @@
   "prompt": "Çima girêdanên bêqablo ji yên bi qablo bêtir hewceyî şîfrekirinê ne?",
   "answers": [
    "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire",
-   "Ji ber ku hêdîtir in",
-   "Ji ber ku kêmtir enerjiyê dixwin",
-   "Ji ber ku kurttir in"
+   "Ji ber ku girêdanên bêqablo her tim hêdîtir dixebitin",
+   "Ji ber ku amûrên bêqablo kêmtir enerjiyê xerc dikin",
+   "Ji ber ku qabloyên wan ji yên din kurttir tên çêkirin"
   ],
   "correctAnswer": "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire",
   "explanation": "Kablosuz sinyal havada yayılır; yakındaki her cihaz onu dinleyebilir.",
@@ -33869,9 +33869,9 @@
   "category": "Teknolojî",
   "prompt": "Çima şîfreyeke dirêj ji ya kurt bihêztir e?",
   "answers": [
-   "Ji ber ku bîranîna wê hêsantir e",
-   "Ji ber ku kêmtir cih digire",
-   "Ji ber ku torê lez dike",
+   "Ji ber ku şîfreyên dirêj hêsantir tên bîranîn û parastin",
+   "Ji ber ku şîfreyên dirêj di bîrê de kêmtir cih digirin",
+   "Ji ber ku şîfreyên dirêj girêdana torê lezdar dikin",
    "Ji ber ku hejmara kombînasyonan bi dirêjiyê re bi lez zêde dibe"
   ],
   "correctAnswer": "Ji ber ku hejmara kombînasyonan bi dirêjiyê re bi lez zêde dibe",
