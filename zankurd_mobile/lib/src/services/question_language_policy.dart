@@ -30,6 +30,11 @@ class QuestionLanguagePolicy {
     'wateya wê çi ye',
     'tê çi wateyê',
     'çi tê gotin',
+    // "Dema 'X' tê gotin, çi tê xwestin?" — anlam sorusunun bir başka
+    // kalıbı. Listede yoktu ve bu kalıptaki 46 soru "dil karışık" diye
+    // suçlanmaya adaydı; oysa şıkların Türkçe olması sorunun **istediği**
+    // şeydir (2026-07-27).
+    'tê xwestin',
     'wergerîne',
   ];
 
@@ -161,7 +166,19 @@ class QuestionLanguagePolicy {
     final promptLanguage = detectLanguage(question.prompt);
     if (promptLanguage == null) return const [];
 
+    // Özel adlar dil taşımaz.
+    //
+    // "Derhênerê fîlmê X kî ye?" sorusunun şıkları yönetmen adlarıdır:
+    // "Zeki Ökten", "Ömer Lütfi Akad". Sınıflandırıcı bunları `ö/ü/ı`
+    // harfleri yüzünden Türkçe sayıyor ve Kurmancî gövdeyle çeliştiği
+    // için soruyu "dil karışık" diye suçluyordu. Oysa kişinin adı odur;
+    // Kurmancî bir metinde de aynen yazılır (2026-07-27).
+    //
+    // Aynı muafiyet `offLanguageDistractors` içinde zaten vardı; burada
+    // yoktu. Ölçüt dar: en çok üç sözcük, hepsi büyük harfle başlıyor,
+    // ayraç yok — yani bir tanım cümlesi değil, bir ad.
     final answerLanguages = question.answers
+        .where((answer) => !looksLikeProperName(answer))
         .map(detectLanguage)
         .whereType<String>()
         .toList();

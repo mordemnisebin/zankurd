@@ -700,7 +700,7 @@ class Tr {
       'ku': 'Bersiva ducarî: şıkka din hilbijêre',
       'tr': 'Çift cevap: bir şık daha seç',
     },
-    K.difficultyHard: {'ku': 'Zor', 'tr': 'Zor'},
+    K.difficultyHard: {'ku': 'Dijwar', 'tr': 'Zor'},
     K.difficultyMedium: {'ku': 'Navîn', 'tr': 'Orta'},
     K.difficultyEasy: {'ku': 'Hêsan', 'tr': 'Kolay'},
     K.waitingOpponent: {
@@ -815,7 +815,7 @@ class Tr {
     K.wheelNextSpinIn: {'ku': 'Dizivirîna nû di:', 'tr': 'Yeni çevirme hakkı:'},
     K.hours: {'ku': 'Saet', 'tr': 'Saat'},
     K.minutes: {'ku': 'Deqîqe', 'tr': 'Dakika'},
-    K.seconds: {'ku': 'Saniye', 'tr': 'Saniye'},
+    K.seconds: {'ku': 'Çirke', 'tr': 'Saniye'},
     K.wheelStatusFailed: {
       'ku': 'Rewşa çerxê nehat kontrolkirin.',
       'tr': 'Çark durumu kontrol edilemedi.',
@@ -876,7 +876,7 @@ class Tr {
     },
     K.cancelling: {'ku': 'Tê betalkirin...', 'tr': 'İptal ediliyor...'},
     K.leaveRoom: {'ku': 'Ji odeyê derkeve', 'tr': 'Odadan ayrıl'},
-    K.chat: {'ku': 'Sohbet', 'tr': 'Sohbet'},
+    K.chat: {'ku': 'Suhbet', 'tr': 'Sohbet'},
     K.privateRoom: {'ku': 'Odeya Taybet', 'tr': 'Özel Oda'},
     K.host: {'ku': 'Mêvandar', 'tr': 'Ev sahibi'},
     K.hostNamed: {'ku': 'Mêvandar: {name}', 'tr': 'Ev sahibi: {name}'},

@@ -7044,9 +7044,9 @@
    "Globa Zêrîn"
   ],
   "correctAnswer": "Şêrê Zêrîn",
-  "explanation": "Her festivalin kendi simgesi vardır: Berlin'de ayı, Cannes'da palmiye.",
+  "explanation": "Bu festivalin simgesi aslandır; Berlin ayıyı, Cannes ise palmiyeyi kullanır.",
   "explanationKu": "Her festîvalek sembola xwe heye: li Berlînê hirç, li Cannesê palmî.",
-  "explanationTr": "Her festivalin kendi simgesi vardır: Berlin'de ayı, Cannes'da palmiye.",
+  "explanationTr": "Bu festivalin simgesi aslandır; Berlin ayıyı, Cannes ise palmiyeyi kullanır.",
   "metadata": {
    "reviewStatus": "approved",
    "dialect": "Kurmancî",
@@ -7172,6 +7172,150 @@
    "dialect": "Kurmancî",
    "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
    "sourceReference": "Akira Kurosawa, Rashomon (1950) — Daiei, arşîva fîlman",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "edit_sinema_0025",
+  "category": "Sînema",
+  "prompt": "Fîlmê «Sûrû» (1978) ji hêla kîjan derhêner ve hatiye kişandin?",
+  "answers": [
+   "Zeki Ökten",
+   "Şerîf Gören",
+   "Atif Yilmaz",
+   "Ömer Lütfi Akad"
+  ],
+  "correctAnswer": "Zeki Ökten",
+  "explanation": "Senaryo Yılmaz Güney'e aitti; cezaevinde yazdı ve yönetmenlik Zeki Ökten'e kaldı.",
+  "explanationKu": "Senaryo ya Yilmaz Guney bû; wî di girtîgehê de nivîsand û derhênerî ji Zeki Ökten re ma.",
+  "explanationTr": "Senaryo Yılmaz Güney'e aitti; cezaevinde yazdı ve yönetmenlik Zeki Ökten'e kaldı.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
+   "sourceReference": "Güney Film / Zeki Ökten, Sürü (1978) — arşîva fîlman",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 5,
+  "id": "edit_sinema_0026",
+  "category": "Sînema",
+  "prompt": "Fîlmê «Dema Hespên Serxweş» bi kîjan zimanî hatiye kişandin?",
+  "answers": [
+   "Kurdî (Soranî û Kurmancî)",
+   "Farisî",
+   "Erebî",
+   "Tirkî"
+  ],
+  "correctAnswer": "Kurdî (Soranî û Kurmancî)",
+  "explanation": "Film yörenin kendi diliyle çekildi; bu da onu Kürtçe çekilen ilk filmler arasına yerleştirir.",
+  "explanationKu": "Fîlm bi zimanê gel ê herêmê hate kişandin; ev jî wê di nav fîlmên yekem ên bi kurdî de bi cih dike.",
+  "explanationTr": "Film yörenin kendi diliyle çekildi; bu da onu Kürtçe çekilen ilk filmler arasına yerleştirir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
+   "sourceReference": "Bahman Ghobadi, Dema Hespên Serxweş (2000) — dosyaya festîvalê",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 5,
+  "id": "edit_sinema_0027",
+  "category": "Sînema",
+  "prompt": "Fîlmê «Cîranê Min Totoro» ji hêla kîjan stûdyoyê ve hatiye çêkirin?",
+  "answers": [
+   "Studio Ghibli",
+   "Toei Animation",
+   "Madhouse",
+   "Pixar"
+  ],
+  "correctAnswer": "Studio Ghibli",
+  "explanation": "Totoro karakteri sonradan aynı stüdyonun resmî simgesi oldu.",
+  "explanationKu": "Karakterê Totoro paşê bû nîşana fermî ya heman stûdyoyê.",
+  "explanationTr": "Totoro karakteri sonradan aynı stüdyonun resmî simgesi oldu.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
+   "sourceReference": "Studio Ghibli, Tonari no Totoro (1988) — arşîva stûdyoyê",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "edit_sinema_0028",
+  "category": "Sînema",
+  "prompt": "Di sînemayê de «plansekans» çi ye?",
+  "answers": [
+   "Dîmenek ku bêyî qutkirinê di yek girtinê de tê kişandin",
+   "Dîmenek ku tenê bi dengê derve tê vegotin",
+   "Rêza dîmenên ku ji dawiyê ber bi destpêkê ve diçin",
+   "Dîmenek ku bi du kameran ji heman goşeyê tê girtin"
+  ],
+  "correctAnswer": "Dîmenek ku bêyî qutkirinê di yek girtinê de tê kişandin",
+  "explanation": "Kesme olmadığı için oyuncu ve kamera hareketlerini birlikte kurgulamak zorundadır; teknik zorluğu buradan gelir.",
+  "explanationKu": "Ji ber ku qutkirin tune ye, lîstikvan û kamera divê tevgera xwe bi hev re rêk bixin; ev jî wê teknîkî dijwar dike.",
+  "explanationTr": "Kesme olmadığı için oyuncu ve kamera hareketlerini birlikte kurgulamak zorundadır; teknik zorluğu buradan gelir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
+   "sourceReference": "David Bordwell & Kristin Thompson, Film Art — beşa mîzansenê",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 5,
+  "id": "edit_sinema_0029",
+  "category": "Sînema",
+  "prompt": "Fîlmê «Yol» ji ber çi sedemî demek dirêj li Tirkiyeyê nehat nîşandan?",
+  "answers": [
+   "Fîlm hate qedexekirin",
+   "Kopyayên fîlm winda bûbûn",
+   "Derhêner nexwest ku li Tirkiyeyê were nîşandan",
+   "Fîlm hîn nehatibû qedandin"
+  ],
+  "correctAnswer": "Fîlm hate qedexekirin",
+  "explanation": "Film, Cannes'dan sonra yıllarca Türkiye'de gösterilemedi; resmî gösterimi çok sonra gerçekleşti.",
+  "explanationKu": "Fîlm piştî Cannesê bi salan li Tirkiyeyê nayê nîşandan; nîşandana wê ya fermî pir dereng çêbû.",
+  "explanationTr": "Film, Cannes'dan sonra yıllarca Türkiye'de gösterilemedi; resmî gösterimi çok sonra gerçekleşti.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
+   "sourceReference": "Yol (1982) — arşîva çapemeniyê ya nîşandanê",
+   "qualityVersion": 2
+  }
+ },
+ {
+  "type": "multipleChoice",
+  "difficulty": 4,
+  "id": "edit_sinema_0030",
+  "category": "Sînema",
+  "prompt": "Festîvala Berlînê xelata xwe ya sereke bi kîjan navî dide?",
+  "answers": [
+   "Hirça Zêrîn",
+   "Şêrê Zêrîn",
+   "Palmiya Zêrîn",
+   "Globa Zêrîn"
+  ],
+  "correctAnswer": "Hirça Zêrîn",
+  "explanation": "Bu festival kendi şehrinin simgesini kullanır ve ayı Berlin şehrinin simgesidir.",
+  "explanationKu": "Her festîvalek sembola bajarê xwe hildibijêre; hirç sembola Berlînê ye.",
+  "explanationTr": "Bu festival kendi şehrinin simgesini kullanır ve ayı Berlin şehrinin simgesidir.",
+  "metadata": {
+   "reviewStatus": "approved",
+   "dialect": "Kurmancî",
+   "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
+   "sourceReference": "Berlinale — agahiyên fermî yên xelatan",
    "qualityVersion": 2
   }
  }
