@@ -351,6 +351,7 @@ class Tr {
       'tr': 'Tekrarların ve kaldığın ders burada.',
     },
     K.storyTeahouse: {'ku': 'Çîrok: Li Çayxanê', 'tr': 'Hikâye: Çay Evinde'},
+    K.storyWord: {'ku': 'ÇÎROK', 'tr': 'HİKÂYE'},
     K.learningPaths: {'ku': 'Rêyên hînbûnê', 'tr': 'Öğrenme yolları'},
     K.learningPathsSub: {
       'ku': 'Mijarek hilbijêre û gav bi gav pêşve here.',
@@ -1690,6 +1691,7 @@ class K {
   static const todaysGoal = 'learn.todaysGoal';
   static const todaysGoalSub = 'learn.todaysGoal.sub';
   static const storyTeahouse = 'learn.story.teahouse';
+  static const storyWord = 'story.word';
   static const learningPaths = 'learn.paths';
   static const learningPathsSub = 'learn.paths.sub';
   static const loadFailedShort = 'common.loadFailed.short';

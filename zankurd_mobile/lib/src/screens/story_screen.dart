@@ -120,6 +120,16 @@ class _StoryScreenState extends State<StoryScreen> {
   }
 
   Widget _buildNode(BuildContext context, bool ku, StoryNode node) {
+    // Ekran bir zamanlar düz metin + çerçeveli iki kutudan ibaretti:
+    // uygulamanın geri kalanı kartlı ve renkliyken hikâye ekranı
+    // yarım kalmış bir taslak gibi duruyor, alt yarısı da bomboş
+    // kalıyordu (2026-07-27, canlı gezinti).
+    //
+    // Anlatı artık kendi kartında, seçenekler ise quiz şıklarıyla aynı
+    // dili konuşuyor: yüzey, kenarlık ve yön oku. Renk hikâyenin
+    // kimliğinden (yeşil) gelir, quizin doğru/yanlış renkleriyle
+    // karışmaz.
+    const accent = AppTheme.playGreen;
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.page),
       children: [
@@ -141,20 +151,48 @@ class _StoryScreenState extends State<StoryScreen> {
               ),
             ),
           ),
-        Text(
-          node.textKu,
-          key: const ValueKey('story-text-ku'),
-          style: AppTypography.heading2.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-            height: 1.35,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: Color.alphaBlend(
+              accent.withValues(alpha: 0.07),
+              AppTheme.surfaceHiColor(context),
+            ),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: accent.withValues(alpha: 0.28)),
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          node.textTr,
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppTheme.textMutedColor(context),
-            height: 1.3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(AppIcons.bookOpen, size: 16, color: accent),
+                  const SizedBox(width: 6),
+                  Text(
+                    context.t(K.storyWord),
+                    style: AppTypography.caption.copyWith(color: accent),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                node.textKu,
+                key: const ValueKey('story-text-ku'),
+                style: AppTypography.heading2.copyWith(
+                  color: AppTheme.textPrimaryColor(context),
+                  height: 1.35,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                node.textTr,
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppTheme.textMutedColor(context),
+                  height: 1.3,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -169,17 +207,43 @@ class _StoryScreenState extends State<StoryScreen> {
           for (final choice in node.choices)
             Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: () => _choose(choice),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      ku ? choice.labelKu : choice.labelTr,
-                      style: AppTypography.bodyLarge.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
+              child: Material(
+                color: AppTheme.surfaceColor(context),
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                child: InkWell(
+                  onTap: () => _choose(choice),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.md,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      border: Border.all(
+                        color: accent.withValues(alpha: 0.35),
+                        width: 1.4,
                       ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            ku ? choice.labelKu : choice.labelTr,
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        const Icon(
+                          AppIcons.chevronRight,
+                          size: 18,
+                          color: accent,
+                        ),
+                      ],
                     ),
                   ),
                 ),
