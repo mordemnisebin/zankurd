@@ -1,5 +1,15 @@
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude:
+    # `flutter analyze` (yolsuz) `build/` içindeki üçüncü taraf örnek
+    # kodunu da tarıyordu: 341 uyarının 338'i firebase_analytics'in kendi
+    # örnek uygulamasından geliyordu. Kendi kodumuzda tek bir sorun olmasa
+    # da çıktı kırmızı görünüyor, bu da insanı çıktıyı okumamaya alıştırır
+    # (2026-07-27). Kapsam artık yalnız bu projenin kaynağı.
+    - build/**
+    - .dart_tool/**
+
 linter:
   rules:
     avoid_print: true

@@ -11,10 +11,10 @@ void main() {
   final out = <String, dynamic>{};
   for (final row in rows) {
     final q = QuizQuestion.fromJson(row);
-    final isKu = !const bool.fromEnvironment('tr');
+    const isKu = !bool.fromEnvironment('tr');
     final text = q.getLocalizedExplanation(isKu);
     if (text.trim().isEmpty) continue;
-    final wanted = isKu ? 'tr' : 'ku';
+    const wanted = isKu ? 'tr' : 'ku';
     if (QuestionLanguagePolicy.detectSentenceLanguage(text) != wanted) continue;
     out[q.id] = q.explanation;
   }
