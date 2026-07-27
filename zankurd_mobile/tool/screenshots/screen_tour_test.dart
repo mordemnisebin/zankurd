@@ -29,6 +29,9 @@ import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/models/mini_guide.dart';
+import 'package:zankurd_mobile/src/models/story.dart';
+import 'package:zankurd_mobile/src/screens/story_screen.dart';
 import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
@@ -489,6 +492,25 @@ void main() {
   testWidgets('34 yarışma (boş)', (t) async {
     await _pump(t, ContestScreen(repository: _EmptyStateRepository()));
     await _shoot(t, '34_contest_empty');
+  }, tags: ['preview']);
+
+  testWidgets('41 seviye sınavı (karanlık)', (t) async {
+    await _pump(t, LevelPlacementScreen(repository: repository), dark: true);
+    await _shoot(t, '41_placement_dark');
+  }, tags: ['preview']);
+
+  testWidgets('42 hikâye (karanlık)', (t) async {
+    await _pump(
+      t,
+      StoryScreen(story: cayxaneStory, guide: cayxaneGuide),
+      dark: true,
+    );
+    await _shoot(t, '42_story_dark');
+  }, tags: ['preview']);
+
+  testWidgets('43 hikâye', (t) async {
+    await _pump(t, StoryScreen(story: cayxaneStory, guide: cayxaneGuide));
+    await _shoot(t, '43_story');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {
