@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Açılış ekranı: uygulamanın krem zemini + ortada logo. -->
+<!--
+  Karanlık temada açılış: koyu zemin. Aynı dosyanın açık sürümü beyaz/krem
+  kullanır; ikisi ayrı olmadan karanlık temada açılışta beyaz bir kare
+  çakıyordu.
+-->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/zk_splash_bg" />
+    <item android:drawable="@color/zk_splash_bg_dark" />
 
     <item>
         <bitmap

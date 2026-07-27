@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Açılış ekranı zemin renkleri.
+
+  2026-07-27: her iki platformda açılış zemini beyazdı, uygulamanın zemini
+  ise krem (#F7F4EE) / karanlıkta neredeyse siyah (#0E1512). Açılışta beyaz
+  bir kare çakıp sonra tema rengine geçiyordu. Karanlık temada bu çakma
+  göze vuruyordu.
+-->
+<resources>
+    <color name="zk_splash_bg">#F7F4EE</color>
+    <color name="zk_splash_bg_dark">#0E1512</color>
+</resources>
