@@ -55,8 +55,15 @@ void main() {
 
       // 2026-07-26: turnuva gerçek oyunculara çevrildi; ekran artık
       // kendini "bot turnuva" diye tanıtmıyor.
-      expect(find.text('Haftalık kupa'), findsOneWidget);
+      //
+      // 2026-07-27: takvim metni de kaldırıldı. Kupa haftalık değil —
+      // kontenjan dolunca başlar, dolmazsa 24 saat sonunda eldekiyle.
+      // "Haftalık kupa" ve "Her Cumartesi 20:00" o kuraldan önce
+      // yazılmıştı ve ekranda yalan duruyordu.
+      expect(find.text('Eleme kupası'), findsOneWidget);
       expect(find.textContaining('bot'), findsNothing);
+      expect(find.textContaining('Cumartesi'), findsNothing);
+      expect(find.text('Kontenjan dolunca başlar'), findsOneWidget);
       expect(find.text('Turnuvaya Katıl'), findsOneWidget);
       final startButton = tester.widget<FilledButton>(
         find.byKey(const ValueKey('tournament-primary-cta')),

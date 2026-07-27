@@ -453,22 +453,25 @@ class Tr {
     K.botTournament: {'ku': 'Kûpa', 'tr': 'Turnuva'},
     K.bracket: {'ku': 'Şemaya Kûpayê', 'tr': 'Turnuva Şeması'},
     K.standings: {'ku': 'Rêzkirin', 'tr': 'Sıralama'},
-    K.everySaturday: {'ku': 'Her Şemî 20:00', 'tr': 'Her Cumartesi 20:00'},
-    K.timeRemaining: {
-      'ku': 'Ji kûpayê re maye: {time}',
-      'tr': 'Turnuvaya kalan: {time}',
+    K.cupStartsWhenFull: {
+      'ku': 'Gava hejmar temam bibe dest pê dike',
+      'tr': 'Kontenjan dolunca başlar',
     },
+    K.cupStartsLatest: {
+      'ku': 'Herî dereng piştî 24 saetan, bi yên amade',
+      'tr': 'En geç 24 saat içinde, eldeki oyuncularla',
+    },
+    // Kupa artık takvime bağlı değil: kontenjan dolunca başlar, dolmazsa
+    // 24 saat sonunda eldekiyle. "Her hafta bir kez" ve "haftalık kupa"
+    // metinleri o kuraldan önce yazılmıştı ve gerçeği anlatmıyordu
+    // (2026-07-27 Kurmancî taraması).
     K.weeklyCupSub: {
-      'ku': 'Her hefte carekê kûpa, hevrikî û xelat',
-      'tr': 'Her hafta bir kez kupa, rekabet ve ödül',
+      'ku': 'Kûpa, hevrikî û xelat — bi lîstikvanên rastî',
+      'tr': 'Kupa, rekabet ve ödül — gerçek oyuncularla',
     },
-    // Turnuva haftalıktır (bir sonraki Cumartesi 20:00). Çip "günlük kupa"
-    // diyordu ve hemen üstündeki "Her hafta bir kez" ile çelişiyordu —
-    // ilk kullanıcı için tam da kaçınılması gereken karışıklık
-    // (2026-07-26 denetimi).
     K.botDailyCup: {
-      'ku': 'Kûpa · heftane',
-      'tr': 'Haftalık kupa',
+      'ku': 'Kûpa · elemeyî',
+      'tr': 'Eleme kupası',
     },
     K.formatSummary: {
       'ku': '{perMatch} pirs/maç · lîstikvanên rastî',
@@ -1748,8 +1751,8 @@ class K {
   static const botTournament = 'tournament.bot';
   static const bracket = 'tournament.bracket';
   static const standings = 'tournament.standings';
-  static const everySaturday = 'tournament.everySaturday';
-  static const timeRemaining = 'tournament.timeRemaining';
+  static const cupStartsWhenFull = 'tournament.startsWhenFull';
+  static const cupStartsLatest = 'tournament.startsLatest';
   static const weeklyCupSub = 'tournament.weeklyCupSub';
   static const botDailyCup = 'tournament.botDailyCup';
   static const formatSummary = 'tournament.formatSummary';

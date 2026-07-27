@@ -10,8 +10,6 @@ import '../l10n/strings.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../utils/duration_format.dart';
-import '../utils/weekly_cup_schedule.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
@@ -684,15 +682,17 @@ class _LobbyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Bir sonraki kupa anı saf bir işlevden gelir; mantık burada gömülüyken
-    // sessiz bir hata barındırıyordu (bkz. `weekly_cup_schedule.dart`).
-    final now = DateTime.now();
-    final nextSaturday = nextWeeklyCupAfter(now);
-    final remaining = nextSaturday.difference(now);
-    final remainingText = formatDurationHuman(remaining, ku: ku);
-
-    final scheduleText = context.t(K.everySaturday);
-    final countdownText = context.t(K.timeRemaining, {'time': remainingText});
+    // Kupanın ne zaman başlayacağı.
+    //
+    // Burada "Her Cumartesi 20:00" ve ona giden bir geri sayım yazıyordu.
+    // Kupa gerçek oyunculara çevrildiğinde (2026-07-26) kural değişti:
+    // kontenjan dolunca başlar, dolmazsa 24 saat sonunda eldeki oyuncularla.
+    // Cumartesi metni o günden beri yalandı — üstelik daha öncesinde de
+    // yanıltıcıydı: bot benzetiminde "Katıl"a basınca tur **hemen**
+    // başlıyordu, geri sayımın işaret ettiği bekleme hiç yaşanmıyordu
+    // (2026-07-27 Kurmancî taraması).
+    final scheduleText = context.t(K.cupStartsWhenFull);
+    final countdownText = context.t(K.cupStartsLatest);
 
     // 2026-07-22 canlı UX denetimi: dikey ortalama — hero kart viewport kısa
     // kaldığında alt boşluk yerine dikeyde ortalanır; içerik uzunsa scroll.
