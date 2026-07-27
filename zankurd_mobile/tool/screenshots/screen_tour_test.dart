@@ -23,12 +23,14 @@ import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';
@@ -511,6 +513,36 @@ void main() {
   testWidgets('43 hikâye', (t) async {
     await _pump(t, StoryScreen(story: cayxaneStory, guide: cayxaneGuide));
     await _shoot(t, '43_story');
+  }, tags: ['preview']);
+
+  testWidgets('44 tur özeti (yanlışlar)', (t) async {
+    await _pump(
+      t,
+      ReviewScreen(
+        room: repository.createRoom(),
+        records: const [
+          AnswerRecord(
+            id: 'r1',
+            category: 'Ziman',
+            prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+            answers: ['su', 'ekmek', 'yol', 'dağ'],
+            correctAnswer: 'su',
+            selectedAnswer: 'su',
+            explanation: '«av» Türkçede «su» demektir.',
+          ),
+          AnswerRecord(
+            id: 'r2',
+            category: 'Dîrok',
+            prompt: 'Şerefname kê nivîsandiye?',
+            answers: ['Şerefxan', 'Ehmedê Xanî', 'Melayê Cizîrî', 'Feqiyê Teyran'],
+            correctAnswer: 'Şerefxan',
+            selectedAnswer: 'Ehmedê Xanî',
+            explanation: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
+          ),
+        ],
+      ),
+    );
+    await _shoot(t, '44_review');
   }, tags: ['preview']);
 
   testWidgets('14 ders akışı', (t) async {
