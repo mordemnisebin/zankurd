@@ -23,30 +23,28 @@ void main() {
     });
 
     test('kaynakta elle yazılmış yüzde biçimi kalmadı', () {
-      // Bu dosyalar denetimde iki farklı biçimi barındırıyordu.
-      const files = [
-        'lib/src/screens/home/home_rows.dart',
-        'lib/src/screens/home/daily_missions_card.dart',
-        'lib/src/widgets/kilim_progress_bar.dart',
-        'lib/src/screens/quiz/quiz_option_tile.dart',
-        'lib/src/screens/profile_screen.dart',
-        'lib/src/widgets/share_result_card.dart',
-      ];
-      for (final path in files) {
-        final source = File(path).readAsStringSync();
-        const quote = "'";
+      // 2026-07-27: bu bekçi elle sayılmış altı dosyaya bakıyordu ve tam
+      // da bu yüzden üç yeni kaçağı görmedi — öğrenme ekranı, sonuç
+      // ekranı ve paylaşım metni Kurmancî arayüzde "%0" yazıyordu.
+      // Listeye yenisi eklenmeyi unutulabilir; ağaç unutulamaz, o yüzden
+      // tarama artık `lib/src`in tamamını gezer.
+      const quote = "'";
+      final offenders = <String>[];
+      for (final entity in Directory('lib/src').listSync(recursive: true)) {
+        if (entity is! File || !entity.path.endsWith('.dart')) continue;
+        // Biçimlendiricinin kendisi iki biçimi de içermek zorunda.
+        if (entity.path.endsWith('utils/percent_format.dart')) continue;
+        final source = entity.readAsStringSync();
         // Önek biçimi:  '%$...    Sonek biçimi:  ...}%'
-        expect(
-          source.contains('$quote%\$'),
-          isFalse,
-          reason: '$path içinde elle önek yüzde biçimi var',
-        );
-        expect(
-          source.contains('}%$quote'),
-          isFalse,
-          reason: '$path içinde elle sonek yüzde biçimi var',
-        );
+        if (source.contains('$quote%\$') || source.contains('}%$quote')) {
+          offenders.add(entity.path);
+        }
       }
+      expect(
+        offenders,
+        isEmpty,
+        reason: 'elle yazılmış yüzde biçimi: ${offenders.join(", ")}',
+      );
     });
   });
 

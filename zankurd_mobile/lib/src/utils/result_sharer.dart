@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
+import 'percent_format.dart';
 
 import '../widgets/share_result_card.dart';
 import 'error_reporter.dart';
@@ -28,10 +29,12 @@ class ResultSharer {
         : ((correctCount / totalQuestions) * 100).round();
     final text = isKu
         ? 'Min di ZanKurd de $score pûan girt! '
-              'Rast: $correctCount/$totalQuestions (%$accuracy). '
+              'Rast: $correctCount/$totalQuestions '
+              '(${PercentFormat.value(accuracy, isKu: true)}). '
               'Tu jî bilîze: Play Store: "ZanKurd"'
         : 'ZanKurd\'te $score puan aldım! '
-              'Doğru: $correctCount/$totalQuestions (%$accuracy). '
+              'Doğru: $correctCount/$totalQuestions '
+              '(${PercentFormat.value(accuracy, isKu: false)}). '
               'Sen de oyna: Play Store: "ZanKurd"';
 
     final overlay = Overlay.maybeOf(context);

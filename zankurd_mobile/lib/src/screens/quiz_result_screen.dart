@@ -23,6 +23,7 @@ import '../models/room.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../widgets/kilim_reveal.dart';
 import '../theme/app_theme.dart';
+import '../utils/percent_format.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
 import '../data/daily_mission_store.dart';
@@ -767,7 +768,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 const SizedBox(height: AppSpacing.xxs),
                                 // Category & accuracy on one line
                                 Text(
-                                  '${CategoryNames.localized(room.category, context.isKu)} · %$accuracy ${context.t(K.accuracyLower)}',
+                                  '${CategoryNames.localized(room.category, context.isKu)} '
+                                  '· ${context.percent(accuracy)} '
+                                  '${context.t(K.accuracyLower)}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTypography.bodyMedium.copyWith(

@@ -12,6 +12,7 @@ import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
+import '../utils/percent_format.dart';
 import '../utils/error_reporter.dart';
 import 'story_screen.dart';
 import '../widgets/app_panel.dart';
@@ -419,9 +420,11 @@ class _LearningScreenState extends State<LearningScreen> {
               ),
               const SizedBox(width: 6),
               Text(
-                '%$pct',
+                // Sabit Türkçe önek Kurmancî arayüzde de "%0" yazıyordu;
+                // aynı ekranda ana ekran "0%" gösterirken (2026-07-27).
+                context.percent(pct),
                 style: AppTypography.caption.copyWith(
-                  color: AppTheme.playGreen,
+                  color: AppColors.readableAccent(context, AppTheme.playGreen),
                   fontWeight: FontWeight.w800,
                 ),
               ),
