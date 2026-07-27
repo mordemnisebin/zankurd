@@ -147,38 +147,33 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
       // Hedef alt şeritte → balon ekranın üstüne.
       tooltipTop = MediaQuery.paddingOf(context).top + 16;
     } else {
-      var showBelow = highlightRect.top < screenSize.height * 0.4;
-      final fitsBelow =
-          highlightRect.bottom + 16 + estimatedBubbleHeight <=
-          screenSize.height - 16;
-      final fitsAbove = highlightRect.top - 16 - estimatedBubbleHeight >= 16;
-      if (showBelow && !fitsBelow && fitsAbove) {
-        showBelow = false;
-      } else if (!showBelow && !fitsAbove && fitsBelow) {
-        showBelow = true;
-      }
-      tooltipTop = showBelow ? highlightRect.bottom + 16 : null;
-      tooltipBottom = !showBelow
-          ? screenSize.height - highlightRect.top + 16
-          : null;
-
-      // Yukarı yerleşimde balonun tepesi serbestti: `bottom` ile
-      // konumlanan bir kutu yüksekliği kadar yukarı uzar ve uzun metinde
-      // durum çubuğunun/başlığın üstüne biner. İlk turda öğretici kart
-      // "Dersê rojane" başlığıyla üst üste geliyordu — yeni kullanıcının
-      // gördüğü ilk quiz ekranıydı (2026-07-27, canlı gezinti).
+      // Balon hedefin altına mı üstüne mi?
       //
-      // Güvenli üst sınır: durum çubuğu + başlık yüksekliği. Balon oraya
-      // sığmıyorsa hedefin altına alınır; iki taraf da dar kalırsa alta
-      // konur, çünkü alt tarafta kaydırılabilir boşluk vardır.
-      if (!showBelow) {
-        final safeTop = MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
-        final bubbleTop =
-            screenSize.height - tooltipBottom! - estimatedBubbleHeight;
-        if (bubbleTop < safeTop) {
-          tooltipTop = highlightRect.bottom + 16;
-          tooltipBottom = null;
-        }
+      // İki kusur peş peşe çıktı (2026-07-27, canlı denemeler):
+      // önce üstte konumlanan balon başlığın üzerine biniyordu; onu
+      // aşağı alınca bu kez ekranın altından taşıp düğmeleri
+      // görünmez yaptı. Sebep aynı: yalnız "sığıyor mu" bakılıyor,
+      // sığmadığında ne yapılacağı tanımlı değildi.
+      //
+      // Kural: her iki tarafın gerçek boşluğu ölçülür. Balon sığan
+      // tarafa konur; hiçbir tarafa sığmıyorsa boşluğu fazla olan
+      // kenara **sabitlenir** — hedefin üstünü bir miktar örtebilir,
+      // ama ışık halkası hedefi zaten gösteriyor ve balonun tümüyle
+      // görünmesi düğmeleri erişilebilir kılar.
+      final safeTop = MediaQuery.paddingOf(context).top + kToolbarHeight + 8;
+      const safeBottom = 24.0;
+      final roomAbove = highlightRect.top - 16 - safeTop;
+      final roomBelow =
+          screenSize.height - safeBottom - (highlightRect.bottom + 16);
+
+      if (roomBelow >= estimatedBubbleHeight) {
+        tooltipTop = highlightRect.bottom + 16;
+      } else if (roomAbove >= estimatedBubbleHeight) {
+        tooltipBottom = screenSize.height - highlightRect.top + 16;
+      } else if (roomBelow >= roomAbove) {
+        tooltipBottom = safeBottom;
+      } else {
+        tooltipTop = safeTop;
       }
     }
 
