@@ -31,9 +31,9 @@
   "prompt": "Alfabeya latînî ya Kurmancî ji aliyê kê ve hat sîstematîzekirin?",
   "answers": [
    "Celadet Alî Bedirxan",
-   "Ehmedê Xanî",
-   "Melayê Cizîrî",
-   "Feqiyê Teyran"
+   "cînavkên tewandî",
+   "Kesê ku karekî dike",
+   "daçekên hevedudanî"
   ],
   "correctAnswer": "Celadet Alî Bedirxan",
   "explanation": "Celadet Ali Bedirhan 1930'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.",
@@ -175,9 +175,9 @@
   "prompt": "Di Kurmancî de \"ergatîf\" çi tê wateyê?",
   "answers": [
    "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
-   "Nîşana pirjimariyê",
-   "Cureyekî daçekê",
-   "Rengdêreke pêşgirtî"
+   "Xwendin (dibistan: cihê xwendinê)",
+   "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+   "Belavkirina alfabeya latînî ya kurdî"
   ],
   "correctAnswer": "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
   "explanation": "Ergatif: geçmiş zamanda geçişli fiillerde özne büküme girer ve fiil nesneye göre çekimlenir — \"Min pirtûk xwend\".",
@@ -343,9 +343,9 @@
   "prompt": "Di Kurmancî de \"daçek\" (preposition/postposition) çi ye?",
   "answers": [
    "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
-   "Nîşana zayendê",
-   "Cureyekî lêkerê",
-   "Paşgira pirjimariyê"
+   "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
+   "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+   "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"
   ],
   "correctAnswer": "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
   "explanation": "Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: \"li malê\", \"bi destan\".",
@@ -435,9 +435,9 @@
   "prompt": "Kovara \"Hawar\" bi taybetî ji bo çi girîng e?",
   "answers": [
    "Belavkirina alfabeya latînî ya kurdî",
-   "Yekem romana kurdî",
-   "Yekem albûma muzîkê",
-   "Ferhenga yekem a kurdî"
+   "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+   "Zayend: \"-ê\" nêr, \"-a\" mê",
+   "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye"
   ],
   "correctAnswer": "Belavkirina alfabeya latînî ya kurdî",
   "explanation": "Hawar (1932, Şam) Kürtçe Latin alfabesini yaydı ve modern Kürtçenin okulu oldu.",
@@ -603,9 +603,9 @@
   "prompt": "Di kevneşopiya kurdî de \"şevbihêrk\" çi ye?",
   "answers": [
    "Civîna şevê ya çîrok û stranan",
-   "Cejna zewacê",
-   "Rêûresma şînê",
-   "Bazara heftane"
+   "girêdanên civak û malbatê",
+   "xurtkirina girêdanên civakî",
+   "cilûbergê kevneşopî yê mêran"
   ],
   "correctAnswer": "Civîna şevê ya çîrok û stranan",
   "explanation": "Şevbihêrk, kış gecelerinde hikâye, bilmece ve türkülerin paylaşıldığı toplantıdır.",
@@ -651,9 +651,9 @@
   "prompt": "Di çanda kurdî de \"heval\" bi giştî çi tê wateyê?",
   "answers": [
    "Hogir / dost",
-   "Cîran",
-   "Xizm",
-   "Mêvan"
+   "toplu halk oyunu",
+   "Mamik / bilmece",
+   "Atalar/ecdat"
   ],
   "correctAnswer": "Hogir / dost",
   "explanation": "\"Heval\" arkadaş/yoldaş anlamını taşır.",
@@ -675,9 +675,9 @@
   "prompt": "Destana \"Mem û Zîn\" bi giştî çîroka çi ye?",
   "answers": [
    "Evîna Mem û Zînê ya ku nagihîje hev",
-   "Şerekî navxweyî",
-   "Rêwîtiya bazirganekî",
-   "Damezrandina bajarekî"
+   "nasname û cihêrengiya herêmî",
+   "misafirperweriya kurdî",
+   "bi çanda devkî ve girêdayî ye"
   ],
   "correctAnswer": "Evîna Mem û Zînê ya ku nagihîje hev",
   "explanation": "Mem û Zîn, kavuşamayan âşıkların hikâyesidir; Ehmedê Xanî 1692'de yazdı.",
@@ -745,9 +745,9 @@
   "prompt": "Rêûresma \"kirîvatî\" di civaka kurdî de çi ye?",
   "answers": [
    "Girêdana malbatan bi rêya sinetê",
-   "Peymana bazirganiyê",
-   "Rêûresma şînê",
-   "Hilbijartina rîspiyan"
+   "reqsa kevneşopî ya herêma Şirnexê",
+   "amûra kevneşopî ya dişibe bilûrê",
+   "bi çanda sifrê ve girêdayî ye"
   ],
   "correctAnswer": "Girêdana malbatan bi rêya sinetê",
   "explanation": "Kirve, sünnet töreninde ikinci baba rolündedir; iki aile böylece hısım olur.",
@@ -841,9 +841,9 @@
   "prompt": "Di kevneşopiya kurdî de \"rîspî\" kî ye?",
   "answers": [
    "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
-   "Serokê eşîretê yê leşkerî",
-   "Mamosteyê dibistanê",
-   "Bazirganê gund"
+   "pîrozbahiya serê salê di salnameya gelêrî ya kurdî de",
+   "reqsa kevneşopî ya herêma Şirnexê",
+   "vegotina ku ji nifşî bo nifşî hatiye veguhastin"
   ],
   "correctAnswer": "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
   "explanation": "Rîspî (aksakal), toplumda arabuluculuk yapan, anlaşmazlıkları çözen saygın yaşlıdır.",
@@ -961,9 +961,9 @@
   "prompt": "Peymana Sevrê (1920) ji bo kurdan çima tê gotin ku girîng e?",
   "answers": [
    "Ji bo herêmeke kurdî ya xweser madde dihewand",
-   "Alfabeya kurdî fermî kir",
-   "Dewleteke kurdî damezrand",
-   "Kovara Hawarê destûr kir"
+   "bandorkirina civakan li hev",
+   "mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir",
+   "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan"
   ],
   "correctAnswer": "Ji bo herêmeke kurdî ya xweser madde dihewand",
   "explanation": "Sevr, Kürtler için olası bir özerklik maddesi içeriyordu ancak antlaşma uygulanmadı.",
@@ -1199,9 +1199,9 @@
   "prompt": "Hûrî û Mîtanî bi giştî li kîjan herêmê dijiyan?",
   "answers": [
    "Mezopotamyaya jorîn",
-   "Deşta Misirê",
-   "Peravê Egeyê",
-   "Asyaya Navîn"
+   "Serokê Komara Mehabadê",
+   "Peymana Lozanê",
+   "Kafkasya (Gence-Anî)"
   ],
   "correctAnswer": "Mezopotamyaya jorîn",
   "explanation": "Hurriler ve Mitanniler Yukarı Mezopotamya'da, Dicle-Fırat'ın yukarı havzasında yaşadı.",
@@ -1271,9 +1271,9 @@
   "prompt": "\"Feqiyê Teyran\" di wêjeya kurdî de bi çi hate naskirin?",
   "answers": [
    "Helbestên xwe yên li ser xweza û teyran",
-   "Romanên xwe yên nûjen",
-   "Şanoyên xwe",
-   "Ferhengên xwe"
+   "helbestvanê mezin ê ku şêwaza azad anî helbesta kurdî",
+   "helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen",
+   "akademîsyenê ku li ser ziman û wêjeya kurdî dixebite"
   ],
   "correctAnswer": "Helbestên xwe yên li ser xweza û teyran",
   "explanation": "Feqiyê Teyran (16-17. yy) şiirlerinde kuşlar ve doğayla konuşur.",
@@ -1343,9 +1343,9 @@
   "prompt": "Di wêjeya kurdî de \"dîwan\" çi tê wateyê?",
   "answers": [
    "Berhevoka helbestên helbestvanekî",
-   "Çîrokeke gelêrî",
-   "Rojnameyeke edebî",
-   "Pirtûkeke rêzimanî"
+   "Forma helbestî ya çîrokî bi beytên qafiyedar",
+   "Dîwana xwe ya helbestên sofîyane",
+   "Kovarên çand û wêjeyê"
   ],
   "correctAnswer": "Berhevoka helbestên helbestvanekî",
   "explanation": "Divan, bir şairin şiirlerinin genelde kafiyeye göre düzenlenmiş toplamıdır.",
@@ -1437,9 +1437,9 @@
   "prompt": "Berhema \"Nûbihara Biçûkan\" a Ehmedê Xanî çi ye?",
   "answers": [
    "Ferhengeke helbestî ya kurdî-erebî ji bo zarokan",
-   "Romaneke evîndarî",
-   "Dîroknameyek",
-   "Berhevoka stranan"
+   "Perwerdehiya klasîk û perwerdekirina helbestvanan",
+   "yek ji şanonivîsên damezrîner ên şanoya kurdî",
+   "yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî"
   ],
   "correctAnswer": "Ferhengeke helbestî ya kurdî-erebî ji bo zarokan",
   "explanation": "Nûbihara Biçûkan, çocuklara öğretmek için manzum yazılmış Kürtçe-Arapça sözlüktür.",
@@ -1867,9 +1867,9 @@
   "prompt": "\"Dengbêj\" kî ye?",
   "answers": [
    "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje",
-   "Lêdera tembûrê",
-   "Nivîskarê stranan",
-   "Reqasê govendê"
+   "hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan",
+   "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
+   "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin"
   ],
   "correctAnswer": "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje",
   "explanation": "Dengbêj, enstrümansız, yalnız sesiyle kilam ve hikâye aktaran anlatıcıdır.",
@@ -1963,9 +1963,9 @@
   "prompt": "Şivan Perwer bi giştî bi çi tê nasîn?",
   "answers": [
    "Stranbêjiya kurdî ya nûjen û siyasî",
-   "Helbesta klasîk",
-   "Romannivîsî",
-   "Dîroknasî"
+   "edeta ku ji muzîkjenan re pere tê avêtin",
+   "Koma stranbêj û muzîkjenan",
+   "Bi tiliyan an bi mizrabê"
   ],
   "correctAnswer": "Stranbêjiya kurdî ya nûjen û siyasî",
   "explanation": "Şivan Perwer ünlü Kürt sanatçıdır; yurtsever şarkıları tüm Kürdistan'a yayıldı.",
@@ -2011,9 +2011,9 @@
   "prompt": "Ayşe Şan di dîroka muzîka kurdî de çima girîng e?",
   "answers": [
    "Yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
-   "Yekem romannivîsa kurd e",
-   "Damezrînera kovara Hawarê ye",
-   "Lêdera yekem a tembûrê ye"
+   "amûra pifê ya bidengê bilind a ku li derve tê lêxistin",
+   "yekem hunermenda kurd a jin a ku plak dagirt",
+   "sazê rîtmê yê ku bi zirneyê re tê lêxistin"
   ],
   "correctAnswer": "Yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
   "explanation": "Ayşe Şan (1938-1996), zor koşullarda Kürt müziğinin en etkili kadın seslerinden biri oldu.",
@@ -2035,9 +2035,9 @@
   "prompt": "\"Lawik\" di muzîka kurdî de bi giştî çi ye?",
   "answers": [
    "Cureyekî kilamê yê bi gelemperî evîndar",
-   "Amûreke lêdanê",
-   "Reqsek zûtir",
-   "Rêbaza notagirtinê"
+   "Yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
+   "Belavbûna cîhanî ya stran û tomarkirinê",
+   "Bi tiliyan an bi mizrabê"
   ],
   "correctAnswer": "Cureyekî kilamê yê bi gelemperî evîndar",
   "explanation": "Lawik bir kilam türüdür; çoğunlukla aşk ve hasret üzerinedir.",
@@ -2153,9 +2153,9 @@
   "prompt": "\"Erbane\" cureyekî çi amûrê ye?",
   "answers": [
    "Amûra lêdanê ya wek def",
-   "Amûra têlî",
-   "Amûra pifê",
-   "Amûra kevanî"
+   "Avaz û qalibê kilamê",
+   "reqsa gelêrî ya komî",
+   "Bûyerên şer û berxwedanê"
   ],
   "correctAnswer": "Amûra lêdanê ya wek def",
   "explanation": "Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.",
@@ -2297,9 +2297,9 @@
   "prompt": "\"KJAR\" kurtenavê çi ye?",
   "answers": [
    "Rêxistina jinan a azadîxwaz a rojhilatê Kurdistanê",
-   "Meclîseke bajêr",
-   "Yekîtiya nivîskaran",
-   "Sendîkayeke karkeran"
+   "Beşdariya rasterast û berdewam a ji binî pêş dixe",
+   "mafên xwepêşandan, xwerêxistin û azadiya îfadeyê",
+   "hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî"
   ],
   "correctAnswer": "Rêxistina jinan a azadîxwaz a rojhilatê Kurdistanê",
   "explanation": "KJAR (Doğu Kürdistan Özgür Kadınlar Topluluğu), doğuda kadın özgürlüğü üzerine çalışır.",
@@ -2391,9 +2391,9 @@
   "prompt": "\"Netewa demokratîk\" bi kîjan xalê ji \"dewleta netewe\" cuda dibe?",
   "answers": [
    "Nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e",
-   "Tenê yek zimanê fermî qebûl dike",
-   "Tenê bi hilbijartinan kar dike",
-   "Bi tundî sînoran diparêze"
+   "daxwaza misogeriya destûrî û naskirina mafên çandî",
+   "hêza ji navendekê bo yekîneyên herêmî belavkirin",
+   "statûya xweseriyê û biryargirtinê li herêmê"
   ],
   "correctAnswer": "Nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e",
   "explanation": "Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar.",
@@ -2439,9 +2439,9 @@
   "prompt": "Di siyaseta herêmî de \"komun\" bi giştî çi ye?",
   "answers": [
    "Yekeya biryardayînê ya herî biçûk a taxê an gund",
-   "Dadgeheke bilind",
-   "Fermandariya leşkerî",
-   "Bankayeke herêmî"
+   "mafê parastinê li dadgehên serbixwe û bêalî",
+   "beşdariya rasterast a gel di biryarên siyasî de",
+   "avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin"
   ],
   "correctAnswer": "Yekeya biryardayînê ya herî biçûk a taxê an gund",
   "explanation": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.",
@@ -2605,9 +2605,9 @@
   "prompt": "Di têgîna \"aboriya komunal\" de xala sereke çi ye?",
   "answers": [
    "Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê",
-   "Zêdekirina bêsînor a qezencê",
-   "Taybetkirina tevahî ya erdê",
-   "Bazirganiya tenê ya derveyî"
+   "mafê civakê yê xwe parastin û xwerêxistinê",
+   "civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire",
+   "pîvana herî bingehîn a azadbûna civakî"
   ],
   "correctAnswer": "Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê",
   "explanation": "Komünal ekonomi, bireysel kârdan önce kooperatifi ve ortak üretimi koyar.",
@@ -2677,9 +2677,9 @@
   "prompt": "Di paradîgmayê de \"azadiya jinê\" çima wek pîvana azadiya civakê tê dîtin?",
   "answers": [
    "Ji ber ku koletiya yekem li ser jinê hatiye avakirin",
-   "Ji ber ku jin pirtir in",
-   "Ji ber ku pirsgirêkeke aborî ye",
-   "Ji ber ku pirsgirêkeke qanûnî ye"
+   "krîza navendîbûna aborî û siyasî ya destekî yekane",
+   "jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe",
+   "pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de"
   ],
   "correctAnswer": "Ji ber ku koletiya yekem li ser jinê hatiye avakirin",
   "explanation": "Argüman şudur: ilk toplumsal hiyerarşi kadının tabi kılınmasıyla başladı, bu yüzden özgürlük de oradan başlar.",
@@ -2797,9 +2797,9 @@
   "prompt": "Di Kurmancî de \"-ek\" wek paşgir çi diyar dike?",
   "answers": [
    "Nebinavkirîbûn (yek/bir)",
-   "Pirjimarî",
-   "Zayenda mê",
-   "Dema borî"
+   "cînavkên kesane",
+   "Kesê ku karekî dike",
+   "lêkera gerguhêz"
   ],
   "correctAnswer": "Nebinavkirîbûn (yek/bir)",
   "explanation": "\"Pirtûkek\" bir kitap demektir; belirsizlik ekidir.",
@@ -2869,9 +2869,9 @@
   "prompt": "Peyva \"dibistan\" ji kîjan koka lêkerê tê?",
   "answers": [
    "Xwendin (dibistan: cihê xwendinê)",
-   "Nivîsandin",
-   "Gotin",
-   "Dîtin"
+   "Belavkirina alfabeya latînî ya kurdî",
+   "Li gorî bireserê (ew)",
+   "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye"
   ],
   "correctAnswer": "Xwendin (dibistan: cihê xwendinê)",
   "explanation": "\"Dibistan\" (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
@@ -3035,9 +3035,9 @@
   "prompt": "Di kevneşopiya kurdî de \"berxwedan\" bi giştî çi tê wateyê?",
   "answers": [
    "Li ber xwe dan / direniş",
-   "Bazirganî",
-   "Xwarina cejnê",
-   "Reqsa dawetê"
+   "Amûra hûnandina xalîçe û bêrîkan",
+   "Kesên ku bûkê ji mala wê tînin",
+   "Destana Memê Alan"
   ],
   "correctAnswer": "Li ber xwe dan / direniş",
   "explanation": "\"Berxwedan\", \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
@@ -3059,9 +3059,9 @@
   "prompt": "Xwarina \"dolme\" ya kurdî bi giştî ji çi tê çêkirin?",
   "answers": [
    "Belg û sebzeyên dagirtî",
-   "Ard û şekir",
-   "Şîr û hingiv",
-   "Genimê sor"
+   "Amûra hûnandina xalîçe û bêrîkan",
+   "Li ber xwe dan / direniş",
+   "Şeva herî dirêj a salê"
   ],
   "correctAnswer": "Belg û sebzeyên dagirtî",
   "explanation": "Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır.",
@@ -3107,9 +3107,9 @@
   "prompt": "\"Pêşmerge\" peyv bi rastî çi tê wateyê?",
   "answers": [
    "Yê ku li pêşiya mirinê ye",
-   "Yê ku digere",
-   "Yê ku distirê",
-   "Yê ku dixwîne"
+   "bi hunera destan ve girêdayî ye",
+   "Komeke malbatên bi xizmî girêdayî",
+   "Civîna şevê ya çîrok û stranan"
   ],
   "correctAnswer": "Yê ku li pêşiya mirinê ye",
   "explanation": "\"Pêş\" (ön) + \"merg\" (ölüm): ölümün önüne duran.",
@@ -3179,9 +3179,9 @@
   "prompt": "Di dawetên kurdî de \"qelen\" çi ye?",
   "answers": [
    "Diyariya ku ji bo bûkê tê dayîn",
-   "Xwarina dawetê",
-   "Reqsa dawiyê",
-   "Navê muzîkjenan"
+   "Komeke malbatên bi xizmî girêdayî",
+   "cilûbergê kevneşopî yê mêran",
+   "şêwaza jiyana koçerî û rîtma reqsê"
   ],
   "correctAnswer": "Diyariya ku ji bo bûkê tê dayîn",
   "explanation": "Başlık (qelen), geleneksel olarak damat ailesinin gelin ailesine verdiği mal/hediyedir.",
@@ -3203,9 +3203,9 @@
   "prompt": "\"Dîwanxane\" di malên kurdî yên kevneşopî de çi ye?",
   "answers": [
    "Odeya mêvanan û civînê",
-   "Embara genim",
-   "Cihê ajalan",
-   "Odeya zarokan"
+   "Mêvan bi rûmet pêşwazîkirin",
+   "hest û bîra civakî",
+   "Belg û sebzeyên dagirtî"
   ],
   "correctAnswer": "Odeya mêvanan û civînê",
   "explanation": "Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir.",
@@ -3323,9 +3323,9 @@
   "prompt": "Peymana Zuhabê (Qesr-î Şîrîn, 1639) ji bo kurdan çima girîng e?",
   "answers": [
    "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin",
-   "Dewleteke kurdî damezrand",
-   "Alfabeya kurdî fermî kir",
-   "Koçberiya kurdan rawestand"
+   "herêma dîrokî ya li dora Dîcle û Feratê",
+   "mîrektiya kurd a girîng a bi navenda Cizîrê",
+   "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de"
   ],
   "correctAnswer": "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin",
   "explanation": "1639 antlaşması Osmanlı-Safevi sınırını çizdi ve Kürt bölgesini ikiye böldü.",
@@ -3371,9 +3371,9 @@
   "prompt": "\"Xoybûn\" çi bû?",
   "answers": [
    "Rêxistineke siyasî ya kurdan a salên 1920î",
-   "Kovareke edebî",
-   "Navê bajarekî",
-   "Cureyekî muzîkê"
+   "navendîbûn û rêveberiya rasterast",
+   "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de",
+   "lêkolîna borî bi rêya bermahiyên maddî"
   ],
   "correctAnswer": "Rêxistineke siyasî ya kurdan a salên 1920î",
   "explanation": "Xoybûn 1927'de Suriye'de kuruldu.",
@@ -3417,9 +3417,9 @@
   "prompt": "Di dîroka nûjen de \"Kurdên Sor\" (Sûriye) bi çi têkildar e?",
   "answers": [
    "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
-   "Komeleyeke muzîkê",
-   "Partiyeke Iraqê",
-   "Rêxistineke perwerdehiyê"
+   "serokê bihêz ê mîrektiya Soranê yê bi leqeba kor",
+   "peymana ku sînorê Osmanî û Sefewî diyar kir",
+   "Ji bo herêmeke kurdî ya xweser madde dihewand"
   ],
   "correctAnswer": "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
   "explanation": "1962 Cezire sayımı yüz binlerce Kürdü vatansız bıraktı.",
@@ -3441,9 +3441,9 @@
   "prompt": "Qelaya Hewlêrê bi çi taybetî tê nasîn?",
   "answers": [
    "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê",
-   "Yekem zanîngeha herêmê",
-   "Navenda bazirganiyê ya Osmanî",
-   "Bendaveke kevnar"
+   "weşanger û ronakbîrê ku alfabeya kurdî pêş xist",
+   "dewleta mezin a ku Selahedînê Eyûbî damezrand",
+   "peymana ku sînorê Osmanî û Sefewî diyar kir"
   ],
   "correctAnswer": "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê",
   "explanation": "Erbil Kalesi 2014'te UNESCO Dünya Mirası listesine girdi.",
@@ -3465,9 +3465,9 @@
   "prompt": "Elî Herîrî di wêjeya kurdî de bi çi tê nasîn?",
   "answers": [
    "Helbestvanekî klasîk ê pêşîn",
-   "Yekem romannivîs",
-   "Dîroknas",
-   "Ferhengnas"
+   "Dîwana xwe ya helbestên sofîyane",
+   "Lihevhatina dengên dawiya rêzikan",
+   "Berhevoka helbestên helbestvanekî"
   ],
   "correctAnswer": "Helbestvanekî klasîk ê pêşîn",
   "explanation": "Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.",
@@ -3489,9 +3489,9 @@
   "prompt": "Berhema \"Rewşenbîr\" an kovarên edebî yên kurdî bi giştî çi rol lîstin?",
   "answers": [
    "Pêşxistina zimanê nivîskî yê kurdî",
-   "Belavkirina muzîkê",
-   "Rêveberiya bajaran",
-   "Perwerdehiya leşkerî"
+   "Helbestên xwe yên li ser xweza û teyran",
+   "Berhevoka helbestên helbestvanekî",
+   "Dîwana xwe ya helbestên sofîyane"
   ],
   "correctAnswer": "Pêşxistina zimanê nivîskî yê kurdî",
   "explanation": "Edebiyat dergileri, yazılı Kürtçenin standartlaşması ve gelişmesinde başrol oynadı.",
@@ -3561,9 +3561,9 @@
   "prompt": "Berhemên Cegerxwîn bi giştî li ser çi ne?",
   "answers": [
    "Welatparêzî, azadî û jiyana gel",
-   "Tenê evîna kesane",
-   "Zanistiya xwezayî",
-   "Rêzimana kurdî"
+   "Berhevoka helbestên helbestvanekî",
+   "Destaneke evînî ya gelêrî",
+   "vegotineke dirêj a lehengiyê"
   ],
   "correctAnswer": "Welatparêzî, azadî û jiyana gel",
   "explanation": "Cegerxwîn şiirini halkın davası ve özgürlükle ilişkilendirdi.",
@@ -3631,9 +3631,9 @@
   "prompt": "Çemê Firat ji kîjan herêmê diherike?",
   "answers": [
    "Çiyayên rojhilatê Anatolyayê",
-   "Deşta Konyayê",
-   "Çiyayên Kafkasyayê",
-   "Peravê Behra Reş"
+   "gola tektonîk a di sînorên Elezîzê de",
+   "nebat û dara tîpîk a çiyayên Kurdistanê",
+   "Girseya çiyayî ya nêzî Çemê Xerzan"
   ],
   "correctAnswer": "Çiyayên rojhilatê Anatolyayê",
   "explanation": "Fırat, Doğu Anadolu dağlarından doğar ve Basra Körfezi'ne dökülür.",
@@ -3679,9 +3679,9 @@
   "prompt": "Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?",
   "answers": [
    "Avahiyên kevirî yên li ser çiyê",
-   "Bircên şûşeyî",
-   "Kanalên avê",
-   "Baxçeyên ser banî"
+   "Iraq (derdora Dihokê)",
+   "hewza çem a ku Amed û Şirnexê digire",
+   "herêma çiyayî ya derdora Zaxo û Dihokê"
   ],
   "correctAnswer": "Avahiyên kevirî yên li ser çiyê",
   "explanation": "Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.",
@@ -3751,9 +3751,9 @@
   "prompt": "Herêma \"Serhed\" bi giştî kîjan derdorê digire?",
   "answers": [
    "Herêma bilind a Agirî-Wan-Mûşê",
-   "Peravê Behra Spî",
-   "Deşta Cizîrê",
-   "Herêma Kirmanşanê"
+   "Warê havînê û warê zivistanê",
+   "hewza çem a ku Amed û Şirnexê digire",
+   "gola tektonîk a di sînorên Elezîzê de"
   ],
   "correctAnswer": "Herêma bilind a Agirî-Wan-Mûşê",
   "explanation": "Serhed, kuzeydeki yüksek bölgenin adıdır: Ağrı, Van, Muş, Bitlis.",
@@ -3775,9 +3775,9 @@
   "prompt": "Deşta Cizîrê bi giştî li ku derê ye?",
   "answers": [
    "Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê",
-   "Rojavayê Îranê",
-   "Başûrê Tirkiyeyê",
-   "Bakurê Iraqê ya çiyayî"
+   "deşta dîrokî ya bibereket a li başûrê Silêmaniyê",
+   "deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan",
+   "gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin"
   ],
   "correctAnswer": "Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê",
   "explanation": "Cezire, iki nehir arasındaki tarım ovasıdır.",
@@ -3845,9 +3845,9 @@
   "prompt": "\"Heyranok\" di muzîka kurdî de bi giştî çi ye?",
   "answers": [
    "Stranên kurt ên bi gelemperî evîndar",
-   "Reqsa dawetê",
-   "Amûreke têlî",
-   "Rêbaza notagirtinê"
+   "avaza ku ji rêzbûna dengan pêk tê",
+   "stranbêjî an lêxistina bi tenê ya hunermendekî",
+   "navê yekem koma rocka kurdî di dîrokê de"
   ],
   "correctAnswer": "Stranên kurt ên bi gelemperî evîndar",
   "explanation": "Heyranok kısa ezgilerdir, sık sık soru-cevap biçiminde söylenir.",
@@ -3893,9 +3893,9 @@
   "prompt": "Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?",
   "answers": [
    "Ji salên 1950î ve stranên kurdî belav kir",
-   "Yekem albûma kurdî çap kir",
-   "Dibistaneke muzîkê bû",
-   "Festîvalek bû"
+   "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin",
+   "veguhastina muzîkal a bi têkiliya hoste-şagird",
+   "edeta ku ji muzîkjenan re pere tê avêtin"
   ],
   "correctAnswer": "Ji salên 1950î ve stranên kurdî belav kir",
   "explanation": "Erivan Radyosu'nun Kürtçe yayını, dengbêj arşivinin ana kaynağı oldu.",
@@ -3941,9 +3941,9 @@
   "prompt": "Di dengbêjiyê de \"kilamên şer\" bi giştî li ser çi ne?",
   "answers": [
    "Bûyerên şer û berxwedanê",
-   "Dawet û şahiyan",
-   "Çandinî",
-   "Rêzimanê"
+   "Avaz û qalibê kilamê",
+   "awayê stranbêjiya bi kom",
+   "Dawet û govendê"
   ],
   "correctAnswer": "Bûyerên şer û berxwedanê",
   "explanation": "Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.",
@@ -4011,9 +4011,9 @@
   "prompt": "\"Kurdên Feylî\" bi giştî li kîjan herêmê dijîn?",
   "answers": [
    "Sînorê Iraq-Îranê, herêma Bexda û Îlamê",
-   "Bakurê Sûriyeyê",
-   "Rojavayê Tirkiyeyê",
-   "Kafkasya"
+   "Herêm karûbarên xwe bi xwe birêve dibe",
+   "mafê parastinê li dadgehên serbixwe û bêalî",
+   "mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e"
   ],
   "correctAnswer": "Sînorê Iraq-Îranê, herêma Bexda û Îlamê",
   "explanation": "Feyli Kürtler Şii Kürtlerdir; 1980'de yüz binlercesi Irak'tan sürüldü.",
@@ -4129,9 +4129,9 @@
   "prompt": "Di paradîgmayê de \"kooperatîf\" çima girîng e?",
   "answers": [
    "Hilberîna hevpar li şûna kara kesane",
-   "Bilindkirina bihayan",
-   "Kêmkirina beşdariyê",
-   "Navendîkirina biryarê"
+   "Kapîtalîzm, pîşesaziyparêzî û dewleta netewe",
+   "Guhertin bi perwerdehî û hişmendiyê dest pê dike",
+   "Parastina civakê bi rêxistinbûna wê ya xwe"
   ],
   "correctAnswer": "Hilberîna hevpar li şûna kara kesane",
   "explanation": "Kooperatif, komünal ekonominin modelidir: emek ve sonuç paylaşılır.",
@@ -4177,9 +4177,9 @@
   "prompt": "Rexneya \"pozîtîvîzmê\" di vê paradîgmayê de li ser çi ye?",
   "answers": [
    "Zanist ji civak û exlaqê nayê veqetandin",
-   "Zanist bi tenê rast e",
-   "Ezmûn ne pêwîst e",
-   "Dîrok ne girîng e"
+   "mafê civakê yê xwe parastin û xwerêxistinê",
+   "têgihiştina mirov a ku ew parçeyekî xwezayê ye",
+   "yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî"
   ],
   "correctAnswer": "Zanist ji civak û exlaqê nayê veqetandin",
   "explanation": "Pozitivizm \"tarafsız bilim\" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir.",
@@ -4247,9 +4247,9 @@
   "prompt": "\"Hevjiyana azad\" di vê paradîgmayê de çi tê wateyê?",
   "answers": [
    "Têkiliya jin û mêr a li ser bingehê wekhevî û azadiyê",
-   "Jiyana bêyî civakê",
-   "Aboriya bazarê",
-   "Rêveberiya navendî"
+   "prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî",
+   "şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan",
+   "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê"
   ],
   "correctAnswer": "Têkiliya jin û mêr a li ser bingehê wekhevî û azadiyê",
   "explanation": "Özgür eş yaşam, ilişkiyi sahiplenmeden çıkarıp eşitlik üzerine kurar.",
@@ -4415,9 +4415,9 @@
   "prompt": "Di Kurmancî de paşgira \"-van\" di peyvên wek \"dergehvan\" de çi diyar dike?",
   "answers": [
    "Kesê ku karekî dike",
-   "Cih",
-   "Dem",
-   "Hejmar"
+   "cînavkên tewandî",
+   "rênivîsa Hawarê",
+   "Zayend: \"-ê\" nêr, \"-a\" mê"
   ],
   "correctAnswer": "Kesê ku karekî dike",
   "explanation": "\"-van\" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.",
@@ -4653,9 +4653,9 @@
   "prompt": "Di kevneşopiya kurdî de \"mêvanperwerî\" çi tê wateyê?",
   "answers": [
    "Mêvan bi rûmet pêşwazîkirin",
-   "Bazirganiya dûr",
-   "Rêûresma zewacê",
-   "Pîrozkirina cejnê"
+   "civînên axaftinê yên şevên zivistanê",
+   "girêdanên civak û malbatê",
+   "Belg û sebzeyên dagirtî"
   ],
   "correctAnswer": "Mêvan bi rûmet pêşwazîkirin",
   "explanation": "Misafirperverlik Kürt toplumunun en yüksek değerlerindendir.",
@@ -4677,9 +4677,9 @@
   "prompt": "\"Çadira reş\" bi giştî ji çi tê çêkirin?",
   "answers": [
    "Hiriyê bizinê",
-   "Pembû",
-   "Hevrîşim",
-   "Kaxez"
+   "çanda koçeriyê",
+   "kilimên kurdî",
+   "diyarî/xelat"
   ],
   "correctAnswer": "Hiriyê bizinê",
   "explanation": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
@@ -4701,9 +4701,9 @@
   "prompt": "Di çanda kurdî de \"koçerî\" çi ye?",
   "answers": [
    "Jiyana bi ajalan re ya guhêrbar",
-   "Cotkariya nîştecih",
-   "Bazirganiya bajaran",
-   "Masîgiriya golê"
+   "Evîna trajîk a li çiyê",
+   "Sor, spî, kesk û zer",
+   "roja ziyaret û bibîranînê ya kevneşopî"
   ],
   "correctAnswer": "Jiyana bi ajalan re ya guhêrbar",
   "explanation": "Göçerler, mevsime göre sürüleriyle yayla ve kışlak arasında hareket eder.",
@@ -4725,9 +4725,9 @@
   "prompt": "\"Zozan\" çi ye?",
   "answers": [
    "Çîmena çiyayî ya havînê",
-   "Gundê zivistanê",
-   "Bajarê mezin",
-   "Cihê bazarê"
+   "çanda koçeriyê",
+   "vegotina devkî û çîroka bi avaz",
+   "Şeva herî dirêj a salê"
   ],
   "correctAnswer": "Çîmena çiyayî ya havînê",
   "explanation": "Zozan (yayla), yazın sürüler için kullanılan yüksek otlaklardır.",
@@ -4749,9 +4749,9 @@
   "prompt": "Di rêûresma şînê ya kurdî de \"şînbêj\" kî ye?",
   "answers": [
    "Kesa ku bi dengekî bilind lorî û şîn dibêje",
-   "Kesê ku mêvanan dibîne",
-   "Kesê ku xwarinê çêdike",
-   "Kesê ku qebrê amade dike"
+   "civaka olî-çandî ya taybet û trawmayên dîrokî",
+   "xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin",
+   "vegotina ku ji nifşî bo nifşî hatiye veguhastin"
   ],
   "correctAnswer": "Kesa ku bi dengekî bilind lorî û şîn dibêje",
   "explanation": "Şînbêj genelde kadınlardır; ağıt kilamlarıyla yası dile getirir.",
@@ -4773,9 +4773,9 @@
   "prompt": "\"Berbang\" di Kurmancî de çi tê wateyê?",
   "answers": [
    "Serê sibê / şafak",
-   "Nîvê şevê",
-   "Danê êvarê",
-   "Nîvro"
+   "çanda koçeriyê",
+   "hest û bîra civakî",
+   "Çîmena çiyayî ya havînê"
   ],
   "correctAnswer": "Serê sibê / şafak",
   "explanation": "\"Berbang\" ışığın söktüğü an, şafaktır.",
@@ -4867,9 +4867,9 @@
   "prompt": "\"Hevrîşk\" an \"hevrîşim\" di destkariya kurdî de çi ye?",
   "answers": [
    "Hevrîşim (ipek) — ji bo tevn û xemlê",
-   "Cureyekî xwarinê",
-   "Amûreke muzîkê",
-   "Navê reqsekê"
+   "amûra kevneşopî ya dişibe bilûrê",
+   "Mêvan bi rûmet pêşwazîkirin",
+   "fîgura mîtolojîk a çanda rojhilat"
   ],
   "correctAnswer": "Hevrîşim (ipek) — ji bo tevn û xemlê",
   "explanation": "İpek, dokuma ve süslü giysilerde kullanılır.",
@@ -4891,9 +4891,9 @@
   "prompt": "\"Tevn\" di destkariya kurdî de çi ye?",
   "answers": [
    "Amûra hûnandina xalîçe û bêrîkan",
-   "Cureyekî nanê",
-   "Amûreke muzîkê",
-   "Navê cejnekê"
+   "Danûstandina civakî û biryardayîn",
+   "amûra kevneşopî ya dişibe bilûrê",
+   "bi hunera destan ve girêdayî ye"
   ],
   "correctAnswer": "Amûra hûnandina xalîçe û bêrîkan",
   "explanation": "Tezgâh; halı, kilim ve heybe dokumak için kullanılır.",
@@ -4939,9 +4939,9 @@
   "prompt": "Di civaka kurdî de \"xwarina şîvê ya hevpar\" li dîwanxaneyê bi giştî çi fonksiyonê digire?",
   "answers": [
    "Danûstandina civakî û biryardayîn",
-   "Tenê xwarinxwarin",
-   "Perwerdehiya fermî",
-   "Bazirganî"
+   "pîroziya ku ji ronahî/rojê re tê dayîn",
+   "Şeva herî dirêj a salê",
+   "misafirperweriya kurdî"
   ],
   "correctAnswer": "Danûstandina civakî û biryardayîn",
   "explanation": "Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler.",
@@ -4987,9 +4987,9 @@
   "prompt": "Xanedaniya Mervaniyan bi giştî li ku derê hukum kir?",
   "answers": [
    "Amed û derdora wê",
-   "Misir",
-   "Endulûs",
-   "Xorasan"
+   "Koçberiya bi darê zorê",
+   "Şerefxan (mîrê Bidlîsê)",
+   "Mezopotamyaya jorîn"
   ],
   "correctAnswer": "Amed û derdora wê",
   "explanation": "Mervaniler (990-1085) Amed ve Silvan çevresinde hüküm sürdü.",
@@ -5011,9 +5011,9 @@
   "prompt": "Xanedaniya Şedadiyan bi giştî li kîjan herêmê hukum kir?",
   "answers": [
    "Kafkasya (Gence-Anî)",
-   "Misir",
-   "Endulûs",
-   "Hindistan"
+   "Amed û derdora wê",
+   "Mezopotamyaya jorîn",
+   "Peymana Lozanê"
   ],
   "correctAnswer": "Kafkasya (Gence-Anî)",
   "explanation": "Şeddadiler, Kafkasya'da Gence ve Ani çevresinde hüküm süren Kürt hanedanıydı.",
@@ -5083,9 +5083,9 @@
   "prompt": "Îdrîsê Bidlîsî di dîroka Osmanî de bi çi tê nasîn?",
   "answers": [
    "Navbeynkariya di navbera Osmanî û mîrên kurd de",
-   "Nivîsandina Mem û Zînê",
-   "Damezrandina Komara Mehabadê",
-   "Weşandina kovara Hawarê"
+   "xanedaniya kurd a serdema navîn a bi navenda Amedê",
+   "serokkomarê Komara Kurd a Mehabadê",
+   "çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin"
   ],
   "correctAnswer": "Navbeynkariya di navbera Osmanî û mîrên kurd de",
   "explanation": "İdris-i Bitlisi, Çaldıran sonrası Kürt emirliklerinin Osmanlı'ya bağlanmasında rol oynadı.",
@@ -5107,9 +5107,9 @@
   "prompt": "Mîrektiya Erdelan navenda xwe li ku derê bû?",
   "answers": [
    "Sine (Sanandaj)",
-   "Cizîr",
-   "Hewlêr",
-   "Bidlîs"
+   "Dewleta Merwaniyan",
+   "Rojnameya Kurdistan",
+   "bihar / Adar"
   ],
   "correctAnswer": "Sine (Sanandaj)",
   "explanation": "Erdelan, Doğu Kürdistan'da bir emirlikti; merkezi Sine (Senendec) idi.",
@@ -5153,9 +5153,9 @@
   "prompt": "Kovara \"Ronahî\" ji aliyê kê ve hat weşandin?",
   "answers": [
    "Celadet Alî Bedirxan",
-   "Ehmedê Xanî",
-   "Qadî Mihemed",
-   "Erebê Şemo"
+   "Peymana Lozanê",
+   "Împaratoriya Medî",
+   "Mîrgeha Botan"
   ],
   "correctAnswer": "Celadet Alî Bedirxan",
   "explanation": "Ronahî (1942), Hawar'dan sonra Celadet tarafından Şam'da çıkarıldı.",
@@ -5249,9 +5249,9 @@
   "prompt": "Qelaya Dimdimê di dîroka kurdî de bi çi tê nasîn?",
   "answers": [
    "Berxwedana li dijî hêzeke mezin",
-   "Navenda bazirganiyê",
-   "Cihê weşanê",
-   "Zanîngeheke kevn"
+   "lêkolîna borî bi rêya bermahiyên maddî",
+   "peymana ku sînorê Osmanî û Sefewî diyar kir",
+   "padîşahekî/tîranekî zalim"
   ],
   "correctAnswer": "Berxwedana li dijî hêzeke mezin",
   "explanation": "Dimdim direnişi (17. yy) destan ve kilamlara konu oldu.",
@@ -5345,9 +5345,9 @@
   "prompt": "Di wêjeya kurdî de \"medrese\" çi rol lîst?",
   "answers": [
    "Perwerdehiya klasîk û perwerdekirina helbestvanan",
-   "Weşandina rojnameyan",
-   "Hilberîna muzîkê",
-   "Rêveberiya bajaran"
+   "Lihevhatina dengên dawiya rêzikan",
+   "romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin",
+   "yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî"
   ],
   "correctAnswer": "Perwerdehiya klasîk û perwerdekirina helbestvanan",
   "explanation": "Klasik Kürt şairlerinin çoğu medreselerde yetişti.",
@@ -5441,9 +5441,9 @@
   "prompt": "Di helbesta kurdî de \"qafiye\" çi ye?",
   "answers": [
    "Lihevhatina dengên dawiya rêzikan",
-   "Hejmara rêzikan",
-   "Mijara helbestê",
-   "Navê helbestvan"
+   "Kovarên çand û wêjeyê",
+   "Dengbêj û çîrokbêjan",
+   "Helbestên xwe yên li ser xweza û teyran"
   ],
   "correctAnswer": "Lihevhatina dengên dawiya rêzikan",
   "explanation": "Kafiye, dize sonlarındaki ses uyumudur.",
@@ -5465,9 +5465,9 @@
   "prompt": "Di klasîkên kurdî de \"mesnewî\" çi ye?",
   "answers": [
    "Forma helbestî ya çîrokî bi beytên qafiyedar",
-   "Cureyekî ferhengê",
-   "Rêbaza nivîsandina dîrokê",
-   "Navê medreseyekê"
+   "belavbûna alfabeya kurdî ya bi bingehê latînî",
+   "helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî",
+   "zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî"
   ],
   "correctAnswer": "Forma helbestî ya çîrokî bi beytên qafiyedar",
   "explanation": "Mem û Zîn mesnevi biçiminde yazılmıştır.",
@@ -5535,9 +5535,9 @@
   "prompt": "\"Zembîlfiroş\" di wêjeya kurdî de çi ye?",
   "answers": [
    "Destaneke evînî ya gelêrî",
-   "Ferhengek",
-   "Rojnameyek",
-   "Amûreke muzîkê"
+   "Mela Ehmedê Xasî",
+   "Dîwana xwe ya helbestên sofîyane",
+   "şevbêrkên wêjeyî"
   ],
   "correctAnswer": "Destaneke evînî ya gelêrî",
   "explanation": "Zembîlfiroş, yoksul bir âşığın hikâyesidir; sözlü ve yazılı olarak yayılmıştır.",
@@ -5559,9 +5559,9 @@
   "prompt": "Wergera berhemên cîhanî bo kurdî çima girîng tê dîtin?",
   "answers": [
    "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
-   "Tenê ji bo bazarê ye",
-   "Ji bo kêmkirina xwendinê",
-   "Tenê ji bo dibistanan e"
+   "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
+   "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca",
+   "belavbûna alfabeya kurdî ya bi bingehê latînî"
   ],
   "correctAnswer": "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
   "explanation": "Çeviri yeni kavramlar getirir ve yazılı dili geliştirir.",
@@ -5583,9 +5583,9 @@
   "prompt": "Di Mem û Zînê de \"Tacdîn\" kî ye?",
   "answers": [
    "Hevalê dilsoz ê Mem",
-   "Bavê Zînê",
-   "Mîrê bajêr",
-   "Dijminê Mem"
+   "dest jî rû dişo",
+   "fikra bingehîn",
+   "Mela Ehmedê Xasî"
   ],
   "correctAnswer": "Hevalê dilsoz ê Mem",
   "explanation": "Tacdin destanda Mem'in dostudur ve onun için fedakârlık yapar.",
@@ -5679,9 +5679,9 @@
   "prompt": "Herêma Kurdistanê ya Iraqê ji çend parêzgehên sereke pêk tê?",
   "answers": [
    "Sê (Hewlêr, Silêmanî, Dihok)",
-   "Du",
-   "Pênc",
-   "Heft"
+   "gola tektonîk a di sînorên Elezîzê de",
+   "Girseya çiyayî ya nêzî Çemê Xerzan",
+   "şiklê erdê yê bilind"
   ],
   "correctAnswer": "Sê (Hewlêr, Silêmanî, Dihok)",
   "explanation": "Üç temel il: Erbil, Süleymaniye ve Duhok.",
@@ -5845,9 +5845,9 @@
   "prompt": "\"Zozan\" û \"germiyan\" di jiyana koçeran de çi diyar dikin?",
   "answers": [
    "Warê havînê û warê zivistanê",
-   "Du bajarên mezin",
-   "Du çemên sereke",
-   "Du cureyên xwarinê"
+   "Girseya çiyayî ya nêzî Çemê Xerzan",
+   "deşta tektonîk a bilind a li Colemêrgê",
+   "Avahiyên kevirî yên li ser çiyê"
   ],
   "correctAnswer": "Warê havînê û warê zivistanê",
   "explanation": "Göçerler yazın yaylada, kışın kışlakta kalır.",
@@ -5941,9 +5941,9 @@
   "prompt": "\"Şeşxane\" an amûrên têlî yên kurdî bi giştî çawa tên lêxistin?",
   "answers": [
    "Bi tiliyan an bi mizrabê",
-   "Bi kevanê",
-   "Bi pifê",
-   "Bi lêdana çermê"
+   "Dawet û govendê",
+   "Koma stranbêj û muzîkjenan",
+   "awayê stranbêjiya bi kom"
   ],
   "correctAnswer": "Bi tiliyan an bi mizrabê",
   "explanation": "Tembûr ve saz parmakla ya da mızrapla çalınır.",
@@ -6085,9 +6085,9 @@
   "prompt": "Di muzîka kurdî ya nûjen de \"kom\" çi ye?",
   "answers": [
    "Koma stranbêj û muzîkjenan",
-   "Amûreke têlî",
-   "Cureyekî reqsê",
-   "Navê festîvalekê"
+   "Bûyerên şer û berxwedanê",
+   "Stranên kurt ên bi gelemperî evîndar",
+   "Kilam çîrokeke dîrokî diguhezîne"
   ],
   "correctAnswer": "Koma stranbêj û muzîkjenan",
   "explanation": "\"Kom\", birlikte söyleyip çalan topluluktur; 1990'ların toplu müziği bununla anılır.",
@@ -6131,9 +6131,9 @@
   "prompt": "Di dengbêjiyê de \"şêwe\" ya herêmî çi tê wateyê?",
   "answers": [
    "Awayê gotinê yê taybetî yê herêmekê",
-   "Navê amûrekê",
-   "Dirêjahiya kilamê",
-   "Hejmara dengbêjan"
+   "Cureyekî kilamê yê bi gelemperî evîndar",
+   "kesa ku bi giştî stranan dibêje",
+   "edeta ku ji muzîkjenan re pere tê avêtin"
   ],
   "correctAnswer": "Awayê gotinê yê taybetî yê herêmekê",
   "explanation": "Her yöre — Serhed, Botan, Behdinan — kendi dengbêj üslubuna sahiptir.",
@@ -6179,9 +6179,9 @@
   "prompt": "Muzîka kurdî ya diasporayê bi giştî çi bandor kir?",
   "answers": [
    "Belavbûna cîhanî ya stran û tomarkirinê",
-   "Kêmbûna stranan",
-   "Rawestandina dengbêjiyê",
-   "Guhertina alfabeyê"
+   "Komên muzîka kurdî ya nûjen",
+   "veguhastina muzîkal a bi têkiliya hoste-şagird",
+   "muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê"
   ],
   "correctAnswer": "Belavbûna cîhanî ya stran û tomarkirinê",
   "explanation": "Diaspora yeni stüdyo, yayın ve festivaller getirdi; şarkılar dünyaya yayıldı.",
@@ -6369,9 +6369,9 @@
   "prompt": "Di rêveberiyên xweser de \"meclîsa jinan\" çi rol digire?",
   "answers": [
    "Li ser mijarên jinan biryarên girêdayî digire",
-   "Tenê şêwir dide",
-   "Tenê perwerdehiyê dide",
-   "Rola wê nîne"
+   "rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî",
+   "destûreke azadîxwaz a ku hemû beşên cuda vedihewîne",
+   "serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî"
   ],
   "correctAnswer": "Li ser mijarên jinan biryarên girêdayî digire",
   "explanation": "Kadın meclisi, kendi konularında nihai karar hakkına sahiptir.",
@@ -6417,9 +6417,9 @@
   "prompt": "Di paradîgmayê de \"civaka xwezayî\" çi tê wateyê?",
   "answers": [
    "Civaka berî hiyerarşiya dewletê",
-   "Civaka bêziman",
-   "Civaka pîşesazî",
-   "Civaka dîjîtal"
+   "civaka exlaqî-polîtîk",
+   "rexneya patriyarkayê",
+   "yekîtiya wekhev a beşên cuda yên bindest"
   ],
   "correctAnswer": "Civaka berî hiyerarşiya dewletê",
   "explanation": "Doğal toplum, sınıf ve devlet öncesi model olarak değerlendirilir.",
@@ -6441,9 +6441,9 @@
   "prompt": "\"Hişmendiya civakî\" di vê paradîgmayê de çima girîng e?",
   "answers": [
    "Guhertin bi perwerdehî û hişmendiyê dest pê dike",
-   "Tenê aborî girîng e",
-   "Tenê hiqûq girîng e",
-   "Guhertin bi teknolojiyê tê"
+   "biryargirtina rasterast a gel bêyî nûneran",
+   "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
+   "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de"
   ],
   "correctAnswer": "Guhertin bi perwerdehî û hişmendiyê dest pê dike",
   "explanation": "Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır.",
@@ -6465,9 +6465,9 @@
   "prompt": "Rexneya li \"dewleta netewe\" di vê paradîgmayê de bi giştî li ser çi ye?",
   "answers": [
    "Pirrengiyê bi zorê yek dike",
-   "Pir bi hêz e",
-   "Pir belavbûyî ye",
-   "Tenê aborî ye"
+   "Hilberîna hevpar li şûna kara kesane",
+   "azadiya jinê, ekolojî û demokrasî",
+   "demokrasî, azadiya jinê û ekolojî"
   ],
   "correctAnswer": "Pirrengiyê bi zorê yek dike",
   "explanation": "Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar.",
@@ -6535,9 +6535,9 @@
   "prompt": "\"Perwerdehiya bi zimanê zikmakî\" di vê paradîgmayê de çima girîng tê dîtin?",
   "answers": [
    "Nasname û hişmendî bi ziman tê veguhastin",
-   "Tenê ji bo îmtîhanan",
-   "Tenê ji bo turîzmê",
-   "Girîngiya wê nîne"
+   "Ji ber ku koletiya yekem li ser jinê hatiye avakirin",
+   "Zanist ji civak û exlaqê nayê veqetandin",
+   "Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê"
   ],
   "correctAnswer": "Nasname û hişmendî bi ziman tê veguhastin",
   "explanation": "Dil hem hafızayı hem kimliği taşır; bu yüzden anadilde eğitim temeldir.",
@@ -6559,9 +6559,9 @@
   "prompt": "Di têgîna \"modernîteya kapîtalîst\" de sê stûnên rexnekirî çi ne?",
   "answers": [
    "Kapîtalîzm, pîşesaziyparêzî û dewleta netewe",
-   "Ziman, çand û dîrok",
-   "Perwerde, tenduristî û aborî",
-   "Komun, meclîs û akademî"
+   "xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e",
+   "pergaleke li ser bingeha jiyana komînal û hevgirtinê",
+   "milkiyeta axê û amûran a gişî civakê"
   ],
   "correctAnswer": "Kapîtalîzm, pîşesaziyparêzî û dewleta netewe",
   "explanation": "Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir.",
@@ -6583,9 +6583,9 @@
   "prompt": "Di modela ekolojîk de çandiniya herêmî çima tê pêşniyar kirin?",
   "answers": [
    "Pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe",
-   "Ji bo îxracatê",
-   "Ji bo pîşesaziya giran",
-   "Ji bo turîzmê"
+   "Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê",
+   "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
+   "biryargirtina rasterast a gel bêyî nûneran"
   ],
   "correctAnswer": "Pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe",
   "explanation": "Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır.",
@@ -6655,9 +6655,9 @@
   "prompt": "Bûyera fîlmê «Kûsî jî Difirin» li ku derê diqewime?",
   "answers": [
    "Li kampeke penaberan a Kurdistana Iraqê",
-   "Li taxeke Stenbolê",
-   "Li navenda Tehranê",
-   "Li benderekê li Beyrûdê"
+   "Festîvala Fîlman a Stenbolê",
+   "Navenda Çanda Mezopotamyayê",
+   "Ji gundiyên herêmê yên ne pîşeyî"
   ],
   "correctAnswer": "Li kampeke penaberan a Kurdistana Iraqê",
   "explanation": "Film, 2003 savaşının hemen öncesinde bir mülteci kampındaki çocuklar arasında geçer.",
@@ -6799,9 +6799,9 @@
   "prompt": "Fîlmê «Zare» (1926), yek ji fîlmên herî kevn ên li ser jiyana kurdan, li kîjan welatî hatiye kişandin?",
   "answers": [
    "Yekîtiya Soviyetê",
-   "Fransa",
-   "Misir",
-   "Îtalya"
+   "Birayên Lumière",
+   "Neorealîzma Îtalî",
+   "Dîktatorê Mezin"
   ],
   "correctAnswer": "Yekîtiya Soviyetê",
   "explanation": "Film Sovyet Ermenistanı'nda çekildi ve Ezidi Kürtlerin yaşamını anlatır.",
@@ -7207,9 +7207,9 @@
   "prompt": "Fîlmê «Dema Hespên Serxweş» bi kîjan zimanî hatiye kişandin?",
   "answers": [
    "Kurdî (Soranî û Kurmancî)",
-   "Farisî",
-   "Erebî",
-   "Tirkî"
+   "Neorealîzma Îtalî",
+   "Birayên Lumière",
+   "Fîlm hate qedexekirin"
   ],
   "correctAnswer": "Kurdî (Soranî û Kurmancî)",
   "explanation": "Film yörenin kendi diliyle çekildi; bu da onu Kürtçe çekilen ilk filmler arasına yerleştirir.",

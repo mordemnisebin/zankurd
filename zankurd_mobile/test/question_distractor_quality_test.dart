@@ -294,4 +294,38 @@ void main() {
           'Sorulan terim şık olarak da duruyor: ${offenders.take(5).join(" | ")}',
     );
   });
+
+  test('doğru cevap uzunluğuyla ele vermiyor', () {
+    // 2026-07-27 ölçümü: çok şıklı soruların **%34,3'ünde en uzun şık
+    // doğru şıktı**; rastgele bir bankada bu oran %25 olmalı. Yani hiçbir
+    // şey bilmeyen bir oyuncu "en uzunu seç" diyerek dokuz puan
+    // kazanıyordu.
+    //
+    // Sebep uzunluk değil biçimdi: doğru şık bir tanım cümlesiyken
+    // çeldiriciler tarih, yer ya da kişi adıydı. 103 soruda çeldiriciler
+    // aynı kategorideki başka soruların doğru cevaplarıyla değiştirildi
+    // (`tool/fix_length_leak_distractors.py`) ve oran %30'a indi.
+    //
+    // Tavan bir mandal: yeni sorular bu oranı yükseltmemeli. %25'e
+    // inmesi beklenmez — bazı sorularda doğru cevap doğal olarak uzundur.
+    const ceilingPercent = 31.0;
+
+    var considered = 0;
+    var longestIsCorrect = 0;
+    for (final q in offlineQuestionBank) {
+      if (q.answers.length < 3) continue;
+      considered++;
+      final longest = q.answers.reduce((a, b) => a.length >= b.length ? a : b);
+      if (longest == q.correctAnswer) longestIsCorrect++;
+    }
+
+    final percent = longestIsCorrect / considered * 100;
+    expect(
+      percent,
+      lessThanOrEqualTo(ceilingPercent),
+      reason:
+          'En uzun şıkkın doğru olduğu soru oranı yükseldi: '
+          '%${percent.toStringAsFixed(1)} > %$ceilingPercent',
+    );
+  });
 }

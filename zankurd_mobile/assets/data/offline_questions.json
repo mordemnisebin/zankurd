@@ -2793,9 +2793,9 @@
   "prompt": "Bajarên wek Amed, Riha ve Mêrdîn li kîjan herêma dîrokî cih digirin?",
   "answers": [
    "Mezopotamyaya Jorîn",
-   "Meraş",
-   "Gola Wanê",
-   "Hewlêr"
+   "Çandiniya genim û ceh",
+   "herêma Botan/Cizîrê",
+   "Herêma Kurdistanê ya Iraqê"
   ],
   "correctAnswer": "Mezopotamyaya Jorîn",
   "explanation": "Bu şehirler, Dicle-Fırat arasındaki Yukarı Mezopotamya bölgesinde yer alır.",
@@ -6556,9 +6556,9 @@
   "category": "Dîrok",
   "prompt": "Di qada Dîrokê de 'Qazi Muhammed' çi îfade dike?",
   "answers": [
-   "Birca Avê",
-   "Mesud Barzani",
-   "serokê Komara Mehabadê",
+   "Ji bo herêmeke kurdî ya xweser madde dihewand",
+   "Vegirtina Qudsê di 1187an de",
+   "Navbeynkariya di navbera Osmanî û mîrên kurd de",
    "serokkomarê Komara Kurd a Mehabadê"
   ],
   "correctAnswer": "serokkomarê Komara Kurd a Mehabadê",
@@ -6659,9 +6659,9 @@
   "category": "Dîrok",
   "prompt": "Derbarê 'Ehmedê Xanî' de agahiya rast kîjan e?",
   "answers": [
-   "serdema Osmanî-Sefewî (sedsalên 16-19em)",
-   "Sevr (1920)",
-   "1946",
+   "êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin",
+   "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
+   "rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin",
    "helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî"
   ],
   "correctAnswer": "helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî",
@@ -7062,9 +7062,9 @@
   "category": "Dîrok",
   "prompt": "Dema 'Komkujiya Helebceyê' tê gotin, çi tê xwestin?",
   "answers": [
-   "Şerê Hittînê (1187)",
-   "sedsala 19em",
-   "Lozan (1923)",
+   "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket",
+   "helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî",
+   "rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin",
    "êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin"
   ],
   "correctAnswer": "êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin",
@@ -9157,10 +9157,10 @@
   "category": "Edebiyat",
   "prompt": "Kîjan têgeha 'Şivanê Kurd' di nav wêjeyê de rast bi cih dike?",
   "answers": [
-   "hikâye",
+   "destana evînê ya herî mezin a wêjeya klasîk a kurdî",
    "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
-   "şînî",
-   "Denizciler"
+   "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+   "helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê"
   ],
   "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
   "explanation": "'Şivanê Kurd': 1935 yılında basılan ilk modern Kürtçe roman.",
@@ -9409,9 +9409,9 @@
   "prompt": "Berhema bi navê «Şivanê Kurmanca» çi ye?",
   "answers": [
    "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
-   "yekîneya pîvanê",
-   "xweza û teyr",
-   "Şam"
+   "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
+   "helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî",
+   "helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê"
   ],
   "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
   "explanation": "'Şivanê Kurd': 1935 yılında basılan ilk modern Kürtçe roman.",
@@ -18636,10 +18636,10 @@
   "category": "Dîrok",
   "prompt": "Di gotûbêja dersê de, ji bo dersa dîrok kîjan vebijark ravekirina têgeha 'Mîrê Kor' bi awayekî rast temam dike?",
   "answers": [
-   "sedsala 16em",
+   "rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin",
    "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
-   "sedsala 19em",
-   "1991"
+   "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
+   "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket"
   ],
   "correctAnswer": "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
   "explanation": "Ravekirina rast ji bo 'Mîrê Kor' ev e: mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike.",
@@ -18653,10 +18653,10 @@
   "category": "Dîrok",
   "prompt": "Di nirxandina xwendekaran de, di qada dîrok de têgeha 'Mîrê Kor' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
-   "sedsala 20em",
-   "di serdema Osmanî de (sedsala 16em)",
+   "helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî",
+   "êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin",
    "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
-   "1923"
+   "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket"
   ],
   "correctAnswer": "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
   "explanation": "«Mîrê Kor» tê vê wateyê: mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike.",
@@ -18824,9 +18824,9 @@
   "prompt": "Di nirxandina xwendekaran de, kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin'?",
   "answers": [
    "Rojnameya Kurdistan",
-   "Kovara Jîn",
-   "Şerefname",
-   "Mîrê Kor"
+   "Mesud Barzani",
+   "Dewleta Merwaniyan",
+   "Sine (Sanandaj)"
   ],
   "correctAnswer": "Rojnameya Kurdistan",
   "explanation": "«Rojnameya Kurdistan» tê vê wateyê: rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin.",
@@ -21536,9 +21536,9 @@
   "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin'?",
   "answers": [
    "misafirperweriya kurdî",
-   "kilimên kurdî",
-   "Newroz",
-   "Kalo û Sersal"
+   "Çîmena çiyayî ya havînê",
+   "bi çanda sifrê ve girêdayî ye",
+   "sor, spî û kesk"
   ],
   "correctAnswer": "misafirperweriya kurdî",
   "explanation": "«misafirperweriya kurdî» tê vê wateyê: têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin.",
@@ -21587,9 +21587,9 @@
   "prompt": "Di gotûbêja dersê de, kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin'?",
   "answers": [
    "misafirperweriya kurdî",
-   "Govenda Kurdî",
-   "kilimên kurdî",
-   "hewran"
+   "Serê sibê / şafak",
+   "Motîfên hêjmarî û sembolîk",
+   "girêdanên civak û malbatê"
   ],
   "correctAnswer": "misafirperweriya kurdî",
   "explanation": "«misafirperweriya kurdî» tê vê wateyê: têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin.",
@@ -22765,10 +22765,10 @@
   "category": "Muzîk",
   "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin'?",
   "answers": [
-   "lawik",
-   "bilûr",
+   "Strana razanê",
+   "lêdana rêkûpêk",
    "lîrîka klaman",
-   "heyran"
+   "Dawet û govendê"
   ],
   "correctAnswer": "lîrîka klaman",
   "explanation": "«lîrîka klaman» tê vê wateyê: avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin.",
@@ -25417,10 +25417,10 @@
   "category": "Paradigma",
   "prompt": "Di gotûbêja dersê de, kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê'?",
   "answers": [
-   "Ekolojiya Civakî",
-   "zanistiya azad",
+   "azadiya jinê, ekolojî û demokrasî",
+   "Lihevhatina civak û xwezayê",
    "Konfederalîzma Demokratîk",
-   "Jineolojî"
+   "civaka exlaqî-polîtîk"
   ],
   "correctAnswer": "Konfederalîzma Demokratîk",
   "explanation": "«Konfederalîzma Demokratîk» tê vê wateyê: modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê.",
@@ -33744,10 +33744,10 @@
   "category": "Teknolojî",
   "prompt": "Di bernamesaziyê de «guhêrbar» çi dike?",
   "answers": [
-   "Ekranê ronî dike",
-   "Torê lez dike",
+   "Hêmana dîtbarî (UI)",
+   "Nîşandana wêne û nivîsan",
    "Nirxekê bi navekî ve girê dide",
-   "Bataryayê dagire"
+   "Xizmet û daneyan digihîne amûrên din"
   ],
   "correctAnswer": "Nirxekê bi navekî ve girê dide",
   "explanation": "Değişken, bir değeri bellekte bir adla saklar.",
@@ -33778,10 +33778,10 @@
   "category": "Teknolojî",
   "prompt": "Di daneparêziyê de «paşvegirtin» çi ye?",
   "answers": [
-   "Şîfreya bikarhêner",
+   "Xizmet û daneyan digihîne amûrên din",
    "Kopiyeke daneyan a li cihekî din",
-   "Leza torê",
-   "Rengê ekranê"
+   "Nîşandana wêne û nivîsan",
+   "Nirxekê bi navekî ve girê dide"
   ],
   "correctAnswer": "Kopiyeke daneyan a li cihekî din",
   "explanation": "Yedekleme, kaybı telafi etmek için veriyi ana cihaz dışında tutar.",
@@ -33846,10 +33846,10 @@
   "category": "Teknolojî",
   "prompt": "Di torê de «server» çi kar dike?",
   "answers": [
-   "Tenê wêneyan çap dike",
+   "Kopiyeke daneyan a li cihekî din",
    "Xizmet û daneyan digihîne amûrên din",
-   "Tenê deng tomar dike",
-   "Tenê bataryayê dagire"
+   "Nirxekê bi navekî ve girê dide",
+   "Nîşandana wêne û nivîsan"
   ],
   "correctAnswer": "Xizmet û daneyan digihîne amûrên din",
   "explanation": "Sunucu, diğer cihazların isteklerini karşılar ve onlara veri ulaştırır.",
