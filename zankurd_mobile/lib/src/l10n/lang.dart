@@ -65,6 +65,22 @@ class LanguageProvider extends ChangeNotifier {
   void toggle() => setLanguage(isKu ? AppLanguage.tr : AppLanguage.ku);
 }
 
+/// Dile duyarlı büyük harf.
+///
+/// `String.toUpperCase()` yereli tanımaz: Türkçede 'i' → 'I' verir, oysa
+/// doğrusu 'İ'dir. Bölüm başlıkları büyük harfle çizildiği için ayarlar
+/// ekranı "GÜVENLIK", "SES & BILDIRIM", "SESLENDIRME" yazıyordu
+/// (2026-07-27). Kusur sessizdi: metinler sözlükte doğruydu, yalnız
+/// büyütme yanlıştı ve yalnız içinde 'i' geçen başlıklarda görünüyordu.
+///
+/// Kurmancîde 'i' → 'I' **doğrudur** (alfabede i ve î ayrı harflerdir),
+/// bu yüzden eşleme dile bağlıdır; tek bir düzeltme iki dili birden
+/// bozardı.
+String upperForLanguage(String value, {required bool ku}) {
+  if (ku) return value.toUpperCase();
+  return value.replaceAll('i', 'İ').replaceAll('ı', 'I').toUpperCase();
+}
+
 /// Helper to get bilingual strings.
 extension LangContext on BuildContext {
   /// Eylem çağrıları (toggle/setLang) için: abonelik kurmaz.
@@ -83,6 +99,9 @@ extension LangContext on BuildContext {
 
   AppLanguage get language =>
       Provider.of<LanguageProvider>(this, listen: false).language;
+
+  /// Etkin dile göre büyük harf — bkz. [upperForLanguage].
+  String upper(String value) => upperForLanguage(value, ku: isKu);
 
   /// Returns [ku] if Kurdish is active, [tr] if Turkish.
   String s(String ku, String tr) => isKu ? ku : tr;

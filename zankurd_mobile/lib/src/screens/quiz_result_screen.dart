@@ -695,7 +695,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     const SizedBox(width: AppSpacing.xs),
                                     Expanded(
                                       child: Text(
-                                        headerTitle.toUpperCase(),
+                                        context.upper(headerTitle),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: AppTypography.caption.copyWith(

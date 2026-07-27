@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 
 /// İkincil ekranların ortak kimlik kartı — soft accent gradyan + ikon.
@@ -123,7 +124,7 @@ class ScreenSectionLabel extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              label.toUpperCase(),
+              context.upper(label),
               style: AppTypography.caption.copyWith(
                 color: AppColors.readableAccent(context, accent),
                 letterSpacing: 1.05,
