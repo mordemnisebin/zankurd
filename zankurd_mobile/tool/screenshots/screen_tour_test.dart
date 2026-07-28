@@ -23,6 +23,7 @@ import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
@@ -129,6 +130,59 @@ String _flutterSdkRoot() {
     dir = dir.parent;
   }
   return '';
+}
+
+/// Tur sonucu ekranı için gerçekçi bir örnek: iki doğru bir yanlış, seri,
+/// coin ödülü ve tam açıklama listesi.
+Widget _resultScreen() {
+  final repository = MockZanKurdRepository();
+  final room = repository.createRoom();
+  return QuizResultScreen(
+    repository: repository,
+    room: room,
+    score: 240,
+    correctCount: 2,
+    wrongCount: 1,
+    totalQuestions: 3,
+    bestStreak: 2,
+    coinsAwarded: 30,
+    answerRecords: const [
+      AnswerRecord(
+        id: 'r1',
+        category: 'Ziman',
+        prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+        answers: ['su', 'ekmek', 'yol', 'dağ'],
+        correctAnswer: 'su',
+        selectedAnswer: 'su',
+        explanation: '«av» Türkçede «su» demektir.',
+        explanationKu: '«av» bi Tirkî dibe «su».',
+        explanationTr: '«av» Türkçede «su» demektir.',
+      ),
+      AnswerRecord(
+        id: 'r2',
+        category: 'Dîrok',
+        prompt: 'Şerefname kê nivîsandiye?',
+        answers: ['Şerefxan', 'Ehmedê Xanî', 'Melayê Cizîrî', 'Feqiyê Teyran'],
+        correctAnswer: 'Şerefxan',
+        selectedAnswer: 'Ehmedê Xanî',
+        explanation: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
+        explanationKu: 'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
+            'nivîsandin.',
+        explanationTr: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
+      ),
+      AnswerRecord(
+        id: 'r3',
+        category: 'Çand',
+        prompt: 'Newroz di kîjan rojê de tê pîrozkirin?',
+        answers: ['21ê Adarê', '1ê Gulanê', '15ê Sibatê', '9ê Nîsanê'],
+        correctAnswer: '21ê Adarê',
+        selectedAnswer: '21ê Adarê',
+        explanation: 'Newroz 21 Mart\'ta kutlanır.',
+        explanationKu: 'Newroz di 21ê Adarê de tê pîrozkirin.',
+        explanationTr: 'Newroz 21 Mart\'ta kutlanır.',
+      ),
+    ],
+  );
 }
 
 Future<void> _pump(
@@ -549,6 +603,24 @@ void main() {
       ),
     );
     await _shoot(t, '44_review');
+  }, tags: ['preview']);
+
+  // Sonuç ekranı tura hiç girmemişti: turun bittiği, puanın, rozetlerin
+  // ve bütün açıklamaların görüldüğü ekran ölçüm dışı kalıyordu
+  // (2026-07-27). Ölçülmeyen yerde kusur görünmez.
+  testWidgets('68 tur sonucu', (t) async {
+    await _pump(t, _resultScreen());
+    await _shoot(t, '68_result');
+  }, tags: ['preview']);
+
+  testWidgets('69 tur sonucu (karanlık)', (t) async {
+    await _pump(t, _resultScreen(), dark: true);
+    await _shoot(t, '69_result_dark');
+  }, tags: ['preview']);
+
+  testWidgets('70 tur sonucu (Kurmancî)', (t) async {
+    await _pump(t, _resultScreen(), ku: true);
+    await _shoot(t, '70_result_ku');
   }, tags: ['preview']);
 
   // ── Kalan ekranların karanlık tema taraması ──

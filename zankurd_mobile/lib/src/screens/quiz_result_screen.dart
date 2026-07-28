@@ -1043,9 +1043,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
+                    // Bağlantılar arasına '·' konuyordu; satır sarınca
+                    // ayraç satır sonunda öksüz kalıyordu — "… Liderlik
+                    // tablosu ·" diye bitip alt satırda "Değerlendir"
+                    // başlıyordu (2026-07-27). Ayraç öğeler arasında
+                    // durmalı, satır sonunda değil; `Wrap` bunu garanti
+                    // edemez. Ayraç yerine boşluk kullanılır.
                     child: Wrap(
                       alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 4,
                       runSpacing: 4,
                       children: [
                         TextButton(
@@ -1067,14 +1074,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               color: AppTheme.textSubColor(context),
                               fontWeight: FontWeight.w700,
                             ),
-                          ),
-                        ),
-                        Text(
-                          '·',
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(
-                              context,
-                            ).withValues(alpha: 0.4),
                           ),
                         ),
                         TextButton(
@@ -1104,14 +1103,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             ),
                           ),
                         ),
-                        Text(
-                          '·',
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(
-                              context,
-                            ).withValues(alpha: 0.4),
-                          ),
-                        ),
                         TextButton(
                           style: TextButton.styleFrom(
                             visualDensity: VisualDensity.compact,
@@ -1134,14 +1125,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               color: AppTheme.textMutedColor(context),
                               fontWeight: FontWeight.w500,
                             ),
-                          ),
-                        ),
-                        Text(
-                          '·',
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(
-                              context,
-                            ).withValues(alpha: 0.4),
                           ),
                         ),
                         // Değerlendir: öne çıkan CTA değil, soluk link — her
@@ -1446,22 +1429,30 @@ class _ResultRewardChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Çip hero gradyanının üzerinde durur, kendi %20'lik tonuyla değil:
+    // zemin yeşilden turuncuya kayarken rengin kendisi yazı olarak
+    // "+30c" için 2.77:1, "+100 XP" için 2.44:1 veriyordu (2026-07-27).
+    //
+    // Yanındaki `_StatPill` bu sorunu 2026-07-22'de çözmüştü — koyu perde
+    // + beyaz metin, ölçümde 10:1'in üstünde. Ödül çipi o çözümü
+    // kullanmıyordu; şimdi kullanıyor. Renk kimliği ikonda ve kenarlıkta
+    // yaşamayı sürdürür.
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.20),
+        color: AppColors.heroScrim(),
         borderRadius: BorderRadius.circular(99),
         border: Border.all(color: color.withValues(alpha: 0.55)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: AppColors.onAccentTint(context, color), size: 14),
+          Icon(icon, color: color, size: 14),
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
-              color: color,
+            style: const TextStyle(
+              color: Colors.white,
               fontWeight: FontWeight.w700,
               fontSize: 12,
             ),
