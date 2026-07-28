@@ -23,6 +23,8 @@ import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
+import 'package:zankurd_mobile/src/screens/image_credits_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
@@ -621,6 +623,19 @@ void main() {
   testWidgets('70 tur sonucu (Kurmancî)', (t) async {
     await _pump(t, _resultScreen(), ku: true);
     await _shoot(t, '70_result_ku');
+  }, tags: ['preview']);
+
+  // Bu iki ekran da tura hiç girmemişti: ikisi de menüden açılıyor ve
+  // ikisi de içerik listeliyor — yani boş durumu, uzun metni ve dili
+  // ölçülmemişti (2026-07-27).
+  testWidgets('71 kayıtlı sorular', (t) async {
+    await _pump(t, FavoriteQuestionsScreen(repository: repository));
+    await _shoot(t, '71_favorites');
+  }, tags: ['preview']);
+
+  testWidgets('72 görsel künyesi', (t) async {
+    await _pump(t, const ImageCreditsScreen());
+    await _shoot(t, '72_image_credits');
   }, tags: ['preview']);
 
   // ── Kalan ekranların karanlık tema taraması ──

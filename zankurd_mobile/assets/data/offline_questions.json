@@ -1105,7 +1105,7 @@
  {
   "id": "offline_0745",
   "category": "Cografya",
-  "prompt": "Di çarçoveya erdnîgariya Kurdistanê de, di Kurmancî de \"çiya\" nêzîkî çi ye?",
+  "prompt": "Kurdistanê de, di Kurmancî de \"çiya\" nêzîkî çi ye?",
   "answers": [
    "kesayetiyeke edebî",
    "nota muzîkê",
@@ -5462,7 +5462,7 @@
  {
   "id": "offline_6083",
   "category": "Çand",
-  "prompt": "Di çarçoveya Çandê de 'destmal' tê çi wateyê?",
+  "prompt": "'destmal' tê çi wateyê?",
   "answers": [
    "Kürt halk müziğindeki ağıt ezgisi",
    "zulme karşı direniş ve yeniden doğuş",
@@ -5806,7 +5806,7 @@
  {
   "id": "offline_6523",
   "category": "Çand",
-  "prompt": "Di çarçoveya Çandê de 'şîlan' çawa divê bê fêmkirin?",
+  "prompt": "'şîlan' çawa divê bê fêmkirin?",
   "answers": [
    "nanê kevneşopî yê ku di tenûrê de tê patin",
    "kevneşopiya gula çolê û çaya nebatî",
@@ -6215,7 +6215,7 @@
  {
   "id": "offline_6841",
   "category": "Çand",
-  "prompt": "Di çarçoveya Çandê de 'reşmal' çawa divê bê fêmkirin?",
+  "prompt": "'reşmal' çawa divê bê fêmkirin?",
   "answers": [
    "konê ji mûyê bizina reş",
    "Ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê",
@@ -6300,7 +6300,7 @@
  {
   "id": "offline_7011",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Jiyan gazetesi' tê çi wateyê?",
+  "prompt": "'Jiyan gazetesi' tê çi wateyê?",
   "answers": [
    "Osmanlı döneminde özerk kalan Kürt hükümdarlığı",
    "tanıklık ve anlatılarla geçmişi anlama yöntemi",
@@ -6330,7 +6330,7 @@
  {
   "id": "offline_7053",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Barzani Hareketi' tê çi wateyê?",
+  "prompt": "'Barzani Hareketi' tê çi wateyê?",
   "answers": [
    "Irak rejimi tarafından idam edilen Kürt kadın aktivist",
    "Şerefhan (Bitlis beyi)",
@@ -6797,7 +6797,7 @@
  {
   "id": "offline_7451",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Serhildanên Agirî' çawa divê bê fêmkirin?",
+  "prompt": "'Serhildanên Agirî' çawa divê bê fêmkirin?",
   "answers": [
    "mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da",
    "berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de",
@@ -6998,7 +6998,7 @@
  {
   "id": "offline_7643",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Mikdat Mithat Bedirxan' çawa divê bê fêmkirin?",
+  "prompt": "'Mikdat Mithat Bedirxan' çawa divê bê fêmkirin?",
   "answers": [
    "yekem rojnamevanê kurd ê ku rojnameya Kurdistanê derxist",
    "serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand",
@@ -7049,7 +7049,7 @@
  {
   "id": "offline_7666",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Mîrgeha Bidlîsê' tê çi wateyê?",
+  "prompt": "'Mîrgeha Bidlîsê' tê çi wateyê?",
   "answers": [
    "hukumdariya kurd a ku di serdema Osmanî de xweser mabû",
    "dewleta mezin a ku Selahedînê Eyûbî damezrand",
@@ -7083,7 +7083,7 @@
  {
   "id": "offline_7669",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Şeyh Mahmud Berzenci' tê çi wateyê?",
+  "prompt": "'Şeyh Mahmud Berzenci' tê çi wateyê?",
   "answers": [
    "Roma û Atîna",
    "serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand",
@@ -7402,7 +7402,7 @@
  {
   "id": "offline_7922",
   "category": "Dîrok",
-  "prompt": "Di çarçoveya Dîrokê de 'Mervaniler' çawa divê bê fêmkirin?",
+  "prompt": "'Mervaniler' çawa divê bê fêmkirin?",
   "answers": [
    "xanedaniya kurd a serdema navîn a bi navenda Amedê",
    "belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)",
@@ -7556,7 +7556,7 @@
  {
   "id": "offline_8149",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Munzur vadisi' çawa divê bê fêmkirin?",
+  "prompt": "'Munzur vadisi' çawa divê bê fêmkirin?",
   "answers": [
    "geliyê bi statuya parka neteweyî ya li Dêrsimê",
    "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
@@ -7843,7 +7843,7 @@
  {
   "id": "offline_8356",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Çiyayê Halgurdê' çawa divê bê fêmkirin?",
+  "prompt": "'Çiyayê Halgurdê' çawa divê bê fêmkirin?",
   "answers": [
    "newala kûr a ku ava Zapê di navbera kevirên bilind re diherike",
    "Lûtkeya herî bilind a li sînorên Kurdistana Iraqê",
@@ -8066,7 +8066,7 @@
  {
   "id": "offline_8539",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'avhewaya Kurdistanê' çawa divê bê fêmkirin?",
+  "prompt": "'avhewaya Kurdistanê' çawa divê bê fêmkirin?",
   "answers": [
    "zivistanên sar ên deverên bejahî û çiyayî",
    "hewza ku gola herî mezin a sodadar a dinyayê ye",
@@ -8083,7 +8083,7 @@
  {
   "id": "offline_8545",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Çiyayên Bîngolê' çawa divê bê fêmkirin?",
+  "prompt": "'Çiyayên Bîngolê' çawa divê bê fêmkirin?",
   "answers": [
    "Deşta çandiniyê ya mezin a ku şaxên Feratê av didinê",
    "Çiyayê volkanîk ê vemirî yê li bakurê Gola Wanê",
@@ -8270,7 +8270,7 @@
  {
   "id": "offline_8739",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Deşta Mûşê' çawa divê bê fêmkirin?",
+  "prompt": "'Deşta Mûşê' çawa divê bê fêmkirin?",
   "answers": [
    "beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê",
    "çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê",
@@ -8322,7 +8322,7 @@
  {
   "id": "offline_8803",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Gola Hazarê' çawa divê bê fêmkirin?",
+  "prompt": "'Gola Hazarê' çawa divê bê fêmkirin?",
   "answers": [
    "çemê hêrs ê ku çiyayên Colemêrgê diqelêşe",
    "gola tektonîk a di sînorên Elezîzê de",
@@ -8356,7 +8356,7 @@
  {
   "id": "offline_8828",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Çemê Garzanê' tê çi wateyê?",
+  "prompt": "'Çemê Garzanê' tê çi wateyê?",
   "answers": [
    "geliyê bi statuya parka neteweyî ya li Dêrsimê",
    "beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê",
@@ -8576,7 +8576,7 @@
  {
   "id": "offline_8947",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Rêzeçiyayên Zagrosê' tê çi wateyê?",
+  "prompt": "'Rêzeçiyayên Zagrosê' tê çi wateyê?",
   "answers": [
    "nebat û dara tîpîk a çiyayên Kurdistanê",
    "çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin",
@@ -8731,7 +8731,7 @@
  {
   "id": "offline_9087",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'deşt' tê çi wateyê?",
+  "prompt": "'deşt' tê çi wateyê?",
   "answers": [
    "gol",
    "Muş",
@@ -8781,7 +8781,7 @@
  {
   "id": "offline_9157",
   "category": "Cografya",
-  "prompt": "Di çarçoveya Cografyaê de 'Dicle nehri' tê çi wateyê?",
+  "prompt": "'Dicle nehri' tê çi wateyê?",
   "answers": [
    "çemê ku ji bin sûrên Amedê derbas dibe",
    "rêzeçiyayên herî asê yên erdnîgariya Dêrsimê",
@@ -8976,7 +8976,7 @@
  {
   "id": "offline_9408",
   "category": "Edebiyat",
-  "prompt": "Di çarçoveya Edebiyatê de 'Mestûre Kurdistanî' tê çi wateyê?",
+  "prompt": "'Mestûre Kurdistanî' tê çi wateyê?",
   "answers": [
    "helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî",
    "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca",
@@ -9735,7 +9735,7 @@
  {
   "id": "offline_10002",
   "category": "Edebiyat",
-  "prompt": "Di çarçoveya Edebiyatê de 'Kamuran Bedirxan' tê çi wateyê?",
+  "prompt": "'Kamuran Bedirxan' tê çi wateyê?",
   "answers": [
    "helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî",
    "zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî",
@@ -9786,7 +9786,7 @@
  {
   "id": "offline_10069",
   "category": "Edebiyat",
-  "prompt": "Di çarçoveya Edebiyatê de 'Ekola Hawarê' çawa divê bê fêmkirin?",
+  "prompt": "'Ekola Hawarê' çawa divê bê fêmkirin?",
   "answers": [
    "yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî",
    "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir",
@@ -9922,7 +9922,7 @@
  {
   "id": "offline_10228",
   "category": "Edebiyat",
-  "prompt": "Di çarçoveya Edebiyatê de 'destan' çawa divê bê fêmkirin?",
+  "prompt": "'destan' çawa divê bê fêmkirin?",
   "answers": [
    "helbesta klasîk a kurdî",
    "xwendekarê medreseyê / feqî",
@@ -10106,7 +10106,7 @@
  {
   "id": "offline_10352",
   "category": "Muzîk",
-  "prompt": "Di çarçoveya Muzîkê de 'dengbêjlik okulu' çawa divê bê fêmkirin?",
+  "prompt": "'dengbêjlik okulu' çawa divê bê fêmkirin?",
   "answers": [
    "dengê bihêz ê ku kurd jê re dibêjin 'şahê dengbêjan'",
    "sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin",
@@ -10634,7 +10634,7 @@
  {
   "id": "offline_10878",
   "category": "Muzîk",
-  "prompt": "Di çarçoveya Muzîkê de 'Kardeş Türküler' tê çi wateyê?",
+  "prompt": "'Kardeş Türküler' tê çi wateyê?",
   "answers": [
    "muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin",
    "stranbêjî an lêxistina bi tenê ya hunermendekî",
@@ -10785,7 +10785,7 @@
  {
   "id": "offline_10963",
   "category": "Muzîk",
-  "prompt": "Di çarçoveya Muzîkê de 'Ciwan Haco' çawa divê bê fêmkirin?",
+  "prompt": "'Ciwan Haco' çawa divê bê fêmkirin?",
   "answers": [
    "muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê",
    "dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir",
@@ -11263,7 +11263,7 @@
  {
   "id": "offline_11341",
   "category": "Muzîk",
-  "prompt": "Di çarçoveya Muzîkê de 'Mihemed Taha Akreyî' çawa divê bê fêmkirin?",
+  "prompt": "'Mihemed Taha Akreyî' çawa divê bê fêmkirin?",
   "answers": [
    "dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin",
    "muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin",
@@ -11365,7 +11365,7 @@
  {
   "id": "offline_11422",
   "category": "Muzîk",
-  "prompt": "Di çarçoveya Muzîkê de 'Mihemed Şêxo' tê çi wateyê?",
+  "prompt": "'Mihemed Şêxo' tê çi wateyê?",
   "answers": [
    "şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê",
    "dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman",
@@ -11382,7 +11382,7 @@
  {
   "id": "offline_11428",
   "category": "Muzîk",
-  "prompt": "Di çarçoveya Muzîkê de 'lawik' tê çi wateyê?",
+  "prompt": "'lawik' tê çi wateyê?",
   "answers": [
    "hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike",
    "strana destanî an evînî ya ku dengbêj dibêjin",
@@ -11535,7 +11535,7 @@
  {
   "id": "offline_11556",
   "category": "Paradigma",
-  "prompt": "Di çarçoveya Paradigmaê de 'peymana civakî' tê çi wateyê?",
+  "prompt": "'peymana civakî' tê çi wateyê?",
   "answers": [
    "pergaleke li ser bingeha jiyana komînal û hevgirtinê",
    "mafê civakê yê xwe parastin û xwerêxistinê",
@@ -12638,7 +12638,7 @@
  {
   "id": "offline_12344",
   "category": "Paradigma",
-  "prompt": "Di çarçoveya Paradigmaê de 'kooperatifçilik' çawa divê bê fêmkirin?",
+  "prompt": "'kooperatifçilik' çawa divê bê fêmkirin?",
   "answers": [
    "yekîneya bingehîn a hevgirtinê ya aboriya komînal",
    "federasyoneke ne-dewletgir a li ser bingeha binî",
@@ -12706,7 +12706,7 @@
  {
   "id": "offline_12391",
   "category": "Paradigma",
-  "prompt": "Di çarçoveya Paradigmaê de 'şaristaniya dewletparêz' tê çi wateyê?",
+  "prompt": "'şaristaniya dewletparêz' tê çi wateyê?",
   "answers": [
    "xeteke pêşketina komînal a gelan a ne-dewletgir",
    "xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e",
@@ -12774,7 +12774,7 @@
  {
   "id": "offline_12459",
   "category": "Paradigma",
-  "prompt": "Di çarçoveya Paradigmaê de 'pozitivizm' çawa divê bê fêmkirin?",
+  "prompt": "'pozitivizm' çawa divê bê fêmkirin?",
   "answers": [
    "belgeya ku prensîbên hevjiyana civakê diyar dike",
    "pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan",
@@ -13010,7 +13010,7 @@
  {
   "id": "offline_12745",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya Siyasetê de 'demokrasiya pirreng' tê çi wateyê?",
+  "prompt": "'demokrasiya pirreng' tê çi wateyê?",
   "answers": [
    "qebûlkirina wekhev a nasname û baweriyên cuda",
    "hevgirtina wekhev û piştgir a gelên cuda",
@@ -13418,7 +13418,7 @@
  {
   "id": "offline_12989",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya Siyasetê de 'xweseriya îdarî' çawa divê bê fêmkirin?",
+  "prompt": "'xweseriya îdarî' çawa divê bê fêmkirin?",
   "answers": [
    "mafê birêvebirina bûçe û xizmetên herêmî bi xwe",
    "Ji bo veguhastina nasname û çandê ji nifşekî bo yê din",
@@ -13435,7 +13435,7 @@
  {
   "id": "offline_13010",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya Siyasetê de 'toplumsal muhalefet' çawa divê bê fêmkirin?",
+  "prompt": "'toplumsal muhalefet' çawa divê bê fêmkirin?",
   "answers": [
    "rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî",
    "rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî",
@@ -13452,7 +13452,7 @@
  {
   "id": "offline_13030",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya Siyasetê de 'yerel irade' çawa divê bê fêmkirin?",
+  "prompt": "'yerel irade' çawa divê bê fêmkirin?",
   "answers": [
    "hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî",
    "komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike",
@@ -13554,7 +13554,7 @@
  {
   "id": "offline_13117",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya Siyasetê de 'siyasi ahlak' tê çi wateyê?",
+  "prompt": "'siyasi ahlak' tê çi wateyê?",
   "answers": [
    "prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de",
    "Hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî",
@@ -14064,7 +14064,7 @@
  {
   "id": "offline_13519",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya siyasetê de 'ademi merkeziyetçilik' divê çawa bê fêmkirin?",
+  "prompt": "'ademi merkeziyetçilik' divê çawa bê fêmkirin?",
   "answers": [
    "hêza ji navendekê bo yekîneyên herêmî belavkirin",
    "mafên xwepêşandan, xwerêxistin û azadiya îfadeyê",
@@ -14540,7 +14540,7 @@
  {
   "id": "offline_13813",
   "category": "Siyaset",
-  "prompt": "Di çarçoveya Siyasetê de 'rêveberiya herêmî' tê çi wateyê?",
+  "prompt": "'rêveberiya herêmî' tê çi wateyê?",
   "answers": [
    "rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî",
    "rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê",

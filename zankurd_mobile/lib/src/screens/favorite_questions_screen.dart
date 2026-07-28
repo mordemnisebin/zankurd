@@ -194,7 +194,12 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          foregroundColor: Colors.white,
+          // Altın gradyan üstünde sabit beyaz 2.40:1 veriyordu; en büyük
+          // düğmenin etiketi ekrandaki en okunmaz yazıydı (2026-07-27).
+          // Renk zemine göre seçilir — gradyanın açık ucu en kötü durum.
+          foregroundColor: AppColors.onSolid(
+            AppTheme.goldGradient.colors.first,
+          ),
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),

@@ -33,6 +33,10 @@ dolgu hem gereksiz hem yanlıştı; 98 gövdede geçiyordu.
 nasîn: '…'?" Burada da kategori adı bankanın küçük harfli iç anahtarıydı
 ve cümleye hiçbir şey katmıyordu.
 
+Üçüncüsü 41 gövdede: "**Di çarçoveya Cografyaê de** 'X' tê çi wateyê?"
+Aynı kalıbın bir başka yazımı; ilk geçişte yalnız "Di çarçoveya dersê de"
+biçimi silinmişti, kategori adı alan hâli gözden kaçmıştı.
+
 Betik iki iş yapar:
 1. Dolguları siler ve kalan cümleyi büyük harfle başlatır.
 2. (kategori, gövde, doğru cevap) üçlüsüne göre tekilleştirir; dolgusuz
@@ -61,8 +65,12 @@ PREFIX = re.compile(
     r",\s*"
 )
 # Kategori çerçevesi: hem gövdenin başında hem ortasında geçiyor.
-FIELD_PREFIX = re.compile(r"^di qada [^ ]+ de,?\s*", re.IGNORECASE)
-FIELD_INLINE = re.compile(r"\b(di|li) qada [^ ]+( de)?\s*", re.IGNORECASE)
+FIELD_PREFIX = re.compile(
+    r"^di (qada|çarçoveya) [^ ]+ de,?\s*", re.IGNORECASE
+)
+FIELD_INLINE = re.compile(
+    r"\b(di|li) (qada|çarçoveya) [^ ]+( de)?\s*", re.IGNORECASE
+)
 
 
 def strip_prefix(prompt: str) -> str:

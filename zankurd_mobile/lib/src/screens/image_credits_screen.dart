@@ -102,6 +102,35 @@ class _Credit {
   final String artist;
   final String license;
   final String source;
+
+  /// Okunabilir başlık.
+  ///
+  /// Künye Wikimedia dosya adını olduğu gibi yazıyordu:
+  /// "17331 A group of Kurdish residents in Dahuk, Iraq celebreate the
+  /// Kurdish New Year in 2006.jpg" — başında yükleme numarası, sonunda
+  /// uzantı. Yasal olarak gereken şey eser, sanatçı, lisans ve bağlantı;
+  /// dosya adının teknik kabuğu değil (2026-07-27). Bağlantı zaten
+  /// dosyanın kendisine gider, yani hiçbir bilgi kaybolmuyor.
+  String get displayTitle {
+    var text = title.replaceFirst(
+      RegExp(r'\.(jpe?g|png|webp|gif)$', caseSensitive: false),
+      '',
+    );
+    // Yükleme/çekim numaraları: "20190510 153415.Koysinjaq…" gibi zincirler
+    // için tekrar tekrar kırpılır.
+    while (RegExp(r'^\d{3,}[\s._-]+').hasMatch(text)) {
+      text = text.replaceFirst(RegExp(r'^\d{3,}[\s._-]+'), '');
+    }
+    text = text.replaceAll('_', ' ');
+    // Fotoğraf makinesi adlandırması boşluk kullanmaz, nokta kullanır.
+    // Yalnız o durumda noktalar boşluğa çevrilir; "U.S. Army" gibi normal
+    // başlıklar bozulmasın.
+    if (!text.contains(' ') && text.contains('.')) {
+      text = text.replaceAll('.', ' ');
+    }
+    text = text.trim();
+    return text.isEmpty ? title : text;
+  }
 }
 
 class _CreditTile extends StatelessWidget {
@@ -116,7 +145,7 @@ class _CreditTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            credit.title,
+            credit.displayTitle,
             style: AppTypography.bodyLarge.copyWith(
               color: AppTheme.textPrimaryColor(context),
               fontWeight: FontWeight.w700,
