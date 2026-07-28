@@ -9,6 +9,24 @@ durur** (debug imzasına düşmez).
 > (`.gitignore`'da). Keystore'u kaybedersen Play Store'da uygulamayı
 > güncelleyemezsin — proje dışında yedekle.
 
+## Derlemenin geri kalanı doğrulandı (2026-07-27)
+
+Senin keystore'un dışında release yolunda eksik bir şey kalmadı. Geçici
+bir anahtarla `flutter build appbundle --release` sonuna kadar koştu:
+
+- AAB üretildi (72,5 MB). Bunun ~70 MB'ı `BUNDLE-METADATA` altındaki hata
+  ayıklama sembolleri ve ProGuard eşlemesi; Play bunları cihaza
+  göndermez, yalnız çökme çözümlemesi için saklar. Cihaza inen paket çok
+  daha küçüktür.
+- R8 küçültme ve kaynak temizleme açık ve **eksik sınıf uyarısı
+  üretmedi** (`missing_rules.txt` hiç oluşmadı). Release'e özgü
+  çökmelerin en yaygın sebebi budur; `proguard-rules.pro` eklentileri
+  kapsıyor demektir.
+- Yazı tipleri ağaç budamasıyla küçüldü (ikon fontlarında %89-99).
+
+Geçici anahtar ve `key.properties` doğrulamadan sonra silindi; depoda iz
+kalmadı. Aşağıdaki adımlar hâlâ senin yapman gereken kısım.
+
 ## 1. Upload keystore oluştur (bir kez)
 
 JDK 17 bu makinede kurulu (`/opt/homebrew/opt/openjdk@17`). Terminalde:
