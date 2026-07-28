@@ -61,7 +61,7 @@ void main() {
     final filler = RegExp(
       r'^(Di gotûbêja dersê de|Di nirxandina xwendekaran de'
       r'|Di çarçoveya dersê de)\s*,'
-      r'|\bdi qada \S+ de\b',
+      r'|\b(di|li) qada \S+( de)?\b',
       caseSensitive: false,
     );
     final offenders = prompts.entries

@@ -767,7 +767,7 @@
  {
   "id": "offline_0529",
   "category": "Dîrok",
-  "prompt": "Wêneya 'birincil kaynak' kîjan kategoriyê nîşan dide?",
+  "prompt": "Wêneya 'çavkaniya yekemîn' kîjan kategoriyê nîşan dide?",
   "answers": [
    "Spor",
    "Muzîk",
@@ -6964,7 +6964,7 @@
  {
   "id": "offline_7605",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeha 'birincil kaynak' di nav dîrokê de rast bi cih dike?",
+  "prompt": "Kîjan têgeha 'çavkaniya yekemîn' di nav dîrokê de rast bi cih dike?",
   "answers": [
    "serokkomarê Komara Kurd a Mehabadê",
    "belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)",
@@ -9014,10 +9014,10 @@
   "answers": [
    "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
    "bi weşandina yekem rojnameya kurdî, Kurdistanê re girêdayî ye",
-   "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
+   "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn",
    "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de"
   ],
-  "correctAnswer": "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
+  "correctAnswer": "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn",
   "explanation": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
   "type": "multipleChoice",
   "difficulty": 4,
@@ -9434,9 +9434,9 @@
    "nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye",
    "yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî",
    "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de",
-   "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı"
+   "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn"
   ],
-  "correctAnswer": "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
+  "correctAnswer": "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn",
   "explanation": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
   "type": "multipleChoice",
   "difficulty": 4,
@@ -9874,11 +9874,11 @@
   "prompt": "'destana Memê Alan' tê çi wateyê?",
   "answers": [
    "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî",
-   "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
+   "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn",
    "ji ber ku xebatên ziman û alfabeyê belav kir",
    "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir"
   ],
-  "correctAnswer": "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
+  "correctAnswer": "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn",
   "explanation": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
   "type": "multipleChoice",
   "difficulty": 1,
@@ -9991,7 +9991,7 @@
    "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
    "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
    "nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye",
-   "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı"
+   "destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn"
   ],
   "correctAnswer": "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
   "explanation": "'destana Dewrêşê Evdî' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.",
@@ -11788,7 +11788,7 @@
  {
   "id": "offline_11728",
   "category": "Paradigma",
-  "prompt": "Li jêr ji bo 'ulus devlet' ya rast kîjan e?",
+  "prompt": "Li jêr ji bo 'dewleta netewe' ya rast kîjan e?",
   "answers": [
    "organeke hevrêzî û biryarê ya li ser komînan",
    "reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye",
@@ -11800,7 +11800,7 @@
   "type": "multipleChoice",
   "difficulty": 3,
   "explanationTr": "'ulus devlet' → tek biçimli ve sınırları kutsayan devlet yapısı.",
-  "explanationKu": "'ulus devlet' → avahiyeke dewletê ya yekreng û sînoran pîroz dike."
+  "explanationKu": "'dewleta netewe' → avahiyeke dewletê ya yekreng û sînoran pîroz dike."
  },
  {
   "id": "offline_11740",
@@ -12060,7 +12060,7 @@
  {
   "id": "offline_11948",
   "category": "Paradigma",
-  "prompt": "Ji bo 'ulus devlet' ravekirina herî dirust kîjan e?",
+  "prompt": "Ji bo 'dewleta netewe' ravekirina herî dirust kîjan e?",
   "answers": [
    "yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê",
    "Têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de",
@@ -12072,7 +12072,7 @@
   "type": "multipleChoice",
   "difficulty": 3,
   "explanationTr": "'ulus devlet' → tek biçimli ve sınırları kutsayan devlet yapısı.",
-  "explanationKu": "'ulus devlet' → avahiyeke dewletê ya yekreng û sînoran pîroz dike."
+  "explanationKu": "'dewleta netewe' → avahiyeke dewletê ya yekreng û sînoran pîroz dike."
  },
  {
   "id": "offline_11953",
@@ -12400,7 +12400,7 @@
  {
   "id": "offline_12156",
   "category": "Paradigma",
-  "prompt": "Dema 'ulus devlet' tê gotin, çi tê xwestin?",
+  "prompt": "Dema 'dewleta netewe' tê gotin, çi tê xwestin?",
   "answers": [
    "reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye",
    "Têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de",
@@ -12412,7 +12412,7 @@
   "type": "multipleChoice",
   "difficulty": 4,
   "explanationTr": "'ulus devlet' → tek biçimli ve sınırları kutsayan devlet yapısı.",
-  "explanationKu": "'ulus devlet' → avahiyeke dewletê ya yekreng û sînoran pîroz dike."
+  "explanationKu": "'dewleta netewe' → avahiyeke dewletê ya yekreng û sînoran pîroz dike."
  },
  {
   "id": "offline_12157",
@@ -14591,7 +14591,7 @@
  {
   "id": "offline_curated_20001",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide'?",
   "answers": [
    "paşgirên tewandinê",
    "cînavkên tewandî",
@@ -14642,7 +14642,7 @@
  {
   "id": "offline_curated_20026",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de'?",
   "answers": [
    "cînavkên tewandî",
    "rênivîsa Hawarê",
@@ -14693,7 +14693,7 @@
  {
   "id": "offline_curated_20051",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide'?",
   "answers": [
    "tewandin",
    "ezafe",
@@ -14744,7 +14744,7 @@
  {
   "id": "offline_curated_20076",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'cînavkên wekî 'min, te, wî, wê, me, we, wan' ku di bin tewandinê de ne'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'cînavkên wekî 'min, te, wî, wê, me, we, wan' ku di bin tewandinê de ne'?",
   "answers": [
    "ergatîf",
    "ezafe",
@@ -14795,7 +14795,7 @@
  {
   "id": "offline_curated_20101",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'peyvên wekî 'di... de, bi... re, ji... re' ku têkiliyên cih nîşan didin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'peyvên wekî 'di... de, bi... re, ji... re' ku têkiliyên cih nîşan didin'?",
   "answers": [
    "cînavkên kesane",
    "ezafe",
@@ -14846,7 +14846,7 @@
  {
   "id": "offline_curated_20126",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê'?",
   "answers": [
    "lêkera gerguhêz",
    "ergatîf",
@@ -14897,7 +14897,7 @@
  {
   "id": "offline_curated_20151",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin'?",
   "answers": [
    "lêkera gerguhêz",
    "daçekên hevedudanî",
@@ -14948,7 +14948,7 @@
  {
   "id": "offline_curated_20176",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn'?",
   "answers": [
    "lêkera gerguhêz",
    "cînavkên tewandî",
@@ -14999,7 +14999,7 @@
  {
   "id": "offline_curated_20201",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide'?",
   "answers": [
    "dema borî ya dûr",
    "lêkera gerguhêz",
@@ -15050,7 +15050,7 @@
  {
   "id": "offline_curated_20226",
   "category": "Ziman",
-  "prompt": "Kîjan têgeh li qada ziman bi vê ravekirinê tê nasîn: 'hêmanên wekî '-î, -ê, -an' ku di tewandina navdêran de cih digirin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'hêmanên wekî '-î, -ê, -an' ku di tewandina navdêran de cih digirin'?",
   "answers": [
    "paşgirên tewandinê",
    "dema borî ya dûr",
@@ -15101,7 +15101,7 @@
  {
   "id": "offline_curated_20251",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin'?",
   "answers": [
    "Ehmedê Xanî",
    "kovara Hawarê",
@@ -15152,7 +15152,7 @@
  {
   "id": "offline_curated_20276",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e'?",
   "answers": [
    "şevbêrkên wêjeyî",
    "Arabê Şamo",
@@ -15203,7 +15203,7 @@
  {
   "id": "offline_curated_20301",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye'?",
   "answers": [
    "Feqiyê Teyran",
    "Ehmedê Xanî",
@@ -15254,7 +15254,7 @@
  {
   "id": "offline_curated_20326",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye'?",
   "answers": [
    "Ehmedê Xanî",
    "Melayê Bateyî",
@@ -15305,7 +15305,7 @@
  {
   "id": "offline_curated_20351",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye'?",
   "answers": [
    "Arabê Şamo",
    "kovara Hawarê",
@@ -15356,7 +15356,7 @@
  {
   "id": "offline_curated_20376",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû'?",
   "answers": [
    "Cegerxwîn",
    "Feqiyê Teyran",
@@ -15407,7 +15407,7 @@
  {
   "id": "offline_curated_20401",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'nivîskarê romana 'Şivanê Kurd' ku wekî romana yekem a kurdî tê qebûlkirin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'nivîskarê romana 'Şivanê Kurd' ku wekî romana yekem a kurdî tê qebûlkirin'?",
   "answers": [
    "Ehmedê Xanî",
    "kovara Hawarê",
@@ -15458,7 +15458,7 @@
  {
   "id": "offline_curated_20426",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir'?",
   "answers": [
    "Ehmedê Xanî",
    "Helbesta Azad",
@@ -15509,7 +15509,7 @@
  {
   "id": "offline_curated_20451",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin'?",
   "answers": [
    "Melayê Cizîrî",
    "şevbêrkên wêjeyî",
@@ -15560,7 +15560,7 @@
  {
   "id": "offline_curated_20476",
   "category": "Edebiyat",
-  "prompt": "Kîjan têgeh li qada edebiyat bi vê ravekirinê tê nasîn: 'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide'?",
   "answers": [
    "kovara Hawarê",
    "Arabê Şamo",
@@ -15611,7 +15611,7 @@
  {
   "id": "offline_curated_20501",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin'?",
   "answers": [
    "Mîrê Kor",
    "Şerefname",
@@ -15663,7 +15663,7 @@
  {
   "id": "offline_curated_20526",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn'?",
   "answers": [
    "Dewleta Merwaniyan",
    "Şerefname",
@@ -15714,7 +15714,7 @@
  {
   "id": "offline_curated_20551",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû'?",
   "answers": [
    "Rojnameya Kurdistan",
    "Şerefname",
@@ -15765,7 +15765,7 @@
  {
   "id": "offline_curated_20576",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin'?",
   "answers": [
    "Selaheddînê Eyûbî",
    "Împaratoriya Medî",
@@ -15816,7 +15816,7 @@
  {
   "id": "offline_curated_20601",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî'?",
   "answers": [
    "Kovara Jîn",
    "Rojnameya Kurdistan",
@@ -15867,7 +15867,7 @@
  {
   "id": "offline_curated_20626",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir'?",
   "answers": [
    "Selaheddînê Eyûbî",
    "Împaratoriya Medî",
@@ -15918,7 +15918,7 @@
  {
   "id": "offline_curated_20651",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike'?",
   "answers": [
    "Şerefname",
    "Selaheddînê Eyûbî",
@@ -15969,7 +15969,7 @@
  {
   "id": "offline_curated_20676",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin'?",
   "answers": [
    "Mîrgeha Botan",
    "Împaratoriya Medî",
@@ -16020,7 +16020,7 @@
  {
   "id": "offline_curated_20701",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû'?",
   "answers": [
    "Selaheddînê Eyûbî",
    "Mîrgeha Erdelanê",
@@ -16071,7 +16071,7 @@
  {
   "id": "offline_curated_20726",
   "category": "Dîrok",
-  "prompt": "Kîjan têgeh li qada dîrok bi vê ravekirinê tê nasîn: 'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir'?",
   "answers": [
    "Selaheddînê Eyûbî",
    "Peymana Lozanê",
@@ -16123,7 +16123,7 @@
  {
   "id": "offline_curated_20751",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin'?",
   "answers": [
    "Çiyayê Cûdî",
    "çiyayên Zagrosê",
@@ -16175,7 +16175,7 @@
  {
   "id": "offline_curated_20776",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze'?",
   "answers": [
    "Newala Dîcleyê",
    "Çemê Firatê",
@@ -16228,7 +16228,7 @@
  {
   "id": "offline_curated_20801",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar'?",
   "answers": [
    "Heskîf",
    "çiyayên Zagrosê",
@@ -16280,7 +16280,7 @@
  {
   "id": "offline_curated_20826",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye'?",
   "answers": [
    "Qerejdax",
    "Heskîf",
@@ -16331,7 +16331,7 @@
  {
   "id": "offline_curated_20851",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye'?",
   "answers": [
    "Çiyayê Sîpanê",
    "Girê Mirazan",
@@ -16383,7 +16383,7 @@
  {
   "id": "offline_curated_20876",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'gola herî mezin a herêmê ku avên wê şor û sodadar in'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'gola herî mezin a herêmê ku avên wê şor û sodadar in'?",
   "answers": [
    "Çiyayê Sîpanê",
    "çiyayên Zagrosê",
@@ -16435,7 +16435,7 @@
  {
   "id": "offline_curated_20901",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê'?",
   "answers": [
    "çiyayên Zagrosê",
    "Geliyê Zapê",
@@ -16488,7 +16488,7 @@
  {
   "id": "offline_curated_20926",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve'?",
   "answers": [
    "Geliyê Zapê",
    "Girê Mirazan",
@@ -16542,7 +16542,7 @@
  {
   "id": "offline_curated_20951",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye'?",
   "answers": [
    "Çemê Firatê",
    "Qerejdax",
@@ -16595,7 +16595,7 @@
  {
   "id": "offline_curated_20976",
   "category": "Cografya",
-  "prompt": "Kîjan têgeh li qada cografya bi vê ravekirinê tê nasîn: 'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne'?",
   "answers": [
    "çiyayên Zagrosê",
    "Girê Mirazan",
@@ -16647,7 +16647,7 @@
  {
   "id": "offline_curated_21001",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin'?",
   "answers": [
    "şevbêrk",
    "çanda koçeriyê",
@@ -16700,7 +16700,7 @@
  {
   "id": "offline_curated_21026",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye'?",
   "answers": [
    "Newroz",
    "misafirperweriya kurdî",
@@ -16753,7 +16753,7 @@
  {
   "id": "offline_curated_21051",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin'?",
   "answers": [
    "Sazîbûna Dengbêjiyê",
    "Govenda Kurdî",
@@ -16805,7 +16805,7 @@
  {
   "id": "offline_curated_21076",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin'?",
   "answers": [
    "Sazîbûna Dengbêjiyê",
    "kilimên kurdî",
@@ -16856,7 +16856,7 @@
  {
   "id": "offline_curated_21101",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye'?",
   "answers": [
    "çanda koçeriyê",
    "şevbêrk",
@@ -16907,7 +16907,7 @@
  {
   "id": "offline_curated_21126",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin'?",
   "answers": [
    "misafirperweriya kurdî",
    "Çîmena çiyayî ya havînê",
@@ -16959,7 +16959,7 @@
  {
   "id": "offline_curated_21151",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin'?",
   "answers": [
    "Sazîbûna Dengbêjiyê",
    "hewran",
@@ -17011,7 +17011,7 @@
  {
   "id": "offline_curated_21176",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne'?",
   "answers": [
    "Newroz",
    "Sazîbûna Dengbêjiyê",
@@ -17062,7 +17062,7 @@
  {
   "id": "offline_curated_21201",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze'?",
   "answers": [
    "Sazîbûna Dengbêjiyê",
    "hewran",
@@ -17113,7 +17113,7 @@
  {
   "id": "offline_curated_21226",
   "category": "Çand",
-  "prompt": "Kîjan têgeh li qada çand bi vê ravekirinê tê nasîn: 'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin'?",
   "answers": [
    "Newroz",
    "şevbêrk",
@@ -17164,7 +17164,7 @@
  {
   "id": "offline_curated_21251",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan'?",
   "answers": [
    "Meryem Xan",
    "tembûr",
@@ -17215,7 +17215,7 @@
  {
   "id": "offline_curated_21276",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e'?",
   "answers": [
    "erbane",
    "bilûr",
@@ -17266,7 +17266,7 @@
  {
   "id": "offline_curated_21301",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin'?",
   "answers": [
    "lîrîka klaman",
    "tembûr",
@@ -17317,7 +17317,7 @@
  {
   "id": "offline_curated_21326",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin'?",
   "answers": [
    "Strana razanê",
    "lêdana rêkûpêk",
@@ -17368,7 +17368,7 @@
  {
   "id": "offline_curated_21351",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'dengbêjê mezin ê ku wekî 'Şahê Dengbêjan' tê naskirin û xwedî dengekî bêhempa bû'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'dengbêjê mezin ê ku wekî 'Şahê Dengbêjan' tê naskirin û xwedî dengekî bêhempa bû'?",
   "answers": [
    "lîrîka klaman",
    "Şakiro",
@@ -17419,7 +17419,7 @@
  {
   "id": "offline_curated_21376",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine'?",
   "answers": [
    "Meryem Xan",
    "heyran",
@@ -17470,7 +17470,7 @@
  {
   "id": "offline_curated_21401",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye'?",
   "answers": [
    "Şakiro",
    "bilûr",
@@ -17521,7 +17521,7 @@
  {
   "id": "offline_curated_21426",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê'?",
   "answers": [
    "Koma Wetan",
    "bilûr",
@@ -17589,7 +17589,7 @@
  {
   "id": "offline_curated_21451",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin'?",
   "answers": [
    "bilûr",
    "Meryem Xan",
@@ -17640,7 +17640,7 @@
  {
   "id": "offline_curated_21476",
   "category": "Muzîk",
-  "prompt": "Kîjan têgeh li qada muzîk bi vê ravekirinê tê nasîn: 'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin'?",
   "answers": [
    "tembûr",
    "Şakiro",
@@ -17691,7 +17691,7 @@
  {
   "id": "offline_curated_21501",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze'?",
   "answers": [
    "Radikal demokrasi",
    "parastina rewa",
@@ -17742,7 +17742,7 @@
  {
   "id": "offline_curated_21526",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin'?",
   "answers": [
    "eşseroktî",
    "hevpeymaniya demokratîk",
@@ -17793,7 +17793,7 @@
  {
   "id": "offline_curated_21551",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan'?",
   "answers": [
    "demokrasiya rasterast",
    "hevpeymaniya demokratîk",
@@ -17844,7 +17844,7 @@
  {
   "id": "offline_curated_21576",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike'?",
   "answers": [
    "pirrengî",
    "komûn û meclîs",
@@ -17895,7 +17895,7 @@
  {
   "id": "offline_curated_21601",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve'?",
   "answers": [
    "xweseriya demokratîk",
    "ademi-merkeziyet",
@@ -17946,7 +17946,7 @@
  {
   "id": "offline_curated_21626",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mafê parastina xwezayî ya civakê li dijî êrîşên derveyî'?",
   "answers": [
    "komûn û meclîs",
    "parastina rewa",
@@ -17997,7 +17997,7 @@
  {
   "id": "offline_curated_21651",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de'?",
   "answers": [
    "demokrasiya rasterast",
    "pirrengî",
@@ -18048,7 +18048,7 @@
  {
   "id": "offline_curated_21676",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide'?",
   "answers": [
    "demokrasiya rasterast",
    "xweseriya demokratîk",
@@ -18099,7 +18099,7 @@
  {
   "id": "offline_curated_21701",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin'?",
   "answers": [
    "demokrasiya rasterast",
    "Radikal demokrasi",
@@ -18150,7 +18150,7 @@
  {
   "id": "offline_curated_21726",
   "category": "Siyaset",
-  "prompt": "Kîjan têgeh li qada siyaset bi vê ravekirinê tê nasîn: 'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de'?",
   "answers": [
    "xweseriya demokratîk",
    "parastina rewa",
@@ -18201,7 +18201,7 @@
  {
   "id": "offline_curated_21751",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê'?",
   "answers": [
    "civaka exlaqî-polîtîk",
    "Konfederalîzma Demokratîk",
@@ -18252,7 +18252,7 @@
  {
   "id": "offline_curated_21776",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'modela alternatîf a jiyanê ya li dijî kapîtalîzma modern'?",
   "answers": [
    "civaka exlaqî-polîtîk",
    "Jineolojî",
@@ -18303,7 +18303,7 @@
  {
   "id": "offline_curated_21801",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike'?",
   "answers": [
    "civaka exlaqî-polîtîk",
    "Moderniteya Demokratîk",
@@ -18354,7 +18354,7 @@
  {
   "id": "offline_curated_21826",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'têkiliya hevseng û dostane ya di navbera civakê û xwezayê de'?",
   "answers": [
    "Ekolojiya Civakî",
    "rexneya patriyarkayê",
@@ -18405,7 +18405,7 @@
  {
   "id": "offline_curated_21851",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê'?",
   "answers": [
    "civaka exlaqî-polîtîk",
    "Konfederalîzma Demokratîk",
@@ -18456,7 +18456,7 @@
  {
   "id": "offline_curated_21876",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide'?",
   "answers": [
    "aboriya komûnal",
    "Ekolojiya Civakî",
@@ -18507,7 +18507,7 @@
  {
   "id": "offline_curated_21901",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê'?",
   "answers": [
    "rexneya patriyarkayê",
    "Ekolojiya Civakî",
@@ -18558,7 +18558,7 @@
  {
   "id": "offline_curated_21926",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike'?",
   "answers": [
    "hiyerarşiya civakî",
    "Moderniteya Demokratîk",
@@ -18609,7 +18609,7 @@
  {
   "id": "offline_curated_21951",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike'?",
   "answers": [
    "hiyerarşiya civakî",
    "Ekolojiya Civakî",
@@ -18660,7 +18660,7 @@
  {
   "id": "offline_curated_21976",
   "category": "Paradigma",
-  "prompt": "Kîjan têgeh li qada paradigma bi vê ravekirinê tê nasîn: 'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de'?",
+  "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de'?",
   "answers": [
    "aboriya komûnal",
    "Ekolojiya Civakî",

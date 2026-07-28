@@ -21,12 +21,17 @@ soru, aynı doğru cevap; yalnız çeldiricilerin sırası karışık. 240 grubu
 Bankanın "kategori içinde gövdeler benzersiz" bekçisi bunu göremiyordu,
 çünkü önekler gövdeleri farklı kılıyordu — dolgu, bekçiyi de atlatıyordu.
 
-Aynı sınıftan ikinci bir dolgu daha var: **"di qada Cografyaê de"**.
+Aynı sınıftan iki dolgu daha var: **"di qada Cografyaê de"** ve
+**"li qada ziman"**.
 Kategori adı zaten soru kartının üstünde çip olarak yazıyor, yani cümle
 ekranda görünen bir şeyi tekrar ediyor. Üstelik bu adlar bankanın iç
 anahtarları ("Cografya") ve Kurmancî çekimleri de bozuk: "Cografyaê"
 yerine "Cografyayê", "Paradigmaê" yerine "Paradîgmayê" olmalıydı. Yani
 dolgu hem gereksiz hem yanlıştı; 98 gövdede geçiyordu.
+
+İkincisi 80 gövdede: "Kîjan têgeh **li qada ziman** bi vê ravekirinê tê
+nasîn: '…'?" Burada da kategori adı bankanın küçük harfli iç anahtarıydı
+ve cümleye hiçbir şey katmıyordu.
 
 Betik iki iş yapar:
 1. Dolguları siler ve kalan cümleyi büyük harfle başlatır.
@@ -57,7 +62,7 @@ PREFIX = re.compile(
 )
 # Kategori çerçevesi: hem gövdenin başında hem ortasında geçiyor.
 FIELD_PREFIX = re.compile(r"^di qada [^ ]+ de,?\s*", re.IGNORECASE)
-FIELD_INLINE = re.compile(r"\bdi qada [^ ]+ de\s*", re.IGNORECASE)
+FIELD_INLINE = re.compile(r"\b(di|li) qada [^ ]+( de)?\s*", re.IGNORECASE)
 
 
 def strip_prefix(prompt: str) -> str:
