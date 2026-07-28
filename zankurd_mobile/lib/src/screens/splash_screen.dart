@@ -91,18 +91,21 @@ class _SplashScreenState extends State<SplashScreen>
       backgroundColor: AppTheme.bgOf(context),
       body: Stack(
         children: [
-          const Positioned.fill(
+          // Zemin uygulamanın kendi zemini.
+          //
+          // Eskiden sabit koyu yeşil bir gradyandı ve açılışta üç renk arka
+          // arkaya geliyordu: sistem açılış ekranı krem (#F7F4EE) →
+          // bu ekran koyu yeşil → uygulama yine krem. İki saniyede iki kez
+          // renk atlıyordu (2026-07-28).
+          //
+          // Masaüstünde ayrıca kötü duruyordu: geniş ekranda içerik 540 pt'ye
+          // sınırlanıyor ve dışı yüzey rengiyle doluyor, yani koyu yeşil panel
+          // krem bir zeminin ortasında yüzen bir dikdörtgen gibi görünüyordu.
+          // Zemin uygulamanınkiyle aynı olunca çerçeve tamamen kayboluyor.
+          Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFF173C2D),
-                    Color(0xFF1E4A38),
-                    Color(0xFF0E1411),
-                  ],
-                ),
+                gradient: AppTheme.backgroundGradient(context),
               ),
             ),
           ),
@@ -114,7 +117,10 @@ class _SplashScreenState extends State<SplashScreen>
               height: 220,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.05),
+                // Süs halkaları: koyu zemine göre beyaz alfaydı, açık
+                // temada görünmez oluyordu. Marka yeşilinin tonu her iki
+                // temada da hafif bir derinlik verir.
+                color: AppTheme.culturalBrandBg.withValues(alpha: 0.06),
               ),
             ),
           ),
@@ -126,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen>
               height: 180,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppTheme.brand.withValues(alpha: 0.08),
+                color: AppTheme.brand.withValues(alpha: 0.07),
               ),
             ),
           ),

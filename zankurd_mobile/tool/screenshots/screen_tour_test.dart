@@ -30,6 +30,7 @@ import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
+import 'package:zankurd_mobile/src/screens/splash_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
@@ -640,6 +641,28 @@ void main() {
   testWidgets('72 görsel künyesi', (t) async {
     await _pump(t, const ImageCreditsScreen());
     await _shoot(t, '72_image_credits');
+  }, tags: ['preview']);
+
+  // Açılış ekranı turda yoktu: 1,8 saniye yaşadığı için ekran görüntüsü
+  // almak zor, o yüzden hiç ölçülmemiş. Oysa uygulamayı açan herkesin
+  // gördüğü ilk kare orası (2026-07-28).
+  testWidgets('71 açılış', (t) async {
+    await _pump(
+      t,
+      const SplashScreen(next: SizedBox.shrink(), duration: Duration(hours: 1)),
+    );
+    await t.pump(const Duration(milliseconds: 900));
+    await _shoot(t, '71_splash');
+  }, tags: ['preview']);
+
+  testWidgets('72 açılış (karanlık)', (t) async {
+    await _pump(
+      t,
+      const SplashScreen(next: SizedBox.shrink(), duration: Duration(hours: 1)),
+      dark: true,
+    );
+    await t.pump(const Duration(milliseconds: 900));
+    await _shoot(t, '72_splash_dark');
   }, tags: ['preview']);
 
   // Yeni kullanıcının gördüğü ilk üç ekran da turda yoktu: karşılama,
