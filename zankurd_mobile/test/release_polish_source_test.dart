@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/app_config.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 
 void main() {
@@ -42,6 +43,40 @@ void main() {
 
     expect(plist, contains('<key>NSPhotoLibraryUsageDescription</key>'));
     expect(plist, contains('profil fotoğrafınızı seçebilmek'));
+  });
+
+  test('yasal bağlantıların işaret ettiği belgeler gerçekten var', () {
+    // 2026-07-27: uygulama hem Ayarlar'da hem paywall'da
+    // `zankurd.com/terms.html` bağlantısı gösteriyordu ama öyle bir belge
+    // hiç yazılmamıştı. Bağlantı ölü olduğu için değil, **var olmayan bir
+    // sayfaya** işaret ettiği için tehlikeliydi: App Store otomatik
+    // yenilenen abonelikte kullanım koşulu bağlantısını şart koşar ve
+    // inceleyen kişi ona tıklar.
+    //
+    // Bekçi, her yasal URL'nin karşılığı olan kaynak belgenin depoda
+    // durduğunu doğrular. Sitenin canlı olup olmadığını ölçemez — o
+    // yüklemeyle ilgili; ama "hiç yazılmamış" hâlini bir daha yaşatmaz.
+    const documents = {
+      'privacy.html': 'docs/privacy_policy.html',
+      'terms.html': 'docs/terms_of_service.html',
+    };
+    for (final url in [
+      AppConfig.privacyPolicyUrl,
+      AppConfig.termsOfServiceUrl,
+    ]) {
+      final fileName = url.split('/').last;
+      final source = documents[fileName];
+      expect(
+        source,
+        isNotNull,
+        reason: '$url için kaynak belge eşlemesi yok',
+      );
+      expect(
+        File(source!).existsSync(),
+        isTrue,
+        reason: '$url $source dosyasına işaret ediyor ama dosya yok',
+      );
+    }
   });
 
   test('iOS declares export compliance so uploads need no manual answer', () {

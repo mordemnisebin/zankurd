@@ -2,6 +2,25 @@
 
 Siteyi herkese atmadan önce bu listeyi uygula.
 
+## 0) Yasal sayfalar (mağaza şartı)
+
+Uygulama, Ayarlar ve paywall ekranlarında iki bağlantı gösteriyor ve bu
+adları bekliyor — dosya adı tutmazsa bağlantı 404 verir:
+
+| Depodaki dosya | Siteye yüklenecek ad |
+|---|---|
+| `docs/privacy_policy.html` | `privacy.html` |
+| `docs/terms_of_service.html` | `terms.html` |
+
+İkisi de sitenin kökünde olmalı: `https://www.zankurd.com/privacy.html`
+ve `.../terms.html`. Bunlar `AppConfig.privacyPolicyUrl` /
+`termsOfServiceUrl` ile birebir aynı olmalı.
+
+Niçin ilk sıraya kondu: App Store, otomatik yenilenen abonelik satan
+uygulamalarda kullanım koşulu bağlantısını şart koşar ve inceleyen kişi
+bağlantıya tıklar. `terms.html` 2026-07-27'ye kadar hiç yazılmamıştı;
+uygulama var olmayan bir sayfaya bağlantı veriyordu.
+
 ## 1) Temiz release build
 
 ```powershell
