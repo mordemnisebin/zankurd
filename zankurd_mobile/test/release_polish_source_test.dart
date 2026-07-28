@@ -45,6 +45,28 @@ void main() {
     expect(plist, contains('profil fotoğrafınızı seçebilmek'));
   });
 
+  test('paylaşım önizlemesi var olan bir görsele işaret ediyor', () {
+    // 2026-07-27: `og:image` `icons/icon-192x192.png` diyordu ama öyle bir
+    // dosya hiç yok (gerçek adlar Icon-192 / Icon-512). Bağlantı
+    // paylaşılınca önizleme kırık geliyordu. Ayrıca kart
+    // `summary_large_image` olarak ilan edilmiş ama hiç `twitter:image`
+    // konmamıştı — görsel isteyen bir kart, görselsiz.
+    final html = File('web/index.html').readAsStringSync();
+    final imageUrls = RegExp(
+      r'(?:og:image|twitter:image)"\s+content="([^"]+)"',
+    ).allMatches(html).map((m) => m.group(1)!).toList();
+
+    expect(imageUrls, hasLength(2), reason: 'iki önizleme görseli beklenir');
+    for (final url in imageUrls) {
+      final fileName = url.split('/').last;
+      expect(
+        File('web/icons/$fileName').existsSync(),
+        isTrue,
+        reason: '$url web/icons altında yok',
+      );
+    }
+  });
+
   test('web tarafı emekli marka turuncusunu taşımıyor', () {
     // 2026-07-24'te eylem rengi Tîrêj'e (#C2560E) geçti çünkü eski
     // #F5931E beyaz metinle 2.2:1 veriyordu. Web tarafı o geçişte geride

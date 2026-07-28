@@ -29,7 +29,11 @@
   <!-- Open Graph -->
   <meta property="og:title" content="ZanKurd">
   <meta property="og:description" content="Fêrbûna Kurmancî bi lîstik, pêşbirk û xelatan.">
-  <meta property="og:image" content="https://zankurd.com/icons/icon-192x192.png">
+  <!-- Dosya adı `icon-192x192.png` idi; böyle bir dosya hiç yok (gerçek
+       adlar Icon-192/Icon-512). Bağlantı paylaşılınca önizleme görseli
+       kırık geliyordu. 512, Open Graph'ın önerdiği en küçük ölçünün
+       üstünde (2026-07-27). -->
+  <meta property="og:image" content="https://zankurd.com/icons/Icon-512.png">
   <meta property="og:url" content="https://zankurd.com">
   <meta property="og:type" content="website">
 
@@ -37,6 +41,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZanKurd">
   <meta name="twitter:description" content="Fêrbûna Kurmancî bi lîstik, pêşbirk û xelatan.">
+  <!-- `summary_large_image` kartı görsel ister; hiç `twitter:image` yoktu,
+       yani kart boş bir çerçeve olarak çıkıyordu. -->
+  <meta name="twitter:image" content="https://zankurd.com/icons/Icon-512.png">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
