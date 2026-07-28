@@ -337,6 +337,27 @@ void main() {
     );
   });
 
+  test('"hangi şehir" sorusunun şıkları yer adı uzunluğunda', () {
+    // Aynı kör nokta, başka bir tür: "Göbekli Tepe hangi şehrin
+    // yakınında?" sorusunun şıklarında bir mevsim, bir siyasi parti ve bir
+    // şehir çifti duruyordu — tek gerçek aday doğru cevaptı (2026-07-27).
+    //
+    // Ölçüt kaba ama kusurun biçimine uyuyor: yer adı birkaç kelimedir;
+    // ödünç alınan tanım cümleleri ve kurum adları uzundur.
+    final asksCity = RegExp('kîjan bajar', caseSensitive: false);
+    final offenders = <String>[];
+    for (final q in everyBankQuestion) {
+      if (!asksCity.hasMatch(q.prompt)) continue;
+      final tooLong = q.answers.where((a) => a.split(' ').length > 3);
+      if (tooLong.isNotEmpty) offenders.add('${q.id} (${tooLong.first})');
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'şehir sorusunda yer adı olmayan şık: ${offenders.join(", ")}',
+    );
+  });
+
   test('çeldiriciler doğru cevapla aynı dilde', () {
     // 2026-07-27: on soruda çeldiricilerden biri doğru cevabın dilinde
     // değildi —

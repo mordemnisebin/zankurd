@@ -22,6 +22,11 @@ denetlemiyor — bir sorunun neyi sorduğunu bilmiyor. Bu, o yaklaşımın
 sınırı: biçimi düzeltirken anlamı bozabiliyor. Bu yüzden bu üç soru elle
 yazıldı ve doğru cevabın ham dizini korundu (A/B/C/D dengesi için).
 
+`offline_2110` de aynı sınıftan: "Göbekli Tepe hangi şehrin yakınında?"
+diye soruyor ama şıklarda bir mevsim ("zivistan / Berfanbar"), bir siyasi
+parti ("YNK") ve bir şehir çifti ("Roma û Atîna") duruyordu. Tek gerçek
+aday doğru cevaptı.
+
 `offline_0080` ayrı bir kusur: resimdeki Kurmancî sözcüğün Türkçe
 karşılığı soruluyor ama şıkların ikisi Kurmancî ("gel!", "heval").
 Dört şık da Türkçe olmalı.
@@ -62,6 +67,11 @@ PATCHES = {
             "Tirkî (bi jêrnivîsa kurdî)",
         ],
         "Kurdî (Soranî û Kurmancî)",
+        0,
+    ),
+    "offline_2110": (
+        ["Riha", "Amed", "Mêrdîn", "Wan"],
+        "Riha",
         0,
     ),
     "offline_0080": (
