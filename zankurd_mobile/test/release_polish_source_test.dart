@@ -45,6 +45,39 @@ void main() {
     expect(plist, contains('profil fotoğrafınızı seçebilmek'));
   });
 
+  test('iOS açılış zemini koyu temayı da tanıyor', () {
+    // Android açılışı 2026-07-27'de iki temaya ayrılmıştı: koyu temada
+    // açılışta beyaz/krem bir kare çakıp sonra karanlığa geçiyordu. Aynı
+    // kusur iOS'ta kalmıştı — storyboard tek bir sabit krem taşıyordu.
+    //
+    // Çözüm adlandırılmış renk: `LaunchBackground` açık temada #F7F4EE,
+    // koyu temada #0E1512. Sabit renge dönüş bu bekçiyi kırar.
+    final storyboard = File(
+      'ios/Runner/Base.lproj/LaunchScreen.storyboard',
+    ).readAsStringSync();
+    expect(
+      storyboard,
+      contains('name="LaunchBackground"'),
+      reason: 'açılış zemini adlandırılmış renge bağlanmamış',
+    );
+    expect(
+      File(
+        'ios/Runner/Assets.xcassets/LaunchBackground.colorset/Contents.json',
+      ).existsSync(),
+      isTrue,
+      reason: 'LaunchBackground renk kümesi yok',
+    );
+
+    final colorSet = File(
+      'ios/Runner/Assets.xcassets/LaunchBackground.colorset/Contents.json',
+    ).readAsStringSync();
+    expect(
+      colorSet,
+      contains('"value" : "dark"'),
+      reason: 'renk kümesinde koyu tema varyantı yok',
+    );
+  });
+
   test('bildirim ikonu siluete uygun tek renkli kaynak kullanıyor', () {
     // 2026-07-27: bildirimler `@mipmap/ic_launcher` kullanıyordu. Android
     // bildirim küçük ikonunu **siluete** çevirir — rengi atar, yalnız
