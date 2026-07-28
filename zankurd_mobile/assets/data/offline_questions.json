@@ -319,8 +319,8 @@
   "answers": [
    "Kitap",
    "küçük",
-   "gel!",
-   "heval"
+   "gel",
+   "arkadaş"
   ],
   "correctAnswer": "küçük",
   "explanation": "\"biçûk\" \"küçük\" demektir.",
@@ -3311,12 +3311,12 @@
   "category": "Edebiyat",
   "prompt": "Cigerxwîn berhemên xwe bi kîjan zimanî nivîsandiye?",
   "answers": [
-   "Dîwana xwe ya klasîk",
-   "Siyabend û Xecê",
-   "dest jî rû dişo",
-   "Kürtçe (Kurmancî)"
+   "Tirkî (bi devoka Stenbolê)",
+   "Erebî (ya klasîk)",
+   "Farisî (ya klasîk)",
+   "Kurdî (Kurmancî)"
   ],
-  "correctAnswer": "Kürtçe (Kurmancî)",
+  "correctAnswer": "Kurdî (Kurmancî)",
   "explanation": "Cigerxwîn, şiirlerini Kürtçe (Kurmancî) yazmıştır.",
   "type": "multipleChoice",
   "difficulty": 3,
@@ -3379,12 +3379,12 @@
   "category": "Edebiyat",
   "prompt": "Mehmed Uzun berhemên xwe bi piranî bi kîjan zimanî nivîsandiye?",
   "answers": [
-   "xweza û teyr",
-   "Rojnameya Nû",
-   "nivîskar û ronakbîr",
-   "Kürtçe (Kurmancî)"
+   "Swêdî (zimanê welatê sirgûnê)",
+   "Erebî (ya klasîk)",
+   "Farisî (ya klasîk)",
+   "Kurdî (Kurmancî)"
   ],
-  "correctAnswer": "Kürtçe (Kurmancî)",
+  "correctAnswer": "Kurdî (Kurmancî)",
   "explanation": "Mehmed Uzun, İsveç'te yaşamasına rağmen eserlerini ağırlıkla Kürtçe (Kurmancî) yazmıştır.",
   "type": "multipleChoice",
   "difficulty": 4,

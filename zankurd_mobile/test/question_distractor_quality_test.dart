@@ -54,9 +54,16 @@ void _metaGuardTests(List<QuizQuestion> Function() getBank) {
 
 void main() {
   late List<QuizQuestion> offlineQuestionBank;
+  // Tür denetimi iki bankayı birden gezer: bozulan soru editoryal
+  // bankadaydı, yalnız çevrimdışı bankaya bakan bir bekçi onu göremezdi.
+  late List<QuizQuestion> everyBankQuestion;
 
   setUpAll(() {
     offlineQuestionBank = loadOfflineBankFromJson();
+    everyBankQuestion = [
+      ...offlineQuestionBank,
+      ...loadEditorialBankFromJson(),
+    ];
   });
 
   _metaGuardTests(() => offlineQuestionBank);
@@ -292,6 +299,41 @@ void main() {
       isEmpty,
       reason:
           'Sorulan terim şık olarak da duruyor: ${offenders.take(5).join(" | ")}',
+    );
+  });
+
+  test('"hangi dilde" sorusunun şıkları dil adı', () {
+    // 2026-07-27: üç soru "bi kîjan zimanî" diye sorup şık olarak kitap
+    // adı, destan adı, hatta atasözü veriyordu — dil olmayan üç şık zaten
+    // eleniyor, soru gereksizleşiyordu.
+    //
+    // Üçüncüsü bu denetimde bozulmuştu: elle yazılmış, dört şıkkı da dil
+    // olan bir soruydu; uzunluk sızıntısını kapatan betik çeldiricileri
+    // aynı kategoriden ödünç cevaplarla değiştirince tür bozuldu. Ödünç
+    // alma dili, tarihi ve uzunluğu denetler ama **türü** denetlemez —
+    // sorunun neyi sorduğunu bilmez. Bu bekçi o kör noktayı kapatır.
+    final asksLanguage = RegExp(
+      'bi kîjan zimanî|kîjan ziman',
+      caseSensitive: false,
+    );
+    final languageName = RegExp(
+      'kurd|kurmanc|soran|zaza|tirk|türk|erebî|arap|farisî|fars|swêd|'
+      'îngil|ingiliz|rus|yunan|ermen|alman|frans|osmanl',
+      caseSensitive: false,
+    );
+
+    final offenders = <String>[];
+    for (final q in everyBankQuestion) {
+      if (!asksLanguage.hasMatch(q.prompt)) continue;
+      final wrongType = q.answers.where((a) => !languageName.hasMatch(a));
+      if (wrongType.isNotEmpty) {
+        offenders.add('${q.id} (${wrongType.first})');
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'dil sorusunda dil olmayan şık: ${offenders.join(", ")}',
     );
   });
 
