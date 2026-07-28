@@ -500,7 +500,19 @@ class AppTheme {
   static const lightBorder = Color(0xFFE7E0D4);
   static const lightTextPrimary = Color(0xFF1B201D); // Mürekkep
   static const lightTextSub = Color(0xFF5C635E);
-  static const lightTextMuted = Color(0xFF7C837D);
+  // Açık temada sönük metin rengi. Eski #7C837D sayfa zemininde 3.54:1,
+  // beyaz kartta 3.89:1 veriyordu — ikisi de AA eşiği olan 4.5'in altında
+  // (2026-07-27). Uygulamanın bütün ikincil etiketleri bu rengi kullanıyor:
+  // ipuçları, alt başlıklar, form yardım metinleri, hatta karşılama
+  // ekranındaki "Atla" düğmesi. Yani tek bir sabit, ekranların yarısında
+  // aynı kusuru taşıyordu ve tek tek bakıldığında "tasarım tercihi" gibi
+  // görünüyordu.
+  //
+  // Bir tık koyulaştırıldı: sayfa zemininde 4.70:1, beyaz kartta 5.16:1.
+  // `lightTextSub` (#5C635E) hâlâ belirgin biçimde koyu, yani sönük/ikincil
+  // ayrımı korunuyor. Koyu temanın karşılığı (#8F98A0) zaten 5.6-6.3
+  // veriyordu; orada bir şey değişmedi.
+  static const lightTextMuted = Color(0xFF686F69);
 
   static const pirsOrangeStart = culturalBrandBg; // Cultural Deep Green
   static const pirsOrangeEnd = culturalBrandBg;

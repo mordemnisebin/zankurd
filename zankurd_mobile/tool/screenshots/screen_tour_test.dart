@@ -25,8 +25,12 @@ import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/image_credits_screen.dart';
+import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
@@ -636,6 +640,38 @@ void main() {
   testWidgets('72 görsel künyesi', (t) async {
     await _pump(t, const ImageCreditsScreen());
     await _shoot(t, '72_image_credits');
+  }, tags: ['preview']);
+
+  // Yeni kullanıcının gördüğü ilk üç ekran da turda yoktu: karşılama,
+  // giriş ve ad sorma. İlk izlenimin ölçülmemesi tuhaf bir boşluktu
+  // (2026-07-27). Bunlar simülatörde tek tek gözden geçirilmişti; tura
+  // girmeleri, bir dahakine gözle bakmadan ölçülebilmeleri için.
+  testWidgets('73 karşılama', (t) async {
+    await _pump(t, OnboardingScreen(onComplete: () {}));
+    await _shoot(t, '73_onboarding');
+  }, tags: ['preview']);
+
+  testWidgets('74 giriş', (t) async {
+    await _pump(t, const SignInScreen());
+    await _shoot(t, '74_sign_in');
+  }, tags: ['preview']);
+
+  testWidgets('75 giriş (karanlık)', (t) async {
+    await _pump(t, const SignInScreen(), dark: true);
+    await _shoot(t, '75_sign_in_dark');
+  }, tags: ['preview']);
+
+  testWidgets('76 kayıt', (t) async {
+    await _pump(t, const SignUpScreen());
+    await _shoot(t, '76_sign_up');
+  }, tags: ['preview']);
+
+  testWidgets('77 ad sorma', (t) async {
+    await _pump(
+      t,
+      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
+    );
+    await _shoot(t, '77_name_gate');
   }, tags: ['preview']);
 
   // ── Kalan ekranların karanlık tema taraması ──
