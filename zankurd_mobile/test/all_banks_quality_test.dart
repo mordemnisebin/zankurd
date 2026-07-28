@@ -192,7 +192,12 @@ void main() {
     // Ölçüt `detectSentenceLanguage`: tırnak içindeki terimler cümlenin
     // dili değil konusudur, ölçmeden önce çıkarılır. Kalan birkaç bulgu
     // Kurmancî özel ad taşıyan Türkçe cümlelerdir; tavan onları kapsar.
-    const ceiling = 12;
+    //
+    // 2026-07-27: sayı 12'den 11'e indi. Biri gerçek kusurdu —
+    // `offline_2201`in Türkçe açıklaması bozuk bir cümleydi ("herêma
+    // Behdînannin ünlü dengbêjidir"): terim değişimi Türkçe iyelik ekiyle
+    // çakışmıştı. Onarıldı ve soruya iki dilli açıklama verildi.
+    const ceiling = 11;
 
     final offenders = <String>[];
     banks.forEach((name, questions) {

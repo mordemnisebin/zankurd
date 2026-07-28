@@ -56,6 +56,19 @@ TERMS = {
 }
 
 
+# Terim değişimi ilk yazımda `explanation` alanına da uygulanmış ve orada
+# Türkçe iyelik ekiyle çakışmıştı: "Behdînan bölgesinin ünlü dengbêjidir"
+# → "herêma Behdînannin ünlü dengbêjidir". Alan artık dokunulmuyor ama
+# hasar kaldı; elle onarılıyor ve soruya iki dilli açıklama veriliyor.
+EXPLANATION_PATCHES = {
+    "offline_2201": {
+        "explanation": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
+        "explanationTr": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
+        "explanationKu": "Kawîs Axa dengbêjekî navdar ê herêma Behdînan e.",
+    },
+}
+
+
 PROMPT_PATCHES = {
     "offline_curated_30014": (
         "Wateya 'ji kerema xwe' bi Tirkî 'teşekkür ederim' e?"
@@ -73,6 +86,11 @@ def main() -> None:
             prompt = PROMPT_PATCHES.get(question["id"])
             if prompt is not None:
                 question["prompt"] = prompt
+                changed += 1
+
+            fixes = EXPLANATION_PATCHES.get(question["id"])
+            if fixes is not None:
+                question.update(fixes)
                 changed += 1
 
             touched = False

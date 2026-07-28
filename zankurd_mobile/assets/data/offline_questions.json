@@ -2028,9 +2028,11 @@
    "wênesaziyê"
   ],
   "correctAnswer": "dengbêjiyê",
-  "explanation": "Kawîs Axa, herêma Behdînannin ünlü dengbêjidir.",
+  "explanation": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
   "type": "multipleChoice",
-  "difficulty": 5
+  "difficulty": 5,
+  "explanationTr": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
+  "explanationKu": "Kawîs Axa dengbêjekî navdar ê herêma Behdînan e."
  },
  {
   "id": "offline_2205",
