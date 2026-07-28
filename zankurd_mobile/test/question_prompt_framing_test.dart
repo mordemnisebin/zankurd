@@ -75,6 +75,41 @@ void main() {
     );
   });
 
+  test('gövdedeki alıntı terimlerde yarı çeviri kalmadı', () {
+    // 2026-07-27: Kurmancî gövdelerin içinde Kürtçe ada Türkçe bir sözcük
+    // yapışmış terimler duruyordu — makine çevirisinin yarıda bıraktığı
+    // yerler: 'Memê Alan destanı', 'Behdînan bölgesi', 'dengbêj makamı'.
+    // Kurmancîde tamlama ters kurulur (destana Memê Alan) ve Türkçe iyelik
+    // eki yoktur; bunlar "biraz tuhaf" değil doğrudan yanlıştı.
+    //
+    // Ölçüt: Kurmancî bir gövdede tırnak içindeki terim Türkçe harf
+    // taşımamalı. Çeviri soruları ("bi Tirkî çi ye?") doğal olarak muaf;
+    // Türkçe özel adlar da adıyla muaf.
+    final translationQuestion = RegExp(
+      'bi Tirkî|Tirkî de|Türkçe',
+      caseSensitive: false,
+    );
+    final quotedTerm = RegExp("'([^']{3,40})'|«([^»]{3,40})»");
+    final turkish = RegExp('[ığöüİĞÖÜ]');
+    const properNames = {'offline_10878'};
+
+    final offenders = <String>[];
+    for (final entry in prompts.entries) {
+      if (properNames.contains(entry.key)) continue;
+      final prompt = entry.value.first;
+      if (translationQuestion.hasMatch(prompt)) continue;
+      for (final match in quotedTerm.allMatches(prompt)) {
+        final term = match.group(1) ?? match.group(2)!;
+        if (turkish.hasMatch(term)) offenders.add('${entry.key} ($term)');
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'yarı çevrilmiş terim: ${offenders.join(", ")}',
+    );
+  });
+
   test('aynı gövde + aynı doğru cevap iki kez geçmiyor', () {
     final duplicates = byKey.entries
         .where((e) => e.value.length > 1)

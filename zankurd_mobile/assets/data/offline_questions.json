@@ -2028,7 +2028,7 @@
    "wênesaziyê"
   ],
   "correctAnswer": "dengbêjiyê",
-  "explanation": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
+  "explanation": "Kawîs Axa, herêma Behdînannin ünlü dengbêjidir.",
   "type": "multipleChoice",
   "difficulty": 5
  },
@@ -7200,7 +7200,7 @@
  {
   "id": "offline_7798",
   "category": "Dîrok",
-  "prompt": "Li jêr ji bo 'İhsan Nuri Paşa' kîjan rast e?",
+  "prompt": "Li jêr ji bo 'Îhsan Nûrî Paşa' kîjan rast e?",
   "answers": [
    "Şerê Enqereyê",
    "dewleta mezin a ku Selahedînê Eyûbî damezrand",
@@ -7208,11 +7208,11 @@
    "efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir"
   ],
   "correctAnswer": "efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir",
-  "explanation": "'İhsan Nuri Paşa': Hoybun cemiyeti adına askeri liderlik yapan subay.",
+  "explanation": "'Îhsan Nûrî Paşa': Hoybun cemiyeti adına askeri liderlik yapan subay.",
   "type": "multipleChoice",
   "difficulty": 1,
   "explanationKu": "'Îhsan Nûrî Paşa' → efserê ku ji bo Xoybûnê rêberiya leşkerî kir.",
-  "explanationTr": "'İhsan Nuri Paşa': Hoybun cemiyeti adına askeri liderlik yapan subay."
+  "explanationTr": "'Îhsan Nûrî Paşa': Hoybun cemiyeti adına askeri liderlik yapan subay."
  },
  {
   "id": "offline_7803",
@@ -7521,7 +7521,7 @@
  {
   "id": "offline_8108",
   "category": "Cografya",
-  "prompt": "'Behdînan bölgesi' di erdnîgariyê de çi îfade dike?",
+  "prompt": "'herêma Behdînan' di erdnîgariyê de çi îfade dike?",
   "answers": [
    "herêma çiyayî ya derdora Zaxo û Dihokê",
    "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
@@ -7529,11 +7529,11 @@
    "çiyayê dîrokî yê ku tê bawerkirin keştiya Nuh lê daketiye"
   ],
   "correctAnswer": "herêma çiyayî ya derdora Zaxo û Dihokê",
-  "explanation": "'Behdînan bölgesi' → Zaho ve Duhok civarındaki dağlık coğrafi alan.",
+  "explanation": "'herêma Behdînan' → Zaho ve Duhok civarındaki dağlık coğrafi alan.",
   "type": "multipleChoice",
   "difficulty": 2,
   "explanationKu": "'Herêma Behdînan' → devera çiyayî ya li dora Zaxo û Dihokê.",
-  "explanationTr": "'Behdînan bölgesi' → Zaho ve Duhok civarındaki dağlık coğrafi alan."
+  "explanationTr": "'herêma Behdînan' → Zaho ve Duhok civarındaki dağlık coğrafi alan."
  },
  {
   "id": "offline_8141",
@@ -8372,7 +8372,7 @@
  {
   "id": "offline_8830",
   "category": "Cografya",
-  "prompt": "Li jêr ji bo 'Behdînan bölgesi' kîjan rast e?",
+  "prompt": "Li jêr ji bo 'herêma Behdînan' kîjan rast e?",
   "answers": [
    "herêma erdnîgarî ya çiyayî ya derdora Zaxo û Dihokê",
    "Beşê bakurrojava yê bilind ê erdnîgariya Kurdistanê",
@@ -8380,11 +8380,11 @@
    "newala kanyonê ya kûr a ku Çemê Botan çêkiriye"
   ],
   "correctAnswer": "herêma erdnîgarî ya çiyayî ya derdora Zaxo û Dihokê",
-  "explanation": "'Behdînan bölgesi' → Zaho ve Duhok civarındaki dağlık coğrafi alan.",
+  "explanation": "'herêma Behdînan' → Zaho ve Duhok civarındaki dağlık coğrafi alan.",
   "type": "multipleChoice",
   "difficulty": 3,
   "explanationKu": "'Herêma Behdînan' → devera çiyayî ya li dora Zaxo û Dihokê.",
-  "explanationTr": "'Behdînan bölgesi' → Zaho ve Duhok civarındaki dağlık coğrafi alan."
+  "explanationTr": "'herêma Behdînan' → Zaho ve Duhok civarındaki dağlık coğrafi alan."
  },
  {
   "id": "offline_8833",
@@ -9010,7 +9010,7 @@
  {
   "id": "offline_9410",
   "category": "Edebiyat",
-  "prompt": "Derbarê 'Memê Alan destanı' de ya rast a zanîn çi ye?",
+  "prompt": "Derbarê 'destana Memê Alan' de ya rast a zanîn çi ye?",
   "answers": [
    "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
    "bi weşandina yekem rojnameya kurdî, Kurdistanê re girêdayî ye",
@@ -9018,11 +9018,11 @@
    "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de"
   ],
   "correctAnswer": "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
-  "explanation": "'Memê Alan destanı' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
+  "explanation": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
   "type": "multipleChoice",
   "difficulty": 4,
   "explanationKu": "'Destana Memê Alan' → destana gelêrî ya ku Ehmedê Xanî jê ji bo Mem û Zînê îlham girt.",
-  "explanationTr": "'Memê Alan destanı' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı."
+  "explanationTr": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı."
  },
  {
   "id": "offline_9411",
@@ -9310,7 +9310,7 @@
  {
   "id": "offline_9668",
   "category": "Edebiyat",
-  "prompt": "Kîjan li gorî pênaseya 'Dewrêşê Evdî destanı' ye?",
+  "prompt": "Kîjan li gorî pênaseya 'destana Dewrêşê Evdî' ye?",
   "answers": [
    "yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî",
    "çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin",
@@ -9318,11 +9318,11 @@
    "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî"
   ],
   "correctAnswer": "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
-  "explanation": "'Dewrêşê Evdî destanı' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.",
+  "explanation": "'destana Dewrêşê Evdî' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.",
   "type": "multipleChoice",
   "difficulty": 2,
   "explanationKu": "'Destana Dewrêşê Evdî' → yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî.",
-  "explanationTr": "'Dewrêşê Evdî destanı' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri."
+  "explanationTr": "'destana Dewrêşê Evdî' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri."
  },
  {
   "id": "offline_9706",
@@ -9429,7 +9429,7 @@
  {
   "id": "offline_9777",
   "category": "Edebiyat",
-  "prompt": "Li jêr kîjan têgiha 'Memê Alan destanı' rave dike?",
+  "prompt": "Li jêr kîjan têgiha 'destana Memê Alan' rave dike?",
   "answers": [
    "nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye",
    "yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî",
@@ -9437,11 +9437,11 @@
    "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı"
   ],
   "correctAnswer": "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
-  "explanation": "'Memê Alan destanı' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
+  "explanation": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
   "type": "multipleChoice",
   "difficulty": 4,
   "explanationKu": "'Destana Memê Alan' → destana gelêrî ya ku Ehmedê Xanî jê ji bo Mem û Zînê îlham girt.",
-  "explanationTr": "'Memê Alan destanı' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı."
+  "explanationTr": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı."
  },
  {
   "id": "offline_9778",
@@ -9871,7 +9871,7 @@
  {
   "id": "offline_10145",
   "category": "Edebiyat",
-  "prompt": "'Memê Alan destanı' tê çi wateyê?",
+  "prompt": "'destana Memê Alan' tê çi wateyê?",
   "answers": [
    "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî",
    "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
@@ -9879,11 +9879,11 @@
    "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir"
   ],
   "correctAnswer": "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı",
-  "explanation": "'Memê Alan destanı' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
+  "explanation": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.",
   "type": "multipleChoice",
   "difficulty": 1,
   "explanationKu": "'Destana Memê Alan' → destana gelêrî ya ku Ehmedê Xanî jê ji bo Mem û Zînê îlham girt.",
-  "explanationTr": "'Memê Alan destanı' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı."
+  "explanationTr": "'destana Memê Alan' → Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı."
  },
  {
   "id": "offline_10157",
@@ -9986,7 +9986,7 @@
  {
   "id": "offline_10271",
   "category": "Edebiyat",
-  "prompt": "Derbarê 'Dewrêşê Evdî destanı' de ravekirina rast kîjan e?",
+  "prompt": "Derbarê 'destana Dewrêşê Evdî' de ravekirina rast kîjan e?",
   "answers": [
    "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
    "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
@@ -9994,11 +9994,11 @@
    "Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı"
   ],
   "correctAnswer": "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
-  "explanation": "'Dewrêşê Evdî destanı' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.",
+  "explanation": "'destana Dewrêşê Evdî' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri.",
   "type": "multipleChoice",
   "difficulty": 3,
   "explanationKu": "'Destana Dewrêşê Evdî' → yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî.",
-  "explanationTr": "'Dewrêşê Evdî destanı' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri."
+  "explanationTr": "'destana Dewrêşê Evdî' → Kürt sözlü edebiyatının en hüzünlü destanlarından biri."
  },
  {
   "id": "offline_10284",
@@ -10651,7 +10651,7 @@
  {
   "id": "offline_10882",
   "category": "Muzîk",
-  "prompt": "'zembîlfiroş stranı' çi îfade dike?",
+  "prompt": "'strana Zembîlfiroş' çi îfade dike?",
   "answers": [
    "cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e",
    "hunermendê ku bayê rock û caz anî muzîka kurdî",
@@ -10659,7 +10659,7 @@
    "efsaneyi anlatan meşhur geleneksel kilam"
   ],
   "correctAnswer": "efsaneyi anlatan meşhur geleneksel kilam",
-  "explanation": "'zembîlfiroş stranı' → efsaneyi anlatan meşhur geleneksel kilam.",
+  "explanation": "'strana Zembîlfiroş' → efsaneyi anlatan meşhur geleneksel kilam.",
   "type": "multipleChoice",
   "difficulty": 4
  },
@@ -11143,7 +11143,7 @@
  {
   "id": "offline_11180",
   "category": "Muzîk",
-  "prompt": "Têgiha 'dengbêj makamı' çi pêk tîne?",
+  "prompt": "Têgiha 'makama dengbêjan' çi pêk tîne?",
   "answers": [
    "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin",
    "muzîkjenê şoreşger ê hezkirî yê herêma Behdînan",
@@ -11151,11 +11151,11 @@
    "stranbêjî an lêxistina bi tenê ya hunermendekî"
   ],
   "correctAnswer": "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin",
-  "explanation": "'dengbêj makamı' → kilamların okunduğu serbest ritimli vokal tarzı.",
+  "explanation": "'makama dengbêjan' → kilamların okunduğu serbest ritimli vokal tarzı.",
   "type": "multipleChoice",
   "difficulty": 4,
   "explanationKu": "'makamê dengbêjiyê' → şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin.",
-  "explanationTr": "'dengbêj makamı' → kilamların okunduğu serbest ritimli vokal tarzı."
+  "explanationTr": "'makama dengbêjan' → kilamların okunduğu serbest ritimli vokal tarzı."
  },
  {
   "id": "offline_11189",
@@ -18905,7 +18905,7 @@
  {
   "id": "offline_curated_30014",
   "category": "Ziman",
-  "prompt": "Wateya 'ji kerema xwe' 'teşekkür ederim' e?",
+  "prompt": "Wateya 'ji kerema xwe' bi Tirkî 'teşekkür ederim' e?",
   "answers": [
    "Rast",
    "Şaş"
