@@ -758,7 +758,7 @@ class Tr {
       'tr': 'Ödül: katılım {join} coin · birinciye {first} coin',
     },
     K.preparing: {'ku': 'Tê amadekirin…', 'tr': 'Hazırlanıyor…'},
-    K.startEvent: {'ku': 'Çalakiyê dest pê bike', 'tr': 'Etkinliğe başla'},
+    K.startEvent: {'ku': 'Dest bi çalakiyê bike', 'tr': 'Etkinliğe başla'},
     K.joinAndRank: {
       'ku': 'Beşdariyê bike û pêşderçûnê de cîh bigire.',
       'tr': 'Katıl ve sıralamada yerini al.',
@@ -896,9 +896,9 @@ class Tr {
       'ku': 'Hevalê xwe bi kodê vexwîne.',
       'tr': 'Arkadaşını kodla davet et.',
     },
-    K.imReady: {'ku': 'Amade Me', 'tr': 'Hazırım'},
+    K.imReady: {'ku': 'Amade me', 'tr': 'Hazırım'},
     K.readyStateNote: {
-      'ku': 'Rewşa te ji lîstikvanên din re ciyê-rast nîşan dide.',
+      'ku': 'Rewşa te di odê de rasterast ji lîstikvanên din re tê nîşandan.',
       'tr': 'Odadaki durumun diğer oyunculara canlı yansır.',
     },
     K.needTwoPlayers: {
@@ -906,7 +906,7 @@ class Tr {
       'tr': 'Yarışı başlatmak için en az 2 oyuncu olmalıdır.',
     },
     K.preparingShort: {'ku': 'Tê Amadekirin', 'tr': 'Hazırlanıyor'},
-    K.startRace: {'ku': 'Pêşbirkê Dest Pê Bike', 'tr': 'Yarışı Başlat'},
+    K.startRace: {'ku': 'Dest bi Pêşbirkê Bike', 'tr': 'Yarışı Başlat'},
     K.waitingHost: {
       'ku':
           'Li benda mêvandar e... Lîstik dê ji aliyê damezrîner ve bê destpêkirin.',
@@ -1026,10 +1026,10 @@ class Tr {
     K.boardLoadFailed: {'ku': 'Tabloya barnekirî', 'tr': 'Yüklenemedi'},
     K.noScoresYet: {'ku': 'Hîn xal tune', 'tr': 'Henüz puan yok'},
     K.startRaceHint: {
-      'ku': 'Pêşbirkekê dest pê bike.',
+      'ku': 'Dest bi pêşbirkekê bike.',
       'tr': 'Bir yarış başlat; puanların burada görünür.',
     },
-    K.startRaceAction: {'ku': 'Pêşbirkê Dest Pê Bike', 'tr': 'Yarışa Başla'},
+    K.startRaceAction: {'ku': 'Dest bi Pêşbirkê Bike', 'tr': 'Yarışa Başla'},
     K.leaderboardTitle: {'ku': 'Tabloya Pêşderiyan', 'tr': 'Liderlik Tablosu'},
     K.refreshEvery30: {
       'ku': 'Her 30 çirkeyî nûve dibe',
