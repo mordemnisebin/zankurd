@@ -33464,7 +33464,7 @@
  {
   "id": "offline_tf_par_0019",
   "category": "Paradigma",
-  "prompt": "Têgeha «civaka bêhiyerarşî» wiha tê ravekirin: ölçüya ku azadiya civakê bi azadiya jinê tê nirxandin. Ev rast e an şaş e?",
+  "prompt": "Têgeha «civaka bêhiyerarşî» wiha tê ravekirin: pîvana ku azadiya civakê bi azadiya jinê tê nirxandin. Ev rast e an şaş e?",
   "answers": [
    "Rast",
    "Şaş"
@@ -33479,7 +33479,7 @@
  {
   "id": "offline_tf_par_0020",
   "category": "Paradigma",
-  "prompt": "Binirxîne: li gorî vê ravekirinê «pîvana azadiyê» ev e — ölçüya ku azadiya civakê bi azadiya jinê tê nirxandin. Rast e an şaş e?",
+  "prompt": "Binirxîne: li gorî vê ravekirinê «pîvana azadiyê» ev e — pîvana ku azadiya civakê bi azadiya jinê tê nirxandin. Rast e an şaş e?",
   "answers": [
    "Rast",
    "Şaş"

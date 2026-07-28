@@ -96,6 +96,31 @@ void main() {
     );
   });
 
+  test('Kurmancî soru gövdesinde Türkçe harf yok', () {
+    // Açıklamalarla aynı ölçüt gövdelere de uygulanır: 2026-07-27'de iki
+    // Paradigma sorusunun gövdesinde "ölçüya" duruyordu — hem yanlış
+    // sözcük hem de cümlenin tanımladığı kavramın ("pîvana azadiyê")
+    // Kurmancî karşılığı. Yani soru, öğrettiği sözcüğü kendisi yanlış
+    // yazıyordu.
+    final quoted = RegExp(r'''«[^»]*»|"[^"]*"|'[^']*'|\([^)]*\)''');
+    final turkish = RegExp('[ığöüİĞÖÜ]');
+    // Türkçe özel adlar Kurmancî gövdede de aynen yazılır.
+    const properNames = {'offline_10344', 'edit_sinema_0005'};
+
+    final offenders = <String>[];
+    for (final question in _allBankQuestions()) {
+      final id = question['id'] as String;
+      if (properNames.contains(id)) continue;
+      final prompt = question['prompt'] as String;
+      if (turkish.hasMatch(prompt.replaceAll(quoted, ''))) offenders.add(id);
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'Kurmancî gövdede Türkçe harf: ${offenders.join(", ")}',
+    );
+  });
+
   test('Kurmancî açıklamada Türkçe harf yok', () {
     // Kurmancî alfabesinde ı, ğ, ö, ü ve İ yoktur. Alıntı ve parantez içi
     // karşılıklar ("teşekkür", (kapıcı)) bilinçli sözlük biçimidir; onlar
