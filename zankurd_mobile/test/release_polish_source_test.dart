@@ -45,6 +45,30 @@ void main() {
     expect(plist, contains('profil fotoğrafınızı seçebilmek'));
   });
 
+  test('web tarafı emekli marka turuncusunu taşımıyor', () {
+    // 2026-07-24'te eylem rengi Tîrêj'e (#C2560E) geçti çünkü eski
+    // #F5931E beyaz metinle 2.2:1 veriyordu. Web tarafı o geçişte geride
+    // kaldı: tarayıcı çubuğu rengi, PWA tema rengi ve klavye odak halkası
+    // 2026-07-27'ye kadar eski turuncuydu — uygulama ile site iki ayrı
+    // marka turuncusu gösteriyordu.
+    //
+    // Palet değişimi kaynak kodda güvenle yapılıyor (sabitler tek yerde),
+    // ama web klasörü Dart'ın dışında kaldığı için kimse oraya bakmamış.
+    // Bekçi tam da o kör noktayı tutuyor.
+    for (final path in const ['web/index.html', 'web/manifest.json']) {
+      final source = File(path).readAsStringSync();
+      // Yorum satırlarında geçmesi serbest: niçin değiştiğini anlatıyor.
+      final withoutComments = source
+          .replaceAll(RegExp(r'<!--.*?-->', dotAll: true), '')
+          .replaceAll(RegExp(r'/\*.*?\*/', dotAll: true), '');
+      expect(
+        withoutComments,
+        isNot(contains('#F5931E')),
+        reason: '$path emekli marka turuncusunu kullanıyor',
+      );
+    }
+  });
+
   test('yasal bağlantıların işaret ettiği belgeler gerçekten var', () {
     // 2026-07-27: uygulama hem Ayarlar'da hem paywall'da
     // `zankurd.com/terms.html` bağlantısı gösteriyordu ama öyle bir belge

@@ -3,9 +3,9 @@
     "short_name": "ZanKurd",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#FBF9F6",
-    "theme_color": "#F5931E",
-    "description": "Kurmanci quiz, online odalar ve liderlik tablosu.",
+    "background_color": "#F7F4EE",
+    "theme_color": "#C2560E",
+    "description": "Kurmancî öğren, sorularla yarış: 10 kategori, çevrimiçi odalar ve liderlik tablosu.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

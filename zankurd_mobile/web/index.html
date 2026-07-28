@@ -20,7 +20,11 @@
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ZanKurd — Fêrbûna Kurmancî bi lîstik, pêşbirk û xelatan.">
-  <meta name="theme-color" content="#F5931E">
+  <!-- Tarayıcı çubuğu ve PWA rengi. #F5931E emekli marka turuncusuydu;
+       palet 2026-07-24'te Tîrêj'e (#C2560E) geçti ama web tarafı geride
+       kaldı ve uygulama ile site iki ayrı turuncu gösteriyordu
+       (2026-07-27). -->
+  <meta name="theme-color" content="#C2560E">
 
   <!-- Open Graph -->
   <meta property="og:title" content="ZanKurd">
@@ -47,10 +51,12 @@
   <link rel="manifest" href="manifest.json">
   <style>
     /* Erişilebilirlik: klavye/ekran okuyucu focus göstergesi belirgin olsun.
-       Varsayılan 1px ince halka yerine 2px marka turuncusu halka. */
+       Varsayılan 1px ince halka yerine 2px marka turuncusu halka.
+       Renk 2026-07-27'de Tîrêj'e çekildi: eski #F5931E emekli edilmişti
+       ve odak halkası tek başına eski paletten kalmıştı. */
     flt-semantics:focus,
     flt-semantics [tabindex]:focus {
-      outline: 2px solid #F5931E !important;
+      outline: 2px solid #C2560E !important;
       outline-offset: 1px;
     }
   </style>
