@@ -342,7 +342,10 @@ void main() {
     //
     // Tavan bir mandal: yeni sorular bu oranı yükseltmemeli. %25'e
     // inmesi beklenmez — bazı sorularda doğru cevap doğal olarak uzundur.
-    const ceilingPercent = 30.0;
+    // 2026-07-27 üçüncü geçiş: ders çerçevesi öneklerinin silinmesi 479
+    // kopya soruyu açığa çıkardı ve bankadan atıldı; kalan 1601 soruda
+    // oran %28,8. Mandal ona göre indirildi.
+    const ceilingPercent = 29.0;
 
     var considered = 0;
     var longestIsCorrect = 0;
