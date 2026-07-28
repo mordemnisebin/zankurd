@@ -431,7 +431,7 @@ class Tr {
       'tr': 'Rakiplerle Karşılaştırma',
     },
     K.finishedAtRank: {
-      'ku': 'Te yarış di rêza {rank}. de qedand.',
+      'ku': 'Te pêşbirk di rêza {rank}. de qedand.',
       'tr': 'Yarışı {rank}. sırada tamamladın.',
     },
     K.leaderFinishedFirst: {
@@ -694,7 +694,7 @@ class Tr {
       'tr': 'Yeşil = doğru, kırmızı = yanlış',
     },
     K.doubleAnswerHint: {
-      'ku': 'Bersiva ducarî: şıkka din hilbijêre',
+      'ku': 'Bersiva ducarî: bijareke din hilbijêre',
       'tr': 'Çift cevap: bir şık daha seç',
     },
     K.difficultyHard: {'ku': 'Dijwar', 'tr': 'Zor'},
@@ -1476,13 +1476,13 @@ class Tr {
 
     // ── Turnuva ağacı ─────────────────────────────────────────────
     K.matchSemantics: {'ku': 'Maça {one} û {two}', 'tr': '{one} ve {two} maçı'},
-    K.matchFinished: {'ku': 'Bİ DAWÎ BÛ', 'tr': 'BİTTİ'},
+    K.matchFinished: {'ku': 'BI DAWÎ BÛ', 'tr': 'BİTTİ'},
     K.unknownPlayer: {'ku': 'Nediyar', 'tr': 'Belirsiz'},
     // ── Görsel künyesi ────────────────────────────────────────────────
     K.imageCredits: {'ku': 'Çavkaniyên wêneyan', 'tr': 'Görsel kaynakları'},
     K.imageCreditsIntro: {
       'ku':
-          'Wêneyên pirsan ji Wikimedia Commons in û bi lîsansên kamu malı, '
+          'Wêneyên pirsan ji Wikimedia Commons in û bi lîsansên malê giştî, '
           'CC0 an CC BY tên bikaranîn. CC BY navê wênegir dixwaze; ev rûpel '
           'ew erka yasayî pêk tîne.',
       'tr':
