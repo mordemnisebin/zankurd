@@ -958,7 +958,7 @@
   "imageUrl": "asset://assets/question_images/cirok.webp",
   "difficulty": 1,
   "explanationTr": "'çîrok' Kurmancîde hikâye/anlatı anlamına gelir.",
-  "explanationKu": "'çîrok' Kurmancîde hikâye/anlatı anlamına gelir."
+  "explanationKu": "Peyva «çîrok» cureyekî vegotinê nîşan dide: bûyerên ku tên gotin an nivîsandin."
  },
  {
   "id": "offline_0656",
@@ -2908,7 +2908,7 @@
   "type": "multipleChoice",
   "difficulty": 5,
   "explanationTr": "Mela Ehmedê Xasî, Zazakîde (Kirmanckî) ilk yazılı mevlitlerden birini vermesiyle bilinir.",
-  "explanationKu": "Mela Ehmedê Xasî, Zazakî'de (Kirmanckî) ilk yazılı mevlitlerden birini vermesiyle bilinir."
+  "explanationKu": "Mela Ehmedê Xasî bi nivîsandina yek ji mewlûdên kirmanckî (zazakî) yên pêşîn tê nasîn."
  },
  {
   "id": "offline_2538",
@@ -27136,7 +27136,7 @@
   "type": "trueFalse",
   "difficulty": 1,
   "explanationTr": "'Rojbaş' günaydın ya da iyi günler için kullanılır.",
-  "explanationKu": "'Rojbaş' ji bo günaydın an iyi günler tê bikaranîn."
+  "explanationKu": "«Rojbaş» ji bo «günaydın» an «iyi günler» tê bikaranîn."
  },
  {
   "id": "offline_curated_30017",
@@ -33501,7 +33501,7 @@
   ],
   "correctAnswer": "Şaş",
   "explanation": "Na — ev ravekirina «zayenda civakî» e; «pîvana azadiyê» tê vê wateyê: ölçüya ku azadiya civakê bi azadiya jinê tê nirxandin.",
-  "explanationKu": "Na — ev ravekirina «zayenda civakî» e; «pîvana azadiyê» tê vê wateyê: ölçüya ku azadiya civakê bi azadiya jinê tê nirxandin.",
+  "explanationKu": "Na — ev ravekirina «zayenda civakî» e; «pîvana azadiyê» tê vê wateyê: pîvana ku azadiya civakê bi azadiya jinê tê nirxandin.",
   "explanationTr": "Hayır — bu tanım «zayenda civakî» kavramına ait; «pîvana azadiyê» şu anlama gelir: toplumun özgürlüğünün kadının özgürlüğüyle ölçülmesi.",
   "type": "trueFalse",
   "difficulty": 5

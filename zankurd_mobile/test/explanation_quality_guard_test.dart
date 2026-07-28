@@ -20,6 +20,22 @@ import 'package:flutter_test/flutter_test.dart';
 ///
 /// Bu test kalıpların bankaya geri sızmasını engeller. Yeni soru üreten
 /// araçlar bu şablonları yeniden kullanırsa burada yakalanır.
+/// Her iki bankanın soruları — kaçaklar ikisine de dağılmıştı.
+List<Map<String, dynamic>> _allBankQuestions() {
+  final all = <Map<String, dynamic>>[];
+  for (final name in const [
+    'assets/data/offline_questions.json',
+    'assets/data/editorial_questions.json',
+  ]) {
+    final file = File(name);
+    expect(file.existsSync(), isTrue, reason: '$name bulunamadı');
+    all.addAll(
+      (jsonDecode(file.readAsStringSync()) as List).cast<Map<String, dynamic>>(),
+    );
+  }
+  return all;
+}
+
 void main() {
   test('soru bankasında bilgi taşımayan açıklama kalıbı yok', () {
     final file = File('assets/data/offline_questions.json');
@@ -54,6 +70,55 @@ void main() {
           '(${offenders.length} adet). İlk üç örnek:\n'
           '${offenders.take(3).join("\n")}\n'
           'Temizlemek için: python3 tool/strip_empty_explanations.py',
+    );
+  });
+
+  test('Kurmancî açıklama Türkçenin kopyası değil', () {
+    // 2026-07-27: iki soruda `explanationKu` ile `explanationTr` birebir
+    // aynıydı ve ikisi de **Türkçeydi**. Yani Kurmancî arayüzde soru
+    // Kurmancî, açıklaması Türkçe çıkıyordu; Kurmancîsi hiç yazılmamış,
+    // Türkçesi kopyalanmıştı.
+    //
+    // Bu kusur gözle bulunmaz: açıklama panelinde bir metin vardır, dolu
+    // görünür ve doğrudur — yalnız dili yanlıştır. Eşitlik ölçütü bunu
+    // kelime bilgisi gerektirmeden yakalar.
+    final offenders = <String>[];
+    for (final question in _allBankQuestions()) {
+      final ku = (question['explanationKu'] as String?)?.trim();
+      final tr = (question['explanationTr'] as String?)?.trim();
+      if (ku == null || tr == null || ku.isEmpty) continue;
+      if (ku == tr) offenders.add(question['id'] as String);
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'Kurmancî açıklaması Türkçenin kopyası: ${offenders.join(", ")}',
+    );
+  });
+
+  test('Kurmancî açıklamada Türkçe harf yok', () {
+    // Kurmancî alfabesinde ı, ğ, ö, ü ve İ yoktur. Alıntı ve parantez içi
+    // karşılıklar ("teşekkür", (kapıcı)) bilinçli sözlük biçimidir; onlar
+    // sayılmaz. Geriye kalan bir Türkçe harf ya sızmış kelimedir ya da
+    // yanlış yazımdır — 2026-07-27'de "ölçüya" (doğrusu "pîvana") böyle
+    // bulundu.
+    final quoted = RegExp(r'''«[^»]*»|"[^"]*"|'[^']*'|\([^)]*\)''');
+    final turkish = RegExp('[ığöüİĞÖÜ]');
+    // Türkçe özel adlar Kurmancî cümlede de aynen yazılır.
+    const properNames = {'edit_sinema_0025'};
+
+    final offenders = <String>[];
+    for (final question in _allBankQuestions()) {
+      final id = question['id'] as String;
+      if (properNames.contains(id)) continue;
+      final ku = question['explanationKu'] as String?;
+      if (ku == null) continue;
+      if (turkish.hasMatch(ku.replaceAll(quoted, ''))) offenders.add(id);
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'Kurmancî açıklamada Türkçe harf: ${offenders.join(", ")}',
     );
   });
 
