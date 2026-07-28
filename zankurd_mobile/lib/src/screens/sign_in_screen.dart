@@ -522,7 +522,10 @@ class _SignInScreenState extends State<SignInScreen>
                                           context.t(K.signUp),
                                           style: AppTypography.bodyMedium
                                               .copyWith(
-                                                color: AppTheme.accent,
+                                                color: AppColors.readableAccent(
+                                                  context,
+                                                  AppTheme.accent,
+                                                ),
                                                 fontWeight: FontWeight.w700,
                                               ),
                                         ),
@@ -766,7 +769,10 @@ class _SignInScreenState extends State<SignInScreen>
                                     child: Text(
                                       context.t(K.signUp),
                                       style: AppTypography.bodyMedium.copyWith(
-                                        color: AppTheme.accent,
+                                        color: AppColors.readableAccent(
+                                          context,
+                                          AppTheme.accent,
+                                        ),
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),

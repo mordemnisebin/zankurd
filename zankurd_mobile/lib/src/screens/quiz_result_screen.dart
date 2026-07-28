@@ -911,9 +911,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       color: AppTheme.surfaceHiColor(context),
                       child: Row(
                         children: [
-                          const Icon(
+                          Icon(
                             AppIcons.fire,
-                            color: AppTheme.accent,
+                            color: AppColors.readableAccent(
+                              context,
+                              AppTheme.accent,
+                            ),
                             size: 30,
                           ),
                           const SizedBox(width: 12),

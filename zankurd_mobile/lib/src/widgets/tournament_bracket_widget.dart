@@ -527,10 +527,10 @@ class _PlayerSlot extends StatelessWidget {
             const SizedBox(width: 2),
             Text(
               '$score',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
-                color: AppTheme.accent,
+                color: AppColors.readableAccent(context, AppTheme.accent),
               ),
             ),
           ],

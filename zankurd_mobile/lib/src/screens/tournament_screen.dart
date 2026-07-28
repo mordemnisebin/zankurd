@@ -1261,10 +1261,10 @@ class _MatchRow extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: match.status == 'completed'
-              ? const Icon(
+              ? Icon(
                   AppIcons.circleCheck,
                   size: 14,
-                  color: AppTheme.accent,
+                  color: AppColors.readableAccent(context, AppTheme.accent),
                 )
               : Text(
                   '—',
@@ -1313,8 +1313,8 @@ class _StandingRow extends StatelessWidget {
             ),
             Text(
               '${s.totalScore}',
-              style: const TextStyle(
-                color: AppTheme.accent,
+              style: TextStyle(
+                color: AppColors.readableAccent(context, AppTheme.accent),
                 fontWeight: FontWeight.w700,
               ),
             ),
