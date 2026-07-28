@@ -48,6 +48,29 @@
 			</array>
 		</dict>
 	</array>
+	<!--
+	  İhracat uyumluluğu beyanı.
+	
+	  Bu anahtar yoksa App Store Connect **her yüklemede** "şifreleme
+	  kullanıyor musunuz?" diye sorar ve yanıtlanana kadar build "Missing
+	  Compliance" durumunda bekler — yani her sürümde elle bir adım
+	  (2026-07-27). Uygulama yalnız HTTPS ve işletim sisteminin standart
+	  şifrelemesini kullanıyor; bu, muafiyet kapsamındadır.
+	-->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<!--
+	  Uygulamanın konuştuğu diller.
+	
+	  App Store liste sayfasındaki "Diller" satırını bu anahtardan üretir.
+	  Anahtar yokken listede yalnız geliştirme dili görünür — iki dilli bir
+	  uygulama için yanlış bilgi, hem de mağazada.
+	-->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ku</string>
+		<string>tr</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ZanKurd, profil fotoğrafınızı seçebilmek için fotoğraf arşivinize erişir.</string>
 	<key>UIApplicationSceneManifest</key>
