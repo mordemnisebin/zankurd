@@ -286,8 +286,14 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                           child: Text(
                             letter,
                             style: AppTypography.heading2.copyWith(
+                              // Seçili dairede harf, kendi renginin %18'lik
+                              // zeminine yazılıyordu: 3.71:1 (2026-07-27).
                               color: selected
-                                  ? color
+                                  ? AppColors.onAccentTint(
+                                      context,
+                                      color,
+                                      tintAlpha: 0.18,
+                                    )
                                   : AppTheme.textMutedColor(context),
                               fontSize: 22,
                             ),
@@ -559,17 +565,25 @@ class _AnswerField extends StatelessWidget {
           child: Text(
             label,
             style: AppTypography.bodyLarge.copyWith(
-              color: isCorrect ? AppTheme.correct : color,
+              // Harf, kendi renginin %14'lük karosunun içine yazılıyordu:
+              // koyu temada 1.93:1 — B, C ve D harfleri neredeyse
+              // görünmüyordu, yalnız seçili olan okunuyordu (2026-07-27).
+              // Şık renkleri bilerek nötrdür; `onAccentTint` yalnız
+              // açıklığı kaydırır, nötrlüğü bozmaz.
+              color: AppColors.onAccentTint(
+                context,
+                isCorrect ? AppTheme.correct : color,
+              ),
               fontWeight: FontWeight.w800,
             ),
           ),
         ),
         suffixIcon: isCorrect
-            ? const Padding(
-                padding: EdgeInsets.all(14),
+            ? Padding(
+                padding: const EdgeInsets.all(14),
                 child: Icon(
                   AppIcons.circleCheck,
-                  color: AppTheme.correct,
+                  color: AppColors.readableAccent(context, AppTheme.correct),
                   size: 22,
                 ),
               )
