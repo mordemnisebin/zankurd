@@ -462,6 +462,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       audiencePercent: audiencePoll?[answer],
       opponentNamesWhoSelected: opps,
       isCompact: isCompact,
+      optionCount: question.displayAnswers.length,
       // Reveal'de renk yalnız anlam taşır: doğru yeşil, seçilen yanlış
       // kırmızı; geri kalan şıklar soluk/disabled görünür.
       dimmed:

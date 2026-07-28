@@ -23,6 +23,7 @@ class QuizOptionTile extends StatelessWidget {
     this.audiencePercent,
     this.opponentNamesWhoSelected,
     this.isCompact = false,
+    this.optionCount = 4,
     this.dimmed = false,
     super.key,
   });
@@ -43,17 +44,29 @@ class QuizOptionTile extends StatelessWidget {
   final List<String>? opponentNamesWhoSelected;
   final bool isCompact;
 
+  /// Sorudaki toplam şık sayısı.
+  ///
+  /// İki şıklı sorularda (doğru/yanlış) kart ekranın yarısını boş
+  /// bırakıyordu: dört şıklı sorular alanı doldururken iki şıklı olanlar
+  /// ortada küçük bir kutu gibi kalıyordu (2026-07-27, simülatörde).
+  final int optionCount;
+
   /// Şık düğmesinin dikey dolgusu.
   ///
   /// Kısa ekranda (isCompact) dar kalır — orada sorun yer darlığıdır.
   /// Uzun ekranda kademeli açılır; 850 pt üstü cihazlarda en geniş hâlini
   /// alır.
+  ///
+  /// İki şıklı soruda bir kademe daha açılır: hem boşluğun bir kısmını
+  /// kapatır hem dokunma hedefini büyütür. Boşluğu tamamen kapatmaz —
+  /// bunun için kartın kendisinin uzaması gerekir, o ayrı bir iş.
   double _verticalPadding(BuildContext context) {
     if (isCompact) return AppSpacing.xs;
     final height = MediaQuery.sizeOf(context).height;
-    if (height >= 850) return AppSpacing.lg;
-    if (height >= 780) return AppSpacing.md;
-    return AppSpacing.sm;
+    final roomy = optionCount <= 2;
+    if (height >= 850) return roomy ? AppSpacing.xl + 12 : AppSpacing.lg;
+    if (height >= 780) return roomy ? AppSpacing.xl : AppSpacing.md;
+    return roomy ? AppSpacing.lg : AppSpacing.sm;
   }
 
   /// Reveal'de seçilmeyen ve doğru olmayan şıklar: %40 opaklık +
