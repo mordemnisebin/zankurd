@@ -49,6 +49,16 @@ ANDROID_ICONS = {
     "mipmap-xxhdpi": 144, "mipmap-xxxhdpi": 192,
 }
 
+# Bildirim ikonu ölçüleri (dp -> px). Android bildirim küçük ikonunu
+# **siluete** çevirir: rengi atar, yalnız alfayı kullanır. Tam renkli
+# başlatıcı simgesi verilirse (ve o simgenin zemini beyazsa) bildirimde
+# düz beyaz bir kare çıkar. Bu yüzden ayrı, saydam zeminli beyaz bir
+# amblem üretilir (2026-07-27).
+NOTIFICATION_ICONS = {
+    "drawable-mdpi": 24, "drawable-hdpi": 36, "drawable-xhdpi": 48,
+    "drawable-xxhdpi": 72, "drawable-xxxhdpi": 96,
+}
+
 LAUNCH_IMAGES = {"LaunchImage.png": 180, "LaunchImage@2x.png": 360,
                  "LaunchImage@3x.png": 540}
 
@@ -168,6 +178,24 @@ def main() -> None:
         canvas.save(
             ROOT / "android/app/src/main/res" / folder / "ic_launcher_fg.png"
         )
+
+    # Bildirim ikonu: amblemin alfası, rengi düz beyaz.
+    for folder, size in NOTIFICATION_ICONS.items():
+        scale = min(size / emblem.width, size / emblem.height)
+        resized = emblem.resize(
+            (max(1, int(emblem.width * scale)), max(1, int(emblem.height * scale))),
+            Image.LANCZOS,
+        )
+        silhouette = Image.new("RGBA", (size, size), (255, 255, 255, 0))
+        white = Image.new("RGBA", resized.size, (255, 255, 255, 255))
+        white.putalpha(resized.getchannel("A"))
+        silhouette.alpha_composite(
+            white,
+            ((size - white.width) // 2, (size - white.height) // 2),
+        )
+        target = ROOT / "android/app/src/main/res" / folder
+        target.mkdir(parents=True, exist_ok=True)
+        silhouette.save(target / "ic_stat_zankurd.png")
 
     for relative, size in WEB_ICONS.items():
         # Maskable simgeler kırpılabilir: içeriden daha fazla pay bırakılır.

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:ui' show Color;
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -22,6 +24,9 @@ class DeviceTimeZoneResolver implements TimeZoneResolver {
 /// Bildirim ayarlarını yöneten servis.
 /// flutter_local_notifications kullanılarak yerel günlük hatırlatıcılar zamanlanır.
 class NotificationService {
+  /// Bildirim siluetinin marka rengi (Tîrêj).
+  static const _accent = Color(0xFFC2560E);
+
   NotificationService._(
     this._preferences,
     this._enabled,
@@ -113,8 +118,13 @@ class NotificationService {
         ErrorReporter.record(error, stack, reason: 'notification_timezone');
       }
 
+      // Bildirim küçük ikonu **silueta** çevrilir: Android rengi atar,
+      // yalnız alfayı kullanır. Başlatıcı simgesi verilince (ki onun zemini
+      // mağaza şartı gereği opak beyazdır) bildirimde düz beyaz bir kare
+      // çıkıyordu — günlük hatırlatıcının her gösteriminde (2026-07-27).
+      // `ic_stat_zankurd` saydam zeminli beyaz amblemdir.
       const AndroidInitializationSettings initializationSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+          AndroidInitializationSettings('@drawable/ic_stat_zankurd');
       const InitializationSettings initializationSettings =
           InitializationSettings(
             android: initializationSettingsAndroid,
@@ -226,6 +236,9 @@ class NotificationService {
             channelDescription: 'Bîranîna pêşbirka rojane ya ZanKurd',
             importance: Importance.max,
             priority: Priority.high,
+            // Siluet ikonu sistemin gri tonuyla çizilir; marka rengi
+            // verilince bildirim ZanKurd'un turuncusuyla görünür.
+            color: _accent,
           );
       const DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
       const NotificationDetails details = NotificationDetails(
@@ -281,6 +294,7 @@ class NotificationService {
         'zankurd_friend_requests',
         'ZanKurd Daxwazên Hevaltiyê',
         channelDescription: 'Daxwazên hevaltiyê yên nû',
+        color: _accent,
         importance: Importance.high,
         priority: Priority.high,
       );

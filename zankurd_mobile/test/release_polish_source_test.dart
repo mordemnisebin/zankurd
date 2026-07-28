@@ -45,6 +45,40 @@ void main() {
     expect(plist, contains('profil fotoğrafınızı seçebilmek'));
   });
 
+  test('bildirim ikonu siluete uygun tek renkli kaynak kullanıyor', () {
+    // 2026-07-27: bildirimler `@mipmap/ic_launcher` kullanıyordu. Android
+    // bildirim küçük ikonunu **siluete** çevirir — rengi atar, yalnız
+    // alfayı kullanır. Başlatıcı simgesinin zemini mağaza şartı gereği
+    // opak beyaz olduğu için bildirimde düz beyaz bir kare çıkıyordu; hem
+    // de günlük hatırlatıcının her gösteriminde.
+    //
+    // Kusur simge dosyaları renkli logoya geçirilince doğdu ve yalnız
+    // gerçek cihazda bildirim gelince görünürdü.
+    final source = File(
+      'lib/src/services/notification_service.dart',
+    ).readAsStringSync();
+    expect(
+      source,
+      contains('@drawable/ic_stat_zankurd'),
+      reason: 'bildirim ikonu tek renkli kaynağa bağlanmamış',
+    );
+    expect(
+      source,
+      isNot(contains("AndroidInitializationSettings('@mipmap")),
+      reason: 'bildirim ikonu yine başlatıcı simgesine bağlanmış',
+    );
+
+    for (final density in const ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']) {
+      expect(
+        File(
+          'android/app/src/main/res/drawable-$density/ic_stat_zankurd.png',
+        ).existsSync(),
+        isTrue,
+        reason: '$density için bildirim ikonu üretilmemiş',
+      );
+    }
+  });
+
   test('paylaşım önizlemesi var olan bir görsele işaret ediyor', () {
     // 2026-07-27: `og:image` `icons/icon-192x192.png` diyordu ama öyle bir
     // dosya hiç yok (gerçek adlar Icon-192 / Icon-512). Bağlantı
