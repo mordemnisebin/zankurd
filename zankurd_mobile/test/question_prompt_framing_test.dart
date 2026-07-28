@@ -54,9 +54,15 @@ void main() {
   });
 
   test('gövde ders çerçevesi dolgusuyla başlamıyor', () {
+    // İkinci dolgu: kategori adı zaten kartın üstünde çip olarak yazıyor,
+    // yani "di qada Cografyaê de" ekranda görünen bir şeyi tekrar ediyordu.
+    // Üstelik bankanın iç anahtarını kullanıyor ve Kurmancî çekimi bozuktu
+    // ("Cografyaê" yerine "Cografyayê"): dolgu hem gereksiz hem yanlıştı.
     final filler = RegExp(
       r'^(Di gotûbêja dersê de|Di nirxandina xwendekaran de'
-      r'|Di çarçoveya dersê de)\s*,',
+      r'|Di çarçoveya dersê de)\s*,'
+      r'|\bdi qada \S+ de\b',
+      caseSensitive: false,
     );
     final offenders = prompts.entries
         .where((e) => filler.hasMatch(e.value.first))

@@ -21,10 +21,17 @@ soru, aynı doğru cevap; yalnız çeldiricilerin sırası karışık. 240 grubu
 Bankanın "kategori içinde gövdeler benzersiz" bekçisi bunu göremiyordu,
 çünkü önekler gövdeleri farklı kılıyordu — dolgu, bekçiyi de atlatıyordu.
 
+Aynı sınıftan ikinci bir dolgu daha var: **"di qada Cografyaê de"**.
+Kategori adı zaten soru kartının üstünde çip olarak yazıyor, yani cümle
+ekranda görünen bir şeyi tekrar ediyor. Üstelik bu adlar bankanın iç
+anahtarları ("Cografya") ve Kurmancî çekimleri de bozuk: "Cografyaê"
+yerine "Cografyayê", "Paradigmaê" yerine "Paradîgmayê" olmalıydı. Yani
+dolgu hem gereksiz hem yanlıştı; 98 gövdede geçiyordu.
+
 Betik iki iş yapar:
-1. Öneki siler ve kalan cümleyi büyük harfle başlatır.
-2. (kategori, gövde, doğru cevap) üçlüsüne göre tekilleştirir; önekli
-   olmayan asıl kaydı tutar, kopyaları atar.
+1. Dolguları siler ve kalan cümleyi büyük harfle başlatır.
+2. (kategori, gövde, doğru cevap) üçlüsüne göre tekilleştirir; dolgusuz
+   asıl kaydı tutar, kopyaları atar.
 
 Bekçiler bankanın geri kalanını korur. Seviye bantlarında yeterli
 benzersiz gövde kalıyor. Doğru cevabın A/B/C/D dağılımı ise kopyalar
@@ -48,13 +55,24 @@ PREFIX = re.compile(
     r"^(Di gotûbêja dersê de|Di nirxandina xwendekaran de|Di çarçoveya dersê de)"
     r",\s*"
 )
+# Kategori çerçevesi: hem gövdenin başında hem ortasında geçiyor.
+FIELD_PREFIX = re.compile(r"^di qada [^ ]+ de,?\s*", re.IGNORECASE)
+FIELD_INLINE = re.compile(r"\bdi qada [^ ]+ de\s*", re.IGNORECASE)
 
 
 def strip_prefix(prompt: str) -> str:
     stripped = PREFIX.sub("", prompt)
-    if stripped == prompt:
-        return prompt
-    return stripped[0].upper() + stripped[1:] if stripped else prompt
+    if stripped != prompt:
+        return stripped[0].upper() + stripped[1:] if stripped else prompt
+
+    stripped = FIELD_PREFIX.sub("", prompt)
+    if stripped != prompt:
+        return stripped[0].upper() + stripped[1:] if stripped else prompt
+
+    stripped = FIELD_INLINE.sub("", prompt)
+    if stripped != prompt:
+        return re.sub(r"\s{2,}", " ", stripped).strip()
+    return prompt
 
 
 def normalize(text: str) -> str:

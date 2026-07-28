@@ -5549,7 +5549,7 @@
  {
   "id": "offline_6182",
   "category": "Çand",
-  "prompt": "Di qada Çandê de 'memê alan' çi îfade dike?",
+  "prompt": "'memê alan' çi îfade dike?",
   "answers": [
    "xwarina kevneşopî ya ku bi mirîşk û birincê tê çêkirin",
    "ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê",
@@ -6560,7 +6560,7 @@
  {
   "id": "offline_7257",
   "category": "Dîrok",
-  "prompt": "Di qada Dîrokê de 'Qazi Muhammed' çi îfade dike?",
+  "prompt": "'Qazi Muhammed' çi îfade dike?",
   "answers": [
    "Ji bo herêmeke kurdî ya xweser madde dihewand",
    "Vegirtina Qudsê di 1187an de",
@@ -7571,7 +7571,7 @@
  {
   "id": "offline_8155",
   "category": "Cografya",
-  "prompt": "Di qada Cografyaê de 'Çiyayê Sîpanê' çi îfade dike?",
+  "prompt": "'Çiyayê Sîpanê' çi îfade dike?",
   "answers": [
    "Newala ku li Dêrsimê bi statûya parka neteweyî heye",
    "Çiyayê volkanîk ê vemirî yê li bakurê Gola Wanê",
@@ -7637,7 +7637,7 @@
  {
   "id": "offline_8213",
   "category": "Cografya",
-  "prompt": "Di qada Cografyaê de 'Zap vadisi' çi îfade dike?",
+  "prompt": "'Zap vadisi' çi îfade dike?",
   "answers": [
    "Beşê bakurrojava yê bilind ê erdnîgariya Kurdistanê",
    "newala kûr a ku ava Zapê di navbera kevirên bilind re diherike",
@@ -7774,7 +7774,7 @@
  {
   "id": "offline_8316",
   "category": "Cografya",
-  "prompt": "Di qada Cografyaê de 'daristanên berû' çi îfade dike?",
+  "prompt": "'daristanên berû' çi îfade dike?",
   "answers": [
    "deşta bi bereket a ku deştên Cizîr û Silopiyê digire",
    "nebat û dara tîpîk a çiyayên Kurdistanê",
@@ -8830,7 +8830,7 @@
  {
   "id": "offline_9227",
   "category": "Edebiyat",
-  "prompt": "Di qada Edebiyatê de 'Cegerxwîn' çi îfade dike?",
+  "prompt": "'Cegerxwîn' çi îfade dike?",
   "answers": [
    "helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen",
    "helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî",
@@ -9497,7 +9497,7 @@
  {
   "id": "offline_9812",
   "category": "Edebiyat",
-  "prompt": "Di qada Edebiyatê de 'Masture Erdelan' çi îfade dike?",
+  "prompt": "'Masture Erdelan' çi îfade dike?",
   "answers": [
    "yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî",
    "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
@@ -9854,7 +9854,7 @@
  {
   "id": "offline_10104",
   "category": "Edebiyat",
-  "prompt": "Di qada Edebiyatê de 'Yaşar Kemal' çi îfade dike?",
+  "prompt": "'Yaşar Kemal' çi îfade dike?",
   "answers": [
    "romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin",
    "helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû",
@@ -10651,7 +10651,7 @@
  {
   "id": "offline_10882",
   "category": "Muzîk",
-  "prompt": "Di qada Muzîkê de 'zembîlfiroş stranı' çi îfade dike?",
+  "prompt": "'zembîlfiroş stranı' çi îfade dike?",
   "answers": [
    "cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e",
    "hunermendê ku bayê rock û caz anî muzîka kurdî",
@@ -10700,7 +10700,7 @@
  {
   "id": "offline_10927",
   "category": "Muzîk",
-  "prompt": "Di qada Muzîkê de 'kevneşopiya şabaşê' çi îfade dike?",
+  "prompt": "'kevneşopiya şabaşê' çi îfade dike?",
   "answers": [
    "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
    "navê yekem koma rocka kurdî di dîrokê de",
@@ -11603,7 +11603,7 @@
  {
   "id": "offline_11588",
   "category": "Paradigma",
-  "prompt": "Di qada Paradigmaê de 'hêza exlaqî' çi îfade dike?",
+  "prompt": "'hêza exlaqî' çi îfade dike?",
   "answers": [
    "têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike",
    "beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de",
@@ -11686,7 +11686,7 @@
  {
   "id": "offline_11624",
   "category": "Paradigma",
-  "prompt": "Di qada Paradigmaê de 'azadiya jinê' çi îfade dike?",
+  "prompt": "'azadiya jinê' çi îfade dike?",
   "answers": [
    "pîvana herî bingehîn a azadbûna civakî",
    "krîzên ekolojî, jin û demokrasiyê",
@@ -12196,7 +12196,7 @@
  {
   "id": "offline_12006",
   "category": "Paradigma",
-  "prompt": "Di qada paradîgmayê de 'demokratik modernite akademisi' çi îfade dike?",
+  "prompt": "'demokratik modernite akademisi' çi îfade dike?",
   "answers": [
    "dibistana lêgerîna zanist û jiyaneke alternatîf",
    "mafê civakê yê xwe parastin û xwerêxistinê",
@@ -12993,7 +12993,7 @@
  {
   "id": "offline_12743",
   "category": "Siyaset",
-  "prompt": "Di qada Siyasetê de 'yerel demokrasi' çi îfade dike?",
+  "prompt": "'yerel demokrasi' çi îfade dike?",
   "answers": [
    "platforma hevbeş a aştiyê ya komên muxalif ên cuda",
    "Beşdariya rasterast û berdewam a ji binî pêş dixe",
@@ -13707,7 +13707,7 @@
  {
   "id": "offline_13171",
   "category": "Siyaset",
-  "prompt": "Di qada Siyasetê de 'siyasi ahlak' çi îfade dike?",
+  "prompt": "'siyasi ahlak' çi îfade dike?",
   "answers": [
    "Hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî",
    "prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de",
@@ -13792,7 +13792,7 @@
  {
   "id": "offline_13269",
   "category": "Siyaset",
-  "prompt": "Di qada Siyasetê de 'eşseroktî' çi îfade dike?",
+  "prompt": "'eşseroktî' çi îfade dike?",
   "answers": [
    "ji bo danûstandin û çareseriya demokratîk",
    "Ji komînên herêmî heta meclîsên jorîn",
@@ -14319,7 +14319,7 @@
  {
   "id": "offline_13647",
   "category": "Siyaset",
-  "prompt": "Di qada Siyasetê de 'lihevkirina demokratîk' çi îfade dike?",
+  "prompt": "'lihevkirina demokratîk' çi îfade dike?",
   "answers": [
    "serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî",
    "hevkombûna aliyan li ser berjewendiya hevbeş",
@@ -14370,7 +14370,7 @@
  {
   "id": "offline_13657",
   "category": "Siyaset",
-  "prompt": "Di qada Siyasetê de 'lihevkirina civakî' çi îfade dike?",
+  "prompt": "'lihevkirina civakî' çi îfade dike?",
   "answers": [
    "jiyana bi hev re ya nasname û baweriyên cuda",
    "diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan",
@@ -14574,7 +14574,7 @@
  {
   "id": "offline_curated_20000",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'ergatîf' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'ergatîf' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
    "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
@@ -14625,7 +14625,7 @@
  {
   "id": "offline_curated_20025",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'tewandin' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'tewandin' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
    "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
@@ -14676,7 +14676,7 @@
  {
   "id": "offline_curated_20050",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'ezafe' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'ezafe' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide",
    "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
@@ -14727,7 +14727,7 @@
  {
   "id": "offline_curated_20075",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'cînavkên tewandî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'cînavkên tewandî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
    "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
@@ -14778,7 +14778,7 @@
  {
   "id": "offline_curated_20100",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'daçekên hevedudanî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'daçekên hevedudanî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
    "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
@@ -14829,7 +14829,7 @@
  {
   "id": "offline_curated_20125",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'lêkera gerguhêz' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'lêkera gerguhêz' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
    "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
@@ -14880,7 +14880,7 @@
  {
   "id": "offline_curated_20150",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'rênivîsa Hawarê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'rênivîsa Hawarê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
    "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
@@ -14931,7 +14931,7 @@
  {
   "id": "offline_curated_20175",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'cînavkên kesane' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'cînavkên kesane' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
    "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
@@ -14982,7 +14982,7 @@
  {
   "id": "offline_curated_20200",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'dema borî ya dûr' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'dema borî ya dûr' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
    "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
@@ -15033,7 +15033,7 @@
  {
   "id": "offline_curated_20225",
   "category": "Ziman",
-  "prompt": "Di qada ziman de têgeha 'paşgirên tewandinê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'paşgirên tewandinê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
    "nîşanderên wekî 'ez, tu, ew, em, hûn, ew' ên ku bo kesan tên bikaranîn",
@@ -15084,7 +15084,7 @@
  {
   "id": "offline_curated_20250",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Melayê Cizîrî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Melayê Cizîrî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
    "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin",
@@ -15135,7 +15135,7 @@
  {
   "id": "offline_curated_20275",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Feqiyê Teyran' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Feqiyê Teyran' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
    "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
@@ -15186,7 +15186,7 @@
  {
   "id": "offline_curated_20300",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Ehmedê Xanî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Ehmedê Xanî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
    "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
@@ -15237,7 +15237,7 @@
  {
   "id": "offline_curated_20325",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Melayê Bateyî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Melayê Bateyî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
    "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin",
@@ -15288,7 +15288,7 @@
  {
   "id": "offline_curated_20350",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'kovara Hawarê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'kovara Hawarê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
    "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
@@ -15339,7 +15339,7 @@
  {
   "id": "offline_curated_20375",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Cegerxwîn' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Cegerxwîn' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
    "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
@@ -15390,7 +15390,7 @@
  {
   "id": "offline_curated_20400",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Arabê Şamo' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Arabê Şamo' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "nivîskarê romana 'Şivanê Kurd' ku wekî romana yekem a kurdî tê qebûlkirin",
    "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
@@ -15441,7 +15441,7 @@
  {
   "id": "offline_curated_20425",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Mehmed Uzun' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Mehmed Uzun' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
    "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin",
@@ -15492,7 +15492,7 @@
  {
   "id": "offline_curated_20450",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'şevbêrkên wêjeyî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'şevbêrkên wêjeyî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin",
    "nivîskarê destana nemir a 'Mem û Zîn' ku hîmê ramanî yê kurdewariyê daniye",
@@ -15543,7 +15543,7 @@
  {
   "id": "offline_curated_20475",
   "category": "Edebiyat",
-  "prompt": "Di qada edebiyat de têgeha 'Helbesta Azad' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Helbesta Azad' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
    "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
@@ -15594,7 +15594,7 @@
  {
   "id": "offline_curated_20500",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Împaratoriya Medî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Împaratoriya Medî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "YNK (Yekîtiya Nîştimanî ya Kurdistanê)",
    "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
@@ -15646,7 +15646,7 @@
  {
   "id": "offline_curated_20525",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Dewleta Merwaniyan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Dewleta Merwaniyan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "bihar / Adar",
    "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn",
@@ -15697,7 +15697,7 @@
  {
   "id": "offline_curated_20550",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Mîrgeha Botan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Mîrgeha Botan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
    "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin",
@@ -15748,7 +15748,7 @@
  {
   "id": "offline_curated_20575",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Şerefname' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Şerefname' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
    "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
@@ -15799,7 +15799,7 @@
  {
   "id": "offline_curated_20600",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Kovara Jîn' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Kovara Jîn' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "sedsala 19em",
    "êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin",
@@ -15850,7 +15850,7 @@
  {
   "id": "offline_curated_20625",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Selaheddînê Eyûbî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Selaheddînê Eyûbî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
    "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
@@ -15901,7 +15901,7 @@
  {
   "id": "offline_curated_20650",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Mîrê Kor' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Mîrê Kor' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "1923",
    "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
@@ -15952,7 +15952,7 @@
  {
   "id": "offline_curated_20675",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Rojnameya Kurdistan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Rojnameya Kurdistan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
    "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
@@ -16003,7 +16003,7 @@
  {
   "id": "offline_curated_20700",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Mîrgeha Erdelanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Mîrgeha Erdelanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin",
    "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
@@ -16054,7 +16054,7 @@
  {
   "id": "offline_curated_20725",
   "category": "Dîrok",
-  "prompt": "Di qada dîrok de têgeha 'Peymana Lozanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Peymana Lozanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
    "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
@@ -16105,7 +16105,7 @@
  {
   "id": "offline_curated_20750",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'çiyayên Zagrosê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'çiyayên Zagrosê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
    "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
@@ -16158,7 +16158,7 @@
  {
   "id": "offline_curated_20775",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Newala Dîcleyê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Newala Dîcleyê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
    "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
@@ -16210,7 +16210,7 @@
  {
   "id": "offline_curated_20800",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Çemê Firatê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Çemê Firatê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
    "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
@@ -16263,7 +16263,7 @@
  {
   "id": "offline_curated_20825",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Çiyayê Cûdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Çiyayê Cûdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
    "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
@@ -16314,7 +16314,7 @@
  {
   "id": "offline_curated_20850",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Girê Mirazan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Girê Mirazan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
    "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
@@ -16365,7 +16365,7 @@
  {
   "id": "offline_curated_20875",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Gola Wanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Gola Wanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
    "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
@@ -16418,7 +16418,7 @@
  {
   "id": "offline_curated_20900",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Çiyayê Sîpanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Çiyayê Sîpanê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
    "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
@@ -16470,7 +16470,7 @@
  {
   "id": "offline_curated_20925",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Geliyê Zapê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Geliyê Zapê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
    "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve",
@@ -16524,7 +16524,7 @@
  {
   "id": "offline_curated_20950",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Heskîf' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Heskîf' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
    "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
@@ -16578,7 +16578,7 @@
  {
   "id": "offline_curated_20975",
   "category": "Cografya",
-  "prompt": "Di qada cografya de têgeha 'Qerejdax' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Qerejdax' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
    "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
@@ -16630,7 +16630,7 @@
  {
   "id": "offline_curated_21000",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'Sazîbûna Dengbêjiyê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Sazîbûna Dengbêjiyê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
    "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
@@ -16682,7 +16682,7 @@
  {
   "id": "offline_curated_21025",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'Newroz' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Newroz' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
    "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
@@ -16735,7 +16735,7 @@
  {
   "id": "offline_curated_21050",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'Kalo û Sersal' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Kalo û Sersal' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
    "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
@@ -16788,7 +16788,7 @@
  {
   "id": "offline_curated_21075",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'Govenda Kurdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Govenda Kurdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
    "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin",
@@ -16839,7 +16839,7 @@
  {
   "id": "offline_curated_21100",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'çanda koçeriyê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'çanda koçeriyê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
    "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
@@ -16890,7 +16890,7 @@
  {
   "id": "offline_curated_21125",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'misafirperweriya kurdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'misafirperweriya kurdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
    "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
@@ -16941,7 +16941,7 @@
  {
   "id": "offline_curated_21150",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'kilimên kurdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'kilimên kurdî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
    "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
@@ -16994,7 +16994,7 @@
  {
   "id": "offline_curated_21175",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'Destana Memê Alan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Destana Memê Alan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
    "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
@@ -17045,7 +17045,7 @@
  {
   "id": "offline_curated_21200",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'hewran' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'hewran' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
    "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
@@ -17096,7 +17096,7 @@
  {
   "id": "offline_curated_21225",
   "category": "Çand",
-  "prompt": "Di qada çand de têgeha 'şevbêrk' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'şevbêrk' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
    "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
@@ -17147,7 +17147,7 @@
  {
   "id": "offline_curated_21250",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'tembûr' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'tembûr' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
    "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
@@ -17198,7 +17198,7 @@
  {
   "id": "offline_curated_21275",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'erbane' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'erbane' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
    "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
@@ -17249,7 +17249,7 @@
  {
   "id": "offline_curated_21300",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'bilûr' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'bilûr' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
    "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
@@ -17300,7 +17300,7 @@
  {
   "id": "offline_curated_21325",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'lîrîka klaman' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'lîrîka klaman' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
    "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
@@ -17351,7 +17351,7 @@
  {
   "id": "offline_curated_21350",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'Şakiro' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Şakiro' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "dengbêjê mezin ê ku wekî 'Şahê Dengbêjan' tê naskirin û xwedî dengekî bêhempa bû",
    "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
@@ -17402,7 +17402,7 @@
  {
   "id": "offline_curated_21375",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'Hasan Cizrawî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Hasan Cizrawî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "dengbêjê mezin ê ku wekî 'Şahê Dengbêjan' tê naskirin û xwedî dengekî bêhempa bû",
    "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
@@ -17453,7 +17453,7 @@
  {
   "id": "offline_curated_21400",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'Meryem Xan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Meryem Xan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
    "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
@@ -17504,7 +17504,7 @@
  {
   "id": "offline_curated_21425",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'Koma Wetan' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Koma Wetan' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
    "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
@@ -17572,7 +17572,7 @@
  {
   "id": "offline_curated_21450",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'lawik' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'lawik' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
    "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
@@ -17623,7 +17623,7 @@
  {
   "id": "offline_curated_21475",
   "category": "Muzîk",
-  "prompt": "Di qada muzîk de têgeha 'heyran' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'heyran' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
    "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
@@ -17674,7 +17674,7 @@
  {
   "id": "offline_curated_21500",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'Radikal demokrasi' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Radikal demokrasi' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
    "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
@@ -17725,7 +17725,7 @@
  {
   "id": "offline_curated_21525",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'eşseroktî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'eşseroktî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
    "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
@@ -17776,7 +17776,7 @@
  {
   "id": "offline_curated_21550",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'komûn û meclîs' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'komûn û meclîs' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
    "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
@@ -17827,7 +17827,7 @@
  {
   "id": "offline_curated_21575",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'peymana civakî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'peymana civakî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
    "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
@@ -17878,7 +17878,7 @@
  {
   "id": "offline_curated_21600",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'ademi-merkeziyet' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'ademi-merkeziyet' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
    "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
@@ -17929,7 +17929,7 @@
  {
   "id": "offline_curated_21625",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'parastina rewa' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'parastina rewa' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
    "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
@@ -17980,7 +17980,7 @@
  {
   "id": "offline_curated_21650",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'pirrengî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'pirrengî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
    "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
@@ -18031,7 +18031,7 @@
  {
   "id": "offline_curated_21675",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'demokrasiya rasterast' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'demokrasiya rasterast' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
    "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
@@ -18082,7 +18082,7 @@
  {
   "id": "offline_curated_21700",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'xweseriya demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'xweseriya demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
    "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
@@ -18133,7 +18133,7 @@
  {
   "id": "offline_curated_21725",
   "category": "Siyaset",
-  "prompt": "Di qada siyaset de têgeha 'hevpeymaniya demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'hevpeymaniya demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
    "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
@@ -18184,7 +18184,7 @@
  {
   "id": "offline_curated_21750",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'Konfederalîzma Demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Konfederalîzma Demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
    "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
@@ -18235,7 +18235,7 @@
  {
   "id": "offline_curated_21775",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'Moderniteya Demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Moderniteya Demokratîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
    "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
@@ -18286,7 +18286,7 @@
  {
   "id": "offline_curated_21800",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'Jineolojî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Jineolojî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
    "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê",
@@ -18337,7 +18337,7 @@
  {
   "id": "offline_curated_21825",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'Ekolojiya Civakî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'Ekolojiya Civakî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
    "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
@@ -18388,7 +18388,7 @@
  {
   "id": "offline_curated_21850",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'aboriya komûnal' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'aboriya komûnal' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê",
    "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
@@ -18439,7 +18439,7 @@
  {
   "id": "offline_curated_21875",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'civaka exlaqî-polîtîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'civaka exlaqî-polîtîk' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
    "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
@@ -18490,7 +18490,7 @@
  {
   "id": "offline_curated_21900",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'rexneya patriyarkayê' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'rexneya patriyarkayê' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
    "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike",
@@ -18541,7 +18541,7 @@
  {
   "id": "offline_curated_21925",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'hiyerarşiya civakî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'hiyerarşiya civakî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê",
    "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava bile ne li ser qezencê",
@@ -18592,7 +18592,7 @@
  {
   "id": "offline_curated_21950",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'zanistiya azad' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'zanistiya azad' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
    "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike",
@@ -18643,7 +18643,7 @@
  {
   "id": "offline_curated_21975",
   "category": "Paradigma",
-  "prompt": "Di qada paradigma de têgeha 'azadiya zayendî' bi kîjan ravekirinê çêtir tê fêmkirin?",
+  "prompt": "Têgeha 'azadiya zayendî' bi kîjan ravekirinê çêtir tê fêmkirin?",
   "answers": [
    "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
    "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
