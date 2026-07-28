@@ -66,7 +66,7 @@ Base the Data Safety form on actual production configuration:
 
 ## 7. Privacy Policy
 
-- [ ] Publish `docs/privacy_policy.html` at a public HTTPS URL.
+- [ ] Publish `web/privacy.html` at a public HTTPS URL.
 - [ ] Verify the URL returns HTTP 200 without login.
 - [ ] Enter the URL in Play Console's Privacy Policy field.
 - [ ] Confirm the app also contains or links to account deletion instructions.

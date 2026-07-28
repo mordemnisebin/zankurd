@@ -9,8 +9,8 @@ adları bekliyor — dosya adı tutmazsa bağlantı 404 verir:
 
 | Depodaki dosya | Siteye yüklenecek ad |
 |---|---|
-| `docs/privacy_policy.html` | `privacy.html` |
-| `docs/terms_of_service.html` | `terms.html` |
+| `web/privacy.html` | `privacy.html` |
+| `web/terms.html` | `terms.html` |
 
 İkisi de sitenin kökünde olmalı: `https://www.zankurd.com/privacy.html`
 ve `.../terms.html`. Bunlar `AppConfig.privacyPolicyUrl` /

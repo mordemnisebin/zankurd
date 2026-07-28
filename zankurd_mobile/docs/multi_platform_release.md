@@ -120,7 +120,7 @@ flutter build linux --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfa
 - Apple Developer account. Full Xcode required for iOS archive/upload
   (Command Line Tools alone is not enough).
 - App Store Connect setup + RevenueCat subscription products.
-- Privacy policy URL — `docs/privacy_policy.html` must be published at
+- Privacy policy URL — `web/privacy.html` must be published at
   `AppConfig.privacyPolicyUrl` (https://www.zankurd.com/privacy).
 - Terms of use URL — published at `AppConfig.termsOfServiceUrl`
   (https://www.zankurd.com/terms).

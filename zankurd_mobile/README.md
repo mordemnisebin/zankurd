@@ -170,10 +170,10 @@ Play Console'a yüklemeden önce şu dosyaları kontrol edin:
 - `docs/release_readiness.md`
 - `docs/play_console_submission_checklist.md`
 - `docs/play_store_internal_test.md`
-- `docs/privacy_policy.html`
+- `web/privacy.html`
 - `docs/release_notes_internal.md`
 
-Google Play'de gizlilik politikası için `docs/privacy_policy.html` dosyası herkese açık bir HTTPS URL'de yayınlanmalı ve aynı URL Play Console'daki Privacy Policy alanına girilmelidir.
+Google Play'de gizlilik politikası için `web/privacy.html` dosyası herkese açık bir HTTPS URL'de yayınlanmalı ve aynı URL Play Console'daki Privacy Policy alanına girilmelidir.
 
 ## Canlı Backend SQL Sırası
 

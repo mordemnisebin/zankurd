@@ -169,9 +169,13 @@ void main() {
     // Bekçi, her yasal URL'nin karşılığı olan kaynak belgenin depoda
     // durduğunu doğrular. Sitenin canlı olup olmadığını ölçemez — o
     // yüklemeyle ilgili; ama "hiç yazılmamış" hâlini bir daha yaşatmaz.
+    // Kaynak `web/` altında: `flutter build web` o klasörü olduğu gibi
+    // `build/web`e kopyalar, yani siteye giden dosya odur. 2026-07-28'de
+    // belgeler bir süre `docs/` altında da duruyordu; iki kopyadan
+    // derlemenin taşımadığı düzeltiliyor, taşıdığı eski kalıyordu.
     const documents = {
-      'privacy.html': 'docs/privacy_policy.html',
-      'terms.html': 'docs/terms_of_service.html',
+      'privacy.html': 'web/privacy.html',
+      'terms.html': 'web/terms.html',
     };
     for (final url in [
       AppConfig.privacyPolicyUrl,

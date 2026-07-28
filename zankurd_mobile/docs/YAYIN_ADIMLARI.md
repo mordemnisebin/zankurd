@@ -49,24 +49,36 @@ göç çalışmamış.
 
 ---
 
-## 2. Siteye iki sayfa yükle
+## 2. Siteyi güncelle (uygulama + yasal sayfalar birlikte)
 
-Uygulama Ayarlar ve abonelik ekranında bu iki bağlantıyı gösteriyor.
-Yüklü değilse Apple abonelik yüzünden reddeder.
+İki yasal sayfa web derlemesinin **içinde** geliyor (`web/privacy.html`,
+`web/terms.html` → `build/web/`), yani siteyi güncellediğinde onlar da
+güncellenir. Ayrı yükleme yok.
 
-Hostinger dosya yöneticisinde `public_html` (ya da sitenin kök klasörü)
-içine, **bu adlarla**:
+1. Derlemeyi yap:
 
-| Bilgisayarındaki dosya | Siteye konacak ad |
-|---|---|
-| `zankurd_mobile/docs/privacy_policy.html` | `privacy.html` |
-| `zankurd_mobile/docs/terms_of_service.html` | `terms.html` |
+```bash
+flutter build web --release
+```
 
-Ad tutmazsa bağlantı 404 verir; uygulama tam olarak bu adları çağırıyor.
+2. `build/web` klasörünün **içindeki her şeyi** (klasörün kendisini
+   değil) Hostinger'da `public_html` içine yükle, üzerine yazsın.
+   Gizli `.htaccess` dosyası da gitmeli — dosya yöneticisinde "gizli
+   dosyaları göster" açık olmalı.
 
-**Tamam mı?** Tarayıcıda şu ikisi açılıyorsa evet:
-- `https://www.zankurd.com/privacy.html`
-- `https://www.zankurd.com/terms.html`
+**Tamam mı?** "Sayfa açılıyor" yetmez: sunucu olmayan her adrese
+uygulamanın kendi sayfasını döndürüyor, yani 404 bile 200 görünüyor.
+İçeriğe bak:
+
+- `https://www.zankurd.com/terms.html` → başlıkta **"Kullanım Koşulları ·
+  Mercên Bikaranînê"** yazmalı. "ZanKurd" yazan boş sayfa görüyorsan
+  yükleme olmamıştır.
+- `https://www.zankurd.com/privacy.html` → 4. maddede **"Ayarlar → Hesap
+  → Hesabımı Sil"** yazmalı. Hâlâ "e-posta gönder" diyorsa eski dosya
+  duruyordur.
+
+İkisi de krem zeminli, yeşil başlıklı. Eskisi lacivert/kırmızıydı; renk
+değiştiyse yeni sürüm yüklenmiş demektir.
 
 ---
 
