@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../data/achievement_store.dart';
@@ -70,6 +71,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _readyMistakeCount = 0;
   String? _currentName;
   LeaderboardEntry? _stats;
+
+  /// Oyuncunun kendi kodu; sunucu vermezse null kalır ve hiç gösterilmez.
+  String? _playerTag;
   List<Achievement> _achievements = const [];
   MasteryStore? _masteryStore;
   int _level = 1;
@@ -178,6 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final name = await widget.repository.getProfileName();
       final stats = await widget.repository.getPlayerStats();
+      final tag = await widget.repository.getPlayerTag();
       final avatarIdentity = await widget.repository.loadAvatarIdentity();
       final achievementStore = await AchievementStore.load();
       final masteryStore = await MasteryStore.load();
@@ -190,6 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           _currentName = name;
           _stats = stats;
+          _playerTag = tag;
           _avatarIdentity = avatarIdentity;
           _achievements = achievementStore.unlockedAchievements;
           _badgeUnlocked = badgeService.unlockedBadges;
@@ -252,6 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       displayName: _displayName(ku),
       avatarIdentity: _avatarIdentity,
       showcaseTitle: _avatarIdentity.showcaseTitle,
+      playerTag: _playerTag,
       level: _level,
       xpInLevel: _xpInLevel,
       xpNeeded: _xpNeeded,

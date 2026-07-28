@@ -227,7 +227,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   textInputAction: TextInputAction.search,
                   onSubmitted: (_) => _search(),
                   decoration: InputDecoration(
-                    hintText: context.t(K.playerNameHintSearch),
+                    hintText: context.t(K.searchByNameOrTag),
                     prefixIcon: const Icon(AppIcons.magnifyingGlass),
                     isDense: true,
                   ),
@@ -284,12 +284,30 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             ),
                           ),
                           const SizedBox(height: 3),
-                          Text(
-                            context.t(K.requestFromHere),
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textMutedColor(context),
+                          // Kod, iki aynı adı ayıran tek şey: adlar
+                          // benzersiz değil ve olmayacak. Kodu olmayan
+                          // eski profillerde satır hiç yazılmaz —
+                          // uydurulmuş bir kod göstermektense yok saymak
+                          // dürüst (2026-07-28).
+                          if (player.formattedTag != null)
+                            Text(
+                              player.formattedTag!,
+                              style: AppTypography.caption.copyWith(
+                                color: AppColors.onAccentTint(
+                                  context,
+                                  AppTheme.cyan,
+                                ),
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 0.6,
+                              ),
+                            )
+                          else
+                            Text(
+                              context.t(K.requestFromHere),
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textMutedColor(context),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),

@@ -1093,11 +1093,12 @@ class Tr {
       'ku': 'Performans nehat barkirin.',
       'tr': 'Performans yüklenemedi.',
     },
+    // Satır sonu iki kez kaçırılmıştı (`\\n`): ekranda satır atlamak yerine
+    // "yok.\\nBir" diye harfi harfine yazılıyordu (2026-07-28). Metin zaten
+    // kısa; tek satır olarak akması daha temiz.
     K.noOnlineHistory: {
-      'ku':
-          'Hîn dîroka lîstikê ya serhêl tune.\\nBi yekê re bikevin an yek çêbikin.',
-      'tr':
-          'Henüz çevrimiçi oyun geçmişin yok.\\nBir odaya katıl veya oluştur.',
+      'ku': 'Hîn dîroka lîstikê ya serhêl tune. Bi yekê re bikeve an yek çêke.',
+      'tr': 'Henüz çevrimiçi oyun geçmişin yok. Bir odaya katıl veya oluştur.',
     },
     K.startToday: {'ku': 'Îro dest pê bike', 'tr': 'Bugün başla'},
     K.secLearningCaps: {'ku': 'FÊRBÛN', 'tr': 'ÖĞRENME'},
@@ -1274,6 +1275,18 @@ class Tr {
     // ── Profil kartı ──────────────────────────────────────────────
     K.editAvatar: {'ku': 'Avatarê xwe biguherîne', 'tr': 'Avatarı düzenle'},
     K.keepProgress: {'ku': 'Rêça xwe berdewam bike', 'tr': 'İlerlemeni sürdür'},
+    K.playerTagCopied: {
+      'ku': 'Koda te hate kopîkirin',
+      'tr': 'Kodun kopyalandı',
+    },
+    K.playerTagSemantics: {
+      'ku': 'Koda te: {tag}. Ji bo kopîkirinê bitikîne.',
+      'tr': 'Oyuncu kodun: {tag}. Kopyalamak için dokun.',
+    },
+    K.searchByNameOrTag: {
+      'ku': 'Nav an koda lîstikvan…',
+      'tr': 'Oyuncu adı ya da kodu…',
+    },
     K.levelWithNumber: {'ku': 'Ast {level}', 'tr': 'Seviye {level}'},
     K.signOutGuestWarn: {
       'ku':
@@ -2123,6 +2136,9 @@ class K {
   // ── Profil kartı ──────────────────────────────────────────────
   static const editAvatar = 'profile.editAvatar';
   static const keepProgress = 'profile.keepProgress';
+  static const playerTagCopied = 'profile.playerTagCopied';
+  static const playerTagSemantics = 'profile.playerTagSemantics';
+  static const searchByNameOrTag = 'friends.searchByNameOrTag';
   static const levelWithNumber = 'profile.levelWithNumber';
   static const signOutGuestWarn = 'profile.signOut.guestWarn';
 

@@ -20,6 +20,17 @@ abstract class ZanKurdRepository {
 
   Future<void> ensureProfile();
   Future<String> getProfileName();
+
+  /// Oyuncunun kendi kodu (ör. `4F7K`) — benzersiz ve değişmez.
+  ///
+  /// Adlar benzersiz değil: ad vermek isteğe bağlı ve iki dilli bir
+  /// toplulukta kültürel bir seçim. Arkadaş eklerken iki "Berfin"i ayıran
+  /// tek şey bu koddur, o yüzden oyuncunun kendi kodunu görebilmesi ve
+  /// paylaşabilmesi gerekir (2026-07-28).
+  ///
+  /// Sunucuya ulaşılamıyorsa ya da profil kod atanmadan önce açıldıysa
+  /// null döner; arayüz o durumda kodu hiç göstermez.
+  Future<String?> getPlayerTag();
   Future<void> updateProfileName(String name);
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();

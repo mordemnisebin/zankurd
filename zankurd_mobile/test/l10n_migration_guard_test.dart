@@ -17,6 +17,28 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 /// eklemek testi kırar, göç ettikçe tavan düşürülür. Böylece ilerleme
 /// ölçülebilir ve geri alınamaz olur.
 void main() {
+  test('metinlerde kaçırılmış satır sonu kalmadı', () {
+    // 2026-07-28: profil ekranı "Henüz çevrimiçi oyun geçmişin yok.\\nBir
+    // odaya katıl" yazıyordu — satır atlamak yerine `\\n`i harfi harfine
+    // basıyordu. Kaçış iki kez uygulanmıştı, yani dizede gerçek bir ters
+    // bölü + n duruyordu.
+    //
+    // Bu kusur gözle bulunur ama yalnız o ekrana bakınca; ölçüt tarama
+    // bütün metinleri bir kerede tarar.
+    final source = File('lib/src/l10n/strings.dart').readAsStringSync();
+    final offenders = <String>[];
+    for (final line in source.split('\n')) {
+      if (line.trimLeft().startsWith('//')) continue;
+      if (!line.contains(r"'")) continue;
+      if (line.contains(r'\\n')) offenders.add(line.trim());
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'kaçırılmış satır sonu: ${offenders.take(3).join(" | ")}',
+    );
+  });
+
   group('l10n göç bekçisi', () {
     /// Satır içi kullanım sayısı (`ku ? '...'` ve `context.s('...', '...')`
     /// toplamı, `lib/` altındaki tüm dosyalar). Bu sayı YALNIZ

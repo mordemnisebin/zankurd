@@ -147,17 +147,38 @@ class PlayerSearchResult {
   final String displayName;
   final String? avatarColor;
 
+  /// Oyuncu kodu (ör. `4F7K`), profil başına benzersiz ve değişmez.
+  ///
+  /// Adlar benzersiz değil ve olmayacak: ad vermek isteğe bağlı ve iki
+  /// dilli bir toplulukta kültürel bir seçim. İki "Berfin" arama
+  /// sonucunda yan yana geldiğinde onları ayıran tek şey bu koddur
+  /// (2026-07-28).
+  ///
+  /// Sunucu kodu atamadan önce açılmış profillerde null olabilir; arayüz
+  /// o durumda kodu hiç göstermez, yanlış bir şey uydurmaz.
+  final String? playerTag;
+
   const PlayerSearchResult({
     required this.id,
     required this.displayName,
     this.avatarColor,
+    this.playerTag,
   });
+
+  /// Ekranda gösterilecek biçim: `ZK-4F7K`. Önek uygulamanın oda
+  /// kodlarıyla aynı; oyuncuya yeni bir kavram öğretmiyor.
+  String? get formattedTag {
+    final tag = playerTag?.trim();
+    if (tag == null || tag.isEmpty) return null;
+    return 'ZK-$tag';
+  }
 
   static PlayerSearchResult fromJson(Map<String, dynamic> json) =>
       PlayerSearchResult(
         id: json['id'] as String,
         displayName: json['display_name'] as String? ?? '',
         avatarColor: json['avatar_color'] as String?,
+        playerTag: json['player_tag'] as String?,
       );
 
   @override

@@ -141,6 +141,30 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<String?> getPlayerTag() async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return null;
+      final profile = await client
+          .from('profiles')
+          .select('player_tag')
+          .eq('id', user.id)
+          .maybeSingle();
+      final tag = profile?['player_tag'] as String?;
+      if (tag != null && tag.trim().isNotEmpty) return tag.trim();
+    } on PostgrestException catch (error, stack) {
+      // Göç uygulanmadan önce sütun yok (42703). Bu bir hata değil,
+      // "henüz kod yok" demek — çökme raporuna gitmesi gürültü olur.
+      if (error.code != '42703') {
+        _recordError(error, stack, reason: 'getPlayerTag failed');
+      }
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'getPlayerTag failed');
+    }
+    return null;
+  }
+
+  @override
   Future<String> getProfileName() async {
     try {
       final user = client.auth.currentUser;

@@ -85,6 +85,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<void> ensureProfile() async {}
 
   @override
+  Future<String?> getPlayerTag() async {
+    // Çevrimdışı depoda sabit bir kod: ekranın kodu nasıl gösterdiği
+    // testlerde ve turda görünür olsun, ama gerçek bir kodmuş gibi
+    // davranmasın.
+    return 'DEMO';
+  }
+
+  @override
   Future<String> getProfileName() async => _mockName;
 
   @override

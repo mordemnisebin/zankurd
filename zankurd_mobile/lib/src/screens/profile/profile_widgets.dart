@@ -6,6 +6,7 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.displayName,
     required this.avatarIdentity,
     required this.showcaseTitle,
+    required this.playerTag,
     required this.level,
     required this.xpInLevel,
     required this.xpNeeded,
@@ -18,6 +19,13 @@ class _ProfileHeroCard extends StatelessWidget {
   final String displayName;
   final AvatarIdentity avatarIdentity;
   final String? showcaseTitle;
+
+  /// Oyuncunun kendi kodu (ör. `4F7K`).
+  ///
+  /// Adlar benzersiz değil; arkadaş ararken iki aynı adı ayıran tek şey
+  /// bu kod. Oyuncunun onu paylaşabilmesi için kendi profilinde görmesi
+  /// gerekiyor. Dokununca panoya kopyalanır (2026-07-28).
+  final String? playerTag;
   final int level;
   final int xpInLevel;
   final int xpNeeded;
@@ -168,13 +176,16 @@ class _ProfileHeroCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              Tr.forKu(K.keepProgress, ku),
-                              style: AppTypography.caption.copyWith(
-                                color: Colors.white.withValues(alpha: 0.74),
-                                fontWeight: FontWeight.w600,
+                            if (playerTag != null)
+                              _PlayerTagChip(tag: playerTag!, ku: ku)
+                            else
+                              Text(
+                                Tr.forKu(K.keepProgress, ku),
+                                style: AppTypography.caption.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.74),
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
                             if (showcaseTitle != null)
                               Container(
                                 margin: const EdgeInsets.only(
@@ -326,6 +337,72 @@ class _ProfileHeroCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Kendi oyuncu kodun: dokununca panoya kopyalanır.
+///
+/// Kod paylaşmak içindir — arkadaşın onu arama kutusuna yazınca seni tek
+/// ve kesin sonuç olarak bulur. Bu yüzden okunması değil **kopyalanması**
+/// asıl iş; dokunma hedefi bütün çipi kapsar.
+class _PlayerTagChip extends StatelessWidget {
+  const _PlayerTagChip({required this.tag, required this.ku});
+
+  final String tag;
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = 'ZK-$tag';
+    return Semantics(
+      button: true,
+      label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),
+      excludeSemantics: true,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppRadius.badge),
+        onTap: () async {
+          await Clipboard.setData(ClipboardData(text: label));
+          if (!context.mounted) return;
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(Tr.forKu(K.playerTagCopied, ku)),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // %200 yazı ölçeğinde çip hero'yu taşırıyordu; kod
+              // kısaltılamaz (elle yazılabilmeli) ama küçültülebilir.
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  style: AppTypography.caption.copyWith(
+                    // Hero zemini doygun yeşil; beyaz burada AA geçiyor ve
+                    // kodun okunması kritik (elle de yazılabilmeli).
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.8,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Icon(
+                AppIcons.copy,
+                size: 13,
+                color: Colors.white.withValues(alpha: 0.8),
+              ),
+            ],
+          ),
         ),
       ),
     );
