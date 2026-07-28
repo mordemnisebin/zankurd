@@ -295,6 +295,54 @@ void main() {
     );
   });
 
+  test('çeldiriciler doğru cevapla aynı dilde', () {
+    // 2026-07-27: on soruda çeldiricilerden biri doğru cevabın dilinde
+    // değildi —
+    //
+    //   Hilgirên herî girîng ên wêjeya devkî ya kurdî kî ne?
+    //     ✓ Dengbêjler
+    //       Tüccarlar          ← Türkçe
+    //
+    // Dil farkı bilgi gerektirmeyen bir ipucudur: Kurmancî şıklar
+    // arasındaki tek Türkçe şık (ya da tersi) bakar bakmaz elenir. Dördü
+    // aynı bozuk çeldiriciyi paylaşıyordu, yani tek bir kayıt dört soruya
+    // bulaşmıştı.
+    //
+    // Ölçüt harf düzeyinde: Kurmancîye özgü î/û/ê ile Türkçeye özgü
+    // ı/ğ/ö/ü/İ. İkisini de taşımayan metin (özel adlar, sayılar) nötr
+    // sayılır ve hiçbir şeye takılmaz.
+    const ku = 'îûêÎÛÊ';
+    const tr = 'ığöüİĞÖÜ';
+    String? language(String text) {
+      final hasKu = text.split('').any(ku.contains);
+      final hasTr = text.split('').any(tr.contains);
+      if (hasKu && !hasTr) return 'ku';
+      if (hasTr && !hasKu) return 'tr';
+      return null;
+    }
+
+    final offenders = <String>[];
+    for (final q in offlineQuestionBank) {
+      if (q.answers.length < 3) continue;
+      final correctLanguage = language(q.correctAnswer);
+      if (correctLanguage == null) continue;
+      final mismatched = q.answers.where(
+        (a) =>
+            a != q.correctAnswer &&
+            language(a) != null &&
+            language(a) != correctLanguage,
+      );
+      if (mismatched.isNotEmpty) {
+        offenders.add('${q.id} (${mismatched.first})');
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'doğru cevaptan başka dilde çeldirici: ${offenders.join(", ")}',
+    );
+  });
+
   test('hiçbir soruda doğru cevap çeldiricileri 1,5 kat aşmıyor', () {
     // Oran testi bankanın genel eğilimini ölçer; bu test tek tek en kötü
     // durumu yasaklar. 2026-07-27'de yedi soruda doğru cevap en uzun

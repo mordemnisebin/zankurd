@@ -1675,7 +1675,7 @@
   "answers": [
    "Dîcle û Ferat",
    "Riha",
-   "Safevi/İran",
+   "Selaheddînê Eyûbî",
    "Çemê Batmanê"
   ],
   "correctAnswer": "Çemê Batmanê",
@@ -2174,9 +2174,9 @@
    "Rojnameya Nû",
    "Hawar",
    "Azadiya Welat",
-   "Kürdistan"
+   "Kurdistan"
   ],
-  "correctAnswer": "Kürdistan",
+  "correctAnswer": "Kurdistan",
   "explanation": "Kürdistan gazetesi, ilk Kürt gazetesi olarak basın tarihinde özel bir yere sahiptir.",
   "type": "multipleChoice",
   "difficulty": 2,
@@ -2427,7 +2427,7 @@
   "prompt": "Ji cihê ku dengbêj lê dicivin û distirên re çi tê gotin?",
   "answers": [
    "Sûriye",
-   "Şarkı",
+   "tembûr",
    "Dîwan",
    "Meydan"
   ],
@@ -3230,7 +3230,7 @@
   "category": "Siyaset",
   "prompt": "\"Çoğulculuk\" di neteweya demokratîk de çi misoger dike?",
   "answers": [
-   "Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti",
+   "Koma xebatê ya li ser mijarekê",
    "rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî",
    "Di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de",
    "jiyana bi hev re ya nasname û baweriyên cuda"
@@ -3546,7 +3546,7 @@
    "Askerler",
    "Denizciler",
    "Dengbêjler",
-   "Tüccarlar"
+   "Ehmedê Xanî"
   ],
   "correctAnswer": "Dengbêjler",
   "explanation": "Kürt sözlü edebiyatının en önemli taşıyıcıları dengbêjlerdir.",
@@ -6303,7 +6303,7 @@
   "prompt": "Di çarçoveya Dîrokê de 'Jiyan gazetesi' tê çi wateyê?",
   "answers": [
    "Osmanlı döneminde özerk kalan Kürt hükümdarlığı",
-   "Birca Spî",
+   "tanıklık ve anlatılarla geçmişi anlama yöntemi",
    "Selahaddin Eyyubi'nin kurduğu büyük devlet",
    "Süleymaniye'de basılan erken dönem Kürtçe gazete"
   ],
@@ -6352,7 +6352,7 @@
    "yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin",
    "herêma dîrokî ya derdora Dîcle û Firatê",
    "serokê bihêz ê mîrektiya Soranê yê bi leqeba kor",
-   "Malazgirt Savaşı"
+   "serokê leşkerî û siyasî yê efsanewî yê tevgera kurdî"
   ],
   "correctAnswer": "herêma dîrokî ya derdora Dîcle û Firatê",
   "explanation": "'Mezopotamya' → Dicle ve Fırat çevresindeki tarihsel bölge.",
@@ -12947,7 +12947,7 @@
    "komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike",
    "Danûstandin, reforma demokratîk û misogerkirina mafan",
    "hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî",
-   "Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti"
+   "statûya xweseriyê û biryargirtinê li herêmê"
   ],
   "correctAnswer": "komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike",
   "explanation": "'hakikat komisyonu' → komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike.",
@@ -13151,7 +13151,7 @@
    "Nîqaşa konfederalîzma demokratîk û netewa demokratîk",
    "qebûlkirina wekhev a nasname û baweriyên cuda",
    "mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe",
-   "Türkiye’de yasal pro-Kürt/sol-demokratik parti siyaseti"
+   "rêbaza çareserkirina pirsgirêkan bi rêya diyalogê"
   ],
   "correctAnswer": "mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe",
   "explanation": "'statü hakkı' → mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe.",
@@ -15702,7 +15702,7 @@
    "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
    "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin",
    "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
-   "II. Abdülhamid"
+   "Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir"
   ],
   "correctAnswer": "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
   "explanation": "«Mîrgeha Botan» tê vê wateyê: mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû.",
