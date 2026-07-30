@@ -67,7 +67,7 @@ yeterliyse rengi değiştirmiyor.
 
 ### Test
 
-960 test geçiyor. Her düzeltmenin yanında onu koruyan bir bekçi var;
+987 test geçiyor. Her düzeltmenin yanında onu koruyan bir bekçi var;
 bekçilerin çoğu ölçüt tabanlı (kontrast oranı, alfabe, kopya gövde), yani
 yarın eklenecek içerikte de çalışır.
 

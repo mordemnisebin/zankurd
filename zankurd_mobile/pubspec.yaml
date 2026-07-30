@@ -67,14 +67,14 @@ dependencies:
   url_launcher: ^6.3.2
 
   # Abonelik / premium yönetimi (RevenueCat)
-  purchases_flutter: ^8.6.0
+  purchases_flutter: ^10.6.0
 
   # Bağlantı durumu (Sprint 6'da kullanılacak)
   connectivity_plus: ^7.3.0
   image_picker: ^1.2.3
   package_info_plus: ^10.2.1
   font_awesome_flutter: ^11.0.0
-  flutter_timezone: ^4.1.1
+  flutter_timezone: ^5.1.0
 
   # Ağ görseli önbellekleme
   cached_network_image: ^3.4.1
@@ -159,10 +159,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
-dependency_overrides:
-  # Newer native-asset hooks fail when this checkout path contains non-ASCII
-  # characters. Keep the last hook-free releases until Flutter fixes that path.
-  objective_c: ">=0.1.0 <6.0.0"
-  path_provider_foundation: ">=0.0.1 <2.6.0"
-  path_provider_android: ">=2.2.0 <2.3.0"

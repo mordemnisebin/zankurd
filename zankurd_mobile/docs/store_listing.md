@@ -1,16 +1,14 @@
 # Mağaza listesi metinleri
 
-App Store ve Google Play listeleri için taslak. **Yayımlanmadan önce
-gözden geçir** — burası pazarlama metni, teknik doküman değil; ton senin
-tercihindir.
+App Store ve Google Play için doğrulanmış yayın metinleri.
 
 Karakter sınırları başlıklarda yazılı ve metinler o sınırlara göre
 yazıldı. Sayılar 2026-07-27 durumudur; sürüm değişince güncelle:
 
 | Ne | Kaç |
 |---|---|
-| Soru | 1.908 |
-| Kategori | 10 |
+| Yayınlanabilir benzersiz soru | 1.953 |
+| Kategori | 9 |
 | Kategori başına seviye | 5 |
 | Arayüz dili | Kurmancî, Türkçe |
 
@@ -24,7 +22,7 @@ App Store en az bir 6,9" (1320×2868) ekran görüntüsü ister; Play için
 telefon görüntüsü 1080 px genişlikten büyük olmalı — aynı dosyalar ikisine
 de yeter.
 
-Yedi görüntü iPhone 17 Pro Max simülatöründen, Türkçe arayüzle alındı ve
+Altı yayın görüntüsü iPhone 17 Pro Max simülatöründen, Türkçe arayüzle alındı ve
 `docs/screenshots/store/tr/` altında duruyor:
 
 | Dosya | Ekran |
@@ -33,9 +31,11 @@ Yedi görüntü iPhone 17 Pro Max simülatöründen, Türkçe arayüzle alındı
 | `02_categories.png` | Kategoriler ve soru sayıları |
 | `03_subcategories.png` | Alt alanlar (illüstrasyonlu başlık) |
 | `04_levels.png` | Seviye yolu |
-| `05_word_order.png` | Cümle kurma alıştırması, doğru cevaplanmış |
 | `06_quiz.png` | Dört şıklı soru |
 | `07_photo_question.png` | Fotoğraflı soru |
+
+`05_word_order.png` yalnız taslak arşividir; cümle kurma soruları editör
+onayı beklediği için bu sürümün mağaza listesine **yüklenmemelidir**.
 
 `docs/screenshots/` sürüm denetiminde tutulmuyor (kökteki `.gitignore`);
 üretilmiş görsellerin kaynak gibi davranmaması için konmuş bir kural.
@@ -66,17 +66,17 @@ ZanKurd — Kurmancî öğren
 ### Kısa açıklama (en fazla 80 karakter)
 
 ```
-Kurmancî öğren, sorularla yarış. 1.900'den fazla soru, 10 kategori.
+Kurmancî öğren, sorularla yarış. 1.900'den fazla soru, 9 kategori.
 ```
 
-(67 karakter)
+(66 karakter)
 
 ### Tam açıklama (en fazla 4000 karakter)
 
 ```
 ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
 uygulamasıdır. Dil, tarih, edebiyat, müzik, coğrafya, kültür ve daha
-fazlası — 1.900'den fazla soru, on kategori.
+fazlası — 1.900'den fazla soru, dokuz kategori.
 
 NASIL İŞLER
 
@@ -105,8 +105,9 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 
 ÇEVRİMDIŞI
 
-Soruların tamamı cihazda. İnternet olmadan da oynarsın; bağlanınca
-puanların eşitlenir.
+Soruların tamamı cihazda. İnternet olmadan da oynarsın. XP ve öğrenme
+ilerlemen cihazda saklanır; çevrimiçi yarışlar, coin işlemleri ve hesap
+özellikleri internet gerektirir.
 
 ERİŞİLEBİLİRLİK
 
@@ -115,8 +116,8 @@ sistemden büyüttüğünde ekranlar taşmaz. Ekran okuyucu için düğmelerin
 adı vardır.
 
 ZanKurd ücretsizdir ve reklam içermez. İsteyen için bir abonelik vardır
-— kozmetiklerin tamamı, VIP rozeti, otomatik seri koruması ve projeye
-destek. Oyunun tamamı aboneliksiz oynanır.
+— otomatik seri koruması ve projeye destek. Oyunun tamamı aboneliksiz
+oynanır.
 ```
 
 ### Anahtar kelimeler / etiketler
@@ -145,7 +146,7 @@ ZanKurd
 Kurmancî öğren, yarış, ilerle
 ```
 
-(28 karakter)
+(29 karakter)
 
 ### Tanıtım metni (en fazla 170 karakter — güncellemesi incelemesizdir)
 
@@ -153,13 +154,12 @@ Kurmancî öğren, yarış, ilerle
 Yeni: turnuvalar artık gerçek oyuncular arasında. Şampiyon kupayı alır.
 ```
 
-(69 karakter)
+(71 karakter)
 
 ### Açıklama (en fazla 4000 karakter)
 
-Play'deki tam açıklamanın aynısı kullanılabilir. App Store madde imi
-karakterlerini destekler; başlıkları BÜYÜK HARF yerine normal yazımla
-bırakmak Apple'ın stil rehberine daha yakındır.
+App Store açıklamasında Play metni, bölüm başlıkları normal yazıma
+çevrilerek kullanılır.
 
 ### Anahtar kelimeler (en fazla 100 karakter, virgülle, boşluksuz)
 
@@ -167,7 +167,7 @@ bırakmak Apple'ın stil rehberine daha yakındır.
 kurmanci,kurtce,kurdi,dil,ogrenme,bilgi,yarisma,quiz,kelime,kultur,tarih,dengbej
 ```
 
-(79 karakter — Türkçe karakterler aranan sözcükte de kullanılmadığı için
+(80 karakter — Türkçe karakterler aranan sözcükte de kullanılmadığı için
 ASCII yazıldı; App Store aramasında bu daha geniş eşleşir.)
 
 ---
@@ -187,24 +187,24 @@ ZanKurd
 ### Bineşan / Alt başlık (30)
 
 ```
-Kurmancî hîn bibe û pêş bike
+Kurmancî hîn bibe, pêş bikeve.
 ```
 
-(28 karakter)
+(30 karakter)
 
 ### Danasîna kurt / Kısa açıklama (80)
 
 ```
-Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetirî 1.900 pirs, 10 kategorî.
+Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.900 pirs, 9 kategorî.
 ```
 
-(76 karakter)
+(78 karakter)
 
 ### Danasîn / Tam açıklama
 
 ```
 ZanKurd sepaneke zanînê ye ku hînbûna kurmancî dike pêşbirk. Ziman,
-dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetirî 1.900 pirs, deh
+dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.900 pirs, neh
 kategorî.
 
 ÇAWA DIXEBITE
@@ -235,10 +235,11 @@ nivîsandin.
 
 BÊ ÎNTERNET
 
-Hemû pirs li ser cîhazê ne. Bêyî înternetê jî tu dilîzî; gava tu
-girêdayî bî xalên te tên hevkirin.
+Hemû pirs li ser amûrê ne. Bêyî înternetê jî tu dikarî bilîzî. XP û
+pêşketina hînbûnê li ser amûrê tên parastin; pêşbirkên serhêl, karên
+coinan û taybetmendiyên hesabê înternetê dixwazin.
 
 ZanKurd belaş e û reklam tê de tune. Ji bo yên ku dixwazin abonetiyek
-heye — hemû xeml, rozeta VIP, parastina zincîrê û piştgirî ji projeyê re.
-Lîstik bi temamî bêyî abonetiyê tê lîstin.
+heye — parastina xweber a zincîrê û piştgirî ji projeyê re. Lîstik bi
+temamî bêyî abonetiyê tê lîstin.
 ```

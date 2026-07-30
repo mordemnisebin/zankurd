@@ -5,10 +5,11 @@
 
   2026-07-27: `NSPrivacyCollectedDataTypes` boştu — yani uygulama "hiçbir
   veri toplamıyorum" beyan ediyordu. Oysa hesap açılıyor (e-posta / Apple /
-  Google), oyuncu adı ve avatarı sunucuda tutuluyor, Firebase Analytics
-  olay gönderiyor, Crashlytics çökme kaydı topluyor ve RevenueCat satın
-  alma geçmişi tutuyor. Beyanın eksik olması App Store incelemesinde
-  reddedilme sebebidir; dahası doğru olmayan bir beyandır.
+  Google), oyuncu adı, oyun ilerlemesi, oda mesajları, soru önerileri ve
+  avatar sunucuda tutuluyor, Firebase Analytics olay gönderiyor, Crashlytics
+  çökme kaydı topluyor ve RevenueCat satın alma geçmişi tutuyor. Beyanın
+  eksik olması App Store incelemesinde reddedilme sebebidir; dahası doğru
+  olmayan bir beyandır.
 
   Her tür için: toplanıyor mu, kullanıcıya bağlı mı (hesapla
   ilişkilendiriliyor), izleme (tracking) amaçlı mı ve hangi amaçla.
@@ -51,10 +52,53 @@
 				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
 			</array>
 		</dict>
-		<!-- Oyuncu adı: sıralamada ve odalarda görünür. -->
+		<!-- Oyuncu adı: sıralama, arkadaşlık, oda ve turnuva alanlarında
+		     görünür. -->
 		<dict>
 			<key>NSPrivacyCollectedDataType</key>
 			<string>NSPrivacyCollectedDataTypeName</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<!-- Oda sohbeti: kullanıcının yazdığı mesajlar oda katılımcılarına
+		     görünür ve hesabıyla ilişkilidir. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeEmailsOrTextMessages</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<!-- Soru önerileri: soru, cevap seçenekleri ve açıklama yalnızca
+		     yetkili içerik incelemesi için tutulur. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeOtherUserContent</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<true/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+		<!-- Sunucuda tutulan oyun/öğrenme ilerlemesi, turnuva katılımı ve
+		     çok oyunculu eşleştirme kayıtları. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeGameplayContent</string>
 			<key>NSPrivacyCollectedDataTypeLinked</key>
 			<true/>
 			<key>NSPrivacyCollectedDataTypeTracking</key>
@@ -117,6 +161,19 @@
 				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
 			</array>
 		</dict>
+		<!-- Uygulama kurulum tanımlayıcısı: Firebase Analytics. -->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeDeviceID</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+			</array>
+		</dict>
 		<!-- Satın alma geçmişi: RevenueCat abonelik durumu. -->
 		<dict>
 			<key>NSPrivacyCollectedDataType</key>
@@ -127,6 +184,7 @@
 			<false/>
 			<key>NSPrivacyCollectedDataTypePurposes</key>
 			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
 				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
 			</array>
 		</dict>

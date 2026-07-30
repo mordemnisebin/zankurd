@@ -1,8 +1,8 @@
 # Yayın adımları — sıradan şaşma
 
-Kodda yapılacak bir şey kalmadı. Aşağıdakiler yalnız senin
-yapabileceklerin: imza anahtarı sende, site senin, mağaza hesapları
-senin.
+Bu belge son yayın sırasıdır. Supabase güvenlik göçleri ve Hostinger SSH
+bağlantısı hazırdır; mağaza hesabı, imza ve fiziksel cihaz adımları hesap
+sahibinde kalır.
 
 Sırayla git. Her adımın sonunda **"tamam mı?"** satırı var; orası
 tutmuyorsa sonrakine geçme.
@@ -17,7 +17,7 @@ inceleme bekleyişi (Apple 1-3 gün, Google 1-7 gün).
 Terminalde proje klasöründe:
 
 ```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile && flutter test && flutter analyze
+cd /Users/kocer/Projects/zankurd/zankurd_mobile && dart analyze && flutter test
 ```
 
 **Tamam mı?** "All tests passed!" ve "No issues found!" görüyorsan evet.
@@ -25,46 +25,47 @@ Görmüyorsan bana yaz, yayına başlama.
 
 ---
 
-## 1. Supabase: oyuncu kodu göçü
+## 1. Supabase: çalıştırılacak göç kalmadı — yalnız doğrula
 
-Aynı adı taşıyan iki oyuncunun ayırt edilmesi buna bağlı.
+Yayın için gereken dört göçün dördü de canlıda: oyuncu kodu
+(`2026-07-28_player_tag.sql`), yayın sertleştirmesi, mağaza satın alma
+bütünlüğü ve ödül yetkisi. Uygulanma kaydı
+`zankurd_mobile/supabase/applied.md` dosyasındadır; **buradaki hiçbir
+dosyayı yeniden çalıştırman gerekmiyor.**
 
-1. [supabase.com](https://supabase.com) → projen → sol menüde **SQL Editor**.
-2. **New query**.
-3. `zankurd_mobile/supabase/2026-07-28_player_tag.sql` dosyasını aç,
-   **tamamını** kopyala, editöre yapıştır.
-4. **Run**.
-
-Dosya yeniden çalıştırılabilir; yanlışlıkla iki kez basarsan bir şey
-bozulmaz.
-
-**Tamam mı?** Aynı editörde şunu çalıştır:
+Yine de yayına başlamadan önce bir bakış iyi olur:
+[supabase.com](https://supabase.com) → projen → **SQL Editor** →
+**New query**:
 
 ```sql
 select display_name, player_tag from public.profiles limit 5;
 ```
 
-Her satırda dört karakterlik bir kod görüyorsan evet. `null` görüyorsan
-göç çalışmamış.
+**Tamam mı?** Her satırda dört karakterlik bir kod görüyorsan evet.
+`null` ya da boş görüyorsan bana yaz — o zaman
+`supabase/2026-07-28_player_tag.sql` yeniden çalıştırılır (dosya
+idempotenttir, iki kez basmak bir şey bozmaz).
 
 ---
 
 ## 2. Siteyi güncelle (uygulama + yasal sayfalar birlikte)
 
-İki yasal sayfa web derlemesinin **içinde** geliyor (`web/privacy.html`,
-`web/terms.html` → `build/web/`), yani siteyi güncellediğinde onlar da
+Üç yasal sayfa web derlemesinin **içinde** geliyor (`web/privacy.html`,
+`web/terms.html`, `web/delete-account.html` → `build/web/`), yani siteyi güncellediğinde onlar da
 güncellenir. Ayrı yükleme yok.
 
-1. Derlemeyi yap:
+Tek komut analiz → bütün testler → açık Supabase ayarlı release derleme →
+Hostinger hedef/anahtar ön kontrolü → şifreli aktarım → dört canlı sayfa
+doğrulaması sırasını uygular:
 
 ```bash
-flutter build web --release
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+./release_web.sh
 ```
 
-2. `build/web` klasörünün **içindeki her şeyi** (klasörün kendisini
-   değil) Hostinger'da `public_html` içine yükle, üzerine yazsın.
-   Gizli `.htaccess` dosyası da gitmeli — dosya yöneticisinde "gizli
-   dosyaları göster" açık olmalı.
+Aktarım parola kullanmaz, hedefin gerçek yolunu doğrulamadan başlamaz,
+değişen uzak dosyaları web kökü dışındaki tarihli yedeğe alır ve uzak
+dosyaları topluca silmez.
 
 **Tamam mı?** "Sayfa açılıyor" yetmez: sunucu olmayan her adrese
 uygulamanın kendi sayfasını döndürüyor, yani 404 bile 200 görünüyor.
@@ -76,8 +77,10 @@ uygulamanın kendi sayfasını döndürüyor, yani 404 bile 200 görünüyor.
 - `https://www.zankurd.com/privacy.html` → 4. maddede **"Ayarlar → Hesap
   → Hesabımı Sil"** yazmalı. Hâlâ "e-posta gönder" diyorsa eski dosya
   duruyordur.
+- `https://www.zankurd.com/delete-account.html` → **"Hesap Silme ·
+  Jêbirina Hesabê"** başlığı ve talep düğmesi görünmeli.
 
-İkisi de krem zeminli, yeşil başlıklı. Eskisi lacivert/kırmızıydı; renk
+Üçü de krem zeminli, yeşil başlıklı. Eskisi lacivert/kırmızıydı; renk
 değiştiyse yeni sürüm yüklenmiş demektir.
 
 ---
@@ -110,10 +113,20 @@ storeFile=/Users/kocer/zankurd-upload.jks
 
 Bu dosya git'e girmiyor (`.gitignore`'da), merak etme.
 
+Mobil release yapılandırmasını örnekten oluştur ve dört açık anahtarı gerçek
+üretim değerleriyle doldur. `.env.mobile.release.json` yerel kalır; repoya
+eklenmez:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+cp .env.mobile.release.example.json .env.mobile.release.json
+```
+
 **Tamam mı?**
 
 ```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile && flutter build appbundle --release
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+flutter build appbundle --release --dart-define-from-file=.env.mobile.release.json
 ```
 
 Sonunda `✓ Built build/app/outputs/bundle/release/app-release.aab`
@@ -151,14 +164,15 @@ Sol menüde **Politika → Uygulama içeriği**. Cevapların madde madde
 **Büyüme → Mağaza listesi**. Metinler `docs/store_listing.md` içinde
 hazır — kopyala yapıştır.
 
-Ekran görüntüleri: `docs/screenshots/store/tr/` klasöründeki 7 dosya.
-Play en az 2 tane ister.
+Ekran görüntüleri: `docs/screenshots/store/tr/` klasöründeki 6 yayın dosyası.
+`05_word_order.png` editör onayı bekleyen özelliği gösterdiği için yüklenmez;
+diğer altı dosyayı kullan. Play en az 2 tane ister.
 
-Ayrıca Play iki görsel daha ister, onlar bende yok:
+Play için gereken iki ek görsel de hazır:
 - **Uygulama simgesi** 512×512 PNG →
   `zankurd_mobile/web/icons/Icon-512.png` dosyasını kullan.
-- **Öne çıkan grafik** 1024×500 — bunu senin yapman ya da bana
-  yaptırman gerek, elimde yok.
+- **Öne çıkan grafik** 1024×500 →
+  `zankurd_mobile/docs/store-assets/play-feature-graphic.png` dosyasını kullan.
 
 **Tamam mı?** Play Console'da hiçbir yerde kırmızı ünlem kalmadıysa evet.
 
@@ -176,14 +190,17 @@ Ayrıca Play iki görsel daha ister, onlar bende yok:
 çalışıyor; App Store Connect'te ürün tanımlı değilse paywall boş görünür.
 
 ### 5c. Yükle
-Xcode ile:
+İmzalı iOS arşivini aynı açık üretim yapılandırmasıyla oluştur:
 
 ```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile && open ios/Runner.xcworkspace
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+flutter build ipa --release --dart-define-from-file=.env.mobile.release.json
+open build/ios/archive/Runner.xcarchive
 ```
 
-Xcode'da: üstten cihaz seçiciden **Any iOS Device** → menüden **Product →
-Archive** → açılan pencerede **Distribute App → App Store Connect**.
+Xcode Organizer'da **Distribute App → App Store Connect** yolunu izle.
+Alternatif olarak `build/ios/ipa/` altındaki `.ipa` dosyasını Transporter ile
+yükleyebilirsin.
 
 Apple Developer hesabın Xcode'da ekli olmalı (Xcode → Settings →
 Accounts).
@@ -191,15 +208,20 @@ Accounts).
 ### 5d. Formlar
 - **Uygulama Gizliliği:** `ios/Runner/PrivacyInfo.xcprivacy` dosyasında
   ne beyan ettiysek aynısını işaretle (hesap kimliği, e-posta, ad, avatar,
-  ürün etkileşimi, çökme, satın alma). Hiçbiri "izleme" değil.
+  oda mesajları, soru önerileri, oyun/eşleştirme içeriği, ürün etkileşimi,
+  uygulama kurulum tanımlayıcısı, çökme, satın alma).
+  Satın alma için **Uygulama İşlevselliği + Analiz** seç; hiçbiri "izleme" değil.
 - **Gizlilik politikası URL'si:** `https://www.zankurd.com/privacy.html`
 - **Kullanım koşulları (EULA):** `https://www.zankurd.com/terms.html`
 - **Yaş derecelendirmesi:** anket, hepsine "yok/hiç".
 - **İhracat uyumluluğu:** sormayacak — kodda beyan ettik.
+- **İnceleme notu:** iOS sürümünde giriş e-posta/şifre veya misafir hesabıyla
+  yapılır. Sosyal giriş seçenekleri bu sürümde bilerek sunulmaz.
 
 ### 5e. Metin ve görseller
 `docs/store_listing.md` içindeki App Store bölümü. Ekran görüntüleri
-`docs/screenshots/store/tr/` (6,9" boyutu, doğru ölçüde).
+`docs/screenshots/store/tr/` (6,9" boyutu, doğru ölçüde; `05_word_order.png`
+hariç).
 
 **Tamam mı?** "İncelemeye gönder" düğmesi aktifse evet.
 

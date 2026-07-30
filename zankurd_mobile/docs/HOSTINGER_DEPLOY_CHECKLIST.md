@@ -11,9 +11,10 @@ adları bekliyor — dosya adı tutmazsa bağlantı 404 verir:
 |---|---|
 | `web/privacy.html` | `privacy.html` |
 | `web/terms.html` | `terms.html` |
+| `web/delete-account.html` | `delete-account.html` |
 
-İkisi de sitenin kökünde olmalı: `https://www.zankurd.com/privacy.html`
-ve `.../terms.html`. Bunlar `AppConfig.privacyPolicyUrl` /
+Üçü de sitenin kökünde olmalı: `https://www.zankurd.com/privacy.html`,
+`.../terms.html` ve `.../delete-account.html`. İlk ikisi `AppConfig.privacyPolicyUrl` /
 `termsOfServiceUrl` ile birebir aynı olmalı.
 
 Niçin ilk sıraya kondu: App Store, otomatik yenilenen abonelik satan
@@ -21,40 +22,24 @@ uygulamalarda kullanım koşulu bağlantısını şart koşar ve inceleyen kişi
 bağlantıya tıklar. `terms.html` 2026-07-27'ye kadar hiç yazılmamıştı;
 uygulama var olmayan bir sayfaya bağlantı veriyordu.
 
-## 1) Temiz release build
+## 1) Tek komutlu doğrulanmış release
 
-```powershell
-cd "C:\Users\AMARGİ\Desktop\pirs kurmanci\zankurd_mobile"
-flutter clean
-flutter pub get
-dart analyze
-flutter test --exclude-tags preview
-flutter build web --release `
-  --dart-define=SUPABASE_URL=https://SENIN-PROJE.supabase.co `
-  --dart-define=SUPABASE_ANON_KEY=SENIN_ANON_KEY
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+./release_web.sh
 ```
 
-> Not: `AppConfig` içinde default proje anahtarları da var; production’da yine de **kendi** `--dart-define` değerlerini kullan.
+Komut `dart analyze`, bütün `flutter test` paketi ve açık yapılandırmalı
+release derlemeyi tamamlamadan aktarım yapmaz. `.env.web.release.json`
+yalnız herkese açık Supabase URL/publishable anahtarını taşır; servis rolü
+veya parola konmaz.
 
-## 2) ZIP (önemli)
+## 2) Şifreli aktarım
 
-- Klasör: `build\web`
-- ZIP’e **`build\web` klasörünün kendisini değil, içindeki dosyaları** koy:
-  - `index.html`, `main.dart.js`, `flutter.js`, `assets/`, `canvaskit/`, `.htaccess`, …
-
-PowerShell örneği:
-
-```powershell
-cd build\web
-Compress-Archive -Path * -DestinationPath ..\..\zankurd_web_release.zip -Force
-```
-
-## 3) Hostinger yükleme
-
-1. File Manager / FTP → public_html (veya domain root)
-2. Eski dosyaları yedekle, yenileri yükle
-3. `.htaccess` yüklü mü kontrol et (SPA 404 **ve Wasm MIME** için şart)
-4. HTTPS açık olsun
+`deploy_sftp.sh`, özel SSH anahtarı ve sabitlenmiş host key kullanır.
+Önce `--dry-run` ile hedefin gerçek yolunu denetler; gerçek aktarımda
+değiştirilen eski dosyaları web kökü dışına yedekler. `.htaccess` dahil
+zorunlu dosyalardan biri eksikse durur.
 
 ### Wasm MIME tuzağı (2026-07-10)
 
@@ -78,7 +63,7 @@ MIME düzelmezse Hostinger hPanel → MIME Types’tan elle ekle, veya Wasm’si
 flutter build web --release
 ```
 
-## 4) 10 dakikalık smoke (yayın sonrası)
+## 3) 10 dakikalık smoke (yayın sonrası)
 
 Telefon + bilgisayar tarayıcı:
 
@@ -91,19 +76,20 @@ Telefon + bilgisayar tarayıcı:
 7. Profil, mağaza, liderlik, ayarlar  
 8. Dil Ku/Tr, tema light/dark  
 
-## 5) Bilinen dürüst sınırlar
+## 4) Bilinen dürüst sınırlar
 
 | Özellik | Durum |
 |---------|--------|
-| Contest / etkinlik | **Aktif** — Günün Yarışması → contest (varsa), quiz + skor/ödül |
-| Turnuva | **Bot kupa** (etiketli) |
+| Günlük etkinlik | **Aktif** — 10 soruluk ilerleme etkinliği; özel ödül ve sıralama yok |
+| Turnuva | **Gerçek oyuncu kupası** |
 | Canlı multiplayer | Supabase + RPC canlıda doğru olmalı |
 
-## 6) “Tamamdır” kriteri
+## 5) “Tamamdır” kriteri
 
 - [ ] Analyze + test yeşil  
-- [ ] Web release build bu checklist ile alındı  
+- [ ] `./release_web.sh` eksiksiz tamamlandı
 - [ ] Smoke 1–8 geçti  
 - [ ] İki gerçek kullanıcı oda veya 1v1 denedi  
 
-Bunlar tamamsa: **paylaşılabilir v1.8 web**.
+Bunlar tamamsa: **paylaşılabilir web sürümü**. (Sürüm numarası tek yerde
+durur: `pubspec.yaml`. Buraya kopyalanmaz — kopyası eskir.)

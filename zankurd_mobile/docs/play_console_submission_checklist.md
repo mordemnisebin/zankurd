@@ -33,8 +33,8 @@ Reviewers can access the app with the guest/anonymous flow. No paid account, inv
 
 - [ ] Complete the content rating questionnaire.
 - [ ] Category: education/trivia quiz.
-- [ ] Disclose user-generated content only if future releases allow public user-submitted questions or chat.
-- [ ] Disclose online interactions only for multiplayer rooms, if prompted.
+- [ ] Disclose user-generated content: multiplayer room chat messages and submitted question suggestions are present in this release.
+- [ ] Disclose online interactions for multiplayer room chat and gameplay.
 
 ## 5. Target Audience
 
@@ -47,22 +47,25 @@ Reviewers can access the app with the guest/anonymous flow. No paid account, inv
 Base the Data Safety form on actual production configuration:
 
 - [ ] Account identifiers: Supabase user ID and optional email if email login is enabled.
-- [ ] User profile data: display name.
+- [ ] User profile data: display name; visible in leaderboards, friend features, multiplayer rooms, and tournaments.
 - [ ] Photos: avatar image, only when the player uploads one (`Photos and videos > Photos`).
+- [ ] Messages: text sent in multiplayer room chat; visible to participants in that room.
+- [ ] Other user-generated content: submitted question text, answer choices, and explanation; visible only to authorized content reviewers.
+- [ ] Gameplay content: stored game and learning progress, scores, tournament participation, and multiplayer matchmaking records.
 - [ ] App activity: quiz scores, leaderboard entries, coin balance, daily spin state, favorites, reported questions.
 - [ ] App interactions: Firebase Analytics events (screen opened, round started/completed, language changed).
+- [ ] Device or other identifiers: Firebase app-installation identifier used for analytics; not advertising and not tracking.
 - [ ] Purchases: RevenueCat subscription state, if premium packages are enabled for the release.
 - [ ] Diagnostics: Firebase Crashlytics crash data on supported platforms.
 - [ ] Data is transmitted over HTTPS.
-- [ ] Data deletion is available through the in-app account deletion flow or support email listed in the privacy policy.
+- [ ] Data deletion is available in-app and through `https://www.zankurd.com/delete-account.html`.
 - [ ] No advertising data is collected unless an ad SDK is added later.
 - [ ] No precise location, contacts, SMS, call log, audio, or camera data is collected by the current app.
 
-> 2026-07-27 denetimi: bu liste fotoğrafı, analitik olaylarını ve satın
-> alma durumunu saymıyordu — üçünü de uygulama topluyor. Aynı eksik iOS
-> gizlilik bildiriminde ve yayınlanan gizlilik politikasında da vardı;
-> üçü birden düzeltildi. Üçünün **aynı** şeyi söylemesi gerekir: form,
-> bildirim ve politika birbirini yalanlarsa inceleme takılır.
+> 2026-07-29 denetimi: fotoğraf, analitik, satın alma, oda mesajları, soru
+> önerileri ve oyun/eşleştirme içeriği uygulamanın gerçek veri akışına göre
+> listelendi. Play formu, iOS bildirimi ve yayınlanan politika **aynı** şeyi
+> söylemelidir; birbirlerini yalanlarlarsa inceleme takılır.
 
 ## 7. Privacy Policy
 
@@ -70,6 +73,7 @@ Base the Data Safety form on actual production configuration:
 - [ ] Verify the URL returns HTTP 200 without login.
 - [ ] Enter the URL in Play Console's Privacy Policy field.
 - [ ] Confirm the app also contains or links to account deletion instructions.
+- [ ] Enter `https://www.zankurd.com/delete-account.html` in the account deletion URL field.
 
 ## 8. Store Listing
 
@@ -77,7 +81,7 @@ Base the Data Safety form on actual production configuration:
 - [ ] Short description: `Kurmanci odaklı günlük quiz, kategori yarışları ve arkadaş odaları.`
 - [ ] Full description should mention quiz, Kurmanci learning, categories, daily challenge, leaderboard, and anonymous play.
 - [ ] Upload phone screenshots from a real or emulator Play build.
-- [ ] Upload feature graphic.
+- [ ] Upload `docs/store-assets/play-feature-graphic.png` (1024×500) as the feature graphic.
 - [ ] Use category `Education` or `Trivia`; prefer `Education` if the listing emphasizes language learning.
 
 ## 9. Internal Test Smoke Check
