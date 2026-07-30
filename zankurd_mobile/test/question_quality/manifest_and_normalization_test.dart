@@ -1,10 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/question_quality/src/discovery.dart';
+import '../../tool/question_quality/src/checks.dart';
 import '../../tool/question_quality/src/manifest.dart';
 import '../../tool/question_quality/src/models.dart';
 import '../../tool/question_quality/src/normalization.dart';
 
 void main() {
+  test('gerçek depodaki bütün soru kaynakları manifestte sınıflandırılır', () {
+    final manifest = SourceManifest.fromJsonString(
+      File('tool/question_quality/source_manifest.json').readAsStringSync(),
+    );
+    final unknown = discoverPotentialQuestionSources(
+      Directory.current,
+    ).where((candidate) => manifest.resolve(candidate.path).isUnknown);
+
+    expect(unknown.map((candidate) => candidate.path), isEmpty);
+  });
+
   group('source manifest', () {
     final manifest = SourceManifest.fromJsonString('''
 {
@@ -101,6 +116,51 @@ void main() {
       expect(first, stableFingerprint('check|canonical|prompt'));
       expect(first, hasLength(32));
       expect(first, isNot(stableFingerprint('check|canonical|other')));
+    });
+  });
+
+  group('dynamic fact detection', () {
+    QuestionRecord record(String prompt, {String? type}) => QuestionRecord(
+      sourceId: 'test',
+      sourceRole: SourceRole.runtimePrimary,
+      sourcePath: 'test.json',
+      sourceFormat: 'json',
+      sourceRow: 1,
+      sourceRecordId: 'q1',
+      canonicalGroup: 'test',
+      locale: 'ku-kmr',
+      category: 'Dîrok',
+      difficulty: 1,
+      prompt: prompt,
+      options: const ['A', 'B'],
+      correctOptionIndex: 0,
+      correctOptionText: 'A',
+      explanation: 'Ravekirina bersivê.',
+      questionType: type,
+      sourceTitle: 'Çavkanî',
+    );
+
+    test('does not match îro inside dîrok or pîrozkirin', () {
+      final issues = runChecks([
+        record('Di dîroka Kurdan de Newroz çawa tê pîrozkirin?'),
+      ]);
+
+      expect(issues.where((issue) => issue.checkId == 'dynamic_fact'), isEmpty);
+    });
+
+    test('still detects standalone time-sensitive terms', () {
+      final issues = runChecks([record('Niha başkan kî ye?')]);
+
+      expect(
+        issues.where((issue) => issue.checkId == 'dynamic_fact'),
+        hasLength(1),
+      );
+    });
+
+    test('does not treat a quoted vocabulary target as a current fact', () {
+      final issues = runChecks([record('Kîjan peyv wateya "bugün" dide?')]);
+
+      expect(issues.where((issue) => issue.checkId == 'dynamic_fact'), isEmpty);
     });
   });
 }

@@ -67,7 +67,12 @@ List<AuditIssue> runChecks(
         normalizedOptions[index] != correct;
     final unresolvedTextAnswer =
         index == null && (correct.isEmpty || textMatches.length != 1);
-    if (indexInvalid || indexedTextMismatch || unresolvedTextAnswer) {
+    final validWordOrderingAnswer =
+        record.questionType == 'wordOrdering' &&
+        normalizeText(record.options.join(' ')) ==
+            normalizeText(record.correctOptionText ?? '');
+    if (!validWordOrderingAnswer &&
+        (indexInvalid || indexedTextMismatch || unresolvedTextAnswer)) {
       add(
         'invalid_correct_answer',
         Severity.blocker,
@@ -121,10 +126,11 @@ List<AuditIssue> runChecks(
       'başkan',
       'nüfus',
       'seçim',
-      'niha',
-      'îro',
     ];
-    if (dynamicPatterns.any(prompt.contains)) {
+    final dynamicPrompt = _withoutQuotedText(prompt);
+    if (dynamicPatterns.any(
+      (pattern) => _containsWholeTerm(dynamicPrompt, pattern),
+    )) {
       add(
         'dynamic_fact',
         Severity.warning,
@@ -188,6 +194,19 @@ List<AuditIssue> runChecks(
   mark('sort');
   return issues;
 }
+
+bool _containsWholeTerm(String text, String term) {
+  final pattern = RegExp(
+    r'(^|[^\p{L}\p{N}_])' + RegExp.escape(term) + r'($|[^\p{L}\p{N}_])',
+    unicode: true,
+  );
+  return pattern.hasMatch(text);
+}
+
+String _withoutQuotedText(String text) => text
+    .replaceAll(RegExp(r'"[^"]*"'), ' ')
+    .replaceAll(RegExp(r'«[^»]*»'), ' ')
+    .replaceAll(RegExp(r"'[^']*'"), ' ');
 
 bool _hasAnswerLeak(String prompt, String correct) {
   if (const {'rast', 'şaş', 'rast e', 'şaş e'}.contains(correct)) return false;

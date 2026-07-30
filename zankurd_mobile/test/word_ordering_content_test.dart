@@ -60,23 +60,30 @@ void main() {
     );
   });
 
-  test('cümle kurma asset bankası parse edilir ve politikadan geçer', () async {
-    final raw = await File(
-      'assets/data/sentence_building_questions.json',
-    ).readAsString();
-    final decoded = jsonDecode(raw) as List;
-    final questions = decoded
-        .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
-        .toList();
+  test(
+    'cümle kurma asset bankası yapısal olarak geçer ama onaysızken oynatılmaz',
+    () async {
+      final raw = await File(
+        'assets/data/sentence_building_questions.json',
+      ).readAsString();
+      final decoded = jsonDecode(raw) as List;
+      final questions = decoded
+          .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
+          .toList();
 
-    expect(questions, isNotEmpty);
-    final ids = questions.map((q) => q.id).toSet();
-    expect(ids.length, questions.length, reason: 'Tekrar eden kimlik var');
+      expect(questions, isNotEmpty);
+      final ids = questions.map((q) => q.id).toSet();
+      expect(ids.length, questions.length, reason: 'Tekrar eden kimlik var');
 
-    for (final q in questions) {
-      expect(q.type, QuestionType.wordOrdering, reason: '${q.id} yanlış tipte');
-      expect(_policy.validate(q), isEmpty, reason: q.id);
-      expect(_policy.isPlayable(q), isTrue, reason: q.id);
-    }
-  });
+      for (final q in questions) {
+        expect(
+          q.type,
+          QuestionType.wordOrdering,
+          reason: '${q.id} yanlış tipte',
+        );
+        expect(_policy.validate(q), isEmpty, reason: q.id);
+        expect(_policy.isPlayable(q), isFalse, reason: q.id);
+      }
+    },
+  );
 }

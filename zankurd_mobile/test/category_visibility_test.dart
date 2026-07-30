@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 
 /// Kategori gizleme mekanizmasının bekçisi.
@@ -17,8 +19,9 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// olsa gizleme çalışmalı, çünkü bir sonraki hazır olmayan kategori için
 /// yine gerekecek.
 void main() {
-  test('şu an gizli kategori yok', () {
-    expect(hiddenCategoryIds, isEmpty);
+  test('yayın tabanının altındaki Sînema gizli', () {
+    expect(hiddenCategoryIds, {'Sînema'});
+    expect(isCategoryVisible('Sînema'), isFalse);
     expect(isCategoryVisible('Teknolojî'), isTrue);
     expect(isCategoryVisible('Ziman'), isTrue);
   });
@@ -61,8 +64,18 @@ void main() {
 
   test('visibleCategories sırayı korur', () {
     final input = ['Ziman', 'Teknolojî', 'Çand'];
-    expect(visibleCategories(input), input);
+    expect(visibleCategories([...input, 'Sînema']), input);
   });
+
+  test(
+    'deponun senkron ve asenkron kategori girişleri gizliyi sızdırmaz',
+    () async {
+      final repository = MockZanKurdRepository();
+
+      expect(repository.categories, isNot(contains('Sînema')));
+      expect(await repository.loadCategories(), isNot(contains('Sînema')));
+    },
+  );
 
   test('gizleme mekanizması hâlâ çalışıyor', () {
     // Liste boşaldı ama mekanizma durmalı: bir sonraki hazır olmayan
@@ -81,6 +94,17 @@ void main() {
 
     expect(policy.isPlayable(question), isTrue);
     expect(isCategoryVisible(question.category), isTrue);
+
+    const rejected = QuizQuestion(
+      id: 'rejected-1',
+      category: 'Ziman',
+      prompt: 'Pirs?',
+      answers: ['A', 'B', 'C', 'D'],
+      correctAnswer: 'A',
+      explanation: 'Ravekirina bersivê.',
+      metadata: QuestionMetadata(reviewStatus: ReviewStatus.rejected),
+    );
+    expect(policy.isPlayable(rejected), isFalse);
 
     // Meta/şema soruları artık kategori gizlemeyle değil, banka bekçisiyle
     // eleniyor (bkz. `question_distractor_quality_test`: "soru bankası

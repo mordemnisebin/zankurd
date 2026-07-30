@@ -92,10 +92,50 @@ const bank = <QuizQuestion>[
     expect(result.records.single.correctOptionIndex, 1);
   });
 
+  test('Dart reader resolves referenced QuestionMetadata constants', () {
+    final file = File('${temp.path}/bank.dart')
+      ..writeAsStringSync('''
+const sourceInfo = QuestionMetadata(
+  reviewStatus: ReviewStatus.approved,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Ferheng',
+  sourceReference: 'https://example.com/source',
+  reviewedAt: '2026-07-29',
+  reviewedBy: 'editor',
+);
+const bank = <QuizQuestion>[
+  QuizQuestion(
+    id: 'q1',
+    category: 'Ziman',
+    prompt: 'Pirs?',
+    answers: ['A', 'B'],
+    correctAnswer: 'B',
+    explanation: 'Ravekirin.',
+    difficulty: 1,
+    metadata: sourceInfo,
+  ),
+];
+''');
+    final result = readSource(
+      source(id: 'dart', parser: 'dart_quiz_question'),
+      file,
+      repositoryRelativePath: 'lib/bank.dart',
+    );
+
+    final record = result.records.single;
+    expect(record.dialect, 'Kurmancî');
+    expect(record.sourceTitle, 'Ferheng');
+    expect(record.sourceUrl, 'https://example.com/source');
+    expect(record.reviewedAt, '2026-07-29');
+    expect(record.reviewedBy, 'editor');
+    expect(record.status, 'approved');
+  });
+
   test('JSON reader maps configured fields', () {
     final file = File('${temp.path}/bank.json')
       ..writeAsStringSync(
-        '[{"qid":"q1","question":"Pirs?","answers":["A","B"],"answer":"B"}]',
+        '[{"qid":"q1","question":"Pirs?","answers":["A","B"],'
+        '"answer":"B","metadata":{"sourceTitle":"Ferheng"}}]',
       );
     final result = readSource(
       source(
@@ -106,12 +146,40 @@ const bank = <QuizQuestion>[
           'prompt': 'question',
           'options': 'answers',
           'correct': 'answer',
+          'sourceTitle': 'metadata.sourceTitle',
         },
       ),
       file,
       repositoryRelativePath: 'bank.json',
     );
     expect(result.records.single.correctOptionIndex, 1);
+    expect(result.records.single.sourceTitle, 'Ferheng');
+  });
+
+  test('JSON reader treats a numeric-looking answer as option text', () {
+    final file = File('${temp.path}/numeric-answer.json')
+      ..writeAsStringSync(
+        '[{"id":"q1","prompt":"Çend?","answers":["31","29"],'
+        '"correctAnswer":"31","type":"multipleChoice"}]',
+      );
+    final result = readSource(
+      source(
+        id: 'numeric-json',
+        parser: 'json',
+        columns: const {
+          'id': 'id',
+          'prompt': 'prompt',
+          'options': 'answers',
+          'correct': 'correctAnswer',
+          'type': 'type',
+        },
+      ),
+      file,
+      repositoryRelativePath: 'numeric-answer.json',
+    );
+
+    expect(result.records.single.correctOptionIndex, 0);
+    expect(result.records.single.correctOptionText, '31');
   });
 
   test('parse error is counted and never silently discarded', () {
@@ -141,6 +209,10 @@ const bank = <QuizQuestion>[
       File(
         '${temp.path}/reports/question_review.json',
       ).writeAsStringSync('[{"prompt":"Pirs?"}]');
+      Directory('${temp.path}/tools/reports').createSync(recursive: true);
+      File(
+        '${temp.path}/tools/reports/question_candidates.csv',
+      ).writeAsStringSync('id,prompt,correct_option\n');
       Directory('${temp.path}/test/fixtures').createSync(recursive: true);
       File(
         '${temp.path}/test/fixtures/question_bank.csv',
@@ -176,6 +248,7 @@ const bank = <QuizQuestion>[
         'docs/audit/question_quality/2026-07-15/summary.json',
         'docs/question_quality_report.csv',
         'reports/question_review.json',
+        'tools/reports/question_candidates.csv',
         'test/fixtures/question_bank.csv',
         'tool/screenshots/quiz_before_after_test.dart',
         'release_packages/supabase_sql/question_seed.sql',

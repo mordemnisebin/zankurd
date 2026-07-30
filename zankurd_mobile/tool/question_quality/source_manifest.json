@@ -3,26 +3,42 @@
   "sources": [
     {
       "id": "offline_runtime_bank", "description": "Primary bundled runtime bank",
-      "path": "lib/src/data/offline_question_bank.dart", "role": "runtime_primary",
-      "parser": "dart_quiz_question", "canonicalGroup": "runtime_questions",
+      "path": "assets/data/offline_questions.json", "role": "runtime_primary",
+      "parser": "json", "canonicalGroup": "runtime_questions",
       "reportIncluded": true, "gateIncluded": true, "productionLike": true,
-      "precedence": 1000, "expectedRecordCount": 2347, "notes": "Generated from the normalized offline JSON source",
-      "columns": {"locale": "ku-kmr"}
+      "precedence": 1000, "expectedRecordCount": 1601, "notes": "Bundled JSON loaded by QuestionBankLoader",
+      "columns": {"id":"id","category":"category","prompt":"prompt","options":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","imagePath":"imageUrl","type":"type","dialect":"metadata.dialect","sourceTitle":"metadata.sourceTitle","sourceUrl":"metadata.sourceReference","reviewedAt":"metadata.reviewedAt","status":"metadata.reviewStatus","locale":"ku-kmr"}
     },
     {
-      "id": "offline_json_mirror", "description": "Development mirror used to regenerate the Dart runtime bank",
-      "path": "assets/data/offline_questions.json", "role": "generated_report",
+      "id": "editorial_runtime_bank", "description": "Reviewed editorial bundled runtime bank",
+      "path": "assets/data/editorial_questions.json", "role": "runtime_secondary",
       "parser": "json", "canonicalGroup": "runtime_questions",
-      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
-      "precedence": 0, "expectedRecordCount": 2347, "notes": "Not bundled at runtime; verified by offline_questions_json_equivalence_test",
-      "columns": {"id":"id","category":"category","prompt":"prompt","answers":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","locale":"ku-kmr"}
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 990, "expectedRecordCount": 307, "notes": "Approved editorial questions bundled with the app",
+      "columns": {"id":"id","category":"category","prompt":"prompt","options":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","imagePath":"imageUrl","type":"type","dialect":"metadata.dialect","sourceTitle":"metadata.sourceTitle","sourceUrl":"metadata.sourceReference","reviewedAt":"metadata.reviewedAt","status":"metadata.reviewStatus","locale":"ku-kmr"}
+    },
+    {
+      "id": "community_runtime_bank", "description": "Reviewed community bundled runtime bank",
+      "path": "assets/data/community_questions.json", "role": "runtime_secondary",
+      "parser": "json", "canonicalGroup": "runtime_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 980, "expectedRecordCount": 46, "notes": "Approved community questions bundled with the app",
+      "columns": {"id":"id","category":"category","prompt":"prompt","options":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","imagePath":"imageUrl","type":"type","dialect":"metadata.dialect","sourceTitle":"metadata.sourceTitle","sourceUrl":"metadata.sourceReference","reviewedAt":"metadata.reviewedAt","status":"metadata.reviewStatus","locale":"ku-kmr"}
+    },
+    {
+      "id": "sentence_runtime_bank", "description": "Sentence-ordering bundled runtime bank",
+      "path": "assets/data/sentence_building_questions.json", "role": "runtime_secondary",
+      "parser": "json", "canonicalGroup": "runtime_questions",
+      "reportIncluded": true, "gateIncluded": true, "productionLike": true,
+      "precedence": 970, "expectedRecordCount": 8, "notes": "Word-ordering questions bundled with the app",
+      "columns": {"id":"id","category":"category","prompt":"prompt","options":"answers","correct":"correctAnswer","explanation":"explanation","difficulty":"difficulty","imagePath":"imageUrl","type":"type","dialect":"metadata.dialect","sourceTitle":"metadata.sourceTitle","sourceUrl":"metadata.sourceReference","reviewedAt":"metadata.reviewedAt","status":"metadata.reviewStatus","locale":"ku-kmr"}
     },
     {
       "id": "curated_runtime_bank", "description": "Curated bundled runtime bank",
       "path": "lib/src/data/curated_question_bank.dart", "role": "runtime_secondary",
       "parser": "dart_quiz_question", "canonicalGroup": "runtime_questions",
       "reportIncluded": true, "gateIncluded": true, "productionLike": true,
-      "precedence": 950, "expectedRecordCount": 20, "notes": "Approved curated bank",
+      "precedence": 950, "expectedRecordCount": 45, "notes": "Approved curated bank",
       "columns": {"locale": "ku-kmr"}
     },
     {
@@ -191,6 +207,14 @@
       "parser": "none", "canonicalGroup": "none",
       "reportIncluded": false, "gateIncluded": false, "productionLike": false,
       "precedence": 1000, "expectedRecordCount": null, "notes": "DDL/maintenance scripts",
+      "columns": {}
+    },
+    {
+      "id": "question_bank_loader_files", "description": "Runtime question loader implementation",
+      "glob": "lib/src/data/question_bank_loader*.dart", "role": "ignored_non_question",
+      "parser": "none", "canonicalGroup": "none",
+      "reportIncluded": false, "gateIncluded": false, "productionLike": false,
+      "precedence": 1000, "expectedRecordCount": null, "notes": "Loader code contains paths but no question records",
       "columns": {}
     },
     {

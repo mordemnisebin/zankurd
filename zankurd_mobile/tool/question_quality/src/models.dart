@@ -130,6 +130,7 @@ class QuestionRecord {
     this.correctOptionIndex,
     this.correctOptionText,
     this.explanation,
+    this.questionType,
     this.tags = const [],
     this.imagePath,
     this.sourceTitle,
@@ -161,6 +162,7 @@ class QuestionRecord {
   final int? correctOptionIndex;
   final String? correctOptionText;
   final String? explanation;
+  final String? questionType;
   final List<String> tags;
   final String? imagePath;
   final String? sourceTitle;

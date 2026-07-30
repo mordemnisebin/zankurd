@@ -12,17 +12,19 @@ void main() {
 
   test('engine separates report records from gate records', () {
     File('${temp.path}/runtime.csv').writeAsStringSync(
-      'id,prompt,a,b,correct,category,difficulty\nq1,Pirs?,A,B,A,Ziman,1\n',
+      'id,prompt,a,b,correct,category,difficulty,status\n'
+      'q1,Pirs?,A,B,A,Ziman,1,approved\n'
+      'q2,Pirs 2?,A,B,B,Ziman,1,needsReview\n',
     );
     File('${temp.path}/history.csv').writeAsStringSync(
-      'id,prompt,a,b,correct,category,difficulty\nq2,Pirs 2?,A,B,B,Ziman,1\n',
+      'id,prompt,a,b,correct,category,difficulty\nq3,Pirs 3?,A,B,B,Ziman,1\n',
     );
     final manifest = SourceManifest.fromJsonString(_manifestJson);
     final result = AuditEngine(root: temp, manifest: manifest).run();
-    expect(result.reportRecords, hasLength(2));
+    expect(result.reportRecords, hasLength(3));
     expect(result.gateRecords, hasLength(1));
-    expect(result.reportPhysicalCount, 2);
-    expect(result.gatePhysicalCount, 1);
+    expect(result.reportPhysicalCount, 3);
+    expect(result.gatePhysicalCount, 2);
   });
 
   test('unknown source is inventoried and makes gate snapshot unsafe', () {
@@ -52,8 +54,8 @@ const _manifestJson = '''
       "id":"runtime","description":"runtime","path":"runtime.csv",
       "role":"runtime_primary","parser":"csv","canonicalGroup":"q",
       "reportIncluded":true,"gateIncluded":true,"productionLike":true,
-      "precedence":100,"expectedRecordCount":1,"notes":"",
-      "columns":{"id":"id","prompt":"prompt","optionA":"a","optionB":"b","correct":"correct","category":"category","difficulty":"difficulty"}
+      "precedence":100,"expectedRecordCount":2,"notes":"",
+      "columns":{"id":"id","prompt":"prompt","optionA":"a","optionB":"b","correct":"correct","category":"category","difficulty":"difficulty","status":"status"}
     },
     {
       "id":"history","description":"history","path":"history.csv",

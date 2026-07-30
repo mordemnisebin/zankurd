@@ -65,6 +65,7 @@ bool _excluded(String path) =>
     path.startsWith('build/') ||
     path.startsWith('docs/') ||
     path.startsWith('reports/') ||
+    path.startsWith('tools/reports/') ||
     path.startsWith('report/') ||
     path.startsWith('release_packages/') ||
     path.startsWith('test/') ||

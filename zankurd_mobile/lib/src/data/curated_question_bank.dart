@@ -63,6 +63,30 @@ const _jineolojiSource = QuestionMetadata(
   qualityVersion: 1,
 );
 
+/// Kurmancîsi bozuk olduğu için oyuncuya gösterilmeyen kayıtların kaynağı.
+///
+/// 2026-07-30 dil taraması: bu dosyadaki yedi soruda `prompt` ve `answers`
+/// alanları Kurmancîde var **olmayan** sözcükler taşıyordu — "Fakltîzm",
+/// "Demorkrasîxerbirîna", "Hespê ûrikirî ya leşkerî", "Kîmoka zîvkirî",
+/// "Kom-xwebûn rêxistin", "şûnartî", "kendê". Aynı kayıtların
+/// `explanationKu`/`explanationTr` alanları düzgün yazılmış; yani bir
+/// önceki elden geçirme açıklamaları onarmış, soru ve şıkları atlamış.
+///
+/// Kurmancî öğreten bir uygulamada oyuncuya uydurma sözcüğü **doğru cevap**
+/// diye göstermek, sorunun hiç sorulmamasından kötüdür: oyuncu yanlışı
+/// öğrenir ve öğrendiğinden emin olur. Sorular silinmedi — şıkları gerçek
+/// Kurmancîyle yeniden yazılana dek inceleme kuyruğunda bekliyor.
+/// Geri açmak için: metnini düzelt, `reviewStatus`u `approved` yap.
+const _bozukKurmanciBekliyor = QuestionMetadata(
+  reviewStatus: ReviewStatus.needsReview,
+  dialect: 'Kurmancî',
+  sourceTitle: 'Kurmancî metni yeniden yazılmayı bekliyor (2026-07-30)',
+  sourceReference:
+      'Şıklar ve soru gövdesi Kurmancîde var olmayan sözcükler taşıyor; '
+      'açıklama alanları sağlam. copy_language_test bekçisi bkz.',
+  qualityVersion: 1,
+);
+
 /// İlk editoryal dalga: Kurmancî öncelikli, kaynaklı ve bağlamlı sorular.
 /// Eski otomatik havuzdan ayrı tutulur; yeni içerik kalite filtresinden geçmiştir.
 const curatedQuestionBank = <QuizQuestion>[
@@ -244,10 +268,10 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0009',
     category: 'Çand',
     prompt: '«Newroz» ji aliyê wateya peyvê ve bi kîjan ravekirinê re nêzîk e?',
-    answers: ['Rojê nû', 'Şeva dirêj', 'Bara kevn', 'Dengê bilind'],
-    correctAnswer: 'Rojê nû',
+    answers: ['Roja nû', 'Şeva dirêj', 'Bara kevn', 'Dengê bilind'],
+    correctAnswer: 'Roja nû',
     explanation:
-        'Newroz bi têgeha «rojê nû» re tê şirovekirin û wek destpêka demsala biharê tê pîroz kirin.',
+        'Newroz bi têgeha «roja nû» re tê şirovekirin û wek destpêka demsala biharê tê pîroz kirin.',
     difficulty: 2,
     metadata: _kongraStarSource,
     explanationKu:
@@ -511,7 +535,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Jineolojî ji «jin» û «lojî» (zanist) pêk tê; zanistiya jinê û rêxistinkirina civaka azad e.',
     difficulty: 1,
-    metadata: _jineolojiSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Jineolojî ji «jin» û «lojî» (zanist) pêk tê; zanistiya jinê û '
         'rêxistinkirina civaka azad e.',
@@ -533,7 +557,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Konfederalîzmek modela ku rêxistinên xwe-bixwe yên herêmî yên xwebûn-bixwe li ser wekheviyê tên girêdan e.',
     difficulty: 2,
-    metadata: _academikSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Konfederalîzm modelek e ku rêxistinên herêmî yên xwe-bi-xwe li ser '
         'bingeha wekheviyê bi hev ve girê dide.',
@@ -553,7 +577,7 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer: 'Wekhevî û pîvana rêxistinê',
     explanation:
-        'Hevaltî peyva ku endamentên rêxistinê li ser wekheviyê dihundirîne, ne serdestiyê.',
+        'Hevaltî endamên rêxistinê li ser bingeha wekheviyê digihîne hev, ne li ser serdestiyê.',
     difficulty: 2,
     metadata: _jineolojiSource,
     explanationKu:
@@ -577,7 +601,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Di «Demokratik Konfederalîzm» de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
     difficulty: 2,
-    metadata: _academikSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Di konfederalîzma demokratîk de civak bi rêxistinên xwe-bi-xwe tê '
         'organîzekirin, ne bi dewletê.',
@@ -599,7 +623,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Paradîgma demorkratîk a civakî rêxistinên demorkatîk û rihevketa gelemperî hene dihundirîne.',
     difficulty: 3,
-    metadata: _academikSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Paradîgmaya civaka demokratîk rêxistinên demokratîk û biryardana '
         'gelemperî digire nav xwe.',
@@ -666,7 +690,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Biryarên civakî bi şiklê konsensus û şûnartî tên standin, ne bi werdêjin.',
     difficulty: 3,
-    metadata: _kongraStarSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Biryarên civakî bi rêya lihevkirin û gotûbêjê tên girtin, ne bi '
         'ferzkirinê.',
@@ -709,7 +733,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Sembola rengîn a jinên parastina jinê ye, ku azadiyê û bicihbûna civakê destnîşan dike.',
     difficulty: 2,
-    metadata: _kongraStarSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Sembol nîşana parastina jinê ye û azadî û cihgirtina wê ya civakî '
         'destnîşan dike.',
@@ -747,7 +771,7 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer: 'Qazî Mihemed',
     explanation:
-        'Qazî Mihemed (1893 — 1947) serokdarê Komara Mehabadê bû, di 31ê Çele.avê de hatî darvekirin.',
+        'Qazî Mihemed (1893 — 1947) serokdarê Komara Mehabadê bû, di 31ê Adara 1947an de hat darvekirin.',
     difficulty: 2,
     metadata: _academikSource,
     explanationKu:
@@ -828,7 +852,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'DMC (Xebûna Demorkatîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demorkatîk a Sûrîyê Bakûr.',
     difficulty: 2,
-    metadata: _academikSource,
+    metadata: _bozukKurmanciBekliyor,
     explanationKu:
         'Rêveberiya xweser a Rojava piştre wek konfederalîzmeke herêmî ya '
         'bakurê Sûriyê hat berfirehkirin.',
@@ -884,7 +908,7 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_siyaset_0009',
     category: 'Siyaset',
-    prompt: 'Kî yekemîn rêberê tevgera Barsanî bû?',
+    prompt: 'Kî yekemîn rêberê tevgera Barzanî bû?',
     answers: [
       'Mistefa Barzanî (1903 — 1979)',
       'Mesûd Barzanî',
@@ -893,7 +917,7 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer: 'Mistefa Barzanî (1903 — 1979)',
     explanation:
-        'Mistefa Barzanî (1903-1979) yekemîn rêberê tevgera Barsanî bû, di 1979î de li Îranê hate vedîtin.',
+        'Mistefa Barzanî (1903-1979) yekemîn rêberê tevgera neteweyî ya başûr bû û di 1979an de koça dawî kir.',
     difficulty: 2,
     metadata: _academikSource,
     explanationKu:
@@ -910,7 +934,7 @@ const curatedQuestionBank = <QuizQuestion>[
     answers: ['1992', '2003', '2005', '2017'],
     correctAnswer: '1992',
     explanation:
-        'Di 1992î de piştî rizgarbûnê, HKK (Hikumeta Herêma Kurdistanê) ava kirin; ew yekem hikûmeta kurdîdemorkat a nûdem bû.',
+        'Di 1992î de piştî rizgarbûnê, HKK (Hikumeta Herêma Kurdistanê) ava kirin; ew yekem hikûmeta kurdî ya nûdem bû.',
     difficulty: 2,
     metadata: _academikSource,
     explanationKu:

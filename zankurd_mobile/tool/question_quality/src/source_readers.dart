@@ -98,7 +98,13 @@ SourceReadResult _readJson(SourceDefinition source, File file, String path) {
         final map = items[i] as Map;
         Object? raw(String field) {
           final column = source.columns[field];
-          return column == null ? null : map[column];
+          if (column == null) return null;
+          Object? current = map;
+          for (final segment in column.split('.')) {
+            if (current is! Map) return null;
+            current = current[segment];
+          }
+          return current;
         }
 
         final optionsValue = raw('options');
@@ -136,6 +142,7 @@ SourceReadResult _readJson(SourceDefinition source, File file, String path) {
 SourceReadResult _readDart(SourceDefinition source, File file, String path) {
   final content = file.readAsStringSync();
   final blocks = _dartConstructorBlocks(content, 'QuizQuestion(');
+  final metadataByName = _dartMetadataConstants(content);
   final records = <QuestionRecord>[];
   final errors = <String>[];
   for (final block in blocks) {
@@ -148,6 +155,10 @@ SourceReadResult _readDart(SourceDefinition source, File file, String path) {
           : _dartStrings(answersExpression);
       final correct = _dartString(_dartNamedExpression(body, 'correctAnswer'));
       final correctIndex = correct == null ? null : options.indexOf(correct);
+      final metadataName = _dartNamedExpression(body, 'metadata')?.trim();
+      final metadata = metadataName == null
+          ? null
+          : metadataByName[metadataName];
       records.add(
         QuestionRecord(
           sourceId: source.id,
@@ -171,7 +182,12 @@ SourceReadResult _readDart(SourceDefinition source, File file, String path) {
           correctOptionText: correct,
           explanation: _dartString(_dartNamedExpression(body, 'explanation')),
           imagePath: _dartString(_dartNamedExpression(body, 'imageUrl')),
-          status: body.contains('ReviewStatus.approved') ? 'approved' : null,
+          dialect: metadata?.dialect,
+          sourceTitle: metadata?.sourceTitle,
+          sourceUrl: metadata?.sourceReference,
+          reviewedAt: metadata?.reviewedAt,
+          reviewedBy: metadata?.reviewedBy,
+          status: metadata?.status,
         ),
       );
     } catch (error) {
@@ -184,6 +200,52 @@ SourceReadResult _readDart(SourceDefinition source, File file, String path) {
     stats: ParserStats(read: records.length, parseErrors: errors.length),
     errors: errors,
   );
+}
+
+Map<String, _DartMetadata> _dartMetadataConstants(String content) {
+  final blocks = {
+    for (final block in _dartConstructorBlocks(content, 'QuestionMetadata('))
+      block.start: block,
+  };
+  final result = <String, _DartMetadata>{};
+  final declarations = RegExp(
+    r'const\s+([A-Za-z_]\w*)\s*=\s*QuestionMetadata\s*\(',
+  );
+  for (final declaration in declarations.allMatches(content)) {
+    final markerStart = declaration.end - 'QuestionMetadata('.length;
+    final block = blocks[markerStart];
+    if (block == null) continue;
+    final statusExpression = _dartNamedExpression(block.text, 'reviewStatus');
+    result[declaration.group(1)!] = _DartMetadata(
+      dialect: _dartString(_dartNamedExpression(block.text, 'dialect')),
+      sourceTitle: _dartString(_dartNamedExpression(block.text, 'sourceTitle')),
+      sourceReference: _dartString(
+        _dartNamedExpression(block.text, 'sourceReference'),
+      ),
+      reviewedAt: _dartString(_dartNamedExpression(block.text, 'reviewedAt')),
+      reviewedBy: _dartString(_dartNamedExpression(block.text, 'reviewedBy')),
+      status: statusExpression?.split('.').last.trim(),
+    );
+  }
+  return result;
+}
+
+class _DartMetadata {
+  const _DartMetadata({
+    this.dialect,
+    this.sourceTitle,
+    this.sourceReference,
+    this.reviewedAt,
+    this.reviewedBy,
+    this.status,
+  });
+
+  final String? dialect;
+  final String? sourceTitle;
+  final String? sourceReference;
+  final String? reviewedAt;
+  final String? reviewedBy;
+  final String? status;
 }
 
 SourceReadResult _readSqlCount(
@@ -224,14 +286,20 @@ QuestionRecord _recordFromFields(
       index = letter;
       if (letter < options.length) correctText = options[letter];
     } else {
-      final numeric = int.tryParse(correctRaw);
-      if (numeric != null) {
-        index = numeric;
-        if (index >= 0 && index < options.length) correctText = options[index];
-      } else {
+      final found = options.indexOf(correctRaw);
+      if (found >= 0) {
+        index = found;
         correctText = correctRaw;
-        final found = options.indexOf(correctRaw);
-        if (found >= 0) index = found;
+      } else {
+        final numeric = int.tryParse(correctRaw);
+        if (numeric != null) {
+          index = numeric;
+          if (index >= 0 && index < options.length) {
+            correctText = options[index];
+          }
+        } else {
+          correctText = correctRaw;
+        }
       }
     }
   }
@@ -254,6 +322,7 @@ QuestionRecord _recordFromFields(
     correctOptionIndex: index,
     correctOptionText: correctText,
     explanation: value('explanation'),
+    questionType: value('type'),
     imagePath: value('imagePath'),
     sourceTitle: value('sourceTitle'),
     sourceUrl: value('sourceUrl'),

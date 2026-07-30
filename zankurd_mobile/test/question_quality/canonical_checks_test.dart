@@ -17,6 +17,7 @@ QuestionRecord question({
   String category = 'Cografya',
   String? explanation = 'Parîs paytexta Fransa ye.',
   SourceRole role = SourceRole.runtimePrimary,
+  String? questionType,
 }) => QuestionRecord(
   sourceId: sourceId,
   sourceRole: role,
@@ -34,6 +35,7 @@ QuestionRecord question({
   correctOptionIndex: correctIndex,
   correctOptionText: correctText,
   explanation: explanation,
+  questionType: questionType,
 );
 
 void main() {
@@ -81,6 +83,23 @@ void main() {
     );
     final ids = runChecks([record]).map((issue) => issue.checkId).toSet();
     expect(ids, containsAll({'duplicate_option', 'invalid_correct_answer'}));
+  });
+
+  test('word ordering answer is validated against joined pieces', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'sentences.json',
+      row: 1,
+      options: const ['Ez', 'diçim', 'malê'],
+      correctIndex: null,
+      correctText: 'Ez diçim malê',
+      questionType: 'wordOrdering',
+    );
+
+    expect(
+      runChecks([record]).map((i) => i.checkId),
+      isNot(contains('invalid_correct_answer')),
+    );
   });
 
   test('valid answer index is not invalidated by a duplicate option', () {

@@ -120,6 +120,7 @@ class AuditEngine {
     final gateRecords = sourceResults
         .where((result) => result.source.gateIncluded)
         .expand((result) => result.records)
+        .where(_isPublishableRecord)
         .toList();
     final gateCanonical = canonicalize(gateRecords);
     final reportRecords = gateOnly
@@ -260,4 +261,9 @@ class AuditEngine {
 
   String _absolute(String relative) =>
       '${root.absolute.path}${Platform.pathSeparator}${relative.replaceAll('/', Platform.pathSeparator)}';
+}
+
+bool _isPublishableRecord(QuestionRecord record) {
+  final status = record.status?.trim().toLowerCase();
+  return status == null || status.isEmpty || status == 'approved';
 }

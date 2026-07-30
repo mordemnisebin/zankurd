@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_set_policy.dart';
 
@@ -96,6 +97,31 @@ void main() {
         reason: '${question.id}: TR yansıtmasında doğru cevap şıklarda yok',
       );
     }
+  });
+
+  test('reddedilmemiş her inceleme adayının açıklaması dolu', () {
+    // Sette açıklaması boş 15 soru var ve on beşi de `rejected` — kullanıcıya
+    // hiç çıkmıyorlar. Bu denge bir teste bağlı değildi: biri yarın o
+    // sorulardan birini açıklama yazmadan `approved` yapsa, tur sonunda
+    // kullanıcı boş bir açıklama kartıyla karşılaşırdı ve hiçbir bekçi
+    // ötmezdi. Kural: reddedilmemiş inceleme adayı açıklamasız olamaz.
+    var checked = 0;
+    for (final question in questions) {
+      if (question.metadata?.reviewStatus == ReviewStatus.rejected) continue;
+      checked++;
+      expect(
+        question.explanation.trim(),
+        isNotEmpty,
+        reason:
+            '${question.id}: inceleme adayı açıklamasız — ya açıklama '
+            'yazılmalı ya da soru inceleme kuyruğunda (rejected) kalmalı',
+      );
+    }
+    expect(
+      checked,
+      greaterThan(0),
+      reason: 'Açıklama bekçisi hiçbir community kaydını denetlemedi.',
+    );
   });
 
   test('aynı kategoride cevap sızdıran çiftler süzgeçten geçiyor', () {

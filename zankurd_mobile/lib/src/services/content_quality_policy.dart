@@ -3,11 +3,9 @@ import '../models/question_metadata.dart';
 /// Son kullanıcı quizinde hangi soruların uygun olduğuna karar veren, saf ve
 /// açık içerik-kalite politikası.
 ///
-/// Tasarım ilkesi: mevcut (doğrulanmamış) içeriği görünmez YAPMAMAK. Yalnız
-/// açıkça `rejected` işaretli sorular elenir; `null`/`draft`/`approved`/
-/// `needsReview` hepsi oynanabilir kabul edilir. Bu, "yalnız approved zorunlu
-/// tut" katı modunun offline bankayı boşaltmasını önler. Katı mod ileride
-/// [requireApproved] ile açılabilir (varsayılan kapalı).
+/// Eski bankadaki metadata'sız içerik geriye uyumluluk için oynanabilir kalır.
+/// Editoryal durumu açıkça `draft`, `needsReview` veya `rejected` olan kayıtlar
+/// ise yayın akışına giremez; yalnız `approved` kayıtlar yeniden açılır.
 class ContentQualityPolicy {
   const ContentQualityPolicy({
     this.requireApproved = false,
@@ -24,7 +22,10 @@ class ContentQualityPolicy {
   /// Soru son kullanıcı quizinde gösterilebilir mi?
   bool isEligible(QuestionMetadata? metadata) {
     final meta = metadata ?? const QuestionMetadata();
-    if (meta.reviewStatus == ReviewStatus.rejected) return false;
+    if (meta.reviewStatus != null &&
+        meta.reviewStatus != ReviewStatus.approved) {
+      return false;
+    }
     if (requireApproved) {
       return meta.reviewStatus == ReviewStatus.approved;
     }

@@ -36,6 +36,37 @@ void main() {
       expect(policy.validate(question), isEmpty);
       expect(policy.isPlayable(question), isTrue);
     });
+
+    test(
+      'sunucuda gizli doğru cevap yalnız oda doğrulamasında kabul edilir',
+      () {
+        const question = QuizQuestion(
+          id: 'server-hidden-answer',
+          category: 'Ziman',
+          prompt: 'Pirtûk çi ye?',
+          answers: ['Kitap', 'Masa', 'Su', 'Ev'],
+          correctAnswer: '',
+          explanation: '',
+        );
+
+        expect(policy.isPlayable(question), isFalse);
+        expect(policy.isPlayableWithHiddenAnswer(question), isTrue);
+      },
+    );
+
+    test('sunucu-gizli cevap yolu cümle kurma sorusunu reddeder', () {
+      const question = QuizQuestion(
+        id: 'server-hidden-word-ordering',
+        category: 'Ziman',
+        prompt: 'Hevokê rêk bike.',
+        answers: ['Ez', 'pirtûkê', 'dixwînim'],
+        correctAnswer: '',
+        explanation: '',
+        type: QuestionType.wordOrdering,
+      );
+
+      expect(policy.isPlayableWithHiddenAnswer(question), isFalse);
+    });
   });
 
   group('QuestionMetadata geriye uyumluluk', () {
@@ -59,9 +90,9 @@ void main() {
       expect(meta.dialect, isNull);
     });
 
-    test('geçersiz enum değeri güvenli biçimde null olur', () {
+    test('geçersiz enum değeri güvenli biçimde reject olur', () {
       final meta = QuestionMetadata.fromJson({'reviewStatus': 'wibbly'});
-      expect(meta.reviewStatus, isNull);
+      expect(meta.reviewStatus, ReviewStatus.rejected);
     });
 
     test('bozuk tipler güvenli varsayılana düşer', () {
@@ -112,14 +143,16 @@ void main() {
       );
     });
 
-    test('draft/needsReview/approved → uygun', () {
-      for (final s in [
-        ReviewStatus.draft,
-        ReviewStatus.needsReview,
-        ReviewStatus.approved,
-      ]) {
-        expect(policy.isEligible(QuestionMetadata(reviewStatus: s)), isTrue);
+    test('yalnız legacy ve approved yayın akışına girer', () {
+      for (final s in [ReviewStatus.draft, ReviewStatus.needsReview]) {
+        expect(policy.isEligible(QuestionMetadata(reviewStatus: s)), isFalse);
       }
+      expect(
+        policy.isEligible(
+          const QuestionMetadata(reviewStatus: ReviewStatus.approved),
+        ),
+        isTrue,
+      );
     });
 
     test('katı mod (requireApproved) yalnız approved kabul eder', () {

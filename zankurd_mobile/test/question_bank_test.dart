@@ -40,6 +40,18 @@ void main() {
     expect(keys.toSet().length, keys.length);
   });
 
+  // Kuralın koruduğu şey: hiçbir şey bilmeyen oyuncu "hep C'yi seç" diyerek
+  // puan kazanamamalı.
+  //
+  // Bu ölçüt içerik değiştikçe kendiliğinden bozulur — 2026-07-30'da 290
+  // kopya soru atılınca dağılım [207, 212, 194, 200] oldu. Bozulunca eşiği
+  // gevşetmek yanlış refleks: bankayı yeniden dengeleyen araç zaten var.
+  //
+  //     python3 tool/rebalance_answer_positions.py offline_curated
+  //
+  // Araç *depolanan* şık sırasını oynatır; görünen sıra id'den türeyen sabit
+  // bir kaydırmayla hesaplandığı için dengeleme görünen sıraya göre yapılır.
+  // Yeni soru ekledikten sonra çalıştırın, sonra bu test yeşile döner.
   test('displayed correct-answer positions are balanced', () {
     final counts = List<int>.filled(4, 0);
     for (final question in offlineQuestionBank.where(
@@ -51,7 +63,13 @@ void main() {
     final spread =
         counts.reduce((a, b) => a > b ? a : b) -
         counts.reduce((a, b) => a < b ? a : b);
-    expect(spread, lessThanOrEqualTo(1), reason: 'Dağılım: $counts');
+    expect(
+      spread,
+      lessThanOrEqualTo(1),
+      reason:
+          'Dağılım: $counts — dengelemek için '
+          '`python3 tool/rebalance_answer_positions.py offline_curated`',
+    );
   });
 
   test('every correct answer exists among its options', () {

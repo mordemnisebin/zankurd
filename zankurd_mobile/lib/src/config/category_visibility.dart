@@ -12,11 +12,14 @@
 /// (23 → 12), kalan 12'si tek tek denetlendi ve 28 yeni soru yazıldı; toplam
 /// 40, her zorluk gözünde bir tur dolduracak kadar. Sorular yalnız teknoloji
 /// kavramını değil o kavramın Kurmancî karşılığını da öğretiyor — uygulamanın
-/// öğrenme amacına uygun. Liste şimdilik boş; yeni bir kategori hazır
-/// olmadan eklenirse buraya id'si yazılır.
+/// öğrenme amacına uygun.
+///
+/// 2026-07-29: Topluluk bankasındaki kaynaklandırılmamış sorular inceleme
+/// kuyruğuna alınınca Sînema 40 soruluk yayın tabanının altına düştü. Kaynaklı
+/// içerik tamamlanana kadar kategori kullanıcıya gösterilmez.
 library;
 
-const Set<String> hiddenCategoryIds = <String>{};
+const Set<String> hiddenCategoryIds = <String>{'Sînema'};
 
 /// Kategori listede/quiz seçiminde gösterilebilir mi?
 bool isCategoryVisible(String categoryId) =>

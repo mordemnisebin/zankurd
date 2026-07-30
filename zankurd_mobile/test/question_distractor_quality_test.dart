@@ -456,7 +456,20 @@ void main() {
     // 2026-07-27 üçüncü geçiş: ders çerçevesi öneklerinin silinmesi 479
     // kopya soruyu açığa çıkardı ve bankadan atıldı; kalan 1601 soruda
     // oran %28,8. Mandal ona göre indirildi.
-    const ceilingPercent = 29.0;
+    //
+    // 2026-07-30 dördüncü geçiş: aynı olgunun farklı kalıp cümleyle iki kez
+    // sorulduğu 290 kayıt daha atıldı. Hangi kopyanın kalacağı rastgele
+    // seçilmedi — ölçüt buydu: çiftten, doğru cevabı en uzun şık **olmayan**
+    // sürüm tutuldu. Oran %28,8'den %25,0'e indi.
+    //
+    // Ve mandal burada tek yönlü olmaktan çıkıyor. %25 bu ölçütün tavanı
+    // değil **hedefi**: dört şıklı bir soruda en uzun şıkkın doğru olma
+    // olasılığı zaten dörtte birdir. Oranın %25'in altına inmesi de bir
+    // eğilimdir — doğru cevabın sistematik olarak *kısa* olduğu anlamına
+    // gelir ve oyuncu bu sefer "en kısayı seç" der. Bu yüzden ölçüt artık
+    // 25 çevresinde bir bant.
+    const targetPercent = 25.0;
+    const tolerance = 3.0;
 
     var considered = 0;
     var longestIsCorrect = 0;
@@ -470,10 +483,11 @@ void main() {
     final percent = longestIsCorrect / considered * 100;
     expect(
       percent,
-      lessThanOrEqualTo(ceilingPercent),
+      inInclusiveRange(targetPercent - tolerance, targetPercent + tolerance),
       reason:
-          'En uzun şıkkın doğru olduğu soru oranı yükseldi: '
-          '%${percent.toStringAsFixed(1)} > %$ceilingPercent',
+          'En uzun şıkkın doğru olduğu soru oranı %${percent.toStringAsFixed(1)}; '
+          'beklenen %$targetPercent ±$tolerance. Yüksekse "en uzunu seç", '
+          'düşükse "en kısayı seç" stratejisi kazandırır.',
     );
   });
 }

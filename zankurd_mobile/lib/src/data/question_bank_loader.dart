@@ -27,7 +27,7 @@ class QuestionBankLoader {
   List<QuizQuestion> _questions = const [];
   bool _loaded = false;
 
-  /// Tüm sorular (curated + editorial + offline).
+  /// Tüm sorular (curated + sentences + community + editorial + offline).
   List<QuizQuestion> get allQuestions {
     _ensureLoadedInTest();
     return _questions;

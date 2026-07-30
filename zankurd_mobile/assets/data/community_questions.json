@@ -24,7 +24,7 @@
   "explanationKu": "Amed (Diyarbekir) li herêma bakur a Kurdistanê ye û bajarê herî mezin ê wê herêmê tê hesibandin.",
   "explanationTr": "Amed (Diyarbakır) Kürdistan'ın kuzey bölgesindedir ve o bölgenin en büyük şehri sayılır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -55,7 +55,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -86,7 +86,7 @@
   "explanationKu": "Nisêbîn navçeyeke li ser sînorê Sûriyeyê ye û bi Mêrdînê ve girêdayî ye.",
   "explanationTr": "Nisêbîn (Nusaybin) Suriye sınırında bir ilçedir ve Mardin'e bağlıdır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -117,7 +117,7 @@
   "explanationKu": "Behra Wanê gola herî mezin a herêmê ye û navê xwe ji bajarê li kêleka xwe digire.",
   "explanationTr": "Van Gölü bölgenin en büyük gölüdür ve adını kıyısındaki şehirden alır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -148,7 +148,7 @@
   "explanationKu": "Seyîd Riza yek ji rêberên olî û civakî yên herêma Dêrsimê bû.",
   "explanationTr": "Seyid Rıza, Dersim bölgesinin tanınmış dinî ve toplumsal önderlerindendi.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -179,7 +179,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -210,7 +210,7 @@
   "explanationKu": "Mihemmed Şêxo yek ji pêşengên muzîka kurdî ye; bi stranên xwe yên bi saz tê nasîn.",
   "explanationTr": "Mihemmed Şêxo Kürt müziğinin öncülerindendir; saz eşliğinde söylediği eserlerle tanınır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -241,7 +241,7 @@
   "explanationKu": "Ev gotin ji Aram Tigran re tê hesibandin; ew hunermendekî bi eslê xwe ermenî bû û bi kurdî distira.",
   "explanationTr": "Bu söz Aram Tigran'a atfedilir; Ermeni asıllı bir sanatçıydı ve Kürtçe söylerdi.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -272,7 +272,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -303,7 +303,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -334,7 +334,7 @@
   "explanationKu": "Baba Tahir bi dûbeytiyên xwe tê nasîn û li derdora Hemedanê jiyaye.",
   "explanationTr": "Baba Tahir dûbeytî biçimiyle tanınır ve Hemedan çevresinde yaşamıştır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -365,7 +365,7 @@
   "explanationKu": "Romana Erebê Şemo ya bi navê 'Şivanê Kurd' (1935) yek ji romanên pêşîn ên bi kurmancî tê hesibandin.",
   "explanationTr": "Erebê Şemo'nun 1935'te yayımlanan 'Şivanê Kurd' (Kürt Çoban) romanı, Kurmancî'de yazılmış ilk romanlardan sayılır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -396,7 +396,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -427,7 +427,7 @@
   "explanationKu": "Romana «Bîra Qederê» ji jiyana Celadet Alî Bedirxan îlham digire.",
   "explanationTr": "«Bîra Qederê» romanı Celadet Alî Bedirxan'ın yaşamından esinlenir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -458,7 +458,7 @@
   "explanationKu": "Muzîka fîlmê Kobanê (2022) ya Komîna Fîlma Rojava ji hêla Mehmûd Berazî ve hatiye çêkirin; ew muzîka çend fîlmên din ên heman derdorê jî nivîsandiye.",
   "explanationTr": "Rojava Film Komünü yapımı Kobanê (2022) filminin müziğini Mehmûd Berazî yaptı; aynı çevrenin başka birkaç filminin müziği de ona aittir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -489,7 +489,7 @@
   "explanationKu": "Fîlm di sala 2022'yan de derket û dorpêça Kobanê ya 2014-2015'an vedibêje; senaryo li ser bingeha hevpeyvînên bi bi sedan şahid û şervanan hatiye nivîsandin.",
   "explanationTr": "Film 2022'de gösterime girdi ve 2014-2015 Kobanê kuşatmasını anlatır; senaryo yüzlerce tanık ve savaşçıyla yapılan görüşmelere dayanır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -520,7 +520,7 @@
   "explanationKu": "Fîlm li Kobanê û Tabqayê hate kişandin; beşek mezin ji lîstikvanan ne pîşeyî bûn, ew bi xwe beşdarî berxwedanê bûbûn.",
   "explanationTr": "Film Kobanê ve Tabqa'da çekildi; oyuncuların büyük bölümü profesyonel değil, direnişe bizzat katılmış kişilerdi.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Editoryal düzeltme — Kobanê (2022) künyesi",
    "qualityVersion": 2,
@@ -552,7 +552,7 @@
   "explanationKu": "Muzîka fîlmê 14 Tîrmeh jî ji hêla Mehmûd Berazî ve hatiye çêkirin.",
   "explanationTr": "14 Tîrmeh filminin müziği de Mehmûd Berazî'ye aittir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -583,7 +583,7 @@
   "explanationKu": "Fîlmê derhêner Haşim Aydemir di sala 2017'an de derket; ew grewa birçîbûnê ya 14'ê Tîrmeha 1982'yan a li girtîgeha Amedê vedibêje.",
   "explanationTr": "Yönetmen Haşim Aydemir'in filmi 2017'de gösterime girdi; 14 Temmuz 1982'de Amed cezaevinde başlayan ölüm orucunu anlatır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -614,7 +614,7 @@
   "explanationKu": "Fîlm di sala 2019'an de derket û berxwedana 103 rojan a li Sûrê vedibêje.",
   "explanationTr": "Film 2019'da gösterime girdi ve Sur'daki 103 günlük direnişi anlatır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -645,7 +645,7 @@
   "explanationKu": "Fîlm bûyerên li Sûra Amedê vedibêje, lê ji ber şert û mercan li Kobanê hate kişandin; hin dîmen li Qamişloyê hatin girtin.",
   "explanationTr": "Film Amed'in Sur ilçesindeki olayları anlatır ama koşullar nedeniyle Kobanê'de çekildi; bazı sahneler Qamişlo'da alındı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -676,7 +676,7 @@
   "explanationKu": "Derhêner Ersin Çelik e; senaryo li ser bingeha rojnivîskên şervanan û şahidiya kesên ku sax man hatiye nivîsandin.",
   "explanationTr": "Yönetmen Ersin Çelik'tir; senaryo savaşanların günlüklerine ve hayatta kalanların tanıklığına dayanır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -707,7 +707,7 @@
   "explanationKu": "Muzîka fîlm a Mehmûd Berazî ye; stranê 'Rûbarê Min' bi dengê Mizgîn Tahir di fîlm de derbas dibe.",
   "explanationTr": "Filmin müziği Mehmûd Berazî'ye aittir; 'Rûbarê Min' parçası Mizgîn Tahir'in sesinden filmde yer alır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -738,7 +738,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -769,7 +769,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -800,7 +800,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -831,7 +831,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -862,7 +862,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -893,7 +893,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -924,7 +924,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -955,7 +955,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -986,7 +986,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -1017,7 +1017,7 @@
   "explanationKu": "",
   "explanationTr": "",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "rejected",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -1048,7 +1048,7 @@
   "explanationKu": "YPJ (Yekîneyên Parastina Jin) yekîneya jinan a li Rojava ye.",
   "explanationTr": "YPJ (Yekîneyên Parastina Jin) Rojava'daki kadın birliğidir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Topluluk katkısı",
    "qualityVersion": 2
@@ -1079,7 +1079,7 @@
   "explanationKu": "'Yol', ku senaryoya wê ji hêla Yilmaz Guney ve hatibû nivîsandin, di Festîvala Cannesê ya 1982'an de Palmiya Zêrîn wergirt.",
   "explanationTr": "Yılmaz Güney'in senaryosunu yazdığı 'Yol', 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1110,7 +1110,7 @@
   "explanationKu": "Guney senaryo ji girtîgehê nivîsî; kişandin ji hêla Şerif Gören ve hat kirin.",
   "explanationTr": "Güney senaryoyu cezaevinden yazdı; çekimleri Şerif Gören yönetti, kurguyu Güney Fransa'da yaptı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1141,7 +1141,7 @@
   "explanationKu": "Senaryoya 'Sûrû' ji hêla Yilmaz Guney ve hat nivîsandin, fîlm ji hêla Zeki Ökten ve hat derhênan.",
   "explanationTr": "'Sürü'nün senaryosunu Yılmaz Güney yazdı, filmi Zeki Ökten yönetti.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1172,7 +1172,7 @@
   "explanationKu": "Fîlmê yekem ê dirêj ê Bahman Ghobadi, di Cannesa 2000'î de Kamera Zêrîn wergirt.",
   "explanationTr": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1203,7 +1203,7 @@
   "explanationKu": "Fîlmê Bahman Ghobadi ê 2004'an li kampeke penaberan a li ser sînorê Iraq-Tirkiyê diqewime û gelek xelat wergirtine.",
   "explanationTr": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1234,7 +1234,7 @@
   "explanationKu": "Fîlmê Hiner Saleem ê 2003'yan li Festîvala Venedîkê xelat wergirt.",
   "explanationTr": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1265,7 +1265,7 @@
   "explanationKu": "Kazim Öz yek ji derhênerên hilberîner ên sînemaya kurdî ye.",
   "explanationTr": "Kazım Öz, Kürt sinemasının üretken yönetmenlerinden; belgesel ve kurmaca alanında çalışır.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1296,7 +1296,7 @@
   "explanationKu": "Yilmaz Guney di 9'ê îlona 1984'an de li Parîsê koça dawî kir.",
   "explanationTr": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1327,7 +1327,7 @@
   "explanationKu": "'Duvar' (1983) fîlmê dawî yê Guney e ku li Fransayê hat kişandin.",
   "explanationTr": "'Duvar' (1983), Güney'in Fransa'da çektiği son filmidir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1358,7 +1358,7 @@
   "explanationKu": "Fîlmê Erol Mintaş ê 2014'an li Antalyayê xelata Fîlmê Yekem ê Herî Baş û li Sarayevoyê xelata Fîlmê Herî Baş wergirt.",
   "explanationTr": "Erol Mintaş'ın 2014 yapımı filmi Antalya Altın Portakal'da En İyi İlk Film, Saraybosna Film Festivali'nde En İyi Film ödülünü kazandı.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1389,7 +1389,7 @@
   "explanationKu": "'Umut' fîlmê guhertinê ye di karîyera Guney a derhêneriyê de.",
   "explanationTr": "'Umut', Güney'in yönetmen olarak dönüm noktası sayılan filmidir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
@@ -1420,7 +1420,7 @@
   "explanationKu": "Bahman Ghobadi derhênerekî kurd e ku li Baneyê, li Îranê ji dayîk bûye.",
   "explanationTr": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
   "metadata": {
-   "reviewStatus": "approved",
+   "reviewStatus": "needsReview",
    "dialect": "Kurmancî",
    "sourceTitle": "Web doğrulaması (Wikipedia, Festival de Cannes, IMDb, Antalya AP)",
    "qualityVersion": 2
