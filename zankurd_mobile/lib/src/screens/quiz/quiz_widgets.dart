@@ -881,11 +881,17 @@ class _ExplanationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final explanationText = question.getLocalizedExplanation(isKu);
+    // Kutu adını `de45f05`ten önce hak ediyordu: o zaman açıklama metnini
+    // basıyordu. Açıklamalar tur sonuna alınınca metin kaldırıldı ama
+    // **görünürlük koşulu** kaldı — kutu, artık göstermediği bir alan boş
+    // diye tümden gizleniyordu. Açıklaması olmayan 15 soruda oyuncu şıkkı
+    // işaretliyor ve hiçbir geri bildirim görmüyordu: doğru cevabı bile.
+    // Sessizdi, çünkü o 15 sorunun hepsi topluluk bankasındaydı ve
+    // ekran turu onları basmıyor.
     return AnimatedSize(
       duration: const Duration(milliseconds: 350),
       curve: Curves.easeOutCubic,
-      child: visible && explanationText.isNotEmpty
+      child: visible
           ? TweenAnimationBuilder<double>(
               tween: Tween(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 400),

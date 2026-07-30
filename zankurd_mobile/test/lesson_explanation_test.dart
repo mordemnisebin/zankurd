@@ -32,7 +32,11 @@ void main() {
     explanation: '«av» Türkçede «su» demektir.',
   );
 
-  Future<void> pumpQuiz(WidgetTester tester, MockZanKurdRepository repository) {
+  Future<void> pumpQuiz(
+    WidgetTester tester,
+    MockZanKurdRepository repository, {
+    QuizQuestion soru = question,
+  }) {
     // Koçmark açık kalırsa şıkkın üstünü kapatır ve dokunuş cevaba ulaşmaz;
     // test o zaman açıklamayı değil, öğreticiyi ölçer.
     SharedPreferences.setMockInitialValues({
@@ -44,7 +48,7 @@ void main() {
         child: QuizScreen(
           repository: repository,
           room: repository.createRoom(),
-          questions: const [question],
+          questions: [soru],
           experience: QuizExperience.learning,
           enableTimer: false,
         ),
@@ -74,6 +78,37 @@ void main() {
 
     expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
     expect(find.text('Doğru cevap'), findsOneWidget);
+  });
+
+  testWidgets('açıklaması olmayan soruda da doğru cevap gösterilir', (
+    tester,
+  ) async {
+    // `de45f05` açıklama metnini turdan kaldırdı ama kutunun **görünürlük
+    // koşulunu** kaldırmadı: kutu, artık basmadığı `explanation` alanı boş
+    // diye tümden gizleniyordu. Açıklaması olmayan 15 soruda (hepsi
+    // topluluk bankasında) oyuncu şıkkı işaretliyor ve hiçbir geri
+    // bildirim görmüyordu — doğru cevabı bile.
+    //
+    // Kusur sessizdi çünkü buradaki iki durum da açıklaması **olan** bir
+    // soru kullanıyor; boş alan hiç sınanmamıştı. Ekran turu da o 15
+    // soruyu basmıyor.
+    const aciklamasiz = QuizQuestion(
+      id: 'lesson-expl-empty',
+      category: 'Ziman',
+      prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+      answers: ['su', 'ekmek', 'yol', 'dağ'],
+      correctAnswer: 'su',
+      explanation: '',
+    );
+
+    await pumpQuiz(tester, MockZanKurdRepository(), soru: aciklamasiz);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('ekmek'));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    expect(find.text('Doğru cevap'), findsOneWidget);
+    expect(find.text('su'), findsWidgets);
   });
 
   testWidgets('sonuç ekranı bütün açıklamaları bir arada gösterir', (

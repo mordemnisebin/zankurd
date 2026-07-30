@@ -171,4 +171,68 @@ void main() {
           'panel açılır, içerik vermez.',
     );
   });
+
+  test('açıklama soruyu tekrar etmekle yetinmiyor', () {
+    // Uzunluk bir açıklamanın bilgi taşıdığını göstermez. 2026-07-30'da
+    // ölçüldü: 263 soruda açıklama, soru gövdesinde ve doğru cevapta zaten
+    // geçen sözcüklerden başka **hiçbir** sözcük taşımıyordu.
+    //
+    //   S : Rast e an şaş e: Têgeha «Arabê Şamo» tê vê wateyê: …
+    //   A : Erê, ev ravekirin bi rastî ya «Arabê Şamo» e.        (213 soru)
+    //
+    //   S : Hejmara «pênc» bi Tirkî çi ye?
+    //   A : «pênc»: beş.                                          (50 soru)
+    //
+    // Oyuncu turu bitirdiğinde sonuç ekranında bu satırları okur; orası
+    // turun tek öğretme anıdır (bkz. `lesson_explanation_test`). Cevabı
+    // ikinci kez yazmak o anı harcar.
+    //
+    // 263'ü düzeltildi. Rast/Şaş ailesi artık aynı kategoriden ikinci bir
+    // terimin tanımını verir — uydurma değil, bankanın kendi Şaş
+    // açıklamalarından türetilmiş. Sözlük soruları kullanım örneği alır.
+    //
+    // Kalan borç, açıklaması doğru cevabın birebir tekrarı olan sorular:
+    // "«destmal»: destmala ku serê govendê dihejîne." Bunlar el yazımı
+    // gerektirir — her biri ayrı bir kültür/siyaset/müzik bilgisidir ve
+    // uydurmak düzeltmemekten kötüdür. Tavan bir mandaldır: yalnız
+    // inebilir. Yeni soru bu kusuru bankaya geri sokamaz.
+    //
+    // Kalan 208 = offline 179 + editoryal 29. Kategoriye göre offline
+    // dağılımı: Paradigma 30, Çand 28, Siyaset 26, Muzîk 25, Edebiyat 21,
+    // Dîrok 20, Cografya 19, Ziman 10.
+    const ceiling = 208;
+
+    // `\w` Dart'ta ASCII'dir: "çîrokê" üç parçaya bölünür ve hepsi
+    // uzunluk süzgecine takılır, yani Kurmancî bir açıklama "boş" görünür.
+    // Unicode harf sınıfı şart.
+    final word = RegExp(r'[\p{L}\p{N}]+', unicode: true);
+    Set<String> significant(String? value) => word
+        .allMatches((value ?? '').toLowerCase())
+        .map((m) => m[0]!)
+        .where((w) => w.length > 3)
+        .toSet();
+
+    final restating = <String>[];
+    for (final question in _allBankQuestions()) {
+      final explanation =
+          (question['explanationKu'] as String?) ??
+          (question['explanation'] as String?);
+      final words = significant(explanation);
+      if (words.isEmpty) continue;
+      final body = significant(question['prompt'] as String?)
+        ..addAll(significant(question['correctAnswer'] as String?));
+      if (words.difference(body).isEmpty) {
+        restating.add(question['id'] as String);
+      }
+    }
+
+    expect(
+      restating.length,
+      lessThanOrEqualTo(ceiling),
+      reason:
+          'Açıklaması soruya hiçbir yeni sözcük eklemeyen soru sayısı '
+          '${restating.length}, tavan $ceiling. Yeni örnekler: '
+          '${restating.take(5).join(", ")}',
+    );
+  });
 }
