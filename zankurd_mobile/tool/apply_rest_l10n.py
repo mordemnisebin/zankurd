@@ -169,7 +169,7 @@ EDITS = {
                                     : 'Öğren, gelişin ve arkadaşlarınla eğlen.',""",
  """                                context.t(K.nameGateSubtitle),"""),
 ("""                                text: ku
-                                    ? 'Lîstikê û serlêderan bike'
+                                    ? 'Lîstikan biqedîne, xelatan bi dest bixe'
                                     : 'Oyunları tamamla, ödül kazan',""",
  """                                text: context.t(K.nameGateValueQuests),"""),
 ("""                                text: ku

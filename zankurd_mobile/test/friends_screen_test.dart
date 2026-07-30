@@ -116,7 +116,7 @@ void main() {
       await tester.tap(find.text('Ara'));
       await tester.pumpAndSettle();
 
-      expect(find.text('En az 2 harf yazın'), findsOneWidget);
+      expect(find.text('En az 2 harf yaz'), findsOneWidget);
     });
   });
 }

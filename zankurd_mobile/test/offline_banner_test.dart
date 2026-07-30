@@ -43,7 +43,7 @@ void main() {
     );
 
     expect(
-      find.text('İnternet bağlantısı yok — Kontrol ediliyor...'),
+      find.text('İnternet bağlantısı yok — Kontrol ediliyor…'),
       findsNothing,
     );
   });

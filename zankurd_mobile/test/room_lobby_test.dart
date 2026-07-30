@@ -142,7 +142,9 @@ void main() {
     final content = find.byKey(const ValueKey('room-content-width'));
     expect(content, findsOneWidget);
     expect(tester.getSize(content).width, lessThanOrEqualTo(680));
-    expect(find.byKey(const ValueKey('room-chat-toggle')), findsOneWidget);
+    // Serbest metin sohbet; raporlama, engelleme ve moderasyon akışı
+    // tamamlanana kadar mağaza sürümünde erişilebilir olmamalı.
+    expect(find.byKey(const ValueKey('room-chat-toggle')), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -165,7 +167,7 @@ void main() {
     await tester.pump();
 
     expect(
-      find.text('Yarışı başlatmak için en az 2 oyuncu olmalıdır.'),
+      find.text('Yarışı başlatmak için en az 2 oyuncu olmalı.'),
       findsOneWidget,
     );
 
@@ -199,7 +201,7 @@ void main() {
 
     expect(find.text('Misafir'), findsOneWidget);
     expect(
-      find.text('Yarışı başlatmak için en az 2 oyuncu olmalıdır.'),
+      find.text('Yarışı başlatmak için en az 2 oyuncu olmalı.'),
       findsNothing,
     );
 
@@ -282,7 +284,9 @@ void main() {
       ],
     );
     await tester.pumpWidget(
-      testShell(child: RoomScreen(repository: repository, initialRoom: room)),
+      testShell(
+        child: RoomScreen(repository: repository, initialRoom: room),
+      ),
     );
     await tester.pump();
 

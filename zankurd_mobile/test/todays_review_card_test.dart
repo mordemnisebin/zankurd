@@ -54,11 +54,19 @@ void main() {
   testWidgets('hazır tekrar yoksa sakin tamamlandı durumu gösterir', (
     tester,
   ) async {
+    final semantics = tester.ensureSemantics();
     SharedPreferences.setMockInitialValues({});
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-empty')), findsOneWidget);
     expect(find.byKey(const ValueKey('todays-review-card')), findsNothing);
+    expect(find.text('Tekrarlar tamam'), findsOneWidget);
+    expect(find.text('Bugün tekrar edilecek soru yok'), findsNothing);
+    expect(
+      find.bySemanticsLabel('Tekrarlar tamam. Bugün tekrar edilecek soru yok'),
+      findsOneWidget,
+    );
     expect(tester.takeException(), isNull);
+    semantics.dispose();
   });
 
   testWidgets('gelecekteki tekrarlar hazır sayılmaz', (tester) async {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,6 +50,82 @@ void main() {
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
     expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('giriş ekranı resmî ZanKurd sloganını kullanır', (tester) async {
+    await tester.pumpWidget(
+      testShell(
+        child: const SignInScreen(),
+        authProvider: GateAuthProvider(),
+        languageProvider: kurmanciLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsOneWidget);
+    expect(find.textContaining('pêşbirkê bike'), findsNothing);
+  });
+
+  testWidgets(
+    'iOS giriş ekranı yalnız e-posta ve misafir seçeneklerini sunar',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      await tester.pumpWidget(
+        testShell(
+          child: const SignInScreen(),
+          authProvider: GateAuthProvider(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      debugDefaultTargetPlatformOverride = null;
+
+      expect(find.text('Google ile giriş yap'), findsNothing);
+      expect(find.text('Apple ile giriş yap'), findsNothing);
+      expect(find.text('Misafir olarak devam et'), findsOneWidget);
+      expect(find.text('Veya e-posta ile'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('auth alanları ve parola görünürlük eylemi adlandırılır', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+
+    final fields = find.byType(TextField);
+    expect(fields, findsNWidgets(2));
+    expect(tester.getSemantics(fields.at(0)).label, 'E-posta adresi');
+    expect(tester.getSemantics(fields.at(1)).label, 'Parola');
+    expect(find.bySemanticsLabel('Parolayı göster'), findsOneWidget);
+    expect(find.bySemanticsLabel('Parolayı unuttun mu?'), findsOneWidget);
+    semantics.dispose();
+  });
+
+  testWidgets('giriş ve onboarding resmi ZanKurd logosunu kullanır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(AppLogo), findsOneWidget);
+
+    await tester.pumpWidget(
+      testShell(child: OnboardingScreen(onComplete: () {})),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(AppLogo), findsOneWidget);
   });
 
   testWidgets(
@@ -216,6 +293,29 @@ void main() {
     }
   });
 
+  testWidgets('oyuncu adı ekranı doğal Kurmancî yönlendirme gösterir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: ProfileNameGateScreen(
+          repository: repository,
+          onCompleted: () {},
+        ),
+        languageProvider: kurmanciLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Hîn bibe, pêş bikeve û bi hevalan re kêfê bike.'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('guest sign in is reachable in the first mobile auth viewport', (
     tester,
   ) async {
@@ -246,7 +346,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
-    expect(find.text('Günün Yarışması'), findsNothing);
+    expect(find.text('Günün Etkinliği'), findsNothing);
   });
 
   testWidgets('first launch shows onboarding before auth screen', (
@@ -266,7 +366,6 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Marka artık metin yerine logo görseliyle gösteriliyor.
     expect(find.byType(AppLogo), findsOneWidget);
     final logoCenter = tester.getCenter(find.byType(AppLogo));
     expect(logoCenter.dx, closeTo(195, 4));

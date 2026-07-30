@@ -108,7 +108,11 @@ void main() {
       // yanlışlıkla tek dile sabitlenirse burada yakalanır.
       expect(Tr.of(K.settings, AppLanguage.ku), 'Mîheng');
       expect(Tr.of(K.settings, AppLanguage.tr), 'Ayarlar');
-      expect(Tr.of(K.navLearn, AppLanguage.ku), 'Fêr Bibe');
+      // 2026-07-30: 'Fêr Bibe' bekliyordu. Defterde öğrenme kavramı iki
+      // kökle yazılıyordu: gezinme etiketi `fêr`, geri kalan her yer
+      // `hîn` (uygulamanın sloganı da 'Kurmancî hîn bibe'). İkisi de
+      // doğru sözcük, ama oyuncu aynı şeyi iki adla görmemeli.
+      expect(Tr.of(K.navLearn, AppLanguage.ku), 'Hîn Bibe');
       expect(Tr.of(K.navLearn, AppLanguage.tr), 'Öğren');
     });
 

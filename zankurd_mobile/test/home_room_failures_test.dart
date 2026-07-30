@@ -143,7 +143,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Oyuncu Adı'), findsOneWidget);
+    expect(find.text('Oyuncu adı'), findsOneWidget);
 
     await tester.enterText(
       find.byKey(const ValueKey('settings-player-name-field')),
@@ -171,7 +171,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Zana'), findsOneWidget);
-    expect(find.text('Oyuncu Adı'), findsNothing);
+    expect(find.text('Oyuncu adı'), findsNothing);
     expect(
       find.byKey(const ValueKey('profile-player-name-field')),
       findsNothing,

@@ -68,16 +68,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Günlük yarışma modu artık yalnızca Bilîze (Oyna) sekmesinde.
+    // Günlük ilerleme etkinliği yalnızca Bilîze (Oyna) sekmesinde.
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Günün Yarışması'));
+    await tester.ensureVisible(find.text('Günün Etkinliği'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Günün Yarışması'));
+    await tester.tap(find.text('Günün Etkinliği'));
     await tester.pumpAndSettle();
 
-    // Mock her gün contest döner → etkinlik lobisi; oradan quiz başlar.
+    // Mock her gün etkinlik döner → etkinlik lobisi; oradan quiz başlar.
     expect(find.byType(ContestScreen), findsOneWidget);
     expect(find.text('Etkinliğe başla'), findsOneWidget);
 
@@ -131,7 +131,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Kodê tevlî bibe'), findsOneWidget);
+    expect(find.text('Bi kodê tevlî bibe'), findsOneWidget);
     expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
     expect(find.text('Bi Kodê Bikeve'), findsNothing);
   });

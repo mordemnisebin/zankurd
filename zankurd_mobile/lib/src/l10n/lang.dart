@@ -173,6 +173,7 @@ class CategoryNames {
     'Paradigma': 'Paradigma',
     'Teknolojî': 'Teknoloji',
     'Sînema': 'Sinema',
+    'Tevlihev': 'Karışık',
   };
 
   /// Optional Kurmanci display labels (ID stays the map key).

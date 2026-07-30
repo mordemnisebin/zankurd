@@ -70,7 +70,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('İnternet bağlantısı yok — Kontrol ediliyor...'),
+      find.text('İnternet bağlantısı yok — Kontrol ediliyor…'),
       findsOneWidget,
     );
     expect(find.text('Tekrar dene'), findsOneWidget);

@@ -194,7 +194,7 @@ void main() {
         reason: 'Boş e-posta alanı için hata mesajı gösterilmeli',
       );
       expect(
-        find.text('Şifre en az 6 karakter olmalı'),
+        find.text('Parola en az 6 karakter olmalı'),
         findsOneWidget,
         reason: 'Kısa şifre için hata mesajı gösterilmeli',
       );

@@ -8,7 +8,6 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
-import 'package:zankurd_mobile/src/screens/home/home_rows.dart';
 import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -17,8 +16,8 @@ import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
 // Ana sayfa (2026-07-24 yenilemesi): ekran tek bir soruyu yanıtlar — "şimdi
-// ne yapmalıyım?". Karo ızgarası kaldırıldı; sıra bugünün görevi → düello →
-// kaldığın yer → günlük görevler.
+// ne yapmalıyım?". Karo ızgarası kaldırıldı; sıra bugünün görevi → öğrenme
+// yolları → yarış geçişi → günlük görevler.
 Widget _wrap(Widget child) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()),
@@ -61,15 +60,47 @@ void main() {
 
     // Destek satırları tek tip kart bileşenini kullanır.
     expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-topic-picker')), findsOneWidget);
     expect(find.byType(AppRowCard), findsWidgets);
-    expect(find.byType(ContinueSection), findsOneWidget);
     expect(find.byType(DailyMissionsCard), findsOneWidget);
 
     // Kalabalık eski bloklar yok: karo ızgarası, teaser kartları, kopya
     // "Yarış"/"Kategoriler" girişleri.
     expect(find.byType(ColorfulActionCard), findsNothing);
     expect(find.byType(ZanaDailyCard), findsNothing);
-    expect(find.bySemanticsLabel('Tema'), findsOneWidget);
+    expect(find.bySemanticsLabel('Moda tarî/ronahî'), findsOneWidget);
+  });
+
+  testWidgets('öğrenme yolları ve yarış geçişi farklı hedeflere gider', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    var lessons = 0;
+    var categories = 0;
+    var play = 0;
+
+    await tester.pumpWidget(
+      _wrap(
+        HomeScreen(
+          repository: MockZanKurdRepository(),
+          displayName: 'Zelal',
+          scrollController: ScrollController(),
+          onOpenLearning: () => lessons++,
+          onOpenCategories: () => categories++,
+          onOpenPlay: () => play++,
+        ),
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+
+    await tester.tap(find.byKey(const ValueKey('home-learning-path')));
+    await tester.tap(find.byKey(const ValueKey('home-topic-picker')));
+    await tester.tap(find.byKey(const ValueKey('home-play-handoff')));
+
+    expect((lessons, categories, play), (1, 1, 1));
   });
 
   testWidgets('ekranda yalnız bir gradyanlı birincil buton var', (

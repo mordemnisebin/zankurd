@@ -45,7 +45,10 @@ SIMPLE: dict[tuple[str, str], str] = {
     ("Deng-xwendin", "Seslendirme"): "K.secTts",
     ("Hemû taybetmendiyên premium vekirî ne", "Tüm premium özellikler aktif"): "K.premiumActive",
     ("Premium bibe", "Premium ol"): "K.premiumCta",
-    ("Xeml belaş, rozeta VIP, parastina zincîrê", "Bedava kozmetik, VIP rozeti, seri koruması"): "K.premiumPerks",
+    (
+        "Parastina xweber a zincîrê û piştgiriya ZanKurdê",
+        "Otomatik seri koruması ve ZanKurd'a destek",
+    ): "K.premiumPerks",
     ("VEKIRÎ", "AKTİF"): "K.premiumBadgeOn",
     ("BIGIRE", "BAŞLA"): "K.premiumBadgeOff",
     ("Derbarê Sepanê", "Uygulama Hakkında"): "K.secAbout",

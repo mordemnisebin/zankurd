@@ -232,7 +232,7 @@ void main() {
     // düşebiliyor. Asıl iddia gezinme: ekran hâlâ yerinde mi?
     expect(find.byType(SettingsScreen), findsOneWidget);
     expect(
-      find.text('Hesap silinemedi. Lütfen tekrar deneyin.'),
+      find.text('Hesap silinemedi. Lütfen tekrar dene.'),
       findsOneWidget,
     );
   });
