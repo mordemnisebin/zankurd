@@ -25,7 +25,7 @@ void main() {
     expect(field, findsOneWidget);
 
     // Boş adla gönder → hata görünür.
-    await tester.tap(find.text('Oyuna Başla'));
+    await tester.tap(find.text('Oyuna başla'));
     await tester.pumpAndSettle();
     expect(find.text('Ad en az 2 karakter olmalı'), findsOneWidget);
 
@@ -80,4 +80,57 @@ void main() {
       );
     },
   );
+
+  testWidgets('kaydetme başarısız olursa oyuncu niçin geçemediğini görür', (
+    tester,
+  ) async {
+    // 2026-07-31, sahibin iPhone ekran görüntüleri: adını yazıyor,
+    // "Dest pê bike"ye basıyor ve **hiçbir şey olmuyor**.
+    //
+    // Sebep iki katmanlıydı. Ad kaydetmek ağ üzerinden `profiles` tablosuna
+    // yazmayı gerektiriyor; o yazım başarısız olunca hata bir SnackBar ile
+    // bildiriliyordu. Ama tema `SnackBarBehavior.floating` kullanır — kutu
+    // ekranın en altına konur ve **açık klavye tam orayı örter**. Mesaj
+    // klavyenin arkasında doğup üç saniye sonra ölüyordu.
+    //
+    // Sonuç, ekranın en can sıkıcı hâliydi: ad vermek, ad vermemekten zor.
+    // "Paşê bike" hiç ağ çağrısı yapmadan geçerken, ad giren oyuncu
+    // açıklamasız bir duvara çarpıyordu.
+    //
+    // Kusur sessizdi çünkü buradaki mevcut durumlar yalnız **doğrulama**
+    // hatasını (boş ad) sınıyor; kaydetmenin kendisi hiç başarısız
+    // olmuyordu.
+    await tester.pumpWidget(
+      testShell(
+        child: ProfileNameGateScreen(
+          repository: _KaydetmeyenDepo(),
+          onCompleted: () {},
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.byKey(const ValueKey('player-name-field')),
+      'Çekdar',
+    );
+    await tester.tap(find.text('Oyuna başla'));
+    await tester.pumpAndSettle();
+
+    // Hata formun içinde, kalıcı olarak duruyor — klavyenin arkasında değil.
+    expect(find.byKey(const ValueKey('name-gate-save-error')), findsOneWidget);
+    expect(find.textContaining('Ad kaydedilemedi'), findsOneWidget);
+
+    // Ve çıkış yolu hâlâ görünür: oyuncu tıkanmış durumda bırakılmaz.
+    expect(find.text('Şimdilik geç'), findsOneWidget);
+  });
+}
+
+/// Ad yazımı her seferinde başarısız olan depo — canlıdaki ağ/RLS hatasının
+/// testteki karşılığı.
+class _KaydetmeyenDepo extends MockZanKurdRepository {
+  @override
+  Future<void> updateProfileName(String name) async {
+    throw StateError('profil adı yazılamadı');
+  }
 }

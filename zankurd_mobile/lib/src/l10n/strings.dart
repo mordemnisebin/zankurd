@@ -120,7 +120,7 @@ class Tr {
     },
     K.deleteAccount: {'ku': 'Hesabê Min Jê Bibe', 'tr': 'Hesabımı Sil'},
     K.deleteAccountSub: {
-      'ku': 'Profîl, coin û pirsên tomarkirî tên jêbirin.',
+      'ku': 'Profîl, zêr û pirsên tomarkirî tên jêbirin.',
       'tr': 'Profil, coin ve kaydedilen soru verilerin silinir.',
     },
     K.notifPermDenied: {
@@ -135,7 +135,7 @@ class Tr {
     },
     K.deleteConfirmBody: {
       'ku':
-          'Ev çalakî venagere. Profîl, coin, pirsên tomarkirî û daneyên kesane yên hesabê te tên jêbirin.',
+          'Ev çalakî venagere. Profîl, zêr, pirsên tomarkirî û daneyên kesane yên hesabê te tên jêbirin.',
       'tr':
           'Bu işlem geri alınamaz. Profil, coin, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
     },
@@ -158,7 +158,7 @@ class Tr {
     },
     K.ttsRate: {'ku': 'Leza xwendinê', 'tr': 'Konuşma hızı'},
     // ── Giriş / kayıt ────────────────────────────────────────────────
-    K.emailRequired: {'ku': 'E-peyam pêwîst e', 'tr': 'E-posta gerekli'},
+    K.emailRequired: {'ku': 'E-name pêwîst e', 'tr': 'E-posta gerekli'},
     K.passwordRequired: {'ku': 'Şîfre pêwîst e', 'tr': 'Parola gerekli'},
     K.passwordMin6: {
       'ku': 'Şîfre divê herî kêm 6 tîp be',
@@ -174,24 +174,24 @@ class Tr {
       'tr': 'Misafir olarak giriliyor…',
     },
     K.enterValidEmailFirst: {
-      'ku': 'Pêşî navnîşana e-peyamê ya derbasdar binivîse.',
+      'ku': 'Pêşî navnîşana e-nameyê ya derbasdar binivîse.',
       'tr': 'Önce geçerli e-posta adresini yaz.',
     },
     K.sendingReset: {
-      'ku': 'E-peyama vesazkirinê tê şandin…',
+      'ku': 'E-nameya vesazkirinê tê şandin…',
       'tr': 'Sıfırlama e-postası gönderiliyor…',
     },
     K.resetSent: {
-      'ku': 'Girêdana vesazkirina şîfreyê ji e-peyama te re hat şandin.',
+      'ku': 'Girêdana vesazkirina şîfreyê ji e-nameya te re hat şandin.',
       'tr': 'Parola sıfırlama bağlantısı e-postana gönderildi.',
     },
     K.resetFailed: {
       'ku': 'Vesazkirina şîfreyê bi ser neket.',
       'tr': 'Parola sıfırlama başarısız.',
     },
-    K.emailAddress: {'ku': 'Navnîşana e-peyamê', 'tr': 'E-posta adresi'},
+    K.emailAddress: {'ku': 'Navnîşana e-nameyê', 'tr': 'E-posta adresi'},
     K.emailInvalid2: {
-      'ku': 'E-peyameke derbasdar binivîse',
+      'ku': 'E-nameyeke derbasdar binivîse',
       'tr': 'Geçerli bir e-posta gir',
     },
     K.passwordLabel: {'ku': 'Şîfre', 'tr': 'Parola'},
@@ -215,7 +215,7 @@ class Tr {
       'ku': 'Wek mêvan bidomîne',
       'tr': 'Misafir olarak devam et',
     },
-    K.orWithEmail: {'ku': 'An jî bi e-peyamê', 'tr': 'Veya e-posta ile'},
+    K.orWithEmail: {'ku': 'An jî bi e-nameyê', 'tr': 'Veya e-posta ile'},
 
     // ── Kayıt ekranı ─────────────────────────────────────────────────
     K.allFieldsRequired: {
@@ -227,7 +227,7 @@ class Tr {
       'tr': 'Hesap oluşturuluyor…',
     },
     K.accountCreated: {
-      'ku': 'Hesab hat afirandin! Ji bo pejirandinê e-peyama xwe kontrol bike.',
+      'ku': 'Hesab hat afirandin! Ji bo pejirandinê e-nameya xwe kontrol bike.',
       'tr': 'Hesap oluşturuldu! Doğrulamak için e-postanı kontrol et.',
     },
     K.backStep: {'ku': 'Paş', 'tr': 'Geri'},
@@ -238,7 +238,7 @@ class Tr {
       'tr': 'Zaten hesabın var mı? ',
     },
     K.stepCredentials: {
-      'ku': 'E-peyam û şîfreya xwe binivîse',
+      'ku': 'E-name û şîfreya xwe binivîse',
       'tr': 'E-postanı ve parolanı gir',
     },
     K.stepUsername: {
@@ -268,7 +268,7 @@ class Tr {
       'ku': 'Navê bikarhêner divê herî kêm 2 tîp be',
       'tr': 'Kullanıcı adı en az 2 karakter olmalı',
     },
-    K.emailColon: {'ku': 'E-peyam:', 'tr': 'E-posta:'},
+    K.emailColon: {'ku': 'E-name:', 'tr': 'E-posta:'},
     K.usernameColon: {'ku': 'Navê bikarhêner:', 'tr': 'Kullanıcı adı:'},
     K.passwordColon: {'ku': 'Şîfre:', 'tr': 'Parola:'},
     K.createYourAccount: {
@@ -394,7 +394,7 @@ class Tr {
     // ── Sonuç ekranı ─────────────────────────────────────────────────
     K.streakBreaking: {'ku': 'Zincîra te dişkê!', 'tr': 'Serin kırılıyor!'},
     K.streakFreezeAsk: {
-      'ku': 'Zincîra te ya rojane dê sifir bibe. Bi {cost} coin biparêze?',
+      'ku': 'Zincîra te ya rojane dê sifir bibe. Bi {cost} zêr biparêze?',
       'tr': 'Günlük serin sıfırlanacak. {cost} coin ile koru?',
     },
     K.streakLetGo: {'ku': 'Na, bila here', 'tr': 'Hayır, sıfırlansın'},
@@ -679,7 +679,7 @@ class Tr {
     },
     K.scoreWord: {'ku': 'Pûan', 'tr': 'Puan'},
     K.streakWord: {'ku': 'Zincîr', 'tr': 'Seri'},
-    K.coinWord: {'ku': 'Coin', 'tr': 'Coin'},
+    K.coinWord: {'ku': 'Zêr', 'tr': 'Coin'},
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
     K.listenExplanation: {'ku': 'Şîroveyê bibihîze', 'tr': 'Açıklamayı dinle'},
     K.listenQuestion: {'ku': 'Pirsê bibihîze', 'tr': 'Soruyu dinle'},
@@ -701,7 +701,7 @@ class Tr {
     K.waitingOpponent: {'ku': 'Li benda hevrik…', 'tr': 'Rakip bekleniyor…'},
     K.finishAction: {'ku': 'Biqedîne', 'tr': 'Bitir'},
     K.finishQuizHint: {
-      'ku': 'Quizê biqedîne, coin qezenc bike û jokeran veke',
+      'ku': 'Quizê biqedîne, zêr qezenc bike û jokeran veke',
       'tr': 'Quizi bitir, coin kazan ve jokerleri aç',
     },
     K.wildcardFiftyHint: {
@@ -756,7 +756,7 @@ class Tr {
     K.startEvent: {'ku': 'Dest bi çalakiyê bike', 'tr': 'Etkinliğe başla'},
     K.wheelTitle: {'ku': 'Çerxa Rojê', 'tr': 'Günün Çarkı'},
     K.wheelRewardNote: {
-      'ku': 'Xelat rasterast li hejmara coinên te tê zêdekirin.',
+      'ku': 'Xelat rasterast li hejmara zêrên te tê zêdekirin.',
       'tr': 'Ödül doğrudan coin bakiyene eklenir.',
     },
     K.wheelOncePerDay: {
@@ -764,16 +764,16 @@ class Tr {
       'tr': 'Her gün bir kez çevir!',
     },
     K.wheelSub: {
-      'ku': 'Coin qezenc bike û zincîra xwe bidomîne',
+      'ku': 'Zêr qezenc bike û zincîra xwe bidomîne',
       'tr': 'Coin kazan ve serini sürdür',
     },
     K.wheelWonAmount: {
-      'ku': 'Te {amount} coin qezenc kir!',
+      'ku': 'Te {amount} zêr qezenc kir!',
       'tr': '{amount} coin kazandın!',
     },
     K.congrats: {'ku': 'Pîroz be!', 'tr': 'Tebrikler!'},
     K.wheelWonPlus: {
-      'ku': '+{amount} coin qezenc kir!',
+      'ku': '+{amount} zêr qezenc kir!',
       'tr': '+{amount} coin kazandın!',
     },
     K.wheelReady: {
@@ -893,10 +893,10 @@ class Tr {
       'tr': 'Oyun başlatılamadı. Tekrar dene.',
     },
     K.yourBalance: {
-      'ku': 'Hejmara coinên te: {coins}',
+      'ku': 'Hejmara zêrên te: {coins}',
       'tr': 'Bakiyen: {coins} coin',
     },
-    K.earnCoins: {'ku': 'Coin qezenc bike', 'tr': 'Coin kazan'},
+    K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Coin kazan'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'İptal'},
     K.rewardPending: {
       'ku': 'Girêdan tune — xelata te tê tomarkirin û paşê tê dayîn.',
@@ -920,16 +920,16 @@ class Tr {
       'tr': 'Skorun kaydedildi; rakibinin oynamasını bekliyoruz.',
     },
     K.championRewardGranted: {
-      'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} coin',
+      'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} zêr',
       'tr': 'Tebrikler! Şampiyonluk ödülün: {coins} coin',
     },
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
     K.buyItemForCoins: {
-      'ku': '{item} bikire — {coins} coin',
+      'ku': '{item} bikire — {coins} zêr',
       'tr': '{item} satın al — {coins} coin',
     },
     K.insufficientBalance: {
-      'ku': 'Coinên te kêm in!',
+      'ku': 'Zêrên te kêm in!',
       'tr': 'Bakiye yetersiz!',
     },
     K.purchaseFailed: {
@@ -943,7 +943,7 @@ class Tr {
     },
     K.gotIt: {'ku': 'Fêm kir', 'tr': 'Anladım'},
     K.zeroBalanceHint: {
-      'ku': 'Coinên te 0 in — çerxa rojane bizivirîne û coin qezenc bike!',
+      'ku': 'Zêrên te 0 in — çerxa rojane bizivirîne û zêr qezenc bike!',
       'tr': 'Bakiyen 0 — günlük çarkı çevir, coin kazan!',
     },
     K.shopEmpty: {
@@ -951,7 +951,7 @@ class Tr {
       'tr': 'Mağazada henüz ürün yok.',
     },
     K.shopSubtitle: {
-      'ku': 'Coinên xwe bi aqilmendî bixercîne û profîla xwe xweştir bike',
+      'ku': 'Zêrên xwe bi aqilmendî bixercîne û profîla xwe xweştir bike',
       'tr': 'Coinlerini akıllıca harca, profilini ve deneyimini güzelleştir',
     },
     K.mostWanted: {'ku': 'YA HERÎ TÊ XWASTIN', 'tr': 'EN POPÜLER'},
@@ -1097,17 +1097,17 @@ class Tr {
     K.secAccountCaps: {'ku': 'HESAB', 'tr': 'HESAP'},
     K.saveAccount: {'ku': 'Hesabê Xwe Tomar Bike', 'tr': 'Hesabını Kaydet'},
     K.saveAccountSub: {
-      'ku': 'E-peyam û şîfreyekê binivîse — hesabê te yê mêvan bibe mayînde',
+      'ku': 'E-name û şîfreyekê binivîse — hesabê te yê mêvan bibe mayînde',
       'tr': 'E-posta ve parola belirle — misafir hesabın kalıcı olsun',
     },
     K.saveAccountBody: {
       'ku':
-          'E-peyam û şîfreyekê binivîse da ku hesabê xwe yê mêvan bikî hesabê mayînde.',
+          'E-name û şîfreyekê binivîse da ku hesabê xwe yê mêvan bikî hesabê mayînde.',
       'tr': 'Misafir hesabını kalıcı yapmak için e-posta ve parola belirle.',
     },
-    K.email: {'ku': 'E-peyam', 'tr': 'E-posta'},
+    K.email: {'ku': 'E-name', 'tr': 'E-posta'},
     K.emailInvalid: {
-      'ku': 'E-peyameke derbasdar binivîse',
+      'ku': 'E-nameyeke derbasdar binivîse',
       'tr': 'Geçerli bir e-posta gir',
     },
     K.password: {'ku': 'Şîfre', 'tr': 'Parola'},
@@ -1238,7 +1238,7 @@ class Tr {
       'tr': '1vs1 ve 10 soruluk Günün Etkinliği',
     },
     K.onbRewardBullet: {
-      'ku': 'Xelat, coin û joker',
+      'ku': 'Xelat, zêr û joker',
       'tr': 'Ödül, coin ve joker',
     },
     K.onbTagline: {
@@ -1296,22 +1296,22 @@ class Tr {
     K.levelWithNumber: {'ku': 'Ast {level}', 'tr': 'Seviye {level}'},
     K.signOutGuestWarn: {
       'ku':
-          'Tu wek mêvan têketî yî. Heke derkevî, XP, coin, rozet û zincîra te bi tevahî winda dibin — vegerandin tune.',
+          'Tu wek mêvan têketî yî. Heke derkevî, XP, zêr, rozet û zincîra te bi tevahî winda dibin — vegerandin tune.',
       'tr':
           'Misafir olarak giriş yaptın. Çıkarsan XP, coin, rozet ve serin kalıcı olarak silinir — geri getirilemez.',
     },
 
     // ── Oyuncu adı kapısı ─────────────────────────────────────────
     K.nameGateSaveFailed: {
-      'ku': 'Navê lîstikê nehat tomar kirin. Dîsa biceribîne.',
-      'tr': 'Oyuncu adı kaydedilemedi. Tekrar dene.',
+      'ku': 'Nav nehat tomar kirin. Dîsa biceribîne, an bi «Paşê bike» derbas bibe û paşê ji profîlê binivîse.',
+      'tr': 'Ad kaydedilemedi. Tekrar dene ya da «Şimdilik geç» ile devam et, adı sonra profilden yazarsın.',
     },
     K.nameGateWelcome: {
-      'ku': 'Xweş hatî ZanKurdê!',
+      'ku': 'Bi xêr hatî ZanKurdê!',
       'tr': "ZanKurd'a Hoş Geldin!",
     },
     K.nameGateSubtitle: {
-      'ku': 'Hîn bibe, pêş bikeve û bi hevalan re kêfê bike.',
+      'ku': 'Hîn bibe, pêş bikeve û bi hevalên xwe re kêf bike.',
       'tr': 'Öğren, ilerle ve arkadaşlarınla eğlen.',
     },
     K.nameGateValueQuests: {
@@ -1331,7 +1331,7 @@ class Tr {
       'tr': 'Oyundaki adın ne olsun?',
     },
     K.nameGateHelp: {
-      'ku': 'Ev nav di tabloya pêşderçûnê û odeyên serhêl de xuya dibe.',
+      'ku': 'Ev nav di tabloya pêşengan û odeyên serhêl de xuya dibe.',
       'tr': 'Bu ad liderlik tablosunda ve çevrimiçi odalarda görünecek.',
     },
     K.nameGateHint: {'ku': 'Mînak: Zelal', 'tr': 'Örn: Zelal'},
@@ -1343,7 +1343,7 @@ class Tr {
       'ku': 'Nav divê herî zêde 24 tîp be',
       'tr': 'Ad en fazla 24 karakter olmalı',
     },
-    K.nameGateCta: {'ku': 'Dest Pê Bike', 'tr': 'Oyuna Başla'},
+    K.nameGateCta: {'ku': 'Dest pê bike', 'tr': 'Oyuna başla'},
     K.nameGateSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
 
     // ── Cevaplar ekranı ───────────────────────────────────────────
@@ -1396,13 +1396,13 @@ class Tr {
     },
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 9 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û coin didin; rêza rast bonus zêde dike.',
+          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 9 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast bonus zêde dike.',
       'tr':
           '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 9 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
     },
     K.privacyBody: {
       'ku':
-          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, navnîşana e-peyamê (heke tomar bibî), pûan, statîstîk û daneyên lîstik û hevberkirinê, hejmara coinan, pirsên tomarkirî, peyamên odeyê û pêşniyarên pirsan. XP, zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên parastin; dema tu derkevî ew ji amûrê tên paqij kirin. Di xetayan de tomarên teknîkî yên anonîm tên berhevkirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di tabloya pêşderçûnê, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Hesab > Hesabê Min Jê Bibe.',
+          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, navnîşana e-nameyê (heke tomar bibî), pûan, statîstîk û daneyên lîstik û hevberkirinê, hejmara zêran, pirsên tomarkirî, peyamên odeyê û pêşniyarên pirsan. XP, zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên parastin; dema tu derkevî ew ji amûrê tên paqij kirin. Di xetayan de tomarên teknîkî yên anonîm tên berhevkirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di tabloya pêşengan, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Hesab > Hesabê Min Jê Bibe.',
       'tr':
           'ZanKurd şu çevrimiçi verileri saklar: oyuncu adı, e-posta adresi (kayıt olursan), oyun ve eşleştirme puanları, istatistikleri ve verileri, coin bakiyesi, kaydedilen sorular, oda mesajları ve soru önerileri. XP, seri, yanlışlar ve öğrenme ilerlemesi yalnız bu cihazda tutulur; çıkış yaptığında cihazdan temizlenir. Hatalarda anonim teknik çökme kayıtları toplanır.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın liderlik tablosunda, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap > Hesabımı Sil.',
     },

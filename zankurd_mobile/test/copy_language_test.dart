@@ -108,7 +108,7 @@ void main() {
     );
     expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), contains('ode an kûpa'));
     expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('9 kategoriyan'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('coin didin'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('zêr didin'));
     expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('9 kategori'));
   });
 
@@ -145,7 +145,7 @@ void main() {
     // ettiği yol uygulamada bulunmuyordu.
     expect(kurmanci, contains('Mîheng > Hesab > Hesabê Min Jê Bibe'));
     expect(kurmanci, contains(Tr.of(K.settings, AppLanguage.ku)));
-    expect(kurmanci, contains('tabloya pêşderçûnê'));
+    expect(kurmanci, contains('tabloya pêşengan'));
     expect(kurmanci, contains('lêgerîna hevalan'));
     expect(kurmanci, contains('odeyên serhêl'));
     expect(kurmanci, isNot(contains('@')));
@@ -159,7 +159,7 @@ void main() {
   // yasaklar ve her birinin karşılığını gösterir.
   test('Kurmancî yuvalara Türkçe sözcük sızmaz', () {
     const forbidden = <String, String>{
-      'e-posta': 'e-peyam',
+      'e-posta': 'e-name',
       'rastgele': 'rasthatî',
       'bakiye': 'hejmara coinan',
       'sînav': 'azmûn',

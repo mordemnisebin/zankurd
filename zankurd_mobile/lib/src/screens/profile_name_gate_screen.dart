@@ -29,6 +29,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _controller;
   bool _saving = false;
+  String? _saveError;
 
   @override
   void initState() {
@@ -48,7 +49,16 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate() || _saving) return;
     final name = _controller.text.trim();
-    setState(() => _saving = true);
+    // Klavye kapanmadan hata gösterilemez: `SnackBarBehavior.floating`
+    // kutuyu ekranın altına koyar ve açık klavye tam orayı örter. Oyuncu
+    // "Dest pê bike"ye basıyor, yazım sunucuya gitmiyor, hata mesajı
+    // klavyenin arkasında doğup ölüyor — ekranda hiçbir şey olmuyor
+    // (2026-07-31, sahibin iPhone ekran görüntüleri).
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _saving = true;
+      _saveError = null;
+    });
     try {
       await widget.repository.updateProfileName(name);
       if (!mounted) return;
@@ -56,10 +66,13 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'profile name gate failed');
       if (!mounted) return;
-      setState(() => _saving = false);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.nameGateSaveFailed))));
+      // Hata artık formun içinde, kalıcı olarak duruyor. Geçici bir
+      // SnackBar burada yanlış araçtı: üç saniye sonra kaybolur ve geriye
+      // açıklamasız bir tıkanma bırakır.
+      setState(() {
+        _saving = false;
+        _saveError = context.t(K.nameGateSaveFailed);
+      });
     }
   }
 
@@ -316,6 +329,61 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                             return null;
                                           },
                                         ),
+                                        if (_saveError != null) ...[
+                                          const SizedBox(height: AppSpacing.md),
+                                          Container(
+                                            key: const ValueKey(
+                                              'name-gate-save-error',
+                                            ),
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.all(
+                                              AppSpacing.md,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.wrong.withValues(
+                                                alpha: 0.12,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    AppRadius.md,
+                                                  ),
+                                              border: Border.all(
+                                                color: AppTheme.wrong
+                                                    .withValues(alpha: 0.4),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Icon(
+                                                  AppIcons.triangleExclamation,
+                                                  size: 20,
+                                                  color:
+                                                      AppColors.readableAccent(
+                                                        context,
+                                                        AppTheme.wrong,
+                                                      ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Expanded(
+                                                  child: Text(
+                                                    _saveError!,
+                                                    style: AppTypography
+                                                        .bodyMedium
+                                                        .copyWith(
+                                                          color:
+                                                              AppTheme.textPrimaryColor(
+                                                                context,
+                                                              ),
+                                                          height: 1.45,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                         const SizedBox(height: AppSpacing.lg),
                                         GeometricGradientButton(
                                           label: context.t(K.nameGateCta),

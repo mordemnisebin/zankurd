@@ -288,7 +288,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const ValueKey('player-name-field')), findsOneWidget);
-      expect(find.text('Oyuna Başla'), findsOneWidget);
+      expect(find.text('Oyuna başla'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
   });
@@ -311,7 +311,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('Hîn bibe, pêş bikeve û bi hevalan re kêfê bike.'),
+      find.text('Hîn bibe, pêş bikeve û bi hevalên xwe re kêf bike.'),
       findsOneWidget,
     );
   });
@@ -648,7 +648,7 @@ void main() {
       find.byKey(const ValueKey('player-name-field')),
       'Rojda Test',
     );
-    await tester.tap(find.text('Oyuna Başla'));
+    await tester.tap(find.text('Oyuna başla'));
     await tester.pumpAndSettle();
 
     expect(repository.savedName, 'Rojda Test');
