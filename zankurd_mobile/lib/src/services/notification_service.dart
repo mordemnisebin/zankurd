@@ -18,7 +18,8 @@ class DeviceTimeZoneResolver implements TimeZoneResolver {
   const DeviceTimeZoneResolver();
 
   @override
-  Future<String?> resolve() async => FlutterTimezone.getLocalTimezone();
+  Future<String?> resolve() async =>
+      (await FlutterTimezone.getLocalTimezone()).identifier;
 }
 
 /// Bildirim ayarlarını yöneten servis.
@@ -233,7 +234,7 @@ class NotificationService {
           AndroidNotificationDetails(
             'zankurd_daily_reminder',
             'ZanKurd Bîranîna Rojane',
-            channelDescription: 'Bîranîna pêşbirka rojane ya ZanKurd',
+            channelDescription: 'Bîranîna çalakiya rojane ya ZanKurd',
             importance: Importance.max,
             priority: Priority.high,
             // Siluet ikonu sistemin gri tonuyla çizilir; marka rengi
@@ -255,8 +256,8 @@ class NotificationService {
         id: 0,
         title: 'ZanKurd',
         body: isKu
-            ? 'Huhu! Zana dibêje pêşbirka rojê dest pê kiriye. Hêza hişê xwe biceribîne!'
-            : 'Huhu! Zana günün yarışmasının başladığını söylüyor. Zihnini test et!',
+            ? 'Huhu! Çalakiya rojê ya 10 pirsan amade ye. Pêşketina xwe biceribîne!'
+            : 'Huhu! Günün 10 soruluk etkinliği hazır. İlerlemeni ölç!',
         scheduledDate: scheduledTime,
         notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

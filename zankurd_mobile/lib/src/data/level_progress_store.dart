@@ -34,4 +34,7 @@ class LevelProgressStore {
     final entries = _played..add(_entry(category, subCategory, level));
     await _prefs.setStringList(_key, entries.toList()..sort());
   }
+
+  /// Hesap değişiminde önceki kullanıcının seviye geçmişini temizler.
+  Future<void> clear() => _prefs.remove(_key);
 }

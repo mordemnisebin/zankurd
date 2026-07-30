@@ -50,4 +50,13 @@ class StoryProgressStore {
     _nodes.remove(storyId);
     await _preferences?.remove('$_prefix$storyId');
   }
+
+  /// Hesap değişiminde önceki kullanıcının hikâye ilerlemesini cihazda bırakmaz.
+  Future<void> clear() async {
+    final storyIds = _nodes.keys.toList(growable: false);
+    _nodes.clear();
+    for (final storyId in storyIds) {
+      await _preferences?.remove('$_prefix$storyId');
+    }
+  }
 }

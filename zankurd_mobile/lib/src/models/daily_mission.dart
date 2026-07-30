@@ -27,6 +27,10 @@ class DailyMission {
   int progress;
   bool completed;
 
+  /// Günlük görevler çevrimdışı ilerlediği için coin hakkı sunucuda güvenle
+  /// doğrulanamaz. Yayın sürümünde görev tamamlaması sabit XP verir.
+  int get xpReward => 100;
+
   /// Sunucu tarifesiyle (claim_mission_reward RPC) anlaşılan anahtar.
   /// Kategori adları SQL'de ASCII kalması için slug'lanır.
   String get missionKey => type == MissionType.playCategory

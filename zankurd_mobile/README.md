@@ -46,11 +46,11 @@ flutter run -d windows
 flutter run -d emulator-5554
 ```
 
-Varsayılan build ZanKurd production Supabase projesine bağlanır; ekstra parametre gerekmez:
+Üretim derlemesi Supabase yapılandırmasının açıkça verilmesini zorunlu tutar:
 
-```powershell
-flutter run
-flutter build appbundle --release
+```bash
+flutter run --dart-define-from-file=.env.web.release.json
+flutter build web --release --dart-define-from-file=.env.web.release.json
 ```
 
 Farklı bir Supabase projesiyle çalıştırmak için build-time override verilebilir:
@@ -188,5 +188,11 @@ Supabase SQL Editor'de en az şu dosyalar uygulanmış olmalıdır:
 7. `supabase/quiz_reward_rpc.sql`
 8. `supabase/coin_policies.sql`
 9. `supabase/delete_my_account_rpc.sql`
+10. `supabase/2026-07-29_release_readiness_hardening.sql`
+11. `supabase/2026-07-29_shop_purchase_integrity_fix.sql`
+
+Canlıya uygulanan dosyaların tek doğruluk kaynağı
+`supabase/applied.md` dosyasıdır; tarihsel SQL dosyaları yeni göçlerin
+üzerine yeniden çalıştırılmaz.
 
 Soru bankası temizliği için `supabase/dedupe_and_fix_questions.sql` ayrıca çalıştırılabilir.

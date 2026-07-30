@@ -22,7 +22,7 @@ extension WildcardTypeDetails on WildcardType {
 
   String label(bool isKu) => switch (this) {
     WildcardType.fiftyFifty => isKu ? 'Nîv bi Nîv' : '50/50',
-    WildcardType.audience => isKu ? 'Ji Temaşevanan' : 'Seyirciye Sor',
+    WildcardType.audience => isKu ? 'Alîkariya Bersivê' : 'Şık İpucu',
     WildcardType.doubleAnswer => isKu ? 'Du Bersiv' : 'Çift Cevap',
     WildcardType.changeQuestion => isKu ? 'Pirsê Biguhere' : 'Soru Değiştir',
   };

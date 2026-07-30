@@ -86,7 +86,7 @@ final Story cayxaneStory = Story(
           labelKu: 'Çayekê, ji kerema xwe.',
           labelTr: 'Bir çay, lütfen.',
           nextNodeId: 'tea',
-          feedbackKu: 'Xwezî! Bijartineke nazik.',
+          feedbackKu: 'Xweş! Bijartineke nazik.',
           feedbackTr: 'Güzel! Nazik bir seçim.',
         ),
         StoryChoice(
@@ -115,7 +115,7 @@ final Story cayxaneStory = Story(
     ),
     const StoryNode(
       id: 'wait',
-      textKu: 'Xizmetkar bişirîn dike: "Baş e, her tu bixwazî bang bike."',
+      textKu: 'Xizmetkar dibişire: "Baş e, kengî bixwazî bang bike."',
       textTr: 'Garson gülümsüyor: "Tamam, ne istersen seslen."',
       choices: [
         StoryChoice(

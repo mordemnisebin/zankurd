@@ -103,10 +103,10 @@ class AchievementStore {
     ),
     const Achievement(
       id: AchievementIds.dailyQuizFive,
-      titleKu: '5 Pêşbirkên Rojê',
-      titleTr: 'Günlük Quiz x5',
-      descriptionKu: 'Pênc caran pêşbirka rojê qedand.',
-      descriptionTr: 'Günün yarışmasını 5 kez tamamladın.',
+      titleKu: '5 Çalakiyên Rojê',
+      titleTr: 'Günün Etkinliği x5',
+      descriptionKu: 'Te Çalakiya Rojê pênc caran qedand.',
+      descriptionTr: 'Günün etkinliğini 5 kez tamamladın.',
       icon: AppIcons.bolt,
     ),
   ];
