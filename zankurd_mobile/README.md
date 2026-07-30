@@ -50,7 +50,7 @@ flutter run -d emulator-5554
 
 ```bash
 flutter run --dart-define-from-file=.env.web.release.json
-flutter build web --release --dart-define-from-file=.env.web.release.json
+flutter build web --release --no-web-resources-cdn --dart-define-from-file=.env.web.release.json
 ```
 
 Farklı bir Supabase projesiyle çalıştırmak için build-time override verilebilir:

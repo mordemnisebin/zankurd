@@ -60,7 +60,7 @@ Kontrol (PowerShell):
 
 MIME düzelmezse Hostinger hPanel → MIME Types’tan elle ekle, veya Wasm’siz yedek:
 ```powershell
-flutter build web --release
+flutter build web --release --no-web-resources-cdn
 ```
 
 ## 3) 10 dakikalık smoke (yayın sonrası)

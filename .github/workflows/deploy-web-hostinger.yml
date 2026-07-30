@@ -27,7 +27,7 @@ jobs:
 
       - name: Web (release) derle
         working-directory: zankurd_mobile
-        run: flutter build web --release
+        run: flutter build web --release --no-web-resources-cdn
 
       - name: Hostinger'a FTP ile yükle
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
