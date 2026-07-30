@@ -141,7 +141,7 @@ void main() {
           explanation: '"kevin" kelimesi "eski" demektir.',
           isKu: true,
         ),
-        'Peyva "kevin" tê wateya "eski".',
+        'Peyva «kevin» tê wateya «eski».',
       );
     });
   });

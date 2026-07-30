@@ -225,11 +225,40 @@ final List<_Rule> _rules = [
 /// Bilinen Türkçe şablonu Kurmancî'ye çevirir; eşleşme yoksa metni
 /// genel bir Kurmancî çerçeveyle döndürür (içerik çevrilemediğinde
 /// ham Türkçe kalıbı doğrudan göstermemek için).
+/// Kural motoruna giren metinde alıntı işaretlerini tekleştirir.
+///
+/// Aşağıdaki 45 kuralın hepsi `"` ya da `'` üzerine çapalı. Banka
+/// 2026-07-30'da «guillemet» kuralında birleştirilince (üç ayrı tırnak
+/// biçimi yan yana duruyordu) kuralların hiçbiri eşleşmez oldu ve 82
+/// açıklama çevrilmeden, Türkçe hâliyle Kurmancî tura düştü.
+///
+/// Kuralları tek tek tırnağa duyarsız yazmak yerine giriş burada
+/// normalleştirilir: motor tek biçim görür, çıktı ürünün biçimine döner.
+/// Yeni kural yazan kişi tırnak biçimini düşünmek zorunda kalmaz.
+String _withQuote(String text, String mark) =>
+    text.replaceAll('«', mark).replaceAll('»', mark);
+
+/// Çıktıdaki düz tırnakları ürünün «» biçimine çevirir: çift sayılı olan
+/// açılış, tek sayılı olan kapanış olur.
+String _productQuotes(String text) {
+  var index = 0;
+  return text.replaceAllMapped(
+    RegExp('[\'"]'),
+    (_) => (index++).isEven ? '«' : '»',
+  );
+}
+
 String explanationToKu(String explanation) {
   final text = explanation.trim();
+  // Kurallar tarihsel olarak iki tırnak biçimiyle yazılmış: kimi `"…"`,
+  // kimi `'…'`. Girişi tek biçime çevirmek yarısını kaçırır, o yüzden her
+  // kural iki varyantta da denenir. Kural sırası korunur, öncelik değişmez.
+  final variants = [_withQuote(text, '"'), _withQuote(text, "'")];
   for (final rule in _rules) {
-    final match = rule.pattern.firstMatch(text);
-    if (match != null) return rule.build(match);
+    for (final variant in variants) {
+      final match = rule.pattern.firstMatch(variant);
+      if (match != null) return _productQuotes(rule.build(match));
+    }
   }
-  return 'Şirove: $text';
+  return _productQuotes('Şirove: $text');
 }

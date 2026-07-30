@@ -85,13 +85,33 @@ void main() {
     // Ölçüt: Kurmancî bir gövdede tırnak içindeki terim Türkçe harf
     // taşımamalı. Çeviri soruları ("bi Tirkî çi ye?") doğal olarak muaf;
     // Türkçe özel adlar da adıyla muaf.
+    // 2026-07-30: bu desenin iki kör noktası vardı.
+    //
+    // Biri alıntı işaretiydi: `'…'` ve `«…»` taranıyordu ama `"…"`
+    // taranmıyordu. Banka üç tırnak kuralını birden taşıdığı için çift
+    // tırnaklı Türkçe terimler bekçiye hiç görünmüyordu. Tırnaklar «»
+    // kuralında birleştirilince (`tool/normalize_question_typography.py`)
+    // 33 kayıt açığa çıktı.
+    //
+    // Öteki muafiyet desenidir: çeviri sorusu yalnız "bi Tirkî" kalıbıyla
+    // tanınıyordu. Banka aynı soruyu altı ayrı kalıpla soruyor —
+    // "Hevwateya «masa» bi Kurmancî çi ye?", "Ji bo gotina «göz»…",
+    // "Kîjan ji van peyva Kurmancî ye ku wateya wê «kapı» ye?". Onlarda
+    // Türkçe terim sorunun konusudur, kusur değil.
+    //
+    // Ayıklama sonrası kalan dört kayıt gerçek kusurdu: Kurmancî gövdede
+    // Türkçe **kavram** adı ("Çoğulculuk", "Demokratik çözüm"). Dördünün
+    // de Kurmancî karşılığı bankada zaten geçiyordu.
     final translationQuestion = RegExp(
-      'bi Tirkî|Tirkî de|Türkçe',
+      'bi Tirkî|Tirkî de|Türkçe|wateya Tirkî|bi Kurmancî|Hevwateya'
+      '|peyva Kurmancî ye ku wateya|ji bo gotina|tê xwestin|wateya wê'
+      '|Kurmancî «[^»]+» =|tê wateya «',
       caseSensitive: false,
     );
     final quotedTerm = RegExp("'([^']{3,40})'|«([^»]{3,40})»");
     final turkish = RegExp('[ığöüİĞÖÜ]');
-    const properNames = {'offline_10878'};
+    // Türkçe özel adlar: müzik grubu ve film adları.
+    const properNames = {'offline_10878', 'comm_sin_0107'};
 
     final offenders = <String>[];
     for (final entry in prompts.entries) {
