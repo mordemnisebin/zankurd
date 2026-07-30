@@ -33,13 +33,21 @@ void main() {
       explanation: 'Şîroveya hatiye redkirin.',
       metadata: QuestionMetadata(reviewStatus: ReviewStatus.rejected),
     );
-    const hiddenCategory = QuizQuestion(
-      id: 'approved-hidden-category',
+    // Bu kayıt eskiden "gizli kategori elenir" durumunu sınıyordu (Sînema).
+    // Sînema 2026-07-30'da açılınca ve gizleme listesi boşalınca o dal
+    // sınanamaz oldu — `hiddenCategoryIds` `const`, teste sahte id
+    // enjekte edilemiyor. Kayıt silinmedi, yönü çevrildi: artık *açılan
+    // bir kategorinin günlük akışa gerçekten ulaştığını* doğruluyor.
+    // Kilit açmak yalnız listeden bir satır silmek değildir; günlük soru,
+    // quiz seçimi ve banka akışlarının hepsinden geçmesi gerekir ve bu
+    // testler o zincirin günlük halkasıdır.
+    const yeniAcilanKategori = QuizQuestion(
+      id: 'approved-sinema',
       category: 'Sînema',
-      prompt: 'Pirsa ji kategoriya veşartî?',
+      prompt: 'Pirsa ji kategoriya nû vebûyî?',
       answers: ['A', 'B', 'C', 'D'],
       correctAnswer: 'A',
-      explanation: 'Şîroveya kategoriya veşartî.',
+      explanation: 'Şîroveya kategoriya nû vebûyî.',
       metadata: QuestionMetadata(reviewStatus: ReviewStatus.approved),
     );
 
@@ -47,7 +55,7 @@ void main() {
       playable,
       needsReview,
       rejected,
-      hiddenCategory,
+      yeniAcilanKategori,
     ]);
 
     final questions = await MockZanKurdRepository().loadDailyQuestions(
@@ -56,6 +64,7 @@ void main() {
 
     expect(questions.map((question) => question.id).toSet(), {
       'approved-visible',
+      'approved-sinema',
     });
   });
 }

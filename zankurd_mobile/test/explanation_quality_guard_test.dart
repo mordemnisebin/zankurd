@@ -129,8 +129,12 @@ void main() {
     // bulundu.
     final quoted = RegExp(r'''«[^»]*»|"[^"]*"|'[^']*'|\([^)]*\)''');
     final turkish = RegExp('[ığöüİĞÖÜ]');
-    // Türkçe özel adlar Kurmancî cümlede de aynen yazılır.
-    const properNames = {'edit_sinema_0025'};
+    // Türkçe özel adlar Kurmancî cümlede de aynen yazılır. Kurmancî
+    // kaynaklar da yönetmenlerin resmî ad yazımını korur; "Oz" yazmak
+    // kişiyi aranamaz hâle getirir.
+    //   edit_sinema_0025 → Zeki Ökten
+    //   offline_sin_2017 → Kazim Öz
+    const properNames = {'edit_sinema_0025', 'offline_sin_2017'};
 
     final offenders = <String>[];
     for (final question in _allBankQuestions()) {

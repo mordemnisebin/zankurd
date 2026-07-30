@@ -15,13 +15,28 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// 2026-07-26'da koşul karşılandı — kusurlu sorular ayıklandı (23 → 12),
 /// kalanlar denetlendi, 28 yeni soru yazıldı — ve kategori açıldı.
 ///
+/// Sînema 2026-07-30'da aynı yolu izledi: 30 kaynaklı soruyla gizlendi,
+/// 20 yeni kaynaklı soru yazılınca (50) açıldı.
+///
 /// Testler artık kategoriyi değil **mekanizmayı** doğruluyor: liste boş da
 /// olsa gizleme çalışmalı, çünkü bir sonraki hazır olmayan kategori için
 /// yine gerekecek.
+///
+/// Liste boşken "gizli kategori görünmüyor" iddiası sınanamaz — sabit
+/// `const` olduğu için teste sahte bir id enjekte edilemez. Bu yüzden
+/// bekçi yön değiştirdi: liste boş kaldığı **sürece** her kategorinin
+/// oynanabilir olduğunu ve iki giriş noktasının (senkron `categories`,
+/// asenkron `loadCategories`) aynı sonucu verdiğini doğruluyor. Listeye
+/// bir id eklendiğinde döngüler kendiliğinden dolar ve dışlama yolu
+/// yeniden sınanır.
 void main() {
-  test('yayın tabanının altındaki Sînema gizli', () {
-    expect(hiddenCategoryIds, {'Sînema'});
-    expect(isCategoryVisible('Sînema'), isFalse);
+  test('gizli liste boş: her kategori oynanabilir', () {
+    // Boş liste bir iddiadır: "yayına hazır olmayan kategori kalmadı."
+    // Yeni bir kategori eklendiğinde bu satır sessizce geçmez — kategoriyi
+    // gizlemek isteyen, hem id'yi listeye hem gerekçeyi kaynak dosyanın
+    // başına yazmak zorunda kalır.
+    expect(hiddenCategoryIds, isEmpty);
+    expect(isCategoryVisible('Sînema'), isTrue);
     expect(isCategoryVisible('Teknolojî'), isTrue);
     expect(isCategoryVisible('Ziman'), isTrue);
   });
@@ -63,8 +78,8 @@ void main() {
   });
 
   test('visibleCategories sırayı korur', () {
-    final input = ['Ziman', 'Teknolojî', 'Çand'];
-    expect(visibleCategories([...input, 'Sînema']), input);
+    final input = ['Ziman', 'Teknolojî', 'Çand', 'Sînema'];
+    expect(visibleCategories(input), input);
   });
 
   test(
@@ -72,8 +87,15 @@ void main() {
     () async {
       final repository = MockZanKurdRepository();
 
-      expect(repository.categories, isNot(contains('Sînema')));
-      expect(await repository.loadCategories(), isNot(contains('Sînema')));
+      // Liste boşken bile iki giriş noktası aynı süzgeçten geçmeli:
+      // `categories` (senkron) ve `loadCategories()` (asenkron). Biri
+      // süzgeci atlarsa gizli kategori bir akıştan sızar.
+      for (final hidden in hiddenCategoryIds) {
+        expect(repository.categories, isNot(contains(hidden)));
+        expect(await repository.loadCategories(), isNot(contains(hidden)));
+      }
+      expect(repository.categories, await repository.loadCategories());
+      expect(repository.categories, contains('Sînema'));
     },
   );
 

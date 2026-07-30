@@ -168,12 +168,12 @@ void main() {
       // yanlışa düştü (2026-07-25). Kaynak, gizleme listesinden geçirilmiş
       // kategori listesi olmalı — sayı oradan türer.
       //
-      // Teknolojî 2026-07-26'da açıldı (içerik hazırlandı), bu yüzden artık
-      // sayıma girer; test kategori adı değil *mekanizma* üzerinden kurulur
-      // ki bir sonraki açılış/kapanışta yine kırılmasın.
+      // Teknolojî 2026-07-26'da, Sînema 2026-07-30'da açıldı (içerik
+      // hazırlandı), bu yüzden artık ikisi de sayıma girer; test kategori
+      // adı değil *mekanizma* üzerinden kurulur ki bir sonraki
+      // açılış/kapanışta yine kırılmasın.
       final all = CategoryVisuals.colorDefinedCategories;
       final visible = visibleCategories(all);
-      expect(visible, isNot(contains('Sînema')));
       expect(
         visible.length,
         all.where((c) => !hiddenCategoryIds.contains(c)).length,

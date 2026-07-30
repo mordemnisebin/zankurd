@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
+import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'support/offline_bank_fixture.dart';
@@ -11,17 +12,11 @@ String _normalized(String value) =>
 late List<QuizQuestion> offlineQuestionBank;
 
 void main() {
-  const validCategories = {
-    'Ziman',
-    'Çand',
-    'Dîrok',
-    'Edebiyat',
-    'Cografya',
-    'Muzîk',
-    'Siyaset',
-    'Paradigma',
-    'Teknolojî',
-  };
+  // Liste elle kopyalanmıştı ve kaydı: Sînema açılınca (2026-07-30) banka
+  // geçerli bir kategori taşıyordu ama test onu "unknown" saydı. Kaynak
+  // artık görsel tanımlarıdır — rengi, ikonu ve görseli olmayan bir
+  // kategoriye soru yazmak zaten kusurdur, test tam onu ölçsün.
+  final validCategories = CategoryVisuals.colorDefinedCategories.toSet();
 
   setUpAll(() {
     offlineQuestionBank = loadOfflineBankFromJson();
