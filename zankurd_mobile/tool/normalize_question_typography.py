@@ -37,7 +37,14 @@ TEXT_FIELDS = ('prompt', 'promptTr', 'explanation', 'explanationKu', 'explanatio
 # Açılış tırnağı: metin başı, boşluk veya açı-parantez sonrası.
 # Kapanış: boşluk, noktalama ya da metin sonu öncesi.
 # Bu iki koşul birlikte kesme işaretini dışarıda bırakır.
-QUOTED = re.compile(r"(?<![\w])'([^'\n]{1,70})'(?![\w])|(?<![\w])\"([^\"\n]{1,70})\"(?![\w])")
+#
+# 2026-07-30: bu kural 27 kaydı kaçırıyordu. Türkçede ek doğrudan kapanış
+# tırnağına yapışır — "agir"dir, "Şivanê Kurmanca"yı, "-stan"dan — ve
+# kapanıştan sonra harf gelince `(?![\w])` koşulu tutmuyordu. Çift tırnak
+# için o koşul kaldırıldı: Türkçe kesme işareti olarak `"` kullanmaz, yani
+# çift tırnak çifti her zaman alıntıdır. Tek tırnakta koşul yerinde kalır,
+# yoksa "Şakiro'nun ... 'x'" gibi dizilerde kesme işareti alıntı sanılır.
+QUOTED = re.compile(r"(?<![\w])'([^'\n]{1,70})'(?![\w])|(?<![\w])\"([^\"\n]{1,70})\"")
 
 
 def to_guillemets(text):
@@ -99,6 +106,30 @@ def main() -> int:
                         if len(samples) < 4 and field == 'prompt':
                             samples.append((row['id'], row[field][:74], new[:74]))
                         row[field] = new
+            # Şıklar da oyuncuya gösterilir ama TEXT_FIELDS onları kapsamıyordu;
+            # 50 şıkta düz tırnak öyle kaldı ("Nû" + "roj", 'şahê dengbêjan').
+            # `correctAnswer` şık metniyle eşleşerek puanlandığı için ikisi
+            # BİRLİKTE dönüştürülür — yalnız birini çevirmek doğru cevabı
+            # şıklardan koparır (2026-07-30).
+            for field in ('answers', 'answersTr'):
+                values = row.get(field)
+                if not isinstance(values, list):
+                    continue
+                mapping = {}
+                converted = []
+                for value in values:
+                    if not isinstance(value, str):
+                        converted.append(value)
+                        continue
+                    new, n = to_guillemets(value)
+                    if n:
+                        total_quotes += n
+                        mapping[value] = new
+                    converted.append(new)
+                row[field] = converted
+                key = 'correctAnswer' if field == 'answers' else 'correctAnswerTr'
+                if row.get(key) in mapping:
+                    row[key] = mapping[row[key]]
             answers = row.get('answers')
             if isinstance(answers, list) and answers:
                 fixed, correct, n = option_case_fix(answers, row.get('correctAnswer', ''))

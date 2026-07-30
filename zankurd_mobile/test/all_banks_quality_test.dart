@@ -238,7 +238,22 @@ void main() {
     // + nesne + fiil." Dilbilgisi öğreten açıklama doğası gereği Kurmancî
     // örnek sözcükle doludur; ölçüt onları dilin kendisi sayıyor. Tavan tam
     // olarak bu sınıfı kapsamak için var — kusur değil, ölçütün sınırı.
-    const ceiling = 13;
+    //
+    // 2026-07-30 (ikinci geçiş): sayı 13'ten 8'e indi ve iniş ölçütün
+    // kendisinden geldi. `her`, `ne`, `de` üçü de iki dilde aynı yazılır
+    // ama yalnız Kurmancî listesindeydi; "Her sabah tarlaya gider." gibi
+    // düpedüz Türkçe cümleler Kurmancî sayılıyordu. Belirsiz sözcükler
+    // artık hiçbir yöne sayılmıyor ve parantez içi karşılıklar da terim
+    // sayılıp atılıyor — kardeş bekçi zaten öyle yapıyordu.
+    //
+    // Ölçüt keskinleşince iki gerçek kusur maskesini yitirdi:
+    // `offline_7011` Kurmancî gövdeye dört Türkçe şık taşıyordu ve
+    // `offline_2349`un tek açıklaması Türkçeydi — kural motoru eşleşme
+    // bulamayınca onu "Şirove: " önekiyle Kurmancî yuvaya basıyordu.
+    //
+    // Kalan 8, Kurmancî özel ad ya da örnek sözcük taşıyan Türkçe
+    // cümlelerdir (Mem û Zîn'i, Xoybûn, yek/du/sê…).
+    const ceiling = 8;
 
     final offenders = <String>[];
     banks.forEach((name, questions) {

@@ -100,6 +100,20 @@ class QuestionLanguagePolicy {
     'olur',
   };
 
+  /// İki dilde de sık geçen sözcükler. Bunlar hiçbir yöne kanıt değildir:
+  /// Kurmancî listesinde durdukları için Türkçe cümleleri Kurmancî ilan
+  /// ediyorlardı (2026-07-30).
+  ///
+  ///   "Örnek: Her sabah tarlaya gider."  →  `her` sayıldı, cümle 'ku' oldu.
+  ///   "Ailemiz her akşam birlikte yemek yer."  →  aynı.
+  ///
+  /// `her` (Tr: her / Ku: her), `ne` (Tr: ne / Ku: ne, değil), `de`
+  /// (Tr: bulunma eki ve bağlaç / Ku: di…de sonedatı). Üçü de iki dilde
+  /// aynı yazılır. Sayımdan tümüyle düşerler; Kurmancî'nin kalan yirmi
+  /// sekiz işareti (`bi`, `ji`, `li`, `tê`, `yê`, `jî`, `xwe`…) ve `î/û/ê`
+  /// harfleri gerçek Kurmancî cümleyi zaten taşır.
+  static const _ambiguousWords = {'her', 'ne', 'de'};
+
   static const _kurmanciChars = {'î', 'û', 'ê'};
   static const _turkishChars = {'ğ', 'ı', 'ö', 'ü'};
 
@@ -115,8 +129,14 @@ class QuestionLanguagePolicy {
       r"[a-zçêğıîöşûü']+",
     ).allMatches(lower).map((m) => m.group(0)!).toSet();
 
-    var ku = words.where(_kurmanciWords.contains).length.toDouble();
-    var tr = words.where(_turkishWords.contains).length.toDouble();
+    var ku = words
+        .where((w) => _kurmanciWords.contains(w) && !_ambiguousWords.contains(w))
+        .length
+        .toDouble();
+    var tr = words
+        .where((w) => _turkishWords.contains(w) && !_ambiguousWords.contains(w))
+        .length
+        .toDouble();
     for (final ch in lower.split('')) {
       if (_kurmanciChars.contains(ch)) ku += 0.34;
       if (_turkishChars.contains(ch)) tr += 0.34;
@@ -140,6 +160,13 @@ class QuestionLanguagePolicy {
         .replaceAll(RegExp('«[^»]*»'), ' ')
         .replaceAll(RegExp('"[^"]*"'), ' ')
         .replaceAll(RegExp("'[^']*'"), ' ')
+        // Parantez içi karşılık da terimdir, cümlenin dili değil:
+        // "«Dirêj» (uzun) û «kurt» (kısa) dijwate ne." Kurmancî bir
+        // cümledir; parantezler kalınca geriye "uzun kısa dijwate ne"
+        // kalıyor ve `ı` harfi cümleyi Türkçe ilan ediyordu. Kardeş bekçi
+        // `explanation_quality_guard_test` parantezi zaten atıyordu; iki
+        // ölçüt aynı şeyi saymalı (2026-07-30).
+        .replaceAll(RegExp(r'\([^)]*\)'), ' ')
         .trim();
     // Terimler çıkınca geriye kalan "Kurmancî ≈ ." gibi kırıntılar karar
     // vermeye yetmez; `Kurmancî` sözcüğündeki `î` tek başına cümleyi

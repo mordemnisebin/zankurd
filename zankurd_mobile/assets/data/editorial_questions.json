@@ -176,7 +176,7 @@
     "answers": [
       "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
       "Xwendin (dibistan: cihê xwendinê)",
-      "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+      "«Tu» yekjimar, «hûn» pirjimar/rêzdarî ye",
       "Belavkirina alfabeya latînî ya kurdî"
     ],
     "correctAnswer": "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
@@ -342,12 +342,12 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de «daçek» (preposition/postposition) çi ye?",
     "answers": [
-      "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
+      "Peyvên wek «di, bi, ji, li» yên ku têkiliya navdêran diyar dikin",
       "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
-      "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+      "«Tu» yekjimar, «hûn» pirjimar/rêzdarî ye",
       "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"
     ],
-    "correctAnswer": "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
+    "correctAnswer": "Peyvên wek «di, bi, ji, li» yên ku têkiliya navdêran diyar dikin",
     "explanation": "Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: «li malê», «bi destan».",
     "explanationKu": "Daçek têkiliya di navbera navdêr û beşên din ên hevokê de diyar dike: «li malê», «bi destan».",
     "explanationTr": "Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: «li malê», «bi destan».",
@@ -458,12 +458,12 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de cudahiya «min» û «ez» çi ye?",
     "answers": [
-      "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye",
+      "«Ez» rewşa xwerû, «min» rewşa tewandî ye",
       "Herdu jî heman in",
-      "\"Min\" pirjimar e",
-      "\"Ez\" tenê di dema borî de tê bikaranîn"
+      "«Min» pirjimar e",
+      "«Ez» tenê di dema borî de tê bikaranîn"
     ],
-    "correctAnswer": "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye",
+    "correctAnswer": "«Ez» rewşa xwerû, «min» rewşa tewandî ye",
     "explanation": "«Ez diçim» (yalın) ama «Min got» (bükünlü) — durum, fiilin zamanına ve geçişliliğine göre değişir.",
     "explanationKu": "«Ez diçim» (xwerû) lê «Min got» (tewandî) — rewş li gorî dem û gerguhêziya lêkerê diguhere.",
     "explanationTr": "«Ez diçim» (yalın) ama «Min got» (bükünlü) — durum, fiilin zamanına ve geçişliliğine göre değişir.",
@@ -1455,30 +1455,6 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 2,
-    "id": "edit_edebiyat_0011",
-    "category": "Edebiyat",
-    "prompt": "Peyva «helbest» bi Tirkî çi tê wateyê?",
-    "answers": [
-      "şiir",
-      "roman",
-      "öykü",
-      "tiyatro"
-    ],
-    "correctAnswer": "şiir",
-    "explanation": "«Helbest» Türkçede «şiir» demektir.",
-    "explanationKu": "«Helbest» bi Tirkî «şiir» e.",
-    "explanationTr": "«Helbest» Türkçede «şiir» demektir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
-      "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
     "difficulty": 3,
     "id": "edit_edebiyat_0012",
     "category": "Edebiyat",
@@ -1490,9 +1466,9 @@
       "Ehmedê Xanî"
     ],
     "correctAnswer": "Erebê Şemo",
-    "explanation": "Erebê Şemo, ilk Kürt romanı sayılan \"Şivanê Kurmanca\"yı (1935) yazdı.",
+    "explanation": "Erebê Şemo, ilk Kürt romanı sayılan «Şivanê Kurmanca»yı (1935) yazdı.",
     "explanationKu": "Erebê Şemo «Şivanê Kurmanca» (1935) nivîsî; ew wek romana kurdî ya pêşîn tê hesibandin.",
-    "explanationTr": "Erebê Şemo, ilk Kürt romanı sayılan \"Şivanê Kurmanca\"yı (1935) yazdı.",
+    "explanationTr": "Erebê Şemo, ilk Kürt romanı sayılan «Şivanê Kurmanca»yı (1935) yazdı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2110,9 +2086,9 @@
       "Weşanxaneyên pirtûkan"
     ],
     "correctAnswer": "Komên muzîka kurdî ya nûjen",
-    "explanation": "Bu \"kom\"lar 1990'larda toplu ve politik Kürt müziğini geliştirdi.",
+    "explanation": "Bu «kom»lar 1990'larda toplu ve politik Kürt müziğini geliştirdi.",
     "explanationKu": "Ev «kom» di salên 1990î de muzîka kurdî ya komî û siyasî pêş xistin.",
-    "explanationTr": "Bu \"kom\"lar 1990'larda toplu ve politik Kürt müziğini geliştirdi.",
+    "explanationTr": "Bu «kom»lar 1990'larda toplu ve politik Kürt müziğini geliştirdi.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2468,9 +2444,9 @@
       "Rêbaza aboriyê"
     ],
     "correctAnswer": "Zanista jinê û jiyanê",
-    "explanation": "Jineoloji, «jin» (kadın) ve \"-loji\"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.",
+    "explanation": "Jineoloji, «jin» (kadın) ve «-loji»den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.",
     "explanationKu": "Jineolojî ji «jin» û «-lojî» tê; zanistek e ku jiyan û civakê ji perspektîfa jinê dinirxîne.",
-    "explanationTr": "Jineoloji, «jin» (kadın) ve \"-loji\"den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.",
+    "explanationTr": "Jineoloji, «jin» (kadın) ve «-loji»den gelir; yaşamı ve toplumu kadın perspektifinden inceleyen bilimdir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2744,30 +2720,6 @@
   {
     "type": "multipleChoice",
     "difficulty": 2,
-    "id": "edit_ziman_0023",
-    "category": "Ziman",
-    "prompt": "Peyva Kurmancî «biçûk» bi Tirkî çi tê wateyê?",
-    "answers": [
-      "küçük",
-      "büyük",
-      "uzun",
-      "geniş"
-    ],
-    "correctAnswer": "küçük",
-    "explanation": "«Biçûk» Türkçede «küçük» demektir.",
-    "explanationKu": "«Biçûk» bi Tirkî «küçük» e.",
-    "explanationTr": "«Biçûk» Türkçede «küçük» demektir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Ferhenga kurdî",
-      "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
-    "difficulty": 2,
     "id": "edit_ziman_0024",
     "category": "Ziman",
     "prompt": "Hejmara «deh» di Kurmancî de bi hejmarî çi ye?",
@@ -2874,9 +2826,9 @@
       "Xwendin"
     ],
     "correctAnswer": "Xwendin",
-    "explanation": "«Dibistan» (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
+    "explanation": "«Dibistan» (okul), okuma kökü ve yer eki «-stan»dan oluşur.",
     "explanationKu": "«Dibistan» ji «dibi-» (xwendin) û paşgira cih «-stan» pêk tê.",
-    "explanationTr": "«Dibistan» (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
+    "explanationTr": "«Dibistan» (okul), okuma kökü ve yer eki «-stan»dan oluşur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2916,12 +2868,12 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de cudahiya «tu» û «hûn» çi ye?",
     "answers": [
-      "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+      "«Tu» yekjimar, «hûn» pirjimar/rêzdarî ye",
       "Herdu jî pirjimar in",
-      "\"Tu\" tenê ji bo jinan e",
-      "\"Hûn\" tenê di nivîsê de tê bikaranîn"
+      "«Tu» tenê ji bo jinan e",
+      "«Hûn» tenê di nivîsê de tê bikaranîn"
     ],
-    "correctAnswer": "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+    "correctAnswer": "«Tu» yekjimar, «hûn» pirjimar/rêzdarî ye",
     "explanation": "«Tu» tekil, «hûn» çoğul ya da saygı ifadesidir.",
     "explanationKu": "«Tu» ji bo yek kesî, «hûn» ji bo gelek kesan an ji bo rêzgirtinê tê bikaranîn.",
     "explanationTr": "«Tu» tekil, «hûn» çoğul ya da saygı ifadesidir.",
@@ -3040,9 +2992,9 @@
       "Destana Memê Alan"
     ],
     "correctAnswer": "Li ber xwe dan / direniş",
-    "explanation": "«Berxwedan», \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
+    "explanation": "«Berxwedan», «li ber xwe dan»dan gelir; direnme ve ısrar anlamındadır.",
     "explanationKu": "«Berxwedan» ji «li ber xwe dan» tê; wateya xwe-parastin û israrê dide.",
-    "explanationTr": "«Berxwedan», \"li ber xwe dan\"dan gelir; direnme ve ısrar anlamındadır.",
+    "explanationTr": "«Berxwedan», «li ber xwe dan»dan gelir; direnme ve ısrar anlamındadır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4348,9 +4300,9 @@
       "lütfen"
     ],
     "correctAnswer": "teşekkür",
-    "explanation": "«Spas» Türkçede \"teşekkür\"dür; «spas dikim» = teşekkür ederim.",
+    "explanation": "«Spas» Türkçede «teşekkür»dür; «spas dikim» = teşekkür ederim.",
     "explanationKu": "«Spas» bi Tirkî «teşekkür» e; «spas dikim» = «teşekkür ederim».",
-    "explanationTr": "«Spas» Türkçede \"teşekkür\"dür; «spas dikim» = teşekkür ederim.",
+    "explanationTr": "«Spas» Türkçede «teşekkür»dür; «spas dikim» = teşekkür ederim.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4417,7 +4369,7 @@
       "Kesê ku karekî dike",
       "cînavkên tewandî",
       "rênivîsa Hawarê",
-      "Zayend: \"-ê\" nêr, \"-a\" mê"
+      "Zayend: «-ê» nêr, «-a» mê"
     ],
     "correctAnswer": "Kesê ku karekî dike",
     "explanation": "«-van» fail ekidir: dergehvan (kapıcı), stranvan, hunervan.",
@@ -4462,12 +4414,12 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de «min got» û «ez gotim» — kîjan rast e?",
     "answers": [
-      "\"Min got\" rast e",
-      "\"Ez gotim\" rast e",
+      "«Min got» rast e",
+      "«Ez gotim» rast e",
       "Herdu jî rast in",
       "Herdu jî şaş in"
     ],
-    "correctAnswer": "\"Min got\" rast e",
+    "correctAnswer": "«Min got» rast e",
     "explanation": "«Gotin» geçişlidir; geçmiş zamanda özne büküme girer: «min got».",
     "explanationKu": "Lêkera «gotin» gerguhêz e; di dema borî de biker tê tewandin: «min got».",
     "explanationTr": "«Gotin» geçişlidir; geçmiş zamanda özne büküme girer: «min got».",
@@ -4486,12 +4438,12 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de cudahiya «-ê» û «-a» ya veqetandekê çi ye?",
     "answers": [
-      "Zayend: \"-ê\" nêr, \"-a\" mê",
-      "Hejmar: \"-ê\" yekjimar, \"-a\" pirjimar",
-      "Dem: \"-ê\" borî, \"-a\" niha",
-      "Rewş: \"-ê\" xwerû, \"-a\" tewandî"
+      "Zayend: «-ê» nêr, «-a» mê",
+      "Hejmar: «-ê» yekjimar, «-a» pirjimar",
+      "Dem: «-ê» borî, «-a» niha",
+      "Rewş: «-ê» xwerû, «-a» tewandî"
     ],
-    "correctAnswer": "Zayend: \"-ê\" nêr, \"-a\" mê",
+    "correctAnswer": "Zayend: «-ê» nêr, «-a» mê",
     "explanation": "«Bavê min» (eril) ama «diya min» (dişil) — izafe cinsiyeti gösterir.",
     "explanationKu": "«Bavê min» (nêr) lê «diya min» (mê) — veqetandek zayendê nîşan dide.",
     "explanationTr": "«Bavê min» (eril) ama «diya min» (dişil) — izafe cinsiyeti gösterir.",
