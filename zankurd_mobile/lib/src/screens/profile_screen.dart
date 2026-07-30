@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart'
+    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +44,11 @@ part 'profile/profile_widgets.dart';
 // 2026-07-23 M18: misafir hesap yükseltme dialog'unun üç olası çıkışı —
 // email/şifre başarılı, email/şifre başarısız, Google bağlama istendi.
 enum _GuestUpgradeAction { emailSuccess, emailFailure, googleRequested }
+
+bool get _supportsGoogleAccountLinking =>
+    kIsWeb ||
+    (defaultTargetPlatform != TargetPlatform.iOS &&
+        defaultTargetPlatform != TargetPlatform.macOS);
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -959,45 +966,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: AppTheme.borderColor(ctx))),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        context.t(K.orSeparator),
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textMutedColor(ctx),
+                if (_supportsGoogleAccountLinking) ...[
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Divider(color: AppTheme.borderColor(ctx)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          context.t(K.orSeparator),
+                          style: AppTypography.caption.copyWith(
+                            color: AppTheme.textMutedColor(ctx),
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(child: Divider(color: AppTheme.borderColor(ctx))),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                // 2026-07-23 M18: Google linkIdentity mevcut oturumu
-                // korur, bu yüzden dialog anında kapanır — sonucu dış
-                // kapsamda _linkGoogleAccount() ele alır.
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: submitting
-                        ? null
-                        : () => Navigator.pop(
-                            dialogContext,
-                            _GuestUpgradeAction.googleRequested,
-                          ),
-                    icon: const Text(
-                      'G',
-                      style: TextStyle(
-                        color: AppTheme.accent,
-                        fontWeight: FontWeight.w900,
+                      Expanded(
+                        child: Divider(color: AppTheme.borderColor(ctx)),
                       ),
-                    ),
-                    label: Text(context.t(K.linkGoogle)),
+                    ],
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: submitting
+                          ? null
+                          : () => Navigator.pop(
+                              dialogContext,
+                              _GuestUpgradeAction.googleRequested,
+                            ),
+                      icon: const Text(
+                        'G',
+                        style: TextStyle(
+                          color: AppTheme.accent,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      label: Text(context.t(K.linkGoogle)),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

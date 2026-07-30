@@ -272,10 +272,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                         ),
                                       ),
                                     ),
-                                    // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                                    child: ExcludeSemantics(
-                                      child: Text(context.t(K.backStep)),
-                                    ),
+                                    child: Text(context.t(K.backStep)),
                                   ),
                                 ),
                                 const SizedBox(width: AppSpacing.sm),
@@ -391,6 +388,9 @@ class _SignUpScreenState extends State<SignUpScreen>
                   suffixIcon: _obscurePassword
                       ? AppIcons.eyeSlash
                       : AppIcons.eye,
+                  suffixSemanticLabel: context.t(
+                    _obscurePassword ? K.showPassword : K.hidePassword,
+                  ),
                   onSuffixIconPressed: () {
                     setState(() => _obscurePassword = !_obscurePassword);
                   },
@@ -418,6 +418,9 @@ class _SignUpScreenState extends State<SignUpScreen>
                 suffixIcon: _obscureConfirmPassword
                     ? AppIcons.eyeSlash
                     : AppIcons.eye,
+                suffixSemanticLabel: context.t(
+                  _obscureConfirmPassword ? K.showPassword : K.hidePassword,
+                ),
                 onSuffixIconPressed: () {
                   setState(
                     () => _obscureConfirmPassword = !_obscureConfirmPassword,

@@ -101,20 +101,6 @@ class _SignInScreenState extends State<SignInScreen>
     }
   }
 
-  Future<void> _signInWithApple(AuthProvider authProvider) async {
-    LoadingOverlay.show(context, message: context.t(K.connectingApple));
-
-    final success = await authProvider.signInWithApple();
-
-    if (mounted) {
-      LoadingOverlay.hide(context);
-
-      if (!success && authProvider.errorMessage != null) {
-        _showAuthError(authProvider.errorMessage!);
-      }
-    }
-  }
-
   Future<void> _signInAsGuest(AuthProvider authProvider) async {
     LoadingOverlay.show(context, message: context.t(K.signingInGuest));
 
@@ -279,10 +265,10 @@ class _SignInScreenState extends State<SignInScreen>
                                       child: AppLogo(
                                         width: logoWidth * 1.2,
                                         onCard: true,
-                                        cardRadius: AppRadius.card,
+                                        cardRadius: 24,
                                         cardPadding: const EdgeInsets.symmetric(
-                                          horizontal: 14,
-                                          vertical: 10,
+                                          horizontal: 18,
+                                          vertical: 14,
                                         ),
                                       ),
                                     ),
@@ -331,24 +317,16 @@ class _SignInScreenState extends State<SignInScreen>
                                     ),
                                   ),
                                   SizedBox(height: wideGap),
-                                  _GoogleSignInButton(
-                                    dense: denseWide,
-                                    onPressed: authProvider.isLoading
-                                        ? null
-                                        : () => _signInWithGoogle(authProvider),
-                                  ),
-                                  if (_AppleSignInButton
-                                      .isSupportedPlatform) ...[
-                                    SizedBox(height: denseWide ? 4 : 8),
-                                    _AppleSignInButton(
+                                  if (_supportsGoogleSignIn) ...[
+                                    _GoogleSignInButton(
                                       dense: denseWide,
                                       onPressed: authProvider.isLoading
                                           ? null
                                           : () =>
-                                                _signInWithApple(authProvider),
+                                                _signInWithGoogle(authProvider),
                                     ),
+                                    SizedBox(height: denseWide ? 4 : 8),
                                   ],
-                                  SizedBox(height: denseWide ? 4 : 8),
                                   Center(
                                     child: _GuestSignInLink(
                                       onPressed: authProvider.isLoading
@@ -419,6 +397,11 @@ class _SignInScreenState extends State<SignInScreen>
                                                 suffixIcon: _obscurePassword
                                                     ? AppIcons.eyeSlash
                                                     : AppIcons.eye,
+                                                suffixSemanticLabel: context.t(
+                                                  _obscurePassword
+                                                      ? K.showPassword
+                                                      : K.hidePassword,
+                                                ),
                                                 onSuffixIconPressed: () {
                                                   setState(
                                                     () => _obscurePassword =
@@ -451,20 +434,17 @@ class _SignInScreenState extends State<SignInScreen>
                                                     : () => _resetPassword(
                                                         authProvider,
                                                       ),
-                                                // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                                                child: ExcludeSemantics(
-                                                  child: Text(
-                                                    context.t(K.forgotPassword),
-                                                    style: AppTypography
-                                                        .bodyMedium
-                                                        .copyWith(
-                                                          color:
-                                                              AppTheme.textSubColor(
-                                                                context,
-                                                              ),
-                                                          fontSize: 13,
-                                                        ),
-                                                  ),
+                                                child: Text(
+                                                  context.t(K.forgotPassword),
+                                                  style: AppTypography
+                                                      .bodyMedium
+                                                      .copyWith(
+                                                        color:
+                                                            AppTheme.textSubColor(
+                                                              context,
+                                                            ),
+                                                        fontSize: 13,
+                                                      ),
                                                 ),
                                               ),
                                             ),
@@ -563,10 +543,10 @@ class _SignInScreenState extends State<SignInScreen>
                             child: AppLogo(
                               width: logoWidth,
                               onCard: true,
-                              cardRadius: AppRadius.card,
+                              cardRadius: 24,
                               cardPadding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 10,
+                                horizontal: 18,
+                                vertical: 14,
                               ),
                             ),
                           ),
@@ -595,22 +575,16 @@ class _SignInScreenState extends State<SignInScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              _GoogleSignInButton(
-                                onPressed: authProvider.isLoading
-                                    ? null
-                                    : () => _signInWithGoogle(authProvider),
-                              ),
-                              if (_AppleSignInButton.isSupportedPlatform) ...[
-                                const SizedBox(height: 8),
-                                _AppleSignInButton(
+                              if (_supportsGoogleSignIn) ...[
+                                _GoogleSignInButton(
                                   onPressed: authProvider.isLoading
                                       ? null
-                                      : () => _signInWithApple(authProvider),
+                                      : () => _signInWithGoogle(authProvider),
                                 ),
+                                const SizedBox(height: 8),
                               ],
-                              const SizedBox(height: 8),
                               // Misafir girişi: ikincil eylem, outlined buton
-                              // (tek baskın CTA = Google, altta belirgin seçenek).
+                              // olarak sosyal girişlerden ayrılır.
                               Center(
                                 child: _GuestSignInLink(
                                   onPressed: authProvider.isLoading
@@ -673,6 +647,11 @@ class _SignInScreenState extends State<SignInScreen>
                                             suffixIcon: _obscurePassword
                                                 ? AppIcons.eyeSlash
                                                 : AppIcons.eye,
+                                            suffixSemanticLabel: context.t(
+                                              _obscurePassword
+                                                  ? K.showPassword
+                                                  : K.hidePassword,
+                                            ),
                                             onSuffixIconPressed: () {
                                               setState(
                                                 () => _obscurePassword =
@@ -704,16 +683,13 @@ class _SignInScreenState extends State<SignInScreen>
                                                 : () => _resetPassword(
                                                     authProvider,
                                                   ),
-                                            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                                            child: ExcludeSemantics(
-                                              child: Text(
-                                                context.t(K.forgotPassword),
-                                                style: TextStyle(
-                                                  color: AppTheme.textSubColor(
-                                                    context,
-                                                  ),
-                                                  fontSize: 13,
+                                            child: Text(
+                                              context.t(K.forgotPassword),
+                                              style: TextStyle(
+                                                color: AppTheme.textSubColor(
+                                                  context,
                                                 ),
+                                                fontSize: 13,
                                               ),
                                             ),
                                           ),
@@ -878,6 +854,11 @@ class _AuthFormPanel extends StatelessWidget {
   }
 }
 
+bool get _supportsGoogleSignIn =>
+    kIsWeb ||
+    (defaultTargetPlatform != TargetPlatform.iOS &&
+        defaultTargetPlatform != TargetPlatform.macOS);
+
 class _GoogleSignInButton extends StatelessWidget {
   const _GoogleSignInButton({required this.onPressed, this.dense = false});
 
@@ -896,6 +877,12 @@ class _GoogleSignInButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(AppRadius.lg),
+            // Beyaz düğme beyaz kartın üstünde duruyor: kontur olmayınca
+            // görünen tek şey alttaki gölge yayı kalıyordu ve düğme üstten
+            // kırpılmış gibi duruyordu (2026-07-30 ekran turu, 74/75).
+            // Uygulamanın ilk ekranındaki ilk düğme bu. Renk Google'ın kendi
+            // marka kılavuzundaki kontur tonudur; koyu temada da görünür.
+            border: Border.all(color: const Color(0xFF747775), width: 1),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.14),
@@ -954,85 +941,8 @@ class _GoogleSignInButton extends StatelessWidget {
   }
 }
 
-/// "Apple ile Giriş" düğmesi — yalnız Apple platformlarında çizilir.
-///
-/// App Store İnceleme Kılavuzu 4.8, üçüncü taraf sosyal giriş (Google)
-/// sunan uygulamalarda eşdeğer bir Apple seçeneğini zorunlu kılar; bu
-/// düğme olmadan uygulama incelemeden geçemiyordu (2026-07-25 denetimi).
-/// Görsel stil Apple'ın marka kuralına uyar: siyah zemin, beyaz logo ve
-/// metin, Google düğmesiyle aynı yükseklik.
-class _AppleSignInButton extends StatelessWidget {
-  const _AppleSignInButton({required this.onPressed, this.dense = false});
-
-  final VoidCallback? onPressed;
-  final bool dense;
-
-  /// Düğme yalnız iOS/macOS'ta anlamlıdır; diğer platformlarda kural da
-  /// geçerli değildir ve gereksiz bir seçenek eklemek istemiyoruz.
-  static bool get isSupportedPlatform =>
-      !kIsWeb &&
-      (defaultTargetPlatform == TargetPlatform.iOS ||
-          defaultTargetPlatform == TargetPlatform.macOS);
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = onPressed != null;
-    return IgnorePointer(
-      ignoring: !enabled,
-      child: Opacity(
-        opacity: enabled ? 1 : 0.55,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(AppRadius.lg),
-              onTap: onPressed,
-              child: Container(
-                height: dense ? 48 : 54,
-                padding: EdgeInsets.symmetric(horizontal: dense ? 12 : 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.apple,
-                      color: Colors.white,
-                      size: dense ? 20 : 24,
-                    ),
-                    SizedBox(width: dense ? 8 : 12),
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          context.t(K.signInApple),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: dense ? 14 : 16,
-                            letterSpacing: 0.1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Misafir girişi: ikincil eylem olarak altı çizili metin bağlantısı.
-/// (Tek baskın CTA Google butonudur; bu, üçüncü tam boy butonu kaldırır.)
+/// Sosyal giriş bulunmayan Apple platformlarında da ana akış açık kalır.
 class _GuestSignInLink extends StatelessWidget {
   const _GuestSignInLink({required this.onPressed});
 

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/percent_format.dart';
+import '../../l10n/lang.dart';
+import '../../l10n/strings.dart';
 
 /// Tek bir cevap şıkkı kartı (A/B/C/D rozeti + cevap metni).
 ///
@@ -126,9 +128,9 @@ class QuizOptionTile extends StatelessWidget {
     final letter = String.fromCharCode(65 + (index % 26));
     final stateActive = correct || wrong || isChecking;
     final stateHint = correct
-        ? ', doğru cevap'
+        ? ', ${context.t(K.correct)}'
         : wrong
-        ? ', yanlış'
+        ? ', ${context.t(K.wrong)}'
         : '';
 
     // Varsayılan olarak Flutter web/erişilebilirlik ağacı bu düğümü kardeş

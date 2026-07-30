@@ -625,32 +625,38 @@ class _LevelNodeState extends State<_LevelNode> {
                 color: AppTheme.bgOf(context),
               ),
             ),
-          Opacity(
-            // Kilitli düğüm görünür kalır (yol görünmez olmamalı) ama açıkça
-            // erişilemez okunur.
-            opacity: widget.locked ? 0.45 : 1.0,
-            child: GestureDetector(
-              onTapDown: blocked
-                  ? null
-                  : (_) => setState(() => _pressed = true),
-              onTapUp: blocked
-                  ? null
-                  : (_) {
-                      setState(() => _pressed = false);
-                      widget.onTap();
-                    },
-              onTapCancel: blocked
-                  ? null
-                  : () => setState(() => _pressed = false),
-              // Kilitli düğüme dokunmak sessiz kalmaz: nedenini söyler.
-              onTap: widget.locked ? () => _explainLock(context) : null,
-              child: AnimatedScale(
-                scale: _pressed ? 0.93 : 1.0,
-                duration: const Duration(milliseconds: 100),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Stack(
+          GestureDetector(
+            onTapDown: blocked ? null : (_) => setState(() => _pressed = true),
+            onTapUp: blocked
+                ? null
+                : (_) {
+                    setState(() => _pressed = false);
+                    widget.onTap();
+                  },
+            onTapCancel: blocked
+                ? null
+                : () => setState(() => _pressed = false),
+            // Kilitli düğüme dokunmak sessiz kalmaz: nedenini söyler.
+            onTap: widget.locked ? () => _explainLock(context) : null,
+            child: AnimatedScale(
+              scale: _pressed ? 0.93 : 1.0,
+              duration: const Duration(milliseconds: 100),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Opacity(
+                    // Saydamlık YALNIZ düğüm dairesine uygulanır.
+                    //
+                    // Önce bütün alt ağacı sarıyordu ve altındaki
+                    // etiket kartı da %45 saydam çiziliyordu: koyu
+                    // temada "Temel · 10 soru" okunabilirlik eşiğinin
+                    // altında kalıyordu (2026-07-30 ekran turu, 38/53).
+                    // Kilitli olduğu zaten dairenin sönük rengi ve
+                    // asma kilit ikonundan belli; oyuncunun hangi
+                    // seviyede kaç soru olduğunu okuyamaması ise
+                    // planlamasını engelliyordu.
+                    opacity: widget.locked ? 0.45 : 1.0,
+                    child: Stack(
                       clipBehavior: Clip.none,
                       children: [
                         Container(
@@ -735,61 +741,59 @@ class _LevelNodeState extends State<_LevelNode> {
                           ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.surfaceColor(context),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                        border: Border.all(
-                          color: color.withValues(alpha: 0.30),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            LevelNames.localized(
-                              widget.level.title,
-                              context.isKu,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 13.5,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _DifficultyStars(
-                                filled: widget.level.difficultyMax.clamp(1, 5),
-                                color: color,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.textMutedColor(context),
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
                     ),
-                  ],
-                ),
+                    decoration: BoxDecoration(
+                      color: AppTheme.surfaceColor(context),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      border: Border.all(color: color.withValues(alpha: 0.30)),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          LevelNames.localized(
+                            widget.level.title,
+                            context.isKu,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13.5,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _DifficultyStars(
+                              filled: widget.level.difficultyMax.clamp(1, 5),
+                              color: color,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textMutedColor(context),
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

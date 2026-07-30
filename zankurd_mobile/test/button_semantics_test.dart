@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -32,7 +36,10 @@ void main() {
   });
 
   /// [child] içindeki etkin düğmelerden adsız olanları döndürür.
-  Future<List<String>> namelessButtons(WidgetTester tester, Widget child) async {
+  Future<List<String>> namelessButtons(
+    WidgetTester tester,
+    Widget child,
+  ) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(testShell(child: child));
     await tester.pump();
@@ -85,6 +92,37 @@ void main() {
   testWidgets('oyun merkezindeki düğmelerin adı var', (tester) async {
     expect(
       await namelessButtons(tester, PlayHubScreen(repository: repository)),
+      isEmpty,
+    );
+  });
+
+  testWidgets('kayıt ekranındaki düğmelerin adı var', (tester) async {
+    expect(await namelessButtons(tester, const SignUpScreen()), isEmpty);
+  });
+
+  testWidgets('ayarlar ekranındaki düğmelerin adı var', (tester) async {
+    expect(
+      await namelessButtons(tester, SettingsScreen(repository: repository)),
+      isEmpty,
+    );
+  });
+
+  testWidgets('favoriler ekranındaki düğmelerin adı var', (tester) async {
+    expect(
+      await namelessButtons(
+        tester,
+        FavoriteQuestionsScreen(repository: repository),
+      ),
+      isEmpty,
+    );
+  });
+
+  testWidgets('profil ekranındaki düğmelerin adı var', (tester) async {
+    expect(
+      await namelessButtons(
+        tester,
+        Scaffold(body: ProfileScreen(repository: repository)),
+      ),
       isEmpty,
     );
   });

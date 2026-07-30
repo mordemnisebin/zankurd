@@ -12,7 +12,13 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
 class _RecordingRepo extends MockZanKurdRepository {
+  _RecordingRepo({this.purchased = const {}});
+
+  final Set<String> purchased;
   AvatarIdentity? saved;
+
+  @override
+  Future<bool> hasPurchased(String itemId) async => purchased.contains(itemId);
 
   @override
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
@@ -126,6 +132,54 @@ void main() {
 
     expect(repo.saved?.showcaseTitle, 'Pispor · Ziman');
   });
+
+  testWidgets('mastery unvanında Kurmancî kategori adı kullanılır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'zankurd.mastery.Edebiyat': 120});
+    MasteryStore.resetInstance();
+
+    final repo = _RecordingRepo();
+    await tester.pumpWidget(shell(AvatarEditorScreen(repository: repo)));
+    await tester.pumpAndSettle();
+
+    const titleKey = ValueKey('avatar-title-Pispor · Wêje');
+    await scrollTo(tester, find.byKey(titleKey));
+    await tester.tap(find.byKey(titleKey));
+    await tester.pumpAndSettle();
+    await scrollTo(tester, find.byKey(const ValueKey('avatar-save')));
+    await tester.tap(find.byKey(const ValueKey('avatar-save')));
+    await tester.pumpAndSettle();
+
+    expect(repo.saved?.showcaseTitle, 'Pispor · Wêje');
+  });
+
+  testWidgets(
+    'mağazadan alınan altın çerçeve ve VIP unvanı yeniden seçilebilir',
+    (tester) async {
+      final repo = _RecordingRepo(
+        purchased: {'avatar_frame_gold', 'profile_badge_vip'},
+      );
+      await tester.pumpWidget(shell(AvatarEditorScreen(repository: repo)));
+      await tester.pumpAndSettle();
+
+      await scrollTo(tester, find.byKey(const ValueKey('avatar-frame-gold')));
+      await tester.tap(find.byKey(const ValueKey('avatar-frame-gold')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Kilitli'), findsNothing);
+
+      const vipKey = ValueKey('avatar-title-VIP');
+      await scrollTo(tester, find.byKey(vipKey));
+      await tester.tap(find.byKey(vipKey));
+      await tester.pumpAndSettle();
+
+      await scrollTo(tester, find.byKey(const ValueKey('avatar-save')));
+      await tester.tap(find.byKey(const ValueKey('avatar-save')));
+      await tester.pumpAndSettle();
+      expect(repo.saved?.frameId, 'gold');
+      expect(repo.saved?.showcaseTitle, 'VIP');
+    },
+  );
 
   testWidgets('unvan yokken bilgilendirme metni görünür', (tester) async {
     final repo = _RecordingRepo();

@@ -63,7 +63,12 @@ void main() {
       find.byType(ScreenIdentityHeader),
     );
     expect(header.accent, AppTheme.playGreen);
-    expect(find.text('Öğren'), findsOneWidget);
+    // 2026-07-30: burada AppBar başlığı olan 'Öğren' aranıyordu. Kimlik
+    // bandı 'Kurmancî öğren' derken AppBar da 'Öğren' diyordu; iki yakın
+    // anlamlı başlık üst üste biniyordu. Kimlik bandı kullanan on ekranın
+    // sekizi AppBar başlığını boş bırakıyor — aykırı olan buydu.
+    expect(header.title, 'Kurmancî öğren');
+    expect(find.text('Öğren'), findsNothing);
     expect(find.text('Bugünkü hedefin'), findsOneWidget);
     expect(find.text('Öğrenme yolları'), findsOneWidget);
     expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
@@ -71,6 +76,32 @@ void main() {
     // okunuyordu ("Sana önerilen Devam et"). Rozet artık yalnız tavsiyeyi
     // söyler; "devam et" kartın kendisi ve ucundaki oktur.
     expect(find.text('Sana önerilen'), findsOneWidget);
+  });
+
+  // Bu test AppBar başlığının yazı tipini ölçüyordu; başlık kaldırılınca
+  // hedefsiz kaldı. Niyeti hâlâ geçerli — bir ekranda iki ayrı yazı tipi
+  // görünmemeli (bkz. 2026-07-26: boyayıcı metinler sistem yazı tipine
+  // düşüyordu). Ölçüm ekranın adını taşıyan yere, kimlik bandına taşındı.
+  testWidgets('öğrenme başlığı ürünün yazı tipini korur', (tester) async {
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    // Aile başlığın kendi stilinde yazılı değil; temadan gelir. Eski test
+    // AppBar'ın `titleTextStyle` içine **açıkça** yazdığı aileyi ölçüyordu,
+    // o başlık kalkınca ölçtüğü şey de kalmadı. Burada asıl mekanizma
+    // ölçülür: tema Rubik'i besler ve başlık stili onu geçersiz kılmaz.
+    final context = tester.element(find.text('Kurmancî öğren'));
+    expect(
+      Theme.of(context).textTheme.bodyMedium?.fontFamily,
+      AppTypography.fontFamily,
+    );
+    expect(
+      AppTypography.heading2.fontFamily,
+      isNull,
+      reason: 'Başlık stili aileyi yazarsa tema değişimi ona ulaşmaz.',
+    );
   });
 
   testWidgets('seçili sekme düz playGreen dolgu taşır', (tester) async {

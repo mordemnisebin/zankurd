@@ -195,10 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             : const Icon(AppIcons.floppyDisk),
-                        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                        label: ExcludeSemantics(
-                          child: Text(CommonStrings.save(ku)),
-                        ),
+                        label: Text(CommonStrings.save(ku)),
                       ),
                     ),
                   ],
@@ -946,10 +943,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(context.t(K.notifPermDenied)),
         content: Text(context.t(K.notifPermDeniedBody)),
         actions: [
-          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: ExcludeSemantics(child: Text(context.t(K.ok))),
+            child: Text(context.t(K.ok)),
           ),
         ],
       ),
@@ -993,16 +989,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(context.t(K.childSafeMode)),
         content: Text(context.t(K.childSafeBody)),
         actions: [
-          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(false),
-            child: ExcludeSemantics(child: Text(context.t(K.cancel))),
+            child: Text(context.t(K.cancel)),
           ),
           FilledButton(
             key: const ValueKey('child-safe-confirm'),
             onPressed: () => Navigator.of(dialogCtx).pop(true),
-            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-            child: ExcludeSemantics(child: Text(context.t(K.openSettings))),
+            child: Text(context.t(K.openSettings)),
           ),
         ],
       ),
@@ -1031,15 +1025,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(context.t(K.deleteConfirmTitle)),
         content: Text(context.t(K.deleteConfirmBody)),
         actions: [
-          // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
           OutlinedButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: ExcludeSemantics(child: Text(context.t(K.cancel))),
+            child: Text(context.t(K.cancel)),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-            child: ExcludeSemantics(child: Text(context.t(K.continueAction))),
+            child: Text(context.t(K.continueAction)),
           ),
         ],
       ),
@@ -1115,19 +1107,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
               actions: [
-                // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                 OutlinedButton(
                   onPressed: () => Navigator.pop(dialogContext, false),
-                  child: ExcludeSemantics(child: Text(context.t(K.cancel))),
+                  child: Text(context.t(K.cancel)),
                 ),
                 FilledButton(
                   onPressed: canDelete
                       ? () => Navigator.pop(dialogContext, true)
                       : null,
-                  // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                  child: ExcludeSemantics(
-                    child: Text(context.t(K.deleteForever)),
-                  ),
+                  child: Text(context.t(K.deleteForever)),
                 ),
               ],
             );

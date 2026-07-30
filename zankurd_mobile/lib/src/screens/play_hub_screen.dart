@@ -31,10 +31,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   Future<void> _openDailyQuiz() async {
     setState(() => _dailyLoading = true);
     try {
-      // Her zaman ContestScreen'e yönlendir; contest yoksa ekran kendisi
+      // Her zaman ContestScreen'e yönlendir; etkinlik yoksa ekran kendisi
       // boş durum mesajı gösterir ("Hîn çalakî tune"). Eskiden contest
       // null olduğunda sessizce generic quiz başlatılıyordu — bu, kullanıcının
-      // günlük yarışmaya katıldığını sanmasına yol açıyordu.
+      // günlük ilerleme etkinliğini açtığını sanmasına yol açıyordu.
       if (!mounted) return;
       await Navigator.of(
         context,
@@ -392,13 +392,13 @@ class _QuickDuelHero extends StatelessWidget {
                   height: 42,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppTheme.primaryCtaColor(context),
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                   ),
                   child: Text(
                     context.t(K.findOpponent),
                     style: AppTypography.bodyLarge.copyWith(
-                      color: AppTheme.culturalBrandBg,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

@@ -107,7 +107,7 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.bodyLarge.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               letterSpacing: 0,
                             ),
                           ),

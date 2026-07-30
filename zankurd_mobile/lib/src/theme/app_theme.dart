@@ -158,7 +158,7 @@ class AppTypography {
   );
 
   static const TextStyle heading1 = TextStyle(
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     fontSize: 24,
     height: 1.2,
     letterSpacing: -0.5,
@@ -193,7 +193,7 @@ class AppTypography {
   );
 
   static const TextStyle caption = TextStyle(
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 12,
     height: 1.35,
     letterSpacing: 0.2,
@@ -807,7 +807,7 @@ class AppTheme {
         titleTextStyle: TextStyle(
           color: textPrimary,
           fontFamily: 'Rubik',
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           fontSize: 20,
           letterSpacing: -0.2,
         ),
@@ -915,7 +915,7 @@ class AppTheme {
       ),
       textTheme: const TextTheme(
         headlineSmall: TextStyle(
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           color: textPrimary,
           letterSpacing: -0.3,
           height: 1.2,
@@ -996,7 +996,7 @@ class AppTheme {
         titleTextStyle: TextStyle(
           color: lightTextPrimary,
           fontFamily: 'Rubik',
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           fontSize: 20,
           letterSpacing: -0.2,
         ),

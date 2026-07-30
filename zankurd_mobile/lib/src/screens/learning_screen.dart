@@ -99,242 +99,260 @@ class _LearningScreenState extends State<LearningScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final unifiedScroll = MediaQuery.textScalerOf(context).scale(14) > 20;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(context.t(K.navLearn)),
-        titleTextStyle: AppTypography.heading1.copyWith(
-          color: AppTheme.textPrimaryColor(context),
-          fontSize: 22,
-          letterSpacing: -0.3,
-        ),
-      ),
+      // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
+      //
+      // Burada başlık da verilince iki yakın anlamlı başlık üst üste
+      // biniyordu — "Öğren" ve hemen altında "Kurmancî öğren" (2026-07-30
+      // ekran turu, 55/56). Kimlik bandı kullanan on ekranın sekizi AppBar
+      // başlığını zaten boş bırakıyor; aykırı olan buydu. Oyuncu hangi
+      // sekmede olduğunu alt gezinme çubuğundan görüyor.
+      appBar: AppBar(),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
-          child: Column(
-            children: [
-              // Ekran kimliği: playGreen "öğrenme" bandı — Xwendin'in imzası.
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  0,
-                ),
-                child: ScreenIdentityHeader(
-                  title: context.t(K.learnKurmanci),
-                  subtitle: context.t(K.learnSubtitle),
-                  accent: AppTheme.playGreen,
-                  icon: AppIcons.graduationCap,
-                  compact: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.sm,
-                  AppSpacing.page,
-                  0,
-                ),
-                child: _LearningSectionHeading(
-                  title: context.t(K.todaysGoal),
-                  subtitle: context.t(K.todaysGoalSub),
-                ),
-              ),
-              // Akıllı tekrar (SM-2) ürün yüzü: yalnız hazır tekrar varsa
-              // dokunulabilir kart, yoksa sakin bir tamamlandı durumu.
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  0,
-                ),
-                child: TodaysReviewCard(
-                  repository: widget.repository,
-                  isKu: ku,
-                ),
-              ),
-              // Hikâye modu girişi (metin tabanlı, sessiz). Ünite başında mini
-              // rehber de buradan açılır.
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  0,
-                ),
-                // Dar ekranlarda (360px) ikon+metin taşmasını önlemek için
-                // tam genişlik: intrinsic genişlik dar viewport'ta sığmıyordu.
-                child: SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    key: const ValueKey('learning-story-entry'),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => StoryScreen(
-                          story: cayxaneStory,
-                          guide: cayxaneGuide,
-                        ),
-                      ),
+          child: Builder(
+            builder: (context) {
+              final content = Column(
+                // `Column`un varsayılanı `center`dır ve bölüm başlıkları
+                // metin genişliğinde daralan `Column`lar olduğu için ekranın
+                // ortasına kaçıyordu: sayfa başlığı "Öğren" solda, hemen
+                // altındaki "Bugünkü hedefin" ve "Öğrenme yolları" ortada
+                // duruyordu (2026-07-30 ekran turu, 55/56). Uygulamanın geri
+                // kalanında bütün bölüm başlıkları sola dayalı.
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Ekran kimliği: playGreen "öğrenme" bandı — Xwendin'in imzası.
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.xs,
+                      AppSpacing.page,
+                      0,
                     ),
-                    icon: const Icon(AppIcons.bookOpenReader, size: 18),
-                    label: Text(
-                      context.t(K.storyTeahouse),
-                      overflow: TextOverflow.ellipsis,
+                    child: ScreenIdentityHeader(
+                      title: context.t(K.learnKurmanci),
+                      subtitle: context.t(K.learnSubtitle),
+                      accent: AppTheme.playGreen,
+                      icon: AppIcons.graduationCap,
+                      compact: true,
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.sm,
-                  AppSpacing.page,
-                  0,
-                ),
-                child: _LearningSectionHeading(
-                  title: context.t(K.learningPaths),
-                  subtitle: context.t(K.learningPathsSub),
-                ),
-              ),
-              // Kategori sekmeler
-              SizedBox(
-                height: 60,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  children: _kLearningCategoryIds
-                      .map(
-                        (cat) => _CategoryTab(
-                          key: ValueKey('learning-tab-$cat'),
-                          label: _categoryLabel(cat, ku),
-                          isSelected: cat == _selectedCategory,
-                          onTap: () => _selectCategory(cat),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  0,
-                ),
-                child: _LearningModeBar(
-                  isKu: ku,
-                  hasLesson: _currentLessons.isNotEmpty,
-                  onPractice: _openCategoryPractice,
-                  onFlashcards: _openCategoryFlashcards,
-                  onLesson: _openCategoryFlashcards,
-                ),
-              ),
-              // Kategori ilerleme göstergesi
-              _buildCategoryProgress(context, ku),
-              // Derslerin listesi
-              Expanded(
-                child: FutureBuilder<List<Lesson>>(
-                  future: _lessonsFuture,
-                  builder: (ctx, snap) {
-                    if (snap.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppTheme.playGreen,
-                        ),
-                      );
-                    }
-                    if (snap.hasError) {
-                      return AppErrorState(
-                        title: context.t(K.loadFailedShort),
-                        message: context.t(K.lessonsLoadFail),
-                        retryLabel: context.t(K.retryShort),
-                        onRetry: () => setState(() => _loadLessons()),
-                      );
-                    }
-                    final lessons = snap.data ?? [];
-                    if (lessons.isEmpty) {
-                      return AppEmptyState(
-                        icon: AppIcons.graduationCap,
-                        title: context.t(K.noLesson),
-                        message: context.t(K.noLessonInCategory),
-                      );
-                    }
-                    final firstOpenIndex = lessons.indexWhere(
-                      (lesson) => !_completedIds.contains(lesson.id),
-                    );
-                    // Seviye belirlemeye göre önerilen başlangıç düğümü.
-                    // Yalnız görsel işaret: kilit/tamamlanma değişmez.
-                    final placementIndex =
-                        PlacementScoring.recommendedStartIndex(
-                          _placementLevel,
-                          lessons.length,
-                        );
-                    // Öneri kilitli bir düğüme düşerse kullanıcıyı erişemeyeceği
-                    // bir karta yönlendirme; ilk açık dersi işaretle.
-                    final recommendedIndex =
-                        firstOpenIndex >= 0 && placementIndex > firstOpenIndex
-                        ? firstOpenIndex
-                        : placementIndex;
-                    return ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.page,
-                        AppSpacing.sm,
-                        AppSpacing.page,
-                        AppSpacing.lg,
-                      ),
-                      itemCount: lessons.length + 1,
-                      itemBuilder: (ctx, i) {
-                        if (i == lessons.length) {
-                          return _MasteryGoal(
-                            completed: firstOpenIndex == -1,
-                            ku: ku,
-                          );
-                        }
-                        final completed = _completedIds.contains(lessons[i].id);
-                        final current =
-                            i ==
-                            (firstOpenIndex < 0
-                                ? lessons.length
-                                : firstOpenIndex);
-                        final locked = !completed && !current;
-                        return _LearningPathNode(
-                          key: ValueKey('learning-path-node-${lessons[i].id}'),
-                          index: i,
-                          completed: completed,
-                          current: current,
-                          locked: locked,
-                          child: _LessonCard(
-                            lesson: lessons[i],
-                            ku: ku,
-                            completed: completed,
-                            locked: locked,
-                            recommended: i == recommendedIndex,
-                            onTap: () async {
-                              if (locked) return;
-                              await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => LessonDetailScreen(
-                                    lesson: lessons[i],
-                                    repository: widget.repository,
-                                  ),
-                                ),
-                              );
-                              _refreshCompleted();
-                            },
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.sm,
+                      AppSpacing.page,
+                      0,
+                    ),
+                    child: _LearningSectionHeading(
+                      title: context.t(K.todaysGoal),
+                      subtitle: context.t(K.todaysGoalSub),
+                    ),
+                  ),
+                  // Akıllı tekrar (SM-2) ürün yüzü: yalnız hazır tekrar varsa
+                  // dokunulabilir kart, yoksa sakin bir tamamlandı durumu.
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.xs,
+                      AppSpacing.page,
+                      0,
+                    ),
+                    child: TodaysReviewCard(
+                      repository: widget.repository,
+                      isKu: ku,
+                    ),
+                  ),
+                  // Hikâye modu girişi (metin tabanlı, sessiz). Ünite başında mini
+                  // rehber de buradan açılır.
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.xs,
+                      AppSpacing.page,
+                      0,
+                    ),
+                    // Dar ekranlarda (360px) ikon+metin taşmasını önlemek için
+                    // tam genişlik: intrinsic genişlik dar viewport'ta sığmıyordu.
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        key: const ValueKey('learning-story-entry'),
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => StoryScreen(
+                              story: cayxaneStory,
+                              guide: cayxaneGuide,
+                            ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
+                        ),
+                        icon: const Icon(AppIcons.bookOpenReader, size: 18),
+                        label: Text(
+                          context.t(K.storyTeahouse),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.sm,
+                      AppSpacing.page,
+                      0,
+                    ),
+                    child: _LearningSectionHeading(
+                      title: context.t(K.learningPaths),
+                      subtitle: context.t(K.learningPathsSub),
+                    ),
+                  ),
+                  // Kategori sekmeler
+                  SizedBox(
+                    height: 60,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      children: _kLearningCategoryIds
+                          .map(
+                            (cat) => _CategoryTab(
+                              key: ValueKey('learning-tab-$cat'),
+                              label: _categoryLabel(cat, ku),
+                              isSelected: cat == _selectedCategory,
+                              onTap: () => _selectCategory(cat),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.page,
+                      AppSpacing.xs,
+                      AppSpacing.page,
+                      0,
+                    ),
+                    child: _LearningModeBar(
+                      isKu: ku,
+                      hasLesson: _currentLessons.isNotEmpty,
+                      onPractice: _openCategoryPractice,
+                      onFlashcards: _openCategoryFlashcards,
+                      onLesson: _openCategoryFlashcards,
+                    ),
+                  ),
+                  // Kategori ilerleme göstergesi
+                  _buildCategoryProgress(context, ku),
+                  // Derslerin listesi. Büyük erişilebilirlik yazısında bütün
+                  // ekran tek yüzey olarak kayar; normal ölçekte üst araçlar
+                  // sabit, ders listesi bağımsız kalır.
+                  if (unifiedScroll)
+                    _buildLessons(context, ku, embedded: true)
+                  else
+                    Expanded(child: _buildLessons(context, ku)),
+                ],
+              );
+              return unifiedScroll
+                  ? SingleChildScrollView(child: content)
+                  : content;
+            },
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLessons(BuildContext context, bool ku, {bool embedded = false}) {
+    return FutureBuilder<List<Lesson>>(
+      future: _lessonsFuture,
+      builder: (ctx, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return SizedBox(
+            height: embedded ? 180 : null,
+            child: const Center(
+              child: CircularProgressIndicator(color: AppTheme.playGreen),
+            ),
+          );
+        }
+        if (snap.hasError) {
+          return AppErrorState(
+            title: context.t(K.loadFailedShort),
+            message: context.t(K.lessonsLoadFail),
+            retryLabel: context.t(K.retryShort),
+            onRetry: () => setState(() => _loadLessons()),
+          );
+        }
+        final lessons = snap.data ?? [];
+        if (lessons.isEmpty) {
+          return AppEmptyState(
+            icon: AppIcons.graduationCap,
+            title: context.t(K.noLesson),
+            message: context.t(K.noLessonInCategory),
+          );
+        }
+        final firstOpenIndex = lessons.indexWhere(
+          (lesson) => !_completedIds.contains(lesson.id),
+        );
+        // Seviye belirlemeye göre önerilen başlangıç düğümü.
+        // Yalnız görsel işaret: kilit/tamamlanma değişmez.
+        final placementIndex = PlacementScoring.recommendedStartIndex(
+          _placementLevel,
+          lessons.length,
+        );
+        // Öneri kilitli bir düğüme düşerse kullanıcıyı erişemeyeceği
+        // bir karta yönlendirme; ilk açık dersi işaretle.
+        final recommendedIndex =
+            firstOpenIndex >= 0 && placementIndex > firstOpenIndex
+            ? firstOpenIndex
+            : placementIndex;
+        return ListView.builder(
+          shrinkWrap: embedded,
+          physics: embedded ? const NeverScrollableScrollPhysics() : null,
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.sm,
+            AppSpacing.page,
+            AppSpacing.lg,
+          ),
+          itemCount: lessons.length + 1,
+          itemBuilder: (ctx, i) {
+            if (i == lessons.length) {
+              return _MasteryGoal(completed: firstOpenIndex == -1, ku: ku);
+            }
+            final completed = _completedIds.contains(lessons[i].id);
+            final current =
+                i == (firstOpenIndex < 0 ? lessons.length : firstOpenIndex);
+            final locked = !completed && !current;
+            return _LearningPathNode(
+              key: ValueKey('learning-path-node-${lessons[i].id}'),
+              index: i,
+              completed: completed,
+              current: current,
+              locked: locked,
+              child: _LessonCard(
+                lesson: lessons[i],
+                ku: ku,
+                completed: completed,
+                locked: locked,
+                recommended: i == recommendedIndex,
+                onTap: () async {
+                  if (locked) return;
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => LessonDetailScreen(
+                        lesson: lessons[i],
+                        repository: widget.repository,
+                      ),
+                    ),
+                  );
+                  _refreshCompleted();
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -447,13 +465,13 @@ class _LearningScreenState extends State<LearningScreen> {
 
   String _categoryLabel(String cat, bool ku) {
     const labels = {
-      'everyday': ('Roj-beroj', 'Günlük'),
+      'everyday': ('Rojane', 'Günlük'),
       'grammar': ('Gramer', 'Dilbilgisi'),
       'culture': ('Çand', 'Kültür'),
       'food': ('Xwarin', 'Yemek'),
       'animals': ('Ajal', 'Hayvanlar'),
       'geography': ('Erdnîgarî', 'Coğrafya'),
-      'emotions': ('Hestan', 'Duygular'),
+      'emotions': ('Hest', 'Duygular'),
       'time': ('Demjimêr', 'Zaman'),
     };
     final (kuLabel, trLabel) = labels[cat] ?? (cat, cat);
@@ -478,13 +496,19 @@ class _LearningModeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Üçü de aynı işin üç kipi: eşit ağırlıkta, tek renk ailesinde.
+    //
+    // Önce üçü ayrı renkteydi (camgöbeği / mor / yeşil) ve her biri dolu
+    // zeminliydi. Aynı ekranda hemen altlarında turuncu "önerilen ders"
+    // kartı da vardı; dört doygun renk aynı anda dikkat istiyordu ve gözün
+    // nereye gideceği belirsizdi (2026-07-30 ekran turu, 55/56). Vurgu
+    // asıl eylemde kalsın diye üçü de öğrenme kimliğinin tonuna çekildi.
     return Row(
       children: [
         Expanded(
           child: _LearningModeButton(
             icon: AppIcons.question,
-            label: isKu ? 'Pirsan' : 'Soru çöz',
-            color: AppTheme.playCyan,
+            label: isKu ? 'Pirs' : 'Soru çöz',
             enabled: hasLesson,
             onTap: onPractice,
           ),
@@ -494,7 +518,6 @@ class _LearningModeBar extends StatelessWidget {
           child: _LearningModeButton(
             icon: AppIcons.paintbrush,
             label: isKu ? 'Kart' : 'Flaş kart',
-            color: AppTheme.violet,
             enabled: hasLesson,
             onTap: onFlashcards,
           ),
@@ -504,7 +527,6 @@ class _LearningModeBar extends StatelessWidget {
           child: _LearningModeButton(
             icon: AppIcons.bookOpen,
             label: isKu ? 'Ders' : 'Dersler',
-            color: AppTheme.playGreen,
             enabled: true,
             onTap: onLesson,
           ),
@@ -518,14 +540,12 @@ class _LearningModeButton extends StatelessWidget {
   const _LearningModeButton({
     required this.icon,
     required this.label,
-    required this.color,
     required this.enabled,
     required this.onTap,
   });
 
   final IconData icon;
   final String label;
-  final Color color;
   final bool enabled;
   final VoidCallback onTap;
 
@@ -542,20 +562,31 @@ class _LearningModeButton extends StatelessWidget {
         onTap: enabled ? onTap : null,
         borderRadius: BorderRadius.circular(AppRadius.sm),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           decoration: BoxDecoration(
-            color: enabled ? color : color.withValues(alpha: 0.10),
+            // Tonlu (dolu değil) yüzey: üç kip birer ikincil eylem olarak
+            // okunur, asıl vurgu önerilen ders kartında kalır.
+            color: AppTheme.playGreen.withValues(alpha: enabled ? 0.14 : 0.06),
             borderRadius: BorderRadius.circular(AppRadius.sm),
+            border: Border.all(
+              color: AppTheme.playGreen.withValues(
+                alpha: enabled ? 0.32 : 0.12,
+              ),
+            ),
           ),
           child: Column(
             children: [
-              // Sabit beyaz, açık aksanlarda (altın, orta yeşil) zeminde
-              // eriyordu: 2.30:1 ve 3.96:1. Renk zemine göre seçilir.
+              // Tonlu zeminde metin/ikon rengi `onTintedSurface`ten gelir:
+              // gerçek zemin harmanlanmış renktir, düz yüzeye göre seçilen
+              // tonlar orada eşiğin altına düşüyordu.
               Icon(
                 icon,
                 color: enabled
-                    ? AppColors.onSolid(color)
-                    : color.withValues(alpha: 0.4),
+                    ? AppColors.onTintedSurface(context)
+                    : AppColors.onTintedSurface(
+                        context,
+                        secondary: true,
+                      ).withValues(alpha: 0.45),
                 size: 18,
               ),
               const SizedBox(height: 2),
@@ -565,10 +596,11 @@ class _LearningModeButton extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.copyWith(
                   color: enabled
-                      ? AppColors.onSolid(color)
-                      : AppTheme.textPrimaryColor(
+                      ? AppColors.onTintedSurface(context)
+                      : AppColors.onTintedSurface(
                           context,
-                        ).withValues(alpha: 0.4),
+                          secondary: true,
+                        ).withValues(alpha: 0.45),
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                 ),
@@ -624,14 +656,21 @@ class _CategoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(12) > 18;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+      padding: EdgeInsets.symmetric(
+        horizontal: 4,
+        vertical: largeText ? 0 : 12,
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: largeText ? 0 : 8,
+          ),
           decoration: BoxDecoration(
             // Xwendin kimliği: seçili sekme düz playGreen dolgu taşır.
             color: isSelected ? AppTheme.playGreen : Colors.transparent,

@@ -35,6 +35,11 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 Future<void> _capture(WidgetTester tester, GlobalKey key, String path) async {
+  // Görsel alınmadan önce giriş/ölçek animasyonları ve gecikmeli asset
+  // çözümlemeleri tamamlansın. Sonsuz animasyonlar olabildiği için
+  // pumpAndSettle yerine sabit, ölçülü bir bekleme kullanılır.
+  await tester.pump(const Duration(milliseconds: 1200));
+  await tester.pump();
   await tester.runAsync(() async {
     final boundary =
         key.currentContext!.findRenderObject() as RenderRepaintBoundary;

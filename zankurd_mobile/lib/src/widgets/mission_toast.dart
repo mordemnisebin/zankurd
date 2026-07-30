@@ -11,12 +11,13 @@ class MissionToast {
     final isKu = context.isKu;
     final label = isKu ? mission.labelKu : mission.labelTr;
     final heading = isKu ? 'Erkên pêkhat!' : 'Görev tamamlandı!';
+    final foregroundColor = AppColors.onSolid(AppTheme.gold);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            const Icon(AppIcons.circleCheck, color: Colors.white, size: 20),
+            Icon(AppIcons.circleCheck, color: foregroundColor, size: 20),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -25,23 +26,23 @@ class MissionToast {
                 children: [
                   Text(
                     heading,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: foregroundColor,
                       fontWeight: FontWeight.w800,
                       fontSize: 13,
                     ),
                   ),
                   Text(
-                    '$label — +${mission.coinReward} coin!',
+                    '$label — +${mission.xpReward} XP',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: foregroundColor.withValues(alpha: 0.9),
                       fontSize: 12,
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(AppIcons.coins, color: Colors.white, size: 18),
+            Icon(AppIcons.bolt, color: foregroundColor, size: 18),
           ],
         ),
         backgroundColor: AppTheme.gold,

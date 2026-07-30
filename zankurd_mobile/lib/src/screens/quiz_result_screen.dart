@@ -9,7 +9,6 @@ import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
-import '../data/sync_manager.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -247,27 +246,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       category: room.category,
       streakAlive: streak > 0,
     );
-    for (final mission in completedMissions) {
-      await repository.claimMissionReward(
-        missionKey: mission.missionKey,
-        fallbackReward: mission.coinReward,
-      );
-    }
-
     // XP ve Seviye Hesaplaması
     int earnedXP = (correctCount * 10) + 50;
     if (isNewDay) earnedXP += 30;
-    earnedXP += completedMissions.length * 100;
+    earnedXP += completedMissions.fold(
+      0,
+      (sum, mission) => sum + mission.xpReward,
+    );
     earnedXP += promotions.length * 200;
 
     final xpStore = await XPStore.load();
     final leveledUp = await xpStore.addXP(earnedXP);
-    try {
-      await repository.awardProfileXPDelta(earnedXP);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'quiz_result_reward');
-      SyncManager.instance.queueXP(xpStore.totalXP, delta: earnedXP);
-    }
 
     // Doğru anda (yeterli quiz + iyi skor) bir kez mağaza değerlendirmesi iste.
     final accuracyPercent = totalQuestions == 0
@@ -310,7 +299,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
-      barrierLabel: 'Level Up',
+      barrierLabel: context.t(K.levelUpTitle),
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (context, anim1, anim2) {
         return const SizedBox.shrink();
@@ -363,7 +352,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      context.isKu ? 'Asta Te Bilind Bû!' : 'Seviyen Yükseldi!',
+                      context.t(K.levelUpTitle),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -406,10 +395,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          color: AppColors.onSolid(AppTheme.gold),
                         ),
                       ),
                     ),
@@ -420,7 +409,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       child: FilledButton(
                         style: FilledButton.styleFrom(
                           backgroundColor: AppTheme.gold,
-                          foregroundColor: Colors.white,
+                          foregroundColor: AppColors.onSolid(AppTheme.gold),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                           ),
@@ -462,6 +451,20 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
+
+    void playAgain() {
+      if (room.id != null) {
+        Navigator.of(context).pop();
+      } else {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
+    }
+
+    void openReview(List<AnswerRecord> records) {
+      Navigator.of(
+        context,
+      ).push(AppRoute.to(ReviewScreen(records: records, room: room)));
+    }
 
     final is1v1 = opponents.length == 1;
     bool isWinner = false;
@@ -952,9 +955,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   const SizedBox(height: 16),
                   // ── Actions ──────────────────────────────────────────
                   const SizedBox(height: 12),
-                  // Dalga 5: tek baskın CTA. Birincil dolgulu "Dîsa bilîze";
-                  // Vekolîn + Parve bike yanında ikon buton, değerlendirme
-                  // text butona indi.
+                  // Yanlış varsa sıradaki en yararlı iş incelemedir; kusursuz
+                  // sonuçta ana eylem yeni tur olur. Seyrek kullanılan yollar
+                  // kapalı bir grupta tutularak karar yükü azaltılır.
                   Row(
                     children: [
                       Expanded(
@@ -969,7 +972,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           child: SizedBox(
                             height: 54,
                             child: FilledButton.icon(
-                              key: const ValueKey('result-play-again-button'),
+                              key: ValueKey(
+                                wrongRecords.isNotEmpty
+                                    ? 'result-primary-review-mistakes'
+                                    : 'result-play-again-button',
+                              ),
                               style: FilledButton.styleFrom(
                                 backgroundColor: AppTheme.primaryCtaColor(
                                   context,
@@ -982,25 +989,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 ),
                                 elevation: 0,
                               ),
-                              onPressed: () {
-                                if (room.id != null) {
-                                  Navigator.of(context).pop();
-                                } else {
-                                  Navigator.of(
-                                    context,
-                                  ).popUntil((route) => route.isFirst);
-                                }
-                              },
-                              icon: const Icon(
-                                AppIcons.arrowRotateLeft,
+                              onPressed: wrongRecords.isNotEmpty
+                                  ? () => openReview(wrongRecords)
+                                  : playAgain,
+                              icon: Icon(
+                                wrongRecords.isNotEmpty
+                                    ? AppIcons.squareCheck
+                                    : AppIcons.arrowRotateLeft,
                                 size: 20,
                               ),
                               label: Text(
-                                QuizStrings.playAgain(context.isKu),
+                                wrongRecords.isNotEmpty
+                                    ? context.t(K.reviewMistakes)
+                                    : QuizStrings.playAgain(context.isKu),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 15,
                                 ),
                               ),
@@ -1009,21 +1014,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      _ResultSideAction(
-                        key: const ValueKey('result-review-button'),
-                        icon: AppIcons.squareCheck,
-                        label: context.t(K.review),
-                        onTap: answerRecords.isEmpty
-                            ? null
-                            : () => Navigator.of(context).push(
-                                AppRoute.to(
-                                  ReviewScreen(
-                                    records: answerRecords,
-                                    room: room,
-                                  ),
-                                ),
-                              ),
-                      ),
+                      if (wrongRecords.isNotEmpty)
+                        _ResultSideAction(
+                          key: const ValueKey('result-play-again-button'),
+                          icon: AppIcons.arrowRotateLeft,
+                          label: context.t(K.playAgain),
+                          onTap: playAgain,
+                        ),
                       if (context
                           .watch<ChildSafetyProvider>()
                           .allowExternalShare)
@@ -1044,114 +1041,104 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2),
-                    // Bağlantılar arasına '·' konuyordu; satır sarınca
-                    // ayraç satır sonunda öksüz kalıyordu — "… Liderlik
-                    // tablosu ·" diye bitip alt satırda "Değerlendir"
-                    // başlıyordu (2026-07-27). Ayraç öğeler arasında
-                    // durmalı, satır sonunda değil; `Wrap` bunu garanti
-                    // edemez. Ayraç yerine boşluk kullanılır.
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 4,
-                      runSpacing: 4,
-                      children: [
-                        TextButton(
-                          key: const ValueKey('result-home-button'),
-                          style: TextButton.styleFrom(
-                            visualDensity: VisualDensity.compact,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 6,
-                            ),
-                          ),
-                          onPressed: () => Navigator.of(
-                            context,
-                          ).popUntil((route) => route.isFirst),
-                          child: Text(
-                            context.t(K.home),
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: AppTheme.textSubColor(context),
-                              fontWeight: FontWeight.w700,
-                            ),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      dividerColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: ExpansionTile(
+                        key: const ValueKey('result-more-options'),
+                        tilePadding: const EdgeInsets.symmetric(horizontal: 8),
+                        childrenPadding: const EdgeInsets.only(bottom: 4),
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
+                        title: Text(
+                          context.t(K.moreOptions),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.caption.copyWith(
+                            color: AppTheme.textSubColor(context),
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            visualDensity: VisualDensity.compact,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                          ),
-                          onPressed: wrongRecords.isEmpty
-                              ? null
-                              : () => Navigator.of(context).push(
-                                  AppRoute.to(
-                                    ReviewScreen(
-                                      records: wrongRecords,
-                                      room: room,
-                                    ),
+                        children: [
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 4,
+                            runSpacing: 4,
+                            children: [
+                              TextButton(
+                                key: const ValueKey('result-home-button'),
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 6,
                                   ),
                                 ),
-                          child: Text(
-                            context.t(K.onlyWrong),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textMutedColor(context),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            visualDensity: VisualDensity.compact,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              AppRoute.to(
-                                LeaderboardScreen(repository: repository),
+                                onPressed: () => Navigator.of(
+                                  context,
+                                ).popUntil((route) => route.isFirst),
+                                child: Text(
+                                  context.t(K.home),
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppTheme.textSubColor(context),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                               ),
-                            );
-                          },
-                          child: Text(
-                            context.t(K.leaderboardLink),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textMutedColor(context),
-                              fontWeight: FontWeight.w500,
-                            ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    AppRoute.to(
+                                      LeaderboardScreen(repository: repository),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  context.t(K.leaderboardLink),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.textMutedColor(context),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              // Değerlendir: öne çıkan CTA değil, soluk link — her
+                              // sonuç ekranında birincil aksiyonla yarışmasın.
+                              TextButton(
+                                key: const ValueKey('result-rate-button'),
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                ),
+                                onPressed: () =>
+                                    ReviewService.openStoreListing(),
+                                child: Text(
+                                  context.t(K.rate),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.textMutedColor(context),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        // Değerlendir: öne çıkan CTA değil, soluk link — her
-                        // sonuç ekranında birincil aksiyonla yarışmasın.
-                        TextButton(
-                          key: const ValueKey('result-rate-button'),
-                          style: TextButton.styleFrom(
-                            visualDensity: VisualDensity.compact,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                          ),
-                          onPressed: () => ReviewService.openStoreListing(),
-                          child: Text(
-                            context.t(K.rate),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.textMutedColor(context),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   // Turun bütün açıklamaları en sonda, bir arada.
@@ -1581,7 +1568,13 @@ class _ResultSideAction extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.sm),
         child: Ink(
-          width: 64,
+          // 64 piksellik kutuda "Tekrar oyna" iki kenara sıfır dayanıyordu;
+          // etiket kutunun içinde değil, kutunun kenarında duruyordu
+          // (2026-07-30 ekran turu, 68/69). Kurmancî karşılıkları daha da
+          // uzun ("Dîsa bilîze", "Parve bike"). Kutu genişletildi, etikete
+          // iç boşluk verildi; taşarsa kırpmak yerine küçülür — yarım
+          // sözcük göstermek, küçük yazıdan kötüdür.
+          width: 76,
           height: 54,
           decoration: BoxDecoration(
             color: AppTheme.surfaceHiColor(context),
@@ -1595,14 +1588,20 @@ class _ResultSideAction extends StatelessWidget {
             children: [
               Icon(icon, size: 20, color: color),
               const SizedBox(height: 2),
-              Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.caption.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: AppTypography.caption.copyWith(
+                      color: color,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 10,
+                    ),
+                  ),
                 ),
               ),
             ],

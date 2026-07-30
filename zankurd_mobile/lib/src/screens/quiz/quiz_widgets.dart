@@ -1137,12 +1137,18 @@ class _ListenButton extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: notifier ?? ValueNotifier<bool>(false),
       builder: (context, isListening, _) {
+        final actionLabel = isListening
+            ? context.t(K.stopAction)
+            : context.t(K.listenQuestion);
         return Semantics(
           button: true,
-          label: context.t(K.listenQuestion),
+          enabled: true,
+          label: actionLabel,
+          hint: actionLabel,
+          onTap: onTap,
           excludeSemantics: true,
           child: Tooltip(
-            message: context.t(K.listenQuestion),
+            message: actionLabel,
             child: InkWell(
               onTap: onTap,
               borderRadius: BorderRadius.circular(20),

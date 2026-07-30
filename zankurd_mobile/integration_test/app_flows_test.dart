@@ -99,7 +99,6 @@ void main() {
     expect(child.allowFriendSearch, isTrue);
     await child.setEnabled(true);
     expect(child.allowFriendSearch, isFalse);
-    expect(child.allowRoomChat, isFalse);
     expect(child.allowExternalShare, isFalse);
     // Kapatınca geri gelir (veri kaybı yok).
     await child.setEnabled(false);

@@ -11,8 +11,12 @@ class ResponsiveWrapper extends StatelessWidget {
 
   final Widget child;
 
-  /// Masaüstünde içeriğin maksimum genişliği (Şık dikey mobil görünüm için daraltıldı).
-  static const double maxContentWidth = 540;
+  /// Masaüstünde içeriğin maksimum genişliği.
+  ///
+  /// [AppShell] 768 px'de masaüstü gezinmesine geçer. Navigator'ı bunun
+  /// altında sınırlamak breakpoint'i erişilemez yaptığı için kabuk ve kendi
+  /// içerik sınırları çalışabilecek güvenli bir masaüstü genişliği korunur.
+  static const double maxContentWidth = 1200;
 
   /// Bu genişliğin üstünde içerik ortalanır.
   static const double wideThreshold = 600;
@@ -26,7 +30,7 @@ class ResponsiveWrapper extends StatelessWidget {
       return child;
     }
 
-    // Tablet: içeriği ortala, maxContentWidth (540px) ile sınırla
+    // Tablet/masaüstü: içeriği ortala ve geniş ekran taşmasını sınırla.
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Center(

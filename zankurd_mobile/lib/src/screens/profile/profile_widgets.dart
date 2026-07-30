@@ -724,32 +724,29 @@ class _UnifiedRewardsSection extends StatelessWidget {
                   ),
                 ),
               ),
-              // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
               TextButton(
                 onPressed: () => _showAllSheet(context),
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: const Size(44, 44),
                 ),
-                child: ExcludeSemantics(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '$totalUnlocked/$totalAll',
-                        style: TextStyle(
-                          color: AppTheme.textMutedColor(context),
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        AppIcons.chevronRight,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '$totalUnlocked/$totalAll',
+                      style: TextStyle(
                         color: AppTheme.textMutedColor(context),
-                        size: 16,
+                        fontWeight: FontWeight.w800,
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      AppIcons.chevronRight,
+                      color: AppTheme.textMutedColor(context),
+                      size: 16,
+                    ),
+                  ],
                 ),
               ),
             ],

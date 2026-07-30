@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/category_visuals.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -224,12 +225,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           );
         },
         icon: const Icon(AppIcons.circlePlay, size: 22),
-        // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-        label: ExcludeSemantics(
-          child: Text(
-            context.t(K.playSavedQuestions),
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-          ),
+        label: Text(
+          context.t(K.playSavedQuestions),
+          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
         ),
       ),
     );
@@ -258,14 +256,28 @@ class _FavoriteQuestionTile extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: Row(
             children: [
+              // Solda sorunun **kategori** simgesi durur, yer imi değil.
+              //
+              // Önce burada da altın bir yer imi kutusu vardı; sağda yer imi
+              // aç/kapa düğmesi, üstte kimlik bandında yine yer imi — aynı
+              // simge tek ekranda dört kez (2026-07-30 ekran turu, 71).
+              // Zaten kaydedilmiş soruların listesinde "kaydedilmiş" bilgisi
+              // yeni bir şey söylemiyor; kategori söylüyor.
               Container(
                 width: 46,
                 height: 46,
                 decoration: BoxDecoration(
-                  gradient: AppTheme.goldGradient,
+                  gradient: LinearGradient(
+                    colors: CategoryVisuals.gradientColors(question.category),
+                  ),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(AppIcons.bookmark, color: Colors.white),
+                child: Icon(
+                  CategoryVisuals.icon(question.category),
+                  color: AppColors.onSolid(
+                    CategoryVisuals.color(question.category),
+                  ),
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(

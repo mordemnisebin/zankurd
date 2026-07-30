@@ -785,14 +785,11 @@ class _LobbyView extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: AppSpacing.md),
-                            Text(
-                              context.t(K.tournamentTitle),
-                              textAlign: TextAlign.center,
-                              style: AppTypography.heading1.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.sm),
+                            // Kart başlığı burada tekrar edilmez: ekranın adını
+                            // `ScreenIdentityHeader` taşıyor ve "ZanKurd
+                            // Kupası" ilk 300 pikselde iki kez yazıyordu
+                            // (2026-07-30 ekran turu, 10/63). Kupa ikonu
+                            // kartın ne olduğunu zaten söylüyor.
                             // Tournament schedule badge
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -867,8 +864,14 @@ class _LobbyView extends StatelessWidget {
                                   color: AppTheme.gold.withValues(alpha: 0.45),
                                 ),
                               ),
+                              // Biçim bilgisi tek satırda: önce "Eleme kupası"
+                              // çipi, altında ayrı bir "4 soru/maç · gerçek
+                              // oyuncular" satırı vardı. Kartta beş meta satırı
+                              // üst üste yığılıyordu (2026-07-30 ekran turu).
                               child: Text(
-                                context.t(K.botDailyCup),
+                                '${context.t(K.botDailyCup)} · '
+                                '${context.t(K.formatSummary, {'perMatch': '${TournamentConfig.questionsPerMatch}'})}',
+                                textAlign: TextAlign.center,
                                 style: AppTypography.caption.copyWith(
                                   // Altın metin + altın@0.2 zemin açık temada
                                   // ~2:1 kalıyordu. `readableAccent` düz
@@ -889,20 +892,6 @@ class _LobbyView extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: AppSpacing.sm),
-                            Text(
-                              context.t(K.formatSummary, {
-                                'perMatch':
-                                    '${TournamentConfig.questionsPerMatch}',
-                              }),
-                              textAlign: TextAlign.center,
-                              style: AppTypography.bodyMedium.copyWith(
-                                // Kartın altın tonu zemini açtığı için düz
-                                // yüzeye göre seçilen tonlar burada eşiğin
-                                // altına düşüyordu (2026-07-27).
-                                color: AppColors.onTintedSurface(context),
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.xxs),
                             Text(
                               context.t(K.botRaceHint),
                               textAlign: TextAlign.center,

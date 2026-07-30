@@ -60,7 +60,12 @@ void main() {
       // kontenjan dolunca başlar, dolmazsa 24 saat sonunda eldekiyle.
       // "Haftalık kupa" ve "Her Cumartesi 20:00" o kuraldan önce
       // yazılmıştı ve ekranda yalan duruyordu.
-      expect(find.text('Eleme kupası'), findsOneWidget);
+      // 2026-07-30: çip artık biçim bilgisini de taşıyor. Önce ayrı bir
+      // "4 soru/maç · gerçek oyuncular" satırı vardı; kartta beş meta
+      // satırı üst üste yığılıyordu ve "gerçek oyuncular" üç kez
+      // geçiyordu.
+      expect(find.textContaining('Eleme kupası'), findsOneWidget);
+      expect(find.textContaining('4 soru/maç'), findsOneWidget);
       expect(find.textContaining('bot'), findsNothing);
       expect(find.textContaining('Cumartesi'), findsNothing);
       expect(find.text('Kontenjan dolunca başlar'), findsOneWidget);

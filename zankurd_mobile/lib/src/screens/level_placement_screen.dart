@@ -93,6 +93,9 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             TextButton(
               key: const ValueKey('placement-skip'),
               onPressed: _skip,
+              style: TextButton.styleFrom(
+                foregroundColor: AppTheme.textSubColor(context),
+              ),
               child: Text(context.t(K.placementSkip)),
             ),
         ],

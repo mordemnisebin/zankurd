@@ -281,7 +281,12 @@ class _MissionTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  maxLines: compact ? 1 : 2,
+                  // Compact kipte tek satırdı ve ana ekranda görev adı
+                  // kırpılıyordu: "Edebiyat kategorisinde oy…" (2026-07-30
+                  // ekran turu, 01/20/26). Oyuncu ne yapması gerektiğini
+                  // okuyamıyordu. İkinci satırın bedeli yalnız gerektiğinde
+                  // ödenir; kırpılan görev ise hiç işe yaramaz.
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.bodyMedium.copyWith(
                     fontWeight: FontWeight.w700,
@@ -306,7 +311,7 @@ class _MissionTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                   ),
                   child: Text(
-                    '+${mission.coinReward}',
+                    '+${mission.xpReward} XP',
                     maxLines: 1,
                     style: AppTypography.caption.copyWith(
                       color: AppColors.readableAccent(context, AppTheme.gold),

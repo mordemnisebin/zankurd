@@ -173,7 +173,7 @@ void main() {
       // ki bir sonraki açılış/kapanışta yine kırılmasın.
       final all = CategoryVisuals.colorDefinedCategories;
       final visible = visibleCategories(all);
-      expect(visible, contains('Sînema'));
+      expect(visible, isNot(contains('Sînema')));
       expect(
         visible.length,
         all.where((c) => !hiddenCategoryIds.contains(c)).length,

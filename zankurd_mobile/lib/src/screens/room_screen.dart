@@ -2,19 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/player.dart';
-import '../providers/child_safety_provider.dart';
+import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
-import '../widgets/room_chat.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -38,7 +36,6 @@ class _RoomScreenState extends State<RoomScreen> {
   bool ready = true;
   bool starting = false;
   bool quizOpened = false;
-  bool _chatOpen = false;
   bool _leaving = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
@@ -266,27 +263,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                       ),
                                     ),
                                     const Spacer(),
-                                    // Oda kodu chip'i kaldırıldı — hero kart zaten
-                                    // büyük paylaşım kodunu gösteriyor.
-                                    // Çocuk modu: serbest metin oda sohbeti kapalı.
-                                    if (context
-                                        .watch<ChildSafetyProvider>()
-                                        .allowRoomChat)
-                                      IconButton(
-                                        key: const ValueKey('room-chat-toggle'),
-                                        onPressed: () => setState(
-                                          () => _chatOpen = !_chatOpen,
-                                        ),
-                                        icon: Icon(
-                                          _chatOpen
-                                              ? AppIcons.comment
-                                              : AppIcons.comment,
-                                          color: _chatOpen
-                                              ? AppTheme.playCyan
-                                              : AppTheme.textSubColor(context),
-                                        ),
-                                        tooltip: context.t(K.chat),
-                                      ),
+                                    // Serbest metin oda sohbeti; raporlama,
+                                    // engelleme ve moderasyon tamamlanana kadar
+                                    // mağaza sürümünde erişilemez.
                                   ],
                                 ),
                                 const SizedBox(height: AppSpacing.xxs),
@@ -808,14 +787,6 @@ class _RoomScreenState extends State<RoomScreen> {
                     ],
                   ),
                 ),
-                // Room chat panel
-                if (room.id != null)
-                  RoomChat(
-                    repository: widget.repository,
-                    roomId: room.id!,
-                    visible: _chatOpen,
-                    onToggle: () => setState(() => _chatOpen = false),
-                  ),
               ],
             ),
           ),
@@ -845,16 +816,30 @@ class _RoomScreenState extends State<RoomScreen> {
       quizOpened = true;
       starting = true;
     });
-    final questions = await widget.repository
-        .loadRoomQuestions(room)
-        .catchError((error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'loadRoomQuestions fallback',
-          );
-          return widget.repository.questions;
+    List<QuizQuestion> questions;
+    try {
+      questions = await widget.repository.loadRoomQuestions(room);
+      if (questions.isEmpty &&
+          room.id != null &&
+          widget.repository.usesServerHiddenAnswers) {
+        throw StateError('Online room questions are unavailable.');
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'loadRoomQuestions failed');
+      if (room.id == null || !widget.repository.usesServerHiddenAnswers) {
+        questions = widget.repository.questions;
+      } else {
+        if (!mounted) return;
+        setState(() {
+          quizOpened = false;
+          starting = false;
         });
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.gameStartFailed))));
+        return;
+      }
+    }
     if (!mounted) return;
     setState(() => starting = false);
     Navigator.of(context).push(

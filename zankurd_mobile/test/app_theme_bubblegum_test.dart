@@ -52,4 +52,16 @@ void main() {
   test('koyu mod metin kâğıt tonu', () {
     expect(AppTheme.textPrimary, const Color(0xFFF6F3EC));
   });
+
+  test('sayfa ve AppBar başlıkları rafine w700 hiyerarşisini paylaşır', () {
+    expect(AppTypography.heading1.fontWeight, FontWeight.w700);
+    expect(
+      AppTheme.dark().appBarTheme.titleTextStyle?.fontWeight,
+      FontWeight.w700,
+    );
+    expect(
+      AppTheme.light().appBarTheme.titleTextStyle?.fontWeight,
+      FontWeight.w700,
+    );
+  });
 }

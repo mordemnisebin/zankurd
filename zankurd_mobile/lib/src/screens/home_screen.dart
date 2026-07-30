@@ -15,7 +15,6 @@ import '../utils/test_environment.dart';
 import '../data/daily_mission_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
-import 'matchmaking_screen.dart';
 import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
 import '../widgets/app_row_card.dart';
@@ -260,30 +259,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () => widget.onOpenLearning?.call(),
             ),
           ],
-          // Ders ağacına kalıcı giriş. Daha önce [LearningScreen]'e yalnız
-          // yukarıdaki tekrar satırından geçiliyordu; o satır ise ancak
-          // tekrara hazır soru varken görünüyor. Yeni kullanıcıda sayaç 0
-          // olduğu için ders modülüne hiçbir yerden ulaşılamıyordu
-          // (2026-07-25 canlı denetimi).
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            context.t(K.homeLearningSection),
+            style: AppTypography.heading2.copyWith(
+              color: AppTheme.textPrimaryColor(context),
+            ),
+          ),
           const SizedBox(height: AppSpacing.xs),
-          AppRowCard(
-            key: const ValueKey('home-lessons-row'),
-            icon: AppIcons.graduationCap,
-            accent: AppTheme.brand,
-            title: context.t(K.lessons),
-            subtitle: context.t(K.homeLessonsSub),
-            onTap: () => widget.onOpenLearning?.call(),
+          KeyedSubtree(
+            key: const ValueKey('home-learning-path'),
+            child: AppRowCard(
+              key: const ValueKey('home-lessons-row'),
+              icon: AppIcons.graduationCap,
+              accent: AppTheme.brand,
+              title: context.t(K.homeLearningPath),
+              subtitle: context.t(K.homeLessonsSub),
+              onTap: () => widget.onOpenLearning?.call(),
+            ),
           ),
           const SizedBox(height: AppSpacing.xs),
           AppRowCard(
-            key: const ValueKey('home-duel-row'),
-            icon: AppIcons.bolt,
-            accent: AppTheme.playCyan,
-            title: context.t(K.homeQuickDuel),
-            subtitle: context.t(K.homeQuickDuelSub),
-            onTap: () => Navigator.of(context).push(
-              AppRoute.to(MatchmakingScreen(repository: widget.repository)),
-            ),
+            key: const ValueKey('home-topic-picker'),
+            icon: AppIcons.bookOpen,
+            accent: AppTheme.gold,
+            title: context.t(K.homeTopicPicker),
+            subtitle: context.t(K.categoriesSubtitle),
+            onTap: () => widget.onOpenCategories?.call(),
           ),
         ],
       ),
@@ -294,13 +296,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ContinueSection(
-            isKu: ku,
-            entries: _categoryProgress,
-            onOpenCategory: (_) => widget.onOpenCategories?.call(),
-            onBrowseCategories: () => widget.onOpenCategories?.call(),
+          KeyedSubtree(
+            key: const ValueKey('home-play-handoff'),
+            child: AppRowCard(
+              key: const ValueKey('home-duel-row'),
+              icon: AppIcons.bolt,
+              accent: AppTheme.playCyan,
+              title: context.t(K.homeQuickDuel),
+              subtitle: context.t(K.homeQuickDuelSub),
+              onTap: () => widget.onOpenPlay?.call(),
+            ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          if (_categoryProgress.any((entry) => entry.ratio > 0)) ...[
+            const SizedBox(height: AppSpacing.xs),
+            ContinueSection(
+              isKu: ku,
+              entries: _categoryProgress,
+              onOpenCategory: (_) => widget.onOpenCategories?.call(),
+              onBrowseCategories: () => widget.onOpenCategories?.call(),
+            ),
+          ],
+          const SizedBox(height: AppSpacing.md),
           DailyMissionsCard(isKu: ku, missions: _missions),
         ],
       ),
@@ -618,7 +634,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           const SizedBox(width: AppSpacing.xs),
           control(
             key: const ValueKey('home-theme-toggle'),
-            tooltip: 'Tema',
+            tooltip: context.t(K.darkLightMode),
             onTap: themeProvider.toggleDarkLight,
             child: Icon(
               themeProvider.isDark ? AppIcons.moon : AppIcons.sun,

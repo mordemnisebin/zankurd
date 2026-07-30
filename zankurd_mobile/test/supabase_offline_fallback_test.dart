@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -11,6 +13,55 @@ class _AlwaysFailingHttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
     throw Exception('injected: ağ erişilemez');
+  }
+}
+
+class _RoomQuestionsHttpClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    if (!request.url.path.endsWith('/rpc/get_room_questions')) {
+      throw StateError('Beklenmeyen istek: ${request.url.path}');
+    }
+    final bytes = utf8.encode(
+      jsonEncode([
+        {
+          'id': 'server-question-1',
+          'category_name': 'Ziman',
+          'prompt': 'Pirtûk çi ye?',
+          'option_a': 'Kitap',
+          'option_b': 'Masa',
+          'option_c': 'Su',
+          'option_d': 'Ev',
+          'question_type': 'multiple_choice',
+          'image_url': null,
+          'difficulty': 2,
+        },
+      ]),
+    );
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+class _EmptyRoomQuestionsHttpClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    if (!request.url.path.endsWith('/rpc/get_room_questions')) {
+      throw StateError('Beklenmeyen istek: ${request.url.path}');
+    }
+    final bytes = utf8.encode('[]');
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
   }
 }
 
@@ -70,30 +121,50 @@ void main() {
     },
   );
 
-  test('yedek yol odanın kategorisini korur', () async {
-    // 2026-07-26: sunucu sorgusu hata verdiğinde ya da boş döndüğünde
-    // yedek yol `loadQuestions(limit:)` çağırıyordu — kategori parametresi
-    // hiç geçmiyordu. "Ziman" için kurulmuş bir odada bütün havuzdan soru
-    // geliyor, oyuncu Dil turu açıp Siyaset sorusu görüyordu. Sessiz bir
-    // kusurdu: ne hata, ne kayıt; yalnız yanlış sorular.
-    final repo = unreachableRepo();
-
-    // Kategori bankanın başındaki 'Ziman' olmamalı: seçim havuz sırasını
-    // koruduğu için kusurlu sürüm de tesadüfen 'Ziman' döndürüyor ve
-    // bekçi hiçbir şey ölçmemiş oluyordu.
-    for (final category in ['Muzîk', 'Cografya', 'Dîrok']) {
-      // Odaya kimlik verilmeli: kimliksiz oda zaten doğrudan çevrimdışı
-      // sürüme gider ve sunucu yolu hiç denenmez — kusurlu yedek yol o
-      // hâlde çalışmaz, bekçi de bir şey ölçmemiş olur.
-      final room = repo.createRoom(category: category).copyWith(id: 'room-1');
-      final questions = await repo.loadRoomQuestions(room);
-
-      expect(questions, isNotEmpty, reason: '$category için soru gelmedi');
-      expect(
-        questions.map((q) => q.category).toSet(),
-        {category},
-        reason: 'Yedek yol $category odasına başka kategoriden soru getirdi',
+  test(
+    'gerçek oda soru RPC hata veya boş sonuçta açıkça başarısız olur',
+    () async {
+      final failingRepo = unreachableRepo();
+      final emptyRepo = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _EmptyRoomQuestionsHttpClient(),
+        ),
       );
-    }
+      final onlineRoom = failingRepo
+          .createRoom(category: 'Ziman')
+          .copyWith(id: '00000000-0000-0000-0000-000000000001');
+
+      for (final repo in [failingRepo, emptyRepo]) {
+        await expectLater(repo.loadRoomQuestions(onlineRoom), throwsStateError);
+      }
+
+      final offlineRoom = failingRepo.createRoom(category: 'Ziman');
+      final offlineQuestions = await failingRepo.loadRoomQuestions(offlineRoom);
+      expect(offlineQuestions, isNotEmpty);
+      expect(
+        offlineQuestions.every((question) => question.correctAnswer.isNotEmpty),
+        isTrue,
+      );
+    },
+  );
+
+  test('sunucu cevabı gizli oda sorusu offline havuza düşmez', () async {
+    final repo = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: _RoomQuestionsHttpClient(),
+      ),
+    );
+    final room = repo
+        .createRoom(category: 'Ziman')
+        .copyWith(id: '00000000-0000-0000-0000-000000000001');
+
+    final questions = await repo.loadRoomQuestions(room);
+
+    expect(questions.map((question) => question.id), ['server-question-1']);
+    expect(questions.single.correctAnswer, isEmpty);
   });
 }

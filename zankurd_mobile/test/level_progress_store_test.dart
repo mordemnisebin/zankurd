@@ -33,4 +33,13 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getStringList('zankurd.level.played'), hasLength(1));
   });
+
+  test('hesap çıkışında seviye ilerlemesi tamamen temizlenir', () async {
+    final store = await LevelProgressStore.load();
+    await store.markPlayed('Muzîk', null, 3);
+
+    await store.clear();
+
+    expect(store.isPlayed('Muzîk', null, 3), isFalse);
+  });
 }

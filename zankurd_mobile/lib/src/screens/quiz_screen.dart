@@ -246,7 +246,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   /// Gerçek online multiplayer: 1v1 veya takım oyunu (bot değil).
   bool get _isMultiplayer => widget.room.id != null;
   bool get _usesServerHiddenAnswers =>
-      _isMultiplayer && widget.repository is SupabaseZanKurdRepository;
+      _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
   @override
   void initState() {
@@ -807,6 +807,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     }
 
     final hasProgress = index > 0 || answered;
+    final favoriteActionLabel = favorite
+        ? context.t(K.removeAction)
+        : context.t(K.save);
     return PopScope(
       canPop: !hasProgress,
       onPopInvokedWithResult: (didPop, _) {
@@ -828,8 +831,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           actions: [
             IconButton(
               onPressed: _toggleFavorite,
-              tooltip: context.t(K.save),
-              icon: Icon(favorite ? AppIcons.bookmark : AppIcons.bookmark),
+              tooltip: favoriteActionLabel,
+              icon: Icon(AppIcons.bookmark, semanticLabel: favoriteActionLabel),
             ),
             IconButton(
               onPressed: _reportQuestion,
@@ -1190,6 +1193,10 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }) async {
     _rewardQueued = false;
     if (widget.practice) return 0;
+    // Yerel soru bankasındaki bir turun sonucu sunucu tarafından bağımsız
+    // doğrulanamaz. Bu yüzden coin yalnız sunucunun cevap kayıtlarını tuttuğu
+    // çevrimiçi odalarda verilir ve yerel tur kuyruğa da alınmaz.
+    if (widget.room.id == null) return 0;
     var amount = 0;
     try {
       amount = await widget.repository.awardQuizCoins(
@@ -1294,7 +1301,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     final questionIndex = index;
     setState(() {
       selectedAnswer = answer;
-      _suspense = !isTimeout;
+      _suspense = !isTimeout || _usesServerHiddenAnswers;
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
     if (!isTimeout && !isFlutterTestEnvironment) {
@@ -1403,7 +1410,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           selectedAnswer = '';
           _suspense = false;
         });
-        _timerController.forward();
+        _timerController.reverse(from: 1.0);
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(context.t(K.answerSendFailed))));

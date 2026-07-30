@@ -7,7 +7,6 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
-import '../services/premium_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/roj_mascot.dart';
@@ -49,9 +48,6 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   if (itemId == 'profile_badge_vip') {
     return identity.copyWith(showcaseTitle: 'VIP');
   }
-  if (itemId == 'frame_simple') {
-    return identity.copyWith(frameId: 'simple');
-  }
   return identity;
 }
 
@@ -91,10 +87,11 @@ class ShopItem {
 
 /// Test-only erişim: mağaza kataloğunun statik yedek listesi.
 ///
-/// 2026-07-23 M24: themeColor dağılımının markaya kaydırıldığını ve
-/// cost'a yanlışlıkla dokunulmadığını otomatik doğrulayabilmek için.
+/// Yalnız etkisi gerçekten uygulanmış yayın ürünlerini döndürür.
 @visibleForTesting
-List<ShopItem> get debugShopItems => _ShopScreenState._items;
+List<ShopItem> get debugShopItems => _ShopScreenState._items
+    .where((item) => _ShopScreenState._supportedItemIds.contains(item.id))
+    .toList(growable: false);
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({required this.repository, super.key});
@@ -109,14 +106,18 @@ class _ShopScreenState extends State<ShopScreen> {
   int _coinBalance = 0;
   bool _loading = true;
   final Set<String> _purchasedItemIds = {};
-  List<ShopItem> _dynamicItems = _items;
+  List<ShopItem> _dynamicItems = _items
+      .where((item) => _supportedItemIds.contains(item.id))
+      .toList(growable: false);
 
-  /// Premium kullanıcı: kozmetikleri coin harcamadan (bedava) edinebilir.
-  /// Ürünler yine tek tek "edinilir" (satın alma kaydı oluşur, efekt uygulanır)
-  /// ama maliyet 0'dır — böylece VIP rozet/çerçeve efektleri düzgün işler.
-  bool get _isPremiumUser => context.read<PremiumService>().isPremium;
-
-  // Tüm ürünler gösterilir (whitelist kaldırıldı).
+  // Sunucuda ürün kaydı bulunması tek başına yayına hazır olduğu anlamına
+  // gelmez. Coin düşürüp etkisi olmayan taslak ürünler burada görünmez.
+  static const Set<String> _supportedItemIds = {
+    'spin_wheel_extra',
+    'avatar_frame_gold',
+    'profile_badge_vip',
+  };
+  static const Set<String> _repeatableItemIds = {'spin_wheel_extra'};
 
   // 2026-07-22 canlı UX denetimi: giriş ürünleri
   // 2026-07-23 M24: themeColor dağılımı playPink/playCyan/playPurple
@@ -181,7 +182,7 @@ class _ShopScreenState extends State<ShopScreen> {
       titleKu: 'Zivirîna Zêde',
       titleTr: 'Ekstra Çevirme',
       descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
-      descTr: 'Bugün çarkı tekrar çevirebilmek için ekstra bir hak tanımlar.',
+      descTr: 'Bugün çarkı tekrar çevirmek için ekstra hak verir.',
       cost: 200,
       icon: AppIcons.dice,
       themeColor: AppTheme.correct,
@@ -269,7 +270,9 @@ class _ShopScreenState extends State<ShopScreen> {
   Future<void> _loadBalance() async {
     try {
       final balance = await widget.repository.loadCoinBalance();
-      List<ShopItem> dynamicItems = List<ShopItem>.of(_items);
+      List<ShopItem> dynamicItems = _items
+          .where((item) => _supportedItemIds.contains(item.id))
+          .toList(growable: false);
 
       if (widget.repository is SupabaseZanKurdRepository) {
         try {
@@ -277,18 +280,21 @@ class _ShopScreenState extends State<ShopScreen> {
               (widget.repository as SupabaseZanKurdRepository).client;
           final rows = await client.from('shop_items').select().order('cost');
           if (rows.isNotEmpty) {
-            dynamicItems = rows.map((row) {
-              return ShopItem(
-                id: row['id'] as String,
-                titleKu: row['title_ku'] as String? ?? '',
-                titleTr: row['title_tr'] as String? ?? '',
-                descKu: row['desc_ku'] as String? ?? '',
-                descTr: row['desc_tr'] as String? ?? '',
-                cost: (row['cost'] as num?)?.toInt() ?? 100,
-                icon: shopIconForName(row['icon_name'] as String?),
-                themeColor: shopColorForHex(row['theme_color'] as String?),
-              );
-            }).toList();
+            dynamicItems = rows
+                .map((row) {
+                  return ShopItem(
+                    id: row['id'] as String,
+                    titleKu: row['title_ku'] as String? ?? '',
+                    titleTr: row['title_tr'] as String? ?? '',
+                    descKu: row['desc_ku'] as String? ?? '',
+                    descTr: row['desc_tr'] as String? ?? '',
+                    cost: (row['cost'] as num?)?.toInt() ?? 100,
+                    icon: shopIconForName(row['icon_name'] as String?),
+                    themeColor: shopColorForHex(row['theme_color'] as String?),
+                  );
+                })
+                .where((item) => _supportedItemIds.contains(item.id))
+                .toList(growable: false);
           }
         } catch (error, stack) {
           ErrorReporter.record(
@@ -302,6 +308,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
       final purchasedIds = <String>{};
       for (final item in dynamicItems) {
+        if (_repeatableItemIds.contains(item.id)) continue;
         final purchased = await widget.repository.hasPurchased(item.id);
         if (purchased) {
           purchasedIds.add(item.id);
@@ -328,7 +335,6 @@ class _ShopScreenState extends State<ShopScreen> {
   // ── Purchase confirmation dialog ──
   Future<void> _confirmPurchase(ShopItem item) async {
     final ku = context.isKu;
-    final isPremium = _isPremiumUser;
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
 
@@ -363,7 +369,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   title,
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(ctx),
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     fontSize: 17,
                   ),
                 ),
@@ -397,16 +403,10 @@ class _ShopScreenState extends State<ShopScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      isPremium ? AppIcons.gem : AppIcons.coins,
-                      color: AppTheme.gold,
-                      size: 22,
-                    ),
+                    const Icon(AppIcons.coins, color: AppTheme.gold, size: 22),
                     const SizedBox(width: 8),
                     Text(
-                      isPremium
-                          ? (context.t(K.freePremium))
-                          : '${item.cost} coin',
+                      '${item.cost} coin',
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(ctx),
                         fontWeight: FontWeight.w800,
@@ -429,7 +429,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   Text(
                     context.t(K.yourBalance, {'coins': '$_coinBalance'}),
                     style: AppTypography.caption.copyWith(
-                      color: (!isPremium && _coinBalance < item.cost)
+                      color: (_coinBalance < item.cost)
                           ? AppTheme.wrong
                           : AppTheme.textSubColor(ctx),
                     ),
@@ -441,7 +441,7 @@ class _ShopScreenState extends State<ShopScreen> {
               // sığmayınca OverflowBar bunları merdiven gibi üç ayrı hizaya
               // dağıtıyordu (2026-07-22 canlı UX denetimi). İçeriğe alınınca
               // actions'ta iki eylem kalıyor ve düzgün hizalanıyor.
-              if (!isPremium && _coinBalance < item.cost) ...[
+              if (_coinBalance < item.cost) ...[
                 const SizedBox(height: 12),
                 SizedBox(
                   width: double.infinity,
@@ -455,47 +455,34 @@ class _ShopScreenState extends State<ShopScreen> {
                         ),
                       );
                     },
-                    // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
                     icon: const Icon(AppIcons.dice, size: 18),
-                    label: ExcludeSemantics(
-                      child: Text(context.t(K.earnCoins)),
-                    ),
+                    label: Text(context.t(K.earnCoins)),
                   ),
                 ),
               ],
             ],
           ),
           actions: [
-            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(false),
-              child: ExcludeSemantics(
-                child: Text(
-                  context.t(K.cancelShort),
-                  style: TextStyle(color: AppTheme.textMutedColor(ctx)),
-                ),
+              child: Text(
+                context.t(K.cancelShort),
+                style: TextStyle(color: AppTheme.textMutedColor(ctx)),
               ),
             ),
             FilledButton(
               // Bakiye yetersizse 'Bikire' gri disabled kalır; kullanıcı
-              // 'Coin qezenc bike' ile çarka yönlendirilir. Premium'da bedava.
-              onPressed: (!isPremium && _coinBalance < item.cost)
+              // 'Coin qezenc bike' ile çarka yönlendirilir.
+              onPressed: (_coinBalance < item.cost)
                   ? null
                   : () => Navigator.of(ctx).pop(true),
               style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.accent,
+                backgroundColor: AppTheme.primaryCtaColor(ctx),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
               ),
-              // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-              child: ExcludeSemantics(
-                child: Text(
-                  isPremium
-                      ? (context.t(K.unlockFree))
-                      : (context.t(K.buyAction)),
-                ),
-              ),
+              child: Text(context.t(K.buyAction)),
             ),
           ],
         );
@@ -508,11 +495,7 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _purchase(ShopItem item) async {
-    // Premium: kozmetik bedava (maliyet 0). Yine satın alma kaydı oluşur ve
-    // efekt uygulanır; sadece coin düşülmez. Aksi halde bakiye kontrolü.
-    final isPremium = _isPremiumUser;
-    final effectiveCost = isPremium ? 0 : item.cost;
-    if (!isPremium && _coinBalance < item.cost) {
+    if (_coinBalance < item.cost) {
       HapticFeedback.vibrate();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -527,7 +510,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
     try {
       final success = await widget.repository.spendCoins(
-        effectiveCost,
+        item.cost,
         'purchase_${item.id}',
       );
 
@@ -568,9 +551,7 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _applyPurchaseEffect(String itemId) async {
-    if (itemId != 'avatar_frame_gold' &&
-        itemId != 'profile_badge_vip' &&
-        itemId != 'frame_simple') {
+    if (itemId != 'avatar_frame_gold' && itemId != 'profile_badge_vip') {
       return;
     }
     try {
@@ -665,10 +646,6 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    // Premium durumunu izle: premium olunca tüm kozmetikler "sahip" görünür
-    // ve ekran otomatik yeniden çizilir.
-    context.watch<PremiumService>();
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -839,7 +816,7 @@ class _ShopScreenState extends State<ShopScreen> {
       // 360pt, modern iPhone'ların tamamını iki sütuna alır; kart genişliği
       // en dar cihazda bile ~166pt kalır.
       crossAxisCount = 2;
-      childAspectRatio = 0.74;
+      childAspectRatio = 0.90;
     } else {
       crossAxisCount = 1;
       childAspectRatio = 1.95;
@@ -895,7 +872,7 @@ class _ShopScreenState extends State<ShopScreen> {
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
-    final canAfford = _isPremiumUser || _coinBalance >= item.cost;
+    final canAfford = _coinBalance >= item.cost;
     final tint = item.themeColor;
 
     return Material(
@@ -1072,9 +1049,8 @@ class _ShopScreenState extends State<ShopScreen> {
   // ────────────────────────────────────────────
   Widget _buildShopCard(ShopItem item, bool ku, bool isDark) {
     final title = ku ? item.titleKu : item.titleTr;
-    final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
-    final canAfford = _isPremiumUser || _coinBalance >= item.cost;
+    final canAfford = _coinBalance >= item.cost;
     final tint = item.themeColor;
 
     return Material(
@@ -1142,27 +1118,9 @@ class _ShopScreenState extends State<ShopScreen> {
                           color: isPurchased
                               ? AppTheme.textMutedColor(context)
                               : AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           fontSize: 14,
                           height: 1.2,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      // Description
-                      Expanded(
-                        child: Text(
-                          desc,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: isPurchased
-                                ? AppTheme.textMutedColor(
-                                    context,
-                                  ).withValues(alpha: 0.7)
-                                : AppTheme.textMutedColor(context),
-                            fontSize: 11,
-                            height: 1.35,
-                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -1238,7 +1196,7 @@ class _ShopScreenState extends State<ShopScreen> {
             style: TextStyle(
               color: AppColors.onAccentTint(context, AppTheme.correct),
               fontSize: 12,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -1254,7 +1212,7 @@ class _ShopScreenState extends State<ShopScreen> {
         onPressed: _loading ? null : () => _confirmPurchase(item),
         style: FilledButton.styleFrom(
           backgroundColor: canAfford
-              ? AppTheme.accent
+              ? AppTheme.primaryCtaColor(context)
               : AppTheme.surfaceHiColor(context),
           disabledBackgroundColor: AppTheme.surfaceHiColor(context),
           // Yetersiz bakiyede fiyat "muted" griyle yazılıyordu: açık
@@ -1270,7 +1228,8 @@ class _ShopScreenState extends State<ShopScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.pill),
           ),
-          elevation: canAfford ? 2 : 0,
+          elevation: 0,
+          shadowColor: Colors.transparent,
           // Aile açıkça yazılmalı: `styleFrom(textStyle:)` temadan gelen
           // biçimi birleştirmez, **değiştirir**. Ailesiz bir biçim verince
           // düğmenin yazısı sistem yazı tipine düşüyordu — fiyat etiketleri
@@ -1278,7 +1237,7 @@ class _ShopScreenState extends State<ShopScreen> {
           // (2026-07-26).
           textStyle: const TextStyle(
             fontFamily: AppTypography.fontFamily,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             fontSize: 12,
           ),
         ),

@@ -131,7 +131,9 @@ Future<void> _shoot(WidgetTester tester, String name) async {
 String _flutterSdkRoot() {
   var dir = File(Platform.resolvedExecutable).parent;
   while (dir.path != dir.parent.path) {
-    if (Directory('${dir.path}/bin/cache/artifacts/material_fonts').existsSync()) {
+    if (Directory(
+      '${dir.path}/bin/cache/artifacts/material_fonts',
+    ).existsSync()) {
       return dir.path;
     }
     dir = dir.parent;
@@ -173,7 +175,8 @@ Widget _resultScreen() {
         correctAnswer: 'Şerefxan',
         selectedAnswer: 'Ehmedê Xanî',
         explanation: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
-        explanationKu: 'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
+        explanationKu:
+            'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
             'nivîsandin.',
         explanationTr: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
       ),
@@ -202,16 +205,26 @@ Future<void> _pump(
   await tester.pumpWidget(
     testShell(
       child: _framed(child),
-      themeProvider: dark
-          ? (ThemeProvider(initialMode: ThemeMode.dark))
-          : null,
+      themeProvider: dark ? (ThemeProvider(initialMode: ThemeMode.dark)) : null,
       languageProvider: ku ? kurmanciLang() : null,
     ),
   );
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
   await tester.pump();
-  await tester.pump(const Duration(milliseconds: 900));
+  await tester.pump(const Duration(milliseconds: 1600));
+  // İlk kez çözülen asset görselleri (özellikle açılış logosu) test
+  // bağlayıcısının sahte saatinden bağımsız tamamlanır. Gerçek I/O'ya kısa
+  // bir tur vermeden ilk ekran boş, hemen arkasındaki koyu ekran ise aynı
+  // görsel önbelleğe girdiği için dolu yakalanıyordu.
+  await tester.runAsync(
+    () => Future<void>.delayed(const Duration(milliseconds: 50)),
+  );
+  // Tema/dil sağlayıcıları gerçek I/O turundan sonra son bir bildirim
+  // yapıp bazı ekran animasyonlarını yeniden başlatabilir. Sıfır süreli
+  // pump bu kareyi başlangıçta bırakıyor ve koyu ekranlarda metin/ikonlar
+  // yarım görünüyordu. İkinci sabit süre tüm sonlu animasyonları bitirir.
+  await tester.pump(const Duration(milliseconds: 1600));
 }
 
 /// Yeni kullanıcının gerçekten gördüğü depo.
@@ -318,10 +331,10 @@ void main() {
       // `fontPackage` alanı, Flutter'ın çözdüğü aileyi
       // `packages/<paket>/<aile>` biçimine çevirir. Öneksiz kayıt sessizce
       // eşleşmez ve ikonlar yine kare çizilir.
-      final iconLoader =
-          FontLoader('packages/font_awesome_flutter/$family')..addFont(
-            iconFont.readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
-          );
+      final iconLoader = FontLoader('packages/font_awesome_flutter/$family')
+        ..addFont(
+          iconFont.readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
+        );
       await iconLoader.load();
     }
   });
@@ -411,10 +424,7 @@ void main() {
   testWidgets('17 oda', (t) async {
     await _pump(
       t,
-      RoomScreen(
-        repository: repository,
-        initialRoom: repository.createRoom(),
-      ),
+      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
     );
     await _shoot(t, '17_room');
   }, tags: ['preview']);
@@ -471,8 +481,11 @@ void main() {
   // kalmış renkler (`Colors.white`, sabit siyah gölge) hiç ölçülmüyordu.
   // Aynı ekranlar ikinci kez, tema karanlıkken basılır.
   testWidgets('20 ana ekran (karanlık)', (t) async {
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)),
-        dark: true);
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+      dark: true,
+    );
     await _shoot(t, '20_home_dark');
   }, tags: ['preview']);
 
@@ -482,8 +495,11 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('22 profil (karanlık)', (t) async {
-    await _pump(t, Scaffold(body: ProfileScreen(repository: repository)),
-        dark: true);
+    await _pump(
+      t,
+      Scaffold(body: ProfileScreen(repository: repository)),
+      dark: true,
+    );
     await _shoot(t, '22_profile_dark');
   }, tags: ['preview']);
 
@@ -508,8 +524,11 @@ void main() {
   // Çevrilmemiş kalmış bir metin ya da uzun Kurmancî sözcüklerin taşırdığı
   // bir düzen bu yüzden hiç görünmüyordu.
   testWidgets('26 ana ekran (Kurmancî)', (t) async {
-    await _pump(t, Scaffold(body: HomeScreen(repository: repository)),
-        ku: true);
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+      ku: true,
+    );
     await _shoot(t, '26_home_ku');
   }, tags: ['preview']);
 
@@ -519,8 +538,11 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('28 profil (Kurmancî)', (t) async {
-    await _pump(t, Scaffold(body: ProfileScreen(repository: repository)),
-        ku: true);
+    await _pump(
+      t,
+      Scaffold(body: ProfileScreen(repository: repository)),
+      ku: true,
+    );
     await _shoot(t, '28_profile_ku');
   }, tags: ['preview']);
 
@@ -598,11 +620,17 @@ void main() {
             id: 'r2',
             category: 'Dîrok',
             prompt: 'Şerefname kê nivîsandiye?',
-            answers: ['Şerefxan', 'Ehmedê Xanî', 'Melayê Cizîrî', 'Feqiyê Teyran'],
+            answers: [
+              'Şerefxan',
+              'Ehmedê Xanî',
+              'Melayê Cizîrî',
+              'Feqiyê Teyran',
+            ],
             correctAnswer: 'Şerefxan',
             selectedAnswer: 'Ehmedê Xanî',
             explanation: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
-            explanationKu: 'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
+            explanationKu:
+                'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
                 'nivîsandin.',
             explanationTr: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
           ),
@@ -672,6 +700,11 @@ void main() {
   testWidgets('73 karşılama', (t) async {
     await _pump(t, OnboardingScreen(onComplete: () {}));
     await _shoot(t, '73_onboarding');
+  }, tags: ['preview']);
+
+  testWidgets('73b karşılama (Kurmancî)', (t) async {
+    await _pump(t, OnboardingScreen(onComplete: () {}), ku: true);
+    await _shoot(t, '73b_onboarding_ku');
   }, tags: ['preview']);
 
   testWidgets('74 giriş', (t) async {

@@ -15,7 +15,7 @@ import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
-/// Günlük contest/etkinlik: tema, sıralama ve quiz başlatma.
+/// Günlük 10 soruluk ilerleme etkinliği: tema ve quiz başlatma.
 class ContestScreen extends StatefulWidget {
   const ContestScreen({required this.repository, super.key});
 
@@ -28,13 +28,6 @@ class ContestScreen extends StatefulWidget {
 class _ContestScreenState extends State<ContestScreen> {
   late Future<Contest?> _contestFuture;
   bool _starting = false;
-
-  /// Sıralama future'ı yarışma kimliğine göre bir kez oluşturulur.
-  /// Daha önce `build()` içinde yaratılıyordu: her yeniden çizim (tema
-  /// animasyonu, setState, klavye) yeni bir RPC atıyor ve listeyi spinner'a
-  /// döndürüyordu.
-  String? _leaderboardContestId;
-  Future<List<ContestLeaderboardRow>>? _leaderboardFuture;
 
   @override
   void initState() {
@@ -49,22 +42,11 @@ class _ContestScreenState extends State<ContestScreen> {
     );
   }
 
-  Future<List<ContestLeaderboardRow>> _leaderboardFor(Contest contest) {
-    if (_leaderboardContestId != contest.id || _leaderboardFuture == null) {
-      _leaderboardContestId = contest.id;
-      _leaderboardFuture = widget.repository.getContestLeaderboard(
-        contestId: contest.id,
-        limit: 10,
-      );
-    }
-    return _leaderboardFuture!;
-  }
-
   Future<void> _startQuiz(Contest contest) async {
     if (_starting) return;
     setState(() => _starting = true);
     try {
-      // Günlük yarışma, tema/kategori etiketinden bağımsız olarak ortak
+      // Günlük etkinlik, tema/kategori etiketinden bağımsız olarak ortak
       // günlük havuzdan beslenir. Repository bu havuzu UTC gün seed'i ile
       // seçtiği için aynı gün tüm oyuncular aynı soruları görür.
       var questions = await widget.repository.loadDailyQuestions(
@@ -84,11 +66,11 @@ class _ContestScreenState extends State<ContestScreen> {
       }
 
       final room = widget.repository
-          .createRoom(category: contest.category)
+          .createRoom(category: 'Tevlihev')
           .copyWith(
-            name: contest.themeNameKu,
+            name: context.t(K.dailyEvent),
             questionCount: questions.length,
-            // Günün yarışması tempolu bir mod; 20sn (2026-07-21 kullanıcı kararı).
+            // Günlük etkinlik tempolu bir mod; 20sn (2026-07-21 kullanıcı kararı).
             secondsPerQuestion: 20,
           );
 
@@ -99,7 +81,6 @@ class _ContestScreenState extends State<ContestScreen> {
             room: room,
             questions: questions,
             dailyQuiz: true,
-            contestId: contest.id,
           ),
         ),
       );
@@ -118,10 +99,15 @@ class _ContestScreenState extends State<ContestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.t(K.dailyContest))),
+      // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
+      // Burada başlık da verilince "Günün Etkinliği" ilk 300 pikselde iki
+      // kez yazıyordu (2026-07-30 ekran turu, 11/24/31/34). Kimlik başlığı
+      // kullanan on ekranın sekizi AppBar başlığını zaten boş bırakıyor;
+      // aykırı olan buydu. (`review_screen` iki *farklı* başlık gösterir —
+      // "Cevaplar" ve "Özet" — orada tekrar yok.)
+      appBar: AppBar(),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -146,7 +132,7 @@ class _ContestScreenState extends State<ContestScreen> {
               }
               final contest = snapshot.data;
               if (contest == null) {
-                // Dürüst boş durum: isim eşleşmesi (Pêşbirka Rojê) + net
+                // Dürüst boş durum: isim eşleşmesi (Çalakiya Rojê) + net
                 // "yakında" mesajı + geri yolu. Kullanıcı ölü ekranda
                 // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
                 return AppEmptyState(
@@ -160,8 +146,6 @@ class _ContestScreenState extends State<ContestScreen> {
               }
               return _ContestContent(
                 contest: contest,
-                leaderboardFuture: _leaderboardFor(contest),
-                ku: ku,
                 starting: _starting,
                 onStart: () => _startQuiz(contest),
               );
@@ -176,25 +160,16 @@ class _ContestScreenState extends State<ContestScreen> {
 class _ContestContent extends StatelessWidget {
   const _ContestContent({
     required this.contest,
-    required this.leaderboardFuture,
-    required this.ku,
     required this.starting,
     required this.onStart,
   });
 
   final Contest contest;
-
-  /// Üst State'te bir kez oluşturulan sıralama future'ı; burada
-  /// oluşturulursa her rebuild yeni bir ağ isteği tetikler.
-  final Future<List<ContestLeaderboardRow>> leaderboardFuture;
-  final bool ku;
   final bool starting;
   final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
-    final categoryLabel = CategoryNames.localized(contest.category, ku);
-
     return ListView(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.page,
@@ -295,7 +270,7 @@ class _ContestContent extends StatelessWidget {
                           const SizedBox(width: AppSpacing.sm),
                           Expanded(
                             child: Text(
-                              contest.themeNameFor(isKu: context.isKu),
+                              context.t(K.dailyEventCardTitle),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: AppTypography.heading2.copyWith(
@@ -305,31 +280,18 @@ class _ContestContent extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if ((contest.themeDescriptionFor(isKu: context.isKu) ??
-                              '')
-                          .isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.sm),
-                        Text(
-                          contest.themeDescriptionFor(isKu: context.isKu)!,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: AppTheme.textMutedColor(context),
-                          ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        context.t(K.dailyEventCardBody),
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textMutedColor(context),
                         ),
-                      ],
+                      ),
                       const SizedBox(height: AppSpacing.sm),
                       Wrap(
                         spacing: AppSpacing.xs,
                         runSpacing: AppSpacing.xs,
                         children: [
-                          _BadgeLabel(
-                            icon: AppIcons.tableCells,
-                            label: categoryLabel,
-                          ),
-                          _BadgeLabel(
-                            icon: AppIcons.gaugeHigh,
-                            label:
-                                '${contest.difficultyMin}-${contest.difficultyMax}',
-                          ),
                           _BadgeLabel(
                             icon: AppIcons.question,
                             label: context.t(K.questionCount, {
@@ -337,37 +299,6 @@ class _ContestContent extends StatelessWidget {
                             }),
                           ),
                         ],
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.gold.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: AppTheme.gold.withValues(alpha: 0.18),
-                          ),
-                        ),
-                        child: Text(
-                          context.t(K.contestRewards, {
-                            'join': '${contest.participationReward}',
-                            'first': '${contest.rank1Reward}',
-                          }),
-                          textAlign: TextAlign.center,
-                          style: AppTypography.caption.copyWith(
-                            // Ham altın kendi tonunun üstünde 2.01:1
-                            // ölçüldü — ödül satırı okunmuyordu (2026-07-27).
-                            color: AppColors.onAccentTint(
-                              context,
-                              AppTheme.gold,
-                            ),
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
                       ),
                       const SizedBox(height: AppSpacing.md),
                       GeometricGradientButton(
@@ -378,70 +309,12 @@ class _ContestContent extends StatelessWidget {
                         isLoading: starting,
                         onPressed: starting ? null : onStart,
                       ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        context.t(K.joinAndRank),
-                        textAlign: TextAlign.center,
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textMutedColor(context),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.section - 8),
-        ScreenSectionLabel(
-          label: context.t(K.rankingWord),
-          accent: AppTheme.gold,
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        FutureBuilder<List<ContestLeaderboardRow>>(
-          future: leaderboardFuture,
-          builder: (ctx, snap) {
-            if (snap.connectionState == ConnectionState.waiting) {
-              return const Padding(
-                padding: EdgeInsets.all(24),
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.primaryGradientStart,
-                  ),
-                ),
-              );
-            }
-            if (snap.hasError) {
-              return Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text(
-                  context.t(K.rankingLoadFailed),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: AppTheme.textMutedColor(context)),
-                ),
-              );
-            }
-            final rows = snap.data ?? [];
-            if (rows.isEmpty) {
-              // Boş sıralama tek satır gri metindi: uygulamanın her yerinde
-              // kullanılan boş durum paneli (ikon + tonlu zemin + Zana)
-              // yerine çıplak bir cümle duruyordu ve ekran orada
-              // bitiveriyordu (2026-07-27).
-              return AppEmptyState(
-                icon: AppIcons.trophy,
-                title: context.t(K.noParticipantsTitle),
-                message: context.t(K.noParticipantsBody),
-              );
-            }
-            return Column(
-              children: [
-                for (int i = 0; i < rows.length; i++)
-                  _LeaderboardRow(row: rows[i], index: i, ku: ku),
-              ],
-            );
-          },
         ),
       ],
     );
@@ -478,139 +351,6 @@ class _BadgeLabel extends StatelessWidget {
             style: AppTypography.caption.copyWith(
               color: AppColors.onAccentTint(context, AppTheme.gold),
               fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LeaderboardRow extends StatelessWidget {
-  const _LeaderboardRow({
-    required this.row,
-    required this.index,
-    required this.ku,
-  });
-
-  final ContestLeaderboardRow row;
-  final int index;
-  final bool ku;
-
-  /// İlk üç sıranın rozeti.
-  ///
-  /// Burada emoji kullanılıyordu (🥇🥈🥉); liderlik tablosu ise aynı işi
-  /// `AppIcons.trophy`/`AppIcons.medal` ile yapıyor. İki ekran aynı şeyi
-  /// iki ayrı görsel dilde anlatıyordu: emoji sistem fontundan gelir,
-  /// cihazdan cihaza değişir ve uygulamanın ikon ailesine hiç benzemez
-  /// (2026-07-26). Rozet artık iki ekranda da aynı.
-  Widget _rankBadge(BuildContext context, int? rank) {
-    final place = rank ?? (index + 1);
-    if (place > 3) {
-      return SizedBox(
-        width: 24,
-        child: Text(
-          '$place.',
-          textAlign: TextAlign.center,
-          style: AppTypography.bodyLarge.copyWith(
-            color: AppTheme.textMutedColor(context),
-          ),
-        ),
-      );
-    }
-    final isLight = AppTheme.isLight(context);
-    final color = switch (place) {
-      1 => AppTheme.gold,
-      2 => isLight ? AppTheme.silverLight : AppTheme.silver,
-      _ => isLight ? AppTheme.bronzeLight : AppTheme.bronze,
-    };
-    return SizedBox(
-      width: 24,
-      child: Icon(
-        place == 1 ? AppIcons.trophy : AppIcons.medal,
-        color: color,
-        size: 20,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final highlight = index == 0
-        ? AppTheme.gold
-        : index == 1
-        ? AppTheme.accent
-        : index == 2
-        ? AppTheme.violet
-        : AppTheme.borderColor(context);
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(
-          color: highlight.withValues(alpha: index < 3 ? 0.24 : 1),
-          width: 1,
-        ),
-        boxShadow: index < 3
-            ? [
-                BoxShadow(
-                  color: highlight.withValues(alpha: 0.10),
-                  blurRadius: 14,
-                  offset: const Offset(0, 8),
-                  spreadRadius: -10,
-                ),
-              ]
-            : null,
-      ),
-      child: Row(
-        children: [
-          _rankBadge(context, row.rank),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  row.displayName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  context.t(K.correctAndScore, {
-                    'correct': '${row.correctCount}',
-                    'score': '${row.score}',
-                  }),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: highlight.withValues(alpha: 0.10),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '${row.score}',
-              style: AppTypography.caption.copyWith(
-                // Puan rozeti de zemini olarak kendi renginin %10'unu
-                // kullanıyor: birincinin altın "1000"i 2.13:1'di.
-                color: AppColors.onAccentTint(
-                  context,
-                  index < 3 ? highlight : AppTheme.primaryGradientStart,
-                ),
-                fontWeight: FontWeight.w800,
-              ),
             ),
           ),
         ],

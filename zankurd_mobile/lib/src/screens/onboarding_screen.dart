@@ -216,16 +216,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         ),
                                       ),
                                     ),
-                                    // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-                                    child: ExcludeSemantics(
-                                      child: Text(
-                                        context.t(K.skip),
-                                        style: AppTypography.caption.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          color: AppTheme.textMutedColor(
-                                            context,
-                                          ),
-                                        ),
+                                    child: Text(
+                                      context.t(K.skip),
+                                      style: AppTypography.caption.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: AppTheme.textMutedColor(context),
                                       ),
                                     ),
                                   ),
@@ -438,9 +433,6 @@ class _AnimatedBrandLockup extends StatelessWidget {
                 ),
               ),
             ],
-            // 2026-07-22 canlı UX denetimi: Roj maskot onboarding'e eklendi
-            const SizedBox(height: AppSpacing.xs),
-            const RojMascot(size: 64, mood: RojMood.happy),
           ],
         ),
       ),

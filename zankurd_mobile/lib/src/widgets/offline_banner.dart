@@ -13,6 +13,7 @@ class OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final foregroundColor = AppColors.onSolid(AppTheme.wrong);
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -40,17 +41,17 @@ class OfflineBanner extends StatelessWidget {
                   bottom: false,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         AppIcons.circleXmark,
-                        color: Colors.white,
+                        color: foregroundColor,
                         size: 18,
                       ),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
                           context.t(K.offlineChecking),
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: foregroundColor,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
@@ -63,9 +64,13 @@ class OfflineBanner extends StatelessWidget {
                             onTap: onRetry,
                             borderRadius: BorderRadius.circular(12),
                             child: Container(
+                              constraints: const BoxConstraints(
+                                minWidth: 44,
+                                minHeight: 44,
+                              ),
+                              alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
-                                vertical: 4,
                               ),
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.2),
@@ -73,8 +78,8 @@ class OfflineBanner extends StatelessWidget {
                               ),
                               child: Text(
                                 context.t(K.retry),
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: foregroundColor,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),

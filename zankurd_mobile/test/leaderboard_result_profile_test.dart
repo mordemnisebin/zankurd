@@ -257,19 +257,15 @@ void main() {
     expect(find.text('Doğru'), findsOneWidget);
     expect(find.text('Yanlış'), findsOneWidget);
 
-    // Dalga 5: "İncele" ikon butona indi (tooltip'li); anahtarla bulunur.
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('result-review-button')),
-      120,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('result-review-button')));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Cevaplar'), findsOneWidget);
-    expect(find.text('Soru 1'), findsOneWidget);
-    expect(find.text('DOĞRU'), findsWidgets);
+    // Kusursuz turda yeni tur ana eylemdir; seyrek çıkış yolları kapalıdır.
+    final replay = find.byKey(const ValueKey('result-play-again-button'));
+    for (var i = 0; i < 8 && replay.evaluate().isEmpty; i++) {
+      await tester.drag(find.byType(ListView).first, const Offset(0, -500));
+      await tester.pumpAndSettle();
+    }
+    expect(replay, findsOneWidget);
+    expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
+    expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
   });
 
   testWidgets('result screen compares the player with bot opponents', (

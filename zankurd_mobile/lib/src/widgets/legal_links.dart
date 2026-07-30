@@ -40,9 +40,12 @@ class LegalLinksRow extends StatelessWidget {
     Widget link(String label, String url) => InkWell(
       onTap: () => _open(url),
       borderRadius: BorderRadius.circular(6),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-        child: Text(label, style: style),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          child: Center(widthFactor: 1, child: Text(label, style: style)),
+        ),
       ),
     );
 

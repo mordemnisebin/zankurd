@@ -493,13 +493,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     if (roomId != null) {
       try {
         final roomQuestions = await widget.repository.loadRoomQuestions(room);
-        if (roomQuestions.isNotEmpty) matchQuestions = roomQuestions;
+        if (roomQuestions.isNotEmpty) {
+          matchQuestions = roomQuestions;
+        } else if (widget.repository.usesServerHiddenAnswers) {
+          throw StateError('Real room has no playable questions.');
+        }
       } catch (error, stack) {
         ErrorReporter.record(
           error,
           stack,
           reason: 'matchmaking_load_room_questions',
         );
+        if (widget.repository.usesServerHiddenAnswers) {
+          setState(() {
+            _found = false;
+          });
+          if (!_isCancelled && mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.t(K.gameStartFailed))),
+            );
+          }
+          return;
+        }
       }
       if (_isCancelled || !mounted) return;
     }
@@ -953,71 +968,82 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                     ),
                   ),
                 // Avatars view
+                //
+                // İki sütun da `Flexible`: sütunun genişliğini avatar değil
+                // altındaki oyuncu adı belirliyor ve ad sınırsız uzayabilir.
+                // Uzun adlı bir rakip bulunduğunda 260 piksellik radar
+                // alanı taşıyordu (2026-07-30: 148 piksel). Avatarlar 72
+                // piksel sabit olduğu için sıkışacak yer var; taşan tek şey
+                // addır, o da tek satıra kırpılır.
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // User Avatar
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 72,
-                          height: 72,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppTheme.primaryGradientStart,
-                              width: 3,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppTheme.primaryGradientStart.withValues(
-                                  alpha: 0.3,
-                                ),
-                                blurRadius: 15,
+                    Flexible(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 72,
+                            height: 72,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppTheme.primaryGradientStart,
+                                width: 3,
                               ),
-                            ],
-                          ),
-                          child: PlayerAvatar(
-                            radius: 33,
-                            photoUrl: _myIdentity.photoUrl,
-                            iconId: _myIdentity.iconId,
-                            colorHex: _myIdentity.colorHex,
-                            frameId: _myIdentity.frameId,
-                            displayName: _myName,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          _myName,
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppTheme.isLight(context)
-                                ? Colors.black.withValues(alpha: 0.06)
-                                : Colors.white.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            context.t(K.levelPrefix, {'level': '$_myLevel'}),
-                            style: TextStyle(
-                              color: AppTheme.textSubColor(context),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppTheme.primaryGradientStart
+                                      .withValues(alpha: 0.3),
+                                  blurRadius: 15,
+                                ),
+                              ],
+                            ),
+                            child: PlayerAvatar(
+                              radius: 33,
+                              photoUrl: _myIdentity.photoUrl,
+                              iconId: _myIdentity.iconId,
+                              colorHex: _myIdentity.colorHex,
+                              frameId: _myIdentity.frameId,
+                              displayName: _myName,
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(
+                            _myName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 13,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppTheme.isLight(context)
+                                  ? Colors.black.withValues(alpha: 0.06)
+                                  : Colors.white.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              context.t(K.levelPrefix, {'level': '$_myLevel'}),
+                              style: TextStyle(
+                                color: AppTheme.textSubColor(context),
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(width: 24),
                     // Eşleşme bulunduğunda VS altın renge döner ve
@@ -1052,92 +1078,99 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                     ),
                     const SizedBox(width: 24),
                     // Opponent Avatar (fades in or animated)
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 72,
-                          height: 72,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: _found ? AppTheme.correct : Colors.white24,
-                              width: 3,
-                            ),
-                            boxShadow: _found
-                                ? [
-                                    BoxShadow(
-                                      color: AppTheme.correct.withValues(
-                                        alpha: 0.35,
+                    Flexible(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 72,
+                            height: 72,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: _found
+                                    ? AppTheme.correct
+                                    : Colors.white24,
+                                width: 3,
+                              ),
+                              boxShadow: _found
+                                  ? [
+                                      BoxShadow(
+                                        color: AppTheme.correct.withValues(
+                                          alpha: 0.35,
+                                        ),
+                                        blurRadius: 15,
                                       ),
-                                      blurRadius: 15,
+                                    ]
+                                  : [],
+                            ),
+                            child: _found
+                                ? PlayerAvatar(
+                                    radius: 33,
+                                    photoUrl: _opponentIdentity.photoUrl,
+                                    iconId: _opponentIdentity.iconId,
+                                    colorHex: _opponentIdentity.colorHex,
+                                    frameId: _opponentIdentity.frameId,
+                                    displayName: _opponentName,
+                                  )
+                                : CircleAvatar(
+                                    backgroundColor: AppColors.disabledSurface(
+                                      context,
                                     ),
-                                  ]
-                                : [],
-                          ),
-                          child: _found
-                              ? PlayerAvatar(
-                                  radius: 33,
-                                  photoUrl: _opponentIdentity.photoUrl,
-                                  iconId: _opponentIdentity.iconId,
-                                  colorHex: _opponentIdentity.colorHex,
-                                  frameId: _opponentIdentity.frameId,
-                                  displayName: _opponentName,
-                                )
-                              : CircleAvatar(
-                                  backgroundColor: AppColors.disabledSurface(
-                                    context,
+                                    child: Icon(
+                                      AppIcons.question,
+                                      color: AppTheme.isLight(context)
+                                          ? AppTheme.textMutedColor(context)
+                                          : Colors.white24,
+                                      size: 38,
+                                    ),
                                   ),
-                                  child: Icon(
-                                    AppIcons.question,
-                                    color: AppTheme.isLight(context)
-                                        ? AppTheme.textMutedColor(context)
-                                        : Colors.white24,
-                                    size: 38,
-                                  ),
-                                ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          _found ? (_opponentName ?? '') : '?',
-                          style: TextStyle(
-                            color: _found
-                                ? AppTheme.textPrimaryColor(context)
-                                : AppTheme.textMutedColor(context),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _found
-                                ? AppTheme.correct.withValues(alpha: 0.15)
-                                : (AppTheme.isLight(context)
-                                      ? Colors.black.withValues(alpha: 0.05)
-                                      : Colors.white.withValues(alpha: 0.05)),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            _found
-                                ? (context.t(K.levelPrefix, {
-                                    'level': '$_opponentLevel',
-                                  }))
-                                : '?',
+                          const SizedBox(height: 8),
+                          Text(
+                            _found ? (_opponentName ?? '') : '?',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: _found
-                                  ? AppTheme.correct
+                                  ? AppTheme.textPrimaryColor(context)
                                   : AppTheme.textMutedColor(context),
-                              fontSize: 10,
                               fontWeight: FontWeight.w700,
+                              fontSize: 13,
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: _found
+                                  ? AppTheme.correct.withValues(alpha: 0.15)
+                                  : (AppTheme.isLight(context)
+                                        ? Colors.black.withValues(alpha: 0.05)
+                                        : Colors.white.withValues(alpha: 0.05)),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              _found
+                                  ? (context.t(K.levelPrefix, {
+                                      'level': '$_opponentLevel',
+                                    }))
+                                  : '?',
+                              style: TextStyle(
+                                color: _found
+                                    ? AppTheme.correct
+                                    : AppTheme.textMutedColor(context),
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

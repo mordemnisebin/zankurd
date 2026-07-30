@@ -68,14 +68,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
         // Kullanıcı vazgeçti ya da akış zaten sürüyor: mesaj gösterme.
         break;
       case PurchaseOutcome.pending:
-        _showMessage(
-          premium.infoMessage ??
-              (context.isKu
-                  ? 'Pereyê te li benda erêkirinê ye.'
-                  : 'Ödemen onay bekliyor.'),
-        );
+        _showMessage(context.t(K.paywallPaymentPending));
       case PurchaseOutcome.failed:
-        if (premium.errorMessage != null) _showMessage(premium.errorMessage!);
+        _showMessage(context.t(K.paywallPurchaseFailed));
     }
   }
 
@@ -88,14 +83,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
         Navigator.of(context).pop();
         return;
       case RestoreOutcome.nothingFound:
-        _showMessage(
-          premium.infoMessage ??
-              (context.isKu
-                  ? 'Aboneyeke çalak nehat dîtin.'
-                  : 'Geri yüklenecek aktif abonelik bulunamadı.'),
-        );
+        _showMessage(context.t(K.paywallRestoreNothing));
       case RestoreOutcome.failed:
-        if (premium.errorMessage != null) _showMessage(premium.errorMessage!);
+        _showMessage(context.t(K.paywallRestoreFailed));
     }
   }
 
@@ -103,15 +93,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppTheme.bgOf(context),
       // Bu ekranın hiçbir çıkış yolu yoktu: AppBar'ı, kapat düğmesi ve
       // (AppRoute bir PageRouteBuilder olduğu için) kaydırarak-geri hareketi
       // yoktu; giren kullanıcı uygulamayı öldürmeden çıkamıyordu
       // (2026-07-25 canlı denetimi, iOS). Geri düğmesi uygulamanın geri
       // kalanıyla aynı yerde — AppBar'da — durur.
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppTheme.bgOf(context),
         elevation: 0,
+        scrolledUnderElevation: 0,
         iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
       ),
       body: Container(
@@ -217,8 +208,8 @@ class _PaywallHero extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             isKu
-                ? 'Xemla belaş, rozeta VIP û parastina zincîrê.'
-                : 'Bedava kozmetikler, VIP rozeti ve seri koruması.',
+                ? 'Parastina xweber a zincîrê û piştgiriya ZanKurdê.'
+                : "Otomatik seri koruması ve ZanKurd'a destek.",
             style: const TextStyle(color: Colors.white, height: 1.4),
           ),
         ],
@@ -235,22 +226,6 @@ class _Benefits extends StatelessWidget {
   Widget build(BuildContext context) {
     final benefits = <_Benefit>[
       _Benefit(
-        icon: AppIcons.palette,
-        title: isKu ? 'Hemû xeml belaş' : 'Tüm kozmetikler bedava',
-        description: isKu
-            ? 'Çarçove, tema, emojî û reng — hemû li dikanê belaş vedibin.'
-            : 'Çerçeve, tema, emoji ve renkler — mağazada hepsi bedava açılır.',
-        color: AppTheme.gold,
-      ),
-      _Benefit(
-        icon: AppIcons.medal,
-        title: isKu ? 'Rozeta VIP' : 'VIP rozeti',
-        description: isKu
-            ? 'Li profîl û lîsteya pêşengan nîşana VIP ya taybet.'
-            : 'Profilinde ve liderlik tablosunda özel VIP rozeti.',
-        color: AppTheme.violet,
-      ),
-      _Benefit(
         icon: AppIcons.shield,
         title: isKu ? 'Parastina zincîrê' : 'Otomatik seri koruması',
         description: isKu
@@ -262,7 +237,7 @@ class _Benefits extends StatelessWidget {
       ),
       _Benefit(
         icon: AppIcons.heart,
-        title: isKu ? 'Piştgiriya ZanKurd' : "ZanKurd'a destek",
+        title: isKu ? 'Piştgiriya ZanKurdê' : "ZanKurd'a destek",
         description: isKu
             ? 'Tu pêşketina sepana kurdî û naveroka nû piştgir dikî.'
             : 'Kürtçe uygulamanın gelişimini ve yeni içeriği desteklersin.',
@@ -428,11 +403,8 @@ class _PackageRow extends StatelessWidget {
   }
 
   String _packageSubtitle() {
-    if (package.packageType == PackageType.annual) {
-      return isKu ? '2 meh belaş' : '2 ay bedava';
-    }
     if (package.packageType == PackageType.monthly) {
-      return isKu ? 'Her gav tê betalkirin' : 'İstediğin zaman iptal';
+      return isKu ? 'Her gav dikarî betal bikî' : 'İstediğin zaman iptal';
     }
     return '';
   }
@@ -453,6 +425,10 @@ class _PackageRow extends StatelessWidget {
     final price = package.storeProduct.price;
     final priceString = package.storeProduct.priceString;
     final accentColor = featured ? AppTheme.gold : null;
+    final buttonBackground = featured
+        ? AppTheme.gold
+        : AppTheme.primaryGradientStart;
+    final buttonForeground = AppColors.onSolid(buttonBackground);
     return Container(
       padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
@@ -501,7 +477,7 @@ class _PackageRow extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          isKu ? 'YÊ' : 'POPÜLER',
+                          isKu ? 'NAVDAR' : 'POPÜLER',
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w800,
@@ -538,10 +514,8 @@ class _PackageRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: featured
-                  ? AppTheme.gold
-                  : AppTheme.primaryGradientStart,
-              foregroundColor: Colors.white,
+              backgroundColor: buttonBackground,
+              foregroundColor: buttonForeground,
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -551,16 +525,16 @@ class _PackageRow extends StatelessWidget {
             ),
             onPressed: isBusy ? null : onBuy,
             child: isBusy
-                ? const SizedBox(
+                ? SizedBox(
                     width: 16,
                     height: 16,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: Colors.white,
+                      color: buttonForeground,
                     ),
                   )
                 : Text(
-                    isKu ? 'Bikirin' : 'Satın al',
+                    isKu ? 'Bikire' : 'Satın al',
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
           ),
@@ -588,7 +562,7 @@ class _EmptyOfferings extends StatelessWidget {
               Expanded(
                 child: Text(
                   isKu
-                      ? 'Pakêtên premium hê nehate vekirin'
+                      ? 'Pakêtên Premium hîn nehatine çalak kirin'
                       : 'Premium paketler henüz aktif değil',
                   style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textPrimaryColor(context),
@@ -601,7 +575,7 @@ class _EmptyOfferings extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             isKu
-                ? 'Kurteyê Premium dê di rojekê de xuya bibin. Ji kerema xwe piştre vegere.'
+                ? 'Pakêtên Premium dê di demeke kurt de çalak bibin. Ji kerema xwe paşê vegere.'
                 : 'Premium paketler kısa süre içinde aktif olacak. Lütfen daha sonra tekrar bakın.',
             style: AppTypography.caption.copyWith(
               color: AppTheme.textSubColor(context),
@@ -627,7 +601,7 @@ class _FooterActions extends StatelessWidget {
         TextButton(
           onPressed: onRestore,
           child: Text(
-            isKu ? 'Kirrinan vegerîn' : 'Satın alımları geri yükle',
+            isKu ? 'Kirînên xwe vegerîne' : 'Satın alımları geri yükle',
             style: AppTypography.caption.copyWith(
               color: AppTheme.textSubColor(context),
             ),
@@ -639,7 +613,7 @@ class _FooterActions extends StatelessWidget {
         // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
         Text(
           isKu
-              ? 'Abone bixweber nû dibe. Heta 24 saetan berî dawiya heyamê '
+              ? 'Abonetiya te bixweber nû dibe. Heta 24 saetan berî dawiya heyamê '
                     'neyê betalkirin, ji hesabê te yê App Store/Google Play '
                     'dîsa tê kişandin. Tu dikarî her gav ji mîhengên hesabê '
                     'xwe betal bikî.'

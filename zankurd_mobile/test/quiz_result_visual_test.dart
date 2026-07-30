@@ -41,6 +41,15 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
         selectedAnswer: 'A',
         explanation: 'Rast bersiv A ye.',
       ),
+      AnswerRecord(
+        id: 'q2',
+        category: 'Ziman',
+        prompt: 'Kîjan bersiv rast e?',
+        answers: ['A', 'B', 'C', 'D'],
+        correctAnswer: 'A',
+        selectedAnswer: 'B',
+        explanation: 'Rast bersiv A ye.',
+      ),
     ],
   );
 }
@@ -66,41 +75,29 @@ void main() {
     }
   });
 
-  testWidgets('primary CTA ve ikincil butonları taşır', (tester) async {
-    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
-    await tester.pump(const Duration(seconds: 1));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'yanlış varsa inceleme ana eylem, diğer yollar kapalı gruptadır',
+    (tester) async {
+      await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
-    // Primary: play again
-    expect(find.text('Tekrar oyna'), findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('result-play-again-button')),
-      findsOneWidget,
-    );
+      expect(
+        find.byKey(const ValueKey('result-primary-review-mistakes')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('result-play-again-button')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
+      expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
 
-    // Secondary: review (ikon + etiket yan aksiyon)
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('result-review-button')),
-      200,
-    );
-    expect(find.byKey(const ValueKey('result-review-button')), findsOneWidget);
-    expect(find.text('İncele'), findsOneWidget);
-
-    // Secondary: home
-    await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('result-home-button')),
-      200,
-    );
-    final homeBtn = tester.widget<TextButton>(
-      find.byKey(const ValueKey('result-home-button')),
-    );
-    expect(homeBtn.onPressed, isNotNull);
-    expect(find.text('Ana Sayfa'), findsOneWidget);
-
-    // Subtle links
-    expect(find.text('Sadece yanlışlar'), findsOneWidget);
-    expect(find.text('Liderlik tablosu'), findsOneWidget);
-  });
+      await tester.tap(find.byKey(const ValueKey('result-more-options')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('result-home-button')), findsOneWidget);
+    },
+  );
 
   // 2026-07-23 M33: Roj maskotu sonuç ekranında görünsün ve yüksek
   // doğrulukta (8/10 = %80) kutlama modunda olsun.

@@ -14,6 +14,7 @@ class StyledInputField extends StatefulWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixIconPressed;
+  final String? suffixSemanticLabel;
   final String? Function(String?)? validator;
 
   /// Ne zaman otomatik doğrulama yapılacağını belirler.
@@ -36,6 +37,7 @@ class StyledInputField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onSuffixIconPressed,
+    this.suffixSemanticLabel,
     this.validator,
     this.autovalidateMode = AutovalidateMode.disabled,
     this.hintText,
@@ -172,9 +174,9 @@ class StyledInputFieldState extends State<StyledInputField> {
                     : [],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppSpacing.lg,
-                  vertical: 14,
+                  vertical: widget.suffixIcon == null ? 14 : 4,
                 ),
                 child: Row(
                   children: [
@@ -193,41 +195,65 @@ class StyledInputFieldState extends State<StyledInputField> {
                     ],
                     // Text field
                     Expanded(
-                      child: TextField(
-                        controller: widget.controller,
-                        focusNode: _focusNode,
-                        keyboardType: widget.keyboardType,
-                        obscureText: widget.obscureText,
-                        style: textStyle,
-                        onChanged: _onChanged,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: widget.hintText ?? '',
-                          hintStyle: TextStyle(
-                            color: AppTheme.textMutedColor(context),
-                            fontSize: 14,
+                      child: Semantics(
+                        label: widget.label.isEmpty ? null : widget.label,
+                        child: TextField(
+                          controller: widget.controller,
+                          focusNode: _focusNode,
+                          keyboardType: widget.keyboardType,
+                          obscureText: widget.obscureText,
+                          style: textStyle,
+                          onChanged: _onChanged,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
+                            filled: false,
+                            hintText: widget.hintText ?? '',
+                            hintStyle: TextStyle(
+                              color: AppTheme.textMutedColor(context),
+                              fontSize: 14,
+                            ),
+                            isDense: true,
+                            contentPadding: EdgeInsets.zero,
                           ),
-                          isDense: true,
-                          contentPadding: EdgeInsets.zero,
+                          cursorColor: hasError
+                              ? AppTheme.wrong
+                              : AppColors.focus,
                         ),
-                        cursorColor: hasError
-                            ? AppTheme.wrong
-                            : AppColors.focus,
                       ),
                     ),
                     // Suffix icon
                     if (widget.suffixIcon != null) ...[
                       const SizedBox(width: AppSpacing.md),
-                      GestureDetector(
+                      Semantics(
+                        label: widget.suffixSemanticLabel,
+                        button: widget.onSuffixIconPressed != null,
+                        enabled: widget.onSuffixIconPressed != null,
                         onTap: widget.onSuffixIconPressed,
-                        child: Icon(
-                          widget.suffixIcon,
-                          size: 18,
-                          color: hasError
-                              ? AppTheme.wrong
-                              : isFocused
-                              ? AppColors.focus
-                              : AppTheme.textMutedColor(context),
+                        child: ExcludeSemantics(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              minWidth: 44,
+                              minHeight: 44,
+                            ),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: widget.onSuffixIconPressed,
+                              child: Icon(
+                                widget.suffixIcon,
+                                size: 18,
+                                color: hasError
+                                    ? AppTheme.wrong
+                                    : isFocused
+                                    ? AppColors.focus
+                                    : AppTheme.textMutedColor(context),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],

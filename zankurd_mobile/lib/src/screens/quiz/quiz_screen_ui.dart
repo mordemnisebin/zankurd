@@ -39,12 +39,9 @@ extension _QuizScreenUI on _QuizScreenState {
                   if (!_isLearningExperience) _buildComboRow(),
                   const SizedBox(height: AppSpacing.xs),
                   Expanded(
-                    // 2026-07-23 M23: 2 şıklı sorularda (Ziman çeviri
-                    // alıştırmaları) içerik kısa kalıyor, aksiyon barından
-                    // önce büyük boş bir bant oluşuyordu. minHeight+Center
-                    // ile içerik kısa olduğunda dikeyde ortalanır; uzun
-                    // olduğunda (4 şık, açıklama kutusu, canlı skor)
-                    // normal şekilde kaydırılabilir kalır.
+                    // Kısa sorular uzun telefonlarda ekranın ortasına
+                    // itilmez. Üstten başlayan akış ilerleme çubuğu → soru
+                    // ilişkisini korur; uzun içerik yine kaydırılabilir.
                     child: LayoutBuilder(
                       builder: (context, scrollConstraints) {
                         return SingleChildScrollView(
@@ -56,50 +53,58 @@ extension _QuizScreenUI on _QuizScreenState {
                                 double.infinity,
                               ),
                             ),
-                            child: Center(
-                              child: Column(
-                                key: const ValueKey('quiz-answer-content'),
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
-                                  // AnimatedSwitcher içinde olduğundan geçiş sırasında
-                                  // eski ve yeni panel aynı anda yaşar; anahtar her
-                                  // soruda geçilirse duplicate-GlobalKey hatası oluşur.
-                                  // Eğitim turu zaten sadece ilk soruda gösterilir.
-                                  _buildQuestionSwitcher(
-                                    context,
-                                    showExplanation: showExpl,
-                                    timerKey: index == 0
-                                        ? _timerTargetKey
-                                        : null,
-                                    answerAreaKey: index == 0
-                                        ? _answerAreaKey
-                                        : null,
-                                    correctAnswerKey: _correctAnswerKey,
-                                    questionVisualReady: index == 0
-                                        ? _handleQuestionVisualReady
-                                        : null,
-                                  ),
-                                  if (selectedAnswer == 'TIMEOUT')
-                                    QuizTimeoutNotice(
-                                      isKu: _isKu,
-                                      correctAnswer: question.correctAnswer,
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: AppSpacing.md,
+                                ),
+                                child: Column(
+                                  key: const ValueKey('quiz-answer-content'),
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    // Coach-mark GlobalKey'leri yalnız ilk soruda: panel
+                                    // AnimatedSwitcher içinde olduğundan geçiş sırasında
+                                    // eski ve yeni panel aynı anda yaşar; anahtar her
+                                    // soruda geçilirse duplicate-GlobalKey hatası oluşur.
+                                    // Eğitim turu zaten sadece ilk soruda gösterilir.
+                                    _buildQuestionSwitcher(
+                                      context,
+                                      showExplanation: showExpl,
+                                      timerKey: index == 0
+                                          ? _timerTargetKey
+                                          : null,
+                                      answerAreaKey: index == 0
+                                          ? _answerAreaKey
+                                          : null,
+                                      correctAnswerKey: _correctAnswerKey,
+                                      questionVisualReady: index == 0
+                                          ? _handleQuestionVisualReady
+                                          : null,
                                     ),
-                                  if (_isMultiplayer &&
-                                      answered &&
-                                      _mpPhase == _MultiplayerPhase.waiting)
-                                    _MultiplayerWaitingOverlay(isKu: _isKu),
-                                  if (_isMultiplayer &&
-                                      _mpPhase == _MultiplayerPhase.reveal)
-                                    _RevealCountdown(
-                                      seconds: _revealCountdown,
-                                      isKu: _isKu,
-                                    ),
-                                  if (widget.is1v1 && screenHeight >= 800) ...[
-                                    const SizedBox(height: 8),
-                                    _LiveScoreboard(players: livePlayers),
+                                    if (selectedAnswer == 'TIMEOUT' &&
+                                        !_suspense)
+                                      QuizTimeoutNotice(
+                                        isKu: _isKu,
+                                        correctAnswer: question.correctAnswer,
+                                      ),
+                                    if (_isMultiplayer &&
+                                        answered &&
+                                        _mpPhase == _MultiplayerPhase.waiting)
+                                      _MultiplayerWaitingOverlay(isKu: _isKu),
+                                    if (_isMultiplayer &&
+                                        _mpPhase == _MultiplayerPhase.reveal)
+                                      _RevealCountdown(
+                                        seconds: _revealCountdown,
+                                        isKu: _isKu,
+                                      ),
+                                    if (widget.is1v1 &&
+                                        screenHeight >= 800) ...[
+                                      const SizedBox(height: 8),
+                                      _LiveScoreboard(players: livePlayers),
+                                    ],
                                   ],
-                                ],
+                                ),
                               ),
                             ),
                           ),
@@ -156,7 +161,7 @@ extension _QuizScreenUI on _QuizScreenState {
                             ? _handleQuestionVisualReady
                             : null,
                       ),
-                      if (selectedAnswer == 'TIMEOUT')
+                      if (selectedAnswer == 'TIMEOUT' && !_suspense)
                         QuizTimeoutNotice(
                           isKu: _isKu,
                           correctAnswer: question.correctAnswer,
@@ -374,7 +379,7 @@ extension _QuizScreenUI on _QuizScreenState {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (!_isLearningExperience) ...[
+        if (!_isLearningExperience && !_usesServerHiddenAnswers) ...[
           _buildWildcardRow(),
           SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
         ],
@@ -399,7 +404,7 @@ extension _QuizScreenUI on _QuizScreenState {
                     child: FilledButton(
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.brandDeep,
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppColors.onSolid(AppTheme.brandDeep),
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
                         ),
@@ -421,7 +426,7 @@ extension _QuizScreenUI on _QuizScreenState {
                     child: FilledButton(
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.playCyan,
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppColors.onSolid(AppTheme.playCyan),
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
                         ),
@@ -443,7 +448,7 @@ extension _QuizScreenUI on _QuizScreenState {
                     child: FilledButton(
                       style: FilledButton.styleFrom(
                         backgroundColor: AppTheme.correct,
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppColors.onSolid(AppTheme.correct),
                         padding: const EdgeInsets.symmetric(
                           vertical: AppSpacing.sm,
                         ),
@@ -470,7 +475,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   key: const ValueKey('quiz-next-button'),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppTheme.brand,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.onSolid(AppTheme.brand),
                     // Cevap beklenirken düğme Material'ın varsayılan gri
                     // levhasına düşüyordu: ekranın en büyük öğesi ölü bir
                     // gri blok oluyordu. Pasif hâl artık markanın kendi
@@ -567,6 +572,8 @@ extension _QuizScreenUI on _QuizScreenState {
       type: type,
       isKu: _isKu,
       isEnabled: isEnabled,
+      isUsed: used,
+      isAnswered: answered,
       isActive: isActive,
       cantAfford: !used && !canAfford && !answered,
       onTap: () => _onWildcardTap(type),
@@ -628,20 +635,9 @@ extension _QuizScreenUI on _QuizScreenState {
     final completed = await store.reportWildcardUsed();
     if (completed == null || !mounted) return;
 
-    await widget.repository.claimMissionReward(
-      missionKey: completed.missionKey,
-      fallbackReward: completed.coinReward,
-    );
-
     final xpStore = await XPStore.load();
-    const missionXP = 100;
+    final missionXP = completed.xpReward;
     final leveledUp = await xpStore.addXP(missionXP);
-    try {
-      await widget.repository.awardProfileXPDelta(missionXP);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'quiz_queue_xp_sync');
-      SyncManager.instance.queueXP(xpStore.totalXP, delta: missionXP);
-    }
 
     if (!mounted) return;
     MissionToast.show(context, completed);

@@ -60,6 +60,12 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
+      final hasGoldFrame = await widget.repository.hasPurchased(
+        'avatar_frame_gold',
+      );
+      final hasVipBadge = await widget.repository.hasPurchased(
+        'profile_badge_vip',
+      );
 
       final masteryByCategory = {
         for (final cat in widget.repository.categories)
@@ -71,18 +77,24 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       for (final cat in widget.repository.categories) {
         final level = masteryStore.levelFor(cat);
         if (level != MasteryLevel.none) {
-          titles.add('${level.titleKu} · $cat');
+          titles.add(
+            '${level.titleKu} · ${CategoryNames.localized(cat, true)}',
+          );
         }
       }
+      if (hasVipBadge && !titles.contains('VIP')) titles.add('VIP');
+
+      final frames = unlockedFrames(
+        unlockedBadgeCount: achievementStore.unlockedAchievements.length,
+        masteryCorrectByCategory: masteryByCategory,
+      );
+      if (hasGoldFrame) frames.add(AvatarFrame.gold);
 
       if (!mounted) return;
       setState(() {
         _identity = identity;
         _displayName = name;
-        _unlocked = unlockedFrames(
-          unlockedBadgeCount: achievementStore.unlockedAchievements.length,
-          masteryCorrectByCategory: masteryByCategory,
-        );
+        _unlocked = frames;
         _earnedTitles = titles;
         _loading = false;
       });

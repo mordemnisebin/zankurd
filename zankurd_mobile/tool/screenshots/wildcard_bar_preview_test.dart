@@ -68,6 +68,8 @@ Future<void> _capture(
                           type: jokers[i],
                           isKu: true,
                           isEnabled: true,
+                          isUsed: false,
+                          isAnswered: false,
                           isActive: false,
                           onTap: () {},
                         ),

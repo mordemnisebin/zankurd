@@ -73,6 +73,17 @@ void main() {
       await store.restart('cayxane');
       expect(store.currentNodeId('cayxane'), isNull);
     });
+
+    test('hesap çıkışında tüm hikâye ilerlemesi temizlenir', () async {
+      final store = await StoryProgressStore.load();
+      await store.saveNode('cayxane', 'tea');
+      await store.saveNode('bazaar', 'entry');
+
+      await store.clear();
+
+      expect(store.currentNodeId('cayxane'), isNull);
+      expect(store.currentNodeId('bazaar'), isNull);
+    });
   });
 
   group('MiniGuide içeriği', () {

@@ -60,7 +60,15 @@ void main() {
       applyShopPurchaseEffect('profile_badge_vip', identity).showcaseTitle,
       'VIP',
     );
-    expect(applyShopPurchaseEffect('joker_bundle', identity), identity);
+    expect(applyShopPurchaseEffect('spin_wheel_extra', identity), identity);
+  });
+
+  test('mağaza yalnız gerçekten çalışan ürünleri yayınlar', () {
+    expect(debugShopItems.map((item) => item.id).toSet(), {
+      'spin_wheel_extra',
+      'avatar_frame_gold',
+      'profile_badge_vip',
+    });
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
@@ -72,10 +80,45 @@ void main() {
     expect(find.text('Ekstra Çevirme'), findsOneWidget);
     expect(find.text('Altın Çerçeve'), findsOneWidget);
     expect(find.text('VIP Rozeti'), findsOneWidget);
-    expect(find.text('Joker Paketi'), findsOneWidget);
-    expect(find.text('Ekstra Can'), findsOneWidget);
-    expect(find.text('Premium Renkler'), findsOneWidget);
+    expect(find.text('Joker Paketi'), findsNothing);
+    expect(find.text('Ekstra Can'), findsNothing);
+    expect(find.text('Premium Renkler'), findsNothing);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
+    expect(find.text(description), findsNothing);
+    await tester.ensureVisible(find.text('Ekstra Çevirme'));
+    await tester.tap(find.text('Ekstra Çevirme'));
+    await tester.pumpAndSettle();
+    expect(find.text(description), findsOneWidget);
+    expect(find.text('Satın Al'), findsOneWidget);
+  });
+
+  testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('200c'));
+    await tester.pumpAndSettle();
+    final button = tester.widget<FilledButton>(
+      find.ancestor(of: find.text('200c'), matching: find.byType(FilledButton)),
+    );
+    expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
+    expect(
+      button.style?.shadowColor?.resolve(<WidgetState>{}),
+      Colors.transparent,
+    );
   });
 
   testWidgets('bakiye yetersizse uyarı çıkar ve coin harcanmaz', (
@@ -129,8 +172,8 @@ void main() {
     tester,
   ) async {
     final repository = _ShopRepository(
-      coins: 500,
-      purchased: {'spin_wheel_extra'},
+      coins: 1000,
+      purchased: {'avatar_frame_gold'},
     );
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
@@ -138,7 +181,21 @@ void main() {
     expect(find.text('Sende'), findsOneWidget);
 
     // Purchased items cannot be re-purchased — no buy button shown
-    expect(find.text('200c'), findsNothing);
+    expect(find.text('750c'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('ekstra çevirme tüketilebilir olduğu için yeniden alınabilir', (
+    tester,
+  ) async {
+    final repository = _ShopRepository(
+      coins: 500,
+      purchased: {'spin_wheel_extra'},
+    );
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('200c'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -161,10 +218,8 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  // 2026-07-23 M24: mağaza paleti markaya kaydırıldı (playPink/playCyan/
-  // playPurple ağırlığından turuncu/altın/koyu-yeşile). Bu iki test, (a)
-  // marka tonlarının çoğunlukta kaldığını ve (b) hiçbir ürünün cost'unun
-  // yanlışlıkla değişmediğini otomatik garanti eder.
+  // Yayın kataloğunda yalnız gerçek etkisi bulunan ürünler kalır. Fiyatlar
+  // istemci ve sunucu arasında birebir korunmalıdır.
   test('mağaza paleti marka tonları çoğunlukta (M24)', () {
     final brandTones = <Color>{
       AppTheme.gold,
@@ -187,18 +242,8 @@ void main() {
 
   test('mağaza ürün fiyatları M24 paleti değişikliğinden etkilenmedi', () {
     const expectedCosts = {
-      'emoji_roj': 10,
-      'emoji_ster': 10,
-      'frame_simple': 20,
-      'joker_bundle': 500,
-      'extra_lifeline': 100,
       'spin_wheel_extra': 200,
-      'premium_colors': 300,
       'avatar_frame_gold': 750,
-      'avatar_frame_neon': 600,
-      'name_color_gold': 500,
-      'name_color_purple': 400,
-      'joker_pack_3': 350,
       'profile_badge_vip': 1000,
     };
 

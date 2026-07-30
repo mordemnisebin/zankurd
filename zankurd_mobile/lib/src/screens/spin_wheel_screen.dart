@@ -619,19 +619,16 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       ),
                     )
                   : Icon(enabled ? AppIcons.dice : AppIcons.lock, size: 22),
-              // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
-              label: ExcludeSemantics(
-                child: Text(
-                  _spinning
-                      ? (context.t(K.wheelSpinning))
-                      : enabled
-                      ? (context.t(K.wheelSpin))
-                      : (context.t(K.wheelComeTomorrow)),
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: enabled
-                        ? Colors.white
-                        : AppTheme.textMutedColor(context),
-                  ),
+              label: Text(
+                _spinning
+                    ? (context.t(K.wheelSpinning))
+                    : enabled
+                    ? (context.t(K.wheelSpin))
+                    : (context.t(K.wheelComeTomorrow)),
+                style: AppTypography.bodyLarge.copyWith(
+                  color: enabled
+                      ? Colors.white
+                      : AppTheme.textMutedColor(context),
                 ),
               ),
             ),

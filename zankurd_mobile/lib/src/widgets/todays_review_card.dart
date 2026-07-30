@@ -248,60 +248,51 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Widget _buildEmpty(BuildContext context, bool ku) {
-    final surface = AppTheme.surfaceHiColor(context);
-    return Container(
+    final title = Tr.forKu(K.reviewsDone, ku);
+    final detail = Tr.forKu(K.noReviewsToday, ku);
+    return Semantics(
       key: const ValueKey('todays-review-empty'),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: surface,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+      label: '$title. $detail',
+      excludeSemantics: true,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm,
+          vertical: AppSpacing.xs,
         ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _accent.withValues(alpha: 0.12),
+        decoration: BoxDecoration(
+          color: _accent.withValues(alpha: 0.07),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _accent.withValues(alpha: 0.12),
+              ),
+              child: Icon(
+                AppIcons.circleCheck,
+                color: _accent.withValues(alpha: 0.9),
+                size: 17,
+              ),
             ),
-            child: Icon(
-              AppIcons.circleCheck,
-              color: _accent.withValues(alpha: 0.9),
-              size: 22,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  Tr.forKu(K.reviewsDone, ku),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
+            const SizedBox(width: AppSpacing.xs),
+            Expanded(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppTheme.textPrimaryColor(context),
+                  fontWeight: FontWeight.w700,
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  Tr.forKu(K.noReviewsToday, ku),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

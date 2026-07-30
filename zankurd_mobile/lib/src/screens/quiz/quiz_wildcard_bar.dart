@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../models/wildcard.dart';
+import '../../l10n/lang.dart';
+import '../../l10n/strings.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/app_icons.dart';
 
@@ -13,6 +15,8 @@ class WildcardButton extends StatefulWidget {
     required this.type,
     required this.isKu,
     required this.isEnabled,
+    required this.isUsed,
+    required this.isAnswered,
     required this.isActive,
     required this.onTap,
     this.cantAfford = false,
@@ -22,6 +26,8 @@ class WildcardButton extends StatefulWidget {
   final WildcardType type;
   final bool isKu;
   final bool isEnabled;
+  final bool isUsed;
+  final bool isAnswered;
   final bool isActive;
   final bool cantAfford;
   final VoidCallback onTap;
@@ -36,6 +42,7 @@ class _WildcardButtonState extends State<WildcardButton> {
   @override
   Widget build(BuildContext context) {
     final baseColor = widget.type.themeColor;
+    final canTap = widget.isEnabled;
 
     final opacity = (widget.isEnabled || widget.isActive)
         ? 1.0
@@ -47,6 +54,35 @@ class _WildcardButtonState extends State<WildcardButton> {
     // ekranının en gürültülü öğesiydi — göz soruya değil alt bara gidiyordu.
     // Joker yardımcı araçtır: varsayılan hâli outline, yalnız etkinken dolu.
     final available = widget.isEnabled && !widget.cantAfford;
+
+    final stateLabel = widget.isActive
+        ? context.t(K.wildcardActive)
+        : widget.isUsed
+        ? context.t(K.wildcardUsed)
+        : widget.isAnswered
+        ? context.t(K.locked)
+        : widget.cantAfford
+        ? context.t(K.insufficientBalance)
+        : null;
+
+    final typeLabel = widget.type.label(widget.isKu);
+    final displayLabel = stateLabel == null
+        ? typeLabel
+        : '$typeLabel • $stateLabel';
+
+    final typeHint = switch (widget.type) {
+      WildcardType.fiftyFifty => context.t(K.wildcardFiftyHint),
+      WildcardType.audience => context.t(K.wildcardAudienceHint),
+      WildcardType.doubleAnswer => context.t(K.wildcardDoubleHint),
+      WildcardType.changeQuestion => context.t(K.wildcardChangeHint),
+    };
+
+    final tooltipMessage = stateLabel == null
+        ? '$typeLabel • $typeHint'
+        : '$typeLabel • $stateLabel';
+    final hintMessage = stateLabel == null
+        ? typeHint
+        : '$typeHint • $stateLabel';
 
     final borderColor = widget.isActive
         ? AppTheme.brand
@@ -68,89 +104,97 @@ class _WildcardButtonState extends State<WildcardButton> {
         ? AppColors.onAccentTint(context, baseColor)
         : AppTheme.textMutedColor(context);
 
-    return Tooltip(
-      message: widget.type.label(widget.isKu),
-      child: GestureDetector(
-        onTapDown: widget.isEnabled
-            ? (_) => setState(() => _pressed = true)
-            : null,
-        onTapUp: widget.isEnabled
-            ? (_) {
-                setState(() => _pressed = false);
-                widget.onTap();
-              }
-            : null,
-        onTapCancel: widget.isEnabled
-            ? () => setState(() => _pressed = false)
-            : null,
-        child: AnimatedScale(
-          scale: _pressed ? 0.94 : 1.0,
-          duration: const Duration(milliseconds: 80),
-          child: Opacity(
-            opacity: opacity.clamp(0.0, 1.0),
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-              // Erişilebilirlik: min 44px dokunma hedefi (WCAG).
-              constraints: const BoxConstraints(minHeight: 52),
-              decoration: BoxDecoration(
-                color: bgColor ?? Colors.transparent,
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: borderColor, width: 1.2),
-              ),
-              // Ad ve fiyat AYRI satırlarda. Tek satıra sıkıştırılıp
-              // FittedBox ile küçültüldüğünde 375px genişlikte dört joker
-              // etiketi ~8pt'ye düşüyor ve okunmuyordu (2026-07-25 canlı
-              // denetimi).
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 18,
-                    height: 18,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: widget.isActive
-                          ? Colors.white.withValues(alpha: 0.24)
-                          : iconColor.withValues(alpha: 0.14),
+    return Semantics(
+      button: true,
+      enabled: canTap,
+      selected: widget.isActive,
+      label: displayLabel,
+      hint: hintMessage,
+      excludeSemantics: true,
+      onTap: canTap ? widget.onTap : null,
+      child: Tooltip(
+        message: tooltipMessage,
+        child: GestureDetector(
+          onTapDown: canTap ? (_) => setState(() => _pressed = true) : null,
+          onTapUp: canTap ? (_) => setState(() => _pressed = false) : null,
+          onTap: canTap
+              ? () {
+                  setState(() => _pressed = false);
+                  widget.onTap();
+                }
+              : null,
+          onTapCancel: canTap ? () => setState(() => _pressed = false) : null,
+          child: AnimatedScale(
+            scale: _pressed ? 0.94 : 1.0,
+            duration: const Duration(milliseconds: 80),
+            child: Opacity(
+              opacity: opacity.clamp(0.0, 1.0),
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                // Erişilebilirlik: min 44px dokunma hedefi (WCAG).
+                constraints: const BoxConstraints(minHeight: 52),
+                decoration: BoxDecoration(
+                  color: bgColor ?? Colors.transparent,
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  border: Border.all(color: borderColor, width: 1.2),
+                ),
+                // Ad ve fiyat AYRI satırlarda. Tek satıra sıkıştırılıp
+                // FittedBox ile küçültüldüğünde 375px genişlikte dört joker
+                // etiketi ~8pt'ye düşüyor ve okunmuyordu (2026-07-25 canlı
+                // denetimi).
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 18,
+                      height: 18,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: widget.isActive
+                            ? Colors.white.withValues(alpha: 0.24)
+                            : iconColor.withValues(alpha: 0.14),
+                      ),
+                      child: Icon(
+                        widget.cantAfford || widget.isAnswered
+                            ? AppIcons.lock
+                            : widget.type.icon,
+                        size: 12,
+                        color: iconColor,
+                      ),
                     ),
-                    child: Icon(
-                      widget.cantAfford ? AppIcons.lock : widget.type.icon,
-                      size: 12,
-                      color: iconColor,
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.type.label(widget.isKu),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 11,
+                        height: 1.05,
+                        color: iconColor,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    widget.type.label(widget.isKu),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: AppTypography.caption.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 11,
-                      height: 1.05,
-                      color: iconColor,
+                    Text(
+                      '${widget.type.coinCost}c',
+                      maxLines: 1,
+                      style: AppTypography.caption.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 10,
+                        height: 1.05,
+                        // %75 alfa hiyerarşi için kondu ama okunabilirliği
+                        // yiyordu: bedel satırı 2.52-2.96:1 ölçüldü, yani
+                        // oyuncu jokerin kaç coin olduğunu ancak yakından
+                        // görüyordu (2026-07-27). Hiyerarşi zaten punto ve
+                        // ağırlık farkında; alfaya gerek yok.
+                        color: iconColor,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '${widget.type.coinCost}c',
-                    maxLines: 1,
-                    style: AppTypography.caption.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
-                      height: 1.05,
-                      // %75 alfa hiyerarşi için kondu ama okunabilirliği
-                      // yiyordu: bedel satırı 2.52-2.96:1 ölçüldü, yani
-                      // oyuncu jokerin kaç coin olduğunu ancak yakından
-                      // görüyordu (2026-07-27). Hiyerarşi zaten punto ve
-                      // ağırlık farkında; alfaya gerek yok.
-                      color: iconColor,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

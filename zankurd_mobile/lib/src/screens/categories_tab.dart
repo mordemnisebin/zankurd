@@ -190,13 +190,21 @@ class _CategoriesTabState extends State<CategoriesTab> {
                           // genişte 2 sütun dergi kapağı oranı.
                           final crossCount = isNarrow ? 1 : 2;
                           // Sakin satır kartı: poster yüksekliği gerekmiyor.
-                          const targetH = 88.0;
-                          final aspectRatio = isNarrow
-                              ? (constraints.maxWidth / targetH).clamp(3.2, 5.4)
-                              : ((constraints.maxWidth / 2) / targetH).clamp(
-                                  2.4,
-                                  4.2,
-                                );
+                          // Grid'in gerçek çocuk genişliği sayfa boşlukları
+                          // çıktıktan sonra kalandır. Tam ekran genişliğiyle
+                          // oran hesaplamak kartı fark edilmeden 11 px kadar
+                          // kısaltıyordu. Büyük yazıda da iki metin satırı
+                          // için kontrollü ek yükseklik gerekir.
+                          final textScale =
+                              MediaQuery.textScalerOf(context).scale(16) / 16;
+                          final targetH =
+                              88.0 + (textScale - 1).clamp(0.0, 1.0) * 40.0;
+                          final availableWidth =
+                              constraints.maxWidth -
+                              (2 * AppSpacing.page) -
+                              ((crossCount - 1) * AppSpacing.md);
+                          final itemWidth = availableWidth / crossCount;
+                          final aspectRatio = itemWidth / targetH;
                           return GridView.builder(
                             controller: widget.scrollController,
                             padding: EdgeInsets.fromLTRB(
@@ -254,9 +262,11 @@ class _CategoriesTabState extends State<CategoriesTab> {
             MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
         final isNarrow = constraints.maxWidth <= 600;
         final crossCount = isNarrow ? 1 : 2;
-        final aspectRatio = isNarrow
-            ? (constraints.maxWidth / 120).clamp(2.5, 4.5)
-            : ((constraints.maxWidth / 2) / 120).clamp(2.0, 4.0);
+        final availableWidth =
+            constraints.maxWidth -
+            (2 * AppSpacing.page) -
+            ((crossCount - 1) * AppSpacing.md);
+        final aspectRatio = (availableWidth / crossCount) / 120;
         return GridView.builder(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.page,

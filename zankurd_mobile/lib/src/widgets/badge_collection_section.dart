@@ -94,7 +94,6 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
             // sığmıyor ve başlık "Rozet Koleksiyo…" diye kesiliyordu
             // (2026-07-22 canlı UX denetimi). Kısa etiket + ok ikonu
             // aynı işi daha az yer kaplayarak yapıyor.
-            // 2026-07-22 canlı UX denetimi: CTA erişilebilirlik düzeltmesi
             TextButton(
               onPressed: () => _showAllBadgesSheet(context, badges, ku),
               style: TextButton.styleFrom(
@@ -102,25 +101,23 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: ExcludeSemantics(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      context.t(K.allFilter),
-                      style: const TextStyle(
-                        color: AppTheme.primaryGradientStart,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const Icon(
-                      AppIcons.chevronRight,
-                      size: 12,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.t(K.allFilter),
+                    style: const TextStyle(
                       color: AppTheme.primaryGradientStart,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 12,
                     ),
-                  ],
-                ),
+                  ),
+                  const Icon(
+                    AppIcons.chevronRight,
+                    size: 12,
+                    color: AppTheme.primaryGradientStart,
+                  ),
+                ],
               ),
             ),
           ],
