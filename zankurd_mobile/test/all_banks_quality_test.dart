@@ -289,6 +289,46 @@ void main() {
     );
   });
 
+  // 2026-07-30: bankanın %42'si on dört soru kalıbından geliyordu ve en sık
+  // tek kalıp ("Rast e an şaş e: …") tek başına %15,6'ydı. Sorular bu yüzden
+  // "yapay" hissettiriyordu: oyuncu arka arkaya beş soru çözünce beşinin de
+  // aynı cümleyle başladığını görüyordu.
+  //
+  // Ölçüt bir mandal, hedef değil. Yeni soru yazan kişi tıkanmış kalıbı
+  // kullanmakta serbest — ama yığılmayı **artıramaz**. Oran düştükçe tavan
+  // da düşürülür; bu, uzunluk ve pozisyon mandallarıyla aynı mantık.
+  test('soru kalıpları tek bir açılışta yığılmıyor', () {
+    final opening = <String, int>{};
+    var total = 0;
+    banks.forEach((name, questions) {
+      for (final question in questions) {
+        final stripped = question.prompt.replaceAll(RegExp('«[^»]*»'), 'X');
+        final words = stripped.split(RegExp(r'\s+')).take(4).join(' ');
+        opening[words] = (opening[words] ?? 0) + 1;
+        total++;
+      }
+    });
+
+    final ranked = opening.values.toList()..sort((a, b) => b.compareTo(a));
+    final topOne = ranked.first / total * 100;
+    final topFourteen = ranked.take(14).fold(0, (a, b) => a + b) / total * 100;
+
+    expect(
+      topOne,
+      lessThanOrEqualTo(16.0),
+      reason:
+          'Tek kalıp soruların %${topOne.toStringAsFixed(1)}\'ini taşıyor; '
+          'oyuncu aynı cümleyi arka arkaya görüyor.',
+    );
+    expect(
+      topFourteen,
+      lessThanOrEqualTo(43.0),
+      reason:
+          'En sık on dört kalıp %${topFourteen.toStringAsFixed(1)} — '
+          'gövde çeşitliliği azalıyor.',
+    );
+  });
+
   // 2026-07-30: altı soruda gövde Kurmancî ama şıkların **dördü de** Türkçeydi.
   // Kurmancî turu oynayan oyuncu Kurmancî bir soru okuyup Türkçe dört şıkla
   // karşılaşıyordu.
