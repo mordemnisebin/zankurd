@@ -129,7 +129,7 @@ void main() {
     expect(turkish, contains('oyun ve eşleştirme'));
     expect(turkish, contains('oda mesajları'));
     expect(turkish, contains('soru önerileri'));
-    expect(turkish, contains('Ayarlar → Hesap → Hesabımı Sil'));
+    expect(turkish, contains('Ayarlar > Hesap > Hesabımı Sil'));
     expect(turkish, contains('liderlik tablosunda'));
     expect(turkish, contains('arkadaş araması ve isteklerinde'));
     expect(turkish, contains('çevrimiçi odalarda'));
@@ -143,7 +143,7 @@ void main() {
     // ayarlar ekranının Kurmancî adı `Mîheng` (K.settings). Hesabını silmek
     // isteyen oyuncu var olmayan bir menü arıyordu — yasal metnin tarif
     // ettiği yol uygulamada bulunmuyordu.
-    expect(kurmanci, contains('Mîheng → Hesab → Hesabê Min Jê Bibe'));
+    expect(kurmanci, contains('Mîheng > Hesab > Hesabê Min Jê Bibe'));
     expect(kurmanci, contains(Tr.of(K.settings, AppLanguage.ku)));
     expect(kurmanci, contains('tabloya pêşderçûnê'));
     expect(kurmanci, contains('lêgerîna hevalan'));
@@ -216,6 +216,44 @@ void main() {
       isEmpty,
       reason:
           'Tek Türkçe metne birden çok Kurmancî karşılık:\n'
+          '${offenders.join("\n")}',
+    );
+  });
+
+  // 2026-07-26'da ölçülmüştü: Rubik U+2192 (→) taşımıyor, ok sistem yazı
+  // tipine düşüyor ve cümlenin ortasında tip değişiyor. O gün yalnız
+  // `explanationToKu` kural motorundan çıkarılmıştı — bankada yazılı 861
+  // alanda ve gizlilik metninin kendisinde ok kalmıştı ("Ayarlar → Hesap →
+  // Hesabımı Sil"). Dört Rubik kesitinin cmap tablosu doğrulandı: hiçbirinde
+  // glif yok.
+  //
+  // Kural yalnız oka değil, ürünün yazı tipinin taşımadığı her karaktere
+  // bakar: yeni bir simge eklendiğinde aynı kusur sessizce dönmesin.
+  test('metinlerde ürünün yazı tipinde olmayan karakter yok', () {
+    // Rubik'te bulunmayan, metne kolayca sızabilen tipografik simgeler.
+    const missingGlyphs = {
+      '\u2192': 'ok (→) — yerine ">" ya da "·"',
+      '\u2190': 'sol ok (←)',
+      '\u21D2': 'çift ok (⇒)',
+      '\u2713': 'onay (✓) — ikon kullanın',
+      '\u2717': 'çarpı (✗) — ikon kullanın',
+    };
+
+    final offenders = <String>[];
+    for (final key in Tr.keys) {
+      for (final language in AppLanguage.values) {
+        final text = Tr.of(key, language);
+        missingGlyphs.forEach((glyph, hint) {
+          if (text.contains(glyph)) offenders.add('$key: $hint');
+        });
+      }
+    }
+
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'Yazı tipinde olmayan karakter cümlenin ortasında tip değiştirir:\n'
           '${offenders.join("\n")}',
     );
   });

@@ -5,7 +5,7 @@
   "sourceFingerprints": {
     "assets/data/community_questions.json": "749c7fea9de9a9aa67127d35b3d048b7be0c4d42a813b8cf36db0aa8a6876c66",
     "assets/data/editorial_questions.json": "b7eb271f581d6f2a51d824e76cd588c876f1d6ba00124b92763ac431d4826713",
-    "assets/data/offline_questions.json": "58f40bdad58d4a8286b75b7eded06daa1a638d9251c3ac64433cbaf04e7f4823",
+    "assets/data/offline_questions.json": "130844b5f671ca045d8fed8821a2ea7eb822591241c28ecd6e1307e1e5b0ebdf",
     "assets/data/sentence_building_questions.json": "ee576f56fbed547843a87cbec397bada1af9a73784ef6d5a0ecf3239272a3f06",
     "lib/src/data/curated_question_bank.dart": "501dd4a1efe10525381a5d6cdd3dab0cd34841a462716029cf505f14ce1c5b44"
   },

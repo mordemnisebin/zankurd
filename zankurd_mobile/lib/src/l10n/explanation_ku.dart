@@ -250,10 +250,37 @@ String _productQuotes(String text) {
 
 String explanationToKu(String explanation) {
   final text = explanation.trim();
-  // Kurallar tarihsel olarak iki tırnak biçimiyle yazılmış: kimi `"…"`,
-  // kimi `'…'`. Girişi tek biçime çevirmek yarısını kaçırır, o yüzden her
-  // kural iki varyantta da denenir. Kural sırası korunur, öncelik değişmez.
-  final variants = [_withQuote(text, '"'), _withQuote(text, "'")];
+  // Kurallar iki yerde kaynak biçimine çapalı ve ikisi de banka
+  // düzenlenince kayıyor. Motor bu yüzden girişi **normalleştirmez**,
+  // her kuralı birkaç varyantta dener; kural sırası korunur.
+  //
+  // Tırnak: kurallar tarihsel olarak hem `"…"` hem `'…'` ile yazılmış.
+  // Banka 2026-07-30'da «» kuralında birleşince ikisi de eşleşmez oldu.
+  //
+  // Ayırıcı: bazı kurallar `"X" → Y.` biçimini bekliyor. Rubik U+2192
+  // taşımadığı için ok metinden çıkarılıp `:` kondu (cümlenin ortasında
+  // yazı tipi değişiyordu); o değişiklik de aynı kuralları düşürdü.
+  // Hangi iki noktanın ayırıcı olduğu metne göre değişir: `«goşt»: Et.`
+  // içinde tek aday var, `Doğru anlam: «pir»: «çok».` içinde ikinci olan
+  // doğrudur. Tahmin etmek yerine her konum ayrı varyant olur; yanlış
+  // varyant hiçbir kurala uymaz, yalnız doğru olan tutar.
+  final separators = RegExp(r'(?<=\S):\s+').allMatches(text).toList();
+  // Ok karakteri kaynağa düz yazılmaz, kod noktasından üretilir. Burada
+  // yalnız **eşleştirme** için var: kuralların çıktısında yer almaz, ekrana
+  // çıkmaz. `ui_glyph_coverage_test` dizge sabitlerinde bu karakteri haklı
+  // olarak yasaklıyor (Rubik U+2192 taşımıyor); niyetin görünür olması için
+  // kaçış değil, adı konmuş bir kod noktası kullanılır.
+  final ruleSeparator = ' ${String.fromCharCode(0x2192)} ';
+  final withArrow = [
+    for (final match in separators)
+      text.replaceRange(match.start, match.end, ruleSeparator),
+  ];
+  final variants = <String>[
+    for (final quote in ['"', "'"]) ...[
+      _withQuote(text, quote),
+      for (final candidate in withArrow) _withQuote(candidate, quote),
+    ],
+  ];
   for (final rule in _rules) {
     for (final variant in variants) {
       final match = rule.pattern.firstMatch(variant);
