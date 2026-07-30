@@ -8,6 +8,8 @@
     <application
         android:label="ZanKurd"
         android:name="${applicationName}"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/ic_launcher">
 
         <!-- Local notifications receivers -->

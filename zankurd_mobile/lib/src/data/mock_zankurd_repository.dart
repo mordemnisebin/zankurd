@@ -25,6 +25,7 @@ import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
+import '../config/category_visibility.dart';
 import '../services/question_set_policy.dart';
 import '../services/question_content_policy.dart';
 
@@ -36,8 +37,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   List<QuizQuestion> get _playableQuestions =>
       questions.where(_contentPolicy.isPlayable).toList(growable: false);
 
-  @override
-  List<String> get categories => const [
+  static const _allCategories = <String>[
     'Ziman',
     'Çand',
     'Dîrok',
@@ -56,6 +56,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   ];
 
   @override
+  List<String> get categories => visibleCategories(_allCategories);
+
+  @override
   List<QuizQuestion> get questions {
     // Üretimde QuestionBankLoader JSON assetleri yükler.
     // Test ortamında loader henüz çağrılmadığından curatedQuestionBank ile
@@ -68,6 +71,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   String? get currentUserId => 'user';
+
+  @override
+  bool get usesServerHiddenAnswers => false;
 
   String _mockName = 'ZanKurd Oyuncusu';
 
@@ -281,8 +287,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
-    final pool = [...questions]..shuffle(Random(dailySeedFor(currentUserId)));
-    return _withVisualBlend(pool.take(limit).toList(), questions, limit);
+    final playable = _playableQuestions;
+    final pool = [...playable]..shuffle(Random(dailySeedFor(currentUserId)));
+    return _withVisualBlend(pool.take(limit).toList(), playable, limit);
   }
 
   /// Görülmemiş soruları öne alan tekrar-önleyici seçim.
@@ -560,20 +567,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<int> claimTournamentReward() async {
     _mockCoins += 200;
     return 200;
-  }
-
-  @Deprecated('awardProfileXPDelta kullanın — mutlak XP yazımı güvensizdir.')
-  @override
-  Future<void> updateProfileXP(int xp) async {
-    // Mock modunda yerel XPStore güncelleniyor, sunucu güncellemesine gerek yok.
-  }
-
-  int _mockXP = 0;
-
-  @override
-  Future<int> awardProfileXPDelta(int delta) async {
-    if (delta > 0) _mockXP += delta;
-    return _mockXP;
   }
 
   @override
@@ -1145,7 +1138,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'emotions_2',
         slug: 'emotions_2',
-        titleKu: 'Hestên Neyênî',
+        titleKu: 'Hestên Neyînî',
         titleTr: 'Olumsuz Duygular',
         category: 'emotions',
         iconName: 'sentiment_very_dissatisfied',
@@ -1189,7 +1182,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'everyday_1',
         order: 2,
         contentKu:
-            'Rewş pirsîn:\n\n• Çonî? / Tu çawa yî?: Nasılsın?\n• Ez baş im, spas dikim: İyiyim, teşekkür ederim.',
+            'Rewş pirsîn:\n\n• Tu çawa yî?: Nasılsın?\n• Ez baş im, spas dikim: İyiyim, teşekkür ederim.',
         contentTr: 'Hal hatır sorma kalıpları.',
       ),
     ],
@@ -1217,7 +1210,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'everyday_3',
         order: 1,
         contentKu:
-            'Sernavên pratik di jiyana rojane de:\n\n• Fermo: Buyurun\n• Kerem bike: Buyur / Geç\n• Spas: Teşekkürler / Sağ ol',
+            'Gotinên pratîk ên jiyana rojane:\n\n• Fermo: Buyurun\n• Kerem bike: Buyur / Geç\n• Spas: Teşekkürler / Sağ ol',
         contentTr: 'Günlük hayatta en çok kullanılan pratik hitaplar.',
       ),
       LessonSlide(
@@ -1225,7 +1218,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'everyday_3',
         order: 2,
         contentKu:
-            'Daxwaz û daxwazî:\n\n• Ji kerema xwe: Lütfen\n• Bibexşîne: Özür dilerim / Affet',
+            'Daxwaz û lêborîn:\n\n• Ji kerema xwe: Lütfen\n• Bibexşîne: Özür dilerim / Affet',
         contentTr: 'Rica ve özür dileme kalıpları.',
       ),
     ],
@@ -1315,7 +1308,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'food_1',
         order: 2,
         contentKu:
-            'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firo / Firvîn: Öğle yemeği\n• Şîv: Akşam yemeği',
+            'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firavîn: Öğle yemeği\n• Şîv: Akşam yemeği',
         contentTr: 'Öğün isimleri.',
       ),
     ],
@@ -1369,7 +1362,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'animals_2',
         order: 2,
         contentKu:
-            'Balindeyên esmanî:\n\n• Teyr / Qertel: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
+            'Balindeyên esmanî:\n\n• Eylo: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
         contentTr: 'Kuş türleri.',
       ),
     ],
@@ -1433,7 +1426,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'emotions_2',
         order: 1,
         contentKu:
-            'Hestên neyênî:\n\n• Xemgîn: Üzgün\n• Hêrsbûyî: Öfkeli\n• Tirsandî: Korkmuş',
+            'Hestên neyênî:\n\n• Xemgîn: Üzgün\n• Hêrsbûyî: Öfkeli\n• Tirsiyayî: Korkmuş',
         contentTr: 'Olumsuz duygu durumları.',
       ),
       LessonSlide(
@@ -1459,7 +1452,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'time_1',
         order: 2,
         contentKu:
-            'Mehnên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
+            'Mehên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
         contentTr: 'Yılın ilk 6 ayı.',
       ),
     ],

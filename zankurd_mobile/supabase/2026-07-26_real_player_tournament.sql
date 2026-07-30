@@ -582,6 +582,11 @@ begin
     raise exception 'Not authenticated';
   end if;
 
+  perform 1 from public.profiles where id = v_uid for update;
+  if not found then
+    return jsonb_build_object('amount', 0, 'error', 'profile missing');
+  end if;
+
   select id into v_tournament
     from public.tournaments
    where status = 'finished'

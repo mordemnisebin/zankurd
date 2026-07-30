@@ -18,6 +18,10 @@ abstract class ZanKurdRepository {
   List<QuizQuestion> get questions;
   String? get currentUserId;
 
+  /// Oda sorularında doğru cevap yalnız yanıt RPC'sinden sonra açıklanıyorsa
+  /// true. Doğru cevaba bağlı istemci jokerleri bu modda kullanılamaz.
+  bool get usesServerHiddenAnswers;
+
   Future<void> ensureProfile();
   Future<String> getProfileName();
 
@@ -106,20 +110,6 @@ abstract class ZanKurdRepository {
 
   /// Turnuva şampiyonluğu ödülünü talep eder (sunucuda günde 1 kez).
   Future<int> claimTournamentReward();
-
-  /// Oyuncunun profil XP değerini sunucuda günceller.
-  ///
-  /// DEPRECATED: mutlak değer yazımı iki cihaz arasında ezmeye yol açar ve
-  /// sunucu tarafında doğrulanamaz. Yeni kod [awardProfileXPDelta] kullanmalı;
-  /// bu metot yalnızca eski senkronizasyon kuyruğu kayıtları için durur.
-  @Deprecated('awardProfileXPDelta kullanın — mutlak XP yazımı güvensizdir.')
-  Future<void> updateProfileXP(int xp);
-
-  /// Kazanılan XP farkını sunucuya yazar ve yeni toplamı döner.
-  ///
-  /// Toplamı sunucu belirler (`award_xp_delta` RPC); istemci yalnızca farkı
-  /// bildirir. Çağrı ve gün başına sunucu tarafında tavan uygulanır.
-  Future<int> awardProfileXPDelta(int delta);
 
   /// Günlük çark: bugün çevrilebilir mi?
   Future<bool> canSpinToday();

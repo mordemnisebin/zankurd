@@ -57,7 +57,7 @@ class SyncManager {
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
   /// Aynı anda tek bir senkronizasyon turu çalışır. İkinci bir tetikleme
-  /// (connectivity olayı, yeni XP kaydı) turu iptal etmez; tur bitince bir
+  /// (connectivity olayı, yeni kuyruk kaydı) turu iptal etmez; tur bitince bir
   /// kez daha çalışması için işaretlenir.
   bool _syncing = false;
   bool _resyncRequested = false;
@@ -96,7 +96,7 @@ class SyncManager {
   ///
   /// [dispose] tek başına çağrılırsa `_instance` dolu kaldığı için bir
   /// sonraki [initialize] erken döner ve connectivity dinleyicisi bir daha
-  /// kurulmaz — çevrimdışı XP senkronizasyonu uygulama ömrü boyunca ölür.
+  /// kurulmaz — çevrimdışı ödül senkronizasyonu uygulama ömrü boyunca ölür.
   /// Çıkış akışı bu yüzden [dispose] değil bu metodu kullanmalıdır.
   static Future<void> shutdown({bool flush = true}) async {
     final inst = _instance;
@@ -204,31 +204,6 @@ class SyncManager {
     }
   }
 
-  /// Kazanılan XP farkını senkronizasyon kuyruğuna alır.
-  ///
-  /// [delta] sunucuya yazılacak olan farktır; [totalXP] yalnızca teşhis ve
-  /// eski kayıtlarla uyumluluk için saklanır. Sunucu mutlak değeri kabul
-  /// etmez (bkz. `supabase/2026-07-25_xp_server_authority.sql`).
-  void queueXP(int totalXP, {int? delta}) {
-    final playerId = _repository.currentUserId;
-    final resolvedDelta = delta ?? 0;
-    developer.log(
-      'Queueing XP update offline: +$resolvedDelta XP (total $totalXP) '
-      'for user: $playerId',
-      name: 'SyncManager',
-    );
-    _queue.add({
-      'type': 'sync_xp',
-      'xp': totalXP,
-      'delta': resolvedDelta,
-      'playerId': playerId,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
-      'retries': 0,
-    });
-    unawaited(_saveQueue());
-    unawaited(sync());
-  }
-
   /// Sunucuya ulaşamadığı için verilemeyen tur ödülünü kuyruğa alır.
   ///
   /// Çevrimdışı bitirilen bir turda `claim_quiz_reward` çağrısı düşüyor ve
@@ -307,8 +282,8 @@ class SyncManager {
     }
 
     // Kuyruğun anlık kopyası üzerinde dönülür: `await` sırasında gelen yeni
-    // bir queueXP() çağrısı canlı liste üzerinde iterasyonu
-    // ConcurrentModificationError ile düşürürdü.
+    // bir kayıt canlı liste üzerinde iterasyonu ConcurrentModificationError
+    // ile düşürmemelidir.
     final batch = List<Map<String, dynamic>>.of(_queue);
     developer.log(
       'Syncing ${batch.length} pending updates to Supabase...',
@@ -354,21 +329,12 @@ class SyncManager {
             name: 'SyncManager',
           );
         } else if (type == 'sync_xp') {
-          final delta = (item['delta'] as num?)?.toInt() ?? 0;
-          if (delta > 0) {
-            final total = await repo.awardProfileXPDelta(delta);
-            developer.log(
-              'Successfully synced XP: +$delta (server total $total)',
-              name: 'SyncManager',
-            );
-          } else {
-            // Eski kayıtlarda yalnızca mutlak toplam vardı; sunucu bunu
-            // kabul etmiyor. Sonsuz yeniden denemeyi önlemek için düşürülür.
-            developer.log(
-              'Dropping legacy absolute-XP item without delta: $item',
-              name: 'SyncManager',
-            );
-          }
+          // XP artık yalnızca cihazda tutulur. Eski sürümlerin bıraktığı XP
+          // kayıtlarını sunucuya yazılmış gibi göstermeden kuyruktan düşür.
+          developer.log(
+            'Dropping unsupported legacy XP item; XP is device-local.',
+            name: 'SyncManager',
+          );
         }
       } on PostgrestException catch (e, stack) {
         // 42883 = function does not exist → migration henüz uygulanmamış.

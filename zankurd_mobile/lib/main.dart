@@ -90,6 +90,18 @@ Future<void> main() async {
         SemanticsBinding.instance.ensureSemantics();
       }
 
+      final releaseConfigurationIssues = AppConfig.validateForRelease(
+        isReleaseMode: kReleaseMode,
+        requireRevenueCat:
+            !kIsWeb &&
+            (defaultTargetPlatform == TargetPlatform.android ||
+                defaultTargetPlatform == TargetPlatform.iOS),
+      );
+      if (releaseConfigurationIssues.isNotEmpty) {
+        runApp(_ConfigurationErrorApp(issues: releaseConfigurationIssues));
+        return;
+      }
+
       // Crash raporlama (web'de Crashlytics desteklenmez).
       try {
         await Firebase.initializeApp(
@@ -106,6 +118,10 @@ Future<void> main() async {
       } catch (_) {
         // Firebase yapılandırması olmayan platformlarda sessizce devam et.
       }
+
+      // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
+      // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.
+      final premiumService = await PremiumService.load();
 
       final ZanKurdRepository repository;
       final AuthProvider authProvider;
@@ -133,7 +149,6 @@ Future<void> main() async {
       final soundFuture = SoundProvider.load();
       final reducedMotionFuture = ReducedMotionProvider.load();
       final childSafetyFuture = ChildSafetyProvider.load();
-      final premiumFuture = PremiumService.load();
 
       await Future.wait<void>([
         QuestionBankLoader.instance.load(),
@@ -143,7 +158,6 @@ Future<void> main() async {
         soundFuture,
         reducedMotionFuture,
         childSafetyFuture,
-        premiumFuture,
       ]);
 
       final languageProvider = await languageFuture;
@@ -155,7 +169,6 @@ Future<void> main() async {
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
       final childSafetyProvider = await childSafetyFuture;
-      final premiumService = await premiumFuture;
 
       runApp(
         ZanKurdApp(
@@ -178,6 +191,50 @@ Future<void> main() async {
       );
     },
   );
+}
+
+class _ConfigurationErrorApp extends StatelessWidget {
+  const _ConfigurationErrorApp({required this.issues});
+
+  final List<ReleaseConfigurationIssue> issues;
+
+  @override
+  Widget build(BuildContext context) {
+    final missing = <String>[
+      if (issues.contains(ReleaseConfigurationIssue.supabase)) 'Supabase',
+      if (issues.contains(ReleaseConfigurationIssue.revenueCat)) 'RevenueCat',
+    ].join(', ');
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.settings_rounded, size: 52),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Uygulama yapılandırması eksik',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '$missing ayarları bu üretim derlemesine eklenmemiş. '
+                    'Lütfen destek ekibiyle iletişime geç.',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class ZanKurdApp extends StatelessWidget {

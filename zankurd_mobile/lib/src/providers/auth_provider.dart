@@ -10,6 +10,9 @@ import '../data/seen_question_store.dart';
 import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../data/daily_mission_store.dart';
+import '../data/level_progress_store.dart';
+import '../data/placement_store.dart';
+import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../services/premium_service.dart';
 import '../utils/error_reporter.dart';
@@ -256,11 +259,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    // Yerel store'lar temizlenmeden ÖNCE bekleyen çevrimdışı kayıtlar
-    // sunucuya gönderilmeye çalışılır; aksi halde çevrimdışı kazanılan XP
-    // sunucuya hiç ulaşmadan silinirdi. `shutdown` ayrıca singleton'ı
-    // serbest bırakır — yalnızca `dispose()` çağrılırsa bir sonraki giriş
-    // connectivity dinleyicisini yeniden kuramaz.
+    // Yerel store'lar temizlenmeden önce bekleyen, sunucuda doğrulanabilen
+    // çevrimdışı ödüller son kez gönderilir. XP cihazda tutulur ve aşağıda
+    // diğer yerel ilerleme verileriyle birlikte temizlenir. `shutdown` ayrıca
+    // singleton'ı serbest bırakır; yalnız `dispose()` sonraki bağlantı
+    // dinleyicisinin kurulmasını engellerdi.
     try {
       await SyncManager.shutdown();
     } catch (e, s) {
@@ -348,6 +351,42 @@ class AuthProvider extends ChangeNotifier {
         e,
         s,
         reason: 'DailyMissionStore clear on signOut failed',
+      );
+    }
+
+    try {
+      final placementStore = await PlacementStore.load();
+      await placementStore.clear();
+      PlacementStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'PlacementStore clear on signOut failed',
+      );
+    }
+
+    try {
+      final storyStore = await StoryProgressStore.load();
+      await storyStore.clear();
+      StoryProgressStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'StoryProgressStore clear on signOut failed',
+      );
+    }
+
+    try {
+      final levelStore = await LevelProgressStore.load();
+      await levelStore.clear();
+      LevelProgressStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'LevelProgressStore clear on signOut failed',
       );
     }
 

@@ -10,8 +10,9 @@ import '../utils/error_reporter.dart';
 /// paylaşım özelliklerini gizler/engeller. Sunucu koruması varmış gibi
 /// davranılmamalıdır.
 ///
-/// Mod açıldığında hiçbir kullanıcı verisi (arkadaşlar, ilerleme, hesap)
-/// SİLİNMEZ; yalnız erişim gizlenir. Mod kapatılınca her şey geri gelir.
+/// Mod açıldığında arkadaş arama ve yeni istek gönderme, herkese açık profil
+/// görünürlüğü ile dış paylaşım kapıları kapanır. Hiçbir kullanıcı verisi
+/// SİLİNMEZ; mod kapatılınca yalnız bu kapılara yeniden erişilir.
 class ChildSafetyProvider extends ChangeNotifier {
   ChildSafetyProvider({bool initialEnabled = false})
     : _enabled = initialEnabled;
@@ -52,9 +53,6 @@ class ChildSafetyProvider extends ChangeNotifier {
   /// Yeni arkadaş isteği gönderme.
   bool get allowFriendRequests => !_enabled;
 
-  /// Serbest metin oda sohbeti.
-  bool get allowRoomChat => !_enabled;
-
   /// Profili herkese açık yapan görünürlük eylemleri.
   bool get allowPublicProfile => !_enabled;
 
@@ -68,13 +66,4 @@ class ChildSafetyProvider extends ChangeNotifier {
     // Tüm kullanıcılar çocuk modunda bu görünen adı paylaşır; kişisel ad gizlenir.
     return 'Heval';
   }
-
-  /// Serbest sohbet yerine sunulabilecek hazır güvenli mesajlar.
-  static const List<String> safeQuickMessages = [
-    'Silav!',
-    'Aferîn!',
-    'Em dest pê bikin?',
-    'Spas!',
-    'Xatir bi te.',
-  ];
 }

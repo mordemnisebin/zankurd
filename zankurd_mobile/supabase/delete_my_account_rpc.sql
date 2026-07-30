@@ -26,6 +26,34 @@ begin
   delete from public.coin_transactions
   where player_id = v_user_id;
 
+  -- Release nullable contributor/moderator references before auth deletion.
+  -- Guards keep this RPC usable on installations where an optional table or
+  -- column has not been deployed yet.
+  if to_regclass('public.questions') is not null
+     and exists (
+       select 1 from pg_catalog.pg_attribute
+       where attrelid = to_regclass('public.questions')
+         and attname = 'created_by'
+         and not attisdropped
+     ) then
+    execute
+      'update public.questions set created_by = null where created_by = $1'
+      using v_user_id;
+  end if;
+
+  if to_regclass('public.suggested_questions') is not null
+     and exists (
+       select 1 from pg_catalog.pg_attribute
+       where attrelid = to_regclass('public.suggested_questions')
+         and attname = 'reviewed_by'
+         and not attisdropped
+     ) then
+    execute
+      'update public.suggested_questions set reviewed_by = null '
+      || 'where reviewed_by = $1'
+      using v_user_id;
+  end if;
+
   update public.question_reports
   set reporter_id = null
   where reporter_id = v_user_id;

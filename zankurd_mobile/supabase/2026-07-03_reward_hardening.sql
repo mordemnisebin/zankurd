@@ -26,7 +26,8 @@ alter table public.questions
 -- 1) Acik kapiyi kapat (canli DB'de zaten yoktu; dosyadaki tanim da silindi).
 drop function if exists public.award_coins(integer, text);
 
--- 2) Gorev odulu: anahtar -> miktar tarifesi sunucudadir.
+-- 2) Görevler çevrimdışı izlenir; istemcinin yalnız bir anahtar göndererek
+-- coin üretmesine izin verilmez. İmza eski uygulamalar için korunur.
 create or replace function public.claim_mission_reward(p_mission_key text)
 returns jsonb
 language plpgsql
@@ -35,62 +36,20 @@ set search_path = public
 as $$
 declare
   v_uid uuid := auth.uid();
-  v_amount integer;
-  v_reason text;
-  v_today_count integer;
 begin
   if v_uid is null then
     raise exception 'Not authenticated';
   end if;
 
-  v_amount := case p_mission_key
-    when 'answerCorrect:5' then 30
-    when 'answerCorrect:10' then 50
-    when 'answerCorrect:15' then 75
-    when 'completeQuiz:1' then 25
-    when 'completeQuiz:3' then 60
-    when 'useWildcard:1' then 20
-    when 'useWildcard:2' then 40
-    when 'keepStreak:1' then 30
-    when 'playCategory:ziman' then 25
-    when 'playCategory:cand' then 25
-    when 'playCategory:dirok' then 25
-    when 'playCategory:edebiyat' then 25
-    when 'playCategory:cografya' then 25
-    when 'playCategory:muzik' then 25
-    else null
-  end;
-  if v_amount is null then
-    raise exception 'Unknown mission key: %', p_mission_key;
-  end if;
-
-  v_reason := 'daily_mission:' || p_mission_key || ':'
-    || to_char(now(), 'YYYY-MM-DD');
-
-  if exists (
-    select 1 from public.coin_transactions
-    where player_id = v_uid and reason = v_reason
-  ) then
-    return jsonb_build_object('amount', 0, 'already_claimed', true);
-  end if;
-
-  select count(*) into v_today_count
-  from public.coin_transactions
-  where player_id = v_uid
-    and reason like 'daily_mission:%'
-    and created_at >= date_trunc('day', now());
-  if v_today_count >= 3 then
-    return jsonb_build_object('amount', 0, 'already_claimed', true);
-  end if;
-
-  insert into public.coin_transactions (player_id, amount, reason)
-  values (v_uid, v_amount, v_reason);
-
-  return jsonb_build_object('amount', v_amount, 'already_claimed', false);
+  return jsonb_build_object(
+    'amount', 0,
+    'verification_required', true,
+    'mission_key', p_mission_key
+  );
 end;
 $$;
 
-revoke all on function public.claim_mission_reward(text) from public;
+revoke all on function public.claim_mission_reward(text) from public, anon;
 grant execute on function public.claim_mission_reward(text) to authenticated;
 
 -- 3) Ekstra cark: hak sayimi ve odul secimi sunucuda.
@@ -111,9 +70,16 @@ begin
     raise exception 'Not authenticated';
   end if;
 
+  perform 1 from public.profiles where id = v_uid for update;
+  if not found then
+    return jsonb_build_object('amount', 0, 'error', 'profile missing');
+  end if;
+
   select count(*) into v_purchased
   from public.coin_transactions
-  where player_id = v_uid and reason = 'purchase_spin_wheel_extra';
+  where player_id = v_uid
+    and reason = 'purchase_spin_wheel_extra'
+    and amount < 0;
 
   -- 'daily_spin:extra_purchase' eski istemcilerin yazdigi mirastir.
   select count(*) into v_used
@@ -134,54 +100,14 @@ begin
 end;
 $$;
 
-revoke all on function public.claim_extra_spin() from public;
+revoke all on function public.claim_extra_spin() from public, anon;
 grant execute on function public.claim_extra_spin() to authenticated;
 
--- 4) Turnuva sampiyonlugu: gunde 1 kez, sabit 200.
--- DİKKAT — bu fonksiyonun güncel sürümü burada DEĞİL.
---
--- Aşağıdaki sürüm şampiyonluğu doğrulamaz: kimliği doğrulanmış herkes
--- çağırıp günde 200 coin alabilir. 2026-07-26'da
--- `2026-07-26_real_player_tournament.sql` içinde şampiyonluğu turnuva
--- tablosundan doğrulayan sürümle değiştirildi.
---
--- Bu dosya yeniden uygulanırsa o sertleştirme geri alınır ve açık yeniden
--- açılır. Tarihsel kayıt olarak duruyor; çalıştırılacaksa ardından
--- turnuva dosyası da uygulanmalıdır.
-create or replace function public.claim_tournament_reward()
-returns jsonb
-language plpgsql
-security definer
-set search_path = public
-as $$
-declare
-  v_uid uuid := auth.uid();
-  v_reason text;
-begin
-  if v_uid is null then
-    raise exception 'Not authenticated';
-  end if;
+-- 4) Turnuva ödülü burada bilinçli olarak tanımlanmaz. Şampiyonluğu sunucu
+-- tablosundan doğrulayan tek sürüm 2026-07-26_real_player_tournament.sql
+-- içindedir; bu tarihsel dosyanın yeniden çalıştırılması onu geri almamalı.
 
-  v_reason := 'tournament_champion:' || to_char(now(), 'YYYY-MM-DD');
-
-  if exists (
-    select 1 from public.coin_transactions
-    where player_id = v_uid and reason = v_reason
-  ) then
-    return jsonb_build_object('amount', 0, 'already_claimed', true);
-  end if;
-
-  insert into public.coin_transactions (player_id, amount, reason)
-  values (v_uid, 200, v_reason);
-
-  return jsonb_build_object('amount', 200, 'already_claimed', false);
-end;
-$$;
-
-revoke all on function public.claim_tournament_reward() from public;
-grant execute on function public.claim_tournament_reward() to authenticated;
-
--- 5) claim_quiz_reward: solo odul gunde 10 ile sinirli.
+-- 5) Quiz coini yalnız sunucunun bütün cevapları tuttuğu bitmiş odalarda.
 create or replace function public.claim_quiz_reward(
   p_room_id uuid default null,
   p_score integer default 0,
@@ -195,83 +121,71 @@ security definer
 set search_path = public
 as $$
 declare
-  v_player_id uuid;
-  v_existing_id uuid;
+  v_player_id uuid := auth.uid();
+  v_room_status text;
   v_room_score integer;
-  v_score integer;
   v_correct_count integer;
-  v_best_streak integer;
   v_total_questions integer;
+  v_answer_count integer;
   v_amount integer;
   v_reason text;
-  v_local_count integer;
 begin
-  v_player_id := auth.uid();
   if v_player_id is null then
     raise exception 'Not authenticated';
   end if;
 
-  v_total_questions := least(greatest(coalesce(p_total_questions, 0), 1), 20);
-  v_correct_count := least(
-    greatest(coalesce(p_correct_count, 0), 0),
-    v_total_questions
-  );
-  v_best_streak := least(
-    greatest(coalesce(p_best_streak, 0), 0),
-    v_correct_count
-  );
-  v_score := least(greatest(coalesce(p_score, 0), 0), v_total_questions * 150);
+  perform 1 from public.profiles where id = v_player_id for update;
+  if not found then
+    return jsonb_build_object('amount', 0, 'error', 'profile missing');
+  end if;
 
-  if p_room_id is not null then
-    select score
-      into v_room_score
-    from public.room_players
-    where room_id = p_room_id
-      and player_id = v_player_id;
+  if p_room_id is null then
+    return jsonb_build_object('amount', 0, 'verification_required', true);
+  end if;
 
-    if not found then
-      raise exception 'Player is not in the room';
-    end if;
+  select r.status, greatest(coalesce(rp.score, 0), 0)
+  into v_room_status, v_room_score
+  from public.rooms r
+  join public.room_players rp
+    on rp.room_id = r.id
+   and rp.player_id = v_player_id
+  where r.id = p_room_id;
+  if not found then
+    raise exception 'Player is not in the room';
+  end if;
+  if v_room_status <> 'finished' then
+    return jsonb_build_object('amount', 0, 'room_not_finished', true);
+  end if;
 
-    v_score := least(v_score, greatest(coalesce(v_room_score, 0), 0));
-    v_reason := 'quiz_complete:room=' || p_room_id::text;
+  select count(*)::integer into v_total_questions
+  from public.room_questions
+  where room_id = p_room_id;
+  select
+    count(*)::integer,
+    count(*) filter (where pa.is_correct)::integer
+  into v_answer_count, v_correct_count
+  from public.player_answers pa
+  join public.room_questions rq
+    on rq.room_id = pa.room_id
+   and rq.question_id = pa.question_id
+  where pa.room_id = p_room_id
+    and pa.player_id = v_player_id;
+  if v_total_questions < 1 or v_answer_count < v_total_questions then
+    return jsonb_build_object('amount', 0, 'answers_incomplete', true);
+  end if;
 
-    select id
-      into v_existing_id
-    from public.coin_transactions
-    where player_id = v_player_id
-      and reason = v_reason
-    limit 1;
-
-    if v_existing_id is not null then
-      return jsonb_build_object(
-        'amount', 0,
-        'already_claimed', true
-      );
-    end if;
-  else
-    v_reason := 'quiz_complete:local';
-
-    -- Solo odul farm'ini sinirla: gunde en fazla 10 odullu solo quiz.
-    select count(*) into v_local_count
-    from public.coin_transactions
-    where player_id = v_player_id
-      and reason = 'quiz_complete:local'
-      and created_at >= date_trunc('day', now());
-    if v_local_count >= 10 then
-      return jsonb_build_object(
-        'amount', 0,
-        'already_claimed', true,
-        'daily_limit', true
-      );
-    end if;
+  v_reason := 'quiz_complete:room=' || p_room_id::text;
+  if exists (
+    select 1 from public.coin_transactions
+    where player_id = v_player_id and reason = v_reason
+  ) then
+    return jsonb_build_object('amount', 0, 'already_claimed', true);
   end if;
 
   v_amount :=
     case when v_total_questions >= 10 then 20 else 8 end
     + (v_correct_count * 6)
-    + (v_best_streak * 2)
-    + (v_score / 80);
+    + (v_room_score / 80);
 
   insert into public.coin_transactions (player_id, amount, reason)
   values (v_player_id, v_amount, v_reason);
@@ -285,10 +199,12 @@ $$;
 
 revoke all on function public.claim_quiz_reward(
   uuid, integer, integer, integer, integer
-) from public;
+) from public, anon;
 grant execute on function public.claim_quiz_reward(
   uuid, integer, integer, integer, integer
 ) to authenticated;
+revoke insert, update, delete on public.player_answers
+  from public, anon, authenticated;
 
 -- 6) profiles.xp: kolon + dogrudan istemci yazimlari icin clamp.
 alter table public.profiles

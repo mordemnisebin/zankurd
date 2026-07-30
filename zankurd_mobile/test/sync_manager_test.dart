@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,18 +49,16 @@ void main() {
     await SyncManager.resetForTesting();
   });
 
-  test('SyncManager queues and syncs XP offline and online', () async {
+  test('SyncManager eski XP kuyruğunu güvenle temizler', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue':
+          '[{"type":"sync_xp","xp":150,"delta":150,"retries":0}]',
+    });
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    // Queue XP update
-    manager.queueXP(150);
-
-    // Since MockZanKurdRepository is not SupabaseZanKurdRepository,
-    // sync() will directly clear the mock queue as fallback.
     await manager.sync();
 
-    // Mock repo yolunda sync kuyruğu boşaltıp preferans'a boş liste yazar.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('zankurd.syncQueue'), '[]');
   });
@@ -73,7 +73,6 @@ void main() {
         connectivityMonitor: _ThrowingConnectivityMonitor(),
       );
 
-      manager.queueXP(75);
       await manager.sync();
 
       expect(manager, isA<SyncManager>());
@@ -84,7 +83,12 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueXP(150);
+    manager.queueQuizReward(
+      score: 100,
+      correctCount: 1,
+      bestStreak: 1,
+      totalQuestions: 1,
+    );
     await manager.clearQueue();
 
     final prefs = await SharedPreferences.getInstance();
@@ -110,23 +114,35 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueXP(150, delta: 150);
+    manager.queueQuizReward(
+      score: 100,
+      correctCount: 1,
+      bestStreak: 1,
+      totalQuestions: 1,
+    );
     await SyncManager.shutdown();
 
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('zankurd.syncQueue'), '[]');
   });
 
-  // Kuyruk canlı liste üzerinde döndüğü için, `await` sırasında gelen bir
-  // queueXP() çağrısı ConcurrentModificationError fırlatıyordu.
+  // Kuyruk canlı liste üzerinde döndüğü için, `await` sırasında gelen yeni
+  // kayıt ConcurrentModificationError fırlatmamalı.
   test('sync sırasında yeni kayıt eklemek çökmeye yol açmaz', () async {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueXP(100, delta: 100);
+    void queueReward(int score) => manager.queueQuizReward(
+      score: score,
+      correctCount: 1,
+      bestStreak: 1,
+      totalQuestions: 1,
+    );
+
+    queueReward(100);
     final syncing = manager.sync();
-    manager.queueXP(200, delta: 100);
-    manager.queueXP(300, delta: 100);
+    queueReward(200);
+    queueReward(300);
     await syncing;
     await manager.sync();
 
@@ -137,21 +153,22 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueXP(100, delta: 100);
+    manager.queueQuizReward(
+      score: 100,
+      correctCount: 1,
+      bestStreak: 1,
+      totalQuestions: 1,
+    );
     await Future.wait([manager.sync(), manager.sync(), manager.sync()]);
 
     expect(manager.pendingCount, 0);
   });
 
-  test('queueXP delta bilgisini kuyruğa yazar', () async {
-    final repository = MockZanKurdRepository();
-    final manager = await SyncManager.initialize(repository);
-    await manager.clearQueue();
-
-    manager.queueXP(1250, delta: 250);
-    // sync() mock repo yolunda kuyruğu boşalttığı için doğrudan kayıt
-    // içeriğini değil, kaydın yazıldığını doğrularız.
-    expect(manager.pendingCount, lessThanOrEqualTo(1));
+  test('istemci artık XP senkronizasyon API yüzeyi sunmaz', () {
+    final source = File('lib/src/data/sync_manager.dart').readAsStringSync();
+    expect(source, isNot(contains('void queueXP(')));
+    expect(source, isNot(contains('awardProfileXPDelta(')));
+    expect(source, contains('Dropping unsupported legacy XP item'));
   });
 
   test('çevrimdışı bitirilen turun ödülü kuyrukta kalır', () async {

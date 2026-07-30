@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+enum ReleaseConfigurationIssue { supabase, revenueCat }
+
 class AppConfig {
   static const _defaultSupabaseUrl = 'https://hupivnxgjtsfafulzspo.supabase.co';
   static const _defaultSupabasePublishableKey =
@@ -66,11 +68,30 @@ class AppConfig {
 
   static bool get hasRevenuecatConfig => revenuecatApiKey.isNotEmpty;
 
+  /// Üretim derlemesinin yanlışlıkla demo veriyle veya satın alma desteği
+  /// olmadan yayımlanmasını engelleyen, yan etkisiz başlangıç kontrolü.
+  static List<ReleaseConfigurationIssue> validateForRelease({
+    required bool isReleaseMode,
+    required bool requireRevenueCat,
+    bool? hasSupabaseOverride,
+    bool? hasRevenueCatOverride,
+  }) {
+    if (!isReleaseMode) return const [];
+
+    final issues = <ReleaseConfigurationIssue>[];
+    if (!(hasSupabaseOverride ?? hasSupabaseConfig)) {
+      issues.add(ReleaseConfigurationIssue.supabase);
+    }
+    if (requireRevenueCat && !(hasRevenueCatOverride ?? hasRevenuecatConfig)) {
+      issues.add(ReleaseConfigurationIssue.revenueCat);
+    }
+    return issues;
+  }
+
   // ── Yasal bağlantılar (mağaza şartı) ───────────────────────────────────
   // Gizlilik politikası ve kullanım koşulları sayfaları. Bu sayfaların
   // yayında ve erişilebilir olması App Store / Play şartıdır.
-  // privacy.html web/ içinde mevcut ve deploy ediliyor; terms.html HENÜZ
-  // oluşturulup yayına alınmalı (bkz. docs/multi_platform_release.md).
+  // privacy.html ve terms.html web derlemesiyle birlikte yayınlanır.
   static const privacyPolicyUrl = 'https://www.zankurd.com/privacy.html';
   static const termsOfServiceUrl = 'https://www.zankurd.com/terms.html';
 }

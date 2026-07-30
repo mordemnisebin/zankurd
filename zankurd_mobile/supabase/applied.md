@@ -17,7 +17,7 @@
 | spend_coins.sql | ✅? | Joker sistemi canlıda çalışıyor; dosya bazında doğrulanmadı |
 | submit_answer_function.sql | ✅? | Oda skorlaması canlıda; clamp sürümü (clamp_submit_answer_response_ms.sql) dahil mi doğrulanmadı |
 | public_read_policies.sql | ✅? | Anon okuma canlıda çalışıyor |
-| delete_my_account_rpc.sql | ✅? | Ayarlar'daki hesap silme buna dayanıyor |
+| delete_my_account_rpc.sql | ✅ | 2026-07-29 canlı fonksiyon ve yalnızca `authenticated` çalıştırma yetkisi doğrulandı; katkı/moderasyon yabancı anahtarları `2026-07-29_client_reward_authority_fix.sql` ile güvenle serbest bırakılıyor. |
 | leaderboard_view.sql / leaderboard_period_rpc.sql | ✅? | Liderlik canlıda çalışıyor |
 | daily_spin_rpc.sql | ✅? | Çark canlıda çalışıyor |
 | 2026-07-10_weekly_league.sql | ? | pg_cron adımı Studio'da ayrı — doğrulanmadı |
@@ -30,4 +30,10 @@
 | 2026-07-22_multiplayer_integrity_hardening.sql | ✅ | 2026-07-22, Management API ile uygulandı; izinler, RPC'ler, politikalar ve TIMEOUT kısıtı canlı sorguyla doğrulandı |
 | 2026-07-26_real_player_tournament.sql | ✅ | 2026-07-26, kullanıcı tarafından Supabase SQL Editor'den elle uygulandı (iki turda: önce şema+RPC'ler, sonra `claim_tournament_reward` sertleştirmesi). **2026-07-27'de canlı sorguyla doğrulandı:** 3 tablo var, üçünde de RLS açık ve politika yalnız `r` (yazma yolu yok), 8 fonksiyonun 8'i var, `claim_tournament_reward` şampiyonluğu `champion_id` üzerinden doğrulayan sürüm. Dosya yeniden uygulanabilir; sütunlar koşullu eklenir. Sağlık raporu: `2026-07-26_tournament_verify.sql` |
 | 2026-07-26_tournament_verify.sql | — | Salt okunur doğrulama betiği; şema değiştirmez |
-| 2026-07-28_player_tag.sql | ✅ | 2026-07-28, kullanıcı tarafından Supabase SQL Editor'den uygulandı. Oyuncu kodu (`profiles.player_tag`): benzersiz dizin, atama/dondurma tetikleyicileri ve `search_profiles`in kodla arayan yeni sürümü. Canlı sorguyla doğrulanmadı; doğrulamak için `select display_name, player_tag from public.profiles limit 5;` — her satırda dört karakterlik kod olmalı. Dosya yeniden çalıştırılabilir. |
+| 2026-07-28_player_tag.sql | ✅ | 2026-07-28, kullanıcı tarafından Supabase SQL Editor'den uygulandı. Oyuncu kodu (`profiles.player_tag`): benzersiz dizin, atama/dondurma tetikleyicileri ve `search_profiles`in kodla arayan yeni sürümü. 2026-07-29 canlı doğrulamasında eksik veya biçimsiz oyuncu kodu sayısı `0`. |
+| 2026-07-29_release_readiness_hardening.sql | ✅ | 2026-07-29, kullanıcı tarafından Supabase SQL Editor'den uygulandı. Oda mesajı üyeliği, aktif soru zorlaması, doğrudan yarışma yazımlarının kapatılması, liderlik sınırı ve sunucu fiyatlı coin harcaması. |
+| 2026-07-29_shop_purchase_integrity_fix.sql | ✅ | 2026-07-29, Codex tarafından SQL Editor'de tek işlem olarak uygulandı. Canlı ön kontrolde `profiles/shop_items/coin_transactions/spin_wheel_history` kimlik tipleri uyumlu bulundu. Son doğrulamada 9/9 izin ve RPC kontrolü `true`; gelecek tarihli çark, geçersiz satın alma ve sahte VIP satırı `0`; karantina satırı `0`. |
+| 2026-07-29_shop_purchase_integrity_preflight.sql | — | Salt okunur ön kontrol betiği; şema değiştirmez |
+| 2026-07-29_shop_purchase_integrity_verify.sql | — | Salt okunur doğrulama betiği; şema değiştirmez |
+| 2026-07-29_client_reward_authority_verify.sql | — | Salt okunur doğrulama betiği; şema değiştirmez |
+| 2026-07-29_client_reward_authority_fix.sql | ✅ | 2026-07-29, Codex tarafından SQL Editor'de tek işlem olarak uygulandı. Canlı doğrulamada yarışma submit kapısı ve yazımsız XP tanımı etkin; istemci tablo yazım yetkisi ve mutasyon politikası `0`; `anon` RPC yetkileri kapalı, `authenticated` yetkileri açık; claim davranışı `false / 0 / NULL`; hesap silme iki `NO ACTION` katkı/moderasyon bağını önce `NULL` yapıyor. Yayın istemcisi sahte senkronizasyon yapmıyor; XP ve öğrenme ilerlemesi açıkça cihaz-yerel tutuluyor. |

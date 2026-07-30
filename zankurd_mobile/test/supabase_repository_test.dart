@@ -99,6 +99,11 @@ void main() {
       expect(sql, contains('rq.question_id = p_question_id'));
       expect(sql, contains("r.status = 'active'"));
       expect(sql, contains('for update'));
+      expect(
+        'v_points integer := 0;'.allMatches(sql).length,
+        1,
+        reason: 'submit_answer PL/pgSQL değişkeni iki kez tanımlanmamalı.',
+      );
       expect(sql, contains("nullif(p_selected_option, ''), 'TIMEOUT'"));
       expect(sql, contains("'A', 'B', 'C', 'D', 'TIMEOUT'"));
     },
@@ -238,7 +243,13 @@ void main() {
 
     expect(source, contains("client.rpc<bool>('can_spin_today')"));
     expect(source, contains("client.rpc<dynamic>('claim_extra_spin')"));
-    expect(source, contains("'purchase_spin_wheel_extra'"));
+    expect(source, contains("'spin_wheel_extra'"));
+    expect(
+      source,
+      contains(".from('shop_purchases')"),
+      reason:
+          'Sahiplik yalnız sunucunun değiştirilemez hak kaydından okunmalı.',
+    );
   });
 
   test(

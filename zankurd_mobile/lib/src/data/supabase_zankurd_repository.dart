@@ -46,6 +46,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   String? get currentUserId => client.auth.currentUser?.id;
 
   @override
+  bool get usesServerHiddenAnswers => true;
+
+  @override
   List<QuizLevel> levelsForCategory(String category) =>
       _offline.levelsForCategory(category);
 
@@ -378,23 +381,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final roomQuestions = (response as List<dynamic>)
           .whereType<Map<String, dynamic>>()
           .map(_roomQuestionFromRow)
-          .where(_contentPolicy.isPlayable)
+          .where(_contentPolicy.isPlayableWithHiddenAnswer)
           .toList();
 
       if (roomQuestions.isNotEmpty) return roomQuestions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadRoomQuestions failed');
-      // Sunucu görünümü/politikası henüz kurulu olmayabilir; çevrimdışı
-      // bankaya düşülür.
     }
 
-    // Yedek yol odanın kategorisini taşımıyordu: "Ziman" için kurulan bir
-    // odada, RPC hata verdiğinde ya da boş döndüğünde bütün havuzdan soru
-    // geliyordu. Oyuncu Dil turu açıp Siyaset sorusu görüyordu ve bunun
-    // sunucu tarafında bir aksaklık olduğuna dair hiçbir iz yoktu
-    // (2026-07-26). Çevrimdışı sürüm kategoriyi zaten süzüyor; yedek yol
-    // artık doğrudan onu çağırıyor.
-    return _offline.loadRoomQuestions(room);
+    throw StateError('Online room questions are unavailable.');
   }
 
   @override
@@ -847,10 +842,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       final rows = await client
-          .from('coin_transactions')
+          .from('shop_purchases')
           .select('id')
           .eq('player_id', user.id)
-          .eq('reason', 'purchase_$itemId')
+          .eq('item_id', itemId)
           .limit(1);
       return rows.isNotEmpty;
     } catch (error, stack) {
@@ -890,43 +885,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim_tournament_reward failed');
       return 0;
-    }
-  }
-
-  /// DEPRECATED — bkz. `supabase/2026-07-25_xp_server_authority.sql`.
-  ///
-  /// `profiles.xp` artık trigger ile istemci yazımına kapalıdır; bu çağrı
-  /// sunucuda sessizce yok sayılır. Yalnızca eski senkronizasyon kuyruğunda
-  /// kalmış kayıtlar bu yoldan geçer ve [awardProfileXPDelta] ile telafi
-  /// edilemedikleri için kuyruktan düşürülürler.
-  @Deprecated('awardProfileXPDelta kullanın — mutlak XP yazımı güvensizdir.')
-  @override
-  Future<void> updateProfileXP(int xp) async {
-    try {
-      final user = client.auth.currentUser;
-      if (user == null) return;
-      await client.from('profiles').update({'xp': xp}).eq('id', user.id);
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'updateProfileXP failed');
-      rethrow;
-    }
-  }
-
-  @override
-  Future<int> awardProfileXPDelta(int delta) async {
-    if (delta <= 0) return 0;
-    try {
-      final user = client.auth.currentUser;
-      if (user == null) return 0;
-      final response = await client.rpc<dynamic>(
-        'award_xp_delta',
-        params: {'p_delta': delta},
-      );
-      if (response is num) return response.toInt();
-      return (_firstRow(response)?['award_xp_delta'] as num?)?.toInt() ?? 0;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'award_xp_delta failed');
-      rethrow;
     }
   }
 
@@ -1003,10 +961,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   Future<bool> _hasUnusedExtraSpin() async {
+    final user = client.auth.currentUser ?? await signInAnonymously();
     final purchased = await client
-        .from('coin_transactions')
+        .from('shop_purchases')
         .count(CountOption.exact)
-        .eq('reason', 'purchase_spin_wheel_extra');
+        .eq('player_id', user.id)
+        .eq('item_id', 'spin_wheel_extra');
     final used = await client
         .from('coin_transactions')
         .count(CountOption.exact)
@@ -1318,42 +1278,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required String contestId,
     required int correctCount,
   }) async {
-    try {
-      final res = await client.rpc(
-        'submit_contest_entry',
-        params: {'p_contest_id': contestId, 'p_correct_count': correctCount},
-      );
-      if (res == null) return null;
-      return ContestEntry.fromJson({
-        'id': res['entry_id'],
-        'contest_id': contestId,
-        'user_id': client.auth.currentUser?.id ?? '',
-        'score': res['score'],
-        'correct_count': correctCount,
-        'finished_at': DateTime.now().toIso8601String(),
-        'rank': res['rank'],
-      });
-    } catch (e, s) {
-      _recordError(e, s, reason: 'submitContestEntry failed');
-      return _offline.submitContestEntry(
-        contestId: contestId,
-        correctCount: correctCount,
-      );
-    }
+    // Contest sonuçları sunucuda doğrulanana kadar istemci beyanıyla skor
+    // yazılmaz. İmza uyumluluk için korunur; güvenli sonuç "kayıt yok"tur.
+    return null;
   }
 
   @override
   Future<Map<String, dynamic>?> claimContestReward(String contestId) async {
-    try {
-      final res = await client.rpc(
-        'claim_contest_reward',
-        params: {'p_contest_id': contestId},
-      );
-      return res;
-    } catch (e, s) {
-      _recordError(e, s, reason: 'claimContestReward failed');
-      return _offline.claimContestReward(contestId);
-    }
+    // Doğrulanmamış contest sonucu için ödül talep edilmez.
+    return null;
   }
 
   @override
@@ -1361,23 +1294,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required String contestId,
     int limit = 10,
   }) async {
-    try {
-      final res =
-          await client.rpc(
-                'get_contest_leaderboard',
-                params: {'p_contest_id': contestId, 'p_limit': limit},
-              )
-              as List<dynamic>;
-      return res
-          .map(
-            (row) =>
-                ContestLeaderboardRow.fromJson(row as Map<String, dynamic>),
-          )
-          .toList();
-    } catch (e, s) {
-      _recordError(e, s, reason: 'getContestLeaderboard failed');
-      return _offline.getContestLeaderboard(contestId: contestId, limit: limit);
-    }
+    // Doğrulanmamış skorlar gösterilmez; API uyumluluğu korunur.
+    return const [];
   }
 
   @override

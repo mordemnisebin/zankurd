@@ -7,6 +7,7 @@
 // AuthProvider ile doğrular. Gerçek cihazda "misafirken puan kazan →
 // Google'a bağla → puan hâlâ duruyor mu?" senaryosu ayrıca elle
 // denenmelidir (bkz. ZANKURD_LIVE_UX_REVIEW.md §7).
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +112,27 @@ void main() {
       await _openGuestUpgradeDialog(tester);
 
       expect(find.text('Google ile Bağla'), findsOneWidget);
+    });
+
+    testWidgets('iOS misafir yükseltmesinde sosyal hesap seçeneği görünmez', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      final guestAuth = _GuestAuthProviderWithGoogleLink();
+
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          guestAuth,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester);
+      debugDefaultTargetPlatformOverride = null;
+
+      expect(find.text('Google ile Bağla'), findsNothing);
+      expect(find.text('E-posta'), findsWidgets);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets('kalıcı kullanıcıda misafir yükseltme dialog\'u hiç açılamaz', (

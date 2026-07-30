@@ -23,6 +23,21 @@ enum PurchaseOutcome {
 
 enum RestoreOutcome { restored, nothingFound, failed }
 
+/// RevenueCat hesap geçişlerini sıraya koyar. Hızlı çıkış/giriş sırasında
+/// yavaş tamamlanan eski bir çağrının yeni hesabı ezmesini önler.
+class PremiumIdentityQueue {
+  Future<void> _tail = Future<void>.value();
+
+  Future<void> schedule(Future<void> Function() operation) {
+    final result = _tail.then((_) => operation());
+    _tail = result.then<void>(
+      (_) {},
+      onError: (Object error, StackTrace stack) {},
+    );
+    return result;
+  }
+}
+
 /// Aylık abonelik altyapısı. Kullanıcının aktif `premium` entitlement'ı
 /// varsa reklamsız, detaylı istatistik, sınırsız joker gibi özellikler
 /// açılır. API anahtarı yoksa tüm premium özellikler kapalı kalır ve
@@ -43,6 +58,7 @@ class PremiumService extends ChangeNotifier {
   String? _errorMessage;
   String? _infoMessage;
   String? _linkedUserId;
+  final PremiumIdentityQueue _identityQueue = PremiumIdentityQueue();
 
   static PremiumService? get instance => _instance;
 
@@ -124,7 +140,7 @@ class PremiumService extends ChangeNotifier {
   /// Böylece abonelik cihaza değil hesaba ait olur: kullanıcı cihaz
   /// değiştirdiğinde entitlement taşınır, aynı cihazda başka bir hesaba
   /// geçildiğinde ise devralınmaz.
-  Future<void> logInUser(String userId) async {
+  Future<void> logInUser(String userId) => _identityQueue.schedule(() async {
     if (!_configured || userId.isEmpty) return;
     if (_linkedUserId == userId) return;
     try {
@@ -134,11 +150,11 @@ class PremiumService extends ChangeNotifier {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'premium logIn');
     }
-  }
+  });
 
   /// Oturum kapanışında RevenueCat kimliğini bırakır ve premium durumunu
   /// sıfırlar. Aksi halde sonraki kullanıcı önceki aboneliği devralır.
-  Future<void> logOutUser() async {
+  Future<void> logOutUser() => _identityQueue.schedule(() async {
     _linkedUserId = null;
     if (!_configured) {
       _applyEntitlement(false);
@@ -153,7 +169,7 @@ class PremiumService extends ChangeNotifier {
       ErrorReporter.record(error, stack, reason: 'premium logOut');
       _applyEntitlement(false);
     }
-  }
+  });
 
   void _applyEntitlement(bool next) {
     if (next == _isPremium) return;
@@ -203,8 +219,8 @@ class PremiumService extends ChangeNotifier {
     _infoMessage = null;
     notifyListeners();
     try {
-      final result = await Purchases.purchasePackage(package);
-      _isPremium = _hasEntitlement(result.entitlements.all);
+      final result = await Purchases.purchase(PurchaseParams.package(package));
+      _isPremium = _hasEntitlement(result.customerInfo.entitlements.all);
       _purchaseInProgress = false;
       notifyListeners();
       return _isPremium ? PurchaseOutcome.success : PurchaseOutcome.failed;

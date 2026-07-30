@@ -21,7 +21,9 @@ enum ReviewStatus {
     for (final s in ReviewStatus.values) {
       if (s.name == key) return s;
     }
-    return null;
+    // Bilinmeyen bir değer, güvenli varsayılanın yerine *asla* sessizce
+    // kabul edilmesin; bu durumda soru akışı kısıtlanır (fail-closed).
+    return ReviewStatus.rejected;
   }
 }
 
