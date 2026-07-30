@@ -75,6 +75,41 @@ Pop-Location
 
 Kök analiz ZanKurd uygulama paketinin tamamını doğrular.
 
+### Soru ekleme ve çıkarma
+
+Bankaya soru eklemenin iki yolu var; ikisi de aynı kuralları uygular.
+
+**Tarayıcıda** — terminal gerektirmez. `tool/soru_editoru.html` dosyasını çift
+tıklayıp aç. Soruyu yazarken bankanın on bekçisi (Hawar alfabesi, «guillemet»
+tırnak, cevabın gövdede geçmemesi, kopya soru, açıklamanın bilgi taşıması…)
+yanda anlık denetlenir; hangi kuralı niçin çiğnediğin yazarken görünür.
+Bittiğinde `yeni-sorular.json` iner. Kopya denetimi ve arama için sayfaya
+`assets/data/*_questions.json` dosyalarını yükle — dosya bilgisayardan çıkmaz,
+sayfa tümüyle çevrimdışıdır.
+
+**Terminalde:**
+
+```bash
+python3 tool/soru.py ara "dengbêj"              # bankada ara
+python3 tool/soru.py ekle yeni-sorular.json     # kuru koşu, ne bozuksa söyler
+python3 tool/soru.py ekle yeni-sorular.json --uygula
+python3 tool/soru.py cikar offline_1234 --uygula
+python3 tool/soru.py dogrula                    # bütün bankayı sına
+```
+
+Yazdıktan sonra sırayla:
+
+```bash
+python3 tool/rebalance_answer_positions.py offline_curated
+flutter test
+dart run tool/question_quality/question_quality_audit.dart baseline --accept-current-debt
+```
+
+Solo, kategori ve günlük sorular uygulama paketinin içindedir: buradaki
+değişiklik oyuncuya ancak yeni bir uygulama sürümüyle ulaşır. Online oda
+soruları Supabase `questions` tablosundan gelir (`get_room_questions`), yani
+oraya yazılan soru mevcut sürümlere de anında ulaşır — ayrı bir yoldur.
+
 ### Soru kalitesi denetimi
 
 Runtime Dart bankası ve geliştirme amaçlı JSON aynasının değişmeden eşleştiğini
