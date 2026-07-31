@@ -319,28 +319,27 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  /// Kategori başına soru sayısı — **soruların gerçekten geldiği yerden**.
+  ///
+  /// Bu sayı bir zamanlar SUNUCUDAN okunuyordu (`quiz_public_questions`
+  /// üzerinde kategori başına exact count), oysa `loadQuestions` hemen
+  /// aşağıda görüldüğü gibi soruları YEREL bankadan veriyor. İki kaynak
+  /// birbirinden kopuktu ve sonuç iki ayrı yerde görünüyordu:
+  ///
+  /// * Kategori kartındaki "260 soru" etiketi, oyuncunun gerçekte
+  ///   karşılaşacağı havuzu tarif etmiyordu.
+  /// * Daha kötüsü, `categories_tab.dart` bir kategoriyi `questionCount! <
+  ///   20` olduğunda "Yakında" diye KİLİTLİYOR. Yani sunucuda az kayıt
+  ///   olan bir kategori, yerel bankada 200 sorusu olduğu hâlde
+  ///   oynanamaz görünebiliyordu — ya da tersi.
+  ///
+  /// Sayı artık soruların geldiği bankadan okunuyor: etiket dürüst,
+  /// kilit kararı doğru (2026-07-31 denetimi).
+  ///
+  /// Sunucu tarafı soru dağıtımı devreye girdiğinde bu metot da o kaynağa
+  /// geçmeli — ama `loadQuestions` ile BİRLİKTE, ayrı değil.
   Future<Map<String, int>> loadCategoryQuestionCounts() async {
-    try {
-      final cats = await client
-          .from('categories')
-          .select('id, name')
-          .eq('is_active', true);
-      // ponytail: sekiz küçük exact-count isteği; kategori sayısı büyürse RPC.
-      final counts = await Future.wait(
-        cats.map((row) async {
-          final count = await client
-              .from('quiz_public_questions')
-              .count(CountOption.exact)
-              .eq('is_approved', true)
-              .eq('category_id', row['id'] as String);
-          return MapEntry(row['name'] as String, count);
-        }),
-      );
-      return Map.fromEntries(counts);
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadCategoryQuestionCounts failed');
-      return _offline.loadCategoryQuestionCounts();
-    }
+    return _offline.loadCategoryQuestionCounts();
   }
 
   @override
@@ -1265,8 +1264,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final res = await client
           .rpc('get_today_contest')
           .timeout(const Duration(seconds: 8));
-      if (res == null || res.isEmpty) return null;
-      return Contest.fromJson(res);
+      if (res == null) return null;
+
+      // `get_today_contest` bir `RETURNS TABLE` fonksiyonu
+      // (2026-07-05_contest_system.sql:63), yani PostgREST onu JSON
+      // DİZİSİ olarak döndürür. Kod ise doğrudan `Contest.fromJson(res)`
+      // diyordu — haritanın kendisini bekliyordu.
+      //
+      // `res.isEmpty` diziyle de çalıştığı için boş gün doğru davranıyordu;
+      // ama DOLU bir gün `fromJson`da tip hatasına düşüyor, hata yakalanıp
+      // çevrimdışı yedeğe geçiliyordu. Yani sunucudan gelen "Günün
+      // Etkinliği" HİÇBİR ZAMAN kullanılamıyordu ve kusur sessizdi, çünkü
+      // yedek her zaman makul bir şey gösteriyordu (2026-07-31 denetimi).
+      final row = res is List
+          ? (res.isEmpty ? null : res.first)
+          : res;
+      if (row == null) return null;
+      if (row is! Map) return null;
+      return Contest.fromJson(Map<String, dynamic>.from(row));
     } catch (e, s) {
       _recordError(e, s, reason: 'loadTodayContest failed');
       return _offline.loadTodayContest();

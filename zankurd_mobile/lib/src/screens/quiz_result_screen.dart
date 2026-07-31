@@ -28,6 +28,7 @@ import '../widgets/app_panel.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../services/analytics_service.dart';
+import '../services/notification_service.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/mission_toast.dart';
@@ -198,6 +199,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   Future<void> _recordProgress() async {
     // Premium durumunu await'lerden ÖNCE, context hâlâ güvenliyken oku.
     final isPremium = context.read<PremiumService>().isPremium;
+    // Dil de await'lerden önce okunur: bildirim metni async boşluğun
+    // ötesinde `context`e dokunmadan seçilsin.
+    final isKuNow = context.isKu;
     final streakStore = await StreakStore.load();
     final today = DateTime.now();
     final todayKey =
@@ -274,6 +278,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : ((correctCount / totalQuestions) * 100).round();
     final reviewService = await ReviewService.load();
     await reviewService.recordQuizCompletion(accuracyPercent: accuracyPercent);
+
+    // Bugün oynandı: akşamki "hiç oynamadın" uyarısı susar, yarınki kurulur.
+    // Uyarı `DateTimeComponents.time` ile her gün tekrarladığı ve gövdesi
+    // koşulsuz olduğu için, iptal edilmezse oynanan günlerde de yalan
+    // söylerdi (2026-07-31 denetimi).
+    await NotificationService.instance?.refreshStreakWarningAfterPlay(
+      isKu: isKuNow,
+    );
 
     AnalyticsService.instance.logQuizComplete(
       category: room.category,

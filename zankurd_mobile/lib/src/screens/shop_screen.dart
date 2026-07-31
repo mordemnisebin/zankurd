@@ -112,9 +112,32 @@ class _ShopScreenState extends State<ShopScreen> {
 
   // Sunucuda ürün kaydı bulunması tek başına yayına hazır olduğu anlamına
   // gelmez. Coin düşürüp etkisi olmayan taslak ürünler burada görünmez.
+  // Bir ürün bu kümede YOKSA vitrinde görünmez. 2026-07-31'e kadar katalog
+  // 13 ürün tanımlıyordu ama küme yalnız 3'ünü geçiriyordu; kalan 10'u ölü
+  // veriydi. Coin ekonomisinin harcama tarafı böylece neredeyse kapalıydı:
+  // kazanç sürüyor (quiz + günlük çark) ama harcanacak yer üç kalemdi,
+  // bakiye şişip anlamsızlaşıyordu.
+  //
+  // Karşılığı olmayan dokuz ürün katalogdan tamamen SİLİNDİ — kümeye
+  // yanlışlıkla eklenirlerse coin alıp hiçbir şey yapmazlardı. Neon
+  // çerçeve ise gerçekten uygulandı (AvatarFrame.neon), o yüzden kaldı.
+  //
+  // Silinenler ve niçin uygulanmadıkları:
+  //   emoji_roj, emoji_ster, frame_simple, premium_colors — profil
+  //     kozmetiği için taşıyıcı alan yok.
+  //   joker_bundle, joker_pack_3, extra_lifeline — jokerler tur başına
+  //     sıfırlanıyor; kalıcı stok kavramı yok.
+  //   name_color_gold, name_color_purple — isim rengi ancak DİĞER
+  //     oyunculara görünürse anlamlı; bu sunucu tarafı yayılım ister
+  //     (profiles kolonu + liderlik sorgusunda taşınması). İstemcide
+  //     yapılabilecek bir şey değil.
+  //
+  // Kural: bu kümeye bir kimlik eklemek, o ürünün gerçekten bir şey
+  // yaptığı anlamına gelir.
   static const Set<String> _supportedItemIds = {
     'spin_wheel_extra',
     'avatar_frame_gold',
+    'avatar_frame_neon',
     'profile_badge_vip',
   };
   static const Set<String> _repeatableItemIds = {'spin_wheel_extra'};
@@ -128,56 +151,6 @@ class _ShopScreenState extends State<ShopScreen> {
   // çünkü açıklama metinleri o rengi ismen anıyor ("mor", "cyan").
   static const List<ShopItem> _items = [
     ShopItem(
-      id: 'emoji_roj',
-      titleKu: 'Emojî Roj',
-      titleTr: 'Güneş Emojisi',
-      descKu: 'Emojîya rojê ya zêrîn ji bo profîla te.',
-      descTr: 'Profilin için altın renkli güneş emojisi.',
-      cost: 10,
-      icon: AppIcons.sun,
-      themeColor: AppTheme.gold,
-    ),
-    ShopItem(
-      id: 'emoji_ster',
-      titleKu: 'Emojî Stêr',
-      titleTr: 'Yıldız Emojisi',
-      descKu: 'Emojîya stêrkê ya mor ji bo profîla te.',
-      descTr: 'Profilin için mor renkli yıldız emojisi.',
-      cost: 10,
-      icon: AppIcons.star,
-      themeColor: AppTheme.playPurple,
-    ),
-    ShopItem(
-      id: 'frame_simple',
-      titleKu: 'Çarçoveya Hêsan',
-      titleTr: 'Basit Çerçeve',
-      descKu: 'Çarçoveyeke hêsan a cyan ji bo avatarê te.',
-      descTr: 'Avatarın için basit cyan renkli çerçeve.',
-      cost: 20,
-      icon: AppIcons.image,
-      themeColor: AppTheme.playCyan,
-    ),
-    ShopItem(
-      id: 'joker_bundle',
-      titleKu: 'Paketa Jokeran',
-      titleTr: 'Joker Paketi',
-      descKu: 'Hemû joker ji bo pêşbirka bê têne nûkirin.',
-      descTr: 'Bir sonraki yarışma için tüm joker haklarını sıfırlar.',
-      cost: 500,
-      icon: AppIcons.wandMagicSparkles,
-      themeColor: AppTheme.accent,
-    ),
-    ShopItem(
-      id: 'extra_lifeline',
-      titleKu: 'Cana Zêde',
-      titleTr: 'Ekstra Can',
-      descKu: 'Di dema quizê de canekî din dide te.',
-      descTr: 'Yarışma esnasında elendiğinde kullanabileceğin 1 can verir.',
-      cost: 100,
-      icon: AppIcons.heart,
-      themeColor: AppTheme.accent,
-    ),
-    ShopItem(
       id: 'spin_wheel_extra',
       titleKu: 'Zivirîna Zêde',
       titleTr: 'Ekstra Çevirme',
@@ -186,16 +159,6 @@ class _ShopScreenState extends State<ShopScreen> {
       cost: 200,
       icon: AppIcons.dice,
       themeColor: AppTheme.correct,
-    ),
-    ShopItem(
-      id: 'premium_colors',
-      titleKu: 'Rengên Taybet',
-      titleTr: 'Premium Renkler',
-      descKu: 'Ji bo profilê rengên nû û taybet vedike.',
-      descTr: 'Profil kartı ve avatarı için özel premium renk paletleri açar.',
-      cost: 300,
-      icon: AppIcons.palette,
-      themeColor: AppTheme.gold,
     ),
     ShopItem(
       id: 'avatar_frame_gold',
@@ -216,38 +179,6 @@ class _ShopScreenState extends State<ShopScreen> {
       cost: 600,
       icon: AppIcons.wandMagicSparkles,
       themeColor: AppTheme.accent,
-    ),
-    ShopItem(
-      id: 'name_color_gold',
-      titleKu: 'Navê Zêrîn',
-      titleTr: 'Altın İsim',
-      descKu: 'Navê te di profîl û rêzbendiyê de bi rengê zêrîn xuya dibe.',
-      descTr: 'İsmin profil ve liderlik tablosunda altın renginde görünsün.',
-      cost: 500,
-      icon: AppIcons.font,
-      themeColor: AppTheme.gold,
-    ),
-    ShopItem(
-      id: 'name_color_purple',
-      titleKu: 'Navê Mor',
-      titleTr: 'Mor İsim',
-      descKu: 'Navê te bi rengekî mor ê taybet were xuyakirin.',
-      descTr: 'İsmin özel mor renkte görünsün.',
-      cost: 400,
-      icon: AppIcons.font,
-      themeColor: AppTheme.playPurple,
-    ),
-    ShopItem(
-      id: 'joker_pack_3',
-      titleKu: 'Pakêta Jokeran (3)',
-      titleTr: 'Joker Paketi (3)',
-      descKu:
-          'Ji bo pêşbirka bê 3 jokerên zêde: 50/50, temaşevan û bersiva ducar.',
-      descTr:
-          'Bir sonraki yarışma için 3 ekstra joker: 50/50, seyirci ve çift cevap.',
-      cost: 350,
-      icon: AppIcons.wandMagicSparkles,
-      themeColor: AppTheme.correct,
     ),
     ShopItem(
       id: 'profile_badge_vip',

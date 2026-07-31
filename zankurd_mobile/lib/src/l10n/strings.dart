@@ -1019,6 +1019,26 @@ class Tr {
       'tr': 'Arkadaş ekleyerek sıralamanı gör!',
     },
     K.addFriend: {'ku': 'Heval lê zêde bike', 'tr': 'Arkadaş ekle'},
+    K.friendsScreen: {'ku': 'Heval', 'tr': 'Arkadaşlar'},
+    // Neon çerçeve: ilerlemeyle değil mağazadan açılır.
+    K.frameNeon: {'ku': 'Neon', 'tr': 'Neon'},
+    // Çerçeve kazanım koşulları. Satır içiydiler; neon eklenince sayı
+    // arttığı için tamamı deftere alındı (2026-07-31).
+    K.frameReqBronze: {'ku': '1 nîşan veke', 'tr': '1 rozet aç'},
+    K.frameReqSilver: {'ku': '5 nîşanan veke', 'tr': '5 rozet aç'},
+    K.frameReqGold: {
+      'ku': 'Di kategoriyekê de bibe Pispor',
+      'tr': 'Bir kategoride Pispor ol',
+    },
+    K.frameReqMamoste: {
+      'ku': 'Di kategoriyekê de bibe Mamoste',
+      'tr': 'Bir kategoride Mamoste ol',
+    },
+    K.frameReqNeon: {'ku': 'Ji dikanê bikire', 'tr': 'Mağazadan satın al'},
+    K.friendRequestsPendingA11y: {
+      'ku': 'Heval: {count} daxwazên nû',
+      'tr': 'Arkadaşlar: {count} yeni istek',
+    },
     K.boardLoadFailed: {'ku': 'Tablo nehat barkirin', 'tr': 'Yüklenemedi'},
     K.noScoresYet: {'ku': 'Hîn xal tune', 'tr': 'Henüz puan yok'},
     K.startRaceHint: {
@@ -2133,6 +2153,14 @@ class K {
   static const noTitlesYet = 'avatar.noTitles';
   static const noFriendsAddHint = 'leaderboard.noFriendsHint';
   static const addFriend = 'leaderboard.addFriend';
+  static const friendsScreen = 'leaderboard.friendsScreen';
+  static const frameNeon = 'avatar.frame.neon';
+  static const frameReqBronze = 'avatar.frame.req.bronze';
+  static const frameReqSilver = 'avatar.frame.req.silver';
+  static const frameReqGold = 'avatar.frame.req.gold';
+  static const frameReqMamoste = 'avatar.frame.req.mamoste';
+  static const frameReqNeon = 'avatar.frame.req.neon';
+  static const friendRequestsPendingA11y = 'leaderboard.friendRequests.a11y';
   static const boardLoadFailed = 'leaderboard.loadFailed';
   static const noScoresYet = 'leaderboard.noScores';
   static const startRaceHint = 'leaderboard.startRaceHint';

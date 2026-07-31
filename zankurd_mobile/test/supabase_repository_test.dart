@@ -300,7 +300,20 @@ void main() {
     expect(loaders, isNot(contains('.from(')));
   });
 
-  test('category counts use exact counts from the answer-free public view', () {
+  // Bu test eskiden sayının SUNUCUDAN, `quiz_public_questions` görünümünden
+  // exact count ile geldiğini doğruluyordu. Niyeti güvenlikti: cevap taşıyan
+  // `questions` tablosu okunmasın.
+  //
+  // 2026-07-31 denetiminde daha derin bir kusur çıktı: sayı sunucudan,
+  // sorular ise YEREL bankadan geliyordu. İki kaynak kopuktu ve sonuç
+  // yalnız yanlış bir etiket değildi — `categories_tab` bir kategoriyi
+  // `questionCount! < 20` olduğunda "Yakında" diye KİLİTLİYOR. Sunucuda az
+  // kayıt olan bir kategori, yerel bankada 200 sorusu olduğu hâlde
+  // oynanamaz görünebiliyordu.
+  //
+  // Sayı artık soruların geldiği bankadan okunuyor. Güvenlik niyeti de
+  // korunuyor, hatta güçleniyor: sunucudan hiç okuma yapılmıyor.
+  test('kategori sayısı soruların geldiği kaynaktan okunur', () {
     final source = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
@@ -309,9 +322,23 @@ void main() {
       source.indexOf('Future<List<QuizQuestion>> loadQuestions({'),
     );
 
-    expect(method, contains("from('quiz_public_questions')"));
-    expect(method, contains('count(CountOption.exact)'));
-    expect(method, isNot(contains("from('questions')")));
+    expect(
+      method,
+      contains('_offline.loadCategoryQuestionCounts()'),
+      reason:
+          'Sayı ve sorular aynı kaynaktan gelmeli; aksi hâlde etiket ve '
+          '"Yakında" kilidi oyuncunun karşılaşacağı havuzu tarif etmez.',
+    );
+    expect(
+      method,
+      isNot(contains("from('questions')")),
+      reason: 'Cevap taşıyan tablo hiçbir koşulda okunmaz.',
+    );
+    expect(
+      method,
+      isNot(contains('.from(')),
+      reason: 'Sunucudan okuma yok: kaynak birliği tek yerde tutulur.',
+    );
   });
 
   test(

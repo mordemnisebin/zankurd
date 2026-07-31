@@ -64,11 +64,12 @@ void main() {
     /// → 165 (lang.dart'taki ikinci sözlük kaldırıldı)
     /// → 148 (çok satırlı dizeler de sayıldı — düzeltilmiş desen
     ///   `\s*` ile satır sonunu geçtiği için sayı bir kez yükseldi)
-    /// → 145 (paywall ekranı tamamen deftere taşındı).
+    /// → 145 (paywall ekranı tamamen deftere taşındı)
+    /// → 141 (avatar çerçeve kazanım etiketleri).
     ///
     /// Sıradaki en yoğun dosyalar: profile_widgets (16), level_screen (11),
     /// leaderboard_screen (9), zana_daily_card (9), notification_service (7).
-    const inlineCeiling = 145;
+    const inlineCeiling = 141;
 
     test('satır içi iki-dil kullanımı tavanı aşmıyor', () {
       final libDir = Directory('lib');

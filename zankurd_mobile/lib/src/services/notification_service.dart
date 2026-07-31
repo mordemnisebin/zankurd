@@ -42,6 +42,12 @@ class NotificationService {
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
 
   static NotificationService? _instance;
+
+  /// Kurulu değilse null. Bildirimler bir iyileştirmedir; servis
+  /// yüklenmemişse (web, test, yapılandırmasız derleme) çağıran taraf
+  /// sessizce devam etmeli.
+  static NotificationService? get instance => _instance;
+
   static final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -281,6 +287,19 @@ class NotificationService {
   }
 
   /// Arkadaşlık isteği geldiğinde anlık bildirim gönderir.
+  /// ⚠️ ÜRETİMDE ÇAĞRILMIYOR — ve yerel olarak çağrılamaz.
+  ///
+  /// Bu bildirimin anlamlı olduğu an, isteğin GELDİĞİ andır; o anda
+  /// uygulama büyük ihtimalle kapalıdır. Yerel bildirimler yalnız cihazda
+  /// zamanlanabilir, dışarıdan tetiklenemez — yani bu metot ancak push
+  /// (FCM) altyapısıyla işe yarar.
+  ///
+  /// Altyapının yarısı hazır: `profiles.fcm_token` kolonu ve `set_fcm_token`
+  /// RPC'si var. Eksik olan sunucu tarafı gönderici (arkadaşlık isteği
+  /// eklendiğinde tetiklenen bir Edge Function ya da trigger). O gelene
+  /// kadar bu metot bilerek bağlanmadan duruyor; uygulama içindeki
+  /// görünürlüğü liderlik başlığındaki bekleyen istek rozeti sağlıyor
+  /// (2026-07-31 denetimi).
   Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {
@@ -317,13 +336,49 @@ class NotificationService {
   }
 
   /// Seri kaybetme uyarısı: kullanıcı bugün oynamazsa serisi kırılacak.
-  Future<void> scheduleStreakWarning({bool isKu = true}) async {
+  /// Seri uyarısını bugün için kapatır.
+  ///
+  /// [scheduleStreakWarning] `matchDateTimeComponents: DateTimeComponents.
+  /// time` kullanıyor, yani bildirim HER GÜN aynı saatte tekrarlar. Gövde
+  /// metni ise koşulsuz: "Bugün hiç oynamadın! Serin kırılabilir."
+  ///
+  /// Yani uyarı, çağrılır çağrılmaz her akşam 21:00'de aynı cümleyi
+  /// söylerdi — oyuncu o gün üç tur oynamış olsa bile. Bildirim yalan
+  /// söyleyen bir uygulama, kapatılan bir uygulamadır (2026-07-31
+  /// denetiminde bu, uyarıyı bağlayacak kişi için tuzak olarak işaretlendi).
+  ///
+  /// Doğru akış: tur bitince bugünün uyarısını iptal et, yarın için
+  /// yeniden kur. Böylece uyarı yalnız gerçekten oynanmayan günde çalar.
+  Future<void> cancelStreakWarning() async {
+    if (kIsWeb) return;
+    try {
+      await _localNotificationsPlugin.cancel(id: _streakWarningId);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService streak cancel');
+    }
+  }
+
+  /// Tur bitiminde çağrılır: bugünün uyarısı susar, yarınki kurulur.
+  Future<void> refreshStreakWarningAfterPlay({bool isKu = true}) async {
+    if (kIsWeb || !_enabled) return;
+    await cancelStreakWarning();
+    await scheduleStreakWarning(isKu: isKu, startTomorrow: true);
+  }
+
+  static const int _streakWarningId = 2;
+
+  /// [startTomorrow] true ise ilk çalma bugüne değil yarına kurulur —
+  /// oyuncu bugün zaten oynadıysa akşam uyarı almamalı.
+  Future<void> scheduleStreakWarning({
+    bool isKu = true,
+    bool startTomorrow = false,
+  }) async {
     if (kIsWeb || !_enabled) return;
     try {
       // Schedule for 21:00 (9 PM) - a gentle reminder
       final now = DateTime.now();
       var scheduledTime = DateTime(now.year, now.month, now.day, 21, 0);
-      if (!scheduledTime.isAfter(now)) {
+      if (startTomorrow || !scheduledTime.isAfter(now)) {
         scheduledTime = scheduledTime.add(const Duration(days: 1));
       }
 
@@ -341,7 +396,7 @@ class NotificationService {
 
       final tzTime = tz.TZDateTime.from(scheduledTime, tz.local);
       await _localNotificationsPlugin.zonedSchedule(
-        id: 2,
+        id: _streakWarningId,
         title: isKu ? 'Zana Xemgîn e...' : 'Zana Üzgün...',
         body: isKu
             ? 'Huhu! Te îro qet nelîst! Seriya te dikare bişkê. Zana li benda te ye!'
@@ -358,6 +413,11 @@ class NotificationService {
   }
 
   /// Arkadaşlık isteği kabul edildi bildirimi.
+  /// ⚠️ ÜRETİMDE ÇAĞRILMIYOR — bkz. [showFriendRequest].
+  ///
+  /// Aynı gerekçe: isteği kabul EDEN taraf zaten ekranda görüyor; bildirimi
+  /// alması gereken, isteği gönderen taraftır ve o an başka bir cihazdadır.
+  /// Push altyapısı olmadan yerel olarak tetiklenemez.
   Future<void> showFriendAccepted(String friendName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../models/mastery_level.dart';
 import '../theme/app_theme.dart';
 
 /// Kazanılabilir avatar çerçeveleri. Kimlikler (name) profiles.avatar_frame
 /// kolonunda saklanır; SABİT kalmalıdır.
-enum AvatarFrame { bronze, silver, gold, mamoste }
+///
+/// [neon] diğerlerinden farklı: ilerlemeyle değil, mağazadan satın alarak
+/// açılır ([unlockedFrames] onu hiç eklemez, `avatar_editor_screen`
+/// `hasPurchased('avatar_frame_neon')` ile ekler). 2026-07-31'e kadar
+/// mağaza kataloğunda tanımlıydı ama karşılığı yoktu — 600 coinlik
+/// ürün hiçbir yerde görünmüyordu.
+enum AvatarFrame { bronze, silver, gold, mamoste, neon }
 
 AvatarFrame? frameFromId(String? id) {
   if (id == null) return null;
@@ -46,14 +53,21 @@ Color frameColor(AvatarFrame frame) => switch (frame) {
   AvatarFrame.silver => const Color(0xFFB6BDC9),
   AvatarFrame.gold => AppTheme.gold,
   AvatarFrame.mamoste => AppTheme.violet,
+  // Marka paletindeki teal'in doygun hâli: "neon" adını karşılıyor ama
+  // uygulamanın renk ailesinden çıkmıyor.
+  AvatarFrame.neon => const Color(0xFF2ED3B7),
 };
 
 /// Editörde kilitli çerçevenin yanında gösterilecek kazanım koşulu.
-String frameRequirementLabel(AvatarFrame frame, bool isKu) => switch (frame) {
-  AvatarFrame.bronze => isKu ? '1 nîşan veke' : '1 rozet aç',
-  AvatarFrame.silver => isKu ? '5 nîşanan veke' : '5 rozet aç',
-  AvatarFrame.gold =>
-    isKu ? 'Di kategoriyekê de bibe Pispor' : 'Bir kategoride Pispor ol',
-  AvatarFrame.mamoste =>
-    isKu ? 'Di kategoriyekê de bibe Mamoste' : 'Bir kategoride Mamoste ol',
-};
+///
+/// Metinler anahtar defterinde durur: satır içi olsalardı Kurmancî alfabe
+/// bekçisinin ve `Tr.missingFor` bütünlük testinin dışında kalırlardı.
+String frameRequirementLabel(AvatarFrame frame, bool isKu) => Tr.forKu(switch (
+  frame
+) {
+  AvatarFrame.bronze => K.frameReqBronze,
+  AvatarFrame.silver => K.frameReqSilver,
+  AvatarFrame.gold => K.frameReqGold,
+  AvatarFrame.mamoste => K.frameReqMamoste,
+  AvatarFrame.neon => K.frameReqNeon,
+}, isKu);

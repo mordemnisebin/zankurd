@@ -63,10 +63,18 @@ void main() {
     expect(applyShopPurchaseEffect('spin_wheel_extra', identity), identity);
   });
 
+  // 2026-07-31: katalog 13 ürün tanımlıyordu ama yalnız 3'ü yayınlanıyordu;
+  // kalan 10'u ölü veriydi ve `_supportedItemIds`e yanlışlıkla eklenirlerse
+  // coin alıp hiçbir şey yapmazlardı. Dokuzu tamamen silindi, neon çerçeve
+  // ise gerçekten uygulandı (AvatarFrame.neon + hasPurchased kancası).
+  //
+  // Bu bekçinin işi: katalogda YAYINLANMAYAN ürün kalmaması. Yani liste
+  // artık hem "ne yayınlanıyor" hem "ne tanımlı" sorusunun tek cevabı.
   test('mağaza yalnız gerçekten çalışan ürünleri yayınlar', () {
     expect(debugShopItems.map((item) => item.id).toSet(), {
       'spin_wheel_extra',
       'avatar_frame_gold',
+      'avatar_frame_neon',
       'profile_badge_vip',
     });
   });
@@ -244,6 +252,8 @@ void main() {
     const expectedCosts = {
       'spin_wheel_extra': 200,
       'avatar_frame_gold': 750,
+      // 600'lük bant boştu: 200 ile 750 arasında harcanacak yer yoktu.
+      'avatar_frame_neon': 600,
       'profile_badge_vip': 1000,
     };
 

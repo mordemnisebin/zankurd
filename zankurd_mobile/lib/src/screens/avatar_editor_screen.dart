@@ -63,6 +63,12 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       final hasGoldFrame = await widget.repository.hasPurchased(
         'avatar_frame_gold',
       );
+      // Neon çerçeve 2026-07-31'e kadar mağaza kataloğunda tanımlıydı ama
+      // hiçbir yerde açılmıyordu: 600 coin ödeyen oyuncu karşılığında
+      // hiçbir şey görmüyordu. Altın çerçevenin birebir aynı deseni.
+      final hasNeonFrame = await widget.repository.hasPurchased(
+        'avatar_frame_neon',
+      );
       final hasVipBadge = await widget.repository.hasPurchased(
         'profile_badge_vip',
       );
@@ -89,6 +95,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         masteryCorrectByCategory: masteryByCategory,
       );
       if (hasGoldFrame) frames.add(AvatarFrame.gold);
+      if (hasNeonFrame) frames.add(AvatarFrame.neon);
 
       if (!mounted) return;
       setState(() {
@@ -350,6 +357,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                 AvatarFrame.silver => context.t(K.silver),
                                 AvatarFrame.gold => context.t(K.gold),
                                 AvatarFrame.mamoste => 'Mamoste',
+                                AvatarFrame.neon => context.t(K.frameNeon),
                               },
                               color: frameColor(frame),
                               locked: !_unlocked.contains(frame),

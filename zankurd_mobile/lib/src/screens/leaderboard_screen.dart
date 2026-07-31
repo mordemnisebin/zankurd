@@ -52,6 +52,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   /// gösterebilmek için ayrıca yüklenir.
   Future<LeaderboardEntry?>? _myStatsFuture;
 
+  /// Bekleyen arkadaşlık isteği sayısı — başlıktaki rozet için.
+  ///
+  /// `loadPendingFriendRequests` 2026-07-31'e kadar YALNIZCA
+  /// `friends_screen.dart` içinde çağrılıyordu ve o ekrana giden tek yol
+  /// boş durum düğmesiydi. Yani ilk arkadaştan sonra gelen istekler
+  /// hiçbir yerde görünmüyordu: gönderen cevap bekliyor, alan taraf
+  /// isteğin varlığından habersizdi.
+  int _pendingRequests = 0;
+
   @override
   void initState() {
     super.initState();
@@ -105,8 +114,22 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     );
   }
 
+  /// Rozet sayısını tazeler. Başarısızlık sessizdir: rozet bir
+  /// iyileştirmedir, tablonun kendisi ona bağlı değil.
+  Future<void> _refreshPendingRequests() async {
+    try {
+      final requests = await widget.repository.loadPendingFriendRequests();
+      if (!mounted) return;
+      if (requests.length == _pendingRequests) return;
+      setState(() => _pendingRequests = requests.length);
+    } catch (_) {
+      // Yoksay: rozet görünmezse tablo yine çalışır.
+    }
+  }
+
   void _loadData() {
     _myStatsFuture = _loadMyStats();
+    unawaited(_refreshPendingRequests());
     if (_tabController.index == 3) {
       setState(() {
         _friendsFuture = widget.repository
@@ -149,6 +172,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return null;
   }
 
+  /// Arkadaş ekranını açar ve dönüşte rozeti tazeler — kullanıcı orada
+  /// istekleri cevaplamış olabilir.
+  Future<void> _openFriends() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(FriendsScreen(repository: widget.repository)));
+    if (!mounted) return;
+    await _refreshPendingRequests();
+  }
+
   Future<void> _startQuickRace() async {
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
@@ -175,7 +208,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       child: SafeArea(
         child: Column(
           children: [
-            _Header(ku: ku, onRefresh: _loadData),
+            _Header(
+              ku: ku,
+              onRefresh: _loadData,
+              onOpenFriends: _openFriends,
+              pendingRequestCount: _pendingRequests,
+            ),
             _PeriodTabs(controller: _tabController, ku: ku),
             Expanded(
               child: _tabController.index == 3
@@ -217,11 +255,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             message: context.t(K.noFriendsAddHint),
             actionLabel: context.t(K.addFriend),
             actionIcon: AppIcons.userPlus,
-            onAction: () {
-              Navigator.of(
-                context,
-              ).push(AppRoute.to(FriendsScreen(repository: widget.repository)));
-            },
+            onAction: _openFriends,
           );
         }
         return Column(
@@ -484,10 +518,34 @@ class _LeagueBanner extends StatelessWidget {
 // ─── Header ──────────────────────────────────────────────────────────────────
 
 class _Header extends StatelessWidget {
-  const _Header({required this.ku, required this.onRefresh});
+  const _Header({
+    required this.ku,
+    required this.onRefresh,
+    required this.onOpenFriends,
+    required this.pendingRequestCount,
+  });
 
   final bool ku;
   final VoidCallback onRefresh;
+
+  /// Arkadaş ekranını açar. Bu düğme 2026-07-31'e kadar YOKTU.
+  ///
+  /// `FriendsScreen` — oyuncu arama, istek gönderme, GELEN İSTEKLERİ
+  /// kabul/ret, arkadaşla oda kurma — uygulamanın tamamında yalnız tek
+  /// yerden açılıyordu: Liderlik > Arkadaşlar sekmesinin BOŞ DURUM
+  /// düğmesinden. Kullanıcı bir arkadaş edindiği anda `friends.isEmpty`
+  /// false oluyor, boş durum kayboluyor ve yerine dokunulamayan bir liste
+  /// geliyordu. O andan sonra ekrana giden hiçbir yol kalmıyordu: yeni
+  /// arkadaş aranamıyor, gelen istekler hiçbir yerde görülemiyor, arkadaşla
+  /// oda kurulamıyordu. Tüm sosyal katman ilk arkadaştan sonra sessizce
+  /// ölüyordu.
+  final VoidCallback onOpenFriends;
+
+  /// Bekleyen arkadaşlık isteği sayısı; 0 ise rozet çizilmez.
+  ///
+  /// Görünür bir işaret olmadan istekler asla fark edilmiyordu: gönderen
+  /// taraf cevap bekliyor, alan taraf isteğin varlığından habersizdi.
+  final int pendingRequestCount;
 
   @override
   Widget build(BuildContext context) {
@@ -531,32 +589,109 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(
-                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-              ),
-            ),
-            child: Semantics(
-              button: true,
-              label: context.t(K.refreshBoardA11y),
-              excludeSemantics: true,
-              child: IconButton(
-                key: const ValueKey('leaderboard-refresh-button'),
-                tooltip: context.t(K.refreshAction),
-                onPressed: onRefresh,
-                icon: Icon(
-                  AppIcons.arrowsRotate,
-                  color: AppTheme.textSubColor(context),
-                  size: 20,
-                ),
-              ),
-            ),
+          _HeaderAction(
+            valueKey: const ValueKey('leaderboard-friends-button'),
+            icon: AppIcons.userPlus,
+            tooltip: context.t(K.friendsScreen),
+            semanticLabel: pendingRequestCount > 0
+                ? context.t(K.friendRequestsPendingA11y, {
+                    'count': '$pendingRequestCount',
+                  })
+                : context.t(K.friendsScreen),
+            onPressed: onOpenFriends,
+            badgeCount: pendingRequestCount,
+          ),
+          const SizedBox(width: AppSpacing.xs),
+          _HeaderAction(
+            valueKey: const ValueKey('leaderboard-refresh-button'),
+            icon: AppIcons.arrowsRotate,
+            tooltip: context.t(K.refreshAction),
+            semanticLabel: context.t(K.refreshBoardA11y),
+            onPressed: onRefresh,
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Liderlik başlığındaki kare eylem düğmesi.
+///
+/// İki düğme aynı kabı paylaşsın diye ayrıldı; ayrıca rozeti tek yerde
+/// çizer. Rozet yalnız sayı sıfırdan büyükken görünür — boş bir nokta
+/// "bir şey var" der ama ne olduğunu söylemez.
+class _HeaderAction extends StatelessWidget {
+  const _HeaderAction({
+    required this.valueKey,
+    required this.icon,
+    required this.tooltip,
+    required this.semanticLabel,
+    required this.onPressed,
+    this.badgeCount = 0,
+  });
+
+  final ValueKey<String> valueKey;
+  final IconData icon;
+  final String tooltip;
+  final String semanticLabel;
+  final VoidCallback onPressed;
+  final int badgeCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final button = Container(
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceHiColor(context),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border.all(
+          color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+        ),
+      ),
+      child: Semantics(
+        button: true,
+        label: semanticLabel,
+        excludeSemantics: true,
+        child: IconButton(
+          key: valueKey,
+          tooltip: tooltip,
+          onPressed: onPressed,
+          icon: Icon(icon, color: AppTheme.textSubColor(context), size: 20),
+        ),
+      ),
+    );
+
+    if (badgeCount <= 0) return button;
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        button,
+        Positioned(
+          right: -2,
+          top: -2,
+          child: Container(
+            key: const ValueKey('leaderboard-friends-badge'),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            constraints: const BoxConstraints(minWidth: 18),
+            decoration: BoxDecoration(
+              color: AppTheme.brand,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(color: AppTheme.bgOf(context), width: 1.5),
+            ),
+            child: Text(
+              badgeCount > 9 ? '9+' : '$badgeCount',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.onSolid(AppTheme.brand),
+                fontFamily: AppTypography.fontFamily,
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                height: 1.2,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
