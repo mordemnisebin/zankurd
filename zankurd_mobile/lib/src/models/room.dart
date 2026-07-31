@@ -17,6 +17,27 @@ String generateRoomCode([Random? random]) {
   return 'ZK-$suffix';
 }
 
+/// Elle yazılmış bir oda kodunu `generateRoomCode`un ürettiği biçime çevirir.
+///
+/// Kod kullanıcıya `ZK-X8WY` diye gösterilir ama insan onu tireyi atlayarak,
+/// küçük harfle ya da araya boşluk koyarak yazar. Katılma alanı bir zamanlar
+/// yalnızca `trim().toUpperCase()` yapıyordu; `zkx8wy` yazan kişi "oda
+/// bulunamadı" görüyordu — oda oradayken. Kusur 2026-08-01'de iki gerçek
+/// cihaz arasında oda kurulup katılınırken bulundu.
+///
+/// Ayıklama yalnızca biçimseldir: harf/rakam dışını atar, büyütür, varsa
+/// baştaki `ZK` önekini kaldırır ve kanonik hâli yeniden kurar. Karakter
+/// *düzeltmez* — `0`ı `O` yapmak gibi bir tahmin yanlış odaya sokabilirdi;
+/// üretim alfabesi zaten o ikilileri hiç kullanmıyor.
+String normalizeRoomCode(String input) {
+  var body = input
+      .toUpperCase()
+      .replaceAll(RegExp(r'[^A-Z0-9]'), '');
+  if (body.startsWith('ZK')) body = body.substring(2);
+  if (body.isEmpty) return '';
+  return 'ZK-$body';
+}
+
 class GameRoom {
   static const allowedSecondsPerQuestion = [20, 30, 45, 60];
   static const defaultSecondsPerQuestion = 30;

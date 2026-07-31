@@ -325,7 +325,12 @@ class Tr {
       'tr': 'Arkadaşlarını kodla çağır',
     },
     K.joinByCode: {'ku': 'Bi kodê tevlî bibe', 'tr': 'Kodla Katıl'},
-    K.joinByCodeSub: {'ku': 'Koda odeyê ya 6 tîpî', 'tr': '6 haneli oda kodu'},
+    // Kod `ZK-` öneki + 4 karakterdir; "6 haneli" hiçbir zaman doğru
+    // değildi ve kullanıcıyı yanlış uzunlukta bir şey aramaya itiyordu.
+    K.joinByCodeSub: {
+      'ku': 'Koda odeyê, mîna ZK-X8WY',
+      'tr': 'Oda kodu, örnek: ZK-X8WY',
+    },
     K.events: {'ku': 'Çalakî', 'tr': 'Etkinlikler'},
     K.eventsSub: {'ku': 'Her roj nû dibe.', 'tr': 'Her gün yenilenir.'},
     K.dailyContest: {'ku': 'Çalakiya Rojê', 'tr': 'Günün Etkinliği'},

@@ -1,4 +1,13 @@
 class Player {
+  /// Oyuncunun odada hazır olduğunu bildiren `state` değeri.
+  ///
+  /// `state` serbest bir gösterim dizesidir (`'Bot'`, `'Cevapladı'`, `'—'`
+  /// de olabilir), bu yüzden hazırlık bilgisi ayrı bir alan değil bu
+  /// dizenin bir değeri olarak taşınıyor. Karşılaştırma birden çok yerde
+  /// yapıldığı için sabit burada durur: bir dosyada 'Hazır' yazımı
+  /// değişirse diğerleri sessizce yanlış cevap vermeye başlardı.
+  static const readyState = 'Hazır';
+
   const Player({
     this.id,
     required this.name,

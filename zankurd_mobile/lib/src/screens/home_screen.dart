@@ -251,7 +251,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             AppRowCard(
               key: const ValueKey('home-review-row'),
               icon: AppIcons.arrowsRotate,
-              accent: AppTheme.playPink,
+              // Altın yalnız ödül/ilerleme sayılarına ayrılmış; tekrar
+              // satırı öğrenme akışının parçası, o yüzden marka yeşili.
+              accent: AppTheme.playGreen,
               title: context.t(K.homeReviewTime),
               subtitle: context.t(K.homeReviewTimeSub, {
                 'count': '$_reviewReadyCount',

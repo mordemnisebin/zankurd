@@ -38,7 +38,32 @@ class _RoomScreenState extends State<RoomScreen> {
   bool _chatOpen = false;
 
   late GameRoom room = widget.initialRoom;
-  bool ready = true;
+  /// Kullanıcı anahtara *elle* dokunduysa dediği geçer; dokunmadıysa
+  /// sunucudaki gerçek durum gösterilir.
+  ///
+  /// Eskiden burada düpedüz `bool ready = true` vardı ve anahtar herkeste
+  /// açık başlıyordu. Ev sahibinde bu doğruydu: `createOnlineRoom` satırı
+  /// `is_ready: true` ile ekliyor. Ama `join_room_by_code` katılan oyuncuyu
+  /// `is_ready = false` ile ekliyor — yani odaya katılan kişi kendi
+  /// ekranında "Hazırım: açık" görürken, oyuncu listesinde "Bekliyor"
+  /// yazıyordu ve ev sahibi yarışı başlatamıyordu. Çıkış yolu (anahtarı
+  /// kapatıp yeniden açmak) hiçbir yerde yazmıyordu.
+  ///
+  /// Kusur tek cihazda görünmüyordu: ev sahibi olarak açan kişi hiçbir
+  /// zaman uyuşmazlığı yaşamıyor. 2026-08-01'de Android'den oda kurulup
+  /// iOS'tan katılınca ortaya çıktı.
+  bool? _readyOverride;
+
+  bool get ready {
+    final chosen = _readyOverride;
+    if (chosen != null) return chosen;
+    final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
+    // Liste henüz gelmediyse ev sahibinin varsayılanı doğrudur.
+    if (me == null) return true;
+    return me.state == Player.readyState;
+  }
+
+  String? get _currentUserId => widget.repository.currentUserId;
   bool starting = false;
   bool quizOpened = false;
   bool _leaving = false;
@@ -637,7 +662,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                           activeTrackColor: AppTheme.playCyan
                                               .withValues(alpha: 0.45),
                                           onChanged: (v) {
-                                            setState(() => ready = v);
+                                            setState(() => _readyOverride = v);
                                             widget.repository.updateReady(
                                               room,
                                               v,
@@ -810,17 +835,31 @@ class _RoomScreenState extends State<RoomScreen> {
                                 // supabase/2026-07-31_chat_moderation.sql.
                                 if (room.id != null) ...[
                                   const SizedBox(height: AppSpacing.cardGap),
-                                  _ChatToggleRow(
-                                    open: _chatOpen,
-                                    onToggle: () =>
-                                        setState(() => _chatOpen = !_chatOpen),
-                                  ),
+                                  // Kapalıyken dış satır, açıkken RoomChat'in
+                                  // KENDİ başlığı görünür. `_ChatToggleRow`
+                                  // koşulsuz basıldığında ikisi üst üste
+                                  // biniyor ve odada alt alta iki "Sohbet"
+                                  // başlığı çıkıyordu (2026-08-01, iOS
+                                  // simülatöründe görüldü). Sohbeti geri
+                                  // getirirken `RoomChat`in zaten katlanabilir
+                                  // bir başlığı ve `onToggle` geri çağrısı
+                                  // olduğu gözden kaçmıştı.
+                                  if (!_chatOpen)
+                                    _ChatToggleRow(
+                                      open: _chatOpen,
+                                      onToggle: () => setState(
+                                        () => _chatOpen = !_chatOpen,
+                                      ),
+                                    ),
                                   if (_chatOpen)
                                     RoomChat(
                                       key: const ValueKey('room-chat'),
                                       repository: widget.repository,
                                       roomId: room.id!,
                                       visible: true,
+                                      onToggle: () => setState(
+                                        () => _chatOpen = !_chatOpen,
+                                      ),
                                     ),
                                 ],
                               ],

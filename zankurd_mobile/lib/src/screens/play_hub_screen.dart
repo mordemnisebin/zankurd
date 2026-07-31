@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -194,6 +195,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     key: const ValueKey('play-hub-join-room-code-field'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
+                    // Yazarken kanonik biçime çeker: kullanıcı `zkx8wy`
+                    // yazsa da alanda `ZK-X8WY` görünür, yani gönderilen
+                    // kodun doğru olduğunu göndermeden önce görür.
+                    inputFormatters: const [_RoomCodeInputFormatter()],
                     style: inputTextStyle,
                     decoration: InputDecoration(
                       labelText: context.t(K.roomCode),
@@ -283,7 +288,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             AppRowCard(
               key: const ValueKey('play-hub-create-room'),
               icon: AppIcons.circlePlus,
-              accent: AppTheme.playPurple,
+              // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
+              // M24 notu playPink/playPurple'ı 2026-07-23'te "marka dışı"
+              // ilan etmiş, eşleşme ekranı 2026-07-31'de düzeltilmişti; ama
+              // kararın verildiği ekranın *kendisi* atlanmıştı. Oyun
+              // merkezinde dört satır yan yana duruyor, yani sapma en çok
+              // burada görünüyordu: mor ve pembe, turuncu-altın-yeşil
+              // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
+              accent: AppTheme.culturalBrandBg,
               title: context.t(K.createRoom),
               subtitle: context.t(K.createRoomSub),
               trailing: _roomActionLoading
@@ -329,7 +341,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             AppRowCard(
               key: const ValueKey('play-hub-tournament'),
               icon: AppIcons.trophy,
-              accent: AppTheme.playPink,
+              // Altın bir satır yukarıda "Günün Etkinliği"nde; turnuva
+              // marka turuncusunu alır. Dört satır artık koyu yeşil ·
+              // çamurlu turkuaz · altın · turuncu — hepsi palet içinde,
+              // yine de birbirinden ayrılıyor.
+              accent: AppTheme.brand,
               title: context.t(K.tournament),
               subtitle: context.t(K.tournamentSub),
               onTap: () => Navigator.of(context).push(
@@ -437,6 +453,31 @@ class _PlaySectionHeading extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Oda kodu alanını yazılırken kanonik biçime çeker.
+///
+/// Kullanıcının gördüğü kod `ZK-X8WY`; elle yazarken tireyi atlamak,
+/// küçük harf kullanmak ya da araya boşluk koymak olağandır. Biçimlendirici
+/// olmadan bunların hepsi "oda bulunamadı" ile dönüyordu.
+class _RoomCodeInputFormatter extends TextInputFormatter {
+  const _RoomCodeInputFormatter();
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final normalized = normalizeRoomCode(newValue.text);
+    // İmleç sona alınır: kod kısa ve tek parça yazılır, ortasına dönüp
+    // düzenleme yapmak beklenen kullanım değil. Metin değişmediyse
+    // değeri olduğu gibi bırak, yoksa her tuşta imleç zıplar.
+    if (normalized == newValue.text) return newValue;
+    return TextEditingValue(
+      text: normalized,
+      selection: TextSelection.collapsed(offset: normalized.length),
     );
   }
 }

@@ -478,7 +478,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
     final response = await client.rpc(
       'join_room_by_code',
-      params: {'p_code': code.trim().toUpperCase()},
+      params: {'p_code': normalizeRoomCode(code)},
     );
     final room = response is Map<String, dynamic>
         ? response
@@ -502,7 +502,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       _recordError(error, stack, reason: 'loadRoom host lookup failed');
     }
 
-    return createRoom(category: category).copyWith(
+    final joined = createRoom(category: category).copyWith(
       id: roomId,
       code: room['code'] as String,
       questionCount: room['question_count'] as int? ?? 10,
@@ -512,6 +512,21 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           (room['seconds_per_question'] as int?) ??
           GameRoom.defaultSecondsPerQuestion,
     );
+
+    // `join_room_by_code` katılanı `is_ready = false` ile ekliyor, oysa
+    // `createOnlineRoom` ev sahibini `is_ready: true` ile ekliyor ve oda
+    // ekranının anahtarı iki rolde de "hazır" varsayılanını gösteriyor.
+    // Katılan kişi bu yüzden hazır olduğunu sanıp bekliyordu. Varsayılanı
+    // sunucuya bildirmek, ekranın gösterdiğiyle veritabanının söylediğini
+    // aynı yere getirir (2026-08-01).
+    try {
+      await updateReady(joined, true);
+    } catch (error, stack) {
+      // Bildirim düşerse oda yine de açılmalı: ekran artık gerçek durumu
+      // okuduğu için kullanıcı anahtarı kendisi açabilir.
+      _recordError(error, stack, reason: 'joinOnlineRoom ready sync failed');
+    }
+    return joined;
   }
 
   @override
@@ -683,7 +698,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 name: name,
                 score: row['score'] as int? ?? 0,
                 streak: row['streak'] as int? ?? 0,
-                state: ready ? 'Hazır' : 'Bekliyor',
+                state: ready ? Player.readyState : 'Bekliyor',
                 avatarIcon: cachedProfile?['avatar_icon'] as String?,
                 avatarColor: cachedProfile?['avatar_color'] as String?,
                 avatarUrl: cachedProfile?['avatar_url'] as String?,
@@ -1191,7 +1206,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         name: name,
         score: row['score'] as int? ?? 0,
         streak: row['streak'] as int? ?? 0,
-        state: ready ? 'Hazır' : 'Bekliyor',
+        state: ready ? Player.readyState : 'Bekliyor',
         avatarIcon: profile?['avatar_icon'] as String?,
         avatarColor: profile?['avatar_color'] as String?,
         avatarUrl: profile?['avatar_url'] as String?,

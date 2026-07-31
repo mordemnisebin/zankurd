@@ -1227,14 +1227,21 @@ class _QuizScreenState extends State<QuizScreen>
 
   Future<void> _advanceAuthoritativeIndex() async {
     if (!_isHost) return;
-    final nextIndex = index + 1;
     if (widget.repository is SupabaseZanKurdRepository) {
       final client = (widget.repository as SupabaseZanKurdRepository).client;
       try {
-        await client
-            .from('rooms')
-            .update({'current_question_index': nextIndex})
-            .eq('id', widget.room.id!);
+        // Doğrudan tablo güncellemesi DEĞİL: `rooms` üzerindeki ev sahibi
+        // UPDATE politikası 2026-07-22'de bilerek kaldırıldı ve buradaki
+        // yazım o günden beri sessizce sıfır satır etkiliyordu — PostgREST
+        // `select` istenmeyen bir update'te RLS engeli için hata döndürmez.
+        // İndeks 0'da takılı kalınca 1. sorudan sonraki her cevabı
+        // `enforce_current_room_question` reddediyordu (2026-08-01, canlı
+        // iki cihazlı denemede bulundu). RPC hata döndürür; sessiz başarı
+        // kusuru aynı biçimde geri gelemez.
+        await client.rpc(
+          'advance_room_question',
+          params: {'p_room_id': widget.room.id!},
+        );
       } catch (e, s) {
         ErrorReporter.record(e, s, reason: 'QuizScreen room sync failed');
         // Fallback

@@ -176,7 +176,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 // Soru metni
                 _SectionHeader(
                   icon: AppIcons.circleQuestion,
-                  color: AppTheme.playPink,
+                  color: AppTheme.brand,
                   title: context.t(K.questionKurmanci),
                 ),
                 const SizedBox(height: AppSpacing.xs),

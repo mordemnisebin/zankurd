@@ -172,7 +172,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ScreenIdentityHeader(
                 title: context.t(K.settings),
                 subtitle: context.t(K.settingsSubtitle),
-                accent: AppTheme.playPurple,
+                accent: AppTheme.culturalBrandBg,
                 icon: AppIcons.gear,
                 compact: true,
               ),
