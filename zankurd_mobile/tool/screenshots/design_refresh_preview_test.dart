@@ -11,7 +11,6 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
@@ -64,7 +63,6 @@ Widget _wrap({
       ),
       ChangeNotifierProvider(create: (_) => AuthProvider.test()),
       ChangeNotifierProvider(create: (_) => ThemeProvider(initialMode: mode)),
-      ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
       ChangeNotifierProvider(create: (_) => ReducedMotionProvider()),
       ChangeNotifierProvider(create: (_) => SoundProvider()),
       ChangeNotifierProvider<PremiumService>(

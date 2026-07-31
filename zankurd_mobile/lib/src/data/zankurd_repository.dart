@@ -202,6 +202,31 @@ abstract class ZanKurdRepository {
   /// Oda sohbet mesajlarını tek seferlik yükle.
   Future<List<RoomMessage>> loadRoomMessages(String roomId);
 
+  // ─── Sohbet moderasyonu (Apple 1.2 / Google Play UGC) ───────────────
+  //
+  // Kullanıcı üretimi içerik barındıran uygulamalarda içerik bildirme ve
+  // kullanıcı engelleme zorunludur. 2026-07-31'e kadar depoda ikisi de
+  // yoktu; sohbet o sırada hiçbir ekranda mount edilmediği için canlı bir
+  // risk değildi. Sohbet geri getirilirken bunlar birlikte geldi.
+
+  /// Bir mesajı moderasyona bildirir.
+  ///
+  /// Bildirim sunucuda kayda geçer; içerik kaldırma kararı istemcide
+  /// verilmez. Bildiren kullanıcı için mesaj hemen gizlenir.
+  Future<bool> reportRoomMessage({
+    required String messageId,
+    required String reason,
+  });
+
+  /// Bir oyuncuyu engeller: mesajları bundan sonra gösterilmez.
+  Future<bool> blockPlayer(String playerId);
+
+  /// Engeli kaldırır.
+  Future<bool> unblockPlayer(String playerId);
+
+  /// Engellenen oyuncu kimlikleri.
+  Future<Set<String>> loadBlockedPlayerIds();
+
   /// Günlük görev tamamlamasını sunucuya senkronize et.
   Future<bool> syncMissionCompletion(
     String missionKey,

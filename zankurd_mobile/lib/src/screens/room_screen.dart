@@ -10,6 +10,7 @@ import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -32,6 +33,10 @@ class RoomScreen extends StatefulWidget {
 }
 
 class _RoomScreenState extends State<RoomScreen> {
+  /// Sohbet paneli açık mı. Kapalı başlar: aa42044'ün kalabalık kaygısı
+  /// haklıydı, ama çözümü sohbeti silmek değil katlamaktı.
+  bool _chatOpen = false;
+
   late GameRoom room = widget.initialRoom;
   bool ready = true;
   bool starting = false;
@@ -779,6 +784,46 @@ class _RoomScreenState extends State<RoomScreen> {
                                     ],
                                   ),
                                 ),
+
+                                // ── Oda sohbeti ───────────────────────
+                                //
+                                // 411 satırlık `RoomChat` yazılmış, testi
+                                // ve çevirileri hazırdı ama aa42044
+                                // ("kalabalık ekranları seyrelt") onu
+                                // RoomScreen'den çıkarmıştı ve commit
+                                // gövdesi sohbetin kaldırıldığını hiç
+                                // anmıyordu. Geriye canlı akışa bağlı,
+                                // hiçbir ekranın mount etmediği bir widget
+                                // kaldı (2026-07-31 denetimi).
+                                //
+                                // Arkadaşla oynamanın en sosyal anında —
+                                // kod paylaşıldı, karşı taraf girdi —
+                                // hiçbir iletişim kanalı yoktu. Sohbet
+                                // katlanabilir bir panel olarak geri
+                                // geldi; kalabalık kaygısı kapalı
+                                // başlayarak karşılanıyor.
+                                //
+                                // Moderasyon onunla BİRLİKTE geldi
+                                // (Apple 1.2): gönderimde küfür/bağlantı
+                                // süzgeci, mesaja uzun basınca bildir ve
+                                // engelle. Sunucu tarafı karşılığı
+                                // supabase/2026-07-31_chat_moderation.sql.
+                                if (room.id != null) ...[
+                                  const SizedBox(height: AppSpacing.cardGap),
+                                  _ChatToggleRow(
+                                    open: _chatOpen,
+                                    onToggle: () => setState(
+                                      () => _chatOpen = !_chatOpen,
+                                    ),
+                                  ),
+                                  if (_chatOpen)
+                                    RoomChat(
+                                      key: const ValueKey('room-chat'),
+                                      repository: widget.repository,
+                                      roomId: room.id!,
+                                      visible: true,
+                                    ),
+                                ],
                               ],
                             ),
                           ),
@@ -1041,6 +1086,60 @@ class _PlayerTile extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Sohbet panelini açıp kapatan satır.
+///
+/// Sohbet kapalı başlar ve bu satır onun var olduğunu söyler. aa42044
+/// odayı seyreltmek için sohbeti tamamen kaldırmıştı; kalabalık kaygısı
+/// haklıydı ama çözüm silmek değil katlamaktı — kapalıyken tek satır yer
+/// kaplıyor (2026-07-31).
+class _ChatToggleRow extends StatelessWidget {
+  const _ChatToggleRow({required this.open, required this.onToggle});
+
+  final bool open;
+  final VoidCallback onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      padding: EdgeInsets.zero,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const ValueKey('room-chat-toggle'),
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          onTap: onToggle,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
+            child: Row(
+              children: [
+                const Icon(AppIcons.comment, color: AppTheme.playCyan, size: 20),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    context.t(K.chat),
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Icon(
+                  open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                  color: AppTheme.textMutedColor(context),
+                  size: 18,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

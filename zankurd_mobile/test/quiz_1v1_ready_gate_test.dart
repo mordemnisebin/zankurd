@@ -9,7 +9,6 @@ import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -54,7 +53,6 @@ Widget _wrap(Widget child) {
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ChangeNotifierProvider(create: (_) => SoundProvider()),
       ChangeNotifierProvider(create: (_) => ReducedMotionProvider()),
-      ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
     ],
     child: MaterialApp(home: Scaffold(body: child)),
   );

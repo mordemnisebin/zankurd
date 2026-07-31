@@ -8,7 +8,6 @@ import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -95,9 +94,6 @@ Widget testShell({
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
       ChangeNotifierProvider<ReducedMotionProvider>(
         create: (_) => ReducedMotionProvider(),
-      ),
-      ChangeNotifierProvider<ChildSafetyProvider>(
-        create: (_) => ChildSafetyProvider(),
       ),
       ChangeNotifierProvider<PremiumService>(
         create: (_) => PremiumService.fallback(),

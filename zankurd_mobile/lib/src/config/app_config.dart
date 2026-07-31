@@ -94,4 +94,24 @@ class AppConfig {
   // privacy.html ve terms.html web derlemesiyle birlikte yayınlanır.
   static const privacyPolicyUrl = 'https://www.zankurd.com/privacy.html';
   static const termsOfServiceUrl = 'https://www.zankurd.com/terms.html';
+
+  // ── Kötüye kullanım bildirimi (Apple 1.2 / Play UGC şartı) ─────────
+  //
+  // Kullanıcı üretimi içerik barındıran uygulamalarda iletişim bilgisinin
+  // YAYIMLANMIŞ olması zorunludur. Oda sohbeti 2026-07-31'de moderasyonuyla
+  // birlikte geri geldi; bu adres o şartın dördüncü maddesini karşılar.
+  //
+  // Bilerek hesap silme sayfasındakiyle AYNI adres: iki ayrı destek kanalı
+  // ikisinin de bakımsız kalmasına yol açar.
+  static const supportEmail = 'nisebinbawer47@gmail.com';
+
+  /// Ayarlar → Güvenlik satırının açtığı, konusu hazır e-posta.
+  ///
+  /// Konu metni çağrı yerinden gelir: yapılandırma dosyası dile
+  /// bağımlı olmamalı, metinler anahtar defterinde durmalı.
+  static Uri abuseReportUri({required String subject}) => Uri(
+    scheme: 'mailto',
+    path: supportEmail,
+    queryParameters: {'subject': subject},
+  );
 }

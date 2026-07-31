@@ -438,6 +438,37 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return List.of(_roomMessages);
   }
 
+  // ─── Sohbet moderasyonu ─────────────────────────────────────────────
+  // Çevrimdışı depoda engelleme cihazda tutulur; bildirme yerel olarak
+  // yalnız mesajı gizler (gönderilecek bir sunucu yok).
+  final Set<String> _blockedPlayerIds = <String>{};
+  final Set<String> _reportedMessageIds = <String>{};
+
+  @override
+  Future<bool> reportRoomMessage({
+    required String messageId,
+    required String reason,
+  }) async {
+    _reportedMessageIds.add(messageId);
+    return true;
+  }
+
+  @override
+  Future<bool> blockPlayer(String playerId) async {
+    _blockedPlayerIds.add(playerId);
+    return true;
+  }
+
+  @override
+  Future<bool> unblockPlayer(String playerId) async {
+    _blockedPlayerIds.remove(playerId);
+    return true;
+  }
+
+  @override
+  Future<Set<String>> loadBlockedPlayerIds() async =>
+      Set.of(_blockedPlayerIds);
+
   @override
   Future<Map<String, dynamic>> submitAnswer({
     required GameRoom room,

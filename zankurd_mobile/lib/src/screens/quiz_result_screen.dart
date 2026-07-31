@@ -12,7 +12,6 @@ import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../providers/child_safety_provider.dart';
 import '../services/premium_service.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
@@ -1043,10 +1042,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           label: context.t(K.playAgain),
                           onTap: playAgain,
                         ),
-                      if (context
-                          .watch<ChildSafetyProvider>()
-                          .allowExternalShare)
-                        _ResultSideAction(
+                      _ResultSideAction(
                           key: const ValueKey('result-share-button'),
                           icon: AppIcons.shareNodes,
                           label: context.t(K.share),

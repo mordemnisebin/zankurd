@@ -10,7 +10,6 @@ import '../l10n/strings.dart';
 import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
-import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
@@ -19,6 +18,9 @@ import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/percent_format.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../config/app_config.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
@@ -118,6 +120,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SnackBar(content: Text(context.t(K.playerNameLoadFailed))),
         );
       }
+    }
+  }
+
+  /// Kötüye kullanım bildirimi için konusu hazır e-posta açar.
+  ///
+  /// Apple 1.2, UGC barındıran uygulamada iletişim bilgisinin
+  /// yayımlanmasını şart koşar ve kullanıcı ona uygulamadan ulaşabilmeli.
+  Future<void> _openAbuseReport() async {
+    final uri = AppConfig.abuseReportUri(
+      subject: context.t(K.abuseMailSubject),
+    );
+    final failed = context.t(K.linkOpenFailed);
+    try {
+      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (ok || !mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(failed)));
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'abuse report mailto');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(failed)));
     }
   }
 
@@ -274,21 +296,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: AppSpacing.cardGap),
 
               // ============ GÜVENLİK / SAFETY ============
+              //
+              // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
+              // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
+              // 2026-07-31'de moderasyonuyla geri geldi; bu satır
+              // kullanıcının taciz bildirimini nereye yapacağını söyler.
+              // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
               ScreenSectionLabel(
                 label: context.t(K.secSafety),
                 accent: AppTheme.playGreen,
               ),
               AppPanel(
                 padding: EdgeInsets.zero,
-                child: Consumer<ChildSafetyProvider>(
-                  builder: (context, child, _) => _SettingsToggleRow(
-                    icon: AppIcons.shield,
-                    color: AppTheme.playGreen,
-                    title: context.t(K.childSafeMode),
-                    trailing: Switch(
-                      key: const ValueKey('child-safe-switch'),
-                      value: child.enabled,
-                      onChanged: (v) => _toggleChildSafety(child, v, ku),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    key: const ValueKey('settings-report-abuse'),
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    onTap: _openAbuseReport,
+                    child: _SettingsToggleRow(
+                      icon: AppIcons.triangleExclamation,
+                      color: AppTheme.playGreen,
+                      title: context.t(K.reportAbuse),
+                      trailing: Icon(
+                        AppIcons.chevronRight,
+                        color: AppTheme.textMutedColor(context),
+                      ),
                     ),
                   ),
                 ),
@@ -969,42 +1002,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// Çocuk modunu değiştirir. Açarken ne değiştiğini açıklayan bir onay
   /// dialogu gösterir. (Yalnız cihaz tarafı — sunucu koruması yoktur.)
-  Future<void> _toggleChildSafety(
-    ChildSafetyProvider provider,
-    bool value,
-    bool ku,
-  ) async {
-    if (!value) {
-      await provider.setEnabled(false);
-      return;
-    }
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogCtx) => AlertDialog(
-        backgroundColor: AppTheme.surfaceOf(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
-        title: Text(context.t(K.childSafeMode)),
-        content: Text(context.t(K.childSafeBody)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogCtx).pop(false),
-            child: Text(context.t(K.cancel)),
-          ),
-          FilledButton(
-            key: const ValueKey('child-safe-confirm'),
-            onPressed: () => Navigator.of(dialogCtx).pop(true),
-            child: Text(context.t(K.openSettings)),
-          ),
-        ],
-      ),
-    );
-    if (confirmed == true) {
-      await provider.setEnabled(true);
-    }
-  }
 
   Future<void> _openPlacement() async {
     await Navigator.of(

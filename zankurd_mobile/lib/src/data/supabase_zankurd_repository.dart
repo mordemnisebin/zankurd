@@ -577,6 +577,65 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  // ─── Sohbet moderasyonu (Apple 1.2 / Google Play UGC) ───────────────
+  //
+  // Tablolar `supabase/2026-07-31_chat_moderation.sql` ile gelir. Göç
+  // uygulanmamışsa çağrılar hata alır ve `false` döner — arayüz bunu
+  // "bildirilemedi" olarak gösterir, çöker değil.
+
+  @override
+  Future<bool> reportRoomMessage({
+    required String messageId,
+    required String reason,
+  }) async {
+    try {
+      await client.rpc(
+        'report_room_message',
+        params: {'p_message_id': messageId, 'p_reason': reason},
+      );
+      return true;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'reportRoomMessage failed');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> blockPlayer(String playerId) async {
+    try {
+      await client.rpc('block_player', params: {'p_blocked_id': playerId});
+      return true;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'blockPlayer failed');
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> unblockPlayer(String playerId) async {
+    try {
+      await client.rpc('unblock_player', params: {'p_blocked_id': playerId});
+      return true;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'unblockPlayer failed');
+      return false;
+    }
+  }
+
+  @override
+  Future<Set<String>> loadBlockedPlayerIds() async {
+    try {
+      final rows = await client.from('blocked_users').select('blocked_id');
+      return rows.map((row) => row['blocked_id'] as String).toSet();
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadBlockedPlayerIds failed');
+      // Engel listesi okunamazsa hiç kimseyi engelli SAYMA: sohbet
+      // çalışmaya devam etsin. Ters yön (herkesi engelli saymak) sohbeti
+      // sessizce boşaltırdı.
+      return const <String>{};
+    }
+  }
+
   @override
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room) {
     final roomId = room.id;

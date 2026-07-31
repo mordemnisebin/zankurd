@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
-import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -181,12 +179,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   icon: AppIcons.peopleGroup,
                 ),
                 const SizedBox(height: AppSpacing.md),
-                // Çocuk modu: arkadaş arama ve yeni istek gönderme kapalı
-                // (cihaz tarafı; mevcut arkadaşlar korunur).
-                if (context.watch<ChildSafetyProvider>().allowFriendSearch) ...[
-                  _buildSearchSection(ku),
-                  const SizedBox(height: 24),
-                ],
+                _buildSearchSection(ku),
+                const SizedBox(height: 24),
                 _buildRequestsSection(ku),
                 ScreenSectionLabel(
                   label: context.t(K.myFriends),

@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -64,7 +63,6 @@ Widget _wrapWithProviders(Widget child, AuthProvider authProvider) {
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ChangeNotifierProvider(create: (_) => SoundProvider()),
       ChangeNotifierProvider(create: (_) => ReducedMotionProvider()),
-      ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
     ],
     child: MaterialApp(
       theme: AppTheme.light(),

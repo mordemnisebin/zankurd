@@ -6,6 +6,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/room_message.dart';
+import '../services/chat_moderation_policy.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import 'player_avatar.dart';
@@ -27,6 +28,9 @@ class RoomChat extends StatefulWidget {
   final bool visible;
   final VoidCallback? onToggle;
 
+  /// Kendi mesajına moderasyon menüsü açılmaz.
+  String? get currentUserId => repository.currentUserId;
+
   @override
   State<RoomChat> createState() => _RoomChatState();
 }
@@ -38,6 +42,21 @@ class _RoomChatState extends State<RoomChat> {
   List<RoomMessage> _messages = [];
   bool _sending = false;
   bool _subscribed = false;
+
+  /// Engellenen göndericiler ve bildirilen mesajlar — bu cihazda hemen
+  /// gizlenir. Sunucu tarafında `blocked_users` politikası zaten süzüyor;
+  /// bu, kararın anında görünmesi için.
+  final Set<String> _blockedSenderIds = <String>{};
+  final Set<String> _hiddenMessageIds = <String>{};
+
+  /// Ekranda gösterilecek mesajlar.
+  List<RoomMessage> get _visibleMessages => _messages
+      .where(
+        (m) =>
+            !_blockedSenderIds.contains(m.senderId) &&
+            !_hiddenMessageIds.contains(m.id),
+      )
+      .toList();
 
   @override
   void initState() {
@@ -102,10 +121,43 @@ class _RoomChatState extends State<RoomChat> {
     });
   }
 
+  /// Süzgeç kararını kullanıcıya okunur bir cümleyle söyler.
+  ///
+  /// Sessizce yutmak en kötüsü: kullanıcı mesajın gittiğini sanır ve
+  /// karşı taraf hiç görmez.
+  String _rejectionMessage(ChatModerationVerdict verdict) {
+    return switch (verdict) {
+      ChatModerationVerdict.blockedWord => context.t(K.chatBlockedWord),
+      ChatModerationVerdict.containsLink => context.t(K.chatNoLinks),
+      ChatModerationVerdict.tooLong => context.t(K.chatTooLong),
+      ChatModerationVerdict.spam => context.t(K.chatSpam),
+      ChatModerationVerdict.empty => '',
+      ChatModerationVerdict.allowed => '',
+    };
+  }
+
   Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
     if (text.isEmpty || _sending) return;
+
+    // İstemci tarafı süzgeç: kullanıcıya ANINDA niçin gönderilemediğini
+    // söyler. Tek başına yeterli değildir — aynı kural `room_messages`
+    // üzerinde bir BEFORE INSERT tetikleyicisiyle de kurulu
+    // (supabase/2026-07-31_chat_moderation.sql), çünkü değiştirilmiş bir
+    // istemci doğrudan REST üzerinden yazabilir.
+    final verdict = ChatModerationPolicy.review(text);
+    if (verdict != ChatModerationVerdict.allowed) {
+      final message = _rejectionMessage(verdict);
+      if (message.isNotEmpty && mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(message)));
+      }
+      return;
+    }
+
     setState(() => _sending = true);
+    final sendFailed = context.t(K.chatSendFailed);
     try {
       await widget.repository.sendRoomMessage(
         roomId: widget.roomId,
@@ -114,9 +166,74 @@ class _RoomChatState extends State<RoomChat> {
       _messageController.clear();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room chat send failed');
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(sendFailed)));
+      }
     } finally {
       if (mounted) setState(() => _sending = false);
     }
+  }
+
+  /// Mesaja uzun basınca açılan moderasyon menüsü.
+  ///
+  /// Apple 1.2 içerik bildirme ve kullanıcı engelleme yollarının
+  /// uygulamada bulunmasını şart koşar. Kendi mesajın için menü açılmaz.
+  Future<void> _showModerationSheet(RoomMessage message) async {
+    if (message.senderId == widget.currentUserId) return;
+    final action = await showModalBottomSheet<String>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              key: const ValueKey('chat-report-action'),
+              leading: const Icon(AppIcons.triangleExclamation),
+              title: Text(sheetContext.t(K.chatReport)),
+              subtitle: Text(sheetContext.t(K.chatReportSub)),
+              onTap: () => Navigator.of(sheetContext).pop('report'),
+            ),
+            ListTile(
+              key: const ValueKey('chat-block-action'),
+              leading: const Icon(AppIcons.circleXmark),
+              title: Text(sheetContext.t(K.chatBlock)),
+              subtitle: Text(sheetContext.t(K.chatBlockSub)),
+              onTap: () => Navigator.of(sheetContext).pop('block'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (action == null || !mounted) return;
+
+    final okText = context.t(
+      action == 'report' ? K.chatReported : K.chatBlocked,
+    );
+    final failText = context.t(K.chatModerationFailed);
+    final ok = action == 'report'
+        ? await widget.repository.reportRoomMessage(
+            messageId: message.id,
+            reason: 'user_report',
+          )
+        : await widget.repository.blockPlayer(message.senderId);
+
+    if (!mounted) return;
+    if (ok) {
+      // Bildiren/engelleyen için mesaj hemen gizlenir; sunucu kararını
+      // beklemek kullanıcıyı rahatsız edici içerikle baş başa bırakırdı.
+      setState(() {
+        if (action == 'block') {
+          _blockedSenderIds.add(message.senderId);
+        } else {
+          _hiddenMessageIds.add(message.id);
+        }
+      });
+    }
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(ok ? okText : failText)));
   }
 
   @override
@@ -184,7 +301,7 @@ class _RoomChatState extends State<RoomChat> {
           ),
           // Mesaj listesi
           Expanded(
-            child: _messages.isEmpty
+            child: _visibleMessages.isEmpty
                 ? Center(
                     child: Text(
                       context.t(K.chatEmpty),
@@ -202,15 +319,23 @@ class _RoomChatState extends State<RoomChat> {
                       AppSpacing.sm,
                       AppSpacing.xs,
                     ),
-                    itemCount: _messages.length,
+                    itemCount: _visibleMessages.length,
                     itemBuilder: (ctx, idx) {
-                      final msg = _messages[idx];
-                      final isMine =
-                          msg.senderId == widget.repository.currentUserId;
-                      return _MessageBubble(
-                        message: msg,
-                        isMine: isMine,
-                        ku: ku,
+                      final msg = _visibleMessages[idx];
+                      final isMine = msg.senderId == widget.currentUserId;
+                      // Uzun basış: bildir / engelle. Apple 1.2 ikisinin de
+                      // uygulamada bulunmasını şart koşuyor. Kendi mesajın
+                      // için menü açılmaz.
+                      return GestureDetector(
+                        key: ValueKey('chat-message-${msg.id}'),
+                        onLongPress: isMine
+                            ? null
+                            : () => _showModerationSheet(msg),
+                        child: _MessageBubble(
+                          message: msg,
+                          isMine: isMine,
+                          ku: ku,
+                        ),
                       );
                     },
                   ),

@@ -77,7 +77,18 @@ class Tr {
       'tr': 'Mevcut seviyen: {name}',
     },
     K.secSafety: {'ku': 'Ewlekarî', 'tr': 'Güvenlik'},
-    K.childSafeMode: {'ku': 'Moda zaroka ewle', 'tr': 'Güvenli çocuk modu'},
+    K.reportAbuse: {
+      'ku': 'Bikaranîna xerab ragihîne',
+      'tr': 'Kötüye kullanım bildir',
+    },
+    K.abuseMailSubject: {
+      'ku': 'ZanKurd — ragihandina bikaranîna xerab',
+      'tr': 'ZanKurd — kötüye kullanım bildirimi',
+    },
+    K.linkOpenFailed: {
+      'ku': 'Girêdan nehat vekirin.',
+      'tr': 'Bağlantı açılamadı.',
+    },
     K.secAppearance: {'ku': 'Dîmen', 'tr': 'Görünüm'},
     K.appLanguage: {'ku': 'Zimanê sepanê', 'tr': 'Uygulama dili'},
     K.darkLightMode: {'ku': 'Moda tarî/ronahî', 'tr': 'Karanlık/Aydınlık mod'},
@@ -1022,6 +1033,44 @@ class Tr {
     K.friendsScreen: {'ku': 'Heval', 'tr': 'Arkadaşlar'},
     // Neon çerçeve: ilerlemeyle değil mağazadan açılır.
     K.frameNeon: {'ku': 'Neon', 'tr': 'Neon'},
+
+    // ── Oda sohbeti moderasyonu (Apple 1.2 / Google Play UGC) ────────
+    K.chatBlockedWord: {
+      'ku': 'Ev peyam nayê şandin: gotinên nebaş.',
+      'tr': 'Bu mesaj gönderilemez: uygunsuz sözcük içeriyor.',
+    },
+    K.chatNoLinks: {
+      'ku': 'Di sohbeta odeyê de girêdan nayên şandin.',
+      'tr': 'Oda sohbetinde bağlantı paylaşılamaz.',
+    },
+    K.chatTooLong: {
+      'ku': 'Peyam pir dirêj e (herî zêde 240 tîp).',
+      'tr': 'Mesaj çok uzun (en fazla 240 karakter).',
+    },
+    K.chatSpam: {
+      'ku': 'Dubarekirina tîpan pir zêde ye.',
+      'tr': 'Aynı karakter çok fazla tekrarlanmış.',
+    },
+    K.chatSendFailed: {
+      'ku': 'Peyam nehat şandin. Dîsa biceribîne.',
+      'tr': 'Mesaj gönderilemedi. Tekrar dene.',
+    },
+    K.chatReport: {'ku': 'Peyamê ragihîne', 'tr': 'Mesajı bildir'},
+    K.chatReportSub: {
+      'ku': 'Ji bo lêkolînê tê şandin.',
+      'tr': 'İncelenmek üzere gönderilir.',
+    },
+    K.chatBlock: {'ku': 'Vî lîstikvanî asteng bike', 'tr': 'Bu oyuncuyu engelle'},
+    K.chatBlockSub: {
+      'ku': 'Peyamên wî/wê êdî ji te re nayên nîşandan.',
+      'tr': 'Mesajları bundan sonra sana gösterilmez.',
+    },
+    K.chatReported: {'ku': 'Peyam hate ragihandin.', 'tr': 'Mesaj bildirildi.'},
+    K.chatBlocked: {'ku': 'Lîstikvan hate astengkirin.', 'tr': 'Oyuncu engellendi.'},
+    K.chatModerationFailed: {
+      'ku': 'Kar nehat kirin. Dîsa biceribîne.',
+      'tr': 'İşlem yapılamadı. Tekrar dene.',
+    },
     // Çerçeve kazanım koşulları. Satır içiydiler; neon eklenince sayı
     // arttığı için tamamı deftere alındı (2026-07-31).
     K.frameReqBronze: {'ku': '1 nîşan veke', 'tr': '1 rozet aç'},
@@ -1528,12 +1577,6 @@ class Tr {
       'tr':
           'Kurmancî bilgi yarışması uygulaması — Kürt dili, kültürü, tarihi, edebiyatı, coğrafyası ve müziğini öğren, yarış.',
     },
-    K.childSafeBody: {
-      'ku':
-          'Ev mod li ser vê amûrê lêgerîna hevalan, şandina daxwazên nû yên hevaltiyê, xuyabûna profîla giştî û parvekirina derve asteng dike. Daneyên te nayên jêbirin; dema ku tu modê neçalak dikî, tenê gihîştina van taybetmendiyan vedigere.',
-      'tr':
-          'Bu mod bu cihazda arkadaş aramayı, yeni arkadaşlık isteklerini, herkese açık profil görünürlüğünü ve dış paylaşımı kapatır. Verilerin silinmez; modu kapattığında yalnız bu özelliklere yeniden erişebilirsin.',
-    },
     K.ttsKurdishLimited: {
       'ku':
           'Dengê kurdî li vê amûrê sînordar e; dibe ku dengekî din were bikaranîn.',
@@ -1743,7 +1786,9 @@ class K {
   static const retakePlacementSub = 'settings.retakePlacement.sub';
   static const currentLevel = 'settings.currentLevel';
   static const secSafety = 'settings.section.safety';
-  static const childSafeMode = 'settings.childSafeMode';
+  static const reportAbuse = 'settings.reportAbuse';
+  static const abuseMailSubject = 'settings.abuseMail.subject';
+  static const linkOpenFailed = 'settings.linkOpenFailed';
   static const secAppearance = 'settings.section.appearance';
   static const appLanguage = 'settings.appLanguage';
   static const darkLightMode = 'settings.darkLightMode';
@@ -2155,6 +2200,20 @@ class K {
   static const addFriend = 'leaderboard.addFriend';
   static const friendsScreen = 'leaderboard.friendsScreen';
   static const frameNeon = 'avatar.frame.neon';
+
+  // ── Oda sohbeti moderasyonu ────────────────────────────────────────
+  static const chatBlockedWord = 'chat.rejected.word';
+  static const chatNoLinks = 'chat.rejected.link';
+  static const chatTooLong = 'chat.rejected.tooLong';
+  static const chatSpam = 'chat.rejected.spam';
+  static const chatSendFailed = 'chat.sendFailed';
+  static const chatReport = 'chat.report';
+  static const chatReportSub = 'chat.report.sub';
+  static const chatBlock = 'chat.block';
+  static const chatBlockSub = 'chat.block.sub';
+  static const chatReported = 'chat.reported';
+  static const chatBlocked = 'chat.blocked';
+  static const chatModerationFailed = 'chat.moderation.failed';
   static const frameReqBronze = 'avatar.frame.req.bronze';
   static const frameReqSilver = 'avatar.frame.req.silver';
   static const frameReqGold = 'avatar.frame.req.gold';
@@ -2361,7 +2420,6 @@ class K {
   static const howToPlayBody = 'settings.howToPlay.body';
   static const privacyBody = 'settings.privacy.body';
   static const aboutBody = 'settings.about.body';
-  static const childSafeBody = 'settings.childSafe.body';
   static const ttsKurdishLimited = 'settings.tts.kurdishLimited';
 
   // ── Hikâye ekranı ─────────────────────────────────────────────
