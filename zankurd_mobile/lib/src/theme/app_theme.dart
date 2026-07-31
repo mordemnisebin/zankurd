@@ -561,11 +561,18 @@ class AppTheme {
     colors: [bg, bgDeep],
   );
 
-  static const homeHeaderGradient = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0xFF173C2D), Color(0xFF1E4A38), Color(0xFF245440)],
-  );
+  // `homeHeaderGradient` burada duruyordu ve hiçbir yerde kullanılmıyordu.
+  // 2026-08-01'de silindi: ana ekran başlık şeridi BİLEREK düz renktir ve
+  // iki ayrı karar onu öyle tutuyor —
+  //
+  //   1. Gradyan "buraya bas" demektir, ekran başına bir tane; ana
+  //      ekranınki "Başla" düğmesinin (kulturel_modern_home_test).
+  //   2. Şeride süs koymak 2026-07-24'te denendi ve geri alındı: dekoratif
+  //      daireler ve yıldız filigranı metnin kontrastını düşürüyordu.
+  //
+  // Kullanılmayan bir token, kararı bilmeyen herkesi onu kullanmaya davet
+  // eder — 2026-07-31 denetimi de "ölü token" diye bildirdi, ardından
+  // gradyan denendi ve test kırıldı. Token yoksa davet de yok.
 
   static const bgGradient = darkAuthGradient;
 
