@@ -8,6 +8,7 @@ import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/screen_identity_header.dart';
@@ -380,9 +381,10 @@ class _ShopScreenState extends State<ShopScreen> {
                     onPressed: () {
                       Navigator.of(ctx).pop(false);
                       Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) =>
-                              SpinWheelScreen(repository: widget.repository),
+                        AppRoute<void>(
+                          page: SpinWheelScreen(
+                            repository: widget.repository,
+                          ),
                         ),
                       );
                     },
@@ -670,8 +672,8 @@ class _ShopScreenState extends State<ShopScreen> {
           borderRadius: BorderRadius.circular(AppRadius.card),
           onTap: () {
             Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (_) => SpinWheelScreen(repository: widget.repository),
+              AppRoute<void>(
+                page: SpinWheelScreen(repository: widget.repository),
               ),
             );
           },

@@ -81,7 +81,9 @@ graph TB
 - **AuthProvider** — Supabase kimlik doğrulama
 - **ThemeProvider** — Aydınlık/Karanlık tema yönetimi
 - **LanguageProvider** — Kurmancî/Türkçe dil yönetimi
-- **SoundProvider** — Ses efektleri açma/kapama
+- **SoundProvider** — Ses efektleri açma/kapama (web'de sessizdir)
+- **ReducedMotionProvider** — Hareketi azalt (kullanıcı + sistem tercihi)
+- **PremiumService** — RevenueCat aboneliği (`ChangeNotifier`)
 
 ### 3. Servisler (`lib/src/services/`)
 - **AnalyticsService** — Anonim kullanım istatistikleri (Firebase Analytics)
@@ -114,16 +116,22 @@ graph TB
 | **Analitik** | Firebase Analytics |
 | **Yerel Depo** | SharedPreferences |
 | **Ses** | audioplayers |
-| **Animasyonlar** | Lottie |
+| **Animasyonlar** | Flutter yerleşik (`AnimationController`, `CustomPainter`) |
 | **CI/CD** | GitHub Actions |
 
 ## Çift Dilli Destek
 
 Uygulama Kurmancî (KU) ve Türkçe (TR) dillerini destekler:
 - `lib/src/l10n/lang.dart` — `LanguageProvider` ve `LangContext` extension
-- `lib/src/l10n/intl_tr.arb` — Türkçe çeviri kaynağı
-- `lib/src/l10n/intl_ku.arb` — Kurmancî çeviri kaynağı
-- Ekranlarda `context.isKu` ve `context.s(ku, tr)` helper'ları kullanılır
+- `lib/src/l10n/strings.dart` — **anahtar tabanlı kayıt defteri**; metinlerin
+  tek kaynağı burasıdır (`K.anahtar` → `{ku, tr}`)
+- Ekranlarda `context.t(K.anahtar)` kullanılır. `context.s(ku, tr)` yalnız
+  geriye dönük uyumluluk için duruyor ve yeni kullanımı bekçi testini kırar
+  (`test/l10n_migration_guard_test.dart`).
+
+> `intl_tr.arb` / `intl_ku.arb` dosyaları YOKTUR; bu belge 2026-07-31'e
+> kadar onları kaynak gibi gösteriyor ve yeni geliştiriciyi var olmayan
+> bir API'ye yönlendiriyordu.
 
 ## Tema Sistemi
 

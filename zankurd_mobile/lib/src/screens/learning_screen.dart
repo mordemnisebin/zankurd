@@ -12,6 +12,7 @@ import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/percent_format.dart';
 import '../utils/error_reporter.dart';
 import 'story_screen.dart';
@@ -182,8 +183,8 @@ class _LearningScreenState extends State<LearningScreen> {
                       child: OutlinedButton.icon(
                         key: const ValueKey('learning-story-entry'),
                         onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => StoryScreen(
+                          AppRoute(
+                            page: StoryScreen(
                               story: cayxaneStory,
                               guide: cayxaneGuide,
                             ),
@@ -210,21 +211,40 @@ class _LearningScreenState extends State<LearningScreen> {
                     ),
                   ),
                   // Kategori sekmeler
+                  //
+                  // Sağ kenarda solma maskesi: satır ekrana sığmıyor ve
+                  // son çip kelime ortasından kesiliyordu ("Ha…"). Sert
+                  // kesik "yazı taştı" gibi okunuyor; solma ise
+                  // "devamı var, kaydır" der (2026-07-31 denetimi).
                   SizedBox(
                     height: 60,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      children: _kLearningCategoryIds
-                          .map(
-                            (cat) => _CategoryTab(
-                              key: ValueKey('learning-tab-$cat'),
-                              label: _categoryLabel(cat, ku),
-                              isSelected: cat == _selectedCategory,
-                              onTap: () => _selectCategory(cat),
-                            ),
-                          )
-                          .toList(),
+                    child: ShaderMask(
+                      shaderCallback: (bounds) => const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        // Son %8'de opaklıktan saydama iner.
+                        colors: [
+                          Colors.white,
+                          Colors.white,
+                          Colors.transparent,
+                        ],
+                        stops: [0.0, 0.92, 1.0],
+                      ).createShader(bounds),
+                      blendMode: BlendMode.dstIn,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        children: _kLearningCategoryIds
+                            .map(
+                              (cat) => _CategoryTab(
+                                key: ValueKey('learning-tab-$cat'),
+                                label: _categoryLabel(cat, ku),
+                                isSelected: cat == _selectedCategory,
+                                onTap: () => _selectCategory(cat),
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
                   ),
                   Padding(
@@ -339,8 +359,8 @@ class _LearningScreenState extends State<LearningScreen> {
                 onTap: () async {
                   if (locked) return;
                   await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => LessonDetailScreen(
+                    AppRoute(
+                      page: LessonDetailScreen(
                         lesson: lessons[i],
                         repository: widget.repository,
                       ),
@@ -371,8 +391,8 @@ class _LearningScreenState extends State<LearningScreen> {
           .createRoom(category: lesson.category)
           .copyWith(questionCount: questions.length);
       await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => QuizScreen(
+        AppRoute(
+          page: QuizScreen(
             repository: widget.repository,
             room: room,
             questions: questions,
@@ -389,8 +409,8 @@ class _LearningScreenState extends State<LearningScreen> {
   Future<void> _openCategoryFlashcards() async {
     if (_currentLessons.isEmpty || !mounted) return;
     await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => LessonDetailScreen(
+      AppRoute(
+        page: LessonDetailScreen(
           lesson: _currentLessons.first,
           repository: widget.repository,
         ),
@@ -876,30 +896,50 @@ class _LessonCard extends StatelessWidget {
     );
   }
 
+  /// Ders slug'ından ikon.
+  ///
+  /// Harita bir zamanlar `alphabet`, `numbers`, `colors` gibi anlamsal
+  /// adlarla anahtarlanıyordu — ama gerçek ders slug'ları `everyday_1`,
+  /// `grammar_2`, `culture_1` biçiminde numaralı ailelerdir. Hiçbiri
+  /// eşleşmiyordu, dolayısıyla HER ders yedek ikona (mezuniyet külahı)
+  /// düşüyordu ve ders listesi üst üste aynı sembolü gösteriyordu
+  /// (2026-07-31 denetimi, görsel tekdüzelik).
+  ///
+  /// Artık önce tam slug, sonra ailesi (sondaki `_1`, `_2` atılarak)
+  /// aranıyor; böylece hem bugünkü numaralı slug'lar hem ileride
+  /// eklenecek anlamsal adlar çalışır.
   IconData _iconForLesson(String slug) {
     const icons = {
+      // Gerçek ders aileleri.
+      'everyday': AppIcons.comment,
+      'grammar': AppIcons.barsStaggered,
+      'culture': AppIcons.peopleGroup,
+      'food': AppIcons.utensils,
+      'animals': AppIcons.paw,
+      'geography': AppIcons.globe,
+      'emotions': AppIcons.faceSmile,
+      'time': AppIcons.clock,
       'alphabet': AppIcons.font,
       'numbers': AppIcons.hashtag,
       'colors': AppIcons.palette,
       'family': AppIcons.peopleRoof,
       'greetings': AppIcons.hand,
-      'food': AppIcons.utensils,
-      'animals': AppIcons.paw,
-      'geography': AppIcons.globe,
       'grammar_noun': AppIcons.font,
       'grammar_verb': AppIcons.barsStaggered,
       'newroz': AppIcons.champagneGlasses,
       'body': AppIcons.personCircleCheck,
       'clothing': AppIcons.shirt,
       'weather': AppIcons.cloud,
-      'time': AppIcons.clock,
       'prepositions': AppIcons.locationDot,
-      'emotions': AppIcons.faceSmile,
       'house': AppIcons.house,
       'profession': AppIcons.briefcase,
       'daily_phrases': AppIcons.comment,
     };
-    return icons[slug] ?? AppIcons.graduationCap;
+    final exact = icons[slug];
+    if (exact != null) return exact;
+    // `everyday_2` → `everyday`
+    final family = slug.replaceFirst(RegExp(r'_\d+$'), '');
+    return icons[family] ?? AppIcons.graduationCap;
   }
 }
 
@@ -1066,8 +1106,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       if (!mounted) return;
 
       await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => QuizScreen(
+        AppRoute(
+          page: QuizScreen(
             repository: widget.repository,
             room: room,
             questions: questions,

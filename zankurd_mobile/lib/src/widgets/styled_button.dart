@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../theme/app_theme.dart';
 
 class GeometricGradientButton extends StatefulWidget {
@@ -47,10 +48,23 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
         onExit: isEnabled ? (_) => setState(() => _isHovered = false) : null,
         child: GestureDetector(
           onTapDown: isEnabled
-              ? (_) => setState(() => _isPressed = true)
+              ? (_) {
+                  // Dokunma geri bildirimi quiz, mağaza ve çarkta vardı
+                  // ama uygulamanın BİRİNCİL düğmesi sessizdi: yedi CTA
+                  // (giriş, kayıt, oda kur, katıl, başla…) hepsi bunu
+                  // kullanıyor (2026-07-31 denetimi).
+                  //
+                  // `selectionClick` basmada, `lightImpact` bırakmada:
+                  // ikisi birlikte düğmenin altına giren fiziksel bir his
+                  // verir. Masaüstü ve web'de platform kanalı sessizce
+                  // yoksayar, ayrıca bir koşul gerekmez.
+                  HapticFeedback.selectionClick();
+                  setState(() => _isPressed = true);
+                }
               : null,
           onTapUp: isEnabled
               ? (_) {
+                  HapticFeedback.lightImpact();
                   setState(() => _isPressed = false);
                   widget.onPressed?.call();
                 }

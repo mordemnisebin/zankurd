@@ -619,22 +619,25 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            // Aynı özellik, tek kimlik.
+            //
+            // Oyun merkezindeki "Hızlı düello" kartı marka yeşiliyle
+            // sunuluyor (play_hub_screen.dart:370), eşleşme ekranının
+            // hero'su ise `playPink` ile — kullanıcı aynı özelliğe iki
+            // ayrı renkten giriyordu. `shop_screen.dart`taki M24 notu
+            // playPink/playCyan/playPurple'ı zaten "marka dışı" diye
+            // işaretlemişti; bu yüzey o kararın dışında kalmıştı
+            // (2026-07-31 denetimi).
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                AppTheme.playPink,
-                Color.alphaBlend(
-                  Colors.black.withValues(alpha: 0.18),
-                  AppTheme.playPink,
-                ),
-              ],
+              colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
             ),
             borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
             boxShadow: [
               BoxShadow(
-                color: AppTheme.playPink.withValues(alpha: 0.30),
+                color: AppTheme.culturalBrandBg.withValues(alpha: 0.30),
                 blurRadius: 18,
                 offset: const Offset(0, 8),
                 spreadRadius: -4,
