@@ -58,6 +58,11 @@ void main() {
           'AppColors.onSolid(AppTheme.gold)',
       'lib/src/screens/quiz/quiz_screen_ui.dart': 'AppColors.onSolid(',
       'lib/src/screens/paywall_screen.dart': 'AppColors.onSolid(',
+      // Boş/hata panelinin eylem düğmesi bu listede yoktu ve sabit beyaz
+      // metin kullanıyordu: `AppErrorState` onu `AppTheme.wrong` ile
+      // çağırdığında kontrast 3,73:1 kalıyordu. Bu düğme uygulamadaki her
+      // yükleme hatasının tek eylemi (2026-07-31 denetimi).
+      'lib/src/widgets/app_state.dart': 'AppColors.onSolid(',
     };
     for (final entry in expectedHelpers.entries) {
       expect(

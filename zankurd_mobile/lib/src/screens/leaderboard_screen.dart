@@ -227,9 +227,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         return Column(
           children: [
             if (snap.connectionState == ConnectionState.waiting)
-              const LinearProgressIndicator(
+              // `backgroundColor` verilmezse M3 rayı `secondaryContainer`
+              // yapar. lib/src'deki 12 LinearProgressIndicator'ın 10'u bunu
+              // açıkça veriyor; yalnız bu iki kardeş vermiyordu
+              // (2026-07-31 denetimi).
+              LinearProgressIndicator(
                 minHeight: 2,
                 color: AppTheme.primaryGradientStart,
+                backgroundColor: AppTheme.borderColor(context),
               ),
             Expanded(
               child: ListView(
@@ -302,9 +307,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             // Filtre/yenileme sırasında mevcut liste korunur; ince çubuk
             // yükleme sinyali verir — gri boş ekran yerine.
             if (snap.connectionState == ConnectionState.waiting)
-              const LinearProgressIndicator(
+              // `backgroundColor` verilmezse M3 rayı `secondaryContainer`
+              // yapar. lib/src'deki 12 LinearProgressIndicator'ın 10'u bunu
+              // açıkça veriyor; yalnız bu iki kardeş vermiyordu
+              // (2026-07-31 denetimi).
+              LinearProgressIndicator(
                 minHeight: 2,
                 color: AppTheme.primaryGradientStart,
+                backgroundColor: AppTheme.borderColor(context),
               ),
             Expanded(
               child: ListView(

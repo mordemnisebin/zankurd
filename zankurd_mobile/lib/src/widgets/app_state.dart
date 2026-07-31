@@ -247,7 +247,16 @@ class _AppStateScaffold extends StatelessWidget {
               onPressed: onAction,
               style: FilledButton.styleFrom(
                 backgroundColor: tint,
-                foregroundColor: Colors.white,
+                // Sabit beyaz DEĞİL: yazı rengi zemine bağlıdır. Bu düğme
+                // uygulamadaki her yükleme hatasının tek eylemidir
+                // ("Tekrar dene") ve `AppErrorState` onu `AppTheme.wrong`
+                // (#E5533D) ile çağırıyor — beyaz üzerinde ölçülen kontrast
+                // 3,73:1, AA eşiği 4,5:1. 14px/w800 olduğu için "büyük
+                // metin" istisnasına da girmiyordu (2026-07-31 denetimi).
+                //
+                // Proje tam bu kusur için `AppColors.onSolid`u yazmıştı;
+                // bu dosya yalnızca bekçinin listesinde yoktu.
+                foregroundColor: AppColors.onSolid(tint),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 22,
                   vertical: 14,

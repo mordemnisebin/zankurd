@@ -779,6 +779,121 @@ class AppTheme {
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
   static const List<Color> ctaBrandGradient = [brand, brandDeep];
 
+  /// Diyalog. Uygulamadaki 11 diyalog şeklini tek tek veriyordu (altısı
+  /// düz `16`, dördü `AppRadius.md`, biri `AppRadius.lg`), seri-dondurma
+  /// diyaloğu ise hiç vermiyor ve Material varsayılanına — 28px, kenarlıksız
+  /// — düşüyordu. Aynı uygulamada iki ayrı diyalog dili oluyordu
+  /// (2026-07-31 denetimi). Karar artık temada tek yerde.
+  static DialogThemeData _dialogTheme({
+    required Color background,
+    required Color title,
+    required Color body,
+  }) {
+    return DialogThemeData(
+      backgroundColor: background,
+      surfaceTintColor: background,
+      titleTextStyle: TextStyle(
+        color: title,
+        fontFamily: AppTypography.fontFamily,
+        fontWeight: FontWeight.w800,
+        fontSize: 18,
+      ),
+      contentTextStyle: TextStyle(
+        color: body,
+        fontFamily: AppTypography.fontFamily,
+        fontSize: 14,
+        height: 1.45,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
+    );
+  }
+
+  /// Kaydırıcı. `inactiveTrackColor` verilmediğinde M3 varsayılanı
+  /// `surfaceContainerHighest`tir; şema eksikken bu `surface`e düşüyor ve
+  /// pasif ray, üstünde durduğu kartla birebir aynı renk oluyordu —
+  /// kullanıcı sesin ya da hızın nereye kadar gidebileceğini göremiyordu
+  /// (Ayarlar → seslendirme, soru öner → zorluk; 2026-07-31 denetimi).
+  ///
+  /// Şema artık tam olsa da ray burada AÇIKÇA veriliyor: tek tek çağrı
+  /// yerlerini yamamak yerine tek yerde karar veriliyor, sonradan
+  /// eklenecek kaydırıcılar da aynı tuzağa düşmüyor.
+  static SliderThemeData _sliderTheme({required Color track}) {
+    return SliderThemeData(
+      activeTrackColor: accent,
+      inactiveTrackColor: track,
+      thumbColor: accent,
+      overlayColor: accent.withValues(alpha: 0.12),
+      trackHeight: 4,
+    );
+  }
+
+  /// Bildirim saati seçici. Temasızken uygulamanın ortasında bir anda
+  /// başka bir uygulamadan gelmiş gibi duruyordu: kadran diski zeminle
+  /// aynı renk (görünmüyor), seçili kutu tam doygun marka turuncusu,
+  /// alan kenarlığı ise metin rengi kadar sert.
+  static TimePickerThemeData _timePickerTheme({
+    required Color background,
+    required Color dial,
+    required Color idleField,
+    required Color idleText,
+    required Color selectedField,
+    required Color selectedText,
+    required Color outline,
+  }) {
+    return TimePickerThemeData(
+      backgroundColor: background,
+      dialBackgroundColor: dial,
+      dialHandColor: accent,
+      hourMinuteColor: WidgetStateColor.resolveWith(
+        (s) => s.contains(WidgetState.selected) ? selectedField : idleField,
+      ),
+      hourMinuteTextColor: WidgetStateColor.resolveWith(
+        (s) => s.contains(WidgetState.selected) ? selectedText : idleText,
+      ),
+      dayPeriodColor: WidgetStateColor.resolveWith(
+        (s) => s.contains(WidgetState.selected)
+            ? selectedField
+            : Colors.transparent,
+      ),
+      dayPeriodTextColor: WidgetStateColor.resolveWith(
+        (s) => s.contains(WidgetState.selected) ? selectedText : idleText,
+      ),
+      dayPeriodBorderSide: BorderSide(color: outline),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+    );
+  }
+
+  /// Bölünmüş düğme (Gözden Geçir → Liste / Flaşkart). Stilsizken seçili
+  /// segmentin zemini `secondaryContainer`a, o da eksik şemada altına
+  /// düşüyordu: beyaz metin altın zeminde 2,30:1 — AA eşiğinin yarısı.
+  static SegmentedButtonThemeData _segmentedButtonTheme({
+    required Color selectedBg,
+    required Color selectedFg,
+    required Color idleFg,
+    required Color outline,
+  }) {
+    return SegmentedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected)
+              ? selectedBg
+              : Colors.transparent,
+        ),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? selectedFg : idleFg,
+        ),
+        iconColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? selectedFg : idleFg,
+        ),
+        side: WidgetStatePropertyAll(BorderSide(color: outline)),
+      ),
+    );
+  }
+
   static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,
@@ -798,6 +913,47 @@ class AppTheme {
         onError: Colors.white,
         surface: surface,
         onSurface: textPrimary,
+        // ── Aşağıdaki roller 2026-07-31'e kadar TANIMSIZDI ────────────
+        //
+        // Şema yalnız 10 rolle kuruluyordu; gerisi Flutter'ın getter
+        // fallback'lerine düşüyordu (color_scheme.dart): surfaceContainer*
+        // → surface, primaryContainer → primary, outline → onSurface.
+        // Yani "container" tonları üstünde durdukları yüzeyle BİREBİR AYNI
+        // renk oluyor, "outline" ise metin rengi kadar sert çıkıyordu.
+        //
+        // Üç görünür kusur bunun doğrudan sonucuydu: Ayarlar'daki
+        // kaydırıcının pasif rayı kartla aynı renkti (nereye kadar
+        // gittiği görünmüyordu), bildirim saati seçicisinin kadran diski
+        // zeminde kayboluyordu, ve Gözden Geçir'deki SegmentedButton
+        // seçili sekmesinde beyaz metin altın zeminde 2,30:1 kalıyordu.
+        //
+        // Container tonları aksanın yüzey üzerine %14 harmanıdır; "on"
+        // karşılıkları rengin tonunu koruyup açıklığını AA (4,5:1)
+        // eşiğini geçene dek zeminden uzaklaştırarak hesaplandı — aynı
+        // yöntem `AppColors.onAccentTint` içinde çalışma zamanında da var.
+        surfaceContainerLowest: Color(0xFF0A100D),
+        surfaceContainerLow: bg,
+        surfaceContainer: surface,
+        surfaceContainerHigh: surfaceHi,
+        surfaceContainerHighest: Color(0xFF29352C),
+        onSurfaceVariant: textSub,
+        outline: border,
+        outlineVariant: Color(0xFF212B24),
+        primaryContainer: Color(0xFF302819),
+        onPrimaryContainer: Color(0xFFED6911), // 4,59:1
+        secondaryContainer: Color(0xFF33331D),
+        onSecondaryContainer: Color(0xFFD9A227), // 5,61:1
+        tertiaryContainer: Color(0xFF1B2C25),
+        onTertiaryContainer: Color(0xFF439E8B), // 4,54:1
+        errorContainer: Color(0xFF352820),
+        onErrorContainer: Color(0xFFE96B58), // 4,55:1
+        // Yüzeyin kendisi: M3'ün yükseklik tonlaması etkisiz kalır ve
+        // kartlar uygulamanın geri kalanı gibi düz durur. Varsayılan
+        // (primary) olsaydı yükselen her yüzey turuncuya çalardı.
+        surfaceTint: surface,
+        inverseSurface: Color(0xFFE6E9E3),
+        onInverseSurface: surface,
+        inversePrimary: Color(0xFFA0450A),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -879,6 +1035,27 @@ class AppTheme {
         ),
       ),
       dividerTheme: const DividerThemeData(color: border, thickness: 1),
+      dialogTheme: _dialogTheme(
+        background: surfaceHi,
+        title: textPrimary,
+        body: textSub,
+      ),
+      sliderTheme: _sliderTheme(track: border),
+      timePickerTheme: _timePickerTheme(
+        background: surface,
+        dial: surfaceHi,
+        idleField: surfaceHi,
+        idleText: textPrimary,
+        selectedField: const Color(0xFF302819),
+        selectedText: const Color(0xFFED6911),
+        outline: border,
+      ),
+      segmentedButtonTheme: _segmentedButtonTheme(
+        selectedBg: accent,
+        selectedFg: Colors.white,
+        idleFg: textSub,
+        outline: border,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: surfaceHi,
@@ -987,6 +1164,27 @@ class AppTheme {
         onError: Colors.white,
         surface: lightSurface,
         onSurface: lightTextPrimary,
+        // Karanlık temadaki ile aynı gerekçe — bkz. `dark()`.
+        surfaceContainerLowest: lightSurface,
+        surfaceContainerLow: lightSurfaceHi,
+        surfaceContainer: lightBg,
+        surfaceContainerHigh: lightBgDeep,
+        surfaceContainerHighest: Color(0xFFE9E4DA),
+        onSurfaceVariant: lightTextSub,
+        outline: lightBorder,
+        outlineVariant: Color(0xFFF0EBE1),
+        primaryContainer: Color(0xFFF6E7DD),
+        onPrimaryContainer: Color(0xFFAA4B0C), // 4,67:1
+        secondaryContainer: Color(0xFFFAF2E1),
+        onSecondaryContainer: Color(0xFF8C6819), // 4,59:1
+        tertiaryContainer: Color(0xFFE2EBE9),
+        onTertiaryContainer: Color(0xFF2F6F62), // 4,84:1
+        errorContainer: Color(0xFFFBE7E4),
+        onErrorContainer: Color(0xFFC5311A), // 4,61:1
+        surfaceTint: lightSurface,
+        inverseSurface: Color(0xFF2A332C),
+        onInverseSurface: Color(0xFFF6F3EC),
+        inversePrimary: Color(0xFFED6911),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -1066,6 +1264,27 @@ class AppTheme {
         ),
       ),
       dividerTheme: const DividerThemeData(color: lightBorder, thickness: 1),
+      dialogTheme: _dialogTheme(
+        background: lightSurface,
+        title: lightTextPrimary,
+        body: lightTextSub,
+      ),
+      sliderTheme: _sliderTheme(track: const Color(0xFFE9E4DA)),
+      timePickerTheme: _timePickerTheme(
+        background: lightSurface,
+        dial: lightBgDeep,
+        idleField: lightSurfaceHi,
+        idleText: lightTextPrimary,
+        selectedField: const Color(0xFFF6E7DD),
+        selectedText: const Color(0xFFAA4B0C),
+        outline: lightBorder,
+      ),
+      segmentedButtonTheme: _segmentedButtonTheme(
+        selectedBg: accent,
+        selectedFg: Colors.white,
+        idleFg: lightTextSub,
+        outline: lightBorder,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: lightSurfaceHi,
