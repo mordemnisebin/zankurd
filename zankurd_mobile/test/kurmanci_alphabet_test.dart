@@ -53,10 +53,9 @@ void main() {
   test('Kurmancî metinlerde ı, ğ, ö, ü, İ geçmez', () {
     final source = File('lib/src/l10n/strings.dart').readAsStringSync();
     // 'ku': 'metin'  — çok satırlı bitişik dizeler dahil.
-    final entries = RegExp(r"'ku':\s*\n?\s*((?:'(?:[^'\\]|\\.)*'\s*)+)")
-        .allMatches(source)
-        .map((m) => m.group(1)!)
-        .toList();
+    final entries = RegExp(
+      r"'ku':\s*\n?\s*((?:'(?:[^'\\]|\\.)*'\s*)+)",
+    ).allMatches(source).map((m) => m.group(1)!).toList();
 
     expect(entries, isNotEmpty, reason: 'Kurmancî metin bulunamadı');
 

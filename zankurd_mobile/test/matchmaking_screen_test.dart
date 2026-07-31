@@ -88,9 +88,7 @@ Future<void> _startImmediateMatch(
   tester.view.physicalSize = const Size(480, 1600);
   tester.view.devicePixelRatio = 1.0;
 
-  await tester.pumpWidget(
-    _shell(MatchmakingScreen(repository: repository)),
-  );
+  await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Rastgele eşleşme'));
   await tester.pump();
@@ -163,9 +161,7 @@ void main() {
   testWidgets('gizli cevaplı gerçek eşleşmede boş oda soruları yerele düşmez', (
     tester,
   ) async {
-    final repository = _HiddenAnswerMatchRepository(
-      _RoomQuestionResult.empty,
-    );
+    final repository = _HiddenAnswerMatchRepository(_RoomQuestionResult.empty);
     addTearDown(tester.view.reset);
 
     await _startImmediateMatch(tester, repository);

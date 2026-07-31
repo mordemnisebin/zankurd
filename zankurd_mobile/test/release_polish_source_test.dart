@@ -101,7 +101,13 @@ void main() {
       reason: 'bildirim ikonu yine başlatıcı simgesine bağlanmış',
     );
 
-    for (final density in const ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']) {
+    for (final density in const [
+      'mdpi',
+      'hdpi',
+      'xhdpi',
+      'xxhdpi',
+      'xxxhdpi',
+    ]) {
       expect(
         File(
           'android/app/src/main/res/drawable-$density/ic_stat_zankurd.png',
@@ -183,11 +189,7 @@ void main() {
     ]) {
       final fileName = url.split('/').last;
       final source = documents[fileName];
-      expect(
-        source,
-        isNotNull,
-        reason: '$url için kaynak belge eşlemesi yok',
-      );
+      expect(source, isNotNull, reason: '$url için kaynak belge eşlemesi yok');
       expect(
         File(source!).existsSync(),
         isTrue,

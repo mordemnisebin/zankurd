@@ -27,9 +27,10 @@ void main() {
       testShell(
         child: QuizScreen(
           repository: repository,
-          room: repository
-              .createRoom()
-              .copyWith(name: roomName, questionCount: 2),
+          room: repository.createRoom().copyWith(
+            name: roomName,
+            questionCount: 2,
+          ),
           questions: repository.questions.take(2).toList(),
           experience: QuizExperience.learning,
           enableTimer: false,

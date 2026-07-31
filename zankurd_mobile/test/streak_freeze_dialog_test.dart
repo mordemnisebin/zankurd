@@ -64,7 +64,12 @@ void main() {
     StreakStore.resetInstance();
 
     final repo1 = MockZanKurdRepository();
-    await repo1.awardQuizCoins(score: 1000, correctCount: 10, totalQuestions: 10, bestStreak: 5);
+    await repo1.awardQuizCoins(
+      score: 1000,
+      correctCount: 10,
+      totalQuestions: 10,
+      bestStreak: 5,
+    );
     await tester.pumpWidget(wrap(buildScreen(repo1)));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
@@ -91,7 +96,12 @@ void main() {
     StreakStore.resetInstance();
 
     final repo2 = MockZanKurdRepository();
-    await repo2.awardQuizCoins(score: 1000, correctCount: 10, totalQuestions: 10, bestStreak: 5);
+    await repo2.awardQuizCoins(
+      score: 1000,
+      correctCount: 10,
+      totalQuestions: 10,
+      bestStreak: 5,
+    );
     await tester.pumpWidget(wrap(buildScreen(repo2)));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();

@@ -29,9 +29,7 @@ class _NoFriendsRepository extends MockZanKurdRepository {
 
 void main() {
   setUp(() {
-    SharedPreferences.setMockInitialValues({
-      'zankurd.navTour.seen': true,
-    });
+    SharedPreferences.setMockInitialValues({'zankurd.navTour.seen': true});
   });
 
   testWidgets('arkadaşı olmayan kullanıcı ekranı sorunsuz açar', (

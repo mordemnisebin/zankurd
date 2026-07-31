@@ -27,11 +27,18 @@ void main() {
       .where((file) => file.path.endsWith('.sql'))
       .toList();
 
-  bool isDated(File file) =>
-      RegExp(r'/\d{4}-\d{2}-\d{2}_').hasMatch(file.path);
+  bool isDated(File file) => RegExp(r'/\d{4}-\d{2}-\d{2}_').hasMatch(file.path);
 
+  // `or replace` BİLEREK opsiyonel.
+  //
+  // İlk yazımda desen yalnız `create or replace function` arıyordu ve tam
+  // bu yüzden `leaderboard_period_rpc.sql`i aşılmamış sandı:
+  // `2026-07-29_release_readiness_hardening.sql` `get_leaderboard`ı
+  // `drop function` + düz `create function` ile yeniden tanımlıyor
+  // (imza değiştiği için `or replace` kullanılamaz). Bekçinin kendi kör
+  // noktasıydı; 2026-08-01'de dört dosya arşive alınırken bulundu.
   Set<String> functionsIn(File file) => RegExp(
-    r'create\s+or\s+replace\s+function\s+public\.([a-z_0-9]+)',
+    r'create\s+(?:or\s+replace\s+)?function\s+public\.([a-z_0-9]+)',
     caseSensitive: false,
   ).allMatches(file.readAsStringSync()).map((m) => m.group(1)!).toSet();
 
@@ -50,29 +57,24 @@ void main() {
     for (final file in migrations.where((file) => !isDated(file))) {
       final overlap = functionsIn(file).intersection(dated);
       if (overlap.isEmpty) continue;
-      offenders.add(
-        '${file.uri.pathSegments.last} → ${overlap.join(", ")}',
-      );
+      offenders.add('${file.uri.pathSegments.last} → ${overlap.join(", ")}');
     }
 
-    // Bilinen ve henüz bölünememiş dosyalar. Hepsi HÂLÂ tek kaynak
-    // oldukları bir şey tanımlıyor, o yüzden körü körüne taşınamazlar;
-    // tarihli göçlere bölünmeleri gerekiyor. Gerekçeler:
-    // supabase/archive/README.md.
+    // 2026-08-01: liste BOŞALDI.
     //
-    //   online_multiplayer_ready.sql → `start_room_game` için tek kaynak
-    //   online_game_sync.sql         → `start_room_game` için tek kaynak
-    //   leaderboard_period_rpc.sql   → `get_leaderboard` için tek kaynak
-    //   daily_spin_rpc.sql           → `spin_wheel_history` tablosunu kurar
+    // Dört dosya "tek kaynak oldukları bir şey var" diye bekliyordu.
+    // Desen düzeltilince (bkz. `functionsIn`) üçünün zaten tamamen aşılmış
+    // olduğu görüldü; geriye yalnız iki gerçek benzersizlik kaldı ve ikisi
+    // de çözüldü:
+    //
+    //   • `spin_wheel_history` tablosunu tarihli
+    //     `2026-07-06_spin_wheel_backend.sql` de kuruyor.
+    //   • `start_room_game` yalnız iki tarihsiz dosyada vardı; korumalı
+    //     sürüm `2026-08-01_start_room_game_hardening.sql`e alındı.
     //
     // Bu liste YALNIZ KISALABİLİR. Yeni bir ad eklemek, aşılmış bir göçün
     // sessizce geri konulduğu anlamına gelir.
-    const knownPending = <String>{
-      'online_multiplayer_ready.sql',
-      'online_game_sync.sql',
-      'leaderboard_period_rpc.sql',
-      'daily_spin_rpc.sql',
-    };
+    const knownPending = <String>{};
 
     final unexpected = offenders
         .where((entry) => !knownPending.any(entry.startsWith))
@@ -143,8 +145,7 @@ void main() {
     expect(
       source,
       contains('advance_tournament'),
-      reason:
-          'Süresi dolan maç bir sonraki turu kurmazsa turnuva kilitlenir.',
+      reason: 'Süresi dolan maç bir sonraki turu kurmazsa turnuva kilitlenir.',
     );
   });
 }

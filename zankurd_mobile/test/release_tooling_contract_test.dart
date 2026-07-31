@@ -275,7 +275,8 @@ void main() {
     expect(
       Directory('.github/workflows').existsSync(),
       isFalse,
-      reason: 'Alt dizindeki iş akışı hiçbir zaman tetiklenmez; kök tek yerdir.',
+      reason:
+          'Alt dizindeki iş akışı hiçbir zaman tetiklenmez; kök tek yerdir.',
     );
 
     final source = root.readAsStringSync();

@@ -86,21 +86,22 @@ void main() {
     // çalışma zamanında sessizce boş kutu görünür — test değil, kullanıcı
     // bulur.
     final pubspec = File('pubspec.yaml').readAsStringSync();
-    final declared = RegExp(r'^\s+- (assets/[^\s]*)$', multiLine: true)
-        .allMatches(pubspec)
-        .map((m) => m[1]!)
-        .toList();
+    final declared = RegExp(
+      r'^\s+- (assets/[^\s]*)$',
+      multiLine: true,
+    ).allMatches(pubspec).map((m) => m[1]!).toList();
 
     final referenced = <String>{};
     for (final dir in ['lib']) {
-      for (final f in Directory(dir)
-          .listSync(recursive: true)
-          .whereType<File>()
-          .where((f) => f.path.endsWith('.dart'))) {
+      for (final f
+          in Directory(dir)
+              .listSync(recursive: true)
+              .whereType<File>()
+              .where((f) => f.path.endsWith('.dart'))) {
         referenced.addAll(
-          RegExp(r"'(assets/[A-Za-z0-9_/.-]+\.[a-z0-9]+)'")
-              .allMatches(f.readAsStringSync())
-              .map((m) => m[1]!),
+          RegExp(
+            r"'(assets/[A-Za-z0-9_/.-]+\.[a-z0-9]+)'",
+          ).allMatches(f.readAsStringSync()).map((m) => m[1]!),
         );
       }
     }

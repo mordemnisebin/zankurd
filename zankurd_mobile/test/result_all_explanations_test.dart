@@ -42,7 +42,8 @@ void main() {
       correctAnswer: 'Şerefxan',
       selectedAnswer: 'Ehmedê Xanî',
       explanation: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
-      explanationKu: 'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
+      explanationKu:
+          'Şerefname ji aliyê Şerefxanê Bidlîsî ve hatiye '
           'nivîsandin.',
       explanationTr: 'Şerefname, Şerefxanê Bidlîsî tarafından yazıldı.',
     ),

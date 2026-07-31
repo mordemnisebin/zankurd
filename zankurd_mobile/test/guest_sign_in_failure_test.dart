@@ -61,10 +61,7 @@ void main() {
           ChangeNotifierProvider<AuthProvider>.value(value: auth),
           ChangeNotifierProvider<ThemeProvider>(create: (_) => ThemeProvider()),
         ],
-        child: MaterialApp(
-          theme: AppTheme.light(),
-          home: const SignInScreen(),
-        ),
+        child: MaterialApp(theme: AppTheme.light(), home: const SignInScreen()),
       ),
     );
     await tester.pump();

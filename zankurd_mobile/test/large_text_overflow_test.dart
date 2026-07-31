@@ -74,7 +74,10 @@ void main() {
   }
 
   testWidgets('ana ekran', (t) async {
-    await expectNoOverflow(t, Scaffold(body: HomeScreen(repository: repository)));
+    await expectNoOverflow(
+      t,
+      Scaffold(body: HomeScreen(repository: repository)),
+    );
   });
 
   testWidgets('oyun merkezi', (t) async {

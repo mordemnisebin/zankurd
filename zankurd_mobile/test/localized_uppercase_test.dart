@@ -35,10 +35,7 @@ void main() {
   });
 
   testWidgets('bölüm başlığı ekranda doğru büyütülür', (tester) async {
-    for (final (lang, expected) in [
-      ('tr', 'GÜVENLİK'),
-      ('ku', 'EWLEKARÎ'),
-    ]) {
+    for (final (lang, expected) in [('tr', 'GÜVENLİK'), ('ku', 'EWLEKARÎ')]) {
       await tester.pumpWidget(
         ChangeNotifierProvider<LanguageProvider>(
           // Anahtar şart: anahtarsız ikinci `pumpWidget` aynı sağlayıcı

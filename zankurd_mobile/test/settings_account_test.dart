@@ -231,10 +231,7 @@ void main() {
     // başlık düzeltmesi) metin, listeyle birlikte kaydırılıp ağaçtan
     // düşebiliyor. Asıl iddia gezinme: ekran hâlâ yerinde mi?
     expect(find.byType(SettingsScreen), findsOneWidget);
-    expect(
-      find.text('Hesap silinemedi. Lütfen tekrar dene.'),
-      findsOneWidget,
-    );
+    expect(find.text('Hesap silinemedi. Lütfen tekrar dene.'), findsOneWidget);
   });
 
   testWidgets('Kurmancî arayüzde oyuncu adı yer tutucusu çevrilir', (

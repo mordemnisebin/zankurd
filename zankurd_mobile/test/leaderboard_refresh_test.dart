@@ -20,10 +20,38 @@ class _CountingLeaderboardRepository extends MockZanKurdRepository {
   }) async {
     loadCalls += 1;
     return const [
-      LeaderboardEntry(rank: 1, playerId: 'm1', displayName: 'User1', totalScore: 8420, bestStreak: 11, roomsPlayed: 14),
-      LeaderboardEntry(rank: 2, playerId: 'm2', displayName: 'User2', totalScore: 7200, bestStreak: 8, roomsPlayed: 10),
-      LeaderboardEntry(rank: 3, playerId: 'm3', displayName: 'User3', totalScore: 6100, bestStreak: 6, roomsPlayed: 8),
-      LeaderboardEntry(rank: 4, playerId: 'm4', displayName: 'User4', totalScore: 5000, bestStreak: 5, roomsPlayed: 6),
+      LeaderboardEntry(
+        rank: 1,
+        playerId: 'm1',
+        displayName: 'User1',
+        totalScore: 8420,
+        bestStreak: 11,
+        roomsPlayed: 14,
+      ),
+      LeaderboardEntry(
+        rank: 2,
+        playerId: 'm2',
+        displayName: 'User2',
+        totalScore: 7200,
+        bestStreak: 8,
+        roomsPlayed: 10,
+      ),
+      LeaderboardEntry(
+        rank: 3,
+        playerId: 'm3',
+        displayName: 'User3',
+        totalScore: 6100,
+        bestStreak: 6,
+        roomsPlayed: 8,
+      ),
+      LeaderboardEntry(
+        rank: 4,
+        playerId: 'm4',
+        displayName: 'User4',
+        totalScore: 5000,
+        bestStreak: 5,
+        roomsPlayed: 6,
+      ),
     ];
   }
 }

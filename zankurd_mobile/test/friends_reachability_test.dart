@@ -54,7 +54,10 @@ Widget _wrap(Widget child) {
       // FriendsScreen oyuncu aramayı çocuk moduna göre kapatıyor; sağlayıcı
       // olmadan açılamıyor.
     ],
-    child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+    child: MaterialApp(
+      theme: AppTheme.light(),
+      home: Scaffold(body: child),
+    ),
   );
 }
 

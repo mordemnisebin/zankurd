@@ -31,16 +31,41 @@ void main() {
     );
   });
 
-  test('online multiplayer SQL patch defines required live RPCs', () {
-    final sql = File(
-      'supabase/online_multiplayer_ready.sql',
-    ).readAsStringSync();
+  // Bu test eskiden tek bir dosyayı (`online_multiplayer_ready.sql`)
+  // okuyup dört RPC'nin orada tanımlı olduğunu doğruluyordu. O dosya
+  // 2026-08-01'de `supabase/archive/` altına alındı: tarihsizdi ve
+  // alfabetik sırada tarihli göçlerden sonra geldiği için
+  // sertleştirilmiş `submit_answer` sürümünü ezebiliyordu.
+  //
+  // Sözleşme artık daha güçlü: her RPC'nin TARİHLİ bir göçte tanımlı
+  // olması gerekiyor. Böylece hangi dosyada durduğu değil, uygulama
+  // sırasının onu koruduğu ölçülüyor.
+  test('çok oyunculu RPC ler tarihli göçlerde tanımlı', () {
+    final dated = Directory('supabase')
+        .listSync()
+        .whereType<File>()
+        .where((file) => RegExp(r'/\d{4}-\d{2}-\d{2}_').hasMatch(file.path))
+        .map((file) => file.readAsStringSync())
+        .join('\n');
 
-    expect(sql, contains('function public.join_room_by_code'));
-    expect(sql, contains('function public.start_room_game'));
-    expect(sql, contains('function public.finish_room_game'));
-    expect(sql, contains('function public.submit_answer'));
-    expect(sql, contains('grant execute on function public.join_room_by_code'));
+    for (final rpc in [
+      'join_room_by_code',
+      'start_room_game',
+      'finish_room_game',
+      'submit_answer',
+    ]) {
+      expect(
+        dated,
+        contains('function public.$rpc'),
+        reason:
+            '$rpc yalnız tarihsiz bir dosyada tanımlıysa, klasörü sırayla '
+            'çalıştıran biri onu sertleştirilmiş sürümün üzerine yazar.',
+      );
+    }
+    expect(
+      dated,
+      contains('grant execute on function public.join_room_by_code'),
+    );
   });
 
   test('solo question loaders never fetch answer-bearing database rows', () {

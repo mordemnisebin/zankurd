@@ -182,7 +182,10 @@ void main() {
   });
 
   testWidgets('favori sorular', (t) async {
-    await expectOpensCleanly(t, FavoriteQuestionsScreen(repository: repository));
+    await expectOpensCleanly(
+      t,
+      FavoriteQuestionsScreen(repository: repository),
+    );
   });
 
   testWidgets('tekrar — kayıt yokken', (t) async {
@@ -196,10 +199,7 @@ void main() {
 
   // ── Depo hata verdiğinde ──
 
-  Future<void> expectFailsGracefully(
-    WidgetTester tester,
-    Widget screen,
-  ) async {
+  Future<void> expectFailsGracefully(WidgetTester tester, Widget screen) async {
     tester.view.devicePixelRatio = 3.0;
     tester.view.physicalSize = const Size(390 * 3, 844 * 3);
     addTearDown(tester.view.reset);

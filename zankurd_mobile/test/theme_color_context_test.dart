@@ -18,53 +18,57 @@ import 'package:flutter_test/flutter_test.dart';
 /// çevrimdışı göstergesi gibi süs renkleri kasten sabittir: onlar iki
 /// temada da aynı anlamı taşır ve renkli bir yüzey üzerinde durur.
 void main() {
-  test('TextStyle içinde tema sabiti değil, bağlama duyarlı renk kullanılır', () {
-    const fixedTextColors = [
-      'AppTheme.textPrimary',
-      'AppTheme.textSub',
-      'AppTheme.textMuted',
-    ];
+  test(
+    'TextStyle içinde tema sabiti değil, bağlama duyarlı renk kullanılır',
+    () {
+      const fixedTextColors = [
+        'AppTheme.textPrimary',
+        'AppTheme.textSub',
+        'AppTheme.textMuted',
+      ];
 
-    final offenders = <String>[];
+      final offenders = <String>[];
 
-    for (final entity in Directory('lib').listSync(recursive: true)) {
-      if (entity is! File || !entity.path.endsWith('.dart')) continue;
-      final source = entity.readAsStringSync();
+      for (final entity in Directory('lib').listSync(recursive: true)) {
+        if (entity is! File || !entity.path.endsWith('.dart')) continue;
+        final source = entity.readAsStringSync();
 
-      var index = source.indexOf('TextStyle(');
-      while (index != -1) {
-        var depth = 0;
-        var end = source.indexOf('(', index);
-        for (var i = end; i < source.length; i++) {
-          if (source[i] == '(') depth++;
-          if (source[i] == ')') {
-            depth--;
-            if (depth == 0) {
-              end = i;
-              break;
+        var index = source.indexOf('TextStyle(');
+        while (index != -1) {
+          var depth = 0;
+          var end = source.indexOf('(', index);
+          for (var i = end; i < source.length; i++) {
+            if (source[i] == '(') depth++;
+            if (source[i] == ')') {
+              depth--;
+              if (depth == 0) {
+                end = i;
+                break;
+              }
             }
           }
-        }
-        final block = source.substring(index, end);
-        for (final fixed in fixedTextColors) {
-          // `textMutedColor(context)` de `textMuted` ile başlar; sondaki
-          // sınır olmadan getter'ın kendisi ihlal sayılırdı.
-          final pattern = RegExp('${RegExp.escape(fixed)}(?![A-Za-z])');
-          if (pattern.hasMatch(block)) {
-            final line = '\n'.allMatches(source.substring(0, index)).length + 1;
-            offenders.add('${entity.path}:$line → $fixed');
+          final block = source.substring(index, end);
+          for (final fixed in fixedTextColors) {
+            // `textMutedColor(context)` de `textMuted` ile başlar; sondaki
+            // sınır olmadan getter'ın kendisi ihlal sayılırdı.
+            final pattern = RegExp('${RegExp.escape(fixed)}(?![A-Za-z])');
+            if (pattern.hasMatch(block)) {
+              final line =
+                  '\n'.allMatches(source.substring(0, index)).length + 1;
+              offenders.add('${entity.path}:$line → $fixed');
+            }
           }
+          index = source.indexOf('TextStyle(', end);
         }
-        index = source.indexOf('TextStyle(', end);
       }
-    }
 
-    expect(
-      offenders,
-      isEmpty,
-      reason:
-          'Metin rengi temaya göre seçilmeli (ör. AppTheme.textMutedColor'
-          '(context)): ${offenders.join(", ")}',
-    );
-  });
+      expect(
+        offenders,
+        isEmpty,
+        reason:
+            'Metin rengi temaya göre seçilmeli (ör. AppTheme.textMutedColor'
+            '(context)): ${offenders.join(", ")}',
+      );
+    },
+  );
 }

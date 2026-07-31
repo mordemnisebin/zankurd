@@ -241,22 +241,19 @@ void main() {
     // elenme turnuvanın bitmesine bağlanmıştı. Sunucu artık açık maçı
     // olmayan ve kaybetmiş oyuncuyu 'eliminated' bildiriyor.
     final repository = _RealTournamentRepository(
-      _bracketWith(
-        const [
-          TournamentMatch(
-            id: 'm1',
-            playerOneId: 'me',
-            playerOneName: 'Ben',
-            playerTwoId: 'p2',
-            playerTwoName: 'Rojda',
-            playerOneScore: 300,
-            playerTwoScore: 900,
-            status: 'completed',
-            winnerId: 'p2',
-          ),
-        ],
-        status: 'eliminated',
-      ),
+      _bracketWith(const [
+        TournamentMatch(
+          id: 'm1',
+          playerOneId: 'me',
+          playerOneName: 'Ben',
+          playerTwoId: 'p2',
+          playerTwoName: 'Rojda',
+          playerOneScore: 300,
+          playerTwoScore: 900,
+          status: 'completed',
+          winnerId: 'p2',
+        ),
+      ], status: 'eliminated'),
     );
 
     await tester.pumpWidget(
@@ -276,22 +273,19 @@ void main() {
     // hiç almıyordu. Hak edişi ve miktarı sunucu belirler; istemcinin işi
     // yalnız istemek ve sonucu göstermek.
     final repository = _RealTournamentRepository(
-      _bracketWith(
-        const [
-          TournamentMatch(
-            id: 'm1',
-            playerOneId: 'me',
-            playerOneName: 'Ben',
-            playerTwoId: 'p2',
-            playerTwoName: 'Rojda',
-            playerOneScore: 900,
-            playerTwoScore: 300,
-            status: 'completed',
-            winnerId: 'me',
-          ),
-        ],
-        status: 'won',
-      ),
+      _bracketWith(const [
+        TournamentMatch(
+          id: 'm1',
+          playerOneId: 'me',
+          playerOneName: 'Ben',
+          playerTwoId: 'p2',
+          playerTwoName: 'Rojda',
+          playerOneScore: 900,
+          playerTwoScore: 300,
+          status: 'completed',
+          winnerId: 'me',
+        ),
+      ], status: 'won'),
     );
 
     await tester.pumpWidget(
@@ -309,22 +303,19 @@ void main() {
     // yanıtını gürültüye çevirir ve ekranda yanlış bir kutlama riski
     // doğurur.
     final repository = _RealTournamentRepository(
-      _bracketWith(
-        const [
-          TournamentMatch(
-            id: 'm1',
-            playerOneId: 'me',
-            playerOneName: 'Ben',
-            playerTwoId: 'p2',
-            playerTwoName: 'Rojda',
-            playerOneScore: 300,
-            playerTwoScore: 900,
-            status: 'completed',
-            winnerId: 'p2',
-          ),
-        ],
-        status: 'eliminated',
-      ),
+      _bracketWith(const [
+        TournamentMatch(
+          id: 'm1',
+          playerOneId: 'me',
+          playerOneName: 'Ben',
+          playerTwoId: 'p2',
+          playerTwoName: 'Rojda',
+          playerOneScore: 300,
+          playerTwoScore: 900,
+          status: 'completed',
+          winnerId: 'p2',
+        ),
+      ], status: 'eliminated'),
     );
 
     await tester.pumpWidget(

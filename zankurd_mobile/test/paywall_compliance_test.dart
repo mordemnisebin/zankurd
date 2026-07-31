@@ -92,7 +92,11 @@ void main() {
         'Kirrinan vegerîn',
         'Bikirin',
       ]) {
-        expect(ku, isNot(contains(obsolete)), reason: '$key eski biçimi taşıyor');
+        expect(
+          ku,
+          isNot(contains(obsolete)),
+          reason: '$key eski biçimi taşıyor',
+        );
       }
     }
   });

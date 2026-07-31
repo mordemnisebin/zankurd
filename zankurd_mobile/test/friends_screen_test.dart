@@ -132,7 +132,6 @@ void main() {
       expect(find.text('Oyna'), findsNothing);
     });
 
-
     testWidgets('oyuncu arama sonuclari ve ekleme akisi calisir', (
       tester,
     ) async {

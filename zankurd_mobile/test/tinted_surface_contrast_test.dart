@@ -103,7 +103,9 @@ void main() {
     }
   });
 
-  testWidgets('tonlu kart üzerindeki metinler AA eşiğini geçer', (tester) async {
+  testWidgets('tonlu kart üzerindeki metinler AA eşiğini geçer', (
+    tester,
+  ) async {
     for (final (label, theme, surface) in [
       ('koyu', AppTheme.dark(), AppTheme.surface),
       ('açık', AppTheme.light(), AppTheme.lightSurface),

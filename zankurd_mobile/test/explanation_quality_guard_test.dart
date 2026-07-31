@@ -30,7 +30,8 @@ List<Map<String, dynamic>> _allBankQuestions() {
     final file = File(name);
     expect(file.existsSync(), isTrue, reason: '$name bulunamadı');
     all.addAll(
-      (jsonDecode(file.readAsStringSync()) as List).cast<Map<String, dynamic>>(),
+      (jsonDecode(file.readAsStringSync()) as List)
+          .cast<Map<String, dynamic>>(),
     );
   }
   return all;
