@@ -773,20 +773,29 @@ extension _QuizScreenUI on _QuizScreenState {
     final difficulty = question.difficulty;
     final usedIds = _questions.map((q) => q.id).toSet();
 
+    // Türkçe oynanıyorsa çevirisi olmayan soru aday olamaz: aksi hâlde
+    // oyuncu 30 coin ödeyip okuyamadığı bir soru alır. Kurmancîde her
+    // sorunun metni zaten anadilindedir, o yüzden koşul yalnız TR'de.
+    bool usable(QuizQuestion q) => _isKu || q.hasTurkishTranslation;
+
     // Önce aynı kategori + zorlukta aday ara
     var candidates = widget.repository.questions
         .where(
           (q) =>
               q.category == category &&
               q.difficulty == difficulty &&
-              !usedIds.contains(q.id),
+              !usedIds.contains(q.id) &&
+              usable(q),
         )
         .toList();
 
     // Yeterli yoksa aynı kategoride herhangi bir zorluk
     if (candidates.isEmpty) {
       candidates = widget.repository.questions
-          .where((q) => q.category == category && !usedIds.contains(q.id))
+          .where(
+            (q) =>
+                q.category == category && !usedIds.contains(q.id) && usable(q),
+          )
           .toList();
     }
 
@@ -800,7 +809,13 @@ extension _QuizScreenUI on _QuizScreenState {
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(changeQuestionUsed: true);
-_questions[index] = replacement;
+      // `.localized()` ÇAĞRISI ŞART. initState turdaki bütün soruları bir
+      // kez seçili dile yansıtıyor (quiz_screen.dart:301); yedek soru ise
+      // havuzdan ham hâliyle geliyordu. `promptText` o zaman doğrudan
+      // `prompt` alanını, yani Kurmancî metni döndürür — Türkçe oynayan
+      // oyuncu 30 coin ödeyip Kurmancî bir soru ve Kurmancî şıklar
+      // alıyordu (2026-07-31 denetimi).
+      _questions[index] = replacement.localized(isKu: _isKu);
       hiddenAnswers = const {};
       _audiencePoll = null;
       favorite = false;

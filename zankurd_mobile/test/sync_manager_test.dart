@@ -110,6 +110,51 @@ void main() {
     expect(SyncManager.instance, same(second));
   });
 
+  // 2026-07-31 denetim bulgusu: `initialize` uygulama ömrü boyunca yalnız
+  // `main()` içinde bir kez çağrılıyor, `signOut()` ise her seferinde
+  // `shutdown()` ile singleton'ı boşaltıyordu. Onu geri kuran hiçbir yer
+  // yoktu, dolayısıyla aynı oturumda çıkıp tekrar giren kullanıcıda:
+  //
+  // * çevrimdışı ödül kuyruğu o oturum boyunca tamamen ölüydü,
+  // * `SyncManager.instance` `StateError` fırlatıyordu ve bu çağrı
+  //   `_claimCoins` içinde try bloğunun DIŞINDA durduğu için istisna
+  //   `Navigator.pushReplacement(QuizResultScreen)` satırına ulaşmadan
+  //   yukarı kaçıyordu — oyuncu son soruda, düğmesi kilitli hâlde takılı
+  //   kalıyor, turunun sonucunu hiç göremiyordu.
+  test('çıkış sonrası yeniden giriş kuyruğu ayağa kaldırır', () async {
+    final repository = MockZanKurdRepository();
+    await SyncManager.initialize(repository);
+
+    await SyncManager.shutdown();
+    expect(
+      SyncManager.maybeInstance,
+      isNull,
+      reason: 'shutdown singleton ı bırakmalı.',
+    );
+
+    await SyncManager.restart();
+    expect(
+      SyncManager.maybeInstance,
+      isNotNull,
+      reason: 'Yeni oturumda kuyruk yeniden kurulmalı.',
+    );
+    // Kurulduktan sonra fırlatmayan erişim de fırlatan erişim de çalışır.
+    expect(() => SyncManager.instance, returnsNormally);
+  });
+
+  test('hiç kurulmamışken restart sessizce döner', () async {
+    // Test ortamı ve Supabase yapılandırması olmayan derlemeler için:
+    // `restart` bir şey bulamazsa fırlatmamalı.
+    expect(SyncManager.maybeInstance, isNull);
+    await SyncManager.restart();
+    expect(SyncManager.maybeInstance, isNull);
+  });
+
+  test('maybeInstance kurulu değilken fırlatmaz', () async {
+    expect(SyncManager.maybeInstance, isNull);
+    expect(() => SyncManager.instance, throwsStateError);
+  });
+
   test('shutdown bekleyen kayıtları temizler', () async {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);

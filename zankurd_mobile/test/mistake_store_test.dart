@@ -125,4 +125,65 @@ void main() {
     expect(counts['Ziman'], 2);
     expect(counts['Dîrok'], 1);
   });
+
+  // 2026-07-31 denetim bulgusu: `markResolvedSM2` önce `_recordAnswer(true)`
+  // ile bugünün doğru sayacını BELLEKTE artırıyor, hemen ardından madde
+  // yanlışlar defterinde değilse `_persist()` çağırmadan çıkıyordu.
+  //
+  // Normal quizde doğru cevaplanan soruların neredeyse tamamı o dala
+  // düşer, yani doğru cevap sayacı diske hiç yazılmıyordu. Profildeki
+  // "Cevaplanan Soru", "Doğruluk" ve haftalık grafik uygulama yeniden
+  // açıldığında yalnız yanlışları hatırlıyordu.
+  //
+  // Kusur sessizdi çünkü aynı oturumda her şey doğru görünüyor; yalnız
+  // yeniden açılışta ortaya çıkıyor. Bekçi de tam onu ölçer.
+  test('doğru cevaplar yeniden açılışta korunur', () async {
+    final store = await MistakeStore.load();
+
+    // Defterde olmayan sorular — yani normal bir turun tipik hâli.
+    await store.markResolved('yeni-1');
+    await store.markResolved('yeni-2');
+    await store.markResolved('yeni-3');
+
+    expect(store.totalCorrect, 3);
+    expect(store.totalWrong, 0);
+
+    MistakeStore.resetInstance();
+    final restored = await MistakeStore.load();
+
+    expect(
+      restored.totalCorrect,
+      3,
+      reason: 'Doğru cevap sayacı yalnız bellekte yaşıyor, diske yazılmıyor.',
+    );
+    expect(restored.accuracyPercent, 100);
+  });
+
+  test('hiç yanlış yapmayan oyuncunun doğruluğu boş kalmaz', () async {
+    final store = await MistakeStore.load();
+    await store.markResolved('yalniz-dogru');
+
+    MistakeStore.resetInstance();
+    final restored = await MistakeStore.load();
+
+    // Kusurlu hâlde burası null dönüyordu: profil "Doğruluk: —" gösteriyordu.
+    expect(restored.accuracyPercent, isNotNull);
+    expect(restored.totalCorrect, greaterThan(0));
+  });
+
+  test('karışık turda doğruluk oranı gerçek değeri verir', () async {
+    final store = await MistakeStore.load();
+    await store.markResolved('d1');
+    await store.markResolved('d2');
+    await store.markResolved('d3');
+    await store.markMistake('y1');
+
+    MistakeStore.resetInstance();
+    final restored = await MistakeStore.load();
+
+    // Kusurlu hâlde yalnız yanlış kalıcı olduğu için oran %0 görünüyordu.
+    expect(restored.totalCorrect, 3);
+    expect(restored.totalWrong, 1);
+    expect(restored.accuracyPercent, 75);
+  });
 }

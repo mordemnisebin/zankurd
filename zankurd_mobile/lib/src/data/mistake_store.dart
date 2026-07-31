@@ -149,7 +149,21 @@ class MistakeStore {
   /// 5 = Kolay (Kürtçe: Hêsan, Türkçe: Kolay)
   Future<void> markResolvedSM2(String id, int score) async {
     await _recordAnswer(true);
-    if (!_ids.contains(id)) return;
+    if (!_ids.contains(id)) {
+      // Erken çıkış BURADA diske yazmadan yapılıyordu. `_recordAnswer`
+      // yalnız bellekteki günlük geçmişi güncelliyor; kalıcılığı
+      // `_persist()` sağlıyor. Yanlışlar defterinde OLMAYAN her soru —
+      // yani normal quizde doğru cevaplanan soruların neredeyse tamamı —
+      // bu dala düşüyordu, dolayısıyla doğru cevap sayacı uygulama
+      // kapanınca kayboluyordu.
+      //
+      // Kullanıcıya yansıması: profildeki "Cevaplanan Soru" ve "Doğruluk"
+      // karoları ile haftalık performans grafiği yalnız YANLIŞLARI
+      // hatırlıyordu. Hiç yanlış yapmamış oyuncu "0 soru" görüyor, yanlış
+      // yapan ise doğruluğunu olduğundan düşük görüyordu (2026-07-31).
+      await _persist();
+      return;
+    }
 
     final meta = _metadata[id];
 

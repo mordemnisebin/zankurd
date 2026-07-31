@@ -108,7 +108,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   @override
   void initState() {
     super.initState();
-    _recordProgress();
+    // Sonuç ekranının kendisi ilerleme yazımına bağlı değildir: skor,
+    // doğru/yanlış ve cevap listesi zaten widget parametrelerinden gelir.
+    // Yazım zinciri (seri, rozet, ustalık, görev, XP, mağaza değerlendirmesi)
+    // yedi ayrı store ve bir platform kanalı üzerinden gider; herhangi
+    // birinden kaçan istisna `initState`ten yukarı çıkıp tüm ekranı
+    // düşürüyordu (2026-07-31 denetimi). Hata bildirilir, ekran yaşar.
+    unawaited(
+      _recordProgress().catchError((Object error, StackTrace stack) {
+        ErrorReporter.record(error, stack, reason: 'quiz result progress');
+      }),
+    );
     repository.logAnalyticsEvent('quiz_complete', {
       'category': widget.room.category,
       'correct_count': widget.correctCount,

@@ -63,6 +63,20 @@ class GameRoom {
       status: status ?? this.status,
       questionCount: questionCount ?? this.questionCount,
       secondsPerQuestion: secondsPerQuestion ?? this.secondsPerQuestion,
+      // DİKKAT: `?? this.hostId` deseni `hostId`i TEMİZLEYEMEZ. Null
+      // geçmek alanı boşaltmaz, eski değeri korur.
+      //
+      // Bugün bu güvenlidir ve bilerek böyle bırakılıyor: hiçbir çağrı
+      // yeri null geçmiyor (`grep 'hostId: null'` boş) ve Supabase yolunda
+      // `hostId` her zaman doluyor — `createRoom` onu `auth.currentUser.id`
+      // ile, `createOnlineRoom` sunucudan dönen değerle set ediyor. 2026-07-31
+      // denetiminde "oda sahipliği düşerse herkes kendini host sanır"
+      // iddiası bu yüzden çürütüldü.
+      //
+      // Ama gizli bir tuzak: ileride sahipliği devretmek ya da boşaltmak
+      // gerekirse bu satır sessizce eski sahibi korur ve iki istemci
+      // birbirini host sanabilir. O gün geldiğinde çözüm null geçmek değil,
+      // ayrı bir `clearHost` bayrağı ya da sentinel değerdir.
       hostId: hostId ?? this.hostId,
     );
   }

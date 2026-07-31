@@ -74,10 +74,17 @@ class SyncManager {
     syncingNotifier.value = _syncing;
   }
 
+  /// [restart] için saklanır: `shutdown` singleton'ı boşaltır ama
+  /// uygulamanın deposu ve bağlantı gözlemcisi aynı kalır.
+  static ZanKurdRepository? _lastRepository;
+  static ConnectivityMonitor? _lastConnectivityMonitor;
+
   static Future<SyncManager> initialize(
     ZanKurdRepository repository, {
     ConnectivityMonitor? connectivityMonitor,
   }) async {
+    _lastRepository = repository;
+    _lastConnectivityMonitor = connectivityMonitor;
     if (_instance != null) return _instance!;
     final manager = SyncManager._(
       repository,
@@ -86,6 +93,26 @@ class SyncManager {
     await manager._loadQueue();
     manager.sync();
     return _instance = manager;
+  }
+
+  /// Oturum yeniden açıldığında kuyruğu ayağa kaldırır.
+  ///
+  /// [initialize] uygulama ömrü boyunca yalnız `main()` içinde bir kez
+  /// çağrılıyordu; [shutdown] ise her `signOut()`ta singleton'ı
+  /// boşaltıyor ve hiçbir yer onu geri kurmuyordu. Sonuç: aynı oturumda
+  /// çıkıp tekrar giren kullanıcıda çevrimdışı ödül kuyruğu o oturum
+  /// boyunca tamamen ölü kalıyordu (2026-07-31 denetimi).
+  ///
+  /// Kurulu ise hiçbir şey yapmaz; hiç `initialize` edilmemişse (test
+  /// ortamı) sessizce döner.
+  static Future<void> restart() async {
+    if (_instance != null) return;
+    final repository = _lastRepository;
+    if (repository == null) return;
+    await initialize(
+      repository,
+      connectivityMonitor: _lastConnectivityMonitor,
+    );
   }
 
   static ConnectivityMonitor _defaultConnectivityMonitor() {
@@ -125,6 +152,8 @@ class SyncManager {
   static Future<void> resetForTesting() async {
     _instance?.dispose();
     _instance = null;
+    _lastRepository = null;
+    _lastConnectivityMonitor = null;
   }
 
   void _startConnectivityListener() {
@@ -174,6 +203,23 @@ class SyncManager {
     }
     return inst;
   }
+
+  /// Kurulu değilse `null` — fırlatmayan erişim.
+  ///
+  /// [initialize] uygulama ömrü boyunca yalnız `main()` içinde bir kez
+  /// çağrılıyor, ama [shutdown] her `signOut()`ta `_instance`ı boşaltıyor
+  /// ve hiçbir yer onu yeniden kurmuyordu. Aynı oturumda çıkıp tekrar
+  /// giren kullanıcıda [instance] `StateError` fırlatıyordu.
+  ///
+  /// Bu, ödül kuyruğa alınırken oluyordu ve çağrı `try` bloğunun DIŞINDA
+  /// duruyordu: istisna yukarı kaçıyor, `Navigator.pushReplacement`
+  /// satırına hiç ulaşılmıyordu. Oyuncu son soruda, düğmesi kilitli
+  /// hâlde takılı kalıyor; turunun sonucunu, XP'sini, rozetlerini hiç
+  /// görmüyordu (2026-07-31 denetimi).
+  ///
+  /// Ödül kuyruğa alınamasa bile sonuç ekranı açılmalıdır: kuyruk bir
+  /// iyileştirmedir, turun kendisi değil.
+  static SyncManager? get maybeInstance => _instance;
 
   Future<void> _loadQueue() async {
     try {

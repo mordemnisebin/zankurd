@@ -73,10 +73,27 @@ class ReviewService {
 
     if (!shouldRequest(accuracyPercent: accuracyPercent)) return false;
 
-    final available = await availabilityCheck();
-    if (!available) return false;
+    // Mağaza değerlendirmesi bir iyileştirmedir, turun parçası değil.
+    //
+    // `availabilityCheck` ve `requestReviewFn` platform kanalına iner
+    // (InAppReview) ve desteklenmeyen cihazda, mağaza uygulaması yokken
+    // ya da Play Services eksikken fırlatabilir. İkisi de korumasızdı ve
+    // çağıran `quiz_result_screen._recordProgress` zincirinin ortasında
+    // duruyordu: buradan kaçan bir istisna XP'yi, görev bildirimlerini,
+    // rozetleri ve seviye atlama diyaloğunu birden düşürüyordu — çünkü
+    // hepsini gösteren `setState` bu satırın ALTINDAYDI (2026-07-31).
+    //
+    // İstek başarısız olursa yalnız istek kaybolur; `_requested` de
+    // işaretlenmez, bir sonraki uygun turda yeniden denenir.
+    try {
+      final available = await availabilityCheck();
+      if (!available) return false;
+      await requestReviewFn();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'in_app_review request');
+      return false;
+    }
 
-    await requestReviewFn();
     _requested = true;
     await _preferences?.setBool(_requestedKey, true);
     return true;

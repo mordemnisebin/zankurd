@@ -59,6 +59,17 @@ class AuthProvider extends ChangeNotifier {
       // cihaza değil hesaba ait olmasını ve cihaz paylaşımında entitlement
       // sızmamasını sağlar.
       if (changed) _syncPremiumIdentity(next);
+      // `signOut()` SyncManager'ı kapatıyor; yeni bir oturum açıldığında
+      // onu geri kuran hiçbir yer yoktu. Aynı oturumda çıkıp tekrar giren
+      // kullanıcıda çevrimdışı ödül kuyruğu ölü kalıyor ve `instance`
+      // getter'ı `StateError` fırlatıyordu (2026-07-31 denetimi).
+      if (changed && next != null) {
+        unawaited(
+          SyncManager.restart().catchError((Object error, StackTrace stack) {
+            ErrorReporter.record(error, stack, reason: 'SyncManager restart');
+          }),
+        );
+      }
       notifyListeners();
     });
   }

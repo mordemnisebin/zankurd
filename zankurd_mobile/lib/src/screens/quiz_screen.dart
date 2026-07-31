@@ -146,7 +146,8 @@ class QuizScreen extends StatefulWidget {
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
+class _QuizScreenState extends State<QuizScreen>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
   bool get _usesTimer => widget.enableTimer && !_isLearningExperience;
@@ -290,6 +291,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _isKu = context.langProvider.isKu;
     // Sorular tura girerken bir kez seçili dile yansıtılır. Yansıtma tur
     // başında yapılır, her karede değil: dil tur ortasında değişirse
@@ -704,6 +706,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
@@ -721,6 +724,40 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     // TTS: ekrandan çıkınca devam eden seslendirmeyi durdur.
     TtsService.instance?.stop();
     super.dispose();
+  }
+
+  /// Uygulama arka plana alınınca soru sayacını durdurur.
+  ///
+  /// Depoda tek bir `WidgetsBindingObserver` yoktu: telefon kilitlenince,
+  /// bir bildirime dokununca ya da uygulama değiştirilince geri sayım
+  /// işlemeye devam ediyordu. Oyuncu geri döndüğünde süresi bitmiş bir
+  /// soruyla karşılaşıyor, hatta doğrudan "TIMEOUT" görüyordu — hiç
+  /// kendi hatası olmadan (2026-07-31 denetimi).
+  ///
+  /// Yalnız tek kişilik akışlarda duraklatılır. Çevrimiçi turda süreyi
+  /// sunucu ve rakip belirler; istemcinin tek taraflı durması iki oyuncuyu
+  /// birbirinden ayırır, o yüzden orada sayaç akmaya devam eder.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (!_usesTimer || _isMultiplayer || answered || completing) return;
+
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.detached:
+        if (_timerController.isAnimating) {
+          _timerController.stop();
+          _questionStopwatch.stop();
+        }
+      case AppLifecycleState.resumed:
+        // Süre baştan başlamaz; kaldığı yerden akar.
+        if (!_timerController.isAnimating && _timerController.value > 0) {
+          _timerController.reverse();
+          _questionStopwatch.start();
+        }
+    }
   }
 
   /// TTS servisini başlatır ve cihazda Kürtçe dil desteğinin olup olmadığını
@@ -1242,14 +1279,27 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ErrorReporter.record(error, stack, reason: 'awardQuizCoins failed');
     }
     if (amount <= 0) {
-      _rewardQueued = true;
-      SyncManager.instance.queueQuizReward(
-        score: score,
-        correctCount: correctCount,
-        bestStreak: bestStreak,
-        totalQuestions: totalQuestions,
-        roomId: widget.room.id,
-      );
+      // Kuyruk yoksa (oturum kapatılıp yeniden girilmişse SyncManager
+      // kurulu değildir) tur yine de bitmelidir. Eskiden burada
+      // `SyncManager.instance` çağrılıyordu ve fırlatan istisna
+      // `_next()`/`_finishGameMultiplayer()` içinden yukarı kaçıp sonuç
+      // ekranının açılmasını engelliyordu.
+      final sync = SyncManager.maybeInstance;
+      if (sync != null) {
+        _rewardQueued = true;
+        try {
+          sync.queueQuizReward(
+            score: score,
+            correctCount: correctCount,
+            bestStreak: bestStreak,
+            totalQuestions: totalQuestions,
+            roomId: widget.room.id,
+          );
+        } catch (error, stack) {
+          _rewardQueued = false;
+          ErrorReporter.record(error, stack, reason: 'queueQuizReward failed');
+        }
+      }
     }
     return amount;
   }
@@ -1318,6 +1368,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         answer != question.correctAnswer) {
       HapticFeedback.heavyImpact();
       setState(() => _firstAttemptAnswer = answer);
+      // Geri sayımı SÜRDÜR. `_answer` en başta `_timerController.stop()`
+      // çağırıyor; bu erken çıkış onu yeniden başlatmadığı için ilk yanlış
+      // denemeden sonra sayaç kalıcı olarak donuyordu. Soru hâlâ açık ve
+      // oyuncu ikinci şıkkı seçecek, ama süre baskısı ortadan kalkıyordu:
+      // Çift Cevap jokeri istemeden sınırsız süre de veriyordu
+      // (2026-07-31 denetimi).
+      //
+      // `_startTimer` değil `reverse()`: süre baştan başlamamalı, kaldığı
+      // yerden akmalı. Stopwatch da zaten çalışmaya devam ediyor.
+      if (_usesTimer) _timerController.reverse();
       return;
     }
 
