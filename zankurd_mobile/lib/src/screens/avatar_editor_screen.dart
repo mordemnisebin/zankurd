@@ -258,10 +258,20 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         children: [
+                          // Ekran okuyucu 2026-07-31'e kadar bu ızgarada
+                          // 16 kez yalnız "button" diyordu: hücrenin tek
+                          // çocuğu etiketsiz bir Icon'du. Görme engelli
+                          // oyuncu hangi sembolü seçtiğini anlayamıyordu.
+                          // Adlar `avatarIcons` anahtarlarında zaten
+                          // vardı, yalnız kullanılmıyordu.
                           for (final entry in avatarIcons.entries)
                             _IconCell(
                               key: ValueKey('avatar-icon-${entry.key}'),
                               icon: entry.value,
+                              semanticLabel: context.t(
+                                avatarIconLabelKeys[entry.key] ??
+                                    K.avatarIconRoj,
+                              ),
                               selected: _identity.iconId == entry.key,
                               color: colorFrom(
                                 _identity.colorHex,
@@ -284,44 +294,58 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                         spacing: 6,
                         runSpacing: 6,
                         children: [
+                          // Aynı kusur renklerde de vardı: InkWell'in tek
+                          // çocuğu renkli bir Container, hiç metin yok.
+                          // Renk adları `avatarColors` listesinin yorum
+                          // satırlarında yazılıydı.
                           for (final hex in avatarColors)
-                            ClipOval(
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  key: ValueKey('avatar-color-$hex'),
-                                  onTap: () => setState(
-                                    () => _identity = _identity.copyWith(
-                                      colorHex: hex,
+                            Semantics(
+                              button: true,
+                              selected: _identity.colorHex == hex,
+                              label: context.t(
+                                avatarColorLabelKeys[hex] ?? K.colorWord,
+                              ),
+                              excludeSemantics: true,
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    key: ValueKey('avatar-color-$hex'),
+                                    onTap: () => setState(
+                                      () => _identity = _identity.copyWith(
+                                        colorHex: hex,
+                                      ),
                                     ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Container(
-                                      width: 36,
-                                      height: 36,
-                                      decoration: BoxDecoration(
-                                        color: colorFrom(
-                                          hex,
-                                          fallback: AppTheme.accent,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Container(
+                                        width: 36,
+                                        height: 36,
+                                        decoration: BoxDecoration(
+                                          color: colorFrom(
+                                            hex,
+                                            fallback: AppTheme.accent,
+                                          ),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: _identity.colorHex == hex
+                                                ? Colors.white
+                                                : Colors.transparent,
+                                            width: 3,
+                                          ),
+                                          boxShadow: _identity.colorHex == hex
+                                              ? [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withValues(
+                                                          alpha: 0.25,
+                                                        ),
+                                                    blurRadius: 4,
+                                                    offset: const Offset(0, 2),
+                                                  ),
+                                                ]
+                                              : null,
                                         ),
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: _identity.colorHex == hex
-                                              ? Colors.white
-                                              : Colors.transparent,
-                                          width: 3,
-                                        ),
-                                        boxShadow: _identity.colorHex == hex
-                                            ? [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withValues(alpha: 0.25),
-                                                  blurRadius: 4,
-                                                  offset: const Offset(0, 2),
-                                                ),
-                                              ]
-                                            : null,
                                       ),
                                     ),
                                   ),
@@ -469,6 +493,7 @@ class _SectionTitle extends StatelessWidget {
 class _IconCell extends StatelessWidget {
   const _IconCell({
     required this.icon,
+    required this.semanticLabel,
     required this.selected,
     required this.color,
     required this.onTap,
@@ -476,12 +501,26 @@ class _IconCell extends StatelessWidget {
   });
 
   final IconData icon;
+
+  /// Ekran okuyucunun söyleyeceği ad. Sembolün kendisi görsel; adı
+  /// olmadan hücre yalnız "button" diye duyulur.
+  final String semanticLabel;
   final bool selected;
   final Color color;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: semanticLabel,
+      excludeSemantics: true,
+      child: _buildCell(context),
+    );
+  }
+
+  Widget _buildCell(BuildContext context) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),

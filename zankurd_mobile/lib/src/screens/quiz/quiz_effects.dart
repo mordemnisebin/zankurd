@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import '../../providers/reduced_motion_provider.dart';
 
 import '../../theme/app_theme.dart';
 import '../../utils/test_environment.dart';
@@ -32,6 +33,22 @@ double vignetteStrengthFor(double remainingFraction) {
 /// Yanlış cevapta şıkkı yatay sarsar. [trigger] her arttığında bir kez
 /// oynar; trigger > 0 ile İLK kurulduğunda da oynar (yanlış-şık sarmalama
 /// senaryosu: widget yanlış anlaşıldığı anda ağaca girer).
+/// Hareket azaltılıyor mu? Efektler ÇALIŞMA ANINDA buna bakar.
+///
+/// 2026-07-31'e kadar bu efektlerin süreleri yalnız
+/// `isFlutterTestEnvironment` ile sıfırlanıyordu: yani animasyonlar
+/// sadece TEST KOŞUCUSUNDA kapanıyor, gerçek kullanıcının "hareketi
+/// azalt" tercihi hiçbirini etkilemiyordu. Yanlış cevaptaki tam genişlikte
+/// kırmızı parlama ve sarsıntı, hareket duyarlılığı olan kullanıcı için
+/// tam da kapatılması gereken şeydi.
+/// YALNIZ kullanıcı/sistem tercihi. `isFlutterTestEnvironment` BİLEREK
+/// dahil değil: o bayrak yalnız ilk kurulumdaki otomatik oynatmayı
+/// susturmak içindi, tetiklenen efektleri değil. İkisini birleştirmek
+/// `quiz_effects_test`i kırdı — test sarsıntının GERÇEKTEN oynadığını
+/// ölçüyor.
+bool _motionOff(BuildContext context) =>
+    ReducedMotionProvider.isReducedIn(context);
+
 class ShakeWrapper extends StatefulWidget {
   const ShakeWrapper({required this.trigger, required this.child, super.key});
 
@@ -52,15 +69,21 @@ class _ShakeWrapperState extends State<ShakeWrapper>
   @override
   void initState() {
     super.initState();
-    if (widget.trigger > 0 && !isFlutterTestEnvironment) {
-      _controller.forward(from: 0);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (widget.trigger > 0 &&
+          !isFlutterTestEnvironment &&
+          !_motionOff(context)) {
+        _controller.forward(from: 0);
+      }
+    });
   }
 
   @override
   void didUpdateWidget(covariant ShakeWrapper oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.trigger != oldWidget.trigger && widget.trigger > 0) {
+      if (_motionOff(context)) return;
       _controller.forward(from: 0);
     }
   }
@@ -103,7 +126,7 @@ class ComboBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final tier = comboTierFor(streak);
     return AnimatedSwitcher(
-      duration: isFlutterTestEnvironment
+      duration: _motionOff(context)
           ? Duration.zero
           : const Duration(milliseconds: 250),
       transitionBuilder: (child, animation) => ScaleTransition(
@@ -224,6 +247,7 @@ class _WrongFlashState extends State<WrongFlash>
   void didUpdateWidget(covariant WrongFlash oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.trigger != oldWidget.trigger && widget.trigger > 0) {
+      if (_motionOff(context)) return;
       _controller.forward(from: 0);
     }
   }
@@ -278,6 +302,7 @@ class _ScoreFlyupState extends State<ScoreFlyup>
   void didUpdateWidget(covariant ScoreFlyup oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.trigger != oldWidget.trigger && widget.trigger > 0) {
+      if (_motionOff(context)) return;
       _controller.forward(from: 0);
     }
   }

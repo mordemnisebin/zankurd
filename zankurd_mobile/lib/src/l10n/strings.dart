@@ -1034,6 +1034,36 @@ class Tr {
     // Neon çerçeve: ilerlemeyle değil mağazadan açılır.
     K.frameNeon: {'ku': 'Neon', 'tr': 'Neon'},
 
+    // ── Avatar sembol ve renk adları (ekran okuyucu) ─────────────────
+    // Adlar koda zaten yazılıydı — ikon anahtarları Kurmancî sözcük,
+    // renkler yorum satırında Türkçe. İkisi de kullanılmıyordu ve
+    // avatar düzenleyici 24 etiketsiz dokunma hedefiyle ekran
+    // okuyucuya tamamen sessizdi (2026-07-31 denetimi).
+    K.avatarIconTembur: {'ku': 'Tembûr', 'tr': 'Tembur (saz)'},
+    K.avatarIconDengbej: {'ku': 'Dengbêj', 'tr': 'Dengbêj'},
+    K.avatarIconCiya: {'ku': 'Çiya', 'tr': 'Dağ'},
+    K.avatarIconRoj: {'ku': 'Roj', 'tr': 'Güneş'},
+    K.avatarIconPirtuk: {'ku': 'Pirtûk', 'tr': 'Kitap'},
+    K.avatarIconNewroz: {'ku': 'Newroz', 'tr': 'Newroz ateşi'},
+    K.avatarIconSter: {'ku': 'Stêr', 'tr': 'Yıldız'},
+    K.avatarIconPen: {'ku': 'Pênûs', 'tr': 'Kalem'},
+    K.avatarIconCihan: {'ku': 'Cîhan', 'tr': 'Dünya'},
+    K.avatarIconMertal: {'ku': 'Mertal', 'tr': 'Kalkan'},
+    K.avatarIconTac: {'ku': 'Tac', 'tr': 'Madalya'},
+    K.avatarIconGul: {'ku': 'Gul', 'tr': 'Fidan'},
+    K.avatarIconDar: {'ku': 'Dar', 'tr': 'Ağaç'},
+    K.avatarIconCav: {'ku': 'Çav', 'tr': 'Göz'},
+    K.avatarIconBirusk: {'ku': 'Birûsk', 'tr': 'Şimşek'},
+    K.avatarIconKupa: {'ku': 'Kupa', 'tr': 'Kupa'},
+    K.avatarColor0: {'ku': 'Sora hinarê', 'tr': 'Nar kırmızısı'},  // #E5533D
+    K.avatarColor1: {'ku': 'Zêrê tûncê', 'tr': 'Pirinç altını'},  // #E7B53C
+    K.avatarColor2: {'ku': 'Keska Kurdistanê', 'tr': 'Kürdistan yeşili'},  // #3DA968
+    K.avatarColor3: {'ku': 'Şînahiya deryayê', 'tr': 'Teal'},  // #2E9E93
+    K.avatarColor4: {'ku': 'Binefşî', 'tr': 'Erik moru'},  // #6B3A7A
+    K.avatarColor5: {'ku': 'Xwelîreng', 'tr': 'Terracotta'},  // #C67A5C
+    K.avatarColor6: {'ku': 'Şîna deryayê', 'tr': 'Deniz mavisi'},  // #2B4F7E
+    K.avatarColor7: {'ku': 'Pembeyê gulê', 'tr': 'Gül pembesi'},  // #D4789E
+
     // ── Oda sohbeti moderasyonu (Apple 1.2 / Google Play UGC) ────────
     K.chatBlockedWord: {
       'ku': 'Ev peyam nayê şandin: gotinên nebaş.',
@@ -2200,6 +2230,30 @@ class K {
   static const addFriend = 'leaderboard.addFriend';
   static const friendsScreen = 'leaderboard.friendsScreen';
   static const frameNeon = 'avatar.frame.neon';
+  static const avatarIconTembur = 'avatar.icon.tembur';
+  static const avatarIconDengbej = 'avatar.icon.dengbej';
+  static const avatarIconCiya = 'avatar.icon.ciya';
+  static const avatarIconRoj = 'avatar.icon.roj';
+  static const avatarIconPirtuk = 'avatar.icon.pirtuk';
+  static const avatarIconNewroz = 'avatar.icon.newroz';
+  static const avatarIconSter = 'avatar.icon.ster';
+  static const avatarIconPen = 'avatar.icon.pen';
+  static const avatarIconCihan = 'avatar.icon.cihan';
+  static const avatarIconMertal = 'avatar.icon.mertal';
+  static const avatarIconTac = 'avatar.icon.tac';
+  static const avatarIconGul = 'avatar.icon.gul';
+  static const avatarIconDar = 'avatar.icon.dar';
+  static const avatarIconCav = 'avatar.icon.cav';
+  static const avatarIconBirusk = 'avatar.icon.birusk';
+  static const avatarIconKupa = 'avatar.icon.kupa';
+  static const avatarColor0 = 'avatar.color.0';
+  static const avatarColor1 = 'avatar.color.1';
+  static const avatarColor2 = 'avatar.color.2';
+  static const avatarColor3 = 'avatar.color.3';
+  static const avatarColor4 = 'avatar.color.4';
+  static const avatarColor5 = 'avatar.color.5';
+  static const avatarColor6 = 'avatar.color.6';
+  static const avatarColor7 = 'avatar.color.7';
 
   // ── Oda sohbeti moderasyonu ────────────────────────────────────────
   static const chatBlockedWord = 'chat.rejected.word';

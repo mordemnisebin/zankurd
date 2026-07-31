@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Hazır avatar seti: kültürel temalı 16 Material ikonu. Yeni asset
@@ -21,6 +22,41 @@ const Map<String, IconData> avatarIcons = {
   'cav': AppIcons.eye,
   'birusk': AppIcons.bolt,
   'kupa': AppIcons.trophy,
+};
+
+/// Sembol kimliği → anahtar defteri anahtarı (ekran okuyucu etiketi).
+///
+/// [avatarIcons] ile aynı sırada ve aynı anahtarlarla; biri değişirse
+/// öteki de değişmeli (bekçi: avatar_accessibility_test.dart).
+const Map<String, String> avatarIconLabelKeys = {
+  'tembur': K.avatarIconTembur,
+  'dengbej': K.avatarIconDengbej,
+  'ciya': K.avatarIconCiya,
+  'roj': K.avatarIconRoj,
+  'pirtuk': K.avatarIconPirtuk,
+  'newroz': K.avatarIconNewroz,
+  'ster': K.avatarIconSter,
+  'pen': K.avatarIconPen,
+  'cihan': K.avatarIconCihan,
+  'mertal': K.avatarIconMertal,
+  'tac': K.avatarIconTac,
+  'gul': K.avatarIconGul,
+  'dar': K.avatarIconDar,
+  'cav': K.avatarIconCav,
+  'birusk': K.avatarIconBirusk,
+  'kupa': K.avatarIconKupa,
+};
+
+/// Renk hex → anahtar defteri anahtarı (ekran okuyucu etiketi).
+const Map<String, String> avatarColorLabelKeys = {
+  '#E5533D': K.avatarColor0,
+  '#E7B53C': K.avatarColor1,
+  '#3DA968': K.avatarColor2,
+  '#2E9E93': K.avatarColor3,
+  '#6B3A7A': K.avatarColor4,
+  '#C67A5C': K.avatarColor5,
+  '#2B4F7E': K.avatarColor6,
+  '#D4789E': K.avatarColor7,
 };
 
 /// Avatar arka plan renk paleti (hex, '#RRGGBB'). Marka ailesinden — jenerik

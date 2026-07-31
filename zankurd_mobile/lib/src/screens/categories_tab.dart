@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../config/category_visibility.dart';
 import '../config/category_visuals.dart';
 import '../data/mastery_store.dart';
@@ -7,6 +6,7 @@ import '../data/zankurd_repository.dart';
 import '../models/mastery_level.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -307,7 +307,15 @@ class _ShimmerCardState extends State<_ShimmerCard>
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
-    )..repeat();
+    );
+    // Shimmer, "hareketi azalt" açıkken düz bir iskelet olarak kalır.
+    // `skeleton_loader.dart` bunu zaten yapıyordu; aynı uygulamada iki
+    // farklı shimmer davranışı vardı (2026-07-31 denetimi).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (ReducedMotionProvider.isReducedIn(context)) return;
+      _controller.repeat();
+    });
     _anim = Tween<double>(begin: -2, end: 2).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
     );

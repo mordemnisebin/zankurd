@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../../providers/reduced_motion_provider.dart';
 
 import '../../theme/app_theme.dart';
 
@@ -54,7 +55,11 @@ class _QuizTimerWidgetState extends State<QuizTimerWidget>
     final seconds = (value * widget.maxSeconds).ceil();
     final shouldPulse = seconds <= 5 && seconds > 0 && !widget.isPaused;
 
-    if (shouldPulse) {
+    // Son 5 saniyedeki nabız "hareketi azalt" açıkken atmaz. İşlevsel
+    // bilgi (kalan süre) rakamda ve halkada zaten var; nabız yalnız
+    // vurgudur (2026-07-31 denetimi).
+    final reduceMotion = ReducedMotionProvider.isReducedIn(context);
+    if (shouldPulse && !reduceMotion) {
       if (!_pulseController.isAnimating) {
         _pulseController.repeat(reverse: true);
       }

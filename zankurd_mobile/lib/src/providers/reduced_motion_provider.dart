@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/error_reporter.dart';
@@ -52,6 +53,27 @@ class ReducedMotionProvider extends ChangeNotifier {
     if (_systemReduce == value) return;
     _systemReduce = value;
     notifyListeners();
+  }
+
+  /// Ağaçta sağlayıcı yoksa `false` döner.
+  ///
+  /// Hareket azaltma bir İYİLEŞTİRMEDİR: widget'lar onu okuyabilmek için
+  /// sağlayıcı zorunlu kılmamalı. Aksi hâlde aynı widget bir ekran
+  /// görüntüsü aracında ya da izole bir testte kullanıldığında
+  /// `ProviderNotFoundException` ile çöker — 2026-07-31'de eşleşme
+  /// ekranının dört testi tam bu yüzden düştü.
+  ///
+  /// Sağlayıcı yoksa güvenli varsayılan "hareket açık"tır: mevcut
+  /// davranış korunur.
+  static bool isReducedIn(BuildContext context) {
+    try {
+      return Provider.of<ReducedMotionProvider>(
+        context,
+        listen: false,
+      ).reduceMotion;
+    } on ProviderNotFoundException {
+      return false;
+    }
   }
 
   /// Hareket azaltıldığında verilen süreyi kısaltır (sıfırlamaz ki işlevsel

@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
+import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -54,6 +55,29 @@ void main() {
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
     await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
     await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  // Avatar düzenleyici 2026-07-31'e kadar bu denetimin DIŞINDAYDI ve
+  // dosyada tek bir `Semantics`, `semanticLabel` ya da `tooltip` yoktu.
+  // Ekran iki ızgaradan oluşuyor, ikisi de yalnız görsel: 16 sembol
+  // hücresi (tek çocuğu etiketsiz bir Icon) ve 8 renk dairesi (tek
+  // çocuğu renkli bir Container, hiç metin yok). TalkBack/VoiceOver
+  // kullanan oyuncu 24 kez sadece "button" duyuyordu — kimlik
+  // kişiselleştirme ekranı görme engelli oyuncuya tamamen kapalıydı.
+  //
+  // Bekçinin kapsamı iki ekrandan ibaret olduğu sürece aynı kusur başka
+  // ekranlarda tekrar eder; liste bu yüzden büyüyor.
+  testWidgets('avatar düzenleyici a11y kılavuzlarını karşılar', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      wrap(AvatarEditorScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
     handle.dispose();
   });
 

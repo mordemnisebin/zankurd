@@ -339,19 +339,38 @@ class ZanKurdApp extends StatelessWidget {
             readiness: _warmUpShell(repository),
             next: AppShell(repository: repository),
           ),
-          builder: (context, child) => MediaQuery.withClampedTextScaling(
-            minScaleFactor: 0.85,
-            maxScaleFactor: 2.0,
-            // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
-            // temada beyaz saat/pil krem zemin üzerine düşüyor ve
-            // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
-            // çoğu AppBar kullanmadığı için stil uygulama kökünde,
-            // etkin parlaklığa göre verilir.
-            child: AnnotatedRegion<SystemUiOverlayStyle>(
-              value: _overlayStyleFor(context),
-              child: ResponsiveWrapper(child: child ?? const SizedBox.shrink()),
-            ),
-          ),
+          builder: (context, child) {
+            // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ
+            // okunmuyordu. `ReducedMotionProvider`ın sınıf belgesi
+            // "kullanıcı tercihi VEYA sistem tercihi" diyor ve
+            // `reduceMotion` getter'ı `_userReduce || _systemReduce`
+            // döndürüyordu — ama `setSystemReduce`i çağıran tek satır
+            // yoktu, yani ikinci koşul hep false kalıyordu. iOS/Android
+            // erişilebilirlik ayarından hareketi kapatan kullanıcı,
+            // uygulamada ayrıca aynı anahtarı bulup açmak zorundaydı.
+            //
+            // `build` içinde okunuyor: sistem tercihi çalışırken
+            // değişebilir ve MediaQuery zaten yeniden çizim tetikler.
+            final disableAnimations = MediaQuery.disableAnimationsOf(context);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              reducedMotionProvider.setSystemReduce(disableAnimations);
+            });
+            return MediaQuery.withClampedTextScaling(
+              minScaleFactor: 0.85,
+              maxScaleFactor: 2.0,
+              // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
+              // temada beyaz saat/pil krem zemin üzerine düşüyor ve
+              // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
+              // çoğu AppBar kullanmadığı için stil uygulama kökünde,
+              // etkin parlaklığa göre verilir.
+              child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: _overlayStyleFor(context),
+                child: ResponsiveWrapper(
+                  child: child ?? const SizedBox.shrink(),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

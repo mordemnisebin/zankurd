@@ -12,6 +12,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/player.dart';
 import '../widgets/player_avatar.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -94,10 +95,22 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       duration: const Duration(seconds: 2),
     );
 
-    if (!isFlutterTestEnvironment) {
+    // Sonsuz animasyonlar "hareketi azalt" açıkken HİÇ başlamaz.
+    //
+    // 2026-07-31'e kadar tek koşul test ortamıydı: yani animasyonlar
+    // yalnız test koşucusunda duruyordu, gerçek kullanıcının tercihi
+    // hiçbirini etkilemiyordu. Radar ve nabız eşleşme beklenirken
+    // sürekli döndüğü için en rahatsız edici olanlardı.
+    //
+    // `addPostFrameCallback`: provider'a `initState` içinde `listen: true`
+    // ile erişilemez.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final reduce = ReducedMotionProvider.isReducedIn(context);
+      if (isFlutterTestEnvironment || reduce) return;
       _radarController.repeat();
       _pulseController.repeat(reverse: true);
-    }
+    });
 
     _loadCategoriesOnly();
   }

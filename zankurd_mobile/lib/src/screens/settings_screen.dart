@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -395,24 +396,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding: EdgeInsets.zero,
                 child: Column(
                   children: [
-                    Consumer<SoundProvider>(
-                      builder: (context, sound, _) => _SettingsToggleRow(
-                        icon: sound.enabled
-                            ? AppIcons.volumeHigh
-                            : AppIcons.volumeXmark,
-                        color: AppTheme.primaryGradientStart,
-                        title: context.t(K.soundEffects),
-                        trailing: Switch(
-                          value: sound.enabled,
-                          onChanged: (_) => sound.toggle(),
+                    // Ses efektleri web'de HİÇ çalmıyor: `SoundProvider._play`
+                    // ikinci satırında `if (kIsWeb) return;` diyor. Anahtar
+                    // yine de koşulsuz gösteriliyordu, yani web kullanıcısı
+                    // hiçbir şey yapmayan bir kontrolü açıp kapatıyordu
+                    // (2026-07-31 denetimi). Ölü kontrol, bozuk kontroldür.
+                    if (!kIsWeb) ...[
+                      Consumer<SoundProvider>(
+                        builder: (context, sound, _) => _SettingsToggleRow(
+                          icon: sound.enabled
+                              ? AppIcons.volumeHigh
+                              : AppIcons.volumeXmark,
+                          color: AppTheme.primaryGradientStart,
+                          title: context.t(K.soundEffects),
+                          trailing: Switch(
+                            value: sound.enabled,
+                            onChanged: (_) => sound.toggle(),
+                          ),
                         ),
                       ),
-                    ),
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
+                      Divider(
+                        height: 1,
+                        indent: 56,
+                        color: AppTheme.borderColor(context),
+                      ),
+                    ],
                     _SettingsToggleRow(
                       icon: _notificationsEnabled
                           ? AppIcons.bell
