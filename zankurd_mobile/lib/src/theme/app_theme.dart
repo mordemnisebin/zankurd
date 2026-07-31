@@ -492,6 +492,25 @@ class AppTheme {
   static const correctDeep = Color(0xFF1B5E20); // Win gradient shadow
   static const wrongDeep = Color(0xFF7F1D1D); // Lose gradient shadow
 
+  /// 1v1 sonuç başlığının AÇIK ucu — `correct`/`wrong`un okunur hâli.
+  ///
+  /// Gradyanın koyu ucu (`correctDeep` 7.87:1, `wrongDeep` 10.02:1) beyaz
+  /// metni rahat okutuyordu, açık ucu okutmuyordu: `correct` 2.97:1,
+  /// `wrong` 3.73:1. Başlığın içeriği — sonuç adı, skor, doğruluk, yıldız
+  /// sırası — sabit beyazla çiziliyor ve kartın ÜST-SOLUNDA, yani
+  /// gradyanın tam da en açık ucunda duruyor. Açık temada durum daha da
+  /// kötüydü: gradyan `alpha: 0.92` ile kartın beyazına karışıyor.
+  ///
+  /// Ton ve doygunluk korunarak yalnız açıklık düşürüldü (HLS'te L: 0.451
+  /// → 0.353 ve 0.569 → 0.487), böylece yeşil hâlâ "kazandın", kırmızı
+  /// hâlâ "kaybettin" diyor ama yazı okunuyor: ikisi de 4.61:1.
+  ///
+  /// `correct`/`wrong`un kendileri değişmedi — onlar şık vurgusu, ilerleme
+  /// çubuğu ve rozetlerde `onSolid()` ile birlikte kullanılıyor ve orada
+  /// zaten doğru davranıyorlar (2026-08-01).
+  static const correctHeader = Color(0xFF308451);
+  static const wrongHeader = Color(0xFFDB361D);
+
   // ============ Light Mode Palette (Variant C) ============
   static const lightBg = Color(0xFFF7F4EE);
   static const lightBgDeep = Color(0xFFEFEBE3);

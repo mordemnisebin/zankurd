@@ -501,30 +501,34 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // kullanılır (M-11 — hardcoded Color literal → adlandırılmış sabit).
     final headerGradient = is1v1
         ? (isWinner
-              ? LinearGradient(
+              ? const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    AppTheme.correct.withValues(alpha: 0.92),
-                    AppTheme.correctDeep,
-                  ],
+                  colors: [AppTheme.correctHeader, AppTheme.correctDeep],
                 )
               : isDraw
-              ? LinearGradient(
+              // Berabere gradyanı bir zamanlar `surfaceHiColor` /
+              // `surfaceColor` idi — temaya göre değişen yüzey tonları.
+              // Açık temada ikisi de neredeyse beyaz, üstündeki başlık ve
+              // skor ise sabit `Colors.white`: kart okunmuyordu. Kazanan
+              // ve kaybeden hâlleri tema-bağımsız KOYU tonlar aldığı için
+              // (correct/correctDeep, wrong/wrongDeep) kusur yalnız
+              // beraberede doğuyordu, yani ancak iki oyuncu aynı skorla
+              // bitirdiğinde. 2026-08-01'de canlı 0-0 biten oda maçında
+              // görüldü.
+              //
+              // Berabere ne zafer ne yenilgi: yeşil ve kırmızının yanına
+              // nötr, tema-bağımsız bir koyu ton konuyor. Beyaz metin
+              // ikisinde de 12:1'in üstünde.
+              ? const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    AppTheme.surfaceHiColor(context),
-                    AppTheme.surfaceColor(context),
-                  ],
+                  colors: [AppTheme.surfaceHi, AppTheme.surface],
                 )
-              : LinearGradient(
+              : const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    AppTheme.wrong.withValues(alpha: 0.88),
-                    AppTheme.wrongDeep,
-                  ],
+                  colors: [AppTheme.wrongHeader, AppTheme.wrongDeep],
                 ))
         // Solo sonuç vitrini kimlik anıdır, eylem değil: Kesk (marka yeşili)
         // kullanılır. Turuncu yalnız "sonraki adım" butonunda kalır — böylece

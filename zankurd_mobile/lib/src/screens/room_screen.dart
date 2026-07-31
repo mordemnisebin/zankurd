@@ -74,6 +74,7 @@ class _RoomScreenState extends State<RoomScreen> {
   /// Yalnızca lobide en az 2 oyuncu görülünce durur; aksi halde devam eder.
   Timer? _pollTimer;
   int _pollCount = 0;
+  bool _pollThrottled = false;
   static const _pollInterval = Duration(seconds: 3);
   static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
 
@@ -82,7 +83,21 @@ class _RoomScreenState extends State<RoomScreen> {
     super.initState();
     _startSubscriptions();
     _startPolling();
-    widget.repository.updateReady(room, ready);
+    // Burada `updateReady(room, ready)` YOK — ve olmamalı.
+    //
+    // Eskiden vardı ve `ready` sabit `true` olduğu için zararsızdı: odaya
+    // giren herkes kendini hazır ilan ediyordu. `ready` sunucudaki gerçek
+    // durumdan beslenmeye başlayınca aynı satır kendi kuyruğunu ısırdı:
+    //
+    //   1. `joinOnlineRoom` katılanın hazır olduğunu sunucuya bildirir,
+    //   2. oda ekranı açılır ve `room.players` HÂLÂ katılış anındaki
+    //      listedir — o listede katılan `is_ready = false`,
+    //   3. `ready` getter'ı o listeden false okur,
+    //   4. bu satır sunucuya false yazar ve 1. adımı siler.
+    //
+    // Ev sahibi katılanı sonsuza dek "Li bendê" görüyordu. Yazma yolu
+    // artık tek: ya `createOnlineRoom`/`joinOnlineRoom` (giriş varsayılanı)
+    // ya da kullanıcının anahtara dokunması (2026-08-01).
   }
 
   void _startSubscriptions() {
@@ -122,19 +137,33 @@ class _RoomScreenState extends State<RoomScreen> {
     _syncPollingForLobby(players.length);
   }
 
-  /// Lobide 2 oyuncu görülene kadar polling açık kalır; eksik realtime
-  /// yanıtlarında host takılı kalmaz.
+  /// Lobide yedek yoklama AÇIK kalır; yalnız yarış başlayınca durur.
+  ///
+  /// Eskiden `playerCount >= 2` görülür görülmez yoklama kalıcı olarak
+  /// duruyordu. Niyet yorumda yazıyordu: "Realtime yetersizse host, 2.
+  /// oyuncuyu polling ile görür." Yani yedek yalnız KATILIMI görmek için
+  /// tasarlanmıştı ve katılan görülünce kapanıyordu.
+  ///
+  /// Ama lobide değişen tek şey katılım değil — hazır durumu da değişiyor,
+  /// üstelik tam olarak katılımdan SONRA: `join_room_by_code` oyuncuyu
+  /// `is_ready = false` ile ekliyor, katılan kendi durumunu hemen ardından
+  /// bildiriyor. Yoklama tam o arada kapandığı için ev sahibi ikinci
+  /// oyuncuyu sonsuza dek "Li bendê" görüyordu. Ekranın vaadi
+  /// ("Rewşa te ... rasterast ... tê nîşandan") yalnız realtime'a kalıyor,
+  /// o da bu tabloda gelmiyordu (2026-08-01, Android ev sahibi + iOS
+  /// katılan).
+  ///
+  /// Lobi kısa ömürlüdür ve 3 saniyelik yoklamanın pil maliyeti buradadır
+  /// — yarış başlar başlamaz `quizOpened` ile duruyor.
   void _syncPollingForLobby(int playerCount) {
     if (quizOpened) {
       _pausePolling();
       return;
     }
-    if (playerCount >= 2) {
-      _pausePolling();
-      _pollCount = 0;
-      return;
-    }
-    if (_pollTimer == null) {
+    // `_pollThrottled` olmadan bu satır, aşağıdaki 60sn'lik pil kısıtını
+    // ilk realtime olayında geri açardı: kısıt `_pollTimer`ı null yapıyor,
+    // burası da null gördüğü an yeniden başlatıyor.
+    if (_pollTimer == null && !_pollThrottled) {
       _startPolling();
     }
   }
@@ -157,11 +186,13 @@ class _RoomScreenState extends State<RoomScreen> {
       }
       _pollCount++;
       if (_pollCount >= _maxPollsBeforePause) {
+        _pollThrottled = true;
         _pausePolling();
         Future.delayed(const Duration(seconds: 15), () {
-          if (mounted && !quizOpened && room.players.length >= 2) {
-            _startPolling();
-          }
+          if (!mounted) return;
+          _pollThrottled = false;
+          _pollCount = 0;
+          if (!quizOpened) _startPolling();
         });
       }
     } catch (error, stack) {

@@ -78,6 +78,27 @@ void main() {
     );
   });
 
+  test('oda ekranı açılışta durumu sunucuya geri yazmıyor', () {
+    // `initState` bir zamanlar `updateReady(room, ready)` çağırıyordu ve
+    // `ready` sabit `true` olduğu sürece zararsızdı. `ready` sunucudan
+    // beslenmeye başlayınca aynı satır kendi kuyruğunu ısırdı: ekran
+    // açıldığında `room.players` hâlâ katılış anındaki listedir, orada
+    // katılan `is_ready = false`, yani çağrı `joinOnlineRoom`un yazdığı
+    // `true`yu hemen siliyordu.
+    final screen = File('lib/src/screens/room_screen.dart').readAsStringSync();
+    final initState = screen.substring(
+      screen.indexOf('void initState()'),
+      screen.indexOf('void _startSubscriptions()'),
+    );
+    expect(
+      initState.replaceAll(RegExp(r'//[^\n]*'), ''),
+      isNot(contains('updateReady(')),
+      reason:
+          'Açılışta yazma, giriş yolunun yazdığı durumu eziyor; ev sahibi '
+          'katılanı hep "Li bendê" görür.',
+    );
+  });
+
   test('katılan oyuncu varsayılan durumunu sunucuya bildiriyor', () {
     final repository = File(
       'lib/src/data/supabase_zankurd_repository.dart',
