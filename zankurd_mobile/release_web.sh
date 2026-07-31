@@ -15,7 +15,22 @@ fi
 cd "$SCRIPT_DIR"
 dart analyze
 flutter test
-flutter build web --release --dart-define-from-file="$DEFINE_FILE"
+# `--no-web-resources-cdn` olmadan Flutter, 7,2 MB'lık canvaskit.wasm'ı
+# gstatic.com'dan çeker: gstatic'in engellendiği ağlarda site boş ekran
+# verir ve ziyaretçinin IP'si Google'a gider. Bayrak 0c8ea27'de README'ye,
+# kontrol listesine ve CI'ya yazıldı ama kontrol listesinin 1. maddesinin
+# çalıştırmanı söylediği bu betiğe yazılmadı; kusur bir sonraki yayında
+# geri gelecekti (2026-07-31 denetimi).
+flutter build web --release --no-web-resources-cdn \
+  --dart-define-from-file="$DEFINE_FILE"
+
+# Bayrak sessizce düşerse dağıtım durmalı: derlenen bootstrap gerçekten
+# yerel CanvasKit'i mi işaret ediyor, onu doğrula.
+grep -Eq 'useLocalCanvasKit:!0|"useLocalCanvasKit":true|useLocalCanvasKit:true' \
+  "$BUILD_DIR/flutter_bootstrap.js" || {
+  echo "HATA: CanvasKit hâlâ CDN'den yükleniyor; --no-web-resources-cdn etkisiz." >&2
+  exit 1
+}
 
 for legal in privacy.html terms.html delete-account.html; do
   cmp -s "$SCRIPT_DIR/web/$legal" "$BUILD_DIR/$legal" || {

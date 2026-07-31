@@ -56,7 +56,22 @@
 
   # Flutter bu dosyaları içerik hash'i olmayan sabit adlarla üretir. Her
   # istekte yeniden doğrulanmazlarsa yeni yayın eski main.dart.js ile açılır.
+  #
+  # `no-store` DEĞİL, `no-cache`: ikisi birlikte yazıldığında `no-store`
+  # kazanır ve tarayıcı dosyayı diske hiç koymaz — o zaman her açılışta,
+  # her yenilemede, her derin bağlantıda 12,9 MB'lık main.dart.js sıfırdan
+  # iner. `no-cache` ise "sakla ama kullanmadan önce doğrula" demektir:
+  # bayat bundle riski aynı biçimde kapalı kalır, ama dosya değişmediğinde
+  # sunucu 304 döner ve gövde hiç inmez (2026-07-31 denetimi).
   <FilesMatch "^(index\.html|flutter_bootstrap\.js|main\.dart\.js|flutter_service_worker\.js|manifest\.json|version\.json|privacy\.html|terms\.html|delete-account\.html)$">
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
+</IfModule>
+
+# --- Sıkıştırma ---
+# main.dart.js sıkıştırılmadan ~12,9 MB; gzip ile dörtte birine iner.
+# Hostinger bunu her zaman kendiliğinden açmıyor, bu yüzden açıkça isteniyor.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/javascript \
+    application/javascript application/json application/wasm image/svg+xml
 </IfModule>

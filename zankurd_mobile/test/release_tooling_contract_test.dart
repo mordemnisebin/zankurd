@@ -20,6 +20,11 @@ void main() {
     expect(privacy, contains('delete-account.html'));
   });
 
+  // Bekçinin kapsamı bir zamanlar yalnız beş yerel betikti. Depo kökündeki
+  // GitHub iş akışları listede olmadığı için `deploy-web-hostinger.yml`
+  // yıllarca düz FTP ile parola gönderdiği hâlde bu testten geçiyordu
+  // (2026-07-31 denetimi). Bir bekçinin kapsamı kusurun yaşadığı yeri
+  // içermiyorsa o bekçi değildir; iş akışları artık taranıyor.
   test('deployment tooling never uses plaintext FTP or password arguments', () {
     expect(File('tools/.env').existsSync(), isFalse);
     final paths = [
@@ -28,6 +33,11 @@ void main() {
       'tools/repair_hostinger_ftp.py',
       'deploy_sftp.sh',
       '.env.deploy.example',
+      ...Directory('../.github/workflows')
+          .listSync()
+          .whereType<File>()
+          .where((file) => file.path.endsWith('.yml'))
+          .map((file) => file.path),
     ];
     final forbidden = [
       'ftp://',
@@ -88,6 +98,19 @@ void main() {
     expect(build, greaterThan(tests));
     expect(deploy, greaterThan(build));
     expect(source, contains('--dart-define-from-file'));
+    // 0c8ea27 bu bayrağı README'ye, kontrol listesine ve CI'ya yazdı ama
+    // kontrol listesinin 1. maddesinin çalıştırmanı söylediği bu betiğe
+    // yazmadı; düzeltilen kusur bir sonraki yayında geri gelecekti.
+    expect(
+      source,
+      contains('--no-web-resources-cdn'),
+      reason: 'Bayrak olmadan CanvasKit 7,2 MB olarak gstatic.com dan iner.',
+    );
+    expect(
+      source,
+      contains('useLocalCanvasKit'),
+      reason: 'Bayrak sessizce düşerse dağıtım durmalı.',
+    );
     expect(source, contains('privacy.html'));
     expect(source, contains('terms.html'));
     expect(source, contains('delete-account.html'));
@@ -145,6 +168,31 @@ void main() {
     expect(headers, contains('flutter_bootstrap\\.js'));
     expect(headers, contains('main\\.dart\\.js'));
     expect(headers, contains('no-cache'));
+    // `no-store` + `no-cache` birlikte yazıldığında `no-store` kazanır ve
+    // tarayıcı main.dart.js'i diske hiç koymaz: her açılışta 12,9 MB
+    // sıfırdan iner. Amaç (bayat bundle ile açılmama) `no-cache` ile zaten
+    // sağlanıyor (2026-07-31 denetimi).
+    //
+    // Ham metin yerine YÖNERGE taranıyor: dosyanın kendi açıklama yorumu
+    // niçin `no-store` kullanılmadığını anlatmak için o kelimeyi içeriyor
+    // ve düz `contains` denetimi buna takılıyordu.
+    final cacheDirectives = RegExp(
+      r'^\s*Header\s+set\s+Cache-Control\s+"([^"]*)"',
+      multiLine: true,
+    ).allMatches(headers).map((match) => match.group(1)!).toList();
+    expect(cacheDirectives, isNotEmpty);
+    for (final directive in cacheDirectives) {
+      expect(
+        directive,
+        isNot(contains('no-store')),
+        reason: 'no-store her sayfa açılışında tüm bundle ı yeniden indirtir.',
+      );
+    }
+    expect(
+      headers,
+      contains('AddOutputFilterByType DEFLATE'),
+      reason: 'Sıkıştırma açık değilse main.dart.js dört katı boyutta iner.',
+    );
     expect(
       headers,
       contains(r'<FilesMatch "\.(png|jpg|jpeg|webp|woff|woff2|ttf|svg)$">'),
@@ -210,6 +258,45 @@ void main() {
         );
       }
     }
+  });
+
+  // GitHub Actions yalnızca deponun kökündeki `.github/workflows` dizinini
+  // okur. İş akışı 2026-07-31'e kadar `zankurd_mobile/.github/workflows/`
+  // altındaydı, yani analyze, testler ve APK derlemesi hiçbir push'ta
+  // koşmuyordu — README ise "CI sonucunu doğrulayın" diyordu. Kusur
+  // sessizdi çünkü yeşil bir CI yoktu; hiç CI yoktu.
+  test('CI iş akışı deponun kökünde ve alt dizine iniyor', () {
+    final root = File('../.github/workflows/flutter_ci.yml');
+    expect(
+      root.existsSync(),
+      isTrue,
+      reason: 'flutter_ci.yml depo kökünde değilse GitHub Actions onu görmez.',
+    );
+    expect(
+      Directory('.github/workflows').existsSync(),
+      isFalse,
+      reason: 'Alt dizindeki iş akışı hiçbir zaman tetiklenmez; kök tek yerdir.',
+    );
+
+    final source = root.readAsStringSync();
+    expect(
+      source,
+      contains('working-directory: zankurd_mobile'),
+      reason: 'Kökte pubspec yok; adımlar uygulama dizinine inmeli.',
+    );
+    for (final step in [
+      'dart analyze',
+      'flutter test --coverage',
+      'question_quality_audit.dart gate',
+    ]) {
+      expect(source, contains(step), reason: 'CI $step adımını kaybetmiş.');
+    }
+    // upload-artifact yolları working-directory'den etkilenmez.
+    expect(source, contains('path: zankurd_mobile/coverage/lcov.info'));
+    expect(
+      source,
+      contains('path: zankurd_mobile/build/app/outputs/flutter-apk'),
+    );
   });
 
   test('mobile release commands always load explicit public configuration', () {

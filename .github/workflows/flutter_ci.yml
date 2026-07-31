@@ -1,10 +1,23 @@
+# Bu dosya DEPO KÖKÜNDE durmalıdır.
+#
+# 2026-07-31 denetimine kadar `zankurd_mobile/.github/workflows/` altındaydı.
+# GitHub Actions yalnızca deponun kökündeki `.github/workflows` dizinini okur,
+# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, 1103 test
+# ve APK derlemesi hiçbir push'ta koşmuyordu — README ise yayın adımı olarak
+# "CI sonucunu doğrulayın" diyordu. Doğrulanacak bir CI yoktu.
+#
+# Uygulama bir alt dizinde olduğu için her adım `defaults.run.working-directory`
+# ile oraya iner. Dikkat: `upload-artifact` yolları bu ayardan ETKİLENMEZ,
+# onlar her zaman depo köküne göredir; bu yüzden aşağıda tam yol yazılıdır.
 name: ZanKurd Flutter CI
 
 on:
   push:
-    branches: [ master, main ]
   pull_request:
-    branches: [ master, main ]
+
+defaults:
+  run:
+    working-directory: zankurd_mobile
 
 jobs:
   analyze-and-test:
@@ -21,7 +34,7 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.44.1'
+        flutter-version: '3.44.7'
         channel: 'stable'
 
     - name: Install app dependencies
@@ -55,7 +68,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
-        path: coverage/lcov.info
+        path: zankurd_mobile/coverage/lcov.info
         retention-days: 30
 
   build-android:
@@ -74,7 +87,7 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.44.1'
+        flutter-version: '3.44.7'
         channel: 'stable'
 
     - name: Install dependencies
@@ -87,5 +100,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: android-debug-apk
-        path: build/app/outputs/flutter-apk/app-debug.apk
+        path: zankurd_mobile/build/app/outputs/flutter-apk/app-debug.apk
         retention-days: 14
