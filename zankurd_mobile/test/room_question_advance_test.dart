@@ -99,12 +99,24 @@ void main() {
       contains("and r.status = 'active'"),
       reason: 'Bitmiş ya da lobideki oda ilerletilememeli.',
     );
+    // Tavan tam olarak `v_count` olmalı.
+    //
+    // `v_count - 1` yazıldığında (ilk sürümde öyleydi) ev sahibi son
+    // soruda kilitleniyor: istemci maçın bittiğini indeksin soru sayısına
+    // ULAŞMASINDAN anlıyor, yani son sorudan sonra bir artış daha şart.
+    // Sınırın kendisi de şart: sınırsız artış, hiçbir cevabın kabul
+    // edilmediği bir odayı süresiz "etkin" bırakırdı.
     expect(
       migration,
-      contains('least('),
+      contains('least(coalesce(r.current_question_index, 0) + 1, v_count)'),
       reason:
-          'İndeks soru sayısını aşarsa `finish_room_game` odayı bir daha '
-          'bitiremez.',
+          'Tavan `v_count` değilse ev sahibi maçı bitiremez ya da indeks '
+          'sınırsız büyür.',
+    );
+    expect(
+      migration,
+      isNot(contains('v_count - 1)')),
+      reason: 'Bir eksik tavan ev sahibini son soruda kilitliyordu.',
     );
     expect(
       migration,

@@ -1274,6 +1274,16 @@ class _QuizScreenState extends State<QuizScreen>
     // çevrimiçi odalarda verilir ve yerel tur kuyruğa da alınmaz.
     if (widget.room.id == null) return 0;
     var amount = 0;
+    // "Sunucu 0 verdi" ile "sunucuya ulaşılamadı" aynı şey değil.
+    //
+    // Eskiden yalnız `amount <= 0`a bakılıyordu. Sunucu düşük skora
+    // meşru olarak 0 coin verdiğinde — 10 soruda 2 doğru gibi — sonuç
+    // ekranı "Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek."
+    // diyordu. Bağlantı vardı; tur zaten sunucuda işlenmişti. Üstelik
+    // aynı tur kuyruğa da giriyordu, yani senkron çalışınca ödül ikinci
+    // kez istenebiliyordu. 2026-08-01'de iki cihazlı canlı maçın sonuç
+    // ekranında görüldü.
+    var awardFailed = false;
     try {
       amount = await widget.repository.awardQuizCoins(
         score: score,
@@ -1283,9 +1293,10 @@ class _QuizScreenState extends State<QuizScreen>
         room: widget.room,
       );
     } catch (error, stack) {
+      awardFailed = true;
       ErrorReporter.record(error, stack, reason: 'awardQuizCoins failed');
     }
-    if (amount <= 0) {
+    if (awardFailed) {
       // Kuyruk yoksa (oturum kapatılıp yeniden girilmişse SyncManager
       // kurulu değildir) tur yine de bitmelidir. Eskiden burada
       // `SyncManager.instance` çağrılıyordu ve fırlatan istisna

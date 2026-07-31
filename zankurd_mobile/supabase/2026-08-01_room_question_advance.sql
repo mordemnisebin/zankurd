@@ -79,12 +79,23 @@ begin
     raise exception 'Room has no questions';
   end if;
 
-  -- Son soruyu aşmaz: `finish_room_game`, indeksin en az `count - 1`
-  -- olmasını şart koşuyor; üstüne çıkmak bir şey kazandırmaz ama
-  -- kayıtları tutarsız yapardı.
+  -- Tavan `v_count`tur, `v_count - 1` DEĞİL.
+  --
+  -- İlk yazımda `v_count - 1`de durduruluyordu ve bu, ev sahibini son
+  -- soruda kilitliyordu: istemci maçın bittiğini "indeks soru sayısına
+  -- ulaştı" diye anlıyor (`_syncToQuestionIndex`), yani son sorudan sonra
+  -- indeksin bir kez daha artması gerekiyor. Sınır bir eksik olunca ev
+  -- sahibinde "Biqedîne" hiç etkinleşmiyordu — katılan sonuç ekranını
+  -- görüyor, ev sahibi son soruda donup kalıyordu (2026-08-01, aynı canlı
+  -- denemede, ilk düzeltmeden hemen sonra görüldü).
+  --
+  -- Sınır yine de gerekli: sınırsız artış, `enforce_current_room_question`
+  -- hiçbir cevabı kabul etmediği hâlde odayı süresiz "etkin" tutardı.
+  -- `v_count`ta durmak ikisini birden sağlıyor — `finish_room_game`
+  -- indeksin `>= v_count - 1` olmasını istiyor, `v_count` bunu karşılıyor.
   update public.rooms r
      set current_question_index =
-           least(coalesce(r.current_question_index, 0) + 1, v_count - 1)
+           least(coalesce(r.current_question_index, 0) + 1, v_count)
    where r.id = p_room_id
      and r.host_id = v_uid
      and r.status = 'active'
