@@ -636,6 +636,27 @@ class Tr {
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.acceptAction: {'ku': 'Qebûl', 'tr': 'Kabul'},
 
+    // ── Çevrimiçi tur durum satırı ───────────────────────────────────
+    K.answeredState: {'ku': 'Bersiv da', 'tr': 'Cevapladı'},
+    K.waitingAnswerState: {
+      'ku': 'Li benda bersivê ye',
+      'tr': 'Cevap bekliyor',
+    },
+
+    // ── Soru tipi rozetleri ──────────────────────────────────────────
+    K.qTypeMultipleChoice: {'ku': 'Hilbijartin', 'tr': 'Şıklı'},
+    K.qTypeTrueFalse: {'ku': 'Rast/Xelet', 'tr': 'Doğru/Yanlış'},
+    K.qTypeVisual: {'ku': 'Wêneyî', 'tr': 'Görselli'},
+    K.qTypeWordOrdering: {'ku': 'Rêzkirin', 'tr': 'Cümle Kurma'},
+    K.qTypeFillInBlank: {'ku': 'Tijîkirin', 'tr': 'Boşluk Doldurma'},
+
+    // ── Tekrar / flaş kart ───────────────────────────────────────────
+    // Kurmancî etiketler bir zamanlar Türkçe parantez taşıyordu:
+    // 'Bersiv (Arka Yüz)'. 'Rû' (yüz) ve 'Pişt' (arka) Kurmancî
+    // karşılıklarıdır; ü ve ö harfleri Kurmancî alfabesinde yoktur.
+    K.flashcardBack: {'ku': 'Bersiv (Pişt)', 'tr': 'Cevap (Arka Yüz)'},
+    K.flashcardFront: {'ku': 'Pirs (Rû)', 'tr': 'Soru (Ön Yüz)'},
+
     // ── Quiz ekranı ──────────────────────────────────────────────────
     K.answerSendFailed: {
       'ku': 'Bersiv nehat şandin. Ji kerema xwe dîsa biceribîne.',
@@ -1278,6 +1299,79 @@ class Tr {
       'ku': 'Kirîn nehatin vegerandin. Ji kerema xwe dîsa biceribîne.',
       'tr': 'Satın alımlar geri yüklenemedi. Lütfen tekrar dene.',
     },
+
+    // Aşağıdaki 16 metin 2026-07-31'e kadar paywall_screen.dart içinde
+    // satır içi duruyordu — gelir üreten ve mağaza incelemesinde en çok
+    // bakılan ekran, `Tr.missingFor` bütünlük testinin tamamen dışındaydı.
+    K.paywallHeroTitle: {'ku': 'ZanKurd Premium', 'tr': 'ZanKurd Premium'},
+    K.paywallHeroSub: {
+      'ku': 'Parastina xweber a zincîrê û piştgiriya ZanKurdê.',
+      'tr': "Otomatik seri koruması ve ZanKurd'a destek.",
+    },
+    K.paywallPerkStreak: {
+      'ku': 'Parastina zincîrê',
+      'tr': 'Otomatik seri koruması',
+    },
+    K.paywallPerkStreakBody: {
+      'ku': 'Zincîra te ya rojane bixweber, bê coin tê parastin.',
+      // Virgülsüz hâlde "serin" sıfat gibi okunuyordu ("günlük serin
+      // coin"); virgül özneyi ayırır (2026-07-27).
+      'tr': 'Günlük serin, coin harcamadan otomatik korunur.',
+    },
+    K.paywallPerkSupport: {
+      'ku': 'Piştgiriya ZanKurdê',
+      'tr': "ZanKurd'a destek",
+    },
+    K.paywallPerkSupportBody: {
+      'ku': 'Tu pêşketina sepana kurdî û naveroka nû piştgir dikî.',
+      'tr': 'Kürtçe uygulamanın gelişimini ve yeni içeriği desteklersin.',
+    },
+    K.periodMonthly: {'ku': 'Mehane', 'tr': 'Aylık'},
+    K.periodAnnual: {'ku': 'Salane', 'tr': 'Yıllık'},
+    K.periodWeekly: {'ku': 'Heftane', 'tr': 'Haftalık'},
+    K.cancelAnytime: {
+      'ku': 'Her gav dikarî betal bikî',
+      'tr': 'İstediğin zaman iptal',
+    },
+    // Apple 3.1.2: fiyatın yanında dönem son eki zorunludur.
+    K.perMonthSuffix: {'ku': '/meh', 'tr': '/ay'},
+    K.perYearSuffix: {'ku': '/sal', 'tr': '/yıl'},
+    K.perWeekSuffix: {'ku': '/hefte', 'tr': '/hafta'},
+    K.popularBadge: {'ku': 'NAVDAR', 'tr': 'POPÜLER'},
+    K.priceComing: {'ku': 'Biha tê', 'tr': 'Fiyat geliyor'},
+    // Satın alma düğmesi için ayrı bir anahtar açılmadı: mağazadaki
+    // `K.buyAction` aynı kavramdır. Paywall satır içiyken 'Satın al',
+    // mağaza 'Satın Al' diyordu — aynı düğme, iki yazım.
+    K.restorePurchases: {
+      'ku': 'Kirînên xwe vegerîne',
+      'tr': 'Satın alımları geri yükle',
+    },
+    K.paywallPackagesInactive: {
+      'ku': 'Pakêtên Premium hîn nehatine çalak kirin',
+      'tr': 'Premium paketler henüz aktif değil',
+    },
+    K.paywallPackagesInactiveBody: {
+      'ku':
+          'Pakêtên Premium dê di demeke kurt de çalak bibin. '
+          'Ji kerema xwe paşê vegere.',
+      'tr':
+          'Premium paketler kısa süre içinde aktif olacak. '
+          'Lütfen daha sonra tekrar bakın.',
+    },
+    // Apple App Store Review 3.1.2 ve Google Play abonelik politikası,
+    // otomatik yenileme koşullarının satın alma ekranının KENDİSİNDE
+    // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
+    K.paywallRenewalTerms: {
+      'ku':
+          'Abonetiya te bixweber nû dibe. Heta 24 saetan berî dawiya heyamê '
+          'neyê betalkirin, ji hesabê te yê App Store/Google Play dîsa tê '
+          'kişandin. Tu dikarî her gav ji mîhengên hesabê xwe betal bikî.',
+      'tr':
+          'Abonelik otomatik yenilenir. Dönem bitiminden en az 24 saat önce '
+          'iptal edilmezse App Store/Google Play hesabından yenileme ücreti '
+          'tahsil edilir. İstediğin zaman mağaza hesap ayarlarından iptal '
+          'edebilirsin.',
+    },
     K.levelUpTitle: {'ku': 'Asta te bilind bû!', 'tr': 'Seviyen yükseldi!'},
 
     // ── Profil kartı ──────────────────────────────────────────────
@@ -1581,10 +1675,16 @@ class Tr {
 
   /// [language] için karşılığı eksik olan anahtarlar — kapsam testleri
   /// bunun boş kalmasını garanti eder.
+  ///
+  /// "Eksik" yalnız *anahtarın yokluğu* değildir: boş ya da yalnız boşluk
+  /// içeren bir karşılık da eksiktir. Önceki hâli sadece `containsKey`e
+  /// bakıyordu, dolayısıyla `{'ku': '', 'tr': 'Ayarlar'}` gibi bir giriş
+  /// testten sessizce geçer ve Kurmancî kullanıcıya boş etiket gösterirdi
+  /// (2026-07-31 denetimi).
   static List<String> missingFor(AppLanguage language) {
     return [
       for (final entry in _table.entries)
-        if (!entry.value.containsKey(language.code)) entry.key,
+        if ((entry.value[language.code] ?? '').trim().isEmpty) entry.key,
     ];
   }
 }
@@ -1854,6 +1954,25 @@ class K {
   static const wantsToBeFriend = 'friends.wantsToBeFriend';
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';
+
+  // ── Çevrimiçi tur durum satırı ─────────────────────────────────────
+  static const answeredState = 'match.answered';
+  static const waitingAnswerState = 'match.waitingAnswer';
+
+  // ── Soru tipi rozetleri ────────────────────────────────────────────
+  // Soru kartının üstünde görünür. Kurmancî karşılıkları bir zamanlar
+  // `quiz_question.dart` içinde satır içi duruyordu ve 'Hilbijartin'
+  // oradan bir `t` eksik yazılmıştı; defterde durunca alfabe bekçisinin
+  // kapsamına girer (2026-07-31 denetimi).
+  static const qTypeMultipleChoice = 'quiz.type.multipleChoice';
+  static const qTypeTrueFalse = 'quiz.type.trueFalse';
+  static const qTypeVisual = 'quiz.type.visual';
+  static const qTypeWordOrdering = 'quiz.type.wordOrdering';
+  static const qTypeFillInBlank = 'quiz.type.fillInBlank';
+
+  // ── Tekrar / flaş kart ─────────────────────────────────────────────
+  static const flashcardBack = 'review.flashcard.back';
+  static const flashcardFront = 'review.flashcard.front';
 
   // ── Quiz ekranı ────────────────────────────────────────────────────
   static const answerSendFailed = 'quiz.answerSendFailed';
@@ -2146,6 +2265,25 @@ class K {
   static const paywallPaymentPending = 'paywall.purchase.pending';
   static const paywallPurchaseFailed = 'paywall.purchase.failed';
   static const paywallRestoreNothing = 'paywall.restore.nothing';
+  static const paywallHeroTitle = 'paywall.hero.title';
+  static const paywallHeroSub = 'paywall.hero.sub';
+  static const paywallPerkStreak = 'paywall.perk.streak';
+  static const paywallPerkStreakBody = 'paywall.perk.streak.body';
+  static const paywallPerkSupport = 'paywall.perk.support';
+  static const paywallPerkSupportBody = 'paywall.perk.support.body';
+  static const periodMonthly = 'paywall.period.monthly';
+  static const periodAnnual = 'paywall.period.annual';
+  static const periodWeekly = 'paywall.period.weekly';
+  static const cancelAnytime = 'paywall.cancelAnytime';
+  static const perMonthSuffix = 'paywall.suffix.month';
+  static const perYearSuffix = 'paywall.suffix.year';
+  static const perWeekSuffix = 'paywall.suffix.week';
+  static const popularBadge = 'paywall.popular';
+  static const priceComing = 'paywall.priceComing';
+  static const restorePurchases = 'paywall.restore';
+  static const paywallPackagesInactive = 'paywall.packages.inactive';
+  static const paywallPackagesInactiveBody = 'paywall.packages.inactive.body';
+  static const paywallRenewalTerms = 'paywall.renewalTerms';
   static const paywallRestoreFailed = 'paywall.restore.failed';
   static const levelUpTitle = 'result.levelUp.title';
 

@@ -31,7 +31,11 @@ void main() {
       expect(question.hasImage, false);
     });
 
-    test('typeLabel returns correct label for multipleChoice', () {
+    // Bu iki test bir zamanlar `typeLabel`i ölçüyordu — yalnız Türkçe
+    // döndüren, üretimde hiç çağrılmayan bir ikizdi ve testler onu canlı
+    // tutuyordu. Ölçülmesi gereken, ekranda gerçekten görünen
+    // `typeLabelLocalized`dir (2026-07-31 denetimi).
+    test('tip rozeti çoktan seçmeli için iki dilde doğru', () {
       const question = QuizQuestion(
         id: 'q_001',
         category: 'Ziman',
@@ -41,10 +45,11 @@ void main() {
         explanation: 'This is correct',
       );
 
-      expect(question.typeLabel, 'Şıklı');
+      expect(question.typeLabelLocalized(false), 'Şıklı');
+      expect(question.typeLabelLocalized(true), 'Hilbijartin');
     });
 
-    test('typeLabel returns correct label for trueFalse', () {
+    test('tip rozeti doğru/yanlış için iki dilde doğru', () {
       const question = QuizQuestion(
         id: 'q_001',
         category: 'Ziman',
@@ -55,7 +60,8 @@ void main() {
         type: QuestionType.trueFalse,
       );
 
-      expect(question.typeLabel, 'Doğru/Yanlış');
+      expect(question.typeLabelLocalized(false), 'Doğru/Yanlış');
+      expect(question.typeLabelLocalized(true), 'Rast/Xelet');
     });
 
     test('displayAnswers moves stored first answer for multiple choice', () {

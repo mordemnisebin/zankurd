@@ -411,6 +411,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
       decoration: const BoxDecoration(
+        // Düz renk BİLEREK duruyor. `AppTheme.homeHeaderGradient` bu şerit
+        // için yazılmış ama kullanılmıyor ve 2026-07-31 denetimi bunu
+        // "ölü token" diye bildirdi. Gradyana çevirmek denendi ve
+        // `kulturel_modern_home_test.dart`i kırdı: o testin kuralı
+        // "gradyan 'buraya bas' demektir, ekran başına bir tane" ve ana
+        // ekranın gradyanı zaten "Başla" düğmesinin.
+        //
+        // Yani token ölü değil, kural onu dışarıda bırakıyor. Şeride
+        // derinlik istenirse yol gradyan değil: filigran/doku katmanı.
         color: AppTheme.culturalBrandBg,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(24),
@@ -564,8 +573,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 const SizedBox(height: 8),
                 Text(
                   _streak > 0
+                      // "sen" Türkçedir; Kurmancîde ikinci tekil şahıs
+                      // "tu"dur. Cümlenin geri kalanı doğru Kurmancî
+                      // olduğu için kusur göze "biraz tuhaf" gelip
+                      // geçiyordu (2026-07-31 denetimi).
                       ? (isKu
-                          ? '$_streak roj in ku sen bi rêkûpêk dilîzî!'
+                          ? '$_streak roj in ku tu bi rêkûpêk dilîzî!'
                           : '$_streak gündür aralıksız oynuyorsun!')
                       : (isKu
                           ? 'Hêj zincîra te dest pê nekiriye. Îro bilîze!'

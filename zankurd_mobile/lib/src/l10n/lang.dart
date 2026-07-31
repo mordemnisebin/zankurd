@@ -211,28 +211,15 @@ class LevelNames {
       isKu ? kuName : tr(kuName);
 }
 
-/// Centralized strings for the Quiz Screen to avoid hardcoded UI text in logic.
-class QuizStrings {
-  static String answered(bool isKu) => isKu ? 'Bersiv da' : 'Cevapladı';
-  static String waiting(bool isKu) =>
-      isKu ? 'Li benda bersivê ye' : 'Cevap bekliyor';
-  static String you(bool isKu) => isKu ? 'Tu' : 'Sen';
-  static String opponent(bool isKu) => isKu ? 'Hevrik' : 'Rakip';
-  static String playAgain(bool isKu) => isKu ? 'Dîsa bilîze' : 'Tekrar oyna';
-}
-
-/// Centralized common UI strings (dialog buttons, state messages, general actions).
-class CommonStrings {
-  const CommonStrings._();
-
-  static String ok(bool isKu) => isKu ? 'Temam' : 'Tamam';
-  static String cancel(bool isKu) => isKu ? 'Betal bike' : 'İptal';
-  static String retry(bool isKu) => isKu ? 'Dîsa biceribîne' : 'Tekrar Dene';
-  static String error(bool isKu) => isKu ? 'Çewtî' : 'Hata';
-  static String loading(bool isKu) => isKu ? 'Tê barkirin...' : 'Yükleniyor...';
-  static String share(bool isKu) => isKu ? 'Parve bike' : 'Paylaş';
-  static String close(bool isKu) => isKu ? 'Bigire' : 'Kapat';
-  static String save(bool isKu) => isKu ? 'Biparêze' : 'Kaydet';
-  static String back(bool isKu) => isKu ? 'Paşve' : 'Geri';
-  static String continueText(bool isKu) => isKu ? 'Berdewam bike' : 'Devam Et';
-}
+// `QuizStrings` ve `CommonStrings` burada duruyordu: `Tr`/`K` kayıt
+// defterine paralel, ikinci bir metin sözlüğü. Defterde zaten var olan
+// anahtarları yeniden tanımlıyorlardı ve bazılarını FARKLI karşılıklarla:
+// Ayarlar'daki Kaydet düğmesi Kurmancî "Biparêze" derken Avatar, Profil
+// ve Quiz ekranlarındaki aynı düğme "Tomar bike" diyordu. Aynı işlev,
+// aynı uygulama, iki ayrı kelime — projenin 2026-07-30'da bilerek
+// düzelttiği kusurun ("oyuncu aynı şeyi iki adla görmemeli") tekrarı.
+//
+// Üstelik bu sözlük `Tr.missingFor` bütünlük testinin ve Kurmancî alfabe
+// bekçisinin dışındaydı. 2026-07-31 denetiminde kaldırıldı; 13 çağrı yeri
+// `Tr.forKu(K.…)`ye çevrildi. Bir kavramın tek Kurmancî karşılığı olur ve
+// o karşılık defterde durur.

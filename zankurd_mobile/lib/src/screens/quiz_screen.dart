@@ -422,8 +422,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     score: (payload['score'] as num?)?.toInt() ?? 0,
                     streak: (payload['streak'] as num?)?.toInt() ?? 0,
                     state: payload['answered'] == true
-                        ? QuizStrings.answered(_isKu)
-                        : QuizStrings.waiting(_isKu),
+                        ? Tr.forKu(K.answeredState, _isKu)
+                        : Tr.forKu(K.waitingAnswerState, _isKu),
                   );
                   if (opponentIdx != -1) {
                     livePlayers[opponentIdx] = updatedOpponent;
@@ -465,15 +465,15 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                         score: p.score,
                         streak: p.streak,
                         state: _answeredPlayerNames.contains(p.name)
-                            ? QuizStrings.answered(_isKu)
-                            : QuizStrings.waiting(_isKu),
+                            ? Tr.forKu(K.answeredState, _isKu)
+                            : Tr.forKu(K.waitingAnswerState, _isKu),
                       );
                     } else {
                       livePlayers.add(
                         p.copyWith(
                           state: _answeredPlayerNames.contains(p.name)
-                              ? QuizStrings.answered(_isKu)
-                              : QuizStrings.waiting(_isKu),
+                              ? Tr.forKu(K.answeredState, _isKu)
+                              : Tr.forKu(K.waitingAnswerState, _isKu),
                         ),
                       );
                     }
@@ -657,7 +657,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   List<Player> _composeBotRacePlayers() {
     final players = [
       Player(
-        name: QuizStrings.you(_isKu),
+        name: Tr.forKu(K.you, _isKu),
         score: score,
         state: '—',
         streak: streak,
@@ -965,8 +965,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         score: score,
         streak: streak,
         state: answeredNow
-            ? QuizStrings.answered(_isKu)
-            : QuizStrings.waiting(_isKu),
+            ? Tr.forKu(K.answeredState, _isKu)
+            : Tr.forKu(K.waitingAnswerState, _isKu),
       );
     }
     widget.repository

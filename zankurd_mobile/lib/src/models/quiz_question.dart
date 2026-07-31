@@ -1,5 +1,6 @@
 import '../l10n/explanation_ku.dart';
 import '../l10n/explanation_overrides.dart';
+import '../l10n/strings.dart';
 import 'question_metadata.dart';
 
 enum QuestionType {
@@ -257,24 +258,23 @@ class QuizQuestion {
     };
   }
 
-  String get typeLabel {
-    return switch (type) {
-      QuestionType.multipleChoice => 'Şıklı',
-      QuestionType.trueFalse => 'Doğru/Yanlış',
-      QuestionType.visual => 'Görselli',
-      QuestionType.wordOrdering => 'Cümle Kurma',
-      QuestionType.fillInBlank => 'Boşluk Doldurma',
-    };
-  }
-
+  /// Soru kartındaki tip rozeti.
+  ///
+  /// Metinler anahtar defterinde durur. Bir zamanlar burada satır içiydi
+  /// ve iki kusur taşıyordu: çoktan seçmelinin Kurmancîsi 'Hilbijarin'
+  /// yazılmıştı (doğrusu 'Hilbijartin' — hilbijartin fiil kökünden), ve
+  /// yalnız Türkçe döndüren ölü bir ikiz (`typeLabel`) üretimde hiç
+  /// çağrılmadığı hâlde testle canlı tutuluyordu. Defterdeki metinler
+  /// Kurmancî alfabe bekçisinin ve `Tr.missingFor` bütünlük testinin
+  /// kapsamına girer; satır içi olanlar girmiyordu (2026-07-31 denetimi).
   String typeLabelLocalized(bool isKu) {
-    return switch (type) {
-      QuestionType.multipleChoice => isKu ? 'Hilbijarin' : 'Şıklı',
-      QuestionType.trueFalse => isKu ? 'Rast/Xelet' : 'Doğru/Yanlış',
-      QuestionType.visual => isKu ? 'Wêneyî' : 'Görselli',
-      QuestionType.wordOrdering => isKu ? 'Rêzkirin' : 'Cümle Kurma',
-      QuestionType.fillInBlank => isKu ? 'Tijîkirin' : 'Boşluk Doldurma',
-    };
+    return Tr.forKu(switch (type) {
+      QuestionType.multipleChoice => K.qTypeMultipleChoice,
+      QuestionType.trueFalse => K.qTypeTrueFalse,
+      QuestionType.visual => K.qTypeVisual,
+      QuestionType.wordOrdering => K.qTypeWordOrdering,
+      QuestionType.fillInBlank => K.qTypeFillInBlank,
+    }, isKu);
   }
 
   String getLocalizedExplanation(bool isKu) {

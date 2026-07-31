@@ -195,7 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 ),
                               )
                             : const Icon(AppIcons.floppyDisk),
-                        label: Text(CommonStrings.save(ku)),
+                        label: Text(Tr.forKu(K.save, ku)),
                       ),
                     ),
                   ],

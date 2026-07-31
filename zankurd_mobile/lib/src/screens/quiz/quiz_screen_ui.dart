@@ -231,7 +231,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
   Widget _buildScoreHeader() {
     if (widget.is1v1) {
-      final myName = widget.room.id != null ? _myName : QuizStrings.you(_isKu);
+      final myName = widget.room.id != null ? _myName : Tr.forKu(K.you, _isKu);
       final player = livePlayers.firstWhere(
         (p) => _myId != null ? p.id == _myId : p.name == myName,
         orElse: () => Player(
@@ -245,7 +245,7 @@ extension _QuizScreenUI on _QuizScreenState {
       final opponent = livePlayers.firstWhere(
         (p) => _myId != null ? p.id != _myId : p.name != myName,
         orElse: () =>
-            Player(name: QuizStrings.opponent(_isKu), score: 0, state: ''),
+            Player(name: Tr.forKu(K.opponentWord, _isKu), score: 0, state: ''),
       );
       return _DuelScoreHeader(
         player: player,
@@ -800,7 +800,7 @@ extension _QuizScreenUI on _QuizScreenState {
     setState(() {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(changeQuestionUsed: true);
-      _questions[index] = replacement;
+_questions[index] = replacement;
       hiddenAnswers = const {};
       _audiencePoll = null;
       favorite = false;

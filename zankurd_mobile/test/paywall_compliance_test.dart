@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -51,31 +52,48 @@ void main() {
     source = File('lib/src/screens/paywall_screen.dart').readAsStringSync();
   });
 
-  test('paywall otomatik yenileme koşullarını yazar', () {
-    expect(source, contains('Abonelik otomatik yenilenir'));
-    expect(source, contains('24 saat'));
-    expect(source, contains('Abonetiya te bixweber nû dibe'));
+  // Bu üç kontrol bir zamanlar `paywall_screen.dart`in KAYNAK METNİNİ
+  // tarıyordu: dosyada 'Abonelik otomatik yenilenir' dizesi geçiyorsa
+  // geçmiş sayılıyordu. Metinler 2026-07-31'de anahtar defterine taşınınca
+  // testler kırıldı — kırılmaları doğruydu, çünkü ölçtükleri şey metnin
+  // *nerede yazıldığıydı*, kullanıcıya *ne gösterildiği* değil. Artık
+  // defterden okunuyor: hangi dosyada durduğu değil, iki dilde de doğru
+  // metnin teslim edildiği ölçülüyor.
+  test('paywall otomatik yenileme koşullarını iki dilde yazar', () {
+    // Apple 3.1.2 / Google Play: yenileme, ücretlendirme anı ve iptal yolu
+    // satın alma ekranının kendisinde yazmalı.
+    final tr = Tr.of(K.paywallRenewalTerms, AppLanguage.tr);
+    final ku = Tr.of(K.paywallRenewalTerms, AppLanguage.ku);
+    expect(tr, contains('otomatik yenilenir'));
+    expect(tr, contains('24 saat'));
+    expect(tr, contains('iptal'));
+    expect(ku, contains('bixweber nû dibe'));
+    expect(ku, contains('24 saetan'));
+    expect(ku, contains('betal'));
   });
 
   test('paywall Kurmancî eylem ve durum metinleri doğaldır', () {
-    for (final expected in [
-      'Piştgiriya ZanKurdê',
-      'Her gav dikarî betal bikî',
-      'NAVDAR',
-      'Bikire',
+    expect(Tr.of(K.paywallPerkSupport, AppLanguage.ku), 'Piştgiriya ZanKurdê');
+    expect(Tr.of(K.cancelAnytime, AppLanguage.ku), 'Her gav dikarî betal bikî');
+    expect(Tr.of(K.popularBadge, AppLanguage.ku), 'NAVDAR');
+    expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
+    expect(
+      Tr.of(K.paywallPackagesInactive, AppLanguage.ku),
       'Pakêtên Premium hîn nehatine çalak kirin',
-      'Kirînên xwe vegerîne',
-    ]) {
-      expect(source, contains(expected));
-    }
-    for (final obsolete in [
-      'Piştgiriya ZanKurd\'',
-      'Her gav tê betalkirin',
-      "isKu ? 'YÊ'",
-      "isKu ? 'Bikirin'",
-      'Kirrinan vegerîn',
-    ]) {
-      expect(source, isNot(contains(obsolete)));
+    );
+    expect(Tr.of(K.restorePurchases, AppLanguage.ku), 'Kirînên xwe vegerîne');
+
+    // Terk edilmiş biçimler hiçbir anahtarda yaşamamalı.
+    for (final key in Tr.keys) {
+      final ku = Tr.of(key, AppLanguage.ku);
+      for (final obsolete in [
+        "Piştgiriya ZanKurd'",
+        'Her gav tê betalkirin',
+        'Kirrinan vegerîn',
+        'Bikirin',
+      ]) {
+        expect(ku, isNot(contains(obsolete)), reason: '$key eski biçimi taşıyor');
+      }
     }
   });
 
@@ -85,8 +103,11 @@ void main() {
 
   test('fiyat yanında yenileme dönemi gösterilir', () {
     expect(source, contains('_pricePeriodSuffix'));
-    expect(source, contains("'/ay'"));
-    expect(source, contains("'/yıl'"));
+    expect(Tr.of(K.perMonthSuffix, AppLanguage.tr), '/ay');
+    expect(Tr.of(K.perYearSuffix, AppLanguage.tr), '/yıl');
+    expect(Tr.of(K.perWeekSuffix, AppLanguage.tr), '/hafta');
+    expect(Tr.of(K.perMonthSuffix, AppLanguage.ku), '/meh');
+    expect(Tr.of(K.perYearSuffix, AppLanguage.ku), '/sal');
   });
 
   test('bozuk Kurmancî alt metni kaldırıldı', () {

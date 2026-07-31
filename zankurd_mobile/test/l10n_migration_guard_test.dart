@@ -40,30 +40,42 @@ void main() {
   });
 
   group('l10n göç bekçisi', () {
-    /// Satır içi kullanım sayısı (`ku ? '...'` ve `context.s('...', '...')`
-    /// toplamı, `lib/` altındaki tüm dosyalar). Bu sayı YALNIZ
-    /// AZALTILABİLİR — göç ettikçe yeni değeri buraya yazın.
+    /// Satır içi kullanım sayısı (`ku ? '...'`, `isKu ? '...'`,
+    /// `_isKu ? '...'` ve `context.s('...', '...')` toplamı, `lib/`
+    /// altındaki tüm dosyalar). Bu sayı YALNIZ AZALTILABİLİR — göç
+    /// ettikçe yeni değeri buraya yazın.
     ///
-    /// Geçmiş: 639 (2026-07-25 ilk ölçüm) → 630 (alt gezinme etiketleri)
-    /// → 576 (ayarlar) → 530 (profil) → 493 (giriş) → 438 (kayıt + yarış)
-    /// → 381 (öğrenme + sonuç) → 355 (turnuva)
-    /// → 307 (soru öner + arkadaşlar) → 203 (quiz + etkinlik)
-    /// → 119 (oda, mağaza, avatar, liderlik) → 3 (kalan tüm ekranlar).
+    /// ## Bekçi bir yıl boyunca yanlış yere baktı
     ///
-    /// Kalan 3 kullanım bilinçli olarak duruyor ve göç edilemez:
-    /// - `lib/src/l10n/strings.dart` (2): göç yolunu anlatan belge
-    ///   yorumunun kendisi; eski imzayı örnek olarak gösteriyor.
-    /// - `lib/src/screens/quiz_result_screen.dart` (1): iki dal aynı metnin
-    ///   çevirisi değil, *farklı veri alanlarını* (titleKu/titleTr) okuyor;
-    ///   anahtar defterine taşınacak bir metin yok.
+    /// Desen 2026-07-31'e kadar `\bku\s*\?` idi: hem küçük harfe duyarlı,
+    /// hem `\b` kelime sınırı istiyordu. Kod tabanının baskın yazımı olan
+    /// `isKu ? '...'` biçiminde "ku" bir kelime başlangıcı değildir ve
+    /// büyük K taşır — yani desen bu biçimi HİÇ görmedi. Bekçi 3 sayıp
+    /// geçiyordu; gerçek sayı 187, 37 dosyaya yayılmıştı.
     ///
-    /// Yani tavan artık pratikte sıfırdır: yeni her satır içi kullanım
-    /// testi kırar.
-    const inlineCeiling = 3;
+    /// Sessiz kalan yalnız sayı değildi. Tam bu kör noktada üç görünür
+    /// kusur yaşıyordu: ana ekranda Kurmancî cümlenin ortasında Türkçe
+    /// "sen" zamiri, flaş kartta "Bersiv (Arka Yüz)", ve soru tipi
+    /// rozetinde 'Hilbijarin' (bir `t` eksik). Üçü de bu deseni
+    /// düzelttikten sonra bulundu.
+    ///
+    /// Geçmiş (eski, kör ölçüm): 639 → … → 3.
+    /// Gerçek ölçüm: 187 (2026-07-31, desen düzeltildi)
+    /// → 165 (lang.dart'taki ikinci sözlük kaldırıldı)
+    /// → 148 (çok satırlı dizeler de sayıldı — düzeltilmiş desen
+    ///   `\s*` ile satır sonunu geçtiği için sayı bir kez yükseldi)
+    /// → 145 (paywall ekranı tamamen deftere taşındı).
+    ///
+    /// Sıradaki en yoğun dosyalar: profile_widgets (16), level_screen (11),
+    /// leaderboard_screen (9), zana_daily_card (9), notification_service (7).
+    const inlineCeiling = 145;
 
     test('satır içi iki-dil kullanımı tavanı aşmıyor', () {
       final libDir = Directory('lib');
-      final pattern = RegExp(r"""(\bku\s*\?\s*['"])|(\.s\(\s*['"])""");
+      // `[Kk]u` — `isKu`, `_isKu`, `widget.isKu` ve düz `ku` biçimlerinin
+      // hepsini yakalar. Kelime sınırı BİLEREK yok: kusur tam orada
+      // saklanıyordu.
+      final pattern = RegExp(r"""([Kk]u\s*\?\s*['"])|(\.s\(\s*['"])""");
 
       var count = 0;
       final perFile = <String, int>{};

@@ -523,9 +523,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
                 ),
               ),
               Text(
-                _isFlipped
-                    ? (isKu ? 'Bersiv (Arka Yüz)' : 'Cevap (Arka Yüz)')
-                    : (isKu ? 'Pirs (Ön Yüz)' : 'Soru (Ön Yüz)'),
+                Tr.forKu(
+                  _isFlipped ? K.flashcardBack : K.flashcardFront,
+                  isKu,
+                ),
                 style: TextStyle(
                   fontSize: 12,
                   color: AppTheme.textSubColor(context),

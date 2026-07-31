@@ -1001,7 +1001,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               label: Text(
                                 wrongRecords.isNotEmpty
                                     ? context.t(K.reviewMistakes)
-                                    : QuizStrings.playAgain(context.isKu),
+                                    : context.t(K.playAgain),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(

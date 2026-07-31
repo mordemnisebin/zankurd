@@ -202,14 +202,12 @@ class _PaywallHero extends StatelessWidget {
           const Icon(AppIcons.gem, color: Colors.white, size: 36),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            isKu ? 'ZanKurd Premium' : 'ZanKurd Premium',
+            Tr.forKu(K.paywallHeroTitle, isKu),
             style: AppTypography.heading1.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 4),
           Text(
-            isKu
-                ? 'Parastina xweber a zincîrê û piştgiriya ZanKurdê.'
-                : "Otomatik seri koruması ve ZanKurd'a destek.",
+            Tr.forKu(K.paywallHeroSub, isKu),
             style: const TextStyle(color: Colors.white, height: 1.4),
           ),
         ],
@@ -227,20 +225,14 @@ class _Benefits extends StatelessWidget {
     final benefits = <_Benefit>[
       _Benefit(
         icon: AppIcons.shield,
-        title: isKu ? 'Parastina zincîrê' : 'Otomatik seri koruması',
-        description: isKu
-            ? 'Zincîra te ya rojane bixweber, bê coin tê parastin.'
-            // Virgülsüz hâlde "serin" sıfat gibi okunuyordu ("günlük serin
-            // coin"); virgül özneyi ayırır (2026-07-27).
-            : 'Günlük serin, coin harcamadan otomatik korunur.',
+        title: Tr.forKu(K.paywallPerkStreak, isKu),
+        description: Tr.forKu(K.paywallPerkStreakBody, isKu),
         color: AppTheme.brand,
       ),
       _Benefit(
         icon: AppIcons.heart,
-        title: isKu ? 'Piştgiriya ZanKurdê' : "ZanKurd'a destek",
-        description: isKu
-            ? 'Tu pêşketina sepana kurdî û naveroka nû piştgir dikî.'
-            : 'Kürtçe uygulamanın gelişimini ve yeni içeriği desteklersin.',
+        title: Tr.forKu(K.paywallPerkSupport, isKu),
+        description: Tr.forKu(K.paywallPerkSupportBody, isKu),
         color: AppTheme.gold,
       ),
     ];
@@ -392,11 +384,11 @@ class _PackageRow extends StatelessWidget {
   String _packageTitle() {
     switch (package.packageType) {
       case PackageType.monthly:
-        return isKu ? 'Mehane' : 'Aylık';
+        return Tr.forKu(K.periodMonthly, isKu);
       case PackageType.annual:
-        return isKu ? 'Salane' : 'Yıllık';
+        return Tr.forKu(K.periodAnnual, isKu);
       case PackageType.weekly:
-        return isKu ? 'Heftane' : 'Haftalık';
+        return Tr.forKu(K.periodWeekly, isKu);
       default:
         return package.identifier;
     }
@@ -404,7 +396,7 @@ class _PackageRow extends StatelessWidget {
 
   String _packageSubtitle() {
     if (package.packageType == PackageType.monthly) {
-      return isKu ? 'Her gav dikarî betal bikî' : 'İstediğin zaman iptal';
+      return Tr.forKu(K.cancelAnytime, isKu);
     }
     return '';
   }
@@ -413,9 +405,9 @@ class _PackageRow extends StatelessWidget {
   /// hangi dönem için olduğunun paywall'da açıkça yazmasını ister.
   String _pricePeriodSuffix() {
     return switch (package.packageType) {
-      PackageType.monthly => isKu ? '/meh' : '/ay',
-      PackageType.annual => isKu ? '/sal' : '/yıl',
-      PackageType.weekly => isKu ? '/hefte' : '/hafta',
+      PackageType.monthly => Tr.forKu(K.perMonthSuffix, isKu),
+      PackageType.annual => Tr.forKu(K.perYearSuffix, isKu),
+      PackageType.weekly => Tr.forKu(K.perWeekSuffix, isKu),
       _ => '',
     };
   }
@@ -477,7 +469,7 @@ class _PackageRow extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          isKu ? 'NAVDAR' : 'POPÜLER',
+                          Tr.forKu(K.popularBadge, isKu),
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w800,
@@ -502,7 +494,7 @@ class _PackageRow extends StatelessWidget {
                 Text(
                   price > 0
                       ? '$priceString${_pricePeriodSuffix()}'
-                      : (isKu ? 'Biha tê' : 'Fiyat geliyor'),
+                      : Tr.forKu(K.priceComing, isKu),
                   style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.gold,
                     fontWeight: FontWeight.w800,
@@ -534,7 +526,7 @@ class _PackageRow extends StatelessWidget {
                     ),
                   )
                 : Text(
-                    isKu ? 'Bikire' : 'Satın al',
+                    Tr.forKu(K.buyAction, isKu),
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
           ),
@@ -561,9 +553,7 @@ class _EmptyOfferings extends StatelessWidget {
               const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: Text(
-                  isKu
-                      ? 'Pakêtên Premium hîn nehatine çalak kirin'
-                      : 'Premium paketler henüz aktif değil',
+                  Tr.forKu(K.paywallPackagesInactive, isKu),
                   style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w700,
@@ -574,9 +564,7 @@ class _EmptyOfferings extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            isKu
-                ? 'Pakêtên Premium dê di demeke kurt de çalak bibin. Ji kerema xwe paşê vegere.'
-                : 'Premium paketler kısa süre içinde aktif olacak. Lütfen daha sonra tekrar bakın.',
+            Tr.forKu(K.paywallPackagesInactiveBody, isKu),
             style: AppTypography.caption.copyWith(
               color: AppTheme.textSubColor(context),
               height: 1.4,
@@ -601,7 +589,7 @@ class _FooterActions extends StatelessWidget {
         TextButton(
           onPressed: onRestore,
           child: Text(
-            isKu ? 'Kirînên xwe vegerîne' : 'Satın alımları geri yükle',
+            Tr.forKu(K.restorePurchases, isKu),
             style: AppTypography.caption.copyWith(
               color: AppTheme.textSubColor(context),
             ),
@@ -612,15 +600,7 @@ class _FooterActions extends StatelessWidget {
         // otomatik yenileme koşullarının satın alma ekranının KENDİSİNDE
         // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
         Text(
-          isKu
-              ? 'Abonetiya te bixweber nû dibe. Heta 24 saetan berî dawiya heyamê '
-                    'neyê betalkirin, ji hesabê te yê App Store/Google Play '
-                    'dîsa tê kişandin. Tu dikarî her gav ji mîhengên hesabê '
-                    'xwe betal bikî.'
-              : 'Abonelik otomatik yenilenir. Dönem bitiminden en az 24 saat '
-                    'önce iptal edilmezse App Store/Google Play hesabından '
-                    'yenileme ücreti tahsil edilir. İstediğin zaman mağaza '
-                    'hesap ayarlarından iptal edebilirsin.',
+          Tr.forKu(K.paywallRenewalTerms, isKu),
           style: AppTypography.caption.copyWith(
             color: AppTheme.textMutedColor(context),
             height: 1.4,
