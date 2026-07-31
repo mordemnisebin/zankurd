@@ -25,26 +25,141 @@ Görmüyorsan bana yaz, yayına başlama.
 
 ---
 
-## 1. Supabase: çalıştırılacak göç kalmadı — yalnız doğrula
+## 1. Supabase: üç göç çalıştırılacak
 
-Yayın için gereken dört göçün dördü de canlıda: oyuncu kodu
-(`2026-07-28_player_tag.sql`), yayın sertleştirmesi, mağaza satın alma
-bütünlüğü ve ödül yetkisi. Uygulanma kaydı
-`zankurd_mobile/supabase/applied.md` dosyasındadır; **buradaki hiçbir
-dosyayı yeniden çalıştırman gerekmiyor.**
+2026-07-31 denetiminden sonra **üç yeni göç var ve üçü de canlıda değil.**
+Sıra önemli; en kritik güvenlik açığı birincide kapanıyor.
 
-Yine de yayına başlamadan önce bir bakış iyi olur:
-[supabase.com](https://supabase.com) → projen → **SQL Editor** →
-**New query**:
+Hepsi için yol aynı: [supabase.com](https://supabase.com) → projen →
+**SQL Editor** → **New query** → dosyanın tamamını yapıştır → **Run**.
+
+Üçü de idempotenttir: yanlışlıkla iki kez çalıştırmak bir şey bozmaz.
+
+---
+
+### 1a. Turnuva skor yetkisi — ÖNCE BU
+
+Dosya: `zankurd_mobile/supabase/2026-07-31_tournament_score_authority.sql`
+
+**Niçin acil:** Şu an turnuva maçında oyuncunun bildirdiği skorun üst
+sınırı yok. REST üzerinden `p_score = 2147483647` gönderen her maçı
+kazanır, şampiyon olur ve turnuva başına 200 coin alır. Coin mağazadan
+VIP rozeti dahil her şeyi aldığı için bu, sınırsız coin basma yoludur.
+Anonim giriş açık olduğundan sınırsız hesapla tekrarlanabilir.
+
+**Çalıştırdıktan sonra doğrula** (yeni query):
 
 ```sql
-select display_name, player_tag from public.profiles limit 5;
+select
+  (select count(*) from information_schema.columns
+    where table_name = 'tournaments' and column_name = 'questions_per_match')
+    as kolon_eklendi,
+  (select bool_or(prosrc ilike '%least(v_score%')
+     from pg_proc where proname = 'submit_tournament_match')
+    as skor_tavani_var,
+  (select bool_or(prosrc ilike '%advance_tournament%')
+     from pg_proc where proname = 'resolve_expired_tournament_matches')
+    as tur_ilerlemesi_var;
 ```
 
-**Tamam mı?** Her satırda dört karakterlik bir kod görüyorsan evet.
-`null` ya da boş görüyorsan bana yaz — o zaman
-`supabase/2026-07-28_player_tag.sql` yeniden çalıştırılır (dosya
-idempotenttir, iki kez basmak bir şey bozmaz).
+**Tamam mı?** Üç sütun da `1` / `true` / `true` ise evet.
+
+---
+
+### 1b. Oda sohbeti moderasyonu
+
+Dosya: `zankurd_mobile/supabase/2026-07-31_chat_moderation.sql`
+
+**Niçin gerekli:** Oda sohbeti bu sürümde geri geldi. Apple App Store
+Review 1.2 ve Google Play, kullanıcı içeriği barındıran uygulamalarda
+süzme + bildirme + engelleme + iletişim bilgisi ister. Uygulama tarafı
+hazır; bu göç sunucu tarafını kuruyor.
+
+Ayrıca iki kusuru daha kapatıyor: gönderen adı ve zaman damgası
+istemciden yazılıyordu (kimlik taklidi), ve `room_messages` okuma
+politikası `USING (true)` idi — oda kodu olmayan biri **bütün odaların**
+mesajlarını okuyabiliyordu.
+
+**Uygulanmazsa ne olur:** Sohbet çalışır ama "Bildir" ve "Engelle"
+düğmeleri "işlem yapılamadı" der, okuma politikası herkese açık kalır.
+
+**Çalıştırdıktan sonra doğrula:**
+
+```sql
+select
+  (select count(*) from pg_tables
+    where tablename in ('blocked_users', 'message_reports')) as tablolar,
+  (select count(*) from pg_trigger
+    where tgname = 'room_messages_moderation') as tetikleyici,
+  (select public.chat_message_is_clean('Merheba heval')) as temiz_gecer,
+  (select public.chat_message_is_clean('bak https://kotu.com')) as link_gecmez;
+```
+
+**Tamam mı?** `2`, `1`, `true`, `false` ise evet.
+
+---
+
+### 1c. Açıkta kalan okuma yüzeyleri — SON VE DİKKATLİ
+
+Dosya: `zankurd_mobile/supabase/2026-07-31_exposure_hardening.sql`
+
+⚠️ **Bu göç iki tablo SİLER ve geri alınamaz.** Önce boş olduklarını —
+daha doğrusu artık gerekmediklerini — doğrula.
+
+**Çalıştırmadan ÖNCE bu sorguyu koş** (tablo yoksa da hata vermez):
+
+```sql
+select tablename,
+       (xpath('/row/c/text()',
+              query_to_xml(format('select count(*) as c from public.%I',
+                                  tablename), false, true, '')))[1]::text::int
+         as satir_sayisi
+  from pg_tables
+ where schemaname = 'public'
+   and tablename like 'questions_editorial_backup%';
+```
+
+Bu yedekler 2026-07-16'daki editoryal düzeltmenin geri dönüş kopyalarıydı
+ve düzeltme 2026-07-18'de canlı sorguyla doğrulandı — yani geri dönüş
+penceresi kapandı. Sorgu hata verip *"relation does not exist"* derse
+tablolar zaten yok demektir; sorun değil, göç yine çalışır.
+
+Silinmelerinin sebebi: bu tablolar `questions`ın tam kopyası ve
+`correct_option` kolonunu taşıyorlar. 2026-07-22'de `questions`tan
+`revoke select` yapıldı ama yedekler o kapatmanın dışında kalmıştı —
+yani doğru cevaplar sertleştirmenin yanından dolanılarak okunabilir
+durumda.
+
+**Emin değilsen** yedeği önce dışa aktar: tabloya tıkla → sağ üstten
+**Export** → CSV. Sonra göçü çalıştır.
+
+**Çalıştırdıktan sonra doğrula:**
+
+```sql
+select
+  (select count(*) from pg_tables
+    where tablename like 'questions_editorial_backup%') as yedek_kalmadi,
+  (select bool_or(prosrc ilike '%escape%')
+     from pg_proc where proname = 'search_profiles') as arama_kacirmali,
+  (select case
+     when not exists (select 1 from information_schema.columns
+       where table_name = 'profiles' and column_name = 'fcm_token')
+     then false
+     else has_column_privilege('authenticated', 'public.profiles',
+            'fcm_token', 'select')
+   end) as jeton_okunabilir;
+```
+
+**Tamam mı?** `0`, `true`, `false` ise evet.
+
+---
+
+### 1d. Hepsi bitince kaydı güncelle
+
+`zankurd_mobile/supabase/applied.md` dosyasında üç satırın `❌`
+işaretini `✅` yap ve yanına tarihi yaz. Bu dosya deponun **tek**
+uygulanma kaydıdır; güncellenmezse bir sonraki sefer hangisinin
+çalıştığı bilinmez.
 
 ---
 
