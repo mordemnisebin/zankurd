@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/avatar_presets.dart';
+import '../config/bot_names.dart';
 import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
 import '../data/sync_manager.dart';
@@ -50,6 +51,44 @@ part 'quiz/quiz_widgets.dart';
 part 'quiz/quiz_screen_ui.dart';
 
 enum QuizExperience { learning, competition }
+
+// ─── Quiz yerleşim dalı seçimi ───────────────────────────────────────────
+//
+// Quiz'in iki yerleşimi var: dikey (stacked) akış ve telefonu yan çevirince
+// devreye giren iki sütunlu "compact landscape" düzeni. İkincisi *yalnız*
+// yüksekliği gerçekten kısıtlı, gerçekten yatay ekranlar için tasarlandı:
+// soru solda, ilerleme ve birincil eylem sağda.
+//
+// Dal eskiden yalnız `constraints.maxWidth >= 700` ile seçiliyordu ve
+// değişkenin adı `landscape` idi — ama yönelim hiç ölçülmüyordu. Bu yüzden
+// 700px'ten geniş her viewport iki sütuna düşüyordu: bütün masaüstü
+// tarayıcılar ve *dikey* tabletler dahil. Orada sağ sütun kısa kalıp tepeye
+// yapıştığı için birincil eylem şıkların üstünde ve uzağında duruyor, ekranın
+// altı boş kalıyordu (2026-07-31 denetimi ZKR-P1-001, 1440×900 ölçümü).
+//
+// Doğru ayrım genişlik değil, **kısa ve yatay** olmaktır:
+//   • Masaüstü tarayıcılar genelde `width > height` olur ama telefon-yatay
+//     değildir — yükseklikleri boldur, dikey akışı rahat taşırlar.
+//   • Dikey tabletlerde zaten `height > width`.
+// Bu yüzden koşul üç şart birden arar; yalnız biri yetmez.
+
+/// Compact landscape dalının aradığı en küçük genişlik.
+const double _compactLandscapeMinWidth = 700.0;
+
+/// Compact landscape dalının kabul ettiği en büyük yükseklik. Telefonlar yan
+/// çevrildiğinde ~375–430px'e iner; masaüstü ve tabletler bunun çok üstünde
+/// kalır ve dikey akışı kullanır.
+const double _compactLandscapeMaxHeight = 600.0;
+
+/// İki sütunlu telefon-yatay düzeni bu viewport için uygun mu?
+///
+/// Beklenmeyen veya sonsuz bir yükseklik kısıtı gelirse güvenli varsayılan
+/// dikey (stacked) akıştır — iki sütunlu düzen dar bir özel durumdur.
+bool _useCompactLandscapeLayout(double width, double height) =>
+    height.isFinite &&
+    width >= _compactLandscapeMinWidth &&
+    width > height &&
+    height <= _compactLandscapeMaxHeight;
 
 /// Multiplayer quiz turlarının ortak faz durumu.
 enum _MultiplayerPhase {
@@ -448,18 +487,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         if (widget.is1v1) {
           // Bot fallback 1v1 match
           final rng = Random();
-          const botNames = [
-            'Rojda',
-            'Baran',
-            'Dilan',
-            'Hogir',
-            'Azad',
-            'Berfin',
-            'Narin',
-            'Sero',
-            'Çiçek',
-            'Welat',
-          ];
+          const botNames = BotNames.pool;
           final botName = botNames[rng.nextInt(botNames.length)];
           final botSkill = 0.65 + rng.nextDouble() * 0.25;
           _botRace = BotRace([
@@ -869,9 +897,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       SafeArea(
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            final landscape = constraints.maxWidth >= 700;
-                            if (landscape) {
-                              return _buildLandscapeLayout();
+                            final useCompactLandscapeLayout =
+                                _useCompactLandscapeLayout(
+                                  constraints.maxWidth,
+                                  constraints.maxHeight,
+                                );
+                            if (useCompactLandscapeLayout) {
+                              return _buildCompactLandscapeLayout();
                             }
                             return _buildPortraitLayout();
                           },

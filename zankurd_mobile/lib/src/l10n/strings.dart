@@ -46,7 +46,7 @@ class Tr {
     // ── Gezinme ──────────────────────────────────────────────────────
     K.navLearn: {'ku': 'Hîn Bibe', 'tr': 'Öğren'},
     K.navPlay: {'ku': 'Pêşbazî', 'tr': 'Yarış'},
-    K.navLeaderboard: {'ku': 'Rêz', 'tr': 'Liderlik'},
+    K.navLeaderboard: {'ku': 'Rêzbendî', 'tr': 'Liderlik'},
     K.navProfile: {'ku': 'Profîl', 'tr': 'Profil'},
 
     // ── Ekran başlıkları ─────────────────────────────────────────────
@@ -426,8 +426,10 @@ class Tr {
     K.home: {'ku': 'Sereke', 'tr': 'Ana Sayfa'},
     K.onlyWrong: {'ku': 'Tenê şaşiyan bibîne', 'tr': 'Sadece yanlışlar'},
     K.reviewMistakes: {'ku': 'Şaşiyan binirxîne', 'tr': 'Yanlışları incele'},
+    K.flashcards: {'ku': 'Kartên Hînbûnê', 'tr': 'Hafıza Kartları'},
+    K.listView: {'ku': 'Lîste', 'tr': 'Liste'},
     K.moreOptions: {'ku': 'Vebijarkên din', 'tr': 'Diğer seçenekler'},
-    K.leaderboardLink: {'ku': 'Tabloya pêşderçûnê', 'tr': 'Liderlik tablosu'},
+    K.leaderboardLink: {'ku': 'Rêzbendî', 'tr': 'Liderlik tablosu'},
     K.rate: {'ku': 'Binirxîne', 'tr': 'Değerlendir'},
     K.you: {'ku': 'Tu', 'tr': 'Sen'},
     K.compareRivals: {
@@ -1003,7 +1005,7 @@ class Tr {
       'tr': 'Bir yarış başlat; puanların burada görünür.',
     },
     K.startRaceAction: {'ku': 'Dest bi Pêşbirkê Bike', 'tr': 'Yarışa Başla'},
-    K.leaderboardTitle: {'ku': 'Tabloya Pêşderçûnê', 'tr': 'Liderlik Tablosu'},
+    K.leaderboardTitle: {'ku': 'Rêzbendî', 'tr': 'Liderlik Tablosu'},
     K.refreshEvery30: {
       'ku': 'Her 30 çirkeyî nûve dibe',
       'tr': 'Her 30 saniyede güncellenir',
@@ -1761,6 +1763,8 @@ class K {
   static const home = 'common.home';
   static const onlyWrong = 'result.onlyWrong';
   static const reviewMistakes = 'result.reviewMistakes';
+  static const flashcards = 'review.flashcards';
+  static const listView = 'review.listView';
   static const moreOptions = 'result.moreOptions';
   static const leaderboardLink = 'result.leaderboard';
   static const rate = 'result.rate';

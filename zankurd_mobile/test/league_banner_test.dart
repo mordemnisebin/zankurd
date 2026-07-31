@@ -7,6 +7,28 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
+import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
+
+class _TestLeagueRepository extends MockZanKurdRepository {
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
+    return const [
+      LeaderboardEntry(
+        rank: 1,
+        playerId: 'm1',
+        displayName: 'Rojda',
+        totalScore: 8420,
+        bestStreak: 11,
+        roomsPlayed: 14,
+      ),
+    ];
+  }
+}
+
 Widget _shell(Widget child) {
   return MultiProvider(
     providers: [
@@ -28,10 +50,8 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
-    // Varsayılan sekme haftalıktır; mock listede oturum sahibi yoksa
-    // oyuncu Bronz Lig'den başlar ve davet metni görünür.
     await tester.pumpWidget(
-      _shell(LeaderboardScreen(repository: MockZanKurdRepository())),
+      _shell(LeaderboardScreen(repository: _TestLeagueRepository())),
     );
     await tester.pumpAndSettle();
 

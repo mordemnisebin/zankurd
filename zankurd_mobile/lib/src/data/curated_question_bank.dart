@@ -592,12 +592,12 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Abdullah Öcalan di gotarên xwe de kîjan «-îzm»ê pêşniyar kir?',
     answers: [
-      'Konfederalîzma demorkatîk',
+      'Konfederalîzma demokratîk',
       'Fakltîzm',
       'Fermendîzm',
       'Medyatîkdemokrasî',
     ],
-    correctAnswer: 'Konfederalîzma demorkatîk',
+    correctAnswer: 'Konfederalîzma demokratîk',
     explanation:
         'Di «Demokratik Konfederalîzm» de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
     difficulty: 2,
@@ -615,13 +615,13 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Civaka takekesî li şûna netewe-dewletê çi pêşniyar dike?',
     answers: [
       'Birayên xwe rêxistinbranî',
-      'Demorkrasîxerbirîna gelemperî',
+      'Demokrasîxerbirîna gelemperî',
       'Hespê ûrikirî ya leşkerî',
       'Hiqûqa malbatê ya nepenî',
     ],
-    correctAnswer: 'Demorkrasîxerbirîna gelemperî',
+    correctAnswer: 'Demokrasîxerbirîna gelemperî',
     explanation:
-        'Paradîgma demorkratîk a civakî rêxistinên demorkatîk û rihevketa gelemperî hene dihundirîne.',
+        'Paradîgma demokratîk a civakî rêxistinên demokratîk û rihevketa gelemperî hene dihundirîne.',
     difficulty: 3,
     metadata: _bozukKurmanciBekliyor,
     explanationKu:
@@ -841,7 +841,7 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_siyaset_0006',
     category: 'Siyaset',
-    prompt: 'Konfederalîzma demorkratîk li kîjan herêmê peydexandî ye?',
+    prompt: 'Konfederalîzma demokratîk li kîjan herêmê peydexandî ye?',
     answers: [
       'Rojavayê Bakurûrê Sûrîyê',
       'Bakurê Kûrdistanê (Tûrkiye)',
@@ -850,7 +850,7 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer: 'Rojavayê Bakurûrê Sûrîyê',
     explanation:
-        'DMC (Xebûna Demorkatîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demorkatîk a Sûrîyê Bakûr.',
+        'DMC (Xebûna Demokratîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demokratîk a Sûrîyê Bakûr.',
     difficulty: 2,
     metadata: _bozukKurmanciBekliyor,
     explanationKu:

@@ -328,7 +328,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final content = find.byKey(const ValueKey('quiz-landscape-content'));
+    // Testin adı zaten "wide **portrait**": geniş bir viewport'ta içeriğin
+    // ortalanıp 800px ile sınırlanmasını ölçüyor. Yazıldığı sırada 1440×900
+    // yanlışlıkla telefon-yatay dalına düşüyordu, bu yüzden ölçüm
+    // `quiz-landscape-content` üzerinden yapılmıştı (ZKR-P1-001). Dal seçimi
+    // düzeltildikten sonra bu genişlik artık dikey (stacked) akışı kullanıyor;
+    // ölçülen sözleşme aynı, yalnız doğru daldan okunuyor.
+    expect(
+      find.byKey(const ValueKey('quiz-landscape-content')),
+      findsNothing,
+      reason: '1440×900 masaüstü telefon-yatay dalına düşmemeli',
+    );
+
+    final content = find.byKey(const ValueKey('quiz-portrait-scroll'));
     expect(content, findsOneWidget);
     expect(tester.getSize(content).width, lessThanOrEqualTo(800));
     expect(tester.takeException(), isNull);

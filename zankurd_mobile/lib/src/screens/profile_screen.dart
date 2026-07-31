@@ -8,6 +8,7 @@ import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
+import '../data/sync_manager.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -285,6 +286,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         profileHero,
+        const SizedBox(height: 8),
+        const Align(alignment: Alignment.centerLeft, child: _SyncStatusChip()),
         const SizedBox(height: AppSpacing.cardGap),
 
         // Stats
@@ -1133,5 +1136,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ErrorReporter.record(error, stack, reason: 'profile_sign_out');
       // AppShell zaten auth durumuna göre giriş ekranına döner.
     }
+  }
+}
+
+class _SyncStatusChip extends StatelessWidget {
+  const _SyncStatusChip();
+
+  @override
+  Widget build(BuildContext context) {
+    final isKu = context.isKu;
+    return ValueListenableBuilder<bool>(
+      valueListenable: SyncManager.syncingNotifier,
+      builder: (context, syncing, _) {
+        return ValueListenableBuilder<int>(
+          valueListenable: SyncManager.pendingCountNotifier,
+          builder: (context, pending, _) {
+            final isSynced = !syncing && pending == 0;
+            final color = isSynced ? AppTheme.correct : AppTheme.gold;
+            final icon = syncing
+                ? AppIcons.arrowsRotate
+                : (isSynced ? AppIcons.circleCheck : AppIcons.cloud);
+            final label = syncing
+                ? (isKu ? 'Tê rêzkirin…' : 'Senkronize ediliyor…')
+                : (isSynced
+                    ? (isKu ? 'Tev rêzkirî ye (Bulut)' : 'Bulutla senkronize')
+                    : (isKu
+                        // "kayd" bankada başka hiçbir yerde geçmiyor;
+                        // yerleşik sözcük "tomar"dır (bkz. "pirsên
+                        // tomarkirî" — strings.dart).
+                        ? '$pending tomar li amûrê ye'
+                        : '$pending çevrimdışı kaydı'));
+
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color.withValues(alpha: 0.3)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, size: 14, color: color),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: color,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

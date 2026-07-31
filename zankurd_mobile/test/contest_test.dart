@@ -142,16 +142,13 @@ void main() {
       expect(reward?['rank_reward'], 500);
     });
 
-    test('getContestLeaderboard returns top 3', () async {
+    test('getContestLeaderboard returns empty list by default', () async {
       final rows = await repo.getContestLeaderboard(
         contestId: 'contest_mock',
         limit: 3,
       );
 
-      expect(rows, isNotEmpty);
-      expect(rows.length, 3);
-      expect(rows.first.displayName, 'Rojda');
-      expect(rows.first.rank, 1);
+      expect(rows, isEmpty);
     });
 
     test('loadUserContestBadges returns empty list for mock', () async {

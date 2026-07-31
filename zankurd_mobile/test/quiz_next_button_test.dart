@@ -33,6 +33,12 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = freshMockRepository();
+    await repository.awardQuizCoins(
+      score: 1000,
+      correctCount: 20,
+      totalQuestions: 20,
+      bestStreak: 10,
+    );
     await tester.pumpWidget(
       testShell(
         child: QuizScreen(

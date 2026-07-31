@@ -22,7 +22,20 @@ class SubcategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final list = SubcategoryConfig.subcategories[category] ?? const [];
+    final canonicalCat = CategoryVisuals.canonicalName(category);
+    final rawList = SubcategoryConfig.subcategories[category] ??
+        SubcategoryConfig.subcategories[canonicalCat];
+    final list = (rawList != null && rawList.isNotEmpty)
+        ? rawList
+        : [
+            SubcategoryInfo(
+              id: 'gisti',
+              nameKu: 'Hemû Pirs',
+              nameTr: 'Tüm Sorular',
+              descriptionKu: 'Têkelpêkel pirsên $category',
+              descriptionTr: '$category kategorisindeki tüm sorular',
+            ),
+          ];
     // Renk kategorinin adından gelir; liste sırasına bağlı değildir.
     final gradient = CategoryVisuals.gradient(category);
 

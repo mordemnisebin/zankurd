@@ -12,6 +12,8 @@ import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
@@ -116,6 +118,41 @@ Widget testShell({
 /// SharedPreferences/store durumu. `MockZanKurdRepository` mutable state
 /// tuttuğu için testler arasında paylaşılan bir örnek sıra bağımlılığı
 /// yaratır — bu yüzden her `setUp` yeni bir örnek döndürür.
+class TestMockZanKurdRepository extends MockZanKurdRepository {
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
+    return const [
+      LeaderboardEntry(
+        rank: 1,
+        playerId: 'm1',
+        displayName: 'Rojda',
+        totalScore: 8420,
+        bestStreak: 11,
+        roomsPlayed: 14,
+      ),
+      LeaderboardEntry(
+        rank: 2,
+        playerId: 'm2',
+        displayName: 'Baran',
+        totalScore: 7190,
+        bestStreak: 9,
+        roomsPlayed: 12,
+      ),
+      LeaderboardEntry(
+        rank: 3,
+        playerId: 'm3',
+        displayName: 'Dilan',
+        totalScore: 6540,
+        bestStreak: 8,
+        roomsPlayed: 10,
+      ),
+    ];
+  }
+}
+
 MockZanKurdRepository freshMockRepository() {
   SharedPreferences.setMockInitialValues({
     'zankurd.onboarding.seen': true,
@@ -127,5 +164,5 @@ MockZanKurdRepository freshMockRepository() {
   SeenQuestionStore.resetInstance();
   StreakStore.resetInstance();
   MistakeStore.resetInstance();
-  return MockZanKurdRepository();
+  return TestMockZanKurdRepository();
 }

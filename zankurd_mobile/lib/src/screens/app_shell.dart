@@ -44,6 +44,13 @@ class _AppShellState extends State<AppShell> {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
   static const _profileNameCompletedKey = 'zankurd.profileName.completed';
 
+  // Açılış sekmesi Öğren'dir (index 0). Bu iki satır birlikte okunmalı:
+  // `_visitedTabs` yalnız *ziyaret edilmiş* sekmeleri taşır ve `_buildTab`
+  // ziyaret edilmemiş sekme için `SizedBox.shrink()` döndürür. Başlangıç
+  // kümesine ikinci bir sekme eklenirse (ör. `{0, 1}`) o sekmenin ekranı
+  // kullanıcı hiç dokunmadan kurulur — pahalı sekmeleri ilk ziyarete
+  // erteleyen lazy-mount kazancı sessizce kaybolur. Bu yüzden küme
+  // daima yalnız açılış sekmesini içerir.
   int _tab = 0;
   final Set<int> _visitedTabs = {0};
 

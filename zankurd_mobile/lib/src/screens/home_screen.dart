@@ -317,7 +317,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
-          DailyMissionsCard(isKu: ku, missions: _missions),
+          DailyMissionsCard(
+            isKu: ku,
+            missions: _missions,
+            compact: false,
+          ),
         ],
       ),
     );
@@ -438,6 +442,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         AppIcons.fire,
                         AppTheme.brand,
                         _streak > 0 ? '$_streak' : null,
+                        semanticLabel: context.t(K.dailyStreakDays),
+                        onTap: () => _showStreakFreezeBottomSheet(context),
                       ),
                       const SizedBox(width: 12),
                       _buildHeaderBadge(
@@ -519,6 +525,126 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ],
       ),
+    );
+  }
+
+  void _showStreakFreezeBottomSheet(BuildContext context) {
+    final isKu = context.isKu;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.surfaceOf(context),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppTheme.brand.withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(AppIcons.fire, color: AppTheme.brand, size: 28),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  isKu ? 'Zincîra Pêşketinê (Streak)' : 'Günlük Seri (Streak)',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimaryColor(ctx),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _streak > 0
+                      ? (isKu
+                          ? '$_streak roj in ku sen bi rêkûpêk dilîzî!'
+                          : '$_streak gündür aralıksız oynuyorsun!')
+                      : (isKu
+                          ? 'Hêj zincîra te dest pê nekiriye. Îro bilîze!'
+                          : 'Henüz serin başlamadı. Bugün bir yarış başlat!'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14, color: AppTheme.textSubColor(ctx)),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppTheme.cyan.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppTheme.cyan.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(AppIcons.shieldHalved, color: AppTheme.cyan, size: 24),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              isKu
+                                  ? 'Karta Parastina Zincîrê'
+                                  : 'Seri Dondurma Koruması',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.textPrimaryColor(ctx),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              isKu
+                                  ? 'Rojên ku tu nekarî bilîzî zincîra te napetite!'
+                                  : 'Oynamayı unuttuğun günlerde serin bozulmaz!',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppTheme.textSubColor(ctx),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                    backgroundColor: AppTheme.brand,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(ctx).pop();
+                    await Navigator.of(context).push(
+                      AppRoute.to(ShopScreen(repository: repo)),
+                    );
+                    if (mounted) await _refreshCoins();
+                  },
+                  icon: const Icon(AppIcons.cartShopping, color: Colors.white, size: 18),
+                  label: Text(
+                    // İki dil aynı düğmede yan yana yazıyordu ("Herin Dukanê
+                    // / Mağazaya Git") — Kurmancî arayüzde Türkçe metin
+                    // sızıyordu (2026-07-31 Antigravity eklentisi denetimi).
+                    isKu ? 'Herin Dukanê' : 'Mağazaya Git (Seri Koru)',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

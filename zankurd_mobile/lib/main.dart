@@ -134,7 +134,7 @@ Future<void> main() async {
         authProvider = AuthProvider(Supabase.instance.client);
       } else {
         repository = MockZanKurdRepository();
-        authProvider = AuthProvider.test();
+        authProvider = AuthProvider.test(authenticated: true);
       }
 
       await SyncManager.initialize(repository);

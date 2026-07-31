@@ -34,6 +34,9 @@ class CategoryVisuals {
     return _aliases[category] ?? category;
   }
 
+  /// Kategori adını canonical (ana) kategori kimliğine eşler.
+  static String canonicalName(String category) => _resolveKey(category);
+
   /// Kategori → renk çifti. 2026-07-24 yenilemesi: tonlar tek bir doygunluk
   /// bandına çekildi (orta ton, düşük kroma) — böylece sekiz kategori yan yana
   /// durduğunda göz yorulmuyor ve hiçbiri eylem turuncusuyla (Tîrêj)

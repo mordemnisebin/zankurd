@@ -62,7 +62,15 @@ void main() {
   group('spendCoins — MockZanKurdRepository', () {
     late MockZanKurdRepository repo;
 
-    setUp(() => repo = MockZanKurdRepository());
+    setUp(() async {
+      repo = MockZanKurdRepository();
+      await repo.awardQuizCoins(
+        score: 1000,
+        correctCount: 20,
+        totalQuestions: 20,
+        bestStreak: 10,
+      );
+    });
 
     test('bakiye yeterliyse true döner ve coin düşer', () async {
       final initial = await repo.loadCoinBalance();

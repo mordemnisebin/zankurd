@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -12,17 +13,24 @@ import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
-class ReviewScreen extends StatelessWidget {
+class ReviewScreen extends StatefulWidget {
   const ReviewScreen({required this.records, required this.room, super.key});
 
   final List<AnswerRecord> records;
   final GameRoom room;
 
   @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
+  bool _isFlashcardMode = false;
+
+  @override
   Widget build(BuildContext context) {
-    final correct = records.where((r) => r.isCorrect).length;
-    final wrong = records.where((r) => !r.isCorrect && !r.isUnanswered).length;
-    final empty = records.where((r) => r.isUnanswered).length;
+    final correct = widget.records.where((r) => r.isCorrect).length;
+    final wrong = widget.records.where((r) => !r.isCorrect && !r.isUnanswered).length;
+    final empty = widget.records.where((r) => r.isUnanswered).length;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -30,7 +38,7 @@ class ReviewScreen extends StatelessWidget {
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
-          child: records.isEmpty
+          child: widget.records.isEmpty
               ? AppEmptyState(
                   icon: AppIcons.squareCheck,
                   title: context.t(K.answersEmptyTitle),
@@ -44,8 +52,6 @@ class ReviewScreen extends StatelessWidget {
                     AppSpacing.lg,
                   ),
                   children: [
-                    // Xwendin ailesi — camgöbeği kimlik (cevap inceleme).
-                    // AppBar "Cevaplar" taşıyor; kart başlığı özet olsun.
                     ScreenIdentityHeader(
                       title: context.t(K.summaryTitle),
                       subtitle: context.t(K.reviewSummaryLine, {
@@ -59,11 +65,39 @@ class ReviewScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.md),
                     _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
+                    const SizedBox(height: 12),
+                    // View Mode Toggle Switcher
+                    Center(
+                      child: SegmentedButton<bool>(
+                        segments: [
+                          ButtonSegment<bool>(
+                            value: false,
+                            label: Text(context.t(K.listView)),
+                            icon: const Icon(AppIcons.barsStaggered, size: 16),
+                          ),
+                          ButtonSegment<bool>(
+                            value: true,
+                            label: Text(context.t(K.flashcards)),
+                            icon: const Icon(AppIcons.layerGroup, size: 16),
+                          ),
+                        ],
+                        selected: {_isFlashcardMode},
+                        onSelectionChanged: (Set<bool> selection) {
+                          setState(() {
+                            _isFlashcardMode = selection.first;
+                          });
+                        },
+                      ),
+                    ),
                     const SizedBox(height: 16),
-                    for (var i = 0; i < records.length; i++) ...[
-                      _ReviewCard(record: records[i], index: i),
-                      if (i != records.length - 1) const SizedBox(height: 14),
-                    ],
+                    if (_isFlashcardMode)
+                      _FlashcardView(records: widget.records)
+                    else
+                      for (var i = 0; i < widget.records.length; i++) ...[
+                        _ReviewCard(record: widget.records[i], index: i),
+                        if (i != widget.records.length - 1)
+                          const SizedBox(height: 14),
+                      ],
                   ],
                 ),
         ),
@@ -427,6 +461,288 @@ class _ReviewCard extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FlashcardView extends StatefulWidget {
+  const _FlashcardView({required this.records});
+
+  final List<AnswerRecord> records;
+
+  @override
+  State<_FlashcardView> createState() => _FlashcardViewState();
+}
+
+class _FlashcardViewState extends State<_FlashcardView> {
+  int _currentIndex = 0;
+  bool _isFlipped = false;
+
+  void _nextCard() {
+    if (_currentIndex < widget.records.length - 1) {
+      setState(() {
+        _currentIndex++;
+        _isFlipped = false;
+      });
+    }
+  }
+
+  void _prevCard() {
+    if (_currentIndex > 0) {
+      setState(() {
+        _currentIndex--;
+        _isFlipped = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.records.isEmpty) return const SizedBox.shrink();
+    final record = widget.records[_currentIndex];
+    final isKu = context.isKu;
+    final explanationText = isKu
+        ? (record.explanationKu ?? record.explanation)
+        : (record.explanationTr ?? record.explanation);
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${_currentIndex + 1} / ${widget.records.length}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: AppTheme.textPrimaryColor(context),
+                ),
+              ),
+              Text(
+                _isFlipped
+                    ? (isKu ? 'Bersiv (Arka Yüz)' : 'Cevap (Arka Yüz)')
+                    : (isKu ? 'Pirs (Ön Yüz)' : 'Soru (Ön Yüz)'),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppTheme.textSubColor(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () => setState(() => _isFlipped = !_isFlipped),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              final rotate = Tween(begin: math.pi, end: 0.0).animate(animation);
+              return AnimatedBuilder(
+                animation: rotate,
+                child: child,
+                builder: (context, child) {
+                  final isUnder = (ValueKey(_isFlipped) != child?.key);
+                  var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
+                  tilt *= isUnder ? -1.0 : 1.0;
+                  final value = isUnder
+                      ? math.min(rotate.value, math.pi / 2)
+                      : rotate.value;
+                  return Transform(
+                    transform: Matrix4.rotationY(value)..setEntry(3, 2, tilt),
+                    alignment: Alignment.center,
+                    child: child,
+                  );
+                },
+              );
+            },
+            child: _isFlipped
+                ? _buildBackCard(context, record, explanationText)
+                : _buildFrontCard(context, record),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedButton.icon(
+              onPressed: _currentIndex > 0 ? _prevCard : null,
+              icon: const Icon(AppIcons.arrowLeft, size: 16),
+              label: Text(context.t(K.back)),
+            ),
+            OutlinedButton.icon(
+              onPressed:
+                  _currentIndex < widget.records.length - 1 ? _nextCard : null,
+              icon: const Icon(AppIcons.arrowRight, size: 16),
+              label: Text(context.t(K.next)),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFrontCard(
+    BuildContext context,
+    AnswerRecord record,
+  ) {
+    return Container(
+      key: const ValueKey(false),
+      width: double.infinity,
+      constraints: const BoxConstraints(minHeight: 240),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceOf(context),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppTheme.borderColor(context),
+          width: 1.5,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppTheme.cyan.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  record.category,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.cyan,
+                  ),
+                ),
+              ),
+              const Icon(AppIcons.layerGroup, size: 18, color: AppTheme.cyan),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Text(
+            record.prompt,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.textPrimaryColor(context),
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(AppIcons.arrowsRotate, size: 14, color: AppTheme.cyan),
+              const SizedBox(width: 6),
+              Text(
+                context.isKu
+                    ? 'Ji bo dîtina bersivê bitikîne'
+                    : 'Cevabı görmek için dokun',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppTheme.cyan,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBackCard(
+    BuildContext context,
+    AnswerRecord record,
+    String explanationText,
+  ) {
+    return Container(
+      key: const ValueKey(true),
+      width: double.infinity,
+      constraints: const BoxConstraints(minHeight: 240),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceOf(context),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppTheme.correct.withValues(alpha: 0.6),
+          width: 2,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(AppIcons.circleCheck, color: AppTheme.correct, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                context.isKu
+                    ? 'Bersiva Rast:'
+                    : 'Doğru Cevap:',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.correct,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppTheme.correct.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.correct.withValues(alpha: 0.3)),
+            ),
+            child: Text(
+              record.correctAnswer,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.textPrimaryColor(context),
+              ),
+            ),
+          ),
+          if (explanationText.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                const Icon(AppIcons.lightbulb, color: AppTheme.violet, size: 18),
+                const SizedBox(width: 6),
+                Text(
+                  // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
+                  // ilişiktirilmişti ("Ravahî / Açıklama:").
+                  context.isKu ? 'Ravahî:' : 'Açıklama:',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.violet,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(
+              explanationText,
+              style: TextStyle(
+                fontSize: 14,
+                color: AppTheme.textSubColor(context),
+                height: 1.4,
+              ),
+            ),
+          ],
         ],
       ),
     );

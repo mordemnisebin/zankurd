@@ -63,8 +63,16 @@ class SyncManager {
   bool _resyncRequested = false;
   bool _disposed = false;
 
+  static final ValueNotifier<int> pendingCountNotifier = ValueNotifier<int>(0);
+  static final ValueNotifier<bool> syncingNotifier = ValueNotifier<bool>(false);
+
   @visibleForTesting
   int get pendingCount => _queue.length;
+
+  void _notifyNotifiers() {
+    pendingCountNotifier.value = _queue.length;
+    syncingNotifier.value = _syncing;
+  }
 
   static Future<SyncManager> initialize(
     ZanKurdRepository repository, {
@@ -247,6 +255,7 @@ class SyncManager {
       return;
     }
     _syncing = true;
+    _notifyNotifiers();
     try {
       do {
         _resyncRequested = false;
@@ -254,6 +263,7 @@ class SyncManager {
       } while (_resyncRequested && !_disposed);
     } finally {
       _syncing = false;
+      _notifyNotifiers();
     }
   }
 

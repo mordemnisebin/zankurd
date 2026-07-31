@@ -232,7 +232,33 @@ class SubcategoryConfig {
         descriptionTr: 'Ağlar, protokoller ve dijital güvenlik',
       ),
     ],
+    'Sînema': _sinemaSubcategories,
+    'Sinema': _sinemaSubcategories,
   };
+
+  static const List<SubcategoryInfo> _sinemaSubcategories = [
+    SubcategoryInfo(
+      id: 'filmen_kurdi',
+      nameKu: 'Fîlm û Derhêner',
+      nameTr: 'Filmler & Yönetmenler',
+      descriptionKu: 'Fîlmên navdar û derhênerên kurdî',
+      descriptionTr: 'Ünlü Kürt filmleri ve yönetmenleri',
+    ),
+    SubcategoryInfo(
+      id: 'yilmaz_guney',
+      nameKu: 'Yılmaz Güney û Klasîk',
+      nameTr: 'Yılmaz Güney & Klasikler',
+      descriptionKu: 'Sînema kevnar û berhemên nemir',
+      descriptionTr: 'Sinema tarihi ve ölümsüz eserler',
+    ),
+    SubcategoryInfo(
+      id: 'festival_belgefilm',
+      nameKu: 'Belgefîlm û Festîval',
+      nameTr: 'Belgesel & Festivaller',
+      descriptionKu: 'Belgefîlm û festîvalên sînemayê',
+      descriptionTr: 'Belgesel sinema ve festivaller',
+    ),
+  ];
 
   /// Alt kategori → konu anahtar kelimeleri. Eşleşme soru metni ve şıklar
   /// üzerinde yapılır; böylece "Rêziman" filtresi gerçekten dilbilgisi
@@ -381,6 +407,10 @@ class SubcategoryConfig {
     'programkirin': ['program', 'kod', 'algorîtma', 'nivîsandina bernameyê'],
     'dijital_internet': ['înternet', 'tor', 'dîjîtal', 'ewlehî', 'protokol'],
     'bingehên_teknolojiyê': ['komputer', 'amûra', 'pergal', 'teknolojî'],
+    // Sînema
+    'filmen_kurdi': ['fîlm', 'derhêner', 'sînema', 'lîstikvan', 'senaryo'],
+    'yilmaz_guney': ['yılmaz güney', 'rê', 'yol', 'sûr', 'dîwar', 'klasîk'],
+    'festival_belgefilm': ['belgefîlm', 'festîval', 'xelat', 'sînematografî'],
   };
 
   /// Soruyu konusuna göre bir alt kategoriye eşler.

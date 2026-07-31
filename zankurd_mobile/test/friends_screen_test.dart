@@ -4,9 +4,87 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+class _TestFriendsRepository extends MockZanKurdRepository {
+  @override
+  Future<List<Friend>> loadFriends() async {
+    return [
+      Friend(
+        id: 'friend1',
+        userId: 'user1',
+        friendId: 'friend-user-1',
+        friendName: 'ZanînBot',
+        friendAvatarColor: '#E94560',
+        createdAt: DateTime.now(),
+        totalScore: 2450,
+        level: 12,
+        gamesPlayed: 48,
+        lastActiveAt: DateTime.now().toUtc(),
+      ),
+      Friend(
+        id: 'friend2',
+        userId: 'user1',
+        friendId: 'friend-user-2',
+        friendName: 'KurdBot',
+        friendAvatarColor: '#6F61C0',
+        createdAt: DateTime.now(),
+        totalScore: 1820,
+        level: 9,
+        gamesPlayed: 31,
+        lastActiveAt: DateTime.now().toUtc().subtract(
+          const Duration(minutes: 10),
+        ),
+      ),
+    ];
+  }
+
+  @override
+  Future<List<FriendRequest>> loadPendingFriendRequests() async {
+    return [
+      FriendRequest(
+        id: 'req1',
+        fromUserId: 'friend-user-3',
+        fromUserName: 'Diyar',
+        toUserId: 'user1',
+        createdAt: DateTime.now(),
+        status: 'pending',
+      ),
+    ];
+  }
+
+  // `MockZanKurdRepository.searchPlayers` 2026-07-31'de boşaltıldı: bir
+  // ağ hatası düşünce gerçek deponun kullandığı fallback, hayalet
+  // profilleri gerçek oyuncuya arkadaş olarak öneriyordu. Bu testin arama
+  // akışını sınaması için sahte sonuç kümesi artık burada, üretim kodunda
+  // değil.
+  @override
+  Future<List<PlayerSearchResult>> searchPlayers(String query) async {
+    final q = query.trim().toLowerCase();
+    if (q.length < 2) return const [];
+    const pool = [
+      PlayerSearchResult(
+        id: 'search-user-1',
+        displayName: 'Rojda',
+        avatarColor: '#2AA6A1',
+      ),
+      PlayerSearchResult(
+        id: 'search-user-2',
+        displayName: 'Rojhat',
+        avatarColor: '#E94560',
+      ),
+      PlayerSearchResult(
+        id: 'search-user-3',
+        displayName: 'Berçem',
+        avatarColor: '#6F61C0',
+      ),
+    ];
+    return pool.where((p) => p.displayName.toLowerCase().contains(q)).toList();
+  }
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +93,7 @@ void main() {
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
-    repository = MockZanKurdRepository();
+    repository = _TestFriendsRepository();
   });
 
   Widget createTestWidget({bool childSafe = false}) {

@@ -123,9 +123,12 @@ extension _QuizScreenUI on _QuizScreenState {
     );
   }
 
-  // ─── Landscape layout ──────────────────────────────────────────────────
+  // ─── Compact landscape layout ──────────────────────────────────────────
+  //
+  // Yalnız gerçekten kısa ve yatay ekranlar için — seçim kuralı ve gerekçesi
+  // `_useCompactLandscapeLayout` başında.
 
-  Widget _buildLandscapeLayout() {
+  Widget _buildCompactLandscapeLayout() {
     // Portrait ile aynı kural: tur içi açıklama yalnız Öğrenme Bölgesi'nde.
     final showExpl = _isLearningExperience && _showExplanation;
 
@@ -827,7 +830,15 @@ extension _QuizScreenUI on _QuizScreenState {
   }) {
     final promptText = question.promptText;
     final size = MediaQuery.sizeOf(context);
-    final compactLandscape = size.width >= 700 && size.width > size.height;
+    // Yerleşim dalıyla AYNI kural. Burada eskiden ayrı bir eşik duruyordu
+    // (`width >= 700 && width > height`) ve dal seçimiyle çelişiyordu:
+    // 1440×900 masaüstünde ikisi de "yatay" diyor, soru görseli gizleniyor ve
+    // punto telefon ölçüsüne düşüyordu; 768×1024 dikey tablette ise dal iki
+    // sütun seçerken tipografi masaüstü kalıyordu. Tek kaynak, tek doğru.
+    final compactLandscape = _useCompactLandscapeLayout(
+      size.width,
+      size.height,
+    );
     final isCompact = size.height < 750;
     final questionIcon = CategoryVisuals.icon(question.category);
     // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,
