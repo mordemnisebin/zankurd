@@ -227,8 +227,15 @@ void main() {
     },
   );
 
+  // Yol 2026-07-31'de değişti. `delete_my_account_rpc.sql` tarihsizdi ve
+  // alfabetik sırada tarihli göçlerden SONRA geldiği için, sırayla
+  // çalıştırılan bir kurulumda 2026-07-29 sertleştirmesinin üzerine eski
+  // sürümü yazıyordu; `supabase/archive/` altına alındı. Bekçi artık
+  // yetkili tanımı okuyor — arşivlenmiş kopyayı değil.
   test('account deletion SQL removes user avatar storage objects', () {
-    final sql = File('supabase/delete_my_account_rpc.sql').readAsStringSync();
+    final sql = File(
+      'supabase/2026-07-29_client_reward_authority_fix.sql',
+    ).readAsStringSync();
 
     expect(sql, contains('delete from storage.objects'));
     expect(sql, contains("bucket_id = 'avatars'"));

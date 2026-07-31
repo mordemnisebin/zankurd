@@ -895,7 +895,7 @@
     {
       "id": "quiz_reward_rpc",
       "description": "Quiz reward RPC",
-      "path": "supabase/quiz_reward_rpc.sql",
+      "path": "supabase/archive/quiz_reward_rpc.sql",
       "role": "ignored_non_question",
       "parser": "none",
       "canonicalGroup": "none",

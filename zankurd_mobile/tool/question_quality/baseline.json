@@ -7,7 +7,7 @@
     "assets/data/editorial_questions.json": "046d2027d4ea9504daccb20174956fb90bcd207d7332ca3a8d455af4e3fb95c9",
     "assets/data/offline_questions.json": "5df16f91fa81e49211127ea0c98ee492a7f7a951dec440ac6b7909ec6dce47d8",
     "assets/data/sentence_building_questions.json": "ee576f56fbed547843a87cbec397bada1af9a73784ef6d5a0ecf3239272a3f06",
-    "lib/src/data/curated_question_bank.dart": "501dd4a1efe10525381a5d6cdd3dab0cd34841a462716029cf505f14ce1c5b44"
+    "lib/src/data/curated_question_bank.dart": "92a08265aa17db9763b0c33160fd6ed3e605935e182c5b5e0c6349fb527d1db3"
   },
   "blockerCount": 0,
   "criticalCount": 0,

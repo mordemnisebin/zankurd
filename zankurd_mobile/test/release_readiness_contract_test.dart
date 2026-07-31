@@ -308,10 +308,12 @@ void main() {
   });
 
   test('account deletion releases contributor foreign keys first', () {
-    for (final path in [
-      'supabase/delete_my_account_rpc.sql',
-      'supabase/2026-07-29_client_reward_authority_fix.sql',
-    ]) {
+    // Eskiden tarihsiz `delete_my_account_rpc.sql` de bu listedeydi.
+    // 2026-07-31'de `supabase/archive/` altına alındı: tarihsiz olduğu için
+    // alfabetik sırada tarihli göçlerden sonra geliyor ve sırayla
+    // çalıştırılan bir kurulumda 2026-07-29 sertleştirmesini geri alıyordu.
+    // Bekçi yalnız yetkili tanımı ölçer.
+    for (final path in ['supabase/2026-07-29_client_reward_authority_fix.sql']) {
       final sql = File(path).readAsStringSync();
       final authDelete = sql.indexOf('delete from auth.users');
       final questionRelease = sql.indexOf('update public.questions');
