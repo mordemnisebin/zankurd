@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'firebase_options.dart';
@@ -30,6 +31,21 @@ import 'src/services/premium_service.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/error_reporter.dart';
 import 'src/widgets/responsive_wrapper.dart';
+
+/// Açılış penceresinde ısıtılan iş.
+///
+/// AppShell mount olduğunda iki kapı var: onboarding bayrağı
+/// (SharedPreferences) ve oyuncu adı (`getProfileName`, ağ). İkisi de
+/// splash'ten SONRA başlıyordu, yani kullanıcı 1800 ms logo + 450 ms
+/// geçiş + iki spinner görüyordu — dört ayrı bekleme yüzeyi.
+///
+/// Burada ikisi de splash görünürken başlatılır. Hata yutulmaz ama
+/// açılışı da engellemez: `SplashScreen` readiness başarısız olsa da
+/// geçiş yapar, AppShell kendi kontrolünü yine çalıştırır.
+Future<void> _warmUpShell(ZanKurdRepository repository) async {
+  await SharedPreferences.getInstance();
+  await repository.getProfileName();
+}
 
 /// Global hata ekranının dili. `ErrorWidget.builder` widget ağacının dışında
 /// çalıştığı için `LangContext`'e erişemez; dil tercihi yüklendiğinde burada
@@ -137,7 +153,6 @@ Future<void> main() async {
       }
 
       await SyncManager.initialize(repository);
-      await NotificationService.load();
 
       // Bağımsız servis ve provider'ları paralel yükle. Sonuçlar indeksle
       // değil kendi future'larıyla okunur: `results[3] as ThemeProvider`
@@ -148,9 +163,17 @@ Future<void> main() async {
       final soundFuture = SoundProvider.load();
       final reducedMotionFuture = ReducedMotionProvider.load();
 
+      // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
+      // tercihleri. `AnalyticsService.initialize()` ve
+      // `NotificationService.load()` buradan ÇIKARILDI — ikisi de ilk
+      // karenin ne çizileceğini etkilemiyor, ama ikisi de bekletiyordu.
+      //
+      // NotificationService özellikle pahalıydı: `tz.initializeTimeZones()`
+      // bütün saat dilimi veritabanını okuyor ve cihaz saat dilimi için
+      // platform kanalına iniyor — bildirimler kapalı olsa bile
+      // (2026-07-31 denetimi).
       await Future.wait<void>([
         QuestionBankLoader.instance.load(),
-        AnalyticsService.instance.initialize(),
         languageFuture,
         themeFuture,
         soundFuture,
@@ -165,6 +188,23 @@ Future<void> main() async {
       final themeProvider = await themeFuture;
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
+
+      // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
+      // hiçbiri uygulamanın açılmasını engellemez.
+      void startInBackground(Future<void> future, String reason) {
+        unawaited(
+          future.catchError((Object error, StackTrace stack) {
+            ErrorReporter.record(error, stack, reason: reason);
+          }),
+        );
+      }
+
+      startInBackground(premiumService.warmUp(), 'premium warmUp');
+      startInBackground(
+        AnalyticsService.instance.initialize(),
+        'analytics init',
+      );
+      startInBackground(NotificationService.load(), 'notifications load');
 
       runApp(
         ZanKurdApp(
@@ -290,7 +330,15 @@ class ZanKurdApp extends StatelessWidget {
           themeMode: themeProvider.mode,
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
-          home: SplashScreen(next: AppShell(repository: repository)),
+          home: SplashScreen(
+            // Marka penceresi artık boşa harcanmıyor: AppShell'in mount
+            // olur olmaz yapacağı iki iş bu 600 ms içinde ısıtılıyor —
+            // SharedPreferences ve `getProfileName()`. Eskiden splash
+            // 1800 ms bekliyor, SONRA AppShell iki tam ekran spinner
+            // daha çiziyordu (2026-07-31 denetimi).
+            readiness: _warmUpShell(repository),
+            next: AppShell(repository: repository),
+          ),
           builder: (context, child) => MediaQuery.withClampedTextScaling(
             minScaleFactor: 0.85,
             maxScaleFactor: 2.0,

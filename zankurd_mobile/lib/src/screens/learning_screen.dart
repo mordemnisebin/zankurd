@@ -1335,6 +1335,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                                           const SizedBox(),
                                     )
                                   : CachedNetworkImage(
+                                      memCacheWidth: 720,
                                       imageUrl: imgUrl,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Container(

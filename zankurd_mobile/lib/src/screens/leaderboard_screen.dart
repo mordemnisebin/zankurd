@@ -36,7 +36,7 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
   late Future<List<LeaderboardEntry>> _future;
   late Future<List<Friend>> _friendsFuture;
@@ -66,6 +66,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     super.initState();
     _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
     _tabController.addListener(_onTabChanged);
+    WidgetsBinding.instance.addObserver(this);
     _loadData();
     _startAutoRefresh();
     widget.refreshSignal?.addListener(_loadData);
@@ -147,14 +148,45 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     }
   }
 
+  /// 30 saniyelik yenileme yalnız uygulama ÖNDEYKEN çalışır.
+  ///
+  /// Zamanlayıcı eskiden yalnız `dispose()`ta iptal ediliyordu. Ama bu ekran
+  /// bir kez ziyaret edildikten sonra `IndexedStack` içinde kalıcı olarak
+  /// mount kalır — sekme değiştirmek onu dispose etmez. Dolayısıyla
+  /// kullanıcı ana sayfadayken, profildeyken, hatta bir quizin ortasındayken
+  /// bile her 30 saniyede bir Supabase RPC'si atılıyor ve görünmeyen bir
+  /// ağaç yeniden çiziliyordu.
+  ///
+  /// Depoda tek bir `WidgetsBindingObserver` yoktu, yani uygulama arka
+  /// plana alındığında da sorgu sürüyordu: gereksiz mobil veri, pil ve
+  /// Supabase kotası (2026-07-31 denetimi).
   void _startAutoRefresh() {
+    _refreshTimer?.cancel();
     _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
       if (mounted) _loadData();
     });
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // Dönüşte bir kez tazele, sonra döngüyü yeniden kur.
+        _loadData();
+        _startAutoRefresh();
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.detached:
+        _refreshTimer?.cancel();
+        _refreshTimer = null;
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     widget.refreshSignal?.removeListener(_loadData);
     _tabController.removeListener(_onTabChanged);
     _tabController.dispose();

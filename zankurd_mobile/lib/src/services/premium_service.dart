@@ -95,14 +95,31 @@ class PremiumService extends ChangeNotifier {
 
   /// RevenueCat yapılandırması yapılmışsa `configure` çağırır, aksi
   /// halde sessizce devre dışı bırakır (anahtar yoksa satın alma kapalı).
+  /// SDK'yı kurar — **ağ beklemez**.
+  ///
+  /// Eskiden bu metot `Purchases.getCustomerInfo()`yu da bekliyordu ve
+  /// `main()` içinde `runApp`tan ÖNCE çağrılıyordu. Yani Flutter, gerçek
+  /// bir ağ isteği tamamlanmadan tek bir kare bile çizmiyordu: kullanıcı
+  /// o süre boyunca sistemin açılış ekranına bakıyordu. Yavaş ya da
+  /// kararsız bir ağda (kırsal 3G, otel wifi, captive portal) bekleme
+  /// RevenueCat SDK'sının kendi zaman aşımına kadar uzayabiliyordu —
+  /// uygulama donmuş görünüyor, oysa yalnız abonelik durumu soruluyordu
+  /// (2026-07-31 denetimi).
+  ///
+  /// Abonelik durumu ilk kare için gerekli DEĞİL: paywall ve premium
+  /// rozetleri `notifyListeners` üzerinden sonradan güncelleniyor.
+  /// [configure] yerel ve hızlıdır; ağ kısmı [warmUp]'a taşındı.
+  ///
+  /// Yine de `configure` bloklayan yolda kalmalı: `AuthProvider` kurulur
+  /// kurulmaz `logInUser` çağırıyor ve o `_configured` ister.
   static Future<PremiumService> load() async {
     if (_instance != null) return _instance!;
     final service = PremiumService._();
-    await service._initialize();
+    await service._configure();
     return _instance = service;
   }
 
-  Future<void> _initialize() async {
+  Future<void> _configure() async {
     if (_initialized) return;
     _initialized = true;
 
@@ -125,14 +142,25 @@ class PremiumService extends ChangeNotifier {
       final configuration = PurchasesConfiguration(apiKey)..appUserID = null;
       await Purchases.configure(configuration);
       _configured = true;
-
-      final info = await Purchases.getCustomerInfo();
-      _isPremium = _hasEntitlement(info.entitlements.all);
       Purchases.addCustomerInfoUpdateListener(_onCustomerInfoUpdate);
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'premium_service init');
+      ErrorReporter.record(error, stack, reason: 'premium_service configure');
     }
     notifyListeners();
+  }
+
+  /// Abonelik durumunu ağdan çeker. `runApp` SONRASINDA, beklenmeden
+  /// çağrılır; sonuç geldiğinde UI `notifyListeners` ile kendiliğinden
+  /// güncellenir.
+  Future<void> warmUp() async {
+    if (!_configured) return;
+    try {
+      final info = await Purchases.getCustomerInfo();
+      _isPremium = _hasEntitlement(info.entitlements.all);
+      notifyListeners();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'premium_service warmUp');
+    }
   }
 
   /// RevenueCat müşterisini Supabase kullanıcısına bağlar.

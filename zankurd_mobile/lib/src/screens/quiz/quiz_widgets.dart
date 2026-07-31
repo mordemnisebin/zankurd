@@ -155,6 +155,12 @@ class _QuestionImage extends StatelessWidget {
         ? CachedNetworkImage(
             imageUrl: url,
             fit: BoxFit.contain,
+            // Kod çözme genişliği sınırlanmazsa görsel tam
+            // çözünürlüğünde belleğe açılır: 2000 px genişliğinde bir
+            // JPEG, ekranda 350 px görünse bile ~16 MB RGBA tutar. Soru
+            // kartı hiçbir zaman 1080 px'ten geniş çizilmiyor
+            // (2026-07-31 denetimi).
+            memCacheWidth: 1080,
             placeholder: (context, url) => const _QuestionImagePlaceholder(),
             imageBuilder: (context, imageProvider) {
               _notifyReady();

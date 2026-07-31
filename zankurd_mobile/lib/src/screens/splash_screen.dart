@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -14,12 +15,29 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
     required this.next,
-    this.duration = const Duration(milliseconds: 1800),
+    this.duration = const Duration(milliseconds: 600),
+    this.readiness,
     super.key,
   });
 
   final Widget next;
+
+  /// Markanın görünmesi için gereken EN AZ süre.
+  ///
+  /// 2026-07-31'e kadar 1800 ms'ti ve bu bir yükleme penceresi değil, saf
+  /// gecikmeydi: `runApp` bütün başlatma zincirinden SONRA çağrıldığı için
+  /// bu ekran göründüğünde iş çoktan bitmiş oluyordu. Üstüne 450 ms geçiş
+  /// biniyor, ardından AppShell iki tam ekran spinner daha çiziyordu
+  /// (SharedPreferences, sonra `getProfileName()` ağ çağrısı). Kullanıcı
+  /// dört ayrı bekleme yüzeyi görüyordu (2026-07-31 denetimi).
+  ///
+  /// Artık pencere süreye değil HAZIR OLMAYA bağlı: 600 ms marka için
+  /// alt sınır, [readiness] ise gerçek iş. Hangisi geç biterse o belirler.
   final Duration duration;
+
+  /// Bir sonraki ekranın ihtiyaç duyduğu hazırlık. Tamamlanmadan geçilmez.
+  /// Verilmezse yalnız [duration] beklenir (eski davranış).
+  final Future<void>? readiness;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -30,7 +48,11 @@ class _SplashScreenState extends State<SplashScreen>
   late final AnimationController _controller;
   late final Animation<double> _fade;
   late final Animation<double> _scale;
-  Timer? _timer;
+
+  Timer? _minimumTimer;
+  bool _minimumElapsed = false;
+  bool _ready = false;
+  bool _navigated = false;
 
   // İkon "tofu" (boş kutu) sorunu: MaterialIcons web fontu ilk ikon
   // rasterize edilene kadar yüklenmez; geç yüklenirse ana ekranda ikonlar
@@ -61,7 +83,40 @@ class _SplashScreenState extends State<SplashScreen>
       begin: 0.82,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
-    _timer = Timer(widget.duration, _goNext);
+    // Marka penceresi ile gerçek hazırlık AYRI ayrı beklenir; hangisi geç
+    // biterse geçişi o tetikler.
+    //
+    // `Future.delayed` yerine iptal edilebilir bir `Timer`: ekran erken
+    // sökülürse zamanlayıcı da ölmeli. Aksi hâlde widget testleri
+    // "pending timer" ile düşer ve gerçek uygulamada da sökülmüş bir
+    // ağaca `pushReplacement` denenirdi.
+    _minimumTimer = Timer(widget.duration, () {
+      _minimumElapsed = true;
+      _goNextIfReady();
+    });
+
+    final readiness = widget.readiness;
+    if (readiness == null) {
+      _ready = true;
+    } else {
+      unawaited(
+        readiness
+            .catchError((Object error, StackTrace stack) {
+              // Açılışı bir hataya kilitlemek, geç açılmaktan kötüdür.
+              ErrorReporter.record(error, stack, reason: 'splash readiness');
+            })
+            .whenComplete(() {
+              _ready = true;
+              _goNextIfReady();
+            }),
+      );
+    }
+  }
+
+  void _goNextIfReady() {
+    if (!_minimumElapsed || !_ready || _navigated) return;
+    _navigated = true;
+    _goNext();
   }
 
   void _goNext() {
@@ -78,7 +133,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _minimumTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }

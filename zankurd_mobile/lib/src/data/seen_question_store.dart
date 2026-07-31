@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +17,19 @@ class SeenQuestionStore {
   SeenQuestionStore._(this._preferences, this._seen);
 
   static const _storageKey = 'zankurd.seenQuestionIds';
+
+  /// Kümedeki en fazla kimlik sayısı — EN ESKİ olanlar düşer (FIFO).
+  ///
+  /// Küme bugün pratikte banka boyutuyla (~1.832) sınırlı: havuz tükendiğinde
+  /// `preferUnseen` o havuzun izlerini siliyor. Ama bu bir tesadüf, kural
+  /// değil — banka büyüdükçe ya da sunucudan soru gelmeye başladıkça sayı
+  /// serbestçe artar ve her `markSeen` çağrısı listenin TAMAMINI diske
+  /// yeniden yazar (2026-07-31 denetimi).
+  ///
+  /// 3.000 bilerek bugünkü bankanın üstünde: davranış aynı kalıyor, yalnız
+  /// tavan yazılı hâle geliyor.
+  static const _maxTrackedIds = 3000;
+
   static SeenQuestionStore? _instance;
 
   static Future<SeenQuestionStore> load() async {
@@ -28,7 +42,9 @@ class SeenQuestionStore {
       ErrorReporter.record(error, stack, reason: 'seen_question_store');
       preferences = null;
     }
-    final seen = preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
+    // `LinkedHashSet` ekleme sırasını korur; budama en eskiden başlar.
+    final stored = preferences?.getStringList(_storageKey) ?? const <String>[];
+    final seen = LinkedHashSet<String>.of(stored);
     return _instance = SeenQuestionStore._(preferences, seen);
   }
 
@@ -36,7 +52,7 @@ class SeenQuestionStore {
   static void resetInstance() => _instance = null;
 
   final SharedPreferences? _preferences;
-  final Set<String> _seen;
+  final LinkedHashSet<String> _seen;
 
   bool isSeen(String id) => _seen.contains(id);
   int get seenCount => _seen.length;
@@ -44,7 +60,19 @@ class SeenQuestionStore {
   Future<void> markSeen(Iterable<String> ids) async {
     if (ids.isEmpty) return;
     _seen.addAll(ids);
+    _trim();
     await _persist();
+  }
+
+  /// Tavanı aşan en eski kimlikleri düşürür.
+  ///
+  /// En eski görülen soru, tekrar gösterilmesi en zararsız olandır: aradan
+  /// en çok zaman geçmiştir.
+  void _trim() {
+    if (_seen.length <= _maxTrackedIds) return;
+    final excess = _seen.length - _maxTrackedIds;
+    final oldest = _seen.take(excess).toList(growable: false);
+    _seen.removeAll(oldest);
   }
 
   Future<void> clear() async {

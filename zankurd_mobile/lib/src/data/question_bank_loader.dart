@@ -1,11 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../models/quiz_question.dart';
 import 'curated_question_bank.dart';
 import 'question_bank_loader_stub.dart'
     if (dart.library.io) 'question_bank_loader_io.dart';
+
+/// `compute` ile arka isolate'te çalıştırılır; üst düzey olmak zorunda.
+List<dynamic> _decodeJsonList(String raw) => json.decode(raw) as List<dynamic>;
 
 /// Soru bankasını asenkron olarak yükler.
 ///
@@ -83,7 +87,18 @@ class QuestionBankLoader {
   static Future<List<QuizQuestion>> _loadJson(String assetPath) async {
     try {
       final raw = await rootBundle.loadString(assetPath);
-      final list = json.decode(raw) as List<dynamic>;
+      // JSON çözme ARKA İSOLATE'te.
+      //
+      // Dört asset toplam ~1,4 MB ve en büyüğü tek başına 1,1 MB
+      // (offline_questions.json). Çözme UI isolate'inde yapılınca ilk kare
+      // o süre boyunca bloklanıyordu — `main()` bu yüklemeyi `runApp`tan
+      // önce bekliyor (2026-07-31 denetimi).
+      //
+      // Yalnız `json.decode` taşınıyor: pahalı olan o. Sonuç düz
+      // List/Map olduğu için isolate sınırından sorunsuz geçer;
+      // `QuizQuestion.fromJson` eşlemesi ucuz ve burada kalıyor.
+      // Web'de `compute` senkron çalışır, davranış aynı kalır.
+      final list = await compute(_decodeJsonList, raw);
       return list
           .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
           .toList(growable: false);

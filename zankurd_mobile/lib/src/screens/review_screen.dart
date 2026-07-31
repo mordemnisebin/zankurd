@@ -316,6 +316,9 @@ class _ReviewCard extends StatelessWidget {
                             errorBuilder: (_, _, _) => const SizedBox(),
                           )
                         : CachedNetworkImage(
+                            // Gözden geçirme kartı küçük; tam çözünürlük
+                            // belleğe açmak gereksiz (2026-07-31).
+                            memCacheWidth: 720,
                             imageUrl: record.imageUrl!,
                             width: double.infinity,
                             height: 180,
