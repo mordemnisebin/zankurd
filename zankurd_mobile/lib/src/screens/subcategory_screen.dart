@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
 import '../data/zankurd_repository.dart';
@@ -23,7 +24,8 @@ class SubcategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final canonicalCat = CategoryVisuals.canonicalName(category);
-    final rawList = SubcategoryConfig.subcategories[category] ??
+    final rawList =
+        SubcategoryConfig.subcategories[category] ??
         SubcategoryConfig.subcategories[canonicalCat];
     final list = (rawList != null && rawList.isNotEmpty)
         ? rawList
@@ -248,9 +250,7 @@ class _CategoryBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  isKu
-                      ? 'Barekî hilbijêre û dest bi lîstinê bike.'
-                      : 'Bir alt alan seçerek yarışmaya başla.',
+                  Tr.forKu(K.birAltAlanSecerek, isKu),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -432,12 +432,12 @@ class _SubcategoryCard extends StatelessWidget {
                                 children: [
                                   _LevelChip(
                                     icon: AppIcons.stairs,
-                                    label: isKu ? '5 ast' : '5 seviye',
+                                    label: Tr.forKu(K.seviye, isKu),
                                     tint: tint,
                                   ),
                                   _LevelChip(
                                     icon: AppIcons.bolt,
-                                    label: isKu ? 'Pêşbaz' : 'Yarış',
+                                    label: Tr.forKu(K.yaris, isKu),
                                     tint: tint,
                                   ),
                                 ],

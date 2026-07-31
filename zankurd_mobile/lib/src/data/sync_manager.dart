@@ -109,10 +109,7 @@ class SyncManager {
     if (_instance != null) return;
     final repository = _lastRepository;
     if (repository == null) return;
-    await initialize(
-      repository,
-      connectivityMonitor: _lastConnectivityMonitor,
-    );
+    await initialize(repository, connectivityMonitor: _lastConnectivityMonitor);
   }
 
   static ConnectivityMonitor _defaultConnectivityMonitor() {

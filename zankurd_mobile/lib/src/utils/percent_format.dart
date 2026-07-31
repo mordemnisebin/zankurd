@@ -16,6 +16,10 @@ class PercentFormat {
 
   /// 0–100 aralığındaki bir yüzde değerini biçimlendirir.
   static String value(int percent, {required bool isKu}) {
+    // BİLEREK satır içi: bu sınıf yüzde biçiminin TEK kaynağıdır ve
+    // `percent_and_identity_test` başka hiçbir yerde elle biçim
+    // yazılmadığını doğrular. Metni anahtar defterine taşımak o bekçiyi
+    // kör eder — biçim bir "ekran metni" değil, bir sayı biçimidir.
     return isKu ? '$percent%' : '%$percent';
   }
 

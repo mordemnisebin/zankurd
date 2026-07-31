@@ -528,7 +528,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          isKu ? 'Hemû Destkeftî' : 'Tüm Başarılar',
+                          Tr.forKu(K.tumBasarilar, isKu),
                           style: AppTypography.heading2.copyWith(
                             color: AppTheme.textPrimaryColor(context),
                             fontSize: 20,
@@ -537,7 +537,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () => Navigator.pop(ctx),
-                        tooltip: isKu ? 'Bigire' : 'Kapat',
+                        tooltip: Tr.forKu(K.close, isKu),
                         icon: const Icon(AppIcons.xmark),
                       ),
                     ],
@@ -550,7 +550,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                         // --- Başarılar bölümü ---
                         if (achDefs.isNotEmpty) ...[
                           Text(
-                            isKu ? 'Destkeftî' : 'Başarılar',
+                            Tr.forKu(K.basarilar, isKu),
                             style: AppTypography.bodyLarge.copyWith(
                               color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
@@ -650,7 +650,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
                         // --- Rozetler bölümü ---
                         if (badgeDefs.isNotEmpty) ...[
                           Text(
-                            isKu ? 'Rozet' : 'Rozetler',
+                            Tr.forKu(K.rozetler, isKu),
                             style: AppTypography.bodyLarge.copyWith(
                               color: AppTheme.textPrimaryColor(context),
                               fontWeight: FontWeight.w700,
@@ -716,7 +716,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
               // başlık artık kalan genişliği alır (2026-07-26).
               Expanded(
                 child: Text(
-                  isKu ? 'Destkeftî' : 'Başarılar',
+                  Tr.forKu(K.basarilar, isKu),
                   style: AppTypography.bodyLarge.copyWith(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w700,
@@ -755,9 +755,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
           // Yatay kaydırma: önce başarımlar, sonra rozetler
           if (achievements.isEmpty && badgeUnlocked.isEmpty)
             Text(
-              isKu
-                  ? 'Pêşbirkekê biqedîne û destkeftiya yekem veke.'
-                  : 'Bir yarış tamamla ve ilk başarımı aç.',
+              Tr.forKu(K.birYarisTamamlaVe, isKu),
               // Sabit `textMuted` karanlık temanın rengidir; açık temada
               // bu metin krem zemin üzerinde ~2,6:1 kontrastla çıkıyordu.
               // Bağlama duyarlı getter iki temada da doğru rengi verir
@@ -864,7 +862,7 @@ class _MasterySection extends StatelessWidget {
               // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
               Expanded(
                 child: Text(
-                  isKu ? 'Ustalîya Kategoriyê' : 'Kategori Ustalığı',
+                  Tr.forKu(K.kategoriUstaligi, isKu),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.bodyLarge.copyWith(
@@ -936,7 +934,7 @@ class _MasteryRow extends StatelessWidget {
               ),
               child: Text(
                 level == MasteryLevel.none
-                    ? (isKu ? 'Destpêkirin' : 'Başlangıç')
+                    ? (Tr.forKu(K.baslangic, isKu))
                     : (isKu ? level.titleKu : level.titleTr),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -1133,7 +1131,7 @@ class _PedagogicalAnalyticsSectionState
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      isKu ? 'Analîza Performansê' : 'Performans Analizi',
+                      Tr.forKu(K.performansAnalizi, isKu),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyLarge.copyWith(
@@ -1150,9 +1148,7 @@ class _PedagogicalAnalyticsSectionState
               // 📊 Category performance bars
               if (categoryBars.isNotEmpty) ...[
                 Text(
-                  isKu
-                      ? 'Performansa li gor kategoriyan'
-                      : 'Kategorilere göre performans',
+                  Tr.forKu(K.kategorilereGorePerformans, isKu),
                   style: AppTypography.caption.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontWeight: FontWeight.w600,
@@ -1224,12 +1220,12 @@ class _PedagogicalAnalyticsSectionState
                     children: [
                       _LegendDot(
                         color: AppTheme.correct,
-                        label: isKu ? 'Rast' : 'Doğru',
+                        label: Tr.forKu(K.correct, isKu),
                       ),
                       const SizedBox(width: 16),
                       _LegendDot(
                         color: AppTheme.wrong,
-                        label: isKu ? 'Şaş' : 'Yanlış',
+                        label: Tr.forKu(K.wrong, isKu),
                       ),
                     ],
                   ),
@@ -1243,9 +1239,7 @@ class _PedagogicalAnalyticsSectionState
 
               if (strongestCat != null) ...[
                 Text(
-                  isKu
-                      ? 'Kategoriya te ya herî bihêz:'
-                      : 'En güçlü olduğun kategori:',
+                  Tr.forKu(K.enGucluOldugunKategori, isKu),
                   style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 13,
@@ -1280,9 +1274,7 @@ class _PedagogicalAnalyticsSectionState
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        isKu
-                            ? '$maxCorrect bersivên rast'
-                            : '$maxCorrect doğru cevap',
+                        Tr.forKu(K.pDogruCevap, isKu, {'p0': '$maxCorrect'}),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(
@@ -1298,9 +1290,7 @@ class _PedagogicalAnalyticsSectionState
                 const SizedBox(height: 14),
               if (weakestCat != null) ...[
                 Text(
-                  isKu
-                      ? 'Kategoriya ku divê tu pêş bixî:'
-                      : 'Geliştirilmesi gereken alan:',
+                  Tr.forKu(K.gelistirilmesiGerekenAlan, isKu),
                   style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.textMutedColor(context),
                     fontSize: 13,
@@ -1335,9 +1325,9 @@ class _PedagogicalAnalyticsSectionState
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        isKu
-                            ? '$maxMistakes pirsên şaş ên çalak'
-                            : '$maxMistakes aktif yanlış soru',
+                        Tr.forKu(K.pAktifYanlisSoru, isKu, {
+                          'p0': '$maxMistakes',
+                        }),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(

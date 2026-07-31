@@ -62,12 +62,11 @@ Color frameColor(AvatarFrame frame) => switch (frame) {
 ///
 /// Metinler anahtar defterinde durur: satır içi olsalardı Kurmancî alfabe
 /// bekçisinin ve `Tr.missingFor` bütünlük testinin dışında kalırlardı.
-String frameRequirementLabel(AvatarFrame frame, bool isKu) => Tr.forKu(switch (
-  frame
-) {
-  AvatarFrame.bronze => K.frameReqBronze,
-  AvatarFrame.silver => K.frameReqSilver,
-  AvatarFrame.gold => K.frameReqGold,
-  AvatarFrame.mamoste => K.frameReqMamoste,
-  AvatarFrame.neon => K.frameReqNeon,
-}, isKu);
+String frameRequirementLabel(AvatarFrame frame, bool isKu) =>
+    Tr.forKu(switch (frame) {
+      AvatarFrame.bronze => K.frameReqBronze,
+      AvatarFrame.silver => K.frameReqSilver,
+      AvatarFrame.gold => K.frameReqGold,
+      AvatarFrame.mamoste => K.frameReqMamoste,
+      AvatarFrame.neon => K.frameReqNeon,
+    }, isKu);

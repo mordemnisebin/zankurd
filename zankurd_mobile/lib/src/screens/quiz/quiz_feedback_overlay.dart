@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/strings.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/app_icons.dart';
 
@@ -19,9 +20,7 @@ class QuizTimeoutNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = isKu
-        ? 'Dem qediya! Bersivên rast: $correctAnswer'
-        : 'Süre doldu! Doğru cevap: $correctAnswer';
+    final label = Tr.forKu(K.sureDolduDogruCevap, isKu, {'p0': correctAnswer});
     return Semantics(
       key: const ValueKey('quiz-timeout-notice'),
       liveRegion: true,

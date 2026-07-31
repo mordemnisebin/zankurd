@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -21,9 +22,9 @@ enum LeagueTier {
   }
 
   String label(bool isKu) => switch (this) {
-    LeagueTier.zer => isKu ? 'Lîga Zêr' : 'Altın Lig',
-    LeagueTier.ziv => isKu ? 'Lîga Zîv' : 'Gümüş Lig',
-    LeagueTier.bronz => isKu ? 'Lîga Bronz' : 'Bronz Lig',
+    LeagueTier.zer => Tr.forKu(K.altinLig, isKu),
+    LeagueTier.ziv => Tr.forKu(K.gumusLig, isKu),
+    LeagueTier.bronz => Tr.forKu(K.bronzLig, isKu),
   };
 
   Color get color => switch (this) {

@@ -812,9 +812,8 @@ class _RoomScreenState extends State<RoomScreen> {
                                   const SizedBox(height: AppSpacing.cardGap),
                                   _ChatToggleRow(
                                     open: _chatOpen,
-                                    onToggle: () => setState(
-                                      () => _chatOpen = !_chatOpen,
-                                    ),
+                                    onToggle: () =>
+                                        setState(() => _chatOpen = !_chatOpen),
                                   ),
                                   if (_chatOpen)
                                     RoomChat(
@@ -1044,7 +1043,7 @@ class _PlayerTile extends StatelessWidget {
                           borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Text(
-                          isKu ? 'Mêvandar' : 'Ev sahibi',
+                          Tr.forKu(K.host, isKu),
                           style: AppTypography.caption.copyWith(
                             color: AppColors.onAccentTint(
                               context,
@@ -1120,7 +1119,11 @@ class _ChatToggleRow extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const Icon(AppIcons.comment, color: AppTheme.playCyan, size: 20),
+                const Icon(
+                  AppIcons.comment,
+                  color: AppTheme.playCyan,
+                  size: 20,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(

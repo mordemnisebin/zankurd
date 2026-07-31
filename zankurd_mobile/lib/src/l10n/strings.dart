@@ -649,10 +649,260 @@ class Tr {
 
     // ── Çevrimiçi tur durum satırı ───────────────────────────────────
     K.answeredState: {'ku': 'Bersiv da', 'tr': 'Cevapladı'},
-    K.waitingAnswerState: {
-      'ku': 'Li benda bersivê ye',
-      'tr': 'Cevap bekliyor',
+    K.waitingAnswerState: {'ku': 'Li benda bersivê ye', 'tr': 'Cevap bekliyor'},
+
+    // ── Göç edilen ekran metinleri (2026-07-31) ─────────────────────
+    K.altinLig: {'ku': 'Lîga Zêr', 'tr': 'Altın Lig'},
+    K.gumusLig: {'ku': 'Lîga Zîv', 'tr': 'Gümüş Lig'},
+    K.bronzLig: {'ku': 'Lîga Bronz', 'tr': 'Bronz Lig'},
+    K.metin: {'ku': 'Nîv bi Nîv', 'tr': '50/50'},
+    K.sikIpucu: {'ku': 'Alîkariya Bersivê', 'tr': 'Şık İpucu'},
+    K.ciftCevap: {'ku': 'Du Bersiv', 'tr': 'Çift Cevap'},
+    K.soruDegistir: {'ku': 'Pirsê Biguhere', 'tr': 'Soru Değiştir'},
+    K.kategorilerYuklenemediLutfenSayfayi: {
+      'ku': 'Kategorî nehatin barkirin. Ji kerema xwe rûpelê nû bike.',
+      'tr': 'Kategoriler yüklenemedi. Lütfen sayfayı yenileyin.',
     },
+    K.yakinda: {'ku': 'Nêzîk de tê', 'tr': 'Yakında'},
+    K.soru: {'ku': 'pirs', 'tr': 'soru'},
+    K.yakindaGeliyor: {'ku': 'Nêzîk de tê…', 'tr': 'Yakında geliyor…'},
+    K.pSoruSeviye: {'ku': '{p0} pirs · 5 ast', 'tr': '{p0} soru · 5 seviye'},
+    K.seviye: {'ku': '5 ast', 'tr': '5 seviye'},
+    K.gunlukGorevler: {'ku': 'Erkên Rojane', 'tr': 'Günlük Görevler'},
+    K.tamamlandi: {'ku': 'temam', 'tr': 'tamamlandı'},
+    K.pGorevTamam: {'ku': '{p0} erk temam bûn', 'tr': '{p0} görev tamam'},
+    K.tumGorevlerTamam: {
+      'ku': 'Hemû erk temam bûn!',
+      'tr': 'Tüm görevler tamam!',
+    },
+    K.kaldiginYer: {'ku': 'Tu li ku mayî', 'tr': 'Kaldığın yer'},
+    K.pPDogru: {'ku': '{p0}/{p1} rast', 'tr': '{p0}/{p1} doğru'},
+    K.tumKategoriler: {'ku': 'Hemû kategorî', 'tr': 'Tüm kategoriler'},
+    K.birKonuSecVe: {
+      'ku': 'Mijarekê hilbijêre û dest pê bike',
+      'tr': 'Bir konu seç ve başla',
+    },
+    K.bugununGorevi: {'ku': 'ERKÊ ÎRO', 'tr': 'BUGÜNÜN GÖREVİ'},
+    K.gununDersi: {'ku': 'Dersê rojane', 'tr': 'Günün dersi'},
+    K.pSoruYaklasikP: {
+      'ku': '{p0} pirs · nêzîkî {p1} deqe',
+      'tr': '{p0} soru · yaklaşık {p1} dakika',
+    },
+    K.devamEt: {'ku': 'Bidomîne', 'tr': 'Devam et'},
+    K.gunlukSeriStreak: {
+      'ku': 'Zincîra Pêşketinê (Streak)',
+      'tr': 'Günlük Seri (Streak)',
+    },
+    K.pGundurAraliksizOynuyorsun: {
+      'ku': '{p0} roj in ku tu bi rêkûpêk dilîzî!',
+      'tr': '{p0} gündür aralıksız oynuyorsun!',
+    },
+    K.henuzSerinBaslamadiBugun: {
+      'ku': 'Hêj zincîra te dest pê nekiriye. Îro bilîze!',
+      'tr': 'Henüz serin başlamadı. Bugün bir yarış başlat!',
+    },
+    K.seriDondurmaKorumasi: {
+      'ku': 'Karta Parastina Zincîrê',
+      'tr': 'Seri Dondurma Koruması',
+    },
+    K.oynamayiUnuttugunGunlerdeSerin: {
+      'ku': 'Rojên ku tu nekarî bilîzî zincîra te napetite!',
+      'tr': 'Oynamayı unuttuğun günlerde serin bozulmaz!',
+    },
+    K.magazayaGitSeriKoru: {
+      'ku': 'Herin Dukanê',
+      'tr': 'Mağazaya Git (Seri Koru)',
+    },
+    K.buHaftakiSiranP: {
+      'ku': 'Rêza te ya heftane: #{p0}',
+      'tr': 'Bu haftaki sıran: #{p0}',
+    },
+    K.buHaftaYarisLige: {
+      'ku': 'Vê heftê bilîze û bikeve lîgê!',
+      'tr': 'Bu hafta yarış, lige gir!',
+    },
+    K.seninSiranPP: {
+      'ku': 'Rêza te: {p0}. {p1}, {p2} xal',
+      'tr': 'Senin sıran: {p0}. {p1}, {p2} puan',
+    },
+    K.pPPPuan: {'ku': '{p0}. {p1}, {p2} xal', 'tr': '{p0}. {p1}, {p2} puan'},
+    K.soruCoz: {'ku': 'Pirs', 'tr': 'Soru çöz'},
+    K.flasKart: {'ku': 'Kart', 'tr': 'Flaş kart'},
+    K.ceviriIcinDokun: {
+      'ku': 'Ji bo wergerê bitikîne',
+      'tr': 'Çeviri için dokun',
+    },
+    K.dersTamamlandi: {'ku': 'Ders qediya!', 'tr': 'Ders tamamlandı'},
+    K.buSeviyeninSorulariYuklenemedi: {
+      'ku': 'Pirsên vê astê neyên barkirin.',
+      'tr': 'Bu seviyenin soruları yüklenemedi.',
+    },
+    K.kolaydanZoraDogruIlerle: {
+      'ku': 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.',
+      'tr': 'Kolaydan zora doğru ilerle, puan topla.',
+    },
+    K.pPSeviye: {'ku': '{p0}/{p1} ast', 'tr': '{p0}/{p1} seviye'},
+    K.oncePSeviyeyiTamamla: {
+      'ku': 'Pêşî asta {p0} temam bike.',
+      'tr': 'Önce {p0} seviyeyi tamamla.',
+    },
+    K.pKilitliOncekiSeviyeyi: {
+      'ku': '{p0} — girtî. Berî wê astê temam bike.',
+      'tr': '{p0} — kilitli. Önceki seviyeyi tamamla.',
+    },
+    K.zorlukUzerindenPYildiz: {
+      'ku': 'Astengî: {p0} ji 5 stêrk',
+      'tr': 'Zorluk: 5 üzerinden {p0} yıldız',
+    },
+    K.zorluk: {'ku': 'Astengî', 'tr': 'Zorluk'},
+    K.tumBasarilar: {'ku': 'Hemû Destkeftî', 'tr': 'Tüm Başarılar'},
+    K.basarilar: {'ku': 'Destkeftî', 'tr': 'Başarılar'},
+    K.rozetler: {'ku': 'Rozet', 'tr': 'Rozetler'},
+    K.birYarisTamamlaVe: {
+      'ku': 'Pêşbirkekê biqedîne û destkeftiya yekem veke.',
+      'tr': 'Bir yarış tamamla ve ilk başarımı aç.',
+    },
+    K.kategoriUstaligi: {
+      'ku': 'Ustalîya Kategoriyê',
+      'tr': 'Kategori Ustalığı',
+    },
+    K.baslangic: {'ku': 'Destpêkirin', 'tr': 'Başlangıç'},
+    K.performansAnalizi: {
+      'ku': 'Analîza Performansê',
+      'tr': 'Performans Analizi',
+    },
+    K.kategorilereGorePerformans: {
+      'ku': 'Performansa li gor kategoriyan',
+      'tr': 'Kategorilere göre performans',
+    },
+    K.enGucluOldugunKategori: {
+      'ku': 'Kategoriya te ya herî bihêz:',
+      'tr': 'En güçlü olduğun kategori:',
+    },
+    K.pDogruCevap: {'ku': '{p0} bersivên rast', 'tr': '{p0} doğru cevap'},
+    K.gelistirilmesiGerekenAlan: {
+      'ku': 'Kategoriya ku divê tu pêş bixî:',
+      'tr': 'Geliştirilmesi gereken alan:',
+    },
+    K.pAktifYanlisSoru: {
+      'ku': '{p0} pirsên şaş ên çalak',
+      'tr': '{p0} aktif yanlış soru',
+    },
+    K.senkronizeEdiliyor: {'ku': 'Tê rêzkirin…', 'tr': 'Senkronize ediliyor…'},
+    K.bulutlaSenkronize: {
+      'ku': 'Tev rêzkirî ye (Bulut)',
+      'tr': 'Bulutla senkronize',
+    },
+    K.seri: {'ku': 'Rêz!', 'tr': 'Seri!'},
+    K.sureDolduDogruCevap: {
+      'ku': 'Dem qediya! Bersivên rast: {p0}',
+      'tr': 'Süre doldu! Doğru cevap: {p0}',
+    },
+    K.tebriklerSeviyeAtladinYeni: {
+      'ku': 'Asta Te Bilind Bû! Ast Nû: {p0}',
+      'tr': 'Tebrikler, seviye atladın! Yeni Seviye: {p0}',
+    },
+    K.cevabinKaydedildi: {
+      'ku': 'Bersiva te hat qeydkirin',
+      'tr': 'Cevabın kaydedildi',
+    },
+    K.digerOyuncuBekleniyor: {
+      'ku': 'Li benda hevrik tê bendewarî...',
+      'tr': 'Diğer oyuncu bekleniyor...',
+    },
+    K.sonrakiSoruPS: {'ku': 'Pirsa nû: {p0}s', 'tr': 'Sonraki soru: {p0}s'},
+    K.rakipBekleniyor: {
+      'ku': 'Li benda hevrikê ye...',
+      'tr': 'Rakip bekleniyor...',
+    },
+    K.cumleyiOlusturmakIcinKelimeleri: {
+      'ku': 'Peyvan hilbijêre ku hevokê çêbikî',
+      'tr': 'Cümleyi oluşturmak için kelimeleri seç',
+    },
+    K.kurdugunCumle: {'ku': 'Hevoka te', 'tr': 'Kurduğun cümle'},
+    K.cumledenCikar: {'ku': 'Ji hevokê derxe', 'tr': 'Cümleden çıkar'},
+    K.cumleyeEkle: {'ku': 'Li hevokê zêde bike', 'tr': 'Cümleye ekle'},
+    K.kontrolEt: {'ku': 'Kontrol bike', 'tr': 'Kontrol et'},
+    K.yeniBirSeviyeyeUlastin: {
+      'ku': 'Te asteke nû bi dest xist!',
+      'tr': 'Yeni bir seviyeye ulaştın!',
+    },
+    K.seviyeP: {'ku': 'Ast {p0}', 'tr': 'Seviye {p0}'},
+    K.devamEt2: {'ku': 'Berdawam bike', 'tr': 'Devam Et'},
+    K.cevabiGormekIcinDokun: {
+      'ku': 'Ji bo dîtina bersivê bitikîne',
+      'tr': 'Cevabı görmek için dokun',
+    },
+    K.dogruCevap: {'ku': 'Bersiva Rast:', 'tr': 'Doğru Cevap:'},
+    K.aciklama: {'ku': 'Ravahî:', 'tr': 'Açıklama:'},
+    K.yeniKelimeler: {'ku': 'Peyvên nû', 'tr': 'Yeni kelimeler'},
+    K.dilbilgisi: {'ku': 'Not', 'tr': 'Dilbilgisi'},
+    K.ornekler: {'ku': 'Mînak', 'tr': 'Örnekler'},
+    K.kulturelNot: {'ku': 'Nota çandî', 'tr': 'Kültürel not'},
+    K.derseBasla: {'ku': 'Dest bi dersê bike', 'tr': 'Derse başla'},
+    K.birAltAlanSecerek: {
+      'ku': 'Barekî hilbijêre û dest bi lîstinê bike.',
+      'tr': 'Bir alt alan seçerek yarışmaya başla.',
+    },
+    K.yaris: {'ku': 'Pêşbaz', 'tr': 'Yarış'},
+    K.huhuGununSorulukEtkinligi: {
+      'ku':
+          'Huhu! Çalakiya rojê ya 10 pirsan amade ye. Pêşketina xwe biceribîne!',
+      'tr': 'Huhu! Günün 10 soruluk etkinliği hazır. İlerlemeni ölç!',
+    },
+    K.zanaDiyorKiYeni: {
+      'ku': 'Zana Dibêje: Hevalek Nû',
+      'tr': 'Zana Diyor ki: Yeni Bir Arkadaş',
+    },
+    K.huhuPSeninleYarismak: {
+      'ku': 'Huhu! {p0} dixwaze bi te re pêşbaziyê bike!',
+      'tr': 'Huhu! {p0} seninle yarışmak istiyor!',
+    },
+    K.zanaUzgun: {'ku': 'Zana Xemgîn e...', 'tr': 'Zana Üzgün...'},
+    K.huhuBugunHicOynamadin: {
+      'ku':
+          'Huhu! Te îro qet nelîst! Seriya te dikare bişkê. Zana li benda te ye!',
+      'tr': 'Huhu! Bugün hiç oynamadın! Serin kırılabilir. Zana seni bekliyor!',
+    },
+    K.zanaMutlu: {'ku': 'Zana Kêfxweş e!', 'tr': 'Zana Mutlu!'},
+    K.huhuPArkadaslikIstegini: {
+      'ku': 'Huhu! {p0} daxwaza hevaltiya te qebûl kir! Wexta pêşbaziyê ye!',
+      'tr': 'Huhu! {p0} arkadaşlık isteğini kabul etti! Yarış zamanı!',
+    },
+    K.kazanildi: {'ku': 'Vekirî', 'tr': 'Kazanıldı'},
+    K.anladim: {'ku': 'Temam', 'tr': 'Anladım'},
+    K.gorevTamamlandi: {'ku': 'Erkên pêkhat!', 'tr': 'Görev tamamlandı!'},
+    K.kurmancBilgiYarismasi: {
+      'ku': 'Pêşbirka Kurmancî',
+      'tr': 'Kurmancî Bilgi Yarışması',
+    },
+    K.puan: {'ku': 'PÛAN', 'tr': 'PUAN'},
+    K.isabet: {'ku': 'Rastî', 'tr': 'İsabet'},
+    K.seri2: {'ku': 'Rêz', 'tr': 'Seri'},
+    K.senDeOynaPlay: {
+      'ku': 'Tu jî bilîze — li Play Store\\\'ê "ZanKurd"',
+      'tr': 'Sen de oyna — Play Store\\\'da "ZanKurd"',
+    },
+    K.bugununHedefi: {'ku': 'Armanca Îro', 'tr': 'Bugünün hedefi'},
+    K.gununSozu: {'ku': 'Gotina Rojê', 'tr': 'Günün Sözü'},
+    K.pSoruTekraraHazir: {
+      'ku': '{p0} pirs li benda dubarekirinê',
+      'tr': '{p0} soru tekrara hazır',
+    },
+    K.dogruCevaplaSeriniKoru: {
+      'ku': 'Bi 3 bersivên rast zincîra xwe biparêze',
+      'tr': '3 doğru cevapla serini koru',
+    },
+    K.zanaTekrarlariniHazirladi: {
+      'ku': 'Zana dubarekirinên te amade kir.',
+      'tr': 'Zana tekrarlarını hazırladı.',
+    },
+    K.zanaBugunkuYolunuHazirladi: {
+      'ku': 'Zana rêya îro ji te re amade kir.',
+      'tr': 'Zana bugünkü yolunu hazırladı.',
+    },
+    K.tekraraBasla: {'ku': 'Dest bi dubarekirinê', 'tr': 'Tekrara başla'},
+    K.ogrenmeyeBasla: {'ku': 'Dest bi hînbûnê bike', 'tr': 'Öğrenmeye başla'},
 
     // ── Soru tipi rozetleri ──────────────────────────────────────────
     K.qTypeMultipleChoice: {'ku': 'Hilbijartin', 'tr': 'Şıklı'},
@@ -962,10 +1212,7 @@ class Tr {
       'ku': '{item} bikire — {coins} zêr',
       'tr': '{item} satın al — {coins} coin',
     },
-    K.insufficientBalance: {
-      'ku': 'Zêrên te kêm in!',
-      'tr': 'Bakiye yetersiz!',
-    },
+    K.insufficientBalance: {'ku': 'Zêrên te kêm in!', 'tr': 'Bakiye yetersiz!'},
     K.purchaseFailed: {
       'ku': 'Kirîn bi ser neket.',
       'tr': 'Satın alma başarısız oldu.',
@@ -1055,15 +1302,17 @@ class Tr {
     K.avatarIconCav: {'ku': 'Çav', 'tr': 'Göz'},
     K.avatarIconBirusk: {'ku': 'Birûsk', 'tr': 'Şimşek'},
     K.avatarIconKupa: {'ku': 'Kupa', 'tr': 'Kupa'},
-    K.avatarColor0: {'ku': 'Sora hinarê', 'tr': 'Nar kırmızısı'},  // #E5533D
-    K.avatarColor1: {'ku': 'Zêrê tûncê', 'tr': 'Pirinç altını'},  // #E7B53C
-    K.avatarColor2: {'ku': 'Keska Kurdistanê', 'tr': 'Kürdistan yeşili'},  // #3DA968
-    K.avatarColor3: {'ku': 'Şînahiya deryayê', 'tr': 'Teal'},  // #2E9E93
-    K.avatarColor4: {'ku': 'Binefşî', 'tr': 'Erik moru'},  // #6B3A7A
-    K.avatarColor5: {'ku': 'Xwelîreng', 'tr': 'Terracotta'},  // #C67A5C
-    K.avatarColor6: {'ku': 'Şîna deryayê', 'tr': 'Deniz mavisi'},  // #2B4F7E
-    K.avatarColor7: {'ku': 'Pembeyê gulê', 'tr': 'Gül pembesi'},  // #D4789E
-
+    K.avatarColor0: {'ku': 'Sora hinarê', 'tr': 'Nar kırmızısı'}, // #E5533D
+    K.avatarColor1: {'ku': 'Zêrê tûncê', 'tr': 'Pirinç altını'}, // #E7B53C
+    K.avatarColor2: {
+      'ku': 'Keska Kurdistanê',
+      'tr': 'Kürdistan yeşili',
+    }, // #3DA968
+    K.avatarColor3: {'ku': 'Şînahiya deryayê', 'tr': 'Teal'}, // #2E9E93
+    K.avatarColor4: {'ku': 'Binefşî', 'tr': 'Erik moru'}, // #6B3A7A
+    K.avatarColor5: {'ku': 'Xwelîreng', 'tr': 'Terracotta'}, // #C67A5C
+    K.avatarColor6: {'ku': 'Şîna deryayê', 'tr': 'Deniz mavisi'}, // #2B4F7E
+    K.avatarColor7: {'ku': 'Pembeyê gulê', 'tr': 'Gül pembesi'}, // #D4789E
     // ── Oda sohbeti moderasyonu (Apple 1.2 / Google Play UGC) ────────
     K.chatBlockedWord: {
       'ku': 'Ev peyam nayê şandin: gotinên nebaş.',
@@ -1090,13 +1339,19 @@ class Tr {
       'ku': 'Ji bo lêkolînê tê şandin.',
       'tr': 'İncelenmek üzere gönderilir.',
     },
-    K.chatBlock: {'ku': 'Vî lîstikvanî asteng bike', 'tr': 'Bu oyuncuyu engelle'},
+    K.chatBlock: {
+      'ku': 'Vî lîstikvanî asteng bike',
+      'tr': 'Bu oyuncuyu engelle',
+    },
     K.chatBlockSub: {
       'ku': 'Peyamên wî/wê êdî ji te re nayên nîşandan.',
       'tr': 'Mesajları bundan sonra sana gösterilmez.',
     },
     K.chatReported: {'ku': 'Peyam hate ragihandin.', 'tr': 'Mesaj bildirildi.'},
-    K.chatBlocked: {'ku': 'Lîstikvan hate astengkirin.', 'tr': 'Oyuncu engellendi.'},
+    K.chatBlocked: {
+      'ku': 'Lîstikvan hate astengkirin.',
+      'tr': 'Oyuncu engellendi.',
+    },
     K.chatModerationFailed: {
       'ku': 'Kar nehat kirin. Dîsa biceribîne.',
       'tr': 'İşlem yapılamadı. Tekrar dene.',
@@ -1498,8 +1753,10 @@ class Tr {
 
     // ── Oyuncu adı kapısı ─────────────────────────────────────────
     K.nameGateSaveFailed: {
-      'ku': 'Nav nehat tomar kirin. Dîsa biceribîne, an bi «Paşê bike» derbas bibe û paşê ji profîlê binivîse.',
-      'tr': 'Ad kaydedilemedi. Tekrar dene ya da «Şimdilik geç» ile devam et, adı sonra profilden yazarsın.',
+      'ku':
+          'Nav nehat tomar kirin. Dîsa biceribîne, an bi «Paşê bike» derbas bibe û paşê ji profîlê binivîse.',
+      'tr':
+          'Ad kaydedilemedi. Tekrar dene ya da «Şimdilik geç» ile devam et, adı sonra profilden yazarsın.',
     },
     K.nameGateWelcome: {
       'ku': 'Bi xêr hatî ZanKurdê!',
@@ -2053,6 +2310,119 @@ class K {
   // ── Çevrimiçi tur durum satırı ─────────────────────────────────────
   static const answeredState = 'match.answered';
   static const waitingAnswerState = 'match.waitingAnswer';
+
+  static const altinLig = 'screen.altinLig';
+  static const gumusLig = 'screen.gumusLig';
+  static const bronzLig = 'screen.bronzLig';
+  static const metin = 'screen.metin';
+  static const sikIpucu = 'screen.sikIpucu';
+  static const ciftCevap = 'screen.ciftCevap';
+  static const soruDegistir = 'screen.soruDegistir';
+  static const kategorilerYuklenemediLutfenSayfayi =
+      'screen.kategorilerYuklenemediLutfenSayfayi';
+  static const yakinda = 'screen.yakinda';
+  static const soru = 'screen.soru';
+  static const yakindaGeliyor = 'screen.yakindaGeliyor';
+  static const pSoruSeviye = 'screen.pSoruSeviye';
+  static const seviye = 'screen.seviye';
+  static const gunlukGorevler = 'screen.gunlukGorevler';
+  static const tamamlandi = 'screen.tamamlandi';
+  static const pGorevTamam = 'screen.pGorevTamam';
+  static const tumGorevlerTamam = 'screen.tumGorevlerTamam';
+  static const kaldiginYer = 'screen.kaldiginYer';
+  static const pPDogru = 'screen.pPDogru';
+  static const tumKategoriler = 'screen.tumKategoriler';
+  static const birKonuSecVe = 'screen.birKonuSecVe';
+  static const bugununGorevi = 'screen.bugununGorevi';
+  static const gununDersi = 'screen.gununDersi';
+  static const pSoruYaklasikP = 'screen.pSoruYaklasikP';
+  static const devamEt = 'screen.devamEt';
+  static const gunlukSeriStreak = 'screen.gunlukSeriStreak';
+  static const pGundurAraliksizOynuyorsun = 'screen.pGundurAraliksizOynuyorsun';
+  static const henuzSerinBaslamadiBugun = 'screen.henuzSerinBaslamadiBugun';
+  static const seriDondurmaKorumasi = 'screen.seriDondurmaKorumasi';
+  static const oynamayiUnuttugunGunlerdeSerin =
+      'screen.oynamayiUnuttugunGunlerdeSerin';
+  static const magazayaGitSeriKoru = 'screen.magazayaGitSeriKoru';
+  static const buHaftakiSiranP = 'screen.buHaftakiSiranP';
+  static const buHaftaYarisLige = 'screen.buHaftaYarisLige';
+  static const seninSiranPP = 'screen.seninSiranPP';
+  static const pPPPuan = 'screen.pPPPuan';
+  static const soruCoz = 'screen.soruCoz';
+  static const flasKart = 'screen.flasKart';
+  static const ceviriIcinDokun = 'screen.ceviriIcinDokun';
+  static const dersTamamlandi = 'screen.dersTamamlandi';
+  static const buSeviyeninSorulariYuklenemedi =
+      'screen.buSeviyeninSorulariYuklenemedi';
+  static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';
+  static const pPSeviye = 'screen.pPSeviye';
+  static const oncePSeviyeyiTamamla = 'screen.oncePSeviyeyiTamamla';
+  static const pKilitliOncekiSeviyeyi = 'screen.pKilitliOncekiSeviyeyi';
+  static const zorlukUzerindenPYildiz = 'screen.zorlukUzerindenPYildiz';
+  static const zorluk = 'screen.zorluk';
+  static const tumBasarilar = 'screen.tumBasarilar';
+  static const basarilar = 'screen.basarilar';
+  static const rozetler = 'screen.rozetler';
+  static const birYarisTamamlaVe = 'screen.birYarisTamamlaVe';
+  static const kategoriUstaligi = 'screen.kategoriUstaligi';
+  static const baslangic = 'screen.baslangic';
+  static const performansAnalizi = 'screen.performansAnalizi';
+  static const kategorilereGorePerformans = 'screen.kategorilereGorePerformans';
+  static const enGucluOldugunKategori = 'screen.enGucluOldugunKategori';
+  static const pDogruCevap = 'screen.pDogruCevap';
+  static const gelistirilmesiGerekenAlan = 'screen.gelistirilmesiGerekenAlan';
+  static const pAktifYanlisSoru = 'screen.pAktifYanlisSoru';
+  static const senkronizeEdiliyor = 'screen.senkronizeEdiliyor';
+  static const bulutlaSenkronize = 'screen.bulutlaSenkronize';
+  static const seri = 'screen.seri';
+  static const sureDolduDogruCevap = 'screen.sureDolduDogruCevap';
+  static const tebriklerSeviyeAtladinYeni = 'screen.tebriklerSeviyeAtladinYeni';
+  static const cevabinKaydedildi = 'screen.cevabinKaydedildi';
+  static const digerOyuncuBekleniyor = 'screen.digerOyuncuBekleniyor';
+  static const sonrakiSoruPS = 'screen.sonrakiSoruPS';
+  static const rakipBekleniyor = 'screen.rakipBekleniyor';
+  static const cumleyiOlusturmakIcinKelimeleri =
+      'screen.cumleyiOlusturmakIcinKelimeleri';
+  static const kurdugunCumle = 'screen.kurdugunCumle';
+  static const cumledenCikar = 'screen.cumledenCikar';
+  static const cumleyeEkle = 'screen.cumleyeEkle';
+  static const kontrolEt = 'screen.kontrolEt';
+  static const yeniBirSeviyeyeUlastin = 'screen.yeniBirSeviyeyeUlastin';
+  static const seviyeP = 'screen.seviyeP';
+  static const devamEt2 = 'screen.devamEt2';
+  static const cevabiGormekIcinDokun = 'screen.cevabiGormekIcinDokun';
+  static const dogruCevap = 'screen.dogruCevap';
+  static const aciklama = 'screen.aciklama';
+  static const yeniKelimeler = 'screen.yeniKelimeler';
+  static const dilbilgisi = 'screen.dilbilgisi';
+  static const ornekler = 'screen.ornekler';
+  static const kulturelNot = 'screen.kulturelNot';
+  static const derseBasla = 'screen.derseBasla';
+  static const birAltAlanSecerek = 'screen.birAltAlanSecerek';
+  static const yaris = 'screen.yaris';
+  static const huhuGununSorulukEtkinligi = 'screen.huhuGununSorulukEtkinligi';
+  static const zanaDiyorKiYeni = 'screen.zanaDiyorKiYeni';
+  static const huhuPSeninleYarismak = 'screen.huhuPSeninleYarismak';
+  static const zanaUzgun = 'screen.zanaUzgun';
+  static const huhuBugunHicOynamadin = 'screen.huhuBugunHicOynamadin';
+  static const zanaMutlu = 'screen.zanaMutlu';
+  static const huhuPArkadaslikIstegini = 'screen.huhuPArkadaslikIstegini';
+  static const kazanildi = 'screen.kazanildi';
+  static const anladim = 'screen.anladim';
+  static const gorevTamamlandi = 'screen.gorevTamamlandi';
+  static const kurmancBilgiYarismasi = 'screen.kurmancBilgiYarismasi';
+  static const puan = 'screen.puan';
+  static const isabet = 'screen.isabet';
+  static const seri2 = 'screen.seri2';
+  static const senDeOynaPlay = 'screen.senDeOynaPlay';
+  static const bugununHedefi = 'screen.bugununHedefi';
+  static const gununSozu = 'screen.gununSozu';
+  static const pSoruTekraraHazir = 'screen.pSoruTekraraHazir';
+  static const dogruCevaplaSeriniKoru = 'screen.dogruCevaplaSeriniKoru';
+  static const zanaTekrarlariniHazirladi = 'screen.zanaTekrarlariniHazirladi';
+  static const zanaBugunkuYolunuHazirladi = 'screen.zanaBugunkuYolunuHazirladi';
+  static const tekraraBasla = 'screen.tekraraBasla';
+  static const ogrenmeyeBasla = 'screen.ogrenmeyeBasla';
 
   // ── Soru tipi rozetleri ────────────────────────────────────────────
   // Soru kartının üstünde görünür. Kurmancî karşılıkları bir zamanlar

@@ -949,7 +949,7 @@ class _ExplanationBox extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            isKu ? 'Bersiva rast' : 'Doğru cevap',
+                            Tr.forKu(K.correctAnswerLabel, isKu),
                             style: AppTypography.caption.copyWith(
                               color: AppColors.readableAccent(
                                 context,
@@ -1017,7 +1017,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    isKu ? 'Bersiva te hat qeydkirin' : 'Cevabın kaydedildi',
+                    Tr.forKu(K.cevabinKaydedildi, isKu),
                     style: AppTypography.bodyMedium.copyWith(
                       color: AppTheme.textPrimaryColor(context),
                       fontWeight: FontWeight.w700,
@@ -1025,9 +1025,7 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    isKu
-                        ? 'Li benda hevrik tê bendewarî...'
-                        : 'Diğer oyuncu bekleniyor...',
+                    Tr.forKu(K.digerOyuncuBekleniyor, isKu),
                     style: AppTypography.caption.copyWith(
                       color: AppTheme.textMutedColor(context),
                     ),
@@ -1080,7 +1078,7 @@ class _RevealCountdown extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              isKu ? 'Pirsa nû: ${seconds}s' : 'Sonraki soru: ${seconds}s',
+              Tr.forKu(K.sonrakiSoruPS, isKu, {'p0': '$seconds'}),
               style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.textSubColor(context),
                 fontWeight: FontWeight.w700,
@@ -1210,7 +1208,7 @@ class _OpponentWaitingOverlay extends StatelessWidget {
               const CircularProgressIndicator(color: AppTheme.gold),
               const SizedBox(height: 16),
               Text(
-                isKu ? 'Li benda hevrikê ye...' : 'Rakip bekleniyor...',
+                Tr.forKu(K.rakipBekleniyor, isKu),
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w800,

@@ -649,9 +649,9 @@ extension _QuizScreenUI on _QuizScreenState {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            isKu
-                ? 'Asta Te Bilind Bû! Ast Nû: ${xpStore.currentLevel}'
-                : 'Tebrikler, seviye atladın! Yeni Seviye: ${xpStore.currentLevel}',
+            Tr.forKu(K.tebriklerSeviyeAtladinYeni, isKu, {
+              'p0': '${xpStore.currentLevel}',
+            }),
           ),
           backgroundColor: AppTheme.secondaryAccent,
           behavior: SnackBarBehavior.floating,

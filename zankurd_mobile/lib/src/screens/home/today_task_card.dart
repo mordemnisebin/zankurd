@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/strings.dart';
 import '../../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -52,7 +53,7 @@ class TodayTaskCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  isKu ? 'ERKÊ ÎRO' : 'BUGÜNÜN GÖREVİ',
+                  Tr.forKu(K.bugununGorevi, isKu),
                   style: AppTypography.caption.copyWith(
                     color: AppColors.readableAccent(context, accent),
                     letterSpacing: 0.8,
@@ -69,7 +70,7 @@ class TodayTaskCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            isKu ? 'Dersê rojane' : 'Günün dersi',
+            Tr.forKu(K.gununDersi, isKu),
             style: AppTypography.heading2.copyWith(
               color: AppTheme.textPrimaryColor(context),
             ),
@@ -78,9 +79,10 @@ class TodayTaskCard extends StatelessWidget {
           Text(
             // Süre soru sayısından türetilir; sabit "4 dakika" metni günlük
             // görev hedefi değiştiğinde yalan söylüyordu.
-            isKu
-                ? '$total pirs · nêzîkî $_minutes deqe'
-                : '$total soru · yaklaşık $_minutes dakika',
+            Tr.forKu(K.pSoruYaklasikP, isKu, {
+              'p0': '$total',
+              'p1': '$_minutes',
+            }),
             style: AppTypography.bodyMedium.copyWith(
               color: AppTheme.textSubColor(context),
             ),
@@ -98,8 +100,8 @@ class TodayTaskCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           _StartButton(
             label: started
-                ? (isKu ? 'Bidomîne' : 'Devam et')
-                : (isKu ? 'Dest pê bike' : 'Başla'),
+                ? (Tr.forKu(K.devamEt, isKu))
+                : (Tr.forKu(K.start, isKu)),
             loading: loading,
             onTap: onStart,
           ),

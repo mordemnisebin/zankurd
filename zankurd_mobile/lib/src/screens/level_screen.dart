@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -163,13 +164,7 @@ class _LevelScreenState extends State<LevelScreen> {
       ErrorReporter.record(error, stack, reason: 'level questions load failed');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            context.isKu
-                ? 'Pirsên vê astê neyên barkirin.'
-                : 'Bu seviyenin soruları yüklenemedi.',
-          ),
-        ),
+        SnackBar(content: Text(context.t(K.buSeviyeninSorulariYuklenemedi))),
       );
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -203,9 +198,7 @@ class _CategoryHero extends StatelessWidget {
     final color2 = Colors.white.withValues(alpha: 0.03);
 
     String title = CategoryNames.localized(category, isKu);
-    String subtitle = isKu
-        ? 'Ji hêsan ber bi dijwar ve, xalên xwe bicivîne.'
-        : 'Kolaydan zora doğru ilerle, puan topla.';
+    String subtitle = Tr.forKu(K.kolaydanZoraDogruIlerle, isKu);
 
     if (subCategory != null) {
       final list = SubcategoryConfig.subcategories[category] ?? const [];
@@ -416,7 +409,7 @@ class _HeroProgress extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              isKu ? '$completed/$total ast' : '$completed/$total seviye',
+              Tr.forKu(K.pPSeviye, isKu, {'p0': '$completed', 'p1': '$total'}),
               style: AppTypography.caption.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -581,9 +574,7 @@ class _LevelNodeState extends State<_LevelNode> {
       ..showSnackBar(
         SnackBar(
           content: Text(
-            context.isKu
-                ? 'Pêşî asta $previous. temam bike.'
-                : 'Önce $previous. seviyeyi tamamla.',
+            context.t(K.oncePSeviyeyiTamamla, {'p0': '$previous.'}),
           ),
         ),
       );
@@ -601,9 +592,7 @@ class _LevelNodeState extends State<_LevelNode> {
       button: true,
       enabled: !blocked,
       label: widget.locked
-          ? (context.isKu
-                ? '$name — girtî. Berî wê astê temam bike.'
-                : '$name — kilitli. Önceki seviyeyi tamamla.')
+          ? (context.t(K.pKilitliOncekiSeviyeyi, {'p0': name}))
           : name,
       child: Stack(
         alignment: Alignment.topCenter,
@@ -869,11 +858,9 @@ class _DifficultyStars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
-    final label = isKu
-        ? 'Astengî: $filled ji 5 stêrk'
-        : 'Zorluk: 5 üzerinden $filled yıldız';
+    final label = Tr.forKu(K.zorlukUzerindenPYildiz, isKu, {'p0': '$filled'});
     return Tooltip(
-      message: isKu ? 'Astengî' : 'Zorluk',
+      message: Tr.forKu(K.zorluk, isKu),
       child: Semantics(
         label: label,
         child: ExcludeSemantics(

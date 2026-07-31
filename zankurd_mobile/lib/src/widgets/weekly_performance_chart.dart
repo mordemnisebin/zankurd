@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 
@@ -36,13 +37,13 @@ class WeeklyPerformanceChart extends StatelessWidget {
           children: [
             _LegendItem(
               color: AppTheme.correct,
-              label: isKu ? 'Rast' : 'Doğru',
+              label: Tr.forKu(K.correct, isKu),
               textColor: textColor,
             ),
             const SizedBox(width: 14),
             _LegendItem(
               color: AppTheme.wrong,
-              label: isKu ? 'Şaş' : 'Yanlış',
+              label: Tr.forKu(K.wrong, isKu),
               textColor: textColor,
             ),
           ],

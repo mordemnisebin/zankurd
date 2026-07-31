@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 
 /// Bir rehber turu adımı: hedef widget'ın konumu + açıklayıcı metin.
@@ -328,15 +329,15 @@ class _CoachMarkBubble extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: onSkip,
-                child: Text(isKu ? 'Derbas bike' : 'Atla'),
+                child: Text(Tr.forKu(K.skip, isKu)),
               ),
               const Spacer(),
               FilledButton(
                 onPressed: onNext,
                 child: Text(
                   isLast
-                      ? (isKu ? 'Temam' : 'Anladım')
-                      : (isKu ? 'Pêş' : 'İleri'),
+                      ? (Tr.forKu(K.anladim, isKu))
+                      : (Tr.forKu(K.nextStep, isKu)),
                 ),
               ),
             ],

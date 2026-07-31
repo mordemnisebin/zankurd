@@ -29,7 +29,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
   @override
   Widget build(BuildContext context) {
     final correct = widget.records.where((r) => r.isCorrect).length;
-    final wrong = widget.records.where((r) => !r.isCorrect && !r.isUnanswered).length;
+    final wrong = widget.records
+        .where((r) => !r.isCorrect && !r.isUnanswered)
+        .length;
     final empty = widget.records.where((r) => r.isUnanswered).length;
 
     return Scaffold(
@@ -526,10 +528,7 @@ class _FlashcardViewState extends State<_FlashcardView> {
                 ),
               ),
               Text(
-                Tr.forKu(
-                  _isFlipped ? K.flashcardBack : K.flashcardFront,
-                  isKu,
-                ),
+                Tr.forKu(_isFlipped ? K.flashcardBack : K.flashcardFront, isKu),
                 style: TextStyle(
                   fontSize: 12,
                   color: AppTheme.textSubColor(context),
@@ -577,8 +576,9 @@ class _FlashcardViewState extends State<_FlashcardView> {
               label: Text(context.t(K.back)),
             ),
             OutlinedButton.icon(
-              onPressed:
-                  _currentIndex < widget.records.length - 1 ? _nextCard : null,
+              onPressed: _currentIndex < widget.records.length - 1
+                  ? _nextCard
+                  : null,
               icon: const Icon(AppIcons.arrowRight, size: 16),
               label: Text(context.t(K.next)),
             ),
@@ -588,10 +588,7 @@ class _FlashcardViewState extends State<_FlashcardView> {
     );
   }
 
-  Widget _buildFrontCard(
-    BuildContext context,
-    AnswerRecord record,
-  ) {
+  Widget _buildFrontCard(BuildContext context, AnswerRecord record) {
     return Container(
       key: const ValueKey(false),
       width: double.infinity,
@@ -600,10 +597,7 @@ class _FlashcardViewState extends State<_FlashcardView> {
       decoration: BoxDecoration(
         color: AppTheme.surfaceOf(context),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppTheme.borderColor(context),
-          width: 1.5,
-        ),
+        border: Border.all(color: AppTheme.borderColor(context), width: 1.5),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -613,7 +607,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: AppTheme.cyan.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
@@ -648,9 +645,7 @@ class _FlashcardViewState extends State<_FlashcardView> {
               const Icon(AppIcons.arrowsRotate, size: 14, color: AppTheme.cyan),
               const SizedBox(width: 6),
               Text(
-                context.isKu
-                    ? 'Ji bo dîtina bersivê bitikîne'
-                    : 'Cevabı görmek için dokun',
+                context.t(K.cevabiGormekIcinDokun),
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppTheme.cyan,
@@ -687,12 +682,14 @@ class _FlashcardViewState extends State<_FlashcardView> {
         children: [
           Row(
             children: [
-              const Icon(AppIcons.circleCheck, color: AppTheme.correct, size: 20),
+              const Icon(
+                AppIcons.circleCheck,
+                color: AppTheme.correct,
+                size: 20,
+              ),
               const SizedBox(width: 8),
               Text(
-                context.isKu
-                    ? 'Bersiva Rast:'
-                    : 'Doğru Cevap:',
+                context.t(K.dogruCevap),
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -708,7 +705,9 @@ class _FlashcardViewState extends State<_FlashcardView> {
             decoration: BoxDecoration(
               color: AppTheme.correct.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppTheme.correct.withValues(alpha: 0.3)),
+              border: Border.all(
+                color: AppTheme.correct.withValues(alpha: 0.3),
+              ),
             ),
             child: Text(
               record.correctAnswer,
@@ -723,12 +722,16 @@ class _FlashcardViewState extends State<_FlashcardView> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Icon(AppIcons.lightbulb, color: AppTheme.violet, size: 18),
+                const Icon(
+                  AppIcons.lightbulb,
+                  color: AppTheme.violet,
+                  size: 18,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
                   // ilişiktirilmişti ("Ravahî / Açıklama:").
-                  context.isKu ? 'Ravahî:' : 'Açıklama:',
+                  context.t(K.aciklama),
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

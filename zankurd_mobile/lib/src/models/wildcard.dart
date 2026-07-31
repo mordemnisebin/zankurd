@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -21,10 +22,10 @@ extension WildcardTypeDetails on WildcardType {
   };
 
   String label(bool isKu) => switch (this) {
-    WildcardType.fiftyFifty => isKu ? 'Nîv bi Nîv' : '50/50',
-    WildcardType.audience => isKu ? 'Alîkariya Bersivê' : 'Şık İpucu',
-    WildcardType.doubleAnswer => isKu ? 'Du Bersiv' : 'Çift Cevap',
-    WildcardType.changeQuestion => isKu ? 'Pirsê Biguhere' : 'Soru Değiştir',
+    WildcardType.fiftyFifty => Tr.forKu(K.metin, isKu),
+    WildcardType.audience => Tr.forKu(K.sikIpucu, isKu),
+    WildcardType.doubleAnswer => Tr.forKu(K.ciftCevap, isKu),
+    WildcardType.changeQuestion => Tr.forKu(K.soruDegistir, isKu),
   };
 
   /// 2026-07-24 canlı denetim: jokerler dört neon renk (kehribar, zümrüt,

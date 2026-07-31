@@ -304,7 +304,7 @@ class _MiniGuideView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.md),
-            _label(context, isKu ? 'Peyvên nû' : 'Yeni kelimeler'),
+            _label(context, Tr.forKu(K.yeniKelimeler, isKu)),
             for (final w in guide.newWords)
               Text(
                 '• ${w.ku} — ${w.tr}',
@@ -313,7 +313,7 @@ class _MiniGuideView extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: AppSpacing.sm),
-            _label(context, isKu ? 'Not' : 'Dilbilgisi'),
+            _label(context, Tr.forKu(K.dilbilgisi, isKu)),
             Text(
               isKu ? guide.grammarKu : guide.grammarTr,
               style: AppTypography.bodyMedium.copyWith(
@@ -321,7 +321,7 @@ class _MiniGuideView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            _label(context, isKu ? 'Mînak' : 'Örnekler'),
+            _label(context, Tr.forKu(K.ornekler, isKu)),
             for (final e in guide.examples)
               Text(
                 '• ${e.ku} — ${e.tr}',
@@ -330,7 +330,7 @@ class _MiniGuideView extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: AppSpacing.sm),
-            _label(context, isKu ? 'Nota çandî' : 'Kültürel not'),
+            _label(context, Tr.forKu(K.kulturelNot, isKu)),
             Text(
               isKu ? guide.cultureKu : guide.cultureTr,
               style: AppTypography.bodyMedium.copyWith(
@@ -342,7 +342,7 @@ class _MiniGuideView extends StatelessWidget {
               width: double.infinity,
               child: FilledButton(
                 onPressed: () => Navigator.of(context).maybePop(),
-                child: Text(isKu ? 'Dest bi dersê bike' : 'Derse başla'),
+                child: Text(Tr.forKu(K.derseBasla, isKu)),
               ),
             ),
           ],

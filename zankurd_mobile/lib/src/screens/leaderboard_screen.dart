@@ -525,12 +525,8 @@ class _LeagueBanner extends StatelessWidget {
                 ),
                 Text(
                   myRank != null
-                      ? (isKu
-                            ? 'Rêza te ya heftane: #$myRank'
-                            : 'Bu haftaki sıran: #$myRank')
-                      : (isKu
-                            ? 'Vê heftê bilîze û bikeve lîgê!'
-                            : 'Bu hafta yarış, lige gir!'),
+                      ? (Tr.forKu(K.buHaftakiSiranP, isKu, {'p0': '$myRank'}))
+                      : (Tr.forKu(K.buHaftaYarisLige, isKu)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(
@@ -1070,12 +1066,16 @@ class _RankRow extends StatelessWidget {
     // düğümde birleştirilir (2026-07-25 denetimi).
     return Semantics(
       label: highlight
-          ? (isKu
-                ? 'Rêza te: ${entry.rank}. ${entry.displayName}, ${entry.totalScore} xal'
-                : 'Senin sıran: ${entry.rank}. ${entry.displayName}, ${entry.totalScore} puan')
-          : (isKu
-                ? '${entry.rank}. ${entry.displayName}, ${entry.totalScore} xal'
-                : '${entry.rank}. ${entry.displayName}, ${entry.totalScore} puan'),
+          ? (Tr.forKu(K.seninSiranPP, isKu, {
+              'p0': '${entry.rank}',
+              'p1': entry.displayName,
+              'p2': '${entry.totalScore}',
+            }))
+          : (Tr.forKu(K.pPPPuan, isKu, {
+              'p0': '${entry.rank}',
+              'p1': entry.displayName,
+              'p2': '${entry.totalScore}',
+            })),
       excludeSemantics: true,
       child: _buildRow(context),
     );
@@ -1303,8 +1303,8 @@ class _FriendRankRow extends StatelessWidget {
                 const SizedBox(height: 1),
                 Text(
                   online
-                      ? (isKu ? 'Serhêl' : 'Çevrimiçi')
-                      : (isKu ? 'Ne li serhêl' : 'Çevrimdışı'),
+                      ? (Tr.forKu(K.online, isKu))
+                      : (Tr.forKu(K.offline, isKu)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(

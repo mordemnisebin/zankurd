@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../l10n/strings.dart';
 import '../l10n/lang.dart';
 
 /// Oyuncu adının ve baş harfinin TEK kaynağı.
@@ -29,7 +30,7 @@ class PlayerIdentity {
   static String resolveName(String? rawName, {required bool isKu}) {
     final name = rawName?.trim() ?? '';
     if (name.isEmpty || _placeholderNames.contains(name)) {
-      return isKu ? 'Lîstikvan' : 'Oyuncu';
+      return Tr.forKu(K.playerWord, isKu);
     }
     return name;
   }

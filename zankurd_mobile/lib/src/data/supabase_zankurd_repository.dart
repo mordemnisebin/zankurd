@@ -1335,9 +1335,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // çevrimdışı yedeğe geçiliyordu. Yani sunucudan gelen "Günün
       // Etkinliği" HİÇBİR ZAMAN kullanılamıyordu ve kusur sessizdi, çünkü
       // yedek her zaman makul bir şey gösteriyordu (2026-07-31 denetimi).
-      final row = res is List
-          ? (res.isEmpty ? null : res.first)
-          : res;
+      final row = res is List ? (res.isEmpty ? null : res.first) : res;
       if (row == null) return null;
       if (row is! Map) return null;
       return Contest.fromJson(Map<String, dynamic>.from(row));

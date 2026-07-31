@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -127,7 +128,7 @@ class BadgeWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 3),
                   Text(
-                    isKu ? 'Vekirî' : 'Kazanıldı',
+                    Tr.forKu(K.kazanildi, isKu),
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,

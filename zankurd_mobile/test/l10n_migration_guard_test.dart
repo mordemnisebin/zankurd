@@ -65,11 +65,22 @@ void main() {
     /// → 148 (çok satırlı dizeler de sayıldı — düzeltilmiş desen
     ///   `\s*` ile satır sonunu geçtiği için sayı bir kez yükseldi)
     /// → 145 (paywall ekranı tamamen deftere taşındı)
-    /// → 141 (avatar çerçeve kazanım etiketleri).
+    /// → 141 (avatar çerçeve kazanım etiketleri)
+    /// → 13 (32 dosyada toplu göç; 109 yeni anahtar, 20 kullanım defterde
+    ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı).
     ///
-    /// Sıradaki en yoğun dosyalar: profile_widgets (16), level_screen (11),
-    /// leaderboard_screen (9), zana_daily_card (9), notification_service (7).
-    const inlineCeiling = 141;
+    /// ## Kalan 13 bilinçli
+    ///
+    /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
+    /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
+    ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
+    ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
+    /// - `level_screen` (4), `leaderboard_screen` (3), `room_screen` (1),
+    ///   `quiz_result_screen` (1), `result_sharer` (1): iki dalı da düz
+    ///   dize OLMAYAN kullanımlar — dallar farklı veri alanları okuyor ya
+    ///   da içlerinde `CategoryNames.localized(...)` gibi çağrılar var.
+    ///   Bunlar çeviri değil, veri seçimidir; deftere taşınacak metin yok.
+    const inlineCeiling = 13;
 
     test('satır içi iki-dil kullanımı tavanı aşmıyor', () {
       final libDir = Directory('lib');

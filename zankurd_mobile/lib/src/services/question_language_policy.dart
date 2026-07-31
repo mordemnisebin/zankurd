@@ -130,7 +130,9 @@ class QuestionLanguagePolicy {
     ).allMatches(lower).map((m) => m.group(0)!).toSet();
 
     var ku = words
-        .where((w) => _kurmanciWords.contains(w) && !_ambiguousWords.contains(w))
+        .where(
+          (w) => _kurmanciWords.contains(w) && !_ambiguousWords.contains(w),
+        )
         .length
         .toDouble();
     var tr = words

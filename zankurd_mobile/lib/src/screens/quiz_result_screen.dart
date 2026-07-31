@@ -384,9 +384,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      context.isKu
-                          ? 'Te asteke nû bi dest xist!'
-                          : 'Yeni bir seviyeye ulaştın!',
+                      context.t(K.yeniBirSeviyeyeUlastin),
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -413,7 +411,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ],
                       ),
                       child: Text(
-                        context.isKu ? 'Ast $newLevel' : 'Seviye $newLevel',
+                        context.t(K.seviyeP, {'p0': '$newLevel'}),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -440,7 +438,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           context,
                         ).pop({'score': score, 'correct': correctCount}),
                         child: Text(
-                          context.isKu ? 'Berdawam bike' : 'Devam Et',
+                          context.t(K.devamEt2),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -1043,19 +1041,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           onTap: playAgain,
                         ),
                       _ResultSideAction(
-                          key: const ValueKey('result-share-button'),
-                          icon: AppIcons.shareNodes,
-                          label: context.t(K.share),
-                          onTap: () => ResultSharer.share(
-                            context,
-                            isKu: context.isKu,
-                            score: score,
-                            correctCount: correctCount,
-                            totalQuestions: totalQuestions,
-                            bestStreak: bestStreak,
-                            category: room.category,
-                          ),
+                        key: const ValueKey('result-share-button'),
+                        icon: AppIcons.shareNodes,
+                        label: context.t(K.share),
+                        onTap: () => ResultSharer.share(
+                          context,
+                          isKu: context.isKu,
+                          score: score,
+                          correctCount: correctCount,
+                          totalQuestions: totalQuestions,
+                          bestStreak: bestStreak,
+                          category: room.category,
                         ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),

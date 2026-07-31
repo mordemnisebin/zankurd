@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/strings.dart';
 import '../../config/category_visuals.dart';
 import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
@@ -41,7 +42,7 @@ class ContinueSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.xs, top: 2),
           child: Text(
-            isKu ? 'Tu li ku mayî' : 'Kaldığın yer',
+            Tr.forKu(K.kaldiginYer, isKu),
             style: AppTypography.heading2.copyWith(
               fontSize: 16,
               color: AppTheme.textPrimaryColor(context),
@@ -61,9 +62,10 @@ class ContinueSection extends StatelessWidget {
               icon: CategoryVisuals.icon(entry.category),
               accent: CategoryVisuals.color(entry.category),
               title: CategoryNames.localized(entry.category, isKu),
-              subtitle: isKu
-                  ? '${entry.correct}/${entry.threshold} rast'
-                  : '${entry.correct}/${entry.threshold} doğru',
+              subtitle: Tr.forKu(K.pPDogru, isKu, {
+                'p0': '${entry.correct}',
+                'p1': '${entry.threshold}',
+              }),
               semanticValue: context.percentRatio(entry.ratio),
               onTap: onOpenCategory == null
                   ? null
@@ -115,7 +117,7 @@ class ContinueSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.xs, top: 2),
           child: Text(
-            isKu ? 'Dest pê bike' : 'Başla',
+            Tr.forKu(K.start, isKu),
             style: AppTypography.heading2.copyWith(
               fontSize: 16,
               color: AppTheme.textPrimaryColor(context),
@@ -126,10 +128,8 @@ class ContinueSection extends StatelessWidget {
           key: const ValueKey('home-browse-categories-row'),
           icon: AppIcons.layerGroup,
           accent: AppTheme.brand,
-          title: isKu ? 'Hemû kategorî' : 'Tüm kategoriler',
-          subtitle: isKu
-              ? 'Mijarekê hilbijêre û dest pê bike'
-              : 'Bir konu seç ve başla',
+          title: Tr.forKu(K.tumKategoriler, isKu),
+          subtitle: Tr.forKu(K.birKonuSecVe, isKu),
           onTap: onBrowseCategories,
         ),
       ],

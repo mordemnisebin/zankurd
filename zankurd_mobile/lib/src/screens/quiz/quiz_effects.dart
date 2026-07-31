@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import '../../l10n/strings.dart';
 import '../../providers/reduced_motion_provider.dart';
 
 import '../../theme/app_theme.dart';
@@ -160,7 +161,7 @@ class ComboBadge extends StatelessWidget {
                   const Icon(AppIcons.fire, color: Colors.white, size: 16),
                   const SizedBox(width: 6),
                   Text(
-                    '×$streak ${isKu ? 'Rêz!' : 'Seri!'}',
+                    '×$streak ${Tr.forKu(K.seri, isKu)}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,

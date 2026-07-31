@@ -56,11 +56,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              context.isKu
-                  ? 'Kategorî nehatin barkirin. Ji kerema xwe rûpelê nû bike.'
-                  : 'Kategoriler yüklenemedi. Lütfen sayfayı yenileyin.',
-            ),
+            content: Text(context.t(K.kategorilerYuklenemediLutfenSayfayi)),
           ),
         );
       }
@@ -487,9 +483,9 @@ class _CategoryCardState extends State<_CategoryCard>
         child: Semantics(
           button: !comingSoon,
           label: comingSoon
-              ? '$catName — ${widget.isKu ? 'Nêzîk de tê' : 'Yakında'}'
+              ? '$catName — ${Tr.forKu(K.yakinda, widget.isKu)}'
               : widget.questionCount != null
-              ? '$catName, ${widget.questionCount} ${widget.isKu ? 'pirs' : 'soru'}'
+              ? '$catName, ${widget.questionCount} ${Tr.forKu(K.soru, widget.isKu)}'
               : catName,
           child: ExcludeSemantics(
             child: GestureDetector(
@@ -574,16 +570,23 @@ class _CategoryCardState extends State<_CategoryCard>
                                             const SizedBox(height: 1),
                                             Text(
                                               comingSoon
-                                                  ? (widget.isKu
-                                                        ? 'Nêzîk de tê…'
-                                                        : 'Yakında geliyor…')
+                                                  ? (Tr.forKu(
+                                                      K.yakindaGeliyor,
+                                                      widget.isKu,
+                                                    ))
                                                   : widget.questionCount != null
-                                                  ? (widget.isKu
-                                                        ? '${widget.questionCount} pirs · 5 ast'
-                                                        : '${widget.questionCount} soru · 5 seviye')
-                                                  : (widget.isKu
-                                                        ? '5 ast'
-                                                        : '5 seviye'),
+                                                  ? (Tr.forKu(
+                                                      K.pSoruSeviye,
+                                                      widget.isKu,
+                                                      {
+                                                        'p0':
+                                                            '${widget.questionCount}',
+                                                      },
+                                                    ))
+                                                  : (Tr.forKu(
+                                                      K.seviye,
+                                                      widget.isKu,
+                                                    )),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: AppTypography.bodyMedium

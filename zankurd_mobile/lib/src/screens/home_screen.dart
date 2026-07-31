@@ -317,11 +317,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
-          DailyMissionsCard(
-            isKu: ku,
-            missions: _missions,
-            compact: false,
-          ),
+          DailyMissionsCard(isKu: ku, missions: _missions, compact: false),
         ],
       ),
     );
@@ -559,11 +555,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     color: AppTheme.brand.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(AppIcons.fire, color: AppTheme.brand, size: 28),
+                  child: const Icon(
+                    AppIcons.fire,
+                    color: AppTheme.brand,
+                    size: 28,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  isKu ? 'Zincîra Pêşketinê (Streak)' : 'Günlük Seri (Streak)',
+                  Tr.forKu(K.gunlukSeriStreak, isKu),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -577,14 +577,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       // "tu"dur. Cümlenin geri kalanı doğru Kurmancî
                       // olduğu için kusur göze "biraz tuhaf" gelip
                       // geçiyordu (2026-07-31 denetimi).
-                      ? (isKu
-                          ? '$_streak roj in ku tu bi rêkûpêk dilîzî!'
-                          : '$_streak gündür aralıksız oynuyorsun!')
-                      : (isKu
-                          ? 'Hêj zincîra te dest pê nekiriye. Îro bilîze!'
-                          : 'Henüz serin başlamadı. Bugün bir yarış başlat!'),
+                      ? (Tr.forKu(K.pGundurAraliksizOynuyorsun, isKu, {
+                          'p0': '$_streak',
+                        }))
+                      : (Tr.forKu(K.henuzSerinBaslamadiBugun, isKu)),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, color: AppTheme.textSubColor(ctx)),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppTheme.textSubColor(ctx),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Container(
@@ -592,20 +593,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   decoration: BoxDecoration(
                     color: AppTheme.cyan.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppTheme.cyan.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: AppTheme.cyan.withValues(alpha: 0.3),
+                    ),
                   ),
                   child: Row(
                     children: [
-                      const Icon(AppIcons.shieldHalved, color: AppTheme.cyan, size: 24),
+                      const Icon(
+                        AppIcons.shieldHalved,
+                        color: AppTheme.cyan,
+                        size: 24,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              isKu
-                                  ? 'Karta Parastina Zincîrê'
-                                  : 'Seri Dondurma Koruması',
+                              Tr.forKu(K.seriDondurmaKorumasi, isKu),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -614,9 +619,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              isKu
-                                  ? 'Rojên ku tu nekarî bilîzî zincîra te napetite!'
-                                  : 'Oynamayı unuttuğun günlerde serin bozulmaz!',
+                              Tr.forKu(K.oynamayiUnuttugunGunlerdeSerin, isKu),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: AppTheme.textSubColor(ctx),
@@ -636,17 +639,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                   onPressed: () async {
                     Navigator.of(ctx).pop();
-                    await Navigator.of(context).push(
-                      AppRoute.to(ShopScreen(repository: repo)),
-                    );
+                    await Navigator.of(
+                      context,
+                    ).push(AppRoute.to(ShopScreen(repository: repo)));
                     if (mounted) await _refreshCoins();
                   },
-                  icon: const Icon(AppIcons.cartShopping, color: Colors.white, size: 18),
+                  icon: const Icon(
+                    AppIcons.cartShopping,
+                    color: Colors.white,
+                    size: 18,
+                  ),
                   label: Text(
                     // İki dil aynı düğmede yan yana yazıyordu ("Herin Dukanê
                     // / Mağazaya Git") — Kurmancî arayüzde Türkçe metin
                     // sızıyordu (2026-07-31 Antigravity eklentisi denetimi).
-                    isKu ? 'Herin Dukanê' : 'Mağazaya Git (Seri Koru)',
+                    Tr.forKu(K.magazayaGitSeriKoru, isKu),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

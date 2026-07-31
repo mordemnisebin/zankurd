@@ -8,6 +8,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
 
 abstract class TimeZoneResolver {
@@ -261,9 +262,7 @@ class NotificationService {
       await _localNotificationsPlugin.zonedSchedule(
         id: 0,
         title: 'ZanKurd',
-        body: isKu
-            ? 'Huhu! Çalakiya rojê ya 10 pirsan amade ye. Pêşketina xwe biceribîne!'
-            : 'Huhu! Günün 10 soruluk etkinliği hazır. İlerlemeni ölç!',
+        body: Tr.forKu(K.huhuGununSorulukEtkinligi, isKu),
         scheduledDate: scheduledTime,
         notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -303,12 +302,8 @@ class NotificationService {
   Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {
-      final title = isKu
-          ? 'Zana Dibêje: Hevalek Nû'
-          : 'Zana Diyor ki: Yeni Bir Arkadaş';
-      final body = isKu
-          ? 'Huhu! $fromName dixwaze bi te re pêşbaziyê bike!'
-          : 'Huhu! $fromName seninle yarışmak istiyor!';
+      final title = Tr.forKu(K.zanaDiyorKiYeni, isKu);
+      final body = Tr.forKu(K.huhuPSeninleYarismak, isKu, {'p0': fromName});
 
       const androidDetails = AndroidNotificationDetails(
         'zankurd_friend_requests',
@@ -397,10 +392,8 @@ class NotificationService {
       final tzTime = tz.TZDateTime.from(scheduledTime, tz.local);
       await _localNotificationsPlugin.zonedSchedule(
         id: _streakWarningId,
-        title: isKu ? 'Zana Xemgîn e...' : 'Zana Üzgün...',
-        body: isKu
-            ? 'Huhu! Te îro qet nelîst! Seriya te dikare bişkê. Zana li benda te ye!'
-            : 'Huhu! Bugün hiç oynamadın! Serin kırılabilir. Zana seni bekliyor!',
+        title: Tr.forKu(K.zanaUzgun, isKu),
+        body: Tr.forKu(K.huhuBugunHicOynamadin, isKu),
         scheduledDate: tzTime,
         notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -435,10 +428,8 @@ class NotificationService {
 
       await _localNotificationsPlugin.show(
         id: 3,
-        title: isKu ? 'Zana Kêfxweş e!' : 'Zana Mutlu!',
-        body: isKu
-            ? 'Huhu! $friendName daxwaza hevaltiya te qebûl kir! Wexta pêşbaziyê ye!'
-            : 'Huhu! $friendName arkadaşlık isteğini kabul etti! Yarış zamanı!',
+        title: Tr.forKu(K.zanaMutlu, isKu),
+        body: Tr.forKu(K.huhuPArkadaslikIstegini, isKu, {'p0': friendName}),
         notificationDetails: details,
       );
     } catch (e, s) {

@@ -466,8 +466,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<Set<String>> loadBlockedPlayerIds() async =>
-      Set.of(_blockedPlayerIds);
+  Future<Set<String>> loadBlockedPlayerIds() async => Set.of(_blockedPlayerIds);
 
   @override
   Future<Map<String, dynamic>> submitAnswer({

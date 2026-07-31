@@ -382,9 +382,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       Navigator.of(ctx).pop(false);
                       Navigator.of(context).push(
                         AppRoute<void>(
-                          page: SpinWheelScreen(
-                            repository: widget.repository,
-                          ),
+                          page: SpinWheelScreen(repository: widget.repository),
                         ),
                       );
                     },

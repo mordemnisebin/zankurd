@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../l10n/lang.dart';
 import '../models/daily_mission.dart';
 import '../theme/app_theme.dart';
@@ -10,7 +11,7 @@ class MissionToast {
     if (!context.mounted) return;
     final isKu = context.isKu;
     final label = isKu ? mission.labelKu : mission.labelTr;
-    final heading = isKu ? 'Erkên pêkhat!' : 'Görev tamamlandı!';
+    final heading = Tr.forKu(K.gorevTamamlandi, isKu);
     final foregroundColor = AppColors.onSolid(AppTheme.gold);
 
     ScaffoldMessenger.of(context).showSnackBar(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../config/zankurd_sayings.dart';
 import 'roj_mascot.dart';
@@ -98,12 +99,10 @@ class ZanaDailyCard extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 hasReview
-                                    ? (isKu
-                                          ? 'Dubarekirinên Îro'
-                                          : 'Bugünkü Tekrarlar')
+                                    ? (Tr.forKu(K.todaysReviews, isKu))
                                     : onStart != null
-                                    ? (isKu ? 'Armanca Îro' : 'Bugünün hedefi')
-                                    : (isKu ? 'Gotina Rojê' : 'Günün Sözü'),
+                                    ? (Tr.forKu(K.bugununHedefi, isKu))
+                                    : (Tr.forKu(K.gununSozu, isKu)),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTypography.caption.copyWith(
@@ -119,13 +118,11 @@ class ZanaDailyCard extends StatelessWidget {
                         // Tek italik stil: yalnızca günün sözü italik.
                         Text(
                           hasReview
-                              ? (isKu
-                                    ? '$reviewReadyCount pirs li benda dubarekirinê'
-                                    : '$reviewReadyCount soru tekrara hazır')
+                              ? (Tr.forKu(K.pSoruTekraraHazir, isKu, {
+                                  'p0': '$reviewReadyCount',
+                                }))
                               : onStart != null
-                              ? (isKu
-                                    ? 'Bi 3 bersivên rast zincîra xwe biparêze'
-                                    : '3 doğru cevapla serini koru')
+                              ? (Tr.forKu(K.dogruCevaplaSeriniKoru, isKu))
                               : saying.$1,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -142,13 +139,9 @@ class ZanaDailyCard extends StatelessWidget {
                         // Çeviri / açıklama: 12px gri.
                         Text(
                           hasReview
-                              ? (isKu
-                                    ? 'Zana dubarekirinên te amade kir.'
-                                    : 'Zana tekrarlarını hazırladı.')
+                              ? (Tr.forKu(K.zanaTekrarlariniHazirladi, isKu))
                               : onStart != null
-                              ? (isKu
-                                    ? 'Zana rêya îro ji te re amade kir.'
-                                    : 'Zana bugünkü yolunu hazırladı.')
+                              ? (Tr.forKu(K.zanaBugunkuYolunuHazirladi, isKu))
                               : saying.$2,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -168,12 +161,8 @@ class ZanaDailyCard extends StatelessWidget {
                             ),
                             label: Text(
                               hasReview
-                                  ? (isKu
-                                        ? 'Dest bi dubarekirinê'
-                                        : 'Tekrara başla')
-                                  : (isKu
-                                        ? 'Dest bi hînbûnê bike'
-                                        : 'Öğrenmeye başla'),
+                                  ? (Tr.forKu(K.tekraraBasla, isKu))
+                                  : (Tr.forKu(K.ogrenmeyeBasla, isKu)),
                             ),
                           ),
                         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/strings.dart';
 import '../../models/daily_mission.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_panel.dart';
@@ -72,7 +73,7 @@ class DailyMissionsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      isKu ? 'Erkên Rojane' : 'Günlük Görevler',
+                      Tr.forKu(K.gunlukGorevler, isKu),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyLarge.copyWith(
@@ -83,7 +84,7 @@ class DailyMissionsCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     if (!loading)
                       Text(
-                        '$completedCount/${missions.length} ${isKu ? 'temam' : 'tamamlandı'}',
+                        '$completedCount/${missions.length} ${Tr.forKu(K.tamamlandi, isKu)}',
                         style: AppTypography.caption.copyWith(
                           color: AppTheme.textMutedColor(context),
                           fontWeight: FontWeight.w500,
@@ -109,9 +110,7 @@ class DailyMissionsCard extends StatelessWidget {
                 child: Text(
                   [
                     if (hiddenDone > 0)
-                      isKu
-                          ? '$hiddenDone erk temam bûn'
-                          : '$hiddenDone görev tamam',
+                      Tr.forKu(K.pGorevTamam, isKu, {'p0': '$hiddenDone'}),
                     if (hiddenPending > 0)
                       isKu
                           // Kurmancî'de sayı tekilse ad da tekil olur:
@@ -141,7 +140,7 @@ class DailyMissionsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  isKu ? 'Hemû erk temam bûn!' : 'Tüm görevler tamam!',
+                  Tr.forKu(K.tumGorevlerTamam, isKu),
                   style: AppTypography.bodyMedium.copyWith(
                     color: AppTheme.correct,
                     fontWeight: FontWeight.w700,
@@ -228,7 +227,7 @@ class _MissionTile extends StatelessWidget {
     return Semantics(
       label: label,
       value: isDone
-          ? (isKu ? 'temam' : 'tamamlandı')
+          ? (Tr.forKu(K.tamamlandi, isKu))
           : '${mission.progress}/${mission.target}',
       excludeSemantics: true,
       child: _buildTile(context, ratio, label, isDone),

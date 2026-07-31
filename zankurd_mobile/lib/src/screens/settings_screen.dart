@@ -136,11 +136,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
       if (ok || !mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(failed)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(failed)));
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'abuse report mailto');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(failed)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(failed)));
     }
   }
 

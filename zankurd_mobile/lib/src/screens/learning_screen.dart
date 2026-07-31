@@ -528,7 +528,7 @@ class _LearningModeBar extends StatelessWidget {
         Expanded(
           child: _LearningModeButton(
             icon: AppIcons.question,
-            label: isKu ? 'Pirs' : 'Soru çöz',
+            label: Tr.forKu(K.soruCoz, isKu),
             enabled: hasLesson,
             onTap: onPractice,
           ),
@@ -537,7 +537,7 @@ class _LearningModeBar extends StatelessWidget {
         Expanded(
           child: _LearningModeButton(
             icon: AppIcons.paintbrush,
-            label: isKu ? 'Kart' : 'Flaş kart',
+            label: Tr.forKu(K.flasKart, isKu),
             enabled: hasLesson,
             onTap: onFlashcards,
           ),
@@ -546,7 +546,7 @@ class _LearningModeBar extends StatelessWidget {
         Expanded(
           child: _LearningModeButton(
             icon: AppIcons.bookOpen,
-            label: isKu ? 'Ders' : 'Dersler',
+            label: Tr.forKu(K.lessons, isKu),
             enabled: true,
             onTap: onLesson,
           ),
@@ -1179,7 +1179,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
               ),
               const SizedBox(width: 6),
               Text(
-                context.isKu ? 'Ji bo wergerê bitikîne' : 'Çeviri için dokun',
+                context.t(K.ceviriIcinDokun),
                 style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
                   fontSize: 11,
@@ -1266,7 +1266,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(context.isKu ? 'Ders qediya!' : 'Ders tamamlandı'),
+          content: Text(context.t(K.dersTamamlandi)),
           duration: const Duration(seconds: 2),
         ),
       );

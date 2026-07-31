@@ -1157,15 +1157,15 @@ class _SyncStatusChip extends StatelessWidget {
                 ? AppIcons.arrowsRotate
                 : (isSynced ? AppIcons.circleCheck : AppIcons.cloud);
             final label = syncing
-                ? (isKu ? 'Tê rêzkirin…' : 'Senkronize ediliyor…')
+                ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
                 : (isSynced
-                    ? (isKu ? 'Tev rêzkirî ye (Bulut)' : 'Bulutla senkronize')
-                    : (isKu
-                        // "kayd" bankada başka hiçbir yerde geçmiyor;
-                        // yerleşik sözcük "tomar"dır (bkz. "pirsên
-                        // tomarkirî" — strings.dart).
-                        ? '$pending tomar li amûrê ye'
-                        : '$pending çevrimdışı kaydı'));
+                      ? (Tr.forKu(K.bulutlaSenkronize, isKu))
+                      : (isKu
+                            // "kayd" bankada başka hiçbir yerde geçmiyor;
+                            // yerleşik sözcük "tomar"dır (bkz. "pirsên
+                            // tomarkirî" — strings.dart).
+                            ? '$pending tomar li amûrê ye'
+                            : '$pending çevrimdışı kaydı'));
 
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

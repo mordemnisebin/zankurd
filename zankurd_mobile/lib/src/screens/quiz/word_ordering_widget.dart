@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../l10n/strings.dart';
 import '../../l10n/lang.dart';
 import '../../models/quiz_question.dart';
 import '../../theme/app_theme.dart';
@@ -142,16 +143,14 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
               : _selectedWords.isEmpty
               ? Center(
                   child: Text(
-                    isKu
-                        ? 'Peyvan hilbijêre ku hevokê çêbikî'
-                        : 'Cümleyi oluşturmak için kelimeleri seç',
+                    Tr.forKu(K.cumleyiOlusturmakIcinKelimeleri, isKu),
                     style: AppTypography.caption.copyWith(
                       color: AppTheme.textMutedColor(context),
                     ),
                   ),
                 )
               : Semantics(
-                  label: isKu ? 'Hevoka te' : 'Kurduğun cümle',
+                  label: Tr.forKu(K.kurdugunCumle, isKu),
                   value: _selectedWords.map((t) => t.word).join(' '),
                   child: Wrap(
                     spacing: AppSpacing.xs,
@@ -161,9 +160,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
                         _WordChip(
                           word: token.word,
                           selected: true,
-                          semanticHint: isKu
-                              ? 'Ji hevokê derxe'
-                              : 'Cümleden çıkar',
+                          semanticHint: Tr.forKu(K.cumledenCikar, isKu),
                           onPressed: answered
                               ? null
                               : () => _unselectWord(token),
@@ -186,7 +183,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
                 _WordChip(
                   word: token.word,
                   selected: false,
-                  semanticHint: isKu ? 'Li hevokê zêde bike' : 'Cümleye ekle',
+                  semanticHint: Tr.forKu(K.cumleyeEkle, isKu),
                   onPressed: () => _selectWord(token),
                 ),
             ],
@@ -207,7 +204,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
                 borderRadius: BorderRadius.circular(AppRadius.md),
               ),
               child: Text(
-                isKu ? 'Kontrol bike' : 'Kontrol et',
+                Tr.forKu(K.kontrolEt, isKu),
                 style: AppTypography.bodyLarge.copyWith(
                   color: _selectedWords.isNotEmpty
                       ? Colors.white

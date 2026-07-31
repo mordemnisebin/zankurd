@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/percent_format.dart';
@@ -63,7 +64,7 @@ class ShareResultCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            isKu ? 'Pêşbirka Kurmancî' : 'Kurmancî Bilgi Yarışması',
+            Tr.forKu(K.kurmancBilgiYarismasi, isKu),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.6),
@@ -84,7 +85,7 @@ class ShareResultCard extends StatelessWidget {
             ),
           ),
           Text(
-            isKu ? 'PÛAN' : 'PUAN',
+            Tr.forKu(K.puan, isKu),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.7),
@@ -99,12 +100,12 @@ class ShareResultCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _stat('$correctCount/$totalQuestions', isKu ? 'Rast' : 'Doğru'),
+              _stat('$correctCount/$totalQuestions', Tr.forKu(K.correct, isKu)),
               _stat(
                 PercentFormat.value(accuracy, isKu: isKu),
-                isKu ? 'Rastî' : 'İsabet',
+                Tr.forKu(K.isabet, isKu),
               ),
-              _stat('$bestStreak', isKu ? 'Rêz' : 'Seri'),
+              _stat('$bestStreak', Tr.forKu(K.seri2, isKu)),
             ],
           ),
           const SizedBox(height: 20),
@@ -128,9 +129,7 @@ class ShareResultCard extends StatelessWidget {
           const SizedBox(height: 18),
 
           Text(
-            isKu
-                ? 'Tu jî bilîze — li Play Store\'ê "ZanKurd"'
-                : 'Sen de oyna — Play Store\'da "ZanKurd"',
+            Tr.forKu(K.senDeOynaPlay, isKu),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppTheme.gold.withValues(alpha: 0.9),
