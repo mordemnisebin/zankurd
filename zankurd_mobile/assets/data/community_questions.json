@@ -7,8 +7,8 @@
     "prompt": "Amed li kîjan parçeyê Kurdistanê ye?",
     "promptTr": "Amed Kürdistan'ın neresindedir?",
     "answers": [
-      "Bakûrê Kurdistan",
       "Rojhilatê Kurdistan",
+      "Bakûrê Kurdistan",
       "Rojavayê Kurdistan",
       "Başûrê Kurdistan"
     ],
@@ -38,9 +38,9 @@
     "prompt": "Ava Spî (Serê Avê) bi kîjan navçeyê ve girêdayî ye?",
     "promptTr": "Ava Spî (Serê Avê) nereye bağlıdır?",
     "answers": [
-      "Nisêbîn",
       "Qoser",
       "Artuklu",
+      "Nisêbîn",
       "Mîdyat"
     ],
     "answersTr": [
@@ -100,9 +100,9 @@
     "prompt": "Behra Wanê li kîjan bajarî ye?",
     "promptTr": "Behra Wanê (Van Gölü) nereye bağlı bir göldür?",
     "answers": [
-      "Van",
       "Diyarbakır",
       "Batman",
+      "Van",
       "Şırnak"
     ],
     "answersTr": [
@@ -131,8 +131,8 @@
     "prompt": "Pîr Seyîd Riza xelkê ku derê ye?",
     "promptTr": "Pîr Seyîd Rıza nerelidir?",
     "answers": [
-      "Dêrsim",
       "Amed",
+      "Dêrsim",
       "Wan",
       "Şîrnex"
     ],
@@ -193,10 +193,10 @@
     "prompt": "Mihemmed Şêxo li ku derê ji dayîk bûye?",
     "promptTr": "Mihemmed Şêxo nerede doğmuştur?",
     "answers": [
-      "Qamişlo",
       "Amed",
       "Hewlêr",
-      "Sînê"
+      "Sînê",
+      "Qamişlo"
     ],
     "answersTr": [
       "Qamişlo",
@@ -255,9 +255,9 @@
     "prompt": "Di rapa kurdî de bi stranê «Ax» tê nasîn — kîjan hunermend e?",
     "promptTr": "Kürt rapinde «Ax» şarkısıyla bilinen sanatçı kimdir?",
     "answers": [
-      "Serhado",
       "Şerifê Omerî",
       "Simyager",
+      "Serhado",
       "Kimyager"
     ],
     "answersTr": [
@@ -317,10 +317,10 @@
     "prompt": "Baba Tahirê Uryan di kîjan sedsalê de jiyaye?",
     "promptTr": "Baba Tahirê Uryan kaçıncı yüzyılda yaşamıştır?",
     "answers": [
-      "11",
       "10",
       "15",
-      "20"
+      "20",
+      "11"
     ],
     "answersTr": [
       "11",
@@ -348,8 +348,8 @@
     "prompt": "Kîjan roman ji hêla Erebê Şemo ve hatiye nivîsandin?",
     "promptTr": "Hangisi Erebê Şemo'nun yazdığı bir romandır?",
     "answers": [
-      "Şivanê Kurd",
       "Mem û Zîn",
+      "Şivanê Kurd",
       "Stêrka Bakûr",
       "Bîra Qederê"
     ],
@@ -379,10 +379,10 @@
     "prompt": "Gotina «Xwîn bi xwînê nayê şûştin» ya kîjan nivîskarî ye?",
     "promptTr": "«Xwîn bi xwînê nayê şûştin» sözü hangi yazarımıza aittir?",
     "answers": [
-      "Mehmed Uzun",
       "Yaşar Kemal",
       "Ahmed Arîf",
-      "Cegerxwîn"
+      "Cegerxwîn",
+      "Mehmed Uzun"
     ],
     "answersTr": [
       "Mehmed Uzun",
@@ -410,9 +410,9 @@
     "prompt": "Nivîskarê pirtûka «Bîra Qederê» kî ye?",
     "promptTr": "«Bîra Qederê» kitabının yazarı kimdir?",
     "answers": [
-      "Mehmed Uzun",
       "Yaşar Kemal",
       "Ahmedê Xanî",
+      "Mehmed Uzun",
       "Ali Haydar Kaytan"
     ],
     "answersTr": [
@@ -441,10 +441,10 @@
     "prompt": "Muzîka fîlmê Kobanê ji hêla kê ve hatiye çêkirin?",
     "promptTr": "Kobanê filminin müziklerini kim yapmıştır?",
     "answers": [
-      "Mehmûd Berazî",
       "Şivan Perwer",
       "Seyidxanê Boyaxçî",
-      "Şakiro"
+      "Şakiro",
+      "Mehmûd Berazî"
     ],
     "answersTr": [
       "Mehmûd Berazî",
@@ -472,8 +472,8 @@
     "prompt": "Derhênerê fîlmê Kobanê kî ye?",
     "promptTr": "Kobanê filminin yönetmeni kimdir?",
     "answers": [
-      "Özlem Yaşar",
       "Çocuk",
+      "Özlem Yaşar",
       "Sevmek",
       "Kazim Öz"
     ],
@@ -503,10 +503,10 @@
     "prompt": "Di fîlmê Kobanê de lîstikvan bi piranî kî ne?",
     "promptTr": "Kobanê filminde oyuncular çoğunlukla kimlerdir?",
     "answers": [
-      "Kesên ku bi xwe beşdarî berxwedanê bûne",
       "Lîstikvanên şanoya Şamê",
       "Xwendekarên dibistana fîlman a Duhokê",
-      "Lîstikvanên navdar ên Hollywoodê"
+      "Lîstikvanên navdar ên Hollywoodê",
+      "Kesên ku bi xwe beşdarî berxwedanê bûne"
     ],
     "answersTr": [
       "Direnişe bizzat katılmış kişiler",
@@ -535,9 +535,9 @@
     "prompt": "Muzîka fîlmê «14 Tîrmeh» ji hêla kê ve hatiye çêkirin?",
     "promptTr": "14 Temmuz filminin müziklerini kim yapmıştır?",
     "answers": [
-      "Mehmûd Berazî",
       "Awazê Çiya",
       "Koma Hevra",
+      "Mehmûd Berazî",
       "TEV-ÇAND"
     ],
     "answersTr": [
@@ -566,10 +566,10 @@
     "prompt": "Fîlmê «14 Tîrmeh» kengî derket ser ekranan?",
     "promptTr": "14 Temmuz filmi ne zaman gösterime girmiştir?",
     "answers": [
-      "2017",
       "2012",
       "2014",
-      "2020"
+      "2020",
+      "2017"
     ],
     "answersTr": [
       "2017",
@@ -597,8 +597,8 @@
     "prompt": "Fîlmê «Ji bo Azadîyê» kengî derket ser ekranan?",
     "promptTr": "«Ji bo Azadîyê» filmi ne zaman gösterime girmiştir?",
     "answers": [
-      "2019",
       "2014",
+      "2019",
       "2016",
       "2023"
     ],
@@ -628,10 +628,10 @@
     "prompt": "Fîlmê «Ji bo Azadîyê» li ku derê hatiye kişandin?",
     "promptTr": "«Ji bo Azadîyê» filmi nerede çekilmiştir?",
     "answers": [
-      "Kobanê",
       "Amed (Sûr)",
       "Hewlêr",
-      "Qamişlo"
+      "Qamişlo",
+      "Kobanê"
     ],
     "answersTr": [
       "Kobanê",
@@ -659,9 +659,9 @@
     "prompt": "Derhênerê fîlmê «Ji bo Azadîyê» kî ye?",
     "promptTr": "«Ji bo Azadîyê» filminin yönetmeni kimdir?",
     "answers": [
-      "Ersin Çelik",
       "Şêro Hindê",
       "Özlem Yaşar",
+      "Ersin Çelik",
       "Kazim Öz"
     ],
     "answersTr": [
@@ -690,10 +690,10 @@
     "prompt": "Muzîka fîlmê «Ji bo Azadîyê» ji hêla kê ve hatiye çêkirin?",
     "promptTr": "«Ji bo Azadîyê» filminin müziklerini kim yapmıştır?",
     "answers": [
-      "Mehmûd Berazî",
       "Hozan Aydin",
       "Hekîm Sefqan",
-      "Awazê Çiya"
+      "Awazê Çiya",
+      "Mehmûd Berazî"
     ],
     "answersTr": [
       "Mehmûd Berazî",
@@ -721,8 +721,8 @@
     "prompt": "Şehîdê ku wek «Şêrê Efrînê» tê nasîn kî ye?",
     "promptTr": "Efrîn'deki direnişin sembol ismi «Şêrê Efrînê» olarak bilinen şehidimiz kimdir?",
     "answers": [
-      "Karker Tolhildan",
       "Gelhat Gever",
+      "Karker Tolhildan",
       "Çiyager Hêvî",
       "Hakî Karer"
     ],
@@ -752,10 +752,10 @@
     "prompt": "Kîjan şehîd bi berxwedana Sûra Amedê re bûye yek?",
     "promptTr": "Amed Sur direnişiyle bütünleşen şehit arkadaş kimdir?",
     "answers": [
-      "Çiyager Hêvî",
       "Gelhat Gever",
       "Karker Tolhildan",
-      "Riza Altun"
+      "Riza Altun",
+      "Çiyager Hêvî"
     ],
     "answersTr": [
       "Çiyager Hêvî",
@@ -783,9 +783,9 @@
     "prompt": "Şehîda fedaî ya ku bi ruhê Kobanê re bûye yek kî ye?",
     "promptTr": "Kobanê ruhuyla bütünleşen fedai şehidimiz kimdir?",
     "answers": [
-      "Arîn Mirkan",
       "Viyan Peyman",
       "Zehra Penaber",
+      "Arîn Mirkan",
       "Gelhat Gever"
     ],
     "answersTr": [
@@ -814,10 +814,10 @@
     "prompt": "Kîjan şehîd bi klamên xwe yên berxwedana Kobanê tê bîranîn?",
     "promptTr": "Kobanê direnişinde söylediği klamlarla hafızalarda kalan şehidimiz kimdir?",
     "answers": [
-      "Viyan Peyman",
       "Arîn Mirkan",
       "Kasım Engin",
-      "Atakan Mahir"
+      "Atakan Mahir",
+      "Viyan Peyman"
     ],
     "answersTr": [
       "Viyan Peyman",
@@ -845,8 +845,8 @@
     "prompt": "Fermandarê pêşeng ê berxwedana Kobanê kî bû?",
     "promptTr": "Kobanê direnişinde büyük fedakârlıklar yapan öncü komutan kimdi?",
     "answers": [
-      "Gelhat Gever",
       "Mazlum Kobanê",
+      "Gelhat Gever",
       "Murat Karayılan",
       "Mustafa Karasu"
     ],
@@ -876,10 +876,10 @@
     "prompt": "Kemal Pir, yê ku wek «Laz Kemal» tê nasîn, xelkê ku derê ye?",
     "promptTr": "«Laz Kemal» olarak bilinen Kemal Pir nerelidir?",
     "answers": [
-      "Gümüşhane",
       "Amed",
       "Qamişlo",
-      "Hewraman"
+      "Hewraman",
+      "Gümüşhane"
     ],
     "answersTr": [
       "Gümüşhane",
@@ -907,9 +907,9 @@
     "prompt": "Hakî Karer xelkê ku derê ye?",
     "promptTr": "Haki Karer nerelidir?",
     "answers": [
-      "Ordu",
       "Giresun",
       "Rize",
+      "Ordu",
       "Gümüşhane"
     ],
     "answersTr": [
@@ -938,10 +938,10 @@
     "prompt": "Kîjan heval wek «cêwiyê ruhê min» tê bilêvkirin?",
     "promptTr": "Öcalan'ın «ruh ikizim» olarak tanımladığı arkadaş kimdir?",
     "answers": [
-      "Hakî Karer",
       "Kemal Pir",
       "Dibistan",
-      "Mehmet Karasungur"
+      "Mehmet Karasungur",
+      "Hakî Karer"
     ],
     "answersTr": [
       "Hakî Karer",
@@ -969,8 +969,8 @@
     "prompt": "Şanogerê ku di berxwedana benda Tişrînê de şehîd ket kî ye?",
     "promptTr": "Tişrin barajındaki direniş sırasında şehit olan tiyatrocu kimdir?",
     "answers": [
-      "Bavê Teyar",
       "Nazmi Karaman",
+      "Bavê Teyar",
       "Mirza Metin",
       "Biçûk"
     ],
@@ -1000,8 +1000,8 @@
     "prompt": "Siyasetmedarê ku wek «Bavê Welat» tê nasîn kî ye?",
     "promptTr": "Rojava direnişiyle bütünleşen ve «Bavê Welat» olarak tanınan siyasetçi kimdir?",
     "answers": [
-      "Salih Mislim",
       "Aldar Xelîl",
+      "Salih Mislim",
       "Mazlum Kobanê",
       "Bavê Teyar"
     ],
@@ -1031,9 +1031,9 @@
     "prompt": "Yekîneya şervanên jin a li Rojava kîjan e?",
     "promptTr": "Rojava'daki kadın savaşçı birliği hangisidir?",
     "answers": [
-      "YPJ",
       "YJA-Star",
       "YPG",
+      "YPJ",
       "HPJ"
     ],
     "answersTr": [
@@ -1093,9 +1093,9 @@
     "prompt": "Ji ber ku Yilmaz Guney di girtîgehê de bû, derhêneriya fîlmê «Yol» kê kir?",
     "promptTr": "Yılmaz Güney cezaevinde olduğu için «Yol» filminin yönetmenliğini kim üstlendi?",
     "answers": [
-      "Şerif Gören",
       "Zeki Ökten",
       "Atıf Yılmaz",
+      "Şerif Gören",
       "Ömer Lütfi Akad"
     ],
     "answersTr": [
@@ -1124,8 +1124,8 @@
     "prompt": "Fîlmê «Sûrû» (1978) senaryoya wê ya kê ye?",
     "promptTr": "«Sürü» (1978) filminin senaryosu kime aittir?",
     "answers": [
-      "Yılmaz Güney",
       "Zeki Ökten",
+      "Yılmaz Güney",
       "Kazım Öz",
       "Hiner Saleem"
     ],
@@ -1155,9 +1155,9 @@
     "prompt": "Derhênerê fîlmê «Dema Hespên Serxweş» kî ye?",
     "promptTr": "«Sarhoş Atlar Zamanı» filminin yönetmeni kimdir?",
     "answers": [
-      "Bahman Ghobadi",
       "Hiner Saleem",
       "Kazım Öz",
+      "Bahman Ghobadi",
       "Yılmaz Güney"
     ],
     "answersTr": [
@@ -1217,9 +1217,9 @@
     "prompt": "Derhênerê fîlmê «Vodka Lemon» kî ye?",
     "promptTr": "«Vodka Lemon» filminin yönetmeni kimdir?",
     "answers": [
-      "Hiner Saleem",
       "Bahman Ghobadi",
       "Kazım Öz",
+      "Hiner Saleem",
       "Şerif Gören"
     ],
     "answersTr": [
@@ -1248,8 +1248,8 @@
     "prompt": "Fîlmên «Fotoğraf», «Bahoz» û «Zer» ji hêla kîjan derhêner ve hatine çêkirin?",
     "promptTr": "«Fotoğraf», «Bahoz» ve «Zer» filmleri hangi yönetmene aittir?",
     "answers": [
-      "Kazım Öz",
       "Erol Mintaş",
+      "Kazım Öz",
       "Hüseyin Karabey",
       "Ersin Çelik"
     ],
@@ -1279,9 +1279,9 @@
     "prompt": "Yilmaz Guney di sala kîjan de li Parîsê koça dawî kir?",
     "promptTr": "Yılmaz Güney hangi yıl Paris'te hayatını kaybetti?",
     "answers": [
-      "1984",
       "1980",
       "1988",
+      "1984",
       "1992"
     ],
     "answersTr": [
@@ -1341,8 +1341,8 @@
     "prompt": "Derhênerê fîlmê «Klama Dayîka Min» kî ye?",
     "promptTr": "«Annemin Şarkısı» (Klama Dayîka Min) filminin yönetmeni kimdir?",
     "answers": [
-      "Erol Mintaş",
       "Kazım Öz",
+      "Erol Mintaş",
       "Hüseyin Karabey",
       "Ersin Çelik"
     ],
@@ -1372,10 +1372,10 @@
     "prompt": "Fîlmê «Umut» (1970) derhênerê wî kî ye?",
     "promptTr": "«Umut» (1970) filminin yönetmeni kimdir?",
     "answers": [
-      "Yılmaz Güney",
       "Zeki Ökten",
       "Şerif Gören",
-      "Atıf Yılmaz"
+      "Atıf Yılmaz",
+      "Yılmaz Güney"
     ],
     "answersTr": [
       "Yılmaz Güney",
@@ -1403,9 +1403,9 @@
     "prompt": "Bahman Ghobadi bi eslê xwe ji kîjan welatî ye?",
     "promptTr": "Bahman Ghobadi asıl olarak hangi ülkedendir?",
     "answers": [
-      "Îran",
       "Iraq",
       "Sûriye",
+      "Îran",
       "Ermenistan"
     ],
     "answersTr": [

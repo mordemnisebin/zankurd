@@ -1,5 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -47,10 +50,32 @@ void main() {
   // Araç *depolanan* şık sırasını oynatır; görünen sıra id'den türeyen sabit
   // bir kaydırmayla hesaplandığı için dengeleme görünen sıraya göre yapılır.
   // Yeni soru ekledikten sonra çalıştırın, sonra bu test yeşile döner.
+  // 2026-08-01: bu bekçi ve `rebalance_answer_positions.py` YALNIZ offline
+  // bankasına bakıyordu; uygulama ise dört banka yüklüyor. Ölçüm:
+  //
+  //     offline    [221, 221, 221, 221]   yayılım   0  ← kapsamdaydı
+  //     editorial  [  5,  76,  70, 130]   yayılım 125  ← kapsam dışı
+  //     community  [  0,  11,  12,  23]   yayılım  23  ← kapsam dışı
+  //
+  // Editoryal sorularda hep D'ye basan oyuncu %46 doğru yapıyordu;
+  // topluluk sorularında A hiçbir zaman doğru değildi. Koruma vardı,
+  // kapsamı eksikti. Ölçüm artık `questionBankAssets`teki her bankayı
+  // kapsıyor — araç da öyle.
   test('displayed correct-answer positions are balanced', () {
     final counts = List<int>.filled(4, 0);
-    for (final question in offlineQuestionBank.where(
-      (q) => q.answers.length == 4,
+    final all = [
+      for (final asset in questionBankAssets)
+        if (File(asset).existsSync())
+          ...(jsonDecode(File(asset).readAsStringSync()) as List)
+              .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+    ];
+    expect(
+      all.length,
+      greaterThan(1000),
+      reason: 'Bekçi kör kalmasın: bankalar yüklenemediyse yayılım 0 çıkar.',
+    );
+    for (final question in all.where(
+      (q) => q.answers.length == 4 && q.answers.contains(q.correctAnswer),
     )) {
       counts[question.displayAnswers.indexOf(question.correctAnswer)]++;
     }
@@ -77,9 +102,27 @@ void main() {
     }
   });
 
+  // Kapsam 2026-08-01'de `offlineQuestionBank`ten bütün bankalara
+  // genişletildi. Editoryal ve topluluk bankaları hiç taranmıyordu —
+  // aynı gece bulunan "koruma var, kapsamı eksik" deseninin bir örneği
+  // daha.
+  //
+  // Eşik (6 karakter) yerinde bırakıldı: kısa cevaplarda soru metniyle
+  // rastlantısal örtüşme yanlış pozitif üretiyor. Bilinen tek istisna
+  // `edit_edebiyat_0020` ("Melayê Cizîrî li kîjan bajarî jiya?" → Cizîr):
+  // şairin mahlası şehrin adını taşıyor, yani sızıntı gerçek ama cevap
+  // 5 karakter olduğu için eşiğin altında kalıyor. Soruyu yeniden
+  // yazmak editör kararı; eşiği düşürmek yanlış refleks olurdu.
   test('prompts do not leak the correct answer text', () {
     final offenders = <String>[];
-    for (final question in offlineQuestionBank) {
+    final all = [
+      for (final asset in questionBankAssets)
+        if (File(asset).existsSync())
+          ...(jsonDecode(File(asset).readAsStringSync()) as List)
+              .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+    ];
+    expect(all.length, greaterThan(1000));
+    for (final question in all) {
       final correct = _normalized(question.correctAnswer);
       if (correct.length < 6) continue;
 
