@@ -47,9 +47,11 @@ with q as (
       when 'C' then 2
       else 3
     end as stored_index,
+    -- `sum()` bigint döndürür, `chr()` integer ister; cast şart.
+    -- (İlk sürüm bunu atlamıştı: `function chr(bigint) does not exist`.)
     (
-      select case when sum(ascii(ch)) % 4 = 0 then 1
-                  else sum(ascii(ch)) % 4 end
+      select (case when sum(ascii(ch)) % 4 = 0 then 1
+                   else sum(ascii(ch)) % 4 end)::int
       from regexp_split_to_table(id::text, '') as ch
     ) as shift
   from public.questions
