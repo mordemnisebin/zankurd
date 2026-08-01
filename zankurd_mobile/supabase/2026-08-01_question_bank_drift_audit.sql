@@ -2,6 +2,17 @@
 --
 -- SALT OKUNUR. Hiçbir şeyi değiştirmez; yalnız rapor döndürür.
 --
+-- ## DİKKAT — sorguları TEK TEK çalıştır
+--
+-- Supabase SQL Editor birden çok ifade gönderildiğinde yalnız SONUNCUNUN
+-- sonucunu gösteriyor. Aşağıdaki beş sorgu ayrı ayrı seçilip
+-- çalıştırılmalı (metni seçip Cmd+Enter). Hepsini birden çalıştırmak
+-- yalnız 5. sorgunun çıktısını verir ve o çıktı ekranda okunacak kadar
+-- kısa değildir.
+--
+-- Dışa aktarılabilir tek sorgu için:
+--   supabase/2026-08-01_question_export_for_audit.sql
+--
 -- ## Niçin gerekli
 --
 -- Yerel bankalar (`assets/data/*.json`, 1787 soru) `QuestionLanguagePolicy`

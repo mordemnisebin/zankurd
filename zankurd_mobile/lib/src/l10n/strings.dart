@@ -388,9 +388,13 @@ class Tr {
       'tr': 'Tamamlanan ders: {completed} / {total}',
     },
     K.recommendedForYou: {'ku': 'Pêşniyara te', 'tr': 'Sana önerilen'},
+    // "mastery" iki dilde de çıplak İngilizce duruyordu, oysa ustalık
+    // SEVİYELERİNİN Kurmancî adları zaten var: xwendekar, pispor,
+    // mamoste (`mastery_level.dart`). Genel terimin İngilizce kalması
+    // tutarsızdı (2026-08-01, canlı ders yolu ekranı).
     K.categoryMasteryGoal: {
-      'ku': 'Armanca mastery ya kategoriyê',
-      'tr': 'Kategori mastery hedefi',
+      'ku': 'Armanca serweriya kategoriyê',
+      'tr': 'Kategori ustalık hedefi',
     },
     K.noQuestionsForCategory: {
       'ku': 'Ji bo vê kategoriyê pirs nehatin dîtin',
@@ -1857,7 +1861,7 @@ class Tr {
     },
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 9 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast bonus zêde dike.',
+          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 9 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast pûanên zêde dide.',
       'tr':
           '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 9 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
     },
