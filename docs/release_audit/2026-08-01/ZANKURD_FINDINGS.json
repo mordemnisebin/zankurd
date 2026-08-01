@@ -1,0 +1,611 @@
+{
+  "audit": {
+    "name": "ZanKurd Release Readiness Audit — Phase 1 (evidence-based, read-only)",
+    "date": "2026-08-01",
+    "repo_root": "/Users/kocer/Projects/zankurd",
+    "app_path": "zankurd_mobile",
+    "branch": "main",
+    "head_sha": "5c79000513e1148b55588dabe0ed923f833b4cb3",
+    "app_version": "1.9.1+13",
+    "toolchain": {
+      "flutter": "3.44.7 (stable)",
+      "dart": "3.12.2",
+      "xcode": "26.6 (17F113)",
+      "ios_sdk": "26.5",
+      "android_compile_sdk": 36,
+      "android_target_sdk": 36,
+      "android_min_sdk": 24,
+      "android_ndk": "28.2.13676358",
+      "java": "17.0.20",
+      "cocoapods": "1.17.0"
+    },
+    "gate_results": {
+      "flutter_analyze": "PASS (No issues found)",
+      "dart_format": "FAIL (23 of 429 files)",
+      "flutter_test": "PASS (1302 tests, 0 skipped, 0 failed)",
+      "question_quality_gate": "FAIL (exit 1, baseline fingerprint mismatch)",
+      "android_release_aab": "BLOCKED (no keystore)",
+      "android_debug_apk": "PASS",
+      "ios_release_no_codesign": "PASS (Runner.app 52.0 MB)",
+      "ios_simulator_build": "PASS",
+      "web_release": "PASS (51 MB)",
+      "16kb_elf_alignment": "PASS (static)",
+      "16kb_device_runtime": "NOT RUN (no 16 KB system image; emulator PAGE_SIZE=4096)"
+    },
+    "counts": {
+      "P0": 1,
+      "P1": 5,
+      "P2": 9,
+      "P3": 5
+    },
+    "note_on_scope": "These are findings the auditor independently verified. A parallel read-only analysis (11 of 12 agents completed) produced roughly 110 additional candidate findings; three were verified and promoted here (P0-001, P2-008, P2-009), the rest are listed as an explicitly UNVERIFIED verification queue in Appendix A of ZANKURD_RELEASE_READINESS_AUDIT.md and must not be acted on before verification.",
+    "phase2": {
+      "date": "2026-08-02",
+      "branch": "fix/release-blockers-2026-08-02",
+      "gates": {
+        "format": "exit 0",
+        "flutter_analyze": "No issues found",
+        "question_quality_gate": "exit 0",
+        "flutter_test": "+1302 passed, 0 failed, 0 skipped",
+        "web_release": "exit 0",
+        "ios_release_no_codesign": "exit 0",
+        "android_release_aab": "exit 0",
+        "aab_signature": "jar verified, upload-key cert match",
+        "android_release_smoke": "PARTIAL PASS",
+        "16kb_release_aab_static": "PASS",
+        "16kb_runtime": "NOT RUN — 16 KB IMAGE NOT INSTALLED"
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "ZKR-REL-20260801-P0-001",
+      "severity": "P0",
+      "title": "Production Hostinger FTP password committed in plaintext and still present in git history; never rotated",
+      "platform": "infrastructure",
+      "area": "secret-management",
+      "status": "MITIGATED — PASSWORD ROTATED / RESIDUAL HISTORY OPEN",
+      "evidence": "git show e8e358a^:zankurd_mobile/deploy_ftp.sh lines 3-5 contain literal production credentials: HOST=\"82.25.***.***\", USER=\"u6226*****.zankurd.com\", PASS=\"Amargi.***REDACTED***\", used at line 20 as --user \"$USER:$PASS\". The project's own commit body for e8e358a (2026-07-24) states: 'deploy_ftp.sh içindeki açık metin FTP şifresi kaldırıldı... Not: Sızan FTP şifresi git GEÇMİŞİNDE hâlâ mevcut — Hostinger'dan şifre değiştirilmeli.' (The leaked FTP password is still in git HISTORY — the password must be changed at Hostinger.)",
+      "file_locations": [
+        "zankurd_mobile/deploy_ftp.sh:3-5 (at commit e8e358a^ and earlier)",
+        "commit e8e358a (remediation, forward-only)"
+      ],
+      "reproduction": "git show e8e358a^:zankurd_mobile/deploy_ftp.sh | sed -n '3,5p'",
+      "expected": "No production credential appears in any commit",
+      "actual": "HEAD is clean (deploy_ftp.sh now delegates to deploy_sftp.sh and reads secrets from the gitignored .env.deploy), but the credential remains reachable in history",
+      "impact": "This account hosts zankurd.com, which serves the privacy policy, terms of use and account-deletion pages that both stores require. Compromise would allow those legally-required pages to be altered or removed and malicious content to be served on the web build.",
+      "policy_reference": "n/a (security); indirectly affects the integrity of the Privacy Policy / Support / Account Deletion URLs declared to both stores",
+      "root_cause": "The deploy script originally embedded credentials. Fixed on 2026-07-24 but forward-only: history was not rewritten and the password was not rotated.",
+      "mitigating_fact": "git remote -v shows origin is a LOCAL bundle file (/Users/kocer/Downloads/zankurd-mac-aktarim.bundle), not GitHub or any public remote. The repository has never been pushed publicly, so present exposure is limited to those with access to the local filesystem and that 167 MB bundle. This lowers, but does not remove, the severity.",
+      "remediation": "Order matters. (1) Rotate the password at Hostinger FIRST — this is the only real fix; scrubbing history is useless while the credential stays live. (2) Move to SFTP/key-based access only (HEAD already delegates to deploy_sftp.sh). (3) Before the repo is ever made public, scrub history with git filter-repo and destroy the bundle. (4) Keep the new secret only in .env.deploy and GitHub Actions secrets — the workflow already correctly uses ${{ secrets.HOSTINGER_FTP_* }}.",
+      "validation": "Password-change record in the Hostinger panel; git log --all -S'<old-password>' returns 0 results after scrubbing; successful deploy via deploy_sftp.sh",
+      "confidence": "high",
+      "dependencies": [],
+      "auditor_note": "Missed on the first pass because the history scan was filename-based (*.env*, key.properties, *.jks, *.p8) while the secret lived inside a shell script. Name-based scanning is insufficient without content-based search (git log -S).",
+      "phase2_update": "2026-08-02 (Phase 2): Owner confirmed the Hostinger password was rotated. Local verification (SHA-256 comparison, no values printed): .env.deploy contains NO password field at all — deployment moved to SSH key auth (SFTP_IDENTITY_FILE); the old credential is absent from .env.deploy and from all tracked files -> DIFFERENT (superseded). deploy_ftp.sh is now a 6-line shim exec'ing deploy_sftp.sh (BatchMode, IdentitiesOnly, StrictHostKeyChecking, pinned known_hosts). The .github/workflows/deploy-web-hostinger.yml that referenced FTP_PASSWORD no longer exists. ACTIVE credential risk is mitigated; the historical commit record remains and history scrub is deliberately deferred to a separate backed-up phase."
+    },
+    {
+      "id": "ZKR-REL-20260801-P1-001",
+      "severity": "P1",
+      "title": "Android release binary cannot be produced — signing material absent",
+      "platform": "android",
+      "area": "build/release-infrastructure",
+      "status": "FIXED",
+      "evidence": "flutter build appbundle --release and flutter build apk --release both exit 1 with: 'Release signing configuration is missing or incomplete. Expected android/key.properties with non-empty fields: storeFile, storePassword, keyAlias, keyPassword ... The release build was stopped for security and will not fall back to debug signing.'",
+      "file_locations": [
+        "zankurd_mobile/android/app/build.gradle.kts:24-52",
+        "zankurd_mobile/android/key.properties (absent)",
+        "audit_artifacts/release_audit_2026-08-01/logs/builds/10_android_aab.log"
+      ],
+      "reproduction": "cd zankurd_mobile && flutter build appbundle --release",
+      "expected": "Signed app-release.aab is produced",
+      "actual": "Gradle throws GradleException, exit code 1",
+      "impact": "No AAB can be uploaded to Google Play. Also blocks: release bundle size measurement, R8 output review, merged release manifest inspection, and 16 KB verification from the release binary itself.",
+      "policy_reference": "Google Play upload requirement; Play App Signing",
+      "root_cause": "Upload keystore and android/key.properties are intentionally not stored in the repository and are absent on this machine. The gradle gate is correct behaviour — it refuses to silently fall back to debug signing.",
+      "remediation": "Owner restores/creates the upload keystore and a local android/key.properties (never committed). If Play App Signing is enabled, only the upload key is required.",
+      "validation": "flutter build appbundle --release -> exit 0; then bundletool build-apks + zipalign -c -P 16 + llvm-readelf -lW on release .so files",
+      "confidence": "high",
+      "dependencies": [
+        "ZKR-REL-20260801-P2-003",
+        "ZKR-REL-20260801-P2-004",
+        "ZKR-REL-20260801-P2-005"
+      ],
+      "phase2_update": "2026-08-02 (Phase 2): New RSA-4096 upload keystore created at ~/.zankurd/signing/zankurd-upload.jks (alias zankurd-upload, SHA384withRSA, valid to 2056-07-25), password held in macOS Keychain (round-trip verified), android/key.properties written mode 600 and confirmed gitignored + untracked. Signed release AAB produced: 73,530,129 B, SHA-256 175147659c5177cc7d2fb611bd27fe87d5427751f1ae2be5f4df01a5c75f07bf. jarsigner -> 'jar verified'; signer cert SHA-256 80:59:2E:...:98:B3 matches the upload key; zero 'Android Debug' occurrences; bundletool validate passed; targetSdk/compileSdk 36, minSdk 24; R8 ran (mapping.txt 295,909 lines). Installs and launches on Android 16 with zero FATAL/E-flutter/dlopen errors. NOTE: shippability is tracked separately as P1-005."
+    },
+    {
+      "id": "ZKR-REL-20260801-P1-002",
+      "severity": "P1",
+      "title": "iPad is a declared supported device but the iPad layout is unfinished (stretched phone UI)",
+      "platform": "ios/ipados",
+      "area": "layout/store-quality",
+      "status": "OPEN — DEFERRED",
+      "evidence": "Real iPad Pro 13-inch (M5) simulator, iOS 26.5. Onboarding: hero card becomes a ~1400pt-wide empty green rectangle with a small centred icon, followed by ~400pt of dead space. Name gate: full-width orange header with content compressed into the left ~30%, a small centred card, and ~600pt of empty space below. Root cause is visible in source: ResponsiveWrapper caps content at maxContentWidth = 1200 and only activates above wideThreshold = 600; iPad Pro 13-inch portrait logical width is ~1032pt, so the 1200pt cap never binds.",
+      "file_locations": [
+        "zankurd_mobile/ios/Runner.xcodeproj/project.pbxproj:462",
+        "zankurd_mobile/lib/src/widgets/responsive_wrapper.dart:19",
+        "zankurd_mobile/lib/src/widgets/responsive_wrapper.dart:22",
+        "audit_artifacts/release_audit_2026-08-01/screenshots/ios/10_ipad_pro13_launch.png",
+        "audit_artifacts/release_audit_2026-08-01/screenshots/ios/11_ipad_after_skip.png"
+      ],
+      "reproduction": "flutter build ios --simulator --debug; xcrun simctl boot <iPad Pro 13-inch (M5)>; xcrun simctl install <udid> build/ios/iphonesimulator/Runner.app; xcrun simctl launch <udid> com.zankurd.app; xcrun simctl io <udid> screenshot out.png",
+      "expected": "On iPad the content is constrained to a readable measure or uses a tablet-appropriate layout",
+      "actual": "Phone layout stretched across 1032pt with large empty regions",
+      "impact": "iPad users see an unfinished, amateur-feeling layout with large empty areas.",
+      "policy_reference": "App Store Review Guideline 4.0 (Design) / 2.4.1; iPad screenshots are mandatory when the device family includes iPad",
+      "root_cause": "ResponsiveWrapper was written for desktop web widths only. Its own class documentation records the deferral: 'Gerçek iki sütunlu tablet düzeni kapsamlı bir tasarım işi; izole bir sprint olarak planlanmalı (M-12).'",
+      "remediation": "Either (a) add a tablet breakpoint reducing maxContentWidth to ~700-820pt, which is small and low-risk and keeps iPad support; or (b) set TARGETED_DEVICE_FAMILY = \"1\" to ship iPhone-only and remove the iPad screenshot obligation. This is a product decision for the owner.",
+      "validation": "Re-run the screen tour on iPad Pro 13-inch, iPad mini and iPad Air simulators; flutter test with no regressions",
+      "confidence": "high",
+      "dependencies": [],
+      "phase2_update": "Deliberately out of scope for Phase 2. Unchanged."
+    },
+    {
+      "id": "ZKR-REL-20260801-P1-003",
+      "severity": "P1",
+      "title": "Question-quality gate fails (exit 1) — CI is red and real content regressions would be masked",
+      "platform": "both",
+      "area": "content-quality-gate/ci",
+      "status": "FIXED",
+      "evidence": "dart run tool/question_quality/question_quality_audit.dart gate -> 'question-quality: sources=5 reportPhysical=1832 reportCanonical=1771 gatePhysical=1832 gateCanonical=1771 unknown=0' followed by 'Gate source fingerprint changed; baseline metrics were not accepted.' exit 1. SHA-256 comparison against baseline.json: community_questions.json CHANGED, editorial_questions.json CHANGED, offline_questions.json CHANGED; sentence_building_questions.json MATCH; curated_question_bank.dart MATCH.",
+      "file_locations": [
+        "zankurd_mobile/tool/question_quality/baseline.json",
+        "zankurd_mobile/assets/data/offline_questions.json",
+        "zankurd_mobile/assets/data/editorial_questions.json",
+        "zankurd_mobile/assets/data/community_questions.json",
+        ".github/workflows/flutter_ci.yml",
+        "audit_artifacts/release_audit_2026-08-01/logs/data_quality/31_baseline_fingerprint_diff.log"
+      ],
+      "reproduction": "cd zankurd_mobile && dart run tool/question_quality/question_quality_audit.dart gate",
+      "expected": "Gate exits 0 and only fails on genuine content regressions",
+      "actual": "Gate exits 1 on every run; a genuine regression would produce the same error and be indistinguishable",
+      "impact": "The CI step that protects question quality no longer discriminates. Pre-release 'CI green' verification is impossible.",
+      "policy_reference": "Internal release gate (CI step 'Check question quality regressions')",
+      "root_cause": "Commit e6cb01b (2026-08-01, 'fix(sorular): cevap konumu yanlılığını...') modified three question JSON files. baseline.json was last refreshed at commit c901521 (2026-07-31), i.e. before that content change. Content was fixed; the baseline was not refreshed.",
+      "remediation": "After reviewing the new content, refresh fingerprints and metrics via the tool's baseline mode. This is safe because the shipped bank currently reports 0 blockers and 0 criticals.",
+      "validation": "dart run tool/question_quality/question_quality_audit.dart gate -> exit 0",
+      "confidence": "high",
+      "dependencies": [],
+      "phase2_update": "2026-08-02 (Phase 2): Verified the three changed sources are the documented 2026-08-01 answer-position rebalance + distractor-language fix: 1779->1779 records, 0 added, 0 deleted, only the 'answers' field changed in 1033 records, 0 prompt-text changes, 0 correctAnswer-text changes; 51 records had option content substituted (documented distractor-language fix) with correctAnswer text unchanged in 51/51 and the correct answer still present in 51/51. Baseline refreshed with the tool's own --accept-current-debt mode: delta 'blockers 0->0, criticals 0->0, issues 1856->1856'; baseline.json diff is exactly 3 source fingerprints and the issueFingerprints SET is identical. Question sources untouched. gate -> exit 0 'no regression from baseline'."
+    },
+    {
+      "id": "ZKR-REL-20260801-P1-004",
+      "severity": "P1",
+      "title": "dart format fails on 23 files — CI's first gate breaks, so no later CI step runs",
+      "platform": "both",
+      "area": "code-quality/ci",
+      "status": "FIXED",
+      "evidence": "dart format --output=none --set-exit-if-changed lib test tool tools integration_test -> 'Formatted 429 files (23 changed)'. Changed files include lib/src/data/question_bank_loader.dart, lib/src/data/seen_question_store.dart, lib/src/models/room.dart, lib/src/screens/learning_screen.dart, lib/src/screens/shop_screen.dart, lib/src/services/question_language_policy.dart, lib/src/widgets/tournament_bracket_widget.dart, plus 16 test files and tool/screenshots/result_before_after_test.dart.",
+      "file_locations": [
+        "audit_artifacts/release_audit_2026-08-01/logs/tests/01_analyze_format.log",
+        ".github/workflows/flutter_ci.yml"
+      ],
+      "reproduction": "cd zankurd_mobile && dart format --output=none --set-exit-if-changed lib test tool tools integration_test",
+      "expected": "exit 0",
+      "actual": "23 files are unformatted; CI's 'Check formatting' step fails, so analyze, the quality gate, tests and the APK build never run",
+      "impact": "No user impact. Process impact: the entire CI pipeline is blocked at step one.",
+      "policy_reference": "Internal CI contract",
+      "root_cause": "Formatting was not run during recent content/code passes. Note the CI step deliberately excludes lib/src/data/offline_question_bank.dart; none of these 23 files fall under that exclusion.",
+      "remediation": "Run dart format using the same exclusion list as CI.",
+      "validation": "dart format --set-exit-if-changed ... -> exit 0, then flutter test -> 1302 pass",
+      "confidence": "high",
+      "dependencies": [],
+      "phase2_update": "2026-08-02 (Phase 2): dart format applied with the exact CI scope and exclusions. 23 files changed; token-level comparison (whitespace + trailing commas normalised) shows 0 files with any semantic difference. offline_question_bank.dart untouched (CI exclusion preserved). Post-check: 'Formatted 430 files (0 changed)' exit 0. flutter test still +1302 pass / 0 fail / 0 skip, confirming behavioural equivalence."
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-001",
+      "severity": "P2",
+      "title": "Advertising ID is collected via Firebase Analytics — store declarations must be reconciled",
+      "platform": "both",
+      "area": "privacy/store-declaration",
+      "status": "VERIFIED FAIL",
+      "evidence": "aapt2 dump badging on the built APK lists uses-permission com.google.android.gms.permission.AD_ID, android.permission.ACCESS_ADSERVICES_ATTRIBUTION and android.permission.ACCESS_ADSERVICES_AD_ID, none of which appear in the app's own AndroidManifest.xml. On iOS, GoogleAdsOnDeviceConversion.framework is embedded in Runner.app/Frameworks. Meanwhile the published terms.html states the game is free with no ads.",
+      "file_locations": [
+        "zankurd_mobile/pubspec.yaml (firebase_analytics ^12.4.5)",
+        "zankurd_mobile/android/app/src/main/AndroidManifest.xml",
+        "audit_artifacts/release_audit_2026-08-01/logs/builds/16_android_manifest_resolved.log",
+        "audit_artifacts/release_audit_2026-08-01/logs/builds/14_ios_bundle.log"
+      ],
+      "reproduction": "aapt2 dump badging build/app/outputs/flutter-apk/app-debug.apk | grep uses-permission",
+      "expected": "Declared data collection matches what the binary actually collects",
+      "actual": "Advertising ID capability ships in the binary; the Data Safety / App Privacy answers for it are not yet settled and public terms say 'no ads'",
+      "impact": "Mismatch between declaration and binary. If the app's target audience includes children, transmitting the Advertising ID is a Play Families policy violation.",
+      "policy_reference": "Google Play Data Safety (support.google.com/googleplay/android-developer/answer/10787469); Apple App Privacy",
+      "root_cause": "firebase_analytics pulls in ad-attribution components by default via manifest merging and pod dependencies.",
+      "remediation": "Either declare Advertising ID in Play Data Safety (and keep terms consistent), or remove it: add tools:node=\"remove\" for com.google.android.gms.permission.AD_ID in the manifest and configure Analytics without ad-id/ads-on-device-conversion.",
+      "validation": "Re-run aapt2 dump badging and confirm the permission set; confirm the iOS framework list",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-002",
+      "severity": "P2",
+      "title": "Remote Supabase schema vs local migrations — drift not verified",
+      "platform": "backend",
+      "area": "backend/schema-drift",
+      "status": "INCONCLUSIVE",
+      "evidence": "supabase/ contains 105 files. supabase/applied.md marks many rows with '?' and the explicit note 'tek tek doğrulanmadı' (not verified individually), including spend_coins.sql, submit_answer_function.sql, public_read_policies.sql, leaderboard_view.sql, daily_spin_rpc.sql, 2026-07-10_weekly_league.sql, 2026-07-14_room_timer_speed_scoring.sql and 2026-07-14_tournament_integrity_hardening.sql.",
+      "file_locations": [
+        "zankurd_mobile/supabase/applied.md",
+        "audit_artifacts/release_audit_2026-08-01/logs/security/40_supabase_inventory.log"
+      ],
+      "reproduction": "Read supabase/applied.md and compare against the live schema",
+      "expected": "Every migration's applied state is known and matches the live schema",
+      "actual": "A material subset is recorded as unverified",
+      "impact": "A policy or RPC assumed to be live may not be, or may differ. Security guarantees asserted in migrations cannot be fully confirmed from the repo alone.",
+      "policy_reference": "n/a (internal integrity)",
+      "root_cause": "Migrations have been applied manually via the SQL editor / Management API / CLI over time; the manifest was maintained by hand.",
+      "remediation": "Run a read-only schema comparison against the live project (supabase db diff or equivalent read-only introspection) and update applied.md. Deliberately excluded from this audit because it targets the production database.",
+      "validation": "Read-only introspection of RLS state and policy list per table",
+      "confidence": "medium",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-003",
+      "severity": "P2",
+      "title": "Native debug symbols are not configured for the release bundle",
+      "platform": "android",
+      "area": "crash-reporting",
+      "status": "VERIFIED FAIL",
+      "evidence": "grep for 'debugSymbolLevel' and 'ndk {' in zankurd_mobile/android/app/build.gradle.kts returns no matches, while the APK ships native libraries (libflutter.so, libdartjni.so, libdatastore_shared_counter.so) for arm64-v8a, armeabi-v7a and x86_64.",
+      "file_locations": [
+        "zankurd_mobile/android/app/build.gradle.kts"
+      ],
+      "reproduction": "grep -n 'debugSymbolLevel' zankurd_mobile/android/app/build.gradle.kts",
+      "expected": "Native debug symbols are generated and uploadable to Play",
+      "actual": "No symbol configuration; Play Console will warn that debug symbols were not uploaded",
+      "impact": "Native crashes are reported unsymbolicated, making engine/plugin crashes hard to diagnose in production.",
+      "policy_reference": "Google Play Console native debug symbols guidance",
+      "root_cause": "Default Flutter Android template does not configure debugSymbolLevel.",
+      "remediation": "Add android { buildTypes { release { ndk { debugSymbolLevel = \"FULL\" } } } }, or build with --split-debug-info and upload the symbols.",
+      "validation": "Build the release AAB and confirm BUNDLE-METADATA contains native debug symbols",
+      "confidence": "high",
+      "dependencies": [
+        "ZKR-REL-20260801-P1-001"
+      ]
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-004",
+      "severity": "P2",
+      "title": "16 KB page-size compatibility not verified on a real 16 KB device",
+      "platform": "android",
+      "area": "android-16-compatibility",
+      "status": "NOT RUN — TOOL MISSING",
+      "evidence": "Emulator reports Android 16 / API 36 / arm64-v8a but 'getconf PAGE_SIZE' returns 4096. The only installed system image is android-36/google_apis/arm64-v8a; no 16 KB page-size image is present. Static ELF proof is strong: release libflutter.so p_align=0x10000; libdartjni.so and libdatastore_shared_counter.so p_align=0x4000; zipalign -c -P 16 -v 4 reports 'Verification successful'.",
+      "file_locations": [
+        "audit_artifacts/release_audit_2026-08-01/logs/builds/13_16kb_elf_alignment.log"
+      ],
+      "reproduction": "adb shell getconf PAGE_SIZE",
+      "expected": "App launches and runs on a device whose PAGE_SIZE is 16384",
+      "actual": "No 16 KB environment available; runtime behaviour unverified",
+      "impact": "Static alignment is necessary but not sufficient; a runtime check would confirm no plugin misbehaves under 16 KB paging.",
+      "policy_reference": "developer.android.com/guide/practices/page-sizes",
+      "root_cause": "16 KB system image not installed in the local SDK.",
+      "remediation": "Install a 16 KB page-size system image, boot it, confirm getconf PAGE_SIZE = 16384, install the release APK and exercise the main flows.",
+      "validation": "adb shell getconf PAGE_SIZE -> 16384 and a clean launch with no native loader errors in logcat",
+      "confidence": "high",
+      "dependencies": [
+        "ZKR-REL-20260801-P1-001"
+      ]
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-005",
+      "severity": "P2",
+      "title": "Release-mode performance and cold start not measured",
+      "platform": "both",
+      "area": "performance",
+      "status": "INCONCLUSIVE",
+      "evidence": "Only debug-mode numbers on a SwiftShader emulator were obtained: ActivityTaskManager 'Displayed com.zankurd.app/.MainActivity ... +13s370ms' with existing data and '+3m7s289ms' after pm clear. Asset weight is small (assets/data/offline_questions.json 1.1 MB; assets/ total 8 MB), so JSON parsing is unlikely to be the bottleneck.",
+      "file_locations": [
+        "audit_artifacts/release_audit_2026-08-01/screenshots/android/10_firstrun_t30.png"
+      ],
+      "reproduction": "adb logcat | grep 'Displayed com.zankurd'",
+      "expected": "Release-mode cold start measured on real hardware",
+      "actual": "Only debug + software-GPU emulator numbers exist, which do not represent release performance",
+      "impact": "Cannot state release cold-start, jank, memory or ANR risk with evidence.",
+      "policy_reference": "n/a",
+      "root_cause": "Android release binary could not be produced (P1-001); debug + SwiftShader is not representative.",
+      "remediation": "After signing is available, profile the release build on real hardware.",
+      "validation": "flutter run --profile with timeline capture; adb 'Displayed' timings from a release install",
+      "confidence": "medium",
+      "dependencies": [
+        "ZKR-REL-20260801-P1-001"
+      ]
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-006",
+      "severity": "P2",
+      "title": "integration_test suite was not executed on a device and is not run by CI",
+      "platform": "both",
+      "area": "test-coverage",
+      "status": "NOT RUN",
+      "evidence": "integration_test/app_flows_test.dart and integration_test/performance_test.dart exist. .github/workflows/flutter_ci.yml runs only 'flutter test --coverage', which does not execute integration tests on a device.",
+      "file_locations": [
+        "zankurd_mobile/integration_test/app_flows_test.dart",
+        "zankurd_mobile/integration_test/performance_test.dart",
+        ".github/workflows/flutter_ci.yml"
+      ],
+      "reproduction": "Inspect the CI workflow and the integration_test directory",
+      "expected": "End-to-end flows are exercised on a device at least before release",
+      "actual": "Never run in CI; not run in this audit",
+      "impact": "End-to-end regressions can reach a release build undetected.",
+      "policy_reference": "n/a",
+      "root_cause": "No device/emulator job in CI.",
+      "remediation": "Add an emulator-backed CI job (or a documented pre-release manual step) running flutter test integration_test.",
+      "validation": "flutter test integration_test -d <device> -> pass",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-007",
+      "severity": "P2",
+      "title": "CI builds only a debug APK — the release path (R8, ProGuard, shrinking, signing) is never exercised",
+      "platform": "android",
+      "area": "ci/release-path",
+      "status": "VERIFIED FAIL",
+      "evidence": ".github/workflows/flutter_ci.yml job build-android runs 'flutter build apk --debug' and uploads app-debug.apk. There is no release build step.",
+      "file_locations": [
+        ".github/workflows/flutter_ci.yml"
+      ],
+      "reproduction": "Read .github/workflows/flutter_ci.yml",
+      "expected": "The release code path is compiled at least once per change",
+      "actual": "Only the debug path is compiled",
+      "impact": "R8/ProGuard stripping errors, resource-shrinking breakage and release-only crashes are only discoverable by hand.",
+      "policy_reference": "n/a",
+      "root_cause": "Release signing secrets are not available to CI, so the release build was omitted entirely.",
+      "remediation": "Add an unsigned or fake-signed release assemble step (e.g. flutter build apk --release with a CI-only debug keystore, or gradle assembleRelease with signing disabled) so R8 runs in CI.",
+      "validation": "CI job completes the release compile step",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-008",
+      "severity": "P2",
+      "title": "Firebase native auto-collection is not suppressed, so measurement can start despite consent defaulting to off",
+      "platform": "both",
+      "area": "privacy/consent",
+      "status": "VERIFIED FAIL",
+      "evidence": "Custom events are correctly gated: main.dart:207 wraps AnalyticsService.instance.initialize() in 'if (analyticsConsentProvider.enabled)'. However, no FIREBASE_ANALYTICS_COLLECTION_ENABLED key exists in ios/Runner/Info.plist or android/app/src/main/AndroidManifest.xml (grep returns nothing). The Firebase Analytics native SDK defaults to enabled once Firebase.initializeApp() runs and auto-collects first_open, session_start and app_open. AnalyticsService.disable() (analytics_service.dart:31-40) is only invoked when a user REVOKES consent, never at startup when consent was never granted.",
+      "file_locations": [
+        "zankurd_mobile/lib/main.dart:207",
+        "zankurd_mobile/lib/src/services/analytics_service.dart:21",
+        "zankurd_mobile/lib/src/services/analytics_service.dart:31-40",
+        "zankurd_mobile/ios/Runner/Info.plist",
+        "zankurd_mobile/android/app/src/main/AndroidManifest.xml"
+      ],
+      "reproduction": "grep -n 'FIREBASE_ANALYTICS_COLLECTION_ENABLED' ios/Runner/Info.plist android/app/src/main/AndroidManifest.xml",
+      "expected": "On a fresh install with consent off, no analytics events leave the device",
+      "actual": "Firebase's automatically-collected events are not suppressed on a fresh install",
+      "impact": "Contradicts the app's own stated opt-in posture and the published privacy policy. Affects Apple App Privacy and Play Data Safety answers.",
+      "policy_reference": "Apple App Privacy; Google Play Data Safety",
+      "root_cause": "Native auto-collection defaults to on and must be disabled declaratively in the platform manifests; only the Dart-side custom-event path was gated.",
+      "remediation": "Add FIREBASE_ANALYTICS_COLLECTION_ENABLED=false to both platform manifests and call setAnalyticsCollectionEnabled(true) only after consent is granted.",
+      "validation": "Fresh install with consent off; confirm via Firebase DebugView / network capture that no analytics events are sent",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P2-009",
+      "severity": "P2",
+      "title": "Paywall empty state ships a 'Premium packages are not active yet' coming-soon placeholder",
+      "platform": "both",
+      "area": "iap/store-review",
+      "status": "VERIFIED FAIL",
+      "evidence": "lib/src/l10n/strings.dart:1745 defines 'tr': 'Premium paketler henüz aktif değil'. lib/src/screens/paywall_screen.dart:17 documents this as a user-friendly 'yakında' (coming soon) view shown when RevenueCat returns no offerings.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/l10n/strings.dart:1745",
+        "zankurd_mobile/lib/src/screens/paywall_screen.dart:17"
+      ],
+      "reproduction": "Open the paywall with RevenueCat returning no offerings",
+      "expected": "The only monetization surface always shows purchasable packages",
+      "actual": "It can render a coming-soon placeholder",
+      "impact": "If a reviewer reaches this state, the app presents an unfinished feature.",
+      "policy_reference": "App Store Review Guideline 2.1 / 4.2 (minimum functionality, incomplete features)",
+      "root_cause": "Empty-state fallback when the offerings fetch is empty or fails. AppConfig.validateForRelease already forces RevenueCat keys to be present in release builds, so the risk is dashboard configuration rather than a missing key.",
+      "remediation": "Confirm the 'premium' entitlement and at least one offering are live in the RevenueCat dashboard for both stores; consider failing closed or retrying rather than showing a coming-soon state.",
+      "validation": "Launch the paywall on a sandbox account and confirm real packages render",
+      "confidence": "high",
+      "owner_confirmation_required": "RevenueCat dashboard must have the 'premium' entitlement and a live offering configured for both App Store and Play.",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P3-001",
+      "severity": "P3",
+      "title": "applied.md carries a stale 'BEKLİYOR' note for a migration that is in fact complete",
+      "platform": "backend",
+      "area": "documentation",
+      "status": "VERIFIED FAIL",
+      "evidence": "supabase/applied.md marks 2026-08-01_room_question_advance.sql with 'BEKLİYOR — canlı çok oyunculu maçları etkiliyor', but the client already calls the RPC: lib/src/screens/quiz_screen.dart:1260 contains 'advance_room_question', and test/room_question_advance_test.dart:48/79/124 guards both the client call and the migration text.",
+      "file_locations": [
+        "zankurd_mobile/supabase/applied.md",
+        "zankurd_mobile/lib/src/screens/quiz_screen.dart:1260",
+        "zankurd_mobile/test/room_question_advance_test.dart:48"
+      ],
+      "reproduction": "grep -rn 'advance_room_question' lib/ test/",
+      "expected": "The manifest reflects the true state",
+      "actual": "Manifest says pending; code and tests say complete",
+      "impact": "Misleading release documentation; a reader could believe live multiplayer is still broken.",
+      "policy_reference": "n/a",
+      "root_cause": "Note not updated after the client-side fix landed.",
+      "remediation": "Update the applied.md row to record completion.",
+      "validation": "Read applied.md",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P3-002",
+      "severity": "P3",
+      "title": "Option-count inconsistency in the shipped question bank (4 questions with 3 options, 1 with 5)",
+      "platform": "content",
+      "area": "content-consistency",
+      "status": "VERIFIED FAIL",
+      "evidence": "Independent analysis of assets/data/*.json: option-count distribution {2: 568, 3: 4, 4: 1214, 5: 1}. The 2-option entries are trueFalse questions by design; the 3- and 5-option entries are outliers.",
+      "file_locations": [
+        "audit_artifacts/release_audit_2026-08-01/logs/data_quality/34_shipped_bank_metrics.log"
+      ],
+      "reproduction": "python3 audit_artifacts/release_audit_2026-08-01/logs/data_quality/shipped_bank_audit.py",
+      "expected": "Multiple-choice questions consistently offer 4 options",
+      "actual": "5 questions deviate",
+      "impact": "Minor visual/consistency inconsistency in the quiz grid.",
+      "policy_reference": "n/a",
+      "root_cause": "Authoring variance across content waves.",
+      "remediation": "Normalise the 5 outliers to 4 options.",
+      "validation": "Re-run the analysis script; distribution shows only {2, 4}",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P3-003",
+      "severity": "P3",
+      "title": "15 shipped questions have no explanation text (0.8%)",
+      "platform": "content",
+      "area": "content-completeness",
+      "status": "VERIFIED FAIL",
+      "evidence": "Independent analysis: 'explanations missing: 15/1787 (0.8%)'.",
+      "file_locations": [
+        "audit_artifacts/release_audit_2026-08-01/logs/data_quality/35_shipped_bank_metrics_v2.log"
+      ],
+      "reproduction": "python3 audit_artifacts/release_audit_2026-08-01/logs/data_quality/shipped2.py",
+      "expected": "Every question carries an explanation shown on the result screen",
+      "actual": "15 lack one",
+      "impact": "Those questions give no learning feedback after answering.",
+      "policy_reference": "n/a",
+      "root_cause": "Authoring gaps.",
+      "remediation": "Author explanations for the 15 records.",
+      "validation": "Re-run the analysis script; missing count = 0",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P3-004",
+      "severity": "P3",
+      "title": "Privacy policy page lacks a contact address",
+      "platform": "web/legal",
+      "area": "legal-consistency",
+      "status": "VERIFIED FAIL",
+      "evidence": "Live fetch of https://www.zankurd.com/privacy.html: no contact email present. terms.html and delete-account.html both publish nisebinbawer47@gmail.com.",
+      "file_locations": [
+        "https://www.zankurd.com/privacy.html"
+      ],
+      "reproduction": "Open the URL and search for a contact address",
+      "expected": "Contact information is easy to find from the privacy policy",
+      "actual": "Only the other two pages carry it",
+      "impact": "Minor; Apple 1.2 'published contact information' is already satisfied elsewhere, but consistency is better.",
+      "policy_reference": "App Store Review Guideline 1.2",
+      "root_cause": "Omission when authoring the page.",
+      "remediation": "Add the contact address to privacy.html.",
+      "validation": "Re-fetch the page",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260801-P3-005",
+      "severity": "P3",
+      "title": "flutter_tts does not support Swift Package Manager — future Flutter versions will error",
+      "platform": "ios",
+      "area": "dependency-maintenance",
+      "status": "VERIFIED FAIL",
+      "evidence": "flutter build ios output: 'The following plugins do not support Swift Package Manager for ios: - flutter_tts. This will become an error in a future version of Flutter.'",
+      "file_locations": [
+        "zankurd_mobile/pubspec.yaml (flutter_tts ^4.2.3)",
+        "audit_artifacts/release_audit_2026-08-01/logs/builds/11_ios_release.log"
+      ],
+      "reproduction": "flutter build ios --release --no-codesign",
+      "expected": "All plugins support SPM",
+      "actual": "flutter_tts does not",
+      "impact": "No impact today; a future Flutter upgrade would break the iOS build.",
+      "policy_reference": "n/a",
+      "root_cause": "Upstream plugin has not adopted SPM.",
+      "remediation": "Track the plugin's SPM adoption; upgrade when available.",
+      "validation": "Build output no longer emits the warning",
+      "confidence": "high",
+      "dependencies": []
+    },
+    {
+      "id": "ZKR-REL-20260802-P1-005",
+      "severity": "P1",
+      "title": "Signed release AAB is verified but not shippable — README's release command omits the required dart-defines",
+      "platform": "android",
+      "area": "release-config/documentation",
+      "status": "OPEN — BLOCKED ON OWNER-SUPPLIED RELEASE CONFIG",
+      "evidence": "README.md 'Play Store Build' documents `flutter build appbundle --release` with no dart-defines. The AAB built with that exact command installs and launches on Android 16 but lands on _ConfigurationErrorApp: 'Uygulama yapılandırması eksik — Supabase, RevenueCat ayarları bu üretim derlemesine eklenmemiş.' (screenshot 30_release_smoke_01.png). AppConfig.validateForRelease (app_config.dart) returns issues for supabase and revenueCat, and main.dart:109-119 swaps in the error app. The correct command IS documented elsewhere: docs/YAYIN_ADIMLARI.md:171 and docs/android_signing_setup.md:70 both specify --dart-define-from-file=.env.mobile.release.json. Only .env.mobile.release.example.json exists on this machine.",
+      "file_locations": [
+        "zankurd_mobile/README.md (Play Store Build section)",
+        "zankurd_mobile/docs/YAYIN_ADIMLARI.md:171",
+        "zankurd_mobile/docs/android_signing_setup.md:70",
+        "zankurd_mobile/lib/main.dart:109-119",
+        "zankurd_mobile/lib/src/config/app_config.dart"
+      ],
+      "reproduction": "flutter build appbundle --release ; install the resulting AAB and launch",
+      "expected": "The documented release command produces a shippable binary",
+      "actual": "It produces a binary that boots into the configuration-error screen",
+      "impact": "Following README alone yields a non-shippable AAB. The runtime guard behaves correctly — this is a documentation inconsistency, not a code defect.",
+      "policy_reference": "n/a",
+      "root_cause": "README's Play Store Build section was not kept in sync with YAYIN_ADIMLARI.md when dart-define-based release config was introduced.",
+      "remediation": "1) cp .env.mobile.release.example.json .env.mobile.release.json and fill real SUPABASE_URL, SUPABASE_ANON_KEY, REVENUECAT_API_KEY_ANDROID, REVENUECAT_API_KEY_IOS (gitignored). 2) flutter build appbundle --release --dart-define-from-file=.env.mobile.release.json. 3) Align README's Play Store Build section with YAYIN_ADIMLARI.md.",
+      "validation": "Rebuild with the dart-define file, install, and confirm the app reaches onboarding/home instead of the configuration-error screen",
+      "confidence": "high",
+      "dependencies": [
+        "ZKR-REL-20260801-P1-001"
+      ],
+      "note": "Values were NOT hard-coded and release validation was NOT disabled (Phase 2 rule 10 / stop condition 7)."
+    }
+  ],
+  "verified_non_findings": [
+    {
+      "claim": "8 shipped questions have a correctAnswer that is not among their answers",
+      "verdict": "NOT A DEFECT",
+      "explanation": "All 8 are type 'wordOrdering', where 'answers' is the word bank and 'correctAnswer' is the assembled sentence. Confirmed at lib/src/screens/quiz/word_ordering_widget.dart:58 ('final rawWords = widget.question.answers;')."
+    },
+    {
+      "claim": "Missing NSCameraUsageDescription would crash the avatar picker",
+      "verdict": "NOT A DEFECT",
+      "explanation": "image_picker is invoked only with ImageSource.gallery at lib/src/screens/avatar_editor_screen.dart:123, so only NSPhotoLibraryUsageDescription is required and it is present."
+    },
+    {
+      "claim": "59,867 blocker-severity content issues exist",
+      "verdict": "MISLEADING — SCOPE ERROR",
+      "explanation": "That figure is the 'report' scope across all 50 known sources including candidate_pool, quarantine and historical_snapshot files. The 'gate' scope (what actually ships) reports blocker=0, critical=0, warning=1856 over 1832 physical / 1771 canonical records."
+    },
+    {
+      "claim": "Correct-answer position is heavily skewed (A 45.8% / D 11.7%)",
+      "verdict": "MISLEADING — SCOPE ERROR",
+      "explanation": "That distribution is report scope (60,198 records incl. candidate pools). Measured directly on the shipped bank, multipleChoice is A 24.1% / B 24.2% / C 23.8% / D 27.8% — near uniform. Length bias is 18.7% vs ~25% chance, i.e. no bias."
+    },
+    {
+      "claim": "Supabase key committed in source is a secret leak",
+      "verdict": "NOT A DEFECT",
+      "explanation": "lib/src/config/app_config.dart:9 embeds 'sb_publishable_...', Supabase's publishable (public) client key format, which is designed to ship in clients. No service_role key exists anywhere in the repo or its history."
+    },
+    {
+      "claim": "Spin wheel requires loot-box odds disclosure under Apple 3.1.1",
+      "verdict": "NOT APPLICABLE",
+      "explanation": "3.1.1 applies to randomized items offered 'for purchase'. RevenueCat sells only the 'premium' subscription entitlement (premium_service.dart:50); there is no coin-pack IAP, and coins are earned (strings.dart:1219 K.earnCoins). The wheel is therefore not purchasable."
+    },
+    {
+      "claim": "18 screens lack empty/error/offline/loading state handling",
+      "verdict": "NOT A DEFECT — BAD QUERY",
+      "explanation": "The shared vocabulary is AppEmptyState / AppErrorState (defined in lib/src/widgets/app_state.dart), not a widget literally named 'AppState'. All 13 data-driven screens use them: categories_tab, contest, favorite_questions, friends, leaderboard, learning, level, matchmaking, profile, review, shop, spin_wheel, tournament. test/screen_data_states_test.dart opens 10 main screens with an all-empty repository and again with an all-erroring repository, asserting no exception on either path; test/empty_state_layout_test.dart covers unbounded and constrained heights. Screens without these widgets (splash, onboarding, name gate, settings, paywall, quiz) do not render remote lists."
+    },
+    {
+      "claim": "Correct/wrong answers are communicated by colour alone",
+      "verdict": "NOT A DEFECT",
+      "explanation": "lib/src/screens/quiz/quiz_option_tile.dart communicates answer state through four independent channels: a persistent icon (AppIcons.circleCheck at :259-260, AppIcons.circleXmark at :266-267), colour/gradient/border, a shake animation for wrong answers (:160-162), and a screen-reader text hint appended to the Semantics label (:130-133, ', doğru' / ', yanlış') with excludeSemantics:true so each option is an independent tappable node. Colour-contrast thresholds are separately gated by test/contrast_policy_test.dart, which asserts WCAG AA ratios."
+    },
+    {
+      "claim": "Some screens in lib/src/screens are dead/unreachable",
+      "verdict": "NOT A DEFECT",
+      "explanation": "Every top-level *Screen class in lib/src/screens is referenced from at least one other file under lib/. No unreachable screen was found."
+    },
+    {
+      "claim": "Brand name capitalisation is inconsistent across surfaces",
+      "verdict": "NOT A DEFECT",
+      "explanation": "'ZanKurd' is used consistently in android:label, iOS CFBundleDisplayName and CFBundleName, web <title>, web manifest name and short_name, and all 31 occurrences in lib/src/l10n/strings.dart. Zero occurrences of Zankurd, ZANKURD or lowercase zankurd in user-visible strings."
+    },
+    {
+      "claim": "Large accessibility text sizes overflow the layout",
+      "verdict": "NOT A DEFECT",
+      "explanation": "Verified on a real iOS 26.5 simulator at content_size accessibility-extra-extra-extra-large: the Profile screen grows and reflows, '0 / 1000 XP' truncates to '0 / 1000 …' with ellipsis rather than overflowing, and no card is clipped. Evidence: audit_artifacts/release_audit_2026-08-01/screenshots/ios/02_profile_dark_xxxl_text.png and 03_profile_light_xxxl_text.png."
+    }
+  ]
+}
