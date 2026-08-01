@@ -29,10 +29,19 @@ class _ManagedRoomChannel {
   int listenerCount = 0;
 }
 
+RoomStatus _roomStatusFromValue(Object? value) {
+  return switch (value) {
+    'active' => RoomStatus.active,
+    'finished' => RoomStatus.finished,
+    _ => RoomStatus.lobby,
+  };
+}
+
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
   static const _contentPolicy = QuestionContentPolicy();
+  static const _defaultAvatarColor = '#2E9E93';
 
   final MockZanKurdRepository _offline = MockZanKurdRepository();
 
@@ -159,6 +168,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       displayName: metadataName is String && metadataName.trim().isNotEmpty
           ? metadataName.trim()
           : 'ZanKurd Oyuncusu',
+      avatarColor: _defaultAvatarColor,
     );
   }
 
@@ -207,7 +217,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<void> updateProfileName(String name) async {
-    await upsertProfile(displayName: name);
+    final user = client.auth.currentUser ?? await signInAnonymously();
+    final existing = await client
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .maybeSingle();
+    await upsertProfile(
+      displayName: name,
+      // Yeni satırda canlı trigger'ın kabul ettiği geçerli rengi gönder;
+      // mevcut satırda avatar seçimini ad değişimi ezmesin.
+      avatarColor: existing == null ? _defaultAvatarColor : null,
+    );
   }
 
   @override
@@ -556,6 +577,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<RoomStatus> loadRoomStatus(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) return room.status;
+
+    final row = await client
+        .from('rooms')
+        .select('status')
+        .eq('id', roomId)
+        .maybeSingle();
+    return _roomStatusFromValue(row?['status']);
+  }
+
+  @override
   Future<void> sendRoomMessage({
     required String roomId,
     required String text,
@@ -737,12 +771,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return client.from('rooms').stream(primaryKey: ['id']).eq('id', roomId).map(
       (rows) {
         if (rows.isEmpty) return RoomStatus.lobby;
-        final statusStr = rows.first['status'] as String? ?? 'lobby';
-        return statusStr == 'active'
-            ? RoomStatus.active
-            : statusStr == 'finished'
-            ? RoomStatus.finished
-            : RoomStatus.lobby;
+        return _roomStatusFromValue(rows.first['status']);
       },
     );
   }

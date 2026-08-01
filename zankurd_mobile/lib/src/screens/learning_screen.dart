@@ -54,6 +54,7 @@ class _LearningScreenState extends State<LearningScreen> {
   Set<String> _completedIds = const {};
   List<Lesson> _currentLessons = const [];
   PlacementLevel? _placementLevel;
+  bool _lessonsLoading = false;
 
   @override
   void initState() {
@@ -73,12 +74,26 @@ class _LearningScreenState extends State<LearningScreen> {
   }
 
   void _loadLessons() {
+    if (_lessonsLoading) return;
+    _lessonsLoading = true;
     _lessonsFuture = widget.repository
         .loadLessonsByCategory(_selectedCategory)
-        .then((lessons) {
-          if (mounted) setState(() => _currentLessons = lessons);
-          return lessons;
-        });
+        .then(
+          (lessons) {
+            if (mounted) {
+              setState(() {
+                _currentLessons = lessons;
+                _lessonsLoading = false;
+              });
+            }
+            return lessons;
+          },
+          onError: (Object error, StackTrace stack) {
+            if (mounted) setState(() => _lessonsLoading = false);
+            ErrorReporter.record(error, stack, reason: 'learning_load_lessons');
+            throw error;
+          },
+        );
   }
 
   Future<void> _refreshCompleted() async {
@@ -91,6 +106,7 @@ class _LearningScreenState extends State<LearningScreen> {
   }
 
   void _selectCategory(String category) {
+    if (_lessonsLoading) return;
     setState(() {
       _selectedCategory = category;
       _loadLessons();
@@ -309,6 +325,8 @@ class _LearningScreenState extends State<LearningScreen> {
             icon: AppIcons.graduationCap,
             title: context.t(K.noLesson),
             message: context.t(K.noLessonInCategory),
+            actionLabel: context.t(K.retryShort),
+            onAction: _loadLessons,
           );
         }
         final firstOpenIndex = lessons.indexWhere(
@@ -1041,13 +1059,16 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   // Flashcard modu
   bool _flashcardMode = false;
   bool _isFlipped = false;
+  bool _miniQuizLoading = false;
+  bool _miniQuizEmpty = false;
+  String? _miniQuizErrorMessage;
   late final AnimationController _flipController;
   late final Animation<double> _flipAnimation;
 
   @override
   void initState() {
     super.initState();
-    _slidesFuture = widget.repository.loadLessonSlides(widget.lesson.id);
+    _loadSlides();
     _flipController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -1055,6 +1076,18 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     _flipAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _flipController, curve: Curves.easeInOut),
     );
+  }
+
+  void _loadSlides() {
+    _slidesFuture = widget.repository.loadLessonSlides(widget.lesson.id);
+  }
+
+  void _retrySlides() {
+    if (!mounted) return;
+    setState(() {
+      _currentSlideIndex = 0;
+      _loadSlides();
+    });
   }
 
   @override
@@ -1082,6 +1115,12 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   }
 
   Future<void> _startMiniQuiz() async {
+    if (_miniQuizLoading) return;
+    setState(() {
+      _miniQuizLoading = true;
+      _miniQuizEmpty = false;
+      _miniQuizErrorMessage = null;
+    });
     try {
       final questions = await widget.repository.loadLevelQuestions(
         category: widget.lesson.category,
@@ -1093,9 +1132,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       if (!mounted) return;
 
       if (questions.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.t(K.noQuestionsForCategory))),
-        );
+        setState(() {
+          _miniQuizLoading = false;
+          _miniQuizEmpty = true;
+        });
         return;
       }
 
@@ -1117,12 +1157,14 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           ),
         ),
       );
+      if (mounted) setState(() => _miniQuizLoading = false);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_load_story');
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.t(K.quizLoadFail))));
+        setState(() {
+          _miniQuizLoading = false;
+          _miniQuizErrorMessage = context.t(K.quizLoadFail);
+        });
       }
     }
   }
@@ -1309,13 +1351,21 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   title: context.t(K.loadFailedShort),
                   message: context.t(K.slidesLoadFail),
                   retryLabel: context.t(K.retryShort),
-                  onRetry: () => setState(() {}),
+                  onRetry: _retrySlides,
                 ),
               );
             }
             final slides = snap.data ?? [];
             if (slides.isEmpty) {
-              return Center(child: Text(context.t(K.noSlides)));
+              return Center(
+                child: AppEmptyState(
+                  icon: AppIcons.bookOpen,
+                  title: context.t(K.noSlides),
+                  message: context.t(K.slidesLoadFail),
+                  actionLabel: context.t(K.retryShort),
+                  onAction: _retrySlides,
+                ),
+              );
             }
             final slide = slides[_currentSlideIndex];
             final isLast = _currentSlideIndex == slides.length - 1;
@@ -1360,6 +1410,21 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                     padding: const EdgeInsets.all(18),
                     child: Column(
                       children: [
+                        if (_miniQuizEmpty)
+                          AppEmptyState(
+                            icon: AppIcons.bookOpen,
+                            title: context.t(K.noQuestionsForCategory),
+                            message: context.t(K.quizLoadFail),
+                            actionLabel: context.t(K.retryShort),
+                            onAction: _startMiniQuiz,
+                          ),
+                        if (_miniQuizErrorMessage != null)
+                          AppErrorState(
+                            title: context.t(K.loadFailedShort),
+                            message: _miniQuizErrorMessage!,
+                            retryLabel: context.t(K.retryShort),
+                            onRetry: _startMiniQuiz,
+                          ),
                         if (slide.imageUrl case final imgUrl?)
                           Container(
                             width: double.infinity,
@@ -1489,7 +1554,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               backgroundColor: AppTheme.playCyan,
                               foregroundColor: Colors.white,
                             ),
-                            onPressed: _startMiniQuiz,
+                            onPressed: _miniQuizLoading
+                                ? null
+                                : _startMiniQuiz,
                             child: Text(context.t(K.miniQuiz)),
                           ),
                         ),

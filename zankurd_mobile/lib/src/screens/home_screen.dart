@@ -13,6 +13,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/test_environment.dart';
 import '../data/daily_mission_store.dart';
+import '../data/achievement_store.dart';
 import '../models/daily_mission.dart';
 import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
@@ -24,6 +25,7 @@ import '../data/mastery_store.dart';
 import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
+import '../services/analytics_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -73,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// Bugün doğru cevaplanan soru sayısı — "bugünün görevi" ilerlemesi.
   int _todayAnswered = 0;
   int _todayTarget = 10;
+  bool _firstSession = true;
 
   /// "Kaldığın yer" listesi: en çok ilerlenen üç kategori.
   List<CategoryProgress> _categoryProgress = const [];
@@ -100,6 +103,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _bootstrap();
     _refreshStreak();
     _loadMissions();
+    _refreshFirstSession();
     _refreshProgress();
     _refreshReviewCount();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
@@ -117,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (!mounted) return;
     _refreshCoins();
     _loadMissions();
+    _refreshFirstSession();
     _refreshStreak();
     _refreshProgress();
     _refreshReviewCount();
@@ -126,6 +131,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshStreak() async {
     final store = await StreakStore.load();
     if (mounted) setState(() => _streak = store.effectiveStreak());
+  }
+
+  Future<void> _refreshFirstSession() async {
+    final store = await AchievementStore.load();
+    if (mounted) {
+      setState(() {
+        _firstSession = !store.isUnlocked(AchievementIds.firstGame);
+      });
+    }
   }
 
   Future<void> _refreshReviewCount() async {
@@ -243,7 +257,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             isKu: ku,
             loading: _roomActionLoading,
             done: _todayAnswered,
-            total: _todayTarget,
+            total: _firstSession ? 5 : _todayTarget,
+            firstSession: _firstSession,
             onStart: _startDailyQuiz,
           ),
           if (_reviewReadyCount > 0) ...[
@@ -319,7 +334,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
-          DailyMissionsCard(isKu: ku, missions: _missions, compact: false),
+          // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
+          // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
+          // ekranın altına taşınıp öğrenme yollarını gömmez.
+          DailyMissionsCard(isKu: ku, missions: _missions, compact: true),
         ],
       ),
     );
@@ -449,7 +467,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         AppIcons.fire,
                         AppTheme.brand,
                         _streak > 0 ? '$_streak' : null,
-                        semanticLabel: context.t(K.dailyStreakDays),
+                        semanticLabel: context.t(K.dailyStreakDays, {
+                          'days': '$_streak',
+                        }),
                         onTap: () => _showStreakFreezeBottomSheet(context),
                       ),
                       const SizedBox(width: 12),
@@ -819,8 +839,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (_roomActionLoading) return;
     setState(() => _roomActionLoading = true);
     try {
-      final questions = await repo.loadDailyQuestions(limit: 10);
+      final firstSession = _firstSession;
+      final questions = await repo.loadDailyQuestions(
+        limit: firstSession ? 5 : 10,
+      );
       if (!mounted || questions.isEmpty) return;
+      if (firstSession) {
+        AnalyticsService.instance.logActivationStep('first_quiz_started');
+      }
       final room = repo.createRoom().copyWith(
         name: context.t(K.dailyLesson),
         questionCount: questions.length,

@@ -16,7 +16,9 @@ import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../services/analytics_service.dart';
 import '../utils/test_environment.dart';
+import '../widgets/app_state.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
@@ -76,7 +78,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   bool _searchingStarted = false;
   List<String> _categories = const [];
   bool _loadingCategories = false;
+  bool _categoriesError = false;
   String? _selectedCategory;
+  String? _lastMatchCategory;
+  String? _matchmakingErrorMessage;
 
   StreamSubscription? _matchmakingSub;
   Timer? _statusTimer;
@@ -156,7 +161,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   }
 
   Future<void> _loadCategoriesOnly() async {
-    setState(() => _loadingCategories = true);
+    if (_loadingCategories) return;
+    setState(() {
+      _loadingCategories = true;
+      _categoriesError = false;
+      _categories = const [];
+    });
     try {
       final name = await widget.repository.getProfileName();
       final identity = await widget.repository.loadAvatarIdentity();
@@ -174,13 +184,18 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_load_categories');
       if (mounted) {
-        setState(() => _loadingCategories = false);
+        setState(() {
+          _loadingCategories = false;
+          _categoriesError = true;
+        });
       }
     }
   }
 
   Future<void> _startMatchmaking(String chosenCategory) async {
     final ku = context.isKu;
+    _lastMatchCategory = chosenCategory;
+    AnalyticsService.instance.logActivationStep('matchmaking_started');
     // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
     // boşluğun ötesine taşınmasın diye burada, senkron olarak çözülür.
     final opponentPlaceholder = context.t(K.opponentWord);
@@ -190,6 +205,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _statusTextKu = 'Lîstikvanek tê gerîn...';
       _statusTextTr = 'Rakip aranıyor...';
       _found = false;
+      _matchmakingErrorMessage = null;
       _opponentIdentity = const AvatarIdentity();
       _secondsElapsed = 0;
     });
@@ -345,10 +361,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (_isCancelled || !mounted) return;
       _matchmakingSub?.cancel();
       _statusTimer?.cancel();
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.matchFailed))));
-      Navigator.of(context).pop();
+      setState(() {
+        _found = false;
+        _matchmakingErrorMessage = context.t(K.matchFailed);
+      });
     }
   }
 
@@ -437,6 +453,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     String category,
     bool ku,
   ) async {
+    AnalyticsService.instance.logActivationStep('matchmaking_matched');
     setState(() {
       _found = true;
       _opponentName = matchedName;
@@ -522,9 +539,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             _found = false;
           });
           if (!_isCancelled && mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(context.t(K.gameStartFailed))),
-            );
+            setState(() {
+              _matchmakingErrorMessage = context.t(K.gameStartFailed);
+            });
           }
           return;
         }
@@ -682,9 +699,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         ),
         const SizedBox(height: 20),
         // 1. Random Match Card
-        Stack(
-          children: [
-            Container(
+        Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: InkWell(
+            onTap: () => _startMatchmaking('Rastgele'),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            child: Container(
               key: const ValueKey('matchmaking-duel-card'),
               decoration: BoxDecoration(
                 // Rastgele eşleşme birincil CTA: kırmızı (tehlike anlamı)
@@ -752,17 +773,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 ],
               ),
             ),
-            Positioned.fill(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () => _startMatchmaking('Rastgele'),
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  child: const SizedBox.expand(),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
         const SizedBox(height: 16),
         // 2. Category selection label
@@ -784,12 +795,20 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             ),
           )
         else if (_categories.isEmpty)
-          Center(
-            child: Text(
-              context.t(K.categoriesNotFound),
-              style: TextStyle(color: AppTheme.textMutedColor(context)),
-            ),
-          )
+          _categoriesError
+              ? AppErrorState(
+                  title: context.t(K.loadFailedShort),
+                  message: context.t(K.categoriesLoadFail),
+                  retryLabel: context.t(K.retryShort),
+                  onRetry: _loadCategoriesOnly,
+                )
+              : AppEmptyState(
+                  icon: AppIcons.layerGroup,
+                  title: context.t(K.categoriesNotFound),
+                  message: context.t(K.categoriesSubtitle),
+                  actionLabel: context.t(K.retryShort),
+                  onAction: _loadCategoriesOnly,
+                )
         else
           Wrap(
             spacing: 8,
@@ -892,6 +911,29 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
+            ),
+          ],
+        ),
+      );
+    }
+    if (_matchmakingErrorMessage != null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppErrorState(
+              title: context.t(K.loadFailedShort),
+              message: _matchmakingErrorMessage!,
+              retryLabel: context.t(K.retryShort),
+              onRetry: () {
+                final category = _lastMatchCategory;
+                if (category != null) _startMatchmaking(category);
+              },
+            ),
+            OutlinedButton.icon(
+              onPressed: _cancelling ? null : _handleCancelAndPop,
+              icon: const Icon(AppIcons.xmark, size: 18),
+              label: Text(context.t(K.cancelAction)),
             ),
           ],
         ),

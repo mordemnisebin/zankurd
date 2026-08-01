@@ -143,6 +143,19 @@ void main() {
     );
   });
 
+  test('kısa Kurmancî çeldiriciler de yakalanıyor', () {
+    const policy = QuestionLanguagePolicy();
+    const broken = QuizQuestion(
+      id: 'canli-kisa-ornek',
+      category: 'Ziman',
+      prompt: 'Di Kurmancî de peyva "heyv" bi Tirkî çi ye?',
+      answers: ['Ay', 'Rê', 'At', 'Te'],
+      correctAnswer: 'Ay',
+      explanation: '',
+    );
+    expect(policy.offLanguageDistractors(broken), contains('Rê'));
+  });
+
   test('doğru-yanlış soruları kapsam dışı', () {
     // `Rast`/`Şaş` sabit etiketlerdir; "çeldiricinin dili" orada
     // anlamsız ve her doğru-yanlış sorusu hatalı bildiriliyordu.

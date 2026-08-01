@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
@@ -16,6 +17,26 @@ Widget wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
   ],
   child: MaterialApp(theme: AppTheme.light(), home: child),
+);
+
+class _RetryableSlidesRepository extends MockZanKurdRepository {
+  bool fail = true;
+  int loadCalls = 0;
+
+  @override
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId) async {
+    loadCalls += 1;
+    if (fail) throw StateError('slides unavailable');
+    return const [];
+  }
+}
+
+const _testLesson = Lesson(
+  id: 'lesson-test',
+  slug: 'lesson-test',
+  titleKu: 'Ders',
+  titleTr: 'Ders',
+  category: 'everyday',
 );
 
 void main() {
@@ -204,5 +225,27 @@ void main() {
       find.byKey(const ValueKey('lesson-recommended-badge')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('slayt hatası görünür ve retry yeni repository çağrısı yapar', (
+    tester,
+  ) async {
+    final repository = _RetryableSlidesRepository();
+    await tester.pumpWidget(
+      wrap(LessonDetailScreen(lesson: _testLesson, repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+
+    repository.fail = false;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
+    expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
+    expect(find.text('Slayt yok'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

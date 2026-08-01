@@ -2,8 +2,8 @@
 
 This script uses only the public publishable key, like the mobile app.
 It creates two anonymous users, creates a room as user A, joins by room code as
-user B, starts the game, submits one answer from both users, and checks the
-leaderboard.
+user B, starts the game, plays every generated question from both users, and
+checks the leaderboard.
 """
 
 from __future__ import annotations
@@ -99,7 +99,7 @@ def ensure_profile(session: UserSession) -> None:
         body={
             "id": session.user_id,
             "display_name": session.name,
-            "avatar_color": "#E94560",
+            "avatar_color": "#2E9E93",
         },
     )
     expect_ok("profile upsert", status, data, {200, 201})
@@ -180,20 +180,30 @@ def start_game(host: UserSession, room_id: str) -> None:
     expect_ok("start_room_game RPC", status, data, {200})
 
 
-def load_first_room_question(token: str, room_id: str) -> tuple[str, str]:
+def load_room_questions(token: str, room_id: str) -> list[str]:
     status, data = request(
-        "GET",
-        "/rest/v1/room_questions"
-        "?select=question_index,question_id,"
-        "questions(id,prompt,correct_option,option_a,option_b,option_c,option_d)"
-        f"&room_id=eq.{room_id}&order=question_index&limit=1",
+        "POST",
+        "/rest/v1/rpc/get_room_questions",
         token=token,
+        body={"p_room_id": room_id},
     )
     expect_ok("load room question", status, data, {200})
     if not data:
         raise CheckFailed("start_room_game did not create room questions")
-    question = data[0]["questions"]
-    return question["id"], question["correct_option"]
+    question_ids = [question["id"] for question in data]
+    # Do not read correct_option from the client-visible question payload.
+    # The server reveals correctness only as part of submit_answer.
+    return question_ids
+
+
+def advance_question(host: UserSession, room_id: str) -> None:
+    status, data = request(
+        "POST",
+        "/rest/v1/rpc/advance_room_question",
+        token=host.access_token,
+        body={"p_room_id": room_id},
+    )
+    expect_ok("advance_room_question RPC", status, data, {200})
 
 
 def submit_answer(session: UserSession, room_id: str, question_id: str, option: str) -> None:
@@ -209,8 +219,8 @@ def submit_answer(session: UserSession, room_id: str, question_id: str, option: 
         },
     )
     expect_ok("submit_answer RPC", status, data, {200})
-    if data.get("new_score", 0) <= 0 and data.get("points", 0) <= 0:
-        raise CheckFailed(f"answer did not award points: {data}")
+    if not isinstance(data, dict) or "is_correct" not in data:
+        raise CheckFailed(f"answer response is malformed: {data}")
 
 
 def finish_game(session: UserSession, room_id: str) -> None:
@@ -223,13 +233,12 @@ def finish_game(session: UserSession, room_id: str) -> None:
     expect_ok("finish_room_game RPC", status, data, {200})
 
 
-def assert_leaderboard_contains(user_ids: set[str]) -> None:
-    encoded_ids = ",".join(sorted(user_ids))
+def assert_leaderboard_contains(token: str, user_ids: set[str]) -> None:
     status, data = request(
-        "GET",
-        "/rest/v1/leaderboard_entries"
-        "?select=player_id,display_name,total_score,best_streak,rooms_played"
-        f"&player_id=in.({encoded_ids})",
+        "POST",
+        "/rest/v1/rpc/get_leaderboard",
+        token=token,
+        body={"p_days": -1, "p_limit": 100},
     )
     expect_ok("leaderboard load", status, data, {200})
     seen = {row["player_id"] for row in data}
@@ -257,11 +266,14 @@ def main() -> int:
             raise CheckFailed(f"room players are wrong: {players}")
 
         start_game(user_a, room_id)
-        question_id, correct_option = load_first_room_question(user_a.access_token, room_id)
-        submit_answer(user_a, room_id, question_id, correct_option)
-        submit_answer(user_b, room_id, question_id, correct_option)
+        question_ids = load_room_questions(user_a.access_token, room_id)
+        for index, question_id in enumerate(question_ids):
+            submit_answer(user_a, room_id, question_id, "A")
+            submit_answer(user_b, room_id, question_id, "A")
+            if index < len(question_ids) - 1:
+                advance_question(user_a, room_id)
         finish_game(user_a, room_id)
-        assert_leaderboard_contains({user_a.user_id, user_b.user_id})
+        assert_leaderboard_contains(user_a.access_token, {user_a.user_id, user_b.user_id})
 
         print(
             json.dumps(

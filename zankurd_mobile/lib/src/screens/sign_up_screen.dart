@@ -5,6 +5,7 @@ import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
@@ -121,6 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       LoadingOverlay.hide(context);
 
       if (success) {
+        AnalyticsService.instance.logSignUp('email');
         if (authProvider.needsEmailConfirmation) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

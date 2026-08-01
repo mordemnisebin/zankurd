@@ -97,9 +97,11 @@ class _BadgeCollectionSectionState extends State<BadgeCollectionSection> {
             TextButton(
               onPressed: () => _showAllBadgesSheet(context, badges, ku),
               style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: Size.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                // Kısa etiket yatayda yer kazandırıyor; dokunma alanı yine
+                // erişilebilir minimumu korumalı.
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                minimumSize: const Size(44, 44),
+                tapTargetSize: MaterialTapTargetSize.padded,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,

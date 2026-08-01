@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -15,6 +16,34 @@ Widget wrap(Widget child) => MultiProvider(
   ],
   child: MaterialApp(theme: AppTheme.light(), home: child),
 );
+
+class _RetryableLevelRepository extends MockZanKurdRepository {
+  _RetryableLevelRepository({required this.returnEmpty});
+
+  bool fail = true;
+  final bool returnEmpty;
+  int loadCalls = 0;
+
+  @override
+  Future<List<QuizQuestion>> loadLevelQuestions({
+    required String category,
+    required int difficultyMin,
+    required int difficultyMax,
+    String? subCategory,
+    int limit = 10,
+  }) async {
+    loadCalls += 1;
+    if (fail) throw StateError('level questions unavailable');
+    if (returnEmpty) return const [];
+    return super.loadLevelQuestions(
+      category: category,
+      difficultyMin: difficultyMin,
+      difficultyMax: difficultyMax,
+      subCategory: subCategory,
+      limit: limit,
+    );
+  }
+}
 
 void main() {
   setUp(() {
@@ -126,5 +155,46 @@ void main() {
         .whereType<String>()
         .where((l) => RegExp(r'^Zorluk: 5 üzerinden \d yıldız$').hasMatch(l));
     expect(difficultyLabels.length, 5);
+  });
+
+  testWidgets('seviye sorusu hatası görünür ve aynı seviye tekrar denenir', (
+    tester,
+  ) async {
+    final repository = _RetryableLevelRepository(returnEmpty: false);
+    await tester.pumpWidget(
+      wrap(LevelScreen(repository: repository, category: 'Ziman')),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('1'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+
+    repository.fail = false;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pump();
+
+    expect(repository.loadCalls, 2);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('seviye soru listesi boşsa açıklamalı boş durum gösterilir', (
+    tester,
+  ) async {
+    final repository = _RetryableLevelRepository(returnEmpty: true);
+    await tester.pumpWidget(
+      wrap(LevelScreen(repository: repository, category: 'Ziman')),
+    );
+    await tester.pumpAndSettle();
+
+    repository.fail = false;
+    await tester.tap(find.text('1'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
+    expect(find.text('Bu kategori için soru bulunamadı'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

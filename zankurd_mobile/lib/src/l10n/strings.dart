@@ -77,9 +77,27 @@ class Tr {
       'tr': 'Mevcut seviyen: {name}',
     },
     K.secSafety: {'ku': 'Ewlekarî', 'tr': 'Güvenlik'},
+    K.secPrivacy: {'ku': 'Nepenî û Daneyên', 'tr': 'Gizlilik ve Veri'},
+    K.analyticsConsent: {'ku': 'Analîza bikaranînê', 'tr': 'Kullanım analizi'},
+    K.analyticsConsentSub: {
+      'ku': 'Daneyên bikaranîna sepanê ji bo pêşxistinê tomar bike',
+      'tr': 'Uygulama kullanım verilerini geliştirme amacıyla kaydet',
+    },
     K.reportAbuse: {
       'ku': 'Bikaranîna xerab ragihîne',
       'tr': 'Kötüye kullanım bildir',
+    },
+    K.betaFeedback: {
+      'ku': 'Ramanên beta parve bike',
+      'tr': 'Beta geri bildirimi gönder',
+    },
+    K.betaFeedbackSub: {
+      'ku': 'Di vê guhertoya pêşîn de çi dikare baştir bibe?',
+      'tr': 'Bu erken sürümde neyi daha iyi yapabiliriz?',
+    },
+    K.betaMailSubject: {
+      'ku': 'ZanKurd — ramanên beta',
+      'tr': 'ZanKurd — beta geri bildirimi',
     },
     K.abuseMailSubject: {
       'ku': 'ZanKurd — ragihandina bikaranîna xerab',
@@ -692,6 +710,11 @@ class Tr {
       'tr': 'Bir konu seç ve başla',
     },
     K.bugununGorevi: {'ku': 'ERKÊ ÎRO', 'tr': 'BUGÜNÜN GÖREVİ'},
+    K.firstSessionBadge: {'ku': 'DESTPÊKA BIÇÛK', 'tr': 'KÜÇÜK BAŞLANGIÇ'},
+    K.firstSessionSub: {
+      'ku': '{p0} pirs · nêzîkî {p1} deqe',
+      'tr': '{p0} soru · yaklaşık {p1} dakika',
+    },
     K.gununDersi: {'ku': 'Dersê rojane', 'tr': 'Günün dersi'},
     K.pSoruYaklasikP: {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
@@ -1226,6 +1249,10 @@ class Tr {
       'tr': '{item} satın al — {coins} coin',
     },
     K.insufficientBalance: {'ku': 'Zêrên te kêm in!', 'tr': 'Bakiye yetersiz!'},
+    K.purchaseErrorTitle: {
+      'ku': 'Pirsgirêka kirînê',
+      'tr': 'Satın alma hatası',
+    },
     K.purchaseFailed: {
       'ku': 'Kirîn bi ser neket.',
       'tr': 'Satın alma başarısız oldu.',
@@ -1867,9 +1894,9 @@ class Tr {
     },
     K.privacyBody: {
       'ku':
-          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, navnîşana e-nameyê (heke tomar bibî), pûan, statîstîk û daneyên lîstik û hevberkirinê, hejmara zêran, pirsên tomarkirî, peyamên odeyê û pêşniyarên pirsan. XP, zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên parastin; dema tu derkevî ew ji amûrê tên paqij kirin. Di xetayan de tomarên teknîkî yên anonîm tên berhevkirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di tabloya pêşengan, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Hesab > Hesabê Min Jê Bibe.',
+          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, navnîşana e-nameyê (heke tomar bibî), pûan, statîstîk û daneyên lîstik û hevberkirinê, hejmara zêran, pirsên tomarkirî, peyamên odeyê û pêşniyarên pirsan. XP, zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên parastin; dema tu derkevî ew ji amûrê tên paqij kirin. Di xetayan de tomarên teknîkî yên anonîm tên berhevkirin. Analîza bikaranînê tenê heke tu wê ji Mîheng > Nepenî û Daneyên ve vekî tê çalak kirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di tabloya pêşengan, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Hesab > Hesabê Min Jê Bibe.',
       'tr':
-          'ZanKurd şu çevrimiçi verileri saklar: oyuncu adı, e-posta adresi (kayıt olursan), oyun ve eşleştirme puanları, istatistikleri ve verileri, coin bakiyesi, kaydedilen sorular, oda mesajları ve soru önerileri. XP, seri, yanlışlar ve öğrenme ilerlemesi yalnız bu cihazda tutulur; çıkış yaptığında cihazdan temizlenir. Hatalarda anonim teknik çökme kayıtları toplanır.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın liderlik tablosunda, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap > Hesabımı Sil.',
+          'ZanKurd şu çevrimiçi verileri saklar: oyuncu adı, e-posta adresi (kayıt olursan), oyun ve eşleştirme puanları, istatistikleri ve verileri, coin bakiyesi, kaydedilen sorular, oda mesajları ve soru önerileri. XP, seri, yanlışlar ve öğrenme ilerlemesi yalnız bu cihazda tutulur; çıkış yaptığında cihazdan temizlenir. Hatalarda anonim teknik çökme kayıtları toplanır. Kullanım analizi yalnız Ayarlar > Gizlilik ve Veri seçeneğini açarsan etkinleşir.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın liderlik tablosunda, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap > Hesabımı Sil.',
     },
     K.aboutBody: {
       'ku':
@@ -2086,7 +2113,13 @@ class K {
   static const retakePlacementSub = 'settings.retakePlacement.sub';
   static const currentLevel = 'settings.currentLevel';
   static const secSafety = 'settings.section.safety';
+  static const secPrivacy = 'settings.section.privacy';
+  static const analyticsConsent = 'settings.analyticsConsent';
+  static const analyticsConsentSub = 'settings.analyticsConsent.sub';
   static const reportAbuse = 'settings.reportAbuse';
+  static const betaFeedback = 'settings.betaFeedback';
+  static const betaFeedbackSub = 'settings.betaFeedback.sub';
+  static const betaMailSubject = 'settings.betaMail.subject';
   static const abuseMailSubject = 'settings.abuseMail.subject';
   static const linkOpenFailed = 'settings.linkOpenFailed';
   static const secAppearance = 'settings.section.appearance';
@@ -2348,6 +2381,8 @@ class K {
   static const birKonuSecVe = 'screen.birKonuSecVe';
   static const bugununGorevi = 'screen.bugununGorevi';
   static const gununDersi = 'screen.gununDersi';
+  static const firstSessionBadge = 'screen.firstSessionBadge';
+  static const firstSessionSub = 'screen.firstSessionSub';
   static const pSoruYaklasikP = 'screen.pSoruYaklasikP';
   static const devamEt = 'screen.devamEt';
   static const gunlukSeriStreak = 'screen.gunlukSeriStreak';
@@ -2581,6 +2616,7 @@ class K {
   static const buyAction = 'shop.buy';
   static const buyItemForCoins = 'shop.buyItemForCoins';
   static const insufficientBalance = 'shop.insufficientBalance';
+  static const purchaseErrorTitle = 'shop.purchaseErrorTitle';
   static const purchaseFailed = 'shop.purchaseFailed';
   static const errorOccurred = 'common.errorOccurred';
   static const purchasedItem = 'shop.purchased';

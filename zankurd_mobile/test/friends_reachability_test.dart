@@ -119,6 +119,19 @@ void main() {
     expect(find.byType(FriendsScreen), findsOneWidget);
   });
 
+  testWidgets('arkadaş sekmesi ilk açılışta boş duruma iner', (tester) async {
+    await tester.pumpWidget(
+      _wrap(LeaderboardScreen(repository: _FriendsRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Arkadaş'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Arkadaş yok'), findsOneWidget);
+    expect(find.text('Bir hata oluştu'), findsNothing);
+  });
+
   testWidgets('bekleyen istek yokken rozet çizilmez', (tester) async {
     await tester.pumpWidget(
       _wrap(LeaderboardScreen(repository: _FriendsRepository())),

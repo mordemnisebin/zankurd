@@ -8,12 +8,13 @@ class AppPanel extends StatelessWidget {
   const AppPanel({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(AppSpacing.md),
     this.gradient,
     this.color,
     this.borderRadius,
     this.cardType = CardType.secondary,
     this.onTap,
+    this.semanticLabel,
   });
 
   final Widget child;
@@ -31,28 +32,47 @@ class AppPanel extends StatelessWidget {
   /// Gradient verilirse her zaman primary efekti uygulanır.
   final CardType cardType;
 
+  /// Dokunulabilir panelin ekran okuyucuda tek bir eylem olarak duyurulması.
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
-    final br = borderRadius ?? BorderRadius.circular(AppRadius.card);
+    final br = borderRadius ?? BorderRadius.circular(AppTheme.panelRadius);
     return _wrapTap(_buildPanel(context, br), br);
   }
 
   Widget _wrapTap(Widget panel, BorderRadius br) {
-    if (onTap == null) return panel;
-    return Stack(
-      children: [
-        panel,
-        Positioned.fill(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: br,
-              child: const SizedBox.expand(),
-            ),
-          ),
-        ),
-      ],
+    if (onTap == null && semanticLabel == null) return panel;
+
+    final content = onTap == null
+        ? panel
+        : Stack(
+            children: [
+              panel,
+              Positioned.fill(
+                child: ExcludeSemantics(
+                  child: Material(
+                    color: Colors.transparent,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: onTap,
+                      borderRadius: br,
+                      child: const SizedBox.expand(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+
+    return Semantics(
+      container: onTap != null || semanticLabel != null,
+      button: onTap != null,
+      enabled: onTap == null ? null : true,
+      label: semanticLabel,
+      excludeSemantics: semanticLabel != null,
+      onTap: onTap,
+      child: content,
     );
   }
 

@@ -8,7 +8,9 @@ import '../models/room.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/screen_identity_header.dart';
 import 'contest_screen.dart';
 import '../widgets/app_row_card.dart';
 import 'matchmaking_screen.dart';
@@ -55,6 +57,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         secondsPerQuestion: seconds,
       );
       if (!mounted) return;
+      AnalyticsService.instance.logActivationStep('room_created');
       _openRoom(room);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'play hub create room failed');
@@ -222,6 +225,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                             controller.text.trim(),
                           );
                           if (!sheetCtx.mounted) return;
+                          AnalyticsService.instance.logActivationStep(
+                            'room_joined',
+                          );
                           Navigator.of(sheetCtx).pop();
                           if (mounted) _openRoom(room);
                         } catch (error, stack) {
@@ -268,9 +274,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             // duruyordu; yeni kullanıcı hangisinin "asıl oyun" olduğunu
             // seçemiyordu (2026-07-25 canlı denetimi). Artık tek birincil
             // eylem (hızlı düello) ve altında iki adlandırılmış grup var.
-            _PlaySectionHeading(
+            ScreenIdentityHeader(
               title: context.t(K.playTitle),
               subtitle: context.t(K.playSubtitle),
+              accent: AppTheme.brand,
+              icon: AppIcons.gamepad,
+              compact: true,
             ),
             const SizedBox(height: AppSpacing.sm),
             _QuickDuelHero(
@@ -342,10 +351,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               key: const ValueKey('play-hub-tournament'),
               icon: AppIcons.trophy,
               // Altın bir satır yukarıda "Günün Etkinliği"nde; turnuva
-              // marka turuncusunu alır. Dört satır artık koyu yeşil ·
-              // çamurlu turkuaz · altın · turuncu — hepsi palet içinde,
+              // yeşil aksanı alır. Dört satır artık koyu yeşil ·
+              // çamurlu turkuaz · altın · turuncu-yeşil — hepsi palet içinde,
               // yine de birbirinden ayrılıyor.
-              accent: AppTheme.brand,
+              accent: AppTheme.playGreen,
               title: context.t(K.tournament),
               subtitle: context.t(K.tournamentSub),
               onTap: () => Navigator.of(context).push(
@@ -387,40 +396,84 @@ class _QuickDuelHero extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(AppRadius.card),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.t(K.quickDuel),
-                  style: AppTypography.heading2.copyWith(color: Colors.white),
+          child: Stack(
+            children: [
+              // Kartın sağındaki düşük opaklıklı ikon, eylemi anlatır ve
+              // paneli boş bir yeşil dikdörtgen olmaktan çıkarır.
+              Positioned(
+                right: -28,
+                top: -34,
+                child: Icon(
+                  AppIcons.bolt,
+                  size: 164,
+                  color: Colors.white.withValues(alpha: 0.055),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  context.t(K.quickDuelSub),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: Colors.white.withValues(alpha: 0.82),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Container(
-                  height: 42,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppTheme.primaryCtaColor(context),
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                  ),
-                  child: Text(
-                    context.t(K.findOpponent),
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 38,
+                          height: 38,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.16),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.22),
+                            ),
+                          ),
+                          child: const Icon(
+                            AppIcons.peopleGroup,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Expanded(
+                          child: Text(
+                            context.t(K.quickDuel),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.caption.copyWith(
+                              color: Colors.white.withValues(alpha: 0.86),
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      context.t(K.quickDuelSub),
+                      style: AppTypography.heading2.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Container(
+                      height: 42,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppTheme.primaryCtaColor(context),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                      child: Text(
+                        context.t(K.findOpponent),
+                        style: AppTypography.bodyLarge.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

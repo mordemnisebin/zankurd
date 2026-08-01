@@ -155,6 +155,10 @@ Mobil release yapılandırmasını örnekten oluştur ve dört açık anahtarı 
 üretim değerleriyle doldur. `.env.mobile.release.json` yerel kalır; repoya
 eklenmez:
 
+RevenueCat anahtarları release derlemesinde zorunludur; Supabase ve RevenueCat
+değerlerinden biri eksik veya yanlış yapılandırılmışsa güvenlik nedeniyle paket
+üretilmez.
+
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
 cp .env.mobile.release.example.json .env.mobile.release.json

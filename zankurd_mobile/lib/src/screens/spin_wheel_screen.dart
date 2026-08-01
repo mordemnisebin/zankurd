@@ -12,6 +12,7 @@ import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/app_state.dart';
 import '../widgets/confetti_overlay.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -32,8 +33,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   late Animation<double> _rotation;
   bool _canSpin = false;
   bool _loading = true;
+  bool _statusError = false;
+  bool _statusRequestInFlight = false;
   bool _spinning = false;
   int? _wonAmount;
+  String? _spinErrorMessage;
+  bool _retrySpinStatus = false;
   int _lastPlayedSegment = -1;
   bool _showConfetti = false;
   Timer? _countdownTimer;
@@ -101,22 +106,33 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   }
 
   Future<void> _checkSpin() async {
-    bool can = false;
-    try {
-      can = await widget.repository.canSpinToday();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'canSpinToday failed');
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.t(K.wheelStatusFailed))));
-      }
-    }
+    if (_statusRequestInFlight) return;
+    _statusRequestInFlight = true;
     if (mounted) {
+      setState(() {
+        _loading = true;
+        _statusError = false;
+        _spinErrorMessage = null;
+      });
+    }
+    try {
+      final can = await widget.repository.canSpinToday();
+      if (!mounted) return;
       setState(() {
         _canSpin = can;
         _loading = false;
+        _statusError = false;
       });
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'canSpinToday failed');
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _statusError = true;
+        });
+      }
+    } finally {
+      _statusRequestInFlight = false;
     }
   }
 
@@ -134,6 +150,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     setState(() {
       _spinning = true;
       _wonAmount = null;
+      _spinErrorMessage = null;
     });
 
     const rewards = SpinWheelScreen.rewards;
@@ -145,10 +162,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       if (!mounted) return;
       setState(() {
         _spinning = false;
+        _spinErrorMessage = context.t(K.wheelRewardFailed);
+        _retrySpinStatus = false;
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.wheelRewardFailed))));
       return;
     }
     if (won <= 0) {
@@ -156,10 +172,9 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       setState(() {
         _spinning = false;
         _canSpin = false;
+        _spinErrorMessage = context.t(K.wheelAlreadySpun);
+        _retrySpinStatus = true;
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.wheelAlreadySpun))));
       return;
     }
     final winnerIndex = rewards.contains(won) ? rewards.indexOf(won) : 0;
@@ -229,6 +244,13 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                         color: AppTheme.primaryGradientStart,
                       ),
                     )
+                  : _statusError
+                  ? AppErrorState(
+                      title: context.t(K.loadFailedShort),
+                      message: context.t(K.wheelStatusFailed),
+                      retryLabel: context.t(K.retryShort),
+                      onRetry: _checkSpin,
+                    )
                   : ListView(
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.page,
@@ -246,6 +268,18 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                         // ── Prize reveal ──
                         if (_wonAmount != null)
                           _buildPrizeReveal(context, ku, _wonAmount!),
+                        if (_spinErrorMessage != null)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: AppSpacing.md,
+                            ),
+                            child: AppErrorState(
+                              title: context.t(K.loadFailedShort),
+                              message: _spinErrorMessage!,
+                              retryLabel: context.t(K.retryShort),
+                              onRetry: _retrySpinStatus ? _checkSpin : _spin,
+                            ),
+                          ),
                         // ── Günlük hak durumu (her durumda görünür) ──
                         _buildSpinStatusChip(context, ku),
                         const SizedBox(height: AppSpacing.sm),
@@ -271,6 +305,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             if (_wonAmount != null && _showConfetti)
               ConfettiOverlay(
                 onFinished: () {
+                  if (!mounted) return;
                   setState(() {
                     _showConfetti = false;
                   });

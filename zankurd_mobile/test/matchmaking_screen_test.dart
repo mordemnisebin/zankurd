@@ -22,6 +22,20 @@ class _TrackingRepository extends MockZanKurdRepository {
   }
 }
 
+class _RetryableMatchCategoriesRepository extends MockZanKurdRepository {
+  bool fail = true;
+  bool returnEmpty = false;
+  int loadCalls = 0;
+
+  @override
+  Future<List<String>> loadCategories() async {
+    loadCalls += 1;
+    if (fail) throw StateError('match categories unavailable');
+    if (returnEmpty) return const [];
+    return categories;
+  }
+}
+
 enum _RoomQuestionResult { empty, failure }
 
 class _HiddenAnswerMatchRepository extends MockZanKurdRepository {
@@ -183,5 +197,43 @@ void main() {
     expect(find.text('Başlamak üzere...'), findsNothing);
     expect(find.text('İptal Et'), findsOneWidget);
     expect(find.text('Oyun başlatılamadı. Tekrar dene.'), findsOneWidget);
+  });
+
+  testWidgets('eşleşme kategorisi hatası görünür ve tekrar denenir', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final repository = _RetryableMatchCategoriesRepository();
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+
+    repository.fail = false;
+    await tester.ensureVisible(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
+    expect(find.text('Dil'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('eşleşme kategorileri boşsa açıklamalı boş durum gösterilir', (
+    tester,
+  ) async {
+    final repository = _RetryableMatchCategoriesRepository()
+      ..fail = false
+      ..returnEmpty = true;
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
+    expect(find.text('Kategoriler bulunamadı.'), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

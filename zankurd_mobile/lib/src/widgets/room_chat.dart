@@ -273,27 +273,47 @@ class _RoomChatState extends State<RoomChat> {
             ),
             child: Row(
               children: [
-                Icon(
-                  AppIcons.comment,
-                  size: 18,
-                  color: AppTheme.textSubColor(context),
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                Text(
-                  context.t(K.chat),
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13,
+                ExcludeSemantics(
+                  child: Row(
+                    children: [
+                      Icon(
+                        AppIcons.comment,
+                        size: 18,
+                        color: AppTheme.textSubColor(context),
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      Text(
+                        context.t(K.chat),
+                        style: TextStyle(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const Spacer(),
-                GestureDetector(
+                Semantics(
+                  container: true,
+                  button: true,
+                  label: context.t(K.chat),
+                  enabled: widget.onToggle != null,
                   onTap: widget.onToggle,
-                  child: Icon(
-                    AppIcons.chevronDown,
-                    size: 22,
-                    color: AppTheme.textMutedColor(context),
+                  child: SizedBox(
+                    width: 44,
+                    height: 44,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: widget.onToggle,
+                      child: Center(
+                        child: Icon(
+                          AppIcons.chevronDown,
+                          size: 22,
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -326,15 +346,26 @@ class _RoomChatState extends State<RoomChat> {
                       // Uzun basış: bildir / engelle. Apple 1.2 ikisinin de
                       // uygulamada bulunmasını şart koşuyor. Kendi mesajın
                       // için menü açılmaz.
-                      return GestureDetector(
-                        key: ValueKey('chat-message-${msg.id}'),
+                      return Semantics(
+                        container: true,
+                        button: !isMine,
+                        enabled: !isMine,
+                        label: '${msg.senderName}: ${msg.text}',
                         onLongPress: isMine
                             ? null
                             : () => _showModerationSheet(msg),
-                        child: _MessageBubble(
-                          message: msg,
-                          isMine: isMine,
-                          ku: ku,
+                        child: ExcludeSemantics(
+                          child: GestureDetector(
+                            key: ValueKey('chat-message-${msg.id}'),
+                            onLongPress: isMine
+                                ? null
+                                : () => _showModerationSheet(msg),
+                            child: _MessageBubble(
+                              message: msg,
+                              isMine: isMine,
+                              ku: ku,
+                            ),
+                          ),
                         ),
                       );
                     },

@@ -12,6 +12,9 @@
 --   3. İnen dosyayı şu ada koy:
 --        zankurd_mobile/tool/server_questions_export.csv
 --
+-- Oyuncunun görebileceği bütün yayınlanmış sorular dışa aktarılır;
+-- karantinadaki eski adaylar aktif kalite sonucunu kirletmez.
+--
 -- Sonra çıktı, uygulamanın kendi `QuestionLanguagePolicy` sınıfından
 -- geçirilir — harf temelli SQL taraması `Dibistan` gibi özel harfsiz
 -- kelimeleri kaçırdığı için gerçek denetim yerelde yapılmalı.
@@ -43,9 +46,6 @@ select
     else q.option_d
   end as correct_answer
 from public.questions q
-where q.prompt ilike '%bi Tirkî%'
-   or q.prompt ilike '%bi Kurmancî%'
-   or q.prompt ilike '%wateya%'
-   or q.prompt ilike '%tê çi wateyê%'
-   or q.prompt ilike '%çi tê gotin%'
+where q.is_approved = true
+  and q.review_status is distinct from 'rejected'
 order by q.id;

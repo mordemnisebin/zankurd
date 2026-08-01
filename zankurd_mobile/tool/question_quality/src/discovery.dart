@@ -71,6 +71,7 @@ bool _excluded(String path) =>
     path.startsWith('test/') ||
     path.startsWith('tests/') ||
     path.startsWith('tool/question_quality/') ||
+    path == 'tool/server_questions_export.csv' ||
     path.startsWith('tool/screenshots/') ||
     RegExp(r'(^|/)node_modules/').hasMatch(path) ||
     RegExp(r'(^|/)readme(?:\.[^/]*)?$').hasMatch(path) ||

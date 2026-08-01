@@ -29,70 +29,71 @@ class ScreenIdentityHeader extends StatelessWidget {
     // başka bir uygulamadan gelmiş gibi görünüyordu. Zemin artık her yerde
     // marka kimliğidir (Kesk); ekrana özgü [accent] yalnız ikon çemberini
     // tonlar. Böylece hem tutarlılık hem ekran kimliği korunur.
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
+    return Semantics(
+      header: true,
+      container: true,
+      child: DecoratedBox(
+        decoration: AppTheme.identityHeaderDecoration(
+          context,
+          radius: AppTheme.panelRadius,
         ),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
-      ),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          AppSpacing.md,
-          compact ? AppSpacing.sm : AppSpacing.md,
-          AppSpacing.md,
-          compact ? AppSpacing.sm : AppSpacing.md,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: compact ? 44 : 52,
-              height: compact ? 44 : 52,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.alphaBlend(
-                  accent.withValues(alpha: 0.55),
-                  Colors.white.withValues(alpha: 0.16),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.md,
+            compact ? AppSpacing.sm : AppSpacing.md,
+            AppSpacing.md,
+            compact ? AppSpacing.sm : AppSpacing.md,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: compact ? 44 : 52,
+                height: compact ? 44 : 52,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.alphaBlend(
+                    accent.withValues(alpha: 0.55),
+                    Colors.white.withValues(alpha: 0.16),
+                  ),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.28),
+                  ),
                 ),
-                border: Border.all(color: Colors.white.withValues(alpha: 0.28)),
+                child: Icon(icon, color: Colors.white, size: compact ? 22 : 26),
               ),
-              child: Icon(icon, color: Colors.white, size: compact ? 22 : 26),
-            ),
-            const SizedBox(width: AppSpacing.sm + 2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.heading2.copyWith(
-                      color: Colors.white,
-                      fontSize: compact ? 17 : 18,
-                      fontWeight: FontWeight.w800,
+              const SizedBox(width: AppSpacing.sm + 2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.heading2.copyWith(
+                        color: Colors.white,
+                        fontSize: compact ? 17 : 18,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
+                    const SizedBox(height: 3),
+                    Text(
+                      subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

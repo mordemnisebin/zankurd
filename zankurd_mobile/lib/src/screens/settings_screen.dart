@@ -11,10 +11,12 @@ import '../l10n/strings.dart';
 import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
+import '../providers/analytics_consent_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
+import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
@@ -145,6 +147,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(failed)));
+    }
+  }
+
+  Future<void> _openBetaFeedback() async {
+    final uri = AppConfig.feedbackUri(subject: context.t(K.betaMailSubject));
+    final failed = context.t(K.linkOpenFailed);
+    try {
+      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (ok || !mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(failed)));
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'beta feedback mailto');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(failed)));
+    }
+  }
+
+  Future<void> _setAnalyticsConsent(bool enabled) async {
+    await context.read<AnalyticsConsentProvider>().setEnabled(enabled);
+    if (enabled) {
+      await AnalyticsService.instance.initialize();
+    } else {
+      await AnalyticsService.instance.disable();
     }
   }
 
@@ -327,6 +356,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         AppIcons.chevronRight,
                         color: AppTheme.textMutedColor(context),
                       ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    key: const ValueKey('settings-beta-feedback'),
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    onTap: _openBetaFeedback,
+                    child: _SettingsToggleRow(
+                      icon: AppIcons.circleInfo,
+                      color: AppTheme.playCyan,
+                      title: context.t(K.betaFeedback),
+                      subtitle: context.t(K.betaFeedbackSub),
+                      trailing: Icon(
+                        AppIcons.chevronRight,
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.cardGap),
+
+              // ============ GİZLİLİK / PRIVACY ============
+              ScreenSectionLabel(
+                label: context.t(K.secPrivacy),
+                accent: AppTheme.violet,
+              ),
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: Consumer<AnalyticsConsentProvider>(
+                  builder: (context, consent, _) => _SettingsToggleRow(
+                    icon: AppIcons.shieldHalved,
+                    color: AppTheme.violet,
+                    title: context.t(K.analyticsConsent),
+                    subtitle: context.t(K.analyticsConsentSub),
+                    trailing: Switch(
+                      key: const ValueKey('analytics-consent-switch'),
+                      value: consent.enabled,
+                      onChanged: _setAnalyticsConsent,
                     ),
                   ),
                 ),

@@ -127,11 +127,13 @@ class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     required this.url,
     this.isCompact = false,
+    this.layoutSize,
     this.onReady,
   });
 
   final String url;
   final bool isCompact;
+  final Size? layoutSize;
   final VoidCallback? onReady;
 
   void _notifyReady() {
@@ -145,8 +147,11 @@ class _QuestionImage extends StatelessWidget {
     final assetPath = url.startsWith('asset://')
         ? url.replaceFirst('asset://', '')
         : null;
-    final size = MediaQuery.sizeOf(context);
-    final isLandscapeTablet = size.width >= 700 && size.width > size.height;
+    final size = layoutSize ?? MediaQuery.sizeOf(context);
+    final isLandscapeTablet = _useCompactLandscapeLayout(
+      size.width,
+      size.height,
+    );
     final maxHeight = isLandscapeTablet
         ? (size.height * 0.24).clamp(84.0, 150.0)
         : double.infinity;

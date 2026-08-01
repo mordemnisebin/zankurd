@@ -292,6 +292,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       totalQuestions: totalQuestions,
       xpEarned: earnedXP,
     );
+    if (newAchievements.any(
+      (achievement) => achievement.id == AchievementIds.firstGame,
+    )) {
+      AnalyticsService.instance.logFirstQuizCompleted();
+    }
     for (final achievement in newAchievements) {
       AnalyticsService.instance.logBadgeEarned(achievement.id);
     }
@@ -819,7 +824,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     if (coinsAwarded > 0)
                                       _ResultRewardChip(
                                         icon: AppIcons.coins,
-                                        label: '+$coinsAwarded${context.t(K.coinAbbrev)}',
+                                        label:
+                                            '+$coinsAwarded${context.t(K.coinAbbrev)}',
                                         color: AppTheme.gold,
                                       ),
                                     if (_earnedXP > 0)

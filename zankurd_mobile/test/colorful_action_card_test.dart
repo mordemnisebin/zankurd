@@ -1,3 +1,5 @@
+import 'dart:ui' show SemanticsAction;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -54,6 +56,28 @@ void main() {
     // ExcludeSemantics ile dışlandığından, "Şerê 1vs1" tek bir düğümde
     // (dıştaki label) bulunmalı — metnin kendisi ayrıca bulunmamalı.
     expect(find.bySemanticsLabel('Şerê 1vs1'), findsNothing);
+    handle.dispose();
+  });
+
+  testWidgets('semantics düğümü gerçek tap action taşır', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ColorfulActionCard(
+            title: 'Hızlı düello',
+            icon: Icons.bolt_rounded,
+            colors: const [AppTheme.playPink, Color(0xFFFF6B70)],
+            onTap: () {},
+          ),
+        ),
+      ),
+    );
+
+    final node = tester
+        .getSemantics(find.bySemanticsLabel('Hızlı düello'))
+        .getSemanticsData();
+    expect(node.hasAction(SemanticsAction.tap), isTrue);
     handle.dispose();
   });
 

@@ -291,6 +291,64 @@
       }
     },
     {
+      "id": "agent_question_wave_20260801",
+      "description": "Source-verified agent editorial wave applied to live bank",
+      "path": "supabase/agent_question_wave_2026-08-01.csv",
+      "role": "publish_candidate",
+      "parser": "csv",
+      "canonicalGroup": "supabase_questions",
+      "reportIncluded": true,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 440,
+      "expectedRecordCount": 133,
+      "notes": "133 reviewed candidates; 91 passed the strict promotion gate and were applied by 2026-08-01_agent_question_wave.sql",
+      "columns": {
+        "id": "id",
+        "locale": "language_code",
+        "category": "category_key",
+        "prompt": "prompt",
+        "optionA": "option_a",
+        "optionB": "option_b",
+        "optionC": "option_c",
+        "optionD": "option_d",
+        "correct": "correct_option",
+        "explanation": "explanation",
+        "difficulty": "difficulty",
+        "sourceUrl": "source_url",
+        "status": "publication_status"
+      }
+    },
+    {
+      "id": "generated_ziman_wave_20260801",
+      "description": "Original Ziman editorial wave applied to live bank",
+      "path": "docs/audit/question_quality/2026-08-01/agent_waves/generated_ziman.csv",
+      "role": "publish_candidate",
+      "parser": "csv",
+      "canonicalGroup": "supabase_questions",
+      "reportIncluded": true,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 430,
+      "expectedRecordCount": 100,
+      "notes": "100 original Ziman questions; 95 passed promotion and were applied by 2026-08-01_generated_ziman_wave.sql",
+      "columns": {
+        "id": "id",
+        "locale": "language_code",
+        "category": "category_key",
+        "prompt": "prompt",
+        "optionA": "option_a",
+        "optionB": "option_b",
+        "optionC": "option_c",
+        "optionD": "option_d",
+        "correct": "correct_option",
+        "explanation": "explanation",
+        "difficulty": "difficulty",
+        "sourceUrl": "source_url",
+        "status": "publication_status"
+      }
+    },
+    {
       "id": "editorial_wave2_review",
       "description": "Generated editorial review queue",
       "path": "supabase/2026-07-14_editorial_kurmanci_question_wave_2_for_ai_review.csv",
@@ -935,6 +993,21 @@
       "precedence": 1100,
       "expectedRecordCount": 49,
       "notes": "Historical SQL copy; count-only",
+      "columns": {}
+    },
+    {
+      "id": "content_authoring_tools",
+      "description": "Content promotion tools, not question sources",
+      "glob": "tool/content_authoring/**",
+      "role": "ignored_non_question",
+      "parser": "none",
+      "canonicalGroup": "none",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 1200,
+      "expectedRecordCount": null,
+      "notes": "Quality-gated authoring utilities and generated reports",
       "columns": {}
     }
   ]

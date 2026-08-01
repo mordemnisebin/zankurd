@@ -139,6 +139,26 @@ void main() {
     expect(find.text('Çark durumu kontrol edilemedi.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('çark durum hatası görünür ve kontrol yeniden denenir', (
+    tester,
+  ) async {
+    await useTallPhoneViewport(tester);
+    final repository = _RetryableSpinStatusRepository();
+    await tester.pumpWidget(_shell(SpinWheelScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+
+    repository.fail = false;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.statusCalls, 2);
+    expect(find.text('Çevir!'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }
 
 /// Buton açık görünürken sunucunun ödülü reddettiği senaryo.
@@ -155,5 +175,17 @@ class _ThrowingSpinRepository extends MockZanKurdRepository {
   @override
   Future<bool> canSpinToday() async {
     throw StateError('network down');
+  }
+}
+
+class _RetryableSpinStatusRepository extends MockZanKurdRepository {
+  bool fail = true;
+  int statusCalls = 0;
+
+  @override
+  Future<bool> canSpinToday() async {
+    statusCalls += 1;
+    if (fail) throw StateError('spin status unavailable');
+    return true;
   }
 }

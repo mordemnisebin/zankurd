@@ -6,6 +6,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_state.dart';
 import '../widgets/kilim_progress_bar.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -33,6 +34,8 @@ class LevelScreen extends StatefulWidget {
 class _LevelScreenState extends State<LevelScreen> {
   bool _loading = false;
   Set<int> _playedLevels = const {};
+  QuizLevel? _retryLevel;
+  _LevelLoadState _loadState = _LevelLoadState.ready;
 
   @override
   void initState() {
@@ -97,13 +100,28 @@ class _LevelScreenState extends State<LevelScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
-                child: _LevelPath(
-                  levels: levels,
-                  disabled: _loading,
-                  isKu: ku,
-                  playedLevels: _playedLevels,
-                  onOpen: _openLevel,
-                ),
+                child: switch (_loadState) {
+                  _LevelLoadState.error => AppErrorState(
+                    title: context.t(K.loadFailedShort),
+                    message: context.t(K.buSeviyeninSorulariYuklenemedi),
+                    retryLabel: context.t(K.retryShort),
+                    onRetry: _retrySelectedLevel,
+                  ),
+                  _LevelLoadState.empty => AppEmptyState(
+                    icon: AppIcons.bookOpen,
+                    title: context.t(K.noQuestionsForCategory),
+                    message: context.t(K.buSeviyeninSorulariYuklenemedi),
+                    actionLabel: context.t(K.retryShort),
+                    onAction: _retrySelectedLevel,
+                  ),
+                  _LevelLoadState.ready => _LevelPath(
+                    levels: levels,
+                    disabled: _loading,
+                    isKu: ku,
+                    playedLevels: _playedLevels,
+                    onOpen: _openLevel,
+                  ),
+                },
               ),
             ],
           ),
@@ -114,7 +132,11 @@ class _LevelScreenState extends State<LevelScreen> {
 
   Future<void> _openLevel(QuizLevel level) async {
     if (_loading) return;
-    setState(() => _loading = true);
+    setState(() {
+      _loading = true;
+      _retryLevel = level;
+      _loadState = _LevelLoadState.ready;
+    });
     try {
       final questions = await widget.repository.loadLevelQuestions(
         category: level.category,
@@ -124,6 +146,10 @@ class _LevelScreenState extends State<LevelScreen> {
         limit: level.questionCount,
       );
       if (!mounted) return;
+      if (questions.isEmpty) {
+        setState(() => _loadState = _LevelLoadState.empty);
+        return;
+      }
       final room = widget.repository
           .createRoom(category: level.category)
           .copyWith(
@@ -163,14 +189,19 @@ class _LevelScreenState extends State<LevelScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'level questions load failed');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.t(K.buSeviyeninSorulariYuklenemedi))),
-      );
+      setState(() => _loadState = _LevelLoadState.error);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
   }
+
+  void _retrySelectedLevel() {
+    final level = _retryLevel;
+    if (level != null) _openLevel(level);
+  }
 }
+
+enum _LevelLoadState { ready, empty, error }
 
 class _CategoryHero extends StatelessWidget {
   const _CategoryHero({

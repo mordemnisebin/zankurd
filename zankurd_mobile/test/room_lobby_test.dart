@@ -94,6 +94,40 @@ class _StaleStreamPollRecoveryRepository extends _HostOnlyRoomRepository {
   }
 }
 
+/// Oda statusu realtime'a ulaşmadığında katılımcı, host'un başlattığı oyunu
+/// tek seferlik durum yoklamasıyla açabilmeli.
+class _StaleStatusPollRecoveryRepository extends MockZanKurdRepository {
+  int statusPollCalls = 0;
+
+  @override
+  String? get currentUserId => 'guest-user';
+
+  GameRoom lobbyRoom() => const GameRoom(
+    id: 'room-status-poll',
+    name: 'Hevalên Zanînê',
+    code: 'ZK-STATUS',
+    category: 'Ziman',
+    players: [
+      Player(id: 'host-user', name: 'Mêvandar', score: 0, state: 'Hazır'),
+      Player(id: 'guest-user', name: 'Misafir', score: 0, state: 'Hazır'),
+    ],
+    status: RoomStatus.lobby,
+    questionCount: 10,
+    hostId: 'host-user',
+  );
+
+  @override
+  Stream<RoomStatus> subscribeRoomStatus(GameRoom room) {
+    return Stream.value(RoomStatus.lobby);
+  }
+
+  @override
+  Future<RoomStatus> loadRoomStatus(GameRoom room) async {
+    statusPollCalls++;
+    return RoomStatus.active;
+  }
+}
+
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
@@ -246,6 +280,33 @@ void main() {
       );
       expect(enabledButton.onPressed, isNotNull);
       expect(find.byType(QuizScreen), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'room lobby opens quiz when only status polling sees host start',
+    (tester) async {
+      final repository = _StaleStatusPollRecoveryRepository();
+
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(
+        testShell(
+          child: RoomScreen(
+            repository: repository,
+            initialRoom: repository.lobbyRoom(),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(QuizScreen), findsNothing);
+      await tester.pump(const Duration(seconds: 3));
+      await tester.pumpAndSettle();
+
+      expect(repository.statusPollCalls, greaterThan(0));
+      expect(find.byType(QuizScreen), findsOneWidget);
     },
   );
 

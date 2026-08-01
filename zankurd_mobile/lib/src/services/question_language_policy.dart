@@ -133,7 +133,7 @@ class QuestionLanguagePolicy {
   /// Türkçe olduğunu söylüyor. İki yönde birden görülenler
   /// [_ambiguousWords] içindedir ve hiçbir yöne sayılmaz.
   static const _kurmanciVocabulary = {
-    'agir', 'axaftin', 'azadî', 'bajar', 'baran', 'bav', 'berf',
+    'agir', 'axaftin', 'azadî', 'av', 'bajar', 'baran', 'bav', 'berf',
     'bihîstin', 'bira', 'biçûk', 'cejn', 'ciwan', 'cîhan', 'danegeh',
     'dapîr', 'dar', 'daristan', 'deh', 'deng', 'derya', 'derî', 'dest',
     'destpêk', 'dev', 'deşt', 'dibistan', 'diran', 'dotmam', 'duh',
@@ -142,7 +142,7 @@ class QuestionLanguagePolicy {
     'huner', 'jin', 'kal', 'kanî', 'kaxiz', 'kevin', 'keç', 'komputer',
     'kurd', 'kursî', 'kûçik', 'mal', 'malbat', 'mamoste', 'mase', 'mast',
     'mêr', 'nan', 'nanpêj', 'nanxane', 'newal', 'nivîn', 'nivîsandin',
-    'pir', 'pirtûk', 'pisîk', 'por', 'poz', 'pênc', 'pênûs', 'pîr',
+    'pir', 'pirtûk', 'pisîk', 'por', 'poz', 'pênc', 'pênûs', 'pîr', 'rê', 'rû',
     'rabûn', 'reng', 'roj', 'rojbaş', 'rûniştin', 'sar', 'sepan', 'ser',
     'spas', 'stran', 'stêrk', 'sînor', 'teşt', 'tor', 'welat', 'wêne',
     'xanî', 'xwendegeh', 'xwendekar', 'xwendin', 'xweş', 'xwîşk', 'zanîn',

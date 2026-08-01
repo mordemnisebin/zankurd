@@ -348,6 +348,22 @@ void main() {
     expectNoLayoutException(tester, '667×375');
   });
 
+  testWidgets('700×656 sınırında panel gövde ölçümüyle aynı dalı kullanır', (
+    tester,
+  ) async {
+    // AppBar sonrası gövde yaklaşık 600px'e iner. Dış LayoutBuilder compact
+    // seçtiğinde soru paneli de aynı ölçümü kullanmalı; aksi hâlde panel,
+    // tam pencere yüksekliği 656px olduğu için stacked görsel kararına döner.
+    await pumpQuizAt(tester, const Size(700, 656));
+
+    expect(find.byKey(compactLandscapeKey), findsOneWidget);
+    final ghostIcon = tester.widget<Icon>(
+      find.byKey(const ValueKey('quiz-question-ghost-icon')),
+    );
+    expect(ghostIcon.size, 88.0);
+    expectNoLayoutException(tester, '700×656');
+  });
+
   // ── 1366×768 masaüstü ──────────────────────────────────────────────────
   testWidgets('1366×768 masaüstü stacked yerleşim kullanır', (tester) async {
     await expectStackedLayout(tester, const Size(1366, 768), '1366×768');

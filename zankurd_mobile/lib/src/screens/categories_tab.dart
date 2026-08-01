@@ -10,6 +10,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/app_state.dart';
 import 'subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -29,10 +30,9 @@ class CategoriesTab extends StatefulWidget {
 
 class _CategoriesTabState extends State<CategoriesTab> {
   // Gizli kategoriler (içerik hazır olana dek) listede gösterilmez.
-  late List<String> _categories = visibleCategories(
-    widget.repository.categories,
-  );
+  List<String> _categories = const [];
   bool _loading = false;
+  bool _loadError = false;
   Map<String, MasteryLevel> _masteryLevels = {};
   Map<String, int> _masteryCounts = {};
   Map<String, int> _masteryThresholds = {};
@@ -45,25 +45,28 @@ class _CategoriesTabState extends State<CategoriesTab> {
   }
 
   Future<void> _load() async {
-    setState(() => _loading = true);
+    if (_loading) return;
+    setState(() {
+      _loading = true;
+      _loadError = false;
+      _categories = const [];
+    });
     try {
       final cats = await widget.repository.loadCategories();
-      if (mounted && cats.isNotEmpty) {
-        setState(() => _categories = visibleCategories(cats));
-      }
+      if (!mounted) return;
+      setState(() => _categories = visibleCategories(cats));
+      await _loadMastery();
+      await _loadQuestionCounts();
+      if (mounted) setState(() => _loading = false);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'categories load failed');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(context.t(K.kategorilerYuklenemediLutfenSayfayi)),
-          ),
-        );
+        setState(() {
+          _loadError = true;
+          _loading = false;
+        });
       }
     }
-    if (mounted) setState(() => _loading = false);
-    await _loadMastery();
-    await _loadQuestionCounts();
   }
 
   Future<void> _loadQuestionCounts() async {
@@ -176,31 +179,34 @@ class _CategoriesTabState extends State<CategoriesTab> {
               Expanded(
                 child: _loading && _categories.isEmpty
                     ? _buildSkeletonGrid(context)
+                    : _loadError
+                    ? AppErrorState(
+                        title: context.t(K.loadFailedShort),
+                        message: context.t(K.categoriesLoadFail),
+                        retryLabel: context.t(K.retryShort),
+                        onRetry: _load,
+                      )
+                    : !_loading && _categories.isEmpty
+                    ? AppEmptyState(
+                        icon: AppIcons.layerGroup,
+                        title: context.t(K.categories),
+                        message: context.t(K.categoriesSubtitle),
+                        actionLabel: context.t(K.retryShort),
+                        onAction: _load,
+                      )
                     : LayoutBuilder(
                         builder: (context, constraints) {
                           final bottomPadding =
                               MediaQuery.paddingOf(context).bottom +
                               AppSpacing.xxl;
-                          final isNarrow = constraints.maxWidth <= 600;
-                          // Poster kart: dar ekranda tek sütun ~148px yükseklik;
-                          // genişte 2 sütun dergi kapağı oranı.
-                          final crossCount = isNarrow ? 1 : 2;
-                          // Sakin satır kartı: poster yüksekliği gerekmiyor.
-                          // Grid'in gerçek çocuk genişliği sayfa boşlukları
-                          // çıktıktan sonra kalandır. Tam ekran genişliğiyle
-                          // oran hesaplamak kartı fark edilmeden 11 px kadar
-                          // kısaltıyordu. Büyük yazıda da iki metin satırı
-                          // için kontrollü ek yükseklik gerekir.
+                          // Telefonda tek sütun dev satırlar yerine iki renkli
+                          // karo kullanılır. 320px gibi çok dar ekranlarda
+                          // okunabilirliği korumak için tek sütuna döner.
+                          final crossCount = constraints.maxWidth < 340 ? 1 : 2;
                           final textScale =
                               MediaQuery.textScalerOf(context).scale(16) / 16;
                           final targetH =
-                              88.0 + (textScale - 1).clamp(0.0, 1.0) * 40.0;
-                          final availableWidth =
-                              constraints.maxWidth -
-                              (2 * AppSpacing.page) -
-                              ((crossCount - 1) * AppSpacing.md);
-                          final itemWidth = availableWidth / crossCount;
-                          final aspectRatio = itemWidth / targetH;
+                              148.0 + (textScale - 1).clamp(0.0, 1.0) * 28.0;
                           return GridView.builder(
                             controller: widget.scrollController,
                             padding: EdgeInsets.fromLTRB(
@@ -215,7 +221,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                                   crossAxisCount: crossCount,
                                   mainAxisSpacing: AppSpacing.md,
                                   crossAxisSpacing: AppSpacing.md,
-                                  childAspectRatio: aspectRatio,
+                                  mainAxisExtent: targetH,
                                 ),
                             itemBuilder: (context, index) {
                               final cat = _categories[index];
@@ -256,13 +262,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
       builder: (context, constraints) {
         final bottomPadding =
             MediaQuery.paddingOf(context).bottom + AppSpacing.xxl;
-        final isNarrow = constraints.maxWidth <= 600;
-        final crossCount = isNarrow ? 1 : 2;
-        final availableWidth =
-            constraints.maxWidth -
-            (2 * AppSpacing.page) -
-            ((crossCount - 1) * AppSpacing.md);
-        final aspectRatio = (availableWidth / crossCount) / 120;
+        final crossCount = constraints.maxWidth < 340 ? 1 : 2;
         return GridView.builder(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.page,
@@ -275,7 +275,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
             crossAxisCount: crossCount,
             mainAxisSpacing: AppSpacing.md,
             crossAxisSpacing: AppSpacing.md,
-            childAspectRatio: aspectRatio,
+            mainAxisExtent: 160,
           ),
           itemBuilder: (context, index) => const _ShimmerCard(),
         );
@@ -507,166 +507,127 @@ class _CategoryCardState extends State<_CategoryCard>
                   opacity: comingSoon ? 0.55 : 1.0,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppTheme.surfaceColor(context),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          accent.withValues(
+                            alpha: AppTheme.isLight(context) ? 0.13 : 0.22,
+                          ),
+                          AppTheme.surfaceColor(context),
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(AppRadius.card),
                       border: Border.all(color: AppTheme.borderColor(context)),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(AppRadius.card),
-                      child: Row(
-                        children: [
-                          // Kategori kimliği: ince renk şeridi.
-                          Container(width: 3, height: 74, color: accent),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                AppSpacing.sm,
-                                AppSpacing.sm,
-                                AppSpacing.sm,
-                                AppSpacing.sm,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 38,
-                                        height: 38,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: accent,
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.badge,
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          icon,
-                                          color: Colors.white,
-                                          size: 18,
-                                        ),
-                                      ),
-                                      const SizedBox(width: AppSpacing.sm),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              catName,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTypography.subtitle
-                                                  .copyWith(
-                                                    fontSize: 16,
-                                                    color:
-                                                        AppTheme.textPrimaryColor(
-                                                          context,
-                                                        ),
-                                                  ),
-                                            ),
-                                            const SizedBox(height: 1),
-                                            Text(
-                                              comingSoon
-                                                  ? (Tr.forKu(
-                                                      K.yakindaGeliyor,
-                                                      widget.isKu,
-                                                    ))
-                                                  : widget.questionCount != null
-                                                  ? (Tr.forKu(
-                                                      K.pSoruSeviye,
-                                                      widget.isKu,
-                                                      {
-                                                        'p0':
-                                                            '${widget.questionCount}',
-                                                      },
-                                                    ))
-                                                  : (Tr.forKu(
-                                                      K.seviye,
-                                                      widget.isKu,
-                                                    )),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTypography.bodyMedium
-                                                  .copyWith(
-                                                    fontSize: 12.5,
-                                                    color:
-                                                        AppTheme.textSubColor(
-                                                          context,
-                                                        ),
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: AppSpacing.xs),
-                                      if (hasProgress)
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 4,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              AppRadius.pill,
-                                            ),
-                                            color: accent.withValues(
-                                              alpha: 0.12,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            widget.isKu
-                                                ? widget.masteryLevel.titleKu
-                                                : widget.masteryLevel.titleTr,
-                                            style: AppTypography.caption
-                                                .copyWith(
-                                                  fontSize: 10,
-                                                  color:
-                                                      AppColors.readableAccent(
-                                                        context,
-                                                        accent,
-                                                      ),
-                                                ),
-                                          ),
-                                        )
-                                      else
-                                        Icon(
-                                          comingSoon
-                                              ? AppIcons.hourglass
-                                              : AppIcons.chevronRight,
-                                          size: 14,
-                                          color: AppTheme.textMutedColor(
-                                            context,
-                                          ),
-                                        ),
-                                    ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppSpacing.sm),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 44,
+                                  height: 44,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: accent,
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.badge,
+                                    ),
+                                    boxShadow: AppShadows.categoryCard(accent),
                                   ),
-                                  if (hasProgress) ...[
-                                    const SizedBox(height: AppSpacing.xs),
-                                    ClipRRect(
+                                  child: Icon(
+                                    icon,
+                                    color: Colors.white,
+                                    size: 21,
+                                  ),
+                                ),
+                                if (hasProgress)
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 7,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                         AppRadius.pill,
                                       ),
-                                      child: LinearProgressIndicator(
-                                        value: progress,
-                                        minHeight: 4,
-                                        backgroundColor: AppTheme.borderColor(
+                                      color: accent.withValues(alpha: 0.14),
+                                    ),
+                                    child: Text(
+                                      widget.isKu
+                                          ? widget.masteryLevel.titleKu
+                                          : widget.masteryLevel.titleTr,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppTypography.caption.copyWith(
+                                        fontSize: 10,
+                                        color: AppColors.readableAccent(
                                           context,
+                                          accent,
                                         ),
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                              accent,
-                                            ),
                                       ),
                                     ),
-                                  ],
-                                ],
+                                  )
+                                else
+                                  Icon(
+                                    comingSoon
+                                        ? AppIcons.hourglass
+                                        : AppIcons.chevronRight,
+                                    size: 15,
+                                    color: AppTheme.textMutedColor(context),
+                                  ),
+                              ],
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              catName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.subtitle.copyWith(
+                                fontSize: 16,
+                                color: AppTheme.textPrimaryColor(context),
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 2),
+                            Text(
+                              comingSoon
+                                  ? Tr.forKu(K.yakindaGeliyor, widget.isKu)
+                                  : widget.questionCount != null
+                                  ? Tr.forKu(K.pSoruSeviye, widget.isKu, {
+                                      'p0': '${widget.questionCount}',
+                                    })
+                                  : Tr.forKu(K.seviye, widget.isKu),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.bodyMedium.copyWith(
+                                fontSize: 12.5,
+                                color: AppTheme.textSubColor(context),
+                              ),
+                            ),
+                            const Spacer(),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                AppRadius.pill,
+                              ),
+                              child: LinearProgressIndicator(
+                                value: hasProgress ? progress : 0,
+                                minHeight: 4,
+                                backgroundColor: AppTheme.borderColor(context),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  hasProgress
+                                      ? accent
+                                      : accent.withValues(alpha: 0.22),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

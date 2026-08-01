@@ -381,6 +381,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<RoomStatus> loadRoomStatus(GameRoom room) async {
+    return room.status;
+  }
+
+  @override
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room) {
     return Stream.value(room.players);
   }

@@ -81,7 +81,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     ];
     if (_tabController.index == 3) {
       // Friends tab
-      setState(() {});
+      _loadData();
       return;
     }
     setState(() {

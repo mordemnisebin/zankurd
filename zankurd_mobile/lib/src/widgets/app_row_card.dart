@@ -52,14 +52,15 @@ class AppRowCard extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return Material(
       color: AppTheme.surfaceColor(context),
-      borderRadius: BorderRadius.circular(AppRadius.card),
+      borderRadius: BorderRadius.circular(AppTheme.panelRadius),
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.card),
+        borderRadius: BorderRadius.circular(AppTheme.panelRadius),
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.sm),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.card),
+            borderRadius: BorderRadius.circular(AppTheme.panelRadius),
             border: Border.all(color: AppTheme.borderColor(context)),
           ),
           child: Row(

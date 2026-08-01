@@ -68,6 +68,7 @@ abstract class ZanKurdRepository {
   });
   Future<GameRoom> joinOnlineRoom(String code);
   Future<List<Player>> loadRoomPlayers(GameRoom room);
+  Future<RoomStatus> loadRoomStatus(GameRoom room);
 
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room);
   Stream<RoomStatus> subscribeRoomStatus(GameRoom room);

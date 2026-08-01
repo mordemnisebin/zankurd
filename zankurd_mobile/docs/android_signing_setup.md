@@ -67,12 +67,12 @@ keyPassword=<key-parolası>
 ```bash
 flutter clean
 flutter build appbundle --release \
-  --dart-define=REVENUECAT_API_KEY_ANDROID=<play-public-key> \
-  --dart-define=REVENUECAT_API_KEY_IOS=<app-store-public-key>
+  --dart-define-from-file=.env.mobile.release.json
 ```
 
-- RevenueCat anahtarları verilmezse premium **mock modda** kalır (satın alma
-  devre dışı; uygulama çalışır). Canlı abonelik için anahtarlar zorunlu.
+- RevenueCat anahtarları release derlemesinde zorunludur; eksikse uygulama
+  açılışta yapılandırma hatası gösterir. Debug derlemede premium mock mod
+  kullanılabilir.
 - Çıktı: `build/app/outputs/bundle/release/app-release.aab` → Play Console'a
   yükle.
 

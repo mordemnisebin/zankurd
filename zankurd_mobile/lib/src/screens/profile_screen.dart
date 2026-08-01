@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart'
     show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -1000,12 +1001,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               dialogContext,
                               _GuestUpgradeAction.googleRequested,
                             ),
-                      icon: const Text(
-                        'G',
-                        style: TextStyle(
-                          color: AppTheme.accent,
-                          fontWeight: FontWeight.w900,
-                        ),
+                      icon: const FaIcon(
+                        FontAwesomeIcons.google,
+                        size: 18,
+                        color: Color(0xFF4285F4),
                       ),
                       label: Text(context.t(K.linkGoogle)),
                     ),

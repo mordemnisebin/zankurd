@@ -44,6 +44,7 @@ class ColorfulActionCard extends StatelessWidget {
       button: true,
       enabled: !loading,
       label: effectiveLabel,
+      onTap: loading ? null : onTap,
       child: ExcludeSemantics(
         child: DecoratedBox(
           decoration: BoxDecoration(

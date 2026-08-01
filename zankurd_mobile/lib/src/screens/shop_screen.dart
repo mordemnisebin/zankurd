@@ -10,6 +10,7 @@ import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/app_state.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/screen_identity_header.dart';
 import 'spin_wheel_screen.dart';
@@ -105,11 +106,12 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   int _coinBalance = 0;
-  bool _loading = true;
+  bool _loading = false;
+  bool _loadError = false;
+  String? _purchaseErrorMessage;
+  ShopItem? _retryPurchaseItem;
   final Set<String> _purchasedItemIds = {};
-  List<ShopItem> _dynamicItems = _items
-      .where((item) => _supportedItemIds.contains(item.id))
-      .toList(growable: false);
+  List<ShopItem> _dynamicItems = const [];
 
   // Sunucuda ürün kaydı bulunması tek başına yayına hazır olduğu anlamına
   // gelmez. Coin düşürüp etkisi olmayan taslak ürünler burada görünmez.
@@ -200,6 +202,12 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _loadBalance() async {
+    if (_loading) return;
+    setState(() {
+      _loading = true;
+      _loadError = false;
+      _dynamicItems = const [];
+    });
     try {
       final balance = await widget.repository.loadCoinBalance();
       List<ShopItem> dynamicItems = _items
@@ -254,12 +262,16 @@ class _ShopScreenState extends State<ShopScreen> {
           _purchasedItemIds.clear();
           _purchasedItemIds.addAll(purchasedIds);
           _loading = false;
+          _loadError = false;
         });
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop balance load failed');
       if (mounted) {
-        setState(() => _loading = false);
+        setState(() {
+          _loading = false;
+          _loadError = true;
+        });
       }
     }
   }
@@ -444,6 +456,10 @@ class _ShopScreenState extends State<ShopScreen> {
     }
 
     setState(() => _loading = true);
+    setState(() {
+      _purchaseErrorMessage = null;
+      _retryPurchaseItem = item;
+    });
 
     try {
       final success = await widget.repository.spendCoins(
@@ -454,6 +470,7 @@ class _ShopScreenState extends State<ShopScreen> {
       if (!mounted) return;
 
       if (success) {
+        _purchaseErrorMessage = null;
         await _applyPurchaseEffect(item.id);
         if (!mounted) return;
         HapticFeedback.lightImpact();
@@ -469,21 +486,19 @@ class _ShopScreenState extends State<ShopScreen> {
         _showPurchaseCelebrationDialog(item);
       } else {
         HapticFeedback.vibrate();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(context.t(K.purchaseFailed)),
-            backgroundColor: AppTheme.wrong,
-          ),
+        setState(
+          () => _purchaseErrorMessage = context.t(K.purchaseFailed),
         );
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop_purchase');
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.errorOccurred))));
+      setState(() => _purchaseErrorMessage = context.t(K.errorOccurred));
     } finally {
-      _loadBalance();
+      if (mounted) {
+        setState(() => _loading = false);
+        _loadBalance();
+      }
     }
   }
 
@@ -652,6 +667,30 @@ class _ShopScreenState extends State<ShopScreen> {
                         child: CircularProgressIndicator(
                           color: AppTheme.primaryGradientStart,
                         ),
+                      )
+                    : _loadError
+                    ? AppErrorState(
+                        title: context.t(K.loadFailedShort),
+                        message: context.t(K.genericErrorBody),
+                        retryLabel: context.t(K.retryShort),
+                        onRetry: _loadBalance,
+                      )
+                    : _purchaseErrorMessage != null
+                    ? AppErrorState(
+                        title: context.t(K.purchaseErrorTitle),
+                        message: _purchaseErrorMessage!,
+                        retryLabel: context.t(K.retryShort),
+                        onRetry: _retryPurchaseItem == null
+                            ? _loadBalance
+                            : () => _purchase(_retryPurchaseItem!),
+                      )
+                    : _dynamicItems.isEmpty
+                    ? AppEmptyState(
+                        icon: AppIcons.bagShopping,
+                        title: context.t(K.shopEmpty),
+                        message: context.t(K.shopSubtitle),
+                        actionLabel: context.t(K.retryShort),
+                        onAction: _loadBalance,
                       )
                     : _buildItemsList(context, ku, isDark),
               ),

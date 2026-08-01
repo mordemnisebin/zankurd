@@ -17,6 +17,7 @@ extension _QuizScreenUI on _QuizScreenState {
     return LayoutBuilder(
       builder: (context, constraints) {
         final contentWidth = min(constraints.maxWidth - 24, 800.0);
+        final layoutSize = Size(constraints.maxWidth, constraints.maxHeight);
         return Padding(
           // M-7: raw literal → adlandırılmış sabit. 6px, AppSpacing.xxs(4) ile
           // xs(8) arasında; quiz-özel değer olduğu için ayrı sabite alındı.
@@ -70,6 +71,7 @@ extension _QuizScreenUI on _QuizScreenState {
                                     // Eğitim turu zaten sadece ilk soruda gösterilir.
                                     _buildQuestionSwitcher(
                                       context,
+                                      layoutSize: layoutSize,
                                       showExplanation: showExpl,
                                       timerKey: index == 0
                                           ? _timerTargetKey
@@ -133,83 +135,87 @@ extension _QuizScreenUI on _QuizScreenState {
     final showExpl = _isLearningExperience && _showExplanation;
 
     return LayoutBuilder(
-      builder: (context, constraints) => SingleChildScrollView(
-        // M-7: landscape iç dolgu — aynı 6px quiz gap sabiti.
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.sm,
-          6.0,
-          AppSpacing.sm,
-          AppSpacing.xs,
-        ),
-        child: Center(
-          child: SizedBox(
-            key: const ValueKey('quiz-landscape-content'),
-            width: min(constraints.maxWidth - 24, 800.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Portrait'taki notla aynı: coach-mark anahtarları
-                      // yalnız ilk soruda geçilir (duplicate-GlobalKey).
-                      _buildQuestionSwitcher(
-                        context,
-                        showExplanation: showExpl,
-                        timerKey: index == 0 ? _timerTargetKey : null,
-                        answerAreaKey: index == 0 ? _answerAreaKey : null,
-                        correctAnswerKey: _correctAnswerKey,
-                        questionVisualReady: index == 0
-                            ? _handleQuestionVisualReady
-                            : null,
-                      ),
-                      if (selectedAnswer == 'TIMEOUT' && !_suspense)
-                        QuizTimeoutNotice(
-                          isKu: _isKu,
-                          correctAnswer: question.correctAnswer,
-                        ),
-                      if (_isMultiplayer &&
-                          answered &&
-                          _mpPhase == _MultiplayerPhase.waiting)
-                        _MultiplayerWaitingOverlay(isKu: _isKu),
-                      if (_isMultiplayer &&
-                          _mpPhase == _MultiplayerPhase.reveal)
-                        _RevealCountdown(
-                          seconds: _revealCountdown,
-                          isKu: _isKu,
-                        ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Flexible(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 270),
+      builder: (context, constraints) {
+        final layoutSize = Size(constraints.maxWidth, constraints.maxHeight);
+        return SingleChildScrollView(
+          // M-7: landscape iç dolgu — aynı 6px quiz gap sabiti.
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.sm,
+            6.0,
+            AppSpacing.sm,
+            AppSpacing.xs,
+          ),
+          child: Center(
+            child: SizedBox(
+              key: const ValueKey('quiz-landscape-content'),
+              width: min(constraints.maxWidth - 24, 800.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (!_isLearningExperience) ...[
-                          _buildScoreHeader(),
-                          const SizedBox(height: 6),
-                        ],
-                        _buildProgressBar(context),
-                        if (!_isLearningExperience) _buildComboRow(),
-                        const SizedBox(height: 6),
-                        _buildActionControls(),
-                        if (widget.is1v1) ...[
-                          const SizedBox(height: 8),
-                          _LiveScoreboard(players: livePlayers),
-                        ],
+                        // Portrait'taki notla aynı: coach-mark anahtarları
+                        // yalnız ilk soruda geçilir (duplicate-GlobalKey).
+                        _buildQuestionSwitcher(
+                          context,
+                          layoutSize: layoutSize,
+                          showExplanation: showExpl,
+                          timerKey: index == 0 ? _timerTargetKey : null,
+                          answerAreaKey: index == 0 ? _answerAreaKey : null,
+                          correctAnswerKey: _correctAnswerKey,
+                          questionVisualReady: index == 0
+                              ? _handleQuestionVisualReady
+                              : null,
+                        ),
+                        if (selectedAnswer == 'TIMEOUT' && !_suspense)
+                          QuizTimeoutNotice(
+                            isKu: _isKu,
+                            correctAnswer: question.correctAnswer,
+                          ),
+                        if (_isMultiplayer &&
+                            answered &&
+                            _mpPhase == _MultiplayerPhase.waiting)
+                          _MultiplayerWaitingOverlay(isKu: _isKu),
+                        if (_isMultiplayer &&
+                            _mpPhase == _MultiplayerPhase.reveal)
+                          _RevealCountdown(
+                            seconds: _revealCountdown,
+                            isKu: _isKu,
+                          ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 270),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!_isLearningExperience) ...[
+                            _buildScoreHeader(),
+                            const SizedBox(height: 6),
+                          ],
+                          _buildProgressBar(context),
+                          if (!_isLearningExperience) _buildComboRow(),
+                          const SizedBox(height: 6),
+                          _buildActionControls(),
+                          if (widget.is1v1) ...[
+                            const SizedBox(height: 8),
+                            _LiveScoreboard(players: livePlayers),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -318,6 +324,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
   Widget _buildQuestionSwitcher(
     BuildContext context, {
+    Size? layoutSize,
     bool? showExplanation,
     GlobalKey? timerKey,
     GlobalKey? answerAreaKey,
@@ -351,6 +358,7 @@ extension _QuizScreenUI on _QuizScreenState {
         key: ValueKey(index),
         child: _buildQuestionPanel(
           context,
+          layoutSize: layoutSize,
           showExplanation: showExplanation,
           timerKey: timerKey,
           answerAreaKey: answerAreaKey,
@@ -837,6 +845,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
   Widget _buildQuestionPanel(
     BuildContext context, {
+    Size? layoutSize,
     bool? showExplanation,
     GlobalKey? timerKey,
     GlobalKey? answerAreaKey,
@@ -844,7 +853,10 @@ extension _QuizScreenUI on _QuizScreenState {
     VoidCallback? questionVisualReady,
   }) {
     final promptText = question.promptText;
-    final size = MediaQuery.sizeOf(context);
+    // Yerleşim dalını seçen LayoutBuilder'ın gövde ölçüsünü kullan. Tam
+    // pencereyi tekrar okumak, AppBar/SafeArea sınırında panelin görsel ve
+    // tipografi kararını dış düzenden ayırabiliyordu.
+    final size = layoutSize ?? MediaQuery.sizeOf(context);
     // Yerleşim dalıyla AYNI kural. Burada eskiden ayrı bir eşik duruyordu
     // (`width >= 700 && width > height`) ve dal seçimiyle çelişiyordu:
     // 1440×900 masaüstünde ikisi de "yatay" diyor, soru görseli gizleniyor ve
@@ -958,6 +970,7 @@ extension _QuizScreenUI on _QuizScreenState {
                       child: _QuestionImage(
                         url: question.imageUrl!,
                         isCompact: isCompact,
+                        layoutSize: size,
                         onReady: questionVisualReady,
                       ),
                     ),
@@ -990,6 +1003,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   _QuestionImage(
                     url: question.imageUrl!,
                     isCompact: isCompact,
+                    layoutSize: size,
                     onReady: questionVisualReady,
                   ),
                   SizedBox(height: isCompact ? 8 : 14),

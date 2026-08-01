@@ -54,6 +54,23 @@ void main() {
     final scale = tester.widget<AnimatedScale>(find.byType(AnimatedScale));
     expect(scale.scale, 1.0);
   });
+
+  testWidgets('enabled geometric button exposes a tap action', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: GeometricGradientButton(label: 'Devam', onPressed: _noop),
+        ),
+      ),
+    );
+
+    final node = tester
+        .getSemantics(find.bySemanticsLabel('Devam'))
+        .getSemanticsData();
+    expect(node.hasAction(SemanticsAction.tap), isTrue);
+    handle.dispose();
+  });
 }
 
 void _noop() {}

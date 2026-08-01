@@ -202,7 +202,7 @@ jarsigner -verify -verbose -certs 'build/app/outputs/bundle/release/app-release.
 
 Play Console'a yüklemeden önce şu dosyaları kontrol edin:
 
-- `docs/release_readiness.md`
+- `../docs/release-readiness.md`
 - `docs/play_console_submission_checklist.md`
 - `docs/play_store_internal_test.md`
 - `web/privacy.html`

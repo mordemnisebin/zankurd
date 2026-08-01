@@ -12,11 +12,13 @@ class AnalyticsService {
 
   /// Uygulama başlatıldığında çağrılır.
   Future<void> initialize() async {
+    if (_analytics != null) return;
     if (kIsWeb ||
         defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS) {
       try {
         _analytics = FirebaseAnalytics.instance;
+        await _analytics!.setAnalyticsCollectionEnabled(true);
         debugPrint('[Analytics] Firebase Analytics başlatıldı');
       } catch (e, s) {
         ErrorReporter.record(e, s, reason: 'AnalyticsService initialize');
@@ -24,6 +26,17 @@ class AnalyticsService {
       }
     } else {
       debugPrint('[Analytics] Bu platformda Firebase Analytics desteklenmiyor');
+    }
+  }
+
+  /// Kullanıcı izni geri çektiğinde yeni olayları hemen durdurur.
+  Future<void> disable() async {
+    final analytics = _analytics;
+    _analytics = null;
+    try {
+      await analytics?.setAnalyticsCollectionEnabled(false);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'AnalyticsService disable');
     }
   }
 
@@ -83,4 +96,17 @@ class AnalyticsService {
   /// Kaydolma olayı.
   Future<void> logSignUp(String method) =>
       logEvent('sign_up', {'method': method});
+
+  /// İzinli, kişisel veri içermeyen beta aktivasyon adımı.
+  ///
+  /// Oda kodu, oyuncu adı, e-posta veya soru metni gibi tanımlayıcılar
+  /// gönderilmez; yalnızca ürün akışının hangi adımına ulaşıldığı tutulur.
+  Future<void> logActivationStep(String step) =>
+      logEvent('activation_step', {'step': step});
+
+  Future<void> logOnboardingCompleted() =>
+      logActivationStep('onboarding_completed');
+
+  Future<void> logFirstQuizCompleted() =>
+      logActivationStep('first_quiz_completed');
 }

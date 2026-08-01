@@ -24,6 +24,18 @@ class _CountRepository extends MockZanKurdRepository {
   Future<Map<String, int>> loadCategoryQuestionCounts() async => {'Ziman': 321};
 }
 
+class _RetryableCategoriesRepository extends MockZanKurdRepository {
+  bool fail = true;
+  int loadCalls = 0;
+
+  @override
+  Future<List<String>> loadCategories() async {
+    loadCalls += 1;
+    if (fail) throw StateError('categories unavailable');
+    return categories;
+  }
+}
+
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -102,6 +114,25 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('kategori yükleme hatası görünür ve aynı çağrı tekrar denenir', (
+    tester,
+  ) async {
+    final repository = _RetryableCategoriesRepository();
+    await tester.pumpWidget(wrap(CategoriesTab(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+
+    repository.fail = false;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
+    expect(find.byKey(const ValueKey('category-card-Ziman')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

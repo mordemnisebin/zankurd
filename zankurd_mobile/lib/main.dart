@@ -20,6 +20,7 @@ import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
+import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
@@ -162,6 +163,7 @@ Future<void> main() async {
       final themeFuture = ThemeProvider.load();
       final soundFuture = SoundProvider.load();
       final reducedMotionFuture = ReducedMotionProvider.load();
+      final analyticsConsentFuture = AnalyticsConsentProvider.load();
 
       // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
       // tercihleri. `AnalyticsService.initialize()` ve
@@ -178,6 +180,7 @@ Future<void> main() async {
         themeFuture,
         soundFuture,
         reducedMotionFuture,
+        analyticsConsentFuture,
       ]);
 
       final languageProvider = await languageFuture;
@@ -188,6 +191,7 @@ Future<void> main() async {
       final themeProvider = await themeFuture;
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
+      final analyticsConsentProvider = await analyticsConsentFuture;
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
       // hiçbiri uygulamanın açılmasını engellemez.
@@ -200,10 +204,12 @@ Future<void> main() async {
       }
 
       startInBackground(premiumService.warmUp(), 'premium warmUp');
-      startInBackground(
-        AnalyticsService.instance.initialize(),
-        'analytics init',
-      );
+      if (analyticsConsentProvider.enabled) {
+        startInBackground(
+          AnalyticsService.instance.initialize(),
+          'analytics init',
+        );
+      }
       startInBackground(NotificationService.load(), 'notifications load');
 
       runApp(
@@ -214,6 +220,7 @@ Future<void> main() async {
           themeProvider: themeProvider,
           soundProvider: soundProvider,
           reducedMotionProvider: reducedMotionProvider,
+          analyticsConsentProvider: analyticsConsentProvider,
           premiumService: premiumService,
         ),
       );
@@ -284,6 +291,7 @@ class ZanKurdApp extends StatelessWidget {
     ThemeProvider? themeProvider,
     SoundProvider? soundProvider,
     ReducedMotionProvider? reducedMotionProvider,
+    AnalyticsConsentProvider? analyticsConsentProvider,
     PremiumService? premiumService,
     super.key,
   }) : authProvider = authProvider ?? AuthProvider.test(),
@@ -291,6 +299,8 @@ class ZanKurdApp extends StatelessWidget {
        themeProvider = themeProvider ?? ThemeProvider(),
        soundProvider = soundProvider ?? SoundProvider(),
        reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
+       analyticsConsentProvider =
+           analyticsConsentProvider ?? AnalyticsConsentProvider(),
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
@@ -299,6 +309,7 @@ class ZanKurdApp extends StatelessWidget {
   final ThemeProvider themeProvider;
   final SoundProvider soundProvider;
   final ReducedMotionProvider reducedMotionProvider;
+  final AnalyticsConsentProvider analyticsConsentProvider;
   final PremiumService premiumService;
 
   @override
@@ -318,6 +329,9 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<SoundProvider>.value(value: soundProvider),
         ChangeNotifierProvider<ReducedMotionProvider>.value(
           value: reducedMotionProvider,
+        ),
+        ChangeNotifierProvider<AnalyticsConsentProvider>.value(
+          value: analyticsConsentProvider,
         ),
         ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],

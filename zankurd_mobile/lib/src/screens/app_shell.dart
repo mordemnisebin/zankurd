@@ -20,6 +20,7 @@ import 'learn_home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
+import '../services/analytics_service.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'play_hub_screen.dart';
@@ -161,6 +162,7 @@ class _AppShellState extends State<AppShell> {
   Future<void> _completeOnboarding() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setBool(_onboardingSeenKey, true);
+    AnalyticsService.instance.logOnboardingCompleted();
     if (!mounted) return;
     setState(() => _showOnboarding = false);
   }

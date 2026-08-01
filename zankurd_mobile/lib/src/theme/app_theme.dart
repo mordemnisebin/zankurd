@@ -361,13 +361,22 @@ class AppTheme {
   static const double sectionGap = AppSpacing.section;
   static const double cardGap = AppSpacing.cardGap;
   static const double pagePadding = AppSpacing.page;
+  static const double panelRadius = AppRadius.card;
 
-  /// 2026-07-24: kartlar artık gölgeyle değil 1px kenarlıkla ayrılır.
-  /// Üst üste binen gölge katmanları ekranı "kabartma" gösteriyor ve
-  /// yüzeyler arasında sahte hiyerarşi yaratıyordu. Gölge yalnız gerçekten
-  /// yüzen katmanlarda kalır (alt navigasyon, sabit CTA, sheet) — onlar
-  /// [floatingShadow] kullanır.
-  static List<BoxShadow> cardShadow(BuildContext context) => const [];
+  /// İçerik kartlarını zeminden ayıran tek, düşük yoğunluklu yüzey gölgesi.
+  /// Hiyerarşiyi bağırmadan verir; yüzen katmanlar için daha güçlü
+  /// [floatingShadow] token'ı ayrı tutulur.
+  static List<BoxShadow> cardShadow(BuildContext context) {
+    final isDark = _isDark(context);
+    return [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: isDark ? 0.16 : 0.07),
+        offset: const Offset(0, 3),
+        blurRadius: 12,
+        spreadRadius: -4,
+      ),
+    ];
+  }
 
   /// Gerçekten yüzen katmanlar için tek gölge token'ı.
   static List<BoxShadow> floatingShadow(BuildContext context) {
@@ -572,6 +581,12 @@ class AppTheme {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [primaryGradientStart, primaryGradientEnd],
+  );
+
+  static const identityHeaderGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [culturalBrandBg, Color(0xFF1E6B4C)],
   );
 
   static const darkAuthGradient = LinearGradient(
@@ -926,6 +941,15 @@ class AppTheme {
       brightness: Brightness.dark,
       fontFamily: 'Rubik',
       scaffoldBackgroundColor: darkBg,
+      cardTheme: const CardThemeData(
+        color: surface,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppRadius.card)),
+        ),
+      ),
       // Klavye odağı görünürlüğü (WCAG 2.4.7): belirgin marka rengi vurgusu.
       focusColor: accent.withValues(alpha: 0.35),
       colorScheme: const ColorScheme(
@@ -1171,12 +1195,33 @@ class AppTheme {
   static Color borderOf(BuildContext context) =>
       _isDark(context) ? border : lightBorder;
 
+  static BoxDecoration identityHeaderDecoration(
+    BuildContext context, {
+    double radius = cardRadius,
+  }) {
+    return BoxDecoration(
+      gradient: identityHeaderGradient,
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
+      boxShadow: cardShadow(context),
+    );
+  }
+
   static ThemeData light() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       fontFamily: 'Rubik',
       scaffoldBackgroundColor: lightBg,
+      cardTheme: const CardThemeData(
+        color: lightSurface,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppRadius.card)),
+        ),
+      ),
       // Klavye odağı görünürlüğü (WCAG 2.4.7): belirgin marka rengi vurgusu.
       focusColor: accent.withValues(alpha: 0.30),
       colorScheme: const ColorScheme(

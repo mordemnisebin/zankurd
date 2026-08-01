@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart'
     show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
@@ -78,6 +80,10 @@ class _SignInScreenState extends State<SignInScreen>
       password: _passwordController.text,
     );
 
+    if (success) {
+      AnalyticsService.instance.logSignIn('email');
+    }
+
     if (mounted) {
       LoadingOverlay.hide(context);
 
@@ -92,6 +98,10 @@ class _SignInScreenState extends State<SignInScreen>
 
     final success = await authProvider.signInWithGoogle();
 
+    if (success) {
+      AnalyticsService.instance.logSignIn('google');
+    }
+
     if (mounted) {
       LoadingOverlay.hide(context);
 
@@ -105,6 +115,10 @@ class _SignInScreenState extends State<SignInScreen>
     LoadingOverlay.show(context, message: context.t(K.signingInGuest));
 
     final success = await authProvider.signInAsGuest();
+
+    if (success) {
+      AnalyticsService.instance.logSignIn('guest');
+    }
 
     if (mounted) {
       LoadingOverlay.hide(context);
@@ -904,14 +918,10 @@ class _GoogleSignInButton extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'G',
-                      style: TextStyle(
-                        color: AppTheme.accent,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: 'Rubik',
-                        fontSize: dense ? 20 : 24,
-                      ),
+                    FaIcon(
+                      FontAwesomeIcons.google,
+                      color: const Color(0xFF1F1F1F),
+                      size: dense ? 18 : 21,
                     ),
                     SizedBox(width: dense ? 8 : 12),
                     Flexible(

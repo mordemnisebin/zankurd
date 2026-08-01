@@ -290,6 +290,25 @@ void main() {
     // Overflow olsaydı framework exception fırlatırdı.
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('mağaza yükleme hatası görünür ve bakiye yeniden yüklenir', (
+    tester,
+  ) async {
+    final repository = _RetryableShopRepository();
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+
+    repository.fail = false;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
+    expect(find.text('500 coin'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }
 
 /// Bakiye yeterli görünürken sunucunun harcamayı reddettiği senaryo
@@ -300,6 +319,21 @@ class _FailingSpendRepository extends MockZanKurdRepository {
 
   @override
   Future<bool> spendCoins(int amount, String reason) async => false;
+
+  @override
+  Future<bool> hasPurchased(String itemId) async => false;
+}
+
+class _RetryableShopRepository extends MockZanKurdRepository {
+  bool fail = true;
+  int loadCalls = 0;
+
+  @override
+  Future<int> loadCoinBalance() async {
+    loadCalls += 1;
+    if (fail) throw StateError('shop unavailable');
+    return 500;
+  }
 
   @override
   Future<bool> hasPurchased(String itemId) async => false;

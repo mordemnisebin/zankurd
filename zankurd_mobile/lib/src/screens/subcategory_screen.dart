@@ -7,6 +7,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../widgets/app_panel.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -61,9 +62,15 @@ class SubcategoryScreen extends StatelessWidget {
               Expanded(
                 child: ListView.separated(
                   padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
-                  itemCount: list.length,
+                  itemCount: list.length + 1,
                   separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, index) {
+                    if (index == list.length) {
+                      return _SubcategoryProgressHint(
+                        isKu: ku,
+                        gradient: gradient,
+                      );
+                    }
                     final sub = list[index];
                     return _SubcategoryCard(
                       info: sub,
@@ -87,6 +94,73 @@ class SubcategoryScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _SubcategoryProgressHint extends StatelessWidget {
+  const _SubcategoryProgressHint({required this.isKu, required this.gradient});
+
+  final bool isKu;
+  final LinearGradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    final tint = gradient.colors.first;
+    return AppPanel(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Row(
+        children: [
+          Container(
+            width: 42,
+            height: 42,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: tint.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+            ),
+            child: Icon(AppIcons.stairs, color: tint, size: 21),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  Tr.forKu(K.kolaydanZoraDogruIlerle, isKu),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Wrap(
+                  spacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    for (var step = 1; step <= 5; step++) ...[
+                      Text(
+                        '$step',
+                        style: AppTypography.caption.copyWith(
+                          color: AppColors.readableAccent(context, tint),
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      if (step < 5)
+                        Icon(
+                          AppIcons.arrowRight,
+                          size: 12,
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Icon(AppIcons.chevronRight, color: AppTheme.textMutedColor(context)),
+        ],
       ),
     );
   }

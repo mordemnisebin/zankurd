@@ -48,6 +48,28 @@ void main() {
       isNotEmpty,
       reason: 'CSV boş görünüyor; dışa aktarım eksik olabilir.',
     );
+    const requiredColumns = {
+      'id',
+      'prompt',
+      'option_a',
+      'option_b',
+      'option_c',
+      'option_d',
+      'correct_option',
+      'correct_answer',
+    };
+    expect(
+      rows.first.keys,
+      containsAll(requiredColumns),
+      reason:
+          'CSV başlığı beklenen soru alanlarını içermiyor; SQL çıktısına '
+          'SET/NOTICE gibi satırlar karışmış olabilir.',
+    );
+    expect(
+      rows.where((row) => (row['id'] ?? '').trim().isNotEmpty).length,
+      greaterThan(1000),
+      reason: "CSV soru ID'leri içermiyor; dışa aktarım eksik olabilir.",
+    );
 
     const policy = QuestionLanguagePolicy();
     final offLanguage = <String>[];
@@ -97,6 +119,10 @@ void main() {
     for (final line in offLanguage.take(40)) {
       // ignore: avoid_print
       print('  $line');
+    }
+    for (final id in givenAway.take(40)) {
+      // ignore: avoid_print
+      print('  answer-language-leak: $id');
     }
 
     expect(

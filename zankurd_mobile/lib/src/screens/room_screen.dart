@@ -38,6 +38,7 @@ class _RoomScreenState extends State<RoomScreen> {
   bool _chatOpen = false;
 
   late GameRoom room = widget.initialRoom;
+
   /// Kullanıcı anahtara *elle* dokunduysa dediği geçer; dokunmadıysa
   /// sunucudaki gerçek durum gösterilir.
   ///
@@ -73,6 +74,7 @@ class _RoomScreenState extends State<RoomScreen> {
   /// Realtime yetersiz kalırsa devreye giren polling fallback.
   /// Yalnızca lobide en az 2 oyuncu görülünce durur; aksi halde devam eder.
   Timer? _pollTimer;
+  Timer? _statusPollTimer;
   int _pollCount = 0;
   bool _pollThrottled = false;
   static const _pollInterval = Duration(seconds: 3);
@@ -83,6 +85,7 @@ class _RoomScreenState extends State<RoomScreen> {
     super.initState();
     _startSubscriptions();
     _startPolling();
+    _startStatusPolling();
     // Burada `updateReady(room, ready)` YOK — ve olmamalı.
     //
     // Eskiden vardı ve `ready` sabit `true` olduğu için zararsızdı: odaya
@@ -120,6 +123,7 @@ class _RoomScreenState extends State<RoomScreen> {
             if (!mounted) return;
             if (status == RoomStatus.active && !quizOpened) {
               _pausePolling();
+              _pauseStatusPolling();
               _navigateToQuiz();
             }
             setState(() => room = room.copyWith(status: status));
@@ -174,6 +178,14 @@ class _RoomScreenState extends State<RoomScreen> {
     _pollTimer = Timer.periodic(_pollInterval, (_) => _pollPlayersOnce());
   }
 
+  void _startStatusPolling() {
+    _statusPollTimer?.cancel();
+    _statusPollTimer = Timer.periodic(
+      _pollInterval,
+      (_) => _pollRoomStatusOnce(),
+    );
+  }
+
   Future<void> _pollPlayersOnce() async {
     if (!mounted || quizOpened) return;
     try {
@@ -182,21 +194,40 @@ class _RoomScreenState extends State<RoomScreen> {
       _applyPlayerList(players);
       if (players.length < 2) {
         _pollCount = 0;
-        return;
-      }
-      _pollCount++;
-      if (_pollCount >= _maxPollsBeforePause) {
-        _pollThrottled = true;
-        _pausePolling();
-        Future.delayed(const Duration(seconds: 15), () {
-          if (!mounted) return;
-          _pollThrottled = false;
-          _pollCount = 0;
-          if (!quizOpened) _startPolling();
-        });
+      } else {
+        _pollCount++;
+        if (_pollCount >= _maxPollsBeforePause) {
+          _pollThrottled = true;
+          _pausePolling();
+          Future.delayed(const Duration(seconds: 15), () {
+            if (!mounted) return;
+            _pollThrottled = false;
+            _pollCount = 0;
+            if (!quizOpened) _startPolling();
+          });
+        }
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'loadRoomPlayers poll failed');
+    }
+  }
+
+  Future<void> _pollRoomStatusOnce() async {
+    if (!mounted || quizOpened) return;
+    try {
+      final status = await widget.repository.loadRoomStatus(room);
+      if (!mounted || quizOpened) return;
+      if (status == RoomStatus.active && !quizOpened) {
+        _pausePolling();
+        _pauseStatusPolling();
+        await _navigateToQuiz();
+        return;
+      }
+      if (status != room.status) {
+        setState(() => room = room.copyWith(status: status));
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'loadRoomStatus poll failed');
     }
   }
 
@@ -205,11 +236,17 @@ class _RoomScreenState extends State<RoomScreen> {
     _pollTimer = null;
   }
 
+  void _pauseStatusPolling() {
+    _statusPollTimer?.cancel();
+    _statusPollTimer = null;
+  }
+
   @override
   void dispose() {
     _playersSub?.cancel();
     _statusSub?.cancel();
     _pausePolling();
+    _pauseStatusPolling();
     if (!_leaving) {
       widget.repository.updateReady(room, false).catchError((_) {});
     }
@@ -227,6 +264,7 @@ class _RoomScreenState extends State<RoomScreen> {
     _statusSub?.cancel();
     _statusSub = null;
     _pausePolling();
+    _pauseStatusPolling();
 
     try {
       await widget.repository.updateReady(room, false);
@@ -926,6 +964,8 @@ class _RoomScreenState extends State<RoomScreen> {
 
   Future<void> _navigateToQuiz() async {
     if (quizOpened) return;
+    _pausePolling();
+    _pauseStatusPolling();
     setState(() {
       quizOpened = true;
       starting = true;

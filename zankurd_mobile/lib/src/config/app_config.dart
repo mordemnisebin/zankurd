@@ -114,4 +114,11 @@ class AppConfig {
     path: supportEmail,
     queryParameters: {'subject': subject},
   );
+
+  /// Beta geri bildirimini de aynı, takip edilebilir destek kanalına yönlendirir.
+  static Uri feedbackUri({required String subject}) => Uri(
+    scheme: 'mailto',
+    path: supportEmail,
+    queryParameters: {'subject': subject},
+  );
 }

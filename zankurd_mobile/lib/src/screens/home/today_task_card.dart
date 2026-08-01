@@ -17,6 +17,7 @@ class TodayTaskCard extends StatelessWidget {
     required this.onStart,
     this.done = 0,
     this.total = 10,
+    this.firstSession = false,
     super.key,
   });
 
@@ -27,6 +28,7 @@ class TodayTaskCard extends StatelessWidget {
   /// Bugün çözülen soru sayısı (görev ilerlemesi).
   final int done;
   final int total;
+  final bool firstSession;
 
   /// Soru başına ~25 saniyelik gerçekçi ortalama üzerinden tahmini süre.
   int get _minutes => ((total * 25) / 60).ceil().clamp(1, 60);
@@ -52,11 +54,19 @@ class TodayTaskCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  Tr.forKu(K.bugununGorevi, isKu),
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.readableAccent(context, accent),
-                    letterSpacing: 0.8,
+                child: KeyedSubtree(
+                  key: firstSession
+                      ? const ValueKey('home-first-session-badge')
+                      : null,
+                  child: Text(
+                    Tr.forKu(
+                      firstSession ? K.firstSessionBadge : K.bugununGorevi,
+                      isKu,
+                    ),
+                    style: AppTypography.caption.copyWith(
+                      color: AppColors.readableAccent(context, accent),
+                      letterSpacing: 0.8,
+                    ),
                   ),
                 ),
               ),
@@ -79,10 +89,11 @@ class TodayTaskCard extends StatelessWidget {
           Text(
             // Süre soru sayısından türetilir; sabit "4 dakika" metni günlük
             // görev hedefi değiştiğinde yalan söylüyordu.
-            Tr.forKu(K.pSoruYaklasikP, isKu, {
-              'p0': '$total',
-              'p1': '$_minutes',
-            }),
+            Tr.forKu(
+              firstSession ? K.firstSessionSub : K.pSoruYaklasikP,
+              isKu,
+              {'p0': '$total', 'p1': '$_minutes'},
+            ),
             style: AppTypography.bodyMedium.copyWith(
               color: AppTheme.textSubColor(context),
             ),
