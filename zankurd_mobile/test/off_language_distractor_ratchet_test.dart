@@ -59,8 +59,9 @@ void main() {
     bank = [
       for (final asset in questionBankAssets)
         if (File(asset).existsSync())
-          ...(jsonDecode(File(asset).readAsStringSync()) as List)
-              .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+          ...(jsonDecode(File(asset).readAsStringSync()) as List).map(
+            (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+          ),
     ];
   });
 
@@ -92,9 +93,7 @@ void main() {
     );
     if (offenders.length < ceiling) {
       // ignore: avoid_print
-      print(
-        'Tavan düşürülebilir: $ceiling → ${offenders.length}',
-      );
+      print('Tavan düşürülebilir: $ceiling → ${offenders.length}');
     }
   });
 

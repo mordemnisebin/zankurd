@@ -30,9 +30,7 @@ String generateRoomCode([Random? random]) {
 /// *düzeltmez* — `0`ı `O` yapmak gibi bir tahmin yanlış odaya sokabilirdi;
 /// üretim alfabesi zaten o ikilileri hiç kullanmıyor.
 String normalizeRoomCode(String input) {
-  var body = input
-      .toUpperCase()
-      .replaceAll(RegExp(r'[^A-Z0-9]'), '');
+  var body = input.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]'), '');
   if (body.startsWith('ZK')) body = body.substring(2);
   if (body.isEmpty) return '';
   return 'ZK-$body';

@@ -66,8 +66,9 @@ void main() {
     final all = [
       for (final asset in questionBankAssets)
         if (File(asset).existsSync())
-          ...(jsonDecode(File(asset).readAsStringSync()) as List)
-              .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+          ...(jsonDecode(File(asset).readAsStringSync()) as List).map(
+            (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+          ),
     ];
     expect(
       all.length,
@@ -118,8 +119,9 @@ void main() {
     final all = [
       for (final asset in questionBankAssets)
         if (File(asset).existsSync())
-          ...(jsonDecode(File(asset).readAsStringSync()) as List)
-              .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+          ...(jsonDecode(File(asset).readAsStringSync()) as List).map(
+            (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+          ),
     ];
     expect(all.length, greaterThan(1000));
     for (final question in all) {

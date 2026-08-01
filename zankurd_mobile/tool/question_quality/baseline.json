@@ -3,9 +3,9 @@
   "createdDate": "2026-07-15",
   "manifestVersion": 1,
   "sourceFingerprints": {
-    "assets/data/community_questions.json": "749c7fea9de9a9aa67127d35b3d048b7be0c4d42a813b8cf36db0aa8a6876c66",
-    "assets/data/editorial_questions.json": "046d2027d4ea9504daccb20174956fb90bcd207d7332ca3a8d455af4e3fb95c9",
-    "assets/data/offline_questions.json": "5df16f91fa81e49211127ea0c98ee492a7f7a951dec440ac6b7909ec6dce47d8",
+    "assets/data/community_questions.json": "c349b5187564d4a8fdfbd519c37cb15057bf674cff397fdd97c02cedc20b2f46",
+    "assets/data/editorial_questions.json": "f3901f6e168b4d5acf5c0f877ed5954c7307165f9462b8f3bcb785550c47a68d",
+    "assets/data/offline_questions.json": "d663eab2e54c4d71031473236655cb115a9b58997afc5d9a5303a0abe295a3d2",
     "assets/data/sentence_building_questions.json": "ee576f56fbed547843a87cbec397bada1af9a73784ef6d5a0ecf3239272a3f06",
     "lib/src/data/curated_question_bank.dart": "92a08265aa17db9763b0c33160fd6ed3e605935e182c5b5e0c6349fb527d1db3"
   },

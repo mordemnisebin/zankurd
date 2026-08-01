@@ -15,7 +15,10 @@ void main() {
     final source = File('tools/check_live_supabase.py').readAsStringSync();
 
     expect(source, contains('question_ids = load_room_questions'));
-    expect(source, contains('for index, question_id in enumerate(question_ids)'));
+    expect(
+      source,
+      contains('for index, question_id in enumerate(question_ids)'),
+    );
     expect(source, contains('submit_answer(user_a'));
     expect(source, contains('submit_answer(user_b'));
   });

@@ -65,10 +65,9 @@ void main() {
     final source = File(
       'lib/src/screens/play_hub_screen.dart',
     ).readAsStringSync();
-    final accents = RegExp(r'accent: AppTheme\.([a-zA-Z]+)')
-        .allMatches(source)
-        .map((m) => m.group(1)!)
-        .toList();
+    final accents = RegExp(
+      r'accent: AppTheme\.([a-zA-Z]+)',
+    ).allMatches(source).map((m) => m.group(1)!).toList();
 
     expect(
       accents.length,

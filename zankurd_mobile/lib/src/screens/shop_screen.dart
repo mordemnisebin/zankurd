@@ -486,9 +486,7 @@ class _ShopScreenState extends State<ShopScreen> {
         _showPurchaseCelebrationDialog(item);
       } else {
         HapticFeedback.vibrate();
-        setState(
-          () => _purchaseErrorMessage = context.t(K.purchaseFailed),
-        );
+        setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop_purchase');

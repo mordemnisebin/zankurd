@@ -64,8 +64,10 @@ void main() {
   test('yoklamayı durduran tek koşul yarışın başlaması', () {
     expect(
       code,
-      contains('void _syncPollingForLobby(int playerCount) { '
-          'if (quizOpened) { _pausePolling(); return; }'),
+      contains(
+        'void _syncPollingForLobby(int playerCount) { '
+        'if (quizOpened) { _pausePolling(); return; }',
+      ),
       reason: 'Lobide yoklama sürmeli.',
     );
   });
@@ -80,7 +82,8 @@ void main() {
     expect(
       code,
       contains('_pollThrottled = false;'),
-      reason: 'Kısıt süresi dolunca bayrak inmeli, yoksa yoklama bir daha '
+      reason:
+          'Kısıt süresi dolunca bayrak inmeli, yoksa yoklama bir daha '
           'hiç başlamaz.',
     );
   });

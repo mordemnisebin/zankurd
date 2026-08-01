@@ -13,13 +13,7 @@ void main() {
 
     final source = migration.readAsStringSync().toLowerCase();
     expect(source, contains('alter table public.profiles'));
-    expect(
-      source,
-      contains("alter column avatar_color set default '#2e9e93'"),
-    );
-    expect(
-      source,
-      contains("where lower(btrim(avatar_color)) = '#177a56'"),
-    );
+    expect(source, contains("alter column avatar_color set default '#2e9e93'"));
+    expect(source, contains("where lower(btrim(avatar_color)) = '#177a56'"));
   });
 }

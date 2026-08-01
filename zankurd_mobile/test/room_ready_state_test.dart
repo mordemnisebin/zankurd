@@ -47,9 +47,7 @@ void main() {
   });
 
   test('anahtar koşulsuz açık başlamıyor', () {
-    final screen = File(
-      'lib/src/screens/room_screen.dart',
-    ).readAsStringSync();
+    final screen = File('lib/src/screens/room_screen.dart').readAsStringSync();
     // Yorumlar kararın *niçin*ini anlatırken eski hâli ismen anıyor;
     // kural koda bakmalı, yoksa bekçi kendi açıklamasına takılır.
     final code = screen

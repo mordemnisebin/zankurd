@@ -1554,9 +1554,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               backgroundColor: AppTheme.playCyan,
                               foregroundColor: Colors.white,
                             ),
-                            onPressed: _miniQuizLoading
-                                ? null
-                                : _startMiniQuiz,
+                            onPressed: _miniQuizLoading ? null : _startMiniQuiz,
                             child: Text(context.t(K.miniQuiz)),
                           ),
                         ),

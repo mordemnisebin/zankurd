@@ -96,10 +96,7 @@ void main() {
       for (final key in Tr.keys) {
         // Yer tutucular (`{level}`, `{coins}`) kullanıcıya görünmez;
         // gördüğü şey yerlerine geçen değerdir.
-        final text = Tr.of(
-          key,
-          language,
-        ).replaceAll(RegExp(r'\{[^}]*\}'), ' ');
+        final text = Tr.of(key, language).replaceAll(RegExp(r'\{[^}]*\}'), ' ');
         for (final word in flagged) {
           if (allowed.contains(word)) continue;
           if (RegExp('\\b$word\\b', caseSensitive: false).hasMatch(text)) {

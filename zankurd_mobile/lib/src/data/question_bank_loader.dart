@@ -63,10 +63,7 @@ class QuestionBankLoader {
     // ve inceleme akışları üretilmiş bankadan bağımsız yürüsün.
     final banks = await Future.wait(questionBankAssets.map(_loadJson));
 
-    _questions = [
-      ...curatedQuestionBank,
-      for (final bank in banks) ...bank,
-    ];
+    _questions = [...curatedQuestionBank, for (final bank in banks) ...bank];
     _loaded = true;
   }
 

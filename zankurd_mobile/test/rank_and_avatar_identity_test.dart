@@ -116,16 +116,11 @@ void main() {
     final repository = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
-    final defaults = RegExp(r"avatarColor\s*=\s*'(#[0-9A-Fa-f]{6})'")
-        .allMatches(repository)
-        .map((m) => m.group(1)!.toUpperCase())
-        .toList();
+    final defaults = RegExp(
+      r"avatarColor\s*=\s*'(#[0-9A-Fa-f]{6})'",
+    ).allMatches(repository).map((m) => m.group(1)!.toUpperCase()).toList();
     for (final hex in defaults) {
-      expect(
-        palette,
-        contains(hex),
-        reason: '$hex palet dışı bir varsayılan.',
-      );
+      expect(palette, contains(hex), reason: '$hex palet dışı bir varsayılan.');
     }
   });
 
@@ -159,10 +154,9 @@ void main() {
       if (!code.contains('colorHex') && !code.contains('avatarColor')) {
         continue;
       }
-      final hexes = RegExp(r"'(#[0-9A-Fa-f]{6})'")
-          .allMatches(code)
-          .map((m) => m.group(1)!.toUpperCase())
-          .toSet();
+      final hexes = RegExp(
+        r"'(#[0-9A-Fa-f]{6})'",
+      ).allMatches(code).map((m) => m.group(1)!.toUpperCase()).toSet();
       final outside = hexes.difference(palette);
       if (outside.isNotEmpty) {
         offenders.add('${entity.path}: ${outside.join(", ")}');

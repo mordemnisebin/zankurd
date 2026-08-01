@@ -26,9 +26,7 @@ void main() {
   });
 
   test('mağaza para birimini sabit yazmıyor', () {
-    final source = File(
-      'lib/src/screens/shop_screen.dart',
-    ).readAsStringSync();
+    final source = File('lib/src/screens/shop_screen.dart').readAsStringSync();
     final code = source
         .split('\n')
         .where((line) => !line.trimLeft().startsWith('//'))
@@ -96,8 +94,7 @@ void main() {
     expect(
       offenders,
       isEmpty,
-      reason:
-          'Kurmancî metinde para birimi "zêr"dir:\n${offenders.join("\n")}',
+      reason: 'Kurmancî metinde para birimi "zêr"dir:\n${offenders.join("\n")}',
     );
   });
 

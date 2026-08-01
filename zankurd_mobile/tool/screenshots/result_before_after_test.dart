@@ -22,9 +22,7 @@ void main() {
 
     await tester.pumpWidget(
       MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => LanguageProvider()),
-        ],
+        providers: [ChangeNotifierProvider(create: (_) => LanguageProvider())],
         child: MaterialApp(
           theme: AppTheme.dark(),
           debugShowCheckedModeBanner: false,

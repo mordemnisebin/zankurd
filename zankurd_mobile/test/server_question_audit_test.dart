@@ -96,10 +96,12 @@ void main() {
 
       final bad = policy.offLanguageDistractors(question);
       if (bad.isNotEmpty) {
-        offLanguage.add('${question.id} | ${question.prompt}\n'
-            '    şıklar: ${answers.join(" · ")}\n'
-            '    doğru: ${question.correctAnswer}\n'
-            '    yabancı: ${bad.join(", ")}');
+        offLanguage.add(
+          '${question.id} | ${question.prompt}\n'
+          '    şıklar: ${answers.join(" · ")}\n'
+          '    doğru: ${question.correctAnswer}\n'
+          '    yabancı: ${bad.join(", ")}',
+        );
       }
       if (policy.answerIsGivenAwayByLanguage(question)) {
         givenAway.add('${question.id} | ${question.prompt}');
@@ -187,8 +189,6 @@ List<Map<String, String>> _parseCsv(String raw) {
   return [
     for (final line in rows.skip(1))
       if (line.length >= header.length)
-        {
-          for (var i = 0; i < header.length; i++) header[i]: line[i],
-        },
+        {for (var i = 0; i < header.length; i++) header[i]: line[i]},
   ];
 }

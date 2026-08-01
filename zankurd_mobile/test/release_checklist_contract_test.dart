@@ -37,7 +37,11 @@ void main() {
     );
     expect(
       guide,
-      isNot(contains('RevenueCat anahtarları verilmezse premium **mock modda** kalır')),
+      isNot(
+        contains(
+          'RevenueCat anahtarları verilmezse premium **mock modda** kalır',
+        ),
+      ),
     );
   });
 }

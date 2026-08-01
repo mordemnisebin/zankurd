@@ -40,13 +40,16 @@ void main() {
     bank = [
       for (final asset in questionBankAssets)
         if (File(asset).existsSync())
-          ...(jsonDecode(File(asset).readAsStringSync()) as List)
-              .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+          ...(jsonDecode(File(asset).readAsStringSync()) as List).map(
+            (e) => QuizQuestion.fromJson(e as Map<String, dynamic>),
+          ),
     ];
   });
 
   String? pairKey(QuizQuestion q) {
-    final match = RegExp('[«"“\']([^«»"”\']{2,40})[»"”\']').firstMatch(q.prompt);
+    final match = RegExp(
+      '[«"“\']([^«»"”\']{2,40})[»"”\']',
+    ).firstMatch(q.prompt);
     if (match == null) return null;
     final term = match.group(1)!.trim().toLowerCase();
     final answer = q.correctAnswer.trim().toLowerCase();

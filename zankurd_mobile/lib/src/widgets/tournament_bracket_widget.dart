@@ -581,8 +581,8 @@ String? _playerIconId(String playerId) {
 /// tonu tutuyor ve beyaz harfle okunur doygunlukta seçilmiş.
 String? _playerColorHex(String playerId) {
   if (playerId.isEmpty || playerId == 'TBD') return null;
-  final color = avatarNamePalette[playerId.hashCode.abs() %
-      avatarNamePalette.length];
+  final color =
+      avatarNamePalette[playerId.hashCode.abs() % avatarNamePalette.length];
   final rgb = color.toARGB32() & 0xFFFFFF;
   return '#${rgb.toRadixString(16).toUpperCase().padLeft(6, '0')}';
 }
