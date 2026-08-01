@@ -969,6 +969,10 @@ class Tr {
     K.scoreWord: {'ku': 'Pûan', 'tr': 'Puan'},
     K.streakWord: {'ku': 'Zincîr', 'tr': 'Seri'},
     K.coinWord: {'ku': 'Zêr', 'tr': 'Coin'},
+    // Dar rozetlerde para biriminin kısaltması. Türkçede "coin"in `c`si;
+    // Kurmancî'de "zêr"in `z`si. Sabit `c` yazıldığında Kurmancî oyuncu
+    // fiyat rozetinde anlamsız bir harf görüyordu (2026-08-01).
+    K.coinAbbrev: {'ku': 'z', 'tr': 'c'},
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
     K.listenExplanation: {'ku': 'Şîroveyê bibihîze', 'tr': 'Açıklamayı dinle'},
     K.listenQuestion: {'ku': 'Pirsê bibihîze', 'tr': 'Soruyu dinle'},
@@ -1672,7 +1676,7 @@ class Tr {
       'tr': 'Otomatik seri koruması',
     },
     K.paywallPerkStreakBody: {
-      'ku': 'Zincîra te ya rojane bixweber, bê coin tê parastin.',
+      'ku': 'Zincîra te ya rojane bixweber, bê zêr tê parastin.',
       // Virgülsüz hâlde "serin" sıfat gibi okunuyordu ("günlük serin
       // coin"); virgül özneyi ayırır (2026-07-27).
       'tr': 'Günlük serin, coin harcamadan otomatik korunur.',
@@ -2469,6 +2473,7 @@ class K {
   static const scoreWord = 'quiz.score';
   static const streakWord = 'quiz.streak';
   static const coinWord = 'quiz.coin';
+  static const coinAbbrev = 'quiz.coin.abbrev';
   static const stopAction = 'common.stop';
   static const listenExplanation = 'quiz.listenExplanation';
   static const listenQuestion = 'quiz.listenQuestion';

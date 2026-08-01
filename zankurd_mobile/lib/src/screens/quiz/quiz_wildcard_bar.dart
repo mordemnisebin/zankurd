@@ -179,7 +179,7 @@ class _WildcardButtonState extends State<WildcardButton> {
                       ),
                     ),
                     Text(
-                      '${widget.type.coinCost}c',
+                      '${widget.type.coinCost}${context.t(K.coinAbbrev)}',
                       maxLines: 1,
                       style: AppTypography.caption.copyWith(
                         fontWeight: FontWeight.w600,

@@ -111,15 +111,34 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return user;
   }
 
+  /// Profili yazar. [avatarColor] verilmezse renk alanına HİÇ dokunulmaz.
+  ///
+  /// Eskiden varsayılan `'#E94560'` idi ve iki ayrı zarar veriyordu.
+  ///
+  /// 1. O hex marka paletinin dışında. `avatar_presets.dart` iki liste
+  ///    tutuyor — kullanıcının seçebileceği 8 marka tonu (`avatarColors`)
+  ///    ve isim hash'ine eşlenen 12 ton (`avatarNamePalette`) — ve
+  ///    `#E94560` ikisinde de yok. Her yeni kullanıcı, hiç seçmediği ve
+  ///    hiçbir yerden seçemeyeceği bir pembeyle başlıyordu.
+  ///
+  /// 2. Daha kötüsü: `updateProfileName` de bu fonksiyonu çağırıyor ve
+  ///    varsayılan yazıldığı için ADINI DEĞİŞTİREN KULLANICI seçtiği
+  ///    avatar rengini kaybediyordu.
+  ///
+  /// Renk yazılmadığında sütun null kalır ve `avatarColorForName`
+  /// devreye girer — sistem zaten bunun için tasarlanmış: isme bağlı
+  /// deterministik ton, `resolveAvatarColors` ile aynı ekrandaki çakışma
+  /// çözümü dahil (2026-08-01, canlı profil ve liderlik ekranında
+  /// görüldü).
   Future<void> upsertProfile({
     required String displayName,
-    String avatarColor = '#E94560',
+    String? avatarColor,
   }) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await client.from('profiles').upsert({
       'id': user.id,
       'display_name': displayName,
-      'avatar_color': avatarColor,
+      'avatar_color': ?avatarColor,
     });
   }
 

@@ -338,7 +338,13 @@ class _ShopScreenState extends State<ShopScreen> {
                     const Icon(AppIcons.coins, color: AppTheme.gold, size: 22),
                     const SizedBox(width: 8),
                     Text(
-                      '${item.cost} coin',
+                      // Para birimi adı defterden gelir: Kurmancî
+                      // ekranda "zêr", Türkçede "coin". Sabit yazıldığında
+                      // aynı ekranda iki ad birden görünüyordu — başlık
+                      // "Zêrên xwe bi aqilmendî bixercîne" derken sayaç
+                      // "0 coin" diyordu (2026-08-01, canlı Kurmancî
+                      // mağaza ekranı).
+                      '${item.cost} ${ctx.t(K.coinWord).toLowerCase()}',
                       style: TextStyle(
                         color: AppTheme.textPrimaryColor(ctx),
                         fontWeight: FontWeight.w800,
@@ -620,7 +626,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      '$_coinBalance coin',
+                      '$_coinBalance ${context.t(K.coinWord).toLowerCase()}',
                       maxLines: 1,
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textPrimaryColor(context),
@@ -1190,7 +1196,9 @@ class _ShopScreenState extends State<ShopScreen> {
             'item': ku ? item.titleKu : item.titleTr,
             'coins': '${item.cost}',
           }),
-          child: ExcludeSemantics(child: Text('${item.cost}c')),
+          child: ExcludeSemantics(
+            child: Text('${item.cost}${context.t(K.coinAbbrev)}'),
+          ),
         ),
       ),
     );

@@ -819,7 +819,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     if (coinsAwarded > 0)
                                       _ResultRewardChip(
                                         icon: AppIcons.coins,
-                                        label: '+${coinsAwarded}c',
+                                        label: '+$coinsAwarded${context.t(K.coinAbbrev)}',
                                         color: AppTheme.gold,
                                       ),
                                     if (_earnedXP > 0)

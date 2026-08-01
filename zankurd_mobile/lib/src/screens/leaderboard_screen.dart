@@ -107,7 +107,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         // Veri yokken hiçbir şey çizilmez — sarmalayıcı da dahil. Aksi
         // halde listenin altında boş, kenarlıklı bir şerit kalır ve
         // görünmez bir satır için dikey alan harcanır.
-        if (me == null || me.rank <= 0) return const SizedBox.shrink();
+        // Puan kapısı `_myRank` ile aynı sebeple burada da gerekli: aksi
+        // hâlde banner susarken bu sabit satır sıfır puanla "#1" demeye
+        // devam eder, yani yanlış iddia yer değiştirmiş olur.
+        if (me == null || me.rank <= 0 || me.totalScore <= 0) {
+          return const SizedBox.shrink();
+        }
         return _PinnedMyRank(
           child: _RankRow(entry: me, isKu: ku, highlight: true),
         );
@@ -194,12 +199,22 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     super.dispose();
   }
 
-  /// Oturum sahibinin haftalık listedeki sırası; listede yoksa null.
+  /// Oturum sahibinin haftalık listedeki sırası; listede yoksa ya da
+  /// puanı sıfırsa null.
+  ///
+  /// Puan kapısı şart. Herkesin sıfırda eşitlendiği bir haftada sıra
+  /// gelişigüzeldir: canlı denetimde iki oyuncu da 0 puandayken ekran
+  /// "Lîga Zêr · Rêza te ya heftane: #1" diyordu — hiç puan almamış
+  /// oyuncuya altın lig birinciliği. `profile_screen.dart` aynı kapıyı
+  /// 2026-07-27'de koymuştu ("profil '#85' derken toplam puan 0'dı");
+  /// karar verildi ama liderlik ekranına uygulanmadı, yani iki ekran
+  /// birbiriyle çelişiyordu — profil "—", liderlik "#1" (2026-08-01).
   int? _myRank(List<LeaderboardEntry> entries) {
     final uid = widget.repository.currentUserId;
     if (uid == null) return null;
     for (final entry in entries) {
-      if (entry.playerId == uid) return entry.rank;
+      if (entry.playerId != uid) continue;
+      return entry.totalScore > 0 ? entry.rank : null;
     }
     return null;
   }
