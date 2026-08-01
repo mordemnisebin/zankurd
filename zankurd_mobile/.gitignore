@@ -92,3 +92,7 @@ release_packages/
 
 # Üretilmiş görsel denetim çıktıları (repoya girmez)
 /docs/ux-audit/screenshots-gemini/
+
+# Sunucudan dışa aktarılan soru dökümü — denetim girdisi, kaynak değil.
+# `supabase/2026-08-01_question_export_for_audit.sql` ile üretilir.
+tool/server_questions_export.csv

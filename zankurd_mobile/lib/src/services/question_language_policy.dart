@@ -70,6 +70,7 @@ class QuestionLanguagePolicy {
     'jî',
     'peyva',
     'wateya',
+
   };
 
   static const _turkishWords = {
@@ -112,7 +113,74 @@ class QuestionLanguagePolicy {
   /// aynı yazılır. Sayımdan tümüyle düşerler; Kurmancî'nin kalan yirmi
   /// sekiz işareti (`bi`, `ji`, `li`, `tê`, `yê`, `jî`, `xwe`…) ve `î/û/ê`
   /// harfleri gerçek Kurmancî cümleyi zaten taşır.
-  static const _ambiguousWords = {'her', 'ne', 'de'};
+
+  /// Sözlük sorularının şıklarını sınıflandırmak için hasat edilmiş
+  /// İÇERİK kelimeleri. Yalnız [_lexiconLanguage] kullanır.
+  ///
+  /// Yukarıdaki [_kurmanciWords]/[_turkishWords] işlev sözcükleridir ve
+  /// CÜMLE dilini ölçer. Bu liste ise tek tek kelimeleri ölçer; ikisi
+  /// bilerek AYRI.
+  ///
+  /// Birleştirmek cümle ölçütünü bozuyor: "Mem û Zîn, kavuşamayan
+  /// âşıkların hikâyesidir" düpedüz Türkçe bir cümledir ama içinde
+  /// Kurmancî bir eser adı geçer. İçerik kelimeleri cümle sayımına
+  /// karışınca böyle 11 Türkçe açıklama Kurmancî ilan edildi — kusur
+  /// değil, ölçütün karıştırılması (2026-08-01, ilk denemede yapılan
+  /// hata ve düzeltmesi).
+  ///
+  /// Kelimeler tahmin değil, bankaların KENDİ verisinden türetildi:
+  /// "«X» bi Tirkî çi ye? → Y" biçimindeki her soru X'in Kurmancî, Y'nin
+  /// Türkçe olduğunu söylüyor. İki yönde birden görülenler
+  /// [_ambiguousWords] içindedir ve hiçbir yöne sayılmaz.
+  static const _kurmanciVocabulary = {
+    'agir', 'axaftin', 'azadî', 'bajar', 'baran', 'bav', 'berf',
+    'bihîstin', 'bira', 'biçûk', 'cejn', 'ciwan', 'cîhan', 'danegeh',
+    'dapîr', 'dar', 'daristan', 'deh', 'deng', 'derya', 'derî', 'dest',
+    'destpêk', 'dev', 'deşt', 'dibistan', 'diran', 'dotmam', 'duh',
+    'dîtin', 'dûr', 'erd', 'geroker', 'gol', 'guh', 'gund', 'hatin',
+    'havîn', 'helbest', 'hesp', 'heval', 'hewa', 'heyv', 'hezkirin',
+    'huner', 'jin', 'kal', 'kanî', 'kaxiz', 'kevin', 'keç', 'komputer',
+    'kurd', 'kursî', 'kûçik', 'mal', 'malbat', 'mamoste', 'mase', 'mast',
+    'mêr', 'nan', 'nanpêj', 'nanxane', 'newal', 'nivîn', 'nivîsandin',
+    'pir', 'pirtûk', 'pisîk', 'por', 'poz', 'pênc', 'pênûs', 'pîr',
+    'rabûn', 'reng', 'roj', 'rojbaş', 'rûniştin', 'sar', 'sepan', 'ser',
+    'spas', 'stran', 'stêrk', 'sînor', 'teşt', 'tor', 'welat', 'wêne',
+    'xanî', 'xwendegeh', 'xwendekar', 'xwendin', 'xweş', 'xwîşk', 'zanîn',
+    'zarok', 'ziman', 'zinar', 'zozan', 'çaper', 'çav', 'çem', 'çiya',
+    'çîrok', 'çûn', 'îro', 'şev', 'şivan', 'şêr', 'şîfre',
+  };
+
+  /// Aynı hasattan Türkçe taraf; bkz. [_kurmanciVocabulary].
+  static const _turkishVocabulary = {
+    'aile', 'akarsu', 'anne', 'arkadaş', 'aslan', 'ateş', 'ağaç', 'ağız',
+    'baba', 'başlangıç', 'ben', 'beş', 'bilmek', 'bugün', 'burun', 'dağ',
+    'dede', 'deniz', 'diş', 'doğru', 'dün', 'dünya', 'ekmek', 'erkek',
+    'eski', 'fırıncı', 'gece', 'gelmek', 'genç', 'gitmek', 'göl', 'görmek',
+    'göz', 'hava', 'işitmek', 'kadın', 'kalem', 'kalkmak', 'kapı', 'kaya',
+    'kağıt', 'kedi', 'kitap', 'konuşmak', 'kulak', 'köpek', 'köy', 'kürt',
+    'küçük', 'leğen', 'ling', 'masa', 'nasılsın?', 'nehir', 'okul',
+    'okumak', 'orman', 'oturmak', 'ova', 'renk', 'rüzgar', 'sanat',
+    'sandalye', 'saç', 'ses', 'sevmek', 'soğuk', 'sınır', 'teşekkür',
+    'teşekkürler', 'toprak', 'uzak', 'vadi', 'yatak', 'yayla', 'yaz',
+    'yazmak', 'yağmur', 'yemekhane', 'yol', 'yoğurt', 'yüz', 'yıldız',
+    'çoban', 'çocuk', 'çok', 'özgürlük', 'öğrenci', 'öğretmen', 'şarkı',
+    'şehir', 'şiir',
+  };
+
+  /// İki dilde de aynı yazılan kelimeler: hiçbirinde dil kararı verilmez.
+  ///
+  /// İlk üçü işlev sözcüğü. Kalanlar hasatta İKİ yönde birden doğru cevap
+  /// olarak görüldü — `kar` (Tr: kar/yağış, Ku: iş), `dil` (Tr: dil/lisan,
+  /// Ku: kalp), `ayak`, `pencere`, `rast`. Bunlarda karar vermek, yanlış
+  /// pozitifi gerçek bulgunun önüne geçirirdi.
+  static const _ambiguousWords = {
+    'her', 'ne', 'de',
+    'ayak', 'dil', 'kar', 'pencere',
+    // `rast`/`şaş` doğru-yanlış sorularının şık ETİKETLERİ, sözlük
+    // birimi değil. Hasatta `şaş` yanlışlıkla Türkçe tarafa düşmüştü ve
+    // her doğru-yanlış sorusu "yabancı çeldirici" bildiriyordu.
+    'rast', 'şaş',
+  };
 
   static const _kurmanciChars = {'î', 'û', 'ê'};
   static const _turkishChars = {'ğ', 'ı', 'ö', 'ü'};
@@ -256,21 +324,113 @@ class QuestionLanguagePolicy {
   /// bu eşik, kuralı asıl işine — uzun tanım şıklarına — bırakır.
   static const _minLengthForLanguageCall = 8;
 
-  List<String> offLanguageDistractors(QuizQuestion question) {
-    if (question.correctAnswer.length < _minLengthForLanguageCall) {
-      return const [];
+  /// Sorunun gövdesi cevabın hangi dilde olmasını istediğini SÖYLÜYORSA
+  /// o dili döndürür.
+  ///
+  /// Bu, doğru cevabın dilini tahmin etmekten daha güçlü bir sinyaldir:
+  /// tahmin değil, sorunun kendi beyanıdır. "Di Kurmancî de peyva «kursî»
+  /// **bi Tirkî** çi ye?" — istenen dil Türkçe, tartışmasız.
+  static String? requestedAnswerLanguage(String prompt) {
+    // Türkçe cevap istendiğini söyleyen kalıplar. `bi Tirkî` tek başına
+    // yetiyor: "bi Tirkî çi ye", "bi Tirkî çi tê gotin",
+    // "bi Tirkî kîjan wateyê digire" — hepsi Türkçe karşılık ister.
+    if (RegExp(
+      r'bi\s+Tirkî|Tirkî\s+(çi|kîjan)|wateya\s+Tirkî',
+      caseSensitive: false,
+    ).hasMatch(prompt)) {
+      return 'tr';
     }
-    final target = detectLanguage(question.correctAnswer);
+    // Kurmancî cevap istendiğini söyleyen kalıplar DAHA DAR olmalı.
+    //
+    // `bi Kurmancî` tek başına yetmez: "«baş» bi kurmancî tê çi wateyê?"
+    // Kurmancî bir kelimenin ANLAMINI soruyor, yani cevabı Türkçedir.
+    // Kalıbı geniş tutmak o soruların dört Türkçe şıkkını "yabancı"
+    // ilan ediyordu (2026-08-01).
+    if (RegExp(
+      r'peyva\s+Kurmancî\s+ye|bi\s+Kurmancî\s+çi\s+(ye|tê)|'
+      r'Hevwateya[^?]*bi\s+Kurmancî|di\s+Kurmancî\s+de\s+kîjan\s+peyv',
+      caseSensitive: false,
+    ).hasMatch(prompt)) {
+      return 'ku';
+    }
+    return null;
+  }
+
+  List<String> offLanguageDistractors(QuizQuestion question) {
+    // Doğru-yanlış soruları kapsam dışı: iki şıkkın ikisi de sabit
+    // etikettir (`Rast`/`Şaş`), sözlük birimi değil. "Çeldiricinin dili"
+    // kavramı orada anlamsız.
+    if (question.answers.length < 3) return const [];
+    // Hedef dil önce SORUDAN okunur, olmazsa doğru cevaptan tahmin edilir.
+    //
+    // Eskiden yalnız tahmin vardı ve tahmin başarısız olduğunda sorunun
+    // TAMAMI atlanıyordu. `Sandalye` hiçbir ayırt edici harf taşımadığı ve
+    // sözlükte olmadığı için `detectLanguage` null dönüyor, dolayısıyla
+    // "kursî → Sandalye" sorusunun `Rûniştin` ve `Dibistan` çeldiricileri
+    // hiç incelenmiyordu. Kusur 2026-08-01'de canlı bir oda maçında
+    // görüldü; sunucudaki 365 kelime çevirisi sorusunun 185'inde vardı ve
+    // hiçbir denetimden geçmemişti.
+    final target =
+        requestedAnswerLanguage(question.prompt) ??
+        (question.correctAnswer.length >= _minLengthForLanguageCall
+            ? detectLanguage(question.correctAnswer)
+            : null);
     if (target == null) return const [];
     return [
       for (final answer in question.answers)
         if (answer != question.correctAnswer &&
-            answer.length >= _minLengthForLanguageCall &&
-            !looksLikeProperName(answer) &&
-            detectLanguage(answer) != null &&
-            detectLanguage(answer) != target)
+            // Özel ad muafiyeti sözlükte geçen kelimelere UYGULANMAZ.
+            //
+            // `looksLikeProperName` ölçütü "en çok üç sözcük, hepsi büyük
+            // harfle başlıyor, ayraç yok" — ve sözlük sorularının şıkları
+            // tam da öyle görünüyor: `Zarok`, `Biçûk`, `Duh`, `Xweş`.
+            // Muafiyet bunları da kapsayınca kural, asıl korumak istediği
+            // yerde susuyordu. Hasat edilmiş listede birebir geçen bir
+            // kelime tanım gereği özel ad değildir — o liste sözlük
+            // sorularının doğru cevaplarından türetildi (2026-08-01).
+            (_lexiconLanguage(answer) != null ||
+                !looksLikeProperName(answer)) &&
+            _answerLanguage(answer) != null &&
+            _answerLanguage(answer) != target)
           answer,
     ];
+  }
+
+  /// Bir şıkkın dili — kısa sözlük birimlerinde de güvenilir.
+  ///
+  /// İki yol var ve sırası önemli:
+  ///
+  ///   1. **Birebir sözlük eşleşmesi.** Tek kelimelik şık, hasat edilmiş
+  ///      listelerden yalnız birinde geçiyorsa karar kesindir; uzunluk
+  ///      eşiği aranmaz. `Zarok`, `Duh`, `Xweş` böyle yakalanır.
+  ///   2. **Sezgisel tahmin.** Sözlükte yoksa eski yol: yalnız
+  ///      [_minLengthForLanguageCall] karakterden uzun metinlerde.
+  ///
+  /// Eşik 1. yolda gereksiz — o, karakter sayımının kısa kelimelerde
+  /// yanılmasına karşı konmuştu (`dağ` yalnız `ğ` yüzünden Türkçe
+  /// sayılıyordu). Birebir eşleşmede sayım yok, dolayısıyla yanılma da yok.
+  static String? _answerLanguage(String answer) {
+    final exact = _lexiconLanguage(answer);
+    if (exact != null) return exact;
+    if (answer.length < _minLengthForLanguageCall) return null;
+    return detectLanguage(answer);
+  }
+
+  /// Tek kelimelik metnin hasat listelerinden YALNIZ birinde geçmesi.
+  /// Sayım yok, tahmin yok — ya kesin bir eşleşme vardır ya da null.
+  static String? _lexiconLanguage(String text) {
+    final word = text.trim().toLowerCase();
+    if (word.contains(' ') || _ambiguousWords.contains(word)) return null;
+    // Değişken adları bilerek `ku`/`tr` DEĞİL. `l10n_migration_guard`,
+    // dil kısaltmasıyla başlayan üçlü koşul kalıbını satır içi çeviri
+    // sayıyor ve o kalıbın tavanı sabit; buradaki teknik kullanım o
+    // sayacı gereksiz yere şişirirdi. (Yorumun kendisi de kalıbı ANMAZ:
+    // bekçi kaynak metne bakıyor, bu gece iki kez kendi açıklamasına
+    // takıldı.)
+    final inKurmanci = _kurmanciVocabulary.contains(word);
+    final inTurkish = _turkishVocabulary.contains(word);
+    if (inKurmanci == inTurkish) return null;
+    return inKurmanci ? 'ku' : 'tr';
   }
 
   /// [text] bir özel ad mı (kişi, yer, eser adı)?

@@ -49,8 +49,8 @@
     "category": "Ziman",
     "prompt": "Wêne «mal» dibêje — wateya rast kîjan e?",
     "answers": [
-      "okul",
-      "ben",
+      "şev",
+      "teşt",
       "su",
       "ev"
     ],
@@ -68,7 +68,7 @@
       "kitap",
       "siyah",
       "çocuk",
-      "zarok"
+      "türkü"
     ],
     "correctAnswer": "kitap",
     "explanation": "Doğru anlam: «pirtûk»: «kitap».",
@@ -82,7 +82,7 @@
     "answers": [
       "beyaz",
       "kitap",
-      "zanîn",
+      "klasör",
       "soğuk"
     ],
     "correctAnswer": "kitap",
@@ -163,7 +163,7 @@
       "su",
       "şehir",
       "kitap",
-      "ev"
+      "dağ"
     ],
     "correctAnswer": "şehir",
     "explanation": "«bajar» «şehir» demektir.",
@@ -179,7 +179,7 @@
       "ekmek",
       "yol",
       "su",
-      "çiya"
+      "kadın"
     ],
     "correctAnswer": "ekmek",
     "explanation": "«nan» «ekmek» demektir.",
@@ -192,10 +192,10 @@
     "category": "Ziman",
     "prompt": "Ev wêne ji bo «rê» e: berambera rast kîjan e?",
     "answers": [
-      "çiya",
+      "leğen",
       "yol",
       "ben",
-      "nan"
+      "eski"
     ],
     "correctAnswer": "yol",
     "explanation": "«rê» «yol» demektir.",
@@ -273,7 +273,7 @@
     "prompt": "Di wêneyê de «sar» tê çi wateyê?",
     "answers": [
       "sıcak",
-      "çiya",
+      "kadın",
       "arkadaş",
       "soğuk"
     ],
@@ -288,7 +288,7 @@
     "category": "Ziman",
     "prompt": "Peyva Kurmancî «biçûk» bi Tirkî çi tê gotin?",
     "answers": [
-      "heval",
+      "ekmek",
       "küçük",
       "siyah",
       "aşağı"
@@ -307,7 +307,7 @@
     "answers": [
       "kitap",
       "küçük",
-      "gel",
+      "ağaç",
       "arkadaş"
     ],
     "correctAnswer": "küçük",
@@ -323,7 +323,7 @@
     "answers": [
       "soru",
       "rast",
-      "çiya",
+      "aile",
       "eski"
     ],
     "correctAnswer": "eski",
@@ -354,7 +354,7 @@
       "eski",
       "rast",
       "elma",
-      "xweş"
+      "ağız"
     ],
     "correctAnswer": "eski",
     "explanation": "«kevin» «eski» demektir.",
@@ -385,7 +385,7 @@
     "answers": [
       "dün",
       "i̇yi",
-      "çiya",
+      "göz",
       "bugün"
     ],
     "correctAnswer": "dün",
@@ -497,7 +497,7 @@
     "category": "Ziman",
     "prompt": "Di wêneya ku têgiha «pir» nîşan dide de, wateya rast kîjan e?",
     "answers": [
-      "duh",
+      "beş",
       "dün",
       "min",
       "çok"
@@ -2519,7 +2519,7 @@
     "category": "Çand",
     "prompt": "Ji wan serpêhatiyên ku zivistanan têne vegotin re bi Kurmancî bi giştî çi tê gotin?",
     "answers": [
-      "Ekmek",
+      "Kurd",
       "Çîrok",
       "Amca",
       "Gelin"
@@ -3812,7 +3812,7 @@
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «yaşlı/ihtiyar» ye?",
     "answers": [
       "pîr",
-      "ben",
+      "jin",
       "îro",
       "poz"
     ],
@@ -3857,7 +3857,7 @@
       "nanxane",
       "xwendin",
       "ad/isim",
-      "pencere"
+      "kursî"
     ],
     "correctAnswer": "xwendin",
     "explanation": "«xwendin» hem «okumak» hem «öğrenim görmek» tê wateyê. Mînak: Ez pirtûkekê dixwînim.",
@@ -3889,8 +3889,8 @@
     "prompt": "Hevwateya «ateş» bi Kurmancî çi ye?",
     "answers": [
       "çiya",
-      "eski",
-      "renk",
+      "gund",
+      "xweş",
       "agir"
     ],
     "correctAnswer": "agir",
@@ -3919,7 +3919,7 @@
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «kalp/dil» ye?",
     "answers": [
       "dil",
-      "ben",
+      "biçûk",
       "dar",
       "gül"
     ],
@@ -3983,7 +3983,7 @@
       "arkadaş",
       "yumurta",
       "pencere",
-      "nanxane"
+      "ekmek"
     ],
     "correctAnswer": "arkadaş",
     "explanation": "Doğru anlam: «heval»: «arkadaş».",
@@ -4081,7 +4081,7 @@
     "answers": [
       "here!",
       "doğru",
-      "ciwan",
+      "yazmak",
       "kağıt"
     ],
     "correctAnswer": "kağıt",
@@ -4155,7 +4155,7 @@
       "di-",
       "kar",
       "çav",
-      "diş"
+      "mal"
     ],
     "correctAnswer": "çav",
     "explanation": "Doğru eşleştirme: «göz»: «çav».",
@@ -4182,7 +4182,7 @@
     "category": "Ziman",
     "prompt": "Peyva Kurmancî «reng» bi Tirkî çi tê gotin?",
     "answers": [
-      "bira",
+      "kitap",
       "kaya",
       "defter",
       "renk"
@@ -4198,7 +4198,7 @@
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «kapı» ye?",
     "answers": [
       "derî",
-      "renk",
+      "bîrge",
       "bira",
       "dev"
     ],
@@ -4248,7 +4248,7 @@
     "answers": [
       "hava",
       "aile",
-      "reng",
+      "türkü",
       "eski"
     ],
     "correctAnswer": "aile",
@@ -4263,9 +4263,9 @@
     "category": "Ziman",
     "prompt": "Ji bo gotina «okul» di Kurmancî de kîjan peyv tê bikaranîn?",
     "answers": [
-      "adın ne?",
+      "malbat",
       "su içmek",
-      "teşekkür",
+      "nivîn",
       "dibistan"
     ],
     "correctAnswer": "dibistan",
@@ -4338,7 +4338,7 @@
     "answers": [
       "bihîstin",
       "mamoste",
-      "sandalye",
+      "komputer",
       "dibistan"
     ],
     "correctAnswer": "bihîstin",
@@ -4394,9 +4394,9 @@
     "category": "Ziman",
     "prompt": "Ji bo gotina «doğru» di Kurmancî de kîjan peyv tê bikaranîn?",
     "answers": [
-      "kaya",
-      "ağız",
-      "okul",
+      "kal",
+      "baran",
+      "reng",
       "rast"
     ],
     "correctAnswer": "rast",
@@ -4453,7 +4453,7 @@
     "prompt": "«mamoste» (Kurmancî) bi Tirkî kîjan wateyê digire?",
     "answers": [
       "altı",
-      "dibistan",
+      "baba",
       "öğretmen",
       "baş/kafa"
     ],
@@ -4487,7 +4487,7 @@
       "poz",
       "şêr",
       "dev",
-      "diş"
+      "deh"
     ],
     "correctAnswer": "dev",
     "explanation": "«dev» = «ağız». Mînak: Bi devê xwe bibêje, ne bi çavan.",
@@ -4542,7 +4542,7 @@
     "answers": [
       "doğru",
       "küçük",
-      "ciwan",
+      "nehir",
       "kadın"
     ],
     "correctAnswer": "kadın",
@@ -4555,10 +4555,10 @@
     "category": "Ziman",
     "prompt": "Ji bo gotina «Kürt» di Kurmancî de kîjan peyv tê bikaranîn?",
     "answers": [
-      "ateş",
+      "deşt",
       "kurd",
       "xweş",
-      "ağız"
+      "hesp"
     ],
     "correctAnswer": "kurd",
     "explanation": "«kurd» = «Kürt». Mînak: Kurd bi kurmancî, soranî û zazakî diaxivin.",
@@ -4589,9 +4589,9 @@
     "category": "Ziman",
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «arkadaş» ye?",
     "answers": [
-      "küçük",
+      "hevîr",
       "nivîn",
-      "doğru",
+      "kursî",
       "heval"
     ],
     "correctAnswer": "heval",
@@ -4694,7 +4694,7 @@
     "answers": [
       "ad/isim",
       "beş",
-      "xwendin",
+      "kitap",
       "pencere"
     ],
     "correctAnswer": "pencere",
@@ -4709,10 +4709,10 @@
     "category": "Ziman",
     "prompt": "Hevwateya «baba» bi Kurmancî çi ye?",
     "answers": [
-      "diş",
+      "nan",
       "îro",
       "bav",
-      "ben"
+      "çem"
     ],
     "correctAnswer": "bav",
     "explanation": "«bav» = «baba». Mînak: Bav û kur bi hev re çûn zeviyê.",
@@ -4770,9 +4770,9 @@
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «el» ye?",
     "answers": [
       "dest",
-      "ateş",
+      "heval",
       "bira",
-      "kaya"
+      "kal"
     ],
     "correctAnswer": "dest",
     "explanation": "Doğru eşleştirme: «el»: «dest».",
@@ -4785,7 +4785,7 @@
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «sandalye» ye?",
     "answers": [
       "were!",
-      "burun",
+      "pênc",
       "kursî",
       "diçim"
     ],
@@ -4844,8 +4844,8 @@
     "answers": [
       "heyv",
       "rast",
-      "okul",
-      "eski"
+      "deşt",
+      "derî"
     ],
     "correctAnswer": "heyv",
     "explanation": "Doğru eşleştirme: «ay»: «heyv».",
@@ -4889,7 +4889,7 @@
     "answers": [
       "dar",
       "av",
-      "okul",
+      "derî",
       "-a"
     ],
     "correctAnswer": "av",
@@ -4906,7 +4906,7 @@
     "answers": [
       "îro",
       "şêr",
-      "diş",
+      "çiya",
       "kal"
     ],
     "correctAnswer": "kal",
@@ -4994,7 +4994,7 @@
     "answers": [
       "sabah",
       "i̇yi",
-      "ben",
+      "teşt",
       "şev"
     ],
     "correctAnswer": "şev",
@@ -5008,9 +5008,9 @@
     "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê «aile» ye?",
     "answers": [
       "malbat",
-      "görmek",
-      "yazmak",
-      "toprak"
+      "helbest",
+      "kilam",
+      "azadî"
     ],
     "correctAnswer": "malbat",
     "explanation": "«malbat» = «aile». Mînak: Malbata me her êvar bi hev re dixwe.",
@@ -5040,9 +5040,9 @@
     "prompt": "Wateya Tirkî ya peyva «kurd» kîjan e?",
     "answers": [
       "eski",
-      "reng",
+      "tarih",
       "kürt",
-      "xweş"
+      "küçük"
     ],
     "correctAnswer": "kürt",
     "explanation": "«kurd» = «Kürt». Mînak: Kurd li çar welatan dijîn.",
@@ -5097,7 +5097,7 @@
     "answers": [
       "welat",
       "beyaz",
-      "küçük",
+      "stran",
       "nivîn"
     ],
     "correctAnswer": "welat",
@@ -5145,7 +5145,7 @@
     "prompt": "Hevwateya «bina/ev» bi Kurmancî çi ye?",
     "answers": [
       "reng",
-      "ateş",
+      "gel",
       "rast",
       "xanî"
     ],
@@ -5164,7 +5164,7 @@
       "dar",
       "gul",
       "îro",
-      "çok"
+      "dil"
     ],
     "correctAnswer": "îro",
     "explanation": "«îro» = «bugün». Mînak: Îro em naçin dibistanê.",
@@ -7487,7 +7487,7 @@
       "bitlis",
       "akarsu",
       "dêrsim",
-      "newal"
+      "bugün"
     ],
     "correctAnswer": "akarsu",
     "explanation": "«çem» = «akarsu». Mînak: Çemê Dîcleyê di nav Amedê re derbas dibe.",
@@ -7709,7 +7709,7 @@
     "prompt": "Derbarê «newal» de vebijêrka rast kîjan e?",
     "answers": [
       "îran",
-      "çiya",
+      "ateş",
       "irak",
       "vadi"
     ],
@@ -7847,7 +7847,7 @@
     "category": "Cografya",
     "prompt": "«deşt» tê çi wateyê?",
     "answers": [
-      "gol",
+      "leğen",
       "muş",
       "ova",
       "amed"
