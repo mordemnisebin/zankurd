@@ -8,14 +8,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:zankurd_mobile/src/data/curated_question_bank.dart';
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_language_policy.dart';
 
 void main(List<String> args) {
+  // `sentence_building_questions.json` bu listede eksikti; banka adları
+  // artık `questionBankAssets`ten türetiliyor ki yeni bir banka eklendiğinde
+  // denetim kendiliğinden kapsasın.
   final banks = <String, List<QuizQuestion>>{
-    'offline': _fromJson('assets/data/offline_questions.json'),
-    'community': _fromJson('assets/data/community_questions.json'),
-    'editorial': _fromJson('assets/data/editorial_questions.json'),
+    for (final asset in questionBankAssets)
+      asset.split('/').last.replaceAll('_questions.json', ''): _fromJson(asset),
     'curated': curatedQuestionBank,
   };
 

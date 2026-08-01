@@ -5,13 +5,16 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_language_policy.dart';
 
-const _banks = [
-  'assets/data/offline_questions.json',
-  'assets/data/community_questions.json',
-];
+// Banka listesi `questionBankAssets`ten gelir. Eskiden burada elle
+// yazılmış iki yol vardı ve uygulamanın yüklediği DÖRT bankanın ikisini
+// atlıyordu — en çok da `editorial_questions.json`ı. Denetim tam bu
+// kusuru aramak için yazılmıştı ve baktığı yerde kusur olmadığı için
+// "temiz" diyordu (2026-08-01).
+const _banks = questionBankAssets;
 
 void main(List<String> args) {
   const policy = QuestionLanguagePolicy();

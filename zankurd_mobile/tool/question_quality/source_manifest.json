@@ -653,6 +653,21 @@
       "columns": {}
     },
     {
+      "id": "question_bank_asset_list",
+      "description": "Yuklenen banka asset yollarinin tek listesi",
+      "glob": "lib/src/data/question_bank_assets.dart",
+      "role": "ignored_non_question",
+      "parser": "none",
+      "canonicalGroup": "none",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 1000,
+      "expectedRecordCount": null,
+      "notes": "Yalniz asset yollari; soru kaydi tasimaz. Yukleyiciler ve denetim araclari buradan okur.",
+      "columns": {}
+    },
+    {
       "id": "question_mock_repository",
       "description": "Mock repository logic",
       "path": "lib/src/data/mock_zankurd_repository.dart",

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../models/quiz_question.dart';
 import 'curated_question_bank.dart';
+import 'question_bank_assets.dart';
 import 'question_bank_loader_stub.dart'
     if (dart.library.io) 'question_bank_loader_io.dart';
 
@@ -56,23 +57,15 @@ class QuestionBankLoader {
   Future<void> load() async {
     if (_loaded) return;
 
-    final offline = await _loadJson('assets/data/offline_questions.json');
-    final editorial = await _loadJson('assets/data/editorial_questions.json');
-    // Cümle kurma (wordOrdering) soruları ayrı asset'te tutulur: üretilmiş
-    // şıklı banka ile karışmasın ve editör incelemesi bağımsız yürüsün.
-    final sentences = await _loadJson(
-      'assets/data/sentence_building_questions.json',
-    );
-    // Topluluk katkısı sorular ayrı asset'te: kaynağı ve inceleme akışı
-    // üretilmiş bankadan bağımsız yürüsün.
-    final community = await _loadJson('assets/data/community_questions.json');
+    // Hangi bankaların yükleneceği ve hangi sırayla — hepsi
+    // `questionBankAssets` içinde, tek yerde. Cümle kurma, topluluk
+    // katkısı ve editoryal sorular ayrı asset'lerde tutulur ki kaynakları
+    // ve inceleme akışları üretilmiş bankadan bağımsız yürüsün.
+    final banks = await Future.wait(questionBankAssets.map(_loadJson));
 
     _questions = [
       ...curatedQuestionBank,
-      ...sentences,
-      ...community,
-      ...editorial,
-      ...offline,
+      for (final bank in banks) ...bank,
     ];
     _loaded = true;
   }

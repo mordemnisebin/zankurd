@@ -3,19 +3,14 @@ import 'dart:io';
 
 import '../models/quiz_question.dart';
 import 'curated_question_bank.dart';
+import 'question_bank_assets.dart';
 
 List<QuizQuestion>? loadSyncIfInTest() {
   if (!Platform.environment.containsKey('FLUTTER_TEST')) return null;
-  final offline = _loadBank('assets/data/offline_questions.json');
-  final editorial = _loadBank('assets/data/editorial_questions.json');
-  final sentences = _loadBank('assets/data/sentence_building_questions.json');
-  final community = _loadBank('assets/data/community_questions.json');
+  // Sıra `questionBankAssets` ile aynıdır; liste orada tek yerde durur.
   return [
     ...curatedQuestionBank,
-    ...sentences,
-    ...community,
-    ...editorial,
-    ...offline,
+    for (final asset in questionBankAssets) ..._loadBank(asset),
   ];
 }
 
