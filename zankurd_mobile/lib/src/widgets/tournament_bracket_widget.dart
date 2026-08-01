@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../config/avatar_presets.dart';
 import '../l10n/strings.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
@@ -565,27 +566,23 @@ String? _playerIconId(String playerId) {
   return icons[hash % icons.length];
 }
 
-/// Deterministic color selection for bot players based on playerId.
+/// Oyuncu kimliğine bağlı deterministik avatar rengi.
+///
+/// Eskiden burada 16 hex'lik KENDİ listesi vardı ve hepsi jenerik
+/// Tailwind tonlarıydı (`#7C3AED` violet-600, `#2563EB` blue-600,
+/// `#10B981` emerald-500, `#EC4899` pink-500 …). `avatar_presets.dart`
+/// tam da bunu reddediyor: "Marka ailesinden — jenerik Tailwind tonları
+/// yerine kategori paletiyle aynı kimlik." Karar orada verilmiş ama
+/// turnuva bracket'i kendi listesini tutmaya devam etmişti, yani aynı
+/// oyuncu profil ekranında marka tonu, bracket'te Tailwind moru
+/// görünüyordu (2026-08-01, canlı turnuva ekranı).
+///
+/// `avatarNamePalette` zaten isim/kimlik hash'i için tasarlanmış 12 marka
+/// tonu tutuyor ve beyaz harfle okunur doygunlukta seçilmiş.
 String? _playerColorHex(String playerId) {
   if (playerId.isEmpty || playerId == 'TBD') return null;
-  const colors = [
-    '#E94560',
-    '#7C3AED',
-    '#2563EB',
-    '#10B981',
-    '#F59E0B',
-    '#EC4899',
-    '#0EA5E9',
-    '#F97316',
-    '#8B5CF6',
-    '#06B6D4',
-    '#84CC16',
-    '#EF4444',
-    '#14B8A6',
-    '#D946EF',
-    '#F43F5E',
-    '#6366F1',
-  ];
-  final hash = playerId.hashCode.abs();
-  return colors[hash % colors.length];
+  final color = avatarNamePalette[playerId.hashCode.abs() %
+      avatarNamePalette.length];
+  final rgb = color.toARGB32() & 0xFFFFFF;
+  return '#${rgb.toRadixString(16).toUpperCase().padLeft(6, '0')}';
 }

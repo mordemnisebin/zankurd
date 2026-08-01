@@ -128,4 +128,52 @@ void main() {
       );
     }
   });
+
+  test('hiçbir ekran kendi avatar renk listesini tutmuyor', () {
+    // Turnuva bracket'i 16 hex'lik kendi listesini tutuyordu ve hepsi
+    // jenerik Tailwind tonuydu (#7C3AED violet-600, #10B981 emerald-500,
+    // #EC4899 pink-500 …). `avatar_presets.dart` tam da bunu reddediyor:
+    // "jenerik Tailwind tonları yerine kategori paletiyle aynı kimlik."
+    // Aynı oyuncu profilde marka tonu, bracket'te Tailwind moru
+    // görünüyordu.
+    final palette = {
+      ...avatarColors.map((hex) => hex.toUpperCase()),
+      ...avatarNamePalette.map(
+        (color) =>
+            '#${(color.toARGB32() & 0xFFFFFF).toRadixString(16).toUpperCase().padLeft(6, '0')}',
+      ),
+    };
+
+    final offenders = <String>[];
+    for (final entity in Directory('lib').listSync(recursive: true)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      if (entity.path.endsWith('avatar_presets.dart')) continue;
+      final code = entity
+          .readAsStringSync()
+          .split('\n')
+          .where((line) => !line.trimLeft().startsWith('//'))
+          .where((line) => !line.trimLeft().startsWith('///'))
+          .join('\n');
+      // Avatar rengi olarak kullanılan hex listeleri: `colorHex` ya da
+      // `avatarColor` adının yakınında duran hex dizileri.
+      if (!code.contains('colorHex') && !code.contains('avatarColor')) {
+        continue;
+      }
+      final hexes = RegExp(r"'(#[0-9A-Fa-f]{6})'")
+          .allMatches(code)
+          .map((m) => m.group(1)!.toUpperCase())
+          .toSet();
+      final outside = hexes.difference(palette);
+      if (outside.isNotEmpty) {
+        offenders.add('${entity.path}: ${outside.join(", ")}');
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'Bu dosya(lar) palet dışı avatar rengi tutuyor; aynı oyuncu iki '
+          'ekranda iki ayrı kimlikte görünür:\n${offenders.join("\n")}',
+    );
+  });
 }
