@@ -1135,12 +1135,30 @@ class _QuizScreenState extends State<QuizScreen>
     _advanceAuthoritativeIndex();
   }
 
+  /// Bu istemci odanın ev sahibi mi?
+  ///
+  /// Eskiden `hostId` bilinmiyorsa "oyuncu listesinin İLKİ benim miyim?"
+  /// diye bir yedek yol vardı. O yol yalnız KATILAN için çalışabiliyordu
+  /// ve yanlış cevap veriyordu:
+  ///
+  ///   * `createOnlineRoom` ev sahibine her zaman `hostId: user.id`
+  ///     veriyor — gerçek ev sahibinin `hostId`si asla null olmaz.
+  ///   * `joinOnlineRoom`daki ev sahibi sorgusu try/catch içinde;
+  ///     düşerse katılan `hostId: null` ile odaya giriyor.
+  ///   * Liste sırası ev sahipliği garantisi taşımıyor (skora göre
+  ///     sıralanabiliyor), yani katılan pekâlâ "ilk" olabiliyor.
+  ///
+  /// Sonuç: katılan kendini ev sahibi sanıp `finishGame` çağırıyordu ve
+  /// sunucu `Only the room host can finish the game` ile reddediyordu —
+  /// canlı logda görüldü (2026-08-01). İki istemcinin birden ev sahibi
+  /// sanması soruyu iki kez ilerletme riskini de taşıyordu.
+  ///
+  /// Bilinmiyorsa "ev sahibi değilim" demek güvenli taraf: yapmadığı iş
+  /// zararsız, yapmaması gereken iş zararlı.
   bool get _isHost {
     final uid = widget.repository.currentUserId;
     if (uid == null) return false;
-    if (widget.room.hostId != null) return uid == widget.room.hostId;
-    return widget.room.players.isNotEmpty &&
-        widget.room.players.first.id == uid;
+    return uid == widget.room.hostId;
   }
 
   void _onRoomQuestionIndexChanged(int dbIndex) {

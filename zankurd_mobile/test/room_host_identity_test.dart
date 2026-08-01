@@ -1,34 +1,44 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 
-/// Oda sahipliği hiçbir zaman boşta kalmaz.
+/// Oda sahipliği tahmin edilmez; bilinmiyorsa "değilim" denir.
 ///
-/// 2026-07-31 denetiminde "oda sahibi düşerse iki istemci de kendini host
-/// sanar ve aynı soruya farklı cevap verir" diye bir iddia geldi. Doğrulama
-/// turunda çürütüldü: `hostId` Supabase yolunda hiçbir zaman null olmuyor.
+/// ## 2026-07-31: iddia çürütüldü sanıldı
 ///
-/// Ama çürütme sırasında gerçek olan şu ortaya çıktı — `copyWith` klasik
-/// `hostId ?? this.hostId` desenini kullanıyor, yani null geçmek alanı
-/// TEMİZLEMİYOR, eski değeri koruyor. Bugün zararsız (kimse null geçmiyor)
-/// ama sessiz bir tuzak.
+/// "Oda sahibi düşerse iki istemci de kendini host sanar" diye bir iddia
+/// gelmişti ve doğrulama turunda çürütüldü: "`hostId` Supabase yolunda
+/// hiçbir zaman null olmuyor."
 ///
-/// Bu bekçi iki şeyi birden sabitler: oda üreten yolların `hostId`i her
-/// zaman doldurduğunu, ve `copyWith`in null karşısındaki davranışının
-/// bilinçli olduğunu. Biri değişirse test kırılır ve karar yeniden
-/// verilmek zorunda kalır.
+/// ## 2026-08-01: çürütme yanlıştı
+///
+/// Canlı logda katılan istemci ev sahibine özel çağrıyı yaptı:
+///
+///     quiz finish game failed: PostgrestException(
+///       message: Only the room host can finish the game, code: P0001)
+///
+/// Çürütme yalnız mock yolunu ölçmüştü. `joinOnlineRoom`daki ev sahibi
+/// sorgusu try/catch içinde; düştüğünde katılan `hostId: null` ile odaya
+/// giriyor. `_isHost`in yedek dalı da o boşlukta devreye girip "oyuncu
+/// listesinin ilki benim miyim?" diye soruyordu — ve liste sırası ev
+/// sahipliği garantisi taşımıyor. Aynı gece bir ekran görüntüsünde
+/// katılan gerçekten birinci sıradaydı.
+///
+/// Yedek yol yalnızca YANLIŞ cevap verebileceği durumda devreye
+/// giriyordu: `createOnlineRoom` ev sahibine her zaman `hostId: user.id`
+/// verdiği için gerçek ev sahibinin kimliği asla eksik olmaz.
+///
+/// Yedek dal kaldırıldı. Bilinmiyorsa cevap "hayır"dır: yapılmayan iş
+/// zararsız, yapılmaması gereken iş zararlı — iki istemcinin birden ev
+/// sahibi sanması soruyu iki kez ilerletebilir, ve gerçek ev sahibi
+/// çıkmışsa oda hiç bitmeyebilir.
 void main() {
   // Mock (çevrimdışı) oda `hostId` taşımaz ve bu doğrudur: tek cihazda
-  // oynanan bir odanın sunucu tarafı sahibi yoktur.
-  //
-  // `_isHost` (quiz_screen.dart) `hostId` null olduğunda geri düşüş dalını
-  // kullanır: `players.first.id == currentUserId`. Mock'ta `currentUserId`
-  // 'user' ama oyuncuların kimliği yok, yani karşılaştırma `null == 'user'`
-  // olur ve kimse host sayılmaz. Güvenlik tam olarak buraya dayanıyor.
-  //
-  // Bu test o zinciri sabitler: mock oyunculara kimlik verilirse geri düşüş
-  // dalı birden ilk oyuncuyu host seçmeye başlar ve sahiplik varsayımı
-  // sessizce değişir.
+  // oynanan bir odanın sunucu tarafı sahibi yoktur. `_isHost` artık yedek
+  // dal taşımadığı için orada kimse host sayılmaz — eskiden güvenlik
+  // "oyuncuların kimliği yok" tesadüfüne dayanıyordu.
   test('çevrimdışı oda sahipsizdir ve kimse host sayılmaz', () {
     final repository = MockZanKurdRepository();
     final room = repository.createRoom(category: 'Ziman');
@@ -40,14 +50,48 @@ void main() {
     );
 
     // Geri düşüş dalının kimseyi seçememesinin tek sebebi bu.
-    expect(
-      room.players.every((player) => player.id == null),
-      isTrue,
-      reason:
-          'Oyunculara kimlik verilirse _isHost geri düşüş dalı ilk oyuncuyu '
-          'host seçer; o zaman hostId nin gerçekten set edilmesi gerekir.',
-    );
     expect(room.players.first.id == repository.currentUserId, isFalse);
+  });
+
+  test('ev sahipliği liste sırasından tahmin edilmiyor', () {
+    final code = File('lib/src/screens/quiz_screen.dart')
+        .readAsStringSync()
+        .split('\n')
+        .where((line) => !line.trimLeft().startsWith('//'))
+        .where((line) => !line.trimLeft().startsWith('///'))
+        .join('\n')
+        .replaceAll(RegExp(r'\s+'), ' ');
+
+    expect(
+      code,
+      isNot(contains('widget.room.players.first.id == uid')),
+      reason:
+          'Liste sırası ev sahipliği garantisi taşımıyor; katılan "ilk" '
+          'olabilir ve kendini ev sahibi sanar.',
+    );
+    expect(
+      code,
+      contains('return uid == widget.room.hostId;'),
+      reason: 'Karar yalnız hostId karşılaştırmasıyla verilmeli.',
+    );
+  });
+
+  test('oda kurucusu her zaman hostId taşıyor', () {
+    // Yedek dalın kaldırılabilmesinin tek dayanağı bu: gerçek ev
+    // sahibinin kimliği hiçbir zaman eksik değil.
+    final repository = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+    final create = repository.substring(
+      repository.indexOf('Future<GameRoom> createOnlineRoom'),
+    );
+    expect(
+      create.substring(0, create.indexOf('\n  @override')),
+      contains('hostId: user.id'),
+      reason:
+          'Ev sahibi kendi kimliğini bilmezse _isHost kimseye evet demez '
+          've oda hiç ilerlemez.',
+    );
   });
 
   test('copyWith sahibi koruyarak diğer alanları değiştirir', () {
