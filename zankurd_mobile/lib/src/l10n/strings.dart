@@ -965,6 +965,26 @@ class Tr {
       'ku': 'Pêşketina te ya vê pêşbirkê winda dibe.',
       'tr': 'Bu yarıştaki ilerlemen kaybolur.',
     },
+    K.leaveOnlineMatchBody: {
+      'ku': 'Heke tu ji pêşbirkê derkevî, tu dê wek têkçûyî bihesibî.',
+      'tr': 'Maçtan ayrılırsan hükmen yenilmiş sayılırsın.',
+    },
+    K.matchForfeitedTitle: {
+      'ku': 'Pêşbirk bi derketinê qediya',
+      'tr': 'Maç hükmen sona erdi',
+    },
+    K.opponentForfeitedMatch: {
+      'ku': 'Hevrikê te ji pêşbirkê derket. Tu xweber serketî.',
+      'tr': 'Rakibin maçtan ayrıldı. Maçı hükmen kazandın.',
+    },
+    K.youForfeitedMatch: {
+      'ku': 'Tu ji pêşbirkê derketî. Pêşbirk bê encama asayî qediya.',
+      'tr': 'Maçtan ayrıldın. Maç hükmen sona erdi.',
+    },
+    K.matchEndedByDeparture: {
+      'ku': 'Ji ber ku lîstikvanek derket, pêşbirk qediya.',
+      'tr': 'Bir oyuncu ayrıldığı için maç sona erdi.',
+    },
     K.leaveAction: {'ku': 'Derkeve', 'tr': 'Çık'},
     K.questionsLoadFailed: {
       'ku': 'Pirs nehatin barkirin. Ji kerema xwe dîsa biceribîne.',
@@ -1197,6 +1217,15 @@ class Tr {
     },
     K.cancelling: {'ku': 'Tê betalkirin…', 'tr': 'İptal ediliyor…'},
     K.leaveRoom: {'ku': 'Ji odeyê derkeve', 'tr': 'Odadan ayrıl'},
+    K.leavingRoom: {'ku': 'Ji odeyê derdikevî…', 'tr': 'Odadan ayrılıyor…'},
+    K.roomLeaveFailed: {
+      'ku': 'Ji odeyê derneketî. Ji kerema xwe dîsa biceribîne.',
+      'tr': 'Odadan ayrılamadın. Lütfen tekrar dene.',
+    },
+    K.roomClosedByHost: {
+      'ku': 'Ji ber ku mêvandar derket, ode hat girtin.',
+      'tr': 'Ev sahibi ayrıldığı için oda kapandı.',
+    },
     K.chat: {'ku': 'Suhbet', 'tr': 'Sohbet'},
     K.privateRoom: {'ku': 'Odeya Taybet', 'tr': 'Özel Oda'},
     K.host: {'ku': 'Mêvandar', 'tr': 'Ev sahibi'},
@@ -2534,6 +2563,11 @@ class K {
   static const leaveRaceQ = 'quiz.leaveRace';
   static const leaveLessonBody = 'quiz.leaveLesson.body';
   static const leaveRaceBody = 'quiz.leaveRace.body';
+  static const leaveOnlineMatchBody = 'quiz.leaveOnlineMatch.body';
+  static const matchForfeitedTitle = 'quiz.matchForfeited.title';
+  static const opponentForfeitedMatch = 'quiz.matchForfeited.opponent';
+  static const youForfeitedMatch = 'quiz.matchForfeited.you';
+  static const matchEndedByDeparture = 'quiz.matchForfeited.unknown';
   static const leaveAction = 'quiz.leave';
   static const questionsLoadFailed = 'quiz.questionsLoadFailed';
   static const raceWord = 'quiz.race';
@@ -2637,6 +2671,9 @@ class K {
   static const roomCodeCopied = 'room.codeCopied';
   static const cancelling = 'room.cancelling';
   static const leaveRoom = 'room.leave';
+  static const leavingRoom = 'room.leaving';
+  static const roomLeaveFailed = 'room.leaveFailed';
+  static const roomClosedByHost = 'room.closedByHost';
   static const chat = 'room.chat';
   static const privateRoom = 'room.private';
   static const host = 'room.host';
