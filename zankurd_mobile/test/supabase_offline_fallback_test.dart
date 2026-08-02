@@ -185,9 +185,12 @@ void main() {
   });
 
   test(
-    'awardQuizCoins başarılı amount 0 yanıtını normal sonuç sayar',
+    'awardQuizCoins açık başarı işaretli amount 0 yanıtını normal sayar',
     () async {
-      final httpClient = _QuizRewardHttpClient(const {'amount': 0});
+      final httpClient = _QuizRewardHttpClient(const {
+        'amount': 0,
+        'already_claimed': false,
+      });
       final repo = _SignedInQuizRewardRepository(
         SupabaseClient(
           'https://example.supabase.co',
@@ -204,6 +207,34 @@ void main() {
       );
 
       expect(amount, 0);
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
+    },
+  );
+
+  test(
+    'awardQuizCoins guard amount 0 yanıtını başarı saymadan yukarı taşır',
+    () async {
+      final httpClient = _QuizRewardHttpClient(const {
+        'amount': 0,
+        'room_not_finished': true,
+      });
+      final repo = _SignedInQuizRewardRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await expectLater(
+        repo.awardQuizCoins(
+          score: 100,
+          correctCount: 2,
+          bestStreak: 1,
+          totalQuestions: 10,
+        ),
+        throwsStateError,
+      );
       expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
     },
   );

@@ -1645,9 +1645,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'p_total_questions': totalQuestions,
         },
       );
-      final amount = _amountFromRpcResponse(response);
-      if (amount != null) return amount;
-      throw StateError('Quiz reward RPC returned no amount for ${user.id}.');
+      return _verifiedQuizRewardAmount(response, userId: user.id);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim_quiz_reward failed');
       rethrow;
@@ -1669,6 +1667,37 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
     }
     return null;
+  }
+
+  int _verifiedQuizRewardAmount(Object? response, {required String userId}) {
+    final Map<String, dynamic>? json;
+    if (response is Map) {
+      json = Map<String, dynamic>.from(response);
+    } else if (response is List && response.length == 1) {
+      final first = response.single;
+      json = first is Map ? Map<String, dynamic>.from(first) : null;
+    } else {
+      json = null;
+    }
+
+    if (json == null ||
+        json.length != 2 ||
+        !json.containsKey('amount') ||
+        json['already_claimed'] is! bool) {
+      throw StateError(
+        'Quiz reward RPC returned an unverified result for $userId.',
+      );
+    }
+    final rawAmount = json['amount'];
+    if (rawAmount is! num ||
+        !rawAmount.isFinite ||
+        rawAmount != rawAmount.toInt() ||
+        rawAmount < 0) {
+      throw StateError(
+        'Quiz reward RPC returned an invalid amount for $userId.',
+      );
+    }
+    return rawAmount.toInt();
   }
 
   /// `RETURNS TABLE` RPC'leri PostgREST'te satır listesi döndürür;
