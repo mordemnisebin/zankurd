@@ -722,645 +722,375 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : AppIcons.faceFrown)
         : AppIcons.flag;
 
-    return PopScope<void>(
-      canPop: !isOnlineRoom,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && isOnlineRoom) completeResultAction();
-      },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
+    final scaffold = Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppTheme.isLight(context)
+                  ? AppTheme.lightTextPrimary.withValues(alpha: 0.06)
+                  : Colors.white.withValues(alpha: 0.08),
+              shape: BoxShape.circle,
+              border: Border.all(
                 color: AppTheme.isLight(context)
-                    ? AppTheme.lightTextPrimary.withValues(alpha: 0.06)
-                    : Colors.white.withValues(alpha: 0.08),
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppTheme.isLight(context)
-                      ? AppTheme.lightTextPrimary.withValues(alpha: 0.10)
-                      : Colors.white.withValues(alpha: 0.15),
-                  width: 1,
-                ),
-              ),
-              child: BackButton(
-                onPressed: isOnlineRoom ? completeResultAction : null,
-                color: AppTheme.isLight(context)
-                    ? AppTheme.lightTextPrimary
-                    : Colors.white,
+                    ? AppTheme.lightTextPrimary.withValues(alpha: 0.10)
+                    : Colors.white.withValues(alpha: 0.15),
+                width: 1,
               ),
             ),
+            child: BackButton(
+              onPressed: isOnlineRoom ? completeResultAction : null,
+              color: AppTheme.isLight(context)
+                  ? AppTheme.lightTextPrimary
+                  : Colors.white,
+            ),
           ),
-          title: Text(context.t(K.resultTitle)),
         ),
-        body: Container(
-          color: AppTheme.bgOf(context),
-          child: SafeArea(
-            child: Stack(
-              children: [
-                ListView(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.xs,
-                    AppSpacing.page,
-                    AppSpacing.lg,
-                  ),
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(AppRadius.card),
-                      // Kutlama katmanı: kilim dokusu başlığın arkasında
-                      // merkezden dışa açılır.
-                      //
-                      // Tek kutlama kanalı konfetiydi; konfeti her uygulamada
-                      // aynıdır ve ZanKurd'a ait bir şey söylemez (2026-07-25
-                      // görsel denetimi). Marka dili zaten kilim motifine
-                      // dayanıyor — kutlama da aynı dili konuşur.
-                      //
-                      // Yalnız kutlanacak bir sonuç varken çizilir: 1v1'de
-                      // galibiyet, solo turda en az yarısı doğru. Kaybedilen
-                      // turda kutlama deseni açmak, sonucu yanlış okur.
-                      child: KilimReveal(
-                        active: is1v1
-                            ? isWinner
-                            : (totalQuestions > 0 &&
-                                  correctCount * 2 >= totalQuestions),
-                        // Sağlayıcı yoksa (ör. bu ekranı izole eden widget
-                        // testleri) kutlama sessizce animasyonsuz çizilir.
-                        // Dekoratif bir katman, barındırıldığı ağaç eksik
-                        // diye ekranı çökertmemeli.
-                        reducedMotion:
-                            context
-                                .watch<ReducedMotionProvider?>()
-                                ?.reduceMotion ??
-                            false,
-                        color: kilimRevealColorFor(context, onBrand: !isDraw),
-                        child: Container(
-                          key: const ValueKey('result-score-header'),
-                          decoration: BoxDecoration(
-                            gradient: headerGradient,
-                            borderRadius: BorderRadius.circular(AppRadius.card),
-                            border: Border.all(
-                              color: borderColor.withValues(alpha: 0.35),
-                              width: 1.0,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.08),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
+        title: Text(context.t(K.resultTitle)),
+      ),
+      body: Container(
+        color: AppTheme.bgOf(context),
+        child: SafeArea(
+          child: Stack(
+            children: [
+              ListView(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.page,
+                  AppSpacing.xs,
+                  AppSpacing.page,
+                  AppSpacing.lg,
+                ),
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    // Kutlama katmanı: kilim dokusu başlığın arkasında
+                    // merkezden dışa açılır.
+                    //
+                    // Tek kutlama kanalı konfetiydi; konfeti her uygulamada
+                    // aynıdır ve ZanKurd'a ait bir şey söylemez (2026-07-25
+                    // görsel denetimi). Marka dili zaten kilim motifine
+                    // dayanıyor — kutlama da aynı dili konuşur.
+                    //
+                    // Yalnız kutlanacak bir sonuç varken çizilir: 1v1'de
+                    // galibiyet, solo turda en az yarısı doğru. Kaybedilen
+                    // turda kutlama deseni açmak, sonucu yanlış okur.
+                    child: KilimReveal(
+                      active: is1v1
+                          ? isWinner
+                          : (totalQuestions > 0 &&
+                                correctCount * 2 >= totalQuestions),
+                      // Sağlayıcı yoksa (ör. bu ekranı izole eden widget
+                      // testleri) kutlama sessizce animasyonsuz çizilir.
+                      // Dekoratif bir katman, barındırıldığı ağaç eksik
+                      // diye ekranı çökertmemeli.
+                      reducedMotion:
+                          context
+                              .watch<ReducedMotionProvider?>()
+                              ?.reduceMotion ??
+                          false,
+                      color: kilimRevealColorFor(context, onBrand: !isDraw),
+                      child: Container(
+                        key: const ValueKey('result-score-header'),
+                        decoration: BoxDecoration(
+                          gradient: headerGradient,
+                          borderRadius: BorderRadius.circular(AppRadius.card),
+                          border: Border.all(
+                            color: borderColor.withValues(alpha: 0.35),
+                            width: 1.0,
                           ),
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.lg,
-                            AppSpacing.lg,
-                            AppSpacing.lg,
-                            AppSpacing.md,
-                          ),
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Positioned(
-                                right: -8,
-                                top: -38,
-                                child: IgnorePointer(
-                                  child: Icon(
-                                    headerIcon,
-                                    size: 130,
-                                    color: Colors.white.withValues(alpha: 0.06),
-                                  ),
-                                ),
-                              ),
-                              // 2026-07-23 M33: Roj maskotu sonuç ekranında hiç
-                              // yoktu — marka kimliği en duygusal andan
-                              // (skoru görme) eksikti. Skora göre ruh hâli
-                              // değişir; yoğun bilgi sütununu bozmasın diye
-                              // sol üst köşede küçük bir rozet olarak durur.
-                              Positioned(
-                                left: 0,
-                                top: 0,
-                                child: IgnorePointer(
-                                  child: Opacity(
-                                    opacity: 0.85,
-                                    child: RojMascot(
-                                      size: 36,
-                                      mood: accuracy >= 80
-                                          ? RojMood.celebrate
-                                          : accuracy >= 40
-                                          ? RojMood.happy
-                                          : RojMood.thinking,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  // Header row: icon + title
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 32,
-                                        height: 32,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white.withValues(
-                                            alpha: 0.14,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            AppRadius.xs,
-                                          ),
-                                          border: Border.all(
-                                            color: Colors.white.withValues(
-                                              alpha: 0.22,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          headerIcon,
-                                          color: Colors.white,
-                                          size: 16,
-                                        ),
-                                      ),
-                                      const SizedBox(width: AppSpacing.xs),
-                                      Expanded(
-                                        child: Text(
-                                          context.upper(headerTitle),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTypography.caption.copyWith(
-                                            color: Colors.white.withValues(
-                                              alpha: 0.82,
-                                            ),
-                                            letterSpacing: 1.4,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: AppSpacing.sm),
-                                  // Mockup 8: doğruluk kademesine göre 3 yıldız
-                                  // (bu boşluk daha önce boştu, net yükseklik
-                                  // artışı yok — ~450px doğrulanmış).
-                                  // Yıldızlar turuncu hero üzerinde duruyor:
-                                  // altın (#E7B53C) turuncuda ~1.3:1, boş yıldız
-                                  // beyaz@0.18 ile görünmez haldeydi — skorun en
-                                  // özet göstergesi okunmuyordu (2026-07-22 UX
-                                  // denetimi). Koyu yarı saydam bir hap zemin
-                                  // hem doluyu hem boşu ayrıştırıyor.
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.heroScrim(),
-                                      borderRadius: BorderRadius.circular(
-                                        AppRadius.pill,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        for (var i = 0; i < 3; i++)
-                                          Icon(
-                                            AppIcons.star,
-                                            size: i == 1 ? 30 : 22,
-                                            color:
-                                                i <
-                                                    (accuracy >= 80
-                                                        ? 3
-                                                        : accuracy >= 50
-                                                        ? 2
-                                                        : 1)
-                                                ? AppTheme.gold
-                                                : Colors.white.withValues(
-                                                    alpha: 0.32,
-                                                  ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: AppSpacing.xxs),
-                                  // BIG score number
-                                  Text(
-                                    '$score',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTypography.display.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 72,
-                                      height: 0.95,
-                                    ),
-                                  ),
-                                  const SizedBox(height: AppSpacing.xxs),
-                                  // Category & accuracy on one line
-                                  Text(
-                                    '${CategoryNames.localized(room.category, context.isKu)} '
-                                    '· ${context.percent(accuracy)} '
-                                    '${context.t(K.accuracyLower)}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.72,
-                                      ),
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  const SizedBox(height: AppSpacing.md),
-                                  // Ödül rozetleri.
-                                  //
-                                  // `Row` idi: sistem yazısı büyütüldüğünde iki
-                                  // rozet yan yana sığmıyor ve kartın dışına
-                                  // taşıyordu. `Wrap` sığmayanı alt satıra alır
-                                  // (2026-07-26).
-                                  Wrap(
-                                    alignment: WrapAlignment.center,
-                                    spacing: 8,
-                                    runSpacing: 8,
-                                    children: [
-                                      if (coinsAwarded > 0)
-                                        _ResultRewardChip(
-                                          icon: AppIcons.coins,
-                                          label:
-                                              '+$coinsAwarded${context.t(K.coinAbbrev)}',
-                                          color: AppTheme.gold,
-                                        ),
-                                      if (_earnedXP > 0)
-                                        _ResultRewardChip(
-                                          icon: AppIcons.bolt,
-                                          label: '+$_earnedXP XP',
-                                          // Koyu sonuç kartında accent (koyu
-                                          // yeşil) soluk kalıyordu; kazanım
-                                          // hissi için aydınlatılmış yeşil.
-                                          color: Color.alphaBlend(
-                                            Colors.white.withValues(
-                                              alpha: 0.35,
-                                            ),
-                                            AppTheme.accent,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                  // Ödül kuyrukta bekliyorsa bunu söyle.
-                                  // Rozet yalnız miktar sıfırdan büyükse
-                                  // çizildiği için çevrimdışı turda ekranda
-                                  // hiçbir iz kalmıyor ve oyuncu turu boşuna
-                                  // oynadığını sanıyordu (2026-07-26).
-                                  if (widget.rewardSettlementState ==
-                                          QuizRewardSettlementState.queued ||
-                                      (widget.rewardSettlementState == null &&
-                                          widget.rewardQueued &&
-                                          coinsAwarded <= 0)) ...[
-                                    const SizedBox(height: AppSpacing.sm),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          AppIcons.cloud,
-                                          size: 14,
-                                          color: Colors.white70,
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Flexible(
-                                          child: Text(
-                                            context.t(K.rewardPending),
-                                            textAlign: TextAlign.center,
-                                            style: AppTypography.caption
-                                                .copyWith(
-                                                  color: Colors.white70,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                  if (widget.rewardSettlementState ==
-                                      QuizRewardSettlementState.unresolved) ...[
-                                    const SizedBox(height: AppSpacing.sm),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          AppIcons.cloud,
-                                          size: 14,
-                                          color: Colors.white70,
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Flexible(
-                                          child: Text(
-                                            context.t(K.rewardUnresolved),
-                                            textAlign: TextAlign.center,
-                                            style: AppTypography.caption
-                                                .copyWith(
-                                                  color: Colors.white70,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                  const SizedBox(height: AppSpacing.md),
-                                  Divider(
-                                    color: Colors.white.withValues(alpha: 0.15),
-                                    height: 1,
-                                  ),
-                                  const SizedBox(height: AppSpacing.sm),
-                                  // Compact stats row: ✅ 17  ❌ 3  ⏱ 0  🔥 12
-                                  Wrap(
-                                    alignment: WrapAlignment.center,
-                                    spacing: AppSpacing.sm,
-                                    runSpacing: AppSpacing.xs,
-                                    children: [
-                                      _StatPill(
-                                        icon: AppIcons.circleCheck,
-                                        value: '$correctCount',
-                                        label: context.t(K.correct),
-                                        color: AppTheme.correct,
-                                      ),
-                                      _StatPill(
-                                        icon: AppIcons.circleXmark,
-                                        value: '$wrongCount',
-                                        label: context.t(K.wrong),
-                                        color: AppTheme.wrong,
-                                      ),
-                                      if (unanswered > 0)
-                                        _StatPill(
-                                          icon: AppIcons.hourglass,
-                                          value: '$unanswered',
-                                          label: context.t(K.blank),
-                                          color: AppTheme.textMutedColor(
-                                            context,
-                                          ),
-                                        ),
-                                      if (bestStreak > 0)
-                                        _StatPill(
-                                          icon: AppIcons.fire,
-                                          value: '$bestStreak',
-                                          label: context.t(K.streakLabel),
-                                          color: AppTheme.gold,
-                                        ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (opponents.isNotEmpty) ...[
-                      const SizedBox(height: 16),
-                      _RaceStandings(
-                        userScore: score,
-                        userIdentity: room.players.isNotEmpty
-                            ? room.players.first
-                            : null,
-                        opponents: opponents,
-                      ),
-                    ],
-                    if (_newAchievements.isNotEmpty) ...[
-                      const SizedBox(height: 16),
-                      _AchievementUnlocks(achievements: _newAchievements),
-                    ],
-                    if (_promotions.isNotEmpty) ...[
-                      const SizedBox(height: 16),
-                      _MasteryPromotions(promotions: _promotions),
-                    ],
-                    if (_dailyStreak > 0) ...[
-                      const SizedBox(height: 16),
-                      AppPanel(
-                        cardType: CardType.secondary,
-                        color: AppTheme.surfaceHiColor(context),
-                        child: Row(
-                          children: [
-                            Icon(
-                              AppIcons.fire,
-                              color: AppColors.readableAccent(
-                                context,
-                                AppTheme.accent,
-                              ),
-                              size: 30,
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    context.t(K.dailyStreakDays, {
-                                      'days': '$_dailyStreak',
-                                    }),
-                                    style: TextStyle(
-                                      color: AppTheme.textPrimaryColor(context),
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    context.t(K.keepStreakTomorrow),
-                                    style: TextStyle(
-                                      color: AppTheme.textMutedColor(context),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                    const SizedBox(height: 16),
-                    // ── Actions ──────────────────────────────────────────
-                    const SizedBox(height: 12),
-                    // Yanlış varsa sıradaki en yararlı iş incelemedir; kusursuz
-                    // sonuçta ana eylem yeni tur olur. Seyrek kullanılan yollar
-                    // kapalı bir grupta tutularak karar yükü azaltılır.
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(AppRadius.md),
-                              boxShadow: AppTheme.glowShadow(
-                                AppTheme.primaryCtaColor(context),
-                                intensity: 0.28,
-                              ),
-                            ),
-                            child: SizedBox(
-                              height: 54,
-                              child: FilledButton.icon(
-                                key: ValueKey(
-                                  wrongRecords.isNotEmpty
-                                      ? 'result-primary-review-mistakes'
-                                      : 'result-play-again-button',
-                                ),
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: AppTheme.primaryCtaColor(
-                                    context,
-                                  ),
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.md,
-                                    ),
-                                  ),
-                                  elevation: 0,
-                                ),
-                                onPressed: wrongRecords.isNotEmpty
-                                    ? () => openReview(wrongRecords)
-                                    : completeResultAction,
-                                icon: Icon(
-                                  wrongRecords.isNotEmpty
-                                      ? AppIcons.squareCheck
-                                      : nextActionIcon,
-                                  size: 20,
-                                ),
-                                label: Text(
-                                  wrongRecords.isNotEmpty
-                                      ? context.t(K.reviewMistakes)
-                                      : nextActionLabel,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.lg,
+                          AppSpacing.lg,
+                          AppSpacing.lg,
+                          AppSpacing.md,
                         ),
-                        const SizedBox(width: 10),
-                        if (wrongRecords.isNotEmpty)
-                          _ResultSideAction(
-                            key: const ValueKey('result-play-again-button'),
-                            icon: nextActionIcon,
-                            label: nextActionLabel,
-                            onTap: completeResultAction,
-                          ),
-                        _ResultSideAction(
-                          key: const ValueKey('result-share-button'),
-                          icon: AppIcons.shareNodes,
-                          label: context.t(K.share),
-                          onTap: () => ResultSharer.share(
-                            context,
-                            isKu: context.isKu,
-                            score: score,
-                            correctCount: correctCount,
-                            totalQuestions: totalQuestions,
-                            bestStreak: bestStreak,
-                            category: room.category,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Theme(
-                      data: Theme.of(context).copyWith(
-                        dividerColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: ExpansionTile(
-                          key: const ValueKey('result-more-options'),
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
-                          childrenPadding: const EdgeInsets.only(bottom: 4),
-                          dense: true,
-                          visualDensity: VisualDensity.compact,
-                          title: Text(
-                            context.t(K.moreOptions),
-                            textAlign: TextAlign.center,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textSubColor(context),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
                           children: [
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              spacing: 4,
-                              runSpacing: 4,
-                              children: [
-                                TextButton(
-                                  key: const ValueKey('result-home-button'),
-                                  style: TextButton.styleFrom(
-                                    visualDensity: VisualDensity.compact,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 6,
-                                    ),
-                                  ),
-                                  onPressed: () => Navigator.of(
-                                    context,
-                                  ).popUntil((route) => route.isFirst),
-                                  child: Text(
-                                    context.t(K.home),
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppTheme.textSubColor(context),
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                            Positioned(
+                              right: -8,
+                              top: -38,
+                              child: IgnorePointer(
+                                child: Icon(
+                                  headerIcon,
+                                  size: 130,
+                                  color: Colors.white.withValues(alpha: 0.06),
+                                ),
+                              ),
+                            ),
+                            // 2026-07-23 M33: Roj maskotu sonuç ekranında hiç
+                            // yoktu — marka kimliği en duygusal andan
+                            // (skoru görme) eksikti. Skora göre ruh hâli
+                            // değişir; yoğun bilgi sütununu bozmasın diye
+                            // sol üst köşede küçük bir rozet olarak durur.
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: IgnorePointer(
+                                child: Opacity(
+                                  opacity: 0.85,
+                                  child: RojMascot(
+                                    size: 36,
+                                    mood: accuracy >= 80
+                                        ? RojMood.celebrate
+                                        : accuracy >= 40
+                                        ? RojMood.happy
+                                        : RojMood.thinking,
                                   ),
                                 ),
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    visualDensity: VisualDensity.compact,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      AppRoute.to(
-                                        LeaderboardScreen(
-                                          repository: repository,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Header row: icon + title
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.14,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.xs,
+                                        ),
+                                        border: Border.all(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.22,
+                                          ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                  child: Text(
-                                    context.t(K.leaderboardLink),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: AppTheme.textMutedColor(context),
-                                      fontWeight: FontWeight.w500,
+                                      child: Icon(
+                                        headerIcon,
+                                        color: Colors.white,
+                                        size: 16,
+                                      ),
                                     ),
+                                    const SizedBox(width: AppSpacing.xs),
+                                    Expanded(
+                                      child: Text(
+                                        context.upper(headerTitle),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTypography.caption.copyWith(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.82,
+                                          ),
+                                          letterSpacing: 1.4,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                // Mockup 8: doğruluk kademesine göre 3 yıldız
+                                // (bu boşluk daha önce boştu, net yükseklik
+                                // artışı yok — ~450px doğrulanmış).
+                                // Yıldızlar turuncu hero üzerinde duruyor:
+                                // altın (#E7B53C) turuncuda ~1.3:1, boş yıldız
+                                // beyaz@0.18 ile görünmez haldeydi — skorun en
+                                // özet göstergesi okunmuyordu (2026-07-22 UX
+                                // denetimi). Koyu yarı saydam bir hap zemin
+                                // hem doluyu hem boşu ayrıştırıyor.
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.heroScrim(),
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.pill,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      for (var i = 0; i < 3; i++)
+                                        Icon(
+                                          AppIcons.star,
+                                          size: i == 1 ? 30 : 22,
+                                          color:
+                                              i <
+                                                  (accuracy >= 80
+                                                      ? 3
+                                                      : accuracy >= 50
+                                                      ? 2
+                                                      : 1)
+                                              ? AppTheme.gold
+                                              : Colors.white.withValues(
+                                                  alpha: 0.32,
+                                                ),
+                                        ),
+                                    ],
                                   ),
                                 ),
-                                // Değerlendir: öne çıkan CTA değil, soluk link — her
-                                // sonuç ekranında birincil aksiyonla yarışmasın.
-                                TextButton(
-                                  key: const ValueKey('result-rate-button'),
-                                  style: TextButton.styleFrom(
-                                    visualDensity: VisualDensity.compact,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
+                                const SizedBox(height: AppSpacing.xxs),
+                                // BIG score number
+                                Text(
+                                  '$score',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.display.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 72,
+                                    height: 0.95,
                                   ),
-                                  onPressed: () =>
-                                      ReviewService.openStoreListing(),
-                                  child: Text(
-                                    context.t(K.rate),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: AppTheme.textMutedColor(context),
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                ),
+                                const SizedBox(height: AppSpacing.xxs),
+                                // Category & accuracy on one line
+                                Text(
+                                  '${CategoryNames.localized(room.category, context.isKu)} '
+                                  '· ${context.percent(accuracy)} '
+                                  '${context.t(K.accuracyLower)}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: Colors.white.withValues(alpha: 0.72),
+                                    fontSize: 13,
                                   ),
+                                ),
+                                const SizedBox(height: AppSpacing.md),
+                                // Ödül rozetleri.
+                                //
+                                // `Row` idi: sistem yazısı büyütüldüğünde iki
+                                // rozet yan yana sığmıyor ve kartın dışına
+                                // taşıyordu. `Wrap` sığmayanı alt satıra alır
+                                // (2026-07-26).
+                                Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  children: [
+                                    if (coinsAwarded > 0)
+                                      _ResultRewardChip(
+                                        icon: AppIcons.coins,
+                                        label:
+                                            '+$coinsAwarded${context.t(K.coinAbbrev)}',
+                                        color: AppTheme.gold,
+                                      ),
+                                    if (_earnedXP > 0)
+                                      _ResultRewardChip(
+                                        icon: AppIcons.bolt,
+                                        label: '+$_earnedXP XP',
+                                        // Koyu sonuç kartında accent (koyu
+                                        // yeşil) soluk kalıyordu; kazanım
+                                        // hissi için aydınlatılmış yeşil.
+                                        color: Color.alphaBlend(
+                                          Colors.white.withValues(alpha: 0.35),
+                                          AppTheme.accent,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                // Ödül kuyrukta bekliyorsa bunu söyle.
+                                // Rozet yalnız miktar sıfırdan büyükse
+                                // çizildiği için çevrimdışı turda ekranda
+                                // hiçbir iz kalmıyor ve oyuncu turu boşuna
+                                // oynadığını sanıyordu (2026-07-26).
+                                if (widget.rewardSettlementState ==
+                                        QuizRewardSettlementState.queued ||
+                                    (widget.rewardSettlementState == null &&
+                                        widget.rewardQueued &&
+                                        coinsAwarded <= 0)) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        AppIcons.cloud,
+                                        size: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.rewardPending),
+                                          textAlign: TextAlign.center,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                if (widget.rewardSettlementState ==
+                                    QuizRewardSettlementState.unresolved) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        AppIcons.cloud,
+                                        size: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.rewardUnresolved),
+                                          textAlign: TextAlign.center,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                const SizedBox(height: AppSpacing.md),
+                                Divider(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  height: 1,
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                // Compact stats row: ✅ 17  ❌ 3  ⏱ 0  🔥 12
+                                Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: AppSpacing.sm,
+                                  runSpacing: AppSpacing.xs,
+                                  children: [
+                                    _StatPill(
+                                      icon: AppIcons.circleCheck,
+                                      value: '$correctCount',
+                                      label: context.t(K.correct),
+                                      color: AppTheme.correct,
+                                    ),
+                                    _StatPill(
+                                      icon: AppIcons.circleXmark,
+                                      value: '$wrongCount',
+                                      label: context.t(K.wrong),
+                                      color: AppTheme.wrong,
+                                    ),
+                                    if (unanswered > 0)
+                                      _StatPill(
+                                        icon: AppIcons.hourglass,
+                                        value: '$unanswered',
+                                        label: context.t(K.blank),
+                                        color: AppTheme.textMutedColor(context),
+                                      ),
+                                    if (bestStreak > 0)
+                                      _StatPill(
+                                        icon: AppIcons.fire,
+                                        value: '$bestStreak',
+                                        label: context.t(K.streakLabel),
+                                        color: AppTheme.gold,
+                                      ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -1368,31 +1098,288 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ),
                       ),
                     ),
-                    // Turun bütün açıklamaları en sonda, bir arada.
-                    //
-                    // Eskiden her şıkkın altında tek tek açılıyordu; şık
-                    // işaretlenir işaretlenmez paragraf beliriyor ve turun
-                    // ritmi kesiliyordu (uygulama sahibinin tekrarlanan geri
-                    // bildirimi, 2026-07-26). Kart birincil butonların
-                    // *altında* durur: "Tekrar oyna" uzun bir okuma listesinin
-                    // arkasında kalmamalı.
-                    const SizedBox(height: 20),
-                    _AllExplanationsCard(records: answerRecords),
-                  ],
-                ),
-                if (_showConfetti)
-                  ConfettiOverlay(
-                    onFinished: () {
-                      setState(() {
-                        _showConfetti = false;
-                      });
-                    },
                   ),
-              ],
-            ),
+                  if (opponents.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _RaceStandings(
+                      userScore: score,
+                      userIdentity: room.players.isNotEmpty
+                          ? room.players.first
+                          : null,
+                      opponents: opponents,
+                    ),
+                  ],
+                  if (_newAchievements.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _AchievementUnlocks(achievements: _newAchievements),
+                  ],
+                  if (_promotions.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    _MasteryPromotions(promotions: _promotions),
+                  ],
+                  if (_dailyStreak > 0) ...[
+                    const SizedBox(height: 16),
+                    AppPanel(
+                      cardType: CardType.secondary,
+                      color: AppTheme.surfaceHiColor(context),
+                      child: Row(
+                        children: [
+                          Icon(
+                            AppIcons.fire,
+                            color: AppColors.readableAccent(
+                              context,
+                              AppTheme.accent,
+                            ),
+                            size: 30,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.t(K.dailyStreakDays, {
+                                    'days': '$_dailyStreak',
+                                  }),
+                                  style: TextStyle(
+                                    color: AppTheme.textPrimaryColor(context),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  context.t(K.keepStreakTomorrow),
+                                  style: TextStyle(
+                                    color: AppTheme.textMutedColor(context),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  // ── Actions ──────────────────────────────────────────
+                  const SizedBox(height: 12),
+                  // Yanlış varsa sıradaki en yararlı iş incelemedir; kusursuz
+                  // sonuçta ana eylem yeni tur olur. Seyrek kullanılan yollar
+                  // kapalı bir grupta tutularak karar yükü azaltılır.
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppRadius.md),
+                            boxShadow: AppTheme.glowShadow(
+                              AppTheme.primaryCtaColor(context),
+                              intensity: 0.28,
+                            ),
+                          ),
+                          child: SizedBox(
+                            height: 54,
+                            child: FilledButton.icon(
+                              key: ValueKey(
+                                wrongRecords.isNotEmpty
+                                    ? 'result-primary-review-mistakes'
+                                    : 'result-play-again-button',
+                              ),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppTheme.primaryCtaColor(
+                                  context,
+                                ),
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.md,
+                                  ),
+                                ),
+                                elevation: 0,
+                              ),
+                              onPressed: wrongRecords.isNotEmpty
+                                  ? () => openReview(wrongRecords)
+                                  : completeResultAction,
+                              icon: Icon(
+                                wrongRecords.isNotEmpty
+                                    ? AppIcons.squareCheck
+                                    : nextActionIcon,
+                                size: 20,
+                              ),
+                              label: Text(
+                                wrongRecords.isNotEmpty
+                                    ? context.t(K.reviewMistakes)
+                                    : nextActionLabel,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      if (wrongRecords.isNotEmpty)
+                        _ResultSideAction(
+                          key: const ValueKey('result-play-again-button'),
+                          icon: nextActionIcon,
+                          label: nextActionLabel,
+                          onTap: completeResultAction,
+                        ),
+                      _ResultSideAction(
+                        key: const ValueKey('result-share-button'),
+                        icon: AppIcons.shareNodes,
+                        label: context.t(K.share),
+                        onTap: () => ResultSharer.share(
+                          context,
+                          isKu: context.isKu,
+                          score: score,
+                          correctCount: correctCount,
+                          totalQuestions: totalQuestions,
+                          bestStreak: bestStreak,
+                          category: room.category,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      dividerColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: ExpansionTile(
+                        key: const ValueKey('result-more-options'),
+                        tilePadding: const EdgeInsets.symmetric(horizontal: 8),
+                        childrenPadding: const EdgeInsets.only(bottom: 4),
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
+                        title: Text(
+                          context.t(K.moreOptions),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.caption.copyWith(
+                            color: AppTheme.textSubColor(context),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        children: [
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 4,
+                            runSpacing: 4,
+                            children: [
+                              TextButton(
+                                key: const ValueKey('result-home-button'),
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 6,
+                                  ),
+                                ),
+                                onPressed: () => Navigator.of(
+                                  context,
+                                ).popUntil((route) => route.isFirst),
+                                child: Text(
+                                  context.t(K.home),
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: AppTheme.textSubColor(context),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    AppRoute.to(
+                                      LeaderboardScreen(repository: repository),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  context.t(K.leaderboardLink),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.textMutedColor(context),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              // Değerlendir: öne çıkan CTA değil, soluk link — her
+                              // sonuç ekranında birincil aksiyonla yarışmasın.
+                              TextButton(
+                                key: const ValueKey('result-rate-button'),
+                                style: TextButton.styleFrom(
+                                  visualDensity: VisualDensity.compact,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                ),
+                                onPressed: () =>
+                                    ReviewService.openStoreListing(),
+                                child: Text(
+                                  context.t(K.rate),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.textMutedColor(context),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Turun bütün açıklamaları en sonda, bir arada.
+                  //
+                  // Eskiden her şıkkın altında tek tek açılıyordu; şık
+                  // işaretlenir işaretlenmez paragraf beliriyor ve turun
+                  // ritmi kesiliyordu (uygulama sahibinin tekrarlanan geri
+                  // bildirimi, 2026-07-26). Kart birincil butonların
+                  // *altında* durur: "Tekrar oyna" uzun bir okuma listesinin
+                  // arkasında kalmamalı.
+                  const SizedBox(height: 20),
+                  _AllExplanationsCard(records: answerRecords),
+                ],
+              ),
+              if (_showConfetti)
+                ConfettiOverlay(
+                  onFinished: () {
+                    setState(() {
+                      _showConfetti = false;
+                    });
+                  },
+                ),
+            ],
           ),
         ),
       ),
+    );
+
+    return PopScope<void>(
+      canPop: !isOnlineRoom,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && isOnlineRoom) completeResultAction();
+      },
+      child: scaffold,
     );
   }
 }
