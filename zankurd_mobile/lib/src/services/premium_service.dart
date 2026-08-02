@@ -77,6 +77,7 @@ class PremiumService extends ChangeNotifier {
 
   bool _initialized = false;
   bool _configured = false;
+  bool _configurationFailed = false;
   bool _isPremium = false;
   bool _purchaseInProgress = false;
   String? _errorMessage;
@@ -127,6 +128,8 @@ class PremiumService extends ChangeNotifier {
     required Future<CustomerInfo> Function() logOut,
     Future<Offerings> Function()? fetchOfferings,
     void Function(Object, StackTrace, {String? reason})? recordError,
+    bool configured = true,
+    bool configurationFailed = false,
   }) {
     final service = PremiumService._(
       isAnonymous: isAnonymous,
@@ -136,7 +139,8 @@ class PremiumService extends ChangeNotifier {
     );
     service
       .._initialized = true
-      .._configured = true;
+      .._configured = configured
+      .._configurationFailed = configurationFailed;
     return service;
   }
 
@@ -175,10 +179,12 @@ class PremiumService extends ChangeNotifier {
       // API anahtarı yoksa satın alma tamamen devre dışıdır; uygulama
       // ücretsiz akışında çalışmaya devam eder.
       _isPremium = false;
+      _configurationFailed = false;
       notifyListeners();
       return;
     }
 
+    _configurationFailed = false;
     try {
       await Purchases.setLogLevel(kDebugMode ? LogLevel.debug : LogLevel.error);
 
@@ -191,6 +197,7 @@ class PremiumService extends ChangeNotifier {
       _configured = true;
       Purchases.addCustomerInfoUpdateListener(_onCustomerInfoUpdate);
     } catch (error, stack) {
+      _configurationFailed = true;
       ErrorReporter.record(error, stack, reason: 'premium_service configure');
     }
     notifyListeners();
@@ -278,6 +285,7 @@ class PremiumService extends ChangeNotifier {
   /// Mevcut offerings listesini getirir. Başarılı boş sonuç, RevenueCat
   /// tarafında ürün olmadığı anlamına gelir; yükleme hatası bundan ayrıdır.
   Future<OfferingsFetchResult> fetchOfferings() async {
+    if (_configurationFailed) return const OfferingsFetchFailure();
     if (!_configured) return const OfferingsFetchSuccess([]);
     try {
       final offerings = await _getOfferings();

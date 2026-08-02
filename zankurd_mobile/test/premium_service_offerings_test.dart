@@ -3,6 +3,22 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 
 void main() {
   test(
+    'RevenueCat yapilandirma hatasi bos basari yerine basarisizlik doner',
+    () async {
+      final service = PremiumService.forTesting(
+        isAnonymous: () async => true,
+        logOut: () async => throw UnimplementedError(),
+        configured: false,
+        configurationFailed: true,
+      );
+
+      final result = await service.fetchOfferings();
+
+      expect(result, isA<OfferingsFetchFailure>());
+    },
+  );
+
+  test(
     'offerings yükleme hatasını raporlayıp başarısız sonuç döndürür',
     () async {
       final reportedErrors = <Object>[];
