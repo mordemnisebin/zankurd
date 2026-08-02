@@ -16,6 +16,13 @@ class _AlwaysFailingHttpClient extends http.BaseClient {
   }
 }
 
+class _SignedInSupabaseRepository extends SupabaseZanKurdRepository {
+  _SignedInSupabaseRepository(super.client);
+
+  @override
+  String? get currentUserId => 'test-user';
+}
+
 class _RoomQuestionsHttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
@@ -96,6 +103,31 @@ void main() {
     () async {
       final repo = unreachableRepo();
       expect(await repo.spendCoins(20, 'wildcard_fifty_fifty'), isFalse);
+    },
+  );
+
+  test(
+    'soru önerisi canlı insert ağ hatasında false döner — sahte başarı yok',
+    () async {
+      final repo = _SignedInSupabaseRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+      final submitted = await repo.submitSuggestedQuestion(
+        category: 'Ziman',
+        prompt: 'Pirtûk çi ye?',
+        optionA: 'Kitap',
+        optionB: 'Masa',
+        optionC: 'Av',
+        optionD: 'Mal',
+        correctOption: 'A',
+      );
+
+      expect(submitted, isFalse);
     },
   );
 

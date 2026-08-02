@@ -2009,18 +2009,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return true;
     } catch (e, stack) {
       _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
-      // Çevrimdışı durumda mock'a düş.
-      return _offline.submitSuggestedQuestion(
-        category: category,
-        prompt: prompt,
-        optionA: optionA,
-        optionB: optionB,
-        optionC: optionC,
-        optionD: optionD,
-        correctOption: correctOption,
-        explanation: explanation,
-        difficulty: difficulty,
-      );
+      return false;
     }
   }
 }
