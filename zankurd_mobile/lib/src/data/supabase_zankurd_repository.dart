@@ -1577,7 +1577,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'addFriend failed');
-      return _offline.addFriend(friendId, friendName);
+      // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME.
+      //
+      // Bu çağrılar eskiden hata yolunda `_offline`a düşüyordu ve mock
+      // karşılıkları gövdesizdi — düpedüz `return true`. Sonuç: kullanıcı
+      // "istek gönderildi" görüyor, istek hiçbir zaman gitmiyor ve hiçbir
+      // yere de kuyruklanmıyordu. `SyncManager` yalnız quiz ödülünü
+      // kuyruklar (`queueQuizReward`); depo ona hiç dokunmuyor.
+      //
+      // Okuma yollarındaki `_offline` geri düşüşü MEŞRUDUR ve korunuyor —
+      // çevrimdışı soru/kategori göstermek değerlidir. Yalan olan, yerel
+      // karşılığı OLMAYAN bir yazımı başarılı saymaktı.
+      //
+      // Arayüz zaten doğru yazılmış: `K.acceptFailed` / `K.rejectFailed`
+      // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
+      // dönüyordu (2026-08-02 denetimi).
+      return false;
     }
   }
 
@@ -1591,7 +1606,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'acceptFriendRequest failed');
-      return _offline.acceptFriendRequest(requestId);
+      // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME.
+      //
+      // Bu çağrılar eskiden hata yolunda `_offline`a düşüyordu ve mock
+      // karşılıkları gövdesizdi — düpedüz `return true`. Sonuç: kullanıcı
+      // "istek gönderildi" görüyor, istek hiçbir zaman gitmiyor ve hiçbir
+      // yere de kuyruklanmıyordu. `SyncManager` yalnız quiz ödülünü
+      // kuyruklar (`queueQuizReward`); depo ona hiç dokunmuyor.
+      //
+      // Okuma yollarındaki `_offline` geri düşüşü MEŞRUDUR ve korunuyor —
+      // çevrimdışı soru/kategori göstermek değerlidir. Yalan olan, yerel
+      // karşılığı OLMAYAN bir yazımı başarılı saymaktı.
+      //
+      // Arayüz zaten doğru yazılmış: `K.acceptFailed` / `K.rejectFailed`
+      // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
+      // dönüyordu (2026-08-02 denetimi).
+      return false;
     }
   }
 
@@ -1605,7 +1635,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'rejectFriendRequest failed');
-      return _offline.rejectFriendRequest(requestId);
+      // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME.
+      //
+      // Bu çağrılar eskiden hata yolunda `_offline`a düşüyordu ve mock
+      // karşılıkları gövdesizdi — düpedüz `return true`. Sonuç: kullanıcı
+      // "istek gönderildi" görüyor, istek hiçbir zaman gitmiyor ve hiçbir
+      // yere de kuyruklanmıyordu. `SyncManager` yalnız quiz ödülünü
+      // kuyruklar (`queueQuizReward`); depo ona hiç dokunmuyor.
+      //
+      // Okuma yollarındaki `_offline` geri düşüşü MEŞRUDUR ve korunuyor —
+      // çevrimdışı soru/kategori göstermek değerlidir. Yalan olan, yerel
+      // karşılığı OLMAYAN bir yazımı başarılı saymaktı.
+      //
+      // Arayüz zaten doğru yazılmış: `K.acceptFailed` / `K.rejectFailed`
+      // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
+      // dönüyordu (2026-08-02 denetimi).
+      return false;
     }
   }
 
@@ -1731,12 +1776,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'saveTournamentProgress failed');
-      return _offline.saveTournamentProgress(
-        stage,
-        userScore,
-        opponentScore,
-        botWinners,
-      );
+      // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME.
+      //
+      // Bu çağrılar eskiden hata yolunda `_offline`a düşüyordu ve mock
+      // karşılıkları gövdesizdi — düpedüz `return true`. Sonuç: kullanıcı
+      // "istek gönderildi" görüyor, istek hiçbir zaman gitmiyor ve hiçbir
+      // yere de kuyruklanmıyordu. `SyncManager` yalnız quiz ödülünü
+      // kuyruklar (`queueQuizReward`); depo ona hiç dokunmuyor.
+      //
+      // Okuma yollarındaki `_offline` geri düşüşü MEŞRUDUR ve korunuyor —
+      // çevrimdışı soru/kategori göstermek değerlidir. Yalan olan, yerel
+      // karşılığı OLMAYAN bir yazımı başarılı saymaktı.
+      //
+      // Arayüz zaten doğru yazılmış: `K.acceptFailed` / `K.rejectFailed`
+      // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
+      // dönüyordu (2026-08-02 denetimi).
+      return false;
     }
   }
 
