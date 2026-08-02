@@ -476,12 +476,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
 
-    void playAgain() {
-      if (room.id != null) {
-        Navigator.of(context).pop();
-      } else {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-      }
+    final isOnlineRoom = room.id != null;
+    final nextActionLabel = context.t(isOnlineRoom ? K.home : K.playAgain);
+    final nextActionIcon = isOnlineRoom
+        ? AppIcons.house
+        : AppIcons.arrowRotateLeft;
+
+    void completeResultAction() {
+      // Quiz rotası sonuç ekranıyla değiştirilir; çevrimiçi turda tek `pop`
+      // bitmiş RoomScreen'i yeniden gösteriyordu. İlk rotaya dönmek solo
+      // tekrar davranışını korurken çevrimiçi odanın eski rotasını temizler.
+      Navigator.of(context).popUntil((route) => route.isFirst);
     }
 
     void openReview(List<AnswerRecord> records) {
@@ -1020,17 +1025,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               ),
                               onPressed: wrongRecords.isNotEmpty
                                   ? () => openReview(wrongRecords)
-                                  : playAgain,
+                                  : completeResultAction,
                               icon: Icon(
                                 wrongRecords.isNotEmpty
                                     ? AppIcons.squareCheck
-                                    : AppIcons.arrowRotateLeft,
+                                    : nextActionIcon,
                                 size: 20,
                               ),
                               label: Text(
                                 wrongRecords.isNotEmpty
                                     ? context.t(K.reviewMistakes)
-                                    : context.t(K.playAgain),
+                                    : nextActionLabel,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -1046,9 +1051,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       if (wrongRecords.isNotEmpty)
                         _ResultSideAction(
                           key: const ValueKey('result-play-again-button'),
-                          icon: AppIcons.arrowRotateLeft,
-                          label: context.t(K.playAgain),
-                          onTap: playAgain,
+                          icon: nextActionIcon,
+                          label: nextActionLabel,
+                          onTap: completeResultAction,
                         ),
                       _ResultSideAction(
                         key: const ValueKey('result-share-button'),
