@@ -44,9 +44,14 @@ class _CancellationRaceRepository extends _SnapshotMatchRepository {
   Future<Map<String, dynamic>> cancelMatchmaking() async => cancelResult;
 
   @override
-  Future<void> leaveOnlineRoom(GameRoom room) async {
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
     expect(room.id, _SnapshotMatchRepository.roomId);
     leaveCalls += 1;
+    return const RoomLeaveOutcome(
+      status: 'finished',
+      reason: 'forfeit',
+      forfeitedBy: 'player',
+    );
   }
 }
 

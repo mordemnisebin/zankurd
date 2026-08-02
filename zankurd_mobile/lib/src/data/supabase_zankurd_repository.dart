@@ -83,6 +83,24 @@ DateTime _requiredDateTime(Map<String, dynamic> json, String key) {
   return DateTime.parse(value);
 }
 
+String? _requiredNullableString(Map<String, dynamic> json, String key) {
+  if (!json.containsKey(key)) {
+    throw FormatException('$key must be present.');
+  }
+  return _optionalString(json, key);
+}
+
+void _requireExactKeys(
+  Map<String, dynamic> json,
+  Set<String> expected,
+  String field,
+) {
+  final actual = json.keys.toSet();
+  if (actual.length != expected.length || !actual.containsAll(expected)) {
+    throw FormatException('$field contains missing or unexpected fields.');
+  }
+}
+
 DateTime? _optionalDateTimeFromKeys(
   Map<String, dynamic> json,
   List<String> keys,
@@ -774,6 +792,265 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  @override
+  Future<RoomResultSnapshot?> loadMyPendingRoomResult() async {
+    final response = await client.rpc('get_my_pending_room_result');
+    return _parseRoomResultResponse(
+      response,
+      source: 'get_my_pending_room_result',
+    );
+  }
+
+  @override
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null || roomId.isEmpty) {
+      throw ArgumentError.value(roomId, 'room.id', 'Room id is required.');
+    }
+    final response = await client.rpc(
+      'get_my_room_result',
+      params: {'p_room_id': roomId},
+    );
+    return _parseRoomResultResponse(
+      response,
+      source: 'get_my_room_result',
+      expectedRoomId: roomId,
+    );
+  }
+
+  RoomResultSnapshot? _parseRoomResultResponse(
+    Object? response, {
+    required String source,
+    String? expectedRoomId,
+  }) {
+    if (response == null) return null;
+
+    final json = _requiredJsonObject(response, source);
+    _requireExactKeys(json, const {
+      'room',
+      'own_player_id',
+      'players',
+      'question_ids',
+      'answers',
+      'winner_id',
+      'ended_reason',
+      'forfeited_by',
+      'finished_at',
+    }, source);
+
+    final roomJson = _requiredJsonObject(json['room'], 'room');
+    _requireExactKeys(roomJson, const {
+      'id',
+      'code',
+      'host_id',
+      'category_name',
+      'question_count',
+      'seconds_per_question',
+      'status',
+      'current_question_index',
+    }, 'room');
+    final roomId = _requiredString(roomJson, const ['id']);
+    if (expectedRoomId != null && roomId != expectedRoomId) {
+      throw const FormatException(
+        'Room result snapshot id does not match requested room.',
+      );
+    }
+    final statusValue = _requiredString(roomJson, const ['status']);
+    final questionCount = _requiredInt(roomJson, const ['question_count']);
+    final currentQuestionIndex = _requiredInt(roomJson, const [
+      'current_question_index',
+    ]);
+    final secondsPerQuestion = _requiredInt(roomJson, const [
+      'seconds_per_question',
+    ]);
+    final hostId = _requiredNullableString(roomJson, 'host_id');
+    if (statusValue != 'finished' ||
+        questionCount < 1 ||
+        currentQuestionIndex != questionCount ||
+        !GameRoom.allowedSecondsPerQuestion.contains(secondsPerQuestion)) {
+      throw const FormatException('Room result is not terminal and complete.');
+    }
+
+    final ownPlayerId = _requiredString(json, const ['own_player_id']);
+    final rawPlayers = json['players'];
+    if (rawPlayers is! List || rawPlayers.length != 2) {
+      throw const FormatException('players must contain exactly two players.');
+    }
+    final players = rawPlayers
+        .map((rawPlayer) {
+          final player = _requiredJsonObject(rawPlayer, 'players[]');
+          _requireExactKeys(player, const {
+            'player_id',
+            'display_name',
+            'final_score',
+            'final_streak',
+          }, 'players[]');
+          final score = _requiredInt(player, const ['final_score']);
+          final streak = _requiredInt(player, const ['final_streak']);
+          if (score < 0 || streak < 0) {
+            throw const FormatException(
+              'Final score and streak must be non-negative.',
+            );
+          }
+          return Player(
+            id: _requiredString(player, const ['player_id']),
+            name: _requiredString(player, const ['display_name']),
+            score: score,
+            state: Player.readyState,
+            streak: streak,
+          );
+        })
+        .toList(growable: false);
+    final playerIds = players.map((player) => player.id!).toSet();
+    if (playerIds.length != 2 || !playerIds.contains(ownPlayerId)) {
+      throw const FormatException(
+        'Result players are not two distinct members.',
+      );
+    }
+    if (hostId != null && !playerIds.contains(hostId)) {
+      throw const FormatException('Room host is not a result player.');
+    }
+
+    final rawQuestionIds = json['question_ids'];
+    if (rawQuestionIds is! List || rawQuestionIds.length != questionCount) {
+      throw const FormatException(
+        'question_ids must contain every room question.',
+      );
+    }
+    final questionIds = rawQuestionIds
+        .map((value) {
+          if (value is! String || value.isEmpty) {
+            throw const FormatException(
+              'question_ids[] must be a non-empty string.',
+            );
+          }
+          return value;
+        })
+        .toList(growable: false);
+    if (questionIds.toSet().length != questionCount) {
+      throw const FormatException('question_ids must be unique.');
+    }
+
+    final rawAnswers = json['answers'];
+    if (rawAnswers is! List || rawAnswers.length != questionCount) {
+      throw const FormatException('answers must contain every own answer.');
+    }
+    final answers = <ResumedAnswer>[];
+    for (var index = 0; index < rawAnswers.length; index++) {
+      final answer = _requiredJsonObject(rawAnswers[index], 'answers[]');
+      _requireExactKeys(answer, const {
+        'question_id',
+        'question_index',
+        'selected_option',
+        'correct_option',
+        'is_correct',
+        'points_awarded',
+        'response_ms',
+        'explanation',
+        'explanation_ku',
+        'explanation_tr',
+      }, 'answers[]');
+      final questionId = _requiredString(answer, const ['question_id']);
+      final questionIndex = _requiredInt(answer, const ['question_index']);
+      final selectedOption = _requiredString(answer, const ['selected_option']);
+      final correctOption = _requiredString(answer, const ['correct_option']);
+      final isCorrect = _requiredBool(answer, 'is_correct');
+      final points = _requiredInt(answer, const ['points_awarded']);
+      final responseMs = _requiredInt(answer, const ['response_ms']);
+      if (questionIndex != index || questionId != questionIds[index]) {
+        throw const FormatException(
+          'Answers are not in canonical question order.',
+        );
+      }
+      if (!const {'A', 'B', 'C', 'D', 'TIMEOUT'}.contains(selectedOption) ||
+          !const {'A', 'B', 'C', 'D'}.contains(correctOption) ||
+          isCorrect != (selectedOption == correctOption) ||
+          points < 0 ||
+          (!isCorrect && points != 0) ||
+          responseMs < 0 ||
+          responseMs > secondsPerQuestion * 1000) {
+        throw const FormatException('Answer result fields are inconsistent.');
+      }
+      answers.add(
+        ResumedAnswer(
+          questionId: questionId,
+          questionIndex: questionIndex,
+          selectedOptionKey: selectedOption,
+          correctOptionKey: correctOption,
+          isCorrect: isCorrect,
+          pointsAwarded: points,
+          responseMs: responseMs,
+          explanation: _requiredNullableString(answer, 'explanation'),
+          explanationKu: _requiredNullableString(answer, 'explanation_ku'),
+          explanationTr: _requiredNullableString(answer, 'explanation_tr'),
+        ),
+      );
+    }
+
+    final ownPlayer = players.singleWhere((player) => player.id == ownPlayerId);
+    final ownScore = answers.fold<int>(
+      0,
+      (total, answer) => total + answer.pointsAwarded,
+    );
+    var ownStreak = 0;
+    for (final answer in answers.reversed) {
+      if (!answer.isCorrect) break;
+      ownStreak++;
+    }
+    if (ownPlayer.score != ownScore || ownPlayer.streak != ownStreak) {
+      throw const FormatException('Own final score does not match answers.');
+    }
+
+    final endedReason = _requiredString(json, const ['ended_reason']);
+    final forfeitedBy = _requiredNullableString(json, 'forfeited_by');
+    if (endedReason != 'completed' || forfeitedBy != null) {
+      throw const FormatException('Room result is not a normal completion.');
+    }
+    final winnerId = _requiredNullableString(json, 'winner_id');
+    final sortedPlayers = [...players]
+      ..sort((a, b) {
+        final scoreOrder = b.score.compareTo(a.score);
+        return scoreOrder != 0 ? scoreOrder : a.id!.compareTo(b.id!);
+      });
+    final expectedWinner = sortedPlayers[0].score == sortedPlayers[1].score
+        ? null
+        : sortedPlayers[0].id;
+    if (winnerId != expectedWinner) {
+      throw const FormatException('winner_id does not match final scores.');
+    }
+
+    final room = GameRoom(
+      id: roomId,
+      name: '1vs1',
+      code: _requiredString(roomJson, const ['code']),
+      category: _requiredString(roomJson, const ['category_name']),
+      players: List.unmodifiable(players),
+      status: RoomStatus.finished,
+      questionCount: questionCount,
+      secondsPerQuestion: secondsPerQuestion,
+      hostId: hostId,
+    );
+    return RoomResultSnapshot(
+      room: room,
+      ownPlayerId: ownPlayerId,
+      questionIds: questionIds,
+      answers: answers,
+      winnerId: winnerId,
+      endedReason: endedReason,
+      forfeitedBy: forfeitedBy,
+      finishedAt: _requiredDateTime(json, 'finished_at'),
+    );
+  }
+
+  @override
+  Future<void> acknowledgeRoomResult(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null || roomId.isEmpty) {
+      throw ArgumentError.value(roomId, 'room.id', 'Room id is required.');
+    }
+    await client.rpc('acknowledge_room_result', params: {'p_room_id': roomId});
+  }
+
   Future<RoomResumeSnapshot?> _loadExpectedRoomResume(String roomId) async {
     final snapshot = await loadMyResumableRoom();
     if (snapshot != null && snapshot.room.id != roomId) {
@@ -812,10 +1089,30 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> leaveOnlineRoom(GameRoom room) async {
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
     final roomId = room.id;
-    if (roomId == null) return;
-    await client.rpc('leave_room', params: {'p_room_id': roomId});
+    if (roomId == null || roomId.isEmpty) {
+      return RoomLeaveOutcome(
+        status: room.status.name,
+        reason: 'local_room',
+        forfeitedBy: null,
+      );
+    }
+    final response = await client.rpc(
+      'leave_room',
+      params: {'p_room_id': roomId},
+    );
+    final json = _requiredJsonObject(response, 'leave_room');
+    _requireExactKeys(json, const {
+      'status',
+      'reason',
+      'forfeited_by',
+    }, 'leave_room');
+    return RoomLeaveOutcome(
+      status: _requiredString(json, const ['status']),
+      reason: _requiredString(json, const ['reason']),
+      forfeitedBy: _requiredNullableString(json, 'forfeited_by'),
+    );
   }
 
   @override

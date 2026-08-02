@@ -441,6 +441,10 @@ void main() {
       "v_room.status not in ('lobby', 'active')",
       'update public.room_players rp set is_ready = false',
     );
+    expect(leave, contains("'forfeited_by', v_room.forfeited_by"));
+    expect(leave, contains("'reason', coalesce(v_room.ended_reason"));
+    expect(leave, contains("'forfeited_by', null"));
+    expect(leave, contains("v_room.ended_reason, 'already_finished'"));
   });
 
   test(
@@ -507,6 +511,8 @@ void main() {
       reward,
       contains("v_reason := 'quiz_complete:room=' || p_room_id::text"),
     );
+    expect(reward, contains('select max(coin_tx.amount)::integer'));
+    expect(reward, contains("'amount', v_amount, 'already_claimed', true"));
     expect(reward, contains("'already_claimed', true"));
     expect(reward, isNot(contains('coalesce(p_score')));
     expect(reward, isNot(contains('coalesce(p_correct_count')));
@@ -573,6 +579,194 @@ void main() {
 
     expect(resume, contains('for share of r'));
     expect(resume, isNot(contains('for share of r, rp')));
+  });
+
+  test('terminal sonuç makbuzu doğrudan istemci yazımına kapalıdır', () {
+    expect(
+      sql,
+      contains(
+        'create table if not exists public.room_result_receipts ( room_id uuid not null references public.rooms(id) on delete cascade, player_id uuid not null references public.profiles(id) on delete cascade, acknowledged_at timestamp with time zone not null default clock_timestamp(), primary key (room_id, player_id) )',
+      ),
+    );
+    expect(
+      sql,
+      contains(
+        'alter table public.room_result_receipts enable row level security',
+      ),
+    );
+    expect(
+      sql,
+      contains(
+        'revoke all on table public.room_result_receipts from public, anon, authenticated',
+      ),
+    );
+    expect(
+      sql,
+      contains('create table if not exists public.room_result_snapshots'),
+    );
+    expect(
+      sql,
+      contains(
+        'revoke all on table public.room_result_snapshots from public, anon, authenticated',
+      ),
+    );
+    expect(
+      sql,
+      isNot(contains('create policy')), // Makbuz erişimi yalnız RPC üzerinden.
+    );
+  });
+
+  test('pending terminal sonuç yalnız tam completed maç snapshotı döndürür', () {
+    final result = _functionBody(sql, 'get_room_result_payload');
+
+    expect(result, contains('v_uid uuid := auth.uid()'));
+    expect(result, contains("r.status = 'finished'"));
+    expect(result, contains("r.ended_reason = 'completed'"));
+    expect(
+      result,
+      contains('coalesce(r.current_question_index, -1) = r.question_count'),
+    );
+    expect(result, contains('count(*) = r.question_count'));
+    expect(result, contains('bool_and(rq.revealed_at is not null)'));
+    expect(result, contains('count(*) = r.question_count * 2'));
+    expect(result, contains('pa.player_id = v_uid'));
+    expect(result, contains("'question_ids'"));
+    expect(result, contains("'players'"));
+    expect(result, contains("'answers'"));
+    expect(result, contains("'winner_id'"));
+    expect(result, contains("'ended_reason', v_room.ended_reason"));
+    expect(result, contains('order by r.finished_at desc'));
+    expect(result, contains('limit 1'));
+    expect(result, contains('from public.room_result_snapshots saved_result'));
+    expect(result, contains('saved_result.player_id = v_uid'));
+    expect(result, isNot(contains("'opponent_answers'")));
+    expect(
+      sql,
+      contains(
+        'revoke all on function public.get_my_pending_room_result() from public, anon',
+      ),
+    );
+    expect(
+      sql,
+      contains(
+        'grant execute on function public.get_my_pending_room_result() to authenticated',
+      ),
+    );
+  });
+
+  test('exact sonuç wrapperı yalnız istenen odayı ve kendi üyeliğini kullanır', () {
+    final helper = _functionBody(sql, 'get_room_result_payload');
+    final exact = _functionBody(sql, 'get_my_room_result');
+    final pending = _functionBody(sql, 'get_my_pending_room_result');
+
+    expect(helper, contains('p_room_id uuid'));
+    expect(helper, contains('p_room_id is null or'));
+    expect(helper, contains('saved_result.room_id = p_room_id'));
+    expect(helper, contains('r.id = p_room_id'));
+    expect(helper, contains('mine.player_id = v_uid'));
+    expect(exact, contains('if p_room_id is null then'));
+    expect(exact, contains('public.get_room_result_payload(p_room_id)'));
+    expect(pending, contains('public.get_room_result_payload(null)'));
+    expect(
+      sql,
+      contains(
+        'revoke all on function public.get_room_result_payload(uuid) from public, anon, authenticated',
+      ),
+    );
+    expect(
+      sql,
+      isNot(
+        contains('grant execute on function public.get_room_result_payload'),
+      ),
+    );
+    expect(
+      sql,
+      contains(
+        'grant execute on function public.get_my_room_result(uuid) to authenticated',
+      ),
+    );
+  });
+
+  test('sonuç acknowledge üyelik ve aynı tamlık invariantıyla idempotenttir', () {
+    final acknowledge = _functionBody(sql, 'acknowledge_room_result');
+
+    expect(acknowledge, contains('v_uid uuid := auth.uid()'));
+    expect(
+      acknowledge,
+      contains(
+        "if exists ( select 1 from public.room_result_receipts receipt where receipt.room_id = p_room_id and receipt.player_id = v_uid ) then return json_build_object('acknowledged', true, 'room_id', p_room_id); end if",
+      ),
+    );
+    expect(acknowledge, contains('rp.player_id = v_uid'));
+    expect(acknowledge, contains("r.status = 'finished'"));
+    expect(acknowledge, contains("r.ended_reason = 'completed'"));
+    expect(
+      acknowledge,
+      contains('coalesce(r.current_question_index, -1) = r.question_count'),
+    );
+    expect(acknowledge, contains('bool_and(rq.revealed_at is not null)'));
+    expect(acknowledge, contains('count(*) = v_question_count * 2'));
+    expect(
+      acknowledge,
+      contains('from public.room_result_snapshots saved_result'),
+    );
+    expect(
+      acknowledge,
+      contains('insert into public.room_result_receipts (room_id, player_id)'),
+    );
+    expect(
+      acknowledge,
+      contains('on conflict (room_id, player_id) do nothing'),
+    );
+    expect(
+      sql,
+      contains(
+        'revoke all on function public.acknowledge_room_result(uuid) from public, anon',
+      ),
+    );
+    expect(
+      sql,
+      contains(
+        'grant execute on function public.acknowledge_room_result(uuid) to authenticated',
+      ),
+    );
+  });
+
+  test('hesap silme rakibe anonim immutable sonuç kanıtı bırakır', () {
+    final deleteAccount = _functionBody(sql, 'delete_my_account');
+
+    expect(deleteAccount, contains('insert into public.room_result_snapshots'));
+    expect(deleteAccount, contains("completed_room.status = 'finished'"));
+    expect(
+      deleteAccount,
+      contains("completed_room.ended_reason = 'completed'"),
+    );
+    expect(
+      deleteAccount,
+      contains("'00000000-0000-0000-0000-000000000000'::uuid"),
+    );
+    expect(deleteAccount, contains("'hesabê jêbirî'"));
+    expect(deleteAccount, contains("'question_ids'"));
+    expect(deleteAccount, contains("'players'"));
+    expect(deleteAccount, contains("'answers'"));
+    expect(deleteAccount, contains("'winner_id'"));
+    expect(deleteAccount, contains('own_answer.player_id = member.player_id'));
+    expect(deleteAccount, contains('<> completed_room.question_count'));
+    expect(
+      deleteAccount,
+      contains('on conflict (room_id, player_id) do nothing'),
+    );
+    expect(
+      deleteAccount,
+      isNot(
+        contains("raise exception 'completed room result is not acknowledged'"),
+      ),
+    );
+    expectOrdered(
+      deleteAccount,
+      'insert into public.room_result_snapshots',
+      'delete from public.player_answers',
+    );
   });
 
   test('ilk cevap pending yanıtında sonuç ve skor alanı sızdırmaz', () {

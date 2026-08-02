@@ -387,6 +387,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<RoomResumeSnapshot?> loadMyResumableRoom() async => null;
 
   @override
+  Future<RoomResultSnapshot?> loadMyPendingRoomResult() async => null;
+
+  @override
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room) async => null;
+
+  @override
+  Future<void> acknowledgeRoomResult(GameRoom room) async {}
+
+  @override
   Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async => null;
 
   @override
@@ -396,7 +405,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }) async => null;
 
   @override
-  Future<void> leaveOnlineRoom(GameRoom room) async {}
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
+    return RoomLeaveOutcome(
+      status: room.status.name,
+      reason: room.status == RoomStatus.finished ? 'completed' : 'left',
+      forfeitedBy: null,
+    );
+  }
 
   @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {

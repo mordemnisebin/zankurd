@@ -78,17 +78,21 @@ class _RoomExitRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<void> leaveOnlineRoom(GameRoom room) async {
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
     leaveCalls++;
     final pending = pendingLeave;
     if (pending != null) {
       await pending.future;
-      return;
     }
     if (failNextLeave) {
       failNextLeave = false;
       throw StateError('network details must not reach the player');
     }
+    return const RoomLeaveOutcome(
+      status: 'finished',
+      reason: 'forfeit',
+      forfeitedBy: 'player',
+    );
   }
 
   @override

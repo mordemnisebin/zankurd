@@ -42,6 +42,44 @@ alter table public.room_players
 alter table public.room_questions
   add column if not exists revealed_at timestamp with time zone;
 
+-- Sonuç ekranı gösterildikten sonra oyuncu başına kalıcı, idempotent makbuz.
+-- Tablo istemciye kapalıdır; hem okuma hem yazma yalnız aşağıdaki yetkili
+-- RPC'lerden geçer.
+create table if not exists public.room_result_receipts (
+  room_id uuid not null
+    references public.rooms(id) on delete cascade,
+  player_id uuid not null
+    references public.profiles(id) on delete cascade,
+  acknowledged_at timestamp with time zone not null
+    default clock_timestamp(),
+  primary key (room_id, player_id)
+);
+
+alter table public.room_result_receipts enable row level security;
+alter table public.room_result_receipts force row level security;
+revoke all on table public.room_result_receipts
+  from public, anon, authenticated;
+
+-- Hesap silme, kalan oyuncunun henüz görmediği sonucu bozmadan kişisel
+-- satırları kaldırabilsin. Payload yalnız sonuç sahibinin kendi cevaplarını
+-- taşır; silinen rakibin kimliği sabit, kişisel olmayan UUID/ad ile değiştirilir.
+create table if not exists public.room_result_snapshots (
+  room_id uuid not null
+    references public.rooms(id) on delete cascade,
+  player_id uuid not null
+    references public.profiles(id) on delete cascade,
+  payload jsonb not null,
+  finished_at timestamp with time zone not null,
+  room_created_at timestamp with time zone not null,
+  created_at timestamp with time zone not null default clock_timestamp(),
+  primary key (room_id, player_id)
+);
+
+alter table public.room_result_snapshots enable row level security;
+alter table public.room_result_snapshots force row level security;
+revoke all on table public.room_result_snapshots
+  from public, anon, authenticated;
+
 create index if not exists room_players_player_room_idx
   on public.room_players (player_id, room_id);
 create unique index if not exists rooms_lobby_upper_code_uidx
@@ -1142,7 +1180,8 @@ begin
   if v_room.status not in ('lobby', 'active') then
     return json_build_object(
       'status', v_room.status,
-      'reason', coalesce(v_room.ended_reason, 'already_finished')
+      'reason', coalesce(v_room.ended_reason, 'already_finished'),
+      'forfeited_by', v_room.forfeited_by
     );
   end if;
 
@@ -1182,19 +1221,28 @@ begin
     delete from public.matchmaking_queue mq
     where mq.room_id = p_room_id;
 
-    return json_build_object('status', 'finished', 'reason', 'host_left');
+    return json_build_object(
+      'status', 'finished',
+      'reason', 'host_left',
+      'forfeited_by', null
+    );
   end if;
 
   if v_room.status = 'lobby' then
     delete from public.room_players rp
     where rp.room_id = p_room_id
       and rp.player_id = v_uid;
-    return json_build_object('status', 'left', 'reason', 'guest_left');
+    return json_build_object(
+      'status', 'left',
+      'reason', 'guest_left',
+      'forfeited_by', null
+    );
   end if;
 
   return json_build_object(
     'status', v_room.status,
-    'reason', coalesce(v_room.ended_reason, 'already_finished')
+    'reason', coalesce(v_room.ended_reason, 'already_finished'),
+    'forfeited_by', v_room.forfeited_by
   );
 end;
 $$;
@@ -1214,6 +1262,12 @@ as $$
 declare
   v_user_id uuid := auth.uid();
   v_room record;
+  v_completed_room record;
+  v_remaining_player record;
+  v_players jsonb;
+  v_question_ids jsonb;
+  v_answers jsonb;
+  v_winner_id uuid;
 begin
   if v_user_id is null then
     raise exception 'Not authenticated';
@@ -1221,6 +1275,208 @@ begin
 
   perform pg_advisory_xact_lock(hashtextextended('room-membership', 0));
   perform pg_advisory_xact_lock(hashtextextended(v_user_id::text, 0));
+
+  -- Silinen oyuncunun cascade'i bitmiş maçtaki iki-skor kanıtını kaldırmadan
+  -- önce, yalnız kalan ve henüz onaylamamış oyuncu için anonim snapshot yaz.
+  for v_completed_room in
+    select
+      completed_room.id,
+      completed_room.code,
+      completed_room.host_id,
+      completed_room.question_count,
+      completed_room.seconds_per_question,
+      completed_room.current_question_index,
+      completed_room.ended_reason,
+      completed_room.forfeited_by,
+      completed_room.finished_at,
+      completed_room.created_at,
+      coalesce(category.name, 'Ziman') as category_name
+    from public.rooms completed_room
+    join public.room_players deleting_member
+      on deleting_member.room_id = completed_room.id
+      and deleting_member.player_id = v_user_id
+    left join public.categories category
+      on category.id = completed_room.category_id
+    where completed_room.status = 'finished'
+      and completed_room.ended_reason = 'completed'
+      and completed_room.forfeited_by is null
+      and completed_room.finished_at is not null
+      and completed_room.question_count > 0
+      and coalesce(completed_room.current_question_index, -1)
+        = completed_room.question_count
+      and exists (
+        select 1
+        from public.room_players exact_players
+        where exact_players.room_id = completed_room.id
+        having count(*) = 2
+      )
+      and exists (
+        select 1
+        from public.room_questions revealed_question
+        where revealed_question.room_id = completed_room.id
+        having count(*) = completed_room.question_count
+          and count(distinct revealed_question.question_index)
+            = completed_room.question_count
+          and min(revealed_question.question_index) = 0
+          and max(revealed_question.question_index)
+            = completed_room.question_count - 1
+          and bool_and(revealed_question.revealed_at is not null)
+      )
+      and exists (
+        select 1
+        from public.player_answers exact_answer
+        join public.room_questions answered_question
+          on answered_question.room_id = exact_answer.room_id
+          and answered_question.question_id = exact_answer.question_id
+        join public.room_players answering_player
+          on answering_player.room_id = exact_answer.room_id
+          and answering_player.player_id = exact_answer.player_id
+        where exact_answer.room_id = completed_room.id
+        having count(*) = completed_room.question_count * 2
+      )
+      and not exists (
+        select 1
+        from public.room_players member
+        where member.room_id = completed_room.id
+          and (
+            select count(*)
+            from public.player_answers own_answer
+            join public.room_questions own_question
+              on own_question.room_id = own_answer.room_id
+              and own_question.question_id = own_answer.question_id
+            where own_answer.room_id = member.room_id
+              and own_answer.player_id = member.player_id
+          ) <> completed_room.question_count
+      )
+      and not exists (
+        select 1
+        from public.room_players scored_player
+        where scored_player.room_id = completed_room.id
+          and scored_player.score <> (
+            select coalesce(sum(scored_answer.points_awarded), 0)::integer
+            from public.player_answers scored_answer
+            where scored_answer.room_id = scored_player.room_id
+              and scored_answer.player_id = scored_player.player_id
+          )
+      )
+    order by completed_room.id
+    for update of completed_room
+  loop
+    for v_remaining_player in
+      select remaining.player_id
+      from public.room_players remaining
+      where remaining.room_id = v_completed_room.id
+        and remaining.player_id <> v_user_id
+        and not exists (
+          select 1
+          from public.room_result_receipts receipt
+          where receipt.room_id = remaining.room_id
+            and receipt.player_id = remaining.player_id
+        )
+    loop
+      select jsonb_agg(
+        jsonb_build_object(
+          'player_id', case
+            when rp.player_id = v_user_id then
+              '00000000-0000-0000-0000-000000000000'::uuid
+            else rp.player_id
+          end,
+          'display_name', case
+            when rp.player_id = v_user_id then 'Hesabê jêbirî'
+            else coalesce(nullif(trim(profile.display_name), ''), 'Hevrik')
+          end,
+          'final_score', rp.score,
+          'final_streak', rp.streak
+        ) order by rp.joined_at, rp.player_id
+      )
+      into v_players
+      from public.room_players rp
+      join public.profiles profile on profile.id = rp.player_id
+      where rp.room_id = v_completed_room.id;
+
+      select jsonb_agg(rq.question_id order by rq.question_index)
+      into v_question_ids
+      from public.room_questions rq
+      where rq.room_id = v_completed_room.id;
+
+      select jsonb_agg(
+        jsonb_build_object(
+          'question_id', rq.question_id,
+          'question_index', rq.question_index,
+          'selected_option', pa.selected_option,
+          'correct_option', question.correct_option,
+          'is_correct', pa.is_correct,
+          'points_awarded', pa.points_awarded,
+          'response_ms', pa.response_ms,
+          'explanation', question.explanation,
+          'explanation_ku', question.explanation_ku,
+          'explanation_tr', question.explanation_tr
+        ) order by rq.question_index
+      )
+      into v_answers
+      from public.player_answers pa
+      join public.room_questions rq
+        on rq.room_id = pa.room_id and rq.question_id = pa.question_id
+      join public.questions question on question.id = pa.question_id
+      where pa.room_id = v_completed_room.id
+        and pa.player_id = v_remaining_player.player_id;
+
+      select case
+        when min(rp.score) = max(rp.score) then null
+        when (array_agg(
+          rp.player_id order by rp.score desc, rp.player_id
+        ))[1] = v_user_id then
+          '00000000-0000-0000-0000-000000000000'::uuid
+        else (array_agg(
+          rp.player_id order by rp.score desc, rp.player_id
+        ))[1]
+      end
+      into v_winner_id
+      from public.room_players rp
+      where rp.room_id = v_completed_room.id;
+
+      insert into public.room_result_snapshots (
+        room_id,
+        player_id,
+        payload,
+        finished_at,
+        room_created_at
+      ) values (
+        v_completed_room.id,
+        v_remaining_player.player_id,
+        jsonb_build_object(
+          'room', jsonb_build_object(
+            'id', v_completed_room.id,
+            'code', v_completed_room.code,
+            'host_id', case
+              when v_completed_room.host_id = v_user_id then null
+              else v_completed_room.host_id
+            end,
+            'category_name', v_completed_room.category_name,
+            'question_count', v_completed_room.question_count,
+            'seconds_per_question', coalesce(
+              v_completed_room.seconds_per_question,
+              30
+            ),
+            'status', 'finished',
+            'current_question_index',
+              v_completed_room.current_question_index
+          ),
+          'own_player_id', v_remaining_player.player_id,
+          'players', v_players,
+          'question_ids', v_question_ids,
+          'answers', v_answers,
+          'winner_id', v_winner_id,
+          'ended_reason', v_completed_room.ended_reason,
+          'forfeited_by', v_completed_room.forfeited_by,
+          'finished_at', v_completed_room.finished_at
+        ),
+        v_completed_room.finished_at,
+        v_completed_room.created_at
+      )
+      on conflict (room_id, player_id) do nothing;
+    end loop;
+  end loop;
 
   for v_room in
     select r.id, r.status, r.host_id
@@ -1550,12 +1806,19 @@ begin
   end if;
 
   v_reason := 'quiz_complete:room=' || p_room_id::text;
-  if exists (
-    select 1 from public.coin_transactions
-    where player_id = v_player_id
-      and reason = v_reason
-  ) then
-    return jsonb_build_object('amount', 0, 'already_claimed', true);
+  select max(coin_tx.amount)::integer
+  into v_amount
+  from public.coin_transactions coin_tx
+  where coin_tx.player_id = v_player_id
+    and coin_tx.reason = v_reason;
+  if v_amount is not null then
+    -- İlk claim commit olduktan sonra sonuç ekranı açılmadan uygulama
+    -- kapanabilir. Retry yeni coin yazmaz; fakat daha önce gerçekten
+    -- yatırılan miktarı döndürür ki kurtarılan sonuç ekranı 0 göstermesin.
+    return jsonb_build_object(
+      'amount', v_amount,
+      'already_claimed', true
+    );
   end if;
 
   v_amount :=
@@ -1877,6 +2140,408 @@ $$;
 
 revoke all on function public.get_my_resumable_room() from public, anon;
 grant execute on function public.get_my_resumable_room() to authenticated;
+
+-- Yalnız eksiksiz tamamlanmış ve henüz kullanıcı tarafından onaylanmamış
+-- en yeni maç döner. Rakibin seçili cevapları hiçbir JSON dalına eklenmez.
+create or replace function public.get_room_result_payload(p_room_id uuid)
+returns json
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_uid uuid := auth.uid();
+  v_room record;
+  v_players jsonb;
+  v_question_ids jsonb;
+  v_answers jsonb;
+  v_winner_id uuid;
+  v_saved_result record;
+  v_saved_found boolean := false;
+  v_live_found boolean := false;
+begin
+  if v_uid is null then
+    raise exception 'Not authenticated';
+  end if;
+
+  select
+    saved_result.room_id,
+    saved_result.payload,
+    saved_result.finished_at,
+    saved_result.room_created_at
+  into v_saved_result
+  from public.room_result_snapshots saved_result
+  join public.room_players saved_member
+    on saved_member.room_id = saved_result.room_id
+    and saved_member.player_id = saved_result.player_id
+  where saved_result.player_id = v_uid
+    and (p_room_id is null or saved_result.room_id = p_room_id)
+    and not exists (
+      select 1
+      from public.room_result_receipts receipt
+      where receipt.room_id = saved_result.room_id
+        and receipt.player_id = v_uid
+    )
+  order by
+    saved_result.finished_at desc,
+    saved_result.room_created_at desc,
+    saved_result.room_id desc
+  limit 1;
+  v_saved_found := found;
+
+  select
+    r.id,
+    r.code,
+    r.host_id,
+    r.question_count,
+    coalesce(r.seconds_per_question, 30) as seconds_per_question,
+    r.current_question_index,
+    r.ended_reason,
+    r.forfeited_by,
+    r.finished_at,
+    r.created_at,
+    coalesce(c.name, 'Ziman') as category_name
+  into v_room
+  from public.rooms r
+  join public.room_players mine
+    on mine.room_id = r.id and mine.player_id = v_uid
+  left join public.categories c on c.id = r.category_id
+  where r.status = 'finished'
+    and (p_room_id is null or r.id = p_room_id)
+    and r.ended_reason = 'completed'
+    and r.forfeited_by is null
+    and r.finished_at is not null
+    and r.question_count > 0
+    and coalesce(r.current_question_index, -1) = r.question_count
+    and not exists (
+      select 1
+      from public.room_result_receipts receipt
+      where receipt.room_id = r.id
+        and receipt.player_id = v_uid
+    )
+    and exists (
+      select 1
+      from public.room_players exact_players
+      where exact_players.room_id = r.id
+      having count(*) = 2
+    )
+    and exists (
+      select 1
+      from public.room_questions rq
+      where rq.room_id = r.id
+      having count(*) = r.question_count
+        and count(distinct rq.question_index) = r.question_count
+        and min(rq.question_index) = 0
+        and max(rq.question_index) = r.question_count - 1
+        and bool_and(rq.revealed_at is not null)
+    )
+    and exists (
+      select 1
+      from public.player_answers pa
+      join public.room_questions answered_question
+        on answered_question.room_id = pa.room_id
+        and answered_question.question_id = pa.question_id
+      join public.room_players answering_player
+        on answering_player.room_id = pa.room_id
+        and answering_player.player_id = pa.player_id
+      where pa.room_id = r.id
+      having count(*) = r.question_count * 2
+    )
+    and not exists (
+      select 1
+      from public.room_players member
+      where member.room_id = r.id
+        and (
+          select count(*)
+          from public.player_answers own_answer
+          join public.room_questions own_question
+            on own_question.room_id = own_answer.room_id
+            and own_question.question_id = own_answer.question_id
+          where own_answer.room_id = member.room_id
+            and own_answer.player_id = member.player_id
+        ) <> r.question_count
+    )
+    and not exists (
+      select 1
+      from public.room_players scored_player
+      where scored_player.room_id = r.id
+        and scored_player.score <> (
+          select coalesce(sum(scored_answer.points_awarded), 0)::integer
+          from public.player_answers scored_answer
+          where scored_answer.room_id = scored_player.room_id
+            and scored_answer.player_id = scored_player.player_id
+        )
+    )
+  order by r.finished_at desc, r.created_at desc, r.id desc
+  limit 1
+  for share of r;
+  v_live_found := found;
+
+  if not v_live_found and not v_saved_found then
+    return null;
+  end if;
+
+  if v_saved_found and (
+    not v_live_found
+    or row(
+      v_saved_result.finished_at,
+      v_saved_result.room_created_at,
+      v_saved_result.room_id
+    ) > row(v_room.finished_at, v_room.created_at, v_room.id)
+  ) then
+    return v_saved_result.payload;
+  end if;
+
+  select jsonb_agg(
+    jsonb_build_object(
+      'player_id', rp.player_id,
+      'display_name', coalesce(nullif(trim(p.display_name), ''), 'Hevrik'),
+      'final_score', rp.score,
+      'final_streak', rp.streak
+    ) order by rp.joined_at, rp.player_id
+  )
+  into v_players
+  from public.room_players rp
+  join public.profiles p on p.id = rp.player_id
+  where rp.room_id = v_room.id;
+
+  select jsonb_agg(rq.question_id order by rq.question_index)
+  into v_question_ids
+  from public.room_questions rq
+  where rq.room_id = v_room.id;
+
+  select jsonb_agg(
+    jsonb_build_object(
+      'question_id', rq.question_id,
+      'question_index', rq.question_index,
+      'selected_option', pa.selected_option,
+      'correct_option', q.correct_option,
+      'is_correct', pa.is_correct,
+      'points_awarded', pa.points_awarded,
+      'response_ms', pa.response_ms,
+      'explanation', q.explanation,
+      'explanation_ku', q.explanation_ku,
+      'explanation_tr', q.explanation_tr
+    ) order by rq.question_index
+  )
+  into v_answers
+  from public.player_answers pa
+  join public.room_questions rq
+    on rq.room_id = pa.room_id and rq.question_id = pa.question_id
+  join public.questions q on q.id = pa.question_id
+  where pa.room_id = v_room.id
+    and pa.player_id = v_uid;
+
+  select case
+    when min(rp.score) = max(rp.score) then null
+    else (array_agg(rp.player_id order by rp.score desc, rp.player_id))[1]
+  end
+  into v_winner_id
+  from public.room_players rp
+  where rp.room_id = v_room.id;
+
+  return json_build_object(
+    'room', json_build_object(
+      'id', v_room.id,
+      'code', v_room.code,
+      'host_id', v_room.host_id,
+      'category_name', v_room.category_name,
+      'question_count', v_room.question_count,
+      'seconds_per_question', v_room.seconds_per_question,
+      'status', 'finished',
+      'current_question_index', v_room.current_question_index
+    ),
+    'own_player_id', v_uid,
+    'players', v_players,
+    'question_ids', v_question_ids,
+    'answers', v_answers,
+    'winner_id', v_winner_id,
+    'ended_reason', v_room.ended_reason,
+    'forfeited_by', v_room.forfeited_by,
+    'finished_at', v_room.finished_at
+  );
+end;
+$$;
+
+revoke all on function public.get_room_result_payload(uuid)
+  from public, anon, authenticated;
+
+create or replace function public.get_my_room_result(p_room_id uuid)
+returns json
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if p_room_id is null then
+    raise exception 'Room id is required';
+  end if;
+  return public.get_room_result_payload(p_room_id);
+end;
+$$;
+
+revoke all on function public.get_my_room_result(uuid) from public, anon;
+grant execute on function public.get_my_room_result(uuid) to authenticated;
+
+create or replace function public.get_my_pending_room_result()
+returns json
+language sql
+security definer
+set search_path = public
+as $$
+  select public.get_room_result_payload(null);
+$$;
+
+revoke all on function public.get_my_pending_room_result()
+  from public, anon;
+grant execute on function public.get_my_pending_room_result()
+  to authenticated;
+
+create or replace function public.acknowledge_room_result(p_room_id uuid)
+returns json
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_uid uuid := auth.uid();
+  v_question_count integer;
+begin
+  if v_uid is null then
+    raise exception 'Not authenticated';
+  end if;
+
+  -- İlk çağrı commit olup ağ yanıtı kaybolmuş olabilir. Makbuz zaten varsa
+  -- kanıt satırları daha sonra anonimleştirilmiş/silinmiş olsa bile aynı
+  -- başarılı sonucu döndür; idempotent retry yeniden tamlık aramamalıdır.
+  if exists (
+    select 1
+    from public.room_result_receipts receipt
+    where receipt.room_id = p_room_id
+      and receipt.player_id = v_uid
+  ) then
+    return json_build_object('acknowledged', true, 'room_id', p_room_id);
+  end if;
+
+  -- Hesap silme öncesi güvenilir fonksiyonun ürettiği immutable snapshot,
+  -- silinen rakibin kişisel satırları artık bulunmasa da aynı tamlık kanıtıdır.
+  if exists (
+    select 1
+    from public.room_result_snapshots saved_result
+    join public.room_players saved_member
+      on saved_member.room_id = saved_result.room_id
+      and saved_member.player_id = saved_result.player_id
+    join public.rooms saved_room on saved_room.id = saved_result.room_id
+    where saved_result.room_id = p_room_id
+      and saved_result.player_id = v_uid
+      and saved_room.status = 'finished'
+      and saved_room.ended_reason = 'completed'
+      and saved_result.payload ->> 'own_player_id' = v_uid::text
+      and saved_result.payload ->> 'ended_reason' = 'completed'
+      and saved_result.payload -> 'room' ->> 'id' = p_room_id::text
+      and saved_result.payload -> 'room' ->> 'status' = 'finished'
+      and (
+        saved_result.payload -> 'room' ->> 'current_question_index'
+      )::integer = (
+        saved_result.payload -> 'room' ->> 'question_count'
+      )::integer
+      and jsonb_array_length(saved_result.payload -> 'players') = 2
+      and jsonb_array_length(saved_result.payload -> 'question_ids') = (
+        saved_result.payload -> 'room' ->> 'question_count'
+      )::integer
+      and jsonb_array_length(saved_result.payload -> 'answers') = (
+        saved_result.payload -> 'room' ->> 'question_count'
+      )::integer
+  ) then
+    insert into public.room_result_receipts (room_id, player_id)
+    values (p_room_id, v_uid)
+    on conflict (room_id, player_id) do nothing;
+
+    return json_build_object('acknowledged', true, 'room_id', p_room_id);
+  end if;
+
+  select r.question_count
+  into v_question_count
+  from public.rooms r
+  join public.room_players rp on rp.room_id = r.id
+  where r.id = p_room_id
+    and rp.player_id = v_uid
+    and r.status = 'finished'
+    and r.ended_reason = 'completed'
+    and r.forfeited_by is null
+    and r.finished_at is not null
+    and r.question_count > 0
+    and coalesce(r.current_question_index, -1) = r.question_count
+  for share of r;
+
+  if not found then
+    raise exception 'Completed room result is unavailable';
+  end if;
+
+  if not exists (
+    select 1
+    from public.room_players exact_players
+    where exact_players.room_id = p_room_id
+    having count(*) = 2
+  ) or not exists (
+    select 1
+    from public.room_questions rq
+    where rq.room_id = p_room_id
+    having count(*) = v_question_count
+      and count(distinct rq.question_index) = v_question_count
+      and min(rq.question_index) = 0
+      and max(rq.question_index) = v_question_count - 1
+      and bool_and(rq.revealed_at is not null)
+  ) or not exists (
+    select 1
+    from public.player_answers pa
+    join public.room_questions answered_question
+      on answered_question.room_id = pa.room_id
+      and answered_question.question_id = pa.question_id
+    join public.room_players answering_player
+      on answering_player.room_id = pa.room_id
+      and answering_player.player_id = pa.player_id
+    where pa.room_id = p_room_id
+    having count(*) = v_question_count * 2
+  ) or exists (
+    select 1
+    from public.room_players member
+    where member.room_id = p_room_id
+      and (
+        select count(*)
+        from public.player_answers own_answer
+        join public.room_questions own_question
+          on own_question.room_id = own_answer.room_id
+          and own_question.question_id = own_answer.question_id
+        where own_answer.room_id = member.room_id
+          and own_answer.player_id = member.player_id
+      ) <> v_question_count
+  ) or exists (
+    select 1
+    from public.room_players scored_player
+    where scored_player.room_id = p_room_id
+      and scored_player.score <> (
+        select coalesce(sum(scored_answer.points_awarded), 0)::integer
+        from public.player_answers scored_answer
+        where scored_answer.room_id = scored_player.room_id
+          and scored_answer.player_id = scored_player.player_id
+      )
+  ) then
+    raise exception 'Completed room result is incomplete';
+  end if;
+
+  insert into public.room_result_receipts (room_id, player_id)
+  values (p_room_id, v_uid)
+  on conflict (room_id, player_id) do nothing;
+
+  return json_build_object('acknowledged', true, 'room_id', p_room_id);
+end;
+$$;
+
+revoke all on function public.acknowledge_room_result(uuid)
+  from public, anon;
+grant execute on function public.acknowledge_room_result(uuid)
+  to authenticated;
 
 drop function if exists public.advance_room_question(uuid);
 

@@ -88,6 +88,15 @@ abstract class ZanKurdRepository {
   /// Aktif üyelik yoksa null; RPC veya şema hataları çağırana iletilir.
   Future<RoomResumeSnapshot?> loadMyResumableRoom();
 
+  /// Kullanıcının henüz onaylamadığı en yeni eksiksiz maç sonucunu yükler.
+  Future<RoomResultSnapshot?> loadMyPendingRoomResult();
+
+  /// Yalnız verilen odanın henüz onaylanmamış eksiksiz sonucunu yükler.
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room);
+
+  /// Terminal sonuç gösterildikten sonra makbuzu idempotent biçimde yazar.
+  Future<void> acknowledgeRoomResult(GameRoom room);
+
   /// İstemcinin aktif oda sorularını yüklediğini sunucu bariyerine bildirir.
   Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room);
 
@@ -98,7 +107,7 @@ abstract class ZanKurdRepository {
   });
 
   /// Çevrimiçi odadan sunucunun yetkili çıkış sözleşmesiyle ayrılır.
-  Future<void> leaveOnlineRoom(GameRoom room);
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room);
 
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);

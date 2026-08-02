@@ -181,13 +181,18 @@ class _SessionRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<void> leaveOnlineRoom(GameRoom room) async {
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
     leaveCalls++;
     if (failLeave) {
       failLeave = false;
       throw StateError('network detail must stay hidden');
     }
     await pendingLeave?.future;
+    return const RoomLeaveOutcome(
+      status: 'finished',
+      reason: 'forfeit',
+      forfeitedBy: 'player',
+    );
   }
 
   @override

@@ -102,6 +102,12 @@ class _RoomSnapshotHttpClient extends http.BaseClient {
 class _RoomSessionHttpClient extends http.BaseClient {
   _RoomSessionHttpClient({
     this.resumeResponse,
+    this.resultResponse,
+    this.leaveResponse = const {
+      'status': 'finished',
+      'reason': 'forfeit',
+      'forfeited_by': 'host-id',
+    },
     this.rpcErrorCode,
     this.roomPlayersResponse = const [
       {
@@ -122,6 +128,8 @@ class _RoomSessionHttpClient extends http.BaseClient {
   });
 
   final Object? resumeResponse;
+  final Object? resultResponse;
+  final Object? leaveResponse;
   final String? rpcErrorCode;
   final Object roomPlayersResponse;
   final requestedPaths = <String>[];
@@ -153,6 +161,12 @@ class _RoomSessionHttpClient extends http.BaseClient {
         return _jsonResponse(request, _roomRpcSnapshot);
       case '/rest/v1/rpc/get_my_resumable_room':
         return _jsonResponse(request, resumeResponse);
+      case '/rest/v1/rpc/get_my_pending_room_result':
+        return _jsonResponse(request, resultResponse);
+      case '/rest/v1/rpc/get_my_room_result':
+        return _jsonResponse(request, resultResponse);
+      case '/rest/v1/rpc/acknowledge_room_result':
+        return _jsonResponse(request, const {'acknowledged': true});
       case '/rest/v1/rpc/mark_room_client_ready':
         return _jsonResponse(request, const {'status': 'waiting'});
       case '/rest/v1/rpc/advance_room_question':
@@ -160,10 +174,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
       case '/rest/v1/rpc/set_room_ready':
         return _jsonResponse(request, null);
       case '/rest/v1/rpc/leave_room':
-        return _jsonResponse(request, const {
-          'status': 'finished',
-          'reason': 'forfeit',
-        });
+        return _jsonResponse(request, leaveResponse);
       case '/rest/v1/rpc/cancel_matchmaking':
         return _jsonResponse(request, const {
           'status': 'matched',
@@ -220,6 +231,65 @@ const _roomRpcSnapshot = {
   'question_count': 10,
   'seconds_per_question': 20,
   'status': 'lobby',
+};
+
+const _completedRoomResult = {
+  'room': {
+    'id': '00000000-0000-0000-0000-000000000099',
+    'code': 'ZK-RSME',
+    'host_id': 'host-id',
+    'category_name': 'Ziman',
+    'question_count': 2,
+    'seconds_per_question': 20,
+    'status': 'finished',
+    'current_question_index': 2,
+  },
+  'own_player_id': 'host-id',
+  'players': [
+    {
+      'player_id': 'host-id',
+      'display_name': 'Berfin',
+      'final_score': 250,
+      'final_streak': 1,
+    },
+    {
+      'player_id': 'guest-id',
+      'display_name': 'Rojda',
+      'final_score': 100,
+      'final_streak': 0,
+    },
+  ],
+  'question_ids': ['question-1', 'question-2'],
+  'answers': [
+    {
+      'question_id': 'question-1',
+      'question_index': 0,
+      'selected_option': 'A',
+      'correct_option': 'B',
+      'is_correct': false,
+      'points_awarded': 0,
+      'response_ms': 4100,
+      'explanation': 'Açıklama',
+      'explanation_ku': 'Ravekirin',
+      'explanation_tr': 'Açıklama',
+    },
+    {
+      'question_id': 'question-2',
+      'question_index': 1,
+      'selected_option': 'C',
+      'correct_option': 'C',
+      'is_correct': true,
+      'points_awarded': 250,
+      'response_ms': 1200,
+      'explanation': null,
+      'explanation_ku': null,
+      'explanation_tr': null,
+    },
+  ],
+  'winner_id': 'host-id',
+  'ended_reason': 'completed',
+  'forfeited_by': null,
+  'finished_at': '2026-08-02T12:01:00.000Z',
 };
 
 class _SignedInRoomSessionRepository extends SupabaseZanKurdRepository {
@@ -502,6 +572,294 @@ void main() {
   });
 
   test(
+    'terminal sonuç RPCsi eksiksiz ve kanonik snapshotı parse eder',
+    () async {
+      final httpClient = _RoomSessionHttpClient(
+        resultResponse: _completedRoomResult,
+      );
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final result = await repository.loadMyPendingRoomResult();
+
+      expect(result, isNotNull);
+      expect(result!.room.id, '00000000-0000-0000-0000-000000000099');
+      expect(result.room.status, RoomStatus.finished);
+      expect(result.room.players.map((player) => player.id), [
+        'host-id',
+        'guest-id',
+      ]);
+      expect(result.room.players.map((player) => player.score), [250, 100]);
+      expect(result.ownPlayerId, 'host-id');
+      expect(result.questionIds, ['question-1', 'question-2']);
+      expect(result.answers.map((answer) => answer.questionIndex), [0, 1]);
+      expect(result.answers.last.correctOptionKey, 'C');
+      expect(result.winnerId, 'host-id');
+      expect(result.endedReason, 'completed');
+      expect(result.forfeitedBy, isNull);
+      expect(result.finishedAt, DateTime.utc(2026, 8, 2, 12, 1));
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/rpc/get_my_pending_room_result',
+      ]);
+    },
+  );
+
+  test('terminal sonuç RPCsi null dönerse pending sonuç yoktur', () async {
+    final httpClient = _RoomSessionHttpClient();
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    expect(await repository.loadMyPendingRoomResult(), isNull);
+    expect(httpClient.requestedPaths, [
+      '/rest/v1/rpc/get_my_pending_room_result',
+    ]);
+  });
+
+  test('exact terminal sonuç yalnız istenen oda kimliğiyle yüklenir', () async {
+    final httpClient = _RoomSessionHttpClient(
+      resultResponse: _completedRoomResult,
+    );
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+    const room = GameRoom(
+      id: '00000000-0000-0000-0000-000000000099',
+      name: '1vs1',
+      code: 'ZK-RSME',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.finished,
+      questionCount: 2,
+    );
+
+    final result = await repository.loadRoomResult(room);
+
+    expect(result?.room.id, room.id);
+    expect(httpClient.requestedPaths, ['/rest/v1/rpc/get_my_room_result']);
+    expect(httpClient.requestBodies, [
+      {'p_room_id': room.id},
+    ]);
+  });
+
+  test(
+    'exact terminal sonuç null ve oda kimliği hatasını güvenli işler',
+    () async {
+      final httpClient = _RoomSessionHttpClient();
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+      const exactRoom = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: '1vs1',
+        code: 'ZK-RSME',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.finished,
+        questionCount: 2,
+      );
+      const localRoom = GameRoom(
+        name: '1vs1',
+        code: 'ZK-LOCAL',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.finished,
+        questionCount: 2,
+      );
+
+      expect(await repository.loadRoomResult(exactRoom), isNull);
+      await expectLater(
+        repository.loadRoomResult(localRoom),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/get_my_room_result']);
+    },
+  );
+
+  test('exact terminal sonuç başka oda veya bozuk payloadı reddeder', () async {
+    const requestedRoom = GameRoom(
+      id: '00000000-0000-0000-0000-000000000042',
+      name: '1vs1',
+      code: 'ZK-OTHR',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.finished,
+      questionCount: 2,
+    );
+    const matchingRoom = GameRoom(
+      id: '00000000-0000-0000-0000-000000000099',
+      name: '1vs1',
+      code: 'ZK-RSME',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.finished,
+      questionCount: 2,
+    );
+    final mismatchedRepository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: _RoomSessionHttpClient(
+          resultResponse: _completedRoomResult,
+        ),
+      ),
+    );
+    final malformedRepository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: _RoomSessionHttpClient(
+          resultResponse: const {
+            ..._completedRoomResult,
+            'opponent_answers': <Object>[],
+          },
+        ),
+      ),
+    );
+
+    await expectLater(
+      mismatchedRepository.loadRoomResult(requestedRoom),
+      throwsA(isA<FormatException>()),
+    );
+    await expectLater(
+      malformedRepository.loadRoomResult(matchingRoom),
+      throwsA(isA<FormatException>()),
+    );
+  });
+
+  test(
+    'terminal sonuç parserı eksik, tutarsız ve sızıntılı payloadı reddeder',
+    () async {
+      final malformedPayloads = <Map<String, Object?>>[
+        {..._completedRoomResult, 'ended_reason': 'forfeit'},
+        {
+          ..._completedRoomResult,
+          'room': {
+            ..._completedRoomResult['room']! as Map<String, Object?>,
+            'current_question_index': 1,
+          },
+        },
+        {
+          ..._completedRoomResult,
+          'answers': (_completedRoomResult['answers']! as List<Object?>)
+              .take(1)
+              .toList(),
+        },
+        {
+          ..._completedRoomResult,
+          'question_ids': ['question-2', 'question-1'],
+        },
+        {
+          ..._completedRoomResult,
+          'opponent_answers': [
+            {'selected_option': 'B'},
+          ],
+        },
+        {
+          ..._completedRoomResult,
+          'players': [
+            ..._completedRoomResult['players']! as List<Object?>,
+            {
+              'player_id': 'third-id',
+              'display_name': 'Azad',
+              'final_score': 0,
+              'final_streak': 0,
+            },
+          ],
+        },
+        {
+          ..._completedRoomResult,
+          'players': [
+            {
+              ...(_completedRoomResult['players']! as List<Object?>).first
+                  as Map<String, Object?>,
+              'final_score': 251,
+            },
+            (_completedRoomResult['players']! as List<Object?>).last,
+          ],
+        },
+        {
+          ..._completedRoomResult,
+          'answers': [
+            {
+              ...(_completedRoomResult['answers']! as List<Object?>).first
+                  as Map<String, Object?>,
+              'opponent_selected_option': 'B',
+            },
+            (_completedRoomResult['answers']! as List<Object?>).last,
+          ],
+        },
+        {..._completedRoomResult, 'winner_id': 'guest-id'},
+      ];
+
+      for (final payload in malformedPayloads) {
+        final repository = SupabaseZanKurdRepository(
+          SupabaseClient(
+            'https://example.supabase.co',
+            'sb_publishable_test_key',
+            httpClient: _RoomSessionHttpClient(resultResponse: payload),
+          ),
+        );
+
+        await expectLater(
+          repository.loadMyPendingRoomResult(),
+          throwsA(isA<FormatException>()),
+          reason: 'Bozuk terminal payload reddedilmelidir: $payload',
+        );
+      }
+    },
+  );
+
+  test(
+    'terminal sonuç acknowledge RPCsi yalnız oda kimliğini gönderir',
+    () async {
+      final httpClient = _RoomSessionHttpClient();
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: '1vs1',
+        code: 'ZK-RSME',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.finished,
+        questionCount: 2,
+      );
+
+      await repository.acknowledgeRoomResult(room);
+
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/rpc/acknowledge_room_result',
+      ]);
+      expect(httpClient.requestBodies, [
+        {'p_room_id': '00000000-0000-0000-0000-000000000099'},
+      ]);
+    },
+  );
+
+  test(
     'resume RPC pending_answer alanını zorunlu ve tip güvenli parse eder',
     () async {
       const baseResume = {
@@ -642,6 +1000,106 @@ void main() {
     );
   });
 
+  test('leave room atomik RPC sonucunu parse eder', () async {
+    for (final expectation in [
+      (
+        payload: const {
+          'status': 'finished',
+          'reason': 'completed',
+          'forfeited_by': null,
+        },
+        status: 'finished',
+        reason: 'completed',
+        forfeitedBy: null,
+        completed: true,
+      ),
+      (
+        payload: const {
+          'status': 'finished',
+          'reason': 'forfeit',
+          'forfeited_by': 'guest-id',
+        },
+        status: 'finished',
+        reason: 'forfeit',
+        forfeitedBy: 'guest-id',
+        completed: false,
+      ),
+      (
+        payload: const {
+          'status': 'left',
+          'reason': 'guest_left',
+          'forfeited_by': null,
+        },
+        status: 'left',
+        reason: 'guest_left',
+        forfeitedBy: null,
+        completed: false,
+      ),
+    ]) {
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(
+            leaveResponse: expectation.payload,
+          ),
+        ),
+      );
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: '1vs1',
+        code: 'ZK-RSME',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.active,
+        questionCount: 10,
+      );
+
+      final outcome = await repository.leaveOnlineRoom(room);
+
+      expect(outcome.status, expectation.status);
+      expect(outcome.reason, expectation.reason);
+      expect(outcome.forfeitedBy, expectation.forfeitedBy);
+      expect(outcome.completed, expectation.completed);
+    }
+  });
+
+  test('leave room eksik, fazla veya yanlış tipli cevabı reddeder', () async {
+    final malformed = <Object?>[
+      const {'status': 'finished', 'reason': 'completed'},
+      const {
+        'status': 'finished',
+        'reason': 'completed',
+        'forfeited_by': null,
+        'score': 100,
+      },
+      const {'status': 'finished', 'reason': 3, 'forfeited_by': null},
+    ];
+    const room = GameRoom(
+      id: '00000000-0000-0000-0000-000000000099',
+      name: '1vs1',
+      code: 'ZK-RSME',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.active,
+      questionCount: 10,
+    );
+
+    for (final payload in malformed) {
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(leaveResponse: payload),
+        ),
+      );
+      await expectLater(
+        repository.leaveOnlineRoom(room),
+        throwsA(isA<FormatException>()),
+      );
+    }
+  });
+
   test(
     'leave room ve cancel matchmaking yetkili RPC sözleşmesini kullanır',
     () async {
@@ -663,9 +1121,11 @@ void main() {
         questionCount: 10,
       );
 
-      await repository.leaveOnlineRoom(room);
+      final outcome = await repository.leaveOnlineRoom(room);
       final cancellation = await repository.cancelMatchmaking();
 
+      expect(outcome.reason, 'forfeit');
+      expect(outcome.forfeitedBy, 'host-id');
       expect(cancellation['status'], 'matched');
       expect(httpClient.requestedPaths, [
         '/rest/v1/rpc/leave_room',

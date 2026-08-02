@@ -87,6 +87,33 @@ class RoomResumeSnapshot {
   final int remainingMs;
 }
 
+/// Sunucuda eksiksiz tamamlanmış bir 1v1 maçın kalıcı sonuç snapshot'ı.
+///
+/// Aktif oda resume verisinden ayrıdır: yalnız terminal indeks, iki oyuncunun
+/// kesin skoru ve kullanıcının tüm reveal edilmiş cevaplarıyla kurulabilir.
+class RoomResultSnapshot {
+  RoomResultSnapshot({
+    required this.room,
+    required this.ownPlayerId,
+    required List<String> questionIds,
+    required List<ResumedAnswer> answers,
+    required this.winnerId,
+    required this.endedReason,
+    required this.forfeitedBy,
+    required this.finishedAt,
+  }) : questionIds = List.unmodifiable(questionIds),
+       answers = List.unmodifiable(answers);
+
+  final GameRoom room;
+  final String ownPlayerId;
+  final List<String> questionIds;
+  final List<ResumedAnswer> answers;
+  final String? winnerId;
+  final String endedReason;
+  final String? forfeitedBy;
+  final DateTime finishedAt;
+}
+
 /// Bitmiş oda ile rakip terkinden doğan hükmen bitişi ayıran küçük model.
 class RoomEndState {
   const RoomEndState({
@@ -98,6 +125,21 @@ class RoomEndState {
   final RoomStatus status;
   final String? endedReason;
   final String? forfeitedBy;
+}
+
+/// `leave_room` transactionının sunucuda kesinleşmiş ham sonucu.
+class RoomLeaveOutcome {
+  const RoomLeaveOutcome({
+    required this.status,
+    required this.reason,
+    required this.forfeitedBy,
+  });
+
+  final String status;
+  final String reason;
+  final String? forfeitedBy;
+
+  bool get completed => status == 'finished' && reason == 'completed';
 }
 
 /// Karışması zor karakterlerden (I/O/0/1 yok) 4 haneli oda kodu üretir.
