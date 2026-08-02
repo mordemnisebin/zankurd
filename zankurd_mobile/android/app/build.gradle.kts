@@ -86,6 +86,16 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+            // Native crash'ler sembolsüz geliyordu: AAB üç ABI için
+            // libflutter.so/libapp.so taşıyor ama sembol tablosu
+            // yapılandırılmamıştı, dolayısıyla Play Console "debug symbols
+            // yüklenmedi" uyarısı veriyor ve engine/plugin çökmeleri
+            // okunamaz yığınlarla ulaşıyordu (2026-08-01 denetimi, P2-003).
+            // FULL, sembolleri doğrudan bundle'a koyar; Play yüklemede
+            // ayıklar, indirilen APK'nın boyutu değişmez.
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
             // R8 ile kod küçültme + kaynak temizleme (AAB boyutunu düşürür).
             // Kurallar proguard-rules.pro'da; eklentilerin (Firebase, Supabase,
             // RevenueCat, flutter_tts, bildirimler) sınıfları korunur.

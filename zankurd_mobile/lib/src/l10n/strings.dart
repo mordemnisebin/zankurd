@@ -973,6 +973,21 @@ class Tr {
     K.raceWord: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.roomWord: {'ku': 'Ode', 'tr': 'Oda'},
     K.reportAction: {'ku': 'Ragihîne', 'tr': 'Bildir'},
+    // 2026-08-02: avatar/ad da yabancılara gösterilen bir UGC yüzeyi;
+    // bildirmenin hiçbir yolu yoktu (Apple 1.2).
+    K.reportProfileTitle: {'ku': 'Profîlê ragihîne', 'tr': 'Profili bildir'},
+    K.reportProfileBodyP: {
+      'ku':
+          'Wêne an navê {p0} neguncaw e? Em ê ragihandinê tomar bikin û '
+          'wî/wê ji te re veşêrin.',
+      'tr':
+          '{p0} adlı oyuncunun görseli veya adı uygunsuz mu? Bildirimi '
+          'kaydedip bu kişiyi senden gizleyeceğiz.',
+    },
+    K.reportProfileDone: {
+      'ku': 'Ragihandin hat şandin.',
+      'tr': 'Bildirim gönderildi.',
+    },
     K.questionSaved: {'ku': 'Pirs hat tomarkirin.', 'tr': 'Soru kaydedildi.'},
     K.saveRemoved: {'ku': 'Tomar hate rakirin.', 'tr': 'Kayıt kaldırıldı.'},
     K.questionSaveFailed: {
@@ -2516,6 +2531,9 @@ class K {
   static const raceWord = 'quiz.race';
   static const roomWord = 'quiz.room';
   static const reportAction = 'quiz.report';
+  static const reportProfileTitle = 'report.profileTitle';
+  static const reportProfileBodyP = 'report.profileBody';
+  static const reportProfileDone = 'report.profileDone';
   static const questionSaved = 'quiz.questionSaved';
   static const saveRemoved = 'quiz.saveRemoved';
   static const questionSaveFailed = 'quiz.questionSaveFailed';

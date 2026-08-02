@@ -682,6 +682,23 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> reportPlayerProfile({
+    required String playerId,
+    required String reason,
+  }) async {
+    try {
+      await client.rpc(
+        'report_player_profile',
+        params: {'p_reported_id': playerId, 'p_reason': reason},
+      );
+      return true;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'reportPlayerProfile failed');
+      return false;
+    }
+  }
+
+  @override
   Future<bool> blockPlayer(String playerId) async {
     try {
       await client.rpc('block_player', params: {'p_blocked_id': playerId});

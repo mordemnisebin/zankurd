@@ -145,12 +145,78 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       });
     } else {
       setState(() {
-        _future = widget.repository
-            .loadLeaderboard(limit: 10, period: _period)
-            .timeout(const Duration(seconds: 10))
-            .then((entries) => _lastEntries = entries);
+        // Engellenen oyuncular liderlikten SÜZÜLÜR.
+        //
+        // `block_player` 2026-08-02'ye kadar yalnız sohbeti süzüyordu;
+        // engellenen kişinin avatarı ve adı liderlikte, eşleştirmede ve
+        // turnuva tablosunda görünmeye devam ediyordu. Apple 1.2'nin
+        // "engelleme" maddesi kullanıcı gözünde "bu kişiyi bir daha
+        // görmeyeyim" demektir — yalnız bir yüzeyde uygulanması onu
+        // karşılamaz (A-05 -> P1-008).
+        //
+        // Sunucu tarafında da süzülür (`leaderboard_visible` RPC'si);
+        // buradaki kopya derinlemesine savunmadır ve engel listesi
+        // okunamadığında bile listeyi boşaltmaz.
+        _future =
+            Future.wait([
+              widget.repository.loadLeaderboard(limit: 10, period: _period),
+              widget.repository.loadBlockedPlayerIds(),
+            ]).timeout(const Duration(seconds: 10)).then((results) {
+              final entries = results[0] as List<LeaderboardEntry>;
+              final blocked = results[1] as Set<String>;
+              final visible = entries
+                  .where((e) => !blocked.contains(e.playerId))
+                  .toList();
+              _lastEntries = visible;
+              return visible;
+            });
       });
     }
+  }
+
+  /// Bir oyuncunun profilini (avatar + görünen ad) bildirir.
+  ///
+  /// Sunucu bildirimi kaydeder VE bildiren kullanıcı için engeli kurar:
+  /// kişi bildirdiği avatarı bir daha görmek zorunda kalmamalı. Karar
+  /// (içeriğin kaldırılması) moderasyon tarafındadır; istemci karar vermez —
+  /// `report_room_message` de aynı deseni izliyor.
+  Future<void> _reportProfile(LeaderboardEntry entry) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        key: const ValueKey('report-profile-dialog'),
+        title: Text(dialogContext.t(K.reportProfileTitle)),
+        content: Text(
+          Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
+            'p0': entry.displayName,
+          }),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(dialogContext.t(K.cancel)),
+          ),
+          FilledButton(
+            key: const ValueKey('report-profile-confirm'),
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(dialogContext.t(K.reportAction)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+
+    final ok = await widget.repository.reportPlayerProfile(
+      playerId: entry.playerId,
+      reason: 'profile_avatar_or_name',
+    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(context.t(ok ? K.reportProfileDone : K.errorOccurred)),
+      ),
+    );
+    if (ok) _loadData();
   }
 
   /// 30 saniyelik yenileme yalnız uygulama ÖNDEYKEN çalışır.
@@ -457,6 +523,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                       entry: e,
                       isKu: ku,
                       colorOverride: avatarColorOverrides[e.playerId],
+                      onReport: () => _reportProfile(e),
                     ),
                 ],
               ),
@@ -1096,6 +1163,7 @@ class _RankRow extends StatelessWidget {
     required this.isKu,
     this.highlight = false,
     this.colorOverride,
+    this.onReport,
   });
 
   final LeaderboardEntry entry;
@@ -1108,6 +1176,16 @@ class _RankRow extends StatelessWidget {
   /// [resolveAvatarColors] ile doldurulur. `_buildMyRankRow`'un ayrıca
   /// getirdiği "kendi sıram" satırı bu listenin dışında, override almaz.
   final Color? colorOverride;
+
+  /// Bu oyuncunun profilini (avatar + ad) bildirme eylemi.
+  ///
+  /// Avatar, yabancılara gösterilen bir GÖRSEL UGC yüzeyidir; 2026-08-02'ye
+  /// kadar onu bildirmenin hiçbir yolu yoktu (A-05 -> P1-008). Eylem
+  /// GÖRÜNÜR bir düğmedir: sohbetteki bildir/engelle yalnız keşfedilemez bir
+  /// uzun basmayla erişilebiliyordu ve denetimde bu ayrıca kusur sayılmıştı.
+  ///
+  /// Kendi satırında null'dır — kişi kendini bildiremez.
+  final VoidCallback? onReport;
 
   @override
   Widget build(BuildContext context) {
@@ -1254,6 +1332,25 @@ class _RankRow extends StatelessWidget {
               ),
             ),
           ),
+          // Bildir düğmesi GÖRÜNÜRDÜR. Sohbetteki bildir/engelle yalnız
+          // keşfedilemez bir uzun basmayla erişilebiliyordu ve denetimde
+          // bu ayrıca kusur sayılmıştı; aynı hatayı burada tekrarlamıyoruz.
+          if (onReport != null)
+            Semantics(
+              button: true,
+              label: Tr.forKu(K.reportProfileTitle, isKu),
+              child: IconButton(
+                key: ValueKey('leaderboard-report-${entry.playerId}'),
+                onPressed: onReport,
+                icon: const Icon(AppIcons.flag, size: 16),
+                color: AppTheme.textMutedColor(context),
+                // 44pt'lik dokunma hedefi: denetimde 48dp altı hedefler
+                // ayrıca kusur olarak kaydedilmişti.
+                constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                padding: EdgeInsets.zero,
+                tooltip: Tr.forKu(K.reportProfileTitle, isKu),
+              ),
+            ),
         ],
       ),
     );

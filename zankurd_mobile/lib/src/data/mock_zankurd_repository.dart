@@ -473,6 +473,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<Set<String>> loadBlockedPlayerIds() async => Set.of(_blockedPlayerIds);
 
+  /// Testlerin bildirimin gerçekten gönderildiğini görebilmesi için.
+  final List<String> reportedProfileIds = <String>[];
+
+  @override
+  Future<bool> reportPlayerProfile({
+    required String playerId,
+    required String reason,
+  }) async {
+    reportedProfileIds.add(playerId);
+    return true;
+  }
+
   @override
   Future<Map<String, dynamic>> submitAnswer({
     required GameRoom room,

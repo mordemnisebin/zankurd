@@ -11,12 +11,27 @@ class ResponsiveWrapper extends StatelessWidget {
 
   final Widget child;
 
-  /// Masaüstünde içeriğin maksimum genişliği.
+  /// Geniş ekranda içeriğin maksimum genişliği.
   ///
-  /// [AppShell] 768 px'de masaüstü gezinmesine geçer. Navigator'ı bunun
-  /// altında sınırlamak breakpoint'i erişilemez yaptığı için kabuk ve kendi
-  /// içerik sınırları çalışabilecek güvenli bir masaüstü genişliği korunur.
-  static const double maxContentWidth = 1200;
+  /// 2026-08-02'ye kadar 1200'dü ve bu, iPad'de sınırın HİÇ BAĞLAMAMASI
+  /// anlamına geliyordu: iPad Pro 13" dikey mantıksal genişliği ~1032 pt,
+  /// yani 1200'ün altında. Sonuç, gerçek cihazda görüldü — telefon düzeni
+  /// tablete gerilmiş hâlde çiziliyordu: hero kartı ~1400 pt boş bir
+  /// dikdörtgene dönüşüyor, içerik sol %30'a sıkışıyor, altta yüzlerce pt
+  /// boşluk kalıyordu (Aşama 1 denetimi, P1-002).
+  ///
+  /// `TARGETED_DEVICE_FAMILY = "1,2"` olduğu için Apple uygulamayı iPad'de
+  /// İNCELER ve iPad ekran görüntüsü ister; "yalnız telefonda iyi görünsün"
+  /// seçeneği yoktu.
+  ///
+  /// 820, bu sarmalayıcının görsel dilinin gerektirdiği ölçüdür: kenarlık,
+  /// gölge ve yuvarlatılmış köşelerle ortalanmış tek sütun — yani masaüstünde
+  /// "telefon çerçevesi" görünümü. 1200 pt o çerçeve için fazla geniş olduğu
+  /// gibi, tek sütunluk okuma ölçüsünü de aşıyordu.
+  ///
+  /// [AppShell]'in 768 px'lik masaüstü gezinme eşiği bundan küçük olduğu
+  /// için NavigationRail'e geçiş hâlâ erişilebilir.
+  static const double maxContentWidth = 820;
 
   /// Bu genişliğin üstünde içerik ortalanır.
   static const double wideThreshold = 600;

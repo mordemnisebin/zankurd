@@ -243,6 +243,19 @@ abstract class ZanKurdRepository {
   /// Engellenen oyuncu kimlikleri.
   Future<Set<String>> loadBlockedPlayerIds();
 
+  /// Bir oyuncunun PROFİLİNİ (avatar fotoğrafı + görünen ad) moderasyona
+  /// bildirir.
+  ///
+  /// 2026-08-02 denetimine kadar yalnız sohbet MESAJI bildirilebiliyordu
+  /// (`reportRoomMessage`). Oysa avatar fotoğrafı da bir görsel UGC
+  /// yüzeyidir ve liderlikte, eşleştirmede, odada ve turnuva tablosunda
+  /// yabancılara gösterilir; onu bildirmenin hiçbir yolu yoktu. Apple
+  /// Guideline 1.2 ve Play UGC politikası bu yüzeyi de kapsar.
+  Future<bool> reportPlayerProfile({
+    required String playerId,
+    required String reason,
+  });
+
   /// Günlük görev tamamlamasını sunucuya senkronize et.
   Future<bool> syncMissionCompletion(
     String missionKey,

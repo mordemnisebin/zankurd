@@ -57,6 +57,17 @@
 	  (2026-07-27). Uygulama yalnız HTTPS ve işletim sisteminin standart
 	  şifrelemesini kullanıyor; bu, muafiyet kapsamındadır.
 	-->
+	<!-- Analytics VARSAYILAN OLARAK KAPALI. Firebase'in yerel SDK'sı
+	     Firebase.initializeApp() ile kendiliğinden açılıyor ve
+	     first_open/session_start olaylarını rıza sorulmadan topluyordu
+	     (2026-08-01 denetimi, P2-008). Toplama artık yalnız kullanıcı
+	     izin verdiğinde AnalyticsService.initialize() ile açılır. -->
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<false/>
+	<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key>
+	<false/>
+	<key>GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED</key>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<!--

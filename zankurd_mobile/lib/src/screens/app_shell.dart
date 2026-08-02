@@ -28,6 +28,14 @@ import 'sign_in_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class AppShell extends StatefulWidget {
+  /// Masaüstü/tablet gezinmesine (NavigationRail) geçiş eşiği.
+  ///
+  /// Sabit olarak dışa açılıyor çünkü `ResponsiveWrapper.maxContentWidth`
+  /// bunun ÜSTÜNDE kalmak zorunda: içerik sınırı bu eşiğin altına inerse
+  /// kabuk hiçbir zaman geniş moda geçemez ve NavigationRail ölü kod olur.
+  /// `test/tablet_layout_test.dart` bu ilişkiyi sabitler.
+  static const double desktopNavBreakpoint = 768;
+
   const AppShell({
     required this.repository,
     this.connectivityMonitor,
@@ -224,7 +232,7 @@ class _AppShellState extends State<AppShell> {
 
   Widget _buildScaffold(BuildContext context, bool ku, double width) {
     // 2026-07-22 canlı UX denetimi: tablet iki sütun düzeni
-    final isDesktop = width >= 768;
+    final isDesktop = width >= AppShell.desktopNavBreakpoint;
 
     final body = IndexedStack(
       index: _tab,
@@ -234,7 +242,9 @@ class _AppShellState extends State<AppShell> {
     final content = Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: width >= 1200 ? 1140 : (width >= 768 ? 920 : 800),
+          maxWidth: width >= 1200
+              ? 1140
+              : (width >= AppShell.desktopNavBreakpoint ? 920 : 800),
         ),
         child: body,
       ),

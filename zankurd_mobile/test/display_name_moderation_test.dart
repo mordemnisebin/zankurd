@@ -84,11 +84,11 @@ void main() {
       // U+202E ile yazılan ad liderlik tablosunda hizalamayı kırar ve
       // tersten okunarak taklide yarar.
       expect(
-        DisplayNamePolicy.review('Ze‮lal'),
+        DisplayNamePolicy.review('Ze\u202Elal'),
         DisplayNameVerdict.invalidCharacters,
       );
       expect(
-        DisplayNamePolicy.review('Ze​lal'),
+        DisplayNamePolicy.review('Ze\u200Blal'),
         DisplayNameVerdict.invalidCharacters,
       );
     });
