@@ -384,6 +384,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<RoomResumeSnapshot?> loadMyResumableRoom() async => null;
+
+  @override
+  Future<void> leaveOnlineRoom(GameRoom room) async {}
+
+  @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     return room.players;
   }
@@ -391,6 +397,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<RoomStatus> loadRoomStatus(GameRoom room) async {
     return room.status;
+  }
+
+  @override
+  Future<RoomEndState> loadRoomEndState(GameRoom room) async {
+    return RoomEndState(
+      status: room.status,
+      endedReason: null,
+      forfeitedBy: null,
+    );
   }
 
   @override
@@ -717,7 +732,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> cancelMatchmaking() async {}
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
+    return const {'status': 'cancelled'};
+  }
 
   @override
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {

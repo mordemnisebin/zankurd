@@ -82,6 +82,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   String get _myName => _profileName ?? (context.t(K.playerWord));
   bool _isCancelled = false;
   bool _cancelling = false;
+  bool _cancelRequested = false;
+  Future<Map<String, dynamic>>? _joinRequest;
   // Bot diyaloğu açıkken arka plan sayacı gizlenir (zamanlayıcı zaten durmuş
   // olur; ekranda donuk "X sn" çipi kalmasın).
   bool _botPromptOpen = false;
@@ -137,16 +139,41 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     _pulseController.dispose();
     _matchmakingSub?.cancel();
     _statusTimer?.cancel();
-    widget.repository.cancelMatchmaking().catchError((error, stack) {
-      ErrorReporter.record(error, stack, reason: 'matchmaking_dispose_cancel');
-    });
+    if (_searchingStarted && !_isCancelled && !_found) {
+      unawaited(_cancelDisposedSearch());
+    }
     super.dispose();
+  }
+
+  Future<void> _cancelDisposedSearch() async {
+    try {
+      final pendingJoin = _joinRequest;
+      if (pendingJoin != null) {
+        try {
+          await pendingJoin.timeout(const Duration(seconds: 10));
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'matchmaking_dispose_join_settle',
+          );
+        }
+      }
+      final result = await widget.repository.cancelMatchmaking();
+      final roomId = _matchedRoomId(result);
+      if (roomId != null) {
+        await widget.repository.leaveOnlineRoom(_roomReference(roomId));
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'matchmaking_dispose_cancel');
+    }
   }
 
   Future<void> _handleCancelAndPop() async {
     if (_cancelling) return;
     setState(() {
       _cancelling = true;
+      _cancelRequested = true;
       _statusTextKu = 'Tê betalkirin...';
       _statusTextTr = 'İptal ediliyor...';
     });
@@ -157,9 +184,33 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     _statusTimer = null;
 
     try {
-      await widget.repository.cancelMatchmaking();
+      // Katılma isteği ağda hâlâ ilerliyorsa önce onun kesin sonucunu bekle.
+      // Aksi hâlde iptal RPC'si "idle" dönüp hemen ardından join kuyruğa
+      // yazabilir ve ekrandan çıkan oyuncuyu hayalet kayıt olarak bırakır.
+      try {
+        await _joinRequest;
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'matchmaking_join_settle_before_cancel',
+        );
+      }
+
+      final result = await widget.repository.cancelMatchmaking();
+      final matchedRoomId = _matchedRoomId(result);
+      if (matchedRoomId != null) {
+        await widget.repository.leaveOnlineRoom(_roomReference(matchedRoomId));
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_cancel_and_pop');
+      if (mounted) {
+        setState(() {
+          _cancelling = false;
+          _matchmakingErrorMessage = context.t(K.matchFailed);
+        });
+      }
+      return;
     }
 
     if (mounted) {
@@ -206,6 +257,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   Future<void> _startMatchmaking(String chosenCategory) async {
     final ku = context.isKu;
     _lastMatchCategory = chosenCategory;
+    _cancelRequested = false;
     AnalyticsService.instance.logActivationStep('matchmaking_started');
     // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
     // boşluğun ötesine taşınmasın diye burada, senkron olarak çözülür.
@@ -223,8 +275,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
     try {
       // Join the matchmaking queue in Supabase
-      final matchRes = await widget.repository.joinMatchmaking(chosenCategory);
-      if (_isCancelled || !mounted) return;
+      final request = widget.repository.joinMatchmaking(chosenCategory);
+      _joinRequest = request;
+      late final Map<String, dynamic> matchRes;
+      try {
+        matchRes = await request;
+      } finally {
+        if (identical(_joinRequest, request)) _joinRequest = null;
+      }
+      if (_cancelRequested || _isCancelled || !mounted) return;
 
       if (matchRes['status'] == 'matched') {
         // Matched immediately!
@@ -314,7 +373,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           timer,
         ) async {
           _secondsElapsed++;
-          if (_isCancelled || !mounted) {
+          if (_cancelRequested || _isCancelled || !mounted) {
             timer.cancel();
             return;
           }
@@ -328,17 +387,49 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             timer.cancel();
             _matchmakingSub?.cancel();
             _matchmakingSub = null;
-            // Abort online queue
-            await widget.repository.cancelMatchmaking().catchError((
-              error,
-              stack,
-            ) {
+            Map<String, dynamic> cancellation;
+            try {
+              cancellation = await widget.repository.cancelMatchmaking();
+            } catch (error, stack) {
               ErrorReporter.record(
                 error,
                 stack,
                 reason: 'matchmaking_timeout_cancel',
               );
-            });
+              if (mounted) {
+                setState(() {
+                  _found = false;
+                  _matchmakingErrorMessage = context.t(K.matchFailed);
+                });
+              }
+              return;
+            }
+
+            try {
+              final matchedRoomId = _matchedRoomId(cancellation);
+              if (matchedRoomId != null) {
+                await _openMatchedRoom(
+                  matchedRoomId,
+                  chosenCategory,
+                  ku,
+                  opponentPlaceholder,
+                );
+                return;
+              }
+            } catch (error, stack) {
+              ErrorReporter.record(
+                error,
+                stack,
+                reason: 'matchmaking_timeout_matched_room',
+              );
+              if (mounted) {
+                setState(() {
+                  _found = false;
+                  _matchmakingErrorMessage = context.t(K.matchFailed);
+                });
+              }
+              return;
+            }
 
             if (!mounted) return;
             // Ask user for bot fallback
@@ -384,7 +475,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_start');
-      if (_isCancelled || !mounted) return;
+      if (_cancelRequested || _isCancelled || !mounted) return;
       _matchmakingSub?.cancel();
       _statusTimer?.cancel();
       setState(() {
@@ -460,6 +551,54 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     return room;
   }
 
+  String? _matchedRoomId(Map<String, dynamic> result) {
+    final status = result['status'];
+    if (status == 'cancelled' || status == 'idle') return null;
+    if (status != 'matched') {
+      throw FormatException('Unexpected cancel_matchmaking status: $status');
+    }
+    final roomId = result['room_id'];
+    if (roomId is! String || roomId.trim().isEmpty) {
+      throw const FormatException(
+        'Matched cancel_matchmaking response is missing room_id.',
+      );
+    }
+    return roomId;
+  }
+
+  GameRoom _roomReference(String roomId) => GameRoom(
+    id: roomId,
+    name: '1vs1',
+    code: '',
+    category: _lastMatchCategory ?? 'Ziman',
+    players: const [],
+    status: RoomStatus.active,
+    questionCount: 10,
+  );
+
+  Future<void> _openMatchedRoom(
+    String roomId,
+    String category,
+    bool ku,
+    String opponentPlaceholder,
+  ) async {
+    final room = await _loadMatchedRoom(roomId);
+    final opponent = selectOpponentPlayer(
+      room.players,
+      currentPlayerId: widget.repository.currentUserId,
+      currentName: _myName,
+    );
+    final matchedName = opponent?.name ?? opponentPlaceholder;
+    await _onMatched(
+      matchedName,
+      max(1, _myLevel + Random().nextInt(3) - 1),
+      opponent == null ? const AvatarIdentity() : _identityFromPlayer(opponent),
+      room,
+      category,
+      ku,
+    );
+  }
+
   Future<void> _onMatched(
     String matchedName,
     int matchedLevel,
@@ -480,7 +619,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
     // Wait 1.5 seconds for victory transition animation
     await Future.delayed(const Duration(milliseconds: 1500));
-    if (_isCancelled || !mounted) return;
+    if (_cancelRequested || _isCancelled || !mounted) return;
 
     final roomId = matchedRoom?.id;
     var room =
@@ -537,7 +676,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           setState(() {
             _found = false;
           });
-          if (!_isCancelled && mounted) {
+          if (!_cancelRequested && !_isCancelled && mounted) {
             setState(() {
               _matchmakingErrorMessage = context.t(K.gameStartFailed);
             });
@@ -545,7 +684,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           return;
         }
       }
-      if (_isCancelled || !mounted) return;
+      if (_cancelRequested || _isCancelled || !mounted) return;
     }
 
     if (matchQuestions.isEmpty) {
@@ -573,7 +712,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (matchQuestions.isEmpty) {
         matchQuestions = widget.repository.questions;
       }
-      if (_isCancelled || !mounted) return;
+      if (_cancelRequested || _isCancelled || !mounted) return;
     }
 
     if (matchedRoom == null) {
@@ -600,7 +739,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         : (_statusTextTr ?? 'Aranıyor...');
 
     return PopScope(
-      canPop: !_searchingStarted || _cancelling || _found,
+      canPop: !_searchingStarted || _cancelling,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         _handleCancelAndPop();

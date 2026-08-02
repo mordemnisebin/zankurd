@@ -99,6 +99,104 @@ class _RoomSnapshotHttpClient extends http.BaseClient {
   }
 }
 
+class _RoomSessionHttpClient extends http.BaseClient {
+  _RoomSessionHttpClient({this.resumeResponse, this.rpcErrorCode});
+
+  final Object? resumeResponse;
+  final String? rpcErrorCode;
+  final requestedPaths = <String>[];
+  final requestBodies = <Map<String, dynamic>>[];
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    requestedPaths.add(request.url.path);
+    if (request is http.Request && request.body.isNotEmpty) {
+      final decoded = jsonDecode(request.body);
+      if (decoded is Map) {
+        requestBodies.add(Map<String, dynamic>.from(decoded));
+      }
+    }
+
+    if (rpcErrorCode != null && request.url.path.startsWith('/rest/v1/rpc/')) {
+      return _jsonResponse(request, {
+        'code': rpcErrorCode,
+        'message': 'RPC schema cache mismatch',
+        'details': null,
+        'hint': null,
+      }, statusCode: 404);
+    }
+
+    switch (request.url.path) {
+      case '/rest/v1/rpc/get_my_resumable_room':
+        return _jsonResponse(request, resumeResponse);
+      case '/rest/v1/rpc/leave_room':
+        return _jsonResponse(request, const {
+          'status': 'finished',
+          'reason': 'forfeit',
+        });
+      case '/rest/v1/rpc/cancel_matchmaking':
+        return _jsonResponse(request, const {
+          'status': 'matched',
+          'room_id': '00000000-0000-0000-0000-000000000099',
+        });
+      case '/rest/v1/rooms':
+        final isEndState = request.url.queryParameters['select']?.contains(
+          'ended_reason',
+        );
+        if (isEndState ?? false) {
+          return _jsonResponse(request, const {
+            'status': 'finished',
+            'ended_reason': 'forfeit',
+            'forfeited_by': 'guest-id',
+          });
+        }
+        return _jsonResponse(request, const {
+          'id': '00000000-0000-0000-0000-000000000099',
+          'code': 'ZK-RSME',
+          'host_id': 'host-id',
+          'question_count': 10,
+          'seconds_per_question': 20,
+          'status': 'active',
+          'categories': {'name': 'Ziman'},
+        });
+      case '/rest/v1/room_players':
+        return _jsonResponse(request, const [
+          {
+            'player_id': 'host-id',
+            'score': 250,
+            'streak': 2,
+            'is_ready': true,
+            'profiles': {'display_name': 'Berfin'},
+          },
+          {
+            'player_id': 'guest-id',
+            'score': 100,
+            'streak': 1,
+            'is_ready': true,
+            'profiles': {'display_name': 'Rojda'},
+          },
+        ]);
+      default:
+        throw StateError('Beklenmeyen istek: ${request.url}');
+    }
+  }
+
+  http.StreamedResponse _jsonResponse(
+    http.BaseRequest request,
+    Object? body, {
+    int statusCode = 200,
+  }) {
+    final bytes = utf8.encode(jsonEncode(body));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      statusCode,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
 void main() {
   test(
     'kategoriler sunucudan farklı olsa bile yerel soru bankasıyla aynı kalır',
@@ -187,6 +285,184 @@ void main() {
       ]);
     },
   );
+
+  test(
+    'resume RPC geçmiş cevapları ve milisaniyelik süreyi parse eder',
+    () async {
+      final httpClient = _RoomSessionHttpClient(
+        resumeResponse: const {
+          'room_id': '00000000-0000-0000-0000-000000000099',
+          'current_question_index': 2,
+          'own_score': 250,
+          'own_streak': 2,
+          'own_best_streak': 4,
+          'correct_count': 1,
+          'wrong_count': 1,
+          'server_now': '2026-08-02T12:00:15.000Z',
+          'current_question_started_at': '2026-08-02T12:00:10.000Z',
+          'current_question_deadline': '2026-08-02T12:00:30.000Z',
+          'current_question_remaining_ms': 15000,
+          'answers': [
+            {
+              'question_id': 'question-1',
+              'question_index': 0,
+              'selected_option': 'A',
+              'correct_option': 'B',
+              'is_correct': false,
+              'points_awarded': 0,
+              'response_ms': 4100,
+              'explanation': 'Açıklama',
+              'explanation_ku': 'Ravekirin',
+              'explanation_tr': 'Açıklama',
+            },
+            {
+              'question_id': 'question-2',
+              'question_index': 1,
+              'selected_option': 'C',
+              'correct_option': 'C',
+              'is_correct': true,
+              'points_awarded': 250,
+              'response_ms': 1200,
+              'explanation': null,
+              'explanation_ku': null,
+              'explanation_tr': null,
+            },
+          ],
+        },
+      );
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final resume = await repository.loadMyResumableRoom();
+
+      expect(resume, isNotNull);
+      expect(resume!.room.id, '00000000-0000-0000-0000-000000000099');
+      expect(resume.room.players.map((player) => player.id), [
+        'host-id',
+        'guest-id',
+      ]);
+      expect(resume.currentQuestionIndex, 2);
+      expect(resume.ownScore, 250);
+      expect(resume.streak, 2);
+      expect(resume.bestStreak, 4);
+      expect(resume.correctCount, 1);
+      expect(resume.wrongCount, 1);
+      expect(resume.remainingMs, 15000);
+      expect(resume.serverNow, DateTime.utc(2026, 8, 2, 12, 0, 15));
+      expect(resume.answers, hasLength(2));
+      expect(resume.answers.first.questionId, 'question-1');
+      expect(resume.answers.first.correctOptionKey, 'B');
+      expect(resume.answers.first.explanationKu, 'Ravekirin');
+      expect(resume.answers.last.pointsAwarded, 250);
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/rpc/get_my_resumable_room',
+        '/rest/v1/rooms',
+        '/rest/v1/room_players',
+      ]);
+    },
+  );
+
+  test('resume RPC null dönerse snapshot sorgulanmaz', () async {
+    final httpClient = _RoomSessionHttpClient();
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    expect(await repository.loadMyResumableRoom(), isNull);
+    expect(httpClient.requestedPaths, ['/rest/v1/rpc/get_my_resumable_room']);
+  });
+
+  test(
+    'leave room ve cancel matchmaking yetkili RPC sözleşmesini kullanır',
+    () async {
+      final httpClient = _RoomSessionHttpClient();
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: '1vs1',
+        code: 'ZK-RSME',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.active,
+        questionCount: 10,
+      );
+
+      await repository.leaveOnlineRoom(room);
+      final cancellation = await repository.cancelMatchmaking();
+
+      expect(cancellation['status'], 'matched');
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/rpc/leave_room',
+        '/rest/v1/rpc/cancel_matchmaking',
+      ]);
+      expect(httpClient.requestBodies.first, {
+        'p_room_id': '00000000-0000-0000-0000-000000000099',
+      });
+    },
+  );
+
+  test('oda bitiş nedeni normal finish ile forfeiti ayırır', () async {
+    final httpClient = _RoomSessionHttpClient();
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+    const room = GameRoom(
+      id: '00000000-0000-0000-0000-000000000099',
+      name: '1vs1',
+      code: 'ZK-RSME',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.active,
+      questionCount: 10,
+    );
+
+    final state = await repository.loadRoomEndState(room);
+
+    expect(state.status, RoomStatus.finished);
+    expect(state.endedReason, 'forfeit');
+    expect(state.forfeitedBy, 'guest-id');
+  });
+
+  test('RPC şema uyumsuzluğu sessizce yutulmaz', () async {
+    final httpClient = _RoomSessionHttpClient(rpcErrorCode: 'PGRST202');
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    await expectLater(
+      repository.cancelMatchmaking(),
+      throwsA(
+        isA<PostgrestException>().having(
+          (error) => error.code,
+          'code',
+          'PGRST202',
+        ),
+      ),
+    );
+  });
 
   test('online room join uses the room-code RPC contract', () {
     final source = File(

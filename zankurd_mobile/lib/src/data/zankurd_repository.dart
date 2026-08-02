@@ -84,8 +84,16 @@ abstract class ZanKurdRepository {
   /// birlikte gelir.
   Future<GameRoom> loadRoomSnapshot(String roomId);
 
+  /// Oyuncunun en son aktif/lobi çevrimiçi odasını geri yükler.
+  /// Aktif üyelik yoksa null; RPC veya şema hataları çağırana iletilir.
+  Future<RoomResumeSnapshot?> loadMyResumableRoom();
+
+  /// Çevrimiçi odadan sunucunun yetkili çıkış sözleşmesiyle ayrılır.
+  Future<void> leaveOnlineRoom(GameRoom room);
+
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);
+  Future<RoomEndState> loadRoomEndState(GameRoom room);
 
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room);
   Stream<RoomStatus> subscribeRoomStatus(GameRoom room);
@@ -304,7 +312,7 @@ abstract class ZanKurdRepository {
   );
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
-  Future<void> cancelMatchmaking();
+  Future<Map<String, dynamic>> cancelMatchmaking();
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);

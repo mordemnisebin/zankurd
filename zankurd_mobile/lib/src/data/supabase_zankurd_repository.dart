@@ -37,6 +37,68 @@ RoomStatus _roomStatusFromValue(Object? value) {
   };
 }
 
+Map<String, dynamic> _requiredJsonObject(Object? value, String field) {
+  if (value is! Map) {
+    throw FormatException('$field must be a JSON object.');
+  }
+  return Map<String, dynamic>.from(value);
+}
+
+String _requiredString(Map<String, dynamic> json, List<String> keys) {
+  for (final key in keys) {
+    final value = json[key];
+    if (value is String && value.isNotEmpty) return value;
+  }
+  throw FormatException('${keys.join('/')} must be a non-empty string.');
+}
+
+String? _optionalString(Map<String, dynamic> json, String key) {
+  final value = json[key];
+  if (value == null) return null;
+  if (value is String) return value;
+  throw FormatException('$key must be a string or null.');
+}
+
+int _requiredInt(Map<String, dynamic> json, List<String> keys) {
+  for (final key in keys) {
+    final value = json[key];
+    if (value is int) return value;
+    if (value is num && value.isFinite) {
+      final parsed = value.toInt();
+      if (value == parsed) return parsed;
+    }
+  }
+  throw FormatException('${keys.join('/')} must be an integer.');
+}
+
+bool _requiredBool(Map<String, dynamic> json, String key) {
+  final value = json[key];
+  if (value is bool) return value;
+  throw FormatException('$key must be a boolean.');
+}
+
+DateTime _requiredDateTime(Map<String, dynamic> json, String key) {
+  final value = json[key];
+  if (value is! String) throw FormatException('$key must be a timestamp.');
+  return DateTime.parse(value);
+}
+
+DateTime? _optionalDateTimeFromKeys(
+  Map<String, dynamic> json,
+  List<String> keys,
+) {
+  for (final key in keys) {
+    if (!json.containsKey(key)) continue;
+    final value = json[key];
+    if (value == null) return null;
+    if (value is! String) {
+      throw FormatException('$key must be a timestamp or null.');
+    }
+    return DateTime.parse(value);
+  }
+  return null;
+}
+
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
@@ -612,6 +674,85 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
+    final response = await client.rpc('get_my_resumable_room');
+    if (response == null) return null;
+
+    final json = _requiredJsonObject(response, 'get_my_resumable_room');
+    final roomId = _requiredString(json, const ['room_id']);
+    final room = await loadRoomSnapshot(roomId);
+    if (room.id != roomId) {
+      throw const FormatException(
+        'Resumable room snapshot id does not match room_id.',
+      );
+    }
+
+    final rawAnswers = json['answers'];
+    if (rawAnswers is! List) {
+      throw const FormatException('answers must be a JSON array.');
+    }
+    final answers = rawAnswers
+        .map((rawAnswer) {
+          final answer = _requiredJsonObject(rawAnswer, 'answers[]');
+          return ResumedAnswer(
+            questionId: _requiredString(answer, const ['question_id']),
+            questionIndex: _requiredInt(answer, const ['question_index']),
+            selectedOptionKey: _requiredString(answer, const [
+              'selected_option',
+              'selected_option_key',
+            ]),
+            correctOptionKey: _requiredString(answer, const [
+              'correct_option',
+              'correct_option_key',
+            ]),
+            isCorrect: _requiredBool(answer, 'is_correct'),
+            pointsAwarded: _requiredInt(answer, const [
+              'points_awarded',
+              'points',
+            ]),
+            responseMs: _requiredInt(answer, const ['response_ms']),
+            explanation: _optionalString(answer, 'explanation'),
+            explanationKu: _optionalString(answer, 'explanation_ku'),
+            explanationTr: _optionalString(answer, 'explanation_tr'),
+          );
+        })
+        .toList(growable: false);
+
+    return RoomResumeSnapshot(
+      room: room,
+      currentQuestionIndex: _requiredInt(json, const [
+        'current_question_index',
+      ]),
+      ownScore: _requiredInt(json, const ['own_score']),
+      streak: _requiredInt(json, const ['streak', 'own_streak']),
+      bestStreak: _requiredInt(json, const ['best_streak', 'own_best_streak']),
+      correctCount: _requiredInt(json, const ['correct_count']),
+      wrongCount: _requiredInt(json, const ['wrong_count']),
+      answers: answers,
+      serverNow: _requiredDateTime(json, 'server_now'),
+      questionStartedAt: _optionalDateTimeFromKeys(json, const [
+        'current_question_started_at',
+        'question_started_at',
+      ]),
+      deadline: _optionalDateTimeFromKeys(json, const [
+        'current_question_deadline',
+        'deadline',
+      ]),
+      remainingMs: _requiredInt(json, const [
+        'current_question_remaining_ms',
+        'remaining_ms',
+      ]),
+    );
+  }
+
+  @override
+  Future<void> leaveOnlineRoom(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) return;
+    await client.rpc('leave_room', params: {'p_room_id': roomId});
+  }
+
+  @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     final id = room.id;
     if (id == null) return room.players;
@@ -629,6 +770,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .eq('id', roomId)
         .maybeSingle();
     return _roomStatusFromValue(row?['status']);
+  }
+
+  @override
+  Future<RoomEndState> loadRoomEndState(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) {
+      return RoomEndState(
+        status: room.status,
+        endedReason: null,
+        forfeitedBy: null,
+      );
+    }
+
+    final row = await client
+        .from('rooms')
+        .select('status, ended_reason, forfeited_by')
+        .eq('id', roomId)
+        .single();
+    return RoomEndState(
+      status: _roomStatusFromValue(row['status']),
+      endedReason: row['ended_reason'] as String?,
+      forfeitedBy: row['forfeited_by'] as String?,
+    );
   }
 
   @override
@@ -1390,10 +1554,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> cancelMatchmaking() async {
-    final user = client.auth.currentUser;
-    if (user == null) return;
-    await client.from('matchmaking_queue').delete().eq('player_id', user.id);
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
+    final response = await client.rpc('cancel_matchmaking');
+    return _requiredJsonObject(response, 'cancel_matchmaking');
   }
 
   @override

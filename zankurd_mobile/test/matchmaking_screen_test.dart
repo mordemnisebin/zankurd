@@ -18,8 +18,35 @@ class _TrackingRepository extends MockZanKurdRepository {
   int cancelCalls = 0;
 
   @override
-  Future<void> cancelMatchmaking() async {
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
     cancelCalls += 1;
+    return const {'status': 'cancelled'};
+  }
+}
+
+class _CancellationRaceRepository extends _SnapshotMatchRepository {
+  _CancellationRaceRepository({required this.cancelResult});
+
+  final Map<String, dynamic> cancelResult;
+  int leaveCalls = 0;
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    return const {'status': 'waiting'};
+  }
+
+  @override
+  Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {
+    return const Stream.empty();
+  }
+
+  @override
+  Future<Map<String, dynamic>> cancelMatchmaking() async => cancelResult;
+
+  @override
+  Future<void> leaveOnlineRoom(GameRoom room) async {
+    expect(room.id, _SnapshotMatchRepository.roomId);
+    leaveCalls += 1;
   }
 }
 
@@ -303,8 +330,14 @@ void main() {
     tester,
   ) async {
     final repository = _TrackingRepository();
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
     await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
     await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump();
 
     // Ekranı kaldır: dispose, kuyruğu sunucuda da temizlemeli ki oyuncu
     // hayalet kayıt olarak eşleşme kuyruğunda kalmasın.
@@ -369,6 +402,59 @@ void main() {
     expect(find.byType(QuizScreen), findsNothing);
     expect(find.text('Eşleştirme başarısız oldu.'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('timeout ile yarışan eşleşme bot yerine gerçek odaya gider', (
+    tester,
+  ) async {
+    final repository = _CancellationRaceRepository(
+      cancelResult: const {
+        'status': 'matched',
+        'room_id': _SnapshotMatchRepository.roomId,
+      },
+    );
+    addTearDown(tester.view.reset);
+
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump(const Duration(seconds: 20));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1501));
+    await tester.pump();
+
+    expect(find.byType(QuizScreen), findsOneWidget);
+    final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+    expect(quiz.room.id, _SnapshotMatchRepository.roomId);
+    expect(repository.leaveCalls, 0);
+    expect(find.text('Bot ile oynamak ister misin?'), findsNothing);
+  });
+
+  testWidgets('açık iptalle yarışan eşleşmiş oda desteklenen çıkışla kapanır', (
+    tester,
+  ) async {
+    final repository = _CancellationRaceRepository(
+      cancelResult: const {
+        'status': 'matched',
+        'room_id': _SnapshotMatchRepository.roomId,
+      },
+    );
+    addTearDown(tester.view.reset);
+
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump();
+    await tester.tap(find.text('İptal Et'));
+    await tester.pump();
+
+    expect(repository.snapshotCalls, 0);
+    expect(repository.leaveCalls, 1);
+    expect(find.byType(QuizScreen), findsNothing);
   });
 
   testWidgets('oda sorusu hatası eşleşti görünümünü kapatıp iptali açar', (

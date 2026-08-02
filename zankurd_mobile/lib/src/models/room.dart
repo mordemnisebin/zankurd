@@ -4,6 +4,81 @@ import 'player.dart';
 
 enum RoomStatus { lobby, active, finished }
 
+/// Sunucuda daha önce yanıtlanmış bir oda sorusunun geri yükleme kaydı.
+///
+/// Doğru seçenek özellikle taşınır: çok oyunculu soruların cevapları ilk
+/// yüklemede istemciden gizlenir ve süreç yeniden açıldığında sonuç görünümü
+/// yalnız bu yetkili kayıtla yeniden kurulabilir.
+class ResumedAnswer {
+  const ResumedAnswer({
+    required this.questionId,
+    required this.questionIndex,
+    required this.selectedOptionKey,
+    required this.correctOptionKey,
+    required this.isCorrect,
+    required this.pointsAwarded,
+    required this.responseMs,
+    this.explanation,
+    this.explanationKu,
+    this.explanationTr,
+  });
+
+  final String questionId;
+  final int questionIndex;
+  final String selectedOptionKey;
+  final String correctOptionKey;
+  final bool isCorrect;
+  final int pointsAwarded;
+  final int responseMs;
+  final String? explanation;
+  final String? explanationKu;
+  final String? explanationTr;
+}
+
+/// Aktif bir çevrimiçi odanın yeniden başlatma için gereken yetkili durumu.
+class RoomResumeSnapshot {
+  RoomResumeSnapshot({
+    required this.room,
+    required this.currentQuestionIndex,
+    required this.ownScore,
+    required this.streak,
+    required this.bestStreak,
+    required this.correctCount,
+    required this.wrongCount,
+    required List<ResumedAnswer> answers,
+    required this.serverNow,
+    required this.questionStartedAt,
+    required this.deadline,
+    required this.remainingMs,
+  }) : answers = List.unmodifiable(answers);
+
+  final GameRoom room;
+  final int currentQuestionIndex;
+  final int ownScore;
+  final int streak;
+  final int bestStreak;
+  final int correctCount;
+  final int wrongCount;
+  final List<ResumedAnswer> answers;
+  final DateTime serverNow;
+  final DateTime? questionStartedAt;
+  final DateTime? deadline;
+  final int remainingMs;
+}
+
+/// Bitmiş oda ile rakip terkinden doğan hükmen bitişi ayıran küçük model.
+class RoomEndState {
+  const RoomEndState({
+    required this.status,
+    required this.endedReason,
+    required this.forfeitedBy,
+  });
+
+  final RoomStatus status;
+  final String? endedReason;
+  final String? forfeitedBy;
+}
+
 /// Karışması zor karakterlerden (I/O/0/1 yok) 4 haneli oda kodu üretir.
 /// 32^4 ≈ 1M kombinasyon; saat milisaniyesine dayalı eski üretim yalnızca
 /// 1000 farklı kod verdiğinden çakışma kaçınılmazdı.
