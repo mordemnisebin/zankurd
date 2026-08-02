@@ -127,4 +127,79 @@ void main() {
       );
     });
   });
+
+  /// 2026-08-02 denetimi (A-02 -> P2-010): quiz şık kartlarının cevap
+  /// durumları bu politikanın DIŞINDA kalmıştı. `contrast_policy_test`
+  /// marka turuncusunu, heroScrim'i ve altın bandı ölçüyordu;
+  /// `quiz_accent_test` gradyanlara dokunuyordu ama yalnız renk KİMLİĞİNİ
+  /// doğruluyordu, kontrastı değil. Sonuç: uygulamanın en çok görüntülenen
+  /// yüzeyinde beyaz metin doğru cevapta 2.97:1, yanlış cevapta 3.73:1
+  /// veriyordu — ikisi de AA'nın altında, biri 3:1'in bile altında.
+  ///
+  /// Etiket `fontSize: isCompact ? 15 : 17`, `FontWeight.w800`
+  /// (`quiz_option_tile.dart`). WCAG'ın kalın "büyük metin" eşiği
+  /// 14pt = 18.67px olduğundan 17px bunun ALTINDADIR ve normal metin
+  /// eşiği (4.5:1) geçerlidir. Testler bu yüzden 4.5'i kullanır.
+  group('quiz cevap durumları beyaz metni okutuyor', () {
+    const stops = <String, Color>{
+      'doğru gradyan başlangıcı': AppTheme.correctGradientStart,
+      'doğru gradyan bitişi': AppTheme.correctGradientEnd,
+      'yanlış gradyan başlangıcı': AppTheme.wrongGradientStart,
+      'yanlış gradyan bitişi': AppTheme.wrongGradientEnd,
+    };
+
+    for (final entry in stops.entries) {
+      test('${entry.key} AA eşiğini geçer', () {
+        expect(
+          contrastRatio(Colors.white, entry.value),
+          greaterThanOrEqualTo(4.5),
+          reason:
+              '${entry.key} üzerinde beyaz metin normal metin eşiğini '
+              'geçmeli; şık etiketi büyük metin sayılmaz (17px < 18.67px).',
+        );
+      });
+    }
+
+    test('gradyanın her ara noktası da eşiği geçer', () {
+      // Metin gradyanın ortasında durur; yalnız uçları ölçmek yetmez.
+      for (final pair in <List<Color>>[
+        [AppTheme.correctGradientStart, AppTheme.correctGradientEnd],
+        [AppTheme.wrongGradientStart, AppTheme.wrongGradientEnd],
+      ]) {
+        for (var i = 0; i <= 10; i++) {
+          final blended = Color.lerp(pair.first, pair.last, i / 10)!;
+          expect(
+            contrastRatio(Colors.white, blended),
+            greaterThanOrEqualTo(4.5),
+            reason: 'gradyan %${i * 10} noktası AA altında',
+          );
+        }
+      }
+    });
+
+    test('gradyan hâlâ görünür bir derinlik taşıyor', () {
+      // Kontrastı düzeltmek için iki durağı aynı yapmak kolay kaçıştır;
+      // o zaman kart düz renge döner. Duraklar ayrık kalmalı.
+      for (final pair in <List<Color>>[
+        [AppTheme.correctGradientStart, AppTheme.correctGradientEnd],
+        [AppTheme.wrongGradientStart, AppTheme.wrongGradientEnd],
+      ]) {
+        final delta =
+            (pair.first.computeLuminance() - pair.last.computeLuminance())
+                .abs();
+        expect(delta, greaterThan(0.01), reason: 'gradyan neredeyse düz');
+      }
+    });
+
+    test('gradyanlar quiz kartlarında gerçekten kullanılıyor', () {
+      expect(AppTheme.correctGradient.colors, <Color>[
+        AppTheme.correctGradientStart,
+        AppTheme.correctGradientEnd,
+      ]);
+      expect(AppTheme.wrongGradient.colors, <Color>[
+        AppTheme.wrongGradientStart,
+        AppTheme.wrongGradientEnd,
+      ]);
+    });
+  });
 }

@@ -137,6 +137,21 @@ abstract class ZanKurdRepository {
   /// Avatar fotoğrafını yükler ve erişilebilir URL'ini döner.
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType);
 
+  /// Oyuncunun avatar fotoğrafını **depodan** siler.
+  ///
+  /// 2026-08-02 denetimine kadar böyle bir yol yoktu: "fotoğrafı kaldır"
+  /// yalnız `profiles.avatar_url` sütununu boşaltıyordu, nesne ise herkese
+  /// açık `avatars` kovasında tahmin edilebilir bir yolda
+  /// (`{user_id}/avatar.jpg`) kalmaya devam ediyordu. Kullanıcı fotoğrafını
+  /// kaldırdığını sanıyor, dosya ise erişilebilir kalıyordu.
+  ///
+  /// Uygulama hem `.jpg` hem `.png` uzantısını siler: yükleme uzantıyı
+  /// içerik türünden seçtiği için önce PNG sonra JPG yükleyen bir kullanıcı
+  /// aksi hâlde eski nesneyi yetim bırakırdı.
+  ///
+  /// Sessizce başarısız olmaz; çağıran hatayı görebilsin diye fırlatır.
+  Future<void> deleteAvatarPhoto();
+
   /// Bugünün contest/etkinlik temesini yükler (varsa).
   Future<Contest?> loadTodayContest();
 

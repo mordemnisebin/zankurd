@@ -24,6 +24,7 @@ import '../utils/percent_format.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_config.dart';
+import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
@@ -1129,6 +1130,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _savePlayerName() async {
     final name = _nameController.text.trim();
     if (name.isEmpty || name == _currentName) return;
+
+    // 2026-08-02: bu yol hiçbir içerik kontrolünden geçmiyordu. İsim kapısı
+    // ve ayarlar aynı sütuna yazıyor; yalnız birini süzmek kapıyı açık
+    // bırakırdı — kullanıcı adını kapıda temiz verip sonra buradan
+    // değiştirebilirdi.
+    final verdict = DisplayNamePolicy.review(name);
+    if (verdict != DisplayNameVerdict.allowed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          key: const ValueKey('settings-name-rejected'),
+          content: Text(context.t(DisplayNamePolicy.messageKeyFor(verdict))),
+        ),
+      );
+      return;
+    }
+
     setState(() => _savingName = true);
     try {
       await widget.repository.updateProfileName(name);

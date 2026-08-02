@@ -48,6 +48,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   bool _saving = false;
   bool _uploadingPhoto = false;
 
+  /// Ekran açıldığında kayıtlı bir fotoğraf var mıydı?
+  ///
+  /// Depodan silme yalnız GERÇEKTEN bir fotoğraf kaldırıldığında yapılır;
+  /// hiç fotoğrafı olmayan kullanıcı yalnız rengini değiştirip kaydettiğinde
+  /// gereksiz bir silme çağrısı gitmesin.
+  bool _hadPhotoOnOpen = false;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +64,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   Future<void> _load() async {
     try {
       final identity = await widget.repository.loadAvatarIdentity();
+      _hadPhotoOnOpen = identity.photoUrl != null;
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
@@ -153,6 +161,24 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   Future<void> _save() async {
     setState(() => _saving = true);
     try {
+      // Fotoğraf kaldırıldıysa DEPODAKİ nesne de silinmelidir.
+      //
+      // 2026-08-02 denetimine kadar "fotoğrafı kaldır" yalnız
+      // `profiles.avatar_url`i boşaltıyordu; dosya herkese açık `avatars`
+      // kovasında `{user_id}/avatar.jpg` gibi tahmin edilebilir bir yolda
+      // kalmaya devam ediyordu. Kullanıcı fotoğrafını kaldırdığını sanıyor,
+      // görsel ise erişilebilir kalıyordu.
+      //
+      // Silme, kaldırma dokunuşunda değil KAYDETMEDE yapılır: kullanıcı
+      // kaldırıp vazgeçerse nesne durmalı, yoksa profil hâlâ ona işaret
+      // ederken dosya yok olur ve avatar kırık görünür.
+      //
+      // Sıra da önemli: önce depo, sonra profil. Ters sırada silme
+      // başarısız olursa sütun boşalmış ama dosya erişilebilir kalırdı —
+      // yani düzeltmek istediğimiz durumun aynısı.
+      if (_identity.photoUrl == null && _hadPhotoOnOpen) {
+        await widget.repository.deleteAvatarPhoto();
+      }
       await widget.repository.updateAvatarIdentity(_identity);
       if (mounted) Navigator.of(context).pop(true);
     } catch (error, stack) {

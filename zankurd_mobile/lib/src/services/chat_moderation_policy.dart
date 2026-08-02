@@ -170,4 +170,21 @@ class ChatModerationPolicy {
   /// Kısa yol: gönderilebilir mi?
   static bool isAllowed(String raw) =>
       review(raw) == ChatModerationVerdict.allowed;
+
+  /// Sadeleştirme, ad politikasıyla ORTAK kullanılır.
+  ///
+  /// Görünen adlar 2026-08-02'ye kadar hiçbir filtreden geçmiyordu
+  /// (`DisplayNamePolicy`). O politika kendi listesini/normalleştirmesini
+  /// yazsaydı ikisi zamanla birbirinden ayrılır ve sohbette engellenen bir
+  /// sözcük adda serbest kalırdı. Tek kaynak burasıdır.
+  static String normalize(String input) => _normalize(input);
+
+  /// Metin, engellenen sözcüklerden birini **tam sözcük** olarak içeriyor mu?
+  static bool containsBlockedWord(String raw) {
+    final words = _normalize(
+      raw,
+    ).split(RegExp(r'[^a-z]+')).where((w) => w.isNotEmpty);
+    final blocked = blockedWords.map(_normalize).toSet();
+    return words.any(blocked.contains);
+  }
 }

@@ -1835,6 +1835,24 @@ class Tr {
       'ku': 'Nav divê herî zêde 24 tîp be',
       'tr': 'Ad en fazla 24 karakter olmalı',
     },
+    // 2026-08-02: adlar hiçbir içerik filtresinden geçmiyordu; bu dört
+    // metin `DisplayNamePolicy`nin verdiği kararları kullanıcıya açıklar.
+    K.nameBlockedWord: {
+      'ku': 'Ev nav peyveke neguncaw dihewîne',
+      'tr': 'Bu ad uygunsuz bir sözcük içeriyor',
+    },
+    K.nameReserved: {
+      'ku': 'Ev nav parastî ye û nayê bikaranîn',
+      'tr': 'Bu ad korumalı, kullanılamaz',
+    },
+    K.nameInvalidChars: {
+      'ku': 'Ev nav tîpên nederbasdar dihewîne',
+      'tr': 'Bu ad geçersiz karakterler içeriyor',
+    },
+    K.nameNoLinks: {
+      'ku': 'Nav nikare girêdanê bihewîne',
+      'tr': 'Ad bağlantı içeremez',
+    },
     K.nameGateCta: {'ku': 'Dest pê bike', 'tr': 'Oyuna başla'},
     K.nameGateSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
 
@@ -2869,6 +2887,10 @@ class K {
   static const nameGateHint = 'nameGate.hint';
   static const nameMinLength = 'nameGate.minLength';
   static const nameMaxLength = 'nameGate.maxLength';
+  static const nameBlockedWord = 'nameGate.blockedWord';
+  static const nameReserved = 'nameGate.reserved';
+  static const nameInvalidChars = 'nameGate.invalidChars';
+  static const nameNoLinks = 'nameGate.noLinks';
   static const nameGateCta = 'nameGate.cta';
   static const nameGateSkip = 'nameGate.skip';
 

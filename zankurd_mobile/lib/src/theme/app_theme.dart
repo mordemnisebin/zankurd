@@ -669,16 +669,38 @@ class AppTheme {
     colors: [gold, Color(0xFFC7A22A)], // Softer gold gradient
   );
 
+  // Quiz şık kartlarının cevap durumları. Bu iki gradyanın ÜZERİNE beyaz metin
+  // yazılır (`quiz_option_tile.dart`), dolayısıyla her iki durak da WCAG AA'yı
+  // geçmek zorundadır.
+  //
+  // 2026-08-02: gradyanlar `correct`/`wrong` sabitlerinden başlıyordu ve
+  // başlangıç duraklarında beyaz metin **2.97:1** (doğru) ve **3.73:1**
+  // (yanlış) veriyordu — ikisi de 4.5:1 eşiğinin altında, biri 3:1'in bile
+  // altında. Etiket 17px/w800; WCAG'ın kalın "büyük metin" eşiği 18.67px
+  // olduğundan normal metin eşiği (4.5:1) geçerlidir. Kusur uygulamanın en
+  // çok görüntülenen yüzeyindeydi ve hiçbir test onu ölçmüyordu.
+  //
+  // Duraklar aynı HSL tonunda (yeşil 144°, kırmızı 8°) koyulaştırıldı; marka
+  // ailesi korunur, derinlik hissi korunur ve dört durak da AA'yı geçer.
+  // Oranlar `contrast_policy_test.dart` ile sabitlenmiştir.
+  //
+  // `correct`/`wrong` sabitlerinin KENDİLERİ değiştirilmedi: onlar kenarlık,
+  // ikon ve açık zemin üstü metin için kullanılıyor ve kendi testleri var.
+  static const correctGradientStart = Color(0xFF308452); // beyazla 4.62:1
+  static const correctGradientEnd = Color(0xFF266A42); // beyazla 6.52:1
+  static const wrongGradientStart = Color(0xFFDB361D); // beyazla 4.61:1
+  static const wrongGradientEnd = Color(0xFFB02C18); // beyazla 6.52:1
+
   static const correctGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [correct, Color(0xFF2D8250)],
+    colors: [correctGradientStart, correctGradientEnd],
   );
 
   static const wrongGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [wrong, Color(0xFFC53F2B)],
+    colors: [wrongGradientStart, wrongGradientEnd],
   );
 
   static List<BoxShadow> shadow3D(Color color) {

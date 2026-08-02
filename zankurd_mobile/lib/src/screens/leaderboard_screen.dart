@@ -250,24 +250,59 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   Widget build(BuildContext context) {
     final ku = context.isKu;
 
-    return Container(
-      color: AppTheme.bgOf(context),
-      child: SafeArea(
-        child: Column(
-          children: [
-            _Header(
-              ku: ku,
-              onRefresh: _loadData,
-              onOpenFriends: _openFriends,
-              pendingRequestCount: _pendingRequests,
-            ),
-            _PeriodTabs(controller: _tabController, ku: ku),
-            Expanded(
-              child: _tabController.index == 3
-                  ? _buildFriendsTab(ku)
-                  : _buildLeaderboardTab(ku),
-            ),
-          ],
+    // Bu ekran İKİ ayrı biçimde kullanılıyor: `AppShell`in 2. sekmesi olarak
+    // (Scaffold'u kabuk sağlar) ve quiz sonucundan tam rota olarak
+    // (`quiz_result_screen.dart` → `AppRoute.to(...)`). İkinci kullanımda
+    // hiçbir Material atası yoktu; Flutter o durumda metinleri
+    // `DefaultTextStyle.fallback()` ile — sarı çift alt çizgiyle ve yanlış
+    // tipografiyle — çizer. Bu yalnız debug'a özel DEĞİLDİR, release'te de
+    // aynı görünür. Üstelik geri düğmesi de yoktu: Android'de sistem geri
+    // tuşu kurtarıyordu ama iOS'ta `AppRoute` bir `PageRouteBuilder`
+    // olduğundan kaydırarak-geri de yok, yani ekran çıkışsız kalıyordu
+    // (2026-08-02 denetimi, A-10).
+    //
+    // Çözüm `categories_tab.dart`'takiyle aynı: şeffaf `Material` sarmalayıcı
+    // + `canPop`'a bağlı geri düğmesi. Sekme olarak açıldığında `canPop`
+    // false'tur, dolayısıyla gömülü görünüm hiç değişmez.
+    final canPop = Navigator.of(context).canPop();
+
+    return Material(
+      type: MaterialType.transparency,
+      child: Container(
+        color: AppTheme.bgOf(context),
+        child: SafeArea(
+          child: Column(
+            children: [
+              if (canPop)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 4),
+                    child: IconButton(
+                      key: const ValueKey('leaderboard-back'),
+                      icon: const Icon(Icons.arrow_back),
+                      color: AppTheme.textPrimaryColor(context),
+                      tooltip: MaterialLocalizations.of(
+                        context,
+                      ).backButtonTooltip,
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    ),
+                  ),
+                ),
+              _Header(
+                ku: ku,
+                onRefresh: _loadData,
+                onOpenFriends: _openFriends,
+                pendingRequestCount: _pendingRequests,
+              ),
+              _PeriodTabs(controller: _tabController, ku: ku),
+              Expanded(
+                child: _tabController.index == 3
+                    ? _buildFriendsTab(ku)
+                    : _buildLeaderboardTab(ku),
+              ),
+            ],
+          ),
         ),
       ),
     );

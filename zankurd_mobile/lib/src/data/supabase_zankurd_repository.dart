@@ -301,6 +301,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> deleteAvatarPhoto() async {
+    final user = client.auth.currentUser;
+    if (user == null) return _offline.deleteAvatarPhoto();
+    // Uzantı içerik türünden seçiliyor (`uploadAvatarPhoto`), yani aynı
+    // kullanıcının geçmişte hem .png hem .jpg nesnesi olabilir. İkisini de
+    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez.
+    await client.storage.from('avatars').remove([
+      '${user.id}/avatar.jpg',
+      '${user.id}/avatar.png',
+    ]);
+  }
+
+  @override
   Future<void> deleteMyAccount() async {
     try {
       await client.rpc('delete_my_account');

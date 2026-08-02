@@ -4,6 +4,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
+import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/styled_button.dart';
@@ -319,14 +320,26 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                             ),
                                           ),
                                           validator: (value) {
-                                            final name = value?.trim() ?? '';
-                                            if (name.length < 2) {
-                                              return context.t(K.nameMinLength);
+                                            // 2026-08-02: burada YALNIZ
+                                            // uzunluk kontrol ediliyordu.
+                                            // Ad, sohbet mesajından daha
+                                            // görünür bir UGC yüzeyi —
+                                            // liderlikte, odada ve
+                                            // eşleştirmede yabancılara
+                                            // gösteriliyor ve kalıcı.
+                                            final verdict =
+                                                DisplayNamePolicy.review(
+                                                  value ?? '',
+                                                );
+                                            if (verdict ==
+                                                DisplayNameVerdict.allowed) {
+                                              return null;
                                             }
-                                            if (name.length > 24) {
-                                              return context.t(K.nameMaxLength);
-                                            }
-                                            return null;
+                                            return context.t(
+                                              DisplayNamePolicy.messageKeyFor(
+                                                verdict,
+                                              ),
+                                            );
                                           },
                                         ),
                                         if (_saveError != null) ...[
