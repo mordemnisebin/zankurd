@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,7 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/utils/app_route.dart';
 
 /// Eşleştirme iptalinin gerçekten çağrıldığını izleyen sahte depo.
 class _TrackingRepository extends MockZanKurdRepository {
@@ -21,6 +24,41 @@ class _TrackingRepository extends MockZanKurdRepository {
   Future<Map<String, dynamic>> cancelMatchmaking() async {
     cancelCalls += 1;
     return const {'status': 'cancelled'};
+  }
+}
+
+class _PendingJoinRepository extends MockZanKurdRepository {
+  _PendingJoinRepository({this.failFirstCancel = false});
+
+  final bool failFirstCancel;
+  final List<Completer<Map<String, dynamic>>> joins = [];
+  int joinCalls = 0;
+  int cancelCalls = 0;
+  int snapshotCalls = 0;
+
+  Completer<Map<String, dynamic>> get latestJoin => joins.last;
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) {
+    joinCalls += 1;
+    final completer = Completer<Map<String, dynamic>>();
+    joins.add(completer);
+    return completer.future;
+  }
+
+  @override
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
+    cancelCalls += 1;
+    if (failFirstCancel && cancelCalls == 1) {
+      throw StateError('injected cancel failure');
+    }
+    return const {'status': 'cancelled'};
+  }
+
+  @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    snapshotCalls += 1;
+    return _SnapshotMatchRepository.snapshot;
   }
 }
 
@@ -254,6 +292,27 @@ Widget _shell(Widget child) {
   );
 }
 
+class _MatchmakingRouteHost extends StatelessWidget {
+  const _MatchmakingRouteHost(this.repository);
+
+  final _PendingJoinRepository repository;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: FilledButton(
+          key: const ValueKey('open-matchmaking'),
+          onPressed: () => Navigator.of(
+            context,
+          ).push(AppRoute.to(MatchmakingScreen(repository: repository))),
+          child: const Text('Eşleştirmeyi aç'),
+        ),
+      ),
+    );
+  }
+}
+
 Future<void> _startImmediateMatch(
   WidgetTester tester,
   _HiddenAnswerMatchRepository repository,
@@ -351,6 +410,101 @@ void main() {
 
     expect(repository.cancelCalls, 1);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('takılan join açık iptali on saniyeden fazla kilitlemez', (
+    tester,
+  ) async {
+    final repository = _PendingJoinRepository();
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_shell(_MatchmakingRouteHost(repository)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump();
+    await tester.tap(find.text('İptal Et'));
+    await tester.pump();
+
+    await tester.pump(const Duration(milliseconds: 9999));
+    final cancelledBeforeDeadline = repository.cancelCalls;
+    final cancellingBeforeDeadline = find
+        .byKey(const ValueKey('matchmaking-cancelling-state'))
+        .evaluate()
+        .length;
+
+    await tester.pump(const Duration(milliseconds: 1));
+    await tester.pump();
+    final cancelledAtDeadline = repository.cancelCalls;
+
+    repository.latestJoin.complete(const {
+      'status': 'matched',
+      'room_id': _SnapshotMatchRepository.roomId,
+    });
+    await tester.pumpAndSettle();
+    final snapshotCallsAfterLateJoin = repository.snapshotCalls;
+    final quizCountAfterLateJoin = find.byType(QuizScreen).evaluate().length;
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+
+    expect(cancelledBeforeDeadline, 0);
+    expect(cancellingBeforeDeadline, 1);
+    expect(cancelledAtDeadline, 1);
+    expect(snapshotCallsAfterLateJoin, 0);
+    expect(quizCountAfterLateJoin, 0);
+  });
+
+  testWidgets('eski join iptal hatası sonrası yeni denemeyi ele geçiremez', (
+    tester,
+  ) async {
+    final repository = _PendingJoinRepository(failFirstCancel: true);
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump();
+    final firstJoin = repository.latestJoin;
+    await tester.tap(find.text('İptal Et'));
+    await tester.pump(const Duration(seconds: 10));
+    await tester.pump();
+
+    final retryVisibleAtDeadline = find.text('Tekrar').evaluate().isNotEmpty;
+    if (!retryVisibleAtDeadline) {
+      firstJoin.complete(const {'status': 'waiting'});
+      await tester.pump();
+      await tester.pump();
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+      expect(retryVisibleAtDeadline, isTrue);
+      return;
+    }
+
+    await tester.tap(find.text('Tekrar'));
+    await tester.pump();
+    expect(repository.joinCalls, 2);
+
+    firstJoin.complete(const {
+      'status': 'matched',
+      'room_id': _SnapshotMatchRepository.roomId,
+    });
+    await tester.pump();
+    await tester.pump();
+
+    final snapshotCallsAfterStaleJoin = repository.snapshotCalls;
+    final quizCountAfterStaleJoin = find.byType(QuizScreen).evaluate().length;
+    repository.latestJoin.complete(const {'status': 'waiting'});
+    await tester.pump();
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+
+    expect(snapshotCallsAfterStaleJoin, 0);
+    expect(quizCountAfterStaleJoin, 0);
   });
 
   testWidgets('gizli cevaplı gerçek eşleşmede boş oda soruları yerele düşmez', (
