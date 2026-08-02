@@ -37,28 +37,23 @@ Future<void> _pumpResultOnFinishedRoomStack(
   required String? roomId,
 }) async {
   final repository = freshMockRepository();
-  final navigatorKey = GlobalKey<NavigatorState>();
 
   await tester.pumpWidget(
     testShell(
       languageProvider: LanguageProvider()..setLang(language),
-      child: Navigator(
-        key: navigatorKey,
-        onGenerateRoute: (_) => MaterialPageRoute<void>(
-          builder: (_) => const Scaffold(body: Text(_rootMarker)),
-        ),
-      ),
+      child: const Scaffold(body: Text(_rootMarker)),
     ),
   );
   await tester.pumpAndSettle();
 
-  navigatorKey.currentState!.push(
+  final navigator = Navigator.of(tester.element(find.text(_rootMarker)));
+  navigator.push(
     MaterialPageRoute<void>(
       builder: (_) => const Scaffold(body: Text(_staleRoomMarker)),
     ),
   );
   await tester.pumpAndSettle();
-  navigatorKey.currentState!.push(
+  navigator.push(
     MaterialPageRoute<void>(
       builder: (_) => _resultScreen(repository, roomId: roomId),
     ),
@@ -111,6 +106,51 @@ void main() {
       find.descendant(of: action, matching: find.text('Sereke')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('çevrimiçi AppBar geri bitmiş oda rotasını temizler', (
+    tester,
+  ) async {
+    await _pumpResultOnFinishedRoomStack(
+      tester,
+      language: 'tr',
+      roomId: 'online-room-id',
+    );
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+
+    expect(find.text(_rootMarker), findsOneWidget);
+    expect(find.text(_staleRoomMarker), findsNothing);
+    expect(find.byType(QuizResultScreen), findsNothing);
+  });
+
+  testWidgets('çevrimiçi sistem geri bitmiş oda rotasını temizler', (
+    tester,
+  ) async {
+    await _pumpResultOnFinishedRoomStack(
+      tester,
+      language: 'tr',
+      roomId: 'online-room-id',
+    );
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    expect(find.text(_rootMarker), findsOneWidget);
+    expect(find.text(_staleRoomMarker), findsNothing);
+    expect(find.byType(QuizResultScreen), findsNothing);
+  });
+
+  testWidgets('solo sistem geri yalnız sonuç rotasını kapatır', (tester) async {
+    await _pumpResultOnFinishedRoomStack(tester, language: 'tr', roomId: null);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    expect(find.text(_rootMarker), findsNothing);
+    expect(find.text(_staleRoomMarker), findsOneWidget);
+    expect(find.byType(QuizResultScreen), findsNothing);
   });
 
   testWidgets('solo sonuç eylemi Tekrar oyna davranışını korur', (
