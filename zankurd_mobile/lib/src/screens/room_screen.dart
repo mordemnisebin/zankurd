@@ -296,7 +296,15 @@ class _RoomScreenState extends State<RoomScreen> {
       ..sort((a, b) => b.score.compareTo(a.score));
     final currentUserId = widget.repository.currentUserId;
     final isHost = room.hostId == null || room.hostId == currentUserId;
-    final canStart = ready && !starting && room.players.length >= 2;
+    final allPlayersReady = room.players.every(
+      (player) => player.state == Player.readyState,
+    );
+    final canStart =
+        isHost &&
+        ready &&
+        !starting &&
+        room.players.length >= 2 &&
+        allPlayersReady;
     if (_leaving) {
       return Scaffold(
         body: Container(
@@ -1004,6 +1012,7 @@ class _RoomScreenState extends State<RoomScreen> {
           questions: questions.isEmpty
               ? widget.repository.questions
               : questions,
+          is1v1: room.id != null && room.players.length == 2,
         ),
       ),
     );
