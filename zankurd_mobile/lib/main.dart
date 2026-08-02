@@ -30,6 +30,7 @@ import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
 import 'src/theme/app_theme.dart';
+import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
 import 'src/widgets/responsive_wrapper.dart';
 
@@ -338,6 +339,7 @@ class ZanKurdApp extends StatelessWidget {
           themeMode: themeProvider.mode,
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
+          navigatorObservers: [appRouteObserver],
           home: SplashScreen(
             // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
             // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
