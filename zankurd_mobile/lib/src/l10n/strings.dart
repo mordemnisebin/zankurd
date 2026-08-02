@@ -1274,6 +1274,24 @@ class Tr {
       'ku': 'Girêdan tune — xelata te tê tomarkirin û paşê tê dayîn.',
       'tr': 'Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.',
     },
+    K.rewardUnresolved: {
+      'ku':
+          'Xelat hîn nehatiye tomarkirin. Di vekirina din de dê dîsa bê '
+          'ceribandin.',
+      'tr': 'Ödül henüz kaydedilemedi. Sonraki açılışta tekrar denenecek.',
+    },
+    K.resultRecoveryLoading: {
+      'ku': 'Encama pêşbirkê tê amadekirin…',
+      'tr': 'Yarış sonucu hazırlanıyor…',
+    },
+    K.resultRecoveryFailed: {
+      'ku': 'Encam nehate barkirin. Dîsa biceribîne.',
+      'tr': 'Sonuç yüklenemedi. Tekrar deneyebilirsin.',
+    },
+    K.resultRecoveryOwnerChanged: {
+      'ku': 'Hesab guherî. Ji bo vê encamê, bi hesabê rast têkeve.',
+      'tr': 'Hesap değişti. Bu sonucu açmak için doğru hesapla devam et.',
+    },
     K.tournamentWaitingTitle: {
       'ku': 'Em li lîstikvanan digerin',
       'tr': 'Oyuncular bekleniyor',
@@ -2694,6 +2712,10 @@ class K {
   static const earnCoins = 'shop.earnCoins';
   static const cancelShort = 'common.cancelShort';
   static const rewardPending = 'result.rewardPending';
+  static const rewardUnresolved = 'result.rewardUnresolved';
+  static const resultRecoveryLoading = 'result.recovery.loading';
+  static const resultRecoveryFailed = 'result.recovery.failed';
+  static const resultRecoveryOwnerChanged = 'result.recovery.ownerChanged';
   static const tournamentWaitingTitle = 'tournament.waitingTitle';
   static const tournamentWaitingBody = 'tournament.waitingBody';
   static const tournamentWaitingOpponent = 'tournament.waitingOpponent';

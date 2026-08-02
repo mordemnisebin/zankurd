@@ -2,17 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
+import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
+import '../services/quiz_reward_settlement_service.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
@@ -38,6 +41,13 @@ import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+typedef QuizResultReceiptRunner =
+    Future<QuizResultProgressReceiptOutcome> Function({
+      required String userId,
+      required String roomId,
+      required Future<void> Function() action,
+    });
+
 class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({
     required this.repository,
@@ -54,6 +64,9 @@ class QuizResultScreen extends StatefulWidget {
     this.practice = false,
     this.dailyQuiz = false,
     this.contestId,
+    this.resultOwnerUserId,
+    this.rewardSettlementState,
+    this.receiptRunner,
     super.key,
   });
 
@@ -81,6 +94,12 @@ class QuizResultScreen extends StatefulWidget {
   final bool dailyQuiz;
   final String? contestId;
 
+  /// Yalnız sunucudan geri kazanılan/tamamlanan online sonuç tesliminde
+  /// kullanılır. Eski solo ve online çağrılar bu alanları vermeden çalışır.
+  final String? resultOwnerUserId;
+  final QuizRewardSettlementState? rewardSettlementState;
+  final QuizResultReceiptRunner? receiptRunner;
+
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
 }
@@ -104,6 +123,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   Map<String, MasteryLevel> _promotions = const {};
   int _earnedXP = 0;
   bool _showConfetti = false;
+  bool _ackAttempted = false;
 
   @override
   void initState() {
@@ -114,19 +134,139 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // yedi ayrı store ve bir platform kanalı üzerinden gider; herhangi
     // birinden kaçan istisna `initState`ten yukarı çıkıp tüm ekranı
     // düşürüyordu (2026-07-31 denetimi). Hata bildirilir, ekran yaşar.
-    unawaited(
-      _recordProgress().catchError((Object error, StackTrace stack) {
-        ErrorReporter.record(error, stack, reason: 'quiz result progress');
-      }),
-    );
-    repository.logAnalyticsEvent('quiz_complete', {
-      'category': widget.room.category,
-      'correct_count': widget.correctCount,
-      'total_questions': widget.totalQuestions,
-      'score': widget.score,
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(_deliverResult());
     });
     if (widget.contestId != null) {
       _claimContestReward();
+    }
+  }
+
+  Future<void> _deliverResult() async {
+    final ownerId = widget.resultOwnerUserId?.trim();
+    final roomId = widget.room.id?.trim();
+    final rewardState = widget.rewardSettlementState;
+    final hasOwner = ownerId != null && ownerId.isNotEmpty;
+    final hasRewardState = rewardState != null;
+
+    if (hasOwner != hasRewardState ||
+        ((hasOwner || hasRewardState) && (roomId == null || roomId.isEmpty))) {
+      ErrorReporter.record(
+        const FormatException('Incomplete online result delivery context.'),
+        StackTrace.current,
+        reason: 'quiz result delivery context',
+      );
+      return;
+    }
+
+    if (!hasOwner && !hasRewardState) {
+      await _runProgressSafely();
+      return;
+    }
+    if (!_hasValidOnlineResultContext(ownerId!) ||
+        !_isCurrentResultOwner(ownerId)) {
+      return;
+    }
+
+    QuizResultProgressReceiptOutcome receiptOutcome;
+    try {
+      final runner = widget.receiptRunner ?? _runDefaultReceipt;
+      receiptOutcome = await runner(
+        userId: ownerId,
+        roomId: roomId!,
+        action: () async {
+          if (!_isCurrentResultOwner(ownerId)) {
+            throw StateError('Result owner changed before local progress.');
+          }
+          await _recordProgressAndAnalytics();
+          if (!_isCurrentResultOwner(ownerId)) {
+            throw StateError('Result owner changed during local progress.');
+          }
+        },
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result receipt');
+      return;
+    }
+
+    switch (receiptOutcome) {
+      case QuizResultProgressReceiptOutcome.executed:
+      case QuizResultProgressReceiptOutcome.skippedCompleted:
+      case QuizResultProgressReceiptOutcome.recoveredProcessing:
+        break;
+    }
+    if (rewardState != QuizRewardSettlementState.claimed ||
+        !_isCurrentResultOwner(ownerId) ||
+        _ackAttempted) {
+      return;
+    }
+
+    _ackAttempted = true;
+    try {
+      await repository.acknowledgeRoomResult(widget.room);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result acknowledge');
+    }
+  }
+
+  Future<QuizResultProgressReceiptOutcome> _runDefaultReceipt({
+    required String userId,
+    required String roomId,
+    required Future<void> Function() action,
+  }) async {
+    final preferences = await SharedPreferences.getInstance();
+    return QuizResultProgressReceiptStore(
+      preferences,
+    ).runOnce(userId: userId, roomId: roomId, action: action);
+  }
+
+  bool _isCurrentResultOwner(String ownerId) {
+    final currentUserId = repository.currentUserId?.trim();
+    return currentUserId != null &&
+        currentUserId.isNotEmpty &&
+        currentUserId == ownerId;
+  }
+
+  bool _hasValidOnlineResultContext(String ownerId) {
+    final playerIds = widget.room.players
+        .map((player) => player.id?.trim() ?? '')
+        .toList(growable: false);
+    final hasValidPlayers =
+        playerIds.length == 2 &&
+        playerIds.every((id) => id.isNotEmpty) &&
+        playerIds.toSet().length == 2 &&
+        playerIds.where((id) => id == ownerId).length == 1;
+    if (widget.room.status == RoomStatus.finished && hasValidPlayers) {
+      return true;
+    }
+    ErrorReporter.record(
+      const FormatException('Invalid online result room context.'),
+      StackTrace.current,
+      reason: 'quiz result delivery context',
+    );
+    return false;
+  }
+
+  Future<void> _runProgressSafely() async {
+    try {
+      await _recordProgressAndAnalytics();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result progress');
+    }
+  }
+
+  Future<void> _recordProgressAndAnalytics() async {
+    await _recordProgress();
+    try {
+      await repository.logAnalyticsEvent('quiz_complete', {
+        'category': widget.room.category,
+        'correct_count': widget.correctCount,
+        'total_questions': widget.totalQuestions,
+        'score': widget.score,
+      });
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result analytics');
     }
   }
 
@@ -852,8 +992,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 // çizildiği için çevrimdışı turda ekranda
                                 // hiçbir iz kalmıyor ve oyuncu turu boşuna
                                 // oynadığını sanıyordu (2026-07-26).
-                                if (widget.rewardQueued &&
-                                    coinsAwarded <= 0) ...[
+                                if (widget.rewardSettlementState ==
+                                        QuizRewardSettlementState.queued ||
+                                    (widget.rewardSettlementState == null &&
+                                        widget.rewardQueued &&
+                                        coinsAwarded <= 0)) ...[
                                   const SizedBox(height: AppSpacing.sm),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -867,6 +1010,30 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       Flexible(
                                         child: Text(
                                           context.t(K.rewardPending),
+                                          textAlign: TextAlign.center,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                if (widget.rewardSettlementState ==
+                                    QuizRewardSettlementState.unresolved) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        AppIcons.cloud,
+                                        size: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.rewardUnresolved),
                                           textAlign: TextAlign.center,
                                           style: AppTypography.caption.copyWith(
                                             color: Colors.white70,
