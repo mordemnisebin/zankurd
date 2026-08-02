@@ -38,7 +38,15 @@ abstract class ZanKurdRepository {
   Future<void> updateProfileName(String name);
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
+
+  /// Öğrenme/tek kişilik akışların çevrimdışı kategori listesi.
   Future<List<String>> loadCategories();
+
+  /// Çevrimiçi eşleştirmede sunucunun gerçekten desteklediği kategoriler.
+  ///
+  /// Ağ veya sunucu hatası sahte bir yerel listeye düşmemeli; çağıran ekran
+  /// hatayı görünür biçimde ele alır.
+  Future<List<String>> loadMatchmakingCategories();
 
   /// Kategori adına göre onaylı soru sayısı (kategori kartlarında gösterim).
   /// Başarısızlıkta boş map döner; UI statik metne düşer.

@@ -28,11 +28,28 @@ class _RetryableMatchCategoriesRepository extends MockZanKurdRepository {
   int loadCalls = 0;
 
   @override
-  Future<List<String>> loadCategories() async {
+  Future<List<String>> loadMatchmakingCategories() async {
     loadCalls += 1;
     if (fail) throw StateError('match categories unavailable');
     if (returnEmpty) return const [];
     return categories;
+  }
+}
+
+class _ServerOnlyMatchCategoriesRepository extends MockZanKurdRepository {
+  int learningCategoryCalls = 0;
+  int matchmakingCategoryCalls = 0;
+
+  @override
+  Future<List<String>> loadCategories() async {
+    learningCategoryCalls += 1;
+    return const ['Sînema'];
+  }
+
+  @override
+  Future<List<String>> loadMatchmakingCategories() async {
+    matchmakingCategoryCalls += 1;
+    return const ['Ziman'];
   }
 }
 
@@ -219,6 +236,21 @@ void main() {
 
     expect(repository.loadCalls, 2);
     expect(find.text('Dil'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('eşleştirme ekranı çevrimdışı öğrenme kategorisini kullanmaz', (
+    tester,
+  ) async {
+    final repository = _ServerOnlyMatchCategoriesRepository();
+
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Dil'), findsOneWidget);
+    expect(find.text('Sinema'), findsNothing);
+    expect(repository.matchmakingCategoryCalls, 1);
+    expect(repository.learningCategoryCalls, 0);
     expect(tester.takeException(), isNull);
   });
 

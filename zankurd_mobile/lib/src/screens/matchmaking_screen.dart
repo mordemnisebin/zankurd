@@ -172,7 +172,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final identity = await widget.repository.loadAvatarIdentity();
       final xpStore = await XPStore.load();
       final level = xpStore.currentLevel;
-      final cats = await widget.repository.loadCategories();
+      final cats = await widget.repository.loadMatchmakingCategories();
       if (!mounted) return;
       setState(() {
         _profileName = name;

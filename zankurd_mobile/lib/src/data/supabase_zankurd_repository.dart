@@ -17,6 +17,7 @@ import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../utils/error_reporter.dart';
+import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
 import 'zankurd_repository.dart';
 import '../services/question_content_policy.dart';
@@ -359,6 +360,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<String>> loadCategories() async {
     return _offline.loadCategories();
+  }
+
+  @override
+  Future<List<String>> loadMatchmakingCategories() async {
+    final rows = await client
+        .from('categories')
+        .select('name')
+        .eq('is_active', true)
+        .order('name');
+    return visibleCategories(rows.map((row) => row['name'] as String));
   }
 
   @override

@@ -131,6 +131,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<List<String>> loadCategories() async => categories;
 
   @override
+  Future<List<String>> loadMatchmakingCategories() => loadCategories();
+
+  @override
   Future<Map<String, int>> loadCategoryQuestionCounts() async {
     final counts = <String, int>{};
     for (final question in _playableQuestions) {

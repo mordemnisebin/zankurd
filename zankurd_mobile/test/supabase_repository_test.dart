@@ -10,12 +10,21 @@ import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 /// sunucu cevabı üretir. Böylece test, yalnız çağrı sayısını değil oyuncuya
 /// gösterilen kategori kaynağını da doğrular.
 class _ServerCategoriesHttpClient extends http.BaseClient {
+  _ServerCategoriesHttpClient({
+    this.serverCategories = const ['Tenê li serverê'],
+  });
+
+  final List<String> serverCategories;
   int requestCount = 0;
+  Uri? lastRequestUrl;
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     requestCount++;
-    final bytes = utf8.encode(jsonEncode([{'name': 'Tenê li serverê'}]));
+    lastRequestUrl = request.url;
+    final bytes = utf8.encode(
+      jsonEncode(serverCategories.map((name) => {'name': name}).toList()),
+    );
     return http.StreamedResponse(
       Stream.value(bytes),
       200,
@@ -46,6 +55,28 @@ void main() {
       expect(httpClient.requestCount, 0);
     },
   );
+
+  test('eşleştirme yalnız sunucuda etkin olan kategorileri kullanır', () async {
+    final httpClient = _ServerCategoriesHttpClient(
+      serverCategories: const ['Ziman'],
+    );
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    final categories = await repository.loadMatchmakingCategories();
+
+    expect(repository.categories, contains('Sînema'));
+    expect(categories, const ['Ziman']);
+    expect(categories, isNot(contains('Sînema')));
+    expect(httpClient.requestCount, 1);
+    expect(httpClient.lastRequestUrl?.path, '/rest/v1/categories');
+    expect(httpClient.lastRequestUrl?.queryParameters['is_active'], 'eq.true');
+  });
 
   test('Supabase local room shell does not include mock opponents', () {
     final repository = SupabaseZanKurdRepository(
