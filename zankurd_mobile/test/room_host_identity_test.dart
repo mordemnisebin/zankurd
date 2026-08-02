@@ -19,16 +19,14 @@ import 'package:zankurd_mobile/src/models/room.dart';
 ///     quiz finish game failed: PostgrestException(
 ///       message: Only the room host can finish the game, code: P0001)
 ///
-/// Çürütme yalnız mock yolunu ölçmüştü. `joinOnlineRoom`daki ev sahibi
-/// sorgusu try/catch içinde; düştüğünde katılan `hostId: null` ile odaya
-/// giriyor. `_isHost`in yedek dalı da o boşlukta devreye girip "oyuncu
-/// listesinin ilki benim miyim?" diye soruyordu — ve liste sırası ev
-/// sahipliği garantisi taşımıyor. Aynı gece bir ekran görüntüsünde
-/// katılan gerçekten birinci sıradaydı.
+/// Çürütme yalnız mock yolunu ölçmüştü. Eski `joinOnlineRoom`, RPC'nin zaten
+/// döndürdüğü `host_id` yerine ikinci ve hata yutulan bir rooms sorgusu
+/// yapıyordu; o sorgu düşünce katılan `hostId: null` ile odaya giriyordu.
+/// `_isHost`in yedek dalı da "oyuncu listesinin ilki benim miyim?" diye
+/// soruyordu — ve liste sırası ev sahipliği garantisi taşımıyor.
 ///
-/// Yedek yol yalnızca YANLIŞ cevap verebileceği durumda devreye
-/// giriyordu: `createOnlineRoom` ev sahibine her zaman `hostId: user.id`
-/// verdiği için gerçek ev sahibinin kimliği asla eksik olmaz.
+/// Artık create/join RPC snapshotındaki `host_id` zorunlu parse edilir;
+/// eksik kimlik sessiz null yerine sözleşme hatasıdır.
 ///
 /// Yedek dal kaldırıldı. Bilinmiyorsa cevap "hayır"dır: yapılmayan iş
 /// zararsız, yapılmaması gereken iş zararlı — iki istemcinin birden ev
@@ -76,22 +74,24 @@ void main() {
     );
   });
 
-  test('oda kurucusu her zaman hostId taşıyor', () {
-    // Yedek dalın kaldırılabilmesinin tek dayanağı bu: gerçek ev
-    // sahibinin kimliği hiçbir zaman eksik değil.
+  test('online oda hostId değerini yetkili RPC snapshotından zorunlu okur', () {
+    // Tekrar çağrılan create RPC mevcut bir odayı döndürebilir ve çağıran o
+    // odanın misafiri olabilir; bu yüzden local user id host diye varsayılmaz.
     final repository = File(
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
     final create = repository.substring(
       repository.indexOf('Future<GameRoom> createOnlineRoom'),
     );
+    final createBody = create.substring(0, create.indexOf('\n  @override'));
     expect(
-      create.substring(0, create.indexOf('\n  @override')),
-      contains('hostId: user.id'),
+      createBody,
+      contains("_requiredString(snapshot, const ['host_id'])"),
       reason:
-          'Ev sahibi kendi kimliğini bilmezse _isHost kimseye evet demez '
-          've oda hiç ilerlemez.',
+          'Eksik host kimliği sessiz null yerine bozuk RPC sözleşmesi olmalı.',
     );
+    expect(createBody, contains('hostId: hostId'));
+    expect(createBody, isNot(contains('hostId: user.id')));
   });
 
   test('copyWith sahibi koruyarak diğer alanları değiştirir', () {

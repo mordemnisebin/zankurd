@@ -16,11 +16,51 @@ class _AlwaysFailingHttpClient extends http.BaseClient {
   }
 }
 
+class _QuizRewardHttpClient extends http.BaseClient {
+  _QuizRewardHttpClient(this.response);
+
+  final Object response;
+  final requestedPaths = <String>[];
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    requestedPaths.add(request.url.path);
+    if (request.url.path != '/rest/v1/rpc/claim_quiz_reward') {
+      throw StateError('Beklenmeyen istek: ${request.url.path}');
+    }
+    final bytes = utf8.encode(jsonEncode(response));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
 class _SignedInSupabaseRepository extends SupabaseZanKurdRepository {
   _SignedInSupabaseRepository(super.client);
 
   @override
   String? get currentUserId => 'test-user';
+}
+
+class _SignedInQuizRewardRepository extends SupabaseZanKurdRepository {
+  _SignedInQuizRewardRepository(super.client);
+
+  @override
+  Future<User> signInAnonymously() async => const User(
+    id: 'test-user',
+    appMetadata: {},
+    userMetadata: {},
+    aud: 'authenticated',
+    createdAt: '2026-08-02T00:00:00.000Z',
+    isAnonymous: true,
+  );
+
+  @override
+  Future<void> ensureProfile() async {}
 }
 
 class _RoomQuestionsHttpClient extends http.BaseClient {
@@ -131,17 +171,40 @@ void main() {
     },
   );
 
-  test(
-    'awardQuizCoins ağ hatasında 0 döner — sunucu onaylamadan ödül verilmez',
-    () async {
-      final repo = unreachableRepo();
-      final amount = await repo.awardQuizCoins(
+  test('awardQuizCoins ağ hatasını yeniden deneme için yukarı taşır', () async {
+    final repo = unreachableRepo();
+    await expectLater(
+      repo.awardQuizCoins(
         score: 500,
         correctCount: 8,
         bestStreak: 5,
         totalQuestions: 10,
+      ),
+      throwsA(anything),
+    );
+  });
+
+  test(
+    'awardQuizCoins başarılı amount 0 yanıtını normal sonuç sayar',
+    () async {
+      final httpClient = _QuizRewardHttpClient(const {'amount': 0});
+      final repo = _SignedInQuizRewardRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
       );
+
+      final amount = await repo.awardQuizCoins(
+        score: 100,
+        correctCount: 2,
+        bestStreak: 1,
+        totalQuestions: 10,
+      );
+
       expect(amount, 0);
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
     },
   );
 

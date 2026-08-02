@@ -88,6 +88,15 @@ abstract class ZanKurdRepository {
   /// Aktif üyelik yoksa null; RPC veya şema hataları çağırana iletilir.
   Future<RoomResumeSnapshot?> loadMyResumableRoom();
 
+  /// İstemcinin aktif oda sorularını yüklediğini sunucu bariyerine bildirir.
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room);
+
+  /// Beklenen indeksle CAS ilerletir; bitiş atomikse resume null dönebilir.
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  });
+
   /// Çevrimiçi odadan sunucunun yetkili çıkış sözleşmesiyle ayrılır.
   Future<void> leaveOnlineRoom(GameRoom room);
 

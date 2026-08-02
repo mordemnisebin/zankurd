@@ -35,6 +35,25 @@ class ResumedAnswer {
   final String? explanationTr;
 }
 
+/// Henüz sunucu tarafından açılmamış mevcut soru cevabı.
+///
+/// Bu model bilerek doğruluk, puan ve açıklama taşımaz. İki oyuncu da
+/// cevaplayana (veya sunucu süresi dolana) kadar istemci yalnız kendi seçimini
+/// geri yükleyebilir.
+class ResumedPendingAnswer {
+  const ResumedPendingAnswer({
+    required this.questionId,
+    required this.questionIndex,
+    required this.selectedOptionKey,
+    required this.responseMs,
+  });
+
+  final String questionId;
+  final int questionIndex;
+  final String selectedOptionKey;
+  final int responseMs;
+}
+
 /// Aktif bir çevrimiçi odanın yeniden başlatma için gereken yetkili durumu.
 class RoomResumeSnapshot {
   RoomResumeSnapshot({
@@ -46,6 +65,7 @@ class RoomResumeSnapshot {
     required this.correctCount,
     required this.wrongCount,
     required List<ResumedAnswer> answers,
+    this.pendingAnswer,
     required this.serverNow,
     required this.questionStartedAt,
     required this.deadline,
@@ -60,6 +80,7 @@ class RoomResumeSnapshot {
   final int correctCount;
   final int wrongCount;
   final List<ResumedAnswer> answers;
+  final ResumedPendingAnswer? pendingAnswer;
   final DateTime serverNow;
   final DateTime? questionStartedAt;
   final DateTime? deadline;

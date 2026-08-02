@@ -99,6 +99,60 @@ DateTime? _optionalDateTimeFromKeys(
   return null;
 }
 
+ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
+  if (!json.containsKey('pending_answer')) {
+    throw const FormatException('pending_answer must be present.');
+  }
+  final rawPending = json['pending_answer'];
+  if (rawPending == null) return null;
+
+  final pending = _requiredJsonObject(rawPending, 'pending_answer');
+  const forbiddenResultFields = {
+    'correct_option',
+    'correct_option_key',
+    'is_correct',
+    'points',
+    'points_awarded',
+    'new_score',
+    'new_streak',
+    'score',
+    'streak',
+    'explanation',
+    'explanation_ku',
+    'explanation_tr',
+  };
+  final leakedField = forbiddenResultFields
+      .where(pending.containsKey)
+      .firstOrNull;
+  if (leakedField != null) {
+    throw FormatException(
+      'pending_answer must not contain result field $leakedField.',
+    );
+  }
+
+  final questionIndex = _requiredInt(pending, const ['question_index']);
+  final responseMs = _requiredInt(pending, const ['response_ms']);
+  final selectedOptionKey = _requiredString(pending, const [
+    'selected_option',
+    'selected_option_key',
+  ]);
+  if (questionIndex < 0 || responseMs < 0) {
+    throw const FormatException(
+      'pending_answer index and response_ms must be non-negative.',
+    );
+  }
+  if (!const {'A', 'B', 'C', 'D', 'TIMEOUT'}.contains(selectedOptionKey)) {
+    throw const FormatException('pending_answer selected_option is invalid.');
+  }
+
+  return ResumedPendingAnswer(
+    questionId: _requiredString(pending, const ['question_id']),
+    questionIndex: questionIndex,
+    selectedOptionKey: selectedOptionKey,
+    responseMs: responseMs,
+  );
+}
+
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
@@ -531,55 +585,41 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
   }) async {
     try {
-      final user = client.auth.currentUser ?? await signInAnonymously();
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
       await ensureProfile();
 
-      final localRoom = createRoom(category: category);
-      final categoryId = await _categoryIdByName(category);
-
-      // Kod çakışırsa (unique ihlali) yeni kodla birkaç kez dene.
-      Map<String, dynamic>? room;
-      var code = localRoom.code;
-      for (var attempt = 0; attempt < 3; attempt++) {
-        try {
-          room = await client
-              .from('rooms')
-              .insert({
-                'code': code,
-                'host_id': user.id,
-                'category_id': categoryId,
-                'question_count': localRoom.questionCount,
-                'seconds_per_question': secondsPerQuestion,
-              })
-              .select('id, code')
-              .single();
-          break;
-        } on PostgrestException catch (error) {
-          final isUniqueViolation = error.code == '23505';
-          if (!isUniqueViolation || attempt == 2) rethrow;
-          code = generateRoomCode();
-        }
-      }
-      if (room == null) {
-        throw StateError('Room insert failed after retries.');
-      }
-
-      final roomId = (room['id'] as String?) ?? '';
-      final roomCode = (room['code'] as String?) ?? '';
-
-      await client.from('room_players').insert({
-        'room_id': roomId,
-        'player_id': user.id,
-        'is_ready': true,
-      });
+      final response = await client.rpc(
+        'create_online_room',
+        params: {
+          'p_category_name': category,
+          'p_seconds_per_question': secondsPerQuestion,
+        },
+      );
+      final snapshot = _requiredJsonObject(response, 'create_online_room');
+      final roomId = _requiredString(snapshot, const ['room_id']);
+      final roomCode = _requiredString(snapshot, const ['code']);
+      final hostId = _requiredString(snapshot, const ['host_id']);
+      final canonicalCategory = _requiredString(snapshot, const [
+        'category_name',
+      ]);
+      final questionCount = _requiredInt(snapshot, const ['question_count']);
+      final serverSeconds = _requiredInt(snapshot, const [
+        'seconds_per_question',
+      ]);
 
       final players = await _loadRoomPlayersById(roomId);
-      return localRoom.copyWith(
+      return GameRoom(
         id: roomId,
+        name: '1vs1',
         code: roomCode,
+        category: canonicalCategory,
         players: players,
-        hostId: user.id,
-        secondsPerQuestion: secondsPerQuestion,
+        status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
+        questionCount: questionCount,
+        secondsPerQuestion: serverSeconds,
+        hostId: hostId,
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'createOnlineRoom failed');
@@ -596,27 +636,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'join_room_by_code',
       params: {'p_code': normalizeRoomCode(code)},
     );
-    final room = response is Map<String, dynamic>
-        ? response
-        : (response as List).firstOrNull as Map<String, dynamic>?;
-    if (room == null) {
+    final rawSnapshot = response is List ? response.firstOrNull : response;
+    if (rawSnapshot == null) {
       throw StateError('join_room_by_code boş yanıt döndürdü: oda bulunamadı');
     }
-    final roomId = room['room_id'] as String;
+    final room = _requiredJsonObject(rawSnapshot, 'join_room_by_code');
+    final roomId = _requiredString(room, const ['room_id']);
+    final hostId = _requiredString(room, const ['host_id']);
     final players = await _loadRoomPlayersById(roomId);
     final category = room['category_name'] as String? ?? 'Ziman';
-
-    String? hostId;
-    try {
-      final hostRow = await client
-          .from('rooms')
-          .select('host_id')
-          .eq('id', roomId)
-          .single();
-      hostId = hostRow['host_id'] as String?;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadRoom host lookup failed');
-    }
 
     final joined = createRoom(category: category).copyWith(
       id: roomId,
@@ -729,6 +757,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       correctCount: _requiredInt(json, const ['correct_count']),
       wrongCount: _requiredInt(json, const ['wrong_count']),
       answers: answers,
+      pendingAnswer: _requiredPendingAnswer(json),
       serverNow: _requiredDateTime(json, 'server_now'),
       questionStartedAt: _optionalDateTimeFromKeys(json, const [
         'current_question_started_at',
@@ -743,6 +772,43 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'remaining_ms',
       ]),
     );
+  }
+
+  Future<RoomResumeSnapshot?> _loadExpectedRoomResume(String roomId) async {
+    final snapshot = await loadMyResumableRoom();
+    if (snapshot != null && snapshot.room.id != roomId) {
+      throw const FormatException(
+        'Room session RPC returned a different resumable room.',
+      );
+    }
+    return snapshot;
+  }
+
+  @override
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) return null;
+
+    await client.rpc('mark_room_client_ready', params: {'p_room_id': roomId});
+    return _loadExpectedRoomResume(roomId);
+  }
+
+  @override
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  }) async {
+    final roomId = room.id;
+    if (roomId == null) return null;
+
+    await client.rpc(
+      'advance_room_question',
+      params: {
+        'p_room_id': roomId,
+        'p_expected_question_index': expectedQuestionIndex,
+      },
+    );
+    return _loadExpectedRoomResume(roomId);
   }
 
   @override
@@ -1266,8 +1332,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     GameRoom? room,
   }) async {
     // Ödül miktarını yalnızca sunucu belirler (claim_quiz_reward RPC).
-    // İstemciden coin_transactions'a yazma yolu yoktur; RPC başarısızsa
-    // coin kazanılmamış sayılır.
+    // İstemciden coin_transactions'a yazma yolu yoktur. RPC/transport/parse
+    // hatası yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
+    // sunucunun başarıyla döndürdüğü 0 ise geçerli bir sonuçtur.
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
@@ -1286,7 +1353,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       throw StateError('Quiz reward RPC returned no amount for ${user.id}.');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim_quiz_reward failed');
-      return 0;
+      rethrow;
     }
   }
 
@@ -1455,25 +1522,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         return const [];
       }
     }
-  }
-
-  Future<String> _categoryIdByName(String categoryName) async {
-    final row = await client
-        .from('categories')
-        .select('id')
-        .eq('name', categoryName)
-        .maybeSingle();
-
-    if (row == null) {
-      final fallback = await client
-          .from('categories')
-          .select('id')
-          .eq('slug', 'ziman')
-          .single();
-      return fallback['id'] as String;
-    }
-
-    return row['id'] as String;
   }
 
   Future<List<Player>> _loadRoomPlayersById(String roomId) async {
