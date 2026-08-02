@@ -238,6 +238,50 @@ void main() {
       );
     });
 
+    test('bağlantı TLD listesi istemci ile sunucuda AYNI', () {
+      // Canlıya uygularken yakalandı: Dart tarafında liste kısaltma alan
+      // adlarıyla genişletilmişti (ly, gl, co…) ama SQL'e yansıtılmamıştı.
+      // Sonuç, kapının yanlış tarafındaydı — istemci 'bit.ly/x' adını
+      // reddederken SUNUCU kabul ediyordu, yani asıl koruma açıktı.
+      final dart = File(
+        'lib/src/services/display_name_policy.dart',
+      ).readAsStringSync();
+      final dartTlds = RegExp(
+        r"\(com\|net\|org\|[a-z|]+\)",
+      ).firstMatch(dart)?.group(0);
+      expect(dartTlds, isNotNull, reason: 'Dart TLD listesi bulunamadı');
+
+      final sqlTlds = RegExp(
+        r"\(com\|net\|org\|[a-z|]+\)",
+      ).firstMatch(sql)?.group(0);
+      expect(sqlTlds, isNotNull, reason: 'SQL TLD listesi bulunamadı');
+
+      expect(
+        sqlTlds,
+        dartTlds,
+        reason:
+            'istemci ve sunucu farklı TLD listesi kullanıyor; birinin '
+            'reddettiğini diğeri kabul eder',
+      );
+    });
+
+    test('normalize eşlemesi istemci ile sunucuda AYNI uzunlukta', () {
+      // Postgres `translate`ta `from`un `to`dan uzun olan kısmı SESSİZCE
+      // SİLİNİR. İlk yazımda uzunluklar tutmuyordu ve '@' -> 's' gibi
+      // yanlış eşleşmeler oluşuyordu.
+      final m = RegExp(
+        r"translate\(\s*\n?\s*lower\(coalesce\(p_input, ''\)\),\s*\n\s*'([^']*)',\s*\n\s*'([^']*)'",
+      ).firstMatch(sql);
+      expect(m, isNotNull, reason: 'SQL translate çağrısı bulunamadı');
+      expect(
+        m!.group(1)!.length,
+        m.group(2)!.length,
+        reason:
+            "translate from/to uzunlukları farklı — fazlalık sessizce "
+            "siliniyor ve kaçamak yakalanmıyor",
+      );
+    });
+
     test('ada dokunmayan güncellemeler denetimden muaf', () {
       // Aksi hâlde eski bir kayıt yüzünden avatar rengi bile kaydedilemezdi.
       expect(
