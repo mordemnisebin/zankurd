@@ -1,10 +1,52 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 
+/// Bir kategori isteği gelirse yerel bankadan bilinçli olarak farklı bir
+/// sunucu cevabı üretir. Böylece test, yalnız çağrı sayısını değil oyuncuya
+/// gösterilen kategori kaynağını da doğrular.
+class _ServerCategoriesHttpClient extends http.BaseClient {
+  int requestCount = 0;
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    requestCount++;
+    final bytes = utf8.encode(jsonEncode([{'name': 'Tenê li serverê'}]));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
 void main() {
+  test(
+    'kategoriler sunucudan farklı olsa bile yerel soru bankasıyla aynı kalır',
+    () async {
+      final httpClient = _ServerCategoriesHttpClient();
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final categories = await repository.loadCategories();
+
+      expect(categories, repository.categories);
+      expect(categories, isNot(contains('Tenê li serverê')));
+      expect(httpClient.requestCount, 0);
+    },
+  );
+
   test('Supabase local room shell does not include mock opponents', () {
     final repository = SupabaseZanKurdRepository(
       SupabaseClient('https://example.supabase.co', 'sb_publishable_test_key'),

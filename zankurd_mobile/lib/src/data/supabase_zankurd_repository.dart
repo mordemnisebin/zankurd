@@ -17,7 +17,6 @@ import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../utils/error_reporter.dart';
-import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
 import 'zankurd_repository.dart';
 import '../services/question_content_policy.dart';
@@ -359,16 +358,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<String>> loadCategories() async {
-    return _retryOnNetworkFailure(() async {
-      final rows = await client
-          .from('categories')
-          .select('name')
-          .eq('is_active', true)
-          .order('name');
-      // Uygulama içi gizli kategoriler (içerik hazır olana dek) listeden
-      // düşülür; veritabanına dokunulmaz.
-      return visibleCategories(rows.map((row) => row['name'] as String));
-    });
+    return _offline.loadCategories();
   }
 
   @override
@@ -1349,22 +1339,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'fill_in_blank' || 'fillInBlank' => QuestionType.fillInBlank,
       _ => QuestionType.multipleChoice,
     };
-  }
-
-  Future<T> _retryOnNetworkFailure<T>(Future<T> Function() operation) async {
-    int attempts = 0;
-    while (true) {
-      try {
-        return await operation();
-      } catch (error) {
-        attempts++;
-        if (attempts >= 3) {
-          rethrow;
-        }
-        final delay = Duration(milliseconds: 500 * (1 << (attempts - 1)));
-        await Future.delayed(delay);
-      }
-    }
   }
 
   @override
