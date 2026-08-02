@@ -116,6 +116,18 @@ void main() {
         reason: '$density için bildirim ikonu üretilmemiş',
       );
     }
+
+    final resourceKeepFile = File('android/app/src/main/res/raw/keep.xml');
+    expect(
+      resourceKeepFile.existsSync(),
+      isTrue,
+      reason: 'R8 kaynak küçültme kuralı bildirim ikonunu korumuyor',
+    );
+    expect(
+      resourceKeepFile.readAsStringSync(),
+      contains('tools:keep="@drawable/ic_stat_zankurd"'),
+      reason: 'release AAB bildirim ikonunu dinamik kullanım yüzünden siliyor',
+    );
   });
 
   test('paylaşım önizlemesi var olan bir görsele işaret ediyor', () {
