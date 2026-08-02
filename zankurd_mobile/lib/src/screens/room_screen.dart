@@ -674,12 +674,11 @@ class _RoomScreenState extends State<RoomScreen> {
                                                                 ),
                                                                 maxLines: 1,
                                                                 softWrap: false,
-                                                                style: AppTypography.heading1.copyWith(
+                                                                style: AppTypography.display.copyWith(
                                                                   color: AppTheme
                                                                       .playCyan,
                                                                   letterSpacing:
                                                                       3,
-                                                                  fontSize: 32,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w900,
