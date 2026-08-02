@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -104,6 +105,63 @@ void main() {
   test('paywall yasal bağlantıları taşır', () {
     expect(source, contains('LegalLinksRow'));
   });
+
+  testWidgets(
+    'offerings yükleme hatası yanıltıcı pasif paket metni yerine yeniden deneme sunar',
+    (tester) async {
+      var attempts = 0;
+      final service = PremiumService.forTesting(
+        isAnonymous: () async => true,
+        logOut: () async => throw UnimplementedError(),
+        fetchOfferings: () async {
+          attempts++;
+          if (attempts == 1) throw StateError('RevenueCat unavailable');
+          return const Offerings({});
+        },
+      );
+
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => LanguageProvider(initialLang: 'tr'),
+            ),
+            ChangeNotifierProvider<PremiumService>.value(value: service),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.light(),
+            home: PaywallScreen(repository: MockZanKurdRepository()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.genericErrorBody, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.retry, AppLanguage.tr)), findsOne);
+      expect(
+        find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
+        findsNothing,
+      );
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(ElevatedButton), findsNothing);
+
+      final retry = find.text(Tr.of(K.retry, AppLanguage.tr));
+      await tester.ensureVisible(retry);
+      await tester.tap(retry);
+      await tester.pumpAndSettle();
+
+      expect(attempts, 2);
+      expect(
+        find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
+        findsOne,
+      );
+      expect(
+        find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)),
+        findsNothing,
+      );
+    },
+  );
 
   test('fiyat yanında yenileme dönemi gösterilir', () {
     expect(source, contains('_pricePeriodSuffix'));

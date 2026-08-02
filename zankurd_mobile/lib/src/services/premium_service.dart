@@ -23,6 +23,22 @@ enum PurchaseOutcome {
 
 enum RestoreOutcome { restored, nothingFound, failed }
 
+/// Teklif isteğinin sonucunu, başarılı boş liste ile yükleme hatasını
+/// birbirine karıştırmadan Paywall'a iletir.
+sealed class OfferingsFetchResult {
+  const OfferingsFetchResult();
+}
+
+final class OfferingsFetchSuccess extends OfferingsFetchResult {
+  const OfferingsFetchSuccess(this.offerings);
+
+  final List<Offering> offerings;
+}
+
+final class OfferingsFetchFailure extends OfferingsFetchResult {
+  const OfferingsFetchFailure();
+}
+
 /// RevenueCat hesap geçişlerini sıraya koyar. Hızlı çıkış/giriş sırasında
 /// yavaş tamamlanan eski bir çağrının yeni hesabı ezmesini önler.
 class PremiumIdentityQueue {
@@ -48,9 +64,11 @@ class PremiumService extends ChangeNotifier {
   PremiumService._({
     Future<bool> Function()? isAnonymous,
     Future<CustomerInfo> Function()? logOut,
+    Future<Offerings> Function()? getOfferings,
     void Function(Object, StackTrace, {String? reason})? recordError,
   }) : _isAnonymous = isAnonymous ?? (() => Purchases.isAnonymous),
        _logOut = logOut ?? Purchases.logOut,
+       _getOfferings = getOfferings ?? Purchases.getOfferings,
        _recordError = recordError ?? ErrorReporter.record;
 
   static const _entitlementId = 'premium';
@@ -67,6 +85,7 @@ class PremiumService extends ChangeNotifier {
   final PremiumIdentityQueue _identityQueue = PremiumIdentityQueue();
   final Future<bool> Function() _isAnonymous;
   final Future<CustomerInfo> Function() _logOut;
+  final Future<Offerings> Function() _getOfferings;
   final void Function(Object, StackTrace, {String? reason}) _recordError;
 
   static PremiumService? get instance => _instance;
@@ -106,11 +125,13 @@ class PremiumService extends ChangeNotifier {
   factory PremiumService.forTesting({
     required Future<bool> Function() isAnonymous,
     required Future<CustomerInfo> Function() logOut,
+    Future<Offerings> Function()? fetchOfferings,
     void Function(Object, StackTrace, {String? reason})? recordError,
   }) {
     final service = PremiumService._(
       isAnonymous: isAnonymous,
       logOut: logOut,
+      getOfferings: fetchOfferings,
       recordError: recordError,
     );
     service
@@ -254,17 +275,16 @@ class PremiumService extends ChangeNotifier {
     return ent.isActive;
   }
 
-  /// Mevcut offerings listesini getirir. Boş dönerse RevenueCat
-  /// tarafında hiçbir ürün tanımlı değil demektir; paywall ekranı
-  /// bu durumu bilgilendirme olarak gösterir.
-  Future<List<Offering>> fetchOfferings() async {
-    if (!AppConfig.hasRevenuecatConfig) return const [];
+  /// Mevcut offerings listesini getirir. Başarılı boş sonuç, RevenueCat
+  /// tarafında ürün olmadığı anlamına gelir; yükleme hatası bundan ayrıdır.
+  Future<OfferingsFetchResult> fetchOfferings() async {
+    if (!_configured) return const OfferingsFetchSuccess([]);
     try {
-      final offerings = await Purchases.getOfferings();
-      return offerings.all.values.toList();
+      final offerings = await _getOfferings();
+      return OfferingsFetchSuccess(offerings.all.values.toList());
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'premium offerings');
-      return const [];
+      _recordError(error, stack, reason: 'premium offerings');
+      return const OfferingsFetchFailure();
     }
   }
 
