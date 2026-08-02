@@ -32,17 +32,30 @@ class AppConfig {
       ? _nextPublicSupabasePublishableKey
       : _defaultSupabasePublishableKey;
 
-  static bool get hasExplicitSupabaseConfig =>
-      (_supabaseUrl != '' || _nextPublicSupabaseUrl != '') &&
-      (_supabaseAnonKey != '' || _nextPublicSupabasePublishableKey != '');
+  static String get _explicitSupabaseUrl =>
+      _supabaseUrl != '' ? _supabaseUrl : _nextPublicSupabaseUrl;
+
+  static String get _explicitSupabaseAnonKey => _supabaseAnonKey != ''
+      ? _supabaseAnonKey
+      : _nextPublicSupabasePublishableKey;
+
+  static bool get hasExplicitSupabaseConfig => hasUsableSupabaseConfiguration(
+    explicitUrl: _explicitSupabaseUrl,
+    explicitAnonKey: _explicitSupabaseAnonKey,
+    useBundledDefaults: false,
+    bundledUrl: '',
+    bundledAnonKey: '',
+  );
 
   static bool get usesBundledSupabaseDefaults => _useBundledSupabaseDefaults;
 
-  static bool get hasSupabaseConfig =>
-      hasExplicitSupabaseConfig ||
-      (usesBundledSupabaseDefaults &&
-          supabaseUrl.isNotEmpty &&
-          supabaseAnonKey.isNotEmpty);
+  static bool get hasSupabaseConfig => hasUsableSupabaseConfiguration(
+    explicitUrl: _explicitSupabaseUrl,
+    explicitAnonKey: _explicitSupabaseAnonKey,
+    useBundledDefaults: usesBundledSupabaseDefaults,
+    bundledUrl: _defaultSupabaseUrl,
+    bundledAnonKey: _defaultSupabasePublishableKey,
+  );
 
   // ── RevenueCat (abonelik) ──────────────────────────────────────────────
   // RevenueCat public API anahtarları derleme zamanı env ile taşınır.
@@ -66,7 +79,62 @@ class AppConfig {
     return '';
   }
 
-  static bool get hasRevenuecatConfig => revenuecatApiKey.isNotEmpty;
+  static bool get hasRevenuecatConfig =>
+      _isUsableReleaseClientValue(revenuecatApiKey);
+
+  /// Örnek env dosyasındaki dolu fakat çalışmayan şablon değerlerinin release
+  /// kapısını geçmesini engeller.
+  static List<ReleaseConfigurationIssue> validateReleaseClientValues({
+    required String supabaseUrl,
+    required String supabaseAnonKey,
+    required String revenueCatKey,
+    required bool requireRevenueCat,
+  }) {
+    final issues = <ReleaseConfigurationIssue>[];
+    if (!_isUsableReleaseClientValue(supabaseUrl) ||
+        !_isUsableReleaseClientValue(supabaseAnonKey)) {
+      issues.add(ReleaseConfigurationIssue.supabase);
+    }
+    if (requireRevenueCat && !_isUsableReleaseClientValue(revenueCatKey)) {
+      issues.add(ReleaseConfigurationIssue.revenueCat);
+    }
+    return issues;
+  }
+
+  /// Açık yapılandırma kısmen verilmişse veya şablonsa bundled değerlerle
+  /// sessizce karıştırmaz. Bundled fallback yalnız iki açık alan da boşken
+  /// kullanılabilir.
+  static bool hasUsableSupabaseConfiguration({
+    required String explicitUrl,
+    required String explicitAnonKey,
+    required bool useBundledDefaults,
+    required String bundledUrl,
+    required String bundledAnonKey,
+  }) {
+    final hasAnyExplicitValue =
+        explicitUrl.trim().isNotEmpty || explicitAnonKey.trim().isNotEmpty;
+    if (hasAnyExplicitValue) {
+      return _isUsableReleaseClientValue(explicitUrl) &&
+          _isUsableReleaseClientValue(explicitAnonKey);
+    }
+    return useBundledDefaults &&
+        _isUsableReleaseClientValue(bundledUrl) &&
+        _isUsableReleaseClientValue(bundledAnonKey);
+  }
+
+  static bool _isUsableReleaseClientValue(String value) {
+    final normalized = value.trim().toLowerCase();
+    if (normalized.isEmpty) return false;
+    return !const [
+      'your-project',
+      'your-public-',
+      'your_public_',
+      'replace-me',
+      'replace_me',
+      'changeme',
+      'placeholder',
+    ].any(normalized.contains);
+  }
 
   /// Üretim derlemesinin yanlışlıkla demo veriyle veya satın alma desteği
   /// olmadan yayımlanmasını engelleyen, yan etkisiz başlangıç kontrolü.

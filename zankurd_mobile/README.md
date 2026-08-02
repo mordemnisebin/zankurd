@@ -191,7 +191,9 @@ $env:TEMP='C:\src\tmp'
 ### 1. Üretim yapılandırma dosyasını hazırlayın
 
 ```powershell
-cp .env.mobile.release.example.json .env.mobile.release.json
+if (-not (Test-Path '.env.mobile.release.json')) {
+  Copy-Item '.env.mobile.release.example.json' '.env.mobile.release.json'
+}
 ```
 
 `.env.mobile.release.json` içine gerçek istemci yapılandırma değerlerini girin:
@@ -207,6 +209,17 @@ cp .env.mobile.release.example.json .env.mobile.release.json
 edilmez**. Yalnız `.env.mobile.release.example.json` şablonu depoda durur.
 Dosyaya service-role anahtarı, RevenueCat secret anahtarı veya başka bir sunucu
 sırrı yazmayın; bu dört değer istemci ikilisine gömülmek üzere tasarlanmıştır.
+`your-project`, `your-public-*` veya başka bir şablon değeri kalmış dosya release
+yapılandırması sayılmaz; uygulamanın release kapısı bu değerleri reddeder.
+
+Dosyayı doldurduktan sonra PowerShell'de şablon kalıntısını sessizce doğrulayın:
+
+```powershell
+$mobileConfig = Get-Content '.env.mobile.release.json' -Raw
+if ($mobileConfig -match 'your-project|your-public-|your_public_|replace[-_]?me|changeme|placeholder') {
+  throw 'Üretim yapılandırmasında şablon değeri kaldı.'
+}
+```
 
 ### 2. AAB'yi üretin
 
@@ -224,6 +237,17 @@ build/app/outputs/bundle/release/app-release.aab
 
 ### 3. İmzayı doğrulayın
 
+Bu makinedeki doğrulanmış upload keystore
+`/Users/kocer/.zankurd/signing/zankurd-upload.jks`, alias ise
+`zankurd-upload` değeridir. Upload sertifikasının doğrulanmış SHA-256 parmak izi:
+
+```text
+80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3
+```
+
+Play Console upload sertifikası kaydı oluştuğunda aynı parmak izini göstermeli.
+Farklıysa AAB'yi yüklemeyin ve yeni keystore üretmeyin.
+
 ```powershell
 jarsigner -verify -verbose -certs 'build/app/outputs/bundle/release/app-release.aab'
 ```
@@ -237,7 +261,8 @@ cihaza kurup gerçekten açın:
 bundletool build-apks --bundle=build/app/outputs/bundle/release/app-release.aab `
   --output=build/app/outputs/bundle/release/app-release.apks `
   --connected-device `
-  --ks=<keystore> --ks-key-alias=zankurd-upload
+  --ks=/Users/kocer/.zankurd/signing/zankurd-upload.jks `
+  --ks-key-alias=zankurd-upload
 bundletool install-apks --apks=build/app/outputs/bundle/release/app-release.apks
 ```
 

@@ -17,6 +17,55 @@ void main() {
   });
 
   group('release configuration validation', () {
+    test('release rejects untouched mobile template values', () {
+      expect(
+        AppConfig.validateReleaseClientValues(
+          supabaseUrl: 'https://your-project.supabase.co',
+          supabaseAnonKey: 'your-public-anon-key',
+          revenueCatKey: 'goog_your-public-sdk-key',
+          requireRevenueCat: true,
+        ),
+        unorderedEquals([
+          ReleaseConfigurationIssue.supabase,
+          ReleaseConfigurationIssue.revenueCat,
+        ]),
+      );
+    });
+
+    test('bundled defaults cannot mask invalid explicit Supabase values', () {
+      for (final explicit in [
+        (url: 'https://your-project.supabase.co', key: 'your-public-anon-key'),
+        (url: 'https://staging.zankurd.invalid', key: ''),
+      ]) {
+        expect(
+          AppConfig.hasUsableSupabaseConfiguration(
+            explicitUrl: explicit.url,
+            explicitAnonKey: explicit.key,
+            useBundledDefaults: true,
+            bundledUrl: 'https://production.zankurd.invalid',
+            bundledAnonKey: 'sb_publishable_public_client_key',
+          ),
+          isFalse,
+          reason:
+              'Açık değer varsa bundled fallback onu tamamlamamalı veya '
+              'şablon değeri gizlememeli.',
+        );
+      }
+    });
+
+    test('bundled defaults remain usable when explicit values are absent', () {
+      expect(
+        AppConfig.hasUsableSupabaseConfiguration(
+          explicitUrl: '',
+          explicitAnonKey: '',
+          useBundledDefaults: true,
+          bundledUrl: 'https://production.zankurd.invalid',
+          bundledAnonKey: 'sb_publishable_public_client_key',
+        ),
+        isTrue,
+      );
+    });
+
     test('release rejects a missing Supabase configuration', () {
       expect(
         AppConfig.validateForRelease(

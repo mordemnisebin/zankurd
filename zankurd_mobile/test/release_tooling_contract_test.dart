@@ -308,4 +308,190 @@ void main() {
     expect(example.readAsStringSync(), contains('REVENUECAT_API_KEY_IOS'));
     expect(steps, contains('--dart-define-from-file=.env.mobile.release.json'));
   });
+
+  test(
+    'release guides only reference current configuration and runnable paths',
+    () {
+      final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+      expect(steps, contains('staging/preview'));
+      expect(steps.toLowerCase(), contains('iki ayrı istemci'));
+
+      final releaseGuideBuildCommands = RegExp(
+        r'^flutter build [^\r\n]+',
+        multiLine: true,
+      ).allMatches(steps).map((match) => match.group(0)!).toList();
+      expect(
+        releaseGuideBuildCommands,
+        unorderedEquals([
+          'flutter build appbundle --release '
+              '--dart-define-from-file=.env.mobile.release.json',
+          'flutter build ipa --release '
+              '--dart-define-from-file=.env.mobile.release.json',
+        ]),
+      );
+
+      final runCommands = RegExp(
+        r'^flutter run [^\r\n]+',
+        multiLine: true,
+      ).allMatches(steps).map((match) => match.group(0)!).toList();
+      expect(
+        runCommands,
+        unorderedEquals([
+          'flutter run --release -d <birinci-cihaz-id> '
+              '--dart-define-from-file=.env.mobile.staging.json',
+          'flutter run --release -d <ikinci-cihaz-id> '
+              '--dart-define-from-file=.env.mobile.staging.json',
+          'flutter run --release -d <iphone-cihaz-id> '
+              '--dart-define-from-file=.env.mobile.release.json',
+        ]),
+        reason:
+            'Staging iki açık cihaz kimliğiyle, son tur ise fiziksel iPhone '
+            'kimliğiyle ve doğru env dosyasıyla çalıştırılmalı.',
+      );
+
+      final multiPlatform = File(
+        'docs/multi_platform_release.md',
+      ).readAsStringSync();
+      expect(
+        multiPlatform,
+        isNot(contains('NEXT_PUBLIC_SUPABASE_URL=https://')),
+      );
+      expect(
+        multiPlatform,
+        isNot(contains('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=')),
+      );
+
+      final platformBuildCommands = RegExp(
+        r'^flutter build [^\r\n]+',
+        multiLine: true,
+      ).allMatches(multiPlatform).map((match) => match.group(0)!).toList();
+      expect(
+        platformBuildCommands,
+        unorderedEquals([
+          'flutter build apk --debug '
+              '--dart-define-from-file=.env.mobile.release.json',
+          'flutter build web --release --no-web-resources-cdn '
+              '--dart-define-from-file=.env.web.release.json',
+          'flutter build windows --release '
+              '--dart-define-from-file=.env.web.release.json',
+          'flutter build ipa --release '
+              '--dart-define-from-file=.env.mobile.release.json',
+          'flutter build macos --release '
+              '--dart-define-from-file=.env.mobile.release.json',
+          'flutter build linux --release '
+              '--dart-define-from-file=.env.web.release.json',
+        ]),
+        reason: 'Her platform komutu kendi açık yapılandırmasını yüklemeli.',
+      );
+
+      final integration = File(
+        'integration_test/app_flows_test.dart',
+      ).readAsStringSync();
+      expect(
+        integration,
+        contains(
+          'flutter test integration_test/app_flows_test.dart -d <device>',
+        ),
+      );
+      expect(integration, isNot(contains('test_driver/integration_test.dart')));
+
+      final screenshotGuide = File(
+        'tool/screenshots/README.md',
+      ).readAsStringSync();
+      final scriptPaths = RegExp(
+        r'flutter test (tool/screenshots/[^\s`]+\.dart)',
+      ).allMatches(screenshotGuide).map((match) => match.group(1)!).toList();
+      expect(scriptPaths, isNotEmpty);
+      for (final path in scriptPaths) {
+        expect(File(path).existsSync(), isTrue, reason: '$path mevcut değil.');
+      }
+    },
+  );
+
+  test('Android imza belgeleri var olan upload anahtarını korur', () {
+    final releaseSteps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+    final signingGuide = File(
+      'docs/android_signing_setup.md',
+    ).readAsStringSync();
+    final readme = File('README.md').readAsStringSync();
+    const certificateSha256 =
+        '80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:'
+        'CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3';
+
+    for (final entry in {
+      'docs/YAYIN_ADIMLARI.md': releaseSteps,
+      'docs/android_signing_setup.md': signingGuide,
+      'README.md': readme,
+    }.entries) {
+      expect(
+        entry.value,
+        contains('/Users/kocer/.zankurd/signing/zankurd-upload.jks'),
+        reason: '${entry.key} doğrulanmış anahtar yolunu göstermeli.',
+      );
+      expect(
+        entry.value,
+        contains('zankurd-upload'),
+        reason: '${entry.key} doğrulanmış alias değerini göstermeli.',
+      );
+      expect(
+        entry.value,
+        isNot(contains('~/zankurd-upload.jks')),
+        reason: '${entry.key} eski anahtar yolunu önermemeli.',
+      );
+      expect(
+        entry.value,
+        isNot(contains('keytool -genkeypair')),
+        reason: '${entry.key} yeni ve uyumsuz bir upload anahtarı üretmemeli.',
+      );
+      expect(
+        entry.value,
+        contains(certificateSha256),
+        reason: '${entry.key} doğrulanmış upload sertifikasını sabitlemeli.',
+      );
+    }
+
+    expect(
+      releaseSteps,
+      isNot(contains('Supabase güvenlik göçleri ve Hostinger SSH')),
+      reason:
+          'Bekleyen 1v1 göçü varken üst özet bütün göçleri hazır saymamalı.',
+    );
+    expect(releaseSteps, contains('jarsigner -verify -verbose -certs'));
+    expect(
+      releaseSteps,
+      contains(
+        'if [ ! -f .env.mobile.staging.json ]; then\n'
+        '  cp .env.mobile.release.example.json .env.mobile.staging.json\n'
+        'fi',
+      ),
+    );
+    expect(
+      releaseSteps,
+      contains(
+        'if [ ! -f .env.mobile.release.json ]; then\n'
+        '  cp .env.mobile.release.example.json .env.mobile.release.json\n'
+        'fi',
+      ),
+    );
+    expect(
+      readme,
+      contains(
+        "if (-not (Test-Path '.env.mobile.release.json')) {\n"
+        "  Copy-Item '.env.mobile.release.example.json' "
+        "'.env.mobile.release.json'\n"
+        '}',
+      ),
+    );
+    expect(readme, isNot(contains('cp -n')));
+    expect(
+      RegExp(r"grep -Eq '[^']*your-project[^']*'").allMatches(releaseSteps),
+      hasLength(2),
+      reason: 'Hem staging hem production env şablon kalıntısı taranmalı.',
+    );
+    expect(
+      releaseSteps,
+      isNot(contains('exit 1')),
+      reason: 'Yayın rehberi etkileşimli terminali kapatmamalı.',
+    );
+  });
 }

@@ -1,8 +1,8 @@
 # Yayın adımları — sıradan şaşma
 
-Bu belge son yayın sırasıdır. Supabase güvenlik göçleri ve Hostinger SSH
-bağlantısı hazırdır; mağaza hesabı, imza ve fiziksel cihaz adımları hesap
-sahibinde kalır.
+Bu belge son yayın sırasıdır. Hostinger SSH bağlantısı ve Android upload
+anahtarı hazırdır. Yeni 1v1 Supabase göçü ise önce staging/preview ortamında
+doğrulanmalıdır; mağaza hesabı ve fiziksel cihaz adımları hesap sahibinde kalır.
 
 Sırayla git. Her adımın sonunda **"tamam mı?"** satırı var; orası
 tutmuyorsa sonrakine geçme.
@@ -25,64 +25,79 @@ Görmüyorsan bana yaz, yayına başlama.
 
 ---
 
-## 1. Supabase: çalıştırılacak göç kalmadı — yalnız doğrula
+## 1. Supabase: yeni 1v1 göçünü uygula ve doğrula
 
-2026-08-01 itibarıyla bütün göçler canlıda. Son üçü 2026-07-31
-denetiminden geldi: turnuva skor yetkisi, sohbet moderasyonu ve açıkta
-kalan okuma yüzeyleri. Uygulanma kaydı
-`zankurd_mobile/supabase/applied.md` dosyasındadır; **buradaki hiçbir
-dosyayı yeniden çalıştırman gerekmiyor.**
+Önce `zankurd_mobile/supabase/applied.md` dosyasına bak. `✅` kaydı olan
+göçleri **yeniden çalıştırma**. Bu sürüm için ayrıca
+`supabase/2026-08-02_multiplayer_session_hardening.sql` gerekir. 2026-08-02
+salt-okunur canlı kontrolde bu dosyanın yeni RPC'leri bulunamadı; dosyanın
+`applied.md` kaydı hâlâ yoksa dosyayı doğrudan üretime gönderme.
 
-Yayına başlamadan önce tek bir sağlık sorgusu yeter.
-[supabase.com](https://supabase.com) → projen → **SQL Editor** →
-**New query** → şunu koş:
+Önce staging/preview Supabase projesinde dosyanın tamamını tek işlem olarak
+uygula. Ardından git tarafından yok sayılan ayrı bir staging yapılandırması
+hazırla; üretim dosyasını staging turunda kullanma:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+if [ ! -f .env.mobile.staging.json ]; then
+  cp .env.mobile.release.example.json .env.mobile.staging.json
+fi
+```
+
+Şimdi `.env.mobile.staging.json` içindeki `SUPABASE_URL` ve
+`SUPABASE_ANON_KEY` değerlerini staging/preview projesinin açık istemci
+değerleriyle, RevenueCat alanlarını da sandbox/test **public SDK** anahtarlarıyla
+doldur. Service-role veya başka bir sunucu sırrı kullanma. Kaydettikten sonra
+ayrı bir komut olarak şablon kalıntısı kontrolünü çalıştır:
+
+```bash
+if grep -Eq 'your-project|your-public-|your_public_|replace[-_]?me|changeme|placeholder' .env.mobile.staging.json; then
+  echo "Staging yapılandırmasında şablon değeri kaldı; düzeltmeden devam etme."
+  false
+else
+  echo "Staging yapılandırmasında şablon kalıntısı yok."
+fi
+```
+
+Kontrol başarısızsa devam etme. Başarılıysa `flutter devices` ile iki hedefin
+kimliğini bul; sonra iki ayrı terminalde şu komutları çalıştır:
+
+```bash
+flutter run --release -d <birinci-cihaz-id> --dart-define-from-file=.env.mobile.staging.json
+flutter run --release -d <ikinci-cihaz-id> --dart-define-from-file=.env.mobile.staging.json
+```
+
+İki ayrı istemciyi iki cihazda çalıştır ve iki ayrı hesap aç. Oda kurma → koda
+katılma → iki tarafın hazır olması → oyunun başlaması → cevap/ilerleme →
+sonuç/makbuz → uygulamayı kapatıp oturumu geri alma akışını tamamla. Bir iOS
+simülatörü release modunu kabul etmezse fiziksel iPhone veya Android hedef
+kullan; staging yerine üretim backend'ine dönme. Bu tur bitmeden üretime geçme.
+
+Staging/preview turundan sonra ayrı bir yeni sorguda şu salt-okunur doğrulamayı
+çalıştır:
 
 ```sql
 select
-  -- 1. Oyuncu kodu (2026-07-28)
-  (select count(*) from public.profiles
-    where player_tag is null or length(trim(player_tag)) = 0)
-    as kodsuz_oyuncu,
-
-  -- 2. Turnuva skoru sunucuda sınırlı mı? (2026-07-31)
-  (select bool_or(prosrc ilike '%least(v_score%')
-     from pg_proc where proname = 'submit_tournament_match')
-    as skor_tavani_var,
-  (select bool_or(prosrc ilike '%advance_tournament%')
-     from pg_proc where proname = 'resolve_expired_tournament_matches')
-    as tur_ilerlemesi_var,
-
-  -- 3. Sohbet moderasyonu ayakta mı? (2026-07-31)
-  (select count(*) from pg_tables
-    where tablename in ('blocked_users', 'message_reports'))
-    as moderasyon_tablolari,
-  (select public.chat_message_is_clean('Merheba heval')) as temiz_gecer,
-  (select public.chat_message_is_clean('bak https://kotu.com'))
-    as link_gecmez,
-
-  -- 4. Doğru cevaplar hâlâ kapalı mı? (2026-07-22 + 2026-07-31)
-  (select count(*) from pg_tables
-    where tablename like 'questions_editorial_backup%')
-    as acikta_yedek_kaldi,
-  (select has_table_privilege('anon', 'public.questions', 'select'))
-    as anon_soru_okuyabilir;
+  to_regprocedure('public.create_online_room(text,integer)') is not null
+    as oda_olusturma_hazir,
+  to_regprocedure('public.get_my_resumable_room()') is not null
+    as oturum_kurtarma_hazir,
+  to_regprocedure('public.get_my_pending_room_result()') is not null
+    as bekleyen_sonuc_hazir,
+  to_regprocedure('public.acknowledge_room_result(uuid)') is not null
+    as sonuc_onayi_hazir,
+  to_regclass('public.room_result_snapshots') is not null
+    as sonuc_anlik_goruntusu_hazir,
+  to_regclass('public.room_result_receipts') is not null
+    as sonuc_makbuzu_hazir;
 ```
 
-**Tamam mı?** Beklenen değerler sırayla:
-
-| Sütun | Olması gereken |
-|---|---|
-| `kodsuz_oyuncu` | `0` |
-| `skor_tavani_var` | `true` |
-| `tur_ilerlemesi_var` | `true` |
-| `moderasyon_tablolari` | `2` |
-| `temiz_gecer` | `true` |
-| `link_gecmez` | `false` |
-| `acikta_yedek_kaldi` | `0` |
-| `anon_soru_okuyabilir` | `false` |
-
-Biri tutmuyorsa bana yaz; ilgili göç dosyası idempotenttir, yeniden
-çalıştırmak bir şey bozmaz.
+**Tamam mı?** Staging/preview iki istemci turu geçti ve altı değerin altısı da
+`true` ise aynı dosyayı üretim SQL Editor'ünde bir kez uygula, doğrulama
+sorgusunu üretimde tekrarla ve ancak ondan sonra göçü `supabase/applied.md`
+dosyasına tarih/kanıt notuyla `✅` olarak kaydet. Herhangi biri `false` ise
+yayına devam etme ve göçü körlemesine ikinci kez çalıştırma; önce ilk
+çalıştırmanın hatasını incele.
 
 ---
 
@@ -123,57 +138,85 @@ değiştiyse yeni sürüm yüklenmiş demektir.
 
 ---
 
-## 3. Android imza anahtarı (bir kez, ömür boyu)
+## 3. Android imza anahtarını doğrula
 
 > **Bu dosyayı kaybedersen Play Store'da uygulamayı bir daha
-> güncelleyemezsin.** Yedekle: parola yöneticisi + harici disk.
+> güncelleyemezsin.** Var olan anahtarı yeniden üretme veya değiştirme.
 
-Terminalde:
+Doğrulanmış upload keystore bu makinede
+`/Users/kocer/.zankurd/signing/zankurd-upload.jks` yolundadır; alias
+`zankurd-upload`, parolaları macOS Keychain'dedir. `android/key.properties`
+zaten bu dosyayı gösterir ve git tarafından yok sayılır. Parolaları terminale
+yazdırmadan yol ile alias değerini denetle:
 
 ```bash
-keytool -genkeypair -v -keystore ~/zankurd-upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+test -f /Users/kocer/.zankurd/signing/zankurd-upload.jks
+awk -F= '$1 == "storeFile" || $1 == "keyAlias" { print }' android/key.properties
 ```
 
-Soracakları:
-- **Keystore parolası** — güçlü seç, kaydet.
-- **Key parolası** — aynısını yazabilirsin (Enter'a basınca aynısını alır).
-- Ad/kurum/şehir — Play için kritik değil, doldur geç.
+Beklenen iki satır:
 
-Sonra `zankurd_mobile/android/key.properties` diye bir dosya oluştur,
-içine (parolaları kendi seçtiklerinle değiştir):
-
-```properties
-storePassword=SENIN_KEYSTORE_PAROLAN
-keyPassword=SENIN_KEY_PAROLAN
-keyAlias=upload
-storeFile=/Users/kocer/zankurd-upload.jks
+```text
+storeFile=/Users/kocer/.zankurd/signing/zankurd-upload.jks
+keyAlias=zankurd-upload
 ```
 
-Bu dosya git'e girmiyor (`.gitignore`'da), merak etme.
+Sertifikayı da Keychain'deki parola istendiğinde girerek doğrula:
+
+```bash
+keytool -list -v -keystore /Users/kocer/.zankurd/signing/zankurd-upload.jks -alias zankurd-upload
+```
+
+Çıktıdaki sertifika SHA-256 parmak izi şu doğrulanmış değerle **birebir** aynı
+olmalı:
+
+```text
+80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3
+```
+
+Play Console upload sertifikası kaydı oluştuğunda oradaki SHA-256 da aynı
+olmalıdır. Dosya yoksa, değerler veya parmak izi farklıysa yeni anahtar üretme;
+yayını durdur ve doğrulanmış anahtarı yedeğinden geri getir.
 
 Mobil release yapılandırmasını örnekten oluştur ve dört açık anahtarı gerçek
 üretim değerleriyle doldur. `.env.mobile.release.json` yerel kalır; repoya
 eklenmez:
 
-RevenueCat anahtarları release derlemesinde zorunludur; Supabase ve RevenueCat
-değerlerinden biri eksik veya yanlış yapılandırılmışsa güvenlik nedeniyle paket
-üretilmez.
+RevenueCat anahtarları release derlemesinde zorunludur. Supabase veya RevenueCat
+değeri eksik/şablonsa uygulamanın release açılış kapısı güvenli hata ekranında
+durur; böyle bir AAB mağazaya yüklenebilir bir paket sayılmaz.
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
-cp .env.mobile.release.example.json .env.mobile.release.json
+if [ ! -f .env.mobile.release.json ]; then
+  cp .env.mobile.release.example.json .env.mobile.release.json
+fi
 ```
 
-**Tamam mı?**
+Dosyayı gerçek üretim istemci değerleriyle doldurup kaydettikten sonra ayrı bir
+komut olarak doğrula:
+
+```bash
+if grep -Eq 'your-project|your-public-|your_public_|replace[-_]?me|changeme|placeholder' .env.mobile.release.json; then
+  echo "Üretim yapılandırmasında şablon değeri kaldı; düzeltmeden devam etme."
+  false
+else
+  echo "Üretim yapılandırmasında şablon kalıntısı yok."
+fi
+```
+
+**Tamam mı?** Şablon kalıntısı yoksa derlemeye geç:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
 flutter build appbundle --release --dart-define-from-file=.env.mobile.release.json
+jarsigner -verify -verbose -certs build/app/outputs/bundle/release/app-release.aab
 ```
 
-Sonunda `✓ Built build/app/outputs/bundle/release/app-release.aab`
-görüyorsan evet. "Release signing is misconfigured" diyorsa
-`key.properties` yolunu ya da parolayı yanlış yazmışsındır.
+Sonunda AAB için `✓ Built` ve imza denetiminde `jar verified` görüyorsan evet.
+"Release signing is misconfigured" diyorsa `key.properties` yolunu veya
+Keychain'deki parolaları doğrula; yeni keystore üretme.
 
 ---
 
@@ -276,7 +319,9 @@ Bunu ben yapamam, simülatörde görünmeyen iki şey var.
 iPhone'unu kabloyla bağla:
 
 ```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile && flutter run --release
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+flutter devices
+flutter run --release -d <iphone-cihaz-id> --dart-define-from-file=.env.mobile.release.json
 ```
 
 Bak:

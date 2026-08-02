@@ -1,9 +1,7 @@
 // Uçtan uca akış senaryoları (integration_test).
 //
 // Gerçek cihazda/emülatörde çalıştırma:
-//   flutter test integration_test/app_flows_test.dart
-//   flutter drive --driver=test_driver/integration_test.dart \
-//       --target=integration_test/app_flows_test.dart -d <device>
+//   flutter test integration_test/app_flows_test.dart -d <device>
 //
 // Bu senaryolar auth gerektirmeyen, cihazdan bağımsız uçtan uca yolları
 // (store + servis + ekran) sürer; böylece CI'da ve gerçek cihazda aynı şekilde
