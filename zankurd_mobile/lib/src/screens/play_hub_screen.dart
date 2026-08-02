@@ -167,12 +167,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       builder: (sheetCtx) {
-        return Padding(
+        // Klavye ve erişilebilir yazı ölçeği aynı anda açıkken içerik sabit
+        // bir Column'a sığmayabilir. Sheet'i kaydırılabilir tutarak alanı ya
+        // da doğrulama mesajını erişilemez bırakma.
+        return SingleChildScrollView(
           padding: EdgeInsets.only(
             left: AppSpacing.page,
             right: AppSpacing.page,
             bottom: MediaQuery.viewInsetsOf(sheetCtx).bottom + AppSpacing.page,
           ),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: AppPanel(
             child: Form(
               key: formKey,
@@ -203,6 +207,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     // kodun doğru olduğunu göndermeden önce görür.
                     inputFormatters: const [_RoomCodeInputFormatter()],
                     style: inputTextStyle,
+                    errorBuilder: (_, errorText) =>
+                        Text(errorText, overflow: TextOverflow.visible),
                     decoration: InputDecoration(
                       labelText: context.t(K.roomCode),
                       prefixIcon: const Icon(AppIcons.doorOpen),
