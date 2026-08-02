@@ -182,8 +182,38 @@ $env:TEMP='C:\src\tmp'
 
 ## Play Store Build
 
+> **Bayraksız `flutter build appbundle --release` KULLANMAYIN.** O komut imzalı
+> bir AAB üretir, ama üretim yapılandırması ikiliye girmediği için uygulama
+> açılışta `AppConfig.validateForRelease` kapısına takılır ve **"Uygulama
+> yapılandırması eksik"** hata ekranında kalır. 2026-08-02 denetiminde bu
+> gerçek bir cihazda doğrulandı. Böyle bir AAB mağazaya gönderilmemelidir.
+
+### 1. Üretim yapılandırma dosyasını hazırlayın
+
 ```powershell
-flutter build appbundle --release
+cp .env.mobile.release.example.json .env.mobile.release.json
+```
+
+`.env.mobile.release.json` içine gerçek istemci yapılandırma değerlerini girin:
+
+| Anahtar | Açıklama |
+|---|---|
+| `SUPABASE_URL` | Üretim Supabase proje URL'si |
+| `SUPABASE_ANON_KEY` | Supabase publishable/anon **istemci** anahtarı (service-role DEĞİL) |
+| `REVENUECAT_API_KEY_ANDROID` | RevenueCat **public** Android SDK anahtarı |
+| `REVENUECAT_API_KEY_IOS` | RevenueCat **public** iOS SDK anahtarı |
+
+`.env.mobile.release.json` `.gitignore` kapsamındadır (`.env.*`) ve **asla commit
+edilmez**. Yalnız `.env.mobile.release.example.json` şablonu depoda durur.
+Dosyaya service-role anahtarı, RevenueCat secret anahtarı veya başka bir sunucu
+sırrı yazmayın; bu dört değer istemci ikilisine gömülmek üzere tasarlanmıştır.
+
+### 2. AAB'yi üretin
+
+```powershell
+flutter build appbundle `
+  --release `
+  --dart-define-from-file=.env.mobile.release.json
 ```
 
 Play Console'a yüklenecek dosya:
@@ -192,11 +222,31 @@ Play Console'a yüklenecek dosya:
 build/app/outputs/bundle/release/app-release.aab
 ```
 
-İmza doğrulama:
+### 3. İmzayı doğrulayın
 
 ```powershell
 jarsigner -verify -verbose -certs 'build/app/outputs/bundle/release/app-release.aab'
 ```
+
+### 4. Çalışma zamanını doğrulayın (zorunlu)
+
+Derlemenin başarılı olması yeterli **değildir**. AAB'yi bir emülatöre veya
+cihaza kurup gerçekten açın:
+
+```powershell
+bundletool build-apks --bundle=build/app/outputs/bundle/release/app-release.aab `
+  --output=build/app/outputs/bundle/release/app-release.apks `
+  --connected-device `
+  --ks=<keystore> --ks-key-alias=zankurd-upload
+bundletool install-apks --apks=build/app/outputs/bundle/release/app-release.apks
+```
+
+Uygulamanın **onboarding/ana ekrana** ulaştığını ve "Uygulama yapılandırması
+eksik" ekranının görünmediğini gözle doğrulayın. Bu ekran görünüyorsa
+`--dart-define-from-file` atlanmış ya da dosyadaki değerlerden biri eksiktir.
+
+> Aynı komutlar `docs/YAYIN_ADIMLARI.md` ve `docs/android_signing_setup.md`
+> belgelerinde de geçer; üçü birbiriyle tutarlı olmalıdır.
 
 ## Play Console Hazırlığı
 
