@@ -241,17 +241,17 @@ class SyncManager {
     }
   }
 
-  Future<void> _saveQueue() async {
+  Future<void> _saveQueue({bool propagateFailure = false}) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_queueKey, jsonEncode(_queue));
-    } catch (e) {
-      ErrorReporter.record(
-        e,
-        StackTrace.current,
-        reason: 'SyncManager save queue',
-      );
+      final saved = await prefs.setString(_queueKey, jsonEncode(_queue));
+      if (!saved) {
+        throw StateError('Sync queue was not persisted.');
+      }
+    } catch (e, stack) {
+      ErrorReporter.record(e, stack, reason: 'SyncManager save queue');
       developer.log('Failed to save sync queue: $e', name: 'SyncManager');
+      if (propagateFailure) rethrow;
     }
   }
 
@@ -268,13 +268,16 @@ class SyncManager {
   /// Oda turlarında sunucu aynı odanın ödülünü ikinci kez vermez
   /// (`coin_transactions` içinde oda kimliğine göre arar), bu yüzden
   /// yeniden gönderim güvenlidir.
-  void queueQuizReward({
+  ///
+  /// Dönen [Future], kayıt kalıcı kuyruğa yazılmadan tamamlanmaz; kalıcı
+  /// yazım başarısızsa hata verir ve senkronizasyonu başlatmaz.
+  Future<void> queueQuizReward({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
     String? roomId,
-  }) {
+  }) async {
     _queue.add({
       'type': 'sync_quiz_reward',
       'score': score,
@@ -286,7 +289,7 @@ class SyncManager {
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'retries': 0,
     });
-    unawaited(_saveQueue());
+    await _saveQueue(propagateFailure: true);
     unawaited(sync());
   }
 
@@ -368,15 +371,9 @@ class SyncManager {
                 ? null
                 : repo.createRoom().copyWith(id: item['roomId'] as String?),
           );
-          // `awardQuizCoins` başarısızlıkta da 0 döner (istisna sızdırmaz),
-          // dolayısıyla 0 "verildi" sayılamaz: öyle sayılsaydı kayıt
-          // kuyruktan düşer ve ödül yine sessizce kaybolurdu — düzeltilen
-          // kusurun ta kendisi. Sunucunun "bu tur zaten ödendi" yanıtı da
-          // 0'dır; o durumda kayıt boşuna birkaç kez denenip düşürülür.
-          // Boş yere deneme, kaybolmuş coinden ucuzdur.
-          if (amount <= 0) {
-            throw StateError('quiz reward not granted yet (amount 0)');
-          }
+          // Gerçek hata `awardQuizCoins` tarafından yeniden fırlatılır.
+          // Başarılı 0 yanıtı (ödül yok veya daha önce talep edilmiş) normal
+          // sonuçtur ve aynı kayıt yeniden kuyruğa alınmamalıdır.
           developer.log(
             'Successfully synced quiz reward: +$amount coin',
             name: 'SyncManager',

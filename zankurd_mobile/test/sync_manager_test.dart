@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/sync_manager.dart';
 
 /// Her isteği anında reddeden HTTP client — gerçek soket açılmaz.
 class _AlwaysFailingHttpClient extends http.BaseClient {
@@ -83,7 +83,7 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueQuizReward(
+    await manager.queueQuizReward(
       score: 100,
       correctCount: 1,
       bestStreak: 1,
@@ -159,7 +159,7 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueQuizReward(
+    await manager.queueQuizReward(
       score: 100,
       correctCount: 1,
       bestStreak: 1,
@@ -177,18 +177,18 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    void queueReward(int score) => manager.queueQuizReward(
+    Future<void> queueReward(int score) => manager.queueQuizReward(
       score: score,
       correctCount: 1,
       bestStreak: 1,
       totalQuestions: 1,
     );
 
-    queueReward(100);
+    final firstQueued = queueReward(100);
     final syncing = manager.sync();
-    queueReward(200);
-    queueReward(300);
-    await syncing;
+    final secondQueued = queueReward(200);
+    final thirdQueued = queueReward(300);
+    await Future.wait([firstQueued, secondQueued, thirdQueued, syncing]);
     await manager.sync();
 
     expect(manager.pendingCount, 0);
@@ -198,7 +198,7 @@ void main() {
     final repository = MockZanKurdRepository();
     final manager = await SyncManager.initialize(repository);
 
-    manager.queueQuizReward(
+    await manager.queueQuizReward(
       score: 100,
       correctCount: 1,
       bestStreak: 1,
@@ -237,7 +237,7 @@ void main() {
     );
     await manager.clearQueue();
 
-    manager.queueQuizReward(
+    await manager.queueQuizReward(
       score: 720,
       correctCount: 8,
       bestStreak: 5,
