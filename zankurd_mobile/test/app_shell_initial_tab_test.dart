@@ -18,6 +18,16 @@ class _HangingProfileNameRepository extends MockZanKurdRepository {
   Future<String> getProfileName() => Completer<String>().future;
 }
 
+class _AccountScopedProfileNameRepository
+    extends _HangingProfileNameRepository {
+  _AccountScopedProfileNameRepository(this.userId);
+
+  final String userId;
+
+  @override
+  String get currentUserId => userId;
+}
+
 /// AppShell açılış sekmesi ve lazy-mount bekçisi.
 ///
 /// Niçin var: 2026-07-31 yayın denetiminde (ZKR-P0-001) commit edilmemiş bir
@@ -167,7 +177,7 @@ void main() {
     (tester) async {
       SharedPreferences.setMockInitialValues({
         'zankurd.onboarding.seen': true,
-        'zankurd.profileName.completed': true,
+        'zankurd.profileName.completed.user': true,
       });
 
       await tester.pumpWidget(
@@ -209,4 +219,30 @@ void main() {
 
     expect(find.byType(ProfileNameGateScreen), findsOneWidget);
   });
+
+  testWidgets(
+    'başka hesabın ad tamamlama kaydı yeni hesabın kapısını atlamaz',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.onboarding.seen': true,
+        'zankurd.profileName.completed': true,
+        'zankurd.profileName.completed.account-a': true,
+      });
+
+      await tester.pumpWidget(
+        testShell(
+          child: AppShell(
+            repository: _AccountScopedProfileNameRepository('account-b'),
+            connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.byType(ProfileNameGateScreen), findsOneWidget);
+      expect(find.byType(HomeScreen), findsNothing);
+    },
+  );
 }

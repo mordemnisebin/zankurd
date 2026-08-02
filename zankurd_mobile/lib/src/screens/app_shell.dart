@@ -51,7 +51,8 @@ class AppShell extends StatefulWidget {
 
 class _AppShellState extends State<AppShell> {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
-  static const _profileNameCompletedKey = 'zankurd.profileName.completed';
+  static const _profileNameCompletedKeyPrefix =
+      'zankurd.profileName.completed.';
 
   // Açılış sekmesi Öğren'dir (index 0). Bu iki satır birlikte okunmalı:
   // `_visitedTabs` yalnız *ziyaret edilmiş* sekmeleri taşır ve `_buildTab`
@@ -74,6 +75,7 @@ class _AppShellState extends State<AppShell> {
   bool _checkingProfileName = false;
   bool _profileNameComplete = false;
   bool _profileCheckStarted = false;
+  String? _profileCheckedUserId;
 
   // Çevrimdışı durum izleme
   bool _isOffline = false;
@@ -189,14 +191,22 @@ class _AppShellState extends State<AppShell> {
 
     if (!authProvider.isAuthenticated) {
       _profileCheckStarted = false;
+      _profileCheckedUserId = null;
       return const SignInScreen();
+    }
+
+    final activeUserId = widget.repository.currentUserId;
+    if (_profileCheckedUserId != activeUserId) {
+      _profileCheckedUserId = activeUserId;
+      _profileCheckStarted = false;
+      _profileNameComplete = false;
     }
 
     if (!_profileCheckStarted) {
       _profileCheckStarted = true;
       _checkingProfileName = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _loadProfileNameState();
+        if (mounted) _loadProfileNameState(activeUserId);
       });
     }
 
@@ -475,15 +485,18 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
-  Future<void> _loadProfileNameState() async {
+  Future<void> _loadProfileNameState(String? userId) async {
     setState(() => _checkingProfileName = true);
     final preferences = await SharedPreferences.getInstance();
-    final completed = preferences.getBool(_profileNameCompletedKey) == true;
+    final key = _profileNameCompletionKey(userId);
+    final completed = key != null && preferences.getBool(key) == true;
 
     // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
-    // bayrağa dayanır. İsim, HomeScreen'in arka plan akışında zenginleşir;
-    // ağdaki yeniden denemeler başlangıç rotasını veya tam ekranı bekletemez.
-    if (!mounted) return;
+    // ve kullanıcıya özel bayrağa dayanır. Global bir bayrak hesap değişiminde
+    // yeni oyuncunun kapısını atlatır ve aynı varsayılan adı 1v1 kimliğine
+    // taşır. İsim, HomeScreen'in arka plan akışında zenginleşir; ağdaki
+    // yeniden denemeler başlangıç rotasını veya tam ekranı bekletemez.
+    if (!mounted || widget.repository.currentUserId != userId) return;
     setState(() {
       _profileNameComplete = completed;
       _checkingProfileName = false;
@@ -492,11 +505,18 @@ class _AppShellState extends State<AppShell> {
 
   Future<void> _completeProfileName() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(_profileNameCompletedKey, true);
+    final key = _profileNameCompletionKey(widget.repository.currentUserId);
+    if (key != null) await preferences.setBool(key, true);
     if (!mounted) return;
     setState(() {
       _profileNameComplete = true;
       _profileCheckStarted = true;
     });
+  }
+
+  String? _profileNameCompletionKey(String? userId) {
+    final normalized = userId?.trim();
+    if (normalized == null || normalized.isEmpty) return null;
+    return '$_profileNameCompletedKeyPrefix$normalized';
   }
 }

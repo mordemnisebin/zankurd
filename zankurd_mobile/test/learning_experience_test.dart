@@ -21,7 +21,7 @@ void main() {
     repository = freshMockRepository();
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
-      'zankurd.profileName.completed': true,
+      'zankurd.profileName.completed.user': true,
       'zankurd.navTour.seen': true,
       'zankurd.quiz_tutorial.seen': true,
     });
@@ -170,7 +170,7 @@ void main() {
   ) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
-      'zankurd.profileName.completed': true,
+      'zankurd.profileName.completed.user': true,
       'zankurd.navTour.seen': true,
     });
     await tester.binding.setSurfaceSize(const Size(390, 844));
