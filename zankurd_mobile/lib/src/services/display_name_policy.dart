@@ -84,6 +84,22 @@ class DisplayNamePolicy {
     'system',
   };
 
+  /// Sunucunun KENDİ atadığı varsayılan adlar.
+  ///
+  /// `SupabaseZanKurdRepository.ensureProfile()` her yeni kullanıcıya
+  /// `'ZanKurd Oyuncusu'` adını yazar. Bu ad markayı içerdiği için
+  /// [reservedWords] kuralına takılıyordu — yani politika olduğu gibi
+  /// uygulansaydı **hiçbir yeni kullanıcının profili oluşamazdı**.
+  ///
+  /// Depo bu sınıftan bir kazayı daha önce yaşadı: `assign_player_tag`
+  /// tetikleyicisi düştüğünde `ensureProfile()` istisnayı yutuyor,
+  /// uygulama normal görünüyor ama profil satırı hiç oluşmuyordu
+  /// (`supabase/applied.md`, 2026-08-01). Aynı tuzağa ikinci kez
+  /// düşmemek için sunucu tarafından atanan adlar açıkça muaf tutulur.
+  ///
+  /// Muafiyet yalnız TAM eşleşmedir: "ZanKurd Destek" hâlâ reddedilir.
+  static const Set<String> systemAssignedNames = {'ZanKurd Oyuncusu'};
+
   /// Görünmez ve kontrol karakterleri.
   ///
   /// Kaçış dizileriyle yazılır: bu karakterlerin kendisi kaynakta görünmez
@@ -139,11 +155,15 @@ class DisplayNamePolicy {
       return DisplayNameVerdict.blockedWord;
     }
 
-    final words = ChatModerationPolicy.normalize(
-      name,
-    ).split(RegExp(r'[^a-z]+')).where((w) => w.isNotEmpty);
-    if (words.any(reservedWords.contains)) {
-      return DisplayNameVerdict.reservedName;
+    // Sunucunun kendi atadığı varsayılan ad korunan sözcük denetiminden
+    // muaftır; aksi hâlde yeni kullanıcı profili hiç oluşamaz.
+    if (!systemAssignedNames.contains(name)) {
+      final words = ChatModerationPolicy.normalize(
+        name,
+      ).split(RegExp(r'[^a-z]+')).where((w) => w.isNotEmpty);
+      if (words.any(reservedWords.contains)) {
+        return DisplayNameVerdict.reservedName;
+      }
     }
 
     return DisplayNameVerdict.allowed;

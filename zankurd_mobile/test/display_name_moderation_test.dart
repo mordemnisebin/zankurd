@@ -116,6 +116,67 @@ void main() {
     });
   });
 
+  group('sunucunun kendi atadığı adlar', () {
+    // Bu grup olmasaydı üretim kırılırdı: `ensureProfile()` HER yeni
+    // kullanıcıya 'ZanKurd Oyuncusu' yazıyor ve bu ad markayı içerdiği
+    // için korunan-ad kuralına takılıyordu. Tetikleyici canlıya
+    // uygulansaydı hiçbir yeni kullanıcının profil INSERT'i geçmezdi.
+    //
+    // Depo aynı sınıftan bir kazayı zaten yaşadı (`assign_player_tag`,
+    // applied.md 2026-08-01): ensureProfile istisnayı yutuyor, uygulama
+    // normal görünüyor ama profil satırı hiç oluşmuyordu.
+    test('varsayılan profil adı politikadan GEÇER', () {
+      expect(
+        DisplayNamePolicy.review('ZanKurd Oyuncusu'),
+        DisplayNameVerdict.allowed,
+        reason:
+            'ensureProfile bu adı her yeni kullanıcıya atıyor; reddedilirse '
+            'kayıt akışı tamamen kırılır',
+      );
+    });
+
+    test('muafiyet TAM eşleşme — marka taklidi hâlâ reddedilir', () {
+      for (final name in ['ZanKurd Destek', 'ZanKurd Resmi', 'ZanKurd']) {
+        expect(
+          DisplayNamePolicy.review(name),
+          DisplayNameVerdict.reservedName,
+          reason: 'muafiyet fazla geniş: "$name" geçiyor',
+        );
+      }
+    });
+
+    test('depodaki varsayılan ad ile politika listesi aynı', () {
+      // İkisi ayrışırsa muafiyet sessizce işlevsiz kalır.
+      final repo = File(
+        'lib/src/data/supabase_zankurd_repository.dart',
+      ).readAsStringSync();
+      for (final name in DisplayNamePolicy.systemAssignedNames) {
+        expect(
+          repo,
+          contains("'$name'"),
+          reason:
+              '"$name" politikada muaf ama depo artık onu atamıyor — '
+              'muafiyet ölü, ya da depo başka bir ad atıyor',
+        );
+      }
+    });
+
+    test('sunucu tarafı da aynı muafiyeti taşıyor', () {
+      final sql = File(
+        'supabase/2026-08-02_display_name_moderation.sql',
+      ).readAsStringSync();
+      for (final name in DisplayNamePolicy.systemAssignedNames) {
+        expect(
+          sql,
+          contains("'$name'"),
+          reason:
+              'istemci muaf tutuyor ama tetikleyici tutmuyor — yeni '
+              'kullanıcı profili sunucuda reddedilir',
+        );
+      }
+    });
+  });
+
   group('yazma yolları politikayı çağırıyor', () {
     test('isim kapısı', () {
       final src = File(
