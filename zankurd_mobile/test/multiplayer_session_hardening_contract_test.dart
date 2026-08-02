@@ -334,6 +334,57 @@ void main() {
     );
   });
 
+  test('hızlı eşleştirme engel ilişkisini iki yönde de dışlar', () {
+    final matchmaking = _functionBody(sql, 'join_matchmaking');
+    final candidateStart = matchmaking.indexOf(
+      'select mq.player_id into v_opponent',
+    );
+    final candidateEnd = matchmaking.indexOf(
+      'for update skip locked',
+      candidateStart,
+    );
+
+    expect(candidateStart, isNonNegative);
+    expect(candidateEnd, greaterThan(candidateStart));
+    final candidateQuery = matchmaking.substring(
+      candidateStart,
+      candidateEnd + 'for update skip locked'.length,
+    );
+
+    expect(
+      candidateQuery,
+      contains(
+        'from public.blocked_users outbound_block '
+        'where outbound_block.blocker_id = v_player_id '
+        'and outbound_block.blocked_id = mq.player_id',
+      ),
+    );
+    expect(
+      candidateQuery,
+      contains(
+        'from public.blocked_users inbound_block '
+        'where inbound_block.blocker_id = mq.player_id '
+        'and inbound_block.blocked_id = v_player_id',
+      ),
+    );
+  });
+
+  test('rastgele eşleşme gerçek kategoriyi yalnız rakip bulunca seçer', () {
+    final matchmaking = _functionBody(sql, 'join_matchmaking');
+    const randomSentinel =
+        "if upper(trim(coalesce(p_category_name, ''))) = 'rastgele' then";
+    const opponentSelection = 'select mq.player_id into v_opponent';
+    const categoryResolution = 'if v_category_id is null then';
+    const roomInsert = 'insert into public.rooms';
+
+    expect(matchmaking, contains(randomSentinel));
+    expect(matchmaking, contains("v_category_name := 'rastgele'"));
+    expect(matchmaking, contains('where c.is_active = true order by random()'));
+    expectOrdered(matchmaking, randomSentinel, opponentSelection);
+    expectOrdered(matchmaking, opponentSelection, categoryResolution);
+    expectOrdered(matchmaking, categoryResolution, roomInsert);
+  });
+
   test('eşleştirme iptali kilit altında eşleşmiş odayı silmeden döndürür', () {
     final cancel = _functionBody(sql, 'cancel_matchmaking');
 
@@ -982,5 +1033,32 @@ void main() {
     );
     expect(submit, isNot(contains('coalesce(p_response_ms')));
     expect(submit, isNot(contains('least(p_response_ms')));
+  });
+
+  test('soru başlamadan alınan yeni cevap sıfıra sıkıştırılmaz', () {
+    final submit = _functionBody(sql, 'submit_answer');
+    final freshStart = submit.indexOf("if v_room.status <> 'active' then");
+    final insertStart = submit.indexOf(
+      'insert into public.player_answers',
+      freshStart,
+    );
+
+    expect(freshStart, isNonNegative);
+    expect(insertStart, greaterThan(freshStart));
+    final freshAnswer = submit.substring(freshStart, insertStart);
+
+    const guard = 'if v_received_at < v_question_started_at then';
+    expect(freshAnswer, contains(guard));
+    expect(
+      freshAnswer,
+      contains("raise exception 'answer received before question started'"),
+    );
+    expectOrdered(
+      freshAnswer,
+      "raise exception 'room clients are not ready'",
+      guard,
+    );
+    expectOrdered(freshAnswer, guard, 'v_elapsed_ms := floor(');
+    expect(freshAnswer, isNot(contains('greatest(0::bigint, v_elapsed_ms)')));
   });
 }

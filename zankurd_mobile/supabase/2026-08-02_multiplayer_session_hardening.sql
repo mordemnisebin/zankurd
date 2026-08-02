@@ -835,14 +835,22 @@ begin
     return v_snapshot;
   end if;
 
-  select c.id, c.name
-  into v_category_id, v_category_name
-  from public.categories c
-  where upper(c.name) = upper(trim(p_category_name))
-    and c.is_active = true
-  limit 1;
+  -- "Rastgele" gerçek bir kategori değil, bütün hızlı eşleşme çağrılarının
+  -- buluştuğu sanal kuyruktur. Gerçek kategori ancak iki oyuncu eşleşince
+  -- aşağıda bir kez seçilir; aksi hâlde her istemcinin ayrı kategori çekmesi
+  -- oyuncu havuzunu parçalar.
+  if upper(trim(coalesce(p_category_name, ''))) = 'RASTGELE' then
+    v_category_name := 'Rastgele';
+  else
+    select c.id, c.name
+    into v_category_id, v_category_name
+    from public.categories c
+    where upper(c.name) = upper(trim(p_category_name))
+      and c.is_active = true
+    limit 1;
+  end if;
 
-  if v_category_id is null then
+  if v_category_name is null then
     raise exception 'Category is not available';
   end if;
 
@@ -928,6 +936,18 @@ begin
     and mq.room_id is null
     and not exists (
       select 1
+      from public.blocked_users outbound_block
+      where outbound_block.blocker_id = v_player_id
+        and outbound_block.blocked_id = mq.player_id
+    )
+    and not exists (
+      select 1
+      from public.blocked_users inbound_block
+      where inbound_block.blocker_id = mq.player_id
+        and inbound_block.blocked_id = v_player_id
+    )
+    and not exists (
+      select 1
       from public.room_players existing_player
       join public.rooms existing_room
         on existing_room.id = existing_player.room_id
@@ -950,6 +970,21 @@ begin
     );
 
     return json_build_object('status', 'waiting');
+  end if;
+
+  -- Sanal rastgele kuyruğu aynı rakibi bulduktan sonra tek bir gerçek ve
+  -- etkin kategoriye çözülür; iki oyuncu da oda snapshot'ından aynı adı alır.
+  if v_category_id is null then
+    select c.id, c.name
+    into v_category_id, v_category_name
+    from public.categories c
+    where c.is_active = true
+    order by random()
+    limit 1;
+
+    if v_category_id is null then
+      raise exception 'Category is not available';
+    end if;
   end if;
 
   v_attempt := 0;
@@ -2920,12 +2955,19 @@ begin
       raise exception 'Room clients are not ready';
     end if;
 
+    -- Çağrı oda kilidini beklerken başka transaction soruyu başlatmışsa
+    -- alınma zamanı started_at'ten eski olabilir. Bunu 0 ms'e sıkıştırmak
+    -- azami hız puanı üretirdi; başlangıç öncesi cevap açıkça geçersizdir.
+    if v_received_at < v_question_started_at then
+      raise exception 'Answer received before question started';
+    end if;
+
     v_elapsed_ms := floor(
       extract(epoch from (v_received_at - v_question_started_at)) * 1000
     )::bigint;
     v_response_ms := least(
       v_limit_ms::bigint,
-      greatest(0::bigint, v_elapsed_ms)
+      v_elapsed_ms
     )::integer;
 
     if v_received_at >= v_deadline then
