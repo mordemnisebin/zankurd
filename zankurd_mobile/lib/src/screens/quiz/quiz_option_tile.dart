@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../providers/reduced_motion_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/percent_format.dart';
@@ -156,10 +157,22 @@ class QuizOptionTile extends StatelessWidget {
           child: InkWell(
             onTap: disabled ? null : onTap,
             borderRadius: BorderRadius.circular(AppRadius.md),
+            // "Hareketi azalt" açıkken sarsıntı ve zıplama uygulanmaz.
+            //
+            // Sağlayıcı ve ayar zaten vardı ama bu iki animasyon onu hiç
+            // okumuyordu (2026-08-02 denetimi). Tercihi açan kullanıcı
+            // uygulamanın en çok gördüğü ekranda yine sallanan kartlarla
+            // karşılaşıyordu. Doğru/yanlış bilgisi renk, ikon ve
+            // semantik metinle zaten taşınıyor; hareket yalnız süstü.
             child: TweenAnimationBuilder<double>(
               key: ValueKey('shake_$wrong'),
               duration: const Duration(milliseconds: 300),
-              tween: Tween<double>(begin: 0.0, end: wrong ? 1.0 : 0.0),
+              tween: Tween<double>(
+                begin: 0.0,
+                end: (wrong && !ReducedMotionProvider.isReducedIn(context))
+                    ? 1.0
+                    : 0.0,
+              ),
               builder: (context, t, child) {
                 if (!wrong) return child!;
                 final shake = sin(t * 4 * pi) * (1.0 - t) * 4.0;

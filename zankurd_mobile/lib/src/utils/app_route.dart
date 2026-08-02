@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../providers/reduced_motion_provider.dart';
+
 /// Tüm sayfa geçişleri için standart fade+slide animasyonu.
 class AppRoute<T> extends PageRouteBuilder<T> {
   AppRoute({required Widget page, super.settings})
@@ -21,6 +23,12 @@ class AppRoute<T> extends PageRouteBuilder<T> {
         // ekranın sağında siyah bir şerit bırakır. Bu yüzden dinlenme
         // durumu (`begin`) nötr, hareket ise `end` tarafında tanımlanır.
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          // "Hareketi azalt" açıkken kaydırma/soldurma yapılmaz.
+          // Sayfa geçişleri uygulamadaki EN SIK hareket kaynağıdır;
+          // tercihi burada yok saymak onu büyük ölçüde anlamsız
+          // kılıyordu (2026-08-02 denetimi).
+          if (ReducedMotionProvider.isReducedIn(context)) return child;
+
           final incoming = CurvedAnimation(
             parent: animation,
             curve: Curves.easeOutCubic,

@@ -54,6 +54,6 @@ void main() {
     await repo.blockPlayer('p9');
     expect((await repo.loadBlockedPlayers()).map((e) => e.id), contains('p9'));
     await repo.unblockPlayer('p9');
-    expect((await repo.loadBlockedPlayers()), isEmpty);
+    expect(await repo.loadBlockedPlayers(), isEmpty);
   });
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../providers/reduced_motion_provider.dart';
+
 class BouncingButton extends StatefulWidget {
   const BouncingButton({
     required this.child,
@@ -67,6 +69,21 @@ class _BouncingButtonState extends State<BouncingButton>
 
   @override
   Widget build(BuildContext context) {
+    // "Hareketi azalt" açıkken zıplama uygulanmaz. Bu düğme uygulamanın
+    // her yerinde kullanılıyor, dolayısıyla tercihi yok saymak onu
+    // fiilen işlevsiz bırakıyordu (2026-08-02 denetimi). Dokunma geri
+    // bildirimi haptic ile korunur.
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      return GestureDetector(
+        onTap: widget.onPressed == null
+            ? null
+            : () {
+                HapticFeedback.lightImpact();
+                widget.onPressed!();
+              },
+        child: widget.child,
+      );
+    }
     return MouseRegion(
       cursor: widget.onPressed != null
           ? SystemMouseCursors.click

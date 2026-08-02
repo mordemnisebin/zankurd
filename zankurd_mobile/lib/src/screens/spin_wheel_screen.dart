@@ -9,6 +9,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/sound_provider.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -53,9 +54,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   void initState() {
     super.initState();
 
+    // "Hareketi azalt" açıkken 3.8 saniyelik dönüş kısaltılır.
+    //
+    // Çark hareketin kendisi olduğu için tamamen kaldırılmaz — sonuç yine
+    // görünür, yalnız uzun dönüş gider. Sağlayıcının belgesi de tam bunu
+    // söylüyor: "uzun giriş/scale/bounce animasyonları kısaltılır"
+    // (2026-08-02 denetimi: bu ekran tercihi hiç okumuyordu).
     _spinController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3800),
+      duration: ReducedMotionProvider.isReducedIn(context)
+          ? const Duration(milliseconds: 400)
+          : const Duration(milliseconds: 3800),
     );
     _rotation = const AlwaysStoppedAnimation(0);
     _spinController.addListener(() {
