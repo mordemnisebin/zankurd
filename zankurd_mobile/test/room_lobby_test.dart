@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
@@ -182,6 +184,69 @@ void main() {
     // tamamlanana kadar mağaza sürümünde erişilebilir olmamalı.
     expect(find.byKey(const ValueKey('room-chat-toggle')), findsNothing);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('13-character room code remains complete at 320 px', (
+    tester,
+  ) async {
+    const code = 'ZK-ABCDEF0123';
+    await tester.binding.setSurfaceSize(const Size(320, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom().copyWith(code: code),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final codeFinder = find.byKey(const ValueKey('room-code'));
+    final codeText = tester.widget<Text>(codeFinder);
+    final paragraph = tester.renderObject<RenderParagraph>(codeFinder);
+    expect(codeText.data, code);
+    expect(codeText.overflow, isNot(TextOverflow.ellipsis));
+    expect(paragraph.didExceedMaxLines, isFalse);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('room code copy keeps the complete 13-character value', (
+    tester,
+  ) async {
+    const code = 'ZK-ABCDEF0123';
+    String? copiedText;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copiedText =
+              (call.arguments as Map<Object?, Object?>)['text'] as String?;
+        }
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      ),
+    );
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom().copyWith(code: code),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(find.byKey(const ValueKey('room-code-copy')));
+    await tester.pump();
+    expect(copiedText, code);
   });
 
   testWidgets('room lobby keeps start disabled until two players are present', (

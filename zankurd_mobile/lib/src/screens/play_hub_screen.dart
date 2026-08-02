@@ -198,8 +198,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     key: const ValueKey('play-hub-join-room-code-field'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
-                    // Yazarken kanonik biçime çeker: kullanıcı `zkx8wy`
-                    // yazsa da alanda `ZK-X8WY` görünür, yani gönderilen
+                    // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
+                    // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
                     // kodun doğru olduğunu göndermeden önce görür.
                     inputFormatters: const [_RoomCodeInputFormatter()],
                     style: inputTextStyle,
@@ -210,6 +210,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return context.t(K.roomCodeRequired);
+                      }
+                      if (!isSupportedRoomCode(value)) {
+                        return context.t(K.roomCodeInvalid);
                       }
                       return null;
                     },
@@ -222,7 +225,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         if (!formKey.currentState!.validate()) return;
                         try {
                           final room = await widget.repository.joinOnlineRoom(
-                            controller.text.trim(),
+                            normalizeRoomCode(controller.text),
                           );
                           if (!sheetCtx.mounted) return;
                           AnalyticsService.instance.logActivationStep(
@@ -512,7 +515,7 @@ class _PlaySectionHeading extends StatelessWidget {
 
 /// Oda kodu alanını yazılırken kanonik biçime çeker.
 ///
-/// Kullanıcının gördüğü kod `ZK-X8WY`; elle yazarken tireyi atlamak,
+/// Kullanıcının gördüğü kod `ZK-ABCDEF0123`; elle yazarken tireyi atlamak,
 /// küçük harf kullanmak ya da araya boşluk koymak olağandır. Biçimlendirici
 /// olmadan bunların hepsi "oda bulunamadı" ile dönüyordu.
 class _RoomCodeInputFormatter extends TextInputFormatter {
@@ -523,7 +526,7 @@ class _RoomCodeInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final normalized = normalizeRoomCode(newValue.text);
+    final normalized = formatRoomCodeInput(newValue.text);
     // İmleç sona alınır: kod kısa ve tek parça yazılır, ortasına dönüp
     // düzenleme yapmak beklenen kullanım değil. Metin değişmediyse
     // değeri olduğu gibi bırak, yoksa her tuşta imleç zıplar.

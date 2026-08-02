@@ -647,12 +647,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<GameRoom> joinOnlineRoom(String code) async {
+    final normalizedCode = normalizeRoomCode(code);
+    if (!isSupportedRoomCode(normalizedCode)) {
+      throw const FormatException('Invalid room code');
+    }
     client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
 
     final response = await client.rpc(
       'join_room_by_code',
-      params: {'p_code': normalizeRoomCode(code)},
+      params: {'p_code': normalizedCode},
     );
     final rawSnapshot = response is List ? response.firstOrNull : response;
     if (rawSnapshot == null) {

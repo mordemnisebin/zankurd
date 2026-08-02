@@ -357,9 +357,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   GameRoom joinRoom(String code) {
-    final cleanCode = code.trim().isEmpty
-        ? 'ZK-4821'
-        : code.trim().toUpperCase();
+    final cleanCode = normalizeRoomCode(code);
+    if (!isSupportedRoomCode(cleanCode)) {
+      throw const FormatException('Invalid room code');
+    }
     return createRoom().copyWith(code: cleanCode);
   }
 

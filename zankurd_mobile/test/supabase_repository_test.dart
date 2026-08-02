@@ -193,7 +193,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
         }
         return _jsonResponse(request, const {
           'id': '00000000-0000-0000-0000-000000000099',
-          'code': 'ZK-RSME',
+          'code': 'ZK-ABCDEF0123',
           'host_id': 'host-id',
           'question_count': 10,
           'seconds_per_question': 20,
@@ -225,7 +225,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
 
 const _roomRpcSnapshot = {
   'room_id': '00000000-0000-0000-0000-000000000099',
-  'code': 'ZK-RSME',
+  'code': 'ZK-ABCDEF0123',
   'host_id': 'host-id',
   'category_name': 'Ziman',
   'question_count': 10,
@@ -236,7 +236,7 @@ const _roomRpcSnapshot = {
 const _completedRoomResult = {
   'room': {
     'id': '00000000-0000-0000-0000-000000000099',
-    'code': 'ZK-RSME',
+    'code': 'ZK-ABCDEF0123',
     'host_id': 'host-id',
     'category_name': 'Ziman',
     'question_count': 2,
@@ -392,7 +392,7 @@ void main() {
     );
 
     expect(room.id, '00000000-0000-0000-0000-000000000099');
-    expect(room.code, 'ZK-RSME');
+    expect(room.code, 'ZK-ABCDEF0123');
     expect(room.hostId, 'host-id');
     expect(room.category, 'Ziman');
     expect(room.secondsPerQuestion, 20);
@@ -420,7 +420,7 @@ void main() {
         ),
       );
 
-      final room = await repository.joinOnlineRoom('zk rsme');
+      final room = await repository.joinOnlineRoom('zk abcdef0123');
 
       expect(room.hostId, 'host-id');
       expect(httpClient.requestedPaths, [
@@ -429,9 +429,41 @@ void main() {
         '/rest/v1/rpc/set_room_ready',
       ]);
       expect(httpClient.requestedPaths, isNot(contains('/rest/v1/rooms')));
-      expect(httpClient.requestBodies.first, {'p_code': 'ZK-RSME'});
+      expect(httpClient.requestBodies.first, {'p_code': 'ZK-ABCDEF0123'});
     },
   );
+
+  test('legacy room code stays joinable during the server cutover', () async {
+    final httpClient = _RoomSessionHttpClient();
+    final repository = _SignedInRoomSessionRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    await repository.joinOnlineRoom('zkab');
+
+    expect(httpClient.requestBodies.first, {'p_code': 'ZK-ZKAB'});
+  });
+
+  test('malformed room code is rejected before auth or RPC work', () async {
+    final httpClient = _RoomSessionHttpClient();
+    final repository = _SignedInRoomSessionRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
+
+    await expectLater(
+      repository.joinOnlineRoom('ZK-ABCDEF01234'),
+      throwsA(isA<FormatException>()),
+    );
+    expect(httpClient.requestedPaths, isEmpty);
+  });
 
   test(
     'oda snapshotı tüm sunucu alanlarını ve oyuncu kimliklerini taşır',

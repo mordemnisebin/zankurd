@@ -8,15 +8,14 @@ import 'package:zankurd_mobile/src/models/room.dart';
 ///
 /// ## Kusur
 ///
-/// Oda kodu kullanıcıya `ZK-X8WY` diye gösteriliyor. Katılma alanı ise
+/// Oda kodu kullanıcıya `ZK-ABCDEF0123` diye gösteriliyor. Katılma alanı ise
 /// yalnızca `trim().toUpperCase()` yapıp RPC'ye gönderiyordu. Tireyi
-/// atlayan (`zkx8wy`), araya boşluk koyan (`ZK X8WY`) ya da yalnızca son
-/// dört karakteri yazan (`X8WY`) kullanıcı "Bu kodla oda bulunamadı"
+/// atlayan (`zkabcdef0123`), araya boşluk koyan (`ZK ABCDEF0123`) ya da
+/// yalnızca soneki yazan (`ABCDEF0123`) kullanıcı "Bu kodla oda bulunamadı"
 /// görüyordu — oda açıkken ve kodu doğru okumuşken.
 ///
-/// Ekranın altyazısı da yanlıştı: "6 haneli oda kodu" diyordu, oysa kod
-/// `ZK-` öneki + 4 karakter, yani 7 karakter. Kullanıcıyı en baştan yanlış
-/// uzunlukta bir şey aramaya itiyordu.
+/// Ekranın altyazısı da "6 haneli oda kodu" diyordu. Tarihsel biçim 7,
+/// güncel 40-bit biçim 13 karakter; bu ifade hiçbir sürümde doğru değildi.
 ///
 /// Kusur test edilemiyordu çünkü hiçbir test insanın *yazacağı* biçimi
 /// denemiyordu; hepsi `generateRoomCode`un çıktısını doğrudan geri
@@ -25,19 +24,19 @@ import 'package:zankurd_mobile/src/models/room.dart';
 void main() {
   test('insanın yazabileceği her biçim kanonik koda çevrilir', () {
     for (final typed in [
-      'ZK-X8WY',
-      'zk-x8wy',
-      'ZKX8WY',
-      'zkx8wy',
-      'ZK X8WY',
-      ' zk x8wy ',
-      'X8WY',
-      'x8wy',
-      'ZK–X8WY', // uzun tire: kopyala-yapıştırda oluşur
+      'ZK-ABCDEF0123',
+      'zk-abcdef0123',
+      'ZKABCDEF0123',
+      'zkabcdef0123',
+      'ZK ABCDEF0123',
+      ' zk abcdef0123 ',
+      'ABCDEF0123',
+      'abcdef0123',
+      'ZK–ABCDEF0123', // uzun tire: kopyala-yapıştırda oluşur
     ]) {
       expect(
         normalizeRoomCode(typed),
-        'ZK-X8WY',
+        'ZK-ABCDEF0123',
         reason: '"$typed" yazan kullanıcı odayı bulamıyor',
       );
     }
@@ -64,7 +63,33 @@ void main() {
     // `0`ı `O`, `1`i `I` yapmak cazip ama yanlış: üretim alfabesi bu
     // ikilileri hiç kullanmadığı için düzeltilecek bir şey yok, ama
     // düzeltme yapılırsa kullanıcı başkasının odasına düşebilir.
-    expect(normalizeRoomCode('ZK-0O1I'), 'ZK-0O1I');
+    expect(normalizeRoomCode('ZK-0O1IABCDEF'), 'ZK-0O1IABCDEF');
+  });
+
+  test('geçiş süresinde tarihsel dört karakterli lobiye katılım korunur', () {
+    expect(isCanonicalRoomCode('ZK-X8WY'), isFalse);
+    expect(isSupportedRoomCode('ZK-X8WY'), isTrue);
+    expect(isSupportedRoomCode('x8wy'), isTrue);
+    expect(isCanonicalRoomCode('ZK-ABCDEF0123'), isTrue);
+    expect(isCanonicalRoomCode('zk-abcdef0123'), isFalse);
+    expect(isCanonicalRoomCode('ABCDEF0123'), isFalse);
+    expect(isSupportedRoomCode('zk-abcdef0123'), isTrue);
+    expect(isSupportedRoomCode('ZK-ABCDEF0123'), isTrue);
+    expect(isSupportedRoomCode('ZK-NOT-A-CODE'), isFalse);
+  });
+
+  test('ZK ile başlayan tarihsel sonek önek sanılıp kaybolmaz', () {
+    expect(normalizeRoomCode('ZKAB'), 'ZK-ZKAB');
+    expect(formatRoomCodeInput('ZKAB'), 'ZKAB');
+    expect(isSupportedRoomCode('ZKAB'), isTrue);
+    expect(normalizeRoomCode('ZK-ZKAB'), 'ZK-ZKAB');
+    expect(formatRoomCodeInput('ZKX8WY'), 'ZK-X8WY');
+  });
+
+  test('fazla karakter başka bir oda koduna sessizce kesilmez', () {
+    expect(formatRoomCodeInput('ZK-ABCDEF01234'), 'ZK-ABCDEF01234');
+    expect(isCanonicalRoomCode('ZK-ABCDEF01234'), isFalse);
+    expect(isSupportedRoomCode('ZK-ABCDEF01234'), isFalse);
   });
 
   test('katılma yolu normalleştiriciden geçer', () {
@@ -74,7 +99,7 @@ void main() {
     ).readAsStringSync();
     expect(
       repository,
-      contains("'p_code': normalizeRoomCode(code)"),
+      contains("'p_code': normalizedCode"),
       reason: 'joinOnlineRoom ham kodu göndermemeli',
     );
     expect(
@@ -98,7 +123,7 @@ void main() {
     expect(
       strings,
       isNot(contains('6 haneli oda kodu')),
-      reason: 'kod 7 karakter; "6 haneli" hiçbir zaman doğru değildi',
+      reason: 'güncel kod 13 karakter; "6 haneli" hiçbir zaman doğru değildi',
     );
     expect(
       strings,

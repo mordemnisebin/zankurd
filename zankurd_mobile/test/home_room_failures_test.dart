@@ -94,7 +94,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('play-hub-join-room-code-field')),
-      'ABCD12',
+      'ABCDEF0123',
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Katıl'));
@@ -132,6 +132,43 @@ void main() {
 
     expect(repository.joinCalls, 0);
     expect(find.text('Kod zorunlu'), findsOneWidget);
+    expect(find.byType(RoomScreen), findsNothing);
+  });
+
+  testWidgets('malformed room code is rejected before online join', (
+    tester,
+  ) async {
+    final repository = _FailingJoinRoomRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: FakeAuthProvider(),
+        languageProvider: turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('play-hub-join-room-code-field')),
+      'ZK-ABCDEF01234',
+    );
+    await tester.tap(find.text('Katıl'));
+    await tester.pumpAndSettle();
+
+    expect(repository.joinCalls, 0);
+    expect(
+      find.text(
+        'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
+      ),
+      findsOneWidget,
+    );
     expect(find.byType(RoomScreen), findsNothing);
   });
 

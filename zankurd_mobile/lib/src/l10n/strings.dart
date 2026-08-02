@@ -322,6 +322,12 @@ class Tr {
     },
     K.roomCode: {'ku': 'Koda odeyê', 'tr': 'Oda kodu'},
     K.roomCodeRequired: {'ku': 'Kod pêwîst e', 'tr': 'Kod zorunlu'},
+    K.roomCodeInvalid: {
+      'ku':
+          'Kod divê bi ZK- dest pê bike û dû re tam 10 karakter ji 0–9/A–F hebin.',
+      'tr':
+          'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
+    },
     K.roomNotFound: {
       'ku': 'Odeya bi vê kodê nehate dîtin.',
       'tr': 'Bu kodla oda bulunamadı.',
@@ -343,11 +349,10 @@ class Tr {
       'tr': 'Arkadaşlarını kodla çağır',
     },
     K.joinByCode: {'ku': 'Bi kodê tevlî bibe', 'tr': 'Kodla Katıl'},
-    // Kod `ZK-` öneki + 4 karakterdir; "6 haneli" hiçbir zaman doğru
-    // değildi ve kullanıcıyı yanlış uzunlukta bir şey aramaya itiyordu.
+    // Kod, sunucuyla aynı biçimde `ZK-` öneki + 10 onaltılık karakterdir.
     K.joinByCodeSub: {
-      'ku': 'Koda odeyê, mîna ZK-X8WY',
-      'tr': 'Oda kodu, örnek: ZK-X8WY',
+      'ku': 'Koda odeyê, mînak: ZK-ABCDEF0123',
+      'tr': 'Oda kodu, örnek: ZK-ABCDEF0123',
     },
     K.events: {'ku': 'Çalakî', 'tr': 'Etkinlikler'},
     K.eventsSub: {'ku': 'Her roj nû dibe.', 'tr': 'Her gün yenilenir.'},
@@ -2279,6 +2284,7 @@ class K {
   static const joinRoomBody = 'play.joinRoom.body';
   static const roomCode = 'play.roomCode';
   static const roomCodeRequired = 'play.roomCode.required';
+  static const roomCodeInvalid = 'play.roomCode.invalid';
   static const roomNotFound = 'play.roomNotFound';
   static const joinAction = 'play.join';
   static const playTitle = 'play.title';

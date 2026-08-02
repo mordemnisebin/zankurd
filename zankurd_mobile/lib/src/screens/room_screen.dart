@@ -597,6 +597,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                             Material(
                                               color: Colors.transparent,
                                               child: InkWell(
+                                                key: const ValueKey(
+                                                  'room-code-copy',
+                                                ),
                                                 onTap: () =>
                                                     _copyRoomCode(context, ku),
                                                 borderRadius:
@@ -659,29 +662,29 @@ class _RoomScreenState extends State<RoomScreen> {
                                                             const SizedBox(
                                                               height: 4,
                                                             ),
-                                                            Text(
-                                                              room.code,
-                                                              key:
-                                                                  const ValueKey(
-                                                                    'room-code',
-                                                                  ),
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: AppTypography
-                                                                  .heading1
-                                                                  .copyWith(
-                                                                    color: AppTheme
-                                                                        .playCyan,
-                                                                    letterSpacing:
-                                                                        3,
-                                                                    fontSize:
-                                                                        32,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w900,
-                                                                  ),
+                                                            FittedBox(
+                                                              fit: BoxFit
+                                                                  .scaleDown,
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                room.code,
+                                                                key: const ValueKey(
+                                                                  'room-code',
+                                                                ),
+                                                                maxLines: 1,
+                                                                softWrap: false,
+                                                                style: AppTypography.heading1.copyWith(
+                                                                  color: AppTheme
+                                                                      .playCyan,
+                                                                  letterSpacing:
+                                                                      3,
+                                                                  fontSize: 32,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
