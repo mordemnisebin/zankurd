@@ -277,6 +277,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   ) async {
     try {
       final joinResult = await pendingJoin;
+      // Retry başladıysa yeni RPC aynı canlı üyeliği idempotent biçimde
+      // döndürebilir. Eski temizliğin bu odayı terk etmesi yeni maçı forfeit
+      // eder; yeni nesil artık sunucu üyeliğinin tek sahibidir.
+      if (_matchmakingAttempt != cleanupGeneration) return;
       final matchedRoomId = joinResult['status'] == 'matched'
           ? joinResult['room_id'] as String?
           : null;
@@ -288,7 +292,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       // Yeni bir arama başladıysa kullanıcıya ait tek sunucu kuyruğunu eski
       // isteğin temizliğiyle silme. Eski istek hâlâ son denemeyse ikinci
       // iptal, timeout sonrasında oluşabilecek hayalet kuyruk kaydını kapatır.
-      if (_matchmakingAttempt != cleanupGeneration) return;
       final cancellation = await repository.cancelMatchmaking();
       final cancellationRoomId = _matchedRoomId(cancellation);
       if (cancellationRoomId != null) {

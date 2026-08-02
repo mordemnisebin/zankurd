@@ -35,6 +35,7 @@ class _PendingJoinRepository extends MockZanKurdRepository {
   int joinCalls = 0;
   int cancelCalls = 0;
   int snapshotCalls = 0;
+  int leaveCalls = 0;
 
   Completer<Map<String, dynamic>> get latestJoin => joins.last;
 
@@ -59,6 +60,16 @@ class _PendingJoinRepository extends MockZanKurdRepository {
   Future<GameRoom> loadRoomSnapshot(String roomId) async {
     snapshotCalls += 1;
     return _SnapshotMatchRepository.snapshot;
+  }
+
+  @override
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
+    leaveCalls += 1;
+    return const RoomLeaveOutcome(
+      status: 'finished',
+      reason: 'forfeit',
+      forfeitedBy: 'player',
+    );
   }
 }
 
@@ -447,6 +458,7 @@ void main() {
     await tester.pumpAndSettle();
     final snapshotCallsAfterLateJoin = repository.snapshotCalls;
     final quizCountAfterLateJoin = find.byType(QuizScreen).evaluate().length;
+    final leaveCallsAfterLateJoin = repository.leaveCalls;
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
 
@@ -455,6 +467,7 @@ void main() {
     expect(cancelledAtDeadline, 1);
     expect(snapshotCallsAfterLateJoin, 0);
     expect(quizCountAfterLateJoin, 0);
+    expect(leaveCallsAfterLateJoin, 1);
   });
 
   testWidgets('eski join iptal hatası sonrası yeni denemeyi ele geçiremez', (
@@ -498,6 +511,7 @@ void main() {
 
     final snapshotCallsAfterStaleJoin = repository.snapshotCalls;
     final quizCountAfterStaleJoin = find.byType(QuizScreen).evaluate().length;
+    final leaveCallsAfterStaleJoin = repository.leaveCalls;
     repository.latestJoin.complete(const {'status': 'waiting'});
     await tester.pump();
     await tester.pumpWidget(const SizedBox.shrink());
@@ -505,6 +519,7 @@ void main() {
 
     expect(snapshotCallsAfterStaleJoin, 0);
     expect(quizCountAfterStaleJoin, 0);
+    expect(leaveCallsAfterStaleJoin, 0);
   });
 
   testWidgets('gizli cevaplı gerçek eşleşmede boş oda soruları yerele düşmez', (
