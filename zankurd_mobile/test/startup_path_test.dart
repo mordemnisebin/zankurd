@@ -86,7 +86,16 @@ void main() {
     // Zamanlayıcı iptal edilebilir olmalı — ekran erken sökülürse onunla
     // birlikte ölmeli.
     expect(splash, contains('_minimumTimer?.cancel()'));
-    expect(mainSource, contains('readiness: _warmUpShell(repository)'));
+    expect(mainSource, contains('readiness: _warmUpShell()'));
+  });
+
+  test('splash hazırlığı profil ağ isteğini beklemez', () {
+    final warmUp = mainSource.substring(
+      mainSource.indexOf('Future<void> _warmUpShell'),
+      mainSource.indexOf('/// Global hata ekranının dili'),
+    );
+
+    expect(warmUp, isNot(contains('getProfileName')));
   });
 
   test('soru bankası JSON çözme arka isolate te', () {

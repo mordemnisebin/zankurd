@@ -35,18 +35,12 @@ import 'src/widgets/responsive_wrapper.dart';
 
 /// Açılış penceresinde ısıtılan iş.
 ///
-/// AppShell mount olduğunda iki kapı var: onboarding bayrağı
-/// (SharedPreferences) ve oyuncu adı (`getProfileName`, ağ). İkisi de
-/// splash'ten SONRA başlıyordu, yani kullanıcı 1800 ms logo + 450 ms
-/// geçiş + iki spinner görüyordu — dört ayrı bekleme yüzeyi.
+/// AppShell'in kapıları yalnız yerel `SharedPreferences` bayraklarıyla
+/// belirlenir. Oyuncu adı ağdan arka planda HomeScreen tarafından yüklenir;
+/// bu yüzden açılış hazır oluşunun parçası değildir.
 ///
-/// Burada ikisi de splash görünürken başlatılır. Hata yutulmaz ama
-/// açılışı da engellemez: `SplashScreen` readiness başarısız olsa da
-/// geçiş yapar, AppShell kendi kontrolünü yine çalıştırır.
-Future<void> _warmUpShell(ZanKurdRepository repository) async {
-  await SharedPreferences.getInstance();
-  await repository.getProfileName();
-}
+/// Yerel depo splash görünürken hazırlanır; ağ isteği burada beklenmez.
+Future<void> _warmUpShell() => SharedPreferences.getInstance();
 
 /// Global hata ekranının dili. `ErrorWidget.builder` widget ağacının dışında
 /// çalıştığı için `LangContext`'e erişemez; dil tercihi yüklendiğinde burada
@@ -345,12 +339,10 @@ class ZanKurdApp extends StatelessWidget {
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
           home: SplashScreen(
-            // Marka penceresi artık boşa harcanmıyor: AppShell'in mount
-            // olur olmaz yapacağı iki iş bu 600 ms içinde ısıtılıyor —
-            // SharedPreferences ve `getProfileName()`. Eskiden splash
-            // 1800 ms bekliyor, SONRA AppShell iki tam ekran spinner
-            // daha çiziyordu (2026-07-31 denetimi).
-            readiness: _warmUpShell(repository),
+            // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
+            // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
+            // yüklendiği için splash hazır oluşunu asla geciktirmez.
+            readiness: _warmUpShell(),
             next: AppShell(repository: repository),
           ),
           builder: (context, child) {

@@ -73,7 +73,6 @@ class _AppShellState extends State<AppShell> {
   bool _showOnboarding = false;
   bool _checkingProfileName = false;
   bool _profileNameComplete = false;
-  String? _profileName;
   bool _profileCheckStarted = false;
 
   // Çevrimdışı durum izleme
@@ -208,7 +207,6 @@ class _AppShellState extends State<AppShell> {
     if (!_profileNameComplete) {
       return ProfileNameGateScreen(
         repository: widget.repository,
-        initialName: _profileName,
         onCompleted: _completeProfileName,
       );
     }
@@ -285,7 +283,6 @@ class _AppShellState extends State<AppShell> {
     return switch (index) {
       0 => LearnHomeScreen(
         repository: widget.repository,
-        displayName: _profileName,
         scrollController: _homeScrollController,
         refreshSignal: _homeRefresh,
         onOpenLearning: () => Navigator.of(
@@ -483,29 +480,12 @@ class _AppShellState extends State<AppShell> {
     final preferences = await SharedPreferences.getInstance();
     final completed = preferences.getBool(_profileNameCompletedKey) == true;
 
-    // "Ad soruldu" bayrağı adın kendisinden ayrı saklanıyor. Ad kaybolur da
-    // bayrak kalırsa (yeniden kurulum, hesap sıfırlama, depo geçişi) kapı
-    // bir daha hiç açılmaz ve oyuncu kalıcı olarak "Oyuncu" olur
-    // (2026-07-25 canlı denetimi). Bu yüzden bayrak, adın gerçekten var
-    // olmasıyla doğrulanır.
-    //
-    // Arama *başarısız* olduğunda (ağ/depo hatası) ad yok sayılmaz: aksi
-    // halde geçici bir hata, adı olan kullanıcıyı kapıya geri gönderirdi.
-    String? name;
-    var lookupFailed = false;
-    try {
-      name = await widget.repository.getProfileName();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'app_shell_preferences');
-      name = null;
-      lookupFailed = true;
-    }
-
-    final hasName = name != null && name.trim().isNotEmpty;
+    // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
+    // bayrağa dayanır. İsim, HomeScreen'in arka plan akışında zenginleşir;
+    // ağdaki yeniden denemeler başlangıç rotasını veya tam ekranı bekletemez.
     if (!mounted) return;
     setState(() {
-      _profileName = name;
-      _profileNameComplete = completed && (hasName || lookupFailed);
+      _profileNameComplete = completed;
       _checkingProfileName = false;
     });
   }
@@ -513,15 +493,8 @@ class _AppShellState extends State<AppShell> {
   Future<void> _completeProfileName() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setBool(_profileNameCompletedKey, true);
-    String? name;
-    try {
-      name = await widget.repository.getProfileName();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'app_shell_tour');
-    }
     if (!mounted) return;
     setState(() {
-      _profileName = name;
       _profileNameComplete = true;
       _profileCheckStarted = true;
     });

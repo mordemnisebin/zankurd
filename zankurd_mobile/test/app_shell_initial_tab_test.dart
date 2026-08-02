@@ -1,12 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 
 import 'support/widget_test_helpers.dart';
+
+class _HangingProfileNameRepository extends MockZanKurdRepository {
+  @override
+  Future<String> getProfileName() => Completer<String>().future;
+}
 
 /// AppShell açılış sekmesi ve lazy-mount bekçisi.
 ///
@@ -150,5 +160,53 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
       expect(find.byType(PlayHubScreen, skipOffstage: false), findsNothing);
     });
+  });
+
+  testWidgets(
+    'tamamlanmış yerel ad kapısı asılı profil isteğine rağmen ana ekranı açar',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.onboarding.seen': true,
+        'zankurd.profileName.completed': true,
+      });
+
+      await tester.pumpWidget(
+        testShell(
+          child: AppShell(
+            repository: _HangingProfileNameRepository(),
+            connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.byType(IndexedStack), findsOneWidget);
+      expect(find.byType(HomeScreen), findsOneWidget);
+    },
+  );
+
+  testWidgets('tamamlanmamış yerel ad kapısı hemen ad ekranını açar', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.onboarding.seen': true,
+      'zankurd.profileName.completed': false,
+    });
+
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: _HangingProfileNameRepository(),
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(ProfileNameGateScreen), findsOneWidget);
   });
 }
