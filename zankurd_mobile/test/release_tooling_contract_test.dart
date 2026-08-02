@@ -260,6 +260,65 @@ void main() {
     }
   });
 
+  test('1v1 üretim göçü hazırlanmış istemci ve legacy kapısıyla kesilir', () {
+    final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+    final normalized = steps.toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+
+    final stagingSmoke = normalized.indexOf('staging/preview iki istemci turu');
+    final webArtifact = normalized.indexOf(
+      'flutter build web --release --no-web-resources-cdn',
+    );
+    final androidArtifact = normalized.indexOf(
+      'flutter build appbundle --release',
+    );
+    final iosArtifact = normalized.indexOf('flutter build ipa --release');
+    final legacyGate = normalized.indexOf('herhangi bir legacy istemci');
+    final productionMigration = normalized.indexOf(
+      'üretim sql editor\'ünde bir kez uygula',
+    );
+    final preparedWebDeploy = normalized.indexOf('./deploy_sftp.sh --dry-run');
+    final productionSmoke = normalized.indexOf('üretim iki istemci smoke');
+    final appliedRecord = normalized.indexOf(
+      'supabase/applied.md` dosyasına tarih/kanıt notuyla `✅`',
+    );
+
+    for (final checkpoint in {
+      'staging doğrulaması': stagingSmoke,
+      'web artefaktı': webArtifact,
+      'Android artefaktı': androidArtifact,
+      'iOS artefaktı': iosArtifact,
+      'legacy istemci kapısı': legacyGate,
+      'üretim göçü': productionMigration,
+      'hazır web dağıtımı': preparedWebDeploy,
+      'üretim iki istemci turu': productionSmoke,
+      'applied.md kaydı': appliedRecord,
+    }.entries) {
+      expect(
+        checkpoint.value,
+        isNonNegative,
+        reason: 'Yayın rehberinde ${checkpoint.key} eksik.',
+      );
+    }
+
+    expect(webArtifact, greaterThan(stagingSmoke));
+    expect(androidArtifact, greaterThan(stagingSmoke));
+    expect(iosArtifact, greaterThan(stagingSmoke));
+    expect(productionMigration, greaterThan(webArtifact));
+    expect(productionMigration, greaterThan(androidArtifact));
+    expect(productionMigration, greaterThan(iosArtifact));
+    expect(productionMigration, greaterThan(legacyGate));
+    expect(preparedWebDeploy, greaterThan(productionMigration));
+    expect(productionSmoke, greaterThan(preparedWebDeploy));
+    expect(appliedRecord, greaterThan(productionSmoke));
+
+    expect(normalized, contains('migration\'ı uygulama'));
+    expect(normalized, contains('bakım modu'));
+    expect(normalized, contains('minimum sürüm'));
+    expect(normalized, contains('zorunlu güncelleme'));
+    expect(normalized, contains('ilk yayın'));
+    expect(normalized, contains('public legacy istemci yok'));
+  });
+
   // GitHub Actions yalnızca deponun kökündeki `.github/workflows` dizinini
   // okur. İş akışı 2026-07-31'e kadar `zankurd_mobile/.github/workflows/`
   // altındaydı, yani analyze, testler ve APK derlemesi hiçbir push'ta
@@ -323,6 +382,8 @@ void main() {
       expect(
         releaseGuideBuildCommands,
         unorderedEquals([
+          'flutter build web --release --no-web-resources-cdn '
+              '--dart-define-from-file=.env.web.release.json',
           'flutter build appbundle --release '
               '--dart-define-from-file=.env.mobile.release.json',
           'flutter build ipa --release '
