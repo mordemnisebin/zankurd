@@ -379,6 +379,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    return createRoom().copyWith(id: roomId);
+  }
+
+  @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     return room.players;
   }

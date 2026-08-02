@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
 
 /// Bir kategori isteği gelirse yerel bankadan bilinçli olarak farklı bir
 /// sunucu cevabı üretir. Böylece test, yalnız çağrı sayısını değil oyuncuya
@@ -25,6 +26,69 @@ class _ServerCategoriesHttpClient extends http.BaseClient {
     final bytes = utf8.encode(
       jsonEncode(serverCategories.map((name) => {'name': name}).toList()),
     );
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+class _RoomSnapshotHttpClient extends http.BaseClient {
+  final requestedPaths = <String>[];
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    requestedPaths.add(request.url.path);
+    final Object body;
+    if (request.url.path == '/rest/v1/rooms') {
+      body = const {
+        'id': '00000000-0000-0000-0000-000000000042',
+        'code': 'ZK-R3AL',
+        'host_id': 'host-id',
+        'question_count': 7,
+        'seconds_per_question': 45,
+        'status': 'active',
+        'categories': {'name': 'Çand'},
+      };
+    } else if (request.url.path == '/rest/v1/room_players') {
+      body = const [
+        {
+          'player_id': 'host-id',
+          'score': 90,
+          'streak': 3,
+          'is_ready': true,
+          'profiles': {
+            'display_name': 'Berfin',
+            'avatar_icon': 'sun',
+            'avatar_color': '#123456',
+            'avatar_url': null,
+            'avatar_frame': 'gold',
+            'showcase_title': 'Dengbêj',
+          },
+        },
+        {
+          'player_id': 'guest-id',
+          'score': 40,
+          'streak': 1,
+          'is_ready': true,
+          'profiles': {
+            'display_name': 'Berfin',
+            'avatar_icon': null,
+            'avatar_color': null,
+            'avatar_url': null,
+            'avatar_frame': null,
+            'showcase_title': null,
+          },
+        },
+      ];
+    } else {
+      throw StateError('Beklenmeyen istek: ${request.url}');
+    }
+
+    final bytes = utf8.encode(jsonEncode(body));
     return http.StreamedResponse(
       Stream.value(bytes),
       200,
@@ -91,6 +155,38 @@ void main() {
     expect(names, isNot(contains('Baran')));
     expect(names, isNot(contains('Dilan')));
   });
+
+  test(
+    'oda snapshotı tüm sunucu alanlarını ve oyuncu kimliklerini taşır',
+    () async {
+      final httpClient = _RoomSnapshotHttpClient();
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final room = await repository.loadRoomSnapshot(
+        '00000000-0000-0000-0000-000000000042',
+      );
+
+      expect(room.id, '00000000-0000-0000-0000-000000000042');
+      expect(room.code, 'ZK-R3AL');
+      expect(room.hostId, 'host-id');
+      expect(room.category, 'Çand');
+      expect(room.questionCount, 7);
+      expect(room.secondsPerQuestion, 45);
+      expect(room.status, RoomStatus.active);
+      expect(room.players.map((player) => player.id), ['host-id', 'guest-id']);
+      expect(room.players.map((player) => player.name), ['Berfin', 'Berfin']);
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/rooms',
+        '/rest/v1/room_players',
+      ]);
+    },
+  );
 
   test('online room join uses the room-code RPC contract', () {
     final source = File(

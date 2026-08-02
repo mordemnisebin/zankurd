@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import '../data/supabase_zankurd_repository.dart';
 import '../data/xp_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -26,19 +25,31 @@ import '../config/category_visuals.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
+  required String? currentPlayerId,
   required String currentName,
   String? preferredName,
 }) {
   final preferred = preferredName?.trim();
   if (preferred != null && preferred.isNotEmpty) {
     for (final player in players) {
-      if (player.name == preferred && player.name != currentName) {
+      if (player.name == preferred &&
+          !playerMatchesIdentity(
+            player,
+            id: currentPlayerId,
+            legacyName: currentName,
+          )) {
         return player;
       }
     }
   }
   for (final player in players) {
-    if (player.name != currentName) return player;
+    if (!playerMatchesIdentity(
+      player,
+      id: currentPlayerId,
+      legacyName: currentName,
+    )) {
+      return player;
+    }
   }
   return null;
 }
@@ -224,9 +235,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         // String? null dönebilir; null ise navigasyon iptal edilir.
         final roomId = matchRes['room_id'] as String?;
         if (roomId == null) return; // beklenmedik schema yanıtı
-        final opponent = await _loadOpponentPlayer(
-          roomId: roomId,
-          category: chosenCategory,
+        final matchedRoom = await _loadMatchedRoom(roomId);
+        final opponent = selectOpponentPlayer(
+          matchedRoom.players,
+          currentPlayerId: widget.repository.currentUserId,
           currentName: _myName,
           preferredName: matchedName,
         );
@@ -239,7 +251,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           matchedName,
           matchedLevel,
           opponentIdentity,
-          roomId,
+          matchedRoom,
           chosenCategory,
           ku,
         );
@@ -258,28 +270,42 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             // olursa crash yerine sessizce çıkar.
             final roomId = entry['room_id'] as String?;
             if (roomId == null) return;
-            // Fetch opponent display name
-            String matchedName = opponentPlaceholder;
-            var opponentIdentity = const AvatarIdentity();
-            final opponent = await _loadOpponentPlayer(
-              roomId: roomId,
-              category: chosenCategory,
-              currentName: _myName,
-            );
-            if (opponent != null) {
-              matchedName = opponent.name;
-              opponentIdentity = _identityFromPlayer(opponent);
-            }
+            try {
+              // Fetch opponent display name
+              String matchedName = opponentPlaceholder;
+              var opponentIdentity = const AvatarIdentity();
+              final matchedRoom = await _loadMatchedRoom(roomId);
+              final opponent = selectOpponentPlayer(
+                matchedRoom.players,
+                currentPlayerId: widget.repository.currentUserId,
+                currentName: _myName,
+              );
+              if (opponent != null) {
+                matchedName = opponent.name;
+                opponentIdentity = _identityFromPlayer(opponent);
+              }
 
-            final matchedLevel = max(1, _myLevel + Random().nextInt(3) - 1);
-            await _onMatched(
-              matchedName,
-              matchedLevel,
-              opponentIdentity,
-              roomId,
-              chosenCategory,
-              ku,
-            );
+              final matchedLevel = max(1, _myLevel + Random().nextInt(3) - 1);
+              await _onMatched(
+                matchedName,
+                matchedLevel,
+                opponentIdentity,
+                matchedRoom,
+                chosenCategory,
+                ku,
+              );
+            } catch (error, stack) {
+              ErrorReporter.record(
+                error,
+                stack,
+                reason: 'matchmaking_load_room_snapshot',
+              );
+              if (!mounted || _isCancelled) return;
+              setState(() {
+                _found = false;
+                _matchmakingErrorMessage = context.t(K.matchFailed);
+              });
+            }
           }
         });
 
@@ -417,39 +443,28 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     showcaseTitle: player.showcaseTitle,
   );
 
-  Future<Player?> _loadOpponentPlayer({
-    required String roomId,
-    required String category,
-    required String currentName,
-    String? preferredName,
-  }) async {
-    try {
-      final roomPlayers = await widget.repository.loadRoomPlayers(
-        GameRoom(
-          name: '',
-          code: '',
-          category: category,
-          players: const [],
-          status: RoomStatus.lobby,
-          questionCount: 0,
-        ).copyWith(id: roomId),
-      );
-      return selectOpponentPlayer(
-        roomPlayers,
-        currentName: currentName,
-        preferredName: preferredName,
-      );
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'matchmaking_load_opponent');
+  Future<GameRoom> _loadMatchedRoom(String roomId) async {
+    final room = await widget.repository.loadRoomSnapshot(roomId);
+    if (room.id != roomId) {
+      throw StateError('Matched room snapshot id does not match room_id.');
     }
-    return null;
+    if (room.players.length < 2) {
+      throw StateError('Matched room snapshot has fewer than two players.');
+    }
+    final currentPlayerId = widget.repository.currentUserId?.trim();
+    if (currentPlayerId != null &&
+        currentPlayerId.isNotEmpty &&
+        !room.players.any((player) => player.id == currentPlayerId)) {
+      throw StateError('Current player is missing from matched room snapshot.');
+    }
+    return room;
   }
 
   Future<void> _onMatched(
     String matchedName,
     int matchedLevel,
     AvatarIdentity opponentIdentity,
-    String? roomId,
+    GameRoom? matchedRoom,
     String category,
     bool ku,
   ) async {
@@ -467,57 +482,41 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     await Future.delayed(const Duration(milliseconds: 1500));
     if (_isCancelled || !mounted) return;
 
-    String? dbHostId;
-    if (roomId != null && widget.repository is SupabaseZanKurdRepository) {
-      try {
-        final client = (widget.repository as SupabaseZanKurdRepository).client;
-        final res = await client
-            .from('rooms')
-            .select('host_id')
-            .eq('id', roomId)
-            .maybeSingle();
-        if (res != null) {
-          dbHostId = res['host_id'] as String?;
-        }
-      } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'matchmaking_load_host');
-      }
-    }
-    if (!mounted) return;
-
-    var room = widget.repository
-        .createRoom(category: category)
-        .copyWith(
-          id: roomId,
-          hostId: dbHostId,
-          name: context.t(K.duel1v1Short),
-          // 1v1 tempolu bir düello; 20sn (2026-07-21 kullanıcı kararı).
-          secondsPerQuestion: 20,
-          players: [
-            Player(
-              name: _myName,
-              score: 0,
-              state: 'Hazır',
-              streak: 0,
-              avatarIcon: _myIdentity.iconId,
-              avatarColor: _myIdentity.colorHex,
-              avatarUrl: _myIdentity.photoUrl,
-              avatarFrame: _myIdentity.frameId,
-              showcaseTitle: _myIdentity.showcaseTitle,
-            ),
-            Player(
-              name: matchedName,
-              score: 0,
-              state: 'Hazır',
-              streak: 0,
-              avatarIcon: opponentIdentity.iconId,
-              avatarColor: opponentIdentity.colorHex,
-              avatarUrl: opponentIdentity.photoUrl,
-              avatarFrame: opponentIdentity.frameId,
-              showcaseTitle: opponentIdentity.showcaseTitle,
-            ),
-          ],
-        );
+    final roomId = matchedRoom?.id;
+    var room =
+        matchedRoom ??
+        widget.repository
+            .createRoom(category: category)
+            .copyWith(
+              name: context.t(K.duel1v1Short),
+              // Bot düellosu yerel bir odadır. Gerçek eşleşmede süre ve
+              // diğer tüm alanlar yukarıdaki sunucu snapshot'ından gelir.
+              secondsPerQuestion: 20,
+              players: [
+                Player(
+                  name: _myName,
+                  score: 0,
+                  state: Player.readyState,
+                  streak: 0,
+                  avatarIcon: _myIdentity.iconId,
+                  avatarColor: _myIdentity.colorHex,
+                  avatarUrl: _myIdentity.photoUrl,
+                  avatarFrame: _myIdentity.frameId,
+                  showcaseTitle: _myIdentity.showcaseTitle,
+                ),
+                Player(
+                  name: matchedName,
+                  score: 0,
+                  state: Player.readyState,
+                  streak: 0,
+                  avatarIcon: opponentIdentity.iconId,
+                  avatarColor: opponentIdentity.colorHex,
+                  avatarUrl: opponentIdentity.photoUrl,
+                  avatarFrame: opponentIdentity.frameId,
+                  showcaseTitle: opponentIdentity.showcaseTitle,
+                ),
+              ],
+            );
 
     List<QuizQuestion> matchQuestions = const [];
     if (roomId != null) {
@@ -550,11 +549,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
 
     if (matchQuestions.isEmpty) {
-      final actualCategory = (category == 'Rastgele' || category == 'Random')
+      final roomCategory = matchedRoom?.category ?? category;
+      final actualCategory =
+          (roomCategory == 'Rastgele' || roomCategory == 'Random')
           ? (_categories.isNotEmpty
                 ? _categories[Random().nextInt(_categories.length)]
                 : 'Ziman')
-          : category;
+          : roomCategory;
       try {
         matchQuestions = await widget.repository.loadLevelQuestions(
           category: actualCategory,
@@ -575,7 +576,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (_isCancelled || !mounted) return;
     }
 
-    room = room.copyWith(questionCount: matchQuestions.length);
+    if (matchedRoom == null) {
+      room = room.copyWith(questionCount: matchQuestions.length);
+    }
 
     Navigator.of(context).pushReplacement(
       AppRoute.to(

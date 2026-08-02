@@ -75,6 +75,15 @@ abstract class ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
+  ///
+  /// Hızlı eşleştirme yalnız `room_id` döndürür; istemci bu kimliği
+  /// yerel `createRoom` kabuğuna yapıştırmamalıdır. Kod, ev sahibi,
+  /// kategori, durum, soru/süre ayarları ve oyuncu kimlikleri bu metottan
+  /// birlikte gelir.
+  Future<GameRoom> loadRoomSnapshot(String roomId);
+
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);
 

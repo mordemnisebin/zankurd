@@ -239,7 +239,7 @@ extension _QuizScreenUI on _QuizScreenState {
     if (widget.is1v1) {
       final myName = widget.room.id != null ? _myName : Tr.forKu(K.you, _isKu);
       final player = livePlayers.firstWhere(
-        (p) => _myId != null ? p.id == _myId : p.name == myName,
+        _isMe,
         orElse: () => Player(
           id: _myId,
           name: myName,
@@ -249,7 +249,7 @@ extension _QuizScreenUI on _QuizScreenState {
         ),
       );
       final opponent = livePlayers.firstWhere(
-        (p) => _myId != null ? p.id != _myId : p.name != myName,
+        (player) => !_isMe(player),
         orElse: () =>
             Player(name: Tr.forKu(K.opponentWord, _isKu), score: 0, state: ''),
       );

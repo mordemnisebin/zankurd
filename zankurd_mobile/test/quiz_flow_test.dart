@@ -7,7 +7,9 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -30,6 +32,29 @@ class _RoomQuizBroadcastRepository extends MockZanKurdRepository {
   ) async {
     broadcasts.add(payload);
     controller.add(payload);
+  }
+}
+
+class _SameNameDuelRepository extends MockZanKurdRepository {
+  final controller = StreamController<Map<String, dynamic>>.broadcast();
+  final sent = <Map<String, dynamic>>[];
+
+  @override
+  String? get currentUserId => 'me-id';
+
+  @override
+  Future<String> getProfileName() async => 'Berfin';
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) =>
+      controller.stream;
+
+  @override
+  Future<void> sendRoomBroadcast(
+    String roomId,
+    Map<String, dynamic> payload,
+  ) async {
+    sent.add(payload);
   }
 }
 
@@ -140,6 +165,151 @@ void main() {
       ),
       isTrue,
     );
+  });
+
+  testWidgets(
+    'aynı adlı farklı kimlikteki oyuncu sonuçta rakip olarak korunur',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.quiz_tutorial.seen': true,
+      });
+      final duelRepository = _SameNameDuelRepository();
+      addTearDown(duelRepository.controller.close);
+      final question = repository.questions.first;
+      final room = GameRoom(
+        id: 'same-name-room',
+        name: '1vs1',
+        code: 'ZK-SAME',
+        category: question.category,
+        players: const [
+          Player(id: 'opponent-id', name: 'Berfin', score: 700, state: 'Hazır'),
+          Player(id: 'me-id', name: 'Berfin', score: 0, state: 'Hazır'),
+        ],
+        status: RoomStatus.active,
+        questionCount: 1,
+        hostId: 'me-id',
+      );
+
+      await tester.pumpWidget(
+        testShell(
+          child: QuizScreen(
+            repository: duelRepository,
+            room: room,
+            questions: [question],
+            enableTimer: false,
+            is1v1: true,
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+
+      duelRepository.controller.add({
+        'sender': 'Berfin',
+        'sender_id': 'opponent-id',
+        'ready': true,
+      });
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text(question.displayAnswers.first).first);
+      await tester.pump(const Duration(milliseconds: 500));
+      duelRepository.controller.add({
+        'sender': 'Berfin',
+        'sender_id': 'opponent-id',
+        'score': 700,
+        'streak': 2,
+        'question_index': 0,
+        'answered': true,
+        'selected_answer': question.correctAnswer,
+        'finished': true,
+      });
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(seconds: 6));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(QuizResultScreen), findsOneWidget);
+      final result = tester.widget<QuizResultScreen>(
+        find.byType(QuizResultScreen),
+      );
+      expect(result.opponents.map((player) => player.id), ['opponent-id']);
+      expect(result.room.players.first.id, 'me-id');
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('aynı adlı farklı rakiplerin cevap işaretleri birbirini ezmez', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+    });
+    final duelRepository = _SameNameDuelRepository();
+    addTearDown(duelRepository.controller.close);
+    const question = QuizQuestion(
+      id: 'same-name-answers',
+      category: 'Ziman',
+      prompt: 'Kîjan bersiv rast e?',
+      answers: ['A', 'B', 'C', 'D'],
+      correctAnswer: 'A',
+      explanation: 'A bersiva rast e.',
+    );
+    const room = GameRoom(
+      id: 'same-name-team-room',
+      name: 'Oda',
+      code: 'ZK-TEAM',
+      category: 'Ziman',
+      players: [
+        Player(id: 'me-id', name: 'Berfin', score: 0, state: 'Hazır'),
+        Player(id: 'opponent-1', name: 'Rojda', score: 0, state: 'Hazır'),
+        Player(id: 'opponent-2', name: 'Rojda', score: 0, state: 'Hazır'),
+      ],
+      status: RoomStatus.active,
+      questionCount: 1,
+      hostId: 'me-id',
+    );
+
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: duelRepository,
+          room: room,
+          questions: const [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.tap(find.text('A').first);
+    await tester.pump(const Duration(milliseconds: 100));
+
+    duelRepository.controller.add({
+      'sender': 'Rojda',
+      'sender_id': 'opponent-1',
+      'score': 0,
+      'streak': 0,
+      'question_index': 0,
+      'answered': true,
+      'selected_answer': 'B',
+    });
+    await tester.pump(const Duration(milliseconds: 100));
+    duelRepository.controller.add({
+      'sender': 'Rojda',
+      'sender_id': 'opponent-2',
+      'score': 0,
+      'streak': 0,
+      'question_index': 0,
+      'answered': true,
+      'selected_answer': 'C',
+    });
+    await tester.pump(const Duration(milliseconds: 100));
+
+    final tiles = tester.widgetList<QuizOptionTile>(
+      find.byType(QuizOptionTile),
+    );
+    final b = tiles.singleWhere((tile) => tile.answer == 'B');
+    final c = tiles.singleWhere((tile) => tile.answer == 'C');
+    expect(b.opponentNamesWhoSelected, ['Rojda']);
+    expect(c.opponentNamesWhoSelected, ['Rojda']);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('short portrait quiz keeps the next action pinned on screen', (

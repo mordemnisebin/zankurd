@@ -584,6 +584,34 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    final row = await client
+        .from('rooms')
+        .select(
+          'id, code, host_id, question_count, seconds_per_question, status, '
+          'categories(name)',
+        )
+        .eq('id', roomId)
+        .single();
+    final players = await _loadRoomPlayersById(roomId);
+    final category = row['categories'] as Map<String, dynamic>?;
+
+    return GameRoom(
+      id: row['id'] as String? ?? roomId,
+      name: '1vs1',
+      code: row['code'] as String? ?? '',
+      category: category?['name'] as String? ?? 'Ziman',
+      players: players,
+      status: _roomStatusFromValue(row['status']),
+      questionCount: (row['question_count'] as num?)?.toInt() ?? 10,
+      secondsPerQuestion:
+          (row['seconds_per_question'] as num?)?.toInt() ??
+          GameRoom.defaultSecondsPerQuestion,
+      hostId: row['host_id'] as String?,
+    );
+  }
+
+  @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     final id = room.id;
     if (id == null) return room.players;

@@ -10,6 +10,7 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 /// Eşleştirme iptalinin gerçekten çağrıldığını izleyen sahte depo.
@@ -58,8 +59,13 @@ enum _RoomQuestionResult { empty, failure }
 class _HiddenAnswerMatchRepository extends MockZanKurdRepository {
   _HiddenAnswerMatchRepository(this.result);
 
+  static const roomId = '00000000-0000-0000-0000-000000000001';
+
   final _RoomQuestionResult result;
   int loadLevelCalls = 0;
+
+  @override
+  String? get currentUserId => 'me-id';
 
   @override
   bool get usesServerHiddenAnswers => true;
@@ -68,9 +74,26 @@ class _HiddenAnswerMatchRepository extends MockZanKurdRepository {
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
     return const {
       'status': 'matched',
-      'room_id': '00000000-0000-0000-0000-000000000001',
+      'room_id': roomId,
       'opponent_name': 'Rojda',
     };
+  }
+
+  @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    return const GameRoom(
+      id: _HiddenAnswerMatchRepository.roomId,
+      name: '1vs1',
+      code: 'ZK-HIDE',
+      category: 'Ziman',
+      players: [
+        Player(id: 'me-id', name: 'ZanKurd Oyuncusu', score: 0, state: 'Hazır'),
+        Player(id: 'opponent-id', name: 'Rojda', score: 0, state: 'Hazır'),
+      ],
+      status: RoomStatus.active,
+      questionCount: 10,
+      hostId: 'me-id',
+    );
   }
 
   @override
@@ -96,6 +119,93 @@ class _HiddenAnswerMatchRepository extends MockZanKurdRepository {
       difficultyMax: difficultyMax,
       subCategory: subCategory,
       limit: limit,
+    );
+  }
+}
+
+/// Hızlı eşleştirmenin döndürdüğü roomId için sunucudaki oda
+/// gerçeğini temsil eder. İki oyuncunun adı bilerek aynıdır: oyuncu
+/// seçimi görünen ada değil değişmez kimliğe dayanmalıdır.
+class _SnapshotMatchRepository extends MockZanKurdRepository {
+  static const roomId = '00000000-0000-0000-0000-000000000042';
+
+  int createRoomCalls = 0;
+  int snapshotCalls = 0;
+  GameRoom? questionsRoom;
+
+  static const snapshot = GameRoom(
+    id: roomId,
+    name: 'Sunucudaki düello',
+    code: 'ZK-R3AL',
+    category: 'Çand',
+    players: [
+      Player(id: 'opponent-id', name: 'Berfin', score: 70, state: 'Hazır'),
+      Player(id: 'me-id', name: 'Berfin', score: 10, state: 'Hazır'),
+    ],
+    status: RoomStatus.active,
+    questionCount: 1,
+    secondsPerQuestion: 45,
+    hostId: 'opponent-id',
+  );
+
+  @override
+  String? get currentUserId => 'me-id';
+
+  @override
+  Future<String> getProfileName() async => 'Berfin';
+
+  @override
+  GameRoom createRoom({String category = 'Ziman'}) {
+    createRoomCalls += 1;
+    return super.createRoom(category: category);
+  }
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    return const {
+      'status': 'matched',
+      'room_id': roomId,
+      'opponent_name': 'Berfin',
+    };
+  }
+
+  @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    snapshotCalls += 1;
+    expect(roomId, _SnapshotMatchRepository.roomId);
+    return snapshot;
+  }
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async {
+    return snapshot.players;
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
+    questionsRoom = room;
+    return const [
+      QuizQuestion(
+        id: 'room-question',
+        category: 'Çand',
+        prompt: 'Dengbêj çi dike?',
+        answers: ['Stranan dibêje', 'Derdikeve avê'],
+        correctAnswer: 'Stranan dibêje',
+        explanation: 'Dengbêj stran û çîran vedibêje.',
+      ),
+    ];
+  }
+}
+
+class _ForeignSnapshotMatchRepository extends _SnapshotMatchRepository {
+  @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    snapshotCalls += 1;
+    return _SnapshotMatchRepository.snapshot.copyWith(
+      players: const [
+        Player(id: 'opponent-id', name: 'Berfin', score: 70, state: 'Hazır'),
+        Player(id: 'other-id', name: 'Berfin', score: 10, state: 'Hazır'),
+      ],
     );
   }
 }
@@ -127,6 +237,21 @@ Future<void> _startImmediateMatch(
   await tester.pump();
 }
 
+Future<void> _startSnapshotMatch(
+  WidgetTester tester,
+  _SnapshotMatchRepository repository,
+) async {
+  tester.view.physicalSize = const Size(480, 1600);
+  tester.view.devicePixelRatio = 1.0;
+
+  await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Rastgele eşleşme'));
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 1501));
+  await tester.pump();
+}
+
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -143,6 +268,7 @@ void main() {
     expect(
       selectOpponentPlayer(
         players,
+        currentPlayerId: 'host',
         currentName: 'Ben',
         preferredName: 'Hogir',
       )?.id,
@@ -199,6 +325,50 @@ void main() {
 
     expect(repository.loadLevelCalls, 0);
     expect(find.text('Oyun başlatılamadı. Tekrar dene.'), findsOneWidget);
+  });
+
+  testWidgets(
+    'hızlı eşleştirme sahte oda kurmaz, tam sunucu snapshotını kullanır',
+    (tester) async {
+      final repository = _SnapshotMatchRepository();
+      addTearDown(tester.view.reset);
+
+      await _startSnapshotMatch(tester, repository);
+
+      expect(repository.snapshotCalls, 1);
+      expect(repository.createRoomCalls, 0);
+      expect(find.byType(QuizScreen), findsOneWidget);
+
+      final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+      expect(quiz.room.id, _SnapshotMatchRepository.roomId);
+      expect(quiz.room.code, 'ZK-R3AL');
+      expect(quiz.room.hostId, 'opponent-id');
+      expect(quiz.room.category, 'Çand');
+      expect(quiz.room.status, RoomStatus.active);
+      expect(quiz.room.secondsPerQuestion, 45);
+      expect(quiz.room.questionCount, 1);
+      expect(quiz.room.players.map((player) => player.id), [
+        'opponent-id',
+        'me-id',
+      ]);
+      expect(repository.questionsRoom, same(quiz.room));
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('oturum kimliği snapshot oyuncularında yoksa maç açılmaz', (
+    tester,
+  ) async {
+    final repository = _ForeignSnapshotMatchRepository();
+    addTearDown(tester.view.reset);
+
+    await _startSnapshotMatch(tester, repository);
+
+    expect(repository.snapshotCalls, 1);
+    expect(repository.createRoomCalls, 0);
+    expect(find.byType(QuizScreen), findsNothing);
+    expect(find.text('Eşleştirme başarısız oldu.'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('oda sorusu hatası eşleşti görünümünü kapatıp iptali açar', (

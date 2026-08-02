@@ -102,6 +102,13 @@ enum _MultiplayerPhase {
   reveal,
 }
 
+class _OpponentAnswer {
+  const _OpponentAnswer({required this.name, required this.answer});
+
+  final String name;
+  final String answer;
+}
+
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
     required this.repository,
@@ -177,8 +184,8 @@ class _QuizScreenState extends State<QuizScreen>
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
-  final Map<String, String> _opponentSelectedAnswers = {};
-  final Set<String> _answeredPlayerNames = {};
+  final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
+  final Set<String> _answeredPlayerKeys = {};
   Timer? _autoNextTimer;
   BotRace? _botRace;
   bool _isKu = true;
@@ -288,6 +295,18 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _usesServerHiddenAnswers =>
       _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
+  bool _isMe(Player player) =>
+      playerMatchesIdentity(player, id: _myId, legacyName: _myName);
+
+  Iterable<Player> get _opponents =>
+      livePlayers.where((player) => !_isMe(player));
+
+  GameRoom get _resultRoom {
+    final myIndex = livePlayers.indexWhere(_isMe);
+    if (myIndex == -1) return widget.room;
+    return widget.room.copyWith(players: [livePlayers[myIndex], ..._opponents]);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -373,27 +392,36 @@ class _QuizScreenState extends State<QuizScreen>
         // benzersiz değildir: aynı adı seçen iki oyuncu olduğunda ada göre
         // eşleştirme skoru ve "hazır" sinyalini rakibe atıyordu. Ad yalnızca
         // kimlik yoksa (eski oda kayıtları) yedek olarak kullanılır.
-        final sessionUserId = widget.repository.currentUserId;
-        final matchById = sessionUserId == null
-            ? null
-            : livePlayers.where((p) => p.id == sessionUserId).firstOrNull;
-        _myId =
-            matchById?.id ??
-            livePlayers.where((p) => p.name == name).firstOrNull?.id;
+        // Oturum kimliği varsa yalnız o yetkilidir. Oda listesindeki aynı
+        // ada bakıp başka bir oyuncunun kimliğini kendimize atamak, iki
+        // "Berfin"li maçta skor ve hazır sinyallerini tersine çeviriyordu.
+        // Kimliksiz eski kayıtlarda [_isMe] ad yedeğini kullanır.
+        _myId = widget.repository.currentUserId;
         _realtimeSub = widget.repository
             .subscribeRoomBroadcast(widget.room.id!)
             .listen((payload) {
               if (!mounted) return;
               final senderId = payload['sender_id'] as String?;
               final senderName = payload['sender'] as String?;
-              final isSelf = _myId != null && senderId != null
-                  ? senderId == _myId
-                  : senderName == name;
+              final isSelf = playerMatchesIdentity(
+                Player(
+                  id: senderId,
+                  name: senderName ?? '',
+                  score: 0,
+                  state: '',
+                ),
+                id: _myId,
+                legacyName: name,
+              );
               if (senderName != null && !isSelf && payload['ready'] == true) {
                 _handleOpponentReady();
                 return;
               }
               if (senderName != null && !isSelf) {
+                final senderKey = playerIdentityKey(
+                  id: senderId,
+                  legacyName: senderName,
+                );
                 if (payload['advance_request'] == true && _isHost) {
                   _advanceAuthoritativeIndex();
                   return;
@@ -401,18 +429,22 @@ class _QuizScreenState extends State<QuizScreen>
                 setState(() {
                   if (payload['finished'] == true) {
                     _opponentFinished = true;
-                    _answeredPlayerNames.add(senderName);
+                    _answeredPlayerKeys.add(senderKey);
                   }
                   if (payload['answered'] == true) {
-                    _answeredPlayerNames.add(senderName);
+                    _answeredPlayerKeys.add(senderKey);
                   } else if (payload['answered'] == false) {
-                    _answeredPlayerNames.remove(senderName);
+                    _answeredPlayerKeys.remove(senderKey);
                   }
 
+                  final incomingPlayer = Player(
+                    id: senderId,
+                    name: senderName,
+                    score: 0,
+                    state: '',
+                  );
                   final opponentIdx = livePlayers.indexWhere(
-                    (p) => senderId != null
-                        ? p.id == senderId
-                        : p.name == senderName,
+                    (player) => playersShareIdentity(player, incomingPlayer),
                   );
                   final updatedOpponent = Player(
                     id:
@@ -436,9 +468,12 @@ class _QuizScreenState extends State<QuizScreen>
 
                   final oppAnswer = payload['selected_answer'] as String?;
                   if (oppAnswer != null) {
-                    _opponentSelectedAnswers[senderName] = oppAnswer;
+                    _opponentSelectedAnswers[senderKey] = _OpponentAnswer(
+                      name: senderName,
+                      answer: oppAnswer,
+                    );
                   } else if (payload['answered'] == false) {
-                    _opponentSelectedAnswers.remove(senderName);
+                    _opponentSelectedAnswers.remove(senderKey);
                   }
 
                   final oppIndex = payload['question_index'] as int?;
@@ -460,20 +495,21 @@ class _QuizScreenState extends State<QuizScreen>
                 setState(() {
                   for (final p in players) {
                     final idx = livePlayers.indexWhere(
-                      (lp) => lp.name == p.name,
+                      (lp) => playersShareIdentity(lp, p),
                     );
+                    final key = playerIdentityKey(id: p.id, legacyName: p.name);
                     if (idx != -1) {
                       livePlayers[idx] = livePlayers[idx].copyWith(
                         score: p.score,
                         streak: p.streak,
-                        state: _answeredPlayerNames.contains(p.name)
+                        state: _answeredPlayerKeys.contains(key)
                             ? Tr.forKu(K.answeredState, _isKu)
                             : Tr.forKu(K.waitingAnswerState, _isKu),
                       );
                     } else {
                       livePlayers.add(
                         p.copyWith(
-                          state: _answeredPlayerNames.contains(p.name)
+                          state: _answeredPlayerKeys.contains(key)
                               ? Tr.forKu(K.answeredState, _isKu)
                               : Tr.forKu(K.waitingAnswerState, _isKu),
                         ),
@@ -992,9 +1028,7 @@ class _QuizScreenState extends State<QuizScreen>
   /// Cevap verme, sonraki soru ve bitiş akışları bu tek bloğu paylaşır.
   void _syncMyDuelState({required bool answeredNow, bool finished = false}) {
     if (!_isMultiplayer) return;
-    final myIdx = livePlayers.indexWhere(
-      (p) => _myId != null ? p.id == _myId : p.name == _myName,
-    );
+    final myIdx = livePlayers.indexWhere(_isMe);
     if (myIdx != -1) {
       livePlayers[myIdx] = Player(
         id: _myId,
@@ -1028,15 +1062,16 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _checkMultiplayerSync() {
     if (!_isMultiplayer) return;
-    final myName = _myName;
-    final otherPlayers = livePlayers
-        .where((p) => _myId != null ? p.id != _myId : p.name != myName)
-        .toList();
+    final otherPlayers = _opponents.toList();
     if (otherPlayers.isEmpty) return;
 
     final allOthersAnswered =
         _opponentFinished ||
-        otherPlayers.every((p) => _answeredPlayerNames.contains(p.name));
+        otherPlayers.every(
+          (player) => _answeredPlayerKeys.contains(
+            playerIdentityKey(id: player.id, legacyName: player.name),
+          ),
+        );
 
     if (answered && allOthersAnswered && _mpPhase != _MultiplayerPhase.reveal) {
       _startRevealPhase();
@@ -1098,10 +1133,11 @@ class _QuizScreenState extends State<QuizScreen>
           return;
         }
         for (final player in livePlayers) {
-          final isMe = _myId != null
-              ? player.id == _myId
-              : player.name == _myName;
-          if (!isMe) _answeredPlayerNames.add(player.name);
+          if (!_isMe(player)) {
+            _answeredPlayerKeys.add(
+              playerIdentityKey(id: player.id, legacyName: player.name),
+            );
+          }
         }
         _startRevealPhase();
       },
@@ -1200,7 +1236,7 @@ class _QuizScreenState extends State<QuizScreen>
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
-      _answeredPlayerNames.clear();
+      _answeredPlayerKeys.clear();
       _opponentFinished = false;
       _mpPhase = _MultiplayerPhase.answering;
       _revealCountdown = 0;
@@ -1368,7 +1404,7 @@ class _QuizScreenState extends State<QuizScreen>
       AppRoute.to(
         QuizResultScreen(
           repository: widget.repository,
-          room: widget.room,
+          room: _resultRoom,
           score: score,
           correctCount: correctCount,
           wrongCount: wrongCount,
@@ -1377,7 +1413,7 @@ class _QuizScreenState extends State<QuizScreen>
           answerRecords: answerRecords,
           coinsAwarded: coinsAwarded,
           rewardQueued: _rewardQueued,
-          opponents: livePlayers.where((p) => p.name != _myName).toList(),
+          opponents: _opponents.toList(),
           practice: widget.practice,
           dailyQuiz: widget.dailyQuiz,
           contestId: widget.contestId,
@@ -1618,7 +1654,7 @@ class _QuizScreenState extends State<QuizScreen>
         AppRoute.to(
           QuizResultScreen(
             repository: widget.repository,
-            room: widget.room,
+            room: _resultRoom,
             score: score,
             correctCount: correctCount,
             wrongCount: wrongCount,
@@ -1628,7 +1664,7 @@ class _QuizScreenState extends State<QuizScreen>
             coinsAwarded: coinsAwarded,
             rewardQueued: _rewardQueued,
             opponents: widget.is1v1 && widget.room.id != null
-                ? livePlayers.where((p) => p.name != _myName).toList()
+                ? _opponents.toList()
                 : (_botRace?.toPlayers() ?? const []),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
@@ -1658,7 +1694,7 @@ class _QuizScreenState extends State<QuizScreen>
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
-      _answeredPlayerNames.clear();
+      _answeredPlayerKeys.clear();
       // Multiplayer phase sıfırla
       _mpPhase = _MultiplayerPhase.answering;
       _revealCountdown = 0;
@@ -1670,9 +1706,10 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Map<String, dynamic> _completionResult() {
-    final opponentScore = livePlayers
-        .where((player) => player.name != _myName)
-        .fold<int>(0, (best, player) => max(best, player.score));
+    final opponentScore = _opponents.fold<int>(
+      0,
+      (best, player) => max(best, player.score),
+    );
     return {
       'completed': true,
       'score': score,
