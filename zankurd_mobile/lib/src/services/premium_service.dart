@@ -45,7 +45,13 @@ class PremiumIdentityQueue {
 ///
 /// Singleton; [load] çağrısı main() içinde yapılmalıdır.
 class PremiumService extends ChangeNotifier {
-  PremiumService._();
+  PremiumService._({
+    Future<bool> Function()? isAnonymous,
+    Future<CustomerInfo> Function()? logOut,
+    void Function(Object, StackTrace, {String? reason})? recordError,
+  }) : _isAnonymous = isAnonymous ?? (() => Purchases.isAnonymous),
+       _logOut = logOut ?? Purchases.logOut,
+       _recordError = recordError ?? ErrorReporter.record;
 
   static const _entitlementId = 'premium';
 
@@ -59,6 +65,9 @@ class PremiumService extends ChangeNotifier {
   String? _infoMessage;
   String? _linkedUserId;
   final PremiumIdentityQueue _identityQueue = PremiumIdentityQueue();
+  final Future<bool> Function() _isAnonymous;
+  final Future<CustomerInfo> Function() _logOut;
+  final void Function(Object, StackTrace, {String? reason}) _recordError;
 
   static PremiumService? get instance => _instance;
 
@@ -91,6 +100,23 @@ class PremiumService extends ChangeNotifier {
     fb._initialized = false;
     fb._isPremium = false;
     return fb;
+  }
+
+  @visibleForTesting
+  factory PremiumService.forTesting({
+    required Future<bool> Function() isAnonymous,
+    required Future<CustomerInfo> Function() logOut,
+    void Function(Object, StackTrace, {String? reason})? recordError,
+  }) {
+    final service = PremiumService._(
+      isAnonymous: isAnonymous,
+      logOut: logOut,
+      recordError: recordError,
+    );
+    service
+      .._initialized = true
+      .._configured = true;
+    return service;
   }
 
   /// RevenueCat yapılandırması yapılmışsa `configure` çağırır, aksi
@@ -189,12 +215,21 @@ class PremiumService extends ChangeNotifier {
       return;
     }
     try {
-      final info = await Purchases.logOut();
+      if (await _isAnonymous()) {
+        _applyEntitlement(false);
+        return;
+      }
+      final info = await _logOut();
       _applyEntitlement(_hasEntitlement(info.entitlements.all));
     } catch (error, stack) {
       // Zaten anonim kullanıcıdaysa logOut hata döndürebilir; premium
       // durumunu yine de düşürmek güvenli taraftır.
-      ErrorReporter.record(error, stack, reason: 'premium logOut');
+      if (_errorCode(error) ==
+          PurchasesErrorCode.logOutWithAnonymousUserError) {
+        _applyEntitlement(false);
+        return;
+      }
+      _recordError(error, stack, reason: 'premium logOut');
       _applyEntitlement(false);
     }
   });
