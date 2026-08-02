@@ -38,7 +38,13 @@ The Dart package name intentionally remains lowercase with an underscore because
 
 Yerel, git tarafından yok sayılan yapılandırma dosyalarını önce depo
 şablonlarından oluştur. Gerçek istemci anahtarlarını komut satırına veya bu
-belgeye yazma.
+belgeye yazma. Production derlemesinden önce ilgili dosyayı değerleri
+yazdırmayan kapıyla doğrula:
+
+```bash
+dart run tool/validate_release_config.dart --file=.env.web.release.json --target=web --environment=production
+dart run tool/validate_release_config.dart --file=.env.mobile.release.json --target=mobile --environment=production
+```
 
 Android debug APK:
 
@@ -98,7 +104,14 @@ Valid options:
 iOS build command on macOS:
 
 ```bash
-flutter build ipa --release --dart-define-from-file=.env.mobile.release.json
+flutter build ipa --release --export-method=app-store --dart-define-from-file=.env.mobile.release.json
+```
+
+Bu App Store IPA doğrudan fiziksel cihaza kurulmaz. Production-config cihaz
+smoke testi için development imzalı release'i açık cihaz kimliğiyle kur:
+
+```bash
+flutter run --release -d <iphone-smoke-cihaz-id> --dart-define-from-file=.env.mobile.release.json
 ```
 
 macOS build command on macOS:

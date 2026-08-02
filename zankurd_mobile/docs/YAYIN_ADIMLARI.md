@@ -46,25 +46,23 @@ fi
 
 Şimdi `.env.mobile.staging.json` içindeki `SUPABASE_URL` ve
 `SUPABASE_ANON_KEY` değerlerini staging/preview projesinin açık istemci
-değerleriyle, RevenueCat alanlarını da sandbox/test **public SDK** anahtarlarıyla
-doldur. Service-role veya başka bir sunucu sırrı kullanma. Kaydettikten sonra
-ayrı bir komut olarak şablon kalıntısı kontrolünü çalıştır:
+değerleriyle, RevenueCat alanlarını da sandbox/Test Store **public SDK**
+anahtarlarıyla doldur. Service-role veya başka bir sunucu sırrı kullanma.
+Kaydettikten sonra değerleri terminale yazdırmayan yapısal doğrulamayı çalıştır:
 
 ```bash
-if grep -Eq 'your-project|your-public-|your_public_|replace[-_]?me|changeme|placeholder' .env.mobile.staging.json; then
-  echo "Staging yapılandırmasında şablon değeri kaldı; düzeltmeden devam etme."
-  false
-else
-  echo "Staging yapılandırmasında şablon kalıntısı yok."
-fi
+dart run tool/validate_release_config.dart --file=.env.mobile.staging.json --target=mobile --environment=staging
 ```
 
-Kontrol başarısızsa devam etme. Başarılıysa `flutter devices` ile iki hedefin
-kimliğini bul; sonra iki ayrı terminalde şu komutları çalıştır:
+Bu kapı HTTPS Supabase proje adresini, yalnız publishable/anon rolünü ve iki
+RevenueCat platform alanını doğrular. Test Store anahtarı yalnız bu açık
+`staging` modunda kabul edilir; production doğrulamasında reddedilir. Kontrol
+başarısızsa devam etme. Başarılıysa `flutter devices` ile iki hedefin kimliğini
+bul; sonra iki ayrı terminalde şu komutları çalıştır:
 
 ```bash
-flutter run --release -d <birinci-cihaz-id> --dart-define-from-file=.env.mobile.staging.json
-flutter run --release -d <ikinci-cihaz-id> --dart-define-from-file=.env.mobile.staging.json
+flutter run --release -d <birinci-cihaz-id> --dart-define=APP_ENV=staging --dart-define-from-file=.env.mobile.staging.json
+flutter run --release -d <ikinci-cihaz-id> --dart-define=APP_ENV=staging --dart-define-from-file=.env.mobile.staging.json
 ```
 
 İki ayrı istemciyi iki cihazda çalıştır ve iki ayrı hesap aç. Oda kurma → koda
@@ -115,14 +113,16 @@ kullanarak yerel paketi hazırla:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
+dart run tool/validate_release_config.dart --file=.env.web.release.json --target=web --environment=production
 flutter build web --release --no-web-resources-cdn --dart-define-from-file=.env.web.release.json
 cmp -s web/privacy.html build/web/privacy.html
 cmp -s web/terms.html build/web/terms.html
 cmp -s web/delete-account.html build/web/delete-account.html
 ```
 
-`build/web/` klasörünü bu kesim için sabit tut; göç uygulanana kadar
-`release_web.sh` veya `deploy_sftp.sh` çalıştırma.
+`build/web/` klasörünü bu kesim için sabit tut. Göç uygulanana kadar
+`release_web.sh` veya gerçek `deploy_sftp.sh` aktarımını çalıştırma; salt-okunur
+`--dry-run` ön kontrolü 2d adımında zorunludur.
 
 ### 2b. Android imza anahtarı ve AAB
 
@@ -170,8 +170,9 @@ Mobil release yapılandırmasını örnekten oluştur ve dört açık anahtarı 
 eklenmez:
 
 RevenueCat anahtarları release derlemesinde zorunludur. Supabase veya RevenueCat
-değeri eksik/şablonsa uygulamanın release açılış kapısı güvenli hata ekranında
-durur; böyle bir AAB mağazaya yüklenebilir bir paket sayılmaz.
+değeri eksik, şablon, secret, Test Store veya yanlış platform anahtarıysa
+production doğrulaması durur; böyle bir AAB mağazaya yüklenebilir bir paket
+sayılmaz.
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
@@ -180,41 +181,78 @@ if [ ! -f .env.mobile.release.json ]; then
 fi
 ```
 
-Dosyayı gerçek üretim istemci değerleriyle doldurup kaydettikten sonra ayrı bir
-komut olarak doğrula:
+Dosyayı gerçek üretim istemci değerleriyle doldurup kaydettikten sonra değerleri
+yazdırmadan doğrula:
 
 ```bash
-if grep -Eq 'your-project|your-public-|your_public_|replace[-_]?me|changeme|placeholder' .env.mobile.release.json; then
-  echo "Üretim yapılandırmasında şablon değeri kaldı; düzeltmeden devam etme."
-  false
-else
-  echo "Üretim yapılandırmasında şablon kalıntısı yok."
-fi
+dart run tool/validate_release_config.dart --file=.env.mobile.release.json --target=mobile --environment=production
 ```
 
-Şablon kalıntısı yoksa AAB'yi üret ve imzasını doğrula:
+Doğrulama geçerse AAB'yi üret, imzasını ve bundle yapısını doğrula:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
 flutter build appbundle --release --dart-define-from-file=.env.mobile.release.json
 jarsigner -verify -verbose -certs build/app/outputs/bundle/release/app-release.aab
+bundletool validate --bundle=build/app/outputs/bundle/release/app-release.aab
 ```
 
-Sonunda AAB için `✓ Built` ve imza denetiminde `jar verified` görmelisin.
+Sonunda AAB için `✓ Built`, imza denetiminde `jar verified` ve bundletool
+doğrulamasında hata olmayan bir çıktı görmelisin. Ardından `flutter devices` ile
+production smoke için ayrılmış Android cihaz kimliğini bul ve mağazaya gidecek
+aynı AAB'den cihaza özel APK setini kur:
 
-### 2c. iOS arşivi
+```bash
+bundletool build-apks --bundle=build/app/outputs/bundle/release/app-release.aab --output=build/app/outputs/bundle/release/app-release-smoke.apks --connected-device --device-id=<android-smoke-cihaz-id> --ks=/Users/kocer/.zankurd/signing/zankurd-upload.jks --ks-key-alias=zankurd-upload --overwrite
+bundletool install-apks --apks=build/app/outputs/bundle/release/app-release-smoke.apks --device-id=<android-smoke-cihaz-id>
+```
 
-Apple Developer hesabı Xcode'da ekliyken imzalı iOS arşivini aynı açık üretim
-yapılandırmasıyla hazırla; henüz App Store Connect'e yükleme:
+Bundletool parolaları etkileşimli ister; parolayı komut satırı argümanına veya
+loga yazma. Kurulan uygulamayı aç, onboarding/ana ekranın geldiğini ve
+"Uygulama yapılandırması eksik" ekranının görünmediğini doğrula. Uygulamayı
+cihazda kurulu bırak; production 1v1 turu kesimden sonra aynı kurulumla yapılır.
+
+### 2c. iOS production-config smoke ve App Store arşivi
+
+Fiziksel iPhone kimliğini `flutter devices` ile bul. Önce aynı kaynak ve üretim
+yapılandırmasını development imzasıyla release modunda kur:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
-flutter build ipa --release --dart-define-from-file=.env.mobile.release.json
+flutter run --release -d <iphone-smoke-cihaz-id> --dart-define-from-file=.env.mobile.release.json
 ```
 
-**Tamam mı?** `build/web/`, imzası doğrulanmış AAB ve imzalı iOS
-arşivinin üçü de bu sürümün aynı kaynak kodundan üretildiyse evet. Bunlardan
-biri eksikse üretim göçüne geçme.
+Onboarding/ana ekranı ve paywall teklif durumunu doğrula; gerçek satın alma
+yapma. Flutter oturumunu kapattıktan sonra uygulamayı telefonda kurulu bırak.
+Ardından Apple Developer hesabı Xcode'da ekliyken mağaza arşivini açıkça App
+Store dağıtım yöntemiyle hazırla; henüz App Store Connect'e yükleme:
+
+```bash
+flutter build ipa --release --export-method=app-store --dart-define-from-file=.env.mobile.release.json
+```
+
+**App Store IPA doğrudan cihaza kurulmaz.** Production smoke için kullanılan
+paket yukarıdaki `flutter run --release` kurulumudur; App Store IPA yalnız
+Organizer/Transporter yüklemesi içindir.
+
+### 2d. Geriye uyumsuz göçten önce dağıtım ön kontrolü
+
+Bütün artefaktlar hazırken gerçek aktarım yapmadan SSH, sabit host key, uzak web
+kökü, uzak yedek kökü ve rsync erişimini doğrula:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+./deploy_sftp.sh --dry-run
+```
+
+Bu komut başarısızsa production migration'ını uygulama. Özellikle uzak yedek
+kökü önceden var, yazılabilir ve gerçek yolu web kökünün dışında olmalıdır;
+kesim sırasında ilk kez oluşturulmaya veya symlink yönlendirmesine güvenilmez.
+
+**Tamam mı?** `build/web/`, imzası/bundle yapısı doğrulanmış ve Android'e
+kurulmuş AAB, fiziksel iPhone'a kurulmuş production-config release, imzalı App
+Store arşivi ve başarılı SFTP dry-run aynı kaynak kodundan geldiyse evet.
+Bunlardan biri eksikse üretim göçüne geçme.
 
 ---
 
@@ -247,10 +285,12 @@ cd /Users/kocer/Projects/zankurd/zankurd_mobile
 ./deploy_sftp.sh
 ```
 
-4. Hazır AAB ve IPA'yı iki ayrı hesapla iki hedefe kur. **Üretim iki istemci smoke**
-   turunda oda kurma → koda katılma → iki tarafın hazır olması → oyun →
-   sonuç/makbuz → uygulamayı kapatıp oturumu geri alma akışını tamamla.
-   Android host/iOS guest ve iOS host/Android guest yönlerini ayrı ayrı dene.
+4. 2b ve 2c adımlarında Android ile fiziksel iPhone'a kurulmuş release
+   uygulamalarını yeniden aç; App Store IPA'yı cihaza kurmaya çalışma. İki ayrı
+   hesapla **Üretim iki istemci smoke** turunda oda kurma → koda katılma → iki
+   tarafın hazır olması → oyun → sonuç/makbuz → uygulamayı kapatıp oturumu geri
+   alma akışını tamamla. Android host/iOS guest ve iOS host/Android guest
+   yönlerini ayrı ayrı dene.
 5. Salt-okunur üretim sorgusu ve iki yönlü smoke geçtikten sonra göçü
    `supabase/applied.md` dosyasına tarih/kanıt notuyla `✅` olarak kaydet.
 
@@ -363,15 +403,9 @@ hariç).
 
 ## 6. Göndermeden önce: gerçek cihazda bir tur
 
-Bunu ben yapamam, simülatörde görünmeyen iki şey var.
-
-iPhone'unu kabloyla bağla:
-
-```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile
-flutter devices
-flutter run --release -d <iphone-cihaz-id> --dart-define-from-file=.env.mobile.release.json
-```
+Bunu ben yapamam; simülatörde görünmeyen donanım ve mağaza davranışları var.
+2c adımında fiziksel iPhone'a kurulmuş production-config release uygulamasını
+yeniden aç. App Store IPA'yı sideload etmeye çalışma.
 
 Bak:
 

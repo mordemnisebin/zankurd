@@ -212,13 +212,12 @@ sırrı yazmayın; bu dört değer istemci ikilisine gömülmek üzere tasarlanm
 `your-project`, `your-public-*` veya başka bir şablon değeri kalmış dosya release
 yapılandırması sayılmaz; uygulamanın release kapısı bu değerleri reddeder.
 
-Dosyayı doldurduktan sonra PowerShell'de şablon kalıntısını sessizce doğrulayın:
+Dosyayı doldurduktan sonra PowerShell'de değerleri yazdırmadan yapısal olarak
+doğrulayın. Bu kapı yanlış URL'yi, Supabase secret/service-role anahtarını,
+RevenueCat Test Store/secret anahtarını ve Android/iOS alan değişimini reddeder:
 
 ```powershell
-$mobileConfig = Get-Content '.env.mobile.release.json' -Raw
-if ($mobileConfig -match 'your-project|your-public-|your_public_|replace[-_]?me|changeme|placeholder') {
-  throw 'Üretim yapılandırmasında şablon değeri kaldı.'
-}
+dart run tool/validate_release_config.dart --file=.env.mobile.release.json --target=mobile --environment=production
 ```
 
 ### 2. AAB'yi üretin
@@ -250,6 +249,7 @@ Farklıysa AAB'yi yüklemeyin ve yeni keystore üretmeyin.
 
 ```powershell
 jarsigner -verify -verbose -certs 'build/app/outputs/bundle/release/app-release.aab'
+bundletool validate --bundle=build/app/outputs/bundle/release/app-release.aab
 ```
 
 ### 4. Çalışma zamanını doğrulayın (zorunlu)
@@ -261,9 +261,12 @@ cihaza kurup gerçekten açın:
 bundletool build-apks --bundle=build/app/outputs/bundle/release/app-release.aab `
   --output=build/app/outputs/bundle/release/app-release.apks `
   --connected-device `
+  --device-id=<android-smoke-cihaz-id> `
   --ks=/Users/kocer/.zankurd/signing/zankurd-upload.jks `
-  --ks-key-alias=zankurd-upload
-bundletool install-apks --apks=build/app/outputs/bundle/release/app-release.apks
+  --ks-key-alias=zankurd-upload `
+  --overwrite
+bundletool install-apks --apks=build/app/outputs/bundle/release/app-release.apks `
+  --device-id=<android-smoke-cihaz-id>
 ```
 
 Uygulamanın **onboarding/ana ekrana** ulaştığını ve "Uygulama yapılandırması

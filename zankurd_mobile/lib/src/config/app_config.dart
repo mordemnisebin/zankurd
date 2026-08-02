@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'release_config_validator.dart';
+
 enum ReleaseConfigurationIssue { supabase, revenueCat }
 
 class AppConfig {
@@ -10,6 +12,10 @@ class AppConfig {
       'sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s';
   static const _useBundledSupabaseDefaults = bool.fromEnvironment(
     'USE_BUNDLED_SUPABASE_DEFAULTS',
+  );
+  static const _appEnvironment = String.fromEnvironment(
+    'APP_ENV',
+    defaultValue: 'production',
   );
 
   static const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -79,8 +85,22 @@ class AppConfig {
     return '';
   }
 
-  static bool get hasRevenuecatConfig =>
-      _isUsableReleaseClientValue(revenuecatApiKey);
+  static RevenueCatPlatform? get _revenueCatPlatform {
+    if (kIsWeb) return null;
+    if (Platform.isAndroid) return RevenueCatPlatform.android;
+    if (Platform.isIOS || Platform.isMacOS) return RevenueCatPlatform.ios;
+    return null;
+  }
+
+  static bool get hasRevenuecatConfig {
+    final platform = _revenueCatPlatform;
+    return platform != null &&
+        ReleaseConfigValidator.isSafeRevenueCatKey(
+          revenuecatApiKey,
+          platform: platform,
+          allowTestStoreKey: _appEnvironment == 'staging',
+        );
+  }
 
   /// Örnek env dosyasındaki dolu fakat çalışmayan şablon değerlerinin release
   /// kapısını geçmesini engeller.
@@ -89,13 +109,20 @@ class AppConfig {
     required String supabaseAnonKey,
     required String revenueCatKey,
     required bool requireRevenueCat,
+    required RevenueCatPlatform revenueCatPlatform,
+    bool allowRevenueCatTestStoreKey = false,
   }) {
     final issues = <ReleaseConfigurationIssue>[];
-    if (!_isUsableReleaseClientValue(supabaseUrl) ||
-        !_isUsableReleaseClientValue(supabaseAnonKey)) {
+    if (!ReleaseConfigValidator.isSafeSupabaseUrl(supabaseUrl) ||
+        !ReleaseConfigValidator.isSafeSupabaseClientKey(supabaseAnonKey)) {
       issues.add(ReleaseConfigurationIssue.supabase);
     }
-    if (requireRevenueCat && !_isUsableReleaseClientValue(revenueCatKey)) {
+    if (requireRevenueCat &&
+        !ReleaseConfigValidator.isSafeRevenueCatKey(
+          revenueCatKey,
+          platform: revenueCatPlatform,
+          allowTestStoreKey: allowRevenueCatTestStoreKey,
+        )) {
       issues.add(ReleaseConfigurationIssue.revenueCat);
     }
     return issues;
@@ -114,26 +141,12 @@ class AppConfig {
     final hasAnyExplicitValue =
         explicitUrl.trim().isNotEmpty || explicitAnonKey.trim().isNotEmpty;
     if (hasAnyExplicitValue) {
-      return _isUsableReleaseClientValue(explicitUrl) &&
-          _isUsableReleaseClientValue(explicitAnonKey);
+      return ReleaseConfigValidator.isSafeSupabaseUrl(explicitUrl) &&
+          ReleaseConfigValidator.isSafeSupabaseClientKey(explicitAnonKey);
     }
     return useBundledDefaults &&
-        _isUsableReleaseClientValue(bundledUrl) &&
-        _isUsableReleaseClientValue(bundledAnonKey);
-  }
-
-  static bool _isUsableReleaseClientValue(String value) {
-    final normalized = value.trim().toLowerCase();
-    if (normalized.isEmpty) return false;
-    return !const [
-      'your-project',
-      'your-public-',
-      'your_public_',
-      'replace-me',
-      'replace_me',
-      'changeme',
-      'placeholder',
-    ].any(normalized.contains);
+        ReleaseConfigValidator.isSafeSupabaseUrl(bundledUrl) &&
+        ReleaseConfigValidator.isSafeSupabaseClientKey(bundledAnonKey);
   }
 
   /// Üretim derlemesinin yanlışlıkla demo veriyle veya satın alma desteği

@@ -71,6 +71,8 @@ ayrı, şifreli ve geri yüklemesi denenmiş bir yedeğini oluştur.
 > verir. `flutter clean` registrant'ı release için doğru yeniden üretir.
 
 ```bash
+dart run tool/validate_release_config.dart \
+  --file=.env.mobile.release.json --target=mobile --environment=production
 flutter clean
 flutter build appbundle --release \
   --dart-define-from-file=.env.mobile.release.json
@@ -87,10 +89,34 @@ flutter build appbundle --release \
 ```bash
 jarsigner -verify -verbose -certs \
   build/app/outputs/bundle/release/app-release.aab
+bundletool validate \
+  --bundle=build/app/outputs/bundle/release/app-release.aab
 ```
 
-`jar verified` görülmeden AAB'yi Play Console'a yükleme. Play App Signing
-açıksa bu dosya upload key'dir; Google dağıtım anahtarını ayrıca yönetir.
+`jar verified` görülmeden ve bundletool doğrulaması hatasız bitmeden AAB'yi Play
+Console'a yükleme. Play App Signing açıksa bu dosya upload key'dir; Google
+dağıtım anahtarını ayrıca yönetir.
+
+## 4. Mağazaya gidecek AAB'yi cihazda aç
+
+`flutter devices` ile hedef Android kimliğini bul. Aynı AAB'den cihaza özel APK
+seti üretip kur; parola isteklerini etkileşimli yanıtla, parolayı argümana veya
+loga yazma:
+
+```bash
+bundletool build-apks \
+  --bundle=build/app/outputs/bundle/release/app-release.aab \
+  --output=build/app/outputs/bundle/release/app-release-smoke.apks \
+  --connected-device --device-id=<android-smoke-cihaz-id> \
+  --ks=/Users/kocer/.zankurd/signing/zankurd-upload.jks \
+  --ks-key-alias=zankurd-upload --overwrite
+bundletool install-apks \
+  --apks=build/app/outputs/bundle/release/app-release-smoke.apks \
+  --device-id=<android-smoke-cihaz-id>
+```
+
+Onboarding/ana ekran açılmalı; "Uygulama yapılandırması eksik" ekranı
+görünmemelidir.
 
 ## İlgili
 

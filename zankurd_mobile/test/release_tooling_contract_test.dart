@@ -70,6 +70,7 @@ void main() {
     expect(source, contains('pwd -P'));
     expect(source, contains('--delay-updates'));
     expect(source, contains('SFTP_BACKUP_PATH'));
+    expect(source, contains(r'BACKUP_RUN="$REMOTE_BACKUP_REALPATH/'));
     expect(source, isNot(contains('--protect-args')));
     expect(source, isNot(contains('--delete')));
     for (final output in [
@@ -85,16 +86,128 @@ void main() {
     }
   });
 
+  test('SFTP dry-run yazılamayan yedek kökünde aktarımı durdurur', () async {
+    final temp = Directory.systemTemp.createTempSync(
+      'zankurd-deploy-preflight-',
+    );
+    try {
+      final script = File('${temp.path}/deploy_sftp.sh');
+      File('deploy_sftp.sh').copySync(script.path);
+      final bin = Directory('${temp.path}/bin')..createSync();
+      final localBuild = Directory('${temp.path}/build/web')
+        ..createSync(recursive: true);
+      for (final output in [
+        'index.html',
+        'main.dart.js',
+        'flutter_bootstrap.js',
+        '.htaccess',
+        'privacy.html',
+        'terms.html',
+        'delete-account.html',
+      ]) {
+        File('${localBuild.path}/$output').writeAsStringSync(output);
+      }
+
+      final identity = File('${temp.path}/identity')..writeAsStringSync('key');
+      final knownHosts = File('${temp.path}/known_hosts')
+        ..writeAsStringSync('host key');
+      File('${temp.path}/.env.deploy').writeAsStringSync('''
+SFTP_HOST="example.com"
+SFTP_USER="deploy"
+SFTP_PORT="22"
+SFTP_PATH="/remote/web"
+SFTP_EXPECTED_REALPATH="/remote/web"
+SFTP_BACKUP_PATH="/remote/backups"
+SFTP_IDENTITY_FILE="${identity.path}"
+SFTP_KNOWN_HOSTS_FILE="${knownHosts.path}"
+LIVE_SITE_URL="https://example.com"
+LOCAL_DIR="${localBuild.path}"
+''');
+
+      final fakeSsh = File('${bin.path}/ssh')
+        ..writeAsStringSync(r'''#!/bin/bash
+set -euo pipefail
+last="${@: -1}"
+if [[ "$last" == *"test -d '/remote/backups'"* ]]; then
+  printf '%s\n' backup-check >> "$FAKE_COMMAND_LOG"
+  if [[ "$last" != *"test -x '/remote/backups'"* ]]; then
+    exit 43
+  fi
+  [[ "$FAKE_BACKUP_WRITABLE" == "1" ]]
+elif [[ "$last" == *"cd '/remote/backups' && pwd -P"* ]]; then
+  printf '%s\n' "$FAKE_BACKUP_REALPATH"
+elif [[ "$last" == *"cd '/remote/web' && pwd -P"* ]]; then
+  printf '%s\n' /remote/web
+fi
+''');
+      final fakeRsync = File('${bin.path}/rsync')
+        ..writeAsStringSync(r'''#!/bin/bash
+set -euo pipefail
+printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
+''');
+      final chmod = Process.runSync('chmod', [
+        '+x',
+        script.path,
+        fakeSsh.path,
+        fakeRsync.path,
+      ]);
+      expect(chmod.exitCode, 0);
+
+      final commandLog = File('${temp.path}/commands.log');
+      final environment = {
+        ...Platform.environment,
+        'PATH': '${bin.path}:${Platform.environment['PATH'] ?? ''}',
+        'FAKE_COMMAND_LOG': commandLog.path,
+        'FAKE_BACKUP_WRITABLE': '0',
+        'FAKE_BACKUP_REALPATH': '/remote/backups',
+      };
+      final blocked = await Process.run(script.path, [
+        '--dry-run',
+      ], environment: environment);
+
+      expect(blocked.exitCode, isNot(0));
+      expect(commandLog.readAsStringSync(), contains('backup-check'));
+      expect(commandLog.readAsStringSync(), isNot(contains('rsync')));
+
+      commandLog.writeAsStringSync('');
+      final allowed = await Process.run(
+        script.path,
+        ['--dry-run'],
+        environment: {...environment, 'FAKE_BACKUP_WRITABLE': '1'},
+      );
+      expect(allowed.exitCode, 0, reason: '${allowed.stderr}');
+      expect(commandLog.readAsStringSync(), contains('rsync'));
+
+      commandLog.writeAsStringSync('');
+      final canonicalCollision = await Process.run(
+        script.path,
+        ['--dry-run'],
+        environment: {
+          ...environment,
+          'FAKE_BACKUP_WRITABLE': '1',
+          'FAKE_BACKUP_REALPATH': '/remote/web/backups',
+        },
+      );
+      expect(canonicalCollision.exitCode, isNot(0));
+      expect(commandLog.readAsStringSync(), isNot(contains('rsync')));
+    } finally {
+      temp.deleteSync(recursive: true);
+    }
+  });
+
   test('tek komutlu web yayını doğrulama sırasını korur', () {
     final file = File('release_web.sh');
     expect(file.existsSync(), isTrue);
     final source = file.readAsStringSync();
     final analyze = source.indexOf('dart analyze');
     final tests = source.indexOf('flutter test');
+    final configValidation = source.indexOf('validate_release_config.dart');
     final build = source.indexOf('flutter build web --release');
     final deploy = source.indexOf('deploy_sftp.sh');
     expect(analyze, greaterThanOrEqualTo(0));
     expect(tests, greaterThan(analyze));
+    expect(configValidation, greaterThan(tests));
+    expect(build, greaterThan(configValidation));
     expect(build, greaterThan(tests));
     expect(deploy, greaterThan(build));
     expect(source, contains('--dart-define-from-file'));
@@ -264,22 +377,29 @@ void main() {
     final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
     final normalized = steps.toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
 
-    final stagingSmoke = normalized.indexOf('staging/preview iki istemci turu');
-    final webArtifact = normalized.indexOf(
+    final stagingSmoke = steps.indexOf('Staging/preview iki istemci turu');
+    final webArtifact = steps.indexOf(
       'flutter build web --release --no-web-resources-cdn',
     );
-    final androidArtifact = normalized.indexOf(
-      'flutter build appbundle --release',
-    );
-    final iosArtifact = normalized.indexOf('flutter build ipa --release');
-    final legacyGate = normalized.indexOf('herhangi bir legacy istemci');
-    final productionMigration = normalized.indexOf(
-      'üretim sql editor\'ünde bir kez uygula',
-    );
-    final preparedWebDeploy = normalized.indexOf('./deploy_sftp.sh --dry-run');
-    final productionSmoke = normalized.indexOf('üretim iki istemci smoke');
-    final appliedRecord = normalized.indexOf(
-      'supabase/applied.md` dosyasına tarih/kanıt notuyla `✅`',
+    final androidArtifact = steps.indexOf('flutter build appbundle --release');
+    final iosArtifact = steps.indexOf('flutter build ipa --release');
+    final legacyGate = steps.indexOf('Bu göç yeni `ready` protokolü');
+    final productionMigration = steps.indexOf("1. Staging'de doğrulanan");
+    final dryRuns = RegExp(
+      r'^\./deploy_sftp\.sh --dry-run$',
+      multiLine: true,
+    ).allMatches(steps).toList();
+    final productionDeploy =
+        RegExp(
+          r'^\./deploy_sftp\.sh$',
+          multiLine: true,
+        ).firstMatch(steps)?.start ??
+        -1;
+    final preMigrationDryRun = dryRuns.isEmpty ? -1 : dryRuns.first.start;
+    final cutoverDryRun = dryRuns.length < 2 ? -1 : dryRuns.last.start;
+    final productionSmoke = steps.indexOf('**Üretim iki istemci smoke**');
+    final appliedRecord = steps.indexOf(
+      '`supabase/applied.md` dosyasına tarih/kanıt notuyla `✅`',
     );
 
     for (final checkpoint in {
@@ -288,8 +408,10 @@ void main() {
       'Android artefaktı': androidArtifact,
       'iOS artefaktı': iosArtifact,
       'legacy istemci kapısı': legacyGate,
+      'göç öncesi dağıtım ön kontrolü': preMigrationDryRun,
       'üretim göçü': productionMigration,
-      'hazır web dağıtımı': preparedWebDeploy,
+      'kesim dağıtım ön kontrolü': cutoverDryRun,
+      'hazır web dağıtımı': productionDeploy,
       'üretim iki istemci turu': productionSmoke,
       'applied.md kaydı': appliedRecord,
     }.entries) {
@@ -303,12 +425,17 @@ void main() {
     expect(webArtifact, greaterThan(stagingSmoke));
     expect(androidArtifact, greaterThan(stagingSmoke));
     expect(iosArtifact, greaterThan(stagingSmoke));
+    expect(preMigrationDryRun, greaterThan(webArtifact));
+    expect(preMigrationDryRun, greaterThan(androidArtifact));
+    expect(preMigrationDryRun, greaterThan(iosArtifact));
+    expect(productionMigration, greaterThan(preMigrationDryRun));
     expect(productionMigration, greaterThan(webArtifact));
     expect(productionMigration, greaterThan(androidArtifact));
     expect(productionMigration, greaterThan(iosArtifact));
     expect(productionMigration, greaterThan(legacyGate));
-    expect(preparedWebDeploy, greaterThan(productionMigration));
-    expect(productionSmoke, greaterThan(preparedWebDeploy));
+    expect(cutoverDryRun, greaterThan(productionMigration));
+    expect(productionDeploy, greaterThan(cutoverDryRun));
+    expect(productionSmoke, greaterThan(productionDeploy));
     expect(appliedRecord, greaterThan(productionSmoke));
 
     expect(normalized, contains('migration\'ı uygulama'));
@@ -386,7 +513,7 @@ void main() {
               '--dart-define-from-file=.env.web.release.json',
           'flutter build appbundle --release '
               '--dart-define-from-file=.env.mobile.release.json',
-          'flutter build ipa --release '
+          'flutter build ipa --release --export-method=app-store '
               '--dart-define-from-file=.env.mobile.release.json',
         ]),
       );
@@ -399,15 +526,43 @@ void main() {
         runCommands,
         unorderedEquals([
           'flutter run --release -d <birinci-cihaz-id> '
+              '--dart-define=APP_ENV=staging '
               '--dart-define-from-file=.env.mobile.staging.json',
           'flutter run --release -d <ikinci-cihaz-id> '
+              '--dart-define=APP_ENV=staging '
               '--dart-define-from-file=.env.mobile.staging.json',
-          'flutter run --release -d <iphone-cihaz-id> '
+          'flutter run --release -d <iphone-smoke-cihaz-id> '
               '--dart-define-from-file=.env.mobile.release.json',
         ]),
         reason:
             'Staging iki açık cihaz kimliğiyle, son tur ise fiziksel iPhone '
             'kimliğiyle ve doğru env dosyasıyla çalıştırılmalı.',
+      );
+      expect(steps, contains('bundletool validate --bundle='));
+      expect(steps, contains('--device-id=<android-smoke-cihaz-id>'));
+      expect(steps, contains('bundletool install-apks'));
+      expect(
+        steps.toLowerCase(),
+        contains('app store ipa doğrudan cihaza kurulmaz'),
+      );
+
+      final configValidationCommands = RegExp(
+        r'^dart run tool/validate_release_config\.dart [^\r\n]+',
+        multiLine: true,
+      ).allMatches(steps).map((match) => match.group(0)!).toSet();
+      expect(
+        configValidationCommands,
+        containsAll([
+          'dart run tool/validate_release_config.dart '
+              '--file=.env.mobile.staging.json --target=mobile '
+              '--environment=staging',
+          'dart run tool/validate_release_config.dart '
+              '--file=.env.web.release.json --target=web '
+              '--environment=production',
+          'dart run tool/validate_release_config.dart '
+              '--file=.env.mobile.release.json --target=mobile '
+              '--environment=production',
+        ]),
       );
 
       final multiPlatform = File(
@@ -435,7 +590,7 @@ void main() {
               '--dart-define-from-file=.env.web.release.json',
           'flutter build windows --release '
               '--dart-define-from-file=.env.web.release.json',
-          'flutter build ipa --release '
+          'flutter build ipa --release --export-method=app-store '
               '--dart-define-from-file=.env.mobile.release.json',
           'flutter build macos --release '
               '--dart-define-from-file=.env.mobile.release.json',
@@ -544,10 +699,11 @@ void main() {
       ),
     );
     expect(readme, isNot(contains('cp -n')));
+    expect(releaseSteps, isNot(contains('grep -Eq')));
     expect(
-      RegExp(r"grep -Eq '[^']*your-project[^']*'").allMatches(releaseSteps),
-      hasLength(2),
-      reason: 'Hem staging hem production env şablon kalıntısı taranmalı.',
+      releaseSteps,
+      contains('dart run tool/validate_release_config.dart'),
+      reason: 'Env değerleri yazdırılmadan yapısal ve rol bazlı doğrulanmalı.',
     );
     expect(
       releaseSteps,

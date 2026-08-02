@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/app_config.dart';
+import 'package:zankurd_mobile/src/config/release_config_validator.dart';
 
 void main() {
   test('bundled Supabase defaults remain available as fallback values', () {
@@ -24,11 +25,55 @@ void main() {
           supabaseAnonKey: 'your-public-anon-key',
           revenueCatKey: 'goog_your-public-sdk-key',
           requireRevenueCat: true,
+          revenueCatPlatform: RevenueCatPlatform.android,
         ),
         unorderedEquals([
           ReleaseConfigurationIssue.supabase,
           ReleaseConfigurationIssue.revenueCat,
         ]),
+      );
+    });
+
+    test('release rejects privileged or malformed client values', () {
+      expect(
+        AppConfig.validateReleaseClientValues(
+          supabaseUrl: 'https://abcdefghijklmnopqrst.supabase.co',
+          supabaseAnonKey:
+              'sb_'
+              'secret_abcdefghijklmnopqrstuvwxyz0123456789',
+          revenueCatKey: 'goog_abcdefghijklmnopqrstuvwxyz012345',
+          requireRevenueCat: true,
+          revenueCatPlatform: RevenueCatPlatform.android,
+        ),
+        contains(ReleaseConfigurationIssue.supabase),
+      );
+      expect(
+        AppConfig.validateReleaseClientValues(
+          supabaseUrl: 'https://abcdefghijklmnopqrst.example.com',
+          supabaseAnonKey:
+              'sb_publishable_abcdefghijklmnopqrstuvwxyz0123456789',
+          revenueCatKey: 'test_abcdefghijklmnopqrstuvwxyz012345',
+          requireRevenueCat: true,
+          revenueCatPlatform: RevenueCatPlatform.android,
+        ),
+        unorderedEquals([
+          ReleaseConfigurationIssue.supabase,
+          ReleaseConfigurationIssue.revenueCat,
+        ]),
+      );
+    });
+
+    test('release rejects a RevenueCat key for the other platform', () {
+      expect(
+        AppConfig.validateReleaseClientValues(
+          supabaseUrl: 'https://abcdefghijklmnopqrst.supabase.co',
+          supabaseAnonKey:
+              'sb_publishable_abcdefghijklmnopqrstuvwxyz0123456789',
+          revenueCatKey: 'appl_abcdefghijklmnopqrstuvwxyz012345',
+          requireRevenueCat: true,
+          revenueCatPlatform: RevenueCatPlatform.android,
+        ),
+        contains(ReleaseConfigurationIssue.revenueCat),
       );
     });
 
@@ -42,8 +87,9 @@ void main() {
             explicitUrl: explicit.url,
             explicitAnonKey: explicit.key,
             useBundledDefaults: true,
-            bundledUrl: 'https://production.zankurd.invalid',
-            bundledAnonKey: 'sb_publishable_public_client_key',
+            bundledUrl: 'https://abcdefghijklmnopqrst.supabase.co',
+            bundledAnonKey:
+                'sb_publishable_abcdefghijklmnopqrstuvwxyz0123456789',
           ),
           isFalse,
           reason:
@@ -59,8 +105,8 @@ void main() {
           explicitUrl: '',
           explicitAnonKey: '',
           useBundledDefaults: true,
-          bundledUrl: 'https://production.zankurd.invalid',
-          bundledAnonKey: 'sb_publishable_public_client_key',
+          bundledUrl: 'https://abcdefghijklmnopqrst.supabase.co',
+          bundledAnonKey: 'sb_publishable_abcdefghijklmnopqrstuvwxyz0123456789',
         ),
         isTrue,
       );

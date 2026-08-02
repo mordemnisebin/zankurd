@@ -15,6 +15,8 @@ fi
 cd "$SCRIPT_DIR"
 dart analyze
 flutter test
+dart run tool/validate_release_config.dart \
+  --file="$DEFINE_FILE" --target=web --environment=production
 # `--no-web-resources-cdn` olmadan Flutter, 7,2 MB'lık canvaskit.wasm'ı
 # gstatic.com'dan çeker: gstatic'in engellendiği ağlarda site boş ekran
 # verir ve ziyaretçinin IP'si Google'a gider. Bayrak 0c8ea27'de README'ye,
