@@ -34,8 +34,8 @@
     },
     "counts": {
       "P0": 1,
-      "P1": 5,
-      "P2": 9,
+      "P1": 9,
+      "P2": 11,
       "P3": 5
     },
     "note_on_scope": "These are findings the auditor independently verified. A parallel read-only analysis (11 of 12 agents completed) produced roughly 110 additional candidate findings; three were verified and promoted here (P0-001, P2-008, P2-009), the rest are listed as an explicitly UNVERIFIED verification queue in Appendix A of ZANKURD_RELEASE_READINESS_AUDIT.md and must not be acted on before verification.",
@@ -54,6 +54,34 @@
         "android_release_smoke": "PARTIAL PASS",
         "16kb_release_aab_static": "PASS",
         "16kb_runtime": "NOT RUN — 16 KB IMAGE NOT INSTALLED"
+      }
+    },
+    "phase3": {
+      "date": "2026-08-02",
+      "branch": "audit/high-risk-verification-2026-08-02",
+      "goal_a_p1_005": "BLOCKED — missing REVENUECAT_API_KEY_ANDROID and REVENUECAT_API_KEY_IOS",
+      "candidate_verdicts": {
+        "A-01": "VERIFIED DEFECT (P1)",
+        "A-02": "VERIFIED DEFECT (P2)",
+        "A-10": "VERIFIED DEFECT (P1)",
+        "A-03": "VERIFIED DEFECT (P2)",
+        "A-04": "NOT A DEFECT",
+        "A-05": "VERIFIED DEFECT (P1)",
+        "A-06": "VERIFIED DEFECT (P1)"
+      },
+      "gates": {
+        "git_diff_check": "clean",
+        "format": "exit 0 (430 files, 0 changed)",
+        "flutter_analyze": "No issues found",
+        "question_quality_gate": "exit 0",
+        "flutter_test": "+1302 passed, 0 failed, 0 skipped"
+      },
+      "readiness": {
+        "code_quality": "READY",
+        "android_binary": "NOT READY",
+        "ios_binary": "NOT READY",
+        "play_submission": "NOT READY",
+        "app_store_submission": "NOT READY"
       }
     }
   },
@@ -527,7 +555,7 @@
       "title": "Signed release AAB is verified but not shippable — README's release command omits the required dart-defines",
       "platform": "android",
       "area": "release-config/documentation",
-      "status": "OPEN — BLOCKED ON OWNER-SUPPLIED RELEASE CONFIG",
+      "status": "BLOCKED — OWNER-SUPPLIED RELEASE CONFIG REQUIRED",
       "evidence": "README.md 'Play Store Build' documents `flutter build appbundle --release` with no dart-defines. The AAB built with that exact command installs and launches on Android 16 but lands on _ConfigurationErrorApp: 'Uygulama yapılandırması eksik — Supabase, RevenueCat ayarları bu üretim derlemesine eklenmemiş.' (screenshot 30_release_smoke_01.png). AppConfig.validateForRelease (app_config.dart) returns issues for supabase and revenueCat, and main.dart:109-119 swaps in the error app. The correct command IS documented elsewhere: docs/YAYIN_ADIMLARI.md:171 and docs/android_signing_setup.md:70 both specify --dart-define-from-file=.env.mobile.release.json. Only .env.mobile.release.example.json exists on this machine.",
       "file_locations": [
         "zankurd_mobile/README.md (Play Store Build section)",
@@ -548,7 +576,143 @@
       "dependencies": [
         "ZKR-REL-20260801-P1-001"
       ],
-      "note": "Values were NOT hard-coded and release validation was NOT disabled (Phase 2 rule 10 / stop condition 7)."
+      "note": "Values were NOT hard-coded and release validation was NOT disabled (Phase 2 rule 10 / stop condition 7).",
+      "phase3_update": "2026-08-02 (Phase 3): Scoped search of all permitted local sources found SUPABASE_URL and SUPABASE_ANON_KEY (in the gitignored .env.web.release.json; both hash-identical to the bundled defaults in app_config.dart, i.e. the same production project and a publishable/public key). REVENUECAT_API_KEY_ANDROID and REVENUECAT_API_KEY_IOS are MISSING everywhere: no env file, no shell env var, no Keychain entry, and the old project copies under ~/Downloads contain no .env.mobile.release.json. Per rules 7/10 and stop condition 1 no placeholder values were invented, .env.mobile.release.json was NOT created, and validateForRelease was not weakened. The production-config Android AAB, Android smoke, and iOS config build therefore remain BLOCKED. README was corrected (see commit docs(release)). Independent re-confirmation: the Phase 2 release APK set still installed on the Android 16 emulator boots into _ConfigurationErrorApp.",
+      "missing_keys": [
+        "REVENUECAT_API_KEY_ANDROID",
+        "REVENUECAT_API_KEY_IOS"
+      ]
+    },
+    {
+      "id": "ZKR-REL-20260802-P1-006",
+      "candidate": "A-01",
+      "severity": "P1",
+      "title": "Shop sells the 600-coin Neon frame but the server spend_coins allowlist rejects it — the purchase can never succeed",
+      "platform": "android+ios",
+      "area": "economy/shop",
+      "status": "VERIFIED DEFECT",
+      "evidence": "Full chain traced. shop_items seed contains ('avatar_frame_neon', ..., 600, ...) in supabase/2026-07-23_shop_items_sync.sql:52-55 and 2026-07-13_shop_chat_suggestions.sql:51. The UI lists it at 600 coins (shop_screen.dart:174-183) and includes it in _supportedItemIds (shop_screen.dart:141-145), whose own comment states that membership means the product actually does something. Purchase calls spendCoins(600,'purchase_avatar_frame_neon') (shop_screen.dart:465-468). The server allowlist in supabase/2026-07-29_shop_purchase_integrity_fix.sql:105-116 permits only spin_wheel_extra, avatar_frame_gold and profile_badge_vip, returning {'success':false,'error':'product not available'}. No later migration adds avatar_frame_neon (the 'product not available' guard exists in exactly one file). spendCoins discards the error string and returns bool (supabase_zankurd_repository.dart:943-959), so the UI shows the generic K.purchaseFailed (shop_screen.dart:487-489). Client-side rendering WAS fixed on 2026-07-31 (AvatarFrame.neon exists and avatar_editor_screen.dart:69-70,98 unlocks it via hasPurchased) but can never trigger.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/screens/shop_screen.dart:141-145",
+        "zankurd_mobile/lib/src/screens/shop_screen.dart:174-183",
+        "zankurd_mobile/supabase/2026-07-29_shop_purchase_integrity_fix.sql:105-116",
+        "zankurd_mobile/lib/src/data/supabase_zankurd_repository.dart:943-959",
+        "zankurd_mobile/lib/src/game/avatar_frames.dart:10-15"
+      ],
+      "impact": "A user with 600+ earned coins sees an advertised cosmetic, taps buy, and receives a permanent unexplained failure. Coins are not deducted, but the product is unobtainable.",
+      "remediation": "Forward-only migration adding 'avatar_frame_neon' to the spend_coins allowlist; additionally propagate the server error string through spendCoins so the UI can explain failures.",
+      "validation": "RPC contract test plus a real 600-coin purchase; the frame must then be selectable in the avatar editor.",
+      "confidence": "high"
+    },
+    {
+      "id": "ZKR-REL-20260802-P2-010",
+      "candidate": "A-02",
+      "severity": "P2",
+      "title": "Quiz answer tiles paint white text on correct/wrong gradients at 2.97:1 and 3.73:1 — below WCAG AA",
+      "platform": "android+ios",
+      "area": "accessibility/contrast",
+      "status": "VERIFIED DEFECT",
+      "evidence": "Measured with the WCAG relative-luminance formula. correct #3DA968 -> #2D8250 and wrong #E5533D -> #C53F2B (app_theme.dart:486-487,672-682); text is Colors.white when correct/wrong (quiz_option_tile.dart:114-116). White on gradient start: correct 2.97:1, wrong 3.73:1; midpoints 3.75:1 and 4.35:1; ends 4.75:1 and 5.10:1. Label is fontSize 15 (compact) or 17 at FontWeight.w800 (quiz_option_tile.dart:241-244); WCAG large-text bold threshold is 14pt = 18.67px, so 17px does NOT qualify and the 4.5:1 normal-text threshold applies. Both gradients are static const and the text colour is a fixed Colors.white, so the ratio is identical in light and dark themes — confirmed on device. No test covers this: contrast_policy_test.dart measures only brand orange, heroScrim and the gold band; quiz_accent_test.dart asserts gradient identity only (:109-115); no test anywhere calls contrastRatio against the answer states.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/theme/app_theme.dart:486-487",
+        "zankurd_mobile/lib/src/theme/app_theme.dart:672-682",
+        "zankurd_mobile/lib/src/screens/quiz/quiz_option_tile.dart:114-116",
+        "zankurd_mobile/lib/src/screens/quiz/quiz_option_tile.dart:241-244"
+      ],
+      "device_evidence": [
+        "audit_artifacts/release_audit_2026-08-02/phase3/screenshots/android/A02_06_LIGHT_answered.png",
+        "audit_artifacts/release_audit_2026-08-02/phase3/screenshots/android/A02_11_DARK_answered.png"
+      ],
+      "impact": "Answer text on the app's most-viewed surface is below the AA readability threshold for low-vision users. Mitigated for discriminability (persistent check/cross icons, shake, semantics text) but not for legibility.",
+      "remediation": "Darken both gradients so every stop reaches >=4.5:1 against white (lowest-risk, keeps brand hue); or add a scrim behind the text; or raise the label to >=18.67px to fall under the 3:1 large-text threshold.",
+      "validation": "Add contrastRatio(Colors.white, <stop>) >= 4.5 assertions for both ends of both gradients to contrast_policy_test.dart.",
+      "confidence": "high"
+    },
+    {
+      "id": "ZKR-REL-20260802-P1-007",
+      "candidate": "A-10",
+      "severity": "P1",
+      "title": "Leaderboard pushed from the quiz result renders with no Material ancestor — all text draws with fallback yellow underlines and there is no back control",
+      "platform": "android+ios",
+      "area": "navigation/render",
+      "status": "VERIFIED DEFECT",
+      "evidence": "quiz_result_screen.dart:1127-1131 pushes LeaderboardScreen via AppRoute. LeaderboardScreen has no Scaffold, no AppBar and no PopScope — only SafeArea (leaderboard_screen.dart:255,466); as tab 2 the Scaffold comes from AppShell (app_shell.dart:287). Verified on a real Android 16 emulator through the full flow (quiz -> result -> 'Rêzbendî'): every string renders in Flutter's DefaultTextStyle.fallback() style with yellow double underlines and wrong typography. That fallback is NOT debug-only; it renders the same in release. Android system back does pop the route (verified), so Android users are not trapped. On iOS there is no back control AND no edge-swipe: AppRoute is a plain PageRouteBuilder (app_route.dart:4) and the repo contains no pageTransitionsTheme, CupertinoPageTransitionsBuilder or CupertinoPageRoute (grep: 0 hits) — so the screen would be inescapable. The iOS sub-claim is source-verified only; not run on device.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/screens/quiz_result_screen.dart:1127-1131",
+        "zankurd_mobile/lib/src/screens/leaderboard_screen.dart:255",
+        "zankurd_mobile/lib/src/screens/app_shell.dart:287",
+        "zankurd_mobile/lib/src/utils/app_route.dart:4"
+      ],
+      "device_evidence": [
+        "audit_artifacts/release_audit_2026-08-02/phase3/screenshots/android/A10_04_leaderboard_pushed.png",
+        "audit_artifacts/release_audit_2026-08-02/phase3/screenshots/android/A10_05_after_system_back.png"
+      ],
+      "impact": "A user reaching the leaderboard from the quiz result sees a visually broken screen. On iOS there is additionally no way back.",
+      "remediation": "Wrap the pushed usage in Scaffold(appBar: ...) or give LeaderboardScreen an isEmbedded flag so it supplies its own Scaffold when presented as a full route. Separately, adding pageTransitionsTheme with CupertinoPageTransitionsBuilder restores iOS swipe-back app-wide.",
+      "validation": "On device: quiz -> result -> leaderboard shows normal typography, a visible back control, and iOS edge-swipe works.",
+      "confidence": "high (render) / medium-high (iOS inescapability — source proven, device test NOT RUN)"
+    },
+    {
+      "id": "ZKR-REL-20260802-P2-011",
+      "candidate": "A-03",
+      "severity": "P2",
+      "title": "'Remove photo' clears the profile column but never deletes the Storage object, which stays publicly readable at a deterministic path",
+      "platform": "android+ios",
+      "area": "privacy/data-lifecycle",
+      "status": "VERIFIED DEFECT",
+      "evidence": "uploadAvatarPhoto writes to the fixed path '${user.id}/avatar.$ext' with upsert:true in the avatars bucket (supabase_zankurd_repository.dart:284-301). The bucket is created with public=true and the policy \"Avatar photos are publicly readable\" using (bucket_id='avatars') — readable by anon (2026-07-05_avatar_showcase.sql:27-46). A remove action exists (ValueKey('avatar-remove-photo') -> clearPhoto:true, avatar_editor_screen.dart:239-246) but only nulls profiles.avatar_url. There is NO storage remove/delete call anywhere in lib/ (grep: 0 hits), so the object persists at a guessable public URL. Changing extension (png -> jpg) also orphans the previous object. IMPORTANT MITIGATION: account deletion DOES purge storage — delete from storage.objects where bucket_id='avatars' and (storage.foldername(name))[1] = v_user_id::text (2026-07-05_avatar_showcase.sql:169-171) — so the store-mandated deletion path is correct.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/data/supabase_zankurd_repository.dart:284-301",
+        "zankurd_mobile/lib/src/screens/avatar_editor_screen.dart:239-246",
+        "zankurd_mobile/supabase/2026-07-05_avatar_showcase.sql:27-46",
+        "zankurd_mobile/supabase/2026-07-05_avatar_showcase.sql:169-171"
+      ],
+      "impact": "A user who removes their photo reasonably believes it is gone; it remains publicly retrievable. Bounded because account deletion does clean up.",
+      "remediation": "Call client.storage.from('avatars').remove([path]) on removal and on extension-changing re-upload; clear the profile URL only after a successful delete and surface failures.",
+      "validation": "Mock storage adapter contract test asserting remove() is invoked on the removal path.",
+      "confidence": "high"
+    },
+    {
+      "id": "ZKR-REL-20260802-P1-008",
+      "candidate": "A-05",
+      "severity": "P1",
+      "title": "Avatar photos are an unmoderated image-UGC surface shown to strangers — no filter, no report, and blocking does not hide them",
+      "platform": "android+ios",
+      "area": "ugc/store-policy",
+      "status": "VERIFIED DEFECT",
+      "evidence": "Avatars of other players are rendered on the leaderboard (leaderboard_screen.dart:938,1168 via entry.avatarUrl), in matchmaking against the opponent (matchmaking_screen.dart:415,515,1168), in room chat and in the tournament bracket; avatar_url is selected for other players in supabase_zankurd_repository.dart:731,1176,1236,1260. Filtering: none — the bucket enforces only MIME type (jpeg/png/webp) and a 2 MB limit; ChatModerationPolicy is text-only and is invoked at exactly one call site (room_chat.dart:148). Reporting: none — report_room_message covers chat messages only; there is no path to report an avatar. Blocking: block_player filters chat, but the leaderboard and matchmaking queries carry no blocked-user filter, so a blocked user's avatar keeps appearing. Published contact exists.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/screens/leaderboard_screen.dart:938",
+        "zankurd_mobile/lib/src/screens/matchmaking_screen.dart:515",
+        "zankurd_mobile/lib/src/data/supabase_zankurd_repository.dart:731",
+        "zankurd_mobile/lib/src/services/chat_moderation_policy.dart"
+      ],
+      "policy_reference": "App Store Review Guideline 1.2 (filter / report / block / published contact); Google Play UGC policy",
+      "impact": "Three of Apple's four UGC requirements are unmet for the avatar surface, which is visible to strangers.",
+      "remediation": "Add an avatar report flow (extend the existing message_reports pattern); exclude blocked users' avatars server-side or hide them client-side; add post-upload moderation or automated NSFW scanning; provide an admin path to disable an avatar.",
+      "validation": "Report and block flows reachable from any surface showing another user's avatar; blocked user's avatar absent from leaderboard and matchmaking.",
+      "confidence": "high"
+    },
+    {
+      "id": "ZKR-REL-20260802-P1-009",
+      "candidate": "A-06",
+      "severity": "P1",
+      "title": "Display names pass no profanity or impersonation filter on any client path and have no server-side validation at all",
+      "platform": "android+ios",
+      "area": "ugc/store-policy",
+      "status": "VERIFIED DEFECT",
+      "evidence": "Client validation is length-only: name.length < 2 and name.length > 24 (profile_name_gate_screen.dart:323,326). ChatModerationPolicy is referenced in exactly one place in the whole repo — room_chat.dart:148 — and is never applied to names. No server-side display_name CHECK constraint, trigger or validating RPC exists in any migration (all supabase/*.sql scanned). updateProfileName writes straight through (supabase_zankurd_repository.dart:219 and :149 'display_name'). Names appear to strangers on the leaderboard, in rooms, matchmaking and chat, and there is no way to report a name.",
+      "file_locations": [
+        "zankurd_mobile/lib/src/screens/profile_name_gate_screen.dart:323",
+        "zankurd_mobile/lib/src/screens/profile_name_gate_screen.dart:326",
+        "zankurd_mobile/lib/src/widgets/room_chat.dart:148",
+        "zankurd_mobile/lib/src/data/supabase_zankurd_repository.dart:219"
+      ],
+      "policy_reference": "App Store Review Guideline 1.2; Google Play UGC policy",
+      "impact": "Any user can set an abusive or impersonating display name (e.g. a support/admin identity) that is broadcast to strangers.",
+      "remediation": "Apply a name-specific moderation policy on all three client write paths AND enforce it server-side (trigger or CHECK), since a client-only filter is trivially bypassed; add a protected-name list and a report-a-name path.",
+      "validation": "Server rejects a profane or protected name submitted directly via the REST API, not just via the UI.",
+      "confidence": "high"
     }
   ],
   "verified_non_findings": [
@@ -606,6 +770,11 @@
       "claim": "Large accessibility text sizes overflow the layout",
       "verdict": "NOT A DEFECT",
       "explanation": "Verified on a real iOS 26.5 simulator at content_size accessibility-extra-extra-extra-large: the Profile screen grows and reflows, '0 / 1000 XP' truncates to '0 / 1000 …' with ellipsis rather than overflowing, and no card is clipped. Evidence: audit_artifacts/release_audit_2026-08-01/screenshots/ios/02_profile_dark_xxxl_text.png and 03_profile_light_xxxl_text.png."
+    },
+    {
+      "claim": "A-04: Supabase analytics_events is a second analytics pipeline writing identity-linked events without consent",
+      "verdict": "NOT A DEFECT",
+      "explanation": "The analytics_events table exists with RLS enabled and a view-own SELECT policy (2026-07-06_persistence.sql:156,164-167), but it is dead schema: zero references to analytics_events / log_event / track_event / telemetry anywhere in lib/, and no 'insert into analytics_events' in any migration. A table's existence does not prove collection. Reopen if any client code or edge function begins inserting, or if rows are found in the live table (the live database was not queried this round). Separate P3-grade suggestion: drop the unused table or document its purpose."
     }
   ]
 }

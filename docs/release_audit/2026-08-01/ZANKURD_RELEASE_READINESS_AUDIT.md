@@ -967,6 +967,22 @@ hatasıyla düştü — o boyut §6.2'de elle incelenmiştir). Toplam ~110 aday 
 
 ### A.2 Doğrulama kuyruğu — yüksek öncelik
 
+> **2026-08-02 GÜNCELLEME (Aşama 3).** Aşağıdaki adaylardan **yedisi** bağımsız olarak
+> doğrulandı. Sonuçlar satır başlarına eklendi; ayrıntılar ve kanıtlar:
+> `docs/release_audit/2026-08-02/ZANKURD_PHASE3_RELEASE_CONFIG_AND_HIGH_RISK_VERIFICATION.md`
+>
+> | Aday | Verdict | Yeni bulgu |
+> |---|---|---|
+> | A-01 | **VERIFIED DEFECT** | `ZKR-REL-20260802-P1-006` |
+> | A-02 | **VERIFIED DEFECT** | `ZKR-REL-20260802-P2-010` |
+> | A-03 | **VERIFIED DEFECT** | `ZKR-REL-20260802-P2-011` |
+> | A-04 | **NOT A DEFECT** (ölü tablo) | — |
+> | A-05 | **VERIFIED DEFECT** | `ZKR-REL-20260802-P1-008` |
+> | A-06 | **VERIFIED DEFECT** | `ZKR-REL-20260802-P1-009` |
+> | A-10 | **VERIFIED DEFECT** | `ZKR-REL-20260802-P1-007` |
+>
+> Kalan A-07…A-18 ve §A.3'teki ~85 aday **hâlâ doğrulanmamıştır**.
+
 Bu adaylar doğrulanırsa P0/P1 olabilir. Sonraki turun ilk işi bunlardır.
 
 | # | Boyut | İddia | İddia edilen kanıt |
