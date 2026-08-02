@@ -890,7 +890,7 @@ void main() {
         status: RoomStatus.active,
         endedReason: null,
         forfeitedBy: null,
-    );
+      );
     await tester.tap(find.text('Tekrar dene'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

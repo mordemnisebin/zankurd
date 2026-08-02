@@ -2579,8 +2579,7 @@ class _QuizScreenState extends State<QuizScreen>
           if (identical(_legacySettlementInFlight, pendingSettlement)) {
             _legacySettlementInFlight = null;
           }
-          if (candidate.isDurable &&
-              candidate.ownerUserId == expectedOwnerId) {
+          if (candidate.isDurable && candidate.ownerUserId == expectedOwnerId) {
             _legacyRewardSettlement = candidate;
           }
           if (!mounted) return;

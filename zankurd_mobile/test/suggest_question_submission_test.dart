@@ -43,9 +43,7 @@ void main() {
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       testShell(
-        child: SuggestQuestionScreen(
-          repository: _SuggestionRepository(result),
-        ),
+        child: SuggestQuestionScreen(repository: _SuggestionRepository(result)),
       ),
     );
     await tester.pumpAndSettle();

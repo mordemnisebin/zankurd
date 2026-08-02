@@ -38,25 +38,28 @@ void main() {
     expect(service.isPremium, isFalse);
   });
 
-  test('anonymous logout race error is treated as an unreported no-op', () async {
-    var nativeLogoutCalls = 0;
-    final reportedErrors = <Object>[];
-    final service = PremiumService.forTesting(
-      isAnonymous: () async => false,
-      logOut: () async {
-        nativeLogoutCalls++;
-        throw PlatformException(code: '22');
-      },
-      recordError: (error, _, {reason}) => reportedErrors.add(error),
-    );
+  test(
+    'anonymous logout race error is treated as an unreported no-op',
+    () async {
+      var nativeLogoutCalls = 0;
+      final reportedErrors = <Object>[];
+      final service = PremiumService.forTesting(
+        isAnonymous: () async => false,
+        logOut: () async {
+          nativeLogoutCalls++;
+          throw PlatformException(code: '22');
+        },
+        recordError: (error, _, {reason}) => reportedErrors.add(error),
+      );
 
-    await service.logOutUser();
+      await service.logOutUser();
 
-    expect(nativeLogoutCalls, 1);
-    expect(reportedErrors, isEmpty);
-    expect(service.linkedUserId, isNull);
-    expect(service.isPremium, isFalse);
-  });
+      expect(nativeLogoutCalls, 1);
+      expect(reportedErrors, isEmpty);
+      expect(service.linkedUserId, isNull);
+      expect(service.isPremium, isFalse);
+    },
+  );
 }
 
 CustomerInfo _anonymousCustomerInfo() => const CustomerInfo(
