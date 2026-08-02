@@ -10,6 +10,7 @@ import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/room.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -24,8 +25,13 @@ import '../services/analytics_service.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'play_hub_screen.dart';
+import 'quiz_screen.dart';
+import 'room_screen.dart';
 import 'sign_in_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+typedef AppShellErrorRecorder =
+    void Function(Object error, StackTrace stack, {String? reason});
 
 class AppShell extends StatefulWidget {
   /// Masaüstü/tablet gezinmesine (NavigationRail) geçiş eşiği.
@@ -39,11 +45,16 @@ class AppShell extends StatefulWidget {
   const AppShell({
     required this.repository,
     this.connectivityMonitor,
+    this.errorRecorder,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ConnectivityMonitor? connectivityMonitor;
+
+  /// Üretimde [ErrorReporter.record] kullanılır. Testlerde yalnız hata
+  /// kaydının gerçekleştiğini gözlemlemek için değiştirilebilir.
+  final AppShellErrorRecorder? errorRecorder;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -77,8 +88,18 @@ class _AppShellState extends State<AppShell> {
   bool _profileCheckStarted = false;
   String? _profileCheckedUserId;
 
+  // Açılıştaki oda geri yükleme ana ekranı bekletmez. Başarılı bir sorgu
+  // kullanıcı başına bir kez yapılır; geçici ağ hatası ise ancak bağlantı
+  // gerçekten gidip geri geldiğinde yeniden denenir.
+  final Set<String> _roomResumeCheckedUsers = {};
+  final Set<String> _roomResumeScheduledUsers = {};
+  final Set<String> _roomResumeInFlightUsers = {};
+  final Set<String> _roomResumeAwaitingReconnectUsers = {};
+  final Set<String> _roomResumeRouteScheduledUsers = {};
+
   // Çevrimdışı durum izleme
   bool _isOffline = false;
+  bool _connectivityKnown = false;
   StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
 
   late final ScrollController _homeScrollController;
@@ -140,12 +161,29 @@ class _AppShellState extends State<AppShell> {
         stack,
         reason: 'app_shell_connectivity_check',
       );
+      // Bağlantı eklentisinin kendisi yoksa uygulama eskisi gibi çevrimiçi
+      // varsayımıyla açılır. Oda sorgusu hata verirse ayrıca raporlanır ve
+      // ana ekran yine kullanılabilir kalır.
+      if (mounted && !_connectivityKnown) {
+        setState(() => _connectivityKnown = true);
+      }
     }
   }
 
   void _applyConnectivityResults(List<ConnectivityResult> results) {
     if (!mounted) return;
-    setState(() => _isOffline = results.contains(ConnectivityResult.none));
+    final nextOffline = results.contains(ConnectivityResult.none);
+    final reconnected = _connectivityKnown && _isOffline && !nextOffline;
+    if (reconnected) {
+      final userId = _normalizedUserId(widget.repository.currentUserId);
+      if (userId != null) {
+        _roomResumeAwaitingReconnectUsers.remove(userId);
+      }
+    }
+    setState(() {
+      _isOffline = nextOffline;
+      _connectivityKnown = true;
+    });
   }
 
   @override
@@ -219,6 +257,11 @@ class _AppShellState extends State<AppShell> {
         repository: widget.repository,
         onCompleted: _completeProfileName,
       );
+    }
+
+    final resumableUserId = _normalizedUserId(activeUserId);
+    if (resumableUserId != null) {
+      _scheduleRoomResumeCheck(resumableUserId);
     }
 
     // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
@@ -518,5 +561,112 @@ class _AppShellState extends State<AppShell> {
     final normalized = userId?.trim();
     if (normalized == null || normalized.isEmpty) return null;
     return '$_profileNameCompletedKeyPrefix$normalized';
+  }
+
+  void _scheduleRoomResumeCheck(String userId) {
+    if (!_connectivityKnown ||
+        _isOffline ||
+        _roomResumeCheckedUsers.contains(userId) ||
+        _roomResumeScheduledUsers.contains(userId) ||
+        _roomResumeInFlightUsers.contains(userId) ||
+        _roomResumeAwaitingReconnectUsers.contains(userId) ||
+        _roomResumeRouteScheduledUsers.contains(userId)) {
+      return;
+    }
+
+    _roomResumeScheduledUsers.add(userId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _roomResumeScheduledUsers.remove(userId);
+      if (!_canCheckRoomResume(userId)) return;
+      _roomResumeInFlightUsers.add(userId);
+      unawaited(_loadRoomResume(userId));
+    });
+  }
+
+  bool _canCheckRoomResume(String userId) {
+    if (!mounted ||
+        !_connectivityKnown ||
+        _isOffline ||
+        _checkingOnboarding ||
+        _showOnboarding ||
+        _checkingProfileName ||
+        !_profileNameComplete ||
+        _roomResumeCheckedUsers.contains(userId) ||
+        _roomResumeInFlightUsers.contains(userId) ||
+        _roomResumeAwaitingReconnectUsers.contains(userId) ||
+        _roomResumeRouteScheduledUsers.contains(userId)) {
+      return false;
+    }
+    return context.read<AuthProvider>().isAuthenticated &&
+        _normalizedUserId(widget.repository.currentUserId) == userId;
+  }
+
+  Future<void> _loadRoomResume(String userId) async {
+    try {
+      final snapshot = await widget.repository.loadMyResumableRoom();
+      if (!_isCurrentRoomResumeUser(userId)) return;
+
+      if (snapshot == null || snapshot.room.status == RoomStatus.finished) {
+        _roomResumeCheckedUsers.add(userId);
+        return;
+      }
+
+      Widget destination;
+      switch (snapshot.room.status) {
+        case RoomStatus.lobby:
+          destination = RoomScreen(
+            repository: widget.repository,
+            initialRoom: snapshot.room,
+          );
+        case RoomStatus.active:
+          final questions = await widget.repository.loadRoomQuestions(
+            snapshot.room,
+          );
+          if (questions.isEmpty) {
+            throw StateError('Resumable online room has no questions.');
+          }
+          if (!_isCurrentRoomResumeUser(userId)) return;
+          destination = QuizScreen(
+            repository: widget.repository,
+            room: snapshot.room,
+            questions: questions,
+            is1v1: true,
+            resumeSnapshot: snapshot,
+          );
+        case RoomStatus.finished:
+          return;
+      }
+
+      _roomResumeRouteScheduledUsers.add(userId);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _roomResumeRouteScheduledUsers.remove(userId);
+        if (!_isCurrentRoomResumeUser(userId)) return;
+        _roomResumeCheckedUsers.add(userId);
+        Navigator.of(context).push(AppRoute.to(destination));
+      });
+    } catch (error, stack) {
+      if (_normalizedUserId(widget.repository.currentUserId) == userId) {
+        _roomResumeAwaitingReconnectUsers.add(userId);
+      }
+      (widget.errorRecorder ?? ErrorReporter.record)(
+        error,
+        stack,
+        reason: 'app_shell_room_resume',
+      );
+    } finally {
+      _roomResumeInFlightUsers.remove(userId);
+    }
+  }
+
+  bool _isCurrentRoomResumeUser(String userId) {
+    if (!mounted || !_connectivityKnown || _isOffline) return false;
+    return context.read<AuthProvider>().isAuthenticated &&
+        _profileNameComplete &&
+        _normalizedUserId(widget.repository.currentUserId) == userId;
+  }
+
+  String? _normalizedUserId(String? userId) {
+    final normalized = userId?.trim();
+    return normalized == null || normalized.isEmpty ? null : normalized;
   }
 }

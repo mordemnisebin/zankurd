@@ -10,40 +10,97 @@ import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 
 import 'support/widget_test_helpers.dart';
 
-class _DelayedHiddenAnswerRepository extends MockZanKurdRepository {
-  final answerResult = Completer<Map<String, dynamic>>();
-  int submitCalls = 0;
+RoomResumeSnapshot _startedSnapshot(GameRoom room, {required int remainingMs}) {
+  final now = DateTime.utc(2026, 8, 2, 12);
+  return RoomResumeSnapshot(
+    room: room,
+    currentQuestionIndex: 0,
+    ownScore: 0,
+    streak: 0,
+    bestStreak: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    answers: const [],
+    serverNow: now,
+    questionStartedAt: now,
+    deadline: now.add(Duration(milliseconds: remainingMs)),
+    remainingMs: remainingMs,
+  );
+}
+
+RoomResumeSnapshot _timeoutRevealSnapshot(GameRoom room) {
+  final now = DateTime.utc(2026, 8, 2, 12);
+  return RoomResumeSnapshot(
+    room: room,
+    currentQuestionIndex: 0,
+    ownScore: 0,
+    streak: 0,
+    bestStreak: 0,
+    correctCount: 0,
+    wrongCount: 1,
+    answers: const [
+      ResumedAnswer(
+        questionId: '00000000-0000-0000-0000-000000000101',
+        questionIndex: 0,
+        selectedOptionKey: 'TIMEOUT',
+        correctOptionKey: 'A',
+        isCorrect: false,
+        pointsAwarded: 0,
+        responseMs: 20000,
+      ),
+    ],
+    serverNow: now,
+    questionStartedAt: now.subtract(const Duration(seconds: 20)),
+    deadline: now,
+    remainingMs: 0,
+  );
+}
+
+class _StartedHiddenRepository extends MockZanKurdRepository {
+  RoomResumeSnapshot? snapshot;
+  int advanceCalls = 0;
 
   @override
   bool get usesServerHiddenAnswers => true;
 
   @override
-  Future<Map<String, dynamic>> submitAnswer({
-    required GameRoom room,
-    required QuizQuestion question,
-    required String selectedOptionOptionKey,
-    required int responseMs,
-  }) {
-    submitCalls += 1;
-    return answerResult.future;
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async =>
+      snapshot;
+
+  @override
+  Future<RoomResumeSnapshot?> loadMyResumableRoom() async => null;
+
+  @override
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  }) async {
+    advanceCalls += 1;
+    return snapshot;
   }
 }
 
-class _FailingHiddenAnswerRepository extends MockZanKurdRepository {
-  int submitCalls = 0;
+class _DelayedHiddenAdvanceRepository extends _StartedHiddenRepository {
+  final advanceResult = Completer<RoomResumeSnapshot?>();
 
   @override
-  bool get usesServerHiddenAnswers => true;
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  }) {
+    advanceCalls += 1;
+    return advanceResult.future;
+  }
+}
 
+class _FailingHiddenAdvanceRepository extends _StartedHiddenRepository {
   @override
-  Future<Map<String, dynamic>> submitAnswer({
-    required GameRoom room,
-    required QuizQuestion question,
-    required String selectedOptionOptionKey,
-    required int responseMs,
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
   }) async {
-    submitCalls += 1;
-    throw StateError('answer unavailable');
+    advanceCalls += 1;
+    throw StateError('advance unavailable');
   }
 }
 
@@ -57,16 +114,17 @@ const _hiddenQuestion = QuizQuestion(
 );
 
 void main() {
-  testWidgets('sunucu gizli TIMEOUT sonucu gelene kadar reveal yapmaz', (
+  testWidgets('sunucu gizli deadline CAS sonucu gelene kadar reveal yapmaz', (
     tester,
   ) async {
     freshMockRepository();
-    final repository = _DelayedHiddenAnswerRepository();
+    final repository = _DelayedHiddenAdvanceRepository();
     final room = repository.createRoom().copyWith(
       id: '00000000-0000-0000-0000-000000000001',
       status: RoomStatus.active,
       secondsPerQuestion: 20,
     );
+    repository.snapshot = _startedSnapshot(room, remainingMs: 20000);
 
     await tester.pumpWidget(
       testShell(
@@ -82,7 +140,7 @@ void main() {
     await tester.pump(const Duration(seconds: 21));
     await tester.pump();
 
-    expect(repository.submitCalls, 1);
+    expect(repository.advanceCalls, 1);
     expect(find.byKey(const ValueKey('quiz-timeout-notice')), findsNothing);
     final pendingTiles = tester
         .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
@@ -91,17 +149,7 @@ void main() {
     expect(pendingTiles.every((tile) => !tile.correct), isTrue);
     expect(pendingTiles.every((tile) => !tile.dimmed), isTrue);
 
-    repository.answerResult.complete({
-      'is_correct': false,
-      'points': 0,
-      'new_score': 0,
-      'new_streak': 0,
-      'correct_option': 'A',
-      'explanation': 'Pirtûk kitêb e.',
-      'explanation_ku': 'Pirtûk kitêb e.',
-      'explanation_tr': 'Pirtûk kitap demektir.',
-      'already_answered': false,
-    });
+    repository.advanceResult.complete(_timeoutRevealSnapshot(room));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1));
 
@@ -114,16 +162,17 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
   });
 
-  testWidgets('gizli TIMEOUT gönderimi başarısızsa sayaç yeniden geri sayar', (
+  testWidgets('gizli deadline CAS hatası local timeout döngüsü üretmez', (
     tester,
   ) async {
     freshMockRepository();
-    final repository = _FailingHiddenAnswerRepository();
+    final repository = _FailingHiddenAdvanceRepository();
     final room = repository.createRoom().copyWith(
       id: '00000000-0000-0000-0000-000000000001',
       status: RoomStatus.active,
       secondsPerQuestion: 20,
     );
+    repository.snapshot = _startedSnapshot(room, remainingMs: 20000);
 
     await tester.pumpWidget(
       testShell(
@@ -139,12 +188,11 @@ void main() {
     await tester.pump(const Duration(seconds: 21));
     await tester.pump();
 
-    expect(repository.submitCalls, 1);
-
-    await tester.pump(const Duration(seconds: 21));
+    await tester.pump(const Duration(seconds: 2));
     await tester.pump();
 
-    expect(repository.submitCalls, 2);
+    expect(repository.advanceCalls, greaterThan(0));
+    expect(repository.advanceCalls, lessThanOrEqualTo(6));
 
     await tester.pumpWidget(const SizedBox.shrink());
   });

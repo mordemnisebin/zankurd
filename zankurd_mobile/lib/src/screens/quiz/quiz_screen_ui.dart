@@ -80,7 +80,7 @@ extension _QuizScreenUI on _QuizScreenState {
                                           ? _answerAreaKey
                                           : null,
                                       correctAnswerKey: _correctAnswerKey,
-                                      questionVisualReady: index == 0
+                                      questionVisualReady: !_questionVisualReady
                                           ? _handleQuestionVisualReady
                                           : null,
                                     ),
@@ -165,7 +165,7 @@ extension _QuizScreenUI on _QuizScreenState {
                           timerKey: index == 0 ? _timerTargetKey : null,
                           answerAreaKey: index == 0 ? _answerAreaKey : null,
                           correctAnswerKey: _correctAnswerKey,
-                          questionVisualReady: index == 0
+                          questionVisualReady: !_questionVisualReady
                               ? _handleQuestionVisualReady
                               : null,
                         ),
