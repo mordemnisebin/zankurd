@@ -93,10 +93,14 @@
       ],
       "tests": "1302 -> 1346 (0 fail, 0 skip)",
       "still_open": {
-        "ZKR-REL-20260802-P1-005": "BLOCKED — REVENUECAT_API_KEY_ANDROID / _IOS required from owner",
-        "ZKR-REL-20260801-P0-001": "RESIDUAL — git history scrub deferred (credential already rotated)",
+        "ZKR-REL-20260801-P0-001": "RESIDUAL — git history scrub deferred (credential already rotated). NOTE: the credential exists in TWO history locations — deploy_ftp.sh and the root .env.deploy at c8a2001 — a scrub must cover both.",
         "store_console": "Data Safety / App Privacy forms, screenshots, closed testing — owner only",
-        "migrations": "3 SQL files written but NOT applied to production"
+        "appendix_a": "~80 lower-risk candidates remain unverified; 7 high-risk ones were verified in Phase 3",
+        "reduced_motion": "ratchet debt frozen at 12 files (reduced_motion_coverage_test.dart)"
+      },
+      "closed_since": {
+        "ZKR-REL-20260802-P1-005": "RESOLVED 2026-08-02 — production-config AAB boots to onboarding, no configuration-error screen",
+        "migrations": "APPLIED 2026-08-02 — all 3 SQL migrations applied to production with pre/post verification (supabase/applied.md)"
       }
     }
   },
@@ -583,7 +587,7 @@
       "title": "Signed release AAB is verified but not shippable — README's release command omits the required dart-defines",
       "platform": "android",
       "area": "release-config/documentation",
-      "status": "BLOCKED — OWNER-SUPPLIED RELEASE CONFIG REQUIRED",
+      "status": "RESOLVED — VERIFIED PASS (2026-08-02, production config supplied by owner)",
       "evidence": "README.md 'Play Store Build' documents `flutter build appbundle --release` with no dart-defines. The AAB built with that exact command installs and launches on Android 16 but lands on _ConfigurationErrorApp: 'Uygulama yapılandırması eksik — Supabase, RevenueCat ayarları bu üretim derlemesine eklenmemiş.' (screenshot 30_release_smoke_01.png). AppConfig.validateForRelease (app_config.dart) returns issues for supabase and revenueCat, and main.dart:109-119 swaps in the error app. The correct command IS documented elsewhere: docs/YAYIN_ADIMLARI.md:171 and docs/android_signing_setup.md:70 both specify --dart-define-from-file=.env.mobile.release.json. Only .env.mobile.release.example.json exists on this machine.",
       "file_locations": [
         "zankurd_mobile/README.md (Play Store Build section)",
@@ -606,10 +610,9 @@
       ],
       "note": "Values were NOT hard-coded and release validation was NOT disabled (Phase 2 rule 10 / stop condition 7).",
       "phase3_update": "2026-08-02 (Phase 3): Scoped search of all permitted local sources found SUPABASE_URL and SUPABASE_ANON_KEY (in the gitignored .env.web.release.json; both hash-identical to the bundled defaults in app_config.dart, i.e. the same production project and a publishable/public key). REVENUECAT_API_KEY_ANDROID and REVENUECAT_API_KEY_IOS are MISSING everywhere: no env file, no shell env var, no Keychain entry, and the old project copies under ~/Downloads contain no .env.mobile.release.json. Per rules 7/10 and stop condition 1 no placeholder values were invented, .env.mobile.release.json was NOT created, and validateForRelease was not weakened. The production-config Android AAB, Android smoke, and iOS config build therefore remain BLOCKED. README was corrected (see commit docs(release)). Independent re-confirmation: the Phase 2 release APK set still installed on the Android 16 emulator boots into _ConfigurationErrorApp.",
-      "missing_keys": [
-        "REVENUECAT_API_KEY_ANDROID",
-        "REVENUECAT_API_KEY_IOS"
-      ]
+      "missing_keys": [],
+      "phase4_update": "2026-08-02 (Phase 4): The owner supplied .env.mobile.release.json (gitignored, never committed, contents never printed). All four keys present and shape-verified without disclosure: the RevenueCat keys carry the goog_/appl_ PUBLIC SDK prefix (not the sk_ secret prefix), and the Supabase JWT decodes to role=anon on project ref hupivnxgjtsfafulzspo — i.e. no secret-tier credential was placed in a client binary. Rebuilt with `flutter build appbundle --release --dart-define-from-file=.env.mobile.release.json`: exit 0, 154.3 MB, SHA-256 d88c9463d333388e853c8978c72af95c41b10ea3dab3651138b866bb9e2f9157. jarsigner reports 'jar verified'; signer cert SHA-256 80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3 matches the upload key; zero 'Android Debug' occurrences. Delivered APK set is 35.2 MB (the AAB size growth is FULL debug symbols, stripped on delivery). Installed and launched on Android 16: the app reaches the onboarding screen and then sign-in (Google / guest / email). ZERO _ConfigurationErrorApp, zero config-error traces, zero FATAL/E-flutter/dlopen errors. Screenshots PROD_01_launch.png, PROD_02_home.png. The documented README command now produces a shippable binary — the documentation/runtime inconsistency is closed.",
+      "resolved_by": "owner-supplied production config + README correction; verified end-to-end on a real Android 16 device image"
     },
     {
       "id": "ZKR-REL-20260802-P1-006",

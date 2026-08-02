@@ -54,3 +54,9 @@ phase1-desktop-current.png
 # Python derleme cache
 __pycache__/
 *.pyc
+
+# Denetim kanıtları: ekran görüntüleri, build/test logları, ham veri dökümleri.
+# Diskte kalır (raporlar buraya yol verir) ama git'e GİRMEZ — hem 36 MB'lık
+# ikili yığın, hem de logların içinde ortama özgü yollar ve kimlikler var.
+# Yedeği: ~/Documents/ZanKurd-Backups/zankurd-audit-*.tar.gz
+audit_artifacts/
