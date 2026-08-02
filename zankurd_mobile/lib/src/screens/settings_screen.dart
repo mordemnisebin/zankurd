@@ -1243,10 +1243,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _deleteAccount() async {
     setState(() => _deleting = true);
+    final authProvider = context.read<AuthProvider>();
+    final deletedUserId = widget.repository.currentUserId?.trim();
     try {
       await widget.repository.deleteMyAccount();
+      // Sunucu silmesi başarılı olduktan sonra ekran route'u kapanmış olsa
+      // bile yerel kimlik ve tam o hesaba ait kuyruk temizlenmelidir.
+      await authProvider.signOut(
+        discardPendingRewards: true,
+        pendingRewardsOwnerId: deletedUserId,
+      );
+    } on AccountLocalCleanupException catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'deleteAccount local cleanup failed',
+      );
       if (!mounted) return;
-      await context.read<AuthProvider>().signOut();
+      setState(() => _deleting = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t(K.accountLocalCleanupFailed))),
+      );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'deleteAccount failed');
       if (!mounted) return;

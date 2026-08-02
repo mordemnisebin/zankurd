@@ -1968,6 +1968,12 @@ class Tr {
       'ku': 'Hesab nehat jêbirin. Ji kerema xwe dîsa biceribîne.',
       'tr': 'Hesap silinemedi. Lütfen tekrar dene.',
     },
+    K.accountLocalCleanupFailed: {
+      'ku':
+          'Hesab hate jêbirin, lê daneyên li ser vê amûrê bi tevahî nehatin paqij kirin. Sepanê ji nû ve bide destpêkirin; eger hişyarî bidome, sepanê ji nû ve saz bike.',
+      'tr':
+          'Hesap silindi ancak bu cihazdaki yerel veriler tamamen temizlenemedi. Uygulamayı yeniden başlat; uyarı sürerse uygulamayı yeniden yükle.',
+    },
     K.premiumBrand: {'ku': 'ZanKurd Premium', 'tr': 'ZanKurd Premium'},
     K.notifPermDeniedInline: {
       'ku': 'Destûra agahdariyê nehat dayîn; ji mîhengên sîstemê veke.',
@@ -3005,6 +3011,8 @@ class K {
   static const playerNameUpdated = 'settings.playerName.updated';
   static const playerNameSaveFailed = 'settings.playerName.saveFailed';
   static const accountDeleteFailed = 'settings.account.deleteFailed';
+  static const accountLocalCleanupFailed =
+      'settings.account.localCleanupFailed';
   static const premiumBrand = 'settings.premium.brand';
   static const notifPermDeniedInline = 'settings.notif.deniedInline';
   static const notifPermDeniedBody = 'settings.notif.deniedBody';

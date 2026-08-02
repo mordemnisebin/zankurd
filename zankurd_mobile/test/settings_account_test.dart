@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -12,6 +14,8 @@ class _SignOutTrackingAuthProvider extends AuthProvider {
 
   bool _authenticated = true;
   int signOutCalls = 0;
+  bool? discardPendingRewards;
+  String? discardedRewardsOwnerId;
 
   @override
   bool get isAuthenticated => _authenticated;
@@ -20,10 +24,29 @@ class _SignOutTrackingAuthProvider extends AuthProvider {
   bool get isLoading => false;
 
   @override
-  Future<void> signOut() async {
+  Future<void> signOut({
+    bool discardPendingRewards = false,
+    String? pendingRewardsOwnerId,
+  }) async {
     signOutCalls += 1;
+    this.discardPendingRewards = discardPendingRewards;
+    discardedRewardsOwnerId = pendingRewardsOwnerId;
     _authenticated = false;
     notifyListeners();
+  }
+}
+
+class _CleanupFailingAuthProvider extends _SignOutTrackingAuthProvider {
+  @override
+  Future<void> signOut({
+    bool discardPendingRewards = false,
+    String? pendingRewardsOwnerId,
+  }) async {
+    await super.signOut(
+      discardPendingRewards: discardPendingRewards,
+      pendingRewardsOwnerId: pendingRewardsOwnerId,
+    );
+    throw const AccountLocalCleanupException();
   }
 }
 
@@ -39,6 +62,18 @@ class _DeleteTrackingRepository extends MockZanKurdRepository {
     if (shouldFail) {
       throw StateError('delete failed');
     }
+  }
+}
+
+class _DeferredDeleteRepository extends _DeleteTrackingRepository {
+  final Completer<void> deleteStarted = Completer<void>();
+  final Completer<void> allowDelete = Completer<void>();
+
+  @override
+  Future<void> deleteMyAccount() async {
+    deleteCalls += 1;
+    deleteStarted.complete();
+    await allowDelete.future;
   }
 }
 
@@ -197,17 +232,23 @@ void main() {
 
     expect(repository.deleteCalls, 1);
     expect(authProvider.signOutCalls, 1);
+    expect(authProvider.discardPendingRewards, isTrue);
+    expect(authProvider.discardedRewardsOwnerId, 'user');
   });
 
-  testWidgets('failed account deletion keeps the user in settings', (
+  testWidgets('deleted account reports local cleanup failure accurately', (
     tester,
   ) async {
-    final repository = _DeleteTrackingRepository(shouldFail: true);
+    final repository = _DeleteTrackingRepository();
+    final authProvider = _CleanupFailingAuthProvider();
     await tester.binding.setSurfaceSize(const Size(390, 1400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
-      testShell(child: SettingsScreen(repository: repository)),
+      testShell(
+        child: SettingsScreen(repository: repository),
+        authProvider: authProvider,
+      ),
     );
     await tester.pumpAndSettle();
 
@@ -226,12 +267,103 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(repository.deleteCalls, 1);
+    expect(authProvider.signOutCalls, 1);
+    expect(find.textContaining('Hesap silindi ancak'), findsOneWidget);
+    expect(find.textContaining('Hesap silinemedi'), findsNothing);
+  });
+
+  testWidgets('failed account deletion keeps the user in settings', (
+    tester,
+  ) async {
+    final repository = _DeleteTrackingRepository(shouldFail: true);
+    final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: SettingsScreen(repository: repository),
+        authProvider: authProvider,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final deleteAction = await _scrollToDeleteAction(tester);
+    await tester.tap(deleteAction);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Devam Et'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SIL',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(repository.deleteCalls, 1);
+    expect(authProvider.signOutCalls, 0);
+    expect(authProvider.discardPendingRewards, isNull);
     // Silme başarısızsa ekrandan çıkılmamalı. Bu, "Ayarlar" metnini arayarak
     // doğrulanıyordu; başlık AppBar'dan kimlik kartına taşınınca (çift
     // başlık düzeltmesi) metin, listeyle birlikte kaydırılıp ağaçtan
     // düşebiliyor. Asıl iddia gezinme: ekran hâlâ yerinde mi?
     expect(find.byType(SettingsScreen), findsOneWidget);
     expect(find.text('Hesap silinemedi. Lütfen tekrar dene.'), findsOneWidget);
+  });
+
+  testWidgets('account cleanup continues if settings unmounts after deletion', (
+    tester,
+  ) async {
+    final repository = _DeferredDeleteRepository();
+    final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        authProvider: authProvider,
+        child: Builder(
+          builder: (context) => Scaffold(
+            body: FilledButton(
+              onPressed: () => Navigator.of(context).push<void>(
+                MaterialPageRoute<void>(
+                  builder: (_) => SettingsScreen(repository: repository),
+                ),
+              ),
+              child: const Text('Open settings'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Open settings'));
+    await tester.pumpAndSettle();
+
+    final deleteAction = await _scrollToDeleteAction(tester);
+    await tester.tap(deleteAction);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Devam Et'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SIL',
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.pump();
+    await repository.deleteStarted.future;
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    repository.allowDelete.complete();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(authProvider.signOutCalls, 1);
+    expect(authProvider.discardPendingRewards, isTrue);
+    expect(authProvider.discardedRewardsOwnerId, 'user');
   });
 
   testWidgets('Kurmancî arayüzde oyuncu adı yer tutucusu çevrilir', (

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 
 class _OfflineConnectivityMonitor implements ConnectivityMonitor {
   int checkCount = 0;
@@ -20,6 +22,19 @@ class _OfflineConnectivityMonitor implements ConnectivityMonitor {
     checkCount++;
     return const [ConnectivityResult.none];
   }
+}
+
+class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
+  _OwnedSupabaseRepository()
+    : super(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+        ),
+      );
+
+  @override
+  String? get currentUserId => 'user-a';
 }
 
 void main() {
@@ -60,12 +75,7 @@ void main() {
           }
         });
     final manager = await SyncManager.initialize(
-      SupabaseZanKurdRepository(
-        SupabaseClient(
-          'https://example.supabase.co',
-          'sb_publishable_test_key',
-        ),
-      ),
+      _OwnedSupabaseRepository(),
       connectivityMonitor: _OfflineConnectivityMonitor(),
     );
 
@@ -108,12 +118,7 @@ void main() {
         });
     final connectivity = _OfflineConnectivityMonitor();
     final manager = await SyncManager.initialize(
-      SupabaseZanKurdRepository(
-        SupabaseClient(
-          'https://example.supabase.co',
-          'sb_publishable_test_key',
-        ),
-      ),
+      _OwnedSupabaseRepository(),
       connectivityMonitor: connectivity,
     );
 
@@ -152,12 +157,7 @@ void main() {
         });
     final connectivity = _OfflineConnectivityMonitor();
     final manager = await SyncManager.initialize(
-      SupabaseZanKurdRepository(
-        SupabaseClient(
-          'https://example.supabase.co',
-          'sb_publishable_test_key',
-        ),
-      ),
+      _OwnedSupabaseRepository(),
       connectivityMonitor: connectivity,
     );
 
@@ -175,4 +175,138 @@ void main() {
     expect(manager.pendingCount, 1);
     expect(connectivity.checkCount, 0, reason: 'Yazılmayan kayıt gönderildi.');
   });
+
+  test('legacy karantina hatası sağlam kullanıcı kuyruğunu ezmez', () async {
+    final storage = <String, Object>{
+      'flutter.zankurd.syncQueue': '{malformed',
+      'flutter.zankurd.syncQueue.v2.user-a': jsonEncode([
+        {
+          'type': 'sync_quiz_reward',
+          'score': 100,
+          'correctCount': 1,
+          'bestStreak': 1,
+          'totalQuestions': 1,
+          'roomId': 'room-old',
+          'playerId': 'user-a',
+          'timestamp': 1,
+          'retries': 0,
+        },
+      ]),
+    };
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
+          switch (call.method) {
+            case 'getAll':
+              return storage;
+            case 'setString':
+              final arguments = Map<String, Object?>.from(
+                call.arguments as Map,
+              );
+              final key = arguments['key'] as String;
+              if (key.endsWith('legacyQuarantine')) {
+                throw PlatformException(
+                  code: 'injected',
+                  message: 'karantina yazımı başarısız',
+                );
+              }
+              storage[key] = arguments['value'] as String;
+              return true;
+            case 'remove':
+              final arguments = Map<String, Object?>.from(
+                call.arguments as Map,
+              );
+              storage.remove(arguments['key']);
+              return true;
+            default:
+              throw StateError('Beklenmeyen SharedPreferences çağrısı');
+          }
+        });
+    final manager = await SyncManager.initialize(
+      _OwnedSupabaseRepository(),
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+
+    expect(manager.pendingCount, 1);
+    await manager.queueQuizReward(
+      score: 200,
+      correctCount: 2,
+      bestStreak: 2,
+      totalQuestions: 2,
+      roomId: 'room-new',
+    );
+
+    final persisted = storage['flutter.zankurd.syncQueue.v2.user-a'] as String;
+    expect(persisted, contains('room-old'));
+    expect(persisted, contains('room-new'));
+  });
+
+  test('hedefli kuyruk silme kalıcı depolama hatasını taşır', () async {
+    final storage = <String, Object>{
+      'flutter.zankurd.syncQueue.v2.user-b': '[]',
+    };
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
+          switch (call.method) {
+            case 'getAll':
+              return storage;
+            case 'remove':
+            case 'setString':
+              return false;
+            default:
+              throw StateError('Beklenmeyen SharedPreferences çağrısı');
+          }
+        });
+
+    await expectLater(
+      SyncManager.discardQueueForUser('user-b'),
+      throwsStateError,
+    );
+  });
+
+  test(
+    'hesap silme yerel kuyruk hatasını çıkış sonunda çağırana taşır',
+    () async {
+      final storage = <String, Object>{
+        'flutter.zankurd.syncQueue.v2.user-b': '[]',
+      };
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (call) async {
+            final arguments = call.arguments == null
+                ? <String, Object?>{}
+                : Map<String, Object?>.from(call.arguments as Map);
+            switch (call.method) {
+              case 'getAll':
+                return storage;
+              case 'remove':
+                final key = arguments['key'] as String;
+                if (key.endsWith('zankurd.syncQueue.v2.user-b')) return false;
+                storage.remove(key);
+                return true;
+              case 'setString':
+                final key = arguments['key'] as String;
+                if (key.endsWith('zankurd.syncQueue.v2.user-b')) return false;
+                storage[key] = arguments['value'] as String;
+                return true;
+              case 'setBool':
+              case 'setInt':
+              case 'setDouble':
+              case 'setStringList':
+                storage[arguments['key'] as String] = arguments['value']!;
+                return true;
+              default:
+                throw StateError('Beklenmeyen SharedPreferences çağrısı');
+            }
+          });
+      final auth = AuthProvider.test(authenticated: true);
+
+      await expectLater(
+        auth.signOut(
+          discardPendingRewards: true,
+          pendingRewardsOwnerId: 'user-b',
+        ),
+        throwsA(isA<AccountLocalCleanupException>()),
+      );
+      expect(auth.isAuthenticated, isFalse);
+    },
+  );
 }
