@@ -193,8 +193,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     switch (receiptOutcome) {
       case QuizResultProgressReceiptOutcome.executed:
       case QuizResultProgressReceiptOutcome.skippedCompleted:
-      case QuizResultProgressReceiptOutcome.recoveredProcessing:
         break;
+      case QuizResultProgressReceiptOutcome.blockedProcessing:
+        ErrorReporter.record(
+          StateError(
+            'Result progress receipt is processing and cannot be verified.',
+          ),
+          StackTrace.current,
+          reason: 'quiz result receipt incomplete',
+        );
+        return;
     }
     if (rewardState != QuizRewardSettlementState.claimed ||
         !_isCurrentResultOwner(ownerId) ||

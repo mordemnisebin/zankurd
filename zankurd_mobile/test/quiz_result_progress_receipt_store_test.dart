@@ -160,7 +160,7 @@ void main() {
   });
 
   test(
-    'action hatasi processing birakir ve sonraki tur tekrar calistirmadan kurtarir',
+    'action hatasi processing birakir ve sonraki turlar teslimati engeller',
     () async {
       final preferences = await SharedPreferences.getInstance();
       final store = QuizResultProgressReceiptStore(preferences);
@@ -178,7 +178,14 @@ void main() {
         throwsStateError,
       );
 
-      final recovered = await store.runOnce(
+      final blocked = await store.runOnce(
+        userId: 'user-action-error',
+        roomId: 'room-action-error',
+        action: () async {
+          actionCount++;
+        },
+      );
+      final blockedAgain = await store.runOnce(
         userId: 'user-action-error',
         roomId: 'room-action-error',
         action: () async {
@@ -186,7 +193,8 @@ void main() {
         },
       );
 
-      expect(recovered, QuizResultProgressReceiptOutcome.recoveredProcessing);
+      expect(blocked, QuizResultProgressReceiptOutcome.blockedProcessing);
+      expect(blockedAgain, QuizResultProgressReceiptOutcome.blockedProcessing);
       expect(actionCount, 1);
     },
   );
@@ -299,7 +307,7 @@ void main() {
             actionCount++;
           },
         ),
-        QuizResultProgressReceiptOutcome.recoveredProcessing,
+        QuizResultProgressReceiptOutcome.blockedProcessing,
       );
       expect(actionCount, 1);
     });

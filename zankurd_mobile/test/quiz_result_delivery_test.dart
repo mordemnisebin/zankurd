@@ -296,6 +296,24 @@ void main() {
     expect(find.byType(QuizResultScreen), findsOneWidget);
   });
 
+  testWidgets('tamamlığı belirsiz processing receipt ACK edilmez', (
+    tester,
+  ) async {
+    final repository = _DeliveryRepository();
+    await _pumpResult(
+      tester,
+      repository: repository,
+      receiptRunner:
+          ({required userId, required roomId, required action}) async =>
+              QuizResultProgressReceiptOutcome.blockedProcessing,
+    );
+    await tester.pump();
+    await tester.pump();
+
+    expect(repository.ackCalls, 0);
+    expect(find.byType(QuizResultScreen), findsOneWidget);
+  });
+
   testWidgets('receipt sonrasında owner değişirse ACK edilmez', (tester) async {
     final repository = _DeliveryRepository();
     final receiptGate = Completer<QuizResultProgressReceiptOutcome>();

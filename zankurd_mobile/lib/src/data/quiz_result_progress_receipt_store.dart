@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum QuizResultProgressReceiptOutcome {
   executed,
   skippedCompleted,
-  recoveredProcessing,
+  blockedProcessing,
 }
 
 class QuizResultProgressReceiptStore {
@@ -60,8 +60,10 @@ class QuizResultProgressReceiptStore {
       return QuizResultProgressReceiptOutcome.skippedCompleted;
     }
     if (state == _processing) {
-      await _persist(key, _completed);
-      return QuizResultProgressReceiptOutcome.recoveredProcessing;
+      // Önceki çalıştırma yerel ilerleme zincirinin ortasında kesilmiş olabilir.
+      // Aşamaların hangilerinin tamamlandığını kanıtlayamadığımız için ne
+      // action'ı tekrar çalıştırmak ne de makbuzu completed yapmak güvenlidir.
+      return QuizResultProgressReceiptOutcome.blockedProcessing;
     }
     if (state != null) {
       throw FormatException('Bilinmeyen sonuç ilerleme makbuzu durumu: $state');
