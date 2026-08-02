@@ -125,7 +125,12 @@
       "confidence": "high",
       "dependencies": [],
       "auditor_note": "Missed on the first pass because the history scan was filename-based (*.env*, key.properties, *.jks, *.p8) while the secret lived inside a shell script. Name-based scanning is insufficient without content-based search (git log -S).",
-      "phase2_update": "2026-08-02 (Phase 2): Owner confirmed the Hostinger password was rotated. Local verification (SHA-256 comparison, no values printed): .env.deploy contains NO password field at all — deployment moved to SSH key auth (SFTP_IDENTITY_FILE); the old credential is absent from .env.deploy and from all tracked files -> DIFFERENT (superseded). deploy_ftp.sh is now a 6-line shim exec'ing deploy_sftp.sh (BatchMode, IdentitiesOnly, StrictHostKeyChecking, pinned known_hosts). The .github/workflows/deploy-web-hostinger.yml that referenced FTP_PASSWORD no longer exists. ACTIVE credential risk is mitigated; the historical commit record remains and history scrub is deliberately deferred to a separate backed-up phase."
+      "phase2_update": "2026-08-02 (Phase 2): Owner confirmed the Hostinger password was rotated. Local verification (SHA-256 comparison, no values printed): .env.deploy contains NO password field at all — deployment moved to SSH key auth (SFTP_IDENTITY_FILE); the old credential is absent from .env.deploy and from all tracked files -> DIFFERENT (superseded). deploy_ftp.sh is now a 6-line shim exec'ing deploy_sftp.sh (BatchMode, IdentitiesOnly, StrictHostKeyChecking, pinned known_hosts). The .github/workflows/deploy-web-hostinger.yml that referenced FTP_PASSWORD no longer exists. ACTIVE credential risk is mitigated; the historical commit record remains and history scrub is deliberately deferred to a separate backed-up phase.",
+      "history_locations": [
+        "zankurd_mobile/deploy_ftp.sh:3-5 (commit e8e358a^ ve öncesi) — parola satır içi",
+        "/.env.deploy (depo KÖKÜ, commit c8a2001'de eklendi, sonra silindi) — FTP_HOST/USER/PASS/REMOTE, 101 bayt"
+      ],
+      "history_scrub_note": "2026-08-02 doğrulaması: sızan parola geçmişte İKİ ayrı yolda duruyor, tek yolda değil. Her ikisindeki FTP_PASS değeri aynı (sha256 018bd779…) ve o parola sahip tarafından döndürüldü, yani kalıntı artık kullanılamaz bir sırdır. Ancak ileride git-history temizliği yapılırken YALNIZ deploy_ftp.sh temizlenirse kökteki .env.deploy blob'u geride kalır. filter-repo çağrısı iki yolu da kapsamalıdır. Bugünkü .env.deploy ile tek çakışan alan FTP_HOST (sunucu adresi); parola ve kullanıcı farklı, dağıtım da SSH anahtarına geçmiş durumda."
     },
     {
       "id": "ZKR-REL-20260801-P1-001",
