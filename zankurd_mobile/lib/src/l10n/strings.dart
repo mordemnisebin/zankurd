@@ -988,6 +988,14 @@ class Tr {
       'ku': 'Ragihandin hat şandin.',
       'tr': 'Bildirim gönderildi.',
     },
+    // 2026-08-02: engel kaldırmanın hiçbir arayüz yolu yoktu.
+    K.secBlocked: {'ku': 'Kesên astengkirî', 'tr': 'Engellenenler'},
+    K.blockedEmpty: {
+      'ku': 'Te kes asteng nekiriye.',
+      'tr': 'Kimseyi engellemedin.',
+    },
+    K.unblockAction: {'ku': 'Astengiyê rake', 'tr': 'Engeli kaldır'},
+    K.unblockDone: {'ku': 'Astengî hat rakirin.', 'tr': 'Engel kaldırıldı.'},
     K.questionSaved: {'ku': 'Pirs hat tomarkirin.', 'tr': 'Soru kaydedildi.'},
     K.saveRemoved: {'ku': 'Tomar hate rakirin.', 'tr': 'Kayıt kaldırıldı.'},
     K.questionSaveFailed: {
@@ -2534,6 +2542,10 @@ class K {
   static const reportProfileTitle = 'report.profileTitle';
   static const reportProfileBodyP = 'report.profileBody';
   static const reportProfileDone = 'report.profileDone';
+  static const secBlocked = 'settings.secBlocked';
+  static const blockedEmpty = 'settings.blockedEmpty';
+  static const unblockAction = 'settings.unblockAction';
+  static const unblockDone = 'settings.unblockDone';
   static const questionSaved = 'quiz.questionSaved';
   static const saveRemoved = 'quiz.saveRemoved';
   static const questionSaveFailed = 'quiz.questionSaveFailed';

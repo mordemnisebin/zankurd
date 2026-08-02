@@ -24,6 +24,7 @@ import '../utils/percent_format.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_config.dart';
+import '../models/friend.dart';
 import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -614,6 +615,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 accent: AppTheme.primaryGradientStart,
               ),
               const _TtsSettingsSection(),
+              const SizedBox(height: AppSpacing.cardGap),
+
+              // ============ ENGELLENENLER ============
+              // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
+              // bir çağıranı bile yoktu — kullanıcı birini engelledikten
+              // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
+              // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
+              ScreenSectionLabel(
+                label: context.t(K.secBlocked),
+                accent: AppTheme.wrong,
+              ),
+              _BlockedUsersSection(repository: widget.repository),
               const SizedBox(height: AppSpacing.cardGap),
 
               // ============ PREMIUM ABONELİK ============
@@ -1766,6 +1779,106 @@ class _TtsSlider extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Engellenen oyuncular ve engeli kaldırma.
+///
+/// 2026-08-02 denetiminde bulundu: `unblockPlayer` deposu vardı, arayüzü
+/// yoktu. Engelleme geri alınabilir olmadıkça moderasyon aracı değil, tek
+/// yönlü bir kapıdır — yanlışlıkla engellenen bir arkadaş kalıcı olarak
+/// kayboluyordu.
+class _BlockedUsersSection extends StatefulWidget {
+  const _BlockedUsersSection({required this.repository});
+
+  final ZanKurdRepository repository;
+
+  @override
+  State<_BlockedUsersSection> createState() => _BlockedUsersSectionState();
+}
+
+class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
+  late Future<List<PlayerSearchResult>> _future;
+  final Set<String> _working = <String>{};
+
+  @override
+  void initState() {
+    super.initState();
+    _future = widget.repository.loadBlockedPlayers();
+  }
+
+  Future<void> _unblock(PlayerSearchResult player) async {
+    setState(() => _working.add(player.id));
+    final ok = await widget.repository.unblockPlayer(player.id);
+    if (!mounted) return;
+    setState(() {
+      _working.remove(player.id);
+      if (ok) _future = widget.repository.loadBlockedPlayers();
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.t(ok ? K.unblockDone : K.errorOccurred))),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      child: FutureBuilder<List<PlayerSearchResult>>(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Padding(
+              padding: EdgeInsets.all(AppSpacing.md),
+              child: Center(
+                child: SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            );
+          }
+          final blocked = snapshot.data ?? const <PlayerSearchResult>[];
+          if (blocked.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Text(
+                context.t(K.blockedEmpty),
+                key: const ValueKey('blocked-empty'),
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textMutedColor(context),
+                ),
+              ),
+            );
+          }
+          return Column(
+            children: [
+              for (final player in blocked)
+                ListTile(
+                  key: ValueKey('blocked-row-${player.id}'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    player.displayName,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                  subtitle: player.formattedTag == null
+                      ? null
+                      : Text(player.formattedTag!),
+                  trailing: TextButton(
+                    key: ValueKey('unblock-${player.id}'),
+                    onPressed: _working.contains(player.id)
+                        ? null
+                        : () => _unblock(player),
+                    child: Text(context.t(K.unblockAction)),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

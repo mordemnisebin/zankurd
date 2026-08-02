@@ -710,6 +710,31 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<List<PlayerSearchResult>> loadBlockedPlayers() async {
+    try {
+      final rows = await client
+          .from('blocked_users')
+          .select(
+            'blocked_id, profiles!blocked_users_blocked_id_fkey(display_name, player_tag)',
+          );
+      return rows.map((row) {
+        final profile = row['profiles'] as Map<String, dynamic>?;
+        return PlayerSearchResult(
+          id: row['blocked_id'] as String,
+          displayName:
+              (profile?['display_name'] as String?) ?? 'ZanKurd Oyuncusu',
+          playerTag: profile?['player_tag'] as String?,
+        );
+      }).toList();
+    } catch (e, s) {
+      _recordError(e, s, reason: 'loadBlockedPlayers failed');
+      // Liste okunamazsa BOŞ dön: burada `_offline`a düşmek sahte bir
+      // "kimseyi engellemedin" tablosu çizerdi.
+      return const [];
+    }
+  }
+
+  @override
   Future<bool> unblockPlayer(String playerId) async {
     try {
       await client.rpc('unblock_player', params: {'p_blocked_id': playerId});

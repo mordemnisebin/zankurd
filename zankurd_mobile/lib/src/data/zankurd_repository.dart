@@ -243,6 +243,15 @@ abstract class ZanKurdRepository {
   /// Engellenen oyuncu kimlikleri.
   Future<Set<String>> loadBlockedPlayerIds();
 
+  /// Engellenen oyuncuları ADLARIYLA getirir.
+  ///
+  /// [loadBlockedPlayerIds] yalnız kimlik döner; engeli kaldırmak isteyen
+  /// kullanıcıya UUID listesi göstermek işe yaramaz. 2026-08-02'ye kadar
+  /// engeli kaldırmanın hiçbir arayüz yolu yoktu: `unblockPlayer` depoda
+  /// duruyordu ama tek bir çağıranı bile yoktu — kullanıcı birini
+  /// engelledikten sonra kararını geri alamıyordu.
+  Future<List<PlayerSearchResult>> loadBlockedPlayers();
+
   /// Bir oyuncunun PROFİLİNİ (avatar fotoğrafı + görünen ad) moderasyona
   /// bildirir.
   ///
