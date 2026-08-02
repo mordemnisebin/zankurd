@@ -1635,6 +1635,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('Quiz reward owner changed before claim RPC.');
+      }
       final response = await client.rpc(
         'claim_quiz_reward',
         params: {
@@ -1645,6 +1648,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'p_total_questions': totalQuestions,
         },
       );
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('Quiz reward owner changed during claim RPC.');
+      }
       return _verifiedQuizRewardAmount(response, userId: user.id);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim_quiz_reward failed');

@@ -27,6 +27,37 @@ class RoomResultPresentation {
   final List<Player> opponents;
 }
 
+/// Sonuç tesliminden önce çağıranın beklediği oda ve kullanıcıyla snapshot'ın
+/// aynı, eksiksiz ve normal biçimde tamamlanmış 1v1 maça ait olduğunu doğrular.
+void validateRoomResultDeliveryContext(
+  RoomResultSnapshot snapshot, {
+  required String expectedUserId,
+  required String expectedRoomId,
+}) {
+  final ownerId = expectedUserId.trim();
+  final roomId = expectedRoomId.trim();
+  final snapshotRoomId = snapshot.room.id?.trim() ?? '';
+  final playerIds = snapshot.room.players
+      .map((player) => player.id?.trim() ?? '')
+      .toList(growable: false);
+  final hasValidPlayers =
+      playerIds.length == 2 &&
+      playerIds.every((id) => id.isNotEmpty) &&
+      playerIds.toSet().length == 2 &&
+      playerIds.where((id) => id == ownerId).length == 1;
+
+  if (ownerId.isEmpty ||
+      roomId.isEmpty ||
+      snapshot.ownPlayerId.trim() != ownerId ||
+      snapshotRoomId != roomId ||
+      !hasValidPlayers ||
+      snapshot.room.status != RoomStatus.finished ||
+      snapshot.endedReason.trim().toLowerCase() != 'completed' ||
+      snapshot.forfeitedBy != null) {
+    throw const FormatException('Invalid room result delivery context.');
+  }
+}
+
 /// Yetkili terminal snapshot'ı, aktif bir QuizScreen'e ihtiyaç duymadan
 /// sonuç ekranının kullandığı verilere dönüştürür.
 RoomResultPresentation buildRoomResultPresentation(

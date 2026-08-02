@@ -49,6 +49,11 @@ class _SignedInSupabaseRepository extends SupabaseZanKurdRepository {
 class _SignedInQuizRewardRepository extends SupabaseZanKurdRepository {
   _SignedInQuizRewardRepository(super.client);
 
+  String activeUserId = 'test-user';
+
+  @override
+  String? get currentUserId => activeUserId;
+
   @override
   Future<User> signInAnonymously() async => const User(
     id: 'test-user',
@@ -61,6 +66,16 @@ class _SignedInQuizRewardRepository extends SupabaseZanKurdRepository {
 
   @override
   Future<void> ensureProfile() async {}
+}
+
+class _IdentityChangingQuizRewardRepository
+    extends _SignedInQuizRewardRepository {
+  _IdentityChangingQuizRewardRepository(super.client);
+
+  @override
+  Future<void> ensureProfile() async {
+    activeUserId = 'other-user';
+  }
 }
 
 class _RoomQuestionsHttpClient extends http.BaseClient {
@@ -236,6 +251,34 @@ void main() {
         throwsStateError,
       );
       expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
+    },
+  );
+
+  test(
+    'awardQuizCoins profile awaitinde hesap değişirse reward RPC çağırmaz',
+    () async {
+      final httpClient = _QuizRewardHttpClient(const {
+        'amount': 0,
+        'already_claimed': false,
+      });
+      final repo = _IdentityChangingQuizRewardRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await expectLater(
+        repo.awardQuizCoins(
+          score: 100,
+          correctCount: 2,
+          bestStreak: 1,
+          totalQuestions: 10,
+        ),
+        throwsStateError,
+      );
+      expect(httpClient.requestedPaths, isEmpty);
     },
   );
 

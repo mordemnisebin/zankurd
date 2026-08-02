@@ -15,6 +15,8 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_result_screen.dart';
 
+const Duration _roomResultRecoveryTimeout = Duration(seconds: 15);
+
 class RoomResultRecoveryScreen extends StatefulWidget {
   const RoomResultRecoveryScreen({
     required this.repository,
@@ -38,6 +40,9 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   bool _loading = true;
   bool _ownerMismatch = false;
   int _attempt = 0;
+  RoomResultPresentation? _cachedPresentation;
+  QuizRewardSettlement? _cachedSettlement;
+  Future<QuizRewardSettlement>? _settlementInFlight;
 
   @override
   void initState() {
@@ -52,27 +57,20 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
 
   bool get _hasValidDeliveryContext {
     final currentUserId = widget.repository.currentUserId?.trim();
-    final snapshotOwnerId = widget.snapshot.ownPlayerId.trim();
     final roomId = widget.snapshot.room.id?.trim();
-    final playerIds = widget.snapshot.room.players
-        .map((player) => player.id?.trim() ?? '')
-        .toList(growable: false);
-    final hasValidPlayers =
-        playerIds.length == 2 &&
-        playerIds.every((id) => id.isNotEmpty) &&
-        playerIds.toSet().length == 2 &&
-        playerIds.where((id) => id == _expectedUserId).length == 1;
-    return _expectedUserId.isNotEmpty &&
-        currentUserId != null &&
-        currentUserId.isNotEmpty &&
-        currentUserId == _expectedUserId &&
-        snapshotOwnerId == _expectedUserId &&
-        roomId != null &&
-        roomId.isNotEmpty &&
-        hasValidPlayers &&
-        widget.snapshot.room.status == RoomStatus.finished &&
-        widget.snapshot.endedReason.trim().toLowerCase() == 'completed' &&
-        widget.snapshot.forfeitedBy == null;
+    if (currentUserId == null || currentUserId != _expectedUserId) {
+      return false;
+    }
+    try {
+      validateRoomResultDeliveryContext(
+        widget.snapshot,
+        expectedUserId: _expectedUserId,
+        expectedRoomId: roomId ?? '',
+      );
+      return true;
+    } on FormatException {
+      return false;
+    }
   }
 
   Future<void> _recover() async {
@@ -80,56 +78,93 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
     if (!_canContinue(attempt)) return;
 
     try {
-      final questions = await widget.repository.loadRoomQuestions(
-        widget.snapshot.room,
-      );
-      if (!mounted || !_canContinue(attempt)) return;
+      var presentation = _cachedPresentation;
+      if (presentation == null) {
+        final questions = await widget.repository
+            .loadRoomQuestions(widget.snapshot.room)
+            .timeout(_roomResultRecoveryTimeout);
+        if (!mounted || !_canContinue(attempt)) return;
 
-      final presentation = buildRoomResultPresentation(
-        widget.snapshot,
-        questions,
-        isKu: context.isKu,
-      );
+        presentation = buildRoomResultPresentation(
+          widget.snapshot,
+          questions,
+          isKu: context.isKu,
+        );
+        _cachedPresentation = presentation;
+        if (!_canContinue(attempt)) return;
+      }
+
+      var settlement = _cachedSettlement;
+      if (settlement == null) {
+        final reusedPendingSettlement = _settlementInFlight != null;
+        final pendingSettlement = _settlementInFlight ??=
+            (widget.rewardSettlementService ?? _defaultSettlementService())
+                .settle(
+                  room: presentation.room,
+                  practice: false,
+                  score: presentation.score,
+                  correctCount: presentation.correctCount,
+                  bestStreak: presentation.bestStreak,
+                  totalQuestions: presentation.totalQuestions,
+                );
+        try {
+          settlement = await pendingSettlement.timeout(
+            _roomResultRecoveryTimeout,
+          );
+        } on TimeoutException {
+          _showFailure(attempt);
+          return;
+        } catch (_) {
+          if (identical(_settlementInFlight, pendingSettlement)) {
+            _settlementInFlight = null;
+          }
+          rethrow;
+        }
+        if (!mounted || attempt != _attempt) return;
+        if (identical(_settlementInFlight, pendingSettlement)) {
+          _settlementInFlight = null;
+        }
+        if (settlement.isDurable) {
+          _cachedSettlement = settlement;
+        } else if (reusedPendingSettlement) {
+          if (!_canContinue(attempt)) return;
+          unawaited(_recover());
+          return;
+        }
+      }
       if (!_canContinue(attempt)) return;
-
-      final settlement =
-          await (widget.rewardSettlementService ?? _defaultSettlementService())
-              .settle(
-                room: presentation.room,
-                practice: false,
-                score: presentation.score,
-                correctCount: presentation.correctCount,
-                bestStreak: presentation.bestStreak,
-                totalQuestions: presentation.totalQuestions,
-              );
-      if (!mounted || !_canContinue(attempt)) return;
-
-      unawaited(
-        Navigator.of(context).pushReplacement(
-          AppRoute.to(
-            QuizResultScreen(
-              repository: widget.repository,
-              room: presentation.room,
-              score: presentation.score,
-              correctCount: presentation.correctCount,
-              wrongCount: presentation.wrongCount,
-              totalQuestions: presentation.totalQuestions,
-              bestStreak: presentation.bestStreak,
-              answerRecords: presentation.answerRecords,
-              coinsAwarded: settlement.coinsAwarded,
-              opponents: presentation.opponents,
-              rewardQueued:
-                  settlement.state == QuizRewardSettlementState.queued,
-              resultOwnerUserId: _expectedUserId,
-              rewardSettlementState: settlement.state,
-            ),
-          ),
-        ),
-      );
+      _openResult(presentation, settlement);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room result recovery');
       _showFailure(attempt);
     }
+  }
+
+  void _openResult(
+    RoomResultPresentation presentation,
+    QuizRewardSettlement settlement,
+  ) {
+    unawaited(
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          QuizResultScreen(
+            repository: widget.repository,
+            room: presentation.room,
+            score: presentation.score,
+            correctCount: presentation.correctCount,
+            wrongCount: presentation.wrongCount,
+            totalQuestions: presentation.totalQuestions,
+            bestStreak: presentation.bestStreak,
+            answerRecords: presentation.answerRecords,
+            coinsAwarded: settlement.coinsAwarded,
+            opponents: presentation.opponents,
+            rewardQueued: settlement.state == QuizRewardSettlementState.queued,
+            resultOwnerUserId: _expectedUserId,
+            rewardSettlementState: settlement.state,
+          ),
+        ),
+      ),
+    );
   }
 
   QuizRewardSettlementService _defaultSettlementService() {
@@ -183,53 +218,72 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
     unawaited(_recover());
   }
 
+  void _leaveRecovery() {
+    if (!mounted) return;
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(context.t(K.resultTitle))),
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: _loading
-                ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: AppSpacing.md),
-                      Text(
-                        context.t(K.resultRecoveryLoading),
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyMedium,
-                      ),
-                    ],
-                  )
-                : Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        _ownerMismatch ? AppIcons.shield : AppIcons.cloud,
-                        size: 42,
-                        color: AppTheme.gold,
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      Text(
-                        context.t(
-                          _ownerMismatch
-                              ? K.resultRecoveryOwnerChanged
-                              : K.resultRecoveryFailed,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _leaveRecovery();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: _leaveRecovery,
+            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+            icon: const Icon(AppIcons.arrowLeft),
+          ),
+          title: Text(context.t(K.resultTitle)),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: _loading
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          context.t(K.resultRecoveryLoading),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.bodyMedium,
                         ),
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyLarge,
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      FilledButton.icon(
-                        onPressed: _retry,
-                        icon: const Icon(AppIcons.arrowsRotate),
-                        label: Text(context.t(K.retry)),
-                      ),
-                    ],
-                  ),
+                      ],
+                    )
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          _ownerMismatch ? AppIcons.shield : AppIcons.cloud,
+                          size: 42,
+                          color: AppTheme.gold,
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          context.t(
+                            _ownerMismatch
+                                ? K.resultRecoveryOwnerChanged
+                                : K.resultRecoveryFailed,
+                          ),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.bodyLarge,
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        FilledButton.icon(
+                          onPressed: _retry,
+                          icon: const Icon(AppIcons.arrowsRotate),
+                          label: Text(context.t(K.retry)),
+                        ),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),

@@ -57,6 +57,7 @@ class QuizRewardSettlementService {
         coinsAwarded: 0,
       );
     }
+    final rewardOwnerId = _repository.currentUserId?.trim() ?? '';
 
     late final int amount;
     try {
@@ -69,6 +70,18 @@ class QuizRewardSettlementService {
       );
     } catch (error, stack) {
       _errorRecorder(error, stack, reason: 'awardQuizCoins failed');
+      final currentOwnerId = _repository.currentUserId?.trim() ?? '';
+      if (rewardOwnerId.isEmpty || currentOwnerId != rewardOwnerId) {
+        _errorRecorder(
+          StateError('Quiz reward owner changed before queue.'),
+          StackTrace.current,
+          reason: 'quiz reward owner changed before queue',
+        );
+        return const QuizRewardSettlement(
+          state: QuizRewardSettlementState.unresolved,
+          coinsAwarded: 0,
+        );
+      }
       final queueReward = _queueReward;
       if (queueReward != null) {
         try {

@@ -36,15 +36,28 @@ import 'package:flutter_test/flutter_test.dart';
 /// biçimde geri gelemez.
 void main() {
   late String quizScreen;
+  late String supabaseRepository;
 
   setUpAll(() {
     quizScreen = File('lib/src/screens/quiz_screen.dart').readAsStringSync();
+    supabaseRepository = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
   });
 
   test('soru ilerletme RPC ile yapılıyor', () {
-    final collapsed = quizScreen.replaceAll(RegExp(r'\s+'), ' ');
+    final quizCollapsed = quizScreen.replaceAll(RegExp(r'\s+'), ' ');
+    final repositoryCollapsed = supabaseRepository.replaceAll(
+      RegExp(r'\s+'),
+      ' ',
+    );
     expect(
-      collapsed,
+      quizCollapsed,
+      contains('widget.repository.advanceRoomQuestion('),
+      reason: 'Ekran durum yazımını depo sözleşmesine devretmeli.',
+    );
+    expect(
+      repositoryCollapsed,
       contains("client.rpc( 'advance_room_question'"),
       reason: 'İlerletme sunucu yetkisiyle çalışan bir fonksiyona ait.',
     );

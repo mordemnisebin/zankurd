@@ -18,12 +18,16 @@ void main() {
     expect(source, contains('_opponentFinished'));
   });
 
-  test('1v1 can request or perform progress when host is unavailable', () {
+  test('1v1 supports legacy host requests and server CAS recovery', () {
     final source = File('lib/src/screens/quiz_screen.dart').readAsStringSync();
+    // Eski broadcast tabanlı odalarda host isteği korunur.
     expect(source, contains("'advance_request': true"));
     expect(source, contains('_requestAuthoritativeAdvance()'));
-    expect(source, contains('_advanceAuthoritativeIndex();'));
-    expect(source, contains('_authoritativeAdvanceFallbackTimer'));
-    expect(source, contains('if (!_isHost) return;'));
+
+    // Server-hidden oturumlarda iki istemci de aynı expected-index CAS'ini
+    // güvenle deneyebilir; başarısızlıklar sınırlı retry zamanlayıcısına gider.
+    expect(source, contains('unawaited(_advanceAuthoritativeIndex())'));
+    expect(source, contains('_scheduleAdvanceRetry(expected, attempt)'));
+    expect(source, contains('_advanceRetryTimer'));
   });
 }

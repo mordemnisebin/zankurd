@@ -33,6 +33,25 @@ const _questions = <QuizQuestion>[
   ),
 ];
 
+const _resultQuestions = <QuizQuestion>[
+  QuizQuestion(
+    id: 'server-q-1',
+    category: 'Ziman',
+    prompt: 'Server pirs 1',
+    answers: ['A1', 'B1', 'C1', 'D1'],
+    correctAnswer: 'A1',
+    explanation: 'A1 rast e.',
+  ),
+  QuizQuestion(
+    id: 'server-q-2',
+    category: 'Ziman',
+    prompt: 'Server pirs 2',
+    answers: ['A2', 'B2', 'C2', 'D2'],
+    correctAnswer: 'A2',
+    explanation: 'A2 rast e.',
+  ),
+];
+
 const _room = GameRoom(
   id: 'server-room',
   name: '1v1',
@@ -113,6 +132,8 @@ class _ServerSessionRepository extends MockZanKurdRepository {
   int submitCalls = 0;
   int finishCalls = 0;
   int awardCalls = 0;
+  int resultCalls = 0;
+  int ackCalls = 0;
   Map<String, dynamic>? submitResult;
   final List<int> expectedIndexes = [];
   final List<Map<String, dynamic>> sentBroadcasts = [];
@@ -192,6 +213,22 @@ class _ServerSessionRepository extends MockZanKurdRepository {
   @override
   Future<void> finishGame(GameRoom room) async {
     finishCalls++;
+  }
+
+  @override
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room) async {
+    resultCalls++;
+    return _serverResultSnapshot();
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
+    return _resultQuestions;
+  }
+
+  @override
+  Future<void> acknowledgeRoomResult(GameRoom room) async {
+    ackCalls++;
   }
 
   @override
@@ -634,7 +671,8 @@ void main() {
 
     expect(repository.advanceCalls, 1);
     expect(find.byType(QuizResultScreen), findsOneWidget);
-    expect(repository.finishCalls, 1);
+    expect(repository.finishCalls, 0);
+    expect(repository.resultCalls, 1);
     expect(repository.awardCalls, 1);
   });
 
@@ -656,4 +694,53 @@ void main() {
     expect(repository.finishCalls, 0);
     expect(repository.awardCalls, 0);
   });
+}
+
+RoomResultSnapshot _serverResultSnapshot() {
+  return RoomResultSnapshot(
+    room: _room.copyWith(
+      players: const [
+        Player(
+          id: 'me',
+          name: 'Ez',
+          score: 40,
+          streak: 1,
+          state: Player.readyState,
+        ),
+        Player(
+          id: 'opponent',
+          name: 'Rakip',
+          score: 20,
+          state: Player.readyState,
+        ),
+      ],
+      status: RoomStatus.finished,
+    ),
+    ownPlayerId: 'me',
+    questionIds: const ['server-q-1', 'server-q-2'],
+    answers: const [
+      ResumedAnswer(
+        questionId: 'server-q-1',
+        questionIndex: 0,
+        selectedOptionKey: 'B',
+        correctOptionKey: 'A',
+        isCorrect: false,
+        pointsAwarded: 0,
+        responseMs: 1200,
+      ),
+      ResumedAnswer(
+        questionId: 'server-q-2',
+        questionIndex: 1,
+        selectedOptionKey: 'A',
+        correctOptionKey: 'A',
+        isCorrect: true,
+        pointsAwarded: 40,
+        responseMs: 900,
+      ),
+    ],
+    winnerId: 'me',
+    endedReason: 'completed',
+    forfeitedBy: null,
+    finishedAt: DateTime.utc(2026, 8, 2),
+  );
 }

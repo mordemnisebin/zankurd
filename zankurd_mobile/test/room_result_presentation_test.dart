@@ -5,6 +5,110 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/services/room_result_presentation.dart';
 
 void main() {
+  test(
+    'teslimat contexti yalnız exact terminal owner snapshotını kabul eder',
+    () {
+      final snapshot = _snapshot(
+        questionIds: const ['q1'],
+        answers: [_answer('q1', 0, selected: 'A', correct: 'A', points: 10)],
+        ownScore: 10,
+      );
+
+      expect(
+        () => validateRoomResultDeliveryContext(
+          snapshot,
+          expectedUserId: ' me ',
+          expectedRoomId: ' room-1 ',
+        ),
+        returnsNormally,
+      );
+      expect(
+        () => validateRoomResultDeliveryContext(
+          snapshot,
+          expectedUserId: 'other',
+          expectedRoomId: 'room-1',
+        ),
+        throwsFormatException,
+      );
+      expect(
+        () => validateRoomResultDeliveryContext(
+          snapshot,
+          expectedUserId: 'me',
+          expectedRoomId: 'other-room',
+        ),
+        throwsFormatException,
+      );
+    },
+  );
+
+  test('teslimat contexti non-terminal ve malformed oyuncuları reddeder', () {
+    final base = _snapshot(
+      questionIds: const ['q1'],
+      answers: [_answer('q1', 0, selected: 'A', correct: 'A', points: 10)],
+      ownScore: 10,
+    );
+    final invalidRooms = [
+      base.room.copyWith(status: RoomStatus.active),
+      base.room.copyWith(
+        players: const [
+          Player(id: 'me', name: 'Ez', score: 10, state: Player.readyState),
+          Player(
+            id: 'opponent',
+            name: 'Hevrik',
+            score: 40,
+            state: Player.readyState,
+          ),
+          Player(
+            id: 'third',
+            name: 'Sêyem',
+            score: 20,
+            state: Player.readyState,
+          ),
+        ],
+      ),
+      base.room.copyWith(
+        players: const [
+          Player(id: 'me', name: 'Ez', score: 10, state: Player.readyState),
+          Player(
+            id: 'me',
+            name: 'Dublîkat',
+            score: 40,
+            state: Player.readyState,
+          ),
+        ],
+      ),
+      base.room.copyWith(
+        players: const [
+          Player(id: 'me', name: 'Ez', score: 10, state: Player.readyState),
+          Player(id: ' ', name: 'Bê ID', score: 40, state: Player.readyState),
+        ],
+      ),
+    ];
+
+    for (final room in invalidRooms) {
+      expect(
+        () => validateRoomResultDeliveryContext(
+          _snapshotWithRoom(base, room),
+          expectedUserId: 'me',
+          expectedRoomId: 'room-1',
+        ),
+        throwsFormatException,
+      );
+    }
+    expect(
+      () => validateRoomResultDeliveryContext(
+        _snapshotWithTerminal(
+          base,
+          endedReason: 'forfeit',
+          forfeitedBy: 'opponent',
+        ),
+        expectedUserId: 'me',
+        expectedRoomId: 'room-1',
+      ),
+      throwsFormatException,
+    );
+  });
+
   test('terminal snapshot seçili dile ve yetkili istatistiklere çevrilir', () {
     final questions = [
       _question('q1', imageUrl: 'https://example.com/q1.webp'),
@@ -237,5 +341,38 @@ RoomResultSnapshot _snapshot({
     endedReason: 'completed',
     forfeitedBy: null,
     finishedAt: DateTime.utc(2026, 8, 2),
+  );
+}
+
+RoomResultSnapshot _snapshotWithRoom(
+  RoomResultSnapshot snapshot,
+  GameRoom room,
+) {
+  return RoomResultSnapshot(
+    room: room,
+    ownPlayerId: snapshot.ownPlayerId,
+    questionIds: snapshot.questionIds,
+    answers: snapshot.answers,
+    winnerId: snapshot.winnerId,
+    endedReason: snapshot.endedReason,
+    forfeitedBy: snapshot.forfeitedBy,
+    finishedAt: snapshot.finishedAt,
+  );
+}
+
+RoomResultSnapshot _snapshotWithTerminal(
+  RoomResultSnapshot snapshot, {
+  required String endedReason,
+  required String? forfeitedBy,
+}) {
+  return RoomResultSnapshot(
+    room: snapshot.room,
+    ownPlayerId: snapshot.ownPlayerId,
+    questionIds: snapshot.questionIds,
+    answers: snapshot.answers,
+    winnerId: snapshot.winnerId,
+    endedReason: endedReason,
+    forfeitedBy: forfeitedBy,
+    finishedAt: snapshot.finishedAt,
   );
 }

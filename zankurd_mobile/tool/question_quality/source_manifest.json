@@ -906,6 +906,21 @@
       "columns": {}
     },
     {
+      "id": "quiz_result_progress_receipt_store",
+      "description": "Delivered-result progress receipt store",
+      "path": "lib/src/data/quiz_result_progress_receipt_store.dart",
+      "role": "ignored_non_question",
+      "parser": "none",
+      "canonicalGroup": "none",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 1000,
+      "expectedRecordCount": null,
+      "notes": "State store, not question data",
+      "columns": {}
+    },
+    {
       "id": "root_question_tests",
       "description": "Root test files",
       "glob": "test/*.dart",

@@ -27,6 +27,7 @@ import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
+import '../services/room_result_presentation.dart';
 import '../services/tts_service.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
@@ -45,6 +46,7 @@ import 'quiz/quiz_option_tile.dart';
 import 'quiz/quiz_timer_widget.dart';
 import 'quiz/quiz_wildcard_bar.dart';
 import 'quiz_result_screen.dart';
+import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 part 'quiz/quiz_widgets.dart';
@@ -80,6 +82,9 @@ const double _compactLandscapeMinWidth = 700.0;
 /// kalır ve dikey akışı kullanır.
 const double _compactLandscapeMaxHeight = 600.0;
 
+/// Terminal 1v1 çağrısı sonsuza dek bekleyip geri dönüşü kilitlememeli.
+const Duration _onlineResultRequestTimeout = Duration(seconds: 15);
+
 /// İki sütunlu telefon-yatay düzeni bu viewport için uygun mu?
 ///
 /// Beklenmeyen veya sonsuz bir yükseklik kısıtı gelirse güvenli varsayılan
@@ -101,6 +106,15 @@ enum _MultiplayerPhase {
   /// İki oyuncu da cevapladı veya süre bitti; doğru cevap gösteriliyor.
   reveal,
 }
+
+enum _OnlineResultPhase { idle, loading, retryableFailure }
+
+typedef _QuizCoinSettlement = ({
+  int coinsAwarded,
+  bool rewardQueued,
+  bool isDurable,
+  String ownerUserId,
+});
 
 class _OpponentAnswer {
   const _OpponentAnswer({required this.name, required this.answer});
@@ -250,6 +264,21 @@ class _QuizScreenState extends State<QuizScreen>
   bool _reconcileInFlight = false;
   int _reconcileGeneration = 0;
   bool _terminalHandling = false;
+  _OnlineResultPhase _onlineResultPhase = _OnlineResultPhase.idle;
+  bool _onlineResultInFlight = false;
+  bool _onlineResultOwnerChanged = false;
+  int _onlineResultGeneration = 0;
+  String _onlineResultOwnerId = '';
+  bool _onlineResultFinishRequired = false;
+  _QuizCoinSettlement? _legacyRewardSettlement;
+  Future<void>? _legacyFinishInFlight;
+  Future<_QuizCoinSettlement>? _legacySettlementInFlight;
+  bool _legacyFinishRequired = false;
+  bool _legacyResultInFlight = false;
+  bool _legacyRetryRequested = false;
+  int _legacyResultGeneration = 0;
+  RoomEndState? _deferredEndState;
+  int _exitGeneration = 0;
   bool _serverReadyWaiting = false;
   bool _clientReadyInFlight = false;
   bool _clientReadyMarked = false;
@@ -360,6 +389,7 @@ class _QuizScreenState extends State<QuizScreen>
       for (final question in widget.questions) question.localized(isKu: _isKu),
     ];
     _myId = widget.repository.currentUserId;
+    _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
     livePlayers = List<Player>.of(widget.room.players);
     _serverReadyWaiting = _usesServerHiddenAnswers;
     final initialResume = _matchingResumeSnapshot(widget.resumeSnapshot);
@@ -635,10 +665,12 @@ class _QuizScreenState extends State<QuizScreen>
               }
             });
       }
-      _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-        _pollRoomIndex();
+      _ensureRoomPolling();
+      final binding = WidgetsBinding.instance;
+      binding.addPostFrameCallback((_) {
+        if (mounted) unawaited(_reconcileOnlineRoom());
       });
-      unawaited(_reconcileOnlineRoom());
+      binding.scheduleFrame();
     }
 
     if (_resumingOnlineSession && _questionVisualReady) {
@@ -1304,7 +1336,18 @@ class _QuizScreenState extends State<QuizScreen>
   /// İlerleme varken geri tuşunda onay sorar; yanlışlıkla çıkışı önler.
   Future<void> _confirmExit() async {
     if (_exitInFlight || _terminalHandling || completing) return;
+    if (_isMultiplayer && !_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    final generation = ++_exitGeneration;
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) return;
     _exitInFlight = true;
+    var leaveConfirmed = false;
+    var leaveFailed = false;
+    RoomLeaveOutcome? outcome;
     try {
       final leave = await showDialog<bool>(
         context: context,
@@ -1347,25 +1390,93 @@ class _QuizScreenState extends State<QuizScreen>
           ],
         ),
       );
-      if (leave != true || !mounted) return;
+      if (leave != true ||
+          !_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+        return;
+      }
+      if (!mounted) return;
+      leaveConfirmed = true;
 
       if (_isMultiplayer) {
-        await widget.repository.leaveOnlineRoom(widget.room);
+        final leaveOutcome = await widget.repository.leaveOnlineRoom(
+          widget.room,
+        );
+        if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+          return;
+        }
         if (!mounted) return;
-        Navigator.of(context).popUntil((route) => route.isFirst);
+        outcome = leaveOutcome;
+        if (!outcome.completed) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
       } else {
         Navigator.of(context).pop();
       }
     } catch (error, stack) {
+      leaveFailed = true;
       ErrorReporter.record(error, stack, reason: 'quiz online leave failed');
-      if (mounted) {
+      if (!mounted) return;
+      if (_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(context.t(K.roomLeaveFailed))));
       }
     } finally {
       _exitInFlight = false;
+      if (mounted &&
+          _canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+        final deferred = _deferredEndState;
+        _deferredEndState = null;
+        if (outcome?.completed == true) {
+          _scheduleTerminalAction(
+            () => _completeMultiplayerResult(requestFinish: false),
+          );
+        } else if ((!leaveConfirmed || leaveFailed) && deferred != null) {
+          _scheduleTerminalAction(() => _handleRoomEndState(deferred));
+        }
+      }
     }
+  }
+
+  bool _canContinueExit(
+    int generation,
+    String expectedOwnerId,
+    ModalRoute<dynamic>? expectedRoute,
+  ) {
+    if (!mounted || generation != _exitGeneration) return false;
+    return _canContinueOnExpectedRoute(expectedOwnerId, expectedRoute);
+  }
+
+  bool _canContinueOnExpectedRoute(
+    String expectedOwnerId,
+    ModalRoute<dynamic>? expectedRoute,
+  ) {
+    if (!mounted ||
+        expectedRoute == null ||
+        ModalRoute.of(context) != expectedRoute ||
+        !expectedRoute.isCurrent) {
+      return false;
+    }
+    if (!_isMultiplayer) return true;
+    return expectedOwnerId == _onlineResultOwnerId && _hasExpectedOnlineOwner;
+  }
+
+  bool get _hasExpectedOnlineOwner {
+    final currentOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    return _onlineResultOwnerId.isNotEmpty &&
+        currentOwnerId == _onlineResultOwnerId;
+  }
+
+  bool get _hasCurrentOnlineRoomContext =>
+      _canContinueOnExpectedRoute(_onlineResultOwnerId, ModalRoute.of(context));
+
+  void _scheduleTerminalAction(Future<void> Function() action) {
+    final binding = WidgetsBinding.instance;
+    binding.addPostFrameCallback((_) {
+      if (!mounted || ModalRoute.of(context)?.isCurrent != true) return;
+      unawaited(action());
+    });
+    binding.scheduleFrame();
   }
 
   /// Başlıkta görünecek tur adı.
@@ -1384,6 +1495,9 @@ class _QuizScreenState extends State<QuizScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (_onlineResultPhase != _OnlineResultPhase.idle) {
+      return _buildOnlineResultGate(context);
+    }
     if (_questions.isEmpty) {
       return Scaffold(
         appBar: AppBar(),
@@ -1793,12 +1907,32 @@ class _QuizScreenState extends State<QuizScreen>
     await _reconcileOnlineRoom();
   }
 
+  void _ensureRoomPolling() {
+    if (!_isMultiplayer || _pollTimer?.isActive == true) return;
+    _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+      _pollRoomIndex();
+    });
+  }
+
   Future<void> _reconcileOnlineRoom() async {
+    if (_isMultiplayer && !_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
     if (!_isMultiplayer ||
         widget.room.id == null ||
         _reconcileInFlight ||
         _terminalHandling ||
         completing) {
+      return;
+    }
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    final routeMatches =
+        expectedRoute != null && ModalRoute.of(context) == expectedRoute;
+    if (!routeMatches ||
+        (!_exitInFlight &&
+            !_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute))) {
       return;
     }
     _reconcileInFlight = true;
@@ -1807,44 +1941,56 @@ class _QuizScreenState extends State<QuizScreen>
     List<Player>? players;
     RoomEndState? endState;
 
-    await Future.wait<void>([
-      () async {
-        try {
-          snapshot = await widget.repository.loadMyResumableRoom();
-        } catch (error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'quiz room resume reconciliation failed',
-          );
-        }
-      }(),
-      () async {
-        try {
-          players = await widget.repository.loadRoomPlayers(widget.room);
-        } catch (error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'quiz room players reconciliation failed',
-          );
-        }
-      }(),
-      () async {
-        try {
-          endState = await widget.repository.loadRoomEndState(widget.room);
-        } catch (error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'quiz room end reconciliation failed',
-          );
-        }
-      }(),
-    ]);
-
     try {
+      await Future.wait<void>([
+        () async {
+          try {
+            snapshot = await widget.repository.loadMyResumableRoom();
+          } catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz room resume reconciliation failed',
+            );
+          }
+        }(),
+        () async {
+          try {
+            players = await widget.repository.loadRoomPlayers(widget.room);
+          } catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz room players reconciliation failed',
+            );
+          }
+        }(),
+        () async {
+          try {
+            endState = await widget.repository.loadRoomEndState(widget.room);
+          } catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz room end reconciliation failed',
+            );
+          }
+        }(),
+      ]).timeout(_onlineResultRequestTimeout);
       if (!mounted || generation != _reconcileGeneration) return;
+      if (!_hasExpectedOnlineOwner) {
+        _enterOwnerChangedResultGate();
+        return;
+      }
+      if (_exitInFlight) {
+        if (ModalRoute.of(context) != expectedRoute) return;
+        final state = endState;
+        if (state != null) await _handleRoomEndState(state);
+        return;
+      }
+      if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
+        return;
+      }
 
       final matchingSnapshot = _matchingResumeSnapshot(snapshot);
       if (matchingSnapshot != null &&
@@ -1867,6 +2013,12 @@ class _QuizScreenState extends State<QuizScreen>
       if (state != null && mounted) {
         await _handleRoomEndState(state);
       }
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'quiz room reconciliation timed out',
+      );
     } finally {
       if (generation == _reconcileGeneration) {
         _reconcileInFlight = false;
@@ -1945,18 +2097,36 @@ class _QuizScreenState extends State<QuizScreen>
     }
   }
 
-  Future<void> _handleRoomEndState(RoomEndState state) async {
-    if (state.status != RoomStatus.finished ||
-        completing ||
-        _terminalHandling ||
-        _exitInFlight) {
-      return;
+  Future<bool> _handleRoomEndState(RoomEndState state) async {
+    if (state.status != RoomStatus.finished) {
+      return false;
     }
+    if (_exitInFlight) {
+      _deferredEndState = state;
+      return false;
+    }
+    if (_isMultiplayer && !_hasExpectedOnlineOwner) {
+      _deferredEndState = state;
+      _enterOwnerChangedResultGate();
+      return false;
+    }
+    if (_isMultiplayer && !_hasCurrentOnlineRoomContext) {
+      _deferredEndState = state;
+      return false;
+    }
+    if (completing || _terminalHandling) return false;
     final reason = state.endedReason?.trim().toLowerCase();
     if (reason == 'completed' ||
         (reason == null && isLastQuestion && answered)) {
-      await _finishGameMultiplayer();
-      return;
+      await _completeMultiplayerResult(requestFinish: false);
+      return true;
+    }
+
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
+      _deferredEndState = state;
+      return false;
     }
 
     _terminalHandling = true;
@@ -1998,8 +2168,14 @@ class _QuizScreenState extends State<QuizScreen>
         ],
       ),
     );
-    if (!mounted) return;
+    if (!mounted) return true;
+    if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
+      _terminalHandling = false;
+      _deferredEndState = state;
+      return false;
+    }
     Navigator.of(context).popUntil((route) => route.isFirst);
+    return true;
   }
 
   Future<void> _advanceAuthoritativeIndex({
@@ -2114,19 +2290,24 @@ class _QuizScreenState extends State<QuizScreen>
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
 
-  Future<int> _claimCoins({
+  Future<_QuizCoinSettlement> _settleCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
   }) async {
-    _rewardQueued = false;
-    if (widget.practice) return 0;
-    // Yerel soru bankasındaki bir turun sonucu sunucu tarafından bağımsız
-    // doğrulanamaz. Bu yüzden coin yalnız sunucunun cevap kayıtlarını tuttuğu
-    // çevrimiçi odalarda verilir ve yerel tur kuyruğa da alınmaz.
-    if (widget.room.id == null) return 0;
+    final rewardOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    if (widget.practice || widget.room.id == null) {
+      return (
+        coinsAwarded: 0,
+        rewardQueued: false,
+        isDurable: true,
+        ownerUserId: rewardOwnerId,
+      );
+    }
     var amount = 0;
+    var rewardQueued = false;
+    var durable = false;
     // "Sunucu 0 verdi" ile "sunucuya ulaşılamadı" aynı şey değil.
     //
     // Eskiden yalnız `amount <= 0`a bakılıyordu. Sunucu düşük skora
@@ -2145,11 +2326,26 @@ class _QuizScreenState extends State<QuizScreen>
         totalQuestions: totalQuestions,
         room: widget.room,
       );
+      durable = true;
     } catch (error, stack) {
       awardFailed = true;
       ErrorReporter.record(error, stack, reason: 'awardQuizCoins failed');
     }
     if (awardFailed) {
+      final currentOwnerId = widget.repository.currentUserId?.trim() ?? '';
+      if (rewardOwnerId.isEmpty || currentOwnerId != rewardOwnerId) {
+        ErrorReporter.record(
+          StateError('Quiz reward owner changed before queue.'),
+          StackTrace.current,
+          reason: 'quiz reward owner changed before queue',
+        );
+        return (
+          coinsAwarded: amount,
+          rewardQueued: false,
+          isDurable: false,
+          ownerUserId: rewardOwnerId,
+        );
+      }
       // Kuyruk yoksa (oturum kapatılıp yeniden girilmişse SyncManager
       // kurulu değildir) tur yine de bitmelidir. Eskiden burada
       // `SyncManager.instance` çağrılıyordu ve fırlatan istisna
@@ -2165,113 +2361,669 @@ class _QuizScreenState extends State<QuizScreen>
             totalQuestions: totalQuestions,
             roomId: widget.room.id,
           );
-          _rewardQueued = true;
+          rewardQueued = true;
+          durable = true;
         } catch (error, stack) {
-          _rewardQueued = false;
           ErrorReporter.record(error, stack, reason: 'queueQuizReward failed');
         }
       }
     }
-    return amount;
+    return (
+      coinsAwarded: amount,
+      rewardQueued: rewardQueued,
+      isDurable: durable,
+      ownerUserId: rewardOwnerId,
+    );
+  }
+
+  Future<int> _claimCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) async {
+    _rewardQueued = false;
+    if (widget.practice) return 0;
+    if (widget.room.id == null) return 0;
+    final settlement = await _settleCoins(
+      score: score,
+      correctCount: correctCount,
+      bestStreak: bestStreak,
+      totalQuestions: totalQuestions,
+    );
+    if (settlement.rewardQueued) {
+      _rewardQueued = true;
+    } else {
+      _rewardQueued = false;
+    }
+    return settlement.coinsAwarded;
   }
 
   Future<void> _finishGameMultiplayer() async {
-    if (completing) return;
+    if (completing ||
+        _terminalHandling ||
+        _onlineResultPhase != _OnlineResultPhase.idle) {
+      return;
+    }
+    await _completeMultiplayerResult(requestFinish: true);
+  }
+
+  Future<void> _completeMultiplayerResult({required bool requestFinish}) {
+    if (widget.is1v1) {
+      return _reconcileCompletedRoomResult(requestFinish: requestFinish);
+    }
+    return _finishLegacyMultiplayerResult(requestFinish: requestFinish);
+  }
+
+  Future<void> _finishLegacyMultiplayerResult({
+    required bool requestFinish,
+  }) async {
+    if (_legacyResultInFlight || completing || _terminalHandling) return;
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) return;
+    _legacyFinishRequired = requestFinish;
+    final generation = ++_legacyResultGeneration;
+    _legacyResultInFlight = true;
     setState(() => completing = true);
 
-    RoomEndState? stateAfterFailure;
     try {
-      await widget.repository.finishGame(widget.room);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
+      RoomEndState? stateAfterFailure;
+      if (requestFinish) {
+        try {
+          final pendingFinish = _legacyFinishInFlight ??= widget.repository
+              .finishGame(widget.room);
+          await pendingFinish.timeout(_onlineResultRequestTimeout);
+          if (identical(_legacyFinishInFlight, pendingFinish)) {
+            _legacyFinishInFlight = null;
+          }
+          _legacyFinishRequired = false;
+        } on TimeoutException catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'quiz finish game timed out',
+          );
+          _showLegacyResultFailure(generation);
+          return;
+        } catch (error, stack) {
+          _legacyFinishInFlight = null;
+          ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
+          try {
+            stateAfterFailure = await widget.repository
+                .loadRoomEndState(widget.room)
+                .timeout(_onlineResultRequestTimeout);
+          } catch (stateError, stateStack) {
+            ErrorReporter.record(
+              stateError,
+              stateStack,
+              reason: 'quiz finish state verification failed',
+            );
+            _showLegacyResultFailure(generation);
+            return;
+          }
+          if (!mounted) return;
+          if (!_canContinueLegacyResult(
+            generation,
+            expectedOwnerId,
+            expectedRoute,
+          )) {
+            _releaseLegacyCompleting(generation);
+            return;
+          }
+          final verified = stateAfterFailure;
+          if (verified.status != RoomStatus.finished) {
+            _showLegacyResultFailure(generation);
+            return;
+          }
+          _legacyFinishRequired = false;
+          final reason = verified.endedReason?.trim().toLowerCase();
+          if (reason != null && reason != 'completed') {
+            _releaseLegacyCompleting(generation);
+            await _handleRoomEndState(verified);
+            return;
+          }
+        }
+      }
+
       try {
-        stateAfterFailure = await widget.repository.loadRoomEndState(
-          widget.room,
-        );
-      } catch (stateError, stateStack) {
+        final finalPlayers = await widget.repository
+            .loadRoomPlayers(widget.room)
+            .timeout(_onlineResultRequestTimeout);
+        if (!mounted) return;
+        if (!_canContinueLegacyResult(
+          generation,
+          expectedOwnerId,
+          expectedRoute,
+        )) {
+          _releaseLegacyCompleting(generation);
+          return;
+        }
+        if (finalPlayers.isNotEmpty) {
+          setState(() {
+            livePlayers = List<Player>.of(finalPlayers)
+              ..sort((a, b) => b.score.compareTo(a.score));
+            final myPlayerIndex = livePlayers.indexWhere(_isMe);
+            if (myPlayerIndex != -1) {
+              final myPlayer = livePlayers[myPlayerIndex];
+              if (myPlayer.score >= score) {
+                score = myPlayer.score;
+                streak = myPlayer.streak;
+                bestStreak = max(bestStreak, myPlayer.streak);
+              }
+            }
+            _applyOwnAuthoritativePlayerState();
+          });
+        }
+      } on TimeoutException catch (error, stack) {
         ErrorReporter.record(
-          stateError,
-          stateStack,
-          reason: 'quiz finish state verification failed',
+          error,
+          stack,
+          reason: 'quiz final players reconciliation timed out',
+        );
+        _showLegacyResultFailure(generation);
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'quiz final players reconciliation failed',
         );
       }
-      final verified = stateAfterFailure;
-      if (verified?.status != RoomStatus.finished) {
-        if (mounted) setState(() => completing = false);
-        if (mounted) unawaited(_reconcileOnlineRoom());
+      if (!mounted) return;
+      if (!_canContinueLegacyResult(
+        generation,
+        expectedOwnerId,
+        expectedRoute,
+      )) {
+        _releaseLegacyCompleting(generation);
         return;
       }
-      final reason = verified?.endedReason?.trim().toLowerCase();
-      if (reason != null && reason != 'completed') {
-        if (mounted) setState(() => completing = false);
-        if (mounted) await _handleRoomEndState(verified!);
+      _syncMyDuelState(answeredNow: true, finished: true);
+
+      var settlement = _legacyRewardSettlement;
+      if (settlement == null) {
+        for (var attempt = 0; attempt < 2 && settlement == null; attempt++) {
+          final reusedPendingSettlement = _legacySettlementInFlight != null;
+          final pendingSettlement = _legacySettlementInFlight ??= _settleCoins(
+            score: score,
+            correctCount: correctCount,
+            bestStreak: bestStreak,
+            totalQuestions: widget.questions.length,
+          );
+          late final _QuizCoinSettlement candidate;
+          try {
+            candidate = await pendingSettlement.timeout(
+              _onlineResultRequestTimeout,
+            );
+          } on TimeoutException catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz legacy reward settlement timed out',
+            );
+            _showLegacyResultFailure(generation);
+            return;
+          } catch (error, stack) {
+            if (identical(_legacySettlementInFlight, pendingSettlement)) {
+              _legacySettlementInFlight = null;
+            }
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz legacy reward settlement failed',
+            );
+            _showLegacyResultFailure(generation);
+            return;
+          }
+          if (identical(_legacySettlementInFlight, pendingSettlement)) {
+            _legacySettlementInFlight = null;
+          }
+          if (candidate.isDurable &&
+              candidate.ownerUserId == expectedOwnerId) {
+            _legacyRewardSettlement = candidate;
+          }
+          if (!mounted) return;
+          if (!_canContinueLegacyResult(
+            generation,
+            expectedOwnerId,
+            expectedRoute,
+          )) {
+            _releaseLegacyCompleting(generation);
+            return;
+          }
+          if (!candidate.isDurable && reusedPendingSettlement) {
+            continue;
+          }
+          settlement = candidate;
+        }
+        if (settlement == null) {
+          _showLegacyResultFailure(generation);
+          return;
+        }
+        if (settlement.isDurable && settlement.ownerUserId == expectedOwnerId) {
+          _legacyRewardSettlement = settlement;
+        }
+      }
+
+      if (!mounted) return;
+      if (!_canContinueLegacyResult(
+        generation,
+        expectedOwnerId,
+        expectedRoute,
+      )) {
+        _releaseLegacyCompleting(generation);
         return;
       }
+      context.read<SoundProvider>().playWin();
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          QuizResultScreen(
+            repository: widget.repository,
+            room: _resultRoom,
+            score: score,
+            correctCount: correctCount,
+            wrongCount: wrongCount,
+            totalQuestions: widget.questions.length,
+            bestStreak: bestStreak,
+            answerRecords: answerRecords,
+            coinsAwarded: settlement.coinsAwarded,
+            rewardQueued: settlement.rewardQueued,
+            opponents: _opponents.toList(),
+            practice: widget.practice,
+            dailyQuiz: widget.dailyQuiz,
+            contestId: widget.contestId,
+          ),
+        ),
+        result: _completionResult(),
+      );
+    } finally {
+      _legacyResultInFlight = false;
+      if (_legacyRetryRequested) {
+        _legacyRetryRequested = false;
+        if (mounted &&
+            _hasExpectedOnlineOwner &&
+            _onlineResultPhase == _OnlineResultPhase.retryableFailure) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) unawaited(_retryTeamOnlineResultGate());
+          });
+          WidgetsBinding.instance.scheduleFrame();
+        }
+      }
+    }
+  }
+
+  bool _canContinueLegacyResult(
+    int generation,
+    String expectedOwnerId,
+    ModalRoute<dynamic>? expectedRoute,
+  ) {
+    if (!mounted || generation != _legacyResultGeneration) return false;
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return false;
+    }
+    return _canContinueOnExpectedRoute(expectedOwnerId, expectedRoute);
+  }
+
+  void _releaseLegacyCompleting(int generation) {
+    if (!mounted ||
+        generation != _legacyResultGeneration ||
+        _onlineResultPhase != _OnlineResultPhase.idle) {
+      return;
+    }
+    setState(() => completing = false);
+  }
+
+  void _showLegacyResultFailure(int generation) {
+    if (!mounted || generation != _legacyResultGeneration) return;
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    _terminalHandling = true;
+    completing = true;
+    _stopTerminalActivity();
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.retryableFailure;
+      _onlineResultOwnerChanged = false;
+    });
+  }
+
+  Future<void> _reconcileCompletedRoomResult({
+    bool requestFinish = false,
+  }) async {
+    if (!_isMultiplayer || !widget.is1v1 || _onlineResultInFlight) return;
+    if (requestFinish) _onlineResultFinishRequired = true;
+    final roomId = widget.room.id?.trim() ?? '';
+    final expectedOwnerId = _onlineResultOwnerId;
+    final generation = ++_onlineResultGeneration;
+    _onlineResultInFlight = true;
+    _terminalHandling = true;
+    completing = true;
+    _stopTerminalActivity();
+    if (mounted) {
+      setState(() {
+        _onlineResultPhase = _OnlineResultPhase.loading;
+        _onlineResultOwnerChanged = false;
+      });
     }
 
     try {
-      final finalPlayers = await widget.repository.loadRoomPlayers(widget.room);
-      if (mounted && finalPlayers.isNotEmpty) {
-        setState(() {
-          livePlayers = List<Player>.of(finalPlayers)
-            ..sort((a, b) => b.score.compareTo(a.score));
-          final myPlayerIndex = livePlayers.indexWhere(_isMe);
-          if (myPlayerIndex != -1) {
-            final myPlayer = livePlayers[myPlayerIndex];
-            // Geç gelen/önbelleklenmiş oyuncu listesi resume snapshotındaki
-            // daha yeni skoru geriye götürmesin. Yüksek/eşit sunucu skoru
-            // geldiğinde ise final seri ve skor yetkili olarak alınır.
-            if (myPlayer.score >= score) {
-              score = myPlayer.score;
-              streak = myPlayer.streak;
-              bestStreak = max(bestStreak, myPlayer.streak);
-            }
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      if (_onlineResultFinishRequired) {
+        try {
+          await widget.repository
+              .finishGame(widget.room)
+              .timeout(_onlineResultRequestTimeout);
+          _onlineResultFinishRequired = false;
+        } catch (error, stack) {
+          ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
+        }
+        if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      }
+
+      final snapshot = await widget.repository
+          .loadRoomResult(widget.room)
+          .timeout(_onlineResultRequestTimeout);
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      if (snapshot == null) {
+        final endState = await widget.repository
+            .loadRoomEndState(widget.room)
+            .timeout(_onlineResultRequestTimeout);
+        if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+        final reason = endState.endedReason?.trim().toLowerCase();
+        if (endState.status == RoomStatus.finished &&
+            reason != null &&
+            reason != 'completed') {
+          _onlineResultPhase = _OnlineResultPhase.idle;
+          _terminalHandling = false;
+          completing = false;
+          final handled = await _handleRoomEndState(endState);
+          if (handled || !mounted) return;
+          if (!_hasExpectedOnlineOwner) {
+            _enterOwnerChangedResultGate();
+          } else {
+            _showOnlineResultFailure(generation);
           }
-          _applyOwnAuthoritativePlayerState();
+          return;
+        }
+        throw StateError('Exact room result is not available yet.');
+      }
+      validateRoomResultDeliveryContext(
+        snapshot,
+        expectedUserId: expectedOwnerId,
+        expectedRoomId: roomId,
+      );
+      final presentation = buildRoomResultPresentation(
+        snapshot,
+        _questions,
+        isKu: _isKu,
+      );
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      if (!mounted) return;
+
+      context.read<SoundProvider>().playWin();
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          RoomResultRecoveryScreen(
+            repository: widget.repository,
+            snapshot: snapshot,
+            expectedUserId: expectedOwnerId,
+          ),
+        ),
+        result: _completionResultFromPresentation(presentation),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'quiz exact room result recovery failed',
+      );
+      _showOnlineResultFailure(generation);
+    } finally {
+      if (generation == _onlineResultGeneration) {
+        _onlineResultInFlight = false;
+      }
+    }
+  }
+
+  bool _canContinueOnlineResult(int generation, String expectedOwnerId) {
+    if (!mounted || generation != _onlineResultGeneration) return false;
+    final currentOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    if (expectedOwnerId.isEmpty || currentOwnerId != expectedOwnerId) {
+      _showOnlineResultFailure(generation, ownerChanged: true);
+      return false;
+    }
+    if (ModalRoute.of(context)?.isCurrent != true) {
+      _showOnlineResultFailure(generation);
+      return false;
+    }
+    return true;
+  }
+
+  void _showOnlineResultFailure(int generation, {bool ownerChanged = false}) {
+    if (!mounted || generation != _onlineResultGeneration) return;
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.retryableFailure;
+      _onlineResultOwnerChanged = ownerChanged;
+    });
+  }
+
+  void _enterOwnerChangedResultGate() {
+    if (!mounted || !_isMultiplayer) return;
+    if (_onlineResultOwnerChanged &&
+        _onlineResultPhase == _OnlineResultPhase.retryableFailure) {
+      return;
+    }
+    _onlineResultGeneration++;
+    _onlineResultInFlight = false;
+    if (!widget.is1v1) _legacyResultGeneration++;
+    _terminalHandling = true;
+    completing = true;
+    _stopTerminalActivity();
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.retryableFailure;
+      _onlineResultOwnerChanged = true;
+    });
+  }
+
+  void _leaveOnlineResultGate() {
+    if (!mounted || _onlineResultPhase != _OnlineResultPhase.retryableFailure) {
+      return;
+    }
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  void _retryOnlineResultGate() {
+    if (!mounted || _onlineResultPhase != _OnlineResultPhase.retryableFailure) {
+      return;
+    }
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    if (!widget.is1v1) {
+      if (_legacyResultInFlight) {
+        _legacyRetryRequested = true;
+        return;
+      }
+      unawaited(_retryTeamOnlineResultGate());
+      return;
+    }
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.idle;
+      _onlineResultOwnerChanged = false;
+      _terminalHandling = false;
+      completing = false;
+    });
+    unawaited(_completeMultiplayerResult(requestFinish: false));
+  }
+
+  Future<void> _retryTeamOnlineResultGate() async {
+    if (!mounted || widget.is1v1 || _onlineResultInFlight) return;
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    final expectedOwnerId = _onlineResultOwnerId;
+    final generation = ++_onlineResultGeneration;
+    _onlineResultInFlight = true;
+    _terminalHandling = true;
+    completing = true;
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.loading;
+      _onlineResultOwnerChanged = false;
+    });
+
+    try {
+      final endState = await widget.repository
+          .loadRoomEndState(widget.room)
+          .timeout(_onlineResultRequestTimeout);
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+
+      if (endState.status != RoomStatus.finished) {
+        setState(() {
+          _onlineResultPhase = _OnlineResultPhase.idle;
+          _onlineResultOwnerChanged = false;
+          _terminalHandling = false;
+          completing = false;
         });
+        if (_legacyFinishInFlight != null || _legacyFinishRequired) {
+          await _finishLegacyMultiplayerResult(requestFinish: true);
+          return;
+        }
+        _ensureRoomPolling();
+        unawaited(_reconcileOnlineRoom());
+        if (_usesServerHiddenAnswers) {
+          unawaited(_ensureServerClientReady(force: true));
+        }
+        return;
+      }
+
+      final reason = endState.endedReason?.trim().toLowerCase();
+      setState(() {
+        _onlineResultPhase = _OnlineResultPhase.idle;
+        _onlineResultOwnerChanged = false;
+        _terminalHandling = false;
+        completing = false;
+      });
+      if (reason == 'completed' ||
+          (reason == null && isLastQuestion && answered)) {
+        await _finishLegacyMultiplayerResult(requestFinish: false);
+        return;
+      }
+      final handled = await _handleRoomEndState(endState);
+      if (handled || !mounted) return;
+      if (!_hasExpectedOnlineOwner) {
+        _enterOwnerChangedResultGate();
+      } else {
+        _showOnlineResultFailure(generation);
       }
     } catch (error, stack) {
       ErrorReporter.record(
         error,
         stack,
-        reason: 'quiz final players reconciliation failed',
+        reason: 'quiz team result recovery failed',
       );
+      _showOnlineResultFailure(generation);
+    } finally {
+      if (generation == _onlineResultGeneration) {
+        _onlineResultInFlight = false;
+      }
     }
-    if (!mounted) return;
-    _syncMyDuelState(answeredNow: true, finished: true);
+  }
 
-    final coinsAwarded = await _claimCoins(
-      score: score,
-      correctCount: correctCount,
-      bestStreak: bestStreak,
-      totalQuestions: widget.questions.length,
+  void _stopTerminalActivity() {
+    _timerController.stop();
+    _questionStopwatch.stop();
+    _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
+    _opponentWaitTimer?.cancel();
+    _advanceRetryTimer?.cancel();
+    _serverReadyRetryTimer?.cancel();
+    _pollTimer?.cancel();
+  }
+
+  Map<String, dynamic> _completionResultFromPresentation(
+    RoomResultPresentation presentation,
+  ) {
+    final opponentScore = presentation.opponents.fold<int>(
+      0,
+      (best, player) => max(best, player.score),
     );
+    return {
+      'completed': true,
+      'score': presentation.score,
+      'correct': presentation.correctCount,
+      'opponentScore': opponentScore,
+    };
+  }
 
-    if (!mounted) return;
-    context.read<SoundProvider>().playWin();
-
-    // result: quiz rotası değiştirilirken çağıranın await'ine "tamamlandı"
-    // sinyali taşır (yarıda çıkışta null döner — bkz. level_screen).
-    Navigator.of(context).pushReplacement(
-      AppRoute.to(
-        QuizResultScreen(
-          repository: widget.repository,
-          room: _resultRoom,
-          score: score,
-          correctCount: correctCount,
-          wrongCount: wrongCount,
-          totalQuestions: widget.questions.length,
-          bestStreak: bestStreak,
-          answerRecords: answerRecords,
-          coinsAwarded: coinsAwarded,
-          rewardQueued: _rewardQueued,
-          opponents: _opponents.toList(),
-          practice: widget.practice,
-          dailyQuiz: widget.dailyQuiz,
-          contestId: widget.contestId,
+  Widget _buildOnlineResultGate(BuildContext context) {
+    final loading = _onlineResultPhase == _OnlineResultPhase.loading;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && !loading) {
+          _leaveOnlineResultGate();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(context.t(K.resultTitle)),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (loading)
+                    const CircularProgressIndicator()
+                  else
+                    Icon(
+                      _onlineResultOwnerChanged
+                          ? AppIcons.shield
+                          : AppIcons.cloud,
+                      size: 42,
+                      color: AppTheme.gold,
+                    ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    context.t(
+                      loading
+                          ? K.resultRecoveryLoading
+                          : _onlineResultOwnerChanged
+                          ? K.resultRecoveryOwnerChanged
+                          : K.resultRecoveryFailed,
+                    ),
+                    textAlign: TextAlign.center,
+                    style: AppTypography.bodyLarge,
+                  ),
+                  if (!loading) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    FilledButton.icon(
+                      onPressed: _retryOnlineResultGate,
+                      icon: const Icon(AppIcons.arrowsRotate),
+                      label: Text(context.t(K.retry)),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    TextButton.icon(
+                      onPressed: _leaveOnlineResultGate,
+                      icon: const Icon(AppIcons.house),
+                      label: Text(context.t(K.home)),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
-      result: _completionResult(),
     );
   }
 

@@ -180,7 +180,7 @@ void main() {
   ) async {
     final awardGate = Completer<int>();
     final repository = _RecoveryRepository(
-      questionResponses: [_questions],
+      questionResponses: [_questions, _questions],
       awardGate: awardGate,
     );
     await _pumpRecovery(
@@ -200,6 +200,114 @@ void main() {
 
     expect(find.byType(QuizResultScreen), findsNothing);
     expect(repository.ackCalls, 0);
+
+    repository.userId = 'user-1';
+    await tester.tap(find.text('Tekrar dene'));
+    await tester.pumpAndSettle();
+
+    final result = tester.widget<QuizResultScreen>(
+      find.byType(QuizResultScreen),
+    );
+    expect(result.coinsAwarded, 24);
+    expect(repository.awardCalls, 1);
+  });
+
+  testWidgets('owner yarışında unresolved reward Retry ile yeniden denenir', (
+    tester,
+  ) async {
+    final awardGate = Completer<int>();
+    final repository = _RecoveryRepository(
+      questionResponses: [_questions],
+      awardGate: awardGate,
+    );
+    await _pumpRecovery(
+      tester,
+      repository: repository,
+      settlementService: QuizRewardSettlementService(
+        repository: repository,
+        errorRecorder: (_, _, {reason}) {},
+      ),
+    );
+    for (var i = 0; i < 10 && repository.awardCalls == 0; i++) {
+      await tester.pump();
+    }
+    expect(repository.awardCalls, 1);
+
+    repository.userId = 'other-user';
+    awardGate.completeError(StateError('session changed'));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(QuizResultScreen), findsNothing);
+    expect(find.text('Tekrar dene'), findsOneWidget);
+
+    repository
+      ..userId = 'user-1'
+      ..awardGate = null;
+    await tester.tap(find.text('Tekrar dene'));
+    await tester.pumpAndSettle();
+
+    final result = tester.widget<QuizResultScreen>(
+      find.byType(QuizResultScreen),
+    );
+    expect(result.rewardSettlementState, QuizRewardSettlementState.claimed);
+    expect(result.coinsAwarded, 24);
+    expect(repository.awardCalls, 2);
+  });
+
+  testWidgets('queued settlement stale hesap Retryında tekrar çalışmaz', (
+    tester,
+  ) async {
+    final queueGate = Completer<void>();
+    final repository = _RecoveryRepository(
+      questionResponses: [_questions, _questions],
+      awardError: StateError('offline'),
+    );
+    var queueCalls = 0;
+    final service = QuizRewardSettlementService(
+      repository: repository,
+      queueReward:
+          ({
+            required score,
+            required correctCount,
+            required bestStreak,
+            required totalQuestions,
+            required roomId,
+          }) async {
+            queueCalls++;
+            await queueGate.future;
+          },
+      errorRecorder: (_, _, {reason}) {},
+    );
+    await _pumpRecovery(
+      tester,
+      repository: repository,
+      settlementService: service,
+    );
+    for (var i = 0; i < 10 && queueCalls == 0; i++) {
+      await tester.pump();
+    }
+    expect(repository.awardCalls, 1);
+    expect(queueCalls, 1);
+
+    repository.userId = 'other-user';
+    queueGate.complete();
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(QuizResultScreen), findsNothing);
+    expect(repository.ackCalls, 0);
+
+    repository.userId = 'user-1';
+    await tester.tap(find.text('Tekrar dene'));
+    await tester.pumpAndSettle();
+
+    final result = tester.widget<QuizResultScreen>(
+      find.byType(QuizResultScreen),
+    );
+    expect(result.rewardSettlementState, QuizRewardSettlementState.queued);
+    expect(repository.awardCalls, 1);
+    expect(queueCalls, 1);
   });
 
   testWidgets('question ve mapper hataları retry ile iyileşir', (tester) async {
@@ -228,6 +336,140 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(QuizResultScreen), findsOneWidget);
     expect(repository.loadQuestionCalls, 3);
+  });
+
+  testWidgets('takılan question load sınırlı sürede Retry açar', (
+    tester,
+  ) async {
+    final gate = Completer<List<QuizQuestion>>();
+    final repository = _RecoveryRepository(questionGate: gate);
+    addTearDown(() {
+      if (!gate.isCompleted) gate.complete(_questions);
+    });
+    await _pumpRecovery(
+      tester,
+      repository: repository,
+      settlementService: QuizRewardSettlementService(repository: repository),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 16));
+    await tester.pump();
+
+    expect(find.text('Tekrar dene'), findsOneWidget);
+    expect(find.byType(QuizResultScreen), findsNothing);
+  });
+
+  testWidgets('takılan settlement Retryda aynı in-flight işi kullanır', (
+    tester,
+  ) async {
+    final awardGate = Completer<int>();
+    final repository = _RecoveryRepository(
+      questionResponses: [_questions],
+      awardGate: awardGate,
+    );
+    addTearDown(() {
+      if (!awardGate.isCompleted) awardGate.complete(24);
+    });
+    await _pumpRecovery(
+      tester,
+      repository: repository,
+      settlementService: QuizRewardSettlementService(repository: repository),
+    );
+    for (var i = 0; i < 10 && repository.awardCalls == 0; i++) {
+      await tester.pump();
+    }
+    expect(repository.awardCalls, 1);
+
+    await tester.pump(const Duration(seconds: 16));
+    await tester.pump();
+    expect(find.text('Tekrar dene'), findsOneWidget);
+
+    await tester.tap(find.text('Tekrar dene'));
+    await tester.pump();
+    expect(repository.awardCalls, 1);
+
+    awardGate.complete(24);
+    await tester.pumpAndSettle();
+    expect(find.byType(QuizResultScreen), findsOneWidget);
+    expect(repository.awardCalls, 1);
+  });
+
+  testWidgets(
+    'timeout sonrası stale unresolved settlement Retryda yeniden çalışır',
+    (tester) async {
+      final awardGate = Completer<int>();
+      final repository = _RecoveryRepository(
+        questionResponses: [_questions],
+        awardGate: awardGate,
+      );
+      await _pumpRecovery(
+        tester,
+        repository: repository,
+        settlementService: QuizRewardSettlementService(
+          repository: repository,
+          errorRecorder: (_, _, {reason}) {},
+        ),
+      );
+      for (var i = 0; i < 10 && repository.awardCalls == 0; i++) {
+        await tester.pump();
+      }
+      expect(repository.awardCalls, 1);
+
+      await tester.pump(const Duration(seconds: 16));
+      await tester.pump();
+      expect(find.text('Tekrar dene'), findsOneWidget);
+
+      repository.userId = 'other-user';
+      awardGate.completeError(StateError('session changed'));
+      await tester.pump();
+      repository
+        ..userId = 'user-1'
+        ..awardGate = null;
+
+      await tester.tap(find.text('Tekrar dene'));
+      await tester.pumpAndSettle();
+
+      final result = tester.widget<QuizResultScreen>(
+        find.byType(QuizResultScreen),
+      );
+      expect(result.rewardSettlementState, QuizRewardSettlementState.claimed);
+      expect(result.coinsAwarded, 24);
+      expect(repository.awardCalls, 2);
+    },
+  );
+
+  testWidgets('geri tuşu stale oda rotasını da temizler', (tester) async {
+    final gate = Completer<List<QuizQuestion>>();
+    final repository = _RecoveryRepository(questionGate: gate);
+    addTearDown(() {
+      if (!gate.isCompleted) gate.complete(_questions);
+    });
+    await tester.pumpWidget(
+      testShell(
+        child: _NestedRecoveryLauncher(
+          repository: repository,
+          settlementService: QuizRewardSettlementService(
+            repository: repository,
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('open-stale-room')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('open-recovery')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.byType(RoomResultRecoveryScreen), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('open-stale-room')), findsOneWidget);
+    expect(find.byKey(const ValueKey('open-recovery')), findsNothing);
+    expect(find.byType(RoomResultRecoveryScreen), findsNothing);
+
+    gate.complete(_questions);
+    await tester.pump();
   });
 
   for (final state in [
@@ -305,7 +547,7 @@ class _RecoveryRepository extends MockZanKurdRepository {
   String userId = 'user-1';
   final List<Object> questionResponses;
   final Completer<List<QuizQuestion>>? questionGate;
-  final Completer<int>? awardGate;
+  Completer<int>? awardGate;
   final Object? awardError;
   int loadQuestionCalls = 0;
   int awardCalls = 0;
@@ -346,6 +588,50 @@ class _RecoveryRepository extends MockZanKurdRepository {
   @override
   Future<void> acknowledgeRoomResult(GameRoom room) async {
     ackCalls++;
+  }
+}
+
+class _NestedRecoveryLauncher extends StatelessWidget {
+  const _NestedRecoveryLauncher({
+    required this.repository,
+    required this.settlementService,
+  });
+
+  final _RecoveryRepository repository;
+  final QuizRewardSettlementService settlementService;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: FilledButton(
+          key: const ValueKey('open-stale-room'),
+          onPressed: () => Navigator.of(context).push<void>(
+            MaterialPageRoute<void>(
+              builder: (roomContext) => Scaffold(
+                body: Center(
+                  child: FilledButton(
+                    key: const ValueKey('open-recovery'),
+                    onPressed: () => Navigator.of(roomContext).push<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => RoomResultRecoveryScreen(
+                          repository: repository,
+                          snapshot: _snapshot,
+                          expectedUserId: 'user-1',
+                          rewardSettlementService: settlementService,
+                        ),
+                      ),
+                    ),
+                    child: const Text('Eski oda rotası'),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          child: const Text('Ana kök'),
+        ),
+      ),
+    );
   }
 }
 

@@ -102,4 +102,20 @@ void main() {
       reason: 'queueQuizReward fırlatırsa bayrak geri alınmalı.',
     );
   });
+
+  test('claim sırasında değişen hesap adına kuyruk yazılmaz', () {
+    final code = source.replaceAll(RegExp(r'\s+'), ' ');
+    expect(
+      code,
+      contains(
+        "final rewardOwnerId = widget.repository.currentUserId?.trim() ?? '';",
+      ),
+      reason: 'Ödül isteği başındaki kullanıcı kimliği sabitlenmeli.',
+    );
+    expect(
+      code,
+      contains('currentOwnerId != rewardOwnerId'),
+      reason: 'Kuyruk yazımından önce aynı kullanıcının kaldığı doğrulanmalı.',
+    );
+  });
 }

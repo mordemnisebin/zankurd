@@ -118,6 +118,42 @@ void main() {
   });
 
   test(
+    'claim beklerken hesap değişirse ödül yeni hesaba queue edilmez',
+    () async {
+      final repository = _DeferredIdentityAwardRepository();
+      final reasons = <String?>[];
+      var queueCalls = 0;
+      final service = QuizRewardSettlementService(
+        repository: repository,
+        queueReward: _queue((_) async => queueCalls++),
+        errorRecorder: (_, _, {reason}) => reasons.add(reason),
+      );
+
+      final future = service.settle(
+        room: _onlineRoom,
+        practice: false,
+        score: 310,
+        correctCount: 7,
+        bestStreak: 4,
+        totalQuestions: 10,
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(repository.calls, 1);
+
+      repository.userId = 'user-2';
+      repository.gate.completeError(StateError('offline'));
+      final result = await future;
+
+      expect(result.state, QuizRewardSettlementState.unresolved);
+      expect(queueCalls, 0);
+      expect(reasons, [
+        'awardQuizCoins failed',
+        'quiz reward owner changed before queue',
+      ]);
+    },
+  );
+
+  test(
     'practice ve yerel oda sunucuya gitmeden güvenli claimed sıfırdır',
     () async {
       final repository = _AwardRepository(result: 99);
@@ -226,6 +262,27 @@ class _AwardRepository extends MockZanKurdRepository {
     lastFacts = [score, correctCount, bestStreak, totalQuestions, room?.id];
     if (error case final error?) throw error;
     return result!;
+  }
+}
+
+class _DeferredIdentityAwardRepository extends MockZanKurdRepository {
+  String userId = 'user-1';
+  final gate = Completer<int>();
+  int calls = 0;
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<int> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    GameRoom? room,
+  }) {
+    calls++;
+    return gate.future;
   }
 }
 
