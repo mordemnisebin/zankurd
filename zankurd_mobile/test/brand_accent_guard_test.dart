@@ -65,8 +65,14 @@ void main() {
     final source = File(
       'lib/src/screens/play_hub_screen.dart',
     ).readAsStringSync();
+    // 2026-08-04: aksanlar `AppTheme.*` sabitlerinden Rengîn palet
+    // literallerine geçti (safir/turkuaz/safran/ametist). Bekçinin
+    // koruduğu kural değişmedi — dört satır ayırt edilebilir kalmalı —
+    // ama yalnız sabit adlarına bakan regex kör kalıyordu: dört satır
+    // ayrıyken bile "1 aksan buldum" diyordu. Artık her iki yazımı da
+    // görür, yani kural gevşemedi, kapsamı düzeldi.
     final accents = RegExp(
-      r'accent: AppTheme\.([a-zA-Z]+)',
+      r'accent: (?:const )?(AppTheme\.[a-zA-Z]+|Color\(0x[0-9A-Fa-f]{8}\))',
     ).allMatches(source).map((m) => m.group(1)!).toList();
 
     expect(

@@ -25,6 +25,7 @@ class ModeCard extends StatelessWidget {
     required this.onTap,
     this.motif = KilimMotif.step,
     this.compact = false,
+    this.busy = false,
     super.key,
   });
 
@@ -32,8 +33,12 @@ class ModeCard extends StatelessWidget {
   final Color accent;
   final String title;
   final String subtitle;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final KilimMotif motif;
+
+  /// Sunucu isteği sürerken chevron yerine ilerleme gösterilir ve dokunuş
+  /// kapanır; çift dokunuş ikinci bir istek başlatmamalı.
+  final bool busy;
 
   /// Dar düzende yüksekliği kısar; iki satır metin yerine bir satır.
   final bool compact;
@@ -48,7 +53,7 @@ class ModeCard extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onTap,
+            onTap: busy ? null : onTap,
             borderRadius: BorderRadius.circular(18),
             child: Ink(
               decoration: BoxDecoration(
@@ -136,10 +141,22 @@ class ModeCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: AppSpacing.xs),
-                          Icon(
-                            Icons.chevron_right_rounded,
-                            color: Colors.white.withValues(alpha: 0.9),
-                          ),
+                          if (busy)
+                            const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                          else
+                            Icon(
+                              Icons.chevron_right_rounded,
+                              color: Colors.white.withValues(alpha: 0.9),
+                            ),
                         ],
                       ),
                     ),

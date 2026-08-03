@@ -12,7 +12,7 @@ import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
 import 'contest_screen.dart';
-import '../widgets/app_row_card.dart';
+import '../widgets/mode_card.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'tournament_screen.dart';
@@ -303,7 +303,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               subtitle: context.t(K.withFriendsSub),
             ),
             const SizedBox(height: AppSpacing.sm),
-            AppRowCard(
+            // Rengîn (2026-08-04): dört satır birbirinin aynı beyaz kartıydı
+            // ve oyun merkezinin tamamı tek yeşil + tek turuncu ile
+            // çiziliyordu. Her mod artık kendi hue ailesini taşır; turuncu
+            // yalnız birincil eylemde kalır.
+            ModeCard(
               key: const ValueKey('play-hub-create-room'),
               icon: AppIcons.circlePlus,
               // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
@@ -313,23 +317,17 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               // merkezinde dört satır yan yana duruyor, yani sapma en çok
               // burada görünüyordu: mor ve pembe, turuncu-altın-yeşil
               // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
-              accent: AppTheme.culturalBrandBg,
+              accent: const Color(0xFF1E4FA6), // safir — kurma
               title: context.t(K.createRoom),
               subtitle: context.t(K.createRoomSub),
-              trailing: _roomActionLoading
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : null,
+              busy: _roomActionLoading,
               onTap: _roomActionLoading ? null : _createOnlineRoom,
             ),
             const SizedBox(height: AppSpacing.xs),
-            AppRowCard(
+            ModeCard(
               key: const ValueKey('play-hub-join-room'),
               icon: AppIcons.doorOpen,
-              accent: AppTheme.playCyan,
+              accent: const Color(0xFF04697C), // turkuaz — katılma
               title: context.t(K.joinByCode),
               subtitle: context.t(K.joinByCodeSub),
               onTap: _showJoinSheet,
@@ -340,30 +338,25 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               subtitle: context.t(K.eventsSub),
             ),
             const SizedBox(height: AppSpacing.sm),
-            AppRowCard(
+            ModeCard(
               key: const ValueKey('play-hub-daily-contest'),
               icon: AppIcons.bolt,
-              accent: AppTheme.gold,
+              // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
+              accent: const Color(0xFF9C6300),
               title: context.t(K.dailyContest),
               subtitle: context.t(K.tenQuestions),
-              trailing: _dailyLoading
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : null,
+              busy: _dailyLoading,
               onTap: _dailyLoading ? null : _openDailyQuiz,
             ),
             const SizedBox(height: AppSpacing.xs),
-            AppRowCard(
+            ModeCard(
               key: const ValueKey('play-hub-tournament'),
               icon: AppIcons.trophy,
               // Altın bir satır yukarıda "Günün Etkinliği"nde; turnuva
               // yeşil aksanı alır. Dört satır artık koyu yeşil ·
               // çamurlu turkuaz · altın · turuncu-yeşil — hepsi palet içinde,
               // yine de birbirinden ayrılıyor.
-              accent: AppTheme.playGreen,
+              accent: const Color(0xFF6A38BE), // ametist — turnuva
               title: context.t(K.tournament),
               subtitle: context.t(K.tournamentSub),
               onTap: () => Navigator.of(context).push(
@@ -398,10 +391,16 @@ class _QuickDuelHero extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: Ink(
           decoration: BoxDecoration(
+            // Rengîn (2026-08-04): hero koyu yeşilden koyu yeşile
+            // iniyordu ve hemen üstündeki kimlik başlığıyla birlikte iki
+            // ayrı yeşil panel gibi okunuyordu. Düello bir REKABET
+            // yüzeyidir; madder ailesinden derin mürekkebe geçer ve artık
+            // ekranın en güçlü yeri odur — altındaki mod kartlarından
+            // sönük kalmaz.
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
+              colors: [Color(0xFFB31E3B), Color(0xFF17233B)],
             ),
             borderRadius: BorderRadius.circular(AppRadius.card),
           ),

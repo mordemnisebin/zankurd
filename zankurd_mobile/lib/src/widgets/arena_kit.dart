@@ -400,7 +400,14 @@ class MissionProgressCard extends StatelessWidget {
                         height: 16,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Text(claimed ? '✓' : '+'),
+                    // Karakter değil ikon: `✓` (U+2713) Rubik'te yok ve
+                    // sistem yazı tipine düşüyordu (ui_glyph_coverage_test).
+                    : Icon(
+                        claimed
+                            ? Icons.check_rounded
+                            : Icons.card_giftcard_rounded,
+                        size: 18,
+                      ),
               ),
             ),
           ],
