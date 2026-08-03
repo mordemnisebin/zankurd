@@ -698,4 +698,70 @@ void main() {
     expect(find.text('Tekrar'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  // Çevrimdışı oyuncu eşleştirme ekranında hapsolmamalı.
+  //
+  // Ekrandan çıkan HER yol — sistem geri hareketi, AppBar geri düğmesi,
+  // bekleme durumundaki "İptal Et", hata durumundaki "İptal" — tek bir
+  // `_handleCancelAndPop` çağrısına bağlı ve arama başladıktan sonra
+  // `canPop` false. İptal RPC'si de başarısız olduğunda geriye hiçbir çıkış
+  // kalmıyordu: "Tekrar" yalnız aynı ağ hatasını tekrarlıyor, iOS'ta
+  // `AppRoute` bir `PageRouteBuilder` olduğu için kaydırarak geri dönüş de
+  // yok. Uygulamayı zorla kapatmak tek seçenek oluyordu.
+  //
+  // Hayalet kuyruk kaygısı yerinde, ama takas yanlış tarafa kurulmuştu:
+  // sunucudaki artık kuyruk satırı süpürülebilir, hapsolmuş kullanıcı
+  // süpürülemez. İlk hata hâlâ hatayı gösterir ve yeniden denemeye izin
+  // verir; oyuncu ısrar ederse çıkış garanti edilir ve iptal arka planda
+  // en iyi çaba olarak sürdürülür.
+  testWidgets('iptal sürekli başarısızken oyuncu ekrandan çıkabilir', (
+    tester,
+  ) async {
+    final repository = _AlwaysFailingCancelRepository();
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(_shell(_MatchmakingRouteHost(repository)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('open-matchmaking')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pumpAndSettle();
+
+    // İlk iptal: hata görünür, oyuncu hâlâ ekranda — hayalet kuyruğa karşı
+    // kasıtlı koruma.
+    await tester.tap(find.text('İptal Et'));
+    await tester.pumpAndSettle();
+    expect(find.byType(MatchmakingScreen), findsOneWidget);
+    expect(repository.cancelCalls, greaterThanOrEqualTo(1));
+
+    // İkinci iptal: çıkış garanti.
+    await tester.tap(find.text('İptal Et'));
+    await tester.pumpAndSettle();
+    expect(
+      find.byType(MatchmakingScreen),
+      findsNothing,
+      reason: 'İptal iki kez başarısız olsa da oyuncu ekranda hapsolmamalı',
+    );
+    expect(tester.takeException(), isNull);
+  });
+}
+
+/// Ağ tamamen kopmuş oyuncu: ne kuyruğa girebiliyor ne de çıkabiliyor.
+class _AlwaysFailingCancelRepository extends _PendingJoinRepository {
+  int failingJoinCalls = 0;
+
+  @override
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    failingJoinCalls += 1;
+    throw StateError('offline');
+  }
+
+  @override
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
+    cancelCalls += 1;
+    throw StateError('offline');
+  }
 }

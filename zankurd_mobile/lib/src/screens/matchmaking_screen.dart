@@ -85,6 +85,17 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   bool _isCancelled = false;
   bool _cancelling = false;
   bool _cancelRequested = false;
+
+  /// İptal RPC'si en az bir kez başarısız oldu.
+  ///
+  /// Ekrandan çıkan her yol tek bir iptal çağrısına bağlı ve arama
+  /// başladıktan sonra `canPop` kapalı. İptal de başarısız olduğunda geriye
+  /// hiçbir çıkış kalmıyordu; ağı kopmuş oyuncu için uygulamayı zorla
+  /// kapatmak tek seçenekti (2026-08-03). Hayalet kuyruk kaygısı yerinde
+  /// ama takas yanlış taraftaydı: sunucudaki artık kuyruk satırı
+  /// süpürülebilir, hapsolmuş kullanıcı süpürülemez. İlk hata hâlâ
+  /// gösterilir ve yeniden denenebilir; ısrar eden oyuncu çıkar.
+  bool _cancelFailed = false;
   int _matchmakingAttempt = 0;
   Future<Map<String, dynamic>>? _joinRequest;
   // Bot diyaloğu açıkken arka plan sayacı gizlenir (zamanlayıcı zaten durmuş
@@ -201,6 +212,26 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final pendingJoin = _joinRequest;
     final repository = widget.repository;
     final cleanupGeneration = ++_matchmakingAttempt;
+
+    // İptal zaten bir kez başarısız oldu ve oyuncu yine çıkmak istiyor.
+    // Ağ geri gelene kadar RPC'yi beklemek onu ekranda tutmaktan başka bir
+    // şey yapmaz; çıkışı hemen ver, temizliği arka planda en iyi çaba
+    // olarak sürdür.
+    if (_cancelFailed) {
+      _matchmakingSub?.cancel();
+      _matchmakingSub = null;
+      _statusTimer?.cancel();
+      _statusTimer = null;
+      unawaited(_bestEffortCancel(pendingJoin, repository, cleanupGeneration));
+      if (mounted) {
+        setState(() {
+          _isCancelled = true;
+          _cancelRequested = true;
+        });
+        Navigator.of(context).pop();
+      }
+      return;
+    }
     setState(() {
       _cancelling = true;
       _cancelRequested = true;
@@ -245,6 +276,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_cancel_and_pop');
+      _cancelFailed = true;
       if (mounted) {
         setState(() {
           _cancelling = false;
@@ -267,6 +299,36 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         _cancelling = false;
       });
       Navigator.of(context).pop();
+    }
+  }
+
+  /// Ekrandan çıkıldıktan sonra kuyruğu kapatmayı sürdürür.
+  ///
+  /// Oyuncu artık beklemiyor, bu yüzden hata yüzeye çıkmaz; kullanılan tek
+  /// güvence `_cleanupLateJoin`in nesil kontrolüdür — yeni bir arama
+  /// başladıysa bu geç temizlik onun odasını terk etmez.
+  Future<void> _bestEffortCancel(
+    Future<Map<String, dynamic>>? pendingJoin,
+    ZanKurdRepository repository,
+    int cleanupGeneration,
+  ) async {
+    if (pendingJoin != null) {
+      await _cleanupLateJoin(pendingJoin, repository, cleanupGeneration);
+      return;
+    }
+    try {
+      final cancellation = await repository.cancelMatchmaking();
+      if (_matchmakingAttempt != cleanupGeneration) return;
+      final cancellationRoomId = _matchedRoomId(cancellation);
+      if (cancellationRoomId != null) {
+        await repository.leaveOnlineRoom(_roomReference(cancellationRoomId));
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'matchmaking_best_effort_cancel',
+      );
     }
   }
 
@@ -349,6 +411,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final ku = context.isKu;
     _lastMatchCategory = chosenCategory;
     _cancelRequested = false;
+    // Yeni arama, iptal borcunu da sıfırlar. Aksi hâlde ağ geri geldikten
+    // sonra başlatılan aramada iptal hâlâ "ateşle-unut" kalır ve hayalet
+    // kuyruğa karşı koruma sessizce kaybolurdu.
+    _cancelFailed = false;
     AnalyticsService.instance.logActivationStep('matchmaking_started');
     // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
     // boşluğun ötesine taşınmasın diye burada, senkron olarak çözülür.
@@ -845,7 +911,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         : (_statusTextTr ?? 'Aranıyor...');
 
     return PopScope(
-      canPop: !_searchingStarted || _cancelling,
+      // İptal bir kez başarısız olduysa sistem geri hareketi de serbest
+      // bırakılır: aksi hâlde ağı kopmuş oyuncunun tek çıkışı uygulamayı
+      // zorla kapatmak oluyor.
+      canPop: !_searchingStarted || _cancelling || _cancelFailed,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
         _handleCancelAndPop();
