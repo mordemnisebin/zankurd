@@ -179,9 +179,9 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: AppTheme.light(),
-          home: MediaQuery(
-            data: const MediaQueryData(textScaler: TextScaler.linear(2.0)),
-            child: const Scaffold(
+          home: const MediaQuery(
+            data: MediaQueryData(textScaler: TextScaler.linear(2.0)),
+            child: Scaffold(
               body: ArenaHero(
                 title: 'Turnuva',
                 subtitle: 'Gerçek oyuncularla eleme',
