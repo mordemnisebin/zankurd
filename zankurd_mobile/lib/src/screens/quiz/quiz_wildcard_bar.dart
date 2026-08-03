@@ -44,11 +44,18 @@ class _WildcardButtonState extends State<WildcardButton> {
     final baseColor = widget.type.themeColor;
     final canTap = widget.isEnabled;
 
+    // Her durum ayrı bir ŞEY söyler; hepsini soluklaştırmak dördünü de
+    // "bozuk" gösteriyordu (2026-08-03 görsel denetimi). Coin'i yetmeyen
+    // joker bir kusur değil bir FİYAT: rengini ve fiyatını korur, yalnız
+    // bir tık geri çekilir. Gerçekten edilgen olan tek durum, cevap
+    // verildikten sonraki kilittir.
     final opacity = (widget.isEnabled || widget.isActive)
         ? 1.0
         : widget.cantAfford
-        ? 0.45
-        : 0.35;
+        ? 0.82
+        : widget.isUsed
+        ? 0.55
+        : 0.45;
 
     // 2026-07-24 canlı denetim: dört joker dolu renk bloğuydu ve quiz
     // ekranının en gürültülü öğesiydi — göz soruya değil alt bara gidiyordu.
@@ -84,10 +91,14 @@ class _WildcardButtonState extends State<WildcardButton> {
         ? typeHint
         : '$typeHint • $stateLabel';
 
+    // Coin'i yetmeyen joker kimliğini korur: gri kenarlık onu ölü
+    // gösteriyordu, oysa satın alınabilir bir araç.
     final borderColor = widget.isActive
         ? AppTheme.brand
         : available
         ? baseColor.withValues(alpha: 0.55)
+        : widget.cantAfford
+        ? baseColor.withValues(alpha: 0.42)
         : AppTheme.borderColor(context);
 
     final bgColor = widget.isActive
@@ -101,6 +112,8 @@ class _WildcardButtonState extends State<WildcardButton> {
         : available
         // Çipin zemini rengin kendi tonu; düz yüzeye göre ayarlanan
         // `readableAccent` orada bir tık yetersiz kalıyordu.
+        ? AppColors.onAccentTint(context, baseColor)
+        : widget.cantAfford
         ? AppColors.onAccentTint(context, baseColor)
         : AppTheme.textMutedColor(context);
 

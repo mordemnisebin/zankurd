@@ -811,11 +811,27 @@ class AppTheme {
   ///
   /// Bu ekranı canlandırmanın yolu şıkları boyamak değil — kart tonu,
   /// kategori kimliği ve eylem düğmesi üzerinden gidilir.
+  /// Şık indeksi rengi — DÖRDÜ DE AYNI nötr tondur, bilerek.
+  ///
+  /// 2026-08-03'te bu liste kategori paletinden dört ayrı renge çevrildi
+  /// (zümrüt/safir/madder/safran) ve `answer_option_color_semantics_test`
+  /// haklı olarak kırdı. İki ayrı denetimin kaldırdığı şey geri gelmişti:
+  /// quiz bağlamında yeşil "doğru", kırmızı "yanlış" demektir; oyuncu
+  /// cevaplamadan ÖNCE A'yı yeşil, C'yi kırmızı görmek sahte ipucudur.
+  /// Dört doygun ton ayrıca şıklar arasında bir fark olduğunu ima eder,
+  /// oysa şık harfi yalnız bir etikettir.
+  ///
+  /// Rengîn kimliği şıklara renkten değil GEOMETRİDEN gelir: rozet artık
+  /// elmas. Karakter kazanıldı, sahte ipucu kazanılmadı.
+  ///
+  /// Ton `#545C63` griden mürekkep ailesine çekildi — aynı nötr işlevi
+  /// görür ama paletin geri kalanıyla akraba. Doygunluk 0.20 (< 0.35
+  /// tavanı), hue 217° (doğru/yanlış hue'larından 73°/209° uzak).
   static const List<Color> answerOptionColors = [
-    Color(0xFF545C63),
-    Color(0xFF545C63),
-    Color(0xFF545C63),
-    Color(0xFF545C63),
+    Color(0xFF3A4557),
+    Color(0xFF3A4557),
+    Color(0xFF3A4557),
+    Color(0xFF3A4557),
   ];
 
   static LinearGradient categoryGradient(int index) {
