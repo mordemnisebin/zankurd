@@ -64,6 +64,25 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell>
     with WidgetsBindingObserver, RouteAware {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
+
+  /// İsim kapısının tamamlandığını belirten, KULLANICIYA ÖZEL bayrağın ön eki.
+  ///
+  /// Eski global anahtar (`zankurd.profileName.completed`, ön ek yok) bilerek
+  /// okunmuyor ve bilerek devralınmıyor. Bunun görünür bir bedeli var: bu
+  /// sürüme güncelleyen ve kapıyı çoktan geçmiş her kurulum, kapıyı bir kez
+  /// daha görecek. Bedel bilinçli olarak kabul edildi.
+  ///
+  /// Devralmanın maliyeti daha yüksek çünkü eski bayrak CİHAZA aitti,
+  /// kullanıcıya değil: hesap değiştiren ikinci oyuncu kapıyı hiç görmeden
+  /// geçiyor ve aynı varsayılan adı kendi 1v1 kimliğine taşıyordu. Kapıyı
+  /// tam olarak bunu durdurmak için kullanıcıya bağladık; "yalnız bir kez,
+  /// yalnız ilk gördüğüm kullanıcı için devral" gibi bir geçiş yolu da aynı
+  /// deliği geri açar, çünkü güncelleme anında oturum kapalıysa ilk giren
+  /// kişi bir başkası olabilir.
+  ///
+  /// Geri dönen kullanıcı için kapı ucuzdur: alan sunucudaki adla kendi
+  /// kendine dolar ve tek dokunuşla geçilir. Bir kez sorulan soru,
+  /// sessizce yanlış kimliğe yazılan addan iyidir (2026-08-03 kararı).
   static const _profileNameCompletedKeyPrefix =
       'zankurd.profileName.completed.';
 
