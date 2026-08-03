@@ -174,6 +174,22 @@ void main() {
     expect(repository.spendCalls, 0);
   });
 
+  // ── 10. Karar adımı hata verirse seri kaybolmaz ────────────────────
+  testWidgets('bakiye okunamazsa bile seri kaydedilir', (tester) async {
+    await reset(breakingStreak());
+    final repository = _FreezeRepository(balance: 500, balanceThrows: true);
+    await pump(tester, repository);
+    await tester.pumpAndSettle();
+
+    // Teklif gösterilemedi ama tur yazıldı: `streak: 0` ile ilerlemek,
+    // kullanıcının hatası olmayan bir hatayı onun serisine yansıtırdı.
+    expect(find.byType(AlertDialog), findsNothing);
+    expect(repository.spendCalls, 0);
+    final preferences = await SharedPreferences.getInstance();
+    expect((preferences.getInt('zankurd.streak.current') ?? 0), greaterThan(0));
+    expect((preferences.getInt('zankurd.xp.total') ?? 0) > 0, isTrue);
+  });
+
   // ── Tamamlanmış makbuz hiçbir şeyi tekrarlamaz ─────────────────────
   testWidgets('completed makbuz ne sorar ne harcar ne ACK eder', (
     tester,
@@ -209,10 +225,15 @@ const _room = GameRoom(
 );
 
 class _FreezeRepository extends MockZanKurdRepository {
-  _FreezeRepository({required this.balance, this.spendThrows = false});
+  _FreezeRepository({
+    required this.balance,
+    this.spendThrows = false,
+    this.balanceThrows = false,
+  });
 
   final int balance;
   final bool spendThrows;
+  final bool balanceThrows;
   int spendCalls = 0;
   int ackCalls = 0;
 
@@ -220,7 +241,10 @@ class _FreezeRepository extends MockZanKurdRepository {
   String? get currentUserId => 'user-freeze';
 
   @override
-  Future<int> loadCoinBalance() async => balance;
+  Future<int> loadCoinBalance() async {
+    if (balanceThrows) throw StateError('injected: balance unavailable');
+    return balance;
+  }
 
   @override
   Future<bool> spendCoins(int amount, String reason) async {

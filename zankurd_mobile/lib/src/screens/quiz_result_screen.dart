@@ -223,9 +223,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           if (!_isCurrentResultOwner(ownerId)) {
             throw StateError('Result owner changed before local progress.');
           }
-          await _recordProgressAndAnalytics(
-            _pendingStreak ?? const _StreakOutcome(streak: 0, isNewDay: false),
-          );
+          await _recordProgressAndAnalytics(_pendingStreak);
           if (!_isCurrentResultOwner(ownerId)) {
             throw StateError('Result owner changed during local progress.');
           }
@@ -331,15 +329,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   Future<void> _runProgressSafely() async {
     try {
-      final streak = await _resolveStreakDecision();
-      await _recordProgressAndAnalytics(streak);
+      await _recordProgressAndAnalytics(await _resolveStreakDecision());
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz result progress');
     }
   }
 
-  Future<void> _recordProgressAndAnalytics(_StreakOutcome streakOutcome) async {
-    await _recordProgress(streakOutcome);
+  Future<void> _recordProgressAndAnalytics(
+    _StreakOutcome? streakOutcome,
+  ) async {
+    await _recordProgress(streakOutcome ?? await _fallbackStreak());
     try {
       await repository.logAnalyticsEvent('quiz_complete', {
         'category': widget.room.category,
@@ -371,6 +370,23 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// Kırılacak günlük seri için coin karşılığı dondurma teklif eder.
   /// Ödeme yapılıp seri korunursa yeni seri değerini, aksi halde null döner.
   static const _streakFreezeCost = 50;
+
+  /// Karar adımı hata verdiyse seri yine de kaydedilmeli.
+  ///
+  /// Aksi hâlde ilerlemeye `streak: 0` giderdi ve rozet/görev hesabı, hiç
+  /// oynanmamış gibi yazılırdı — kullanıcının hatası olmayan bir hata,
+  /// sessizce serisini sıfırlamış görünürdü. Dondurma teklifi olmayan
+  /// yoldaki davranışın aynısı uygulanır.
+  Future<_StreakOutcome> _fallbackStreak() async {
+    final store = await StreakStore.load();
+    final today = DateTime.now();
+    final todayKey =
+        '${today.year.toString().padLeft(4, '0')}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+    final isNewDay = store.lastDay != todayKey;
+    return _StreakOutcome(streak: await store.recordPlay(), isNewDay: isNewDay);
+  }
 
   /// Seri kararını, makbuzun kritik bölümünün DIŞINDA çözer.
   ///
