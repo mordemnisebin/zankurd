@@ -163,6 +163,65 @@ void main() {
     },
   );
 
+  // Boş offering, yükleme HATASI değildir: fetch başarılı döner, içinde
+  // paket yoktur. Bu yüzden hata dalına düşmez ve `_OfferingsLoadError`in
+  // yeniden deneme düğmesinden yararlanamıyordu — ekranda yalnız "Premium
+  // paketler henüz aktif değil" cümlesi kalıyordu, tek bir eylem bile
+  // olmadan (2026-08-03 denetimi, `09_paywall.png`).
+  //
+  // Oysa bu durum kalıcı değildir: RevenueCat panelindeki offering ↔ mağaza
+  // ürünü eşlemesi tamamlandığı anda aynı fetch paketleri döndürür. Satın
+  // alma ekranını, tek amacı satın almak olan kullanıcıya çıkışsız bir
+  // duvar olarak bırakmak hem yarım ürün hissi verir hem de mağaza
+  // incelemesinde "ölü ekran" riskidir. Boş durum da tıpkı hata durumu
+  // gibi oturum içinde yeniden denenebilir olmalıdır.
+  testWidgets('boş offering yeniden denenebilir bir durum olarak sunulur', (
+    tester,
+  ) async {
+    var attempts = 0;
+    final service = PremiumService.forTesting(
+      isAnonymous: () async => true,
+      logOut: () async => throw UnimplementedError(),
+      fetchOfferings: () async {
+        attempts++;
+        return const Offerings({});
+      },
+    );
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => LanguageProvider(initialLang: 'tr'),
+          ),
+          ChangeNotifierProvider<PremiumService>.value(value: service),
+        ],
+        child: MaterialApp(
+          theme: AppTheme.light(),
+          home: PaywallScreen(repository: MockZanKurdRepository()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(attempts, 1);
+    expect(
+      find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
+      findsOne,
+    );
+    // Hata dalı değil: teknik hata başlığı gösterilmemeli.
+    expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsNothing);
+
+    // Kullanıcı çıkışsız kalmamalı: durum oturum içinde tazelenebilmeli.
+    final retry = find.text(Tr.of(K.retry, AppLanguage.tr));
+    expect(retry, findsOne);
+    await tester.ensureVisible(retry);
+    await tester.tap(retry);
+    await tester.pumpAndSettle();
+
+    expect(attempts, 2);
+  });
+
   test('fiyat yanında yenileme dönemi gösterilir', () {
     expect(source, contains('_pricePeriodSuffix'));
     expect(Tr.of(K.perMonthSuffix, AppLanguage.tr), '/ay');
