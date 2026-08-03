@@ -108,13 +108,40 @@ void main() {
     expect(applied, isNot(contains('2026-08-03_streak_freeze_idempotency')));
   });
 
-  test('istemci hâlâ eski yolu kullanır, çift çekim riski artmaz', () {
-    // Göç uygulanana kadar istemci `spend_streak_freeze` çağırmamalı:
-    // çağırırsa canlıda PGRST202 alır ve dondurma tamamen kırılır.
+  // Göç yerel PostgreSQL üzerinde doğrulandıktan (2026-08-03) sonra istemci
+  // idempotent yola geçirildi. Ama göç PRODUCTION'a hâlâ uygulanmadı, yani
+  // bu derleme göçün ÖNÜNDE yayınlanabilir. O durumda PostgREST fonksiyonu
+  // bulamaz; istemci sessizce kırılmak yerine eski `spend_coins` yoluna
+  // düşmeli — ve düştüğünü söylemeli, çünkü o yol idempotent değildir ve
+  // belirsiz bir tahsilat tekrarlanmamalıdır.
+  test('istemci idempotent RPC yolunu kullanır', () {
+    final repo = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+    expect(repo, contains("client.rpc(\n        'spend_streak_freeze'"));
+    expect(repo, contains("'p_idempotency_key': idempotencyKey"));
+  });
+
+  test('göç uygulanmamışsa eski yola güvenle düşülür', () {
+    final repo = File(
+      'lib/src/data/supabase_zankurd_repository.dart',
+    ).readAsStringSync();
+    // Eksik fonksiyon iki kodla da bildirilebilir; ikisi de yakalanmalı.
+    expect(repo, contains("error.code == '42883'"));
+    expect(repo, contains("error.code == 'PGRST202'"));
+    // Düşülen yol idempotent DEĞİL ve bunu çağırana söylemeli.
+    expect(repo, contains('idempotent: false'));
+    expect(repo, contains("spendCoins(50, 'streak_freeze')"));
+  });
+
+  test('idempotency anahtari sonuc makbuzunun kimligidir', () {
     final screen = File(
       'lib/src/screens/quiz_result_screen.dart',
     ).readAsStringSync();
-    expect(screen, isNot(contains('spend_streak_freeze')));
-    expect(screen, contains("spendCoins(_streakFreezeCost, 'streak_freeze')"));
+    // Rastgele ya da zamana bagli bir anahtar, tekrarda ikinci kez cekerdi.
+    expect(
+      screen,
+      contains('idempotencyKey: QuizResultProgressReceiptStore.keyFor('),
+    );
   });
 }

@@ -1573,6 +1573,62 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// Seri dondurma ücretini idempotent RPC ile tahsil eder.
+  ///
+  /// Göç (`2026-08-03_streak_freeze_idempotency.sql`) henüz uygulanmamış
+  /// olabilir; o durumda PostgREST fonksiyonu bulamaz (`PGRST202`/42883) ve
+  /// eski `spend_coins` yoluna düşülür. Düşülen yol idempotent OLMADIĞI
+  /// için sonuçta `idempotent: false` döner ve çağıran belirsiz kalan bir
+  /// tahsilatı tekrarlamaz. Böylece derleme, göçün önünde ya da ardında
+  /// yayınlansa da çift çekim riski artmaz.
+  @override
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      final response = await client.rpc(
+        'spend_streak_freeze',
+        params: {'p_idempotency_key': idempotencyKey},
+      );
+      if (response is Map<String, dynamic>) {
+        if (response['success'] == true) {
+          return StreakFreezeChargeResult(
+            outcome: response['already_charged'] == true
+                ? StreakFreezeChargeOutcome.alreadyCharged
+                : StreakFreezeChargeOutcome.charged,
+            idempotent: true,
+          );
+        }
+        return const StreakFreezeChargeResult(
+          outcome: StreakFreezeChargeOutcome.insufficient,
+          idempotent: true,
+        );
+      }
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    } catch (error, stack) {
+      if (_isMissingFunction(error)) {
+        // Göç uygulanmamış: eski, idempotent OLMAYAN yol.
+        final ok = await spendCoins(50, 'streak_freeze');
+        return StreakFreezeChargeResult(
+          outcome: ok
+              ? StreakFreezeChargeOutcome.charged
+              : StreakFreezeChargeOutcome.insufficient,
+          idempotent: false,
+        );
+      }
+      _recordError(error, stack, reason: 'spendStreakFreeze failed');
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    }
+  }
+
   @override
   Future<bool> hasPurchased(String itemId) async {
     try {
@@ -2392,8 +2448,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   // exist") döner. O durumda ekran boş kalmasın diye eski bot benzetimine
   // düşülür — bu bir yedek yol, hedef değil.
 
+  /// Sunucuda böyle bir fonksiyon yok mu.
+  ///
+  /// İki kod da aynı durumu anlatır: `42883` PostgreSQL'in kendi hatası,
+  /// `PGRST202` ise PostgREST şema önbelleğinde fonksiyonu bulamadığında
+  /// döndürdüğü koddur. Uygulanmamış bir göçün ardından yayınlanan derleme
+  /// pratikte ikincisini görür.
   bool _isMissingFunction(Object error) =>
-      error is PostgrestException && error.code == '42883';
+      error is PostgrestException &&
+      (error.code == '42883' || error.code == 'PGRST202');
 
   @override
   Future<TournamentBracket?> joinRealTournament() async {

@@ -13,6 +13,44 @@ import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 
+/// Seri dondurma tahsilatının sonucu.
+///
+/// [charged] ile [alreadyCharged] ayrı tutulur çünkü çağıranın kararı
+/// buna bağlıdır: idempotent yolda cevabı kaybolan bir istek güvenle
+/// tekrarlanabilir, eski yolda tekrarlanamaz.
+enum StreakFreezeChargeOutcome {
+  /// Ücret bu çağrıda tahsil edildi.
+  charged,
+
+  /// Aynı anahtarla daha önce tahsil edilmişti; yeni hareket oluşmadı.
+  alreadyCharged,
+
+  /// Bakiye yetersiz.
+  insufficient,
+
+  /// Çağrı başarısız oldu (ağ/sunucu). Tahsil edilip edilmediği BİLİNMİYOR.
+  failed,
+}
+
+class StreakFreezeChargeResult {
+  const StreakFreezeChargeResult({
+    required this.outcome,
+    required this.idempotent,
+  });
+
+  final StreakFreezeChargeOutcome outcome;
+
+  /// Sunucu tarafı idempotent yol kullanıldı mı.
+  ///
+  /// `false` ise (göç henüz uygulanmamış, eski `spend_coins` yolu) belirsiz
+  /// kalan bir tahsilat ASLA tekrarlanmamalıdır.
+  final bool idempotent;
+
+  bool get succeeded =>
+      outcome == StreakFreezeChargeOutcome.charged ||
+      outcome == StreakFreezeChargeOutcome.alreadyCharged;
+}
+
 abstract class ZanKurdRepository {
   List<String> get categories;
   List<QuizQuestion> get questions;
@@ -139,6 +177,17 @@ abstract class ZanKurdRepository {
   /// Oyuncunun coin bakiyesinden [amount] kadar düşer.
   /// Bakiye yeterli değilse false, başarılıysa true döner.
   Future<bool> spendCoins(int amount, String reason);
+
+  /// Seri dondurma ücretini IDEMPOTENT biçimde tahsil eder.
+  ///
+  /// [idempotencyKey] değişmez olmalıdır (sonuç makbuzunun kimliği). Aynı
+  /// anahtarla ikinci çağrı yeni bir coin hareketi yaratmaz; ilk çekimi
+  /// bildirir. Cevabı kaybolan bir istek bu sayede güvenle tekrarlanabilir
+  /// — düz [spendCoins] ile bu mümkün değildir, çünkü `streak_freeze`
+  /// sunucuda dedup anahtarı taşımaz ve her çağrı yeni bir satır yazar.
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  });
 
   /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
   Future<bool> hasPurchased(String itemId);

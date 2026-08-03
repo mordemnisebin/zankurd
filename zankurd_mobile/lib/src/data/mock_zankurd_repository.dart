@@ -635,6 +635,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return amount;
   }
 
+  /// Anahtar başına en fazla bir kez tahsil eden sahte idempotent yol.
+  final Set<String> _streakFreezeKeys = {};
+
+  @override
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
+    if (_streakFreezeKeys.contains(idempotencyKey)) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.alreadyCharged,
+        idempotent: true,
+      );
+    }
+    if (_mockCoins < 50) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.insufficient,
+        idempotent: true,
+      );
+    }
+    _mockCoins -= 50;
+    _streakFreezeKeys.add(idempotencyKey);
+    return const StreakFreezeChargeResult(
+      outcome: StreakFreezeChargeOutcome.charged,
+      idempotent: true,
+    );
+  }
+
   @override
   Future<bool> spendCoins(int amount, String reason) async {
     if (_mockCoins < amount) return false;

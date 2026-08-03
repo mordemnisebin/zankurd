@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/quiz_result_progress_receipt_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -190,6 +191,28 @@ void main() {
     expect((preferences.getInt('zankurd.xp.total') ?? 0) > 0, isTrue);
   });
 
+  // ── Tahsilat, makbuzla AYNI degismez kimlikten turer ───────────────
+  testWidgets('idempotency anahtari makbuz anahtariyla aynidir', (
+    tester,
+  ) async {
+    await reset(breakingStreak());
+    final repository = _FreezeRepository(balance: 500);
+    final stages = QuizResultProgressReceiptStore(
+      await SharedPreferences.getInstance(),
+    );
+    await pump(tester, repository, stages: stages);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Koru (50)'));
+    await tester.pumpAndSettle();
+
+    // Anahtar rastgele degil: ayni sonuc icin yapilan her tekrar ayni
+    // anahtari tasir, sunucu da bu yuzden ikinci kez cekmez.
+    expect(repository.keysSeen, [
+      QuizResultProgressReceiptStore.keyFor(userId: userId, roomId: roomId),
+    ]);
+    expect(repository.spendCalls, 1);
+  });
+
   // ── Tamamlanmış makbuz hiçbir şeyi tekrarlamaz ─────────────────────
   testWidgets('completed makbuz ne sorar ne harcar ne ACK eder', (
     tester,
@@ -236,6 +259,8 @@ class _FreezeRepository extends MockZanKurdRepository {
   final bool balanceThrows;
   int spendCalls = 0;
   int ackCalls = 0;
+  final List<String> keysSeen = [];
+  final Set<String> charged = {};
 
   @override
   String? get currentUserId => 'user-freeze';
@@ -247,10 +272,23 @@ class _FreezeRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<bool> spendCoins(int amount, String reason) async {
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
     spendCalls++;
+    keysSeen.add(idempotencyKey);
     if (spendThrows) throw StateError('injected: spend failed');
-    return true;
+    if (charged.contains(idempotencyKey)) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.alreadyCharged,
+        idempotent: true,
+      );
+    }
+    charged.add(idempotencyKey);
+    return const StreakFreezeChargeResult(
+      outcome: StreakFreezeChargeOutcome.charged,
+      idempotent: true,
+    );
   }
 
   @override

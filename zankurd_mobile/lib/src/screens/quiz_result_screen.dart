@@ -188,18 +188,27 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     }
 
     final stages = widget.receiptStages ?? await _defaultStageRecorder();
+    // Bu noktadan sonra oda kimliği kesin: yukarıdaki bağlam kontrolü
+    // eksik/tutarsız teslimatı zaten elemişti.
+    final resultRoomId = roomId!;
 
     // Aşama 1 — kullanıcı kararı. Makbuzun kritik bölümünün DIŞINDA.
     try {
-      final resumed = await stages?.read(userId: ownerId, roomId: roomId!);
+      final resumed = await stages?.read(userId: ownerId, roomId: resultRoomId);
       if (resumed?.isTerminal != true) {
         final streak = await _resolveStreakDecision(
           resumed: resumed,
+          // Makbuz anahtarıyla AYNI kimlik: tahsilat da, makbuz da aynı
+          // sonuca bağlı olduğu için ikisi tek bir değişmezden türer.
+          idempotencyKey: QuizResultProgressReceiptStore.keyFor(
+            userId: ownerId,
+            roomId: resultRoomId,
+          ),
           recordStage: stages == null
               ? null
               : (stage, {bool freezeRequested = false}) => stages.write(
                   userId: ownerId,
-                  roomId: roomId!,
+                  roomId: resultRoomId,
                   receipt: QuizResultReceipt(
                     stage: stage,
                     freezeRequested: freezeRequested,
@@ -218,7 +227,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       final runner = widget.receiptRunner ?? _runDefaultReceipt;
       receiptOutcome = await runner(
         userId: ownerId,
-        roomId: roomId!,
+        roomId: resultRoomId,
         action: () async {
           if (!_isCurrentResultOwner(ownerId)) {
             throw StateError('Result owner changed before local progress.');
@@ -266,7 +275,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       await repository.acknowledgeRoomResult(widget.room);
       await stages?.write(
         userId: ownerId,
-        roomId: roomId,
+        roomId: resultRoomId,
         receipt: const QuizResultReceipt(
           stage: QuizResultReceiptStage.completed,
         ),
@@ -406,6 +415,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     Future<void> Function(QuizResultReceiptStage stage, {bool freezeRequested})?
     recordStage,
     QuizResultReceipt? resumed,
+    // Sonuç makbuzunun değişmez kimliği: `<user>:<room>`. Tahsilatın
+    // idempotency anahtarı budur, yani aynı sonuç için yapılan her tekrar
+    // aynı anahtarı taşır ve sunucu ikinci kez çekmez.
+    String idempotencyKey = '',
   }) async {
     final isPremium = context.read<PremiumService>().isPremium;
     final streakStore = await StreakStore.load();
@@ -490,14 +503,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       QuizResultReceiptStage.freezeApplying,
       freezeRequested: true,
     );
-    final saved = await _applyPaidStreakFreeze(streakStore);
+    final charge = await _applyPaidStreakFreeze(streakStore, idempotencyKey);
     await recordStage?.call(
-      saved == null
+      charge.streak == null
           ? QuizResultReceiptStage.freezeSkipped
           : QuizResultReceiptStage.freezeApplied,
     );
     return _StreakOutcome(
-      streak: saved ?? await streakStore.recordPlay(),
+      streak: charge.streak ?? await streakStore.recordPlay(),
       isNewDay: isNewDay,
     );
   }
@@ -540,21 +553,36 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   /// Coini harcar ve dondurmayı uygular.
   ///
-  /// Çağıran, bu çağrıdan ÖNCE `freezeApplying` aşamasını yazmış olmalıdır:
-  /// harcama sunucuda idempotent olmadığı için, kesinti hâlinde tekrar
-  /// denenmemesi ancak o kayıtla garanti edilir.
-  Future<int?> _applyPaidStreakFreeze(StreakStore store) async {
-    bool ok;
+  /// Çağıran, bu çağrıdan ÖNCE `freezeApplying` aşamasını yazmış olmalıdır.
+  /// Tahsilat, sonuç makbuzunun kimliğinden türeyen değişmez bir
+  /// idempotency anahtarıyla yapılır: cevabı kaybolan bir istek aynı
+  /// anahtarla tekrarlandığında sunucu yeni bir hareket yaratmaz.
+  ///
+  /// Dönen [StreakFreezeChargeResult.idempotent] bilgisi çağırana taşınır;
+  /// göç uygulanmamış bir sunucuda eski (idempotent OLMAYAN) yola
+  /// düşüldüğü için belirsiz tahsilat yine tekrarlanmamalıdır.
+  Future<({int? streak, bool idempotent})> _applyPaidStreakFreeze(
+    StreakStore store,
+    String idempotencyKey,
+  ) async {
+    StreakFreezeChargeResult charge;
     try {
-      ok = await repository.spendCoins(_streakFreezeCost, 'streak_freeze');
+      charge = await repository.spendStreakFreeze(
+        idempotencyKey: idempotencyKey,
+      );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'streak_freeze_spend');
-      return null;
+      return (streak: null, idempotent: false);
     }
-    if (!ok) return null;
+    if (!charge.succeeded) {
+      return (streak: null, idempotent: charge.idempotent);
+    }
     // Coin ödendi: bir jeton verilip hemen uygulanır (seri +1 devam eder).
     await store.addFreeze();
-    return store.freezeAndRecordPlay();
+    return (
+      streak: await store.freezeAndRecordPlay(),
+      idempotent: charge.idempotent,
+    );
   }
 
   Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
