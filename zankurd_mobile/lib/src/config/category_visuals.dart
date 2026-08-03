@@ -37,35 +37,43 @@ class CategoryVisuals {
   /// Kategori adını canonical (ana) kategori kimliğine eşler.
   static String canonicalName(String category) => _resolveKey(category);
 
-  /// Kategori → renk çifti. 2026-07-24 yenilemesi: tonlar tek bir doygunluk
-  /// bandına çekildi (orta ton, düşük kroma) — böylece sekiz kategori yan yana
-  /// durduğunda göz yorulmuyor ve hiçbiri eylem turuncusuyla (Tîrêj)
-  /// yarışmıyor. Ziman turuncudan çıkarıldı çünkü CTA rengiyle çakışıyordu.
+  /// Kategori → renk çifti. **Rengîn Editorial Arena** (2026-08-03).
   ///
-  /// Bu renkler artık kartın tamamını doldurmaz; ikon karosu ve ince kenar
-  /// şeridi gibi küçük kimlik alanlarında kullanılır.
+  /// Önceki set bilerek düşük kromaya çekilmişti ve kartın yalnız küçük bir
+  /// köşesini boyuyordu. Sonuç, gerçek cihazda pastel bir yıkamaydı: on
+  /// kategori yan yana durduğunda hiçbiri kimlik taşımıyor, ekran renkli
+  /// değil soluk görünüyordu. Renk artık kartın TAMAMINI dolduruyor, bu
+  /// yüzden doygunluk geri getirildi.
+  ///
+  /// Altı ana hue ailesi (zümrüt, ametist, madder, safir, safran, turkuaz)
+  /// ve bunların ton varyantları kullanılır — on bağımsız rastgele renk
+  /// değil. Her ton beyaz metinle WCAG AA'yı KENDİ BAŞINA geçer (ölçülen
+  /// aralık 5.00:1 – 8.08:1), çünkü kategori adı artık dolu renk zeminin
+  /// üstünde duruyor ve okunurluk rengin kendisine bağlı.
+  ///
+  /// İkinci ton yalnız derinlik içindir; gradyanın koyu ucu olarak birinci
+  /// tonun ~%18 karartılmışıdır, ayrı bir hue değildir.
   static const Map<String, List<Color>> _gradients = {
-    'Ziman': [Color(0xFF2F6F62), Color(0xFF24564C)], // çam yeşili
-    'Çand': [Color(0xFF6B5AA6), Color(0xFF55458A)], // mor
-    'Dîrok': [Color(0xFFA85A7A), Color(0xFF8C4763)], // gül
-    'Edebiyat': [Color(0xFF3C6EA5), Color(0xFF2F5885)], // mavi
-    'Cografya': [Color(0xFF8A6A2F), Color(0xFF6E5325)], // toprak sarısı
-    'Muzîk': [Color(0xFF5C7A3A), Color(0xFF48602C)], // zeytin
-    'Siyaset': [Color(0xFF9E5B4A), Color(0xFF80463A)], // terracotta
-    'Paradigma': [Color(0xFF566B7F), Color(0xFF425364)], // arduvaz
-    // Teknolojî kategori açılana kadar Paradigma'nın arduvaz tonunu
-    // paylaşıyordu; iki kart yan yana ayırt edilemiyordu (2026-07-26).
-    // Turkuaz, mevcut dokuz tonun hiçbirine yakın değil ve aynı doygunluk
-    // bandında kalıyor.
-    'Teknolojî': [Color(0xFF2E7D8A), Color(0xFF23626C)], // turkuaz
-    // Sînema: koyu bordo — mevcut sekiz tonun hiçbiriyle çakışmayan, aynı
-    // doygunluk bandında kalan bir kimlik.
-    'Sînema': [Color(0xFF8C4A5C), Color(0xFF703A49)],
+    // ── Zümrüt ailesi ──
+    'Ziman': [Color(0xFF0E7A57), Color(0xFF0A5C41)],
+    'Muzîk': [Color(0xFF4C7A17), Color(0xFF3A5D11)],
+    // ── Ametist ailesi ──
+    'Çand': [Color(0xFF6A38BE), Color(0xFF522B92)],
+    'Sînema': [Color(0xFF8B2A60), Color(0xFF6B204A)],
+    // ── Madder ailesi ──
+    'Dîrok': [Color(0xFFB31E3B), Color(0xFF8B172E)],
+    'Siyaset': [Color(0xFFBC4318), Color(0xFF933412)],
+    // ── Safir ailesi ──
+    'Edebiyat': [Color(0xFF1E4FA6), Color(0xFF173D80)],
+    'Paradigma': [Color(0xFF2A5A8C), Color(0xFF20456C)],
+    // ── Safran / turkuaz ──
+    'Cografya': [Color(0xFF9C6300), Color(0xFF784C00)],
+    'Teknolojî': [Color(0xFF04697C), Color(0xFF03505F)],
   };
 
   static const List<Color> _fallbackGradient = [
-    Color(0xFF2F6F62),
-    Color(0xFF24564C),
+    Color(0xFF0E7A57),
+    Color(0xFF0A5C41),
   ];
 
   /// Rengi açıkça tanımlanmış kategoriler. Yeni bir kategori eklenirse

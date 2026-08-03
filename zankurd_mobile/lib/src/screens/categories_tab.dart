@@ -13,6 +13,7 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import 'subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 
 class CategoriesTab extends StatefulWidget {
   const CategoriesTab({
@@ -505,129 +506,159 @@ class _CategoryCardState extends State<_CategoryCard>
                 curve: Curves.easeOutCubic,
                 child: Opacity(
                   opacity: comingSoon ? 0.55 : 1.0,
+                  // Rengîn Editorial Arena (2026-08-03): kart artık kategori
+                  // renginin TAMAMINI taşır. Önceki sürüm rengi %13 alfayla
+                  // yüzeye karıştırıyordu; gerçek cihazda sonuç pastel bir
+                  // yıkamaydı ve on kategori yan yana dururken hiçbiri kimlik
+                  // taşımıyordu. Doygunluk kartın kendisine taşındı, kontrol
+                  // ise ortak ink kabuğunda kaldı.
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          accent.withValues(
-                            alpha: AppTheme.isLight(context) ? 0.13 : 0.22,
-                          ),
-                          AppTheme.surfaceColor(context),
-                        ],
+                        colors: CategoryVisuals.gradientColors(widget.category),
                       ),
-                      borderRadius: BorderRadius.circular(AppRadius.card),
-                      border: Border.all(color: AppTheme.borderColor(context)),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: accent.withValues(alpha: 0.28),
+                          blurRadius: 14,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(AppRadius.card),
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppSpacing.sm),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 44,
-                                  height: 44,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: accent,
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.badge,
-                                    ),
-                                    boxShadow: AppShadows.categoryCard(accent),
-                                  ),
-                                  child: Icon(
-                                    icon,
-                                    color: Colors.white,
-                                    size: 21,
-                                  ),
+                      borderRadius: BorderRadius.circular(18),
+                      child: Stack(
+                        children: [
+                          // Basamak motifi kartın alt köşesinde derinlik verir.
+                          // Tek motif, tek yerde: kartın etrafını desenle
+                          // çevirmek kimliği dekora çeviriyordu.
+                          // Basamak ritmi kartın TABANINA yaslanır. Köşede
+                          // yüzen bir parça olarak denendiğinde bilinçli bir
+                          // öğe değil, rastgele blok yığını gibi okunuyordu.
+                          const Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            child: SizedBox(
+                              height: 40,
+                              child: CustomPaint(
+                                painter: KilimPainter(
+                                  motif: KilimMotif.step,
+                                  color: Colors.white,
+                                  opacity: 0.10,
+                                  count: 11,
                                 ),
-                                if (hasProgress)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 7,
-                                      vertical: 4,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(AppSpacing.sm),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CategoryEmblem(
+                                      icon: icon,
+                                      color: Colors.white,
+                                      size: 46,
                                     ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                        AppRadius.pill,
-                                      ),
-                                      color: accent.withValues(alpha: 0.14),
-                                    ),
-                                    child: Text(
-                                      widget.isKu
-                                          ? widget.masteryLevel.titleKu
-                                          : widget.masteryLevel.titleTr,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTypography.caption.copyWith(
-                                        fontSize: 10,
-                                        color: AppColors.readableAccent(
-                                          context,
-                                          accent,
+                                    if (hasProgress)
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            AppRadius.pill,
+                                          ),
+                                          color: Colors.white.withValues(
+                                            alpha: 0.22,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          widget.isKu
+                                              ? widget.masteryLevel.titleKu
+                                              : widget.masteryLevel.titleTr,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTypography.caption.copyWith(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    else
+                                      Icon(
+                                        comingSoon
+                                            ? AppIcons.hourglass
+                                            : AppIcons.chevronRight,
+                                        size: 16,
+                                        color: Colors.white.withValues(
+                                          alpha: 0.85,
                                         ),
                                       ),
-                                    ),
-                                  )
-                                else
-                                  Icon(
-                                    comingSoon
-                                        ? AppIcons.hourglass
-                                        : AppIcons.chevronRight,
-                                    size: 15,
-                                    color: AppTheme.textMutedColor(context),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Text(
+                                  catName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.subtitle.copyWith(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: -0.3,
+                                    color: Colors.white,
                                   ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  comingSoon
+                                      ? Tr.forKu(K.yakindaGeliyor, widget.isKu)
+                                      : widget.questionCount != null
+                                      ? Tr.forKu(K.pSoruSeviye, widget.isKu, {
+                                          'p0': '${widget.questionCount}',
+                                        })
+                                      : Tr.forKu(K.seviye, widget.isKu),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    fontSize: 12.5,
+                                    color: Colors.white.withValues(alpha: 0.86),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                // İlerleme artık 4px'lik görünmez bir çizgi
+                                // değil: dolu zeminde beyazla çizilen 7px'lik
+                                // bir çubuk.
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.pill,
+                                  ),
+                                  child: LinearProgressIndicator(
+                                    value: hasProgress ? progress : 0,
+                                    minHeight: 7,
+                                    backgroundColor: Colors.white.withValues(
+                                      alpha: 0.24,
+                                    ),
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                          Colors.white,
+                                        ),
+                                  ),
+                                ),
                               ],
                             ),
-                            const SizedBox(height: AppSpacing.sm),
-                            Text(
-                              catName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.subtitle.copyWith(
-                                fontSize: 16,
-                                color: AppTheme.textPrimaryColor(context),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              comingSoon
-                                  ? Tr.forKu(K.yakindaGeliyor, widget.isKu)
-                                  : widget.questionCount != null
-                                  ? Tr.forKu(K.pSoruSeviye, widget.isKu, {
-                                      'p0': '${widget.questionCount}',
-                                    })
-                                  : Tr.forKu(K.seviye, widget.isKu),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.bodyMedium.copyWith(
-                                fontSize: 12.5,
-                                color: AppTheme.textSubColor(context),
-                              ),
-                            ),
-                            const Spacer(),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                AppRadius.pill,
-                              ),
-                              child: LinearProgressIndicator(
-                                value: hasProgress ? progress : 0,
-                                minHeight: 4,
-                                backgroundColor: AppTheme.borderColor(context),
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  hasProgress
-                                      ? accent
-                                      : accent.withValues(alpha: 0.22),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
