@@ -909,14 +909,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   end: Alignment.bottomRight,
                   colors: [AppTheme.wrongHeader, AppTheme.wrongDeep],
                 ))
-        // Solo sonuç vitrini kimlik anıdır, eylem değil: Kesk (marka yeşili)
-        // kullanılır. Turuncu yalnız "sonraki adım" butonunda kalır — böylece
-        // ekranda göz nereye gideceğini şaşırmaz. Ayrıca eski turuncu hero,
-        // açık temada beyaz metni okutabilmek için siyah perde harcıyordu.
+        // Solo sonuç vitrini kimlik anıdır, eylem değil; turuncu yalnız
+        // "sonraki adım" butonunda kalır — bu kural korunuyor.
+        //
+        // Değişen, iki ucun KARIŞIMI: marka yeşilinden koyu turuncuya inen
+        // gradyan gerçek cihazda kutlama değil çamur veriyordu (yeşil→kahve
+        // geçişi, 2026-08-03 görsel denetimi). Rengîn kutlama yüzeyi
+        // mücevher mantığını kullanır: derin mürekkepten ametiste. İki uç da
+        // beyaz metinle çok yüksek kontrast verir (15.67:1 ve 7.19:1) ve
+        // hiçbiri eylem turuncusuyla yarışmaz.
         : const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.culturalBrandBg, AppTheme.brandDeep],
+            colors: [Color(0xFF17233B), Color(0xFF6A38BE)],
           );
 
     final borderColor = is1v1
