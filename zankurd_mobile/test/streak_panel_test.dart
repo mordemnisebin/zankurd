@@ -5,7 +5,7 @@ import 'package:zankurd_mobile/src/widgets/streak_panel.dart';
 
 /// Streak yüzeyinin kullanıcıya verdiği sözleşmeler.
 ///
-/// Panelin tek işi seriyi göstermek değil, oyuncunun onu KORUYABİLMESİ için
+/// Panelin işi seriyi göstermek değil, oyuncunun onu KORUYABİLMESİ için
 /// gereken bilgiyi vermek: hangi günler oynandı, bugün ne durumda, dondurma
 /// niçin kullanılabilir ya da kullanılamaz.
 Widget _wrap(Widget child, {Brightness brightness = Brightness.light}) =>
@@ -15,6 +15,8 @@ Widget _wrap(Widget child, {Brightness brightness = Brightness.light}) =>
           : AppTheme.dark(),
       home: Scaffold(body: SingleChildScrollView(child: child)),
     );
+
+const _days = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
 
 const _week = [
   StreakDayState.completed,
@@ -26,27 +28,37 @@ const _week = [
   StreakDayState.upcoming,
 ];
 
+StreakPanel _panel({
+  int current = 5,
+  List<StreakDayState> days = _week,
+  StreakFreezeState freezeState = StreakFreezeState.notNeeded,
+  String? freezeLabel,
+  String? freezeActionLabel,
+  int? nextMilestone,
+  int? freezeCost,
+  VoidCallback? onFreeze,
+}) => StreakPanel(
+  current: current,
+  days: days,
+  freezeState: freezeState,
+  freezeLabel: freezeLabel ?? 'F-${freezeState.name}',
+  dayLabels: _days,
+  freezeActionLabel: freezeActionLabel,
+  nextMilestone: nextMilestone,
+  freezeCost: freezeCost,
+  onFreeze: onFreeze,
+);
+
 void main() {
-  testWidgets('yedi günün her durumu ayrı ikon taşır', (tester) async {
+  testWidgets('her gün durumu ayrı ikon taşır', (tester) async {
     // Renk tek kanal olamaz: "kaçırdım" ile "henüz gelmedi" arasındaki fark
     // yalnız tonla anlatılırsa renk körü oyuncu için kaybolur.
     final icons = <IconData>{};
     for (final state in StreakDayState.values) {
-      await tester.pumpWidget(
-        _wrap(
-          StreakPanel(
-            current: 3,
-            days: [state],
-            freezeState: StreakFreezeState.notNeeded,
-          ),
-        ),
+      await tester.pumpWidget(_wrap(_panel(days: [state])));
+      icons.add(
+        tester.widgetList<Icon>(find.byType(Icon)).map((i) => i.icon!).last,
       );
-      // İlk ikon gün işareti; jeton ve çip ikonları sonra gelir.
-      final dayIcon = tester
-          .widgetList<Icon>(find.byType(Icon))
-          .map((i) => i.icon!)
-          .toList();
-      icons.add(dayIcon.last);
     }
     expect(
       icons,
@@ -55,52 +67,35 @@ void main() {
     );
   });
 
-  testWidgets('freeze durumları birbirinden ayrı etiket taşır', (tester) async {
+  testWidgets('her freeze durumu kendi etiketini gösterir', (tester) async {
     // Sekiz durumun altısı "sönük düğme" olarak çiziliyordu; oyuncu niçin
     // kullanamadığını ayırt edemiyordu.
-    final labels = <String>{};
     for (final state in StreakFreezeState.values) {
-      await tester.pumpWidget(
-        _wrap(StreakPanel(current: 5, days: _week, freezeState: state)),
+      await tester.pumpWidget(_wrap(_panel(freezeState: state)));
+      expect(
+        find.text('F-${state.name}'),
+        findsOneWidget,
+        reason: '${state.name} kendi etiketini göstermeli',
       );
-      final texts = tester
-          .widgetList<Text>(find.byType(Text))
-          .map((t) => t.data ?? '')
-          .where((t) => t.isNotEmpty)
-          .toList();
-      labels.add(texts.join('|'));
     }
-    expect(
-      labels,
-      hasLength(StreakFreezeState.values.length),
-      reason: 'iki freeze durumu aynı görünüyorsa ayrım kaybolur',
-    );
   });
 
   testWidgets('belirsiz işlem "uygulandı" demez', (tester) async {
     // Sunucudan cevap gelmeden başarı gösterilemez.
     await tester.pumpWidget(
-      _wrap(
-        const StreakPanel(
-          current: 5,
-          days: _week,
-          freezeState: StreakFreezeState.uncertain,
-          isKu: false,
-        ),
-      ),
+      _wrap(_panel(freezeState: StreakFreezeState.uncertain)),
     );
-    expect(find.text('Korundu'), findsNothing);
-    expect(find.text('Sonuç belirsiz'), findsOneWidget);
+    expect(find.text('F-applied'), findsNothing);
+    expect(find.text('F-uncertain'), findsOneWidget);
   });
 
   testWidgets('uygulanırken koruma düğmesi sunulmaz', (tester) async {
     var taps = 0;
     await tester.pumpWidget(
       _wrap(
-        StreakPanel(
-          current: 5,
-          days: _week,
+        _panel(
           freezeState: StreakFreezeState.applying,
+          freezeActionLabel: 'Koru',
           onFreeze: () => taps++,
         ),
       ),
@@ -112,45 +107,34 @@ void main() {
   testWidgets('coin yetersizken koruma düğmesi sunulmaz', (tester) async {
     await tester.pumpWidget(
       _wrap(
-        StreakPanel(
-          current: 5,
-          days: _week,
+        _panel(
           freezeState: StreakFreezeState.insufficientCoins,
+          freezeActionLabel: 'Koru',
           onFreeze: () {},
         ),
       ),
     );
     expect(find.byType(FilledButton), findsNothing);
-    expect(find.text('Coin yetersiz'), findsOneWidget);
+    expect(find.text('F-insufficientCoins'), findsOneWidget);
+  });
+
+  testWidgets('etiket verilmezse koruma düğmesi çizilmez', (tester) async {
+    // Bileşen kendi metnini uydurmaz; çağıran vermezse eylem sunulmaz.
+    await tester.pumpWidget(
+      _wrap(_panel(freezeState: StreakFreezeState.available, onFreeze: () {})),
+    );
+    expect(find.byType(FilledButton), findsNothing);
   });
 
   testWidgets('milestone ilerlemesi sayıyla da yazılır', (tester) async {
-    await tester.pumpWidget(
-      _wrap(
-        const StreakPanel(
-          current: 5,
-          days: _week,
-          freezeState: StreakFreezeState.notNeeded,
-          nextMilestone: 7,
-        ),
-      ),
-    );
+    await tester.pumpWidget(_wrap(_panel(current: 5, nextMilestone: 7)));
     expect(find.text('5/7'), findsOneWidget);
   });
 
   testWidgets('milestone geçilmişse ilerleme çubuğu gösterilmez', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      _wrap(
-        const StreakPanel(
-          current: 9,
-          days: _week,
-          freezeState: StreakFreezeState.notNeeded,
-          nextMilestone: 7,
-        ),
-      ),
-    );
+    await tester.pumpWidget(_wrap(_panel(current: 9, nextMilestone: 7)));
     expect(find.byType(LinearProgressIndicator), findsNothing);
   });
 
@@ -161,17 +145,18 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.dark(),
-        home: const MediaQuery(
-          data: MediaQueryData(textScaler: TextScaler.linear(2.0)),
+        home: MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(2.0)),
           child: Scaffold(
             body: SingleChildScrollView(
-              child: StreakPanel(
+              child: _panel(
                 current: 12,
-                days: _week,
                 freezeState: StreakFreezeState.available,
+                freezeLabel: 'Amade ye ji bo parastinê',
+                freezeActionLabel: 'Rêzê biparêze',
                 nextMilestone: 30,
                 freezeCost: 50,
-                isKu: true,
+                onFreeze: () {},
               ),
             ),
           ),

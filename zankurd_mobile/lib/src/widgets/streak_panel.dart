@@ -38,10 +38,13 @@ class StreakPanel extends StatelessWidget {
     required this.current,
     required this.days,
     required this.freezeState,
+    required this.freezeLabel,
+    required this.dayLabels,
+    this.freezeActionLabel,
     this.nextMilestone,
     this.freezeCost,
     this.onFreeze,
-    this.isKu = false,
+    this.dayUnitLabel = '',
     super.key,
   });
 
@@ -53,6 +56,15 @@ class StreakPanel extends StatelessWidget {
 
   final StreakFreezeState freezeState;
 
+  /// Freeze durumunun yerelleştirilmiş etiketi.
+  final String freezeLabel;
+
+  /// Yedi günün yerelleştirilmiş kısaltmaları.
+  final List<String> dayLabels;
+
+  /// Koruma düğmesinin yerelleştirilmiş etiketi; yoksa düğme çizilmez.
+  final String? freezeActionLabel;
+
   /// Bir sonraki kilometre taşı; yoksa gösterilmez.
   final int? nextMilestone;
 
@@ -60,52 +72,33 @@ class StreakPanel extends StatelessWidget {
   final int? freezeCost;
 
   final VoidCallback? onFreeze;
-  final bool isKu;
 
-  static const _dayLabelsTr = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
-  static const _dayLabelsKu = ['Dş', 'Sş', 'Çş', 'Pş', 'În', 'Şm', 'Yş'];
+  /// "gün"/"roj" — jetonun birim etiketi.
+  final String dayUnitLabel;
 
-  (String, ArenaStatus) _freezeChip() => switch (freezeState) {
-    StreakFreezeState.available => (
-      isKu ? 'Amade' : 'Kullanılabilir',
-      ArenaStatus.live,
-    ),
-    StreakFreezeState.notNeeded => (
-      isKu ? 'Ne hewce ye' : 'Gerekmiyor',
-      ArenaStatus.completed,
-    ),
-    StreakFreezeState.insufficientCoins => (
-      isKu ? 'Pere têrê nake' : 'Coin yetersiz',
-      ArenaStatus.locked,
-    ),
-    StreakFreezeState.applying => (
-      isKu ? 'Tê sepandin…' : 'Uygulanıyor…',
-      ArenaStatus.loading,
-    ),
-    StreakFreezeState.applied => (
-      isKu ? 'Hate parastin' : 'Korundu',
-      ArenaStatus.joined,
-    ),
-    // Belirsiz işlem: sunucudan cevap gelmedi. "Uygulandı" DEMEZ — çift
-    // çekim korkusuyla tekrar denemek de doğru değil.
-    StreakFreezeState.uncertain => (
-      isKu ? 'Encam ne diyar e' : 'Sonuç belirsiz',
-      ArenaStatus.upcoming,
-    ),
-    StreakFreezeState.offline => (
-      isKu ? 'Negirêdayî' : 'Çevrimdışı',
-      ArenaStatus.offline,
-    ),
-    StreakFreezeState.unavailable => (
-      isKu ? 'Nayê bikaranîn' : 'Kullanılamıyor',
-      ArenaStatus.locked,
-    ),
+  /// Freeze durumunun okunur etiketi ve gün kısaltmaları ÇAĞIRANDAN gelir.
+  ///
+  /// Panel içine satır içi iki-dilli üçlü ifade yazmak metni bileşene
+  /// gömer ve
+  /// `l10n_migration_guard`in saydığı satır içi iki-dil kullanımını
+  /// artırır. Bileşen sunumsal kalmalı: neyi çizeceğini bilir, hangi dilde
+  /// yazacağını bilmez.
+  static ArenaStatus _statusFor(StreakFreezeState state) => switch (state) {
+    StreakFreezeState.available => ArenaStatus.live,
+    StreakFreezeState.notNeeded => ArenaStatus.completed,
+    StreakFreezeState.insufficientCoins => ArenaStatus.locked,
+    StreakFreezeState.applying => ArenaStatus.loading,
+    StreakFreezeState.applied => ArenaStatus.joined,
+    // Belirsiz işlem: sunucudan cevap gelmedi. "Uygulandı" DEMEZ.
+    StreakFreezeState.uncertain => ArenaStatus.upcoming,
+    StreakFreezeState.offline => ArenaStatus.offline,
+    StreakFreezeState.unavailable => ArenaStatus.locked,
   };
 
   @override
   Widget build(BuildContext context) {
-    final labels = isKu ? _dayLabelsKu : _dayLabelsTr;
-    final (chipLabel, chipStatus) = _freezeChip();
+    final labels = dayLabels;
+    final chipStatus = _statusFor(freezeState);
     final fire = RewardKind.streak.color;
 
     return Container(
@@ -124,20 +117,46 @@ class StreakPanel extends StatelessWidget {
               RewardToken(
                 kind: RewardKind.streak,
                 value: '$current',
-                label: isKu ? 'roj' : 'gün',
+                label: dayUnitLabel,
               ),
-              const Spacer(),
-              ArenaStatusChip(status: chipStatus, label: chipLabel),
+              const SizedBox(width: AppSpacing.xs),
+              // Esnek olmalı: uzun Kurmancî durum etiketi %200 yazıda
+              // satırı 356 piksel taşırıyordu. `Spacer` esnemeyen bir
+              // çipin yanında hiçbir şeyi kurtaramaz.
+              Flexible(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: ArenaStatusChip(
+                    status: chipStatus,
+                    label: freezeLabel,
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
           // Haftalık ritim: her gün renk + şekil/ikon taşır.
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (var i = 0; i < days.length && i < labels.length; i++)
-                _DayMark(state: days[i], label: labels[i], accent: fire),
-            ],
+          //
+          // Yedi işaret 200% yazıda dar telefona sığmıyordu; satır yatay
+          // kaydırılabilir. Günleri kırpmak ya da küçültmek ritmi
+          // okunmaz hâle getirirdi — asıl bilgi tam da o dizidir.
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (var i = 0; i < days.length && i < labels.length; i++)
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: i == days.length - 1 ? 0 : 10,
+                    ),
+                    child: _DayMark(
+                      state: days[i],
+                      label: labels[i],
+                      accent: fire,
+                    ),
+                  ),
+              ],
+            ),
           ),
           if (nextMilestone != null && nextMilestone! > current) ...[
             const SizedBox(height: AppSpacing.sm),
@@ -167,7 +186,8 @@ class StreakPanel extends StatelessWidget {
             ),
           ],
           if (freezeState == StreakFreezeState.available &&
-              onFreeze != null) ...[
+              onFreeze != null &&
+              freezeActionLabel != null) ...[
             const SizedBox(height: AppSpacing.sm),
             SizedBox(
               width: double.infinity,
@@ -176,10 +196,8 @@ class StreakPanel extends StatelessWidget {
                 icon: const Icon(Icons.ac_unit_rounded, size: 18),
                 label: Text(
                   freezeCost == null
-                      ? (isKu ? 'Rêzê biparêze' : 'Seriyi koru')
-                      : (isKu
-                            ? 'Rêzê biparêze · $freezeCost'
-                            : 'Seriyi koru · $freezeCost'),
+                      ? freezeActionLabel!
+                      : '${freezeActionLabel!} · $freezeCost',
                 ),
               ),
             ),
@@ -261,7 +279,6 @@ class _DayMark extends StatelessWidget {
             Text(
               label,
               style: AppTypography.caption.copyWith(
-                fontSize: 10,
                 color: AppTheme.textMutedColor(context),
               ),
             ),
