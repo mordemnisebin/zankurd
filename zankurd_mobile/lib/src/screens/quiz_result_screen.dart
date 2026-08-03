@@ -249,12 +249,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     if (receiptOutcome == QuizResultProgressReceiptOutcome.blockedProcessing) {
       ErrorReporter.record(
         StateError(
-          'Result progress receipt is processing and cannot be verified.',
+          'Result progress receipt was interrupted; local progress skipped.',
         ),
         StackTrace.current,
         reason: 'quiz result receipt incomplete',
       );
-      return;
     }
 
     if (rewardState != QuizRewardSettlementState.claimed ||

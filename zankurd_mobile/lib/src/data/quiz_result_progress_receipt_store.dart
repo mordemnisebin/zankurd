@@ -110,7 +110,7 @@ class QuizResultReceipt {
     }
     if (value == 'processing') {
       return const QuizResultReceipt(
-        stage: QuizResultReceiptStage.progressApplying,
+        stage: QuizResultReceiptStage.acknowledgementPending,
       );
     }
 
@@ -225,6 +225,12 @@ class QuizResultProgressReceiptStore {
       // şurada: akış ileri taşınır, böylece onay yapılabilir ve kurtarma
       // ekranı tekrarlamayı bırakır.
       case QuizResultReceiptStage.progressApplying:
+        await _persist(
+          key,
+          const QuizResultReceipt(
+            stage: QuizResultReceiptStage.acknowledgementPending,
+          ),
+        );
         return QuizResultProgressReceiptOutcome.blockedProcessing;
 
       case null:

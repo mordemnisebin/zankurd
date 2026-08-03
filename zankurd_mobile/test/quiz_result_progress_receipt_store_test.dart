@@ -159,45 +159,64 @@ void main() {
     expect(actionCount, 1);
   });
 
-  test(
-    'action hatasi processing birakir ve sonraki turlar teslimati engeller',
-    () async {
-      final preferences = await SharedPreferences.getInstance();
-      final store = QuizResultProgressReceiptStore(preferences);
-      var actionCount = 0;
+  // Bu test bir zamanlar "sonraki turlar teslimatı ENGELLER" diyordu ve
+  // engellemeyi bir güvenlik özelliği sayıyordu. Koruduğu asıl özellik
+  // doğruydu: yarıda kalmış bir yazım TEKRARLANMAMALI, çünkü yerel depolar
+  // (XP, rozet, ustalık) idempotent değil.
+  //
+  // Ama "tekrarlama" ile "sonsuza dek kilitle" aynı şey değil. Eski
+  // sözleşme ikincisini yapıyordu: makbuz kalıcı `processing` kalıyor,
+  // `acknowledgeRoomResult` hiç çağrılamıyor ve kurtarma ekranı her soğuk
+  // açılışta geri geliyordu — hiçbir şeyi kurtarmadan.
+  //
+  // Yeni sözleşme aynı korumayı veri kaybı olmadan verir: adım yine
+  // atlanır (çift XP yok), fakat akış onay aşamasına taşınır. Onay
+  // sunucuda idempotenttir, bu yüzden ileri gitmek güvenlidir.
+  test('action hatasi ilerlemeyi tekrarlamaz ama akisi kilitlemez', () async {
+    final preferences = await SharedPreferences.getInstance();
+    final store = QuizResultProgressReceiptStore(preferences);
+    var actionCount = 0;
 
-      await expectLater(
-        store.runOnce(
-          userId: 'user-action-error',
-          roomId: 'room-action-error',
-          action: () async {
-            actionCount++;
-            throw StateError('injected: action failed');
-          },
-        ),
-        throwsStateError,
-      );
-
-      final blocked = await store.runOnce(
+    await expectLater(
+      store.runOnce(
         userId: 'user-action-error',
         roomId: 'room-action-error',
         action: () async {
           actionCount++;
+          throw StateError('injected: action failed');
         },
-      );
-      final blockedAgain = await store.runOnce(
-        userId: 'user-action-error',
-        roomId: 'room-action-error',
-        action: () async {
-          actionCount++;
-        },
-      );
+      ),
+      throwsStateError,
+    );
 
-      expect(blocked, QuizResultProgressReceiptOutcome.blockedProcessing);
-      expect(blockedAgain, QuizResultProgressReceiptOutcome.blockedProcessing);
-      expect(actionCount, 1);
-    },
-  );
+    final resolved = await store.runOnce(
+      userId: 'user-action-error',
+      roomId: 'room-action-error',
+      action: () async {
+        actionCount++;
+      },
+    );
+    final afterResolution = await store.runOnce(
+      userId: 'user-action-error',
+      roomId: 'room-action-error',
+      action: () async {
+        actionCount++;
+      },
+    );
+
+    // Kesilen yazım atlandı.
+    expect(resolved, QuizResultProgressReceiptOutcome.blockedProcessing);
+    // Ve ileri çözüldü: ikinci tur artık "belirsiz" değil, "tamamlanmış".
+    expect(afterResolution, QuizResultProgressReceiptOutcome.skippedCompleted);
+    // Asıl güvence: yerel etki tam bir kez.
+    expect(actionCount, 1);
+
+    final receipt = await store.read(
+      userId: 'user-action-error',
+      roomId: 'room-action-error',
+    );
+    expect(receipt!.stage, QuizResultReceiptStage.acknowledgementPending);
+  });
 
   test('bilinmeyen kalici durum action calistirmaz', () async {
     SharedPreferences.setMockInitialValues({

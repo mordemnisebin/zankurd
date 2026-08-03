@@ -296,7 +296,47 @@ void main() {
     expect(find.byType(QuizResultScreen), findsOneWidget);
   });
 
-  testWidgets('tamamlığı belirsiz processing receipt ACK edilmez', (
+  // Bu test eskiden `ackCalls == 0` bekliyordu ve o beklenti gerçek bir
+  // kullanıcı veri kaybını sabitliyordu.
+  //
+  // Korumaya çalıştığı özellik iki ayrı şeyin birleşimiydi:
+  //   (a) belirsiz bir yerel yazım TEKRARLANMAMALI, ve
+  //   (b) sunucuya "yerleşti" denmemeli ki kullanıcı geri gelip
+  //       tamamlayabilsin.
+  //
+  // (a) doğru ve korunuyor. (b) ise hiçbir zaman işlemedi: makbuzu
+  // `processing`ten çıkaran tek bir satır bile yoktu, yani "geri gelip
+  // tamamlama" imkânsızdı. Karşılığında kullanıcı, hiçbir şeyi kurtarmayan
+  // bir kurtarma ekranını her soğuk açılışta yeniden görüyordu.
+  //
+  // Yeni beklenti (a)'yı aynen korur ve (b)'yi gerçeğe uydurur: onay
+  // yapılır — sunucuda idempotent olduğu için güvenlidir — ve TAM BİR KEZ
+  // yapılır.
+  testWidgets(
+    'tamamlığı belirsiz receipt ilerlemeyi tekrarlamaz ama ACK eder',
+    (tester) async {
+      final repository = _DeliveryRepository();
+      var actionCalls = 0;
+      await _pumpResult(
+        tester,
+        repository: repository,
+        receiptRunner:
+            ({required userId, required roomId, required action}) async {
+              // Kesilen yazım: action ÇAĞRILMAZ — çift XP koruması budur.
+              actionCalls++;
+              return QuizResultProgressReceiptOutcome.blockedProcessing;
+            },
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(actionCalls, 1, reason: 'runner bir kez çağrılır');
+      expect(repository.ackCalls, 1, reason: 'kurtarma döngüsü bitmeli');
+      expect(find.byType(QuizResultScreen), findsOneWidget);
+    },
+  );
+
+  testWidgets('belirsiz receipt tekrarlanan teslimatta ikinci kez ACK etmez', (
     tester,
   ) async {
     final repository = _DeliveryRepository();
@@ -309,9 +349,10 @@ void main() {
     );
     await tester.pump();
     await tester.pump();
+    await tester.pump();
+    await tester.pump();
 
-    expect(repository.ackCalls, 0);
-    expect(find.byType(QuizResultScreen), findsOneWidget);
+    expect(repository.ackCalls, 1, reason: 'ACK en fazla bir kez');
   });
 
   testWidgets('receipt sonrasında owner değişirse ACK edilmez', (tester) async {
