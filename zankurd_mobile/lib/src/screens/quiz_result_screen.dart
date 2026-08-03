@@ -41,6 +41,18 @@ import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// Seri kararının sonucu.
+///
+/// Karar (ve varsa coin harcaması) makbuzun kritik bölümünün DIŞINDA
+/// verilir; buradan sonrası yalnız otomatik yerel yazımdır. Bu tip, iki
+/// aşama arasındaki tek taşıyıcıdır.
+class _StreakOutcome {
+  const _StreakOutcome({required this.streak, required this.isNewDay});
+
+  final int streak;
+  final bool isNewDay;
+}
+
 typedef QuizResultReceiptRunner =
     Future<QuizResultProgressReceiptOutcome> Function({
       required String userId,
@@ -67,6 +79,7 @@ class QuizResultScreen extends StatefulWidget {
     this.resultOwnerUserId,
     this.rewardSettlementState,
     this.receiptRunner,
+    this.receiptStages,
     super.key,
   });
 
@@ -100,6 +113,10 @@ class QuizResultScreen extends StatefulWidget {
   final QuizRewardSettlementState? rewardSettlementState;
   final QuizResultReceiptRunner? receiptRunner;
 
+  /// Aşama kaydedici. Testler süreç ölümünü taklit edebilsin diye
+  /// enjekte edilebilir; üretimde `SharedPreferences` üzerinden kurulur.
+  final QuizResultProgressReceiptStore? receiptStages;
+
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
 }
@@ -122,6 +139,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<Achievement> _newAchievements = const [];
   Map<String, MasteryLevel> _promotions = const {};
   int _earnedXP = 0;
+  _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
   bool _ackAttempted = false;
 
@@ -169,6 +187,32 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       return;
     }
 
+    final stages = widget.receiptStages ?? await _defaultStageRecorder();
+
+    // Aşama 1 — kullanıcı kararı. Makbuzun kritik bölümünün DIŞINDA.
+    try {
+      final resumed = await stages?.read(userId: ownerId, roomId: roomId!);
+      if (resumed?.isTerminal != true) {
+        final streak = await _resolveStreakDecision(
+          resumed: resumed,
+          recordStage: stages == null
+              ? null
+              : (stage, {bool freezeRequested = false}) => stages.write(
+                  userId: ownerId,
+                  roomId: roomId!,
+                  receipt: QuizResultReceipt(
+                    stage: stage,
+                    freezeRequested: freezeRequested,
+                  ),
+                ),
+        );
+        _pendingStreak = streak;
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result streak decision');
+    }
+
+    // Aşama 2 — otomatik yerel ilerleme. Yalnız burada kritik bölüm var.
     QuizResultProgressReceiptOutcome receiptOutcome;
     try {
       final runner = widget.receiptRunner ?? _runDefaultReceipt;
@@ -179,7 +223,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           if (!_isCurrentResultOwner(ownerId)) {
             throw StateError('Result owner changed before local progress.');
           }
-          await _recordProgressAndAnalytics();
+          await _recordProgressAndAnalytics(
+            _pendingStreak ?? const _StreakOutcome(streak: 0, isNewDay: false),
+          );
           if (!_isCurrentResultOwner(ownerId)) {
             throw StateError('Result owner changed during local progress.');
           }
@@ -190,31 +236,59 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       return;
     }
 
-    switch (receiptOutcome) {
-      case QuizResultProgressReceiptOutcome.executed:
-      case QuizResultProgressReceiptOutcome.skippedCompleted:
-        break;
-      case QuizResultProgressReceiptOutcome.blockedProcessing:
-        ErrorReporter.record(
-          StateError(
-            'Result progress receipt is processing and cannot be verified.',
-          ),
-          StackTrace.current,
-          reason: 'quiz result receipt incomplete',
-        );
-        return;
+    // `blockedProcessing` artık "sonsuza dek kilitli" değil, "önceki yazım
+    // kesildiği için atlandı" demektir. Yerel ilerleme tekrarlanmaz —
+    // depolar idempotent olmadığı için XP ve rozet ikiye katlanırdı — ama
+    // akış burada durmaz.
+    //
+    // Durmaması gerekiyor çünkü ONAY ayrı bir güvenlik özelliğidir ve
+    // sunucuda idempotenttir: `room_result_receipts` birincil anahtarı
+    // `(room_id, player_id)`. Onayı belirsiz bir yerel yazım yüzünden
+    // sonsuza dek engellemek, hiçbir şeyi kurtarmadan kurtarma ekranını
+    // her soğuk açılışta geri getiriyordu (2026-08-03).
+    if (receiptOutcome == QuizResultProgressReceiptOutcome.blockedProcessing) {
+      ErrorReporter.record(
+        StateError(
+          'Result progress receipt is processing and cannot be verified.',
+        ),
+        StackTrace.current,
+        reason: 'quiz result receipt incomplete',
+      );
+      return;
     }
+
     if (rewardState != QuizRewardSettlementState.claimed ||
         !_isCurrentResultOwner(ownerId) ||
         _ackAttempted) {
       return;
     }
 
+    // Aşama 3 — sunucu onayı. Tek gerçekten yeniden denenebilir adım.
     _ackAttempted = true;
     try {
       await repository.acknowledgeRoomResult(widget.room);
+      await stages?.write(
+        userId: ownerId,
+        roomId: roomId,
+        receipt: const QuizResultReceipt(
+          stage: QuizResultReceiptStage.completed,
+        ),
+      );
     } catch (error, stack) {
+      // Makbuz `acknowledgementPending` kalır; sonraki açılışta yeniden
+      // denenir. Sunucu idempotent olduğu için bu güvenlidir.
       ErrorReporter.record(error, stack, reason: 'quiz result acknowledge');
+    }
+  }
+
+  Future<QuizResultProgressReceiptStore?> _defaultStageRecorder() async {
+    try {
+      return QuizResultProgressReceiptStore(
+        await SharedPreferences.getInstance(),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result receipt stages');
+      return null;
     }
   }
 
@@ -258,14 +332,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   Future<void> _runProgressSafely() async {
     try {
-      await _recordProgressAndAnalytics();
+      final streak = await _resolveStreakDecision();
+      await _recordProgressAndAnalytics(streak);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz result progress');
     }
   }
 
-  Future<void> _recordProgressAndAnalytics() async {
-    await _recordProgress();
+  Future<void> _recordProgressAndAnalytics(_StreakOutcome streakOutcome) async {
+    await _recordProgress(streakOutcome);
     try {
       await repository.logAnalyticsEvent('quiz_complete', {
         'category': widget.room.category,
@@ -298,16 +373,132 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// Ödeme yapılıp seri korunursa yeni seri değerini, aksi halde null döner.
   static const _streakFreezeCost = 50;
 
-  Future<int?> _maybeOfferStreakFreeze(StreakStore store) async {
-    if (!mounted) return null;
+  /// Seri kararını, makbuzun kritik bölümünün DIŞINDA çözer.
+  ///
+  /// Buradaki iki adım da kritik bölümde duramaz:
+  ///
+  /// * Diyalog sınırsız süre kullanıcı girdisi bekler. Kritik bölümde
+  ///   beklerse "oyuncu cevap vermeden uygulamayı kapattı" makbuzu kalıcı
+  ///   olarak kilitler.
+  /// * `spend_coins` sunucuda idempotent DEĞİLDİR (`streak_freeze` için
+  ///   dedup anahtarı yok, her çağrı yeni bir `-50` satırı yazar). Bu
+  ///   yüzden hiçbir koşulda otomatik tekrarlanmamalıdır.
+  ///
+  /// [recordStage] verilirse her geçiş diske yazılır; kesinti sonrası
+  /// nerede kalındığı okunabilir. Verilmezse (çevrimdışı/yerel quiz)
+  /// makbuz yoktur ve karar sıradan biçimde alınır.
+  Future<_StreakOutcome> _resolveStreakDecision({
+    Future<void> Function(QuizResultReceiptStage stage, {bool freezeRequested})?
+    recordStage,
+    QuizResultReceipt? resumed,
+  }) async {
+    final isPremium = context.read<PremiumService>().isPremium;
+    final streakStore = await StreakStore.load();
+    final today = DateTime.now();
+    final todayKey =
+        '${today.year.toString().padLeft(4, '0')}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+    final isNewDay = streakStore.lastDay != todayKey;
+
+    // Kesintiden sonra yan etkili aşamalar ASLA tekrarlanmaz.
+    switch (resumed?.stage) {
+      // Coin isteği gönderilmiş ama sonucu bilinmiyor. Tekrar harcamak
+      // yerine ileri çözülür: coin en fazla bir kez gider.
+      case QuizResultReceiptStage.freezeApplying:
+        ErrorReporter.record(
+          StateError('Streak freeze spend outcome is unknown after restart.'),
+          StackTrace.current,
+          reason: 'streak_freeze_uncertain',
+        );
+        await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+        return _StreakOutcome(
+          streak: await streakStore.recordPlay(),
+          isNewDay: isNewDay,
+        );
+      // Dondurma zaten uygulanmış; seri yeniden yazılmaz.
+      case QuizResultReceiptStage.freezeApplied:
+      case QuizResultReceiptStage.freezeSkipped:
+      case QuizResultReceiptStage.progressApplying:
+      case QuizResultReceiptStage.progressApplied:
+      case QuizResultReceiptStage.acknowledgementPending:
+      case QuizResultReceiptStage.completed:
+        // Yeniden yazma yok: bu aşamalarda seri zaten bu turda
+        // uygulanmıştır, yalnız görünen değeri okunur.
+        return _StreakOutcome(
+          streak: streakStore.effectiveStreak(now: today),
+          isNewDay: isNewDay,
+        );
+      case null:
+      case QuizResultReceiptStage.pendingUserDecision:
+      case QuizResultReceiptStage.decisionRecorded:
+        break;
+    }
+
+    if (!streakStore.willBreakOnPlay()) {
+      await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+      return _StreakOutcome(
+        streak: await streakStore.recordPlay(),
+        isNewDay: isNewDay,
+      );
+    }
+
+    // Premium: ücretsiz ve otomatik; kullanıcı kararı yok.
+    if (isPremium) {
+      await recordStage?.call(QuizResultReceiptStage.freezeApplying);
+      await streakStore.addFreeze();
+      final streak = await streakStore.freezeAndRecordPlay();
+      await recordStage?.call(QuizResultReceiptStage.freezeApplied);
+      return _StreakOutcome(streak: streak, isNewDay: isNewDay);
+    }
+
+    // Karar bekleniyor. Bu aşamada hiçbir yan etki yoktur, bu yüzden
+    // kesinti olursa soruyu yeniden sormak güvenlidir.
+    await recordStage?.call(QuizResultReceiptStage.pendingUserDecision);
+    final wantsFreeze = await _askForStreakFreeze();
+
+    // Karar, UYGULANMADAN önce yazılır: aksi hâlde coin harcama ile
+    // kararın kendisi aynı kesintide birlikte kaybolur.
+    await recordStage?.call(
+      QuizResultReceiptStage.decisionRecorded,
+      freezeRequested: wantsFreeze,
+    );
+    if (!wantsFreeze) {
+      await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+      return _StreakOutcome(
+        streak: await streakStore.recordPlay(),
+        isNewDay: isNewDay,
+      );
+    }
+
+    await recordStage?.call(
+      QuizResultReceiptStage.freezeApplying,
+      freezeRequested: true,
+    );
+    final saved = await _applyPaidStreakFreeze(streakStore);
+    await recordStage?.call(
+      saved == null
+          ? QuizResultReceiptStage.freezeSkipped
+          : QuizResultReceiptStage.freezeApplied,
+    );
+    return _StreakOutcome(
+      streak: saved ?? await streakStore.recordPlay(),
+      isNewDay: isNewDay,
+    );
+  }
+
+  /// Yalnız sorar. Hiçbir yan etkisi yoktur — bu yüzden kesildiğinde
+  /// yeniden sorulabilir.
+  Future<bool> _askForStreakFreeze() async {
+    if (!mounted) return false;
     int balance;
     try {
       balance = await repository.loadCoinBalance();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'streak_freeze_balance');
-      return null;
+      return false;
     }
-    if (!mounted || balance < _streakFreezeCost) return null;
+    if (!mounted || balance < _streakFreezeCost) return false;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -329,7 +520,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ],
       ),
     );
-    if (confirmed != true || !mounted) return null;
+    return confirmed == true && mounted;
+  }
+
+  /// Coini harcar ve dondurmayı uygular.
+  ///
+  /// Çağıran, bu çağrıdan ÖNCE `freezeApplying` aşamasını yazmış olmalıdır:
+  /// harcama sunucuda idempotent olmadığı için, kesinti hâlinde tekrar
+  /// denenmemesi ancak o kayıtla garanti edilir.
+  Future<int?> _applyPaidStreakFreeze(StreakStore store) async {
     bool ok;
     try {
       ok = await repository.spendCoins(_streakFreezeCost, 'streak_freeze');
@@ -343,35 +542,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     return store.freezeAndRecordPlay();
   }
 
-  Future<void> _recordProgress() async {
-    // Premium durumunu await'lerden ÖNCE, context hâlâ güvenliyken oku.
-    final isPremium = context.read<PremiumService>().isPremium;
-    // Dil de await'lerden önce okunur: bildirim metni async boşluğun
+  Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
+    // Dil, await'lerden önce okunur: bildirim metni async boşluğun
     // ötesinde `context`e dokunmadan seçilsin.
     final isKuNow = context.isKu;
-    final streakStore = await StreakStore.load();
-    final today = DateTime.now();
-    final todayKey =
-        '${today.year.toString().padLeft(4, '0')}-'
-        '${today.month.toString().padLeft(2, '0')}-'
-        '${today.day.toString().padLeft(2, '0')}';
-    final isNewDay = streakStore.lastDay != todayKey;
-
-    // Seri bugün oynamayınca kırılacaksa: Premium ise otomatik ve ÜCRETSİZ
-    // korunur; değilse oyuncuya coin karşılığı koruma teklif edilir
-    // (pay-at-result). Kabul edilmezse normal davranış işler.
-    final int streak;
-    if (streakStore.willBreakOnPlay()) {
-      if (isPremium) {
-        await streakStore.addFreeze();
-        streak = await streakStore.freezeAndRecordPlay();
-      } else {
-        final saved = await _maybeOfferStreakFreeze(streakStore);
-        streak = saved ?? await streakStore.recordPlay();
-      }
-    } else {
-      streak = await streakStore.recordPlay();
-    }
+    // Seri kararı bu adımdan ÖNCE, kritik bölümün dışında verildi ve
+    // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
+    final streak = streakOutcome.streak;
+    final isNewDay = streakOutcome.isNewDay;
     final mistakeStore = await MistakeStore.load();
     final achievementStore = await AchievementStore.load();
     final newAchievements = await achievementStore.recordQuizResult(
