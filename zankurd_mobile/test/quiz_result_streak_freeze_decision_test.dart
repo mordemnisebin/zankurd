@@ -186,7 +186,7 @@ void main() {
     expect(find.byType(AlertDialog), findsNothing);
     expect(repository.spendCalls, 0);
     final preferences = await SharedPreferences.getInstance();
-    expect((preferences.getInt('zankurd.streak.current') ?? 0), greaterThan(0));
+    expect(preferences.getInt('zankurd.streak.current') ?? 0, greaterThan(0));
     expect((preferences.getInt('zankurd.xp.total') ?? 0) > 0, isTrue);
   });
 
