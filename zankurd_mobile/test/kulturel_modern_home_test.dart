@@ -8,7 +8,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
-import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
+import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -59,9 +59,16 @@ void main() {
     expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
 
     // Destek satırları tek tip kart bileşenini kullanır.
+    //
+    // Bileşen 2026-08-03'te `AppRowCard`tan `ModeCard`a geçti: üç mod
+    // birbirinin aynı beyaz satırı olmaktan çıkıp kendi rengini ve
+    // amblemini taşıyan kartlara dönüştü. Testin koruduğu şey bileşenin
+    // ADI değil, sözleşmesi — modların TEK ve tutarlı bir bileşenle
+    // gösterilmesi ve eski kalabalık blokların geri gelmemesi. Sözleşme
+    // aynen duruyor, yalnız bileşen değişti.
     expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-topic-picker')), findsOneWidget);
-    expect(find.byType(AppRowCard), findsWidgets);
+    expect(find.byType(ModeCard), findsWidgets);
     expect(find.byType(DailyMissionsCard), findsOneWidget);
 
     // Kalabalık eski bloklar yok: karo ızgarası, teaser kartları, kopya

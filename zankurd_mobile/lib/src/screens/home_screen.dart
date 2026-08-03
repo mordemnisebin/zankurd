@@ -19,6 +19,7 @@ import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
 import '../widgets/app_row_card.dart';
+import '../widgets/mode_card.dart';
 import 'home/daily_missions_card.dart';
 import 'shop_screen.dart';
 import '../data/mastery_store.dart';
@@ -286,20 +287,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           const SizedBox(height: AppSpacing.xs),
           KeyedSubtree(
             key: const ValueKey('home-learning-path'),
-            child: AppRowCard(
+            // Üç mod artık birbirinin aynı satır değil; her biri kendi
+            // rengini ve amblemini taşıyan bir mod kartı (2026-08-03).
+            child: ModeCard(
               key: const ValueKey('home-lessons-row'),
               icon: AppIcons.graduationCap,
-              accent: AppTheme.brand,
+              // Marka turuncusu DEĞİL: o ton birincil CTA'ya ayrılmış ve
+              // hemen üstteki "Başla" düğmesi onu kullanıyor. Mod kartı da
+              // aynı turuncuyu alınca ikisi yarışıyor ve CTA'nın "tek
+              // eylem rengi" olma özelliği kayboluyordu (2026-08-03 görsel
+              // denetimi). Ders yolu bir öğrenme yüzeyi; zümrüt ailesi.
+              accent: const Color(0xFF0E7A57),
               title: context.t(K.homeLearningPath),
               subtitle: context.t(K.homeLessonsSub),
               onTap: () => widget.onOpenLearning?.call(),
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
-          AppRowCard(
+          ModeCard(
             key: const ValueKey('home-topic-picker'),
             icon: AppIcons.bookOpen,
-            accent: AppTheme.gold,
+            // Altın yalnız ödül/ilerleme için ayrılmış; konu seçimi bir
+            // öğrenme yüzeyi olduğu için safir ailesinden bir ton alır.
+            accent: const Color(0xFF1E4FA6),
             title: context.t(K.homeTopicPicker),
             subtitle: context.t(K.categoriesSubtitle),
             onTap: () => widget.onOpenCategories?.call(),
@@ -315,10 +325,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         children: [
           KeyedSubtree(
             key: const ValueKey('home-play-handoff'),
-            child: AppRowCard(
+            child: ModeCard(
               key: const ValueKey('home-duel-row'),
               icon: AppIcons.bolt,
-              accent: AppTheme.playCyan,
+              // Düello rekabet yüzeyi: madder ailesinden enerjik bir ton.
+              accent: const Color(0xFFB31E3B),
               title: context.t(K.homeQuickDuel),
               subtitle: context.t(K.homeQuickDuelSub),
               onTap: () => widget.onOpenPlay?.call(),
