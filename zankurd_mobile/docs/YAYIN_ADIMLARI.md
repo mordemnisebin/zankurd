@@ -273,10 +273,25 @@ Kesim penceresinde sırayı değiştirme:
    `supabase/2026-08-02_multiplayer_session_hardening.sql` dosyasını üretim SQL
    Editor'ünde bir kez uygula. Hata alırsan dur; körlemesine ikinci kez
    çalıştırma.
-2. Yukarıdaki altı alanlı salt-okunur sorguyu yeni bir sorguda üretimde
+2. Aynı pencerede
+   `supabase/2026-08-03_streak_freeze_idempotency.sql` dosyasını da bir kez
+   uygula. Bu göç atlanırsa hiçbir şey görünür biçimde kırılmaz — istemci
+   `PGRST202` alıp eski `spend_coins` yoluna düşer ve seri dondurma
+   çalışmaya devam eder. Sessizce kaybolan şey idempotency'dir: cevabı
+   kaybolan bir tahsilat bir daha denenemez hâle gelir ve göçün kapatmak
+   için yazıldığı çift-çekim penceresi açık kalır. Sessiz olduğu için
+   unutulmaya en açık adım budur.
+3. Yukarıdaki altı alanlı salt-okunur sorguyu yeni bir sorguda üretimde
    çalıştır. Altı değerden biri bile `false` ise istemci dağıtma ve sorunu
-   incele.
-3. Daha önce hazırlanmış `build/web/` çıktısını yeniden derlemeden güvenli
+   incele. Dondurma göçünü ayrıca doğrula:
+
+```sql
+select count(*) = 1 as spend_streak_freeze_var
+from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+where n.nspname = 'public' and p.proname = 'spend_streak_freeze';
+```
+
+4. Daha önce hazırlanmış `build/web/` çıktısını yeniden derlemeden güvenli
    ön kontrol ve aktarım ile yayınla:
 
 ```bash
@@ -285,7 +300,7 @@ cd /Users/kocer/Projects/zankurd/zankurd_mobile
 ./deploy_sftp.sh
 ```
 
-4. 2b ve 2c adımlarında Android ile fiziksel iPhone'a kurulmuş release
+5. 2b ve 2c adımlarında Android ile fiziksel iPhone'a kurulmuş release
    uygulamalarını yeniden aç; App Store IPA'yı cihaza kurmaya çalışma. İki ayrı
    hesapla **Üretim iki istemci smoke** turunda oda kurma → koda katılma → iki
    tarafın hazır olması → oyun → sonuç/makbuz → uygulamayı kapatıp oturumu geri
