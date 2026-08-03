@@ -738,17 +738,31 @@ class _RoomScreenState extends State<RoomScreen> {
                                             size: 20,
                                           ),
                                           const SizedBox(width: AppSpacing.xs),
-                                          Text(
-                                            context.t(K.playersWord),
-                                            style: AppTypography.heading2
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textPrimaryColor(
-                                                        context,
-                                                      ),
-                                                ),
+                                          // Esnek olmalı: başlık `heading2`
+                                          // ve sayaçla aynı satırda duruyor.
+                                          // Sabit `Text` + `Spacer` ikilisi
+                                          // %200 sistem yazısında satırı 57
+                                          // piksel taşırıyordu — `Spacer`
+                                          // kalan yeri yeniden dağıtamaz,
+                                          // çünkü esnemeyen başlık zaten
+                                          // hepsini yemiş oluyor (2026-08-03).
+                                          // `Expanded` + tek satır kısaltma
+                                          // sayacı yine sağa yaslar.
+                                          Expanded(
+                                            child: Text(
+                                              context.t(K.playersWord),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTypography.heading2
+                                                  .copyWith(
+                                                    color:
+                                                        AppTheme.textPrimaryColor(
+                                                          context,
+                                                        ),
+                                                  ),
+                                            ),
                                           ),
-                                          const Spacer(),
+                                          const SizedBox(width: AppSpacing.xs),
                                           Text(
                                             '${sorted.length}',
                                             style: AppTypography.caption

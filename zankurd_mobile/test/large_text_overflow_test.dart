@@ -3,13 +3,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
+import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
+import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
+import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
@@ -239,5 +246,73 @@ void main() {
       size: se,
       textScale: 1.0,
     );
+  });
+
+  // ── Kapsam boşluğu: kapı ve para ekranları ──────────────────────────
+  //
+  // Ratchet kurulduğunda "ana akış" ekranları alınmıştı. Dışarıda kalanlar
+  // rastgele değil, hepsi aynı türden: kullanıcının uygulamaya GİRDİĞİ
+  // (auth, isim kapısı), PARA harcadığı (paywall) ve başka bir insanla
+  // BULUŞTUĞU (oda, eşleştirme) ekranlar. Bunlar en az ana ekran kadar
+  // kritik ve daha dar: oda kodu, e-posta alanı ve fiyat satırı sabit
+  // genişlikte yan yana duran öğeler taşır — %200 yazıda ilk kırılacak
+  // yerler tam olarak buralarıdır (2026-08-03 kapsam denetimi).
+  testWidgets('oda', (t) async {
+    await expectNoOverflow(
+      t,
+      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+    );
+  });
+
+  testWidgets('eşleştirme', (t) async {
+    await expectNoOverflow(t, MatchmakingScreen(repository: repository));
+  });
+
+  testWidgets('premium', (t) async {
+    await expectNoOverflow(t, PaywallScreen(repository: repository));
+  });
+
+  testWidgets('giriş', (t) async {
+    await expectNoOverflow(t, const SignInScreen());
+  });
+
+  testWidgets('kayıt', (t) async {
+    await expectNoOverflow(t, const SignUpScreen());
+  });
+
+  testWidgets('isim kapısı', (t) async {
+    await expectNoOverflow(
+      t,
+      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
+    );
+  });
+
+  testWidgets('kategoriler', (t) async {
+    await expectNoOverflow(
+      t,
+      Scaffold(body: CategoriesTab(repository: repository)),
+    );
+  });
+
+  testWidgets('dar ekran — oda', (t) async {
+    await expectNoOverflow(
+      t,
+      RoomScreen(repository: repository, initialRoom: repository.createRoom()),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — premium', (t) async {
+    await expectNoOverflow(
+      t,
+      PaywallScreen(repository: repository),
+      size: se,
+      textScale: 1.0,
+    );
+  });
+
+  testWidgets('dar ekran — giriş', (t) async {
+    await expectNoOverflow(t, const SignInScreen(), size: se, textScale: 1.0);
   });
 }
