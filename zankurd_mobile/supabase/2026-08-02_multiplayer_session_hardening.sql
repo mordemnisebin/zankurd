@@ -184,6 +184,35 @@ $$;
 revoke all on function public.enforce_current_room_question()
   from public, anon, authenticated;
 
+-- Tetikleyicinin KENDİSİ bu dosyada kurulmuyordu; yalnız gövdesi
+-- değiştiriliyordu. Tetikleyici `2026-07-29_release_readiness_hardening.sql`
+-- içinde yaratılmıştı — o göç uygulanmamış ya da tetikleyici sonradan
+-- düşürülmüşse bu dosya bekçi fonksiyonunu kurar ve onu hiçbir şey çağırmaz:
+-- koruma sessizce yok olur. Göç kendi kendine yeterli olmalı.
+do $$
+begin
+  if not exists (
+    select 1 from pg_trigger
+    where tgname = 'player_answers_current_question_trg'
+      and tgrelid = 'public.player_answers'::regclass
+      and not tgisinternal
+  ) then
+    create trigger player_answers_current_question_trg
+      before insert or update on public.player_answers
+      for each row execute function public.enforce_current_room_question();
+  end if;
+end $$;
+
+-- `create or replace` bir fonksiyonun dönüş tipini ya da parametre ADINI
+-- değiştiremez; denerse `42P13` ile bütün transaction geri alınır. Aşağıdaki
+-- üç fonksiyonun izlenen bir önceki tanımı repoda YOK (canlıya repo dışından
+-- gelmişler) — yani imzalarının bu dosyadakiyle aynı olduğu doğrulanamıyor.
+-- `advance_room_question` için zaten uygulanan çözüm burada da uygulanır:
+-- önce düşür, sonra kur. Yetkiler her birinin ardından yeniden veriliyor.
+drop function if exists public.create_online_room(text, integer);
+drop function if exists public.cancel_matchmaking();
+drop function if exists public.leave_room(uuid);
+
 create or replace function public.create_online_room(
   p_category_name text,
   p_seconds_per_question integer
@@ -3124,5 +3153,63 @@ revoke all on function public.submit_answer(uuid, uuid, text, integer)
   from public, anon;
 grant execute on function public.submit_answer(uuid, uuid, text, integer)
   to authenticated;
+
+-- ── Cutover: uçuştaki maçları kurtar ────────────────────────────────────
+--
+-- Bu göç "aktif odanın güncel sorusunda `started_at` DOLUDUR" invariant'ını
+-- getiriyor: `submit_answer` ve `advance_room_question` boşsa reddediyor.
+-- Ama YAYINDAKİ kod bu invariant'ı 0. sorunun ötesinde hiç kurmuyor —
+-- `start_room_game` yalnız ilk satıra `started_at` yazıyor, yayındaki
+-- `advance_room_question(uuid)` `room_questions`a hiç dokunmuyor.
+--
+-- Yani `commit` anında, 1. soruya geçmiş her aktif maç anında kilitleniyor:
+-- iki güncel istemci varsa `mark_room_client_ready` ile timer sıfırlanarak
+-- kurtuluyor, karışık odada rakip ~2 dakika sonra hükmen kaybediyor, iki
+-- eski istemcili oda 24 saatlik süpürmeye kadar asılı kalıyor. Hiçbiri
+-- kabul edilebilir değil ve hiçbiri kullanıcının hatası değil.
+--
+-- Tek satırlık geri dolgu bunu kaynağında kaldırır: yalnız EKSİK olanı
+-- doldurur (`is null` koruması), dolu olanı ellemez, bu yüzden yeniden
+-- çalıştırmak güvenlidir.
+update public.room_questions rq
+set started_at = clock_timestamp()
+from public.rooms r
+where r.id = rq.room_id
+  and r.status = 'active'
+  and rq.question_index = coalesce(r.current_question_index, 0)
+  and rq.started_at is null;
+
+-- ── Postflight: sessiz aşırı yükleme bırakma ────────────────────────────
+--
+-- Yukarıdaki `drop function if exists` çağrıları argüman TİPİNE göre eşleşir.
+-- Canlıdaki tanım farklı tiplerle duruyorsa düşürme sessizce boşa gider ve
+-- `create or replace` İKİNCİ bir aşırı yükleme kurar. Sonuç bir hata değil,
+-- daha kötüsü: PostgREST çağrıyı belirsiz bulup `PGRST203` döndürür ve oda
+-- kurma canlıda ölür. Belirsizliği yayına taşımak yerine burada patlat.
+do $$
+declare
+  v_name text;
+  v_count integer;
+begin
+  foreach v_name in array array[
+    'create_online_room', 'join_room_by_code', 'set_room_ready',
+    'start_room_game', 'mark_room_client_ready', 'join_matchmaking',
+    'cancel_matchmaking', 'finish_room_game', 'leave_room',
+    'delete_my_account', 'claim_quiz_reward', 'get_my_resumable_room',
+    'get_my_room_result', 'get_my_pending_room_result',
+    'acknowledge_room_result', 'advance_room_question', 'submit_answer'
+  ] loop
+    select count(*) into v_count
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public' and p.proname = v_name;
+
+    if v_count <> 1 then
+      raise exception
+        'public.% has % definitions after this migration; expected exactly 1',
+        v_name, v_count;
+    end if;
+  end loop;
+end $$;
 
 commit;

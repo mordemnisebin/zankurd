@@ -1061,4 +1061,89 @@ void main() {
     expectOrdered(freshAnswer, guard, 'v_elapsed_ms := floor(');
     expect(freshAnswer, isNot(contains('greatest(0::bigint, v_elapsed_ms)')));
   });
+
+  // ── Cutover güvenliği ───────────────────────────────────────────────
+  //
+  // Bu üç bekçi, göçün YAZILDIĞI ânı değil UYGULANACAĞI ânı korur: canlı
+  // veritabanında zaten koşan maçlar, zaten var olan fonksiyonlar ve
+  // uygulanmamış olabilecek bir önceki göç. Hiçbiri statik okumayla
+  // görünmez; hepsi ancak production'da patlar.
+
+  test('göç, uçuştaki maçların güncel sorusunu geri doldurur', () {
+    // Yayındaki `start_room_game` yalnız İLK soruya `started_at` yazar ve
+    // yayındaki `advance_room_question` `room_questions`a hiç dokunmaz.
+    // Bu göç ise "güncel sorunun `started_at`i doludur" invariant'ını
+    // dayatıyor. Geri dolgu olmadan, 1. soruya geçmiş her aktif maç
+    // commit ânında kilitleniyor.
+    final backfill = sql.substring(sql.indexOf('update public.room_questions'));
+    expect(backfill, contains("r.status = 'active'"));
+    expect(
+      backfill,
+      contains('rq.question_index = coalesce(r.current_question_index, 0)'),
+    );
+    // Yalnız EKSİK olan doldurulmalı: dolu bir `started_at`i ezmek koşan
+    // maçın süresini sıfırlar ve göç idempotent olmaktan çıkar.
+    expect(backfill, contains('rq.started_at is null'));
+  });
+
+  test('imzası doğrulanamayan fonksiyonlar önce düşürülür', () {
+    // `create or replace` dönüş tipini veya parametre adını değiştiremez;
+    // denerse 42P13 ile 3000+ satırlık transaction'ın tamamı geri alınır.
+    // Bu üçünün repoda izlenen bir önceki tanımı yok — canlıdaki imzaları
+    // doğrulanamıyor, bu yüzden `advance_room_question` ile aynı korumayı
+    // almalılar.
+    for (final signature in [
+      'drop function if exists public.create_online_room(text, integer);',
+      'drop function if exists public.cancel_matchmaking();',
+      'drop function if exists public.leave_room(uuid);',
+      'drop function if exists public.advance_room_question(uuid);',
+    ]) {
+      expect(sql, contains(signature), reason: 'Düşürme koruması yok');
+    }
+
+    // Düşürme argüman TİPİNE göre eşleşir; canlıdaki tanım farklı tiplerle
+    // duruyorsa sessizce boşa gider ve ikinci bir aşırı yükleme kalır.
+    // PostgREST bunu PGRST203 ile reddeder — yani belirsizlik göçte değil,
+    // canlıda ortaya çıkar. Postflight bekçisi onu göçte patlatır.
+    expect(sql, contains('definitions after this migration; expected exactly'));
+    expect(sql, contains('from pg_proc p'));
+    for (final rpc in [
+      'create_online_room',
+      'cancel_matchmaking',
+      'leave_room',
+      'advance_room_question',
+      'submit_answer',
+    ]) {
+      expect(
+        sql.substring(sql.indexOf('foreach v_name in array')),
+        contains("'$rpc'"),
+        reason: '$rpc aşırı yükleme kontrolünde yok',
+      );
+    }
+  });
+
+  test('göç kendi tetikleyicisini kurar', () {
+    // Gövde burada değiştiriliyordu ama tetikleyici yalnız
+    // `2026-07-29_release_readiness_hardening.sql` içinde yaratılıyordu.
+    // O göç uygulanmamışsa bekçi fonksiyonu kurulur ve onu hiçbir şey
+    // çağırmaz: koruma sessizce yok olur.
+    expect(
+      sql,
+      contains(
+        'create or replace function '
+        'public.enforce_current_room_question()',
+      ),
+    );
+    expect(sql, contains('create trigger player_answers_current_question_trg'));
+    expect(sql, contains('before insert or update on public.player_answers'));
+    // Yeniden çalıştırılabilir olmalı: koşulsuz `create trigger` ikinci
+    // uygulamada 42710 verir ve göçün idempotency'sini bozar.
+    expect(
+      sql,
+      contains(
+        "where tgname = "
+        "'player_answers_current_question_trg'",
+      ),
+    );
+  });
 }
