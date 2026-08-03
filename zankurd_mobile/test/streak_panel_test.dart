@@ -81,7 +81,7 @@ void main() {
     // Sunucudan cevap gelmeden başarı gösterilemez.
     await tester.pumpWidget(
       _wrap(
-        StreakPanel(
+        const StreakPanel(
           current: 5,
           days: _week,
           freezeState: StreakFreezeState.uncertain,
@@ -127,7 +127,7 @@ void main() {
   testWidgets('milestone ilerlemesi sayıyla da yazılır', (tester) async {
     await tester.pumpWidget(
       _wrap(
-        StreakPanel(
+        const StreakPanel(
           current: 5,
           days: _week,
           freezeState: StreakFreezeState.notNeeded,
@@ -143,7 +143,7 @@ void main() {
   ) async {
     await tester.pumpWidget(
       _wrap(
-        StreakPanel(
+        const StreakPanel(
           current: 9,
           days: _week,
           freezeState: StreakFreezeState.notNeeded,
@@ -161,9 +161,9 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.dark(),
-        home: MediaQuery(
-          data: const MediaQueryData(textScaler: TextScaler.linear(2.0)),
-          child: const Scaffold(
+        home: const MediaQuery(
+          data: MediaQueryData(textScaler: TextScaler.linear(2.0)),
+          child: Scaffold(
             body: SingleChildScrollView(
               child: StreakPanel(
                 current: 12,
