@@ -223,6 +223,52 @@ void main() {
     expect(find.byType(RoomScreen), findsNothing);
   });
 
+  // Askıda kalan bir `leave_room`, BAŞARISIZ olan bir `leave_room` gibi
+  // davranmalı.
+  //
+  // Hata yolu zaten bitmiş: snackbar gösteriliyor, lobi geri geliyor, çıkış
+  // düğmesi yeniden denenebiliyor (yukarıdaki test). Ama çağrı hata
+  // vermeyip yalnız ASILI kalırsa — captive portal ya da kopmuş hücresel
+  // bağlantıda soket dakikalarca sessiz durabilir — o yolun hiçbiri
+  // çalışmaz: `_leaving` sonsuza dek true kalır ve ekran, geri düğmesi bile
+  // olmayan çıplak bir spinner'a dönüşür.
+  //
+  // Bu diff çevrimiçi çağrıların neredeyse hepsine 15 sn'lik zaman aşımı
+  // ekledi (`finishGame`, `loadRoomResult`, `loadRoomEndState`,
+  // `loadRoomPlayers`, ödül mutabakatı); iki `leave_room` çağrısı atlanmış.
+  testWidgets('asılı kalan online leave zaman aşımıyla lobiye döner', (
+    tester,
+  ) async {
+    final repository = _RoomExitRepository();
+    addTearDown(repository.close);
+    // Hiç tamamlanmayan çağrı: ne sonuç, ne hata.
+    repository.pendingLeave = Completer<void>();
+    await _openRoom(tester, repository, repository.onlineLobby());
+
+    await tester.tap(find.byTooltip('Odadan ayrıl'));
+    await tester.pump();
+
+    expect(repository.leaveCalls, 1);
+    expect(find.text('Odadan ayrılıyor…'), findsOneWidget);
+
+    // Zaman aşımı penceresinin ötesine geç.
+    await tester.pump(const Duration(seconds: 20));
+    await _pumpRouteTransition(tester);
+
+    expect(
+      find.text('Odadan ayrılıyor…'),
+      findsNothing,
+      reason: 'Asılı çağrı ekranı süresiz spinner hâlinde bırakmamalı',
+    );
+    expect(find.byType(RoomScreen), findsOneWidget);
+    expect(
+      find.text('Odadan ayrılamadın. Lütfen tekrar dene.'),
+      findsOneWidget,
+    );
+    // Oyuncu yeniden deneyebilmeli: lobi izleme de geri gelmiş olmalı.
+    expect(find.byTooltip('Odadan ayrıl'), findsOneWidget);
+  });
+
   testWidgets('subscription cleanup failure does not block online leave', (
     tester,
   ) async {

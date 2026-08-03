@@ -18,6 +18,14 @@ import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// Odadan çıkış RPC'sinin beklenebileceği en uzun süre.
+///
+/// `quiz_screen.dart`teki `_onlineResultRequestTimeout` ile aynı bütçe:
+/// çevrimiçi çağrıların geri kalanı zaten bu sınırla korunuyor. Süre
+/// dolduğunda çağrı hata vermiş sayılır ve mevcut — test edilmiş — hata
+/// yoluna düşer: lobi geri gelir, snackbar çıkar, çıkış yeniden denenebilir.
+const Duration _roomLeaveTimeout = Duration(seconds: 15);
+
 class RoomScreen extends StatefulWidget {
   const RoomScreen({
     required this.repository,
@@ -296,7 +304,9 @@ class _RoomScreenState extends State<RoomScreen> {
 
     if (room.id != null) {
       try {
-        await widget.repository.leaveOnlineRoom(room);
+        await widget.repository
+            .leaveOnlineRoom(room)
+            .timeout(_roomLeaveTimeout);
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'room_leave_failed');
         if (!mounted) return;

@@ -1398,9 +1398,13 @@ class _QuizScreenState extends State<QuizScreen>
       leaveConfirmed = true;
 
       if (_isMultiplayer) {
-        final leaveOutcome = await widget.repository.leaveOnlineRoom(
-          widget.room,
-        );
+        // Zaman aşımı, diğer çevrimiçi çağrılarla aynı bütçeyi kullanır.
+        // `_exitInFlight` yeniden girişi kapatıyor ve çevrimiçi maçta
+        // `PopScope.canPop` false; çağrı hata vermeden asılı kalırsa quiz
+        // geri düğmesine yanıt vermeyi tamamen bırakıyordu.
+        final leaveOutcome = await widget.repository
+            .leaveOnlineRoom(widget.room)
+            .timeout(_onlineResultRequestTimeout);
         if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
           return;
         }
