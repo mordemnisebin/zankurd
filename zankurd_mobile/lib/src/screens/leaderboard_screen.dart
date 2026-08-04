@@ -1197,12 +1197,26 @@ class _PodiumSlot extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: color.withValues(alpha: 0.4)),
                 ),
-                child: Text(
-                  '${entry.totalScore}',
-                  style: TextStyle(
-                    color: AppColors.readableAccent(context, color),
-                    fontWeight: FontWeight.w800,
-                    fontSize: scoreFontSz,
+                // Puan %200 yazıda "50/00" gibi iki satıra bölünüyordu:
+                // sayı bir sözcük değil, bölününce anlamını kaybediyor ve
+                // birinciyle üçüncüyü karşılaştırmak imkânsızlaşıyordu.
+                //
+                // `FittedBox` YALNIZ sayıya uygulanır ve yalnız gerekince
+                // küçültür (`scaleDown`): erişilebilirlik ölçeği kapatılmaz,
+                // sabit küçük font dayatılmaz, değer kısaltılmaz — sığdığı
+                // sürece kullanıcının seçtiği boyutta çizilir
+                // (2026-08-04 görsel denetimi).
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '${entry.totalScore}',
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                      color: AppColors.readableAccent(context, color),
+                      fontWeight: FontWeight.w800,
+                      fontSize: scoreFontSz,
+                    ),
                   ),
                 ),
               ),
