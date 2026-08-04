@@ -261,6 +261,7 @@ class ArenaHero extends StatelessWidget {
                     CategoryEmblem(icon: icon, color: Colors.white, size: 46),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
+                      flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -286,7 +287,13 @@ class ArenaHero extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ?status,
+                    // Durum çipi ESNEK olmalı. `ArenaStatusChip`in kendi
+                    // etiketi zaten kısalabiliyordu, ama hero onu esnemeyen
+                    // bir çocuk olarak veriyordu: çip sınırsız genişlik
+                    // alıyor, kısaltma hiç devreye girmiyor ve satır
+                    // taşıyordu. Turnuva hero'sunda uzun bir durum
+                    // etiketiyle 46 piksel taştı (2026-08-04).
+                    if (status != null) Flexible(flex: 2, child: status!),
                   ],
                 ),
                 if (tokens.isNotEmpty) ...[

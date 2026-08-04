@@ -524,6 +524,15 @@ class Tr {
       'tr': 'Şampiyon kupayı alır!',
     },
     K.joinTournament: {'ku': 'Tevlî Kûpayê Bibe', 'tr': 'Turnuvaya Katıl'},
+    K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
+    K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
+    K.cupPerMatchReward: {'ku': 'her maç', 'tr': 'maç başı'},
+    K.cupChampionReward: {'ku': 'şampiyon', 'tr': 'şampiyon'},
+    K.cupLadder: {'ku': 'Rêya kûpayê', 'tr': 'Kupa yolu'},
+    K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
+    K.cupRewardTitle: {'ku': 'Xelat', 'tr': 'Ödül'},
+    K.cupCategory: {'ku': 'Beş', 'tr': 'Kategori'},
+    K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
     K.champion: {'ku': 'Şampiyon!', 'tr': 'Şampiyon!'},
     K.eliminated: {'ku': 'Derket', 'tr': 'Elendi'},
     K.ongoing: {'ku': 'Berdewam', 'tr': 'Devam'},
@@ -2402,6 +2411,19 @@ class K {
   static const formatSummary = 'tournament.formatSummary';
   static const botRaceHint = 'tournament.botRaceHint';
   static const joinTournament = 'tournament.join';
+
+  // Turnuva biçim ve ödül şeridi (2026-08-04). Kupanın kaç oyuncu, kaç
+  // tur ve maç başına kaç soru olduğu `TournamentConfig`te sabitti ama
+  // ekranda hiç görünmüyordu; ödül de öyle.
+  static const cupPlayers = 'tournament.players';
+  static const cupRounds = 'tournament.rounds';
+  static const cupPerMatchReward = 'tournament.perMatchReward';
+  static const cupChampionReward = 'tournament.championRewardLabel';
+  static const cupLadder = 'tournament.ladder';
+  static const cupFormatTitle = 'tournament.formatTitle';
+  static const cupRewardTitle = 'tournament.rewardTitle';
+  static const cupCategory = 'tournament.category';
+  static const cupNotStarted = 'tournament.notStarted';
   static const champion = 'tournament.champion';
   static const eliminated = 'tournament.eliminated';
   static const ongoing = 'tournament.ongoing';
