@@ -751,7 +751,10 @@ class Tr {
     K.streakFreezeUnavailable: {'ku': 'Nayê bikaranîn', 'tr': 'Kullanılamıyor'},
     K.streakProtectAction: {'ku': 'Rêzê biparêze', 'tr': 'Seriyi koru'},
     K.streakDayUnit: {'ku': 'roj', 'tr': 'gün'},
-    K.streakWeekdays: {'ku': 'Dş,Sş,Çş,Pş,În,Şm,Yş', 'tr': 'Pt,Sa,Ça,Pe,Cu,Ct,Pz'},
+    K.streakWeekdays: {
+      'ku': 'Dş,Sş,Çş,Pş,În,Şm,Yş',
+      'tr': 'Pt,Sa,Ça,Pe,Cu,Ct,Pz',
+    },
     K.seriDondurmaKorumasi: {
       'ku': 'Karta Parastina Zincîrê',
       'tr': 'Seri Dondurma Koruması',
