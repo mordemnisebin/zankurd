@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
+import '../widgets/streak_panel.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -566,6 +567,71 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
+  /// Son yedi günün streak durumunu GERÇEK geçmişten türetir.
+  ///
+  /// `MistakeStore` zaten günlük doğru/yanlış sayısını tutuyor; oynanmış
+  /// gün, o günde en az bir cevap bulunan gündür. Uydurma yok: veri yoksa
+  /// gün "kaçırıldı" değil, olduğu gibi boş kalır ve bugünden sonrası
+  /// `upcoming` olarak işaretlenir.
+  Future<List<StreakDayState>> _loadStreakWeek() async {
+    final store = await MistakeStore.load();
+    final history = store.getLast7DaysHistory();
+    final today = DateTime.now();
+    final todayKey =
+        '${today.year.toString().padLeft(4, '0')}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+
+    final states = <StreakDayState>[];
+    for (final entry in history.entries) {
+      final played =
+          (entry.value['correct'] ?? 0) + (entry.value['wrong'] ?? 0) > 0;
+      if (entry.key == todayKey) {
+        states.add(played ? StreakDayState.completed : StreakDayState.today);
+      } else {
+        states.add(played ? StreakDayState.completed : StreakDayState.missed);
+      }
+    }
+    return states;
+  }
+
+  /// Freeze'in o andaki durumu — yalnız gerçekten türetilebilen hâller.
+  ///
+  /// `uncertain`, `offline` ve `unavailable` ana sayfada türetilemez:
+  /// dondurma burada tetiklenmiyor, dolayısıyla belirsiz bir işlem yok.
+  /// Türetilemeyen durumu uydurmak yerine gösterilmez.
+  StreakFreezeState _freezeStateFor(StreakStore store) {
+    if (!store.willBreakOnPlay()) return StreakFreezeState.notNeeded;
+    if (store.freezeCount > 0) return StreakFreezeState.available;
+    return _coinBalance >= _streakFreezeCost
+        ? StreakFreezeState.available
+        : StreakFreezeState.insufficientCoins;
+  }
+
+  static const _streakFreezeCost = 50;
+
+  /// Bir sonraki kilometre taşı. Sabit eşikler; modelde ayrı bir milestone
+  /// kaynağı yok, bu yüzden uydurma bir "maksimum" da tanımlanmaz.
+  static int? _nextStreakMilestone(int current) {
+    for (final milestone in const [3, 7, 14, 30, 60, 100]) {
+      if (milestone > current) return milestone;
+    }
+    return null;
+  }
+
+  String _freezeLabel(BuildContext context, StreakFreezeState state) {
+    return switch (state) {
+      StreakFreezeState.available => context.t(K.streakFreezeAvailable),
+      StreakFreezeState.notNeeded => context.t(K.streakFreezeNotNeeded),
+      StreakFreezeState.insufficientCoins => context.t(K.streakFreezeNoCoins),
+      StreakFreezeState.applying => context.t(K.streakFreezeApplying),
+      StreakFreezeState.applied => context.t(K.streakFreezeApplied),
+      StreakFreezeState.uncertain => context.t(K.streakFreezeUncertain),
+      StreakFreezeState.offline => context.t(K.streakFreezeOffline),
+      StreakFreezeState.unavailable => context.t(K.streakFreezeUnavailable),
+    };
+  }
+
   void _showStreakFreezeBottomSheet(BuildContext context) {
     final isKu = context.isKu;
     showModalBottomSheet(
@@ -575,125 +641,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (ctx) {
+        // Bilgilendirme sayfası değil, seriyi KORUMAK için gereken bilgi:
+        // haftalık ritim, sonraki milestone ve freeze durumu tek yüzeyde.
+        // Önceki hâli ikon + başlık + paragraf + bilgi kartıydı; oyuncu
+        // hangi günleri kaçırdığını göremiyordu (2026-08-04).
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: AppTheme.brand.withValues(alpha: 0.15),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    AppIcons.fire,
-                    color: AppTheme.brand,
-                    size: 28,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  Tr.forKu(K.gunlukSeriStreak, isKu),
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimaryColor(ctx),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  _streak > 0
-                      // "sen" Türkçedir; Kurmancîde ikinci tekil şahıs
-                      // "tu"dur. Cümlenin geri kalanı doğru Kurmancî
-                      // olduğu için kusur göze "biraz tuhaf" gelip
-                      // geçiyordu (2026-07-31 denetimi).
-                      ? (Tr.forKu(K.pGundurAraliksizOynuyorsun, isKu, {
-                          'p0': '$_streak',
-                        }))
-                      : (Tr.forKu(K.henuzSerinBaslamadiBugun, isKu)),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppTheme.textSubColor(ctx),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppTheme.cyan.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: AppTheme.cyan.withValues(alpha: 0.3),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        AppIcons.shieldHalved,
-                        color: AppTheme.cyan,
-                        size: 24,
+            child: FutureBuilder<(List<StreakDayState>, StreakStore)>(
+              future: () async {
+                final week = await _loadStreakWeek();
+                final store = await StreakStore.load();
+                return (week, store);
+              }(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 40),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final (week, store) = snapshot.data!;
+                final freezeState = _freezeStateFor(store);
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      Tr.forKu(K.gunlukSeriStreak, isKu),
+                      style: AppTypography.heading2.copyWith(
+                        color: AppTheme.textPrimaryColor(context),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              Tr.forKu(K.seriDondurmaKorumasi, isKu),
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: AppTheme.textPrimaryColor(ctx),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              Tr.forKu(K.oynamayiUnuttugunGunlerdeSerin, isKu),
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppTheme.textSubColor(ctx),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48),
-                    backgroundColor: AppTheme.brand,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(ctx).pop();
-                    await Navigator.of(
-                      context,
-                    ).push(AppRoute.to(ShopScreen(repository: repo)));
-                    if (mounted) await _refreshCoins();
-                  },
-                  icon: const Icon(
-                    AppIcons.cartShopping,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                  label: Text(
-                    // İki dil aynı düğmede yan yana yazıyordu ("Herin Dukanê
-                    // / Mağazaya Git") — Kurmancî arayüzde Türkçe metin
-                    // sızıyordu (2026-07-31 Antigravity eklentisi denetimi).
-                    Tr.forKu(K.magazayaGitSeriKoru, isKu),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                ),
-              ],
+                    const SizedBox(height: 16),
+                    StreakPanel(
+                      current: _streak,
+                      days: week,
+                      freezeState: freezeState,
+                      freezeLabel: _freezeLabel(context, freezeState),
+                      dayLabels: context.t(K.streakWeekdays).split(','),
+                      dayUnitLabel: context.t(K.streakDayUnit),
+                      nextMilestone: _nextStreakMilestone(_streak),
+                      freezeCost: store.freezeCount > 0
+                          ? null
+                          : _streakFreezeCost,
+                      freezeActionLabel: context.t(K.streakProtectAction),
+                      // Dondurma sonuç ekranında, ödül akışının içinde
+                      // uygulanıyor; buradan tetiklemek ikinci bir yol
+                      // açar ve idempotency anahtarını bağlamsız bırakır.
+                      onFreeze: null,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         );

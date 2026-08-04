@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -165,5 +166,33 @@ void main() {
     );
     await tester.pump();
     expect(tester.takeException(), isNull);
+  });
+
+  // ── Gerçek ürüne bağlılık ────────────────────────────────────────────
+  //
+  // Panel bir süre yalnız dosyada durdu: testlerde çiziliyordu ama hiçbir
+  // ekran onu kullanmıyordu. Bu bekçi, streak yüzeyinin gerçekten ana
+  // sayfadan ulaşılabilir olduğunu ve eski "ikon + başlık + paragraf"
+  // anatomisinin geri gelmediğini sabitler.
+  test('ana sayfa streak yüzeyi paneli kullanır', () {
+    final home = File('lib/src/screens/home_screen.dart').readAsStringSync();
+    expect(home, contains('StreakPanel('));
+    expect(home, contains('_loadStreakWeek'));
+    // Haftalık ritim GERÇEK geçmişten gelmeli; uydurma dizi değil.
+    expect(home, contains('getLast7DaysHistory'));
+    // Eski bilgilendirme metni panelin yerini almamalı.
+    expect(home, isNot(contains('K.pGundurAraliksizOynuyorsun')));
+  });
+
+  test('panel etiketleri l10n defterinden gelir', () {
+    final home = File('lib/src/screens/home_screen.dart').readAsStringSync();
+    for (final key in const [
+      'K.streakFreezeAvailable',
+      'K.streakFreezeNoCoins',
+      'K.streakWeekdays',
+      'K.streakDayUnit',
+    ]) {
+      expect(home, contains(key), reason: '$key kullanilmiyor');
+    }
   });
 }

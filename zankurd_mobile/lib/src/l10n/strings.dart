@@ -738,6 +738,19 @@ class Tr {
       'ku': 'Hêj zincîra te dest pê nekiriye. Îro bilîze!',
       'tr': 'Henüz serin başlamadı. Bugün bir yarış başlat!',
     },
+    // Streak paneli durum etiketleri (2026-08-04). Panel sunumsaldır ve
+    // metnini çağırandan alır; anahtarlar burada durur.
+    K.streakFreezeAvailable: {'ku': 'Amade', 'tr': 'Kullanılabilir'},
+    K.streakFreezeNotNeeded: {'ku': 'Ne hewce ye', 'tr': 'Gerekmiyor'},
+    K.streakFreezeNoCoins: {'ku': 'Pere têrê nake', 'tr': 'Coin yetersiz'},
+    K.streakFreezeApplying: {'ku': 'Tê sepandin', 'tr': 'Uygulanıyor'},
+    K.streakFreezeApplied: {'ku': 'Hate parastin', 'tr': 'Korundu'},
+    K.streakFreezeUncertain: {'ku': 'Encam ne diyar e', 'tr': 'Sonuç belirsiz'},
+    K.streakFreezeOffline: {'ku': 'Negirêdayî', 'tr': 'Çevrimdışı'},
+    K.streakFreezeUnavailable: {'ku': 'Nayê bikaranîn', 'tr': 'Kullanılamıyor'},
+    K.streakProtectAction: {'ku': 'Rêzê biparêze', 'tr': 'Seriyi koru'},
+    K.streakDayUnit: {'ku': 'roj', 'tr': 'gün'},
+    K.streakWeekdays: {'ku': 'Dş,Sş,Çş,Pş,În,Şm,Yş', 'tr': 'Pt,Sa,Ça,Pe,Cu,Ct,Pz'},
     K.seriDondurmaKorumasi: {
       'ku': 'Karta Parastina Zincîrê',
       'tr': 'Seri Dondurma Koruması',
@@ -2488,6 +2501,17 @@ class K {
   static const gunlukSeriStreak = 'screen.gunlukSeriStreak';
   static const pGundurAraliksizOynuyorsun = 'screen.pGundurAraliksizOynuyorsun';
   static const henuzSerinBaslamadiBugun = 'screen.henuzSerinBaslamadiBugun';
+  static const streakFreezeAvailable = 'streak.freeze.available';
+  static const streakFreezeNotNeeded = 'streak.freeze.notNeeded';
+  static const streakFreezeNoCoins = 'streak.freeze.noCoins';
+  static const streakFreezeApplying = 'streak.freeze.applying';
+  static const streakFreezeApplied = 'streak.freeze.applied';
+  static const streakFreezeUncertain = 'streak.freeze.uncertain';
+  static const streakFreezeOffline = 'streak.freeze.offline';
+  static const streakFreezeUnavailable = 'streak.freeze.unavailable';
+  static const streakProtectAction = 'streak.protect.action';
+  static const streakDayUnit = 'streak.day.unit';
+  static const streakWeekdays = 'streak.weekdays';
   static const seriDondurmaKorumasi = 'screen.seriDondurmaKorumasi';
   static const oynamayiUnuttugunGunlerdeSerin =
       'screen.oynamayiUnuttugunGunlerdeSerin';
