@@ -650,17 +650,26 @@ class _TournamentScreenState extends State<TournamentScreen> {
                     ),
                   ),
                 ),
-                // -- Legacy round list (collapsed below the bracket) --
+                // Şemanın ALTINDAKİ düz tur listesi kaldırıldı.
+                //
+                // Aynı eşleşmeleri ikinci kez, üstelik DAHA AZ bilgiyle
+                // gösteriyordu: şemada kupa/çarpı işareti, üstü çizili
+                // kaybeden adı, kullanıcının vurgulu maçı ve (bu turdan
+                // itibaren) skor var; düz listede yalnız iki ad ve bir
+                // onay simgesi vardı. Kod içinde de "legacy" diye
+                // işaretliydi. İki kez anlatılan bir yapı, bir kez
+                // anlatılandan daha anlaşılır olmuyor (2026-08-04).
+                //
+                // Yerine turun NEREDE olduğunu söyleyen ilerleme şeridi
+                // konur — lobideki kupa merdiveni diliyle aynı aile.
                 const SizedBox(height: AppSpacing.md),
-                for (var i = 0; i < bracket.rounds.length; i++) ...[
-                  _RoundSection(
-                    title: roundNames[i],
-                    round: bracket.rounds[i],
-                    userId: _userId,
-                    ku: ku,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                ],
+                _RoundProgressStrip(
+                  roundNames: roundNames,
+                  rounds: bracket.rounds,
+                  currentRound: bracket.currentRound,
+                  bracketStatus: bracket.status,
+                ),
+                const SizedBox(height: AppSpacing.md),
                 if (_standings.isNotEmpty) ...[
                   _TournamentSectionTitle(
                     label: context.t(K.standings),
@@ -1120,6 +1129,115 @@ class _CupPanel extends StatelessWidget {
   }
 }
 
+/// Turun nerede olduğunu söyleyen ilerleme şeridi.
+///
+/// Şema yatay kaydırılabilir ve dar telefonda yalnız ilk iki tur görünür;
+/// oyuncu kupanın kaç turdan oluştuğunu ve hangi turda olduğunu şemayı
+/// kaydırmadan göremiyordu. Şerit bunu tek bakışta verir ve aynı zamanda
+/// şemada sağa doğru daha fazla içerik olduğunun işaretidir.
+///
+/// Lobideki kupa merdiveniyle aynı görsel aile — ikinci bir dil kurulmaz.
+class _RoundProgressStrip extends StatelessWidget {
+  const _RoundProgressStrip({
+    required this.roundNames,
+    required this.rounds,
+    required this.currentRound,
+    required this.bracketStatus,
+  });
+
+  final List<String> roundNames;
+  final List<TournamentRound> rounds;
+  final int currentRound;
+  final String bracketStatus;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 4,
+      runSpacing: 6,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        for (var i = 0; i < rounds.length && i < roundNames.length; i++) ...[
+          if (i > 0)
+            Icon(
+              Icons.chevron_right_rounded,
+              size: 15,
+              color: AppTheme.textMutedColor(context),
+            ),
+          _RoundPill(
+            label: roundNames[i],
+            // Durum GERÇEK tur verisinden gelir; sıra numarasından
+            // tahmin edilmez. Turnuva bittiyse (kazandı/elendi) hiçbir
+            // tur "şu an oynanıyor" diye işaretlenmez.
+            state: rounds[i].status == 'completed'
+                ? _RoundState.done
+                : (bracketStatus == 'active' && i == currentRound)
+                ? _RoundState.active
+                : _RoundState.upcoming,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+enum _RoundState { done, active, upcoming }
+
+class _RoundPill extends StatelessWidget {
+  const _RoundPill({required this.label, required this.state});
+
+  final String label;
+  final _RoundState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final light = AppTheme.isLight(context);
+    // Renk tek kanal değil: her durumun kendi ikonu var.
+    final (tone, icon) = switch (state) {
+      _RoundState.done => (const Color(0xFF0E7A57), Icons.check_rounded),
+      _RoundState.active => (AppTheme.gold, Icons.play_arrow_rounded),
+      _RoundState.upcoming => (const Color(0xFF3A4557), Icons.remove_rounded),
+    };
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+      decoration: BoxDecoration(
+        color: tone.withValues(
+          alpha: state == _RoundState.upcoming
+              ? (light ? 0.07 : 0.16)
+              : (light ? 0.14 : 0.26),
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: state == _RoundState.active
+            ? Border.all(color: tone.withValues(alpha: 0.55))
+            : null,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12, color: AppColors.readableAccent(context, tone)),
+          const SizedBox(width: 5),
+          // Esnek olmalı: "Çeyrek Final" %200 yazıda dar telefonda çipi
+          // 47 piksel taşırıyordu. `Wrap` satırı sarabilir ama tek bir
+          // çipin kendi içeriğini sığdırması gerekir.
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.caption.copyWith(
+                fontWeight: state == _RoundState.active
+                    ? FontWeight.w900
+                    : FontWeight.w700,
+                color: AppColors.readableAccent(context, tone),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// Bölüm başlığı — all-caps etiket patlaması yerine standart gövde başlığı:
 /// sol accent çizgisi + normal büyük/küçük harf, okunabilir ağırlık.
 class _TournamentSectionTitle extends StatelessWidget {
@@ -1175,24 +1293,33 @@ class _StatusCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.t(K.status),
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w600,
+          // Esnek olmalı: "Elendi"/"Şampiyon" %200 yazıda tur rozetiyle
+          // aynı satıra sığmıyordu ve durum kartı taşıyordu. Bu kart tam
+          // da elenme ve şampiyonluk anında görünen kart — taşma şeridi
+          // sonucun kendisini örtüyordu (2026-08-04).
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.t(K.status),
+                  style: AppTypography.caption.copyWith(
+                    color: AppTheme.textMutedColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                statusLabel,
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
+                Text(
+                  statusLabel,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.heading2.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
+          const SizedBox(width: AppSpacing.sm),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.sm,
@@ -1206,6 +1333,7 @@ class _StatusCard extends StatelessWidget {
             child: Text(
               '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
               '/${bracket.rounds.length}',
+              maxLines: 1,
               style: AppTypography.bodyLarge.copyWith(
                 color: AppColors.onAccentTint(context, AppTheme.gold),
               ),
@@ -1340,115 +1468,6 @@ class _UserMatchCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _RoundSection extends StatelessWidget {
-  const _RoundSection({
-    required this.title,
-    required this.round,
-    required this.userId,
-    required this.ku,
-  });
-
-  final String title;
-  final TournamentRound round;
-  final String userId;
-  final bool ku;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: round.status == 'active'
-                ? AppTheme.accent
-                : AppTheme.textSubColor(context),
-            fontWeight: FontWeight.w800,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 8),
-        AppPanel(
-          color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-          child: Column(
-            children: [
-              for (var i = 0; i < round.matches.length; i++) ...[
-                if (i > 0)
-                  Divider(height: 16, color: AppTheme.borderColor(context)),
-                _MatchRow(match: round.matches[i], userId: userId, ku: ku),
-              ],
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _MatchRow extends StatelessWidget {
-  const _MatchRow({
-    required this.match,
-    required this.userId,
-    required this.ku,
-  });
-
-  final TournamentMatch match;
-  final String userId;
-  final bool ku;
-
-  @override
-  Widget build(BuildContext context) {
-    final isUserMatch =
-        match.playerOneId == userId || match.playerTwoId == userId;
-    final placeholder = context.t(K.unknown);
-
-    TextStyle nameStyle(String playerId) => TextStyle(
-      color: match.status == 'completed' && match.winnerId != playerId
-          ? AppTheme.textMutedColor(context)
-          : isUserMatch
-          ? AppTheme.accent
-          : AppTheme.textPrimaryColor(context),
-      fontWeight: playerId == userId ? FontWeight.w800 : FontWeight.w600,
-      fontSize: 13,
-    );
-
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            match.playerOneName == 'TBD' ? placeholder : match.playerOneName,
-            maxLines: 1,
-            style: nameStyle(match.playerOneId),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: match.status == 'completed'
-              ? Icon(
-                  AppIcons.circleCheck,
-                  size: 14,
-                  color: AppColors.readableAccent(context, AppTheme.accent),
-                )
-              : Text(
-                  '—',
-                  style: TextStyle(color: AppTheme.textMutedColor(context)),
-                ),
-        ),
-        Expanded(
-          child: Text(
-            match.playerTwoName == 'TBD' ? placeholder : match.playerTwoName,
-            textAlign: TextAlign.end,
-            style: nameStyle(match.playerTwoId),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
     );
   }
 }
