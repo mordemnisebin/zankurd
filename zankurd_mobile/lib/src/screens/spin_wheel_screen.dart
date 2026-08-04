@@ -340,11 +340,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         ),
         decoration: BoxDecoration(
           // Sarı/gold gradyan üzerinde beyaz metin kontrastı zayıftı;
-          // her iki temada da koyu yeşil zemin + gold vurgu kullanılır.
+          // her iki temada da koyu zemin + gold vurgu kullanılır.
+          //
+          // Gradyan eskiden `brandDeep` (kahve-turuncu) ile koyu yeşili
+          // karıştırıyordu ve ortada çamurlu bir ton bırakıyordu — Night
+          // Jewel'in açıkça dışladığı yeşil-kahve geçişi. Artık TEK hue
+          // ailesinde kalır: koyu yeşilden daha koyu mürekkep yeşiline
+          // (2026-08-04 görsel denetimi).
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.brandDeep, Color(0xFF17503A)],
+            colors: [Color(0xFF17503A), Color(0xFF0E3326)],
           ),
           border: Border.all(
             color: AppTheme.gold.withValues(alpha: isDark ? 0.30 : 0.45),
