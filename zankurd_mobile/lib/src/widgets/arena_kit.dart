@@ -477,15 +477,41 @@ class RankMedal extends StatelessWidget {
                 color: tone.withValues(alpha: 0.14),
               ),
             ),
-          Text(
-            '$rank',
-            style: AppTypography.caption.copyWith(
-              fontWeight: FontWeight.w900,
-              color: podium
-                  ? Colors.white
-                  : AppColors.readableAccent(context, tone),
+          // İlk üçte rakam DOLU bir disk üstünde durur.
+          //
+          // Beyaz rakam doğrudan kilim elmasının üstüne çiziliyordu; elmas
+          // dolu değil desenli olduğu için rakam açık zeminde kayboluyordu
+          // ve madalya boş bir şekle dönüşüyordu. Sıralamada bu hiç
+          // görülmedi çünkü liste yalnız 4 ve sonrasını çiziyor; yarışma
+          // ödül basamaklarında ilk üç kullanılınca ortaya çıktı
+          // (2026-08-04). Sıra yalnız renkle anlatılamaz — rakam
+          // okunabilir kalmalı.
+          if (podium)
+            Container(
+              width: size * 0.52,
+              height: size * 0.52,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: tone),
+              alignment: Alignment.center,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '$rank',
+                  maxLines: 1,
+                  style: AppTypography.caption.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.onSolid(tone),
+                  ),
+                ),
+              ),
+            )
+          else
+            Text(
+              '$rank',
+              style: AppTypography.caption.copyWith(
+                fontWeight: FontWeight.w900,
+                color: AppColors.readableAccent(context, tone),
+              ),
             ),
-          ),
         ],
       ),
     );

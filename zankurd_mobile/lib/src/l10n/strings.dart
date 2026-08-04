@@ -533,6 +533,14 @@ class Tr {
     K.cupRewardTitle: {'ku': 'Xelat', 'tr': 'Ödül'},
     K.cupCategory: {'ku': 'Beş', 'tr': 'Kategori'},
     K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
+    K.contestToday: {'ku': 'Îro', 'tr': 'Bugün'},
+    K.contestDifficulty: {'ku': 'zehmetî', 'tr': 'zorluk'},
+    K.contestCategoryLabel: {'ku': 'beş', 'tr': 'kategori'},
+    K.contestQuestionsLabel: {'ku': 'pirs', 'tr': 'soru'},
+    K.contestRewardsTitle: {'ku': 'Xelatên îro', 'tr': 'Bugünün ödülleri'},
+    K.contestJoinReward: {'ku': 'beşdarî', 'tr': 'katılım'},
+    K.contestQuickInfo: {'ku': 'Bi kurtî', 'tr': 'Kısaca'},
+    K.contestSeconds: {'ku': 'çirke/pirs', 'tr': 'sn/soru'},
     K.champion: {'ku': 'Şampiyon!', 'tr': 'Şampiyon!'},
     K.eliminated: {'ku': 'Derket', 'tr': 'Elendi'},
     K.ongoing: {'ku': 'Berdewam', 'tr': 'Devam'},
@@ -2424,6 +2432,18 @@ class K {
   static const cupRewardTitle = 'tournament.rewardTitle';
   static const cupCategory = 'tournament.category';
   static const cupNotStarted = 'tournament.notStarted';
+
+  // Yarışma hızlı bilgi ve ödül şeridi (2026-08-04). `Contest` modeli
+  // zorluk aralığını ve dört ödül basamağını taşıyordu; ekran hiçbirini
+  // göstermiyordu ve tema adı yerine sabit bir başlık yazıyordu.
+  static const contestToday = 'contest.today';
+  static const contestDifficulty = 'contest.difficulty';
+  static const contestCategoryLabel = 'contest.categoryLabel';
+  static const contestQuestionsLabel = 'contest.questionsLabel';
+  static const contestRewardsTitle = 'contest.rewardsTitle';
+  static const contestJoinReward = 'contest.joinReward';
+  static const contestQuickInfo = 'contest.quickInfo';
+  static const contestSeconds = 'contest.seconds';
   static const champion = 'tournament.champion';
   static const eliminated = 'tournament.eliminated';
   static const ongoing = 'tournament.ongoing';
