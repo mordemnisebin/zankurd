@@ -309,6 +309,24 @@ void main() {
     expect(find.text('500 coin'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('ağ yoksa mağaza bağlamsal çevrimdışı durumu gösterir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: _OfflineShopRepository())),
+    );
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Mağaza çevrimdışı'), findsOneWidget);
+    expect(
+      find.text('Mağaza verileri için internet bağlantısı gerekiyor.'),
+      findsOneWidget,
+    );
+    expect(find.text('Tekrar'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }
 
 /// Bakiye yeterli görünürken sunucunun harcamayı reddettiği senaryo
@@ -337,4 +355,11 @@ class _RetryableShopRepository extends MockZanKurdRepository {
 
   @override
   Future<bool> hasPurchased(String itemId) async => false;
+}
+
+class _OfflineShopRepository extends MockZanKurdRepository {
+  @override
+  Future<int> loadCoinBalance() async {
+    throw StateError('network unavailable');
+  }
 }

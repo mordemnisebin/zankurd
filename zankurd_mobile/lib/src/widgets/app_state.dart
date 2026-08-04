@@ -67,6 +67,34 @@ class AppErrorState extends StatelessWidget {
   }
 }
 
+class AppOfflineState extends StatelessWidget {
+  const AppOfflineState({
+    required this.title,
+    required this.message,
+    required this.retryLabel,
+    required this.onRetry,
+    super.key = const ValueKey('app-offline-state'),
+  });
+
+  final String title;
+  final String message;
+  final String retryLabel;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return _AppStateScaffold(
+      icon: AppIcons.cloud,
+      iconColor: AppTheme.secondaryAccent,
+      title: title,
+      message: message,
+      actionLabel: retryLabel,
+      onAction: onRetry,
+      actionIcon: AppIcons.arrowsRotate,
+    );
+  }
+}
+
 class _AppStateScaffold extends StatelessWidget {
   const _AppStateScaffold({
     required this.icon,

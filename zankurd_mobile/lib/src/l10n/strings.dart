@@ -1218,6 +1218,11 @@ class Tr {
       'ku': 'Rewşa çerxê nehat kontrolkirin.',
       'tr': 'Çark durumu kontrol edilemedi.',
     },
+    K.wheelOfflineTitle: {'ku': 'Çerx ne li serhêl e', 'tr': 'Çark çevrimdışı'},
+    K.wheelOfflineBody: {
+      'ku': 'Ji bo dîtina rewşa çerxê girêdana înternetê pêwîst e.',
+      'tr': 'Çark durumunu görmek için internet bağlantısı gerekiyor.',
+    },
     K.wheelRewardFailed: {'ku': 'Xelat nehat dayîn.', 'tr': 'Ödül verilemedi.'},
     K.wheelAlreadySpun: {
       'ku': 'Îro jixwe zivirandî.',
@@ -1404,6 +1409,14 @@ class Tr {
     },
     K.mostWanted: {'ku': 'YA HERÎ TÊ XWASTIN', 'tr': 'EN POPÜLER'},
     K.ownedLabel: {'ku': 'Yê te', 'tr': 'Sende'},
+    K.shopOfflineTitle: {
+      'ku': 'Dukan ne li serhêl e',
+      'tr': 'Mağaza çevrimdışı',
+    },
+    K.shopOfflineBody: {
+      'ku': 'Ji bo daneyên dukanê girêdana înternetê pêwîst e.',
+      'tr': 'Mağaza verileri için internet bağlantısı gerekiyor.',
+    },
 
     // ── Avatar / liderlik / kaydedilenler ────────────────────────────
     K.photoTooLarge: {
@@ -2774,6 +2787,8 @@ class K {
   static const minutes = 'common.minutes';
   static const seconds = 'common.seconds';
   static const wheelStatusFailed = 'wheel.statusFailed';
+  static const wheelOfflineTitle = 'wheel.offlineTitle';
+  static const wheelOfflineBody = 'wheel.offlineBody';
   static const wheelRewardFailed = 'wheel.rewardFailed';
   static const wheelAlreadySpun = 'wheel.alreadySpun';
   static const playerWord = 'match.player';
@@ -2844,6 +2859,8 @@ class K {
   static const shopSubtitle = 'shop.subtitle';
   static const mostWanted = 'shop.mostWanted';
   static const ownedLabel = 'shop.owned';
+  static const shopOfflineTitle = 'shop.offlineTitle';
+  static const shopOfflineBody = 'shop.offlineBody';
 
   // ── Avatar / liderlik / kaydedilenler ──────────────────────────────
   static const photoTooLarge = 'avatar.photoTooLarge';

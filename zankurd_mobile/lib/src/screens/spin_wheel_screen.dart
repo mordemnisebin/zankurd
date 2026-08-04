@@ -12,6 +12,7 @@ import '../providers/sound_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
+import '../utils/network_error.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/confetti_overlay.dart';
@@ -35,10 +36,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   bool _canSpin = false;
   bool _loading = true;
   bool _statusError = false;
+  bool _statusOffline = false;
   bool _statusRequestInFlight = false;
   bool _spinning = false;
   int? _wonAmount;
   String? _spinErrorMessage;
+  bool _spinErrorOffline = false;
   bool _retrySpinStatus = false;
   int _lastPlayedSegment = -1;
   bool _showConfetti = false;
@@ -121,6 +124,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       setState(() {
         _loading = true;
         _statusError = false;
+        _statusOffline = false;
         _spinErrorMessage = null;
       });
     }
@@ -138,6 +142,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         setState(() {
           _loading = false;
           _statusError = true;
+          _statusOffline = isLikelyOfflineError(error);
         });
       }
     } finally {
@@ -160,6 +165,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       _spinning = true;
       _wonAmount = null;
       _spinErrorMessage = null;
+      _spinErrorOffline = false;
     });
 
     const rewards = SpinWheelScreen.rewards;
@@ -172,6 +178,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       setState(() {
         _spinning = false;
         _spinErrorMessage = context.t(K.wheelRewardFailed);
+        _spinErrorOffline = isLikelyOfflineError(error);
         _retrySpinStatus = false;
       });
       return;
@@ -254,12 +261,19 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       ),
                     )
                   : _statusError
-                  ? AppErrorState(
-                      title: context.t(K.loadFailedShort),
-                      message: context.t(K.wheelStatusFailed),
-                      retryLabel: context.t(K.retryShort),
-                      onRetry: _checkSpin,
-                    )
+                  ? _statusOffline
+                        ? AppOfflineState(
+                            title: context.t(K.wheelOfflineTitle),
+                            message: context.t(K.wheelOfflineBody),
+                            retryLabel: context.t(K.retryShort),
+                            onRetry: _checkSpin,
+                          )
+                        : AppErrorState(
+                            title: context.t(K.loadFailedShort),
+                            message: context.t(K.wheelStatusFailed),
+                            retryLabel: context.t(K.retryShort),
+                            onRetry: _checkSpin,
+                          )
                   : ListView(
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.page,
@@ -282,12 +296,23 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                             padding: const EdgeInsets.only(
                               bottom: AppSpacing.md,
                             ),
-                            child: AppErrorState(
-                              title: context.t(K.loadFailedShort),
-                              message: _spinErrorMessage!,
-                              retryLabel: context.t(K.retryShort),
-                              onRetry: _retrySpinStatus ? _checkSpin : _spin,
-                            ),
+                            child: _spinErrorOffline
+                                ? AppOfflineState(
+                                    title: context.t(K.wheelOfflineTitle),
+                                    message: context.t(K.wheelOfflineBody),
+                                    retryLabel: context.t(K.retryShort),
+                                    onRetry: _retrySpinStatus
+                                        ? _checkSpin
+                                        : _spin,
+                                  )
+                                : AppErrorState(
+                                    title: context.t(K.loadFailedShort),
+                                    message: _spinErrorMessage!,
+                                    retryLabel: context.t(K.retryShort),
+                                    onRetry: _retrySpinStatus
+                                        ? _checkSpin
+                                        : _spin,
+                                  ),
                           ),
                         // ── Günlük hak durumu (her durumda görünür) ──
                         _buildSpinStatusChip(context, ku),
