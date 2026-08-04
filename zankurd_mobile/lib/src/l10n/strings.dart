@@ -533,6 +533,24 @@ class Tr {
     K.cupRewardTitle: {'ku': 'Xelat', 'tr': 'Ödül'},
     K.cupCategory: {'ku': 'Beş', 'tr': 'Kategori'},
     K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
+    K.cupRewardClaiming: {
+      'ku': 'Xelat tê kontrolkirin…',
+      'tr': 'Ödül doğrulanıyor…',
+    },
+    K.cupRewardGranted: {'ku': 'Xelat hat dayîn', 'tr': 'Ödül verildi'},
+    K.cupRewardUnverified: {
+      'ku': 'Xelat hîn nehat pejirandin',
+      'tr': 'Ödül henüz doğrulanmadı',
+    },
+    K.cupRewardLocal: {
+      'ku': 'Ev kûpa herêmî ye — xelat nayê dayîn',
+      'tr': 'Bu kupa yerel oynandı — ödül verilmez',
+    },
+    K.cupFinalScore: {'ku': 'Puana dawî', 'tr': 'Final skoru'},
+    K.cupEliminatedRound: {
+      'ku': 'Tu li {round} derketî',
+      'tr': '{round} turunda elendin',
+    },
     K.contestToday: {'ku': 'Îro', 'tr': 'Bugün'},
     K.contestDifficulty: {'ku': 'zehmetî', 'tr': 'zorluk'},
     K.contestCategoryLabel: {'ku': 'beş', 'tr': 'kategori'},
@@ -2432,6 +2450,16 @@ class K {
   static const cupRewardTitle = 'tournament.rewardTitle';
   static const cupCategory = 'tournament.category';
   static const cupNotStarted = 'tournament.notStarted';
+
+  // Sampiyonluk odulunun DURUMU (2026-08-04). Kupayi kazanmak odulun
+  // verildigi anlamina gelmez: odulu sunucu verir ve benzetim modunda hic
+  // talep edilmez. Ekran hangi durumda oldugunu soylemeli.
+  static const cupRewardClaiming = 'tournament.rewardClaiming';
+  static const cupRewardGranted = 'tournament.rewardGranted';
+  static const cupRewardUnverified = 'tournament.rewardUnverified';
+  static const cupRewardLocal = 'tournament.rewardLocal';
+  static const cupFinalScore = 'tournament.finalScore';
+  static const cupEliminatedRound = 'tournament.eliminatedRound';
 
   // Yarışma hızlı bilgi ve ödül şeridi (2026-08-04). `Contest` modeli
   // zorluk aralığını ve dört ödül basamağını taşıyordu; ekran hiçbirini

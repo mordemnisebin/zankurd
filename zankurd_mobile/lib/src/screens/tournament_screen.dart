@@ -63,6 +63,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
   /// Turnuva doldu mu bekliyoruz?
   bool _waitingForPlayers = false;
+
+  /// Şampiyonluk ödülünün GERÇEK durumu.
+  ///
+  /// Kupayı kazanmak ödülün verildiği anlamına gelmez: ödülü sunucu verir
+  /// (`claimTournamentChampionReward`) ve bot benzetiminde hiç talep
+  /// edilmez. Ekran eskiden her iki durumda da aynı altın "Şampiyon!"
+  /// bandını gösteriyordu — yani yerel bir kupada oyuncu hiçbir şey
+  /// almadığı hâlde kutlanıyor ve bunu hiçbir yerde okuyamıyordu
+  /// (2026-08-04).
+  _CupRewardState _rewardState = _CupRewardState.none;
+  int _rewardAmount = 0;
   List<TournamentStandings> _standings = const [];
   bool _loading = true;
   bool _hasError = false;
@@ -230,9 +241,20 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// olmayan çağrıda sıfır döner, aynı kupa ikinci kez talep edilemez
   /// (2026-07-26).
   Future<void> _claimChampionReward() async {
+    if (mounted) setState(() => _rewardState = _CupRewardState.claiming);
     try {
       final amount = await widget.repository.claimTournamentChampionReward();
-      if (!mounted || amount <= 0) return;
+      if (!mounted) return;
+      // Sunucu sıfır döndüyse ödül VERİLMEDİ: hak ediş doğrulanmamış ya da
+      // aynı kupa için zaten talep edilmiş olabilir. "Verildi" demek yanlış
+      // olurdu.
+      setState(() {
+        _rewardAmount = amount;
+        _rewardState = amount > 0
+            ? _CupRewardState.granted
+            : _CupRewardState.unverified;
+      });
+      if (amount <= 0) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -242,6 +264,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tournament_champion_reward');
+      if (!mounted) return;
+      setState(() => _rewardState = _CupRewardState.unverified);
     }
   }
 
@@ -572,10 +596,19 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
                 // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
                 if (bracket.status != 'active')
-                  _StatusCard(bracket: bracket, ku: ku),
+                  _StatusCard(bracket: bracket, ku: ku, roundNames: roundNames),
                 if (bracket.status == 'won') ...[
                   const SizedBox(height: AppSpacing.md),
-                  _ChampionBanner(ku: ku),
+                  _ChampionBanner(
+                    ku: ku,
+                    finalScore: bracket.totalScore,
+                    // Ödül yalnız SUNUCU şemasında talep edilir; yerel
+                    // benzetimde hiç istenmez ve bu açıkça yazılır.
+                    rewardState: _serverBracket
+                        ? _rewardState
+                        : _CupRewardState.localOnly,
+                    rewardAmount: _rewardAmount,
+                  ),
                 ],
                 // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz
                 // oynamamış. Gerçek oyunculu turnuvada bu normal bir
@@ -1275,11 +1308,21 @@ class _TournamentSectionTitle extends StatelessWidget {
   }
 }
 
+/// Turnuva bittiğinde (elendi/kazandı) görünen özet.
+///
+/// "Elendi" tek başına hangi turda elenildiğini ve kaç puan alındığını
+/// söylemiyordu; oyuncunun turnuvadan aldığı tek somut bilgi kayıptı.
+/// İkisi de şemada gerçekten duruyor (2026-08-04).
 class _StatusCard extends StatelessWidget {
-  const _StatusCard({required this.bracket, required this.ku});
+  const _StatusCard({
+    required this.bracket,
+    required this.ku,
+    required this.roundNames,
+  });
 
   final TournamentBracket bracket;
   final bool ku;
+  final List<String> roundNames;
 
   @override
   Widget build(BuildContext context) {
@@ -1316,6 +1359,36 @@ class _StatusCard extends StatelessWidget {
                     color: AppTheme.textPrimaryColor(context),
                   ),
                 ),
+                // Elenen oyuncuya HANGİ turda elendiği ve kaç puan aldığı
+                // söylenir. "Elendi" tek başına turnuvadan alınan tek
+                // somut bilgiyi (skor) ve bağlamı (tur) gizliyordu.
+                // İkisi de şemada gerçekten duruyor; uydurulmaz.
+                if (bracket.status == 'eliminated' &&
+                    bracket.currentRound < roundNames.length) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    Tr.forKu(K.cupEliminatedRound, ku, {
+                      'round': roundNames[bracket.currentRound],
+                    }),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+                if (bracket.totalScore > 0) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    '${Tr.forKu(K.cupFinalScore, ku)}: ${bracket.totalScore}',
+                    maxLines: 1,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
@@ -1345,28 +1418,89 @@ class _StatusCard extends StatelessWidget {
   }
 }
 
+/// Şampiyonluk ödülünün durumu.
+enum _CupRewardState {
+  /// Henüz talep edilmedi.
+  none,
+
+  /// Sunucudan cevap bekleniyor.
+  claiming,
+
+  /// Sunucu ödülü verdi ve miktarı bildirdi.
+  granted,
+
+  /// Sunucu sıfır döndü ya da çağrı başarısız oldu — ödül VERİLMEDİ.
+  unverified,
+
+  /// Kupa yerel benzetimde oynandı; ödül hiç talep edilmez.
+  localOnly,
+}
+
+/// Şampiyonluk yüzeyi: kupa, gerçek final skoru ve ödülün GERÇEK durumu.
+///
+/// Eskiden yalnız altın bir bantta "Tebrikler, şampiyon!" yazıyordu.
+/// Kupayı kazanmak ödülün verildiği anlamına gelmez: ödülü sunucu verir ve
+/// bot benzetiminde hiç talep edilmez. Oyuncu yerel bir kupada hiçbir şey
+/// almadığı hâlde kutlanıyor ve bunu hiçbir yerde okuyamıyordu.
 class _ChampionBanner extends StatelessWidget {
-  const _ChampionBanner({required this.ku});
+  const _ChampionBanner({
+    required this.ku,
+    required this.finalScore,
+    required this.rewardState,
+    required this.rewardAmount,
+  });
 
   final bool ku;
+  final int finalScore;
+  final _CupRewardState rewardState;
+  final int rewardAmount;
+
+  (ArenaStatus, String) _rewardVisual(BuildContext context) =>
+      switch (rewardState) {
+        _CupRewardState.claiming => (
+          ArenaStatus.loading,
+          context.t(K.cupRewardClaiming),
+        ),
+        _CupRewardState.granted => (
+          ArenaStatus.completed,
+          context.t(K.cupRewardGranted),
+        ),
+        _CupRewardState.unverified => (
+          ArenaStatus.upcoming,
+          context.t(K.cupRewardUnverified),
+        ),
+        _CupRewardState.localOnly => (
+          ArenaStatus.locked,
+          context.t(K.cupRewardLocal),
+        ),
+        _CupRewardState.none => (
+          ArenaStatus.loading,
+          context.t(K.cupRewardClaiming),
+        ),
+      };
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      cardType: CardType.primary,
-      gradient: AppTheme.goldGradient,
-      child: Row(
-        children: [
-          const Icon(AppIcons.trophy, color: Colors.white, size: 32),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Text(
-              context.t(K.championCongrats),
-              style: AppTypography.heading2.copyWith(color: Colors.white),
-            ),
+    final (status, label) = _rewardVisual(context);
+    return ArenaHero(
+      key: const ValueKey('tournament-champion'),
+      title: context.t(K.championCongrats),
+      // Final skoru GERÇEK şemadan gelir.
+      subtitle: '${context.t(K.cupFinalScore)}: $finalScore',
+      accent: AppTheme.gold,
+      icon: AppIcons.trophy,
+      tokens: [
+        ArenaStatusChip(status: status, label: label, onSolid: true),
+        // Jeton YALNIZ ödül gerçekten verildiyse çizilir. "500 şampiyon"
+        // lobide bir vaattir; burada yazılan sayı sunucunun bildirdiği
+        // gerçek miktardır.
+        if (rewardState == _CupRewardState.granted && rewardAmount > 0)
+          RewardToken(
+            kind: RewardKind.coin,
+            value: '$rewardAmount',
+            onSolid: true,
           ),
-        ],
-      ),
+      ],
     );
   }
 }
