@@ -740,6 +740,7 @@ class Tr {
     },
     // Streak paneli durum etiketleri (2026-08-04). Panel sunumsaldır ve
     // metnini çağırandan alır; anahtarlar burada durur.
+    K.progressLevelLabel: {'ku': 'Ast', 'tr': 'Seviye'},
     K.streakFreezeAvailable: {'ku': 'Amade', 'tr': 'Kullanılabilir'},
     K.streakFreezeNotNeeded: {'ku': 'Ne hewce ye', 'tr': 'Gerekmiyor'},
     K.streakFreezeNoCoins: {'ku': 'Pere têrê nake', 'tr': 'Coin yetersiz'},
@@ -2501,6 +2502,7 @@ class K {
   static const gunlukSeriStreak = 'screen.gunlukSeriStreak';
   static const pGundurAraliksizOynuyorsun = 'screen.pGundurAraliksizOynuyorsun';
   static const henuzSerinBaslamadiBugun = 'screen.henuzSerinBaslamadiBugun';
+  static const progressLevelLabel = 'progress.level.label';
   static const streakFreezeAvailable = 'streak.freeze.available';
   static const streakFreezeNotNeeded = 'streak.freeze.notNeeded';
   static const streakFreezeNoCoins = 'streak.freeze.noCoins';

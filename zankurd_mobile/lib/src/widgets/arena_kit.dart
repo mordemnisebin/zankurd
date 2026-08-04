@@ -91,19 +91,32 @@ class RewardToken extends StatelessWidget {
             children: [
               Icon(kind.icon, size: compact ? 13 : 15, color: fg),
               const SizedBox(width: 5),
-              Text(
-                value,
-                style: AppTypography.caption.copyWith(
-                  color: fg,
-                  fontWeight: FontWeight.w900,
+              // Esnek olmalı: `987654/1000000` gibi bir değer %200 yazıda
+              // dar telefonda hiçbir biçimde sığmıyor ve jeton satırı
+              // taşırıyordu. Kısaltma son çare — ama taşma şeridi hiçbir
+              // şey göstermez, kısaltma en azından öneki gösterir ve
+              // düzen ayakta kalır.
+              Flexible(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption.copyWith(
+                    color: fg,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
               if (label != null) ...[
                 const SizedBox(width: 4),
-                Text(
-                  label!,
-                  style: AppTypography.caption.copyWith(
-                    color: fg.withValues(alpha: 0.75),
+                Flexible(
+                  child: Text(
+                    label!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: fg.withValues(alpha: 0.75),
+                    ),
                   ),
                 ),
               ],

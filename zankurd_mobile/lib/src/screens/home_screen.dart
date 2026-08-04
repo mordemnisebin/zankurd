@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
+import '../data/xp_store.dart';
+import '../widgets/progress_summary.dart';
 import '../widgets/streak_panel.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -70,6 +72,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // "—" yükleme placeholder'ı yerine 0 ile başlıyor: kısa an için kırık
   // görünen bir tire yerine, gerçek bakiye gelince normal bir güncelleme.
   int _coinBalance = 0;
+  int _level = 1;
+  int _xpInLevel = 0;
+  int _xpNeeded = 0;
   int _streak = 0;
   List<DailyMission> _missions = [];
   int _reviewReadyCount = 0;
@@ -106,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshStreak();
     _loadMissions();
     _refreshFirstSession();
-    _refreshProgress();
+    _refreshXpLevel();
     _refreshReviewCount();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
@@ -122,12 +127,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _handleRefreshSignal() {
     if (!mounted) return;
     _refreshCoins();
+    _refreshXpLevel();
     _loadMissions();
     _refreshFirstSession();
     _refreshStreak();
     _refreshProgress();
     _refreshReviewCount();
     setState(() => _refreshCounter++);
+  }
+
+  Future<void> _refreshXpLevel() async {
+    try {
+      final store = await XPStore.load();
+      if (!mounted) return;
+      setState(() {
+        _level = store.currentLevel;
+        _xpInLevel = store.xpInCurrentLevel;
+        _xpNeeded = store.xpNeededForNextLevel;
+      });
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home_progress');
+    }
   }
 
   Future<void> _refreshStreak() async {
@@ -262,6 +282,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             total: _firstSession ? 5 : _todayTarget,
             firstSession: _firstSession,
             onStart: _startDailyQuiz,
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
+          // ekranın ilk ve en güçlü eylemi kalmalı. Üstte denendiğinde
+          // CTA'yı aşağı itiyordu (2026-08-04 görsel denetimi).
+          //
+          // Coin burada YOK: başlıkta zaten kalıcı bir coin rozeti ve
+          // mağaza girişi var; ikisini birden çizmek aynı bilgiyi iki kez
+          // göstermekti.
+          ProgressSummary(
+            key: const ValueKey('home-progress-summary'),
+            level: _level,
+            xpInLevel: _xpInLevel,
+            xpNeeded: _xpNeeded,
+            levelLabel: context.t(K.progressLevelLabel),
           ),
           if (_reviewReadyCount > 0) ...[
             const SizedBox(height: AppSpacing.xs),
@@ -888,7 +923,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshCoins() async {
     try {
       final coins = await repo.loadCoinBalance();
-      if (mounted) setState(() => _coinBalance = coins);
+      if (mounted) {
+        setState(() => _coinBalance = coins);
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'coin refresh failed');
     }
