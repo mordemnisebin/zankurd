@@ -57,12 +57,37 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
     super.dispose();
   }
 
+  /// Gerçekten AÇILABİLECEK tekrar soruları.
+  ///
+  /// Sayı ile eylem eskiden iki ayrı kaynaktan besleniyordu: rozet
+  /// `store.readyCount` (bütün hazır kimlikler), başlatma ise
+  /// `repository.questions` ile kesişim. Çevrimiçi maçlarda yanlış
+  /// yapılan sorular veritabanı UUID'siyle kaydediliyor
+  /// (`get_room_questions` satırın `id`sini döndürür); paketli bankanın
+  /// kimlikleri ise `offline_0005` biçiminde. `_trackMistake` çevrimiçi
+  /// yolda da çalıştığı için bu UUID'ler yanlış defterine giriyor ama
+  /// hiçbir zaman çözümlenemiyordu.
+  ///
+  /// Sonuç: kart sıfırdan büyük bir rozet gösteriyor, dokunuş ise
+  /// `questions.isEmpty` dalına düşüp SESSİZCE hiçbir şey yapmıyordu —
+  /// Öğren sekmesinin başlık kartı, çevrimiçi 1v1 oynayan her kullanıcıda
+  /// kalıcı olarak tepkisiz kalıyordu (2026-08-06 denetimi).
+  ///
+  /// Artık ikisi de aynı listeden besleniyor: sayı neyi vaat ediyorsa
+  /// dokunuş onu açar.
+  List<QuizQuestion> _launchable(Set<String> readyIds) => widget
+      .repository
+      .questions
+      .where((q) => readyIds.contains(q.id))
+      .toList();
+
   Future<void> _refresh() async {
     try {
       final store = await MistakeStore.load();
+      final launchable = _launchable(store.readyIds).length;
       if (mounted) {
         setState(() {
-          _readyCount = store.readyCount;
+          _readyCount = launchable;
           _loading = false;
         });
       }
@@ -74,10 +99,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
 
   Future<void> _startReview() async {
     final store = await MistakeStore.load();
-    final readyIds = store.readyIds;
-    final questions = widget.repository.questions
-        .where((q) => readyIds.contains(q.id))
-        .toList();
+    final questions = _launchable(store.readyIds);
     if (questions.isEmpty) return;
 
     final onStart = widget.onStartReview;
