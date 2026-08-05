@@ -22,6 +22,7 @@ import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
+import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'play_hub_screen.dart';
@@ -307,6 +308,17 @@ class _AppShellState extends State<AppShell>
       _profileCheckStarted = false;
       _profileCheckedUserId = null;
       return const SignInScreen();
+    }
+
+    // Kurtarma bağlantısı da normal bir oturum açar. Bu kapı olmadan
+    // kullanıcı doğrudan Home'a düşüyor ve parolası eski hâliyle
+    // kalıyordu — "parolamı unuttum" hiçbir şeyi kurtarmıyordu
+    // (2026-08-06 denetimi).
+    //
+    // İtilmiş bir rota yerine build kapısı olması bilinçli: geri tuşu
+    // ya da web'de tarayıcı geri düğmesi kurtarmayı atlayamasın.
+    if (authProvider.needsPasswordRecovery) {
+      return const PasswordRecoveryScreen();
     }
 
     final activeUserId = widget.repository.currentUserId;

@@ -218,6 +218,40 @@ class Tr {
       'ku': 'Vesazkirina şîfreyê bi ser neket.',
       'tr': 'Parola sıfırlama başarısız.',
     },
+    // Kurtarma bağlantısıyla açılan oturumda gösterilen yeni parola
+    // ekranı (2026-08-06). Bağlantı eskiden yalnız içeri alıyordu,
+    // parola hiç değişmiyordu.
+    K.newPasswordTitle: {
+      'ku': 'Şîfreyeke nû saz bike',
+      'tr': 'Yeni parola belirle',
+    },
+    K.newPasswordBody: {
+      'ku':
+          'Ji bo hesabê xwe şîfreyeke nû binivîse. Piştî vê, tu dikarî bi '
+          'şîfreya nû têkevî.',
+      'tr':
+          'Hesabın için yeni bir parola yaz. Bundan sonra yeni parolanla '
+          'giriş yapabilirsin.',
+    },
+    K.newPasswordLabel: {'ku': 'Şîfreya nû', 'tr': 'Yeni parola'},
+    K.newPasswordSave: {'ku': 'Şîfreyê tomar bike', 'tr': 'Parolayı kaydet'},
+    K.newPasswordSaved: {
+      'ku': 'Şîfreya te hat guhertin.',
+      'tr': 'Parolan değiştirildi.',
+    },
+    K.newPasswordSameAsOld: {
+      'ku': 'Şîfreya nû divê ji ya kevin cuda be.',
+      'tr': 'Yeni parola eskisinden farklı olmalı.',
+    },
+    K.recoveryLinkExpired: {
+      'ku':
+          'Ev girêdan bi kar nayê anîn an dema wê derbas bûye. Ji kerema '
+          'xwe girêdaneke nû bixwaze.',
+      'tr':
+          'Bu bağlantı kullanılamıyor veya süresi dolmuş. Lütfen yeni bir '
+          'bağlantı iste.',
+    },
+    K.recoveryCancel: {'ku': 'Dev jê berde', 'tr': 'Vazgeç'},
     K.emailAddress: {'ku': 'Navnîşana e-nameyê', 'tr': 'E-posta adresi'},
     K.emailInvalid2: {
       'ku': 'E-nameyeke derbasdar binivîse',
@@ -2997,6 +3031,14 @@ class K {
   static const sendingReset = 'auth.sendingReset';
   static const resetSent = 'auth.resetSent';
   static const resetFailed = 'auth.resetFailed';
+  static const newPasswordTitle = 'auth.newPassword.title';
+  static const newPasswordBody = 'auth.newPassword.body';
+  static const newPasswordLabel = 'auth.newPassword.label';
+  static const newPasswordSave = 'auth.newPassword.save';
+  static const newPasswordSaved = 'auth.newPassword.saved';
+  static const newPasswordSameAsOld = 'auth.newPassword.sameAsOld';
+  static const recoveryLinkExpired = 'auth.recovery.linkExpired';
+  static const recoveryCancel = 'auth.recovery.cancel';
   static const emailAddress = 'auth.emailAddress';
   static const emailInvalid2 = 'auth.email.invalid';
   static const passwordLabel = 'auth.password.label';

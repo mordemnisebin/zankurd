@@ -41,12 +41,23 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   bool _needsEmailConfirmation = false;
+  bool _needsPasswordRecovery = false;
   bool _mockAuthenticated = false;
 
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   bool get needsEmailConfirmation => _needsEmailConfirmation;
+
+  /// Kurtarma bağlantısıyla açılmış, parolası HENÜZ DEĞİŞMEMİŞ oturum.
+  ///
+  /// `resetPasswordForEmail` yalnız bir bağlantı yollar; bağlantıya
+  /// dokunulduğunda Supabase normal bir oturum açar. Bu durum ayrı
+  /// modellenmezse — ki 2026-08-06 denetimine kadar modellenmiyordu —
+  /// kullanıcı doğrudan Home'a düşer ve parolası eski hâliyle kalır:
+  /// "parolamı unuttum" hiçbir şeyi kurtarmaz, yalnız bir kerelik giriş
+  /// yapar. `AppShell` bu bayrak açıkken parola ekranını gösterir.
+  bool get needsPasswordRecovery => _needsPasswordRecovery;
 
   /// Misafir (anonim) oturum da kimlikli sayılır.
   /// Supabase yapılandırması yoksa test/mock kapısı yine kullanıcı seçimini bekler.
@@ -62,6 +73,7 @@ class AuthProvider extends ChangeNotifier {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;
       _currentUser = next;
+      applyAuthEvent(state.event, hasSession: next != null);
       // RevenueCat müşterisi Supabase kullanıcısına bağlanır: aboneliğin
       // cihaza değil hesaba ait olmasını ve cihaz paylaşımında entitlement
       // sızmamasını sağlar.
@@ -274,6 +286,52 @@ class AuthProvider extends ChangeNotifier {
       (client) =>
           client.auth.resetPasswordForEmail(email, redirectTo: authRedirectUri),
     );
+  }
+
+  /// Oturum olayının kurtarma bayrağına etkisi.
+  ///
+  /// Dinleyici eskiden YALNIZ `state.session?.user` okuyordu; olayın TÜRÜ
+  /// hiç sorulmuyordu. Kurtarma bağlantısı da normal bir oturum açtığı
+  /// için kullanıcı sessizce içeri giriyor, parolası değişmemiş oluyordu
+  /// (2026-08-06 denetimi).
+  ///
+  /// Gövde ayrı bir metotta: gerçek bir `SupabaseClient` kurmadan
+  /// doğrulanabilsin.
+  @visibleForTesting
+  void applyAuthEvent(AuthChangeEvent event, {required bool hasSession}) {
+    if (event == AuthChangeEvent.passwordRecovery) {
+      _needsPasswordRecovery = true;
+    } else if (!hasSession) {
+      // Çıkışta bayrak asılı kalmamalı, yoksa bir sonraki oturum sebepsiz
+      // parola ekranıyla açılır.
+      _needsPasswordRecovery = false;
+    }
+  }
+
+  /// Kurtarma oturumunda yeni parolayı yazar.
+  ///
+  /// `resetPassword` yalnız bağlantıyı gönderir; parolayı DEĞİŞTİREN
+  /// çağrı budur ve 2026-08-06'ya kadar uygulamada hiç yoktu. Başarılı
+  /// olduğunda kurtarma bayrağı düşer ve `AppShell` normal akışa döner.
+  Future<bool> completePasswordRecovery(String password) async {
+    final ok = await _run(
+      (client) => client.auth.updateUser(UserAttributes(password: password)),
+    );
+    if (ok) {
+      _needsPasswordRecovery = false;
+      notifyListeners();
+    }
+    return ok;
+  }
+
+  /// Kurtarmadan vazgeçilir ve oturum kapatılır.
+  ///
+  /// Bayrağı tek başına düşürmek, parolası hâlâ eski olan bir oturumu
+  /// sessizce Home'a bırakırdı — düzeltilmek istenen durumun aynısı.
+  /// Bu yüzden vazgeçmek çıkış yapmak demektir.
+  Future<void> cancelPasswordRecovery() async {
+    _needsPasswordRecovery = false;
+    await signOut();
   }
 
   Future<void> signOut({
