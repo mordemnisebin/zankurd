@@ -45,7 +45,16 @@ part 'profile/profile_widgets.dart';
 
 // 2026-07-23 M18: misafir hesap yükseltme dialog'unun üç olası çıkışı —
 // email/şifre başarılı, email/şifre başarısız, Google bağlama istendi.
-enum _GuestUpgradeAction { emailSuccess, emailFailure, googleRequested }
+enum _GuestUpgradeAction {
+  emailSuccess,
+  // E-posta onayı AÇIKKEN GoTrue hesabı kaydetmez, yalnız onaya alır:
+  // kullanıcı hâlâ anonimdir ve adres `new_email`de bekler. Bu durum
+  // ayrı bir sonuç olarak taşınmazsa "kaydedildi" denip geçiliyordu
+  // (2026-08-06 denetimi).
+  emailPendingConfirmation,
+  emailFailure,
+  googleRequested,
+}
 
 bool get _supportsGoogleAccountLinking =>
     kIsWeb ||
@@ -1034,9 +1043,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (!ctx.mounted) return;
                       Navigator.pop(
                         dialogContext,
-                        success
-                            ? _GuestUpgradeAction.emailSuccess
-                            : _GuestUpgradeAction.emailFailure,
+                        !success
+                            ? _GuestUpgradeAction.emailFailure
+                            : auth.needsEmailConfirmation
+                            ? _GuestUpgradeAction.emailPendingConfirmation
+                            : _GuestUpgradeAction.emailSuccess,
                       );
                     },
               child: submitting
@@ -1068,12 +1079,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(context.t(K.accountSaved))));
+      case _GuestUpgradeAction.emailPendingConfirmation:
+        // Hesap HENÜZ kalıcı değil; adres onay bekliyor. Kayıt akışının
+        // zaten kullandığı metin burada da doğrudur.
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.accountCreated))));
       case _GuestUpgradeAction.emailFailure:
         final message = context.read<AuthProvider>().errorMessage;
         if (message != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(message)));
+          // Sunucu metni Türkçe sabittir; `sign_in`/`sign_up` ekranları
+          // gibi burada da anahtar defterinden çevrilir, yoksa Kurmancî
+          // kullanıcı Türkçe hata görürdü.
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.translateAuthError(message))),
+          );
         }
       case _GuestUpgradeAction.googleRequested:
         await _linkGoogleAccount();

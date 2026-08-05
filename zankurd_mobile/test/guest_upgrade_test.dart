@@ -41,6 +41,34 @@ class _GuestAuthProvider extends AuthProvider {
   }
 }
 
+/// E-posta onayı AÇIK bir projede GoTrue'nun döndürdüğü durumu taklit eder.
+///
+/// Yerel GoTrue v2.192.0 ile ölçüldü (2026-08-06): onay açıkken
+/// `updateUser` İSTİSNA ATMAZ ama kullanıcı hâlâ `is_anonymous: true`,
+/// `email: ''` ve `new_email: 'pending1@zk.test'` olarak döner. Yani
+/// "başarılı" görünen bir çağrı, hesabı aslında kaydetmemiştir.
+class _PendingConfirmationAuthProvider extends AuthProvider {
+  _PendingConfirmationAuthProvider() : super.test();
+
+  @override
+  bool get isAuthenticated => true;
+
+  @override
+  bool get isGuest => true;
+
+  @override
+  bool get isLoading => false;
+
+  @override
+  bool get needsEmailConfirmation => true;
+
+  @override
+  Future<bool> upgradeGuestAccount({
+    required String email,
+    required String password,
+  }) async => true;
+}
+
 /// Misafir olmayan (isGuest = false) sahte AuthProvider.
 class _PermanentAuthProvider extends AuthProvider {
   _PermanentAuthProvider() : super.test();
@@ -240,6 +268,45 @@ void main() {
         find.text('Hesabın başarıyla kaydedildi!'),
         findsOneWidget,
         reason: 'Başarılı yükseltme sonrası başarı mesajı gösterilmeli',
+      );
+    });
+  });
+
+  group('GuestUpgrade — onay bekleyen yükseltme başarı sayılmıyor', () {
+    testWidgets('onay açıkken "kaydedildi" DEĞİL "e-postanı doğrula" denir', (
+      tester,
+    ) async {
+      final auth = _PendingConfirmationAuthProvider();
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          auth,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _scrollToCta(tester);
+      await tester.tap(find.text('Hesabını Kaydet'));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.byType(TextFormField).first,
+        'bekleyen@zankurd.com',
+      );
+      await tester.enterText(find.byType(TextFormField).last, 'gizli123');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Kaydet'));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Hesabın başarıyla kaydedildi!'),
+        findsNothing,
+        reason:
+            'Kullanıcı hâlâ anonim ve adres yalnız onay bekliyor; '
+            '"kaydedildi" demek ilerlemesinin kalıcı olduğu yalanıdır',
+      );
+      expect(
+        find.text('Hesap oluşturuldu! Doğrulamak için e-postanı kontrol et.'),
+        findsOneWidget,
       );
     });
   });

@@ -249,16 +249,39 @@ class AuthProvider extends ChangeNotifier {
   // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
   /// Misafir (anonim) hesabı e-posta/şifre ile kalıcı hesaba yükseltir.
   ///
-  /// Supabase `updateUser` API'sini kullanır. Başarılı olursa [isGuest]
-  /// otomatik olarak `false` döner. Hata durumunda exception fırlatır.
+  /// Supabase `updateUser` API'sini kullanır. Hata durumunda `false` döner.
+  ///
+  /// Dönen `UserResponse` eskiden HİÇ İNCELENMİYORDU: çağrı istisna
+  /// atmadığı sürece `true` dönülüyor, ekran da "Hesabın başarıyla
+  /// kaydedildi!" diyordu. Oysa e-posta onayı AÇIKKEN GoTrue hesabı
+  /// kaydetmez, yalnız onaya alır. Yerel GoTrue'da (v2.192.0) iki
+  /// yapılandırma da ölçüldü (2026-08-06):
+  ///
+  ///   onay KAPALI → is_anonymous=false, email='upgraded1@zk.test',
+  ///                 new_email=null          → gerçekten kaydedildi
+  ///   onay AÇIK   → is_anonymous=TRUE,      email='',
+  ///                 new_email='pending1@zk.test'
+  ///
+  /// İkinci durumda kullanıcı hâlâ anonimdi ve adres yalnız beklemedeydi;
+  /// uygulamayı silse ya da başka cihazdan girmeye çalışsa ilerlemesi
+  /// (coin, liderlik kimliği, o kullanıcıya bağlı abonelik) geri
+  /// gelmezdi — ama kendisine tam tersi söylenmişti.
+  ///
+  /// [needsEmailConfirmation] artık bu iki alandan hesaplanıyor; böylece
+  /// panelde onay açık da olsa kapalı da olsa mesaj gerçeğe uyar.
   Future<bool> upgradeGuestAccount({
     required String email,
     required String password,
   }) {
     return _run((client) async {
-      await client.auth.updateUser(
+      final response = await client.auth.updateUser(
         UserAttributes(email: email, password: password),
       );
+      final user = response.user;
+      final pendingEmail = user?.newEmail;
+      _needsEmailConfirmation =
+          (pendingEmail != null && pendingEmail.isNotEmpty) ||
+          (user?.isAnonymous ?? false);
     });
   }
 
