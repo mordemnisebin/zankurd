@@ -291,17 +291,55 @@ Kesim penceresinde sırayı değiştirme:
    kaybolan bir tahsilat bir daha denenemez hâle gelir ve göçün kapatmak
    için yazıldığı çift-çekim penceresi açık kalır. Sessiz olduğu için
    unutulmaya en açık adım budur.
-3. Yukarıdaki altı alanlı salt-okunur sorguyu yeni bir sorguda üretimde
+3. Aynı pencerede 2026-08-06 denetiminin ÜÇ göçünü sırayla bir kez uygula.
+   Üçü de `create or replace` ve yetki işlemlerinden oluşur; şema
+   değiştirmez, veri taşımaz ve yeniden çalıştırılabilir:
+
+   - `supabase/2026-08-06_neon_frame_persistence.sql` — mağazadan 600
+     coine alınan Neon çerçevesi sunucuda saklanamıyordu. Atlanırsa
+     ödeme yapan kullanıcının çerçevesi kaydedilmez ve `neon` seçili
+     kaldığı sürece avatar fotoğrafı/ikonu/rengi de sessizce kaydedilemez
+     olur.
+   - `supabase/2026-08-06_friend_identity_and_resend.sql` — arkadaş
+     istekleri ve listesi herkesi `Player` gösteriyordu; reddedilen bir
+     istek bir daha gönderilemiyor ama gönderene "gönderildi" deniyordu.
+     Atlanırsa arkadaşlık özelliği ürün olarak kullanılamaz kalır.
+   - `supabase/2026-08-06_profile_insert_and_league_authority.sql` —
+     GÜVENLİK. Profil INSERT'inde sütun yetkisi yoktu (istemci kendine
+     `coins/xp/rating` yazabiliyordu) ve `finalize_weekly_league`
+     `authenticated` rolüne açıktı. Bu göç atlanırsa ekonomi ve liderlik
+     açık kalır; **istemci bu göç olmadan dağıtılmamalıdır.**
+
+   Hata alırsan dur; körlemesine ikinci kez çalıştırma.
+
+4. Yukarıdaki altı alanlı salt-okunur sorguyu yeni bir sorguda üretimde
    çalıştır. Altı değerden biri bile `false` ise istemci dağıtma ve sorunu
-   incele. Dondurma göçünü ayrıca doğrula:
+   incele. Dondurma göçünü ve 2026-08-06 göçlerini ayrıca doğrula:
 
 ```sql
 select count(*) = 1 as spend_streak_freeze_var
 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
 where n.nspname = 'public' and p.proname = 'spend_streak_freeze';
+
+-- 2026-08-06 denetimi: dördü de true olmalı
+select
+  (select pg_get_functiondef(oid) like '%''neon''%'
+     from pg_proc where proname = 'protect_paid_profile_cosmetics')
+    as neon_frame_allowed,
+  (select pg_get_functiondef(oid) not like '%''Player''%'
+     from pg_proc where proname = 'add_friend')
+    as friend_identity_real,
+  (select count(*) = 1 from pg_trigger
+    where tgrelid = 'public.profiles'::regclass
+      and tgname = 'profiles_client_insert_authority_trg')
+    as profile_insert_guarded,
+  (select array_to_string(proacl, ' | ') not like '%authenticated=X%'
+     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public' and p.proname = 'finalize_weekly_league')
+    as league_finalize_locked;
 ```
 
-4. Daha önce hazırlanmış `build/web/` çıktısını yeniden derlemeden güvenli
+5. Daha önce hazırlanmış `build/web/` çıktısını yeniden derlemeden güvenli
    ön kontrol ve aktarım ile yayınla:
 
 ```bash
