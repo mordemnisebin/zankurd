@@ -37,6 +37,140 @@ RoomStatus _roomStatusFromValue(Object? value) {
   };
 }
 
+Map<String, dynamic> _requiredJsonObject(Object? value, String field) {
+  if (value is! Map) {
+    throw FormatException('$field must be a JSON object.');
+  }
+  return Map<String, dynamic>.from(value);
+}
+
+String _requiredString(Map<String, dynamic> json, List<String> keys) {
+  for (final key in keys) {
+    final value = json[key];
+    if (value is String && value.isNotEmpty) return value;
+  }
+  throw FormatException('${keys.join('/')} must be a non-empty string.');
+}
+
+String? _optionalString(Map<String, dynamic> json, String key) {
+  final value = json[key];
+  if (value == null) return null;
+  if (value is String) return value;
+  throw FormatException('$key must be a string or null.');
+}
+
+int _requiredInt(Map<String, dynamic> json, List<String> keys) {
+  for (final key in keys) {
+    final value = json[key];
+    if (value is int) return value;
+    if (value is num && value.isFinite) {
+      final parsed = value.toInt();
+      if (value == parsed) return parsed;
+    }
+  }
+  throw FormatException('${keys.join('/')} must be an integer.');
+}
+
+bool _requiredBool(Map<String, dynamic> json, String key) {
+  final value = json[key];
+  if (value is bool) return value;
+  throw FormatException('$key must be a boolean.');
+}
+
+DateTime _requiredDateTime(Map<String, dynamic> json, String key) {
+  final value = json[key];
+  if (value is! String) throw FormatException('$key must be a timestamp.');
+  return DateTime.parse(value);
+}
+
+String? _requiredNullableString(Map<String, dynamic> json, String key) {
+  if (!json.containsKey(key)) {
+    throw FormatException('$key must be present.');
+  }
+  return _optionalString(json, key);
+}
+
+void _requireExactKeys(
+  Map<String, dynamic> json,
+  Set<String> expected,
+  String field,
+) {
+  final actual = json.keys.toSet();
+  if (actual.length != expected.length || !actual.containsAll(expected)) {
+    throw FormatException('$field contains missing or unexpected fields.');
+  }
+}
+
+DateTime? _optionalDateTimeFromKeys(
+  Map<String, dynamic> json,
+  List<String> keys,
+) {
+  for (final key in keys) {
+    if (!json.containsKey(key)) continue;
+    final value = json[key];
+    if (value == null) return null;
+    if (value is! String) {
+      throw FormatException('$key must be a timestamp or null.');
+    }
+    return DateTime.parse(value);
+  }
+  return null;
+}
+
+ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
+  if (!json.containsKey('pending_answer')) {
+    throw const FormatException('pending_answer must be present.');
+  }
+  final rawPending = json['pending_answer'];
+  if (rawPending == null) return null;
+
+  final pending = _requiredJsonObject(rawPending, 'pending_answer');
+  const forbiddenResultFields = {
+    'correct_option',
+    'correct_option_key',
+    'is_correct',
+    'points',
+    'points_awarded',
+    'new_score',
+    'new_streak',
+    'score',
+    'streak',
+    'explanation',
+    'explanation_ku',
+    'explanation_tr',
+  };
+  final leakedField = forbiddenResultFields
+      .where(pending.containsKey)
+      .firstOrNull;
+  if (leakedField != null) {
+    throw FormatException(
+      'pending_answer must not contain result field $leakedField.',
+    );
+  }
+
+  final questionIndex = _requiredInt(pending, const ['question_index']);
+  final responseMs = _requiredInt(pending, const ['response_ms']);
+  final selectedOptionKey = _requiredString(pending, const [
+    'selected_option',
+    'selected_option_key',
+  ]);
+  if (questionIndex < 0 || responseMs < 0) {
+    throw const FormatException(
+      'pending_answer index and response_ms must be non-negative.',
+    );
+  }
+  if (!const {'A', 'B', 'C', 'D', 'TIMEOUT'}.contains(selectedOptionKey)) {
+    throw const FormatException('pending_answer selected_option is invalid.');
+  }
+
+  return ResumedPendingAnswer(
+    questionId: _requiredString(pending, const ['question_id']),
+    questionIndex: questionIndex,
+    selectedOptionKey: selectedOptionKey,
+    responseMs: responseMs,
+  );
+}
+
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
@@ -359,16 +493,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<String>> loadCategories() async {
-    return _retryOnNetworkFailure(() async {
-      final rows = await client
-          .from('categories')
-          .select('name')
-          .eq('is_active', true)
-          .order('name');
-      // Uygulama içi gizli kategoriler (içerik hazır olana dek) listeden
-      // düşülür; veritabanına dokunulmaz.
-      return visibleCategories(rows.map((row) => row['name'] as String));
-    });
+    return _offline.loadCategories();
+  }
+
+  @override
+  Future<List<String>> loadMatchmakingCategories() async {
+    final rows = await client
+        .from('categories')
+        .select('name')
+        .eq('is_active', true)
+        .order('name');
+    return visibleCategories(rows.map((row) => row['name'] as String));
   }
 
   @override
@@ -468,55 +603,41 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
   }) async {
     try {
-      final user = client.auth.currentUser ?? await signInAnonymously();
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
       await ensureProfile();
 
-      final localRoom = createRoom(category: category);
-      final categoryId = await _categoryIdByName(category);
-
-      // Kod çakışırsa (unique ihlali) yeni kodla birkaç kez dene.
-      Map<String, dynamic>? room;
-      var code = localRoom.code;
-      for (var attempt = 0; attempt < 3; attempt++) {
-        try {
-          room = await client
-              .from('rooms')
-              .insert({
-                'code': code,
-                'host_id': user.id,
-                'category_id': categoryId,
-                'question_count': localRoom.questionCount,
-                'seconds_per_question': secondsPerQuestion,
-              })
-              .select('id, code')
-              .single();
-          break;
-        } on PostgrestException catch (error) {
-          final isUniqueViolation = error.code == '23505';
-          if (!isUniqueViolation || attempt == 2) rethrow;
-          code = generateRoomCode();
-        }
-      }
-      if (room == null) {
-        throw StateError('Room insert failed after retries.');
-      }
-
-      final roomId = (room['id'] as String?) ?? '';
-      final roomCode = (room['code'] as String?) ?? '';
-
-      await client.from('room_players').insert({
-        'room_id': roomId,
-        'player_id': user.id,
-        'is_ready': true,
-      });
+      final response = await client.rpc(
+        'create_online_room',
+        params: {
+          'p_category_name': category,
+          'p_seconds_per_question': secondsPerQuestion,
+        },
+      );
+      final snapshot = _requiredJsonObject(response, 'create_online_room');
+      final roomId = _requiredString(snapshot, const ['room_id']);
+      final roomCode = _requiredString(snapshot, const ['code']);
+      final hostId = _requiredString(snapshot, const ['host_id']);
+      final canonicalCategory = _requiredString(snapshot, const [
+        'category_name',
+      ]);
+      final questionCount = _requiredInt(snapshot, const ['question_count']);
+      final serverSeconds = _requiredInt(snapshot, const [
+        'seconds_per_question',
+      ]);
 
       final players = await _loadRoomPlayersById(roomId);
-      return localRoom.copyWith(
+      return GameRoom(
         id: roomId,
+        name: '1vs1',
         code: roomCode,
+        category: canonicalCategory,
         players: players,
-        hostId: user.id,
-        secondsPerQuestion: secondsPerQuestion,
+        status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
+        questionCount: questionCount,
+        secondsPerQuestion: serverSeconds,
+        hostId: hostId,
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'createOnlineRoom failed');
@@ -526,34 +647,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<GameRoom> joinOnlineRoom(String code) async {
+    final normalizedCode = normalizeRoomCode(code);
+    if (!isSupportedRoomCode(normalizedCode)) {
+      throw const FormatException('Invalid room code');
+    }
     client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
 
     final response = await client.rpc(
       'join_room_by_code',
-      params: {'p_code': normalizeRoomCode(code)},
+      params: {'p_code': normalizedCode},
     );
-    final room = response is Map<String, dynamic>
-        ? response
-        : (response as List).firstOrNull as Map<String, dynamic>?;
-    if (room == null) {
+    final rawSnapshot = response is List ? response.firstOrNull : response;
+    if (rawSnapshot == null) {
       throw StateError('join_room_by_code boş yanıt döndürdü: oda bulunamadı');
     }
-    final roomId = room['room_id'] as String;
+    final room = _requiredJsonObject(rawSnapshot, 'join_room_by_code');
+    final roomId = _requiredString(room, const ['room_id']);
+    final hostId = _requiredString(room, const ['host_id']);
     final players = await _loadRoomPlayersById(roomId);
     final category = room['category_name'] as String? ?? 'Ziman';
-
-    String? hostId;
-    try {
-      final hostRow = await client
-          .from('rooms')
-          .select('host_id')
-          .eq('id', roomId)
-          .single();
-      hostId = hostRow['host_id'] as String?;
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'loadRoom host lookup failed');
-    }
 
     final joined = createRoom(category: category).copyWith(
       id: roomId,
@@ -583,6 +696,430 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    final row = await client
+        .from('rooms')
+        .select(
+          'id, code, host_id, question_count, seconds_per_question, status, '
+          'categories(name)',
+        )
+        .eq('id', roomId)
+        .single();
+    final players = await _loadRoomPlayersById(roomId);
+    final category = row['categories'] as Map<String, dynamic>?;
+
+    return GameRoom(
+      id: row['id'] as String? ?? roomId,
+      name: '1vs1',
+      code: row['code'] as String? ?? '',
+      category: category?['name'] as String? ?? 'Ziman',
+      players: players,
+      status: _roomStatusFromValue(row['status']),
+      questionCount: (row['question_count'] as num?)?.toInt() ?? 10,
+      secondsPerQuestion:
+          (row['seconds_per_question'] as num?)?.toInt() ??
+          GameRoom.defaultSecondsPerQuestion,
+      hostId: row['host_id'] as String?,
+    );
+  }
+
+  @override
+  Future<RoomResumeSnapshot?> loadMyResumableRoom() async {
+    final response = await client.rpc('get_my_resumable_room');
+    if (response == null) return null;
+
+    final json = _requiredJsonObject(response, 'get_my_resumable_room');
+    final roomId = _requiredString(json, const ['room_id']);
+    final room = await loadRoomSnapshot(roomId);
+    if (room.id != roomId) {
+      throw const FormatException(
+        'Resumable room snapshot id does not match room_id.',
+      );
+    }
+
+    final rawAnswers = json['answers'];
+    if (rawAnswers is! List) {
+      throw const FormatException('answers must be a JSON array.');
+    }
+    final answers = rawAnswers
+        .map((rawAnswer) {
+          final answer = _requiredJsonObject(rawAnswer, 'answers[]');
+          return ResumedAnswer(
+            questionId: _requiredString(answer, const ['question_id']),
+            questionIndex: _requiredInt(answer, const ['question_index']),
+            selectedOptionKey: _requiredString(answer, const [
+              'selected_option',
+              'selected_option_key',
+            ]),
+            correctOptionKey: _requiredString(answer, const [
+              'correct_option',
+              'correct_option_key',
+            ]),
+            isCorrect: _requiredBool(answer, 'is_correct'),
+            pointsAwarded: _requiredInt(answer, const [
+              'points_awarded',
+              'points',
+            ]),
+            responseMs: _requiredInt(answer, const ['response_ms']),
+            explanation: _optionalString(answer, 'explanation'),
+            explanationKu: _optionalString(answer, 'explanation_ku'),
+            explanationTr: _optionalString(answer, 'explanation_tr'),
+          );
+        })
+        .toList(growable: false);
+
+    return RoomResumeSnapshot(
+      room: room,
+      currentQuestionIndex: _requiredInt(json, const [
+        'current_question_index',
+      ]),
+      ownScore: _requiredInt(json, const ['own_score']),
+      streak: _requiredInt(json, const ['streak', 'own_streak']),
+      bestStreak: _requiredInt(json, const ['best_streak', 'own_best_streak']),
+      correctCount: _requiredInt(json, const ['correct_count']),
+      wrongCount: _requiredInt(json, const ['wrong_count']),
+      answers: answers,
+      pendingAnswer: _requiredPendingAnswer(json),
+      serverNow: _requiredDateTime(json, 'server_now'),
+      questionStartedAt: _optionalDateTimeFromKeys(json, const [
+        'current_question_started_at',
+        'question_started_at',
+      ]),
+      deadline: _optionalDateTimeFromKeys(json, const [
+        'current_question_deadline',
+        'deadline',
+      ]),
+      remainingMs: _requiredInt(json, const [
+        'current_question_remaining_ms',
+        'remaining_ms',
+      ]),
+    );
+  }
+
+  @override
+  Future<RoomResultSnapshot?> loadMyPendingRoomResult() async {
+    final response = await client.rpc('get_my_pending_room_result');
+    return _parseRoomResultResponse(
+      response,
+      source: 'get_my_pending_room_result',
+    );
+  }
+
+  @override
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null || roomId.isEmpty) {
+      throw ArgumentError.value(roomId, 'room.id', 'Room id is required.');
+    }
+    final response = await client.rpc(
+      'get_my_room_result',
+      params: {'p_room_id': roomId},
+    );
+    return _parseRoomResultResponse(
+      response,
+      source: 'get_my_room_result',
+      expectedRoomId: roomId,
+    );
+  }
+
+  RoomResultSnapshot? _parseRoomResultResponse(
+    Object? response, {
+    required String source,
+    String? expectedRoomId,
+  }) {
+    if (response == null) return null;
+
+    final json = _requiredJsonObject(response, source);
+    _requireExactKeys(json, const {
+      'room',
+      'own_player_id',
+      'players',
+      'question_ids',
+      'answers',
+      'winner_id',
+      'ended_reason',
+      'forfeited_by',
+      'finished_at',
+    }, source);
+
+    final roomJson = _requiredJsonObject(json['room'], 'room');
+    _requireExactKeys(roomJson, const {
+      'id',
+      'code',
+      'host_id',
+      'category_name',
+      'question_count',
+      'seconds_per_question',
+      'status',
+      'current_question_index',
+    }, 'room');
+    final roomId = _requiredString(roomJson, const ['id']);
+    if (expectedRoomId != null && roomId != expectedRoomId) {
+      throw const FormatException(
+        'Room result snapshot id does not match requested room.',
+      );
+    }
+    final statusValue = _requiredString(roomJson, const ['status']);
+    final questionCount = _requiredInt(roomJson, const ['question_count']);
+    final currentQuestionIndex = _requiredInt(roomJson, const [
+      'current_question_index',
+    ]);
+    final secondsPerQuestion = _requiredInt(roomJson, const [
+      'seconds_per_question',
+    ]);
+    final hostId = _requiredNullableString(roomJson, 'host_id');
+    if (statusValue != 'finished' ||
+        questionCount < 1 ||
+        currentQuestionIndex != questionCount ||
+        !GameRoom.allowedSecondsPerQuestion.contains(secondsPerQuestion)) {
+      throw const FormatException('Room result is not terminal and complete.');
+    }
+
+    final ownPlayerId = _requiredString(json, const ['own_player_id']);
+    final rawPlayers = json['players'];
+    if (rawPlayers is! List || rawPlayers.length != 2) {
+      throw const FormatException('players must contain exactly two players.');
+    }
+    final players = rawPlayers
+        .map((rawPlayer) {
+          final player = _requiredJsonObject(rawPlayer, 'players[]');
+          _requireExactKeys(player, const {
+            'player_id',
+            'display_name',
+            'final_score',
+            'final_streak',
+          }, 'players[]');
+          final score = _requiredInt(player, const ['final_score']);
+          final streak = _requiredInt(player, const ['final_streak']);
+          if (score < 0 || streak < 0) {
+            throw const FormatException(
+              'Final score and streak must be non-negative.',
+            );
+          }
+          return Player(
+            id: _requiredString(player, const ['player_id']),
+            name: _requiredString(player, const ['display_name']),
+            score: score,
+            state: Player.readyState,
+            streak: streak,
+          );
+        })
+        .toList(growable: false);
+    final playerIds = players.map((player) => player.id!).toSet();
+    if (playerIds.length != 2 || !playerIds.contains(ownPlayerId)) {
+      throw const FormatException(
+        'Result players are not two distinct members.',
+      );
+    }
+    if (hostId != null && !playerIds.contains(hostId)) {
+      throw const FormatException('Room host is not a result player.');
+    }
+
+    final rawQuestionIds = json['question_ids'];
+    if (rawQuestionIds is! List || rawQuestionIds.length != questionCount) {
+      throw const FormatException(
+        'question_ids must contain every room question.',
+      );
+    }
+    final questionIds = rawQuestionIds
+        .map((value) {
+          if (value is! String || value.isEmpty) {
+            throw const FormatException(
+              'question_ids[] must be a non-empty string.',
+            );
+          }
+          return value;
+        })
+        .toList(growable: false);
+    if (questionIds.toSet().length != questionCount) {
+      throw const FormatException('question_ids must be unique.');
+    }
+
+    final rawAnswers = json['answers'];
+    if (rawAnswers is! List || rawAnswers.length != questionCount) {
+      throw const FormatException('answers must contain every own answer.');
+    }
+    final answers = <ResumedAnswer>[];
+    for (var index = 0; index < rawAnswers.length; index++) {
+      final answer = _requiredJsonObject(rawAnswers[index], 'answers[]');
+      _requireExactKeys(answer, const {
+        'question_id',
+        'question_index',
+        'selected_option',
+        'correct_option',
+        'is_correct',
+        'points_awarded',
+        'response_ms',
+        'explanation',
+        'explanation_ku',
+        'explanation_tr',
+      }, 'answers[]');
+      final questionId = _requiredString(answer, const ['question_id']);
+      final questionIndex = _requiredInt(answer, const ['question_index']);
+      final selectedOption = _requiredString(answer, const ['selected_option']);
+      final correctOption = _requiredString(answer, const ['correct_option']);
+      final isCorrect = _requiredBool(answer, 'is_correct');
+      final points = _requiredInt(answer, const ['points_awarded']);
+      final responseMs = _requiredInt(answer, const ['response_ms']);
+      if (questionIndex != index || questionId != questionIds[index]) {
+        throw const FormatException(
+          'Answers are not in canonical question order.',
+        );
+      }
+      if (!const {'A', 'B', 'C', 'D', 'TIMEOUT'}.contains(selectedOption) ||
+          !const {'A', 'B', 'C', 'D'}.contains(correctOption) ||
+          isCorrect != (selectedOption == correctOption) ||
+          points < 0 ||
+          (!isCorrect && points != 0) ||
+          responseMs < 0 ||
+          responseMs > secondsPerQuestion * 1000) {
+        throw const FormatException('Answer result fields are inconsistent.');
+      }
+      answers.add(
+        ResumedAnswer(
+          questionId: questionId,
+          questionIndex: questionIndex,
+          selectedOptionKey: selectedOption,
+          correctOptionKey: correctOption,
+          isCorrect: isCorrect,
+          pointsAwarded: points,
+          responseMs: responseMs,
+          explanation: _requiredNullableString(answer, 'explanation'),
+          explanationKu: _requiredNullableString(answer, 'explanation_ku'),
+          explanationTr: _requiredNullableString(answer, 'explanation_tr'),
+        ),
+      );
+    }
+
+    final ownPlayer = players.singleWhere((player) => player.id == ownPlayerId);
+    final ownScore = answers.fold<int>(
+      0,
+      (total, answer) => total + answer.pointsAwarded,
+    );
+    var ownStreak = 0;
+    for (final answer in answers.reversed) {
+      if (!answer.isCorrect) break;
+      ownStreak++;
+    }
+    if (ownPlayer.score != ownScore || ownPlayer.streak != ownStreak) {
+      throw const FormatException('Own final score does not match answers.');
+    }
+
+    final endedReason = _requiredString(json, const ['ended_reason']);
+    final forfeitedBy = _requiredNullableString(json, 'forfeited_by');
+    if (endedReason != 'completed' || forfeitedBy != null) {
+      throw const FormatException('Room result is not a normal completion.');
+    }
+    final winnerId = _requiredNullableString(json, 'winner_id');
+    final sortedPlayers = [...players]
+      ..sort((a, b) {
+        final scoreOrder = b.score.compareTo(a.score);
+        return scoreOrder != 0 ? scoreOrder : a.id!.compareTo(b.id!);
+      });
+    final expectedWinner = sortedPlayers[0].score == sortedPlayers[1].score
+        ? null
+        : sortedPlayers[0].id;
+    if (winnerId != expectedWinner) {
+      throw const FormatException('winner_id does not match final scores.');
+    }
+
+    final room = GameRoom(
+      id: roomId,
+      name: '1vs1',
+      code: _requiredString(roomJson, const ['code']),
+      category: _requiredString(roomJson, const ['category_name']),
+      players: List.unmodifiable(players),
+      status: RoomStatus.finished,
+      questionCount: questionCount,
+      secondsPerQuestion: secondsPerQuestion,
+      hostId: hostId,
+    );
+    return RoomResultSnapshot(
+      room: room,
+      ownPlayerId: ownPlayerId,
+      questionIds: questionIds,
+      answers: answers,
+      winnerId: winnerId,
+      endedReason: endedReason,
+      forfeitedBy: forfeitedBy,
+      finishedAt: _requiredDateTime(json, 'finished_at'),
+    );
+  }
+
+  @override
+  Future<void> acknowledgeRoomResult(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null || roomId.isEmpty) {
+      throw ArgumentError.value(roomId, 'room.id', 'Room id is required.');
+    }
+    await client.rpc('acknowledge_room_result', params: {'p_room_id': roomId});
+  }
+
+  Future<RoomResumeSnapshot?> _loadExpectedRoomResume(String roomId) async {
+    final snapshot = await loadMyResumableRoom();
+    if (snapshot != null && snapshot.room.id != roomId) {
+      throw const FormatException(
+        'Room session RPC returned a different resumable room.',
+      );
+    }
+    return snapshot;
+  }
+
+  @override
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) return null;
+
+    await client.rpc('mark_room_client_ready', params: {'p_room_id': roomId});
+    return _loadExpectedRoomResume(roomId);
+  }
+
+  @override
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  }) async {
+    final roomId = room.id;
+    if (roomId == null) return null;
+
+    await client.rpc(
+      'advance_room_question',
+      params: {
+        'p_room_id': roomId,
+        'p_expected_question_index': expectedQuestionIndex,
+      },
+    );
+    return _loadExpectedRoomResume(roomId);
+  }
+
+  @override
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null || roomId.isEmpty) {
+      return RoomLeaveOutcome(
+        status: room.status.name,
+        reason: 'local_room',
+        forfeitedBy: null,
+      );
+    }
+    final response = await client.rpc(
+      'leave_room',
+      params: {'p_room_id': roomId},
+    );
+    final json = _requiredJsonObject(response, 'leave_room');
+    _requireExactKeys(json, const {
+      'status',
+      'reason',
+      'forfeited_by',
+    }, 'leave_room');
+    return RoomLeaveOutcome(
+      status: _requiredString(json, const ['status']),
+      reason: _requiredString(json, const ['reason']),
+      forfeitedBy: _requiredNullableString(json, 'forfeited_by'),
+    );
+  }
+
+  @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     final id = room.id;
     if (id == null) return room.players;
@@ -600,6 +1137,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .eq('id', roomId)
         .maybeSingle();
     return _roomStatusFromValue(row?['status']);
+  }
+
+  @override
+  Future<RoomEndState> loadRoomEndState(GameRoom room) async {
+    final roomId = room.id;
+    if (roomId == null) {
+      return RoomEndState(
+        status: room.status,
+        endedReason: null,
+        forfeitedBy: null,
+      );
+    }
+
+    final row = await client
+        .from('rooms')
+        .select('status, ended_reason, forfeited_by')
+        .eq('id', roomId)
+        .single();
+    return RoomEndState(
+      status: _roomStatusFromValue(row['status']),
+      endedReason: row['ended_reason'] as String?,
+      forfeitedBy: row['forfeited_by'] as String?,
+    );
   }
 
   @override
@@ -1013,6 +1573,62 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// Seri dondurma ücretini idempotent RPC ile tahsil eder.
+  ///
+  /// Göç (`2026-08-03_streak_freeze_idempotency.sql`) henüz uygulanmamış
+  /// olabilir; o durumda PostgREST fonksiyonu bulamaz (`PGRST202`/42883) ve
+  /// eski `spend_coins` yoluna düşülür. Düşülen yol idempotent OLMADIĞI
+  /// için sonuçta `idempotent: false` döner ve çağıran belirsiz kalan bir
+  /// tahsilatı tekrarlamaz. Böylece derleme, göçün önünde ya da ardında
+  /// yayınlansa da çift çekim riski artmaz.
+  @override
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
+    try {
+      final _ = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      final response = await client.rpc(
+        'spend_streak_freeze',
+        params: {'p_idempotency_key': idempotencyKey},
+      );
+      if (response is Map<String, dynamic>) {
+        if (response['success'] == true) {
+          return StreakFreezeChargeResult(
+            outcome: response['already_charged'] == true
+                ? StreakFreezeChargeOutcome.alreadyCharged
+                : StreakFreezeChargeOutcome.charged,
+            idempotent: true,
+          );
+        }
+        return const StreakFreezeChargeResult(
+          outcome: StreakFreezeChargeOutcome.insufficient,
+          idempotent: true,
+        );
+      }
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    } catch (error, stack) {
+      if (_isMissingFunction(error)) {
+        // Göç uygulanmamış: eski, idempotent OLMAYAN yol.
+        final ok = await spendCoins(50, 'streak_freeze');
+        return StreakFreezeChargeResult(
+          outcome: ok
+              ? StreakFreezeChargeOutcome.charged
+              : StreakFreezeChargeOutcome.insufficient,
+          idempotent: false,
+        );
+      }
+      _recordError(error, stack, reason: 'spendStreakFreeze failed');
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.failed,
+        idempotent: true,
+      );
+    }
+  }
+
   @override
   Future<bool> hasPurchased(String itemId) async {
     try {
@@ -1073,11 +1689,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     GameRoom? room,
   }) async {
     // Ödül miktarını yalnızca sunucu belirler (claim_quiz_reward RPC).
-    // İstemciden coin_transactions'a yazma yolu yoktur; RPC başarısızsa
-    // coin kazanılmamış sayılır.
+    // İstemciden coin_transactions'a yazma yolu yoktur. RPC/transport/parse
+    // hatası yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
+    // sunucunun başarıyla döndürdüğü 0 ise geçerli bir sonuçtur.
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('Quiz reward owner changed before claim RPC.');
+      }
       final response = await client.rpc(
         'claim_quiz_reward',
         params: {
@@ -1088,12 +1708,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'p_total_questions': totalQuestions,
         },
       );
-      final amount = _amountFromRpcResponse(response);
-      if (amount != null) return amount;
-      throw StateError('Quiz reward RPC returned no amount for ${user.id}.');
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('Quiz reward owner changed during claim RPC.');
+      }
+      return _verifiedQuizRewardAmount(response, userId: user.id);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim_quiz_reward failed');
-      return 0;
+      rethrow;
     }
   }
 
@@ -1112,6 +1733,37 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
     }
     return null;
+  }
+
+  int _verifiedQuizRewardAmount(Object? response, {required String userId}) {
+    final Map<String, dynamic>? json;
+    if (response is Map) {
+      json = Map<String, dynamic>.from(response);
+    } else if (response is List && response.length == 1) {
+      final first = response.single;
+      json = first is Map ? Map<String, dynamic>.from(first) : null;
+    } else {
+      json = null;
+    }
+
+    if (json == null ||
+        json.length != 2 ||
+        !json.containsKey('amount') ||
+        json['already_claimed'] is! bool) {
+      throw StateError(
+        'Quiz reward RPC returned an unverified result for $userId.',
+      );
+    }
+    final rawAmount = json['amount'];
+    if (rawAmount is! num ||
+        !rawAmount.isFinite ||
+        rawAmount != rawAmount.toInt() ||
+        rawAmount < 0) {
+      throw StateError(
+        'Quiz reward RPC returned an invalid amount for $userId.',
+      );
+    }
+    return rawAmount.toInt();
   }
 
   /// `RETURNS TABLE` RPC'leri PostgREST'te satır listesi döndürür;
@@ -1264,25 +1916,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
-  Future<String> _categoryIdByName(String categoryName) async {
-    final row = await client
-        .from('categories')
-        .select('id')
-        .eq('name', categoryName)
-        .maybeSingle();
-
-    if (row == null) {
-      final fallback = await client
-          .from('categories')
-          .select('id')
-          .eq('slug', 'ziman')
-          .single();
-      return fallback['id'] as String;
-    }
-
-    return row['id'] as String;
-  }
-
   Future<List<Player>> _loadRoomPlayersById(String roomId) async {
     final rows = await client
         .from('room_players')
@@ -1351,22 +1984,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     };
   }
 
-  Future<T> _retryOnNetworkFailure<T>(Future<T> Function() operation) async {
-    int attempts = 0;
-    while (true) {
-      try {
-        return await operation();
-      } catch (error) {
-        attempts++;
-        if (attempts >= 3) {
-          rethrow;
-        }
-        final delay = Duration(milliseconds: 500 * (1 << (attempts - 1)));
-        await Future.delayed(delay);
-      }
-    }
-  }
-
   @override
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
     final response = await client.rpc(
@@ -1377,10 +1994,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> cancelMatchmaking() async {
-    final user = client.auth.currentUser;
-    if (user == null) return;
-    await client.from('matchmaking_queue').delete().eq('player_id', user.id);
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
+    final response = await client.rpc('cancel_matchmaking');
+    return _requiredJsonObject(response, 'cancel_matchmaking');
   }
 
   @override
@@ -1832,8 +2448,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   // exist") döner. O durumda ekran boş kalmasın diye eski bot benzetimine
   // düşülür — bu bir yedek yol, hedef değil.
 
+  /// Sunucuda böyle bir fonksiyon yok mu.
+  ///
+  /// İki kod da aynı durumu anlatır: `42883` PostgreSQL'in kendi hatası,
+  /// `PGRST202` ise PostgREST şema önbelleğinde fonksiyonu bulamadığında
+  /// döndürdüğü koddur. Uygulanmamış bir göçün ardından yayınlanan derleme
+  /// pratikte ikincisini görür.
   bool _isMissingFunction(Object error) =>
-      error is PostgrestException && error.code == '42883';
+      error is PostgrestException &&
+      (error.code == '42883' || error.code == 'PGRST202');
 
   @override
   Future<TournamentBracket?> joinRealTournament() async {
@@ -2009,18 +2632,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return true;
     } catch (e, stack) {
       _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
-      // Çevrimdışı durumda mock'a düş.
-      return _offline.submitSuggestedQuestion(
-        category: category,
-        prompt: prompt,
-        optionA: optionA,
-        optionB: optionB,
-        optionC: optionC,
-        optionD: optionD,
-        correctOption: correctOption,
-        explanation: explanation,
-        difficulty: difficulty,
-      );
+      return false;
     }
   }
 }

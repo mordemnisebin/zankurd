@@ -7,5 +7,8 @@ taşındılar (2026-07-21 denetimi).
 Çalıştırmak için:
 
 ```bash
-flutter test tool/screenshots/home_before_after_test.dart
+flutter test tool/screenshots/screen_tour_test.dart
 ```
+
+Tek bir yüzeyi yenilemek için aynı klasördeki ilgili `*_test.dart` üreticisini
+çalıştırabilirsin.

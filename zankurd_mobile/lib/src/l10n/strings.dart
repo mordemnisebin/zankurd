@@ -322,6 +322,12 @@ class Tr {
     },
     K.roomCode: {'ku': 'Koda odeyê', 'tr': 'Oda kodu'},
     K.roomCodeRequired: {'ku': 'Kod pêwîst e', 'tr': 'Kod zorunlu'},
+    K.roomCodeInvalid: {
+      'ku':
+          'Kod divê bi ZK- dest pê bike û dû re tam 10 karakter ji 0–9/A–F hebin.',
+      'tr':
+          'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
+    },
     K.roomNotFound: {
       'ku': 'Odeya bi vê kodê nehate dîtin.',
       'tr': 'Bu kodla oda bulunamadı.',
@@ -343,11 +349,10 @@ class Tr {
       'tr': 'Arkadaşlarını kodla çağır',
     },
     K.joinByCode: {'ku': 'Bi kodê tevlî bibe', 'tr': 'Kodla Katıl'},
-    // Kod `ZK-` öneki + 4 karakterdir; "6 haneli" hiçbir zaman doğru
-    // değildi ve kullanıcıyı yanlış uzunlukta bir şey aramaya itiyordu.
+    // Kod, sunucuyla aynı biçimde `ZK-` öneki + 10 onaltılık karakterdir.
     K.joinByCodeSub: {
-      'ku': 'Koda odeyê, mîna ZK-X8WY',
-      'tr': 'Oda kodu, örnek: ZK-X8WY',
+      'ku': 'Koda odeyê, mînak: ZK-ABCDEF0123',
+      'tr': 'Oda kodu, örnek: ZK-ABCDEF0123',
     },
     K.events: {'ku': 'Çalakî', 'tr': 'Etkinlikler'},
     K.eventsSub: {'ku': 'Her roj nû dibe.', 'tr': 'Her gün yenilenir.'},
@@ -519,6 +524,41 @@ class Tr {
       'tr': 'Şampiyon kupayı alır!',
     },
     K.joinTournament: {'ku': 'Tevlî Kûpayê Bibe', 'tr': 'Turnuvaya Katıl'},
+    K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
+    K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
+    K.cupPerMatchReward: {'ku': 'her maç', 'tr': 'maç başı'},
+    K.cupChampionReward: {'ku': 'şampiyon', 'tr': 'şampiyon'},
+    K.cupLadder: {'ku': 'Rêya kûpayê', 'tr': 'Kupa yolu'},
+    K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
+    K.cupRewardTitle: {'ku': 'Xelat', 'tr': 'Ödül'},
+    K.cupCategory: {'ku': 'Beş', 'tr': 'Kategori'},
+    K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
+    K.cupRewardClaiming: {
+      'ku': 'Xelat tê kontrolkirin…',
+      'tr': 'Ödül doğrulanıyor…',
+    },
+    K.cupRewardGranted: {'ku': 'Xelat hat dayîn', 'tr': 'Ödül verildi'},
+    K.cupRewardUnverified: {
+      'ku': 'Xelat hîn nehat pejirandin',
+      'tr': 'Ödül henüz doğrulanmadı',
+    },
+    K.cupRewardLocal: {
+      'ku': 'Ev kûpa herêmî ye — xelat nayê dayîn',
+      'tr': 'Bu kupa yerel oynandı — ödül verilmez',
+    },
+    K.cupFinalScore: {'ku': 'Puana dawî', 'tr': 'Final skoru'},
+    K.cupEliminatedRound: {
+      'ku': 'Tu li {round} derketî',
+      'tr': '{round} turunda elendin',
+    },
+    K.contestToday: {'ku': 'Îro', 'tr': 'Bugün'},
+    K.contestDifficulty: {'ku': 'zehmetî', 'tr': 'zorluk'},
+    K.contestCategoryLabel: {'ku': 'beş', 'tr': 'kategori'},
+    K.contestQuestionsLabel: {'ku': 'pirs', 'tr': 'soru'},
+    K.contestRewardsTitle: {'ku': 'Xelatên îro', 'tr': 'Bugünün ödülleri'},
+    K.contestJoinReward: {'ku': 'beşdarî', 'tr': 'katılım'},
+    K.contestQuickInfo: {'ku': 'Bi kurtî', 'tr': 'Kısaca'},
+    K.contestSeconds: {'ku': 'çirke/pirs', 'tr': 'sn/soru'},
     K.champion: {'ku': 'Şampiyon!', 'tr': 'Şampiyon!'},
     K.eliminated: {'ku': 'Derket', 'tr': 'Elendi'},
     K.ongoing: {'ku': 'Berdewam', 'tr': 'Devam'},
@@ -732,6 +772,23 @@ class Tr {
     K.henuzSerinBaslamadiBugun: {
       'ku': 'Hêj zincîra te dest pê nekiriye. Îro bilîze!',
       'tr': 'Henüz serin başlamadı. Bugün bir yarış başlat!',
+    },
+    // Streak paneli durum etiketleri (2026-08-04). Panel sunumsaldır ve
+    // metnini çağırandan alır; anahtarlar burada durur.
+    K.progressLevelLabel: {'ku': 'Ast', 'tr': 'Seviye'},
+    K.streakFreezeAvailable: {'ku': 'Amade', 'tr': 'Kullanılabilir'},
+    K.streakFreezeNotNeeded: {'ku': 'Ne hewce ye', 'tr': 'Gerekmiyor'},
+    K.streakFreezeNoCoins: {'ku': 'Pere têrê nake', 'tr': 'Coin yetersiz'},
+    K.streakFreezeApplying: {'ku': 'Tê sepandin', 'tr': 'Uygulanıyor'},
+    K.streakFreezeApplied: {'ku': 'Hate parastin', 'tr': 'Korundu'},
+    K.streakFreezeUncertain: {'ku': 'Encam ne diyar e', 'tr': 'Sonuç belirsiz'},
+    K.streakFreezeOffline: {'ku': 'Negirêdayî', 'tr': 'Çevrimdışı'},
+    K.streakFreezeUnavailable: {'ku': 'Nayê bikaranîn', 'tr': 'Kullanılamıyor'},
+    K.streakProtectAction: {'ku': 'Rêzê biparêze', 'tr': 'Seriyi koru'},
+    K.streakDayUnit: {'ku': 'roj', 'tr': 'gün'},
+    K.streakWeekdays: {
+      'ku': 'Dş,Sş,Çş,Pş,În,Şm,Yş',
+      'tr': 'Pt,Sa,Ça,Pe,Cu,Ct,Pz',
     },
     K.seriDondurmaKorumasi: {
       'ku': 'Karta Parastina Zincîrê',
@@ -965,6 +1022,26 @@ class Tr {
       'ku': 'Pêşketina te ya vê pêşbirkê winda dibe.',
       'tr': 'Bu yarıştaki ilerlemen kaybolur.',
     },
+    K.leaveOnlineMatchBody: {
+      'ku': 'Heke tu ji pêşbirkê derkevî, tu dê wek têkçûyî bihesibî.',
+      'tr': 'Maçtan ayrılırsan hükmen yenilmiş sayılırsın.',
+    },
+    K.matchForfeitedTitle: {
+      'ku': 'Pêşbirk bi derketinê qediya',
+      'tr': 'Maç hükmen sona erdi',
+    },
+    K.opponentForfeitedMatch: {
+      'ku': 'Hevrikê te ji pêşbirkê derket. Tu xweber serketî.',
+      'tr': 'Rakibin maçtan ayrıldı. Maçı hükmen kazandın.',
+    },
+    K.youForfeitedMatch: {
+      'ku': 'Tu ji pêşbirkê derketî. Pêşbirk bê encama asayî qediya.',
+      'tr': 'Maçtan ayrıldın. Maç hükmen sona erdi.',
+    },
+    K.matchEndedByDeparture: {
+      'ku': 'Ji ber ku lîstikvanek derket, pêşbirk qediya.',
+      'tr': 'Bir oyuncu ayrıldığı için maç sona erdi.',
+    },
     K.leaveAction: {'ku': 'Derkeve', 'tr': 'Çık'},
     K.questionsLoadFailed: {
       'ku': 'Pirs nehatin barkirin. Ji kerema xwe dîsa biceribîne.',
@@ -1141,6 +1218,11 @@ class Tr {
       'ku': 'Rewşa çerxê nehat kontrolkirin.',
       'tr': 'Çark durumu kontrol edilemedi.',
     },
+    K.wheelOfflineTitle: {'ku': 'Çerx ne li serhêl e', 'tr': 'Çark çevrimdışı'},
+    K.wheelOfflineBody: {
+      'ku': 'Ji bo dîtina rewşa çerxê girêdana înternetê pêwîst e.',
+      'tr': 'Çark durumunu görmek için internet bağlantısı gerekiyor.',
+    },
     K.wheelRewardFailed: {'ku': 'Xelat nehat dayîn.', 'tr': 'Ödül verilemedi.'},
     K.wheelAlreadySpun: {
       'ku': 'Îro jixwe zivirandî.',
@@ -1197,6 +1279,15 @@ class Tr {
     },
     K.cancelling: {'ku': 'Tê betalkirin…', 'tr': 'İptal ediliyor…'},
     K.leaveRoom: {'ku': 'Ji odeyê derkeve', 'tr': 'Odadan ayrıl'},
+    K.leavingRoom: {'ku': 'Ji odeyê derdikevî…', 'tr': 'Odadan ayrılıyor…'},
+    K.roomLeaveFailed: {
+      'ku': 'Ji odeyê derneketî. Ji kerema xwe dîsa biceribîne.',
+      'tr': 'Odadan ayrılamadın. Lütfen tekrar dene.',
+    },
+    K.roomClosedByHost: {
+      'ku': 'Ji ber ku mêvandar derket, ode hat girtin.',
+      'tr': 'Ev sahibi ayrıldığı için oda kapandı.',
+    },
     K.chat: {'ku': 'Suhbet', 'tr': 'Sohbet'},
     K.privateRoom: {'ku': 'Odeya Taybet', 'tr': 'Özel Oda'},
     K.host: {'ku': 'Mêvandar', 'tr': 'Ev sahibi'},
@@ -1244,6 +1335,24 @@ class Tr {
     K.rewardPending: {
       'ku': 'Girêdan tune — xelata te tê tomarkirin û paşê tê dayîn.',
       'tr': 'Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.',
+    },
+    K.rewardUnresolved: {
+      'ku':
+          'Xelat hîn nehatiye tomarkirin. Di vekirina din de dê dîsa bê '
+          'ceribandin.',
+      'tr': 'Ödül henüz kaydedilemedi. Sonraki açılışta tekrar denenecek.',
+    },
+    K.resultRecoveryLoading: {
+      'ku': 'Encama pêşbirkê tê amadekirin…',
+      'tr': 'Yarış sonucu hazırlanıyor…',
+    },
+    K.resultRecoveryFailed: {
+      'ku': 'Encam nehate barkirin. Dîsa biceribîne.',
+      'tr': 'Sonuç yüklenemedi. Tekrar deneyebilirsin.',
+    },
+    K.resultRecoveryOwnerChanged: {
+      'ku': 'Hesab guherî. Ji bo vê encamê, bi hesabê rast têkeve.',
+      'tr': 'Hesap değişti. Bu sonucu açmak için doğru hesapla devam et.',
     },
     K.tournamentWaitingTitle: {
       'ku': 'Em li lîstikvanan digerin',
@@ -1300,6 +1409,14 @@ class Tr {
     },
     K.mostWanted: {'ku': 'YA HERÎ TÊ XWASTIN', 'tr': 'EN POPÜLER'},
     K.ownedLabel: {'ku': 'Yê te', 'tr': 'Sende'},
+    K.shopOfflineTitle: {
+      'ku': 'Dukan ne li serhêl e',
+      'tr': 'Mağaza çevrimdışı',
+    },
+    K.shopOfflineBody: {
+      'ku': 'Ji bo daneyên dukanê girêdana înternetê pêwîst e.',
+      'tr': 'Mağaza verileri için internet bağlantısı gerekiyor.',
+    },
 
     // ── Avatar / liderlik / kaydedilenler ────────────────────────────
     K.photoTooLarge: {
@@ -1916,6 +2033,12 @@ class Tr {
       'ku': 'Hesab nehat jêbirin. Ji kerema xwe dîsa biceribîne.',
       'tr': 'Hesap silinemedi. Lütfen tekrar dene.',
     },
+    K.accountLocalCleanupFailed: {
+      'ku':
+          'Hesab hate jêbirin, lê daneyên li ser vê amûrê bi tevahî nehatin paqij kirin. Sepanê ji nû ve bide destpêkirin; eger hişyarî bidome, sepanê ji nû ve saz bike.',
+      'tr':
+          'Hesap silindi ancak bu cihazdaki yerel veriler tamamen temizlenemedi. Uygulamayı yeniden başlat; uyarı sürerse uygulamayı yeniden yükle.',
+    },
     K.premiumBrand: {'ku': 'ZanKurd Premium', 'tr': 'ZanKurd Premium'},
     K.notifPermDeniedInline: {
       'ku': 'Destûra agahdariyê nehat dayîn; ji mîhengên sîstemê veke.',
@@ -2232,6 +2355,7 @@ class K {
   static const joinRoomBody = 'play.joinRoom.body';
   static const roomCode = 'play.roomCode';
   static const roomCodeRequired = 'play.roomCode.required';
+  static const roomCodeInvalid = 'play.roomCode.invalid';
   static const roomNotFound = 'play.roomNotFound';
   static const joinAction = 'play.join';
   static const playTitle = 'play.title';
@@ -2326,6 +2450,41 @@ class K {
   static const formatSummary = 'tournament.formatSummary';
   static const botRaceHint = 'tournament.botRaceHint';
   static const joinTournament = 'tournament.join';
+
+  // Turnuva biçim ve ödül şeridi (2026-08-04). Kupanın kaç oyuncu, kaç
+  // tur ve maç başına kaç soru olduğu `TournamentConfig`te sabitti ama
+  // ekranda hiç görünmüyordu; ödül de öyle.
+  static const cupPlayers = 'tournament.players';
+  static const cupRounds = 'tournament.rounds';
+  static const cupPerMatchReward = 'tournament.perMatchReward';
+  static const cupChampionReward = 'tournament.championRewardLabel';
+  static const cupLadder = 'tournament.ladder';
+  static const cupFormatTitle = 'tournament.formatTitle';
+  static const cupRewardTitle = 'tournament.rewardTitle';
+  static const cupCategory = 'tournament.category';
+  static const cupNotStarted = 'tournament.notStarted';
+
+  // Sampiyonluk odulunun DURUMU (2026-08-04). Kupayi kazanmak odulun
+  // verildigi anlamina gelmez: odulu sunucu verir ve benzetim modunda hic
+  // talep edilmez. Ekran hangi durumda oldugunu soylemeli.
+  static const cupRewardClaiming = 'tournament.rewardClaiming';
+  static const cupRewardGranted = 'tournament.rewardGranted';
+  static const cupRewardUnverified = 'tournament.rewardUnverified';
+  static const cupRewardLocal = 'tournament.rewardLocal';
+  static const cupFinalScore = 'tournament.finalScore';
+  static const cupEliminatedRound = 'tournament.eliminatedRound';
+
+  // Yarışma hızlı bilgi ve ödül şeridi (2026-08-04). `Contest` modeli
+  // zorluk aralığını ve dört ödül basamağını taşıyordu; ekran hiçbirini
+  // göstermiyordu ve tema adı yerine sabit bir başlık yazıyordu.
+  static const contestToday = 'contest.today';
+  static const contestDifficulty = 'contest.difficulty';
+  static const contestCategoryLabel = 'contest.categoryLabel';
+  static const contestQuestionsLabel = 'contest.questionsLabel';
+  static const contestRewardsTitle = 'contest.rewardsTitle';
+  static const contestJoinReward = 'contest.joinReward';
+  static const contestQuickInfo = 'contest.quickInfo';
+  static const contestSeconds = 'contest.seconds';
   static const champion = 'tournament.champion';
   static const eliminated = 'tournament.eliminated';
   static const ongoing = 'tournament.ongoing';
@@ -2429,6 +2588,18 @@ class K {
   static const gunlukSeriStreak = 'screen.gunlukSeriStreak';
   static const pGundurAraliksizOynuyorsun = 'screen.pGundurAraliksizOynuyorsun';
   static const henuzSerinBaslamadiBugun = 'screen.henuzSerinBaslamadiBugun';
+  static const progressLevelLabel = 'progress.level.label';
+  static const streakFreezeAvailable = 'streak.freeze.available';
+  static const streakFreezeNotNeeded = 'streak.freeze.notNeeded';
+  static const streakFreezeNoCoins = 'streak.freeze.noCoins';
+  static const streakFreezeApplying = 'streak.freeze.applying';
+  static const streakFreezeApplied = 'streak.freeze.applied';
+  static const streakFreezeUncertain = 'streak.freeze.uncertain';
+  static const streakFreezeOffline = 'streak.freeze.offline';
+  static const streakFreezeUnavailable = 'streak.freeze.unavailable';
+  static const streakProtectAction = 'streak.protect.action';
+  static const streakDayUnit = 'streak.day.unit';
+  static const streakWeekdays = 'streak.weekdays';
   static const seriDondurmaKorumasi = 'screen.seriDondurmaKorumasi';
   static const oynamayiUnuttugunGunlerdeSerin =
       'screen.oynamayiUnuttugunGunlerdeSerin';
@@ -2534,6 +2705,11 @@ class K {
   static const leaveRaceQ = 'quiz.leaveRace';
   static const leaveLessonBody = 'quiz.leaveLesson.body';
   static const leaveRaceBody = 'quiz.leaveRace.body';
+  static const leaveOnlineMatchBody = 'quiz.leaveOnlineMatch.body';
+  static const matchForfeitedTitle = 'quiz.matchForfeited.title';
+  static const opponentForfeitedMatch = 'quiz.matchForfeited.opponent';
+  static const youForfeitedMatch = 'quiz.matchForfeited.you';
+  static const matchEndedByDeparture = 'quiz.matchForfeited.unknown';
   static const leaveAction = 'quiz.leave';
   static const questionsLoadFailed = 'quiz.questionsLoadFailed';
   static const raceWord = 'quiz.race';
@@ -2611,6 +2787,8 @@ class K {
   static const minutes = 'common.minutes';
   static const seconds = 'common.seconds';
   static const wheelStatusFailed = 'wheel.statusFailed';
+  static const wheelOfflineTitle = 'wheel.offlineTitle';
+  static const wheelOfflineBody = 'wheel.offlineBody';
   static const wheelRewardFailed = 'wheel.rewardFailed';
   static const wheelAlreadySpun = 'wheel.alreadySpun';
   static const playerWord = 'match.player';
@@ -2637,6 +2815,9 @@ class K {
   static const roomCodeCopied = 'room.codeCopied';
   static const cancelling = 'room.cancelling';
   static const leaveRoom = 'room.leave';
+  static const leavingRoom = 'room.leaving';
+  static const roomLeaveFailed = 'room.leaveFailed';
+  static const roomClosedByHost = 'room.closedByHost';
   static const chat = 'room.chat';
   static const privateRoom = 'room.private';
   static const host = 'room.host';
@@ -2657,6 +2838,10 @@ class K {
   static const earnCoins = 'shop.earnCoins';
   static const cancelShort = 'common.cancelShort';
   static const rewardPending = 'result.rewardPending';
+  static const rewardUnresolved = 'result.rewardUnresolved';
+  static const resultRecoveryLoading = 'result.recovery.loading';
+  static const resultRecoveryFailed = 'result.recovery.failed';
+  static const resultRecoveryOwnerChanged = 'result.recovery.ownerChanged';
   static const tournamentWaitingTitle = 'tournament.waitingTitle';
   static const tournamentWaitingBody = 'tournament.waitingBody';
   static const tournamentWaitingOpponent = 'tournament.waitingOpponent';
@@ -2674,6 +2859,8 @@ class K {
   static const shopSubtitle = 'shop.subtitle';
   static const mostWanted = 'shop.mostWanted';
   static const ownedLabel = 'shop.owned';
+  static const shopOfflineTitle = 'shop.offlineTitle';
+  static const shopOfflineBody = 'shop.offlineBody';
 
   // ── Avatar / liderlik / kaydedilenler ──────────────────────────────
   static const photoTooLarge = 'avatar.photoTooLarge';
@@ -2940,6 +3127,8 @@ class K {
   static const playerNameUpdated = 'settings.playerName.updated';
   static const playerNameSaveFailed = 'settings.playerName.saveFailed';
   static const accountDeleteFailed = 'settings.account.deleteFailed';
+  static const accountLocalCleanupFailed =
+      'settings.account.localCleanupFailed';
   static const premiumBrand = 'settings.premium.brand';
   static const notifPermDeniedInline = 'settings.notif.deniedInline';
   static const notifPermDeniedBody = 'settings.notif.deniedBody';

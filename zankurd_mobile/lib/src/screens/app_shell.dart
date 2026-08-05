@@ -10,6 +10,7 @@ import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/room.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -24,8 +25,14 @@ import '../services/analytics_service.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
 import 'play_hub_screen.dart';
+import 'quiz_screen.dart';
+import 'room_result_recovery_screen.dart';
+import 'room_screen.dart';
 import 'sign_in_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+typedef AppShellErrorRecorder =
+    void Function(Object error, StackTrace stack, {String? reason});
 
 class AppShell extends StatefulWidget {
   /// Masaüstü/tablet gezinmesine (NavigationRail) geçiş eşiği.
@@ -39,19 +46,45 @@ class AppShell extends StatefulWidget {
   const AppShell({
     required this.repository,
     this.connectivityMonitor,
+    this.errorRecorder,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ConnectivityMonitor? connectivityMonitor;
 
+  /// Üretimde [ErrorReporter.record] kullanılır. Testlerde yalnız hata
+  /// kaydının gerçekleştiğini gözlemlemek için değiştirilebilir.
+  final AppShellErrorRecorder? errorRecorder;
+
   @override
   State<AppShell> createState() => _AppShellState();
 }
 
-class _AppShellState extends State<AppShell> {
+class _AppShellState extends State<AppShell>
+    with WidgetsBindingObserver, RouteAware {
   static const _onboardingSeenKey = 'zankurd.onboarding.seen';
-  static const _profileNameCompletedKey = 'zankurd.profileName.completed';
+
+  /// İsim kapısının tamamlandığını belirten, KULLANICIYA ÖZEL bayrağın ön eki.
+  ///
+  /// Eski global anahtar (`zankurd.profileName.completed`, ön ek yok) bilerek
+  /// okunmuyor ve bilerek devralınmıyor. Bunun görünür bir bedeli var: bu
+  /// sürüme güncelleyen ve kapıyı çoktan geçmiş her kurulum, kapıyı bir kez
+  /// daha görecek. Bedel bilinçli olarak kabul edildi.
+  ///
+  /// Devralmanın maliyeti daha yüksek çünkü eski bayrak CİHAZA aitti,
+  /// kullanıcıya değil: hesap değiştiren ikinci oyuncu kapıyı hiç görmeden
+  /// geçiyor ve aynı varsayılan adı kendi 1v1 kimliğine taşıyordu. Kapıyı
+  /// tam olarak bunu durdurmak için kullanıcıya bağladık; "yalnız bir kez,
+  /// yalnız ilk gördüğüm kullanıcı için devral" gibi bir geçiş yolu da aynı
+  /// deliği geri açar, çünkü güncelleme anında oturum kapalıysa ilk giren
+  /// kişi bir başkası olabilir.
+  ///
+  /// Geri dönen kullanıcı için kapı ucuzdur: alan sunucudaki adla kendi
+  /// kendine dolar ve tek dokunuşla geçilir. Bir kez sorulan soru,
+  /// sessizce yanlış kimliğe yazılan addan iyidir (2026-08-03 kararı).
+  static const _profileNameCompletedKeyPrefix =
+      'zankurd.profileName.completed.';
 
   // Açılış sekmesi Öğren'dir (index 0). Bu iki satır birlikte okunmalı:
   // `_visitedTabs` yalnız *ziyaret edilmiş* sekmeleri taşır ve `_buildTab`
@@ -73,11 +106,27 @@ class _AppShellState extends State<AppShell> {
   bool _showOnboarding = false;
   bool _checkingProfileName = false;
   bool _profileNameComplete = false;
-  String? _profileName;
   bool _profileCheckStarted = false;
+  String? _profileCheckedUserId;
+
+  // Açılıştaki oda geri yükleme ana ekranı bekletmez. Başarılı bir sorgu
+  // kullanıcı başına bir kez yapılır; geçici ağ hatası ise ancak bağlantı
+  // gerçekten gidip geri geldiğinde yeniden denenir.
+  final Set<String> _roomResumeCheckedUsers = {};
+  final Set<String> _roomResumeAwaitingReconnectUsers = {};
+  final Set<String> _roomResumeRetryWhenVisibleUsers = {};
+  final Set<String> _roomResumeRejectedUsers = {};
+  final Map<String, int> _roomResumeScheduledEpochs = {};
+  final Map<String, int> _roomResumeInFlightEpochs = {};
+  final Map<String, int> _roomResumeRouteScheduledEpochs = {};
+  ModalRoute<dynamic>? _shellRoute;
+  String? _roomResumeAccountUserId;
+  int _roomResumeEpoch = 0;
+  ({int epoch, String roomId, String userId})? _ownedRoomResumeRoute;
 
   // Çevrimdışı durum izleme
   bool _isOffline = false;
+  bool _connectivityKnown = false;
   StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
 
   late final ScrollController _homeScrollController;
@@ -86,10 +135,22 @@ class _AppShellState extends State<AppShell> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
     _initConnectivity();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of<dynamic>(context);
+    if (identical(route, _shellRoute)) return;
+    final previous = _shellRoute;
+    if (previous != null) appRouteObserver.unsubscribe(this);
+    _shellRoute = route;
+    if (route != null) appRouteObserver.subscribe(this, route);
   }
 
   Future<void> _initConnectivity() async {
@@ -139,16 +200,65 @@ class _AppShellState extends State<AppShell> {
         stack,
         reason: 'app_shell_connectivity_check',
       );
+      // Bağlantı eklentisinin kendisi yoksa uygulama eskisi gibi çevrimiçi
+      // varsayımıyla açılır. Oda sorgusu hata verirse ayrıca raporlanır ve
+      // ana ekran yine kullanılabilir kalır.
+      if (mounted && !_connectivityKnown) {
+        setState(() => _connectivityKnown = true);
+      }
     }
   }
 
   void _applyConnectivityResults(List<ConnectivityResult> results) {
     if (!mounted) return;
-    setState(() => _isOffline = results.contains(ConnectivityResult.none));
+    final nextOffline = results.contains(ConnectivityResult.none);
+    final reconnected = _connectivityKnown && _isOffline && !nextOffline;
+    setState(() {
+      _isOffline = nextOffline;
+      _connectivityKnown = true;
+    });
+    if (reconnected) _wakeRoomResumeForCurrentUser();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _wakeRoomResumeForCurrentUser();
+    }
+  }
+
+  @override
+  void didPushNext() {
+    final userId = _roomResumeAccountUserId;
+    if (userId == null) return;
+    final owned = _ownedRoomResumeRoute;
+    if (owned != null &&
+        owned.userId == userId &&
+        owned.epoch == _roomResumeEpoch) {
+      return;
+    }
+    if (_roomResumeInFlightEpochs[userId] == _roomResumeEpoch) {
+      _roomResumeRetryWhenVisibleUsers.add(userId);
+    }
+  }
+
+  @override
+  void didPopNext() {
+    final owned = _ownedRoomResumeRoute;
+    if (owned != null) {
+      _ownedRoomResumeRoute = null;
+      if (owned.userId == _roomResumeAccountUserId &&
+          owned.epoch == _roomResumeEpoch) {
+        return;
+      }
+    }
+    _retryRoomResumeWhenVisible();
   }
 
   @override
   void dispose() {
+    appRouteObserver.unsubscribe(this);
+    WidgetsBinding.instance.removeObserver(this);
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
@@ -179,6 +289,11 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
     final ku = context.isKu;
+    _syncRoomResumeAccount(
+      authProvider.isAuthenticated
+          ? _normalizedUserId(widget.repository.currentUserId)
+          : null,
+    );
 
     if (_checkingOnboarding) {
       return const Scaffold(body: BrandedLoaderCenter());
@@ -190,14 +305,22 @@ class _AppShellState extends State<AppShell> {
 
     if (!authProvider.isAuthenticated) {
       _profileCheckStarted = false;
+      _profileCheckedUserId = null;
       return const SignInScreen();
+    }
+
+    final activeUserId = widget.repository.currentUserId;
+    if (_profileCheckedUserId != activeUserId) {
+      _profileCheckedUserId = activeUserId;
+      _profileCheckStarted = false;
+      _profileNameComplete = false;
     }
 
     if (!_profileCheckStarted) {
       _profileCheckStarted = true;
       _checkingProfileName = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _loadProfileNameState();
+        if (mounted) _loadProfileNameState(activeUserId);
       });
     }
 
@@ -208,9 +331,13 @@ class _AppShellState extends State<AppShell> {
     if (!_profileNameComplete) {
       return ProfileNameGateScreen(
         repository: widget.repository,
-        initialName: _profileName,
         onCompleted: _completeProfileName,
       );
+    }
+
+    final resumableUserId = _normalizedUserId(activeUserId);
+    if (resumableUserId != null) {
+      _scheduleRoomResumeCheck(resumableUserId);
     }
 
     // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
@@ -285,7 +412,6 @@ class _AppShellState extends State<AppShell> {
     return switch (index) {
       0 => LearnHomeScreen(
         repository: widget.repository,
-        displayName: _profileName,
         scrollController: _homeScrollController,
         refreshSignal: _homeRefresh,
         onOpenLearning: () => Navigator.of(
@@ -478,52 +604,269 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
-  Future<void> _loadProfileNameState() async {
+  Future<void> _loadProfileNameState(String? userId) async {
     setState(() => _checkingProfileName = true);
     final preferences = await SharedPreferences.getInstance();
-    final completed = preferences.getBool(_profileNameCompletedKey) == true;
+    final key = _profileNameCompletionKey(userId);
+    final completed = key != null && preferences.getBool(key) == true;
 
-    // "Ad soruldu" bayrağı adın kendisinden ayrı saklanıyor. Ad kaybolur da
-    // bayrak kalırsa (yeniden kurulum, hesap sıfırlama, depo geçişi) kapı
-    // bir daha hiç açılmaz ve oyuncu kalıcı olarak "Oyuncu" olur
-    // (2026-07-25 canlı denetimi). Bu yüzden bayrak, adın gerçekten var
-    // olmasıyla doğrulanır.
-    //
-    // Arama *başarısız* olduğunda (ağ/depo hatası) ad yok sayılmaz: aksi
-    // halde geçici bir hata, adı olan kullanıcıyı kapıya geri gönderirdi.
-    String? name;
-    var lookupFailed = false;
-    try {
-      name = await widget.repository.getProfileName();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'app_shell_preferences');
-      name = null;
-      lookupFailed = true;
-    }
-
-    final hasName = name != null && name.trim().isNotEmpty;
-    if (!mounted) return;
+    // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
+    // ve kullanıcıya özel bayrağa dayanır. Global bir bayrak hesap değişiminde
+    // yeni oyuncunun kapısını atlatır ve aynı varsayılan adı 1v1 kimliğine
+    // taşır. İsim, HomeScreen'in arka plan akışında zenginleşir; ağdaki
+    // yeniden denemeler başlangıç rotasını veya tam ekranı bekletemez.
+    if (!mounted || widget.repository.currentUserId != userId) return;
     setState(() {
-      _profileName = name;
-      _profileNameComplete = completed && (hasName || lookupFailed);
+      _profileNameComplete = completed;
       _checkingProfileName = false;
     });
   }
 
   Future<void> _completeProfileName() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(_profileNameCompletedKey, true);
-    String? name;
-    try {
-      name = await widget.repository.getProfileName();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'app_shell_tour');
-    }
+    final key = _profileNameCompletionKey(widget.repository.currentUserId);
+    if (key != null) await preferences.setBool(key, true);
     if (!mounted) return;
     setState(() {
-      _profileName = name;
       _profileNameComplete = true;
       _profileCheckStarted = true;
     });
+  }
+
+  String? _profileNameCompletionKey(String? userId) {
+    final normalized = userId?.trim();
+    if (normalized == null || normalized.isEmpty) return null;
+    return '$_profileNameCompletedKeyPrefix$normalized';
+  }
+
+  void _scheduleRoomResumeCheck(String userId) {
+    final epoch = _roomResumeEpoch;
+    if (!_canCheckRoomResume(userId, epoch) ||
+        _roomResumeScheduledEpochs[userId] == epoch) {
+      return;
+    }
+
+    _roomResumeScheduledEpochs[userId] = epoch;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_roomResumeScheduledEpochs[userId] != epoch) return;
+      _roomResumeScheduledEpochs.remove(userId);
+      if (!_canCheckRoomResume(userId, epoch)) return;
+      _roomResumeRetryWhenVisibleUsers.remove(userId);
+      _roomResumeInFlightEpochs[userId] = epoch;
+      unawaited(_loadRoomResume(userId, epoch));
+    });
+    WidgetsBinding.instance.scheduleFrame();
+  }
+
+  bool _canCheckRoomResume(String userId, int epoch) {
+    if (!_isCurrentRoomResumeUser(userId, epoch) ||
+        _roomResumeCheckedUsers.contains(userId) ||
+        _roomResumeInFlightEpochs[userId] == epoch ||
+        _roomResumeAwaitingReconnectUsers.contains(userId) ||
+        _roomResumeRouteScheduledEpochs[userId] == epoch) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _loadRoomResume(String userId, int epoch) async {
+    var errorReason = 'app_shell_room_resume';
+    try {
+      final snapshot = await widget.repository.loadMyResumableRoom();
+      if (!_continueRoomResumeOrDefer(userId, epoch)) return;
+
+      if (snapshot != null && snapshot.room.status != RoomStatus.finished) {
+        Widget destination;
+        switch (snapshot.room.status) {
+          case RoomStatus.lobby:
+            destination = RoomScreen(
+              repository: widget.repository,
+              initialRoom: snapshot.room,
+            );
+          case RoomStatus.active:
+            final questions = await widget.repository.loadRoomQuestions(
+              snapshot.room,
+            );
+            if (questions.isEmpty) {
+              throw StateError('Resumable online room has no questions.');
+            }
+            if (!_continueRoomResumeOrDefer(userId, epoch)) return;
+            destination = QuizScreen(
+              repository: widget.repository,
+              room: snapshot.room,
+              questions: questions,
+              is1v1: true,
+              resumeSnapshot: snapshot,
+            );
+          case RoomStatus.finished:
+            return;
+        }
+        _scheduleRoomResumeRoute(userId, epoch, snapshot.room, destination);
+        return;
+      }
+
+      errorReason = 'app_shell_pending_room_result';
+      final pending = await widget.repository.loadMyPendingRoomResult();
+      if (!_continueRoomResumeOrDefer(userId, epoch)) return;
+      if (pending == null) {
+        _roomResumeCheckedUsers.add(userId);
+        return;
+      }
+      if (!_isValidPendingRoomResult(pending, userId)) {
+        _roomResumeCheckedUsers.add(userId);
+        _roomResumeRejectedUsers.add(userId);
+        throw const FormatException('Pending room result is malformed.');
+      }
+      _scheduleRoomResumeRoute(
+        userId,
+        epoch,
+        pending.room,
+        RoomResultRecoveryScreen(
+          repository: widget.repository,
+          snapshot: pending,
+          expectedUserId: userId,
+        ),
+      );
+    } catch (error, stack) {
+      if (_isCurrentRoomResumeIdentity(userId, epoch) &&
+          !_roomResumeCheckedUsers.contains(userId)) {
+        _roomResumeAwaitingReconnectUsers.add(userId);
+      }
+      (widget.errorRecorder ?? ErrorReporter.record)(
+        error,
+        stack,
+        reason: errorReason,
+      );
+    } finally {
+      if (_roomResumeInFlightEpochs[userId] == epoch) {
+        _roomResumeInFlightEpochs.remove(userId);
+      }
+      if (_isCurrentRoomResumeUser(userId, epoch) &&
+          _roomResumeRetryWhenVisibleUsers.contains(userId)) {
+        _retryRoomResumeWhenVisible();
+      }
+    }
+  }
+
+  void _scheduleRoomResumeRoute(
+    String userId,
+    int epoch,
+    GameRoom room,
+    Widget destination,
+  ) {
+    final roomId = room.id?.trim();
+    if (roomId == null || roomId.isEmpty) {
+      throw const FormatException('Recovery room id is missing.');
+    }
+    _roomResumeRouteScheduledEpochs[userId] = epoch;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_roomResumeRouteScheduledEpochs[userId] != epoch) return;
+      _roomResumeRouteScheduledEpochs.remove(userId);
+      if (!_isCurrentRoomResumeUser(userId, epoch)) {
+        if (_isCurrentRoomResumeIdentity(userId, epoch)) {
+          _roomResumeRetryWhenVisibleUsers.add(userId);
+        }
+        return;
+      }
+      _roomResumeCheckedUsers.add(userId);
+      _ownedRoomResumeRoute = (epoch: epoch, roomId: roomId, userId: userId);
+      Navigator.of(context).push(AppRoute.to(destination));
+    });
+    WidgetsBinding.instance.scheduleFrame();
+  }
+
+  bool _continueRoomResumeOrDefer(String userId, int epoch) {
+    if (_isCurrentRoomResumeUser(userId, epoch)) return true;
+    if (_isCurrentRoomResumeIdentity(userId, epoch)) {
+      _roomResumeRetryWhenVisibleUsers.add(userId);
+    }
+    return false;
+  }
+
+  bool _isCurrentRoomResumeUser(String userId, int epoch) {
+    if (!_isCurrentRoomResumeIdentity(userId, epoch) ||
+        !_connectivityKnown ||
+        _isOffline ||
+        _checkingOnboarding ||
+        _showOnboarding ||
+        _checkingProfileName ||
+        !_profileNameComplete ||
+        _shellRoute?.isCurrent != true) {
+      return false;
+    }
+    return context.read<AuthProvider>().isAuthenticated &&
+        _normalizedUserId(widget.repository.currentUserId) == userId;
+  }
+
+  bool _isCurrentRoomResumeIdentity(String userId, int epoch) {
+    return mounted &&
+        _roomResumeEpoch == epoch &&
+        _roomResumeAccountUserId == userId &&
+        _normalizedUserId(widget.repository.currentUserId) == userId;
+  }
+
+  bool _isValidPendingRoomResult(RoomResultSnapshot snapshot, String userId) {
+    final roomId = snapshot.room.id?.trim();
+    final playerIds = snapshot.room.players
+        .map((player) => player.id?.trim() ?? '')
+        .toList(growable: false);
+    return roomId != null &&
+        roomId.isNotEmpty &&
+        snapshot.ownPlayerId.trim() == userId &&
+        snapshot.room.status == RoomStatus.finished &&
+        snapshot.endedReason.trim().toLowerCase() == 'completed' &&
+        snapshot.forfeitedBy == null &&
+        playerIds.length == 2 &&
+        playerIds.every((id) => id.isNotEmpty) &&
+        playerIds.toSet().length == 2 &&
+        playerIds.where((id) => id == userId).length == 1;
+  }
+
+  void _syncRoomResumeAccount(String? userId) {
+    if (_roomResumeAccountUserId == userId) return;
+    _roomResumeAccountUserId = userId;
+    _roomResumeEpoch++;
+    if (userId == null) return;
+    _roomResumeCheckedUsers.remove(userId);
+    _roomResumeAwaitingReconnectUsers.remove(userId);
+    _roomResumeRejectedUsers.remove(userId);
+    _roomResumeRetryWhenVisibleUsers.add(userId);
+  }
+
+  void _wakeRoomResumeForCurrentUser() {
+    final userId = _roomResumeAccountUserId;
+    if (userId == null || _ownedRoomResumeRoute != null) return;
+    if (_shellRoute?.isCurrent != true) {
+      _roomResumeRetryWhenVisibleUsers.add(userId);
+      return;
+    }
+    if (_roomResumeRejectedUsers.contains(userId) ||
+        _roomResumeInFlightEpochs[userId] == _roomResumeEpoch) {
+      return;
+    }
+    _roomResumeCheckedUsers.remove(userId);
+    _roomResumeAwaitingReconnectUsers.remove(userId);
+    _roomResumeRetryWhenVisibleUsers.remove(userId);
+    _scheduleRoomResumeCheck(userId);
+  }
+
+  void _retryRoomResumeWhenVisible() {
+    final userId = _roomResumeAccountUserId;
+    if (userId == null ||
+        _roomResumeRejectedUsers.contains(userId) ||
+        !_roomResumeRetryWhenVisibleUsers.contains(userId) ||
+        _roomResumeInFlightEpochs[userId] == _roomResumeEpoch ||
+        _shellRoute?.isCurrent != true) {
+      return;
+    }
+    _roomResumeRetryWhenVisibleUsers.remove(userId);
+    _roomResumeCheckedUsers.remove(userId);
+    _roomResumeAwaitingReconnectUsers.remove(userId);
+    _scheduleRoomResumeCheck(userId);
+  }
+
+  String? _normalizedUserId(String? userId) {
+    final normalized = userId?.trim();
+    return normalized == null || normalized.isEmpty ? null : normalized;
   }
 }

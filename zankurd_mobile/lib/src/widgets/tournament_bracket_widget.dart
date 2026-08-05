@@ -378,35 +378,61 @@ class _BracketMatchCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 1,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isCompleted
-                            ? AppTheme.gold.withValues(alpha: 0.15)
-                            : AppTheme.accent.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        isCompleted
-                            ? Tr.forKu(K.matchFinished, ku)
-                            : hasPlayers
-                            ? 'VS'
-                            : '—',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
+                    // `Spacer` YOK: iki yanında birer Spacer varken esnek
+                    // çip satırın yalnız üçte birini alıyor ve skor
+                    // okunamayacak kadar küçülüyordu. `center` hizası
+                    // zaten ortalar.
+                    // Esnek olmalı: "340 – 280" %200 yazıda 120 piksellik
+                    // karta sığmıyor ve satırı 16 piksel taşırıyordu.
+                    // Skor kısaltılamaz (kısaltılmış skor yanlış bilgi),
+                    // o yüzden çip esner ve metin gerekince küçülür.
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 1,
+                        ),
+                        decoration: BoxDecoration(
                           color: isCompleted
-                              ? AppTheme.gold
-                              : AppTheme.accent.withValues(alpha: 0.7),
-                          letterSpacing: 1.0,
+                              ? AppTheme.gold.withValues(alpha: 0.15)
+                              : AppTheme.accent.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        // Maç bittiyse SKORLAR burada durur.
+                        //
+                        // Skor eskiden hiçbir yerde görünmüyordu: oyuncu
+                        // satırındaki dal yalnız maç tamamlanmamışken
+                        // çalışıyordu ve skor ancak tamamlandıktan sonra
+                        // oluşuyor. Skoru oyuncu satırına koymayı denedik;
+                        // dar kartta adı yiyordu ("R…", "Şi…") ve ad
+                        // oyuncunun kimliğidir. Ortadaki çip zaten iki
+                        // satırın arasında ve tam da sonucun yeri
+                        // (2026-08-04).
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            isCompleted
+                                ? '${match.playerOneScore} – ${match.playerTwoScore}'
+                                : hasPlayers
+                                ? 'VS'
+                                : '—',
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                              color: isCompleted
+                                  ? AppColors.readableAccent(
+                                      context,
+                                      AppTheme.gold,
+                                    )
+                                  : AppTheme.accent.withValues(alpha: 0.7),
+                              letterSpacing: 0.5,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    const Spacer(),
                   ],
                 ),
               ),
@@ -504,8 +530,11 @@ class _PlayerSlot extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: isUser ? FontWeight.w800 : FontWeight.w600,
+                // Ham altın, kartın altın tonlu zemininde karanlık temada
+                // kayboluyordu: kazananın adı hiç görünmüyordu
+                // (2026-08-04).
                 color: isWinner
-                    ? AppTheme.gold
+                    ? AppColors.readableAccent(context, AppTheme.gold)
                     : isDimmed
                     ? AppTheme.textMutedColor(context)
                     : isUser
@@ -515,7 +544,16 @@ class _PlayerSlot extends StatelessWidget {
               ),
             ),
           ),
-          // Winner crown icon
+          // Maç bittiyse SKOR da yazılır.
+          //
+          // Skor eskiden yalnız `else if (score > 0)` dalındaydı, yani maç
+          // tamamlanmamışken. Ama skor ancak tamamlandıktan sonra oluşur:
+          // kazanan kupayı, kaybeden çarpıyı alıyor ve o dal hiçbir zaman
+          // çalışmıyordu. Sonuç olarak maçın kaç-kaç bittiği uygulamanın
+          // HİÇBİR yerinde görünmüyordu — turnuvanın tek somut çıktısı
+          // kayıptı (2026-08-04).
+          // Kazanan/kaybeden yalnız renkle anlatılmaz: kupa ya da çarpı
+          // ikonu ve kaybedende üstü çizili ad ikinci ve üçüncü kanaldır.
           if (isWinner)
             const Icon(AppIcons.trophy, size: 14, color: AppTheme.gold)
           else if (isCompleted && hasPlayer)
@@ -523,18 +561,7 @@ class _PlayerSlot extends StatelessWidget {
               AppIcons.circleXmark,
               size: 12,
               color: AppTheme.textMutedColor(context).withValues(alpha: 0.6),
-            )
-          else if (score > 0) ...[
-            const SizedBox(width: 2),
-            Text(
-              '$score',
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                color: AppColors.readableAccent(context, AppTheme.accent),
-              ),
             ),
-          ],
         ],
       ),
     );

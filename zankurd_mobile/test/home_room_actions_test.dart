@@ -2,12 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
+
+class _CapturingJoinRepository extends MockZanKurdRepository {
+  String? joinedCode;
+
+  @override
+  Future<GameRoom> joinOnlineRoom(String code) async {
+    joinedCode = code;
+    return createRoom().copyWith(code: normalizeRoomCode(code));
+  }
+}
 
 void main() {
   late MockZanKurdRepository repository;
@@ -170,7 +181,7 @@ void main() {
     );
   });
 
-  testWidgets('join room sheet accepts typed room code text', (tester) async {
+  testWidgets('join room sheet accepts pasted room code text', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -193,13 +204,89 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
-    const code = 'ZK-ABCD';
+    const code = 'ZK-ABCDEF0123';
     await tester.enterText(
       find.byKey(const ValueKey('play-hub-join-room-code-field')),
-      code,
+      'zk–abcdef0123',
     );
     await tester.pumpAndSettle();
 
     expect(find.text(code), findsOneWidget);
+  });
+
+  testWidgets('join room code can be typed one character at a time', (
+    tester,
+  ) async {
+    final repository = _CapturingJoinRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: FakeAuthProvider(),
+        languageProvider: turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('play-hub-join-room')),
+    );
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
+    await tester.pumpAndSettle();
+
+    final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
+    for (final rune in 'ZK-ABCDEF0123'.runes) {
+      final current = tester.widget<TextFormField>(field).controller!.text;
+      await tester.enterText(field, '$current${String.fromCharCode(rune)}');
+      await tester.pump();
+    }
+
+    expect(
+      tester.widget<TextFormField>(field).controller!.text,
+      'ZK-ABCDEF0123',
+    );
+    await tester.tap(find.text('Katıl'));
+    await tester.pumpAndSettle();
+    expect(repository.joinedCode, 'ZK-ABCDEF0123');
+  });
+
+  testWidgets('legacy suffix beginning with ZK is submitted intact', (
+    tester,
+  ) async {
+    final repository = _CapturingJoinRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: FakeAuthProvider(),
+        languageProvider: turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('play-hub-join-room')),
+    );
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
+    await tester.pumpAndSettle();
+
+    final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
+    for (final rune in 'ZKAB'.runes) {
+      final current = tester.widget<TextFormField>(field).controller!.text;
+      await tester.enterText(field, '$current${String.fromCharCode(rune)}');
+      await tester.pump();
+    }
+    await tester.tap(find.text('Katıl'));
+    await tester.pumpAndSettle();
+
+    expect(repository.joinedCode, 'ZK-ZKAB');
   });
 }

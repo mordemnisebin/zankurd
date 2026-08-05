@@ -18,6 +18,14 @@ import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// Odadan çıkış RPC'sinin beklenebileceği en uzun süre.
+///
+/// `quiz_screen.dart`teki `_onlineResultRequestTimeout` ile aynı bütçe:
+/// çevrimiçi çağrıların geri kalanı zaten bu sınırla korunuyor. Süre
+/// dolduğunda çağrı hata vermiş sayılır ve mevcut — test edilmiş — hata
+/// yoluna düşer: lobi geri gelir, snackbar çıkar, çıkış yeniden denenebilir.
+const Duration _roomLeaveTimeout = Duration(seconds: 15);
+
 class RoomScreen extends StatefulWidget {
   const RoomScreen({
     required this.repository,
@@ -68,8 +76,10 @@ class _RoomScreenState extends State<RoomScreen> {
   bool starting = false;
   bool quizOpened = false;
   bool _leaving = false;
+  bool _terminalHandled = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
+  int _subscriptionGeneration = 0;
 
   /// Realtime yetersiz kalırsa devreye giren polling fallback.
   /// Yalnızca lobide en az 2 oyuncu görülünce durur; aksi halde devam eder.
@@ -104,15 +114,28 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   void _startSubscriptions() {
+    if (_leaving ||
+        _terminalHandled ||
+        quizOpened ||
+        _playersSub != null ||
+        _statusSub != null) {
+      return;
+    }
+    final generation = ++_subscriptionGeneration;
     _playersSub = widget.repository
         .subscribeRoomPlayers(room)
         .listen(
           (p) {
-            if (!mounted) return;
+            if (!mounted || generation != _subscriptionGeneration) return;
             _applyPlayerList(p);
           },
           onError: (err, stack) {
-            if (!mounted) return;
+            if (!mounted ||
+                generation != _subscriptionGeneration ||
+                _leaving ||
+                _terminalHandled) {
+              return;
+            }
             _startPolling();
           },
         );
@@ -120,7 +143,16 @@ class _RoomScreenState extends State<RoomScreen> {
         .subscribeRoomStatus(room)
         .listen(
           (status) {
-            if (!mounted) return;
+            if (!mounted ||
+                generation != _subscriptionGeneration ||
+                _leaving ||
+                _terminalHandled) {
+              return;
+            }
+            if (status == RoomStatus.finished) {
+              _handleLobbyFinished();
+              return;
+            }
             if (status == RoomStatus.active && !quizOpened) {
               _pausePolling();
               _pauseStatusPolling();
@@ -129,14 +161,19 @@ class _RoomScreenState extends State<RoomScreen> {
             setState(() => room = room.copyWith(status: status));
           },
           onError: (err, stack) {
-            if (!mounted) return;
+            if (!mounted ||
+                generation != _subscriptionGeneration ||
+                _leaving ||
+                _terminalHandled) {
+              return;
+            }
             _startPolling();
           },
         );
   }
 
   void _applyPlayerList(List<Player> players) {
-    if (!mounted) return;
+    if (!mounted || _leaving || _terminalHandled || quizOpened) return;
     setState(() => room = room.copyWith(players: players));
     _syncPollingForLobby(players.length);
   }
@@ -174,11 +211,13 @@ class _RoomScreenState extends State<RoomScreen> {
 
   /// Realtime yetersizse host, 2. oyuncuyu polling ile görür.
   void _startPolling() {
+    if (_leaving || _terminalHandled || quizOpened) return;
     _pollTimer?.cancel();
     _pollTimer = Timer.periodic(_pollInterval, (_) => _pollPlayersOnce());
   }
 
   void _startStatusPolling() {
+    if (_leaving || _terminalHandled || quizOpened) return;
     _statusPollTimer?.cancel();
     _statusPollTimer = Timer.periodic(
       _pollInterval,
@@ -190,7 +229,7 @@ class _RoomScreenState extends State<RoomScreen> {
     if (!mounted || quizOpened) return;
     try {
       final players = await widget.repository.loadRoomPlayers(room);
-      if (!mounted) return;
+      if (!mounted || _leaving || _terminalHandled || quizOpened) return;
       _applyPlayerList(players);
       if (players.length < 2) {
         _pollCount = 0;
@@ -216,7 +255,11 @@ class _RoomScreenState extends State<RoomScreen> {
     if (!mounted || quizOpened) return;
     try {
       final status = await widget.repository.loadRoomStatus(room);
-      if (!mounted || quizOpened) return;
+      if (!mounted || quizOpened || _leaving || _terminalHandled) return;
+      if (status == RoomStatus.finished) {
+        _handleLobbyFinished();
+        return;
+      }
       if (status == RoomStatus.active && !quizOpened) {
         _pausePolling();
         _pauseStatusPolling();
@@ -243,42 +286,132 @@ class _RoomScreenState extends State<RoomScreen> {
 
   @override
   void dispose() {
-    _playersSub?.cancel();
-    _statusSub?.cancel();
+    _cancelSubscriptionsBestEffort('room_dispose_subscription_cancel_failed');
     _pausePolling();
     _pauseStatusPolling();
-    if (!_leaving) {
-      widget.repository.updateReady(room, false).catchError((_) {});
-    }
     super.dispose();
   }
 
   Future<void> _leaveRoom() async {
-    if (_leaving) return;
+    if (_leaving || _terminalHandled) return;
     setState(() {
       _leaving = true;
     });
 
-    _playersSub?.cancel();
-    _playersSub = null;
-    _statusSub?.cancel();
-    _statusSub = null;
+    _cancelSubscriptionsBestEffort('room_leave_subscription_cancel_failed');
     _pausePolling();
     _pauseStatusPolling();
 
-    try {
-      await widget.repository.updateReady(room, false);
-    } catch (error, stack) {
-      ErrorReporter.record(
-        error,
-        stack,
-        reason: 'room_leave_update_ready_failed',
-      );
+    if (room.id != null) {
+      try {
+        await widget.repository
+            .leaveOnlineRoom(room)
+            .timeout(_roomLeaveTimeout);
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'room_leave_failed');
+        if (!mounted) return;
+        setState(() => _leaving = false);
+        _resumeLobbyMonitoring();
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(context.t(K.roomLeaveFailed))));
+        return;
+      }
+    } else {
+      // Yerel odada sunucu oturumu yoktur. Hazırlık durumunu sıfırlama
+      // mevcut en iyi-niyetli davranıştır; başarısız olması yerel
+      // ekrandan çıkışı engellememelidir.
+      try {
+        await widget.repository.updateReady(room, false);
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'room_leave_update_ready_failed',
+        );
+      }
     }
 
-    if (mounted) {
-      Navigator.of(context).pop();
+    if (!mounted) return;
+    _returnToPreviousRoute();
+  }
+
+  void _resumeLobbyMonitoring() {
+    if (!mounted || quizOpened || _terminalHandled) return;
+    _startSubscriptions();
+    _startPolling();
+    _startStatusPolling();
+  }
+
+  void _cancelSubscriptionsBestEffort(String failureReason) {
+    final playersSub = _playersSub;
+    final statusSub = _statusSub;
+    _playersSub = null;
+    _statusSub = null;
+    // Bazı Stream uygulamaları `cancel()` Future'ını geç veya hiç
+    // tamamlamaz. Nesil anahtarı eski olayları hemen geçersiz kılar;
+    // fiziksel temizliği beklemek çıkış RPC'sini bloke etmez.
+    _subscriptionGeneration++;
+    if (playersSub != null) {
+      unawaited(_cancelSubscription(playersSub, failureReason));
     }
+    if (statusSub != null) {
+      unawaited(_cancelSubscription(statusSub, failureReason));
+    }
+  }
+
+  Future<void> _cancelSubscription(
+    StreamSubscription subscription,
+    String failureReason,
+  ) async {
+    try {
+      await subscription.cancel();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: failureReason);
+    }
+  }
+
+  void _returnToPreviousRoute() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+      return;
+    }
+    // Widget bir test/yerleştirme kabında kök rota olarak açılmışsa
+    // güvenli bir geri hedef yoktur; ekranı kilitli bırakma.
+    setState(() => _leaving = false);
+  }
+
+  void _handleLobbyFinished() {
+    // Quiz açıldıktan sonra maçın terminal durumu QuizScreen'in
+    // sorumluluğudur. Geç gelen lobi olayı aktif maç rotasını kapatmamalı.
+    if (!mounted || quizOpened || _leaving || _terminalHandled) return;
+    _terminalHandled = true;
+    _cancelSubscriptionsBestEffort('room_finished_subscription_cancel_failed');
+    _pausePolling();
+    _pauseStatusPolling();
+
+    final message = context.t(K.roomClosedByHost);
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!messenger.mounted) return;
+        messenger
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(message)));
+      });
+      return;
+    }
+
+    // Normal uygulama akışında RoomScreen daima bir önceki rotanın
+    // üstüne açılır. Yine de kök rota olarak yerleştirilirse kapandığını
+    // açıkça göster; geçersiz bir geri işlemi yapma.
+    setState(() => room = room.copyWith(status: RoomStatus.finished));
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _copyRoomCode(BuildContext context, bool ku) async {
@@ -296,7 +429,15 @@ class _RoomScreenState extends State<RoomScreen> {
       ..sort((a, b) => b.score.compareTo(a.score));
     final currentUserId = widget.repository.currentUserId;
     final isHost = room.hostId == null || room.hostId == currentUserId;
-    final canStart = ready && !starting && room.players.length >= 2;
+    final allPlayersReady = room.players.every(
+      (player) => player.state == Player.readyState,
+    );
+    final canStart =
+        isHost &&
+        ready &&
+        !starting &&
+        room.players.length >= 2 &&
+        allPlayersReady;
     if (_leaving) {
       return Scaffold(
         body: Container(
@@ -308,7 +449,7 @@ class _RoomScreenState extends State<RoomScreen> {
                 const CircularProgressIndicator(color: AppTheme.playCyan),
                 const SizedBox(height: 24),
                 Text(
-                  context.t(K.cancelling),
+                  context.t(K.leavingRoom),
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
                     fontSize: 18,
@@ -323,10 +464,12 @@ class _RoomScreenState extends State<RoomScreen> {
     }
 
     return PopScope(
-      canPop: _leaving,
+      // Sunucu çıkışı onaylamadan sistem geri hareketi rotayı
+      // kapatmamalı. İkinci geri/ikon dokunuşunu `_leaving` tekilleştirir.
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
-        _leaveRoom();
+        await _leaveRoom();
       },
       child: Scaffold(
         body: Container(
@@ -464,6 +607,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                             Material(
                                               color: Colors.transparent,
                                               child: InkWell(
+                                                key: const ValueKey(
+                                                  'room-code-copy',
+                                                ),
                                                 onTap: () =>
                                                     _copyRoomCode(context, ku),
                                                 borderRadius:
@@ -526,29 +672,28 @@ class _RoomScreenState extends State<RoomScreen> {
                                                             const SizedBox(
                                                               height: 4,
                                                             ),
-                                                            Text(
-                                                              room.code,
-                                                              key:
-                                                                  const ValueKey(
-                                                                    'room-code',
-                                                                  ),
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: AppTypography
-                                                                  .heading1
-                                                                  .copyWith(
-                                                                    color: AppTheme
-                                                                        .playCyan,
-                                                                    letterSpacing:
-                                                                        3,
-                                                                    fontSize:
-                                                                        32,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w900,
-                                                                  ),
+                                                            FittedBox(
+                                                              fit: BoxFit
+                                                                  .scaleDown,
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                room.code,
+                                                                key: const ValueKey(
+                                                                  'room-code',
+                                                                ),
+                                                                maxLines: 1,
+                                                                softWrap: false,
+                                                                style: AppTypography.display.copyWith(
+                                                                  color: AppTheme
+                                                                      .playCyan,
+                                                                  letterSpacing:
+                                                                      3,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -603,17 +748,31 @@ class _RoomScreenState extends State<RoomScreen> {
                                             size: 20,
                                           ),
                                           const SizedBox(width: AppSpacing.xs),
-                                          Text(
-                                            context.t(K.playersWord),
-                                            style: AppTypography.heading2
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textPrimaryColor(
-                                                        context,
-                                                      ),
-                                                ),
+                                          // Esnek olmalı: başlık `heading2`
+                                          // ve sayaçla aynı satırda duruyor.
+                                          // Sabit `Text` + `Spacer` ikilisi
+                                          // %200 sistem yazısında satırı 57
+                                          // piksel taşırıyordu — `Spacer`
+                                          // kalan yeri yeniden dağıtamaz,
+                                          // çünkü esnemeyen başlık zaten
+                                          // hepsini yemiş oluyor (2026-08-03).
+                                          // `Expanded` + tek satır kısaltma
+                                          // sayacı yine sağa yaslar.
+                                          Expanded(
+                                            child: Text(
+                                              context.t(K.playersWord),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTypography.heading2
+                                                  .copyWith(
+                                                    color:
+                                                        AppTheme.textPrimaryColor(
+                                                          context,
+                                                        ),
+                                                  ),
+                                            ),
                                           ),
-                                          const Spacer(),
+                                          const SizedBox(width: AppSpacing.xs),
                                           Text(
                                             '${sorted.length}',
                                             style: AppTypography.caption
@@ -988,6 +1147,7 @@ class _RoomScreenState extends State<RoomScreen> {
           quizOpened = false;
           starting = false;
         });
+        _resumeLobbyMonitoring();
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(context.t(K.gameStartFailed))));
@@ -1004,6 +1164,7 @@ class _RoomScreenState extends State<RoomScreen> {
           questions: questions.isEmpty
               ? widget.repository.questions
               : questions,
+          is1v1: room.id != null && room.players.length == 2,
         ),
       ),
     );

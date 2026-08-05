@@ -17,6 +17,13 @@ import '../data/sync_manager.dart';
 import '../services/premium_service.dart';
 import '../utils/error_reporter.dart';
 
+class AccountLocalCleanupException implements Exception {
+  const AccountLocalCleanupException();
+
+  @override
+  String toString() => 'AccountLocalCleanupException';
+}
+
 /// Supabase tabanlı kimlik sağlayıcı.
 ///
 /// Giriş yapan kullanıcı ile skor/profil verisinin yazıldığı Supabase
@@ -269,16 +276,29 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut({
+    bool discardPendingRewards = false,
+    String? pendingRewardsOwnerId,
+  }) async {
+    var accountCleanupFailed = false;
     // Yerel store'lar temizlenmeden önce bekleyen, sunucuda doğrulanabilen
     // çevrimdışı ödüller son kez gönderilir. XP cihazda tutulur ve aşağıda
     // diğer yerel ilerleme verileriyle birlikte temizlenir. `shutdown` ayrıca
     // singleton'ı serbest bırakır; yalnız `dispose()` sonraki bağlantı
     // dinleyicisinin kurulmasını engellerdi.
     try {
-      await SyncManager.shutdown();
+      if (discardPendingRewards) {
+        final ownerId = pendingRewardsOwnerId?.trim();
+        if (ownerId == null || ownerId.isEmpty) {
+          throw StateError('Deleted account sync queue owner is missing.');
+        }
+        await SyncManager.discardQueueForUser(ownerId);
+      } else {
+        await SyncManager.shutdown();
+      }
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'SyncManager shutdown on signOut');
+      accountCleanupFailed = discardPendingRewards;
     }
 
     // RevenueCat kimliği de bırakılır; aksi halde aynı cihazda giriş yapan
@@ -406,6 +426,9 @@ class AuthProvider extends ChangeNotifier {
       _mockAuthenticated = false;
       _errorMessage = null;
       notifyListeners();
+      if (accountCleanupFailed) {
+        throw const AccountLocalCleanupException();
+      }
       return;
     }
     try {
@@ -416,6 +439,9 @@ class AuthProvider extends ChangeNotifier {
     _currentUser = client.auth.currentUser;
     _errorMessage = null;
     notifyListeners();
+    if (accountCleanupFailed) {
+      throw const AccountLocalCleanupException();
+    }
   }
 
   @visibleForTesting

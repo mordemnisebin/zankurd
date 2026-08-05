@@ -16,6 +16,68 @@ class _AlwaysFailingHttpClient extends http.BaseClient {
   }
 }
 
+class _QuizRewardHttpClient extends http.BaseClient {
+  _QuizRewardHttpClient(this.response);
+
+  final Object response;
+  final requestedPaths = <String>[];
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    requestedPaths.add(request.url.path);
+    if (request.url.path != '/rest/v1/rpc/claim_quiz_reward') {
+      throw StateError('Beklenmeyen istek: ${request.url.path}');
+    }
+    final bytes = utf8.encode(jsonEncode(response));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+class _SignedInSupabaseRepository extends SupabaseZanKurdRepository {
+  _SignedInSupabaseRepository(super.client);
+
+  @override
+  String? get currentUserId => 'test-user';
+}
+
+class _SignedInQuizRewardRepository extends SupabaseZanKurdRepository {
+  _SignedInQuizRewardRepository(super.client);
+
+  String activeUserId = 'test-user';
+
+  @override
+  String? get currentUserId => activeUserId;
+
+  @override
+  Future<User> signInAnonymously() async => const User(
+    id: 'test-user',
+    appMetadata: {},
+    userMetadata: {},
+    aud: 'authenticated',
+    createdAt: '2026-08-02T00:00:00.000Z',
+    isAnonymous: true,
+  );
+
+  @override
+  Future<void> ensureProfile() async {}
+}
+
+class _IdentityChangingQuizRewardRepository
+    extends _SignedInQuizRewardRepository {
+  _IdentityChangingQuizRewardRepository(super.client);
+
+  @override
+  Future<void> ensureProfile() async {
+    activeUserId = 'other-user';
+  }
+}
+
 class _RoomQuestionsHttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
@@ -100,16 +162,123 @@ void main() {
   );
 
   test(
-    'awardQuizCoins ağ hatasında 0 döner — sunucu onaylamadan ödül verilmez',
+    'soru önerisi canlı insert ağ hatasında false döner — sahte başarı yok',
     () async {
-      final repo = unreachableRepo();
-      final amount = await repo.awardQuizCoins(
+      final repo = _SignedInSupabaseRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+      final submitted = await repo.submitSuggestedQuestion(
+        category: 'Ziman',
+        prompt: 'Pirtûk çi ye?',
+        optionA: 'Kitap',
+        optionB: 'Masa',
+        optionC: 'Av',
+        optionD: 'Mal',
+        correctOption: 'A',
+      );
+
+      expect(submitted, isFalse);
+    },
+  );
+
+  test('awardQuizCoins ağ hatasını yeniden deneme için yukarı taşır', () async {
+    final repo = unreachableRepo();
+    await expectLater(
+      repo.awardQuizCoins(
         score: 500,
         correctCount: 8,
         bestStreak: 5,
         totalQuestions: 10,
+      ),
+      throwsA(anything),
+    );
+  });
+
+  test(
+    'awardQuizCoins açık başarı işaretli amount 0 yanıtını normal sayar',
+    () async {
+      final httpClient = _QuizRewardHttpClient(const {
+        'amount': 0,
+        'already_claimed': false,
+      });
+      final repo = _SignedInQuizRewardRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
       );
+
+      final amount = await repo.awardQuizCoins(
+        score: 100,
+        correctCount: 2,
+        bestStreak: 1,
+        totalQuestions: 10,
+      );
+
       expect(amount, 0);
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
+    },
+  );
+
+  test(
+    'awardQuizCoins guard amount 0 yanıtını başarı saymadan yukarı taşır',
+    () async {
+      final httpClient = _QuizRewardHttpClient(const {
+        'amount': 0,
+        'room_not_finished': true,
+      });
+      final repo = _SignedInQuizRewardRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await expectLater(
+        repo.awardQuizCoins(
+          score: 100,
+          correctCount: 2,
+          bestStreak: 1,
+          totalQuestions: 10,
+        ),
+        throwsStateError,
+      );
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
+    },
+  );
+
+  test(
+    'awardQuizCoins profile awaitinde hesap değişirse reward RPC çağırmaz',
+    () async {
+      final httpClient = _QuizRewardHttpClient(const {
+        'amount': 0,
+        'already_claimed': false,
+      });
+      final repo = _IdentityChangingQuizRewardRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await expectLater(
+        repo.awardQuizCoins(
+          score: 100,
+          correctCount: 2,
+          bestStreak: 1,
+          totalQuestions: 10,
+        ),
+        throwsStateError,
+      );
+      expect(httpClient.requestedPaths, isEmpty);
     },
   );
 

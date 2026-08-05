@@ -58,7 +58,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
 
     setState(() => _submitting = true);
     try {
-      await widget.repository.submitSuggestedQuestion(
+      final submitted = await widget.repository.submitSuggestedQuestion(
         category: _selectedCategory!,
         prompt: _promptController.text.trim(),
         optionA: _optionAController.text.trim(),
@@ -71,6 +71,15 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
             : _explanationController.text.trim(),
         difficulty: _difficulty,
       );
+      if (!submitted) {
+        if (mounted) {
+          setState(() => _submitting = false);
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(context.t(K.genericError))));
+        }
+        return;
+      }
       if (mounted) {
         setState(() {
           _submitting = false;

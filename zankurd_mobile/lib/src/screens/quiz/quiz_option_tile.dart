@@ -402,34 +402,45 @@ class _OptionBadge extends StatelessWidget {
     final badgeBg = idle ? fg : Colors.white;
     final badgeFg = idle ? Colors.white : fg;
 
-    return Container(
-      width: 34,
-      height: 34,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: badgeBg,
-        borderRadius: BorderRadius.circular(AppRadius.xs),
-        boxShadow: idle
-            ? [
-                BoxShadow(
-                  color: fg.withValues(alpha: 0.28),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ]
-            : null,
-      ),
-      // Rozette bir zamanlar harfin üstüne 8 px'lik bir şekil ikonu
-      // biniyordu (renk körü ayrımı için). 34 px'lik rozette o boyut bir
-      // işaret değil bir leke: harfin tepesine oturuyor ve "A" bozuk bir
-      // karakter gibi görünüyordu (2026-07-27, canlı gezinti).
-      //
-      // Şekil kaldırıldı; ayrımı harfin kendisi taşıyor. A/B/C/D renkten
-      // bağımsızdır, evrenseldir ve ekran okuyucuya da aynı adla gider —
-      // yani erişilebilirlik kaybı yok, okunaklılık kazancı var.
-      child: Text(
-        letter,
-        style: AppTypography.heading2.copyWith(color: badgeFg),
+    // Rozet artık yuvarlatılmış kare değil, elmas: Rengîn geometrisi
+    // kategori ambleminde ve şık indeksinde aynı dili konuşur. Harf
+    // döndürülmez — yalnız zemin döner, yoksa "A" yan yatar.
+    return SizedBox(
+      width: 38,
+      height: 38,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Transform.rotate(
+            angle: 0.7853981633974483, // 45°
+            child: Container(
+              width: 27,
+              height: 27,
+              decoration: BoxDecoration(
+                color: badgeBg,
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: idle
+                    ? [
+                        BoxShadow(
+                          color: fg.withValues(alpha: 0.30),
+                          blurRadius: 7,
+                          offset: const Offset(0, 2),
+                        ),
+                      ]
+                    : null,
+              ),
+            ),
+          ),
+          // Rozette bir zamanlar harfin üstüne 8 px'lik bir şekil ikonu
+          // biniyordu (renk körü ayrımı için). 34 px'lik rozette o boyut bir
+          // işaret değil bir leke: harfin tepesine oturuyor ve "A" bozuk bir
+          // karakter gibi görünüyordu (2026-07-27, canlı gezinti).
+          //
+          // Şekil kaldırıldı; ayrımı harfin kendisi taşıyor. A/B/C/D renkten
+          // bağımsızdır, evrenseldir ve ekran okuyucuya da aynı adla gider —
+          // yani erişilebilirlik kaybı yok, okunaklılık kazancı var.
+          Text(letter, style: AppTypography.heading2.copyWith(color: badgeFg)),
+        ],
       ),
     );
   }

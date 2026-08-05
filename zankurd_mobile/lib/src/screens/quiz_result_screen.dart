@@ -2,17 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
+import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/streak_store.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
+import '../services/quiz_reward_settlement_service.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
@@ -38,6 +41,25 @@ import 'leaderboard_screen.dart';
 import 'review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// Seri kararının sonucu.
+///
+/// Karar (ve varsa coin harcaması) makbuzun kritik bölümünün DIŞINDA
+/// verilir; buradan sonrası yalnız otomatik yerel yazımdır. Bu tip, iki
+/// aşama arasındaki tek taşıyıcıdır.
+class _StreakOutcome {
+  const _StreakOutcome({required this.streak, required this.isNewDay});
+
+  final int streak;
+  final bool isNewDay;
+}
+
+typedef QuizResultReceiptRunner =
+    Future<QuizResultProgressReceiptOutcome> Function({
+      required String userId,
+      required String roomId,
+      required Future<void> Function() action,
+    });
+
 class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({
     required this.repository,
@@ -54,6 +76,10 @@ class QuizResultScreen extends StatefulWidget {
     this.practice = false,
     this.dailyQuiz = false,
     this.contestId,
+    this.resultOwnerUserId,
+    this.rewardSettlementState,
+    this.receiptRunner,
+    this.receiptStages,
     super.key,
   });
 
@@ -81,6 +107,16 @@ class QuizResultScreen extends StatefulWidget {
   final bool dailyQuiz;
   final String? contestId;
 
+  /// Yalnız sunucudan geri kazanılan/tamamlanan online sonuç tesliminde
+  /// kullanılır. Eski solo ve online çağrılar bu alanları vermeden çalışır.
+  final String? resultOwnerUserId;
+  final QuizRewardSettlementState? rewardSettlementState;
+  final QuizResultReceiptRunner? receiptRunner;
+
+  /// Aşama kaydedici. Testler süreç ölümünü taklit edebilsin diye
+  /// enjekte edilebilir; üretimde `SharedPreferences` üzerinden kurulur.
+  final QuizResultProgressReceiptStore? receiptStages;
+
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
 }
@@ -103,7 +139,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<Achievement> _newAchievements = const [];
   Map<String, MasteryLevel> _promotions = const {};
   int _earnedXP = 0;
+  _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
+  bool _ackAttempted = false;
 
   @override
   void initState() {
@@ -114,19 +152,211 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // yedi ayrı store ve bir platform kanalı üzerinden gider; herhangi
     // birinden kaçan istisna `initState`ten yukarı çıkıp tüm ekranı
     // düşürüyordu (2026-07-31 denetimi). Hata bildirilir, ekran yaşar.
-    unawaited(
-      _recordProgress().catchError((Object error, StackTrace stack) {
-        ErrorReporter.record(error, stack, reason: 'quiz result progress');
-      }),
-    );
-    repository.logAnalyticsEvent('quiz_complete', {
-      'category': widget.room.category,
-      'correct_count': widget.correctCount,
-      'total_questions': widget.totalQuestions,
-      'score': widget.score,
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      unawaited(_deliverResult());
     });
     if (widget.contestId != null) {
       _claimContestReward();
+    }
+  }
+
+  Future<void> _deliverResult() async {
+    final ownerId = widget.resultOwnerUserId?.trim();
+    final roomId = widget.room.id?.trim();
+    final rewardState = widget.rewardSettlementState;
+    final hasOwner = ownerId != null && ownerId.isNotEmpty;
+    final hasRewardState = rewardState != null;
+
+    if (hasOwner != hasRewardState ||
+        ((hasOwner || hasRewardState) && (roomId == null || roomId.isEmpty))) {
+      ErrorReporter.record(
+        const FormatException('Incomplete online result delivery context.'),
+        StackTrace.current,
+        reason: 'quiz result delivery context',
+      );
+      return;
+    }
+
+    if (!hasOwner && !hasRewardState) {
+      await _runProgressSafely();
+      return;
+    }
+    if (!_hasValidOnlineResultContext(ownerId!) ||
+        !_isCurrentResultOwner(ownerId)) {
+      return;
+    }
+
+    final stages = widget.receiptStages ?? await _defaultStageRecorder();
+    // Bu noktadan sonra oda kimliği kesin: yukarıdaki bağlam kontrolü
+    // eksik/tutarsız teslimatı zaten elemişti.
+    final resultRoomId = roomId!;
+
+    // Aşama 1 — kullanıcı kararı. Makbuzun kritik bölümünün DIŞINDA.
+    try {
+      final resumed = await stages?.read(userId: ownerId, roomId: resultRoomId);
+      if (resumed?.isTerminal != true) {
+        final streak = await _resolveStreakDecision(
+          resumed: resumed,
+          // Makbuz anahtarıyla AYNI kimlik: tahsilat da, makbuz da aynı
+          // sonuca bağlı olduğu için ikisi tek bir değişmezden türer.
+          idempotencyKey: QuizResultProgressReceiptStore.keyFor(
+            userId: ownerId,
+            roomId: resultRoomId,
+          ),
+          recordStage: stages == null
+              ? null
+              : (stage, {bool freezeRequested = false}) => stages.write(
+                  userId: ownerId,
+                  roomId: resultRoomId,
+                  receipt: QuizResultReceipt(
+                    stage: stage,
+                    freezeRequested: freezeRequested,
+                  ),
+                ),
+        );
+        _pendingStreak = streak;
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result streak decision');
+    }
+
+    // Aşama 2 — otomatik yerel ilerleme. Yalnız burada kritik bölüm var.
+    QuizResultProgressReceiptOutcome receiptOutcome;
+    try {
+      final runner = widget.receiptRunner ?? _runDefaultReceipt;
+      receiptOutcome = await runner(
+        userId: ownerId,
+        roomId: resultRoomId,
+        action: () async {
+          if (!_isCurrentResultOwner(ownerId)) {
+            throw StateError('Result owner changed before local progress.');
+          }
+          await _recordProgressAndAnalytics(_pendingStreak);
+          if (!_isCurrentResultOwner(ownerId)) {
+            throw StateError('Result owner changed during local progress.');
+          }
+        },
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result receipt');
+      return;
+    }
+
+    // `blockedProcessing` artık "sonsuza dek kilitli" değil, "önceki yazım
+    // kesildiği için atlandı" demektir. Yerel ilerleme tekrarlanmaz —
+    // depolar idempotent olmadığı için XP ve rozet ikiye katlanırdı — ama
+    // akış burada durmaz.
+    //
+    // Durmaması gerekiyor çünkü ONAY ayrı bir güvenlik özelliğidir ve
+    // sunucuda idempotenttir: `room_result_receipts` birincil anahtarı
+    // `(room_id, player_id)`. Onayı belirsiz bir yerel yazım yüzünden
+    // sonsuza dek engellemek, hiçbir şeyi kurtarmadan kurtarma ekranını
+    // her soğuk açılışta geri getiriyordu (2026-08-03).
+    if (receiptOutcome == QuizResultProgressReceiptOutcome.blockedProcessing) {
+      ErrorReporter.record(
+        StateError(
+          'Result progress receipt was interrupted; local progress skipped.',
+        ),
+        StackTrace.current,
+        reason: 'quiz result receipt incomplete',
+      );
+    }
+
+    if (rewardState != QuizRewardSettlementState.claimed ||
+        !_isCurrentResultOwner(ownerId) ||
+        _ackAttempted) {
+      return;
+    }
+
+    // Aşama 3 — sunucu onayı. Tek gerçekten yeniden denenebilir adım.
+    _ackAttempted = true;
+    try {
+      await repository.acknowledgeRoomResult(widget.room);
+      await stages?.write(
+        userId: ownerId,
+        roomId: resultRoomId,
+        receipt: const QuizResultReceipt(
+          stage: QuizResultReceiptStage.completed,
+        ),
+      );
+    } catch (error, stack) {
+      // Makbuz `acknowledgementPending` kalır; sonraki açılışta yeniden
+      // denenir. Sunucu idempotent olduğu için bu güvenlidir.
+      ErrorReporter.record(error, stack, reason: 'quiz result acknowledge');
+    }
+  }
+
+  Future<QuizResultProgressReceiptStore?> _defaultStageRecorder() async {
+    try {
+      return QuizResultProgressReceiptStore(
+        await SharedPreferences.getInstance(),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result receipt stages');
+      return null;
+    }
+  }
+
+  Future<QuizResultProgressReceiptOutcome> _runDefaultReceipt({
+    required String userId,
+    required String roomId,
+    required Future<void> Function() action,
+  }) async {
+    final preferences = await SharedPreferences.getInstance();
+    return QuizResultProgressReceiptStore(
+      preferences,
+    ).runOnce(userId: userId, roomId: roomId, action: action);
+  }
+
+  bool _isCurrentResultOwner(String ownerId) {
+    final currentUserId = repository.currentUserId?.trim();
+    return currentUserId != null &&
+        currentUserId.isNotEmpty &&
+        currentUserId == ownerId;
+  }
+
+  bool _hasValidOnlineResultContext(String ownerId) {
+    final playerIds = widget.room.players
+        .map((player) => player.id?.trim() ?? '')
+        .toList(growable: false);
+    final hasValidPlayers =
+        playerIds.length == 2 &&
+        playerIds.every((id) => id.isNotEmpty) &&
+        playerIds.toSet().length == 2 &&
+        playerIds.where((id) => id == ownerId).length == 1;
+    if (widget.room.status == RoomStatus.finished && hasValidPlayers) {
+      return true;
+    }
+    ErrorReporter.record(
+      const FormatException('Invalid online result room context.'),
+      StackTrace.current,
+      reason: 'quiz result delivery context',
+    );
+    return false;
+  }
+
+  Future<void> _runProgressSafely() async {
+    try {
+      await _recordProgressAndAnalytics(await _resolveStreakDecision());
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result progress');
+    }
+  }
+
+  Future<void> _recordProgressAndAnalytics(
+    _StreakOutcome? streakOutcome,
+  ) async {
+    await _recordProgress(streakOutcome ?? await _fallbackStreak());
+    try {
+      await repository.logAnalyticsEvent('quiz_complete', {
+        'category': widget.room.category,
+        'correct_count': widget.correctCount,
+        'total_questions': widget.totalQuestions,
+        'score': widget.score,
+      });
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz result analytics');
     }
   }
 
@@ -150,16 +380,153 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// Ödeme yapılıp seri korunursa yeni seri değerini, aksi halde null döner.
   static const _streakFreezeCost = 50;
 
-  Future<int?> _maybeOfferStreakFreeze(StreakStore store) async {
-    if (!mounted) return null;
+  /// Karar adımı hata verdiyse seri yine de kaydedilmeli.
+  ///
+  /// Aksi hâlde ilerlemeye `streak: 0` giderdi ve rozet/görev hesabı, hiç
+  /// oynanmamış gibi yazılırdı — kullanıcının hatası olmayan bir hata,
+  /// sessizce serisini sıfırlamış görünürdü. Dondurma teklifi olmayan
+  /// yoldaki davranışın aynısı uygulanır.
+  Future<_StreakOutcome> _fallbackStreak() async {
+    final store = await StreakStore.load();
+    final today = DateTime.now();
+    final todayKey =
+        '${today.year.toString().padLeft(4, '0')}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+    final isNewDay = store.lastDay != todayKey;
+    return _StreakOutcome(streak: await store.recordPlay(), isNewDay: isNewDay);
+  }
+
+  /// Seri kararını, makbuzun kritik bölümünün DIŞINDA çözer.
+  ///
+  /// Buradaki iki adım da kritik bölümde duramaz:
+  ///
+  /// * Diyalog sınırsız süre kullanıcı girdisi bekler. Kritik bölümde
+  ///   beklerse "oyuncu cevap vermeden uygulamayı kapattı" makbuzu kalıcı
+  ///   olarak kilitler.
+  /// * `spend_coins` sunucuda idempotent DEĞİLDİR (`streak_freeze` için
+  ///   dedup anahtarı yok, her çağrı yeni bir `-50` satırı yazar). Bu
+  ///   yüzden hiçbir koşulda otomatik tekrarlanmamalıdır.
+  ///
+  /// [recordStage] verilirse her geçiş diske yazılır; kesinti sonrası
+  /// nerede kalındığı okunabilir. Verilmezse (çevrimdışı/yerel quiz)
+  /// makbuz yoktur ve karar sıradan biçimde alınır.
+  Future<_StreakOutcome> _resolveStreakDecision({
+    Future<void> Function(QuizResultReceiptStage stage, {bool freezeRequested})?
+    recordStage,
+    QuizResultReceipt? resumed,
+    // Sonuç makbuzunun değişmez kimliği: `<user>:<room>`. Tahsilatın
+    // idempotency anahtarı budur, yani aynı sonuç için yapılan her tekrar
+    // aynı anahtarı taşır ve sunucu ikinci kez çekmez.
+    String idempotencyKey = '',
+  }) async {
+    final isPremium = context.read<PremiumService>().isPremium;
+    final streakStore = await StreakStore.load();
+    final today = DateTime.now();
+    final todayKey =
+        '${today.year.toString().padLeft(4, '0')}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+    final isNewDay = streakStore.lastDay != todayKey;
+
+    // Kesintiden sonra yan etkili aşamalar ASLA tekrarlanmaz.
+    switch (resumed?.stage) {
+      // Coin isteği gönderilmiş ama sonucu bilinmiyor. Tekrar harcamak
+      // yerine ileri çözülür: coin en fazla bir kez gider.
+      case QuizResultReceiptStage.freezeApplying:
+        ErrorReporter.record(
+          StateError('Streak freeze spend outcome is unknown after restart.'),
+          StackTrace.current,
+          reason: 'streak_freeze_uncertain',
+        );
+        await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+        return _StreakOutcome(
+          streak: await streakStore.recordPlay(),
+          isNewDay: isNewDay,
+        );
+      // Dondurma zaten uygulanmış; seri yeniden yazılmaz.
+      case QuizResultReceiptStage.freezeApplied:
+      case QuizResultReceiptStage.freezeSkipped:
+      case QuizResultReceiptStage.progressApplying:
+      case QuizResultReceiptStage.progressApplied:
+      case QuizResultReceiptStage.acknowledgementPending:
+      case QuizResultReceiptStage.completed:
+        // Yeniden yazma yok: bu aşamalarda seri zaten bu turda
+        // uygulanmıştır, yalnız görünen değeri okunur.
+        return _StreakOutcome(
+          streak: streakStore.effectiveStreak(now: today),
+          isNewDay: isNewDay,
+        );
+      case null:
+      case QuizResultReceiptStage.pendingUserDecision:
+      case QuizResultReceiptStage.decisionRecorded:
+        break;
+    }
+
+    if (!streakStore.willBreakOnPlay()) {
+      await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+      return _StreakOutcome(
+        streak: await streakStore.recordPlay(),
+        isNewDay: isNewDay,
+      );
+    }
+
+    // Premium: ücretsiz ve otomatik; kullanıcı kararı yok.
+    if (isPremium) {
+      await recordStage?.call(QuizResultReceiptStage.freezeApplying);
+      await streakStore.addFreeze();
+      final streak = await streakStore.freezeAndRecordPlay();
+      await recordStage?.call(QuizResultReceiptStage.freezeApplied);
+      return _StreakOutcome(streak: streak, isNewDay: isNewDay);
+    }
+
+    // Karar bekleniyor. Bu aşamada hiçbir yan etki yoktur, bu yüzden
+    // kesinti olursa soruyu yeniden sormak güvenlidir.
+    await recordStage?.call(QuizResultReceiptStage.pendingUserDecision);
+    final wantsFreeze = await _askForStreakFreeze();
+
+    // Karar, UYGULANMADAN önce yazılır: aksi hâlde coin harcama ile
+    // kararın kendisi aynı kesintide birlikte kaybolur.
+    await recordStage?.call(
+      QuizResultReceiptStage.decisionRecorded,
+      freezeRequested: wantsFreeze,
+    );
+    if (!wantsFreeze) {
+      await recordStage?.call(QuizResultReceiptStage.freezeSkipped);
+      return _StreakOutcome(
+        streak: await streakStore.recordPlay(),
+        isNewDay: isNewDay,
+      );
+    }
+
+    await recordStage?.call(
+      QuizResultReceiptStage.freezeApplying,
+      freezeRequested: true,
+    );
+    final charge = await _applyPaidStreakFreeze(streakStore, idempotencyKey);
+    await recordStage?.call(
+      charge.streak == null
+          ? QuizResultReceiptStage.freezeSkipped
+          : QuizResultReceiptStage.freezeApplied,
+    );
+    return _StreakOutcome(
+      streak: charge.streak ?? await streakStore.recordPlay(),
+      isNewDay: isNewDay,
+    );
+  }
+
+  /// Yalnız sorar. Hiçbir yan etkisi yoktur — bu yüzden kesildiğinde
+  /// yeniden sorulabilir.
+  Future<bool> _askForStreakFreeze() async {
+    if (!mounted) return false;
     int balance;
     try {
       balance = await repository.loadCoinBalance();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'streak_freeze_balance');
-      return null;
+      return false;
     }
-    if (!mounted || balance < _streakFreezeCost) return null;
+    if (!mounted || balance < _streakFreezeCost) return false;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -181,49 +548,51 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ],
       ),
     );
-    if (confirmed != true || !mounted) return null;
-    bool ok;
-    try {
-      ok = await repository.spendCoins(_streakFreezeCost, 'streak_freeze');
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'streak_freeze_spend');
-      return null;
-    }
-    if (!ok) return null;
-    // Coin ödendi: bir jeton verilip hemen uygulanır (seri +1 devam eder).
-    await store.addFreeze();
-    return store.freezeAndRecordPlay();
+    return confirmed == true && mounted;
   }
 
-  Future<void> _recordProgress() async {
-    // Premium durumunu await'lerden ÖNCE, context hâlâ güvenliyken oku.
-    final isPremium = context.read<PremiumService>().isPremium;
-    // Dil de await'lerden önce okunur: bildirim metni async boşluğun
+  /// Coini harcar ve dondurmayı uygular.
+  ///
+  /// Çağıran, bu çağrıdan ÖNCE `freezeApplying` aşamasını yazmış olmalıdır.
+  /// Tahsilat, sonuç makbuzunun kimliğinden türeyen değişmez bir
+  /// idempotency anahtarıyla yapılır: cevabı kaybolan bir istek aynı
+  /// anahtarla tekrarlandığında sunucu yeni bir hareket yaratmaz.
+  ///
+  /// Dönen [StreakFreezeChargeResult.idempotent] bilgisi çağırana taşınır;
+  /// göç uygulanmamış bir sunucuda eski (idempotent OLMAYAN) yola
+  /// düşüldüğü için belirsiz tahsilat yine tekrarlanmamalıdır.
+  Future<({int? streak, bool idempotent})> _applyPaidStreakFreeze(
+    StreakStore store,
+    String idempotencyKey,
+  ) async {
+    StreakFreezeChargeResult charge;
+    try {
+      charge = await repository.spendStreakFreeze(
+        idempotencyKey: idempotencyKey,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_freeze_spend');
+      return (streak: null, idempotent: false);
+    }
+    if (!charge.succeeded) {
+      return (streak: null, idempotent: charge.idempotent);
+    }
+    // Coin ödendi: bir jeton verilip hemen uygulanır (seri +1 devam eder).
+    await store.addFreeze();
+    return (
+      streak: await store.freezeAndRecordPlay(),
+      idempotent: charge.idempotent,
+    );
+  }
+
+  Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
+    // Dil, await'lerden önce okunur: bildirim metni async boşluğun
     // ötesinde `context`e dokunmadan seçilsin.
     final isKuNow = context.isKu;
-    final streakStore = await StreakStore.load();
-    final today = DateTime.now();
-    final todayKey =
-        '${today.year.toString().padLeft(4, '0')}-'
-        '${today.month.toString().padLeft(2, '0')}-'
-        '${today.day.toString().padLeft(2, '0')}';
-    final isNewDay = streakStore.lastDay != todayKey;
-
-    // Seri bugün oynamayınca kırılacaksa: Premium ise otomatik ve ÜCRETSİZ
-    // korunur; değilse oyuncuya coin karşılığı koruma teklif edilir
-    // (pay-at-result). Kabul edilmezse normal davranış işler.
-    final int streak;
-    if (streakStore.willBreakOnPlay()) {
-      if (isPremium) {
-        await streakStore.addFreeze();
-        streak = await streakStore.freezeAndRecordPlay();
-      } else {
-        final saved = await _maybeOfferStreakFreeze(streakStore);
-        streak = saved ?? await streakStore.recordPlay();
-      }
-    } else {
-      streak = await streakStore.recordPlay();
-    }
+    // Seri kararı bu adımdan ÖNCE, kritik bölümün dışında verildi ve
+    // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
+    final streak = streakOutcome.streak;
+    final isNewDay = streakOutcome.isNewDay;
     final mistakeStore = await MistakeStore.load();
     final achievementStore = await AchievementStore.load();
     final newAchievements = await achievementStore.recordQuizResult(
@@ -476,12 +845,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
 
-    void playAgain() {
-      if (room.id != null) {
-        Navigator.of(context).pop();
-      } else {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-      }
+    final isOnlineRoom = room.id != null;
+    final nextActionLabel = context.t(isOnlineRoom ? K.home : K.playAgain);
+    final nextActionIcon = isOnlineRoom
+        ? AppIcons.house
+        : AppIcons.arrowRotateLeft;
+
+    void completeResultAction() {
+      // Quiz rotası sonuç ekranıyla değiştirilir; çevrimiçi turda tek `pop`
+      // bitmiş RoomScreen'i yeniden gösteriyordu. İlk rotaya dönmek solo
+      // tekrar davranışını korurken çevrimiçi odanın eski rotasını temizler.
+      Navigator.of(context).popUntil((route) => route.isFirst);
     }
 
     void openReview(List<AnswerRecord> records) {
@@ -535,14 +909,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   end: Alignment.bottomRight,
                   colors: [AppTheme.wrongHeader, AppTheme.wrongDeep],
                 ))
-        // Solo sonuç vitrini kimlik anıdır, eylem değil: Kesk (marka yeşili)
-        // kullanılır. Turuncu yalnız "sonraki adım" butonunda kalır — böylece
-        // ekranda göz nereye gideceğini şaşırmaz. Ayrıca eski turuncu hero,
-        // açık temada beyaz metni okutabilmek için siyah perde harcıyordu.
+        // Solo sonuç vitrini kimlik anıdır, eylem değil; turuncu yalnız
+        // "sonraki adım" butonunda kalır — bu kural korunuyor.
+        //
+        // Değişen, iki ucun KARIŞIMI: marka yeşilinden koyu turuncuya inen
+        // gradyan gerçek cihazda kutlama değil çamur veriyordu (yeşil→kahve
+        // geçişi, 2026-08-03 görsel denetimi). Rengîn kutlama yüzeyi
+        // mücevher mantığını kullanır: derin mürekkepten ametiste. İki uç da
+        // beyaz metinle çok yüksek kontrast verir (15.67:1 ve 7.19:1) ve
+        // hiçbiri eylem turuncusuyla yarışmaz.
         : const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppTheme.culturalBrandBg, AppTheme.brandDeep],
+            colors: [Color(0xFF17233B), Color(0xFF6A38BE)],
           );
 
     final borderColor = is1v1
@@ -569,7 +948,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : AppIcons.faceFrown)
         : AppIcons.flag;
 
-    return Scaffold(
+    final scaffold = Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: Padding(
@@ -588,6 +967,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ),
             ),
             child: BackButton(
+              onPressed: isOnlineRoom ? completeResultAction : null,
               color: AppTheme.isLight(context)
                   ? AppTheme.lightTextPrimary
                   : Colors.white,
@@ -847,8 +1227,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 // çizildiği için çevrimdışı turda ekranda
                                 // hiçbir iz kalmıyor ve oyuncu turu boşuna
                                 // oynadığını sanıyordu (2026-07-26).
-                                if (widget.rewardQueued &&
-                                    coinsAwarded <= 0) ...[
+                                if (widget.rewardSettlementState ==
+                                        QuizRewardSettlementState.queued ||
+                                    (widget.rewardSettlementState == null &&
+                                        widget.rewardQueued &&
+                                        coinsAwarded <= 0)) ...[
                                   const SizedBox(height: AppSpacing.sm),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -862,6 +1245,30 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       Flexible(
                                         child: Text(
                                           context.t(K.rewardPending),
+                                          textAlign: TextAlign.center,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                if (widget.rewardSettlementState ==
+                                    QuizRewardSettlementState.unresolved) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        AppIcons.cloud,
+                                        size: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.rewardUnresolved),
                                           textAlign: TextAlign.center,
                                           style: AppTypography.caption.copyWith(
                                             color: Colors.white70,
@@ -1020,17 +1427,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                               ),
                               onPressed: wrongRecords.isNotEmpty
                                   ? () => openReview(wrongRecords)
-                                  : playAgain,
+                                  : completeResultAction,
                               icon: Icon(
                                 wrongRecords.isNotEmpty
                                     ? AppIcons.squareCheck
-                                    : AppIcons.arrowRotateLeft,
+                                    : nextActionIcon,
                                 size: 20,
                               ),
                               label: Text(
                                 wrongRecords.isNotEmpty
                                     ? context.t(K.reviewMistakes)
-                                    : context.t(K.playAgain),
+                                    : nextActionLabel,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -1046,9 +1453,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       if (wrongRecords.isNotEmpty)
                         _ResultSideAction(
                           key: const ValueKey('result-play-again-button'),
-                          icon: AppIcons.arrowRotateLeft,
-                          label: context.t(K.playAgain),
-                          onTap: playAgain,
+                          icon: nextActionIcon,
+                          label: nextActionLabel,
+                          onTap: completeResultAction,
                         ),
                       _ResultSideAction(
                         key: const ValueKey('result-share-button'),
@@ -1191,6 +1598,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ),
         ),
       ),
+    );
+
+    return PopScope<void>(
+      canPop: !isOnlineRoom,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && isOnlineRoom) completeResultAction();
+      },
+      child: scaffold,
     );
   }
 }

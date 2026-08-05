@@ -27,6 +27,7 @@ import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
+import '../services/room_result_presentation.dart';
 import '../services/tts_service.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
@@ -45,6 +46,7 @@ import 'quiz/quiz_option_tile.dart';
 import 'quiz/quiz_timer_widget.dart';
 import 'quiz/quiz_wildcard_bar.dart';
 import 'quiz_result_screen.dart';
+import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 part 'quiz/quiz_widgets.dart';
@@ -80,6 +82,9 @@ const double _compactLandscapeMinWidth = 700.0;
 /// kalır ve dikey akışı kullanır.
 const double _compactLandscapeMaxHeight = 600.0;
 
+/// Terminal 1v1 çağrısı sonsuza dek bekleyip geri dönüşü kilitlememeli.
+const Duration _onlineResultRequestTimeout = Duration(seconds: 15);
+
 /// İki sütunlu telefon-yatay düzeni bu viewport için uygun mu?
 ///
 /// Beklenmeyen veya sonsuz bir yükseklik kısıtı gelirse güvenli varsayılan
@@ -102,6 +107,36 @@ enum _MultiplayerPhase {
   reveal,
 }
 
+enum _OnlineResultPhase { idle, loading, retryableFailure }
+
+typedef _QuizCoinSettlement = ({
+  int coinsAwarded,
+  bool rewardQueued,
+  bool isDurable,
+  String ownerUserId,
+});
+
+class _OpponentAnswer {
+  const _OpponentAnswer({required this.name, required this.answer});
+
+  final String name;
+  final String answer;
+}
+
+class _ResolvedResumeAnswer {
+  const _ResolvedResumeAnswer({
+    required this.answer,
+    required this.questionIndex,
+    required this.selectedAnswer,
+    required this.correctAnswer,
+  });
+
+  final ResumedAnswer answer;
+  final int questionIndex;
+  final String selectedAnswer;
+  final String correctAnswer;
+}
+
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
     required this.repository,
@@ -115,6 +150,7 @@ class QuizScreen extends StatefulWidget {
     this.experience = QuizExperience.competition,
     this.contestId,
     this.versusBannerText,
+    this.resumeSnapshot,
     super.key,
   });
 
@@ -141,6 +177,9 @@ class QuizScreen extends StatefulWidget {
   /// Turnuva maçı gibi versus bağlamı olan akışlarda ekran üstünde
   /// gösterilen bant metni (örn. "Çaryeka Final · Li dijî Azad").
   final String? versusBannerText;
+
+  /// Süreç yeniden açıldığında sunucudan gelen yetkili aktif-oda durumu.
+  final RoomResumeSnapshot? resumeSnapshot;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -177,8 +216,8 @@ class _QuizScreenState extends State<QuizScreen>
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
-  final Map<String, String> _opponentSelectedAnswers = {};
-  final Set<String> _answeredPlayerNames = {};
+  final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
+  final Set<String> _answeredPlayerKeys = {};
   Timer? _autoNextTimer;
   BotRace? _botRace;
   bool _isKu = true;
@@ -213,11 +252,42 @@ class _QuizScreenState extends State<QuizScreen>
   int _revealCountdown = 0;
   Timer? _revealTickTimer;
   Timer? _opponentWaitTimer;
-  Timer? _authoritativeAdvanceFallbackTimer;
+  Timer? _advanceRetryTimer;
+  Timer? _serverReadyRetryTimer;
   bool _opponentFinished = false;
   StreamSubscription? _roomSub;
   Timer? _pollTimer;
   bool _questionFlowStarted = false;
+  double? _initialTimerFraction;
+  bool _resumingOnlineSession = false;
+  bool _exitInFlight = false;
+  bool _reconcileInFlight = false;
+  int _reconcileGeneration = 0;
+  bool _terminalHandling = false;
+  _OnlineResultPhase _onlineResultPhase = _OnlineResultPhase.idle;
+  bool _onlineResultInFlight = false;
+  bool _onlineResultOwnerChanged = false;
+  int _onlineResultGeneration = 0;
+  String _onlineResultOwnerId = '';
+  bool _onlineResultFinishRequired = false;
+  _QuizCoinSettlement? _legacyRewardSettlement;
+  Future<void>? _legacyFinishInFlight;
+  Future<_QuizCoinSettlement>? _legacySettlementInFlight;
+  bool _legacyFinishRequired = false;
+  bool _legacyResultInFlight = false;
+  bool _legacyRetryRequested = false;
+  int _legacyResultGeneration = 0;
+  RoomEndState? _deferredEndState;
+  int _exitGeneration = 0;
+  bool _serverReadyWaiting = false;
+  bool _clientReadyInFlight = false;
+  bool _clientReadyMarked = false;
+  int _serverReadyRetryCount = 0;
+  bool _advanceInFlight = false;
+  bool _advanceSequenceActive = false;
+  bool _serverAnswerPending = false;
+  int? _authoritativeRemainingMs;
+  DateTime? _authoritativeRemainingCapturedAt;
 
   // TTS: cihaz Kürtçe TTS desteklemiyorsa canListen false kalır ve
   // dinleme butonu gizlenir. Konuşma durumu TtsService.speakingNotifier
@@ -238,7 +308,11 @@ class _QuizScreenState extends State<QuizScreen>
   Timer? _visualReadyFallbackTimer;
   Timer? _readyPingTimer;
   Timer? _readyTimeoutTimer;
-  bool get _needsOpponentReadyGate => widget.is1v1 && _isMultiplayer;
+  bool get _needsOpponentReadyGate =>
+      !_usesServerHiddenAnswers &&
+      widget.is1v1 &&
+      _isMultiplayer &&
+      !_resumingOnlineSession;
 
   // Quiz tutorial coach mark hedef anahtarları
   final GlobalKey _timerTargetKey = GlobalKey();
@@ -288,6 +362,18 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _usesServerHiddenAnswers =>
       _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
+  bool _isMe(Player player) =>
+      playerMatchesIdentity(player, id: _myId, legacyName: _myName);
+
+  Iterable<Player> get _opponents =>
+      livePlayers.where((player) => !_isMe(player));
+
+  GameRoom get _resultRoom {
+    final myIndex = livePlayers.indexWhere(_isMe);
+    if (myIndex == -1) return widget.room;
+    return widget.room.copyWith(players: [livePlayers[myIndex], ..._opponents]);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -302,7 +388,18 @@ class _QuizScreenState extends State<QuizScreen>
     _questions = [
       for (final question in widget.questions) question.localized(isKu: _isKu),
     ];
-    _questionVisualReady = _questions.isEmpty || !_questions.first.hasImage;
+    _myId = widget.repository.currentUserId;
+    _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    livePlayers = List<Player>.of(widget.room.players);
+    _serverReadyWaiting = _usesServerHiddenAnswers;
+    final initialResume = _matchingResumeSnapshot(widget.resumeSnapshot);
+    if (initialResume != null && _questions.isNotEmpty) {
+      _resumingOnlineSession = true;
+      _tutorialGateReady = true;
+      _opponentClientReady = true;
+      _applyResumeSnapshotData(initialResume, initial: true);
+    }
+    _questionVisualReady = _questions.isEmpty || !_questions[index].hasImage;
     if (!_questionVisualReady) {
       // Görsel yükleme kapısı için emniyet supabı: ağ askıda kalır veya
       // görsel callback'i hiç tetiklenmezse soru akışı ve sayaç sonsuza
@@ -325,7 +422,7 @@ class _QuizScreenState extends State<QuizScreen>
     _timerController = AnimationController(
       vsync: this,
       duration: Duration(seconds: widget.room.secondsPerQuestion),
-      value: 1.0,
+      value: _initialTimerFraction ?? 1.0,
     );
     _explanationController = AnimationController(
       vsync: this,
@@ -340,7 +437,7 @@ class _QuizScreenState extends State<QuizScreen>
       _timerController.addStatusListener((status) {
         if (status == AnimationStatus.dismissed) {
           if (!answered) {
-            _answer('TIMEOUT');
+            _handleQuestionDeadline();
           }
         }
       });
@@ -368,51 +465,70 @@ class _QuizScreenState extends State<QuizScreen>
 
       if (widget.room.id != null) {
         // Real online multiplayer (1vs1 or Team Game)
-        livePlayers = List.of(widget.room.players);
         // Kimlik önce oturum kullanıcı kimliğinden çözülür. Görünen ad
         // benzersiz değildir: aynı adı seçen iki oyuncu olduğunda ada göre
         // eşleştirme skoru ve "hazır" sinyalini rakibe atıyordu. Ad yalnızca
         // kimlik yoksa (eski oda kayıtları) yedek olarak kullanılır.
-        final sessionUserId = widget.repository.currentUserId;
-        final matchById = sessionUserId == null
-            ? null
-            : livePlayers.where((p) => p.id == sessionUserId).firstOrNull;
-        _myId =
-            matchById?.id ??
-            livePlayers.where((p) => p.name == name).firstOrNull?.id;
+        // Oturum kimliği varsa yalnız o yetkilidir. Oda listesindeki aynı
+        // ada bakıp başka bir oyuncunun kimliğini kendimize atamak, iki
+        // "Berfin"li maçta skor ve hazır sinyallerini tersine çeviriyordu.
+        // Kimliksiz eski kayıtlarda [_isMe] ad yedeğini kullanır.
+        _myId = widget.repository.currentUserId;
+        _applyOwnAuthoritativePlayerState();
         _realtimeSub = widget.repository
             .subscribeRoomBroadcast(widget.room.id!)
             .listen((payload) {
               if (!mounted) return;
               final senderId = payload['sender_id'] as String?;
               final senderName = payload['sender'] as String?;
-              final isSelf = _myId != null && senderId != null
-                  ? senderId == _myId
-                  : senderName == name;
-              if (senderName != null && !isSelf && payload['ready'] == true) {
+              final isSelf = playerMatchesIdentity(
+                Player(
+                  id: senderId,
+                  name: senderName ?? '',
+                  score: 0,
+                  state: '',
+                ),
+                id: _myId,
+                legacyName: name,
+              );
+              if (!_usesServerHiddenAnswers &&
+                  senderName != null &&
+                  !isSelf &&
+                  payload['ready'] == true) {
                 _handleOpponentReady();
                 return;
               }
               if (senderName != null && !isSelf) {
-                if (payload['advance_request'] == true && _isHost) {
-                  _advanceAuthoritativeIndex();
+                final senderKey = playerIdentityKey(
+                  id: senderId,
+                  legacyName: senderName,
+                );
+                if (!_usesServerHiddenAnswers &&
+                    payload['advance_request'] == true &&
+                    _isHost) {
+                  unawaited(_next());
                   return;
                 }
+                int? newerQuestionIndex;
                 setState(() {
                   if (payload['finished'] == true) {
                     _opponentFinished = true;
-                    _answeredPlayerNames.add(senderName);
+                    _answeredPlayerKeys.add(senderKey);
                   }
                   if (payload['answered'] == true) {
-                    _answeredPlayerNames.add(senderName);
+                    _answeredPlayerKeys.add(senderKey);
                   } else if (payload['answered'] == false) {
-                    _answeredPlayerNames.remove(senderName);
+                    _answeredPlayerKeys.remove(senderKey);
                   }
 
+                  final incomingPlayer = Player(
+                    id: senderId,
+                    name: senderName,
+                    score: 0,
+                    state: '',
+                  );
                   final opponentIdx = livePlayers.indexWhere(
-                    (p) => senderId != null
-                        ? p.id == senderId
-                        : p.name == senderName,
+                    (player) => playersShareIdentity(player, incomingPlayer),
                   );
                   final updatedOpponent = Player(
                     id:
@@ -434,24 +550,43 @@ class _QuizScreenState extends State<QuizScreen>
                   }
                   livePlayers.sort((a, b) => b.score.compareTo(a.score));
 
-                  final oppAnswer = payload['selected_answer'] as String?;
+                  final oppAnswer = _usesServerHiddenAnswers
+                      ? null
+                      : payload['selected_answer'] as String?;
                   if (oppAnswer != null) {
-                    _opponentSelectedAnswers[senderName] = oppAnswer;
+                    _opponentSelectedAnswers[senderKey] = _OpponentAnswer(
+                      name: senderName,
+                      answer: oppAnswer,
+                    );
                   } else if (payload['answered'] == false) {
-                    _opponentSelectedAnswers.remove(senderName);
+                    _opponentSelectedAnswers.remove(senderKey);
                   }
 
                   final oppIndex = payload['question_index'] as int?;
                   if (oppIndex != null && oppIndex > index) {
-                    _syncToQuestionIndex(oppIndex);
+                    newerQuestionIndex = oppIndex;
                   }
                 });
+                final targetIndex = newerQuestionIndex;
+                if (targetIndex != null) {
+                  if (_usesServerHiddenAnswers) {
+                    unawaited(_reconcileOnlineRoom());
+                  } else {
+                    _syncToQuestionIndex(targetIndex);
+                  }
+                }
+                if (_usesServerHiddenAnswers && payload['answered'] == true) {
+                  unawaited(_reconcileOnlineRoom());
+                  return;
+                }
                 _checkMultiplayerSync();
               }
             });
 
         if (widget.is1v1) {
-          _startOpponentReadyHandshake();
+          if (!_resumingOnlineSession && !_usesServerHiddenAnswers) {
+            _startOpponentReadyHandshake();
+          }
         } else {
           _playersSub = widget.repository
               .subscribeRoomPlayers(widget.room)
@@ -460,20 +595,21 @@ class _QuizScreenState extends State<QuizScreen>
                 setState(() {
                   for (final p in players) {
                     final idx = livePlayers.indexWhere(
-                      (lp) => lp.name == p.name,
+                      (lp) => playersShareIdentity(lp, p),
                     );
+                    final key = playerIdentityKey(id: p.id, legacyName: p.name);
                     if (idx != -1) {
                       livePlayers[idx] = livePlayers[idx].copyWith(
                         score: p.score,
                         streak: p.streak,
-                        state: _answeredPlayerNames.contains(p.name)
+                        state: _answeredPlayerKeys.contains(key)
                             ? Tr.forKu(K.answeredState, _isKu)
                             : Tr.forKu(K.waitingAnswerState, _isKu),
                       );
                     } else {
                       livePlayers.add(
                         p.copyWith(
-                          state: _answeredPlayerNames.contains(p.name)
+                          state: _answeredPlayerKeys.contains(key)
                               ? Tr.forKu(K.answeredState, _isKu)
                               : Tr.forKu(K.waitingAnswerState, _isKu),
                         ),
@@ -520,16 +656,283 @@ class _QuizScreenState extends State<QuizScreen>
             .listen((rows) {
               if (!mounted) return;
               if (rows.isNotEmpty) {
-                final dbIndex =
-                    rows.first['current_question_index'] as int? ?? 0;
+                final row = rows.first;
+                final dbIndex = row['current_question_index'] as int? ?? 0;
                 _onRoomQuestionIndexChanged(dbIndex);
+                if (row['status'] == 'finished') {
+                  unawaited(_reconcileOnlineRoom());
+                }
               }
             });
       }
-      _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-        _pollRoomIndex();
+      _ensureRoomPolling();
+      final binding = WidgetsBinding.instance;
+      binding.addPostFrameCallback((_) {
+        if (mounted) unawaited(_reconcileOnlineRoom());
       });
+      binding.scheduleFrame();
     }
+
+    if (_resumingOnlineSession && _questionVisualReady) {
+      scheduleMicrotask(_maybeStartQuestionFlow);
+    }
+  }
+
+  RoomResumeSnapshot? _matchingResumeSnapshot(RoomResumeSnapshot? snapshot) {
+    final roomId = widget.room.id;
+    if (snapshot == null || roomId == null) return null;
+    if (snapshot.room.id != roomId ||
+        snapshot.room.status != RoomStatus.active) {
+      return null;
+    }
+    return snapshot;
+  }
+
+  bool _hasAuthoritativeTiming(RoomResumeSnapshot snapshot) =>
+      snapshot.questionStartedAt != null && snapshot.deadline != null;
+
+  void _captureAuthoritativeTiming(RoomResumeSnapshot snapshot) {
+    if (!_hasAuthoritativeTiming(snapshot)) {
+      _authoritativeRemainingMs = null;
+      _authoritativeRemainingCapturedAt = null;
+      return;
+    }
+    _authoritativeRemainingMs = max(0, snapshot.remainingMs);
+    _authoritativeRemainingCapturedAt = DateTime.now();
+  }
+
+  int? get _estimatedAuthoritativeRemainingMs {
+    final remaining = _authoritativeRemainingMs;
+    final capturedAt = _authoritativeRemainingCapturedAt;
+    if (remaining == null || capturedAt == null) return null;
+    return max(
+      0,
+      remaining - DateTime.now().difference(capturedAt).inMilliseconds,
+    );
+  }
+
+  bool get _hasSafeCurrentReveal =>
+      !_serverAnswerPending &&
+      question.correctAnswer.isNotEmpty &&
+      answerRecords.any((record) => record.id == question.id);
+
+  bool get _serverQuestionGatesReady =>
+      _tutorialGateReady && _questionVisualReady && _clientReadyMarked;
+
+  void _applyResumeSnapshotData(
+    RoomResumeSnapshot snapshot, {
+    required bool initial,
+  }) {
+    if (_questions.isEmpty) return;
+    final targetIndex = snapshot.currentQuestionIndex
+        .clamp(0, _questions.length - 1)
+        .toInt();
+    if (!initial && targetIndex < index) return;
+
+    final advanced = targetIndex > index;
+    if (advanced) {
+      _autoNextTimer?.cancel();
+      _revealTimer?.cancel();
+      _revealTickTimer?.cancel();
+      _opponentWaitTimer?.cancel();
+      _advanceRetryTimer?.cancel();
+      selectedAnswer = '';
+      favorite = false;
+      _favoriteTouched = false;
+      completing = false;
+      _wildcard = const WildcardState();
+      _firstAttemptAnswer = '';
+      _audiencePoll = null;
+      hiddenAnswers = const {};
+      _showExplanation = false;
+      _suspense = false;
+      _opponentSelectedAnswers.clear();
+      _answeredPlayerKeys.clear();
+      _opponentFinished = false;
+      _mpPhase = _MultiplayerPhase.answering;
+      _revealCountdown = 0;
+      _serverAnswerPending = false;
+      _advanceSequenceActive = false;
+      _visualReadyFallbackTimer?.cancel();
+      _questionVisualReady = !_questions[targetIndex].hasImage;
+      if (!_questionVisualReady) {
+        _visualReadyFallbackTimer = Timer(const Duration(seconds: 3), () {
+          if (mounted) _handleQuestionVisualReady();
+        });
+      }
+    }
+
+    index = targetIndex;
+    _captureAuthoritativeTiming(snapshot);
+    score = snapshot.ownScore;
+    streak = snapshot.streak;
+    bestStreak = snapshot.bestStreak;
+    correctCount = snapshot.correctCount;
+    wrongCount = snapshot.wrongCount;
+
+    final resolved = _resolveResumeAnswers(snapshot.answers);
+    if (initial) answerRecords.clear();
+    for (final item in resolved) {
+      final baseQuestion = _questions[item.questionIndex];
+      final revealedQuestion = baseQuestion.withRevealedAnswer(
+        correctAnswer: item.correctAnswer,
+        explanation: item.answer.explanation,
+        explanationKu: item.answer.explanationKu,
+        explanationTr: item.answer.explanationTr,
+      );
+      _questions[item.questionIndex] = revealedQuestion;
+
+      final record = AnswerRecord(
+        id: revealedQuestion.id,
+        category: revealedQuestion.category,
+        prompt: revealedQuestion.promptText,
+        answers: revealedQuestion.answers,
+        correctAnswer: item.correctAnswer,
+        selectedAnswer: item.selectedAnswer,
+        explanation: revealedQuestion.explanation,
+        explanationKu: revealedQuestion.explanationKu,
+        explanationTr: revealedQuestion.explanationTr,
+        imageUrl: revealedQuestion.imageUrl,
+        responseMs: item.answer.responseMs,
+        pointsEarned: item.answer.pointsAwarded,
+      );
+      final existing = answerRecords.indexWhere(
+        (candidate) => candidate.id == record.id,
+      );
+      if (existing == -1) {
+        answerRecords.add(record);
+      } else {
+        answerRecords[existing] = record;
+      }
+    }
+    answerRecords.sort((a, b) {
+      final aIndex = _questions.indexWhere((question) => question.id == a.id);
+      final bIndex = _questions.indexWhere((question) => question.id == b.id);
+      return aIndex.compareTo(bIndex);
+    });
+
+    _ResolvedResumeAnswer? currentAnswer;
+    for (final item in resolved) {
+      if (item.questionIndex == index) currentAnswer = item;
+    }
+    final pendingSelection = _resolvePendingSelection(
+      snapshot.pendingAnswer,
+      expectedQuestionIndex: index,
+    );
+    if (currentAnswer != null) {
+      selectedAnswer = currentAnswer.selectedAnswer;
+      _serverAnswerPending = false;
+      _suspense = false;
+      _showExplanation = true;
+      if (initial || advanced || _mpPhase != _MultiplayerPhase.reveal) {
+        _mpPhase = _MultiplayerPhase.waiting;
+      }
+      _questionFlowStarted = true;
+      _initialTimerFraction = null;
+      _answeredPlayerKeys.add(
+        playerIdentityKey(id: _myId, legacyName: _myName),
+      );
+    } else if (pendingSelection != null) {
+      selectedAnswer = pendingSelection;
+      _serverAnswerPending = true;
+      _suspense = false;
+      _showExplanation = false;
+      _mpPhase = _MultiplayerPhase.waiting;
+      _questionFlowStarted = true;
+      _initialTimerFraction = null;
+      _answeredPlayerKeys.add(
+        playerIdentityKey(id: _myId, legacyName: _myName),
+      );
+    } else if (initial || advanced) {
+      selectedAnswer = '';
+      _suspense = false;
+      _showExplanation = false;
+      _mpPhase = _MultiplayerPhase.answering;
+      _questionFlowStarted = false;
+      final totalMs = widget.room.secondsPerQuestion * 1000;
+      _initialTimerFraction = !_hasAuthoritativeTiming(snapshot)
+          ? null
+          : totalMs <= 0
+          ? 0
+          : (snapshot.remainingMs / totalMs).clamp(0.0, 1.0).toDouble();
+    }
+    if (_usesServerHiddenAnswers) {
+      _serverReadyWaiting =
+          (!_hasAuthoritativeTiming(snapshot) || !_clientReadyMarked) &&
+          !answered;
+      if (_serverReadyWaiting) {
+        _questionFlowStarted = false;
+        _initialTimerFraction = null;
+      }
+    }
+    _applyOwnAuthoritativePlayerState();
+  }
+
+  String? _resolvePendingSelection(
+    ResumedPendingAnswer? pending, {
+    required int expectedQuestionIndex,
+  }) {
+    if (pending == null) return null;
+    var questionIndex = _questions.indexWhere(
+      (question) => question.id == pending.questionId,
+    );
+    if (questionIndex == -1 &&
+        pending.questionId.trim().isEmpty &&
+        pending.questionIndex >= 0 &&
+        pending.questionIndex < _questions.length) {
+      questionIndex = pending.questionIndex;
+    }
+    if (questionIndex != expectedQuestionIndex) return null;
+    if (pending.selectedOptionKey == 'TIMEOUT') return 'TIMEOUT';
+    return _questions[questionIndex].answerForOptionKey(
+      pending.selectedOptionKey,
+    );
+  }
+
+  List<_ResolvedResumeAnswer> _resolveResumeAnswers(
+    List<ResumedAnswer> answers,
+  ) {
+    final byQuestionIndex = <int, _ResolvedResumeAnswer>{};
+    for (final answer in answers) {
+      var questionIndex = _questions.indexWhere(
+        (question) => question.id == answer.questionId,
+      );
+      if (questionIndex == -1 &&
+          answer.questionId.trim().isEmpty &&
+          answer.questionIndex >= 0 &&
+          answer.questionIndex < _questions.length) {
+        questionIndex = answer.questionIndex;
+      }
+      if (questionIndex < 0 || questionIndex >= _questions.length) continue;
+
+      final question = _questions[questionIndex];
+      final selected = answer.selectedOptionKey == 'TIMEOUT'
+          ? 'TIMEOUT'
+          : question.answerForOptionKey(answer.selectedOptionKey);
+      final correct = question.answerForOptionKey(answer.correctOptionKey);
+      if (selected == null || correct == null) continue;
+      byQuestionIndex[questionIndex] = _ResolvedResumeAnswer(
+        answer: answer,
+        questionIndex: questionIndex,
+        selectedAnswer: selected,
+        correctAnswer: correct,
+      );
+    }
+    final resolved = byQuestionIndex.values.toList()
+      ..sort((a, b) => a.questionIndex.compareTo(b.questionIndex));
+    return resolved;
+  }
+
+  void _applyOwnAuthoritativePlayerState() {
+    final myIndex = livePlayers.indexWhere(_isMe);
+    if (myIndex == -1) return;
+    final previous = livePlayers[myIndex];
+    livePlayers[myIndex] = previous.copyWith(
+      score: score,
+      streak: streak,
+      state: answered ? Tr.forKu(K.answeredState, _isKu) : previous.state,
+    );
+    livePlayers.sort((a, b) => b.score.compareTo(a.score));
   }
 
   /// Gösterilen sorunun gerçek favori durumunu yükler. Soru değiştiyse
@@ -557,19 +960,57 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   void _startTimer() {
+    if (_usesServerHiddenAnswers &&
+        _estimatedAuthoritativeRemainingMs == null) {
+      return;
+    }
     _questionStopwatch
       ..reset()
       ..start();
     if (_usesTimer) {
+      var initialFraction = _initialTimerFraction;
+      if (_usesServerHiddenAnswers) {
+        final totalMs = widget.room.secondsPerQuestion * 1000;
+        final remainingMs = _estimatedAuthoritativeRemainingMs ?? 0;
+        initialFraction = totalMs <= 0
+            ? 0
+            : (remainingMs / totalMs).clamp(0.0, 1.0).toDouble();
+      }
+      _initialTimerFraction = null;
       _timerController.stop();
-      _timerController.value = 1.0;
+      _timerController.value = initialFraction ?? 1.0;
+      if (_timerController.value <= 0) {
+        scheduleMicrotask(() {
+          if (mounted && !answered) _handleQuestionDeadline();
+        });
+        return;
+      }
       _timerController.reverse();
     }
   }
 
+  void _handleQuestionDeadline() {
+    if (!mounted || answered) return;
+    if (_usesServerHiddenAnswers) {
+      if (_advanceSequenceActive) return;
+      _timerController.stop();
+      _questionStopwatch.stop();
+      _advanceSequenceActive = true;
+      unawaited(_advanceAuthoritativeIndex());
+      return;
+    }
+    unawaited(_answer('TIMEOUT'));
+  }
+
   void _startQuestionFlowOnce() {
     if (_questionFlowStarted || _questions.isEmpty) return;
+    if (_usesServerHiddenAnswers &&
+        (!_serverQuestionGatesReady ||
+            _estimatedAuthoritativeRemainingMs == null)) {
+      return;
+    }
     _questionFlowStarted = true;
+    _serverReadyWaiting = false;
     _startTimer();
   }
 
@@ -579,7 +1020,7 @@ class _QuizScreenState extends State<QuizScreen>
     _tutorialGateReady = true;
     _maybeStartQuestionFlow();
     // Tutorial açıkken oda index senkronu sayacı ertelediyse şimdi başlat.
-    if (_timerDeferredForTutorial) {
+    if (_timerDeferredForTutorial && !_usesServerHiddenAnswers) {
       _timerDeferredForTutorial = false;
       if (!answered) _startTimer();
     }
@@ -587,9 +1028,96 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _maybeStartQuestionFlow() {
     if (!_tutorialGateReady) return;
-    if (_needsOpponentReadyGate && !_opponentClientReady) return;
     if (!_questionVisualReady) return;
+    if (_usesServerHiddenAnswers) {
+      unawaited(_ensureServerClientReady());
+      return;
+    }
+    if (_needsOpponentReadyGate && !_opponentClientReady) return;
     _startQuestionFlowOnce();
+  }
+
+  Future<void> _ensureServerClientReady({bool force = false}) async {
+    if (!_usesServerHiddenAnswers ||
+        !_tutorialGateReady ||
+        !_questionVisualReady ||
+        _clientReadyInFlight ||
+        _terminalHandling ||
+        completing) {
+      return;
+    }
+    if (_clientReadyMarked && !force) {
+      if (_serverReadyWaiting) {
+        _scheduleServerReadyRetry();
+      } else if (answered) {
+        _startOpponentWaitTimer();
+      } else {
+        _startQuestionFlowOnce();
+      }
+      return;
+    }
+
+    _clientReadyInFlight = true;
+    try {
+      final snapshot = await widget.repository.markRoomClientReady(widget.room);
+      if (!mounted || _terminalHandling || completing) return;
+      _clientReadyMarked = true;
+      final matchingSnapshot = _matchingResumeSnapshot(snapshot);
+      if (matchingSnapshot != null &&
+          matchingSnapshot.currentQuestionIndex >= index) {
+        _applyReconciledSnapshot(matchingSnapshot);
+      } else {
+        await _reconcileOnlineRoom();
+      }
+      if (!mounted) return;
+      if (_serverReadyWaiting) {
+        _scheduleServerReadyRetry();
+      } else if (answered) {
+        _startOpponentWaitTimer();
+        _checkMultiplayerSync();
+      } else {
+        _startQuestionFlowOnce();
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'quiz client ready failed');
+      if (mounted) _scheduleServerReadyRetry(retryReadyMark: true);
+    } finally {
+      _clientReadyInFlight = false;
+    }
+  }
+
+  void _scheduleServerReadyRetry({bool retryReadyMark = false}) {
+    if (!_usesServerHiddenAnswers ||
+        (!_serverReadyWaiting && !retryReadyMark) ||
+        (!_clientReadyMarked && !retryReadyMark) ||
+        _serverReadyRetryTimer != null) {
+      return;
+    }
+    if (_serverReadyRetryCount >= 6) {
+      _serverReadyRetryTimer = Timer(const Duration(seconds: 4), () async {
+        _serverReadyRetryTimer = null;
+        if (!mounted || _terminalHandling || completing) return;
+        _serverReadyRetryCount = 0;
+        if (!_clientReadyMarked) {
+          await _ensureServerClientReady(force: true);
+        } else if (_serverReadyWaiting) {
+          await _reconcileOnlineRoom();
+          if (mounted && _serverReadyWaiting) _scheduleServerReadyRetry();
+        }
+      });
+      return;
+    }
+    _serverReadyRetryCount += 1;
+    _serverReadyRetryTimer = Timer(const Duration(milliseconds: 350), () async {
+      _serverReadyRetryTimer = null;
+      if (!mounted || (!_serverReadyWaiting && !retryReadyMark)) return;
+      if (retryReadyMark) {
+        await _ensureServerClientReady(force: true);
+      } else {
+        await _reconcileOnlineRoom();
+      }
+      if (mounted && _serverReadyWaiting) _scheduleServerReadyRetry();
+    });
   }
 
   void _handleQuestionVisualReady() {
@@ -707,13 +1235,15 @@ class _QuizScreenState extends State<QuizScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _reconcileGeneration++;
     _playersSub?.cancel();
     _realtimeSub?.cancel();
     _autoNextTimer?.cancel();
     _revealTimer?.cancel();
     _revealTickTimer?.cancel();
     _opponentWaitTimer?.cancel();
-    _authoritativeAdvanceFallbackTimer?.cancel();
+    _advanceRetryTimer?.cancel();
+    _serverReadyRetryTimer?.cancel();
     _roomSub?.cancel();
     _pollTimer?.cancel();
     _readyPingTimer?.cancel();
@@ -740,7 +1270,19 @@ class _QuizScreenState extends State<QuizScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (!_usesTimer || _isMultiplayer || answered || completing) return;
+    if (_isMultiplayer) {
+      if (state == AppLifecycleState.resumed) {
+        unawaited(_reconcileOnlineRoom());
+        if (_usesServerHiddenAnswers) {
+          _serverReadyRetryCount = 0;
+          _serverReadyRetryTimer?.cancel();
+          _serverReadyRetryTimer = null;
+          unawaited(_ensureServerClientReady(force: true));
+        }
+      }
+      return;
+    }
+    if (!_usesTimer || answered || completing) return;
 
     switch (state) {
       case AppLifecycleState.paused:
@@ -793,46 +1335,152 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// İlerleme varken geri tuşunda onay sorar; yanlışlıkla çıkışı önler.
   Future<void> _confirmExit() async {
-    final leave = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceColor(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
-        // Kopya akışa göre değişir: öğrenme akışında kullanıcı "yarış"
-        // başlatmamıştı, ders başlatmıştı.
-        title: Text(
-          _isLearningExperience
-              ? context.t(K.leaveLessonQ)
-              : context.t(K.leaveRaceQ),
-        ),
-        content: Text(
-          _isLearningExperience
-              ? context.t(K.leaveLessonBody)
-              : context.t(K.leaveRaceBody),
-        ),
-        // Vurgu güvenli eylemdedir. Önceden "Çık" dolgulu birincil buton,
-        // "Devam Et" ise düz metindi: ilerlemeyi silen yıkıcı eylem, göz
-        // en çok oraya gittiği için varsayılan gibi duruyordu
-        // (2026-07-25 canlı denetimi).
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(
-              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+    if (_exitInFlight || _terminalHandling || completing) return;
+    if (_isMultiplayer && !_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    final generation = ++_exitGeneration;
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) return;
+    _exitInFlight = true;
+    var leaveConfirmed = false;
+    var leaveFailed = false;
+    RoomLeaveOutcome? outcome;
+    try {
+      final leave = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          backgroundColor: AppTheme.surfaceColor(context),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: AppTheme.borderColor(context)),
+          ),
+          // Kopya akışa göre değişir: öğrenme akışında kullanıcı "yarış"
+          // başlatmamıştı, ders başlatmıştı.
+          title: Text(
+            _isLearningExperience
+                ? context.t(K.leaveLessonQ)
+                : context.t(K.leaveRaceQ),
+          ),
+          content: Text(
+            _isMultiplayer
+                ? context.t(K.leaveOnlineMatchBody)
+                : _isLearningExperience
+                ? context.t(K.leaveLessonBody)
+                : context.t(K.leaveRaceBody),
+          ),
+          // Vurgu güvenli eylemdedir. Önceden "Çık" dolgulu birincil buton,
+          // "Devam Et" ise düz metindi: ilerlemeyi silen yıkıcı eylem, göz
+          // en çok oraya gittiği için varsayılan gibi duruyordu
+          // (2026-07-25 canlı denetimi).
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(dialogContext).colorScheme.error,
+              ),
+              child: Text(context.t(K.leaveAction)),
             ),
-            child: Text(context.t(K.leaveAction)),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(context.t(K.continueAction)),
-          ),
-        ],
-      ),
-    );
-    if (leave == true && mounted) Navigator.of(context).pop();
+            FilledButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(context.t(K.continueAction)),
+            ),
+          ],
+        ),
+      );
+      if (leave != true ||
+          !_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+        return;
+      }
+      if (!mounted) return;
+      leaveConfirmed = true;
+
+      if (_isMultiplayer) {
+        // Zaman aşımı, diğer çevrimiçi çağrılarla aynı bütçeyi kullanır.
+        // `_exitInFlight` yeniden girişi kapatıyor ve çevrimiçi maçta
+        // `PopScope.canPop` false; çağrı hata vermeden asılı kalırsa quiz
+        // geri düğmesine yanıt vermeyi tamamen bırakıyordu.
+        final leaveOutcome = await widget.repository
+            .leaveOnlineRoom(widget.room)
+            .timeout(_onlineResultRequestTimeout);
+        if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+          return;
+        }
+        if (!mounted) return;
+        outcome = leaveOutcome;
+        if (!outcome.completed) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      } else {
+        Navigator.of(context).pop();
+      }
+    } catch (error, stack) {
+      leaveFailed = true;
+      ErrorReporter.record(error, stack, reason: 'quiz online leave failed');
+      if (!mounted) return;
+      if (_canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.roomLeaveFailed))));
+      }
+    } finally {
+      _exitInFlight = false;
+      if (mounted &&
+          _canContinueExit(generation, expectedOwnerId, expectedRoute)) {
+        final deferred = _deferredEndState;
+        _deferredEndState = null;
+        if (outcome?.completed == true) {
+          _scheduleTerminalAction(
+            () => _completeMultiplayerResult(requestFinish: false),
+          );
+        } else if ((!leaveConfirmed || leaveFailed) && deferred != null) {
+          _scheduleTerminalAction(() => _handleRoomEndState(deferred));
+        }
+      }
+    }
+  }
+
+  bool _canContinueExit(
+    int generation,
+    String expectedOwnerId,
+    ModalRoute<dynamic>? expectedRoute,
+  ) {
+    if (!mounted || generation != _exitGeneration) return false;
+    return _canContinueOnExpectedRoute(expectedOwnerId, expectedRoute);
+  }
+
+  bool _canContinueOnExpectedRoute(
+    String expectedOwnerId,
+    ModalRoute<dynamic>? expectedRoute,
+  ) {
+    if (!mounted ||
+        expectedRoute == null ||
+        ModalRoute.of(context) != expectedRoute ||
+        !expectedRoute.isCurrent) {
+      return false;
+    }
+    if (!_isMultiplayer) return true;
+    return expectedOwnerId == _onlineResultOwnerId && _hasExpectedOnlineOwner;
+  }
+
+  bool get _hasExpectedOnlineOwner {
+    final currentOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    return _onlineResultOwnerId.isNotEmpty &&
+        currentOwnerId == _onlineResultOwnerId;
+  }
+
+  bool get _hasCurrentOnlineRoomContext =>
+      _canContinueOnExpectedRoute(_onlineResultOwnerId, ModalRoute.of(context));
+
+  void _scheduleTerminalAction(Future<void> Function() action) {
+    final binding = WidgetsBinding.instance;
+    binding.addPostFrameCallback((_) {
+      if (!mounted || ModalRoute.of(context)?.isCurrent != true) return;
+      unawaited(action());
+    });
+    binding.scheduleFrame();
   }
 
   /// Başlıkta görünecek tur adı.
@@ -851,6 +1499,9 @@ class _QuizScreenState extends State<QuizScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (_onlineResultPhase != _OnlineResultPhase.idle) {
+      return _buildOnlineResultGate(context);
+    }
     if (_questions.isEmpty) {
       return Scaffold(
         appBar: AppBar(),
@@ -876,7 +1527,7 @@ class _QuizScreenState extends State<QuizScreen>
         ? context.t(K.removeAction)
         : context.t(K.save);
     return PopScope(
-      canPop: !hasProgress,
+      canPop: !_isMultiplayer && !hasProgress && !_exitInFlight,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmExit();
       },
@@ -971,9 +1622,10 @@ class _QuizScreenState extends State<QuizScreen>
                             });
                           },
                         ),
-                      if (_needsOpponentReadyGate &&
-                          !_opponentClientReady &&
-                          !_questionFlowStarted)
+                      if ((_serverReadyWaiting && !answered) ||
+                          (_needsOpponentReadyGate &&
+                              !_opponentClientReady &&
+                              !_questionFlowStarted))
                         _OpponentWaitingOverlay(isKu: _isKu),
                     ],
                   ),
@@ -992,9 +1644,7 @@ class _QuizScreenState extends State<QuizScreen>
   /// Cevap verme, sonraki soru ve bitiş akışları bu tek bloğu paylaşır.
   void _syncMyDuelState({required bool answeredNow, bool finished = false}) {
     if (!_isMultiplayer) return;
-    final myIdx = livePlayers.indexWhere(
-      (p) => _myId != null ? p.id == _myId : p.name == _myName,
-    );
+    final myIdx = livePlayers.indexWhere(_isMe);
     if (myIdx != -1) {
       livePlayers[myIdx] = Player(
         id: _myId,
@@ -1014,7 +1664,8 @@ class _QuizScreenState extends State<QuizScreen>
           'streak': streak,
           'question_index': index,
           'answered': answeredNow,
-          'selected_answer': answeredNow ? selectedAnswer : null,
+          if (!_usesServerHiddenAnswers)
+            'selected_answer': answeredNow ? selectedAnswer : null,
           if (finished) 'finished': true,
         })
         .catchError((error, stack) {
@@ -1028,17 +1679,26 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _checkMultiplayerSync() {
     if (!_isMultiplayer) return;
-    final myName = _myName;
-    final otherPlayers = livePlayers
-        .where((p) => _myId != null ? p.id != _myId : p.name != myName)
-        .toList();
+    if (_usesServerHiddenAnswers && answered && _hasSafeCurrentReveal) {
+      if (_mpPhase != _MultiplayerPhase.reveal) _startRevealPhase();
+      return;
+    }
+    final otherPlayers = _opponents.toList();
     if (otherPlayers.isEmpty) return;
 
     final allOthersAnswered =
         _opponentFinished ||
-        otherPlayers.every((p) => _answeredPlayerNames.contains(p.name));
+        otherPlayers.every(
+          (player) => _answeredPlayerKeys.contains(
+            playerIdentityKey(id: player.id, legacyName: player.name),
+          ),
+        );
 
     if (answered && allOthersAnswered && _mpPhase != _MultiplayerPhase.reveal) {
+      if (_usesServerHiddenAnswers && !_hasSafeCurrentReveal) {
+        unawaited(_reconcileOnlineRoom());
+        return;
+      }
       _startRevealPhase();
     }
   }
@@ -1046,9 +1706,14 @@ class _QuizScreenState extends State<QuizScreen>
   /// Multiplayer reveal phase: doğru cevap ve açıklama gösterilir.
   /// [_revealCountdown] saniye sonra otomatik olarak sonraki soruya geçilir.
   void _startRevealPhase() {
+    if (_mpPhase == _MultiplayerPhase.reveal ||
+        (_usesServerHiddenAnswers && !_hasSafeCurrentReveal)) {
+      return;
+    }
     _autoNextTimer?.cancel();
     _revealTimer?.cancel();
     _revealTickTimer?.cancel();
+    _opponentWaitTimer?.cancel();
 
     const revealDuration = 5;
     setState(() {
@@ -1073,12 +1738,16 @@ class _QuizScreenState extends State<QuizScreen>
       });
     });
 
-    // Reveal süresi bitince host olan taraf index'i DB'de artırır.
+    // Server-hidden odada her iki üye de aynı expected-index CAS'ini
+    // güvenle deneyebilir. Eski broadcast tabanlı odalarda mevcut host
+    // koordinasyonu korunur.
     _revealTimer = Timer(const Duration(seconds: revealDuration), () {
       _revealTickTimer?.cancel();
       if (mounted) {
-        if (_isHost) {
-          _advanceAuthoritativeIndex();
+        if (_usesServerHiddenAnswers) {
+          unawaited(_advanceAuthoritativeIndex());
+        } else if (_isHost) {
+          unawaited(_next());
         } else {
           _requestAuthoritativeAdvance();
         }
@@ -1091,6 +1760,22 @@ class _QuizScreenState extends State<QuizScreen>
   void _startOpponentWaitTimer() {
     if (!_isMultiplayer) return;
     _opponentWaitTimer?.cancel();
+    if (_usesServerHiddenAnswers) {
+      if (_advanceSequenceActive) return;
+      final remainingMs = _estimatedAuthoritativeRemainingMs;
+      if (remainingMs == null) {
+        unawaited(_reconcileOnlineRoom());
+        return;
+      }
+      _opponentWaitTimer = Timer(Duration(milliseconds: remainingMs), () {
+        if (!mounted || !answered || _mpPhase != _MultiplayerPhase.waiting) {
+          return;
+        }
+        _advanceSequenceActive = true;
+        unawaited(_advanceAuthoritativeIndex());
+      });
+      return;
+    }
     _opponentWaitTimer = Timer(
       Duration(seconds: max(20, widget.room.secondsPerQuestion)),
       () {
@@ -1098,10 +1783,11 @@ class _QuizScreenState extends State<QuizScreen>
           return;
         }
         for (final player in livePlayers) {
-          final isMe = _myId != null
-              ? player.id == _myId
-              : player.name == _myName;
-          if (!isMe) _answeredPlayerNames.add(player.name);
+          if (!_isMe(player)) {
+            _answeredPlayerKeys.add(
+              playerIdentityKey(id: player.id, legacyName: player.name),
+            );
+          }
         }
         _startRevealPhase();
       },
@@ -1127,12 +1813,11 @@ class _QuizScreenState extends State<QuizScreen>
 
     // Only the host may update the authoritative room index. If the host has
     // disappeared, keep this client playable after a bounded grace period.
-    _authoritativeAdvanceFallbackTimer?.cancel();
-    _authoritativeAdvanceFallbackTimer = Timer(const Duration(seconds: 8), () {
+    _advanceRetryTimer?.cancel();
+    _advanceRetryTimer = Timer(const Duration(seconds: 8), () {
       if (!mounted || _isHost || _mpPhase != _MultiplayerPhase.reveal) return;
-      _next();
+      unawaited(_next());
     });
-    _advanceAuthoritativeIndex();
   }
 
   /// Bu istemci odanın ev sahibi mi?
@@ -1164,7 +1849,11 @@ class _QuizScreenState extends State<QuizScreen>
   void _onRoomQuestionIndexChanged(int dbIndex) {
     if (!_isMultiplayer) return;
     if (dbIndex > index) {
-      _syncToQuestionIndex(dbIndex);
+      if (_usesServerHiddenAnswers) {
+        unawaited(_reconcileOnlineRoom());
+      } else {
+        _syncToQuestionIndex(dbIndex);
+      }
     }
   }
 
@@ -1200,7 +1889,7 @@ class _QuizScreenState extends State<QuizScreen>
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
-      _answeredPlayerNames.clear();
+      _answeredPlayerKeys.clear();
       _opponentFinished = false;
       _mpPhase = _MultiplayerPhase.answering;
       _revealCountdown = 0;
@@ -1219,55 +1908,381 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _pollRoomIndex() async {
-    if (!_isMultiplayer) return;
-    if (widget.room.id == null) return;
-    if (widget.repository is SupabaseZanKurdRepository) {
-      final client = (widget.repository as SupabaseZanKurdRepository).client;
-      try {
-        final row = await client
-            .from('rooms')
-            .select('current_question_index')
-            .eq('id', widget.room.id!)
-            .single();
-        final dbIndex = row['current_question_index'] as int? ?? 0;
-        if (mounted && dbIndex > index) {
-          _onRoomQuestionIndexChanged(dbIndex);
-        }
-      } catch (error, stack) {
-        ErrorReporter.record(
-          error,
-          stack,
-          reason: 'quiz room index poll failed',
-        );
+    await _reconcileOnlineRoom();
+  }
+
+  void _ensureRoomPolling() {
+    if (!_isMultiplayer || _pollTimer?.isActive == true) return;
+    _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
+      _pollRoomIndex();
+    });
+  }
+
+  Future<void> _reconcileOnlineRoom() async {
+    if (_isMultiplayer && !_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    if (!_isMultiplayer ||
+        widget.room.id == null ||
+        _reconcileInFlight ||
+        _terminalHandling ||
+        completing) {
+      return;
+    }
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    final routeMatches =
+        expectedRoute != null && ModalRoute.of(context) == expectedRoute;
+    if (!routeMatches ||
+        (!_exitInFlight &&
+            !_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute))) {
+      return;
+    }
+    _reconcileInFlight = true;
+    final generation = ++_reconcileGeneration;
+    RoomResumeSnapshot? snapshot;
+    List<Player>? players;
+    RoomEndState? endState;
+
+    try {
+      await Future.wait<void>([
+        () async {
+          try {
+            snapshot = await widget.repository.loadMyResumableRoom();
+          } catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz room resume reconciliation failed',
+            );
+          }
+        }(),
+        () async {
+          try {
+            players = await widget.repository.loadRoomPlayers(widget.room);
+          } catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz room players reconciliation failed',
+            );
+          }
+        }(),
+        () async {
+          try {
+            endState = await widget.repository.loadRoomEndState(widget.room);
+          } catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz room end reconciliation failed',
+            );
+          }
+        }(),
+      ]).timeout(_onlineResultRequestTimeout);
+      if (!mounted || generation != _reconcileGeneration) return;
+      if (!_hasExpectedOnlineOwner) {
+        _enterOwnerChangedResultGate();
+        return;
+      }
+      if (_exitInFlight) {
+        if (ModalRoute.of(context) != expectedRoute) return;
+        final state = endState;
+        if (state != null) await _handleRoomEndState(state);
+        return;
+      }
+      if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
+        return;
+      }
+
+      final matchingSnapshot = _matchingResumeSnapshot(snapshot);
+      if (matchingSnapshot != null &&
+          matchingSnapshot.currentQuestionIndex >= index) {
+        _applyReconciledSnapshot(matchingSnapshot);
+      }
+
+      final loadedPlayers = players;
+      if (loadedPlayers != null && loadedPlayers.isNotEmpty && mounted) {
+        setState(() {
+          livePlayers = List<Player>.of(loadedPlayers)
+            ..sort((a, b) => b.score.compareTo(a.score));
+          if (matchingSnapshot != null) {
+            _applyOwnAuthoritativePlayerState();
+          }
+        });
+      }
+
+      final state = endState;
+      if (state != null && mounted) {
+        await _handleRoomEndState(state);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'quiz room reconciliation timed out',
+      );
+    } finally {
+      if (generation == _reconcileGeneration) {
+        _reconcileInFlight = false;
       }
     }
   }
 
-  Future<void> _advanceAuthoritativeIndex() async {
-    if (!_isHost) return;
-    if (widget.repository is SupabaseZanKurdRepository) {
-      final client = (widget.repository as SupabaseZanKurdRepository).client;
-      try {
-        // Doğrudan tablo güncellemesi DEĞİL: `rooms` üzerindeki ev sahibi
-        // UPDATE politikası 2026-07-22'de bilerek kaldırıldı ve buradaki
-        // yazım o günden beri sessizce sıfır satır etkiliyordu — PostgREST
-        // `select` istenmeyen bir update'te RLS engeli için hata döndürmez.
-        // İndeks 0'da takılı kalınca 1. sorudan sonraki her cevabı
-        // `enforce_current_room_question` reddediyordu (2026-08-01, canlı
-        // iki cihazlı denemede bulundu). RPC hata döndürür; sessiz başarı
-        // kusuru aynı biçimde geri gelemez.
-        await client.rpc(
-          'advance_room_question',
-          params: {'p_room_id': widget.room.id!},
-        );
-      } catch (e, s) {
-        ErrorReporter.record(e, s, reason: 'QuizScreen room sync failed');
-        // Fallback
-        _next();
+  void _applyReconciledSnapshot(RoomResumeSnapshot snapshot) {
+    if (!mounted || _questions.isEmpty) return;
+    final oldIndex = index;
+    final hasTiming = _hasAuthoritativeTiming(snapshot);
+    setState(() {
+      _applyResumeSnapshotData(snapshot, initial: false);
+      if (_usesServerHiddenAnswers && hasTiming && _clientReadyMarked) {
+        _serverReadyWaiting = false;
+        _serverReadyRetryCount = 0;
       }
-    } else {
-      _next();
+    });
+    if (_usesServerHiddenAnswers && hasTiming && _clientReadyMarked) {
+      _serverReadyRetryTimer?.cancel();
+      _serverReadyRetryTimer = null;
     }
+    if (index > oldIndex) {
+      _markQuestionSeen();
+      _loadFavoriteState();
+    }
+
+    if (_usesServerHiddenAnswers && !hasTiming) {
+      _timerController.stop();
+      _questionStopwatch.stop();
+      _initialTimerFraction = null;
+      _questionFlowStarted = false;
+      if (!answered) _scheduleServerReadyRetry();
+      return;
+    }
+
+    if (answered) {
+      _timerController.stop();
+      _questionStopwatch.stop();
+      _initialTimerFraction = null;
+      if (!_usesServerHiddenAnswers || _serverQuestionGatesReady) {
+        if (_mpPhase != _MultiplayerPhase.reveal) {
+          _startOpponentWaitTimer();
+        }
+        _checkMultiplayerSync();
+      }
+      return;
+    }
+
+    final totalMs = widget.room.secondsPerQuestion * 1000;
+    final remainingMs = _usesServerHiddenAnswers
+        ? (_estimatedAuthoritativeRemainingMs ?? 0)
+        : snapshot.remainingMs;
+    final serverFraction = totalMs <= 0
+        ? 0.0
+        : (remainingMs / totalMs).clamp(0.0, 1.0).toDouble();
+    _initialTimerFraction = null;
+    _timerController.stop();
+    _timerController.value = serverFraction;
+    if (_usesServerHiddenAnswers && !_serverQuestionGatesReady) {
+      _initialTimerFraction = serverFraction;
+      _questionFlowStarted = false;
+      return;
+    }
+    _questionFlowStarted = true;
+    _questionStopwatch
+      ..reset()
+      ..start();
+    if (!_usesTimer) return;
+    if (_timerController.value <= 0) {
+      scheduleMicrotask(() {
+        if (mounted && !answered) _handleQuestionDeadline();
+      });
+    } else {
+      _timerController.reverse();
+    }
+  }
+
+  Future<bool> _handleRoomEndState(RoomEndState state) async {
+    if (state.status != RoomStatus.finished) {
+      return false;
+    }
+    if (_exitInFlight) {
+      _deferredEndState = state;
+      return false;
+    }
+    if (_isMultiplayer && !_hasExpectedOnlineOwner) {
+      _deferredEndState = state;
+      _enterOwnerChangedResultGate();
+      return false;
+    }
+    if (_isMultiplayer && !_hasCurrentOnlineRoomContext) {
+      _deferredEndState = state;
+      return false;
+    }
+    if (completing || _terminalHandling) return false;
+    final reason = state.endedReason?.trim().toLowerCase();
+    if (reason == 'completed' ||
+        (reason == null && isLastQuestion && answered)) {
+      await _completeMultiplayerResult(requestFinish: false);
+      return true;
+    }
+
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
+      _deferredEndState = state;
+      return false;
+    }
+
+    _terminalHandling = true;
+    _timerController.stop();
+    _questionStopwatch.stop();
+    _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
+    _opponentWaitTimer?.cancel();
+    _advanceRetryTimer?.cancel();
+    _serverReadyRetryTimer?.cancel();
+
+    final forfeitedBy =
+        state.forfeitedBy ??
+        (reason == 'host_left' ? widget.room.hostId : null);
+    final userForfeited = forfeitedBy != null && forfeitedBy == _myId;
+    final bodyKey = forfeitedBy == null
+        ? K.matchEndedByDeparture
+        : userForfeited
+        ? K.youForfeitedMatch
+        : K.opponentForfeitedMatch;
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppTheme.surfaceColor(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: AppTheme.borderColor(context)),
+        ),
+        title: Text(context.t(K.matchForfeitedTitle)),
+        content: Text(context.t(bodyKey)),
+        actions: [
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(context.t(K.ok)),
+          ),
+        ],
+      ),
+    );
+    if (!mounted) return true;
+    if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
+      _terminalHandling = false;
+      _deferredEndState = state;
+      return false;
+    }
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    return true;
+  }
+
+  Future<void> _advanceAuthoritativeIndex({
+    int? expectedQuestionIndex,
+    int attempt = 0,
+  }) async {
+    if (!_usesServerHiddenAnswers ||
+        _advanceInFlight ||
+        _terminalHandling ||
+        completing) {
+      return;
+    }
+    final expected = expectedQuestionIndex ?? index;
+    if (expected != index) return;
+    _advanceSequenceActive = true;
+    final wasRevealPhase = _mpPhase == _MultiplayerPhase.reveal;
+
+    _advanceInFlight = true;
+    RoomResumeSnapshot? snapshot;
+    Object? failure;
+    StackTrace? failureStack;
+    try {
+      snapshot = await widget.repository.advanceRoomQuestion(
+        widget.room,
+        expectedQuestionIndex: expected,
+      );
+    } catch (error, stack) {
+      failure = error;
+      failureStack = stack;
+    } finally {
+      _advanceInFlight = false;
+    }
+    if (!mounted || index != expected) return;
+
+    if (failure != null) {
+      ErrorReporter.record(
+        failure,
+        failureStack ?? StackTrace.current,
+        reason: 'quiz authoritative advance failed',
+      );
+      await _reconcileOnlineRoom();
+      if (mounted && index == expected && !completing) {
+        _scheduleAdvanceRetry(expected, attempt);
+      }
+      return;
+    }
+
+    final matchingSnapshot = _matchingResumeSnapshot(snapshot);
+    if (matchingSnapshot == null) {
+      await _reconcileOnlineRoom();
+      if (mounted && index == expected && !completing && !_terminalHandling) {
+        _scheduleAdvanceRetry(expected, attempt);
+      }
+      return;
+    }
+
+    _applyReconciledSnapshot(matchingSnapshot);
+    if (!mounted || index != expected) return;
+    if (_hasSafeCurrentReveal) {
+      if (wasRevealPhase) {
+        _scheduleAdvanceRetry(expected, attempt);
+      } else if (_mpPhase != _MultiplayerPhase.reveal) {
+        _startRevealPhase();
+      }
+      return;
+    }
+
+    await _reconcileOnlineRoom();
+    if (mounted && index == expected && !completing && !_terminalHandling) {
+      _scheduleAdvanceRetry(expected, attempt);
+    }
+  }
+
+  void _scheduleAdvanceRetry(int expectedQuestionIndex, int attempt) {
+    if (!_usesServerHiddenAnswers ||
+        expectedQuestionIndex != index ||
+        completing ||
+        _terminalHandling) {
+      return;
+    }
+    _advanceRetryTimer?.cancel();
+    if (attempt >= 5) {
+      _advanceRetryTimer = Timer(const Duration(seconds: 4), () {
+        _advanceRetryTimer = null;
+        if (!mounted || expectedQuestionIndex != index) return;
+        unawaited(
+          _advanceAuthoritativeIndex(
+            expectedQuestionIndex: expectedQuestionIndex,
+          ),
+        );
+      });
+      return;
+    }
+    _advanceRetryTimer = Timer(const Duration(milliseconds: 350), () {
+      _advanceRetryTimer = null;
+      if (!mounted || expectedQuestionIndex != index) return;
+      unawaited(
+        _advanceAuthoritativeIndex(
+          expectedQuestionIndex: expectedQuestionIndex,
+          attempt: attempt + 1,
+        ),
+      );
+    });
   }
 
   /// Tur ödülünü ister; verilemezse kuyruğa alır.
@@ -1279,19 +2294,24 @@ class _QuizScreenState extends State<QuizScreen>
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
 
-  Future<int> _claimCoins({
+  Future<_QuizCoinSettlement> _settleCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
   }) async {
-    _rewardQueued = false;
-    if (widget.practice) return 0;
-    // Yerel soru bankasındaki bir turun sonucu sunucu tarafından bağımsız
-    // doğrulanamaz. Bu yüzden coin yalnız sunucunun cevap kayıtlarını tuttuğu
-    // çevrimiçi odalarda verilir ve yerel tur kuyruğa da alınmaz.
-    if (widget.room.id == null) return 0;
+    final rewardOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    if (widget.practice || widget.room.id == null) {
+      return (
+        coinsAwarded: 0,
+        rewardQueued: false,
+        isDurable: true,
+        ownerUserId: rewardOwnerId,
+      );
+    }
     var amount = 0;
+    var rewardQueued = false;
+    var durable = false;
     // "Sunucu 0 verdi" ile "sunucuya ulaşılamadı" aynı şey değil.
     //
     // Eskiden yalnız `amount <= 0`a bakılıyordu. Sunucu düşük skora
@@ -1310,11 +2330,26 @@ class _QuizScreenState extends State<QuizScreen>
         totalQuestions: totalQuestions,
         room: widget.room,
       );
+      durable = true;
     } catch (error, stack) {
       awardFailed = true;
       ErrorReporter.record(error, stack, reason: 'awardQuizCoins failed');
     }
     if (awardFailed) {
+      final currentOwnerId = widget.repository.currentUserId?.trim() ?? '';
+      if (rewardOwnerId.isEmpty || currentOwnerId != rewardOwnerId) {
+        ErrorReporter.record(
+          StateError('Quiz reward owner changed before queue.'),
+          StackTrace.current,
+          reason: 'quiz reward owner changed before queue',
+        );
+        return (
+          coinsAwarded: amount,
+          rewardQueued: false,
+          isDurable: false,
+          ownerUserId: rewardOwnerId,
+        );
+      }
       // Kuyruk yoksa (oturum kapatılıp yeniden girilmişse SyncManager
       // kurulu değildir) tur yine de bitmelidir. Eskiden burada
       // `SyncManager.instance` çağrılıyordu ve fırlatan istisna
@@ -1322,68 +2357,676 @@ class _QuizScreenState extends State<QuizScreen>
       // ekranının açılmasını engelliyordu.
       final sync = SyncManager.maybeInstance;
       if (sync != null) {
-        _rewardQueued = true;
         try {
-          sync.queueQuizReward(
+          await sync.queueQuizReward(
             score: score,
             correctCount: correctCount,
             bestStreak: bestStreak,
             totalQuestions: totalQuestions,
             roomId: widget.room.id,
           );
+          rewardQueued = true;
+          durable = true;
         } catch (error, stack) {
-          _rewardQueued = false;
           ErrorReporter.record(error, stack, reason: 'queueQuizReward failed');
         }
       }
     }
-    return amount;
+    return (
+      coinsAwarded: amount,
+      rewardQueued: rewardQueued,
+      isDurable: durable,
+      ownerUserId: rewardOwnerId,
+    );
   }
 
-  Future<void> _finishGameMultiplayer() async {
-    if (completing) return;
-    setState(() => completing = true);
-
-    if (_isHost) {
-      widget.repository.finishGame(widget.room).catchError((error, stack) {
-        ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
-      });
-    }
-
-    _syncMyDuelState(answeredNow: true, finished: true);
-
-    final coinsAwarded = await _claimCoins(
+  Future<int> _claimCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+  }) async {
+    _rewardQueued = false;
+    if (widget.practice) return 0;
+    if (widget.room.id == null) return 0;
+    final settlement = await _settleCoins(
       score: score,
       correctCount: correctCount,
       bestStreak: bestStreak,
-      totalQuestions: widget.questions.length,
+      totalQuestions: totalQuestions,
     );
+    if (settlement.rewardQueued) {
+      _rewardQueued = true;
+    } else {
+      _rewardQueued = false;
+    }
+    return settlement.coinsAwarded;
+  }
 
-    if (!mounted) return;
-    context.read<SoundProvider>().playWin();
+  Future<void> _finishGameMultiplayer() async {
+    if (completing ||
+        _terminalHandling ||
+        _onlineResultPhase != _OnlineResultPhase.idle) {
+      return;
+    }
+    await _completeMultiplayerResult(requestFinish: true);
+  }
 
-    // result: quiz rotası değiştirilirken çağıranın await'ine "tamamlandı"
-    // sinyali taşır (yarıda çıkışta null döner — bkz. level_screen).
-    Navigator.of(context).pushReplacement(
-      AppRoute.to(
-        QuizResultScreen(
-          repository: widget.repository,
-          room: widget.room,
-          score: score,
-          correctCount: correctCount,
-          wrongCount: wrongCount,
-          totalQuestions: widget.questions.length,
-          bestStreak: bestStreak,
-          answerRecords: answerRecords,
-          coinsAwarded: coinsAwarded,
-          rewardQueued: _rewardQueued,
-          opponents: livePlayers.where((p) => p.name != _myName).toList(),
-          practice: widget.practice,
-          dailyQuiz: widget.dailyQuiz,
-          contestId: widget.contestId,
+  Future<void> _completeMultiplayerResult({required bool requestFinish}) {
+    if (widget.is1v1) {
+      return _reconcileCompletedRoomResult(requestFinish: requestFinish);
+    }
+    return _finishLegacyMultiplayerResult(requestFinish: requestFinish);
+  }
+
+  Future<void> _finishLegacyMultiplayerResult({
+    required bool requestFinish,
+  }) async {
+    if (_legacyResultInFlight || completing || _terminalHandling) return;
+    final expectedOwnerId = _onlineResultOwnerId;
+    final expectedRoute = ModalRoute.of(context);
+    if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) return;
+    _legacyFinishRequired = requestFinish;
+    final generation = ++_legacyResultGeneration;
+    _legacyResultInFlight = true;
+    setState(() => completing = true);
+
+    try {
+      RoomEndState? stateAfterFailure;
+      if (requestFinish) {
+        try {
+          final pendingFinish = _legacyFinishInFlight ??= widget.repository
+              .finishGame(widget.room);
+          await pendingFinish.timeout(_onlineResultRequestTimeout);
+          if (identical(_legacyFinishInFlight, pendingFinish)) {
+            _legacyFinishInFlight = null;
+          }
+          _legacyFinishRequired = false;
+        } on TimeoutException catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'quiz finish game timed out',
+          );
+          _showLegacyResultFailure(generation);
+          return;
+        } catch (error, stack) {
+          _legacyFinishInFlight = null;
+          ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
+          try {
+            stateAfterFailure = await widget.repository
+                .loadRoomEndState(widget.room)
+                .timeout(_onlineResultRequestTimeout);
+          } catch (stateError, stateStack) {
+            ErrorReporter.record(
+              stateError,
+              stateStack,
+              reason: 'quiz finish state verification failed',
+            );
+            _showLegacyResultFailure(generation);
+            return;
+          }
+          if (!mounted) return;
+          if (!_canContinueLegacyResult(
+            generation,
+            expectedOwnerId,
+            expectedRoute,
+          )) {
+            _releaseLegacyCompleting(generation);
+            return;
+          }
+          final verified = stateAfterFailure;
+          if (verified.status != RoomStatus.finished) {
+            _showLegacyResultFailure(generation);
+            return;
+          }
+          _legacyFinishRequired = false;
+          final reason = verified.endedReason?.trim().toLowerCase();
+          if (reason != null && reason != 'completed') {
+            _releaseLegacyCompleting(generation);
+            await _handleRoomEndState(verified);
+            return;
+          }
+        }
+      }
+
+      try {
+        final finalPlayers = await widget.repository
+            .loadRoomPlayers(widget.room)
+            .timeout(_onlineResultRequestTimeout);
+        if (!mounted) return;
+        if (!_canContinueLegacyResult(
+          generation,
+          expectedOwnerId,
+          expectedRoute,
+        )) {
+          _releaseLegacyCompleting(generation);
+          return;
+        }
+        if (finalPlayers.isNotEmpty) {
+          setState(() {
+            livePlayers = List<Player>.of(finalPlayers)
+              ..sort((a, b) => b.score.compareTo(a.score));
+            final myPlayerIndex = livePlayers.indexWhere(_isMe);
+            if (myPlayerIndex != -1) {
+              final myPlayer = livePlayers[myPlayerIndex];
+              if (myPlayer.score >= score) {
+                score = myPlayer.score;
+                streak = myPlayer.streak;
+                bestStreak = max(bestStreak, myPlayer.streak);
+              }
+            }
+            _applyOwnAuthoritativePlayerState();
+          });
+        }
+      } on TimeoutException catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'quiz final players reconciliation timed out',
+        );
+        _showLegacyResultFailure(generation);
+        return;
+      } catch (error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'quiz final players reconciliation failed',
+        );
+      }
+      if (!mounted) return;
+      if (!_canContinueLegacyResult(
+        generation,
+        expectedOwnerId,
+        expectedRoute,
+      )) {
+        _releaseLegacyCompleting(generation);
+        return;
+      }
+      _syncMyDuelState(answeredNow: true, finished: true);
+
+      var settlement = _legacyRewardSettlement;
+      if (settlement == null) {
+        for (var attempt = 0; attempt < 2 && settlement == null; attempt++) {
+          final reusedPendingSettlement = _legacySettlementInFlight != null;
+          final pendingSettlement = _legacySettlementInFlight ??= _settleCoins(
+            score: score,
+            correctCount: correctCount,
+            bestStreak: bestStreak,
+            totalQuestions: widget.questions.length,
+          );
+          late final _QuizCoinSettlement candidate;
+          try {
+            candidate = await pendingSettlement.timeout(
+              _onlineResultRequestTimeout,
+            );
+          } on TimeoutException catch (error, stack) {
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz legacy reward settlement timed out',
+            );
+            _showLegacyResultFailure(generation);
+            return;
+          } catch (error, stack) {
+            if (identical(_legacySettlementInFlight, pendingSettlement)) {
+              _legacySettlementInFlight = null;
+            }
+            ErrorReporter.record(
+              error,
+              stack,
+              reason: 'quiz legacy reward settlement failed',
+            );
+            _showLegacyResultFailure(generation);
+            return;
+          }
+          if (identical(_legacySettlementInFlight, pendingSettlement)) {
+            _legacySettlementInFlight = null;
+          }
+          if (candidate.isDurable && candidate.ownerUserId == expectedOwnerId) {
+            _legacyRewardSettlement = candidate;
+          }
+          if (!mounted) return;
+          if (!_canContinueLegacyResult(
+            generation,
+            expectedOwnerId,
+            expectedRoute,
+          )) {
+            _releaseLegacyCompleting(generation);
+            return;
+          }
+          if (!candidate.isDurable && reusedPendingSettlement) {
+            continue;
+          }
+          settlement = candidate;
+        }
+        if (settlement == null) {
+          _showLegacyResultFailure(generation);
+          return;
+        }
+        if (settlement.isDurable && settlement.ownerUserId == expectedOwnerId) {
+          _legacyRewardSettlement = settlement;
+        }
+      }
+
+      if (!mounted) return;
+      if (!_canContinueLegacyResult(
+        generation,
+        expectedOwnerId,
+        expectedRoute,
+      )) {
+        _releaseLegacyCompleting(generation);
+        return;
+      }
+      context.read<SoundProvider>().playWin();
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          QuizResultScreen(
+            repository: widget.repository,
+            room: _resultRoom,
+            score: score,
+            correctCount: correctCount,
+            wrongCount: wrongCount,
+            totalQuestions: widget.questions.length,
+            bestStreak: bestStreak,
+            answerRecords: answerRecords,
+            coinsAwarded: settlement.coinsAwarded,
+            rewardQueued: settlement.rewardQueued,
+            opponents: _opponents.toList(),
+            practice: widget.practice,
+            dailyQuiz: widget.dailyQuiz,
+            contestId: widget.contestId,
+          ),
+        ),
+        result: _completionResult(),
+      );
+    } finally {
+      _legacyResultInFlight = false;
+      if (_legacyRetryRequested) {
+        _legacyRetryRequested = false;
+        if (mounted &&
+            _hasExpectedOnlineOwner &&
+            _onlineResultPhase == _OnlineResultPhase.retryableFailure) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) unawaited(_retryTeamOnlineResultGate());
+          });
+          WidgetsBinding.instance.scheduleFrame();
+        }
+      }
+    }
+  }
+
+  bool _canContinueLegacyResult(
+    int generation,
+    String expectedOwnerId,
+    ModalRoute<dynamic>? expectedRoute,
+  ) {
+    if (!mounted || generation != _legacyResultGeneration) return false;
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return false;
+    }
+    return _canContinueOnExpectedRoute(expectedOwnerId, expectedRoute);
+  }
+
+  void _releaseLegacyCompleting(int generation) {
+    if (!mounted ||
+        generation != _legacyResultGeneration ||
+        _onlineResultPhase != _OnlineResultPhase.idle) {
+      return;
+    }
+    setState(() => completing = false);
+  }
+
+  void _showLegacyResultFailure(int generation) {
+    if (!mounted || generation != _legacyResultGeneration) return;
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    _terminalHandling = true;
+    completing = true;
+    _stopTerminalActivity();
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.retryableFailure;
+      _onlineResultOwnerChanged = false;
+    });
+  }
+
+  Future<void> _reconcileCompletedRoomResult({
+    bool requestFinish = false,
+  }) async {
+    if (!_isMultiplayer || !widget.is1v1 || _onlineResultInFlight) return;
+    if (requestFinish) _onlineResultFinishRequired = true;
+    final roomId = widget.room.id?.trim() ?? '';
+    final expectedOwnerId = _onlineResultOwnerId;
+    final generation = ++_onlineResultGeneration;
+    _onlineResultInFlight = true;
+    _terminalHandling = true;
+    completing = true;
+    _stopTerminalActivity();
+    if (mounted) {
+      setState(() {
+        _onlineResultPhase = _OnlineResultPhase.loading;
+        _onlineResultOwnerChanged = false;
+      });
+    }
+
+    try {
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      if (_onlineResultFinishRequired) {
+        try {
+          await widget.repository
+              .finishGame(widget.room)
+              .timeout(_onlineResultRequestTimeout);
+          _onlineResultFinishRequired = false;
+        } catch (error, stack) {
+          ErrorReporter.record(error, stack, reason: 'quiz finish game failed');
+        }
+        if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      }
+
+      final snapshot = await widget.repository
+          .loadRoomResult(widget.room)
+          .timeout(_onlineResultRequestTimeout);
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      if (snapshot == null) {
+        final endState = await widget.repository
+            .loadRoomEndState(widget.room)
+            .timeout(_onlineResultRequestTimeout);
+        if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+        final reason = endState.endedReason?.trim().toLowerCase();
+        if (endState.status == RoomStatus.finished &&
+            reason != null &&
+            reason != 'completed') {
+          _onlineResultPhase = _OnlineResultPhase.idle;
+          _terminalHandling = false;
+          completing = false;
+          final handled = await _handleRoomEndState(endState);
+          if (handled || !mounted) return;
+          if (!_hasExpectedOnlineOwner) {
+            _enterOwnerChangedResultGate();
+          } else {
+            _showOnlineResultFailure(generation);
+          }
+          return;
+        }
+        throw StateError('Exact room result is not available yet.');
+      }
+      validateRoomResultDeliveryContext(
+        snapshot,
+        expectedUserId: expectedOwnerId,
+        expectedRoomId: roomId,
+      );
+      final presentation = buildRoomResultPresentation(
+        snapshot,
+        _questions,
+        isKu: _isKu,
+      );
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+      if (!mounted) return;
+
+      context.read<SoundProvider>().playWin();
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          RoomResultRecoveryScreen(
+            repository: widget.repository,
+            snapshot: snapshot,
+            expectedUserId: expectedOwnerId,
+          ),
+        ),
+        result: _completionResultFromPresentation(presentation),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'quiz exact room result recovery failed',
+      );
+      _showOnlineResultFailure(generation);
+    } finally {
+      if (generation == _onlineResultGeneration) {
+        _onlineResultInFlight = false;
+      }
+    }
+  }
+
+  bool _canContinueOnlineResult(int generation, String expectedOwnerId) {
+    if (!mounted || generation != _onlineResultGeneration) return false;
+    final currentOwnerId = widget.repository.currentUserId?.trim() ?? '';
+    if (expectedOwnerId.isEmpty || currentOwnerId != expectedOwnerId) {
+      _showOnlineResultFailure(generation, ownerChanged: true);
+      return false;
+    }
+    if (ModalRoute.of(context)?.isCurrent != true) {
+      _showOnlineResultFailure(generation);
+      return false;
+    }
+    return true;
+  }
+
+  void _showOnlineResultFailure(int generation, {bool ownerChanged = false}) {
+    if (!mounted || generation != _onlineResultGeneration) return;
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.retryableFailure;
+      _onlineResultOwnerChanged = ownerChanged;
+    });
+  }
+
+  void _enterOwnerChangedResultGate() {
+    if (!mounted || !_isMultiplayer) return;
+    if (_onlineResultOwnerChanged &&
+        _onlineResultPhase == _OnlineResultPhase.retryableFailure) {
+      return;
+    }
+    _onlineResultGeneration++;
+    _onlineResultInFlight = false;
+    if (!widget.is1v1) _legacyResultGeneration++;
+    _terminalHandling = true;
+    completing = true;
+    _stopTerminalActivity();
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.retryableFailure;
+      _onlineResultOwnerChanged = true;
+    });
+  }
+
+  void _leaveOnlineResultGate() {
+    if (!mounted || _onlineResultPhase != _OnlineResultPhase.retryableFailure) {
+      return;
+    }
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  void _retryOnlineResultGate() {
+    if (!mounted || _onlineResultPhase != _OnlineResultPhase.retryableFailure) {
+      return;
+    }
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    if (!widget.is1v1) {
+      if (_legacyResultInFlight) {
+        _legacyRetryRequested = true;
+        return;
+      }
+      unawaited(_retryTeamOnlineResultGate());
+      return;
+    }
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.idle;
+      _onlineResultOwnerChanged = false;
+      _terminalHandling = false;
+      completing = false;
+    });
+    unawaited(_completeMultiplayerResult(requestFinish: false));
+  }
+
+  Future<void> _retryTeamOnlineResultGate() async {
+    if (!mounted || widget.is1v1 || _onlineResultInFlight) return;
+    if (!_hasExpectedOnlineOwner) {
+      _enterOwnerChangedResultGate();
+      return;
+    }
+    final expectedOwnerId = _onlineResultOwnerId;
+    final generation = ++_onlineResultGeneration;
+    _onlineResultInFlight = true;
+    _terminalHandling = true;
+    completing = true;
+    setState(() {
+      _onlineResultPhase = _OnlineResultPhase.loading;
+      _onlineResultOwnerChanged = false;
+    });
+
+    try {
+      final endState = await widget.repository
+          .loadRoomEndState(widget.room)
+          .timeout(_onlineResultRequestTimeout);
+      if (!_canContinueOnlineResult(generation, expectedOwnerId)) return;
+
+      if (endState.status != RoomStatus.finished) {
+        setState(() {
+          _onlineResultPhase = _OnlineResultPhase.idle;
+          _onlineResultOwnerChanged = false;
+          _terminalHandling = false;
+          completing = false;
+        });
+        if (_legacyFinishInFlight != null || _legacyFinishRequired) {
+          await _finishLegacyMultiplayerResult(requestFinish: true);
+          return;
+        }
+        _ensureRoomPolling();
+        unawaited(_reconcileOnlineRoom());
+        if (_usesServerHiddenAnswers) {
+          unawaited(_ensureServerClientReady(force: true));
+        }
+        return;
+      }
+
+      final reason = endState.endedReason?.trim().toLowerCase();
+      setState(() {
+        _onlineResultPhase = _OnlineResultPhase.idle;
+        _onlineResultOwnerChanged = false;
+        _terminalHandling = false;
+        completing = false;
+      });
+      if (reason == 'completed' ||
+          (reason == null && isLastQuestion && answered)) {
+        await _finishLegacyMultiplayerResult(requestFinish: false);
+        return;
+      }
+      final handled = await _handleRoomEndState(endState);
+      if (handled || !mounted) return;
+      if (!_hasExpectedOnlineOwner) {
+        _enterOwnerChangedResultGate();
+      } else {
+        _showOnlineResultFailure(generation);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'quiz team result recovery failed',
+      );
+      _showOnlineResultFailure(generation);
+    } finally {
+      if (generation == _onlineResultGeneration) {
+        _onlineResultInFlight = false;
+      }
+    }
+  }
+
+  void _stopTerminalActivity() {
+    _timerController.stop();
+    _questionStopwatch.stop();
+    _autoNextTimer?.cancel();
+    _revealTimer?.cancel();
+    _revealTickTimer?.cancel();
+    _opponentWaitTimer?.cancel();
+    _advanceRetryTimer?.cancel();
+    _serverReadyRetryTimer?.cancel();
+    _pollTimer?.cancel();
+  }
+
+  Map<String, dynamic> _completionResultFromPresentation(
+    RoomResultPresentation presentation,
+  ) {
+    final opponentScore = presentation.opponents.fold<int>(
+      0,
+      (best, player) => max(best, player.score),
+    );
+    return {
+      'completed': true,
+      'score': presentation.score,
+      'correct': presentation.correctCount,
+      'opponentScore': opponentScore,
+    };
+  }
+
+  Widget _buildOnlineResultGate(BuildContext context) {
+    final loading = _onlineResultPhase == _OnlineResultPhase.loading;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && !loading) {
+          _leaveOnlineResultGate();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(context.t(K.resultTitle)),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (loading)
+                    const CircularProgressIndicator()
+                  else
+                    Icon(
+                      _onlineResultOwnerChanged
+                          ? AppIcons.shield
+                          : AppIcons.cloud,
+                      size: 42,
+                      color: AppTheme.gold,
+                    ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    context.t(
+                      loading
+                          ? K.resultRecoveryLoading
+                          : _onlineResultOwnerChanged
+                          ? K.resultRecoveryOwnerChanged
+                          : K.resultRecoveryFailed,
+                    ),
+                    textAlign: TextAlign.center,
+                    style: AppTypography.bodyLarge,
+                  ),
+                  if (!loading) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    FilledButton.icon(
+                      onPressed: _retryOnlineResultGate,
+                      icon: const Icon(AppIcons.arrowsRotate),
+                      label: Text(context.t(K.retry)),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    TextButton.icon(
+                      onPressed: _leaveOnlineResultGate,
+                      icon: const Icon(AppIcons.house),
+                      label: Text(context.t(K.home)),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
-      result: _completionResult(),
     );
   }
 
@@ -1455,6 +3098,27 @@ class _QuizScreenState extends State<QuizScreen>
 
       if (!mounted || index != questionIndex) return;
 
+      final pendingServerReveal =
+          _usesServerHiddenAnswers &&
+          (result['pending'] == true ||
+              (result['accepted'] == true &&
+                  !result.containsKey('correct_option') &&
+                  !result.containsKey('is_correct')));
+      if (pendingServerReveal) {
+        setState(() {
+          _suspense = false;
+          _serverAnswerPending = true;
+          _mpPhase = _MultiplayerPhase.waiting;
+          _answeredPlayerKeys.add(
+            playerIdentityKey(id: _myId, legacyName: _myName),
+          );
+        });
+        _syncMyDuelState(answeredNow: true);
+        _startOpponentWaitTimer();
+        unawaited(_reconcileOnlineRoom());
+        return;
+      }
+
       QuizQuestion? revealedQuestion;
       if (_usesServerHiddenAnswers) {
         final correctAnswer = question.answerForOptionKey(
@@ -1486,6 +3150,7 @@ class _QuizScreenState extends State<QuizScreen>
         if (revealedQuestion != null) {
           _questions[questionIndex] = revealedQuestion;
         }
+        _serverAnswerPending = false;
         _suspense = false;
         score =
             result['new_score'] as int? ??
@@ -1536,9 +3201,25 @@ class _QuizScreenState extends State<QuizScreen>
         if (!mounted || index != questionIndex) return;
         setState(() {
           selectedAnswer = '';
+          _serverAnswerPending = false;
           _suspense = false;
         });
-        _timerController.reverse(from: 1.0);
+        await _reconcileOnlineRoom();
+        if (!mounted || index != questionIndex || answered) return;
+        final remainingMs = _estimatedAuthoritativeRemainingMs;
+        if (remainingMs != null) {
+          final totalMs = widget.room.secondsPerQuestion * 1000;
+          _timerController.stop();
+          _timerController.value = totalMs <= 0
+              ? 0
+              : (remainingMs / totalMs).clamp(0.0, 1.0).toDouble();
+          if (remainingMs > 0 && _usesTimer) {
+            _timerController.reverse();
+            _questionStopwatch.start();
+          } else if (remainingMs <= 0) {
+            unawaited(_advanceAuthoritativeIndex());
+          }
+        }
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(context.t(K.answerSendFailed))));
@@ -1600,6 +3281,10 @@ class _QuizScreenState extends State<QuizScreen>
     _revealTickTimer?.cancel();
     _opponentWaitTimer?.cancel();
     if (isLastQuestion) {
+      if (_isMultiplayer) {
+        await _finishGameMultiplayer();
+        return;
+      }
       if (completing) return;
       setState(() => completing = true);
       widget.repository.finishGame(widget.room).catchError((error, stack) {
@@ -1618,7 +3303,7 @@ class _QuizScreenState extends State<QuizScreen>
         AppRoute.to(
           QuizResultScreen(
             repository: widget.repository,
-            room: widget.room,
+            room: _resultRoom,
             score: score,
             correctCount: correctCount,
             wrongCount: wrongCount,
@@ -1628,7 +3313,7 @@ class _QuizScreenState extends State<QuizScreen>
             coinsAwarded: coinsAwarded,
             rewardQueued: _rewardQueued,
             opponents: widget.is1v1 && widget.room.id != null
-                ? livePlayers.where((p) => p.name != _myName).toList()
+                ? _opponents.toList()
                 : (_botRace?.toPlayers() ?? const []),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
@@ -1658,7 +3343,7 @@ class _QuizScreenState extends State<QuizScreen>
       _showExplanation = false;
       _suspense = false;
       _opponentSelectedAnswers.clear();
-      _answeredPlayerNames.clear();
+      _answeredPlayerKeys.clear();
       // Multiplayer phase sıfırla
       _mpPhase = _MultiplayerPhase.answering;
       _revealCountdown = 0;
@@ -1670,9 +3355,10 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Map<String, dynamic> _completionResult() {
-    final opponentScore = livePlayers
-        .where((player) => player.name != _myName)
-        .fold<int>(0, (best, player) => max(best, player.score));
+    final opponentScore = _opponents.fold<int>(
+      0,
+      (best, player) => max(best, player.score),
+    );
     return {
       'completed': true,
       'score': score,

@@ -216,6 +216,22 @@ class _MissionTile extends StatelessWidget {
     };
   }
 
+  /// Görev türünün kontrollü aksanı.
+  ///
+  /// Beş görev de `AppTheme.accent` ile çiziliyordu: ikonlar farklıydı ama
+  /// renk aynıydı, yani liste tek bir turuncu tekrarıydı. Rengîn kuralı
+  /// gereği her göreve DOLU renk yüzey verilmez — yalnız ikon ve ilerleme
+  /// türün tonunu alır, kartın zemini sakin kalır.
+  static Color _missionAccent(MissionType type) {
+    return switch (type) {
+      MissionType.answerCorrect => const Color(0xFF0E7A57), // zümrüt
+      MissionType.completeQuiz => const Color(0xFF1E4FA6), // safir
+      MissionType.useWildcard => const Color(0xFF6A38BE), // ametist
+      MissionType.keepStreak => const Color(0xFFBC4318), // ateş
+      MissionType.playCategory => const Color(0xFF04697C), // turkuaz
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final ratio = (mission.progress / mission.target).clamp(0.0, 1.0);
@@ -266,13 +282,18 @@ class _MissionTile extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isDone
-                      ? AppTheme.gold.withValues(alpha: 0.12)
-                      : AppTheme.accent.withValues(alpha: 0.08),
+                      ? AppTheme.gold.withValues(alpha: 0.14)
+                      : _missionAccent(mission.type).withValues(alpha: 0.14),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   isDone ? AppIcons.check : _missionIcon(mission.type),
-                  color: isDone ? AppTheme.gold : AppTheme.accent,
+                  color: isDone
+                      ? AppTheme.gold
+                      : AppColors.readableAccent(
+                          context,
+                          _missionAccent(mission.type),
+                        ),
                   size: compact ? 12 : 14,
                 ),
               ),
@@ -341,7 +362,12 @@ class _MissionTile extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: isDone
                           ? AppTheme.goldGradient
-                          : AppTheme.accentGradient,
+                          : LinearGradient(
+                              colors: [
+                                _missionAccent(mission.type),
+                                _missionAccent(mission.type),
+                              ],
+                            ),
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),

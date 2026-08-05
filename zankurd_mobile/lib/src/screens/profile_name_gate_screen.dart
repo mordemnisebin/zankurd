@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
@@ -39,12 +41,31 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
         ? ''
         : widget.initialName;
     _controller = TextEditingController(text: initial ?? '');
+    if (_controller.text.isEmpty) {
+      unawaited(_loadInitialName());
+    }
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadInitialName() async {
+    try {
+      final name = await widget.repository.getProfileName();
+      if (!mounted || _controller.text.isNotEmpty || _isDefaultName(name)) {
+        return;
+      }
+      _controller.text = name.trim();
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'profile name gate prefill failed',
+      );
+    }
   }
 
   Future<void> _save() async {

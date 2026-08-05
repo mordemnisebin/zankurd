@@ -13,6 +13,7 @@ import '../models/league_tier.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
+import '../widgets/arena_kit.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import 'friends_screen.dart';
@@ -96,6 +97,148 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     } catch (_) {
       return null;
     }
+  }
+
+  /// Liderlik gövdesi: dar ekranda tek sütun, geniş ekranda iki sütun.
+  ///
+  /// iPad'de telefon düzeni yukarıdan aşağı gerilmiş hâlde çiziliyordu:
+  /// podyum ekranın üçte birini kaplıyor, sıralama listesi katlamanın
+  /// altında kalıyordu — yani tabletin bütün fazla genişliği boşa
+  /// gidiyordu. 720 eşiği `onboarding_screen.dart`taki eşikle aynıdır ve
+  /// iPad mini'nin dikey genişliğinin (744 pt) altında, en geniş telefonun
+  /// (440 pt) çok üstündedir; telefon düzeni hiçbir biçimde değişmez
+  /// (2026-08-04).
+  ///
+  /// `ResponsiveWrapper.maxContentWidth` içeriği 820 pt'de sınırladığı için
+  /// iki sütun iPad Pro'da da bu genişlik içinde kalır — sütunlar
+  /// okunamayacak kadar açılmaz.
+  Widget _buildBody(
+    List<LeaderboardEntry> entries,
+    Map<String, Color> avatarColorOverrides,
+    bool ku,
+  ) {
+    final uid = widget.repository.currentUserId;
+    final rest = entries.skip(3).toList();
+
+    List<Widget> rankRows() => [
+      for (final e in rest)
+        _RankRow(
+          entry: e,
+          isKu: ku,
+          grouped: true,
+          highlight: uid != null && e.playerId == uid,
+          colorOverride: avatarColorOverrides[e.playerId],
+          // Kişi kendini bildiremez. Liste eskiden kendi satırında da
+          // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
+          // sorulmuyordu (2026-08-04).
+          onReport: e.playerId == uid ? null : () => _reportProfile(e),
+        ),
+    ];
+
+    final podium = _Podium(
+      entries: entries.take(3).toList(),
+      isKu: ku,
+      colorOverrides: avatarColorOverrides,
+    );
+    final banner = _period == LeaderboardPeriod.weekly
+        ? _LeagueBanner(myRank: _myRank(entries), isKu: ku)
+        : null;
+
+    // Geniş ekranda sol sütun podyumdan sonra boş kalıyordu; oyuncunun
+    // kendi satırı ise sağdaki uzun listenin ortasında bir yerdeydi.
+    // Bağlam sütununa kendi sıra özeti konur — AMA yalnız oyuncu gerçekten
+    // sıralanmışsa ve podyumda DEĞİLSE. Podyumdaysa kimliği zaten en büyük
+    // öğede duruyor; ikinci bir özet aynı şeyi iki kez söylerdi.
+    //
+    // `_myRank` puan kapısını da uyguladığı için sıfır puanlı oyuncuya
+    // burada da sıra gösterilmez; o durumda listenin altındaki sabit satır
+    // devreye girer ve ikisi asla birlikte çizilmez.
+    final selfIndex = uid == null
+        ? -1
+        : entries.indexWhere((e) => e.playerId == uid);
+    final selfSummary = (_myRank(entries) != null && selfIndex >= 3)
+        ? _RankRow(
+            entry: entries[selfIndex],
+            isKu: ku,
+            highlight: true,
+            colorOverride: avatarColorOverrides[entries[selfIndex].playerId],
+          )
+        : null;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 720) {
+          return ListView(
+            controller: widget.scrollController,
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.page,
+              AppSpacing.xs,
+              AppSpacing.page,
+              AppSpacing.xl,
+            ),
+            children: [
+              if (banner != null) ...[
+                banner,
+                const SizedBox(height: AppSpacing.cardGap),
+              ],
+              podium,
+              if (rest.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.cardGap),
+                _RankListSurface(rows: rankRows()),
+              ],
+            ],
+          );
+        }
+        // Geniş ekran: sol sütun bağlam (lig bandı + podyum), sağ sütun
+        // sıralama. Podyum sola sabitlenip aşırı genişlemesin diye sol
+        // sütun daha dar tutulur; liste satır yüksekliğini korur.
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.page,
+            AppSpacing.xs,
+            AppSpacing.page,
+            0,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.xl),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (banner != null) ...[
+                        banner,
+                        const SizedBox(height: AppSpacing.cardGap),
+                      ],
+                      podium,
+                      if (selfSummary != null) ...[
+                        const SizedBox(height: AppSpacing.cardGap),
+                        selfSummary,
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.cardGap),
+              Expanded(
+                flex: 6,
+                child: rest.isEmpty
+                    ? const SizedBox.shrink()
+                    : ListView(
+                        key: const ValueKey('leaderboard-wide-list'),
+                        controller: widget.scrollController,
+                        padding: const EdgeInsets.only(bottom: AppSpacing.xl),
+                        children: [_RankListSurface(rows: rankRows())],
+                      ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   /// Oyuncu ilk 10'da değilse en alta sabitlenen kendi sırası.
@@ -498,36 +641,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 color: AppTheme.primaryGradientStart,
                 backgroundColor: AppTheme.borderColor(context),
               ),
-            Expanded(
-              child: ListView(
-                controller: widget.scrollController,
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  AppSpacing.xl,
-                ),
-                children: [
-                  if (_period == LeaderboardPeriod.weekly) ...[
-                    _LeagueBanner(myRank: _myRank(entries), isKu: ku),
-                    const SizedBox(height: AppSpacing.cardGap),
-                  ],
-                  _Podium(
-                    entries: entries.take(3).toList(),
-                    isKu: ku,
-                    colorOverrides: avatarColorOverrides,
-                  ),
-                  const SizedBox(height: AppSpacing.cardGap),
-                  for (final e in entries.skip(3))
-                    _RankRow(
-                      entry: e,
-                      isKu: ku,
-                      colorOverride: avatarColorOverrides[e.playerId],
-                      onReport: () => _reportProfile(e),
-                    ),
-                ],
-              ),
-            ),
+            Expanded(child: _buildBody(entries, avatarColorOverrides, ku)),
             // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa
             // kendi sırasını hiç göremiyordu — tablonun temel motivasyon
             // mekanizması eksikti (2026-07-22 UX denetimi).
@@ -1083,12 +1197,26 @@ class _PodiumSlot extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: color.withValues(alpha: 0.4)),
                 ),
-                child: Text(
-                  '${entry.totalScore}',
-                  style: TextStyle(
-                    color: AppColors.readableAccent(context, color),
-                    fontWeight: FontWeight.w800,
-                    fontSize: scoreFontSz,
+                // Puan %200 yazıda "50/00" gibi iki satıra bölünüyordu:
+                // sayı bir sözcük değil, bölününce anlamını kaybediyor ve
+                // birinciyle üçüncüyü karşılaştırmak imkânsızlaşıyordu.
+                //
+                // `FittedBox` YALNIZ sayıya uygulanır ve yalnız gerekince
+                // küçültür (`scaleDown`): erişilebilirlik ölçeği kapatılmaz,
+                // sabit küçük font dayatılmaz, değer kısaltılmaz — sığdığı
+                // sürece kullanıcının seçtiği boyutta çizilir
+                // (2026-08-04 görsel denetimi).
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '${entry.totalScore}',
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                      color: AppColors.readableAccent(context, color),
+                      fontWeight: FontWeight.w800,
+                      fontSize: scoreFontSz,
+                    ),
                   ),
                 ),
               ),
@@ -1157,11 +1285,95 @@ class _PodiumSlot extends StatelessWidget {
 
 // ─── Rank Row (4-10) ─────────────────────────────────────────────────────────
 
+/// Oyuncunun kendi satırının vurgu tonu — safir (#1E4FA6).
+///
+/// Eskiden marka turuncusuydu. Turuncu bu üründe TEK bir işi olan renktir:
+/// birincil eylem. Sıralamadaki kendi satırın bir eylem değil, bir konum;
+/// turuncuya boyanınca listenin ortasında basılacak bir düğme gibi
+/// duruyordu. Safir dikkati aynı güçte çeker ama "buraya bas" demez
+/// (2026-08-04).
+///
+/// Renk tek kanal da değildir: aynı satır ayrıca sol kenarda bir şerit ve
+/// adın yanında "Sen"/"Tu" etiketi taşır.
+const Color _selfRankTone = Color(0xFF1E4FA6);
+
+/// "Sen"/"Tu" etiketi — vurgunun ÜÇÜNCÜ kanalı (dolgu ve şeritten sonra).
+///
+/// Renk ve şerit görsel işaretlerdir; ekran okuyucu kullanan ya da renk
+/// ayrımını göremeyen oyuncu için satırın kendisine ait olduğunu SÖYLEYEN
+/// bir metin gerekir. Satırın birleşik semantik etiketi ayrıca
+/// `K.seninSiranPP` ile "senin sıran" der.
+class _SelfTag extends StatelessWidget {
+  const _SelfTag({required this.isKu});
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      decoration: BoxDecoration(
+        color: _selfRankTone.withValues(
+          alpha: AppTheme.isLight(context) ? 0.14 : 0.30,
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+      ),
+      child: Text(
+        Tr.forKu(K.you, isKu),
+        maxLines: 1,
+        style: AppTypography.caption.copyWith(
+          fontWeight: FontWeight.w900,
+          color: AppColors.readableAccent(context, _selfRankTone),
+        ),
+      ),
+    );
+  }
+}
+
+/// Sıralama satırlarını tek bir yüzeyde toplar.
+///
+/// Satırlar arasındaki ayrım ince bir ayraçla yapılır; her satıra ayrı
+/// kenarlık, gölge ve dış boşluk vermek listeyi on ayrı karta bölüyordu.
+class _RankListSurface extends StatelessWidget {
+  const _RankListSurface({required this.rows});
+
+  final List<Widget> rows;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context),
+        borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
+        border: Border.all(
+          color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < rows.length; i++) ...[
+            if (i > 0)
+              Divider(
+                height: 1,
+                thickness: 1,
+                color: AppTheme.borderColor(context).withValues(alpha: 0.45),
+              ),
+            rows[i],
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _RankRow extends StatelessWidget {
   const _RankRow({
     required this.entry,
     required this.isKu,
     this.highlight = false,
+    this.grouped = false,
     this.colorOverride,
     this.onReport,
   });
@@ -1171,6 +1383,19 @@ class _RankRow extends StatelessWidget {
 
   /// Oyuncunun kendi satırı: listede görünmediğinde en alta sabitlenir.
   final bool highlight;
+
+  /// Satır ortak bir liste yüzeyinin İÇİNDE mi çiziliyor.
+  ///
+  /// Sıralama on ayrı beyaz kart olarak çiziliyordu: her satırın kendi
+  /// kenarlığı, kendi dolgusu ve kendi dış boşluğu vardı. Sonuç, sırayla
+  /// okunması gereken bir listede on ayrı "bu bir kart" sinyaliydi — göz
+  /// ritmi yakalayamıyor, kenarlıklar üst üste binerek gürültü
+  /// oluşturuyordu. Gruplu satır kendi kabuğunu bırakır; ayrım tek bir
+  /// ince ayraçla yapılır (2026-08-04).
+  ///
+  /// Sabitlenmiş "kendi sıram" satırı listenin dışında, kendi katmanında
+  /// durduğu için gruplu DEĞİLDİR — orada kabuk gerçekten gerekli.
+  final bool grouped;
 
   /// 2026-07-23 M25b: yalnız ana listeden (görünür ilk 10) çağrılırken
   /// [resolveAvatarColors] ile doldurulur. `_buildMyRankRow`'un ayrıca
@@ -1210,71 +1435,57 @@ class _RankRow extends StatelessWidget {
   }
 
   Widget _buildRow(BuildContext context) {
+    final light = AppTheme.isLight(context);
+    // Vurgu dolgusu koyu temada daha güçlü olmalı: aynı alfa açık zeminde
+    // görünen farkı koyu zeminde vermiyor.
+    final fill = highlight
+        ? _selfRankTone.withValues(alpha: light ? 0.09 : 0.20)
+        : (grouped ? Colors.transparent : AppTheme.surfaceColor(context));
+
     return Container(
-      key: highlight
+      key: highlight && !grouped
           ? const ValueKey('leaderboard-my-rank-row')
           : ValueKey('leaderboard-rank-row-${entry.rank}'),
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+      // Gruplu satır kendi dış boşluğunu ve kabuğunu taşımaz — ayrım
+      // yüzeyin kendi ayracıyla yapılır.
+      margin: grouped
+          ? EdgeInsets.zero
+          : const EdgeInsets.only(bottom: AppSpacing.sm),
+      // Gruplu satırda şerit yüzeyin sol kenarına yaslanır; kabuklu
+      // satırda kenarlığın içinde kalması için soldan da boşluk alır.
+      padding: EdgeInsets.fromLTRB(
+        grouped ? 0 : AppSpacing.sm,
+        AppSpacing.xs,
+        AppSpacing.md,
+        AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: highlight
-            ? AppTheme.brand.withValues(alpha: 0.10)
-            : AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-        border: Border.all(
-          color: highlight
-              ? AppTheme.brand.withValues(alpha: 0.45)
-              : AppTheme.borderColor(context).withValues(alpha: 0.55),
-        ),
-        boxShadow: highlight
-            ? [
-                BoxShadow(
-                  color: AppTheme.brand.withValues(alpha: 0.12),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ]
-            : null,
+        color: fill,
+        borderRadius: grouped
+            ? null
+            : BorderRadius.circular(AppTheme.cardRadiusSmall),
+        border: grouped
+            ? null
+            : Border.all(
+                color: highlight
+                    ? _selfRankTone.withValues(alpha: 0.45)
+                    : AppTheme.borderColor(context).withValues(alpha: 0.55),
+              ),
       ),
       child: Row(
         children: [
+          // Sol şerit: vurgunun İKİNCİ kanalı. Dolgu tonu tek başına renk
+          // körü oyuncuya yeterli fark vermez.
           Container(
-            width: 32,
-            height: 32,
+            width: 3,
+            height: 40,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: entry.rank <= 10
-                  ? LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        AppTheme.gold,
-                        Color.alphaBlend(
-                          Colors.black.withValues(alpha: 0.12),
-                          AppTheme.gold,
-                        ),
-                      ],
-                    )
-                  : null,
-              color: entry.rank <= 10
-                  ? null
-                  : AppTheme.textMutedColor(context).withValues(alpha: 0.16),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              '${entry.rank}',
-              style: AppTypography.bodyMedium.copyWith(
-                color: entry.rank <= 10
-                    ? Colors.white
-                    : AppTheme.textSubColor(context),
-                fontWeight: FontWeight.w800,
-                fontSize: 13,
-              ),
+              color: highlight ? _selfRankTone : Colors.transparent,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
             ),
           ),
+          const SizedBox(width: AppSpacing.sm),
+          RankMedal(rank: entry.rank, size: 34),
           const SizedBox(width: 10),
           PlayerAvatar(
             radius: 18,
@@ -1290,14 +1501,27 @@ class _RankRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  entry.displayName,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                // Ad ve "Sen" etiketi tek satırda; ad esner, etiket esnemez.
+                // Uzun bir kullanıcı adı etiketi ekrandan atmamalı — asıl
+                // bilgi hangi satırın SENİN olduğun.
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        entry.displayName,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (highlight) ...[
+                      const SizedBox(width: 6),
+                      _SelfTag(isKu: isKu),
+                    ],
+                  ],
                 ),
                 const SizedBox(height: 1),
                 Text(
@@ -1335,7 +1559,16 @@ class _RankRow extends StatelessWidget {
           // Bildir düğmesi GÖRÜNÜRDÜR. Sohbetteki bildir/engelle yalnız
           // keşfedilemez bir uzun basmayla erişilebiliyordu ve denetimde
           // bu ayrıca kusur sayılmıştı; aynı hatayı burada tekrarlamıyoruz.
-          if (onReport != null)
+          // Kendi satırında düğme yok ama LİSTE İÇİNDE yeri durur: aksi
+          // hâlde o satırın puanı sağa kayıyor ve listenin sağ kenarı tam
+          // da en çok bakılan satırda kırılıyordu (2026-08-04).
+          //
+          // Tek başına duran özet kartında rezerve edilmez: hizalanacak
+          // kardeş satır yok ve dar sütunda o 44 pt doğrudan addan çalınıp
+          // ismi "Oy..." hâline getiriyordu.
+          if (onReport == null)
+            if (grouped) const SizedBox(width: 44) else const SizedBox.shrink()
+          else
             Semantics(
               button: true,
               label: Tr.forKu(K.reportProfileTitle, isKu),

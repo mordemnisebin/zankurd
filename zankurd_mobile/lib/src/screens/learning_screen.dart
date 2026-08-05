@@ -1555,7 +1555,14 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               foregroundColor: Colors.white,
                             ),
                             onPressed: _miniQuizLoading ? null : _startMiniQuiz,
-                            child: Text(context.t(K.miniQuiz)),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                context.t(K.miniQuiz),
+                                maxLines: 1,
+                                softWrap: false,
+                              ),
+                            ),
                           ),
                         ),
                       ],

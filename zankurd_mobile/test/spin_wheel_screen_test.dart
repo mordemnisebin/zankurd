@@ -140,6 +140,24 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('ağ yoksa çark bağlamsal çevrimdışı durumu gösterir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _shell(SpinWheelScreen(repository: _OfflineSpinStatusRepository())),
+    );
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Çark çevrimdışı'), findsOneWidget);
+    expect(
+      find.text('Çark durumunu görmek için internet bağlantısı gerekiyor.'),
+      findsOneWidget,
+    );
+    expect(find.text('Tekrar'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('çark durum hatası görünür ve kontrol yeniden denenir', (
     tester,
   ) async {
@@ -174,7 +192,7 @@ class _RefusingSpinRepository extends MockZanKurdRepository {
 class _ThrowingSpinRepository extends MockZanKurdRepository {
   @override
   Future<bool> canSpinToday() async {
-    throw StateError('network down');
+    throw StateError('spin status failed');
   }
 }
 
@@ -187,5 +205,12 @@ class _RetryableSpinStatusRepository extends MockZanKurdRepository {
     statusCalls += 1;
     if (fail) throw StateError('spin status unavailable');
     return true;
+  }
+}
+
+class _OfflineSpinStatusRepository extends MockZanKurdRepository {
+  @override
+  Future<bool> canSpinToday() async {
+    throw StateError('network unavailable');
   }
 }

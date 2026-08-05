@@ -1,8 +1,8 @@
 # Yayın adımları — sıradan şaşma
 
-Bu belge son yayın sırasıdır. Supabase güvenlik göçleri ve Hostinger SSH
-bağlantısı hazırdır; mağaza hesabı, imza ve fiziksel cihaz adımları hesap
-sahibinde kalır.
+Bu belge son yayın sırasıdır. Hostinger SSH bağlantısı ve Android upload
+anahtarı hazırdır. Yeni 1v1 Supabase göçü ise önce staging/preview ortamında
+doğrulanmalıdır; mağaza hesabı ve fiziksel cihaz adımları hesap sahibinde kalır.
 
 Sırayla git. Her adımın sonunda **"tamam mı?"** satırı var; orası
 tutmuyorsa sonrakine geçme.
@@ -25,155 +25,304 @@ Görmüyorsan bana yaz, yayına başlama.
 
 ---
 
-## 1. Supabase: çalıştırılacak göç kalmadı — yalnız doğrula
+## 1. Supabase: yeni 1v1 göçünü staging'de doğrula
 
-2026-08-01 itibarıyla bütün göçler canlıda. Son üçü 2026-07-31
-denetiminden geldi: turnuva skor yetkisi, sohbet moderasyonu ve açıkta
-kalan okuma yüzeyleri. Uygulanma kaydı
-`zankurd_mobile/supabase/applied.md` dosyasındadır; **buradaki hiçbir
-dosyayı yeniden çalıştırman gerekmiyor.**
+Önce `zankurd_mobile/supabase/applied.md` dosyasına bak. `✅` kaydı olan
+göçleri **yeniden çalıştırma**. Bu sürüm için ayrıca
+`supabase/2026-08-02_multiplayer_session_hardening.sql` gerekir. 2026-08-02
+salt-okunur canlı kontrolde bu dosyanın yeni RPC'leri bulunamadı; dosyanın
+`applied.md` kaydı hâlâ yoksa dosyayı doğrudan üretime gönderme.
 
-Yayına başlamadan önce tek bir sağlık sorgusu yeter.
-[supabase.com](https://supabase.com) → projen → **SQL Editor** →
-**New query** → şunu koş:
-
-```sql
-select
-  -- 1. Oyuncu kodu (2026-07-28)
-  (select count(*) from public.profiles
-    where player_tag is null or length(trim(player_tag)) = 0)
-    as kodsuz_oyuncu,
-
-  -- 2. Turnuva skoru sunucuda sınırlı mı? (2026-07-31)
-  (select bool_or(prosrc ilike '%least(v_score%')
-     from pg_proc where proname = 'submit_tournament_match')
-    as skor_tavani_var,
-  (select bool_or(prosrc ilike '%advance_tournament%')
-     from pg_proc where proname = 'resolve_expired_tournament_matches')
-    as tur_ilerlemesi_var,
-
-  -- 3. Sohbet moderasyonu ayakta mı? (2026-07-31)
-  (select count(*) from pg_tables
-    where tablename in ('blocked_users', 'message_reports'))
-    as moderasyon_tablolari,
-  (select public.chat_message_is_clean('Merheba heval')) as temiz_gecer,
-  (select public.chat_message_is_clean('bak https://kotu.com'))
-    as link_gecmez,
-
-  -- 4. Doğru cevaplar hâlâ kapalı mı? (2026-07-22 + 2026-07-31)
-  (select count(*) from pg_tables
-    where tablename like 'questions_editorial_backup%')
-    as acikta_yedek_kaldi,
-  (select has_table_privilege('anon', 'public.questions', 'select'))
-    as anon_soru_okuyabilir;
-```
-
-**Tamam mı?** Beklenen değerler sırayla:
-
-| Sütun | Olması gereken |
-|---|---|
-| `kodsuz_oyuncu` | `0` |
-| `skor_tavani_var` | `true` |
-| `tur_ilerlemesi_var` | `true` |
-| `moderasyon_tablolari` | `2` |
-| `temiz_gecer` | `true` |
-| `link_gecmez` | `false` |
-| `acikta_yedek_kaldi` | `0` |
-| `anon_soru_okuyabilir` | `false` |
-
-Biri tutmuyorsa bana yaz; ilgili göç dosyası idempotenttir, yeniden
-çalıştırmak bir şey bozmaz.
-
----
-
-## 2. Siteyi güncelle (uygulama + yasal sayfalar birlikte)
-
-Üç yasal sayfa web derlemesinin **içinde** geliyor (`web/privacy.html`,
-`web/terms.html`, `web/delete-account.html` → `build/web/`), yani siteyi güncellediğinde onlar da
-güncellenir. Ayrı yükleme yok.
-
-Tek komut analiz → bütün testler → açık Supabase ayarlı release derleme →
-Hostinger hedef/anahtar ön kontrolü → şifreli aktarım → dört canlı sayfa
-doğrulaması sırasını uygular:
+Önce staging/preview Supabase projesinde dosyanın tamamını tek işlem olarak
+uygula. Ardından git tarafından yok sayılan ayrı bir staging yapılandırması
+hazırla; üretim dosyasını staging turunda kullanma:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
-./release_web.sh
+if [ ! -f .env.mobile.staging.json ]; then
+  cp .env.mobile.release.example.json .env.mobile.staging.json
+fi
 ```
 
-Aktarım parola kullanmaz, hedefin gerçek yolunu doğrulamadan başlamaz,
-değişen uzak dosyaları web kökü dışındaki tarihli yedeğe alır ve uzak
-dosyaları topluca silmez.
+Şimdi `.env.mobile.staging.json` içindeki `SUPABASE_URL` ve
+`SUPABASE_ANON_KEY` değerlerini staging/preview projesinin açık istemci
+değerleriyle, RevenueCat alanlarını da sandbox/Test Store **public SDK**
+anahtarlarıyla doldur. Service-role veya başka bir sunucu sırrı kullanma.
+Kaydettikten sonra değerleri terminale yazdırmayan yapısal doğrulamayı çalıştır:
 
-**Tamam mı?** "Sayfa açılıyor" yetmez: sunucu olmayan her adrese
-uygulamanın kendi sayfasını döndürüyor, yani 404 bile 200 görünüyor.
-İçeriğe bak:
+```bash
+dart run tool/validate_release_config.dart --file=.env.mobile.staging.json --target=mobile --environment=staging
+```
 
-- `https://www.zankurd.com/terms.html` → başlıkta **"Kullanım Koşulları ·
-  Mercên Bikaranînê"** yazmalı. "ZanKurd" yazan boş sayfa görüyorsan
-  yükleme olmamıştır.
-- `https://www.zankurd.com/privacy.html` → 4. maddede **"Ayarlar → Hesap
-  → Hesabımı Sil"** yazmalı. Hâlâ "e-posta gönder" diyorsa eski dosya
-  duruyordur.
-- `https://www.zankurd.com/delete-account.html` → **"Hesap Silme ·
-  Jêbirina Hesabê"** başlığı ve talep düğmesi görünmeli.
+Bu kapı HTTPS Supabase proje adresini, yalnız publishable/anon rolünü ve iki
+RevenueCat platform alanını doğrular. Test Store anahtarı yalnız bu açık
+`staging` modunda kabul edilir; production doğrulamasında reddedilir. Kontrol
+başarısızsa devam etme. Başarılıysa `flutter devices` ile iki hedefin kimliğini
+bul; sonra iki ayrı terminalde şu komutları çalıştır:
 
-Üçü de krem zeminli, yeşil başlıklı. Eskisi lacivert/kırmızıydı; renk
-değiştiyse yeni sürüm yüklenmiş demektir.
+```bash
+flutter run --release -d <birinci-cihaz-id> --dart-define=APP_ENV=staging --dart-define-from-file=.env.mobile.staging.json
+flutter run --release -d <ikinci-cihaz-id> --dart-define=APP_ENV=staging --dart-define-from-file=.env.mobile.staging.json
+```
+
+İki ayrı istemciyi iki cihazda çalıştır ve iki ayrı hesap aç. Oda kurma → koda
+katılma → iki tarafın hazır olması → oyunun başlaması → cevap/ilerleme →
+sonuç/makbuz → uygulamayı kapatıp oturumu geri alma akışını tamamla. Bir iOS
+simülatörü release modunu kabul etmezse fiziksel iPhone veya Android hedef
+kullan; staging yerine üretim backend'ine dönme. Bu tur bitmeden üretime geçme.
+
+Staging/preview turundan sonra ayrı bir yeni sorguda şu salt-okunur doğrulamayı
+çalıştır:
+
+```sql
+select
+  to_regprocedure('public.create_online_room(text,integer)') is not null
+    as oda_olusturma_hazir,
+  to_regprocedure('public.get_my_resumable_room()') is not null
+    as oturum_kurtarma_hazir,
+  to_regprocedure('public.get_my_pending_room_result()') is not null
+    as bekleyen_sonuc_hazir,
+  to_regprocedure('public.acknowledge_room_result(uuid)') is not null
+    as sonuc_onayi_hazir,
+  to_regclass('public.room_result_snapshots') is not null
+    as sonuc_anlik_goruntusu_hazir,
+  to_regclass('public.room_result_receipts') is not null
+    as sonuc_makbuzu_hazir;
+```
+
+**Tamam mı?** Staging/preview iki istemci turu geçti ve altı değerin altısı da
+`true` ise evet. Bu aşamada üretim SQL Editor'ünü açma ve
+`supabase/applied.md` dosyasını değiştirme. Herhangi biri `false` ise yayına
+devam etme ve göçü körlemesine ikinci kez çalıştırma; önce ilk çalıştırmanın
+hatasını incele.
 
 ---
 
-## 3. Android imza anahtarı (bir kez, ömür boyu)
+## 2. Üretim artefaktlarını dağıtmadan hazırla
 
-> **Bu dosyayı kaybedersen Play Store'da uygulamayı bir daha
-> güncelleyemezsin.** Yedekle: parola yöneticisi + harici disk.
+Staging doğrulaması bitince yeni istemcilerin bütün üretim artefaktlarını
+hazırla. Bu adımda web sitesini değiştirme, mağazaya paket yükleme ve üretim
+Supabase göçünü uygulama. Kesim sırasında yeniden derleme yapılmayacak.
 
-Terminalde:
+### 2a. Web artefaktı
+
+Üç yasal sayfa web derlemesinin **içinde** geliyor (`web/privacy.html`,
+`web/terms.html`, `web/delete-account.html` → `build/web/`). Daha önce gerçek
+üretim açık istemci değerleriyle doğrulanmış `.env.web.release.json` dosyasını
+kullanarak yerel paketi hazırla:
 
 ```bash
-keytool -genkeypair -v -keystore ~/zankurd-upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+dart run tool/validate_release_config.dart --file=.env.web.release.json --target=web --environment=production
+flutter build web --release --no-web-resources-cdn --dart-define-from-file=.env.web.release.json
+cmp -s web/privacy.html build/web/privacy.html
+cmp -s web/terms.html build/web/terms.html
+cmp -s web/delete-account.html build/web/delete-account.html
 ```
 
-Soracakları:
-- **Keystore parolası** — güçlü seç, kaydet.
-- **Key parolası** — aynısını yazabilirsin (Enter'a basınca aynısını alır).
-- Ad/kurum/şehir — Play için kritik değil, doldur geç.
+`build/web/` klasörünü bu kesim için sabit tut. Göç uygulanana kadar
+`release_web.sh` veya gerçek `deploy_sftp.sh` aktarımını çalıştırma; salt-okunur
+`--dry-run` ön kontrolü 2d adımında zorunludur.
 
-Sonra `zankurd_mobile/android/key.properties` diye bir dosya oluştur,
-içine (parolaları kendi seçtiklerinle değiştir):
+### 2b. Android imza anahtarı ve AAB
 
-```properties
-storePassword=SENIN_KEYSTORE_PAROLAN
-keyPassword=SENIN_KEY_PAROLAN
-keyAlias=upload
-storeFile=/Users/kocer/zankurd-upload.jks
+> **Bu dosyayı kaybedersen Play Store'da uygulamayı bir daha
+> güncelleyemezsin.** Var olan anahtarı yeniden üretme veya değiştirme.
+
+Doğrulanmış upload keystore bu makinede
+`/Users/kocer/.zankurd/signing/zankurd-upload.jks` yolundadır; alias
+`zankurd-upload`, parolaları macOS Keychain'dedir. `android/key.properties`
+zaten bu dosyayı gösterir ve git tarafından yok sayılır. Parolaları terminale
+yazdırmadan yol ile alias değerini denetle:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+test -f /Users/kocer/.zankurd/signing/zankurd-upload.jks
+awk -F= '$1 == "storeFile" || $1 == "keyAlias" { print }' android/key.properties
 ```
 
-Bu dosya git'e girmiyor (`.gitignore`'da), merak etme.
+Beklenen iki satır:
+
+```text
+storeFile=/Users/kocer/.zankurd/signing/zankurd-upload.jks
+keyAlias=zankurd-upload
+```
+
+Sertifikayı da Keychain'deki parola istendiğinde girerek doğrula:
+
+```bash
+keytool -list -v -keystore /Users/kocer/.zankurd/signing/zankurd-upload.jks -alias zankurd-upload
+```
+
+Çıktıdaki sertifika SHA-256 parmak izi şu doğrulanmış değerle **birebir** aynı
+olmalı:
+
+```text
+80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3
+```
+
+Play Console upload sertifikası kaydı oluştuğunda oradaki SHA-256 da aynı
+olmalıdır. Dosya yoksa, değerler veya parmak izi farklıysa yeni anahtar üretme;
+yayını durdur ve doğrulanmış anahtarı yedeğinden geri getir.
 
 Mobil release yapılandırmasını örnekten oluştur ve dört açık anahtarı gerçek
 üretim değerleriyle doldur. `.env.mobile.release.json` yerel kalır; repoya
 eklenmez:
 
-RevenueCat anahtarları release derlemesinde zorunludur; Supabase ve RevenueCat
-değerlerinden biri eksik veya yanlış yapılandırılmışsa güvenlik nedeniyle paket
-üretilmez.
+RevenueCat anahtarları release derlemesinde zorunludur. Supabase veya RevenueCat
+değeri eksik, şablon, secret, Test Store veya yanlış platform anahtarıysa
+production doğrulaması durur; böyle bir AAB mağazaya yüklenebilir bir paket
+sayılmaz.
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
-cp .env.mobile.release.example.json .env.mobile.release.json
+if [ ! -f .env.mobile.release.json ]; then
+  cp .env.mobile.release.example.json .env.mobile.release.json
+fi
 ```
 
-**Tamam mı?**
+Dosyayı gerçek üretim istemci değerleriyle doldurup kaydettikten sonra değerleri
+yazdırmadan doğrula:
+
+```bash
+dart run tool/validate_release_config.dart --file=.env.mobile.release.json --target=mobile --environment=production
+```
+
+Doğrulama geçerse AAB'yi üret, imzasını ve bundle yapısını doğrula:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
 flutter build appbundle --release --dart-define-from-file=.env.mobile.release.json
+jarsigner -verify -verbose -certs build/app/outputs/bundle/release/app-release.aab
+bundletool validate --bundle=build/app/outputs/bundle/release/app-release.aab
 ```
 
-Sonunda `✓ Built build/app/outputs/bundle/release/app-release.aab`
-görüyorsan evet. "Release signing is misconfigured" diyorsa
-`key.properties` yolunu ya da parolayı yanlış yazmışsındır.
+Sonunda AAB için `✓ Built`, imza denetiminde `jar verified` ve bundletool
+doğrulamasında hata olmayan bir çıktı görmelisin. Ardından `flutter devices` ile
+production smoke için ayrılmış Android cihaz kimliğini bul ve mağazaya gidecek
+aynı AAB'den cihaza özel APK setini kur:
+
+```bash
+bundletool build-apks --bundle=build/app/outputs/bundle/release/app-release.aab --output=build/app/outputs/bundle/release/app-release-smoke.apks --connected-device --device-id=<android-smoke-cihaz-id> --ks=/Users/kocer/.zankurd/signing/zankurd-upload.jks --ks-key-alias=zankurd-upload --overwrite
+bundletool install-apks --apks=build/app/outputs/bundle/release/app-release-smoke.apks --device-id=<android-smoke-cihaz-id>
+```
+
+Bundletool parolaları etkileşimli ister; parolayı komut satırı argümanına veya
+loga yazma. Kurulan uygulamayı aç, onboarding/ana ekranın geldiğini ve
+"Uygulama yapılandırması eksik" ekranının görünmediğini doğrula. Uygulamayı
+cihazda kurulu bırak; production 1v1 turu kesimden sonra aynı kurulumla yapılır.
+
+### 2c. iOS production-config smoke ve App Store arşivi
+
+Fiziksel iPhone kimliğini `flutter devices` ile bul. Önce aynı kaynak ve üretim
+yapılandırmasını development imzasıyla release modunda kur:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+flutter run --release -d <iphone-smoke-cihaz-id> --dart-define-from-file=.env.mobile.release.json
+```
+
+Onboarding/ana ekranı ve paywall teklif durumunu doğrula; gerçek satın alma
+yapma. Flutter oturumunu kapattıktan sonra uygulamayı telefonda kurulu bırak.
+Ardından Apple Developer hesabı Xcode'da ekliyken mağaza arşivini açıkça App
+Store dağıtım yöntemiyle hazırla; henüz App Store Connect'e yükleme:
+
+```bash
+flutter build ipa --release --export-method=app-store --dart-define-from-file=.env.mobile.release.json
+```
+
+**App Store IPA doğrudan cihaza kurulmaz.** Production smoke için kullanılan
+paket yukarıdaki `flutter run --release` kurulumudur; App Store IPA yalnız
+Organizer/Transporter yüklemesi içindir.
+
+### 2d. Geriye uyumsuz göçten önce dağıtım ön kontrolü
+
+Bütün artefaktlar hazırken gerçek aktarım yapmadan SSH, sabit host key, uzak web
+kökü, uzak yedek kökü ve rsync erişimini doğrula:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+./deploy_sftp.sh --dry-run
+```
+
+Bu komut başarısızsa production migration'ını uygulama. Özellikle uzak yedek
+kökü önceden var, yazılabilir ve gerçek yolu web kökünün dışında olmalıdır;
+kesim sırasında ilk kez oluşturulmaya veya symlink yönlendirmesine güvenilmez.
+
+**Tamam mı?** `build/web/`, imzası/bundle yapısı doğrulanmış ve Android'e
+kurulmuş AAB, fiziksel iPhone'a kurulmuş production-config release, imzalı App
+Store arşivi ve başarılı SFTP dry-run aynı kaynak kodundan geldiyse evet.
+Bunlardan biri eksikse üretim göçüne geçme.
+
+---
+
+## 3. Koordineli üretim kesimi
+
+Bu göç yeni `ready` protokolü ile RPC imzalarını birlikte değiştirir. Herhangi bir
+legacy istemci — eski web dağıtımı, mağaza/test paketi veya doğrudan
+kurulmuş mobil sürüm — üretime erişebiliyorsa **migration'ı uygulama**. Önce
+bakım modu ile erişimi kesen ve minimum sürüm/zorunlu güncelleme uygulayan bir
+geçiş planı gerekir. Planı yalnızca yazmak yetmez: legacy erişimin gerçekten
+kesildiğini üretimde doğrulamadan migration'ı uygulama. Yalnızca gerçekten ilk
+yayın yapılıyorsa ve
+**public legacy istemci yok** ise aşağıdaki koordineli kesime devam et.
+
+Kesim penceresinde sırayı değiştirme:
+
+1. Staging'de doğrulanan
+   `supabase/2026-08-02_multiplayer_session_hardening.sql` dosyasını üretim SQL
+   Editor'ünde bir kez uygula. Hata alırsan dur; körlemesine ikinci kez
+   çalıştırma.
+2. Aynı pencerede
+   `supabase/2026-08-03_streak_freeze_idempotency.sql` dosyasını da bir kez
+   uygula. Bu göç atlanırsa hiçbir şey görünür biçimde kırılmaz — istemci
+   `PGRST202` alıp eski `spend_coins` yoluna düşer ve seri dondurma
+   çalışmaya devam eder. Sessizce kaybolan şey idempotency'dir: cevabı
+   kaybolan bir tahsilat bir daha denenemez hâle gelir ve göçün kapatmak
+   için yazıldığı çift-çekim penceresi açık kalır. Sessiz olduğu için
+   unutulmaya en açık adım budur.
+3. Yukarıdaki altı alanlı salt-okunur sorguyu yeni bir sorguda üretimde
+   çalıştır. Altı değerden biri bile `false` ise istemci dağıtma ve sorunu
+   incele. Dondurma göçünü ayrıca doğrula:
+
+```sql
+select count(*) = 1 as spend_streak_freeze_var
+from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+where n.nspname = 'public' and p.proname = 'spend_streak_freeze';
+```
+
+4. Daha önce hazırlanmış `build/web/` çıktısını yeniden derlemeden güvenli
+   ön kontrol ve aktarım ile yayınla:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+./deploy_sftp.sh --dry-run
+./deploy_sftp.sh
+```
+
+5. 2b ve 2c adımlarında Android ile fiziksel iPhone'a kurulmuş release
+   uygulamalarını yeniden aç; App Store IPA'yı cihaza kurmaya çalışma. İki ayrı
+   hesapla **Üretim iki istemci smoke** turunda oda kurma → koda katılma → iki
+   tarafın hazır olması → oyun → sonuç/makbuz → uygulamayı kapatıp oturumu geri
+   alma akışını tamamla. Android host/iOS guest ve iOS host/Android guest
+   yönlerini ayrı ayrı dene.
+5. Salt-okunur üretim sorgusu ve iki yönlü smoke geçtikten sonra göçü
+   `supabase/applied.md` dosyasına tarih/kanıt notuyla `✅` olarak kaydet.
+
+Web aktarımı parola kullanmaz, hedefin gerçek yolunu doğrulamadan başlamaz,
+değişen uzak dosyaları web kökü dışındaki tarihli yedeğe alır ve uzak dosyaları
+topluca silmez. Smoke sırasında canlı sayfaların içeriğini de doğrula:
+
+- `https://www.zankurd.com/terms.html` → başlıkta **"Kullanım Koşulları ·
+  Mercên Bikaranînê"** yazmalı.
+- `https://www.zankurd.com/privacy.html` → 4. maddede **"Ayarlar → Hesap
+  → Hesabımı Sil"** yazmalı.
+- `https://www.zankurd.com/delete-account.html` → **"Hesap Silme ·
+  Jêbirina Hesabê"** başlığı ve talep düğmesi görünmeli.
+
+**Tamam mı?** Üretim RPC kontrolü, web içeriği ve iki yönlü 1v1 smoke geçti;
+`applied.md` kaydı da yalnız bu kanıtlardan sonra yazıldıysa evet. Aksi halde
+mağaza yüklemelerine geçme.
 
 ---
 
@@ -232,11 +381,9 @@ Play için gereken iki ek görsel de hazır:
 çalışıyor; App Store Connect'te ürün tanımlı değilse paywall boş görünür.
 
 ### 5c. Yükle
-İmzalı iOS arşivini aynı açık üretim yapılandırmasıyla oluştur:
+2c adımında hazırlanmış imzalı iOS arşivini aç:
 
 ```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile
-flutter build ipa --release --dart-define-from-file=.env.mobile.release.json
 open build/ios/archive/Runner.xcarchive
 ```
 
@@ -271,13 +418,9 @@ hariç).
 
 ## 6. Göndermeden önce: gerçek cihazda bir tur
 
-Bunu ben yapamam, simülatörde görünmeyen iki şey var.
-
-iPhone'unu kabloyla bağla:
-
-```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile && flutter run --release
-```
+Bunu ben yapamam; simülatörde görünmeyen donanım ve mağaza davranışları var.
+2c adımında fiziksel iPhone'a kurulmuş production-config release uygulamasını
+yeniden aç. App Store IPA'yı sideload etmeye çalışma.
 
 Bak:
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -124,6 +126,54 @@ void main() {
     // Ve çıkış yolu hâlâ görünür: oyuncu tıkanmış durumda bırakılmaz.
     expect(find.text('Şimdilik geç'), findsOneWidget);
   });
+
+  testWidgets(
+    'kapı önce boş ve kullanılabilir görünür, sonra geçerli sunucu adıyla dolar',
+    (tester) async {
+      final repository = _GecikenProfilAdiDeposu();
+      await tester.pumpWidget(
+        testShell(
+          child: ProfileNameGateScreen(
+            repository: repository,
+            onCompleted: () {},
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final field = find.byKey(const ValueKey('player-name-field'));
+      expect(field, findsOneWidget);
+      expect(tester.widget<TextFormField>(field).controller!.text, isEmpty);
+      expect(tester.widget<TextFormField>(field).enabled, isTrue);
+
+      repository.profileName.complete('Rojhat');
+      await tester.pump();
+
+      expect(tester.widget<TextFormField>(field).controller!.text, 'Rojhat');
+    },
+  );
+
+  testWidgets('kullanıcının yazdığı ad geciken sunucu adıyla ezilmez', (
+    tester,
+  ) async {
+    final repository = _GecikenProfilAdiDeposu();
+    await tester.pumpWidget(
+      testShell(
+        child: ProfileNameGateScreen(
+          repository: repository,
+          onCompleted: () {},
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final field = find.byKey(const ValueKey('player-name-field'));
+    await tester.enterText(field, 'Dilan');
+    repository.profileName.complete('Rojhat');
+    await tester.pump();
+
+    expect(tester.widget<TextFormField>(field).controller!.text, 'Dilan');
+  });
 }
 
 /// Ad yazımı her seferinde başarısız olan depo — canlıdaki ağ/RLS hatasının
@@ -133,4 +183,11 @@ class _KaydetmeyenDepo extends MockZanKurdRepository {
   Future<void> updateProfileName(String name) async {
     throw StateError('profil adı yazılamadı');
   }
+}
+
+class _GecikenProfilAdiDeposu extends MockZanKurdRepository {
+  final profileName = Completer<String>();
+
+  @override
+  Future<String> getProfileName() => profileName.future;
 }

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_timer_widget.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
@@ -94,7 +95,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('play-hub-join-room-code-field')),
-      'ABCD12',
+      'ABCDEF0123',
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Katıl'));
@@ -133,6 +134,112 @@ void main() {
     expect(repository.joinCalls, 0);
     expect(find.text('Kod zorunlu'), findsOneWidget);
     expect(find.byType(RoomScreen), findsNothing);
+  });
+
+  testWidgets('malformed room code is rejected before online join', (
+    tester,
+  ) async {
+    final repository = _FailingJoinRoomRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: repository,
+        authProvider: FakeAuthProvider(),
+        languageProvider: turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('play-hub-join-room-code-field')),
+      'ZK-ABCDEF01234',
+    );
+    await tester.tap(find.text('Katıl'));
+    await tester.pumpAndSettle();
+
+    expect(repository.joinCalls, 0);
+    expect(
+      find.text(
+        'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.byType(RoomScreen), findsNothing);
+  });
+
+  testWidgets('Kurmancî room code error stays readable at 320px', (
+    tester,
+  ) async {
+    final repository = _FailingJoinRoomRepository();
+    await tester.binding.setSurfaceSize(const Size(320, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      testShell(
+        child: PlayHubScreen(repository: repository),
+        languageProvider: kurmanciLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final joinRoom = find.byKey(const ValueKey('play-hub-join-room'));
+    await tester.scrollUntilVisible(
+      joinRoom,
+      200,
+      scrollable: find.byType(Scrollable),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(joinRoom);
+    await tester.pumpAndSettle();
+
+    await tester.binding.setSurfaceSize(const Size(320, 568));
+    tester.view.viewInsets = const FakeViewPadding(bottom: 220);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+    final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
+    await tester.ensureVisible(field);
+    await tester.enterText(field, 'ZK-ABCDEF01234');
+    final submit = find.text('Tevlî bibe');
+    await tester.ensureVisible(submit);
+    await tester.pumpAndSettle();
+    await tester.tap(submit);
+    await tester.pumpAndSettle();
+
+    expect(repository.joinCalls, 0);
+    const fullError =
+        'Kod divê bi ZK- dest pê bike û dû re tam 10 karakter '
+        'ji 0–9/A–F hebin.';
+    final error = find.text(fullError);
+    expect(error, findsOneWidget);
+    await tester.ensureVisible(error);
+    await tester.pumpAndSettle();
+    final errorText = tester.widget<Text>(error);
+    expect(errorText.maxLines, isNull);
+    expect(errorText.overflow, TextOverflow.visible);
+    expect(tester.getRect(error).top, greaterThanOrEqualTo(0));
+    expect(tester.getRect(error).bottom, lessThanOrEqualTo(568 - 220));
+    final sheetScrollable = find.descendant(
+      of: find.byType(SingleChildScrollView),
+      matching: find.byWidgetPredicate(
+        (widget) =>
+            widget is Scrollable && widget.axisDirection == AxisDirection.down,
+      ),
+    );
+    expect(
+      tester.state<ScrollableState>(sheetScrollable).position.pixels,
+      greaterThan(0),
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('settings updates the online player name', (tester) async {

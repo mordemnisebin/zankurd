@@ -19,6 +19,13 @@ Widget wrap(Widget child) => MultiProvider(
   child: MaterialApp(theme: AppTheme.light(), home: child),
 );
 
+Widget wrapKu(Widget child) => MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('ku')),
+  ],
+  child: MaterialApp(theme: AppTheme.light(), home: child),
+);
+
 class _RetryableSlidesRepository extends MockZanKurdRepository {
   bool fail = true;
   int loadCalls = 0;
@@ -246,6 +253,37 @@ void main() {
     expect(repository.loadCalls, 2);
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
     expect(find.text('Slayt yok'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('uzun mini quiz etiketi dar ekranda tek satırda kalır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      wrapKu(
+        LessonDetailScreen(
+          lesson: const Lesson(
+            id: 'everyday_1',
+            slug: 'everyday-1',
+            titleKu: 'Ders',
+            titleTr: 'Ders',
+            category: 'everyday',
+          ),
+          repository: MockZanKurdRepository(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Pêş'));
+    await tester.pumpAndSettle();
+
+    final miniQuizLabel = tester.widget<Text>(find.text('Quiz-a Kurt'));
+    expect(miniQuizLabel.maxLines, 1);
+    expect(miniQuizLabel.softWrap, isFalse);
     expect(tester.takeException(), isNull);
   });
 }

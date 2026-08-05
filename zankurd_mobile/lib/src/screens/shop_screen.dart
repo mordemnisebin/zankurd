@@ -10,6 +10,7 @@ import '../providers/sound_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/network_error.dart';
 import '../widgets/app_state.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/screen_identity_header.dart';
@@ -108,7 +109,9 @@ class _ShopScreenState extends State<ShopScreen> {
   int _coinBalance = 0;
   bool _loading = false;
   bool _loadError = false;
+  bool _loadOffline = false;
   String? _purchaseErrorMessage;
+  bool _purchaseOffline = false;
   ShopItem? _retryPurchaseItem;
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = const [];
@@ -206,6 +209,7 @@ class _ShopScreenState extends State<ShopScreen> {
     setState(() {
       _loading = true;
       _loadError = false;
+      _loadOffline = false;
       _dynamicItems = const [];
     });
     try {
@@ -271,6 +275,7 @@ class _ShopScreenState extends State<ShopScreen> {
         setState(() {
           _loading = false;
           _loadError = true;
+          _loadOffline = isLikelyOfflineError(error);
         });
       }
     }
@@ -459,6 +464,7 @@ class _ShopScreenState extends State<ShopScreen> {
     setState(() {
       _purchaseErrorMessage = null;
       _retryPurchaseItem = item;
+      _purchaseOffline = false;
     });
 
     try {
@@ -491,7 +497,10 @@ class _ShopScreenState extends State<ShopScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop_purchase');
       if (!mounted) return;
-      setState(() => _purchaseErrorMessage = context.t(K.errorOccurred));
+      setState(() {
+        _purchaseErrorMessage = context.t(K.errorOccurred);
+        _purchaseOffline = isLikelyOfflineError(error);
+      });
     } finally {
       if (mounted) {
         setState(() => _loading = false);
@@ -667,21 +676,37 @@ class _ShopScreenState extends State<ShopScreen> {
                         ),
                       )
                     : _loadError
-                    ? AppErrorState(
-                        title: context.t(K.loadFailedShort),
-                        message: context.t(K.genericErrorBody),
-                        retryLabel: context.t(K.retryShort),
-                        onRetry: _loadBalance,
-                      )
+                    ? _loadOffline
+                          ? AppOfflineState(
+                              title: context.t(K.shopOfflineTitle),
+                              message: context.t(K.shopOfflineBody),
+                              retryLabel: context.t(K.retryShort),
+                              onRetry: _loadBalance,
+                            )
+                          : AppErrorState(
+                              title: context.t(K.loadFailedShort),
+                              message: context.t(K.genericErrorBody),
+                              retryLabel: context.t(K.retryShort),
+                              onRetry: _loadBalance,
+                            )
                     : _purchaseErrorMessage != null
-                    ? AppErrorState(
-                        title: context.t(K.purchaseErrorTitle),
-                        message: _purchaseErrorMessage!,
-                        retryLabel: context.t(K.retryShort),
-                        onRetry: _retryPurchaseItem == null
-                            ? _loadBalance
-                            : () => _purchase(_retryPurchaseItem!),
-                      )
+                    ? _purchaseOffline
+                          ? AppOfflineState(
+                              title: context.t(K.shopOfflineTitle),
+                              message: context.t(K.shopOfflineBody),
+                              retryLabel: context.t(K.retryShort),
+                              onRetry: _retryPurchaseItem == null
+                                  ? _loadBalance
+                                  : () => _purchase(_retryPurchaseItem!),
+                            )
+                          : AppErrorState(
+                              title: context.t(K.purchaseErrorTitle),
+                              message: _purchaseErrorMessage!,
+                              retryLabel: context.t(K.retryShort),
+                              onRetry: _retryPurchaseItem == null
+                                  ? _loadBalance
+                                  : () => _purchase(_retryPurchaseItem!),
+                            )
                     : _dynamicItems.isEmpty
                     ? AppEmptyState(
                         icon: AppIcons.bagShopping,

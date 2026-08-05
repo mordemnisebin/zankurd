@@ -1,6 +1,9 @@
 # ZanKurd Multi-Platform Release Notes
 
-Last updated: 2026-06-08
+Last updated: 2026-08-02
+
+> Güncel mağaza yayın sırası `docs/YAYIN_ADIMLARI.md` dosyasındadır. Bu belge
+> platform derleme özeti olarak kullanılır; çelişki olursa yayın sırası esastır.
 
 ## Current Platform Status
 
@@ -31,12 +34,22 @@ Dart package name:
 
 The Dart package name intentionally remains lowercase with an underscore because Dart package names must follow that format.
 
-## Builds Verified On This Windows Machine
+## Platform Build Commands
+
+Yerel, git tarafından yok sayılan yapılandırma dosyalarını önce depo
+şablonlarından oluştur. Gerçek istemci anahtarlarını komut satırına veya bu
+belgeye yazma. Production derlemesinden önce ilgili dosyayı değerleri
+yazdırmayan kapıyla doğrula:
+
+```bash
+dart run tool/validate_release_config.dart --file=.env.web.release.json --target=web --environment=production
+dart run tool/validate_release_config.dart --file=.env.mobile.release.json --target=mobile --environment=production
+```
 
 Android debug APK:
 
 ```powershell
-flutter build apk --debug --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+flutter build apk --debug --dart-define-from-file=.env.mobile.release.json
 ```
 
 Output:
@@ -46,7 +59,7 @@ Output:
 Web:
 
 ```powershell
-flutter build web --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+flutter build web --release --no-web-resources-cdn --dart-define-from-file=.env.web.release.json
 ```
 
 Output:
@@ -70,7 +83,7 @@ Enable:
 Then run:
 
 ```powershell
-flutter build windows --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+flutter build windows --release --dart-define-from-file=.env.web.release.json
 ```
 
 Expected output:
@@ -91,13 +104,20 @@ Valid options:
 iOS build command on macOS:
 
 ```bash
-flutter build ipa --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+flutter build ipa --release --export-method=app-store --dart-define-from-file=.env.mobile.release.json
+```
+
+Bu App Store IPA doğrudan fiziksel cihaza kurulmaz. Production-config cihaz
+smoke testi için development imzalı release'i açık cihaz kimliğiyle kur:
+
+```bash
+flutter run --release -d <iphone-smoke-cihaz-id> --dart-define-from-file=.env.mobile.release.json
 ```
 
 macOS build command on macOS:
 
 ```bash
-flutter build macos --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+flutter build macos --release --dart-define-from-file=.env.mobile.release.json
 ```
 
 ## Linux Requirement
@@ -107,23 +127,19 @@ Linux build should be run on Linux with GTK/CMake build dependencies installed.
 Command:
 
 ```bash
-flutter build linux --dart-define=NEXT_PUBLIC_SUPABASE_URL=https://hupivnxgjtsfafulzspo.supabase.co --dart-define=NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s
+flutter build linux --release --dart-define-from-file=.env.web.release.json
 ```
 
 ## Store Release Tasks Still Needed
 
-- Production app icon.
-- Splash screen.
-- Android release signing key. See `docs/android_signing_setup.md` (keystore +
-  `key.properties`). R8/minify is enabled and verified.
 - Google Play Console app listing.
 - Apple Developer account. Full Xcode required for iOS archive/upload
   (Command Line Tools alone is not enough).
 - App Store Connect setup + RevenueCat subscription products.
 - Privacy policy URL — `web/privacy.html` must be published at
-  `AppConfig.privacyPolicyUrl` (https://www.zankurd.com/privacy).
+  `AppConfig.privacyPolicyUrl` (https://www.zankurd.com/privacy.html).
 - Terms of use URL — published at `AppConfig.termsOfServiceUrl`
-  (https://www.zankurd.com/terms).
+  (https://www.zankurd.com/terms.html).
 - Screenshots for phone/tablet/web/desktop.
 - Real profile login flow for production accounts.
 - Admin content workflow for approving questions.

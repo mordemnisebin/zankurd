@@ -131,6 +131,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<List<String>> loadCategories() async => categories;
 
   @override
+  Future<List<String>> loadMatchmakingCategories() => loadCategories();
+
+  @override
   Future<Map<String, int>> loadCategoryQuestionCounts() async {
     final counts = <String, int>{};
     for (final question in _playableQuestions) {
@@ -354,9 +357,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   GameRoom joinRoom(String code) {
-    final cleanCode = code.trim().isEmpty
-        ? 'ZK-4821'
-        : code.trim().toUpperCase();
+    final cleanCode = normalizeRoomCode(code);
+    if (!isSupportedRoomCode(cleanCode)) {
+      throw const FormatException('Invalid room code');
+    }
     return createRoom().copyWith(code: cleanCode);
   }
 
@@ -376,6 +380,41 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<GameRoom> loadRoomSnapshot(String roomId) async {
+    return createRoom().copyWith(id: roomId);
+  }
+
+  @override
+  Future<RoomResumeSnapshot?> loadMyResumableRoom() async => null;
+
+  @override
+  Future<RoomResultSnapshot?> loadMyPendingRoomResult() async => null;
+
+  @override
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room) async => null;
+
+  @override
+  Future<void> acknowledgeRoomResult(GameRoom room) async {}
+
+  @override
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room) async => null;
+
+  @override
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  }) async => null;
+
+  @override
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
+    return RoomLeaveOutcome(
+      status: room.status.name,
+      reason: room.status == RoomStatus.finished ? 'completed' : 'left',
+      forfeitedBy: null,
+    );
+  }
+
+  @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     return room.players;
   }
@@ -383,6 +422,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<RoomStatus> loadRoomStatus(GameRoom room) async {
     return room.status;
+  }
+
+  @override
+  Future<RoomEndState> loadRoomEndState(GameRoom room) async {
+    return RoomEndState(
+      status: room.status,
+      endedReason: null,
+      forfeitedBy: null,
+    );
   }
 
   @override
@@ -587,6 +635,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return amount;
   }
 
+  /// Anahtar başına en fazla bir kez tahsil eden sahte idempotent yol.
+  final Set<String> _streakFreezeKeys = {};
+
+  @override
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  }) async {
+    if (_streakFreezeKeys.contains(idempotencyKey)) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.alreadyCharged,
+        idempotent: true,
+      );
+    }
+    if (_mockCoins < 50) {
+      return const StreakFreezeChargeResult(
+        outcome: StreakFreezeChargeOutcome.insufficient,
+        idempotent: true,
+      );
+    }
+    _mockCoins -= 50;
+    _streakFreezeKeys.add(idempotencyKey);
+    return const StreakFreezeChargeResult(
+      outcome: StreakFreezeChargeOutcome.charged,
+      idempotent: true,
+    );
+  }
+
   @override
   Future<bool> spendCoins(int amount, String reason) async {
     if (_mockCoins < amount) return false;
@@ -709,7 +784,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> cancelMatchmaking() async {}
+  Future<Map<String, dynamic>> cancelMatchmaking() async {
+    return const {'status': 'cancelled'};
+  }
 
   @override
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {

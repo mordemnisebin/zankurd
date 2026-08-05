@@ -18,7 +18,7 @@ void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
-      'zankurd.profileName.completed': true,
+      'zankurd.profileName.completed.user': true,
       'zankurd.navTour.seen': true,
     });
   });

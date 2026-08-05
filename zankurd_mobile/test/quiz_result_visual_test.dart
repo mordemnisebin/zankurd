@@ -63,13 +63,32 @@ void main() {
     );
     final decoration = header.decoration as BoxDecoration;
     final gradient = decoration.gradient as LinearGradient;
-    // 2026-07-24: solo vitrin kimlik anıdır — Kesk (marka yeşili). Turuncu
-    // yalnız eylem butonunda kalır. Beyaz metin perdesiz AA geçmeli.
+    // 2026-07-24: solo vitrin kimlik anıdır — turuncu yalnız eylem
+    // butonunda kalır, beyaz metin perdesiz AA geçmeli.
+    //
+    // 2026-08-03: iki güvence de aynen duruyor; sabitlenen ŞEY değişti.
+    // Test `culturalBrandBg`i tek tek eşitliyordu, yani kimliğin hangi
+    // renk olduğunu dondurmuştu. Oysa korunması gereken kural "yeşil
+    // olsun" değil, "eylem rengi OLMASIN ve beyazı perdesiz okutsun".
+    // Marka yeşilinden koyu turuncuya inen eski gradyan gerçek cihazda
+    // kutlama değil çamur veriyordu; Rengîn kutlama yüzeyi derin
+    // mürekkepten ametiste geçer. Kural test edilir, sabit edilmez.
     expect(gradient.colors, hasLength(2));
-    expect(gradient.colors.first, AppTheme.culturalBrandBg);
     for (final color in gradient.colors) {
       final luminance = color.computeLuminance();
-      expect(1.05 / (luminance + 0.05), greaterThanOrEqualTo(4.5));
+      expect(
+        1.05 / (luminance + 0.05),
+        greaterThanOrEqualTo(4.5),
+        reason: 'beyaz metin perdesiz okunmalı: $color',
+      );
+      // Kimlik yüzeyi eylem rengini kullanamaz.
+      expect(
+        color,
+        isNot(AppTheme.brand),
+        reason: 'vitrin eylem turuncusunu kullanmamalı',
+      );
+      expect(color, isNot(AppTheme.brandDeep));
+      expect(color, isNot(AppTheme.brandLite));
     }
   });
 

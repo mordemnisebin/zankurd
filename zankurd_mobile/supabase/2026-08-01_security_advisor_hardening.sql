@@ -32,7 +32,35 @@ revoke execute on function public.mark_lesson_completed(uuid) from public, anon;
 revoke execute on function public.protect_paid_profile_cosmetics() from public, anon;
 revoke execute on function public.reject_friend_request(uuid) from public, anon;
 revoke execute on function public.report_question(text) from public, anon;
-revoke execute on function public.rls_auto_enable() from public, anon;
+-- `rls_auto_enable()` bu depoda HİÇBİR YERDE tanımlanmıyor.
+--
+-- Tek geçtiği yer bu satırdı ve koşulsuz bir `revoke` idi; yani göç zinciri
+-- temiz bir veritabanına kurulamıyordu — fonksiyon yok, `revoke` `42883`
+-- veriyor ve dosyanın geri kalanındaki bütün revoke'lar da geri alınıyordu
+-- (2026-08-03 yerel doğrulaması; zincir ancak elle stub yazılarak
+-- ilerletilebildi). Yeni bir makinenin repo + Docker ile şemayı kurabilmesi
+-- gerektiği için bu kabul edilemez.
+--
+-- Fonksiyonun kendisi canlıda var ama izlenen bir göçten gelmiyor; ne
+-- yaptığı kaynaktan doğrulanamıyor. Uydurma bir tanım yazmak, olmayan bir
+-- şeyi varmış gibi göstermek olurdu. Bu yüzden niyet korunuyor ama koşula
+-- bağlanıyor: "böyle bir fonksiyon VARSA anon onu çalıştıramaz."
+--
+-- Canlıda davranış birebir aynı; temiz kurulumda sessizce atlanıyor.
+do $$
+begin
+  if exists (
+    select 1
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public'
+      and p.proname = 'rls_auto_enable'
+      and p.pronargs = 0
+  ) then
+    execute 'revoke execute on function public.rls_auto_enable() '
+      'from public, anon';
+  end if;
+end $$;
 revoke execute on function public.save_tournament_progress(text, integer, integer, text[]) from public, anon;
 revoke execute on function public.sync_mission_completion(text, integer, integer) from public, anon;
 

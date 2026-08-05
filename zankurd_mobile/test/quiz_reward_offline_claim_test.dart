@@ -82,10 +82,40 @@ void main() {
     // Sonuç ekranındaki "bağlanınca verilecek" satırı bu bayrağa bakıyor.
     final code = source.replaceAll(RegExp(r'\s+'), ' ');
     expect(code, contains('_rewardQueued = true;'));
+    final persistedQueue = code.indexOf('await sync.queueQuizReward(');
+    final successFlag = persistedQueue < 0
+        ? -1
+        : code.indexOf('_rewardQueued = true;', persistedQueue);
+    expect(
+      persistedQueue,
+      greaterThanOrEqualTo(0),
+      reason: 'Sonuç ekranı gösterilmeden önce kuyruk diske yazılmalı.',
+    );
+    expect(
+      successFlag,
+      greaterThan(persistedQueue),
+      reason: 'Bayrak yalnız kalıcı kuyruk yazımı başarıyla bitince açılmalı.',
+    );
     expect(
       code,
       contains('_rewardQueued = false;'),
       reason: 'queueQuizReward fırlatırsa bayrak geri alınmalı.',
+    );
+  });
+
+  test('claim sırasında değişen hesap adına kuyruk yazılmaz', () {
+    final code = source.replaceAll(RegExp(r'\s+'), ' ');
+    expect(
+      code,
+      contains(
+        "final rewardOwnerId = widget.repository.currentUserId?.trim() ?? '';",
+      ),
+      reason: 'Ödül isteği başındaki kullanıcı kimliği sabitlenmeli.',
+    );
+    expect(
+      code,
+      contains('currentOwnerId != rewardOwnerId'),
+      reason: 'Kuyruk yazımından önce aynı kullanıcının kaldığı doğrulanmalı.',
     );
   });
 }

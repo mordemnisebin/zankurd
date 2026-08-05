@@ -13,6 +13,44 @@ import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
 
+/// Seri dondurma tahsilatının sonucu.
+///
+/// [charged] ile [alreadyCharged] ayrı tutulur çünkü çağıranın kararı
+/// buna bağlıdır: idempotent yolda cevabı kaybolan bir istek güvenle
+/// tekrarlanabilir, eski yolda tekrarlanamaz.
+enum StreakFreezeChargeOutcome {
+  /// Ücret bu çağrıda tahsil edildi.
+  charged,
+
+  /// Aynı anahtarla daha önce tahsil edilmişti; yeni hareket oluşmadı.
+  alreadyCharged,
+
+  /// Bakiye yetersiz.
+  insufficient,
+
+  /// Çağrı başarısız oldu (ağ/sunucu). Tahsil edilip edilmediği BİLİNMİYOR.
+  failed,
+}
+
+class StreakFreezeChargeResult {
+  const StreakFreezeChargeResult({
+    required this.outcome,
+    required this.idempotent,
+  });
+
+  final StreakFreezeChargeOutcome outcome;
+
+  /// Sunucu tarafı idempotent yol kullanıldı mı.
+  ///
+  /// `false` ise (göç henüz uygulanmamış, eski `spend_coins` yolu) belirsiz
+  /// kalan bir tahsilat ASLA tekrarlanmamalıdır.
+  final bool idempotent;
+
+  bool get succeeded =>
+      outcome == StreakFreezeChargeOutcome.charged ||
+      outcome == StreakFreezeChargeOutcome.alreadyCharged;
+}
+
 abstract class ZanKurdRepository {
   List<String> get categories;
   List<QuizQuestion> get questions;
@@ -38,7 +76,15 @@ abstract class ZanKurdRepository {
   Future<void> updateProfileName(String name);
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
+
+  /// Öğrenme/tek kişilik akışların çevrimdışı kategori listesi.
   Future<List<String>> loadCategories();
+
+  /// Çevrimiçi eşleştirmede sunucunun gerçekten desteklediği kategoriler.
+  ///
+  /// Ağ veya sunucu hatası sahte bir yerel listeye düşmemeli; çağıran ekran
+  /// hatayı görünür biçimde ele alır.
+  Future<List<String>> loadMatchmakingCategories();
 
   /// Kategori adına göre onaylı soru sayısı (kategori kartlarında gösterim).
   /// Başarısızlıkta boş map döner; UI statik metne düşer.
@@ -67,8 +113,43 @@ abstract class ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
+  ///
+  /// Hızlı eşleştirme yalnız `room_id` döndürür; istemci bu kimliği
+  /// yerel `createRoom` kabuğuna yapıştırmamalıdır. Kod, ev sahibi,
+  /// kategori, durum, soru/süre ayarları ve oyuncu kimlikleri bu metottan
+  /// birlikte gelir.
+  Future<GameRoom> loadRoomSnapshot(String roomId);
+
+  /// Oyuncunun en son aktif/lobi çevrimiçi odasını geri yükler.
+  /// Aktif üyelik yoksa null; RPC veya şema hataları çağırana iletilir.
+  Future<RoomResumeSnapshot?> loadMyResumableRoom();
+
+  /// Kullanıcının henüz onaylamadığı en yeni eksiksiz maç sonucunu yükler.
+  Future<RoomResultSnapshot?> loadMyPendingRoomResult();
+
+  /// Yalnız verilen odanın henüz onaylanmamış eksiksiz sonucunu yükler.
+  Future<RoomResultSnapshot?> loadRoomResult(GameRoom room);
+
+  /// Terminal sonuç gösterildikten sonra makbuzu idempotent biçimde yazar.
+  Future<void> acknowledgeRoomResult(GameRoom room);
+
+  /// İstemcinin aktif oda sorularını yüklediğini sunucu bariyerine bildirir.
+  Future<RoomResumeSnapshot?> markRoomClientReady(GameRoom room);
+
+  /// Beklenen indeksle CAS ilerletir; bitiş atomikse resume null dönebilir.
+  Future<RoomResumeSnapshot?> advanceRoomQuestion(
+    GameRoom room, {
+    required int expectedQuestionIndex,
+  });
+
+  /// Çevrimiçi odadan sunucunun yetkili çıkış sözleşmesiyle ayrılır.
+  Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room);
+
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);
+  Future<RoomEndState> loadRoomEndState(GameRoom room);
 
   Stream<List<Player>> subscribeRoomPlayers(GameRoom room);
   Stream<RoomStatus> subscribeRoomStatus(GameRoom room);
@@ -96,6 +177,17 @@ abstract class ZanKurdRepository {
   /// Oyuncunun coin bakiyesinden [amount] kadar düşer.
   /// Bakiye yeterli değilse false, başarılıysa true döner.
   Future<bool> spendCoins(int amount, String reason);
+
+  /// Seri dondurma ücretini IDEMPOTENT biçimde tahsil eder.
+  ///
+  /// [idempotencyKey] değişmez olmalıdır (sonuç makbuzunun kimliği). Aynı
+  /// anahtarla ikinci çağrı yeni bir coin hareketi yaratmaz; ilk çekimi
+  /// bildirir. Cevabı kaybolan bir istek bu sayede güvenle tekrarlanabilir
+  /// — düz [spendCoins] ile bu mümkün değildir, çünkü `streak_freeze`
+  /// sunucuda dedup anahtarı taşımaz ve her çağrı yeni bir satır yazar.
+  Future<StreakFreezeChargeResult> spendStreakFreeze({
+    required String idempotencyKey,
+  });
 
   /// Belirli bir ürün kimliğinin daha önce satın alınıp alınmadığını kontrol eder.
   Future<bool> hasPurchased(String itemId);
@@ -287,7 +379,7 @@ abstract class ZanKurdRepository {
   );
 
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
-  Future<void> cancelMatchmaking();
+  Future<Map<String, dynamic>> cancelMatchmaking();
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);

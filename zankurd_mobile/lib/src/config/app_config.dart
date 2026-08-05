@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'release_config_validator.dart';
+
 enum ReleaseConfigurationIssue { supabase, revenueCat }
 
 class AppConfig {
@@ -10,6 +12,10 @@ class AppConfig {
       'sb_publishable_Hgs7VAhfNVmunE1siN2Lig_viLKqC2s';
   static const _useBundledSupabaseDefaults = bool.fromEnvironment(
     'USE_BUNDLED_SUPABASE_DEFAULTS',
+  );
+  static const _appEnvironment = String.fromEnvironment(
+    'APP_ENV',
+    defaultValue: 'production',
   );
 
   static const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -32,17 +38,30 @@ class AppConfig {
       ? _nextPublicSupabasePublishableKey
       : _defaultSupabasePublishableKey;
 
-  static bool get hasExplicitSupabaseConfig =>
-      (_supabaseUrl != '' || _nextPublicSupabaseUrl != '') &&
-      (_supabaseAnonKey != '' || _nextPublicSupabasePublishableKey != '');
+  static String get _explicitSupabaseUrl =>
+      _supabaseUrl != '' ? _supabaseUrl : _nextPublicSupabaseUrl;
+
+  static String get _explicitSupabaseAnonKey => _supabaseAnonKey != ''
+      ? _supabaseAnonKey
+      : _nextPublicSupabasePublishableKey;
+
+  static bool get hasExplicitSupabaseConfig => hasUsableSupabaseConfiguration(
+    explicitUrl: _explicitSupabaseUrl,
+    explicitAnonKey: _explicitSupabaseAnonKey,
+    useBundledDefaults: false,
+    bundledUrl: '',
+    bundledAnonKey: '',
+  );
 
   static bool get usesBundledSupabaseDefaults => _useBundledSupabaseDefaults;
 
-  static bool get hasSupabaseConfig =>
-      hasExplicitSupabaseConfig ||
-      (usesBundledSupabaseDefaults &&
-          supabaseUrl.isNotEmpty &&
-          supabaseAnonKey.isNotEmpty);
+  static bool get hasSupabaseConfig => hasUsableSupabaseConfiguration(
+    explicitUrl: _explicitSupabaseUrl,
+    explicitAnonKey: _explicitSupabaseAnonKey,
+    useBundledDefaults: usesBundledSupabaseDefaults,
+    bundledUrl: _defaultSupabaseUrl,
+    bundledAnonKey: _defaultSupabasePublishableKey,
+  );
 
   // ── RevenueCat (abonelik) ──────────────────────────────────────────────
   // RevenueCat public API anahtarları derleme zamanı env ile taşınır.
@@ -66,7 +85,69 @@ class AppConfig {
     return '';
   }
 
-  static bool get hasRevenuecatConfig => revenuecatApiKey.isNotEmpty;
+  static RevenueCatPlatform? get _revenueCatPlatform {
+    if (kIsWeb) return null;
+    if (Platform.isAndroid) return RevenueCatPlatform.android;
+    if (Platform.isIOS || Platform.isMacOS) return RevenueCatPlatform.ios;
+    return null;
+  }
+
+  static bool get hasRevenuecatConfig {
+    final platform = _revenueCatPlatform;
+    return platform != null &&
+        ReleaseConfigValidator.isSafeRevenueCatKey(
+          revenuecatApiKey,
+          platform: platform,
+          allowTestStoreKey: _appEnvironment == 'staging',
+        );
+  }
+
+  /// Örnek env dosyasındaki dolu fakat çalışmayan şablon değerlerinin release
+  /// kapısını geçmesini engeller.
+  static List<ReleaseConfigurationIssue> validateReleaseClientValues({
+    required String supabaseUrl,
+    required String supabaseAnonKey,
+    required String revenueCatKey,
+    required bool requireRevenueCat,
+    required RevenueCatPlatform revenueCatPlatform,
+    bool allowRevenueCatTestStoreKey = false,
+  }) {
+    final issues = <ReleaseConfigurationIssue>[];
+    if (!ReleaseConfigValidator.isSafeSupabaseUrl(supabaseUrl) ||
+        !ReleaseConfigValidator.isSafeSupabaseClientKey(supabaseAnonKey)) {
+      issues.add(ReleaseConfigurationIssue.supabase);
+    }
+    if (requireRevenueCat &&
+        !ReleaseConfigValidator.isSafeRevenueCatKey(
+          revenueCatKey,
+          platform: revenueCatPlatform,
+          allowTestStoreKey: allowRevenueCatTestStoreKey,
+        )) {
+      issues.add(ReleaseConfigurationIssue.revenueCat);
+    }
+    return issues;
+  }
+
+  /// Açık yapılandırma kısmen verilmişse veya şablonsa bundled değerlerle
+  /// sessizce karıştırmaz. Bundled fallback yalnız iki açık alan da boşken
+  /// kullanılabilir.
+  static bool hasUsableSupabaseConfiguration({
+    required String explicitUrl,
+    required String explicitAnonKey,
+    required bool useBundledDefaults,
+    required String bundledUrl,
+    required String bundledAnonKey,
+  }) {
+    final hasAnyExplicitValue =
+        explicitUrl.trim().isNotEmpty || explicitAnonKey.trim().isNotEmpty;
+    if (hasAnyExplicitValue) {
+      return ReleaseConfigValidator.isSafeSupabaseUrl(explicitUrl) &&
+          ReleaseConfigValidator.isSafeSupabaseClientKey(explicitAnonKey);
+    }
+    return useBundledDefaults &&
+        ReleaseConfigValidator.isSafeSupabaseUrl(bundledUrl) &&
+        ReleaseConfigValidator.isSafeSupabaseClientKey(bundledAnonKey);
+  }
 
   /// Üretim derlemesinin yanlışlıkla demo veriyle veya satın alma desteği
   /// olmadan yayımlanmasını engelleyen, yan etkisiz başlangıç kontrolü.

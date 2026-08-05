@@ -27,6 +27,7 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   List<Package> _packages = [];
   bool _loading = true;
+  bool _offeringsLoadFailed = false;
 
   @override
   void initState() {
@@ -37,14 +38,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Future<void> _loadOfferings() async {
     setState(() => _loading = true);
     final premium = context.read<PremiumService>();
-    final offerings = await premium.fetchOfferings();
     final pkgs = <Package>[];
-    for (final o in offerings) {
-      pkgs.addAll(o.availablePackages);
+    final result = await premium.fetchOfferings();
+    if (result case OfferingsFetchSuccess(:final offerings)) {
+      for (final offering in offerings) {
+        pkgs.addAll(offering.availablePackages);
+      }
     }
     if (!mounted) return;
     setState(() {
       _packages = pkgs;
+      _offeringsLoadFailed = result is OfferingsFetchFailure;
       _loading = false;
     });
   }
@@ -147,8 +151,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                             ),
                           ),
                         )
+                      else if (_offeringsLoadFailed)
+                        _OfferingsLoadError(onRetry: _loadOfferings)
                       else if (_packages.isEmpty)
-                        _EmptyOfferings(isKu: ku)
+                        _EmptyOfferings(isKu: ku, onRetry: _loadOfferings)
                       else
                         _PackageList(
                           packages: _packages,
@@ -536,9 +542,18 @@ class _PackageRow extends StatelessWidget {
   }
 }
 
+/// Offering çekildi ama içinde paket yok.
+///
+/// Bu bir hata DEĞİLDİR — fetch başarılı döner — ama kullanıcı açısından
+/// sonucu aynıdır: satın alacak bir şey yoktur. Aradaki tek fark, bu
+/// durumun dışarıdan (RevenueCat panelinde offering ↔ mağaza ürünü
+/// eşlemesi tamamlandığında) kendiliğinden düzelmesidir. Bu yüzden ekran
+/// dürüst kalır (sahte fiyat veya sahte paket uydurulmaz) fakat çıkışsız
+/// bırakılmaz: hata durumuyla aynı yeniden deneme yolu sunulur.
 class _EmptyOfferings extends StatelessWidget {
-  const _EmptyOfferings({required this.isKu});
+  const _EmptyOfferings({required this.isKu, required this.onRetry});
   final bool isKu;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -569,6 +584,59 @@ class _EmptyOfferings extends StatelessWidget {
               color: AppTheme.textSubColor(context),
               height: 1.4,
             ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          TextButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(AppIcons.arrowsRotate),
+            label: Text(Tr.forKu(K.retry, isKu)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OfferingsLoadError extends StatelessWidget {
+  const _OfferingsLoadError({required this.onRetry});
+
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppPanel(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(AppIcons.triangleExclamation, color: AppTheme.wrong),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  context.t(K.genericErrorTitle),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            context.t(K.genericErrorBody),
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textSubColor(context),
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          TextButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(AppIcons.arrowsRotate),
+            label: Text(context.t(K.retry)),
           ),
         ],
       ),

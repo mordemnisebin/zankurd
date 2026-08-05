@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../providers/reduced_motion_provider.dart';
 
+final RouteObserver<ModalRoute<dynamic>> appRouteObserver =
+    RouteObserver<ModalRoute<dynamic>>();
+
 /// Tüm sayfa geçişleri için standart fade+slide animasyonu.
 class AppRoute<T> extends PageRouteBuilder<T> {
   AppRoute({required Widget page, super.settings})

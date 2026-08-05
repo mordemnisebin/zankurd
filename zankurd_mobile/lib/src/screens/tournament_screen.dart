@@ -12,6 +12,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/arena_kit.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/tournament_bracket_widget.dart';
@@ -62,6 +63,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
 
   /// Turnuva doldu mu bekliyoruz?
   bool _waitingForPlayers = false;
+
+  /// Şampiyonluk ödülünün GERÇEK durumu.
+  ///
+  /// Kupayı kazanmak ödülün verildiği anlamına gelmez: ödülü sunucu verir
+  /// (`claimTournamentChampionReward`) ve bot benzetiminde hiç talep
+  /// edilmez. Ekran eskiden her iki durumda da aynı altın "Şampiyon!"
+  /// bandını gösteriyordu — yani yerel bir kupada oyuncu hiçbir şey
+  /// almadığı hâlde kutlanıyor ve bunu hiçbir yerde okuyamıyordu
+  /// (2026-08-04).
+  _CupRewardState _rewardState = _CupRewardState.none;
+  int _rewardAmount = 0;
   List<TournamentStandings> _standings = const [];
   bool _loading = true;
   bool _hasError = false;
@@ -229,9 +241,20 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// olmayan çağrıda sıfır döner, aynı kupa ikinci kez talep edilemez
   /// (2026-07-26).
   Future<void> _claimChampionReward() async {
+    if (mounted) setState(() => _rewardState = _CupRewardState.claiming);
     try {
       final amount = await widget.repository.claimTournamentChampionReward();
-      if (!mounted || amount <= 0) return;
+      if (!mounted) return;
+      // Sunucu sıfır döndüyse ödül VERİLMEDİ: hak ediş doğrulanmamış ya da
+      // aynı kupa için zaten talep edilmiş olabilir. "Verildi" demek yanlış
+      // olurdu.
+      setState(() {
+        _rewardAmount = amount;
+        _rewardState = amount > 0
+            ? _CupRewardState.granted
+            : _CupRewardState.unverified;
+      });
+      if (amount <= 0) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -241,6 +264,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tournament_champion_reward');
+      if (!mounted) return;
+      setState(() => _rewardState = _CupRewardState.unverified);
     }
   }
 
@@ -571,10 +596,19 @@ class _TournamentScreenState extends State<TournamentScreen> {
                 // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
                 // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
                 if (bracket.status != 'active')
-                  _StatusCard(bracket: bracket, ku: ku),
+                  _StatusCard(bracket: bracket, ku: ku, roundNames: roundNames),
                 if (bracket.status == 'won') ...[
                   const SizedBox(height: AppSpacing.md),
-                  _ChampionBanner(ku: ku),
+                  _ChampionBanner(
+                    ku: ku,
+                    finalScore: bracket.totalScore,
+                    // Ödül yalnız SUNUCU şemasında talep edilir; yerel
+                    // benzetimde hiç istenmez ve bu açıkça yazılır.
+                    rewardState: _serverBracket
+                        ? _rewardState
+                        : _CupRewardState.localOnly,
+                    rewardAmount: _rewardAmount,
+                  ),
                 ],
                 // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz
                 // oynamamış. Gerçek oyunculu turnuvada bu normal bir
@@ -649,17 +683,26 @@ class _TournamentScreenState extends State<TournamentScreen> {
                     ),
                   ),
                 ),
-                // -- Legacy round list (collapsed below the bracket) --
+                // Şemanın ALTINDAKİ düz tur listesi kaldırıldı.
+                //
+                // Aynı eşleşmeleri ikinci kez, üstelik DAHA AZ bilgiyle
+                // gösteriyordu: şemada kupa/çarpı işareti, üstü çizili
+                // kaybeden adı, kullanıcının vurgulu maçı ve (bu turdan
+                // itibaren) skor var; düz listede yalnız iki ad ve bir
+                // onay simgesi vardı. Kod içinde de "legacy" diye
+                // işaretliydi. İki kez anlatılan bir yapı, bir kez
+                // anlatılandan daha anlaşılır olmuyor (2026-08-04).
+                //
+                // Yerine turun NEREDE olduğunu söyleyen ilerleme şeridi
+                // konur — lobideki kupa merdiveni diliyle aynı aile.
                 const SizedBox(height: AppSpacing.md),
-                for (var i = 0; i < bracket.rounds.length; i++) ...[
-                  _RoundSection(
-                    title: roundNames[i],
-                    round: bracket.rounds[i],
-                    userId: _userId,
-                    ku: ku,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                ],
+                _RoundProgressStrip(
+                  roundNames: roundNames,
+                  rounds: bracket.rounds,
+                  currentRound: bracket.currentRound,
+                  bracketStatus: bracket.status,
+                ),
+                const SizedBox(height: AppSpacing.md),
                 if (_standings.isNotEmpty) ...[
                   _TournamentSectionTitle(
                     label: context.t(K.standings),
@@ -695,247 +738,535 @@ class _LobbyView extends StatelessWidget {
     // başlıyordu, geri sayımın işaret ettiği bekleme hiç yaşanmıyordu
     // (2026-07-27 Kurmancî taraması).
     final scheduleText = context.t(K.cupStartsWhenFull);
-    final countdownText = context.t(K.cupStartsLatest);
 
-    // 2026-07-22 canlı UX denetimi: dikey ortalama — hero kart viewport kısa
-    // kaldığında alt boşluk yerine dikeyde ortalanır; içerik uzunsa scroll.
-    // IntrinsicHeight KULLANILMADI: LayoutBuilder içinde IntrinsicHeight
-    // "LayoutBuilder does not support returning intrinsic dimensions"
-    // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli.
+    // Kupa hero'su: durum, ödül ve ana eylem TEK yüzeyde.
+    //
+    // Eskiden burada ikon + çip + paragraf + hap + paragraf + düğme alt
+    // alta diziliydi ve ekranın yarısından fazlası boştu. Daha kötüsü,
+    // kupanın ödülü (`coinRewardPerMatch`, `coinBonusChampion`) ve yapısı
+    // (16 oyuncu, 4 tur) `TournamentConfig`te sabit dururken ekranda HİÇ
+    // görünmüyordu: oyuncu neye katıldığını okumadan karar veriyordu
+    // (2026-08-04 görsel denetimi).
+    final hero = ArenaHero(
+      title: context.t(K.tournamentTitle),
+      // Kural alt başlıkta, DURUM çipte. Çip bir etikettir; "Kontenjan
+      // dolunca başlar" gibi bir cümleyi taşıyamaz ve taşımaya
+      // çalışınca "Kontenj..." diye kırpılıyordu (2026-08-04).
+      subtitle: scheduleText,
+      accent: AppTheme.gold,
+      icon: AppIcons.trophy,
+      // Durum çipi başlığın YANINDA değil, jeton satırında. Başlıkla aynı
+      // satırda genişlik yarıştırınca ikisi de kırpılıyordu ("ZanKurd
+      // Kupası" iki satıra, "Başlamadı" → "Başlama..."). Jeton satırı
+      // sarmalı bir `Wrap`; orada hiçbir şey kısalmaz (2026-08-04).
+      tokens: [
+        ArenaStatusChip(
+          // Kupa henüz başlamadı: kontenjan dolunca başlar.
+          status: ArenaStatus.upcoming,
+          label: context.t(K.cupNotStarted),
+          onSolid: true,
+        ),
+        // Ödül GERÇEK sabitlerden gelir; uydurulmaz.
+        RewardToken(
+          kind: RewardKind.coin,
+          value: '${TournamentConfig.coinRewardPerMatch}',
+          label: context.t(K.cupPerMatchReward),
+          onSolid: true,
+        ),
+        RewardToken(
+          kind: RewardKind.coin,
+          value: '${TournamentConfig.coinBonusChampion}',
+          label: context.t(K.cupChampionReward),
+          onSolid: true,
+        ),
+      ],
+      action: SizedBox(
+        width: double.infinity,
+        child: FilledButton.icon(
+          key: const ValueKey('tournament-primary-cta'),
+          onPressed: onStart,
+          icon: const Icon(AppIcons.trophy, size: 20),
+          style: FilledButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+            backgroundColor: AppTheme.brand,
+            foregroundColor: Colors.white,
+          ),
+          label: Text(
+            context.t(K.joinTournament),
+            style: AppTypography.bodyLarge.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final format = _CupFormatPanel(ku: ku);
+    final ladder = _CupLadder(ku: ku);
+
     return LayoutBuilder(
       builder: (context, constraints) {
+        // `ScreenIdentityHeader` BİLEREK yok: `ArenaHero` aynı başlığı,
+        // aynı amblemi ve fazlasını (durum, ödül, eylem) taşıyor. İkisi
+        // birlikte çizilince "ZanKurd Kupası" ilk 300 pikselde iki kez
+        // yazıyordu — 2026-07-30 ekran turunda kapatılmış bir kusur; hero'ya
+        // geçerken farkında olmadan geri geldi ve görüntüde yakalandı
+        // (2026-08-04).
+
+        // Geniş ekranda gerçek iki sütun: solda kupanın ne olduğu ve
+        // katılma eylemi, sağda biçim ve kupa yolu. Telefon düzeni
+        // 720'nin altında hiç değişmez.
+        if (constraints.maxWidth >= 720) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 6, child: hero),
+                    const SizedBox(width: AppSpacing.cardGap),
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        key: const ValueKey('tournament-wide-column'),
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          format,
+                          const SizedBox(height: AppSpacing.cardGap),
+                          ladder,
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }
+
+        // 2026-07-22 canlı UX denetimi: dikey ortalama — hero kart viewport
+        // kısa kaldığında alt boşluk yerine dikeyde ortalanır; içerik
+        // uzunsa scroll. IntrinsicHeight KULLANILMADI: LayoutBuilder içinde
+        // "LayoutBuilder does not support returning intrinsic dimensions"
+        // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli.
         final minH = math.max(0.0, constraints.maxHeight - AppSpacing.lg * 2);
         return SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: minH),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ScreenIdentityHeader(
-                  title: context.t(K.tournamentTitle),
-                  subtitle: context.t(K.weeklyCupSub),
-                  accent: AppTheme.gold,
-                  icon: AppIcons.trophy,
-                  compact: true,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  child: Container(
-                    key: const ValueKey('tournament-hero'),
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(AppSpacing.lg),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          AppTheme.surfaceColor(context),
-                          AppTheme.gold.withValues(alpha: 0.08),
-                        ],
-                      ),
-                      border: Border.all(
-                        color: AppTheme.gold.withValues(alpha: 0.18),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.gold.withValues(alpha: 0.12),
-                          blurRadius: 22,
-                          offset: const Offset(0, 10),
-                          spreadRadius: -12,
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          right: -28,
-                          top: -24,
-                          child: Container(
-                            width: 132,
-                            height: 132,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppTheme.gold.withValues(alpha: 0.07),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: AppTheme.goldGradient,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppTheme.gold.withValues(
-                                      alpha: 0.22,
-                                    ),
-                                    blurRadius: 12,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: const Icon(
-                                AppIcons.trophy,
-                                color: Colors.white,
-                                size: 44,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.md),
-                            // Kart başlığı burada tekrar edilmez: ekranın adını
-                            // `ScreenIdentityHeader` taşıyor ve "ZanKurd
-                            // Kupası" ilk 300 pikselde iki kez yazıyordu
-                            // (2026-07-30 ekran turu, 10/63). Kupa ikonu
-                            // kartın ne olduğunu zaten söylüyor.
-                            // Tournament schedule badge
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.sm,
-                                vertical: AppSpacing.xxs,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppTheme.surfaceHiColor(context),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.pill,
-                                ),
-                                border: Border.all(
-                                  color: AppTheme.borderColor(context),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    AppIcons.clock,
-                                    size: 14,
-                                    color: AppTheme.textSubColor(context),
-                                  ),
-                                  const SizedBox(width: 6),
-                                  // Sistem yazısı büyütüldüğünde bu satır
-                                  // rozetin dışına taşıyordu; metin artık
-                                  // kalan genişliğe sığar (2026-07-26).
-                                  Flexible(
-                                    child: Text(
-                                      scheduleText,
-                                      style: AppTypography.caption.copyWith(
-                                        color: AppTheme.textPrimaryColor(
-                                          context,
-                                        ),
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.xs),
-                            // Countdown
-                            Text(
-                              countdownText,
-                              textAlign: TextAlign.center,
-                              style: AppTypography.caption.copyWith(
-                                // Ham altın, kartın altın tonlu zemininde
-                                // 1.78:1 veriyordu — turnuvanın ne zaman
-                                // başlayacağını söyleyen satır neredeyse
-                                // görünmüyordu (2026-07-27).
-                                color: AppColors.onAccentTint(
-                                  context,
-                                  AppTheme.gold,
-                                ),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.sm),
-                            // Honesty label: bot-filled bracket, not live multiplayer
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.sm,
-                                vertical: AppSpacing.xxs,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppTheme.gold.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.pill,
-                                ),
-                                border: Border.all(
-                                  color: AppTheme.gold.withValues(alpha: 0.45),
-                                ),
-                              ),
-                              // Biçim bilgisi tek satırda: önce "Eleme kupası"
-                              // çipi, altında ayrı bir "4 soru/maç · gerçek
-                              // oyuncular" satırı vardı. Kartta beş meta satırı
-                              // üst üste yığılıyordu (2026-07-30 ekran turu).
-                              child: Text(
-                                '${context.t(K.botDailyCup)} · '
-                                '${context.t(K.formatSummary, {'perMatch': '${TournamentConfig.questionsPerMatch}'})}',
-                                textAlign: TextAlign.center,
-                                style: AppTypography.caption.copyWith(
-                                  // Altın metin + altın@0.2 zemin açık temada
-                                  // ~2:1 kalıyordu. `readableAccent` düz
-                                  // yüzeye göre ayarlı olduğu için 3.84'te
-                                  // takılıyordu: bu çip zaten altın tonlu
-                                  // bir kartın üstünde duruyor, yani gerçek
-                                  // zemin daha açık (2026-07-27).
-                                  color: AppColors.onAccentTint(
-                                    context,
-                                    AppTheme.gold,
-                                    // Çipin kendi %20'si + altındaki kartın
-                                    // altın gradyanı: ölçülen gerçek zemin
-                                    // beyazın üstünde ~%50 altına denk gelir.
-                                    tintAlpha: 0.50,
-                                  ),
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.sm),
-                            Text(
-                              context.t(K.botRaceHint),
-                              textAlign: TextAlign.center,
-                              style: AppTypography.caption.copyWith(
-                                color: AppColors.onTintedSurface(
-                                  context,
-                                  secondary: true,
-                                ),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.lg),
-                            SizedBox(
-                              width: double.infinity,
-                              child: FilledButton.icon(
-                                key: const ValueKey('tournament-primary-cta'),
-                                onPressed: onStart,
-                                icon: const Icon(AppIcons.trophy, size: 20),
-                                style: FilledButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: AppSpacing.md,
-                                  ),
-                                  backgroundColor: AppTheme.brand,
-                                  foregroundColor: Colors.white,
-                                ),
-                                label: Text(
-                                  context.t(K.joinTournament),
-                                  style: AppTypography.bodyLarge.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                hero,
+                const SizedBox(height: AppSpacing.cardGap),
+                format,
+                const SizedBox(height: AppSpacing.cardGap),
+                ladder,
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+/// Kupanın biçimi: kaç oyuncu, kaç tur, maç başına kaç soru, hangi beş.
+///
+/// Dört değer de `TournamentConfig`te sabittir ve uydurulmaz. Bunlar
+/// eskiden yalnız tek bir çipte "Eleme kupası · 4 soru/maç" diye
+/// özetleniyordu; oyuncu kaç kişilik bir kupaya girdiğini göremiyordu.
+class _CupFormatPanel extends StatelessWidget {
+  const _CupFormatPanel({required this.ku});
+
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = <(IconData, String, String)>[
+      (
+        AppIcons.peopleGroup,
+        '${TournamentConfig.totalPlayers}',
+        Tr.forKu(K.cupPlayers, ku),
+      ),
+      (
+        AppIcons.trophy,
+        '${TournamentConfig.roundCount}',
+        Tr.forKu(K.cupRounds, ku),
+      ),
+    ];
+
+    // Kupanın türü ve maç uzunluğu TEK cümlede durur.
+    //
+    // Sayıya bölünmüş bir blok ("4" + "soru/maç") görsel olarak daha
+    // düzenli görünüyordu ama cümleyi parçalıyordu: kupanın eleme usulü
+    // olduğu bilgisi hiçbir yerde kalmıyordu ve bu, 2026-07-30'da bilerek
+    // konmuş dürüstlük ifadesiydi. Sunum değişti diye kaybolmamalı.
+    final formatLine =
+        '${Tr.forKu(K.botDailyCup, ku)} · '
+        '${Tr.forKu(K.formatSummary, ku, {'perMatch': '${TournamentConfig.questionsPerMatch}'})}';
+
+    return _CupPanel(
+      title: Tr.forKu(K.cupFormatTitle, ku),
+      icon: AppIcons.trophy,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            formatLine,
+            style: AppTypography.bodyMedium.copyWith(
+              fontWeight: FontWeight.w800,
+              color: AppTheme.textPrimaryColor(context),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          // Yatay kaydırma: bloklar %200 yazıda dar telefona sığmıyor ve
+          // sayıları küçültmek biçim bilgisini okunmaz kılardı.
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (var i = 0; i < items.length; i++)
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: i == items.length - 1 ? 0 : AppSpacing.sm,
+                    ),
+                    child: _CupStat(
+                      icon: items[i].$1,
+                      value: items[i].$2,
+                      label: items[i].$3,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          // Kupanın iki kuralı da burada durur: kontenjan dolmazsa ne
+          // olacağı hero'nun alt başlığına sığmıyordu.
+          Text(
+            '${Tr.forKu(K.botRaceHint, ku)}\n${Tr.forKu(K.cupStartsLatest, ku)}',
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textMutedColor(context),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Kupa yolu: 16 → 8 → 4 → 2 → 1.
+///
+/// Turnuvayı yarışmadan ayıran şey tam da bu: aşamalı ve uzun soluklu bir
+/// etkinlik. Merdiven o kimliği tek bakışta anlatır — "Eleme kupası"
+/// yazan bir çipin anlatamadığı şey.
+class _CupLadder extends StatelessWidget {
+  const _CupLadder({required this.ku});
+
+  final bool ku;
+
+  @override
+  Widget build(BuildContext context) {
+    // 16 → 8 → 4 → 2 → 1: `TournamentConfig.generateBracket` ile aynı
+    // bölme mantığı; sabit dizi yazılmaz ki ikisi ayrışmasın.
+    final steps = <int>[TournamentConfig.totalPlayers];
+    while (steps.last > 1) {
+      steps.add(steps.last ~/ 2);
+    }
+
+    return _CupPanel(
+      title: Tr.forKu(K.cupLadder, ku),
+      icon: AppIcons.chartLine,
+      // `Wrap`, yatay kaydırma DEĞİL: kaydırmada merdivenin son basamağı
+      // — yani şampiyonluk — ekranın sağında kesik duruyordu ve kupanın
+      // varış noktası tam da o basamak (2026-08-04).
+      child: Wrap(
+        spacing: 4,
+        runSpacing: 6,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          for (var i = 0; i < steps.length; i++) ...[
+            if (i > 0)
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 16,
+                color: AppTheme.textMutedColor(context),
+              ),
+            _LadderStep(count: steps[i], isFinal: steps[i] == 1),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _LadderStep extends StatelessWidget {
+  const _LadderStep({required this.count, required this.isFinal});
+
+  final int count;
+  final bool isFinal;
+
+  @override
+  Widget build(BuildContext context) {
+    // Son basamak şampiyonluk: altın dolu, diğerleri sakin tonal.
+    final tone = isFinal ? AppTheme.gold : const Color(0xFF6A38BE);
+    return Container(
+      constraints: const BoxConstraints(minWidth: 34),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+      decoration: BoxDecoration(
+        color: tone.withValues(
+          alpha: isFinal
+              ? (AppTheme.isLight(context) ? 0.22 : 0.34)
+              : (AppTheme.isLight(context) ? 0.10 : 0.22),
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.badge),
+        border: isFinal
+            ? Border.all(color: tone.withValues(alpha: 0.55))
+            : null,
+      ),
+      // `alignment` YOK: alignment verilen bir `Container` gevşek
+      // kısıtlar altında var olan bütün genişliği doldurur. Yatay
+      // kaydırmada (sınırsız genişlik) sorun çıkmıyordu, `Wrap`a
+      // geçince her basamak tam satır oldu ve merdiven dikey bir
+      // yığına dönüştü (2026-08-04).
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Şampiyonluk basamağı ayrıca bir kupa taşır: renk tek kanal
+          // olamaz, son basamağın farkı yalnız tonla anlatılmamalı.
+          if (isFinal) ...[
+            Icon(
+              AppIcons.trophy,
+              size: 13,
+              color: AppColors.readableAccent(context, tone),
+            ),
+            const SizedBox(width: 4),
+          ],
+          Text(
+            '$count',
+            maxLines: 1,
+            style: AppTypography.caption.copyWith(
+              fontWeight: FontWeight.w900,
+              color: AppColors.readableAccent(context, tone),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Sayı + etiketten oluşan küçük biçim bloğu.
+class _CupStat extends StatelessWidget {
+  const _CupStat({
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
+
+  final IconData icon;
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minWidth: 74),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceHiColor(context),
+        borderRadius: BorderRadius.circular(AppRadius.badge),
+        border: Border.all(color: AppTheme.borderColor(context)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 14, color: AppTheme.textSubColor(context)),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            maxLines: 1,
+            style: AppTypography.subtitle.copyWith(
+              fontWeight: FontWeight.w900,
+              color: AppTheme.textPrimaryColor(context),
+            ),
+          ),
+          Text(
+            label,
+            maxLines: 1,
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textMutedColor(context),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Başlıklı sakin panel — arena ailesinin nötr yüzeyi.
+///
+/// Her bilgiyi ayrı renkli karta koymak yeni bir kart yığını üretirdi;
+/// panel yalnız iki tane ve ikisi de mürekkep nötrü.
+class _CupPanel extends StatelessWidget {
+  const _CupPanel({
+    required this.title,
+    required this.icon,
+    required this.child,
+  });
+
+  final String title;
+  final IconData icon;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: AppTheme.surfaceColor(context),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppTheme.borderColor(context)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 15, color: AppTheme.textSubColor(context)),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: AppTheme.textSubColor(context),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+/// Turun nerede olduğunu söyleyen ilerleme şeridi.
+///
+/// Şema yatay kaydırılabilir ve dar telefonda yalnız ilk iki tur görünür;
+/// oyuncu kupanın kaç turdan oluştuğunu ve hangi turda olduğunu şemayı
+/// kaydırmadan göremiyordu. Şerit bunu tek bakışta verir ve aynı zamanda
+/// şemada sağa doğru daha fazla içerik olduğunun işaretidir.
+///
+/// Lobideki kupa merdiveniyle aynı görsel aile — ikinci bir dil kurulmaz.
+class _RoundProgressStrip extends StatelessWidget {
+  const _RoundProgressStrip({
+    required this.roundNames,
+    required this.rounds,
+    required this.currentRound,
+    required this.bracketStatus,
+  });
+
+  final List<String> roundNames;
+  final List<TournamentRound> rounds;
+  final int currentRound;
+  final String bracketStatus;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 4,
+      runSpacing: 6,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        for (var i = 0; i < rounds.length && i < roundNames.length; i++) ...[
+          if (i > 0)
+            Icon(
+              Icons.chevron_right_rounded,
+              size: 15,
+              color: AppTheme.textMutedColor(context),
+            ),
+          _RoundPill(
+            label: roundNames[i],
+            // Durum GERÇEK tur verisinden gelir; sıra numarasından
+            // tahmin edilmez. Turnuva bittiyse (kazandı/elendi) hiçbir
+            // tur "şu an oynanıyor" diye işaretlenmez.
+            state: rounds[i].status == 'completed'
+                ? _RoundState.done
+                : (bracketStatus == 'active' && i == currentRound)
+                ? _RoundState.active
+                : _RoundState.upcoming,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+enum _RoundState { done, active, upcoming }
+
+class _RoundPill extends StatelessWidget {
+  const _RoundPill({required this.label, required this.state});
+
+  final String label;
+  final _RoundState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final light = AppTheme.isLight(context);
+    // Renk tek kanal değil: her durumun kendi ikonu var.
+    final (tone, icon) = switch (state) {
+      _RoundState.done => (const Color(0xFF0E7A57), Icons.check_rounded),
+      _RoundState.active => (AppTheme.gold, Icons.play_arrow_rounded),
+      _RoundState.upcoming => (const Color(0xFF3A4557), Icons.remove_rounded),
+    };
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+      decoration: BoxDecoration(
+        color: tone.withValues(
+          alpha: state == _RoundState.upcoming
+              ? (light ? 0.07 : 0.16)
+              : (light ? 0.14 : 0.26),
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: state == _RoundState.active
+            ? Border.all(color: tone.withValues(alpha: 0.55))
+            : null,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12, color: AppColors.readableAccent(context, tone)),
+          const SizedBox(width: 5),
+          // Esnek olmalı: "Çeyrek Final" %200 yazıda dar telefonda çipi
+          // 47 piksel taşırıyordu. `Wrap` satırı sarabilir ama tek bir
+          // çipin kendi içeriğini sığdırması gerekir.
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.caption.copyWith(
+                fontWeight: state == _RoundState.active
+                    ? FontWeight.w900
+                    : FontWeight.w700,
+                color: AppColors.readableAccent(context, tone),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -977,11 +1308,21 @@ class _TournamentSectionTitle extends StatelessWidget {
   }
 }
 
+/// Turnuva bittiğinde (elendi/kazandı) görünen özet.
+///
+/// "Elendi" tek başına hangi turda elenildiğini ve kaç puan alındığını
+/// söylemiyordu; oyuncunun turnuvadan aldığı tek somut bilgi kayıptı.
+/// İkisi de şemada gerçekten duruyor (2026-08-04).
 class _StatusCard extends StatelessWidget {
-  const _StatusCard({required this.bracket, required this.ku});
+  const _StatusCard({
+    required this.bracket,
+    required this.ku,
+    required this.roundNames,
+  });
 
   final TournamentBracket bracket;
   final bool ku;
+  final List<String> roundNames;
 
   @override
   Widget build(BuildContext context) {
@@ -995,24 +1336,63 @@ class _StatusCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.t(K.status),
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w600,
+          // Esnek olmalı: "Elendi"/"Şampiyon" %200 yazıda tur rozetiyle
+          // aynı satıra sığmıyordu ve durum kartı taşıyordu. Bu kart tam
+          // da elenme ve şampiyonluk anında görünen kart — taşma şeridi
+          // sonucun kendisini örtüyordu (2026-08-04).
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.t(K.status),
+                  style: AppTypography.caption.copyWith(
+                    color: AppTheme.textMutedColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                statusLabel,
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
+                Text(
+                  statusLabel,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.heading2.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
                 ),
-              ),
-            ],
+                // Elenen oyuncuya HANGİ turda elendiği ve kaç puan aldığı
+                // söylenir. "Elendi" tek başına turnuvadan alınan tek
+                // somut bilgiyi (skor) ve bağlamı (tur) gizliyordu.
+                // İkisi de şemada gerçekten duruyor; uydurulmaz.
+                if (bracket.status == 'eliminated' &&
+                    bracket.currentRound < roundNames.length) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    Tr.forKu(K.cupEliminatedRound, ku, {
+                      'round': roundNames[bracket.currentRound],
+                    }),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+                if (bracket.totalScore > 0) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    '${Tr.forKu(K.cupFinalScore, ku)}: ${bracket.totalScore}',
+                    maxLines: 1,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ),
+          const SizedBox(width: AppSpacing.sm),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.sm,
@@ -1026,6 +1406,7 @@ class _StatusCard extends StatelessWidget {
             child: Text(
               '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
               '/${bracket.rounds.length}',
+              maxLines: 1,
               style: AppTypography.bodyLarge.copyWith(
                 color: AppColors.onAccentTint(context, AppTheme.gold),
               ),
@@ -1037,28 +1418,89 @@ class _StatusCard extends StatelessWidget {
   }
 }
 
+/// Şampiyonluk ödülünün durumu.
+enum _CupRewardState {
+  /// Henüz talep edilmedi.
+  none,
+
+  /// Sunucudan cevap bekleniyor.
+  claiming,
+
+  /// Sunucu ödülü verdi ve miktarı bildirdi.
+  granted,
+
+  /// Sunucu sıfır döndü ya da çağrı başarısız oldu — ödül VERİLMEDİ.
+  unverified,
+
+  /// Kupa yerel benzetimde oynandı; ödül hiç talep edilmez.
+  localOnly,
+}
+
+/// Şampiyonluk yüzeyi: kupa, gerçek final skoru ve ödülün GERÇEK durumu.
+///
+/// Eskiden yalnız altın bir bantta "Tebrikler, şampiyon!" yazıyordu.
+/// Kupayı kazanmak ödülün verildiği anlamına gelmez: ödülü sunucu verir ve
+/// bot benzetiminde hiç talep edilmez. Oyuncu yerel bir kupada hiçbir şey
+/// almadığı hâlde kutlanıyor ve bunu hiçbir yerde okuyamıyordu.
 class _ChampionBanner extends StatelessWidget {
-  const _ChampionBanner({required this.ku});
+  const _ChampionBanner({
+    required this.ku,
+    required this.finalScore,
+    required this.rewardState,
+    required this.rewardAmount,
+  });
 
   final bool ku;
+  final int finalScore;
+  final _CupRewardState rewardState;
+  final int rewardAmount;
+
+  (ArenaStatus, String) _rewardVisual(BuildContext context) =>
+      switch (rewardState) {
+        _CupRewardState.claiming => (
+          ArenaStatus.loading,
+          context.t(K.cupRewardClaiming),
+        ),
+        _CupRewardState.granted => (
+          ArenaStatus.completed,
+          context.t(K.cupRewardGranted),
+        ),
+        _CupRewardState.unverified => (
+          ArenaStatus.upcoming,
+          context.t(K.cupRewardUnverified),
+        ),
+        _CupRewardState.localOnly => (
+          ArenaStatus.locked,
+          context.t(K.cupRewardLocal),
+        ),
+        _CupRewardState.none => (
+          ArenaStatus.loading,
+          context.t(K.cupRewardClaiming),
+        ),
+      };
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      cardType: CardType.primary,
-      gradient: AppTheme.goldGradient,
-      child: Row(
-        children: [
-          const Icon(AppIcons.trophy, color: Colors.white, size: 32),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Text(
-              context.t(K.championCongrats),
-              style: AppTypography.heading2.copyWith(color: Colors.white),
-            ),
+    final (status, label) = _rewardVisual(context);
+    return ArenaHero(
+      key: const ValueKey('tournament-champion'),
+      title: context.t(K.championCongrats),
+      // Final skoru GERÇEK şemadan gelir.
+      subtitle: '${context.t(K.cupFinalScore)}: $finalScore',
+      accent: AppTheme.gold,
+      icon: AppIcons.trophy,
+      tokens: [
+        ArenaStatusChip(status: status, label: label, onSolid: true),
+        // Jeton YALNIZ ödül gerçekten verildiyse çizilir. "500 şampiyon"
+        // lobide bir vaattir; burada yazılan sayı sunucunun bildirdiği
+        // gerçek miktardır.
+        if (rewardState == _CupRewardState.granted && rewardAmount > 0)
+          RewardToken(
+            kind: RewardKind.coin,
+            value: '$rewardAmount',
+            onSolid: true,
           ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -1160,115 +1602,6 @@ class _UserMatchCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _RoundSection extends StatelessWidget {
-  const _RoundSection({
-    required this.title,
-    required this.round,
-    required this.userId,
-    required this.ku,
-  });
-
-  final String title;
-  final TournamentRound round;
-  final String userId;
-  final bool ku;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: round.status == 'active'
-                ? AppTheme.accent
-                : AppTheme.textSubColor(context),
-            fontWeight: FontWeight.w800,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 8),
-        AppPanel(
-          color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-          child: Column(
-            children: [
-              for (var i = 0; i < round.matches.length; i++) ...[
-                if (i > 0)
-                  Divider(height: 16, color: AppTheme.borderColor(context)),
-                _MatchRow(match: round.matches[i], userId: userId, ku: ku),
-              ],
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _MatchRow extends StatelessWidget {
-  const _MatchRow({
-    required this.match,
-    required this.userId,
-    required this.ku,
-  });
-
-  final TournamentMatch match;
-  final String userId;
-  final bool ku;
-
-  @override
-  Widget build(BuildContext context) {
-    final isUserMatch =
-        match.playerOneId == userId || match.playerTwoId == userId;
-    final placeholder = context.t(K.unknown);
-
-    TextStyle nameStyle(String playerId) => TextStyle(
-      color: match.status == 'completed' && match.winnerId != playerId
-          ? AppTheme.textMutedColor(context)
-          : isUserMatch
-          ? AppTheme.accent
-          : AppTheme.textPrimaryColor(context),
-      fontWeight: playerId == userId ? FontWeight.w800 : FontWeight.w600,
-      fontSize: 13,
-    );
-
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            match.playerOneName == 'TBD' ? placeholder : match.playerOneName,
-            maxLines: 1,
-            style: nameStyle(match.playerOneId),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: match.status == 'completed'
-              ? Icon(
-                  AppIcons.circleCheck,
-                  size: 14,
-                  color: AppColors.readableAccent(context, AppTheme.accent),
-                )
-              : Text(
-                  '—',
-                  style: TextStyle(color: AppTheme.textMutedColor(context)),
-                ),
-        ),
-        Expanded(
-          child: Text(
-            match.playerTwoName == 'TBD' ? placeholder : match.playerTwoName,
-            textAlign: TextAlign.end,
-            style: nameStyle(match.playerTwoId),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
     );
   }
 }

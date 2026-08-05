@@ -309,7 +309,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final String firstAttemptAnswer;
   final Map<String, double>? audiencePoll;
   final bool showExplanation;
-  final Map<String, String>? opponentSelectedAnswers;
+  final Map<String, _OpponentAnswer>? opponentSelectedAnswers;
   final bool isCompact;
 
   /// Quiz turu için cevap alanını hedef gösteren GlobalKey.
@@ -455,9 +455,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     final revealed = answered && !suspense;
     final List<String> opps = [];
     if (revealed && opponentSelectedAnswers != null) {
-      opponentSelectedAnswers!.forEach((name, ans) {
-        if (ans == answer) {
-          opps.add(name);
+      opponentSelectedAnswers!.forEach((_, selection) {
+        if (selection.answer == answer) {
+          opps.add(selection.name);
         }
       });
     }

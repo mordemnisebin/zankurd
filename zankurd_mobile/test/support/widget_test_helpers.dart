@@ -16,6 +16,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/utils/app_route.dart';
 
 /// `test/widget_test.dart` bölünmeden önce burada özel (private, `_` önekli)
 /// olan ortak test kurulumu — birden fazla test dosyası tarafından
@@ -108,6 +109,7 @@ Widget testShell({
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: theme.mode,
+        navigatorObservers: [appRouteObserver],
         home: child,
       ),
     ),
@@ -156,7 +158,7 @@ class TestMockZanKurdRepository extends MockZanKurdRepository {
 MockZanKurdRepository freshMockRepository() {
   SharedPreferences.setMockInitialValues({
     'zankurd.onboarding.seen': true,
-    'zankurd.profileName.completed': true,
+    'zankurd.profileName.completed.user': true,
     'zankurd.navTour.seen': true,
     'zankurd.quiz_tutorial.seen': true,
   });

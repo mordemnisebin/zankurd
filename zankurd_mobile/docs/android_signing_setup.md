@@ -1,4 +1,4 @@
-# Android İmzalama (Release Signing) Kurulumu
+# Android İmzalama (Release Signing) Doğrulaması
 
 Play Store'a yüklenecek AAB'nin bir **upload key** ile imzalanması gerekir.
 `android/app/build.gradle.kts` bu yapılandırmayı `android/key.properties`
@@ -7,56 +7,62 @@ durur** (debug imzasına düşmez).
 
 > ⚠️ `key.properties` ve `.jks`/`.keystore` dosyaları **asla commit edilmez**
 > (`.gitignore`'da). Keystore'u kaybedersen Play Store'da uygulamayı
-> güncelleyemezsin — proje dışında yedekle.
+> güncelleyemezsin. Var olan anahtarı yeniden üretme veya değiştirme.
 
-## Derlemenin geri kalanı doğrulandı (2026-07-27)
+## Doğrulanmış yerel durum (2026-08-02)
 
-Senin keystore'un dışında release yolunda eksik bir şey kalmadı. Geçici
-bir anahtarla `flutter build appbundle --release` sonuna kadar koştu:
+- Upload keystore:
+  `/Users/kocer/.zankurd/signing/zankurd-upload.jks`
+- Alias: `zankurd-upload`
+- `android/key.properties` bu yolu ve alias değerini kullanıyor.
+- Parolalar macOS Keychain'de; belgeye veya komut satırına yazılmıyor.
+- Doğrulanmış imzalı AAB çalışma çıktıları temizlenirken silindi. Keystore ve
+  yerel `.env.mobile.release.json` durduğu için aynı paket yeniden üretilebilir.
 
-- AAB üretildi (72,5 MB). Bunun ~70 MB'ı `BUNDLE-METADATA` altındaki hata
-  ayıklama sembolleri ve ProGuard eşlemesi; Play bunları cihaza
-  göndermez, yalnız çökme çözümlemesi için saklar. Cihaza inen paket çok
-  daha küçüktür.
-- R8 küçültme ve kaynak temizleme açık ve **eksik sınıf uyarısı
-  üretmedi** (`missing_rules.txt` hiç oluşmadı). Release'e özgü
-  çökmelerin en yaygın sebebi budur; `proguard-rules.pro` eklentileri
-  kapsıyor demektir.
-- Yazı tipleri ağaç budamasıyla küçüldü (ikon fontlarında %89-99).
+Release yolu R8 küçültme, kaynak temizleme ve native debug sembolleriyle
+yapılandırılmıştır. Release imzası eksik veya hatalıysa derleme güvenlik için
+durur; debug imzasına düşmez.
 
-Geçici anahtar ve `key.properties` doğrulamadan sonra silindi; depoda iz
-kalmadı. Aşağıdaki adımlar hâlâ senin yapman gereken kısım.
+## 1. Anahtar yolunu ve sertifikayı doğrula
 
-## 1. Upload keystore oluştur (bir kez)
-
-JDK 17 bu makinede kurulu (`/opt/homebrew/opt/openjdk@17`). Terminalde:
+Parolaları terminale yazdırmadan önce dosyayı, ardından yalnız yol ile alias
+alanlarını denetle:
 
 ```bash
-keytool -genkeypair -v \
-  -keystore ~/zankurd-upload.jks \
-  -alias upload -keyalg RSA -keysize 2048 -validity 10000
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+test -f /Users/kocer/.zankurd/signing/zankurd-upload.jks
+awk -F= '$1 == "storeFile" || $1 == "keyAlias" { print }' android/key.properties
 ```
 
-- Bir **keystore parolası** ve **key parolası** sorulacak — güçlü seç, güvenli
-  bir yerde sakla (parola yöneticisi).
-- İsim/kurum sorularını doldur (Play için kritik değil).
-- Dosyayı proje dışında tut (ör. `~/zankurd-upload.jks`) ve yedekle.
+Beklenen çıktı:
 
-## 2. `android/key.properties` oluştur
-
-`zankurd_mobile/android/key.properties` (gitignore'lu) dosyasını şu içerikle
-oluştur — parolaları kendi değerlerinle değiştir:
-
-```properties
-storeFile=/Users/<kullanıcı>/zankurd-upload.jks
-storePassword=<keystore-parolası>
-keyAlias=upload
-keyPassword=<key-parolası>
+```text
+storeFile=/Users/kocer/.zankurd/signing/zankurd-upload.jks
+keyAlias=zankurd-upload
 ```
 
-`storeFile` mutlak yol olmalı ve var olan `.jks`'yi göstermeli.
+Keychain'deki parola istendiğinde girerek sertifikayı incele:
 
-## 3. Release AAB derle
+```bash
+keytool -list -v \
+  -keystore /Users/kocer/.zankurd/signing/zankurd-upload.jks \
+  -alias zankurd-upload
+```
+
+Çıktıdaki sertifika SHA-256 parmak izi şu doğrulanmış değerle **birebir** aynı
+olmalı:
+
+```text
+80:59:2E:73:81:FE:05:2B:0C:E1:49:F2:09:06:0F:32:CC:7B:53:F3:5B:92:E2:FC:39:58:DD:19:32:E8:98:B3
+```
+
+Play Console upload sertifikası kaydı oluştuğunda oradaki SHA-256 da aynı
+olmalıdır. Dosya yoksa, alias/parmak izi farklıysa veya sertifika açılamıyorsa
+yeni anahtar üretme. Yayını durdur ve doğrulanmış anahtarı şifreli yedeğinden
+geri getir. İlk mağaza yüklemesinden önce keystore ile Keychain parolalarının
+ayrı, şifreli ve geri yüklemesi denenmiş bir yedeğini oluştur.
+
+## 2. Release AAB derle
 
 > ⚠️ Daha önce bir **debug** build aldıysan, release'ten önce `flutter clean`
 > çalıştır. Aksi halde debug'dan kalma `GeneratedPluginRegistrant.java`,
@@ -65,6 +71,8 @@ keyPassword=<key-parolası>
 > verir. `flutter clean` registrant'ı release için doğru yeniden üretir.
 
 ```bash
+dart run tool/validate_release_config.dart \
+  --file=.env.mobile.release.json --target=mobile --environment=production
 flutter clean
 flutter build appbundle --release \
   --dart-define-from-file=.env.mobile.release.json
@@ -76,13 +84,39 @@ flutter build appbundle --release \
 - Çıktı: `build/app/outputs/bundle/release/app-release.aab` → Play Console'a
   yükle.
 
-## 4. Doğrulama (yapıldı)
+## 3. Üretilen imzayı her seferinde doğrula
 
-- `key.properties` + geçici test keystore ile `flutter build appbundle
-  --release` bu makinede başarıyla derlendi; **R8/minify** (kod küçültme,
-  `android/app/proguard-rules.pro`) release'i bozmuyor.
-- Play App Signing açıksa yalnız **upload key** senin sorumluluğunda; Google
-  dağıtım anahtarını yönetir.
+```bash
+jarsigner -verify -verbose -certs \
+  build/app/outputs/bundle/release/app-release.aab
+bundletool validate \
+  --bundle=build/app/outputs/bundle/release/app-release.aab
+```
+
+`jar verified` görülmeden ve bundletool doğrulaması hatasız bitmeden AAB'yi Play
+Console'a yükleme. Play App Signing açıksa bu dosya upload key'dir; Google
+dağıtım anahtarını ayrıca yönetir.
+
+## 4. Mağazaya gidecek AAB'yi cihazda aç
+
+`flutter devices` ile hedef Android kimliğini bul. Aynı AAB'den cihaza özel APK
+seti üretip kur; parola isteklerini etkileşimli yanıtla, parolayı argümana veya
+loga yazma:
+
+```bash
+bundletool build-apks \
+  --bundle=build/app/outputs/bundle/release/app-release.aab \
+  --output=build/app/outputs/bundle/release/app-release-smoke.apks \
+  --connected-device --device-id=<android-smoke-cihaz-id> \
+  --ks=/Users/kocer/.zankurd/signing/zankurd-upload.jks \
+  --ks-key-alias=zankurd-upload --overwrite
+bundletool install-apks \
+  --apks=build/app/outputs/bundle/release/app-release-smoke.apks \
+  --device-id=<android-smoke-cihaz-id>
+```
+
+Onboarding/ana ekran açılmalı; "Uygulama yapılandırması eksik" ekranı
+görünmemelidir.
 
 ## İlgili
 

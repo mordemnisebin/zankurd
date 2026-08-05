@@ -12,7 +12,7 @@ import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
 import 'contest_screen.dart';
-import '../widgets/app_row_card.dart';
+import '../widgets/mode_card.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
 import 'tournament_screen.dart';
@@ -167,12 +167,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       builder: (sheetCtx) {
-        return Padding(
+        // Klavye ve erişilebilir yazı ölçeği aynı anda açıkken içerik sabit
+        // bir Column'a sığmayabilir. Sheet'i kaydırılabilir tutarak alanı ya
+        // da doğrulama mesajını erişilemez bırakma.
+        return SingleChildScrollView(
           padding: EdgeInsets.only(
             left: AppSpacing.page,
             right: AppSpacing.page,
             bottom: MediaQuery.viewInsetsOf(sheetCtx).bottom + AppSpacing.page,
           ),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: AppPanel(
             child: Form(
               key: formKey,
@@ -198,11 +202,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     key: const ValueKey('play-hub-join-room-code-field'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
-                    // Yazarken kanonik biçime çeker: kullanıcı `zkx8wy`
-                    // yazsa da alanda `ZK-X8WY` görünür, yani gönderilen
+                    // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
+                    // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
                     // kodun doğru olduğunu göndermeden önce görür.
                     inputFormatters: const [_RoomCodeInputFormatter()],
                     style: inputTextStyle,
+                    errorBuilder: (_, errorText) =>
+                        Text(errorText, overflow: TextOverflow.visible),
                     decoration: InputDecoration(
                       labelText: context.t(K.roomCode),
                       prefixIcon: const Icon(AppIcons.doorOpen),
@@ -210,6 +216,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return context.t(K.roomCodeRequired);
+                      }
+                      if (!isSupportedRoomCode(value)) {
+                        return context.t(K.roomCodeInvalid);
                       }
                       return null;
                     },
@@ -222,7 +231,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         if (!formKey.currentState!.validate()) return;
                         try {
                           final room = await widget.repository.joinOnlineRoom(
-                            controller.text.trim(),
+                            normalizeRoomCode(controller.text),
                           );
                           if (!sheetCtx.mounted) return;
                           AnalyticsService.instance.logActivationStep(
@@ -294,7 +303,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               subtitle: context.t(K.withFriendsSub),
             ),
             const SizedBox(height: AppSpacing.sm),
-            AppRowCard(
+            // Rengîn (2026-08-04): dört satır birbirinin aynı beyaz kartıydı
+            // ve oyun merkezinin tamamı tek yeşil + tek turuncu ile
+            // çiziliyordu. Her mod artık kendi hue ailesini taşır; turuncu
+            // yalnız birincil eylemde kalır.
+            ModeCard(
               key: const ValueKey('play-hub-create-room'),
               icon: AppIcons.circlePlus,
               // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
@@ -304,23 +317,17 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               // merkezinde dört satır yan yana duruyor, yani sapma en çok
               // burada görünüyordu: mor ve pembe, turuncu-altın-yeşil
               // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
-              accent: AppTheme.culturalBrandBg,
+              accent: const Color(0xFF1E4FA6), // safir — kurma
               title: context.t(K.createRoom),
               subtitle: context.t(K.createRoomSub),
-              trailing: _roomActionLoading
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : null,
+              busy: _roomActionLoading,
               onTap: _roomActionLoading ? null : _createOnlineRoom,
             ),
             const SizedBox(height: AppSpacing.xs),
-            AppRowCard(
+            ModeCard(
               key: const ValueKey('play-hub-join-room'),
               icon: AppIcons.doorOpen,
-              accent: AppTheme.playCyan,
+              accent: const Color(0xFF04697C), // turkuaz — katılma
               title: context.t(K.joinByCode),
               subtitle: context.t(K.joinByCodeSub),
               onTap: _showJoinSheet,
@@ -331,30 +338,25 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               subtitle: context.t(K.eventsSub),
             ),
             const SizedBox(height: AppSpacing.sm),
-            AppRowCard(
+            ModeCard(
               key: const ValueKey('play-hub-daily-contest'),
               icon: AppIcons.bolt,
-              accent: AppTheme.gold,
+              // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
+              accent: const Color(0xFF9C6300),
               title: context.t(K.dailyContest),
               subtitle: context.t(K.tenQuestions),
-              trailing: _dailyLoading
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : null,
+              busy: _dailyLoading,
               onTap: _dailyLoading ? null : _openDailyQuiz,
             ),
             const SizedBox(height: AppSpacing.xs),
-            AppRowCard(
+            ModeCard(
               key: const ValueKey('play-hub-tournament'),
               icon: AppIcons.trophy,
               // Altın bir satır yukarıda "Günün Etkinliği"nde; turnuva
               // yeşil aksanı alır. Dört satır artık koyu yeşil ·
               // çamurlu turkuaz · altın · turuncu-yeşil — hepsi palet içinde,
               // yine de birbirinden ayrılıyor.
-              accent: AppTheme.playGreen,
+              accent: const Color(0xFF6A38BE), // ametist — turnuva
               title: context.t(K.tournament),
               subtitle: context.t(K.tournamentSub),
               onTap: () => Navigator.of(context).push(
@@ -389,10 +391,16 @@ class _QuickDuelHero extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: Ink(
           decoration: BoxDecoration(
+            // Rengîn (2026-08-04): hero koyu yeşilden koyu yeşile
+            // iniyordu ve hemen üstündeki kimlik başlığıyla birlikte iki
+            // ayrı yeşil panel gibi okunuyordu. Düello bir REKABET
+            // yüzeyidir; madder ailesinden derin mürekkebe geçer ve artık
+            // ekranın en güçlü yeri odur — altındaki mod kartlarından
+            // sönük kalmaz.
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
+              colors: [Color(0xFFB31E3B), Color(0xFF17233B)],
             ),
             borderRadius: BorderRadius.circular(AppRadius.card),
           ),
@@ -512,7 +520,7 @@ class _PlaySectionHeading extends StatelessWidget {
 
 /// Oda kodu alanını yazılırken kanonik biçime çeker.
 ///
-/// Kullanıcının gördüğü kod `ZK-X8WY`; elle yazarken tireyi atlamak,
+/// Kullanıcının gördüğü kod `ZK-ABCDEF0123`; elle yazarken tireyi atlamak,
 /// küçük harf kullanmak ya da araya boşluk koymak olağandır. Biçimlendirici
 /// olmadan bunların hepsi "oda bulunamadı" ile dönüyordu.
 class _RoomCodeInputFormatter extends TextInputFormatter {
@@ -523,7 +531,7 @@ class _RoomCodeInputFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final normalized = normalizeRoomCode(newValue.text);
+    final normalized = formatRoomCodeInput(newValue.text);
     // İmleç sona alınır: kod kısa ve tek parça yazılır, ortasına dönüp
     // düzenleme yapmak beklenen kullanım değil. Metin değişmediyse
     // değeri olduğu gibi bırak, yoksa her tuşta imleç zıplar.

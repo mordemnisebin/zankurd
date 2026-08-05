@@ -157,6 +157,11 @@ ssh "${SSH_OPTIONS[@]}" "$REMOTE" \
     echo "HATA: Uzak rsync veya yazılabilir web kökü doğrulanamadı." >&2
     exit 1
   }
+ssh "${SSH_OPTIONS[@]}" "$REMOTE" \
+  "test -d '$SFTP_BACKUP_PATH' && test -w '$SFTP_BACKUP_PATH' && test -x '$SFTP_BACKUP_PATH'" || {
+    echo "HATA: Uzak yedek kökü mevcut, yazılabilir veya erişilebilir değil." >&2
+    exit 1
+  }
 REMOTE_REALPATH="$(
   ssh "${SSH_OPTIONS[@]}" "$REMOTE" "cd '$SFTP_PATH' && pwd -P"
 )"
@@ -164,6 +169,18 @@ if [[ "$REMOTE_REALPATH" != "$SFTP_EXPECTED_REALPATH" ]]; then
   echo "HATA: Uzak hedef beklenen gerçek yol değil." >&2
   echo "Beklenen: $SFTP_EXPECTED_REALPATH" >&2
   echo "Bulunan:  $REMOTE_REALPATH" >&2
+  exit 1
+fi
+REMOTE_BACKUP_REALPATH="$(
+  ssh "${SSH_OPTIONS[@]}" "$REMOTE" "cd '$SFTP_BACKUP_PATH' && pwd -P"
+)"
+safe_absolute_path "$REMOTE_BACKUP_REALPATH" || {
+  echo "HATA: Uzak yedek kökünün gerçek yolu güvenli değil." >&2
+  exit 1
+}
+if [[ "$REMOTE_BACKUP_REALPATH" == "$REMOTE_REALPATH" \
+  || "$REMOTE_BACKUP_REALPATH/" == "$REMOTE_REALPATH/"* ]]; then
+  echo "HATA: Uzak yedek kökünün gerçek yolu web kökünün dışında değil." >&2
   exit 1
 fi
 
@@ -181,7 +198,7 @@ if [[ "$DRY_RUN" == true ]]; then
   RSYNC_OPTIONS+=(--dry-run)
   echo "Güvenli aktarım ön izlemesi:"
 else
-  BACKUP_RUN="$SFTP_BACKUP_PATH/$(date -u +%Y%m%dT%H%M%SZ)"
+  BACKUP_RUN="$REMOTE_BACKUP_REALPATH/$(date -u +%Y%m%dT%H%M%SZ)"
   ssh "${SSH_OPTIONS[@]}" "$REMOTE" "mkdir -p '$BACKUP_RUN'"
   RSYNC_OPTIONS+=(--backup "--backup-dir=$BACKUP_RUN")
   echo "Şifreli web aktarımı başlıyor; değişen eski dosyalar: $BACKUP_RUN"

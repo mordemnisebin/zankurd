@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
@@ -12,16 +14,18 @@ import 'support/widget_test_helpers.dart';
 
 /// Host-only online lobby for start-gate diagnostics.
 class _HostOnlyRoomRepository extends MockZanKurdRepository {
-  _HostOnlyRoomRepository()
-    : _players = const [
-        Player(
-          id: 'host',
-          name: 'HostOyuncu',
-          score: 0,
-          state: 'Hazır',
-          streak: 0,
-        ),
-      ];
+  _HostOnlyRoomRepository([List<Player>? players])
+    : _players =
+          players ??
+          const [
+            Player(
+              id: 'host-user',
+              name: 'HostOyuncu',
+              score: 0,
+              state: 'Hazır',
+              streak: 0,
+            ),
+          ];
 
   final List<Player> _players;
 
@@ -62,7 +66,7 @@ class _GrowingPlayersRoomRepository extends _HostOnlyRoomRepository {
         id: 'guest',
         name: 'Misafir',
         score: 0,
-        state: 'Bekliyor',
+        state: 'Hazır',
         streak: 0,
       ),
     ];
@@ -87,7 +91,7 @@ class _StaleStreamPollRecoveryRepository extends _HostOnlyRoomRepository {
         id: 'guest',
         name: 'Misafir',
         score: 0,
-        state: 'Bekliyor',
+        state: 'Hazır',
         streak: 0,
       ),
     ];
@@ -182,6 +186,69 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('13-character room code remains complete at 320 px', (
+    tester,
+  ) async {
+    const code = 'ZK-ABCDEF0123';
+    await tester.binding.setSurfaceSize(const Size(320, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom().copyWith(code: code),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final codeFinder = find.byKey(const ValueKey('room-code'));
+    final codeText = tester.widget<Text>(codeFinder);
+    final paragraph = tester.renderObject<RenderParagraph>(codeFinder);
+    expect(codeText.data, code);
+    expect(codeText.overflow, isNot(TextOverflow.ellipsis));
+    expect(paragraph.didExceedMaxLines, isFalse);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('room code copy keeps the complete 13-character value', (
+    tester,
+  ) async {
+    const code = 'ZK-ABCDEF0123';
+    String? copiedText;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copiedText =
+              (call.arguments as Map<Object?, Object?>)['text'] as String?;
+        }
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      ),
+    );
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom().copyWith(code: code),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(find.byKey(const ValueKey('room-code-copy')));
+    await tester.pump();
+    expect(copiedText, code);
+  });
+
   testWidgets('room lobby keeps start disabled until two players are present', (
     tester,
   ) async {
@@ -243,6 +310,120 @@ void main() {
       find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
     );
     expect(startButton.onPressed, isNotNull);
+  });
+
+  testWidgets('room lobby keeps start disabled while a guest is not ready', (
+    tester,
+  ) async {
+    final repository = _HostOnlyRoomRepository(const [
+      Player(
+        id: 'host-user',
+        name: 'HostOyuncu',
+        score: 0,
+        state: Player.readyState,
+      ),
+      Player(id: 'guest-user', name: 'Misafir', score: 0, state: 'Bekliyor'),
+    ]);
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.hostLobbyRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final startButton = tester.widget<GeometricGradientButton>(
+      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+    );
+    expect(startButton.onPressed, isNull);
+    expect(find.byType(QuizScreen), findsNothing);
+  });
+
+  testWidgets('two-player private room opens quiz in 1v1 mode', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final repository = _HostOnlyRoomRepository(const [
+      Player(
+        id: 'host-user',
+        name: 'HostOyuncu',
+        score: 0,
+        state: Player.readyState,
+      ),
+      Player(
+        id: 'guest-user',
+        name: 'Misafir',
+        score: 0,
+        state: Player.readyState,
+      ),
+    ]);
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.hostLobbyRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(
+      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+    );
+    await tester.pumpAndSettle();
+
+    final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+    expect(quiz.is1v1, isTrue);
+  });
+
+  testWidgets('three-player private room opens quiz outside 1v1 mode', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final repository = _HostOnlyRoomRepository(const [
+      Player(
+        id: 'host-user',
+        name: 'HostOyuncu',
+        score: 0,
+        state: Player.readyState,
+      ),
+      Player(
+        id: 'guest-user',
+        name: 'Misafir',
+        score: 0,
+        state: Player.readyState,
+      ),
+      Player(
+        id: 'third-user',
+        name: 'Üçüncü',
+        score: 0,
+        state: Player.readyState,
+      ),
+    ]);
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.hostLobbyRoom(),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(
+      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+    );
+    await tester.pumpAndSettle();
+
+    final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
+    expect(quiz.is1v1, isFalse);
   });
 
   testWidgets(

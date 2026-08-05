@@ -56,3 +56,38 @@ class Player {
     );
   }
 }
+
+String? _usablePlayerId(String? id) {
+  final normalized = id?.trim();
+  return normalized == null || normalized.isEmpty ? null : normalized;
+}
+
+/// [player] ile hedef kimlik aynı oyuncuyu mu temsil ediyor?
+///
+/// Taraflardan herhangi birinde kalıcı kimlik varsa ad hiç dikkate
+/// alınmaz; eşleşme için iki kimliğin de bulunup aynı olması gerekir. Ad
+/// karşılaştırması yalnız iki tarafın da kimliksiz olduğu eski oda ve
+/// broadcast kayıtları için geriye uyumluluk yoludur.
+bool playerMatchesIdentity(
+  Player player, {
+  required String? id,
+  required String legacyName,
+}) {
+  final playerId = _usablePlayerId(player.id);
+  final targetId = _usablePlayerId(id);
+  if (playerId != null || targetId != null) {
+    return playerId != null && targetId != null && playerId == targetId;
+  }
+  return player.name == legacyName;
+}
+
+/// İki oyuncu kaydı aynı kimliğe mi ait?
+bool playersShareIdentity(Player first, Player second) {
+  return playerMatchesIdentity(first, id: second.id, legacyName: second.name);
+}
+
+/// Cevap/hazır durumları gibi geçici haritalar için çakışmasız anahtar.
+String playerIdentityKey({required String? id, required String legacyName}) {
+  final usableId = _usablePlayerId(id);
+  return usableId == null ? 'name:$legacyName' : 'id:$usableId';
+}
