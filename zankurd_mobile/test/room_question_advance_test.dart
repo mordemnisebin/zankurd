@@ -84,9 +84,9 @@ void main() {
     );
   });
 
-  test('göç fonksiyonu ev sahibiyle ve etkin odayla sınırlı', () {
+  test('göç fonksiyonu oda üyeliği ve expected-index CAS ile sınırlı', () {
     final migration = File(
-      'supabase/2026-08-01_room_question_advance.sql',
+      'supabase/2026-08-02_multiplayer_session_hardening.sql',
     ).readAsStringSync();
 
     expect(migration, contains('function public.advance_room_question'));
@@ -102,40 +102,40 @@ void main() {
       contains('set search_path = public'),
       reason: 'Tanımlayıcı yetkili fonksiyon çağıranın arama yolunu almamalı.',
     );
+    expect(migration, contains('p_expected_question_index integer'));
+    expect(migration, contains('join public.room_players rp'));
     expect(
       migration,
-      contains('and r.host_id = v_uid'),
-      reason: 'Katılan oyuncu maçı ileri saramamalı.',
+      contains('rp.player_id = v_uid'),
+      reason: 'İlerletme oda üyesiyle sınırlı olmalı.',
+    );
+    expect(
+      migration,
+      isNot(contains('and r.host_id = v_uid')),
+      reason: 'Host-only advance, guest failover CAS sözleşmesini bozar.',
     );
     expect(
       migration,
       contains("and r.status = 'active'"),
       reason: 'Bitmiş ya da lobideki oda ilerletilememeli.',
     );
-    // Tavan tam olarak `v_count` olmalı.
-    //
-    // `v_count - 1` yazıldığında (ilk sürümde öyleydi) ev sahibi son
-    // soruda kilitleniyor: istemci maçın bittiğini indeksin soru sayısına
-    // ULAŞMASINDAN anlıyor, yani son sorudan sonra bir artış daha şart.
-    // Sınırın kendisi de şart: sınırsız artış, hiçbir cevabın kabul
-    // edilmediği bir odayı süresiz "etkin" bırakırdı.
     expect(
       migration,
-      contains('least(coalesce(r.current_question_index, 0) + 1, v_count)'),
+      contains('for update of r'),
       reason:
-          'Tavan `v_count` değilse ev sahibi maçı bitiremez ya da indeks '
-          'sınırsız büyür.',
-    );
-    expect(
-      migration,
-      isNot(contains('v_count - 1)')),
-      reason: 'Bir eksik tavan ev sahibini son soruda kilitliyordu.',
+          'Oda satırı kilidi olmadan iki istemcinin CAS tekrarları yarışabilir.',
     );
     expect(
       migration,
       contains(
-        'revoke all on function public.advance_room_question(uuid) '
-        'from public, anon',
+        'coalesce(r.current_question_index, 0) = p_expected_question_index',
+      ),
+      reason: 'İlerletme beklenen indeksle atomik CAS yapmalı.',
+    );
+    expect(
+      migration,
+      contains(
+        'revoke all on function public.advance_room_question(uuid, integer)',
       ),
     );
   });

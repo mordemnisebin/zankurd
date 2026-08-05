@@ -30,6 +30,13 @@ void main() {
     'spend_streak_freeze': '2026-08-03_streak_freeze_idempotency.sql',
   };
 
+  const appliedMigrationBySource = {
+    '2026-08-02_multiplayer_session_hardening.sql':
+        '20260802000000_multiplayer_session_hardening.sql',
+    '2026-08-03_streak_freeze_idempotency.sql':
+        '20260803000000_streak_freeze_idempotency.sql',
+  };
+
   test('istemcinin cagirdigi her yeni RPC gercekten cagriliyor', () {
     final repo = File(
       'lib/src/data/supabase_zankurd_repository.dart',
@@ -61,19 +68,20 @@ void main() {
     expect(runbook, contains('Kesim penceresinde sırayı değiştirme'));
   });
 
-  test('uygulanmamis goc applied.md icinde YANLISLIKLA isaretli degil', () {
+  test('production rollout migrationlari applied.md icinde kayitli', () {
     final applied = File('supabase/applied.md').readAsStringSync();
     for (final migration in rpcToMigration.values.toSet()) {
+      final appliedMigration = appliedMigrationBySource[migration]!;
       final marked = RegExp(
-        '^\\| ${RegExp.escape(migration)} \\| ✅',
+        '^\\| ${RegExp.escape(appliedMigration)} \\| ✅',
         multiLine: true,
       ).hasMatch(applied);
       expect(
         marked,
-        isFalse,
+        isTrue,
         reason:
-            '$migration uretimde uygulanmadi; applied.md ✅ isareti '
-            'yanlis guvence verir',
+            '$migration production history ile doğrulanmış ama applied.md '
+            'kaydı eksik.',
       );
     }
   });

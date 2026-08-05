@@ -899,7 +899,7 @@ void main() {
     },
   );
 
-  test('soru ilerletme oda kilidiyle sonraki sunucu başlangıcını yazar', () {
+  test('soru ilerletme oda üyesi CAS’iyle host failover desteği verir', () {
     final advance = _functionBody(sql, 'advance_room_question');
     final answerGuard = _functionBody(sql, 'enforce_current_room_question');
 
@@ -909,6 +909,7 @@ void main() {
     );
     expect(advance, contains('p_expected_question_index integer'));
     expect(advance, contains('from public.rooms r'));
+    expect(advance, contains('join public.room_players rp'));
     expect(advance, contains('for update'));
     expect(advance, contains('rp.player_id = v_uid'));
     expect(advance, isNot(contains('v_room.host_id <> v_uid')));

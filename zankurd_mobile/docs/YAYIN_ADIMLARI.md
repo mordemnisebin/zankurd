@@ -267,6 +267,16 @@ kesildiğini üretimde doğrulamadan migration'ı uygulama. Yalnızca gerçekten
 yayın yapılıyorsa ve
 **public legacy istemci yok** ise aşağıdaki koordineli kesime devam et.
 
+2026-08-05 production rollout kaydı tamamlandı: aşağıdaki iki migration
+production history’de birer kez uygulanmış ve `supabase/applied.md` içinde
+kanıt notuyla kayıtlıdır. Bu rollout için aynı SQL’i production’a yeniden
+çalıştırma; yalnız repo dışı local clone replay’i doğrulama amacıyla kullan.
+
+İlerletme yetki sözleşmesi özellikle host-only değildir: `start_room_game`
+host-only kalır; `advance_room_question(uuid, integer)` ise oda üyeliği ve
+`p_expected_question_index` CAS’i ile korunur. Host bağlantısı koparsa guest’in
+aynı güvenli retry yolunu kullanması beklenen davranıştır.
+
 Kesim penceresinde sırayı değiştirme:
 
 1. Staging'de doğrulanan

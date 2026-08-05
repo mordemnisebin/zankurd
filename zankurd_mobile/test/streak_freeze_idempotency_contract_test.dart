@@ -13,8 +13,8 @@ import 'package:flutter_test/flutter_test.dart';
 /// denemediğini açıklar — ve o kısıt kaldırılacaksa önce bu göç
 /// uygulanmalıdır.
 ///
-/// Göç UYGULANMADI. Aşağıdaki kontroller statiktir; `applied.md` içinde
-/// kaydı yoktur ve istemci hâlâ eski yolu kullanır.
+/// Göç production'da uygulandı ve aşağıdaki kontroller statik istemci/RPC
+/// sözleşmesini korur. Eski backend'lere karşı güvenli fallback yine tutulur.
 void main() {
   late String sql;
 
@@ -100,20 +100,21 @@ void main() {
     expect(sql, contains('commit;'));
   });
 
-  test('göç uygulanmış olarak işaretlenmemiştir', () {
-    // İstemci bu RPC'ye geçmeden ve göç gerçekten uygulanmadan önce
-    // `applied.md`ye satır eklenmesi, ileride yanlış bir "güvende"
-    // varsayımına yol açar.
+  test('göç production rollout kaydı olarak işaretlenmiştir', () {
     final applied = File('supabase/applied.md').readAsStringSync();
-    expect(applied, isNot(contains('2026-08-03_streak_freeze_idempotency')));
+    expect(
+      RegExp(
+        r'^\| 20260803000000_streak_freeze_idempotency\.sql \| ✅',
+        multiLine: true,
+      ).hasMatch(applied),
+      isTrue,
+    );
   });
 
   // Göç yerel PostgreSQL üzerinde doğrulandıktan (2026-08-03) sonra istemci
-  // idempotent yola geçirildi. Ama göç PRODUCTION'a hâlâ uygulanmadı, yani
-  // bu derleme göçün ÖNÜNDE yayınlanabilir. O durumda PostgREST fonksiyonu
-  // bulamaz; istemci sessizce kırılmak yerine eski `spend_coins` yoluna
-  // düşmeli — ve düştüğünü söylemeli, çünkü o yol idempotent değildir ve
-  // belirsiz bir tahsilat tekrarlanmamalıdır.
+  // İstemci idempotent yola geçirildi. Eski veya kısmi backend'lerde
+  // PostgREST fonksiyonu bulunamazsa istemci sessizce kırılmak yerine eski
+  // `spend_coins` yoluna düşmeli ve bu yolun idempotent olmadığını bildirmeli.
   test('istemci idempotent RPC yolunu kullanır', () {
     final repo = File(
       'lib/src/data/supabase_zankurd_repository.dart',
