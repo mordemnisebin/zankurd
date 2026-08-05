@@ -409,7 +409,21 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             'updated_at': DateTime.now().toUtc().toIso8601String(),
           })
           .eq('id', user.id);
+    } on PostgrestException catch (error, stack) {
+      // Sunucu veriyi REDDETTİ. Bu kalıcı bir rettir, geçici bir ağ
+      // sorunu değil — ve yutulduğu için kullanıcıya yalan söylüyordu:
+      // `avatar_editor_screen._save()` başarı sayıp `pop(true)` ile
+      // kapanıyordu. 600 coin ödenen Neon çerçevesi tam buradan
+      // kayboluyordu; `protect_paid_profile_cosmetics` `neon` değerini
+      // reddediyor, istisna burada yutuluyor, ekran "kaydedildi" gibi
+      // kapanıyordu (2026-08-06 denetimi).
+      //
+      // Çağıran zaten yerelleştirilmiş `K.saveFailed` gösteriyor.
+      _recordError(error, stack, reason: 'updateAvatarIdentity rejected');
+      rethrow;
     } catch (error, stack) {
+      // Ağ/bağlantı kaynaklı geçici hatalar sessiz kalır: yerel kopya
+      // yukarıda yazıldı ve çevrimdışı görünürlük bozulmamalı.
       _recordError(error, stack, reason: 'updateAvatarIdentity failed');
     }
   }

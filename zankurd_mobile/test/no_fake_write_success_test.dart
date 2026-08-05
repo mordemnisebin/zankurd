@@ -107,4 +107,78 @@ void main() {
       );
     }
   });
+
+  /// Aynı kusurun `void` dönen kardeşi (2026-08-06 denetimi).
+  ///
+  /// `updateAvatarIdentity` bool döndürmüyor; başarısızlığı bildirmesinin
+  /// tek yolu istisnayı geçirmek. Oysa BÜTÜN istisnaları yutuyordu ve
+  /// `avatar_editor_screen._save()` bunu başarı sayıp `pop(true)` ile
+  /// kapanıyordu.
+  ///
+  /// Somut kayıp: mağazadan 600 coine alınan Neon çerçevesi.
+  /// `protect_paid_profile_cosmetics` `neon` değerini reddediyordu —
+  /// temiz üretim klonunda üretildi: satın alma `success: true`, hemen
+  /// ardından `ERROR: Invalid avatar frame`. İstisna burada yutulunca
+  /// kullanıcı "kaydedildi" görüyordu. Üstelik `neon` seçili kaldığı
+  /// sürece UPDATE'in tamamı iptal olduğu için avatar fotoğrafı, ikonu ve
+  /// rengi de sessizce kaydedilemez oluyordu.
+  ///
+  /// Ayrım bilinçli: **sunucu reddi** (`PostgrestException`) kalıcıdır ve
+  /// görünmelidir; ağ kaynaklı geçici hata sessiz kalır, çünkü yerel kopya
+  /// zaten yazılmıştır ve çevrimdışı kullanım bozulmamalıdır.
+  group('sunucu reddi yutulmuyor', () {
+    test('updateAvatarIdentity PostgrestException geçiriyor', () {
+      final at = repo.indexOf("reason: 'updateAvatarIdentity rejected'");
+      expect(
+        at,
+        greaterThan(-1),
+        reason:
+            'Sunucu reddi ayrı yakalanmıyor; ödenen kozmetik yine sessizce '
+            'kaybolur',
+      );
+
+      final tail = repo.substring(at, at + 400);
+      expect(
+        tail.substring(0, tail.indexOf('\n    }')),
+        contains('rethrow;'),
+        reason:
+            'Ret çağırana ulaşmazsa ekran yine pop(true) ile başarı gibi '
+            'kapanır',
+      );
+
+      // Yakalanan tür gerçekten PostgrestException olmalı: düz `catch`
+      // yeniden fırlatılırsa çevrimdışı kayıt da hata verirdi.
+      final methodStart = repo.indexOf('Future<void> updateAvatarIdentity(');
+      expect(methodStart, greaterThan(-1));
+      expect(
+        repo.substring(methodStart, at),
+        contains('on PostgrestException catch'),
+        reason:
+            'Ret düz `catch` ile yakalanıp fırlatılırsa çevrimdışı '
+            'kayıt da hata verir',
+      );
+    });
+
+    test('ağ hatasında çevrimdışı sessizlik korunuyor', () {
+      final at = repo.indexOf("reason: 'updateAvatarIdentity failed'");
+      expect(at, greaterThan(-1));
+      final tail = repo.substring(at, at + 300);
+      expect(
+        tail.substring(0, tail.indexOf('\n    }')),
+        isNot(contains('rethrow;')),
+        reason:
+            'Geçici ağ hatası da fırlatılırsa çevrimdışı avatar değişikliği '
+            'her seferinde hata gösterir — düzeltme fazla geniş uygulanmış',
+      );
+    });
+
+    test('ekran reddi yerelleştirilmiş metinle gösteriyor', () {
+      final editor = File(
+        'lib/src/screens/avatar_editor_screen.dart',
+      ).readAsStringSync();
+      expect(editor, contains('K.saveFailed'));
+      // Başarı yolu yalnız istisna ATILMADIĞINDA çalışır.
+      expect(editor, contains('Navigator.of(context).pop(true)'));
+    });
+  });
 }
