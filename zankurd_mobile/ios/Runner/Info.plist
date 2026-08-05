@@ -82,6 +82,39 @@
 		<string>ku</string>
 		<string>tr</string>
 	</array>
+	<!--
+	  Kamera amaç dizesi.
+
+	  Uygulama kamerayı HİÇ AÇMIYOR: tek çağrı yeri
+	  `avatar_editor_screen.dart` ve orada yalnız `ImageSource.gallery`
+	  kullanılıyor. Buna rağmen `image_picker_ios` eklentisi
+	  `GeneratedPluginRegistrant` ile koşulsuz kaydediliyor ve podspec
+	  bütün `.m` dosyalarını topluca derliyor
+	  (`source_files = '.../**/*.{h,m}'` — kamera dosyasını dışarıda
+	  bırakacak bir anahtar yok). Sonuç, 2026-08-06'da no-codesign
+	  release derlemesinin İKİLİSİNDEN doğrulandı:
+
+	      nm -mu Runner.app/Runner
+	        (undefined) external _OBJC_CLASS_$_AVCaptureDevice
+	                                            (from AVFoundation)
+	        (undefined) external _OBJC_CLASS_$_UIImagePickerController
+	                                            (from UIKit)
+	      strings -a Runner.app/Runner
+	        authorizationStatusForMediaType:
+	        requestAccessForMediaType:completionHandler:
+
+	  Apple'ın amaç-dizesi taraması İKİLİYE bakar, Dart çağrı yerine
+	  değil; bu semboller varken dize yoksa yükleme sonrası ITMS-90683
+	  ("Missing Purpose String in Info.plist") gelir — yani sorun yayın
+	  günü, build yüklendikten sonra ortaya çıkar.
+
+	  Kamerayı derlemeden çıkarmak, `image_picker`ı tamamen bırakmak
+	  demekti; o da avatar fotoğrafı özelliğini kaldırırdı. Dize eklemek
+	  hem küçük hem dürüst: kullanıcı bu istemi zaten hiç görmez, çünkü
+	  kamera hiç istenmiyor.
+	-->
+	<key>NSCameraUsageDescription</key>
+	<string>ZanKurd kamerayı kullanmaz; bu izin yalnızca fotoğraf seçici bileşeninin sistem gereksinimidir.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ZanKurd, profil fotoğrafınızı seçebilmek için fotoğraf arşivinize erişir.</string>
 	<key>UIApplicationSceneManifest</key>
