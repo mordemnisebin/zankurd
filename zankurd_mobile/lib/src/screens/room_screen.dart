@@ -14,6 +14,7 @@ import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/player_moderation_button.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -839,6 +840,13 @@ class _RoomScreenState extends State<RoomScreen> {
                                             rank: i + 1,
                                             player: sorted[i],
                                             isKu: ku,
+                                            repository: widget.repository,
+                                            isSelf:
+                                                sorted[i].id == null ||
+                                                sorted[i].id ==
+                                                    widget
+                                                        .repository
+                                                        .currentUserId,
                                             isHost:
                                                 room.hostId != null &&
                                                 sorted[i].id == room.hostId,
@@ -1225,6 +1233,8 @@ class _PlayerTile extends StatelessWidget {
     required this.rank,
     required this.player,
     required this.isKu,
+    required this.repository,
+    required this.isSelf,
     this.isHost = false,
   });
 
@@ -1232,6 +1242,12 @@ class _PlayerTile extends StatelessWidget {
   final Player player;
   final bool isKu;
   final bool isHost;
+
+  /// Bildir/engelle için; yeni bir backend yok, mevcut RPC'ler kullanılır.
+  final ZanKurdRepository repository;
+
+  /// Kendi satırında moderasyon düğmesi çizilmez.
+  final bool isSelf;
 
   /// Yerel oyuncunun görünen adı.
   ///
@@ -1354,6 +1370,21 @@ class _PlayerTile extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          // Yabancı bir oyuncunun avatarı ve adı bu satırda da
+          // gösteriliyor; bildir/engelle bu ekranda hiç yoktu
+          // (2026-08-06 denetimi).
+          //
+          // Satırın SONUNA konuyor, ad sütununun içine değil: 44 pt'lik
+          // dokunma hedefi metin sütununu uzatırsa satır yükselir ve
+          // lobinin birincil eylemi ("Yarışı Başlat") üç kişilik odada
+          // 390x844 ekranda katlamanın altına iniyordu.
+          PlayerModerationButton(
+            repository: repository,
+            playerId: player.id,
+            playerName: player.name,
+            isSelf: isSelf,
+            compact: true,
           ),
         ],
       ),

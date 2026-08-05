@@ -11,6 +11,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/player.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/player_moderation_button.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -78,6 +79,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   int _myLevel = 1;
   AvatarIdentity _myIdentity = const AvatarIdentity();
   AvatarIdentity _opponentIdentity = const AvatarIdentity();
+
+  /// Rakibin kimliği — bildir/engelle için gerekli.
+  ///
+  /// Bot rakipte `null` kalır: bot bildirilebilir bir kullanıcı değildir
+  /// ve sunucuya gönderilecek bir kimliği yoktur.
+  String? _opponentId;
   int _opponentLevel = 1;
   String? _profileName;
 
@@ -427,6 +434,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _found = false;
       _matchmakingErrorMessage = null;
       _opponentIdentity = const AvatarIdentity();
+      _opponentId = null;
       _secondsElapsed = 0;
     });
 
@@ -472,6 +480,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           chosenCategory,
           ku,
           attempt,
+          opponentId: opponent?.id,
         );
       } else {
         // Status is waiting. Let's subscribe to matchmaking_queue changes.
@@ -514,6 +523,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 chosenCategory,
                 ku,
                 attempt,
+                opponentId: opponent?.id,
               );
             } catch (error, stack) {
               ErrorReporter.record(
@@ -764,6 +774,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       category,
       ku,
       attempt,
+      opponentId: opponent?.id,
     );
   }
 
@@ -774,8 +785,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     GameRoom? matchedRoom,
     String category,
     bool ku,
-    int attempt,
-  ) async {
+    int attempt, {
+    String? opponentId,
+  }) async {
     if (!_isAttemptActive(attempt)) return;
     AnalyticsService.instance.logActivationStep('matchmaking_matched');
     setState(() {
@@ -783,6 +795,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _opponentName = matchedName;
       _opponentLevel = matchedLevel;
       _opponentIdentity = opponentIdentity;
+      _opponentId = opponentId;
       _statusTextKu = 'Lîstikvanek hat dîtin: $matchedName!';
       _statusTextTr = 'Rakip bulundu: $matchedName!';
     });
@@ -1502,18 +1515,40 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   ),
                           ),
                           const SizedBox(height: 8),
-                          Text(
-                            _found ? (_opponentName ?? '') : '?',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: _found
-                                  ? AppTheme.textPrimaryColor(context)
-                                  : AppTheme.textMutedColor(context),
-                              fontWeight: FontWeight.w700,
-                              fontSize: 13,
-                            ),
+                          // Rakibin YÜKLEDİĞİ fotoğraf ve adı burada tam
+                          // ekran gösteriliyor; bildir/engelle de tam
+                          // burada olmalı. Eskiden bu ekranda hiçbir
+                          // moderasyon aracı yoktu: tek yol ya sohbete
+                          // mesaj yazmış birine long-press ya da ilk
+                          // 10'a girmiş birini liderlikten bildirmekti
+                          // (2026-08-06 denetimi).
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  _found ? (_opponentName ?? '') : '?',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: _found
+                                        ? AppTheme.textPrimaryColor(context)
+                                        : AppTheme.textMutedColor(context),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                              if (_found)
+                                PlayerModerationButton(
+                                  repository: widget.repository,
+                                  playerId: _opponentId,
+                                  playerName: _opponentName ?? '',
+                                  compact: true,
+                                ),
+                            ],
                           ),
                           const SizedBox(height: 4),
                           Container(
