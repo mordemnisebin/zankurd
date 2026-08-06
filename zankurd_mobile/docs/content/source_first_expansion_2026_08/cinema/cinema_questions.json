@@ -132,5 +132,407 @@
       "note": "external 11 ve DeepSeek 125 ile çakışma yok"
     },
     "finalContentHash": "29d9c585b57da63e"
+  },
+  {
+    "questionId": "sf_cin_0003",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_history",
+    "claimId": "cin_ven_01",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+    "exactSupportingFact": "The first \"Esposizione d'Arte Cinematografica\" came into being in 1932",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?",
+    "promptTr": "Venedik Film Festivali hangi yılda kuruldu?",
+    "answersKu": [
+      "1932",
+      "1946",
+      "1951",
+      "1955"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1951",
+      "1955"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Pêşangeha yekem a hunera sînemayê ya Venedîkê di sala 1932an de dest pê kir.",
+    "explanationTr": "Venedik'in ilk sinema sanatı sergisi 1932 yılında başladı.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + corpus'ta yerleşik sinema sözcükleri"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek kavramsal sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu; pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
+    },
+    "finalContentHash": "bd9ffe0401390dcb"
+  },
+  {
+    "questionId": "sf_cin_0004",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_history",
+    "claimId": "cin_ven_03",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+    "exactSupportingFact": "the Golden Lion of St. Mark introduced for best film (1949)",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Xelata «Şêrê Zêrîn» ji bo fîlmê herî baş di kîjan salê de hate danîn?",
+    "promptTr": "«Altın Aslan» ödülü en iyi film için hangi yılda konuldu?",
+    "answersKu": [
+      "1932",
+      "1936",
+      "1949",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1936",
+      "1949",
+      "1968"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Şêrê Zêrîn ê Aziz Marko di sala 1949an de ji bo fîlmê herî baş hate danîn.",
+    "explanationTr": "Aziz Marko'nun Altın Aslanı, en iyi film için 1949 yılında konuldu.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + corpus'ta yerleşik sinema sözcükleri"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek kavramsal sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu; pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
+    },
+    "finalContentHash": "28642861080f4283"
+  },
+  {
+    "questionId": "sf_cin_0005",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_history",
+    "claimId": "cin_ven_04",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+    "exactSupportingFact": "The very first film to be shown in the history of the Festival was Rouben Mamoulian's Dr. Jekyll and Mr. Hyde",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê yekem ê ku di dîroka Festîvala Venedîkê de hate nîşandan kîjan e?",
+    "promptTr": "Venedik Festivali tarihinde gösterilen ilk film hangisidir?",
+    "answersKu": [
+      "Dr. Jekyll and Mr. Hyde",
+      "Citizen Kane",
+      "Metropolis",
+      "Nosferatu"
+    ],
+    "answersTr": [
+      "Dr. Jekyll and Mr. Hyde",
+      "Citizen Kane",
+      "Metropolis",
+      "Nosferatu"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Fîlmê yekem ê festîvalê Dr. Jekyll and Mr. Hyde a Rouben Mamoulian bû.",
+    "explanationTr": "Festivalin ilk filmi Rouben Mamoulian'ın Dr. Jekyll and Mr. Hyde'ıydı.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + corpus'ta yerleşik sinema sözcükleri"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek kavramsal sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu; pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
+    },
+    "finalContentHash": "a7f31ca4adf5c26b"
+  },
+  {
+    "questionId": "sf_cin_0006",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_history",
+    "claimId": "cin_ven_05",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+    "exactSupportingFact": "The second Festival was held from 1 to 20 August 1934 and for the first time it included a competition",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?",
+    "promptTr": "Resmî yarışma ilk kez hangi yılda festivale girdi?",
+    "answersKu": [
+      "1932",
+      "1934",
+      "1949",
+      "1937"
+    ],
+    "answersTr": [
+      "1932",
+      "1934",
+      "1949",
+      "1937"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Festîvala duyem a 1934an cara yekem pêşbazî lê zêde kir.",
+    "explanationTr": "1934'teki ikinci festival, ilk kez bir yarışma içeriyordu.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + corpus'ta yerleşik sinema sözcükleri"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek kavramsal sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu; pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
+    },
+    "finalContentHash": "304abd1dee82e7ef"
+  },
+  {
+    "questionId": "sf_cin_0007",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_history",
+    "claimId": "cin_ven_06",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+    "exactSupportingFact": "in 1936 an international jury was nominated for the first time",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?",
+    "promptTr": "Uluslararası jüri ilk kez hangi yılda atandı?",
+    "answersKu": [
+      "1934",
+      "1932",
+      "1949",
+      "1936"
+    ],
+    "answersTr": [
+      "1934",
+      "1932",
+      "1949",
+      "1936"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Di sala 1936an de cara yekem jûriyeke navneteweyî hate destnîşankirin.",
+    "explanationTr": "1936 yılında ilk kez uluslararası bir jüri atandı.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + corpus'ta yerleşik sinema sözcükleri"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek kavramsal sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu; pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
+    },
+    "finalContentHash": "ef1c5625eaa8b463"
+  },
+  {
+    "questionId": "sf_cin_0008",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_history",
+    "claimId": "cin_ven_02",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+    "exactSupportingFact": "held on the terrace of the Hotel Excelsior on the Venice Lido",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Edîsyona yekem li ku hate lidarxistin?",
+    "promptTr": "İlk edisyon nerede düzenlendi?",
+    "answersKu": [
+      "Li Palazzo del Cinema",
+      "Li terasa Hotel Excelsior",
+      "Li Piazza San Marco",
+      "Li Teatro La Fenice"
+    ],
+    "answersTr": [
+      "Palazzo del Cinema'da",
+      "Hotel Excelsior terasında",
+      "Piazza San Marco'da",
+      "Teatro La Fenice'de"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Edîsyona yekem li terasa Hotel Excelsior a li Lido ya Venedîkê hate lidarxistin.",
+    "explanationTr": "İlk edisyon, Venedik Lido'daki Hotel Excelsior'un terasında düzenlendi.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + corpus'ta yerleşik sinema sözcükleri"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek kavramsal sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu; pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
+    },
+    "finalContentHash": "3a7c65841cfef865"
   }
 ]

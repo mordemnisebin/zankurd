@@ -1,14 +1,20 @@
 {
   "batchStatus": "INCOMPLETE_BELOW_MINIMUM",
   "minimumRequired": 12,
-  "produced": 2,
+  "produced": 8,
   "addedToVerifiedPool": false,
-  "whyBelowMinimum": "Bağlam bütçesi. Bu turda üç Columbia terimi açıldı; `long-take` biçimsel tanım vermediği için claim çıkarılmadı (yalnız 'a shot of some duration'). İki temiz claim iki soru verdi.",
+  "whyBelowMinimum": "Bağlam bütçesi. La Biennale tarihçe sayfası tek başına 6 ayrı claim verdi (yüksek kaldıraç); Cannes resmî tarihçe sayfası 403 döndürdü ve o kaynak ailesi açılamadı. 8/12.",
   "kurdishCinemaContent": "Bu turda Kürt sineması / Yılmaz Güney sorusu ÜRETİLMEDİ. §9 Risk-A için doğrudan güçlü akademik kaynak ya da iki bağımsız kaynak istiyor; bu turda hiçbiri açılmadı. Kaynaksız içerik üretilmedi, eksiklik burada kayıtlı. Plan korunuyor: plans/yilmaz_guney_kurdish_cinema_content_plan.md",
   "notRecycledFromDeepSeek": "İki soru da doğrudan Columbia sayfalarından üretildi; eski DeepSeek adaylarının düzeltilmiş sürümü DEĞİL. DeepSeek Sînema kararları donduruldu.",
   "verifiedQuestions": [
     "sf_cin_0001",
-    "sf_cin_0002"
+    "sf_cin_0002",
+    "sf_cin_0003",
+    "sf_cin_0004",
+    "sf_cin_0005",
+    "sf_cin_0006",
+    "sf_cin_0007",
+    "sf_cin_0008"
   ],
   "reviewer": "opus-5",
   "timestamp": "2026-08-06"

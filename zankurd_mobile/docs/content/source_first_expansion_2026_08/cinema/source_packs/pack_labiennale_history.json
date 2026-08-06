@@ -1,0 +1,30 @@
+{
+  "sourcePackId": "pack_labiennale_history",
+  "sourceTitle": "La Biennale di Venezia — History of the Venice Film Festival",
+  "institution": "La Biennale di Venezia",
+  "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "history / origins / awards"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri; pasaj kopyalanmadı.",
+  "exactSourceStatements": [
+    "The first \"Esposizione d'Arte Cinematografica\" came into being in 1932",
+    "held on the terrace of the Hotel Excelsior on the Venice Lido",
+    "the Golden Lion of St. Mark introduced for best film (1949)",
+    "The very first film to be shown in the history of the Festival was Rouben Mamoulian's Dr. Jekyll and Mr. Hyde, that was screened at 9:15 p.m. on 6 August 1932",
+    "The second Festival was held from 1 to 20 August 1934 and for the first time it included a competition",
+    "in 1936 an international jury was nominated for the first time",
+    "the new Palazzo del Cinema was inaugurated (1937) and has hosted the Festival ever since"
+  ],
+  "extractedClaimIds": [
+    "cin_ven_01",
+    "cin_ven_02",
+    "cin_ven_03",
+    "cin_ven_04",
+    "cin_ven_05",
+    "cin_ven_06"
+  ],
+  "sourceHash": "875e61dba3d90af2"
+}
