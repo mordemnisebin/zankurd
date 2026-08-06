@@ -26,4 +26,9 @@ const questionBankAssets = <String>[
   'assets/data/community_questions.json',
   'assets/data/editorial_questions.json',
   'assets/data/offline_questions.json',
+  // 2026-08-06 iki dilli genişletme: TR+KU soru, şık ve açıklama.
+  // Kaynak ajan batch'lerinden deterministik yeniden kuruldu ve
+  // `tool/content_authoring/normalize_content_typography.py` ile
+  // yapısal olarak normalleştirildi (regex ile toplu onarım DEĞİL).
+  'assets/data/expansion_2026_08_questions.json',
 ];

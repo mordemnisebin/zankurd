@@ -64,6 +64,37 @@
       }
     },
     {
+      "id": "expansion_2026_08_bank",
+      "description": "2026-08-06 bilingual expansion bundled runtime bank",
+      "path": "assets/data/expansion_2026_08_questions.json",
+      "role": "runtime_secondary",
+      "parser": "json",
+      "canonicalGroup": "runtime_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": true,
+      "precedence": 985,
+      "expectedRecordCount": 218,
+      "notes": "Bilingual KU+TR, deterministically rebuilt 2026-08-06",
+      "columns": {
+        "id": "id",
+        "category": "category",
+        "prompt": "prompt",
+        "options": "answers",
+        "correct": "correctAnswer",
+        "explanation": "explanation",
+        "difficulty": "difficulty",
+        "imagePath": "imageUrl",
+        "type": "type",
+        "dialect": "metadata.dialect",
+        "sourceTitle": "metadata.sourceTitle",
+        "sourceUrl": "metadata.sourceReference",
+        "reviewedAt": "metadata.reviewedAt",
+        "status": "metadata.reviewStatus",
+        "locale": "ku-kmr"
+      }
+    },
+    {
       "id": "community_runtime_bank",
       "description": "Reviewed community bundled runtime bank",
       "path": "assets/data/community_questions.json",

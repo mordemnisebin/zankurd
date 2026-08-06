@@ -31,6 +31,7 @@ void main() {
     'assets/data/editorial_questions.json',
     'assets/data/community_questions.json',
     'assets/data/sentence_building_questions.json',
+    'assets/data/expansion_2026_08_questions.json',
   ];
 
   const fields = [

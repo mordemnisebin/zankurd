@@ -54,6 +54,7 @@ void main() {
       'community': fromJson('assets/data/community_questions.json'),
       'editorial': fromJson('assets/data/editorial_questions.json'),
       'sentence': fromJson('assets/data/sentence_building_questions.json'),
+      'expansion': fromJson('assets/data/expansion_2026_08_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -70,19 +71,25 @@ void main() {
     });
   });
 
-  test('runtime yükleyici aynı sıra ve kapsamla beş kaynağı birleştiriyor', () {
-    final expected = [
-      ...curatedQuestionBank,
-      ...fromJson('assets/data/sentence_building_questions.json'),
-      ...fromJson('assets/data/community_questions.json'),
-      ...fromJson('assets/data/editorial_questions.json'),
-      ...fromJson('assets/data/offline_questions.json'),
-    ];
+  test(
+    'runtime yükleyici aynı sıra ve kapsamla altı kaynağı birleştiriyor',
+    () {
+      final expected = [
+        ...curatedQuestionBank,
+        ...fromJson('assets/data/sentence_building_questions.json'),
+        ...fromJson('assets/data/community_questions.json'),
+        ...fromJson('assets/data/editorial_questions.json'),
+        ...fromJson('assets/data/offline_questions.json'),
+        // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
+        // aynı id birden çok bankada varsa SONRAKİ kazanır.
+        ...fromJson('assets/data/expansion_2026_08_questions.json'),
+      ];
 
-    final runtime = QuestionBankLoader.instance.allQuestions;
-    expect(runtime, hasLength(expected.length));
-    expect(runtime.map((q) => q.id), equals(expected.map((q) => q.id)));
-  });
+      final runtime = QuestionBankLoader.instance.allQuestions;
+      expect(runtime, hasLength(expected.length));
+      expect(runtime.map((q) => q.id), equals(expected.map((q) => q.id)));
+    },
+  );
 
   test('hiçbir kaynakta sorulan terim şık olarak durmuyor', () {
     final quoted = RegExp(r'[«\x27"]([^«»\x27"]{2,60})[»\x27"]');
