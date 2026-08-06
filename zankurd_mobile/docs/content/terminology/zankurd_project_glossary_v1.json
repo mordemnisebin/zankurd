@@ -273,13 +273,26 @@
       "domain": "physics",
       "projectPreferredKurmanji": "elektrîk",
       "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
+      "partOfSpeech": "noun (f)",
       "definitionKu": null,
       "definitionTr": null,
-      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
-      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
-      "allowedSenses": [],
-      "evidenceChain": [],
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "electricity (noun)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/elektr%C3%AEk",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, noun, feminine: 'electricity'.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
       "corpusAttestations": [
         "offline_tf_cog_0062",
         "offline_tf_cog_0063",
@@ -291,11 +304,11 @@
       "corpusAttestationCount": 31,
       "spellingDecision": "Corpus yazımı `elektrîk`.",
       "dialectNotes": null,
-      "ambiguityNotes": "girdi okunmadı. Corpus (Seviye 5) tek başına yeterli değil.",
-      "approvedForQuestionAuthoring": false,
+      "ambiguityNotes": "YALNIZ isim 'electricity' anlamı açık. 'electric' sıfatı ve 'electrical' alan sıfatı AÇILMADI; girdi yalnız isim veriyor. Corpus'ta 25 tutarlı kullanım ikinci kanıt katmanıdır.",
+      "approvedForQuestionAuthoring": true,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "0a5821363238a6e2"
+      "recordHash": "413b2c09f264a622"
     },
     {
       "conceptId": "ku_tech_sifre_password",

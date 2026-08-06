@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "createdDate": "2026-08-06",
+  "note": "Bu paket bir İNSAN/PROJE EDİTÖRÜ kararı içindir. reviewerDecision alanları bilerek boştur. Opus bu terimleri kendi başına açmadı ve açmayacak.",
+  "humanReviewStatement": "Hiçbir kayıt insan tarafından incelenmedi.",
+  "concepts": [
+    {
+      "conceptId": "ku_tech_server",
+      "EnglishConcept": "server",
+      "TurkishConcept": "Sunucu",
+      "searchedSources": [
+        "en.wiktionary.org",
+        "alan-sınırlı arama"
+      ],
+      "candidateKurmanjiForms": [],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "network/web/software/device anlamları ayrışmalı; MDN'nin en zengin olguları buna bağlı.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_client",
+      "EnglishConcept": "client",
+      "TurkishConcept": "İstemci",
+      "searchedSources": [
+        "en.wiktionary.org",
+        "alan-sınırlı arama"
+      ],
+      "candidateKurmanjiForms": [],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "ticari 'müşteri' anlamı ağ bağlamına taşınmamalı.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_browser",
+      "EnglishConcept": "browser",
+      "TurkishConcept": "Tarayıcı",
+      "searchedSources": [
+        "en.wiktionary.org",
+        "alan-sınırlı arama"
+      ],
+      "candidateKurmanjiForms": [],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "web browser / browsing fiili / file browser ayrışmalı.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_internet",
+      "EnglishConcept": "internet",
+      "TurkishConcept": "İnternet",
+      "searchedSources": [
+        "en.wiktionary.org (404)"
+      ],
+      "candidateKurmanjiForms": [
+        "înternet"
+      ],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "corpus'ta 17 kullanım var; sözlük girdisi yok. Internet/web/network ayrışmalı.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_dane",
+      "EnglishConcept": "data",
+      "TurkishConcept": "Veri",
+      "searchedSources": [
+        "en.wiktionary.org (Kurmancî bölümü yok)"
+      ],
+      "candidateKurmanjiForms": [
+        "dane"
+      ],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "corpus'ta 34 kullanım var; sözlük girdisi yok. data/datum/information ayrışmalı.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_nermalav",
+      "EnglishConcept": "software",
+      "TurkishConcept": "Yazılım",
+      "searchedSources": [
+        "en.wiktionary.org (404)"
+      ],
+      "candidateKurmanjiForms": [
+        "nermalav"
+      ],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "corpus'ta 14 kullanım var; sözlük girdisi yok.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_sepan",
+      "EnglishConcept": "application",
+      "TurkishConcept": "Uygulama",
+      "searchedSources": [
+        "en.wiktionary.org"
+      ],
+      "candidateKurmanjiForms": [
+        "sepan"
+      ],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "isim/fiil ayrımı ve implementation anlamı çözülmeli.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_sifre_password",
+      "EnglishConcept": "password",
+      "TurkishConcept": "Parola",
+      "searchedSources": [
+        "corpus"
+      ],
+      "candidateKurmanjiForms": [
+        "şîfre"
+      ],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "password/cipher/encryption/code ayrışmalı.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    },
+    {
+      "conceptId": "ku_tech_tor_network",
+      "EnglishConcept": "computer network",
+      "TurkishConcept": "Bilgisayar ağı",
+      "searchedSources": [
+        "corpus"
+      ],
+      "candidateKurmanjiForms": [
+        "tor"
+      ],
+      "corpusEvidence": "aktif ZanKurd corpus'u (Seviye 5) — bkz. glossary corpusAttestations",
+      "publishedEvidence": null,
+      "unresolvedSenseQuestions": "genel 'ağ' anlamı + İngilizce 'Tor' özel adıyla karışma riski.",
+      "orthographyQuestions": "proje yazımı korunmalı mı, lexicon headword'ü mü esas alınmalı?",
+      "proposedProjectUsage": "kısıtlı anlamla, yalnız açıkça yazılan sense içinde",
+      "currentStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "requestedEditorialDecision": "Proje editörü bu terimi belirtilen kısıtlı anlamda kullanıma açıyor mu? Açarsa statü PROJECT_EDITOR_APPROVED_RESTRICTED_SENSE olur; bu 'dilbilimsel evrensel standart' anlamına GELMEZ.",
+      "reviewerDecision": null,
+      "reviewerNotes": null,
+      "decidedAt": null
+    }
+  ]
+}

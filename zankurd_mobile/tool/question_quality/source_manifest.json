@@ -1664,6 +1664,48 @@
         "correctAnswer": "sourceReference",
         "category": "riskClass"
       }
+    },
+    {
+      "id": "technology_human_review_packet",
+      "description": "Terminology / yield decision record",
+      "path": "docs/content/terminology/technology_human_review_packet_2026_08.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_registry",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Decision record; contains no questions.",
+      "columns": {
+        "id": "conceptId",
+        "prompt": "EnglishConcept",
+        "options": "candidateKurmanjiForms",
+        "correctAnswer": "currentStatus",
+        "category": "category"
+      }
+    },
+    {
+      "id": "category_yield_assessment",
+      "description": "Terminology / yield decision record",
+      "path": "docs/content/source_first_expansion_2026_08/category_yield_assessment.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_registry",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Decision record; contains no questions.",
+      "columns": {
+        "id": "conceptId",
+        "prompt": "EnglishConcept",
+        "options": "candidateKurmanjiForms",
+        "correctAnswer": "currentStatus",
+        "category": "category"
+      }
     }
   ]
 }

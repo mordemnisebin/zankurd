@@ -1,5 +1,5 @@
 {
-  "pilotStatus": "INCOMPLETE_BELOW_MINIMUM",
+  "pilotStatus": "DEFERRED_TERMINOLOGY_COVERAGE",
   "minimumRequired": 8,
   "produced": 4,
   "addedToVerifiedPool": false,
@@ -65,5 +65,8 @@
     }
   ],
   "lessonRecorded": "Terminoloji sözleşmesini kendi batch'ime uygulayınca 5 sorunun 3'ü düştü. İkisinde ihlal ÇELDİRİCİDEYDİ — soru kökü ve doğru cevap temizdi. Daha önce self-labelled distractor kusurunda aynı ders çıkmıştı: kural yalnız baktığı kanalı korur. Terminoloji taraması artık promptKu + answersKu + explanationKu'nun tamamını kapsıyor.",
-  "serverClientBrowserOutcome": "server/client/browser için erişilebilir kaynaklarda Kurmancî karşılık BULUNAMADI (Wiktionary ve arama). Üçü de bloke kaldı; MDN'nin en zengin olguları bu yüzden hâlâ kilitli."
+  "serverClientBrowserOutcome": "server/client/browser için erişilebilir kaynaklarda Kurmancî karşılık BULUNAMADI (Wiktionary ve arama). Üçü de bloke kaldı; MDN'nin en zengin olguları bu yüzden hâlâ kilitli.",
+  "terminologySprintResult": "5 kavramdan YALNIZ 1'i açıldı (elektrîk: Wiktionary Northern Kurdish, dişil isim, 'electricity' — doğrudan okundu). Eşik 2 idi. `dane` için Wiktionary'de Kurmancî bölümü YOK; `înternet` 404. server/client/browser aramaları §3 gereği tekrarlanmadı.",
+  "closureReason": "§6: iki yeni terim açılamadı. Minimum 8 eşiği DÜŞÜRÜLMEDİ, dört soru havuza alınmadı, aynı arama yeni turda tekrarlanmayacak. Teknolojî alanı DEFERRED_TERMINOLOGY_COVERAGE olarak kapatıldı.",
+  "humanReviewPacket": "docs/content/terminology/technology_human_review_packet_2026_08.json"
 }
