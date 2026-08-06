@@ -1475,6 +1475,27 @@
         "correctAnswer": "correctAnswer",
         "category": "category"
       }
+    },
+    {
+      "id": "source_first_pack_usgs_water_cycle",
+      "description": "Source-first claim pack (USGS water cycle)",
+      "path": "docs/content/source_first_expansion_2026_08/pack_usgs_water_cycle.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_packs",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Claim pack: sourced facts awaiting authoring. Contains no questions.",
+      "columns": {
+        "id": "claimId",
+        "prompt": "exactSupportingFact",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "claimType"
+      }
     }
   ]
 }

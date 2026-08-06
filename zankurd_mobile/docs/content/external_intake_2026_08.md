@@ -579,3 +579,62 @@ Risk-C değildi; kalan 12 gerçek kavram sorusu tek bir kaynak turunu haklı
 3. 10 TR/KU exonim tutarsızlığını endonime çek.
 4. Risk-B 70 kayıt için gazetteer/harita kurumu kaynağı aç.
 5. Sonra DeepSeek Çand/Muzîk, Grok'un kalan teknik adayları, en son Grok Dîrok.
+
+## Tur 9 (2026-08-06) — dış intake kapandı, kaynak-önce üretime geçiş
+
+Dış aday kurtarma çalışması kapatıldı. Kararlar dondu; bu havuzlarda yeni
+arama, toplu yeniden yazım veya kurtarma yapılmayacak.
+
+    doğrulanmış ortak havuz            13  (Sînema 11, Teknolojî 2)
+    Grok self-labelled distractor     296  REJECTED_LOW_QUALITY
+    Grok iç slug / kayıt numarası      19  REJECTED_INVALID_SCHEMA
+    dairesel coğrafya soruları          7  REJECTED_LOW_QUALITY
+    devlet-merkezli coğrafya           62  QUARANTINED_POLITICAL_AMBIGUITY
+    kaynaksız factual kayıtlar        ...  QUARANTINED_UNVERIFIABLE
+    10 endonim + 62 bölge bulgusu           manifestte, runtime dışında
+
+### İki yapısal engel
+
+**1. Kol A'nın kategori evi yok.** Kendi içinde çözülebilir mantık/akıl
+yürütme içeriği için runtime'da kategori bulunmuyor. Kategoriler sabit:
+Ziman, Cografya, Muzîk, Çand, Dîrok, Edebiyat, Siyaset, Paradigma,
+Teknolojî, Sînema. `Paradigma` genel mantık değil; jineolojî, demokratik
+konfederalizm ve toplumsal ekoloji içeriği taşıyor. Mantık sorusunu oraya
+koymak kategoriyi bozardı; yeni kategori açmak ise UI/kategori sistemi
+değişikliği demek ve kapsam dışı.
+
+**2. Kurmancî bilim terminolojisi doğrulanmadı.** USGS su döngüsü paketi
+hazır ve kaynaklı, ama 2050 soruluk korpusta su döngüsü sözlüğü YOK:
+`hilm` yalnız bir kez ve türbin bağlamında geçiyor ("Hilma bin zextê"),
+kalan eşleşmeler alt-dizge yanlış pozitifi. Buharlaşma, yoğuşma, sızma ve
+yüzey akışı için Kurmancî karşılıkları uydurmak gerekirdi.
+
+Uydurmadım. Bu, reddettiğim DeepSeek atıf pratiğinin dil tarafındaki
+karşılığı olurdu: doğrulanmamış bir şeyi doğrulanmış gibi sunmak. Kurmancî
+bir uygulamada uydurulmuş bilimsel terim, yanlış kaynaktan daha zararlıdır —
+kullanıcı onu doğru sanıp öğrenir.
+
+### Üretilen
+
+`docs/content/source_first_expansion_2026_08/pack_usgs_water_cycle.json` —
+USGS Water Science School sayfası doğrudan açıldı (FETCHED_DIRECT, risk C),
+beş açık olgu claim olarak çıkarıldı.
+
+Pakette kayıtlı bir ayrım daha var: sayfa süreçleri anlatıyor ama terimleri
+resmî olarak TANIMLAMIYOR. Bu yüzden "buharlaşma nedir" tipi tanım soruları
+bu paketten üretilemez; yalnız sayfada açıkça yazan ifadeler claim sayıldı.
+
+Soru üretilmedi: claim'ler `READY_FOR_AUTHORING`, engel `authoringBlocker`
+alanında kayıtlı.
+
+### Kesin devam noktası
+
+1. Kurmancî bilim terminolojisini doğrula (proje glossary'si, akademik
+   Kurmancî sözlük, anadili konuşur editör). Bu tek adım Kol B'nin tamamını
+   açar.
+2. Kol A için karar gerekiyor: mantık içeriği ya bir kategoriye gerçekten
+   uyacak biçimde çerçevelenmeli (ör. Ziman içinde dil-mantığı) ya da
+   kategori sistemi kararı kullanıcıya bırakılmalı.
+3. Kol C (Kürdistan coğrafyası) Risk-A: iki bağımsız akademik kaynak
+   bulunmadan tek soru üretilmeyecek.
+4. Ortak havuz 13; eşik 100. Aktivasyon yok.
