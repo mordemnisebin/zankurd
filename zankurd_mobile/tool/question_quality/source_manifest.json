@@ -1706,6 +1706,27 @@
         "correctAnswer": "currentStatus",
         "category": "category"
       }
+    },
+    {
+      "id": "ziman_feasibility_assessment",
+      "description": "Ziman feasibility decision record",
+      "path": "docs/content/source_first_expansion_2026_08/ziman_feasibility_assessment.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_packs",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Feasibility decision record; contains no questions.",
+      "columns": {
+        "id": "assessedHead",
+        "prompt": "rationale",
+        "options": "usableRuntimePatterns",
+        "correctAnswer": "recommendation",
+        "category": "fallbackCategory"
+      }
     }
   ]
 }
