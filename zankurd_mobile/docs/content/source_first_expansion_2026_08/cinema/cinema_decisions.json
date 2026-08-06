@@ -1,8 +1,8 @@
 {
-  "batchStatus": "INCOMPLETE_BELOW_MINIMUM",
+  "batchStatus": "COMPLETE",
   "minimumRequired": 12,
-  "produced": 8,
-  "addedToVerifiedPool": false,
+  "produced": 12,
+  "addedToVerifiedPool": true,
   "whyBelowMinimum": "Bağlam bütçesi. La Biennale tarihçe sayfası tek başına 6 ayrı claim verdi (yüksek kaldıraç); Cannes resmî tarihçe sayfası 403 döndürdü ve o kaynak ailesi açılamadı. 8/12.",
   "kurdishCinemaContent": "Bu turda Kürt sineması / Yılmaz Güney sorusu ÜRETİLMEDİ. §9 Risk-A için doğrudan güçlü akademik kaynak ya da iki bağımsız kaynak istiyor; bu turda hiçbiri açılmadı. Kaynaksız içerik üretilmedi, eksiklik burada kayıtlı. Plan korunuyor: plans/yilmaz_guney_kurdish_cinema_content_plan.md",
   "notRecycledFromDeepSeek": "İki soru da doğrudan Columbia sayfalarından üretildi; eski DeepSeek adaylarının düzeltilmiş sürümü DEĞİL. DeepSeek Sînema kararları donduruldu.",
@@ -14,8 +14,14 @@
     "sf_cin_0005",
     "sf_cin_0006",
     "sf_cin_0007",
-    "sf_cin_0008"
+    "sf_cin_0008",
+    "sf_cin_0009",
+    "sf_cin_0010",
+    "sf_cin_0011",
+    "sf_cin_0012"
   ],
   "reviewer": "opus-5",
-  "timestamp": "2026-08-06"
+  "timestamp": "2026-08-06",
+  "poolOrigin": "source_first_verified",
+  "kurdishCinemaNote": "Bu turda da Kürt sineması/Yılmaz Güney sorusu ÜRETİLMEDİ. Risk-A doğrudan akademik/arşiv kaynağı açılmadı; kota sahte biçimde doldurulmadı."
 }

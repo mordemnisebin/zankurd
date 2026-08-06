@@ -100,11 +100,57 @@ def main() -> int:
             metrics[q.get("category")] += 1
             metrics[f"level:{r.get('sourceVerificationLevel')}"] += 1
 
+    # ── source-first kayıtlar ────────────────────────────────────────────
+    # Dış aday havuzundan AYRI bir köken. Aynı havuzda sayılırlar ama
+    # `origin` alanı ikisini ayırır: external_verified kaynağı bir dış
+    # modeldir, source_first_verified'ın kaynağı doğrudan açılmış kurumsal
+    # sayfadır. Ayrımı kaybetmek, iki farklı kanıt rejimini tek sayıya
+    # eritirdi.
+    SF = "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json"
+    if os.path.exists(SF):
+        for q in json.load(open(SF, encoding="utf-8")):
+            h = hashlib.sha256(json.dumps(
+                {k: q.get(k) for k in ("promptKu", "promptTr", "answersKu",
+                                       "answersTr", "correctIndex")},
+                ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:16]
+            questions.append({
+                "id": q["questionId"], "category": q["category"],
+                "subcategory": q.get("subcategory"),
+                "prompt": q["promptKu"], "promptTr": q["promptTr"],
+                "answers": q["answersKu"], "answersTr": q["answersTr"],
+                "correctAnswer": q["answersKu"][q["correctIndex"]],
+                "correctAnswerTr": q["answersTr"][q["correctIndex"]],
+                "explanationKu": q["explanationKu"],
+                "explanationTr": q["explanationTr"],
+                "difficulty": q.get("difficulty", 2),
+                "type": q.get("questionType", "multipleChoice")})
+            provenance.append({
+                "originalQuestionId": q["questionId"], "sourcePool": "source_first",
+                "origin": "source_first_verified",
+                "sourceBranch": None, "sourceCommit": None,
+                "category": q["category"], "subcategory": q.get("subcategory"),
+                "verificationLevel": q["sourceAccessLevel"],
+                "sourceReference": q["sourceReference"],
+                "exactSupportingFact": q["exactSupportingFact"],
+                "verifiedAt": "2026-08-06", "reviewer": "opus-5",
+                "finalContentHash": h, "activationStatus": "STAGED_VERIFIED"})
+            decisions.append({"originalQuestionId": q["questionId"],
+                              "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+                              "OpusReviewReasons": ["doğrudan açılmış kurumsal sayfa"],
+                              "subcategoryOld": None, "subcategoryNew": None})
+            metrics[q["category"]] += 1
+            metrics["level:" + q["sourceAccessLevel"]] += 1
+            metrics["origin:source_first_verified"] += 1
+
     questions.sort(key=lambda x: x["id"])
     provenance.sort(key=lambda x: x["originalQuestionId"])
     decisions.sort(key=lambda x: x["originalQuestionId"])
     cat_metrics = {
         "totalStagedVerified": len(questions),
+        "externalVerifiedCount": sum(1 for p in provenance
+                                     if p.get("origin") != "source_first_verified"),
+        "sourceFirstVerifiedCount": sum(1 for p in provenance
+                                        if p.get("origin") == "source_first_verified"),
         "byCategory": {k: v for k, v in sorted(metrics.items())
                        if not k.startswith("level:")},
         "byVerificationLevel": {k[6:]: v for k, v in sorted(metrics.items())

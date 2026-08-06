@@ -1,0 +1,26 @@
+{
+  "sourcePackId": "pack_labiennale_institution",
+  "sourceTitle": "La Biennale di Venezia — History",
+  "institution": "La Biennale di Venezia",
+  "sourceReference": "https://www.labiennale.org/en/history",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "history"
+  ],
+  "copyrightNotes": "Kısa olgu ifadeleri; pasaj kopyalanmadı.",
+  "exactSourceStatements": [
+    "Established in 1895, La Biennale had an attendance of over 800,000 visitors",
+    "The history of the La Biennale di Venezia dates back from 1895, when the first International Art Exhibition was organized",
+    "In the 1930s new festivals were born: Music, Cinema, and Theatre",
+    "In 1980 the first International Architecture Exhibition took place",
+    "in 1999 Dance made its debut at La Biennale"
+  ],
+  "extractedClaimIds": [
+    "cin_bien_01",
+    "cin_bien_02",
+    "cin_bien_03",
+    "cin_bien_04"
+  ],
+  "sourceHash": "2513907e47184b0c"
+}

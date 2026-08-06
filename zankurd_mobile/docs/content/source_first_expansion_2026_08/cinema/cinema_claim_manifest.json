@@ -110,5 +110,61 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "1f2ff145c2103538"
+  },
+  {
+    "claimId": "cin_bien_01",
+    "sourcePackId": "pack_labiennale_institution",
+    "claimFamily": "institution_history",
+    "factualClaim": "La Biennale 1895'te kuruldu.",
+    "exactSupportingFact": "Established in 1895, La Biennale",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "61868905856ff2ac"
+  },
+  {
+    "claimId": "cin_bien_02",
+    "sourcePackId": "pack_labiennale_institution",
+    "claimFamily": "institution_history",
+    "factualClaim": "İlk Uluslararası Sanat Sergisi 1895'te düzenlendi.",
+    "exactSupportingFact": "when the first International Art Exhibition was organized",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "2d23a6431073afa2"
+  },
+  {
+    "claimId": "cin_bien_03",
+    "sourcePackId": "pack_labiennale_institution",
+    "claimFamily": "institution_history",
+    "factualClaim": "İlk Uluslararası Mimarlık Sergisi 1980'de yapıldı.",
+    "exactSupportingFact": "In 1980 the first International Architecture Exhibition took place",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "ca80639622295050"
+  },
+  {
+    "claimId": "cin_bien_04",
+    "sourcePackId": "pack_labiennale_institution",
+    "claimFamily": "institution_history",
+    "factualClaim": "Dans 1999'da La Biennale'ye katıldı.",
+    "exactSupportingFact": "in 1999 Dance made its debut at La Biennale",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "5b2b1b83c5eadc54"
   }
 ]

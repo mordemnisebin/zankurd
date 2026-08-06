@@ -323,5 +323,305 @@
     "subcategory": "Teknolojiya Bingehîn",
     "difficulty": 3,
     "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0001",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?",
+    "promptTr": "Film dili sözlüğüne göre montajda anlam esas olarak nereden doğar?",
+    "answers": [
+      "Ji dirêjahiya giştî ya fîlmê",
+      "Ji têkiliya di navbera dîmenan de",
+      "Ji hevahengiya rengên kincan",
+      "Ji şêwaza kesane ya derhêner"
+    ],
+    "answersTr": [
+      "Filmin toplam uzunluğundan",
+      "Sahneler arasındaki ilişkiden",
+      "Kostümlerin renk uyumundan",
+      "Yönetmenin kişisel tarzından"
+    ],
+    "correctAnswer": "Ji têkiliya di navbera dîmenan de",
+    "correctAnswerTr": "Sahneler arasındaki ilişkiden",
+    "explanationKu": "Di montajê de dîmenek tenê bi têkiliya xwe ya bi dîmenekî din re wateyê digire.",
+    "explanationTr": "Montajda bir sahne, anlamını ancak başka bir sahneyle kurduğu ilişkiden alır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0002",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Di teknîka «deep focus» de çi tê bidestxistin?",
+    "promptTr": "«Deep focus» tekniğinde ne elde edilir?",
+    "answers": [
+      "Tenê paşxaneya dûr zelal dibe",
+      "Rengên dîmenê hemû winda dibin",
+      "Leza dîmenê pir hêdî dibe",
+      "Nêzîk û dûr bi hev re zelal dibin"
+    ],
+    "answersTr": [
+      "Yalnız uzak arka plan netleşir",
+      "Görüntünün renkleri tümden kaybolur",
+      "Görüntünün hızı belirgin yavaşlar",
+      "Yakın ve uzak birlikte net olur"
+    ],
+    "correctAnswer": "Nêzîk û dûr bi hev re zelal dibin",
+    "correctAnswerTr": "Yakın ve uzak birlikte net olur",
+    "explanationKu": "Deep focus de cîhên nêzîk û yên dûr di heman demê de zelal têne nîşandan.",
+    "explanationTr": "Deep focus'ta yakın ve uzak düzlemler aynı anda net gösterilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0003",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?",
+    "promptTr": "Venedik Film Festivali hangi yılda kuruldu?",
+    "answers": [
+      "1932",
+      "1946",
+      "1951",
+      "1955"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1951",
+      "1955"
+    ],
+    "correctAnswer": "1932",
+    "correctAnswerTr": "1932",
+    "explanationKu": "Pêşangeha yekem a hunera sînemayê ya Venedîkê di sala 1932an de dest pê kir.",
+    "explanationTr": "Venedik'in ilk sinema sanatı sergisi 1932 yılında başladı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0004",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Xelata «Şêrê Zêrîn» ji bo fîlmê herî baş di kîjan salê de hate danîn?",
+    "promptTr": "«Altın Aslan» ödülü en iyi film için hangi yılda konuldu?",
+    "answers": [
+      "1932",
+      "1936",
+      "1949",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1936",
+      "1949",
+      "1968"
+    ],
+    "correctAnswer": "1949",
+    "correctAnswerTr": "1949",
+    "explanationKu": "Şêrê Zêrîn ê Aziz Marko di sala 1949an de ji bo fîlmê herî baş hate danîn.",
+    "explanationTr": "Aziz Marko'nun Altın Aslanı, en iyi film için 1949 yılında konuldu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0005",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê yekem ê ku di dîroka Festîvala Venedîkê de hate nîşandan kîjan e?",
+    "promptTr": "Venedik Festivali tarihinde gösterilen ilk film hangisidir?",
+    "answers": [
+      "Dr. Jekyll and Mr. Hyde",
+      "The Cabinet of Dr. Caligari",
+      "The Birth of a Nation",
+      "Battleship Potemkin"
+    ],
+    "answersTr": [
+      "Dr. Jekyll and Mr. Hyde",
+      "The Cabinet of Dr. Caligari",
+      "The Birth of a Nation",
+      "Battleship Potemkin"
+    ],
+    "correctAnswer": "Dr. Jekyll and Mr. Hyde",
+    "correctAnswerTr": "Dr. Jekyll and Mr. Hyde",
+    "explanationKu": "Fîlmê yekem ê festîvalê Dr. Jekyll and Mr. Hyde a Rouben Mamoulian bû.",
+    "explanationTr": "Festivalin ilk filmi Rouben Mamoulian'ın Dr. Jekyll and Mr. Hyde'ıydı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0006",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?",
+    "promptTr": "Resmî yarışma ilk kez hangi yılda festivale girdi?",
+    "answers": [
+      "1932",
+      "1934",
+      "1949",
+      "1937"
+    ],
+    "answersTr": [
+      "1932",
+      "1934",
+      "1949",
+      "1937"
+    ],
+    "correctAnswer": "1934",
+    "correctAnswerTr": "1934",
+    "explanationKu": "Festîvala duyem a 1934an cara yekem pêşbazî lê zêde kir.",
+    "explanationTr": "1934'teki ikinci festival, ilk kez bir yarışma içeriyordu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0007",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?",
+    "promptTr": "Uluslararası jüri ilk kez hangi yılda atandı?",
+    "answers": [
+      "1934",
+      "1932",
+      "1949",
+      "1936"
+    ],
+    "answersTr": [
+      "1934",
+      "1932",
+      "1949",
+      "1936"
+    ],
+    "correctAnswer": "1936",
+    "correctAnswerTr": "1936",
+    "explanationKu": "Di sala 1936an de cara yekem jûriyeke navneteweyî hate destnîşankirin.",
+    "explanationTr": "1936 yılında ilk kez uluslararası bir jüri atandı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0008",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Edîsyona yekem li ku hate lidarxistin?",
+    "promptTr": "İlk edisyon nerede düzenlendi?",
+    "answers": [
+      "Li salona Palazzo del Cinema",
+      "Li terasa Hotel Excelsior",
+      "Li meydana Piazza San Marco",
+      "Li sahneya Teatro La Fenice"
+    ],
+    "answersTr": [
+      "Palazzo del Cinema salonunda",
+      "Hotel Excelsior terasında",
+      "Piazza San Marco meydanında",
+      "Teatro La Fenice sahnesinde"
+    ],
+    "correctAnswer": "Li terasa Hotel Excelsior",
+    "correctAnswerTr": "Hotel Excelsior terasında",
+    "explanationKu": "Edîsyona yekem li terasa Hotel Excelsior a li Lido ya Venedîkê hate lidarxistin.",
+    "explanationTr": "İlk edisyon, Venedik Lido'daki Hotel Excelsior'un terasında düzenlendi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0009",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "La Biennale di Venezia di kîjan salê de hate damezrandin?",
+    "promptTr": "La Biennale di Venezia hangi yılda kuruldu?",
+    "answers": [
+      "1895",
+      "1932",
+      "1949",
+      "1980"
+    ],
+    "answersTr": [
+      "1895",
+      "1932",
+      "1949",
+      "1980"
+    ],
+    "correctAnswer": "1895",
+    "correctAnswerTr": "1895",
+    "explanationKu": "La Biennale di Venezia di sala 1895an de hate damezrandin.",
+    "explanationTr": "La Biennale di Venezia 1895 yılında kuruldu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0010",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Pêşangeha Hunerî ya Navneteweyî ya yekem di kîjan salê de hate lidarxistin?",
+    "promptTr": "İlk Uluslararası Sanat Sergisi hangi yılda düzenlendi?",
+    "answers": [
+      "1932",
+      "1895",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1932",
+      "1895",
+      "1980",
+      "1999"
+    ],
+    "correctAnswer": "1895",
+    "correctAnswerTr": "1895",
+    "explanationKu": "Pêşangeha Hunerî ya Navneteweyî ya yekem di sala 1895an de hate lidarxistin.",
+    "explanationTr": "İlk Uluslararası Sanat Sergisi 1895 yılında düzenlendi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0011",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di kîjan salê de pêk hat?",
+    "promptTr": "İlk Uluslararası Mimarlık Sergisi hangi yılda gerçekleşti?",
+    "answers": [
+      "1949",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1949",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "correctAnswer": "1980",
+    "correctAnswerTr": "1980",
+    "explanationKu": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di sala 1980yî de pêk hat.",
+    "explanationTr": "İlk Uluslararası Mimarlık Sergisi 1980 yılında gerçekleşti.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0012",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Dans di kîjan salê de beşdarî La Biennale bû?",
+    "promptTr": "Dans hangi yılda La Biennale'ye katıldı?",
+    "answers": [
+      "1895",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1895",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "correctAnswer": "1999",
+    "correctAnswerTr": "1999",
+    "explanationKu": "Dans di sala 1999an de beşdarî La Biennale bû.",
+    "explanationTr": "Dans 1999 yılında La Biennale'ye katıldı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
   }
 ]

@@ -15,16 +15,16 @@
     "promptKu": "Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?",
     "promptTr": "Film dili sözlüğüne göre montajda anlam esas olarak nereden doğar?",
     "answersKu": [
-      "Ji dirêjahiya fîlmê",
+      "Ji dirêjahiya giştî ya fîlmê",
       "Ji têkiliya di navbera dîmenan de",
-      "Ji rengê kostuman",
-      "Ji navê derhêner"
+      "Ji hevahengiya rengên kincan",
+      "Ji şêwaza kesane ya derhêner"
     ],
     "answersTr": [
-      "Filmin uzunluğundan",
+      "Filmin toplam uzunluğundan",
       "Sahneler arasındaki ilişkiden",
-      "Kostümlerin renginden",
-      "Yönetmenin adından"
+      "Kostümlerin renk uyumundan",
+      "Yönetmenin kişisel tarzından"
     ],
     "correctIndex": 1,
     "explanationKu": "Di montajê de dîmenek tenê bi têkiliya xwe ya bi dîmenekî din re wateyê digire.",
@@ -47,7 +47,7 @@
     "distractorReview": {
       "reviewer": "opus-5-distractor",
       "result": "PASS",
-      "note": "hepsi aynı kavramsal sınıf"
+      "note": "hepsi aynı kavramsal sınıf ; çeldirici uzunlukları doğru cevaba yaklaştırıldı"
     },
     "circularityReview": {
       "reviewer": "opus-5-adversarial",
@@ -64,7 +64,12 @@
       "result": "PASS",
       "note": "external 11 ve DeepSeek 125 ile çakışma yok"
     },
-    "finalContentHash": "31f2a250877d8f81"
+    "finalContentHash": "29cbd4deb5261ae8",
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "FIXED",
+      "note": "tek başına en uzun olma sinyali giderildi; seçenekler aynı ayrıntı düzeyinde"
+    }
   },
   {
     "questionId": "sf_cin_0002",
@@ -82,15 +87,15 @@
     "promptKu": "Di teknîka «deep focus» de çi tê bidestxistin?",
     "promptTr": "«Deep focus» tekniğinde ne elde edilir?",
     "answersKu": [
-      "Tenê paşxane zelal dibe",
-      "Reng winda dibe",
-      "Dîmen hêdî dibe",
+      "Tenê paşxaneya dûr zelal dibe",
+      "Rengên dîmenê hemû winda dibin",
+      "Leza dîmenê pir hêdî dibe",
       "Nêzîk û dûr bi hev re zelal dibin"
     ],
     "answersTr": [
-      "Yalnız arka plan netleşir",
-      "Renk kaybolur",
-      "Görüntü yavaşlar",
+      "Yalnız uzak arka plan netleşir",
+      "Görüntünün renkleri tümden kaybolur",
+      "Görüntünün hızı belirgin yavaşlar",
       "Yakın ve uzak birlikte net olur"
     ],
     "correctIndex": 3,
@@ -114,7 +119,7 @@
     "distractorReview": {
       "reviewer": "opus-5-distractor",
       "result": "PASS",
-      "note": "hepsi aynı kavramsal sınıf"
+      "note": "hepsi aynı kavramsal sınıf ; çeldirici uzunlukları doğru cevaba yaklaştırıldı"
     },
     "circularityReview": {
       "reviewer": "opus-5-adversarial",
@@ -131,7 +136,12 @@
       "result": "PASS",
       "note": "external 11 ve DeepSeek 125 ile çakışma yok"
     },
-    "finalContentHash": "29d9c585b57da63e"
+    "finalContentHash": "8fd612e8634753b9",
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "FIXED",
+      "note": "tek başına en uzun olma sinyali giderildi; seçenekler aynı ayrıntı düzeyinde"
+    }
   },
   {
     "questionId": "sf_cin_0003",
@@ -284,15 +294,15 @@
     "promptTr": "Venedik Festivali tarihinde gösterilen ilk film hangisidir?",
     "answersKu": [
       "Dr. Jekyll and Mr. Hyde",
-      "Citizen Kane",
-      "Metropolis",
-      "Nosferatu"
+      "The Cabinet of Dr. Caligari",
+      "The Birth of a Nation",
+      "Battleship Potemkin"
     ],
     "answersTr": [
       "Dr. Jekyll and Mr. Hyde",
-      "Citizen Kane",
-      "Metropolis",
-      "Nosferatu"
+      "The Cabinet of Dr. Caligari",
+      "The Birth of a Nation",
+      "Battleship Potemkin"
     ],
     "correctIndex": 0,
     "explanationKu": "Fîlmê yekem ê festîvalê Dr. Jekyll and Mr. Hyde a Rouben Mamoulian bû.",
@@ -315,7 +325,7 @@
     "distractorReview": {
       "reviewer": "opus-5-distractor",
       "result": "PASS",
-      "note": "seçenekler tek kavramsal sınıfta"
+      "note": "seçenekler tek kavramsal sınıfta ; çeldirici uzunlukları doğru cevaba yaklaştırıldı"
     },
     "circularityReview": {
       "reviewer": "opus-5-adversarial",
@@ -332,7 +342,12 @@
       "result": "PASS",
       "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
     },
-    "finalContentHash": "a7f31ca4adf5c26b"
+    "finalContentHash": "955b70a02485bd91",
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "FIXED",
+      "note": "tek başına en uzun olma sinyali giderildi; seçenekler aynı ayrıntı düzeyinde"
+    }
   },
   {
     "questionId": "sf_cin_0006",
@@ -484,16 +499,16 @@
     "promptKu": "Edîsyona yekem li ku hate lidarxistin?",
     "promptTr": "İlk edisyon nerede düzenlendi?",
     "answersKu": [
-      "Li Palazzo del Cinema",
+      "Li salona Palazzo del Cinema",
       "Li terasa Hotel Excelsior",
-      "Li Piazza San Marco",
-      "Li Teatro La Fenice"
+      "Li meydana Piazza San Marco",
+      "Li sahneya Teatro La Fenice"
     ],
     "answersTr": [
-      "Palazzo del Cinema'da",
+      "Palazzo del Cinema salonunda",
       "Hotel Excelsior terasında",
-      "Piazza San Marco'da",
-      "Teatro La Fenice'de"
+      "Piazza San Marco meydanında",
+      "Teatro La Fenice sahnesinde"
     ],
     "correctIndex": 1,
     "explanationKu": "Edîsyona yekem li terasa Hotel Excelsior a li Lido ya Venedîkê hate lidarxistin.",
@@ -516,7 +531,7 @@
     "distractorReview": {
       "reviewer": "opus-5-distractor",
       "result": "PASS",
-      "note": "seçenekler tek kavramsal sınıfta"
+      "note": "seçenekler tek kavramsal sınıfta ; çeldirici uzunlukları doğru cevaba yaklaştırıldı"
     },
     "circularityReview": {
       "reviewer": "opus-5-adversarial",
@@ -533,6 +548,299 @@
       "result": "PASS",
       "note": "external 11 Venedik sorusu yalnız 'en eski festival' olgusunu kullanıyor; bu claim'ler farklı"
     },
-    "finalContentHash": "3a7c65841cfef865"
+    "finalContentHash": "86f9d14f140b840d",
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "FIXED",
+      "note": "tek başına en uzun olma sinyali giderildi; seçenekler aynı ayrıntı düzeyinde"
+    }
+  },
+  {
+    "questionId": "sf_cin_0009",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_institution",
+    "claimId": "cin_bien_01",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "exactSupportingFact": "Established in 1895, La Biennale",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "La Biennale di Venezia di kîjan salê de hate damezrandin?",
+    "promptTr": "La Biennale di Venezia hangi yılda kuruldu?",
+    "answersKu": [
+      "1895",
+      "1932",
+      "1949",
+      "1980"
+    ],
+    "answersTr": [
+      "1895",
+      "1932",
+      "1949",
+      "1980"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "La Biennale di Venezia di sala 1895an de hate damezrandin.",
+    "explanationTr": "La Biennale di Venezia 1895 yılında kuruldu.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + yerleşik sözcükler"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "yıl seçenekleri eşit uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "1932 festival claim'lerinden farklı: kurum tarihi"
+    },
+    "finalContentHash": "c04e85e0c997ab84"
+  },
+  {
+    "questionId": "sf_cin_0010",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_institution",
+    "claimId": "cin_bien_02",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "exactSupportingFact": "when the first International Art Exhibition was organized",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Pêşangeha Hunerî ya Navneteweyî ya yekem di kîjan salê de hate lidarxistin?",
+    "promptTr": "İlk Uluslararası Sanat Sergisi hangi yılda düzenlendi?",
+    "answersKu": [
+      "1932",
+      "1895",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1932",
+      "1895",
+      "1980",
+      "1999"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Pêşangeha Hunerî ya Navneteweyî ya yekem di sala 1895an de hate lidarxistin.",
+    "explanationTr": "İlk Uluslararası Sanat Sergisi 1895 yılında düzenlendi.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + yerleşik sözcükler"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "yıl seçenekleri eşit uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "1932 festival claim'lerinden farklı: kurum tarihi"
+    },
+    "finalContentHash": "3e22d63009b5d2db"
+  },
+  {
+    "questionId": "sf_cin_0011",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_institution",
+    "claimId": "cin_bien_03",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "exactSupportingFact": "In 1980 the first International Architecture Exhibition took place",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di kîjan salê de pêk hat?",
+    "promptTr": "İlk Uluslararası Mimarlık Sergisi hangi yılda gerçekleşti?",
+    "answersKu": [
+      "1949",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1949",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di sala 1980yî de pêk hat.",
+    "explanationTr": "İlk Uluslararası Mimarlık Sergisi 1980 yılında gerçekleşti.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + yerleşik sözcükler"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "yıl seçenekleri eşit uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "1932 festival claim'lerinden farklı: kurum tarihi"
+    },
+    "finalContentHash": "74ce1033cda92504"
+  },
+  {
+    "questionId": "sf_cin_0012",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_labiennale_institution",
+    "claimId": "cin_bien_04",
+    "sourceReference": "https://www.labiennale.org/en/history",
+    "exactSupportingFact": "in 1999 Dance made its debut at La Biennale",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Dans di kîjan salê de beşdarî La Biennale bû?",
+    "promptTr": "Dans hangi yılda La Biennale'ye katıldı?",
+    "answersKu": [
+      "1895",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1895",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Dans di sala 1999an de beşdarî La Biennale bû.",
+    "explanationTr": "Dans 1999 yılında La Biennale'ye katıldı.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kurumun kendi tarihçesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel ad + yerleşik sözcükler"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "yıl seçenekleri eşit uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "1932 festival claim'lerinden farklı: kurum tarihi"
+    },
+    "finalContentHash": "d02c7c4f8fdbb92c"
   }
 ]

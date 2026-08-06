@@ -1,5 +1,5 @@
 {
-  "produced": 8,
+  "produced": 12,
   "claimFamilies": {
     "film_language_term": 1,
     "film_technique": 1,
@@ -9,21 +9,42 @@
     "film_title": 1
   },
   "correctIndexDistribution": {
-    "1": 3,
-    "3": 2,
-    "0": 2,
-    "2": 1
+    "1": 4,
+    "3": 3,
+    "0": 3,
+    "2": 2
   },
-  "maxPositionSharePct": 37.5,
+  "maxPositionSharePct": 33.3,
   "strictLongestCorrect": 4,
   "strictShortestCorrect": 0,
   "lengthBiasNote": "İki ölçüm ayrı: naif `==max` beraberlikte de doğru döner ve yıl sorularında bütün seçenekler 4 karakter olduğu için 8/8 diyordu — artefakt. KESİN ölçüm (tek başına en uzun) 4/8 verdi. Bu bir artefakt DEĞİL: dört kavramsal soruda (montage, deep focus, ilk film, mekân) doğru seçenek tek başına en uzun. n=8'de kesin sonuç çıkmaz ama izlenmesi gereken gerçek bir eğilim; batch 12'ye çıkarılırken çeldiricilerin uzunluğu doğru seçeneğe yaklaştırılmalı.",
   "sourceAccessLevels": {
-    "FETCHED_DIRECT": 8
+    "FETCHED_DIRECT": 12
   },
   "kurdishCinemaCount": 0,
   "kurdishCinemaNote": "Bu turda da doğrudan akademik/arşiv kaynağı açılmadı; Risk-A kuralı gereği kaynaksız içerik üretilmedi. Cannes resmî tarihçe sayfası 403 verdi.",
-  "strictLongestCorrectPct": 50.0,
-  "lengthBiasStatus": "WATCH — n=8'de %50; 12'ye çıkarken düzeltilecek",
-  "commitMessageCorrection": "69cf024'ün gövdesinde bu oran sehven '1/8' yazıldı; doğru değer 4/8'dir. Commit yeniden yazılmadı; düzeltme burada ve takip eden commit'te."
+  "strictLongestCorrectPct": 8.3,
+  "lengthBiasStatus": "RESOLVED — strict %8.3 (üst sınır %33)",
+  "commitMessageCorrection": "69cf024'ün gövdesinde bu oran sehven '1/8' yazıldı; doğru değer 4/8'dir. Commit yeniden yazılmadı; düzeltme burada ve takip eden commit'te.",
+  "strictUniquelyLongestCorrect": 1,
+  "strictUniquelyShortestCorrect": 1,
+  "naiveMaxTieCorrect": 9,
+  "naiveNote": "9/12'nin çoğu yıl sorusu; bütün seçenekler 4 karakter, beraberlik artefaktı.",
+  "lengthFixApplied": [
+    "sf_cin_0001",
+    "sf_cin_0002",
+    "sf_cin_0005",
+    "sf_cin_0008"
+  ],
+  "kurdishCinemaVerifiedCount": 0,
+  "failedSources": [
+    {
+      "url": "festival-cannes.com/.../birth-of-a-festival",
+      "status": "FETCH_FAILED_403"
+    },
+    {
+      "url": "berlinale.de/en/about-us/history.html",
+      "status": "FETCH_FAILED_503"
+    }
+  ]
 }
