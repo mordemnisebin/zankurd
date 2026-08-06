@@ -5,7 +5,7 @@
   "notes": {
     "attributionRule": "Bir esere atıf ancak üç koşul birden sağlanırsa yazılır: (1) belirli baskı/eser gerçekten doğrulandı, (2) ilgili bilgi kaynağın erişilebilir bölümünde bulundu, (3) soru kaynağın desteklediği iddiayla uyumlu. Aksi hâlde kayıt QUARANTINED_UNVERIFIABLE olur.",
     "whyThisExists": "DeepSeek havuzundaki 80 kayıt Kreyenbroek & Allison, Izady ve Bordwell & Thompson'a atıf taşıyordu; aynı kayıtların provenance.method alanı ise 'independent-llm-authoring-from-reference-knowledge' diyordu. Kitaplar gerçek, atıf değildi. Bu katalog, atfın kanıtla eşleşmesini zorunlu kılar.",
-    "verificationMethod": "fetched = sayfa bu oturumda açıldı ve içeriği okundu; listed = arama sonucunda kurumun kendi alan adında göründü ama sayfa içeriği okunmadı. 'listed' kayıtlar tek başına bir soruyu doğrulamak için YETERLİ DEĞİLDİR; kullanılmadan önce fetched seviyesine çıkarılmalıdır."
+    "verificationMethod": "fetched = sayfa açıldı ve içeriği okundu; search_summary = kurumun kendi alan adıyla sınırlanmış arama, ilgili olguyu özetleyen sonuç okundu (Britannica ve oscars.org doğrudan fetch'e 403 döndürüyor); listed = yalnız alan adında göründü, içerik okunmadı. 'listed' tek başına bir soruyu DOĞRULAMAZ."
   },
   "sources": [
     {
@@ -17,7 +17,10 @@
       "reliabilityTier": 2,
       "reliabilityLabel": "üniversite",
       "coveredTopics": [
-        "sinema dili", "plan ölçekleri", "kurgu teknikleri", "kamera hareketi",
+        "sinema dili",
+        "plan ölçekleri",
+        "kurgu teknikleri",
+        "kamera hareketi",
         "ses ve anlatı terimleri"
       ],
       "verificationMethod": "fetched",
@@ -37,10 +40,19 @@
       "sourceReference": "https://www.britannica.com/technology/close-up-camera-technique",
       "reliabilityTier": 5,
       "reliabilityLabel": "alanında güvenilir temel referans",
-      "coveredTopics": ["sinema teknikleri", "film tarihi", "yönetmenler", "eserler"],
-      "verificationMethod": "listed",
+      "coveredTopics": [
+        "sinema teknikleri",
+        "film tarihi",
+        "yönetmenler",
+        "eserler"
+      ],
+      "verificationMethod": "search_summary",
       "verifiedOn": "2026-08-06",
-      "usageConstraints": "Kullanılmadan önce ilgili madde açılıp okunmalı (fetched seviyesine çıkarılmalı). Britannica bir tersiyer kaynaktır; tarih ve sayı iddialarında birincil/kurumsal kaynakla desteklenmelidir."
+      "usageConstraints": "Doğrudan fetch 403; alan adıyla sınırlı arama özeti kullanıldı. Tersiyer kaynak: tarih/sayı iddialarında resmî kurum kaydıyla desteklenmeli.",
+      "verifiedExample": {
+        "fact": "AMPAS 1927 kuruldu; Berlinale Almanya, Altın Ayı",
+        "supports": "ds26_cinema_0088, 0091, 0113"
+      }
     },
     {
       "sourceId": "bfi-film-database",
@@ -50,7 +62,12 @@
       "sourceReference": "https://www.bfi.org.uk/",
       "reliabilityTier": 4,
       "reliabilityLabel": "müze, arşiv, kütüphane",
-      "coveredTopics": ["film künyeleri", "yapım yılı", "yönetmen", "ülke"],
+      "coveredTopics": [
+        "film künyeleri",
+        "yapım yılı",
+        "yönetmen",
+        "ülke"
+      ],
       "verificationMethod": "listed",
       "verifiedOn": "2026-08-06",
       "verifiedExample": {
@@ -67,10 +84,78 @@
       "sourceReference": "https://www.moma.org/collection/works/306307",
       "reliabilityTier": 4,
       "reliabilityLabel": "müze, arşiv, kütüphane",
-      "coveredTopics": ["film künyeleri", "yönetmen", "yapım yılı", "sinema tarihi"],
+      "coveredTopics": [
+        "film künyeleri",
+        "yönetmen",
+        "yapım yılı",
+        "sinema tarihi"
+      ],
       "verificationMethod": "listed",
       "verifiedOn": "2026-08-06",
       "usageConstraints": "Koleksiyon kaydı künye için bağlayıcıdır; sergi metinleri yorum içerebilir."
+    },
+    {
+      "sourceId": "oscars-official",
+      "title": "Academy of Motion Picture Arts and Sciences — resmî tören arşivi",
+      "institution": "AMPAS",
+      "sourceType": "official_institution_archive",
+      "sourceReference": "https://www.oscars.org/oscars/ceremonies/1929",
+      "reliabilityTier": 1,
+      "reliabilityLabel": "resmî kurum",
+      "coveredTopics": [
+        "Oscar törenleri",
+        "ödül tarihleri",
+        "kazananlar"
+      ],
+      "verificationMethod": "search_summary",
+      "verifiedOn": "2026-08-06",
+      "verifiedExample": {
+        "fact": "İlk tören 16 Mayıs 1929; En İyi Film: Wings",
+        "supports": "ds26_cinema_0087, ds26_cinema_0111"
+      },
+      "usageConstraints": "Doğrudan fetch 403 veriyor; alan adıyla sınırlı arama özeti kullanıldı."
+    },
+    {
+      "sourceId": "cannes-official",
+      "title": "Festival de Cannes — resmî tarihçe ve ödül arşivi",
+      "institution": "Festival de Cannes",
+      "sourceType": "official_festival_archive",
+      "sourceReference": "https://www.festival-cannes.com/en/the-festival/the-history-of-the-festival/",
+      "reliabilityTier": 1,
+      "reliabilityLabel": "resmî kurum",
+      "coveredTopics": [
+        "Cannes",
+        "Altın Palmiye",
+        "festival tarihi"
+      ],
+      "verificationMethod": "search_summary",
+      "verifiedOn": "2026-08-06",
+      "verifiedExample": {
+        "fact": "Cannes Fransa'da, ilk festival 1946; ilk Altın Palmiye 1955 Marty",
+        "supports": "ds26_cinema_0089, ds26_cinema_0109"
+      },
+      "usageConstraints": "Künye ve ödül tarihi için bağlayıcı."
+    },
+    {
+      "sourceId": "labiennale-official",
+      "title": "La Biennale di Venezia — Venedik Film Festivali tarihçesi",
+      "institution": "La Biennale di Venezia",
+      "sourceType": "official_festival_archive",
+      "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
+      "reliabilityTier": 1,
+      "reliabilityLabel": "resmî kurum",
+      "coveredTopics": [
+        "Venedik Film Festivali",
+        "festival tarihi",
+        "Altın Aslan"
+      ],
+      "verificationMethod": "search_summary",
+      "verifiedOn": "2026-08-06",
+      "verifiedExample": {
+        "fact": "Dünyanın en eski film festivali, 1932",
+        "supports": "ds26_cinema_0090"
+      },
+      "usageConstraints": "Kuruluş yılı ve \"en eski\" iddiası için bağlayıcı."
     }
   ],
   "pendingCategories": {
@@ -79,6 +164,7 @@
     "Cografya ve doğa": "kaynak henüz doğrulanmadı",
     "Dîrok": "kaynak henüz doğrulanmadı",
     "Çand ve Muzîk": "kaynak henüz doğrulanmadı",
-    "Kürdistan coğrafyası ve Kürt tarihi": "kaynak henüz doğrulanmadı — bu kategori en sıkı doğrulamayı gerektirir; kurumsal arşiv ve üniversite kaynağı bulunmadan hiçbir kayıt aktive edilmeyecek"
+    "Kürdistan coğrafyası ve Kürt tarihi": "kaynak henüz doğrulanmadı — bu kategori en sıkı doğrulamayı gerektirir; kurumsal arşiv ve üniversite kaynağı bulunmadan hiçbir kayıt aktive edilmeyecek",
+    "Sînema — film adı/yıl (34 kayıt)": "BFI/MoMA künye doğrulaması bekliyor"
   }
 }

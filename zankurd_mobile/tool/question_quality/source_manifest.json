@@ -1223,6 +1223,27 @@
         "correctAnswer": "correctAnswerTr",
         "category": "category"
       }
+    },
+    {
+      "id": "cinema_claim_matrix",
+      "description": "Cinema claim matrix (decision record)",
+      "path": "docs/content/cinema_claim_matrix_2026_08.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Per-claim verification record, not a question bank.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "factualClaim",
+        "options": "answers",
+        "correctAnswer": "expectedAnswer",
+        "category": "claimType"
+      }
     }
   ]
 }

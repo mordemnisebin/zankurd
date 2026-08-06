@@ -202,3 +202,80 @@ Girdi dosyaları salt-okunur olarak
 `scratchpad/external_authoring/opus_intake_2026_08/raw/` altında;
 envanter `inventory.json`, terminoloji manifestleri
 `terminology_review.json` ve `terminology_review_live.json`.
+
+## Tur 3 (2026-08-06) — claim matrix ile toplu doğrulama
+
+`docs/content/cinema_claim_matrix_2026_08.json`. 125 kayıt önce iddia türüne
+ayrıldı; doğrulama soru başına ayrı arama yerine iddia ailesi başına yapıldı.
+
+    other              50    film_title_year   34
+    film_language      17    festival_award    13
+    production_tech     5    director_person    4
+    country_movement    2    yilmaz_guney       0
+
+### Düzeltme: Yılmaz Güney kaydı sıfır
+
+Tur 2'de "125 kaydın yalnız biri Yılmaz Güney'den söz ediyor" yazmıştım.
+Yanlıştı: eşleşme `güney` sözcüğünün "Fransa'nın **güney**indeki Cannes"
+içinde geçmesinden geliyordu. Gerçek sayı **sıfır**. `Yılmaz Güney û Klasîk`
+etiketli 28 kaydın hiçbiri Yılmaz Güney ile ilgili değil.
+
+### Alt kategori düzeltmesi — 28 kayıt
+
+Gerçek içeriğe göre yeniden sınıflandırıldı; mevcut taksonomi içinde kalındı,
+yeni kategori sistemi kurulmadı:
+
+    Klasîkên Sînemaya Cîhanê  22
+    Dîroka Sînemayê            2
+    Teknîka Hilberînê          2
+    Zimanê Fîlmê               1
+    Belgefîlm û Festîval       1
+
+### Doğrulanan 9 kayıt
+
+Festival/ödül ailesi resmî kurum arşivlerinden doğrulandı:
+
+    0087 ilk Oscar töreni 1929      oscars.org
+    0088 resmî ad Akademi Ödülü     Britannica
+    0089 Altın Palmiye / Cannes     festival-cannes.com
+    0090 Venedik en eski, 1932      labiennale.org
+    0091 Berlinale Almanya          Britannica
+    0109 Cannes Fransa              festival-cannes.com
+    0111 ilk En İyi Film: Wings     oscars.org
+    0113 AMPAS 1927                 Britannica
+    0001 yakın çekim tanımı         Columbia University
+
+`0112` (tören şehri) bilerek doğrulanmadı sayıldı: kaynaklarda açıkça
+görülmedi, tahminle kabul edilmedi.
+
+Katalog artık üç doğrulama seviyesi ayırır: `fetched`, `search_summary`
+(Britannica ve oscars.org doğrudan fetch'e **403** veriyor; alan adıyla
+sınırlı arama özeti kullanıldı) ve `listed`.
+
+### Karar dağılımı (125)
+
+    ACCEPTED_VERIFIED             9
+    QUARANTINED_DUPLICATE         2
+    REJECTED_WRONG_ANSWER         1
+    QUARANTINED_UNVERIFIABLE    113
+
+### Aktive edilen: 0 — ve niçin bu turda da değil
+
+9 kayıt aktive edilmeye hazır. Aktivasyon bankanın içeriğini değiştirir,
+bu da question-quality baseline kaynak hash'ini değiştirir ve kapı
+`--accept-current-debt` gerektirir. O komut bu oturumda izin sınıflandırıcısı
+tarafından üç kez engellendi; kullanıcı manuel çalıştırmıştı. Şimdi aktive
+etmek kapıyı yeniden kırmızı bırakır ve yine kullanıcı müdahalesi gerektirir.
+
+Bu yüzden 9 kayıt doğrulanmış ve hazır biçimde bekletiliyor; aktivasyon tek
+adımda, izin verildiğinde yapılacak.
+
+### Sıradaki iş
+
+1. `film_title_year` (34) ve `director_person` (4) ailelerini BFI/MoMA künye
+   sayfalarından toplu doğrula.
+2. `film_language` (17) ailesini Columbia sözlüğünün terim sayfalarından
+   doğrula (indeks sayfası terimleri listelemiyor; terim URL'leri tek tek).
+3. Doğrulananlarla birlikte tek Sînema intake bankası aç ve aktive et.
+4. Sonra Edebiyat → Teknolojî → Cografya/doğa → Dîrok → Çand/Muzîk →
+   Grok'un kalan 111'i.
