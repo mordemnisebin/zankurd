@@ -35,40 +35,75 @@ void main() {
     expect(ids.toSet().length, ids.length, reason: 'yinelenen conceptId');
   });
 
-  test('kaynaksız kayıt APPROVED olamaz', () {
+  test('yazıma açık terimin okunmuş bir kanıt zinciri olmalı', () {
+    // Dilbilimsel kanıt ile proje izni AYRI alanlardır (v2). Ama izin,
+    // kanıtsız verilemez: en az bir evidencePage gerçekten OKUNMUŞ olmalı.
     final offenders = <String>[];
     for (final c in concepts) {
-      final status = c['approvalStatus'] as String;
-      final sources = (c['sourceEntries'] as List?) ?? const [];
-      if (status.startsWith('APPROVED') && sources.isEmpty) {
-        offenders.add('${c['conceptId']}: $status ama sourceEntries boş');
-      }
-    }
-    expect(offenders, isEmpty, reason: offenders.join('\n'));
-  });
-
-  test('okunmamış kaynak onay kanıtı sayılamaz', () {
-    // LISTED_NOT_READ: kitabın/sayfanın yalnız adı görüldü. Onay veremez.
-    final offenders = <String>[];
-    for (final c in concepts) {
-      final status = c['approvalStatus'] as String;
-      if (!status.startsWith('APPROVED')) continue;
-      final sources = (c['sourceEntries'] as List?) ?? const [];
-      final anyRead = sources.any((s) => (s as Map)['read'] == true);
+      if (c['approvedForQuestionAuthoring'] != true) continue;
+      final chain = (c['evidenceChain'] as List?) ?? const [];
+      final anyRead = chain.any(
+        (e) => (e as Map)['originalEntryReadDirectly'] == true,
+      );
       if (!anyRead) {
-        offenders.add('${c['conceptId']}: APPROVED ama okunmuş kaynak yok');
+        offenders.add(
+          '${c['conceptId']}: authoring açık ama okunmuş kanıt yok',
+        );
       }
     }
     expect(offenders, isEmpty, reason: offenders.join('\n'));
   });
 
-  test('onaylanmamış terim soru yazımına açılamaz', () {
+  test('yazıma açık terimin izinli anlamı belirtilmeli', () {
     final offenders = <String>[];
     for (final c in concepts) {
-      final status = c['approvalStatus'] as String;
+      if (c['approvedForQuestionAuthoring'] != true) continue;
+      final senses = (c['allowedSenses'] as List?) ?? const [];
+      if (senses.isEmpty) {
+        offenders.add('${c['conceptId']}: izinli anlam listesi boş');
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.join('\n'));
+  });
+
+  test('bloke authoring durumu ile izin çelişemez', () {
+    final offenders = <String>[];
+    for (final c in concepts) {
+      final auth = c['projectAuthoringStatus'] as String;
       final approved = c['approvedForQuestionAuthoring'] == true;
-      if (approved && !status.startsWith('APPROVED')) {
-        offenders.add('${c['conceptId']}: $status ama authoring=true');
+      if (auth.startsWith('AUTHORING_BLOCKED') && approved) {
+        offenders.add('${c['conceptId']}: $auth ama authoring=true');
+      }
+      if (auth.startsWith('AUTHORING_ALLOWED') && !approved) {
+        offenders.add('${c['conceptId']}: $auth ama authoring=false');
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.join('\n'));
+  });
+
+  test('çözülmemiş çok-anlamlılık yazıma açılamaz', () {
+    // `şîfre` (password/encryption) ve `tor` (network/internet/Tor) gibi.
+    final offenders = <String>[];
+    for (final c in concepts) {
+      if (c['linguisticEvidenceStatus'] == 'MULTIPLE_SENSES_UNRESOLVED' &&
+          c['approvedForQuestionAuthoring'] == true) {
+        offenders.add('${c['conceptId']}: anlam ayrımı çözülmeden açılmış');
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.join('\n'));
+  });
+
+  test('dolaylı atıf doğrudan okuma gibi gösterilemez', () {
+    final offenders = <String>[];
+    for (final c in concepts) {
+      for (final e in (c['evidenceChain'] as List?) ?? const []) {
+        final m = e as Map;
+        if (m['evidenceChainStatus'] == 'INDIRECT_NAMED_SOURCE_CITATION' &&
+            m['originalEntryReadDirectly'] == true) {
+          offenders.add(
+            '${c['conceptId']}: dolaylı atıf doğrudan okundu denmiş',
+          );
+        }
       }
     }
     expect(offenders, isEmpty, reason: offenders.join('\n'));
@@ -82,7 +117,9 @@ void main() {
     final raw = File(
       'docs/content/terminology/zankurd_project_glossary_v1.json',
     ).readAsStringSync();
-    final statuses = concepts.map((c) => c['approvalStatus'] as String);
+    final statuses = concepts.map(
+      (c) => '${c['linguisticEvidenceStatus']}${c['projectAuthoringStatus']}',
+    );
     expect(
       statuses.any(banned.hasMatch),
       isFalse,

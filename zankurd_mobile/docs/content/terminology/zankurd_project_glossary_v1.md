@@ -81,3 +81,79 @@ Bu erişim basılı kaynak veya abonelik gerektiriyorsa, karar kullanıcıya
 aittir: ya kaynak sağlanır ya da proje `ATTESTED_NEEDS_LANGUAGE_REVIEW`
 seviyesindeki terimlerle soru yazmayı bilinçli olarak kabul eder. Opus bu
 kararı kendi başına veremez; verirse kanıt seviyesini şişirmiş olur.
+
+
+---
+
+# v2 (2026-08-06) — dilbilimsel kanıt ile proje izni ayrıldı
+
+Önceki sürümde tek bir `approvalStatus` hem dilbilimsel kanıtı hem yazım
+iznini taşıyordu; sonuç authoring'in tamamen kilitlenmesiydi. İki alan ayrıldı:
+
+* `linguisticEvidenceStatus` — yalnız dilbilimsel kanıt
+* `projectAuthoringStatus` — yalnız ZanKurd içinde kullanım izni
+
+Düşük dilbilimsel kanıt otomatik yazım bloğu değildir; yüksek corpus kullanımı
+da otomatik izin değildir. İkisi ayrı gerekçelendirilir.
+
+## Sonuç
+
+    linguisticEvidenceStatus            projectAuthoringStatus
+    COMMUNITY_LEXICON_ENTRY_READ  3     ALLOWED_RESTRICTED_SENSE   2
+    PROJECT_CORPUS_ATTESTED       5     ALLOWED_BORROWED_TERM      1
+    MULTIPLE_SENSES_UNRESOLVED    4     BLOCKED_INSUFFICIENT       5
+                                        BLOCKED_AMBIGUOUS_SENSE    4
+
+## Yazıma açılan üç terim ve kesin anlam sınırları
+
+**`malper`** — `AUTHORING_ALLOWED_RESTRICTED_SENSE`.
+Girdi okundu: Northern Kurdish, dişil, "(Internet) homepage", "website";
+bileşik *mal*+*per*, eşanlamlı *serrûpel*. İzinli anlamlar: **website,
+homepage**. "web page" (tek sayfa) anlamı girdide ayrı görünmediği için o
+anlamda KULLANILMAYACAK — bu, batch'te planlanan "website ve web page
+ayrımı" sorusunu şimdilik dışarıda bırakır.
+
+**`pergal`** — `AUTHORING_ALLOWED_RESTRICTED_SENSE`.
+Girdi okundu: Northern Kurdish, dişil, "system". İzinli anlam: **genel
+"system"**. operating system, information system, political system,
+biological system anlamlarının hiçbiri açılmadı. İngilizce `pergal` maddesi
+(süt kutusu) ayrı dildir, karıştırılmadı.
+
+**`komputer`** — `AUTHORING_ALLOWED_BORROWED_TERM`.
+Girdi okundu: Northern Kurdish, dişil, **`kompûter`in alternatif biçimi**.
+Yani sözlüğün ana biçimi `kompûter`. ZanKurd corpus'u tutarlı biçimde
+`komputer` kullanıyor (8 geçiş) ve proje yazımı KORUNDU; otomatik `kompûter`e
+dönüştürme yapılmadı. Bu bir ortografik varyant kararıdır, lehçe uyuşmazlığı
+değil — her iki biçim de Northern Kurdish.
+
+## Bloke kalanlar
+
+`nermalav` için Wiktionary'de **girdi yok (404)**; corpus'ta 14 geçişi var ama
+sözlük kanıtı yok → `AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE`. Aynı sınıfta
+`înternet`, `dane`, `sepan`, `elektrîk` (girdileri bu turda okunmadı).
+
+`şîfre` ve `tor` dört ayrı conceptId'ye bölündü ve
+`AUTHORING_BLOCKED_AMBIGUOUS_SENSE` olarak kaldı. `tor` için İngilizce "Tor"
+anonimlik ağıyla karışma riski kayıtlı: seçeneklerde ikisini karıştıracak
+soru üretilmeyecek.
+
+## Sözleşme testi (9 kural)
+
+Yeni kurallar: yazıma açık terimin **okunmuş** bir kanıt zinciri olmalı;
+izinli anlam listesi boş olamaz; `AUTHORING_BLOCKED` ile izin çelişemez;
+çözülmemiş çok-anlamlılık yazıma açılamaz; **dolaylı atıf doğrudan okuma gibi
+gösterilemez** (`INDIRECT_NAMED_SOURCE_CITATION` + `originalEntryReadDirectly:
+true` yasak).
+
+## Devam noktası
+
+Eşik karşılandı: üç terim yazıma açık. İlk source-first Teknolojî batch'i
+bir sonraki turun ilk işidir ve şu konularla sınırlı olmalıdır:
+
+* `malper` → website/homepage kavramı (web page ayrımı HARİÇ)
+* `pergal` → genel "system" kavramı
+* `komputer` → cihaz olarak bilgisayar
+
+Factual taraf ucuz: MDN, W3C, IETF, NIST, CISA sayfaları doğrudan açılıp
+ilgili ifade okunacak. Bir soru bloke terime ihtiyaç duyarsa yalnız o soru
+bekletilir, batch durmaz.

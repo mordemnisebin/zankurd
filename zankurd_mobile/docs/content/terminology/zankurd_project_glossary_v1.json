@@ -1,35 +1,9 @@
 {
-  "version": 1,
+  "version": 2,
   "createdDate": "2026-08-06",
   "status": "CANONICAL_PROJECT_GLOSSARY_v1",
-  "note": "Bu glossary projenin bağlayıcı TERMİNOLOJİ KARAR kaydıdır. Glossary'de yer almak dilbilimsel kesinlik anlamına GELMEZ; her kayıt kendi kanıt seviyesini ve onay durumunu taşır. Bu bir otomatik kelime değiştirme aracı DEĞİLDİR.",
-  "humanReviewStatement": "Hiçbir kayıt insan dil editörü tarafından incelenmedi. NATIVE_SPEAKER_APPROVED / HUMAN_APPROVED / LINGUIST_APPROVED etiketleri kullanılmamıştır ve kullanılmayacaktır.",
-  "sourcesConsulted": [
-    {
-      "name": "Ferhenga Birûskî (Kurmancî-English)",
-      "level": 1,
-      "status": "LISTED_NOT_READ",
-      "note": "Girdi açılamadı; kitabın adı kaynak gösterilip terim onaylanmadı."
-    },
-    {
-      "name": "Institut kurde de Paris — Kurmancî yayınları",
-      "level": 2,
-      "status": "LISTED_NOT_READ",
-      "note": "Yayın listesi görüldü, terim girdisi okunmadı."
-    },
-    {
-      "name": "Kurdish Academy of Language",
-      "level": 2,
-      "status": "LISTED_NOT_READ",
-      "note": "Lexicography sayfaları listelendi, terim girdisi okunmadı."
-    },
-    {
-      "name": "Wiktionary (en)",
-      "level": 4,
-      "status": "READ",
-      "note": "malper girdisi doğrudan okundu; Northern Kurdish etiketi doğrulandı."
-    }
-  ],
+  "note": "v2: dilbilimsel kanıt (`linguisticEvidenceStatus`) ile proje içi yazım izni (`projectAuthoringStatus`) AYRI alanlar. Düşük dilbilimsel kanıt otomatik authoring bloğu değildir; yüksek corpus kullanımı da otomatik izin değildir. Her iki karar ayrı gerekçelidir.",
+  "humanReviewStatement": "Hiçbir kayıt insan dil editörü tarafından incelenmedi. NATIVE_SPEAKER_APPROVED / HUMAN_APPROVED / LINGUIST_APPROVED kullanılmadı. AUTHORING_ALLOWED_* 'Kurmancîde kesin standarttır' demek DEĞİLDİR; yalnız 'ZanKurd v1 içeriklerinde belirtilen anlam sınırları içinde kullanılabilir' kararıdır.",
   "concepts": [
     {
       "conceptId": "ku_tech_malper",
@@ -42,17 +16,25 @@
       ],
       "partOfSpeech": "noun (f)",
       "definitionKu": null,
-      "definitionTr": "İnternette bir kuruluşa veya kişiye ait sayfa bütünü",
-      "evidenceLevel": 4,
-      "sourceEntries": [
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "website",
+        "homepage"
+      ],
+      "evidenceChain": [
         {
-          "source": "Wiktionary (en) — malper",
-          "url": "https://en.wiktionary.org/wiki/malper",
-          "level": 4,
-          "read": true
+          "evidencePage": "https://en.wiktionary.org/wiki/malper",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, f: '(Internet) homepage'; 'website'. Compound mal (home) + per (page). Synonym: serrûpel.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
         }
       ],
-      "exactDictionaryEntry": "Northern Kurdish, feminine: '(Internet) homepage', 'website'; compound mal (home) + per (page); synonym serrûpel",
       "corpusAttestations": [
         "offline_curated_30010",
         "offline_tek_0025",
@@ -62,14 +44,103 @@
         "offline_tek_0080"
       ],
       "corpusAttestationCount": 17,
-      "spellingDecision": "Corpus yazımı `malper` ile sözlük girdisi uyuşuyor.",
-      "dialectNotes": "Girdi açıkça Northern Kurdish (Kurmancî) olarak etiketli — lehçe uyumu doğrulandı.",
-      "ambiguityNotes": "Seviye 4 topluluk sözlüğü GİRDİSİ OKUNDU (yalnız varlığı değil). Ancak Seviye 4 tek başına teknik standardı belirlemez; Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez. 'homepage' ile 'website' anlam ayrımı soru yazarken netleştirilmeli.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
-      "approvedForQuestionAuthoring": false,
+      "spellingDecision": "Sözlük girdisi ile corpus yazımı aynı: `malper`.",
+      "dialectNotes": "Girdi açıkça Northern Kurdish etiketli; lehçe varsayımı yapılmadı.",
+      "ambiguityNotes": "YALNIZ 'website' ve 'homepage' anlamlarında açık. 'web page' (tek sayfa) anlamı girdide ayrı görünmüyor; o anlam için kullanılmayacak. Bütün web kavramları için topluca onaylanmadı.",
+      "approvedForQuestionAuthoring": true,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "1e5d93f33768abc3"
+      "recordHash": "5c863dbdb899e2b2"
+    },
+    {
+      "conceptId": "ku_tech_pergal",
+      "EnglishConcept": "system (general)",
+      "TurkishConcept": "Sistem (genel)",
+      "domain": "computing",
+      "projectPreferredKurmanji": "pergal",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "noun (f)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "system (general sense)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/pergal",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, f: 'system'.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_0395",
+        "offline_0415",
+        "offline_0425",
+        "offline_2232",
+        "offline_2233",
+        "offline_2241"
+      ],
+      "corpusAttestationCount": 78,
+      "spellingDecision": "Corpus yazımı `pergal` girdiyle uyuşuyor.",
+      "dialectNotes": "Northern Kurdish bölümü ayrı; İngilizce 'pergal' (süt kutusu) maddesiyle karıştırılmadı.",
+      "ambiguityNotes": "YALNIZ genel 'system' anlamında açık. operating system, information system, political system, biological system anlamlarının HİÇBİRİ otomatik açılmadı; her biri ayrı kanıt ister.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "cbe27ff7a92b8fed"
+    },
+    {
+      "conceptId": "ku_tech_komputer",
+      "EnglishConcept": "computer",
+      "TurkishConcept": "Bilgisayar",
+      "domain": "computing",
+      "projectPreferredKurmanji": "komputer",
+      "alternativeKurmanjiForms": [
+        "kompûter"
+      ],
+      "partOfSpeech": "noun (f)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_BORROWED_TERM",
+      "allowedSenses": [
+        "computer (device)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/komputer",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, f: alternative form of `kompûter`.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_5325",
+        "offline_curated_30001",
+        "offline_curated_30010",
+        "offline_tek_0003",
+        "offline_tek_0004",
+        "offline_tek_0049"
+      ],
+      "corpusAttestationCount": 9,
+      "spellingDecision": "ÖNEMLİ: Wiktionary ana biçim olarak `kompûter`i, `komputer`i alternatif biçim olarak veriyor. ZanKurd corpus'u tutarlı biçimde `komputer` kullanıyor (8 geçiş). Proje yazımı `komputer` olarak KORUNDU; otomatik `kompûter`e dönüştürme YAPILMADI — corpus tutarlılığı kullanıcı deneyimi için bağlayıcı.",
+      "dialectNotes": "Her iki biçim de Northern Kurdish; lehçe uyuşmazlığı yok, yalnız ortografik varyant.",
+      "ambiguityNotes": "Ödünç uluslararası terim. Yalnız 'cihaz olarak bilgisayar' anlamında açık.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "bca8dedccfd25610"
     },
     {
       "conceptId": "ku_tech_internet",
@@ -81,9 +152,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_curated_30007",
         "offline_tek_0018",
@@ -95,12 +167,11 @@
       "corpusAttestationCount": 17,
       "spellingDecision": "Corpus yazımı `înternet`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
+      "ambiguityNotes": "Wiktionary girdisi bu turda okunmadı. Corpus (Seviye 5) tek başına yeterli değil.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "1b2575684ebd66c6"
+      "recordHash": "0d7213a6c4265d63"
     },
     {
       "conceptId": "ku_tech_dane",
@@ -112,9 +183,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_13556",
         "offline_curated_30007",
@@ -126,43 +198,11 @@
       "corpusAttestationCount": 37,
       "spellingDecision": "Corpus yazımı `dane`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
+      "ambiguityNotes": "data/datum/information/record ayrımı yapılmadı. Corpus (Seviye 5) tek başına yeterli değil.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "4ba5d91faf7c1af2"
-    },
-    {
-      "conceptId": "ku_tech_pergal",
-      "EnglishConcept": "system",
-      "TurkishConcept": "Sistem",
-      "domain": "computing",
-      "projectPreferredKurmanji": "pergal",
-      "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
-      "definitionKu": null,
-      "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
-      "corpusAttestations": [
-        "offline_0395",
-        "offline_0415",
-        "offline_0425",
-        "offline_2232",
-        "offline_2233",
-        "offline_2241"
-      ],
-      "corpusAttestationCount": 78,
-      "spellingDecision": "Corpus yazımı `pergal`.",
-      "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
-      "approvedForQuestionAuthoring": false,
-      "reviewer": "opus-5",
-      "reviewedAt": "2026-08-06",
-      "recordHash": "33203ff23752c9a7"
+      "recordHash": "4edc37fdfe041211"
     },
     {
       "conceptId": "ku_tech_nermalav",
@@ -174,9 +214,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_tek_0027",
         "offline_tek_0044",
@@ -188,12 +229,11 @@
       "corpusAttestationCount": 14,
       "spellingDecision": "Corpus yazımı `nermalav`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
+      "ambiguityNotes": "Wiktionary'de girdi YOK (404). Corpus'ta 14 geçiş var ama sözlük kanıtı yok. Corpus (Seviye 5) tek başına yeterli değil.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "b03e6f67f6a31c36"
+      "recordHash": "ef9a1df372db3a05"
     },
     {
       "conceptId": "ku_tech_sepan",
@@ -205,9 +245,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_curated_30011",
         "offline_tek_0050",
@@ -219,43 +260,11 @@
       "corpusAttestationCount": 10,
       "spellingDecision": "Corpus yazımı `sepan`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
+      "ambiguityNotes": "isim/fiil ve application/implementation ayrımı yapılmadı. Corpus (Seviye 5) tek başına yeterli değil.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "722fcabf7dea2815"
-    },
-    {
-      "conceptId": "ku_tech_komputer",
-      "EnglishConcept": "computer",
-      "TurkishConcept": "Bilgisayar",
-      "domain": "computing",
-      "projectPreferredKurmanji": "komputer",
-      "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
-      "definitionKu": null,
-      "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
-      "corpusAttestations": [
-        "offline_5325",
-        "offline_curated_30001",
-        "offline_curated_30010",
-        "offline_tek_0003",
-        "offline_tek_0004",
-        "offline_tek_0049"
-      ],
-      "corpusAttestationCount": 9,
-      "spellingDecision": "Corpus yazımı `komputer`.",
-      "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
-      "approvedForQuestionAuthoring": false,
-      "reviewer": "opus-5",
-      "reviewedAt": "2026-08-06",
-      "recordHash": "3e6c9d3dca83161c"
+      "recordHash": "a169389f963c2f20"
     },
     {
       "conceptId": "ku_tech_elektrik",
@@ -267,9 +276,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_tf_cog_0062",
         "offline_tf_cog_0063",
@@ -281,12 +291,11 @@
       "corpusAttestationCount": 31,
       "spellingDecision": "Corpus yazımı `elektrîk`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir. Seviye 1-2 (akademik sözlük / kurumsal terminoloji) girdisi okunmadan APPROVED_* verilemez.",
-      "approvalStatus": "ATTESTED_NEEDS_LANGUAGE_REVIEW",
+      "ambiguityNotes": "girdi okunmadı. Corpus (Seviye 5) tek başına yeterli değil.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "4a126979437675fc"
+      "recordHash": "0a5821363238a6e2"
     },
     {
       "conceptId": "ku_tech_sifre_password",
@@ -298,9 +307,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_curated_30004",
         "offline_tek_0006",
@@ -312,12 +322,11 @@
       "corpusAttestationCount": 35,
       "spellingDecision": "Corpus yazımı `şîfre`.",
       "dialectNotes": null,
-      "ambiguityNotes": "`şîfre` corpus'ta hem 'parola' hem şifreleme bağlamında geçiyor. password / cipher / encryption / code ayrı kavramlardır ve tek toplu onay verilemez; her anlam ayrı conceptId ve ayrı kanıt ister. Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir.",
-      "approvalStatus": "MULTIPLE_SENSES_NEEDS_SPLIT",
+      "ambiguityNotes": "password / PIN / cipher / encryption / code ayrı kavramlar.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "61c0e52be6c8e20f"
+      "recordHash": "825b04286123a8b1"
     },
     {
       "conceptId": "ku_tech_sifre_encryption",
@@ -329,9 +338,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_curated_30004",
         "offline_tek_0006",
@@ -343,12 +353,11 @@
       "corpusAttestationCount": 35,
       "spellingDecision": "Corpus yazımı `şîfre`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aynı sözcüğün 'password' için uygun olması 'encryption' için uygun olduğunu göstermez. Ayrı kanıt gerekir. Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir.",
-      "approvalStatus": "MULTIPLE_SENSES_NEEDS_SPLIT",
+      "ambiguityNotes": "'password' kanıtı 'encryption'ı desteklemez.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "1e00dee22e4db738"
+      "recordHash": "1a8f405a4963c0ec"
     },
     {
       "conceptId": "ku_tech_tor_network",
@@ -360,9 +369,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_2276",
         "offline_2304",
@@ -374,16 +384,15 @@
       "corpusAttestationCount": 22,
       "spellingDecision": "Corpus yazımı `tor`.",
       "dialectNotes": null,
-      "ambiguityNotes": "`tor` Kurmancîde 'ağ/file' anlamında genel bir sözcük. General network / computer network / internet / physical network ayrımı yapılmadan onay verilemez; ayrıca İngilizce 'Tor' (anonimlik ağı) ile karışma riski soru yazarken değerlendirilmeli. Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir.",
-      "approvalStatus": "MULTIPLE_SENSES_NEEDS_SPLIT",
+      "ambiguityNotes": "general network / computer network / internet ayrımı çözülmedi.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "85f8e41e74c9e956"
+      "recordHash": "f420704471833414"
     },
     {
       "conceptId": "ku_tech_tor_internet",
-      "EnglishConcept": "the Internet (as network)",
+      "EnglishConcept": "the Internet",
       "TurkishConcept": "İnternet ağı",
       "domain": "tor_and_web",
       "projectPreferredKurmanji": "tor",
@@ -391,9 +400,10 @@
       "partOfSpeech": "noun",
       "definitionKu": null,
       "definitionTr": null,
-      "evidenceLevel": 5,
-      "sourceEntries": [],
-      "exactDictionaryEntry": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
       "corpusAttestations": [
         "offline_2276",
         "offline_2304",
@@ -405,12 +415,11 @@
       "corpusAttestationCount": 22,
       "spellingDecision": "Corpus yazımı `tor`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Aynı sözcüğün genel 'ağ' anlamı, 'İnternet' teknik terimi olduğunu göstermez. Aktif ZanKurd corpus'unda tutarlı kullanım (Seviye 5). Seviye 5 dil otoritesi değildir.",
-      "approvalStatus": "MULTIPLE_SENSES_NEEDS_SPLIT",
+      "ambiguityNotes": "Ayrıca İngilizce 'Tor' anonimlik ağı özel adıyla karışma riski; seçeneklerde ikisini karıştıracak soru üretilmeyecek.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "624be7acac6253f9"
+      "recordHash": "f25dbef004a1fc1b"
     }
   ]
 }
