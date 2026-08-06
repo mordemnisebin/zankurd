@@ -1,0 +1,41 @@
+{
+  "sourcePackId": "pack_how_the_web_works",
+  "sourceTitle": "MDN — How the web works",
+  "sourceInstitution": "Mozilla (MDN Web Docs)",
+  "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+  "accessStatus": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; uzun pasaj kopyalanmadı.",
+  "exactSourceStatements": [
+    "Servers are computers that store webpages, sites, or apps.",
+    "The browser goes to the DNS server and finds the real address of the server that the website lives on.",
+    "The browser sends an HTTP request message to the server, asking it to send a copy of the website to the client.",
+    "If the server approves the client's request, the server sends the client a \"200 OK\" message.",
+    "The browser assembles the small chunks into a complete web page and displays it to you."
+  ],
+  "extractedClaims": [
+    {
+      "claimId": "web_01",
+      "claim": "Malper komputeran de tên hilanîn.",
+      "supports": "Servers are computers that store webpages, sites, or apps."
+    },
+    {
+      "claimId": "web_02",
+      "claim": "HTTP 200 daxwaza qebûlkirî nîşan dide.",
+      "supports": "the server sends the client a \"200 OK\" message"
+    },
+    {
+      "claimId": "web_03",
+      "claim": "DNS navnîşana rastîn peyda dike.",
+      "supports": "The browser goes to the DNS server and finds the real address"
+    },
+    {
+      "claimId": "web_04",
+      "claim": "Dane bi perçeyên biçûk (packets) tên şandin.",
+      "supports": "a series of small chunks called packets"
+    }
+  ],
+  "sourceHash": "3d349be517d8bde7"
+}

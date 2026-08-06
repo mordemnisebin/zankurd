@@ -1559,6 +1559,90 @@
         "correctAnswer": "projectPreferredKurmanji",
         "category": "domain"
       }
+    },
+    {
+      "id": "source_first_tech_pilot",
+      "description": "Source-first technology pilot artifact",
+      "path": "docs/content/source_first_expansion_2026_08/technology_pilot/technology_pilot_claims.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "source_first_pilot",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first pilot; NOT loaded by the app and not in the verified pool (below 8-question minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "source_first_tech_pilot_decisions",
+      "description": "Source-first technology pilot artifact",
+      "path": "docs/content/source_first_expansion_2026_08/technology_pilot/technology_pilot_decisions.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_pilot",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first pilot; NOT loaded by the app and not in the verified pool (below 8-question minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "pack_how_the_web_works",
+      "description": "Source-first technology pilot artifact",
+      "path": "docs/content/source_first_expansion_2026_08/technology_pilot/pack_how_the_web_works.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_pilot",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first pilot; NOT loaded by the app and not in the verified pool (below 8-question minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "pack_http_404",
+      "description": "Source-first technology pilot artifact",
+      "path": "docs/content/source_first_expansion_2026_08/technology_pilot/pack_http_404.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_pilot",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first pilot; NOT loaded by the app and not in the verified pool (below 8-question minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
     }
   ]
 }

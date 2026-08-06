@@ -1,0 +1,293 @@
+[
+  {
+    "questionId": "sf_tech_0001",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_how_the_web_works",
+    "claimId": "web_01",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "exactSupportingFact": "Servers are computers that store webpages, sites, or apps.",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_malper",
+      "ku_tech_komputer"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_malper": "5c863dbdb899e2b2",
+      "ku_tech_komputer": "bca8dedccfd25610"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_malper": "website",
+      "ku_tech_komputer": "computer (device)"
+    },
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "Malper bi giştî li ser çi têne hilanîn?",
+    "promptTr": "Web siteleri genel olarak neyin üzerinde saklanır?",
+    "answersKu": [
+      "Li ser komputeran",
+      "Li ser kaxizê",
+      "Li ser dengbêjan",
+      "Li ser nexşeyan"
+    ],
+    "answersTr": [
+      "Bilgisayarların üzerinde",
+      "Kâğıt üzerinde",
+      "Anlatıcıların belleğinde",
+      "Haritalar üzerinde"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Malper li ser komputeran têne hilanîn û ji wir ji bikarhêneran re têne şandin.",
+    "explanationTr": "Web siteleri bilgisayarlarda saklanır ve oradan kullanıcılara gönderilir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "iddia kaynak cümlesiyle birebir eşleşiyor"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "TR ve KU aynı olguyu soruyor, doğru cevap aynı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "çeldiriciler makul, kendini yanlış ilan etmiyor"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "doğru cevap soru kökündeki adı tekrar etmiyor"
+    },
+    "finalContentHash": "89095ebf0e55a923"
+  },
+  {
+    "questionId": "sf_tech_0002",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_http_404",
+    "claimId": "http_404",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404",
+    "exactSupportingFact": "The HTTP 404 Not Found client error response status code indicates that the server cannot find the requested resource.",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [],
+    "terminologyRecordHashes": {},
+    "terminologyAllowedSenses": {},
+    "standardTechnicalIdentifiers": [
+      "HTTP"
+    ],
+    "promptKu": "Di HTTPê de koda 404 çi nîşan dide?",
+    "promptTr": "HTTP'de 404 kodu neyi gösterir?",
+    "answersKu": [
+      "Şîfre çewt e",
+      "Daxwaz bi serkeftî qediya",
+      "Çavkaniya xwestî nehat dîtin",
+      "Girêdan hêdî ye"
+    ],
+    "answersTr": [
+      "Parola hatalı",
+      "İstek başarıyla tamamlandı",
+      "İstenen kaynak bulunamadı",
+      "Bağlantı yavaş"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Koda 404 tê wateya ku çavkaniya hatî xwestin nehat dîtin.",
+    "explanationTr": "404 kodu, istenen kaynağın bulunamadığı anlamına gelir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "iddia kaynak cümlesiyle birebir eşleşiyor"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "TR ve KU aynı olguyu soruyor, doğru cevap aynı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "çeldiriciler makul, kendini yanlış ilan etmiyor ; doğru cevap konumu dengelendi"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "doğru cevap soru kökündeki adı tekrar etmiyor"
+    },
+    "finalContentHash": "6439f1e73982e1ee"
+  },
+  {
+    "questionId": "sf_tech_0003",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_how_the_web_works",
+    "claimId": "web_02",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "exactSupportingFact": "If the server approves the client's request, the server sends the client a \"200 OK\" message.",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [],
+    "terminologyRecordHashes": {},
+    "terminologyAllowedSenses": {},
+    "standardTechnicalIdentifiers": [
+      "HTTP"
+    ],
+    "promptKu": "Di HTTPê de peyama «200 OK» çi nîşan dide?",
+    "promptTr": "HTTP'de «200 OK» mesajı neyi gösterir?",
+    "answersKu": [
+      "Çavkanî nehat dîtin",
+      "Daxwaz hat qebûlkirin",
+      "Girêdan hat birîn",
+      "Şîfre pêwîst e"
+    ],
+    "answersTr": [
+      "Kaynak bulunamadı",
+      "İstek kabul edildi",
+      "Bağlantı kesildi",
+      "Parola gerekli"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Peyama «200 OK» nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
+    "explanationTr": "«200 OK» mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "iddia kaynak cümlesiyle birebir eşleşiyor"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "TR ve KU aynı olguyu soruyor, doğru cevap aynı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "çeldiriciler makul, kendini yanlış ilan etmiyor ; doğru cevap konumu dengelendi"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "doğru cevap soru kökündeki adı tekrar etmiyor"
+    },
+    "finalContentHash": "c47e75cae06d2149"
+  },
+  {
+    "questionId": "sf_tech_0004",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_how_the_web_works",
+    "claimId": "web_03",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "exactSupportingFact": "The browser goes to the DNS server and finds the real address of the server that the website lives on.",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_malper"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_malper": "5c863dbdb899e2b2"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_malper": "website"
+    },
+    "standardTechnicalIdentifiers": [
+      "DNS"
+    ],
+    "promptKu": "DNS di gihîştina malperekê de çi kar dike?",
+    "promptTr": "DNS bir web sitesine erişimde ne işe yarar?",
+    "answersKu": [
+      "Bataryayê şarj dike",
+      "Wêneyan biçûk dike",
+      "Dengê vîdeoyê zêde dike",
+      "Navnîşana rastîn peyda dike"
+    ],
+    "answersTr": [
+      "Pili şarj eder",
+      "Görselleri küçültür",
+      "Videonun sesini artırır",
+      "Gerçek adresi bulur"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "DNS navnîşana rastîn a malperê peyda dike, da ku daxwaz bigihîje cihê rast.",
+    "explanationTr": "DNS, web sitesinin gerçek adresini bulur; böylece istek doğru yere ulaşır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "iddia kaynak cümlesiyle birebir eşleşiyor"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "TR ve KU aynı olguyu soruyor, doğru cevap aynı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "çeldiriciler makul, kendini yanlış ilan etmiyor ; doğru cevap konumu dengelendi"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "doğru cevap soru kökündeki adı tekrar etmiyor"
+    },
+    "finalContentHash": "eb48c7f495ca36f2"
+  },
+  {
+    "questionId": "sf_tech_0005",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_how_the_web_works",
+    "claimId": "web_04",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "exactSupportingFact": "The browser assembles the small chunks into a complete web page and displays it to you.",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [],
+    "terminologyRecordHashes": {},
+    "terminologyAllowedSenses": {},
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "Dane di înternetê de bi çi awayî tên şandin?",
+    "promptTr": "Veriler internette nasıl gönderilir?",
+    "answersKu": [
+      "Bi kaxizê",
+      "Bi carekê û bi tevahî",
+      "Bi perçeyên biçûk",
+      "Bi dengê bilind"
+    ],
+    "answersTr": [
+      "Kâğıtla",
+      "Tek seferde ve bütün olarak",
+      "Küçük parçalar hâlinde",
+      "Yüksek sesle"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Dane bi perçeyên biçûk tên şandin û li dawiyê ji nû ve tên hev kirin.",
+    "explanationTr": "Veriler küçük parçalar hâlinde gönderilir ve sonunda yeniden birleştirilir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "iddia kaynak cümlesiyle birebir eşleşiyor"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "TR ve KU aynı olguyu soruyor, doğru cevap aynı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "çeldiriciler makul, kendini yanlış ilan etmiyor ; doğru cevap konumu dengelendi"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "doğru cevap soru kökündeki adı tekrar etmiyor"
+    },
+    "finalContentHash": "091b63d597e0c989"
+  }
+]

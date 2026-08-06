@@ -1,0 +1,38 @@
+{
+  "pilotStatus": "INCOMPLETE_BELOW_MINIMUM",
+  "minimumRequired": 8,
+  "produced": 5,
+  "addedToVerifiedPool": false,
+  "whyNotPadded": "§2 gereği doğrulanmamış kelime veya yapay terminoloji ile sayı tamamlanmadı. Üç izinli terim (malper/website+homepage, pergal/genel system, komputer/cihaz) ve iki source pack, 8 farklı bilgi noktası için yeterli kavramsal çeşitlilik vermedi.",
+  "pergalUnused": "`pergal` pilotta HİÇ kullanılmadı. Elde edilen MDN kaynakları genel 'system' kavramına değil web/HTTP akışına dair; `pergal`i buraya sokmak ancak 'operating system' gibi AÇILMAMIŞ bir anlama kaymakla mümkün olurdu.",
+  "blockedByMissingTerms": "server, client, browser, software, application için onaylı Kurmancî terim yok. MDN'nin en zengin olguları (server/client rolleri, tarayıcının istek göndermesi) tam da bu terimleri gerektirdiği için soruya çevrilemedi. §4 gereği bu sıradan İngilizce teknik isimler 'standart tanımlayıcı' bahanesiyle Kurmancî metne yerleştirilmedi.",
+  "droppedQuestions": [
+    {
+      "questionId": "sf_tech_0006",
+      "reason": "MDN 'sunucular sürekli açık olmalı' DEMİYOR; soru kaynağın ötesine geçen bir çıkarımdı. Kaynak-önce modelde çıkarım claim değildir."
+    }
+  ],
+  "standardIdentifierDecisions": [
+    {
+      "identifier": "HTTP",
+      "termType": "STANDARD_TECHNICAL_IDENTIFIER",
+      "decision": "ALLOWED",
+      "reason": "MDN'de durum kodları doğrudan tanımlı; çevrilmeden korunur, glossary onayına sokulmadı."
+    },
+    {
+      "identifier": "DNS",
+      "termType": "STANDARD_TECHNICAL_IDENTIFIER",
+      "decision": "ALLOWED",
+      "reason": "MDN'de işlevi açıkça anlatılmış; kısaltma korunur."
+    }
+  ],
+  "verifiedQuestions": [
+    "sf_tech_0001",
+    "sf_tech_0002",
+    "sf_tech_0003",
+    "sf_tech_0004",
+    "sf_tech_0005"
+  ],
+  "reviewer": "opus-5",
+  "timestamp": "2026-08-06"
+}
