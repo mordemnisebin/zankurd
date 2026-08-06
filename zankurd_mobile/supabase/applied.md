@@ -95,3 +95,17 @@
 | 20260801000000_production_baseline.sql | ✅ | 2026-08-05 production logical backup'tan üretilen ve local restore/semantic karşılaştırma ile doğrulanan baseline. Canonical dosya: `supabase/baselines/20260801000000_production_baseline.sql`. |
 | 20260802000000_multiplayer_session_hardening.sql | ✅ | 2026-08-05 production history’de tam bir kez; canonical SQL SHA-256 `efac75e55f2aa7e7bef74ec1f3938b82e26e59c6c2883de2c49245157656c2ff`. Kaynak uygulama migrationı `2026-08-02_multiplayer_session_hardening.sql`. |
 | 20260803000000_streak_freeze_idempotency.sql | ✅ | 2026-08-05 production history’de tam bir kez; canonical SQL SHA-256 `1c09276ae4c729e6ce6094474263553d914d8c66ebaf01da38be53309fd7c3cd`. Kaynak uygulama migrationı `2026-08-03_streak_freeze_idempotency.sql`. |
+
+<!-- 2026-08-06 production rollout. Üç göç `supabase db push --linked` ile,
+     runbook sırasıyla ve HER BİRİ AYRI işlem olarak uygulandı; her uygulamadan
+     sonra ayrı postflight çalıştırıldı. Rollout öncesi tam mantıksal yedek
+     (roles + auth/storage şeması + public şema + veri) alındı ve ayrı bir
+     local PostgreSQL'e geri yüklenerek 13 tablonun satır sayısı birebir
+     doğrulandı. Uygulama sonrası production history'de altı göç var, her biri
+     tam bir kez, artan sırada; tekrar dry-run "Remote database is up to date".
+     İki sentetik kullanıcıyla gerçek istemci yolundan (GoTrue + PostgREST)
+     doğrulandı ve sentetik veri sonrasında tamamen temizlendi: bütün tablolar
+     rollout öncesi satır sayılarına döndü. -->
+| 20260806000001_neon_frame_persistence.sql | ✅ | 2026-08-06 production history’de tam bir kez; canonical SQL SHA-256 `e705662cc33426ce91dd9554710ffc798b097edd3948de8d7995705ebda5e437`. Kaynak uygulama migrationı `2026-08-06_neon_frame_persistence.sql`. Postflight: satın alınmamış neon reddedildi (400), satın alınan kalıcılaştı, kozmetik yazımı yeniden açıldı, tekrar satın almada çift tahsilat yok (`already purchased`). |
+| 20260806000002_friend_identity_and_resend.sql | ✅ | 2026-08-06 production history’de tam bir kez; canonical SQL SHA-256 `1a4a073aaea96467f028adb4eb368c52076147a5ebcad166832fd5bfd0ce4a65`. Kaynak uygulama migrationı `2026-08-06_friend_identity_and_resend.sql`. Postflight: istemcinin gönderdiği sahte ad yok sayıldı ve alıcı gerçek adı gördü; duplicate pending dürüst `false` döndü; reddedilen istek yeniden gönderilebildi; iki taraf da gerçek adı gördü. Mevcut 4 `friends` ve 12 `friend_requests` satırı hâlâ `'Player'` saklıyor ama okuma yolu profilden okuduğu için gerçek ad görünüyor — veri taşıyan hiçbir UPDATE çalıştırılmadı. |
+| 20260806000003_profile_insert_and_league_authority.sql | ✅ | 2026-08-06 production history’de tam bir kez; canonical SQL SHA-256 `e8fcb1c8cdf3d85fe8be98fdd5973e2c7c17db87afef225f42e7384f04ef8064`. Kaynak uygulama migrationı `2026-08-06_profile_insert_and_league_authority.sql`. Postflight: `coins/xp/rating` şişirilmiş INSERT sunucu varsayılanlarına çekildi (0/0/1000), yabancı UID INSERT RLS ile reddedildi (403), mevcut UPDATE guard bozulmadı, `finalize_weekly_league` normal kullanıcıda `42501 permission denied` verdi, service_role yolu korundu. |
