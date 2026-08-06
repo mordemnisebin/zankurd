@@ -1160,6 +1160,69 @@
         "correctAnswer": "correctAnswer",
         "category": "category"
       }
+    },
+    {
+      "id": "intake_decisions_cinema",
+      "description": "Sînema intake karar kaydı: 125 aday, kayıt bazında Opus kararı",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/decisions_cinema.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Sînema intake karar kaydı: 125 aday, kayıt bazında Opus kararı. promptTr/correctAnswerTr taşıdığı için keşif onu banka sanıyor; karar kaydıdır, soru kaynağı değildir.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answers",
+        "correctAnswer": "correctAnswerTr",
+        "category": "category"
+      }
+    },
+    {
+      "id": "intake_decisions_grok_rejected",
+      "description": "Grok'un kendi yanlışlığını duyuran çeldirici taşıyan 296 kaydının kesin REJECTED_LOW_QUALITY kaydı",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/decisions_grok_rejected.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Grok'un kendi yanlışlığını duyuran çeldirici taşıyan 296 kaydının kesin REJECTED_LOW_QUALITY kaydı.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answers",
+        "correctAnswer": "correctAnswerTr",
+        "category": "category"
+      }
+    },
+    {
+      "id": "verified_source_catalog",
+      "description": "Doğrulanmış kaynak kataloğu",
+      "path": "docs/content/source_catalog_2026_08.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Doğrulanmış kaynak kataloğu. Soru içermez; atıf kuralının kaynağıdır.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answers",
+        "correctAnswer": "correctAnswerTr",
+        "category": "category"
+      }
     }
   ]
 }

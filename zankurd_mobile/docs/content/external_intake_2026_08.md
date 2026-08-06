@@ -116,21 +116,87 @@ yasaklar. 907 adayın **hiçbirinde** doğrulanabilir kaynak yok. Kaynak
 sorunu kayıt bazında çözülmeden batch aktive etmek, kapıyı biçimsel olarak
 geçip anlamca çiğnemek olurdu.
 
+## Tur 2 (2026-08-06) — kaynaklandırılmış intake
+
+### Grok 296: kesin red uygulandı
+
+`decisions_grok_rejected.json` — 296 kayıt `REJECTED_LOW_QUALITY`. Toplu
+onarım denenmedi: ekonomik değil ve orijinal seçenek kalitesi güvenilmez.
+Grok'un kalan 111 adayı inceleme havuzunda bekliyor.
+
+### Kaynak kataloğu
+
+`docs/content/source_catalog_2026_08.json`. Katalog iki doğrulama seviyesi
+ayırır ve bu ayrım işin özüdür:
+
+* `fetched` — sayfa bu oturumda açıldı ve okundu;
+* `listed` — kurumun kendi alan adında arama sonucunda göründü, içeriği
+  okunmadı.
+
+`listed` bir kayıt tek başına bir soruyu doğrulamaz. Şu an yalnız **bir**
+kaynak `fetched`: Columbia University Film Language Glossary.
+
+Katalog Sînema dışındaki kategoriler için henüz boş; `pendingCategories`
+altında açıkça işaretli. Kürdistan coğrafyası/Kürt tarihi kategorisi en sıkı
+doğrulamayı gerektirdiği için kurumsal arşiv kaynağı bulunmadan hiçbir kayıt
+aktive edilmeyecek.
+
+### Sînema batch'i (DeepSeek batch_01, 125) — karar dağılımı
+
+    ACCEPTED_VERIFIED             1
+    QUARANTINED_DUPLICATE         2
+    REJECTED_WRONG_ANSWER         1
+    QUARANTINED_UNVERIFIABLE    121
+
+Kayıt bazında kararlar `decisions_cinema.json` içinde.
+
+**Aktive edilen: 0.** Tek doğrulanmış kayıt (ds26_cinema_0001, yakın çekim
+tanımı) tek başına bir batch değildir; tek kayıt için banka açmak, ölçüm ve
+kapı maliyetini karşılamaz. Doğrulama derinleştiğinde kabul edilenlerle
+birlikte aktive edilecek.
+
+### Bulunan somut kusurlar
+
+**Yanlış subcategory etiketi — 28 kayıt.** `subcategory` alanı
+`"Yılmaz Güney û Klasîk"` diyor; oysa 125 kaydın **yalnız biri** Yılmaz
+Güney'den söz ediyor (o da Cannes sorusu, ilgisiz). 28 kaydın tamamı batı/
+dünya sineması klasikleri: Méliès, Lang, Welles, Fellini, Godard. Kürt
+yönetmen adı taşıyan bir bölüm vaat edilip içi doldurulmamış. Kürtçe bir
+uygulamada bu, ölçülebilir bir içerik boşluğudur.
+
+**Olgu tekrarı — 2 kayıt.** `0082`, `0063` ile aynı olguyu soruyor (1939,
+siyah-beyazdan renkliye, Oz Büyücüsü). `0020`, `0002` ile aynı (establishing
+shot). Envanterdeki Jaccard eşiği bunları kaçırmıştı; aynı doğru cevabı
+paylaşan kayıtları gruplayınca göründüler. `0052`/`0109` de aynı cevabı
+("Fransa") paylaşıyor ama farklı olgular — tekrar DEĞİL; bu yüzden eşleşme
+otomatik red değil, inceleme sebebi sayıldı.
+
+**Doğrulanamayan Türkçe başlık — 1 kayıt.** `0079` À bout de souffle'ün
+Türkçe adını "Sersefil" diye veriyor. Hiçbir kurumsal kaynak (BFI, MoMA,
+Britannica) bunu desteklemiyor; yerleşik kullanım "Serseri Âşıklar".
+`REJECTED_WRONG_ANSWER`.
+
 ## Devam noktası
 
-Sıradaki iş, §11 sırasına göre **Sînema (DeepSeek batch_01, 125 kayıt)**:
+Sınırlayıcı etken içerik değil, **doğrulama hızıdır**. 121 kaydın her biri
+ayrı bir olgu iddiası taşıyor (film adı, yıl, yönetmen, teknik terim) ve her
+biri kurumsal kaynakta tek tek aranmayı gerektiriyor. Tur 2'de bir kaynak
+`fetched` seviyesine çıkarıldı ve bir kayıt doğrulandı.
 
-1. 125 kaydın her birinin olgusunu bağımsız doğrula (sinema dilbilgisi
-   ağırlıklı; çoğu sabit ve doğrulanabilir).
-2. `Bordwell & Thompson` atfını kaldır; dürüst iç künye yaz.
-3. Doğrulanamayanı `QUARANTINED_UNVERIFIABLE` yap.
-4. `validate_batch` → terminoloji → tipografi → semantic duplicate →
-   question-quality → runtime loader → hedefli quiz testi.
-5. `content(intake): review external cinema candidates` olarak commit et.
+Sıradaki iş, sırayla:
 
-Grok havuzu için sıradaki iş: 296 kaydı `REJECTED_LOW_QUALITY`
-(distractor-self-labeled) olarak işaretlemek ve kalan 111'i aynı hattan
-geçirmek.
+1. Sînema kataloğunu genişlet: Columbia sözlüğünün terim dizinini açıp
+   sinema-dili sorularının (yaklaşık ilk 52 kayıt) kapsandığını doğrula;
+   BFI ve MoMA künye sayfalarını `fetched` seviyesine çıkar.
+2. `QUARANTINED_UNVERIFIABLE` 121 kaydı bu kataloga karşı yeniden geçir;
+   doğrulananı `ACCEPTED_VERIFIED`, gerçek `sourceReference` ile güncelle.
+3. Yalnız doğrulanmış kayıtlarla Sînema batch'ini aktive et.
+4. Sonra Edebiyat → Teknolojî → Cografya/doğa → Dîrok → Çand/Muzîk →
+   Grok'un kalan 111'i.
+
+28 kaydın yanlış `subcategory` etiketi aktivasyondan önce düzeltilmeli;
+"Yılmaz Güney" bölümü ya gerçek Yılmaz Güney içeriğiyle doldurulmalı ya da
+etiket dürüst bir ada çekilmelidir.
 
 Girdi dosyaları salt-okunur olarak
 `scratchpad/external_authoring/opus_intake_2026_08/raw/` altında;
