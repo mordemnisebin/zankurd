@@ -1244,6 +1244,69 @@
         "correctAnswer": "expectedAnswer",
         "category": "claimType"
       }
+    },
+    {
+      "id": "verified_external_pool",
+      "description": "Kategoriler arası doğrulanmış intake havuzu",
+      "path": "docs/content/verified_external_pool_2026_08/questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "verified_external_pool",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 310,
+      "expectedRecordCount": null,
+      "notes": "Kategoriler arası doğrulanmış intake havuzu. STAGED_VERIFIED: kabul edildi ve gerçek kaynağı var, ama henüz runtime bankasına bağlı DEĞİL. Gate dışı tutulur; aktivasyon ayrı ve açık bir adımdır.",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "verified_external_pool_provenance",
+      "description": "Havuz provenance kaydı",
+      "path": "docs/content/verified_external_pool_2026_08/provenance.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "verified_external_pool",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 310,
+      "expectedRecordCount": null,
+      "notes": "Havuz provenance kaydı.",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "verified_external_pool_decisions",
+      "description": "Havuz karar kaydı",
+      "path": "docs/content/verified_external_pool_2026_08/decisions.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "verified_external_pool",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 310,
+      "expectedRecordCount": null,
+      "notes": "Havuz karar kaydı.",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
     }
   ]
 }

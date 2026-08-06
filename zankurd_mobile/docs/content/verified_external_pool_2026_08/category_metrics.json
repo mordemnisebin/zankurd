@@ -1,0 +1,17 @@
+{
+  "totalStagedVerified": 11,
+  "byCategory": {
+    "Sînema": 11
+  },
+  "byVerificationLevel": {
+    "FETCHED_DIRECT": 5,
+    "SEARCH_SUMMARY_CORROBORATED": 6
+  },
+  "skippedByDecision": {
+    "QUARANTINED_DUPLICATE": 2,
+    "QUARANTINED_UNVERIFIABLE": 111,
+    "REJECTED_WRONG_ANSWER": 1
+  },
+  "activationThreshold": 100,
+  "readyForBulkActivation": false
+}

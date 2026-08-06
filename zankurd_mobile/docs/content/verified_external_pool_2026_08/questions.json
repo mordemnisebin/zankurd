@@ -1,0 +1,277 @@
+[
+  {
+    "prompt": "Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?",
+    "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
+    "answers": [
+      "planê nêzîk (yakın çekim)",
+      "planê dûr (uzak çekim)",
+      "planê navîn (orta çekim)",
+      "plana damezrîner (establishing shot)"
+    ],
+    "answersTr": [
+      "yakın çekim",
+      "uzak çekim",
+      "orta çekim",
+      "geniş açılış çekimi"
+    ],
+    "correctAnswer": "planê nêzîk (yakın çekim)",
+    "correctAnswerTr": "yakın çekim",
+    "explanationKu": "Plana nêzîk rûyê lîstikvan an hûrgiliyekê bi awayekî mezin nîşan dide; bi vî awayî hest û reaksiyonên karakterê dibin navenda dîmenê. Planê dûr jî cih û têkiliyên di navbera hêmanan de nîşan dide.",
+    "explanationTr": "Yakın çekim, oyuncunun yüzünü ya da bir ayrıntıyı büyük ölçüde gösterir; böylece karakterin duygu ve tepkileri çerçevenin merkezine gelir. Uzak çekim ise mekânı ve öğeler arasındaki ilişkileri gösterir.",
+    "id": "ds26_cinema_0001",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?",
+    "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
+    "answers": [
+      "planê nêzîk (yakın çekim)",
+      "plana damezrîner (establishing shot)",
+      "planê serpîrî (baş üstü çekim)",
+      "çapa cemidî (freeze frame)"
+    ],
+    "answersTr": [
+      "yakın çekim",
+      "geniş açılış çekimi (establishing shot)",
+      "tepe çekimi",
+      "dondurulmuş kare"
+    ],
+    "correctAnswer": "plana damezrîner (establishing shot)",
+    "correctAnswerTr": "geniş açılış çekimi (establishing shot)",
+    "explanationKu": "Plana damezrîner di destpêka dîmenekî de cihê bûyerê, dem û hawîrdora giştî nîşanî temaşevan dide. Ev plan bi gelemperî ji dûr ve tê kişandin da ku temaşevan berî çîrokê cihê bûyerê nas bike.",
+    "explanationTr": "Geniş açılış çekimi (establishing shot), bir sahnenin başında olayın geçtiği yeri, zamanı ve genel çevreyi izleyiciye tanıtır. Bu plan genellikle uzaktan çekilir; izleyici öyküye girmeden önce mekânı kavrar.",
+    "id": "ds26_cinema_0002",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Dengê ku temaşevan dibihîze lê kesê ku dipeyive di dîmenê de xuya nake çi ye?",
+    "promptTr": "İzleyicinin duyduğu ama konuşan kişinin ekranda görünmediği ses hangisidir?",
+    "answers": [
+      "dengê dîjejîk (diegetic sound)",
+      "foley",
+      "playback",
+      "voice-over (dengê derveyî dîmenê)"
+    ],
+    "answersTr": [
+      "diejetik ses",
+      "foley sesi",
+      "playback",
+      "dış ses (voice-over)"
+    ],
+    "correctAnswer": "voice-over (dengê derveyî dîmenê)",
+    "correctAnswerTr": "dış ses (voice-over)",
+    "explanationKu": "Voice-over dengê derveyî dîmenê ye: gotinê dibihîzin lê kesê axivînir di çarçoveyê de tune. Ev teknîk bi gelemperî ji bo vegotina hundirîn, zanîna paşîn an jî vegotinekî derveyî çîrokê tê bikaranîn.",
+    "explanationTr": "Dış ses (voice-over), ekranda görünmeyen birinin sesidir; sözleri duyarız ama konuşan kişi çerçevede yoktur. Bu teknik iç monolog, arka plan bilgisi ya da öykü dışı bir anlatıcı için kullanılır.",
+    "id": "ds26_cinema_0004",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Qutbûna ku di nav dîmenekî de ji nişkê ve demê dide pêşerojê an paşerojê çi ye?",
+    "promptTr": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
+    "answers": [
+      "fade out (vedimirîn)",
+      "jump cut (qutbûna ji nişkê)",
+      "dissolve (tevlîhevî)",
+      "pan (gerandina panoramîk)"
+    ],
+    "answersTr": [
+      "karartma (fade out)",
+      "atlama kesme (jump cut)",
+      "zincirleme geçiş (dissolve)",
+      "kamera kaydırma (pan)"
+    ],
+    "correctAnswer": "jump cut (qutbûna ji nişkê)",
+    "correctAnswerTr": "atlama kesme (jump cut)",
+    "explanationKu": "Jump cut di nav dîmenekî de ji nişkê ve di dem, mekan an pozîsyonê de çavkaniyekê diafirîne û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn.",
+    "explanationTr": "Atlama kesme (jump cut), bir sahne içinde zaman, mekân ya da konumda ani bir sıçrama yaratır ve doğal bir geçiş olmadan izleyiciyi farklı bir ana taşır. Fransız Yeni Dalgası'nda bu teknik belirgin biçimde kullanılmıştır.",
+    "id": "ds26_cinema_0005",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekî de berhev dike çi ye?",
+    "promptTr": "Çerçeve içindeki tüm görsel öğeleri (dekor, ışık, oyunculuk) birleştiren kavram hangisidir?",
+    "answers": [
+      "sînematografî",
+      "montaj",
+      "mise-en-scène",
+      "senaryo"
+    ],
+    "answersTr": [
+      "sinematografi",
+      "kurgu",
+      "mise-en-scène",
+      "senaryo"
+    ],
+    "correctAnswer": "mise-en-scène",
+    "correctAnswerTr": "mise-en-scène",
+    "explanationKu": "Mise-en-scène hemû hêmanên dîtbarî yên di çarçoveyê de ye: dekor, cil, ronahî, pozîsyon û lîstika lîstikvanan. Sînematografî ji vê cuda ye; ew bi kamerayê û kişandina dîmenê ve mijûl dibe.",
+    "explanationTr": "Mise-en-scène, çerçeve içindeki tüm görsel öğelerdir: dekor, kostüm, ışık, konum ve oyunculuk. Sinematografi bundan farklıdır; kamera ve görüntü çekimiyle ilgilenir.",
+    "id": "ds26_cinema_0035",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Xelatên Oscarê cara yekem di kîjan salê de hatin pêşkêşkirin?",
+    "promptTr": "Oscar ödülleri ilk kez hangi yıl verildi?",
+    "answers": [
+      "1919",
+      "1939",
+      "1949",
+      "1929"
+    ],
+    "answersTr": [
+      "1919",
+      "1939",
+      "1949",
+      "1929"
+    ],
+    "correctAnswer": "1929",
+    "correctAnswerTr": "1929",
+    "explanationKu": "Merasima yekem a Xelatên Akademiyê (Oscar) di 16'ê gulana 1929'an de li Hollywoodê hate lidarxistin. Ji wê demê vir ve Oscar her sal tê dayîn û bûye xelata herî bi prestîj a pîşesaziya fîlmê.",
+    "explanationTr": "Akademi Ödülleri'nin (Oscar) ilk töreni 16 Mayıs 1929'da Hollywood'da yapıldı. O zamandan beri Oscar her yıl verilir ve film endüstrisinin en prestijli ödülü hâline geldi.",
+    "id": "ds26_cinema_0087",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
+    "promptTr": "Altın Palmiye hangi festivalin en büyük ödülüdür?",
+    "answers": [
+      "Festîvala Cannesê",
+      "Festîvala Venedîkê",
+      "Festîvala Berlînê",
+      "Festîvala Torontoyê"
+    ],
+    "answersTr": [
+      "Cannes Film Festivali",
+      "Venedik Film Festivali",
+      "Berlin Film Festivali",
+      "Toronto Film Festivali"
+    ],
+    "correctAnswer": "Festîvala Cannesê",
+    "correctAnswerTr": "Cannes Film Festivali",
+    "explanationKu": "Palmiya Zêrîn ji sala 1955'an vir ve xelata sereke ya Festîvala Cannesê ye ku her sal li Fransa tê lidarxistin. Venedîk xelata Şêra Zêrîn, Berlîn jî xelata Xirçika Zêrîn dide.",
+    "explanationTr": "Altın Palmiye, 1955'ten beri her yıl Fransa'da düzenlenen Cannes Film Festivali'nin ana ödülüdür. Venedik Altın Aslan, Berlin ise Altın Ayı ödülünü verir.",
+    "id": "ds26_cinema_0089",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Kîjan festîvala fîlman a herî kevn a cîhanê ye?",
+    "promptTr": "Dünyanın en eski film festivali hangisidir?",
+    "answers": [
+      "Festîvala Cannesê",
+      "Festîvala Venedîkê",
+      "Festîvala Berlînê",
+      "Festîvala Lokarnoyê"
+    ],
+    "answersTr": [
+      "Cannes Film Festivali",
+      "Venedik Film Festivali",
+      "Berlin Film Festivali",
+      "Locarno Film Festivali"
+    ],
+    "correctAnswer": "Festîvala Venedîkê",
+    "correctAnswerTr": "Venedik Film Festivali",
+    "explanationKu": "Festîvala Venedîkê di sala 1932'an de hate damezrandin û wek festîvala fîlman a herî kevn a cîhanê tê zanîn. Cannes di sala 1946'an, Berlîn jî di sala 1951'ê de dest pê kirin.",
+    "explanationTr": "Venedik Film Festivali 1932'de kuruldu ve dünyanın en eski film festivali olarak kabul edilir. Cannes 1946'da, Berlin ise 1951'de başladı.",
+    "id": "ds26_cinema_0090",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Festîvala Cannesê di kîjan welatî de tê lidarxistin?",
+    "promptTr": "Cannes Film Festivali hangi ülkede düzenlenir?",
+    "answers": [
+      "Îtalya",
+      "Fransa",
+      "Spanya",
+      "Swîsre"
+    ],
+    "answersTr": [
+      "İtalya",
+      "Fransa",
+      "İspanya",
+      "İsviçre"
+    ],
+    "correctAnswer": "Fransa",
+    "correctAnswerTr": "Fransa",
+    "explanationKu": "Festîvala Cannesê ji sala 1946'an vir ve her gulan li bajarê Cannesê ya li başûrê Fransa tê lidarxistin. Xelata wê ya sereke Palmiya Zêrîn e û festîval yek ji bûyerên herî girîng ên pîşesaziya fîlmê ye.",
+    "explanationTr": "Cannes Film Festivali, 1946'dan beri her mayıs Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir.",
+    "id": "ds26_cinema_0109",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Fîlma ku di merasima yekem a Oscarê de xelata Fîlmê ya Herî Baş wergirt çi ye?",
+    "promptTr": "İlk Oscar töreninde En İyi Film ödülünü kazanan yapım hangisidir?",
+    "answers": [
+      "The Jazz Singer",
+      "Citizen Kane",
+      "Gone with the Wind",
+      "Wings"
+    ],
+    "answersTr": [
+      "Jazz Singer",
+      "Yurttaş Kane",
+      "Rüzgâr Gibi Geçti",
+      "Kanatlar (Wings)"
+    ],
+    "correctAnswer": "Wings",
+    "correctAnswerTr": "Kanatlar (Wings)",
+    "explanationKu": "Wings (1927) di merasima yekem a Oscarê ya 1929'an de xelata Fîlmê ya Herî Baş wergirt. Ev fîlm derbarê pilotekî Şerê Cîhanê yê Yekem de ye û bi dîmenên xwe yên hewayî tê nasîn.",
+    "explanationTr": "Kanatlar (Wings, 1927), 1929'daki ilk Oscar töreninde En İyi Film ödülünü kazandı. I. Dünya Savaşı pilotlarını konu alır ve hava sahneleriyle tanınır.",
+    "id": "ds26_cinema_0111",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Kîjan saziya ku Oscarê dide di sala 1927'an de hate damezrandin?",
+    "promptTr": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
+    "answers": [
+      "AMPAS",
+      "Cannes Film Society",
+      "British Academy (BAFTA)",
+      "Tribeca Institute"
+    ],
+    "answersTr": [
+      "AMPAS",
+      "Cannes Film Cemiyeti",
+      "İngiliz Akademisi (BAFTA)",
+      "Tribeca Enstitüsü"
+    ],
+    "correctAnswer": "AMPAS",
+    "correctAnswerTr": "AMPAS",
+    "explanationKu": "Akademiya Huner û Zanistên Fîlmê (AMPAS) di sala 1927'an de li Hollywoodê hate damezrandin û ji 1929'an vir ve Xelatên Akademiyê (Oscar) dide. BAFTA ya Brîtanî û saziyên din ên ku xelatên xwe hene ji vê akademiyê cuda ne.",
+    "explanationTr": "Sinema Sanatları ve Bilimleri Akademisi (AMPAS) 1927'de Hollywood'da kuruldu ve 1929'dan beri Akademi Ödülleri'ni (Oscar) verir. İngiliz BAFTA ve kendi ödülleri olan diğer kurumlar bu akademiden farklıdır.",
+    "id": "ds26_cinema_0113",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  }
+]
