@@ -269,10 +269,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -367,10 +367,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -443,10 +443,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -475,10 +475,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -519,10 +519,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -586,9 +586,9 @@
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -651,10 +651,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -737,10 +737,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -781,10 +781,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1078,9 +1078,9 @@
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1100,9 +1100,9 @@
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1122,9 +1122,9 @@
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1144,9 +1144,9 @@
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1165,10 +1165,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1263,10 +1263,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1285,10 +1285,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1307,10 +1307,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1329,10 +1329,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1373,10 +1373,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1505,10 +1505,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1527,10 +1527,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1549,10 +1549,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -1845,10 +1845,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2021,10 +2021,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2043,10 +2043,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2087,10 +2087,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2559,10 +2559,10 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2780,9 +2780,9 @@
     "sourceCommit": "8fbbb94",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2855,10 +2855,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2877,10 +2877,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2899,10 +2899,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2921,10 +2921,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2943,10 +2943,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -2987,10 +2987,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3075,10 +3075,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3097,10 +3097,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3119,10 +3119,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3141,10 +3141,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3185,10 +3185,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3207,10 +3207,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3229,10 +3229,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3252,9 +3252,9 @@
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
     "riskClass": "C",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "REJECTED_LOW_QUALITY",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "döngüsel soru: doğru cevap soru kökündeki adı/terimi aynen tekrar ediyor (ör. \"Van hangi gölüyle tanınır?\" -> \"Van Gölü'yle\"). Oyuncu konuyu bilmeden okuyarak kazanır. Mevcut substring tabanlı answer-leak kuralı bunu görmüyordu."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3273,10 +3273,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3317,10 +3317,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3339,10 +3339,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3361,10 +3361,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3405,10 +3405,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3427,10 +3427,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,
@@ -3493,10 +3493,10 @@
     "sourceBranch": "content/author-grok-wave-01-2026-08-06",
     "sourceCommit": "8f68a50",
     "claimFamily": "physical_geography_term",
-    "riskClass": "C",
+    "riskClass": "B",
     "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "risk sınıfı C: doğrudan açılmış kurumsal kaynak bulunmadı"
+      "risk sınıfı düzeltildi C->B: bu bir gazetteer/yer bilgisi sorusu, sabit fizikî coğrafya kavramı değil. Tek açık kurumsal harita/gazetteer kaydı gerekir."
     ],
     "sourceVerificationLevel": "UNVERIFIABLE",
     "verifiedSourceReference": null,

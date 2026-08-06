@@ -516,3 +516,66 @@ doğrulansaydı bile kalıbı yüzünden aktive edilemezdi.
 2. 10 TR/KU tutarsızlığını endonime çek.
 3. Risk C'nin 54 kaydı için tek kurumsal kaynak yeterli — en ucuz kazanç.
 4. Sonra Grok Dîrok (46, risk A) ve DeepSeek Çand/Muzîk.
+
+## Tur 8 (2026-08-06) — Cografya kapanışı
+
+### Kendi risk sınıflandırmamı düzelttim
+
+Tur 7'de 54 kaydı Risk-C ("sabit fizikî coğrafya") saymıştım. İçeriğe
+bakınca çoğunun sabit kavram değil **gazetteer/yer bilgisi** olduğu görüldü:
+
+    "Elazığ hangi ilin merkezidir?"     "Barzan hangi bölgededir?"
+    "Nusaybin hangi sınırdadır?"        "Küçük Zap hangi bölgeden doğar?"
+
+Bunlar tanım değil kayıt sorusu; üstelik büyük kısmı Kürt yerleri hakkında ve
+Türkçe exonim kullanıyor. Risk sınıfı C'den B'ye çekildi. "Ova nedir",
+"Mezopotamya ne anlama gelir" gibi gerçek kavram soruları C'de kaldı.
+
+Sonuç: Risk-C'nin "yüksek verimli, tek kaynak yeter" avantajı bu batch'te
+sanıldığı kadar geniş değil.
+
+### Dördüncü kapı deliği: döngüsel soru
+
+7 kayıtta doğru cevap, soru kökündeki adı ya da terimi aynen tekrar ediyor:
+
+    "Van hangi gölüyle tanınır?"     -> "Van Gölü'yle"
+    "Elazığ hangi ilin merkezidir?"  -> "Elazığ ilinin"
+    "Coğrafyada «vadi» nedir?"       -> "iki dağ arasındaki vadi"
+
+Oyuncu konuyu bilmeden, yalnız okuyarak kazanır. Mevcut `answer-leak` kuralı
+substring tabanlı ("cevap metni soru metninin içinde mi") ve bunların
+**hiçbirini** yakalamıyor — araya kelime girdiği için eşleşme kuruluyor.
+7 kayıt `REJECTED_LOW_QUALITY`.
+
+Bu kez kurala dönüştürmedim. İlk denemem token örtüşmesine bakıyordu ve 156
+kaydın 36'sını işaretledi; incelenince çoğu yapısal sözcüktü ("metre",
+"derdora", "nêzîkî", "sînorê"). Gürültülü bir kapı kuralı, kuralsızlıktan
+kötüdür — bir önceki turda kendi `(1929)` yanlış pozitifim bunu gösterdi.
+İki dilde güvenilir stopword çalışması gerekiyor; bulgular kayıtlı, kural
+sonraki tura bırakıldı.
+
+### Cografya nihai kararlar (156)
+
+    QUARANTINED_POLITICAL_AMBIGUITY  62
+    QUARANTINED_UNVERIFIABLE         87
+    REJECTED_LOW_QUALITY              7
+
+    risk A 77   risk B 67   risk C 12
+
+Doğrulanan 0, ortak havuz 13'te sabit.
+
+### Niçin bu turda da doğrulama yapılmadı
+
+Aşama 1 "54 Risk-C'yi önce doğrula" diyordu. O 54ün 42si incelendiğinde
+Risk-C değildi; kalan 12 gerçek kavram sorusu tek bir kaynak turunu haklı
+çıkarmıyor. Yanlış etiketle hızlı doğrulama yapmak, kaynak seviyesini
+şişirmenin başka bir biçimi olurdu.
+
+### Sıradaki iş
+
+1. Döngüsel-soru kuralını iki dilli stopword listesiyle sağlam kur.
+2. 62 politik belirsizlik kaydını bölge çerçevesine yeniden yaz (hedef kalıp
+   batch içinde mevcut: "li kîjan herêma Kurdistanê ye").
+3. 10 TR/KU exonim tutarsızlığını endonime çek.
+4. Risk-B 70 kayıt için gazetteer/harita kurumu kaynağı aç.
+5. Sonra DeepSeek Çand/Muzîk, Grok'un kalan teknik adayları, en son Grok Dîrok.
