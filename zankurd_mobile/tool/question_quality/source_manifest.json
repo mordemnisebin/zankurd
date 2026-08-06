@@ -1370,6 +1370,27 @@
         "correctAnswer": "expectedAnswer",
         "category": "claimType"
       }
+    },
+    {
+      "id": "intake_decisions_technology",
+      "description": "Technology intake decision record",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/decisions_technology.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Per-claim decision record with riskClass, not a question bank.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answers",
+        "correctAnswer": "correctAnswerTr",
+        "category": "riskClass"
+      }
     }
   ]
 }

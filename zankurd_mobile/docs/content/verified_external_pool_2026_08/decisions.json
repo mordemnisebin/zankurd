@@ -97,5 +97,23 @@
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "grok26_tech_core_0040",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "risk sınıfı C: tek doğrudan açılmış kurumsal kaynak yeterli"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": "Teknolojiya Bingehîn"
+  },
+  {
+    "originalQuestionId": "grok26_tech_core_0071",
+    "OpusReviewDecision": "ACCEPTED_SELF_CONTAINED",
+    "OpusReviewReasons": [
+      "risk sınıfı D: kendi içinde çözülebilir"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": "Teknolojiya Bingehîn"
   }
 ]

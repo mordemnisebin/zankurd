@@ -163,5 +163,35 @@
     "reviewer": "opus-5",
     "finalContentHash": "728ee3a3e274a845",
     "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "grok26_tech_core_0040",
+    "sourcePool": "grok",
+    "sourceBranch": "content/author-grok-wave-01-2026-08-06",
+    "sourceCommit": "8f68a50",
+    "category": "Teknolojî",
+    "subcategory": "Teknolojiya Bingehîn",
+    "verificationLevel": "FETCHED_DIRECT",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404",
+    "exactSupportingFact": "MDN: \"The HTTP 404 Not Found client error response status code indicates that the server cannot find the requested resource.\"",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "fc1c045c9b204c83",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "grok26_tech_core_0071",
+    "sourcePool": "grok",
+    "sourceBranch": "content/author-grok-wave-01-2026-08-06",
+    "sourceCommit": "8f68a50",
+    "category": "Teknolojî",
+    "subcategory": "Teknolojiya Bingehîn",
+    "verificationLevel": "SELF_CONTAINED",
+    "sourceReference": "self-contained://binary-positional-notation",
+    "exactSupportingFact": "SELF_CONTAINED_DERIVATION: 1010(2) = 1*2^3 + 0*2^2 + 1*2^1 + 0*2^0 = 8+0+2+0 = 10(10). Dış kaynak gerekmez; çözüm adımları sorunun kendisinden türer.",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "71fcae05d7988c34",
+    "activationStatus": "STAGED_VERIFIED"
   }
 ]

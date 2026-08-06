@@ -396,3 +396,56 @@ Edebiyat'ın 25 Kürt edebiyatı kaydı, kurumsal Kürt çalışmaları kaynakla
 katalogları, British Library Kürtçe koleksiyonu) `FETCHED_DIRECT` seviyesine
 çıkarıldığında yeniden değerlendirilmeli — havuzun en yüksek değerli adayları
 bunlar.
+
+## Tur 6 (2026-08-06) — risk temelli kaynak politikası, Teknolojî
+
+Risk sınıfları uygulandı: A (yüksek hassasiyet, iki kaynak), B (otoritatif
+katalog, tek kaynak), C (sabit teknik/bilimsel, tek doğrudan kaynak),
+D (kendi içinde çözülebilir, dış kaynak gerekmez), E (doğrulanamaz).
+
+### Üçüncü kapı deliği: şablon kimliği sızıntısı
+
+Grok'un kalan 111 adayının **19'u** soru metninde iç etiket ve sıfır dolgulu
+kayıt numarası taşıyordu:
+
+    "Temel tanım: «ewle (0025)» hangisidir?"
+    "Hangi açıklama «sîstem (0036)» ile uyumludur?"
+
+`ewle` iç slug, `(0025)` kayıt numarası. Oyuncuya hiçbir şey ifade etmiyor.
+`validate_batch`'in TODO/XXX arayan `placeholder-*` kuralı bu biçimi
+görmüyordu ve 19'unu da **kabul etmişti**.
+
+Bu, aynı desenin üçüncü tekrarı: self-labelled distractor, yol deseni
+charset'i, şimdi şablon kimliği. Her seferinde kural, kusurun hangi biçimde
+geleceğini varsaydığı için varsaymadığı biçimi kaçırdı.
+
+Kural eklendi ve `distractor_integrity_test`'e bağlandı. İlk yazımda desen
+`\d{3,4}` idi ve yayımlanmış `cinema_0047`'nin meşru **"(1929)"** yılını
+şablon artığı sandı. Kayıt numarası sıfır dolguludur, yıl asla sıfırla
+başlamaz — desen `\(\s*0\d{3}\s*\)` olarak daraltıldı. Şimdi 19'u da
+yakalıyor, canlı bankalarda yanlış pozitif yok.
+
+### Teknolojî (Grok, 34 kullanılabilir aday)
+
+    risk C 14   risk D 1   risk E 19
+
+    ACCEPTED_PRIMARY_DIRECT      1   (HTTP 404, MDN'den doğrudan okundu)
+    ACCEPTED_SELF_CONTAINED      1   (1010(2)=10(10), türetme kayıtlı)
+    QUARANTINED_UNVERIFIABLE    13
+    REJECTED_INVALID_SCHEMA     19
+
+Risk C'nin 13'ü reddedilmedi, yalnız doğrulanmadı: her biri için doğrudan
+açılmış kurumsal tanım kaynağı gerekiyor (W3C/IETF/MDN/NIST/üniversite) ve
+bu turda yalnız biri açıldı.
+
+Volatil konu bulunmadı (sürüm, pazar payı, "en yeni" iddiası yok).
+
+### Ortak havuz
+
+    STAGED_VERIFIED 13   |   Sînema 11, Teknolojî 2   |   eşik 100
+
+### Sıradaki iş
+
+Cografya (DeepSeek + Grok, 31 Grok kaydı dâhil) — iki havuz tek potada
+karşılaştırılıp semantic duplicate seçimi yapılacak, ardından Dîrok (Grok 46,
+risk sınıfı A) ve Çand/Muzîk.

@@ -70,6 +70,16 @@ HEDGE = re.compile(r"\b(genellikle|bazen|çoğunlukla|bir tür|olabilir|sanılma
 ESCAPE_OPTS = re.compile(r"^\s*(hepsi|hiçbiri|yukarıdakilerin hepsi|hiçbiri değil|"
                          r"hemû|tu kes|yek jî na)\s*$", re.I)
 NEGATIVE = re.compile(r"\b(değildir|değil|olmayan|hangisi yanlış|ne dibe|nîne)\b", re.I)
+# Şablon artığı: soru metninde iç slug ve kayıt numarası kalmış.
+# 2026-08-06: Grok'un kalan 111 adayının 19'u böyleydi —
+# "Temel tanım: «ewle (0025)» hangisidir?". `ewle` iç etiket, (0025) kayıt
+# numarası; oyuncuya hiçbir şey ifade etmiyor. Mevcut `placeholder-*` kuralı
+# TODO/XXX gibi işaretlere bakıyordu, bu biçimi görmüyordu ve 19'unu da
+# kabul etmişti.
+# Kayıt numarası SIFIR DOLGULUDUR (0025); yıl asla sıfırla başlamaz.
+# İlk desen `\d{3,4}` idi ve meşru "(1929)" yılını da yakalıyordu.
+PLACEHOLDER_ID = re.compile(r"\(\s*0\d{3}\s*\)")
+
 # Şıkkın kendini yanlış ilan etmesi. Parantezli etiket en yaygın biçim,
 # ama parantezsiz sonek de görüldü ("RAM e ne rast").
 SELF_LABELED = re.compile(
@@ -182,6 +192,9 @@ class Gate:
             if SELF_LABELED.search(str(opt)):
                 errs.append("distractor-self-labeled")
                 break
+
+        if PLACEHOLDER_ID.search(p_ku) or PLACEHOLDER_ID.search(p_tr):
+            errs.append("placeholder-id-leak")
 
         expl = str(q.get("explanation") or "")
         if len(expl) < MIN_EXPL:

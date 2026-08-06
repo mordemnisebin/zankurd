@@ -1,15 +1,18 @@
 {
-  "totalStagedVerified": 11,
+  "totalStagedVerified": 13,
   "byCategory": {
-    "Sînema": 11
+    "Sînema": 11,
+    "Teknolojî": 2
   },
   "byVerificationLevel": {
-    "FETCHED_DIRECT": 5,
-    "SEARCH_SUMMARY_CORROBORATED": 6
+    "FETCHED_DIRECT": 6,
+    "SEARCH_SUMMARY_CORROBORATED": 6,
+    "SELF_CONTAINED": 1
   },
   "skippedByDecision": {
     "QUARANTINED_DUPLICATE": 2,
-    "QUARANTINED_UNVERIFIABLE": 236,
+    "QUARANTINED_UNVERIFIABLE": 249,
+    "REJECTED_INVALID_SCHEMA": 19,
     "REJECTED_WRONG_ANSWER": 1
   },
   "activationThreshold": 100,

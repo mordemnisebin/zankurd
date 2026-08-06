@@ -69,6 +69,39 @@ void main() {
     );
   });
 
+  /// Şablon artığı: soru metninde iç slug ve kayıt numarası kalması.
+  ///
+  /// 2026-08-06: Grok'un kalan 111 adayının 19'u böyleydi —
+  /// "Temel tanım: «ewle (0025)» hangisidir?". `ewle` iç etiket, `(0025)`
+  /// kayıt numarası. Oyuncuya hiçbir şey ifade etmiyor. `validate_batch`'in
+  /// TODO/XXX arayan `placeholder-*` kuralı bu biçimi görmüyordu ve 19'unu
+  /// da kabul etmişti.
+  /// Kayıt numarası SIFIR DOLGULUDUR (0025, 0036); yıl asla sıfırla
+  /// başlamaz. İlk yazımda desen `\d{3,4}` idi ve yayımlanmış
+  /// `cinema_0047`'nin meşru "(1929)" yılını şablon artığı sanmıştı.
+  final placeholderId = RegExp('\\\\(\\\\s*0\\\\d{3}\\\\s*\\\\)');
+
+  test('hiçbir soru metninde şablon kimliği kalmamış', () {
+    final offenders = <String>[];
+    banks.forEach((asset, rows) {
+      for (final q in rows) {
+        for (final field in ['prompt', 'promptTr']) {
+          final v = q[field];
+          if (v is String && placeholderId.hasMatch(v)) {
+            offenders.add('${q['id']} ($asset) $field: "$v"');
+          }
+        }
+      }
+    });
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'Soru metninde iç etiket/kayıt numarası kalmış:\n'
+          '${offenders.take(15).join("\n")}',
+    );
+  });
+
   test('bekçi gerçekten yakalıyor', () {
     // Kural yanlış yazılırsa üstteki test boş listeyle sessizce geçer.
     for (final sample in [

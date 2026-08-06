@@ -273,5 +273,55 @@
     "subcategory": "Belgefîlm û Festîval",
     "difficulty": 4,
     "type": "multipleChoice"
+  },
+  {
+    "prompt": "HTTP koda 404 bi gelemperî çi tê wateya?",
+    "promptTr": "HTTP 404 kodu genellikle ne anlama gelir?",
+    "answers": [
+      "Hemû tişt serkeftî ye",
+      "Pêwîstî bi têketinê heye",
+      "Çavkanî nehat dîtin",
+      "Server veguherî"
+    ],
+    "answersTr": [
+      "Her şey başarılı",
+      "Giriş gerekli",
+      "Kaynak bulunamadı",
+      "Sunucu yönlendirdi"
+    ],
+    "correctAnswer": "Çavkanî nehat dîtin",
+    "correctAnswerTr": "Kaynak bulunamadı",
+    "explanationKu": "404 dibêje ku server hate gihiştin lê rûpel an pelê xwestî li wir nîne.",
+    "explanationTr": "404, sunucuya ulaşıldığını ama istenen sayfa veya dosyanın orada olmadığını söyler.",
+    "id": "grok26_tech_core_0040",
+    "category": "Teknolojî",
+    "subcategory": "Teknolojiya Bingehîn",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Hejmara dual 1010 di dehî de çend e?",
+    "promptTr": "İkili 1010 sayısı onlukta kaçtır?",
+    "answers": [
+      "5",
+      "8",
+      "12",
+      "10"
+    ],
+    "answersTr": [
+      "5",
+      "8",
+      "12",
+      "10"
+    ],
+    "correctAnswer": "10",
+    "correctAnswerTr": "10",
+    "explanationKu": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her cîh hêza 2yê ye.",
+    "explanationTr": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her basamak 2'nin kuvvetidir.",
+    "id": "grok26_tech_core_0071",
+    "category": "Teknolojî",
+    "subcategory": "Teknolojiya Bingehîn",
+    "difficulty": 3,
+    "type": "multipleChoice"
   }
 ]
