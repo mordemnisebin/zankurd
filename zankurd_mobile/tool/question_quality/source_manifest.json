@@ -1538,6 +1538,27 @@
         "correctAnswer": "preferredCandidate",
         "category": "domain"
       }
+    },
+    {
+      "id": "zankurd_project_glossary",
+      "description": "Canonical ZanKurd terminology glossary",
+      "path": "docs/content/terminology/zankurd_project_glossary_v1.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_registry",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Binding terminology decision record. Contains no questions.",
+      "columns": {
+        "id": "conceptId",
+        "prompt": "EnglishConcept",
+        "options": "alternativeKurmanjiForms",
+        "correctAnswer": "projectPreferredKurmanji",
+        "category": "domain"
+      }
     }
   ]
 }
