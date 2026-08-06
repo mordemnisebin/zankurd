@@ -1,0 +1,4877 @@
+[
+ {
+  "id": "grok26_tech_core_0001",
+  "category": "Teknolojî",
+  "prompt": "Yek kîlobayt (KB) bi kevneşopî çend baytan e?",
+  "answers": [
+   "1024 bayt",
+   "1000 bayt",
+   "512 bayt",
+   "2048 bayt"
+  ],
+  "correctAnswer": "1024 bayt",
+  "promptTr": "Bir kilobayt (KB) geleneksel olarak kaç bayttır?",
+  "answersTr": [
+   "1024 bayt",
+   "1000 bayt",
+   "512 bayt",
+   "2048 bayt"
+  ],
+  "correctAnswerTr": "1024 bayt",
+  "explanation": "Geleneksel bilgisayar hesabında 1 KB = 1024 bayttır çünkü 2 üzeri 10'dur. Bazı yeni standartlarda 1000 de kullanılır ama klasik sistemlerde 1024 kabul edilir.",
+  "explanationTr": "Geleneksel bilgisayar hesabında 1 KB = 1024 bayttır çünkü 2 üzeri 10'dur. Bazı yeni standartlarda 1000 de kullanılır ama klasik sistemlerde 1024 kabul edilir.",
+  "explanationKu": "Di hesabên kompîterê yên kevneşopî de 1 KB = 1024 bayt e, ji ber ku 2 bi hêza 10 e. Di hin standardên nû de 1000 jî tê bikaranîn, lê di pergalên klasîk de 1024 tê pejirandin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=139d8df68f39ebf0",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr-yêkîne",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "139d8df68f39ebf0"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0002",
+  "category": "Teknolojî",
+  "prompt": "Yek megabayt (MB) bi kevneşopî çend kîlobaytan e?",
+  "answers": [
+   "100 KB",
+   "1024 KB",
+   "512 KB (çewt)",
+   "2048 KB"
+  ],
+  "correctAnswer": "1024 KB",
+  "promptTr": "Bir megabayt (MB) geleneksel olarak kaç kilobayttır?",
+  "answersTr": [
+   "100 KB",
+   "1024 KB",
+   "512 KB (yanlış)",
+   "2048 KB"
+  ],
+  "correctAnswerTr": "1024 KB",
+  "explanation": "Geleneksel ikili hesapta 1 MB = 1024 KB'dir. Bu ölçü ikili (binary) kuvvetlere dayanır.",
+  "explanationTr": "Geleneksel ikili hesapta 1 MB = 1024 KB'dir. Bu ölçü ikili (binary) kuvvetlere dayanır.",
+  "explanationKu": "1 MB di hesabê dîjîtal ê kevneşopî de 1024 KB ye. Ev pîvan li ser hêzên duyan (binary) ava ye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=9b25d069b767486e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr-yêkîne",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9b25d069b767486e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0003",
+  "category": "Teknolojî",
+  "prompt": "RAM di kompîterê de bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Tomarkirina mayînde ya pelan",
+   "Çapkirina kaxezê",
+   "Daneyên çalak ên demkurt",
+   "Pêwendiya înternetê"
+  ],
+  "correctAnswer": "Daneyên çalak ên demkurt",
+  "promptTr": "RAM bilgisayarda esas olarak ne için kullanılır?",
+  "answersTr": [
+   "Kalıcı dosya saklama",
+   "Kâğıt yazdırma",
+   "Geçici aktif veriler",
+   "İnternet bağlantısı"
+  ],
+  "correctAnswerTr": "Geçici aktif veriler",
+  "explanation": "RAM çalışma belleğidir; açık program ve veriler elektrik varken orada durur. Kalıcı dosyalar diskte saklanır.",
+  "explanationTr": "RAM çalışma belleğidir; açık program ve veriler elektrik varken orada durur. Kalıcı dosyalar diskte saklanır.",
+  "explanationKu": "RAM bîra xebatê ye; bername û daneyên çalak li wir dimînin heya ku elektrîk hebe. Pelên mayînde li dîskê têne hilanîn.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=938427e2af010aa0",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr-yêkîne",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "938427e2af010aa0"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0004",
+  "category": "Teknolojî",
+  "prompt": "Kîjan amûr bi gelemperî daneyan bi awayekî mayînde hildigire?",
+  "answers": [
+   "RAM (ne rast) (ne rastîn)",
+   "Cache ya CPU",
+   "Register",
+   "Dîska hişk (HDD/SSD)"
+  ],
+  "correctAnswer": "Dîska hişk (HDD/SSD)",
+  "promptTr": "Hangisi verileri genellikle kalıcı biçimde saklar?",
+  "answersTr": [
+   "RAM (yanlış) (geçersiz)",
+   "CPU önbelleği",
+   "Yazmaç",
+   "Sabit disk (HDD/SSD)"
+  ],
+  "correctAnswerTr": "Sabit disk (HDD/SSD)",
+  "explanation": "HDD ve SSD veriyi elektriksiz de tutar. RAM, önbellek ve yazmaç geçicidir; elektrik kesilince silinir.",
+  "explanationTr": "HDD ve SSD veriyi elektriksiz de tutar. RAM, önbellek ve yazmaç geçicidir; elektrik kesilince silinir.",
+  "explanationKu": "HDD û SSD daneyan bêyî elektrîk jî digirin. RAM, cache û register demkurt in û elektrîk çûyî de naşopînin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f2fffeba097bd3fe",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hilanîn",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f2fffeba097bd3fe"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0005",
+  "category": "Teknolojî",
+  "prompt": "SSD ji HDD-yê bi giranî çawa cuda ye?",
+  "answers": [
+   "Zêdetir germê çêdike",
+   "Parçeyên tevger ên mekanîkî nînin",
+   "Tenê bi kaxezê dixebite",
+   "RAM e (ne rast)"
+  ],
+  "correctAnswer": "Parçeyên tevger ên mekanîkî nînin",
+  "promptTr": "SSD, HDD'den esas olarak nasıl ayrılır?",
+  "answersTr": [
+   "Daha çok ısı üretir",
+   "Hareketli mekanik parçası yoktur",
+   "Yalnızca kâğıtla çalışır",
+   "RAM'dir (yanlış)"
+  ],
+  "correctAnswerTr": "Hareketli mekanik parçası yoktur",
+  "explanation": "SSD flaş çiplerdedir ve dönen parçası yoktur; bu yüzden genelde daha hızlı ve sessizdir. HDD mekanik plakalar döndürür.",
+  "explanationTr": "SSD flaş çiplerdedir ve dönen parçası yoktur; bu yüzden genelde daha hızlı ve sessizdir. HDD mekanik plakalar döndürür.",
+  "explanationKu": "SSD li ser çîpên flash e û parçeyên zivirî nînin; ji ber vê yekê bi gelemperî bileztir û bêdengtir e. HDD plakên mekanîkî dizivirîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=68593291f7adeb3c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hilanîn",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "68593291f7adeb3c"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0006",
+  "category": "Teknolojî",
+  "prompt": "Klavye di kompîterê de kîjan cure amûr e?",
+  "answers": [
+   "Amûra têketinê (input)",
+   "Amûra derketinê (output)",
+   "Amûra hilanînê",
+   "Pêvajoker"
+  ],
+  "correctAnswer": "Amûra têketinê (input)",
+  "promptTr": "Klavye bilgisayarda ne tür bir aygıttır?",
+  "answersTr": [
+   "Giriş aygıtı (input)",
+   "Çıkış aygıtı (output)",
+   "Saklama aygıtı",
+   "İşlemci"
+  ],
+  "correctAnswerTr": "Giriş aygıtı (input)",
+  "explanation": "Klavye komut ve yazıyı sisteme verir; bu yüzden giriş aygıtıdır. Ekran ve yazıcı çıkış aygıtıdır.",
+  "explanationTr": "Klavye komut ve yazıyı sisteme verir; bu yüzden giriş aygıtıdır. Ekran ve yazıcı çıkış aygıtıdır.",
+  "explanationKu": "Klavye ferman û nivîsê dide pergalê; loma amûra têketinê ye. Ekran û çapker derketinê ne.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=3a599e2ebb5abd75",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têketin-derketin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "3a599e2ebb5abd75"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0007",
+  "category": "Teknolojî",
+  "prompt": "Monitor bi giranî kîjan rolê dilîze?",
+  "answers": [
+   "Amûra têketina deng — şaş e",
+   "Yêkîneya hêzê",
+   "Kart a torê (ne rast)",
+   "Amûra derketinê ya dîtbar"
+  ],
+  "correctAnswer": "Amûra derketinê ya dîtbar",
+  "promptTr": "Monitör esas olarak hangi rolü oynar?",
+  "answersTr": [
+   "Ses giriş aygıtı — hatalı",
+   "Güç ünitesi",
+   "Ağ kartı (yanlış)",
+   "Görsel çıkış aygıtı"
+  ],
+  "correctAnswerTr": "Görsel çıkış aygıtı",
+  "explanation": "Monitör görüntü ve yazı gösterir; bu görsel çıkıştır. Mikrofon ses girişidir.",
+  "explanationTr": "Monitör görüntü ve yazı gösterir; bu görsel çıkıştır. Mikrofon ses girişidir.",
+  "explanationKu": "Monitor wêne û nivîsê nîşan dide; ev derketina dîtbar e. Mîkrofon têketina deng e.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f561b1da281b4174",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têketin-derketin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f561b1da281b4174"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0008",
+  "category": "Teknolojî",
+  "prompt": "CPU di nav xwe de kîjan beşa sereke fermanan dixe meriyetê?",
+  "answers": [
+   "Dîska derve",
+   "Çapker (ne rast) (ne rastîn) (ne rastîn)",
+   "Yekîneya kontrol û arîtmetîkê (ALU/CU)",
+   "Klavyeya derveyî"
+  ],
+  "correctAnswer": "Yekîneya kontrol û arîtmetîkê (ALU/CU)",
+  "promptTr": "CPU içinde komutları yürüten ana bölüm hangisidir?",
+  "answersTr": [
+   "Harici disk",
+   "Yazıcı (yanlış) (geçersiz) (geçersiz)",
+   "Denetim ve aritmetik birimi (ALU/CU)",
+   "Harici klavye"
+  ],
+  "correctAnswerTr": "Denetim ve aritmetik birimi (ALU/CU)",
+  "explanation": "CPU komutları alır, CU'da denetler ve ALU'da hesaplar. Disk ve yazıcı dış birimlerdir.",
+  "explanationTr": "CPU komutları alır, CU'da denetler ve ALU'da hesaplar. Disk ve yazıcı dış birimlerdir.",
+  "explanationKu": "CPU fermanan digire, di CU de kontrol dike û di ALU de hesab dike. Dîsk û çapker parçeyên derveyî ne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b0bd6c3107d2af3c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pêvajoker",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b0bd6c3107d2af3c"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0009",
+  "category": "Teknolojî",
+  "prompt": "Pergala xebitandinê (OS) bi giranî çi dike?",
+  "answers": [
+   "Çavkaniyên hişk û nerm birêve dibe",
+   "Tenê lîstikan dilîze",
+   "Tenê înternetê vedike",
+   "Baytan dişewitîne (ne rast)"
+  ],
+  "correctAnswer": "Çavkaniyên hişk û nerm birêve dibe",
+  "promptTr": "İşletim sistemi (OS) esas olarak ne yapar?",
+  "answersTr": [
+   "Donanım ve yazılım kaynaklarını yönetir",
+   "Yalnızca oyun oynar",
+   "Yalnızca internet açar",
+   "Bayt yakar (yanlış)"
+  ],
+  "correctAnswerTr": "Donanım ve yazılım kaynaklarını yönetir",
+  "explanation": "OS bellek, süreç, dosya ve aygıtları yönetir; programları donanımda çalıştırır. Tek bir uygulama değildir.",
+  "explanationTr": "OS bellek, süreç, dosya ve aygıtları yönetir; programları donanımda çalıştırır. Tek bir uygulama değildir.",
+  "explanationKu": "OS bîr, pêvajoyan, pelan û amûran birêve dibe; bernameyan li ser hişkê dixebitîne. Ew ne tenê yek bername ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=33250aa73cad2566",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pergala-xebitandinê",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "33250aa73cad2566"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0010",
+  "category": "Teknolojî",
+  "prompt": "Ji van kîjan mînaka pergala xebitandinê ye?",
+  "answers": [
+   "HTTP (ne rast)",
+   "Linux",
+   "HTML",
+   "JPEG"
+  ],
+  "correctAnswer": "Linux",
+  "promptTr": "Hangisi bir işletim sistemi örneğidir?",
+  "answersTr": [
+   "HTTP (yanlış)",
+   "Linux",
+   "HTML",
+   "JPEG"
+  ],
+  "correctAnswerTr": "Linux",
+  "explanation": "Linux bir işletim sistemidir. HTTP protokol, HTML sayfa dili, JPEG görüntü biçimidir.",
+  "explanationTr": "Linux bir işletim sistemidir. HTTP protokol, HTML sayfa dili, JPEG görüntü biçimidir.",
+  "explanationKu": "Linux pergala xebitandinê ye. HTTP protokol e, HTML zimanê rûpelan e, JPEG formata wêneyê ye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=30ae48da832bb14f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pergala-xebitandinê",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "30ae48da832bb14f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0011",
+  "category": "Teknolojî",
+  "prompt": "Pelê bi pêveka «.txt» bi gelemperî çi digire?",
+  "answers": [
+   "Vîdyoya pêçandî",
+   "Bernameya cîbicîkirî",
+   "Nivîsa sade",
+   "Tor a sêwirandî"
+  ],
+  "correctAnswer": "Nivîsa sade",
+  "promptTr": "«.txt» uzantılı dosya genellikle ne içerir?",
+  "answersTr": [
+   "Sıkıştırılmış video",
+   "Çalıştırılabilir program",
+   "Düz metin",
+   "Tasarlanmış ağ"
+  ],
+  "correctAnswerTr": "Düz metin",
+  "explanation": ".txt uzantısı düz metin içindir; görüntü, video veya program biçimleri farklıdır.",
+  "explanationTr": ".txt uzantısı düz metin içindir; görüntü, video veya program biçimleri farklıdır.",
+  "explanationKu": "Pêveka .txt ji bo nivîsa sade ye; formatên wêne, vîdyo an bername cuda ne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=1bd72244048f9b27",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pel-format",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1bd72244048f9b27"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0012",
+  "category": "Teknolojî",
+  "prompt": "Formata JPEG bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Tomara deng a bêwindahî",
+   "Koda çavkaniyê",
+   "Cedwel a hesab",
+   "Wêneyên dîjîtal"
+  ],
+  "correctAnswer": "Wêneyên dîjîtal",
+  "promptTr": "JPEG biçimi esas olarak ne için kullanılır?",
+  "answersTr": [
+   "Kayıpsız ses kaydı",
+   "Kaynak kod",
+   "Hesap tablosu",
+   "Dijital görüntüler"
+  ],
+  "correctAnswerTr": "Dijital görüntüler",
+  "explanation": "JPEG bir görüntü biçimidir ve kayıplı sıkıştırma kullanır. Ses, kod ve tablo başka biçimlerdir.",
+  "explanationTr": "JPEG bir görüntü biçimidir ve kayıplı sıkıştırma kullanır. Ses, kod ve tablo başka biçimlerdir.",
+  "explanationKu": "JPEG formata wêneyê ye û pêçandina windahîdar bikar tîne. Deng, kod û cedwel formatên din in.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=44ae6d8158788168",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pel-format",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "44ae6d8158788168"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0013",
+  "category": "Teknolojî",
+  "prompt": "URL di înternetê de çi nîşan dide?",
+  "answers": [
+   "Leza pêvajokerê",
+   "Navnîşana çavkaniyekê li ser torê",
+   "Mezinahiya RAM-ê",
+   "Rengê ekranê (ne rast)"
+  ],
+  "correctAnswer": "Navnîşana çavkaniyekê li ser torê",
+  "promptTr": "URL internette neyi gösterir?",
+  "answersTr": [
+   "İşlemci hızını",
+   "Ağ üzerindeki bir kaynağın adresini",
+   "RAM boyutunu",
+   "Ekran rengini (yanlış)"
+  ],
+  "correctAnswerTr": "Ağ üzerindeki bir kaynağın adresini",
+  "explanation": "URL (Uniform Resource Locator), ağdaki sayfa, görüntü veya dosyanın yerini belirtir.",
+  "explanationTr": "URL (Uniform Resource Locator), ağdaki sayfa, görüntü veya dosyanın yerini belirtir.",
+  "explanationKu": "URL (Uniform Resource Locator) cihê rûpel, wêne an pelê li ser torê diyar dike.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c690e5f37b0e1de0",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c690e5f37b0e1de0"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0014",
+  "category": "Teknolojî",
+  "prompt": "DNS di înternetê de kîjan karî dike?",
+  "answers": [
+   "Navên domain vediguherîne navnîşanên IP",
+   "Wêneyan mezin dike",
+   "CPU hênik dike (ne rast) (çewt) (çewt) (çewt)",
+   "Pelan çap dike"
+  ],
+  "correctAnswer": "Navên domain vediguherîne navnîşanên IP",
+  "promptTr": "DNS internette hangi işi yapar?",
+  "answersTr": [
+   "Alan adlarını IP adreslerine çevirir",
+   "Görselleri büyütür",
+   "CPU soğutur (yanlış) (yanlış) (yanlış) (yanlış)",
+   "Dosya yazdırır"
+  ],
+  "correctAnswerTr": "Alan adlarını IP adreslerine çevirir",
+  "explanation": "DNS ornek.com gibi adı bir IP sayısına çevirir ki bilgisayar sunucuya ulaşsın.",
+  "explanationTr": "DNS ornek.com gibi adı bir IP sayısına çevirir ki bilgisayar sunucuya ulaşsın.",
+  "explanationKu": "DNS navê mîna mînak.com dike hejmareke IP da ku kompîter bigihîje serverê.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e5b869a534d74b53",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e5b869a534d74b53"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0015",
+  "category": "Teknolojî",
+  "prompt": "Protokola HTTPS ji HTTP-yê bi çi cuda ye?",
+  "answers": [
+   "Leza dîskê zêde dike",
+   "RAM diguherîne (ne rast)",
+   "Klavyeyê vedike — şaş e — şaş e",
+   "Şîfrekirina pêwendiyê (TLS/SSL)"
+  ],
+  "correctAnswer": "Şîfrekirina pêwendiyê (TLS/SSL)",
+  "promptTr": "HTTPS protokolü HTTP'den neyle ayrılır?",
+  "answersTr": [
+   "Disk hızını artırır",
+   "RAM değiştirir (yanlış)",
+   "Klavyeyi açar — hatalı — hatalı",
+   "Bağlantı şifrelemesi (TLS/SSL)"
+  ],
+  "correctAnswerTr": "Bağlantı şifrelemesi (TLS/SSL)",
+  "explanation": "HTTPS iletişimi TLS/SSL ile şifreler; gizlilik ve bütünlük için önemlidir. HTTP kendi başına şifresizdir.",
+  "explanationTr": "HTTPS iletişimi TLS/SSL ile şifreler; gizlilik ve bütünlük için önemlidir. HTTP kendi başına şifresizdir.",
+  "explanationKu": "HTTPS danûstendinê bi TLS/SSL dişîfre dike; ev ji bo nepenî û rastbûnê girîng e. HTTP bi xwe neşîfrekirî ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=ba065945631a8215",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ba065945631a8215"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0016",
+  "category": "Teknolojî",
+  "prompt": "Gerok (browser) ji bo çi tê bikaranîn?",
+  "answers": [
+   "Sermaseyê fêkî kirin (ne rastîn)",
+   "Tenê dîskê format kirin",
+   "Vekirin û nîşandana rûpelên webê",
+   "Pîla şarj kirin (ne rast)"
+  ],
+  "correctAnswer": "Vekirin û nîşandana rûpelên webê",
+  "promptTr": "Tarayıcı (browser) ne için kullanılır?",
+  "answersTr": [
+   "Masayı silmek (geçersiz)",
+   "Yalnızca disk biçimlemek",
+   "Web sayfalarını açmak ve göstermek",
+   "Pili şarj etmek (yanlış)"
+  ],
+  "correctAnswerTr": "Web sayfalarını açmak ve göstermek",
+  "explanation": "Tarayıcı HTML ve web kaynaklarını okur ve sayfayı gösterir. Saklama veya güç aygıtı değildir.",
+  "explanationTr": "Tarayıcı HTML ve web kaynaklarını okur ve sayfayı gösterir. Saklama veya güç aygıtı değildir.",
+  "explanationKu": "Gerok HTML û çavkaniyên webê dixwîne û rûpelê nîşan dide. Ew ne amûra hilanîn an hêzê ye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e3029e82d929e005",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e3029e82d929e005"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0017",
+  "category": "Teknolojî",
+  "prompt": "IP-navnîşan di torê de çi ye?",
+  "answers": [
+   "Nasnameya lojîk a cîhazekê li ser torê",
+   "Rengê kabelê (ne rast)",
+   "Mezinahiya ekranê",
+   "Dirêjahiya klavyeyê"
+  ],
+  "correctAnswer": "Nasnameya lojîk a cîhazekê li ser torê",
+  "promptTr": "Ağda IP adresi nedir?",
+  "answersTr": [
+   "Ağdaki bir aygıtın mantıksal kimliği",
+   "Kablo rengi (yanlış)",
+   "Ekran boyutu",
+   "Klavye uzunluğu"
+  ],
+  "correctAnswerTr": "Ağdaki bir aygıtın mantıksal kimliği",
+  "explanation": "Ağdaki her aygıt, paketlerin doğru yere gitmesi için bir IP ile tanımlanır.",
+  "explanationTr": "Ağdaki her aygıt, paketlerin doğru yere gitmesi için bir IP ile tanımlanır.",
+  "explanationKu": "Her cîhazê torê bi IP-yekê tê naskirin da ku paket bigihîjin cihê rast.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=56ee7683ac71dadd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "56ee7683ac71dadd"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0018",
+  "category": "Teknolojî",
+  "prompt": "Wi-Fi bi giranî çi pêşkêş dike?",
+  "answers": [
+   "Şewitandina CD-yan",
+   "Pêwendiya torê ya bêtêl",
+   "Çêkirina pîlan (ne rast)",
+   "Mezinahiya RAM-ê"
+  ],
+  "correctAnswer": "Pêwendiya torê ya bêtêl",
+  "promptTr": "Wi-Fi esas olarak ne sağlar?",
+  "answersTr": [
+   "CD yakma",
+   "Kablosuz ağ bağlantısı",
+   "Pil üretme (yanlış)",
+   "RAM boyutu"
+  ],
+  "correctAnswerTr": "Kablosuz ağ bağlantısı",
+  "explanation": "Wi-Fi aygıtları yerel ağa veya internete kablosuz bağlar.",
+  "explanationTr": "Wi-Fi aygıtları yerel ağa veya internete kablosuz bağlar.",
+  "explanationKu": "Wi-Fi cîhazan bi tora herêmî an înternetê ve bi awayekî bêtêl girê dide.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=2aff4397a2e1d0c2",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "2aff4397a2e1d0c2"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0019",
+  "category": "Teknolojî",
+  "prompt": "Nermalav (software) çi ye?",
+  "answers": [
+   "Tenê kabloyên metal — şaş e — şaş e — şaş e",
+   "Parçeya plastîk a qutiyê",
+   "Bername û rêwerzên ku li ser hişkê dixebitin",
+   "Batin a dîskê (ne rast)"
+  ],
+  "correctAnswer": "Bername û rêwerzên ku li ser hişkê dixebitin",
+  "promptTr": "Yazılım (software) nedir?",
+  "answersTr": [
+   "Yalnızca metal kablolar — hatalı — hatalı — hatalı",
+   "Kasanın plastik parçası",
+   "Donanımda çalışan program ve yönergeler",
+   "Disk tepsisi (yanlış)"
+  ],
+  "correctAnswerTr": "Donanımda çalışan program ve yönergeler",
+  "explanation": "Yazılım programlar kümesidir; donanım fiziksel parçalardır. İkisi birlikte çalışır.",
+  "explanationTr": "Yazılım programlar kümesidir; donanım fiziksel parçalardır. İkisi birlikte çalışır.",
+  "explanationKu": "Nermalav koma bernameyan e; hişk jî parçeyên fîzîkî ne. Her du bi hev re dixebitin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f5113438f51d0d21",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nermalav",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f5113438f51d0d21"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0020",
+  "category": "Teknolojî",
+  "prompt": "Hişk (hardware) çi ye?",
+  "answers": [
+   "Tenê pelên nivîsê",
+   "Tenê şîfreyên bikarhêner (ne rastîn)",
+   "Rêzikên qanûnê (ne rast)",
+   "Parçeyên fîzîkî yên kompîterê"
+  ],
+  "correctAnswer": "Parçeyên fîzîkî yên kompîterê",
+  "promptTr": "Donanım (hardware) nedir?",
+  "answersTr": [
+   "Yalnızca metin dosyaları",
+   "Yalnızca kullanıcı parolaları (geçersiz)",
+   "Yasa maddeleri (yanlış)",
+   "Bilgisayarın fiziksel parçaları"
+  ],
+  "correctAnswerTr": "Bilgisayarın fiziksel parçaları",
+  "explanation": "Donanım CPU, RAM, disk, ekran vb.dir — elle tutulur parçalardır.",
+  "explanationTr": "Donanım CPU, RAM, disk, ekran vb.dir — elle tutulur parçalardır.",
+  "explanationKu": "Hişk CPU, RAM, dîsk, ekran û hwd. e — tiştên ku mirov dikare bi dest bihêle.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=7a44eab53c2debc8",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hişk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "7a44eab53c2debc8"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0021",
+  "category": "Teknolojî",
+  "prompt": "Di programkirinê de guhêrbar (variable) çi digire?",
+  "answers": [
+   "Tenê navê dosyayê",
+   "Nirxek ku dikare biguhere",
+   "Rengê sermaseyê",
+   "Voltaja pîlê (ne rast)"
+  ],
+  "correctAnswer": "Nirxek ku dikare biguhere",
+  "promptTr": "Programlamada değişken (variable) ne tutar?",
+  "answersTr": [
+   "Yalnızca dosya adı",
+   "Değişebilen bir değer",
+   "Masaüstü rengi",
+   "Pil voltajı (yanlış)"
+  ],
+  "correctAnswerTr": "Değişebilen bir değer",
+  "explanation": "Değişken bellekte programın sayı, metin veya başka veri tutup değiştirdiği yerdir.",
+  "explanationTr": "Değişken bellekte programın sayı, metin veya başka veri tutup değiştirdiği yerdir.",
+  "explanationKu": "Guhêrbar di bîrê de cîhek e ku bername tê de hejmar, nivîs an daneyên din digire û diguherîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=5c394a55aed9a809",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5c394a55aed9a809"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0022",
+  "category": "Teknolojî",
+  "prompt": "Algorithmek çi ye?",
+  "answers": [
+   "Rêza gavan a çareserkirina pirsgirêkekê",
+   "Cureyê kabloyê (ne rast) (çewt) (çewt) (çewt)",
+   "Mezinahiya ekranê",
+   "Navê markaya CPU"
+  ],
+  "correctAnswer": "Rêza gavan a çareserkirina pirsgirêkekê",
+  "promptTr": "Algoritma nedir?",
+  "answersTr": [
+   "Bir sorunu çözmek için adımlar dizisi",
+   "Kablo türü (yanlış) (yanlış) (yanlış) (yanlış)",
+   "Ekran boyutu",
+   "CPU marka adı"
+  ],
+  "correctAnswerTr": "Bir sorunu çözmek için adımlar dizisi",
+  "explanation": "Algoritma mantıksal yöntemdir: girdi, açık adımlar, çıktı. Farklı dillerde yazılabilir.",
+  "explanationTr": "Algoritma mantıksal yöntemdir: girdi, açık adımlar, çıktı. Farklı dillerde yazılabilir.",
+  "explanationKu": "Algoritm rêbaza lojîk e: têketin, gavên zelal, derketin. Dikare bi zimanên cuda were nivîsandin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=349de03b9b849621",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "349de03b9b849621"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0023",
+  "category": "Teknolojî",
+  "prompt": "Di gelek zimanan de «loop» ji bo çi tê bikaranîn?",
+  "answers": [
+   "Jêbirina dîskê (ne rast)",
+   "Girtina elektrîkê — şaş e — şaş e",
+   "Yekcar çapkirina kaxezê",
+   "Dubarekirina komek fermanan"
+  ],
+  "correctAnswer": "Dubarekirina komek fermanan",
+  "promptTr": "Birçok dilde «loop» ne için kullanılır?",
+  "answersTr": [
+   "Diski silmek (yanlış)",
+   "Elektriği kesmek — hatalı — hatalı",
+   "Kâğıdı bir kez yazdırmak",
+   "Bir komut kümesini yinelemek"
+  ],
+  "correctAnswerTr": "Bir komut kümesini yinelemek",
+  "explanation": "Döngü (loop) komutları bir koşula veya sayıya kadar yineler; tekrarlayan işler için önemlidir.",
+  "explanationTr": "Döngü (loop) komutları bir koşula veya sayıya kadar yineler; tekrarlayan işler için önemlidir.",
+  "explanationKu": "Loop (çerx) fermanan heya şertekê an hejmareke diyarkirî dubare dike; ev ji bo karên dubare girîng e.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c9ba2dc5b384d546",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c9ba2dc5b384d546"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0024",
+  "category": "Teknolojî",
+  "prompt": "Şaşiyeke «syntax error» kengê derdikeve?",
+  "answers": [
+   "Tenê dîsk tijî be",
+   "Tenê înternet qut be",
+   "Koda li gorî rêzikên zimanê nehatibe nivîsandin",
+   "Ekran tarî be (ne rast) (ne rastîn) (ne rastîn) (ne rastîn)"
+  ],
+  "correctAnswer": "Koda li gorî rêzikên zimanê nehatibe nivîsandin",
+  "promptTr": "Bir «sözdizimi hatası» ne zaman ortaya çıkar?",
+  "answersTr": [
+   "Yalnızca disk doluysa",
+   "Yalnızca internet kesikse",
+   "Kod dil kurallarına göre yazılmamışsa",
+   "Ekran karanlıksa (yanlış) (geçersiz) (geçersiz) (geçersiz)"
+  ],
+  "correctAnswerTr": "Kod dil kurallarına göre yazılmamışsa",
+  "explanation": "Sözdizimi hatası kod yazımı dil gramerine uymayınca olur; program genelde çalışmaz.",
+  "explanationTr": "Sözdizimi hatası kod yazımı dil gramerine uymayınca olur; program genelde çalışmaz.",
+  "explanationKu": "Syntax error dema ku nivîsara kodê li gorî gramer a zimanê nabe; bername bi gelemperî naxe meriyetê.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=9682e0b6451fd23b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9682e0b6451fd23b"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0025",
+  "category": "Teknolojî",
+  "prompt": "Şîfreyeke xurt bi gelemperî çi dihewîne?",
+  "answers": [
+   "Tîp, hejmar û nîşanên cuda yên dirêj",
+   "Tenê sala jidayikbûnê",
+   "Tenê navê bikarhêner",
+   "Tenê 1234 (ne rast)"
+  ],
+  "correctAnswer": "Tîp, hejmar û nîşanên cuda yên dirêj",
+  "promptTr": "Güçlü bir parola genellikle ne içerir?",
+  "answersTr": [
+   "Uzun ve çeşitli harf, sayı ve işaretler",
+   "Yalnızca doğum yılı",
+   "Yalnızca kullanıcı adı",
+   "Yalnızca 1234 (yanlış)"
+  ],
+  "correctAnswerTr": "Uzun ve çeşitli harf, sayı ve işaretler",
+  "explanation": "Güçlü parola uzundur ve karışıktır; kolay tahmin edilenler (ad, doğum yılı) zayıftır.",
+  "explanationTr": "Güçlü parola uzundur ve karışıktır; kolay tahmin edilenler (ad, doğum yılı) zayıftır.",
+  "explanationKu": "Şîfreya xurt dirêj e û têkel e; hêsan têne pêşbînîkirin (nav, sala jidayikbûnê) lawaz in.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=7515f6485972bdcd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "7515f6485972bdcd"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0026",
+  "category": "Teknolojî",
+  "prompt": "Phishing bi giranî dixwaze çi bike?",
+  "answers": [
+   "Leza CPU zêde bike",
+   "Bi xapandinê agahiyên nepen bistîne",
+   "RAM mezin bike (ne rast) (çewt) (çewt)",
+   "Dîskê paqij bike"
+  ],
+  "correctAnswer": "Bi xapandinê agahiyên nepen bistîne",
+  "promptTr": "Oltalama (phishing) esas olarak neyi amaçlar?",
+  "answersTr": [
+   "CPU hızını artırmak",
+   "Aldatarak gizli bilgi elde etmek",
+   "RAM büyütmek (yanlış) (yanlış) (yanlış)",
+   "Diski temizlemek"
+  ],
+  "correctAnswerTr": "Aldatarak gizli bilgi elde etmek",
+  "explanation": "Phishing sahte e-posta veya sitelerle kullanıcıyı kandırıp parola veya banka verisi almaya çalışır.",
+  "explanationTr": "Phishing sahte e-posta veya sitelerle kullanıcıyı kandırıp parola veya banka verisi almaya çalışır.",
+  "explanationKu": "Phishing bi e-name an malperên sexte bikarhêner dixapîne da ku şîfre an daneyên bankê bidin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=0dba6cbf5839cf6f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0dba6cbf5839cf6f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0027",
+  "category": "Teknolojî",
+  "prompt": "Nûvekirina nermalavê bi gelemperî çima girîng e?",
+  "answers": [
+   "Rengê qutiyê diguherîne",
+   "Kabloyê kurt dike",
+   "Kêmasî û qulên ewlehiyê dadigire",
+   "Pîlê giran dike (ne rast) — şaş e"
+  ],
+  "correctAnswer": "Kêmasî û qulên ewlehiyê dadigire",
+  "promptTr": "Yazılım güncellemesi genellikle neden önemlidir?",
+  "answersTr": [
+   "Kasa rengini değiştirir",
+   "Kabloyu kısaltır",
+   "Açık ve güvenlik deliklerini kapatır",
+   "Pili ağırlaştırır (yanlış) — hatalı"
+  ],
+  "correctAnswerTr": "Açık ve güvenlik deliklerini kapatır",
+  "explanation": "Güncelleme hataları düzeltir ve saldırganların kullandığı açıkları kapatır; güvenliği güçlendirir.",
+  "explanationTr": "Güncelleme hataları düzeltir ve saldırganların kullandığı açıkları kapatır; güvenliği güçlendirir.",
+  "explanationKu": "Nûvekirin çewtiyan sererast dike û qulên ku êrîşkar bikar tînin digire; loma ewlehiyê xurt dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6abc9850ccece590",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6abc9850ccece590"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0028",
+  "category": "Teknolojî",
+  "prompt": "Kopiyeke yedek (backup) ji bo çi baş e?",
+  "answers": [
+   "Zêdekirina germê ya CPU (ne rastîn)",
+   "Jêbirina hemû şîfreyan",
+   "Girtina Wi-Fi bi zorê (ne rast)",
+   "Dema daneyên winda bibin vegerandin"
+  ],
+  "correctAnswer": "Dema daneyên winda bibin vegerandin",
+  "promptTr": "Yedek kopya (backup) ne işe yarar?",
+  "answersTr": [
+   "CPU ısısını artırma (geçersiz)",
+   "Tüm parolaları silme",
+   "Wi-Fi'yi zorla kapatma (yanlış)",
+   "Veri kaybında geri yükleme"
+  ],
+  "correctAnswerTr": "Veri kaybında geri yükleme",
+  "explanation": "Yedek veriyi başka yerde tutar; disk bozulsa veya silinse bile geri yüklenebilir.",
+  "explanationTr": "Yedek veriyi başka yerde tutar; disk bozulsa veya silinse bile geri yüklenebilir.",
+  "explanationKu": "Yedek daneyan li cihê din digire; dîsk şikestî an jêbirin çêbibe jî mirov dikare vegerîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=49e48b6775d6b465",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "49e48b6775d6b465"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0029",
+  "category": "Teknolojî",
+  "prompt": "Antîvîrus bi giranî li dijî çi tê bikaranîn?",
+  "answers": [
+   "Kêmbûna ronahiya ekranê",
+   "Nermalava xerab û vîrusan",
+   "Dirêjahiya kabloyê",
+   "Rengê klavyeyê (ne rast)"
+  ],
+  "correctAnswer": "Nermalava xerab û vîrusan",
+  "promptTr": "Antivirüs esas olarak neye karşı kullanılır?",
+  "answersTr": [
+   "Ekran ışığı azlığına",
+   "Kötücül yazılım ve virüslere",
+   "Kablo uzunluğuna",
+   "Klavye rengine (yanlış)"
+  ],
+  "correctAnswerTr": "Kötücül yazılım ve virüslere",
+  "explanation": "Antivirüs şüpheli dosya ve davranışları tarayarak virüs ve kötücül yazılımı azaltır.",
+  "explanationTr": "Antivirüs şüpheli dosya ve davranışları tarayarak virüs ve kötücül yazılımı azaltır.",
+  "explanationKu": "Antîvîrus pel û tevgerên gumanbar digere da ku vîrus û malware kêm bike.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=63416b9560face80",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "63416b9560face80"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0030",
+  "category": "Teknolojî",
+  "prompt": "Hesabkirina ewr (cloud) bi giranî çi pêşkêş dike?",
+  "answers": [
+   "Çavkaniyên kompîterê bi rêya înternetê",
+   "Tenê kaxez a çapkirî",
+   "Tenê pîla fîzîkî (ne rast)",
+   "Tenê klavyeya derveyî (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Çavkaniyên kompîterê bi rêya înternetê",
+  "promptTr": "Bulut bilişim esas olarak ne sunar?",
+  "answersTr": [
+   "İnternet üzerinden bilgisayar kaynakları",
+   "Yalnızca basılı kâğıt",
+   "Yalnızca fiziksel pil (yanlış)",
+   "Yalnızca harici klavye (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "İnternet üzerinden bilgisayar kaynakları",
+  "explanation": "Bulut sunucu, depolama ve yazılımı internetten sunar; kullanıcı genelde kullanıma göre öder.",
+  "explanationTr": "Bulut sunucu, depolama ve yazılımı internetten sunar; kullanıcı genelde kullanıma göre öder.",
+  "explanationKu": "Cloud server, hilanîn û nermalavê li ser înternetê dide; bikarhêner bi piranî li gorî bikaranînê dide.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=5710c8431fcb9d2d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5710c8431fcb9d2d"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0031",
+  "category": "Teknolojî",
+  "prompt": "Danegeh (database) bi giranî çi dike?",
+  "answers": [
+   "Wêneyan tenê mezin dike — şaş e — şaş e",
+   "Kabloyê dişewitîne",
+   "Ekranê tarî dike (ne rast)",
+   "Daneyan bi rêkûpêk hildigire û digere"
+  ],
+  "correctAnswer": "Daneyan bi rêkûpêk hildigire û digere",
+  "promptTr": "Veritabanı esas olarak ne yapar?",
+  "answersTr": [
+   "Görselleri yalnızca büyütür — hatalı — hatalı",
+   "Kabloyu yakar",
+   "Ekranı karartır (yanlış)",
+   "Verileri düzenli saklar ve sorgular"
+  ],
+  "correctAnswerTr": "Verileri düzenli saklar ve sorgular",
+  "explanation": "Veritabanı verileri tablo veya yapılarda tutar ve sorgularla hızlı arar.",
+  "explanationTr": "Veritabanı verileri tablo veya yapılarda tutar ve sorgularla hızlı arar.",
+  "explanationKu": "Database daneyan di tablo an strukturan de digire û bi sorgûyan zû digere.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6058abded3e26020",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6058abded3e26020"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0032",
+  "category": "Teknolojî",
+  "prompt": "Di danegehên têkilî de rêzek (row) bi gelemperî çi temsîl dike?",
+  "answers": [
+   "Yek kabloyê torê (ne rast)",
+   "Yek pîla laptopê",
+   "Yek tomar an tomarok",
+   "Yek rengê temayê"
+  ],
+  "correctAnswer": "Yek tomar an tomarok",
+  "promptTr": "İlişkisel veritabanında bir satır genellikle neyi temsil eder?",
+  "answersTr": [
+   "Tek bir ağ kablosu (yanlış)",
+   "Tek bir dizüstü pili",
+   "Tek bir kayıt",
+   "Tek bir tema rengi"
+  ],
+  "correctAnswerTr": "Tek bir kayıt",
+  "explanation": "Her satır bir kayıttır (ör. bir öğrenci); sütunlar özellikleri tutar (ad, numara).",
+  "explanationTr": "Her satır bir kayıttır (ör. bir öğrenci); sütunlar özellikleri tutar (ad, numara).",
+  "explanationKu": "Her rêz tomar e (mînak yek xwendekar); stûn jî taybetmendiyan digirin (nav, hejmar).",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=143216a8ce6d1b3f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "143216a8ce6d1b3f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0033",
+  "category": "Teknolojî",
+  "prompt": "Mouse di bikaranîna sermaseyê de bi giranî çi dike?",
+  "answers": [
+   "Nîşankerê diguherîne û hilbijêre dike",
+   "Dîskê format dike",
+   "IP diguherîne (ne rast)",
+   "HTTPS dadigire"
+  ],
+  "correctAnswer": "Nîşankerê diguherîne û hilbijêre dike",
+  "promptTr": "Masaüstü kullanımında fare esas olarak ne yapar?",
+  "answersTr": [
+   "İmleci hareket ettirir ve seçim yapar",
+   "Diski biçimlendirir",
+   "IP değiştirir (yanlış)",
+   "HTTPS kapatır"
+  ],
+  "correctAnswerTr": "İmleci hareket ettirir ve seçim yapar",
+  "explanation": "Fare imleci ekranda gezdirir ve tıklayarak komut verir.",
+  "explanationTr": "Fare imleci ekranda gezdirir ve tıklayarak komut verir.",
+  "explanationKu": "Mouse nîşankerê li ser ekranê diguherîne û bi tikandinê fermanan dide.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=464a8eefd503ff65",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "komputer-sade",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "464a8eefd503ff65"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0034",
+  "category": "Teknolojî",
+  "prompt": "USB bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Şîfrekirina tenê a IP (çewt)",
+   "Girêdana amûrên derveyî",
+   "Mezinahiya monitorê",
+   "Navê domain (ne rast)"
+  ],
+  "correctAnswer": "Girêdana amûrên derveyî",
+  "promptTr": "USB esas olarak ne için kullanılır?",
+  "answersTr": [
+   "Yalnızca IP şifreleme (yanlış)",
+   "Harici aygıt bağlama",
+   "Monitör boyutu",
+   "Alan adı (yanlış)"
+  ],
+  "correctAnswerTr": "Harici aygıt bağlama",
+  "explanation": "USB; klavye, harici disk, mikrofon ve birçok aygıtı bağlamak için bir standarttır.",
+  "explanationTr": "USB; klavye, harici disk, mikrofon ve birçok aygıtı bağlamak için bir standarttır.",
+  "explanationKu": "USB standard e ji bo girêdana klavye, dîsk a derve, mîkrofon û gelek amûrên din.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=d2c9ad8b393db4ba",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "komputer-sade",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d2c9ad8b393db4ba"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0035",
+  "category": "Teknolojî",
+  "prompt": "Router di tora malê de bi giranî çi dike?",
+  "answers": [
+   "Wêneyan çap dike",
+   "Pîlê çêdike (ne rast) — şaş e — şaş e",
+   "Paketan di navbera toran de rê dike",
+   "CPU diguherîne"
+  ],
+  "correctAnswer": "Paketan di navbera toran de rê dike",
+  "promptTr": "Ev ağında yönlendirici (router) esas olarak ne yapar?",
+  "answersTr": [
+   "Görsel basar",
+   "Pil üretir (yanlış) — hatalı — hatalı",
+   "Paketleri ağlar arasında yönlendirir",
+   "CPU değiştirir"
+  ],
+  "correctAnswerTr": "Paketleri ağlar arasında yönlendirir",
+  "explanation": "Yönlendirici yerel ağı internete bağlar ve veri paketlerini yönlendirir.",
+  "explanationTr": "Yönlendirici yerel ağı internete bağlar ve veri paketlerini yönlendirir.",
+  "explanationKu": "Router tora herêmî bi înternetê ve girê dide û paketên daneyê rê dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=05f7b16ba6b9e7c1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "05f7b16ba6b9e7c1"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0036",
+  "category": "Teknolojî",
+  "prompt": "Bandwidth a torê bi gelemperî çi pîvan dike?",
+  "answers": [
+   "Germahiya odê (ne rast)",
+   "Giraniya laptopê",
+   "Dirêjahiya maseyê (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Çiqas dane di yekîneya demê de dikare derbas bibe"
+  ],
+  "correctAnswer": "Çiqas dane di yekîneya demê de dikare derbas bibe",
+  "promptTr": "Ağ bant genişliği genellikle neyi ölçer?",
+  "answersTr": [
+   "Oda sıcaklığını (yanlış)",
+   "Dizüstü ağırlığını",
+   "Masa uzunluğunu (geçersiz) (geçersiz) (geçersiz)",
+   "Birim zamanda ne kadar veri geçebileceğini"
+  ],
+  "correctAnswerTr": "Birim zamanda ne kadar veri geçebileceğini",
+  "explanation": "Bant genişliği aktarım kapasitesidir; Mbps veya Gbps ile ölçülür.",
+  "explanationTr": "Bant genişliği aktarım kapasitesidir; Mbps veya Gbps ile ölçülür.",
+  "explanationKu": "Bandwidth kapasîteya veguhastinê ye; bi Mbps an Gbps tê pîvandin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=15bdc63fe3383464",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "15bdc63fe3383464"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0037",
+  "category": "Teknolojî",
+  "prompt": "LAN çi ye?",
+  "answers": [
+   "Tor a gerdûnî ya fezayê",
+   "Tora herêmî ya sînorkirî (mînak ofîs/mal)",
+   "Tenê protokola e-nameyê",
+   "Formata deng (ne rast)"
+  ],
+  "correctAnswer": "Tora herêmî ya sînorkirî (mînak ofîs/mal)",
+  "promptTr": "LAN nedir?",
+  "answersTr": [
+   "Evrensel uzay ağı",
+   "Sınırlı yerel ağ (ör. ofis/ev)",
+   "Yalnızca e-posta protokolü",
+   "Ses biçimi (yanlış)"
+  ],
+  "correctAnswerTr": "Sınırlı yerel ağ (ör. ofis/ev)",
+  "explanation": "LAN (Local Area Network) cihazları küçük alanda bağlar; WAN daha geniştir.",
+  "explanationTr": "LAN (Local Area Network) cihazları küçük alanda bağlar; WAN daha geniştir.",
+  "explanationKu": "LAN (Local Area Network) cîhazan di qadeke piçûk de digihîne hev; WAN firehtir e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=8bcc0340ea883ce4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "8bcc0340ea883ce4"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0038",
+  "category": "Teknolojî",
+  "prompt": "E-name (e-mail) bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Şandina peyamên dîjîtal",
+   "Şarjkirina pîlê",
+   "Zivirandina fanê",
+   "Mezinahiya RAM (ne rast)"
+  ],
+  "correctAnswer": "Şandina peyamên dîjîtal",
+  "promptTr": "E-posta esas olarak ne için kullanılır?",
+  "answersTr": [
+   "Dijital ileti gönderme",
+   "Pil şarjı",
+   "Fan döndürme",
+   "RAM boyutu (yanlış)"
+  ],
+  "correctAnswerTr": "Dijital ileti gönderme",
+  "explanation": "E-posta, e-posta adresleriyle ileti ve ek gönderir; bir internet hizmetidir.",
+  "explanationTr": "E-posta, e-posta adresleriyle ileti ve ek gönderir; bir internet hizmetidir.",
+  "explanationKu": "E-name peyam û pêvekan bi navnîşanên e-nameyê dişîne; ev xizmeteke înternetê ye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=8ce87db9b54b7014",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "8ce87db9b54b7014"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0039",
+  "category": "Teknolojî",
+  "prompt": "Cookie yên webê bi gelemperî çi dikin?",
+  "answers": [
+   "CPU diguherînin (ne rast)",
+   "Dîskê fîzîkî dişewitînin",
+   "Kabloyê dirêj dikin — şaş e — şaş e — şaş e",
+   "Agahiyên piçûk ên daniştinê li gerokê digirin"
+  ],
+  "correctAnswer": "Agahiyên piçûk ên daniştinê li gerokê digirin",
+  "promptTr": "Web çerezleri (cookie) genellikle ne yapar?",
+  "answersTr": [
+   "CPU değiştirir (yanlış)",
+   "Fiziksel diski yakar",
+   "Kabloyu uzatır — hatalı — hatalı — hatalı",
+   "Oturum bilgilerini tarayıcıda saklar"
+  ],
+  "correctAnswerTr": "Oturum bilgilerini tarayıcıda saklar",
+  "explanation": "Çerezler site tarafından konur; tercih veya oturum durumu hatırlansın diye.",
+  "explanationTr": "Çerezler site tarafından konur; tercih veya oturum durumu hatırlansın diye.",
+  "explanationKu": "Cookie aliyê malperê ve têne danîn da ku tercihan an rewşa têketinê were bîranîn.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=79072d69a1af7dee",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "79072d69a1af7dee"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0040",
+  "category": "Teknolojî",
+  "prompt": "HTTP koda 404 bi gelemperî çi tê wateya?",
+  "answers": [
+   "Hemû tişt serkeftî ye",
+   "Pêwîstî bi têketinê heye",
+   "Çavkanî nehat dîtin",
+   "Server veguherî"
+  ],
+  "correctAnswer": "Çavkanî nehat dîtin",
+  "promptTr": "HTTP 404 kodu genellikle ne anlama gelir?",
+  "answersTr": [
+   "Her şey başarılı",
+   "Giriş gerekli",
+   "Kaynak bulunamadı",
+   "Sunucu yönlendirdi"
+  ],
+  "correctAnswerTr": "Kaynak bulunamadı",
+  "explanation": "404, sunucuya ulaşıldığını ama istenen sayfa veya dosyanın orada olmadığını söyler.",
+  "explanationTr": "404, sunucuya ulaşıldığını ama istenen sayfa veya dosyanın orada olmadığını söyler.",
+  "explanationKu": "404 dibêje ku server hate gihiştin lê rûpel an pelê xwestî li wir nîne.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=9b84c6c6cd4b2206",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9b84c6c6cd4b2206"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0041",
+  "category": "Teknolojî",
+  "prompt": "HTTP koda 200 bi gelemperî çi tê wateya?",
+  "answers": [
+   "Daxwaz serkeftî bû ya standard",
+   "Çavkanî nîne",
+   "Server qeydî ye",
+   "Şîfre şaş e (ne rast)"
+  ],
+  "correctAnswer": "Daxwaz serkeftî bû ya standard",
+  "promptTr": "HTTP 200 kodu genellikle ne anlama gelir?",
+  "answersTr": [
+   "İstek başarılı oldu (standart)",
+   "Kaynak yok",
+   "Sunucu kapalı",
+   "Parola yanlış (yanlış)"
+  ],
+  "correctAnswerTr": "İstek başarılı oldu (standart)",
+  "explanation": "200 OK, isteğin anlaşıldığı ve yanıtın başarıyla gönderildiği anlamına gelir.",
+  "explanationTr": "200 OK, isteğin anlaşıldığı ve yanıtın başarıyla gönderildiği anlamına gelir.",
+  "explanationKu": "200 OK tê wateya ku daxwaz hate fêm kirin û bersiv bi serkeftî hate şandin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=406754138d4ed84d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "406754138d4ed84d"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0042",
+  "category": "Teknolojî",
+  "prompt": "Pelê PDF bi gelemperî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Tenê vîdyoya zindî (ne rast)",
+   "Belgeyên ku xuyangê xwe digirin",
+   "Tenê şîfreya Wi-Fi",
+   "Tenê germahiya CPU (çewt) (çewt)"
+  ],
+  "correctAnswer": "Belgeyên ku xuyangê xwe digirin",
+  "promptTr": "PDF dosyası genellikle ne için kullanılır?",
+  "answersTr": [
+   "Yalnızca canlı video (yanlış)",
+   "Görünümünü koruyan belgeler",
+   "Yalnızca Wi-Fi parolası",
+   "Yalnızca CPU ısısı (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Görünümünü koruyan belgeler",
+  "explanation": "PDF belgeyi farklı cihazlarda aynı görünümle gösterir; paylaşımda yaygındır.",
+  "explanationTr": "PDF belgeyi farklı cihazlarda aynı görünümle gösterir; paylaşımda yaygındır.",
+  "explanationKu": "PDF belgeyê li ser cîhazên cuda bi heman xuyangî nîşan dide; ji bo parvekirinê gelemperî ye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=2e61e4a4efb4f266",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pel-format",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "2e61e4a4efb4f266"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0043",
+  "category": "Teknolojî",
+  "prompt": "Formata MP3 bi giranî çi digire?",
+  "answers": [
+   "Wêneya vektorî",
+   "Koda çavkaniya C",
+   "Dengê pêçandî",
+   "Cedwel a Excel"
+  ],
+  "correctAnswer": "Dengê pêçandî",
+  "promptTr": "MP3 biçimi esas olarak ne içerir?",
+  "answersTr": [
+   "Vektör görüntü",
+   "C kaynak kodu",
+   "Sıkıştırılmış ses",
+   "Excel tablosu"
+  ],
+  "correctAnswerTr": "Sıkıştırılmış ses",
+  "explanation": "MP3 bir ses biçimidir ve dosyayı küçültmek için sıkıştırma kullanır.",
+  "explanationTr": "MP3 bir ses biçimidir ve dosyayı küçültmek için sıkıştırma kullanır.",
+  "explanationKu": "MP3 formata deng e û pêçandinê bikar tîne da ku pel piçûktir bibe.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=90b3de879e0a8d77",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pel-format",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "90b3de879e0a8d77"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0044",
+  "category": "Teknolojî",
+  "prompt": "Formata PNG ji JPEG-ê bi kîjan alî ve pir caran cuda ye?",
+  "answers": [
+   "Tenê vîdyo digire",
+   "Tenê e-name ye (ne rast) (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Tenê protokol e",
+   "Piştgiriya zelaliyê (transparency) û pêçandina bêwindahî"
+  ],
+  "correctAnswer": "Piştgiriya zelaliyê (transparency) û pêçandina bêwindahî",
+  "promptTr": "PNG, JPEG'den hangi yönden sıkça ayrılır?",
+  "answersTr": [
+   "Yalnızca video tutar",
+   "Yalnızca e-postadır (yanlış) (geçersiz) (geçersiz) (geçersiz)",
+   "Yalnızca protokoldür",
+   "Saydamlık desteği ve kayıpsız sıkıştırma"
+  ],
+  "correctAnswerTr": "Saydamlık desteği ve kayıpsız sıkıştırma",
+  "explanation": "PNG saydamlık tutabilir ve çoğunlukla kayıpsız sıkıştırır; JPEG kayıplıdır ve fotoğraflarda yaygındır.",
+  "explanationTr": "PNG saydamlık tutabilir ve çoğunlukla kayıpsız sıkıştırır; JPEG kayıplıdır ve fotoğraflarda yaygındır.",
+  "explanationKu": "PNG dikare alpha/zelaliyê bigire û bi piranî bêwindahî pêç dike; JPEG windahîdar e û ji bo wêneyên wênekêşiyê gelemperî ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6c074e14db523eac",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pel-format",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6c074e14db523eac"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0045",
+  "category": "Teknolojî",
+  "prompt": "Fonksiyonek di programkirinê de bi giranî çi dike?",
+  "answers": [
+   "Tenê ekranê vedike (ne rast)",
+   "Komek kodê di bin navekê de kom dike û vedixwîne",
+   "Tenê pîlê dadigire",
+   "Tenê kabloyê diguherîne"
+  ],
+  "correctAnswer": "Komek kodê di bin navekê de kom dike û vedixwîne",
+  "promptTr": "Programlamada bir fonksiyon esas olarak ne yapar?",
+  "answersTr": [
+   "Yalnızca ekranı açar (yanlış)",
+   "Bir kod kümesini ad altında toplar ve çağırır",
+   "Yalnızca pili kapatır",
+   "Yalnızca kabloyu değiştirir"
+  ],
+  "correctAnswerTr": "Bir kod kümesini ad altında toplar ve çağırır",
+  "explanation": "Fonksiyon kodu yeniden kullanılabilir kılar: girdi alır, işler, çıktı verir.",
+  "explanationTr": "Fonksiyon kodu yeniden kullanılabilir kılar: girdi alır, işler, çıktı verir.",
+  "explanationKu": "Fonksiyon kodê dubare bikêrhatî dike: têketin digire, kar dike, derketin dide.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=050d75ce94749b6e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "050d75ce94749b6e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0046",
+  "category": "Teknolojî",
+  "prompt": "Şerta «if» di kodê de çi dike?",
+  "answers": [
+   "Li gorî şertekê kîjan kod bixebite diyar dike",
+   "Dîskê jê dibe (çewt) (çewt) (çewt)",
+   "IP diguherîne",
+   "Gerok digire (ne rast)"
+  ],
+  "correctAnswer": "Li gorî şertekê kîjan kod bixebite diyar dike",
+  "promptTr": "Kodda «if» koşulu ne yapar?",
+  "answersTr": [
+   "Bir şarta göre hangi kodun çalışacağını belirler",
+   "Diski siler (yanlış) (yanlış) (yanlış)",
+   "IP değiştirir",
+   "Tarayıcı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Bir şarta göre hangi kodun çalışacağını belirler",
+  "explanation": "if koşullu mantıktır: koşul doğruysa bir blok, değilse diğeri çalışabilir.",
+  "explanationTr": "if koşullu mantıktır: koşul doğruysa bir blok, değilse diğeri çalışabilir.",
+  "explanationKu": "if lojîka şertî ye: heke şert rast be blokek, wekî din ya din dikare bixebite.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b8d40bb811158f4f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b8d40bb811158f4f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0047",
+  "category": "Teknolojî",
+  "prompt": "Compiler bi giranî çi dike?",
+  "answers": [
+   "Wêneyan çêdike",
+   "Kabloyê dişêwîne — şaş e — şaş e — şaş e",
+   "Pîlê çêdike (ne rast)",
+   "Koda çavkaniyê vediguherîne koda makîneyê an navîn"
+  ],
+  "correctAnswer": "Koda çavkaniyê vediguherîne koda makîneyê an navîn",
+  "promptTr": "Derleyici (compiler) esas olarak ne yapar?",
+  "answersTr": [
+   "Görüntü üretir",
+   "Kabloyu büker — hatalı — hatalı — hatalı",
+   "Pil üretir (yanlış)",
+   "Kaynak kodu makine veya ara koda çevirir"
+  ],
+  "correctAnswerTr": "Kaynak kodu makine veya ara koda çevirir",
+  "explanation": "Derleyici yüksek düzey dili bilgisayarın veya çalışma ortamının kullandığı biçime çevirir.",
+  "explanationTr": "Derleyici yüksek düzey dili bilgisayarın veya çalışma ortamının kullandığı biçime çevirir.",
+  "explanationKu": "Compiler zimanê bilind vediguherîne formata ku kompîter an runtime bikar tîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=363306b331a7380d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "363306b331a7380d"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0048",
+  "category": "Teknolojî",
+  "prompt": "Interpreter ji compiler-ê bi gelemperî çawa cuda ye?",
+  "answers": [
+   "Tenê dîskê format dike",
+   "Tenê Wi-Fi vedike",
+   "Kodê gav bi gav di dema xebitandinê de dinirxîne",
+   "Tenê PDF çêdike (ne rast) (ne rastîn) (ne rastîn)"
+  ],
+  "correctAnswer": "Kodê gav bi gav di dema xebitandinê de dinirxîne",
+  "promptTr": "Yorumlayıcı, derleyiciden genellikle nasıl ayrılır?",
+  "answersTr": [
+   "Yalnızca disk biçimlendirir",
+   "Yalnızca Wi-Fi açar",
+   "Kodu çalışırken adım adım değerlendirir",
+   "Yalnızca PDF yapar (yanlış) (geçersiz) (geçersiz)"
+  ],
+  "correctAnswerTr": "Kodu çalışırken adım adım değerlendirir",
+  "explanation": "Yorumlayıcı tüm kodu önce makine dosyasına çevirmeden çalışırken değerlendirir; derleyici çoğunlukla önce çevirir.",
+  "explanationTr": "Yorumlayıcı tüm kodu önce makine dosyasına çevirmeden çalışırken değerlendirir; derleyici çoğunlukla önce çevirir.",
+  "explanationKu": "Interpreter bêyî ku hemû kodê pêşî bike pelê makîneyê, di dema xebitandinê de dinirxîne; compiler bi piranî pêşî wergerîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f42a13c335561be2",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bernamekirin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f42a13c335561be2"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0049",
+  "category": "Teknolojî",
+  "prompt": "Cedweleke hesab (spreadsheet) bi giranî ji bo çi ye?",
+  "answers": [
+   "Hejmar, hesab û tabloyan birêvebirin",
+   "Tenê vîdyoya 4K (ne rast)",
+   "Tenê şîfrekirina diskê",
+   "Tenê tora bêtêl"
+  ],
+  "correctAnswer": "Hejmar, hesab û tabloyan birêvebirin",
+  "promptTr": "Hesap tablosu esas olarak ne içindir?",
+  "answersTr": [
+   "Sayı, hesap ve tabloları yönetmek",
+   "Yalnızca 4K video (yanlış)",
+   "Yalnızca disk şifreleme",
+   "Yalnızca kablosuz ağ"
+  ],
+  "correctAnswerTr": "Sayı, hesap ve tabloları yönetmek",
+  "explanation": "Hesap tablosu hücre, formül ve grafik tutar; bütçe ve sayısal veride yaygındır.",
+  "explanationTr": "Hesap tablosu hücre, formül ve grafik tutar; bütçe ve sayısal veride yaygındır.",
+  "explanationKu": "Spreadsheet xane, formul û diagraman digire; ji bo budget û daneyên hejmarî gelemperî ye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=299836ecc37951eb",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ofîs",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "299836ecc37951eb"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0050",
+  "category": "Teknolojî",
+  "prompt": "Di cedwelê de formul bi gelemperî bi kîjan nîşanê dest pê dike?",
+  "answers": [
+   "Nîşana sedî (%)",
+   "Nîşana wekheviyê (=)",
+   "Nîşana pirsiyarê (?) (çewt)",
+   "Nîşana koma (,)"
+  ],
+  "correctAnswer": "Nîşana wekheviyê (=)",
+  "promptTr": "Tabloda formül genellikle hangi işaretle başlar?",
+  "answersTr": [
+   "Yüzde işareti (%)",
+   "Eşittir işareti (=)",
+   "Soru işareti (?) (yanlış)",
+   "Virgül (,)"
+  ],
+  "correctAnswerTr": "Eşittir işareti (=)",
+  "explanation": "Birçok tablo programında formül = ile başlar, örneğin =A1+B1.",
+  "explanationTr": "Birçok tablo programında formül = ile başlar, örneğin =A1+B1.",
+  "explanationKu": "Di gelek bernameyên cedwelê de formul bi = dest pê dike, mînak =A1+B1.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=553c4c7e5c68e458",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ofîs",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "553c4c7e5c68e458"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0051",
+  "category": "Teknolojî",
+  "prompt": "Pêşkêşiya slayd (presentation) bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Şarjkirina têlefonê",
+   "Jêbirina OS (ne rast)",
+   "Nîşandana mijaran bi slaydên dîtbar",
+   "Girtina routerê — şaş e — şaş e — şaş e"
+  ],
+  "correctAnswer": "Nîşandana mijaran bi slaydên dîtbar",
+  "promptTr": "Slayt sunumu esas olarak ne için kullanılır?",
+  "answersTr": [
+   "Telefon şarjı",
+   "OS silme (yanlış)",
+   "Konuları görsel slaytlarla sunmak",
+   "Yönlendirici kapatma — hatalı — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Konuları görsel slaytlarla sunmak",
+  "explanation": "Sunum programları konuşma veya dersi desteklemek için slayt, görsel ve metin dizer.",
+  "explanationTr": "Sunum programları konuşma veya dersi desteklemek için slayt, görsel ve metin dizer.",
+  "explanationKu": "Bernameyên pêşkêşiyê slayd, wêne û nivîsê rêz dikin da ku axaftin an ders were piştgirîkirin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=3d8c5ee0be6d1b13",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ofîs",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "3d8c5ee0be6d1b13"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0052",
+  "category": "Teknolojî",
+  "prompt": "Pêvajoyek (process) di OS-ê de çi ye?",
+  "answers": [
+   "Tenê pelê wêneyê (ne rast) (ne rastîn)",
+   "Tenê kabloyê USB",
+   "Tenê marka monitorê",
+   "Bernameyeke di xebitandinê de"
+  ],
+  "correctAnswer": "Bernameyeke di xebitandinê de",
+  "promptTr": "İşletim sisteminde bir süreç (process) nedir?",
+  "answersTr": [
+   "Yalnızca görüntü dosyası (yanlış) (geçersiz)",
+   "Yalnızca USB kablosu",
+   "Yalnızca monitör markası",
+   "Çalışmakta olan bir program"
+  ],
+  "correctAnswerTr": "Çalışmakta olan bir program",
+  "explanation": "Program çalışınca OS bir süreç oluşturur; bellek ve CPU zamanı alır.",
+  "explanationTr": "Program çalışınca OS bir süreç oluşturur; bellek ve CPU zamanı alır.",
+  "explanationKu": "Gava bername tê xebitandin OS pêvajoyekê çêdike; bîr û dema CPU digire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=85469452b62d1a03",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "85469452b62d1a03"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0053",
+  "category": "Teknolojî",
+  "prompt": "Multitasking di OS-ê de çi tê wateya?",
+  "answers": [
+   "Tenê yek pel heye (ne rast)",
+   "Gelek pêvajo di heman demê de têne birêvebirin",
+   "Tenê yek bikarhêner heye",
+   "Tenê yek pixel heye"
+  ],
+  "correctAnswer": "Gelek pêvajo di heman demê de têne birêvebirin",
+  "promptTr": "İşletim sisteminde çoklu görev ne anlama gelir?",
+  "answersTr": [
+   "Yalnızca bir dosya vardır (yanlış)",
+   "Birçok sürecin aynı anda yönetilmesi",
+   "Yalnızca bir kullanıcı vardır",
+   "Yalnızca bir piksel vardır"
+  ],
+  "correctAnswerTr": "Birçok sürecin aynı anda yönetilmesi",
+  "explanation": "OS, birçok işin birlikte yürümesi için CPU zamanını süreçler arasında paylaştırır.",
+  "explanationTr": "OS, birçok işin birlikte yürümesi için CPU zamanını süreçler arasında paylaştırır.",
+  "explanationKu": "OS dema CPU di navbera pêvajoyan de par ve dike da ku gelek kar bi hev re bimeşin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=5dd789b5adbe8ef1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5dd789b5adbe8ef1"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0054",
+  "category": "Teknolojî",
+  "prompt": "Pelrêç (path) di pergalê de çi nîşan dide?",
+  "answers": [
+   "Cihê pel an peldankê di dara pelan de",
+   "Germahiya fanê",
+   "Voltaja pîlê (ne rast)",
+   "Leza fanê ya derve (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Cihê pel an peldankê di dara pelan de",
+  "promptTr": "Sistemde dosya yolu (path) neyi gösterir?",
+  "answersTr": [
+   "Dosya veya klasörün dizin ağacındaki yeri",
+   "Fan sıcaklığı",
+   "Pil voltajı (yanlış)",
+   "Harici fan hızı (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Dosya veya klasörün dizin ağacındaki yeri",
+  "explanation": "Yol, /home/user/doc.txt veya C:\\Users\\... gibi dosyanın mantıksal yerini belirtir.",
+  "explanationTr": "Yol, /home/user/doc.txt veya C:\\Users\\... gibi dosyanın mantıksal yerini belirtir.",
+  "explanationKu": "Path mîna /home/user/doc.txt an C:\\Users\\... cihê lojîk a pelê diyar dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f32787e051e91f88",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f32787e051e91f88"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0055",
+  "category": "Teknolojî",
+  "prompt": "Peldank (folder/directory) çi ye?",
+  "answers": [
+   "Tenê yek bayt — şaş e — şaş e — şaş e",
+   "Tenê yek pixel",
+   "Tenê yek IP (ne rast)",
+   "Cihê ku pel û peldankên din digire"
+  ],
+  "correctAnswer": "Cihê ku pel û peldankên din digire",
+  "promptTr": "Klasör (dizin) nedir?",
+  "answersTr": [
+   "Yalnızca bir bayt — hatalı — hatalı — hatalı",
+   "Yalnızca bir piksel",
+   "Yalnızca bir IP (yanlış)",
+   "Dosya ve başka klasörleri tutan yer"
+  ],
+  "correctAnswerTr": "Dosya ve başka klasörleri tutan yer",
+  "explanation": "Klasör, dosyaların dağınık olmaması için bir düzenleme yapısıdır.",
+  "explanationTr": "Klasör, dosyaların dağınık olmaması için bir düzenleme yapısıdır.",
+  "explanationKu": "Peldank struktur a organîzekirinê ye da ku pel ne li ser hev bin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=bb7de74553f1e0f3",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "bb7de74553f1e0f3"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0056",
+  "category": "Teknolojî",
+  "prompt": "Firewall bi giranî çi dike?",
+  "answers": [
+   "Wêneyan renge dike",
+   "Pîlê çêdike (ne rast) (ne rastîn) (ne rastîn)",
+   "Trafîka torê li gorî rêzikan kontrol dike",
+   "Klavyeyê dişêwîne"
+  ],
+  "correctAnswer": "Trafîka torê li gorî rêzikan kontrol dike",
+  "promptTr": "Güvenlik duvarı esas olarak ne yapar?",
+  "answersTr": [
+   "Görselleri boyar",
+   "Pil üretir (yanlış) (geçersiz) (geçersiz)",
+   "Ağ trafiğini kurallara göre denetler",
+   "Klavyeyi büker"
+  ],
+  "correctAnswerTr": "Ağ trafiğini kurallara göre denetler",
+  "explanation": "Güvenlik duvarı giren-çıkan paketleri değerlendirir ve izinsiz olanları engeller.",
+  "explanationTr": "Güvenlik duvarı giren-çıkan paketleri değerlendirir ve izinsiz olanları engeller.",
+  "explanationKu": "Firewall paketên têketin û derketinê dinirxîne û yên ne destûr mayî asteng dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c0c11e1e0979e858",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c0c11e1e0979e858"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0057",
+  "category": "Teknolojî",
+  "prompt": "Li ser tor: kîjan şirove rast e?",
+  "answers": [
+   "Kanaleke şîfrekirî li ser torê",
+   "Zêdekirina fîzîkî ya RAM",
+   "Guhertina rengê qutiyê",
+   "Çêkirina kaxezê (ne rast)"
+  ],
+  "correctAnswer": "Kanaleke şîfrekirî li ser torê",
+  "promptTr": "tor hakkında hangi açıklama doğrudur?",
+  "answersTr": [
+   "Ağ üzerinde şifreli bir kanal",
+   "Fiziksel RAM artışı",
+   "Kasa rengi değişimi",
+   "Kâğıt üretimi (yanlış)"
+  ],
+  "correctAnswerTr": "Ağ üzerinde şifreli bir kanal",
+  "explanation": "VPN bağlantıyı şifreler ve çoğu kez görünen IP'yi değiştirir; gizlilik ve güvenli erişim için kullanılır.",
+  "explanationTr": "VPN bağlantıyı şifreler ve çoğu kez görünen IP'yi değiştirir; gizlilik ve güvenli erişim için kullanılır.",
+  "explanationKu": "VPN pêwendiyê dişîfre dike û gelek caran IP-ya xuya diguherîne; ji bo nepenî û gihîştina ewle tê bikaranîn.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e63d9723fb03bba6",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e63d9723fb03bba6"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0058",
+  "category": "Teknolojî",
+  "prompt": "Authentication çi ye?",
+  "answers": [
+   "Mezinahiya dîskê (çewt) (çewt) (çewt)",
+   "Îsbat kirina ku bikarhêner kî ye",
+   "Rengê slaydê (ne rast)",
+   "Dirêjahiya kabloyê"
+  ],
+  "correctAnswer": "Îsbat kirina ku bikarhêner kî ye",
+  "promptTr": "Kimlik doğrulama nedir?",
+  "answersTr": [
+   "Disk boyutu (yanlış) (yanlış) (yanlış)",
+   "Kullanıcının kim olduğunu kanıtlama",
+   "Slayt rengi (yanlış)",
+   "Kablo uzunluğu"
+  ],
+  "correctAnswerTr": "Kullanıcının kim olduğunu kanıtlama",
+  "explanation": "Kimlik doğrulama parola, kod veya biyometri ile kişinin iddia ettiği kişi olup olmadığını belirler.",
+  "explanationTr": "Kimlik doğrulama parola, kod veya biyometri ile kişinin iddia ettiği kişi olup olmadığını belirler.",
+  "explanationKu": "Authentication bi şîfre, kod an biyometrîkê diyar dike ka kes ewe ku dibêje.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6ca1312c36c14eda",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6ca1312c36c14eda"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0059",
+  "category": "Teknolojî",
+  "prompt": "Authorization ji authentication-ê çawa cuda ye?",
+  "answers": [
+   "Tenê navê bikarhêner digire",
+   "Tenê dîskê jê dibe — şaş e — şaş e — şaş e",
+   "Diyar dike ka piştî têketinê çi destûr heye",
+   "Tenê Wi-Fi vedike (ne rast)"
+  ],
+  "correctAnswer": "Diyar dike ka piştî têketinê çi destûr heye",
+  "promptTr": "Yetkilendirme, kimlik doğrulamadan nasıl ayrılır?",
+  "answersTr": [
+   "Yalnızca kullanıcı adını alır",
+   "Yalnızca diski siler — hatalı — hatalı — hatalı",
+   "Girişten sonra nelere izin verildiğini belirler",
+   "Yalnızca Wi-Fi açar (yanlış)"
+  ],
+  "correctAnswerTr": "Girişten sonra nelere izin verildiğini belirler",
+  "explanation": "Kimlik doğrulama kimliği belirler; yetkilendirme okuma, yazma veya yönetim haklarını verir.",
+  "explanationTr": "Kimlik doğrulama kimliği belirler; yetkilendirme okuma, yazma veya yönetim haklarını verir.",
+  "explanationKu": "Authentication kîbûnê diyar dike; authorization jî mafên xwendin, nivîsandin an rêveberiyê dide.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b402c3be407ead42",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b402c3be407ead42"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0060",
+  "category": "Teknolojî",
+  "prompt": "Two-factor authentication (2FA) çi zêde dike?",
+  "answers": [
+   "Zêdekirina germahiya CPU",
+   "Jêbirina hemû pelan (ne rast)",
+   "Girtina ekranê bi zorê (ne rastîn) (ne rastîn)",
+   "Ji bilî şîfreyê delîleke din a nasnameyê"
+  ],
+  "correctAnswer": "Ji bilî şîfreyê delîleke din a nasnameyê",
+  "promptTr": "İki adımlı doğrulama (2FA) ne ekler?",
+  "answersTr": [
+   "CPU ısısını artırma",
+   "Tüm dosyaları silme (yanlış)",
+   "Ekranı zorla kapatma (geçersiz) (geçersiz)",
+   "Parolanın yanında ikinci bir kimlik kanıtı"
+  ],
+  "correctAnswerTr": "Parolanın yanında ikinci bir kimlik kanıtı",
+  "explanation": "2FA parolaya telefon kodu veya fiziksel anahtar ekler; saldırıyı zorlaştırır.",
+  "explanationTr": "2FA parolaya telefon kodu veya fiziksel anahtar ekler; saldırıyı zorlaştırır.",
+  "explanationKu": "2FA mîna kodê têlefonê an mifteya fîzîkî li ser şîfreyê zêde dike; êrîşê dijwartir dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=a55b3092b4424b1a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a55b3092b4424b1a"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0061",
+  "category": "Teknolojî",
+  "prompt": "Sepana mobîl (app) çi ye?",
+  "answers": [
+   "Tenê kabloyê elektrîkê",
+   "Bernameya ku li ser têlefon an tabletan dixebite",
+   "Tenê pîla otomobîlê (ne rast)",
+   "Tenê kaxez a nivîsê"
+  ],
+  "correctAnswer": "Bernameya ku li ser têlefon an tabletan dixebite",
+  "promptTr": "Mobil uygulama (app) nedir?",
+  "answersTr": [
+   "Yalnızca elektrik kablosu",
+   "Telefon veya tablette çalışan program",
+   "Yalnızca araba pili (yanlış)",
+   "Yalnızca yazı kâğıdı"
+  ],
+  "correctAnswerTr": "Telefon veya tablette çalışan program",
+  "explanation": "Uygulama mobil yazılımdır; uygulama mağazasından indirilir ve belirli işler yapar.",
+  "explanationTr": "Uygulama mobil yazılımdır; uygulama mağazasından indirilir ve belirli işler yapar.",
+  "explanationKu": "App nermalava mobîl e; ji firotgeha sepanan tê daxistin û karên diyarkirî dike.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=ce1eef39e4dc40f8",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "mobil",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ce1eef39e4dc40f8"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0062",
+  "category": "Teknolojî",
+  "prompt": "Pêveka «.apk» bi gelemperî li kîjan pergalê tê dîtin?",
+  "answers": [
+   "Android",
+   "Tenê printêrên kevn",
+   "Tenê routerên bêyî Wi-Fi",
+   "Tenê kamera yên film"
+  ],
+  "correctAnswer": "Android",
+  "promptTr": "«.apk» uzantısı genellikle hangi sistemde görülür?",
+  "answersTr": [
+   "Android",
+   "Yalnızca eski yazıcılar",
+   "Yalnızca Wi-Fi'siz yönlendiriciler",
+   "Yalnızca film kameraları"
+  ],
+  "correctAnswerTr": "Android",
+  "explanation": "APK, Android uygulama paketidir. iOS genelde kendi farklı biçimini kullanır.",
+  "explanationTr": "APK, Android uygulama paketidir. iOS genelde kendi farklı biçimini kullanır.",
+  "explanationKu": "APK pakêt a sepana Android e. iOS bi gelemperî formata xwe ya cuda bikar tîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=417b920f19ee2091",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "mobil",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "417b920f19ee2091"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0063",
+  "category": "Teknolojî",
+  "prompt": "GPS di têlefonan de bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Şewitandina CD-yê",
+   "Mezinahiya RAM-a derve",
+   "Rengê qutiyê (ne rast) — şaş e",
+   "Diyarkirina cihê erdnîgarî"
+  ],
+  "correctAnswer": "Diyarkirina cihê erdnîgarî",
+  "promptTr": "Telefonlarda GPS esas olarak ne için kullanılır?",
+  "answersTr": [
+   "CD yakma",
+   "Harici RAM boyutu",
+   "Kasa rengi (yanlış) — hatalı",
+   "Coğrafi konum belirleme"
+  ],
+  "correctAnswerTr": "Coğrafi konum belirleme",
+  "explanation": "GPS, aygıtın koordinatlarını tahmin etmek için uydu sinyallerini kullanır.",
+  "explanationTr": "GPS, aygıtın koordinatlarını tahmin etmek için uydu sinyallerini kullanır.",
+  "explanationKu": "GPS sînyalên peykan bikar tîne da ku koordînatên cîhazê texmîn bike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=4a3ea35a71331594",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "mobil",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "4a3ea35a71331594"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0064",
+  "category": "Teknolojî",
+  "prompt": "Pixel di wêneya dîjîtal de çi ye?",
+  "answers": [
+   "Yekîneya voltajê (ne rastîn) (ne rastîn)",
+   "Cureyê kabloyê (ne rast)",
+   "Xala rengîn a herî piçûk a wêneyê",
+   "Navê protokolê"
+  ],
+  "correctAnswer": "Xala rengîn a herî piçûk a wêneyê",
+  "promptTr": "Dijital görüntüde piksel nedir?",
+  "answersTr": [
+   "Voltaj birimi (geçersiz) (geçersiz)",
+   "Kablo türü (yanlış)",
+   "Görüntünün en küçük renkli noktası",
+   "Protokol adı"
+  ],
+  "correctAnswerTr": "Görüntünün en küçük renkli noktası",
+  "explanation": "Görüntü piksel matrisinden oluşur; her piksel renk ve çoğu kez saydamlık tutar.",
+  "explanationTr": "Görüntü piksel matrisinden oluşur; her piksel renk ve çoğu kez saydamlık tutar.",
+  "explanationKu": "Wêne ji matrixa pixelan pêk tê; her pixel reng û gelek caran zelaliyê digire.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=4dc9f9337fec3ea6",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "medya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "4dc9f9337fec3ea6"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0065",
+  "category": "Teknolojî",
+  "prompt": "Resolution a ekranê bi gelemperî çi dibêje?",
+  "answers": [
+   "Çiqas pixel di firehî û bilindahiyê de hene",
+   "Giraniya monitorê",
+   "Dirêjahiya kabloyê HDMI",
+   "Rengê çarçoveyê (ne rast)"
+  ],
+  "correctAnswer": "Çiqas pixel di firehî û bilindahiyê de hene",
+  "promptTr": "Ekran çözünürlüğü genellikle neyi söyler?",
+  "answersTr": [
+   "Yatay ve dikeyde kaç piksel olduğunu",
+   "Monitör ağırlığını",
+   "HDMI kablo uzunluğunu",
+   "Çerçeve rengini (yanlış)"
+  ],
+  "correctAnswerTr": "Yatay ve dikeyde kaç piksel olduğunu",
+  "explanation": "Örneğin 1920×1080, 1920 yatay ve 1080 dikey piksel demektir; daha çok piksel daha ayrıntılı görünüm verir.",
+  "explanationTr": "Örneğin 1920×1080, 1920 yatay ve 1080 dikey piksel demektir; daha çok piksel daha ayrıntılı görünüm verir.",
+  "explanationKu": "Mînak 1920×1080 tê wateya 1920 pixel fireh û 1080 bilind; zêdetir pixel hûrgilîtir dîtbarî dide.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=929e2b148a3569f6",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "medya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "929e2b148a3569f6"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0066",
+  "category": "Teknolojî",
+  "prompt": "Codec di vîdyo/deng de çi dike?",
+  "answers": [
+   "Kabloyê dirêj dike",
+   "Daneyan pêç dike an vedike",
+   "Pîlê fîzîkî çêdike",
+   "OS jê dibe (ne rast) (çewt)"
+  ],
+  "correctAnswer": "Daneyan pêç dike an vedike",
+  "promptTr": "Video/seste kodek ne yapar?",
+  "answersTr": [
+   "Kabloyu uzatır",
+   "Veriyi sıkıştırır veya açar",
+   "Fiziksel pil üretir",
+   "OS siler (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Veriyi sıkıştırır veya açar",
+  "explanation": "Kodek (coder-decoder) dosyaları küçültür veya oynatmak için açar; örneğin H.264, AAC.",
+  "explanationTr": "Kodek (coder-decoder) dosyaları küçültür veya oynatmak için açar; örneğin H.264, AAC.",
+  "explanationKu": "Codec (coder-decoder) pelan piçûk dike an ji bo lîstinê vedike; mînak H.264, AAC.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=eddc7812e6193cb3",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "medya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "eddc7812e6193cb3"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0067",
+  "category": "Teknolojî",
+  "prompt": "Cache bi giranî çima tê bikaranîn?",
+  "answers": [
+   "Zêdekirina giraniya laptopê — şaş e — şaş e — şaş e",
+   "Guhertina rengê klavyeyê",
+   "Gihîştina bileztir a daneyên pir têne bikaranîn",
+   "Çêkirina kaxezê (ne rast)"
+  ],
+  "correctAnswer": "Gihîştina bileztir a daneyên pir têne bikaranîn",
+  "promptTr": "Önbellek (cache) esas olarak neden kullanılır?",
+  "answersTr": [
+   "Dizüstü ağırlığını artırma — hatalı — hatalı — hatalı",
+   "Klavye rengini değiştirme",
+   "Sık kullanılan verilere daha hızlı erişim",
+   "Kâğıt üretme (yanlış)"
+  ],
+  "correctAnswerTr": "Sık kullanılan verilere daha hızlı erişim",
+  "explanation": "Önbellek, CPU'nun yavaş disk veya RAM'e daha az bakması için sıcak veri kopyalarını tutan daha hızlı bellektir.",
+  "explanationTr": "Önbellek, CPU'nun yavaş disk veya RAM'e daha az bakması için sıcak veri kopyalarını tutan daha hızlı bellektir.",
+  "explanationKu": "Cache bîra bileztir e ku kopiyên daneyên germ digire da ku CPU kêm li dîsk an RAM-a hêdî binêre.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f4b14aa67bda05c6",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f4b14aa67bda05c6"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0068",
+  "category": "Teknolojî",
+  "prompt": "Virtual memory bi giranî çi dike?",
+  "answers": [
+   "Ekranê fîzîkî diguherîne",
+   "Kabloyê şîfre dike (ne rast) (ne rastîn) (ne rastîn)",
+   "Mouse vediguherîne klavyeyê",
+   "Beşek dîskê wek dirêjkirina RAM bikar tîne"
+  ],
+  "correctAnswer": "Beşek dîskê wek dirêjkirina RAM bikar tîne",
+  "promptTr": "Sanal bellek esas olarak ne yapar?",
+  "answersTr": [
+   "Fiziksel ekranı değiştirir",
+   "Kabloyu şifreler (yanlış) (geçersiz) (geçersiz)",
+   "Fareyi klavyeye çevirir",
+   "Diskin bir kısmını RAM uzantısı gibi kullanır"
+  ],
+  "correctAnswerTr": "Diskin bir kısmını RAM uzantısı gibi kullanır",
+  "explanation": "RAM dolunca OS sayfaları diske gönderir (swap/pagefile); bu daha yavaştır ama kapasiteyi genişletir.",
+  "explanationTr": "RAM dolunca OS sayfaları diske gönderir (swap/pagefile); bu daha yavaştır ama kapasiteyi genişletir.",
+  "explanationKu": "Gava RAM tije be OS rûpelan dişîne dîskê (swap/pagefile); ev hêdîtir e lê kapasîteyê fireh dike.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=f605ee8705299b9a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f605ee8705299b9a"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0069",
+  "category": "Teknolojî",
+  "prompt": "Bit yekîneya herî piçûk a agahiyê ye û çend nirx digire?",
+  "answers": [
+   "10 (ne rast)",
+   "2 (0 an 1) ya standard",
+   "256",
+   "1024"
+  ],
+  "correctAnswer": "2 (0 an 1) ya standard",
+  "promptTr": "Bit en küçük bilgi birimidir ve kaç değer alır?",
+  "answersTr": [
+   "10 (yanlış)",
+   "2 (0 veya 1) (standart)",
+   "256",
+   "1024"
+  ],
+  "correctAnswerTr": "2 (0 veya 1) (standart)",
+  "explanation": "Bit ikilidir: 0 veya 1. Bayt 8 bittir ve 256 değer alır.",
+  "explanationTr": "Bit ikilidir: 0 veya 1. Bayt 8 bittir ve 256 değer alır.",
+  "explanationKu": "Bit dual e: 0 an 1. Bayt 8 bit e û 256 nirx digire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6c35fb410af29624",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6c35fb410af29624"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0070",
+  "category": "Teknolojî",
+  "prompt": "Di pergala dual (binary) de tenê kîjan reqem têne bikaranîn?",
+  "answers": [
+   "0 û 1",
+   "0 heta 9",
+   "A heta F",
+   "1 heta 7"
+  ],
+  "correctAnswer": "0 û 1",
+  "promptTr": "İkili (binary) sistemde yalnızca hangi rakamlar kullanılır?",
+  "answersTr": [
+   "0 ve 1",
+   "0 ile 9",
+   "A ile F",
+   "1 ile 7"
+  ],
+  "correctAnswerTr": "0 ve 1",
+  "explanation": "İkili iki duruma dayanır; bu açık/kapalı elektrik durumlarıyla ilişkilidir.",
+  "explanationTr": "İkili iki duruma dayanır; bu açık/kapalı elektrik durumlarıyla ilişkilidir.",
+  "explanationKu": "Binary li ser du rewşan e; ev bi rewşên elektrîkê yên vekirî/girtî re têkildar e.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=76a31fb4c257e22f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "76a31fb4c257e22f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0071",
+  "category": "Teknolojî",
+  "prompt": "Hejmara dual 1010 di dehî de çend e?",
+  "answers": [
+   "5",
+   "8",
+   "12",
+   "10"
+  ],
+  "correctAnswer": "10",
+  "promptTr": "İkili 1010 sayısı onlukta kaçtır?",
+  "answersTr": [
+   "5",
+   "8",
+   "12",
+   "10"
+  ],
+  "correctAnswerTr": "10",
+  "explanation": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her basamak 2'nin kuvvetidir.",
+  "explanationTr": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her basamak 2'nin kuvvetidir.",
+  "explanationKu": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her cîh hêza 2yê ye.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=d2238759c2e60ed9",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "bîr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d2238759c2e60ed9"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0072",
+  "category": "Teknolojî",
+  "prompt": "MAC-navnîşan bi gelemperî çi ye?",
+  "answers": [
+   "Navê bikarhêner ê e-nameyê",
+   "Şîfreya Wi-Fi ya giştî",
+   "Nasnameya fîzîkî ya navbera torê ya cîhazê",
+   "Mezinahiya dîskê (ne rast) (ne rastîn) (ne rastîn)"
+  ],
+  "correctAnswer": "Nasnameya fîzîkî ya navbera torê ya cîhazê",
+  "promptTr": "MAC adresi genellikle nedir?",
+  "answersTr": [
+   "E-posta kullanıcı adı",
+   "Genel Wi-Fi parolası",
+   "Aygıtın ağ arayüzünün fiziksel kimliği",
+   "Disk boyutu (yanlış) (geçersiz) (geçersiz)"
+  ],
+  "correctAnswerTr": "Aygıtın ağ arayüzünün fiziksel kimliği",
+  "explanation": "MAC ağ kartına işlenir ve yerel alanda aygıtı tanır; IP mantıksaldır.",
+  "explanationTr": "MAC ağ kartına işlenir ve yerel alanda aygıtı tanır; IP mantıksaldır.",
+  "explanationKu": "MAC li ser kart a torê tê çespandin û di qada herêmî de cîhazê dinase; IP lojîktir.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=75bb395f6ec24ad3",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "75bb395f6ec24ad3"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0073",
+  "category": "Teknolojî",
+  "prompt": "Ping bi giranî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Ceribandina gihîştin û derengiya torê",
+   "Çapkirina belgeyê",
+   "Şarjkirina pîlê (ne rast)",
+   "Guhertina temayê"
+  ],
+  "correctAnswer": "Ceribandina gihîştin û derengiya torê",
+  "promptTr": "Ping esas olarak ne için kullanılır?",
+  "answersTr": [
+   "Ağ erişimini ve gecikmeyi sınamak",
+   "Belge yazdırmak",
+   "Pil şarj etmek (yanlış)",
+   "Temayı değiştirmek"
+  ],
+  "correctAnswerTr": "Ağ erişimini ve gecikmeyi sınamak",
+  "explanation": "Ping ICMP paketleri gönderip yanıtı ölçer; hedefin ayakta olup olmadığını ve gecikmeyi gösterir.",
+  "explanationTr": "Ping ICMP paketleri gönderip yanıtı ölçer; hedefin ayakta olup olmadığını ve gecikmeyi gösterir.",
+  "explanationKu": "Ping pakêtên ICMP dişîne û bersivê dipîve; dibîne ka mîvan zindî ye û çiqas dereng heye.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=61ab2ba94269b9de",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "61ab2ba94269b9de"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0074",
+  "category": "Teknolojî",
+  "prompt": "Port di torê de bi giranî çi dike?",
+  "answers": [
+   "Giraniya laptopê diguherîne",
+   "Karûbarên cuda yên li ser heman IP vediqetîne",
+   "Rengê pixel diguherîne (ne rast) (çewt) (çewt)",
+   "Dirêjahiya maseyê diguherîne"
+  ],
+  "correctAnswer": "Karûbarên cuda yên li ser heman IP vediqetîne",
+  "promptTr": "Ağda port esas olarak ne yapar?",
+  "answersTr": [
+   "Dizüstü ağırlığını değiştirir",
+   "Aynı IP'deki farklı hizmetleri ayırır",
+   "Piksel rengini değiştirir (yanlış) (yanlış) (yanlış)",
+   "Masa uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Aynı IP'deki farklı hizmetleri ayırır",
+  "explanation": "Örneğin port 443 genelde HTTPS, 22 SSH'tir; IP hedef makine, port hizmettir.",
+  "explanationTr": "Örneğin port 443 genelde HTTPS, 22 SSH'tir; IP hedef makine, port hizmettir.",
+  "explanationKu": "Mînak port 443 bi gelemperî HTTPS e, 22 SSH e; IP mîvan e, port karûbar e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e4b33cfc76801c11",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e4b33cfc76801c11"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0075",
+  "category": "Teknolojî",
+  "prompt": "Search engine bi giranî çi dike?",
+  "answers": [
+   "Pîlê fîzîkî çêdike (ne rast)",
+   "Kabloyê metal dike",
+   "Li ser webê naverok digere û rêz dike",
+   "Monitor diguherîne CPU — şaş e — şaş e"
+  ],
+  "correctAnswer": "Li ser webê naverok digere û rêz dike",
+  "promptTr": "Arama motoru esas olarak ne yapar?",
+  "answersTr": [
+   "Fiziksel pil üretir (yanlış)",
+   "Kabloyu metal yapar",
+   "Webde içerik arar ve sıralar",
+   "Monitörü CPU yapar — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Webde içerik arar ve sıralar",
+  "explanation": "Arama motorları sayfaları dizinler ve sorguya göre sonuç gösterir.",
+  "explanationTr": "Arama motorları sayfaları dizinler ve sorguya göre sonuç gösterir.",
+  "explanationKu": "Motorên lêgerînê rûpelan dizin û li gorî sorgûyê encaman nîşan didin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=af9e879550085dce",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "af9e879550085dce"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0076",
+  "category": "Teknolojî",
+  "prompt": "Hyperlink di rûpela webê de çi ye?",
+  "answers": [
+   "Tenê rengê paşxanê (ne rastîn) (ne rastîn)",
+   "Tenê mezinahiya tîpan",
+   "Tenê sînga wêneyê (ne rast)",
+   "Girêdana ku diçe çavkaniyeke din"
+  ],
+  "correctAnswer": "Girêdana ku diçe çavkaniyeke din",
+  "promptTr": "Web sayfasında köprü (hyperlink) nedir?",
+  "answersTr": [
+   "Yalnızca arka plan rengi (geçersiz) (geçersiz)",
+   "Yalnızca yazı tipi boyutu",
+   "Yalnızca görsel çerçevesi (yanlış)",
+   "Başka bir kaynağa giden bağlantı"
+  ],
+  "correctAnswerTr": "Başka bir kaynağa giden bağlantı",
+  "explanation": "Bağlantı tıklanınca kullanıcıyı başka URL'ye götürür; bu web'in temelidir.",
+  "explanationTr": "Bağlantı tıklanınca kullanıcıyı başka URL'ye götürür; bu web'in temelidir.",
+  "explanationKu": "Link bi tikandinê bikarhêner digihîne URL-yeke din; ev bingeha webê ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=1ee491570a4e94f7",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1ee491570a4e94f7"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0077",
+  "category": "Teknolojî",
+  "prompt": "HTML bi giranî çi diyar dike?",
+  "answers": [
+   "Leza fanê ya CPU",
+   "Struktur û naveroka rûpela webê",
+   "Voltaja pîlê (ne rast)",
+   "Dirêjahiya USB"
+  ],
+  "correctAnswer": "Struktur û naveroka rûpela webê",
+  "promptTr": "HTML esas olarak neyi tanımlar?",
+  "answersTr": [
+   "CPU fan hızını",
+   "Web sayfasının yapısı ve içeriğini",
+   "Pil voltajını (yanlış)",
+   "USB uzunluğunu"
+  ],
+  "correctAnswerTr": "Web sayfasının yapısı ve içeriğini",
+  "explanation": "HTML başlık, paragraf, bağlantı ve öğeleri işaretler; CSS görünüm, JS davranış ekler.",
+  "explanationTr": "HTML başlık, paragraf, bağlantı ve öğeleri işaretler; CSS görünüm, JS davranış ekler.",
+  "explanationKu": "HTML sernivîs, paragraf, girêdan û hêmanan nîşan dide; CSS xuyangê, JS tevgerê digire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b29af4709118a311",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b29af4709118a311"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0078",
+  "category": "Teknolojî",
+  "prompt": "CSS di webê de bi giranî çi diguherîne?",
+  "answers": [
+   "Xuyang, rêz û sêwirana rûpelê",
+   "Navnîşana IP ya serverê",
+   "Mezinahiya fîzîkî ya dîskê",
+   "Cureyê pîla laptopê (ne rast) (çewt)"
+  ],
+  "correctAnswer": "Xuyang, rêz û sêwirana rûpelê",
+  "promptTr": "Webde CSS esas olarak neyi değiştirir?",
+  "answersTr": [
+   "Sayfanın görünüm, düzen ve tasarımını",
+   "Sunucunun IP adresini",
+   "Diskin fiziksel boyutunu",
+   "Dizüstü pil türünü (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Sayfanın görünüm, düzen ve tasarımını",
+  "explanation": "CSS renk, yazı tipi, boşluk ve yerleşimi kontrol eder; temel içerik HTML'de kalır.",
+  "explanationTr": "CSS renk, yazı tipi, boşluk ve yerleşimi kontrol eder; temel içerik HTML'de kalır.",
+  "explanationKu": "CSS reng, tîp, margin û layout kontrol dike; naveroka bingehîn di HTML de dimîne.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c1a71f429550f59f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c1a71f429550f59f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0079",
+  "category": "Teknolojî",
+  "prompt": "JavaScript di rûpelên webê de bi giranî çi zêde dike?",
+  "answers": [
+   "Şarj a pîlê ya fîzîkî — şaş e — şaş e",
+   "Giranî a monitorê",
+   "Dirêjahiya HDMI (ne rast)",
+   "Tevger û înteraktîvîteya aliyê gerokê"
+  ],
+  "correctAnswer": "Tevger û înteraktîvîteya aliyê gerokê",
+  "promptTr": "Web sayfalarında JavaScript esas olarak ne ekler?",
+  "answersTr": [
+   "Fiziksel pil şarjı — hatalı — hatalı",
+   "Monitör ağırlığı",
+   "HDMI uzunluğu (yanlış)",
+   "Tarayıcı tarafında davranış ve etkileşim"
+  ],
+  "correctAnswerTr": "Tarayıcı tarafında davranış ve etkileşim",
+  "explanation": "JS form denetler, içeriği günceller ve her seferinde sayfayı yenilemeden kullanıcı olaylarını alır.",
+  "explanationTr": "JS form denetler, içeriği günceller ve her seferinde sayfayı yenilemeden kullanıcı olaylarını alır.",
+  "explanationKu": "JS form kontrol dike, naverokê nûve dike û bûyerên bikarhêner digire bêyî ku her car rûpel ji nû ve were barkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=598bf4c5d6ba44db",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "înternet",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "598bf4c5d6ba44db"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0080",
+  "category": "Teknolojî",
+  "prompt": "Digitalization çi ye?",
+  "answers": [
+   "Tenê çapkirina kaxezê",
+   "Tenê şewitandina CD (ne rast) (ne rastîn)",
+   "Veguhestina agahiyê bo formata dîjîtal",
+   "Tenê girtina elektrîkê"
+  ],
+  "correctAnswer": "Veguhestina agahiyê bo formata dîjîtal",
+  "promptTr": "Dijitalleşme nedir?",
+  "answersTr": [
+   "Yalnızca kâğıt basma",
+   "Yalnızca CD yakma (yanlış) (geçersiz)",
+   "Bilgiyi dijital biçime aktarma",
+   "Yalnızca elektriği kesme"
+  ],
+  "correctAnswerTr": "Bilgiyi dijital biçime aktarma",
+  "explanation": "Dijitalleşme yazı, ses veya görüntüyü işlenebilir sayı ve bilgisayar dosyalarına çevirir.",
+  "explanationTr": "Dijitalleşme yazı, ses veya görüntüyü işlenebilir sayı ve bilgisayar dosyalarına çevirir.",
+  "explanationKu": "Dîjîtalkirin nivîs, deng an wêneyan dike hejmar û pelên kompîterê ku werin xebitandin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6a42001d020650ca",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6a42001d020650ca"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0081",
+  "category": "Teknolojî",
+  "prompt": "Open source nermalav çi tê wateya?",
+  "answers": [
+   "Koda çavkaniyê vekirî ye û dikare were vekolîn/parvekirin",
+   "Tenê bi pereyê zêr tê firotin",
+   "Tenê li ser kaxezê ye (ne rast)",
+   "Tenê di ROM-ê de girtî ye"
+  ],
+  "correctAnswer": "Koda çavkaniyê vekirî ye û dikare were vekolîn/parvekirin",
+  "promptTr": "Açık kaynak yazılım ne anlama gelir?",
+  "answersTr": [
+   "Kaynak kodu açıktır; incelenebilir/paylaşılabilir",
+   "Yalnızca altın parayla satılır",
+   "Yalnızca kâğıttadır (yanlış)",
+   "Yalnızca ROM'da kilitlidir"
+  ],
+  "correctAnswerTr": "Kaynak kodu açıktır; incelenebilir/paylaşılabilir",
+  "explanation": "Açık kaynak, topluluğun kodu görmesine, düzeltmesine ve dağıtmasına izin verir; lisans koşulları belirler.",
+  "explanationTr": "Açık kaynak, topluluğun kodu görmesine, düzeltmesine ve dağıtmasına izin verir; lisans koşulları belirler.",
+  "explanationKu": "Open source destûr dide ku civak kodê bibîne, sererast bike û belav bike; lîsans mercan diyar dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c0f9dbaedb0fee4b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c0f9dbaedb0fee4b"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0082",
+  "category": "Teknolojî",
+  "prompt": "Interface a bikarhêner (UI) çi ye?",
+  "answers": [
+   "Tenê kabloyê hundir (çewt) (çewt) (çewt)",
+   "Rûyê ku bikarhêner pê re têkiliyê dike",
+   "Tenê pîla derve (ne rast)",
+   "Tenê hewa ya fanê"
+  ],
+  "correctAnswer": "Rûyê ku bikarhêner pê re têkiliyê dike",
+  "promptTr": "Kullanıcı arayüzü (UI) nedir?",
+  "answersTr": [
+   "Yalnızca iç kablo (yanlış) (yanlış) (yanlış)",
+   "Kullanıcının etkileştiği yüzey",
+   "Yalnızca dış pil (yanlış)",
+   "Yalnızca fan havası"
+  ],
+  "correctAnswerTr": "Kullanıcının etkileştiği yüzey",
+  "explanation": "UI düğme, menü ve ekranları kapsar; UX ise genel kullanım deneyimidir.",
+  "explanationTr": "UI düğme, menü ve ekranları kapsar; UX ise genel kullanım deneyimidir.",
+  "explanationKu": "UI bişkok, menû û ekranan digire; UX jî ezmûna giştî ya bikaranînê ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=5181e2d5f340c4e1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5181e2d5f340c4e1"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0083",
+  "category": "Teknolojî",
+  "prompt": "API bi giranî çi ye?",
+  "answers": [
+   "Tenê cureyê plastîk a qutiyê",
+   "Tenê rengê LED (ne rast) — şaş e — şaş e — şaş e",
+   "Navbera diyarkirî ji bo ku bername bi hev re bixebitin",
+   "Tenê dirêjahiya antenê"
+  ],
+  "correctAnswer": "Navbera diyarkirî ji bo ku bername bi hev re bixebitin",
+  "promptTr": "API esas olarak nedir?",
+  "answersTr": [
+   "Yalnızca kasa plastik türü",
+   "Yalnızca LED rengi (yanlış) — hatalı — hatalı — hatalı",
+   "Programların birlikte çalışması için tanımlı arayüz",
+   "Yalnızca anten uzunluğu"
+  ],
+  "correctAnswerTr": "Programların birlikte çalışması için tanımlı arayüz",
+  "explanation": "API, bir yazılımın diğerinin hizmetlerini kullanması için kural ve istekleri tanımlar.",
+  "explanationTr": "API, bir yazılımın diğerinin hizmetlerini kullanması için kural ve istekleri tanımlar.",
+  "explanationKu": "API rêgez û daxwazan diyar dike da ku nermalavek karûbarên ya din bikar bîne.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=1b78e4e09eb91b9e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1b78e4e09eb91b9e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0084",
+  "category": "Teknolojî",
+  "prompt": "Bug di nermalavê de çi ye?",
+  "answers": [
+   "Zêdebûna fîzîkî ya RAM",
+   "Guhertina marka a mouse",
+   "Dirêjbûna kabloyê (ne rast) (ne rastîn)",
+   "Çewtî an tevgereke nexwestî di kodê de"
+  ],
+  "correctAnswer": "Çewtî an tevgereke nexwestî di kodê de",
+  "promptTr": "Yazılımda hata (bug) nedir?",
+  "answersTr": [
+   "Fiziksel RAM artışı",
+   "Fare markası değişimi",
+   "Kablo uzaması (yanlış) (geçersiz)",
+   "Kodda istenmeyen yanlışlık veya davranış"
+  ],
+  "correctAnswerTr": "Kodda istenmeyen yanlışlık veya davranış",
+  "explanation": "Hata mantık veya kod yanlışlığından çıkar; test ve hata ayıklama onu arar.",
+  "explanationTr": "Hata mantık veya kod yanlışlığından çıkar; test ve hata ayıklama onu arar.",
+  "explanationKu": "Bug ji ber çewtiya mantiq an kodê derdikeve; testing û debug wê digerin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=56778d828921728c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "56778d828921728c"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0085",
+  "category": "Teknolojî",
+  "prompt": "Download çi ye?",
+  "answers": [
+   "Şandina pel ji cîhazê bo serverê",
+   "Anîna pel an daneyê ji torê bo cîhazê",
+   "Jêbirina OS (ne rast)",
+   "Girtina Wi-Fi"
+  ],
+  "correctAnswer": "Anîna pel an daneyê ji torê bo cîhazê",
+  "promptTr": "İndirme nedir?",
+  "answersTr": [
+   "Dosyayı aygıttan sunucuya gönderme",
+   "Dosya veya veriyi ağdan aygıta alma",
+   "OS silme (yanlış)",
+   "Wi-Fi kapatma"
+  ],
+  "correctAnswerTr": "Dosya veya veriyi ağdan aygıta alma",
+  "explanation": "İndirme dışarıdan getirir; yükleme aygıttan dışarı gönderir.",
+  "explanationTr": "İndirme dışarıdan getirir; yükleme aygıttan dışarı gönderir.",
+  "explanationKu": "Download ji derve tîne; upload jî ji cîhazê dişîne derve.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=faddcd30d8bec53e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "faddcd30d8bec53e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0086",
+  "category": "Teknolojî",
+  "prompt": "Upload çi ye?",
+  "answers": [
+   "Şandina pel an daneyê ji cîhazê bo tor/server",
+   "Anîna pel tenê ji CD-yê",
+   "Guhertina rengê ekranê (ne rast) (çewt) (çewt)",
+   "Zêdekirina giraniya qutiyê"
+  ],
+  "correctAnswer": "Şandina pel an daneyê ji cîhazê bo tor/server",
+  "promptTr": "Yükleme nedir?",
+  "answersTr": [
+   "Dosya veya veriyi aygıttan ağ/sunucuya gönderme",
+   "Dosyayı yalnızca CD'den alma",
+   "Ekran rengini değiştirme (yanlış) (yanlış) (yanlış)",
+   "Kasa ağırlığını artırma"
+  ],
+  "correctAnswerTr": "Dosya veya veriyi aygıttan ağ/sunucuya gönderme",
+  "explanation": "Yükleme belgeyi buluta, siteye veya başkalarına iletir; indirme tersidir.",
+  "explanationTr": "Yükleme belgeyi buluta, siteye veya başkalarına iletir; indirme tersidir.",
+  "explanationKu": "Upload belgeyê digihîne ewr, malper an hevalan; berevajî download e.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=ff329d1c12d2ba4e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ff329d1c12d2ba4e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0087",
+  "category": "Teknolojî",
+  "prompt": "Partition a dîskê çi ye?",
+  "answers": [
+   "Tenê yek pixel (ne rast)",
+   "Tenê yek bit ê şîfreyê",
+   "Tenê yek rengê temayê — şaş e — şaş e — şaş e",
+   "Beşa lojîk a dîskê ku wek yekîne tê dîtin"
+  ],
+  "correctAnswer": "Beşa lojîk a dîskê ku wek yekîne tê dîtin",
+  "promptTr": "Disk bölümü (partition) nedir?",
+  "answersTr": [
+   "Yalnızca bir piksel (yanlış)",
+   "Yalnızca bir parola biti",
+   "Yalnızca bir tema rengi — hatalı — hatalı — hatalı",
+   "Diskin birim gibi görülen mantıksal parçası"
+  ],
+  "correctAnswerTr": "Diskin birim gibi görülen mantıksal parçası",
+  "explanation": "Bölüm diski ayrı parçalara ayırır; her biri kendi sistemi veya verisini tutabilir.",
+  "explanationTr": "Bölüm diski ayrı parçalara ayırır; her biri kendi sistemi veya verisini tutabilir.",
+  "explanationKu": "Partition dîskê dike beşên cuda; her yek dikare pergal an daneyên xwe bigire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=340dfdfd0247c289",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hilanîn",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "340dfdfd0247c289"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0088",
+  "category": "Teknolojî",
+  "prompt": "File compression bi giranî çi dike?",
+  "answers": [
+   "Leza ronahiya ekranê zêde dike (ne rastîn) (ne rastîn)",
+   "Kabloyê qalind dike",
+   "Mezinahiya pel kêm dike bi kodkirina bikêrtir",
+   "Pîlê giran dike (ne rast)"
+  ],
+  "correctAnswer": "Mezinahiya pel kêm dike bi kodkirina bikêrtir",
+  "promptTr": "Dosya sıkıştırma esas olarak ne yapar?",
+  "answersTr": [
+   "Ekran parlaklığını artırır (geçersiz) (geçersiz)",
+   "Kabloyu kalınlaştırır",
+   "Daha verimli kodlamayla dosya boyutunu küçültür",
+   "Pili ağırlaştırır (yanlış)"
+  ],
+  "correctAnswerTr": "Daha verimli kodlamayla dosya boyutunu küçültür",
+  "explanation": "ZIP vb. tekrarı azaltır; bazı türler kayıplı (JPEG), bazıları kayıpsızdır (PNG, ZIP).",
+  "explanationTr": "ZIP vb. tekrarı azaltır; bazı türler kayıplı (JPEG), bazıları kayıpsızdır (PNG, ZIP).",
+  "explanationKu": "ZIP û hwd. dubarebûnê kêm dikin; hin cure windahîdar in (JPEG), hin jî bêwindahî (PNG, ZIP).",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=09f3ede33842e624",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hilanîn",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "09f3ede33842e624"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0089",
+  "category": "Teknolojî",
+  "prompt": "Format kirina dîskê bi gelemperî çi dike?",
+  "answers": [
+   "Struktur a pergala pelan amade dike û gelek caran daneyan paqij dike",
+   "Monitor diguherîne",
+   "IP ya giştî diguherîne",
+   "HTML dinivîse (ne rast)"
+  ],
+  "correctAnswer": "Struktur a pergala pelan amade dike û gelek caran daneyan paqij dike",
+  "promptTr": "Disk biçimlendirme genellikle ne yapar?",
+  "answersTr": [
+   "Dosya sistemi yapısını hazırlar ve çoğu kez veriyi siler",
+   "Monitör değiştirir",
+   "Genel IP değiştirir",
+   "HTML yazar (yanlış)"
+  ],
+  "correctAnswerTr": "Dosya sistemi yapısını hazırlar ve çoğu kez veriyi siler",
+  "explanation": "Biçimlendirme dosya sistemini (ör. NTFS, ext4) kurar; dikkat, önceki veriler kaybolur.",
+  "explanationTr": "Biçimlendirme dosya sistemini (ör. NTFS, ext4) kurar; dikkat, önceki veriler kaybolur.",
+  "explanationKu": "Format pergala pelan (mînak NTFS, ext4) dadimezrîne; hişyar be, daneyên berê winda dibin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6628657291295cca",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hilanîn",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6628657291295cca"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0090",
+  "category": "Teknolojî",
+  "prompt": "Restart a kompîterê çi dike?",
+  "answers": [
+   "Tenê rengê paşxanê diguherîne",
+   "Pergalê digire û ji nû ve vedike",
+   "Tenê yek pel jê dibe (ne rast)",
+   "Tenê kabloyê dikişîne (çewt) (çewt)"
+  ],
+  "correctAnswer": "Pergalê digire û ji nû ve vedike",
+  "promptTr": "Bilgisayarı yeniden başlatmak ne yapar?",
+  "answersTr": [
+   "Yalnızca arka plan rengini değiştirir",
+   "Sistemi kapatıp yeniden açar",
+   "Yalnızca bir dosya siler (yanlış)",
+   "Yalnızca kabloyu çeker (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Sistemi kapatıp yeniden açar",
+  "explanation": "Yeniden başlatma süreçleri temizler ve yazılımı yeniden yükler; çoğu kez geçici hataları giderir.",
+  "explanationTr": "Yeniden başlatma süreçleri temizler ve yazılımı yeniden yükler; çoğu kez geçici hataları giderir.",
+  "explanationKu": "Restart pêvajoyan paqij dike û nermalavê ji nû ve bar dike; gelek caran çewtiyên demkurt çareser dike.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=79139bce967d72b9",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pergal",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "79139bce967d72b9"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0091",
+  "category": "Teknolojî",
+  "prompt": "Sleep/mode a razanê bi giranî çi dike?",
+  "answers": [
+   "Hemû dîskê jê dibe — şaş e — şaş e",
+   "OS diguherîne (ne rast)",
+   "Rewşê digire û hêza kêm bikar tîne",
+   "IP ya derve diguherîne"
+  ],
+  "correctAnswer": "Rewşê digire û hêza kêm bikar tîne",
+  "promptTr": "Uyku modu esas olarak ne yapar?",
+  "answersTr": [
+   "Tüm diski siler — hatalı — hatalı",
+   "OS değiştirir (yanlış)",
+   "Durumu saklar ve az güç kullanır",
+   "Dış IP değiştirir"
+  ],
+  "correctAnswerTr": "Durumu saklar ve az güç kullanır",
+  "explanation": "Uyku RAM'i korur ve işe çabuk döner; tam kapama her şeyi kapatır.",
+  "explanationTr": "Uyku RAM'i korur ve işe çabuk döner; tam kapama her şeyi kapatır.",
+  "explanationKu": "Sleep RAM digire û zû vedigere xebatê; shutdown bi tevahî digire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6c7170dc54e2338a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pergal",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6c7170dc54e2338a"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0092",
+  "category": "Teknolojî",
+  "prompt": "Driver a amûrê çi ye?",
+  "answers": [
+   "Tenê pîla derve (ne rast)",
+   "Tenê kaxez a çapê (ne rastîn) (ne rastîn)",
+   "Tenê navê bikarhêner",
+   "Nermalava ku OS-ê bi hişkê re diaxive"
+  ],
+  "correctAnswer": "Nermalava ku OS-ê bi hişkê re diaxive",
+  "promptTr": "Aygıt sürücüsü nedir?",
+  "answersTr": [
+   "Yalnızca dış pil (yanlış)",
+   "Yalnızca yazıcı kâğıdı (geçersiz) (geçersiz)",
+   "Yalnızca kullanıcı adı",
+   "OS'nin donanımla konuşmasını sağlayan yazılım"
+  ],
+  "correctAnswerTr": "OS'nin donanımla konuşmasını sağlayan yazılım",
+  "explanation": "Sürücü, OS komutlarını aygıtın diline çevirir (yazıcı, ekran kartı vb.).",
+  "explanationTr": "Sürücü, OS komutlarını aygıtın diline çevirir (yazıcı, ekran kartı vb.).",
+  "explanationKu": "Driver fermanên OS vediguherîne zimanê amûrê (printer, kart a grafîkê, hwd.).",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e707ddb162a1574f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pergal",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e707ddb162a1574f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0093",
+  "category": "Teknolojî",
+  "prompt": "Boot process çi ye?",
+  "answers": [
+   "Tenê jêbirina yek pelî",
+   "Destpêkirina pergalê ji vekirina elektrîkê heta OS-ê",
+   "Tenê guhertina temayê (ne rast)",
+   "Tenê vekirina yek appê"
+  ],
+  "correctAnswer": "Destpêkirina pergalê ji vekirina elektrîkê heta OS-ê",
+  "promptTr": "Önyükleme (boot) süreci nedir?",
+  "answersTr": [
+   "Yalnızca bir dosya silme",
+   "Elektrik açılışından OS'ye kadar sistemin başlaması",
+   "Yalnızca tema değiştirme (yanlış)",
+   "Yalnızca bir uygulama açma"
+  ],
+  "correctAnswerTr": "Elektrik açılışından OS'ye kadar sistemin başlaması",
+  "explanation": "Önyükleme firmware/BIOS veya UEFI'nin donanımı sınayıp OS yüklemesidir.",
+  "explanationTr": "Önyükleme firmware/BIOS veya UEFI'nin donanımı sınayıp OS yüklemesidir.",
+  "explanationKu": "Boot firmware/BIOS an UEFI kontrol dike, hişkê diceribîne û OS bar dike.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=6f157f55da3d11f7",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pergal",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6f157f55da3d11f7"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0094",
+  "category": "Teknolojî",
+  "prompt": "GPU bi giranî ji bo çi tê sêwirandin?",
+  "answers": [
+   "Hesabên grafîk û paralel ên zêde",
+   "Tenê şîfreya e-nameyê (ne rast) (çewt)",
+   "Tenê çapkirina kaxezê",
+   "Tenê pîvandina germahiya odê"
+  ],
+  "correctAnswer": "Hesabên grafîk û paralel ên zêde",
+  "promptTr": "GPU esas olarak ne için tasarlanır?",
+  "answersTr": [
+   "Yoğun grafik ve paralel hesaplar",
+   "Yalnızca e-posta parolası (yanlış) (yanlış)",
+   "Yalnızca kâğıt basma",
+   "Yalnızca oda sıcaklığı ölçme"
+  ],
+  "correctAnswerTr": "Yoğun grafik ve paralel hesaplar",
+  "explanation": "GPU binlerce küçük birimle çok sayıda eşzamanlı hesap yapar; oyun, video ve bazı yapay zekâ işlerinde yararlıdır.",
+  "explanationTr": "GPU binlerce küçük birimle çok sayıda eşzamanlı hesap yapar; oyun, video ve bazı yapay zekâ işlerinde yararlıdır.",
+  "explanationKu": "GPU bi hezaran yekîneyên piçûk gelek hesabên hevdem dike; ji bo lîstik, vîdyo û hin AI kêrhatî ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=27cb958c66d48066",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "grafîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "27cb958c66d48066"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0095",
+  "category": "Teknolojî",
+  "prompt": "Refresh rate a ekranê bi Hz çi dibêje?",
+  "answers": [
+   "Giraniya monitorê bi kg",
+   "Dirêjahiya kabloyê bi m — şaş e — şaş e",
+   "Mezinahiya RAM bi GB (ne rast)",
+   "Di çirkeyê de çend car wêne nû dibe"
+  ],
+  "correctAnswer": "Di çirkeyê de çend car wêne nû dibe",
+  "promptTr": "Ekran yenileme hızı (Hz) neyi söyler?",
+  "answersTr": [
+   "Monitör ağırlığını kg",
+   "Kablo uzunluğunu m — hatalı — hatalı",
+   "RAM boyutunu GB (yanlış)",
+   "Görüntünün saniyede kaç kez yenilendiğini"
+  ],
+  "correctAnswerTr": "Görüntünün saniyede kaç kez yenilendiğini",
+  "explanation": "60 Hz saniyede 60 kez demektir; daha yüksek Hz hareketi daha akıcı gösterir.",
+  "explanationTr": "60 Hz saniyede 60 kez demektir; daha yüksek Hz hareketi daha akıcı gösterir.",
+  "explanationKu": "60 Hz tê wateya 60 car di çirkeyê de; Hz bilindtir tevger nermtir xuya dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b2091ceb4739d66c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "grafîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b2091ceb4739d66c"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0096",
+  "category": "Teknolojî",
+  "prompt": "Speaker amûra kîjan cureyê ye?",
+  "answers": [
+   "Amûra têketina nivîsê",
+   "Amûra hilanîna mayînde",
+   "Amûra derketina deng",
+   "Pêvajokerê sereke"
+  ],
+  "correctAnswer": "Amûra derketina deng",
+  "promptTr": "Hoparlör ne tür bir aygıttır?",
+  "answersTr": [
+   "Metin giriş aygıtı",
+   "Kalıcı saklama aygıtı",
+   "Ses çıkış aygıtı",
+   "Ana işlemci"
+  ],
+  "correctAnswerTr": "Ses çıkış aygıtı",
+  "explanation": "Hoparlör elektrik sinyalini sese çevirir; mikrofon tersini yapar (ses → elektrik).",
+  "explanationTr": "Hoparlör elektrik sinyalini sese çevirir; mikrofon tersini yapar (ses → elektrik).",
+  "explanationKu": "Speaker sînyala elektrîkê dike deng; mîkrofon berevajî dike (deng → elektrîk).",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=66079be4f78b434a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "deng",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "66079be4f78b434a"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0097",
+  "category": "Teknolojî",
+  "prompt": "Mîkrofon amûra kîjan cureyê ye?",
+  "answers": [
+   "Amûra têketina deng ya standard",
+   "Amûra derketina wêneyê",
+   "Amûra hilanîna dîskê",
+   "Yêkîneya hêzê"
+  ],
+  "correctAnswer": "Amûra têketina deng ya standard",
+  "promptTr": "Mikrofon ne tür bir aygıttır?",
+  "answersTr": [
+   "Ses giriş aygıtı (standart)",
+   "Görüntü çıkış aygıtı",
+   "Disk saklama aygıtı",
+   "Güç ünitesi"
+  ],
+  "correctAnswerTr": "Ses giriş aygıtı (standart)",
+  "explanation": "Mikrofon sesi alıp kayıt veya konuşma için elektrik sinyaline çevirir.",
+  "explanationTr": "Mikrofon sesi alıp kayıt veya konuşma için elektrik sinyaline çevirir.",
+  "explanationKu": "Mîkrofon deng digire û dike sînyala elektrîkê ji bo tomar an axaftinê.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=5d2eb364b78d7756",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "deng",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5d2eb364b78d7756"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0098",
+  "category": "Teknolojî",
+  "prompt": "Bluetooth bi giranî çi ye?",
+  "answers": [
+   "Protokola tenê a e-nameyê",
+   "Standard a pêwendiya bêtêl a nêzîk",
+   "Formata tenê a PDF (çewt) (çewt) (çewt)",
+   "Cureyê tenê a SSD (ne rast)"
+  ],
+  "correctAnswer": "Standard a pêwendiya bêtêl a nêzîk",
+  "promptTr": "Bluetooth esas olarak nedir?",
+  "answersTr": [
+   "Yalnızca e-posta protokolü",
+   "Yakın mesafe kablosuz bağlantı standardı",
+   "Yalnızca PDF biçimi (yanlış) (yanlış) (yanlış)",
+   "Yalnızca SSD türü (yanlış)"
+  ],
+  "correctAnswerTr": "Yakın mesafe kablosuz bağlantı standardı",
+  "explanation": "Bluetooth kulaklık, klavye ve telefonları kısa mesafede birbirine bağlar.",
+  "explanationTr": "Bluetooth kulaklık, klavye ve telefonları kısa mesafede birbirine bağlar.",
+  "explanationKu": "Bluetooth guhê, klavye û têlefonan bi mesafe kin bi hev ve girê dide.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c1c7e94b17014792",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têkilî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c1c7e94b17014792"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0099",
+  "category": "Teknolojî",
+  "prompt": "NFC bi gelemperî ji bo çi tê bikaranîn?",
+  "answers": [
+   "Veguhastina peykan a fezayê",
+   "Şewitandina DVD (ne rast)",
+   "Danûstendina nêzîk a kurt (mînak dayin)",
+   "Mezinahiya serveran — şaş e — şaş e — şaş e"
+  ],
+  "correctAnswer": "Danûstendina nêzîk a kurt (mînak dayin)",
+  "promptTr": "NFC genellikle ne için kullanılır?",
+  "answersTr": [
+   "Uzay uydu aktarımı",
+   "DVD yakma (yanlış)",
+   "Çok kısa mesafe iletişim (ör. ödeme)",
+   "Sunucu boyutu — hatalı — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Çok kısa mesafe iletişim (ör. ödeme)",
+  "explanation": "NFC mesafesi çok kısadır; ödeme kartları ve bazı hızlı paylaşımları destekler.",
+  "explanationTr": "NFC mesafesi çok kısadır; ödeme kartları ve bazı hızlı paylaşımları destekler.",
+  "explanationKu": "NFC mesafe pir kin e; kart ên dayinê û hin parvekirinên bilez piştgirî dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=0b946349c245cf68",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têkilî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0b946349c245cf68"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0100",
+  "category": "Teknolojî",
+  "prompt": "IPv4 navnîşan bi gelemperî çend beşên hejmarî ye?",
+  "answers": [
+   "2 beş (ne rast) (ne rastîn)",
+   "8 beş ên hex yên IPv6",
+   "16 beş",
+   "4 beş (mînak 192.168.0.1)"
+  ],
+  "correctAnswer": "4 beş (mînak 192.168.0.1)",
+  "promptTr": "IPv4 adresi genellikle kaç sayısal bölümden oluşur?",
+  "answersTr": [
+   "2 bölüm (yanlış) (geçersiz)",
+   "IPv6'nın 8 hex bölümü",
+   "16 bölüm",
+   "4 bölüm (ör. 192.168.0.1)"
+  ],
+  "correctAnswerTr": "4 bölüm (ör. 192.168.0.1)",
+  "explanation": "IPv4 32 bittir ve 4 oktetle yazılır. IPv6 daha uzundur ve farklı yazılır.",
+  "explanationTr": "IPv4 32 bittir ve 4 oktetle yazılır. IPv6 daha uzundur ve farklı yazılır.",
+  "explanationKu": "IPv4 32 bit e û bi 4 oktetan tê nivîsandin. IPv6 dirêjtir e û cuda tê nivîsandin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=086382be05f9522f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "086382be05f9522f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0101",
+  "category": "Teknolojî",
+  "prompt": "IPv6 çima hate pêşxistin?",
+  "answers": [
+   "Ji bo ku ekran tarî bibe",
+   "Qada navnîşanên IPv4 têra xwe nedihat",
+   "Ji bo jêbirina HTML (ne rast)",
+   "Ji bo girtina klavyeyê"
+  ],
+  "correctAnswer": "Qada navnîşanên IPv4 têra xwe nedihat",
+  "promptTr": "IPv6 neden geliştirildi?",
+  "answersTr": [
+   "Ekranın kararması için",
+   "IPv4 adres alanı yetersiz kalıyordu",
+   "HTML silmek için (yanlış)",
+   "Klavyeyi kapatmak için"
+  ],
+  "correctAnswerTr": "IPv4 adres alanı yetersiz kalıyordu",
+  "explanation": "IPv6 128 bittir ve çok daha fazla adres sunar; ayrıca protokol iyileştirmeleri de vardır.",
+  "explanationTr": "IPv6 128 bittir ve çok daha fazla adres sunar; ayrıca protokol iyileştirmeleri de vardır.",
+  "explanationKu": "IPv6 128 bit e û gelek zêdetir navnîşan dide; her wiha pêşveçûnên protokolê jî hene.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c3e20fa63b4a3db8",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c3e20fa63b4a3db8"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0102",
+  "category": "Teknolojî",
+  "prompt": "Encryption çi dike?",
+  "answers": [
+   "Daneyan dike formata ku bê mifte nayê xwendin",
+   "Wêneyan tenê mezin dike",
+   "Kabloyê kurt dike",
+   "Fanê digire (ne rast) (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Daneyan dike formata ku bê mifte nayê xwendin",
+  "promptTr": "Şifreleme ne yapar?",
+  "answersTr": [
+   "Veriyi anahtarsız okunamayacak biçime çevirir",
+   "Görselleri yalnızca büyütür",
+   "Kabloyu kısaltır",
+   "Fanı kapatır (yanlış) (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Veriyi anahtarsız okunamayacak biçime çevirir",
+  "explanation": "Şifreleme açık metni şifreye çevirir; yalnızca anahtarı olan geri çevirebilir.",
+  "explanationTr": "Şifreleme açık metni şifreye çevirir; yalnızca anahtarı olan geri çevirebilir.",
+  "explanationKu": "Şîfrekirin nivîsara eşkere dike şîfre; tenê yê mifteyê heye dikare vegerîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=cf3998578ba5ecf6",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "cf3998578ba5ecf6"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0103",
+  "category": "Teknolojî",
+  "prompt": "Hash function di ewlehiyê de bi giranî çi dike?",
+  "answers": [
+   "Daneyê vedigerîne orîjînal bi hêsanî — şaş e",
+   "Ekranê vedike (ne rast)",
+   "IP diguherîne",
+   "Ji daneyê şop a sabît a yekalî çêdike"
+  ],
+  "correctAnswer": "Ji daneyê şop a sabît a yekalî çêdike",
+  "promptTr": "Güvenlikte özet (hash) fonksiyonu esas olarak ne yapar?",
+  "answersTr": [
+   "Veriyi kolayca özgün haline döndürür — hatalı",
+   "Ekranı açar (yanlış)",
+   "IP değiştirir",
+   "Veriden tek yönlü sabit uzunlukta iz üretir"
+  ],
+  "correctAnswerTr": "Veriden tek yönlü sabit uzunlukta iz üretir",
+  "explanation": "Hash bütünlük kontrolü ve parola saklamada yararlıdır; bilerek tersine çevirmek kolay değildir.",
+  "explanationTr": "Hash bütünlük kontrolü ve parola saklamada yararlıdır; bilerek tersine çevirmek kolay değildir.",
+  "explanationKu": "Hash ji bo kontrola yekbûnê û hilanîna şîfreyan kêrhatî ye; berevajîkirin bi armanc ne hêsan e.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=a1194dad39a1112e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a1194dad39a1112e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0104",
+  "category": "Teknolojî",
+  "prompt": "Malware tê wateya çi?",
+  "answers": [
+   "Nermalava tenê a vekirî ya perwerdeyê",
+   "Tenê driver a printerê (ne rastîn) (ne rastîn)",
+   "Nermalava xerab a ku zirarê dide an dixapîne",
+   "Tenê tema ya xweşik (ne rast)"
+  ],
+  "correctAnswer": "Nermalava xerab a ku zirarê dide an dixapîne",
+  "promptTr": "Malware ne demektir?",
+  "answersTr": [
+   "Yalnızca açık eğitim yazılımı",
+   "Yalnızca yazıcı sürücüsü (geçersiz) (geçersiz)",
+   "Zarar veren veya aldatan kötücül yazılım",
+   "Yalnızca güzel tema (yanlış)"
+  ],
+  "correctAnswerTr": "Zarar veren veya aldatan kötücül yazılım",
+  "explanation": "Malware virüs, trojan, fidye yazılımı vb. kapsar; güvenilmeyen kaynaktan indirilmemelidir.",
+  "explanationTr": "Malware virüs, trojan, fidye yazılımı vb. kapsar; güvenilmeyen kaynaktan indirilmemelidir.",
+  "explanationKu": "Malware vîrus, trojan, ransomware û hwd. digire; ji çavkaniyên ne bawer nayê daxistin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=0c646e896c7b2813",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0c646e896c7b2813"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0105",
+  "category": "Teknolojî",
+  "prompt": "Ransomware bi giranî çi dike?",
+  "answers": [
+   "Daneyan dişîfre dike û ji bo mifteyê pere dixwaze",
+   "Leza înternetê qanûnî zêde dike",
+   "RAM fîzîkî mezin dike",
+   "Monitor nû dike (ne rast)"
+  ],
+  "correctAnswer": "Daneyan dişîfre dike û ji bo mifteyê pere dixwaze",
+  "promptTr": "Fidye yazılımı esas olarak ne yapar?",
+  "answersTr": [
+   "Veriyi şifreler ve anahtar için para ister",
+   "İnternet hızını yasal olarak artırır",
+   "Fiziksel RAM büyütür",
+   "Monitör yeniler (yanlış)"
+  ],
+  "correctAnswerTr": "Veriyi şifreler ve anahtar için para ister",
+  "explanation": "Fidye yazılımı dosyaları kilitler ve bedel ister; yedek ve şüpheli bağlantı dikkati korumayı güçlendirir.",
+  "explanationTr": "Fidye yazılımı dosyaları kilitler ve bedel ister; yedek ve şüpheli bağlantı dikkati korumayı güçlendirir.",
+  "explanationKu": "Ransomware pelan digire û berdêl dixwaze; yedek û hişyariya lînkên gumanbar parastinê xurt dikin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e4fcca15ef7fca0b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e4fcca15ef7fca0b"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0106",
+  "category": "Teknolojî",
+  "prompt": "Copy-paste di nermalavê de çi dike?",
+  "answers": [
+   "Dîskê format dike (çewt) (çewt) (çewt)",
+   "Naverokê ji cîhekê digire û li cîhekî din datîne",
+   "OS diguherîne (ne rast)",
+   "Firewall digire"
+  ],
+  "correctAnswer": "Naverokê ji cîhekê digire û li cîhekî din datîne",
+  "promptTr": "Yazılımda kopyala-yapıştır ne yapar?",
+  "answersTr": [
+   "Diski biçimlendirir (yanlış) (yanlış) (yanlış)",
+   "İçeriği bir yerden alıp başka yere koyar",
+   "OS değiştirir (yanlış)",
+   "Güvenlik duvarını kapatır"
+  ],
+  "correctAnswerTr": "İçeriği bir yerden alıp başka yere koyar",
+  "explanation": "Kopyala içeriği panoya alır; yapıştır yeni yere koyar, özgün silinmez (kes siler).",
+  "explanationTr": "Kopyala içeriği panoya alır; yapıştır yeni yere koyar, özgün silinmez (kes siler).",
+  "explanationKu": "Copy naverokê di clipboardê de digire; paste li cihê nû datîne bêyî ku orîjînal jê bibe (cut jê dike).",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=c6049c4ad765fe80",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c6049c4ad765fe80"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0107",
+  "category": "Teknolojî",
+  "prompt": "Undo bi gelemperî çi dike?",
+  "answers": [
+   "Hemû pergalê jê dibe",
+   "Înternetê digire (ne rast)",
+   "Gav a dawîn betal dike",
+   "Şîfreyê diguherîne"
+  ],
+  "correctAnswer": "Gav a dawîn betal dike",
+  "promptTr": "Geri al (undo) genellikle ne yapar?",
+  "answersTr": [
+   "Tüm sistemi siler",
+   "İnterneti kapatır (yanlış)",
+   "Son adımı geri alır",
+   "Parolayı değiştirir"
+  ],
+  "correctAnswerTr": "Son adımı geri alır",
+  "explanation": "Geri al yeni yanlışları düzeltir; birçok program adım zincirini tutar.",
+  "explanationTr": "Geri al yeni yanlışları düzeltir; birçok program adım zincirini tutar.",
+  "explanationKu": "Undo çewtiyên nû sererast dike; gelek bername zincîra gavan digirin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=a48461bb734ced5e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a48461bb734ced5e"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0108",
+  "category": "Teknolojî",
+  "prompt": "Shortcut a klavyeyê çi ye?",
+  "answers": [
+   "Tenê dirêjahiya kabloyê",
+   "Tenê rengê bişkokê (ne rast)",
+   "Tenê giraniya laptopê (ne rastîn) (ne rastîn)",
+   "Tevlîheviya bişkokan ji bo fermana bilez"
+  ],
+  "correctAnswer": "Tevlîheviya bişkokan ji bo fermana bilez",
+  "promptTr": "Klavye kısayolu nedir?",
+  "answersTr": [
+   "Yalnızca kablo uzunluğu",
+   "Yalnızca tuş rengi (yanlış)",
+   "Yalnızca dizüstü ağırlığı (geçersiz) (geçersiz)",
+   "Hızlı komut için tuş birleşimi"
+  ],
+  "correctAnswerTr": "Hızlı komut için tuş birleşimi",
+  "explanation": "Örneğin Ctrl+C kopyalar; kısayol zaman kazandırır ve kullanımı kolaylaştırır.",
+  "explanationTr": "Örneğin Ctrl+C kopyalar; kısayol zaman kazandırır ve kullanımı kolaylaştırır.",
+  "explanationKu": "Mînak Ctrl+C copy dike; shortcut demê xilas dike û bikaranînê hêsantir dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=752f71acbe798638",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "752f71acbe798638"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0109",
+  "category": "Teknolojî",
+  "prompt": "Screenshot çi ye?",
+  "answers": [
+   "Pelê deng ê tenê (ne rast)",
+   "Wêneya ku rewşa ekranê digire",
+   "Şîfreya tenê a Wi-Fi",
+   "Nûvekirina tenê a BIOS"
+  ],
+  "correctAnswer": "Wêneya ku rewşa ekranê digire",
+  "promptTr": "Ekran görüntüsü nedir?",
+  "answersTr": [
+   "Yalnızca ses dosyası (yanlış)",
+   "Ekranın o anki hâlini kaydeden görüntü",
+   "Yalnızca Wi-Fi parolası",
+   "Yalnızca BIOS güncellemesi"
+  ],
+  "correctAnswerTr": "Ekranın o anki hâlini kaydeden görüntü",
+  "explanation": "Ekran görüntüsü yardım, belgeleme veya sorun paylaşımında yararlıdır.",
+  "explanationTr": "Ekran görüntüsü yardım, belgeleme veya sorun paylaşımında yararlıdır.",
+  "explanationKu": "Screenshot ji bo alîkarî, belgekirin an parvekirina pirsgirêkan kêrhatî ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=aa7d84f71a91edfe",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "aa7d84f71a91edfe"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0110",
+  "category": "Teknolojî",
+  "prompt": "Zip pel çi dike?",
+  "answers": [
+   "Gelek pelan di yek pelê pêçandî de kom dike",
+   "Ekranê vedike (ne rast)",
+   "Pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Router diguherîne"
+  ],
+  "correctAnswer": "Gelek pelan di yek pelê pêçandî de kom dike",
+  "promptTr": "Zip dosyası ne yapar?",
+  "answersTr": [
+   "Birçok dosyayı tek sıkıştırılmış dosyada toplar",
+   "Ekranı açar (yanlış)",
+   "Pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "Yönlendiriciyi değiştirir"
+  ],
+  "correctAnswerTr": "Birçok dosyayı tek sıkıştırılmış dosyada toplar",
+  "explanation": "ZIP paylaşım ve saklamayı kolaylaştırır; kullanmadan önce çıkarılmalıdır.",
+  "explanationTr": "ZIP paylaşım ve saklamayı kolaylaştırır; kullanmadan önce çıkarılmalıdır.",
+  "explanationKu": "ZIP parvekirin û hilanînê hêsantir dike; berî vekirinê divê were extract kirin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e47bafbb18c7c9d4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e47bafbb18c7c9d4"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0111",
+  "category": "Teknolojî",
+  "prompt": "Moore's law bi kevneşopî çi got?",
+  "answers": [
+   "Giraniya monitoran her sal duqat dibe",
+   "Dirêjahiya kabloyan her meh kêm dibe",
+   "Rengê qutiyan her roj diguhere (ne rast) — şaş e — şaş e — şaş e",
+   "Hejmara transîstoran li ser çîpê bi demê re nêzî duqat dibe"
+  ],
+  "correctAnswer": "Hejmara transîstoran li ser çîpê bi demê re nêzî duqat dibe",
+  "promptTr": "Moore yasası geleneksel olarak neyi söyledi?",
+  "answersTr": [
+   "Monitör ağırlığının her yıl iki katını",
+   "Kablo uzunluğunun her ay azaldığını",
+   "Kasa renginin her gün değiştiğini (yanlış) — hatalı — hatalı — hatalı",
+   "Çipteki transistör sayısının zamanla kabaca iki katına çıktığını"
+  ],
+  "correctAnswerTr": "Çipteki transistör sayısının zamanla kabaca iki katına çıktığını",
+  "explanation": "Moore, transistör yoğunluğunun yıllar içinde kabaca iki katlandığını gözlemledi; bu tarihsel bir gözlemdir, fizik yasası değil.",
+  "explanationTr": "Moore, transistör yoğunluğunun yıllar içinde kabaca iki katlandığını gözlemledi; bu tarihsel bir gözlemdir, fizik yasası değil.",
+  "explanationKu": "Moore dît ku tîrbûna transîstoran di navbera salan de nêzî duqat dibe; ev rêberiyeke dîrokî bû, ne qanûna fîzîkê ye.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=1c1a920e36974b76",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "zanist",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1c1a920e36974b76"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0112",
+  "category": "Teknolojî",
+  "prompt": "Pixel a wêneyê çiqas zêde be, bi gelemperî çi çêdibe?",
+  "answers": [
+   "Deng bixweber baştir dibe (ne rastîn) (ne rastîn)",
+   "IP diguhere (ne rast)",
+   "Hûrgilîbûn zêde dibe (heke mezinahî sabît be)",
+   "Şîfre hêsantir dibe"
+  ],
+  "correctAnswer": "Hûrgilîbûn zêde dibe (heke mezinahî sabît be)",
+  "promptTr": "Görüntüde piksel arttıkça genellikle ne olur?",
+  "answersTr": [
+   "Ses kendiliğinden düzelir (geçersiz) (geçersiz)",
+   "IP değişir (yanlış)",
+   "Ayrıntı artar (boyut sabitse)",
+   "Parola kolaylaşır"
+  ],
+  "correctAnswerTr": "Ayrıntı artar (boyut sabitse)",
+  "explanation": "Aynı alanda daha çok piksel daha ayrıntılı görüntü verir; dosya boyutu da çoğu kez artar.",
+  "explanationTr": "Aynı alanda daha çok piksel daha ayrıntılı görüntü verir; dosya boyutu da çoğu kez artar.",
+  "explanationKu": "Zêdetir pixel di heman qadê de hûrgilîtir wêne dide; mezinahiya pel jî gelek caran mezin dibe.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b1e3183e02eaa89f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "zanist",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b1e3183e02eaa89f"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0113",
+  "category": "Teknolojî",
+  "prompt": "Metadata çi ye?",
+  "answers": [
+   "Agahî der barê daneyên din de ya standard",
+   "Tenê naveroka sereke ya vîdyoyê",
+   "Tenê voltaja pîlê",
+   "Tenê giraniya qutiyê"
+  ],
+  "correctAnswer": "Agahî der barê daneyên din de ya standard",
+  "promptTr": "Üstveri (metadata) nedir?",
+  "answersTr": [
+   "Başka veriler hakkındaki bilgi (standart)",
+   "Yalnızca videonun ana içeriği",
+   "Yalnızca pil voltajı",
+   "Yalnızca kasa ağırlığı"
+  ],
+  "correctAnswerTr": "Başka veriler hakkındaki bilgi (standart)",
+  "explanation": "Üstveri örneğin dosya tarihi, yazar, boyut veya fotoğraf koordinatlarıdır.",
+  "explanationTr": "Üstveri örneğin dosya tarihi, yazar, boyut veya fotoğraf koordinatlarıdır.",
+  "explanationKu": "Metadata mînak dîroka pel, nivîskar, mezinahî an koordînatên wêneyê ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b6779c39d230743c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b6779c39d230743c"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0114",
+  "category": "Teknolojî",
+  "prompt": "Lossless û lossy pêçandin çawa cuda ne?",
+  "answers": [
+   "Her du jî her tim heman in",
+   "Lossless orîjînal vedigerîne; lossy hin agahiyê diavêje",
+   "Lossless tenê deng e",
+   "Lossy tenê nivîs e (ne rast) (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Lossless orîjînal vedigerîne; lossy hin agahiyê diavêje",
+  "promptTr": "Kayıpsız ve kayıplı sıkıştırma nasıl ayrılır?",
+  "answersTr": [
+   "İkisi her zaman aynıdır",
+   "Kayıpsız özgüni geri getirir; kayıplı bazı bilgiyi atar",
+   "Kayıpsız yalnızca sestir",
+   "Kayıplı yalnızca metindir (yanlış) (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Kayıpsız özgüni geri getirir; kayıplı bazı bilgiyi atar",
+  "explanation": "FLAC/PNG çoğu kez kayıpsızdır; MP3/JPEG kayıplıdır, daha küçük dosya verir ama bilgi kaybolur.",
+  "explanationTr": "FLAC/PNG çoğu kez kayıpsızdır; MP3/JPEG kayıplıdır, daha küçük dosya verir ama bilgi kaybolur.",
+  "explanationKu": "FLAC/PNG gelek caran lossless in; MP3/JPEG lossy in û piçûktir pel didin lê agahî winda dibe.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=0fe01c5a6dbea32a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0fe01c5a6dbea32a"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0115",
+  "category": "Teknolojî",
+  "prompt": "Server çi ye?",
+  "answers": [
+   "Tenê klavyeya bikarhêner — şaş e — şaş e — şaş e",
+   "Tenê mîkrofon a lîstikê",
+   "Cîhaz an nermalava ku karûbar dide mîvanan",
+   "Tenê pîla saetê (ne rast)"
+  ],
+  "correctAnswer": "Cîhaz an nermalava ku karûbar dide mîvanan",
+  "promptTr": "Sunucu nedir?",
+  "answersTr": [
+   "Yalnızca kullanıcı klavyesi — hatalı — hatalı — hatalı",
+   "Yalnızca oyun mikrofonu",
+   "İstemcilere hizmet veren aygıt veya yazılım",
+   "Yalnızca saat pili (yanlış)"
+  ],
+  "correctAnswerTr": "İstemcilere hizmet veren aygıt veya yazılım",
+  "explanation": "Sunucu sayfa, e-posta veya veri sunar; istemci istek gönderir.",
+  "explanationTr": "Sunucu sayfa, e-posta veya veri sunar; istemci istek gönderir.",
+  "explanationKu": "Server rûpel, e-name an daneyan pêşkêş dike; client daxwazê dişîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=03d7457cbf78d72a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "03d7457cbf78d72a"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0116",
+  "category": "Teknolojî",
+  "prompt": "Client di modela client-server de çi dike?",
+  "answers": [
+   "Tenê elektrîkê dide bajarê",
+   "Tenê avê germ dike (ne rast) (ne rastîn)",
+   "Tenê kaxezê dirêj dike",
+   "Daxwazê dişîne û karûbarê bi kar tîne"
+  ],
+  "correctAnswer": "Daxwazê dişîne û karûbarê bi kar tîne",
+  "promptTr": "İstemci-sunucu modelinde istemci ne yapar?",
+  "answersTr": [
+   "Yalnızca kente elektrik verir",
+   "Yalnızca suyu ısıtır (yanlış) (geçersiz)",
+   "Yalnızca kâğıdı uzatır",
+   "İstek gönderir ve hizmeti kullanır"
+  ],
+  "correctAnswerTr": "İstek gönderir ve hizmeti kullanır",
+  "explanation": "Tarayıcı, uygulama veya bilgisayar istemci ; istek yapar ve yanıt alır. Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationTr": "Tarayıcı, uygulama veya bilgisayar istemci ; istek yapar ve yanıt alır. Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationKu": "Gerok, app an kompîter dikarin client bin; ew daxwazê dikin û bersivê digirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=8c13f2884eca4866",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "8c13f2884eca4866"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0117",
+  "category": "Teknolojî",
+  "prompt": "Offline xebitandin çi tê wateya?",
+  "answers": [
+   "Tenê bi leza herî bilind",
+   "Bêyî pêwendiya înternetê xebitandin",
+   "Tenê bi GPU-yê (ne rast)",
+   "Tenê bi çapkerê"
+  ],
+  "correctAnswer": "Bêyî pêwendiya înternetê xebitandin",
+  "promptTr": "Çevrimdışı çalışma ne demektir?",
+  "answersTr": [
+   "Yalnızca en yüksek hızda",
+   "İnternet bağlantısı olmadan çalışma",
+   "Yalnızca GPU ile (yanlış)",
+   "Yalnızca yazıcı ile"
+  ],
+  "correctAnswerTr": "İnternet bağlantısı olmadan çalışma",
+  "explanation": "Çevrimdışı yerel dosyalar kullanılır; çevrimiçi için ağ gerekir.",
+  "explanationTr": "Çevrimdışı yerel dosyalar kullanılır; çevrimiçi için ağ gerekir.",
+  "explanationKu": "Offline pelên herêmî têne bikaranîn; online jî tor pêwîst e.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=21f301c0ca771bae",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "21f301c0ca771bae"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0118",
+  "category": "Teknolojî",
+  "prompt": "Online xebitandin çi tê wateya?",
+  "answers": [
+   "Bi pêwendiya tor/înternetê xebitandin",
+   "Tenê bêyî elektrîkê (çewt) (çewt) (çewt)",
+   "Tenê di tarîtiyê de",
+   "Tenê bêyî ekranê (ne rast)"
+  ],
+  "correctAnswer": "Bi pêwendiya tor/înternetê xebitandin",
+  "promptTr": "Çevrimiçi çalışma ne demektir?",
+  "answersTr": [
+   "Ağ/internet bağlantısıyla çalışma",
+   "Yalnızca elektriksiz (yanlış) (yanlış) (yanlış)",
+   "Yalnızca karanlıkta",
+   "Yalnızca ekransız (yanlış)"
+  ],
+  "correctAnswerTr": "Ağ/internet bağlantısıyla çalışma",
+  "explanation": "Çevrimiçi web, e-posta ve bulut hizmetleri bağlantı gerektirir.",
+  "explanationTr": "Çevrimiçi web, e-posta ve bulut hizmetleri bağlantı gerektirir.",
+  "explanationKu": "Online karûbarên web, e-name û ewr pêwîstî bi pêwendiyê heye.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=bb870c2399f2415b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "bb870c2399f2415b"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0119",
+  "category": "Teknolojî",
+  "prompt": "Synchronization a daneyan çi dike?",
+  "answers": [
+   "Tenê yek cîhazê jê dibe",
+   "Tenê şîfreyê eşkere dike — şaş e — şaş e",
+   "Tenê dîskê şewitîne (ne rast)",
+   "Kopiyên li ser cîhazên cuda li hev dîne"
+  ],
+  "correctAnswer": "Kopiyên li ser cîhazên cuda li hev dîne",
+  "promptTr": "Veri eşitleme (senkronizasyon) ne yapar?",
+  "answersTr": [
+   "Yalnızca bir aygıtı siler",
+   "Yalnızca parolayı açığa çıkarır — hatalı — hatalı",
+   "Yalnızca diski yakar (yanlış)",
+   "Farklı aygıtlardaki kopyaları uyumlu tutar"
+  ],
+  "correctAnswerTr": "Farklı aygıtlardaki kopyaları uyumlu tutar",
+  "explanation": "Eşitleme telefon, tablet ve bilgisayardaki dosyaları aynı sürümde tutar.",
+  "explanationTr": "Eşitleme telefon, tablet ve bilgisayardaki dosyaları aynı sürümde tutar.",
+  "explanationKu": "Sync pelan di têlefon, tablet û kompîterê de nû digire da ku heman guherto be.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=335f3b7d1546b65d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "têgeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "335f3b7d1546b65d"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0120",
+  "category": "Teknolojî",
+  "prompt": "Permissions ên pelan çi kontrol dikin?",
+  "answers": [
+   "Rengê ikonê tenê (ne rast)",
+   "Dirêjahiya navê tenê",
+   "Kî dikare bixwîne, binivîse an bixebitîne",
+   "Mezinahiya ikonê tenê (ne rastîn) (ne rastîn)"
+  ],
+  "correctAnswer": "Kî dikare bixwîne, binivîse an bixebitîne",
+  "promptTr": "Dosya izinleri neyi kontrol eder?",
+  "answersTr": [
+   "Yalnızca simge rengini (yanlış)",
+   "Yalnızca ad uzunluğunu",
+   "Kimin okuyabileceğini, yazabileceğini veya çalıştırabileceğini",
+   "Yalnızca simge boyutunu (geçersiz) (geçersiz)"
+  ],
+  "correctAnswerTr": "Kimin okuyabileceğini, yazabileceğini veya çalıştırabileceğini",
+  "explanation": "Dosya hakları korumayı güçlendirir; diğer kullanıcılar sınırlara uymak zorundadır.",
+  "explanationTr": "Dosya hakları korumayı güçlendirir; diğer kullanıcılar sınırlara uymak zorundadır.",
+  "explanationKu": "Mafên pel parastinê xurt dikin; bikarhênerên din neçar in ku sînoran bişopînin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=b8a9f603b07d35de",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b8a9f603b07d35de"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0121",
+  "category": "Teknolojî",
+  "prompt": "Log file bi giranî çi digire?",
+  "answers": [
+   "Tomarên bûyer û çewtiyên pergal an bernameyê",
+   "Tenê wêneyên screensaver",
+   "Tenê strana mp3 (ne rast)",
+   "Tenê lîstika offline"
+  ],
+  "correctAnswer": "Tomarên bûyer û çewtiyên pergal an bernameyê",
+  "promptTr": "Günlük dosyası (log) esas olarak ne tutar?",
+  "answersTr": [
+   "Sistem veya program olay ve hata kayıtları",
+   "Yalnızca ekran koruyucu görselleri",
+   "Yalnızca mp3 şarkısı (yanlış)",
+   "Yalnızca çevrimdışı oyun"
+  ],
+  "correctAnswerTr": "Sistem veya program olay ve hata kayıtları",
+  "explanation": "Günlük, sorun teşhisi ve güvenlik için yararlıdır.",
+  "explanationTr": "Günlük, sorun teşhisi ve güvenlik için yararlıdır.",
+  "explanationKu": "Log ji bo teşhîskirina pirsgirêkan û ewlehiyê kêrhatî ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=3d74b3f8e08952c0",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "3d74b3f8e08952c0"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0122",
+  "category": "Teknolojî",
+  "prompt": "Default setting çi ye?",
+  "answers": [
+   "Tenê mîhenga herî xeter (ne rast)",
+   "Mîheng a kargehî ya ku bername pê dest pê dike",
+   "Tenê mîhenga vala ya jêbirî (çewt) (çewt) (çewt)",
+   "Tenê mîhenga ku qet nayê guhertin qanûnen"
+  ],
+  "correctAnswer": "Mîheng a kargehî ya ku bername pê dest pê dike",
+  "promptTr": "Varsayılan ayar nedir?",
+  "answersTr": [
+   "Yalnızca en tehlikeli ayar (yanlış)",
+   "Programın başlangıçtaki fabrika ayarı",
+   "Yalnızca silinmiş boş ayar (yanlış) (yanlış) (yanlış)",
+   "Yalnızca yasal olarak hiç değişmeyen ayar"
+  ],
+  "correctAnswerTr": "Programın başlangıçtaki fabrika ayarı",
+  "explanation": "Varsayılan çoğu kullanıcı için seçilir; sonra değiştirilebilir.",
+  "explanationTr": "Varsayılan çoğu kullanıcı için seçilir; sonra değiştirilebilir.",
+  "explanationKu": "Default ji bo piraniya bikarhêneran tê hilbijartin; paşê dikare were guhertin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=353098def33fd7ba",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "353098def33fd7ba"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0123",
+  "category": "Teknolojî",
+  "prompt": "Install kirina bernameyê çi ye?",
+  "answers": [
+   "Tenê jêbirina nermalavê",
+   "Tenê girtina cîhazê (ne rast)",
+   "Daxistin û amadekirina nermalavê li ser cîhazê",
+   "Tenê guhertina kabloyê — şaş e — şaş e — şaş e"
+  ],
+  "correctAnswer": "Daxistin û amadekirina nermalavê li ser cîhazê",
+  "promptTr": "Program kurmak nedir?",
+  "answersTr": [
+   "Yalnızca yazılımı silmek",
+   "Yalnızca aygıtı kapatmak (yanlış)",
+   "Yazılımı aygıta indirip hazırlamak",
+   "Yalnızca kabloyu değiştirmek — hatalı — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Yazılımı aygıta indirip hazırlamak",
+  "explanation": "Kurulum dosyaları yerleştirir, ayarları oluşturur ve sürücü de ekler. Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationTr": "Kurulum dosyaları yerleştirir, ayarları oluşturur ve sürücü de ekler. Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationKu": "Install pelan datîne, mîhengan çêdike û carinan driver jî zêde dike.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=1e59e094ae4bc375",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1e59e094ae4bc375"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0124",
+  "category": "Teknolojî",
+  "prompt": "Uninstall çi dike?",
+  "answers": [
+   "Nûve dike bo guhertoya nû tenê",
+   "Şîfreya Wi-Fi diguherîne",
+   "IP ya derve diguherîne",
+   "Nermalavê ji pergalê radike"
+  ],
+  "correctAnswer": "Nermalavê ji pergalê radike",
+  "promptTr": "Kaldırma (uninstall) ne yapar?",
+  "answersTr": [
+   "Yalnızca yeni sürüme günceller",
+   "Wi-Fi parolasını değiştirir",
+   "Dış IP'yi değiştirir",
+   "Yazılımı sistemden kaldırır"
+  ],
+  "correctAnswerTr": "Yazılımı sistemden kaldırır",
+  "explanation": "Kaldırma, yer ve kaynak açılsın diye program dosya ve kayıtlarını temizler.",
+  "explanationTr": "Kaldırma, yer ve kaynak açılsın diye program dosya ve kayıtlarını temizler.",
+  "explanationKu": "Uninstall pel û tomarkirinên bernameyê paqij dike da ku cih û çavkanî azad bibin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=e57589ea0bcf9998",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "e57589ea0bcf9998"
+  }
+ },
+ {
+  "id": "grok26_tech_core_0125",
+  "category": "Teknolojî",
+  "prompt": "Strong password manager çima bikêr e?",
+  "answers": [
+   "Hemû şîfreyan dike 1234 (ne rast)",
+   "Şîfreyên cuda yên xurt digire û tîne bîra mirov",
+   "Şîfreyan li ser kaxezê çap dike",
+   "Şîfreyan bi e-nameyê eşkere dike"
+  ],
+  "correctAnswer": "Şîfreyên cuda yên xurt digire û tîne bîra mirov",
+  "promptTr": "Güçlü bir parola yöneticisi neden yararlıdır?",
+  "answersTr": [
+   "Tüm parolaları 1234 yapar (yanlış)",
+   "Farklı güçlü parolaları saklar ve hatırlatır",
+   "Parolaları kâğıda basar",
+   "Parolaları e-postayla açığa vurur"
+  ],
+  "correctAnswerTr": "Farklı güçlü parolaları saklar ve hatırlatır",
+  "explanation": "Yönetici uzun ve farklı parolaları tutar; kullanıcı yalnızca bir ana parola hatırlar.",
+  "explanationTr": "Yönetici uzun ve farklı parolaları tutar; kullanıcı yalnızca bir ana parola hatırlar.",
+  "explanationKu": "Manager şîfreyên dirêj ên cuda digire; bikarhêner tenê yek şîfreya master dihêle.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
+   "sourceReference": "textbook:ICT-fundamentals#hash=cd6c22b31d5f5ab1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewlehî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "cd6c22b31d5f5ab1"
+  }
+ }
+]

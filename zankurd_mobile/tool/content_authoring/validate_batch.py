@@ -70,6 +70,14 @@ HEDGE = re.compile(r"\b(genellikle|bazen|çoğunlukla|bir tür|olabilir|sanılma
 ESCAPE_OPTS = re.compile(r"^\s*(hepsi|hiçbiri|yukarıdakilerin hepsi|hiçbiri değil|"
                          r"hemû|tu kes|yek jî na)\s*$", re.I)
 NEGATIVE = re.compile(r"\b(değildir|değil|olmayan|hangisi yanlış|ne dibe|nîne)\b", re.I)
+# Şıkkın kendini yanlış ilan etmesi. Parantezli etiket en yaygın biçim,
+# ama parantezsiz sonek de görüldü ("RAM e ne rast").
+SELF_LABELED = re.compile(
+    r"\(\s*(ne\s*rast(în)?|yanlış|yanlis|geçersiz|gecersiz|doğru\s*değil|"
+    r"dogru\s*degil|not\s*correct|incorrect|false)\s*\)"
+    r"|\s+(ne\s*rast(în)?|yanlış|geçersiz)\s*$",
+    re.I,
+)
 VOLATILE = re.compile(r"\b(şu an|şu anda|günümüzde|bugün|halen|hâlen|en yeni|son olarak|"
                       r"niha|îro)\b", re.I)
 
@@ -161,6 +169,19 @@ class Gate:
             errs.append("answer-leak-ku")
         if ca_tr and len(ca_tr) > 3 and ca_tr in norm(p_tr):
             errs.append("answer-leak-tr")
+
+        # Çeldirici KENDİNİ yanlış ilan etmemeli.
+        #
+        # 2026-08-06: dış havuzda 407 Grok adayının 296'sı (%72,7) şıklarında
+        # "(ne rast)", "(yanlış)", "(geçersiz)" gibi etiketler taşıyordu —
+        # ör. `["512 KB (yanlış)", ...]`. Oyuncu konuyu bilmeden etiketsiz
+        # şıkkı seçip kazanır. Mevcut `answer-leak-*` kuralı bunu görmüyordu,
+        # çünkü o yalnız doğru cevabın SORU KÖKÜNDE geçmesine bakıyor; buradaki
+        # sızıntı şıkkın kendi içinde. Kapı 8 batch'in hepsine PASS demişti.
+        for opt in ku_a + tr_a:
+            if SELF_LABELED.search(str(opt)):
+                errs.append("distractor-self-labeled")
+                break
 
         expl = str(q.get("explanation") or "")
         if len(expl) < MIN_EXPL:
