@@ -27,9 +27,8 @@ void main() {
 
   setUpAll(() {
     for (final asset in questionBankAssets) {
-      banks[asset] =
-          (jsonDecode(File(asset).readAsStringSync()) as List)
-              .cast<Map<String, dynamic>>();
+      banks[asset] = (jsonDecode(File(asset).readAsStringSync()) as List)
+          .cast<Map<String, dynamic>>();
     }
   });
 
@@ -60,9 +59,11 @@ void main() {
     final offenders = <String>[];
     banks.forEach((asset, rows) {
       for (final q in rows) {
-        final present = ['promptTr', 'answersTr', 'correctAnswerTr']
-            .where((k) => has(q, k))
-            .toList();
+        final present = [
+          'promptTr',
+          'answersTr',
+          'correctAnswerTr',
+        ].where((k) => has(q, k)).toList();
         if (present.isEmpty || present.length == 3) continue;
         offenders.add('${q['id']} ($asset): yalnız ${present.join(", ")}');
       }
