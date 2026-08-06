@@ -17,10 +17,13 @@
   "maxPositionSharePct": 37.5,
   "strictLongestCorrect": 4,
   "strictShortestCorrect": 0,
-  "lengthBiasNote": "Yıl sorularında bütün seçenekler 4 karakter; naif 'en uzun' ölçümü beraberlik yüzünden 8/8 diyordu. KESİN (tek başına en uzun) ölçüm gerçek sinyaldir.",
+  "lengthBiasNote": "İki ölçüm ayrı: naif `==max` beraberlikte de doğru döner ve yıl sorularında bütün seçenekler 4 karakter olduğu için 8/8 diyordu — artefakt. KESİN ölçüm (tek başına en uzun) 4/8 verdi. Bu bir artefakt DEĞİL: dört kavramsal soruda (montage, deep focus, ilk film, mekân) doğru seçenek tek başına en uzun. n=8'de kesin sonuç çıkmaz ama izlenmesi gereken gerçek bir eğilim; batch 12'ye çıkarılırken çeldiricilerin uzunluğu doğru seçeneğe yaklaştırılmalı.",
   "sourceAccessLevels": {
     "FETCHED_DIRECT": 8
   },
   "kurdishCinemaCount": 0,
-  "kurdishCinemaNote": "Bu turda da doğrudan akademik/arşiv kaynağı açılmadı; Risk-A kuralı gereği kaynaksız içerik üretilmedi. Cannes resmî tarihçe sayfası 403 verdi."
+  "kurdishCinemaNote": "Bu turda da doğrudan akademik/arşiv kaynağı açılmadı; Risk-A kuralı gereği kaynaksız içerik üretilmedi. Cannes resmî tarihçe sayfası 403 verdi.",
+  "strictLongestCorrectPct": 50.0,
+  "lengthBiasStatus": "WATCH — n=8'de %50; 12'ye çıkarken düzeltilecek",
+  "commitMessageCorrection": "69cf024'ün gövdesinde bu oran sehven '1/8' yazıldı; doğru değer 4/8'dir. Commit yeniden yazılmadı; düzeltme burada ve takip eden commit'te."
 }
