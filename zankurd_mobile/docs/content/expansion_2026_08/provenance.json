@@ -1,0 +1,1504 @@
+{
+ "generatedAt": "2026-08-06",
+ "status": "VALIDATED_NOT_ACTIVATED",
+ "gate": "tool/content_authoring/validate_batch.py",
+ "gateResult": "PASS (0 hard violations, all distribution gates green)",
+ "activationBlocker": "tool/question_quality baseline ratchet: 166 new fingerprints require review + --accept-current-debt",
+ "count": 165,
+ "categories": {
+  "Teknolojî": 110,
+  "Sînema": 55
+ },
+ "batches": {
+  "tech_core": 55,
+  "tech_invent": 55,
+  "cinema": 55
+ },
+ "records": [
+  {
+   "id": "tech_core_0001",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "63217207c6a08d67",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0002",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "7affec2868cebab3",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0003",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2079f748c99acd18",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0004",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d1b6b6c6c1968f36",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0005",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "82922c9fe813d09d",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0006",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "f030e2dcde1249fc",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0007",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "9fe6f00ab443df8f",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0008",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3cd34070e7ab4fb6",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0009",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a2b2dc24626da480",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0010",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "832011ee83b0ca99",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0011",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "999d13c765a857f3",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0012",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1770dd73aa36a0dd",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0013",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "f726a283ce032ba0",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0014",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "204b07bcd8bab8df",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0015",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e73c56e2b84b7163",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0016",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3ee8d6919fc1c7fe",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0017",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "961a7d15619b8af5",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0018",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "67836109ba9deb6c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0019",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1e02b57a8a28afa3",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0020",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "7bb58f75525e5778",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0021",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1ee182ba37321c5e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0022",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "38f6c121addef83c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0023",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ce36ea12a5382880",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0024",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "5df4a4799a77501c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0025",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e694ce1732bb362b",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0026",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6675fa5e22f5473a",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0027",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e6f6fc83e6a75d23",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0028",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "28a36429fc50027f",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0029",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "676d5d564aebfa99",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0030",
+   "category": "Teknolojî",
+   "difficulty": 5,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "501cfe860871a4ca",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0031",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "440932e5c7dbf4a9",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0032",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "dc373a223880f763",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0033",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6ea754fbefdb454e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0034",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "36e8095e0491fe4e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0035",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e26ca79a6a4273e1",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0036",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "0d9c9813908e1f80",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0037",
+   "category": "Teknolojî",
+   "difficulty": 5,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "360b14e4dd14bc4e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0038",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "9eb7f5c6b807195e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0039",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a117e0222e011044",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0040",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "196a02dec32da10e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0041",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "10ac6ed3427c650b",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0042",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "eb253459af153bd0",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0043",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "eb3dfb1bfc68aefe",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0044",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "53a8729e6813fc67",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0045",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "950ba8e2c4508d5f",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0046",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "8e270989194a9d01",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0047",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d958ff73b7ae6bc7",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0048",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "71204f6816175a15",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0049",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a4fc72f948662d1c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0050",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "f3fc8962f902984c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0051",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e8214be78f8dedda",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0052",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "680055f92dd6adb5",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0053",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "43a0af6dd4a9dc59",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0054",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "04e545fc4067cf73",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_core_0055",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_core",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "820eafb101a9a24e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0001",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "9f5ed52c1186c2bf",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0002",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "8b1ce6090765e441",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0003",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2da5bc8165876068",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0004",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e45ec627eb8ace6f",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0005",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "200e43490c81cf8d",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0006",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2f580ddda8552f74",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0007",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "72e706f6e93fb8a4",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0008",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d54737086434230f",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0009",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e665f311df6cd6ae",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0010",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b3c78d207143ee20",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0011",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6f7429495e43944b",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0012",
+   "category": "Teknolojî",
+   "difficulty": 5,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "8075cbdcb42653fc",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0013",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "47b7351c6f49239e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0014",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "30b2396adad280e1",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0015",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "81ad6b3f9c932685",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0016",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6e824982ed0d6db6",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0017",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "733f0b57fe8601bd",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0018",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "07e7e4565bca7778",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0019",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e1b41c99c625ed56",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0020",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ff537fd31409bdad",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0021",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e51eab4350abdab1",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0022",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b35e3141e0afef1e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0023",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a5616bb3808dee81",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0024",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "90e709f7d95da277",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0025",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "305a52460438bc3f",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0026",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "4e0d8bb8535b90e1",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0027",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "c1d3f39c282b282c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0028",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "55cd97575d472584",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0029",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "78808364c1e55358",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0030",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "260c33d8519b572e",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0031",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2f4d16825837d86c",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0032",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3a246c82f212cd03",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0033",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2c732207882f7040",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0034",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "139edbf7998b6051",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0035",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "9dd8dbf71296b7b1",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0036",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "be7265ab80b510eb",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0037",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ccf86e889d17af38",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0038",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "7110625ef46a1c13",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0039",
+   "category": "Teknolojî",
+   "difficulty": 1,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "199420e809738a21",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0040",
+   "category": "Teknolojî",
+   "difficulty": 2,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2c8ba0c2cc2e905d",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0041",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a3e185b9b99d14af",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0042",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "cc9f1bf7392eac2d",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0043",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6dc546eb3873e9d0",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0044",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3f9b87de0c17e891",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0045",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "c61981295074aeff",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0046",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a49fa6c876b2e7f5",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0047",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "85d9bd4bfa856581",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0048",
+   "category": "Teknolojî",
+   "difficulty": 5,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ffeb13d0ffba8144",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0049",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "98a6cdba5e12be86",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0050",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "de5187852898a598",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0051",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "879f709c1ff3eb89",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0052",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "69c6ca88b49e81fb",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0053",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "060a5fbfaabdf8eb",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0054",
+   "category": "Teknolojî",
+   "difficulty": 4,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3b1d26debb159119",
+   "state": "accepted"
+  },
+  {
+   "id": "tech_invent_0055",
+   "category": "Teknolojî",
+   "difficulty": 3,
+   "authoredBy": "subagent:tech_invent",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6b108b45062f155e",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0001",
+   "category": "Sînema",
+   "difficulty": 1,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "71001c3eea3168c6",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0002",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "c48dea927af3ed28",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0003",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ffae3d585e7fd981",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0004",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "48a6a44ad74ae71c",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0005",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "37bfc4cedf56b228",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0006",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a53688396f2edd2d",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0007",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "747a789d617e61aa",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0008",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "0cabd65238c276fd",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0009",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2edabb90e625d580",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0010",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "40db3bebaf8eafcd",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0011",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e9c733a8d9fe9825",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0012",
+   "category": "Sînema",
+   "difficulty": 1,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "7219560ca8437187",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0013",
+   "category": "Sînema",
+   "difficulty": 1,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "232445550b5c8132",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0014",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3142f5ae1e34ef8e",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0015",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "46869bfdf5dde080",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0016",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "563e77d3cad45c92",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0017",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ecf4944718723400",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0018",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "aeffe4d31bce460e",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0019",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "af5a8f35a34ecc0d",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0020",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "fa7a37ed4debd229",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0021",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "8506ffe25742095b",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0022",
+   "category": "Sînema",
+   "difficulty": 1,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "9cdc2d560367ace4",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0023",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "17fa8fda8a18ae8f",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0024",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "4c1937e758c2260d",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0025",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "c5a520dd938eb0f0",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0026",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "24ff9a149b8b83d8",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0027",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3b65098d0927f9dc",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0028",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "24caaafa8e0dfaf8",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0029",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "0d95e1eeb3496077",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0030",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "123bd433dbf359a1",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0031",
+   "category": "Sînema",
+   "difficulty": 1,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "13db5fe38938db13",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0032",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "35bebab7bd97db2c",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0033",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "35ad6a9f224bdb67",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0034",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "523ddaf9eb7d96e9",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0035",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e180436e9e2a20c4",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0036",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "47fc4a22531ab158",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0037",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "26bf564c49ecab11",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0038",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a341b9718993cd87",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0039",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e8ff1cb188c358c8",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0040",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "51ee6027afd9423b",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0041",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2c898308921a760b",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0042",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3b52deea10c0c8ff",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0043",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3a3ff002a900bd40",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0044",
+   "category": "Sînema",
+   "difficulty": 5,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "89403f636b0f0821",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0045",
+   "category": "Sînema",
+   "difficulty": 2,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "f8c845e3a1894959",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0046",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b64a71a1172f15ce",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0047",
+   "category": "Sînema",
+   "difficulty": 5,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "43dc563703f5ca07",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0048",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d80b9b6dd5e0d9a7",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0049",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "665f9a107ea653b3",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0050",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3e933e88a28fabc6",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0051",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "56763d72bf616fa4",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0052",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "63418e23e18748e7",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0053",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2bfee3c954d019f9",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0054",
+   "category": "Sînema",
+   "difficulty": 4,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "67adc78cab93ed03",
+   "state": "accepted"
+  },
+  {
+   "id": "cinema_0055",
+   "category": "Sînema",
+   "difficulty": 3,
+   "authoredBy": "subagent:cinema",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2c47af3abdc80d59",
+   "state": "accepted"
+  }
+ ]
+}

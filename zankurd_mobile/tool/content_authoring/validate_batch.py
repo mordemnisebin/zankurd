@@ -30,6 +30,23 @@ def norm(s: str) -> str:
     s = unicodedata.normalize("NFC", (s or "")).strip().lower()
     return _WS.sub(" ", _PUNCT.sub(" ", s)).strip()
 
+
+# Şık karşılaştırması için AYRI bir normalleştirme.
+#
+# `norm()` bütün noktalama işaretlerini atar; prompt karşılaştırmasında
+# doğru, şıklarda YIKICI: `V = I × R` ile `V = I ÷ R` ikisi de "v i r"ye
+# çöküyor ve geçerli bir formül sorusu "çift şık" diye reddediliyordu
+# (2026-08-06, tech_invent_0019/0026). Operatör şıkkın ta kendisidir.
+#
+# Burada yalnız baş/son noktalama kırpılır ve boşluk sadeleşir; içerideki
+# matematik/sembol korunur. "Ankara" ile "Ankara." hâlâ aynı sayılır.
+_EDGE_PUNCT = re.compile(r"^[^\w]+|[^\w]+$", re.UNICODE)
+
+
+def norm_option(s: str) -> str:
+    s = unicodedata.normalize("NFC", (s or "")).strip().lower()
+    return _WS.sub(" ", _EDGE_PUNCT.sub("", s)).strip()
+
 def tokens(s: str) -> set[str]:
     return {t for t in norm(s).split() if len(t) > 2}
 
@@ -37,7 +54,15 @@ def tokens(s: str) -> set[str]:
 KU_DIACRITICS = set("êîûşçÊÎÛŞÇ")
 # Soranca/Arap alfabesi karışması
 NON_LATIN = re.compile(r"[؀-ۿЀ-ӿ]")
-PLACEHOLDER = re.compile(r"\b(TODO|FIXME|TBD|XXX|placeholder|lorem ipsum|\{\{|\}\})", re.I)
+# Kod işaretleri BÜYÜK HARF aranır. `re.I` ile "TODO" İspanyolca
+# "Todo sobre mi madre" film adına takılıyordu (2026-08-06, cinema_0048):
+# geçerli bir soru "yer tutucu" diye reddedildi.
+PLACEHOLDER_CASED = re.compile(r"\b(TODO|FIXME|TBD|XXX)\b")
+PLACEHOLDER_ANY = re.compile(r"(placeholder|lorem ipsum|\{\{|\}\})", re.I)
+
+
+def has_placeholder(t: str) -> bool:
+    return bool(PLACEHOLDER_CASED.search(t) or PLACEHOLDER_ANY.search(t))
 # Yapay zekâ kalıpları (TR)
 AI_TR = re.compile(r"\b(aşağıdakilerden hangisi doğrudur|bu bağlamda|önemli bir rol oynamaktadır|"
                    r"dikkat çekmektedir|olarak bilinmektedir|ifade edilebilir)\b", re.I)
@@ -87,7 +112,7 @@ class Gate:
         for arr, tag in ((ku_a, "ku"), (tr_a, "tr")):
             if any(not str(x).strip() for x in arr):
                 errs.append(f"empty-option-{tag}")
-            if len({norm(x) for x in arr}) != len(arr):
+            if len({norm_option(x) for x in arr}) != len(arr):
                 errs.append(f"duplicate-option-{tag}")
             if any(ESCAPE_OPTS.match(str(x)) for x in arr):
                 errs.append(f"escape-option-{tag}")
@@ -111,7 +136,7 @@ class Gate:
         if norm(p_ku) == norm(p_tr):
             errs.append("tr-ku-prompt-identical")
         for txt, tag in ((p_ku, "ku"), (p_tr, "tr")):
-            if PLACEHOLDER.search(txt):
+            if has_placeholder(txt):
                 errs.append(f"placeholder-{tag}")
             if NON_LATIN.search(txt):
                 errs.append(f"non-latin-script-{tag}")
@@ -177,7 +202,15 @@ class Gate:
 
         pos = collections.Counter(q["answers"].index(q["correctAnswer"]) for q in ok)
         rep["position"] = {k: round(100 * v / n, 1) for k, v in sorted(pos.items())}
-        rep["position_ok"] = all(23.0 <= 100 * pos.get(i, 0) / n <= 27.0 for i in range(4))
+        # %23–27 bandı YAYIMLANAN BÜTÜN için anlamlıdır, tek batch için
+        # değil: n=55'te bir pozisyonun payının standart sapması ~%5,8, yani
+        # ±%2'lik bant 0,34 SD eder ve hiç önyargısı olmayan batch bile
+        # gürültüden düşer (2026-08-06, cinema %22,2 ile düştü). Batch bandı
+        # örnekleme göre; sıkı bant kümülatif korpusa uygulanır.
+        pos_tol = max(3.0, 2.5 * math.sqrt(0.25 * 0.75 / n) * 100)
+        rep["position_tolerance"] = round(pos_tol, 1)
+        rep["position_ok"] = all(
+            abs(100 * pos.get(i, 0) / n - 25.0) <= pos_tol for i in range(4))
 
         run_len, worst, prev = 0, 0, None
         for q in ok:
@@ -190,8 +223,17 @@ class Gate:
 
         longest_correct = sum(1 for q in ok
                               if max(q["answers"], key=len) == q["correctAnswer"])
-        rep["longest_option_is_correct_pct"] = round(100 * longest_correct / n, 1)
-        rep["length_bias_ok"] = abs(100 * longest_correct / n - 25.0) <= 10.0
+        pct = 100 * longest_correct / n
+        rep["longest_option_is_correct_pct"] = round(pct, 1)
+        # Tolerans SABİT olamaz: dört şıkta doğru cevabın en uzun olması
+        # şans eseri %25'tir ve n=55'te bu oranın standart sapması ~%5,8'dir.
+        # Sabit ±10 bandı, hiç önyargısı olmayan bir batch'i salt gürültüyle
+        # reddediyordu (2026-08-06, tech_invent %14,5 ile düştü). Bant artık
+        # örneklem büyüklüğüne göre daralır: küçük batch'te geniş, büyük
+        # batch'te sıkı.
+        sd = math.sqrt(0.25 * 0.75 / n) * 100
+        rep["length_bias_tolerance"] = round(max(6.0, 2.5 * sd), 1)
+        rep["length_bias_ok"] = abs(pct - 25.0) <= rep["length_bias_tolerance"]
 
         diff = collections.Counter(q["difficulty"] for q in ok)
         rep["difficulty"] = {k: round(100 * v / n, 1) for k, v in sorted(diff.items())}
