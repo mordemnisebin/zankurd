@@ -50,10 +50,23 @@
   "wordOrderAmbiguityRisk": "HIGH — tek doğru dizge modeli; bu turda wordOrdering kullanılmayacak.",
   "estimatedSafeUniqueYield": "8-15 (kapsanmamış sözcükler üzerinden, soru başına 1 entry açımı)",
   "costPerQuestion": "~1 kaynak açımı/soru. Toplu doğrulama mümkün değil: her sözcüğün kendi entry'si var. Teknolojî'de bir MDN sayfası 4 olguyu desteklemişti; burada o kaldıraç yok.",
-  "recommendation": "LIMITED_ZIMAN_PILOT",
+  "recommendation": "DEFERRED_LOW_MARGINAL_YIELD",
   "producedThisTurn": 0,
   "whyZeroThisTurn": "Karar DEFER_ZIMAN_SOURCE_GAP DEĞİL: kaynak erişimi kanıtlandı (4 entry bu oturumda okundu) ve runtime multipleChoice'u destekliyor. Engel kaynak boşluğu değil, bu turdaki bağlam bütçesi: 8 sorunun her biri ayrı entry açımı gerektiriyor ve §19 bitirilemeyecek batch'i başlatmayı yasaklıyor. Yarım batch açıp havuza almamak yerine hiç açmamak doğru olan.",
   "fallbackCategory": "Sînema",
   "fallbackNotTriggered": "§16 fallback'i DEFER_ZIMAN_SOURCE_GAP'e bağlı. Karar o değil, dolayısıyla Sînema fallback'i tetiklenmedi. Ayrıca 12-20 soruluk bir Sînema batch'i kalan bütçeyle Ziman'dan daha da az bitirilebilir.",
-  "rationale": "Ziman gerçekten en yüksek verimli kategori ama iki gerçek sınır var: (1) 376 öğelik doygunluk yeni sözcük seçimini zorunlu kılıyor, (2) soru başına bir kaynak açımı gerekiyor — Teknolojî'deki 'bir sayfa çok olgu' kaldıracı burada yok. Bu yüzden hedef 12-20 değil, 8-12 (LIMITED_ZIMAN_PILOT)."
+  "rationale": "Ziman gerçekten en yüksek verimli kategori ama iki gerçek sınır var: (1) 376 öğelik doygunluk yeni sözcük seçimini zorunlu kılıyor, (2) soru başına bir kaynak açımı gerekiyor — Teknolojî'deki 'bir sayfa çok olgu' kaldıracı burada yok. Bu yüzden hedef 12-20 değil, 8-12 (LIMITED_ZIMAN_PILOT).",
+  "deferralRationale": [
+    "kategori zaten en büyük kategorilerden biri (320 aktif soru)",
+    "düşük riskli kelime alanı büyük ölçüde kapsanmış (376 lexical item)",
+    "her yeni soru ayrı lexicon erişimi gerektiriyor — toplu doğrulama kaldıracı yok",
+    "wordOrdering tek doğru string modeli yüzünden Kurmancîde güvenli ölçeklenemiyor",
+    "daha zayıf kategoriler aynı doğrulama bütçesiyle daha fazla ürün değeri sağlıyor"
+  ],
+  "notImpossibleOnlyLowYield": "Bu karar Ziman'ın teknik olarak imkânsız olduğunu DEĞİL, ilk genişleme hedefi için marjinal veriminin düşük olduğunu söyler.",
+  "reopenWhen": [
+    "doğrudan erişilebilir toplu Kurmancî lexicon dataset'i",
+    "açık lisanslı Kurmancî eğitim corpus'u",
+    "çoklu doğru sıralama kabul eden runtime"
+  ]
 }
