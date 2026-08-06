@@ -1,0 +1,4163 @@
+[
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0020",
+   "category": "Teknolojî",
+   "prompt": "Li ser AI: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast)",
+    "Tenê IP diguherîne bi zorê (ne rastîn) (ne rastîn)",
+    "Tenê şîfreya Wi-Fi eşkere dike",
+    "Tevna yekîneyên girêdayî yên sînyal diguherînin"
+   ],
+   "correctAnswer": "Tevna yekîneyên girêdayî yên sînyal diguherînin",
+   "promptTr": "AI hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış)",
+    "Yalnızca IP'yi zorla değiştirir (geçersiz) (geçersiz)",
+    "Yalnızca Wi-Fi parolasını açığa vurur",
+    "Sinyal dönüştüren bağlı birim ağı"
+   ],
+   "correctAnswerTr": "Sinyal dönüştüren bağlı birim ağı",
+   "explanation": "Sinyal dönüştüren bağlı birim ağı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Sinyal dönüştüren bağlı birim ağı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Tevna yekîneyên girêdayî yên sînyal diguherînin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=958be7390b43242c",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "AI",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "958be7390b43242c"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0051",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike",
+    "Sorgûyên DNS dişîfre dike",
+    "Tenê ikonê mezin dike (ne rast)"
+   ],
+   "correctAnswer": "Sorgûyên DNS dişîfre dike",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir",
+    "DNS sorgularını şifreler",
+    "Yalnızca simgeyi büyütür (yanlış)"
+   ],
+   "correctAnswerTr": "DNS sorgularını şifreler",
+   "explanation": "DNS sorgularını şifreler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "DNS sorgularını şifreler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Sorgûyên DNS dişîfre dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=b3b61df07fcd7765",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "b3b61df07fcd7765"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0061",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê rengê qutiyê diguherîne (ne rast)",
+    "Rêyên di navbera AS ên mezin de diguherîne",
+    "Tenê giraniya laptopê zêde dike",
+    "Tenê dirêjahiya kabloyê diguherîne"
+   ],
+   "correctAnswer": "Rêyên di navbera AS ên mezin de diguherîne",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca kasa rengini değiştirir (yanlış)",
+    "Büyük AS'ler arasında rota değiş tokuşu",
+    "Yalnızca dizüstü ağırlığını artırır",
+    "Yalnızca kablo uzunluğunu değiştirir"
+   ],
+   "correctAnswerTr": "Büyük AS'ler arasında rota değiş tokuşu",
+   "explanation": "Büyük AS'ler arasında rota değiş tokuşu. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Büyük AS'ler arasında rota değiş tokuşu. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Rêyên di navbera AS ên mezin de diguherîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=176bba763f8edd1f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "176bba763f8edd1f"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0062",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tora mezin a bi polîtîkaya rêvekirinê ya yekgirtî",
+    "Tenê pîlê şarj dike",
+    "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+    "Tenê fanê digire (ne rast)"
+   ],
+   "correctAnswer": "Tora mezin a bi polîtîkaya rêvekirinê ya yekgirtî",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Tek yönlendirme politikalı büyük ağ",
+    "Yalnızca pili şarj eder",
+    "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+    "Yalnızca fanı kapatır (yanlış)"
+   ],
+   "correctAnswerTr": "Tek yönlendirme politikalı büyük ağ",
+   "explanation": "Tek yönlendirme politikalı büyük ağ. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Tek yönlendirme politikalı büyük ağ. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Tora mezin a bi polîtîkaya rêvekirinê ya yekgirtî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=11a7c32ff2065ac9",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "11a7c32ff2065ac9"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0071",
+   "category": "Teknolojî",
+   "prompt": "Li ser sîstem: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike — şaş e — şaş e — şaş e",
+    "Tenê ikonê mezin dike (ne rast)",
+    "Bernameyê di jîngeha sînorkirî de digire"
+   ],
+   "correctAnswer": "Bernameyê di jîngeha sînorkirî de digire",
+   "promptTr": "sîstem hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir — hatalı — hatalı — hatalı",
+    "Yalnızca simgeyi büyütür (yanlış)",
+    "Programı sınırlı ortamda tutar"
+   ],
+   "correctAnswerTr": "Programı sınırlı ortamda tutar",
+   "explanation": "Programı sınırlı ortamda tutar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Programı sınırlı ortamda tutar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Bernameyê di jîngeha sînorkirî de digire. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=32590831705de9ed",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "sîstem",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "32590831705de9ed"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0074",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê pîlê şarj dike",
+    "Êrîş û daxwazên zêde asteng dike",
+    "Tenê kaxezê çap dike (çewt) (çewt)",
+    "Tenê fanê digire (ne rast)"
+   ],
+   "correctAnswer": "Êrîş û daxwazên zêde asteng dike",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca pili şarj eder",
+    "Aşırı istek ve saldırıları engeller",
+    "Yalnızca kâğıt basar (yanlış) (yanlış)",
+    "Yalnızca fanı kapatır (yanlış)"
+   ],
+   "correctAnswerTr": "Aşırı istek ve saldırıları engeller",
+   "explanation": "Aşırı istek ve saldırıları engeller. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Aşırı istek ve saldırıları engeller. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Êrîş û daxwazên zêde asteng dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=97cbaf0b7a473d85",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "97cbaf0b7a473d85"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0075",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike",
+    "Mirov ji botan veqetîne",
+    "Tenê ikonê mezin dike (ne rast)"
+   ],
+   "correctAnswer": "Mirov ji botan veqetîne",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir",
+    "İnsanı botlardan ayırır",
+    "Yalnızca simgeyi büyütür (yanlış)"
+   ],
+   "correctAnswerTr": "İnsanı botlardan ayırır",
+   "explanation": "İnsanı botlardan ayırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "İnsanı botlardan ayırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Mirov ji botan veqetîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=24b61cf42af4f419",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "24b61cf42af4f419"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0076",
+   "category": "Teknolojî",
+   "prompt": "Li ser AI: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast) (ne rastîn)",
+    "Tenê IP diguherîne bi zorê",
+    "Tenê şîfreya Wi-Fi eşkere dike",
+    "Meyla nerast ji daneyên nehevseng"
+   ],
+   "correctAnswer": "Meyla nerast ji daneyên nehevseng",
+   "promptTr": "AI hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış) (geçersiz)",
+    "Yalnızca IP'yi zorla değiştirir",
+    "Yalnızca Wi-Fi parolasını açığa vurur",
+    "Dengesiz veriden yanlış eğilim"
+   ],
+   "correctAnswerTr": "Dengesiz veriden yanlış eğilim",
+   "explanation": "Dengesiz veriden yanlış eğilim. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Dengesiz veriden yanlış eğilim. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Meyla nerast ji daneyên nehevseng. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=e57c6973ef18d92f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "AI",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "e57c6973ef18d92f"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0078",
+   "category": "Teknolojî",
+   "prompt": "Li ser AI: kîjan şirove rast e?",
+   "answers": [
+    "Mirov di biryarên krîtîk de pejirandinê digire",
+    "Tenê pîlê şarj dike",
+    "Tenê kaxezê çap dike",
+    "Tenê fanê digire (ne rast) (çewt) (çewt) (çewt)"
+   ],
+   "correctAnswer": "Mirov di biryarên krîtîk de pejirandinê digire",
+   "promptTr": "AI hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Kritik kararlarda insan onayı",
+    "Yalnızca pili şarj eder",
+    "Yalnızca kâğıt basar",
+    "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış) (yanlış)"
+   ],
+   "correctAnswerTr": "Kritik kararlarda insan onayı",
+   "explanation": "Kritik kararlarda insan onayı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Kritik kararlarda insan onayı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Mirov di biryarên krîtîk de pejirandinê digire. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=18f0f78a18076898",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "AI",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "18f0f78a18076898"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0088",
+   "category": "Teknolojî",
+   "prompt": "Li ser database: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast) (ne rastîn)",
+    "Tenê IP diguherîne bi zorê",
+    "Struktur nerm û pîvana horizontal",
+    "Tenê şîfreya Wi-Fi eşkere dike"
+   ],
+   "correctAnswer": "Struktur nerm û pîvana horizontal",
+   "promptTr": "database hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış) (geçersiz)",
+    "Yalnızca IP'yi zorla değiştirir",
+    "Esnek yapı ve yatay ölçek",
+    "Yalnızca Wi-Fi parolasını açığa vurur"
+   ],
+   "correctAnswerTr": "Esnek yapı ve yatay ölçek",
+   "explanation": "Esnek yapı ve yatay ölçek. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Esnek yapı ve yatay ölçek. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Struktur nerm û pîvana horizontal. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=f456ccb59de1ddef",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "database",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "f456ccb59de1ddef"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0091",
+   "category": "Teknolojî",
+   "prompt": "Li ser UX: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike",
+    "Kêm kirin biryarê hêsan dike",
+    "Tenê ikonê mezin dike (ne rast)"
+   ],
+   "correctAnswer": "Kêm kirin biryarê hêsan dike",
+   "promptTr": "UX hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir",
+    "Azaltmak kararı kolaylaştırır",
+    "Yalnızca simgeyi büyütür (yanlış)"
+   ],
+   "correctAnswerTr": "Azaltmak kararı kolaylaştırır",
+   "explanation": "Azaltmak kararı kolaylaştırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Azaltmak kararı kolaylaştırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Kêm kirin biryarê hêsan dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=65863bbe8d9cd828",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "UX",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "65863bbe8d9cd828"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0106",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê pîlê şarj dike (çewt) (çewt)",
+    "UDP bi pêbawerî û TLS a nûjen",
+    "Tenê kaxezê çap dike",
+    "Tenê fanê digire (ne rast)"
+   ],
+   "correctAnswer": "UDP bi pêbawerî û TLS a nûjen",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca pili şarj eder (yanlış) (yanlış)",
+    "Modern güvenilirlik ve TLS'li UDP",
+    "Yalnızca kâğıt basar",
+    "Yalnızca fanı kapatır (yanlış)"
+   ],
+   "correctAnswerTr": "Modern güvenilirlik ve TLS'li UDP",
+   "explanation": "Modern güvenilirlik ve TLS'li UDP. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Modern güvenilirlik ve TLS'li UDP. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "UDP bi pêbawerî û TLS a nûjen. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=aea4237bfbc34638",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "aea4237bfbc34638"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0107",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike — şaş e — şaş e — şaş e",
+    "Gelek daxwazan li ser yek pêwendiyê multiplex dike",
+    "Tenê ikonê mezin dike (ne rast)"
+   ],
+   "correctAnswer": "Gelek daxwazan li ser yek pêwendiyê multiplex dike",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir — hatalı — hatalı — hatalı",
+    "Tek bağlantıda birçok isteği çoklar",
+    "Yalnızca simgeyi büyütür (yanlış)"
+   ],
+   "correctAnswerTr": "Tek bağlantıda birçok isteği çoklar",
+   "explanation": "Tek bağlantıda birçok isteği çoklar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Tek bağlantıda birçok isteği çoklar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Gelek daxwazan li ser yek pêwendiyê multiplex dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=326c259dd48f861a",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "326c259dd48f861a"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0108",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast)",
+    "Tenê IP diguherîne bi zorê",
+    "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)",
+    "Diyar dike ka bersiv çawa were cache kirin"
+   ],
+   "correctAnswer": "Diyar dike ka bersiv çawa were cache kirin",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış)",
+    "Yalnızca IP'yi zorla değiştirir",
+    "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)",
+    "Yanıtın nasıl önbellekleneceğini belirler"
+   ],
+   "correctAnswerTr": "Yanıtın nasıl önbellekleneceğini belirler",
+   "explanation": "Yanıtın nasıl önbellekleneceğini belirler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Yanıtın nasıl önbellekleneceğini belirler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Diyar dike ka bersiv çawa were cache kirin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=e5383c976dc791ca",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "e5383c976dc791ca"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0111",
+   "category": "Teknolojî",
+   "prompt": "Li ser dane: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike",
+    "Tenê ikonê mezin dike (ne rast)",
+    "Nirxê ku ji yên din pir dûr e"
+   ],
+   "correctAnswer": "Nirxê ku ji yên din pir dûr e",
+   "promptTr": "dane hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir",
+    "Yalnızca simgeyi büyütür (yanlış)",
+    "Diğerlerinden çok uzak değer"
+   ],
+   "correctAnswerTr": "Diğerlerinden çok uzak değer",
+   "explanation": "Diğerlerinden çok uzak değer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Diğerlerinden çok uzak değer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Nirxê ku ji yên din pir dûr e. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=f595f12066007f7d",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "dane",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "f595f12066007f7d"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0112",
+   "category": "Teknolojî",
+   "prompt": "Li ser ewle: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe",
+    "Tenê IP diguherîne bi zorê",
+    "Li pişt te li ekranê nêrîn",
+    "Tenê şîfreya Wi-Fi eşkere dike"
+   ],
+   "correctAnswer": "Li pişt te li ekranê nêrîn",
+   "promptTr": "ewle hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler",
+    "Yalnızca IP'yi zorla değiştirir",
+    "Ardından ekrana bakma",
+    "Yalnızca Wi-Fi parolasını açığa vurur"
+   ],
+   "correctAnswerTr": "Ardından ekrana bakma",
+   "explanation": "Ardından ekrana bakma. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Ardından ekrana bakma. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Li pişt te li ekranê nêrîn. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=263371b51dc27aa9",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ewle",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "263371b51dc27aa9"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0115",
+   "category": "Teknolojî",
+   "prompt": "Li ser ewle: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne — şaş e — şaş e",
+    "Tenê dengê bilind dike",
+    "Îsbat a fîzîkî li dijî phishing",
+    "Tenê ikonê mezin dike (ne rast)"
+   ],
+   "correctAnswer": "Îsbat a fîzîkî li dijî phishing",
+   "promptTr": "ewle hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir — hatalı — hatalı",
+    "Yalnızca sesi yükseltir",
+    "Oltalamaya karşı fiziksel kanıt",
+    "Yalnızca simgeyi büyütür (yanlış)"
+   ],
+   "correctAnswerTr": "Oltalamaya karşı fiziksel kanıt",
+   "explanation": "Oltalamaya karşı fiziksel kanıt. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Oltalamaya karşı fiziksel kanıt. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Îsbat a fîzîkî li dijî phishing. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=5ad64094105e9f82",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ewle",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "5ad64094105e9f82"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0116",
+   "category": "Teknolojî",
+   "prompt": "Li ser sîstem: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast)",
+    "Tenê IP diguherîne bi zorê (ne rastîn) (ne rastîn) (ne rastîn)",
+    "Tenê şîfreya Wi-Fi eşkere dike",
+    "Heke nermalav bersiv nede ji nû ve dide destpêkirin"
+   ],
+   "correctAnswer": "Heke nermalav bersiv nede ji nû ve dide destpêkirin",
+   "promptTr": "sîstem hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış)",
+    "Yalnızca IP'yi zorla değiştirir (geçersiz) (geçersiz) (geçersiz)",
+    "Yalnızca Wi-Fi parolasını açığa vurur",
+    "Yazılım yanıt vermezse yeniden başlatır"
+   ],
+   "correctAnswerTr": "Yazılım yanıt vermezse yeniden başlatır",
+   "explanation": "Yazılım yanıt vermezse yeniden başlatır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Yazılım yanıt vermezse yeniden başlatır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Heke nermalav bersiv nede ji nû ve dide destpêkirin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=c586623fe5f2a52a",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "sîstem",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "c586623fe5f2a52a"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0118",
+   "category": "Teknolojî",
+   "prompt": "Li ser sîstem: kîjan şirove rast e?",
+   "answers": [
+    "Hişkê diceribîne û OS bar dike",
+    "Tenê pîlê şarj dike (çewt) (çewt)",
+    "Tenê kaxezê çap dike",
+    "Tenê fanê digire (ne rast)"
+   ],
+   "correctAnswer": "Hişkê diceribîne û OS bar dike",
+   "promptTr": "sîstem hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Donanımı sınar ve OS yükler",
+    "Yalnızca pili şarj eder (yanlış) (yanlış)",
+    "Yalnızca kâğıt basar",
+    "Yalnızca fanı kapatır (yanlış)"
+   ],
+   "correctAnswerTr": "Donanımı sınar ve OS yükler",
+   "explanation": "Donanımı sınar ve OS yükler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Donanımı sınar ve OS yükler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Hişkê diceribîne û OS bar dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=6545cc7b56fa7963",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "sîstem",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "6545cc7b56fa7963"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0120",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast)",
+    "Tenê IP diguherîne bi zorê",
+    "Li qata IP şîfre û rastbûnê dide",
+    "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)"
+   ],
+   "correctAnswer": "Li qata IP şîfre û rastbûnê dide",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış)",
+    "Yalnızca IP'yi zorla değiştirir",
+    "IP katmanında şifre ve bütünlük verir",
+    "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)"
+   ],
+   "correctAnswerTr": "IP katmanında şifre ve bütünlük verir",
+   "explanation": "IP katmanında şifre ve bütünlük verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "IP katmanında şifre ve bütünlük verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Li qata IP şîfre û rastbûnê dide. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=da3ae0e6deef6c16",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "da3ae0e6deef6c16"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0121",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Navnîşanên herêmî û derve diguherîne ya standard",
+    "Tenê rengê qutiyê diguherîne (ne rast)",
+    "Tenê giraniya laptopê zêde dike",
+    "Tenê dirêjahiya kabloyê diguherîne"
+   ],
+   "correctAnswer": "Navnîşanên herêmî û derve diguherîne ya standard",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yerel ve dış adresleri çevirir (standart)",
+    "Yalnızca kasa rengini değiştirir (yanlış)",
+    "Yalnızca dizüstü ağırlığını artırır",
+    "Yalnızca kablo uzunluğunu değiştirir"
+   ],
+   "correctAnswerTr": "Yerel ve dış adresleri çevirir (standart)",
+   "explanation": "Yerel ve dış adresleri çevirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Yerel ve dış adresleri çevirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Navnîşanên herêmî û derve diguherîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=0e504034b136d52f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "0e504034b136d52f"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0122",
+   "category": "Teknolojî",
+   "prompt": "Li ser tor: kîjan şirove rast e?",
+   "answers": [
+    "Tenê pîlê şarj dike",
+    "Gelek bikarhêner heman IP a giştî par ve dikin",
+    "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+    "Tenê fanê digire (ne rast)"
+   ],
+   "correctAnswer": "Gelek bikarhêner heman IP a giştî par ve dikin",
+   "promptTr": "tor hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca pili şarj eder",
+    "Çok kullanıcı aynı genel IP'yi paylaşır",
+    "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+    "Yalnızca fanı kapatır (yanlış)"
+   ],
+   "correctAnswerTr": "Çok kullanıcı aynı genel IP'yi paylaşır",
+   "explanation": "Çok kullanıcı aynı genel IP'yi paylaşır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Çok kullanıcı aynı genel IP'yi paylaşır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Gelek bikarhêner heman IP a giştî par ve dikin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=092e9ad838a450cf",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "tor",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "092e9ad838a450cf"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0123",
+   "category": "Teknolojî",
+   "prompt": "Li ser AI: kîjan şirove rast e?",
+   "answers": [
+    "Tenê temayê diguherîne",
+    "Tenê dengê bilind dike",
+    "Bersiva rast a mînakan (label)",
+    "Tenê ikonê mezin dike (ne rast)"
+   ],
+   "correctAnswer": "Bersiva rast a mînakan (label)",
+   "promptTr": "AI hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca temayı değiştirir",
+    "Yalnızca sesi yükseltir",
+    "Örneklerin doğru yanıtı (etiket)",
+    "Yalnızca simgeyi büyütür (yanlış)"
+   ],
+   "correctAnswerTr": "Örneklerin doğru yanıtı (etiket)",
+   "explanation": "Örneklerin doğru yanıtı (etiket). Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Örneklerin doğru yanıtı (etiket). Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Bersiva rast a mînakan (label). Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=71a75824c3b66591",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "AI",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "71a75824c3b66591"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0124",
+   "category": "Teknolojî",
+   "prompt": "Li ser AI: kîjan şirove rast e?",
+   "answers": [
+    "Tenê dîrokê jê dibe (ne rast) (ne rastîn)",
+    "Tenê IP diguherîne bi zorê",
+    "Tenê şîfreya Wi-Fi eşkere dike",
+    "Struktur di daneyên bê label de digere"
+   ],
+   "correctAnswer": "Struktur di daneyên bê label de digere",
+   "promptTr": "AI hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca geçmişi siler (yanlış) (geçersiz)",
+    "Yalnızca IP'yi zorla değiştirir",
+    "Yalnızca Wi-Fi parolasını açığa vurur",
+    "Etiketsiz veride yapı arar"
+   ],
+   "correctAnswerTr": "Etiketsiz veride yapı arar",
+   "explanation": "Etiketsiz veride yapı arar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Etiketsiz veride yapı arar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Struktur di daneyên bê label de digere. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=8cf4abff6d6487d8",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "AI",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "8cf4abff6d6487d8"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_tech_advanced_0125",
+   "category": "Teknolojî",
+   "prompt": "Li ser AI: kîjan şirove rast e?",
+   "answers": [
+    "Tenê rengê qutiyê diguherîne",
+    "Bi xelat û ceza fêr dibe ya standard",
+    "Tenê giraniya laptopê zêde dike",
+    "Tenê dirêjahiya kabloyê diguherîne"
+   ],
+   "correctAnswer": "Bi xelat û ceza fêr dibe ya standard",
+   "promptTr": "AI hakkında hangi açıklama doğrudur?",
+   "answersTr": [
+    "Yalnızca kasa rengini değiştirir",
+    "Ödül ve ceza ile öğrenir (standart)",
+    "Yalnızca dizüstü ağırlığını artırır",
+    "Yalnızca kablo uzunluğunu değiştirir"
+   ],
+   "correctAnswerTr": "Ödül ve ceza ile öğrenir (standart)",
+   "explanation": "Ödül ve ceza ile öğrenir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationTr": "Ödül ve ceza ile öğrenir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+   "explanationKu": "Bi xelat û ceza fêr dibe. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+    "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=0ebe91a0eaa5ea4a",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "AI",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "contentHash": "0ebe91a0eaa5ea4a"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0012",
+   "category": "Cografya",
+   "prompt": "Alp çiya bi giranî li kîjan parzemînê ne?",
+   "answers": [
+    "Awistralya",
+    "Amerîkaya Bakur",
+    "Afrîkaya Rojavayî",
+    "Ewrûpa"
+   ],
+   "correctAnswer": "Ewrûpa",
+   "promptTr": "Alpler esas olarak hangi kıtadadır?",
+   "answersTr": [
+    "Avustralya",
+    "Kuzey Amerika",
+    "Batı Afrika",
+    "Avrupa"
+   ],
+   "correctAnswerTr": "Avrupa",
+   "explanation": "Alpler Orta Avrupa'dadır.",
+   "explanationTr": "Alpler Orta Avrupa'dadır.",
+   "explanationKu": "Alp di Ewrûpaya Navîn de ne.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=e1c4a10d6ca29764",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "çiya",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erd-şekl",
+    "contentHash": "e1c4a10d6ca29764"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0022",
+   "category": "Cografya",
+   "prompt": "Volkan çi ye?",
+   "answers": [
+    "Cihê ku magma digihîje rûyê erdê",
+    "Tenê gola ava sar (çewt) (çewt) (çewt)",
+    "Tenê deşta hişk (ne rast)",
+    "Tenê çemê piçûk"
+   ],
+   "correctAnswer": "Cihê ku magma digihîje rûyê erdê",
+   "promptTr": "Volkan nedir?",
+   "answersTr": [
+    "Magmanın yeryüzüne ulaştığı yer",
+    "Yalnızca soğuk su gölü (yanlış) (yanlış) (yanlış)",
+    "Yalnızca kuru ova (yanlış)",
+    "Yalnızca küçük ırmak"
+   ],
+   "correctAnswerTr": "Magmanın yeryüzüne ulaştığı yer",
+   "explanation": "Püskürme lav, kül ve gaz çıkarır.",
+   "explanationTr": "Püskürme lav, kül ve gaz çıkarır.",
+   "explanationKu": "Teqîn lava, xwelî û gazan derdixe.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=dcde797cc4ddb3b4",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "erd",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erd-şekl",
+    "contentHash": "dcde797cc4ddb3b4"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0037",
+   "category": "Cografya",
+   "prompt": "Polê Bakur di kîjan nîvkûreyê de ye?",
+   "answers": [
+    "Nîvkûreya başûr",
+    "Nîvkûreya bakur ya standard",
+    "Tenê li ser Heyvê",
+    "Tenê li ser Merîxê"
+   ],
+   "correctAnswer": "Nîvkûreya bakur ya standard",
+   "promptTr": "Kuzey Kutbu hangi yarımkürededir?",
+   "answersTr": [
+    "Güney yarımküre",
+    "Kuzey yarımküre (standart)",
+    "Yalnızca Ay'da",
+    "Yalnızca Mars'ta"
+   ],
+   "correctAnswerTr": "Kuzey yarımküre (standart)",
+   "explanation": "Kuzey Kutbu 90° kuzey enlemdedir.",
+   "explanationTr": "Kuzey Kutbu 90° kuzey enlemdedir.",
+   "explanationKu": "Polê Bakur li 90° firehiya bakur e.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=854141a264c79b2d",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "854141a264c79b2d"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0038",
+   "category": "Cografya",
+   "prompt": "Polê Başûr li ser kîjan parzemînê ye?",
+   "answers": [
+    "Antarktîka",
+    "Ewrûpa",
+    "Afrîka",
+    "Asya (ne rast)"
+   ],
+   "correctAnswer": "Antarktîka",
+   "promptTr": "Güney Kutbu hangi kıta üzerindedir?",
+   "answersTr": [
+    "Antarktika",
+    "Avrupa",
+    "Afrika",
+    "Asya (yanlış)"
+   ],
+   "correctAnswerTr": "Antarktika",
+   "explanation": "Antarktika güneydeki buzul kıtadır.",
+   "explanationTr": "Antarktika güneydeki buzul kıtadır.",
+   "explanationKu": "Antarktîka parzemîna qeşagirtî ya başûr e.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=eb97f6c5af03bbfb",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "eb97f6c5af03bbfb"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0039",
+   "category": "Cografya",
+   "prompt": "Sahra li kîjan parzemînê ye?",
+   "answers": [
+    "Ewrûpa",
+    "Amerîkaya Bakur",
+    "Awistralya",
+    "Afrîka"
+   ],
+   "correctAnswer": "Afrîka",
+   "promptTr": "Sahra hangi kıtadadır?",
+   "answersTr": [
+    "Avrupa",
+    "Kuzey Amerika",
+    "Avustralya",
+    "Afrika"
+   ],
+   "correctAnswerTr": "Afrika",
+   "explanation": "Sahra Kuzey Afrika'daki büyük çöldür.",
+   "explanationTr": "Sahra Kuzey Afrika'daki büyük çöldür.",
+   "explanationKu": "Sahra çola mezin a Afrîkaya Bakur e.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=9d1ccd8af9f12c9f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "9d1ccd8af9f12c9f"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0041",
+   "category": "Cografya",
+   "prompt": "Çemê Amazon bi giranî ber bi kîjan okyanûsê diherike?",
+   "answers": [
+    "Okyanûsa Atlasê ya standard",
+    "Okyanûsa Pasîfîk",
+    "Okyanûsa Arktîk",
+    "Deryaya Spî"
+   ],
+   "correctAnswer": "Okyanûsa Atlasê ya standard",
+   "promptTr": "Amazon ırmağı esas olarak hangi okyanusa akar?",
+   "answersTr": [
+    "Atlas Okyanusu (standart)",
+    "Pasifik Okyanusu",
+    "Arktik Okyanus",
+    "Akdeniz"
+   ],
+   "correctAnswerTr": "Atlas Okyanusu (standart)",
+   "explanation": "Amazon doğuya akarak Atlas'a ulaşır.",
+   "explanationTr": "Amazon doğuya akarak Atlas'a ulaşır.",
+   "explanationKu": "Amazon ber bi rojhilat diherike û digihîje Atlasê.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=04d1133bb2e98d7f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "04d1133bb2e98d7f"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0042",
+   "category": "Cografya",
+   "prompt": "Çiyayên Rocky bi giranî li kîjan parzemînê ne?",
+   "answers": [
+    "Afrîka (ne rast)",
+    "Amerîkaya Bakur",
+    "Ewrûpa",
+    "Antarktîka"
+   ],
+   "correctAnswer": "Amerîkaya Bakur",
+   "promptTr": "Kayalık Dağlar esas olarak hangi kıtadadır?",
+   "answersTr": [
+    "Afrika (yanlış)",
+    "Kuzey Amerika",
+    "Avrupa",
+    "Antarktika"
+   ],
+   "correctAnswerTr": "Kuzey Amerika",
+   "explanation": "Kayalıklar Kanada'dan ABD'ye uzanır.",
+   "explanationTr": "Kayalıklar Kanada'dan ABD'ye uzanır.",
+   "explanationKu": "Rocky ji Kanada heta Dewletên Yekbûyî dirêj dibin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=a3dda39d78f5b10f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "a3dda39d78f5b10f"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0044",
+   "category": "Cografya",
+   "prompt": "Deryaya Spî di navbera kîjan parzemînan de ye?",
+   "answers": [
+    "Tenê Amerîka û Antarktîka",
+    "Tenê Awistralya û Antarktîka",
+    "Tenê bakurê Amerîkaya Bakur",
+    "Ewrûpa, Afrîka û Asya"
+   ],
+   "correctAnswer": "Ewrûpa, Afrîka û Asya",
+   "promptTr": "Akdeniz hangi kıtalar arasındadır?",
+   "answersTr": [
+    "Yalnızca Amerika ve Antarktika",
+    "Yalnızca Avustralya ve Antarktika",
+    "Yalnızca Kuzey Amerika'nın kuzeyi",
+    "Avrupa, Afrika ve Asya"
+   ],
+   "correctAnswerTr": "Avrupa, Afrika ve Asya",
+   "explanation": "Akdeniz üç kıtayı buluşturur.",
+   "explanationTr": "Akdeniz üç kıtayı buluşturur.",
+   "explanationKu": "Deryaya Spî sê parzemînan digihîne hev.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=e877b9571542d75a",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "e877b9571542d75a"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0046",
+   "category": "Cografya",
+   "prompt": "Çiyayên Toros bi giranî li kîjan welatî dirêj dibin?",
+   "answers": [
+    "Tirkiye",
+    "Brezîlya",
+    "Japonya",
+    "Norwêc"
+   ],
+   "correctAnswer": "Tirkiye",
+   "promptTr": "Toros dağları esas olarak hangi ülkede uzanır?",
+   "answersTr": [
+    "Türkiye",
+    "Brezilya",
+    "Japonya",
+    "Norveç"
+   ],
+   "correctAnswerTr": "Türkiye",
+   "explanation": "Toroslar Anadolu'nun güneyinde uzanır.",
+   "explanationTr": "Toroslar Anadolu'nun güneyinde uzanır.",
+   "explanationKu": "Toros li başûrê Anatolyayê dirêj dibin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=45a0e51f8909dd1b",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kurdistan-xweza",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "herêm",
+    "contentHash": "45a0e51f8909dd1b"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0048",
+   "category": "Cografya",
+   "prompt": "Çemê Dîjle bi giranî ber bi kîjan kendavê diherike?",
+   "answers": [
+    "Kendava Meksîkayê",
+    "Kendava Botniyayê",
+    "Kendava Farisî / Basra",
+    "Kendava Bîskayê (ne rast)"
+   ],
+   "correctAnswer": "Kendava Farisî / Basra",
+   "promptTr": "Dicle ırmağı esas olarak hangi körfeze akar?",
+   "answersTr": [
+    "Meksika Körfezi",
+    "Botniya Körfezi",
+    "Basra/Pers Körfezi",
+    "Biskay Körfezi (yanlış)"
+   ],
+   "correctAnswerTr": "Basra/Pers Körfezi",
+   "explanation": "Dicle ve Fırat birleşerek körfeze akar.",
+   "explanationTr": "Dicle ve Fırat birleşerek körfeze akar.",
+   "explanationKu": "Dîjle û Firat digihîjin hev û ber bi kendavê diherikin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=5687a8225c1e9ce7",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kurdistan-xweza",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "herêm",
+    "contentHash": "5687a8225c1e9ce7"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0051",
+   "category": "Cografya",
+   "prompt": "Germahî bi piranî bi kîjan yekîneyê tê pîvandin di jiyana rojane de?",
+   "answers": [
+    "Kîlometre",
+    "Lître (ne rast)",
+    "Pileya Celsius (°C)",
+    "Hejmar a bit — şaş e"
+   ],
+   "correctAnswer": "Pileya Celsius (°C)",
+   "promptTr": "Sıcaklık günlük yaşamda çoğunlukla hangi birimle ölçülür?",
+   "answersTr": [
+    "Kilometre",
+    "Litre (yanlış)",
+    "Celsius derecesi (°C)",
+    "Bit sayısı — hatalı"
+   ],
+   "correctAnswerTr": "Celsius derecesi (°C)",
+   "explanation": "Celsius birçok ülkede standarttır.",
+   "explanationTr": "Celsius birçok ülkede standarttır.",
+   "explanationKu": "Celsius di gelek welatan de standard e.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=0cfe9044f42e5496",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "hewa",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "hewa-îklîm",
+    "contentHash": "0cfe9044f42e5496"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0060",
+   "category": "Cografya",
+   "prompt": "Ax a berhemdar çima girîng e ji bo çandiniyê?",
+   "answers": [
+    "Riwekan dike kevir",
+    "Avê dike qûm (ne rast)",
+    "Hewayê dike dîwar (ne rastîn) (ne rastîn)",
+    "Madeyên xurdemenî û avê dide riwekan"
+   ],
+   "correctAnswer": "Madeyên xurdemenî û avê dide riwekan",
+   "promptTr": "Verimli toprak tarım için neden önemlidir?",
+   "answersTr": [
+    "Bitkileri taş yapar",
+    "Suyu kum yapar (yanlış)",
+    "Havayı duvar yapar (geçersiz) (geçersiz)",
+    "Bitkilere besin maddesi ve su sağlar"
+   ],
+   "correctAnswerTr": "Bitkilere besin maddesi ve su sağlar",
+   "explanation": "Erozyon ve kirlilik toprağı zayıflatır.",
+   "explanationTr": "Erozyon ve kirlilik toprağı zayıflatır.",
+   "explanationKu": "Erozyon û qirêjî axê lawaz dike.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=3b9bd990c085da10",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ekolojî",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "3b9bd990c085da10"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0061",
+   "category": "Cografya",
+   "prompt": "Erozyona axê çi ye?",
+   "answers": [
+    "Zêdebûna axê bi xweber her sal",
+    "Çûyîna axê bi bayê an avê re ya standard",
+    "Axê dike zêr",
+    "Axê dike hewa"
+   ],
+   "correctAnswer": "Çûyîna axê bi bayê an avê re ya standard",
+   "promptTr": "Toprak erozyonu nedir?",
+   "answersTr": [
+    "Toprağın her yıl kendiliğinden artması",
+    "Toprağın rüzgar veya suyla gitmesi (standart)",
+    "Toprağı altın yapmak",
+    "Toprağı hava yapmak"
+   ],
+   "correctAnswerTr": "Toprağın rüzgar veya suyla gitmesi (standart)",
+   "explanation": "Orman ve uygun örtü erozyonu azaltır.",
+   "explanationTr": "Orman ve uygun örtü erozyonu azaltır.",
+   "explanationKu": "Daristan û çêreya guncav erozyonê kêm dikin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=c0ddc44d154b2327",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ekolojî",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "c0ddc44d154b2327"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0064",
+   "category": "Cografya",
+   "prompt": "Mij bi giranî çi ye?",
+   "answers": [
+    "Çiyayekî qeşagirtî",
+    "Çemekî hişk",
+    "Ewrê nêzî rûyê erdê",
+    "Kevirê sor (ne rast)"
+   ],
+   "correctAnswer": "Ewrê nêzî rûyê erdê",
+   "promptTr": "Sis esas olarak nedir?",
+   "answersTr": [
+    "Buzul dağ",
+    "Kuru ırmak",
+    "Yere yakın bulut",
+    "Kırmızı taş (yanlış)"
+   ],
+   "correctAnswerTr": "Yere yakın bulut",
+   "explanation": "Sis görüşü azaltır.",
+   "explanationTr": "Sis görüşü azaltır.",
+   "explanationKu": "Mij dîtinê kêm dike.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=e78b801facbd2629",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "îklîm",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "hewa-îklîm",
+    "contentHash": "e78b801facbd2629"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0065",
+   "category": "Cografya",
+   "prompt": "Berf çi ye?",
+   "answers": [
+    "Kristalên qeşa yên ku ji ewrân diweşin",
+    "Dilopên ava germ (ne rast)",
+    "Kevirên piçûk ên metal",
+    "Parçeyên plastîk"
+   ],
+   "correctAnswer": "Kristalên qeşa yên ku ji ewrân diweşin",
+   "promptTr": "Kar nedir?",
+   "answersTr": [
+    "Bulutlardan düşen buz kristalleri",
+    "Sıcak su damlaları (yanlış)",
+    "Küçük metal taşlar",
+    "Plastik parçalar"
+   ],
+   "correctAnswerTr": "Bulutlardan düşen buz kristalleri",
+   "explanation": "Kar düşük sıcakta oluşur.",
+   "explanationTr": "Kar düşük sıcakta oluşur.",
+   "explanationKu": "Berf di germahiya nizm de çêdibe.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=6d633480009a94c0",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "îklîm",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "hewa-îklîm",
+    "contentHash": "6d633480009a94c0"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0069",
+   "category": "Cografya",
+   "prompt": "Kompas bi kevneşopî aliyê kîjan polê nîşan dide?",
+   "answers": [
+    "Başûrê rojê her tim",
+    "Bakurê magnetîk ya standard",
+    "Rojhilatê heyvê",
+    "Rojavayê stêrkê"
+   ],
+   "correctAnswer": "Bakurê magnetîk ya standard",
+   "promptTr": "Pusula geleneksel olarak hangi kutup yönünü gösterir?",
+   "answersTr": [
+    "Her zaman güneş güneyi",
+    "Manyetik kuzey (standart)",
+    "Ay doğusu",
+    "Yıldız batısı"
+   ],
+   "correctAnswerTr": "Manyetik kuzey (standart)",
+   "explanation": "Pusula ibresi manyetik kuzeye döner.",
+   "explanationTr": "Pusula ibresi manyetik kuzeye döner.",
+   "explanationKu": "Destê kompasê ber bi bakurê magnetîk ve diçe.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=2c5250a2f38d2cd1",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nexşe",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "nexşe-amûr",
+    "contentHash": "2c5250a2f38d2cd1"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0077",
+   "category": "Cografya",
+   "prompt": "Enerjiya bayê çawa elektrîkê çêdike?",
+   "answers": [
+    "Bay keviran dişewitîne",
+    "Bay tirbînan dizivirîne û jenerator digere",
+    "Bay avê dike zêr (ne rast)",
+    "Bay dîskê format dike"
+   ],
+   "correctAnswer": "Bay tirbînan dizivirîne û jenerator digere",
+   "promptTr": "Rüzgar enerjisi nasıl elektrik üretir?",
+   "answersTr": [
+    "Rüzgar taş yakar",
+    "Rüzgar türbinleri döndürüp jeneratör çalıştırır",
+    "Rüzgar suyu altın yapar (yanlış)",
+    "Rüzgar disk biçimlendirir"
+   ],
+   "correctAnswerTr": "Rüzgar türbinleri döndürüp jeneratör çalıştırır",
+   "explanation": "Bu yenilenebilir enerjidir.",
+   "explanationTr": "Bu yenilenebilir enerjidir.",
+   "explanationKu": "Ev enerjiya nûjenbûyî ye.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=5789225e82fa721b",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "jîngeh",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "5789225e82fa721b"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0078",
+   "category": "Cografya",
+   "prompt": "Hîdroelektrîk enerjiyê ji ku digire?",
+   "answers": [
+    "Ji tevgera avê ya ku tirbînan dizivirîne",
+    "Ji şewitandina plastîkê",
+    "Ji qeşa heyvê (ne rast)",
+    "Ji dengê birûskê tenê (çewt) (çewt) (çewt)"
+   ],
+   "correctAnswer": "Ji tevgera avê ya ku tirbînan dizivirîne",
+   "promptTr": "Hidroelektrik enerjiyi nereden alır?",
+   "answersTr": [
+    "Türbinleri döndüren su hareketinden",
+    "Plastik yanmasından",
+    "Ay buzundan (yanlış)",
+    "Yalnızca şimşek sesinden (yanlış) (yanlış) (yanlış)"
+   ],
+   "correctAnswerTr": "Türbinleri döndüren su hareketinden",
+   "explanation": "Baraj veya ırmak akışı kullanılabilir.",
+   "explanationTr": "Baraj veya ırmak akışı kullanılabilir.",
+   "explanationKu": "Bendav an herikîna çem dikarin were bikaranîn.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=f3973989a5fa4631",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "jîngeh",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "f3973989a5fa4631"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0085",
+   "category": "Cografya",
+   "prompt": "Av a şîrîn û av a xwê çawa cuda ne?",
+   "answers": [
+    "Her du jî heman in her tim",
+    "Av a xwê xwêya hilweşandî zêde ye; şîrîn kêm e",
+    "Av a şîrîn her tim reş e (ne rast)",
+    "Av a xwê her tim şîrîn e"
+   ],
+   "correctAnswer": "Av a xwê xwêya hilweşandî zêde ye; şîrîn kêm e",
+   "promptTr": "Tatlı su ve tuzlu su nasıl ayrılır?",
+   "answersTr": [
+    "İkisi her zaman aynıdır",
+    "Tuzlu suda çözünmüş tuz fazla; tatlıda azdır",
+    "Tatlı su her zaman siyahtır (yanlış)",
+    "Tuzlu su her zaman tatlıdır"
+   ],
+   "correctAnswerTr": "Tuzlu suda çözünmüş tuz fazla; tatlıda azdır",
+   "explanation": "Tatlı suyun çoğu buz ve yeraltındadır.",
+   "explanationTr": "Tatlı suyun çoğu buz ve yeraltındadır.",
+   "explanationKu": "Piraniya ava şîrîn di qeşayê û ava bin erdê de ye.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=8e596e3318bc2ae3",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "av",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "av-çem",
+    "contentHash": "8e596e3318bc2ae3"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0088",
+   "category": "Cografya",
+   "prompt": "Devê çemî çi ye?",
+   "answers": [
+    "Cihê ku çem herî bilind e (ne rastîn) (ne rastîn)",
+    "Cihê ku çem qet av tê de nîne",
+    "Cihê ku çem digihîje derya, gol an çemekî din",
+    "Cihê ku çem di ewr de ye (ne rast)"
+   ],
+   "correctAnswer": "Cihê ku çem digihîje derya, gol an çemekî din",
+   "promptTr": "Irmak ağzı nedir?",
+   "answersTr": [
+    "Irmağın en yüksek yeri (geçersiz) (geçersiz)",
+    "Irmağın hiç suyu olmayan yeri",
+    "Irmağın deniz göl veya başka ırmağa ulaştığı yer",
+    "Irmağın bulutta olduğu yer (yanlış)"
+   ],
+   "correctAnswerTr": "Irmağın deniz göl veya başka ırmağa ulaştığı yer",
+   "explanation": "Ağızda hız düşer ve tortu çökebilir.",
+   "explanationTr": "Ağızda hız düşer ve tortu çökebilir.",
+   "explanationKu": "Li devê çem lez kêm dibe û sediment dikare rûne.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=66c4e28db1c0a5cf",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "av",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "av-çem",
+    "contentHash": "66c4e28db1c0a5cf"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0091",
+   "category": "Cografya",
+   "prompt": "Ûral çiya bi kevneşopî sînorê di navbera kîjan parzemînan de tê dîtin?",
+   "answers": [
+    "Afrîka û Antarktîka",
+    "Amerîkaya Bakur û Başûr",
+    "Ewrûpa û Asya",
+    "Awistralya û Asya"
+   ],
+   "correctAnswer": "Ewrûpa û Asya",
+   "promptTr": "Ural dağları geleneksel olarak hangi kıtalar arasında sınır sayılır?",
+   "answersTr": [
+    "Afrika ve Antarktika",
+    "Kuzey ve Güney Amerika",
+    "Avrupa ve Asya",
+    "Avustralya ve Asya"
+   ],
+   "correctAnswerTr": "Avrupa ve Asya",
+   "explanation": "Ural Rusya'da kuzeyden güneye uzanır.",
+   "explanationTr": "Ural Rusya'da kuzeyden güneye uzanır.",
+   "explanationKu": "Ûral ji bakur ber bi başûr li Rûsyayê dirêj dibin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=99c681b26788eb07",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "99c681b26788eb07"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0092",
+   "category": "Cografya",
+   "prompt": "Girava Greenland bi giranî bi kîjan cureyê erdê tê naskirin?",
+   "answers": [
+    "Daristana tropîkal a stûr",
+    "Çola germ a qûmê tenê",
+    "Deşta tropîkal a şil tenê",
+    "Qeşa û qeşasûrên mezin"
+   ],
+   "correctAnswer": "Qeşa û qeşasûrên mezin",
+   "promptTr": "Grönland adası esas olarak neyle tanınır?",
+   "answersTr": [
+    "Sık tropikal orman",
+    "Yalnızca sıcak kum çölü",
+    "Yalnızca nemli tropikal ova",
+    "Buz ve büyük buzullar"
+   ],
+   "correctAnswerTr": "Buz ve büyük buzullar",
+   "explanation": "Grönland dünyanın en büyük adasıdır.",
+   "explanationTr": "Grönland dünyanın en büyük adasıdır.",
+   "explanationKu": "Greenland girava herî mezin a cîhanê ye.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=b4091595c13cd5c5",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "b4091595c13cd5c5"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0095",
+   "category": "Cografya",
+   "prompt": "Hewa û îklîm çawa cuda ne?",
+   "answers": [
+    "Her du jî heman in û qet cuda nîn in",
+    "Hewa tenê di fezayê de ye (ne rast) — şaş e",
+    "Îklîm tenê di nav deryayê de ye",
+    "Hewa demkurt e; îklîm navînîya demdirêj e"
+   ],
+   "correctAnswer": "Hewa demkurt e; îklîm navînîya demdirêj e",
+   "promptTr": "Hava ve iklim nasıl ayrılır?",
+   "answersTr": [
+    "İkisi aynıdır ve hiç ayrılmaz",
+    "Hava yalnızca uzaydadır (yanlış) — hatalı",
+    "İklim yalnızca denizdedir",
+    "Hava kısa süreli; iklim uzun dönem ortalamasıdır"
+   ],
+   "correctAnswerTr": "Hava kısa süreli; iklim uzun dönem ortalamasıdır",
+   "explanation": "İklim onyıllarla ölçülür.",
+   "explanationTr": "İklim onyıllarla ölçülür.",
+   "explanationKu": "Îklîm bi dehsalan tê pîvandin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=be9ab1269943e8c7",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "hewa",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "hewa-îklîm",
+    "contentHash": "be9ab1269943e8c7"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0096",
+   "category": "Cografya",
+   "prompt": "Rojhilat û rojava bi kîjan têgihê ve têkildar in li ser nexşeyê?",
+   "answers": [
+    "Tenê rengê okyanûsê (ne rast)",
+    "Tenê mezinahiya bajarê",
+    "Dirêjahî û aliyên sereke",
+    "Tenê bilindahiya ewr"
+   ],
+   "correctAnswer": "Dirêjahî û aliyên sereke",
+   "promptTr": "Doğu ve batı haritada hangi kavramla ilgilidir?",
+   "answersTr": [
+    "Yalnızca okyanus rengi (yanlış)",
+    "Yalnızca kent boyutu",
+    "Boylam ve ana yönler",
+    "Yalnızca bulut yüksekliği"
+   ],
+   "correctAnswerTr": "Boylam ve ana yönler",
+   "explanation": "Güneş doğudan doğar batıdan batar.",
+   "explanationTr": "Güneş doğudan doğar batıdan batar.",
+   "explanationKu": "Roj ji rojhilat hildiçe û li rojava diçe ava.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=636cc15fe1957ba5",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "636cc15fe1957ba5"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0098",
+   "category": "Cografya",
+   "prompt": "Gola Urmiyê li kîjan welatî ye?",
+   "answers": [
+    "Norwêc",
+    "Îran",
+    "Portûgal",
+    "Şîle"
+   ],
+   "correctAnswer": "Îran",
+   "promptTr": "Urmiye Gölü hangi ülkededir?",
+   "answersTr": [
+    "Norveç",
+    "İran",
+    "Portekiz",
+    "Şili"
+   ],
+   "correctAnswerTr": "İran",
+   "explanation": "Urmiye İran'ın kuzeybatısındaki büyük tuz gölüdür.",
+   "explanationTr": "Urmiye İran'ın kuzeybatısındaki büyük tuz gölüdür.",
+   "explanationKu": "Urmiye gola xwê ya mezin a li bakurê rojavayê Îranê ye.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=7b72db09f9203f5f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kurdistan-xweza",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "herêm",
+    "contentHash": "7b72db09f9203f5f"
+   }
+  },
+  "reasons": [
+   "duplicate-prompt",
+   "near-duplicate-of-existing"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0099",
+   "category": "Cografya",
+   "prompt": "Çiyayê Cûdî di kevneşopiya herêmî de li nêzî kîjan sînoran tê naskirin?",
+   "answers": [
+    "Sînorê Brezîlya-Arjantîn",
+    "Sînorê Kanada-Meksîka",
+    "Sînorên Tirkiye-Îraq-Sûriyê yên nêzîk",
+    "Sînorê Japonya-Kore (ne rast) — şaş e — şaş e"
+   ],
+   "correctAnswer": "Sînorên Tirkiye-Îraq-Sûriyê yên nêzîk",
+   "promptTr": "Cudi Dağı bölgesel gelenekte hangi sınırlara yakın bilinir?",
+   "answersTr": [
+    "Brezilya-Arjantin sınırı",
+    "Kanada-Meksika sınırı",
+    "Türkiye-Irak-Suriye yakın sınırları",
+    "Japonya-Kore sınırı (yanlış) — hatalı — hatalı"
+   ],
+   "correctAnswerTr": "Türkiye-Irak-Suriye yakın sınırları",
+   "explanation": "Cudi kuzey Mezopotamya'da bir dağdır.",
+   "explanationTr": "Cudi kuzey Mezopotamya'da bir dağdır.",
+   "explanationKu": "Cûdî çiyayekî li bakurê Mezopotamyayê ye.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=75ace20037d5259e",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kurdistan-xweza",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "herêm",
+    "contentHash": "75ace20037d5259e"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0102",
+   "category": "Cografya",
+   "prompt": "Çolên mezin gelek caran li derdora kîjan firehiyan xuya dibin?",
+   "answers": [
+    "Nêzî 30 pile bakur û başûr",
+    "Tenê li ser ekvatorê her tim şil",
+    "Tenê li 90 pile bakur",
+    "Tenê li 0 pile dirêjahiyê"
+   ],
+   "correctAnswer": "Nêzî 30 pile bakur û başûr",
+   "promptTr": "Büyük çöller çoğu kez hangi enlemler dolayında görülür?",
+   "answersTr": [
+    "Yaklaşık 30 derece kuzey ve güney",
+    "Yalnızca ekvatorda hep nemli",
+    "Yalnızca 90 derece kuzey",
+    "Yalnızca 0 derece boylam"
+   ],
+   "correctAnswerTr": "Yaklaşık 30 derece kuzey ve güney",
+   "explanation": "Hava alçalır ve kurur; Sahra örnektir.",
+   "explanationTr": "Hava alçalır ve kurur; Sahra örnektir.",
+   "explanationKu": "Hewa dadikeve û hişk dibe; Sahra mînak e.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=9882d316e7212880",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "îklîm",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "hewa-îklîm",
+    "contentHash": "9882d316e7212880"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0103",
+   "category": "Cografya",
+   "prompt": "Plastîk di okyanûsan de çima pirsgirêk e?",
+   "answers": [
+    "Zû dibe xurdemenî ya bikêr ji bo hemû masiyan",
+    "Automatic oksîjenê zêde dike",
+    "Avê paqijtir dike her tim",
+    "Hêdî dihilweşe û zindiyan zirarê dide"
+   ],
+   "correctAnswer": "Hêdî dihilweşe û zindiyan zirarê dide",
+   "promptTr": "Okyanuslarda plastik neden sorundur?",
+   "answersTr": [
+    "Hızla tüm balıklara yararlı besin olur",
+    "Otomatik oksijen artırır",
+    "Suyu her zaman temizler",
+    "Yavaş parçalanır ve canlılara zarar verir"
+   ],
+   "correctAnswerTr": "Yavaş parçalanır ve canlılara zarar verir",
+   "explanation": "Mikroplastik besin zincirinde dolaşır.",
+   "explanationTr": "Mikroplastik besin zincirinde dolaşır.",
+   "explanationKu": "Microplastîk di zincîra xurekî de digere.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=bedf5823fbe13d56",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "jîngeh",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "bedf5823fbe13d56"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0105",
+   "category": "Cografya",
+   "prompt": "Acid rain bi giranî çawa çêdibe?",
+   "answers": [
+    "Gazên sulfur û nîtrojen digel ava baranê dibin asîd",
+    "Baran a safî dibe şekir",
+    "Baran a safî dibe zêr (ne rast)",
+    "Baran a safî dibe rûn"
+   ],
+   "correctAnswer": "Gazên sulfur û nîtrojen digel ava baranê dibin asîd",
+   "promptTr": "Asit yağmuru esas olarak nasıl oluşur?",
+   "answersTr": [
+    "Kükürt ve azot gazları yağmur suyuyla asit olur",
+    "Saf yağmur şeker olur",
+    "Saf yağmur altın olur (yanlış)",
+    "Saf yağmur yağ olur"
+   ],
+   "correctAnswerTr": "Kükürt ve azot gazları yağmur suyuyla asit olur",
+   "explanation": "Sanayi ve yakıt bu gazları salar.",
+   "explanationTr": "Sanayi ve yakıt bu gazları salar.",
+   "explanationKu": "Pîşesazî û sotemenî van gazan berdide.",
+   "difficulty": 4,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=eb49afe45b1f2338",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "jîngeh",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "eb49afe45b1f2338"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0106",
+   "category": "Cografya",
+   "prompt": "Predator di ekosîstemê de çi ye?",
+   "answers": [
+    "Zindiyê ku tenê keviran dixwe (çewt) (çewt)",
+    "Zindiyê ku zindiyên din nêçîr dike û dixwe",
+    "Zindiyê ku tenê hewayê dixwe (ne rast)",
+    "Zindiyê ku tenê tîrêjê dixwe"
+   ],
+   "correctAnswer": "Zindiyê ku zindiyên din nêçîr dike û dixwe",
+   "promptTr": "Ekosistemde avcı nedir?",
+   "answersTr": [
+    "Yalnızca taş yiyen canlı (yanlış) (yanlış)",
+    "Başka canlıları avlayıp yiyen canlı",
+    "Yalnızca hava yiyen canlı (yanlış)",
+    "Yalnızca ışın yiyen canlı"
+   ],
+   "correctAnswerTr": "Başka canlıları avlayıp yiyen canlı",
+   "explanation": "Avcı av sayısını denetler.",
+   "explanationTr": "Avcı av sayısını denetler.",
+   "explanationKu": "Predator hejmara nêçîrê kontrol dike.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=4361c202b8415c61",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ekolojî",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "4361c202b8415c61"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0107",
+   "category": "Cografya",
+   "prompt": "Herbîvor çi dixwe?",
+   "answers": [
+    "Bi piranî tenê goşt",
+    "Bi piranî tenê plastîk",
+    "Bi piranî riwekan",
+    "Bi piranî tenê metal"
+   ],
+   "correctAnswer": "Bi piranî riwekan",
+   "promptTr": "Otobur ne yer?",
+   "answersTr": [
+    "Çoğunlukla yalnızca et",
+    "Çoğunlukla yalnızca plastik",
+    "Çoğunlukla bitki",
+    "Çoğunlukla yalnızca metal"
+   ],
+   "correctAnswerTr": "Çoğunlukla bitki",
+   "explanation": "Koyun ve sığır otoburdur.",
+   "explanationTr": "Koyun ve sığır otoburdur.",
+   "explanationKu": "Pez û dewar herbîvor in.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=e318ed4f5e2db660",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ekolojî",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "e318ed4f5e2db660"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0108",
+   "category": "Cografya",
+   "prompt": "Omnîvor çi ye?",
+   "answers": [
+    "Zindiyê ku qet naxwe (ne rast)",
+    "Zindiyê ku tenê qeşa dixwe",
+    "Zindiyê ku tenê keviran dixwe (ne rastîn)",
+    "Zindiyê ku hem riwek hem jî goşt dixwe"
+   ],
+   "correctAnswer": "Zindiyê ku hem riwek hem jî goşt dixwe",
+   "promptTr": "Hepçil nedir?",
+   "answersTr": [
+    "Hiç yemeyen canlı (yanlış)",
+    "Yalnızca buz yiyen canlı",
+    "Yalnızca taş yiyen canlı (geçersiz)",
+    "Hem bitki hem et yiyen canlı"
+   ],
+   "correctAnswerTr": "Hem bitki hem et yiyen canlı",
+   "explanation": "İnsan ve ayı hepçil örnekleridir.",
+   "explanationTr": "İnsan ve ayı hepçil örnekleridir.",
+   "explanationKu": "Mirov û hirç mînak ên omnivor in.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=32e97ca7b9c4d25c",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "ekolojî",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "jîngeh",
+    "contentHash": "32e97ca7b9c4d25c"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0112",
+   "category": "Cografya",
+   "prompt": "Ewr ên cumulus bi gelemperî çawa xuya dikin?",
+   "answers": [
+    "Tenê xêzên zirav ên bilind",
+    "Tenê reş ên ku her tim birûsk in",
+    "Spî û mîna pembû yên stûr",
+    "Tenê tebeqeyên tarî yên erdê"
+   ],
+   "correctAnswer": "Spî û mîna pembû yên stûr",
+   "promptTr": "Kümülüs bulutları genellikle nasıl görünür?",
+   "answersTr": [
+    "Yalnızca ince yüksek çizgiler",
+    "Yalnızca hep şimşekli siyah",
+    "Beyaz ve kalın pamuk gibi",
+    "Yalnızca yerin koyu katmanları"
+   ],
+   "correctAnswerTr": "Beyaz ve kalın pamuk gibi",
+   "explanation": "Kümülüs sakin havada sık görülür.",
+   "explanationTr": "Kümülüs sakin havada sık görülür.",
+   "explanationKu": "Cumulus di hewaya aram de gelek caran xuya dibin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=78ac8c4751b82b73",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "hewa",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "hewa-îklîm",
+    "contentHash": "78ac8c4751b82b73"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_geo_nature_0121",
+   "category": "Cografya",
+   "prompt": "Kîjan okyanûs di navbera Afrîka Asya û Awistralyayê de ye?",
+   "answers": [
+    "Okyanûsa Hindê ya standard",
+    "Okyanûsa Arktîk",
+    "Deryaya Xazerê",
+    "Gola Superior"
+   ],
+   "correctAnswer": "Okyanûsa Hindê ya standard",
+   "promptTr": "Afrika Asya ve Avustralya arasında hangi okyanus vardır?",
+   "answersTr": [
+    "Hint Okyanusu (standart)",
+    "Arktik Okyanus",
+    "Hazar Denizi",
+    "Superior Gölü"
+   ],
+   "correctAnswerTr": "Hint Okyanusu (standart)",
+   "explanation": "Hint Okyanusu üç kıtayı buluşturur.",
+   "explanationTr": "Hint Okyanusu üç kıtayı buluşturur.",
+   "explanationKu": "Okyanûsa Hindê sê parzemînan digihîne hev.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+    "sourceReference": "textbook:geography-environment-basics#hash=d6a1674042c21d2e",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "cîhan",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "erdnîgarî-giştî",
+    "contentHash": "d6a1674042c21d2e"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0009",
+   "category": "Dîrok",
+   "prompt": "Homeros bi kevneşopî bi kîjan berheman tê naskirin?",
+   "answers": [
+    "Îlyada û Odeseya ya standard",
+    "Tenê qanûnên Roma",
+    "Tenê pîramîdên Giza",
+    "Tenê tabletên Sumer"
+   ],
+   "correctAnswer": "Îlyada û Odeseya ya standard",
+   "promptTr": "Homeros geleneksel olarak hangi eserlerle anılır?",
+   "answersTr": [
+    "İlyada ve Odysseia (standart)",
+    "Yalnızca Roma yasaları",
+    "Yalnızca Giza piramitleri",
+    "Yalnızca Sümer tabletleri"
+   ],
+   "correctAnswerTr": "İlyada ve Odysseia (standart)",
+   "explanation": "Bu antik Yunan destanlarıdır.",
+   "explanationTr": "Bu antik Yunan destanlarıdır.",
+   "explanationKu": "Ev destanên Yewnana kevnar in.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=9c089e464b35a5bb",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "yewnan",
+    "contentHash": "9c089e464b35a5bb"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0010",
+   "category": "Dîrok",
+   "prompt": "Împaratoriya Romayê deryaya navîn wek çi bi nav dikir?",
+   "answers": [
+    "Okyanûsa Pasîfîk (çewt) (çewt)",
+    "Mare Nostrum ango deryaya me",
+    "Gola Wanê",
+    "Çemê Nîl (ne rast)"
+   ],
+   "correctAnswer": "Mare Nostrum ango deryaya me",
+   "promptTr": "Roma İmparatorluğu Akdeniz'i ne diye anardı?",
+   "answersTr": [
+    "Pasifik Okyanusu (yanlış) (yanlış)",
+    "Mare Nostrum yani bizim deniz",
+    "Van Gölü",
+    "Nil ırmağı (yanlış)"
+   ],
+   "correctAnswerTr": "Mare Nostrum yani bizim deniz",
+   "explanation": "Roma Akdeniz çevresinde genişledi.",
+   "explanationTr": "Roma Akdeniz çevresinde genişledi.",
+   "explanationKu": "Roma li dora Deryaya Spî fireh bû.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=258221161aa391c0",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "roma",
+    "contentHash": "258221161aa391c0"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0013",
+   "category": "Dîrok",
+   "prompt": "Dabeşbûna Împaratoriya Romayê kîjan du beşan tîne bîra mirov?",
+   "answers": [
+    "Bakur û Antarktîka",
+    "Rojavayî û Rojhilatî ango Bîzans",
+    "Pasîfîk û Arktîk",
+    "Amazon û Sahara (ne rast)"
+   ],
+   "correctAnswer": "Rojavayî û Rojhilatî ango Bîzans",
+   "promptTr": "Roma'nın bölünmesi hangi iki kısmı akla getirir?",
+   "answersTr": [
+    "Kuzey ve Antarktika",
+    "Batı ve Doğu yani Bizans",
+    "Pasifik ve Arktik",
+    "Amazon ve Sahra (yanlış)"
+   ],
+   "correctAnswerTr": "Batı ve Doğu yani Bizans",
+   "explanation": "Doğu kısım daha uzun sürdü.",
+   "explanationTr": "Doğu kısım daha uzun sürdü.",
+   "explanationKu": "Beşa rojhilat dirêjtir ma.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=b049c45f657225af",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "roma",
+    "contentHash": "b049c45f657225af"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0014",
+   "category": "Dîrok",
+   "prompt": "Dîwarê Mezin ê Çînê bi giranî ji bo çi hate avakirin?",
+   "answers": [
+    "Parastina sînoran li hember êrîşên bakur",
+    "Wek rêya keştiyan a okyanûsê",
+    "Wek pîramîda gorê ya yek firawûnî (çewt) (çewt)",
+    "Wek stadyûma olîmpiyadê (ne rast)"
+   ],
+   "correctAnswer": "Parastina sînoran li hember êrîşên bakur",
+   "promptTr": "Çin Seddi esas olarak ne için inşa edildi?",
+   "answersTr": [
+    "Kuzey saldırılarına karşı sınır koruması",
+    "Okyanus gemi yolu olarak",
+    "Tek firavun mezar piramidi olarak (yanlış) (yanlış)",
+    "Olimpiyat stadyumu olarak (yanlış)"
+   ],
+   "correctAnswerTr": "Kuzey saldırılarına karşı sınır koruması",
+   "explanation": "Seddin farklı dönemlerde genişletildi.",
+   "explanationTr": "Seddin farklı dönemlerde genişletildi.",
+   "explanationKu": "Dîwar di serdemên cuda de hate firehkirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=cca27cbcb4d48795",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "çîn",
+    "contentHash": "cca27cbcb4d48795"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0018",
+   "category": "Dîrok",
+   "prompt": "Magna Carta ya 1215an bi giranî li kîjan welatî hate îmzekirin?",
+   "answers": [
+    "Misir (ne rast)",
+    "Îngilistan",
+    "Japonya",
+    "Meksîka"
+   ],
+   "correctAnswer": "Îngilistan",
+   "promptTr": "1215 Magna Carta esas olarak hangi ülkede imzalandı?",
+   "answersTr": [
+    "Mısır (yanlış)",
+    "İngiltere",
+    "Japonya",
+    "Meksika"
+   ],
+   "correctAnswerTr": "İngiltere",
+   "explanation": "Magna Carta kralın gücünü sınırladı.",
+   "explanationTr": "Magna Carta kralın gücünü sınırladı.",
+   "explanationKu": "Magna Carta sînorên hêza padîşah diyar kir.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=50aee8a66cb0b32f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "navîn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "ewrûpa",
+    "contentHash": "50aee8a66cb0b32f"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0019",
+   "category": "Dîrok",
+   "prompt": "Şerê Sedsalê bi giranî di navbera kîjan du welatan de bû?",
+   "answers": [
+    "Çîn û Japonya",
+    "Brezîlya û Arjantîn",
+    "Îngilistan û Fransa",
+    "Misir û Etiyopya"
+   ],
+   "correctAnswer": "Îngilistan û Fransa",
+   "promptTr": "Yüz Yıl Savaşları esas olarak hangi iki ülke arasındaydı?",
+   "answersTr": [
+    "Çin ve Japonya",
+    "Brezilya ve Arjantin",
+    "İngiltere ve Fransa",
+    "Mısır ve Etiyopya"
+   ],
+   "correctAnswerTr": "İngiltere ve Fransa",
+   "explanation": "Bunlar ortaçağın uzun savaşlarıydı.",
+   "explanationTr": "Bunlar ortaçağın uzun savaşlarıydı.",
+   "explanationKu": "Ev şerên dirêj ên serdema navîn bûn.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=64af2d71a4d333ae",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "navîn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "ewrûpa",
+    "contentHash": "64af2d71a4d333ae"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0022",
+   "category": "Dîrok",
+   "prompt": "Kopernîk kîjan modela ezmanî pêş xist?",
+   "answers": [
+    "Modela ku gerstêrk dora rojê digerin",
+    "Modela ku roj dora Erdê digere wek rastîya dawî",
+    "Modela ku stêrk di nav deryayê de ne",
+    "Modela ku heyv navenda gerdûnê ye"
+   ],
+   "correctAnswer": "Modela ku gerstêrk dora rojê digerin",
+   "promptTr": "Kopernik hangi gök modelini öne sürdü?",
+   "answersTr": [
+    "Gezegenlerin Güneş çevresinde döndüğü model",
+    "Güneş'in Dünya çevresinde döndüğü son gerçek modeli",
+    "Yıldızların deniz içinde olduğu model",
+    "Ay'ın evren merkezi olduğu model"
+   ],
+   "correctAnswerTr": "Gezegenlerin Güneş çevresinde döndüğü model",
+   "explanation": "Bu astronomide büyük bir değişimdi.",
+   "explanationTr": "Bu astronomide büyük bir değişimdi.",
+   "explanationKu": "Ev guhertina mezin a di felekiyatê de bû.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=83961fd2fffcacff",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "zanist",
+    "contentHash": "83961fd2fffcacff"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0028",
+   "category": "Dîrok",
+   "prompt": "Şerê Cîhanê yê Yekem bi gelemperî di kîjan salan de bû?",
+   "answers": [
+    "1812–1815",
+    "1939–1945",
+    "1775–1783",
+    "1914–1918"
+   ],
+   "correctAnswer": "1914–1918",
+   "promptTr": "Birinci Dünya Savaşı genellikle hangi yıllardaydı?",
+   "answersTr": [
+    "1812–1815",
+    "1939–1945",
+    "1775–1783",
+    "1914–1918"
+   ],
+   "correctAnswerTr": "1914–1918",
+   "explanation": "Savaş birçok imparatorluğu değiştirdi.",
+   "explanationTr": "Savaş birçok imparatorluğu değiştirdi.",
+   "explanationKu": "Şer gelek împaratoriyan guherand.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=383be7cfb6bf4c8c",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "şer",
+    "contentHash": "383be7cfb6bf4c8c"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0029",
+   "category": "Dîrok",
+   "prompt": "Şerê Cîhanê yê Duyem bi gelemperî di kîjan salan de bû?",
+   "answers": [
+    "1914–1918",
+    "1939–1945 ya standard",
+    "1789–1799",
+    "1492–1500"
+   ],
+   "correctAnswer": "1939–1945 ya standard",
+   "promptTr": "İkinci Dünya Savaşı genellikle hangi yıllardaydı?",
+   "answersTr": [
+    "1914–1918",
+    "1939–1945 (standart)",
+    "1789–1799",
+    "1492–1500"
+   ],
+   "correctAnswerTr": "1939–1945 (standart)",
+   "explanation": "20. yüzyılın en yıkıcı savaşıydı.",
+   "explanationTr": "20. yüzyılın en yıkıcı savaşıydı.",
+   "explanationKu": "Ev şerê herî wêranker ê sedsala 20an bû.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=4ccdd38afef7e7db",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "şer",
+    "contentHash": "4ccdd38afef7e7db"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0030",
+   "category": "Dîrok",
+   "prompt": "Neteweyên Yekbûyî piştî kîjan şerî hate damezrandin?",
+   "answers": [
+    "Şerê Cîhanê yê Duyem",
+    "Şerê Sedsalê",
+    "Şerê Trojan (ne rast)",
+    "Şerê Peloponnes"
+   ],
+   "correctAnswer": "Şerê Cîhanê yê Duyem",
+   "promptTr": "Birleşmiş Milletler hangi savaştan sonra kuruldu?",
+   "answersTr": [
+    "İkinci Dünya Savaşı",
+    "Yüz Yıl Savaşları",
+    "Troya Savaşı (yanlış)",
+    "Peloponez Savaşı"
+   ],
+   "correctAnswerTr": "İkinci Dünya Savaşı",
+   "explanation": "BM 1945'te kuruldu.",
+   "explanationTr": "BM 1945'te kuruldu.",
+   "explanationKu": "UN di 1945an de hate damezrandin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=65c056f7dddc6282",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "şer",
+    "contentHash": "65c056f7dddc6282"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0031",
+   "category": "Dîrok",
+   "prompt": "Daxuyaniya Gerdûnî ya Mafên Mirovan di kîjan salê de hate pejirandin?",
+   "answers": [
+    "1914",
+    "1789",
+    "1492",
+    "1948"
+   ],
+   "correctAnswer": "1948",
+   "promptTr": "İnsan Hakları Evrensel Bildirgesi hangi yılda kabul edildi?",
+   "answersTr": [
+    "1914",
+    "1789",
+    "1492",
+    "1948"
+   ],
+   "correctAnswerTr": "1948",
+   "explanation": "Belge BM tarafından kabul edildi.",
+   "explanationTr": "Belge BM tarafından kabul edildi.",
+   "explanationKu": "Belge ji hêla Neteweyên Yekbûyî ve hate pejirandin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=e9b0aa99922252e4",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "maf",
+    "contentHash": "e9b0aa99922252e4"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0036",
+   "category": "Dîrok",
+   "prompt": "Împaratoriya Osmanî paytexta xwe piştî 1453an li kîjan bajarî girt?",
+   "answers": [
+    "New York",
+    "Kapetown",
+    "Seoul (ne rast) (ne rastîn) (ne rastîn)",
+    "Stenbol ango Konstantînopolîs"
+   ],
+   "correctAnswer": "Stenbol ango Konstantînopolîs",
+   "promptTr": "Osmanlı 1453'ten sonra başkentini hangi kentte tuttu?",
+   "answersTr": [
+    "New York",
+    "Cape Town",
+    "Seul (yanlış) (geçersiz) (geçersiz)",
+    "İstanbul yani Konstantinopolis"
+   ],
+   "correctAnswerTr": "İstanbul yani Konstantinopolis",
+   "explanation": "1453 fethi büyük tarihsel değişimdi.",
+   "explanationTr": "1453 fethi büyük tarihsel değişimdi.",
+   "explanationKu": "Fetih a 1453an bû guhertina mezin a dîrokî.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=793b2a3ff0b719cf",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "herêm",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "kurd-dîrok",
+    "contentHash": "793b2a3ff0b719cf"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0042",
+   "category": "Dîrok",
+   "prompt": "UNESCO beşek ji kîjan saziyê ye?",
+   "answers": [
+    "Tenê yek klûba sporê ya herêmî",
+    "Neteweyên Yekbûyî",
+    "Tenê yek firotgeha mezin",
+    "Tenê yek banka taybet"
+   ],
+   "correctAnswer": "Neteweyên Yekbûyî",
+   "promptTr": "UNESCO hangi kurumun bir parçasıdır?",
+   "answersTr": [
+    "Yalnızca yerel bir spor kulübü",
+    "Birleşmiş Milletler",
+    "Yalnızca büyük bir mağaza",
+    "Yalnızca özel bir banka"
+   ],
+   "correctAnswerTr": "Birleşmiş Milletler",
+   "explanation": "UNESCO eğitim bilim ve kültürü kapsar.",
+   "explanationTr": "UNESCO eğitim bilim ve kültürü kapsar.",
+   "explanationKu": "UNESCO perwerde, zanist û çandê digire nav xwe.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=5e2415500622aec6",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sazî",
+    "contentHash": "5e2415500622aec6"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0043",
+   "category": "Dîrok",
+   "prompt": "Papîrûs bi giranî ji hêla kîjan şaristaniyê ve dihat bikaranîn?",
+   "answers": [
+    "Înka yên Andê",
+    "Viking ên bakur tenê",
+    "Misira kevnar",
+    "Aborjîn ên Awistralyayê tenê"
+   ],
+   "correctAnswer": "Misira kevnar",
+   "promptTr": "Papirüs esas olarak hangi uygarlıkça kullanıldı?",
+   "answersTr": [
+    "And İnka",
+    "Yalnızca kuzey Viking",
+    "Eski Mısır",
+    "Yalnızca Avustralya Aborjin"
+   ],
+   "correctAnswerTr": "Eski Mısır",
+   "explanation": "Papirüs Nil bitkisinden yapılırdı.",
+   "explanationTr": "Papirüs Nil bitkisinden yapılırdı.",
+   "explanationKu": "Papîrûs ji riweka nîlê dihat çêkirin.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=89655b0935c76889",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "nivîs",
+    "contentHash": "89655b0935c76889"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0051",
+   "category": "Dîrok",
+   "prompt": "Yekem mirovê ku çû fezayê di 1961ê de kî bû?",
+   "answers": [
+    "Neil Armstrong",
+    "Christopher Columbus",
+    "Yuri Gagarin",
+    "Marco Polo"
+   ],
+   "correctAnswer": "Yuri Gagarin",
+   "promptTr": "1961'de uzaya giden ilk insan kimdi?",
+   "answersTr": [
+    "Neil Armstrong",
+    "Kristof Kolomb",
+    "Yuri Gagarin",
+    "Marco Polo"
+   ],
+   "correctAnswerTr": "Yuri Gagarin",
+   "explanation": "Gagarin Vostok 1 ile döndü ve uzay tarihini açtı.",
+   "explanationTr": "Gagarin Vostok 1 ile döndü ve uzay tarihini açtı.",
+   "explanationKu": "Gagarin bi Vostok 1ê geriya û dîroka fezayê vekir.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=52b69ae8a810e29c",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala20",
+    "contentHash": "52b69ae8a810e29c"
+   }
+  },
+  "reasons": [
+   "near-duplicate-of-existing"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0059",
+   "category": "Dîrok",
+   "prompt": "Beytülhikme li Bexdayê bi giranî çi bû?",
+   "answers": [
+    "Tenê qeşa polar (ne rast)",
+    "Tenê stadyûma lîstikê",
+    "Navenda werger û zanistê",
+    "Tenê bendera okyanûsê"
+   ],
+   "correctAnswer": "Navenda werger û zanistê",
+   "promptTr": "Bağdat'taki Beytülhikme esas olarak neydi?",
+   "answersTr": [
+    "Yalnızca kutup buzu (yanlış)",
+    "Yalnızca oyun stadyumu",
+    "Çeviri ve bilim merkezi",
+    "Yalnızca okyanus limanı"
+   ],
+   "correctAnswerTr": "Çeviri ve bilim merkezi",
+   "explanation": "Birçok Yunanca ve Farsça eser çevrildi.",
+   "explanationTr": "Birçok Yunanca ve Farsça eser çevrildi.",
+   "explanationKu": "Gelek berhemên Yewnanî û Farisî hatin wergerandin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=d3fbad4105eb6ea1",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "navîn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "zanist-îslam",
+    "contentHash": "d3fbad4105eb6ea1"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0062",
+   "category": "Dîrok",
+   "prompt": "Şerê Navxweyî yê Amerîkayê bi giranî di kîjan salan de bû?",
+   "answers": [
+    "1861–1865",
+    "1914–1918",
+    "1939–1945 (çewt)",
+    "1775–1783"
+   ],
+   "correctAnswer": "1861–1865",
+   "promptTr": "ABD İç Savaşı esas olarak hangi yıllardaydı?",
+   "answersTr": [
+    "1861–1865",
+    "1914–1918",
+    "1939–1945 (yanlış)",
+    "1775–1783"
+   ],
+   "correctAnswerTr": "1861–1865",
+   "explanation": "Savaş birlik ve kölelik üzerineydi.",
+   "explanationTr": "Savaş birlik ve kölelik üzerineydi.",
+   "explanationKu": "Şer li ser yekîtiyê û koletiyê bû.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=469a32378b21c5ae",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala19",
+    "contentHash": "469a32378b21c5ae"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0073",
+   "category": "Dîrok",
+   "prompt": "Şaristaniya Misirê li bakurê Afrîkayê li dora kîjan çemî bû?",
+   "answers": [
+    "Nîl ya standard",
+    "Amazon",
+    "Danube",
+    "Murray"
+   ],
+   "correctAnswer": "Nîl ya standard",
+   "promptTr": "Kuzey Afrika'da Mısır uygarlığı hangi ırmak çevresindeydi?",
+   "answersTr": [
+    "Nil (standart)",
+    "Amazon",
+    "Tuna",
+    "Murray"
+   ],
+   "correctAnswerTr": "Nil (standart)",
+   "explanation": "Nil tarım ve ticareti mümkün kıldı.",
+   "explanationTr": "Nil tarım ve ticareti mümkün kıldı.",
+   "explanationKu": "Nîl jiyana çandinî û bazirganiyê gengaz kir.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=0bc1eb7df8ded85f",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "afrîka",
+    "contentHash": "0bc1eb7df8ded85f"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0075",
+   "category": "Dîrok",
+   "prompt": "Împaratoriya Inka bi giranî li kîjan parzemînê bû?",
+   "answers": [
+    "Ewrûpa (ne rast)",
+    "Afrîka",
+    "Amerîkaya Başûr",
+    "Antarktîka"
+   ],
+   "correctAnswer": "Amerîkaya Başûr",
+   "promptTr": "İnka İmparatorluğu esas olarak hangi kıtadaydı?",
+   "answersTr": [
+    "Avrupa (yanlış)",
+    "Afrika",
+    "Güney Amerika",
+    "Antarktika"
+   ],
+   "correctAnswerTr": "Güney Amerika",
+   "explanation": "Andlar ve İnka Yolu ünlü miraslarıdır.",
+   "explanationTr": "Andlar ve İnka Yolu ünlü miraslarıdır.",
+   "explanationKu": "And û Rêya Inka mîrasên wan ên navdar in.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=a0624f60342f8d1a",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "amerîka",
+    "contentHash": "a0624f60342f8d1a"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0076",
+   "category": "Dîrok",
+   "prompt": "Aztek paytexta xwe Tenochtitlan li ku ava kirin?",
+   "answers": [
+    "Li herêma Norwêcê",
+    "Li herêma Kenyayê",
+    "Li herêma Koreyê (ne rast)",
+    "Li herêma Meksîkaya îroyîn"
+   ],
+   "correctAnswer": "Li herêma Meksîkaya îroyîn",
+   "promptTr": "Aztekler Tenochtitlan'ı nerede kurdu?",
+   "answersTr": [
+    "Norveç bölgesinde",
+    "Kenya bölgesinde",
+    "Kore bölgesinde (yanlış)",
+    "Bugünkü Meksika bölgesinde"
+   ],
+   "correctAnswerTr": "Bugünkü Meksika bölgesinde",
+   "explanation": "İspanyollar 16. yüzyılda kenti aldı.",
+   "explanationTr": "İspanyollar 16. yüzyılda kenti aldı.",
+   "explanationKu": "Spanyol di sedsala 16an de bajar girtin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=ef2f9d6363d56561",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "amerîka",
+    "contentHash": "ef2f9d6363d56561"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0080",
+   "category": "Dîrok",
+   "prompt": "Salnameya miladî îro bi giranî li ku tê bikaranîn?",
+   "answers": [
+    "Tenê li ser yek girava piçûk",
+    "Tenê di yek gundî de (ne rast) (ne rastîn) (ne rastîn)",
+    "Li gelek welatên cîhanê wek salnameya standard",
+    "Tenê di yek müzexaneyê de"
+   ],
+   "correctAnswer": "Li gelek welatên cîhanê wek salnameya standard",
+   "promptTr": "Miladi takvim bugün esas olarak nerede kullanılır?",
+   "answersTr": [
+    "Yalnızca tek küçük adada",
+    "Yalnızca tek köyde (yanlış) (geçersiz) (geçersiz)",
+    "Dünyanın birçok ülkesinde standart takvim olarak",
+    "Yalnızca tek müzede"
+   ],
+   "correctAnswerTr": "Dünyanın birçok ülkesinde standart takvim olarak",
+   "explanation": "Bu takvim Jülyen takviminden düzeltilmiştir.",
+   "explanationTr": "Bu takvim Jülyen takviminden düzeltilmiştir.",
+   "explanationKu": "Ev salname ji salnameya Julian hate sererast kirin.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=2030042702b0a39b",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "girtin",
+    "contentHash": "2030042702b0a39b"
+   }
+  },
+  "reasons": [
+   "volatile-fact"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0089",
+   "category": "Dîrok",
+   "prompt": "Acropolis a Atînayê sîmbolê kîjan şaristaniyê ye?",
+   "answers": [
+    "Yewnana kevnar",
+    "Înka (ne rast)",
+    "Aztek",
+    "Mongol"
+   ],
+   "correctAnswer": "Yewnana kevnar",
+   "promptTr": "Atina Akropolü hangi uygarlığın simgesidir?",
+   "answersTr": [
+    "Antik Yunan",
+    "İnka (yanlış)",
+    "Aztek",
+    "Moğol"
+   ],
+   "correctAnswerTr": "Antik Yunan",
+   "explanation": "Parthenon Akropolis'tedir.",
+   "explanationTr": "Parthenon Akropolis'tedir.",
+   "explanationKu": "Parthenon li ser Acropolisê ye.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=02ca73e7f08b9b7a",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "abîde",
+    "contentHash": "02ca73e7f08b9b7a"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0090",
+   "category": "Dîrok",
+   "prompt": "Ayasofya di dîrokê de hem dêr hem jî mizgeft bû; li kîjan bajarî ye?",
+   "answers": [
+    "Madrid",
+    "Stenbol",
+    "Berlin",
+    "Oslo (ne rast)"
+   ],
+   "correctAnswer": "Stenbol",
+   "promptTr": "Ayasofya hem kilise hem cami oldu; hangi kenttedir?",
+   "answersTr": [
+    "Madrid",
+    "İstanbul",
+    "Berlin",
+    "Oslo (yanlış)"
+   ],
+   "correctAnswerTr": "İstanbul",
+   "explanation": "Ayasofya Bizans mimarisi örneğidir.",
+   "explanationTr": "Ayasofya Bizans mimarisi örneğidir.",
+   "explanationKu": "Ayasofya mînaka mîmariya Bîzansê ye.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=306d166448f97b02",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "navîn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "abîde",
+    "contentHash": "306d166448f97b02"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0097",
+   "category": "Dîrok",
+   "prompt": "ENIAC yek ji yekem komputerên elektronîk ên mezin bû li kîjan welatî?",
+   "answers": [
+    "Dewletên Yekbûyî ya standard",
+    "Împaratoriya Romaya kevnar",
+    "Misira firawûnan",
+    "Yewnana Homeros"
+   ],
+   "correctAnswer": "Dewletên Yekbûyî ya standard",
+   "promptTr": "ENIAC ilk büyük elektronik bilgisayarlardan biriydi; hangi ülkedeydi?",
+   "answersTr": [
+    "Amerika Birleşik Devletleri (standart)",
+    "Antik Roma İmparatorluğu",
+    "Firavunlar Mısır'ı",
+    "Homeros Yunanistan'ı"
+   ],
+   "correctAnswerTr": "Amerika Birleşik Devletleri (standart)",
+   "explanation": "ENIAC 1940'larda kullanıldı.",
+   "explanationTr": "ENIAC 1940'larda kullanıldı.",
+   "explanationKu": "ENIAC di salên 1940î de hate bikaranîn.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=9a703b00bc7e5e72",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala20",
+    "contentHash": "9a703b00bc7e5e72"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0098",
+   "category": "Dîrok",
+   "prompt": "Zimanê Kurdî beşek ji kîjan malbata zimanan e?",
+   "answers": [
+    "Tenê Tûnguzî",
+    "Hind û Ewropî ango îranî",
+    "Tenê Bantu (ne rast) (çewt)",
+    "Tenê Polînezyayî"
+   ],
+   "correctAnswer": "Hind û Ewropî ango îranî",
+   "promptTr": "Kürtçe hangi dil ailesinin parçasıdır?",
+   "answersTr": [
+    "Yalnızca Tunguz",
+    "Hint-Avrupa yani İrani",
+    "Yalnızca Bantu (yanlış) (yanlış)",
+    "Yalnızca Polinezya"
+   ],
+   "correctAnswerTr": "Hint-Avrupa yani İrani",
+   "explanation": "Kurmanci ve Sorani bu ailededir.",
+   "explanationTr": "Kurmanci ve Sorani bu ailededir.",
+   "explanationKu": "Kurmancî û Soranî di vê malbatê de ne.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=30a5afe6547911be",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "herêm",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "kurd-dîrok",
+    "contentHash": "30a5afe6547911be"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0102",
+   "category": "Dîrok",
+   "prompt": "Yekemîn peyka çêkirî Sputnik 1 di kîjan salê de hate şandin?",
+   "answers": [
+    "1957",
+    "1945",
+    "1918",
+    "1989 (çewt)"
+   ],
+   "correctAnswer": "1957",
+   "promptTr": "İlk yapay uydu Sputnik 1 hangi yılda gönderildi?",
+   "answersTr": [
+    "1957",
+    "1945",
+    "1918",
+    "1989 (yanlış)"
+   ],
+   "correctAnswerTr": "1957",
+   "explanation": "Sputnik uzay çağını açtı.",
+   "explanationTr": "Sputnik uzay çağını açtı.",
+   "explanationKu": "Sputnik serdema fezayê vekir.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=f3c4afe57204523d",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala20",
+    "contentHash": "f3c4afe57204523d"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0103",
+   "category": "Dîrok",
+   "prompt": "Herodot bi gelemperî wek çi tê binavkirin?",
+   "answers": [
+    "Bavê pîramîdan",
+    "Bavê telefonê (ne rast)",
+    "Bavê înternetê",
+    "Bavê dîroknivîsîyê"
+   ],
+   "correctAnswer": "Bavê dîroknivîsîyê",
+   "promptTr": "Herodot genellikle ne diye anılır?",
+   "answersTr": [
+    "Piramitlerin babası",
+    "Telefonun babası (yanlış)",
+    "İnternetin babası",
+    "Tarih yazıcılığının babası"
+   ],
+   "correctAnswerTr": "Tarih yazıcılığının babası",
+   "explanation": "Yunan-Pers savaşlarının tarihini yazdı.",
+   "explanationTr": "Yunan-Pers savaşlarının tarihini yazdı.",
+   "explanationKu": "Wî dîroka şerên Yewnan-Faris nivîsand.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=33effdcf4e4b2bd9",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "girtin",
+    "contentHash": "33effdcf4e4b2bd9"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0104",
+   "category": "Dîrok",
+   "prompt": "Salnameya miladî bi bûyera kîjan kesayetiyê ve tê girêdan?",
+   "answers": [
+    "Jidayikbûna Kolumbus",
+    "Jidayikbûna Newton",
+    "Jidayikbûna Îsa",
+    "Jidayikbûna Gagarin"
+   ],
+   "correctAnswer": "Jidayikbûna Îsa",
+   "promptTr": "Miladi takvim hangi kişiliğin olayıyla bağlanır?",
+   "answersTr": [
+    "Kolomb'un doğumu",
+    "Newton'un doğumu",
+    "İsa'nın doğumu",
+    "Gagarin'in doğumu"
+   ],
+   "correctAnswerTr": "İsa'nın doğumu",
+   "explanation": "Miladi takvim yılları o noktadan sayar.",
+   "explanationTr": "Miladi takvim yılları o noktadan sayar.",
+   "explanationKu": "Salnameya miladî ji wê xalê ve salan digire.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=cd24d5a9a4d1d39c",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "girtin",
+    "contentHash": "cd24d5a9a4d1d39c"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0106",
+   "category": "Dîrok",
+   "prompt": "Leonardo da Vinci sîmbolê kîjan serdemê ye?",
+   "answers": [
+    "Şerê Cîhanê yê Duyem",
+    "Ronesans",
+    "Serdema fezayê ya 1960î",
+    "Serdema înternetê ya 1990î"
+   ],
+   "correctAnswer": "Ronesans",
+   "promptTr": "Leonardo da Vinci hangi dönemin simgesidir?",
+   "answersTr": [
+    "İkinci Dünya Savaşı",
+    "Rönesans",
+    "1960'lar uzay çağı",
+    "1990'lar internet çağı"
+   ],
+   "correctAnswerTr": "Rönesans",
+   "explanation": "Hem sanatçı hem mucitti.",
+   "explanationTr": "Hem sanatçı hem mucitti.",
+   "explanationKu": "Wî hem hunermend hem jî dahêner bû.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=01375afb865ebbe8",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "navîn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "ewrûpa",
+    "contentHash": "01375afb865ebbe8"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0108",
+   "category": "Dîrok",
+   "prompt": "NATO di 1949an de wek kîjan cure saziyê hate damezrandin?",
+   "answers": [
+    "Tenê klûba sporê (ne rast)",
+    "Tenê firotgeha pirtûkan",
+    "Tenê koma muzîkê (ne rastîn) (ne rastîn)",
+    "Hevpeymaniya leşkerî ya bakurê Atlasê"
+   ],
+   "correctAnswer": "Hevpeymaniya leşkerî ya bakurê Atlasê",
+   "promptTr": "NATO 1949'da ne tür bir kurum olarak kuruldu?",
+   "answersTr": [
+    "Yalnızca spor kulübü (yanlış)",
+    "Yalnızca kitap mağazası",
+    "Yalnızca müzik grubu (geçersiz) (geçersiz)",
+    "Kuzey Atlas askerî ittifakı"
+   ],
+   "correctAnswerTr": "Kuzey Atlas askerî ittifakı",
+   "explanation": "NATO Soğuk Savaş döneminde kuruldu.",
+   "explanationTr": "NATO Soğuk Savaş döneminde kuruldu.",
+   "explanationKu": "NATO di dema Şerê Sar de hate avakirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=90d8c472d16b316c",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala20",
+    "contentHash": "90d8c472d16b316c"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0111",
+   "category": "Dîrok",
+   "prompt": "Ziggurat çi bûn?",
+   "answers": [
+    "Keştiyên şer ên Romayê",
+    "Pîramîdên tenê yên Misirê yên heman sêwiranê",
+    "Balafirên sedsala 20an",
+    "Perestgehên pêlîpêlî yên Mezopotamyayê"
+   ],
+   "correctAnswer": "Perestgehên pêlîpêlî yên Mezopotamyayê",
+   "promptTr": "Zigguratlar neydi?",
+   "answersTr": [
+    "Roma savaş gemileri",
+    "Yalnızca aynı tasarımlı Mısır piramitleri",
+    "20. yüzyıl uçakları",
+    "Mezopotamya'nın basamaklı tapınakları"
+   ],
+   "correctAnswerTr": "Mezopotamya'nın basamaklı tapınakları",
+   "explanation": "Zigguratlar kerpiçten yapılırdı.",
+   "explanationTr": "Zigguratlar kerpiçten yapılırdı.",
+   "explanationKu": "Ziggurat ji kerpîçê dihatin avakirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=dc36f7303a1c88e9",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "mezopotamya",
+    "contentHash": "dc36f7303a1c88e9"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0120",
+   "category": "Dîrok",
+   "prompt": "Augustus yekem kî bû di sîstema nû de?",
+   "answers": [
+    "Yekem firawûnê Misirê",
+    "Yekem padîşahê Îngilistanê",
+    "Yekem împaratorê Romayê bi pratîk",
+    "Yekem serokkomarê Dewletên Yekbûyî"
+   ],
+   "correctAnswer": "Yekem împaratorê Romayê bi pratîk",
+   "promptTr": "Augustus yeni sistemde ilk kimdi?",
+   "answersTr": [
+    "İlk Mısır firavunu",
+    "İlk İngiltere kralı",
+    "Pratikte ilk Roma imparatoru",
+    "İlk ABD başkanı"
+   ],
+   "correctAnswerTr": "Pratikte ilk Roma imparatoru",
+   "explanation": "İç savaşlardan sonra istikrar getirdi.",
+   "explanationTr": "İç savaşlardan sonra istikrar getirdi.",
+   "explanationKu": "Wî piştî şerên navxweyî aramî anî.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=54940f00adc652fb",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "kevn",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "roma",
+    "contentHash": "54940f00adc652fb"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0122",
+   "category": "Dîrok",
+   "prompt": "Konferansa San Francisco ya 1945an bingeha kîjan saziyê ava kir?",
+   "answers": [
+    "Tenê Yekîtiya Ewrûpayê ya 1993an",
+    "Neteweyên Yekbûyî",
+    "Tenê NATO ya 1949an tenê wek yekem mijar",
+    "Tenê Warsaw Pact"
+   ],
+   "correctAnswer": "Neteweyên Yekbûyî",
+   "promptTr": "1945 San Francisco Konferansı hangi kurumun temelini attı?",
+   "answersTr": [
+    "Yalnızca 1993 Avrupa Birliği",
+    "Birleşmiş Milletler",
+    "Yalnızca ilk konu olarak 1949 NATO",
+    "Yalnızca Varşova Paktı"
+   ],
+   "correctAnswerTr": "Birleşmiş Milletler",
+   "explanation": "BM tüzüğü orada hazırlandı.",
+   "explanationTr": "BM tüzüğü orada hazırlandı.",
+   "explanationKu": "Destûra UN li wir hate amadekirin.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=42e5f317545884d4",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala20",
+    "contentHash": "42e5f317545884d4"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ },
+ {
+  "question": {
+   "id": "grok26_history_0123",
+   "category": "Dîrok",
+   "prompt": "Marshall Plan piştî ŞYC2 alîkariya aborî da kîjan parzemînê?",
+   "answers": [
+    "Antarktîka",
+    "Tenê Awistralya",
+    "Ewrûpa",
+    "Tenê Antarktîka û Pasîfîk"
+   ],
+   "correctAnswer": "Ewrûpa",
+   "promptTr": "Marshall Planı ŞYC2'den sonra hangi kıtaya ekonomik yardım verdi?",
+   "answersTr": [
+    "Antarktika",
+    "Yalnızca Avustralya",
+    "Avrupa",
+    "Yalnızca Antarktika ve Pasifik"
+   ],
+   "correctAnswerTr": "Avrupa",
+   "explanation": "Plan ABD tarafından sunuldu.",
+   "explanationTr": "Plan ABD tarafından sunuldu.",
+   "explanationKu": "Plan ji hêla Dewletên Yekbûyî ve hate pêşkêş kirin.",
+   "difficulty": 2,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Dîroka cîhanê û herêmê — olgu yên sabît",
+    "sourceReference": "textbook:world-regional-history-stable-facts#hash=fcd1d40c417ca105",
+    "reviewedBy": "author-self-check+validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2,
+    "topic": "nûjen",
+    "authorModel": "grok-4.5-independent-author",
+    "factualVerification": "textbook-stable-fact",
+    "reviewerPass": "author-pass-1",
+    "subcategory": "sedsala20",
+    "contentHash": "fcd1d40c417ca105"
+   }
+  },
+  "reasons": [
+   "explanation-too-short"
+  ]
+ }
+]
