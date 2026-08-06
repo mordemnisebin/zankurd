@@ -13,8 +13,8 @@
       "Başûrê Kurdistan"
     ],
     "answersTr": [
-      "Bakûrê Kurdistan",
       "Rojhilatê Kurdistan",
+      "Bakûrê Kurdistan",
       "Rojavayê Kurdistan",
       "Başûrê Kurdistan"
     ],
@@ -44,9 +44,9 @@
       "Mîdyat"
     ],
     "answersTr": [
-      "Nisêbîn",
       "Qoser",
       "Artuklu",
+      "Nisêbîn",
       "Mîdyat"
     ],
     "correctAnswer": "Nisêbîn",
@@ -106,9 +106,9 @@
       "Şırnak"
     ],
     "answersTr": [
-      "Van",
       "Diyarbakır",
       "Batman",
+      "Van",
       "Şırnak"
     ],
     "correctAnswer": "Van",
@@ -137,8 +137,8 @@
       "Şîrnex"
     ],
     "answersTr": [
-      "Dêrsim",
       "Amed",
+      "Dêrsim",
       "Wan",
       "Şîrnex"
     ],
@@ -199,10 +199,10 @@
       "Qamişlo"
     ],
     "answersTr": [
-      "Qamişlo",
       "Amed",
       "Hewlêr",
-      "Sînê"
+      "Sînê",
+      "Qamişlo"
     ],
     "correctAnswer": "Qamişlo",
     "correctAnswerTr": "Qamişlo",
@@ -261,9 +261,9 @@
       "Kimyager"
     ],
     "answersTr": [
-      "Serhado",
       "Şerifê Omerî",
       "Simyager",
+      "Serhado",
       "Kimyager"
     ],
     "correctAnswer": "Serhado",
@@ -323,10 +323,10 @@
       "11"
     ],
     "answersTr": [
-      "11",
       "10",
       "15",
-      "20"
+      "20",
+      "11"
     ],
     "correctAnswer": "11",
     "correctAnswerTr": "11",
@@ -354,8 +354,8 @@
       "Bîra Qederê"
     ],
     "answersTr": [
-      "Şivanê Kurd",
       "Mem û Zîn",
+      "Şivanê Kurd",
       "Stêrka Bakûr",
       "Bîra Qederê"
     ],
@@ -385,10 +385,10 @@
       "Mehmed Uzun"
     ],
     "answersTr": [
-      "Mehmed Uzun",
       "Yaşar Kemal",
       "Ahmed Arîf",
-      "Cegerxwîn"
+      "Cegerxwîn",
+      "Mehmed Uzun"
     ],
     "correctAnswer": "Mehmed Uzun",
     "correctAnswerTr": "Mehmed Uzun",
@@ -416,9 +416,9 @@
       "Ali Haydar Kaytan"
     ],
     "answersTr": [
-      "Mehmed Uzun",
       "Yaşar Kemal",
       "Ahmedê Xanî",
+      "Mehmed Uzun",
       "Ali Haydar Kaytan"
     ],
     "correctAnswer": "Mehmed Uzun",
@@ -447,10 +447,10 @@
       "Mehmûd Berazî"
     ],
     "answersTr": [
-      "Mehmûd Berazî",
       "Şivan Perwer",
       "Seyidxanê Boyaxçî",
-      "Şakiro"
+      "Şakiro",
+      "Mehmûd Berazî"
     ],
     "correctAnswer": "Mehmûd Berazî",
     "correctAnswerTr": "Mehmûd Berazî",
@@ -478,8 +478,8 @@
       "Kazim Öz"
     ],
     "answersTr": [
-      "Özlem Yaşar",
       "Şêro Hindê",
+      "Özlem Yaşar",
       "Mehmûd Berazî",
       "Kazim Öz"
     ],
@@ -509,10 +509,10 @@
       "Kesên ku bi xwe beşdarî berxwedanê bûne"
     ],
     "answersTr": [
-      "Direnişe bizzat katılmış kişiler",
       "Şam tiyatrosunun oyuncuları",
       "Duhok film okulunun öğrencileri",
-      "Hollywood'un ünlü oyuncuları"
+      "Hollywood'un ünlü oyuncuları",
+      "Direnişe bizzat katılmış kişiler"
     ],
     "correctAnswer": "Kesên ku bi xwe beşdarî berxwedanê bûne",
     "correctAnswerTr": "Direnişe bizzat katılmış kişiler",
@@ -541,9 +541,9 @@
       "TEV-ÇAND"
     ],
     "answersTr": [
-      "Mehmûd Berazî",
       "Awazê Çiya",
       "Koma Hevra",
+      "Mehmûd Berazî",
       "TEV-ÇAND"
     ],
     "correctAnswer": "Mehmûd Berazî",
@@ -572,10 +572,10 @@
       "2017"
     ],
     "answersTr": [
-      "2017",
       "2012",
       "2014",
-      "2020"
+      "2020",
+      "2017"
     ],
     "correctAnswer": "2017",
     "correctAnswerTr": "2017",
@@ -603,8 +603,8 @@
       "2023"
     ],
     "answersTr": [
-      "2019",
       "2014",
+      "2019",
       "2016",
       "2023"
     ],
@@ -634,10 +634,10 @@
       "Kobanê"
     ],
     "answersTr": [
-      "Kobanê",
       "Amed (Sûr)",
       "Hewlêr",
-      "Qamişlo"
+      "Qamişlo",
+      "Kobanê"
     ],
     "correctAnswer": "Kobanê",
     "correctAnswerTr": "Kobanê",
@@ -665,9 +665,9 @@
       "Kazim Öz"
     ],
     "answersTr": [
-      "Ersin Çelik",
       "Şêro Hindê",
       "Özlem Yaşar",
+      "Ersin Çelik",
       "Kazim Öz"
     ],
     "correctAnswer": "Ersin Çelik",
@@ -696,10 +696,10 @@
       "Mehmûd Berazî"
     ],
     "answersTr": [
-      "Mehmûd Berazî",
       "Hozan Aydin",
       "Hekîm Sefqan",
-      "Awazê Çiya"
+      "Awazê Çiya",
+      "Mehmûd Berazî"
     ],
     "correctAnswer": "Mehmûd Berazî",
     "correctAnswerTr": "Mehmûd Berazî",
@@ -727,8 +727,8 @@
       "Hakî Karer"
     ],
     "answersTr": [
-      "Karker Tolhildan",
       "Gelhat Gever",
+      "Karker Tolhildan",
       "Çiyager Hêvî",
       "Hakî Karer"
     ],
@@ -758,10 +758,10 @@
       "Çiyager Hêvî"
     ],
     "answersTr": [
-      "Çiyager Hêvî",
       "Gelhat Gever",
       "Karker Tolhildan",
-      "Riza Altun"
+      "Riza Altun",
+      "Çiyager Hêvî"
     ],
     "correctAnswer": "Çiyager Hêvî",
     "correctAnswerTr": "Çiyager Hêvî",
@@ -789,9 +789,9 @@
       "Gelhat Gever"
     ],
     "answersTr": [
-      "Arîn Mirkan",
       "Viyan Peyman",
       "Zehra Penaber",
+      "Arîn Mirkan",
       "Gelhat Gever"
     ],
     "correctAnswer": "Arîn Mirkan",
@@ -820,10 +820,10 @@
       "Viyan Peyman"
     ],
     "answersTr": [
-      "Viyan Peyman",
       "Arîn Mirkan",
       "Kasım Engin",
-      "Atakan Mahir"
+      "Atakan Mahir",
+      "Viyan Peyman"
     ],
     "correctAnswer": "Viyan Peyman",
     "correctAnswerTr": "Viyan Peyman",
@@ -851,8 +851,8 @@
       "Mustafa Karasu"
     ],
     "answersTr": [
-      "Gelhat Gever",
       "Mazlum Kobanê",
+      "Gelhat Gever",
       "Murat Karayılan",
       "Mustafa Karasu"
     ],
@@ -882,10 +882,10 @@
       "Gümüşhane"
     ],
     "answersTr": [
-      "Gümüşhane",
       "Amed",
       "Qamişlo",
-      "Hewraman"
+      "Hewraman",
+      "Gümüşhane"
     ],
     "correctAnswer": "Gümüşhane",
     "correctAnswerTr": "Gümüşhane",
@@ -913,9 +913,9 @@
       "Gümüşhane"
     ],
     "answersTr": [
-      "Ordu",
       "Giresun",
       "Rize",
+      "Ordu",
       "Gümüşhane"
     ],
     "correctAnswer": "Ordu",
@@ -944,10 +944,10 @@
       "Hakî Karer"
     ],
     "answersTr": [
-      "Hakî Karer",
       "Kemal Pir",
       "Mazlum Doğan",
-      "Mehmet Karasungur"
+      "Mehmet Karasungur",
+      "Hakî Karer"
     ],
     "correctAnswer": "Hakî Karer",
     "correctAnswerTr": "Hakî Karer",
@@ -975,8 +975,8 @@
       "Biçûk"
     ],
     "answersTr": [
-      "Bavê Teyar",
       "Nazmi Karaman",
+      "Bavê Teyar",
       "Mirza Metin",
       "Aydın Orak"
     ],
@@ -1006,8 +1006,8 @@
       "Bavê Teyar"
     ],
     "answersTr": [
-      "Salih Mislim",
       "Aldar Xelîl",
+      "Salih Mislim",
       "Mazlum Kobanê",
       "Bavê Teyar"
     ],
@@ -1037,9 +1037,9 @@
       "HPJ"
     ],
     "answersTr": [
-      "YPJ",
       "YJA-Star",
       "YPG",
+      "YPJ",
       "HPJ"
     ],
     "correctAnswer": "YPJ",
@@ -1099,9 +1099,9 @@
       "Ömer Lütfi Akad"
     ],
     "answersTr": [
-      "Şerif Gören",
       "Zeki Ökten",
       "Atıf Yılmaz",
+      "Şerif Gören",
       "Ömer Lütfi Akad"
     ],
     "correctAnswer": "Şerif Gören",
@@ -1130,8 +1130,8 @@
       "Hiner Saleem"
     ],
     "answersTr": [
-      "Yılmaz Güney",
       "Zeki Ökten",
+      "Yılmaz Güney",
       "Kazım Öz",
       "Hiner Saleem"
     ],
@@ -1161,9 +1161,9 @@
       "Yılmaz Güney"
     ],
     "answersTr": [
-      "Bahman Ghobadi",
       "Hiner Saleem",
       "Kazım Öz",
+      "Bahman Ghobadi",
       "Yılmaz Güney"
     ],
     "correctAnswer": "Bahman Ghobadi",
@@ -1223,9 +1223,9 @@
       "Şerif Gören"
     ],
     "answersTr": [
-      "Hiner Saleem",
       "Bahman Ghobadi",
       "Kazım Öz",
+      "Hiner Saleem",
       "Şerif Gören"
     ],
     "correctAnswer": "Hiner Saleem",
@@ -1254,8 +1254,8 @@
       "Ersin Çelik"
     ],
     "answersTr": [
-      "Kazım Öz",
       "Erol Mintaş",
+      "Kazım Öz",
       "Hüseyin Karabey",
       "Ersin Çelik"
     ],
@@ -1285,9 +1285,9 @@
       "1992"
     ],
     "answersTr": [
-      "1984",
       "1980",
       "1988",
+      "1984",
       "1992"
     ],
     "correctAnswer": "1984",
@@ -1347,8 +1347,8 @@
       "Ersin Çelik"
     ],
     "answersTr": [
-      "Erol Mintaş",
       "Kazım Öz",
+      "Erol Mintaş",
       "Hüseyin Karabey",
       "Ersin Çelik"
     ],
@@ -1378,10 +1378,10 @@
       "Yılmaz Güney"
     ],
     "answersTr": [
-      "Yılmaz Güney",
       "Zeki Ökten",
       "Şerif Gören",
-      "Atıf Yılmaz"
+      "Atıf Yılmaz",
+      "Yılmaz Güney"
     ],
     "correctAnswer": "Yılmaz Güney",
     "correctAnswerTr": "Yılmaz Güney",
@@ -1409,9 +1409,9 @@
       "Ermenistan"
     ],
     "answersTr": [
-      "Îran",
       "Iraq",
       "Sûriye",
+      "Îran",
       "Ermenistan"
     ],
     "correctAnswer": "Îran",

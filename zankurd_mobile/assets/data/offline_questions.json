@@ -2166,10 +2166,10 @@
     "explanationKu": "Jira ji bo kurdiya navîn wek korpusa axaftinê û xebateke naskirina dengî ya bi ferhengeke mezin hatiye pêşkêşkirin.",
     "explanationTr": "Jira, Merkezî Kürtçe için konuşma korpusu ve büyük sözvarlıklı konuşma tanıma çalışması olarak sunulmuştur.",
     "answersTr": [
-      "Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi",
       "Temel sözvarlığı ve kültürel kavramları tanıma",
       "Kategori, seçenek, doğru cevap ve açıklama içeren yapı",
-      "Kullanıcı seviyesine göre soru seçmeyi"
+      "Kullanıcı seviyesine göre soru seçmeyi",
+      "Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi"
     ],
     "correctAnswerTr": "Merkezî Kürtçe/Soranî için konuşma korpusu ve tanıma sistemi",
     "promptTr": "Kürtçe konuşma tanıma çalışmalarında Jira projesi hangi alanda örnek olarak gösterilir?"
@@ -3604,9 +3604,9 @@
     "promptTr": "Govend, dengbêjlik ve kilam birlikte neyi oluşturur?",
     "answersTr": [
       "Kuzey Amerika caz geleneğini",
+      "Kürt müzik-kültür mirasını",
       "Klasik Batı müziğini",
-      "Modern pop endüstrisini",
-      "Kürt müzik-kültür mirasını"
+      "Modern pop endüstrisini"
     ],
     "correctAnswerTr": "Kürt müzik-kültür mirasını"
   },
@@ -5449,9 +5449,9 @@
     "explanationKu": "«destmal»: destmala ku serê govendê dihejîne.",
     "explanationTr": "«destmal»: halay başının elinde salladığı mendil.",
     "answersTr": [
+      "halay başının elinde salladığı mendil",
       "Kürt halk müziğindeki ağıt ezgisi",
       "zulme karşı direniş ve yeniden doğuş",
-      "halay başının elinde salladığı mendil",
       "el yapımı geleneksel Kürt ayakkabısı"
     ],
     "correctAnswerTr": "halay başının elinde salladığı mendil",
@@ -5956,9 +5956,9 @@
     "explanationKu": "«heftegiyan»: şorbeya kevneşopî ya bi heft dexlan.",
     "explanationTr": "«heftegiyan»: geleneksel yedi tahıllı çorba.",
     "answersTr": [
+      "geleneksel yedi tahıllı çorba",
       "toplumsal bağları güçlendirme",
       "sözlü anlatım ve ezgili hikâye",
-      "geleneksel yedi tahıllı çorba",
       "müzik ve ritüel/ezgi geleneği"
     ],
     "correctAnswerTr": "geleneksel yedi tahıllı çorba",
@@ -5981,8 +5981,8 @@
     "explanationKu": "«bêrîvan»: rola çandî ya jinên ku pez didoşin.",
     "explanationTr": "«bêrîvan»: koyun sağan kadınların kültürel rolü.",
     "answersTr": [
-      "koyun sağan kadınların kültürel rolü",
       "farklı halkların eşitlik ve barış içinde ortak yaşamı",
+      "koyun sağan kadınların kültürel rolü",
       "Höyük üzerinde gelişmiş eski tahkimli yerleşim",
       "dağ ikliminde mevsimsel dayanıklılık ve gıda güvenliği sağladığı için"
     ],
@@ -6144,8 +6144,8 @@
     "answersTr": [
       "Osmanlı döneminde özerk kalan Kürt hükümdarlığı",
       "tanıklık ve anlatılarla geçmişi anlama yöntemi",
-      "Süleymaniye’de basılan erken dönem Kürtçe gazete",
-      "Selahaddin Eyyubi’nin kurduğu büyük devlet"
+      "Selahaddin Eyyubi’nin kurduğu büyük devlet",
+      "Süleymaniye’de basılan erken dönem Kürtçe gazete"
     ],
     "correctAnswerTr": "Süleymaniye’de basılan erken dönem Kürtçe gazete",
     "explanationKu": "«Jiyan» li Silêmaniyê derket û ji rojnameyên kurdî yên destpêkê ye; wê nivîs û helbestên kurdî belav kirin.",
@@ -9132,9 +9132,9 @@
     "explanationKu": "«stranên Şakiro»: kilamên destanî yên dirêj ên ku Şakiro digot.",
     "explanationTr": "«şakiro stranları»: Şakiro'nun seslendirdiği uzun soluklu destansı kilamlar.",
     "answersTr": [
+      "Şakiro'nun seslendirdiği uzun soluklu destansı kilamlar",
       "halayda çalınan hızlı ve ritmik halk şarkıları",
       "plak dolduran ilk Kürt kadın sanatçı",
-      "Şakiro'nun seslendirdiği uzun soluklu destansı kilamlar",
       "kadın dengbêjlik geleneğinin en tanınmış temsilcilerinden biri"
     ],
     "correctAnswerTr": "Şakiro'nun seslendirdiği uzun soluklu destansı kilamlar",
@@ -10976,8 +10976,8 @@
     "explanationKu": "Danezan belgeyeke damezrîner e: mafên bingehîn bi nivîskî rêz dike û ji bo wan bingehekê datîne.",
     "promptTr": "Siyasette «demokratik haklar bildirgesi» ne anlama gelir?",
     "answersTr": [
-      "temel hakları sıralayan kurucu belge",
       "eşit yurttaşlık ve hakların tanınması",
+      "temel hakları sıralayan kurucu belge",
       "tabandan katılım ve yerel karar alma",
       "sorunları diyalogla çözme yöntemi"
     ],
