@@ -6,10 +6,11 @@
     "expectedAnswer": "yakın çekim",
     "sourceId": "columbia-film-language-glossary",
     "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/close-up/",
-    "exactSupportingFact": "Close-up: 'a shot in which a person's face fills most of the screen'",
+    "exactSupportingFact": "a shot in which a person's face fills most of the screen",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT"
   },
   {
     "questionId": "ds26_cinema_0002",
@@ -17,11 +18,12 @@
     "factualClaim": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "expectedAnswer": "geniş açılış çekimi (establishing shot)",
     "sourceId": null,
-    "sourceReference": null,
-    "exactSupportingFact": null,
-    "verificationStatus": "PENDING",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/establishing-shot/",
+    "exactSupportingFact": "A long shot at the start of a scene that shows things from a distance; orients location/time",
+    "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": null
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT"
   },
   {
     "questionId": "ds26_cinema_0003",
@@ -41,11 +43,12 @@
     "factualClaim": "İzleyicinin duyduğu ama konuşan kişinin ekranda görünmediği ses hangisidir?",
     "expectedAnswer": "dış ses (voice-over)",
     "sourceId": null,
-    "sourceReference": null,
-    "exactSupportingFact": null,
-    "verificationStatus": "PENDING",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/voice-over/",
+    "exactSupportingFact": "Dialogue, usually narration, from an unseen, offscreen voice, character, or narrator",
+    "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": null
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT"
   },
   {
     "questionId": "ds26_cinema_0005",
@@ -53,11 +56,12 @@
     "factualClaim": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
     "expectedAnswer": "atlama kesme (jump cut)",
     "sourceId": null,
-    "sourceReference": null,
-    "exactSupportingFact": null,
-    "verificationStatus": "PENDING",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/jump-cut/",
+    "exactSupportingFact": "an editing technique in which some frames are taken out of a sequence",
+    "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": null
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT"
   },
   {
     "questionId": "ds26_cinema_0006",
@@ -413,11 +417,12 @@
     "factualClaim": "Çerçeve içindeki tüm görsel öğeleri (dekor, ışık, oyunculuk) birleştiren kavram hangisidir?",
     "expectedAnswer": "mise-en-scène",
     "sourceId": null,
-    "sourceReference": null,
-    "exactSupportingFact": null,
-    "verificationStatus": "PENDING",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/mise-en-scene/",
+    "exactSupportingFact": "everything that goes into the composition of a shot - framing, movement, lighting, set design, sound",
+    "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": null
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT"
   },
   {
     "questionId": "ds26_cinema_0036",
@@ -1037,11 +1042,12 @@
     "factualClaim": "Oscar ödülleri ilk kez hangi yıl verildi?",
     "expectedAnswer": "1929",
     "sourceId": "oscars-official",
-    "sourceReference": "https://www.oscars.org/oscars/ceremonies/1929",
-    "exactSupportingFact": "İlk Akademi Ödülleri töreni 16 Mayıs 1929'da yapıldı",
+    "sourceReference": "https://www.oscars.org/oscars/ceremonies/1929 + britannica.com/art/Academy-Award-for-best-picture",
+    "exactSupportingFact": "İlk tören 16 Mayıs 1929 (oscars.org ve Britannica)",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED"
   },
   {
     "questionId": "ds26_cinema_0088",
@@ -1061,11 +1067,12 @@
     "factualClaim": "Altın Palmiye hangi festivalin en büyük ödülüdür?",
     "expectedAnswer": "Cannes Film Festivali",
     "sourceId": "cannes-official",
-    "sourceReference": "https://www.festival-cannes.com/en/retrospective/awards/",
-    "exactSupportingFact": "Altın Palmiye (Palme d'Or) Cannes'ın en büyük ödülü; ilki 1955'te Marty'ye",
+    "sourceReference": "https://www.festival-cannes.com/en/retrospective/awards/ + britannica.com/art/film-festival",
+    "exactSupportingFact": "Altın Palmiye Cannes'ın en büyük ödülü; ilki 1955 (Cannes resmî arşivi ve Britannica)",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED"
   },
   {
     "questionId": "ds26_cinema_0090",
@@ -1073,11 +1080,12 @@
     "factualClaim": "Dünyanın en eski film festivali hangisidir?",
     "expectedAnswer": "Venedik Film Festivali",
     "sourceId": "labiennale-official",
-    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
-    "exactSupportingFact": "Venedik Film Festivali dünyanın en eski film festivali, 1932'de kuruldu",
+    "sourceReference": "https://www.labiennale.org/en/history-venice-film-festival + britannica.com/art/Venice-Film-Festival",
+    "exactSupportingFact": "Venedik dünyanın en eski film festivali, 1932 (La Biennale ve Britannica)",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED"
   },
   {
     "questionId": "ds26_cinema_0091",
@@ -1301,11 +1309,12 @@
     "factualClaim": "Cannes Film Festivali hangi ülkede düzenlenir?",
     "expectedAnswer": "Fransa",
     "sourceId": "cannes-official",
-    "sourceReference": "https://www.festival-cannes.com/en/the-festival/the-history-of-the-festival/",
-    "exactSupportingFact": "Cannes Film Festivali Fransa'da düzenlenir, ilki 1946",
+    "sourceReference": "https://www.festival-cannes.com/en/the-festival/the-history-of-the-festival/ + britannica.com/art/film-festival",
+    "exactSupportingFact": "Cannes Fransa'da; ilk festival 1946 (Cannes resmî arşivi ve Britannica)",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED"
   },
   {
     "questionId": "ds26_cinema_0110",
@@ -1325,11 +1334,12 @@
     "factualClaim": "İlk Oscar töreninde En İyi Film ödülünü kazanan yapım hangisidir?",
     "expectedAnswer": "Kanatlar (Wings)",
     "sourceId": "oscars-official",
-    "sourceReference": "https://www.oscars.org/oscars/ceremonies/1929/memorable-moments",
-    "exactSupportingFact": "İlk törende En İyi Film: Wings (Kanatlar)",
+    "sourceReference": "https://www.oscars.org/oscars/ceremonies/1929/memorable-moments + airandspace.si.edu",
+    "exactSupportingFact": "İlk En İyi Film: Wings (oscars.org ve Smithsonian National Air and Space Museum)",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED"
   },
   {
     "questionId": "ds26_cinema_0112",
@@ -1349,11 +1359,12 @@
     "factualClaim": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
     "expectedAnswer": "AMPAS",
     "sourceId": "britannica-film",
-    "sourceReference": "https://www.britannica.com/topic/Academy-of-Motion-Picture-Arts-and-Sciences",
-    "exactSupportingFact": "AMPAS 1927'de kuruldu",
+    "sourceReference": "https://www.oscars.org/oscars/ceremonies/1927 + britannica.com/topic/Academy-of-Motion-Picture-Arts-and-Sciences",
+    "exactSupportingFact": "AMPAS 1927'de kuruldu (oscars.org ve Britannica)",
     "verificationStatus": "VERIFIED",
     "verifier": "opus-5",
-    "verifiedAt": "2026-08-06"
+    "verifiedAt": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED"
   },
   {
     "questionId": "ds26_cinema_0114",

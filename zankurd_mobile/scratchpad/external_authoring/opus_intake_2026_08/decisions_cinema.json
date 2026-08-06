@@ -5,19 +5,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "film_language",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
     ],
     "subcategoryOld": "Fîlm û Derhêner",
     "subcategoryNew": null,
     "verifiedSourceId": "columbia-film-language-glossary",
     "verifiedSourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/close-up/",
-    "exactSupportingFact": "Close-up: 'a shot in which a person's face fills most of the screen'",
+    "exactSupportingFact": "a shot in which a person's face fills most of the screen",
     "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
     "correctAnswerTr": "yakın çekim",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0002",
@@ -25,19 +27,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "film_language",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
     "OpusReviewReasons": [
-      "bu tur kurumsal kaynakta doğrulanmadı"
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
     ],
     "subcategoryOld": "Fîlm û Derhêner",
     "subcategoryNew": null,
-    "verifiedSourceId": null,
-    "verifiedSourceReference": null,
-    "exactSupportingFact": null,
+    "verifiedSourceId": "columbia-film-language-glossary",
+    "verifiedSourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/establishing-shot/",
+    "exactSupportingFact": "A long shot at the start of a scene that shows things from a distance; orients location/time",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "correctAnswerTr": "geniş açılış çekimi (establishing shot)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0003",
@@ -57,7 +61,9 @@
     "promptTr": "Bir filmde geçmişte yaşanan olayları gösteren sahneler ne adlandırılır?",
     "correctAnswerTr": "geriye dönüş (flashback)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0004",
@@ -65,19 +71,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "film_language",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
     "OpusReviewReasons": [
-      "bu tur kurumsal kaynakta doğrulanmadı"
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
     ],
     "subcategoryOld": "Fîlm û Derhêner",
     "subcategoryNew": null,
-    "verifiedSourceId": null,
-    "verifiedSourceReference": null,
-    "exactSupportingFact": null,
+    "verifiedSourceId": "columbia-film-language-glossary",
+    "verifiedSourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/voice-over/",
+    "exactSupportingFact": "Dialogue, usually narration, from an unseen, offscreen voice, character, or narrator",
     "promptTr": "İzleyicinin duyduğu ama konuşan kişinin ekranda görünmediği ses hangisidir?",
     "correctAnswerTr": "dış ses (voice-over)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0005",
@@ -85,19 +93,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "film_language",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
     "OpusReviewReasons": [
-      "bu tur kurumsal kaynakta doğrulanmadı"
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
     ],
     "subcategoryOld": "Fîlm û Derhêner",
     "subcategoryNew": null,
-    "verifiedSourceId": null,
-    "verifiedSourceReference": null,
-    "exactSupportingFact": null,
+    "verifiedSourceId": "columbia-film-language-glossary",
+    "verifiedSourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/jump-cut/",
+    "exactSupportingFact": "an editing technique in which some frames are taken out of a sequence",
     "promptTr": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
     "correctAnswerTr": "atlama kesme (jump cut)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0006",
@@ -117,7 +127,9 @@
     "promptTr": "Görüntünün yavaşça kararıp sona erdiği geçiş tekniği hangisidir?",
     "correctAnswerTr": "karartma (fade out)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0007",
@@ -137,7 +149,9 @@
     "promptTr": "Henüz gerçekleşmemiş bir olayı gösterip anlatıyı geleceğe taşıyan sahne hangisidir?",
     "correctAnswerTr": "ileriye sıçrama (flashforward)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0008",
@@ -157,7 +171,9 @@
     "promptTr": "Bir filmin özgün dili başka bir dile çevrilerek kaydedilir; bu işlem hangisidir?",
     "correctAnswerTr": "dublaj",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0009",
@@ -177,7 +193,9 @@
     "promptTr": "Yabancı filmlerde görüntünün altında beliren yazılı çeviriye ne denir?",
     "correctAnswerTr": "altyazı",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0010",
@@ -197,7 +215,9 @@
     "promptTr": "Bir filmin görüntülerini ve ışığını sanatsal biçimde yöneten sorumluya ne ad verilir?",
     "correctAnswerTr": "görüntü yönetmeni (sinematograf)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0011",
@@ -217,7 +237,9 @@
     "promptTr": "Bir filmi mali ve organizasyonel açıdan yöneten kişi hangisidir?",
     "correctAnswerTr": "yapımcı",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0012",
@@ -237,7 +259,9 @@
     "promptTr": "Bir filmin diyaloglarını ve sahnelerini içeren yazılı metin hangisidir?",
     "correctAnswerTr": "senaryo",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0013",
@@ -257,7 +281,9 @@
     "promptTr": "Standart filmler saniyede kaç kare ile gösterilir?",
     "correctAnswerTr": "24 kare",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0014",
@@ -277,7 +303,9 @@
     "promptTr": "Modern geniş ekran (widescreen) oranı hangisidir?",
     "correctAnswerTr": "16:9",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0015",
@@ -297,7 +325,9 @@
     "promptTr": "Bir karakterin gözünden çekilen ve onun gördüğünü gösteren plan hangisidir?",
     "correctAnswerTr": "POV planı (karakterin gözünden)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0016",
@@ -317,7 +347,9 @@
     "promptTr": "Kamera sabit ekseni üzerinde dönerek geniş bir görüntü gösterdiğinde buna ne denir?",
     "correctAnswerTr": "panoramik kaydırma (pan)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0017",
@@ -337,7 +369,9 @@
     "promptTr": "Kamera, sahne içinde raylar üzerinde hareket ederek görüntüyü takip ettiğinde bu hangi plandır?",
     "correctAnswerTr": "izleme çekimi (tracking shot)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0018",
@@ -357,7 +391,9 @@
     "promptTr": "Elde tutulan ve sarsılan kamerayla çekilen görüntüler neyle tanınır?",
     "correctAnswerTr": "elde taşınan kamera (handheld)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0019",
@@ -377,7 +413,9 @@
     "promptTr": "Bir görüntünün aniden durdurulup kare gibi sabitlenmesine ne denir?",
     "correctAnswerTr": "dondurulmuş kare (freeze frame)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0020",
@@ -397,7 +435,9 @@
     "promptTr": "Bir sahnenin başında olay yerini uzaktan gösteren plan hangisidir?",
     "correctAnswerTr": "geniş açılış çekimi (establishing shot)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0021",
@@ -417,7 +457,9 @@
     "promptTr": "Filmin karakterlerinin de duyduğu ve öykü dünyasının parçası olan ses hangisidir?",
     "correctAnswerTr": "diejetik ses",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0022",
@@ -437,7 +479,9 @@
     "promptTr": "Filmin günlük seslerini (ayak sesi, kapı, cam kırılması gibi) stüdyoda üretme sanatı hangisidir?",
     "correctAnswerTr": "foley",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0023",
@@ -457,7 +501,9 @@
     "promptTr": "Bir filmin sonunda yapımda emeği geçenlerin listesine ne denir?",
     "correctAnswerTr": "jenerik",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0024",
@@ -477,7 +523,9 @@
     "promptTr": "Bir film için özel olarak bestelenen müzik çalışmasına ne denir?",
     "correctAnswerTr": "film müziği (soundtrack)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0025",
@@ -497,7 +545,9 @@
     "promptTr": "Eski bir filmin temel alınıp yeniden çekilmesine ne denir?",
     "correctAnswerTr": "yeniden çevrim (remake)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0026",
@@ -517,7 +567,9 @@
     "promptTr": "Bir filmin öyküsünü devam ettiren yapım hangisidir?",
     "correctAnswerTr": "devam filmi (sequel)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0027",
@@ -537,7 +589,9 @@
     "promptTr": "Başka bir filmin öncesindeki olayları anlatan yapıma ne denir?",
     "correctAnswerTr": "önceki hikâye (prequel)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0028",
@@ -557,7 +611,9 @@
     "promptTr": "Bir filmin gösteriminden önce izletilen kısa tanıtım videosuna ne denir?",
     "correctAnswerTr": "fragman",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0029",
@@ -577,7 +633,9 @@
     "promptTr": "Bir film için oyuncuların seçilmesi sürecine ne denir?",
     "correctAnswerTr": "casting (oyuncu seçimi)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0030",
@@ -597,7 +655,9 @@
     "promptTr": "Ana oyuncunun yerine tehlikeli sahneleri canlandıran kişiye ne denir?",
     "correctAnswerTr": "dublör",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0031",
@@ -617,7 +677,9 @@
     "promptTr": "Arka planı bilgisayarda değiştirilmek üzere yeşil perde önünde çekilen görüntüye ne denir?",
     "correctAnswerTr": "green screen (yeşil perde)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0032",
@@ -637,7 +699,9 @@
     "promptTr": "Bir filmin ses ve müziğinin hazırlanıp düzenlenmesi sanatı hangisidir?",
     "correctAnswerTr": "ses tasarımı",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0033",
@@ -657,7 +721,9 @@
     "promptTr": "Bir filmi oluşturan tek tek görüntülerin her birine ne denir?",
     "correctAnswerTr": "kare (frame)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0034",
@@ -677,7 +743,9 @@
     "promptTr": "1920'lerden dijital döneme dek endüstrinin standardı olan film ölçüsü hangisidir?",
     "correctAnswerTr": "35 mm",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0035",
@@ -685,19 +753,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "other",
-    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
     "OpusReviewReasons": [
-      "bu tur kurumsal kaynakta doğrulanmadı"
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
     ],
     "subcategoryOld": "Fîlm û Derhêner",
     "subcategoryNew": null,
-    "verifiedSourceId": null,
-    "verifiedSourceReference": null,
-    "exactSupportingFact": null,
+    "verifiedSourceId": "columbia-film-language-glossary",
+    "verifiedSourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/mise-en-scene/",
+    "exactSupportingFact": "everything that goes into the composition of a shot - framing, movement, lighting, set design, sound",
     "promptTr": "Çerçeve içindeki tüm görsel öğeleri (dekor, ışık, oyunculuk) birleştiren kavram hangisidir?",
     "correctAnswerTr": "mise-en-scène",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "FETCHED_DIRECT",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0036",
@@ -717,7 +787,9 @@
     "promptTr": "Kamerayla görüntü çeken ve ışıkla ilgilenen disiplin hangisidir?",
     "correctAnswerTr": "sinematografi",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0037",
@@ -737,7 +809,9 @@
     "promptTr": "Bilgisayarla üretilen görüntüleri ifade eden kısaltma hangisidir?",
     "correctAnswerTr": "CGI (bilgisayar üretimi görüntü)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0038",
@@ -757,7 +831,9 @@
     "promptTr": "Kuklaların kare kare çekilip birleştirildiği animasyon tekniği hangisidir?",
     "correctAnswerTr": "stop-motion",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0039",
@@ -777,7 +853,9 @@
     "promptTr": "Büyük reklam kampanyaları ve geniş dağıtımla birçok sinemada gösterilen filme ne denir?",
     "correctAnswerTr": "blockbuster",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0040",
@@ -797,7 +875,9 @@
     "promptTr": "Özel bir izleyici kitlesi tarafından sadakatle takip edilip zamanla ünlenen filme ne denir?",
     "correctAnswerTr": "kült film",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0041",
@@ -817,7 +897,9 @@
     "promptTr": "Geniş ekranlardan önce kullanılan geleneksel ekran oranı hangisidir?",
     "correctAnswerTr": "4:3",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0042",
@@ -837,7 +919,9 @@
     "promptTr": "İzleyicinin özel gözlüklerle üç boyutlu gördüğü filmler hangi teknikle çekilir?",
     "correctAnswerTr": "3D film",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0043",
@@ -857,7 +941,9 @@
     "promptTr": "Çok büyük ekranları ve yüksek görüntü kalitesiyle tanınan sistem hangisidir?",
     "correctAnswerTr": "IMAX",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0044",
@@ -877,7 +963,9 @@
     "promptTr": "Öyküsünün içine dans ve şarkıları katan film türü hangisidir?",
     "correctAnswerTr": "müzikal",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0045",
@@ -897,7 +985,9 @@
     "promptTr": "19. yüzyılda Amerika'nın Batı'sında geçen film türü hangisidir?",
     "correctAnswerTr": "western",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0046",
@@ -917,7 +1007,9 @@
     "promptTr": "İzleyiciyi korkutmak amacıyla yapılan film türü hangisidir?",
     "correctAnswerTr": "korku filmi",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0047",
@@ -937,7 +1029,9 @@
     "promptTr": "Geleceğin teknolojisi ve hayali dünyalarla ilgilenen film türü hangisidir?",
     "correctAnswerTr": "bilimkurgu",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0048",
@@ -957,7 +1051,9 @@
     "promptTr": "Klasik film noir örnekleri çoğunlukla hangi yıllarda çekildi?",
     "correctAnswerTr": "1940'lar ve 1950'ler",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0049",
@@ -977,7 +1073,9 @@
     "promptTr": "1960'larda İtalya'da çekilen western filmleri hangi adla bilinir?",
     "correctAnswerTr": "spaghetti western",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0050",
@@ -997,7 +1095,9 @@
     "promptTr": "Gerçek yaşam olaylarını ve gerçekleri ekrana taşıyan film türü hangisidir?",
     "correctAnswerTr": "belgesel",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0051",
@@ -1017,7 +1117,9 @@
     "promptTr": "Auteur (yazar) kuramına göre bir filmin temel sanatsal sorumlusu kimdir?",
     "correctAnswerTr": "yönetmen",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0052",
@@ -1037,7 +1139,9 @@
     "promptTr": "Auteur kuramını geliştiren Cahiers du cinéma dergisi hangi ülkede yayımlanıyordu?",
     "correctAnswerTr": "Fransa",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0053",
@@ -1057,7 +1161,9 @@
     "promptTr": "Georges Méliès'in Ay'a yolculuğu konu alan 1902 tarihli filmi hangisidir?",
     "correctAnswerTr": "Aya Yolculuk (Le Voyage dans la Lune)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0054",
@@ -1077,7 +1183,9 @@
     "promptTr": "Georges Méliès, film yönetmeni olmadan önce hangi mesleğiyle tanınıyordu?",
     "correctAnswerTr": "sihirbaz",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0055",
@@ -1097,7 +1205,9 @@
     "promptTr": "1927'de gösterilen ilk uzun metrajlı sesli film (talkie) hangisidir?",
     "correctAnswerTr": "Jazz Singer",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0056",
@@ -1117,7 +1227,9 @@
     "promptTr": "Fritz Lang'in geleceğin şehrini konu alan 1927 tarihli filmi hangisidir?",
     "correctAnswerTr": "Metropolis",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0057",
@@ -1137,7 +1249,9 @@
     "promptTr": "Robert Wiene'in Alman dışavurumculuğunun örneği sayılan 1920 tarihli filmi hangisidir?",
     "correctAnswerTr": "Dr. Caligari'nin Muayenehanesi",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0058",
@@ -1157,7 +1271,9 @@
     "promptTr": "F. W. Murnau'un bir vampiri konu alan 1922 tarihli filmi hangisidir?",
     "correctAnswerTr": "Nosferatu",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0059",
@@ -1177,7 +1293,9 @@
     "promptTr": "Stop-motion tekniğiyle yapılan devasa bir maymunla tanınan 1933 filmi hangisidir?",
     "correctAnswerTr": "King Kong",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0060",
@@ -1197,7 +1315,9 @@
     "promptTr": "Orson Welles'in «Rosebud» sözcüğüyle tanınan 1941 tarihli filmi hangisidir?",
     "correctAnswerTr": "Yurttaş Kane",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0061",
@@ -1217,7 +1337,9 @@
     "promptTr": "İkinci Dünya Savaşı sırasında Fas'ta geçen 1942 filmi hangisidir?",
     "correctAnswerTr": "Casablanca",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0062",
@@ -1237,7 +1359,9 @@
     "promptTr": "Amerikan İç Savaşı'nda geçen ve Scarlet O'Hara ile tanınan 1939 filmi hangisidir?",
     "correctAnswerTr": "Rüzgâr Gibi Geçti",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0063",
@@ -1257,7 +1381,9 @@
     "promptTr": "Başlangıçta siyah-beyaz olup sonra renkli gösterilen 1939 filmi hangisidir?",
     "correctAnswerTr": "Oz Büyücüsü",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0064",
@@ -1277,7 +1403,9 @@
     "promptTr": "Yağmur altındaki dans sahnesiyle tanınan 1952 müzikal filmi hangisidir?",
     "correctAnswerTr": "Singin' in the Rain",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0065",
@@ -1297,7 +1425,9 @@
     "promptTr": "John Ford'un western türünün gelişimini sürdüren 1939 filmi hangisidir?",
     "correctAnswerTr": "Posta Arabası",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0066",
@@ -1317,7 +1447,9 @@
     "promptTr": "Ennio Morricone'nin müziğiyle tanınan Sergio Leone'nin 1966 filmi hangisidir?",
     "correctAnswerTr": "İyi, Kötü ve Çirkin",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0067",
@@ -1337,7 +1469,9 @@
     "promptTr": "Francis Ford Coppola'nın mafya ailesini konu alan 1972 filmi hangisidir?",
     "correctAnswerTr": "Baba",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0068",
@@ -1357,7 +1491,9 @@
     "promptTr": "Steven Spielberg'in bir köpekbalığını konu alan 1975 filmi hangisidir?",
     "correctAnswerTr": "Jaws",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0069",
@@ -1377,7 +1513,9 @@
     "promptTr": "George Lucas'ın galaktik bir evrende geçen 1977 filmi hangisidir?",
     "correctAnswerTr": "Yıldız Savaşları",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0070",
@@ -1397,7 +1535,9 @@
     "promptTr": "Martin Scorsese'nin Travis Bickle karakteriyle tanınan 1976 filmi hangisidir?",
     "correctAnswerTr": "Taksi Şoförü",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0071",
@@ -1417,7 +1557,9 @@
     "promptTr": "Stanley Kubrick'in İngiltere'de büyük sansürle karşılaşan 1971 filmi hangisidir?",
     "correctAnswerTr": "Otomatik Portakal",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0072",
@@ -1437,7 +1579,9 @@
     "promptTr": "Kubrick'in ıssız bir otelde geçen 1980 filmi hangisidir?",
     "correctAnswerTr": "Cinnet",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0073",
@@ -1457,7 +1601,9 @@
     "promptTr": "Hitchcock'un penceresinden komşularını izleyen bir adamı anlatan 1954 filmi hangisidir?",
     "correctAnswerTr": "Arka Pencere",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0074",
@@ -1477,7 +1623,9 @@
     "promptTr": "Hitchcock'un öfkeli kanatlıların insanlara saldırdığını anlatan 1963 filmi hangisidir?",
     "correctAnswerTr": "Kuşlar",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0075",
@@ -1497,7 +1645,9 @@
     "promptTr": "Ingmar Bergman'ın Ölüm'le satranç oyunu sahnesiyle tanınan 1957 filmi hangisidir?",
     "correctAnswerTr": "Yedinci Mühür",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0076",
@@ -1517,7 +1667,9 @@
     "promptTr": "Federico Fellini'nin Roma'daki ünlü yaşamını anlatan 1960 filmi hangisidir?",
     "correctAnswerTr": "Tatlı Hayat",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0077",
@@ -1537,7 +1689,9 @@
     "promptTr": "Fellini'nin bir yönetmenin krizini konu alan 1963 filmi hangisidir?",
     "correctAnswerTr": "8½",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0078",
@@ -1557,7 +1711,9 @@
     "promptTr": "Roberto Rossellini'nin İtalyan Yeni Gerçekçiliğinin başlangıcı sayılan 1945 filmi hangisidir?",
     "correctAnswerTr": "Roma, Açık Şehir",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0079",
@@ -1577,7 +1733,9 @@
     "promptTr": "Jean-Luc Godard'ın Fransız Yeni Dalgası'nın başlangıcını belirleyen 1960 filmi hangisidir?",
     "correctAnswerTr": "Sersefil (À bout de souffle)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0080",
@@ -1597,7 +1755,9 @@
     "promptTr": "François Truffaut'nun Antoine Doinel karakteriyle tanınan 1959 filmi hangisidir?",
     "correctAnswerTr": "400 Darbe",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0081",
@@ -1617,7 +1777,9 @@
     "promptTr": "Akira Kurosawa'nın bir köyün savaşçılardan korunmasını anlatan 1954 filmi hangisidir?",
     "correctAnswerTr": "Yedi Samuray",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0082",
@@ -1637,7 +1799,9 @@
     "promptTr": "Siyah-beyazdan renkliye geçen ve Dorothy ile tanınan 1939 filmi hangisidir?",
     "correctAnswerTr": "Oz Büyücüsü",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0083",
@@ -1657,7 +1821,9 @@
     "promptTr": "19. yüzyılda koşan atların seri fotoğraflarıyla sinemanın temelini atan bilim insanı hangisidir?",
     "correctAnswerTr": "Eadweard Muybridge",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0084",
@@ -1677,7 +1843,9 @@
     "promptTr": "Kinetoskop (film izleme makinesi) ile tanınan Amerikalı mucit hangisidir?",
     "correctAnswerTr": "Thomas Edison",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0085",
@@ -1697,7 +1865,9 @@
     "promptTr": "Hollywood'un klasik dönemi stüdyo filmleri çoğunlukla hangi şehirde üretildi?",
     "correctAnswerTr": "Hollywood (Los Angeles)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0086",
@@ -1717,7 +1887,9 @@
     "promptTr": "1970'lerde yönetmenlere sanatsal özgürlük tanıyan Amerikan sinema hareketi hangisidir?",
     "correctAnswerTr": "Yeni Hollywood",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0087",
@@ -1725,19 +1897,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
     "verifiedSourceId": "oscars-official",
-    "verifiedSourceReference": "https://www.oscars.org/oscars/ceremonies/1929",
-    "exactSupportingFact": "İlk Akademi Ödülleri töreni 16 Mayıs 1929'da yapıldı",
+    "verifiedSourceReference": "https://www.oscars.org/oscars/ceremonies/1929 + britannica.com/art/Academy-Award-for-best-picture",
+    "exactSupportingFact": "İlk tören 16 Mayıs 1929 (oscars.org ve Britannica)",
     "promptTr": "Oscar ödülleri ilk kez hangi yıl verildi?",
     "correctAnswerTr": "1929",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0088",
@@ -1745,19 +1919,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "Ödülün 'resmî adı' iddiasını yalnız Britannica destekliyor ve arama özeti sorgudaki resmî adı doğrulamadığını açıkça belirtti; ikinci kurumsal kaynak yok."
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
-    "verifiedSourceId": "britannica-film",
-    "verifiedSourceReference": "https://www.britannica.com/topic/Academy-of-Motion-Picture-Arts-and-Sciences",
-    "exactSupportingFact": "Ödülün resmî adı Academy Award (Akademi Ödülü)",
+    "verifiedSourceId": null,
+    "verifiedSourceReference": null,
+    "exactSupportingFact": null,
     "promptTr": "Oscar ödülü resmî olarak hangi adla bilinir?",
     "correctAnswerTr": "Akademi Ödülü",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_UNCORROBORATED",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0089",
@@ -1765,19 +1941,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
     "verifiedSourceId": "cannes-official",
-    "verifiedSourceReference": "https://www.festival-cannes.com/en/retrospective/awards/",
-    "exactSupportingFact": "Altın Palmiye (Palme d'Or) Cannes'ın en büyük ödülü; ilki 1955'te Marty'ye",
+    "verifiedSourceReference": "https://www.festival-cannes.com/en/retrospective/awards/ + britannica.com/art/film-festival",
+    "exactSupportingFact": "Altın Palmiye Cannes'ın en büyük ödülü; ilki 1955 (Cannes resmî arşivi ve Britannica)",
     "promptTr": "Altın Palmiye hangi festivalin en büyük ödülüdür?",
     "correctAnswerTr": "Cannes Film Festivali",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0090",
@@ -1785,19 +1963,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
     "verifiedSourceId": "labiennale-official",
-    "verifiedSourceReference": "https://www.labiennale.org/en/history-venice-film-festival",
-    "exactSupportingFact": "Venedik Film Festivali dünyanın en eski film festivali, 1932'de kuruldu",
+    "verifiedSourceReference": "https://www.labiennale.org/en/history-venice-film-festival + britannica.com/art/Venice-Film-Festival",
+    "exactSupportingFact": "Venedik dünyanın en eski film festivali, 1932 (La Biennale ve Britannica)",
     "promptTr": "Dünyanın en eski film festivali hangisidir?",
     "correctAnswerTr": "Venedik Film Festivali",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0091",
@@ -1805,19 +1985,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "QUARANTINED_UNVERIFIABLE",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "Berlinale'nin Almanya'da olduğu tek kurumsal özetten geldi; berlinale.de sayfası doğrudan okunmadı, ikinci bağımsız kayıt doğrulanmadı."
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
-    "verifiedSourceId": "britannica-film",
-    "verifiedSourceReference": "https://www.britannica.com/art/Berlin-International-Film-Festival",
-    "exactSupportingFact": "Berlinale Almanya'da (Berlin) düzenlenir; en büyük ödülü Altın Ayı",
+    "verifiedSourceId": null,
+    "verifiedSourceReference": null,
+    "exactSupportingFact": null,
     "promptTr": "Berlin Film Festivali (Berlinale) hangi ülkede düzenlenir?",
     "correctAnswerTr": "Almanya",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_UNCORROBORATED",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0092",
@@ -1837,7 +2019,9 @@
     "promptTr": "Adını Bombay (Mumbai) şehrinden alan Hint sineması hangisidir?",
     "correctAnswerTr": "Bollywood",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0093",
@@ -1857,7 +2041,9 @@
     "promptTr": "Robert Flaherty'nin bir Eskimo ailesinin yaşamını anlatan 1922 belgeseli hangisidir?",
     "correctAnswerTr": "Nanook of the North",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0094",
@@ -1877,7 +2063,9 @@
     "promptTr": "Dziga Vertov'un senaryosuz şehir yaşamını gösteren 1929 belgeseli hangisidir?",
     "correctAnswerTr": "Kameralı Adam",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0095",
@@ -1897,7 +2085,9 @@
     "promptTr": "Disney'in 1937'de gösterilen ilk uzun metrajlı animasyon filminin adı nedir?",
     "correctAnswerTr": "Pamuk Prenses",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0096",
@@ -1917,7 +2107,9 @@
     "promptTr": "Studio Ghibli'nin animasyon Oscarı kazanan 2001 yapımı filmi hangisidir?",
     "correctAnswerTr": "Ruhların Kaçışı",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0097",
@@ -1937,7 +2129,9 @@
     "promptTr": "Ghibli stüdyosunu kuran ve Totoro gibi filmleriyle tanınan animasyon yönetmeni kimdir?",
     "correctAnswerTr": "Hayao Miyazaki",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0098",
@@ -1957,7 +2151,9 @@
     "promptTr": "1995'te tamamen CGI (bilgisayar görüntüsü) ile yapılan ilk uzun metrajlı film hangisidir?",
     "correctAnswerTr": "Oyuncak Hikâyesi",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0099",
@@ -1977,7 +2173,9 @@
     "promptTr": "Ridley Scott'ın karanlık bir gelecek dünyasında geçen 1982 filmi hangisidir?",
     "correctAnswerTr": "Blade Runner",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0100",
@@ -1997,7 +2195,9 @@
     "promptTr": "Ridley Scott'ın bir uzay gemisinde korkunç bir olayın geçtiği 1979 filmi hangisidir?",
     "correctAnswerTr": "Yaratık",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0101",
@@ -2017,7 +2217,9 @@
     "promptTr": "1964'te Berlin Film Festivali'nde Altın Ayı kazanan Türk filmi hangi yönetmenindir?",
     "correctAnswerTr": "Metin Erksan",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0102",
@@ -2037,7 +2239,9 @@
     "promptTr": "Hababam Sınıfı filmleri çoğunlukla hangi Türk oyuncusuyla özdeşleşir?",
     "correctAnswerTr": "Kemal Sunal",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0103",
@@ -2057,7 +2261,9 @@
     "promptTr": "Modern Türk sineması, 2014'te Cannes'da Altın Palmiye kazanan hangi yönetmenin filmleriyle tanınır?",
     "correctAnswerTr": "Nuri Bilge Ceylan",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0104",
@@ -2077,7 +2283,9 @@
     "promptTr": "Billy Wilder'ın savaş esirlerinin yaşamını konu alan 1960 komedisi hangisidir?",
     "correctAnswerTr": "Garsoniyer",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0105",
@@ -2097,7 +2305,9 @@
     "promptTr": "Billy Wilder'ın film noir örneği sayılan 1944 yapımı hangisidir?",
     "correctAnswerTr": "Kaza (Double Indemnity)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0106",
@@ -2117,7 +2327,9 @@
     "promptTr": "Buster Keaton'ın sessiz film komedilerinin en büyüklerinden sayılan 1926 yapımı hangisidir?",
     "correctAnswerTr": "The General",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0107",
@@ -2137,7 +2349,9 @@
     "promptTr": "Joseph Mankiewicz'in karmaşık insan ilişkilerini konu alan 1950 filmi hangisidir?",
     "correctAnswerTr": "Perde Açılıyor",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0108",
@@ -2157,7 +2371,9 @@
     "promptTr": "Charlie Chaplin'in modern endüstriyel yaşamı konu alan 1936 filmi hangisidir?",
     "correctAnswerTr": "Modern Zamanlar",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0109",
@@ -2165,19 +2381,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
     "verifiedSourceId": "cannes-official",
-    "verifiedSourceReference": "https://www.festival-cannes.com/en/the-festival/the-history-of-the-festival/",
-    "exactSupportingFact": "Cannes Film Festivali Fransa'da düzenlenir, ilki 1946",
+    "verifiedSourceReference": "https://www.festival-cannes.com/en/the-festival/the-history-of-the-festival/ + britannica.com/art/film-festival",
+    "exactSupportingFact": "Cannes Fransa'da; ilk festival 1946 (Cannes resmî arşivi ve Britannica)",
     "promptTr": "Cannes Film Festivali hangi ülkede düzenlenir?",
     "correctAnswerTr": "Fransa",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0110",
@@ -2197,7 +2415,9 @@
     "promptTr": "Yeni filmlerin gösterilip ödüllerin verildiği etkinliğe ne denir?",
     "correctAnswerTr": "film festivali",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0111",
@@ -2205,19 +2425,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
     "verifiedSourceId": "oscars-official",
-    "verifiedSourceReference": "https://www.oscars.org/oscars/ceremonies/1929/memorable-moments",
-    "exactSupportingFact": "İlk törende En İyi Film: Wings (Kanatlar)",
+    "verifiedSourceReference": "https://www.oscars.org/oscars/ceremonies/1929/memorable-moments + airandspace.si.edu",
+    "exactSupportingFact": "İlk En İyi Film: Wings (oscars.org ve Smithsonian National Air and Space Museum)",
     "promptTr": "İlk Oscar töreninde En İyi Film ödülünü kazanan yapım hangisidir?",
     "correctAnswerTr": "Kanatlar (Wings)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0112",
@@ -2237,7 +2459,9 @@
     "promptTr": "Oscar töreni genellikle hangi şehirde yapılır?",
     "correctAnswerTr": "Los Angeles",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0113",
@@ -2245,19 +2469,21 @@
     "sourceBranch": "content/author-deepseek-wave-01-2026-08-06",
     "sourceCommit": "8fbbb94",
     "claimType": "festival_award",
-    "OpusReviewDecision": "ACCEPTED_VERIFIED",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
     "OpusReviewReasons": [
-      "kurumsal kaynakta doğrulandı"
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
     ],
     "subcategoryOld": "Belgefîlm û Festîval",
     "subcategoryNew": null,
     "verifiedSourceId": "britannica-film",
-    "verifiedSourceReference": "https://www.britannica.com/topic/Academy-of-Motion-Picture-Arts-and-Sciences",
-    "exactSupportingFact": "AMPAS 1927'de kuruldu",
+    "verifiedSourceReference": "https://www.oscars.org/oscars/ceremonies/1927 + britannica.com/topic/Academy-of-Motion-Picture-Arts-and-Sciences",
+    "exactSupportingFact": "AMPAS 1927'de kuruldu (oscars.org ve Britannica)",
     "promptTr": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
     "correctAnswerTr": "AMPAS",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "SEARCH_SUMMARY_CORROBORATED",
+    "verifiedAt": "2026-08-06"
   },
   {
     "questionId": "ds26_cinema_0114",
@@ -2277,7 +2503,9 @@
     "promptTr": "Bir filmin stüdyo dışında, gerçek mekânlarda çekilmesi hangi kavramla bilinir?",
     "correctAnswerTr": "yerinde çekim (location shooting)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0115",
@@ -2297,7 +2525,9 @@
     "promptTr": "Kamera sabitken lensin görüntüyü yakınlaştırmasına ne denir?",
     "correctAnswerTr": "zoom",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0116",
@@ -2317,7 +2547,9 @@
     "promptTr": "Kameranın yana yatırılarak çekildiği, alışılmadık açısıyla tanınan plan hangisidir?",
     "correctAnswerTr": "hollanda açısı (Dutch angle)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0117",
@@ -2337,7 +2569,9 @@
     "promptTr": "Önceden çekilmiş arşiv görüntülerinden oluşturulan film üslubu hangisidir?",
     "correctAnswerTr": "found footage (buluntu görüntü)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0118",
@@ -2357,7 +2591,9 @@
     "promptTr": "Belgesel üslubunda olan ama öyküsü hayalî olan filme ne denir?",
     "correctAnswerTr": "sahte belgesel (mockumentary)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0119",
@@ -2377,7 +2613,9 @@
     "promptTr": "Ünlü oyuncuyu filmin ticaretinin ana unsuru sayan sistem hangisidir?",
     "correctAnswerTr": "yıldız sistemi (star system)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0120",
@@ -2397,7 +2635,9 @@
     "promptTr": "Bir filmin halka ve eleştirmenlere ilk kez gösterilmesine ne denir?",
     "correctAnswerTr": "gala gösterimi (premiere)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0121",
@@ -2417,7 +2657,9 @@
     "promptTr": "Bir filmin bilet satışlarından elde ettiği gelire ne denir?",
     "correctAnswerTr": "gişe hasılatı (box office)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0122",
@@ -2437,7 +2679,9 @@
     "promptTr": "Bir filmin sahnelerini çekimden önce kareler hâlinde gösteren çizim dizisine ne denir?",
     "correctAnswerTr": "storyboard",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0123",
@@ -2457,7 +2701,9 @@
     "promptTr": "1930'larda Hollywood'un renkli filmleri çoğunlukla hangi yöntemle üretildi?",
     "correctAnswerTr": "Technicolor",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0124",
@@ -2477,7 +2723,9 @@
     "promptTr": "1950'lerde Fox stüdyosunun geliştirdiği geniş ekran tekniğinin adı nedir?",
     "correctAnswerTr": "CinemaScope",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   },
   {
     "questionId": "ds26_cinema_0125",
@@ -2497,6 +2745,8 @@
     "promptTr": "Farklı yerlerde eş zamanlı olayları iç içe gösteren kesme tekniği hangisidir?",
     "correctAnswerTr": "çapraz kesme (cross-cutting)",
     "reviewer": "opus-5",
-    "timestamp": "2026-08-06"
+    "timestamp": "2026-08-06",
+    "sourceVerificationLevel": "UNVERIFIABLE",
+    "verifiedAt": null
   }
 ]

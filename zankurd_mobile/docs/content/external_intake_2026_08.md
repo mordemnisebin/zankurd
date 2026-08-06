@@ -279,3 +279,70 @@ adımda, izin verildiğinde yapılacak.
 3. Doğrulananlarla birlikte tek Sînema intake bankası aç ve aktive et.
 4. Sonra Edebiyat → Teknolojî → Cografya/doğa → Dîrok → Çand/Muzîk →
    Grok'un kalan 111'i.
+
+## Tur 4 (2026-08-06) — kaynak seviyeleri ve nihai Sînema kararları
+
+Kaynaklar artık dört seviyeye ayrılmış durumda ve seviye olduğundan güçlü
+gösterilmiyor:
+
+* `FETCHED_DIRECT` — sayfa açıldı, tanım okundu. Tek başına yeterli.
+* `SEARCH_SUMMARY_CORROBORATED` — sayfa doğrudan açılamıyor (403), ama iki
+  bağımsız kurumsal kaynak aynı olguyu gösteriyor.
+* `SEARCH_SUMMARY_UNCORROBORATED` — tek kaynak. **Yetersiz.**
+* `UNVERIFIABLE` — runtime'a alınmaz.
+
+### Columbia sözlüğü: yapı keşfedildi, ama kısmi
+
+`/term/<slug>/` deseni çalışıyor. Beş terim doğrudan açılıp okundu:
+close-up, establishing-shot, voice-over, jump-cut, mise-en-scene.
+
+`browse` sayfası ve `flashback` gibi bazı slug'lar **403** veriyor — sözlük
+batch'teki her terimi kapsamıyor. Kapsanmayanlar tahminle doldurulmadı.
+
+### İki kayıt bilerek geri alındı
+
+Tur 3'te doğrulanmış saydığım iki kayıt §1'in iki-kaynak kuralına takıldı ve
+`QUARANTINED_UNVERIFIABLE` yapıldı:
+
+* `0088` (ödülün resmî adı) — yalnız Britannica; üstelik arama özeti
+  sorgudaki resmî adı doğrulamadığını açıkça söylüyordu.
+* `0091` (Berlinale Almanya) — tek kurumsal özet; berlinale.de doğrudan
+  okunmadı.
+
+Sayıyı korumak için kuralı gevşetmek, kaynak seviyesi icat etmekle aynı şey
+olurdu.
+
+### Nihai Sînema kararları (125)
+
+    ACCEPTED_VERIFIED_DIRECT          5
+    ACCEPTED_VERIFIED_CORROBORATED    6
+    QUARANTINED_DUPLICATE             2
+    REJECTED_WRONG_ANSWER             1
+    QUARANTINED_UNVERIFIABLE        111
+
+**Toplam doğrulanmış: 11. Aktivasyon eşiği 40. Aktive edilen: 0.**
+
+Eşik karşılanmadığı için batch staged ve karantinada bırakıldı; §7'nin
+"doğrulanmamış soruyla eşiği doldurma" kuralı gereği 29 kaydı tamamlamak
+için doğrulama seviyesi düşürülmedi. Aktivasyon commit'i oluşturulmadı.
+
+Sınırlayıcı etken yine doğrulama hızı: 111 kaydın çoğu ayrı bir film/yıl/
+yönetmen künyesi gerektiriyor ve kurumsal katalog sayfalarının bir kısmı
+doğrudan fetch'e kapalı.
+
+### Yılmaz Güney / Kürt sineması
+
+`docs/content/plans/yilmaz_guney_kurdish_cinema_content_plan.md` — yalnız
+plan: kaynak aileleri, alt başlıklar, doğrulanacak iddia listesi ve editoryal
+sınırlar. Soru içermiyor. Boş `Yılmaz Güney û Klasîk` etiketi, içi kaynaklı
+içerikle dolmadan yeniden kullanılmayacak.
+
+### Sıradaki iş
+
+1. `film_title_year` (34) + `director_person` (4): BFI/MoMA künye sayfaları;
+   film başına en çok iki arama, sonra karantina.
+2. Kalan film dili terimleri: Columbia'da bulunmayanlar için başka üniversite
+   veya resmî film enstitüsü sözlüğü.
+3. 40 eşiği aşılırsa tek Sînema intake bankası açılıp aktive edilecek.
+4. Sonra Edebiyat → Teknolojî → Cografya/doğa → Dîrok → Çand/Muzîk →
+   Grok'un kalan 111'i.
