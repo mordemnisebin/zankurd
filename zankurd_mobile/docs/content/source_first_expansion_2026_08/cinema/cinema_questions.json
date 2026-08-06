@@ -1,0 +1,136 @@
+[
+  {
+    "questionId": "sf_cin_0001",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_columbia_montage",
+    "claimId": "cin_montage_01",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/montage/",
+    "exactSupportingFact": "a single shot has meaning only in relation to another shot",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?",
+    "promptTr": "Film dili sözlüğüne göre montajda anlam esas olarak nereden doğar?",
+    "answersKu": [
+      "Ji dirêjahiya fîlmê",
+      "Ji têkiliya di navbera dîmenan de",
+      "Ji rengê kostuman",
+      "Ji navê derhêner"
+    ],
+    "answersTr": [
+      "Filmin uzunluğundan",
+      "Sahneler arasındaki ilişkiden",
+      "Kostümlerin renginden",
+      "Yönetmenin adından"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Di montajê de dîmenek tenê bi têkiliya xwe ya bi dîmenekî din re wateyê digire.",
+    "explanationTr": "Montajda bir sahne, anlamını ancak başka bir sahneyle kurduğu ilişkiden alır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynak cümlesiyle birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız corpus'ta yerleşik sinema sözcükleri (dîmen, fîlm) + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi aynı kavramsal sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "tanım yeniden ifade edildi, pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 ve DeepSeek 125 ile çakışma yok"
+    },
+    "finalContentHash": "31f2a250877d8f81"
+  },
+  {
+    "questionId": "sf_cin_0002",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_columbia_deep_focus",
+    "claimId": "cin_deepfocus_01",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/deep-focus/",
+    "exactSupportingFact": "render in sharp focus near and distant planes simultaneously",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Di teknîka «deep focus» de çi tê bidestxistin?",
+    "promptTr": "«Deep focus» tekniğinde ne elde edilir?",
+    "answersKu": [
+      "Tenê paşxane zelal dibe",
+      "Reng winda dibe",
+      "Dîmen hêdî dibe",
+      "Nêzîk û dûr bi hev re zelal dibin"
+    ],
+    "answersTr": [
+      "Yalnız arka plan netleşir",
+      "Renk kaybolur",
+      "Görüntü yavaşlar",
+      "Yakın ve uzak birlikte net olur"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Deep focus de cîhên nêzîk û yên dûr di heman demê de zelal têne nîşandan.",
+    "explanationTr": "Deep focus'ta yakın ve uzak düzlemler aynı anda net gösterilir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynak cümlesiyle birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız corpus'ta yerleşik sinema sözcükleri (dîmen, fîlm) + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi aynı kavramsal sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "tanım yeniden ifade edildi, pasaj kopyalanmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "external 11 ve DeepSeek 125 ile çakışma yok"
+    },
+    "finalContentHash": "29d9c585b57da63e"
+  }
+]

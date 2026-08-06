@@ -1,0 +1,15 @@
+{
+  "batchStatus": "INCOMPLETE_BELOW_MINIMUM",
+  "minimumRequired": 12,
+  "produced": 2,
+  "addedToVerifiedPool": false,
+  "whyBelowMinimum": "Bağlam bütçesi. Bu turda üç Columbia terimi açıldı; `long-take` biçimsel tanım vermediği için claim çıkarılmadı (yalnız 'a shot of some duration'). İki temiz claim iki soru verdi.",
+  "kurdishCinemaContent": "Bu turda Kürt sineması / Yılmaz Güney sorusu ÜRETİLMEDİ. §9 Risk-A için doğrudan güçlü akademik kaynak ya da iki bağımsız kaynak istiyor; bu turda hiçbiri açılmadı. Kaynaksız içerik üretilmedi, eksiklik burada kayıtlı. Plan korunuyor: plans/yilmaz_guney_kurdish_cinema_content_plan.md",
+  "notRecycledFromDeepSeek": "İki soru da doğrudan Columbia sayfalarından üretildi; eski DeepSeek adaylarının düzeltilmiş sürümü DEĞİL. DeepSeek Sînema kararları donduruldu.",
+  "verifiedQuestions": [
+    "sf_cin_0001",
+    "sf_cin_0002"
+  ],
+  "reviewer": "opus-5",
+  "timestamp": "2026-08-06"
+}

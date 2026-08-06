@@ -1727,6 +1727,153 @@
         "correctAnswer": "recommendation",
         "category": "fallbackCategory"
       }
+    },
+    {
+      "id": "source_first_cinema_questions",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "source_first_cinema_claims",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/cinema_claim_manifest.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "source_first_cinema_decisions",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/cinema_decisions.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "source_first_cinema_catalog",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/source_catalog.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "source_first_cinema_metrics",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/cinema_metrics.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "pack_columbia_montage",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/source_packs/pack_columbia_montage.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "pack_columbia_deep_focus",
+      "description": "Source-first cinema artifact",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/source_packs/pack_columbia_deep_focus.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first cinema artifact; not loaded by the app, not in the verified pool (below 12 minimum).",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
     }
   ]
 }

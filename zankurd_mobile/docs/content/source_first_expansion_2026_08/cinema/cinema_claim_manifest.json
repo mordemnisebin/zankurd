@@ -1,0 +1,30 @@
+[
+  {
+    "claimId": "cin_montage_01",
+    "sourcePackId": "pack_columbia_montage",
+    "claimFamily": "film_language_term",
+    "factualClaim": "Montajda wate ji têkiliya di navbera dîmenan de derdikeve.",
+    "exactSupportingFact": "a single shot has meaning only in relation to another shot",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/montage/",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "c9116440b38828cb"
+  },
+  {
+    "claimId": "cin_deepfocus_01",
+    "sourcePackId": "pack_columbia_deep_focus",
+    "claimFamily": "film_technique",
+    "factualClaim": "Di deep focus de dîmenên nêzîk û dûr bi hev re zelal xuya dibin.",
+    "exactSupportingFact": "render in sharp focus near and distant planes simultaneously",
+    "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/deep-focus/",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "5c58b263d1947ebb"
+  }
+]

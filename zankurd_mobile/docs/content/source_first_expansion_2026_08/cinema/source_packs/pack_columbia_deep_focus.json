@@ -1,0 +1,13 @@
+{
+  "sourcePackId": "pack_columbia_deep_focus",
+  "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/deep-focus/",
+  "sourceAccessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "copyrightNotes": "Tek kısa tanım cümlesi.",
+  "exactSourceStatements": [
+    "a style or technique of cinematography and staging with great depth of field, using relatively wide-angle lenses and small lens apertures to render in sharp focus near and distant planes simultaneously."
+  ],
+  "sourceHash": "c0d47b2a73d4e8e8"
+}
