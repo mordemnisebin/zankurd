@@ -67,7 +67,7 @@ void main() {
   /// içindeki ihlali GÖRMEDİ ve bunu negatif fixture yakaladı. Unicode
   /// bayrağıyla da güvenilir sonuç alınamadı, bu yüzden sınır elle
   /// kontrol edilir: harf olmayan bir karakterle başlamalı.
-  bool _containsTerm(String field, String term) {
+  bool containsTerm(String field, String term) {
     final haystack = field.toLowerCase();
     final needle = term.toLowerCase();
     var from = 0;
@@ -88,7 +88,7 @@ void main() {
     final hits = <String>[];
     for (final field in visibleKurmanji(q)) {
       for (final term in blocked) {
-        if (_containsTerm(field, term)) hits.add('$term -> "$field"');
+        if (containsTerm(field, term)) hits.add('$term -> "$field"');
       }
     }
     return hits;
