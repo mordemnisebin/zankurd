@@ -449,3 +449,70 @@ Volatil konu bulunmadı (sürüm, pazar payı, "en yeni" iddiası yok).
 Cografya (DeepSeek + Grok, 31 Grok kaydı dâhil) — iki havuz tek potada
 karşılaştırılıp semantic duplicate seçimi yapılacak, ardından Dîrok (Grok 46,
 risk sınıfı A) ve Çand/Muzîk.
+
+## Tur 7 (2026-08-06) — Cografya (DeepSeek 125 + Grok 31)
+
+### Çapraz duplicate: sıfır
+
+DeepSeek ile Grok arasında yakın çift bulunamadı (Jaccard >= 0.55). İki model
+farklı olgu kümeleri üretmiş; seçim yapılacak çift yok.
+
+### Asıl bulgu: batch'in çoğu sözleşmeyle çelişen kalıpta
+
+DeepSeek coğrafya batch'inin omurgası "hangi ülkededir" sorusu:
+
+    "Dêrik hangi ülkededir?"              -> Suriye'de
+    "Ağrı Dağı (Ararat) hangi ülkededir?" -> Türkiye'de
+    "Urmiye Gölü hangi ülkededir?"        -> İran'da
+    "Afrin Çayı hangi ülkede akar?"       -> Suriye'de
+
+Doğru cevabı paylaşan gruplar: Türkiye'de 16, Irak'ta 13, Suriye'de 11,
+İran'da 11. Yani Kürt yerlerinin tek ve ana kimliği egemen devlet olarak
+kuruluyor — §3.4 ve §5'in doğrudan yasakladığı kalıp.
+
+**62 kayıt** `QUARANTINED_POLITICAL_AMBIGUITY`.
+
+Bunun uydurma bir ölçüt olmadığının kanıtı batch'in kendi içinde: aynı model
+doğru kalıbı da üretmiş —
+
+    "Colemêrg li kîjan herêma Kurdistanê ye?" -> Bakurê Kurdistanê
+    "Serhed li kîjan herêma Kurdistanê ye?"   -> Bakurê Kurdistanê
+
+21 kayıt bu `Kurdistan_region` çerçevesinde. Yeniden yazım için hedef kalıp
+hazır; uydurulması gerekmiyor.
+
+### TR/KU çerçeve tutarsızlığı — 10 kayıt
+
+Türkçe metin exonim, Kurmancî metin endonim kullanıyor; §3.6 ikisinin aynı
+coğrafi çerçeveyi taşımasını şart koşar:
+
+    TR "Hakkari Kürdistan'ın hangi bölgesindedir?"
+    KU "Colemêrg li kîjan herêma Kurdistanê ye?"
+
+Aynı soru iki dilde iki farklı adlandırma rejimi kullanıyor. Kayıtlar aktive
+edilmediği için düzeltme UYGULANMADI; manifestte eski metin, tespit ve
+gerekçeyle bekliyor.
+
+### Risk sınıfları ve kararlar
+
+    risk A 77   risk B 25   risk C 54
+
+    QUARANTINED_POLITICAL_AMBIGUITY  62
+    QUARANTINED_UNVERIFIABLE         94
+
+Doğrulanan 0: bu turda coğrafya için kurumsal kaynak açılmadı; bağlam
+bütçesi çapraz denetim ve terminoloji analizine gitti — ikisi de kaynak
+doğrulamasından önce yapılması gereken işlerdi, çünkü 62 kaydın kaynağı
+doğrulansaydı bile kalıbı yüzünden aktive edilemezdi.
+
+### Ortak havuz
+
+    STAGED_VERIFIED 13 (Sînema 11, Teknolojî 2)   |   eşik 100
+
+### Sıradaki iş
+
+1. 62 `POLITICAL_AMBIGUITY` kaydını bölge çerçevesine yeniden yaz (hedef kalıp
+   batch içinde mevcut), sonra risk A kaynak doğrulaması.
+2. 10 TR/KU tutarsızlığını endonime çek.
+3. Risk C'nin 54 kaydı için tek kurumsal kaynak yeterli — en ucuz kazanç.
+4. Sonra Grok Dîrok (46, risk A) ve DeepSeek Çand/Muzîk.

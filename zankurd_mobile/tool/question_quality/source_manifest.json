@@ -1391,6 +1391,90 @@
         "correctAnswer": "correctAnswerTr",
         "category": "riskClass"
       }
+    },
+    {
+      "id": "intake_decisions_geography",
+      "description": "Geography intake artifact",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/decisions_geography.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Read-only geography intake artifact; never loaded by the app.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answers",
+        "correctAnswer": "correctAnswerTr",
+        "category": "claimFamily"
+      }
+    },
+    {
+      "id": "terminology_review_geography",
+      "description": "Geography intake artifact",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/geography/terminology_review.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Read-only geography intake artifact; never loaded by the app.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answers",
+        "correctAnswer": "correctAnswerTr",
+        "category": "claimFamily"
+      }
+    },
+    {
+      "id": "geo_candidates_deepseek",
+      "description": "Geography intake artifact",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/geography/deepseek_candidates.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_candidates_geography",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Read-only geography intake artifact; never loaded by the app.",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "geo_candidates_grok",
+      "description": "Geography intake artifact",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/geography/grok_candidates.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_candidates_geography",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Read-only geography intake artifact; never loaded by the app.",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
     }
   ]
 }
