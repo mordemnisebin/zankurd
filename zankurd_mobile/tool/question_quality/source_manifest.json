@@ -1307,6 +1307,69 @@
         "correctAnswer": "correctAnswer",
         "category": "category"
       }
+    },
+    {
+      "id": "literature_claim_matrix",
+      "description": "Literature intake decision record",
+      "path": "docs/content/literature_claim_matrix_2026_08.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Per-claim decision record, not a question bank.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "factualClaim",
+        "options": "answers",
+        "correctAnswer": "expectedAnswer",
+        "category": "claimType"
+      }
+    },
+    {
+      "id": "intake_decisions_literature",
+      "description": "Literature intake decision record",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/decisions_literature.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Per-claim decision record, not a question bank.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "factualClaim",
+        "options": "answers",
+        "correctAnswer": "expectedAnswer",
+        "category": "claimType"
+      }
+    },
+    {
+      "id": "terminology_review_literature",
+      "description": "Literature intake decision record",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/terminology_review_literature.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "intake_decisions",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Per-claim decision record, not a question bank.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "factualClaim",
+        "options": "answers",
+        "correctAnswer": "expectedAnswer",
+        "category": "claimType"
+      }
     }
   ]
 }

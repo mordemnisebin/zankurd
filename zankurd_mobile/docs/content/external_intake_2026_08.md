@@ -346,3 +346,53 @@ içerikle dolmadan yeniden kullanılmayacak.
 3. 40 eşiği aşılırsa tek Sînema intake bankası açılıp aktive edilecek.
 4. Sonra Edebiyat → Teknolojî → Cografya/doğa → Dîrok → Çand/Muzîk →
    Grok'un kalan 111'i.
+
+## Tur 5 (2026-08-06) — ortak havuz ve Edebiyat
+
+### Ortak doğrulanmış havuz kuruldu
+
+`docs/content/verified_external_pool_2026_08/` — 11 Sînema kaydı
+STAGED_VERIFIED. `build_verified_pool.py` havuzu karar manifestlerinden
+TÜRETİR (deterministik, idempotent doğrulandı). Kategori başına 40 eşiği
+kaldırıldı; toplu eşik 100.
+
+### Edebiyat (DeepSeek batch_02, 125) — kapatıldı, doğrulanan 0
+
+    kurdish_lit 25   work_author 14   concept_term 8
+    period_movement 6   other 72
+
+Bu batch Sînema'dan farklı: **25 kayıt doğrudan Kürt edebiyatıyla ilgili**
+(Ehmedê Xanî, Melayê Cizîrî, Feqiyê Teyran, Cegerxwîn, Mehmed Uzun,
+dengbêj geleneği, Şivanê Kurmanca). Uygulama için en değerli içerik burada.
+
+Encyclopaedia Iranica üç iddiayı destekledi — Mem û Zîn'in masnavi olduğu,
+Kurmancî yazıldığı ve Kürt ulusal destanı sayıldığı. Ama §1'in iki-kaynak
+kuralı için ikinci **bağımsız** kurumsal kaynak bulunamadı: ikinci arama
+British Library ve LoC alan adlarından sonuç döndürdü, fakat özet aynı
+iddiayı tekrar ediyordu, ayrı bir kurumsal sayfayı göstermiyordu.
+
+Sînema'da 0088 ve 0091 aynı sebeple geri alınmıştı. Aynı ölçüyü burada
+gevşetmek tutarsızlık olurdu; üçü de `SEARCH_SUMMARY_UNCORROBORATED` olarak
+karantinada. Tarih iddiaları (Mem û Zîn 1692, Xanî'nin 1651 doğumu) hiçbir
+kurumsal kaynakta doğrulanamadı.
+
+**Terminoloji bulgusu:** 8 kayıt `KURDISH_ENDONYM_REWRITE`, 1
+`POLITICAL_STATUS_QUESTION_REJECTED`, 1 `REGION_FRAME_REWRITE`. Örnek:
+`0003` Ehmedê Xanî'nin doğum yerini "Xankê (Hakkari)" veriyor — sözleşme
+gereği Colemêrg. Düzeltmeler kayıt aktive edilmediği için uygulanmadı;
+manifestte bekliyor (`terminology_review_literature.json`).
+
+### Ortak havuz durumu
+
+    STAGED_VERIFIED 11 (Sînema)   |   eşik 100   |   aktivasyon: HAYIR
+
+### Sıradaki iş
+
+Sıra: Grok Teknolojî → DeepSeek Cografya → Grok Cografya → Grok Dîrok →
+DeepSeek Çand/Muzîk → Grok'un kalanı.
+
+Edebiyat'ın 25 Kürt edebiyatı kaydı, kurumsal Kürt çalışmaları kaynakları
+(Iranica dışında: üniversite Kürt çalışmaları merkezleri, ulusal kütüphane
+katalogları, British Library Kürtçe koleksiyonu) `FETCHED_DIRECT` seviyesine
+çıkarıldığında yeniden değerlendirilmeli — havuzun en yüksek değerli adayları
+bunlar.

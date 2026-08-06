@@ -1,0 +1,198 @@
+[
+  {
+    "questionId": "ds26_literature_0003",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr, Diyarbakır->Amed, Hakkari->Colemêrg, Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Ehmedê Xanî di sala 1651'an de li kîjan deverê hatiye dinê?",
+    "newPromptKu": null,
+    "oldPromptTr": "Ehmedê Xanî 1651'de hangi bölgede doğdu?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Ehmedê Xanî di sala 1651'an de li gundê Xankê yê herêma Colemêrgê (Hakkari) hatiye dinê. Ew hem nivîskar û hem jî alim bû û di sala 1707'an de wefat kir.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Ehmedê Xanî 1651'de Hakkari bölgesindeki Xankê köyünde doğdu. Hem yazar hem âlimdi ve 1707'de vefat etti.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0004",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Melayê Bateyî di kîjan sedsalê de jiyaye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Melayê Bateyî hangi yüzyılda yaşamıştır?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Melayê Bateyî (1757-1791) di sedsala 18an de jiyaye. Ew bi Mewlûda xwe ya bi Kurmancî tê nasîn û yek ji helbestvanên navdar ên herêma Cizîrê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Melayê Bateyî (1757-1791) 18. yüzyılda yaşamıştır. Kurmancî mevlidiyle tanınır ve Cizre bölgesinin ünlü şairlerindendir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0007",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr, Hakkari->Colemêrg"
+    ],
+    "oldPromptKu": "Melayê Cizîrî di kîjan bajarî de jiyaye û wefat kiriye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Melayê Cizîrî hangi şehirde yaşayıp vefat etmiştir?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Melayê Cizîrî di navbera sedsalên 16 û 17an de li Cizîra Botanê (Cizre) jiyaye û li wir wefat kiriye. Navê wî jî ji vî bajarî tê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Melayê Cizîrî, 16. ve 17. yüzyıllar arasında Cizre'de yaşamış ve orada vefat etmiştir. Adı da bu şehirden gelir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0017",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Erbil->Hewlêr, Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Destana Sîyabend û Xecê bi piranî li kîjan herêmê tê vegotin?",
+    "newPromptKu": null,
+    "oldPromptTr": "Sîyabend û Xecê destanı çoğunlukla hangi bölgede anlatılır?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Destana Sîyabend û Xecê çîrokeke evînê ye ku bi piranî li herêma Çewlîgê (Bingol) û deverên wê tê vegotin. Ew ji destanên herî navdar ên kurdî ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Sîyabend û Xecê destanı, çoğunlukla Bingöl bölgesi ve çevresinde anlatılan bir aşk hikâyesidir. Kürtlerin en ünlü destanlarındandır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0076",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr, Diyarbakır->Amed, Erbil->Hewlêr"
+    ],
+    "oldPromptKu": "Melayê Cizîrî li kîjan herêmê jiyaye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Melayê Cizîrî hangi bölgede yaşamıştır?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Melayê Cizîrî di sedsalên 16-17an de li herêma Botanê, taybetî li Cizîra Botanê jiyaye. Di wê serdemê de Botan mîrektiyeke xurt a kurdan bû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Melayê Cizîrî, 16-17. yüzyıllarda Botan bölgesinde, özellikle Cizre'de yaşamıştır. O dönemde Botan güçlü bir Kürt beyliğiydi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0086",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr, Diyarbakır->Amed, Kamışlı->Qamişlo"
+    ],
+    "oldPromptKu": "Mehmed Uzun di sala 1953'an de li kîjan bajarî hatiye dinê?",
+    "newPromptKu": null,
+    "oldPromptTr": "Mehmed Uzun 1953'te hangi şehirde doğdu?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Mehmed Uzun di sala 1953'an de li Sêwregê (Siverek, Amed) hatiye dinê. Wî piranîya jiyana xwe li Swêdê bi derbas kir û romanên xwe li wir nivîsîn.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Mehmed Uzun 1953'te Siverek'te (Diyarbakır) doğdu. Yaşamının büyük bölümünü İsveç'te geçirdi ve romanlarını orada yazdı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0091",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "POLITICAL_STATUS_QUESTION_REJECTED",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Kars']",
+      "yalnız devlet çerçevesi: ['Kars']",
+      "exonim: Kars->Qers"
+    ],
+    "oldPromptKu": "Şivanê Kurmanca di kîjan salê û li kîjan welatî hate weşandin?",
+    "newPromptKu": null,
+    "oldPromptTr": "Şivanê Kurmanca hangi yılda ve hangi ülkede yayımlandı?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Şivanê Kurmanca ya Erebê Şemo di sala 1935'an de li Yekîtiya Sovyetê hate weşandin û wek yekem romana kurdî tê hesibandin. Erebê Şemo li Qersê ji dayik bûye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Erebê Şemo'nun Şivanê Kurmanca'sı 1935'te Sovyetler Birliği'nde yayımlandı ve ilk Kürt romanı sayılır. Erebê Şemo, Kars'ta doğmuştur.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "ds26_literature_0095",
+    "sourceFile": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_02_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed, Kars->Qers"
+    ],
+    "oldPromptKu": "Yaşar Kemal di sala 1923'an de li kîjan herêmê hatiye dinê?",
+    "newPromptKu": null,
+    "oldPromptTr": "Yaşar Kemal 1923'te hangi bölgede doğdu?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Yaşar Kemal di sala 1923'an de li Hemîte (Gökçedam) ya herêma Adanayê hatiye dinê. Çîrokên wî yên bi zaravayê gel ê çukurovayê pir dewlemend in.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Yaşar Kemal 1923'te Adana bölgesindeki Hemite (Gökçedam) köyünde doğdu. Hikâyeleri Çukurova halk ağzıyla çok zengindir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  }
+]

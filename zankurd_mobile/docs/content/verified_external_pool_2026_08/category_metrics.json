@@ -9,7 +9,7 @@
   },
   "skippedByDecision": {
     "QUARANTINED_DUPLICATE": 2,
-    "QUARANTINED_UNVERIFIABLE": 111,
+    "QUARANTINED_UNVERIFIABLE": 236,
     "REJECTED_WRONG_ANSWER": 1
   },
   "activationThreshold": 100,
