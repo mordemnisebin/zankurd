@@ -1643,6 +1643,27 @@
         "correctAnswer": "correctIndex",
         "category": "category"
       }
+    },
+    {
+      "id": "pack_what_is_a_url",
+      "description": "MDN URL source pack",
+      "path": "docs/content/source_first_expansion_2026_08/technology_pilot/pack_what_is_a_url.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_pilot",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Source pack; contains no questions.",
+      "columns": {
+        "id": "sourcePackId",
+        "prompt": "sourceTitle",
+        "options": "exactSourceStatements",
+        "correctAnswer": "sourceReference",
+        "category": "riskClass"
+      }
     }
   ]
 }
