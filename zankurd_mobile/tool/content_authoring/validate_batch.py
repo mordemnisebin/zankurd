@@ -85,6 +85,12 @@ class Gate:
     def __init__(self, existing_prompts=None, existing_ids=None):
         self.existing_prompts = existing_prompts or {}
         self.existing_ids = set(existing_ids or [])
+        # Near-duplicate taraması BATCH İÇİYLE sınırlıydı; mevcut bankaya
+        # karşı bakmıyordu. Bu yüzden `ziman_x_0038` ("Hejmara «deh» bi
+        # tirkî çend e?") kapıdan geçti ve yayımlanmış `offline_2035`
+        # ("Hejmara «deh» bi Tirkî çi ye?") ile aynı bilgiyi soruyordu —
+        # depo denetimi yakaladı, ben yakalayamadım (2026-08-06).
+        self.existing_token_sets = [tokens(p) for p in (existing_prompts or [])]
         self.hard = collections.Counter()
         self.rows_ok = []
         self.rows_bad = []
@@ -173,6 +179,12 @@ class Gate:
         np = norm(p_ku)
         if np in seen_prompts or np in self.existing_prompts:
             errs.append("duplicate-prompt")
+        t = tokens(p_ku)
+        for et in self.existing_token_sets:
+            u = t | et
+            if u and len(t & et) / len(u) >= 0.7:
+                errs.append("near-duplicate-of-existing")
+                break
 
         return errs
 

@@ -4,11 +4,11 @@
  "gate": "tool/content_authoring/validate_batch.py",
  "gateResult": "PASS (0 hard violations, all distribution gates green)",
  "activationBlocker": "tool/question_quality baseline ratchet: 166 new fingerprints require review + --accept-current-debt",
- "count": 220,
+ "count": 218,
  "categories": {
   "Teknolojî": 110,
   "Sînema": 55,
-  "Ziman": 55
+  "Ziman": 53
  },
  "batches": {
   "tech_core": 55,
@@ -1665,15 +1665,6 @@
    "state": "accepted"
   },
   {
-   "id": "ziman_x_0019",
-   "category": "Ziman",
-   "difficulty": 3,
-   "authoredBy": "subagent:ziman",
-   "reviewedBy": "validate_batch.py",
-   "contentHash": "cd2d3cf8d8831079",
-   "state": "accepted"
-  },
-  {
    "id": "ziman_x_0020",
    "category": "Ziman",
    "difficulty": 4,
@@ -1836,15 +1827,6 @@
    "state": "accepted"
   },
   {
-   "id": "ziman_x_0038",
-   "category": "Ziman",
-   "difficulty": 1,
-   "authoredBy": "subagent:ziman",
-   "reviewedBy": "validate_batch.py",
-   "contentHash": "f54a12ec21c85392",
-   "state": "accepted"
-  },
-  {
    "id": "ziman_x_0039",
    "category": "Ziman",
    "difficulty": 4,
@@ -1997,5 +1979,14 @@
    "contentHash": "307f9f752a117b73",
    "state": "accepted"
   }
- ]
+ ],
+ "quarantined": 2,
+ "quarantineReasons": {
+  "semantic_duplicate_of_existing:offline_2035": 1,
+  "near-duplicate-of-existing": 1
+ },
+ "fingerprintReview": "COMPLETE — 166 fingerprint sınıflandırıldı ve çözüldü (220 missing_source_metadata, 7 near_duplicate_candidate, 1 generated_template). question-quality baseline delta 1856->1856: SIFIR yeni borç, blocker 0, critical 0, gate exit 0.",
+ "remainingActivationBlocker": "all_banks_quality_test 3 kapı + typography: (a) 'Türkçe arayüzde açıklama Kurmancî kalmıyor', (b) 27 kayıtta yabancı dilde çeldirici, (c) loader merge sayacı, (d) Kurmancî çevirilerin getirdiği düz tırnaklar «» yapılmalı.",
+ "provenanceHonesty": "LLM-authored from textbook-level general knowledge; verified by automated gate only. No external source verification, no human editorial review, no fabricated URLs. reviewStatus deliberately left unset (approved would overclaim; needsReview would make questions unplayable via ContentQualityPolicy.isEligible).",
+ "explanationKuCoverage": "218/218"
 }
