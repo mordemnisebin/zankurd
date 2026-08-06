@@ -3793,5 +3793,1270 @@
     "explanation": "Film, İstanbul«da tanışan iki genç adamın ülkenin doğusuna uzanan yolculuğunu izler ve Berlin»de ödül almıştır. Demirkubuz, İpekçi ve Akar da 1990'ların sonunda öne çıkan yönetmenlerdir.",
     "difficulty": 3,
     "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0001",
+    "category": "Ziman",
+    "prompt": "Kîjan peyva kurmancî tê wateya «kar»a tirkî?",
+    "answers": [
+      "Baran",
+      "Ba",
+      "Berf",
+      "Ewr"
+    ],
+    "correctAnswer": "Berf",
+    "promptTr": "Türkçedeki «kar» sözcüğünün Kurmancî karşılığı hangisidir?",
+    "answersTr": [
+      "Baran",
+      "Ba",
+      "Berf",
+      "Ewr"
+    ],
+    "correctAnswerTr": "Berf",
+    "explanation": "Berf, gökten yağan kar demektir. Baran yağmur, ba rüzgâr, ewr ise buluttur; dördü de hava olaylarıyla ilgili olduğu için sık karıştırılır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0002",
+    "category": "Ziman",
+    "prompt": "Li ser sifreyê «nan» heye. Ev peyv bi tirkî çi ye?",
+    "answers": [
+      "Ekmek",
+      "Süt",
+      "Et",
+      "Peynir"
+    ],
+    "correctAnswer": "Ekmek",
+    "promptTr": "Sofrada «nan» var. Bu kelimenin Türkçesi nedir?",
+    "answersTr": [
+      "Ekmek",
+      "Süt",
+      "Et",
+      "Peynir"
+    ],
+    "correctAnswerTr": "Ekmek",
+    "explanation": "Nan, un ve sudan yapılan ekmektir. Süt şîr, et goşt, peynir penîr olarak geçer; hepsi temel besin adı olduğu için şıklar aynı sınıftandır.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0003",
+    "category": "Ziman",
+    "prompt": "Navdêra «mal» mê ye. Ji bo wateya «evim» kîjan form rast e?",
+    "answers": [
+      "malê min",
+      "malên min",
+      "malek min",
+      "mala min"
+    ],
+    "correctAnswer": "mala min",
+    "promptTr": "«Mal» adı dişildir. «Evim» anlamı için doğru biçim hangisidir?",
+    "answersTr": [
+      "malê min",
+      "malên min",
+      "malek min",
+      "mala min"
+    ],
+    "correctAnswerTr": "mala min",
+    "explanation": "Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden «mala min» denir. -ê eril tekile, -ên çoğula aittir; «malek» ise belirsiz tekildir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0004",
+    "category": "Ziman",
+    "prompt": "Cînavka «hûn» bi tirkî çi ye?",
+    "answers": [
+      "Biz",
+      "Siz",
+      "Onlar",
+      "Sen"
+    ],
+    "correctAnswer": "Siz",
+    "promptTr": "«Hûn» zamirinin Türkçe karşılığı nedir?",
+    "answersTr": [
+      "Biz",
+      "Siz",
+      "Onlar",
+      "Sen"
+    ],
+    "correctAnswerTr": "Siz",
+    "explanation": "Hûn, çoğul ikinci kişiyi yani «siz»i gösterir. «Biz» em, «onlar» ew, «sen» ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0005",
+    "category": "Ziman",
+    "prompt": "Di alfabeya kurmancî de bi giştî çend tîp hene?",
+    "answers": [
+      "31",
+      "29",
+      "26",
+      "33"
+    ],
+    "correctAnswer": "31",
+    "promptTr": "Kurmancî alfabesinde toplam kaç harf vardır?",
+    "answersTr": [
+      "31",
+      "29",
+      "26",
+      "33"
+    ],
+    "correctAnswerTr": "31",
+    "explanation": "Latin temelli Kurmancî alfabesinde 8 ünlü ve 23 ünsüz olmak üzere 31 harf bulunur. 29 Türk, 26 ise İngiliz alfabesinin harf sayısıdır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0006",
+    "category": "Ziman",
+    "prompt": "Du peyvên cuda yên bi heman wateyê, ji hev re çi tên gotin?",
+    "answers": [
+      "Dijwate",
+      "Hevdeng",
+      "Hevwate",
+      "Peyva deynkirî"
+    ],
+    "correctAnswer": "Hevwate",
+    "promptTr": "Aynı anlama gelen iki farklı kelimeye ne denir?",
+    "answersTr": [
+      "Zıt anlamlı",
+      "Eş sesli",
+      "Eş anlamlı",
+      "Alıntı kelime"
+    ],
+    "correctAnswerTr": "Eş anlamlı",
+    "explanation": "Eş anlamlı sözcükler farklı yazılır, aynı anlamı taşır: yıl ile sene gibi. Zıt anlamlı karşıtlığı, eş sesli ise aynı yazılışta farklı anlamı gösterir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0007",
+    "category": "Ziman",
+    "prompt": "Rengê «kesk» di tirkî de kîjan reng e?",
+    "answers": [
+      "Sarı",
+      "Yeşil",
+      "Mavi",
+      "Kırmızı"
+    ],
+    "correctAnswer": "Yeşil",
+    "promptTr": "«Kesk» rengi Türkçede hangi renktir?",
+    "answersTr": [
+      "Sarı",
+      "Yeşil",
+      "Mavi",
+      "Kırmızı"
+    ],
+    "correctAnswerTr": "Yeşil",
+    "explanation": "Kesk yeşil demektir. Sarı zer, mavi şîn, kırmızı ise sordur; dördü de temel renk adı olduğu için aynı kavram sınıfındadır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0008",
+    "category": "Ziman",
+    "prompt": "Kîjan hevok wateya «Ekmeği yedim» bi rêziman rast dide?",
+    "answers": [
+      "Ez nan xwar",
+      "Ez nan dixwim",
+      "Min nan dixwe",
+      "Min nan xwar"
+    ],
+    "correctAnswer": "Min nan xwar",
+    "promptTr": "«Ekmeği yedim» anlamını dilbilgisi açısından doğru veren cümle hangisidir?",
+    "answersTr": [
+      "Ez nan xwar",
+      "Ez nan dixwim",
+      "Min nan dixwe",
+      "Min nan xwar"
+    ],
+    "correctAnswerTr": "Min nan xwar",
+    "explanation": "Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden «ez» yerine «min» gelir. «Ez nan dixwim» ise ekmek yiyorum demektir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0009",
+    "category": "Ziman",
+    "prompt": "Peyva «dayik» bi tirkî tê çi wateyê?",
+    "answers": [
+      "Abla",
+      "Teyze",
+      "Anne",
+      "Nine"
+    ],
+    "correctAnswer": "Anne",
+    "promptTr": "«Dayik» kelimesi Türkçede ne demektir?",
+    "answersTr": [
+      "Abla",
+      "Teyze",
+      "Anne",
+      "Nine"
+    ],
+    "correctAnswerTr": "Anne",
+    "explanation": "Dayik, kısa biçimiyle dê, anne demektir. Teyze xaltî, nine dapîr olarak geçer; hepsi kadın akraba adı olduğu için karıştırılabilir.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0010",
+    "category": "Ziman",
+    "prompt": "Kîjan form wateya «kitaplarım» bi kurmancî rast dide?",
+    "answers": [
+      "pirtûkên min",
+      "pirtûka min",
+      "pirtûkan min",
+      "pirtûkek min"
+    ],
+    "correctAnswer": "pirtûkên min",
+    "promptTr": "«Kitaplarım» anlamını doğru veren biçim hangisidir?",
+    "answersTr": [
+      "pirtûkên min",
+      "pirtûka min",
+      "pirtûkan min",
+      "pirtûkek min"
+    ],
+    "correctAnswerTr": "pirtûkên min",
+    "explanation": "Çoğul izafe eki -ên«dir. »Pirtûka min« tekil dişil biçimdir, »pirtûkek« bir kitap demektir, »pirtûkan' ise tek başına izafe kuramaz.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0011",
+    "category": "Ziman",
+    "prompt": "Hejmara «heft» bi tirkî çi ye?",
+    "answers": [
+      "Beş",
+      "Altı",
+      "Sekiz",
+      "Yedi"
+    ],
+    "correctAnswer": "Yedi",
+    "promptTr": "«Heft» sayısı Türkçede kaçtır?",
+    "answersTr": [
+      "Beş",
+      "Altı",
+      "Sekiz",
+      "Yedi"
+    ],
+    "correctAnswerTr": "Yedi",
+    "explanation": "Heft yedidir. Beş pênc, altı şeş, sekiz heşttir; şeş ile heşt sesçe yakın olduğu için sık karıştırılır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0012",
+    "category": "Ziman",
+    "prompt": "Kurmancî û Soranî ji bo zimanê kurdî çi ne?",
+    "answers": [
+      "Du alfabe",
+      "Du zarava",
+      "Du hevok",
+      "Du deng"
+    ],
+    "correctAnswer": "Du zarava",
+    "promptTr": "Kurmancî ve Soranî, Kürt dili açısından nedir?",
+    "answersTr": [
+      "İki alfabe",
+      "İki lehçe",
+      "İki cümle",
+      "İki ses"
+    ],
+    "correctAnswerTr": "İki lehçe",
+    "explanation": "İkisi aynı dilin iki lehçesidir; söz varlığı büyük ölçüde ortaktır ama ses ve çekim farkları vardır. Yazı sistemi ayrı bir konudur.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0013",
+    "category": "Ziman",
+    "prompt": "Hevoka «Ez diçim» çawa tê neyînîkirin?",
+    "answers": [
+      "Ez naçim",
+      "Ez neçim",
+      "Ez nediçim",
+      "Ez biçim"
+    ],
+    "correctAnswer": "Ez naçim",
+    "promptTr": "«Ez diçim» cümlesi nasıl olumsuz yapılır?",
+    "answersTr": [
+      "Ez naçim",
+      "Ez neçim",
+      "Ez nediçim",
+      "Ez biçim"
+    ],
+    "correctAnswerTr": "Ez naçim",
+    "explanation": "Bildirme kipinde di- öneki yerini na- ekine bırakır: diçim olumsuzda naçim olur. «Neçim» ile «biçim» istek kipine aittir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0014",
+    "category": "Ziman",
+    "prompt": "Ajalê ku bi tirkî «at» e, bi kurmancî çi ye?",
+    "answers": [
+      "Ker",
+      "Ga",
+      "Hesp",
+      "Kûçik"
+    ],
+    "correctAnswer": "Hesp",
+    "promptTr": "«At» hayvanının Kurmancî adı hangisidir?",
+    "answersTr": [
+      "Ker",
+      "Ga",
+      "Hesp",
+      "Kûçik"
+    ],
+    "correctAnswerTr": "Hesp",
+    "explanation": "Hesp at demektir. Ker eşek, ga öküz, kûçik ise köpektir; dördü de evcil hayvan adı olduğu için şıklar aynı sınıftandır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0015",
+    "category": "Ziman",
+    "prompt": "Peyva «kulîlk» ji çend kîteyan pêk tê?",
+    "answers": [
+      "Çar",
+      "Yek",
+      "Sê",
+      "Du"
+    ],
+    "correctAnswer": "Du",
+    "promptTr": "«Kulîlk» kelimesi kaç heceden oluşur?",
+    "answersTr": [
+      "Dört",
+      "Bir",
+      "Üç",
+      "İki"
+    ],
+    "correctAnswerTr": "İki",
+    "explanation": "Hece sayısı ünlü sayısına eşittir. Bu sözcükte u ve î olmak üzere iki ünlü vardır: ku-lîlk. Ünsüz yığını hece sayısını artırmaz.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0016",
+    "category": "Ziman",
+    "prompt": "Dema ku roj diçe ava, ji wê demê re bi kurmancî çi tê gotin?",
+    "answers": [
+      "Sibe",
+      "Êvar",
+      "Nîvro",
+      "Şev"
+    ],
+    "correctAnswer": "Êvar",
+    "promptTr": "Güneşin battığı vakte Kurmancîde ne denir?",
+    "answersTr": [
+      "Sibe",
+      "Êvar",
+      "Nîvro",
+      "Şev"
+    ],
+    "correctAnswerTr": "Êvar",
+    "explanation": "Êvar günbatımı vaktidir. Sibe sabahı, nîvro öğleni, şev ise karanlık saatlerin tamamını anlatır; dördü de gün bölümü adıdır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0017",
+    "category": "Ziman",
+    "prompt": "Ji bo wateya «evde» kîjan bikaranîn rast e?",
+    "answers": [
+      "ji malê",
+      "bi malê",
+      "li malê",
+      "ser malê"
+    ],
+    "correctAnswer": "li malê",
+    "promptTr": "«Evde» anlamı için doğru kullanım hangisidir?",
+    "answersTr": [
+      "ji malê",
+      "bi malê",
+      "li malê",
+      "ser malê"
+    ],
+    "correctAnswerTr": "li malê",
+    "explanation": "Bulunma anlamını «li» daçeki verir. «Ji» ayrılma yani -den, «bi» araç yani ile anlamındadır; «ser» tek başına daçek olarak kullanılmaz.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0018",
+    "category": "Ziman",
+    "prompt": "Peyva «derî» bi tirkî çi ye?",
+    "answers": [
+      "Kapı",
+      "Pencere",
+      "Duvar",
+      "Çatı"
+    ],
+    "correctAnswer": "Kapı",
+    "promptTr": "«Derî» kelimesinin Türkçesi nedir?",
+    "answersTr": [
+      "Kapı",
+      "Pencere",
+      "Duvar",
+      "Çatı"
+    ],
+    "correctAnswerTr": "Kapı",
+    "explanation": "Derî kapı demektir. Duvar dîwar, çatı banî olarak geçer; pencere ise Kurmancîde de aynı biçimde söylenir. Hepsi ev bölümü adıdır.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0019",
+    "category": "Ziman",
+    "prompt": "Dijwateya peyva «germ» kîjan e?",
+    "answers": [
+      "Nerm",
+      "Sar",
+      "Şil",
+      "Giran"
+    ],
+    "correctAnswer": "Sar",
+    "promptTr": "«Germ» kelimesinin zıt anlamlısı nedir?",
+    "answersTr": [
+      "Nerm (yumuşak)",
+      "Sar (soğuk)",
+      "Şil (ıslak)",
+      "Giran (ağır)"
+    ],
+    "correctAnswerTr": "Sar (soğuk)",
+    "explanation": "Germ sıcak demektir; karşıtı sar yani soğuktur. Nerm, şil ve giran da sıfattır ama hiçbiri sıcaklık ekseninde yer almaz.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0020",
+    "category": "Ziman",
+    "prompt": "Forma fermanî ya lêkera «xwendin» ji bo yekjimar kîjan e?",
+    "answers": [
+      "xwend",
+      "dixwîne",
+      "xwendiye",
+      "bixwîne"
+    ],
+    "correctAnswer": "bixwîne",
+    "promptTr": "«Xwendin» fiilinin tekil emir biçimi hangisidir?",
+    "answersTr": [
+      "xwend",
+      "dixwîne",
+      "xwendiye",
+      "bixwîne"
+    ],
+    "correctAnswerTr": "bixwîne",
+    "explanation": "Emir kipi bi- öneki ve fiil köküyle kurulur: bi + xwîn + e. «Dixwîne» o okuyor, «xwend» geçmiş kök, «xwendiye» ise bitmiş geçmiştir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0021",
+    "category": "Ziman",
+    "prompt": "Bi kurmancî ji «yıldız»ê re çi tê gotin?",
+    "answers": [
+      "Stêrk",
+      "Heyv",
+      "Roj",
+      "Ewr"
+    ],
+    "correctAnswer": "Stêrk",
+    "promptTr": "«Yıldız» için Kurmancîde ne denir?",
+    "answersTr": [
+      "Stêrk",
+      "Heyv",
+      "Roj",
+      "Ewr"
+    ],
+    "correctAnswerTr": "Stêrk",
+    "explanation": "Stêrk yıldız demektir. Heyv ay, roj hem güneş hem gün, ewr ise buluttur; hepsi gökyüzüyle ilgili olduğu için birlikte öğrenilir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0022",
+    "category": "Ziman",
+    "prompt": "Peyveke ku ji zimanekî din hatibe girtin, jê re çi tê gotin?",
+    "answers": [
+      "Hevwate",
+      "Kîte",
+      "Peyva deynkirî",
+      "Dijwate"
+    ],
+    "correctAnswer": "Peyva deynkirî",
+    "promptTr": "Başka bir dilden alınmış kelimeye ne denir?",
+    "answersTr": [
+      "Eş anlamlı",
+      "Hece",
+      "Alıntı kelime",
+      "Zıt anlamlı"
+    ],
+    "correctAnswerTr": "Alıntı kelime",
+    "explanation": "Diller birbirinden sözcük alır; bunlara alıntı ya da ödünç kelime denir. Türkçedeki kalem Arapçadan, vapur Fransızcadan gelmiştir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0023",
+    "category": "Ziman",
+    "prompt": "Kîjan navdêr di kurmancî de nêr e?",
+    "answers": [
+      "Mal",
+      "Nan",
+      "Roj",
+      "Şev"
+    ],
+    "correctAnswer": "Nan",
+    "promptTr": "Kurmancîde hangi ad erildir?",
+    "answersTr": [
+      "Mal",
+      "Nan",
+      "Roj",
+      "Şev"
+    ],
+    "correctAnswerTr": "Nan",
+    "explanation": "Eril olduğu için izafede «nanê germ» denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0024",
+    "category": "Ziman",
+    "prompt": "Peyva «duh» bi tirkî tê çi wateyê?",
+    "answers": [
+      "Yarın",
+      "Bugün",
+      "Sabah",
+      "Dün"
+    ],
+    "correctAnswer": "Dün",
+    "promptTr": "«Duh» kelimesi Türkçede ne demektir?",
+    "answersTr": [
+      "Yarın",
+      "Bugün",
+      "Sabah",
+      "Dün"
+    ],
+    "correctAnswerTr": "Dün",
+    "explanation": "Duh, bazı yörelerde do, dün demektir. Kurmancîde «sibe» hem sabah hem ertesi gün anlamı taşır, bu yüzden bağlam belirleyicidir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0025",
+    "category": "Ziman",
+    "prompt": "Di hevoka «Ez ... dibînim» de ji bo «seni» kîjan cînavk rast e?",
+    "answers": [
+      "tu",
+      "ew",
+      "te",
+      "wî"
+    ],
+    "correctAnswer": "te",
+    "promptTr": "«Ez ... dibînim» cümlesinde «seni» için hangi zamir gelir?",
+    "answersTr": [
+      "tu",
+      "ew",
+      "te",
+      "wî"
+    ],
+    "correctAnswerTr": "te",
+    "explanation": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. «Tu» yalın öznedir, «wî» eril üçüncü kişi, «ew» ise yalın üçüncü kişidir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0026",
+    "category": "Ziman",
+    "prompt": "Rengê «reş» bi tirkî çi ye?",
+    "answers": [
+      "Siyah",
+      "Beyaz",
+      "Yeşil",
+      "Sarı"
+    ],
+    "correctAnswer": "Siyah",
+    "promptTr": "«Reş» rengi Türkçede nedir?",
+    "answersTr": [
+      "Siyah",
+      "Beyaz",
+      "Yeşil",
+      "Sarı"
+    ],
+    "correctAnswerTr": "Siyah",
+    "explanation": "Reş siyah demektir; beyaz spî, yeşil kesk, sarı ise zerdir. Reş ile spî birbirinin karşıtı olduğu için ikisi birlikte öğretilir.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0027",
+    "category": "Ziman",
+    "prompt": "Kurdî di kîjan malbata zimanan de cih digire?",
+    "answers": [
+      "Malbata tirkî",
+      "Malbata samî",
+      "Malbata fîno-ugrî",
+      "Malbata hindû-ewropî"
+    ],
+    "correctAnswer": "Malbata hindû-ewropî",
+    "promptTr": "Kürtçe hangi dil ailesinde yer alır?",
+    "answersTr": [
+      "Türk dilleri",
+      "Sami dilleri",
+      "Fin-Ugor dilleri",
+      "Hint-Avrupa dilleri"
+    ],
+    "correctAnswerTr": "Hint-Avrupa dilleri",
+    "explanation": "Kürtçe, Hint-Avrupa ailesinin İran kolundandır ve Farsçayla akrabadır. Arapça Sami, Türkçe Türk dilleri, Macarca ise Fin-Ugor ailesindendir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0028",
+    "category": "Ziman",
+    "prompt": "Lêkera «çûn» bi pêşgira di- ji bo kesê sêyem ê yekjimar çawa tê?",
+    "answers": [
+      "diçim",
+      "diçe",
+      "diçin",
+      "diçî"
+    ],
+    "correctAnswer": "diçe",
+    "promptTr": "«Çûn» fiili di- önekiyle tekil üçüncü kişide nasıl olur?",
+    "answersTr": [
+      "diçim",
+      "diçe",
+      "diçin",
+      "diçî"
+    ],
+    "correctAnswerTr": "diçe",
+    "explanation": "Kişi ekleri sırasıyla -im, -î, -e, -in biçimindedir; üçüncü tekilde -e gelir. «Diçim» ben, «diçî» sen, «diçin» ise çoğul kişiler içindir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0029",
+    "category": "Ziman",
+    "prompt": "Peyva «şîr» li ser sifreyê çi ye?",
+    "answers": [
+      "Süt",
+      "Bal",
+      "Yoğurt",
+      "Yağ"
+    ],
+    "correctAnswer": "Süt",
+    "promptTr": "Sofradaki «şîr» nedir?",
+    "answersTr": [
+      "Süt",
+      "Bal",
+      "Yoğurt",
+      "Yağ"
+    ],
+    "correctAnswerTr": "Süt",
+    "explanation": "Şîr süttür. Bal hingiv, yoğurt mast, yağ ise rûn olarak geçer; dördü de süt sofrasında bulunduğu için birbirine yakın şıklardır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0030",
+    "category": "Ziman",
+    "prompt": "Di alfabeya kurmancî de çend dengdêr hene?",
+    "answers": [
+      "Şeş",
+      "Deh",
+      "Heşt",
+      "Pênc"
+    ],
+    "correctAnswer": "Heşt",
+    "promptTr": "Kurmancî alfabesinde kaç ünlü harf vardır?",
+    "answersTr": [
+      "Altı",
+      "On",
+      "Sekiz",
+      "Beş"
+    ],
+    "correctAnswerTr": "Sekiz",
+    "explanation": "Ünlüler a, e, ê, i, î, o, u, û olmak üzere sekizdir; geri kalan 23 harf ünsüzdür. Ünlüsüz hece kurulamadığı için bu sayı önemlidir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0031",
+    "category": "Ziman",
+    "prompt": "Ajalê ku bi tirkî «kedi» ye, bi kurmancî çi ye?",
+    "answers": [
+      "Kûçik",
+      "Pisîk",
+      "Mişk",
+      "Rovî"
+    ],
+    "correctAnswer": "Pisîk",
+    "promptTr": "«Kedi» hayvanının Kurmancî adı nedir?",
+    "answersTr": [
+      "Kûçik",
+      "Pisîk",
+      "Mişk",
+      "Rovî"
+    ],
+    "correctAnswerTr": "Pisîk",
+    "explanation": "Pisîk kedidir. Kûçik köpek, mişk fare, rovî ise tilkidir; dördü de memeli hayvan adı olduğu için şıklar aynı sınıftandır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0032",
+    "category": "Ziman",
+    "prompt": "Ji bo wateya «odanın içinde» kîjan avanî rast e?",
+    "answers": [
+      "li odeyê ser",
+      "ji odeyê de",
+      "bi odeyê re",
+      "di odeyê de"
+    ],
+    "correctAnswer": "di odeyê de",
+    "promptTr": "«Odanın içinde» anlamı için doğru yapı hangisidir?",
+    "answersTr": [
+      "li odeyê ser",
+      "ji odeyê de",
+      "bi odeyê re",
+      "di odeyê de"
+    ],
+    "correctAnswerTr": "di odeyê de",
+    "explanation": "Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik «di ... de» ile kurulur; «bi ... re» birliktelik, «ji» ise ayrılma bildirir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0033",
+    "category": "Ziman",
+    "prompt": "Alfabeya latînî ya kurmancî di sala 1932yan de bi kîjan kovarê belav bû?",
+    "answers": [
+      "Hawar",
+      "Roja Nû",
+      "Nûbihar",
+      "Bîrnebûn"
+    ],
+    "correctAnswer": "Hawar",
+    "promptTr": "Kurmancînin Latin alfabesi 1932'de hangi dergiyle yayıldı?",
+    "answersTr": [
+      "Hawar",
+      "Roja Nû",
+      "Nûbihar",
+      "Bîrnebûn"
+    ],
+    "correctAnswerTr": "Hawar",
+    "explanation": "Celadet Alî Bedirxan bu alfabeyi 1932«de Şam»da çıkardığı dergide kullandı; alfabe de o yüzden derginin adıyla anılır. Diğerleri sonraki yayınlardır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0034",
+    "category": "Ziman",
+    "prompt": "Di hevoka «Ez ji ... hez dikim» de ji bo wateya «çocukları» kîjan form tê?",
+    "answers": [
+      "zarok",
+      "zarokek",
+      "zarokan",
+      "zarokên"
+    ],
+    "correctAnswer": "zarokan",
+    "promptTr": "«Ez ji ... hez dikim» cümlesinde «çocukları» için hangi biçim gelir?",
+    "answersTr": [
+      "zarok",
+      "zarokek",
+      "zarokan",
+      "zarokên"
+    ],
+    "correctAnswerTr": "zarokan",
+    "explanation": "Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an«dır. »Zarokên' izafe biçimidir, ardından bir niteleyici ya da sahip ister.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0035",
+    "category": "Ziman",
+    "prompt": "Endama ku pê tê dîtin, bi kurmancî çi ye?",
+    "answers": [
+      "Guh",
+      "Çav",
+      "Dev",
+      "Poz"
+    ],
+    "correctAnswer": "Çav",
+    "promptTr": "Görme organının Kurmancî adı nedir?",
+    "answersTr": [
+      "Guh",
+      "Çav",
+      "Dev",
+      "Poz"
+    ],
+    "correctAnswerTr": "Çav",
+    "explanation": "Çav gözdür. Guh kulak, dev ağız, poz ise burundur; dördü de baştaki organ adıdır ama yalnız biri görmeyle ilgilidir.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0036",
+    "category": "Ziman",
+    "prompt": "Di rêzimanê de peyva ku kar û tevgerê nîşan dide çi ye?",
+    "answers": [
+      "Navdêr",
+      "Rengdêr",
+      "Cînavk",
+      "Lêker"
+    ],
+    "correctAnswer": "Lêker",
+    "promptTr": "Dilbilgisinde iş ve oluş bildiren söz türü hangisidir?",
+    "answersTr": [
+      "Ad",
+      "Sıfat",
+      "Zamir",
+      "Fiil"
+    ],
+    "correctAnswerTr": "Fiil",
+    "explanation": "Fiil iş, oluş ve durumu anlatır: çûn, xwarin, kirin. Ad varlığı, sıfat niteliği gösterir; zamir ise adın yerine geçer.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0037",
+    "category": "Ziman",
+    "prompt": "Hevoka «Ezê biçim» kîjan demê nîşan dide?",
+    "answers": [
+      "Dema borî",
+      "Fermanî",
+      "Dema bê",
+      "Daxwazî"
+    ],
+    "correctAnswer": "Dema bê",
+    "promptTr": "«Ezê biçim» cümlesi hangi zamanı gösterir?",
+    "answersTr": [
+      "Geçmiş zaman",
+      "Emir kipi",
+      "Gelecek zaman",
+      "İstek kipi"
+    ],
+    "correctAnswerTr": "Gelecek zaman",
+    "explanation": "Gelecek zaman, kişi zamirine eklenen ê ile ve bi- önekli fiille kurulur. Emir yalnız bi- ister, geçmiş zamanda ise fiil kökü değişir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0038",
+    "category": "Ziman",
+    "prompt": "Hejmara «deh» bi tirkî çend e?",
+    "answers": [
+      "On",
+      "Dokuz",
+      "Yirmi",
+      "Yüz"
+    ],
+    "correctAnswer": "On",
+    "promptTr": "«Deh» sayısı Türkçede kaçtır?",
+    "answersTr": [
+      "On",
+      "Dokuz",
+      "Yirmi",
+      "Yüz"
+    ],
+    "correctAnswerTr": "On",
+    "explanation": "Deh on demektir. Dokuz neh, yirmi bîst, yüz ise sed'dir; neh ile deh tek harfle ayrıldığı için sık karıştırılır.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0039",
+    "category": "Ziman",
+    "prompt": "Peyva tirkî ya «pencere» ji kîjan zimanî hatiye wergirtin?",
+    "answers": [
+      "Ji erebî",
+      "Ji fransî",
+      "Ji yewnanî",
+      "Ji farisî"
+    ],
+    "correctAnswer": "Ji farisî",
+    "promptTr": "Türkçedeki «pencere» kelimesi hangi dilden alınmıştır?",
+    "answersTr": [
+      "Arapçadan",
+      "Fransızcadan",
+      "Yunancadan",
+      "Farsçadan"
+    ],
+    "correctAnswerTr": "Farsçadan",
+    "explanation": "Bu sözcük Farsça pencere biçiminden gelir. Türkçeye Arapçadan kitap, Fransızcadan vapur, Yunancadan ise liman geçmiştir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0040",
+    "category": "Ziman",
+    "prompt": "Amûra ku pê tê nivîsandin bi kurmancî çi ye?",
+    "answers": [
+      "Pirtûk",
+      "Qelem",
+      "Kaxez",
+      "Mase"
+    ],
+    "correctAnswer": "Qelem",
+    "promptTr": "Yazmak için kullanılan araç Kurmancîde nedir?",
+    "answersTr": [
+      "Pirtûk",
+      "Qelem",
+      "Kaxez",
+      "Mase"
+    ],
+    "correctAnswerTr": "Qelem",
+    "explanation": "Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; hepsi yazı ortamıyla ilgilidir ama yalnız biri yazma aracıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0041",
+    "category": "Ziman",
+    "prompt": "Peyva pirsyarî ya «kengî» li ser çi disekine?",
+    "answers": [
+      "Cih",
+      "Kes",
+      "Dem",
+      "Sedem"
+    ],
+    "correctAnswer": "Dem",
+    "promptTr": "«Kengî» soru sözcüğü neyi sorar?",
+    "answersTr": [
+      "Yer",
+      "Kişi",
+      "Zaman",
+      "Sebep"
+    ],
+    "correctAnswerTr": "Zaman",
+    "explanation": "Kengî «ne zaman» demektir ve zamanı sorar. Yeri «li ku», kişiyi «kî», sebebi ise «çima» sorar; her biri farklı bir öge arar.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0042",
+    "category": "Ziman",
+    "prompt": "Peyva «çiya» bi tirkî çi ye?",
+    "answers": [
+      "Dağ",
+      "Ova",
+      "Nehir",
+      "Orman"
+    ],
+    "correctAnswer": "Dağ",
+    "promptTr": "«Çiya» kelimesinin Türkçesi nedir?",
+    "answersTr": [
+      "Dağ",
+      "Ova",
+      "Nehir",
+      "Orman"
+    ],
+    "correctAnswerTr": "Dağ",
+    "explanation": "Çiya dağ demektir. Ova deşt, nehir çem ya da robar, orman ise daristan olarak geçer; dördü de coğrafya terimidir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0043",
+    "category": "Ziman",
+    "prompt": "Tîpa «û» di kurmancî de dikeve kîjan komê?",
+    "answers": [
+      "Dengdar",
+      "Dengdêr",
+      "Kîte",
+      "Daçek"
+    ],
+    "correctAnswer": "Dengdêr",
+    "promptTr": "Kurmancîde «û» harfi hangi gruba girer?",
+    "answersTr": [
+      "Ünsüz",
+      "Ünlü",
+      "Hece",
+      "Edat"
+    ],
+    "correctAnswerTr": "Ünlü",
+    "explanation": "Û uzun bir ünlüdür ve u'dan hem süre hem yuvarlaklıkla ayrılır. Ünsüz tek başına hece kuramaz; hece ve edat ise harf grubu değildir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0044",
+    "category": "Ziman",
+    "prompt": "Ji bo wateya «O kadın mektup yazdı» kîjan hevok rast e?",
+    "answers": [
+      "Ew name nivîsî",
+      "Wê nameyê dinivîse",
+      "Ew nameyê nivîsî",
+      "Wê name nivîsî"
+    ],
+    "correctAnswer": "Wê name nivîsî",
+    "promptTr": "«O kadın mektup yazdı» anlamı için hangi cümle doğrudur?",
+    "answersTr": [
+      "Ew name nivîsî",
+      "Wê nameyê dinivîse",
+      "Ew nameyê nivîsî",
+      "Wê name nivîsî"
+    ],
+    "correctAnswerTr": "Wê name nivîsî",
+    "explanation": "Geçmiş zamanda geçişli fiilin öznesi bükümlü hâle girer: ew biçimi wê olur. Nesne yalın kalır ve fiil nesneye göre çekilir.",
+    "difficulty": 5,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0045",
+    "category": "Ziman",
+    "prompt": "Birayê bavê mirov bi kurmancî çi ye?",
+    "answers": [
+      "Ap",
+      "Xal",
+      "Met",
+      "Bapîr"
+    ],
+    "correctAnswer": "Ap",
+    "promptTr": "Kişinin babasının erkek kardeşine Kurmancîde ne denir?",
+    "answersTr": [
+      "Ap",
+      "Xal",
+      "Met",
+      "Bapîr"
+    ],
+    "correctAnswerTr": "Ap",
+    "explanation": "Ap, bazı yörelerde mam, amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0046",
+    "category": "Ziman",
+    "prompt": "Berhevoka peyvên zimanekî bi wateyên wan re çi ye?",
+    "answers": [
+      "Rêziman",
+      "Hevok",
+      "Ferheng",
+      "Alfabe"
+    ],
+    "correctAnswer": "Ferheng",
+    "promptTr": "Bir dilin kelimelerini anlamlarıyla birlikte toplayan eser nedir?",
+    "answersTr": [
+      "Dilbilgisi",
+      "Cümle",
+      "Sözlük",
+      "Alfabe"
+    ],
+    "correctAnswerTr": "Sözlük",
+    "explanation": "Sözlük, sözcükleri anlamlarıyla sıralar. Dilbilgisi kuralları anlatır, alfabe harf dizisidir, cümle ise anlamlı söz birliğidir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0047",
+    "category": "Ziman",
+    "prompt": "Navdêra «sêv» mê ye. Wateya «kırmızı elma» çawa tê nivîsîn?",
+    "answers": [
+      "sêv sor",
+      "sêvê sor",
+      "sêvên sor",
+      "sêva sor"
+    ],
+    "correctAnswer": "sêva sor",
+    "promptTr": "«Sêv» adı dişildir. «Kırmızı elma» nasıl yazılır?",
+    "answersTr": [
+      "sêv sor",
+      "sêvê sor",
+      "sêvên sor",
+      "sêva sor"
+    ],
+    "correctAnswerTr": "sêva sor",
+    "explanation": "Sıfat adı izafe ekiyle izler; dişil tekil ad -a alır. Eksiz kuruluş olmaz, -ê eril tekile, -ên ise çoğula aittir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0048",
+    "category": "Ziman",
+    "prompt": "Roja piştî Duşemê bi kurmancî çi ye?",
+    "answers": [
+      "Çarşem",
+      "Sêşem",
+      "Pêncşem",
+      "Şemî"
+    ],
+    "correctAnswer": "Sêşem",
+    "promptTr": "Kurmancîde Duşem'den sonraki gün hangisidir?",
+    "answersTr": [
+      "Çarşem",
+      "Sêşem",
+      "Pêncşem",
+      "Şemî"
+    ],
+    "correctAnswerTr": "Sêşem",
+    "explanation": "Gün adları sayılardan türer: du iki, sê üç, çar dört, pênc beş. Bu sıra bilindiğinde hangi günün hangisini izlediği kolayca çıkarılır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0049",
+    "category": "Ziman",
+    "prompt": "Peyva tirkî ya «yüz» hem rû hem 100 e. Ev rewş çi ye?",
+    "answers": [
+      "Hevwate",
+      "Dijwate",
+      "Hevdeng",
+      "Peyva deynkirî"
+    ],
+    "correctAnswer": "Hevdeng",
+    "promptTr": "Türkçedeki «yüz» hem surat hem 100 demektir. Bu duruma ne denir?",
+    "answersTr": [
+      "Eş anlamlılık",
+      "Zıt anlamlılık",
+      "Eş seslilik",
+      "Alıntı kelime"
+    ],
+    "correctAnswerTr": "Eş seslilik",
+    "explanation": "Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi ters kavramlardır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0050",
+    "category": "Ziman",
+    "prompt": "Peyva «goşt» bi tirkî çi ye?",
+    "answers": [
+      "Et",
+      "Balık",
+      "Ekmek",
+      "Çorba"
+    ],
+    "correctAnswer": "Et",
+    "promptTr": "«Goşt» kelimesinin Türkçesi nedir?",
+    "answersTr": [
+      "Et",
+      "Balık",
+      "Ekmek",
+      "Çorba"
+    ],
+    "correctAnswerTr": "Et",
+    "explanation": "Goşt et demektir. Balık masî, ekmek nan, çorba ise şorbe olarak geçer; dördü de yemek adı olduğu için aynı kavram sınıfındadır.",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0051",
+    "category": "Ziman",
+    "prompt": "Hevoka bi wateya «bana söyle» bi kurmancî çawa tê avakirin?",
+    "answers": [
+      "li min bêje",
+      "bi min bêje",
+      "di min bêje",
+      "ji min re bêje"
+    ],
+    "correctAnswer": "ji min re bêje",
+    "promptTr": "«Bana söyle» cümlesi Kurmancîde nasıl kurulur?",
+    "answersTr": [
+      "li min bêje",
+      "bi min bêje",
+      "di min bêje",
+      "ji min re bêje"
+    ],
+    "correctAnswerTr": "ji min re bêje",
+    "explanation": "Yönelme anlamı iki parçalı «ji ... re» daçekiyle verilir. «Li» bulunma, «bi» araç, «di ... de» ise içindelik bildirir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0052",
+    "category": "Ziman",
+    "prompt": "Ji bo xwedîtiya nêr, wateya «onun kitabı» kîjan form e?",
+    "answers": [
+      "pirtûka wê",
+      "pirtûka wî",
+      "pirtûkên wî",
+      "pirtûka wan"
+    ],
+    "correctAnswer": "pirtûka wî",
+    "promptTr": "Eril sahiplik için «onun kitabı» hangi biçimdir?",
+    "answersTr": [
+      "pirtûka wê",
+      "pirtûka wî",
+      "pirtûkên wî",
+      "pirtûka wan"
+    ],
+    "correctAnswerTr": "pirtûka wî",
+    "explanation": "İzafe eki adın cinsiyetine, zamir ise sahibin cinsiyetine bakar. Kitap dişil olduğu için -a gelir; eril sahip wî, dişil wê, çoğul ise wan olur.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0053",
+    "category": "Ziman",
+    "prompt": "Awayê axaftinê yê ku bi tirkî Zazakî tê gotin, bi navekî din çi ye?",
+    "answers": [
+      "Kirmanckî",
+      "Soranî",
+      "Hewramî",
+      "Kurmancî"
+    ],
+    "correctAnswer": "Kirmanckî",
+    "promptTr": "Türkçede Zazaca denen konuşma biçiminin diğer adı nedir?",
+    "answersTr": [
+      "Kirmanckî",
+      "Soranî",
+      "Hewramî",
+      "Kurmancî"
+    ],
+    "correctAnswerTr": "Kirmanckî",
+    "explanation": "Konuşurları kendi dillerini çoğunlukla Kirmanckî ya da Dimilkî diye adlandırır. Soranî, Hewramî ve Kurmancî ise ayrı konuşma biçimlerinin adlarıdır.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0054",
+    "category": "Ziman",
+    "prompt": "Ajalê ku bi tirkî «kurt» e, bi kurmancî çi ye?",
+    "answers": [
+      "Hirç",
+      "Rovî",
+      "Gur",
+      "Kew"
+    ],
+    "correctAnswer": "Gur",
+    "promptTr": "«Kurt» hayvanının Kurmancî adı nedir?",
+    "answersTr": [
+      "Hirç",
+      "Rovî",
+      "Gur",
+      "Kew"
+    ],
+    "correctAnswerTr": "Gur",
+    "explanation": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; ilk üçü yabani memeli, sonuncusu kuş adıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "ziman_x_0055",
+    "category": "Ziman",
+    "prompt": "Di hevoka «Ez dixwazim ku ez ...» de lêkera «çûn» çawa tê?",
+    "answers": [
+      "diçim",
+      "çûm",
+      "naçim",
+      "biçim"
+    ],
+    "correctAnswer": "biçim",
+    "promptTr": "«Ez dixwazim ku ez ...» cümlesinde «çûn» fiili nasıl gelir?",
+    "answersTr": [
+      "diçim",
+      "çûm",
+      "naçim",
+      "biçim"
+    ],
+    "correctAnswerTr": "biçim",
+    "explanation": "İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. «Diçim» bildirme, «çûm» geçmiş, «naçim» ise olumsuzdur.",
+    "difficulty": 4,
+    "type": "multipleChoice"
   }
 ]

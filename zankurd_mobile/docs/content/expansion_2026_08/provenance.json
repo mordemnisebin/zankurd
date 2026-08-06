@@ -4,15 +4,17 @@
  "gate": "tool/content_authoring/validate_batch.py",
  "gateResult": "PASS (0 hard violations, all distribution gates green)",
  "activationBlocker": "tool/question_quality baseline ratchet: 166 new fingerprints require review + --accept-current-debt",
- "count": 165,
+ "count": 220,
  "categories": {
   "Teknolojî": 110,
-  "Sînema": 55
+  "Sînema": 55,
+  "Ziman": 55
  },
  "batches": {
   "tech_core": 55,
   "tech_invent": 55,
-  "cinema": 55
+  "cinema": 55,
+  "ziman": 55
  },
  "records": [
   {
@@ -1498,6 +1500,501 @@
    "authoredBy": "subagent:cinema",
    "reviewedBy": "validate_batch.py",
    "contentHash": "2c47af3abdc80d59",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0001",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "e378c85bef439886",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0002",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "4e14a693ad719866",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0003",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "0186268c3cd0486e",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0004",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b0b8d4581f326289",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0005",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "483137d591124455",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0006",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6166da6e9d6edee8",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0007",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "372c8b70896fcc00",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0008",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "c78720a58bda6ac3",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0009",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "0e9ab2dd00ba2dd4",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0010",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1c4aa85dd3f93390",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0011",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "fb3327ea5119be68",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0012",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1baf5c56ff7ccad1",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0013",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2cb55fdd9b292a70",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0014",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1d26a6d8fc5d3d3a",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0015",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "947e7531ae77d57c",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0016",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "eb24c9a628cc3306",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0017",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "0bc004517130a5d1",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0018",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a66d38a2a4eb1d49",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0019",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "cd2d3cf8d8831079",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0020",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "76c8b5c7f2fce3f7",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0021",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1eaae0ccb57767a7",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0022",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6b34cb0b61c8781c",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0023",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "4d0300943d6b033b",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0024",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "16aec891a54a7194",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0025",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "bd07db6dd49dd68c",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0026",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b6da522fd26a5d4e",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0027",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3853e4844b853ed1",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0028",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "9cfc24d7f39f4ee0",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0029",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "5e80839a4014d076",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0030",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b16f2c1d8907c55d",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0031",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "2392feadb80db559",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0032",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "7633ab767833a14b",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0033",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3bbe1afa76c832d1",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0034",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "3f2eb1df4c91d833",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0035",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "8e604cf9d5ecff77",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0036",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "ca32a8a077f02f87",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0037",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d84ab7f39ebf010b",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0038",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "f54a12ec21c85392",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0039",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "f7d1bf28a2cccf54",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0040",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "4d419736df3a6c5a",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0041",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d78a5742d91d6b60",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0042",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "fdef9bfd08ace265",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0043",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "6392b74ffe484913",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0044",
+   "category": "Ziman",
+   "difficulty": 5,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "198fb3371b9a9802",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0045",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b78dec00c1df60a2",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0046",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "8f4c9c1c6704965a",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0047",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "38a7d8bc92cf6006",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0048",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "d09226d7178b1418",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0049",
+   "category": "Ziman",
+   "difficulty": 3,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "1a5ec0d09e7ed946",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0050",
+   "category": "Ziman",
+   "difficulty": 1,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "b4d6904254cee2f3",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0051",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "11854af43345d7b3",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0052",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "a82bb4aaba9d7d49",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0053",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "4455e86892c7fbdb",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0054",
+   "category": "Ziman",
+   "difficulty": 2,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "41a4ceb53c220fe1",
+   "state": "accepted"
+  },
+  {
+   "id": "ziman_x_0055",
+   "category": "Ziman",
+   "difficulty": 4,
+   "authoredBy": "subagent:ziman",
+   "reviewedBy": "validate_batch.py",
+   "contentHash": "307f9f752a117b73",
    "state": "accepted"
   }
  ]
