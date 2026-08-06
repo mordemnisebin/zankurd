@@ -1055,6 +1055,111 @@
       "expectedRecordCount": null,
       "notes": "Quality-gated authoring utilities and generated reports",
       "columns": {}
+    },
+    {
+      "id": "external_candidate_grok_wave_01",
+      "description": "External grok wave-01 candidates (read-only intake copy)",
+      "glob": "scratchpad/external_authoring/opus_intake_2026_08/raw/grok/batch_*_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_candidates_grok",
+      "reportIncluded": true,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 320,
+      "expectedRecordCount": 407,
+      "notes": "Read-only copy from content/author-grok-wave-01-2026-08-06@8f68a50. Never loaded by the app and deliberately NOT gate-eligible: no record carries a verifiable sourceReference, so admitting them to the gate would launder unsourced content past a passing gate. See docs/content/external_intake_2026_08.md",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "external_candidate_deepseek_wave_01",
+      "description": "External deepseek wave-01 candidates (read-only intake copy)",
+      "glob": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_*_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_candidates_deepseek",
+      "reportIncluded": true,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 320,
+      "expectedRecordCount": 500,
+      "notes": "Read-only copy from content/author-deepseek-wave-01-2026-08-06@8fbbb94. Never loaded by the app and deliberately NOT gate-eligible: no record carries a verifiable sourceReference, so admitting them to the gate would launder unsourced content past a passing gate. See docs/content/external_intake_2026_08.md",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "external_rejected_grok_wave_01",
+      "description": "Grok's own pre-screen rejects, kept for audit",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/raw/grok/rejected_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_rejected_grok",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Grok's own pre-screen rejects, kept for audit. Never a runtime source.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "oldPromptKu",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "terminology_review_candidates",
+      "description": "Kurdistan terminology review rows for the candidate pools",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/terminology_review.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_review",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Kurdistan terminology review rows for the candidate pools. Holds oldPrompt*/newPrompt* pairs, so source discovery sees prompt-like fields; it is a decision record, not a question bank.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "oldPromptKu",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "terminology_review_live",
+      "description": "Same, for the live runtime banks",
+      "path": "scratchpad/external_authoring/opus_intake_2026_08/terminology_review_live.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_review",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Same, for the live runtime banks. The 121 rows here are FLAGGED ONLY and deliberately unchanged; rewriting shipped questions needs its own review.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "oldPromptKu",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
     }
   ]
 }
