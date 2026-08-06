@@ -59,5 +59,7 @@
       "akademik Kurmancî sözlük veya üniversite kaynağı",
       "anadili Kurmancî olan editör incelemesi"
     ]
-  }
+  },
+  "packStatus": "SOURCE_VERIFIED_TERMINOLOGY_BLOCKED",
+  "terminologyRegistry": "docs/content/terminology/kurmanji_science_terminology_2026_08.json"
 }

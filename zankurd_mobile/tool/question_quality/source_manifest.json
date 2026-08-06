@@ -1496,6 +1496,48 @@
         "correctAnswer": "correctAnswer",
         "category": "claimType"
       }
+    },
+    {
+      "id": "kurmanji_science_terminology",
+      "description": "Kurmanji science terminology registry",
+      "path": "docs/content/terminology/kurmanji_science_terminology_2026_08.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_registry",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Terminology decision record. Contains no questions.",
+      "columns": {
+        "id": "conceptId",
+        "prompt": "EnglishConcept",
+        "options": "KurmanjiCandidates",
+        "correctAnswer": "preferredCandidate",
+        "category": "domain"
+      }
+    },
+    {
+      "id": "established_terminology_opportunities",
+      "description": "Kurmanji science terminology registry",
+      "path": "docs/content/source_first_expansion_2026_08/established_terminology_opportunities.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "terminology_registry",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Terminology decision record. Contains no questions.",
+      "columns": {
+        "id": "conceptId",
+        "prompt": "EnglishConcept",
+        "options": "KurmanjiCandidates",
+        "correctAnswer": "preferredCandidate",
+        "category": "domain"
+      }
     }
   ]
 }

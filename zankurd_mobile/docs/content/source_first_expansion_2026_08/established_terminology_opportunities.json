@@ -1,0 +1,202 @@
+[
+  {
+    "establishedKurmanjiTerm": "înternet",
+    "EnglishConcept": "internet",
+    "TurkishConcept": "İnternet",
+    "existingQuestionIds": [
+      "offline_curated_30007",
+      "offline_tek_0018",
+      "offline_tek_0053",
+      "offline_tek_0055",
+      "offline_tek_0085",
+      "offline_tek_0086",
+      "offline_tek_0087",
+      "tech_core_0005"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "tor_and_web",
+    "possibleInstitutionalSource": "MDN / W3C / IETF RFC",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "malper",
+    "EnglishConcept": "website",
+    "TurkishConcept": "Web sitesi",
+    "existingQuestionIds": [
+      "offline_curated_30010",
+      "offline_tek_0025",
+      "offline_tek_0042",
+      "offline_tek_0044",
+      "offline_tek_0052",
+      "offline_tek_0080",
+      "offline_tek_0085",
+      "tech_core_0020"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "tor_and_web",
+    "possibleInstitutionalSource": "MDN / W3C / IETF RFC",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "tor",
+    "EnglishConcept": "network",
+    "TurkishConcept": "Ağ",
+    "existingQuestionIds": [
+      "offline_2276",
+      "offline_2304",
+      "offline_2307",
+      "offline_6020",
+      "offline_curated_30010",
+      "offline_curated_30011",
+      "offline_tek_0004",
+      "offline_tek_0007"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "tor_and_web",
+    "possibleInstitutionalSource": "MDN / W3C / IETF RFC",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "dane",
+    "EnglishConcept": "data",
+    "TurkishConcept": "Veri",
+    "existingQuestionIds": [
+      "offline_13556",
+      "offline_curated_30007",
+      "offline_curated_30011",
+      "offline_tek_0008",
+      "offline_tek_0010",
+      "offline_tek_0013",
+      "offline_tek_0014",
+      "offline_tek_0018"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "computing",
+    "possibleInstitutionalSource": "üniversite bilgisayar bilimi kaynakları / resmî platform dokümantasyonu",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "şîfre",
+    "EnglishConcept": "password",
+    "TurkishConcept": "Parola",
+    "existingQuestionIds": [
+      "offline_curated_30004",
+      "offline_tek_0006",
+      "offline_tek_0007",
+      "offline_tek_0009",
+      "offline_tek_0013",
+      "offline_tek_0015",
+      "offline_tek_0017",
+      "offline_tek_0021"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "security",
+    "possibleInstitutionalSource": "NIST / CISA",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "pergal",
+    "EnglishConcept": "system",
+    "TurkishConcept": "Sistem",
+    "existingQuestionIds": [
+      "offline_0395",
+      "offline_0415",
+      "offline_0425",
+      "offline_2232",
+      "offline_2233",
+      "offline_2241",
+      "offline_2270",
+      "offline_10379"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "computing",
+    "possibleInstitutionalSource": "üniversite bilgisayar bilimi kaynakları / resmî platform dokümantasyonu",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "nermalav",
+    "EnglishConcept": "software",
+    "TurkishConcept": "Yazılım",
+    "existingQuestionIds": [
+      "offline_tek_0027",
+      "offline_tek_0044",
+      "offline_tek_0063",
+      "offline_tek_0064",
+      "offline_tek_0065",
+      "tech_core_0005",
+      "tech_core_0013",
+      "tech_core_0018"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "computing",
+    "possibleInstitutionalSource": "üniversite bilgisayar bilimi kaynakları / resmî platform dokümantasyonu",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "sepan",
+    "EnglishConcept": "application",
+    "TurkishConcept": "Uygulama",
+    "existingQuestionIds": [
+      "offline_curated_30011",
+      "offline_tek_0050",
+      "offline_tek_0051",
+      "offline_tek_0052",
+      "offline_tek_0053",
+      "offline_tek_0055",
+      "offline_tek_0057",
+      "offline_tek_0059"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "computing",
+    "possibleInstitutionalSource": "üniversite bilgisayar bilimi kaynakları / resmî platform dokümantasyonu",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "komputer",
+    "EnglishConcept": "computer",
+    "TurkishConcept": "Bilgisayar",
+    "existingQuestionIds": [
+      "offline_5325",
+      "offline_curated_30001",
+      "offline_curated_30010",
+      "offline_tek_0003",
+      "offline_tek_0004",
+      "offline_tek_0049",
+      "offline_tek_0067",
+      "offline_tek_0075"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "computing",
+    "possibleInstitutionalSource": "üniversite bilgisayar bilimi kaynakları / resmî platform dokümantasyonu",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  },
+  {
+    "establishedKurmanjiTerm": "elektrîk",
+    "EnglishConcept": "electricity",
+    "TurkishConcept": "Elektrik",
+    "existingQuestionIds": [
+      "offline_tf_cog_0062",
+      "offline_tf_cog_0063",
+      "offline_tek_0012",
+      "offline_tek_2001",
+      "offline_tek_2002",
+      "offline_tek_2004",
+      "offline_tek_2014",
+      "offline_tek_2015"
+    ],
+    "projectGlossaryReference": null,
+    "domain": "physics",
+    "possibleInstitutionalSource": "üniversite fizik kaynakları",
+    "volatility": "low",
+    "authoringSuitability": "TERM_ATTESTED_BUT_UNAPPROVED — factual claim kurumsal kaynaktan çıkarılabilir, ancak terim Seviye 1-2 kanıtı almadan soru yazılmayacak"
+  }
+]
