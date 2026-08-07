@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_bfi_battleship_potemkin",
+  "sourceTitle": "BFI — Battleship Potemkin (1925) künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları; eleştiri metni ALINMADI.",
+  "exactSourceStatements": [
+    "Original Title: Battleship Potemkin",
+    "Director: Sergei M. Eisenstein",
+    "Year: 1925",
+    "Country: USSR",
+    "Runtime: 72 minutes"
+  ],
+  "extractedClaimIds": [
+    "cin_bfi_03",
+    "cin_bfi_04"
+  ],
+  "notUsed": "1958 Brüksel 'en iyi film' ilanı ve Sight & Sound anket sıralamaları claim'e ÇEVRİLMEDİ: ikisi de volatil (anketler yenileniyor) ve değerlendirme ifadeleri. Eleştiri metni telifli yorum.",
+  "sourceHash": "a78651d4bb22e32f"
+}

@@ -241,5 +241,23 @@
     ],
     "subcategoryOld": null,
     "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0015",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0016",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
   }
 ]

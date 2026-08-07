@@ -673,5 +673,55 @@
     "explanationTr": "BFI kataloğuna göre filmin yılı 1960'tır.",
     "difficulty": 2,
     "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0015",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Battleship Potemkin» kî ye?",
+    "promptTr": "«Battleship Potemkin» filminin yönetmeni kimdir?",
+    "answers": [
+      "Dziga Vertov",
+      "Lev Kuleshov",
+      "Sergei M. Eisenstein",
+      "Vsevolod Pudovkin"
+    ],
+    "answersTr": [
+      "Dziga Vertov",
+      "Lev Kuleshov",
+      "Sergei M. Eisenstein",
+      "Vsevolod Pudovkin"
+    ],
+    "correctAnswer": "Sergei M. Eisenstein",
+    "correctAnswerTr": "Sergei M. Eisenstein",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Sergei M. Eisenstein e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Sergei M. Eisenstein'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0016",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Battleship Potemkin» di kîjan salê de derket?",
+    "promptTr": "«Battleship Potemkin» filmi hangi yılda çıktı?",
+    "answers": [
+      "1919",
+      "1922",
+      "1929",
+      "1925"
+    ],
+    "answersTr": [
+      "1919",
+      "1922",
+      "1929",
+      "1925"
+    ],
+    "correctAnswer": "1925",
+    "correctAnswerTr": "1925",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1925 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1925'tir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
   }
 ]

@@ -417,5 +417,37 @@
     "reviewer": "opus-5",
     "finalContentHash": "e36ab7ca0a75f46a",
     "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0015",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+    "exactSupportingFact": "Director: Sergei M. Eisenstein",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "8e6ebe063bf5d95d",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0016",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+    "exactSupportingFact": "Year: 1925",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "84d44bfeef8aad3a",
+    "activationStatus": "STAGED_VERIFIED"
   }
 ]

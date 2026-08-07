@@ -194,5 +194,33 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "8d848f25288b5111"
+  },
+  {
+    "claimId": "cin_bfi_03",
+    "sourcePackId": "pack_bfi_battleship_potemkin",
+    "claimFamily": "film_director",
+    "factualClaim": "Battleship Potemkin'in yönetmeni Sergei M. Eisenstein'dır.",
+    "exactSupportingFact": "Director: Sergei M. Eisenstein",
+    "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "0747fc79898d5881"
+  },
+  {
+    "claimId": "cin_bfi_04",
+    "sourcePackId": "pack_bfi_battleship_potemkin",
+    "claimFamily": "film_year",
+    "factualClaim": "Battleship Potemkin 1925 yapımıdır.",
+    "exactSupportingFact": "Year: 1925",
+    "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "881746205668d073"
   }
 ]

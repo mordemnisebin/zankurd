@@ -1,7 +1,7 @@
 {
   "batchStatus": "COMPLETE",
   "minimumRequired": 12,
-  "produced": 14,
+  "produced": 16,
   "addedToVerifiedPool": true,
   "whyBelowMinimum": "Bağlam bütçesi. La Biennale tarihçe sayfası tek başına 6 ayrı claim verdi (yüksek kaldıraç); Cannes resmî tarihçe sayfası 403 döndürdü ve o kaynak ailesi açılamadı. 8/12.",
   "kurdishCinemaContent": "Bu turda Kürt sineması / Yılmaz Güney sorusu ÜRETİLMEDİ. §9 Risk-A için doğrudan güçlü akademik kaynak ya da iki bağımsız kaynak istiyor; bu turda hiçbiri açılmadı. Kaynaksız içerik üretilmedi, eksiklik burada kayıtlı. Plan korunuyor: plans/yilmaz_guney_kurdish_cinema_content_plan.md",
@@ -20,7 +20,9 @@
     "sf_cin_0011",
     "sf_cin_0012",
     "sf_cin_0013",
-    "sf_cin_0014"
+    "sf_cin_0014",
+    "sf_cin_0015",
+    "sf_cin_0016"
   ],
   "reviewer": "opus-5",
   "timestamp": "2026-08-06",

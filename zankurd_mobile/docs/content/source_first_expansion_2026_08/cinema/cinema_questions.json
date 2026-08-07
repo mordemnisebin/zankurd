@@ -986,5 +986,149 @@
       "note": "DeepSeek 0079 bu filmi Türkçe BAŞLIK üzerinden soruyordu ve REJECTED_WRONG_ANSWER'dı; burada özgün başlık + BFI künyesi"
     },
     "finalContentHash": "e36ab7ca0a75f46a"
+  },
+  {
+    "questionId": "sf_cin_0015",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_battleship_potemkin",
+    "claimId": "cin_bfi_03",
+    "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+    "exactSupportingFact": "Director: Sergei M. Eisenstein",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Battleship Potemkin» kî ye?",
+    "promptTr": "«Battleship Potemkin» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Dziga Vertov",
+      "Lev Kuleshov",
+      "Sergei M. Eisenstein",
+      "Vsevolod Pudovkin"
+    ],
+    "answersTr": [
+      "Dziga Vertov",
+      "Lev Kuleshov",
+      "Sergei M. Eisenstein",
+      "Vsevolod Pudovkin"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Sergei M. Eisenstein e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Sergei M. Eisenstein'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar; lexeme approval gerekmez"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "seçenekler benzer uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve external 11'de bu film yok"
+    },
+    "finalContentHash": "8e6ebe063bf5d95d"
+  },
+  {
+    "questionId": "sf_cin_0016",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_battleship_potemkin",
+    "claimId": "cin_bfi_04",
+    "sourceReference": "https://www.bfi.org.uk/film/9c02c20b-1487-52c8-bbfc-0849e204fe59/battleship-potemkin",
+    "exactSupportingFact": "Year: 1925",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Battleship Potemkin» di kîjan salê de derket?",
+    "promptTr": "«Battleship Potemkin» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1919",
+      "1922",
+      "1929",
+      "1925"
+    ],
+    "answersTr": [
+      "1919",
+      "1922",
+      "1929",
+      "1925"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1925 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1925'tir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar; lexeme approval gerekmez"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "seçenekler benzer uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve external 11'de bu film yok"
+    },
+    "finalContentHash": "84d44bfeef8aad3a"
   }
 ]
