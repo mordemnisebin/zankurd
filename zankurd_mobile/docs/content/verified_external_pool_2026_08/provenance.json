@@ -451,6 +451,38 @@
     "activationStatus": "STAGED_VERIFIED"
   },
   {
+    "originalQuestionId": "sf_cin_0017",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/bda6ff8a-ed7e-5942-980d-c2910c0120ec/metropolis",
+    "exactSupportingFact": "Director: Fritz Lang",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "ba26e5317e4d73cc",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0018",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/bda6ff8a-ed7e-5942-980d-c2910c0120ec/metropolis",
+    "exactSupportingFact": "Country: Germany",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "0deb52d0344a6267",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
     "originalQuestionId": "sf_geo_0001",
     "sourcePool": "source_first",
     "origin": "source_first_verified",

@@ -725,6 +725,56 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0017",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Metropolis» (1927) kî ye?",
+    "promptTr": "«Metropolis» (1927) filminin yönetmeni kimdir?",
+    "answers": [
+      "F. W. Murnau",
+      "Robert Wiene",
+      "Fritz Lang",
+      "G. W. Pabst"
+    ],
+    "answersTr": [
+      "F. W. Murnau",
+      "Robert Wiene",
+      "Fritz Lang",
+      "G. W. Pabst"
+    ],
+    "correctAnswer": "Fritz Lang",
+    "correctAnswerTr": "Fritz Lang",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Metropolisê Fritz Lang e.",
+    "explanationTr": "BFI kataloğuna göre Metropolis'in yönetmeni Fritz Lang'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0018",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Metropolis» (1927) hilberîna kîjan welatî ye?",
+    "promptTr": "«Metropolis» (1927) hangi ülkenin yapımıdır?",
+    "answers": [
+      "Fransa",
+      "Almanya",
+      "Îtalya",
+      "Sovyet"
+    ],
+    "answersTr": [
+      "Fransa",
+      "Almanya",
+      "Îtalya",
+      "Sovyet"
+    ],
+    "correctAnswer": "Almanya",
+    "correctAnswerTr": "Almanya",
+    "explanationKu": "Li gorî kataloga BFIyê Metropolis hilberîneke Almanyayê ye.",
+    "explanationTr": "BFI kataloğuna göre Metropolis bir Almanya yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,

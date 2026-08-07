@@ -222,5 +222,33 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "881746205668d073"
+  },
+  {
+    "claimId": "cin_bfi_05",
+    "sourcePackId": "pack_bfi_metropolis",
+    "claimFamily": "film_director",
+    "factualClaim": "Metropolis'in yönetmeni Fritz Lang'dır.",
+    "exactSupportingFact": "Director: Fritz Lang",
+    "sourceReference": "https://www.bfi.org.uk/film/bda6ff8a-ed7e-5942-980d-c2910c0120ec/metropolis",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "6e34ce2c64d66461"
+  },
+  {
+    "claimId": "cin_bfi_06",
+    "sourcePackId": "pack_bfi_metropolis",
+    "claimFamily": "film_country",
+    "factualClaim": "Metropolis Alman yapımıdır.",
+    "exactSupportingFact": "Country: Germany",
+    "sourceReference": "https://www.bfi.org.uk/film/bda6ff8a-ed7e-5942-980d-c2910c0120ec/metropolis",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "77fe7fb273ae18ed"
   }
 ]
