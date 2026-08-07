@@ -1,0 +1,22 @@
+{
+  "sourcePackId": "pack_nasa_earth_facts",
+  "sourceTitle": "NASA Science — Earth Facts",
+  "institution": "NASA",
+  "sourceReference": "https://science.nasa.gov/earth/facts/",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "targetCategory": "Cografya",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "365.25 days to complete one trip around the Sun",
+    "23.9 hours",
+    "Earth is the only planet in our solar system with only one moon",
+    "Earth's global ocean, which covers about 71% of the planet's surface",
+    "78% nitrogen, 21% oxygen, and 1% other gases"
+  ],
+  "notAuthored": "Atmosfer bileşimi (azot/oksijen) soruya ÇEVRİLMEDİ: `nîtrojen` ve `oksîjen` Kurmancî karşılıkları doğrulanmadı, corpus'ta da yok. Terim uydurmak yerine claim bekletildi.",
+  "sourceHash": "4a11d56ad6e3e9e4"
+}

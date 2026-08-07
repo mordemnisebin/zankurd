@@ -570,5 +570,285 @@
       "note": "aktif bankada güneş sistemi sorusu yok"
     },
     "finalContentHash": "99a3d3ed63f7c217"
+  },
+  {
+    "questionId": "sf_nat_0009",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_01",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "365.25 days to complete one trip around the Sun",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Cîhan di çend rojan de li dora rojê yek car digere?",
+    "promptTr": "Dünya, Güneş çevresindeki bir turunu kaç günde tamamlar?",
+    "answersKu": [
+      "365.25 roj",
+      "30 roj",
+      "24 roj",
+      "687 roj"
+    ],
+    "answersTr": [
+      "365,25 gün",
+      "30 gün",
+      "24 gün",
+      "687 gün"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Cîhan di 365.25 rojan de li dora rojê yek car digere.",
+    "explanationTr": "Dünya, Güneş çevresindeki turunu 365,25 günde tamamlar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "468c85a856f9aa86"
+  },
+  {
+    "questionId": "sf_nat_0010",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_02",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "23.9 hours",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Zivirîna Cîhanê ya li dora xwe çend saetan didome?",
+    "promptTr": "Dünya'nın kendi çevresindeki dönüşü kaç saat sürer?",
+    "answersKu": [
+      "12 saet",
+      "48 saet",
+      "23.9 saet",
+      "6 saet"
+    ],
+    "answersTr": [
+      "12 saat",
+      "48 saat",
+      "23,9 saat",
+      "6 saat"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Cîhan di nêzîkî 23.9 saetan de li dora xwe yek car dizivire.",
+    "explanationTr": "Dünya kendi çevresindeki turunu yaklaşık 23,9 saatte tamamlar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "b1423959d14ed985"
+  },
+  {
+    "questionId": "sf_nat_0011",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_03",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "Earth is the only planet in our solar system with only one moon",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Cîhan çend heyvên xwe hene?",
+    "promptTr": "Dünya'nın kaç uydusu vardır?",
+    "answersKu": [
+      "Du",
+      "Sê",
+      "Çar",
+      "Yek"
+    ],
+    "answersTr": [
+      "İki",
+      "Üç",
+      "Dört",
+      "Bir"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Cîhan tenê yek heyvê xwe heye; ew di sîstema rojê de yekane gerstêrka wisa ye.",
+    "explanationTr": "Dünya'nın tek bir uydusu vardır; güneş sisteminde tek uydusu olan tek gezegendir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "56b88ae322267fb5"
+  },
+  {
+    "questionId": "sf_nat_0012",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_04",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "Earth's global ocean, which covers about 71% of the planet's surface",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Nêzîkî ji sedî çend rûyê Cîhanê bi okyanûsê pêçayî ye?",
+    "promptTr": "Dünya yüzeyinin yaklaşık yüzde kaçı okyanusla kaplıdır?",
+    "answersKu": [
+      "Ji sedî 30",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 90"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 90"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Okyanûsa cîhanî nêzîkî ji sedî 71ê rûyê Cîhanê digire.",
+    "explanationTr": "Küresel okyanus, Dünya yüzeyinin yaklaşık yüzde 71'ini kaplar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "c73d947e012d15e6"
   }
 ]

@@ -1025,6 +1025,106 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_nat_0009",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Cîhan di çend rojan de li dora rojê yek car digere?",
+    "promptTr": "Dünya, Güneş çevresindeki bir turunu kaç günde tamamlar?",
+    "answers": [
+      "365.25 roj",
+      "30 roj",
+      "24 roj",
+      "687 roj"
+    ],
+    "answersTr": [
+      "365,25 gün",
+      "30 gün",
+      "24 gün",
+      "687 gün"
+    ],
+    "correctAnswer": "365.25 roj",
+    "correctAnswerTr": "365,25 gün",
+    "explanationKu": "Cîhan di 365.25 rojan de li dora rojê yek car digere.",
+    "explanationTr": "Dünya, Güneş çevresindeki turunu 365,25 günde tamamlar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0010",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Zivirîna Cîhanê ya li dora xwe çend saetan didome?",
+    "promptTr": "Dünya'nın kendi çevresindeki dönüşü kaç saat sürer?",
+    "answers": [
+      "12 saet",
+      "48 saet",
+      "23.9 saet",
+      "6 saet"
+    ],
+    "answersTr": [
+      "12 saat",
+      "48 saat",
+      "23,9 saat",
+      "6 saat"
+    ],
+    "correctAnswer": "23.9 saet",
+    "correctAnswerTr": "23,9 saat",
+    "explanationKu": "Cîhan di nêzîkî 23.9 saetan de li dora xwe yek car dizivire.",
+    "explanationTr": "Dünya kendi çevresindeki turunu yaklaşık 23,9 saatte tamamlar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0011",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Cîhan çend heyvên xwe hene?",
+    "promptTr": "Dünya'nın kaç uydusu vardır?",
+    "answers": [
+      "Du",
+      "Sê",
+      "Çar",
+      "Yek"
+    ],
+    "answersTr": [
+      "İki",
+      "Üç",
+      "Dört",
+      "Bir"
+    ],
+    "correctAnswer": "Yek",
+    "correctAnswerTr": "Bir",
+    "explanationKu": "Cîhan tenê yek heyvê xwe heye; ew di sîstema rojê de yekane gerstêrka wisa ye.",
+    "explanationTr": "Dünya'nın tek bir uydusu vardır; güneş sisteminde tek uydusu olan tek gezegendir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0012",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Nêzîkî ji sedî çend rûyê Cîhanê bi okyanûsê pêçayî ye?",
+    "promptTr": "Dünya yüzeyinin yaklaşık yüzde kaçı okyanusla kaplıdır?",
+    "answers": [
+      "Ji sedî 30",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 90"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 90"
+    ],
+    "correctAnswer": "Ji sedî 71",
+    "correctAnswerTr": "Yüzde 71",
+    "explanationKu": "Okyanûsa cîhanî nêzîkî ji sedî 71ê rûyê Cîhanê digire.",
+    "explanationTr": "Küresel okyanus, Dünya yüzeyinin yaklaşık yüzde 71'ini kaplar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_tech_0001",
     "category": "Teknolojî",
     "subcategory": null,
