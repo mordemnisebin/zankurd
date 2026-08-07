@@ -775,6 +775,56 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0019",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Nosferatu» (1922) kî ye?",
+    "promptTr": "«Nosferatu» (1922) filminin yönetmeni kimdir?",
+    "answers": [
+      "F. W. Murnau",
+      "Fritz Lang",
+      "Robert Wiene",
+      "Paul Wegener"
+    ],
+    "answersTr": [
+      "F. W. Murnau",
+      "Fritz Lang",
+      "Robert Wiene",
+      "Paul Wegener"
+    ],
+    "correctAnswer": "F. W. Murnau",
+    "correctAnswerTr": "F. W. Murnau",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Nosferatuyê F. W. Murnau ye.",
+    "explanationTr": "BFI kataloğuna göre Nosferatu'nun yönetmeni F. W. Murnau'dur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0020",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Nosferatu» di kîjan salê de derket?",
+    "promptTr": "«Nosferatu» filmi hangi yılda çıktı?",
+    "answers": [
+      "1916",
+      "1919",
+      "1927",
+      "1922"
+    ],
+    "answersTr": [
+      "1916",
+      "1919",
+      "1927",
+      "1922"
+    ],
+    "correctAnswer": "1922",
+    "correctAnswerTr": "1922",
+    "explanationKu": "Li gorî kataloga BFIyê sala Nosferatuyê 1922 e.",
+    "explanationTr": "BFI kataloğuna göre Nosferatu'nun yılı 1922'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,

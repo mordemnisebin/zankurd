@@ -250,5 +250,33 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "77fe7fb273ae18ed"
+  },
+  {
+    "claimId": "cin_bfi_07",
+    "sourcePackId": "pack_bfi_nosferatu",
+    "claimFamily": "film_director",
+    "factualClaim": "Nosferatu'nun yönetmeni F.W. Murnau'dur.",
+    "exactSupportingFact": "Director: F.W. Murnau",
+    "sourceReference": "https://www.bfi.org.uk/film/3d4cb177-731b-53ff-b7e3-41ef1bbd0c9d/nosferatu",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "edcf65921fc4695b"
+  },
+  {
+    "claimId": "cin_bfi_08",
+    "sourcePackId": "pack_bfi_nosferatu",
+    "claimFamily": "film_year",
+    "factualClaim": "Nosferatu 1922 yapımıdır.",
+    "exactSupportingFact": "Year: 1922",
+    "sourceReference": "https://www.bfi.org.uk/film/3d4cb177-731b-53ff-b7e3-41ef1bbd0c9d/nosferatu",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "30d4092e6f1729f5"
   }
 ]

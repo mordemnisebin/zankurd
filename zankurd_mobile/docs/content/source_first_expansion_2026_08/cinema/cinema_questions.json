@@ -1274,5 +1274,149 @@
       "note": "DeepSeek havuzunda Metropolis'in ülkesini soran kayıt yok; çakışma yok."
     },
     "finalContentHash": "0deb52d0344a6267"
+  },
+  {
+    "questionId": "sf_cin_0019",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_nosferatu",
+    "claimId": "cin_bfi_07",
+    "sourceReference": "https://www.bfi.org.uk/film/3d4cb177-731b-53ff-b7e3-41ef1bbd0c9d/nosferatu",
+    "exactSupportingFact": "Director: F.W. Murnau",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Nosferatu» (1922) kî ye?",
+    "promptTr": "«Nosferatu» (1922) filminin yönetmeni kimdir?",
+    "answersKu": [
+      "F. W. Murnau",
+      "Fritz Lang",
+      "Robert Wiene",
+      "Paul Wegener"
+    ],
+    "answersTr": [
+      "F. W. Murnau",
+      "Fritz Lang",
+      "Robert Wiene",
+      "Paul Wegener"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Nosferatuyê F. W. Murnau ye.",
+    "explanationTr": "BFI kataloğuna göre Nosferatu'nun yönetmeni F. W. Murnau'dur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "ÇAKIŞMA KAYDI: DeepSeek ds26_cinema_0058 aynı çifti ters yönde soruyordu (Murnau+1922 -> Nosferatu), QUARANTINED_UNVERIFIABLE, runtime'da değil. Bu soru BFI künyesine dayanıyor."
+    },
+    "finalContentHash": "acf7783c32142921"
+  },
+  {
+    "questionId": "sf_cin_0020",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_nosferatu",
+    "claimId": "cin_bfi_08",
+    "sourceReference": "https://www.bfi.org.uk/film/3d4cb177-731b-53ff-b7e3-41ef1bbd0c9d/nosferatu",
+    "exactSupportingFact": "Year: 1922",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Nosferatu» di kîjan salê de derket?",
+    "promptTr": "«Nosferatu» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1916",
+      "1919",
+      "1927",
+      "1922"
+    ],
+    "answersTr": [
+      "1916",
+      "1919",
+      "1927",
+      "1922"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê sala Nosferatuyê 1922 e.",
+    "explanationTr": "BFI kataloğuna göre Nosferatu'nun yılı 1922'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "Batch içinde 1922 yılını soran başka kayıt yok; sf_cin_0019 yönetmeni soruyor, bu yıl — farklı bilgi noktaları."
+    },
+    "finalContentHash": "b5372b491ad56dbd"
   }
 ]

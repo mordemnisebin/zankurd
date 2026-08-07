@@ -279,6 +279,24 @@
     "subcategoryNew": null
   },
   {
+    "originalQuestionId": "sf_cin_0019",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0020",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
     "originalQuestionId": "sf_geo_0001",
     "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
     "OpusReviewReasons": [

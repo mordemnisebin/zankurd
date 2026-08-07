@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_bfi_nosferatu",
+  "sourceTitle": "BFI — Nosferatu (1922) künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/3d4cb177-731b-53ff-b7e3-41ef1bbd0c9d/nosferatu",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Original Title: Nosferatu",
+    "Director: F.W. Murnau",
+    "Year: 1922",
+    "Country: Germany",
+    "Running Time: 89 minutes"
+  ],
+  "extractedClaimIds": [
+    "cin_bfi_07",
+    "cin_bfi_08"
+  ],
+  "notUsed": "SÜRE yine kullanılmadı: arama özeti 85 dakika, künye sayfası 89 diyor. Metropolis'te de aynı tutarsızlık çıkmıştı — sessiz film süreleri sürüme göre değişiyor, sistematik olarak volatil sayılıyor. 2022 anket sıralaması da dışarıda.",
+  "sourceHash": "c7c83b28e0e1ed04"
+}
