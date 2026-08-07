@@ -2572,5 +2572,1301 @@
       "note": "batch içinde ve aktif bankada bu olgu yok"
     },
     "finalContentHash": "94477227ca0036ef"
+  },
+  {
+    "questionId": "sf_cin_0037",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_persona",
+    "claimId": "cin_persona_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/d58fc7f8-fd9a-5f17-88e8-c87f27856486/persona",
+    "exactSupportingFact": "Directed by: Ingmar Bergman",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Persona» kî ye?",
+    "promptTr": "«Persona» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Ingmar Bergman",
+      "Lars von Trier",
+      "Roy Andersson",
+      "Victor Sjöström"
+    ],
+    "answersTr": [
+      "Ingmar Bergman",
+      "Lars von Trier",
+      "Roy Andersson",
+      "Victor Sjöström"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Ingmar Bergman e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Ingmar Bergman'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "6b91b7a01f21b9cd"
+  },
+  {
+    "questionId": "sf_cin_0038",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_persona",
+    "claimId": "cin_persona_cnt",
+    "sourceReference": "https://www.bfi.org.uk/film/d58fc7f8-fd9a-5f17-88e8-c87f27856486/persona",
+    "exactSupportingFact": "Country: Sweden",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Persona» hilberîna kîjan welatî ye?",
+    "promptTr": "«Persona» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Swêd",
+      "Norwec",
+      "Danîmarka",
+      "Fînlanda"
+    ],
+    "answersTr": [
+      "İsveç",
+      "Norveç",
+      "Danimarka",
+      "Finlandiya"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Swêdê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İsveç yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "22e4013765e1ccf5"
+  },
+  {
+    "questionId": "sf_cin_0039",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_otto",
+    "claimId": "cin_otto_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/3b1e80a4-111a-5fff-b799-7c50460d6284/812",
+    "exactSupportingFact": "Directed by: Federico Fellini",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «8½» kî ye?",
+    "promptTr": "«8½» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Federico Fellini",
+      "Michelangelo Antonioni",
+      "Luchino Visconti",
+      "Pier Paolo Pasolini"
+    ],
+    "answersTr": [
+      "Federico Fellini",
+      "Michelangelo Antonioni",
+      "Luchino Visconti",
+      "Pier Paolo Pasolini"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Federico Fellini e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Federico Fellini'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "9126513fcdc0e14c"
+  },
+  {
+    "questionId": "sf_cin_0040",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_otto",
+    "claimId": "cin_otto_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/3b1e80a4-111a-5fff-b799-7c50460d6284/812",
+    "exactSupportingFact": "Year: 1963",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «8½» di kîjan salê de derket?",
+    "promptTr": "«8½» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1949",
+      "1955",
+      "1958",
+      "1963"
+    ],
+    "answersTr": [
+      "1949",
+      "1955",
+      "1958",
+      "1963"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1963 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1963'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "52b69e3cb490c377"
+  },
+  {
+    "questionId": "sf_cin_0041",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_godfather",
+    "claimId": "cin_godfather_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/ccc481e1-f1c2-5b60-bbe7-77ad5645fb1a/the-godfather",
+    "exactSupportingFact": "Directed by: Francis Ford Coppola",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «The Godfather» kî ye?",
+    "promptTr": "«The Godfather» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Francis Ford Coppola",
+      "Martin Scorsese",
+      "Sidney Lumet",
+      "Sam Peckinpah"
+    ],
+    "answersTr": [
+      "Francis Ford Coppola",
+      "Martin Scorsese",
+      "Sidney Lumet",
+      "Sam Peckinpah"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Francis Ford Coppola e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Francis Ford Coppola'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "c120abbda0eee766"
+  },
+  {
+    "questionId": "sf_cin_0042",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_godfather",
+    "claimId": "cin_godfather_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/ccc481e1-f1c2-5b60-bbe7-77ad5645fb1a/the-godfather",
+    "exactSupportingFact": "Year: 1972",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «The Godfather» di kîjan salê de derket?",
+    "promptTr": "«The Godfather» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1965",
+      "1969",
+      "1980",
+      "1972"
+    ],
+    "answersTr": [
+      "1965",
+      "1969",
+      "1980",
+      "1972"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1972 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1972'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "653fdbb604124e2d"
+  },
+  {
+    "questionId": "sf_cin_0043",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_vertigo",
+    "claimId": "cin_vertigo_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/489eada8-7d7e-594c-acac-5903f43f4b85/vertigo",
+    "exactSupportingFact": "Directed by: Alfred Hitchcock",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Vertigo» kî ye?",
+    "promptTr": "«Vertigo» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Huston",
+      "Otto Preminger"
+    ],
+    "answersTr": [
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Huston",
+      "Otto Preminger"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Alfred Hitchcock e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "e39e596e80141ba0"
+  },
+  {
+    "questionId": "sf_cin_0044",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_vertigo",
+    "claimId": "cin_vertigo_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/489eada8-7d7e-594c-acac-5903f43f4b85/vertigo",
+    "exactSupportingFact": "Year: 1958",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Vertigo» di kîjan salê de derket?",
+    "promptTr": "«Vertigo» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1944",
+      "1951",
+      "1966",
+      "1958"
+    ],
+    "answersTr": [
+      "1944",
+      "1951",
+      "1966",
+      "1958"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1958 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1958'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "f2338177cc23b47a"
+  },
+  {
+    "questionId": "sf_cin_0045",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_sunrise",
+    "claimId": "cin_sunrise_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/846a7d3b-1aee-5183-a318-903dc129dd9a/sunrise-a-song-of-two-humans",
+    "exactSupportingFact": "Year: 1927",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Sunrise A Song of Two Humans» di kîjan salê de derket?",
+    "promptTr": "«Sunrise A Song of Two Humans» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1927",
+      "1935",
+      "1941",
+      "1919"
+    ],
+    "answersTr": [
+      "1927",
+      "1935",
+      "1941",
+      "1919"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1927 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1927'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "54ee63a6c7620de9"
+  },
+  {
+    "questionId": "sf_cin_0046",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_movcam",
+    "claimId": "cin_movcam_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/cacbb2df-be18-5e59-b5c3-f0eb9ea3a90d/man-with-a-movie-camera",
+    "exactSupportingFact": "Directed by: Dziga Vertov",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Man with a Movie Camera» kî ye?",
+    "promptTr": "«Man with a Movie Camera» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Sergei Eisenstein",
+      "Lev Kuleshov",
+      "Vsevolod Pudovkin",
+      "Dziga Vertov"
+    ],
+    "answersTr": [
+      "Sergei Eisenstein",
+      "Lev Kuleshov",
+      "Vsevolod Pudovkin",
+      "Dziga Vertov"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Dziga Vertov e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Dziga Vertov'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "1f5e713bf3d8173a"
+  },
+  {
+    "questionId": "sf_cin_0047",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_movcam",
+    "claimId": "cin_movcam_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/cacbb2df-be18-5e59-b5c3-f0eb9ea3a90d/man-with-a-movie-camera",
+    "exactSupportingFact": "Year: 1929",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Man with a Movie Camera» di kîjan salê de derket?",
+    "promptTr": "«Man with a Movie Camera» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1929",
+      "1917",
+      "1938",
+      "1945"
+    ],
+    "answersTr": [
+      "1929",
+      "1917",
+      "1938",
+      "1945"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1929 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1929'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "16988d1cc5c245b5"
+  },
+  {
+    "questionId": "sf_cin_0048",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_mirror",
+    "claimId": "cin_mirror_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/97341aa7-c937-57bf-9011-99bb084472b9/mirror",
+    "exactSupportingFact": "Directed by: Andrei Tarkovsky",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Mirror» kî ye?",
+    "promptTr": "«Mirror» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Sergei Parajanov",
+      "Larisa Shepitko",
+      "Andrei Konchalovsky",
+      "Andrei Tarkovsky"
+    ],
+    "answersTr": [
+      "Sergei Parajanov",
+      "Larisa Shepitko",
+      "Andrei Konchalovsky",
+      "Andrei Tarkovsky"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Andrei Tarkovsky e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "c0fea2384df9f8cb"
+  },
+  {
+    "questionId": "sf_cin_0049",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_mirror",
+    "claimId": "cin_mirror_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/97341aa7-c937-57bf-9011-99bb084472b9/mirror",
+    "exactSupportingFact": "Year: 1975",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Mirror» di kîjan salê de derket?",
+    "promptTr": "«Mirror» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1975",
+      "1962",
+      "1988",
+      "1953"
+    ],
+    "answersTr": [
+      "1975",
+      "1962",
+      "1988",
+      "1953"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1975 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1975'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "e5b722166bee20e3"
+  },
+  {
+    "questionId": "sf_cin_0050",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_mood",
+    "claimId": "cin_mood_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/1b8c3bcb-842f-5ba2-90ee-39b6b40b7c21/in-the-mood-for-love",
+    "exactSupportingFact": "Directed by: Wong Kar Wai",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «In the Mood for Love» kî ye?",
+    "promptTr": "«In the Mood for Love» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "John Woo",
+      "Tsai Ming-liang",
+      "Hou Hsiao-hsien",
+      "Wong Kar Wai"
+    ],
+    "answersTr": [
+      "John Woo",
+      "Tsai Ming-liang",
+      "Hou Hsiao-hsien",
+      "Wong Kar Wai"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Wong Kar Wai e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Wong Kar Wai'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "aa572721a45a066f"
+  },
+  {
+    "questionId": "sf_cin_0051",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_mood",
+    "claimId": "cin_mood_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/1b8c3bcb-842f-5ba2-90ee-39b6b40b7c21/in-the-mood-for-love",
+    "exactSupportingFact": "Year: 2000",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «In the Mood for Love» di kîjan salê de derket?",
+    "promptTr": "«In the Mood for Love» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "2000",
+      "1988",
+      "1994",
+      "2008"
+    ],
+    "answersTr": [
+      "2000",
+      "1988",
+      "1994",
+      "2008"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 2000 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 2000'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "a89f0cd945ff9fbb"
+  },
+  {
+    "questionId": "sf_cin_0052",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_comesee",
+    "claimId": "cin_comesee_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/7400501f-e65d-5e1c-9ba7-847a1a680978/come-and-see",
+    "exactSupportingFact": "Directed by: Elem Klimov",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Come and See» kî ye?",
+    "promptTr": "«Come and See» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Elem Klimov",
+      "Andrei Tarkovsky",
+      "Nikita Mikhalkov",
+      "Sergei Bondarchuk"
+    ],
+    "answersTr": [
+      "Elem Klimov",
+      "Andrei Tarkovsky",
+      "Nikita Mikhalkov",
+      "Sergei Bondarchuk"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Elem Klimov e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "6a5303877ef53d41"
+  },
+  {
+    "questionId": "sf_cin_0053",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_closeup",
+    "claimId": "cin_closeup_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/3b863389-5735-5b97-86c2-7e52217a7517/close-up",
+    "exactSupportingFact": "Directed by: Abbas Kiarostami",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Close-up» kî ye?",
+    "promptTr": "«Close-up» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Mohsen Makhmalbaf",
+      "Jafar Panahi",
+      "Abbas Kiarostami",
+      "Asghar Farhadi"
+    ],
+    "answersTr": [
+      "Mohsen Makhmalbaf",
+      "Jafar Panahi",
+      "Abbas Kiarostami",
+      "Asghar Farhadi"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Abbas Kiarostami e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Abbas Kiarostami'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "3074689af54bbf90"
+  },
+  {
+    "questionId": "sf_cin_0054",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_closeup",
+    "claimId": "cin_closeup_cnt",
+    "sourceReference": "https://www.bfi.org.uk/film/3b863389-5735-5b97-86c2-7e52217a7517/close-up",
+    "exactSupportingFact": "Country: Iran",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Close-up» hilberîna kîjan welatî ye?",
+    "promptTr": "«Close-up» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Tirkiye",
+      "Iraq",
+      "Efxanistan",
+      "Îran"
+    ],
+    "answersTr": [
+      "Türkiye",
+      "Irak",
+      "Afganistan",
+      "İran"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Îranê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İran yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke, aynı dönem/bölge"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "film-alan çifti batch içinde tek"
+    },
+    "finalContentHash": "9bd82c9fbb16ee22"
   }
 ]

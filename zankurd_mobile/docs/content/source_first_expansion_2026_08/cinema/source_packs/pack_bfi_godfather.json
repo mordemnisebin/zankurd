@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_godfather",
+  "sourceTitle": "BFI — The Godfather künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/ccc481e1-f1c2-5b60-bbe7-77ad5645fb1a/the-godfather",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: The Godfather",
+    "Directed by: Francis Ford Coppola",
+    "Year: 1972",
+    "Country: USA"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "7af467d00d6a0ad0"
+}

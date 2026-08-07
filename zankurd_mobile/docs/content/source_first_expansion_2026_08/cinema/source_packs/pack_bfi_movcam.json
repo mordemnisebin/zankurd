@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_movcam",
+  "sourceTitle": "BFI — Man with a Movie Camera künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/cacbb2df-be18-5e59-b5c3-f0eb9ea3a90d/man-with-a-movie-camera",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: Man with a Movie Camera",
+    "Directed by: Dziga Vertov",
+    "Year: 1929",
+    "Country: Ukrainian SSR, USSR"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "d223f946dd39699f"
+}

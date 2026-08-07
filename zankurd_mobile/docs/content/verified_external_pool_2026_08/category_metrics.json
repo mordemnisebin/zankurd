@@ -1,15 +1,15 @@
 {
-  "totalStagedVerified": 83,
+  "totalStagedVerified": 101,
   "externalVerifiedCount": 13,
-  "sourceFirstVerifiedCount": 70,
+  "sourceFirstVerifiedCount": 88,
   "byCategory": {
     "Cografya": 24,
-    "Sînema": 47,
+    "Sînema": 65,
     "Teknolojî": 12,
-    "origin:source_first_verified": 70
+    "origin:source_first_verified": 88
   },
   "byVerificationLevel": {
-    "AUTHORITATIVE_CATALOG_DIRECT": 22,
+    "AUTHORITATIVE_CATALOG_DIRECT": 40,
     "FETCHED_DIRECT": 54,
     "SEARCH_SUMMARY_CORROBORATED": 6,
     "SELF_CONTAINED": 1
@@ -23,5 +23,5 @@
     "REJECTED_WRONG_ANSWER": 1
   },
   "activationThreshold": 100,
-  "readyForBulkActivation": false
+  "readyForBulkActivation": true
 }

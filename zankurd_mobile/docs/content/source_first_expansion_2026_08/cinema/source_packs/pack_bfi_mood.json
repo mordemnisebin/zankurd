@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_mood",
+  "sourceTitle": "BFI — In the Mood for Love künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/1b8c3bcb-842f-5ba2-90ee-39b6b40b7c21/in-the-mood-for-love",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: In the Mood for Love",
+    "Directed by: Wong Kar Wai",
+    "Year: 2000",
+    "Country: Hong Kong, France"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "cae6ed056ed5c839"
+}

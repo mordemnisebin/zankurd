@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_mirror",
+  "sourceTitle": "BFI — Mirror künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/97341aa7-c937-57bf-9011-99bb084472b9/mirror",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: Mirror",
+    "Directed by: Andrei Tarkovsky",
+    "Year: 1975",
+    "Country: USSR, Russian SFSR"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "760c8e700f31400d"
+}

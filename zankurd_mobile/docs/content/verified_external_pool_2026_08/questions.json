@@ -1225,6 +1225,456 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0037",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Persona» kî ye?",
+    "promptTr": "«Persona» filminin yönetmeni kimdir?",
+    "answers": [
+      "Ingmar Bergman",
+      "Lars von Trier",
+      "Roy Andersson",
+      "Victor Sjöström"
+    ],
+    "answersTr": [
+      "Ingmar Bergman",
+      "Lars von Trier",
+      "Roy Andersson",
+      "Victor Sjöström"
+    ],
+    "correctAnswer": "Ingmar Bergman",
+    "correctAnswerTr": "Ingmar Bergman",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Ingmar Bergman e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Ingmar Bergman'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0038",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Persona» hilberîna kîjan welatî ye?",
+    "promptTr": "«Persona» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Swêd",
+      "Norwec",
+      "Danîmarka",
+      "Fînlanda"
+    ],
+    "answersTr": [
+      "İsveç",
+      "Norveç",
+      "Danimarka",
+      "Finlandiya"
+    ],
+    "correctAnswer": "Fînlanda",
+    "correctAnswerTr": "Finlandiya",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Swêdê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İsveç yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0039",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «8½» kî ye?",
+    "promptTr": "«8½» filminin yönetmeni kimdir?",
+    "answers": [
+      "Federico Fellini",
+      "Michelangelo Antonioni",
+      "Luchino Visconti",
+      "Pier Paolo Pasolini"
+    ],
+    "answersTr": [
+      "Federico Fellini",
+      "Michelangelo Antonioni",
+      "Luchino Visconti",
+      "Pier Paolo Pasolini"
+    ],
+    "correctAnswer": "Federico Fellini",
+    "correctAnswerTr": "Federico Fellini",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Federico Fellini e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Federico Fellini'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0040",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «8½» di kîjan salê de derket?",
+    "promptTr": "«8½» filmi hangi yılda çıktı?",
+    "answers": [
+      "1949",
+      "1955",
+      "1958",
+      "1963"
+    ],
+    "answersTr": [
+      "1949",
+      "1955",
+      "1958",
+      "1963"
+    ],
+    "correctAnswer": "1963",
+    "correctAnswerTr": "1963",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1963 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1963'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0041",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «The Godfather» kî ye?",
+    "promptTr": "«The Godfather» filminin yönetmeni kimdir?",
+    "answers": [
+      "Francis Ford Coppola",
+      "Martin Scorsese",
+      "Sidney Lumet",
+      "Sam Peckinpah"
+    ],
+    "answersTr": [
+      "Francis Ford Coppola",
+      "Martin Scorsese",
+      "Sidney Lumet",
+      "Sam Peckinpah"
+    ],
+    "correctAnswer": "Francis Ford Coppola",
+    "correctAnswerTr": "Francis Ford Coppola",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Francis Ford Coppola e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Francis Ford Coppola'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0042",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «The Godfather» di kîjan salê de derket?",
+    "promptTr": "«The Godfather» filmi hangi yılda çıktı?",
+    "answers": [
+      "1965",
+      "1969",
+      "1980",
+      "1972"
+    ],
+    "answersTr": [
+      "1965",
+      "1969",
+      "1980",
+      "1972"
+    ],
+    "correctAnswer": "1972",
+    "correctAnswerTr": "1972",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1972 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1972'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0043",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Vertigo» kî ye?",
+    "promptTr": "«Vertigo» filminin yönetmeni kimdir?",
+    "answers": [
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Huston",
+      "Otto Preminger"
+    ],
+    "answersTr": [
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Huston",
+      "Otto Preminger"
+    ],
+    "correctAnswer": "Alfred Hitchcock",
+    "correctAnswerTr": "Alfred Hitchcock",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Alfred Hitchcock e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0044",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Vertigo» di kîjan salê de derket?",
+    "promptTr": "«Vertigo» filmi hangi yılda çıktı?",
+    "answers": [
+      "1944",
+      "1951",
+      "1966",
+      "1958"
+    ],
+    "answersTr": [
+      "1944",
+      "1951",
+      "1966",
+      "1958"
+    ],
+    "correctAnswer": "1958",
+    "correctAnswerTr": "1958",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1958 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1958'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0045",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Sunrise A Song of Two Humans» di kîjan salê de derket?",
+    "promptTr": "«Sunrise A Song of Two Humans» filmi hangi yılda çıktı?",
+    "answers": [
+      "1927",
+      "1935",
+      "1941",
+      "1919"
+    ],
+    "answersTr": [
+      "1927",
+      "1935",
+      "1941",
+      "1919"
+    ],
+    "correctAnswer": "1927",
+    "correctAnswerTr": "1927",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1927 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1927'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0046",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Man with a Movie Camera» kî ye?",
+    "promptTr": "«Man with a Movie Camera» filminin yönetmeni kimdir?",
+    "answers": [
+      "Sergei Eisenstein",
+      "Lev Kuleshov",
+      "Vsevolod Pudovkin",
+      "Dziga Vertov"
+    ],
+    "answersTr": [
+      "Sergei Eisenstein",
+      "Lev Kuleshov",
+      "Vsevolod Pudovkin",
+      "Dziga Vertov"
+    ],
+    "correctAnswer": "Dziga Vertov",
+    "correctAnswerTr": "Dziga Vertov",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Dziga Vertov e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Dziga Vertov'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0047",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Man with a Movie Camera» di kîjan salê de derket?",
+    "promptTr": "«Man with a Movie Camera» filmi hangi yılda çıktı?",
+    "answers": [
+      "1929",
+      "1917",
+      "1938",
+      "1945"
+    ],
+    "answersTr": [
+      "1929",
+      "1917",
+      "1938",
+      "1945"
+    ],
+    "correctAnswer": "1929",
+    "correctAnswerTr": "1929",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1929 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1929'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0048",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Mirror» kî ye?",
+    "promptTr": "«Mirror» filminin yönetmeni kimdir?",
+    "answers": [
+      "Sergei Parajanov",
+      "Larisa Shepitko",
+      "Andrei Konchalovsky",
+      "Andrei Tarkovsky"
+    ],
+    "answersTr": [
+      "Sergei Parajanov",
+      "Larisa Shepitko",
+      "Andrei Konchalovsky",
+      "Andrei Tarkovsky"
+    ],
+    "correctAnswer": "Andrei Tarkovsky",
+    "correctAnswerTr": "Andrei Tarkovsky",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Andrei Tarkovsky e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0049",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Mirror» di kîjan salê de derket?",
+    "promptTr": "«Mirror» filmi hangi yılda çıktı?",
+    "answers": [
+      "1975",
+      "1962",
+      "1988",
+      "1953"
+    ],
+    "answersTr": [
+      "1975",
+      "1962",
+      "1988",
+      "1953"
+    ],
+    "correctAnswer": "1975",
+    "correctAnswerTr": "1975",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1975 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1975'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0050",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «In the Mood for Love» kî ye?",
+    "promptTr": "«In the Mood for Love» filminin yönetmeni kimdir?",
+    "answers": [
+      "John Woo",
+      "Tsai Ming-liang",
+      "Hou Hsiao-hsien",
+      "Wong Kar Wai"
+    ],
+    "answersTr": [
+      "John Woo",
+      "Tsai Ming-liang",
+      "Hou Hsiao-hsien",
+      "Wong Kar Wai"
+    ],
+    "correctAnswer": "Wong Kar Wai",
+    "correctAnswerTr": "Wong Kar Wai",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Wong Kar Wai e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Wong Kar Wai'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0051",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «In the Mood for Love» di kîjan salê de derket?",
+    "promptTr": "«In the Mood for Love» filmi hangi yılda çıktı?",
+    "answers": [
+      "2000",
+      "1988",
+      "1994",
+      "2008"
+    ],
+    "answersTr": [
+      "2000",
+      "1988",
+      "1994",
+      "2008"
+    ],
+    "correctAnswer": "2000",
+    "correctAnswerTr": "2000",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 2000 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 2000'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0052",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Come and See» kî ye?",
+    "promptTr": "«Come and See» filminin yönetmeni kimdir?",
+    "answers": [
+      "Elem Klimov",
+      "Andrei Tarkovsky",
+      "Nikita Mikhalkov",
+      "Sergei Bondarchuk"
+    ],
+    "answersTr": [
+      "Elem Klimov",
+      "Andrei Tarkovsky",
+      "Nikita Mikhalkov",
+      "Sergei Bondarchuk"
+    ],
+    "correctAnswer": "Elem Klimov",
+    "correctAnswerTr": "Elem Klimov",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Elem Klimov e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0053",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Close-up» kî ye?",
+    "promptTr": "«Close-up» filminin yönetmeni kimdir?",
+    "answers": [
+      "Mohsen Makhmalbaf",
+      "Jafar Panahi",
+      "Abbas Kiarostami",
+      "Asghar Farhadi"
+    ],
+    "answersTr": [
+      "Mohsen Makhmalbaf",
+      "Jafar Panahi",
+      "Abbas Kiarostami",
+      "Asghar Farhadi"
+    ],
+    "correctAnswer": "Abbas Kiarostami",
+    "correctAnswerTr": "Abbas Kiarostami",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Abbas Kiarostami e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Abbas Kiarostami'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0054",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Close-up» hilberîna kîjan welatî ye?",
+    "promptTr": "«Close-up» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Tirkiye",
+      "Iraq",
+      "Efxanistan",
+      "Îran"
+    ],
+    "answersTr": [
+      "Türkiye",
+      "Irak",
+      "Afganistan",
+      "İran"
+    ],
+    "correctAnswer": "Îran",
+    "correctAnswerTr": "İran",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Îranê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İran yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,
