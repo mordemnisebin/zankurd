@@ -8,7 +8,7 @@
   "riskClass": "C",
   "volatility": "low",
   "targetCategory": "Cografya",
-  "packStatus": "SOURCE_VERIFIED_TERMINOLOGY_BLOCKED",
+  "packStatus": "REJECTED_LANGUAGE_CONCEPT_MISMATCH",
   "copyrightNotes": "Kısa olgu ifadeleri.",
   "exactSourceStatements": [
     "Weather refers to short term atmospheric conditions on a given day",
@@ -19,28 +19,27 @@
     {
       "claimId": "noaa_wc_01",
       "claim": "Hava kısa vadeli atmosfer koşullarıdır.",
-      "status": "BLOCKED"
+      "status": "REJECTED_CONCEPT_MISMATCH"
     },
     {
       "claimId": "noaa_wc_02",
       "claim": "İklim, uzun bir dönemde havaların ortalamasıdır.",
-      "status": "BLOCKED"
+      "status": "REJECTED_CONCEPT_MISMATCH"
     },
     {
       "claimId": "noaa_wc_03",
       "claim": "Hava dakikadan dakikaya değişebilir.",
-      "status": "BLOCKED"
+      "status": "REJECTED_CONCEPT_MISMATCH"
     }
   ],
   "authoringBlocker": {
-    "blockedDistinction": "weather (hewa) vs climate (avhewa)",
-    "evidence": "Corpus'ta `avhewa` 22, `hewa` 14 kullanım var — yani İKİ terim de yerleşik. Sorun varlık değil, SINIR: hangisinin 'hava durumu', hangisinin 'iklim' olduğu corpus kullanımından kesinleşmiyor ve Wîkîferheng girdileri okunmadı.",
-    "whyBlocked": "Bu paketin üç claim'i de tam olarak weather/climate AYRIMINA dayanıyor. Ayrım yanlış kurulursa soru olgusal olarak ters döner — 'iklim beklediğin, hava aldığın şeydir' cümlesinin tersi öğretilir. Yerleşik olmaları tek başına ayrımı doğrulamıyor.",
-    "unblockedBy": [
-      "ku.wiktionary `hewa` ve `avhewa` girdilerinin okunması",
-      "yayımlanmış Kurmancî coğrafya metninde ayrımın görülmesi"
-    ]
+    "blockedDistinction": "weather (hava) vs climate (iklim)",
+    "resolution": "ARAŞTIRILDI VE ÇÖZÜLDÜ — ama sonuç: soru Kurmancî'de doğal kurulamıyor.",
+    "evidence": "ku.wiktionary `avhewa` -> `avûhewa` varyantı. `avûhewa` girdisi: \"îklîm, seqa, keş, hewa\" — yani TEK sözcük hem iklimi hem havayı kapsıyor. Etimoloji: av (su) + û (ve) + hewa (hava).",
+    "whyRejectedNotDeferred": "Bu bir terim EKSİKLİĞİ değil, kavram HARİTASI farkı. NOAA'nın üç claim'i de İngilizce'nin weather/climate keskin ayrımına dayanıyor; Kurmancî bu ayrımı aynı biçimde yapmıyor. Terim bulunsa bile soru, dilin kendi kavram yapısına aykırı bir ayrımı dayatırdı.",
+    "whatWouldBeWrong": "`hewa` = hava, `avûhewa` = iklim diye zorlamak sözlüğün söylemediği bir sınır çizmek olurdu. Oyuncu yanlış bir ayrımı doğru sanıp öğrenirdi — uydurma terimden farkı yok.",
+    "lessonRecorded": "Yeni blokaj türü: kaynak sağlam, terimler yerleşik, ama SORU kaynak dilin kavram ayrımını taşıyor ve hedef dilde o ayrım yok. Çeviri değil, kavramsallaştırma sorunu."
   },
-  "readyWhenUnblocked": "Ayrım netleşince üç claim doğrudan soruya çevrilebilir.",
-  "sourceHash": "9c570cda232b3bc7"
+  "sourceHash": "65fa87fb90f9696c",
+  "alternativeUse": "Aynı sayfadaki 'hava dakikadan dakikaya değişir' olgusu, ayrım kurmadan tek başına sorulabilir; ileride `hewa` girdisi okunursa değerlendirilecek."
 }
