@@ -1,16 +1,16 @@
 {
-  "totalStagedVerified": 52,
+  "totalStagedVerified": 53,
   "externalVerifiedCount": 13,
-  "sourceFirstVerifiedCount": 39,
+  "sourceFirstVerifiedCount": 40,
   "byCategory": {
-    "Cografya": 17,
+    "Cografya": 18,
     "Sînema": 27,
     "Teknolojî": 8,
-    "origin:source_first_verified": 39
+    "origin:source_first_verified": 40
   },
   "byVerificationLevel": {
     "AUTHORITATIVE_CATALOG_DIRECT": 4,
-    "FETCHED_DIRECT": 41,
+    "FETCHED_DIRECT": 42,
     "SEARCH_SUMMARY_CORROBORATED": 6,
     "SELF_CONTAINED": 1
   },

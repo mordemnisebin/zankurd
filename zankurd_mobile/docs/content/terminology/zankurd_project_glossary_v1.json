@@ -626,6 +626,46 @@
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
       "recordHash": "8f630738df072cb7"
+    },
+    {
+      "conceptId": "ku_sci_nitrogen",
+      "EnglishConcept": "nitrogen",
+      "TurkishConcept": "Azot",
+      "domain": "chemistry",
+      "projectPreferredKurmanji": "nîtrojen",
+      "alternativeKurmanjiForms": [
+        "nîtrocen",
+        "azot"
+      ],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "madeyê kîmyayî yê bi kurteya N û bi hejmara atomî 7 ku gazeke bêreng û bêbêhn e",
+      "definitionTr": "N kısaltmalı, atom numarası 7 olan, renksiz ve kokusuz gaz hâlindeki kimyasal madde",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "nitrogen (chemical element)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/n%C3%AEtrojen",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr: madeyê kîmyayî yê bi kurteya N û bi hejmara atomî 7 û giraniya atomî 14.0067 ku gazeke bêreng û bêbêhn e. Varyant: nîtrocen. Hevwate: azot.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`nîtrojen` tercih edildi; `nîtrocen` varyant, `azot` eşanlamlı olarak kayıtlı.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Tek teknik anlam; belirsizlik yok. Eşanlamlı `azot` da girdide kayıtlı.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "387db121d3f36dd2"
     }
   ],
   "sourcesConsulted": []

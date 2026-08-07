@@ -922,5 +922,79 @@
       "note": "aktif bankada atmosfer sorusu yok"
     },
     "finalContentHash": "c1ab728965a896c1"
+  },
+  {
+    "questionId": "sf_nat_0014",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_06",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "78% nitrogen, 21% oxygen, and 1% other gases",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_nitrogen",
+      "ku_sci_oxygen"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_nitrogen": "387db121d3f36dd2",
+      "ku_sci_oxygen": "8f630738df072cb7"
+    },
+    "promptKu": "Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?",
+    "promptTr": "Dünya atmosferinin en büyük payını hangi gaz oluşturur?",
+    "answersKu": [
+      "Oksîjen",
+      "Nîtrojen",
+      "Karbondîoksît",
+      "Argon"
+    ],
+    "answersTr": [
+      "Oksijen",
+      "Azot",
+      "Karbondioksit",
+      "Argon"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Nîtrojen bi ji sedî 78 para herî mezin a atmosferê pêk tîne; oksîjen ji sedî 21 e.",
+    "explanationTr": "Azot yüzde 78 ile atmosferin en büyük payını oluşturur; oksijen yüzde 21'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "nîtrojen ve oksîjen açık; karbondîoksît/argon uluslararası biçim, çeldirici olarak"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi gaz adı, tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "sf_nat_0013 oksijen ORANINI soruyor; bu soru en büyük payı soruyor — farklı bilgi noktası"
+    },
+    "finalContentHash": "1f41af37cc7c977c"
   }
 ]

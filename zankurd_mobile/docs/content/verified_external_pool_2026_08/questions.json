@@ -1150,6 +1150,31 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_nat_0014",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?",
+    "promptTr": "Dünya atmosferinin en büyük payını hangi gaz oluşturur?",
+    "answers": [
+      "Oksîjen",
+      "Nîtrojen",
+      "Karbondîoksît",
+      "Argon"
+    ],
+    "answersTr": [
+      "Oksijen",
+      "Azot",
+      "Karbondioksit",
+      "Argon"
+    ],
+    "correctAnswer": "Nîtrojen",
+    "correctAnswerTr": "Azot",
+    "explanationKu": "Nîtrojen bi ji sedî 78 para herî mezin a atmosferê pêk tîne; oksîjen ji sedî 21 e.",
+    "explanationTr": "Azot yüzde 78 ile atmosferin en büyük payını oluşturur; oksijen yüzde 21'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_tech_0001",
     "category": "Teknolojî",
     "subcategory": null,

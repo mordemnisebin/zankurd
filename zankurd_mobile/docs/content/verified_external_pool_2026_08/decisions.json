@@ -414,6 +414,15 @@
     "subcategoryNew": null
   },
   {
+    "originalQuestionId": "sf_nat_0014",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
     "originalQuestionId": "sf_tech_0001",
     "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
     "OpusReviewReasons": [
