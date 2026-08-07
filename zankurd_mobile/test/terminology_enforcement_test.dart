@@ -115,8 +115,10 @@ void main() {
     // Bu iki terim HÂLÂ bloke. `dane` bir zamanlar buradaydı; Wîkîferheng
     // girdisi okununca açıldı ve bu test onu yakaladı — sözleşme değişince
     // testin sessizce geçmemesi tam olarak istenen davranış.
-    expect(blocked, contains('şîfre'));
+    // `şîfre` bir zamanlar buradaydı; password anlamı açılınca listeden
+    // çıktı ve bu test onu yakaladı. Hâlâ hiçbir anlamı açık olmayanlar:
     expect(blocked, contains('sepan'));
+    expect(blocked, contains('tor'));
   });
 
   test('staged sorularda bloke terim yok', () {
@@ -142,7 +144,7 @@ void main() {
       'answersKu': [
         'Çavkaniya xwestî nehat dîtin',
         'Daxwaz bi serkeftî qediya',
-        'Şîfre çewt e',
+        'Sepan nehatiye barkirin',
         'Girêdan hêdî ye',
       ],
       'explanationKu': 'Koda 404 tê wateya ku çavkanî nehat dîtin.',
@@ -150,7 +152,7 @@ void main() {
     expect(
       offendersIn(bad),
       isNotEmpty,
-      reason: 'çeldiricideki "şîfre" yakalanmalıydı',
+      reason: 'çeldiricideki "sepan" yakalanmalıydı',
     );
   });
 
