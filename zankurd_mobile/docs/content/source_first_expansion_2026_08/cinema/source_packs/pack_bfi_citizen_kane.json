@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_citizen_kane",
+  "sourceTitle": "BFI — Citizen Kane künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/f4c92833-af39-5cd6-a41e-8df5933d0dc1/citizen-kane",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Original Title: Citizen Kane",
+    "Director: Orson Welles",
+    "Year: 1941",
+    "Country: USA"
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac (paralel künye toplama); her sayfa ajan tarafından WebFetch ile açıldı",
+  "notUsed": "Süre ve anket sıralaması istenmedi — sürüme göre değişiyor.",
+  "sourceHash": "9ad16457bada8adb"
+}

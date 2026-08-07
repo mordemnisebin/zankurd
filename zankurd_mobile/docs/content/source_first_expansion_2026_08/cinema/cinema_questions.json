@@ -1706,5 +1706,725 @@
       "note": "Diğer ülke soruları Almanya (0018) ve Japonya (0022); üç farklı cevap, çakışma yok."
     },
     "finalContentHash": "e1189b2cdfa806dd"
+  },
+  {
+    "questionId": "sf_cin_0025",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_bicycle_thieves",
+    "claimId": "cin_bicycle_thieves_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/594f7408-2fdd-55a0-a347-79370e42e0ed/bicycle-thieves",
+    "exactSupportingFact": "Director: Vittorio De Sica",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Bicycle Thieves» kî ye?",
+    "promptTr": "«Bicycle Thieves» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Roberto Rossellini",
+      "Vittorio De Sica",
+      "Luchino Visconti",
+      "Federico Fellini"
+    ],
+    "answersTr": [
+      "Roberto Rossellini",
+      "Vittorio De Sica",
+      "Luchino Visconti",
+      "Federico Fellini"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Vittorio De Sica e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Vittorio De Sica'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "2aef6e7ec692a2be"
+  },
+  {
+    "questionId": "sf_cin_0026",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_bicycle_thieves",
+    "claimId": "cin_bicycle_thieves_cnt",
+    "sourceReference": "https://www.bfi.org.uk/film/594f7408-2fdd-55a0-a347-79370e42e0ed/bicycle-thieves",
+    "exactSupportingFact": "Country: Italy",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Bicycle Thieves» hilberîna kîjan welatî ye?",
+    "promptTr": "«Bicycle Thieves» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Fransa",
+      "Îspanya",
+      "Îtalya",
+      "Yewnanistan"
+    ],
+    "answersTr": [
+      "Fransa",
+      "İspanya",
+      "İtalya",
+      "Yunanistan"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke İtalyayê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İtalya yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "ea7ab86a2419fccc"
+  },
+  {
+    "questionId": "sf_cin_0027",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_citizen_kane",
+    "claimId": "cin_citizen_kane_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/f4c92833-af39-5cd6-a41e-8df5933d0dc1/citizen-kane",
+    "exactSupportingFact": "Director: Orson Welles",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Citizen Kane» kî ye?",
+    "promptTr": "«Citizen Kane» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "John Ford",
+      "Howard Hawks",
+      "Orson Welles",
+      "Frank Capra"
+    ],
+    "answersTr": [
+      "John Ford",
+      "Howard Hawks",
+      "Orson Welles",
+      "Frank Capra"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Orson Welles e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Orson Welles'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "2c40c6fb0086f302"
+  },
+  {
+    "questionId": "sf_cin_0028",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_citizen_kane",
+    "claimId": "cin_citizen_kane_cnt",
+    "sourceReference": "https://www.bfi.org.uk/film/f4c92833-af39-5cd6-a41e-8df5933d0dc1/citizen-kane",
+    "exactSupportingFact": "Country: USA",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Citizen Kane» hilberîna kîjan welatî ye?",
+    "promptTr": "«Citizen Kane» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Brîtanya",
+      "Kanada",
+      "Awistralya",
+      "DYA"
+    ],
+    "answersTr": [
+      "Britanya",
+      "Kanada",
+      "Avustralya",
+      "ABD"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke ABDyê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir ABD yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "14942adecb87c29c"
+  },
+  {
+    "questionId": "sf_cin_0029",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_caligari",
+    "claimId": "cin_caligari_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/b249ad93-f1e7-5cff-bb6c-c77695f6ab3c/das-cabinet-des-dr-caligari",
+    "exactSupportingFact": "Director: Robert Wiene",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Das Cabinet des Dr. Caligari» kî ye?",
+    "promptTr": "«Das Cabinet des Dr. Caligari» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Robert Wiene",
+      "Fritz Lang",
+      "F. W. Murnau",
+      "G. W. Pabst"
+    ],
+    "answersTr": [
+      "Robert Wiene",
+      "Fritz Lang",
+      "F. W. Murnau",
+      "G. W. Pabst"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Robert Wiene e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "e5862d32b2eeb8d5"
+  },
+  {
+    "questionId": "sf_cin_0030",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_rashomon",
+    "claimId": "cin_rashomon_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/878cd0fa-33da-547a-b128-84cec508f7da/rashomon",
+    "exactSupportingFact": "Director: Akira Kurosawa",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Rashomon» kî ye?",
+    "promptTr": "«Rashomon» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Mikio Naruse"
+    ],
+    "answersTr": [
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Mikio Naruse"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Akira Kurosawa e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Akira Kurosawa'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "b52af65b8557fe35"
+  },
+  {
+    "questionId": "sf_cin_0031",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_rashomon",
+    "claimId": "cin_rashomon_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/878cd0fa-33da-547a-b128-84cec508f7da/rashomon",
+    "exactSupportingFact": "Year: 1950",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Rashomon» di kîjan salê de derket?",
+    "promptTr": "«Rashomon» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1935",
+      "1950",
+      "1961",
+      "1972"
+    ],
+    "answersTr": [
+      "1935",
+      "1950",
+      "1961",
+      "1972"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1950 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1950'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "22148cea7d367624"
+  },
+  {
+    "questionId": "sf_cin_0032",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_400_blows",
+    "claimId": "cin_400_blows_dir",
+    "sourceReference": "https://www.bfi.org.uk/film/8803865c-9135-5c8f-b36f-6e50ffcb4873/the-400-blows",
+    "exactSupportingFact": "Director: François Truffaut",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «The 400 Blows» kî ye?",
+    "promptTr": "«The 400 Blows» filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Éric Rohmer"
+    ],
+    "answersTr": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Éric Rohmer"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê François Truffaut e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "c845e7ed4b5c639d"
+  },
+  {
+    "questionId": "sf_cin_0033",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_400_blows",
+    "claimId": "cin_400_blows_cnt",
+    "sourceReference": "https://www.bfi.org.uk/film/8803865c-9135-5c8f-b36f-6e50ffcb4873/the-400-blows",
+    "exactSupportingFact": "Country: France",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «The 400 Blows» hilberîna kîjan welatî ye?",
+    "promptTr": "«The 400 Blows» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Belçîka",
+      "Swîsre",
+      "Fransa",
+      "Portekîz"
+    ],
+    "answersTr": [
+      "Belçika",
+      "İsviçre",
+      "Fransa",
+      "Portekiz"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Fransayê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir Fransa yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "1df8c4bc71f1f2e7"
+  },
+  {
+    "questionId": "sf_cin_0034",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_seven_samurai",
+    "claimId": "cin_seven_samurai_yr",
+    "sourceReference": "https://www.bfi.org.uk/film/01391b07-5940-5d02-aa47-1158142f2b64/seven-samurai",
+    "exactSupportingFact": "Year: 1954",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Seven Samurai» di kîjan salê de derket?",
+    "promptTr": "«Seven Samurai» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1948",
+      "1954",
+      "1963",
+      "1970"
+    ],
+    "answersTr": [
+      "1948",
+      "1954",
+      "1963",
+      "1970"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1954 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1954'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde bu film-alan çifti tek"
+    },
+    "finalContentHash": "46effa35e9083a43"
   }
 ]

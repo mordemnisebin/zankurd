@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_bicycle_thieves",
+  "sourceTitle": "BFI — Bicycle Thieves künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/594f7408-2fdd-55a0-a347-79370e42e0ed/bicycle-thieves",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Original Title: Bicycle Thieves",
+    "Director: Vittorio De Sica",
+    "Year: 1948",
+    "Country: Italy"
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac (paralel künye toplama); her sayfa ajan tarafından WebFetch ile açıldı",
+  "notUsed": "Süre ve anket sıralaması istenmedi — sürüme göre değişiyor.",
+  "sourceHash": "20fadd68ac2f19a1"
+}

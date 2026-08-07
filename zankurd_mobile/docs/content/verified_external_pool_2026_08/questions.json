@@ -925,6 +925,256 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0025",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Bicycle Thieves» kî ye?",
+    "promptTr": "«Bicycle Thieves» filminin yönetmeni kimdir?",
+    "answers": [
+      "Roberto Rossellini",
+      "Vittorio De Sica",
+      "Luchino Visconti",
+      "Federico Fellini"
+    ],
+    "answersTr": [
+      "Roberto Rossellini",
+      "Vittorio De Sica",
+      "Luchino Visconti",
+      "Federico Fellini"
+    ],
+    "correctAnswer": "Vittorio De Sica",
+    "correctAnswerTr": "Vittorio De Sica",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Vittorio De Sica e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Vittorio De Sica'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0026",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Bicycle Thieves» hilberîna kîjan welatî ye?",
+    "promptTr": "«Bicycle Thieves» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Fransa",
+      "Îspanya",
+      "Îtalya",
+      "Yewnanistan"
+    ],
+    "answersTr": [
+      "Fransa",
+      "İspanya",
+      "İtalya",
+      "Yunanistan"
+    ],
+    "correctAnswer": "Îtalya",
+    "correctAnswerTr": "İtalya",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke İtalyayê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İtalya yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0027",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Citizen Kane» kî ye?",
+    "promptTr": "«Citizen Kane» filminin yönetmeni kimdir?",
+    "answers": [
+      "John Ford",
+      "Howard Hawks",
+      "Orson Welles",
+      "Frank Capra"
+    ],
+    "answersTr": [
+      "John Ford",
+      "Howard Hawks",
+      "Orson Welles",
+      "Frank Capra"
+    ],
+    "correctAnswer": "Orson Welles",
+    "correctAnswerTr": "Orson Welles",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Orson Welles e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Orson Welles'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0028",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Citizen Kane» hilberîna kîjan welatî ye?",
+    "promptTr": "«Citizen Kane» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Brîtanya",
+      "Kanada",
+      "Awistralya",
+      "DYA"
+    ],
+    "answersTr": [
+      "Britanya",
+      "Kanada",
+      "Avustralya",
+      "ABD"
+    ],
+    "correctAnswer": "DYA",
+    "correctAnswerTr": "ABD",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke ABDyê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir ABD yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0029",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Das Cabinet des Dr. Caligari» kî ye?",
+    "promptTr": "«Das Cabinet des Dr. Caligari» filminin yönetmeni kimdir?",
+    "answers": [
+      "Robert Wiene",
+      "Fritz Lang",
+      "F. W. Murnau",
+      "G. W. Pabst"
+    ],
+    "answersTr": [
+      "Robert Wiene",
+      "Fritz Lang",
+      "F. W. Murnau",
+      "G. W. Pabst"
+    ],
+    "correctAnswer": "Robert Wiene",
+    "correctAnswerTr": "Robert Wiene",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Robert Wiene e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0030",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Rashomon» kî ye?",
+    "promptTr": "«Rashomon» filminin yönetmeni kimdir?",
+    "answers": [
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Mikio Naruse"
+    ],
+    "answersTr": [
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Mikio Naruse"
+    ],
+    "correctAnswer": "Akira Kurosawa",
+    "correctAnswerTr": "Akira Kurosawa",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Akira Kurosawa e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Akira Kurosawa'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0031",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Rashomon» di kîjan salê de derket?",
+    "promptTr": "«Rashomon» filmi hangi yılda çıktı?",
+    "answers": [
+      "1935",
+      "1950",
+      "1961",
+      "1972"
+    ],
+    "answersTr": [
+      "1935",
+      "1950",
+      "1961",
+      "1972"
+    ],
+    "correctAnswer": "1950",
+    "correctAnswerTr": "1950",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1950 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1950'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0032",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «The 400 Blows» kî ye?",
+    "promptTr": "«The 400 Blows» filminin yönetmeni kimdir?",
+    "answers": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Éric Rohmer"
+    ],
+    "answersTr": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Éric Rohmer"
+    ],
+    "correctAnswer": "François Truffaut",
+    "correctAnswerTr": "François Truffaut",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê François Truffaut e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0033",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «The 400 Blows» hilberîna kîjan welatî ye?",
+    "promptTr": "«The 400 Blows» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Belçîka",
+      "Swîsre",
+      "Fransa",
+      "Portekîz"
+    ],
+    "answersTr": [
+      "Belçika",
+      "İsviçre",
+      "Fransa",
+      "Portekiz"
+    ],
+    "correctAnswer": "Fransa",
+    "correctAnswerTr": "Fransa",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Fransayê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir Fransa yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0034",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Seven Samurai» di kîjan salê de derket?",
+    "promptTr": "«Seven Samurai» filmi hangi yılda çıktı?",
+    "answers": [
+      "1948",
+      "1954",
+      "1963",
+      "1970"
+    ],
+    "answersTr": [
+      "1948",
+      "1954",
+      "1963",
+      "1970"
+    ],
+    "correctAnswer": "1954",
+    "correctAnswerTr": "1954",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1954 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1954'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,

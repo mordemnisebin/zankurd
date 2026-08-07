@@ -117,8 +117,11 @@ void main() {
     // testin sessizce geçmemesi tam olarak istenen davranış.
     // `şîfre` bir zamanlar buradaydı; password anlamı açılınca listeden
     // çıktı ve bu test onu yakaladı. Hâlâ hiçbir anlamı açık olmayanlar:
+    // Liste zamanla küçülüyor: `şîfre`, `dane`, `înternet`, `tor` sırayla
+    // açıldı ve her açılışta bu assertion kırılıp beni uyardı. Şu an hiçbir
+    // anlamı açık olmayan tek sözcük `sepan` — Wîkîferheng girdisi
+    // 'uygulama' anlamını desteklemiyor.
     expect(blocked, contains('sepan'));
-    expect(blocked, contains('tor'));
   });
 
   test('staged sorularda bloke terim yok', () {

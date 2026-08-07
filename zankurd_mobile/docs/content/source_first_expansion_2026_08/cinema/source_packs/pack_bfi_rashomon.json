@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_rashomon",
+  "sourceTitle": "BFI — Rashomon künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/878cd0fa-33da-547a-b128-84cec508f7da/rashomon",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Original Title: Rashomon",
+    "Director: Akira Kurosawa",
+    "Year: 1950",
+    "Country: Japan"
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac (paralel künye toplama); her sayfa ajan tarafından WebFetch ile açıldı",
+  "notUsed": "Süre ve anket sıralaması istenmedi — sürüme göre değişiyor.",
+  "sourceHash": "c5ca81898d91dfad"
+}

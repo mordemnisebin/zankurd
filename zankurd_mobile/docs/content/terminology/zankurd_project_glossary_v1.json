@@ -461,11 +461,11 @@
       "corpusAttestationCount": 22,
       "spellingDecision": "Corpus yazımı `tor`.",
       "dialectNotes": null,
-      "ambiguityNotes": "general network / computer network / internet ayrımı çözülmedi.",
+      "ambiguityNotes": "Bu kaydın yerini ku_tech_network aldı (tanım satırı doğrudan okundu).",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "f420704471833414"
+      "recordHash": "f8b24922b1abfa82"
     },
     {
       "conceptId": "ku_tech_tor_internet",
@@ -492,11 +492,11 @@
       "corpusAttestationCount": 22,
       "spellingDecision": "Corpus yazımı `tor`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Ayrıca İngilizce 'Tor' anonimlik ağı özel adıyla karışma riski; seçeneklerde ikisini karıştıracak soru üretilmeyecek.",
+      "ambiguityNotes": "ku_tech_network (pêşkêşker turunda) `tor`un BİLGİSAYAR AĞI anlamını açtı. Bu kayıt kapalı kalıyor: 'the Internet' anlamı ayrı ve doğrulanmadı.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "f25dbef004a1fc1b"
+      "recordHash": "a853bdf7c13c73e6"
     },
     {
       "conceptId": "ku_geo_okyanus",
@@ -691,6 +691,122 @@
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
       "recordHash": "387db121d3f36dd2"
+    },
+    {
+      "conceptId": "ku_tech_server",
+      "EnglishConcept": "server",
+      "TurkishConcept": "Sunucu",
+      "domain": "computing",
+      "projectPreferredKurmanji": "pêşkêşker",
+      "alternativeKurmanjiForms": [
+        "rajekar",
+        "rajeker"
+      ],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "(enformatîk) server, rajeker, amûra ku weşana webê tê de tê kirin",
+      "definitionTr": "Web yayınının üzerinde yapıldığı aygıt",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "server (computing)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/p%C3%AA%C5%9Fk%C3%AA%C5%9Fker",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "(enformatîk) server, rajeker, amûra ku weşana webê tê de tê kirin",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`pêşkêşker` girdideki biçim.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Teknik anlam ÇEVİRİ LİSTESİNDEN değil, tanım satırının kendisinden geliyor: satır (enformatîk) alan etiketi taşıyor. Girdide ayrıca 1. anlam 'pêşkêş eden kişi' var — yalnız bilişim anlamı açıldı. `rajekar` bağımsız bir maddede aynı anlamı veriyor (iki ayrı girdi), bu ikinci kanıt katmanıdır.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "d528293a3c452cf2"
+    },
+    {
+      "conceptId": "ku_tech_browser",
+      "EnglishConcept": "web browser",
+      "TurkishConcept": "Web tarayıcısı",
+      "domain": "computing",
+      "projectPreferredKurmanji": "gerok",
+      "alternativeKurmanjiForms": [
+        "gerrok"
+      ],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "(kompûternasî) Ew bernameya ku mirov pê di înternetê de digere.",
+      "definitionTr": "İnternette gezinmeye yarayan program",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "web browser"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/gerok",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "(kompûternasî) Ew bernameya ku mirov pê di înternetê de digere.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`gerok` girdideki biçim.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "(kompûternasî) alan etiketli tanım satırı. Girdide başka anlamlar da var: 'çok gezen kişi', 'gezgin/turist', 'dilenci' — bunların HİÇBİRİ açılmadı. Eşanlamlı listesindeki geştyar/turîst/parsek o anlamlara ait, tarayıcı anlamına DEĞİL.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "e486fc2ca33ef73b"
+    },
+    {
+      "conceptId": "ku_tech_network",
+      "EnglishConcept": "computer network",
+      "TurkishConcept": "Bilgisayar ağı",
+      "domain": "computing",
+      "projectPreferredKurmanji": "tor",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "(enformatîk) Avaniya ku ji pevgirêdana çend kombersan pêk tê.",
+      "definitionTr": "Birden çok bilgisayarın birbirine bağlanmasıyla oluşan yapı",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "computer network"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/tor",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "(enformatîk) Avaniya ku ji pevgirêdana çend kombersan pêk tê.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`tor` girdideki biçim.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Tanım satırı (enformatîk) etiketli ve 'çend komberan pevgirêdan' = birden çok bilgisayarın bağlanması diyor. YALNIZ bilgisayar ağı anlamı açıldı; `tor`un genel 'ağ/file' anlamı ve İngilizce 'Tor' anonimlik ağı özel adı AÇILMADI. Seçeneklerde ikisini karıştıracak soru yazılmayacak.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "57e193192192a67c"
     }
   ],
   "sourcesConsulted": []
