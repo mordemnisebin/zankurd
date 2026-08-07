@@ -1958,6 +1958,27 @@
         "correctAnswer": "correctIndex",
         "category": "category"
       }
+    },
+    {
+      "id": "pack_nasa_solar_system",
+      "description": "NASA solar system claim pack",
+      "path": "docs/content/source_first_expansion_2026_08/nature/pack_nasa_solar_system.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_nature",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Claim pack.",
+      "columns": {
+        "id": "sourcePackId",
+        "prompt": "sourceTitle",
+        "options": "exactSourceStatements",
+        "correctAnswer": "sourceReference",
+        "category": "targetCategory"
+      }
     }
   ]
 }

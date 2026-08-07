@@ -282,5 +282,293 @@
       "note": "aktif bankada su döngüsü sorusu yok"
     },
     "finalContentHash": "fb9e86710963a40a"
+  },
+  {
+    "questionId": "sf_nat_0005",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_01",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "Our solar system includes the Sun, eight planets",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Di sîstema rojê de çend gerstêrk hene?",
+    "promptTr": "Güneş sisteminde kaç gezegen vardır?",
+    "answersKu": [
+      "Şeş",
+      "Heft",
+      "Heşt",
+      "Neh"
+    ],
+    "answersTr": [
+      "Altı",
+      "Yedi",
+      "Sekiz",
+      "Dokuz"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî NASAyê sîstema rojê heşt gerstêrkan dihewîne.",
+    "explanationTr": "NASA'ya göre güneş sistemi sekiz gezegen içerir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "5a0e0160c7ef14c7"
+  },
+  {
+    "questionId": "sf_nat_0006",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_02",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "The largest planet is Jupiter.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Gerstêrka herî mezin a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en büyük gezegeni hangisidir?",
+    "answersKu": [
+      "Saturn",
+      "Jupiter",
+      "Neptun",
+      "Mars"
+    ],
+    "answersTr": [
+      "Satürn",
+      "Jüpiter",
+      "Neptün",
+      "Mars"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Jupiter gerstêrka herî mezin a sîstema rojê ye.",
+    "explanationTr": "Jüpiter, güneş sisteminin en büyük gezegenidir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "1973d4da63982164"
+  },
+  {
+    "questionId": "sf_nat_0007",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_03",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "The hottest planet in our solar system is Venus, even though Mercury is closer to the Sun.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Gerstêrka herî germ a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en sıcak gezegeni hangisidir?",
+    "answersKu": [
+      "Jupiter",
+      "Merkur",
+      "Mars",
+      "Venus"
+    ],
+    "answersTr": [
+      "Jüpiter",
+      "Merkür",
+      "Mars",
+      "Venüs"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Venus gerstêrka herî germ e, tevî ku Merkur nêzîktirî rojê ye.",
+    "explanationTr": "Merkür güneşe daha yakın olsa da en sıcak gezegen Venüs'tür.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "84bb86f7e3f8fc45"
+  },
+  {
+    "questionId": "sf_nat_0008",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_04",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "Our solar system formed about 4.6 billion years ago",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Sîstema rojê berî nêzîkî çend milyar salan pêk hat?",
+    "promptTr": "Güneş sistemi yaklaşık kaç milyar yıl önce oluştu?",
+    "answersKu": [
+      "2.4 milyar",
+      "4.6 milyar",
+      "13.8 milyar",
+      "8.2 milyar"
+    ],
+    "answersTr": [
+      "2,4 milyar",
+      "4,6 milyar",
+      "13,8 milyar",
+      "8,2 milyar"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî NASAyê sîstema rojê berî nêzîkî 4.6 milyar salan pêk hatiye.",
+    "explanationTr": "NASA'ya göre güneş sistemi yaklaşık 4,6 milyar yıl önce oluşmuştur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "99a3d3ed63f7c217"
   }
 ]

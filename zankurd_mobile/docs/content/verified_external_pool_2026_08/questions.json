@@ -925,6 +925,106 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_nat_0005",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Di sîstema rojê de çend gerstêrk hene?",
+    "promptTr": "Güneş sisteminde kaç gezegen vardır?",
+    "answers": [
+      "Şeş",
+      "Heft",
+      "Heşt",
+      "Neh"
+    ],
+    "answersTr": [
+      "Altı",
+      "Yedi",
+      "Sekiz",
+      "Dokuz"
+    ],
+    "correctAnswer": "Heşt",
+    "correctAnswerTr": "Sekiz",
+    "explanationKu": "Li gorî NASAyê sîstema rojê heşt gerstêrkan dihewîne.",
+    "explanationTr": "NASA'ya göre güneş sistemi sekiz gezegen içerir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0006",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Gerstêrka herî mezin a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en büyük gezegeni hangisidir?",
+    "answers": [
+      "Saturn",
+      "Jupiter",
+      "Neptun",
+      "Mars"
+    ],
+    "answersTr": [
+      "Satürn",
+      "Jüpiter",
+      "Neptün",
+      "Mars"
+    ],
+    "correctAnswer": "Jupiter",
+    "correctAnswerTr": "Jüpiter",
+    "explanationKu": "Jupiter gerstêrka herî mezin a sîstema rojê ye.",
+    "explanationTr": "Jüpiter, güneş sisteminin en büyük gezegenidir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0007",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Gerstêrka herî germ a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en sıcak gezegeni hangisidir?",
+    "answers": [
+      "Jupiter",
+      "Merkur",
+      "Mars",
+      "Venus"
+    ],
+    "answersTr": [
+      "Jüpiter",
+      "Merkür",
+      "Mars",
+      "Venüs"
+    ],
+    "correctAnswer": "Venus",
+    "correctAnswerTr": "Venüs",
+    "explanationKu": "Venus gerstêrka herî germ e, tevî ku Merkur nêzîktirî rojê ye.",
+    "explanationTr": "Merkür güneşe daha yakın olsa da en sıcak gezegen Venüs'tür.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0008",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Sîstema rojê berî nêzîkî çend milyar salan pêk hat?",
+    "promptTr": "Güneş sistemi yaklaşık kaç milyar yıl önce oluştu?",
+    "answers": [
+      "2.4 milyar",
+      "4.6 milyar",
+      "13.8 milyar",
+      "8.2 milyar"
+    ],
+    "answersTr": [
+      "2,4 milyar",
+      "4,6 milyar",
+      "13,8 milyar",
+      "8,2 milyar"
+    ],
+    "correctAnswer": "4.6 milyar",
+    "correctAnswerTr": "4,6 milyar",
+    "explanationKu": "Li gorî NASAyê sîstema rojê berî nêzîkî 4.6 milyar salan pêk hatiye.",
+    "explanationTr": "NASA'ya göre güneş sistemi yaklaşık 4,6 milyar yıl önce oluşmuştur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_tech_0001",
     "category": "Teknolojî",
     "subcategory": null,

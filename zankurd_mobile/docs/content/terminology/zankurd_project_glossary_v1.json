@@ -548,6 +548,47 @@
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
       "recordHash": "98ae367018c2fc2d"
+    },
+    {
+      "conceptId": "ku_sci_planet",
+      "EnglishConcept": "planet",
+      "TurkishConcept": "Gezegen",
+      "domain": "astronomy",
+      "projectPreferredKurmanji": "gerstêrk",
+      "alternativeKurmanjiForms": [
+        "exter",
+        "hesare",
+        "planet"
+      ],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "Gogên mezin yên li dor stêrkan dizivirin lê bi xwe ronahiyê nadin derdorî xwe",
+      "definitionTr": "Yıldızların çevresinde dönen ama kendi ışık vermeyen büyük gök cisimleri",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "planet (astronomical body)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/gerst%C3%AArk",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m): Gogên mezin yên li dor stêrkan dizivirin lê bi xwe ronahiyê nadin derdorî xwe. Hevwate: exter, hesare, planet. Ger + stêr.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 1,
+      "spellingDecision": "`gerstêrk` tercih edildi; corpus'ta 1 kullanım (Voyager sorusu) bununla uyumlu.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Girdi NEOLOJİZM olduğunu açıkça söylüyor (ger + stêr, 'planet' çevirisi). Eşanlamlılar exter/hesare/planet kayıtlı ama proje `gerstêrk` kullanır. Corpus'ta yalnız 1 kullanım var; kabul Seviye 5'e değil, doğrudan okunmuş girdiye dayanıyor.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "302c135fb94f0685"
     }
   ],
   "sourcesConsulted": []
