@@ -106,8 +106,11 @@ def main() -> int:
     # modeldir, source_first_verified'ın kaynağı doğrudan açılmış kurumsal
     # sayfadır. Ayrımı kaybetmek, iki farklı kanıt rejimini tek sayıya
     # eritirdi.
-    SF = "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json"
-    if os.path.exists(SF):
+    SF_FILES = [
+        "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json",
+        "docs/content/source_first_expansion_2026_08/geography/geography_questions.json",
+    ]
+    for SF in [f for f in SF_FILES if os.path.exists(f)]:
         for q in json.load(open(SF, encoding="utf-8")):
             h = hashlib.sha256(json.dumps(
                 {k: q.get(k) for k in ("promptKu", "promptTr", "answersKu",

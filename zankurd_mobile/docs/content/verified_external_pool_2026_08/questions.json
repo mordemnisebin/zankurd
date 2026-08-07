@@ -723,5 +723,105 @@
     "explanationTr": "BFI kataloğuna göre filmin yılı 1925'tir.",
     "difficulty": 2,
     "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Di dîrokê de çend okyanûsên bi nav hebûn?",
+    "promptTr": "Tarihsel olarak kaç adlandırılmış okyanus vardı?",
+    "answers": [
+      "Çar",
+      "Sê",
+      "Pênc",
+      "Şeş"
+    ],
+    "answersTr": [
+      "Dört",
+      "Üç",
+      "Beş",
+      "Altı"
+    ],
+    "correctAnswer": "Çar",
+    "correctAnswerTr": "Dört",
+    "explanationKu": "Di dîrokê de çar okyanûsên bi nav hebûn: Atlas, Aram, Hindî û Bakur.",
+    "explanationTr": "Tarihsel olarak dört adlandırılmış okyanus vardı: Atlas, Pasifik, Hint ve Arktik.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Kîjan okyanûs wek okyanûsa pêncem tê naskirin?",
+    "promptTr": "Beşinci okyanus olarak hangisi tanınır?",
+    "answers": [
+      "Okyanûsa Hindî",
+      "Okyanûsa Başûr",
+      "Okyanûsa Atlas",
+      "Okyanûsa Aram"
+    ],
+    "answersTr": [
+      "Hint Okyanusu",
+      "Güney Okyanusu",
+      "Atlas Okyanusu",
+      "Pasifik Okyanusu"
+    ],
+    "correctAnswer": "Okyanûsa Başûr",
+    "correctAnswerTr": "Güney Okyanusu",
+    "explanationKu": "Okyanûsa Başûr (Antarktîk) îro ji aliyê piraniya welatan ve wek okyanûsa pêncem tê naskirin.",
+    "explanationTr": "Güney (Antarktika) Okyanusu bugün çoğu ülke tarafından beşinci okyanus olarak tanınır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Sînorên Okyanûsa Başûr di kîjan salê de ji IHOyê re hatin pêşniyarkirin?",
+    "promptTr": "Güney Okyanusu'nun sınırları hangi yılda IHO'ya önerildi?",
+    "answers": [
+      "1982",
+      "1994",
+      "2000",
+      "2010"
+    ],
+    "answersTr": [
+      "1982",
+      "1994",
+      "2000",
+      "2010"
+    ],
+    "correctAnswer": "2000",
+    "correctAnswerTr": "2000",
+    "explanationKu": "Sînorên vê okyanûsê di sala 2000î de ji Rêxistina Hîdrografîk a Navneteweyî re hatin pêşniyarkirin.",
+    "explanationTr": "Bu okyanusun sınırları 2000 yılında Uluslararası Hidrografi Örgütü'ne önerildi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî NOAAyê, ji hêla fizîkî ve li cîhanê çend okyanûs hene?",
+    "promptTr": "NOAA'ya göre fiziksel olarak dünyada kaç okyanus vardır?",
+    "answers": [
+      "Çar okyanûsên cuda",
+      "Pênc okyanûsên cuda",
+      "Sê okyanûsên cuda",
+      "Tenê yek okyanûsa gerdûnî"
+    ],
+    "answersTr": [
+      "Dört ayrı okyanus",
+      "Beş ayrı okyanus",
+      "Üç ayrı okyanus",
+      "Tek bir küresel okyanus"
+    ],
+    "correctAnswer": "Tenê yek okyanûsa gerdûnî",
+    "correctAnswerTr": "Tek bir küresel okyanus",
+    "explanationKu": "NOAA dibêje ku tenê yek okyanûsa gerdûnî heye; nav li herêmên wê yên cuda tên kirin.",
+    "explanationTr": "NOAA'ya göre tek bir küresel okyanus vardır; adlar onun ayrı bölgelerine verilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
   }
 ]

@@ -38,7 +38,7 @@
       "status": "READY_FOR_AUTHORING"
     }
   ],
-  "packStatus": "SOURCE_VERIFIED_TERMINOLOGY_BLOCKED",
+  "packStatus": "UNBLOCKED_AUTHORED",
   "authoringBlocker": {
     "blockedTerm": "ocean / okyanus",
     "evidence": "Aktif corpus'ta (2050 soru) `okyan*` deseni SIFIR kez geçiyor. Buna karşılık `çem` 104, `çiya` 119, `gol` 61, `derya` 7, `behr` 6 kez yerleşik. Yani coğrafya terminolojisi genel olarak sağlam ama tam da bu paketin ihtiyaç duyduğu terim yok.",
@@ -50,5 +50,10 @@
     ]
   },
   "readyWhenUnblocked": "Terim açıldığı anda dört soru doğrudan yazılabilir; kaynak tarafı tamamlanmış durumda.",
-  "sourceHash": "e134f1c1db49e8c5"
+  "sourceHash": "e134f1c1db49e8c5",
+  "terminologyResolvedBy": {
+    "conceptId": "ku_geo_okyanus",
+    "evidencePage": "https://ku.wiktionary.org/wiki/okyan%C3%BBs",
+    "note": "ku.wiktionary (Wîkîferheng) doğrudan okundu; İngilizce Wiktionary'de denenmemişti."
+  }
 }

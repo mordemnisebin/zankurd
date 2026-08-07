@@ -1895,6 +1895,27 @@
         "correctAnswer": "sourceReference",
         "category": "targetCategory"
       }
+    },
+    {
+      "id": "source_first_geography_questions",
+      "description": "Source-first geography questions",
+      "path": "docs/content/source_first_expansion_2026_08/geography/geography_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "source_first_geography",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged source-first geography batch; runtime dışı.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
     }
   ]
 }

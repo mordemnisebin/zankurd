@@ -433,6 +433,44 @@
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
       "recordHash": "f25dbef004a1fc1b"
+    },
+    {
+      "conceptId": "ku_geo_okyanus",
+      "EnglishConcept": "ocean",
+      "TurkishConcept": "Okyanus",
+      "domain": "geography",
+      "projectPreferredKurmanji": "okyanûs",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "Deryayên mezin ên cîhanê",
+      "definitionTr": "Dünyada bulunan büyük denizler",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "ocean (geographic body of water)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/okyan%C3%BBs",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m), (Coğrafya) Dünyada bulunan 5 büyük deniz. Örnek: Okyanûsa Aram, Okyanûsa Atlas, Okyanûsa Hindî, Okyanûsa Bakur, Okyanûsa Başûr",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "Wîkîferheng yazımı `okyanûs`; corpus'ta hiç geçmiyor, çelişki yok.",
+      "dialectNotes": "Kurmancî Wiktionary (ku.wiktionary) ana dil sürümü — lehçe doğrudan Kurmancî.",
+      "ambiguityNotes": "Girdi okyanus ADLARINI da veriyor (Aram/Atlas/Hindî/Bakur/Başûr), bu yüzden soru içinde ad kullanımı da aynı kaynakla desteklidir. YALNIZ coğrafi 'okyanus' anlamında açık; mecazi kullanım açılmadı.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "7d8ba0d5eac6ff42"
     }
-  ]
+  ],
+  "sourcesConsulted": []
 }
