@@ -842,5 +842,149 @@
       "note": "1932 festival claim'lerinden farklı: kurum tarihi"
     },
     "finalContentHash": "d02c7c4f8fdbb92c"
+  },
+  {
+    "questionId": "sf_cin_0013",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_a_bout_de_souffle",
+    "claimId": "cin_bfi_01",
+    "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+    "exactSupportingFact": "Director: Jean-Luc Godard",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «À bout de souffle» (1960) kî ye?",
+    "promptTr": "«À bout de souffle» (1960) filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Alain Resnais"
+    ],
+    "answersTr": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Alain Resnais"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Li gorî kataloga BFIyê, derhênerê fîlmê Jean-Luc Godard e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Jean-Luc Godard'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar; Kurmancî lexeme approval gerekmez"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "seçenekler benzer uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye; eleştiri metni alınmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "DeepSeek 0079 bu filmi Türkçe BAŞLIK üzerinden soruyordu ve REJECTED_WRONG_ANSWER'dı; burada özgün başlık + BFI künyesi"
+    },
+    "finalContentHash": "3c904d2de5d66630"
+  },
+  {
+    "questionId": "sf_cin_0014",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_a_bout_de_souffle",
+    "claimId": "cin_bfi_02",
+    "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+    "exactSupportingFact": "Year: 1960",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «À bout de souffle» di kîjan salê de derket?",
+    "promptTr": "«À bout de souffle» filmi hangi yılda çıktı?",
+    "answersKu": [
+      "1954",
+      "1966",
+      "1960",
+      "1972"
+    ],
+    "answersTr": [
+      "1954",
+      "1966",
+      "1960",
+      "1972"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1960 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1960'tır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar; Kurmancî lexeme approval gerekmez"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yıl, aynı sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "seçenekler benzer uzunlukta"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye; eleştiri metni alınmadı"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "DeepSeek 0079 bu filmi Türkçe BAŞLIK üzerinden soruyordu ve REJECTED_WRONG_ANSWER'dı; burada özgün başlık + BFI künyesi"
+    },
+    "finalContentHash": "e36ab7ca0a75f46a"
   }
 ]

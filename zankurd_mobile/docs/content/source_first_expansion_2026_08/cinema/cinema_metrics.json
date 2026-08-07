@@ -1,20 +1,22 @@
 {
-  "produced": 12,
+  "produced": 14,
   "claimFamilies": {
     "film_language_term": 1,
     "film_technique": 1,
     "festival_foundation_year": 1,
-    "institution_history": 3,
+    "institution_history": 7,
     "award_name": 1,
-    "film_title": 1
+    "film_title": 1,
+    "film_director": 1,
+    "film_year": 1
   },
   "correctIndexDistribution": {
     "1": 4,
     "3": 3,
-    "0": 3,
-    "2": 2
+    "0": 4,
+    "2": 3
   },
-  "maxPositionSharePct": 33.3,
+  "maxPositionSharePct": 28.6,
   "strictLongestCorrect": 4,
   "strictShortestCorrect": 0,
   "lengthBiasNote": "İki ölçüm ayrı: naif `==max` beraberlikte de doğru döner ve yıl sorularında bütün seçenekler 4 karakter olduğu için 8/8 diyordu — artefakt. KESİN ölçüm (tek başına en uzun) 4/8 verdi. Bu bir artefakt DEĞİL: dört kavramsal soruda (montage, deep focus, ilk film, mekân) doğru seçenek tek başına en uzun. n=8'de kesin sonuç çıkmaz ama izlenmesi gereken gerçek bir eğilim; batch 12'ye çıkarılırken çeldiricilerin uzunluğu doğru seçeneğe yaklaştırılmalı.",
@@ -23,7 +25,7 @@
   },
   "kurdishCinemaCount": 0,
   "kurdishCinemaNote": "Bu turda da doğrudan akademik/arşiv kaynağı açılmadı; Risk-A kuralı gereği kaynaksız içerik üretilmedi. Cannes resmî tarihçe sayfası 403 verdi.",
-  "strictLongestCorrectPct": 8.3,
+  "strictLongestCorrectPct": 7.1,
   "lengthBiasStatus": "RESOLVED — strict %8.3 (üst sınır %33)",
   "commitMessageCorrection": "69cf024'ün gövdesinde bu oran sehven '1/8' yazıldı; doğru değer 4/8'dir. Commit yeniden yazılmadı; düzeltme burada ve takip eden commit'te.",
   "strictUniquelyLongestCorrect": 1,
@@ -45,6 +47,11 @@
     {
       "url": "berlinale.de/en/about-us/history.html",
       "status": "FETCH_FAILED_503"
+    },
+    {
+      "url": "moma.org/collection/works/306307",
+      "status": "FETCH_FAILED_403"
     }
-  ]
+  ],
+  "rebalanceNote": "BFI'dan gelen iki soru da index 1'e düşmüş ve pozisyon payı %43'e çıkmıştı (tavan %40). 0013 -> 0, 0014 -> 2 taşındı; answersKu, answersTr ve correctIndex birlikte güncellendi."
 }

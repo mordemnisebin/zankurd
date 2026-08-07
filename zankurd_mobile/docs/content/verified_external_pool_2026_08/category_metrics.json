@@ -1,13 +1,14 @@
 {
-  "totalStagedVerified": 25,
+  "totalStagedVerified": 27,
   "externalVerifiedCount": 13,
-  "sourceFirstVerifiedCount": 12,
+  "sourceFirstVerifiedCount": 14,
   "byCategory": {
-    "Sînema": 23,
+    "Sînema": 25,
     "Teknolojî": 2,
-    "origin:source_first_verified": 12
+    "origin:source_first_verified": 14
   },
   "byVerificationLevel": {
+    "AUTHORITATIVE_CATALOG_DIRECT": 2,
     "FETCHED_DIRECT": 18,
     "SEARCH_SUMMARY_CORROBORATED": 6,
     "SELF_CONTAINED": 1

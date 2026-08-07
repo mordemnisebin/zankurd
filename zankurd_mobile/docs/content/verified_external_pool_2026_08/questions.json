@@ -623,5 +623,55 @@
     "explanationTr": "Dans 1999 yılında La Biennale'ye katıldı.",
     "difficulty": 2,
     "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0013",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «À bout de souffle» (1960) kî ye?",
+    "promptTr": "«À bout de souffle» (1960) filminin yönetmeni kimdir?",
+    "answers": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Alain Resnais"
+    ],
+    "answersTr": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Alain Resnais"
+    ],
+    "correctAnswer": "Jean-Luc Godard",
+    "correctAnswerTr": "Jean-Luc Godard",
+    "explanationKu": "Li gorî kataloga BFIyê, derhênerê fîlmê Jean-Luc Godard e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Jean-Luc Godard'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0014",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «À bout de souffle» di kîjan salê de derket?",
+    "promptTr": "«À bout de souffle» filmi hangi yılda çıktı?",
+    "answers": [
+      "1954",
+      "1966",
+      "1960",
+      "1972"
+    ],
+    "answersTr": [
+      "1954",
+      "1966",
+      "1960",
+      "1972"
+    ],
+    "correctAnswer": "1960",
+    "correctAnswerTr": "1960",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1960 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1960'tır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
   }
 ]

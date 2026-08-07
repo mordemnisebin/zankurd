@@ -385,5 +385,37 @@
     "reviewer": "opus-5",
     "finalContentHash": "d02c7c4f8fdbb92c",
     "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0013",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+    "exactSupportingFact": "Director: Jean-Luc Godard",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "3c904d2de5d66630",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0014",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+    "exactSupportingFact": "Year: 1960",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "e36ab7ca0a75f46a",
+    "activationStatus": "STAGED_VERIFIED"
   }
 ]

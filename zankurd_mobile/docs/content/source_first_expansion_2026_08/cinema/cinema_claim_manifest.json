@@ -166,5 +166,33 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "5b2b1b83c5eadc54"
+  },
+  {
+    "claimId": "cin_bfi_01",
+    "sourcePackId": "pack_bfi_a_bout_de_souffle",
+    "claimFamily": "film_director",
+    "factualClaim": "À bout de souffle'ün yönetmeni Jean-Luc Godard'dır.",
+    "exactSupportingFact": "Director: Jean-Luc Godard",
+    "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "889cd3fa2aa3bc4b"
+  },
+  {
+    "claimId": "cin_bfi_02",
+    "sourcePackId": "pack_bfi_a_bout_de_souffle",
+    "claimFamily": "film_year",
+    "factualClaim": "À bout de souffle 1960 yapımıdır.",
+    "exactSupportingFact": "Year: 1960",
+    "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "8d848f25288b5111"
   }
 ]
