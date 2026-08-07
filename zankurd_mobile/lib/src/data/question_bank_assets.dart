@@ -31,4 +31,10 @@ const questionBankAssets = <String>[
   // `tool/content_authoring/normalize_content_typography.py` ile
   // yapısal olarak normalleştirildi (regex ile toplu onarım DEĞİL).
   'assets/data/expansion_2026_08_questions.json',
+  // 2026-08-06 kaynak-önce genişletme: her soru doğrudan açılmış kurumsal
+  // sayfadan (BFI, NASA, NOAA, USGS, NIST, Columbia, La Biennale, Berlinale,
+  // MDN) çıkarılmış tek bir olguya dayanır ve gerekli Kurmancî terimleri
+  // Wîkîferheng girdisiyle açılmıştır. Provenance:
+  // docs/content/verified_external_pool_2026_08/provenance.json
+  'assets/data/source_first_2026_08_questions.json',
 ];

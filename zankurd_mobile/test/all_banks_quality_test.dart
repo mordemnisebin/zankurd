@@ -55,6 +55,9 @@ void main() {
       'editorial': fromJson('assets/data/editorial_questions.json'),
       'sentence': fromJson('assets/data/sentence_building_questions.json'),
       'expansion': fromJson('assets/data/expansion_2026_08_questions.json'),
+      'sourceFirst': fromJson(
+        'assets/data/source_first_2026_08_questions.json',
+      ),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -72,7 +75,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla altı kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yedi kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -83,6 +86,7 @@ void main() {
         // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
         // aynı id birden çok bankada varsa SONRAKİ kazanır.
         ...fromJson('assets/data/expansion_2026_08_questions.json'),
+        ...fromJson('assets/data/source_first_2026_08_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

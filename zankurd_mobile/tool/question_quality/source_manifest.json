@@ -2168,6 +2168,35 @@
         "correctAnswer": "sourceReference",
         "category": "institution"
       }
+    },
+    {
+      "id": "source_first_runtime_bank",
+      "description": "Source-first verified expansion (runtime)",
+      "path": "assets/data/source_first_2026_08_questions.json",
+      "role": "runtime_secondary",
+      "parser": "json",
+      "canonicalGroup": "runtime_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": true,
+      "precedence": 980,
+      "expectedRecordCount": 101,
+      "notes": "Her kayıt doğrudan açılmış kurumsal kaynağa dayanır; provenance verified_external_pool_2026_08 altında.",
+      "columns": {
+        "id": "id",
+        "category": "category",
+        "prompt": "prompt",
+        "options": "answers",
+        "correct": "correctAnswer",
+        "explanation": "explanationKu",
+        "difficulty": "difficulty",
+        "type": "type",
+        "dialect": "metadata.dialect",
+        "sourceTitle": "metadata.sourceTitle",
+        "sourceUrl": "metadata.sourceReference",
+        "reviewedAt": "metadata.reviewedAt",
+        "locale": "ku-kmr"
+      }
     }
   ]
 }

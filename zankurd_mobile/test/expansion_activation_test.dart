@@ -30,7 +30,7 @@ void main() {
 
   test('yükleyici beklenen fiziksel ve tekil toplamı veriyor', () {
     // Kalite kapısının bildirdiği "canonical 1989" BAŞKA bir ölçüdür ve
-    // yükleyicinin sayısı değildir: kapı 2050 fiziksel kaydı kendi
+    // yükleyicinin sayısı değildir: kapı fiziksel kaydı kendi
     // canonicalization'ıyla 1989'a indirir. Bu −61'lik fark bu batch'ten
     // önce de vardı (1832 fiziksel → 1771 kanonik, yine −61); genişletme
     // her iki sayıya da +218 ekledi, yani 218 kaydın tamamı kanonik olarak
@@ -39,7 +39,7 @@ void main() {
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      2050,
+      2151,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
