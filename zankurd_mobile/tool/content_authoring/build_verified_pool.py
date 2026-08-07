@@ -110,6 +110,7 @@ def main() -> int:
         "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json",
         "docs/content/source_first_expansion_2026_08/geography/geography_questions.json",
         "docs/content/source_first_expansion_2026_08/technology_pilot/technology_pilot_claims.json",
+        "docs/content/source_first_expansion_2026_08/nature/nature_questions.json",
     ]
     for SF in [f for f in SF_FILES if os.path.exists(f)]:
         for q in json.load(open(SF, encoding="utf-8")):

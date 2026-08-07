@@ -1916,6 +1916,48 @@
         "correctAnswer": "correctIndex",
         "category": "category"
       }
+    },
+    {
+      "id": "source_first_nature_questions",
+      "description": "Source-first nature artifact",
+      "path": "docs/content/source_first_expansion_2026_08/nature/nature_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "source_first_nature",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged; runtime dışı.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
+    },
+    {
+      "id": "pack_usgs_water_cycle_v2",
+      "description": "Source-first nature artifact",
+      "path": "docs/content/source_first_expansion_2026_08/nature/pack_usgs_water_cycle.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_nature",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 300,
+      "expectedRecordCount": null,
+      "notes": "Staged; runtime dışı.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "promptTr",
+        "options": "answersTr",
+        "correctAnswer": "correctIndex",
+        "category": "category"
+      }
     }
   ]
 }

@@ -825,6 +825,106 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_nat_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî USGSê, ji sedî çend ava cîhanê di okyanûsan de ye?",
+    "promptTr": "USGS'e göre dünyadaki suyun yüzde kaçı okyanuslardadır?",
+    "answers": [
+      "Ji sedî 30",
+      "Ji sedî 50",
+      "Ji sedî 71",
+      "Ji sedî 96"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 50",
+      "Yüzde 71",
+      "Yüzde 96"
+    ],
+    "correctAnswer": "Ji sedî 96",
+    "correctAnswerTr": "Yüzde 96",
+    "explanationKu": "USGS dibêje ku ji sedî 96ê ava cîhanê di okyanûsan de tê hilanîn.",
+    "explanationTr": "USGS'e göre dünyadaki suyun yüzde 96'sı okyanuslarda bulunur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Ava okyanûsê çawa ye?",
+    "promptTr": "Okyanus suyu nasıldır?",
+    "answers": [
+      "Bêtam e",
+      "Şor e",
+      "Şêrîn e",
+      "Tirş e"
+    ],
+    "answersTr": [
+      "Tatsızdır",
+      "Tuzludur",
+      "Tatlıdır",
+      "Ekşidir"
+    ],
+    "correctAnswer": "Şor e",
+    "correctAnswerTr": "Tuzludur",
+    "explanationKu": "Ava okyanûsê şor e; ev ji ava çeman cuda dike.",
+    "explanationTr": "Okyanus suyu tuzludur; bu onu akarsu suyundan ayırır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Bi enerjiya rojê ava şil vediguhere çi?",
+    "promptTr": "Güneş enerjisiyle sıvı su neye dönüşür?",
+    "answers": [
+      "Berfê",
+      "Qeşayê",
+      "Hilmê",
+      "Xwêyê"
+    ],
+    "answersTr": [
+      "Kara",
+      "Buza",
+      "Buhara",
+      "Tuza"
+    ],
+    "correctAnswer": "Hilmê",
+    "correctAnswerTr": "Buhara",
+    "explanationKu": "Enerjiya rojê dibe sedem ku ava şil vegere hilmê û hilkeve hewayê.",
+    "explanationTr": "Güneş enerjisi sıvı suyun buhara dönüşüp havaya yükselmesine yol açar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Ewr bi giranî ji çi pêk tên?",
+    "promptTr": "Bulutlar esas olarak neyden oluşur?",
+    "answers": [
+      "Ji ava di hewayê de",
+      "Ji xweliyê",
+      "Ji dûmanê",
+      "Ji qumê"
+    ],
+    "answersTr": [
+      "Havadaki sudan",
+      "Topraktan",
+      "Dumandan",
+      "Kumdan"
+    ],
+    "correctAnswer": "Ji ava di hewayê de",
+    "correctAnswerTr": "Havadaki sudan",
+    "explanationKu": "Ewr bi ava ku di hewayê de kom dibe pêk tên.",
+    "explanationTr": "Bulutlar, havada bir araya gelen sudan oluşur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_tech_0001",
     "category": "Teknolojî",
     "subcategory": null,

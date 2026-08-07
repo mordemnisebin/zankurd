@@ -509,6 +509,45 @@
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
       "recordHash": "7d8ba0d5eac6ff42"
+    },
+    {
+      "conceptId": "ku_sci_water_vapour",
+      "EnglishConcept": "water vapour / steam",
+      "TurkishConcept": "Su buharı",
+      "domain": "hydrology",
+      "projectPreferredKurmanji": "hilm",
+      "alternativeKurmanjiForms": [
+        "helm"
+      ],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "ava kel ya dibe gaz û hildikeve",
+      "definitionTr": "Sıvı hâlden gaz hâline geçen su",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "water vapour / steam"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/hilm",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "hilm (m): 1) ava kel ya dibe gaz û hildikeve (buhar); çeviriler: steam, vapor, buhar",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 1,
+      "spellingDecision": "`hilm` ana biçim; `helm` girdide varyant olarak veriliyor. Proje `hilm` kullanır.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Girdi ÜÇ anlam veriyor: buhar, nefes, koku. YALNIZ 'buhar/su buharı' anlamı açıldı. 'Buharlaşma' SÜREÇ adı (evaporation) AÇILMADI — girdi isim veriyor, süreç adı ayrı kanıt ister. Bu yüzden sorular süreç adı kullanmadan, 'neye dönüşür' biçiminde kuruldu.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "98ae367018c2fc2d"
     }
   ],
   "sourcesConsulted": []

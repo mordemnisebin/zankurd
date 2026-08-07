@@ -1,0 +1,286 @@
+[
+  {
+    "questionId": "sf_nat_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_01",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "Oceans store 96% of all water on Earth.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Li gorî USGSê, ji sedî çend ava cîhanê di okyanûsan de ye?",
+    "promptTr": "USGS'e göre dünyadaki suyun yüzde kaçı okyanuslardadır?",
+    "answersKu": [
+      "Ji sedî 30",
+      "Ji sedî 50",
+      "Ji sedî 71",
+      "Ji sedî 96"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 50",
+      "Yüzde 71",
+      "Yüzde 96"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "USGS dibêje ku ji sedî 96ê ava cîhanê di okyanûsan de tê hilanîn.",
+    "explanationTr": "USGS'e göre dünyadaki suyun yüzde 96'sı okyanuslarda bulunur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "0c9491c4226af16b"
+  },
+  {
+    "questionId": "sf_nat_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_02",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "Ocean water is saline, meaning it's salty.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Ava okyanûsê çawa ye?",
+    "promptTr": "Okyanus suyu nasıldır?",
+    "answersKu": [
+      "Bêtam e",
+      "Şor e",
+      "Şêrîn e",
+      "Tirş e"
+    ],
+    "answersTr": [
+      "Tatsızdır",
+      "Tuzludur",
+      "Tatlıdır",
+      "Ekşidir"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Ava okyanûsê şor e; ev ji ava çeman cuda dike.",
+    "explanationTr": "Okyanus suyu tuzludur; bu onu akarsu suyundan ayırır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "c722b2719e8d06bb"
+  },
+  {
+    "questionId": "sf_nat_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_03",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "The sun's energy causes liquid water to evaporate into water vapor.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_water_vapour"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_water_vapour": "98ae367018c2fc2d"
+    },
+    "promptKu": "Bi enerjiya rojê ava şil vediguhere çi?",
+    "promptTr": "Güneş enerjisiyle sıvı su neye dönüşür?",
+    "answersKu": [
+      "Berfê",
+      "Qeşayê",
+      "Hilmê",
+      "Xwêyê"
+    ],
+    "answersTr": [
+      "Kara",
+      "Buza",
+      "Buhara",
+      "Tuza"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Enerjiya rojê dibe sedem ku ava şil vegere hilmê û hilkeve hewayê.",
+    "explanationTr": "Güneş enerjisi sıvı suyun buhara dönüşüp havaya yükselmesine yol açar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "fe6e1223e9db06fc"
+  },
+  {
+    "questionId": "sf_nat_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_04",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "Clouds are formed by water condensing in the atmosphere.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Ewr bi giranî ji çi pêk tên?",
+    "promptTr": "Bulutlar esas olarak neyden oluşur?",
+    "answersKu": [
+      "Ji ava di hewayê de",
+      "Ji xweliyê",
+      "Ji dûmanê",
+      "Ji qumê"
+    ],
+    "answersTr": [
+      "Havadaki sudan",
+      "Topraktan",
+      "Dumandan",
+      "Kumdan"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Ewr bi ava ku di hewayê de kom dibe pêk tên.",
+    "explanationTr": "Bulutlar, havada bir araya gelen sudan oluşur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "fb9e86710963a40a"
+  }
+]
