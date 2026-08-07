@@ -1562,5 +1562,149 @@
       "note": "Batch'teki diğer ülke sorusu (sf_cin_0018) Almanya'yı soruyor; farklı film, farklı cevap."
     },
     "finalContentHash": "aa8230b5e41a507d"
+  },
+  {
+    "questionId": "sf_cin_0023",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_pather_panchali",
+    "claimId": "cin_bfi_11",
+    "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+    "exactSupportingFact": "Director: Satyajit Ray",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Pather Panchali» (1955) kî ye?",
+    "promptTr": "«Pather Panchali» (1955) filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Ritwik Ghatak",
+      "Mrinal Sen",
+      "Satyajit Ray",
+      "Guru Dutt"
+    ],
+    "answersTr": [
+      "Ritwik Ghatak",
+      "Mrinal Sen",
+      "Satyajit Ray",
+      "Guru Dutt"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Pather Panchaliyê Satyajit Ray e.",
+    "explanationTr": "BFI kataloğuna göre Pather Panchali'nin yönetmeni Satyajit Ray'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "DeepSeek havuzunda Satyajit Ray geçmiyor; çakışma yok."
+    },
+    "finalContentHash": "4f5b0b84a198cfa7"
+  },
+  {
+    "questionId": "sf_cin_0024",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_pather_panchali",
+    "claimId": "cin_bfi_12",
+    "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+    "exactSupportingFact": "Country: India",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Pather Panchali» hilberîna kîjan welatî ye?",
+    "promptTr": "«Pather Panchali» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Bangladeş",
+      "Hindistan",
+      "Pakistan",
+      "Sri Lanka"
+    ],
+    "answersTr": [
+      "Bangladeş",
+      "Hindistan",
+      "Pakistan",
+      "Sri Lanka"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî kataloga BFIyê Pather Panchali hilberîneke Hindistanê ye.",
+    "explanationTr": "BFI kataloğuna göre Pather Panchali bir Hindistan yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "Diğer ülke soruları Almanya (0018) ve Japonya (0022); üç farklı cevap, çakışma yok."
+    },
+    "finalContentHash": "e1189b2cdfa806dd"
   }
 ]

@@ -306,5 +306,33 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "cf126314f7e5d2b3"
+  },
+  {
+    "claimId": "cin_bfi_11",
+    "sourcePackId": "pack_bfi_pather_panchali",
+    "claimFamily": "film_director",
+    "factualClaim": "Pather Panchali'nin yönetmeni Satyajit Ray'dir.",
+    "exactSupportingFact": "Director: Satyajit Ray",
+    "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "2764ff0ff82f22f4"
+  },
+  {
+    "claimId": "cin_bfi_12",
+    "sourcePackId": "pack_bfi_pather_panchali",
+    "claimFamily": "film_country",
+    "factualClaim": "Pather Panchali Hindistan yapımıdır.",
+    "exactSupportingFact": "Country: India",
+    "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "8c39e4ac5d6e655d"
   }
 ]

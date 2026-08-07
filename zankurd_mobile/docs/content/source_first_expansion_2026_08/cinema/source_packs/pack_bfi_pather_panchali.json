@@ -1,0 +1,24 @@
+{
+  "sourcePackId": "pack_bfi_pather_panchali",
+  "sourceTitle": "BFI — Pather Panchali (1955) künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları; eleştiri ALINMADI.",
+  "exactSourceStatements": [
+    "Original Title: Pather Panchali",
+    "Director: Satyajit Ray",
+    "Year: 1955",
+    "Country: India"
+  ],
+  "extractedClaimIds": [
+    "cin_bfi_11",
+    "cin_bfi_12"
+  ],
+  "notUsed": "2022 anket sıralamaları volatil. Cannes 'best human document' ödülü arama özetinde geçiyor ama KÜNYE SAYFASINDA yok — arama özeti kaynak sayılmadığı için claim'e çevrilmedi.",
+  "sourceHash": "717e1b740dd0eddf"
+}

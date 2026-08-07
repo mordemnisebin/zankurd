@@ -875,6 +875,56 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0023",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Pather Panchali» (1955) kî ye?",
+    "promptTr": "«Pather Panchali» (1955) filminin yönetmeni kimdir?",
+    "answers": [
+      "Ritwik Ghatak",
+      "Mrinal Sen",
+      "Satyajit Ray",
+      "Guru Dutt"
+    ],
+    "answersTr": [
+      "Ritwik Ghatak",
+      "Mrinal Sen",
+      "Satyajit Ray",
+      "Guru Dutt"
+    ],
+    "correctAnswer": "Satyajit Ray",
+    "correctAnswerTr": "Satyajit Ray",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Pather Panchaliyê Satyajit Ray e.",
+    "explanationTr": "BFI kataloğuna göre Pather Panchali'nin yönetmeni Satyajit Ray'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0024",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Pather Panchali» hilberîna kîjan welatî ye?",
+    "promptTr": "«Pather Panchali» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Bangladeş",
+      "Hindistan",
+      "Pakistan",
+      "Sri Lanka"
+    ],
+    "answersTr": [
+      "Bangladeş",
+      "Hindistan",
+      "Pakistan",
+      "Sri Lanka"
+    ],
+    "correctAnswer": "Hindistan",
+    "correctAnswerTr": "Hindistan",
+    "explanationKu": "Li gorî kataloga BFIyê Pather Panchali hilberîneke Hindistanê ye.",
+    "explanationTr": "BFI kataloğuna göre Pather Panchali bir Hindistan yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,

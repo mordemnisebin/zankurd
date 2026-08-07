@@ -547,6 +547,38 @@
     "activationStatus": "STAGED_VERIFIED"
   },
   {
+    "originalQuestionId": "sf_cin_0023",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+    "exactSupportingFact": "Director: Satyajit Ray",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "4f5b0b84a198cfa7",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0024",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/bfbb9ef1-1b2c-58fd-b030-4f50c4827d91/pather-panchali",
+    "exactSupportingFact": "Country: India",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "e1189b2cdfa806dd",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
     "originalQuestionId": "sf_geo_0001",
     "sourcePool": "source_first",
     "origin": "source_first_verified",

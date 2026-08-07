@@ -2084,6 +2084,27 @@
         "correctAnswer": "sourceReference",
         "category": "institution"
       }
+    },
+    {
+      "id": "pack_bfi_pather_panchali",
+      "description": "BFI Pather Panchali claim pack",
+      "path": "docs/content/source_first_expansion_2026_08/cinema/source_packs/pack_bfi_pather_panchali.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_cinema",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Claim pack.",
+      "columns": {
+        "id": "sourcePackId",
+        "prompt": "sourceTitle",
+        "options": "exactSourceStatements",
+        "correctAnswer": "sourceReference",
+        "category": "institution"
+      }
     }
   ]
 }
