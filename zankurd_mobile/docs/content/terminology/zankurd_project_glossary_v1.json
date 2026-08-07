@@ -589,6 +589,43 @@
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
       "recordHash": "302c135fb94f0685"
+    },
+    {
+      "conceptId": "ku_sci_oxygen",
+      "EnglishConcept": "oxygen",
+      "TurkishConcept": "Oksijen",
+      "domain": "chemistry",
+      "projectPreferredKurmanji": "oksîjen",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "Madeyek kîmyawî ya gazî ye û di nav hewayî de mişe ye û bo nefesdanê pêdivî ye",
+      "definitionTr": "Havada bol bulunan, solunum için gerekli gaz hâlindeki kimyasal madde",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "oxygen (chemical element)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/oks%C3%AEjen",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr: Madeyek kîmyawî ya gazî ye û di nav hewayî de mişe ye û bo nefesdanê pêdivî ye. Sembol: O, hejmara atomî: 8.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`oksîjen` girdideki biçim; corpus'ta geçmiyor, çelişki yok.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Girdide cinsiyet çelişkili aktarılıyor (navdêr mê / m), bu yüzden cinsiyet iddia edilmiyor. `nîtrojen` AÇILMADI — ayrı girdi ayrı kanıt ister; bu yüzden NASA'nın %78 azot claim'i hâlâ bekliyor.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "8f630738df072cb7"
     }
   ],
   "sourcesConsulted": []

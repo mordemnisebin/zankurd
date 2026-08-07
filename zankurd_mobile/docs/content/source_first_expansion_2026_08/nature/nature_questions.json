@@ -850,5 +850,77 @@
       "note": "aktif bankada bu olgular yok"
     },
     "finalContentHash": "c73d947e012d15e6"
+  },
+  {
+    "questionId": "sf_nat_0013",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_05",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "78% nitrogen, 21% oxygen, and 1% other gases",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_oxygen"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_oxygen": "8f630738df072cb7"
+    },
+    "promptKu": "Li gorî NASAyê, ji sedî çend ê atmosfera Cîhanê oksîjen e?",
+    "promptTr": "NASA'ya göre Dünya atmosferinin yüzde kaçı oksijendir?",
+    "answersKu": [
+      "Ji sedî 21",
+      "Ji sedî 50",
+      "Ji sedî 78",
+      "Ji sedî 5"
+    ],
+    "answersTr": [
+      "Yüzde 21",
+      "Yüzde 50",
+      "Yüzde 78",
+      "Yüzde 5"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Atmosfera Cîhanê ji sedî 21 oksîjen dihewîne; para herî mezin gazeke din e.",
+    "explanationTr": "Dünya atmosferinin yüzde 21'i oksijendir; en büyük payı başka bir gaz oluşturur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "oksîjen açık; nîtrojen kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yüzde, tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada atmosfer sorusu yok"
+    },
+    "finalContentHash": "c1ab728965a896c1"
   }
 ]

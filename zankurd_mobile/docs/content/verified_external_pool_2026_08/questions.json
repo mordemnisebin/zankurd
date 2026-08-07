@@ -1125,6 +1125,31 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_nat_0013",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî NASAyê, ji sedî çend ê atmosfera Cîhanê oksîjen e?",
+    "promptTr": "NASA'ya göre Dünya atmosferinin yüzde kaçı oksijendir?",
+    "answers": [
+      "Ji sedî 21",
+      "Ji sedî 50",
+      "Ji sedî 78",
+      "Ji sedî 5"
+    ],
+    "answersTr": [
+      "Yüzde 21",
+      "Yüzde 50",
+      "Yüzde 78",
+      "Yüzde 5"
+    ],
+    "correctAnswer": "Ji sedî 21",
+    "correctAnswerTr": "Yüzde 21",
+    "explanationKu": "Atmosfera Cîhanê ji sedî 21 oksîjen dihewîne; para herî mezin gazeke din e.",
+    "explanationTr": "Dünya atmosferinin yüzde 21'i oksijendir; en büyük payı başka bir gaz oluşturur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_tech_0001",
     "category": "Teknolojî",
     "subcategory": null,

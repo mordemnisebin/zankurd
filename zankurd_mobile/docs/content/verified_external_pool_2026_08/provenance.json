@@ -707,6 +707,22 @@
     "activationStatus": "STAGED_VERIFIED"
   },
   {
+    "originalQuestionId": "sf_nat_0013",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Cografya",
+    "subcategory": null,
+    "verificationLevel": "FETCHED_DIRECT",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "78% nitrogen, 21% oxygen, and 1% other gases",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "c1ab728965a896c1",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
     "originalQuestionId": "sf_tech_0001",
     "sourcePool": "source_first",
     "origin": "source_first_verified",
