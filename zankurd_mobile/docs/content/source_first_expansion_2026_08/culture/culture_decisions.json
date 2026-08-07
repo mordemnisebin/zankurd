@@ -1,0 +1,31 @@
+{
+  "batchStatus": "COMPLETE",
+  "category": "Çand",
+  "produced": 12,
+  "verifiedQuestions": [
+    "sf_cand_0001",
+    "sf_cand_0002",
+    "sf_cand_0003",
+    "sf_cand_0004",
+    "sf_cand_0005",
+    "sf_cand_0006",
+    "sf_cand_0007",
+    "sf_cand_0008",
+    "sf_cand_0009",
+    "sf_cand_0010",
+    "sf_cand_0011",
+    "sf_cand_0012"
+  ],
+  "sourcesOpened": 4,
+  "sourcesFailed": 6,
+  "whyNotMore": "Dört UNESCO eleman sayfası okundu. Beşinci kaynak (henna) olgu verdi ama terminoloji engeline takıldı; `source_catalog.json` içinde gerekçesiyle duruyor.",
+  "kurdishContentCount": 0,
+  "kurdishContentNote": "Bu turda Kürt kültürüne/müziğine ÖZGÜ tek soru üretilmedi. Sebep uydurmak değil, ölçülen erişim: Kürt içeriğini adıyla anan bütün kurumsal kaynaklar (Smithsonian Folkways'in üç Kürt müziği albümü, MET'in tanbur/Ehl-i Hak sergisi, Encyclopaedia Iranica 'Kurdish music', UNESCO Dünya Mirası Hewlêr Kalesi) bu ortamda 403/429 döndürdü. Risk-A iki bağımsız kaynak ister; sıfır açıldı. Kaynaksız Kürt içeriği yazmak, reddedilen DeepSeek atıf pratiğinin aynısı olurdu. Eksiklik burada kayıtlı ve kapatılması gereken asıl iştir.",
+  "newrozNote": "Newroz sorusu ÜRETİLMEDİ. UNESCO'nun çok uluslu Nowruz sayfası açıldı, ama okunabilen betimleyici cümleler Moğolistan Kazaklarının Nauryz'ına aitti. O cümleleri Kürt Newrozuna genellemek kaynağı esnetmek olurdu.",
+  "politicalFramingCheck": "Hiçbir soru 'hangi ülkededir' kalıbını kullanmıyor. Tek coğrafi soru (sf_cand_0007) devlet değil NEHİR soruyor ve şıkların dördü de bölgenin gerçek akarsularıdır: Dîcle, Firat, Zapa Mezin, Xabûr.",
+  "reviewer": "opus-5",
+  "timestamp": "2026-08-07",
+  "poolOrigin": "source_first_verified",
+  "addedToVerifiedPool": true,
+  "sourceAccessLevel": "FETCHED_DIRECT (12/12)"
+}

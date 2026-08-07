@@ -1,14 +1,16 @@
 {
-  "totalStagedVerified": 25,
+  "totalStagedVerified": 49,
   "externalVerifiedCount": 13,
-  "sourceFirstVerifiedCount": 12,
+  "sourceFirstVerifiedCount": 36,
   "byCategory": {
+    "Muzîk": 12,
     "Sînema": 23,
     "Teknolojî": 2,
-    "origin:source_first_verified": 12
+    "origin:source_first_verified": 36,
+    "Çand": 12
   },
   "byVerificationLevel": {
-    "FETCHED_DIRECT": 18,
+    "FETCHED_DIRECT": 42,
     "SEARCH_SUMMARY_CORROBORATED": 6,
     "SELF_CONTAINED": 1
   },

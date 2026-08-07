@@ -325,6 +325,306 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cand_0001",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, ev nanê kevneşopî ji bilî tenûrê li ser çi jî tê patin?",
+    "promptTr": "UNESCO'ya göre bu geleneksel ekmek, tandır dışında başka neyin üzerinde pişirilir?",
+    "answers": [
+      "Li ser kevirê sar",
+      "Li ser sêla hesinî",
+      "Li ser agirê vekirî",
+      "Di nav ava germ de"
+    ],
+    "answersTr": [
+      "Soğuk taş üzerinde",
+      "Demir sac üzerinde",
+      "Açık ateş üzerinde",
+      "Sıcak su içinde"
+    ],
+    "correctAnswer": "Li ser sêla hesinî",
+    "correctAnswerTr": "Demir sac üzerinde",
+    "explanationKu": "UNESCO dibêje ku ev nan di tenûrê de an li ser sêlê tê patin.",
+    "explanationTr": "UNESCO bu ekmeğin tandırda ya da sac üzerinde pişirildiğini belirtir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0002",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, tenûr ji çi tê çêkirin?",
+    "promptTr": "UNESCO'ya göre tandır neden yapılır?",
+    "answers": [
+      "Ji hesin an sifir",
+      "Ji ax an kevir",
+      "Ji dar an qamîş",
+      "Ji ard an hevîr"
+    ],
+    "answersTr": [
+      "Demir ya da bakırdan",
+      "Toprak ya da taştan",
+      "Ağaç ya da kamıştan",
+      "Un ya da hamurdan"
+    ],
+    "correctAnswer": "Ji ax an kevir",
+    "correctAnswerTr": "Toprak ya da taştan",
+    "explanationKu": "UNESCO dibêje ku tenûr ji ax an kevir tê çêkirin û di erdê de tê danîn.",
+    "explanationTr": "UNESCO tandırı, toprağa gömülü, toprak ya da taştan yapılan bir fırın olarak tanıtır.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0003",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, ev nan ji bilî xwarina rojane di kîjan rewşan de jî tê parvekirin?",
+    "promptTr": "UNESCO'ya göre bu ekmek, günlük yemek dışında hangi durumlarda da paylaşılır?",
+    "answers": [
+      "Di dersên dibistanên gundan de",
+      "Di lîstikên zarokan de",
+      "Di dawet û jidayikbûnan de",
+      "Di karên çandiniyê yên biharê de"
+    ],
+    "answersTr": [
+      "Köy okullarının derslerinde",
+      "Çocuk oyunlarında",
+      "Düğün ve doğumlarda",
+      "Bahar dönemi tarım işlerinde"
+    ],
+    "correctAnswer": "Di dawet û jidayikbûnan de",
+    "correctAnswerTr": "Düğün ve doğumlarda",
+    "explanationKu": "UNESCO di nav van rewşan de dawet, jidayikbûn û cejnan diyar dike.",
+    "explanationTr": "UNESCO bu durumlar arasında düğün, doğum ve bayramları sayar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0004",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, çanda çayê berî her tiştî çi nîşan dide?",
+    "promptTr": "UNESCO'ya göre çay kültürü her şeyden önce neyi gösterir?",
+    "answers": [
+      "Mêvandarî û girêdana civakî",
+      "Hêza aborî ya malbatên bajêr",
+      "Zanîna zanistî ya gelên herêmê",
+      "Şiyana leşkerî ya welatên cîran"
+    ],
+    "answersTr": [
+      "Misafirperverlik ve toplumsal bağ",
+      "Kentli ailelerin ekonomik gücü",
+      "Bölge halklarının bilimsel bilgisi",
+      "Komşu ülkelerin askerî kapasitesi"
+    ],
+    "correctAnswer": "Mêvandarî û girêdana civakî",
+    "correctAnswerTr": "Misafirperverlik ve toplumsal bağ",
+    "explanationKu": "UNESCO dibêje ku çanda çayê mêvandariyê nîşan dide û girêdanên civakî ava dike û diparêze.",
+    "explanationTr": "UNESCO, çay kültürünün misafirperverliği gösterdiğini, toplumsal bağları kurup koruduğunu belirtir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0005",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Çanda çayê di kîjan salî de ket Lîsteya Nûnertiyê ya UNESCOyê?",
+    "promptTr": "Çay kültürü UNESCO Temsilî Liste'ye hangi yıl girdi?",
+    "answers": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "answersTr": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "correctAnswer": "2022",
+    "correctAnswerTr": "2022",
+    "explanationKu": "Ew di sala 2022an de (17.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2022'de (17.COM) UNESCO Temsilî Liste'ye girdi.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0006",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, al-naoor çi ye?",
+    "promptTr": "UNESCO'ya göre al-naoor nedir?",
+    "answers": [
+      "Kaniyeke di bin erdê de",
+      "Bircek ji kevir a li ber çem",
+      "Bendaveke ji ax û kevir",
+      "Çerxeke dar a ku dizivire"
+    ],
+    "answersTr": [
+      "Yer altındaki bir kaynak",
+      "Nehir kıyısında taş bir kule",
+      "Toprak ve taştan bir baraj",
+      "Dönen ahşap bir çark"
+    ],
+    "correctAnswer": "Çerxeke dar a ku dizivire",
+    "correctAnswerTr": "Dönen ahşap bir çark",
+    "explanationKu": "UNESCO al-naoorê wek çerxeke dar a ku li ser xwe dizivire dide nasîn.",
+    "explanationTr": "UNESCO al-naoor'u kendi ekseni etrafında dönen ahşap bir çark olarak tanıtır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0007",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, al-naoor li ser kîjan çemî tê bikaranîn?",
+    "promptTr": "UNESCO'ya göre al-naoor hangi nehir üzerinde kullanılır?",
+    "answers": [
+      "Dîcle",
+      "Firat",
+      "Zapa Mezin",
+      "Xabûr"
+    ],
+    "answersTr": [
+      "Dicle",
+      "Fırat",
+      "Büyük Zap",
+      "Habur"
+    ],
+    "correctAnswer": "Firat",
+    "correctAnswerTr": "Fırat",
+    "explanationKu": "UNESCO dibêje ku ew li ser çemikên Firatê tê bikaranîn, li cihên ku asta avê ji deştên nêzîk kêmtir e.",
+    "explanationTr": "UNESCO, su seviyesinin komşu tarlalardan düşük olduğu Fırat kollarında kullanıldığını belirtir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0008",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, li ser çerxa al-naoorê çend stûnên dar hene?",
+    "promptTr": "UNESCO'ya göre al-naoor çarkında kaç ahşap sütun bulunur?",
+    "answers": [
+      "12",
+      "18",
+      "24",
+      "36"
+    ],
+    "answersTr": [
+      "12",
+      "18",
+      "24",
+      "36"
+    ],
+    "correctAnswer": "24",
+    "correctAnswerTr": "24",
+    "explanationKu": "UNESCO dibêje ku çerx ji 24 stûnên dar pêk tê.",
+    "explanationTr": "UNESCO, çarkın 24 ahşap sütun ve 24 toprak testiden oluştuğunu belirtir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0009",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, çerxa al-naoorê di navbera çi de tê danîn?",
+    "promptTr": "UNESCO'ya göre al-naoor çarkı neyin arasına kurulur?",
+    "answers": [
+      "Di navbera du stûnên kevirî de",
+      "Di navbera du darên bilind de",
+      "Di navbera du dîwarên hesinî de",
+      "Di navbera du bircên axê de"
+    ],
+    "answersTr": [
+      "İki taş ayak arasına",
+      "İki yüksek ağaç arasına",
+      "İki demir duvar arasına",
+      "İki toprak kule arasına"
+    ],
+    "correctAnswer": "Di navbera du stûnên kevirî de",
+    "correctAnswerTr": "İki taş ayak arasına",
+    "explanationKu": "UNESCO dibêje ku çerx di navbera du stûnên kevirî de tê danîn.",
+    "explanationTr": "UNESCO, çarkın dikey biçimde iki taş ayak arasına kurulduğunu belirtir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0010",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, cejna Khidr Elias di kîjan rojên mehê de tê pîrozkirin?",
+    "promptTr": "UNESCO'ya göre Khidr Elias bayramı ayın hangi günlerinde kutlanır?",
+    "answers": [
+      "Di sê rojên pêşî de",
+      "Di heft rojên dawî de",
+      "Tenê di roja yekem de",
+      "Di sê rojên dawî de"
+    ],
+    "answersTr": [
+      "İlk üç günde",
+      "Son yedi günde",
+      "Yalnız ilk günde",
+      "Son üç günde"
+    ],
+    "correctAnswer": "Di sê rojên dawî de",
+    "correctAnswerTr": "Son üç günde",
+    "explanationKu": "UNESCO dibêje ku ew di sê rojên dawî yên mehê de tê pîrozkirin.",
+    "explanationTr": "UNESCO, ayın son üç gününde kutlandığını belirtir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0011",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, ciwan vê kevneşopiyê ji ku fêr dibin?",
+    "promptTr": "UNESCO'ya göre gençler bu geleneği nereden öğrenir?",
+    "answers": [
+      "Ji mezinên malbatê û li dibistanê",
+      "Tenê ji pirtûkên fermî yên dewletê",
+      "Tenê ji stranên gelêrî yên kevnar",
+      "Tenê ji wêneyên malbatê yên kevin"
+    ],
+    "answersTr": [
+      "Ailenin büyüklerinden ve okulda",
+      "Yalnız devletin resmî kitaplarından",
+      "Yalnız eski halk türkülerinden",
+      "Yalnız eski aile fotoğraflarından"
+    ],
+    "correctAnswer": "Ji mezinên malbatê û li dibistanê",
+    "correctAnswerTr": "Ailenin büyüklerinden ve okulda",
+    "explanationKu": "UNESCO dibêje ku ciwan wê ji mezinên malbatê û li dibistanê fêr dibin.",
+    "explanationTr": "UNESCO, gençlerin bunu ailenin büyüklerinden ve okulda öğrendiğini belirtir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cand_0012",
+    "category": "Çand",
+    "subcategory": null,
+    "prompt": "UNESCOyê cejna Khidr Elias di kîjan salî de tomar kir?",
+    "promptTr": "UNESCO Khidr Elias bayramını hangi yıl kaydetti?",
+    "answers": [
+      "2010",
+      "2013",
+      "2016",
+      "2019"
+    ],
+    "answersTr": [
+      "2010",
+      "2013",
+      "2016",
+      "2019"
+    ],
+    "correctAnswer": "2016",
+    "correctAnswerTr": "2016",
+    "explanationKu": "Ew di sala 2016an de (11.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2016'da (11.COM) UNESCO Temsilî Liste'ye girdi.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_cin_0001",
     "category": "Sînema",
     "subcategory": null,
@@ -621,6 +921,306 @@
     "correctAnswerTr": "1999",
     "explanationKu": "Dans di sala 1999an de beşdarî La Biennale bû.",
     "explanationTr": "Dans 1999 yılında La Biennale'ye katıldı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0001",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, ud dikeve nav kîjan koma amûran?",
+    "promptTr": "UNESCO'ya göre ud hangi çalgı grubuna girer?",
+    "answers": [
+      "Amûrên lêdanê",
+      "Amûrên têlî",
+      "Amûrên pifê",
+      "Amûrên elektronîk"
+    ],
+    "answersTr": [
+      "Vurmalı çalgılar",
+      "Telli çalgılar",
+      "Üflemeli çalgılar",
+      "Elektronik çalgılar"
+    ],
+    "correctAnswer": "Amûrên têlî",
+    "correctAnswerTr": "Telli çalgılar",
+    "explanationKu": "UNESCO udê wek amûreke kevneşopî ya têlî dide nasîn; ew ne amûreke lêdanê ye û ne jî ya pifê ye.",
+    "explanationTr": "UNESCO udu lut türünden geleneksel bir çalgı olarak tanımlar; lut telli bir çalgıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0002",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Hunera çêkirin û lêdana udê ji kîjan salê ve di lîsteya UNESCOyê de ye?",
+    "promptTr": "Ud yapımı ve çalımı sanatı hangi yıldan beri UNESCO listesindedir?",
+    "answers": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "answersTr": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "correctAnswer": "2022",
+    "correctAnswerTr": "2022",
+    "explanationKu": "Ew di sala 2022an de (17.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2022'de (17.COM) UNESCO Temsilî Liste'ye girdi.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0003",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, Makamê Iraqî çi ye?",
+    "promptTr": "UNESCO'ya göre Irak Makamı nedir?",
+    "answers": [
+      "Kevneşopiya muzîka leşkerî",
+      "Kevneşopiya muzîka klasîk",
+      "Kevneşopiya muzîka zarokan",
+      "Kevneşopiya muzîka elektronîk"
+    ],
+    "answersTr": [
+      "Askerî müzik geleneği",
+      "Klasik müzik geleneği",
+      "Çocuk müziği geleneği",
+      "Elektronik müzik geleneği"
+    ],
+    "correctAnswer": "Kevneşopiya muzîka klasîk",
+    "correctAnswerTr": "Klasik müzik geleneği",
+    "explanationKu": "UNESCO wê wek kevneşopiya muzîka klasîk a sereke ya Iraqê dide nasîn; ew komeke mezin a stranan digire nav xwe.",
+    "explanationTr": "UNESCO onu Irak'ın başlıca klasik müzik geleneği olarak tanıtır; geniş bir şarkı dağarcığını kapsar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0004",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Koma amûran a ku bi Makamê Iraqî re lê dide bi kîjan navî tê nasîn?",
+    "promptTr": "Irak Makamı'na eşlik eden çalgı topluluğu hangi adla bilinir?",
+    "answers": [
+      "jawzah",
+      "santur",
+      "tshalghi",
+      "dumbak"
+    ],
+    "answersTr": [
+      "jawzah",
+      "santur",
+      "tshalghi",
+      "dumbak"
+    ],
+    "correctAnswer": "tshalghi",
+    "correctAnswerTr": "tshalghi",
+    "explanationKu": "Navê wê komê tshalghi ye; jawzah, santur û dumbak navên amûrên di nav wê komê de ne.",
+    "explanationTr": "Topluluğun adı tshalghi'dir; jawzah, santur ve dumbak ise o topluluktaki çalgıların adlarıdır.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0005",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, di koma tshalghi de kîjan amûra lêdanê ya bi dengê kûr e?",
+    "promptTr": "UNESCO'ya göre tshalghi topluluğunda pes sesli vurmalı çalgı hangisidir?",
+    "answers": [
+      "santur",
+      "jawzah",
+      "dumbak",
+      "daff"
+    ],
+    "answersTr": [
+      "santur",
+      "jawzah",
+      "dumbak",
+      "daff"
+    ],
+    "correctAnswer": "dumbak",
+    "correctAnswerTr": "dumbak",
+    "explanationKu": "UNESCO dumbakê wek amûreke lêdanê ya bi dengê kûr dide nasîn; daff defeke piçûk e.",
+    "explanationTr": "UNESCO dumbak'ı pes sesli bir el davulu olarak tanımlar; daff ise küçük bir teftir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0006",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, li ser jawzahê çend têl hene?",
+    "promptTr": "UNESCO'ya göre jawzah'ta kaç tel bulunur?",
+    "answers": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answersTr": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "correctAnswer": "4",
+    "correctAnswerTr": "4",
+    "explanationKu": "UNESCO jawzahê wek amûreke têlî ya bi çar têlan bi nav dike.",
+    "explanationTr": "UNESCO jawzah'ı dört telli bir yaylı çalgı olarak tanımlar.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0007",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "UNESCOyê Makamê Iraqî di kîjan salî de li Lîsteya Nûnertiyê zêde kir?",
+    "promptTr": "UNESCO Irak Makamı'nı Temsilî Liste'ye hangi yıl ekledi?",
+    "answers": [
+      "2008",
+      "2011",
+      "2014",
+      "2017"
+    ],
+    "answersTr": [
+      "2008",
+      "2011",
+      "2014",
+      "2017"
+    ],
+    "correctAnswer": "2008",
+    "correctAnswerTr": "2008",
+    "explanationKu": "Ew di sala 2003yan de hat ragihandin, lê di sala 2008an de (3.COM) ket Lîsteya Nûnertiyê.",
+    "explanationTr": "2003'te ilan edildi, ancak Temsilî Liste'ye 2008'de (3.COM) girdi.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0008",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, li ser Kamancha ya ku îro herî zêde tê bikaranîn çend têl hene?",
+    "promptTr": "UNESCO'ya göre bugün en çok kullanılan Kamancha'da kaç tel bulunur?",
+    "answers": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "answersTr": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correctAnswer": "4",
+    "correctAnswerTr": "4",
+    "explanationKu": "UNESCO dibêje ku îro bi giranî Kamancha ya çar têlî tê bikaranîn.",
+    "explanationTr": "UNESCO, bugünkü icracıların ağırlıkla dört telli Kamancha kullandığını belirtir.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0009",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, rêza guhertina van şêwazên muzîkê çawa ye?",
+    "promptTr": "UNESCO'ya göre bu müzik biçimlerinin dönüşüm sırası nasıldır?",
+    "answers": [
+      "Ska, paşê Rock Steady, paşê Reggae",
+      "Reggae, paşê Ska, paşê Rock Steady",
+      "Rock Steady, paşê Reggae, paşê Ska",
+      "Ska, paşê Reggae, paşê Rock Steady"
+    ],
+    "answersTr": [
+      "Ska, sonra Rock Steady, sonra Reggae",
+      "Reggae, sonra Ska, sonra Rock Steady",
+      "Rock Steady, sonra Reggae, sonra Ska",
+      "Ska, sonra Reggae, sonra Rock Steady"
+    ],
+    "correctAnswer": "Ska, paşê Rock Steady, paşê Reggae",
+    "correctAnswerTr": "Ska, sonra Rock Steady, sonra Reggae",
+    "explanationKu": "UNESCO dibêje ku Ska hêdî hêdî bû Rock Steady û paşê bû Reggae.",
+    "explanationTr": "UNESCO, Ska'nın yavaş yavaş Rock Steady'ye, ardından Reggae'ye dönüştüğünü belirtir.",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0010",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Muzîka reggae kengî ket lîsteya UNESCOyê?",
+    "promptTr": "Reggae müziği UNESCO listesine ne zaman girdi?",
+    "answers": [
+      "2012",
+      "2015",
+      "2018",
+      "2021"
+    ],
+    "answersTr": [
+      "2012",
+      "2015",
+      "2018",
+      "2021"
+    ],
+    "correctAnswer": "2018",
+    "correctAnswerTr": "2018",
+    "explanationKu": "Ew di sala 2018an de (13.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2018'de (13.COM) UNESCO Temsilî Liste'ye girdi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0011",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, sevdalinka çi ye?",
+    "promptTr": "UNESCO'ya göre sevdalinka nedir?",
+    "answers": [
+      "Stranbêjiya olî ya kevneşopî",
+      "Stranbêjiya zarokan a kevneşopî",
+      "Stranbêjiya leşkerî ya kevneşopî",
+      "Stranbêjiya bajarî ya kevneşopî"
+    ],
+    "answersTr": [
+      "Geleneksel dinî şarkı söyleme biçimi",
+      "Geleneksel çocuk şarkısı söyleme biçimi",
+      "Geleneksel askerî şarkı söyleme biçimi",
+      "Geleneksel kentli şarkı söyleme biçimi"
+    ],
+    "correctAnswer": "Stranbêjiya bajarî ya kevneşopî",
+    "correctAnswerTr": "Geleneksel kentli şarkı söyleme biçimi",
+    "explanationKu": "UNESCO sevdalinkayê wek şêwazeke stranbêjiya bajarî ya kevneşopî bi nav dike.",
+    "explanationTr": "UNESCO sevdalinka'yı geleneksel kentli bir şarkı söyleme biçimi olarak tanımlar.",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_muz_0012",
+    "category": "Muzîk",
+    "subcategory": null,
+    "prompt": "Li gorî UNESCOyê, karê sereke yê sevdalinkayê çi ye?",
+    "promptTr": "UNESCO'ya göre sevdalinka'nın temel işlevi nedir?",
+    "answers": [
+      "Dayîna rîtmê ji govendê re",
+      "Vegotina çîrokekê",
+      "Hînkirina hejmaran ji zarokan re",
+      "Pîrozkirina serkeftina werzîşê"
+    ],
+    "answersTr": [
+      "Halaya ritim vermek",
+      "Bir hikâye anlatmak",
+      "Çocuklara sayıları öğretmek",
+      "Spor başarısını kutlamak"
+    ],
+    "correctAnswer": "Vegotina çîrokekê",
+    "correctAnswerTr": "Bir hikâye anlatmak",
+    "explanationKu": "UNESCO dibêje ku karê sereke yê sevdalinkayê vegotina çîrokekê ye.",
+    "explanationTr": "UNESCO, sevdalinka'nın temel işlevinin bir hikâye anlatmak olduğunu belirtir.",
     "difficulty": 2,
     "type": "multipleChoice"
   }

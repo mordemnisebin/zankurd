@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "createdDate": "2026-08-07",
+  "accessLevelsUsed": {
+    "FETCHED_DIRECT": "Sayfa bu oturumda açıldı ve olgu cümlesi okundu. Tek başına yeterli (Risk B/C)."
+  },
+  "note": "Bu turda kullanılabilen TEK kurumsal alan adı ich.unesco.org oldu. Aşağıdaki `failedSources` listesi denenip açılamayanların tamamıdır; hiçbiri arama özetiyle ikame edilmedi.",
+  "failedSources": [
+    {
+      "url": "https://folkways.si.edu/kurdish-folk-songs-and-dances/islamica-world/music/album/smithsonian",
+      "institution": "Smithsonian Folkways Recordings",
+      "http": 403,
+      "note": "Kürt müziği künye sayfası. Hem WebFetch hem doğrudan istek 403 döndü; liner notes okunamadı."
+    },
+    {
+      "url": "https://folkways.si.edu/kurdish-music/world/music/album/smithsonian",
+      "institution": "Smithsonian Folkways Recordings",
+      "http": 403,
+      "note": "Aynı alan adı, aynı engel. Arama özeti 'pentacord' iddiasını gösterdi ama sayfa açılmadığı için claim çıkarılmadı."
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/listings/2014/sacred-lute",
+      "institution": "The Metropolitan Museum of Art",
+      "http": 429,
+      "note": "Tanbur ve Ehl-i Hak bağlantısını veren sergi sayfası. 429/403; doğrudan okunamadı."
+    },
+    {
+      "url": "https://iranicaonline.org/articles/kurdish-music",
+      "institution": "Encyclopaedia Iranica",
+      "http": 403,
+      "note": "Kürt müziği maddesi. Açılamadı."
+    },
+    {
+      "url": "https://whc.unesco.org/en/list/1437/",
+      "institution": "UNESCO World Heritage Centre",
+      "http": 403,
+      "note": "Hewlêr (Erbil) Kalesi künyesi. Açılamadı; Kürdistan coğrafyasına dair tek kaynak da bu turda açılmadı."
+    },
+    {
+      "url": "https://www.loc.gov/item/2017701123/",
+      "institution": "Library of Congress",
+      "http": 403,
+      "note": "Açılamadı."
+    },
+    {
+      "url": "https://ich.unesco.org/en/RL/novruz-nowrouz-nooruz-navruz-nauroz-nevruz-00282",
+      "institution": "UNESCO Intangible Cultural Heritage",
+      "http": 301,
+      "note": "Eski çok uluslu Nowruz kaydı: sonsuz yönlendirme döngüsü."
+    }
+  ],
+  "examinedButNoClaim": [
+    {
+      "sourceReference": "https://ich.unesco.org/en/RL/nawrouz-novruz-nowrouz-nowrouz-nawrouz-nauryz-nooruz-nowruz-navruz-nevruz-nowruz-navruz-02097",
+      "title": "Nawrouz, Novruz, Nowrouz ... Navruz",
+      "accessLevel": "FETCHED_DIRECT",
+      "whyNoClaim": "Sayfa açıldı ve okundu. Ama okunabilen betimleyici cümleler ülke ülke ayrılmış ve dönen bölüm Moğolistan Kazaklarının Nauryz'ını anlatıyor ('On 22 March, the Kazakh people of Mongolia rise early...'). ZanKurd için Newroz sorusu üretmek, o cümleyi Kürt Newrozuna genellemek olurdu. Genelleme yapılmadı; Newroz bu turda üretilmedi."
+    },
+    {
+      "sourceReference": "https://ich.unesco.org/en/RL/kochari-traditional-group-dance-01295",
+      "title": "Kochari, traditional group dance",
+      "accessLevel": "FETCHED_DIRECT",
+      "whyNoClaim": "Sayfa yalnız Ermenistan bağlamında icra vesilelerini veriyor; oluşum, tutuş ve eşlik çalgıları için cümle yok. Govend/kochari ilişkisine dair hiçbir şey söylemiyor. Tek cümlelik ülke atfından soru üretmek, reddedilen 'hangi ülkededir' kalıbının dans hâli olurdu."
+    },
+    {
+      "sourceReference": "https://ich.unesco.org/en/RL/henna-rituals-aesthetic-and-social-practices-02116",
+      "title": "Henna: rituals, aesthetic and social practices",
+      "accessLevel": "FETCHED_DIRECT",
+      "whyNoClaim": "Kaynak sağlam ve iki kullanılabilir olgu verdi. ENGEL TERMİNOLOJİ: Kurmancî'de kına «hene»dir ve korpusta «hene» ezici çoğunlukla 'vardır' fiilidir ('Di destê mirov de pênc tilî hene'). Soru kökünde «hene» geçtiğinde oyuncu iki okumayı ayıramaz. Sözcük uydurulmadı, ikinci bir yazım icat edilmedi; kayıt terminoloji çözülene kadar bekletildi."
+    }
+  ],
+  "sources": [
+    {
+      "sourceId": "pack_unesco_oud",
+      "title": "Crafting and playing the Oud — UNESCO Representative List",
+      "institution": "UNESCO Intangible Cultural Heritage",
+      "sourceType": "intergovernmental_heritage_register",
+      "sourceReference": "https://ich.unesco.org/en/RL/crafting-and-playing-the-oud-01867",
+      "sourceAccessLevel": "FETCHED_DIRECT",
+      "reliabilityTier": 1,
+      "statementsRead": 4,
+      "claimsExtracted": 2
+    },
+    {
+      "sourceId": "pack_unesco_iraqi_maqam",
+      "title": "Iraqi Maqam — UNESCO Representative List",
+      "institution": "UNESCO Intangible Cultural Heritage",
+      "sourceType": "intergovernmental_heritage_register",
+      "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+      "sourceAccessLevel": "FETCHED_DIRECT",
+      "reliabilityTier": 1,
+      "statementsRead": 5,
+      "claimsExtracted": 5
+    },
+    {
+      "sourceId": "pack_unesco_kamancha",
+      "title": "Art of crafting and playing with Kamantcheh/Kamancha — UNESCO Representative List",
+      "institution": "UNESCO Intangible Cultural Heritage",
+      "sourceType": "intergovernmental_heritage_register",
+      "sourceReference": "https://ich.unesco.org/en/RL/art-of-crafting-and-playing-with-kamantcheh-kamancha-a-bowed-string-musical-instrument-01286",
+      "sourceAccessLevel": "FETCHED_DIRECT",
+      "reliabilityTier": 1,
+      "statementsRead": 2,
+      "claimsExtracted": 1
+    },
+    {
+      "sourceId": "pack_unesco_reggae",
+      "title": "Reggae music of Jamaica — UNESCO Representative List",
+      "institution": "UNESCO Intangible Cultural Heritage",
+      "sourceType": "intergovernmental_heritage_register",
+      "sourceReference": "https://ich.unesco.org/en/RL/reggae-music-of-jamaica-01398",
+      "sourceAccessLevel": "FETCHED_DIRECT",
+      "reliabilityTier": 1,
+      "statementsRead": 3,
+      "claimsExtracted": 2
+    },
+    {
+      "sourceId": "pack_unesco_sevdalinka",
+      "title": "Sevdalinka, traditional urban folk song — UNESCO Representative List",
+      "institution": "UNESCO Intangible Cultural Heritage",
+      "sourceType": "intergovernmental_heritage_register",
+      "sourceReference": "https://ich.unesco.org/en/RL/sevdalinka-traditional-urban-folk-song-01872",
+      "sourceAccessLevel": "FETCHED_DIRECT",
+      "reliabilityTier": 1,
+      "statementsRead": 3,
+      "claimsExtracted": 2
+    }
+  ]
+}

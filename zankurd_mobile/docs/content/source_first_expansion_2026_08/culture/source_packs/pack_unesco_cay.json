@@ -1,0 +1,22 @@
+{
+  "sourcePackId": "pack_unesco_cay",
+  "sourceTitle": "Culture of Cay (tea), a symbol of identity, hospitality and social interaction — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/culture-of-cay-tea-a-symbol-of-identity-hospitality-and-social-interaction-01685",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2022 (17.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "The drink is served freshly-brewed and hot, in pear-shaped cups made from glass, porcelain, faience or silver.",
+    "Tea culture in Azerbaijan and Turkiye is an important social practice that shows hospitality, builds and maintains social ties, and is used to celebrate important moments in the lives of communities."
+  ],
+  "extractedClaimIds": [
+    "cand_cay_01",
+    "cand_cay_02"
+  ],
+  "sourceHash": "d182b2eeac50998d"
+}

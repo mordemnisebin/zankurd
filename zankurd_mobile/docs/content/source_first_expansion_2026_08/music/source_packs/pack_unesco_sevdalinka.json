@@ -1,0 +1,22 @@
+{
+  "sourcePackId": "pack_unesco_sevdalinka",
+  "sourceTitle": "Sevdalinka, traditional urban folk song — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/sevdalinka-traditional-urban-folk-song-01872",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2024 (19.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "Sevdalinka is a form of traditional urban singing that is practised in Bosnia and Herzegovina.",
+    "Performed a capella or with the accompaniment of traditional instruments, the main function of sevdalinka is to tell a story."
+  ],
+  "extractedClaimIds": [
+    "muz_sev_01",
+    "muz_sev_02"
+  ],
+  "sourceHash": "2923c1c0a220a053"
+}

@@ -1,0 +1,27 @@
+{
+  "sourcePackId": "pack_unesco_iraqi_maqam",
+  "sourceTitle": "Iraqi Maqam — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description / instruments"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2008 (3.COM) on the Representative List of the Intangible Cultural Heritage of Humanity (originally proclaimed in 2003)",
+    "Widely recognized as Iraq's predominant classical music tradition, the Maqam encompasses a vast repertory of songs, accompanied by traditional instruments.",
+    "Typical instruments include the board cither santur, a four-string spike fiddle (jawzah), a low-pitched hand-drum (dumbak) and a small tambourine (daff).",
+    "tshalghi",
+    "With a repertory rooted in classical and colloquial Arabic poetry, the Maqam is highly revered by musicians and scholars, but also by the Iraqi population at large."
+  ],
+  "extractedClaimIds": [
+    "muz_maqam_01",
+    "muz_maqam_02",
+    "muz_maqam_04",
+    "muz_maqam_05",
+    "muz_maqam_06"
+  ],
+  "sourceHash": "8a6eedc69c3f21ec"
+}

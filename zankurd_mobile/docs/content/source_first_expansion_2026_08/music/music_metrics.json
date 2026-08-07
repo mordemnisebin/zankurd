@@ -1,0 +1,39 @@
+{
+  "produced": 12,
+  "claimFamilies": {
+    "muz_kam": 1,
+    "muz_maqam": 5,
+    "muz_oud": 2,
+    "muz_reg": 2,
+    "muz_sev": 2
+  },
+  "correctIndexDistribution": {
+    "0": 2,
+    "1": 4,
+    "2": 4,
+    "3": 2
+  },
+  "maxPositionSharePct": 33.3,
+  "difficultyDistribution": {
+    "2": 4,
+    "3": 4,
+    "4": 4
+  },
+  "riskClasses": {
+    "B": 6,
+    "C": 6
+  },
+  "sourceAccessLevels": {
+    "FETCHED_DIRECT": 12
+  },
+  "naiveMaxTieCorrect": 16,
+  "strictUniquelyLongestCorrect": 2,
+  "strictUniquelyLongestPct": 8.3,
+  "strictUniquelyShortestCorrect": 3,
+  "lengthBiasNote": "İki ölçüm ayrı tutulur. Naif sayı yıl sorularında beraberlik yüzünden şişer; oyuncuya sinyal veren ölçüm `strictUniquelyLongestCorrect`'tir. Kurmancî ve Türkçe şık dizileri ayrı ayrı sayılır, bu yüzden payda 2n'dir.",
+  "selfLabelledDistractors": 0,
+  "templateIdLeaks": 0,
+  "circularQuestions": 0,
+  "duplicateAgainstLiveBanks": 0,
+  "problems": []
+}

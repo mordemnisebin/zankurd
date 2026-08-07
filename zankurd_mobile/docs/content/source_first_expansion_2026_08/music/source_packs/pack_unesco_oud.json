@@ -1,0 +1,23 @@
+{
+  "sourcePackId": "pack_unesco_oud",
+  "sourceTitle": "Crafting and playing the Oud — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/crafting-and-playing-the-oud-01867",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2022 (17.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "The oud is a traditional, lute-type instrument played in Iran and Syria.",
+    "They typically have five twin strings, though a sixth string can be added.",
+    "In both countries, the oud consists of a pear-shaped sound box made of walnut, rose, poplar, ebony or apricot wood."
+  ],
+  "extractedClaimIds": [
+    "muz_oud_01",
+    "muz_oud_02"
+  ],
+  "sourceHash": "387c583282b9c723"
+}

@@ -1,0 +1,22 @@
+{
+  "sourcePackId": "pack_unesco_reggae",
+  "sourceTitle": "Reggae music of Jamaica — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/reggae-music-of-jamaica-01398",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description / social functions"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2018 (13.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "gradually transforming Ska into Rock Steady and then into Reggae",
+    "The basic social functions of the music - as a vehicle for social commentary, a cathartic practice, and a means of praising God - have not changed, and the music continues to act as a voice for all."
+  ],
+  "extractedClaimIds": [
+    "muz_reg_01",
+    "muz_reg_02"
+  ],
+  "sourceHash": "55c69a1c007f44ca"
+}

@@ -1,0 +1,26 @@
+{
+  "sourcePackId": "pack_unesco_alnaoor",
+  "sourceTitle": "Traditional craft skills and arts of Al-Naoor — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/traditional-craft-skills-and-arts-of-al-naoor-01694",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2021 (16.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "Al-naoor is a wooden wheel that rotates on its axis.",
+    "It is used on the streams of the Euphrates River in Iraq, where water levels are lower than the adjacent fields.",
+    "The wheel is made of twenty-four columns of wooden sticks and twenty-four clay jugs attached to the outer circumference with palm leaf ropes",
+    "the wheel is installed vertically between two stone pedestals on the streams of the river"
+  ],
+  "extractedClaimIds": [
+    "cand_naoor_01",
+    "cand_naoor_02",
+    "cand_naoor_03",
+    "cand_naoor_04"
+  ],
+  "sourceHash": "144de22eca435bc7"
+}

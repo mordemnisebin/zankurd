@@ -1,0 +1,30 @@
+{
+  "batchStatus": "COMPLETE",
+  "category": "Muzîk",
+  "produced": 12,
+  "verifiedQuestions": [
+    "sf_muz_0001",
+    "sf_muz_0002",
+    "sf_muz_0003",
+    "sf_muz_0004",
+    "sf_muz_0005",
+    "sf_muz_0006",
+    "sf_muz_0007",
+    "sf_muz_0008",
+    "sf_muz_0009",
+    "sf_muz_0010",
+    "sf_muz_0011",
+    "sf_muz_0012"
+  ],
+  "sourcesOpened": 5,
+  "sourcesFailed": 6,
+  "whyNotMore": "Bağlam bütçesi değil kaynak erişimi sınırladı. Açılabilen tek kurumsal alan adı ich.unesco.org'du; oradan beş eleman sayfası okundu ve 12 olgu çıktı. Sayıyı yükseltmek için arama özeti kaynak sayılmadı.",
+  "kurdishContentCount": 0,
+  "kurdishContentNote": "Bu turda Kürt kültürüne/müziğine ÖZGÜ tek soru üretilmedi. Sebep uydurmak değil, ölçülen erişim: Kürt içeriğini adıyla anan bütün kurumsal kaynaklar (Smithsonian Folkways'in üç Kürt müziği albümü, MET'in tanbur/Ehl-i Hak sergisi, Encyclopaedia Iranica 'Kurdish music', UNESCO Dünya Mirası Hewlêr Kalesi) bu ortamda 403/429 döndürdü. Risk-A iki bağımsız kaynak ister; sıfır açıldı. Kaynaksız Kürt içeriği yazmak, reddedilen DeepSeek atıf pratiğinin aynısı olurdu. Eksiklik burada kayıtlı ve kapatılması gereken asıl iştir.",
+  "worldVsRegionalBalance": "7 kayıt bölgesel (ud, Iraqi Maqam, Kamancha), 5 kayıt bölge dışı (reggae, sevdalinka). Kategori tek bir coğrafyaya kilitlenmedi.",
+  "reviewer": "opus-5",
+  "timestamp": "2026-08-07",
+  "poolOrigin": "source_first_verified",
+  "addedToVerifiedPool": true,
+  "sourceAccessLevel": "FETCHED_DIRECT (12/12)"
+}
