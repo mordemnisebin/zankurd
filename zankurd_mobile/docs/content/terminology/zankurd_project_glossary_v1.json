@@ -281,13 +281,24 @@
       "domain": "computing",
       "projectPreferredKurmanji": "sepan",
       "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
-      "definitionKu": null,
-      "definitionTr": null,
-      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "1) kesa/ê ku genimê yan cehê kesek dî didirû  2) xulam, noker",
+      "definitionTr": "1) başkasının buğday veya arpasını işleyen kişi  2) hizmetçi, görevli",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
       "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
       "allowedSenses": [],
-      "evidenceChain": [],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/sepan",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m): 1) kesa/ê ku genimê yan cehê kesek dî bo didirû 2) xulam, noker. Fiil formu: sepîn / hatin sepandin.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
       "corpusAttestations": [
         "offline_curated_30011",
         "offline_tek_0050",
@@ -299,11 +310,12 @@
       "corpusAttestationCount": 10,
       "spellingDecision": "Corpus yazımı `sepan`.",
       "dialectNotes": null,
-      "ambiguityNotes": "isim/fiil ve application/implementation ayrımı yapılmadı. Corpus (Seviye 5) tek başına yeterli değil.",
+      "ambiguityNotes": "GİRDİ 'APPLICATION' ANLAMINI DESTEKLEMİYOR. Tanımlar tarımsal ('başkasının buğdayını işleyen kişi') ve 'hizmetçi/görevli'. Çeviri listesinde app/aplikasyon görünüyor ama sözcüğün o anlamda kullanıldığı AÇIKÇA belirtilmemiş — çeviri listesi tanım değildir. Ayrıca `sepîn` fiil formu var, yani isim/fiil ayrımı da çözülmemiş. Corpus'taki 9 kullanım bu anlamı KANITLAMIYOR: yerleşiklik doğruluk değildir.",
       "approvedForQuestionAuthoring": false,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "a169389f963c2f20"
+      "recordHash": "8db2b1ea31bb35b0",
+      "corpusWarning": "Aktif bankada `sepan` 9 kez geçiyor. Sözlük 'uygulama' anlamını desteklemediği için bu kullanımlar AYRI bir inceleme gerektirebilir. Bu turda hiçbir yayımlanmış soru DEĞİŞTİRİLMEDİ — 'eski doğru soruları sessizce değiştirme' kuralı gereği yalnız görünür kılındı."
     },
     {
       "conceptId": "ku_tech_elektrik",
