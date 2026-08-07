@@ -1,0 +1,20 @@
+{
+  "sourcePackId": "pack_nasa_moon",
+  "sourceTitle": "NASA Science — Moon Facts",
+  "institution": "NASA",
+  "sourceReference": "https://science.nasa.gov/moon/facts/",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "The Moon is an average of 238,855 miles (384,400 kilometers) away.",
+    "With a radius of about 1,080 miles (1,740 kilometers), the Moon is less than a third of the width of Earth.",
+    "The Moon makes a complete orbit around Earth in 27 Earth days."
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac",
+  "notUsed": "",
+  "sourceHash": "f56c9fc34270ffc7"
+}

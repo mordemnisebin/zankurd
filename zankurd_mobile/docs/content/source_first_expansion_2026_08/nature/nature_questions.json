@@ -996,5 +996,451 @@
       "note": "sf_nat_0013 oksijen ORANINI soruyor; bu soru en büyük payı soruyor — farklı bilgi noktası"
     },
     "finalContentHash": "1f41af37cc7c977c"
+  },
+  {
+    "questionId": "sf_nat_0015",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_how_much_water",
+    "claimId": "usgs_hm_01",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth",
+    "exactSupportingFact": "the oceans hold about 96.5 percent of all Earth's water",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Li gorî USGSê, okyanûs ji sedî çend ava Cîhanê digirin?",
+    "promptTr": "USGS'e göre okyanuslar Dünya'daki suyun yüzde kaçını tutar?",
+    "answersKu": [
+      "Ji sedî 96.5",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 30"
+    ],
+    "answersTr": [
+      "Yüzde 96,5",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 30"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Okyanûs ji sedî 96.5ê ava Cîhanê digirin; ya mayî av a şêrîn e.",
+    "explanationTr": "Okyanuslar Dünya'daki suyun yüzde 96,5'ini tutar; kalanı tatlı sudur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "99ac369f54e15117"
+  },
+  {
+    "questionId": "sf_nat_0016",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_how_much_water",
+    "claimId": "usgs_hm_02",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth",
+    "exactSupportingFact": "Of total freshwater, over 68 percent is locked up in ice and glaciers.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Piraniya ava şêrîn a Cîhanê li ku ye?",
+    "promptTr": "Dünya'daki tatlı suyun çoğu nerededir?",
+    "answersKu": [
+      "Di golan de",
+      "Di qeşa û cemedan de",
+      "Di çeman de",
+      "Di baranê de"
+    ],
+    "answersTr": [
+      "Göllerde",
+      "Buz ve buzullarda",
+      "Akarsularda",
+      "Yağmurda"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Zêdetirî ji sedî 68ê ava şêrîn di qeşa û cemedan de girtî ye.",
+    "explanationTr": "Tatlı suyun yüzde 68'den fazlası buz ve buzullarda kilitlidir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "ad9f4c3086d25e0c"
+  },
+  {
+    "questionId": "sf_nat_0017",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_moon",
+    "claimId": "moon_01",
+    "sourceReference": "https://science.nasa.gov/moon/facts/",
+    "exactSupportingFact": "The Moon is an average of 238,855 miles (384,400 kilometers) away.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
+    "promptTr": "Dünya ile Ay arasındaki ortalama uzaklık kaç kilometredir?",
+    "answersKu": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "answersTr": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Heyv bi navînî 384.400 kîlometre ji Cîhanê dûr e.",
+    "explanationTr": "Ay, Dünya'dan ortalama 384.400 kilometre uzaktadır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "3533d880008f024c"
+  },
+  {
+    "questionId": "sf_nat_0018",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_moon",
+    "claimId": "moon_02",
+    "sourceReference": "https://science.nasa.gov/moon/facts/",
+    "exactSupportingFact": "The Moon makes a complete orbit around Earth in 27 Earth days.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
+    "promptTr": "Ay, Dünya çevresindeki turunu kaç günde tamamlar?",
+    "answersKu": [
+      "7 roj",
+      "14 roj",
+      "27 roj",
+      "365 roj"
+    ],
+    "answersTr": [
+      "7 gün",
+      "14 gün",
+      "27 gün",
+      "365 gün"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Heyv di 27 rojan de li dora Cîhanê yek car digere.",
+    "explanationTr": "Ay, Dünya çevresindeki turunu 27 günde tamamlar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "04987307e8f6a9a5"
+  },
+  {
+    "questionId": "sf_nat_0019",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_ocean_depth",
+    "claimId": "deep_01",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+    "exactSupportingFact": "The deepest part of the ocean is called the Challenger Deep and is located beneath the western Pacific Ocean",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Cihê herî kûr ê okyanûsê bi çi navî tê nasîn?",
+    "promptTr": "Okyanusun en derin yeri hangi adla bilinir?",
+    "answersKu": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "answersTr": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Cihê herî kûr ê okyanûsê Challenger Deep e û li bin okyanûsa Aramê ya rojava ye.",
+    "explanationTr": "Okyanusun en derin yeri Challenger Deep'tir ve batı Pasifik'in altındadır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "5dbda2f3b2abc94f"
+  },
+  {
+    "questionId": "sf_nat_0020",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_ocean_depth",
+    "claimId": "deep_02",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+    "exactSupportingFact": "It is named after the HMS Challenger, whose crew first sounded the depths of the trench in 1875.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Navê Challenger Deepê ji ku tê?",
+    "promptTr": "Challenger Deep adı nereden gelir?",
+    "answersKu": [
+      "Ji navê keştiyekê",
+      "Ji navê zanyarekî",
+      "Ji navê giravekê",
+      "Ji navê welatekî"
+    ],
+    "answersTr": [
+      "Bir geminin adından",
+      "Bir bilim insanının adından",
+      "Bir adanın adından",
+      "Bir ülkenin adından"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Nav ji keştiya HMS Challenger tê; ekîba wê di 1875an de kûrahî pîva.",
+    "explanationTr": "Ad, HMS Challenger gemisinden gelir; mürettebatı 1875'te derinliği ölçmüştür.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "51b27f83419fba9c"
   }
 ]

@@ -1,0 +1,19 @@
+{
+  "sourcePackId": "pack_berlinale_profile",
+  "sourceTitle": "Berlinale — Festival Profile",
+  "institution": "Internationale Filmfestspiele Berlin",
+  "sourceReference": "https://www.berlinale.de/en/festival/festival-profile.html",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "The festival was created for the Berlin public in 1951, at the beginning of the Cold War",
+    "The most important awards at the Berlinale are the Golden Bear and the Silver Bears."
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac",
+  "notUsed": "ERİŞİM NOTU: berlinale.de WebFetch istemcisini 503 ile engelliyor. Ajan sayfayı doğrudan HTTPS ile çekti ve alıntıları ham HTML üzerinde birebir doğruladı — arama özeti veya model hafızası DEĞİL. Seviye FETCHED_DIRECT sayıldı, yöntem farkı burada kayıtlı.",
+  "sourceHash": "54e7c763a009b54f"
+}

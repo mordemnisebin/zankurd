@@ -1175,6 +1175,56 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0035",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?",
+    "promptTr": "Berlin Film Festivali hangi yılda kuruldu?",
+    "answers": [
+      "1932",
+      "1946",
+      "1951",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1951",
+      "1968"
+    ],
+    "correctAnswer": "1951",
+    "correctAnswerTr": "1951",
+    "explanationKu": "Berlinale di sala 1951an de ji bo temaşevanên Berlînê hate avakirin.",
+    "explanationTr": "Berlinale 1951 yılında Berlin izleyicisi için kuruldu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0036",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Xelata herî girîng a Berlinaleyê kîjan e?",
+    "promptTr": "Berlinale'nin en önemli ödülü hangisidir?",
+    "answers": [
+      "Şêrê Zêrîn",
+      "Palmiyeya Zêrîn",
+      "Hirça Zêrîn",
+      "Ayiyê Zêrîn"
+    ],
+    "answersTr": [
+      "Altın Aslan",
+      "Altın Palmiye",
+      "Altın Ayı",
+      "Altın Küre"
+    ],
+    "correctAnswer": "Hirça Zêrîn",
+    "correctAnswerTr": "Altın Ayı",
+    "explanationKu": "Xelatên herî girîng ên Berlinaleyê Hirça Zêrîn û Hirçên Zîvîn in.",
+    "explanationTr": "Berlinale'nin en önemli ödülleri Altın Ayı ve Gümüş Ayılar'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,
@@ -1621,6 +1671,156 @@
     "correctAnswerTr": "Azot",
     "explanationKu": "Nîtrojen bi ji sedî 78 para herî mezin a atmosferê pêk tîne; oksîjen ji sedî 21 e.",
     "explanationTr": "Azot yüzde 78 ile atmosferin en büyük payını oluşturur; oksijen yüzde 21'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0015",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî USGSê, okyanûs ji sedî çend ava Cîhanê digirin?",
+    "promptTr": "USGS'e göre okyanuslar Dünya'daki suyun yüzde kaçını tutar?",
+    "answers": [
+      "Ji sedî 96.5",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 30"
+    ],
+    "answersTr": [
+      "Yüzde 96,5",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 30"
+    ],
+    "correctAnswer": "Ji sedî 96.5",
+    "correctAnswerTr": "Yüzde 96,5",
+    "explanationKu": "Okyanûs ji sedî 96.5ê ava Cîhanê digirin; ya mayî av a şêrîn e.",
+    "explanationTr": "Okyanuslar Dünya'daki suyun yüzde 96,5'ini tutar; kalanı tatlı sudur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0016",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Piraniya ava şêrîn a Cîhanê li ku ye?",
+    "promptTr": "Dünya'daki tatlı suyun çoğu nerededir?",
+    "answers": [
+      "Di golan de",
+      "Di qeşa û cemedan de",
+      "Di çeman de",
+      "Di baranê de"
+    ],
+    "answersTr": [
+      "Göllerde",
+      "Buz ve buzullarda",
+      "Akarsularda",
+      "Yağmurda"
+    ],
+    "correctAnswer": "Di qeşa û cemedan de",
+    "correctAnswerTr": "Buz ve buzullarda",
+    "explanationKu": "Zêdetirî ji sedî 68ê ava şêrîn di qeşa û cemedan de girtî ye.",
+    "explanationTr": "Tatlı suyun yüzde 68'den fazlası buz ve buzullarda kilitlidir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0017",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
+    "promptTr": "Dünya ile Ay arasındaki ortalama uzaklık kaç kilometredir?",
+    "answers": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "answersTr": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "correctAnswer": "384.400 km",
+    "correctAnswerTr": "384.400 km",
+    "explanationKu": "Heyv bi navînî 384.400 kîlometre ji Cîhanê dûr e.",
+    "explanationTr": "Ay, Dünya'dan ortalama 384.400 kilometre uzaktadır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0018",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
+    "promptTr": "Ay, Dünya çevresindeki turunu kaç günde tamamlar?",
+    "answers": [
+      "7 roj",
+      "14 roj",
+      "27 roj",
+      "365 roj"
+    ],
+    "answersTr": [
+      "7 gün",
+      "14 gün",
+      "27 gün",
+      "365 gün"
+    ],
+    "correctAnswer": "27 roj",
+    "correctAnswerTr": "27 gün",
+    "explanationKu": "Heyv di 27 rojan de li dora Cîhanê yek car digere.",
+    "explanationTr": "Ay, Dünya çevresindeki turunu 27 günde tamamlar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0019",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Cihê herî kûr ê okyanûsê bi çi navî tê nasîn?",
+    "promptTr": "Okyanusun en derin yeri hangi adla bilinir?",
+    "answers": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "answersTr": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "correctAnswer": "Challenger Deep",
+    "correctAnswerTr": "Challenger Deep",
+    "explanationKu": "Cihê herî kûr ê okyanûsê Challenger Deep e û li bin okyanûsa Aramê ya rojava ye.",
+    "explanationTr": "Okyanusun en derin yeri Challenger Deep'tir ve batı Pasifik'in altındadır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0020",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Navê Challenger Deepê ji ku tê?",
+    "promptTr": "Challenger Deep adı nereden gelir?",
+    "answers": [
+      "Ji navê keştiyekê",
+      "Ji navê zanyarekî",
+      "Ji navê giravekê",
+      "Ji navê welatekî"
+    ],
+    "answersTr": [
+      "Bir geminin adından",
+      "Bir bilim insanının adından",
+      "Bir adanın adından",
+      "Bir ülkenin adından"
+    ],
+    "correctAnswer": "Ji navê keştiyekê",
+    "correctAnswerTr": "Bir geminin adından",
+    "explanationKu": "Nav ji keştiya HMS Challenger tê; ekîba wê di 1875an de kûrahî pîva.",
+    "explanationTr": "Ad, HMS Challenger gemisinden gelir; mürettebatı 1875'te derinliği ölçmüştür.",
     "difficulty": 2,
     "type": "multipleChoice"
   },

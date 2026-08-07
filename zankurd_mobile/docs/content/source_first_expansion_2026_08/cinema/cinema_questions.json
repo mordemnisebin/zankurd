@@ -2426,5 +2426,151 @@
       "note": "batch içinde bu film-alan çifti tek"
     },
     "finalContentHash": "46effa35e9083a43"
+  },
+  {
+    "questionId": "sf_cin_0035",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_berlinale_profile",
+    "claimId": "berl_01",
+    "sourceReference": "https://www.berlinale.de/en/festival/festival-profile.html",
+    "exactSupportingFact": "The festival was created for the Berlin public in 1951",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?",
+    "promptTr": "Berlin Film Festivali hangi yılda kuruldu?",
+    "answersKu": [
+      "1932",
+      "1946",
+      "1951",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1951",
+      "1968"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Berlinale di sala 1951an de ji bo temaşevanên Berlînê hate avakirin.",
+    "explanationTr": "Berlinale 1951 yılında Berlin izleyicisi için kuruldu.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "ab99fb32bb1afcfb"
+  },
+  {
+    "questionId": "sf_cin_0036",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_berlinale_profile",
+    "claimId": "berl_02",
+    "sourceReference": "https://www.berlinale.de/en/festival/festival-profile.html",
+    "exactSupportingFact": "The most important awards at the Berlinale are the Golden Bear and the Silver Bears.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Xelata herî girîng a Berlinaleyê kîjan e?",
+    "promptTr": "Berlinale'nin en önemli ödülü hangisidir?",
+    "answersKu": [
+      "Şêrê Zêrîn",
+      "Palmiyeya Zêrîn",
+      "Hirça Zêrîn",
+      "Ayiyê Zêrîn"
+    ],
+    "answersTr": [
+      "Altın Aslan",
+      "Altın Palmiye",
+      "Altın Ayı",
+      "Altın Küre"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Xelatên herî girîng ên Berlinaleyê Hirça Zêrîn û Hirçên Zîvîn in.",
+    "explanationTr": "Berlinale'nin en önemli ödülleri Altın Ayı ve Gümüş Ayılar'dır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "94477227ca0036ef"
   }
 ]

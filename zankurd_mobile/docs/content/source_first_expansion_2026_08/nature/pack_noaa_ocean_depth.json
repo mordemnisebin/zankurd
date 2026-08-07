@@ -1,0 +1,19 @@
+{
+  "sourcePackId": "pack_noaa_ocean_depth",
+  "sourceTitle": "NOAA — How deep is the ocean?",
+  "institution": "NOAA",
+  "sourceReference": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "The deepest part of the ocean is called the Challenger Deep and is located beneath the western Pacific Ocean",
+    "It is named after the HMS Challenger, whose crew first sounded the depths of the trench in 1875."
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac",
+  "notUsed": "Challenger Deep DERİNLİĞİ (10.935 m) ve ortalama derinlik VOLATİL işaretlendi — ölçüm yöntemine göre değişiyor; soruya çevrilmedi. İstenen URL 404 verdi, aynı kurumun oceandepth.html sayfası kullanıldı.",
+  "sourceHash": "2a1589071c4be158"
+}
