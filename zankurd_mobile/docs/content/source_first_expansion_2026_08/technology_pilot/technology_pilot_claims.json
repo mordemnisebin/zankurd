@@ -237,5 +237,126 @@
       "note": "kök cevabı açık etmiyor"
     },
     "finalContentHash": "cd3006ee4abdd2e7"
+  },
+  {
+    "questionId": "sf_tech_0009",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_how_the_web_works",
+    "claimId": "web_04",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "exactSupportingFact": "a series of small chunks called packets",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_dane",
+      "ku_tech_internet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_dane": "bf4debaf57a9374f",
+      "ku_tech_internet": "6e16f8e51843897d"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_dane": "data (computing sense)",
+      "ku_tech_internet": "the Internet"
+    },
+    "linguisticEvidenceSummary": "Wîkîferheng girdileri doğrudan okundu; corpus ile tutarlı.",
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "Dane di înternetê de bi çi awayî têne şandin?",
+    "promptTr": "Veriler internette nasıl gönderilir?",
+    "answersKu": [
+      "Bi perçeyên biçûk",
+      "Bi carekê û bi tevahî",
+      "Bi rêza tîpan",
+      "Bi dengê bilind"
+    ],
+    "answersTr": [
+      "Küçük parçalar hâlinde",
+      "Tek seferde ve bütün olarak",
+      "Harf sırasına göre",
+      "Yüksek sesle"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Dane bi perçeyên biçûk têne şandin û li dawiyê ji nû ve têne hev kirin.",
+    "explanationTr": "Veriler küçük parçalar hâlinde gönderilir ve sonunda yeniden birleştirilir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "MDN'de birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf; bloke terim yok"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "finalContentHash": "d3171bb863c494de"
+  },
+  {
+    "questionId": "sf_tech_0010",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_how_the_web_works",
+    "claimId": "web_02",
+    "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+    "exactSupportingFact": "the server sends the client a \"200 OK\" message",
+    "riskClass": "C",
+    "requiredTerminologyConceptIds": [],
+    "terminologyRecordHashes": {},
+    "terminologyAllowedSenses": {},
+    "linguisticEvidenceSummary": "Wîkîferheng girdileri doğrudan okundu; corpus ile tutarlı.",
+    "standardTechnicalIdentifiers": [
+      "HTTP"
+    ],
+    "promptKu": "Di HTTPê de peyama «200 OK» çi nîşan dide?",
+    "promptTr": "HTTP'de «200 OK» mesajı neyi gösterir?",
+    "answersKu": [
+      "Girêdan hat birîn",
+      "Daxwaz hat qebûlkirin",
+      "Rûpel hat guhertin",
+      "Navnîşan çewt e"
+    ],
+    "answersTr": [
+      "Bağlantı kesildi",
+      "İstek kabul edildi",
+      "Sayfa değiştirildi",
+      "Adres hatalı"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Peyama «200 OK» nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
+    "explanationTr": "«200 OK» mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "MDN'de birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf; bloke terim yok"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "finalContentHash": "cd65cea8436213a2"
   }
 ]

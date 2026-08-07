@@ -99,8 +99,11 @@ void main() {
     // sessizce yeşile döner. O yüzden ikisi de burada sabitlenir.
     expect(blocked, isNotEmpty, reason: 'bloke terim listesi boş');
     expect(staged, isNotEmpty, reason: 'staged soru listesi boş');
+    // Bu iki terim HÂLÂ bloke. `dane` bir zamanlar buradaydı; Wîkîferheng
+    // girdisi okununca açıldı ve bu test onu yakaladı — sözleşme değişince
+    // testin sessizce geçmemesi tam olarak istenen davranış.
     expect(blocked, contains('şîfre'));
-    expect(blocked, contains('dane'));
+    expect(blocked, contains('sepan'));
   });
 
   test('staged sorularda bloke terim yok', () {

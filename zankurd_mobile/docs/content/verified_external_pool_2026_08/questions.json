@@ -823,5 +823,155 @@
     "explanationTr": "NOAA'ya göre tek bir küresel okyanus vardır; adlar onun ayrı bölgelerine verilir.",
     "difficulty": 2,
     "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0001",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Malper bi giştî li ser çi têne hilanîn?",
+    "promptTr": "Web siteleri genel olarak neyin üzerinde saklanır?",
+    "answers": [
+      "Li ser komputeran",
+      "Li ser kaxizê",
+      "Li ser dengbêjan",
+      "Li ser nexşeyan"
+    ],
+    "answersTr": [
+      "Bilgisayarların üzerinde",
+      "Kâğıt üzerinde",
+      "Anlatıcıların belleğinde",
+      "Haritalar üzerinde"
+    ],
+    "correctAnswer": "Li ser komputeran",
+    "correctAnswerTr": "Bilgisayarların üzerinde",
+    "explanationKu": "Malper li ser komputeran têne hilanîn û ji wir ji bikarhêneran re têne şandin.",
+    "explanationTr": "Web siteleri bilgisayarlarda saklanır ve oradan kullanıcılara gönderilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0004",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "DNS di gihîştina malperekê de çi kar dike?",
+    "promptTr": "DNS bir web sitesine erişimde ne işe yarar?",
+    "answers": [
+      "Bataryayê şarj dike",
+      "Wêneyan biçûk dike",
+      "Navnîşana rastîn peyda dike",
+      "Dengê vîdeoyê zêde dike"
+    ],
+    "answersTr": [
+      "Pili şarj eder",
+      "Görselleri küçültür",
+      "Gerçek adresi bulur",
+      "Videonun sesini artırır"
+    ],
+    "correctAnswer": "Navnîşana rastîn peyda dike",
+    "correctAnswerTr": "Gerçek adresi bulur",
+    "explanationKu": "DNS navnîşana rastîn a malperê peyda dike, da ku daxwaz bigihîje cihê rast.",
+    "explanationTr": "DNS, web sitesinin gerçek adresini bulur; böylece istek doğru yere ulaşır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0007",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Kurtenivîsa «URL» li ser çi tê avakirin?",
+    "promptTr": "«URL» kısaltması neyin karşılığıdır?",
+    "answers": [
+      "Universal Reading Language",
+      "Uniform Resource Locator",
+      "Unique Router Link",
+      "Upper Range Layer"
+    ],
+    "answersTr": [
+      "Universal Reading Language",
+      "Uniform Resource Locator",
+      "Unique Router Link",
+      "Upper Range Layer"
+    ],
+    "correctAnswer": "Uniform Resource Locator",
+    "correctAnswerTr": "Uniform Resource Locator",
+    "explanationKu": "«URL» kurtenivîsa «Uniform Resource Locator» e.",
+    "explanationTr": "«URL», «Uniform Resource Locator» ifadesinin kısaltmasıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0008",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "URL bi giranî çi diyar dike?",
+    "promptTr": "URL esas olarak neyi belirtir?",
+    "answers": [
+      "Rengê rûpelê",
+      "Mezinahiya wêneyan",
+      "Dema xwendinê",
+      "Navnîşana çavkaniyekê"
+    ],
+    "answersTr": [
+      "Sayfanın rengini",
+      "Görsellerin boyutunu",
+      "Okuma süresini",
+      "Bir kaynağın adresini"
+    ],
+    "correctAnswer": "Navnîşana çavkaniyekê",
+    "correctAnswerTr": "Bir kaynağın adresini",
+    "explanationKu": "URL navnîşana çavkaniyekê ye; bi wê navnîşanê çavkanî tê dîtin.",
+    "explanationTr": "URL bir kaynağın adresidir; o adres sayesinde kaynağa ulaşılır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0009",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Dane di înternetê de bi çi awayî têne şandin?",
+    "promptTr": "Veriler internette nasıl gönderilir?",
+    "answers": [
+      "Bi perçeyên biçûk",
+      "Bi carekê û bi tevahî",
+      "Bi rêza tîpan",
+      "Bi dengê bilind"
+    ],
+    "answersTr": [
+      "Küçük parçalar hâlinde",
+      "Tek seferde ve bütün olarak",
+      "Harf sırasına göre",
+      "Yüksek sesle"
+    ],
+    "correctAnswer": "Bi perçeyên biçûk",
+    "correctAnswerTr": "Küçük parçalar hâlinde",
+    "explanationKu": "Dane bi perçeyên biçûk têne şandin û li dawiyê ji nû ve têne hev kirin.",
+    "explanationTr": "Veriler küçük parçalar hâlinde gönderilir ve sonunda yeniden birleştirilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0010",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Di HTTPê de peyama «200 OK» çi nîşan dide?",
+    "promptTr": "HTTP'de «200 OK» mesajı neyi gösterir?",
+    "answers": [
+      "Girêdan hat birîn",
+      "Daxwaz hat qebûlkirin",
+      "Rûpel hat guhertin",
+      "Navnîşan çewt e"
+    ],
+    "answersTr": [
+      "Bağlantı kesildi",
+      "İstek kabul edildi",
+      "Sayfa değiştirildi",
+      "Adres hatalı"
+    ],
+    "correctAnswer": "Daxwaz hat qebûlkirin",
+    "correctAnswerTr": "İstek kabul edildi",
+    "explanationKu": "Peyama «200 OK» nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
+    "explanationTr": "«200 OK» mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
   }
 ]

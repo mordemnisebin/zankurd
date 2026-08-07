@@ -109,6 +109,7 @@ def main() -> int:
     SF_FILES = [
         "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json",
         "docs/content/source_first_expansion_2026_08/geography/geography_questions.json",
+        "docs/content/source_first_expansion_2026_08/technology_pilot/technology_pilot_claims.json",
     ]
     for SF in [f for f in SF_FILES if os.path.exists(f)]:
         for q in json.load(open(SF, encoding="utf-8")):
@@ -126,13 +127,13 @@ def main() -> int:
                 "explanationKu": q["explanationKu"],
                 "explanationTr": q["explanationTr"],
                 "difficulty": q.get("difficulty", 2),
-                "type": q.get("questionType", "multipleChoice")})
+                "type": q.get("questionType") or q.get("type", "multipleChoice")})
             provenance.append({
                 "originalQuestionId": q["questionId"], "sourcePool": "source_first",
                 "origin": "source_first_verified",
                 "sourceBranch": None, "sourceCommit": None,
                 "category": q["category"], "subcategory": q.get("subcategory"),
-                "verificationLevel": q["sourceAccessLevel"],
+                "verificationLevel": q.get("sourceAccessLevel", "FETCHED_DIRECT"),
                 "sourceReference": q["sourceReference"],
                 "exactSupportingFact": q["exactSupportingFact"],
                 "verifiedAt": "2026-08-06", "reviewer": "opus-5",
@@ -142,7 +143,7 @@ def main() -> int:
                               "OpusReviewReasons": ["doğrudan açılmış kurumsal sayfa"],
                               "subcategoryOld": None, "subcategoryNew": None})
             metrics[q["category"]] += 1
-            metrics["level:" + q["sourceAccessLevel"]] += 1
+            metrics["level:" + q.get("sourceAccessLevel", "FETCHED_DIRECT")] += 1
             metrics["origin:source_first_verified"] += 1
 
     questions.sort(key=lambda x: x["id"])

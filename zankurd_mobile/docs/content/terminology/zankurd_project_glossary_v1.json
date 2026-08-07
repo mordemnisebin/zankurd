@@ -149,13 +149,26 @@
       "domain": "tor_and_web",
       "projectPreferredKurmanji": "înternet",
       "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
+      "partOfSpeech": "navdêr (m)",
       "definitionKu": null,
       "definitionTr": null,
-      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
-      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
-      "allowedSenses": [],
-      "evidenceChain": [],
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_BORROWED_TERM",
+      "allowedSenses": [
+        "the Internet"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/%C3%AEnternet",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m); madde ana 'Internet' maddesine yönlendiriyor",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
       "corpusAttestations": [
         "offline_curated_30007",
         "offline_tek_0018",
@@ -167,11 +180,11 @@
       "corpusAttestationCount": 17,
       "spellingDecision": "Corpus yazımı `înternet`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Wiktionary girdisi bu turda okunmadı. Corpus (Seviye 5) tek başına yeterli değil.",
-      "approvedForQuestionAuthoring": false,
+      "ambiguityNotes": "Madde YÖNLENDİRME: sözcük türü (navdêr, m) ve Kurmancî yazımı `înternet` doğrulandı, ama tanım ana maddede ve o sayfa OKUNMADI. Ödünç uluslararası terim olarak açıldı; yazım + corpus'taki 17 tutarlı kullanım yeterli sayıldı. `web` ve genel `network` anlamları AÇILMADI.",
+      "approvedForQuestionAuthoring": true,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "0d7213a6c4265d63"
+      "recordHash": "6e16f8e51843897d"
     },
     {
       "conceptId": "ku_tech_dane",
@@ -180,13 +193,26 @@
       "domain": "computing",
       "projectPreferredKurmanji": "dane",
       "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
+      "partOfSpeech": "navdêr",
       "definitionKu": null,
       "definitionTr": null,
-      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
-      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
-      "allowedSenses": [],
-      "evidenceChain": [],
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "data (computing sense)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/dane",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr; bilişim anlamı: 'Tiştên ku ji baytan pêk tên, gelek caran ji bo nivîs û tiştên bernameyê re tê gotin'",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
       "corpusAttestations": [
         "offline_13556",
         "offline_curated_30007",
@@ -198,11 +224,11 @@
       "corpusAttestationCount": 37,
       "spellingDecision": "Corpus yazımı `dane`.",
       "dialectNotes": null,
-      "ambiguityNotes": "data/datum/information/record ayrımı yapılmadı. Corpus (Seviye 5) tek başına yeterli değil.",
-      "approvedForQuestionAuthoring": false,
+      "ambiguityNotes": "Wîkîferheng girdisi BİLİŞİM anlamını ayrıca veriyor — genel anlamı 'lib/heb/tane' (adet). YALNIZ bilişim 'data' anlamı açık; 'adet/tane' anlamı bu projede kullanılmaz. Girdide cinsiyet çelişkili aktarılıyor (navdêr mê), bu yüzden cinsiyet iddia edilmiyor. Corpus'ta 34 tutarlı kullanım ikinci kanıt katmanı.",
+      "approvedForQuestionAuthoring": true,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "4edc37fdfe041211"
+      "recordHash": "bf4debaf57a9374f"
     },
     {
       "conceptId": "ku_tech_nermalav",
@@ -211,13 +237,26 @@
       "domain": "computing",
       "projectPreferredKurmanji": "nermalav",
       "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
+      "partOfSpeech": "navdêr (m)",
       "definitionKu": null,
       "definitionTr": null,
-      "linguisticEvidenceStatus": "PROJECT_CORPUS_ATTESTED",
-      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
-      "allowedSenses": [],
-      "evidenceChain": [],
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "software"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/nermalav",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m); bilişimde 'software': bilgisayar işi için gereken programlar. Etimoloji: nerm + alav. Eşanlamlı: nivîsbarî",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
       "corpusAttestations": [
         "offline_tek_0027",
         "offline_tek_0044",
@@ -229,11 +268,11 @@
       "corpusAttestationCount": 14,
       "spellingDecision": "Corpus yazımı `nermalav`.",
       "dialectNotes": null,
-      "ambiguityNotes": "Wiktionary'de girdi YOK (404). Corpus'ta 14 geçiş var ama sözlük kanıtı yok. Corpus (Seviye 5) tek başına yeterli değil.",
-      "approvedForQuestionAuthoring": false,
+      "ambiguityNotes": "YALNIZ 'software' anlamı açık. Girdi uygulama ve işletim sistemini ÖRNEK olarak veriyor; bu, `application` ve `operating system` terimlerinin açıldığı anlamına GELMEZ — onlar ayrı kanıt ister. Corpus'ta 14 kullanım.",
+      "approvedForQuestionAuthoring": true,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "ef9a1df372db3a05"
+      "recordHash": "e3653e3ebb8db393"
     },
     {
       "conceptId": "ku_tech_sepan",
