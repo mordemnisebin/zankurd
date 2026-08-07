@@ -1023,7 +1023,7 @@
     "exactSupportingFact": "a compromised password from one site could compromise all accounts",
     "verifiedAt": "2026-08-06",
     "reviewer": "opus-5",
-    "finalContentHash": "8f32e1f4e2bb080d",
+    "finalContentHash": "c641cbcffbcafedb",
     "activationStatus": "STAGED_VERIFIED"
   }
 ]

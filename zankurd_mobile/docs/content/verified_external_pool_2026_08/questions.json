@@ -1606,14 +1606,14 @@
     "prompt": "Çima şîfreya yekseb li gelek malperan xeter e?",
     "promptTr": "Aynı parolayı birçok sitede kullanmak neden risklidir?",
     "answers": [
-      "Ji ber ku malper hêdî dibin",
       "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+      "Ji ber ku malper hêdî dibin",
       "Ji ber ku bîranîn zehmet e",
       "Ji ber ku înternet zêde tê bikaranîn"
     ],
     "answersTr": [
-      "Siteler yavaşladığı için",
       "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+      "Siteler yavaşladığı için",
       "Hatırlaması zor olduğu için",
       "İnternet çok kullanıldığı için"
     ],

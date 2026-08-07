@@ -34,12 +34,25 @@ void main() {
               ).readAsStringSync(),
             )
             as Map<String, dynamic>;
+    final concepts = (g['concepts'] as List).cast<Map<String, dynamic>>();
+    // Bir SÖZCÜK birden çok conceptId'de olabilir: `şîfre` hem
+    // password (açık) hem encryption (bloke) kaydında geçiyor. Sözcüğü
+    // yalnız bloke kayda bakıp yasaklamak, açık anlamıyla yazılmış
+    // soruyu da düşürür — 2026-08-06'da NIST parola batch'inde tam bu
+    // oldu. Doğru ölçü: sözcük HİÇBİR kayıtta açık değilse bloke sayılır.
+    final allowedWords = {
+      for (final c in concepts)
+        if (c['approvedForQuestionAuthoring'] == true &&
+            c['projectPreferredKurmanji'] != null)
+          c['projectPreferredKurmanji'] as String,
+    };
     blocked = {
-      for (final c in (g['concepts'] as List).cast<Map<String, dynamic>>())
+      for (final c in concepts)
         if ((c['projectAuthoringStatus'] as String).startsWith(
           'AUTHORING_BLOCKED',
         ))
-          if (c['projectPreferredKurmanji'] != null)
+          if (c['projectPreferredKurmanji'] != null &&
+              !allowedWords.contains(c['projectPreferredKurmanji']))
             c['projectPreferredKurmanji'] as String,
     };
     staged =
