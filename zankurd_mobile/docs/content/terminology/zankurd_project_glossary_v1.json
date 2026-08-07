@@ -356,13 +356,26 @@
       "domain": "computing",
       "projectPreferredKurmanji": "şîfre",
       "alternativeKurmanjiForms": [],
-      "partOfSpeech": "noun",
-      "definitionKu": null,
-      "definitionTr": null,
-      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
-      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
-      "allowedSenses": [],
-      "evidenceChain": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "Peyv an hevokek ku divê were nivîsandin da ku mirov destûra gihîştinê bi dest bixe",
+      "definitionTr": "Bir şeye erişim izni almak için girilmesi gereken sözcük veya ifade",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "password (authentication)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/%C5%9F%C3%AEfre",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m): erişim/izin almak için kullanılan sözcük veya ifade; örnek: e-postayı açmak için ad ve şîfre girilmeli. İngilizce karşılık: password. Etimoloji: Fransızca chiffre. Türevler: deşîfre, şîfrekirî, şîfrekirin.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
       "corpusAttestations": [
         "offline_curated_30004",
         "offline_tek_0006",
@@ -374,11 +387,11 @@
       "corpusAttestationCount": 35,
       "spellingDecision": "Corpus yazımı `şîfre`.",
       "dialectNotes": null,
-      "ambiguityNotes": "password / PIN / cipher / encryption / code ayrı kavramlar.",
-      "approvedForQuestionAuthoring": false,
+      "ambiguityNotes": "Girdi açıkça PAROLA anlamını tanımlıyor ve örneği de kimlik doğrulama (e-posta girişi). İngilizce karşılık 'password'. ŞİFRELEME anlamı AÇILMADI: girdi `şîfrekirin`/`deşîfre` türevlerini AYRI biçimler olarak listeliyor — kökün parola anlamı, türevin şifreleme anlamını kanıtlamaz. `ku_tech_sifre_encryption` bloke kalıyor. Corpus'ta 35 kullanım ikinci katman.",
+      "approvedForQuestionAuthoring": true,
       "reviewer": "opus-5",
       "reviewedAt": "2026-08-06",
-      "recordHash": "825b04286123a8b1"
+      "recordHash": "c268eebe198cbc90"
     },
     {
       "conceptId": "ku_tech_sifre_encryption",
