@@ -358,5 +358,249 @@
       "note": "kök cevabı açık etmiyor"
     },
     "finalContentHash": "cd65cea8436213a2"
+  },
+  {
+    "questionId": "sf_tech_0011",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nist_password",
+    "claimId": "nist_01",
+    "sourceReference": "https://www.nist.gov/cybersecurity/how-do-i-create-good-password",
+    "exactSupportingFact": "NIST guidance recommends that a password should be at least 15 characters long.",
+    "riskClass": "C",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_sifre_password"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_sifre_password": "c268eebe198cbc90"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_sifre_password": "password (authentication)"
+    },
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "Li gorî NISTê şîfre divê herî kêm çend tîp be?",
+    "promptTr": "NIST'e göre parola en az kaç karakter olmalı?",
+    "answersKu": [
+      "6",
+      "8",
+      "15",
+      "4"
+    ],
+    "answersTr": [
+      "6",
+      "8",
+      "15",
+      "4"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "NIST pêşniyar dike ku şîfre herî kêm 15 tîp be; dirêjî girîngtirîn faktor e.",
+    "explanationTr": "NIST parolanın en az 15 karakter olmasını önerir; uzunluk en önemli etkendir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NIST'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf; bloke terim yok"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "finalContentHash": "2799b1d2e09bb343"
+  },
+  {
+    "questionId": "sf_tech_0012",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nist_password",
+    "claimId": "nist_02",
+    "sourceReference": "https://www.nist.gov/cybersecurity/how-do-i-create-good-password",
+    "exactSupportingFact": "NIST no longer recommends that passwords require special characters and numbers.",
+    "riskClass": "C",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_sifre_password"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_sifre_password": "c268eebe198cbc90"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_sifre_password": "password (authentication)"
+    },
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?",
+    "promptTr": "NIST'in yeni rehberine göre özel karakterler zorunlu mudur?",
+    "answersKu": [
+      "Erê, her dem mecbûr in",
+      "Na, êdî mecbûr nayên pêşniyarkirin",
+      "Tenê ji bo bankan mecbûr in",
+      "Tenê ji bo e-nameyê mecbûr in"
+    ],
+    "answersTr": [
+      "Evet, her zaman zorunlu",
+      "Hayır, artık zorunlu önerilmiyor",
+      "Sadece bankalar için zorunlu",
+      "Sadece e-posta için zorunlu"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "NIST êdî pêşniyar nake ku şîfre bi mecbûrî tîpên taybet û hejmaran bihewîne.",
+    "explanationTr": "NIST artık parolaların zorunlu olarak özel karakter ve sayı içermesini önermiyor.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NIST'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf; bloke terim yok"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "finalContentHash": "6b84e5d180cb8e0e"
+  },
+  {
+    "questionId": "sf_tech_0013",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nist_password",
+    "claimId": "nist_03",
+    "sourceReference": "https://www.nist.gov/cybersecurity/how-do-i-create-good-password",
+    "exactSupportingFact": "A passphrase combines multiple real words together",
+    "riskClass": "C",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_sifre_password"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_sifre_password": "c268eebe198cbc90"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_sifre_password": "password (authentication)"
+    },
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "«Passphrase» çi ye?",
+    "promptTr": "«Passphrase» nedir?",
+    "answersKu": [
+      "Yek tîpa dubarekirî",
+      "Hejmarek bi tenê",
+      "Navê bikarhêner",
+      "Çend peyvên rastîn ên li hev hatî"
+    ],
+    "answersTr": [
+      "Tekrarlanan tek harf",
+      "Yalnızca bir sayı",
+      "Kullanıcı adı",
+      "Birleştirilmiş birkaç gerçek sözcük"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir tê bîrîn hem dirêjtir e.",
+    "explanationTr": "Passphrase birkaç gerçek sözcüğü birleştirir; hem akılda kalıcı hem daha uzundur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NIST'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf; bloke terim yok"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "finalContentHash": "0fc5a0061f9eaf8e"
+  },
+  {
+    "questionId": "sf_tech_0014",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nist_password",
+    "claimId": "nist_04",
+    "sourceReference": "https://www.nist.gov/cybersecurity/how-do-i-create-good-password",
+    "exactSupportingFact": "a compromised password from one site could compromise all accounts",
+    "riskClass": "C",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "requiredTerminologyConceptIds": [
+      "ku_tech_sifre_password"
+    ],
+    "terminologyRecordHashes": {
+      "ku_tech_sifre_password": "c268eebe198cbc90"
+    },
+    "terminologyAllowedSenses": {
+      "ku_tech_sifre_password": "password (authentication)"
+    },
+    "standardTechnicalIdentifiers": [],
+    "promptKu": "Çima şîfreya yekseb li gelek malperan xeter e?",
+    "promptTr": "Aynı parolayı birçok sitede kullanmak neden risklidir?",
+    "answersKu": [
+      "Ji ber ku malper hêdî dibin",
+      "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+      "Ji ber ku bîranîn zehmet e",
+      "Ji ber ku înternet zêde tê bikaranîn"
+    ],
+    "answersTr": [
+      "Siteler yavaşladığı için",
+      "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+      "Hatırlaması zor olduğu için",
+      "İnternet çok kullanıldığı için"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Ger şîfreya heman li malperekê bikeve destan, hemû hesabên bi wê şîfreyê dikevin xetereyê.",
+    "explanationTr": "Aynı parola bir sitede ele geçerse, o parolayı kullanan tüm hesaplar tehlikeye girer.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NIST'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf; bloke terim yok"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "finalContentHash": "8f32e1f4e2bb080d"
   }
 ]

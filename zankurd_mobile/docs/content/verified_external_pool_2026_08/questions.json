@@ -1523,5 +1523,105 @@
     "explanationTr": "«200 OK» mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
     "difficulty": 2,
     "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0011",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Li gorî NISTê şîfre divê herî kêm çend tîp be?",
+    "promptTr": "NIST'e göre parola en az kaç karakter olmalı?",
+    "answers": [
+      "6",
+      "8",
+      "15",
+      "4"
+    ],
+    "answersTr": [
+      "6",
+      "8",
+      "15",
+      "4"
+    ],
+    "correctAnswer": "15",
+    "correctAnswerTr": "15",
+    "explanationKu": "NIST pêşniyar dike ku şîfre herî kêm 15 tîp be; dirêjî girîngtirîn faktor e.",
+    "explanationTr": "NIST parolanın en az 15 karakter olmasını önerir; uzunluk en önemli etkendir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0012",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?",
+    "promptTr": "NIST'in yeni rehberine göre özel karakterler zorunlu mudur?",
+    "answers": [
+      "Erê, her dem mecbûr in",
+      "Na, êdî mecbûr nayên pêşniyarkirin",
+      "Tenê ji bo bankan mecbûr in",
+      "Tenê ji bo e-nameyê mecbûr in"
+    ],
+    "answersTr": [
+      "Evet, her zaman zorunlu",
+      "Hayır, artık zorunlu önerilmiyor",
+      "Sadece bankalar için zorunlu",
+      "Sadece e-posta için zorunlu"
+    ],
+    "correctAnswer": "Na, êdî mecbûr nayên pêşniyarkirin",
+    "correctAnswerTr": "Hayır, artık zorunlu önerilmiyor",
+    "explanationKu": "NIST êdî pêşniyar nake ku şîfre bi mecbûrî tîpên taybet û hejmaran bihewîne.",
+    "explanationTr": "NIST artık parolaların zorunlu olarak özel karakter ve sayı içermesini önermiyor.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0013",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "«Passphrase» çi ye?",
+    "promptTr": "«Passphrase» nedir?",
+    "answers": [
+      "Yek tîpa dubarekirî",
+      "Hejmarek bi tenê",
+      "Navê bikarhêner",
+      "Çend peyvên rastîn ên li hev hatî"
+    ],
+    "answersTr": [
+      "Tekrarlanan tek harf",
+      "Yalnızca bir sayı",
+      "Kullanıcı adı",
+      "Birleştirilmiş birkaç gerçek sözcük"
+    ],
+    "correctAnswer": "Çend peyvên rastîn ên li hev hatî",
+    "correctAnswerTr": "Birleştirilmiş birkaç gerçek sözcük",
+    "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir tê bîrîn hem dirêjtir e.",
+    "explanationTr": "Passphrase birkaç gerçek sözcüğü birleştirir; hem akılda kalıcı hem daha uzundur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0014",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Çima şîfreya yekseb li gelek malperan xeter e?",
+    "promptTr": "Aynı parolayı birçok sitede kullanmak neden risklidir?",
+    "answers": [
+      "Ji ber ku malper hêdî dibin",
+      "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+      "Ji ber ku bîranîn zehmet e",
+      "Ji ber ku înternet zêde tê bikaranîn"
+    ],
+    "answersTr": [
+      "Siteler yavaşladığı için",
+      "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+      "Hatırlaması zor olduğu için",
+      "İnternet çok kullanıldığı için"
+    ],
+    "correctAnswer": "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+    "correctAnswerTr": "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+    "explanationKu": "Ger şîfreya heman li malperekê bikeve destan, hemû hesabên bi wê şîfreyê dikevin xetereyê.",
+    "explanationTr": "Aynı parola bir sitede ele geçerse, o parolayı kullanan tüm hesaplar tehlikeye girer.",
+    "difficulty": 2,
+    "type": "multipleChoice"
   }
 ]

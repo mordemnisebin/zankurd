@@ -547,5 +547,41 @@
     ],
     "subcategoryOld": null,
     "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0011",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0012",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0013",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0014",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
   }
 ]
