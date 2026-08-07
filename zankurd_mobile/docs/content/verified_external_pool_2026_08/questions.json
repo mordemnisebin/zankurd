@@ -825,6 +825,56 @@
     "type": "multipleChoice"
   },
   {
+    "id": "sf_cin_0021",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Tokyo Story» (1953) kî ye?",
+    "promptTr": "«Tokyo Story» (1953) filminin yönetmeni kimdir?",
+    "answers": [
+      "Akira Kurosawa",
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "answersTr": [
+      "Akira Kurosawa",
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "correctAnswer": "Yasujirō Ozu",
+    "correctAnswerTr": "Yasujirō Ozu",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Tokyo Storyê Yasujirō Ozu ye.",
+    "explanationTr": "BFI kataloğuna göre Tokyo Story'nin yönetmeni Yasujirō Ozu'dur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0022",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Tokyo Story» hilberîna kîjan welatî ye?",
+    "promptTr": "«Tokyo Story» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Çîn",
+      "Kore",
+      "Japonya",
+      "Taywan"
+    ],
+    "answersTr": [
+      "Çîn",
+      "Kore",
+      "Japonya",
+      "Taywan"
+    ],
+    "correctAnswer": "Japonya",
+    "correctAnswerTr": "Japonya",
+    "explanationKu": "Li gorî kataloga BFIyê Tokyo Story hilberîneke Japonyayê ye.",
+    "explanationTr": "BFI kataloğuna göre Tokyo Story bir Japonya yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
     "id": "sf_geo_0001",
     "category": "Cografya",
     "subcategory": null,

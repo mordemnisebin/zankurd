@@ -1418,5 +1418,149 @@
       "note": "Batch içinde 1922 yılını soran başka kayıt yok; sf_cin_0019 yönetmeni soruyor, bu yıl — farklı bilgi noktaları."
     },
     "finalContentHash": "b5372b491ad56dbd"
+  },
+  {
+    "questionId": "sf_cin_0021",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_tokyo_story",
+    "claimId": "cin_bfi_09",
+    "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+    "exactSupportingFact": "Director: Yasujirō Ozu",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Derhênerê fîlmê «Tokyo Story» (1953) kî ye?",
+    "promptTr": "«Tokyo Story» (1953) filminin yönetmeni kimdir?",
+    "answersKu": [
+      "Akira Kurosawa",
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "answersTr": [
+      "Akira Kurosawa",
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Tokyo Storyê Yasujirō Ozu ye.",
+    "explanationTr": "BFI kataloğuna göre Tokyo Story'nin yönetmeni Yasujirō Ozu'dur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yönetmen"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "DeepSeek havuzunda Ozu yalnız çeldirici olarak geçiyordu (ds26_cinema_0097, Miyazaki sorusu); çakışma yok."
+    },
+    "finalContentHash": "d43964ad98bca85d"
+  },
+  {
+    "questionId": "sf_cin_0022",
+    "category": "Sînema",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_bfi_tokyo_story",
+    "claimId": "cin_bfi_10",
+    "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+    "exactSupportingFact": "Country: Japan",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Fîlmê «Tokyo Story» hilberîna kîjan welatî ye?",
+    "promptTr": "«Tokyo Story» hangi ülkenin yapımıdır?",
+    "answersKu": [
+      "Çîn",
+      "Kore",
+      "Japonya",
+      "Taywan"
+    ],
+    "answersTr": [
+      "Çîn",
+      "Kore",
+      "Japonya",
+      "Taywan"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî kataloga BFIyê Tokyo Story hilberîneke Japonyayê ye.",
+    "explanationTr": "BFI kataloğuna göre Tokyo Story bir Japonya yapımıdır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "BFI künyesinde birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "özel adlar"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi ülke"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "yalnız künye"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "Batch'teki diğer ülke sorusu (sf_cin_0018) Almanya'yı soruyor; farklı film, farklı cevap."
+    },
+    "finalContentHash": "aa8230b5e41a507d"
   }
 ]

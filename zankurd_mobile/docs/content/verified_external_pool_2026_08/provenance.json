@@ -515,6 +515,38 @@
     "activationStatus": "STAGED_VERIFIED"
   },
   {
+    "originalQuestionId": "sf_cin_0021",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+    "exactSupportingFact": "Director: Yasujirō Ozu",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "d43964ad98bca85d",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
+    "originalQuestionId": "sf_cin_0022",
+    "sourcePool": "source_first",
+    "origin": "source_first_verified",
+    "sourceBranch": null,
+    "sourceCommit": null,
+    "category": "Sînema",
+    "subcategory": null,
+    "verificationLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+    "exactSupportingFact": "Country: Japan",
+    "verifiedAt": "2026-08-06",
+    "reviewer": "opus-5",
+    "finalContentHash": "aa8230b5e41a507d",
+    "activationStatus": "STAGED_VERIFIED"
+  },
+  {
     "originalQuestionId": "sf_geo_0001",
     "sourcePool": "source_first",
     "origin": "source_first_verified",

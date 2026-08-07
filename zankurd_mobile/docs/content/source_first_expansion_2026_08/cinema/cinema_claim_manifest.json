@@ -278,5 +278,33 @@
     "extractedAt": "2026-08-06",
     "extractor": "opus-5",
     "claimHash": "30d4092e6f1729f5"
+  },
+  {
+    "claimId": "cin_bfi_09",
+    "sourcePackId": "pack_bfi_tokyo_story",
+    "claimFamily": "film_director",
+    "factualClaim": "Tokyo Story'nin yönetmeni Yasujirō Ozu'dur.",
+    "exactSupportingFact": "Director: Yasujirō Ozu",
+    "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "f4d1a3b29f2142af"
+  },
+  {
+    "claimId": "cin_bfi_10",
+    "sourcePackId": "pack_bfi_tokyo_story",
+    "claimFamily": "film_country",
+    "factualClaim": "Tokyo Story Japon yapımıdır.",
+    "exactSupportingFact": "Country: Japan",
+    "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+    "sourceAccessLevel": "AUTHORITATIVE_CATALOG_DIRECT",
+    "riskClass": "B",
+    "volatility": "low",
+    "extractedAt": "2026-08-06",
+    "extractor": "opus-5",
+    "claimHash": "cf126314f7e5d2b3"
   }
 ]
