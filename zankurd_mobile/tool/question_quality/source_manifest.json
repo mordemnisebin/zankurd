@@ -2000,6 +2000,27 @@
         "correctAnswer": "sourceReference",
         "category": "targetCategory"
       }
+    },
+    {
+      "id": "pack_noaa_weather_climate",
+      "description": "NOAA weather/climate claim pack (blocked)",
+      "path": "docs/content/source_first_expansion_2026_08/nature/pack_noaa_weather_climate.json",
+      "role": "ignored_non_question",
+      "parser": "json",
+      "canonicalGroup": "source_first_nature",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Claim pack; soru içermez.",
+      "columns": {
+        "id": "sourcePackId",
+        "prompt": "sourceTitle",
+        "options": "exactSourceStatements",
+        "correctAnswer": "sourceReference",
+        "category": "targetCategory"
+      }
     }
   ]
 }

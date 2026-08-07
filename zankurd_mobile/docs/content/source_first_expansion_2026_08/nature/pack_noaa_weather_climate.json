@@ -1,0 +1,46 @@
+{
+  "sourcePackId": "pack_noaa_weather_climate",
+  "sourceTitle": "NOAA — What is the difference between weather and climate?",
+  "institution": "NOAA",
+  "sourceReference": "https://oceanservice.noaa.gov/facts/weather_climate.html",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "targetCategory": "Cografya",
+  "packStatus": "SOURCE_VERIFIED_TERMINOLOGY_BLOCKED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "Weather refers to short term atmospheric conditions on a given day",
+    "Climate is the average of daily weather for a location over a long period of time",
+    "Weather can change from minute-to-minute, hour-to-hour, day-to-day, and season-to-season"
+  ],
+  "extractedClaims": [
+    {
+      "claimId": "noaa_wc_01",
+      "claim": "Hava kısa vadeli atmosfer koşullarıdır.",
+      "status": "BLOCKED"
+    },
+    {
+      "claimId": "noaa_wc_02",
+      "claim": "İklim, uzun bir dönemde havaların ortalamasıdır.",
+      "status": "BLOCKED"
+    },
+    {
+      "claimId": "noaa_wc_03",
+      "claim": "Hava dakikadan dakikaya değişebilir.",
+      "status": "BLOCKED"
+    }
+  ],
+  "authoringBlocker": {
+    "blockedDistinction": "weather (hewa) vs climate (avhewa)",
+    "evidence": "Corpus'ta `avhewa` 22, `hewa` 14 kullanım var — yani İKİ terim de yerleşik. Sorun varlık değil, SINIR: hangisinin 'hava durumu', hangisinin 'iklim' olduğu corpus kullanımından kesinleşmiyor ve Wîkîferheng girdileri okunmadı.",
+    "whyBlocked": "Bu paketin üç claim'i de tam olarak weather/climate AYRIMINA dayanıyor. Ayrım yanlış kurulursa soru olgusal olarak ters döner — 'iklim beklediğin, hava aldığın şeydir' cümlesinin tersi öğretilir. Yerleşik olmaları tek başına ayrımı doğrulamıyor.",
+    "unblockedBy": [
+      "ku.wiktionary `hewa` ve `avhewa` girdilerinin okunması",
+      "yayımlanmış Kurmancî coğrafya metninde ayrımın görülmesi"
+    ]
+  },
+  "readyWhenUnblocked": "Ayrım netleşince üç claim doğrudan soruya çevrilebilir.",
+  "sourceHash": "9c570cda232b3bc7"
+}
