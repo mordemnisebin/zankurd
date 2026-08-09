@@ -126,12 +126,25 @@ class _LiveScoreRow extends StatelessWidget {
 class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     required this.url,
+    this.alt,
     this.isCompact = false,
     this.layoutSize,
     this.onReady,
   });
 
   final String url;
+
+  /// Görselin ekran okuyucuya okunan betimlemesi.
+  ///
+  /// 2026-08-07'ye kadar soru görselleri hiçbir semantik etiket taşımıyordu:
+  /// TalkBack/VoiceOver kullanan oyuncu için görsel yok sayılıyordu. Görselin
+  /// süs olduğu sorularda bu bir eksiklik, görselin sorunun KENDİSİ olduğu
+  /// sorularda ("görseldeki çalgı hangisidir?") soruyu çözülemez yapıyordu.
+  ///
+  /// `null` ise yerelleştirilmiş genel bir etiket kullanılır — sessiz
+  /// kalmaktansa "soru görseli" demek yeğdir, çünkü ekran okuyucu en azından
+  /// bir görselin var olduğunu duyurur.
+  final String? alt;
   final bool isCompact;
   final Size? layoutSize;
   final VoidCallback? onReady;
@@ -201,19 +214,30 @@ class _QuestionImage extends StatelessWidget {
       size.width * 9 / 16,
       size.height * 0.30,
     ).clamp(120.0, 260.0);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.sm),
-      child: (isLandscapeTablet || forcedHeight != null)
-          ? SizedBox(
-              width: double.infinity,
-              height: forcedHeight ?? maxHeight,
-              child: image,
-            )
-          : SizedBox(
-              width: double.infinity,
-              height: portraitHeight,
-              child: image,
-            ),
+    final label = (alt != null && alt!.trim().isNotEmpty)
+        ? alt!.trim()
+        : context.t(K.questionImage);
+
+    return Semantics(
+      image: true,
+      label: label,
+      // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
+      // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
+      excludeSemantics: true,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        child: (isLandscapeTablet || forcedHeight != null)
+            ? SizedBox(
+                width: double.infinity,
+                height: forcedHeight ?? maxHeight,
+                child: image,
+              )
+            : SizedBox(
+                width: double.infinity,
+                height: portraitHeight,
+                child: image,
+              ),
+      ),
     );
   }
 }

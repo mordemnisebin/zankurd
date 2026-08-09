@@ -427,5 +427,71 @@
       "authoredAt": "2026-08-07",
       "restoresRemovedCount": true
     }
+  },
+  {
+    "id": "restore_2026_08_07_0014",
+    "category": "Cografya",
+    "prompt": "Bajarê Colemêrgê li kîjan perçeyê Kurdistanê ye?",
+    "answers": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "correctAnswer": "Bakurê Kurdistanê",
+    "promptTr": "Colemêrg şehri Kurdistanê'nin hangi parçasındadır?",
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctAnswerTr": "Bakur (Kuzey)",
+    "explanation": "Colemêrg Bakur'dadır; yüksek dağları ve derin vadileriyle bilinir, bölgenin en yüksek yörelerinden biridir.",
+    "explanationKu": "Colemêrg li Bakur e; ew bi çiyayên xwe yên bilind û geliyên kûr tê nasîn û yek ji herêmên herî bilind ên deverê ye.",
+    "explanationTr": "Colemêrg Bakur'dadır; yüksek dağları ve derin vadileriyle bilinir, bölgenin en yüksek yörelerinden biridir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0015",
+    "category": "Cografya",
+    "prompt": "Gola Wanê li kîjan perçeyê Kurdistanê ye?",
+    "answers": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "correctAnswer": "Bakurê Kurdistanê",
+    "promptTr": "Wan Gölü Kurdistanê'nin hangi parçasındadır?",
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctAnswerTr": "Bakur (Kuzey)",
+    "explanation": "Wan Gölü Bakur'dadır; suyu sodalıdır, bu yüzden ne içme ne de sulama için kullanılır.",
+    "explanationKu": "Gola Wanê li Bakur e; ava wê sodadar e, ji ber vê yekê ne ji bo vexwarinê ne jî ji bo avdanê tê bikaranîn.",
+    "explanationTr": "Wan Gölü Bakur'dadır; suyu sodalıdır, bu yüzden ne içme ne de sulama için kullanılır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
   }
 ]

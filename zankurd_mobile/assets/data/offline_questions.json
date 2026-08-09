@@ -15529,9 +15529,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide»?",
     "answers": [
       "tewandin",
+      "ezafe",
       "cînavkên kesane",
-      "rênivîsa Hawarê",
-      "ezafe"
+      "rênivîsa Hawarê"
     ],
     "correctAnswer": "ezafe",
     "explanation": "«ezafe» tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
@@ -15542,9 +15542,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi»?",
     "answersTr": [
       "tewandin",
+      "ezafe",
       "cînavkên kesane",
-      "rênivîsa Hawarê",
-      "ezafe"
+      "rênivîsa Hawarê"
     ],
     "correctAnswerTr": "ezafe"
   },
@@ -15554,9 +15554,9 @@
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «ezafe» bi awayekî rast temam dike?",
     "answers": [
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
-      "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide",
       "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
-      "nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn"
+      "nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn",
+      "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
     ],
     "correctAnswer": "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide",
     "explanation": "Ravekirina rast ji bo «ezafe» ev e: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
@@ -15567,9 +15567,9 @@
     "promptTr": "Dil dersi için hangi seçenek «ezafe» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı",
-      "adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi",
       "adların bükümünde yer alan «-î, -ê, -an» gibi ögeler",
-      "kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler"
+      "kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler",
+      "adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi"
     ],
     "correctAnswerTr": "adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi"
   },
@@ -15579,9 +15579,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne?",
     "answers": [
       "ergatîf",
+      "cînavkên tewandî",
       "ezafe",
-      "daçekên hevedudanî",
-      "cînavkên tewandî"
+      "daçekên hevedudanî"
     ],
     "correctAnswer": "cînavkên tewandî",
     "explanation": "«cînavkên tewandî» tê vê wateyê: cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne.",
@@ -15592,9 +15592,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: büküm almış «min, te, wî, wê, me, we, wan» gibi zamirler?",
     "answersTr": [
       "ergatîf",
+      "cînavkên tewandî",
       "ezafe",
-      "daçekên hevedudanî",
-      "cînavkên tewandî"
+      "daçekên hevedudanî"
     ],
     "correctAnswerTr": "cînavkên tewandî"
   },
@@ -15604,9 +15604,9 @@
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «cînavkên tewandî» bi awayekî rast temam dike?",
     "answers": [
       "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
+      "cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne",
       "peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin",
-      "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
-      "cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne"
+      "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide"
     ],
     "correctAnswer": "cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne",
     "explanation": "Ravekirina rast ji bo «cînavkên tewandî» ev e: cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne.",
@@ -15617,9 +15617,9 @@
     "promptTr": "Dil dersi için hangi seçenek «cînavkên tewandî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi",
+      "büküm almış «min, te, wî, wê, me, we, wan» gibi zamirler",
       "yer ilişkilerini gösteren «di... de, bi... re, ji... re» gibi sözcükler",
-      "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı",
-      "büküm almış «min, te, wî, wê, me, we, wan» gibi zamirler"
+      "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı"
     ],
     "correctAnswerTr": "büküm almış «min, te, wî, wê, me, we, wan» gibi zamirler"
   },
@@ -15629,9 +15629,9 @@
     "prompt": "Têgeha «daçekên hevedudanî» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
+      "peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin",
       "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
-      "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
-      "peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin"
+      "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin"
     ],
     "correctAnswer": "peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin",
     "explanation": "«daçekên hevedudanî» tê vê wateyê: peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin.",
@@ -15642,9 +15642,9 @@
     "promptTr": "«daçekên hevedudanî» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi",
+      "yer ilişkilerini gösteren «di... de, bi... re, ji... re» gibi sözcükler",
       "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı",
-      "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi",
-      "yer ilişkilerini gösteren «di... de, bi... re, ji... re» gibi sözcükler"
+      "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi"
     ],
     "correctAnswerTr": "yer ilişkilerini gösteren «di... de, bi... re, ji... re» gibi sözcükler"
   },
@@ -15654,9 +15654,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin'?",
     "answers": [
       "cînavkên kesane",
-      "daçekên hevedudanî",
       "ezafe",
-      "rênivîsa Hawarê"
+      "rênivîsa Hawarê",
+      "daçekên hevedudanî"
     ],
     "correctAnswer": "daçekên hevedudanî",
     "explanation": "«daçekên hevedudanî» tê vê wateyê: peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin.",
@@ -15667,9 +15667,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «yer ilişkilerini gösteren «di... de, bi... re, ji... re» gibi sözcükler»?",
     "answersTr": [
       "cînavkên kesane",
-      "daçekên hevedudanî",
       "ezafe",
-      "rênivîsa Hawarê"
+      "rênivîsa Hawarê",
+      "daçekên hevedudanî"
     ],
     "correctAnswerTr": "daçekên hevedudanî"
   },
@@ -15679,8 +15679,8 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê'?",
     "answers": [
       "ergatîf",
-      "rênivîsa Hawarê",
       "lêkera gerguhêz",
+      "rênivîsa Hawarê",
       "tewandin"
     ],
     "correctAnswer": "lêkera gerguhêz",
@@ -15692,8 +15692,8 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller»?",
     "answersTr": [
       "ergatîf",
-      "rênivîsa Hawarê",
       "lêkera gerguhêz",
+      "rênivîsa Hawarê",
       "tewandin"
     ],
     "correctAnswerTr": "lêkera gerguhêz"
@@ -15703,8 +15703,8 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «lêkera gerguhêz» bi awayekî rast temam dike?",
     "answers": [
-      "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
       "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
+      "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
       "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
       "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"
     ],
@@ -15716,8 +15716,8 @@
     "explanationKu": "Ravekirina rast ji bo «lêkera gerguhêz» ev e: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
     "promptTr": "Dil dersi için hangi seçenek «lêkera gerguhêz» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "adların bükümünde yer alan «-î, -ê, -an» gibi ögeler",
       "anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller",
+      "adların bükümünde yer alan «-î, -ê, -an» gibi ögeler",
       "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi",
       "ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi"
     ],
@@ -15728,9 +15728,9 @@
     "category": "Ziman",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin'?",
     "answers": [
+      "rênivîsa Hawarê",
       "lêkera gerguhêz",
       "daçekên hevedudanî",
-      "rênivîsa Hawarê",
       "cînavkên kesane"
     ],
     "correctAnswer": "rênivîsa Hawarê",
@@ -15741,9 +15741,9 @@
     "explanationTr": "«rênivîsa Hawarê» şu anlama gelir: Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: 'Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi'?",
     "answersTr": [
+      "rênivîsa Hawarê",
       "lêkera gerguhêz",
       "daçekên hevedudanî",
-      "rênivîsa Hawarê",
       "cînavkên kesane"
     ],
     "correctAnswerTr": "rênivîsa Hawarê"
@@ -15753,9 +15753,9 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «rênivîsa Hawarê» bi awayekî rast temam dike?",
     "answers": [
+      "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
       "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
-      "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
       "nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn"
     ],
     "correctAnswer": "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
@@ -15766,9 +15766,9 @@
     "explanationKu": "Ravekirina rast ji bo «rênivîsa Hawarê» ev e: pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin.",
     "promptTr": "Dil dersi için hangi seçenek «rênivîsa Hawarê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi",
       "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı",
       "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı",
-      "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi",
       "kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler"
     ],
     "correctAnswerTr": "Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi"
@@ -15779,9 +15779,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn?",
     "answers": [
       "lêkera gerguhêz",
+      "cînavkên kesane",
       "cînavkên tewandî",
-      "paşgirên tewandinê",
-      "cînavkên kesane"
+      "paşgirên tewandinê"
     ],
     "correctAnswer": "cînavkên kesane",
     "explanation": "«cînavkên kesane» tê vê wateyê: nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn.",
@@ -15792,9 +15792,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler?",
     "answersTr": [
       "lêkera gerguhêz",
+      "cînavkên kesane",
       "cînavkên tewandî",
-      "paşgirên tewandinê",
-      "cînavkên kesane"
+      "paşgirên tewandinê"
     ],
     "correctAnswerTr": "cînavkên kesane"
   },
@@ -15803,9 +15803,9 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «cînavkên kesane» bi awayekî rast temam dike?",
     "answers": [
-      "nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn",
       "peyvên wekî «di... de, bi... re, ji... re» ku têkiliyên cih nîşan didin",
       "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
+      "nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn",
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide"
     ],
     "correctAnswer": "nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn",
@@ -15816,9 +15816,9 @@
     "explanationKu": "Ravekirina rast ji bo «cînavkên kesane» ev e: nîşanderên wekî «ez, tu, ew, em, hûn, ew» ên ku bo kesan tên bikaranîn.",
     "promptTr": "Dil dersi için hangi seçenek «cînavkên kesane» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler",
       "yer ilişkilerini gösteren «di... de, bi... re, ji... re» gibi sözcükler",
       "adların bükümünde yer alan «-î, -ê, -an» gibi ögeler",
+      "kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler",
       "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı"
     ],
     "correctAnswerTr": "kişiler için kullanılan «ez, tu, ew, em, hûn, ew» gibi göstericiler"
@@ -15828,9 +15828,9 @@
     "category": "Ziman",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide»?",
     "answers": [
+      "dema borî ya dûr",
       "lêkera gerguhêz",
       "cînavkên kesane",
-      "dema borî ya dûr",
       "daçekên hevedudanî"
     ],
     "correctAnswer": "dema borî ya dûr",
@@ -15841,9 +15841,9 @@
     "explanationTr": "«dema borî ya dûr» şu anlama gelir: çok uzak bir geçmişte olan eylemi gösteren fiil yapısı.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «çok uzak bir geçmişte olan eylemi gösteren fiil yapısı»?",
     "answersTr": [
+      "dema borî ya dûr",
       "lêkera gerguhêz",
       "cînavkên kesane",
-      "dema borî ya dûr",
       "daçekên hevedudanî"
     ],
     "correctAnswerTr": "dema borî ya dûr"
@@ -15853,9 +15853,9 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «dema borî ya dûr» bi awayekî rast temam dike?",
     "answers": [
+      "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
       "cînavkên wekî «min, te, wî, wê, me, we, wan» ku di bin tewandinê de ne",
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
-      "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
       "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
     ],
     "correctAnswer": "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
@@ -15866,9 +15866,9 @@
     "explanationKu": "Ravekirina rast ji bo «dema borî ya dûr» ev e: avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide.",
     "promptTr": "Dil dersi için hangi seçenek «dema borî ya dûr» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı",
       "büküm almış «min, te, wî, wê, me, we, wan» gibi zamirler",
       "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren yapı",
-      "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı",
       "adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi"
     ],
     "correctAnswerTr": "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı"
@@ -15879,9 +15879,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «hêmanên wekî »-î, -ê, -an' ku di tewandina navdêran de cih digirin'?",
     "answers": [
       "dema borî ya dûr",
+      "paşgirên tewandinê",
       "cînavkên kesane",
-      "ezafe",
-      "paşgirên tewandinê"
+      "ezafe"
     ],
     "correctAnswer": "paşgirên tewandinê",
     "explanation": "«paşgirên tewandinê» tê vê wateyê: hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin.",
@@ -15892,9 +15892,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanımlanır: «adların bükümünde yer alan -î, -ê, -an gibi ekler»?",
     "answersTr": [
       "dema borî ya dûr",
+      "paşgirên tewandinê",
       "cînavkên kesane",
-      "ezafe",
-      "paşgirên tewandinê"
+      "ezafe"
     ],
     "correctAnswerTr": "paşgirên tewandinê"
   },
@@ -15903,9 +15903,9 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha «paşgirên tewandinê» bi awayekî rast temam dike?",
     "answers": [
-      "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
       "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
+      "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
       "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide"
     ],
     "correctAnswer": "hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin",
@@ -15916,9 +15916,9 @@
     "explanationKu": "Ravekirina rast ji bo «paşgirên tewandinê» ev e: hêmanên wekî «-î, -ê, -an» ku di tewandina navdêran de cih digirin.",
     "promptTr": "Dil dersi için hangi seçenek «paşgirên tewandinê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "adların bükümünde yer alan «-î, -ê, -an» gibi ekler",
       "anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller",
       "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren yapı",
+      "adların bükümünde yer alan «-î, -ê, -an» gibi ekler",
       "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı"
     ],
     "correctAnswerTr": "adların bükümünde yer alan «-î, -ê, -an» gibi ekler"
@@ -15929,9 +15929,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin'?",
     "answers": [
       "Ehmedê Xanî",
+      "Melayê Cizîrî",
       "kovara Hawarê",
-      "Helbesta Azad",
-      "Melayê Cizîrî"
+      "Helbesta Azad"
     ],
     "correctAnswer": "Melayê Cizîrî",
     "explanation": "«Melayê Cizîrî» tê vê wateyê: helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin.",
@@ -15942,9 +15942,9 @@
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «felsefî ve tasavvufî divanıyla tanınan büyük klasik şair»?",
     "answersTr": [
       "Ehmedê Xanî",
+      "Melayê Cizîrî",
       "Hawar dergisi",
-      "Helbesta Azad",
-      "Melayê Cizîrî"
+      "Helbesta Azad"
     ],
     "correctAnswerTr": "Melayê Cizîrî"
   },
@@ -15954,9 +15954,9 @@
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Melayê Cizîrî» bi awayekî rast temam dike?",
     "answers": [
       "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin",
+      "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin",
       "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
-      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
-      "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin"
+      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû"
     ],
     "correctAnswer": "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin",
     "explanation": "Ravekirina rast ji bo «Melayê Cizîrî» ev e: helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin.",
@@ -15967,9 +15967,9 @@
     "promptTr": "Edebiyat dersi için hangi seçenek «Melayê Cizîrî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı",
+      "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair",
       "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı",
-      "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair",
-      "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair"
+      "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair"
     ],
     "correctAnswerTr": "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair"
   },
@@ -15978,9 +15978,9 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e'?",
     "answers": [
-      "Feqiyê Teyran",
       "şevbêrkên wêjeyî",
       "Arabê Şamo",
+      "Feqiyê Teyran",
       "Cegerxwîn"
     ],
     "correctAnswer": "Feqiyê Teyran",
@@ -15991,9 +15991,9 @@
     "explanationTr": "«Feqiyê Teyran» şu anlama gelir: 'Şêx Sen'an' eseri ve kuşlarla konuşmasıyla tanınan klasik şair.",
     "promptTr": "Hangi kavram şu açıklamayla tanınır: ''Şêx Sen'an' eseri ve kuşlarla konuşmasıyla tanınan klasik şair'?",
     "answersTr": [
-      "Feqiyê Teyran",
       "şevbêrkên wêjeyî",
       "Arabê Şamo",
+      "Feqiyê Teyran",
       "Cegerxwîn"
     ],
     "correctAnswerTr": "Feqiyê Teyran"
@@ -16003,9 +16003,9 @@
     "category": "Edebiyat",
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Feqiyê Teyran» bi awayekî rast temam dike?",
     "answers": [
-      "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
       "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
       "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
+      "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
       "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû"
     ],
     "correctAnswer": "helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e",
@@ -16016,9 +16016,9 @@
     "explanationKu": "Ravekirina rast ji bo «Feqiyê Teyran» ev e: helbestvanê klasîk ê ku bi berhema 'Şêx Sen'an' û axaftina bi çûkan re navdar e.",
     "promptTr": "Edebiyat dersi için hangi seçenek «Feqiyê Teyran» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "'Şêx Sen'an' eseri ve kuşlarla konuşmasıyla tanınan klasik şair",
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
       "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi",
+      "'Şêx Sen'an' eseri ve kuşlarla konuşmasıyla tanınan klasik şair",
       "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair"
     ],
     "correctAnswerTr": "'Şêx Sen'an' eseri ve kuşlarla konuşmasıyla tanınan klasik şair"
@@ -16028,9 +16028,9 @@
     "category": "Edebiyat",
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Ehmedê Xanî» bi awayekî rast temam dike?",
     "answers": [
+      "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
       "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
       "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
-      "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
       "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin"
     ],
     "correctAnswer": "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
@@ -16041,9 +16041,9 @@
     "explanationKu": "Ravekirina rast ji bo «Ehmedê Xanî» ev e: nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye.",
     "promptTr": "Edebiyat dersi için hangi seçenek «Ehmedê Xanî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı",
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
       "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi",
-      "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı",
       "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı"
     ],
     "correctAnswerTr": "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı"
@@ -16054,9 +16054,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye»?",
     "answers": [
       "Ehmedê Xanî",
+      "Melayê Bateyî",
       "Mehmed Uzun",
-      "Melayê Cizîrî",
-      "Melayê Bateyî"
+      "Melayê Cizîrî"
     ],
     "correctAnswer": "Melayê Bateyî",
     "explanation": "«Melayê Bateyî» tê vê wateyê: helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye.",
@@ -16067,9 +16067,9 @@
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair»?",
     "answersTr": [
       "Ehmedê Xanî",
+      "Melayê Bateyî",
       "Mehmed Uzun",
-      "Melayê Cizîrî",
-      "Melayê Bateyî"
+      "Melayê Cizîrî"
     ],
     "correctAnswerTr": "Melayê Bateyî"
   },
@@ -16079,9 +16079,9 @@
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Melayê Bateyî» bi awayekî rast temam dike?",
     "answers": [
       "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
+      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
       "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
-      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
-      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye"
+      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû"
     ],
     "correctAnswer": "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
     "explanation": "Ravekirina rast ji bo «Melayê Bateyî» ev e: helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye.",
@@ -16092,9 +16092,9 @@
     "promptTr": "Edebiyat dersi için hangi seçenek «Melayê Bateyî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı",
+      "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
       "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi",
-      "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair",
-      "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair"
+      "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair"
     ],
     "correctAnswerTr": "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair"
   },
@@ -16103,9 +16103,9 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye'?",
     "answers": [
-      "kovara Hawarê",
       "Arabê Şamo",
       "Feqiyê Teyran",
+      "kovara Hawarê",
       "Mehmed Uzun"
     ],
     "correctAnswer": "kovara Hawarê",
@@ -16116,9 +16116,9 @@
     "explanationTr": "«kovara Hawarê» şu anlama gelir: 1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi.",
     "promptTr": "Hangi kavram şu açıklamayla tanınır: '1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi'?",
     "answersTr": [
-      "Hawar dergisi",
       "Arabê Şamo",
       "Feqiyê Teyran",
+      "Hawar dergisi",
       "Mehmed Uzun"
     ],
     "correctAnswerTr": "Hawar dergisi"
@@ -16129,9 +16129,9 @@
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «kovara Hawarê» bi awayekî rast temam dike?",
     "answers": [
       "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
+      "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
       "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
-      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
-      "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye"
+      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir"
     ],
     "correctAnswer": "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
     "explanation": "Ravekirina rast ji bo «kovara Hawarê» ev e: kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye.",
@@ -16142,9 +16142,9 @@
     "promptTr": "Edebiyat dersi için hangi seçenek «Hawar dergisi» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı",
+      "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi",
       "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi",
-      "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı",
-      "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi"
+      "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı"
     ],
     "correctAnswerTr": "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi"
   },
@@ -16154,9 +16154,9 @@
     "prompt": "Têgeha «Cegerxwîn» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
       "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
-      "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin",
-      "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû"
+      "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin"
     ],
     "correctAnswer": "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
     "explanation": "«Cegerxwîn» tê vê wateyê: helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû.",
@@ -16167,9 +16167,9 @@
     "promptTr": "«Cegerxwîn» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
+      "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair",
       "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi",
-      "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair",
-      "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair"
+      "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair"
     ],
     "correctAnswerTr": "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair"
   },
@@ -16179,9 +16179,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû'?",
     "answers": [
       "Feqiyê Teyran",
-      "Cegerxwîn",
       "Arabê Şamo",
-      "Melayê Cizîrî"
+      "Melayê Cizîrî",
+      "Cegerxwîn"
     ],
     "correctAnswer": "Cegerxwîn",
     "explanation": "«Cegerxwîn» tê vê wateyê: helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû.",
@@ -16192,9 +16192,9 @@
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair»?",
     "answersTr": [
       "Feqiyê Teyran",
-      "Cegerxwîn",
       "Arabê Şamo",
-      "Melayê Cizîrî"
+      "Melayê Cizîrî",
+      "Cegerxwîn"
     ],
     "correctAnswerTr": "Cegerxwîn"
   },
@@ -16203,9 +16203,9 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin'?",
     "answers": [
-      "Arabê Şamo",
       "Ehmedê Xanî",
       "kovara Hawarê",
+      "Arabê Şamo",
       "Melayê Bateyî"
     ],
     "correctAnswer": "Arabê Şamo",
@@ -16216,9 +16216,9 @@
     "explanationTr": "«Arabê Şamo» şu anlama gelir: ilk Kürtçe roman kabul edilen 'Şivanê Kurd'ün yazarı.",
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı»?",
     "answersTr": [
-      "Arabê Şamo",
       "Ehmedê Xanî",
       "Hawar dergisi",
+      "Arabê Şamo",
       "Melayê Bateyî"
     ],
     "correctAnswerTr": "Arabê Şamo"
@@ -16229,9 +16229,9 @@
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Arabê Şamo» bi awayekî rast temam dike?",
     "answers": [
       "helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin",
+      "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin",
       "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
-      "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin",
-      "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin"
+      "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin"
     ],
     "correctAnswer": "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin",
     "explanation": "Ravekirina rast ji bo «Arabê Şamo» ev e: nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin.",
@@ -16242,9 +16242,9 @@
     "promptTr": "Edebiyat dersi için hangi seçenek «Arabê Şamo» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair",
+      "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı",
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
-      "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları",
-      "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı"
+      "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları"
     ],
     "correctAnswerTr": "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı"
   },
@@ -16253,9 +16253,9 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir'?",
     "answers": [
-      "Mehmed Uzun",
       "Ehmedê Xanî",
       "Helbesta Azad",
+      "Mehmed Uzun",
       "kovara Hawarê"
     ],
     "correctAnswer": "Mehmed Uzun",
@@ -16266,9 +16266,9 @@
     "explanationTr": "«Mehmed Uzun» şu anlama gelir: derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı.",
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı»?",
     "answersTr": [
-      "Mehmed Uzun",
       "Ehmedê Xanî",
       "Helbesta Azad",
+      "Mehmed Uzun",
       "Hawar dergisi"
     ],
     "correctAnswerTr": "Mehmed Uzun"
@@ -16278,9 +16278,9 @@
     "category": "Edebiyat",
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Mehmed Uzun» bi awayekî rast temam dike?",
     "answers": [
-      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
       "kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye",
       "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
       "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin"
     ],
     "correctAnswer": "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
@@ -16291,9 +16291,9 @@
     "explanationKu": "Ravekirina rast ji bo «Mehmed Uzun» ev e: romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir.",
     "promptTr": "Edebiyat dersi için hangi seçenek «Mehmed Uzun» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı",
       "1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi",
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
+      "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı",
       "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları"
     ],
     "correctAnswerTr": "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı"
@@ -16303,9 +16303,9 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin'?",
     "answers": [
-      "şevbêrkên wêjeyî",
       "Melayê Cizîrî",
       "kovara Hawarê",
+      "şevbêrkên wêjeyî",
       "Ehmedê Xanî"
     ],
     "correctAnswer": "şevbêrkên wêjeyî",
@@ -16316,9 +16316,9 @@
     "explanationTr": "«şevbêrkên wêjeyî» şu anlama gelir: klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları.",
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları»?",
     "answersTr": [
-      "şevbêrkên wêjeyî",
       "Melayê Cizîrî",
       "Hawar dergisi",
+      "şevbêrkên wêjeyî",
       "Ehmedê Xanî"
     ],
     "correctAnswerTr": "şevbêrkên wêjeyî"
@@ -16329,9 +16329,9 @@
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «şevbêrkên wêjeyî» bi awayekî rast temam dike?",
     "answers": [
       "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
-      "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin",
       "helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû",
-      "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin"
+      "nivîskarê romana «Şivanê Kurd» ku wekî romana yekem a kurdî tê qebûlkirin",
+      "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin"
     ],
     "correctAnswer": "civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin",
     "explanation": "Ravekirina rast ji bo «şevbêrkên wêjeyî» ev e: civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin.",
@@ -16342,9 +16342,9 @@
     "promptTr": "Edebiyat dersi için hangi seçenek «şevbêrkên wêjeyî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı",
-      "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları",
       "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair",
-      "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı"
+      "ilk Kürtçe roman kabul edilen «Şivanê Kurd» romanının yazarı",
+      "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları"
     ],
     "correctAnswerTr": "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları"
   },
@@ -16353,9 +16353,9 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide'?",
     "answers": [
+      "Helbesta Azad",
       "kovara Hawarê",
       "Arabê Şamo",
-      "Helbesta Azad",
       "Ehmedê Xanî"
     ],
     "correctAnswer": "Helbesta Azad",
@@ -16366,9 +16366,9 @@
     "explanationTr": "«Helbesta Azad» şu anlama gelir: ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi.",
     "promptTr": "Hangi kavram şu açıklamayla tanınır: «ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi»?",
     "answersTr": [
+      "Helbesta Azad",
       "Hawar dergisi",
       "Arabê Şamo",
-      "Helbesta Azad",
       "Ehmedê Xanî"
     ],
     "correctAnswerTr": "Helbesta Azad"
@@ -16379,9 +16379,9 @@
     "prompt": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha «Helbesta Azad» bi awayekî rast temam dike?",
     "answers": [
       "nivîskarê destana nemir a «Mem û Zîn» ku hîmê ramanî yê kurdewariyê daniye",
-      "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
       "romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir",
-      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye"
+      "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+      "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide"
     ],
     "correctAnswer": "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
     "explanation": "Ravekirina rast ji bo «Helbesta Azad» ev e: rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide.",
@@ -16392,9 +16392,9 @@
     "promptTr": "Edebiyat dersi için hangi seçenek «Helbesta Azad» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Kürtlük düşüncesinin temelini atan ölümsüz «Mem û Zîn» destanının yazarı",
-      "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi",
       "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı",
-      "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair"
+      "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
+      "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi"
     ],
     "correctAnswerTr": "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi"
   },
@@ -16403,9 +16403,9 @@
     "category": "Dîrok",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin'?",
     "answers": [
-      "Împaratoriya Medî",
       "Mîrê Kor",
       "Şerefname",
+      "Împaratoriya Medî",
       "Mîrgeha Erdelanê"
     ],
     "correctAnswer": "Împaratoriya Medî",
@@ -16417,9 +16417,9 @@
     "imageUrl": "asset://assets/question_images/ciyayen_zagros.webp",
     "promptTr": "Hangi terim şu açıklamayla tanınır: «Kürtlerin kendilerini torunları saydığı, Zagros dağlarındaki büyük antik güç»?",
     "answersTr": [
-      "Împaratoriya Medî",
       "Mîrê Kor",
       "Şerefname",
+      "Împaratoriya Medî",
       "Mîrgeha Erdelanê"
     ],
     "correctAnswerTr": "Împaratoriya Medî"
@@ -16430,9 +16430,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Împaratoriya Medî» bi awayekî rast temam dike?",
     "answers": [
       "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
-      "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin",
       "Birca Zêrîn",
-      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû"
+      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
+      "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin"
     ],
     "correctAnswer": "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin",
     "explanation": "Ravekirina rast ji bo «Împaratoriya Medî» ev e: hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin.",
@@ -16443,9 +16443,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Împaratoriya Medî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Kürdistan'ı dört devlete bölen 1923 tarihli uluslararası antlaşma",
-      "Kürtlerin kendilerini torunları saydığı, Zagros dağlarındaki büyük antik güç",
       "Birca Zêrîn",
-      "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği"
+      "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği",
+      "Kürtlerin kendilerini torunları saydığı, Zagros dağlarındaki büyük antik güç"
     ],
     "correctAnswerTr": "Kürtlerin kendilerini torunları saydığı, Zagros dağlarındaki büyük antik güç"
   },
@@ -16454,9 +16454,9 @@
     "category": "Dîrok",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn»?",
     "answers": [
+      "Dewleta Merwaniyan",
       "Şerefname",
       "Mîrgeha Erdelanê",
-      "Dewleta Merwaniyan",
       "Mîrgeha Botan"
     ],
     "correctAnswer": "Dewleta Merwaniyan",
@@ -16467,9 +16467,9 @@
     "explanationTr": "«Dewleta Merwaniyan» şu anlama gelir: merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı.",
     "promptTr": "Hangi terim şu açıklamayla tanınır: «merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı»?",
     "answersTr": [
+      "Dewleta Merwaniyan",
       "Şerefname",
       "Mîrgeha Erdelanê",
-      "Dewleta Merwaniyan",
       "Mîrgeha Botan"
     ],
     "correctAnswerTr": "Dewleta Merwaniyan"
@@ -16480,9 +16480,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Dewleta Merwaniyan» bi awayekî rast temam dike?",
     "answers": [
       "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
-      "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn",
       "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
-      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû"
+      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
+      "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn"
     ],
     "correctAnswer": "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn",
     "explanation": "Ravekirina rast ji bo «Dewleta Merwaniyan» ev e: xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn.",
@@ -16493,9 +16493,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Dewleta Merwaniyan» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi",
-      "merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı",
       "merkezi Sine olan, doğudaki kadim bir Kürt beyliği",
-      "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği"
+      "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği",
+      "merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı"
     ],
     "correctAnswerTr": "merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı"
   },
@@ -16505,9 +16505,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû'?",
     "answers": [
       "Rojnameya Kurdistan",
-      "Mîrgeha Botan",
       "Şerefname",
-      "Kovara Jîn"
+      "Kovara Jîn",
+      "Mîrgeha Botan"
     ],
     "correctAnswer": "Mîrgeha Botan",
     "explanation": "«Mîrgeha Botan» tê vê wateyê: mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû.",
@@ -16518,9 +16518,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanınır: «merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği»?",
     "answersTr": [
       "Rojnameya Kurdistan",
-      "Mîrgeha Botan",
       "Şerefname",
-      "Kovara Jîn"
+      "Kovara Jîn",
+      "Mîrgeha Botan"
     ],
     "correctAnswerTr": "Mîrgeha Botan"
   },
@@ -16530,9 +16530,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Mîrgeha Botan» bi awayekî rast temam dike?",
     "answers": [
       "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
-      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
       "hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin",
-      "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin"
+      "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
+      "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû"
     ],
     "correctAnswer": "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
     "explanation": "Ravekirina rast ji bo «Mîrgeha Botan» ev e: mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû.",
@@ -16543,9 +16543,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Mîrgeha Botan» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Kürdistan'ı dört devlete bölen 1923 tarihli uluslararası antlaşma",
-      "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği",
       "Kürtlerin kendilerini torunları saydığı, Zagros dağlarındaki büyük antik güç",
-      "1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı"
+      "1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı",
+      "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği"
     ],
     "correctAnswerTr": "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği"
   },
@@ -16554,9 +16554,9 @@
     "category": "Dîrok",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin'?",
     "answers": [
+      "Şerefname",
       "Selaheddînê Eyûbî",
       "Împaratoriya Medî",
-      "Şerefname",
       "Mîrê Kor"
     ],
     "correctAnswer": "Şerefname",
@@ -16567,9 +16567,9 @@
     "explanationTr": "«Şerefname» şu anlama gelir: 1597'de Bitlisli Şerefhan tarafından yazılan Kürt beylikleri tarihi kitabı.",
     "promptTr": "Hangi terim şu açıklamayla tanınır: '1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı'?",
     "answersTr": [
+      "Şerefname",
       "Selaheddînê Eyûbî",
       "Împaratoriya Medî",
-      "Şerefname",
       "Mîrê Kor"
     ],
     "correctAnswerTr": "Şerefname"
@@ -16580,9 +16580,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Şerefname» bi awayekî rast temam dike?",
     "answers": [
       "Şerefxanê Bidlîsî",
+      "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
       "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
-      "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
-      "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin"
+      "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin"
     ],
     "correctAnswer": "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
     "explanation": "Ravekirina rast ji bo «Şerefname» ev e: pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin.",
@@ -16593,9 +16593,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Şerefname» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Şerefxanê Bidlîsî",
+      "1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı",
       "Kudüs'ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder",
-      "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi",
-      "1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı"
+      "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi"
     ],
     "correctAnswerTr": "1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı"
   },
@@ -16605,9 +16605,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî'?",
     "answers": [
       "Rojnameya Kurdistan",
-      "Kovara Jîn",
       "Peymana Lozanê",
-      "Şerefname"
+      "Şerefname",
+      "Kovara Jîn"
     ],
     "correctAnswer": "Kovara Jîn",
     "explanation": "«Kovara Jîn» tê vê wateyê: weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî.",
@@ -16618,9 +16618,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanınır: «20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını»?",
     "answersTr": [
       "Rojnameya Kurdistan",
-      "Kovara Jîn",
       "Lozan Antlaşması",
-      "Şerefname"
+      "Şerefname",
+      "Kovara Jîn"
     ],
     "correctAnswerTr": "Kovara Jîn"
   },
@@ -16630,9 +16630,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Kovara Jîn» bi awayekî rast temam dike?",
     "answers": [
       "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket",
-      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
       "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
-      "Serdema Navîn (sedsalên 10-11em)"
+      "Serdema Navîn (sedsalên 10-11em)",
+      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî"
     ],
     "correctAnswer": "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
     "explanation": "Ravekirina rast ji bo «Kovara Jîn» ev e: weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî.",
@@ -16643,9 +16643,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Kovara Jîn» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "1921'de Sivas yöresinde gelişen Kürt hareketi",
-      "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını",
       "19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi",
-      "Orta Çağ (10-11. yüzyıllar)"
+      "Orta Çağ (10-11. yüzyıllar)",
+      "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını"
     ],
     "correctAnswerTr": "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını"
   },
@@ -16654,9 +16654,9 @@
     "category": "Dîrok",
     "prompt": "Têgeha «Selaheddînê Eyûbî» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
+      "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
       "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
       "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
-      "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
       "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû"
     ],
     "correctAnswer": "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
@@ -16667,9 +16667,9 @@
     "explanationTr": "«Selaheddînê Eyûbî» şu anlama gelir: Kudüs'ü Haçlılardan geri alan ve Eyyubi hanedanını kuran büyük Kürt önder.",
     "promptTr": "«Selaheddînê Eyûbî» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
+      "Kudüs'ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder",
       "Kürdistan'ı dört devlete bölen 1923 tarihli uluslararası antlaşma",
       "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi",
-      "Kudüs'ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder",
       "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği"
     ],
     "correctAnswerTr": "Kudüs'ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder"
@@ -16680,9 +16680,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir'?",
     "answers": [
       "Împaratoriya Medî",
+      "Selaheddînê Eyûbî",
       "Mîrgeha Botan",
-      "Dewleta Merwaniyan",
-      "Selaheddînê Eyûbî"
+      "Dewleta Merwaniyan"
     ],
     "correctAnswer": "Selaheddînê Eyûbî",
     "explanation": "«Selaheddînê Eyûbî» tê vê wateyê: serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir.",
@@ -16693,9 +16693,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanınır: 'Kudüs'ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder'?",
     "answersTr": [
       "Împaratoriya Medî",
+      "Selaheddînê Eyûbî",
       "Mîrgeha Botan",
-      "Dewleta Merwaniyan",
-      "Selaheddînê Eyûbî"
+      "Dewleta Merwaniyan"
     ],
     "correctAnswerTr": "Selaheddînê Eyûbî"
   },
@@ -16705,9 +16705,9 @@
     "prompt": "Têgeha «Mîrê Kor» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "1923",
-      "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
       "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket",
-      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî"
+      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
+      "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike"
     ],
     "correctAnswer": "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike",
     "explanation": "«Mîrê Kor» tê vê wateyê: mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike.",
@@ -16718,9 +16718,9 @@
     "promptTr": "«Mîrê Kor» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "1923",
-      "19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi",
       "1921'de Sivas yöresinde gelişen Kürt hareketi",
-      "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını"
+      "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını",
+      "19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi"
     ],
     "correctAnswerTr": "19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi"
   },
@@ -16730,9 +16730,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike'?",
     "answers": [
       "Şerefname",
+      "Mîrê Kor",
       "Selaheddînê Eyûbî",
-      "Rojnameya Kurdistan",
-      "Mîrê Kor"
+      "Rojnameya Kurdistan"
     ],
     "correctAnswer": "Mîrê Kor",
     "explanation": "«Mîrê Kor» tê vê wateyê: mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike.",
@@ -16743,9 +16743,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanınır: «19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi»?",
     "answersTr": [
       "Şerefname",
+      "Mîrê Kor",
       "Selaheddînê Eyûbî",
-      "Rojnameya Kurdistan",
-      "Mîrê Kor"
+      "Rojnameya Kurdistan"
     ],
     "correctAnswerTr": "Mîrê Kor"
   },
@@ -16755,9 +16755,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin'?",
     "answers": [
       "Mîrgeha Botan",
+      "Rojnameya Kurdistan",
       "Împaratoriya Medî",
-      "Mîrgeha Erdelanê",
-      "Rojnameya Kurdistan"
+      "Mîrgeha Erdelanê"
     ],
     "correctAnswer": "Rojnameya Kurdistan",
     "explanation": "«Rojnameya Kurdistan» tê vê wateyê: rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin.",
@@ -16768,9 +16768,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanınır: '1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi'?",
     "answersTr": [
       "Mîrgeha Botan",
+      "Rojnameya Kurdistan",
       "Împaratoriya Medî",
-      "Mîrgeha Erdelanê",
-      "Rojnameya Kurdistan"
+      "Mîrgeha Erdelanê"
     ],
     "correctAnswerTr": "Rojnameya Kurdistan"
   },
@@ -16780,9 +16780,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Rojnameya Kurdistan» bi awayekî rast temam dike?",
     "answers": [
       "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
+      "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
       "pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin",
-      "Birca Zêrîn",
-      "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin"
+      "Birca Zêrîn"
     ],
     "correctAnswer": "rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin",
     "explanation": "Ravekirina rast ji bo «Rojnameya Kurdistan» ev e: rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin.",
@@ -16793,9 +16793,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Rojnameya Kurdistan» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "merkezi Sine olan, doğudaki kadim bir Kürt beyliği",
+      "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi",
       "1597'de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı",
-      "Birca Zêrîn",
-      "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi"
+      "Birca Zêrîn"
     ],
     "correctAnswerTr": "1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi"
   },
@@ -16804,9 +16804,9 @@
     "category": "Dîrok",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû»?",
     "answers": [
+      "Mîrgeha Erdelanê",
       "Selaheddînê Eyûbî",
       "Împaratoriya Medî",
-      "Mîrgeha Erdelanê",
       "Dewleta Merwaniyan"
     ],
     "correctAnswer": "Mîrgeha Erdelanê",
@@ -16817,9 +16817,9 @@
     "explanationTr": "«Mîrgeha Erdelanê» şu anlama gelir: merkezi Sine olan, doğudaki kadim bir Kürt beyliği.",
     "promptTr": "Hangi terim şu açıklamayla tanınır: «merkezi Sine olan, doğudaki kadim bir Kürt beyliği»?",
     "answersTr": [
+      "Mîrgeha Erdelanê",
       "Selaheddînê Eyûbî",
       "Împaratoriya Medî",
-      "Mîrgeha Erdelanê",
       "Dewleta Merwaniyan"
     ],
     "correctAnswerTr": "Mîrgeha Erdelanê"
@@ -16829,9 +16829,9 @@
     "category": "Dîrok",
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Mîrgeha Erdelanê» bi awayekî rast temam dike?",
     "answers": [
+      "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
       "Kovara Jîn",
       "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
-      "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
       "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir"
     ],
     "correctAnswer": "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
@@ -16842,9 +16842,9 @@
     "explanationKu": "Ravekirina rast ji bo «Mîrgeha Erdelanê» ev e: mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû.",
     "promptTr": "Tarih dersi için hangi seçenek «Mîrgeha Erdelanê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "merkezi Sine olan, doğudaki kadim bir Kürt beyliği",
       "Kovara Jîn",
       "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği",
-      "merkezi Sine olan, doğudaki kadim bir Kürt beyliği",
       "Kürdistan'ı dört devlete bölen 1923 tarihli uluslararası antlaşma"
     ],
     "correctAnswerTr": "merkezi Sine olan, doğudaki kadim bir Kürt beyliği"
@@ -16855,9 +16855,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir'?",
     "answers": [
       "Selaheddînê Eyûbî",
+      "Peymana Lozanê",
       "Dewleta Merwaniyan",
-      "Rojnameya Kurdistan",
-      "Peymana Lozanê"
+      "Rojnameya Kurdistan"
     ],
     "correctAnswer": "Peymana Lozanê",
     "explanation": "«Peymana Lozanê» tê vê wateyê: peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir.",
@@ -16868,9 +16868,9 @@
     "promptTr": "Hangi kavram şu açıklamayla tanımlanır: 'Kürdistan'ı dört devlet arasında bölen 1923 tarihli uluslararası antlaşma'?",
     "answersTr": [
       "Selaheddînê Eyûbî",
+      "Peymana Lozanê",
       "Dewleta Merwaniyan",
-      "Rojnameya Kurdistan",
-      "Peymana Lozanê"
+      "Rojnameya Kurdistan"
     ],
     "correctAnswerTr": "Peymana Lozanê"
   },
@@ -16880,9 +16880,9 @@
     "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Peymana Lozanê» bi awayekî rast temam dike?",
     "answers": [
       "mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû",
+      "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
       "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû",
-      "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir",
-      "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir"
+      "serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir"
     ],
     "correctAnswer": "peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir",
     "explanation": "Ravekirina rast ji bo «Peymana Lozanê» ev e: peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir.",
@@ -16893,9 +16893,9 @@
     "promptTr": "Tarih dersi için hangi seçenek «Peymana Lozanê» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği",
+      "Kürdistan'ı dört devlet arasında bölen 1923 tarihli uluslararası antlaşma",
       "merkezi Sine olan, doğudaki kadim bir Kürt beyliği",
-      "Kudüs'ü Haçlılardan geri alan ve Eyyubi hanedanını kuran büyük Kürt önder",
-      "Kürdistan'ı dört devlet arasında bölen 1923 tarihli uluslararası antlaşma"
+      "Kudüs'ü Haçlılardan geri alan ve Eyyubi hanedanını kuran büyük Kürt önder"
     ],
     "correctAnswerTr": "Kürdistan'ı dört devlet arasında bölen 1923 tarihli uluslararası antlaşma"
   },
@@ -16904,9 +16904,9 @@
     "category": "Cografya",
     "prompt": "Têgeha «çiyayên Zagrosê» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
+      "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
       "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
       "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
-      "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
       "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye"
     ],
     "correctAnswer": "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
@@ -16918,9 +16918,9 @@
     "imageUrl": "asset://assets/question_images/ciyayen_zagros.webp",
     "promptTr": "«Zagros dağları» kavramı en iyi hangi açıklamayla anlaşılır?",
     "answersTr": [
+      "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar",
       "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî şehir",
       "Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ",
-      "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar",
       "Riha yakınındaki, insanlığın en eski tapınak alanı"
     ],
     "correctAnswerTr": "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar"
@@ -16931,9 +16931,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin'?",
     "answers": [
       "Çiyayê Cûdî",
-      "çiyayên Zagrosê",
       "Geliyê Zapê",
-      "Çiyayê Sîpanê"
+      "Çiyayê Sîpanê",
+      "çiyayên Zagrosê"
     ],
     "correctAnswer": "çiyayên Zagrosê",
     "explanation": "«çiyayên Zagrosê» tê vê wateyê: rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin.",
@@ -16944,9 +16944,9 @@
     "promptTr": "Şu açıklamayla tanınan kavram hangisidir: «Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar»?",
     "answersTr": [
       "Cûdî Dağı",
-      "Zagros Dağları",
       "Zap Vadisi",
-      "Sîpan Dağı"
+      "Sîpan Dağı",
+      "Zagros Dağları"
     ],
     "correctAnswerTr": "Zagros Dağları"
   },
@@ -16955,9 +16955,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze»?",
     "answers": [
-      "Newala Dîcleyê",
       "Çemê Firatê",
       "Geliyê Zapê",
+      "Newala Dîcleyê",
       "çiyayên Zagrosê"
     ],
     "correctAnswer": "Newala Dîcleyê",
@@ -16969,9 +16969,9 @@
     "imageUrl": "asset://assets/question_images/ava_zape.webp",
     "promptTr": "Şu açıklamayla tanınan kavram hangisidir: «içinden Dicle'nin aktığı, Amed'i koruyan büyük vadi»?",
     "answersTr": [
-      "Dicle Vadisi",
       "Fırat Nehri",
       "Zap Vadisi",
+      "Dicle Vadisi",
       "Zagros Dağları"
     ],
     "correctAnswerTr": "Dicle Vadisi"
@@ -16981,9 +16981,9 @@
     "category": "Cografya",
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Newala Dîcleyê» bi awayekî rast temam dike?",
     "answers": [
-      "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
       "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
       "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
+      "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
       "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar"
     ],
     "correctAnswer": "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
@@ -16994,9 +16994,9 @@
     "explanationKu": "Ravekirina rast ji bo «Newala Dîcleyê» ev e: geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze.",
     "promptTr": "Coğrafya dersi için hangi seçenek «Newala Dîcleyê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
       "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent",
       "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri",
+      "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
       "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı"
     ],
     "correctAnswerTr": "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi"
@@ -17006,9 +17006,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar»?",
     "answers": [
-      "Çemê Firatê",
       "Heskîf",
       "çiyayên Zagrosê",
+      "Çemê Firatê",
       "Qerejdax"
     ],
     "correctAnswer": "Çemê Firatê",
@@ -17019,9 +17019,9 @@
     "explanationTr": "«Çemê Firatê» şu anlama gelir: Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı.",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı»?",
     "answersTr": [
-      "Çemê Firatê",
       "Heskîf",
       "çiyayên Zagrosê",
+      "Çemê Firatê",
       "Qerejdax"
     ],
     "correctAnswerTr": "Çemê Firatê"
@@ -17032,9 +17032,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Çemê Firatê» bi awayekî rast temam dike?",
     "answers": [
       "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
+      "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
-      "gola herî mezin a herêmê ku avên wê şor û sodadar in",
-      "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar"
+      "gola herî mezin a herêmê ku avên wê şor û sodadar in"
     ],
     "correctAnswer": "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
     "explanation": "Ravekirina rast ji bo «Çemê Firatê» ev e: yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar.",
@@ -17046,9 +17046,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Çemê Firatê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ",
+      "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı",
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
-      "suları tuzlu ve sodalı olan, bölgenin en büyük gölü",
-      "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı"
+      "suları tuzlu ve sodalı olan, bölgenin en büyük gölü"
     ],
     "correctAnswerTr": "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı"
   },
@@ -17057,9 +17057,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye'?",
     "answers": [
-      "Çiyayê Cûdî",
       "Qerejdax",
       "Heskîf",
+      "Çiyayê Cûdî",
       "Çemê Firatê"
     ],
     "correctAnswer": "Çiyayê Cûdî",
@@ -17070,9 +17070,9 @@
     "explanationTr": "«Çiyayê Cûdî» şu anlama gelir: inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ.",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ»?",
     "answersTr": [
-      "Çiyayê Cûdî",
       "Qerejdax",
       "Heskîf",
+      "Çiyayê Cûdî",
       "Çemê Firatê"
     ],
     "correctAnswerTr": "Çiyayê Cûdî"
@@ -17082,9 +17082,9 @@
     "category": "Cografya",
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Çiyayê Cûdî» bi awayekî rast temam dike?",
     "answers": [
-      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
       "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
+      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
       "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye"
     ],
     "correctAnswer": "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
@@ -17095,9 +17095,9 @@
     "explanationKu": "Ravekirina rast ji bo «Çiyayê Cûdî» ev e: çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye.",
     "promptTr": "Coğrafya dersi için hangi seçenek «Çiyayê Cûdî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ",
       "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ",
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
+      "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ",
       "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent"
     ],
     "correctAnswerTr": "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ"
@@ -17107,9 +17107,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye»?",
     "answers": [
-      "Girê Mirazan",
       "Çiyayê Sîpanê",
       "Newala Dîcleyê",
+      "Girê Mirazan",
       "Çemê Firatê"
     ],
     "correctAnswer": "Girê Mirazan",
@@ -17120,9 +17120,9 @@
     "explanationTr": "«Girê Mirazan» şu anlama gelir: Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri.",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri»?",
     "answersTr": [
-      "Girê Mirazan",
       "Çiyayê Sîpanê",
       "Newala Dîcleyê",
+      "Girê Mirazan",
       "Çemê Firatê"
     ],
     "correctAnswerTr": "Girê Mirazan"
@@ -17133,9 +17133,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Girê Mirazan» bi awayekî rast temam dike?",
     "answers": [
       "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
-      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
-      "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye"
+      "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
+      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye"
     ],
     "correctAnswer": "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
     "explanation": "Ravekirina rast ji bo «Girê Mirazan» ev e: şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye.",
@@ -17146,9 +17146,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Girê Mirazan» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ",
-      "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri",
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
-      "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent"
+      "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent",
+      "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri"
     ],
     "correctAnswerTr": "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri"
   },
@@ -17157,9 +17157,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «gola herî mezin a herêmê ku avên wê şor û sodadar in»?",
     "answers": [
+      "Gola Wanê",
       "Çiyayê Sîpanê",
       "çiyayên Zagrosê",
-      "Gola Wanê",
       "Geliyê Zapê"
     ],
     "correctAnswer": "Gola Wanê",
@@ -17170,9 +17170,9 @@
     "explanationTr": "«Gola Wanê» şu anlama gelir: suları tuzlu ve sodalı olan, bölgenin en büyük gölü.",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «suları tuzlu ve sodalı olan, bölgenin en büyük gölü»?",
     "answersTr": [
+      "Gola Wanê",
       "Çiyayê Sîpanê",
       "çiyayên Zagrosê",
-      "Gola Wanê",
       "Geliyê Zapê"
     ],
     "correctAnswerTr": "Gola Wanê"
@@ -17183,9 +17183,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Gola Wanê» bi awayekî rast temam dike?",
     "answers": [
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
-      "gola herî mezin a herêmê ku avên wê şor û sodadar in",
       "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
-      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye"
+      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
+      "gola herî mezin a herêmê ku avên wê şor û sodadar in"
     ],
     "correctAnswer": "gola herî mezin a herêmê ku avên wê şor û sodadar in",
     "explanation": "Ravekirina rast ji bo «Gola Wanê» ev e: gola herî mezin a herêmê ku avên wê şor û sodadar in.",
@@ -17197,9 +17197,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Gola Wanê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
-      "suları tuzlu ve sodalı olan, bölgenin en büyük gölü",
       "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar",
-      "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri"
+      "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri",
+      "suları tuzlu ve sodalı olan, bölgenin en büyük gölü"
     ],
     "correctAnswerTr": "suları tuzlu ve sodalı olan, bölgenin en büyük gölü"
   },
@@ -17208,9 +17208,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê»?",
     "answers": [
-      "Çiyayê Sîpanê",
       "çiyayên Zagrosê",
       "Geliyê Zapê",
+      "Çiyayê Sîpanê",
       "Newala Dîcleyê"
     ],
     "correctAnswer": "Çiyayê Sîpanê",
@@ -17222,9 +17222,9 @@
     "imageUrl": "asset://assets/question_images/gola_wane.webp",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ»?",
     "answersTr": [
-      "Çiyayê Sîpanê",
       "çiyayên Zagrosê",
       "Geliyê Zapê",
+      "Çiyayê Sîpanê",
       "Newala Dîcleyê"
     ],
     "correctAnswerTr": "Çiyayê Sîpanê"
@@ -17235,9 +17235,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Çiyayê Sîpanê» bi awayekî rast temam dike?",
     "answers": [
       "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
-      "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
       "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
-      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye"
+      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
+      "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê"
     ],
     "correctAnswer": "çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê",
     "explanation": "Ravekirina rast ji bo «Çiyayê Sîpanê» ev e: çiyayê volkanîk ê bilind û berfîn ê li bakurê Gola Wanê.",
@@ -17248,9 +17248,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Çiyayê Sîpanê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı",
-      "Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ",
       "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar",
-      "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ"
+      "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ",
+      "Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ"
     ],
     "correctAnswerTr": "Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ"
   },
@@ -17259,9 +17259,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve»?",
     "answers": [
+      "Geliyê Zapê",
       "Girê Mirazan",
       "Newala Dîcleyê",
-      "Geliyê Zapê",
       "Gola Wanê"
     ],
     "correctAnswer": "Geliyê Zapê",
@@ -17273,9 +17273,9 @@
     "imageUrl": "asset://assets/question_images/ava_zape.webp",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «coşkun Zap suyunun güneye doğru aktığı derin ve dar vadi»?",
     "answersTr": [
+      "Geliyê Zapê",
       "Girê Mirazan",
       "Newala Dîcleyê",
-      "Geliyê Zapê",
       "Gola Wanê"
     ],
     "correctAnswerTr": "Geliyê Zapê"
@@ -17286,9 +17286,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Geliyê Zapê» bi awayekî rast temam dike?",
     "answers": [
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
-      "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve",
       "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
-      "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar"
+      "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
+      "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve"
     ],
     "correctAnswer": "geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve",
     "explanation": "Ravekirina rast ji bo «Geliyê Zapê» ev e: geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve.",
@@ -17300,9 +17300,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Geliyê Zapê» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
-      "coşkun Zap suyunun güneye doğru aktığı derin ve dar vadi",
       "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri",
-      "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı"
+      "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı",
+      "coşkun Zap suyunun güneye doğru aktığı derin ve dar vadi"
     ],
     "correctAnswerTr": "coşkun Zap suyunun güneye doğru aktığı derin ve dar vadi"
   },
@@ -17312,9 +17312,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye'?",
     "answers": [
       "Çemê Firatê",
-      "Heskîf",
       "Qerejdax",
-      "Newala Dîcleyê"
+      "Newala Dîcleyê",
+      "Heskîf"
     ],
     "correctAnswer": "Heskîf",
     "explanation": "«Heskîf» tê vê wateyê: bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye.",
@@ -17326,9 +17326,9 @@
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent»?",
     "answersTr": [
       "Çemê Firatê",
-      "Heskîf",
       "Qerejdax",
-      "Newala Dîcleyê"
+      "Newala Dîcleyê",
+      "Heskîf"
     ],
     "correctAnswerTr": "Heskîf"
   },
@@ -17338,9 +17338,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Heskîf» bi awayekî rast temam dike?",
     "answers": [
       "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
-      "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
       "yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar",
-      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye"
+      "şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye",
+      "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye"
     ],
     "correctAnswer": "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
     "explanation": "Ravekirina rast ji bo «Heskîf» ev e: bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye.",
@@ -17352,9 +17352,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Heskîf» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ",
-      "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent",
       "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı",
-      "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri"
+      "Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri",
+      "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent"
     ],
     "correctAnswerTr": "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent"
   },
@@ -17363,9 +17363,9 @@
     "category": "Cografya",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne»?",
     "answers": [
+      "Qerejdax",
       "çiyayên Zagrosê",
       "Girê Mirazan",
-      "Qerejdax",
       "Geliyê Zapê"
     ],
     "correctAnswer": "Qerejdax",
@@ -17377,9 +17377,9 @@
     "imageUrl": "asset://assets/question_images/desta_muse.webp",
     "promptTr": "Şu açıklamayla tanımlanan terim hangisidir: «Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ»?",
     "answersTr": [
+      "Qerejdax",
       "çiyayên Zagrosê",
       "Girê Mirazan",
-      "Qerejdax",
       "Geliyê Zapê"
     ],
     "correctAnswerTr": "Qerejdax"
@@ -17390,9 +17390,9 @@
     "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Qerejdax» bi awayekî rast temam dike?",
     "answers": [
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
+      "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
       "rêzeçiyayên mezin û asê yên ku sînorê xwezayî yê welatê kurdan pêk tînin",
-      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
-      "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne"
+      "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye"
     ],
     "correctAnswer": "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
     "explanation": "Ravekirina rast ji bo «Qerejdax» ev e: çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne.",
@@ -17403,9 +17403,9 @@
     "promptTr": "Coğrafya dersi için hangi seçenek «Qerejdax» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
+      "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ",
       "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar",
-      "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ",
-      "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ"
+      "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ"
     ],
     "correctAnswerTr": "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ"
   },
@@ -17414,9 +17414,9 @@
     "category": "Çand",
     "prompt": "Têgeha «Sazîbûna Dengbêjiyê» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
-      "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
       "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
       "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
+      "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
       "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin"
     ],
     "correctAnswer": "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
@@ -17427,9 +17427,9 @@
     "explanationTr": "«Sazîbûna Dengbêjiyê» şu anlama gelir: dengbêjlerin stran ve kilamlarıyla yürüyen, dili ve tarihi koruyan kale.",
     "promptTr": "«Dengbêjlik Kurumu» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
-      "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale",
       "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır",
       "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi",
+      "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale",
       "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu"
     ],
     "correctAnswerTr": "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale"
@@ -17440,9 +17440,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin'?",
     "answers": [
       "şevbêrk",
-      "Sazîbûna Dengbêjiyê",
       "çanda koçeriyê",
-      "Destana Memê Alan"
+      "Destana Memê Alan",
+      "Sazîbûna Dengbêjiyê"
     ],
     "correctAnswer": "Sazîbûna Dengbêjiyê",
     "explanation": "«Sazîbûna Dengbêjiyê» tê vê wateyê: kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin.",
@@ -17454,9 +17454,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanınır: «dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale»?",
     "answersTr": [
       "şevbêrk",
-      "Dengbêjlik Kurumu",
       "göçerlik kültürü",
-      "Memê Alan Destanı"
+      "Memê Alan Destanı",
+      "Dengbêjlik Kurumu"
     ],
     "correctAnswerTr": "Dengbêjlik Kurumu"
   },
@@ -17465,9 +17465,9 @@
     "category": "Çand",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye'?",
     "answers": [
+      "Newroz",
       "misafirperweriya kurdî",
       "Destana Memê Alan",
-      "Newroz",
       "Kalo û Sersal"
     ],
     "correctAnswer": "Newroz",
@@ -17478,9 +17478,9 @@
     "explanationTr": "«Newroz» şu anlama gelir: başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı.",
     "promptTr": "Şu açıklamayla hangi terim tanınır: «başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı»?",
     "answersTr": [
+      "Newroz",
       "Kürt misafirperverliği",
       "Memê Alan Destanı",
-      "Newroz",
       "Kalo û Sersal"
     ],
     "correctAnswerTr": "Newroz"
@@ -17491,9 +17491,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «Newroz» bi awayekî rast temam dike?",
     "answers": [
       "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
-      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
       "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin",
-      "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze"
+      "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
+      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye"
     ],
     "correctAnswer": "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
     "explanation": "Ravekirina rast ji bo «Newroz» ev e: cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye.",
@@ -17505,9 +17505,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «Newroz» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı",
-      "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı",
       "konuğun evin bereketi sayıldığı toplumsal ilişki",
-      "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır"
+      "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır",
+      "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı"
     ],
     "correctAnswerTr": "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı"
   },
@@ -17517,9 +17517,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin'?",
     "answers": [
       "Sazîbûna Dengbêjiyê",
-      "Kalo û Sersal",
       "Govenda Kurdî",
-      "kilimên kurdî"
+      "kilimên kurdî",
+      "Kalo û Sersal"
     ],
     "correctAnswer": "Kalo û Sersal",
     "explanation": "«Kalo û Sersal» tê vê wateyê: şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin.",
@@ -17530,9 +17530,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanınır: «yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu»?",
     "answersTr": [
       "Dengbêjlik Kurumu",
-      "Kalo û Sersal",
       "Kürt govendi",
-      "Kürt kilimleri"
+      "Kürt kilimleri",
+      "Kalo û Sersal"
     ],
     "correctAnswerTr": "Kalo û Sersal"
   },
@@ -17542,9 +17542,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «Kalo û Sersal» bi awayekî rast temam dike?",
     "answers": [
       "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
-      "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
       "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
-      "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin"
+      "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
+      "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin"
     ],
     "correctAnswer": "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
     "explanation": "Ravekirina rast ji bo «Kalo û Sersal» ev e: şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin.",
@@ -17556,9 +17556,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «Kalo û Sersal» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı",
-      "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu",
       "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları",
-      "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale"
+      "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale",
+      "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu"
     ],
     "correctAnswerTr": "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu"
   },
@@ -17567,9 +17567,9 @@
     "category": "Çand",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin'?",
     "answers": [
+      "Govenda Kurdî",
       "Sazîbûna Dengbêjiyê",
       "kilimên kurdî",
-      "Govenda Kurdî",
       "Destana Memê Alan"
     ],
     "correctAnswer": "Govenda Kurdî",
@@ -17580,9 +17580,9 @@
     "explanationTr": "«Govenda Kurdî» şu anlama gelir: el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı.",
     "promptTr": "Şu açıklamayla hangi terim tanınır: «el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı»?",
     "answersTr": [
+      "Kürt govendi",
       "Dengbêjlik Kurumu",
       "Kürt kilimleri",
-      "Kürt govendi",
       "Memê Alan Destanı"
     ],
     "correctAnswerTr": "Kürt govendi"
@@ -17593,9 +17593,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «Govenda Kurdî» bi awayekî rast temam dike?",
     "answers": [
       "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
+      "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin",
       "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin",
-      "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
-      "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin"
+      "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye"
     ],
     "correctAnswer": "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin",
     "explanation": "Ravekirina rast ji bo «Govenda Kurdî» ev e: dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin.",
@@ -17606,9 +17606,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «Kürt govendi» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları",
+      "el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı",
       "konuğun evin bereketi sayıldığı toplumsal ilişki",
-      "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi",
-      "el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı"
+      "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi"
     ],
     "correctAnswerTr": "el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı"
   },
@@ -17618,9 +17618,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye'?",
     "answers": [
       "şevbêrk",
-      "çanda koçeriyê",
       "hewran",
-      "kilimên kurdî"
+      "kilimên kurdî",
+      "çanda koçeriyê"
     ],
     "correctAnswer": "çanda koçeriyê",
     "explanation": "«çanda koçeriyê» tê vê wateyê: şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye.",
@@ -17631,9 +17631,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanınır: «yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi»?",
     "answersTr": [
       "şevbêrk",
-      "göçerlik kültürü",
       "hewran",
-      "Kürt kilimleri"
+      "Kürt kilimleri",
+      "göçerlik kültürü"
     ],
     "correctAnswerTr": "göçerlik kültürü"
   },
@@ -17643,9 +17643,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «çanda koçeriyê» bi awayekî rast temam dike?",
     "answers": [
       "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
-      "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
       "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
-      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne"
+      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
+      "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye"
     ],
     "correctAnswer": "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
     "explanation": "Ravekirina rast ji bo «çanda koçeriyê» ev e: şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye.",
@@ -17656,9 +17656,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «göçerlik kültürü» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları",
-      "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi",
       "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale",
-      "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı"
+      "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı",
+      "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi"
     ],
     "correctAnswerTr": "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi"
   },
@@ -17667,9 +17667,9 @@
     "category": "Çand",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin»?",
     "answers": [
+      "misafirperweriya kurdî",
       "çîmena çiyayî ya havînê",
       "bi çanda sifrê ve girêdayî ye",
-      "misafirperweriya kurdî",
       "sor, spî û kesk"
     ],
     "correctAnswer": "misafirperweriya kurdî",
@@ -17680,9 +17680,9 @@
     "explanationTr": "«misafirperweriya kurdî» şu anlama gelir: konuğun evin bereketi sayıldığı toplumsal ilişki.",
     "promptTr": "Şu açıklamayla hangi terim tanınır: «konuğun evin bereketi sayıldığı toplumsal ilişki»?",
     "answersTr": [
+      "Kürt misafirperverliği",
       "yazın dağ çayırı",
       "sofra kültürüyle bağlantılıdır",
-      "Kürt misafirperverliği",
       "kırmızı, beyaz ve yeşil"
     ],
     "correctAnswerTr": "Kürt misafirperverliği"
@@ -17693,9 +17693,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «misafirperweriya kurdî» bi awayekî rast temam dike?",
     "answers": [
       "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin",
+      "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin",
       "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
-      "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
-      "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin"
+      "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin"
     ],
     "correctAnswer": "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin",
     "explanation": "Ravekirina rast ji bo «misafirperweriya kurdî» ev e: têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin.",
@@ -17706,9 +17706,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «Kürt misafirperverliği» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale",
+      "konuğun evin bereketi sayıldığı toplumsal ilişki",
       "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu",
-      "motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı",
-      "konuğun evin bereketi sayıldığı toplumsal ilişki"
+      "motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı"
     ],
     "correctAnswerTr": "konuğun evin bereketi sayıldığı toplumsal ilişki"
   },
@@ -17717,9 +17717,9 @@
     "category": "Çand",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin'?",
     "answers": [
+      "kilimên kurdî",
       "Sazîbûna Dengbêjiyê",
       "hewran",
-      "kilimên kurdî",
       "çanda koçeriyê"
     ],
     "correctAnswer": "kilimên kurdî",
@@ -17730,9 +17730,9 @@
     "explanationTr": "«kilimên kurdî» şu anlama gelir: motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı.",
     "promptTr": "Şu açıklamayla hangi terim tanınır: «motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı»?",
     "answersTr": [
+      "Kürt kilimleri",
       "Dengbêjlik Kurumu",
       "hewran",
-      "Kürt kilimleri",
       "göçerlik kültürü"
     ],
     "correctAnswerTr": "Kürt kilimleri"
@@ -17742,9 +17742,9 @@
     "category": "Çand",
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «kilimên kurdî» bi awayekî rast temam dike?",
     "answers": [
+      "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
       "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
       "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
-      "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
       "kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin"
     ],
     "correctAnswer": "elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin",
@@ -17756,9 +17756,9 @@
     "explanationKu": "Ravekirina rast ji bo «kilimên kurdî» ev e: elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin.",
     "promptTr": "Kültür dersi için hangi seçenek «Kürt kilimleri» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı",
       "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı",
       "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi",
-      "motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı",
       "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale"
     ],
     "correctAnswerTr": "motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı"
@@ -17769,9 +17769,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne»?",
     "answers": [
       "Newroz",
+      "Destana Memê Alan",
       "Sazîbûna Dengbêjiyê",
-      "çanda koçeriyê",
-      "Destana Memê Alan"
+      "çanda koçeriyê"
     ],
     "correctAnswer": "Destana Memê Alan",
     "explanation": "«Destana Memê Alan» tê vê wateyê: destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne.",
@@ -17782,9 +17782,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanınır: «Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı»?",
     "answersTr": [
       "Newroz",
+      "Memê Alan Destanı",
       "Dengbêjlik Kurumu",
-      "göçerlik kültürü",
-      "Memê Alan Destanı"
+      "göçerlik kültürü"
     ],
     "correctAnswerTr": "Memê Alan Destanı"
   },
@@ -17794,9 +17794,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «Destana Memê Alan» bi awayekî rast temam dike?",
     "answers": [
       "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
+      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
       "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
-      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
-      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne"
+      "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye"
     ],
     "correctAnswer": "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
     "explanation": "Ravekirina rast ji bo «Destana Memê Alan» ev e: destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne.",
@@ -17807,9 +17807,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «Memê Alan Destanı» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları",
+      "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı",
       "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır",
-      "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı",
-      "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı"
+      "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı"
     ],
     "correctAnswerTr": "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı"
   },
@@ -17819,9 +17819,9 @@
     "prompt": "Têgeha «hewran» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye",
-      "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
       "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
-      "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin"
+      "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
+      "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze"
     ],
     "correctAnswer": "çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze",
     "explanation": "«hewran» tê vê wateyê: çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze.",
@@ -17832,9 +17832,9 @@
     "promptTr": "«hewran» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi",
-      "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır",
       "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı",
-      "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları"
+      "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları",
+      "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır"
     ],
     "correctAnswerTr": "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır"
   },
@@ -17844,9 +17844,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze'?",
     "answers": [
       "Sazîbûna Dengbêjiyê",
+      "hewran",
       "misafirperweriya kurdî",
-      "Kalo û Sersal",
-      "hewran"
+      "Kalo û Sersal"
     ],
     "correctAnswer": "hewran",
     "explanation": "«hewran» tê vê wateyê: çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze.",
@@ -17857,9 +17857,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanınır: «keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır»?",
     "answersTr": [
       "Dengbêjlik Kurumu",
+      "hewran",
       "Kürt misafirperverliği",
-      "Kalo û Sersal",
-      "hewran"
+      "Kalo û Sersal"
     ],
     "correctAnswerTr": "hewran"
   },
@@ -17869,9 +17869,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin'?",
     "answers": [
       "Newroz",
+      "şevbêrk",
       "kilimên kurdî",
-      "Kalo û Sersal",
-      "şevbêrk"
+      "Kalo û Sersal"
     ],
     "correctAnswer": "şevbêrk",
     "explanation": "«şevbêrk» tê vê wateyê: civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin.",
@@ -17882,9 +17882,9 @@
     "promptTr": "Şu açıklamayla hangi terim tanınır: «halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları»?",
     "answersTr": [
       "Newroz",
+      "şevbêrk",
       "Kürt kilimleri",
-      "Kalo û Sersal",
-      "şevbêrk"
+      "Kalo û Sersal"
     ],
     "correctAnswerTr": "şevbêrk"
   },
@@ -17894,9 +17894,9 @@
     "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha «şevbêrk» bi awayekî rast temam dike?",
     "answers": [
       "dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin",
+      "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
       "şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin",
-      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
-      "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin"
+      "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne"
     ],
     "correctAnswer": "civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin",
     "explanation": "Ravekirina rast ji bo «şevbêrk» ev e: civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin.",
@@ -17907,9 +17907,9 @@
     "promptTr": "Kültür dersi için hangi seçenek «şevbêrk» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı",
+      "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları",
       "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu",
-      "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı",
-      "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları"
+      "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı"
     ],
     "correctAnswerTr": "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları"
   },
@@ -17918,9 +17918,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan'?",
     "answers": [
-      "tembûr",
       "Meryem Xan",
       "Koma Wetan",
+      "tembûr",
       "Hasan Cizrawî"
     ],
     "correctAnswer": "tembûr",
@@ -17931,9 +17931,9 @@
     "explanationTr": "«tembûr» şu anlama gelir: özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı»?",
     "answersTr": [
-      "tembûr",
       "Meryem Xan",
       "Koma Wetan",
+      "tembûr",
       "Hasan Cizrawî"
     ],
     "correctAnswerTr": "tembûr"
@@ -17944,9 +17944,9 @@
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «tembûr» bi awayekî rast temam dike?",
     "answers": [
       "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
+      "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
       "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
-      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
-      "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan"
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine"
     ],
     "correctAnswer": "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
     "explanation": "Ravekirina rast ji bo «tembûr» ev e: amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan.",
@@ -17957,9 +17957,9 @@
     "promptTr": "Müzik dersi için hangi seçenek «tembûr» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı",
+      "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı",
       "özellikle kadınların söylediği Serhed yöresi aşk kilamları",
-      "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
-      "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı"
+      "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri"
     ],
     "correctAnswerTr": "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı"
   },
@@ -17968,9 +17968,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e'?",
     "answers": [
-      "erbane",
       "bilûr",
       "Koma Wetan",
+      "erbane",
       "Meryem Xan"
     ],
     "correctAnswer": "erbane",
@@ -17981,9 +17981,9 @@
     "explanationTr": "«erbane» şu anlama gelir: Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı»?",
     "answersTr": [
-      "erbane",
       "bilûr",
       "Koma Wetan",
+      "erbane",
       "Meryem Xan"
     ],
     "correctAnswerTr": "erbane"
@@ -17993,9 +17993,9 @@
     "category": "Muzîk",
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «erbane» bi awayekî rast temam dike?",
     "answers": [
-      "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
       "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
       "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
+      "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
       "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan"
     ],
     "correctAnswer": "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
@@ -18006,9 +18006,9 @@
     "explanationKu": "Ravekirina rast ji bo «erbane» ev e: amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e.",
     "promptTr": "Müzik dersi için hangi seçenek «erbane» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı",
       "70'li yıllarda ortaya çıkan ilk Kürt rock grubu",
       "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
+      "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı",
       "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı"
     ],
     "correctAnswerTr": "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı"
@@ -18018,9 +18018,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin»?",
     "answers": [
-      "bilûr",
       "lîrîka klaman",
       "tembûr",
+      "bilûr",
       "lawik"
     ],
     "correctAnswer": "bilûr",
@@ -18031,9 +18031,9 @@
     "explanationTr": "«bilûr» şu anlama gelir: hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı»?",
     "answersTr": [
-      "bilûr",
       "lîrîka klaman",
       "tembûr",
+      "bilûr",
       "lawik"
     ],
     "correctAnswerTr": "bilûr"
@@ -18044,9 +18044,9 @@
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «bilûr» bi awayekî rast temam dike?",
     "answers": [
       "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
+      "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
       "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
-      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
-      "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin"
+      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin"
     ],
     "correctAnswer": "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
     "explanation": "Ravekirina rast ji bo «bilûr» ev e: amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin.",
@@ -18057,9 +18057,9 @@
     "promptTr": "Müzik dersi için hangi seçenek «bilûr» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı",
+      "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı",
       "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı",
-      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi",
-      "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı"
+      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi"
     ],
     "correctAnswerTr": "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı"
   },
@@ -18068,9 +18068,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin'?",
     "answers": [
-      "lîrîka klaman",
       "strana razanê",
       "lêdana rêkûpêk",
+      "lîrîka klaman",
       "dawet û govendê"
     ],
     "correctAnswer": "lîrîka klaman",
@@ -18081,9 +18081,9 @@
     "explanationTr": "«lîrîka klaman» şu anlama gelir: aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı»?",
     "answersTr": [
-      "lîrîka klaman",
       "ninni",
       "düzenli vuruş",
+      "lîrîka klaman",
       "düğün ve govend"
     ],
     "correctAnswerTr": "lîrîka klaman"
@@ -18093,9 +18093,9 @@
     "category": "Muzîk",
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «lîrîka klaman» bi awayekî rast temam dike?",
     "answers": [
-      "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
       "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
       "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
+      "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
       "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan"
     ],
     "correctAnswer": "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
@@ -18106,9 +18106,9 @@
     "explanationKu": "Ravekirina rast ji bo «lîrîka klaman» ev e: avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin.",
     "promptTr": "Müzik dersi için hangi seçenek «lîrîka klaman» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı",
       "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı",
       "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı",
+      "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı",
       "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı"
     ],
     "correctAnswerTr": "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı"
@@ -18118,9 +18118,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'dengbêjê mezin ê ku wekî «Şahê Dengbêjan» tê naskirin û xwedî dengekî bêhempa bû'?",
     "answers": [
-      "Şakiro",
       "lîrîka klaman",
       "bilûr",
+      "Şakiro",
       "Meryem Xan"
     ],
     "correctAnswer": "Şakiro",
@@ -18131,9 +18131,9 @@
     "explanationTr": "«Şakiro» şu anlama gelir: «Dengbêjlerin Şahı» diye bilinen, eşsiz sese sahip büyük dengbêj.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: ««Dengbêjlerin Şahı» diye bilinen, eşsiz sese sahip büyük dengbêj»?",
     "answersTr": [
-      "Şakiro",
       "lîrîka klaman",
       "bilûr",
+      "Şakiro",
       "Meryem Xan"
     ],
     "correctAnswerTr": "Şakiro"
@@ -18144,9 +18144,9 @@
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «Şakiro» bi awayekî rast temam dike?",
     "answers": [
       "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
-      "dengbêjê mezin ê ku wekî «Şahê Dengbêjan» tê naskirin û xwedî dengekî bêhempa bû",
       "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
-      "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan"
+      "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
+      "dengbêjê mezin ê ku wekî «Şahê Dengbêjan» tê naskirin û xwedî dengekî bêhempa bû"
     ],
     "correctAnswer": "dengbêjê mezin ê ku wekî «Şahê Dengbêjan» tê naskirin û xwedî dengekî bêhempa bû",
     "explanation": "Ravekirina rast ji bo «Şakiro» ev e: dengbêjê mezin ê ku wekî «Şahê Dengbêjan» tê naskirin û xwedî dengekî bêhempa bû.",
@@ -18157,9 +18157,9 @@
     "promptTr": "Müzik dersi için hangi seçenek «Şakiro» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı",
-      "«Dengbêjlerin Şahı» diye bilinen, eşsiz sese sahip büyük dengbêj",
       "70'li yıllarda ortaya çıkan ilk Kürt rock grubu",
-      "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı"
+      "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı",
+      "«Dengbêjlerin Şahı» diye bilinen, eşsiz sese sahip büyük dengbêj"
     ],
     "correctAnswerTr": "«Dengbêjlerin Şahı» diye bilinen, eşsiz sese sahip büyük dengbêj"
   },
@@ -18168,9 +18168,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine'?",
     "answers": [
+      "Hasan Cizrawî",
       "Meryem Xan",
       "heyran",
-      "Hasan Cizrawî",
       "lawik"
     ],
     "correctAnswer": "Hasan Cizrawî",
@@ -18181,9 +18181,9 @@
     "explanationTr": "«Hasan Cizrawî» şu anlama gelir: Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri»?",
     "answersTr": [
+      "Hasan Cizrawî",
       "Meryem Xan",
       "heyran",
-      "Hasan Cizrawî",
       "lawik"
     ],
     "correctAnswerTr": "Hasan Cizrawî"
@@ -18194,9 +18194,9 @@
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «Hasan Cizrawî» bi awayekî rast temam dike?",
     "answers": [
       "avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin",
-      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
       "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
-      "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye"
+      "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine"
     ],
     "correctAnswer": "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
     "explanation": "Ravekirina rast ji bo «Hasan Cizrawî» ev e: yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine.",
@@ -18207,9 +18207,9 @@
     "promptTr": "Müzik dersi için hangi seçenek «Hasan Cizrawî» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı",
-      "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
       "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı",
-      "sesini plağa kaydeden ilk Kürt kadın şarkıcı"
+      "sesini plağa kaydeden ilk Kürt kadın şarkıcı",
+      "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri"
     ],
     "correctAnswerTr": "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri"
   },
@@ -18218,9 +18218,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye»?",
     "answers": [
-      "Meryem Xan",
       "Şakiro",
       "bilûr",
+      "Meryem Xan",
       "lîrîka klaman"
     ],
     "correctAnswer": "Meryem Xan",
@@ -18231,9 +18231,9 @@
     "explanationTr": "«Meryem Xan» şu anlama gelir: sesini plağa kaydeden ilk Kürt kadın şarkıcı.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «sesini plağa kaydeden ilk Kürt kadın şarkıcı»?",
     "answersTr": [
-      "Meryem Xan",
       "Şakiro",
       "bilûr",
+      "Meryem Xan",
       "lîrîka klaman"
     ],
     "correctAnswerTr": "Meryem Xan"
@@ -18244,9 +18244,9 @@
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «Meryem Xan» bi awayekî rast temam dike?",
     "answers": [
       "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
-      "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
       "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
-      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin"
+      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
+      "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye"
     ],
     "correctAnswer": "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
     "explanation": "Ravekirina rast ji bo «Meryem Xan» ev e: stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye.",
@@ -18257,9 +18257,9 @@
     "promptTr": "Müzik dersi için hangi seçenek «Meryem Xan» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı",
-      "sesini plağa kaydeden ilk Kürt kadın şarkıcı",
       "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
-      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi"
+      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi",
+      "sesini plağa kaydeden ilk Kürt kadın şarkıcı"
     ],
     "correctAnswerTr": "sesini plağa kaydeden ilk Kürt kadın şarkıcı"
   },
@@ -18268,9 +18268,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê»?",
     "answers": [
+      "Koma Wetan",
       "bilûr",
       "Meryem Xan",
-      "Koma Wetan",
       "Şakiro"
     ],
     "correctAnswer": "Koma Wetan",
@@ -18281,9 +18281,9 @@
     "explanationTr": "«Koma Wetan» şu anlama gelir: 70'li yıllarda ortaya çıkan ilk Kürt rock grubu.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «70'li yıllarda ortaya çıkan ilk Kürt rock grubu»?",
     "answersTr": [
+      "Koma Wetan",
       "bilûr",
       "Meryem Xan",
-      "Koma Wetan",
       "Şakiro"
     ],
     "correctAnswerTr": "Koma Wetan"
@@ -18294,9 +18294,9 @@
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «Koma Wetan» bi awayekî rast temam dike?",
     "answers": [
       "dengbêjê mezin ê ku wekî «Şahê Dengbêjan» tê naskirin û xwedî dengekî bêhempa bû",
-      "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
       "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
-      "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin"
+      "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin",
+      "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê"
     ],
     "correctAnswer": "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê",
     "explanation": "Ravekirina rast ji bo «Koma Wetan» ev e: koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê.",
@@ -18307,9 +18307,9 @@
     "promptTr": "Müzik dersi için hangi seçenek «Koma Wetan» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "«Dengbêjlerin Şahı» diye bilinen, eşsiz sese sahip büyük dengbêj",
-      "70'li yıllarda ortaya çıkan ilk Kürt rock grubu",
       "sesini plağa kaydeden ilk Kürt kadın şarkıcı",
-      "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı"
+      "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı",
+      "70'li yıllarda ortaya çıkan ilk Kürt rock grubu"
     ],
     "correctAnswerTr": "70'li yıllarda ortaya çıkan ilk Kürt rock grubu"
   },
@@ -18319,9 +18319,9 @@
     "prompt": "Koma Wetan di muzîka kurdî de bi çi tê nasîn?",
     "answers": [
       "Koma yekem a muzîka klasîk a kurdî",
-      "Koma yekem a muzîka rock a kurdî",
       "Korek a stranên dînî yên kurdî",
-      "Koma yekem a muzîka jazz a kurdî"
+      "Koma yekem a muzîka jazz a kurdî",
+      "Koma yekem a muzîka rock a kurdî"
     ],
     "correctAnswer": "Koma yekem a muzîka rock a kurdî",
     "explanation": "«Koma Wetan» tê vê wateyê: koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê.",
@@ -18332,9 +18332,9 @@
     "promptTr": "Koma Wetan, Kürt müziğinde neyle tanınır?",
     "answersTr": [
       "İlk Kürt klasik müziği grubu",
-      "İlk Kürt rock müziği grubu",
       "Kürtçe dinî şarkılar korosu",
-      "İlk Kürt caz müziği grubu"
+      "İlk Kürt caz müziği grubu",
+      "İlk Kürt rock müziği grubu"
     ],
     "correctAnswerTr": "İlk Kürt rock müziği grubu"
   },
@@ -18343,9 +18343,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin»?",
     "answers": [
+      "lawik",
       "bilûr",
       "Meryem Xan",
-      "lawik",
       "erbane"
     ],
     "correctAnswer": "lawik",
@@ -18356,9 +18356,9 @@
     "explanationTr": "«lawik» şu anlama gelir: erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi»?",
     "answersTr": [
+      "lawik",
       "bilûr",
       "Meryem Xan",
-      "lawik",
       "erbane"
     ],
     "correctAnswerTr": "lawik"
@@ -18368,9 +18368,9 @@
     "category": "Muzîk",
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha «lawik» bi awayekî rast temam dike?",
     "answers": [
+      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
       "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
       "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
-      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
       "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin"
     ],
     "correctAnswer": "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
@@ -18381,9 +18381,9 @@
     "explanationKu": "Ravekirina rast ji bo «lawik» ev e: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
     "promptTr": "Müzik dersi için hangi seçenek «lawik» teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi",
       "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
       "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı",
-      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi",
       "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı"
     ],
     "correctAnswerTr": "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi"
@@ -18394,9 +18394,9 @@
     "prompt": "Têgeha «heyran» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan",
+      "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
       "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
-      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
-      "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin"
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine"
     ],
     "correctAnswer": "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
     "explanation": "«heyran» tê vê wateyê: klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin.",
@@ -18407,9 +18407,9 @@
     "promptTr": "«heyran» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "özellikle dinî meclislerde çalınan, en kutsal ve kadim Kürt çalgısı",
+      "özellikle kadınların söylediği Serhed yöresi aşk kilamları",
       "sesini plağa kaydeden ilk Kürt kadın şarkıcı",
-      "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
-      "özellikle kadınların söylediği Serhed yöresi aşk kilamları"
+      "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri"
     ],
     "correctAnswerTr": "özellikle kadınların söylediği Serhed yöresi aşk kilamları"
   },
@@ -18418,9 +18418,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin'?",
     "answers": [
-      "heyran",
       "tembûr",
       "Şakiro",
+      "heyran",
       "Hasan Cizrawî"
     ],
     "correctAnswer": "heyran",
@@ -18431,9 +18431,9 @@
     "explanationTr": "«heyran» şu anlama gelir: özellikle kadınların söylediği Serhat yöresi aşk kilamları.",
     "promptTr": "Hangi terim şu açıklamayla bilinir: «özellikle kadınların söylediği Serhed yöresi aşk kilamları»?",
     "answersTr": [
-      "heyran",
       "tembûr",
       "Şakiro",
+      "heyran",
       "Hasan Cizrawî"
     ],
     "correctAnswerTr": "heyran"
@@ -18444,9 +18444,9 @@
     "prompt": "Têgeha «Radikal demokrasi» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
-      "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
       "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
-      "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de"
+      "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
+      "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze"
     ],
     "correctAnswer": "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
     "explanation": "«Radikal demokrasi» tê vê wateyê: teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze.",
@@ -18457,9 +18457,9 @@
     "promptTr": "«Radikal demokrasi» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge",
-      "kararlarda halkın doğrudan katılımını savunan siyasal teori",
       "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model",
-      "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi"
+      "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi",
+      "kararlarda halkın doğrudan katılımını savunan siyasal teori"
     ],
     "correctAnswerTr": "kararlarda halkın doğrudan katılımını savunan siyasal teori"
   },
@@ -18469,9 +18469,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze»?",
     "answers": [
       "parastina rewa",
+      "radikal demokrasi",
       "ademi-merkeziyet",
-      "eşseroktî",
-      "radikal demokrasi"
+      "eşseroktî"
     ],
     "correctAnswer": "radikal demokrasi",
     "explanation": "«Radikal demokrasi» tê vê wateyê: teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze.",
@@ -18482,9 +18482,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «kararlarda halkın doğrudan katılımını savunan siyasal teori»?",
     "answersTr": [
       "parastina rewa",
+      "radikal demokrasi",
       "ademi-merkeziyet",
-      "eşseroktî",
-      "radikal demokrasi"
+      "eşseroktî"
     ],
     "correctAnswerTr": "radikal demokrasi"
   },
@@ -18494,9 +18494,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin'?",
     "answers": [
       "hevpeymaniya demokratîk",
+      "eşseroktî",
       "radikal demokrasi",
-      "parastina rewa",
-      "eşseroktî"
+      "parastina rewa"
     ],
     "correctAnswer": "eşseroktî",
     "explanation": "«eşseroktî» tê vê wateyê: sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin.",
@@ -18507,9 +18507,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem»?",
     "answersTr": [
       "hevpeymaniya demokratîk",
+      "eşseroktî",
       "radikal demokrasi",
-      "parastina rewa",
-      "eşseroktî"
+      "parastina rewa"
     ],
     "correctAnswerTr": "eşseroktî"
   },
@@ -18518,9 +18518,9 @@
     "category": "Siyaset",
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «eşseroktî» bi awayekî rast temam dike?",
     "answers": [
-      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
       "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
       "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
+      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
       "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de"
     ],
     "correctAnswer": "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
@@ -18531,9 +18531,9 @@
     "explanationKu": "Ravekirina rast ji bo «eşseroktî» ev e: sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin.",
     "promptTr": "Siyaset dersi için hangi seçenek «eşseroktî» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
-      "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem",
       "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi",
       "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması",
+      "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem",
       "toplumun değişim güçleri arasındaki stratejik ilişki"
     ],
     "correctAnswerTr": "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem"
@@ -18544,9 +18544,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan»?",
     "answers": [
       "demokrasiya rasterast",
+      "komûn û meclîs",
       "hevpeymaniya demokratîk",
-      "pirrengî",
-      "komûn û meclîs"
+      "pirrengî"
     ],
     "correctAnswer": "komûn û meclîs",
     "explanation": "«komûn û meclîs» tê vê wateyê: avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan.",
@@ -18557,9 +18557,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «mahalle ve köylerde halkın öz yönetiminin en temel yapıları»?",
     "answersTr": [
       "demokrasiya rasterast",
+      "komûn û meclîs",
       "hevpeymaniya demokratîk",
-      "pirrengî",
-      "komûn û meclîs"
+      "pirrengî"
     ],
     "correctAnswerTr": "komûn û meclîs"
   },
@@ -18569,9 +18569,9 @@
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «komûn û meclîs» bi awayekî rast temam dike?",
     "answers": [
       "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
+      "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
       "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
-      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
-      "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan"
+      "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin"
     ],
     "correctAnswer": "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
     "explanation": "Ravekirina rast ji bo «komûn û meclîs» ev e: avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan.",
@@ -18582,9 +18582,9 @@
     "promptTr": "Siyaset dersi için hangi seçenek «komûn û meclîs» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
       "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge",
+      "mahalle ve köylerde halkın öz yönetiminin en temel yapıları",
       "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model",
-      "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem",
-      "mahalle ve köylerde halkın öz yönetiminin en temel yapıları"
+      "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem"
     ],
     "correctAnswerTr": "mahalle ve köylerde halkın öz yönetiminin en temel yapıları"
   },
@@ -18594,9 +18594,9 @@
     "prompt": "Têgeha «peymana civakî» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
+      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
       "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
-      "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
-      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike"
+      "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de"
     ],
     "correctAnswer": "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
     "explanation": "«peymana civakî» tê vê wateyê: belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike.",
@@ -18607,9 +18607,9 @@
     "promptTr": "«peymana civakî» terimi hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem",
+      "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge",
       "kararlarda halkın doğrudan katılımını savunan siyasal teori",
-      "toplumun değişim güçleri arasındaki stratejik ilişki",
-      "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge"
+      "toplumun değişim güçleri arasındaki stratejik ilişki"
     ],
     "correctAnswerTr": "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge"
   },
@@ -18619,9 +18619,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike'?",
     "answers": [
       "pirrengî",
-      "peymana civakî",
       "komûn û meclîs",
-      "parastina rewa"
+      "parastina rewa",
+      "peymana civakî"
     ],
     "correctAnswer": "peymana civakî",
     "explanation": "«peymana civakî» tê vê wateyê: belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike.",
@@ -18632,9 +18632,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge»?",
     "answersTr": [
       "pirrengî",
-      "peymana civakî",
       "komûn û meclîs",
-      "parastina rewa"
+      "parastina rewa",
+      "peymana civakî"
     ],
     "correctAnswerTr": "peymana civakî"
   },
@@ -18644,9 +18644,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve»?",
     "answers": [
       "xweseriya demokratîk",
+      "ademi-merkeziyet",
       "radikal demokrasi",
-      "hevpeymaniya demokratîk",
-      "ademi-merkeziyet"
+      "hevpeymaniya demokratîk"
     ],
     "correctAnswer": "ademi-merkeziyet",
     "explanation": "«ademi-merkeziyet» tê vê wateyê: parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve.",
@@ -18657,9 +18657,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması»?",
     "answersTr": [
       "xweseriya demokratîk",
+      "ademi-merkeziyet",
       "radikal demokrasi",
-      "hevpeymaniya demokratîk",
-      "ademi-merkeziyet"
+      "hevpeymaniya demokratîk"
     ],
     "correctAnswerTr": "ademi-merkeziyet"
   },
@@ -18669,9 +18669,9 @@
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «ademi-merkeziyet» bi awayekî rast temam dike?",
     "answers": [
       "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
+      "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
       "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
-      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
-      "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve"
+      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike"
     ],
     "correctAnswer": "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
     "explanation": "Ravekirina rast ji bo «ademi-merkeziyet» ev e: parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve.",
@@ -18682,9 +18682,9 @@
     "promptTr": "Siyaset dersi için hangi seçenek «ademi-merkeziyet» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
       "toplumun dış saldırılara karşı doğal savunma hakkı",
+      "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması",
       "kararlarda halkın doğrudan katılımını savunan siyasal teori",
-      "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge",
-      "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması"
+      "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge"
     ],
     "correctAnswerTr": "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması"
   },
@@ -18693,9 +18693,9 @@
     "category": "Siyaset",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «mafê parastina xwezayî ya civakê li dijî êrîşên derveyî»?",
     "answers": [
-      "parastina rewa",
       "komûn û meclîs",
       "xweseriya demokratîk",
+      "parastina rewa",
       "eşseroktî"
     ],
     "correctAnswer": "parastina rewa",
@@ -18706,9 +18706,9 @@
     "explanationTr": "«parastina rewa» şu anlama gelir: toplumun dış saldırılara karşı doğal savunma hakkı.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «toplumun dış saldırılara karşı doğal savunma hakkı»?",
     "answersTr": [
-      "parastina rewa",
       "komûn û meclîs",
       "xweseriya demokratîk",
+      "parastina rewa",
       "eşseroktî"
     ],
     "correctAnswerTr": "parastina rewa"
@@ -18718,9 +18718,9 @@
     "category": "Siyaset",
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «parastina rewa» bi awayekî rast temam dike?",
     "answers": [
-      "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
       "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide",
       "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
+      "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
       "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze"
     ],
     "correctAnswer": "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî",
@@ -18731,9 +18731,9 @@
     "explanationKu": "Ravekirina rast ji bo «parastina rewa» ev e: mafê parastina xwezayî ya civakê li dijî êrîşên derveyî.",
     "promptTr": "Siyaset dersi için hangi seçenek «parastina rewa» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
-      "toplumun dış saldırılara karşı doğal savunma hakkı",
       "halkın temsilciler olmadan karar verdiği yönetim biçimi",
       "mahalle ve köylerde halkın öz yönetiminin en temel yapıları",
+      "toplumun dış saldırılara karşı doğal savunma hakkı",
       "kararlarda halkın doğrudan katılımını savunan siyasal teori"
     ],
     "correctAnswerTr": "toplumun dış saldırılara karşı doğal savunma hakkı"
@@ -18744,9 +18744,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de»?",
     "answers": [
       "demokrasiya rasterast",
-      "pirrengî",
       "parastina rewa",
-      "peymana civakî"
+      "peymana civakî",
+      "pirrengî"
     ],
     "correctAnswer": "pirrengî",
     "explanation": "«pirrengî» tê vê wateyê: prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de.",
@@ -18757,9 +18757,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi»?",
     "answersTr": [
       "demokrasiya rasterast",
-      "pirrengî",
       "parastina rewa",
-      "peymana civakî"
+      "peymana civakî",
+      "pirrengî"
     ],
     "correctAnswerTr": "pirrengî"
   },
@@ -18768,9 +18768,9 @@
     "category": "Siyaset",
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «pirrengî» bi awayekî rast temam dike?",
     "answers": [
-      "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
       "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
       "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
+      "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
       "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin"
     ],
     "correctAnswer": "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
@@ -18781,9 +18781,9 @@
     "explanationKu": "Ravekirina rast ji bo «pirrengî» ev e: prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de.",
     "promptTr": "Siyaset dersi için hangi seçenek «pirrengî» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
-      "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi",
       "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması",
       "mahalle ve köylerde halkın öz yönetiminin en temel yapıları",
+      "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi",
       "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model"
     ],
     "correctAnswerTr": "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi"
@@ -18794,9 +18794,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide»?",
     "answers": [
       "xweseriya demokratîk",
-      "demokrasiya rasterast",
       "komûn û meclîs",
-      "pirrengî"
+      "pirrengî",
+      "demokrasiya rasterast"
     ],
     "correctAnswer": "demokrasiya rasterast",
     "explanation": "«demokrasiya rasterast» tê vê wateyê: şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide.",
@@ -18807,9 +18807,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «halkın temsilciler olmadan karar verdiği yönetim biçimi»?",
     "answersTr": [
       "xweseriya demokratîk",
-      "demokrasiya rasterast",
       "komûn û meclîs",
-      "pirrengî"
+      "pirrengî",
+      "demokrasiya rasterast"
     ],
     "correctAnswerTr": "demokrasiya rasterast"
   },
@@ -18819,9 +18819,9 @@
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «demokrasiya rasterast» bi awayekî rast temam dike?",
     "answers": [
       "prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de",
-      "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide",
       "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan",
-      "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze"
+      "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
+      "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide"
     ],
     "correctAnswer": "şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide",
     "explanation": "Ravekirina rast ji bo «demokrasiya rasterast» ev e: şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide.",
@@ -18832,9 +18832,9 @@
     "promptTr": "Siyaset dersi için hangi seçenek «demokrasiya rasterast» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
       "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi",
-      "halkın temsilciler olmadan karar verdiği yönetim biçimi",
       "mahalle ve köylerde halkın öz yönetiminin en temel yapıları",
-      "kararlarda halkın doğrudan katılımını savunan siyasal teori"
+      "kararlarda halkın doğrudan katılımını savunan siyasal teori",
+      "halkın temsilciler olmadan karar verdiği yönetim biçimi"
     ],
     "correctAnswerTr": "halkın temsilciler olmadan karar verdiği yönetim biçimi"
   },
@@ -18844,9 +18844,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin»?",
     "answers": [
       "demokrasiya rasterast",
-      "xweseriya demokratîk",
       "radikal demokrasi",
-      "hevpeymaniya demokratîk"
+      "hevpeymaniya demokratîk",
+      "xweseriya demokratîk"
     ],
     "correctAnswer": "xweseriya demokratîk",
     "explanation": "«xweseriya demokratîk» tê vê wateyê: modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin.",
@@ -18857,9 +18857,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model»?",
     "answersTr": [
       "demokrasiya rasterast",
-      "xweseriya demokratîk",
       "radikal demokrasi",
-      "hevpeymaniya demokratîk"
+      "hevpeymaniya demokratîk",
+      "xweseriya demokratîk"
     ],
     "correctAnswerTr": "xweseriya demokratîk"
   },
@@ -18868,9 +18868,9 @@
     "category": "Siyaset",
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «xweseriya demokratîk» bi awayekî rast temam dike?",
     "answers": [
-      "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
       "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
       "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze",
+      "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
       "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî"
     ],
     "correctAnswer": "modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin",
@@ -18881,9 +18881,9 @@
     "explanationKu": "Ravekirina rast ji bo «xweseriya demokratîk» ev e: modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin.",
     "promptTr": "Siyaset dersi için hangi seçenek «xweseriya demokratîk» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
-      "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model",
       "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge",
       "kararlarda halkın doğrudan katılımını savunan siyasal teori",
+      "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model",
       "toplumun dış saldırılara karşı doğal savunma hakkı"
     ],
     "correctAnswerTr": "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model"
@@ -18894,9 +18894,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de»?",
     "answers": [
       "xweseriya demokratîk",
-      "hevpeymaniya demokratîk",
       "parastina rewa",
-      "demokrasiya rasterast"
+      "demokrasiya rasterast",
+      "hevpeymaniya demokratîk"
     ],
     "correctAnswer": "hevpeymaniya demokratîk",
     "explanation": "«hevpeymaniya demokratîk» tê vê wateyê: têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de.",
@@ -18907,9 +18907,9 @@
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: «toplumun değişim güçleri arasındaki stratejik ilişki»?",
     "answersTr": [
       "xweseriya demokratîk",
-      "hevpeymaniya demokratîk",
       "parastina rewa",
-      "demokrasiya rasterast"
+      "demokrasiya rasterast",
+      "hevpeymaniya demokratîk"
     ],
     "correctAnswerTr": "hevpeymaniya demokratîk"
   },
@@ -18919,9 +18919,9 @@
     "prompt": "Ji bo dersa siyaset kîjan vebijark ravekirina têgeha «hevpeymaniya demokratîk» bi awayekî rast temam dike?",
     "answers": [
       "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve",
-      "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
       "sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin",
-      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike"
+      "belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike",
+      "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de"
     ],
     "correctAnswer": "têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de",
     "explanation": "Ravekirina rast ji bo «hevpeymaniya demokratîk» ev e: têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de.",
@@ -18932,9 +18932,9 @@
     "promptTr": "Siyaset dersi için hangi seçenek «hevpeymaniya demokratîk» teriminin açıklamasını doğru şekilde tamamlar?",
     "answersTr": [
       "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması",
-      "toplumun değişim güçleri arasındaki stratejik ilişki",
       "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem",
-      "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge"
+      "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge",
+      "toplumun değişim güçleri arasındaki stratejik ilişki"
     ],
     "correctAnswerTr": "toplumun değişim güçleri arasındaki stratejik ilişki"
   },
@@ -18944,9 +18944,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê»?",
     "answers": [
       "civaka exlaqî-polîtîk",
-      "Konfederalîzma Demokratîk",
       "Moderniteya Demokratîk",
-      "Ekolojiya Civakî"
+      "Ekolojiya Civakî",
+      "Konfederalîzma Demokratîk"
     ],
     "correctAnswer": "Konfederalîzma Demokratîk",
     "explanation": "«Konfederalîzma Demokratîk» tê vê wateyê: modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê.",
@@ -18957,9 +18957,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «ulus-devlet sisteminin dışında bir toplum yönetimi modeli»?",
     "answersTr": [
       "civaka exlaqî-polîtîk",
-      "Konfederalîzma Demokratîk",
       "Moderniteya Demokratîk",
-      "Ekolojiya Civakî"
+      "Ekolojiya Civakî",
+      "Konfederalîzma Demokratîk"
     ],
     "correctAnswerTr": "Konfederalîzma Demokratîk"
   },
@@ -18968,9 +18968,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «Konfederalîzma Demokratîk» bi awayekî rast temam dike?",
     "answers": [
+      "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
       "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
       "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
-      "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
       "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike"
     ],
     "correctAnswer": "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
@@ -18981,9 +18981,9 @@
     "explanationKu": "Ravekirina rast ji bo «Konfederalîzma Demokratîk» ev e: modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê.",
     "promptTr": "Paradigma dersi için hangi seçenek «Konfederalîzma Demokratîk» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "ulus-devlet sisteminin dışında bir toplum yönetimi modeli",
       "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
       "kararlarını ahlaki ve politik bilinçle veren özgür toplum",
-      "ulus-devlet sisteminin dışında bir toplum yönetimi modeli",
       "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi"
     ],
     "correctAnswerTr": "ulus-devlet sisteminin dışında bir toplum yönetimi modeli"
@@ -18994,9 +18994,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «modela alternatîf a jiyanê ya li dijî kapîtalîzma modern»?",
     "answers": [
       "civaka exlaqî-polîtîk",
+      "Moderniteya Demokratîk",
       "Jineolojî",
-      "azadiya zayendî",
-      "Moderniteya Demokratîk"
+      "azadiya zayendî"
     ],
     "correctAnswer": "Moderniteya Demokratîk",
     "explanation": "«Moderniteya Demokratîk» tê vê wateyê: modela alternatîf a jiyanê ya li dijî kapîtalîzma modern.",
@@ -19007,9 +19007,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «modern kapitalizme karşı alternatif yaşam modeli»?",
     "answersTr": [
       "civaka exlaqî-polîtîk",
+      "Moderniteya Demokratîk",
       "Jineolojî",
-      "azadiya zayendî",
-      "Moderniteya Demokratîk"
+      "azadiya zayendî"
     ],
     "correctAnswerTr": "Moderniteya Demokratîk"
   },
@@ -19018,9 +19018,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «Moderniteya Demokratîk» bi awayekî rast temam dike?",
     "answers": [
+      "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
       "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike",
       "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
-      "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
       "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike"
     ],
     "correctAnswer": "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
@@ -19031,9 +19031,9 @@
     "explanationKu": "Ravekirina rast ji bo «Moderniteya Demokratîk» ev e: modela alternatîf a jiyanê ya li dijî kapîtalîzma modern.",
     "promptTr": "Paradigma dersi için hangi seçenek «Moderniteya Demokratîk» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "modern kapitalizme karşı alternatif yaşam modeli",
       "iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç",
       "kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi",
-      "modern kapitalizme karşı alternatif yaşam modeli",
       "toplumu üst ve alt sınıflara bölen tahakküm yapısı"
     ],
     "correctAnswerTr": "modern kapitalizme karşı alternatif yaşam modeli"
@@ -19044,9 +19044,9 @@
     "prompt": "Têgeha «Jineolojî» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
-      "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
       "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
-      "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê"
+      "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê",
+      "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike"
     ],
     "correctAnswer": "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
     "explanation": "«Jineolojî» tê vê wateyê: zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike.",
@@ -19057,9 +19057,9 @@
     "promptTr": "«Jineolojî» kavramı hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "toplum ile doğa arasındaki dengeli ve dostça ilişki",
-      "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi",
       "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
-      "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması"
+      "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması",
+      "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi"
     ],
     "correctAnswerTr": "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi"
   },
@@ -19068,9 +19068,9 @@
     "category": "Paradigma",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike»?",
     "answers": [
+      "Jineolojî",
       "civaka exlaqî-polîtîk",
       "Moderniteya Demokratîk",
-      "Jineolojî",
       "aboriya komûnal"
     ],
     "correctAnswer": "Jineolojî",
@@ -19081,9 +19081,9 @@
     "explanationTr": "«Jineolojî» şu anlama gelir: toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi.",
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi»?",
     "answersTr": [
+      "Jineolojî",
       "civaka exlaqî-polîtîk",
       "Moderniteya Demokratîk",
-      "Jineolojî",
       "aboriya komûnal"
     ],
     "correctAnswerTr": "Jineolojî"
@@ -19094,9 +19094,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «têkiliya hevseng û dostane ya di navbera civakê û xwezayê de»?",
     "answers": [
       "rexneya patriyarkayê",
+      "Ekolojiya Civakî",
       "zanistiya azad",
-      "civaka exlaqî-polîtîk",
-      "Ekolojiya Civakî"
+      "civaka exlaqî-polîtîk"
     ],
     "correctAnswer": "Ekolojiya Civakî",
     "explanation": "«Ekolojiya Civakî» tê vê wateyê: têkiliya hevseng û dostane ya di navbera civakê û xwezayê de.",
@@ -19107,9 +19107,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «toplum ile doğa arasındaki dengeli ve dostça ilişki»?",
     "answersTr": [
       "rexneya patriyarkayê",
+      "Ekolojiya Civakî",
       "zanistiya azad",
-      "civaka exlaqî-polîtîk",
-      "Ekolojiya Civakî"
+      "civaka exlaqî-polîtîk"
     ],
     "correctAnswerTr": "Ekolojiya Civakî"
   },
@@ -19118,9 +19118,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «Ekolojiya Civakî» bi awayekî rast temam dike?",
     "answers": [
+      "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
       "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
       "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
-      "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
       "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike"
     ],
     "correctAnswer": "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
@@ -19131,9 +19131,9 @@
     "explanationKu": "Ravekirina rast ji bo «Ekolojiya Civakî» ev e: têkiliya hevseng û dostane ya di navbera civakê û xwezayê de.",
     "promptTr": "Paradigma dersi için hangi seçenek «Ekolojiya Civakî» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "toplum ile doğa arasındaki dengeli ve dostça ilişki",
       "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
       "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi",
-      "toplum ile doğa arasındaki dengeli ve dostça ilişki",
       "iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç"
     ],
     "correctAnswerTr": "toplum ile doğa arasındaki dengeli ve dostça ilişki"
@@ -19143,9 +19143,9 @@
     "category": "Paradigma",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê'?",
     "answers": [
+      "aboriya komûnal",
       "civaka exlaqî-polîtîk",
       "Konfederalîzma Demokratîk",
-      "aboriya komûnal",
       "Ekolojiya Civakî"
     ],
     "correctAnswer": "aboriya komûnal",
@@ -19156,9 +19156,9 @@
     "explanationTr": "«aboriya komûnal» şu anlama gelir: kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli.",
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli»?",
     "answersTr": [
+      "aboriya komûnal",
       "civaka exlaqî-polîtîk",
       "Konfederalîzma Demokratîk",
-      "aboriya komûnal",
       "Ekolojiya Civakî"
     ],
     "correctAnswerTr": "aboriya komûnal"
@@ -19168,9 +19168,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «aboriya komûnal» bi awayekî rast temam dike?",
     "answers": [
+      "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
       "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
       "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
-      "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
       "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê"
     ],
     "correctAnswer": "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
@@ -19181,9 +19181,9 @@
     "explanationKu": "Ravekirina rast ji bo «aboriya komûnal» ev e: modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê.",
     "promptTr": "Paradigma dersi için hangi seçenek «aboriya komûnal» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
       "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi",
       "toplum ile doğa arasındaki dengeli ve dostça ilişki",
-      "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
       "ulus-devlet sisteminin dışında bir toplum yönetimi modeli"
     ],
     "correctAnswerTr": "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli"
@@ -19194,9 +19194,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide»?",
     "answers": [
       "aboriya komûnal",
+      "civaka exlaqî-polîtîk",
       "Ekolojiya Civakî",
-      "Moderniteya Demokratîk",
-      "civaka exlaqî-polîtîk"
+      "Moderniteya Demokratîk"
     ],
     "correctAnswer": "civaka exlaqî-polîtîk",
     "explanation": "«civaka exlaqî-polîtîk» tê vê wateyê: civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide.",
@@ -19207,9 +19207,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «kararlarını ahlaki ve politik bilinçle veren özgür toplum»?",
     "answersTr": [
       "aboriya komûnal",
+      "civaka exlaqî-polîtîk",
       "Ekolojiya Civakî",
-      "Moderniteya Demokratîk",
-      "civaka exlaqî-polîtîk"
+      "Moderniteya Demokratîk"
     ],
     "correctAnswerTr": "civaka exlaqî-polîtîk"
   },
@@ -19218,9 +19218,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «civaka exlaqî-polîtîk» bi awayekî rast temam dike?",
     "answers": [
-      "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
       "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
       "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
+      "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
       "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê"
     ],
     "correctAnswer": "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
@@ -19231,9 +19231,9 @@
     "explanationKu": "Ravekirina rast ji bo «civaka exlaqî-polîtîk» ev e: civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide.",
     "promptTr": "Paradigma dersi için hangi seçenek «civaka exlaqî-polîtîk» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "kararlarını ahlaki ve politik bilinçle veren özgür toplum",
       "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
       "ulus-devlet sisteminin dışında bir toplum yönetimi modeli",
+      "kararlarını ahlaki ve politik bilinçle veren özgür toplum",
       "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması"
     ],
     "correctAnswerTr": "kararlarını ahlaki ve politik bilinçle veren özgür toplum"
@@ -19243,9 +19243,9 @@
     "category": "Paradigma",
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê»?",
     "answers": [
+      "rexneya patriyarkayê",
       "Ekolojiya Civakî",
       "aboriya komûnal",
-      "rexneya patriyarkayê",
       "Moderniteya Demokratîk"
     ],
     "correctAnswer": "rexneya patriyarkayê",
@@ -19256,9 +19256,9 @@
     "explanationTr": "«rexneya patriyarkayê» şu anlama gelir: toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması.",
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması»?",
     "answersTr": [
+      "rexneya patriyarkayê",
       "Ekolojiya Civakî",
       "aboriya komûnal",
-      "rexneya patriyarkayê",
       "Moderniteya Demokratîk"
     ],
     "correctAnswerTr": "rexneya patriyarkayê"
@@ -19268,9 +19268,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «rexneya patriyarkayê» bi awayekî rast temam dike?",
     "answers": [
+      "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê",
       "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
       "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
-      "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê",
       "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide"
     ],
     "correctAnswer": "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê",
@@ -19281,9 +19281,9 @@
     "explanationKu": "Ravekirina rast ji bo «rexneya patriyarkayê» ev e: analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê.",
     "promptTr": "Paradigma dersi için hangi seçenek «rexneya patriyarkayê» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
+      "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması",
       "kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi",
       "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi",
-      "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması",
       "kararlarını ahlaki ve politik bilinçle veren özgür toplum"
     ],
     "correctAnswerTr": "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması"
@@ -19294,9 +19294,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike»?",
     "answers": [
       "Moderniteya Demokratîk",
+      "hiyerarşiya civakî",
       "azadiya zayendî",
-      "Konfederalîzma Demokratîk",
-      "hiyerarşiya civakî"
+      "Konfederalîzma Demokratîk"
     ],
     "correctAnswer": "hiyerarşiya civakî",
     "explanation": "«hiyerarşiya civakî» tê vê wateyê: avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike.",
@@ -19307,9 +19307,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «toplumu üst ve alt sınıflara bölen tahakküm yapısı»?",
     "answersTr": [
       "Moderniteya Demokratîk",
+      "hiyerarşiya civakî",
       "azadiya zayendî",
-      "Konfederalîzma Demokratîk",
-      "hiyerarşiya civakî"
+      "Konfederalîzma Demokratîk"
     ],
     "correctAnswerTr": "hiyerarşiya civakî"
   },
@@ -19318,9 +19318,9 @@
     "category": "Paradigma",
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «hiyerarşiya civakî» bi awayekî rast temam dike?",
     "answers": [
-      "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
       "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
       "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
+      "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
       "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern"
     ],
     "correctAnswer": "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike",
@@ -19331,9 +19331,9 @@
     "explanationKu": "Ravekirina rast ji bo «hiyerarşiya civakî» ev e: avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike.",
     "promptTr": "Paradigma dersi için hangi seçenek «hiyerarşiya civakî» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "toplumu üst ve alt sınıflara bölen tahakküm yapısı",
       "ulus-devlet sisteminin dışında bir toplum yönetimi modeli",
       "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi",
+      "toplumu üst ve alt sınıflara bölen tahakküm yapısı",
       "modern kapitalizme karşı alternatif yaşam modeli"
     ],
     "correctAnswerTr": "toplumu üst ve alt sınıflara bölen tahakküm yapısı"
@@ -19344,9 +19344,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike'?",
     "answers": [
       "hiyerarşiya civakî",
+      "zanistiya azad",
       "Ekolojiya Civakî",
-      "azadiya zayendî",
-      "zanistiya azad"
+      "azadiya zayendî"
     ],
     "correctAnswer": "zanistiya azad",
     "explanation": "«zanistiya azad» tê vê wateyê: hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike.",
@@ -19357,9 +19357,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç»?",
     "answersTr": [
       "hiyerarşiya civakî",
+      "zanistiya azad",
       "Ekolojiya Civakî",
-      "azadiya zayendî",
-      "zanistiya azad"
+      "azadiya zayendî"
     ],
     "correctAnswerTr": "zanistiya azad"
   },
@@ -19369,9 +19369,9 @@
     "prompt": "Ji bo dersa paradigma kîjan vebijark ravekirina têgeha «zanistiya azad» bi awayekî rast temam dike?",
     "answers": [
       "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
+      "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike",
       "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
-      "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê",
-      "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike"
+      "modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê"
     ],
     "correctAnswer": "hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike",
     "explanation": "Ravekirina rast ji bo «zanistiya azad» ev e: hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike.",
@@ -19382,9 +19382,9 @@
     "promptTr": "Paradigma dersi için hangi seçenek «zanistiya azad» kavramının açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "modern kapitalizme karşı alternatif yaşam modeli",
+      "iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç",
       "toplum ile doğa arasındaki dengeli ve dostça ilişki",
-      "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli",
-      "iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç"
+      "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli"
     ],
     "correctAnswerTr": "iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç"
   },
@@ -19394,9 +19394,9 @@
     "prompt": "Têgeha «azadiya zayendî» bi kîjan ravekirinê çêtir tê fêmkirin?",
     "answers": [
       "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern",
+      "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
       "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide",
-      "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
-      "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de"
+      "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike"
     ],
     "correctAnswer": "prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de",
     "explanation": "«azadiya zayendî» tê vê wateyê: prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de.",
@@ -19407,9 +19407,9 @@
     "promptTr": "«azadiya zayendî» kavramı hangi açıklamayla daha iyi anlaşılır?",
     "answersTr": [
       "modern kapitalizme karşı alternatif yaşam modeli",
+      "kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi",
       "kararlarını ahlaki ve politik bilinçle veren özgür toplum",
-      "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi",
-      "kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi"
+      "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi"
     ],
     "correctAnswerTr": "kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi"
   },
@@ -19419,9 +19419,9 @@
     "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: «prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de»?",
     "answers": [
       "aboriya komûnal",
-      "azadiya zayendî",
       "Ekolojiya Civakî",
-      "hiyerarşiya civakî"
+      "hiyerarşiya civakî",
+      "azadiya zayendî"
     ],
     "correctAnswer": "azadiya zayendî",
     "explanation": "«azadiya zayendî» tê vê wateyê: prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de.",
@@ -19432,9 +19432,9 @@
     "promptTr": "Bu açıklamayla hangi kavram tanınır: «kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi»?",
     "answersTr": [
       "aboriya komûnal",
-      "azadiya zayendî",
       "Ekolojiya Civakî",
-      "hiyerarşiya civakî"
+      "hiyerarşiya civakî",
+      "azadiya zayendî"
     ],
     "correctAnswerTr": "azadiya zayendî"
   },
@@ -19464,9 +19464,9 @@
     "category": "Teknolojî",
     "prompt": "Peyva «klavye» di Kurmancî de bi kîjan peyvê tê naskirin?",
     "answers": [
+      "Textê tiliyan",
       "Klavyeya",
       "Bûka tiliyan",
-      "Textê tiliyan",
       "Teşta tiliyan"
     ],
     "correctAnswer": "Textê tiliyan",
@@ -19477,9 +19477,9 @@
     "explanationKu": "Di Kurmancî de ji bo «klavye» peyva «textê tiliyan» an «klavye» tê bikaranîn.",
     "promptTr": "Kurmancîde «klavye» hangi sözcükle karşılanır?",
     "answersTr": [
+      "Textê tiliyan",
       "Klavyeya",
       "Bûka tiliyan",
-      "Textê tiliyan",
       "Teşta tiliyan"
     ],
     "correctAnswerTr": "Textê tiliyan"
@@ -19489,9 +19489,9 @@
     "category": "Teknolojî",
     "prompt": "Kîjan têgeh di programkirinê de ji bo çerxên dubarekirinê (loop) tê bikaranîn?",
     "answers": [
-      "Xelek",
       "Guherbar",
       "Fonksiyon",
+      "Xelek",
       "Şert"
     ],
     "correctAnswer": "Xelek",
@@ -19502,9 +19502,9 @@
     "explanationKu": "Di programkirinê de ji bo çerxên dubarekirinê (loop) peyva «xelek» tê bikaranîn.",
     "promptTr": "Programlamada yineleme çemberi (loop) için Kurmancîde hangi terim kullanılır?",
     "answersTr": [
-      "Xelek",
       "Guherbar",
       "Fonksiyon",
+      "Xelek",
       "Şert"
     ],
     "correctAnswerTr": "Xelek"
@@ -19557,9 +19557,9 @@
     "prompt": "Peyva «mouse» di Kurmancî de bi kîjan navî tê nasîn?",
     "answers": [
       "Pisîk",
+      "Mişk",
       "Kezî",
-      "Tewr",
-      "Mişk"
+      "Tewr"
     ],
     "correctAnswer": "Mişk",
     "explanation": "Di Kurmancî de ji bo «fare (mouse)» peyva «mişk» tê bikaranîn.",
@@ -19570,9 +19570,9 @@
     "promptTr": "Kurmancîde «mouse» hangi adla bilinir?",
     "answersTr": [
       "Pisîk",
+      "Mişk",
       "Kezî",
-      "Tewr",
-      "Mişk"
+      "Tewr"
     ],
     "correctAnswerTr": "Mişk"
   },
@@ -19581,9 +19581,9 @@
     "category": "Teknolojî",
     "prompt": "Peyva «file» di Kurmancî de tê çi wateyê?",
     "answers": [
-      "Dosya",
       "Rûpel",
       "Wêne",
+      "Dosya",
       "Stran"
     ],
     "correctAnswer": "Dosya",
@@ -19594,9 +19594,9 @@
     "explanationKu": "Di Kurmancî de ji bo «dosya» peyva «peldank» an «dosya» tê bikaranîn.",
     "promptTr": "«File» sözcüğü Kurmancîde ne anlama gelir?",
     "answersTr": [
-      "Dosya",
       "Sayfa",
       "Resim",
+      "Dosya",
       "Şarkı"
     ],
     "correctAnswerTr": "Dosya"
@@ -19607,9 +19607,9 @@
     "prompt": "Di torên komputerê de kîjan pergal navên malperan vediguherîne navnîşanên IP?",
     "answers": [
       "Firewall",
-      "DNS",
       "HTTP",
-      "DHCP"
+      "DHCP",
+      "DNS"
     ],
     "correctAnswer": "DNS",
     "explanation": "DNS (Domain Name System) navên malperan (wek google.com) vediguherîne navnîşanên IP.",
@@ -19620,9 +19620,9 @@
     "promptTr": "Bilgisayar ağlarında site adlarını IP adreslerine hangi sistem çevirir?",
     "answersTr": [
       "Firewall",
-      "DNS",
       "HTTP",
-      "DHCP"
+      "DHCP",
+      "DNS"
     ],
     "correctAnswerTr": "DNS"
   },
@@ -19632,9 +19632,9 @@
     "prompt": "Di sêwirana sepanên mobîl de «widget» bi giştî çi nîşan dide?",
     "answers": [
       "Depoya daneyan (DB)",
+      "Hêmana dîtbarî (UI)",
       "Girêdana torê (net)",
-      "Rêbaza hesabê (algorîtma)",
-      "Hêmana dîtbarî (UI)"
+      "Rêbaza hesabê (algorîtma)"
     ],
     "correctAnswer": "Hêmana dîtbarî (UI)",
     "explanation": "Di Flutter de her hêmaneke dîtbarî û sêwiranê wek «Widget» tê naskirin.",
@@ -19645,9 +19645,9 @@
     "promptTr": "Mobil uygulama tasarımında «widget» genel olarak neyi gösterir?",
     "answersTr": [
       "Veri deposu (DB)",
+      "Görsel öge (UI)",
       "Ağ bağlantısı (net)",
-      "Hesap yöntemi (algoritma)",
-      "Görsel öge (UI)"
+      "Hesap yöntemi (algoritma)"
     ],
     "correctAnswerTr": "Görsel öge (UI)"
   },
@@ -19678,9 +19678,9 @@
     "prompt": "Peyva «fermo» di Tirkî de tê çi wateyê?",
     "answers": [
       "Lütfen",
+      "Buyurun",
       "Teşekkürler",
-      "Özür dilerim",
-      "Buyurun"
+      "Özür dilerim"
     ],
     "correctAnswer": "Buyurun",
     "explanation": "Di Kurmancî de ji bo «buyurun» peyva «fermo» tê bikaranîn.",
@@ -19691,9 +19691,9 @@
     "promptTr": "«Fermo» sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
       "Lütfen",
+      "Buyurun",
       "Teşekkürler",
-      "Özür dilerim",
-      "Buyurun"
+      "Özür dilerim"
     ],
     "correctAnswerTr": "Buyurun"
   },
@@ -19724,9 +19724,9 @@
     "prompt": "Ji bo «bibore» di Kurmancî de kîjan peyv tê bikaranîn?",
     "answers": [
       "Rast e",
-      "Bibexşîne",
       "Rojbaş",
-      "Kerem bike"
+      "Kerem bike",
+      "Bibexşîne"
     ],
     "correctAnswer": "Bibexşîne",
     "explanation": "Di Kurmancî de ji bo «özür dilerim» peyva «bibexşîne» an «lêborînê dixwazim» tê bikaranîn.",
@@ -19737,9 +19737,9 @@
     "promptTr": "«Özür dilerim» için Kurmancîde hangi sözcük kullanılır?",
     "answersTr": [
       "Rast e",
-      "Bibexşîne",
       "Rojbaş",
-      "Kerem bike"
+      "Kerem bike",
+      "Bibexşîne"
     ],
     "correctAnswerTr": "Bibexşîne"
   },
@@ -19770,9 +19770,9 @@
     "prompt": "Kesek dema derbasî êvarê dibe silav dide te; tu jî bi heman peyva silavê bersivê didî. Ev peyv çi ye?",
     "answers": [
       "Spas, ez baş im",
-      "Êvarbaş",
       "Rojbaş",
-      "Şevbaş"
+      "Şevbaş",
+      "Êvarbaş"
     ],
     "correctAnswer": "Êvarbaş",
     "explanation": "Dema kesek dibêje «êvarbaş», em bi heman şêweyî dibêjin «êvarbaş».",
@@ -19783,9 +19783,9 @@
     "promptTr": "Akşam olurken biri seni selamlıyor; sen de aynı selam sözcüğüyle karşılık veriyorsun. Bu sözcük nedir?",
     "answersTr": [
       "Spas, ez baş im",
-      "Êvarbaş",
       "Rojbaş",
-      "Şevbaş"
+      "Şevbaş",
+      "Êvarbaş"
     ],
     "correctAnswerTr": "Êvarbaş"
   },
@@ -19816,9 +19816,9 @@
     "prompt": "Tiştoka «Bi roj hevalê min e, bi şev hevalê dîwêr e» bersiva wê çi ye?",
     "answers": [
       "Çire / Fener",
+      "Sol / Pêlav",
       "Mifta / Kilît",
-      "Dermên",
-      "Sol / Pêlav"
+      "Dermên"
     ],
     "correctAnswer": "Sol / Pêlav",
     "explanation": "Ev tiştokeke kurdî ya gelêrî ye, bersiva wê «sol» (pêlav) e.",
@@ -19829,9 +19829,9 @@
     "promptTr": "«Gündüz benim arkadaşımdır, gece duvarın arkadaşıdır» bilmecesinin cevabı nedir?",
     "answersTr": [
       "Çıra / Fener",
+      "Ayakkabı",
       "Anahtar",
-      "Dermên",
-      "Ayakkabı"
+      "Dermên"
     ],
     "correctAnswerTr": "Ayakkabı"
   },
@@ -19841,9 +19841,9 @@
     "prompt": "Tiştoka «Reng spî ye lê ne berf e, dixwure lê ne heywan e» bersiva wê çi ye?",
     "answers": [
       "Sabûn",
-      "Xwê",
       "Şekir",
-      "Ar / Mird"
+      "Ar / Mird",
+      "Xwê"
     ],
     "correctAnswer": "Xwê",
     "explanation": "Bersiva vê tiştokê «xwê» (tuz) e.",
@@ -19854,9 +19854,9 @@
     "promptTr": "«Rengi beyazdır ama kar değildir, yer ama hayvan değildir» bilmecesinin cevabı nedir?",
     "answersTr": [
       "Sabun",
-      "Tuz",
       "Şeker",
-      "Un"
+      "Un",
+      "Tuz"
     ],
     "correctAnswerTr": "Tuz"
   },
@@ -19865,9 +19865,9 @@
     "category": "Çand",
     "prompt": "Tiştoka «Heta jê nekirî mezin nabe» bersiva wê çi ye?",
     "answers": [
+      "Kolin",
       "Dîwar",
       "Dar",
-      "Kolin",
       "Rê"
     ],
     "correctAnswer": "Kolin",
@@ -19878,9 +19878,9 @@
     "explanationKu": "Ev tiştokeke zekayê ye, bersiva wê «kolin» an «çal» (çukur) e.",
     "promptTr": "«Ondan alınmadıkça büyümez» bilmecesinin cevabı nedir?",
     "answersTr": [
+      "Çukur",
       "Duvar",
       "Ağaç",
-      "Çukur",
       "Yol"
     ],
     "correctAnswerTr": "Çukur"

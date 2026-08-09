@@ -969,6 +969,7 @@ extension _QuizScreenUI on _QuizScreenState {
                       width: 164,
                       child: _QuestionImage(
                         url: question.imageUrl!,
+                        alt: question.imageAltFor(isKu: context.isKu),
                         isCompact: isCompact,
                         layoutSize: size,
                         onReady: questionVisualReady,
@@ -1002,6 +1003,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 if (question.hasImage) ...[
                   _QuestionImage(
                     url: question.imageUrl!,
+                    alt: question.imageAltFor(isKu: context.isKu),
                     isCompact: isCompact,
                     layoutSize: size,
                     onReady: questionVisualReady,

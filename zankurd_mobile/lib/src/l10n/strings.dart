@@ -111,6 +111,8 @@ class Tr {
     K.appLanguage: {'ku': 'Zimanê sepanê', 'tr': 'Uygulama dili'},
     K.darkLightMode: {'ku': 'Moda tarî/ronahî', 'tr': 'Karanlık/Aydınlık mod'},
     K.reduceMotion: {'ku': 'Tevgerê kêm bike', 'tr': 'Hareketi azalt'},
+    // Görselin kendi betimlemesi yoksa ekran okuyucuya okunan genel etiket.
+    K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
     K.secSoundNotif: {'ku': 'Deng û Agahdarî', 'tr': 'Ses ve Bildirim'},
     K.soundEffects: {'ku': 'Deng û mûzîk', 'tr': 'Ses efektleri'},
     K.dailyReminder: {'ku': 'Bîranîna rojane', 'tr': 'Günlük hatırlatıcı'},
@@ -2324,6 +2326,7 @@ class K {
   static const appLanguage = 'settings.appLanguage';
   static const darkLightMode = 'settings.darkLightMode';
   static const reduceMotion = 'settings.reduceMotion';
+  static const questionImage = 'quiz.questionImage';
   static const secSoundNotif = 'settings.section.soundNotif';
   static const soundEffects = 'settings.soundEffects';
   static const dailyReminder = 'settings.dailyReminder';

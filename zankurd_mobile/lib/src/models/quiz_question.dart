@@ -29,6 +29,8 @@ class QuizQuestion {
     this.audioUrl,
     this.type = QuestionType.multipleChoice,
     this.imageUrl,
+    this.imageAltKu,
+    this.imageAltTr,
     this.difficulty = 2,
     this.metadata,
   });
@@ -65,7 +67,34 @@ class QuizQuestion {
   final String? audioUrl;
   final QuestionType type;
   final String? imageUrl;
+
+  /// Görselin ekran okuyucuya okunan betimlemesi.
+  ///
+  /// 2026-08-07 denetimi: 126 görselli sorunun hiçbirinde alt metin yoktu,
+  /// yani TalkBack/VoiceOver kullanan bir oyuncu için görsel **hiç yoktu**.
+  /// Kimi soruda görsel süstür, ama kimi soruda sorunun kendisidir
+  /// ("görseldeki çalgı hangisidir?") — orada alt metnin yokluğu soruyu
+  /// çözülemez yapar.
+  ///
+  /// Alan bilinçli olarak nullable ve doldurulması ZORUNLU DEĞİL: uydurma
+  /// bir betimleme, betimlemenin yokluğundan kötüdür. Yalnız görseli
+  /// gerçekten açıp bakan biri tarafından yazılır; boş olduğunda arayüz
+  /// yerelleştirilmiş genel bir etiket kullanır (bkz. `_QuestionImage`).
+  final String? imageAltKu;
+  final String? imageAltTr;
   final int difficulty;
+
+  /// Seçili dile göre görsel betimlemesi. Yoksa `null` döner ve etiketi
+  /// çağıran arayüz katmanı belirler — model l10n'a bağlı değildir.
+  String? imageAltFor({required bool isKu}) {
+    final preferred = isKu ? imageAltKu : imageAltTr;
+    final trimmed = preferred?.trim();
+    if (trimmed != null && trimmed.isNotEmpty) return trimmed;
+    // Bir dilde yazılmış betimleme, hiç betimleme olmamasından iyidir:
+    // ekran okuyucu yanlış aksanla da olsa içeriği duyurur.
+    final fallback = (isKu ? imageAltTr : imageAltKu)?.trim();
+    return (fallback == null || fallback.isEmpty) ? null : fallback;
+  }
 
   /// Editör/kalite meta verisi (opsiyonel, geriye uyumlu). Eski verilerde
   /// `null`'dır ve [ContentQualityPolicy] bunu "uygun ama doğrulanmamış"
@@ -142,6 +171,8 @@ class QuizQuestion {
       audioUrl: audioUrl,
       type: type,
       imageUrl: imageUrl,
+      imageAltKu: imageAltKu,
+      imageAltTr: imageAltTr,
       difficulty: difficulty,
       metadata: metadata,
     );
@@ -313,6 +344,8 @@ class QuizQuestion {
         (json['type'] as String?) ?? 'multipleChoice',
       ),
       imageUrl: json['imageUrl'] as String?,
+      imageAltKu: json['imageAltKu'] as String?,
+      imageAltTr: json['imageAltTr'] as String?,
       difficulty: (json['difficulty'] as num?)?.toInt() ?? 2,
       metadata: json['metadata'] == null
           ? null
@@ -337,6 +370,8 @@ class QuizQuestion {
     if (audioUrl != null) 'audioUrl': audioUrl,
     'type': type.name,
     if (imageUrl != null) 'imageUrl': imageUrl,
+    if (imageAltKu != null) 'imageAltKu': imageAltKu,
+    if (imageAltTr != null) 'imageAltTr': imageAltTr,
     'difficulty': difficulty,
     if (metadata != null) 'metadata': metadata!.toJson(),
   };

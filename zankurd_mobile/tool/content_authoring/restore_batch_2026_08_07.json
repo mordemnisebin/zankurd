@@ -271,5 +271,47 @@
     "explanationKu": "Bilûr amûreke sivik e ku şivan li zozanan pê distirên; dengê wê nerm e û ji bo govendê ne guncaw e. Dahol û erbane amûrên lêdanê ne, zurna jî dengekî pir bilind derdixe.",
     "explanationTr": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve halay için uygun değildir. Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
     "difficulty": 2
+  },
+  {
+    "category": "Cografya",
+    "promptKu": "Bajarê Colemêrgê li kîjan perçeyê Kurdistanê ye?",
+    "promptTr": "Colemêrg şehri Kurdistanê'nin hangi parçasındadır?",
+    "answersKu": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Colemêrg li Bakur e; ew bi çiyayên xwe yên bilind û geliyên kûr tê nasîn û yek ji herêmên herî bilind ên deverê ye.",
+    "explanationTr": "Colemêrg Bakur'dadır; yüksek dağları ve derin vadileriyle bilinir, bölgenin en yüksek yörelerinden biridir.",
+    "difficulty": 2
+  },
+  {
+    "category": "Cografya",
+    "promptKu": "Gola Wanê li kîjan perçeyê Kurdistanê ye?",
+    "promptTr": "Wan Gölü Kurdistanê'nin hangi parçasındadır?",
+    "answersKu": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Gola Wanê li Bakur e; ava wê sodadar e, ji ber vê yekê ne ji bo vexwarinê ne jî ji bo avdanê tê bikaranîn.",
+    "explanationTr": "Wan Gölü Bakur'dadır; suyu sodalıdır, bu yüzden ne içme ne de sulama için kullanılır.",
+    "difficulty": 2
   }
 ]

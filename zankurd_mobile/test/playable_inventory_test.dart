@@ -43,14 +43,14 @@ void main() {
   test('oynanabilir soru sayısı beklenen değerde', () {
     expect(
       loaded.length,
-      2151,
+      2153,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
     );
     expect(
       playable.length,
-      2098,
+      2100,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
