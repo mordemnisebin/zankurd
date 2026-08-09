@@ -50,7 +50,7 @@ void main() {
     );
     expect(
       playable.length,
-      2090,
+      2098,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -73,7 +73,7 @@ void main() {
     }
 
     expect(byReason, {
-      'reviewStatus=${ReviewStatus.needsReview}': 46,
+      'reviewStatus=${ReviewStatus.needsReview}': 38,
       'reviewStatus=${ReviewStatus.rejected}': 15,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });

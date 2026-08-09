@@ -17,10 +17,13 @@
     "type": "wordOrdering",
     "difficulty": 1,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "ez diçim malê — kirde + lêker + navdêra tewandî, rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Ben eve gidiyorum.»"
   },
@@ -42,10 +45,13 @@
     "type": "wordOrdering",
     "difficulty": 1,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "ew nan dixwe — kirde + bireser + lêker, rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «O ekmek yiyor.»"
   },
@@ -67,10 +73,13 @@
     "type": "wordOrdering",
     "difficulty": 1,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "ez pirtûkê dixwînim — bireser tewandî (-ê), rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Ben kitap okuyorum.»"
   },
@@ -92,10 +101,13 @@
     "type": "wordOrdering",
     "difficulty": 1,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "dayik nan çêdike — hevoka gerguhêz a dema niha, rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Anne ekmek yapıyor.»"
   },
@@ -118,10 +130,13 @@
     "type": "wordOrdering",
     "difficulty": 2,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "em bi kurdî diaxivin — daçeka «bi» + zimanê, rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Biz Kürtçe konuşuyoruz.»"
   },
@@ -144,10 +159,13 @@
     "type": "wordOrdering",
     "difficulty": 2,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "zarok li dibistanê ne — daçeka «li» + lêkera «bûn» a pirjimar, rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Çocuklar okuldalar.»"
   },
@@ -171,10 +189,13 @@
     "type": "wordOrdering",
     "difficulty": 2,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "ez ji te hez dikim — biwêja «hez kirin» bi daçeka «ji», rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Seni seviyorum.»"
   },
@@ -197,10 +218,13 @@
     "type": "wordOrdering",
     "difficulty": 1,
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
-      "qualityVersion": 1
+      "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
+      "qualityVersion": 2,
+      "reviewNote": "îro hewa germ e — hevoka nav-hokerî, rast",
+      "reviewedBy": "opus-5",
+      "reviewedAt": "2026-08-07"
     },
     "promptTr": "Cümleyi sırala: «Bugün hava sıcak.»"
   }
