@@ -22,6 +22,7 @@ import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
+import 'src/providers/untimed_mode_provider.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
@@ -158,6 +159,7 @@ Future<void> main() async {
       final themeFuture = ThemeProvider.load();
       final soundFuture = SoundProvider.load();
       final reducedMotionFuture = ReducedMotionProvider.load();
+      final untimedModeFuture = UntimedModeProvider.load();
       final analyticsConsentFuture = AnalyticsConsentProvider.load();
 
       // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
@@ -175,6 +177,7 @@ Future<void> main() async {
         themeFuture,
         soundFuture,
         reducedMotionFuture,
+        untimedModeFuture,
         analyticsConsentFuture,
       ]);
 
@@ -186,6 +189,7 @@ Future<void> main() async {
       final themeProvider = await themeFuture;
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
+      final untimedModeProvider = await untimedModeFuture;
       final analyticsConsentProvider = await analyticsConsentFuture;
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
@@ -215,6 +219,7 @@ Future<void> main() async {
           themeProvider: themeProvider,
           soundProvider: soundProvider,
           reducedMotionProvider: reducedMotionProvider,
+          untimedModeProvider: untimedModeProvider,
           analyticsConsentProvider: analyticsConsentProvider,
           premiumService: premiumService,
         ),
@@ -286,6 +291,7 @@ class ZanKurdApp extends StatelessWidget {
     ThemeProvider? themeProvider,
     SoundProvider? soundProvider,
     ReducedMotionProvider? reducedMotionProvider,
+    UntimedModeProvider? untimedModeProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
     PremiumService? premiumService,
     super.key,
@@ -294,6 +300,7 @@ class ZanKurdApp extends StatelessWidget {
        themeProvider = themeProvider ?? ThemeProvider(),
        soundProvider = soundProvider ?? SoundProvider(),
        reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
+       untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
        premiumService = premiumService ?? PremiumService.fallback();
@@ -304,6 +311,7 @@ class ZanKurdApp extends StatelessWidget {
   final ThemeProvider themeProvider;
   final SoundProvider soundProvider;
   final ReducedMotionProvider reducedMotionProvider;
+  final UntimedModeProvider untimedModeProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
   final PremiumService premiumService;
 
@@ -324,6 +332,9 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<SoundProvider>.value(value: soundProvider),
         ChangeNotifierProvider<ReducedMotionProvider>.value(
           value: reducedMotionProvider,
+        ),
+        ChangeNotifierProvider<UntimedModeProvider>.value(
+          value: untimedModeProvider,
         ),
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,

@@ -13,6 +13,7 @@ import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
 import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
+import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
@@ -189,7 +190,32 @@ class _QuizScreenState extends State<QuizScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
-  bool get _usesTimer => widget.enableTimer && !_isLearningExperience;
+
+  /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik
+  /// turlar.
+  ///
+  /// Sınır keyfî değil, ödül yerleşiminin sınırıyla aynı:
+  /// `_settleQuizReward` bu koşulda erken dönüp sıfır coin veriyor
+  /// (`widget.practice || widget.room.id == null`). Yani burada sayacı
+  /// kapatmak hiçbir sunucu ödülünü, lig puanını ya da rakip karşılaşmasını
+  /// etkilemiyor — kapanan tek şey oyuncunun kendi üzerindeki baskı.
+  ///
+  /// Oda, 1v1, günlük tur, bot yarışı ve turnuva her hâlükârda sayaçlı
+  /// kalır: orada süre puanın parçasıdır.
+  bool get _isRewardNeutralSolo =>
+      !widget.is1v1 &&
+      !widget.dailyQuiz &&
+      !widget.botRace &&
+      (widget.practice || widget.room.id == null);
+
+  /// Kullanıcı tercihi build sırasında okunur; `_untimedPreference`
+  /// `didChangeDependencies` içinde tazelenir (sağlayıcı yoksa `false`).
+  bool _untimedPreference = false;
+
+  bool get _usesTimer =>
+      widget.enableTimer &&
+      !_isLearningExperience &&
+      !(_untimedPreference && _isRewardNeutralSolo);
 
   /// Analytics'te "hangi modda oynanıyor" ayrımı için (quiz_start event'i).
   String get _quizModeLabel {
@@ -372,6 +398,14 @@ class _QuizScreenState extends State<QuizScreen>
     final myIndex = livePlayers.indexWhere(_isMe);
     if (myIndex == -1) return widget.room;
     return widget.room.copyWith(players: [livePlayers[myIndex], ..._opponents]);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Tercih tur BAŞLARKEN okunur ve tur boyunca sabit kalır: oyuncu tur
+    // ortasında ayarı değiştirse bile sayaç ortada belirip kaybolmamalı.
+    _untimedPreference = UntimedModeProvider.isEnabledIn(context);
   }
 
   @override

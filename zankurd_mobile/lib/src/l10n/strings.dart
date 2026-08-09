@@ -113,6 +113,12 @@ class Tr {
     K.reduceMotion: {'ku': 'Tevgerê kêm bike', 'tr': 'Hareketi azalt'},
     // Görselin kendi betimlemesi yoksa ekran okuyucuya okunan genel etiket.
     K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
+    K.untimedSolo: {'ku': 'Moda bêsînor', 'tr': 'Süresiz mod'},
+    K.untimedSoloSub: {
+      'ku': 'Di tûrên tenê de saet nasekine; oda, 1v1 û turnûva naguhere.',
+      'tr':
+          'Tek kişilik turlarda sayaç çalışmaz; oda, 1v1 ve turnuva değişmez.',
+    },
     K.secSoundNotif: {'ku': 'Deng û Agahdarî', 'tr': 'Ses ve Bildirim'},
     K.soundEffects: {'ku': 'Deng û mûzîk', 'tr': 'Ses efektleri'},
     K.dailyReminder: {'ku': 'Bîranîna rojane', 'tr': 'Günlük hatırlatıcı'},
@@ -2327,6 +2333,8 @@ class K {
   static const darkLightMode = 'settings.darkLightMode';
   static const reduceMotion = 'settings.reduceMotion';
   static const questionImage = 'quiz.questionImage';
+  static const untimedSolo = 'settings.untimedSolo';
+  static const untimedSoloSub = 'settings.untimedSoloSub';
   static const secSoundNotif = 'settings.section.soundNotif';
   static const soundEffects = 'settings.soundEffects';
   static const dailyReminder = 'settings.dailyReminder';
