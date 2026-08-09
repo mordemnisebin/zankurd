@@ -1400,25 +1400,25 @@
     "difficulty": 3,
     "id": "comm_sin_0112",
     "category": "Sînema",
-    "prompt": "Bahman Ghobadi bi eslê xwe ji kîjan welatî ye?",
-    "promptTr": "Bahman Ghobadi asıl olarak hangi ülkedendir?",
+    "prompt": "Derhêner Bahman Ghobadi ji kîjan perçeyê Kurdistanê ye?",
+    "promptTr": "Yönetmen Bahman Ghobadi Kurdistanê'nin hangi parçasındandır?",
     "answers": [
-      "Iraq",
-      "Sûriye",
-      "Îran",
-      "Ermenistan"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
     "answersTr": [
-      "Iraq",
-      "Sûriye",
-      "Îran",
-      "Ermenistan"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswer": "Îran",
-    "correctAnswerTr": "Îran",
-    "explanation": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
-    "explanationKu": "Bahman Ghobadi derhênerekî kurd e ku li Baneyê, li Îranê ji dayîk bûye.",
-    "explanationTr": "Bahman Ghobadi, İran'ın Bane kentinde doğmuş Kürt yönetmendir.",
+    "correctAnswer": "Rojhilatê Kurdistanê",
+    "correctAnswerTr": "Rojhilat (Doğu)",
+    "explanation": "Bahman Ghobadi Rojhilat'taki Bane'de doğdu; «Sarhoş Atlar Zamanı» ilk uzun metrajlı filmidir.",
+    "explanationKu": "Bahman Ghobadi li Banê, li Rojhilat, ji dayik bû; «Dema Hespên Serxweş» yekem fîlmê wî yê dirêjmetraj e.",
+    "explanationTr": "Bahman Ghobadi Rojhilat'taki Bane'de doğdu; «Sarhoş Atlar Zamanı» ilk uzun metrajlı filmidir.",
     "metadata": {
       "reviewStatus": "needsReview",
       "dialect": "Kurmancî",

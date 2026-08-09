@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "authoredAt": "2026-08-07",
+  "reviewer": "opus-5",
+  "rationale": "İkinci onarım turu. Hiçbir kayıt SİLİNMİYOR — hepsi yerinde onarılıyor. İki kusur sınıfı: (1) kaynağıyla çelişen tek bir cevap anahtarı, (2) Kürt yerini ve Kürt sanatçısını yalnız egemen devletle tanımlayan on bir soru. İkincisi projenin bağlayıcı adlandırma sözleşmesine aykırıydı: bir Kürt şehri hangi devletin sınırında olduğuyla değil, Kurdistanê'nin hangi parçasında olduğuyla tanımlanır.",
+
+  "patchOptions": [
+    {
+      "id": "sf_cin_0038",
+      "reason": "answer_key_contradicts_its_own_source",
+      "detail": "Kaydın kendisi kendisiyle çelişiyordu. `correctAnswer` «Fînlanda» diyordu; oysa aynı kaydın açıklaması «BFI kataloğuna göre bu film bir İsveç yapımıdır», provenance kaydındaki `exactSupportingFact` «Country: Sweden» ve kaynak BFI'ın Persona sayfası. Bergman'ın Persona'sı (1966) İsveç yapımıdır. Filmi bilen oyuncu «Swêd» seçip YANLIŞ işaretleniyor, sonra kendisine filmin İsveç yapımı olduğunu söyleyen açıklamayı okuyordu. Şıklar doğru, yalnız anahtar yanlıştı — bu yüzden şık listesine dokunulmadı, cevap düzeltildi.",
+      "replace": {},
+      "setCorrect": { "correctAnswer": "Swêd", "correctAnswerTr": "İsveç" }
+    }
+  ],
+
+  "rewrite": [
+    {
+      "reason": "kurdish_place_defined_only_by_sovereign_state",
+      "detail": "«X hangi ülkededir?» kalıbı bir Kürt şehrini, gölünü ya da sanatçısını yalnız üzerinde bulunduğu devletle tanımlar. Projenin sözleşmesi bunu reddediyor: tanım Kurdistanê'nin dört parçası üzerinden yapılır (Bakur, Rojava, Başûr, Rojhilat). Sorular silinmedi — aynı coğrafi bilgiyi ölçmeye devam ediyorlar, yalnız çerçeve değişti. Şıklar dört parçanın kendisi olduğu için soru artık devlet sınırını değil Kürt coğrafyasını öğretiyor.",
+      "sharedAnswers": {
+        "answers": ["Bakurê Kurdistanê", "Rojavayê Kurdistanê", "Başûrê Kurdistanê", "Rojhilatê Kurdistanê"],
+        "answersTr": ["Bakur (Kuzey)", "Rojava (Batı)", "Başûr (Güney)", "Rojhilat (Doğu)"]
+      },
+      "items": [
+        {
+          "id": "edit_cografya_0014",
+          "prompt": "Bajarê Sineyê (Sanandaj) li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Sine (Sanandaj) şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Rojhilatê Kurdistanê",
+          "explanationKu": "Sine navenda herêma Kurdistanê ya li Rojhilat e û bi kevneşopiya xwe ya muzîk û helbestê tê nasîn.",
+          "explanationTr": "Sine, Rojhilat'taki Kürt bölgesinin merkezidir ve müzik ile şiir geleneğiyle tanınır."
+        },
+        {
+          "id": "edit_cografya_0017",
+          "prompt": "Bajarê Silêmaniyê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Silêmanî şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Başûrê Kurdistanê",
+          "explanationKu": "Silêmanî li Başûr e; di sedsala 18an de wek paytexta mîrektiya Babanan hat avakirin û navendeke edebî ya girîng e.",
+          "explanationTr": "Silêmanî Başûr'dadır; 18. yüzyılda Baban mirliğinin merkezi olarak kurulmuş, önemli bir edebiyat merkezidir."
+        },
+        {
+          "id": "edit_cografya_0028",
+          "prompt": "Bajarê Kirmanşanê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Kirmanşan şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Rojhilatê Kurdistanê",
+          "explanationKu": "Kirmanşan li Rojhilat e; devera wê bi giranî bi kurdiya başûrî diaxive.",
+          "explanationTr": "Kirmanşan Rojhilat'tadır; yöresinde ağırlıklı olarak güney Kürtçesi konuşulur."
+        },
+        {
+          "id": "edit_cografya_0031",
+          "prompt": "Gola Urmiyê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Urmiye Gölü Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Rojhilatê Kurdistanê",
+          "explanationKu": "Gola Urmiyê gola herî mezin a herêmê ye, ava wê şor e û li Rojhilat dimîne; asta avê di deh salên dawî de gelek daketiye.",
+          "explanationTr": "Urmiye Gölü bölgenin en büyük gölüdür, suyu tuzludur ve Rojhilat'ta kalır; su seviyesi son on yılda büyük ölçüde düşmüştür."
+        },
+        {
+          "id": "edit_cografya_0033",
+          "prompt": "Bajarê Dihokê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Dihok şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Başûrê Kurdistanê",
+          "explanationKu": "Dihok li Başûr e û navenda herêma Behdînan e; li wê derê zaravayê behdînî tê axaftin.",
+          "explanationTr": "Dihok Başûr'dadır ve Behdînan bölgesinin merkezidir; orada Behdînî ağzı konuşulur."
+        },
+        {
+          "id": "edit_cografya_0037",
+          "prompt": "Bajarê Efrînê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Efrîn şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Rojavayê Kurdistanê",
+          "explanationKu": "Efrîn li Rojava ye û bi daristanên zeytûnê yên xwe tê nasîn.",
+          "explanationTr": "Efrîn Rojava'dadır ve zeytinlikleriyle tanınır."
+        },
+        {
+          "id": "offline_2175",
+          "prompt": "Bajarê Mehabadê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Mehabad şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Rojhilatê Kurdistanê",
+          "explanationKu": "Mehabad li Rojhilat e; di 1946an de Komara Kurdistanê li vê bajarê hat ragihandin.",
+          "explanationTr": "Mehabad Rojhilat'tadır; 1946'da Kurdistan Cumhuriyeti bu şehirde ilan edilmiştir."
+        },
+        {
+          "id": "offline_2354",
+          "prompt": "Bajarê Kobanê li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Kobanê şehri Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Rojavayê Kurdistanê",
+          "explanationKu": "Kobanê li Rojava ye; navê wê yê din Eyn el-Ereb e û bi berxwedana 2014-2015an tê bibîranîn.",
+          "explanationTr": "Kobanê Rojava'dadır; diğer adı Ayn el-Arab'dır ve 2014-2015 direnişiyle anılır."
+        },
+        {
+          "id": "offline_2556",
+          "prompt": "Herêma Behdînan bi piranî li kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Behdînan bölgesi büyük ölçüde Kurdistanê'nin hangi parçasındadır?",
+          "correct": "Başûrê Kurdistanê",
+          "explanationKu": "Behdînan devera Dihokê ya li Başûr e; navê wê ji mîrektiya Behdînan tê û zaravayê behdînî li wir tê axaftin.",
+          "explanationTr": "Behdînan, Başûr'daki Dihok yöresidir; adını Behdînan mirliğinden alır ve orada Behdînî ağzı konuşulur."
+        },
+        {
+          "id": "offline_2199",
+          "prompt": "Stranbêj Hesen Zîrek ji kîjan perçeyê Kurdistanê bû?",
+          "promptTr": "Şarkıcı Hesen Zîrek Kurdistanê'nin hangi parçasındandı?",
+          "correct": "Rojhilatê Kurdistanê",
+          "explanationKu": "Hesen Zîrek li Bokanê, li Rojhilat, ji dayik bû û bi sedan stranên gelêrî tomar kirin.",
+          "explanationTr": "Hesen Zîrek Rojhilat'taki Bokan'da doğdu ve yüzlerce halk şarkısı kaydetti."
+        },
+        {
+          "id": "comm_sin_0112",
+          "prompt": "Derhêner Bahman Ghobadi ji kîjan perçeyê Kurdistanê ye?",
+          "promptTr": "Yönetmen Bahman Ghobadi Kurdistanê'nin hangi parçasındandır?",
+          "correct": "Rojhilatê Kurdistanê",
+          "explanationKu": "Bahman Ghobadi li Banê, li Rojhilat, ji dayik bû; «Dema Hespên Serxweş» yekem fîlmê wî yê dirêjmetraj e.",
+          "explanationTr": "Bahman Ghobadi Rojhilat'taki Bane'de doğdu; «Sarhoş Atlar Zamanı» ilk uzun metrajlı filmidir."
+        }
+      ]
+    }
+  ]
+}

@@ -2380,17 +2380,17 @@
     "difficulty": 4,
     "id": "edit_cografya_0014",
     "category": "Cografya",
-    "prompt": "Bajarê Sanandaj (Sine) li kîjan welatî ye?",
+    "prompt": "Bajarê Sineyê (Sanandaj) li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Îran",
-      "Iraq",
-      "Sûriye",
-      "Ermenistan"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "Îran",
-    "explanation": "Sine (Sanandaj), İran'ın Kürdistan eyaletinin merkezidir.",
-    "explanationKu": "Sine (Sanandaj) navenda parêzgeha Kurdistanê ya Îranê ye.",
-    "explanationTr": "Sine (Sanandaj), İran'ın Kürdistan eyaletinin merkezidir.",
+    "correctAnswer": "Rojhilatê Kurdistanê",
+    "explanation": "Sine, Rojhilat'taki Kürt bölgesinin merkezidir ve müzik ile şiir geleneğiyle tanınır.",
+    "explanationKu": "Sine navenda herêma Kurdistanê ya li Rojhilat e û bi kevneşopiya xwe ya muzîk û helbestê tê nasîn.",
+    "explanationTr": "Sine, Rojhilat'taki Kürt bölgesinin merkezidir ve müzik ile şiir geleneğiyle tanınır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2398,14 +2398,14 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Sine (Sanandaj) şehri bugün hangi devletin sınırları içindedir?",
+    "promptTr": "Sine (Sanandaj) şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "İran",
-      "Irak",
-      "Suriye",
-      "Ermenistan"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "İran"
+    "correctAnswerTr": "Rojhilat (Doğu)"
   },
   {
     "type": "multipleChoice",
@@ -4788,17 +4788,17 @@
     "difficulty": 3,
     "id": "edit_cografya_0017",
     "category": "Cografya",
-    "prompt": "Bajarê Silêmaniyê li kîjan welatî ye?",
+    "prompt": "Bajarê Silêmaniyê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Îran",
-      "Sûriye",
-      "Iraq",
-      "Tirkiye"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "Iraq",
-    "explanation": "Süleymaniye, Irak Kürdistan Bölgesi'ndedir.",
-    "explanationKu": "Silêmanî li Herêma Kurdistanê ya Iraqê ye.",
-    "explanationTr": "Süleymaniye, Irak Kürdistan Bölgesi'ndedir.",
+    "correctAnswer": "Başûrê Kurdistanê",
+    "explanation": "Silêmanî Başûr'dadır; 18. yüzyılda Baban mirliğinin merkezi olarak kurulmuş, önemli bir edebiyat merkezidir.",
+    "explanationKu": "Silêmanî li Başûr e; di sedsala 18an de wek paytexta mîrektiya Babanan hat avakirin û navendeke edebî ya girîng e.",
+    "explanationTr": "Silêmanî Başûr'dadır; 18. yüzyılda Baban mirliğinin merkezi olarak kurulmuş, önemli bir edebiyat merkezidir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4806,14 +4806,14 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Silêmanî şehri bugün hangi devletin sınırları içindedir?",
+    "promptTr": "Silêmanî şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "İran",
-      "Suriye",
-      "Irak",
-      "Türkiye"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "Irak"
+    "correctAnswerTr": "Başûr (Güney)"
   },
   {
     "type": "multipleChoice",
@@ -7508,17 +7508,17 @@
     "difficulty": 3,
     "id": "edit_cografya_0028",
     "category": "Cografya",
-    "prompt": "Bajarê Kirmanşanê li kîjan welatî ye?",
+    "prompt": "Bajarê Kirmanşanê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Iraq",
-      "Îran",
-      "Sûriye",
-      "Tirkiye"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "Îran",
-    "explanation": "Kirmanşah, Doğu Kürdistan'da, İran'dadır.",
-    "explanationKu": "Kirmanşan li rojhilatê Kurdistanê, li Îranê ye.",
-    "explanationTr": "Kirmanşah, Doğu Kürdistan'da, İran'dadır.",
+    "correctAnswer": "Rojhilatê Kurdistanê",
+    "explanation": "Kirmanşan Rojhilat'tadır; yöresinde ağırlıklı olarak güney Kürtçesi konuşulur.",
+    "explanationKu": "Kirmanşan li Rojhilat e; devera wê bi giranî bi kurdiya başûrî diaxive.",
+    "explanationTr": "Kirmanşan Rojhilat'tadır; yöresinde ağırlıklı olarak güney Kürtçesi konuşulur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7526,14 +7526,14 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Kirmanşan şehri bugün hangi devletin sınırları içindedir?",
+    "promptTr": "Kirmanşan şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Irak",
-      "İran",
-      "Suriye",
-      "Türkiye"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "İran"
+    "correctAnswerTr": "Rojhilat (Doğu)"
   },
   {
     "type": "multipleChoice",
@@ -7604,17 +7604,17 @@
     "difficulty": 3,
     "id": "edit_cografya_0031",
     "category": "Cografya",
-    "prompt": "Gola Urmiyê li kîjan welatî ye?",
+    "prompt": "Gola Urmiyê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Tirkiye",
-      "Iraq",
-      "Sûriye",
-      "Îran"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "Îran",
-    "explanation": "Urmiye Gölü, Doğu Kürdistan'da, İran'ın kuzeybatısındadır.",
-    "explanationKu": "Gola Urmiyê li rojhilatê Kurdistanê, li bakurê rojavayê Îranê ye.",
-    "explanationTr": "Urmiye Gölü, Doğu Kürdistan'da, İran'ın kuzeybatısındadır.",
+    "correctAnswer": "Rojhilatê Kurdistanê",
+    "explanation": "Urmiye Gölü bölgenin en büyük gölüdür, suyu tuzludur ve Rojhilat'ta kalır; su seviyesi son on yılda büyük ölçüde düşmüştür.",
+    "explanationKu": "Gola Urmiyê gola herî mezin a herêmê ye, ava wê şor e û li Rojhilat dimîne; asta avê di deh salên dawî de gelek daketiye.",
+    "explanationTr": "Urmiye Gölü bölgenin en büyük gölüdür, suyu tuzludur ve Rojhilat'ta kalır; su seviyesi son on yılda büyük ölçüde düşmüştür.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7622,14 +7622,14 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Urmiye Gölü bugün hangi devletin sınırları içindedir?",
+    "promptTr": "Urmiye Gölü Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Türkiye",
-      "Irak",
-      "Suriye",
-      "İran"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "İran"
+    "correctAnswerTr": "Rojhilat (Doğu)"
   },
   {
     "type": "trueFalse",
@@ -7664,17 +7664,17 @@
     "difficulty": 4,
     "id": "edit_cografya_0033",
     "category": "Cografya",
-    "prompt": "Bajarê Dihokê li kîjan welatî ye?",
+    "prompt": "Bajarê Dihokê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Tirkiye",
-      "Iraq",
-      "Îran",
-      "Sûriye"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "Iraq",
-    "explanation": "Duhok, Irak Kürdistan Bölgesi'nde, Türkiye sınırına yakındır.",
-    "explanationKu": "Dihok li Herêma Kurdistanê ya Iraqê, li nêzî sînorê Tirkiyeyê ye.",
-    "explanationTr": "Duhok, Irak Kürdistan Bölgesi'nde, Türkiye sınırına yakındır.",
+    "correctAnswer": "Başûrê Kurdistanê",
+    "explanation": "Dihok Başûr'dadır ve Behdînan bölgesinin merkezidir; orada Behdînî ağzı konuşulur.",
+    "explanationKu": "Dihok li Başûr e û navenda herêma Behdînan e; li wê derê zaravayê behdînî tê axaftin.",
+    "explanationTr": "Dihok Başûr'dadır ve Behdînan bölgesinin merkezidir; orada Behdînî ağzı konuşulur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7682,14 +7682,14 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Dihok şehri bugün hangi devletin sınırları içindedir?",
+    "promptTr": "Dihok şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Türkiye",
-      "Irak",
-      "İran",
-      "Suriye"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "Irak"
+    "correctAnswerTr": "Başûr (Güney)"
   },
   {
     "type": "multipleChoice",
@@ -7792,17 +7792,17 @@
     "difficulty": 4,
     "id": "edit_cografya_0037",
     "category": "Cografya",
-    "prompt": "Bajarê Efrînê li kîjan welatî ye?",
+    "prompt": "Bajarê Efrînê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Tirkiye",
-      "Sûriye",
-      "Iraq",
-      "Îran"
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "Sûriye",
-    "explanation": "Efrin, Suriye'nin kuzeybatısındadır.",
-    "explanationKu": "Efrîn li bakurê rojavayê Sûriyeyê ye.",
-    "explanationTr": "Efrin, Suriye'nin kuzeybatısındadır.",
+    "correctAnswer": "Rojavayê Kurdistanê",
+    "explanation": "Efrîn Rojava'dadır ve zeytinlikleriyle tanınır.",
+    "explanationKu": "Efrîn li Rojava ye û bi daristanên zeytûnê yên xwe tê nasîn.",
+    "explanationTr": "Efrîn Rojava'dadır ve zeytinlikleriyle tanınır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7810,14 +7810,14 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Efrîn şehri bugün hangi devletin sınırları içindedir?",
+    "promptTr": "Efrîn şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Türkiye",
-      "Suriye",
-      "Irak",
-      "İran"
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "Suriye"
+    "correctAnswerTr": "Rojava (Batı)"
   },
   {
     "type": "multipleChoice",

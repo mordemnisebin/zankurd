@@ -1659,7 +1659,7 @@
       "Danîmarka",
       "Fînlanda"
     ],
-    "correctAnswer": "Fînlanda",
+    "correctAnswer": "Swêd",
     "promptTr": "«Persona» hangi ülkenin yapımıdır?",
     "answersTr": [
       "İsveç",
@@ -1667,7 +1667,7 @@
       "Danimarka",
       "Finlandiya"
     ],
-    "correctAnswerTr": "Finlandiya",
+    "correctAnswerTr": "İsveç",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Swêdê ye.",
     "explanationTr": "BFI kataloğuna göre bu film bir İsveç yapımıdır.",
     "difficulty": 2,

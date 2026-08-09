@@ -46,4 +46,10 @@ const questionBankAssets = <String>[
   // uyumsuz çıktı (ör. `ritim.webp` Batı Afrika djembe'si gösteriyordu) ve
   // hem soru hem görsel elendi.
   'assets/data/visual_2026_08_07_questions.json',
+  // 2026-08-07: çıkarılan 33 kaydın 20'si görsel soruyla karşılandı; kalan
+  // 13'ü burada. Amaç sayıyı korumak değil, kaldırılan her konunun bankada
+  // bir karşılığının kalması: dahol, zurna, kilam, bilûr, şabaş, kelaş,
+  // metelok, hewran, Şerefname, Rojnameya Kurdistan, Çiyayê Cûdî, Deşta
+  // Amedê. Terim tanımları bankanın kendi onaylı açıklamalarıyla birebir.
+  'assets/data/restore_2026_08_07_questions.json',
 ];

@@ -1,0 +1,431 @@
+[
+  {
+    "id": "restore_2026_08_07_0001",
+    "category": "Çand",
+    "prompt": "Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?",
+    "answers": [
+      "şabaş",
+      "metelok",
+      "kelaş",
+      "hewran"
+    ],
+    "correctAnswer": "şabaş",
+    "promptTr": "Kürt düğün ve şenliklerinde yeni evlilere verilen para hediyesi hangi adla bilinir?",
+    "answersTr": [
+      "şabaş",
+      "metelok",
+      "kelaş",
+      "hewran"
+    ],
+    "correctAnswerTr": "şabaş",
+    "explanation": "Şabaş, düğünlerde para hediye etme geleneğidir ve topluluğun yeni aileye desteğini gösterir. Metelok kısa bir atasözü, kelaş örülerek yapılan ayakkabı, hewran ise göçerlerin kara çadırıdır.",
+    "explanationKu": "Şabaş kevneşopiya diyarîkirina pereyan e ku di dawetan de tê kirin û piştgiriya civakê ya ji malbata nû re nîşan dide. Metelok gotineke kurt a pêşiyan e, kelaş pêlava hûnandî ye, hewran jî çadira reş a koçeran e.",
+    "explanationTr": "Şabaş, düğünlerde para hediye etme geleneğidir ve topluluğun yeni aileye desteğini gösterir. Metelok kısa bir atasözü, kelaş örülerek yapılan ayakkabı, hewran ise göçerlerin kara çadırıdır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0002",
+    "category": "Çand",
+    "prompt": "Pêlava kurdî ya kevneşopî ya ku bi tayan tê hûnandin bi kîjan navî tê nasîn?",
+    "answers": [
+      "şûtik",
+      "kelaş",
+      "kolos",
+      "elek"
+    ],
+    "correctAnswer": "kelaş",
+    "promptTr": "İplik örülerek yapılan geleneksel Kürt ayakkabısı hangi adla bilinir?",
+    "answersTr": [
+      "şûtik",
+      "kelaş",
+      "kolos",
+      "elek"
+    ],
+    "correctAnswerTr": "kelaş",
+    "explanation": "Kelaş elde iplikten örülür ve hafiftir; özellikle dağlık yörelerde giyilir. Şûtik bel kuşağı, kolos başlık, elek ise kolsuz yelektir.",
+    "explanationKu": "Kelaş bi destan ji tayan tê hûnandin û sivik e; bi taybetî li herêmên çiyayî tê lixwekirin. Şûtik pişteynê navtengê ye, kolos serpoş e, elek jî berstûkeke bêmil e.",
+    "explanationTr": "Kelaş elde iplikten örülür ve hafiftir; özellikle dağlık yörelerde giyilir. Şûtik bel kuşağı, kolos başlık, elek ise kolsuz yelektir.",
+    "type": "multipleChoice",
+    "difficulty": 3,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0003",
+    "category": "Çand",
+    "prompt": "Di kurmancî de gotina kurt a pêşiyan ku ezmûneke civakî bi çend peyvan vedibêje çi ye?",
+    "answers": [
+      "metelok",
+      "şabaş",
+      "mêvanperwerî",
+      "govend"
+    ],
+    "correctAnswer": "metelok",
+    "promptTr": "Kurmancîde toplumsal bir deneyimi birkaç sözcükle anlatan kısa atasözüne ne denir?",
+    "answersTr": [
+      "metelok",
+      "şabaş",
+      "mêvanperwerî",
+      "govend"
+    ],
+    "correctAnswerTr": "metelok",
+    "explanation": "Metelok, kuşakların deneyimini yeni kuşaklara taşıyan kısa ve yoğun anlamlı sözdür. Şabaş para hediyesi, mêvanperwerî konuğa gösterilen saygı, govend ise toplu halk oyunudur.",
+    "explanationKu": "Metelok gotineke kurt û tije wate ye ku ezmûna nifşan digihîne nifşên nû. Şabaş diyariya pereyan e, mêvanperwerî rêzgirtina li mêvan e, govend jî lîstika komî ye.",
+    "explanationTr": "Metelok, kuşakların deneyimini yeni kuşaklara taşıyan kısa ve yoğun anlamlı sözdür. Şabaş para hediyesi, mêvanperwerî konuğa gösterilen saygı, govend ise toplu halk oyunudur.",
+    "type": "multipleChoice",
+    "difficulty": 3,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0004",
+    "category": "Çand",
+    "prompt": "Çadira reş a ji hiriya bizinê ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
+    "answers": [
+      "hewran",
+      "kelaş",
+      "şûtik",
+      "metelok"
+    ],
+    "correctAnswer": "hewran",
+    "promptTr": "Göçerlerin yazın yaylalarda kurduğu, keçi kılından yapılan kara çadır hangi adla bilinir?",
+    "answersTr": [
+      "hewran",
+      "kelaş",
+      "şûtik",
+      "metelok"
+    ],
+    "correctAnswerTr": "hewran",
+    "explanation": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
+    "explanationKu": "Hewran ji hiriya bizinê tê çêkirin; ew di germê de hênik dimîne û baranê nade hundir. Ew perçeyeke bingehîn a çanda koçeriyê ye ku di navbera zozan û germiyanê de digere.",
+    "explanationTr": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
+    "type": "multipleChoice",
+    "difficulty": 3,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0005",
+    "category": "Dîrok",
+    "prompt": "Hejmara yekem a «Rojnameya Kurdistan» (1898) li kîjan bajarî derket?",
+    "answers": [
+      "Şam",
+      "Qahîre",
+      "Stenbol",
+      "Bexda"
+    ],
+    "correctAnswer": "Qahîre",
+    "promptTr": "«Rojnameya Kurdistan»ın ilk sayısı (1898) hangi şehirde çıktı?",
+    "answersTr": [
+      "Şam",
+      "Kahire",
+      "İstanbul",
+      "Bağdat"
+    ],
+    "correctAnswerTr": "Kahire",
+    "explanation": "Mîqdat Mîdhad Bedirxan'ın çıkardığı Rojnameya Kurdistan 1898'de Kahire'de basıldı ve ilk Kürt gazetesi sayılır. Sonraki sayıları başka şehirlerde de çıktı.",
+    "explanationKu": "Rojnameya Kurdistan a ku Mîqdat Mîdhad Bedirxan derxist, di 1898an de li Qahîreyê hat çapkirin û wek rojnameya kurdî ya yekem tê hesibandin. Paşê hejmarên wê li bajarên din jî derketin.",
+    "explanationTr": "Mîqdat Mîdhad Bedirxan'ın çıkardığı Rojnameya Kurdistan 1898'de Kahire'de basıldı ve ilk Kürt gazetesi sayılır. Sonraki sayıları başka şehirlerde de çıktı.",
+    "type": "multipleChoice",
+    "difficulty": 3,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0006",
+    "category": "Dîrok",
+    "prompt": "«Şerefname», dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?",
+    "answers": [
+      "Ehmedê Xanî",
+      "Mîqdat Mîdhad Bedirxan",
+      "Şerefxanê Bidlîsî",
+      "Feqiyê Teyran"
+    ],
+    "correctAnswer": "Şerefxanê Bidlîsî",
+    "promptTr": "Kürt mirliklerinin tarihi olan «Şerefname»yi kim yazmıştır?",
+    "answersTr": [
+      "Ehmedê Xanî",
+      "Mîqdat Mîdhad Bedirxan",
+      "Şerefxanê Bidlîsî",
+      "Feqiyê Teyran"
+    ],
+    "correctAnswerTr": "Şerefxanê Bidlîsî",
+    "explanation": "Şerefxanê Bidlîsî, Şerefname'yi 16. yüzyılın sonunda yazdı; eser Kürt mirliklerinin tarihini derler. Ehmedê Xanî Mem û Zîn'i yazdı, Mîqdat Mîdhad Bedirxan Rojnameya Kurdistan'ı çıkardı, Feqiyê Teyran ise klasik bir şairdir.",
+    "explanationKu": "Şerefxanê Bidlîsî Şerefname di dawiya sedsala 16an de nivîsand; ew dîroka mîrektiyên kurdan berhev dike. Ehmedê Xanî Mem û Zîn nivîsand, Mîqdat Mîdhad Bedirxan Rojnameya Kurdistanê derxist, Feqiyê Teyran jî helbestvanekî klasîk e.",
+    "explanationTr": "Şerefxanê Bidlîsî, Şerefname'yi 16. yüzyılın sonunda yazdı; eser Kürt mirliklerinin tarihini derler. Ehmedê Xanî Mem û Zîn'i yazdı, Mîqdat Mîdhad Bedirxan Rojnameya Kurdistan'ı çıkardı, Feqiyê Teyran ise klasik bir şairdir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0007",
+    "category": "Cografya",
+    "prompt": "Çiyayê Cûdî li kîjan perçeyê Kurdistanê ye?",
+    "answers": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "correctAnswer": "Bakurê Kurdistanê",
+    "promptTr": "Cûdî Dağı Kurdistanê'nin hangi parçasındadır?",
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctAnswerTr": "Bakur (Kuzey)",
+    "explanation": "Cûdî Dağı, Bakur'daki Şirnex yöresindedir. Yöre inanışına göre Nuh'un gemisi bu dağa oturmuştur; bu inanış birçok yerel kaynakta yinelenir.",
+    "explanationKu": "Çiyayê Cûdî li herêma Şirnexê ya li Bakur e. Li gorî baweriyên herêmê keştiya Nûh Pêxember li ser vî çiyayî rûniştiye; ev bawerî di gelek çavkaniyên herêmî de tê dubarekirin.",
+    "explanationTr": "Cûdî Dağı, Bakur'daki Şirnex yöresindedir. Yöre inanışına göre Nuh'un gemisi bu dağa oturmuştur; bu inanış birçok yerel kaynakta yinelenir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0008",
+    "category": "Cografya",
+    "prompt": "Deşta Amedê bi kîjan taybetmendiya axa xwe ji deştên derdorê vediqete?",
+    "answers": [
+      "axa bazaltî ya berdar",
+      "axa şor a bêber",
+      "axa qûmî ya hişk",
+      "axa çiyayî ya kevirîn"
+    ],
+    "correctAnswer": "axa bazaltî ya berdar",
+    "promptTr": "Amed ovası toprağının hangi özelliğiyle çevresindeki ovalardan ayrılır?",
+    "answersTr": [
+      "verimli bazalt toprağı",
+      "tuzlu ve çorak toprak",
+      "kuru kumlu toprak",
+      "taşlık dağ toprağı"
+    ],
+    "correctAnswerTr": "verimli bazalt toprağı",
+    "explanation": "Amed ovası Karacadağ'ın bazalt lavları üzerinde oluşmuştur; bu toprak verimlidir ve buğday tarımına elverişlidir. Siyah bazalt taşı şehrin yapılarında da görülür.",
+    "explanationKu": "Deşta Amedê li ser lavên bazaltî yên Karacadaxê ava bûye; ev ax berdar e û çandiniya genim li wê derê bi hêsanî tê kirin. Kevirê bazalt ê reş di avahiyên bajêr de jî tê dîtin.",
+    "explanationTr": "Amed ovası Karacadağ'ın bazalt lavları üzerinde oluşmuştur; bu toprak verimlidir ve buğday tarımına elverişlidir. Siyah bazalt taşı şehrin yapılarında da görülür.",
+    "type": "multipleChoice",
+    "difficulty": 3,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0009",
+    "category": "Muzîk",
+    "prompt": "Amûra lêdanê ya mezin a ku bi du daran tê lêxistin û pir caran bi zurneyê re li derve tê lêxistin çi ye?",
+    "answers": [
+      "dahol",
+      "bilûr",
+      "tembûr",
+      "erbane"
+    ],
+    "correctAnswer": "dahol",
+    "promptTr": "İki değnekle çalınan ve çoğunlukla zurnayla birlikte açık havada çalınan büyük vurmalı çalgı hangisidir?",
+    "answersTr": [
+      "dahol",
+      "bilûr",
+      "tembûr",
+      "erbane"
+    ],
+    "correctAnswerTr": "dahol",
+    "explanation": "Dahol yüksek ses çıkarır ve halayın vuruşunu belirler; bu yüzden zurnayla birlikte meydanlarda çalınır. Bilûr üflemeli, tembûr telli, erbane ise el defidir.",
+    "explanationKu": "Dahol dengekî bilind derdixe û lêdana govendê diyar dike; loma bi zurneyê re li meydanan tê lêxistin. Bilûr amûra bayê ye, tembûr amûra têlî ye, erbane jî def a destan e.",
+    "explanationTr": "Dahol yüksek ses çıkarır ve halayın vuruşunu belirler; bu yüzden zurnayla birlikte meydanlarda çalınır. Bilûr üflemeli, tembûr telli, erbane ise el defidir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0010",
+    "category": "Muzîk",
+    "prompt": "Amûra bayê ya bi dengê bilind ku li meydanan bi dahol re tê lêxistin çi ye?",
+    "answers": [
+      "zurna",
+      "bilûr",
+      "tembûr",
+      "dahol"
+    ],
+    "correctAnswer": "zurna",
+    "promptTr": "Meydanlarda davulla birlikte çalınan, yüksek sesli üflemeli çalgı hangisidir?",
+    "answersTr": [
+      "zurna",
+      "bilûr",
+      "tembûr",
+      "dahol"
+    ],
+    "correctAnswerTr": "zurna",
+    "explanation": "Zurnanın sesi keskin ve yüksektir; bu yüzden açık havada uzaktan duyulur ve halaya uygundur. Bilûr çobanların yumuşak sesli kavalı, tembûr telli, dahol ise vurmalı çalgıdır.",
+    "explanationKu": "Zurna dengê xwe yê tûj û bilind heye, ji ber vê yekê li derve ji dûr ve tê bihîstin û ji bo govendê guncaw e. Bilûr dengekî nerm ê şivanan e, tembûr têlî ye, dahol jî amûra lêdanê ye.",
+    "explanationTr": "Zurnanın sesi keskin ve yüksektir; bu yüzden açık havada uzaktan duyulur ve halaya uygundur. Bilûr çobanların yumuşak sesli kavalı, tembûr telli, dahol ise vurmalı çalgıdır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0011",
+    "category": "Muzîk",
+    "prompt": "Awaza dirêj a dengbêjan a ku bûyerek an çîrokek vedibêje bi kîjan navî tê nasîn?",
+    "answers": [
+      "kilam",
+      "govend",
+      "şabaş",
+      "metelok"
+    ],
+    "correctAnswer": "kilam",
+    "promptTr": "Dengbêjlerin bir olayı ya da hikâyeyi anlatan uzun ezgisi hangi adla bilinir?",
+    "answersTr": [
+      "kilam",
+      "govend",
+      "şabaş",
+      "metelok"
+    ],
+    "correctAnswerTr": "kilam",
+    "explanation": "Kilam uzun sözleriyle bir olayı ya da hikâyeyi anlatır ve çalgısız söylenir; toplumun sözlü belleğini taşır. Govend toplu halk oyunu, şabaş para hediyesi, metelok ise atasözüdür.",
+    "explanationKu": "Kilam bi gotinên xwe yên dirêj bûyerekê an çîrokekê vedibêje û bêyî amûrê tê gotin; ew bîra devkî ya civakê hildigire. Govend lîstika komî ye, şabaş diyariya pereyan e, metelok jî gotina pêşiyan e.",
+    "explanationTr": "Kilam uzun sözleriyle bir olayı ya da hikâyeyi anlatır ve çalgısız söylenir; toplumun sözlü belleğini taşır. Govend toplu halk oyunu, şabaş para hediyesi, metelok ise atasözüdür.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0012",
+    "category": "Muzîk",
+    "prompt": "Cudahiya sereke ya di navbera kilamê û stranên govendê de çi ye?",
+    "answers": [
+      "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
+      "Kilam bi zurneyê tê gotin, stranên govendê bêdeng in",
+      "Kilam tenê ji hêla jinan ve tê gotin",
+      "Kilam tenê di dawetan de tê gotin"
+    ],
+    "correctAnswer": "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
+    "promptTr": "Kilam ile halay şarkıları arasındaki temel fark nedir?",
+    "answersTr": [
+      "Kilam hikâye anlatır, halay şarkıları ritmiktir",
+      "Kilam zurnayla söylenir, halay şarkıları sessizdir",
+      "Kilam yalnızca kadınlar tarafından söylenir",
+      "Kilam yalnızca düğünlerde söylenir"
+    ],
+    "correctAnswerTr": "Kilam hikâye anlatır, halay şarkıları ritmiktir",
+    "explanation": "Kilam uzundur, serbest ritimlidir ve bir olayı anlatır; halay şarkıları kısa ve hızlıdır, oyunun ritme ihtiyacı olduğu için vuruşa göre söylenir. İkisi de müzik kültüründe yan yana yaşar.",
+    "explanationKu": "Kilam dirêj e, azad e û bûyerekê vedibêje; stranên govendê kurt û bilez in û li gorî lêdanê tên gotin ji ber ku pêwîstiya lîstikê bi rîtmê heye. Herdu jî di çanda muzîkê de li kêleka hev dijîn.",
+    "explanationTr": "Kilam uzundur, serbest ritimlidir ve bir olayı anlatır; halay şarkıları kısa ve hızlıdır, oyunun ritme ihtiyacı olduğu için vuruşa göre söylenir. İkisi de müzik kültüründe yan yana yaşar.",
+    "type": "multipleChoice",
+    "difficulty": 4,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  },
+  {
+    "id": "restore_2026_08_07_0013",
+    "category": "Muzîk",
+    "prompt": "Amûra bayê ya şivanan a ji qamîş an dar ku bi dengekî nerm tê lêxistin çi ye?",
+    "answers": [
+      "bilûr",
+      "dahol",
+      "erbane",
+      "zurna"
+    ],
+    "correctAnswer": "bilûr",
+    "promptTr": "Kamıştan ya da ağaçtan yapılan, yumuşak sesle çalınan çoban üflemeli çalgısı hangisidir?",
+    "answersTr": [
+      "bilûr",
+      "dahol",
+      "erbane",
+      "zurna"
+    ],
+    "correctAnswerTr": "bilûr",
+    "explanation": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve halay için uygun değildir. Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
+    "explanationKu": "Bilûr amûreke sivik e ku şivan li zozanan pê distirên; dengê wê nerm e û ji bo govendê ne guncaw e. Dahol û erbane amûrên lêdanê ne, zurna jî dengekî pir bilind derdixe.",
+    "explanationTr": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve halay için uygun değildir. Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceTitle": "Bankanın kendi onaylı tanımlarından türetildi",
+      "sourceReference": "internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı",
+      "authoredAt": "2026-08-07",
+      "restoresRemovedCount": true
+    }
+  }
+]

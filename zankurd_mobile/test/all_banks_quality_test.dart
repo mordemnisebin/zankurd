@@ -75,7 +75,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla sekiz kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla dokuz kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -91,6 +91,7 @@ void main() {
         // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
         // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
         ...fromJson('assets/data/visual_2026_08_07_questions.json'),
+        ...fromJson('assets/data/restore_2026_08_07_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

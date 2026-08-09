@@ -2226,6 +2226,35 @@
         "reviewedAt": "metadata.reviewedAt",
         "locale": "ku-kmr"
       }
+    },
+    {
+      "id": "restore_2026_08_07_runtime_bank",
+      "description": "2026-08-07: çıkarılan döngüsel soruların konularını bankada tutan onarım partisi",
+      "path": "assets/data/restore_2026_08_07_questions.json",
+      "role": "runtime_secondary",
+      "parser": "json",
+      "canonicalGroup": "runtime_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": true,
+      "precedence": 980,
+      "expectedRecordCount": 13,
+      "notes": "Terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı; yeni olgu iddiası üretilmedi.",
+      "columns": {
+        "id": "id",
+        "category": "category",
+        "prompt": "prompt",
+        "options": "answers",
+        "correct": "correctAnswer",
+        "explanation": "explanationKu",
+        "difficulty": "difficulty",
+        "type": "type",
+        "dialect": "metadata.dialect",
+        "sourceTitle": "metadata.sourceTitle",
+        "sourceUrl": "metadata.sourceReference",
+        "reviewedAt": "metadata.reviewedAt",
+        "locale": "ku-kmr"
+      }
     }
   ]
 }
