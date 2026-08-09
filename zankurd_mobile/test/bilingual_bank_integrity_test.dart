@@ -59,6 +59,22 @@ void main() {
     final offenders = <String>[];
     banks.forEach((asset, rows) {
       for (final q in rows) {
+        // Cümle kurma bu kuralın DIŞINDADIR — bu bir istisna değil, kuralın
+        // kapsamının doğru çizilmesidir. `wordOrdering`de `answers` bir şık
+        // listesi değil, Kurmancî KELİME HAVUZU'dur ve alıştırmanın kendisi
+        // odur ("ez / diçim / malê" → "ez diçim malê"). Havuzu Türkçeye
+        // çevirmek soruyu yok eder. Soru metnini ("Hevokê rêz bike" →
+        // "Cümleyi sırala") çevirmek ise Türkçe oyuncuya ne yapacağını
+        // anlatır. Yani burada yarım çeviri eksik değil, DOĞRU olanıdır.
+        if (q['type'] == 'wordOrdering') {
+          if (has(q, 'answersTr') || has(q, 'correctAnswerTr')) {
+            offenders.add(
+              '${q['id']} ($asset): cümle kurma sorusunun kelime havuzu '
+              'Kurmancî kalmalı, çevrilmiş',
+            );
+          }
+          continue;
+        }
         final present = [
           'promptTr',
           'answersTr',

@@ -2197,6 +2197,35 @@
         "reviewedAt": "metadata.reviewedAt",
         "locale": "ku-kmr"
       }
+    },
+    {
+      "id": "visual_2026_08_07_runtime_bank",
+      "description": "2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine yazılan doğrulanmış görsel sorular",
+      "path": "assets/data/visual_2026_08_07_questions.json",
+      "role": "runtime_secondary",
+      "parser": "json",
+      "canonicalGroup": "runtime_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": true,
+      "precedence": 980,
+      "expectedRecordCount": 20,
+      "notes": "Her soru için yazan ve denetleyen iki ayrı ajan görseli açtı; görseli konuyla uyumsuz çıkan 9 aday elendi.",
+      "columns": {
+        "id": "id",
+        "category": "category",
+        "prompt": "prompt",
+        "options": "answers",
+        "correct": "correctAnswer",
+        "explanation": "explanationKu",
+        "difficulty": "difficulty",
+        "type": "type",
+        "dialect": "metadata.dialect",
+        "sourceTitle": "metadata.sourceTitle",
+        "sourceUrl": "metadata.sourceReference",
+        "reviewedAt": "metadata.reviewedAt",
+        "locale": "ku-kmr"
+      }
     }
   ]
 }

@@ -37,4 +37,13 @@ const questionBankAssets = <String>[
   // Wîkîferheng girdisiyle açılmıştır. Provenance:
   // docs/content/verified_external_pool_2026_08/provenance.json
   'assets/data/source_first_2026_08_questions.json',
+  // 2026-08-07: kendi kategorisini soran döngüsel «kategori eşleştirme»
+  // soruları çıkarılınca 29 görsel öksüz kaldı. Bunlar gerçek fotoğraflar —
+  // dengbêj icrası, tembûr, erbane, arkeolojik kazı — ve çöpe atılmaları
+  // israf olurdu. Yerlerine görselin GERÇEKTEN gösterdiği şeye dayanan soru
+  // yazıldı: bir ajan görseli açıp yazdı, ikinci bir ajan görseli kendisi
+  // açıp doğruladı. 29 görselin 20'si geçti; kalan 9'un görseli konuyla
+  // uyumsuz çıktı (ör. `ritim.webp` Batı Afrika djembe'si gösteriyordu) ve
+  // hem soru hem görsel elendi.
+  'assets/data/visual_2026_08_07_questions.json',
 ];

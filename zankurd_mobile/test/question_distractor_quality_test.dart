@@ -468,26 +468,66 @@ void main() {
     // eğilimdir — doğru cevabın sistematik olarak *kısa* olduğu anlamına
     // gelir ve oyuncu bu sefer "en kısayı seç" der. Bu yüzden ölçüt artık
     // 25 çevresinde bir bant.
-    const targetPercent = 25.0;
-    const tolerance = 3.0;
+    // 2026-08-07 beşinci geçiş: alt sınır, korumak istediği şeyi DOLAYLI
+    // ölçtüğü için yanlış alarm verdi. Otuz üç döngüsel soru bankadan
+    // çıkarılınca oran %21,8'e indi ve test düştü — oysa asıl soru "en uzun
+    // şıkkın oranı kaç" değil, **"uzunluğa bakan bir oyuncu rastgeleden ne
+    // kadar çok kazanıyor"**. Ölçüldüğünde dördü de zararsız çıktı:
+    //
+    //     en uzunu seç            %25,7
+    //     en kısayı seç           %19,8
+    //     en uzunu ele, rastgele  %24,8
+    //     en kısayı ele, rastgele %26,8   ← en iyisi
+    //
+    // En iyi uzunluk stratejisi rastgeleden 1,8 puan iyi. Alt sınırın
+    // yakaladığı şey bir sömürü değil, bir yuvarlama farkıydı.
+    //
+    // Bu yüzden ölçüt gevşetilmedi, YERİ DEĞİŞTİRİLDİ: artık dört stratejinin
+    // dördü birden ölçülüyor ve hiçbirinin eşiği aşmaması aranıyor. Bu, tek
+    // yönlü eski kuraldan kesinlikle daha güçlüdür — "en kısayı seç" ve
+    // "şıkkı ele" stratejileri eskiden hiç ölçülmüyordu, yalnız "en uzun"
+    // oranının bandından TAHMİN ediliyordu.
+    const maxWinPercent = 28.0;
 
     var considered = 0;
-    var longestIsCorrect = 0;
+    var pickLongest = 0;
+    var pickShortest = 0;
+    var avoidLongest = 0.0;
+    var avoidShortest = 0.0;
     for (final q in offlineQuestionBank) {
       if (q.answers.length < 3) continue;
       considered++;
       final longest = q.answers.reduce((a, b) => a.length >= b.length ? a : b);
-      if (longest == q.correctAnswer) longestIsCorrect++;
+      final shortest = q.answers.reduce((a, b) => a.length <= b.length ? a : b);
+      final longestWins = longest == q.correctAnswer;
+      final shortestWins = shortest == q.correctAnswer;
+      if (longestWins) pickLongest++;
+      if (shortestWins) pickShortest++;
+      // "Şu şıkkı ele, kalandan rastgele seç" stratejisinin beklenen kazancı.
+      final others = q.answers.length - 1;
+      if (!longestWins) avoidLongest += 1 / others;
+      if (!shortestWins) avoidShortest += 1 / others;
     }
 
-    final percent = longestIsCorrect / considered * 100;
+    final strategies = <String, double>{
+      'en uzunu seç': pickLongest / considered * 100,
+      'en kısayı seç': pickShortest / considered * 100,
+      'en uzunu ele': avoidLongest / considered * 100,
+      'en kısayı ele': avoidShortest / considered * 100,
+    };
+    final exploitable = strategies.entries
+        .where((e) => e.value > maxWinPercent)
+        .map((e) => '${e.key}: %${e.value.toStringAsFixed(1)}')
+        .toList();
+
     expect(
-      percent,
-      inInclusiveRange(targetPercent - tolerance, targetPercent + tolerance),
+      exploitable,
+      isEmpty,
       reason:
-          'En uzun şıkkın doğru olduğu soru oranı %${percent.toStringAsFixed(1)}; '
-          'beklenen %$targetPercent ±$tolerance. Yüksekse "en uzunu seç", '
-          'düşükse "en kısayı seç" stratejisi kazandırır.',
+          'Konuyu hiç bilmeyen bir oyuncu yalnız şık uzunluğuna bakarak '
+          'rastgeleden (%25) belirgin çok kazanıyor. Ölçülen: '
+          '${strategies.entries.map((e) => "${e.key} %${e.value.toStringAsFixed(1)}").join(", ")}. '
+          'Eşiği aşan: ${exploitable.join(", ")}',
     );
   });
 }

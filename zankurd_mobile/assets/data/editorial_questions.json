@@ -21,7 +21,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürtçe Latin alfabesi kaç harften oluşur?",
+    "answersTr": [
+      "29",
+      "26",
+      "34",
+      "31"
+    ],
+    "correctAnswerTr": "31"
   },
   {
     "type": "multipleChoice",
@@ -45,7 +53,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî Latin alfabesi kim tarafından sistemleştirildi?",
+    "answersTr": [
+      "Celadet Alî Bedirxan",
+      "Ehmedê Xanî",
+      "Melayê Cizîrî",
+      "Şerefxanê Bidlîsî"
+    ],
+    "correctAnswerTr": "Celadet Alî Bedirxan"
   },
   {
     "type": "multipleChoice",
@@ -69,7 +85,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürtçe Latin alfabesinde kaç sesli harf (dengdêr) vardır?",
+    "answersTr": [
+      "5",
+      "6",
+      "8",
+      "10"
+    ],
+    "correctAnswerTr": "8"
   },
   {
     "type": "multipleChoice",
@@ -93,7 +117,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de isim, sıfata ya da başka bir isme neyle bağlanır?",
+    "answersTr": [
+      "İzafe (veqetandek)",
+      "Edat (daçek)",
+      "Zamir (cînav)",
+      "Soru sözcüğü (bêjeya pirsê)"
+    ],
+    "correctAnswerTr": "İzafe (veqetandek)"
   },
   {
     "type": "multipleChoice",
@@ -117,7 +149,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «jin» sözcüğü hangi cinstendir?",
+    "answersTr": [
+      "Eril",
+      "Cinsiyetsiz",
+      "Her ikisi de",
+      "Dişil"
+    ],
+    "correctAnswerTr": "Dişil"
   },
   {
     "type": "multipleChoice",
@@ -141,7 +181,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de bükünlü (oblique) durumun çoğul eki hangisidir?",
+    "answersTr": [
+      "-an",
+      "-ek",
+      "-ê",
+      "-ne"
+    ],
+    "correctAnswerTr": "-an"
   },
   {
     "type": "multipleChoice",
@@ -165,7 +213,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Kirin» fiili şimdiki zamanda üçüncü tekil kişi için nasıl çekilir?",
+    "answersTr": [
+      "Ew kir",
+      "Ew bike",
+      "Ew dike",
+      "Ew kiriye"
+    ],
+    "correctAnswerTr": "Ew dike"
   },
   {
     "type": "multipleChoice",
@@ -189,7 +245,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «ergatîf» ne demektir?",
+    "answersTr": [
+      "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi",
+      "Okuma (dibistan: okuma yeri)",
+      "«Tu» tekil, «hûn» çoğul/saygı biçimidir",
+      "Kürtçe Latin alfabesinin yaygınlaştırılması"
+    ],
+    "correctAnswerTr": "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi"
   },
   {
     "type": "multipleChoice",
@@ -213,7 +277,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Rojname» sözcüğü hangi iki sözcükten oluşur?",
+    "answersTr": [
+      "Ro + jname",
+      "Rojan + me",
+      "Roja + nem",
+      "Roj + name"
+    ],
+    "correctAnswerTr": "Roj + name"
   },
   {
     "type": "multipleChoice",
@@ -237,7 +309,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «av» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "su",
+      "ateş",
+      "ekmek",
+      "taş"
+    ],
+    "correctAnswerTr": "su"
   },
   {
     "type": "multipleChoice",
@@ -261,7 +341,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «hesp» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "köpek",
+      "at",
+      "kuş",
+      "koyun"
+    ],
+    "correctAnswerTr": "at"
   },
   {
     "type": "multipleChoice",
@@ -285,7 +373,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «zanîn» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "görmek",
+      "gitmek",
+      "almak",
+      "bilmek"
+    ],
+    "correctAnswerTr": "bilmek"
   },
   {
     "type": "multipleChoice",
@@ -309,7 +405,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «dilgeş» sözcüğünün eş anlamlısı hangisidir?",
+    "answersTr": [
+      "Xemgîn",
+      "Şa",
+      "Westiyayî",
+      "Tirsonek"
+    ],
+    "correctAnswerTr": "Şa"
   },
   {
     "type": "multipleChoice",
@@ -333,7 +437,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «germ» sözcüğünün zıt anlamlısı hangisidir?",
+    "answersTr": [
+      "Sar",
+      "Nerm",
+      "Tarî",
+      "Giran"
+    ],
+    "correctAnswerTr": "Sar"
   },
   {
     "type": "multipleChoice",
@@ -357,7 +469,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «daçek» (edat) nedir?",
+    "answersTr": [
+      "eylemin çok uzak bir geçmişte olduğunu gösteren fiil yapısı",
+      "İsimlerin ilişkisini belirten «di, bi, ji, li» gibi sözcükler",
+      "«Tu» tekil, «hûn» çoğul/saygı biçimidir",
+      "isim ya da zamirlerin cümledeki rolüne göre ekinin değişmesi"
+    ],
+    "correctAnswerTr": "İsimlerin ilişkisini belirten «di, bi, ji, li» gibi sözcükler"
   },
   {
     "type": "multipleChoice",
@@ -381,7 +501,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «hatin» fiilinin ikinci tekil kişi için emir kipi (raweya fermanî) hangisidir?",
+    "answersTr": [
+      "Hat",
+      "Tê",
+      "Hatiye",
+      "Were"
+    ],
+    "correctAnswerTr": "Were"
   },
   {
     "type": "trueFalse",
@@ -403,7 +531,13 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Kurmancî'de «Q» harfi vardır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "trueFalse",
@@ -425,7 +559,13 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Kurmancî, Kürtçenin üç ana lehçesinden biridir.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -449,7 +589,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Hawar» dergisi özellikle neden önemlidir?",
+    "answersTr": [
+      "İlk Kürtçe romanı yayımladığı için",
+      "Büyük Kürtçe sözlüğü hazırladığı için",
+      "Serhed dengbêjlerinin kilamlarını kaydettiği için",
+      "Kürtçe Latin alfabesini yaygınlaştırdığı için"
+    ],
+    "correctAnswerTr": "Kürtçe Latin alfabesini yaygınlaştırdığı için"
   },
   {
     "type": "multipleChoice",
@@ -473,7 +621,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «min» ile «ez» arasındaki fark nedir?",
+    "answersTr": [
+      "«Ez» yalın durum, «min» bükünlü durumdur",
+      "İkisi de aynıdır",
+      "«Min» çoğuldur",
+      "«Ez» yalnızca geçmiş zamanda kullanılır"
+    ],
+    "correctAnswerTr": "«Ez» yalın durum, «min» bükünlü durumdur"
   },
   {
     "type": "multipleChoice",
@@ -497,7 +653,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Newroz her yıl hangi günde kutlanır?",
+    "answersTr": [
+      "1 Mayıs",
+      "21 Eylül",
+      "1 Ocak",
+      "21 Mart"
+    ],
+    "correctAnswerTr": "21 Mart"
   },
   {
     "type": "multipleChoice",
@@ -521,7 +685,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Newroz efsanesine göre Kawa'nın mesleği neydi?",
+    "answersTr": [
+      "Çoban",
+      "Çiftçi",
+      "Demirci",
+      "Tüccar"
+    ],
+    "correctAnswerTr": "Demirci"
   },
   {
     "type": "multipleChoice",
@@ -545,7 +717,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "El ele tutuşarak ve sıra hâlinde oynanan Kürt halk dansı hangisidir?",
+    "answersTr": [
+      "Semah",
+      "Zeybek",
+      "Horon",
+      "Govend"
+    ],
+    "correctAnswerTr": "Govend"
   },
   {
     "type": "multipleChoice",
@@ -569,7 +749,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt kültüründe «tiştonek» nedir?",
+    "answersTr": [
+      "Dinî bir ezgi",
+      "Mamik / bilmece",
+      "Bir yemek türü",
+      "Bir halk dansı"
+    ],
+    "correctAnswerTr": "Mamik / bilmece"
   },
   {
     "type": "multipleChoice",
@@ -593,7 +781,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt kadın giysisinde başa bağlanan ve pullarla süslenen parça genel olarak ne adla anılır?",
+    "answersTr": [
+      "Şal û şapik",
+      "Kras",
+      "Şûtik",
+      "Klîtik / kofî"
+    ],
+    "correctAnswerTr": "Klîtik / kofî"
   },
   {
     "type": "multipleChoice",
@@ -617,7 +813,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt geleneğinde «şevbihêrk» nedir?",
+    "answersTr": [
+      "toplum ve aile arasındaki bağlar",
+      "toplumsal bağların güçlendirilmesi",
+      "hikâye ve türkü anlatılan gece toplantısı",
+      "erkeklerin geleneksel giysisi"
+    ],
+    "correctAnswerTr": "hikâye ve türkü anlatılan gece toplantısı"
   },
   {
     "type": "multipleChoice",
@@ -641,7 +845,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Bulgur ve etten yapılan, elde yuvarlanarak şekillendirilen Kürt yemeği hangisidir?",
+    "answersTr": [
+      "Dolma",
+      "Sarma",
+      "Kadayıf",
+      "Kutilk"
+    ],
+    "correctAnswerTr": "Kutilk"
   },
   {
     "type": "multipleChoice",
@@ -665,7 +877,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt kültüründe «heval» genel olarak ne anlama gelir?",
+    "answersTr": [
+      "Toplu halk oyunu",
+      "Hogir / dost",
+      "Mamik / bilmece",
+      "Atalar/ecdat"
+    ],
+    "correctAnswerTr": "Hogir / dost"
   },
   {
     "type": "multipleChoice",
@@ -689,7 +909,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Mem û Zîn» destanı genel olarak neyin hikâyesidir?",
+    "answersTr": [
+      "kimlik ve yöresel çeşitlilik",
+      "Kürt misafirperverliği",
+      "sözlü kültüre bağlı olması",
+      "Kavuşamayan Mem ile Zîn'in aşkı"
+    ],
+    "correctAnswerTr": "Kavuşamayan Mem ile Zîn'in aşkı"
   },
   {
     "type": "trueFalse",
@@ -711,7 +939,13 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Newroz yalnızca Kürtler tarafından kutlanır.",
+    "answersTr": [
+      "Yanlış",
+      "Doğru"
+    ],
+    "correctAnswerTr": "Yanlış"
   },
   {
     "type": "multipleChoice",
@@ -735,7 +969,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt düğünlerinde «berbû» kimlerdir?",
+    "answersTr": [
+      "Düğünde çalan müzisyenler",
+      "Uzaktan gelen misafirler",
+      "Gelini evinden alıp getirenler",
+      "Düğünde yemek yapanlar"
+    ],
+    "correctAnswerTr": "Gelini evinden alıp getirenler"
   },
   {
     "type": "multipleChoice",
@@ -759,7 +1001,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt toplumunda «kirîvatî» geleneği nedir?",
+    "answersTr": [
+      "Şirnex yöresinin geleneksel dansı",
+      "bilûra benzeyen geleneksel çalgı",
+      "sofra kültürüne bağlı olması",
+      "Ailelerin sünnet yoluyla bağ kurması"
+    ],
+    "correctAnswerTr": "Ailelerin sünnet yoluyla bağ kurması"
   },
   {
     "type": "multipleChoice",
@@ -783,7 +1033,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt bayrağında genel olarak geçen renkler hangileridir?",
+    "answersTr": [
+      "Mavi, beyaz ve kırmızı",
+      "Kırmızı, beyaz, yeşil ve sarı",
+      "Siyah, beyaz ve yeşil",
+      "Sarı, mor ve kırmızı"
+    ],
+    "correctAnswerTr": "Kırmızı, beyaz, yeşil ve sarı"
   },
   {
     "type": "multipleChoice",
@@ -807,7 +1065,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt kültüründe «gotinên pêşiyan» nedir?",
+    "answersTr": [
+      "dua ve ayinlerde söylenen dinî ezgiler",
+      "haritalarda yaşamaya devam eden eski köy adları",
+      "cümle kuruluşunu belirleyen dilbilgisi kuralları",
+      "kuşakların deneyimini aktaran kısa sözler"
+    ],
+    "correctAnswerTr": "kuşakların deneyimini aktaran kısa sözler"
   },
   {
     "type": "multipleChoice",
@@ -831,7 +1097,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Dew» neyden yapılır?",
+    "answersTr": [
+      "Un ve su",
+      "Süt ve şeker",
+      "Yoğurt ve su",
+      "Buğday ve yağ"
+    ],
+    "correctAnswerTr": "Yoğurt ve su"
   },
   {
     "type": "multipleChoice",
@@ -855,7 +1129,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt geleneğinde «rîspî» kimdir?",
+    "answersTr": [
+      "Kürt halk takvimindeki yılbaşı kutlaması",
+      "Şirnex yöresinin geleneksel dansı",
+      "kuşaktan kuşağa aktarılan anlatı",
+      "Anlaşmazlıkları çözen saygın yaşlı kişi"
+    ],
+    "correctAnswerTr": "Anlaşmazlıkları çözen saygın yaşlı kişi"
   },
   {
     "type": "multipleChoice",
@@ -879,7 +1161,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Hawar» dergisi hangi yılda yayımlanmaya başladı?",
+    "answersTr": [
+      "1898",
+      "1932",
+      "1945",
+      "1960"
+    ],
+    "correctAnswerTr": "1932"
   },
   {
     "type": "multipleChoice",
@@ -903,7 +1193,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "İlk Kürtçe gazete «Kurdistan» hangi yılda ve nerede yayımlandı?",
+    "answersTr": [
+      "1908, İstanbul",
+      "1920, Bağdat",
+      "1932, Şam",
+      "1898, Kahire"
+    ],
+    "correctAnswerTr": "1898, Kahire"
   },
   {
     "type": "multipleChoice",
@@ -927,7 +1225,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Selahedînê Eyûbî özellikle neyle tanınır?",
+    "answersTr": [
+      "Osmanlı İmparatorluğu'nu kurmasıyla",
+      "Mem û Zîn'i yazmasıyla",
+      "1187'de Kudüs'ü almasıyla",
+      "Kürt alfabesini bulmasıyla"
+    ],
+    "correctAnswerTr": "1187'de Kudüs'ü almasıyla"
   },
   {
     "type": "multipleChoice",
@@ -951,7 +1257,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Lozan Antlaşması hangi yılda imzalandı?",
+    "answersTr": [
+      "1920",
+      "1918",
+      "1932",
+      "1923"
+    ],
+    "correctAnswerTr": "1923"
   },
   {
     "type": "multipleChoice",
@@ -975,7 +1289,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Sevr Antlaşması (1920) Kürtler açısından neden önemli sayılır?",
+    "answersTr": [
+      "Toplumların birbirini etkilemesi",
+      "Özerk bir Kürt bölgesi için madde içermesi",
+      "Rewandiz merkezli, askerî güç toplayan emirlik",
+      "Suriye Kürtlerinin 1962 sayımı sonrası vatansızlığı"
+    ],
+    "correctAnswerTr": "Özerk bir Kürt bölgesi için madde içermesi"
   },
   {
     "type": "multipleChoice",
@@ -999,7 +1321,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Med İmparatorluğu genel olarak hangi yüzyılda kuruldu?",
+    "answersTr": [
+      "M.S. 3. yüzyıl",
+      "12. yüzyıl",
+      "M.Ö. 1. yüzyıl",
+      "M.Ö. 7. yüzyıl"
+    ],
+    "correctAnswerTr": "M.Ö. 7. yüzyıl"
   },
   {
     "type": "multipleChoice",
@@ -1023,7 +1353,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ehmedê Xanî «Mem û Zîn»'i hangi yılda yazdı?",
+    "answersTr": [
+      "1592",
+      "1792",
+      "1692",
+      "1892"
+    ],
+    "correctAnswerTr": "1692"
   },
   {
     "type": "multipleChoice",
@@ -1047,7 +1385,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Botan Emirliği hangi merkeziyle tanınır?",
+    "answersTr": [
+      "Hewlêr",
+      "Sanandaj",
+      "Kirmanşan",
+      "Cizîr"
+    ],
+    "correctAnswerTr": "Cizîr"
   },
   {
     "type": "multipleChoice",
@@ -1071,7 +1417,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Şerefxanê Bidlîsî'nin «Şerefname» adlı eseri nedir?",
+    "answersTr": [
+      "Bir şiir divanı",
+      "Kürt emirliklerinin tarihi",
+      "Kürtçe-Arapça bir sözlük",
+      "Bir dilbilgisi kitabı"
+    ],
+    "correctAnswerTr": "Kürt emirliklerinin tarihi"
   },
   {
     "type": "trueFalse",
@@ -1093,7 +1447,13 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Celadet Alî Bedirxan hem dilbilimci hem de yayıncıydı.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -1117,7 +1477,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Mehabad Cumhuriyeti hangi yılda kuruldu?",
+    "answersTr": [
+      "1936",
+      "1958",
+      "1961",
+      "1946"
+    ],
+    "correctAnswerTr": "1946"
   },
   {
     "type": "multipleChoice",
@@ -1141,7 +1509,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Qadî Mihemed neyle tanınır?",
+    "answersTr": [
+      "Şerefname'nin yazarı olmasıyla",
+      "Hawar dergisini kurmasıyla",
+      "Mehabad Cumhuriyeti'ne önderlik etmesiyle",
+      "Botan emiri olmasıyla"
+    ],
+    "correctAnswerTr": "Mehabad Cumhuriyeti'ne önderlik etmesiyle"
   },
   {
     "type": "multipleChoice",
@@ -1165,7 +1541,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Amed şehri tarihte hangi Latince adla da bilinir?",
+    "answersTr": [
+      "Ninova",
+      "Palmyra",
+      "Edessa",
+      "Amida"
+    ],
+    "correctAnswerTr": "Amida"
   },
   {
     "type": "multipleChoice",
@@ -1189,7 +1573,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Xerabreşk» köyünün ya da genel olarak 1990'larda köylerin yakılıp yıkılmasının sonucu hangi kavramla anılır?",
+    "answersTr": [
+      "Toprak reformu",
+      "Zorunlu göç",
+      "Kentleşme",
+      "Tarımsal kolonizasyon"
+    ],
+    "correctAnswerTr": "Zorunlu göç"
   },
   {
     "type": "multipleChoice",
@@ -1213,7 +1605,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Hûrî ve Mîtanîler genel olarak hangi bölgede yaşadı?",
+    "answersTr": [
+      "Sine (Sanandaj)",
+      "Amed ve çevresi",
+      "Kafkasya (Gence-Anî)",
+      "Yukarı Mezopotamya"
+    ],
+    "correctAnswerTr": "Yukarı Mezopotamya"
   },
   {
     "type": "multipleChoice",
@@ -1237,7 +1637,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Mem û Zîn»in yazarı kimdir?",
+    "answersTr": [
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Ehmedê Xanî",
+      "Elî Herîrî"
+    ],
+    "correctAnswerTr": "Ehmedê Xanî"
   },
   {
     "type": "multipleChoice",
@@ -1261,7 +1669,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Melayê Cizîrî genel olarak neyle tanınır?",
+    "answersTr": [
+      "Kürtçedeki ilk roman",
+      "Kürtçe-Arapça sözlük",
+      "Beyliklerin tarihnamesi",
+      "Tasavvufi şiirlerden oluşan Divanı"
+    ],
+    "correctAnswerTr": "Tasavvufi şiirlerden oluşan Divanı"
   },
   {
     "type": "multipleChoice",
@@ -1285,7 +1701,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Feqiyê Teyran» Kürt edebiyatında neyle tanınmıştır?",
+    "answersTr": [
+      "Kürt şiirine serbest üslubu getiren büyük şair olmasıyla",
+      "doğa ve kuşlar üzerine yazdığı şiirlerle",
+      "modern Kürt şiirinin öncü toplumcu şairi olmasıyla",
+      "Kürt dili ve edebiyatı üzerine çalışan akademisyen olmasıyla"
+    ],
+    "correctAnswerTr": "doğa ve kuşlar üzerine yazdığı şiirlerle"
   },
   {
     "type": "multipleChoice",
@@ -1309,7 +1733,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Mehmed Uzun genel olarak hangi edebî türle tanınır?",
+    "answersTr": [
+      "Klasik şiir",
+      "Tiyatro",
+      "Sözlükçülük",
+      "Roman"
+    ],
+    "correctAnswerTr": "Roman"
   },
   {
     "type": "multipleChoice",
@@ -1333,7 +1765,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Şêrko Bêkes hangi lehçeyle yazmıştır?",
+    "answersTr": [
+      "Kurmancî",
+      "Zazakî",
+      "Soranî",
+      "Goranî"
+    ],
+    "correctAnswerTr": "Soranî"
   },
   {
     "type": "multipleChoice",
@@ -1357,7 +1797,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt edebiyatında «dîwan» ne anlama gelir?",
+    "answersTr": [
+      "Kafiyeli beyitlerle kurulan anlatı şiiri biçimi",
+      "Bir şairin tasavvufi şiirlerinden oluşan kitap",
+      "Kültür ve edebiyat dergileri",
+      "Bir şairin şiirlerinin derlemesi"
+    ],
+    "correctAnswerTr": "Bir şairin şiirlerinin derlemesi"
   },
   {
     "type": "multipleChoice",
@@ -1381,7 +1829,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Cegerxwîn genel olarak ne olarak tanınır?",
+    "answersTr": [
+      "Romancı",
+      "Şair",
+      "Tarihçi",
+      "Müzisyen"
+    ],
+    "correctAnswerTr": "Şair"
   },
   {
     "type": "trueFalse",
@@ -1403,7 +1859,13 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: «Siya Evînê» Mehmed Uzun'un bir romanıdır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -1427,7 +1889,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Klasik Kürt şiirinde hangi edebiyatların etkisi daha çok görülür?",
+    "answersTr": [
+      "Yunan ve Latin",
+      "Fars ve Arap",
+      "Slav ve Rus",
+      "Çin ve Hint"
+    ],
+    "correctAnswerTr": "Fars ve Arap"
   },
   {
     "type": "multipleChoice",
@@ -1451,7 +1921,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ehmedê Xanî'nin «Nûbihara Biçûkan» adlı eseri nedir?",
+    "answersTr": [
+      "klasik eğitim ve şairlerin yetiştirilmesi",
+      "Kürt tiyatrosunun kurucu oyun yazarlarından biri",
+      "çocuklar için manzum Kürtçe-Arapça sözlük",
+      "divan yazan ilk Kürt kadın tarihçi ve şair"
+    ],
+    "correctAnswerTr": "çocuklar için manzum Kürtçe-Arapça sözlük"
   },
   {
     "type": "multipleChoice",
@@ -1475,7 +1953,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Şivanê Kurmanca» romanını yazan ve «ilk Kürt romancısı» sayılan kişi kimdir?",
+    "answersTr": [
+      "Erebê Şemo",
+      "Cegerxwîn",
+      "Mehmed Uzun",
+      "Ehmedê Xanî"
+    ],
+    "correctAnswerTr": "Erebê Şemo"
   },
   {
     "type": "multipleChoice",
@@ -1499,7 +1985,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt coğrafyasının büyük bölümünden geçen sıradağ hangisidir?",
+    "answersTr": [
+      "Zagros",
+      "Alpler",
+      "Kafkaslar",
+      "Batı Toroslar"
+    ],
+    "correctAnswerTr": "Zagros"
   },
   {
     "type": "multipleChoice",
@@ -1523,7 +2017,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Türkiye'nin Kürt bölgesinde yer alan en yüksek dağı hangisidir?",
+    "answersTr": [
+      "Cûdî Dağı",
+      "Nemrûd Dağı",
+      "Agirî Dağı",
+      "Erciyes Dağı"
+    ],
+    "correctAnswerTr": "Agirî Dağı"
   },
   {
     "type": "multipleChoice",
@@ -1547,7 +2049,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Türkiye'nin Kürt bölgesinde yer alan en büyük gölü hangisidir?",
+    "answersTr": [
+      "Wan Gölü",
+      "Tuz Gölü",
+      "Beyşehir Gölü",
+      "İznik Gölü"
+    ],
+    "correctAnswerTr": "Wan Gölü"
   },
   {
     "type": "multipleChoice",
@@ -1571,7 +2081,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Mezopotamya'nın iki ana nehri hangileridir?",
+    "answersTr": [
+      "Nil ve Kongo",
+      "Volga ve Don",
+      "Ganj ve İndus",
+      "Dicle ve Fırat"
+    ],
+    "correctAnswerTr": "Dicle ve Fırat"
   },
   {
     "type": "multipleChoice",
@@ -1595,7 +2113,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Hewlêr (Erbil) şehri hangi bölgenin merkezidir?",
+    "answersTr": [
+      "Irak Kürdistan Bölgesi",
+      "Rojava (Batı Kürdistan)",
+      "Bakur (Kuzey Kürdistan)",
+      "Rojhilat (Doğu Kürdistan)"
+    ],
+    "correctAnswerTr": "Irak Kürdistan Bölgesi"
   },
   {
     "type": "multipleChoice",
@@ -1619,7 +2145,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "UNESCO Dünya Mirası listesinde yer alan bazalt surlar hangi şehirdedir?",
+    "answersTr": [
+      "Wan",
+      "Mêrdîn",
+      "Amed",
+      "Riha"
+    ],
+    "correctAnswerTr": "Amed"
   },
   {
     "type": "multipleChoice",
@@ -1643,7 +2177,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Girê Navokê (Göbeklitepe) hangi şehrin yakınındadır?",
+    "answersTr": [
+      "Riha",
+      "Wan",
+      "Amed",
+      "Elezîz"
+    ],
+    "correctAnswerTr": "Riha"
   },
   {
     "type": "multipleChoice",
@@ -1667,7 +2209,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ilısu Barajı hangi nehir üzerine kurulmuştur?",
+    "answersTr": [
+      "Fırat",
+      "Murat",
+      "Zap",
+      "Dicle"
+    ],
+    "correctAnswerTr": "Dicle"
   },
   {
     "type": "multipleChoice",
@@ -1691,7 +2241,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Heskîf (Hasankeyf), sular altında kalmadan önce hangi nehrin kıyısındaydı?",
+    "answersTr": [
+      "Dicle",
+      "Fırat",
+      "Botan",
+      "Zap"
+    ],
+    "correctAnswerTr": "Dicle"
   },
   {
     "type": "multipleChoice",
@@ -1715,7 +2273,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Zap Suyu genel olarak hangi nehre karışır?",
+    "answersTr": [
+      "Fırat",
+      "Dicle",
+      "Erez",
+      "Çoruh"
+    ],
+    "correctAnswerTr": "Dicle"
   },
   {
     "type": "trueFalse",
@@ -1737,7 +2303,13 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Wan Gölü'nün suyu tuzludur.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -1761,7 +2333,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Behdînan bölgesi genel olarak Kürdistan'ın hangi parçasındadır?",
+    "answersTr": [
+      "Başûr",
+      "Bakur",
+      "Rojava",
+      "Rojhilat"
+    ],
+    "correctAnswerTr": "Başûr"
   },
   {
     "type": "multipleChoice",
@@ -1785,7 +2365,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Qamişlo şehri Kürdistan'ın hangi parçasındadır?",
+    "answersTr": [
+      "Bakur",
+      "Başûr",
+      "Rojhilat",
+      "Rojava"
+    ],
+    "correctAnswerTr": "Rojava"
   },
   {
     "type": "multipleChoice",
@@ -1809,7 +2397,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Sine (Sanandaj) şehri bugün hangi devletin sınırları içindedir?",
+    "answersTr": [
+      "İran",
+      "Irak",
+      "Suriye",
+      "Ermenistan"
+    ],
+    "correctAnswerTr": "İran"
   },
   {
     "type": "multipleChoice",
@@ -1833,7 +2429,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Çiya» kelimesi Türkçede ne anlama gelir?",
+    "answersTr": [
+      "nehir",
+      "göl",
+      "dağ",
+      "ova"
+    ],
+    "correctAnswerTr": "dağ"
   },
   {
     "type": "multipleChoice",
@@ -1857,7 +2461,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Dengbêj» kimdir?",
+    "answersTr": [
+      "Behdînan yöresinin sevilen klasik halk sanatçısı",
+      "Sesini plağa kaydeden ilk Kürt kadın şarkıcı",
+      "Hikâyeleri kilamlarla anlatan sözlü icracı",
+      "Daha çok aşk ve yiğitlik üzerine söylenen müzik türü"
+    ],
+    "correctAnswerTr": "Hikâyeleri kilamlarla anlatan sözlü icracı"
   },
   {
     "type": "multipleChoice",
@@ -1881,7 +2493,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Saz» adıyla da bilinen telli Kürt çalgısı hangisidir?",
+    "answersTr": [
+      "Tembûr",
+      "Bilûr",
+      "Davul",
+      "Zurna"
+    ],
+    "correctAnswerTr": "Tembûr"
   },
   {
     "type": "multipleChoice",
@@ -1905,7 +2525,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Bilûr» ne tür bir çalgıdır?",
+    "answersTr": [
+      "Telli çalgı",
+      "Vurmalı çalgı",
+      "Üflemeli çalgı",
+      "Elektronik çalgı"
+    ],
+    "correctAnswerTr": "Üflemeli çalgı"
   },
   {
     "type": "multipleChoice",
@@ -1929,7 +2557,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Davul ve zurna genellikle hangi durumda çalınır?",
+    "answersTr": [
+      "Yas töreninde",
+      "Düğün ve govendde",
+      "Okul derslerinde",
+      "Sabah namazında"
+    ],
+    "correctAnswerTr": "Düğün ve govendde"
   },
   {
     "type": "multipleChoice",
@@ -1953,7 +2589,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Şivan Perwer genel olarak neyle tanınır?",
+    "answersTr": [
+      "Şarkıcı ve müzisyenlerden oluşan topluluk",
+      "20. yüzyılın ünlü bir kadın dengbêji",
+      "Modern ve siyasi Kürt şarkıcılığı",
+      "Hikâyeleri kilamlarla anlatan sözlü icracı"
+    ],
+    "correctAnswerTr": "Modern ve siyasi Kürt şarkıcılığı"
   },
   {
     "type": "multipleChoice",
@@ -1977,7 +2621,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt müziğinde «kilam» nedir?",
+    "answersTr": [
+      "Uzun, hikâye anlatan ezgiler",
+      "Toplu dans",
+      "Telli bir çalgı",
+      "Bir yemek türü"
+    ],
+    "correctAnswerTr": "Uzun, hikâye anlatan ezgiler"
   },
   {
     "type": "multipleChoice",
@@ -2001,7 +2653,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ayşe Şan, Kürt müziği tarihinde neden önemlidir?",
+    "answersTr": [
+      "açık havada çalınan yüksek sesli üflemeli çalgıdır",
+      "plak dolduran ilk Kürt kadın sanatçıdır",
+      "Kürt müziğinin öncü kadın seslerinden biridir",
+      "zurnayla birlikte çalınan ritim sazıdır"
+    ],
+    "correctAnswerTr": "Kürt müziğinin öncü kadın seslerinden biridir"
   },
   {
     "type": "multipleChoice",
@@ -2025,7 +2685,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt müziğinde «lawik» genel olarak nedir?",
+    "answersTr": [
+      "Kürt müziğinin öncü kadın seslerinden biridir",
+      "Çoğunlukla aşk üzerine bir kilam türüdür",
+      "Şarkı ve kayıtların dünyaya yayılmasıdır",
+      "Parmakla ya da mızrapla çalınır"
+    ],
+    "correctAnswerTr": "Çoğunlukla aşk üzerine bir kilam türüdür"
   },
   {
     "type": "trueFalse",
@@ -2047,7 +2715,13 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Dengbêjler genellikle çalgısız söyler.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -2071,7 +2745,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dengbêj müziğinde «şeşbendî» genel olarak neyi belirtir?",
+    "answersTr": [
+      "Çalgıların sayısını",
+      "Düğünün uzunluğunu",
+      "Kilamın ezgi ve kalıbını",
+      "Bir yörenin adını"
+    ],
+    "correctAnswerTr": "Kilamın ezgi ve kalıbını"
   },
   {
     "type": "multipleChoice",
@@ -2095,7 +2777,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Koma Mizgîn, Koma Amed ve Koma Dengê Azadî genel olarak nedir?",
+    "answersTr": [
+      "Modern Kürt müziği gruplarıdır",
+      "Kürtçe gazetelerdir",
+      "Siyasi partilerdir",
+      "Kitap yayınevleridir"
+    ],
+    "correctAnswerTr": "Modern Kürt müziği gruplarıdır"
   },
   {
     "type": "multipleChoice",
@@ -2119,7 +2809,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Stran» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "dans",
+      "saz",
+      "şarkı",
+      "ses"
+    ],
+    "correctAnswerTr": "şarkı"
   },
   {
     "type": "multipleChoice",
@@ -2143,7 +2841,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Erbane» ne tür bir çalgıdır?",
+    "answersTr": [
+      "Kilamın ezgi ve kalıbıdır",
+      "Def gibi vurmalı bir çalgıdır",
+      "Toplu oynanan halk dansıdır",
+      "Savaş ve direniş olaylarıdır"
+    ],
+    "correctAnswerTr": "Def gibi vurmalı bir çalgıdır"
   },
   {
     "type": "multipleChoice",
@@ -2167,7 +2873,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürtler genel olarak başlıca kaç ülkeye yayılmış durumdadır?",
+    "answersTr": [
+      "Dört",
+      "İki",
+      "Altı",
+      "Sekiz"
+    ],
+    "correctAnswerTr": "Dört"
   },
   {
     "type": "multipleChoice",
@@ -2191,7 +2905,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Irak Kürdistan Bölgesi federal statüsünü hangi belgeyle kazandı?",
+    "answersTr": [
+      "Lozan Antlaşması",
+      "1991 tarihli BM kararı",
+      "1970 anayasası",
+      "2005 Irak anayasası"
+    ],
+    "correctAnswerTr": "2005 Irak anayasası"
   },
   {
     "type": "multipleChoice",
@@ -2215,7 +2937,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt siyasetinde «hevserokatî» ne demektir?",
+    "answersTr": [
+      "Bir kadın ve bir erkeğin ortak yönetimi",
+      "İki yılda bir yapılan seçim",
+      "Çift meclisli yönetim sistemi",
+      "Kentler arasında dönüşümlü başkanlık"
+    ],
+    "correctAnswerTr": "Bir kadın ve bir erkeğin ortak yönetimi"
   },
   {
     "type": "multipleChoice",
@@ -2239,7 +2969,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Xweseriya demokratîk» genel olarak neyi önerir?",
+    "answersTr": [
+      "Yeni ve merkezi bir devlet kurmayı",
+      "Ordunun yönettiği askeri bir düzeni",
+      "Halk meclislerine dayalı yerel öz yönetimi",
+      "Padişahlığa dayalı bir yönetim düzenini"
+    ],
+    "correctAnswerTr": "Halk meclislerine dayalı yerel öz yönetimi"
   },
   {
     "type": "multipleChoice",
@@ -2263,7 +3001,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kongra Star genel olarak hangi alanda çalışır?",
+    "answersTr": [
+      "Rojava'da kadınların örgütlenmesi",
+      "Gazete ve dergi yayıncılığı",
+      "Uluslararası ticaret ilişkileri",
+      "Genel askeri eğitim programları"
+    ],
+    "correctAnswerTr": "Rojava'da kadınların örgütlenmesi"
   },
   {
     "type": "multipleChoice",
@@ -2287,7 +3033,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«KJAR» neyin kısaltmasıdır?",
+    "answersTr": [
+      "Aşağıdan doğrudan ve sürekli katılımı geliştirir",
+      "gösteri, örgütlenme ve ifade özgürlüğü hakları",
+      "merkezden atanan kayyum yerine seçilmiş yerel yöneticinin yetkisi",
+      "Rojhilatê Kurdistanê'nin özgürlükçü kadın örgütü"
+    ],
+    "correctAnswerTr": "Rojhilatê Kurdistanê'nin özgürlükçü kadın örgütü"
   },
   {
     "type": "trueFalse",
@@ -2309,7 +3063,13 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Kürtçe, Irak Kürdistan Bölgesi'nde resmi bir dildir.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -2333,7 +3093,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Irak Kürdistan Bölgesi'nin bağımsızlık referandumu hangi yıl yapıldı?",
+    "answersTr": [
+      "2005",
+      "2017",
+      "2011",
+      "2020"
+    ],
+    "correctAnswerTr": "2017"
   },
   {
     "type": "multipleChoice",
@@ -2357,7 +3125,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kuzey ve Doğu Suriye Özerk Yönetimi genel olarak hangi dönemde kuruldu?",
+    "answersTr": [
+      "1990'dan önce",
+      "1946'da",
+      "2020'de",
+      "2012'den sonra"
+    ],
+    "correctAnswerTr": "2012'den sonra"
   },
   {
     "type": "multipleChoice",
@@ -2381,7 +3157,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Netewa demokratîk», «dewleta netewe»den hangi noktada ayrılır?",
+    "answersTr": [
+      "farklı kimlikler tek toplum içinde korunur, devlet zorunlu değildir",
+      "anayasal güvence ve kültürel hakların tanınması talebi",
+      "yetkinin merkezden yerel birimlere dağıtılması",
+      "bölgede özerklik ve karar alma statüsü"
+    ],
+    "correctAnswerTr": "farklı kimlikler tek toplum içinde korunur, devlet zorunlu değildir"
   },
   {
     "type": "multipleChoice",
@@ -2405,7 +3189,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Azadî» sözcüğü Türkçede ne anlama gelir?",
+    "answersTr": [
+      "eşitlik",
+      "adalet",
+      "barış",
+      "özgürlük"
+    ],
+    "correctAnswerTr": "özgürlük"
   },
   {
     "type": "multipleChoice",
@@ -2429,7 +3221,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Yerel siyasette «komun» genel olarak nedir?",
+    "answersTr": [
+      "mahallenin ya da köyün en küçük karar birimi",
+      "bağımsız ve tarafsız mahkemelerde savunma hakkı",
+      "halkın siyasi kararlara doğrudan katılımı",
+      "yalnız çoğunluğun değil azınlığın da dinlendiği yapı"
+    ],
+    "correctAnswerTr": "mahallenin ya da köyün en küçük karar birimi"
   },
   {
     "type": "multipleChoice",
@@ -2453,7 +3253,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Jineolojî» genel olarak ne anlama gelir?",
+    "answersTr": [
+      "Resim sanatı",
+      "Coğrafya bilimi",
+      "Ekonomi yöntemi",
+      "Kadın ve yaşam bilimi"
+    ],
+    "correctAnswerTr": "Kadın ve yaşam bilimi"
   },
   {
     "type": "multipleChoice",
@@ -2477,7 +3285,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ekolojik paradigmada temel amaç nedir?",
+    "answersTr": [
+      "Üretimi her yolla artırmak",
+      "Sınırsız serbest ticaret",
+      "Toplum ile doğanın uyumu",
+      "Hızlı kentleşme"
+    ],
+    "correctAnswerTr": "Toplum ile doğanın uyumu"
   },
   {
     "type": "multipleChoice",
@@ -2501,7 +3317,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Öz savunma» bu paradigmada genel olarak ne anlama gelir?",
+    "answersTr": [
+      "Silah ticareti yapmak",
+      "Dünyadan tümüyle kopmak",
+      "Yönetimin yalnızca seçimlerle yürütülmesi",
+      "Toplumun kendi örgütlenmesiyle korunması"
+    ],
+    "correctAnswerTr": "Toplumun kendi örgütlenmesiyle korunması"
   },
   {
     "type": "multipleChoice",
@@ -2525,7 +3349,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Demokratik modernite» kavramı neyin karşısına konur?",
+    "answersTr": [
+      "Orta Çağ",
+      "Kapitalist modernite",
+      "Sanayi devrimi",
+      "Antik felsefe"
+    ],
+    "correctAnswerTr": "Kapitalist modernite"
   },
   {
     "type": "multipleChoice",
@@ -2549,7 +3381,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Bu paradigmada «ahlaki ve politik toplum» ne anlama gelir?",
+    "answersTr": [
+      "Yalnızca yasalarla yönetilen toplum",
+      "Hiç örgütlenmemiş toplum",
+      "Uzmanlar tarafından yönetilen toplum",
+      "Ortak değer ve kararla yönetilen toplum"
+    ],
+    "correctAnswerTr": "Ortak değer ve kararla yönetilen toplum"
   },
   {
     "type": "trueFalse",
@@ -2571,7 +3411,13 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Demokratik ulus paradigmasında amaç yeni bir devlet kurmaktır.",
+    "answersTr": [
+      "Yanlış",
+      "Doğru"
+    ],
+    "correctAnswerTr": "Yanlış"
   },
   {
     "type": "multipleChoice",
@@ -2595,7 +3441,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Komünal ekonomi» kavramında temel nokta nedir?",
+    "answersTr": [
+      "toplumun öz savunma ve öz örgütlenme hakkı",
+      "ahlaki değerleri olan ve kararını kendi veren toplum",
+      "üretim kâra göre değil, toplumun ihtiyacına göre",
+      "toplumsal özgürleşmenin en temel ölçüsü"
+    ],
+    "correctAnswerTr": "üretim kâra göre değil, toplumun ihtiyacına göre"
   },
   {
     "type": "multipleChoice",
@@ -2619,7 +3473,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Hiyerarşi» ve «devlet» bu teorik çalışmada nasıl değerlendirilir?",
+    "answersTr": [
+      "Değiştirilebilir tarihsel süreçler olarak",
+      "Değişmez doğal durumlar olarak",
+      "Yalnızca ekonomik olgular olarak",
+      "Teknik sorunlar olarak"
+    ],
+    "correctAnswerTr": "Değiştirilebilir tarihsel süreçler olarak"
   },
   {
     "type": "multipleChoice",
@@ -2643,7 +3505,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Jiyan» sözcüğü Türkçede ne anlama gelir?",
+    "answersTr": [
+      "özgürlük",
+      "toplum",
+      "yaşam",
+      "doğa"
+    ],
+    "correctAnswerTr": "yaşam"
   },
   {
     "type": "multipleChoice",
@@ -2667,7 +3537,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Paradigmada «kadın özgürlüğü» neden toplumun özgürlük ölçüsü sayılır?",
+    "answersTr": [
+      "ekonomik ve siyasal gücün tek elde toplanma krizi",
+      "baskı ve sahiplenme üzerine kurulmayan eşit ortak yaşam",
+      "yönetim organlarında kadın-erkek eşit temsil sistemi",
+      "ilk kölelik kadın üzerinde kurulduğu için"
+    ],
+    "correctAnswerTr": "ilk kölelik kadın üzerinde kurulduğu için"
   },
   {
     "type": "multipleChoice",
@@ -2691,7 +3569,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «dar» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "taş",
+      "yol",
+      "kapı",
+      "ağaç"
+    ],
+    "correctAnswerTr": "ağaç"
   },
   {
     "type": "multipleChoice",
@@ -2715,7 +3601,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «nan» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "tuz",
+      "ekmek",
+      "şeker",
+      "et"
+    ],
+    "correctAnswerTr": "ekmek"
   },
   {
     "type": "multipleChoice",
@@ -2739,7 +3633,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'deki «deh» sayısı rakamla kaçtır?",
+    "answersTr": [
+      "10",
+      "7",
+      "12",
+      "20"
+    ],
+    "correctAnswerTr": "10"
   },
   {
     "type": "multipleChoice",
@@ -2763,7 +3665,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «-ek» eki neyi gösterir?",
+    "answersTr": [
+      "kişi zamirlerini",
+      "bir işi yapan kişiyi",
+      "belirsizliği (yek/bir)",
+      "geçişli fiili"
+    ],
+    "correctAnswerTr": "belirsizliği (yek/bir)"
   },
   {
     "type": "multipleChoice",
@@ -2787,7 +3697,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de tekil eril isimlerin izafesi (veqetandek) hangisidir?",
+    "answersTr": [
+      "-ê",
+      "-a",
+      "-an",
+      "-in"
+    ],
+    "correctAnswerTr": "-ê"
   },
   {
     "type": "multipleChoice",
@@ -2811,7 +3729,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Min ew dît» cümlesinde fiil neye göre çekilir?",
+    "answersTr": [
+      "Özneye göre (min)",
+      "Zamana göre",
+      "Cinsiyete göre",
+      "Nesneye göre (ew)"
+    ],
+    "correctAnswerTr": "Nesneye göre (ew)"
   },
   {
     "type": "multipleChoice",
@@ -2835,7 +3761,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Dibistan» sözcüğü hangi fiil kökünden gelir?",
+    "answersTr": [
+      "Xwendin",
+      "Gotin",
+      "Xwarin",
+      "Nivîsîn"
+    ],
+    "correctAnswerTr": "Xwendin"
   },
   {
     "type": "multipleChoice",
@@ -2859,7 +3793,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Kurdistan» gibi sözcüklerdeki «-istan/-stan» eki neyi gösterir?",
+    "answersTr": [
+      "Kişilik",
+      "Zaman",
+      "Yer / mekân",
+      "Sayı"
+    ],
+    "correctAnswerTr": "Yer / mekân"
   },
   {
     "type": "multipleChoice",
@@ -2883,7 +3825,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «tu» ile «hûn» arasındaki fark nedir?",
+    "answersTr": [
+      "İkisi de çoğuldur",
+      "«Tu» yalnızca kadınlar için kullanılır",
+      "«Hûn» yalnızca yazıda kullanılır",
+      "«Tu» tekil, «hûn» çoğul/saygı biçimidir"
+    ],
+    "correctAnswerTr": "«Tu» tekil, «hûn» çoğul/saygı biçimidir"
   },
   {
     "type": "multipleChoice",
@@ -2907,7 +3857,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de istek kipi (raweya bilanî) hangi ön ekle kurulur?",
+    "answersTr": [
+      "di-",
+      "bi-",
+      "na-",
+      "ne-"
+    ],
+    "correctAnswerTr": "bi-"
   },
   {
     "type": "multipleChoice",
@@ -2931,7 +3889,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de şimdiki zamanın olumsuzluk eki hangisidir?",
+    "answersTr": [
+      "na-",
+      "ne-",
+      "bi-",
+      "di-"
+    ],
+    "correctAnswerTr": "na-"
   },
   {
     "type": "trueFalse",
@@ -2953,7 +3919,13 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Kurmancî'de isimler cinsiyet taşır (eril ve dişil).",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -2977,7 +3949,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Xwendekar» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "öğretmen",
+      "okul",
+      "öğrenci",
+      "kitap"
+    ],
+    "correctAnswerTr": "öğrenci"
   },
   {
     "type": "multipleChoice",
@@ -3001,7 +3981,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt geleneğinde «berxwedan» genel olarak ne anlama gelir?",
+    "answersTr": [
+      "Halı ve heybe dokuma aracı",
+      "Gelini evinden alıp getirenler",
+      "Memê Alan destanı",
+      "Li ber xwe dan / direniş"
+    ],
+    "correctAnswerTr": "Li ber xwe dan / direniş"
   },
   {
     "type": "multipleChoice",
@@ -3025,7 +4013,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt mutfağındaki «dolme» genel olarak neyden yapılır?",
+    "answersTr": [
+      "Halı ve heybe dokuma aracı",
+      "Doldurulmuş yaprak ve sebzeler",
+      "Li ber xwe dan / direniş",
+      "Yılın en uzun gecesi"
+    ],
+    "correctAnswerTr": "Doldurulmuş yaprak ve sebzeler"
   },
   {
     "type": "multipleChoice",
@@ -3049,7 +4045,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Newroz bayramı hangi ana sembolle tanınır?",
+    "answersTr": [
+      "Ateş",
+      "Su",
+      "Kar",
+      "Fırtına"
+    ],
+    "correctAnswerTr": "Ateş"
   },
   {
     "type": "multipleChoice",
@@ -3073,7 +4077,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Pêşmerge» sözcüğü aslen ne anlama gelir?",
+    "answersTr": [
+      "El sanatlarıyla bağlantılı olması",
+      "Ölümün önünde duran kişi",
+      "Akrabalıkla bağlı aile topluluğu",
+      "Hikâye ve türkü anlatılan gece toplantısı"
+    ],
+    "correctAnswerTr": "Ölümün önünde duran kişi"
   },
   {
     "type": "multipleChoice",
@@ -3097,7 +4109,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt toplumunda «eşîret» nedir?",
+    "answersTr": [
+      "Modern bir siyasi örgütlenme",
+      "Bir tür geleneksel yemek",
+      "Akrabalıkla bağlı aile topluluğu",
+      "Kentsel bir bölgenin adı"
+    ],
+    "correctAnswerTr": "Akrabalıkla bağlı aile topluluğu"
   },
   {
     "type": "multipleChoice",
@@ -3121,7 +4141,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Şeva Yeldayê» (Şeva Zivistanê) nedir?",
+    "answersTr": [
+      "Yılın en uzun gecesi",
+      "Baharın ilk günü",
+      "Yazın son günü",
+      "Newroz gecesi"
+    ],
+    "correctAnswerTr": "Yılın en uzun gecesi"
   },
   {
     "type": "multipleChoice",
@@ -3145,7 +4173,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt düğünlerinde «qelen» nedir?",
+    "answersTr": [
+      "akrabalıkla bağlı aile topluluğu",
+      "erkeklerin geleneksel giysisi",
+      "gelin için verilen mal ve hediye",
+      "göçebe yaşam biçimi ve dans ritmi"
+    ],
+    "correctAnswerTr": "gelin için verilen mal ve hediye"
   },
   {
     "type": "multipleChoice",
@@ -3169,7 +4205,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Geleneksel Kürt evlerinde «dîwanxane» nedir?",
+    "answersTr": [
+      "Misafiri saygıyla ağırlamak",
+      "Misafir ve toplantı odası",
+      "Toplumsal duygu ve hafıza",
+      "Doldurulmuş yaprak ve sebzeler"
+    ],
+    "correctAnswerTr": "Misafir ve toplantı odası"
   },
   {
     "type": "multipleChoice",
@@ -3193,7 +4237,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancîdeki «mal» sözcüğü Türkçede ne anlama gelir?",
+    "answersTr": [
+      "yol",
+      "dağ",
+      "ev",
+      "su"
+    ],
+    "correctAnswerTr": "ev"
   },
   {
     "type": "multipleChoice",
@@ -3217,7 +4269,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Şerefxanê Bidlîsî, Şerefname'yi hangi yılda tamamladı?",
+    "answersTr": [
+      "1497",
+      "1697",
+      "1797",
+      "1597"
+    ],
+    "correctAnswerTr": "1597"
   },
   {
     "type": "multipleChoice",
@@ -3241,7 +4301,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Bedirxan Beg hangi emirliğin emiriydi?",
+    "answersTr": [
+      "Botan",
+      "Baban",
+      "Erdelan",
+      "Soran"
+    ],
+    "correctAnswerTr": "Botan"
   },
   {
     "type": "multipleChoice",
@@ -3265,7 +4333,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Baban Emirliği merkezini genel olarak nerede kurmuştu?",
+    "answersTr": [
+      "Hewlêr",
+      "Wan",
+      "Silêmanî",
+      "Kirmanşan"
+    ],
+    "correctAnswerTr": "Silêmanî"
   },
   {
     "type": "multipleChoice",
@@ -3289,7 +4365,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Zuhab (Qesr-î Şîrîn, 1639) Antlaşması Kürtler için neden önemlidir?",
+    "answersTr": [
+      "Kürt bölgesi Osmanlı ile Safevîler arasında bölündü",
+      "Dicle ile Fırat çevresindeki tarihî bölgedir",
+      "Cizîr merkezli önemli bir Kürt emirliğidir",
+      "Amed'in eski çağlardaki tarihî adı ve kalesidir"
+    ],
+    "correctAnswerTr": "Kürt bölgesi Osmanlı ile Safevîler arasında bölündü"
   },
   {
     "type": "multipleChoice",
@@ -3313,7 +4397,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Jîn» dergisi hangi yıllarda çıktı?",
+    "answersTr": [
+      "1890'lı yıllar",
+      "1918-1919 yılları",
+      "1950'li yıllar",
+      "1970'li yıllar"
+    ],
+    "correctAnswerTr": "1918-1919 yılları"
   },
   {
     "type": "multipleChoice",
@@ -3337,7 +4429,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Xoybûn» neydi?",
+    "answersTr": [
+      "1920'li yılların bir Kürt siyasi örgütü",
+      "merkezileşme ve doğrudan yönetim",
+      "Amed kalesinin eski çağdaki tarihî adı",
+      "maddi kalıntılar yoluyla geçmişi araştırma"
+    ],
+    "correctAnswerTr": "1920'li yılların bir Kürt siyasi örgütü"
   },
   {
     "type": "trueFalse",
@@ -3359,7 +4459,13 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Selahedînê Eyûbî Eyyubi Devleti'ni kurdu.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -3383,7 +4489,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Modern tarihte «Kurdên Sor» (Suriye) neyle ilgilidir?",
+    "answersTr": [
+      "Soran emirliğinin kör lakaplı güçlü lideri",
+      "Osmanlı-Safevi sınırını belirleyen antlaşma",
+      "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı",
+      "Özerk bir Kürt bölgesi için madde içermesi"
+    ],
+    "correctAnswerTr": "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı"
   },
   {
     "type": "multipleChoice",
@@ -3407,7 +4521,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Hewlêr (Erbil) Kalesi hangi özelliğiyle tanınır?",
+    "answersTr": [
+      "Dünyanın en eski sürekli yerleşim yerlerinden biri",
+      "Kürt alfabesini geliştiren yayıncı ve aydın",
+      "Selahedînê Eyûbî'nin kurduğu büyük devlet",
+      "Osmanlı-Safevi sınırını belirleyen antlaşma"
+    ],
+    "correctAnswerTr": "Dünyanın en eski sürekli yerleşim yerlerinden biri"
   },
   {
     "type": "multipleChoice",
@@ -3431,7 +4553,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Elî Herîrî, Kürt edebiyatında neyle tanınır?",
+    "answersTr": [
+      "Tasavvufi şiirlerden oluşan divanı",
+      "Öncü klasik şairlerden biri olması",
+      "Dize sonlarındaki seslerin uyumu",
+      "Bir şairin şiirlerinden derleme"
+    ],
+    "correctAnswerTr": "Öncü klasik şairlerden biri olması"
   },
   {
     "type": "multipleChoice",
@@ -3455,7 +4585,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Rewşenbîr» ve Kürtçe edebiyat dergileri genel olarak hangi rolü oynadı?",
+    "answersTr": [
+      "Kürtçe yazı dilinin geliştirilmesi",
+      "Doğa ve kuşlar üzerine şiirler yazması",
+      "Bir şairin şiirlerinden derleme",
+      "Tasavvufi şiirlerden oluşan divanı"
+    ],
+    "correctAnswerTr": "Kürtçe yazı dilinin geliştirilmesi"
   },
   {
     "type": "multipleChoice",
@@ -3479,7 +4617,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Pirtûk» kelimesi Türkçede ne anlama gelir?",
+    "answersTr": [
+      "kalem",
+      "kitap",
+      "defter",
+      "masa"
+    ],
+    "correctAnswerTr": "kitap"
   },
   {
     "type": "multipleChoice",
@@ -3503,7 +4649,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Mem û Zîn»de âşıkların ayrılmasına sebep olan karakter kimdir?",
+    "answersTr": [
+      "Tacdîn",
+      "Mîr Zeynedîn",
+      "Sitî",
+      "Bekir"
+    ],
+    "correctAnswerTr": "Bekir"
   },
   {
     "type": "multipleChoice",
@@ -3527,7 +4681,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Cegerxwîn'in eserleri genel olarak ne üzerinedir?",
+    "answersTr": [
+      "Bir şairin şiirlerinden derleme",
+      "Yurtseverlik, özgürlük ve halk yaşamı",
+      "Halk arasında yayılan aşk destanı",
+      "Uzun bir kahramanlık anlatısı"
+    ],
+    "correctAnswerTr": "Yurtseverlik, özgürlük ve halk yaşamı"
   },
   {
     "type": "multipleChoice",
@@ -3551,7 +4713,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Bahoz» gibi modern Kürt romanları çoğunlukla hangi dönemde çoğaldı?",
+    "answersTr": [
+      "1980'den sonra",
+      "17. yüzyılda",
+      "1900'den önce",
+      "1930'da"
+    ],
+    "correctAnswerTr": "1980'den sonra"
   },
   {
     "type": "trueFalse",
@@ -3573,7 +4743,13 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Ehmedê Xanî, Mem û Zîn'de Kürtlerin birliğinden de söz eder.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -3597,7 +4773,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Fırat Nehri hangi bölgeden kaynağını alır?",
+    "answersTr": [
+      "Elezîz sınırları içindeki tektonik göl",
+      "Kürdistan dağlarının tipik bitki ve ağacı",
+      "Xerzan Çayı yakınındaki dağ kütlesi",
+      "Doğu Anadolu'nun yüksek dağları"
+    ],
+    "correctAnswerTr": "Doğu Anadolu'nun yüksek dağları"
   },
   {
     "type": "multipleChoice",
@@ -3621,7 +4805,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Silêmanî şehri bugün hangi devletin sınırları içindedir?",
+    "answersTr": [
+      "İran",
+      "Suriye",
+      "Irak",
+      "Türkiye"
+    ],
+    "correctAnswerTr": "Irak"
   },
   {
     "type": "multipleChoice",
@@ -3645,7 +4837,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Mêrdîn şehri hangi mimari özelliğiyle ünlüdür?",
+    "answersTr": [
+      "Irak (Dihok çevresi)",
+      "Amed ve Şirnex'i kapsayan nehir havzası",
+      "Zaxo ve Dihok çevresindeki dağlık bölge",
+      "Yamaca kurulmuş taş yapılar"
+    ],
+    "correctAnswerTr": "Yamaca kurulmuş taş yapılar"
   },
   {
     "type": "multipleChoice",
@@ -3669,7 +4869,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Cûdî Dağı hangi şehrin sınırları içinde kalır?",
+    "answersTr": [
+      "Wan",
+      "Şirnex",
+      "Amed",
+      "Riha"
+    ],
+    "correctAnswerTr": "Şirnex"
   },
   {
     "type": "multipleChoice",
@@ -3693,7 +4901,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Gund» kelimesi Türkçede ne anlama gelir?",
+    "answersTr": [
+      "şehir",
+      "dağ",
+      "köy",
+      "ova"
+    ],
+    "correctAnswerTr": "köy"
   },
   {
     "type": "multipleChoice",
@@ -3717,7 +4933,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Serhed» bölgesi genel olarak hangi yöreyi kapsar?",
+    "answersTr": [
+      "Agirî-Wan-Mûş çevresindeki yüksek bölge",
+      "Yaylak ve kışlak alanları",
+      "Amed ve Şirnex'i kapsayan nehir havzası",
+      "Elezîz sınırları içindeki tektonik göl"
+    ],
+    "correctAnswerTr": "Agirî-Wan-Mûş çevresindeki yüksek bölge"
   },
   {
     "type": "multipleChoice",
@@ -3741,7 +4965,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Cizîr Ovası genel olarak nerede yer alır?",
+    "answersTr": [
+      "Silêmanî'nin güneyindeki verimli tarihi ova",
+      "Fırat kollarıyla sulanan büyük tarım ovası",
+      "Diyala nehri üzerine kurulmuş baraj gölü",
+      "Dicle ile Fırat arasında, Suriye'nin kuzeydoğusunda"
+    ],
+    "correctAnswerTr": "Dicle ile Fırat arasında, Suriye'nin kuzeydoğusunda"
   },
   {
     "type": "trueFalse",
@@ -3763,7 +4995,13 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Agirî Dağı volkanik bir dağdır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -3787,7 +5025,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Zirne» ne tür bir çalgıdır?",
+    "answersTr": [
+      "Üflemeli çalgı",
+      "Telli çalgı",
+      "Vurmalı çalgı",
+      "Yaylı çalgı"
+    ],
+    "correctAnswerTr": "Üflemeli çalgı"
   },
   {
     "type": "multipleChoice",
@@ -3811,7 +5057,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt müziğinde «heyranok» genel olarak nedir?",
+    "answersTr": [
+      "seslerin ardışık dizilmesiyle oluşan ezgi",
+      "bir sanatçının tek başına söylemesi ya da çalması",
+      "çoğunlukla aşk üzerine söylenen kısa ezgiler",
+      "tarihteki ilk Kürt rock grubunun adı"
+    ],
+    "correctAnswerTr": "çoğunlukla aşk üzerine söylenen kısa ezgiler"
   },
   {
     "type": "multipleChoice",
@@ -3835,7 +5089,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Meryem Xan Kürt müziğinde kimdir?",
+    "answersTr": [
+      "20. yüzyılın tanınmış bir kadın dengbêjidir",
+      "20. yüzyılın tarihî roman yazarlarındandır",
+      "İstanbul'da bir edebiyat dergisinin kurucusudur",
+      "Amed'de tembûr çalan ilk kadındır"
+    ],
+    "correctAnswerTr": "20. yüzyılın tanınmış bir kadın dengbêjidir"
   },
   {
     "type": "multipleChoice",
@@ -3859,7 +5121,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Erivan Radyosu Kürt müziği için neden önemlidir?",
+    "answersTr": [
+      "kilamların söylendiği serbest ritimli ses üslubudur",
+      "usta-çırak ilişkisiyle yürüyen müzikal aktarımdır",
+      "müzisyenlere para atma âdetidir",
+      "1950'lerden bu yana Kürtçe şarkıları yaydı"
+    ],
+    "correctAnswerTr": "1950'lerden bu yana Kürtçe şarkıları yaydı"
   },
   {
     "type": "multipleChoice",
@@ -3883,7 +5153,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Deng» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "ses",
+      "söz",
+      "saz",
+      "şarkı"
+    ],
+    "correctAnswerTr": "ses"
   },
   {
     "type": "multipleChoice",
@@ -3907,7 +5185,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dengbêjlikte «kilamên şer» genel olarak ne üzerinedir?",
+    "answersTr": [
+      "Kilamın ezgi ve kalıbı",
+      "Toplu söyleme biçimi",
+      "Savaş ve direniş olayları",
+      "Düğün ve govend"
+    ],
+    "correctAnswerTr": "Savaş ve direniş olayları"
   },
   {
     "type": "trueFalse",
@@ -3929,7 +5215,13 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Def ve erbane ikisi de vurmalı çalgıdır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -3953,7 +5245,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Halk meclisleri sisteminde kararlar genel olarak nasıl alınır?",
+    "answersTr": [
+      "Yalnızca uzmanlar tarafından",
+      "Merkezden gelen buyrukla",
+      "On yılda bir yapılan seçimle",
+      "Katılımcıların tartışıp uzlaşmasıyla"
+    ],
+    "correctAnswerTr": "Katılımcıların tartışıp uzlaşmasıyla"
   },
   {
     "type": "multipleChoice",
@@ -3977,7 +5277,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Feylî Kürtler» genel olarak hangi bölgede yaşar?",
+    "answersTr": [
+      "Amed ve çevre bölgeler",
+      "Irak-İran sınırı, Bağdat ve Îlam",
+      "Yukarı Mezopotamya bölgesi",
+      "Kafkasya bölgesi (Gence-Anî)"
+    ],
+    "correctAnswerTr": "Irak-İran sınırı, Bağdat ve Îlam"
   },
   {
     "type": "multipleChoice",
@@ -4001,7 +5309,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Gel» sözcüğü Türkçede ne anlama gelir?",
+    "answersTr": [
+      "halk",
+      "devlet",
+      "ordu",
+      "şehir"
+    ],
+    "correctAnswerTr": "halk"
   },
   {
     "type": "multipleChoice",
@@ -4025,7 +5341,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kerkûk'ün statüsü Irak siyasetinde hangi anayasa maddesine bağlıdır?",
+    "answersTr": [
+      "5. madde",
+      "140. madde",
+      "61. madde",
+      "100. madde"
+    ],
+    "correctAnswerTr": "140. madde"
   },
   {
     "type": "trueFalse",
@@ -4047,7 +5371,13 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Rojava'da eş başkanlık sistemi uygulanır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -4071,7 +5401,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt «diasporası» genel olarak en çok nerededir?",
+    "answersTr": [
+      "Batı Avrupa",
+      "Güney Amerika",
+      "Güney Afrika",
+      "Avustralya"
+    ],
+    "correctAnswerTr": "Batı Avrupa"
   },
   {
     "type": "multipleChoice",
@@ -4095,7 +5433,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Paradigmada «kooperatif» neden önemlidir?",
+    "answersTr": [
+      "Kapitalizm, endüstriyalizm ve ulus-devlet",
+      "Değişim eğitim ve bilinçle başlar",
+      "Toplumun kendi örgütlenmesiyle korunması",
+      "Bireysel kâr yerine ortak üretim"
+    ],
+    "correctAnswerTr": "Bireysel kâr yerine ortak üretim"
   },
   {
     "type": "multipleChoice",
@@ -4119,7 +5465,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Akademî» Rojava'daki toplumsal modelde hangi rolü oynar?",
+    "answersTr": [
+      "Toplumsal ve düşünsel eğitim",
+      "Yalnızca teknik eğitim",
+      "Mali işlerin yönetimi",
+      "Sınırların denetimi"
+    ],
+    "correctAnswerTr": "Toplumsal ve düşünsel eğitim"
   },
   {
     "type": "multipleChoice",
@@ -4143,7 +5497,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Bu paradigmada «pozitivizm» eleştirisi neyin üzerinedir?",
+    "answersTr": [
+      "toplumun öz savunma ve öz örgütlenme hakkı",
+      "insanın doğanın bir parçası olduğunu kavraması",
+      "bilim toplumdan ve ahlaktan ayrılamaz",
+      "yerel özerkliğe sahip idari ve toplumsal birim"
+    ],
+    "correctAnswerTr": "bilim toplumdan ve ahlaktan ayrılamaz"
   },
   {
     "type": "multipleChoice",
@@ -4167,7 +5529,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Xweza» sözcüğü Türkçede ne anlama gelir?",
+    "answersTr": [
+      "doğa",
+      "şehir",
+      "insan",
+      "toplum"
+    ],
+    "correctAnswerTr": "doğa"
   },
   {
     "type": "trueFalse",
@@ -4189,7 +5559,13 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Ekolojik paradigmada insan doğanın dışında görülür.",
+    "answersTr": [
+      "Yanlış",
+      "Doğru"
+    ],
+    "correctAnswerTr": "Yanlış"
   },
   {
     "type": "multipleChoice",
@@ -4213,7 +5589,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Hevjiyana azad» bu paradigmada ne anlama gelir?",
+    "answersTr": [
+      "cinsiyet baskısına ve ayrımcılığına karşı eşitlikçi ilke",
+      "toplumun yasaya ihtiyaç duymadan kendini düzenleme yetisi",
+      "toplum üzerindeki erkek egemen sistemin çözümlenip dağıtılması",
+      "kadın ile erkeğin eşitlik ve özgürlük temelinde ilişkisi"
+    ],
+    "correctAnswerTr": "kadın ile erkeğin eşitlik ve özgürlük temelinde ilişkisi"
   },
   {
     "type": "multipleChoice",
@@ -4237,7 +5621,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «çav» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "kulak",
+      "burun",
+      "göz",
+      "el"
+    ],
+    "correctAnswerTr": "göz"
   },
   {
     "type": "multipleChoice",
@@ -4261,7 +5653,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «dest» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "ayak",
+      "el",
+      "baş",
+      "sırt"
+    ],
+    "correctAnswerTr": "el"
   },
   {
     "type": "multipleChoice",
@@ -4285,7 +5685,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «zarok» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "yaşlı",
+      "komşu",
+      "çocuk",
+      "misafir"
+    ],
+    "correctAnswerTr": "çocuk"
   },
   {
     "type": "multipleChoice",
@@ -4309,7 +5717,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî «spas» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "teşekkür",
+      "merhaba",
+      "hoşça kal",
+      "lütfen"
+    ],
+    "correctAnswerTr": "teşekkür"
   },
   {
     "type": "multipleChoice",
@@ -4333,7 +5749,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «dirêj» sözcüğünün zıt anlamlısı hangisidir?",
+    "answersTr": [
+      "Fireh",
+      "Giran",
+      "Kurt",
+      "Nerm"
+    ],
+    "correctAnswerTr": "Kurt"
   },
   {
     "type": "multipleChoice",
@@ -4357,7 +5781,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «ez dixwazim» hangi zamanın cümlesidir?",
+    "answersTr": [
+      "Geçmiş zaman",
+      "Gelecek zaman",
+      "Emir kipi",
+      "Şimdiki zaman"
+    ],
+    "correctAnswerTr": "Şimdiki zaman"
   },
   {
     "type": "multipleChoice",
@@ -4381,7 +5813,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «dergehvan» gibi sözcüklerdeki «-van» eki neyi gösterir?",
+    "answersTr": [
+      "bükünlü zamirleri",
+      "Hawar imlasını",
+      "Bir işi yapan kişiyi",
+      "Cinsiyeti: «-ê» eril, «-a» dişil"
+    ],
+    "correctAnswerTr": "Bir işi yapan kişiyi"
   },
   {
     "type": "multipleChoice",
@@ -4405,7 +5845,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «were» ve «biçe» hangi kipi gösterir?",
+    "answersTr": [
+      "İstek kipi",
+      "Geçmiş zaman",
+      "Gelecek zaman",
+      "Emir kipi"
+    ],
+    "correctAnswerTr": "Emir kipi"
   },
   {
     "type": "multipleChoice",
@@ -4429,7 +5877,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «min got» ile «ez gotim» — hangisi doğrudur?",
+    "answersTr": [
+      "«Ez gotim» doğrudur",
+      "«Min got» doğrudur",
+      "İkisi de doğrudur",
+      "İkisi de yanlıştır"
+    ],
+    "correctAnswerTr": "«Min got» doğrudur"
   },
   {
     "type": "multipleChoice",
@@ -4453,7 +5909,15 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de izafedeki «-ê» ile «-a» arasındaki fark nedir?",
+    "answersTr": [
+      "Sayı: «-ê» tekil, «-a» çoğul",
+      "Zaman: «-ê» geçmiş, «-a» şimdiki",
+      "Durum: «-ê» yalın, «-a» bükünlü",
+      "Cinsiyet: «-ê» eril, «-a» dişil"
+    ],
+    "correctAnswerTr": "Cinsiyet: «-ê» eril, «-a» dişil"
   },
   {
     "type": "multipleChoice",
@@ -4477,7 +5941,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Hevîr» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "peynir",
+      "tuz",
+      "hamur",
+      "yağ"
+    ],
+    "correctAnswerTr": "hamur"
   },
   {
     "type": "multipleChoice",
@@ -4501,7 +5973,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancî'de «westiyayî» sözcüğünün eş anlamlısı hangisidir?",
+    "answersTr": [
+      "Kêfxweş",
+      "Bilez",
+      "Nexweş",
+      "Betilî"
+    ],
+    "correctAnswerTr": "Betilî"
   },
   {
     "type": "trueFalse",
@@ -4523,7 +6003,13 @@
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Kurmancî'de sıfat (rengdêr) isimden sonra gelir.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -4547,7 +6033,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Heyv» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "güneş",
+      "yıldız",
+      "ay",
+      "gök"
+    ],
+    "correctAnswerTr": "ay"
   },
   {
     "type": "multipleChoice",
@@ -4571,7 +6065,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Zanîngeh» sözcüğü hangi parçalardan oluşur?",
+    "answersTr": [
+      "Zan + îng",
+      "Zanîn + geh (yer)",
+      "Za + nîngeh",
+      "Zanî + gehîn"
+    ],
+    "correctAnswerTr": "Zanîn + geh (yer)"
   },
   {
     "type": "multipleChoice",
@@ -4595,7 +6097,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Savar» (bulgur) neyden yapılır?",
+    "answersTr": [
+      "Pirinç",
+      "Un",
+      "Nohut",
+      "Buğday"
+    ],
+    "correctAnswerTr": "Buğday"
   },
   {
     "type": "multipleChoice",
@@ -4619,7 +6129,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt geleneğinde «mêvanperwerî» ne anlama gelir?",
+    "answersTr": [
+      "kış gecelerinin sohbet toplantıları",
+      "misafiri saygıyla ağırlamak",
+      "toplum ve aile bağları",
+      "doldurulmuş yaprak ve sebzeler"
+    ],
+    "correctAnswerTr": "misafiri saygıyla ağırlamak"
   },
   {
     "type": "multipleChoice",
@@ -4643,7 +6161,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Kara çadır» genellikle neyden yapılır?",
+    "answersTr": [
+      "keçi kılından",
+      "göçebe kültüründen",
+      "Kürt kilimlerinden",
+      "hediye/ödülden"
+    ],
+    "correctAnswerTr": "keçi kılından"
   },
   {
     "type": "multipleChoice",
@@ -4667,7 +6193,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt kültüründe «koçerî» nedir?",
+    "answersTr": [
+      "Dağdaki trajik aşk",
+      "Sürülerle yer değiştiren yaşam",
+      "Kırmızı, beyaz, yeşil ve sarı",
+      "Geleneksel ziyaret ve anma günü"
+    ],
+    "correctAnswerTr": "Sürülerle yer değiştiren yaşam"
   },
   {
     "type": "multipleChoice",
@@ -4691,7 +6225,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Zozan» nedir?",
+    "answersTr": [
+      "göçebe kültürü",
+      "sözlü anlatı ve ezgili hikâye",
+      "yazın kullanılan dağ çayırı",
+      "yılın en uzun gecesi"
+    ],
+    "correctAnswerTr": "yazın kullanılan dağ çayırı"
   },
   {
     "type": "multipleChoice",
@@ -4715,7 +6257,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt yas geleneğinde «şînbêj» kimdir?",
+    "answersTr": [
+      "yüksek sesle ağıt ve şîn söyleyen kişi",
+      "özgün dinî-kültürel topluluk ve tarihsel travmalar",
+      "harçla doldurulan sebze ya da yaprak yemeği",
+      "kuşaktan kuşağa aktarılan sözlü anlatı"
+    ],
+    "correctAnswerTr": "yüksek sesle ağıt ve şîn söyleyen kişi"
   },
   {
     "type": "multipleChoice",
@@ -4739,7 +6289,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kurmancîde «berbang» ne anlama gelir?",
+    "answersTr": [
+      "göçebe kültürü",
+      "toplumsal duygu ve hafıza",
+      "sabahın ilk anı / şafak",
+      "yazın kullanılan dağ çayırı"
+    ],
+    "correctAnswerTr": "sabahın ilk anı / şafak"
   },
   {
     "type": "multipleChoice",
@@ -4763,7 +6321,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Siyabend û Xecê» destanının ana konusu nedir?",
+    "answersTr": [
+      "İki aşiretin savaşı",
+      "Dağdaki trajik aşk",
+      "Bir tüccarın yolculuğu",
+      "Bir köyün kuruluşu"
+    ],
+    "correctAnswerTr": "Dağdaki trajik aşk"
   },
   {
     "type": "trueFalse",
@@ -4785,7 +6351,13 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Govend genellikle el ele tutuşarak oynanır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -4809,7 +6381,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Yılbaşı» yemekleri ya da bayram yemekleri genelde neden önemlidir?",
+    "answersTr": [
+      "Ucuz oldukları için",
+      "Çabuk hazırlandıkları için",
+      "Yalnızca misafirler için oldukları için",
+      "Toplumu ve aileyi bir araya getirdikleri için"
+    ],
+    "correctAnswerTr": "Toplumu ve aileyi bir araya getirdikleri için"
   },
   {
     "type": "multipleChoice",
@@ -4833,7 +6413,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt el sanatlarında «hevrîşk» ya da «hevrîşim» nedir?",
+    "answersTr": [
+      "kavala benzeyen geleneksel çalgı",
+      "ipek — dokuma ve süsleme için",
+      "misafiri saygıyla ağırlamak",
+      "doğu kültürünün mitolojik figürü"
+    ],
+    "correctAnswerTr": "ipek — dokuma ve süsleme için"
   },
   {
     "type": "multipleChoice",
@@ -4857,7 +6445,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt el sanatlarında «tevn» nedir?",
+    "answersTr": [
+      "halı ve heybe dokuma tezgâhı",
+      "toplumsal müzakere ve karar alma",
+      "kavala benzeyen geleneksel çalgı",
+      "el sanatlarıyla bağlantılıdır"
+    ],
+    "correctAnswerTr": "halı ve heybe dokuma tezgâhı"
   },
   {
     "type": "multipleChoice",
@@ -4881,7 +6477,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt halı ve kilimleri genellikle neyle bezenir?",
+    "answersTr": [
+      "Fotoğraf görüntüleriyle",
+      "Geometrik ve sembolik motiflerle",
+      "Uzun yazılarla",
+      "Yalnızca siyah ve beyaz renklerle"
+    ],
+    "correctAnswerTr": "Geometrik ve sembolik motiflerle"
   },
   {
     "type": "multipleChoice",
@@ -4905,7 +6509,15 @@
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt toplumunda dîwanxanede «ortak akşam yemeği» genelde hangi işlevi üstlenir?",
+    "answersTr": [
+      "ışığa/güneşe verilen kutsallık",
+      "yılın en uzun gecesi",
+      "Kürt misafirperverliği",
+      "toplumsal müzakere ve karar alma"
+    ],
+    "correctAnswerTr": "toplumsal müzakere ve karar alma"
   },
   {
     "type": "multipleChoice",
@@ -4929,7 +6541,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Amed kenti Roma döneminde hangi rolü üstleniyordu?",
+    "answersTr": [
+      "İmparatorluğun başkenti",
+      "Başlıca dinî merkez",
+      "Ticaret adası",
+      "Stratejik bir sınır kenti"
+    ],
+    "correctAnswerTr": "Stratejik bir sınır kenti"
   },
   {
     "type": "multipleChoice",
@@ -4953,7 +6573,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Mervani hanedanı genel olarak nerede hüküm sürdü?",
+    "answersTr": [
+      "Amed ve çevresi",
+      "Silêmanî",
+      "Sine (Sanandaj)",
+      "Yukarı Mezopotamya"
+    ],
+    "correctAnswerTr": "Amed ve çevresi"
   },
   {
     "type": "multipleChoice",
@@ -4977,7 +6605,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Şeddadi hanedanı genel olarak hangi bölgede hüküm sürdü?",
+    "answersTr": [
+      "Amed ve çevresi",
+      "Yukarı Mezopotamya",
+      "Kafkasya (Gence-Anî)",
+      "Lozan Antlaşması"
+    ],
+    "correctAnswerTr": "Kafkasya (Gence-Anî)"
   },
   {
     "type": "multipleChoice",
@@ -5001,7 +6637,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Selahedînê Eyûbî hangi kentte doğdu?",
+    "answersTr": [
+      "Tikrit",
+      "Şam",
+      "Kahire",
+      "Musul"
+    ],
+    "correctAnswerTr": "Tikrit"
   },
   {
     "type": "multipleChoice",
@@ -5025,7 +6669,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Çaldıran Savaşı (1514) kimler arasında oldu?",
+    "answersTr": [
+      "Roma ve Sasaniler",
+      "Medler ve Asurlular",
+      "Eyyubiler ve Haçlılar",
+      "Osmanlılar ve Safeviler"
+    ],
+    "correctAnswerTr": "Osmanlılar ve Safeviler"
   },
   {
     "type": "multipleChoice",
@@ -5049,7 +6701,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Îdrîsê Bidlîsî Osmanlı tarihinde neyle tanınır?",
+    "answersTr": [
+      "Osmanlı ile Kürt beyleri arasında arabuluculuk",
+      "merkezi Amed olan ortaçağ Kürt hanedanı",
+      "Mehabad Kürt Cumhuriyeti'nin cumhurbaşkanı",
+      "Irak rejimi tarafından idam edilen Kürt kadın aktivist"
+    ],
+    "correctAnswerTr": "Osmanlı ile Kürt beyleri arasında arabuluculuk"
   },
   {
     "type": "multipleChoice",
@@ -5073,7 +6733,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Erdelan Emirliği'nin merkezi neredeydi?",
+    "answersTr": [
+      "Silêmanî",
+      "Sine (Sanandaj)",
+      "Amed ve çevresi",
+      "Kafkasya (Gence-Anî)"
+    ],
+    "correctAnswerTr": "Sine (Sanandaj)"
   },
   {
     "type": "trueFalse",
@@ -5095,7 +6763,13 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Hawar dergisi Latin alfabesiyle yayımlandı.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -5119,7 +6793,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Ronahî» dergisi kim tarafından çıkarıldı?",
+    "answersTr": [
+      "Celadet Alî Bedirxan",
+      "Arabê Şamo",
+      "Ehmedê Xanî",
+      "Şerefxanê Bidlîsî"
+    ],
+    "correctAnswerTr": "Celadet Alî Bedirxan"
   },
   {
     "type": "multipleChoice",
@@ -5143,7 +6825,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kafkasya Kürtleri (Ermenistan-Gürcistan) genel olarak hangi dönemde oraya yerleşti?",
+    "answersTr": [
+      "12. yüzyıl",
+      "Milattan önce",
+      "21. yüzyıl",
+      "19-20. yüzyıllar"
+    ],
+    "correctAnswerTr": "19-20. yüzyıllar"
   },
   {
     "type": "multipleChoice",
@@ -5167,7 +6857,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Erivan'da ilk Kürtçe radyo yayını hangi yıllarda başladı?",
+    "answersTr": [
+      "1950'li yıllar",
+      "1920'li yıllar",
+      "1980'li yıllar",
+      "2000'li yıllar"
+    ],
+    "correctAnswerTr": "1950'li yıllar"
   },
   {
     "type": "multipleChoice",
@@ -5191,7 +6889,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Şerefname» hangi dilde yazıldı?",
+    "answersTr": [
+      "Kurmancî",
+      "Arapça",
+      "Farsça",
+      "Türkçe"
+    ],
+    "correctAnswerTr": "Farsça"
   },
   {
     "type": "multipleChoice",
@@ -5215,7 +6921,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dimdim Kalesi Kürt tarihinde neyle tanınır?",
+    "answersTr": [
+      "Büyük bir güce karşı direniş",
+      "maddi kalıntılar yoluyla geçmişi araştırma",
+      "Osmanlı-Safevi sınırını belirleyen antlaşma",
+      "zalim bir kral/tiran"
+    ],
+    "correctAnswerTr": "Büyük bir güce karşı direniş"
   },
   {
     "type": "multipleChoice",
@@ -5239,7 +6953,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Dîrok» sözcüğü Türkçede ne anlama gelir?",
+    "answersTr": [
+      "coğrafya",
+      "edebiyat",
+      "müzik",
+      "tarih"
+    ],
+    "correctAnswerTr": "tarih"
   },
   {
     "type": "multipleChoice",
@@ -5263,7 +6985,15 @@
       "sourceTitle": "Dîroka kurdan — çavkaniyên akademîk",
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt emirlikleri genel olarak hangi yüzyılda ortadan kaldırıldı?",
+    "answersTr": [
+      "19. yüzyıl",
+      "15. yüzyıl",
+      "21. yüzyıl",
+      "10. yüzyıl"
+    ],
+    "correctAnswerTr": "19. yüzyıl"
   },
   {
     "type": "multipleChoice",
@@ -5287,7 +7017,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Melayê Cizîrî hangi şehirde yaşadı?",
+    "answersTr": [
+      "Hewlêr",
+      "Cizîr",
+      "Wan",
+      "Şam"
+    ],
+    "correctAnswerTr": "Cizîr"
   },
   {
     "type": "multipleChoice",
@@ -5311,7 +7049,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt edebiyatında «medrese» hangi rolü oynadı?",
+    "answersTr": [
+      "dize sonlarındaki seslerin uyumu",
+      "dünyada tanınan, Kürt kökenli usta romancı",
+      "Kürt edebiyatının en eski klasik şairlerinden biri",
+      "klasik eğitim ve şairlerin yetiştirilmesi"
+    ],
+    "correctAnswerTr": "klasik eğitim ve şairlerin yetiştirilmesi"
   },
   {
     "type": "multipleChoice",
@@ -5335,7 +7081,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Çîrok» kelimesi Türkçede ne anlama gelir?",
+    "answersTr": [
+      "şiir",
+      "hikâye",
+      "roman",
+      "tiyatro"
+    ],
+    "correctAnswerTr": "hikâye"
   },
   {
     "type": "multipleChoice",
@@ -5359,7 +7113,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Nûbihar» ve «Tîroj» genel olarak nedir?",
+    "answersTr": [
+      "Edebiyat dergileri",
+      "Modern romanlar",
+      "Müzik grupları",
+      "Siyasi partiler"
+    ],
+    "correctAnswerTr": "Edebiyat dergileri"
   },
   {
     "type": "multipleChoice",
@@ -5383,7 +7145,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Şivanê Kurmanca» hangi yıl yayımlandı?",
+    "answersTr": [
+      "1965",
+      "1935",
+      "1905",
+      "1985"
+    ],
+    "correctAnswerTr": "1935"
   },
   {
     "type": "multipleChoice",
@@ -5407,7 +7177,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt şiirinde «kafiye» nedir?",
+    "answersTr": [
+      "Kültür ve edebiyat dergileri",
+      "Dengbêj ve masalcılar",
+      "Doğa ve kuşlar üzerine şiirler",
+      "Dize sonlarındaki seslerin uyumu"
+    ],
+    "correctAnswerTr": "Dize sonlarındaki seslerin uyumu"
   },
   {
     "type": "multipleChoice",
@@ -5431,7 +7209,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt klasiklerinde «mesnevî» nedir?",
+    "answersTr": [
+      "Latin temelli Kürt alfabesinin yayılması",
+      "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi",
+      "kuşların diliyle yazan ünlü Kürt şair",
+      "Kürtçe gramer kitapları yazan dilbilimci ve yazar"
+    ],
+    "correctAnswerTr": "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi"
   },
   {
     "type": "trueFalse",
@@ -5453,7 +7239,13 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Cegerxwîn bir mahlastır (edebî ad).",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -5477,7 +7269,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt sözlü edebiyatı çoğunlukla neyle aktarılmıştır?",
+    "answersTr": [
+      "Dengbêj ve masalcılarla",
+      "Basılı kitaplarla",
+      "Gazetelerle",
+      "Filmlerle"
+    ],
+    "correctAnswerTr": "Dengbêj ve masalcılarla"
   },
   {
     "type": "multipleChoice",
@@ -5501,7 +7301,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Zembîlfiroş» Kürt edebiyatında nedir?",
+    "answersTr": [
+      "Mela Ehmedê Xasî",
+      "Tasavvufi şiirlerden oluşan divanı",
+      "Halk arasında bir aşk destanı",
+      "Edebî gece toplantıları"
+    ],
+    "correctAnswerTr": "Halk arasında bir aşk destanı"
   },
   {
     "type": "multipleChoice",
@@ -5525,7 +7333,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dünya eserlerinin Kürtçeye çevrilmesi neden önemli görülür?",
+    "answersTr": [
+      "Kürt sözlü edebiyatının en hüzünlü destanlarından biri",
+      "ilk Kürt romanı Şivanê Kurmanca'nın yazarı",
+      "Latin temelli Kürt alfabesinin yayılması",
+      "Yazı dilini genişletir ve söz varlığını zenginleştirir"
+    ],
+    "correctAnswerTr": "Yazı dilini genişletir ve söz varlığını zenginleştirir"
   },
   {
     "type": "multipleChoice",
@@ -5549,7 +7365,15 @@
       "sourceTitle": "Wêjeya kurdî — antolojî û berhem",
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Mem û Zîn'de «Tacdîn» kimdir?",
+    "answersTr": [
+      "Şarkıları söyleyen kişi",
+      "Mem'in vefalı dostu",
+      "Gelini evinden alıp getirenler",
+      "Sorunları çözen saygın yaşlı kişi"
+    ],
+    "correctAnswerTr": "Mem'in vefalı dostu"
   },
   {
     "type": "multipleChoice",
@@ -5573,7 +7397,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Wan şehri neyin kıyısındadır?",
+    "answersTr": [
+      "Karadeniz",
+      "Wan Gölü",
+      "Fırat Nehri",
+      "Akdeniz"
+    ],
+    "correctAnswerTr": "Wan Gölü"
   },
   {
     "type": "multipleChoice",
@@ -5597,7 +7429,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Amed'in tarihi surları hangi volkanik taştan yapılmıştır?",
+    "answersTr": [
+      "Mermer",
+      "Granit",
+      "Kireç taşı",
+      "Bazalt"
+    ],
+    "correctAnswerTr": "Bazalt"
   },
   {
     "type": "multipleChoice",
@@ -5621,7 +7461,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Botan Çayı hangi nehre karışır?",
+    "answersTr": [
+      "Fırat",
+      "Zap",
+      "Dicle",
+      "Murat"
+    ],
+    "correctAnswerTr": "Dicle"
   },
   {
     "type": "multipleChoice",
@@ -5645,7 +7493,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Irak Kürdistan Bölgesi kaç temel ilden oluşur?",
+    "answersTr": [
+      "İki",
+      "Dört",
+      "Beş",
+      "Üç"
+    ],
+    "correctAnswerTr": "Üç"
   },
   {
     "type": "multipleChoice",
@@ -5669,7 +7525,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kirmanşan şehri bugün hangi devletin sınırları içindedir?",
+    "answersTr": [
+      "Irak",
+      "İran",
+      "Suriye",
+      "Türkiye"
+    ],
+    "correctAnswerTr": "İran"
   },
   {
     "type": "multipleChoice",
@@ -5693,7 +7557,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Herîr Ovası ve Başûr'un tarım ovaları genel olarak neyle tanınır?",
+    "answersTr": [
+      "Deniz balıkçılığı",
+      "Ağır sanayi tesisleri",
+      "Deniz kıyısı turizmi",
+      "Buğday ve arpa tarımı"
+    ],
+    "correctAnswerTr": "Buğday ve arpa tarımı"
   },
   {
     "type": "multipleChoice",
@@ -5717,7 +7589,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Sîpan Dağı hangi gölün yakınındadır?",
+    "answersTr": [
+      "Wan Gölü",
+      "Urmiye Gölü",
+      "Tuz Gölü",
+      "Beyşehir Gölü"
+    ],
+    "correctAnswerTr": "Wan Gölü"
   },
   {
     "type": "multipleChoice",
@@ -5741,7 +7621,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Urmiye Gölü bugün hangi devletin sınırları içindedir?",
+    "answersTr": [
+      "Türkiye",
+      "Irak",
+      "Suriye",
+      "İran"
+    ],
+    "correctAnswerTr": "İran"
   },
   {
     "type": "trueFalse",
@@ -5763,7 +7651,13 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Dicle ve Fırat, Basra Körfezi'ne ulaşır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -5787,7 +7681,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dihok şehri bugün hangi devletin sınırları içindedir?",
+    "answersTr": [
+      "Türkiye",
+      "Irak",
+      "İran",
+      "Suriye"
+    ],
+    "correctAnswerTr": "Irak"
   },
   {
     "type": "multipleChoice",
@@ -5811,7 +7713,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Göçer yaşamında «zozan» ve «germiyan» neyi belirtir?",
+    "answersTr": [
+      "Xerzan Çayı yakınındaki dağ kütlesi",
+      "Colemêrg'deki yüksek tektonik ova",
+      "Yamaca kurulmuş taş yapılar",
+      "Yaylak ve kışlak alanları"
+    ],
+    "correctAnswerTr": "Yaylak ve kışlak alanları"
   },
   {
     "type": "multipleChoice",
@@ -5835,7 +7745,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Şengal bölgesi özellikle hangi toplulukla anılır?",
+    "answersTr": [
+      "Asuri",
+      "Ermeni",
+      "Êzidî",
+      "Türkmen"
+    ],
+    "correctAnswerTr": "Êzidî"
   },
   {
     "type": "multipleChoice",
@@ -5859,7 +7777,15 @@
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Behr» kelimesi Türkçede ne anlama gelir?",
+    "answersTr": [
+      "göl",
+      "nehir",
+      "çeşme",
+      "deniz"
+    ],
+    "correctAnswerTr": "deniz"
   },
   {
     "type": "multipleChoice",
@@ -5883,7 +7809,15 @@
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Efrîn şehri bugün hangi devletin sınırları içindedir?",
+    "answersTr": [
+      "Türkiye",
+      "Suriye",
+      "Irak",
+      "İran"
+    ],
+    "correctAnswerTr": "Suriye"
   },
   {
     "type": "multipleChoice",
@@ -5907,7 +7841,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Şeşxane» ya da Kürt telli çalgıları genel olarak nasıl çalınır?",
+    "answersTr": [
+      "Düğün ve govendle",
+      "Şarkıcı ve müzisyen topluluğuyla",
+      "Toplu söyleme biçimiyle",
+      "Parmakla ya da mızrapla"
+    ],
+    "correctAnswerTr": "Parmakla ya da mızrapla"
   },
   {
     "type": "multipleChoice",
@@ -5931,7 +7873,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt müziğinde «stranbêj» sözcüğü kimin için kullanılır?",
+    "answersTr": [
+      "Çalgı yapan kişi",
+      "Dans öğreten kişi",
+      "Şarkıları söyleyen kişi",
+      "Şiir yazan kişi"
+    ],
+    "correctAnswerTr": "Şarkıları söyleyen kişi"
   },
   {
     "type": "multipleChoice",
@@ -5955,7 +7905,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt müziğinde «makam» ya da «avaz» neyi belirtir?",
+    "answersTr": [
+      "Şarkıcıların sayısını",
+      "Düğünün uzunluğunu",
+      "Çalgının adını",
+      "Şarkının ses kalıbını"
+    ],
+    "correctAnswerTr": "Şarkının ses kalıbını"
   },
   {
     "type": "multipleChoice",
@@ -5979,7 +7937,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürt düğünlerinde toplu dans genellikle hangi çalgılarla yürütülür?",
+    "answersTr": [
+      "Tembûr ve bilûr",
+      "Def ve zurna",
+      "Piyano ve gitar",
+      "Erbane ve ney"
+    ],
+    "correctAnswerTr": "Def ve zurna"
   },
   {
     "type": "multipleChoice",
@@ -6003,7 +7969,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dengbêj kilamlarında anlatı neden önemlidir?",
+    "answersTr": [
+      "Yalnızca ses ahengi önemlidir",
+      "Yanında dans edilir",
+      "Yanında çalgı çalınır",
+      "Kilam tarihî bir hikâyeyi aktarır"
+    ],
+    "correctAnswerTr": "Kilam tarihî bir hikâyeyi aktarır"
   },
   {
     "type": "multipleChoice",
@@ -6027,7 +8001,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Kilam» sözcüğü Türkçede genel olarak ne demektir?",
+    "answersTr": [
+      "dans",
+      "saz",
+      "türkü",
+      "düğün"
+    ],
+    "correctAnswerTr": "türkü"
   },
   {
     "type": "multipleChoice",
@@ -6051,7 +8033,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Modern Kürt müziğinde «kom» nedir?",
+    "answersTr": [
+      "Savaş ve direniş olaylarıdır",
+      "Çoğunlukla aşk üzerine kısa şarkılardır",
+      "Kilamın tarihî bir hikâyeyi aktarmasıdır",
+      "Şarkıcı ve müzisyen topluluğudur"
+    ],
+    "correctAnswerTr": "Şarkıcı ve müzisyen topluluğudur"
   },
   {
     "type": "trueFalse",
@@ -6073,7 +8063,13 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Bilûr üflenerek çalınır.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -6097,7 +8093,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Dengbêjlikte yöresel «şêwe» ne demektir?",
+    "answersTr": [
+      "çoğunlukla aşk üzerine bir kilam türü",
+      "genel olarak şarkıları söyleyen kişi",
+      "bir yörenin kendine özgü söyleyiş biçimi",
+      "müzisyenlere para atma âdeti"
+    ],
+    "correctAnswerTr": "bir yörenin kendine özgü söyleyiş biçimi"
   },
   {
     "type": "multipleChoice",
@@ -6121,7 +8125,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürtçe çocuk şarkılarında «lorî» nedir?",
+    "answersTr": [
+      "Düğün şarkısı",
+      "Savaş kilamı",
+      "Bayram şarkısı",
+      "Uyku şarkısı"
+    ],
+    "correctAnswerTr": "Uyku şarkısı"
   },
   {
     "type": "multipleChoice",
@@ -6145,7 +8157,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Diaspora Kürt müziği genel olarak neyi etkiledi?",
+    "answersTr": [
+      "Modern Kürt müziği gruplarını",
+      "usta-çırak ilişkisiyle yürüyen müzikal aktarımı",
+      "Şarkı ve kayıtların dünyaya yayılmasını",
+      "Şirnex ve Cizîr yöresinin ritmik ve makamsal müziğini"
+    ],
+    "correctAnswerTr": "Şarkı ve kayıtların dünyaya yayılmasını"
   },
   {
     "type": "multipleChoice",
@@ -6169,7 +8189,15 @@
       "sourceTitle": "Muzîk û dengbêjiya kurdî",
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Govend» sözcüğü Türkçede ne demektir?",
+    "answersTr": [
+      "şarkı",
+      "saz",
+      "düğün",
+      "halay"
+    ],
+    "correctAnswerTr": "halay"
   },
   {
     "type": "multipleChoice",
@@ -6193,7 +8221,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Öz yönetim modelinde «köy meclisi» ne yapar?",
+    "answersTr": [
+      "Köyün sorunları hakkında karar verir",
+      "Yalnızca müzik etkinlikleri düzenler",
+      "Köyde vergi toplama işini yürütür",
+      "Köyde askerî birlik kurar"
+    ],
+    "correctAnswerTr": "Köyün sorunları hakkında karar verir"
   },
   {
     "type": "multipleChoice",
@@ -6217,7 +8253,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Yerel siyasette «komisyon» genel olarak nedir?",
+    "answersTr": [
+      "Özel yetkili mahkeme",
+      "Konu bazlı çalışma grubu",
+      "Askerî bir birlik",
+      "İşçilerin sendikası"
+    ],
+    "correctAnswerTr": "Konu bazlı çalışma grubu"
   },
   {
     "type": "multipleChoice",
@@ -6241,7 +8285,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Wekhevî» kelimesi Türkçede ne anlama gelir?",
+    "answersTr": [
+      "özgürlük",
+      "barış",
+      "eşitlik",
+      "adalet"
+    ],
+    "correctAnswerTr": "eşitlik"
   },
   {
     "type": "multipleChoice",
@@ -6265,7 +8317,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ezidi Kürtler 2014'te hangi olayla karşı karşıya kaldı?",
+    "answersTr": [
+      "Şengal saldırısı",
+      "Bağımsızlık referandumu",
+      "Lozan Antlaşması",
+      "Cizîr sayımı"
+    ],
+    "correctAnswerTr": "Şengal saldırısı"
   },
   {
     "type": "multipleChoice",
@@ -6289,7 +8349,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Irak Kürdistan Bölgesi'nde eğitim dili genel olarak nedir?",
+    "answersTr": [
+      "Arapça",
+      "İngilizce",
+      "Kürtçe",
+      "Farsça"
+    ],
+    "correctAnswerTr": "Kürtçe"
   },
   {
     "type": "trueFalse",
@@ -6311,7 +8379,13 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Diaspora Kürt siyasetinde bir rol oynar.",
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswerTr": "Doğru"
   },
   {
     "type": "multipleChoice",
@@ -6335,7 +8409,15 @@
       "sourceTitle": "Siyaseta herêmê — çavkaniyên belge û akademîk",
       "sourceReference": "Destûra Iraqê (2005), Beşa 4; The Cambridge History of the Kurds; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Özerk yönetimlerde «kadın meclisi» hangi rolü üstlenir?",
+    "answersTr": [
+      "halkın resmî yönetime karşı barışçıl tepkilerini örgütler",
+      "kadınlarla ilgili konularda bağlayıcı kararlar alır",
+      "bütün farklı kesimleri kapsayan özgürlükçü anayasadır",
+      "yasama, yürütme ve yargının birbirinden bağımsızlığıdır"
+    ],
+    "correctAnswerTr": "kadınlarla ilgili konularda bağlayıcı kararlar alır"
   },
   {
     "type": "multipleChoice",
@@ -6359,7 +8441,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Modern siyasette «yerel öz yönetim» ne anlama gelir?",
+    "answersTr": [
+      "Merkez her şeyi belirler",
+      "Ordu yönetimini üstlenir",
+      "Yalnızca seçim vardır",
+      "Bölge kendi işlerini yürütür"
+    ],
+    "correctAnswerTr": "Bölge kendi işlerini yürütür"
   },
   {
     "type": "multipleChoice",
@@ -6383,7 +8473,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Paradigmada «doğal toplum» ne anlama gelir?",
+    "answersTr": [
+      "devlet hiyerarşisinden önceki toplum",
+      "ahlaki-politik toplum",
+      "patriyarka eleştirisi",
+      "ezilen farklı kesimlerin eşit birliği"
+    ],
+    "correctAnswerTr": "devlet hiyerarşisinden önceki toplum"
   },
   {
     "type": "multipleChoice",
@@ -6407,7 +8505,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Toplumsal bilinç» bu paradigmada neden önemlidir?",
+    "answersTr": [
+      "halkın temsilcisiz doğrudan karar alması",
+      "ulus-devlet sisteminin dışındaki toplum yönetimi modeli",
+      "değişim eğitim ve bilinçle başlar",
+      "toplum ile doğa arasındaki dengeli ve dostça ilişki"
+    ],
+    "correctAnswerTr": "değişim eğitim ve bilinçle başlar"
   },
   {
     "type": "multipleChoice",
@@ -6431,7 +8537,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Bu paradigmada «ulus-devlet» eleştirisi genel olarak neyin üzerinedir?",
+    "answersTr": [
+      "Kadın özgürlüğü, ekoloji ve demokrasi",
+      "Çokrenkliliği zorla tekleştirmesi",
+      "Bireysel kâr yerine ortak üretim",
+      "Ortak değer ve kararla yönetilen toplum"
+    ],
+    "correctAnswerTr": "Çokrenkliliği zorla tekleştirmesi"
   },
   {
     "type": "multipleChoice",
@@ -6455,7 +8569,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Bu paradigmada «özgürlük» ile «eşitlik» birlikte neye bağlanır?",
+    "answersTr": [
+      "Pazar ekonomisine",
+      "Askeri güce",
+      "Kadın özgürlüğüne",
+      "Sınırlara"
+    ],
+    "correctAnswerTr": "Kadın özgürlüğüne"
   },
   {
     "type": "trueFalse",
@@ -6477,7 +8599,13 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Doğru mu yanlış mı: Komünal modelde karar yukarıdan aşağıya doğru verilir.",
+    "answersTr": [
+      "Yanlış",
+      "Doğru"
+    ],
+    "correctAnswerTr": "Yanlış"
   },
   {
     "type": "multipleChoice",
@@ -6501,7 +8629,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Anadilde eğitim» bu paradigmada neden önemli görülür?",
+    "answersTr": [
+      "Kimlik ve bilinç dil aracılığıyla aktarılır",
+      "İlk kölelik kadın üzerinde kurulduğu için",
+      "Bilim toplumdan ve ahlaktan ayrılamaz",
+      "Üretim kâra göre değil, toplumun ihtiyacına göre"
+    ],
+    "correctAnswerTr": "Kimlik ve bilinç dil aracılığıyla aktarılır"
   },
   {
     "type": "multipleChoice",
@@ -6525,7 +8661,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Kapitalist modernite» kavramında eleştirilen üç sütun nedir?",
+    "answersTr": [
+      "sınıflı, hiyerarşik ve merkezinde devlet olan tarihsel çizgi",
+      "komünal yaşam ve dayanışma temelli bir sistem",
+      "kapitalizm, endüstriyalizm ve ulus-devlet",
+      "toprağın ve araçların toplumun ortak mülkiyeti"
+    ],
+    "correctAnswerTr": "kapitalizm, endüstriyalizm ve ulus-devlet"
   },
   {
     "type": "multipleChoice",
@@ -6549,7 +8693,15 @@
       "sourceTitle": "Paradîgmaya netewa demokratîk — çavkanî û şirove",
       "sourceReference": "Cambridge, Beyond Feminism? Jineolojî and the Kurdish Women's Freedom Movement; https://kongra-star.org/eng/about/",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ekolojik modelde yerel tarım neden önerilir?",
+    "answersTr": [
+      "üretim kâra göre değil, toplumun ihtiyacına göre",
+      "bölgenin ihtiyacı yerinde karşılanır, taşıma azalır",
+      "toplumun özgürlüğünü kadın özgürlüğü üzerine kuran kadın bilimi",
+      "halkın temsilcisiz doğrudan karar alması"
+    ],
+    "correctAnswerTr": "bölgenin ihtiyacı yerinde karşılanır, taşıma azalır"
   },
   {
     "type": "multipleChoice",
@@ -6573,7 +8725,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Festival de Cannes, arşîva xelatan: Palme d'Or 1982 (Yol / Missing)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Yol» filmi 1982'de Cannes'da Altın Palmiye'yi hangi filmle paylaştı?",
+    "answersTr": [
+      "Gandhi",
+      "E.T.",
+      "Fanny ve Alexander",
+      "Missing"
+    ],
+    "correctAnswerTr": "Missing"
   },
   {
     "type": "multipleChoice",
@@ -6597,7 +8757,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Festival de Cannes, arşîva Caméra d'Or 2000",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Dema Hespên Serxweş» filmi 2000 yılında Cannes'da hangi ödülü aldı?",
+    "answersTr": [
+      "Altın Palmiye",
+      "Caméra d'Or",
+      "Jüri Büyük Ödülü",
+      "Altın Aslan"
+    ],
+    "correctAnswerTr": "Caméra d'Or"
   },
   {
     "type": "multipleChoice",
@@ -6621,7 +8789,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Bahman Ghobadi, Kûsî jî Difirin (2004) — dosyaya çapemeniyê ya fîlm",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Kûsî jî Difirin» filminin olayları nerede geçer?",
+    "answersTr": [
+      "Irak Kürdistanı'ndaki bir mülteci kampında",
+      "Çiyayê Agirî'nin yüksek yaylalarında",
+      "Büyük bir kentin göçmen mahallesinde",
+      "Îran sınırındaki bir dağ köyünde"
+    ],
+    "correctAnswerTr": "Irak Kürdistanı'ndaki bir mülteci kampında"
   },
   {
     "type": "multipleChoice",
@@ -6645,7 +8821,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Hiner Saleem, Vodka Lemon (2003) — Festîvala Venedîkê, dosyaya fîlm",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Vodka Lemon» filmi hangi ülkede çekilmiştir?",
+    "answersTr": [
+      "Gürcistan",
+      "Ermenistan",
+      "Azerbaycan",
+      "Ukrayna"
+    ],
+    "correctAnswerTr": "Ermenistan"
   },
   {
     "type": "multipleChoice",
@@ -6669,7 +8853,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Navenda Çanda Mezopotamyayê (NÇM), arşîva xebatên sînemayê 1996-2000",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kazim Öz kariyerinin başında hangi kültür kurumunda çalıştı?",
+    "answersTr": [
+      "Paris Kürt Enstitüsü",
+      "Berlin Film Akademisi",
+      "Türkiye Yazarlar Birliği",
+      "Mezopotamya Kültür Merkezi"
+    ],
+    "correctAnswerTr": "Mezopotamya Kültür Merkezi"
   },
   {
     "type": "multipleChoice",
@@ -6693,7 +8885,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Goristana Père-Lachaise, Parîs — tomara goran (Yilmaz Guney, 1984)",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Yilmaz Guney'in mezarı hangi şehirdedir?",
+    "answersTr": [
+      "İstanbul",
+      "Paris",
+      "Adana",
+      "Berlin"
+    ],
+    "correctAnswerTr": "Paris"
   },
   {
     "type": "multipleChoice",
@@ -6717,7 +8917,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Festîvala Fîlman a Navneteweyî ya Stenbolê, arşîva xelatan 2014",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Klama Dayîka Min» filmi en iyi film ödülünü hangi festivalde aldı?",
+    "answersTr": [
+      "İstanbul Film Festivali",
+      "Cannes Festivali",
+      "Berlin Festivali",
+      "Venedik Festivali"
+    ],
+    "correctAnswerTr": "İstanbul Film Festivali"
   },
   {
     "type": "multipleChoice",
@@ -6741,7 +8949,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Duhok International Film Festival — agahiyên fermî yên festîvalê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Duhok Film Festivali hangi ülkede düzenlenir?",
+    "answersTr": [
+      "İran",
+      "Irak",
+      "Suriye",
+      "Ermenistan"
+    ],
+    "correctAnswerTr": "Irak"
   },
   {
     "type": "multipleChoice",
@@ -6765,7 +8981,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Hamo Beknazarian, Zare (1926), Ermenfilm — arşîva sînemaya Soviyetê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Kürtlerin yaşamını anlatan en eski filmlerden «Zare» (1926) hangi ülkede çekilmiştir?",
+    "answersTr": [
+      "İsveç",
+      "İtalya",
+      "Güney Kore",
+      "Sovyetler Birliği"
+    ],
+    "correctAnswerTr": "Sovyetler Birliği"
   },
   {
     "type": "multipleChoice",
@@ -6789,7 +9013,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Bahman Ghobadi, Dema Hespên Serxweş (2000) — hevpeyvînên derhêner",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Dema Hespên Serxweş» filminde oyuncular çoğunlukla hangi gruptan seçildi?",
+    "answersTr": [
+      "Yörenin profesyonel olmayan köylülerinden",
+      "Tahran tiyatrosunun oyuncularından",
+      "Hollywood'un ünlü oyuncularından",
+      "Yörenin tanınmış şarkıcılarından"
+    ],
+    "correctAnswerTr": "Yörenin profesyonel olmayan köylülerinden"
   },
   {
     "type": "multipleChoice",
@@ -6813,7 +9045,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Bong Joon-ho, Parasite (2019) — CJ Entertainment, agahiyên belavkirinê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Parazît» filmi hangi ülkenindir?",
+    "answersTr": [
+      "Japonya",
+      "Çin",
+      "Güney Kore",
+      "Tayland"
+    ],
+    "correctAnswerTr": "Güney Kore"
   },
   {
     "type": "multipleChoice",
@@ -6837,7 +9077,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Academy of Motion Picture Arts and Sciences, arşîva Oscaran 2020",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Hangi film, En İyi Film Oscar'ını kazanan ilk İngilizce olmayan yapım oldu?",
+    "answersTr": [
+      "Roma",
+      "Parazît",
+      "Amélie",
+      "Rashomon"
+    ],
+    "correctAnswerTr": "Parazît"
   },
   {
     "type": "multipleChoice",
@@ -6861,7 +9109,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Akira Kurosawa, Shichinin no Samurai (1954) — Toho, arşîva fîlman",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Yedi Samuray» (1954) filminin yönetmeni kimdir?",
+    "answersTr": [
+      "Yasujiro Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Hirokazu Kore-eda"
+    ],
+    "correctAnswerTr": "Akira Kurosawa"
   },
   {
     "type": "multipleChoice",
@@ -6885,7 +9141,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Charlie Chaplin, The Great Dictator (1940) — Chaplin Office, arşîv",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Charlie Chaplin'in sesli diyaloglu ilk filmi hangisidir?",
+    "answersTr": [
+      "Büyük Diktatör",
+      "Şehir Işıkları",
+      "Modern Zamanlar",
+      "Çocuk"
+    ],
+    "correctAnswerTr": "Büyük Diktatör"
   },
   {
     "type": "multipleChoice",
@@ -6909,7 +9173,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Studio Ghibli, Sen to Chihiro no Kamikakushi (2001) — arşîva stûdyoyê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Spirited Away» animasyonunun yönetmeni kimdir?",
+    "answersTr": [
+      "Isao Takahata",
+      "Makoto Shinkai",
+      "Hayao Miyazaki",
+      "Satoshi Kon"
+    ],
+    "correctAnswerTr": "Hayao Miyazaki"
   },
   {
     "type": "multipleChoice",
@@ -6933,7 +9205,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "British Film Institute, dosyaya Alfred Hitchcock",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Psycho» ve «Vertigo» filmleri hangi yönetmen tarafından çekilmiştir?",
+    "answersTr": [
+      "Orson Welles",
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Ford"
+    ],
+    "correctAnswerTr": "Alfred Hitchcock"
   },
   {
     "type": "multipleChoice",
@@ -6957,7 +9237,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Stanley Kubrick, 2001: A Space Odyssey (1968) — MGM, arşîva fîlman",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«2001: A Space Odyssey» filminin yönetmeni kimdir?",
+    "answersTr": [
+      "Ridley Scott",
+      "George Lucas",
+      "Stanley Kubrick",
+      "Steven Spielberg"
+    ],
+    "correctAnswerTr": "Stanley Kubrick"
   },
   {
     "type": "multipleChoice",
@@ -6981,7 +9269,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Institut Lumière, Lyon — tomara pêşandana 28'ê Kanûna 1895'an",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "1895 yılında Paris'te halka açık ilk film gösterimini kim düzenledi?",
+    "answersTr": [
+      "Lumière Kardeşler",
+      "Thomas Edison",
+      "Georges Méliès",
+      "Warner Kardeşler"
+    ],
+    "correctAnswerTr": "Lumière Kardeşler"
   },
   {
     "type": "multipleChoice",
@@ -7005,7 +9301,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "La Biennale di Venezia, agahiyên fermî yên xelata Leone d'Oro",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Venedik Festivali'nin en büyük ödülü nedir?",
+    "answersTr": [
+      "Altın Ayı",
+      "Altın Palmiye",
+      "Altın Aslan",
+      "Altın Küre"
+    ],
+    "correctAnswerTr": "Altın Aslan"
   },
   {
     "type": "multipleChoice",
@@ -7029,7 +9333,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Giuseppe Tornatore, Nuovo Cinema Paradiso (1988) — Cristaldifilm",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Cinema Paradiso» filmi hangi ülkenindir?",
+    "answersTr": [
+      "Fransa",
+      "İspanya",
+      "Yunanistan",
+      "İtalya"
+    ],
+    "correctAnswerTr": "İtalya"
   },
   {
     "type": "multipleChoice",
@@ -7053,7 +9365,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Vittorio De Sica, Ladri di biciclette (1948) — Cineteca di Bologna",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Bisiklet Hırsızları» (1948) hangi sinema akımının örneğidir?",
+    "answersTr": [
+      "Alman Dışavurumculuğu",
+      "Fransız Yeni Dalgası",
+      "İtalyan Yeni Gerçekçiliği",
+      "Sovyet Sineması"
+    ],
+    "correctAnswerTr": "İtalyan Yeni Gerçekçiliği"
   },
   {
     "type": "multipleChoice",
@@ -7077,7 +9397,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Sergei Eisenstein, Bronenosets Potyomkin (1925) — Goskino, arşîv",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Potemkin Zırhlısı» (1925) filminin yönetmeni ve montaj kuramcısı kimdir?",
+    "answersTr": [
+      "Dziga Vertov",
+      "Lev Kuleşov",
+      "Andrey Tarkovski",
+      "Sergey Eisenstein"
+    ],
+    "correctAnswerTr": "Sergey Eisenstein"
   },
   {
     "type": "multipleChoice",
@@ -7101,7 +9429,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Svenska Filminstitutet, dosyaya Ingmar Bergman",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Ingmar Bergman hangi ülkedendir?",
+    "answersTr": [
+      "Danimarka",
+      "İsveç",
+      "Norveç",
+      "Finlandiya"
+    ],
+    "correctAnswerTr": "İsveç"
   },
   {
     "type": "multipleChoice",
@@ -7125,7 +9461,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Akira Kurosawa, Rashomon (1950) — Daiei, arşîva fîlman",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Rashomon» (1950) filmi hangi anlatım özelliğiyle tanınır?",
+    "answersTr": [
+      "Film baştan sona tek bir uzun planda çekilmiştir",
+      "Filmde baştan sona hiç diyalog kullanılmaz",
+      "Olaylar sondan başa doğru geriye giderek anlatılır",
+      "Aynı olay farklı tanıkların ağzından çelişkili anlatılır"
+    ],
+    "correctAnswerTr": "Aynı olay farklı tanıkların ağzından çelişkili anlatılır"
   },
   {
     "type": "multipleChoice",
@@ -7149,7 +9493,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Güney Film / Zeki Ökten, Sürü (1978) — arşîva fîlman",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Sürü» (1978) filmi hangi yönetmen tarafından çekilmiştir?",
+    "answersTr": [
+      "Şerif Gören",
+      "Atıf Yılmaz",
+      "Zeki Ökten",
+      "Ömer Lütfi Akad"
+    ],
+    "correctAnswerTr": "Zeki Ökten"
   },
   {
     "type": "multipleChoice",
@@ -7173,7 +9525,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Bahman Ghobadi, Dema Hespên Serxweş (2000) — dosyaya festîvalê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Sarhoş Atlar Zamanı» filmi hangi dilde çekilmiştir?",
+    "answersTr": [
+      "Farsça (yörenin ağzıyla)",
+      "Arapça (Irak ağzıyla)",
+      "Türkçe (Kürtçe altyazıyla)",
+      "Kürtçe (Soranî ve Kurmancî)"
+    ],
+    "correctAnswerTr": "Kürtçe (Soranî ve Kurmancî)"
   },
   {
     "type": "multipleChoice",
@@ -7197,7 +9557,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Studio Ghibli, Tonari no Totoro (1988) — arşîva stûdyoyê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Komşum Totoro» hangi stüdyo tarafından yapılmıştır?",
+    "answersTr": [
+      "Toei Animation",
+      "Studio Ghibli",
+      "Madhouse",
+      "Pixar"
+    ],
+    "correctAnswerTr": "Studio Ghibli"
   },
   {
     "type": "multipleChoice",
@@ -7221,7 +9589,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "David Bordwell & Kristin Thompson, Film Art — beşa mîzansenê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Sinemada «plansekans» nedir?",
+    "answersTr": [
+      "Yalnızca dış sesle anlatılan bir sahne",
+      "Sondan başa doğru giden sahneler dizisi",
+      "Aynı açıdan iki kamerayla çekilen bir sahne",
+      "Kesme olmadan tek çekimde alınan bir sahne"
+    ],
+    "correctAnswerTr": "Kesme olmadan tek çekimde alınan bir sahne"
   },
   {
     "type": "multipleChoice",
@@ -7245,7 +9621,15 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Yol (1982) — arşîva çapemeniyê ya nîşandanê",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "«Yol» filmi neden uzun süre Türkiye'de gösterilemedi?",
+    "answersTr": [
+      "Filmin kopyaları kaybolmuştu",
+      "Yönetmen Türkiye'de gösterilmesini istemedi",
+      "Filme yasak konulmuştu",
+      "Film henüz tamamlanmamıştı"
+    ],
+    "correctAnswerTr": "Filme yasak konulmuştu"
   },
   {
     "type": "multipleChoice",
@@ -7269,6 +9653,14 @@
       "sourceTitle": "Editoryal — sînemaya kurdî û ya cîhanê",
       "sourceReference": "Berlinale — agahiyên fermî yên xelatan",
       "qualityVersion": 2
-    }
+    },
+    "promptTr": "Berlin Festivali ana ödülünü hangi adla verir?",
+    "answersTr": [
+      "Altın Aslan",
+      "Altın Palmiye",
+      "Altın Küre",
+      "Altın Ayı"
+    ],
+    "correctAnswerTr": "Altın Ayı"
   }
 ]

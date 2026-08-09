@@ -21,7 +21,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Ben eve gidiyorum.»"
   },
   {
     "id": "wo-ku-002",
@@ -45,7 +46,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «O ekmek yiyor.»"
   },
   {
     "id": "wo-ku-003",
@@ -69,7 +71,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Ben kitap okuyorum.»"
   },
   {
     "id": "wo-ku-004",
@@ -93,7 +96,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Anne ekmek yapıyor.»"
   },
   {
     "id": "wo-ku-005",
@@ -118,7 +122,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Biz Kürtçe konuşuyoruz.»"
   },
   {
     "id": "wo-ku-006",
@@ -143,7 +148,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Çocuklar okuldalar.»"
   },
   {
     "id": "wo-ku-007",
@@ -169,7 +175,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Seni seviyorum.»"
   },
   {
     "id": "wo-ku-008",
@@ -194,6 +201,7 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — editör onayı bekliyor",
       "qualityVersion": 1
-    }
+    },
+    "promptTr": "Cümleyi sırala: «Bugün hava sıcak.»"
   }
 ]

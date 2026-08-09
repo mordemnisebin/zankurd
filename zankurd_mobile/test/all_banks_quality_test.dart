@@ -75,7 +75,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla yedi kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla sekiz kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -87,6 +87,10 @@ void main() {
         // aynı id birden çok bankada varsa SONRAKİ kazanır.
         ...fromJson('assets/data/expansion_2026_08_questions.json'),
         ...fromJson('assets/data/source_first_2026_08_questions.json'),
+        // 2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine
+        // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
+        // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
+        ...fromJson('assets/data/visual_2026_08_07_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

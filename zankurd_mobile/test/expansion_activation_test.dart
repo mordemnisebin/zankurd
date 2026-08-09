@@ -36,10 +36,19 @@ void main() {
     // her iki sayıya da +218 ekledi, yani 218 kaydın tamamı kanonik olarak
     // ayrıdır. Yükleyici düzeyinde doğru ölçü id bazında TEKİLLİK'tir ve
     // orada kayıp yoktur.
+    //
+    // 2026-08-07: 2151 → 2118 → 2138. Önce otuz üç kayıt çıkarıldı; gerekçesi
+    // `tool/content_authoring/repair_manifest_2026_08_07.json` içinde kayıt
+    // kayıt yazılıdır. Otuz biri kendi kategorisini soran döngüsel «kategori
+    // eşleştirme» sorusuydu ve sınıf kendi içinde çelişiyordu: «dengbêj» bir
+    // soruda Çand, bir başkasında Muzîk sayılıyordu. İkisi ise yanlış
+    // seçeneği hiçbir koşulda savunulabilir olmayan önemsiz önermelerdi.
+    // Sonra bu kayıtların öksüz bıraktığı görsellere yirmi yeni görsel soru
+    // yazıldı (`visual_2026_08_07_questions.json`), dolayısıyla 2118 → 2138.
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      2151,
+      2138,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
