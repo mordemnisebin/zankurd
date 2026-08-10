@@ -199,15 +199,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text(question.prompt), findsOneWidget);
+    // Arayüz Türkçe: soru ekranda `localized(isKu: false)` ile
+    // yansıtılıyor. Kurmancî ham metni aramak, curated banka
+    // çevrilene kadar tesadüfen çalışıyordu (2026-08-10).
+    final shown = question.localized(isKu: false);
+    expect(find.text(shown.prompt), findsOneWidget);
     expect(
       find.byKey(const ValueKey('quiz-landscape-content')),
       findsOneWidget,
     );
-    expect(find.text(question.displayAnswers.first), findsWidgets);
+    expect(find.text(shown.displayAnswers.first), findsWidgets);
 
-    await tester.ensureVisible(find.text(question.displayAnswers.first).first);
-    await tester.tap(find.text(question.displayAnswers.first).first);
+    await tester.ensureVisible(find.text(shown.displayAnswers.first).first);
+    await tester.tap(find.text(shown.displayAnswers.first).first);
     await tester.pumpAndSettle();
 
     // Yarışma modunda tur içi açıklama gösterilmez (çözümler oyun sonunda).
@@ -896,7 +900,11 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byType(QuizResultScreen), findsNothing);
-    expect(find.text(question.prompt), findsOneWidget);
+    // Arayüz Türkçe: soru ekranda `localized(isKu: false)` ile
+    // yansıtılıyor. Kurmancî ham metni aramak, curated banka
+    // çevrilene kadar tesadüfen çalışıyordu (2026-08-10).
+    final shown = question.localized(isKu: false);
+    expect(find.text(shown.prompt), findsOneWidget);
     expect(teamRepository.resultCalls, 0);
     expect(teamRepository.awardCalls, 0);
     expect(teamRepository.finishCalls, 0);
