@@ -30,6 +30,11 @@ BANKS = [
     'assets/data/editorial_questions.json',
     'assets/data/community_questions.json',
     'assets/data/sentence_building_questions.json',
+    'assets/data/fill_in_blank_2026_08_questions.json',
+    'assets/data/expansion_2026_08_questions.json',
+    'assets/data/source_first_2026_08_questions.json',
+    'assets/data/visual_2026_08_07_questions.json',
+    'assets/data/restore_2026_08_07_questions.json',
 ]
 
 TEXT_FIELDS = ('prompt', 'promptTr', 'explanation', 'explanationKu', 'explanationTr')

@@ -30,6 +30,7 @@ import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
 import '../services/room_result_presentation.dart';
 import '../services/tts_service.dart';
+import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -380,6 +381,13 @@ class _QuizScreenState extends State<QuizScreen>
 
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
+  bool? get _currentAnswerAdjudication {
+    for (final record in answerRecords.reversed) {
+      if (record.id == question.id) return record.isCorrect;
+    }
+    return null;
+  }
+
   bool get isLastQuestion => index == widget.questions.length - 1;
   bool get _isSoloMode => widget.room.id == null;
 
@@ -3086,7 +3094,7 @@ class _QuizScreenState extends State<QuizScreen>
     if (!_usesServerHiddenAnswers &&
         _wildcard.doubleAnswerActivated &&
         _firstAttemptAnswer.isEmpty &&
-        answer != question.correctAnswer) {
+        !question.acceptsAnswer(answer)) {
       HapticFeedback.heavyImpact();
       setState(() => _firstAttemptAnswer = answer);
       // Geri sayımı SÜRDÜR. `_answer` en başta `_timerController.stop()`
@@ -3220,6 +3228,7 @@ class _QuizScreenState extends State<QuizScreen>
         }
         _recordAnswer(
           answer,
+          isCorrect: isCorrect,
           responseMs: responseMs,
           pointsEarned: result['points'] as int? ?? 0,
         );
@@ -3269,7 +3278,7 @@ class _QuizScreenState extends State<QuizScreen>
       }
       // Fallback local logic if network fails during answer submit
       if (!mounted || index != questionIndex) return;
-      final correct = answer == question.correctAnswer;
+      final correct = question.acceptsAnswer(answer);
       _trackMistake(correct);
       if (correct) {
         HapticFeedback.mediumImpact();
@@ -3299,6 +3308,7 @@ class _QuizScreenState extends State<QuizScreen>
         }
         _recordAnswer(
           answer,
+          isCorrect: correct,
           responseMs: responseMs,
           pointsEarned: correct ? (100 + (streak * 10).clamp(0, 50)) : 0,
         );
@@ -3411,6 +3421,7 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _recordAnswer(
     String answer, {
+    required bool isCorrect,
     required int responseMs,
     required int pointsEarned,
   }) {
@@ -3430,6 +3441,7 @@ class _QuizScreenState extends State<QuizScreen>
       imageUrl: question.imageUrl,
       responseMs: responseMs,
       pointsEarned: pointsEarned,
+      adjudicatedCorrect: isCorrect,
     );
 
     if (existingIndex == -1) {

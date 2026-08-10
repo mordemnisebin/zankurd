@@ -309,6 +309,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.promptFontSize,
     required this.question,
     required this.selectedAnswer,
+    required this.adjudicatedCorrect,
     required this.answered,
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
@@ -328,6 +329,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final double promptFontSize;
   final QuizQuestion question;
   final String selectedAnswer;
+  final bool? adjudicatedCorrect;
   final bool answered;
   final Set<String> hiddenAnswers;
   final String firstAttemptAnswer;
@@ -384,6 +386,23 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             builder: (context, areaConstraints) {
               // Landscape (844x390 gibi): dikey alan kıt — 4 şık 2x2
               // grid'e girer, Piştre butonu ekranda kalır.
+              if (question.type == QuestionType.fillInBlank) {
+                return FillInBlankWidget(
+                  key: ValueKey('fill-in-blank-${question.id}'),
+                  question: question,
+                  disabled: answered,
+                  showResult: answered && !suspense,
+                  adjudicatedCorrect: adjudicatedCorrect,
+                  excludedAnswer: firstAttemptAnswer.isEmpty
+                      ? null
+                      : firstAttemptAnswer,
+                  selectedAnswer: selectedAnswer.isEmpty
+                      ? null
+                      : selectedAnswer,
+                  onAnswerSubmitted: onAnswer,
+                );
+              }
+
               if (question.type == QuestionType.wordOrdering) {
                 return WordOrderingWidget(
                   // Soru kimliği key'e girer: aynı tipte bir sonraki soruya

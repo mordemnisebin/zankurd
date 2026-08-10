@@ -2024,14 +2024,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   QuestionType _questionTypeFromRow(Map<String, dynamic> row) {
-    final value = row['question_type'] as String?;
-    return switch (value) {
-      'true_false' => QuestionType.trueFalse,
-      'visual' => QuestionType.visual,
-      'word_ordering' || 'wordOrdering' => QuestionType.wordOrdering,
-      'fill_in_blank' || 'fillInBlank' => QuestionType.fillInBlank,
-      _ => QuestionType.multipleChoice,
-    };
+    try {
+      return questionTypeFromStorage(row['question_type']);
+    } on ArgumentError {
+      return QuestionType.multipleChoice;
+    }
   }
 
   @override

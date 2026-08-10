@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
 /// Soru bankasında alıntı işaretinin bekçisi.
 ///
@@ -26,13 +27,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// Bu test iki kuralı birden sabitler: alıntı «guillemet»tir ve düz tırnak
 /// çifti bankaya giremez. Kesme işareti dokunulmadan geçer.
 void main() {
-  const banks = [
-    'assets/data/offline_questions.json',
-    'assets/data/editorial_questions.json',
-    'assets/data/community_questions.json',
-    'assets/data/sentence_building_questions.json',
-    'assets/data/expansion_2026_08_questions.json',
-  ];
+  const banks = questionBankAssets;
 
   const fields = [
     'prompt',

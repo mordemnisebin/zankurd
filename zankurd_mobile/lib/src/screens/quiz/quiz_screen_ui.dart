@@ -295,8 +295,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   height: i == index ? 8 : 6,
                   decoration: BoxDecoration(
                     color: i < answerRecords.length
-                        ? (answerRecords[i].selectedAnswer ==
-                                  answerRecords[i].correctAnswer
+                        ? (answerRecords[i].isCorrect
                               ? AppTheme.correct
                               : AppTheme.wrong)
                         : i == index
@@ -373,7 +372,9 @@ extension _QuizScreenUI on _QuizScreenState {
     final bool showRatingBar =
         widget.practice &&
         answered &&
-        selectedAnswer == question.correctAnswer &&
+        answerRecords.any(
+          (record) => record.id == question.id && record.isCorrect,
+        ) &&
         !completing;
 
     // Multiplayer'da "Sonraki" butonu devre dışı: geçiş otomatik.
@@ -395,16 +396,21 @@ extension _QuizScreenUI on _QuizScreenState {
           SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
         ],
         // Çift Cevap ilk denemesi yanlışsa: reveal görüntüsü olmadan
-        // ikinci şık beklenir; kullanıcıya net ipucu verilir.
+        // ikinci cevap beklenir; kullanıcıya net ipucu verilir.
         if (!answered && _firstAttemptAnswer.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-            child: Text(
-              context.t(K.doubleAnswerHint),
-              textAlign: TextAlign.center,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.gold,
-                fontWeight: FontWeight.w800,
+            child: Semantics(
+              liveRegion: true,
+              label: context.t(K.doubleAnswerHint),
+              excludeSemantics: true,
+              child: Text(
+                context.t(K.doubleAnswerHint),
+                textAlign: TextAlign.center,
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.gold,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ),
@@ -536,8 +542,10 @@ extension _QuizScreenUI on _QuizScreenState {
 
   Widget _buildWildcardRow() {
     final jokers = [
-      WildcardType.fiftyFifty,
-      WildcardType.audience,
+      if (_supportsOptionWildcards) ...[
+        WildcardType.fiftyFifty,
+        WildcardType.audience,
+      ],
       WildcardType.doubleAnswer,
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
@@ -641,6 +649,10 @@ extension _QuizScreenUI on _QuizScreenState {
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
 
+  bool get _supportsOptionWildcards =>
+      question.type != QuestionType.fillInBlank &&
+      question.type != QuestionType.wordOrdering;
+
   Future<void> _trackWildcardMission() async {
     final store = await DailyMissionStore.load();
     final completed = await store.reportWildcardUsed();
@@ -672,7 +684,12 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _useFiftyFifty() {
     final cost = WildcardType.fiftyFifty.coinCost;
-    if (_wildcard.fiftyFiftyUsed || _coinBalance < cost || answered) return;
+    if (!_supportsOptionWildcards ||
+        _wildcard.fiftyFiftyUsed ||
+        _coinBalance < cost ||
+        answered) {
+      return;
+    }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
@@ -698,7 +715,12 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _useAudience() {
     final cost = WildcardType.audience.coinCost;
-    if (_wildcard.audienceUsed || _coinBalance < cost || answered) return;
+    if (!_supportsOptionWildcards ||
+        _wildcard.audienceUsed ||
+        _coinBalance < cost ||
+        answered) {
+      return;
+    }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
@@ -982,6 +1004,7 @@ extension _QuizScreenUI on _QuizScreenState {
                         promptFontSize: 20,
                         question: question,
                         selectedAnswer: selectedAnswer,
+                        adjudicatedCorrect: _currentAnswerAdjudication,
                         answered: answered,
                         hiddenAnswers: hiddenAnswers,
                         firstAttemptAnswer: _firstAttemptAnswer,
@@ -1015,6 +1038,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   promptFontSize: compactLandscape ? 21 : (isCompact ? 21 : 25),
                   question: question,
                   selectedAnswer: selectedAnswer,
+                  adjudicatedCorrect: _currentAnswerAdjudication,
                   answered: answered,
                   hiddenAnswers: hiddenAnswers,
                   firstAttemptAnswer: _firstAttemptAnswer,

@@ -7,7 +7,7 @@ yazıldı. Sayılar 2026-07-27 durumudur; sürüm değişince güncelle:
 
 | Ne | Kaç |
 |---|---|
-| Yayınlanabilir benzersiz soru | 1.953 |
+| Yayınlanabilir benzersiz soru | 2.120 |
 | Kategori | 9 |
 | Kategori başına seviye | 5 |
 | Arayüz dili | Kurmancî, Türkçe |
@@ -34,8 +34,9 @@ Altı yayın görüntüsü iPhone 17 Pro Max simülatöründen, Türkçe arayüz
 | `06_quiz.png` | Dört şıklı soru |
 | `07_photo_question.png` | Fotoğraflı soru |
 
-`05_word_order.png` yalnız taslak arşividir; cümle kurma soruları editör
-onayı beklediği için bu sürümün mağaza listesine **yüklenmemelidir**.
+`05_word_order.png` yalnız taslak arşividir ve güncel mağaza setinde
+kullanılmıyor. Yeniden kullanılacaksa mevcut derlemeyle yeniden çekilip
+görsel kalite kontrolünden geçirilmelidir.
 
 `docs/screenshots/` sürüm denetiminde tutulmuyor (kökteki `.gitignore`);
 üretilmiş görsellerin kaynak gibi davranmaması için konmuş bir kural.

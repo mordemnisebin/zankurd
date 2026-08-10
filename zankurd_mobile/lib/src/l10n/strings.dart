@@ -1154,8 +1154,8 @@ class Tr {
       'tr': 'Yeşil = doğru, kırmızı = yanlış',
     },
     K.doubleAnswerHint: {
-      'ku': 'Bersiva ducarî: bijareke din hilbijêre',
-      'tr': 'Çift cevap: bir şık daha seç',
+      'ku': 'Bersiva ducarî: bersiveke din bide',
+      'tr': 'Çift cevap: bir cevap daha ver',
     },
     K.difficultyHard: {'ku': 'Dijwar', 'tr': 'Zor'},
     K.difficultyMedium: {'ku': 'Navîn', 'tr': 'Orta'},
@@ -2057,6 +2057,10 @@ class Tr {
     K.correctBadge: {'ku': 'RAST', 'tr': 'DOĞRU'},
     K.wrongBadge: {'ku': 'ŞAŞ', 'tr': 'YANLIŞ'},
     K.questionIndex: {'ku': 'Pirs {index}', 'tr': 'Soru {index}'},
+    K.yourAnswer: {
+      'ku': 'Bersiva te: {answer}',
+      'tr': 'Senin cevabın: {answer}',
+    },
 
     // ── Ayarlar — kalan metinler ──────────────────────────────────
     K.playerNameLoadFailed: {
@@ -3174,6 +3178,7 @@ class K {
   static const correctBadge = 'review.badge.correct';
   static const wrongBadge = 'review.badge.wrong';
   static const questionIndex = 'review.questionIndex';
+  static const yourAnswer = 'review.yourAnswer';
 
   // ── Ayarlar — kalan metinler ──────────────────────────────────
   static const playerNameLoadFailed = 'settings.playerName.loadFailed';

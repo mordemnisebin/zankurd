@@ -97,7 +97,7 @@ void main() {
 
       // İpucu görünür, Piştre kilitli (answered değil) ama ekran takılı değil:
       // kalan şıklar hâlâ seçilebilir.
-      expect(find.text('Çift cevap: bir şık daha seç'), findsOneWidget);
+      expect(find.text('Çift cevap: bir cevap daha ver'), findsOneWidget);
       expect(nextButtonCallback(tester), isNull);
 
       // İkinci deneme: doğru şık → reveal → Piştre aktif

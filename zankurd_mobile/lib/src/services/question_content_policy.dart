@@ -34,9 +34,27 @@ class QuestionContentPolicy {
     final issues = <String>[];
     if (question.prompt.trim().isEmpty) issues.add('empty_prompt');
     if (question.category.trim().isEmpty) issues.add('empty_category');
-    if (question.answers.length < 2) issues.add('too_few_answers');
+    if (question.type != QuestionType.fillInBlank &&
+        question.answers.length < 2) {
+      issues.add('too_few_answers');
+    }
+    if (question.type == QuestionType.fillInBlank &&
+        (question.answers.length != 1 ||
+            question.answers.single.trim().isEmpty ||
+            question.correctAnswer.trim().isEmpty)) {
+      issues.add('fill_in_blank_requires_one_canonical_answer');
+    }
     final answerIsHidden =
         allowHiddenAnswer && question.correctAnswer.trim().isEmpty;
+
+    // Çevrimiçi oda protokolü yalnız A-D/TIMEOUT anahtarı taşır. Serbest
+    // metni veya acceptedAnswers listesini sunucuya güvenle iletemediği için
+    // boşluk doldurma, protokol genişletilene kadar gizli-cevap akışına
+    // alınmaz.
+    if (question.type == QuestionType.fillInBlank && allowHiddenAnswer) {
+      issues.add('hidden_answer_unsupported');
+      return List.unmodifiable(issues);
+    }
 
     // Cümle kurma sorusunda `answers` şık listesi değil, kelime havuzudur;
     // `correctAnswer` ise bu kelimelerin doğru sırayla birleştirilmiş hâli.

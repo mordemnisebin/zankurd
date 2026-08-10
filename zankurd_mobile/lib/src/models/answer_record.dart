@@ -12,6 +12,7 @@ class AnswerRecord {
     this.responseMs,
     this.pointsEarned = 0,
     this.imageUrl,
+    this.adjudicatedCorrect,
   });
 
   final String id;
@@ -36,8 +37,14 @@ class AnswerRecord {
   final int pointsEarned;
   final String? imageUrl;
 
+  /// Cevap gönderildiği anda repository/yerel fallback tarafından verilen
+  /// yetkili karar. Eski kayıtlar için `null` bırakılır ve metin eşitliği
+  /// geriye uyumlu yedek olarak kullanılır.
+  final bool? adjudicatedCorrect;
+
   bool get isCorrect =>
-      selectedAnswer == correctAnswer && selectedAnswer != null;
+      adjudicatedCorrect ??
+      (selectedAnswer == correctAnswer && selectedAnswer != null);
 
   bool get isUnanswered => selectedAnswer == null || selectedAnswer!.isEmpty;
 

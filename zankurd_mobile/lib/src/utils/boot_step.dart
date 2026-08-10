@@ -20,7 +20,7 @@ import 'error_reporter.dart';
 /// `Future` hiç tamamlanmaz ve `runApp` hiç çağrılmaz.
 ///
 /// Bağımlılık yönü tersti. ZanKurd çevrimdışı-öncelikli bir uygulama:
-/// 2153 soru cihazda duruyor ve ilk kareyi çizmek için tek bir ağ çağrısı
+/// 2173 soru cihazda duruyor ve ilk kareyi çizmek için tek bir ağ çağrısı
 /// gerekmiyor. Uzak servisler uygulamayı açmalı değil, açıldıktan sonra
 /// bağlanmalıydı.
 ///

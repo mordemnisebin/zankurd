@@ -7,6 +7,7 @@ QuizQuestion _q({
   required String category,
   required List<String> answers,
   required String correct,
+  QuestionType type = QuestionType.multipleChoice,
 }) => QuizQuestion(
   id: id,
   category: category,
@@ -14,6 +15,7 @@ QuizQuestion _q({
   answers: answers,
   correctAnswer: correct,
   explanation: 'e',
+  type: type,
 );
 
 void main() {
@@ -92,6 +94,35 @@ void main() {
     final engine = CategoryDistractorPool([q]);
     final rebuilt = engine.rebuildAnswers(q, engine.buildPools());
     expect(rebuilt, ['Rast', 'Şaş']);
+  });
+
+  test('yazılı ve cümle kurma cevapları çeldirici havuzuna girmez', () {
+    final fill = _q(
+      id: 'fill',
+      category: 'Ziman',
+      answers: ['pirtûk'],
+      correct: 'pirtûk',
+      type: QuestionType.fillInBlank,
+    );
+    final ordering = _q(
+      id: 'ordering',
+      category: 'Ziman',
+      answers: ['Ez', 'diçim', 'malê'],
+      correct: 'Ez diçim malê',
+      type: QuestionType.wordOrdering,
+    );
+    final option = _q(
+      id: 'option',
+      category: 'Ziman',
+      answers: ['nan', 'av', 'şîr', 'çay'],
+      correct: 'nan',
+    );
+    final engine = CategoryDistractorPool([fill, ordering, option]);
+    final pools = engine.buildPools();
+
+    expect(pools['Ziman'], ['nan']);
+    expect(engine.rebuildAnswers(fill, pools), ['pirtûk']);
+    expect(engine.rebuildAnswers(ordering, pools), ['Ez', 'diçim', 'malê']);
   });
 
   test('rebuildAll doğru cevapları korur', () {

@@ -43,7 +43,13 @@ void main() {
   List<Map<String, dynamic>> translated() => [
     for (final rows in banks.values)
       for (final q in rows)
-        if (has(q, 'answersTr') && has(q, 'correctAnswerTr')) q,
+        // Konum ancak dört şıklı soruda anlamlıdır. Yazılı cevapta tek
+        // kanonik değer doğal olarak daima 0. indekstedir; onu "hep A"
+        // hilesi ölçümüne katmak gerçek dağılımı kirletir.
+        if ((q['answers'] as List?)?.length == 4 &&
+            has(q, 'answersTr') &&
+            has(q, 'correctAnswerTr'))
+          q,
   ];
 
   test('bütün bankalar okunabildi', () {

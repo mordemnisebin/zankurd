@@ -23,6 +23,10 @@ library;
 /// yer almaz — o bir asset değil.
 const questionBankAssets = <String>[
   'assets/data/sentence_building_questions.json',
+  // 2026-08-10: gerçek yazılı cevap akışı için iki dilli, kaynaklı ve
+  // editör denetimli 20 Ziman sorusu. `answers` şık listesi değil, tek
+  // kanonik cevaptır; güvenli klavye varyantları `acceptedAnswers`dadır.
+  'assets/data/fill_in_blank_2026_08_questions.json',
   'assets/data/community_questions.json',
   'assets/data/editorial_questions.json',
   'assets/data/offline_questions.json',

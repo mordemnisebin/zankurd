@@ -2255,6 +2255,37 @@
         "reviewedAt": "metadata.reviewedAt",
         "locale": "ku-kmr"
       }
+    },
+    {
+      "id": "fill_in_blank_2026_08_runtime_bank",
+      "description": "2026-08-10 iki dilli, kaynaklı ve bağımsız Kurmancî QA'dan geçmiş yazılı Ziman soruları",
+      "path": "assets/data/fill_in_blank_2026_08_questions.json",
+      "role": "runtime_secondary",
+      "parser": "json",
+      "canonicalGroup": "runtime_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": true,
+      "precedence": 980,
+      "expectedRecordCount": 20,
+      "notes": "Tek kanonik cevaplı fillInBlank kayıtları; şık dağılımı ölçümüne girmez. Kaynaklar Arizona Iranian Languages, Institut kurde de Paris ve Nûbihar 115'tir.",
+      "columns": {
+        "id": "id",
+        "category": "category",
+        "prompt": "prompt",
+        "options": "answers",
+        "correct": "correctAnswer",
+        "explanation": "explanationKu",
+        "difficulty": "difficulty",
+        "type": "type",
+        "dialect": "metadata.dialect",
+        "sourceTitle": "metadata.sourceTitle",
+        "sourceUrl": "metadata.sourceReference",
+        "reviewedAt": "metadata.reviewedAt",
+        "reviewedBy": "metadata.reviewedBy",
+        "status": "metadata.reviewStatus",
+        "locale": "ku-kmr"
+      }
     }
   ]
 }
