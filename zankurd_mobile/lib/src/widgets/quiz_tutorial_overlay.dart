@@ -148,10 +148,16 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
                   icon: AppIcons.bullseye,
                   titleKu: 'Bersivê hilbijêre',
                   titleTr: 'Cevabı seç',
+                  // 2026-08-10: metin tutmayan bir söz veriyordu — "her
+                  // cevaptan sonra açıklama gösterilir". Açıklamalar
+                  // `de45f05`te tur SONUNA alınmıştı; cevaptan sonra yalnız
+                  // doğru cevap açılıyor (bkz. `_ExplanationBox`). Simülatörde
+                  // gezilirken görüldü: balon açıklama vaat ediyor, kart
+                  // yalnız «Bersiva rast» diyor.
                   descriptionKu:
-                      'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî her bersivê ravekirin tê nîşandan.',
+                      'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî bersivê bersiva rast tê nîşandan; ravekirin li dawiya tûrê ne.',
                   descriptionTr:
-                      'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Her cevaptan sonra açıklama gösterilir.',
+                      'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Cevaptan sonra doğru cevap gösterilir; açıklamalar turun sonunda.',
                 ),
               CoachMarkStep(
                 targetKey: widget.nextButtonKey,

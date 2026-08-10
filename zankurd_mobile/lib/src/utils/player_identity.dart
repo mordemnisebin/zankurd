@@ -47,6 +47,36 @@ class PlayerIdentity {
     final resolved = resolveName(rawName, isKu: isKu);
     return resolved.isEmpty ? '?' : resolved.characters.first.toUpperCase();
   }
+
+  /// Avatar renginin DİLDEN BAĞIMSIZ tohumu.
+  ///
+  /// ## Kusur
+  ///
+  /// 2026-08-10'da simülatörde görüldü: dili değiştiren oyuncunun avatar
+  /// rengi turuncudan maviye dönüyordu. Sebep bu sınıfın kendi kuralıydı —
+  /// "renk daima `resolveName` sonucundan türetilir". `resolveName` yer
+  /// tutucu adlarda dile göre farklı bir metin döndürüyor («Oyuncu» /
+  /// «Lîstikvan»), renk de isim hash'inden geldiği için birlikte kayıyordu.
+  ///
+  /// Baş harf ile renk burada AYRILIYOR ve bu bilinçli: harf bir etikettir,
+  /// gösterilen adı izlemeli — adı «Oyuncu» yazarken «L» göstermek daha
+  /// kötü olurdu. Renk ise kimliktir ve dil değiştirince oynamamalı.
+  ///
+  /// Adını gerçekten seçmiş oyuncu zaten etkilenmiyordu (ad dilden bağımsız);
+  /// kusur yalnız ad kapısını atlayanlarda görünüyordu. Tohum orada sabit
+  /// bir dizeye düşer, yani o oyuncuların hepsi aynı rengi paylaşır — dil
+  /// değiştikçe renk değiştirmesinden iyidir.
+  static String resolveColorSeed(String? rawName) {
+    final name = rawName?.trim() ?? '';
+    if (name.isEmpty || _placeholderNames.contains(name)) {
+      return _defaultColorSeed;
+    }
+    return name;
+  }
+
+  /// Yer tutucu adlı oyuncuların ortak renk tohumu. Değeri anlamlı değil;
+  /// yalnız SABİT olması önemli.
+  static const _defaultColorSeed = 'zankurd.player.default';
 }
 
 extension PlayerIdentityContext on BuildContext {

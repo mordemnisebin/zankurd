@@ -17,6 +17,7 @@ class PlayerAvatar extends StatelessWidget {
     this.colorHex,
     this.frameId,
     this.displayName,
+    this.colorSeed,
     this.colorOverride,
     this.imageProviderFactory,
     super.key,
@@ -28,6 +29,13 @@ class PlayerAvatar extends StatelessWidget {
   final String? colorHex;
   final String? frameId;
   final String? displayName;
+
+  /// Renk hash'inin tohumu. Verilmezse [displayName] kullanılır.
+  ///
+  /// Ayrı bir alan çünkü gösterilen ad DİLE göre değişebiliyor (yer tutucu
+  /// adlarda «Oyuncu»/«Lîstikvan») ve renk onunla birlikte kaymamalı —
+  /// bkz. `PlayerIdentity.resolveColorSeed`.
+  final String? colorSeed;
 
   /// 2026-07-23 M25b: aynı ekranda render edilen oyuncular arasındaki hash
   /// çakışmasını çözmek için çağıran taraf ([resolveAvatarColors]) bu
@@ -49,7 +57,7 @@ class PlayerAvatar extends StatelessWidget {
         colorOverride ??
         (colorHex != null
             ? colorFrom(colorHex, fallback: AppTheme.accent)
-            : avatarColorForName(displayName));
+            : avatarColorForName(colorSeed ?? displayName));
     final frame = frameFromId(frameId);
 
     Widget core = _buildCore(bg);

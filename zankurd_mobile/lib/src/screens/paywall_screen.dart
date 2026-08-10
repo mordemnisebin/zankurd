@@ -133,8 +133,18 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _PaywallHero(isKu: ku),
-                      const SizedBox(height: AppSpacing.lg),
+                      // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı
+                      // değer önerisini ÜÇ kez söylüyordu — üstteki
+                      // `ScreenIdentityHeader` ("Premium / ZanKurd'u
+                      // destekle, serini koru"), hemen altındaki altın hero
+                      // ("ZanKurd Premium / Otomatik seri koruması ve
+                      // ZanKurd'a destek") ve ardından aynı iki maddeyi
+                      // sayan fayda listesi. İkisinde de aynı elmas ikonu
+                      // vardı.
+                      //
+                      // Tekrarı silmek yalnız görsel bir sadeleştirme değil:
+                      // paketler bir ekran yukarı çıkıyor, yani satın alma
+                      // kararının verildiği yer ilk bakışta görünüyor.
                       ScreenSectionLabel(
                         label: context.t(K.paywallFeatures),
                         accent: AppTheme.gold,
@@ -173,50 +183,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _PaywallHero extends StatelessWidget {
-  const _PaywallHero({required this.isKu});
-  final bool isKu;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppTheme.gold, AppTheme.brandDeep],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.gold.withValues(alpha: 0.25),
-            blurRadius: 18,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(AppIcons.gem, color: Colors.white, size: 36),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            Tr.forKu(K.paywallHeroTitle, isKu),
-            style: AppTypography.heading1.copyWith(color: Colors.white),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            Tr.forKu(K.paywallHeroSub, isKu),
-            style: const TextStyle(color: Colors.white, height: 1.4),
-          ),
-        ],
       ),
     );
   }

@@ -548,6 +548,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           currentName,
                           isKu: ku,
                         ),
+                        // Renk dilden bağımsız tohumdan: ad yer tutucuysa
+                        // dile göre değişiyordu (2026-08-10).
+                        colorSeed: PlayerIdentity.resolveColorSeed(currentName),
                       ),
                     ],
                   );
