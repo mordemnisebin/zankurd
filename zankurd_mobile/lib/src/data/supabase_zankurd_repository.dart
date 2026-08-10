@@ -1702,32 +1702,68 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   }) async {
-    // Ödül miktarını yalnızca sunucu belirler (claim_quiz_reward RPC).
-    // İstemciden coin_transactions'a yazma yolu yoktur. RPC/transport/parse
-    // hatası yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
+    // Ödül miktarını yalnızca sunucu belirler. İstemciden
+    // coin_transactions'a yazma yolu yoktur. RPC/transport/parse hatası
+    // yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
     // sunucunun başarıyla döndürdüğü 0 ise geçerli bir sonuçtur.
+    //
+    // İki ayrı RPC var çünkü iki ayrı doğrulama rejimi var:
+    //
+    //   oda turu  → `claim_quiz_reward`: sunucu odayı, oyuncuları ve
+    //               cevapları görebildiği için turu DOĞRULAR.
+    //   solo tur  → `claim_solo_reward`: çevrimdışı banka istemcide
+    //               olduğu için sunucu turu doğrulayamaz; talep
+    //               doğrulanmadan kabul edilir ama günlük tavanla
+    //               sınırlanır (bkz. 2026-08-10_solo_round_reward.sql).
+    final isSolo = room?.id == null;
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
       if (currentUserId?.trim() != user.id) {
         throw StateError('Quiz reward owner changed before claim RPC.');
       }
-      final response = await client.rpc(
-        'claim_quiz_reward',
-        params: {
-          'p_room_id': room?.id,
-          'p_score': score,
-          'p_correct_count': correctCount,
-          'p_best_streak': bestStreak,
-          'p_total_questions': totalQuestions,
-        },
-      );
+      final response = isSolo
+          ? await client.rpc(
+              'claim_solo_reward',
+              params: {
+                'p_correct_count': correctCount,
+                'p_total_questions': totalQuestions,
+                'p_best_streak': bestStreak,
+              },
+            )
+          : await client.rpc(
+              'claim_quiz_reward',
+              params: {
+                'p_room_id': room?.id,
+                'p_score': score,
+                'p_correct_count': correctCount,
+                'p_best_streak': bestStreak,
+                'p_total_questions': totalQuestions,
+              },
+            );
       if (currentUserId?.trim() != user.id) {
         throw StateError('Quiz reward owner changed during claim RPC.');
       }
+      if (isSolo) return _amountFromRpcResponse(response) ?? 0;
       return _verifiedQuizRewardAmount(response, userId: user.id);
+    } on PostgrestException catch (error, stack) {
+      // Göç henüz üretime uygulanmadıysa `claim_solo_reward` yoktur
+      // (42883 undefined_function). Bu bir arıza değil, beklenen ara
+      // durumdur: eski davranışa — solo turda sıfır jeton — sessizce
+      // düşülür. Kuyruğa alınırsa hiç başarılamayacak bir talep birikir
+      // ve oyuncuya yanlışlıkla "ödülün kaydedildi" denir.
+      if (isSolo && error.code == '42883') {
+        _recordError(
+          error,
+          stack,
+          reason: 'claim_solo_reward missing — migration not applied yet',
+        );
+        return 0;
+      }
+      _recordError(error, stack, reason: 'claim quiz reward failed');
+      rethrow;
     } catch (error, stack) {
-      _recordError(error, stack, reason: 'claim_quiz_reward failed');
+      _recordError(error, stack, reason: 'claim quiz reward failed');
       rethrow;
     }
   }

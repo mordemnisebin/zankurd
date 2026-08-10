@@ -64,11 +64,15 @@ void main() {
 
     setUp(() async {
       repo = MockZanKurdRepository();
+      // Oda turu gibi tohumla: `room` verilmezse çağrı SOLO sayılır ve
+      // günlük tavanlı küçük ödülü verir (2026-08-10). Buradaki amaç
+      // bakiye kurmak, solo ekonomisini sınamak değil.
       await repo.awardQuizCoins(
         score: 1000,
         correctCount: 20,
         totalQuestions: 20,
         bestStreak: 10,
+        room: repo.createRoom().copyWith(id: 'seed-room'),
       );
     });
 

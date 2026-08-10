@@ -64,11 +64,14 @@ void main() {
     StreakStore.resetInstance();
 
     final repo1 = MockZanKurdRepository();
+    // Oda turu gibi tohumla: `room` verilmezse çağrı solo sayılır ve
+    // günlük tavanlı küçük ödülü verir (2026-08-10).
     await repo1.awardQuizCoins(
       score: 1000,
       correctCount: 10,
       totalQuestions: 10,
       bestStreak: 5,
+      room: repo1.createRoom().copyWith(id: 'seed-room'),
     );
     await tester.pumpWidget(wrap(buildScreen(repo1)));
     await tester.pump(const Duration(seconds: 1));
@@ -96,11 +99,14 @@ void main() {
     StreakStore.resetInstance();
 
     final repo2 = MockZanKurdRepository();
+    // Oda turu gibi tohumla: `room` verilmezse çağrı solo sayılır ve
+    // günlük tavanlı küçük ödülü verir (2026-08-10).
     await repo2.awardQuizCoins(
       score: 1000,
       correctCount: 10,
       totalQuestions: 10,
       bestStreak: 5,
+      room: repo2.createRoom().copyWith(id: 'seed-room'),
     );
     await tester.pumpWidget(wrap(buildScreen(repo2)));
     await tester.pump(const Duration(seconds: 1));

@@ -2335,7 +2335,15 @@ class _QuizScreenState extends State<QuizScreen>
     required int totalQuestions,
   }) async {
     final rewardOwnerId = widget.repository.currentUserId?.trim() ?? '';
-    if (widget.practice || widget.room.id == null) {
+    // Alıştırma (yanlış tekrarı) bilerek ödülsüz: aynı sorular tekrar
+    // çözülüyor, yeni bir tur değil.
+    //
+    // Solo tur ise 2026-08-10'a kadar burada erken dönüyordu ve sıfır
+    // jeton veriyordu — yani ürünün ANA döngüsü, çevrimdışı tek başına
+    // oynamak, hiçbir şey kazandırmıyordu. Artık `claim_solo_reward`
+    // RPC'sine gidiyor: sunucu turu doğrulayamaz (çevrimdışı banka
+    // istemcide) ama talebi günlük tavanla sınırlar.
+    if (widget.practice) {
       return (
         coinsAwarded: 0,
         rewardQueued: false,

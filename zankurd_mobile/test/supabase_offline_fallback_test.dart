@@ -214,11 +214,15 @@ void main() {
         ),
       );
 
+      // Bu testler ODA ödül yolunu (doğrulanan tur) sınıyor. `room`
+      // verilmezse çağrı 2026-08-10'dan beri SOLO sayılır ve
+      // `claim_solo_reward`a gider — yani sınanan yol değişir.
       final amount = await repo.awardQuizCoins(
         score: 100,
         correctCount: 2,
         bestStreak: 1,
         totalQuestions: 10,
+        room: repo.createRoom().copyWith(id: 'room-under-test'),
       );
 
       expect(amount, 0);
@@ -247,6 +251,7 @@ void main() {
           correctCount: 2,
           bestStreak: 1,
           totalQuestions: 10,
+          room: repo.createRoom().copyWith(id: 'room-under-test'),
         ),
         throwsStateError,
       );

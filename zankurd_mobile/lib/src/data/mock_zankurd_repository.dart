@@ -87,6 +87,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   int _mockUsedExtraSpins = 0;
   final Set<String> _mockPurchases = {};
 
+  /// Solo tavanı gün bazında tutulur; gün dönünce sıfırlanır.
+  DateTime? _mockSoloDay;
+  int _mockSoloEarnedToday = 0;
+
   @override
   Future<void> ensureProfile() async {}
 
@@ -703,6 +707,27 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   }) async {
+    // Solo tur üretimde ayrı bir RPC'ye gider (`claim_solo_reward`): küçük
+    // formül + günlük tavan. Çevrimdışı yol aynı davranışı göstermeli,
+    // yoksa mock'ta oynanan ekonomi üretimdekiyle ilgisiz olur.
+    if (room?.id == null) {
+      final today = DateTime.now();
+      final day = DateTime(today.year, today.month, today.day);
+      if (_mockSoloDay != day) {
+        _mockSoloDay = day;
+        _mockSoloEarnedToday = 0;
+      }
+      final remaining = CoinCalculator.soloDailyCap - _mockSoloEarnedToday;
+      if (remaining <= 0) return 0;
+      final earned = CoinCalculator.soloAward(
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+      ).clamp(0, remaining);
+      _mockSoloEarnedToday += earned;
+      _mockCoins += earned;
+      return earned;
+    }
+
     final earned = _calculateCoinAward(
       score: score,
       correctCount: correctCount,
