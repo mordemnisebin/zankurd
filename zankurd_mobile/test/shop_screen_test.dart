@@ -117,10 +117,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('200c'));
+    await tester.ensureVisible(find.text('120c'));
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('200c'), matching: find.byType(FilledButton)),
+      find.ancestor(of: find.text('120c'), matching: find.byType(FilledButton)),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
     expect(
@@ -136,10 +136,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    // Ekstra çark 200c — bakiye 50c ile alınamamalı.
-    await tester.ensureVisible(find.text('200c'));
+    // Ekstra çark 120c — bakiye 50c ile alınamamalı.
+    await tester.ensureVisible(find.text('120c'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('200c'));
+    await tester.tap(find.text('120c'));
     await tester.pumpAndSettle();
     // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın Al' gri disabled
     // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
@@ -162,17 +162,18 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('200c'));
+    await tester.ensureVisible(find.text('120c'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('200c'));
+    await tester.tap(find.text('120c'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın Al"
     await tester.tap(find.text('Satın Al'));
     await tester.pumpAndSettle();
 
     expect(repository.spendReasons, ['purchase_spin_wheel_extra']);
-    expect(repository.coins, 300);
-    expect(find.text('300 coin'), findsOneWidget);
+    // 500 - 120 (yeni ekstra çevirme fiyatı) = 380
+    expect(repository.coins, 380);
+    expect(find.text('380 coin'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -189,7 +190,7 @@ void main() {
     expect(find.text('Sende'), findsOneWidget);
 
     // Purchased items cannot be re-purchased — no buy button shown
-    expect(find.text('750c'), findsNothing);
+    expect(find.text('480c'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -203,7 +204,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('200c'), findsOneWidget);
+    expect(find.text('120c'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -214,9 +215,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('200c'));
+    await tester.ensureVisible(find.text('120c'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('200c'));
+    await tester.tap(find.text('120c'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın Al"
     await tester.tap(find.text('Satın Al'));
@@ -249,12 +250,15 @@ void main() {
   });
 
   test('mağaza ürün fiyatları M24 paleti değişikliğinden etkilenmedi', () {
+    // 2026-08-10: fiyatlar ölçülen gelire göre yeniden çıpalandı.
+    // Çevrimdışı oyuncunun tek jeton kaynağı günlük çark (ortalama 40,6/gün);
+    // eski fiyatlarla ilk satın alma 4,9 gün, katalog 24,6 gün sürüyordu.
+    // Gerekçe ve kısıtlar `test/shop_economy_anchor_test.dart` içinde.
     const expectedCosts = {
-      'spin_wheel_extra': 200,
-      'avatar_frame_gold': 750,
-      // 600'lük bant boştu: 200 ile 750 arasında harcanacak yer yoktu.
-      'avatar_frame_neon': 600,
-      'profile_badge_vip': 1000,
+      'spin_wheel_extra': 120,
+      'avatar_frame_gold': 480,
+      'avatar_frame_neon': 350,
+      'profile_badge_vip': 720,
     };
 
     final actualCosts = {for (final item in debugShopItems) item.id: item.cost};
