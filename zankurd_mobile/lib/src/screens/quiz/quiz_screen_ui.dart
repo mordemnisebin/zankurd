@@ -541,12 +541,13 @@ extension _QuizScreenUI on _QuizScreenState {
   // ─── Joker satırı ────────────────────────────────────────────────────────
 
   Widget _buildWildcardRow() {
+    // Eleme jokerleri iki şıklı soruda cevabın kendisini satar; orada hiç
+    // GÖSTERİLMEZLER. Pasif bir düğme bırakmak da olurdu ama oyuncuya
+    // sebebini anlatmayan ölü bir düğme, olmayan düğmeden kötüdür.
     final jokers = [
-      if (_supportsOptionWildcards) ...[
-        WildcardType.fiftyFifty,
-        WildcardType.audience,
-      ],
-      WildcardType.doubleAnswer,
+      if (_supportsEliminationWildcards) WildcardType.fiftyFifty,
+      if (_supportsOptionWildcards) WildcardType.audience,
+      if (_supportsEliminationWildcards) WildcardType.doubleAnswer,
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
     return Column(
@@ -653,6 +654,29 @@ extension _QuizScreenUI on _QuizScreenState {
       question.type != QuestionType.fillInBlank &&
       question.type != QuestionType.wordOrdering;
 
+  /// Şık ELEYEN jokerler için ek koşul: en az dört şık.
+  ///
+  /// ## Kusur
+  ///
+  /// 50/50 iki yanlışı gizler. İki şıklı bir doğru/yanlış sorusunda tek bir
+  /// yanlış vardır; `take(2)` onu gizler ve geriye YALNIZ doğru cevap kalır.
+  /// Oyuncu 20 jeton ödeyip cevabın kendisini satın alıyordu.
+  ///
+  /// Çift cevap aynı kapıdan geçiyordu ve orada daha da kötüydü: iki şıklı
+  /// bir soruda iki kez cevaplama hakkı kazanmayı GARANTİ eder — 50 jeton
+  /// karşılığında kesin puan.
+  ///
+  /// Banka doğru/yanlış sorularıyla dolu; ikisi de kuramsal değil.
+  ///
+  /// Sessizdi çünkü kapı soru TÜRÜNE bakıyordu (`fillInBlank` ve
+  /// `wordOrdering` dışarıda) ve doğru/yanlış da şıklı bir türdür. Eleme
+  /// jokerlerini anlamlı kılan şey tür değil, ŞIK SAYISIdır (2026-08-12).
+  ///
+  /// Seyirci jokeri bu kapıdan geçmez: iki şıkta da dürüst bir dağılım
+  /// gösterir, cevabı ele vermez.
+  bool get _supportsEliminationWildcards =>
+      _supportsOptionWildcards && question.answers.length >= 4;
+
   Future<void> _trackWildcardMission() async {
     final store = await DailyMissionStore.load();
     final completed = await store.reportWildcardUsed();
@@ -684,7 +708,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _useFiftyFifty() {
     final cost = WildcardType.fiftyFifty.coinCost;
-    if (!_supportsOptionWildcards ||
+    if (!_supportsEliminationWildcards ||
         _wildcard.fiftyFiftyUsed ||
         _coinBalance < cost ||
         answered) {
@@ -768,7 +792,8 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _activateDoubleAnswer() {
     final cost = WildcardType.doubleAnswer.coinCost;
-    if (_wildcard.doubleAnswerActivated ||
+    if (!_supportsEliminationWildcards ||
+        _wildcard.doubleAnswerActivated ||
         _coinBalance < cost ||
         answered ||
         _firstAttemptAnswer.isNotEmpty) {
