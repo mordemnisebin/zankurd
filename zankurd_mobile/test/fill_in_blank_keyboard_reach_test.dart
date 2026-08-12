@@ -52,9 +52,52 @@ void main() {
     );
   });
 
+  /// Soru, katlanan ünlünün KENDİSİNİ adıyla anıyor mu?
+  ///
+  /// «"û" ünlüsünü içeren sözcüğü doğru yaz» diyen bir soruda `sud`u kabul
+  /// etmek, sorunun yasakladığı yazımı doğru saymaktır: oyuncu soruyu tam
+  /// olarak yanlış yaparak geçer. Klavye kolaylığı burada kolaylık değil,
+  /// sorunun iptalidir.
+  bool asksForTheVowelItself(QuizQuestion q) {
+    final text = '${q.prompt} ${q.promptTr ?? ''}';
+    return unreachable.keys
+        .where(q.correctAnswer.contains)
+        .any((vowel) => text.contains('«$vowel»') || text.contains('"$vowel"'));
+  }
+
+  test('yazımı SORAN sorularda kolaylık varyantı yok', () {
+    // Bu iki soru («sûd», «lêv») 2026-08-12'de tam bu yüzden varyantını
+    // kaybetti: ikisi de "şu ünlüyü içeren sözcüğü doğru yaz" diyor.
+    final offenders = <String>[];
+    for (final q in blanks) {
+      if (!asksForTheVowelItself(q)) continue;
+      if (q.acceptedAnswers.isNotEmpty) {
+        offenders.add(
+          '${q.id}: soru «${q.correctAnswer}» yazımını sınıyor ama '
+          '${q.acceptedAnswers} kabul ediliyor',
+        );
+      }
+      final typed = toTurkishKeyboard(q.correctAnswer);
+      if (typed != q.correctAnswer && q.acceptsAnswer(typed)) {
+        offenders.add(
+          '${q.id}: «$typed» kabul ediliyor — soru bunu yasaklıyor',
+        );
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'Bu sorularda kolaylık varyantı sorunun yerine geçiyor; oyuncu '
+          'soruyu yanlış yaparak geçer:\n${offenders.join("\n")}',
+    );
+  });
+
   test('inceltmeli cevabın klavyeyle yazılabilir hâli kabul ediliyor', () {
     final offenders = <String>[];
     for (final q in blanks) {
+      // Yazımı SORAN sorular dışarıda: onlarda varyant sorunun iptalidir.
+      if (asksForTheVowelItself(q)) continue;
       final typed = toTurkishKeyboard(q.correctAnswer);
       if (typed == q.correctAnswer) continue;
       if (!q.acceptsAnswer(typed)) {
@@ -79,6 +122,7 @@ void main() {
     // görür. Yani varyantı tek dile yazmak, çeviriyi SESSİZCE düşürür.
     final offenders = <String>[];
     for (final q in blanks) {
+      if (asksForTheVowelItself(q)) continue;
       final typed = toTurkishKeyboard(q.correctAnswer);
       if (typed == q.correctAnswer) continue;
       if (!q.localized(isKu: false).acceptsAnswer(typed)) {
