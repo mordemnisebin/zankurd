@@ -1768,6 +1768,40 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  @override
+  Future<int> awardXp(int delta) async {
+    if (delta <= 0) return 0;
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      if (currentUserId?.trim() != user.id) return 0;
+      final response = await client.rpc<dynamic>(
+        'award_xp_delta',
+        params: {'p_delta': delta},
+      );
+      if (response is int) return response;
+      if (response is num) return response.toInt();
+      return 0;
+    } on PostgrestException catch (error, stack) {
+      // Göç uygulanmamışsa fonksiyon yoktur (42883). Bu bir arıza değil:
+      // XP'nin cihazdaki hâli zaten yazıldı, sunucu tarafı sessizce
+      // beklemeye devam eder.
+      _recordError(
+        error,
+        stack,
+        reason: error.code == '42883'
+            ? 'award_xp_delta missing — migration not applied yet'
+            : 'award_xp_delta failed',
+      );
+      return 0;
+    } catch (error, stack) {
+      // Ödül yolu OYUNCUYU BEKLETMEZ ve turu düşürmez: sunucuya XP
+      // yazılamaması, tamamlanmış bir turu geçersiz kılmaz.
+      _recordError(error, stack, reason: 'award_xp_delta failed');
+      return 0;
+    }
+  }
+
   void _recordError(Object error, StackTrace stack, {String? reason}) {
     ErrorReporter.record(error, stack, reason: reason);
   }

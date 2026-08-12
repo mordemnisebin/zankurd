@@ -640,6 +640,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final xpStore = await XPStore.load();
     final leveledUp = await xpStore.addXP(earnedXP);
 
+    // Aynı XP sunucuya da bildirilir. Cihazdaki `XPStore` seviyeyi ve
+    // ilerleme çubuğunu besler; `profiles.xp` ise sıralamanın, toplam puanın
+    // ve lig rozetinin kaynağıdır. İkincisine hiç yazılmıyordu: RPC
+    // 2026-07-25'te yazıldı ve hiçbir istemci kodu onu çağırmadı, dolayısıyla
+    // üretimde her oyuncunun toplam puanı sıfırdı ve profil «Sıralama» ile
+    // «Toplam Puan» yerine kalıcı olarak «—» gösteriyordu.
+    //
+    // BEKLENMEZ: miktar cihazda zaten yazıldı, sunucu yazımı en iyi çabadır
+    // ve sonucu ekranın akışını durdurmamalı. Miktarı sunucu sınırlar.
+    unawaited(repository.awardXp(earnedXP));
+
     // Doğru anda (yeterli quiz + iyi skor) bir kez mağaza değerlendirmesi iste.
     final accuracyPercent = totalQuestions == 0
         ? 0

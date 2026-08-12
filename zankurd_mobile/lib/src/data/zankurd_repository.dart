@@ -220,6 +220,28 @@ abstract class ZanKurdRepository {
     GameRoom? room,
   });
 
+  /// Kazanılan XP'yi SUNUCUYA bildirir ve sunucudaki güncel toplamı döner.
+  ///
+  /// ## Niçin var
+  ///
+  /// XP iki yerde yaşıyordu ve yalnız biri gerçekti. Cihazdaki `XPStore`
+  /// seviye ve ilerleme çubuğunu besliyordu; `profiles.xp` ise sıralamanın,
+  /// toplam puanın ve lig rozetinin kaynağı. İkincisine hiçbir zaman
+  /// yazılmadı: `award_xp_delta` RPC'si 2026-07-25'te yazıldı, iki test
+  /// SQL dosyasında VARLIĞINI doğruladı ve hiçbir istemci kodu onu çağırmadı.
+  ///
+  /// Ölçüldü (2026-08-12, üretim yedeğinin yerel klonu): 21 profilin
+  /// hiçbirinde `xp > 0` yok. Yani `get_leaderboard`ın `total_score`u herkes
+  /// için sıfır, profil ekranındaki «Sıralama» ve «Toplam Puan» her oyuncuda
+  /// «—», lig rozeti hiç açılmıyor. Sıralama özelliğinin verisi yoktu.
+  ///
+  /// Miktarı sunucu belirler: RPC çağrı başına 2000, günde 20000 ile
+  /// sınırlar. İstemci yalnız bildirir.
+  ///
+  /// Bu çağrı oyuncuyu BEKLETMEZ ve hata fırlatmaz: XP'nin cihazdaki hâli
+  /// zaten yazılmıştır, sunucu yazımı en iyi çabadır.
+  Future<int> awardXp(int delta);
+
   /// Oyuncunun görsel kimliğini (avatar/çerçeve/unvan) yükler.
   Future<AvatarIdentity> loadAvatarIdentity();
 

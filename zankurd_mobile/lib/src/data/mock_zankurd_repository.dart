@@ -616,6 +616,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return _mockExtraSpins > _mockUsedExtraSpins;
   }
 
+  /// Sahte depoda sunucu XP'si tutulmaz; yalnız çağrının yapıldığı görülür.
+  int awardedXpTotal = 0;
+
+  @override
+  Future<int> awardXp(int delta) async {
+    if (delta <= 0) return awardedXpTotal;
+    awardedXpTotal += delta;
+    return awardedXpTotal;
+  }
+
   @override
   Future<int> awardSpinCoins() async {
     const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
