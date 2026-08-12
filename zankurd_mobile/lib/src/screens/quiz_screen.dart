@@ -2437,8 +2437,24 @@ class _QuizScreenState extends State<QuizScreen>
     required int totalQuestions,
   }) async {
     _rewardQueued = false;
+    // Alıştırma turu bilerek ödülsüz: aynı sorular tekrar çözülüyor.
     if (widget.practice) return 0;
-    if (widget.room.id == null) return 0;
+    // Burada bir zamanlar `if (widget.room.id == null) return 0;` duruyordu
+    // ve solo turu ödül yolundan tamamen çıkarıyordu.
+    //
+    // Kapı, sunucunun odasız turu ödüllendiremediği dönemde doğruydu:
+    // `claim_quiz_reward` `p_room_id is null` gördüğünde `verification_
+    // required` dönüyordu, yani çağrı boşunaydı. 2026-08-10'da solo tur için
+    // ayrı bir RPC yazıldı (`claim_solo_reward`) ve depo odasız çağrıyı ona
+    // yönlendirmeye başladı — ama BU kapı yerinde kaldı. Sonuç: yeni RPC
+    // istemciden hiç çağrılmadı; ölü koda göç yazılmıştı.
+    //
+    // Sessizdi çünkü kapının `_settleCoins` içinde bir ikizi vardı; oradaki
+    // kaldırılınca sorun çözülmüş göründü ve solo ödülü uçtan uca kuran bir
+    // test yoktu (2026-08-12 denetimi).
+    //
+    // Göç uygulanmamışken de güvenli: depo `42883`ü yakalar, sıfır döner ve
+    // kuyruğa hiçbir şey koymaz.
     final settlement = await _settleCoins(
       score: score,
       correctCount: correctCount,
