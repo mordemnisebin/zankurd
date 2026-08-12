@@ -128,7 +128,17 @@ void main() {
     // fiyatlarla upsert eder ve ikisi de kendini "yeniden çalıştırma
     // güvenli" ilan eder. 2026-08-12'de yerelde ölçüldü: çıpadan sonra
     // 07-23'ü yeniden koşmak 120/480'i tek komutla 200/750 yaptı ve hiçbir
-    // uyarı vermedi. İkisine de, çıpa uygulanmışsa duran bir blok kondu.
+    // uyarı vermedi.
+    //
+    // İlk çözüm o dosyaları tümden durduran bir `raise exception` bloğuydu.
+    // O çözüm YANLIŞTI ve ikinci bir kusur üretti: `2026-07-13` yalnız
+    // katalogu değil `room_messages` ve `suggested_questions` tablolarını da
+    // kurar, üstelik onları INSERT'ten SONRA kurar. Durdurma, o iki tabloyu
+    // yeniden kurma yolunu da kapatıyordu — fiyatı korumak için başka bir
+    // şeyi kırmak.
+    //
+    // Doğru çözüm dar olanı: `cost` çakışma güncellemesinden çıkarıldı.
+    // Dosyalar hâlâ koşar ve metni eşitler; fiyata dokunamazlar.
     for (final path in const [
       'supabase/2026-07-13_shop_chat_suggestions.sql',
       'supabase/2026-07-23_shop_items_sync.sql',
@@ -136,17 +146,31 @@ void main() {
       final superseded = File(path);
       expect(superseded.existsSync(), isTrue, reason: '$path bulunamadı');
       final body = superseded.readAsStringSync();
+
+      final conflictClause = RegExp(
+        r'ON CONFLICT \(id\) DO UPDATE SET(.*?);',
+        dotAll: true,
+        caseSensitive: false,
+      ).firstMatch(body);
       expect(
-        body,
-        contains('shop_items_spin_wheel_above_wheel_max'),
+        conflictClause,
+        isNotNull,
+        reason: '$path içindeki upsert biçimi değişmiş; bekçi kör kaldı.',
+      );
+      expect(
+        conflictClause!.group(1),
+        isNot(contains('cost')),
         reason:
-            '$path çıpayı sessizce geri alabilir: duran blok kaldırılmış. '
-            'Bu dosya fiyat sütunu taşıdığı sürece o blok orada kalmalı.',
+            '$path çakışmada `cost` güncelliyor. Bu dosya çıpadan ÖNCE '
+            'yazıldı ve eski fiyatları taşıyor; yeniden koşulduğunda '
+            'ölçülerek belirlenmiş fiyatları sessizce geri alır.',
       );
       expect(
         body,
-        contains('RAISE EXCEPTION'),
-        reason: '$path içindeki blok artık hata fırlatmıyor.',
+        isNot(contains('RAISE EXCEPTION')),
+        reason:
+            '$path yeniden durdurulmuş. Durdurma, dosyanın fiyat DIŞINDAKİ '
+            'işlerini de engeller; koruma dar olmalı.',
       );
     }
   });
