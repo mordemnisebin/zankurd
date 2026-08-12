@@ -563,6 +563,19 @@ class AppIcons {
     fontFamily: 'FontAwesomeRegular',
     fontPackage: 'font_awesome_flutter',
   );
+
+  /// [star]'ın DOLU biçimi. Aynı kod noktası, farklı aile.
+  ///
+  /// Puanlama yıldızı "kazanıldı / kazanılmadı" ayrımını doluluktan okutur.
+  /// İki durumu da [star] ile çizmek o ayrımı yalnız renge indirger ve
+  /// mor kahraman zemininde altın kontur "boş yıldız" gibi okunur: %100
+  /// doğru bir tur üç boş yıldızla kutlanıyordu (2026-08-12 simülatör
+  /// turu). Kazanılan yıldız dolu, kazanılmayan kontur çizilir.
+  static const IconData starSolid = IconData(
+    0xf005,
+    fontFamily: 'FontAwesomeSolid',
+    fontPackage: 'font_awesome_flutter',
+  );
   static const IconData stopwatch = IconData(
     0xf2f2,
     fontFamily: 'FontAwesomeSolid',

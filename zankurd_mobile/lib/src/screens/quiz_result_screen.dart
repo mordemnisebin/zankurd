@@ -1146,20 +1146,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       for (var i = 0; i < 3; i++)
-                                        Icon(
-                                          AppIcons.star,
-                                          size: i == 1 ? 30 : 22,
-                                          color:
+                                        _ScoreStar(
+                                          // Doluluk, rengin yanında ikinci
+                                          // ve daha güçlü bir işarettir:
+                                          // renk körü bir oyuncu için tek
+                                          // ayırt edici olan da odur.
+                                          earned:
                                               i <
-                                                  (accuracy >= 80
-                                                      ? 3
-                                                      : accuracy >= 50
-                                                      ? 2
-                                                      : 1)
-                                              ? AppTheme.gold
-                                              : Colors.white.withValues(
-                                                  alpha: 0.32,
-                                                ),
+                                              (accuracy >= 80
+                                                  ? 3
+                                                  : accuracy >= 50
+                                                  ? 2
+                                                  : 1),
+                                          size: i == 1 ? 30 : 22,
                                         ),
                                     ],
                                   ),
@@ -1843,6 +1842,36 @@ class _MasteryPromotions extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// Sonuç kahramanındaki üç puan yıldızından biri.
+///
+/// ## Kusur
+///
+/// Kazanılan ve kazanılmayan yıldız aynı KONTUR glifiyle çiziliyordu
+/// (`AppIcons.star` → FontAwesome **Regular**); ikisini yalnız renk
+/// ayırıyordu. Mor kahraman zemininde altın bir kontur "boş yıldız" gibi
+/// okunuyor ve 5/5 doğru bir tur üç boş yıldızla kutlanıyordu — turun en
+/// güçlü ödül anı, hiçbir şey kazanılmamış gibi görünüyordu (2026-08-12
+/// simülatör turu, iPhone SE).
+///
+/// Sessizdi çünkü mantık doğruydu: %80 üstü zaten 3 yıldız hesaplıyordu.
+/// Kusur hesapta değil, o hesabı taşıyan glifteydi ve hiçbir test bir
+/// ikonun dolu mu boş mu çizildiğine bakmıyordu.
+class _ScoreStar extends StatelessWidget {
+  const _ScoreStar({required this.earned, required this.size});
+
+  final bool earned;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      earned ? AppIcons.starSolid : AppIcons.star,
+      size: size,
+      color: earned ? AppTheme.gold : Colors.white.withValues(alpha: 0.32),
     );
   }
 }
