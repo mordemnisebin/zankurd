@@ -80,6 +80,30 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
     widget.onAnswerSubmitted(_controller.text.trim());
   }
 
+  /// İmleç neredeyse oraya bir harf yazar ve imleci harften sonraya taşır.
+  ///
+  /// Seçili bir aralık varsa onun yerine geçer; böylece harf düğmesi
+  /// klavyedeki bir tuştan ayırt edilemez davranır.
+  void _insert(String letter) {
+    if (widget.disabled) return;
+    final value = _controller.value;
+    final selection = value.selection.isValid
+        ? value.selection
+        : TextSelection.collapsed(offset: value.text.length);
+    final text = value.text.replaceRange(
+      selection.start,
+      selection.end,
+      letter,
+    );
+    _controller.value = value.copyWith(
+      text: text,
+      selection: TextSelection.collapsed(
+        offset: selection.start + letter.length,
+      ),
+      composing: TextRange.empty,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isKu = LangContext(context).isKu;
@@ -120,6 +144,8 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
           ),
         ),
         if (!widget.disabled) ...[
+          const SizedBox(height: AppSpacing.sm),
+          _DiacriticRow(onInsert: _insert),
           const SizedBox(height: AppSpacing.md),
           FilledButton(
             key: const ValueKey('fill-in-blank-submit'),
@@ -180,6 +206,55 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
             ),
           ),
         ],
+      ],
+    );
+  }
+}
+
+/// Türkçe klavyede bulunmayan üç Kurmancî sesliyi girişe ekleyen sıra.
+///
+/// Kabul listesi (`acceptedAnswers`) `miroveki` yazanı doğru sayar ama
+/// oyuncuya doğru YAZIMI hiç göstermez. Bu sıra tersini yapar: harf bir
+/// dokunuş uzağa gelir, oyuncu `mirovekî` yazar ve kanonik biçimi bir kez
+/// daha görür. İkisi birlikte çalışır — biri hakkı teslim eder, öteki öğretir.
+///
+/// `ş` ve `ç` bilerek yok: Türkçe klavyede ikisi de var, sıraya eklemek
+/// gerçekten eksik olan üçünü seyreltirdi.
+class _DiacriticRow extends StatelessWidget {
+  const _DiacriticRow({required this.onInsert});
+
+  static const letters = ['î', 'ê', 'û'];
+
+  final ValueChanged<String> onInsert;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        for (final letter in letters)
+          Padding(
+            padding: const EdgeInsets.only(right: AppSpacing.xs),
+            child: OutlinedButton(
+              key: ValueKey('fill-in-blank-diacritic-$letter'),
+              onPressed: () => onInsert(letter),
+              style: OutlinedButton.styleFrom(
+                // 44pt, dokunma hedefi için en küçük saygılı ölçü.
+                minimumSize: const Size(44, 44),
+                padding: EdgeInsets.zero,
+                foregroundColor: AppTheme.textPrimaryColor(context),
+                side: BorderSide(color: AppTheme.borderColor(context)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+              ),
+              child: Text(
+                letter,
+                style: AppTypography.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
