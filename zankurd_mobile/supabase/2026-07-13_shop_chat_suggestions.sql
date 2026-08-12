@@ -26,6 +26,25 @@ CREATE POLICY "shop_items_read" ON shop_items FOR SELECT USING (true);
 -- Statik yedek listedeki (shop_screen.dart _items) 10 ürünle birebir
 -- aynı id/başlık/açıklama/fiyat/ikon/renk — dinamik ve yedek liste aynı
 -- görünsün diye. id çakışırsa güncellenir (yeniden çalıştırma güvenli).
+--
+-- ⚠ FİYATLAR AÇISINDAN AŞILDI — bkz. `2026-08-12_shop_price_anchor.sql`.
+-- Yukarıdaki "yeniden çalıştırma güvenli" cümlesi yalnız ŞEMA için doğru:
+-- aşağıdaki upsert `spin_wheel_extra`yı 200'e, `profile_badge_vip`i 1000'e
+-- geri yazar ve bunu sessizce yapar. Aşağıdaki blok, çıpa uygulanmışsa
+-- dosyayı durdurur; sıfırdan kurulan zincirde kısıt henüz olmadığı için
+-- bootstrap etkilenmez.
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'shop_items_spin_wheel_above_wheel_max'
+  ) THEN
+    RAISE EXCEPTION
+      'Bu göç fiyatlar açısından aşıldı: 2026-08-12_shop_price_anchor.sql '
+      'zaten uygulanmış. Yeniden çalıştırmak fiyatları eskiye döndürürdü.';
+  END IF;
+END $$;
+
 INSERT INTO shop_items (id, title_ku, title_tr, desc_ku, desc_tr, cost, icon_name, theme_color)
 VALUES
   ('joker_bundle', 'Paketa Jokeran', 'Joker Paketi',

@@ -17,8 +17,8 @@ import '../widgets/screen_identity_header.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
-/// `shopShopItem.catalog` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
-/// Statik yedek listedeki (`ShopItem.ShopItem.catalog`) her ikon burada da
+/// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
+/// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
 /// tanımlı olmalı — aksi halde canlı katalog jenerik çanta ikonuna düşer.
 ///
 /// Map tabanlı arama kasıtlı: bir switch-expression'la yazıldığında web
@@ -54,7 +54,7 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   return identity;
 }
 
-/// `shopShopItem.catalog` tablosundaki `theme_color` (ör. "FF3B81") sütununu
+/// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
 /// [Color]'a çevirir.
 Color shopColorForHex(String? hex) {
   if (hex == null) return AppTheme.accent;
@@ -250,7 +250,22 @@ class _ShopScreenState extends State<ShopScreen> {
           final client =
               (widget.repository as SupabaseZanKurdRepository).client;
           final rows = await client
-              .from('shopShopItem.catalog')
+              // Tablo adı `shop_items`.
+              //
+              // Burada bir zamanlar `shopShopItem.catalog` yazıyordu: bir
+              // toplu isim değiştirmenin `shop_items` dizesini de yakalayıp
+              // bozduğu bir kalıntı. PostgREST böyle bir tabloyu hiçbir
+              // zaman bulamadı, sorgu her açılışta hata verdi ve ekran
+              // sessizce statik yedek listeye düştü. Yani "uzaktan
+              // güncellenebilir katalog" özelliği hiç çalışmadı ve bunu
+              // yalnız hata günlüğü biliyordu (2026-08-12 denetimi).
+              //
+              // DİKKAT: bu düzeltme, uzak tablonun fiyatlarını yeniden
+              // devreye sokar. `shop_items` üretimde 2026-07-13 tohumundaki
+              // ESKİ fiyatları taşıyor; `2026-08-12_shop_price_anchor.sql`
+              // uygulanmadan bu sürüm yayınlanırsa fiyat çıpası
+              // (`ShopItem.catalog`) sessizce eskiye döner.
+              .from('shop_items')
               .select()
               .order('cost');
           if (rows.isNotEmpty) {

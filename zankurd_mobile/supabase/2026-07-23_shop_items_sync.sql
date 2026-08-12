@@ -13,7 +13,31 @@
 -- 3 değişiklik dahil: avatar_frame_neon, joker_pack_3, profile_badge_vip.
 --
 -- Çalıştırma: Supabase SQL Editor'de bu dosyayı olduğu gibi yapıştırıp çalıştır.
--- Tekrar çalıştırmak güvenli (ON CONFLICT DO UPDATE, id sabit).
+--
+-- ⚠ FİYATLAR AÇISINDAN AŞILDI — bkz. `2026-08-12_shop_price_anchor.sql`.
+--
+-- "Tekrar çalıştırmak güvenli" cümlesi yalnız ŞEMA için doğruydu. Aşağıdaki
+-- upsert dört ürünü ESKİ fiyatlarıyla (200/600/750/1000) yeniden yazar; çıpa
+-- göçünden sonra yeniden koşulursa ölçülerek belirlenmiş fiyatlar SESSİZCE
+-- geri alınır — upsert başarıyla döner, hiçbir uyarı çıkmaz, vitrin eskiye
+-- döner. 2026-08-12'de yerelde ölçüldü: 120/480 tek komutla 200/750 oldu.
+--
+-- Aşağıdaki blok o sessizliği gürültüye çevirir. Çıpa göçünün bıraktığı kısıt
+-- varsa bu dosya çalışmayı reddeder. Sıfırdan kurulan bir zincirde kısıt
+-- henüz yoktur (bu dosya çıpadan ÖNCE koşar), dolayısıyla bootstrap bozulmaz.
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'shop_items_spin_wheel_above_wheel_max'
+  ) THEN
+    RAISE EXCEPTION
+      'Bu göç fiyatlar açısından aşıldı: 2026-08-12_shop_price_anchor.sql '
+      'zaten uygulanmış. Yeniden çalıştırmak fiyatları eski değerlerine '
+      'döndürürdü. Katalog METNİNİ güncellemek istiyorsan önce bu dosyadaki '
+      'cost sütunlarını çıpayla eşitle, sonra yeniden dene.';
+  END IF;
+END $$;
 
 INSERT INTO shop_items (id, title_ku, title_tr, desc_ku, desc_tr, cost, icon_name, theme_color)
 VALUES
