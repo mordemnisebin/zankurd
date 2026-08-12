@@ -919,7 +919,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
       );
-      if (mounted) _handleRefreshSignal();
+      // Buradaki tazeleme bilerek KALDIRILDI.
+      //
+      // `await push(QuizScreen)`, quiz ekranı sonucu `pushReplacement` ile
+      // açtığı anda tamamlanır — yani bu satır, oyuncu daha sonuç
+      // ekranındayken ve ödüller yazılmadan önce koşuyordu. Faydası yoktu,
+      // zararı vardı: kabuk gerçek dönüşte (`didPopNext`) zaten tazeliyor,
+      // dolayısıyla her ders turu ana ekranı iki kez yüklüyordu — biri
+      // erken ve yanlış, biri doğru.
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home daily quiz');
     } finally {

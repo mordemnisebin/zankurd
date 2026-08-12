@@ -35,6 +35,7 @@ import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
@@ -1334,10 +1335,27 @@ class _QuizScreenState extends State<QuizScreen>
         if (_timerController.isAnimating) {
           _timerController.stop();
           _questionStopwatch.stop();
+          _timerPausedByLifecycle = true;
         }
       case AppLifecycleState.resumed:
         // Süre baştan başlamaz; kaldığı yerden akar.
-        if (!_timerController.isAnimating && _timerController.value > 0) {
+        //
+        // Koşul YALNIZCA "biz durdurduysak" olmalı. Eskiden
+        // `!isAnimating && value > 0` yeterdi ve bu, HİÇ BAŞLAMAMIŞ bir
+        // sayacı da geçiriyordu: `AnimationController` 1.0 değeriyle
+        // kurulur, yani soru henüz açılmamışken de `value > 0` doğrudur.
+        // Soru açılışı beklemek zorunda kalabilir — görsel yüklenene kadar
+        // akış kapıda durur ve ilk turda rehber örtüsü okunur. O pencerede
+        // uygulamayı arka plana atıp dönen oyuncunun sayacı, soru daha
+        // ekranda yokken işlemeye başlıyordu; yavaş bir görselde soru hiç
+        // görülmeden süresi dolabiliyordu (2026-08-12 denetimi).
+        final resume = shouldResumeQuestionTimer(
+          pausedByLifecycle: _timerPausedByLifecycle,
+          isAnimating: _timerController.isAnimating,
+          timerValue: _timerController.value,
+        );
+        _timerPausedByLifecycle = false;
+        if (resume) {
           _timerController.reverse();
           _questionStopwatch.start();
         }
@@ -2335,6 +2353,13 @@ class _QuizScreenState extends State<QuizScreen>
   /// sunucu hesaplar (2026-07-26).
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
+
+  /// Sayacı UYGULAMA ARKA PLANA GİTTİĞİ için biz mi durdurduk?
+  ///
+  /// Dönüşte yalnız kendi durdurduğumuzu sürdürürüz. "Duruyor ve değeri
+  /// sıfırdan büyük" ölçütü yetmez: `AnimationController` 1.0 ile kurulur,
+  /// yani hiç başlamamış bir sayaç da o ölçütü geçer.
+  bool _timerPausedByLifecycle = false;
 
   Future<_QuizCoinSettlement> _settleCoins({
     required int score,
