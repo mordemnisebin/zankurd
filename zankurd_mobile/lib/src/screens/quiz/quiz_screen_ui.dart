@@ -285,7 +285,11 @@ extension _QuizScreenUI on _QuizScreenState {
       child: Tooltip(
         message: context.t(K.progressLegendShort),
         child: Row(
-          key: const ValueKey('quiz-wildcard-row'),
+          // Bu satır İLERLEME ÇUBUĞU. Anahtarı bir zamanlar
+          // `quiz-wildcard-row`du ve iki test onunla "joker satırı ekranda"
+          // diye iddia ediyordu; ilerleme çubuğu her zaman ekranda olduğu
+          // için o iki iddia hiçbir şey korumuyordu (2026-08-12 denetimi).
+          key: const ValueKey('quiz-progress-bar'),
           children: [
             for (var i = 0; i < total; i++) ...[
               Expanded(
@@ -551,6 +555,7 @@ extension _QuizScreenUI on _QuizScreenState {
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
     return Column(
+      key: const ValueKey('quiz-wildcard-row'),
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
@@ -875,6 +880,18 @@ extension _QuizScreenUI on _QuizScreenState {
       _audiencePoll = null;
       favorite = false;
       _favoriteTouched = false;
+      // İlk deneme ATILAN soruya aitti; yeni soruya taşınamaz.
+      //
+      // Taşındığında Çift Cevap hakkı sessizce yanıyordu: oyuncu 50 jeton
+      // ödeyip iki cevap hakkı alıyor, ilkini yanlış kullanıyor (bu aşamada
+      // `answered` hâlâ yanlıştır, o yüzden soru değiştirme açıktır), 40
+      // jetonla soruyu değiştiriyor ve yeni soruda İLK dokunuşu ikinci
+      // deneme sayılıyordu — tek şansı kalıyordu. Ödediği iki hakkın biri,
+      // artık görmediği bir soruda harcanmış oluyordu (2026-08-12 denetimi).
+      //
+      // `doubleAnswerActivated` bilerek korunuyor: hak duruyor, yalnız o
+      // hakkın atılan soruda kullanılmış YARISI siliniyor.
+      _firstAttemptAnswer = '';
     });
     _markQuestionSeen();
     _loadFavoriteState();

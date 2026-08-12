@@ -101,6 +101,11 @@ class _AppShellState extends State<AppShell>
   final GlobalKey _playNavKey = GlobalKey();
   final GlobalKey _profileNavKey = GlobalKey();
   final ValueNotifier<int> _homeRefresh = ValueNotifier<int>(0);
+
+  /// Sekme tazelemesini SAYFA geçişlerine bağlayan dinleyici.
+  late final _TabRefreshRouteAware _tabRefreshAware = _TabRefreshRouteAware(
+    onReturnedToShell: _refreshVisibleTab,
+  );
   final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
@@ -149,9 +154,21 @@ class _AppShellState extends State<AppShell>
     final route = ModalRoute.of<dynamic>(context);
     if (identical(route, _shellRoute)) return;
     final previous = _shellRoute;
-    if (previous != null) appRouteObserver.unsubscribe(this);
+    if (previous != null) {
+      appRouteObserver.unsubscribe(this);
+      appPageRouteObserver.unsubscribe(_tabRefreshAware);
+    }
     _shellRoute = route;
-    if (route != null) appRouteObserver.subscribe(this, route);
+    if (route != null) {
+      appRouteObserver.subscribe(this, route);
+      // Sekme tazelemesi AYRI bir dinleyiciye ve YALNIZ sayfa gözlemcisine
+      // bağlı. Kabuğun kendisini ikinci gözlemciye de abone etmek olmazdı:
+      // her gözlemci kendi dinleyici tablosunu tutar, sayfadan her dönüşte
+      // `didPopNext` iki kez çalışır ve tur dönüşü iki tazeleme yapardı.
+      if (route is PageRoute<dynamic>) {
+        appPageRouteObserver.subscribe(_tabRefreshAware, route);
+      }
+    }
   }
 
   Future<void> _initConnectivity() async {
@@ -245,8 +262,13 @@ class _AppShellState extends State<AppShell>
 
   @override
   void didPopNext() {
-    // Kabuğun üstüne itilmiş bir ekrandan (tur, sonuç, mağaza…) DÖNÜLDÜ.
-    // Görünen sekme burada tazelenir.
+    // Kabuğun üstüne itilmiş HERHANGİ bir rotadan dönüldü — diyalog ve alt
+    // sayfa dâhil. Burada yalnız oda devamı uyandırılır.
+    //
+    // Sekme tazelemesi bilerek burada DEĞİL: bu geri çağrı açılır pencereler
+    // için de çalışır ve tazelemeyi buraya koymak, iptal edilen bir
+    // diyalogdan sonra profil ekranını iskelete döndürüyordu. Tazeleme
+    // `_TabRefreshRouteAware` içinde ve yalnız sayfa geçişlerinde.
     //
     // ## Kusur
     //
@@ -263,7 +285,6 @@ class _AppShellState extends State<AppShell>
     // Sessizdi çünkü tazeleme kodu VARDI ve doğru görünüyordu; yanlış olan
     // çağrılma ANIydı ve hiçbir test iki rotalı (quiz → sonuç) dönüşü
     // kurmuyordu.
-    _refreshVisibleTab();
     final owned = _ownedRoomResumeRoute;
     if (owned != null) {
       _ownedRoomResumeRoute = null;
@@ -278,6 +299,7 @@ class _AppShellState extends State<AppShell>
   @override
   void dispose() {
     appRouteObserver.unsubscribe(this);
+    appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
@@ -906,4 +928,19 @@ class _AppShellState extends State<AppShell>
     final normalized = userId?.trim();
     return normalized == null || normalized.isEmpty ? null : normalized;
   }
+}
+
+/// Kabuğa SAYFA geçişiyle dönüldüğünü bildiren küçük dinleyici.
+///
+/// Ayrı bir nesne olması şart. Kabuk durumu iki gözlemciye birden abone
+/// olsaydı her gözlemci kendi dinleyici tablosunu tuttuğu için `didPopNext`
+/// sayfadan her dönüşte iki kez çalışır, yani tur dönüşü iki tazeleme
+/// yapardı.
+class _TabRefreshRouteAware extends RouteAware {
+  _TabRefreshRouteAware({required this.onReturnedToShell});
+
+  final VoidCallback onReturnedToShell;
+
+  @override
+  void didPopNext() => onReturnedToShell();
 }

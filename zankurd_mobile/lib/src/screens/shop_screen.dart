@@ -56,10 +56,22 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
 
 /// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
 /// [Color]'a çevirir.
+/// Uzunluk denetimi `try/catch`ten ÖNCE gelir ve şart.
+///
+/// `int.parse('FF' + clean, radix: 16)` eksik bir hex için hata ATMAZ,
+/// sessizce yanlış bir sayı üretir: boş dize `0xFF` yani
+/// `Color(0x000000FF)` verir — alfası sıfır, tamamen saydam. Üç haneli
+/// `FFF` de `0x000FFFFF` verir, yine saydam. Yani `catch` bloğu bu
+/// durumların hiçbirinde çalışmıyordu ve uzak katalogdaki kısa ya da boş
+/// bir `theme_color`, vitrinde görünmez bir karo tonu üretiyordu.
+///
+/// Mevcut test bunu göremiyordu: yalnız `isNotNull` denetliyordu ve saydam
+/// bir renk de null değildir (2026-08-12 denetimi).
 Color shopColorForHex(String? hex) {
   if (hex == null) return AppTheme.accent;
+  final cleanHex = hex.replaceAll('#', '').trim();
+  if (!RegExp(r'^[0-9a-fA-F]{6}$').hasMatch(cleanHex)) return AppTheme.accent;
   try {
-    final cleanHex = hex.replaceAll('#', '');
     return Color(int.parse('FF$cleanHex', radix: 16));
   } catch (_) {
     return AppTheme.accent;

@@ -116,7 +116,7 @@ Widget testShell({
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: theme.mode,
-        navigatorObservers: [appRouteObserver],
+        navigatorObservers: [appRouteObserver, appPageRouteObserver],
         home: child,
       ),
     ),

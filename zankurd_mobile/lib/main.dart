@@ -414,7 +414,7 @@ class ZanKurdApp extends StatelessWidget {
           themeMode: themeProvider.mode,
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
-          navigatorObservers: [appRouteObserver],
+          navigatorObservers: [appRouteObserver, appPageRouteObserver],
           home: SplashScreen(
             // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
             // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
