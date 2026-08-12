@@ -205,8 +205,20 @@ class _QuestionImage extends StatelessWidget {
             },
           );
 
+    // Dar ekranda görsel için ayrılan tavan.
+    //
+    // Eskiden `%15 → en çok 100pt`ti ve iPhone SE'de (667pt) tam 100'e
+    // oturuyordu. Ölçüldüğünde (2026-08-12, SE) aynı ekranda soru kartının
+    // ALTINDA ~110pt kullanılmayan boşluk duruyordu: düzen, harcamadığı
+    // yeri kısmak için görseli aç bırakıyordu. Bedeli somuttu — «kelaş»
+    // sorusu ayakkabıyı sorar, görselde ayakkabı 90pt'lik bir karede
+    // seçilemez; görselin sorunun KENDİSİ olduğu sorularda soru
+    // cevaplanamaz hâle geliyordu.
+    //
+    // Tavan o ölçülen boşluğun içinde kalacak kadar açıldı; `BoxFit.contain`
+    // korunduğu için görsel taşmaz, yalnız daha çok yer bulur.
     final double? forcedHeight = isCompact
-        ? (size.height * 0.15).clamp(60.0, 100.0)
+        ? (size.height * 0.19).clamp(64.0, 132.0)
         : null;
     // Portre düzende 16/9 çerçeve dar ama uzun görsellerde büyük boş
     // alan bırakıyordu; yüksekliği ekranın %30'u ile sınırla.
