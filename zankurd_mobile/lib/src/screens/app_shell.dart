@@ -245,6 +245,25 @@ class _AppShellState extends State<AppShell>
 
   @override
   void didPopNext() {
+    // Kabuğun üstüne itilmiş bir ekrandan (tur, sonuç, mağaza…) DÖNÜLDÜ.
+    // Görünen sekme burada tazelenir.
+    //
+    // ## Kusur
+    //
+    // Ana ekran turu `await Navigator.push(QuizScreen)` ile açıp dönüşte
+    // tazeliyordu. Ama quiz ekranı sonuç ekranını `pushReplacement` ile
+    // açıyor ve `pushReplacement` ESKİ rotanın `popped` future'ını o anda
+    // tamamlar — yani "dönüş" tazelemesi, oyuncu daha sonuç ekranındayken
+    // çalışıyordu. Tur ödülleri (XP, zincir, günün doğruları) sonuç
+    // ekranında yazıldığı için tazeleme onlardan ÖNCE geliyor; oyuncu geri
+    // dönünce ana ekranda tur öncesinin sayılarını görüyordu. Ölçüldü
+    // (2026-08-12, iPhone SE): 4/10 doğru bir turdan sonra XP 130'da
+    // kaldı, sekmeye basılınca 230 oldu.
+    //
+    // Sessizdi çünkü tazeleme kodu VARDI ve doğru görünüyordu; yanlış olan
+    // çağrılma ANIydı ve hiçbir test iki rotalı (quiz → sonuç) dönüşü
+    // kurmuyordu.
+    _refreshVisibleTab();
     final owned = _ownedRoomResumeRoute;
     if (owned != null) {
       _ownedRoomResumeRoute = null;
@@ -462,13 +481,19 @@ class _AppShellState extends State<AppShell>
       return;
     }
 
-    if (i == 0) _homeRefresh.value++;
-    if (i == 2) _leaderboardRefresh.value++;
-    if (i == 3) _profileRefresh.value++;
+    _refreshVisibleTab(i);
     setState(() {
       _visitedTabs.add(i);
       _tab = i;
     });
+  }
+
+  /// [tab] (verilmezse görünen sekme) için tazeleme sinyalini tetikler.
+  void _refreshVisibleTab([int? tab]) {
+    final i = tab ?? _tab;
+    if (i == 0) _homeRefresh.value++;
+    if (i == 2) _leaderboardRefresh.value++;
+    if (i == 3) _profileRefresh.value++;
   }
 
   Widget _buildNavRail(BuildContext context, bool ku) {

@@ -176,17 +176,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _loadMissions() async {
     final store = await DailyMissionStore.load();
     if (!mounted) return;
-    // "Bugünün görevi" ilerlemesi günlük "doğru cevap" görevinden okunur;
-    // ayrı bir sayaç tutmak yerine mevcut kaynağı kullanıyoruz.
+    // "Bugünün görevi" ilerlemesi deponun kendi günlük sayacından okunur.
+    //
+    // Buradaki kaynak bir zamanlar `MissionType.answerCorrect` göreviydi:
+    // görev seçilmediği günlerde kart gün boyu 0'da donuyordu, çünkü günün
+    // üç görevi on altı tanelik havuzdan çekiliyor ve o türden yalnız üç
+    // tanım var (bkz. `DailyMissionStore.correctAnswersToday`). Hedef hâlâ
+    // görevden gelir — varsa oyuncunun o gün gördüğü sayıyla aynı kalsın;
+    // yoksa varsayılan hedef kullanılır.
     final answerMission = store.missions
         .where((m) => m.type == MissionType.answerCorrect)
         .firstOrNull;
     setState(() {
       _missions = List.from(store.missions);
-      if (answerMission != null) {
-        _todayAnswered = answerMission.progress.clamp(0, answerMission.target);
-        _todayTarget = answerMission.target;
-      }
+      _todayTarget = answerMission?.target ?? _todayTarget;
+      _todayAnswered = store.correctAnswersToday.clamp(0, _todayTarget);
     });
   }
 
