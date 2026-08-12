@@ -551,7 +551,7 @@ extension _QuizScreenUI on _QuizScreenState {
     final jokers = [
       if (_supportsEliminationWildcards) WildcardType.fiftyFifty,
       if (_supportsOptionWildcards) WildcardType.audience,
-      if (_supportsEliminationWildcards) WildcardType.doubleAnswer,
+      if (_supportsDoubleAnswer) WildcardType.doubleAnswer,
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
     return Column(
@@ -682,6 +682,18 @@ extension _QuizScreenUI on _QuizScreenState {
   bool get _supportsEliminationWildcards =>
       _supportsOptionWildcards && question.answers.length >= 4;
 
+  /// Çift cevap hakkı bu soruda anlamlı mı?
+  ///
+  /// Kısıt yalnız ŞIKLI sorular için geçerli. Serbest metinli türlerde
+  /// (boşluk doldurma, sıralama) şık yoktur, dolayısıyla iki deneme hakkı
+  /// hiçbir şeyi garanti etmez — oyuncu yine doğru sözcüğü yazmak zorunda.
+  ///
+  /// İlk taslak bu ayrımı yapmıyor ve `answers.length >= 4` diyordu; boşluk
+  /// doldurma sorusunun şık listesi BOŞ olduğu için çift cevap orada da
+  /// kapanmıştı. Kusuru iki mevcut test yakaladı.
+  bool get _supportsDoubleAnswer =>
+      !_supportsOptionWildcards || question.answers.length >= 4;
+
   Future<void> _trackWildcardMission() async {
     final store = await DailyMissionStore.load();
     final completed = await store.reportWildcardUsed();
@@ -797,7 +809,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _activateDoubleAnswer() {
     final cost = WildcardType.doubleAnswer.coinCost;
-    if (!_supportsEliminationWildcards ||
+    if (!_supportsDoubleAnswer ||
         _wildcard.doubleAnswerActivated ||
         _coinBalance < cost ||
         answered ||

@@ -101,6 +101,36 @@ void main() {
     );
   });
 
+  testWidgets('serbest metinli soruda çift cevap açık kalıyor', (tester) async {
+    // Kısıt yalnız ŞIKLI soruları ilgilendirir. Boşluk doldurmada şık
+    // listesi boştur; ilk taslak `answers.length >= 4` dediği için çift
+    // cevabı orada da kapatmıştı — oysa serbest metinde iki deneme hakkı
+    // hiçbir şeyi garanti etmez, oyuncu yine doğru sözcüğü yazmak zorunda.
+    const blank = QuizQuestion(
+      id: 'wildcard_blank_probe',
+      category: 'Ziman',
+      prompt: 'Cümleyi tamamla: «Ez ___ dibînim.»',
+      answers: [],
+      correctAnswer: 'mirovekî',
+      explanation: 'Tewang paşgiri «-î».',
+      type: QuestionType.fillInBlank,
+    );
+    final shown = await shownWildcards(tester, blank);
+
+    expect(
+      shown,
+      contains(WildcardType.doubleAnswer),
+      reason:
+          'Serbest metinli soruda çift cevap meşrudur; eleme kısıtı buraya '
+          'uygulanmamalı.',
+    );
+    expect(
+      shown,
+      isNot(contains(WildcardType.fiftyFifty)),
+      reason: 'Eleyecek şık yok; 50/50 burada zaten kapalı olmalı.',
+    );
+  });
+
   testWidgets('dört şıklı soruda bütün jokerler duruyor', (tester) async {
     // Korumanın öteki yarısı: kısıt, meşru kullanımı kırmamalı.
     final shown = await shownWildcards(tester, multipleChoice);

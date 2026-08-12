@@ -76,10 +76,26 @@ void main() {
       'lib/src/animations/load_animations.dart',
     };
 
+    /// Yorumları atar.
+    ///
+    /// Tarama ham metinde arıyordu ve bir YORUMDA geçen
+    /// `AnimationController` sözcüğü de ihlal sayılıyordu. 2026-08-12'de
+    /// `question_timer_resume.dart` tam bu yüzden listeye girdi: dosyada tek
+    /// satır animasyon kodu yok, yalnız kusuru anlatan belge o sınıfı adıyla
+    /// anıyor. Borcu bir artırmak kusuru gizlerdi; ölçüm düzeltildi.
+    String withoutComments(String source) => source
+        .replaceAll(RegExp(r'/\*.*?\*/', dotAll: true), ' ')
+        .split('\n')
+        .map((line) {
+          final index = line.indexOf('//');
+          return index == -1 ? line : line.substring(0, index);
+        })
+        .join('\n');
+
     final offenders = <String>[];
     for (final entity in Directory('lib/src').listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;
-      final src = entity.readAsStringSync();
+      final src = withoutComments(entity.readAsStringSync());
       final animates =
           src.contains('AnimationController') ||
           src.contains('TweenAnimationBuilder');
