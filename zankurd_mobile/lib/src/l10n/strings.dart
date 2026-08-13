@@ -1361,6 +1361,14 @@ class Tr {
       'ku': 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.',
       'tr': 'Yarışı başlatmak için en az 2 oyuncu olmalı.',
     },
+    K.waitingOpponentReady: {
+      'ku': 'Li bendê ne ku hemû lîstikvan amade bibin.',
+      'tr': 'Tüm oyuncuların hazır olması bekleniyor.',
+    },
+    K.tapReadyToStart: {
+      'ku': 'Gava amade bî, "Ez amade me" veke.',
+      'tr': 'Hazır olduğunda "Hazırım" anahtarını aç.',
+    },
     K.preparingShort: {'ku': 'Tê Amadekirin', 'tr': 'Hazırlanıyor'},
     K.startRace: {'ku': 'Dest bi Pêşbirkê Bike', 'tr': 'Yarışı Başlat'},
     K.waitingHost: {
@@ -2889,6 +2897,8 @@ class K {
   static const imReady = 'room.imReady';
   static const readyStateNote = 'room.readyStateNote';
   static const needTwoPlayers = 'room.needTwoPlayers';
+  static const waitingOpponentReady = 'room.waitingOpponentReady';
+  static const tapReadyToStart = 'room.tapReadyToStart';
   static const preparingShort = 'room.preparing';
   static const startRace = 'room.startRace';
   static const waitingHost = 'room.waitingHost';

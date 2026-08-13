@@ -693,19 +693,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           GameRoom.defaultSecondsPerQuestion,
     );
 
-    // `join_room_by_code` katılanı `is_ready = false` ile ekliyor, oysa
-    // `createOnlineRoom` ev sahibini `is_ready: true` ile ekliyor ve oda
-    // ekranının anahtarı iki rolde de "hazır" varsayılanını gösteriyor.
-    // Katılan kişi bu yüzden hazır olduğunu sanıp bekliyordu. Varsayılanı
-    // sunucuya bildirmek, ekranın gösterdiğiyle veritabanının söylediğini
-    // aynı yere getirir (2026-08-01).
-    try {
-      await updateReady(joined, true);
-    } catch (error, stack) {
-      // Bildirim düşerse oda yine de açılmalı: ekran artık gerçek durumu
-      // okuduğu için kullanıcı anahtarı kendisi açabilir.
-      _recordError(error, stack, reason: 'joinOnlineRoom ready sync failed');
-    }
+    // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
+    //
+    // Burada bir zamanlar `updateReady(joined, true)` vardı. Amacı meşruydu:
+    // ekranın anahtarı iki rolde de "açık" çiziliyordu, katılan kendini hazır
+    // sanıyor ama listede "Bekliyor" görünüyordu ve ev sahibi yarışı hiç
+    // başlatamıyordu (2026-08-01). O uyuşmazlığın asıl çaresi ekranın gerçek
+    // durumu okuması oldu — `room_screen.dart` içindeki `ready` alıcısı.
+    // Sunucuya zorla `true` yazmak ise ayrı ve istenmeyen bir şey yaptı:
+    // odaya yeni giren kişi hiçbir şeye dokunmadan hazır sayılıyor ve ev
+    // sahibi, öteki daha ekranı görmeden yarışı başlatabiliyordu
+    // (2026-08-13 iki cihazlı denetimi, uygulama sahibinin bildirimi).
+    //
+    // "Hazırım" bir onaydır; onayı katılan kişi verir.
     return joined;
   }
 

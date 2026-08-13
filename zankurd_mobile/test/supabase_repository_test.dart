@@ -423,11 +423,21 @@ void main() {
       final room = await repository.joinOnlineRoom('zk abcdef0123');
 
       expect(room.hostId, 'host-id');
+      // Listede `set_room_ready` YOK ve olmamalı: katılan oyuncu odaya
+      // hazır DEĞİL girer, hazır olduğunu kendisi bildirir. O çağrı
+      // 2026-08-13'te kaldırıldı; gerekçesi `room_ready_state_test.dart`
+      // içinde yazılıdır.
       expect(httpClient.requestedPaths, [
         '/rest/v1/rpc/join_room_by_code',
         '/rest/v1/room_players',
-        '/rest/v1/rpc/set_room_ready',
       ]);
+      expect(
+        httpClient.requestedPaths,
+        isNot(contains('/rest/v1/rpc/set_room_ready')),
+        reason:
+            'Katılma yolu hazır durumunu sunucuya yazıyor; oyuncu onayı '
+            'olmadan hazır sayılır ve ev sahibi yarışı erken başlatabilir.',
+      );
       expect(httpClient.requestedPaths, isNot(contains('/rest/v1/rooms')));
       expect(httpClient.requestBodies.first, {'p_code': 'ZK-ABCDEF0123'});
     },
