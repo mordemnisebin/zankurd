@@ -109,10 +109,10 @@ void main() {
     const blank = QuizQuestion(
       id: 'wildcard_blank_probe',
       category: 'Ziman',
-      prompt: 'Cümleyi tamamla: «Ez ___ dibînim.»',
+      prompt: 'Cümleyi tamamla: "Ez ___ dibînim."',
       answers: [],
       correctAnswer: 'mirovekî',
-      explanation: 'Tewang paşgiri «-î».',
+      explanation: 'Tewang paşgiri "-î".',
       type: QuestionType.fillInBlank,
     );
     final shown = await shownWildcards(tester, blank);

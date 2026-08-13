@@ -1337,7 +1337,9 @@
       "newal"
     ],
     "correctAnswer": "tembûr",
-    "explanation": "Doğru yanıt: tembûr.",
+    "explanation": "Tembûr amûreke têldar a stûdirêj e û di muzîka kurdî de yek ji amûrên herî belav e. Çiya, çîrok û newal ne amûrên muzîkê ne; ew têgehên xwezayî û wêjeyî ne.",
+    "explanationKu": "Tembûr amûreke têldar a stûdirêj e û di muzîka kurdî de yek ji amûrên herî belav e. Çiya, çîrok û newal ne amûrên muzîkê ne; ew têgehên xwezayî û wêjeyî ne.",
+    "explanationTr": "Tembûr, uzun saplı telli bir çalgıdır ve Kürt müziğinde en yaygın çalgılardan biridir. Dağ, hikâye ve dere ise çalgı değil; doğa ve edebiyat kavramlarıdır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "promptTr": "Kürt müziğinde \"telli çalgı\" ifadesi en çok hangi kavramı açıklar?",
