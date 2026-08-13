@@ -2190,11 +2190,11 @@
       "wênesaziyê"
     ],
     "correctAnswer": "dengbêjiyê",
-    "explanation": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
+    "explanation": "Kawîs Axa dengbêjliğiyle ünlüdür — kilamları çalgısız ve ezbere söyleyen sözlü gelenek. Saz yapımcılığı, yönetmenlik ve ressamlık ayrı sanatlardır.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationTr": "Kawîs Axa, Behdînan bölgesinin ünlü dengbêjidir.",
-    "explanationKu": "Kawîs Axa dengbêjekî navdar ê herêma Behdînan e.",
+    "explanationTr": "Kawîs Axa dengbêjliğiyle ünlüdür — kilamları çalgısız ve ezbere söyleyen sözlü gelenek. Saz yapımcılığı, yönetmenlik ve ressamlık ayrı sanatlardır.",
+    "explanationKu": "Kawîs Axa bi dengbêjiyê navdar e — kevneşopiya devkî ya ku kilaman bêyî amûr û ji ber dike. Sazçêkerî, derhênerî û wênesazî hunerên din in.",
     "promptTr": "Kawîs Axa ne ile ünlüdür?",
     "answersTr": [
       "dengbêjlikle",
@@ -11137,11 +11137,11 @@
       "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca"
     ],
     "correctAnswer": "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca",
-    "explanation": "\"Arabê Şamo\": Şivanê Kurd adlı ilk Kürtçe romanın yazarı.",
+    "explanation": "\"Arabê Şamo\" (Erebê Şemo), \"Şivanê Kurmanca\" adlı eserin yazarıdır; 1935'te basılan bu roman ilk modern Kürtçe roman sayılır ve sonradan \"Şivanê Kurd\" adıyla da bilinir.",
     "type": "multipleChoice",
     "difficulty": 4,
-    "explanationKu": "\"Erebê Şemo\": nivîskarê romana yekem a kurdî, \"Şivanê Kurd\".",
-    "explanationTr": "\"Arabê Şamo\": Şivanê Kurd adlı ilk Kürtçe romanın yazarı.",
+    "explanationKu": "\"Erebê Şemo\" (Arabê Şamo) nivîskarê \"Şivanê Kurmanca\" ye — romana kurdî ya nûjen a yekem, ku di 1935an de hat çapkirin. Ew berhem paşê bi navê \"Şivanê Kurd\" jî hat naskirin.",
+    "explanationTr": "\"Arabê Şamo\" (Erebê Şemo), \"Şivanê Kurmanca\" adlı eserin yazarıdır; 1935'te basılan bu roman ilk modern Kürtçe roman sayılır ve sonradan \"Şivanê Kurd\" adıyla da bilinir.",
     "promptTr": "\"Arabê Şamo\" edebiyat konusunda neyi ifade eder?",
     "answersTr": [
       "Mem û Zîn eserinin ünlü yazar ve düşünürü",
@@ -11487,11 +11487,11 @@
       "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin"
     ],
     "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
-    "explanation": "\"Şivanê Kurd\": 1935 yılında basılan ilk modern Kürtçe roman.",
+    "explanation": "\"Şivanê Kurmanca\": Erebê Şemo'nun 1935'te basılan ve ilk modern Kürtçe roman sayılan eseri; sonradan \"Şivanê Kurd\" adıyla da bilinir.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "\"Şivanê Kurd\": romana kurdî ya modern a yekem, di sala 1935an de hat çapkirin.",
-    "explanationTr": "\"Şivanê Kurd\": 1935 yılında basılan ilk modern Kürtçe roman.",
+    "explanationKu": "\"Şivanê Kurmanca\": romana Erebê Şemo ya ku di 1935an de hat çapkirin û wek yekem romana kurdî ya nûjen tê hesibandin; paşê bi navê \"Şivanê Kurd\" jî hat naskirin.",
+    "explanationTr": "\"Şivanê Kurmanca\": Erebê Şemo'nun 1935'te basılan ve ilk modern Kürtçe roman sayılan eseri; sonradan \"Şivanê Kurd\" adıyla da bilinir.",
     "promptTr": "\"Şivanê Kurmanca\" adlı eser nedir?",
     "answersTr": [
       "Yazı dilini genişletir ve söz varlığını zenginleştirir",
@@ -12084,24 +12084,24 @@
     "prompt": "Kîjan vebijêrk tê wateya \"lawik\"?",
     "answers": [
       "hunermendê ku bayê rock û caz anî muzîka kurdî",
-      "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin",
+      "cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin",
       "cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e",
       "hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê"
     ],
-    "correctAnswer": "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin",
-    "explanation": "\"lawik\": daha çok aşk ve yiğitlik üzerine söylenen müzik türü.",
+    "correctAnswer": "cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin",
+    "explanation": "\"lawik\": daha çok aşk ve hasret üzerine söylenen lirik kilam türü.",
     "type": "multipleChoice",
     "difficulty": 1,
-    "explanationKu": "\"lawik\": cureyê muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin.",
-    "explanationTr": "\"lawik\": daha çok aşk ve yiğitlik üzerine söylenen müzik türü.",
+    "explanationKu": "\"lawik\": cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin.",
+    "explanationTr": "\"lawik\": daha çok aşk ve hasret üzerine söylenen lirik kilam türü.",
     "promptTr": "Hangi seçenek \"lawik\" anlamına gelir?",
     "answersTr": [
       "Kürt müziğine rock ve caz esintisi getiren sanatçı",
-      "daha çok aşk ve yiğitlik üzerine söylenen müzik türü",
+      "daha çok aşk ve hasret üzerine söylenen lirik kilam türü",
       "Serhed yöresinde yaygın bir Kürt halk ezgisi türü",
       "Kürt müziğini dünyaya tanıtan en ünlü ses sanatçısı"
     ],
-    "correctAnswerTr": "daha çok aşk ve yiğitlik üzerine söylenen müzik türü"
+    "correctAnswerTr": "daha çok aşk ve hasret üzerine söylenen lirik kilam türü"
   },
   {
     "id": "offline_10480",
@@ -18343,7 +18343,7 @@
   {
     "id": "offline_curated_21451",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin\"?",
+    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye\"?",
     "answers": [
       "lawik",
       "bilûr",
@@ -18351,12 +18351,12 @@
       "erbane"
     ],
     "correctAnswer": "lawik",
-    "explanation": "\"lawik\" tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
+    "explanation": "\"lawik\" tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationKu": "\"lawik\" tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
-    "explanationTr": "\"lawik\" şu anlama gelir: erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi\"?",
+    "explanationKu": "\"lawik\" tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
+    "explanationTr": "\"lawik\" şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
+    "promptTr": "Hangi terim şu açıklamayla bilinir: \"çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı\"?",
     "answersTr": [
       "lawik",
       "bilûr",
@@ -18370,25 +18370,25 @@
     "category": "Muzîk",
     "prompt": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \"lawik\" bi awayekî rast temam dike?",
     "answers": [
-      "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
+      "şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye",
       "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine",
       "amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e",
       "amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin"
     ],
-    "correctAnswer": "şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin",
-    "explanation": "Ravekirina rast ji bo \"lawik\" ev e: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
+    "correctAnswer": "şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye",
+    "explanation": "Ravekirina rast ji bo \"lawik\" ev e: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationTr": "\"lawik\" için doğru açıklama şudur: erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi.",
-    "explanationKu": "Ravekirina rast ji bo \"lawik\" ev e: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
+    "explanationTr": "\"lawik\" için doğru açıklama şudur: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
+    "explanationKu": "Ravekirina rast ji bo \"lawik\" ev e: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
     "promptTr": "Müzik dersi için hangi seçenek \"lawik\" teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
-      "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi",
+      "çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı",
       "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri",
       "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı",
       "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı"
     ],
-    "correctAnswerTr": "erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi"
+    "correctAnswerTr": "çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı"
   },
   {
     "id": "offline_curated_21475",
@@ -22059,9 +22059,9 @@
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. Li kêleka wê \"lawik\" jî heye; ew tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
-    "explanationKu": "Rast e. Li kêleka wê \"lawik\" jî heye; ew tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
-    "explanationTr": "Doğru. Yanı sıra \"lawik\" de vardır; şu anlama gelir: erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi.",
+    "explanation": "Rast e. Li kêleka wê \"lawik\" jî heye; ew tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
+    "explanationKu": "Rast e. Li kêleka wê \"lawik\" jî heye; ew tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
+    "explanationTr": "Doğru. Yanı sıra \"lawik\" de vardır; şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
     "type": "trueFalse",
     "difficulty": 3,
     "promptTr": "Doğru mu yanlış mı: \"heyran\" terimi şu anlama gelir: özellikle kadınlar tarafından söylenen Serhed yöresi aşk kilamları.",
@@ -22263,7 +22263,7 @@
   {
     "id": "offline_tf_0112",
     "category": "Muzîk",
-    "prompt": "Rast e an şaş e: Têgeha \"lawik\" tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
+    "prompt": "Rast e an şaş e: Têgeha \"lawik\" tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
     "answers": [
       "Rast",
       "Şaş"
@@ -22274,7 +22274,7 @@
     "explanationTr": "Evet, tanım yerinde. \"heyran\" ayrı bir kavramdır: özellikle kadınların söylediği Serhat yöresi aşk kilamları.",
     "type": "trueFalse",
     "difficulty": 3,
-    "promptTr": "Doğru mu yanlış mı: \"lawik\" terimi şu anlama gelir: erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi.",
+    "promptTr": "Doğru mu yanlış mı: \"lawik\" terimi şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -22290,9 +22290,9 @@
       "Şaş"
     ],
     "correctAnswer": "Şaş",
-    "explanation": "Na — ev ravekirina \"heyran\" e; \"lawik\" tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
-    "explanationKu": "Na — ev ravekirina \"heyran\" e; \"lawik\" tê vê wateyê: şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin.",
-    "explanationTr": "Hayır — bu tanım \"heyran\" kavramına ait; \"lawik\" şu anlama gelir: erkeklerin kahramanlığı ve savaşlar üzerine söylenen dengbêjlik biçimi.",
+    "explanation": "Na — ev ravekirina \"heyran\" e; \"lawik\" tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
+    "explanationKu": "Na — ev ravekirina \"heyran\" e; \"lawik\" tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
+    "explanationTr": "Hayır — bu tanım \"heyran\" kavramına ait; \"lawik\" şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
     "type": "trueFalse",
     "difficulty": 4,
     "promptTr": "Doğru mu yanlış mı: \"lawik\" terimi şu anlama gelir: özellikle kadınlar tarafından söylenen Serhed yöresi aşk kilamları.",
