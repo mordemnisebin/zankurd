@@ -3689,7 +3689,7 @@
     ],
     "correctAnswer": "-ê",
     "explanation": "Eril isim \"-ê\" alır; örnek: \"bavê min\" (benim babam).",
-    "explanationKu": "Navdêrê nêr \"-ê\" digire: \"kitêbê\" na, lê \"dar-ê mezin\" — mînak: \"bavê min\".",
+    "explanationKu": "Navdêrê nêr veqetandeka \"-ê\" digire: \"bavê min\", \"hespê reş\". Navdêra mê \"-a\" digire: \"kitêba min\", \"dara mezin\".",
     "explanationTr": "Eril isim \"-ê\" alır; örnek: \"bavê min\" (benim babam).",
     "metadata": {
       "reviewStatus": "approved",
@@ -3744,7 +3744,7 @@
     "difficulty": 2,
     "id": "edit_ziman_0028",
     "category": "Ziman",
-    "prompt": "Peyva \"dibistan\" ji kîjan koka lêkerê tê?",
+    "prompt": "Peyva \"xwendegeh\" ji kîjan koka lêkerê tê?",
     "answers": [
       "Xwendin",
       "Gotin",
@@ -3752,9 +3752,9 @@
       "Nivîsîn"
     ],
     "correctAnswer": "Xwendin",
-    "explanation": "\"Dibistan\" (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
-    "explanationKu": "\"Dibistan\" ji \"dibi-\" (xwendin) û paşgira cih \"-stan\" pêk tê.",
-    "explanationTr": "\"Dibistan\" (okul), okuma kökü ve yer eki \"-stan\"dan oluşur.",
+    "explanation": "\"Xwendegeh\" (okul), \"xwendin\" kökü ve yer eki \"-geh\"ten oluşur.",
+    "explanationKu": "\"Xwendegeh\" ji koka \"xwendin\" û paşgira cih \"-geh\" pêk tê: cihê xwendinê.",
+    "explanationTr": "\"Xwendegeh\" (okul), \"xwendin\" (okumak) kökü ve yer eki \"-geh\"ten oluşur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3762,7 +3762,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Dibistan\" sözcüğü hangi fiil kökünden gelir?",
+    "promptTr": "\"Xwendegeh\" sözcüğü hangi fiil kökünden gelir?",
     "answersTr": [
       "Xwendin",
       "Gotin",
@@ -7824,7 +7824,7 @@
     "difficulty": 3,
     "id": "edit_muzik_0021",
     "category": "Muzîk",
-    "prompt": "\"Şeşxane\" an amûrên têlî yên kurdî bi giştî çawa tên lêxistin?",
+    "prompt": "\"Şeştar\" an amûrên têlî yên kurdî bi giştî çawa tên lêxistin?",
     "answers": [
       "Dawet û govendê",
       "Koma stranbêj û muzîkjenan",
@@ -7832,9 +7832,9 @@
       "Bi tiliyan an bi mizrabê"
     ],
     "correctAnswer": "Bi tiliyan an bi mizrabê",
-    "explanation": "Tembûr ve saz parmakla ya da mızrapla çalınır.",
-    "explanationKu": "Tembûr û saz bi tiliyan an bi mizrabê tên lêxistin.",
-    "explanationTr": "Tembûr ve saz parmakla ya da mızrapla çalınır.",
+    "explanation": "Şeştar, tembûr ve saz parmakla ya da mızrapla çalınır.",
+    "explanationKu": "Şeştar, tembûr û saz bi tiliyan an bi mizrabê tên lêxistin.",
+    "explanationTr": "Şeştar, tembûr ve saz parmakla ya da mızrapla çalınır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7842,7 +7842,7 @@
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Şeşxane\" ya da Kürt telli çalgıları genel olarak nasıl çalınır?",
+    "promptTr": "\"Şeştar\" ya da Kürt telli çalgıları genel olarak nasıl çalınır?",
     "answersTr": [
       "Düğün ve govendle",
       "Şarkıcı ve müzisyen topluluğuyla",

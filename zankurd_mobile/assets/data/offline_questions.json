@@ -190,24 +190,24 @@
     "category": "Ziman",
     "prompt": "Wêneya \"dil\" tê çi wateyê?",
     "answers": [
-      "kalp/dil",
+      "kalp/gönül",
       "nasılsın?",
       "teşekkür",
       "su içmek"
     ],
-    "correctAnswer": "kalp/dil",
-    "explanation": "\"dil\" \"kalp/dil\" demektir.",
+    "correctAnswer": "kalp/gönül",
+    "explanation": "\"dil\" \"kalp\" demektir; \"gönül\" anlamında da kullanılır. Türkçedeki \"dil\" ise Kurmancîde \"ziman\"dır.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/dil.webp",
     "difficulty": 3,
     "promptTr": "\"dil\" görseli ne anlama gelir?",
     "answersTr": [
-      "kalp/dil",
+      "kalp/gönül",
       "nasılsın?",
       "teşekkür",
       "su içmek"
     ],
-    "correctAnswerTr": "kalp/dil"
+    "correctAnswerTr": "kalp/gönül"
   },
   {
     "id": "offline_0045",
@@ -1511,7 +1511,7 @@
     "explanation": "\"e\" kısa, \"ê\" ise kapalı uzun bir ünlüdür; farklı seslerdir.",
     "type": "trueFalse",
     "difficulty": 3,
-    "explanationKu": "\"e\" dengdareke kurt e, \"ê\" jî dirêj û girtî ye; ew du deng in.",
+    "explanationKu": "\"e\" dengdêreke kurt e, \"ê\" jî dengdêreke dirêj û girtî ye; ew du deng in.",
     "explanationTr": "\"e\" kısa, \"ê\" ise kapalı uzun bir ünlüdür; farklı seslerdir.",
     "promptTr": "Kurmancî'de \"e\" ve \"ê\" harfleri aynı sestir.",
     "answersTr": [
@@ -4950,7 +4950,7 @@
   {
     "id": "offline_5090",
     "category": "Ziman",
-    "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê \"kalp/dil\" ye?",
+    "prompt": "Kîjan ji van peyva Kurmancî ye ku wateya wê \"kalp/gönül\" ye?",
     "answers": [
       "biçûk",
       "dil",
@@ -5925,9 +5925,9 @@
       "el",
       "göz",
       "konuşmak",
-      "kalp/dil"
+      "kalp/gönül"
     ],
-    "correctAnswer": "kalp/dil",
+    "correctAnswer": "kalp/gönül",
     "explanation": "\"dil\" ne tenê endamê laş e; wateya \"gönül\" jî dide. Mînak: Ew bi dilê xwe hat.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -6393,11 +6393,11 @@
       "av"
     ],
     "correctAnswer": "av",
-    "explanation": "\"su\" peyvê wateya \"av\" dide.",
+    "explanation": "\"av\" peyvê wateya \"su\" dide. Mînak: Ez avê vedixwim.",
     "type": "multipleChoice",
     "difficulty": 4,
-    "explanationKu": "\"su\" peyvê wateya \"av\" dide.",
-    "explanationTr": "\"su\" kelimesi \"av\" anlamına gelir.",
+    "explanationKu": "\"av\" peyvê wateya \"su\" dide. Mînak: Ez avê vedixwim.",
+    "explanationTr": "\"av\" kelimesi \"su\" anlamına gelir. Örnek: Ez avê vedixwim — Su içiyorum.",
     "promptTr": "Bunlardan hangisi anlamı \"su\" olan Kurmancî sözcüktür?",
     "answersTr": [
       "dar",
@@ -15506,7 +15506,7 @@
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha \"tewandin\" bi awayekî rast temam dike?",
     "answers": [
       "hêmanên wekî \"-î, -ê, -an\" ku di tewandina navdêran de cih digirin",
-      "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
+      "lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê",
       "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
       "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin"
     ],
@@ -15528,7 +15528,7 @@
   {
     "id": "offline_curated_20051",
     "category": "Ziman",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\"?",
+    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide\"?",
     "answers": [
       "tewandin",
       "ezafe",
@@ -15536,10 +15536,10 @@
       "rênivîsa Hawarê"
     ],
     "correctAnswer": "ezafe",
-    "explanation": "\"ezafe\" tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanation": "\"ezafe\" tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "type": "multipleChoice",
     "difficulty": 4,
-    "explanationKu": "\"ezafe\" tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanationKu": "\"ezafe\" tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "explanationTr": "\"ezafe\" şu anlama gelir: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: \"adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi\"?",
     "answersTr": [
@@ -15558,14 +15558,14 @@
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
       "hêmanên wekî \"-î, -ê, -an\" ku di tewandina navdêran de cih digirin",
       "nîşanderên wekî \"ez, tu, ew, em, hûn, ew\" ên ku bo kesan tên bikaranîn",
-      "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
+      "têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
     ],
-    "correctAnswer": "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide",
-    "explanation": "Ravekirina rast ji bo \"ezafe\" ev e: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "correctAnswer": "têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide",
+    "explanation": "Ravekirina rast ji bo \"ezafe\" ev e: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationTr": "\"ezafe\" için doğru açıklama şudur: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.",
-    "explanationKu": "Ravekirina rast ji bo \"ezafe\" ev e: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanationKu": "Ravekirina rast ji bo \"ezafe\" ev e: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "promptTr": "Dil dersi için hangi seçenek \"ezafe\" teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı",
@@ -15678,7 +15678,7 @@
   {
     "id": "offline_curated_20126",
     "category": "Ziman",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê'?",
+    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê'?",
     "answers": [
       "ergatîf",
       "lêkera gerguhêz",
@@ -15686,10 +15686,10 @@
       "tewandin"
     ],
     "correctAnswer": "lêkera gerguhêz",
-    "explanation": "\"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "explanation": "\"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "\"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "explanationKu": "\"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "explanationTr": "\"lêkera gerguhêz\" şu anlama gelir: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.",
     "promptTr": "Hangi terim şu açıklamayla tanımlanır: \"anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller\"?",
     "answersTr": [
@@ -15705,17 +15705,17 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha \"lêkera gerguhêz\" bi awayekî rast temam dike?",
     "answers": [
-      "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
+      "lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê",
       "hêmanên wekî \"-î, -ê, -an\" ku di tewandina navdêran de cih digirin",
       "pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin",
       "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"
     ],
-    "correctAnswer": "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
-    "explanation": "Ravekirina rast ji bo \"lêkera gerguhêz\" ev e: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "correctAnswer": "lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê",
+    "explanation": "Ravekirina rast ji bo \"lêkera gerguhêz\" ev e: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationTr": "\"lêkera gerguhêz\" için doğru açıklama şudur: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.",
-    "explanationKu": "Ravekirina rast ji bo \"lêkera gerguhêz\" ev e: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "explanationKu": "Ravekirina rast ji bo \"lêkera gerguhêz\" ev e: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "promptTr": "Dil dersi için hangi seçenek \"lêkera gerguhêz\" teriminin açıklamasını doğru biçimde tamamlar?",
     "answersTr": [
       "anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller",
@@ -15858,7 +15858,7 @@
       "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
       "cînavkên wekî \"min, te, wî, wê, me, we, wan\" ku di bin tewandinê de ne",
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
-      "têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
+      "têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"
     ],
     "correctAnswer": "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide",
     "explanation": "Ravekirina rast ji bo \"dema borî ya dûr\" ev e: avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide.",
@@ -15905,7 +15905,7 @@
     "category": "Ziman",
     "prompt": "Ji bo dersa ziman kîjan vebijark ravekirina têgeha \"paşgirên tewandinê\" bi awayekî rast temam dike?",
     "answers": [
-      "lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê",
+      "lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê",
       "avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide",
       "hêmanên wekî \"-î, -ê, -an\" ku di tewandina navdêran de cih digirin",
       "avahiya lêkerê ya ku kiryarek di rabirdûyeke pir dûr de nîşan dide"
@@ -19589,11 +19589,11 @@
       "Stran"
     ],
     "correctAnswer": "Dosya",
-    "explanation": "Di Kurmancî de ji bo \"dosya\" peyva \"peldank\" an \"dosya\" tê bikaranîn.",
+    "explanation": "Di Kurmancî de ji bo \"file\" peyva \"pel\" an \"dosya\" tê bikaranîn; \"peldank\" ne dosya ye, ew ji bo \"klasör\" e.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationTr": "Kurmancîde \"dosya\" için \"peldank\" ya da \"dosya\" kullanılır.",
-    "explanationKu": "Di Kurmancî de ji bo \"dosya\" peyva \"peldank\" an \"dosya\" tê bikaranîn.",
+    "explanationTr": "Kurmancîde \"file\" için \"pel\" ya da \"dosya\" kullanılır; \"peldank\" dosya değil, \"klasör\" demektir.",
+    "explanationKu": "Di Kurmancî de ji bo \"file\" peyva \"pel\" an \"dosya\" tê bikaranîn; \"peldank\" ne dosya ye, ew ji bo \"klasör\" e.",
     "promptTr": "\"File\" sözcüğü Kurmancîde ne anlama gelir?",
     "answersTr": [
       "Sayfa",
@@ -21681,8 +21681,8 @@
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. Li kêleka wê \"lêkera gerguhêz\" jî heye; ew tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
-    "explanationKu": "Rast e. Li kêleka wê \"lêkera gerguhêz\" jî heye; ew tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "explanation": "Rast e. Li kêleka wê \"lêkera gerguhêz\" jî heye; ew tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
+    "explanationKu": "Rast e. Li kêleka wê \"lêkera gerguhêz\" jî heye; ew tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "explanationTr": "Doğru. Yanı sıra \"lêkera gerguhêz\" de vardır; şu anlama gelir: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -21885,14 +21885,14 @@
   {
     "id": "offline_tf_0094",
     "category": "Ziman",
-    "prompt": "Rast e an şaş e: Têgeha \"ezafe\" tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "prompt": "Rast e an şaş e: Têgeha \"ezafe\" tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Erê, ravekirin li cih e. \"lêkera gerguhêz\" têgeheke cuda ye: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
-    "explanationKu": "Erê, ravekirin li cih e. \"lêkera gerguhêz\" têgeheke cuda ye: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "explanation": "Erê, ravekirin li cih e. \"lêkera gerguhêz\" têgeheke cuda ye: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
+    "explanationKu": "Erê, ravekirin li cih e. \"lêkera gerguhêz\" têgeheke cuda ye: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "explanationTr": "Evet, tanım yerinde. \"lêkera gerguhêz\" ayrı bir kavramdır: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -21906,14 +21906,14 @@
   {
     "id": "offline_tf_0095",
     "category": "Ziman",
-    "prompt": "Rast e an şaş e: Têgeha \"ezafe\" tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "prompt": "Rast e an şaş e: Têgeha \"ezafe\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Şaş",
-    "explanation": "Na — ev ravekirina \"lêkera gerguhêz\" e; \"ezafe\" tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
-    "explanationKu": "Na — ev ravekirina \"lêkera gerguhêz\" e; \"ezafe\" tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanation": "Na — ev ravekirina \"lêkera gerguhêz\" e; \"ezafe\" tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanationKu": "Na — ev ravekirina \"lêkera gerguhêz\" e; \"ezafe\" tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "explanationTr": "Hayır — bu tanım \"lêkera gerguhêz\" kavramına ait; \"ezafe\" şu anlama gelir: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.",
     "type": "trueFalse",
     "difficulty": 4,
@@ -22305,14 +22305,14 @@
   {
     "id": "offline_tf_0114",
     "category": "Ziman",
-    "prompt": "Rast e an şaş e: Têgeha \"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "prompt": "Rast e an şaş e: Têgeha \"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. Li kêleka wê \"ezafe\" jî heye; ew tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
-    "explanationKu": "Rast e. Li kêleka wê \"ezafe\" jî heye; ew tê vê wateyê: têkiliya artêla mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanation": "Rast e. Li kêleka wê \"ezafe\" jî heye; ew tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
+    "explanationKu": "Rast e. Li kêleka wê \"ezafe\" jî heye; ew tê vê wateyê: têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide.",
     "explanationTr": "Doğru. Yanı sıra \"ezafe\" de vardır; şu anlama gelir: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -22332,8 +22332,8 @@
       "Şaş"
     ],
     "correctAnswer": "Şaş",
-    "explanation": "Na — ev ravekirina \"daçekên hevedudanî\" e; \"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
-    "explanationKu": "Na — ev ravekirina \"daçekên hevedudanî\" e; \"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi artêla tewandî heye bo temamkirina wateyê.",
+    "explanation": "Na — ev ravekirina \"daçekên hevedudanî\" e; \"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
+    "explanationKu": "Na — ev ravekirina \"daçekên hevedudanî\" e; \"lêkera gerguhêz\" tê vê wateyê: lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê.",
     "explanationTr": "Hayır — bu tanım \"daçekên hevedudanî\" kavramına ait; \"lêkera gerguhêz\" şu anlama gelir: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.",
     "type": "trueFalse",
     "difficulty": 4,
