@@ -2,16 +2,16 @@
   {
     "id": "wo-ku-001",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Ben eve gidiyorum.»",
+    "prompt": "Hevokê rêz bike: \"Ben eve gidiyorum.\"",
     "answers": [
       "ez",
       "diçim",
       "malê"
     ],
     "correctAnswer": "ez diçim malê",
-    "explanation": "Kurmancî'de basit şimdiki zaman: özne + fiil + yer. «Ez diçim malê» = «Ben eve gidiyorum.»",
-    "explanationKu": "Di dema niha de: kirde + lêker + cih. «Ez diçim malê.»",
-    "explanationTr": "Kurmancî'de basit şimdiki zaman: özne + fiil + yer. «Ez diçim malê» = «Ben eve gidiyorum.»",
+    "explanation": "Kurmancî'de basit şimdiki zaman: özne + fiil + yer. \"Ez diçim malê\" = \"Ben eve gidiyorum.\"",
+    "explanationKu": "Di dema niha de: kirde + lêker + cih. \"Ez diçim malê.\"",
+    "explanationTr": "Kurmancî'de basit şimdiki zaman: özne + fiil + yer. \"Ez diçim malê\" = \"Ben eve gidiyorum.\"",
     "hintKu": "Bi kirdeyê dest pê bike: \"Ez\".",
     "hintTr": "Özneyle başla: \"Ez\".",
     "type": "wordOrdering",
@@ -25,12 +25,12 @@
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Ben eve gidiyorum.»"
+    "promptTr": "Cümleyi sırala: \"Ben eve gidiyorum.\""
   },
   {
     "id": "wo-ku-002",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «O ekmek yiyor.»",
+    "prompt": "Hevokê rêz bike: \"O ekmek yiyor.\"",
     "answers": [
       "ew",
       "nan",
@@ -53,21 +53,21 @@
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «O ekmek yiyor.»"
+    "promptTr": "Cümleyi sırala: \"O ekmek yiyor.\""
   },
   {
     "id": "wo-ku-003",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Ben kitap okuyorum.»",
+    "prompt": "Hevokê rêz bike: \"Ben kitap okuyorum.\"",
     "answers": [
       "ez",
       "pirtûkê",
       "dixwînim"
     ],
     "correctAnswer": "ez pirtûkê dixwînim",
-    "explanation": "«Pirtûkê» nesne halindedir ve fiilden önce gelir.",
-    "explanationKu": "«Pirtûkê» bireser e û berî lêkerê tê.",
-    "explanationTr": "«Pirtûkê» nesne halindedir ve fiilden önce gelir.",
+    "explanation": "\"Pirtûkê\" nesne halindedir ve fiilden önce gelir.",
+    "explanationKu": "\"Pirtûkê\" bireser e û berî lêkerê tê.",
+    "explanationTr": "\"Pirtûkê\" nesne halindedir ve fiilden önce gelir.",
     "hintKu": "Lêker: \"dixwînim\".",
     "hintTr": "Fiil: \"dixwînim\".",
     "type": "wordOrdering",
@@ -81,12 +81,12 @@
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Ben kitap okuyorum.»"
+    "promptTr": "Cümleyi sırala: \"Ben kitap okuyorum.\""
   },
   {
     "id": "wo-ku-004",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Anne ekmek yapıyor.»",
+    "prompt": "Hevokê rêz bike: \"Anne ekmek yapıyor.\"",
     "answers": [
       "dayik",
       "nan",
@@ -109,12 +109,12 @@
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Anne ekmek yapıyor.»"
+    "promptTr": "Cümleyi sırala: \"Anne ekmek yapıyor.\""
   },
   {
     "id": "wo-ku-005",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Biz Kürtçe konuşuyoruz.»",
+    "prompt": "Hevokê rêz bike: \"Biz Kürtçe konuşuyoruz.\"",
     "answers": [
       "em",
       "bi",
@@ -122,9 +122,9 @@
       "diaxivin"
     ],
     "correctAnswer": "em bi kurdî diaxivin",
-    "explanation": "«Bi» edatı dil adının önünde gelir: «bi kurdî».",
-    "explanationKu": "Daçeka «bi» berî navê zimên tê: «bi kurdî».",
-    "explanationTr": "«Bi» edatı dil adının önünde gelir: «bi kurdî».",
+    "explanation": "\"Bi\" edatı dil adının önünde gelir: \"bi kurdî\".",
+    "explanationKu": "Daçeka \"bi\" berî navê zimên tê: \"bi kurdî\".",
+    "explanationTr": "\"Bi\" edatı dil adının önünde gelir: \"bi kurdî\".",
     "hintKu": "\"bi\" û \"kurdî\" bi hev re ne.",
     "hintTr": "\"bi\" ile \"kurdî\" birlikte durur.",
     "type": "wordOrdering",
@@ -134,16 +134,16 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
       "qualityVersion": 2,
-      "reviewNote": "em bi kurdî diaxivin — daçeka «bi» + zimanê, rast",
+      "reviewNote": "em bi kurdî diaxivin — daçeka \"bi\" + zimanê, rast",
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Biz Kürtçe konuşuyoruz.»"
+    "promptTr": "Cümleyi sırala: \"Biz Kürtçe konuşuyoruz.\""
   },
   {
     "id": "wo-ku-006",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Çocuklar okuldalar.»",
+    "prompt": "Hevokê rêz bike: \"Çocuklar okuldalar.\"",
     "answers": [
       "zarok",
       "li",
@@ -151,9 +151,9 @@
       "ne"
     ],
     "correctAnswer": "zarok li dibistanê ne",
-    "explanation": "«Li» yer edatıdır; çoğul özneyle koşaç «ne» olur.",
-    "explanationKu": "«Li» daçeka cih e; bi kirdeya pirjimar re «ne» tê bikaranîn.",
-    "explanationTr": "«Li» yer edatıdır; çoğul özneyle koşaç «ne» olur.",
+    "explanation": "\"Li\" yer edatıdır; çoğul özneyle koşaç \"ne\" olur.",
+    "explanationKu": "\"Li\" daçeka cih e; bi kirdeya pirjimar re \"ne\" tê bikaranîn.",
+    "explanationTr": "\"Li\" yer edatıdır; çoğul özneyle koşaç \"ne\" olur.",
     "hintKu": "Koşaç li dawiyê ye.",
     "hintTr": "Koşaç en sonda.",
     "type": "wordOrdering",
@@ -163,16 +163,16 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
       "qualityVersion": 2,
-      "reviewNote": "zarok li dibistanê ne — daçeka «li» + lêkera «bûn» a pirjimar, rast",
+      "reviewNote": "zarok li dibistanê ne — daçeka \"li\" + lêkera \"bûn\" a pirjimar, rast",
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Çocuklar okuldalar.»"
+    "promptTr": "Cümleyi sırala: \"Çocuklar okuldalar.\""
   },
   {
     "id": "wo-ku-007",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Seni seviyorum.»",
+    "prompt": "Hevokê rêz bike: \"Seni seviyorum.\"",
     "answers": [
       "ez",
       "ji",
@@ -181,9 +181,9 @@
       "dikim"
     ],
     "correctAnswer": "ez ji te hez dikim",
-    "explanation": "«Hez kirin» birleşik fiildir; «ji ... hez kirin» kalıbıyla kullanılır.",
-    "explanationKu": "«Hez kirin» lêkereke hevedudanî ye: «ji ... hez kirin».",
-    "explanationTr": "«Hez kirin» birleşik fiildir; «ji ... hez kirin» kalıbıyla kullanılır.",
+    "explanation": "\"Hez kirin\" birleşik fiildir; \"ji ... hez kirin\" kalıbıyla kullanılır.",
+    "explanationKu": "\"Hez kirin\" lêkereke hevedudanî ye: \"ji ... hez kirin\".",
+    "explanationTr": "\"Hez kirin\" birleşik fiildir; \"ji ... hez kirin\" kalıbıyla kullanılır.",
     "hintKu": "\"hez\" û \"dikim\" li dawiyê ne.",
     "hintTr": "\"hez\" ve \"dikim\" sonda.",
     "type": "wordOrdering",
@@ -193,16 +193,16 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Temel Kurmancî cümle kalıpları — 2026-08-07 editör denetimi",
       "qualityVersion": 2,
-      "reviewNote": "ez ji te hez dikim — biwêja «hez kirin» bi daçeka «ji», rast",
+      "reviewNote": "ez ji te hez dikim — biwêja \"hez kirin\" bi daçeka \"ji\", rast",
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Seni seviyorum.»"
+    "promptTr": "Cümleyi sırala: \"Seni seviyorum.\""
   },
   {
     "id": "wo-ku-008",
     "category": "Ziman",
-    "prompt": "Hevokê rêz bike: «Bugün hava sıcak.»",
+    "prompt": "Hevokê rêz bike: \"Bugün hava sıcak.\"",
     "answers": [
       "îro",
       "hewa",
@@ -210,9 +210,9 @@
       "e"
     ],
     "correctAnswer": "îro hewa germ e",
-    "explanation": "Zaman zarfı başta, koşaç «e» sonda gelir.",
-    "explanationKu": "Hoker li destpêkê, koşaça «e» li dawiyê tê.",
-    "explanationTr": "Zaman zarfı başta, koşaç «e» sonda gelir.",
+    "explanation": "Zaman zarfı başta, koşaç \"e\" sonda gelir.",
+    "explanationKu": "Hoker li destpêkê, koşaça \"e\" li dawiyê tê.",
+    "explanationTr": "Zaman zarfı başta, koşaç \"e\" sonda gelir.",
     "hintKu": "Bi \"Îro\" dest pê bike.",
     "hintTr": "\"Îro\" ile başla.",
     "type": "wordOrdering",
@@ -226,6 +226,6 @@
       "reviewedBy": "opus-5",
       "reviewedAt": "2026-08-07"
     },
-    "promptTr": "Cümleyi sırala: «Bugün hava sıcak.»"
+    "promptTr": "Cümleyi sırala: \"Bugün hava sıcak.\""
   }
 ]

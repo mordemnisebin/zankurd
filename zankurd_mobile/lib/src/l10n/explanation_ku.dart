@@ -236,17 +236,18 @@ final List<_Rule> _rules = [
 /// normalleştirilir: motor tek biçim görür, çıktı ürünün biçimine döner.
 /// Yeni kural yazan kişi tırnak biçimini düşünmek zorunda kalmaz.
 String _withQuote(String text, String mark) =>
-    text.replaceAll('«', mark).replaceAll('»', mark);
+    text.replaceAll('«', mark).replaceAll('»', mark).replaceAll('"', mark);
 
-/// Çıktıdaki düz tırnakları ürünün «» biçimine çevirir: çift sayılı olan
-/// açılış, tek sayılı olan kapanış olur.
-String _productQuotes(String text) {
-  var index = 0;
-  return text.replaceAllMapped(
-    RegExp('[\'"]'),
-    (_) => (index++).isEven ? '«' : '»',
-  );
-}
+/// Çıktıyı ürünün tırnak biçimine çevirir: düz ÇİFT tırnak.
+///
+/// Bu işlev bir zamanlar `«»` üretiyordu — açılış/kapanış ayrımı için
+/// tırnakları sayıyordu. Ürünün biçimi 2026-08-12'de düz çift tırnağa
+/// geçince o dönüşüm bir GERİLEME kaynağı oldu: banka tümüyle çevrilmiş
+/// olsa bile motor, ürettiği her açıklamaya guillemet'i geri koyuyordu.
+/// Yani metin dosyada düz tırnaklı, ekranda guillemet'li olurdu.
+///
+/// Açılış/kapanış ayrımı artık gereksiz: iki uç da aynı karakter.
+String _productQuotes(String text) => text.replaceAll(RegExp("['«»]"), '"');
 
 String explanationToKu(String explanation) {
   final text = explanation.trim();

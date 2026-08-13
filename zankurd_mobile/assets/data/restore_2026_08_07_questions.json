@@ -134,7 +134,7 @@
   {
     "id": "restore_2026_08_07_0005",
     "category": "Dîrok",
-    "prompt": "Hejmara yekem a «Rojnameya Kurdistan» (1898) li kîjan bajarî derket?",
+    "prompt": "Hejmara yekem a \"Rojnameya Kurdistan\" (1898) li kîjan bajarî derket?",
     "answers": [
       "Şam",
       "Qahîre",
@@ -142,7 +142,7 @@
       "Bexda"
     ],
     "correctAnswer": "Qahîre",
-    "promptTr": "«Rojnameya Kurdistan»ın ilk sayısı (1898) hangi şehirde çıktı?",
+    "promptTr": "\"Rojnameya Kurdistan\"ın ilk sayısı (1898) hangi şehirde çıktı?",
     "answersTr": [
       "Şam",
       "Kahire",
@@ -167,7 +167,7 @@
   {
     "id": "restore_2026_08_07_0006",
     "category": "Dîrok",
-    "prompt": "«Şerefname», dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?",
+    "prompt": "\"Şerefname\", dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?",
     "answers": [
       "Ehmedê Xanî",
       "Mîqdat Mîdhad Bedirxan",
@@ -175,7 +175,7 @@
       "Feqiyê Teyran"
     ],
     "correctAnswer": "Şerefxanê Bidlîsî",
-    "promptTr": "Kürt mirliklerinin tarihi olan «Şerefname»yi kim yazmıştır?",
+    "promptTr": "Kürt mirliklerinin tarihi olan \"Şerefname\"yi kim yazmıştır?",
     "answersTr": [
       "Ehmedê Xanî",
       "Mîqdat Mîdhad Bedirxan",

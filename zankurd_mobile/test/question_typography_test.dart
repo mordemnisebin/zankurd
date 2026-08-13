@@ -6,26 +6,35 @@ import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
 /// Soru bankasında alıntı işaretinin bekçisi.
 ///
-/// Kural: alıntı yalnız «guillemet» ile yapılır. Düz tırnak (' ") yalnız
-/// kesme işareti olarak serbesttir — "1997'an", "Şakiro'nun", "Mem û Zîn'i".
+/// ## Kural (2026-08-12'de DEĞİŞTİ)
 ///
-/// `tool/normalize_question_typography.py` 2026-07-30'da bankayı tek kurala
-/// çekmişti (aynı bankada 467 «guillemet», 575 tek tırnak, 360 çift tırnak
-/// yan yana duruyordu). Ama bekçi yazılmamıştı ve aracın kendi düzenli
+/// Alıntı ve vurgu **düz çift tırnakla** yapılır: `"agir"`. Guillemet
+/// (`«»`) ve eğri tırnak (`“”`) bankaya giremez. Tek tırnak yalnız kesme
+/// işaretidir — `1997'an`, `Şakiro'nun`, `Mem û Zîn'i`.
+///
+/// Kural bir zamanlar tersiydi: alıntı guillemet ile yapılır, düz tırnak
+/// yasaktı. Uygulama sahibi 2026-08-12'de tek biçim olarak düz çift tırnağı
+/// seçti ve banka tümüyle çevrildi: 8486 guillemet çifti, 3 eğri tırnak
+/// çifti ve 74 `'sözcük'ek` kullanımı. Bu dosya o kararı izliyor.
+///
+/// ## Niçin bekçi
+///
+/// `tool/normalize_question_typography.py` 2026-07-30'da bankayı bir kez
+/// tek kurala çekmişti (o gün 467 guillemet, 575 tek tırnak, 360 çift
+/// tırnak yan yana duruyordu) ama bekçi yazılmamıştı ve aracın düzenli
 /// ifadesinde bir boşluk vardı: Türkçede ek doğrudan kapanış tırnağına
 /// yapışır —
 ///
-///     «ateş» kelimesinin karşılığı "agir"dir.
+///     "ateş" kelimesinin karşılığı "agir"dir.
 ///     Erebê Şemo, ... "Şivanê Kurmanca"yı (1935) yazdı.
 ///
-/// — ve kapanıştan sonra harf gelince `(?![\w])` koşulu tutmuyordu. 27 kayıt
-/// böyle sızdı. Aynı 27 kayıt ikinci bir kusur daha taşıyordu: ek uyumu
-/// bozuktu ("rast"dir → doğrusu "rast"tır, "toprak"dir → "toprak"tır).
-/// Türkçesi kusursuz olması gereken bir üründe bu, tırnak karışıklığından
-/// daha görünür bir hatadır.
+/// — ve kapanıştan sonra harf gelince `(?![\w])` koşulu tutmuyordu. 27
+/// kayıt böyle sızmıştı. O ders burada duruyor: kapanış tırnağının ardından
+/// harf gelmesi kuraldışı DEĞİLDİR, olağandır.
 ///
-/// Bu test iki kuralı birden sabitler: alıntı «guillemet»tir ve düz tırnak
-/// çifti bankaya giremez. Kesme işareti dokunulmadan geçer.
+/// İkinci ders: sınıf `\w` değil `\p{L}` olmalı. Dart'ta `\w` ASCII'dir ve
+/// "Savaşı'nın ardından Kudüs'ü" dizisinde ilk kesmenin öncesindeki `ı`yı
+/// harf saymaz; iki ayrı kesme işareti alıntı çifti sanılıyordu.
 void main() {
   const banks = questionBankAssets;
 
@@ -37,24 +46,18 @@ void main() {
     'explanationTr',
   ];
 
-  // Açılış: harf/rakam olmayan bir şeyden sonra. Kapanış: çift tırnakta
-  // serbest (Türkçe `"` ile kesme yapmaz, yani çift tırnak çifti her zaman
-  // alıntıdır), tek tırnakta harf/rakam gelmemeli.
-  //
-  // Sınıf `\w` DEĞİL `\p{L}`: Dart'ta `\w` ASCII'dir ve "Savaşı'nın
-  // ardından Kudüs'ü" dizisinde ilk kesmenin öncesindeki `ı`yı harf
-  // saymaz — iki ayrı kesme işareti alıntı çifti sanılıyordu. Python
-  // aracının `\w`si unicode olduğu için aynı tuzağa düşmüyor.
-  final doubleQuoted = RegExp(
-    r'(?<![\p{L}\p{N}])"[^"\n]{1,70}"',
-    unicode: true,
-  );
+  /// Yasak alıntı biçimleri: guillemet ve eğri tırnak.
+  final forbiddenQuotes = RegExp('[«»\u201C\u201D\u201E\u201F]');
+
+  /// Alıntı olarak kullanılan TEK tırnak. Kesme işaretinden ayrımı açılış
+  /// tarafındadır: alıntı harf/rakam OLMAYAN bir şeyden sonra açılır,
+  /// kesme işaretinin öncesinde ise harf ya da rakam vardır.
   final singleQuoted = RegExp(
-    r"(?<![\p{L}\p{N}])'[^'\n]{1,70}'(?![\p{L}\p{N}])",
+    r"(?<![\p{L}\p{N}])'[^'\n]{1,70}'",
     unicode: true,
   );
 
-  test('alıntılar «guillemet», düz tırnak çifti yok', () {
+  test('alıntılar düz çift tırnak; guillemet ve eğri tırnak yok', () {
     final offenders = <String>[];
 
     for (final path in banks) {
@@ -64,21 +67,23 @@ void main() {
           .cast<Map<String, dynamic>>();
 
       for (final row in rows) {
-        for (final field in fields) {
-          final value = row[field];
-          if (value is! String || value.isEmpty) continue;
-          if (doubleQuoted.hasMatch(value) || singleQuoted.hasMatch(value)) {
-            offenders.add('${row['id']}/$field: $value');
+        void check(String? value, String where) {
+          if (value == null || value.isEmpty) return;
+          if (forbiddenQuotes.hasMatch(value) || singleQuoted.hasMatch(value)) {
+            offenders.add('${row['id']}/$where: $value');
           }
         }
+
+        for (final field in fields) {
+          final value = row[field];
+          if (value is String) check(value, field);
+        }
         // Şıklar da oyuncuya gösterilir; kural orada da geçerli.
-        final answers = row['answers'];
-        if (answers is List) {
-          for (final answer in answers) {
-            if (answer is! String) continue;
-            if (doubleQuoted.hasMatch(answer) ||
-                singleQuoted.hasMatch(answer)) {
-              offenders.add('${row['id']}/answers: $answer');
+        for (final key in ['answers', 'answersTr']) {
+          final list = row[key];
+          if (list is List) {
+            for (final answer in list) {
+              if (answer is String) check(answer, key);
             }
           }
         }
@@ -89,39 +94,40 @@ void main() {
       offenders,
       isEmpty,
       reason:
-          '${offenders.length} kayıtta düz tırnak çifti var; alıntı «» ile '
-          'yapılır. Onarmak için: python3 '
-          'tool/normalize_question_typography.py --apply\n'
-          '${offenders.take(8).join("\n")}',
+          '${offenders.length} kayıtta eski alıntı biçimi var. Alıntı ve '
+          'vurgu düz çift tırnakla yazılır:\n${offenders.take(8).join("\n")}',
     );
   });
 
   test('kesme işareti dokunulmadan kalır', () {
-    // Bekçinin kendisi de sınanmalı: kural düz tırnağı yasaklarken kesme
-    // işaretini yasaklarsa banka Kurmancî ve Türkçe ek alamaz hâle gelir.
-    // "1997'an de", "Şakiro'nun", "Mem û Zîn'i" geçerli yazımlardır.
+    // Bekçinin kendisi de sınanmalı: kural tek tırnak çiftini yasaklarken
+    // kesme işaretini yasaklarsa banka Kurmancî ve Türkçe ek alamaz hâle
+    // gelir. Bu üç yazım geçerlidir ve yakalanmamalıdır.
     for (final safe in [
       "Di sala 1997'an de Palmiya Zêrîn wergirt.",
       "Şakiro'nun sesi bir kuşaktır belleklerde.",
       "Ehmedê Xanî, Mem û Zîn'i 1692'de tamamladı.",
-    ]) {
-      expect(
-        doubleQuoted.hasMatch(safe) || singleQuoted.hasMatch(safe),
-        isFalse,
-        reason: 'Kesme işareti alıntı sanıldı: $safe',
-      );
-    }
-
-    // Buna karşılık gerçek düz tırnak çifti — ek yapışsa bile — yakalanmalı.
-    for (final bad in [
-      '«ateş» kelimesinin karşılığı "agir"dir.',
-      "Têgeha 'dengbêj' çi ye?",
+      // Yeni kuralın olağan hâli: kapanış tırnağına ek yapışır.
+      '"ateş" kelimesinin karşılığı "agir"dir.',
       'Erebê Şemo "Şivanê Kurmanca"yı yazdı.',
     ]) {
       expect(
-        doubleQuoted.hasMatch(bad) || singleQuoted.hasMatch(bad),
+        forbiddenQuotes.hasMatch(safe) || singleQuoted.hasMatch(safe),
+        isFalse,
+        reason: 'Geçerli yazım kuraldışı sanıldı: $safe',
+      );
+    }
+
+    // Buna karşılık eski biçimler — ek yapışsa bile — yakalanmalı.
+    for (final bad in [
+      '«ateş» kelimesinin karşılığı "agir"dir.',
+      "Têgeha 'dengbêj' çi ye?",
+      'Peyva \u201Cstêrk\u201D çi ye?',
+    ]) {
+      expect(
+        forbiddenQuotes.hasMatch(bad) || singleQuoted.hasMatch(bad),
         isTrue,
-        reason: 'Düz tırnak çifti kaçtı: $bad',
+        reason: 'Eski alıntı biçimi kaçtı: $bad',
       );
     }
   });

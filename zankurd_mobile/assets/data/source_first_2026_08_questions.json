@@ -464,7 +464,7 @@
   {
     "id": "sf_cin_0002",
     "category": "Sînema",
-    "prompt": "Di teknîka «deep focus» de çi tê bidestxistin?",
+    "prompt": "Di teknîka \"deep focus\" de çi tê bidestxistin?",
     "answers": [
       "Tenê paşxaneya dûr zelal dibe",
       "Rengên dîmenê hemû winda dibin",
@@ -472,7 +472,7 @@
       "Nêzîk û dûr bi hev re zelal dibin"
     ],
     "correctAnswer": "Nêzîk û dûr bi hev re zelal dibin",
-    "promptTr": "«Deep focus» tekniğinde ne elde edilir?",
+    "promptTr": "\"Deep focus\" tekniğinde ne elde edilir?",
     "answersTr": [
       "Yalnız uzak arka plan netleşir",
       "Görüntünün renkleri tümden kaybolur",
@@ -530,7 +530,7 @@
   {
     "id": "sf_cin_0004",
     "category": "Sînema",
-    "prompt": "Xelata «Şêrê Zêrîn» ji bo fîlmê herî baş di kîjan salê de hate danîn?",
+    "prompt": "Xelata \"Şêrê Zêrîn\" ji bo fîlmê herî baş di kîjan salê de hate danîn?",
     "answers": [
       "1932",
       "1936",
@@ -538,7 +538,7 @@
       "1968"
     ],
     "correctAnswer": "1949",
-    "promptTr": "«Altın Aslan» ödülü en iyi film için hangi yılda konuldu?",
+    "promptTr": "\"Altın Aslan\" ödülü en iyi film için hangi yılda konuldu?",
     "answersTr": [
       "1932",
       "1936",
@@ -827,7 +827,7 @@
   {
     "id": "sf_cin_0013",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «À bout de souffle» (1960) kî ye?",
+    "prompt": "Derhênerê fîlmê \"À bout de souffle\" (1960) kî ye?",
     "answers": [
       "Jean-Luc Godard",
       "François Truffaut",
@@ -835,7 +835,7 @@
       "Alain Resnais"
     ],
     "correctAnswer": "Jean-Luc Godard",
-    "promptTr": "«À bout de souffle» (1960) filminin yönetmeni kimdir?",
+    "promptTr": "\"À bout de souffle\" (1960) filminin yönetmeni kimdir?",
     "answersTr": [
       "Jean-Luc Godard",
       "François Truffaut",
@@ -860,7 +860,7 @@
   {
     "id": "sf_cin_0014",
     "category": "Sînema",
-    "prompt": "Fîlmê «À bout de souffle» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"À bout de souffle\" di kîjan salê de derket?",
     "answers": [
       "1954",
       "1966",
@@ -868,7 +868,7 @@
       "1972"
     ],
     "correctAnswer": "1960",
-    "promptTr": "«À bout de souffle» filmi hangi yılda çıktı?",
+    "promptTr": "\"À bout de souffle\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1954",
       "1966",
@@ -893,7 +893,7 @@
   {
     "id": "sf_cin_0015",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Battleship Potemkin» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Battleship Potemkin\" kî ye?",
     "answers": [
       "Dziga Vertov",
       "Lev Kuleshov",
@@ -901,7 +901,7 @@
       "Vsevolod Pudovkin"
     ],
     "correctAnswer": "Sergei M. Eisenstein",
-    "promptTr": "«Battleship Potemkin» filminin yönetmeni kimdir?",
+    "promptTr": "\"Battleship Potemkin\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Dziga Vertov",
       "Lev Kuleshov",
@@ -926,7 +926,7 @@
   {
     "id": "sf_cin_0016",
     "category": "Sînema",
-    "prompt": "Fîlmê «Battleship Potemkin» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Battleship Potemkin\" di kîjan salê de derket?",
     "answers": [
       "1919",
       "1922",
@@ -934,7 +934,7 @@
       "1925"
     ],
     "correctAnswer": "1925",
-    "promptTr": "«Battleship Potemkin» filmi hangi yılda çıktı?",
+    "promptTr": "\"Battleship Potemkin\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1919",
       "1922",
@@ -959,7 +959,7 @@
   {
     "id": "sf_cin_0017",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Metropolis» (1927) kî ye?",
+    "prompt": "Derhênerê fîlmê \"Metropolis\" (1927) kî ye?",
     "answers": [
       "F. W. Murnau",
       "Robert Wiene",
@@ -967,7 +967,7 @@
       "G. W. Pabst"
     ],
     "correctAnswer": "Fritz Lang",
-    "promptTr": "«Metropolis» (1927) filminin yönetmeni kimdir?",
+    "promptTr": "\"Metropolis\" (1927) filminin yönetmeni kimdir?",
     "answersTr": [
       "F. W. Murnau",
       "Robert Wiene",
@@ -992,7 +992,7 @@
   {
     "id": "sf_cin_0018",
     "category": "Sînema",
-    "prompt": "Fîlmê «Metropolis» (1927) hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Metropolis\" (1927) hilberîna kîjan welatî ye?",
     "answers": [
       "Fransa",
       "Almanya",
@@ -1000,7 +1000,7 @@
       "Sovyet"
     ],
     "correctAnswer": "Almanya",
-    "promptTr": "«Metropolis» (1927) hangi ülkenin yapımıdır?",
+    "promptTr": "\"Metropolis\" (1927) hangi ülkenin yapımıdır?",
     "answersTr": [
       "Fransa",
       "Almanya",
@@ -1025,7 +1025,7 @@
   {
     "id": "sf_cin_0019",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Nosferatu» (1922) kî ye?",
+    "prompt": "Derhênerê fîlmê \"Nosferatu\" (1922) kî ye?",
     "answers": [
       "F. W. Murnau",
       "Fritz Lang",
@@ -1033,7 +1033,7 @@
       "Paul Wegener"
     ],
     "correctAnswer": "F. W. Murnau",
-    "promptTr": "«Nosferatu» (1922) filminin yönetmeni kimdir?",
+    "promptTr": "\"Nosferatu\" (1922) filminin yönetmeni kimdir?",
     "answersTr": [
       "F. W. Murnau",
       "Fritz Lang",
@@ -1058,7 +1058,7 @@
   {
     "id": "sf_cin_0020",
     "category": "Sînema",
-    "prompt": "Fîlmê «Nosferatu» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Nosferatu\" di kîjan salê de derket?",
     "answers": [
       "1916",
       "1919",
@@ -1066,7 +1066,7 @@
       "1922"
     ],
     "correctAnswer": "1922",
-    "promptTr": "«Nosferatu» filmi hangi yılda çıktı?",
+    "promptTr": "\"Nosferatu\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1916",
       "1919",
@@ -1091,7 +1091,7 @@
   {
     "id": "sf_cin_0021",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Tokyo Story» (1953) kî ye?",
+    "prompt": "Derhênerê fîlmê \"Tokyo Story\" (1953) kî ye?",
     "answers": [
       "Akira Kurosawa",
       "Yasujirō Ozu",
@@ -1099,7 +1099,7 @@
       "Masaki Kobayashi"
     ],
     "correctAnswer": "Yasujirō Ozu",
-    "promptTr": "«Tokyo Story» (1953) filminin yönetmeni kimdir?",
+    "promptTr": "\"Tokyo Story\" (1953) filminin yönetmeni kimdir?",
     "answersTr": [
       "Akira Kurosawa",
       "Yasujirō Ozu",
@@ -1124,7 +1124,7 @@
   {
     "id": "sf_cin_0022",
     "category": "Sînema",
-    "prompt": "Fîlmê «Tokyo Story» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Tokyo Story\" hilberîna kîjan welatî ye?",
     "answers": [
       "Çîn",
       "Kore",
@@ -1132,7 +1132,7 @@
       "Taywan"
     ],
     "correctAnswer": "Japonya",
-    "promptTr": "«Tokyo Story» hangi ülkenin yapımıdır?",
+    "promptTr": "\"Tokyo Story\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "Çîn",
       "Kore",
@@ -1157,7 +1157,7 @@
   {
     "id": "sf_cin_0023",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Pather Panchali» (1955) kî ye?",
+    "prompt": "Derhênerê fîlmê \"Pather Panchali\" (1955) kî ye?",
     "answers": [
       "Ritwik Ghatak",
       "Mrinal Sen",
@@ -1165,7 +1165,7 @@
       "Guru Dutt"
     ],
     "correctAnswer": "Satyajit Ray",
-    "promptTr": "«Pather Panchali» (1955) filminin yönetmeni kimdir?",
+    "promptTr": "\"Pather Panchali\" (1955) filminin yönetmeni kimdir?",
     "answersTr": [
       "Ritwik Ghatak",
       "Mrinal Sen",
@@ -1190,7 +1190,7 @@
   {
     "id": "sf_cin_0024",
     "category": "Sînema",
-    "prompt": "Fîlmê «Pather Panchali» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Pather Panchali\" hilberîna kîjan welatî ye?",
     "answers": [
       "Bangladeş",
       "Hindistan",
@@ -1198,7 +1198,7 @@
       "Sri Lanka"
     ],
     "correctAnswer": "Hindistan",
-    "promptTr": "«Pather Panchali» hangi ülkenin yapımıdır?",
+    "promptTr": "\"Pather Panchali\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "Bangladeş",
       "Hindistan",
@@ -1223,7 +1223,7 @@
   {
     "id": "sf_cin_0025",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Bicycle Thieves» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Bicycle Thieves\" kî ye?",
     "answers": [
       "Roberto Rossellini",
       "Vittorio De Sica",
@@ -1231,7 +1231,7 @@
       "Federico Fellini"
     ],
     "correctAnswer": "Vittorio De Sica",
-    "promptTr": "«Bicycle Thieves» filminin yönetmeni kimdir?",
+    "promptTr": "\"Bicycle Thieves\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Roberto Rossellini",
       "Vittorio De Sica",
@@ -1256,7 +1256,7 @@
   {
     "id": "sf_cin_0026",
     "category": "Sînema",
-    "prompt": "Fîlmê «Bicycle Thieves» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Bicycle Thieves\" hilberîna kîjan welatî ye?",
     "answers": [
       "Fransa",
       "Îspanya",
@@ -1264,7 +1264,7 @@
       "Yewnanistan"
     ],
     "correctAnswer": "Îtalya",
-    "promptTr": "«Bicycle Thieves» hangi ülkenin yapımıdır?",
+    "promptTr": "\"Bicycle Thieves\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "Fransa",
       "İspanya",
@@ -1289,7 +1289,7 @@
   {
     "id": "sf_cin_0027",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Citizen Kane» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Citizen Kane\" kî ye?",
     "answers": [
       "John Ford",
       "Howard Hawks",
@@ -1297,7 +1297,7 @@
       "Frank Capra"
     ],
     "correctAnswer": "Orson Welles",
-    "promptTr": "«Citizen Kane» filminin yönetmeni kimdir?",
+    "promptTr": "\"Citizen Kane\" filminin yönetmeni kimdir?",
     "answersTr": [
       "John Ford",
       "Howard Hawks",
@@ -1322,7 +1322,7 @@
   {
     "id": "sf_cin_0028",
     "category": "Sînema",
-    "prompt": "Fîlmê «Citizen Kane» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Citizen Kane\" hilberîna kîjan welatî ye?",
     "answers": [
       "Brîtanya",
       "Kanada",
@@ -1330,7 +1330,7 @@
       "DYA"
     ],
     "correctAnswer": "DYA",
-    "promptTr": "«Citizen Kane» hangi ülkenin yapımıdır?",
+    "promptTr": "\"Citizen Kane\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "Britanya",
       "Kanada",
@@ -1355,7 +1355,7 @@
   {
     "id": "sf_cin_0029",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Das Cabinet des Dr. Caligari» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Das Cabinet des Dr. Caligari\" kî ye?",
     "answers": [
       "Robert Wiene",
       "Fritz Lang",
@@ -1363,7 +1363,7 @@
       "G. W. Pabst"
     ],
     "correctAnswer": "Robert Wiene",
-    "promptTr": "«Das Cabinet des Dr. Caligari» filminin yönetmeni kimdir?",
+    "promptTr": "\"Das Cabinet des Dr. Caligari\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Robert Wiene",
       "Fritz Lang",
@@ -1388,7 +1388,7 @@
   {
     "id": "sf_cin_0030",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Rashomon» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Rashomon\" kî ye?",
     "answers": [
       "Yasujirō Ozu",
       "Kenji Mizoguchi",
@@ -1396,7 +1396,7 @@
       "Mikio Naruse"
     ],
     "correctAnswer": "Akira Kurosawa",
-    "promptTr": "«Rashomon» filminin yönetmeni kimdir?",
+    "promptTr": "\"Rashomon\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Yasujirō Ozu",
       "Kenji Mizoguchi",
@@ -1421,7 +1421,7 @@
   {
     "id": "sf_cin_0031",
     "category": "Sînema",
-    "prompt": "Fîlmê «Rashomon» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Rashomon\" di kîjan salê de derket?",
     "answers": [
       "1935",
       "1950",
@@ -1429,7 +1429,7 @@
       "1972"
     ],
     "correctAnswer": "1950",
-    "promptTr": "«Rashomon» filmi hangi yılda çıktı?",
+    "promptTr": "\"Rashomon\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1935",
       "1950",
@@ -1454,7 +1454,7 @@
   {
     "id": "sf_cin_0032",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «The 400 Blows» kî ye?",
+    "prompt": "Derhênerê fîlmê \"The 400 Blows\" kî ye?",
     "answers": [
       "Jean-Luc Godard",
       "François Truffaut",
@@ -1462,7 +1462,7 @@
       "Éric Rohmer"
     ],
     "correctAnswer": "François Truffaut",
-    "promptTr": "«The 400 Blows» filminin yönetmeni kimdir?",
+    "promptTr": "\"The 400 Blows\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Jean-Luc Godard",
       "François Truffaut",
@@ -1487,7 +1487,7 @@
   {
     "id": "sf_cin_0033",
     "category": "Sînema",
-    "prompt": "Fîlmê «The 400 Blows» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"The 400 Blows\" hilberîna kîjan welatî ye?",
     "answers": [
       "Belçîka",
       "Swîsre",
@@ -1495,7 +1495,7 @@
       "Portekîz"
     ],
     "correctAnswer": "Fransa",
-    "promptTr": "«The 400 Blows» hangi ülkenin yapımıdır?",
+    "promptTr": "\"The 400 Blows\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "Belçika",
       "İsviçre",
@@ -1520,7 +1520,7 @@
   {
     "id": "sf_cin_0034",
     "category": "Sînema",
-    "prompt": "Fîlmê «Seven Samurai» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Seven Samurai\" di kîjan salê de derket?",
     "answers": [
       "1948",
       "1954",
@@ -1528,7 +1528,7 @@
       "1970"
     ],
     "correctAnswer": "1954",
-    "promptTr": "«Seven Samurai» filmi hangi yılda çıktı?",
+    "promptTr": "\"Seven Samurai\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1948",
       "1954",
@@ -1619,7 +1619,7 @@
   {
     "id": "sf_cin_0037",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Persona» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Persona\" kî ye?",
     "answers": [
       "Ingmar Bergman",
       "Lars von Trier",
@@ -1627,7 +1627,7 @@
       "Victor Sjöström"
     ],
     "correctAnswer": "Ingmar Bergman",
-    "promptTr": "«Persona» filminin yönetmeni kimdir?",
+    "promptTr": "\"Persona\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Ingmar Bergman",
       "Lars von Trier",
@@ -1652,7 +1652,7 @@
   {
     "id": "sf_cin_0038",
     "category": "Sînema",
-    "prompt": "Fîlmê «Persona» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Persona\" hilberîna kîjan welatî ye?",
     "answers": [
       "Swêd",
       "Norwec",
@@ -1660,7 +1660,7 @@
       "Fînlanda"
     ],
     "correctAnswer": "Swêd",
-    "promptTr": "«Persona» hangi ülkenin yapımıdır?",
+    "promptTr": "\"Persona\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "İsveç",
       "Norveç",
@@ -1685,7 +1685,7 @@
   {
     "id": "sf_cin_0039",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «8½» kî ye?",
+    "prompt": "Derhênerê fîlmê \"8½\" kî ye?",
     "answers": [
       "Federico Fellini",
       "Michelangelo Antonioni",
@@ -1693,7 +1693,7 @@
       "Pier Paolo Pasolini"
     ],
     "correctAnswer": "Federico Fellini",
-    "promptTr": "«8½» filminin yönetmeni kimdir?",
+    "promptTr": "\"8½\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Federico Fellini",
       "Michelangelo Antonioni",
@@ -1718,7 +1718,7 @@
   {
     "id": "sf_cin_0040",
     "category": "Sînema",
-    "prompt": "Fîlmê «8½» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"8½\" di kîjan salê de derket?",
     "answers": [
       "1949",
       "1955",
@@ -1726,7 +1726,7 @@
       "1963"
     ],
     "correctAnswer": "1963",
-    "promptTr": "«8½» filmi hangi yılda çıktı?",
+    "promptTr": "\"8½\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1949",
       "1955",
@@ -1751,7 +1751,7 @@
   {
     "id": "sf_cin_0041",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «The Godfather» kî ye?",
+    "prompt": "Derhênerê fîlmê \"The Godfather\" kî ye?",
     "answers": [
       "Francis Ford Coppola",
       "Martin Scorsese",
@@ -1759,7 +1759,7 @@
       "Sam Peckinpah"
     ],
     "correctAnswer": "Francis Ford Coppola",
-    "promptTr": "«The Godfather» filminin yönetmeni kimdir?",
+    "promptTr": "\"The Godfather\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Francis Ford Coppola",
       "Martin Scorsese",
@@ -1784,7 +1784,7 @@
   {
     "id": "sf_cin_0042",
     "category": "Sînema",
-    "prompt": "Fîlmê «The Godfather» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"The Godfather\" di kîjan salê de derket?",
     "answers": [
       "1965",
       "1969",
@@ -1792,7 +1792,7 @@
       "1972"
     ],
     "correctAnswer": "1972",
-    "promptTr": "«The Godfather» filmi hangi yılda çıktı?",
+    "promptTr": "\"The Godfather\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1965",
       "1969",
@@ -1817,7 +1817,7 @@
   {
     "id": "sf_cin_0043",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Vertigo» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Vertigo\" kî ye?",
     "answers": [
       "Alfred Hitchcock",
       "Billy Wilder",
@@ -1825,7 +1825,7 @@
       "Otto Preminger"
     ],
     "correctAnswer": "Alfred Hitchcock",
-    "promptTr": "«Vertigo» filminin yönetmeni kimdir?",
+    "promptTr": "\"Vertigo\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Alfred Hitchcock",
       "Billy Wilder",
@@ -1850,7 +1850,7 @@
   {
     "id": "sf_cin_0044",
     "category": "Sînema",
-    "prompt": "Fîlmê «Vertigo» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Vertigo\" di kîjan salê de derket?",
     "answers": [
       "1944",
       "1951",
@@ -1858,7 +1858,7 @@
       "1958"
     ],
     "correctAnswer": "1958",
-    "promptTr": "«Vertigo» filmi hangi yılda çıktı?",
+    "promptTr": "\"Vertigo\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1944",
       "1951",
@@ -1883,7 +1883,7 @@
   {
     "id": "sf_cin_0045",
     "category": "Sînema",
-    "prompt": "Fîlmê «Sunrise A Song of Two Humans» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Sunrise A Song of Two Humans\" di kîjan salê de derket?",
     "answers": [
       "1927",
       "1935",
@@ -1891,7 +1891,7 @@
       "1919"
     ],
     "correctAnswer": "1927",
-    "promptTr": "«Sunrise A Song of Two Humans» filmi hangi yılda çıktı?",
+    "promptTr": "\"Sunrise A Song of Two Humans\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1927",
       "1935",
@@ -1916,7 +1916,7 @@
   {
     "id": "sf_cin_0046",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Man with a Movie Camera» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Man with a Movie Camera\" kî ye?",
     "answers": [
       "Sergei Eisenstein",
       "Lev Kuleshov",
@@ -1924,7 +1924,7 @@
       "Dziga Vertov"
     ],
     "correctAnswer": "Dziga Vertov",
-    "promptTr": "«Man with a Movie Camera» filminin yönetmeni kimdir?",
+    "promptTr": "\"Man with a Movie Camera\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Sergei Eisenstein",
       "Lev Kuleshov",
@@ -1949,7 +1949,7 @@
   {
     "id": "sf_cin_0047",
     "category": "Sînema",
-    "prompt": "Fîlmê «Man with a Movie Camera» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Man with a Movie Camera\" di kîjan salê de derket?",
     "answers": [
       "1929",
       "1917",
@@ -1957,7 +1957,7 @@
       "1945"
     ],
     "correctAnswer": "1929",
-    "promptTr": "«Man with a Movie Camera» filmi hangi yılda çıktı?",
+    "promptTr": "\"Man with a Movie Camera\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1929",
       "1917",
@@ -1982,7 +1982,7 @@
   {
     "id": "sf_cin_0048",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Mirror» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Mirror\" kî ye?",
     "answers": [
       "Sergei Parajanov",
       "Larisa Shepitko",
@@ -1990,7 +1990,7 @@
       "Andrei Tarkovsky"
     ],
     "correctAnswer": "Andrei Tarkovsky",
-    "promptTr": "«Mirror» filminin yönetmeni kimdir?",
+    "promptTr": "\"Mirror\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Sergei Parajanov",
       "Larisa Shepitko",
@@ -2015,7 +2015,7 @@
   {
     "id": "sf_cin_0049",
     "category": "Sînema",
-    "prompt": "Fîlmê «Mirror» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"Mirror\" di kîjan salê de derket?",
     "answers": [
       "1975",
       "1962",
@@ -2023,7 +2023,7 @@
       "1953"
     ],
     "correctAnswer": "1975",
-    "promptTr": "«Mirror» filmi hangi yılda çıktı?",
+    "promptTr": "\"Mirror\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1975",
       "1962",
@@ -2048,7 +2048,7 @@
   {
     "id": "sf_cin_0050",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «In the Mood for Love» kî ye?",
+    "prompt": "Derhênerê fîlmê \"In the Mood for Love\" kî ye?",
     "answers": [
       "John Woo",
       "Tsai Ming-liang",
@@ -2056,7 +2056,7 @@
       "Wong Kar Wai"
     ],
     "correctAnswer": "Wong Kar Wai",
-    "promptTr": "«In the Mood for Love» filminin yönetmeni kimdir?",
+    "promptTr": "\"In the Mood for Love\" filminin yönetmeni kimdir?",
     "answersTr": [
       "John Woo",
       "Tsai Ming-liang",
@@ -2081,7 +2081,7 @@
   {
     "id": "sf_cin_0051",
     "category": "Sînema",
-    "prompt": "Fîlmê «In the Mood for Love» di kîjan salê de derket?",
+    "prompt": "Fîlmê \"In the Mood for Love\" di kîjan salê de derket?",
     "answers": [
       "2000",
       "1988",
@@ -2089,7 +2089,7 @@
       "2008"
     ],
     "correctAnswer": "2000",
-    "promptTr": "«In the Mood for Love» filmi hangi yılda çıktı?",
+    "promptTr": "\"In the Mood for Love\" filmi hangi yılda çıktı?",
     "answersTr": [
       "2000",
       "1988",
@@ -2114,7 +2114,7 @@
   {
     "id": "sf_cin_0052",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Come and See» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Come and See\" kî ye?",
     "answers": [
       "Elem Klimov",
       "Andrei Tarkovsky",
@@ -2122,7 +2122,7 @@
       "Sergei Bondarchuk"
     ],
     "correctAnswer": "Elem Klimov",
-    "promptTr": "«Come and See» filminin yönetmeni kimdir?",
+    "promptTr": "\"Come and See\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Elem Klimov",
       "Andrei Tarkovsky",
@@ -2147,7 +2147,7 @@
   {
     "id": "sf_cin_0053",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê «Close-up» kî ye?",
+    "prompt": "Derhênerê fîlmê \"Close-up\" kî ye?",
     "answers": [
       "Mohsen Makhmalbaf",
       "Jafar Panahi",
@@ -2155,7 +2155,7 @@
       "Asghar Farhadi"
     ],
     "correctAnswer": "Abbas Kiarostami",
-    "promptTr": "«Close-up» filminin yönetmeni kimdir?",
+    "promptTr": "\"Close-up\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Mohsen Makhmalbaf",
       "Jafar Panahi",
@@ -2180,7 +2180,7 @@
   {
     "id": "sf_cin_0054",
     "category": "Sînema",
-    "prompt": "Fîlmê «Close-up» hilberîna kîjan welatî ye?",
+    "prompt": "Fîlmê \"Close-up\" hilberîna kîjan welatî ye?",
     "answers": [
       "Tirkiye",
       "Iraq",
@@ -2188,7 +2188,7 @@
       "Îran"
     ],
     "correctAnswer": "Îran",
-    "promptTr": "«Close-up» hangi ülkenin yapımıdır?",
+    "promptTr": "\"Close-up\" hangi ülkenin yapımıdır?",
     "answersTr": [
       "Türkiye",
       "Irak",
@@ -3071,7 +3071,7 @@
   {
     "id": "sf_tech_0007",
     "category": "Teknolojî",
-    "prompt": "Kurtenivîsa «URL» li ser çi tê avakirin?",
+    "prompt": "Kurtenivîsa \"URL\" li ser çi tê avakirin?",
     "answers": [
       "Universal Reading Language",
       "Unique Router Link",
@@ -3079,7 +3079,7 @@
       "Uniform Resource Locator"
     ],
     "correctAnswer": "Uniform Resource Locator",
-    "promptTr": "«URL» kısaltması neyin karşılığıdır?",
+    "promptTr": "\"URL\" kısaltması neyin karşılığıdır?",
     "answersTr": [
       "Universal Reading Language",
       "Unique Router Link",
@@ -3087,8 +3087,8 @@
       "Uniform Resource Locator"
     ],
     "correctAnswerTr": "Uniform Resource Locator",
-    "explanationKu": "«URL» kurtenivîsa «Uniform Resource Locator» e.",
-    "explanationTr": "«URL», «Uniform Resource Locator» ifadesinin kısaltmasıdır.",
+    "explanationKu": "\"URL\" kurtenivîsa \"Uniform Resource Locator\" e.",
+    "explanationTr": "\"URL\", \"Uniform Resource Locator\" ifadesinin kısaltmasıdır.",
     "difficulty": 2,
     "type": "multipleChoice",
     "metadata": {
@@ -3170,7 +3170,7 @@
   {
     "id": "sf_tech_0010",
     "category": "Teknolojî",
-    "prompt": "Di HTTPê de peyama «200 OK» çi nîşan dide?",
+    "prompt": "Di HTTPê de peyama \"200 OK\" çi nîşan dide?",
     "answers": [
       "Girêdan hat birîn",
       "Rûpel hat guhertin",
@@ -3178,7 +3178,7 @@
       "Navnîşan çewt e"
     ],
     "correctAnswer": "Daxwaz hat qebûlkirin",
-    "promptTr": "HTTP'de «200 OK» mesajı neyi gösterir?",
+    "promptTr": "HTTP'de \"200 OK\" mesajı neyi gösterir?",
     "answersTr": [
       "Bağlantı kesildi",
       "Sayfa değiştirildi",
@@ -3186,8 +3186,8 @@
       "Adres hatalı"
     ],
     "correctAnswerTr": "İstek kabul edildi",
-    "explanationKu": "Peyama «200 OK» nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
-    "explanationTr": "«200 OK» mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
+    "explanationKu": "Peyama \"200 OK\" nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
+    "explanationTr": "\"200 OK\" mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
     "difficulty": 2,
     "type": "multipleChoice",
     "metadata": {
@@ -3269,7 +3269,7 @@
   {
     "id": "sf_tech_0013",
     "category": "Teknolojî",
-    "prompt": "«Passphrase» çi ye?",
+    "prompt": "\"Passphrase\" çi ye?",
     "answers": [
       "Yek tîpa dubarekirî",
       "Hejmarek bi tenê",
@@ -3277,7 +3277,7 @@
       "Çend peyvên rastîn ên li hev hatî"
     ],
     "correctAnswer": "Çend peyvên rastîn ên li hev hatî",
-    "promptTr": "«Passphrase» nedir?",
+    "promptTr": "\"Passphrase\" nedir?",
     "answersTr": [
       "Tekrarlanan tek harf",
       "Yalnızca bir sayı",

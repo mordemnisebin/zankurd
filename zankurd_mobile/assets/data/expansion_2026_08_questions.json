@@ -70,7 +70,7 @@
   {
     "id": "cinema_0003",
     "category": "Sînema",
-    "prompt": "Fîlmê «Rashomon» ê ku sala 1951ê li Venedîkê Şêrê Zêrîn wergirt, ji aliyê kîjan derhênerî ve hat kişandin?",
+    "prompt": "Fîlmê \"Rashomon\" ê ku sala 1951ê li Venedîkê Şêrê Zêrîn wergirt, ji aliyê kîjan derhênerî ve hat kişandin?",
     "answers": [
       "Yasujirô Ozu",
       "Kenji Mizoguchi",
@@ -78,7 +78,7 @@
       "Nagisa Ôshima"
     ],
     "correctAnswer": "Akira Kurosawa",
-    "promptTr": "1951'de Venedik'te Altın Aslan kazanan «Rashomon» filmini hangi yönetmen çekti?",
+    "promptTr": "1951'de Venedik'te Altın Aslan kazanan \"Rashomon\" filmini hangi yönetmen çekti?",
     "answersTr": [
       "Yasujiro Ozu",
       "Kenji Mizoguchi",
@@ -138,7 +138,7 @@
   {
     "id": "cinema_0005",
     "category": "Sînema",
-    "prompt": "Nûbûna sereke ya fîlmê 1927an «The Jazz Singer» di dîroka sînemayê de çi bû?",
+    "prompt": "Nûbûna sereke ya fîlmê 1927an \"The Jazz Singer\" di dîroka sînemayê de çi bû?",
     "answers": [
       "Diyaloga hevaheng a bi deng",
       "Karanîna pêşîn a Technicolorê",
@@ -146,7 +146,7 @@
       "Yekem animasyona dirêj"
     ],
     "correctAnswer": "Diyaloga hevaheng a bi deng",
-    "promptTr": "1927 yapımı «The Jazz Singer» filminin sinema tarihindeki temel yeniliği neydi?",
+    "promptTr": "1927 yapımı \"The Jazz Singer\" filminin sinema tarihindeki temel yeniliği neydi?",
     "answersTr": [
       "Sesle eşzamanlı diyalog",
       "İlk Technicolor kullanımı",
@@ -172,7 +172,7 @@
   {
     "id": "cinema_0006",
     "category": "Sînema",
-    "prompt": "Fîlmê «Yol» ê ku sala 1982yan Palme d'Or wergirt, senaryoya wî ji aliyê kê ve hat nivîsîn?",
+    "prompt": "Fîlmê \"Yol\" ê ku sala 1982yan Palme d'Or wergirt, senaryoya wî ji aliyê kê ve hat nivîsîn?",
     "answers": [
       "Şerîf Gören",
       "Yilmaz Güney",
@@ -180,7 +180,7 @@
       "Atif Yilmaz"
     ],
     "correctAnswer": "Yilmaz Güney",
-    "promptTr": "1982'de Altın Palmiye kazanan «Yol» filminin senaryosunu kim yazdı?",
+    "promptTr": "1982'de Altın Palmiye kazanan \"Yol\" filminin senaryosunu kim yazdı?",
     "answersTr": [
       "Şerif Gören",
       "Yılmaz Güney",
@@ -188,11 +188,11 @@
       "Atıf Yılmaz"
     ],
     "correctAnswerTr": "Yılmaz Güney",
-    "explanation": "Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın «Kayıp» filmiyle paylaşıldı.",
+    "explanation": "Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın \"Kayıp\" filmiyle paylaşıldı.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın «Kayıp» filmiyle paylaşıldı.",
-    "explanationKu": "Güney senaryo dema ku li girtîgehê bû nivîsî, kişandin ji aliyê Şerif Gören ve hat kirin, hevgirêdan jî piştî ku Güney derket derveyî welat wî bi xwe kir. Xelat wê salê digel fîlmê «Kayıp» yê Costa-Gavras hat parvekirin.",
+    "explanationTr": "Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın \"Kayıp\" filmiyle paylaşıldı.",
+    "explanationKu": "Güney senaryo dema ku li girtîgehê bû nivîsî, kişandin ji aliyê Şerif Gören ve hat kirin, hevgirêdan jî piştî ku Güney derket derveyî welat wî bi xwe kir. Xelat wê salê digel fîlmê \"Kayıp\" yê Costa-Gavras hat parvekirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -260,7 +260,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Ayzenştayn bu sahnede çarpışan görüntülerle duygu üreten kurgu anlayışını gösterdi. Grev de 1925 yapımıdır ama merdiven sahnesi ona ait değildir; Ekim 1928, Korkunç İvan ise 1944 tarihlidir.",
-    "explanationKu": "Eyzenştayn di vê dîmenê de wê têgeha hevgirêdanê ku bi dîmenên li hev diqelêbin hest çêdike nîşan da. «Grev» jî berhema sala 1925an e lê dîmena pêpelûkan ne ya wê ye; «Cotmeh» ya sala 1928an e û «Îvanê Tirsnak» jî ya sala 1944an e.",
+    "explanationKu": "Eyzenştayn di vê dîmenê de wê têgeha hevgirêdanê ku bi dîmenên li hev diqelêbin hest çêdike nîşan da. \"Grev\" jî berhema sala 1925an e lê dîmena pêpelûkan ne ya wê ye; \"Cotmeh\" ya sala 1928an e û \"Îvanê Tirsnak\" jî ya sala 1944an e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -274,7 +274,7 @@
   {
     "id": "cinema_0009",
     "category": "Sînema",
-    "prompt": "Kîjan derhênerî fîlmê «Kış Uykusu» kişand, ku sala 2014an li Cannesê Palme d'Or wergirt?",
+    "prompt": "Kîjan derhênerî fîlmê \"Kış Uykusu\" kişand, ku sala 2014an li Cannesê Palme d'Or wergirt?",
     "answers": [
       "Zekî Demîrkubuz",
       "Reha Erdem",
@@ -282,7 +282,7 @@
       "Nurî Bîlge Ceylan"
     ],
     "correctAnswer": "Nurî Bîlge Ceylan",
-    "promptTr": "2014'te Cannes'da Altın Palmiye kazanan «Kış Uykusu» filmini hangi yönetmen çekti?",
+    "promptTr": "2014'te Cannes'da Altın Palmiye kazanan \"Kış Uykusu\" filmini hangi yönetmen çekti?",
     "answersTr": [
       "Zeki Demirkubuz",
       "Reha Erdem",
@@ -290,11 +290,11 @@
       "Nuri Bilge Ceylan"
     ],
     "correctAnswerTr": "Nuri Bilge Ceylan",
-    "explanation": "Kapadokya'da geçen film, Türkiye sinemasının Cannes'daki ikinci büyük ödülüdür; ilki 1982'de «Yol» ile gelmişti. Demirkubuz, Erdem ve Ustaoğlu aynı kuşaktandır ama bu filmin yönetmeni değildir.",
+    "explanation": "Kapadokya'da geçen film, Türkiye sinemasının Cannes'daki ikinci büyük ödülüdür; ilki 1982'de \"Yol\" ile gelmişti. Demirkubuz, Erdem ve Ustaoğlu aynı kuşaktandır ama bu filmin yönetmeni değildir.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Kapadokya'da geçen film, Türkiye sinemasının Cannes'daki ikinci büyük ödülüdür; ilki 1982'de «Yol» ile gelmişti. Demirkubuz, Erdem ve Ustaoğlu aynı kuşaktandır ama bu filmin yönetmeni değildir.",
-    "explanationKu": "Fîlmê ku li Kapadokyayê derbas dibe, xelata duyem a mezin a sînemaya Tirkiyeyê ye li Cannesê; ya yekem di sala 1982yan de bi fîlmê «Yol» hatibû wergirtin. Demirkubuz, Erdem û Ustaoğlu jî ji heman nifşî ne, lê derhênerê vî fîlmî ne ew in.",
+    "explanationTr": "Kapadokya'da geçen film, Türkiye sinemasının Cannes'daki ikinci büyük ödülüdür; ilki 1982'de \"Yol\" ile gelmişti. Demirkubuz, Erdem ve Ustaoğlu aynı kuşaktandır ama bu filmin yönetmeni değildir.",
+    "explanationKu": "Fîlmê ku li Kapadokyayê derbas dibe, xelata duyem a mezin a sînemaya Tirkiyeyê ye li Cannesê; ya yekem di sala 1982yan de bi fîlmê \"Yol\" hatibû wergirtin. Demirkubuz, Erdem û Ustaoğlu jî ji heman nifşî ne, lê derhênerê vî fîlmî ne ew in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -342,7 +342,7 @@
   {
     "id": "cinema_0011",
     "category": "Sînema",
-    "prompt": "Fîlmê 1902yan «Le Voyage dans la Lune» ku bi hîleyên dîmenî yên pêşîn navdar e, berhema kê ye?",
+    "prompt": "Fîlmê 1902yan \"Le Voyage dans la Lune\" ku bi hîleyên dîmenî yên pêşîn navdar e, berhema kê ye?",
     "answers": [
       "Georges Méliès",
       "Edwin S. Porter",
@@ -350,7 +350,7 @@
       "Émile Cohl"
     ],
     "correctAnswer": "Georges Méliès",
-    "promptTr": "İlk görsel hileleriyle ünlü 1902 yapımı «Aya Yolculuk» kimin filmidir?",
+    "promptTr": "İlk görsel hileleriyle ünlü 1902 yapımı \"Aya Yolculuk\" kimin filmidir?",
     "answersTr": [
       "Georges Méliès",
       "Edwin S. Porter",
@@ -376,7 +376,7 @@
   {
     "id": "cinema_0012",
     "category": "Sînema",
-    "prompt": "Navê «Bollywood» ji bo pîşesaziya fîlmên hindî yên kîjan bajarî tê bikaranîn?",
+    "prompt": "Navê \"Bollywood\" ji bo pîşesaziya fîlmên hindî yên kîjan bajarî tê bikaranîn?",
     "answers": [
       "Kolkata",
       "Çennaî",
@@ -384,7 +384,7 @@
       "Delhî"
     ],
     "correctAnswer": "Mumbai",
-    "promptTr": "«Bollywood» adı hangi şehirdeki Hint film endüstrisi için kullanılır?",
+    "promptTr": "\"Bollywood\" adı hangi şehirdeki Hint film endüstrisi için kullanılır?",
     "answersTr": [
       "Kolkata",
       "Chennai",
@@ -444,7 +444,7 @@
   {
     "id": "cinema_0014",
     "category": "Sînema",
-    "prompt": "Fîlmê 1948an «Ladri di biciclette» (Duzê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?",
+    "prompt": "Fîlmê 1948an \"Ladri di biciclette\" (Duzê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?",
     "answers": [
       "Neorealîzma îtalî",
       "Ekspresyonîzma almanî",
@@ -452,7 +452,7 @@
       "Sînemaya Nû ya Almanî"
     ],
     "correctAnswer": "Neorealîzma îtalî",
-    "promptTr": "1948 yapımı «Bisiklet Hırsızları» hangi sinema akımının örneğidir?",
+    "promptTr": "1948 yapımı \"Bisiklet Hırsızları\" hangi sinema akımının örneğidir?",
     "answersTr": [
       "İtalyan yeni gerçekçiliği",
       "Alman dışavurumculuğu",
@@ -478,7 +478,7 @@
   {
     "id": "cinema_0015",
     "category": "Sînema",
-    "prompt": "Rêzefîlma Apu bi berhema 1955an «Pather Panchali» dest pê dike; derhênerê wê kî ye?",
+    "prompt": "Rêzefîlma Apu bi berhema 1955an \"Pather Panchali\" dest pê dike; derhênerê wê kî ye?",
     "answers": [
       "Satyajit Ray",
       "Ritwik Ghatak",
@@ -486,7 +486,7 @@
       "Guru Dutt"
     ],
     "correctAnswer": "Satyajit Ray",
-    "promptTr": "Apu üçlemesi 1955 yapımı «Pather Panchali» ile başlar; bu filmin yönetmeni kimdir?",
+    "promptTr": "Apu üçlemesi 1955 yapımı \"Pather Panchali\" ile başlar; bu filmin yönetmeni kimdir?",
     "answersTr": [
       "Satyajit Ray",
       "Ritwik Ghatak",
@@ -546,7 +546,7 @@
   {
     "id": "cinema_0017",
     "category": "Sînema",
-    "prompt": "Fîlmê 1920yî «Kabîneya Doktor Caligari» bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?",
+    "prompt": "Fîlmê 1920yî \"Kabîneya Doktor Caligari\" bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?",
     "answers": [
       "Realîzma poetîk",
       "Sînema-çav",
@@ -554,7 +554,7 @@
       "Ekspresyonîzma almanî"
     ],
     "correctAnswer": "Ekspresyonîzma almanî",
-    "promptTr": "Çarpık dekorları ve keskin gölgeleriyle 1920 yapımı «Dr. Caligari'nin Muayenehanesi» hangi akımın örneğidir?",
+    "promptTr": "Çarpık dekorları ve keskin gölgeleriyle 1920 yapımı \"Dr. Caligari'nin Muayenehanesi\" hangi akımın örneğidir?",
     "answersTr": [
       "Şiirsel gerçekçilik",
       "Sine-göz",
@@ -580,7 +580,7 @@
   {
     "id": "cinema_0018",
     "category": "Sînema",
-    "prompt": "Fîlmê 2000î «Demê ku Hesp Serxweş Dibin» ku li Cannesê Caméra d'Or wergirt, ji kîjan derhênerî ye?",
+    "prompt": "Fîlmê 2000î \"Demê ku Hesp Serxweş Dibin\" ku li Cannesê Caméra d'Or wergirt, ji kîjan derhênerî ye?",
     "answers": [
       "Bahman Ghobadî",
       "Hîner Salêm",
@@ -588,7 +588,7 @@
       "Mohsen Mexmelbaf"
     ],
     "correctAnswer": "Bahman Ghobadî",
-    "promptTr": "Cannes'da Altın Kamera kazanan 2000 yapımı «Sarhoş Atlar Zamanı» hangi yönetmenin filmidir?",
+    "promptTr": "Cannes'da Altın Kamera kazanan 2000 yapımı \"Sarhoş Atlar Zamanı\" hangi yönetmenin filmidir?",
     "answersTr": [
       "Bahman Ghobadi",
       "Hiner Saleem",
@@ -648,7 +648,7 @@
   {
     "id": "cinema_0020",
     "category": "Sînema",
-    "prompt": "Kîjan lîstikvan û derhêner bi karakterê «Serserê Piçûk» ê dema sînemaya bêdeng tê nasîn?",
+    "prompt": "Kîjan lîstikvan û derhêner bi karakterê \"Serserê Piçûk\" ê dema sînemaya bêdeng tê nasîn?",
     "answers": [
       "Buster Keaton",
       "Charlie Chaplin",
@@ -656,7 +656,7 @@
       "Roscoe Arbuckle"
     ],
     "correctAnswer": "Charlie Chaplin",
-    "promptTr": "Sessiz sinema döneminin «Küçük Serseri» tipiyle tanınan oyuncu-yönetmen kimdir?",
+    "promptTr": "Sessiz sinema döneminin \"Küçük Serseri\" tipiyle tanınan oyuncu-yönetmen kimdir?",
     "answersTr": [
       "Buster Keaton",
       "Charlie Chaplin",
@@ -682,7 +682,7 @@
   {
     "id": "cinema_0021",
     "category": "Sînema",
-    "prompt": "Derhênerê swêdî yê fîlmê 1957an «Det sjunde inseglet» (Mohra Heftemîn) kî ye?",
+    "prompt": "Derhênerê swêdî yê fîlmê 1957an \"Det sjunde inseglet\" (Mohra Heftemîn) kî ye?",
     "answers": [
       "Victor Sjöström",
       "Ingmar Bergman",
@@ -690,7 +690,7 @@
       "Jan Troell"
     ],
     "correctAnswer": "Ingmar Bergman",
-    "promptTr": "1957 yapımı «Yedinci Mühür» filminin İsveçli yönetmeni kimdir?",
+    "promptTr": "1957 yapımı \"Yedinci Mühür\" filminin İsveçli yönetmeni kimdir?",
     "answersTr": [
       "Victor Sjöström",
       "Ingmar Bergman",
@@ -784,7 +784,7 @@
   {
     "id": "cinema_0024",
     "category": "Sînema",
-    "prompt": "Krîza afirînerî ya derhênerekî di fîlmê 1963yan «8½» de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?",
+    "prompt": "Krîza afirînerî ya derhênerekî di fîlmê 1963yan \"8½\" de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?",
     "answers": [
       "Luchino Visconti",
       "Federico Fellini",
@@ -792,7 +792,7 @@
       "Pier Paolo Pasolini"
     ],
     "correctAnswer": "Federico Fellini",
-    "promptTr": "1963 yapımı «8½» bir yönetmenin yaratıcılık bunalımını anlatır; film hangi İtalyan yönetmenindir?",
+    "promptTr": "1963 yapımı \"8½\" bir yönetmenin yaratıcılık bunalımını anlatır; film hangi İtalyan yönetmenindir?",
     "answersTr": [
       "Luchino Visconti",
       "Federico Fellini",
@@ -852,7 +852,7 @@
   {
     "id": "cinema_0026",
     "category": "Sînema",
-    "prompt": "Fîlmê 1959an «Les 400 coups» ku destpêka Tevgera Nû ya Fransî tê hesibandin, ji kê ye?",
+    "prompt": "Fîlmê 1959an \"Les 400 coups\" ku destpêka Tevgera Nû ya Fransî tê hesibandin, ji kê ye?",
     "answers": [
       "François Truffaut",
       "Jean-Luc Godard",
@@ -860,7 +860,7 @@
       "Jean-Pierre Melville"
     ],
     "correctAnswer": "François Truffaut",
-    "promptTr": "Fransız Yeni Dalgası'nın başlangıcı sayılan 1959 yapımı «Dört Yüz Darbe» kimin filmidir?",
+    "promptTr": "Fransız Yeni Dalgası'nın başlangıcı sayılan 1959 yapımı \"Dört Yüz Darbe\" kimin filmidir?",
     "answersTr": [
       "François Truffaut",
       "Jean-Luc Godard",
@@ -886,7 +886,7 @@
   {
     "id": "cinema_0027",
     "category": "Sînema",
-    "prompt": "Kîjan derhêner sala 1964an bi fîlmê «Susuz Yaz» li Berlînê Hirça Zêrîn wergirt?",
+    "prompt": "Kîjan derhêner sala 1964an bi fîlmê \"Susuz Yaz\" li Berlînê Hirça Zêrîn wergirt?",
     "answers": [
       "Lütfî Ö. Akad",
       "Atif Yilmaz",
@@ -894,7 +894,7 @@
       "Metîn Erksan"
     ],
     "correctAnswer": "Metîn Erksan",
-    "promptTr": "1964'te «Susuz Yaz» filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?",
+    "promptTr": "1964'te \"Susuz Yaz\" filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?",
     "answersTr": [
       "Lütfi Ö. Akad",
       "Atıf Yılmaz",
@@ -974,7 +974,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo ile Fantasia 1940, Dumbo ise 1941 yapımıdır.",
-    "explanationKu": "Yekem fîlmê dirêjmetraj ê stûdyoyê di dawiya sala 1937an de derket ser perdeyê û îsbat kir ku anîmasyona bi destan xêzkirî dikare vegotineke bi budceyeke mezin hilgire. «Pinokyo» û «Fantasia» ya sala 1940î ne, «Dumbo» jî ya sala 1941ê ye.",
+    "explanationKu": "Yekem fîlmê dirêjmetraj ê stûdyoyê di dawiya sala 1937an de derket ser perdeyê û îsbat kir ku anîmasyona bi destan xêzkirî dikare vegotineke bi budceyeke mezin hilgire. \"Pinokyo\" û \"Fantasia\" ya sala 1940î ne, \"Dumbo\" jî ya sala 1941ê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -988,7 +988,7 @@
   {
     "id": "cinema_0030",
     "category": "Sînema",
-    "prompt": "Derhênerê senegalî yê ku bi fîlmê 1966an «La Noire de…» tê nasîn kî ye?",
+    "prompt": "Derhênerê senegalî yê ku bi fîlmê 1966an \"La Noire de…\" tê nasîn kî ye?",
     "answers": [
       "Djibril Diop Mambéty",
       "Souleymane Cissé",
@@ -996,7 +996,7 @@
       "Med Hondo"
     ],
     "correctAnswer": "Ousmane Sembène",
-    "promptTr": "1966 yapımı «Kara Kız» filmiyle tanınan Senegalli yönetmen kimdir?",
+    "promptTr": "1966 yapımı \"Kara Kız\" filmiyle tanınan Senegalli yönetmen kimdir?",
     "answersTr": [
       "Djibril Diop Mambéty",
       "Souleymane Cissé",
@@ -1056,7 +1056,7 @@
   {
     "id": "cinema_0032",
     "category": "Sînema",
-    "prompt": "Manîfestoya «Dogme 95» ku qedexeyên tund li ronahiya sûnî û muzîka lêzêdekirî danî, li kîjan welatî hat ragihandin?",
+    "prompt": "Manîfestoya \"Dogme 95\" ku qedexeyên tund li ronahiya sûnî û muzîka lêzêdekirî danî, li kîjan welatî hat ragihandin?",
     "answers": [
       "Danîmarka",
       "Awistirya",
@@ -1064,7 +1064,7 @@
       "Hollanda"
     ],
     "correctAnswer": "Danîmarka",
-    "promptTr": "Yapay ışığa ve sonradan eklenen müziğe katı yasaklar koyan «Dogma 95» bildirisi hangi ülkede açıklandı?",
+    "promptTr": "Yapay ışığa ve sonradan eklenen müziğe katı yasaklar koyan \"Dogma 95\" bildirisi hangi ülkede açıklandı?",
     "answersTr": [
       "Danimarka",
       "Avusturya",
@@ -1090,7 +1090,7 @@
   {
     "id": "cinema_0033",
     "category": "Sînema",
-    "prompt": "Derhênerê hongkongî yê fîlmê 2000î «In the Mood for Love» kî ye?",
+    "prompt": "Derhênerê hongkongî yê fîlmê 2000î \"In the Mood for Love\" kî ye?",
     "answers": [
       "John Woo",
       "Tsui Hark",
@@ -1098,7 +1098,7 @@
       "Wong Kar-waî"
     ],
     "correctAnswer": "Wong Kar-waî",
-    "promptTr": "2000 yapımı «Aşk Zamanı» filminin Hong Konglu yönetmeni kimdir?",
+    "promptTr": "2000 yapımı \"Aşk Zamanı\" filminin Hong Konglu yönetmeni kimdir?",
     "answersTr": [
       "John Woo",
       "Tsui Hark",
@@ -1158,7 +1158,7 @@
   {
     "id": "cinema_0035",
     "category": "Sînema",
-    "prompt": "Kûrahiya zeviyê ya berfireh bi fîlmê 1941ê «Citizen Kane» navdar bû; derhênerê wî kî ye?",
+    "prompt": "Kûrahiya zeviyê ya berfireh bi fîlmê 1941ê \"Citizen Kane\" navdar bû; derhênerê wî kî ye?",
     "answers": [
       "Orson Welles",
       "Howard Hawks",
@@ -1166,7 +1166,7 @@
       "Billy Wilder"
     ],
     "correctAnswer": "Orson Welles",
-    "promptTr": "Geniş alan derinliği 1941 yapımı «Yurttaş Kane» ile ün kazandı; bu filmin yönetmeni kimdir?",
+    "promptTr": "Geniş alan derinliği 1941 yapımı \"Yurttaş Kane\" ile ün kazandı; bu filmin yönetmeni kimdir?",
     "answersTr": [
       "Orson Welles",
       "Howard Hawks",
@@ -1192,7 +1192,7 @@
   {
     "id": "cinema_0036",
     "category": "Sînema",
-    "prompt": "Sala 2010an li Berlînê Hirça Zêrîn ji fîlmê «Bal» re hat dayîn; derhênerê vî fîlmî kî ye?",
+    "prompt": "Sala 2010an li Berlînê Hirça Zêrîn ji fîlmê \"Bal\" re hat dayîn; derhênerê vî fîlmî kî ye?",
     "answers": [
       "Derviş Zaîm",
       "Özcan Alper",
@@ -1200,7 +1200,7 @@
       "Kazim Öz"
     ],
     "correctAnswer": "Semîh Kaplanoglu",
-    "promptTr": "2010'da Berlin'de Altın Ayı «Bal» filmine verildi; bu filmin yönetmeni kimdir?",
+    "promptTr": "2010'da Berlin'de Altın Ayı \"Bal\" filmine verildi; bu filmin yönetmeni kimdir?",
     "answersTr": [
       "Derviş Zaim",
       "Özcan Alper",
@@ -1212,7 +1212,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Bal, yönetmenin Yusuf üçlemesinin son halkasıdır; üçleme zamanda geriye doğru ilerleyip çocukluğa varır. Zaim, Alper ve Öz de aynı dönemin bağımsız yönetmenleridir.",
-    "explanationKu": "«Bal» ya dawî ya sêyemîna Yusuf a derhêner e; sêyemîn di demê de bi paş ve diçe û digihîje zaroktiyê. Zaim, Alper û Öz jî derhênerên serbixwe yên heman serdemê ne.",
+    "explanationKu": "\"Bal\" ya dawî ya sêyemîna Yusuf a derhêner e; sêyemîn di demê de bi paş ve diçe û digihîje zaroktiyê. Zaim, Alper û Öz jî derhênerên serbixwe yên heman serdemê ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1260,7 +1260,7 @@
   {
     "id": "cinema_0038",
     "category": "Sînema",
-    "prompt": "Kîjan kovara fransî di salên 1950î de nêrîna «derhêner nivîskarê fîlmî ye» belav kir?",
+    "prompt": "Kîjan kovara fransî di salên 1950î de nêrîna \"derhêner nivîskarê fîlmî ye\" belav kir?",
     "answers": [
       "Sight and Sound",
       "Positif",
@@ -1268,7 +1268,7 @@
       "Variety"
     ],
     "correctAnswer": "Cahiers du cinéma",
-    "promptTr": "1950'lerde «yönetmen filmin yazarıdır» görüşünü hangi Fransız dergi yaydı?",
+    "promptTr": "1950'lerde \"yönetmen filmin yazarıdır\" görüşünü hangi Fransız dergi yaydı?",
     "answersTr": [
       "Sight and Sound",
       "Positif",
@@ -1294,7 +1294,7 @@
   {
     "id": "cinema_0039",
     "category": "Sînema",
-    "prompt": "Palme d'Or a sala 2019an ji fîlmê «Parasite» re hat dayîn; ev fîlm ji kîjan welatî ye?",
+    "prompt": "Palme d'Or a sala 2019an ji fîlmê \"Parasite\" re hat dayîn; ev fîlm ji kîjan welatî ye?",
     "answers": [
       "Japonya",
       "Koreya Başûr",
@@ -1302,7 +1302,7 @@
       "Taywan"
     ],
     "correctAnswer": "Koreya Başûr",
-    "promptTr": "2019 Altın Palmiye'si «Parazit» filmine verildi; bu film hangi ülkenindir?",
+    "promptTr": "2019 Altın Palmiye'si \"Parazit\" filmine verildi; bu film hangi ülkenindir?",
     "answersTr": [
       "Japonya",
       "Güney Kore",
@@ -1362,7 +1362,7 @@
   {
     "id": "cinema_0041",
     "category": "Sînema",
-    "prompt": "Dîmena duşê ya fîlmê 1960î «Psycho» berhema kîjan derhênerî ye?",
+    "prompt": "Dîmena duşê ya fîlmê 1960î \"Psycho\" berhema kîjan derhênerî ye?",
     "answers": [
       "Henri-Georges Clouzot",
       "Otto Preminger",
@@ -1370,7 +1370,7 @@
       "Alfred Hitchcock"
     ],
     "correctAnswer": "Alfred Hitchcock",
-    "promptTr": "1960 yapımı «Sapık» filminin duş sahnesi hangi yönetmenin işidir?",
+    "promptTr": "1960 yapımı \"Sapık\" filminin duş sahnesi hangi yönetmenin işidir?",
     "answersTr": [
       "Henri-Georges Clouzot",
       "Otto Preminger",
@@ -1396,7 +1396,7 @@
   {
     "id": "cinema_0042",
     "category": "Sînema",
-    "prompt": "Fîlmê 2003yan «Vodka Lemon» ji kîjan derhênerê kurd e?",
+    "prompt": "Fîlmê 2003yan \"Vodka Lemon\" ji kîjan derhênerê kurd e?",
     "answers": [
       "Bahman Ghobadî",
       "Hîner Salêm",
@@ -1404,7 +1404,7 @@
       "Mano Xelîl"
     ],
     "correctAnswer": "Hîner Salêm",
-    "promptTr": "2003 yapımı «Vodka Lemon» hangi Kürt yönetmenin filmidir?",
+    "promptTr": "2003 yapımı \"Vodka Lemon\" hangi Kürt yönetmenin filmidir?",
     "answersTr": [
       "Bahman Ghobadi",
       "Hiner Saleem",
@@ -1498,7 +1498,7 @@
   {
     "id": "cinema_0045",
     "category": "Sînema",
-    "prompt": "Di sînemaya tirkî de navê «Yeşilçam» behsa çi dike?",
+    "prompt": "Di sînemaya tirkî de navê \"Yeşilçam\" behsa çi dike?",
     "answers": [
       "Festîvaleke fîlman li Anqereyê",
       "Xelateke sînemayê ya salane",
@@ -1506,7 +1506,7 @@
       "Pîşesaziya fîlman a Îstenbolê"
     ],
     "correctAnswer": "Pîşesaziya fîlman a Îstenbolê",
-    "promptTr": "Türk sinemasında «Yeşilçam» adı neyi anlatır?",
+    "promptTr": "Türk sinemasında \"Yeşilçam\" adı neyi anlatır?",
     "answersTr": [
       "Ankara'daki bir film festivali",
       "Yıllık bir sinema ödülü",
@@ -1600,7 +1600,7 @@
   {
     "id": "cinema_0048",
     "category": "Sînema",
-    "prompt": "Derhênerê spanî yê ku bi fîlmê xwe yê 1999an «Dayika Min» Oscara fîlmê biyanî wergirt kî ye?",
+    "prompt": "Derhênerê spanî yê ku bi fîlmê xwe yê 1999an \"Dayika Min\" Oscara fîlmê biyanî wergirt kî ye?",
     "answers": [
       "Carlos Saura",
       "Luis Buñuel",
@@ -1608,7 +1608,7 @@
       "Alejandro Amenábar"
     ],
     "correctAnswer": "Pedro Almodóvar",
-    "promptTr": "1999 yapımı «Annem Hakkında Her Şey» ile yabancı film Oscarı kazanan İspanyol yönetmen kimdir?",
+    "promptTr": "1999 yapımı \"Annem Hakkında Her Şey\" ile yabancı film Oscarı kazanan İspanyol yönetmen kimdir?",
     "answersTr": [
       "Carlos Saura",
       "Luis Buñuel",
@@ -1668,7 +1668,7 @@
   {
     "id": "cinema_0050",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê 1979an «Stalker» ê ku li Yekîtiya Sovyetê hat kişandin kî ye?",
+    "prompt": "Derhênerê fîlmê 1979an \"Stalker\" ê ku li Yekîtiya Sovyetê hat kişandin kî ye?",
     "answers": [
       "Andrey Tarkovskî",
       "Sergey Parajanov",
@@ -1676,7 +1676,7 @@
       "Nikita Mihalkov"
     ],
     "correctAnswer": "Andrey Tarkovskî",
-    "promptTr": "Sovyetler Birliği'nde çekilen 1979 yapımı «İz Sürücü» filminin yönetmeni kimdir?",
+    "promptTr": "Sovyetler Birliği'nde çekilen 1979 yapımı \"İz Sürücü\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Andrey Tarkovski",
       "Sergey Parajanov",
@@ -1702,7 +1702,7 @@
   {
     "id": "cinema_0051",
     "category": "Sînema",
-    "prompt": "Kîjan derhêner sala 2004an bi fîlmê «Gegen die Wand» li Berlînê Hirça Zêrîn wergirt?",
+    "prompt": "Kîjan derhêner sala 2004an bi fîlmê \"Gegen die Wand\" li Berlînê Hirça Zêrîn wergirt?",
     "answers": [
       "Ferzan Özpetek",
       "Thomas Arslan",
@@ -1710,7 +1710,7 @@
       "Yüksel Yavuz"
     ],
     "correctAnswer": "Fatîh Akin",
-    "promptTr": "2004'te «Duvara Karşı» filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?",
+    "promptTr": "2004'te \"Duvara Karşı\" filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?",
     "answersTr": [
       "Ferzan Özpetek",
       "Thomas Arslan",
@@ -1770,7 +1770,7 @@
   {
     "id": "cinema_0053",
     "category": "Sînema",
-    "prompt": "Palme d'Or a 1997an çû fîlmê «Ta'm-e Guilass»; ev berhem ya kîjan derhênerê îranî ye?",
+    "prompt": "Palme d'Or a 1997an çû fîlmê \"Ta'm-e Guilass\"; ev berhem ya kîjan derhênerê îranî ye?",
     "answers": [
       "Asghar Ferhadî",
       "Macîd Macîdî",
@@ -1778,7 +1778,7 @@
       "Abbas Kiarostamî"
     ],
     "correctAnswer": "Abbas Kiarostamî",
-    "promptTr": "1997 Altın Palmiye'si «Kiraz Tadı» filmine gitti; bu film hangi İranlı yönetmenindir?",
+    "promptTr": "1997 Altın Palmiye'si \"Kiraz Tadı\" filmine gitti; bu film hangi İranlı yönetmenindir?",
     "answersTr": [
       "Asghar Farhadi",
       "Macid Macidi",
@@ -1804,7 +1804,7 @@
   {
     "id": "cinema_0054",
     "category": "Sînema",
-    "prompt": "Amûra «Kinetoscope» ku fîlm tenê ji bo temaşevanekî bi qulikekê nîşan dida, li kîjan laboratûvarê hat pêşxistin?",
+    "prompt": "Amûra \"Kinetoscope\" ku fîlm tenê ji bo temaşevanekî bi qulikekê nîşan dida, li kîjan laboratûvarê hat pêşxistin?",
     "answers": [
       "Laboratûvara Edison",
       "Laboratûvara Lumière",
@@ -1812,7 +1812,7 @@
       "Enstîtuya Marey"
     ],
     "correctAnswer": "Laboratûvara Edison",
-    "promptTr": "Filmi tek bir izleyiciye delikten gösteren «Kinetoskop» hangi laboratuvarda geliştirildi?",
+    "promptTr": "Filmi tek bir izleyiciye delikten gösteren \"Kinetoskop\" hangi laboratuvarda geliştirildi?",
     "answersTr": [
       "Edison laboratuvarı",
       "Lumière laboratuvarı",
@@ -1838,7 +1838,7 @@
   {
     "id": "cinema_0055",
     "category": "Sînema",
-    "prompt": "Fîlmê 1999an «Güneşe Yolculuk» ji kîjan derhênerî ye?",
+    "prompt": "Fîlmê 1999an \"Güneşe Yolculuk\" ji kîjan derhênerî ye?",
     "answers": [
       "Zekî Demîrkubuz",
       "Handan Îpekçî",
@@ -1846,7 +1846,7 @@
       "Serdar Akar"
     ],
     "correctAnswer": "Yeşîm Ustaoglu",
-    "promptTr": "1999 yapımı «Güneşe Yolculuk» hangi yönetmenin filmidir?",
+    "promptTr": "1999 yapımı \"Güneşe Yolculuk\" hangi yönetmenin filmidir?",
     "answersTr": [
       "Zeki Demirkubuz",
       "Handan İpekçi",
@@ -1906,7 +1906,7 @@
   {
     "id": "tech_core_0002",
     "category": "Teknolojî",
-    "prompt": "Kîjan parçeyê kompîterê fermanên bernameyan bi cih tîne û wek «mejî» tê nasîn?",
+    "prompt": "Kîjan parçeyê kompîterê fermanên bernameyan bi cih tîne û wek \"mejî\" tê nasîn?",
     "answers": [
       "Dîska hişk",
       "Karta grafîkê",
@@ -1914,7 +1914,7 @@
       "Çavkaniya enerjiyê"
     ],
     "correctAnswer": "Pêvajoker (CPU)",
-    "promptTr": "Program komutlarını yürüten ve bilgisayarın «beyni» sayılan parça hangisidir?",
+    "promptTr": "Program komutlarını yürüten ve bilgisayarın \"beyni\" sayılan parça hangisidir?",
     "answersTr": [
       "Sabit disk",
       "Ekran kartı",
@@ -2280,7 +2280,7 @@
   {
     "id": "tech_core_0013",
     "category": "Teknolojî",
-    "prompt": "Têgeha «nermalav» çi vedibêje?",
+    "prompt": "Têgeha \"nermalav\" çi vedibêje?",
     "answers": [
       "Parçeyên fizîkî yên ku mirov dikare bi dest bigire",
       "Bername û fermanên ku li ser kompîterê dixebitin",
@@ -3028,7 +3028,7 @@
   {
     "id": "tech_core_0035",
     "category": "Teknolojî",
-    "prompt": "Têgeha «latency» di torê de çi dipîve?",
+    "prompt": "Têgeha \"latency\" di torê de çi dipîve?",
     "answers": [
       "Hejmara amûrên girêdayî",
       "Mezinahiya giştî ya pelên hatine daxistin",
@@ -5612,7 +5612,7 @@
   {
     "id": "ziman_x_0001",
     "category": "Ziman",
-    "prompt": "Kîjan peyva kurmancî tê wateya 'kar'a tirkî?",
+    "prompt": "Kîjan peyva kurmancî tê wateya \"kar\"a tirkî?",
     "answers": [
       "Baran",
       "Ba",
@@ -5620,7 +5620,7 @@
       "Ewr"
     ],
     "correctAnswer": "Berf",
-    "promptTr": "Türkçedeki «kar» sözcüğünün Kurmancî karşılığı hangisidir?",
+    "promptTr": "Türkçedeki \"kar\" sözcüğünün Kurmancî karşılığı hangisidir?",
     "answersTr": [
       "Baran",
       "Ba",
@@ -5632,7 +5632,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Berf, gökten yağan kar demektir. Baran yağmur, ba rüzgâr, ewr ise buluttur; dördü de hava olaylarıyla ilgili olduğu için sık karıştırılır.",
-    "explanationKu": "Berf tê wateya 'kar'ê (berfa ku ji ezmên dikeve). Baran 'yağmur'ê, ba 'rüzgar'ê, ewr jî 'bulut'ê nîşan dide; ji ber ku her çar jî bi rewşa hewa ve girêdayî ne, pir caran tên tevlihevkirin.",
+    "explanationKu": "Berf tê wateya \"kar\"ê (berfa ku ji ezmên dikeve). Baran \"yağmur\"ê, ba \"rüzgar\"ê, ewr jî \"bulut\"ê nîşan dide; ji ber ku her çar jî bi rewşa hewa ve girêdayî ne, pir caran tên tevlihevkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5646,7 +5646,7 @@
   {
     "id": "ziman_x_0002",
     "category": "Ziman",
-    "prompt": "Li ser sifreyê «nan» heye. Ev peyv bi tirkî çi ye?",
+    "prompt": "Li ser sifreyê \"nan\" heye. Ev peyv bi tirkî çi ye?",
     "answers": [
       "Süt",
       "Et",
@@ -5654,7 +5654,7 @@
       "Ekmek"
     ],
     "correctAnswer": "Ekmek",
-    "promptTr": "Sofrada «nan» var. Bu kelimenin Türkçesi nedir?",
+    "promptTr": "Sofrada \"nan\" var. Bu kelimenin Türkçesi nedir?",
     "answersTr": [
       "Süt",
       "Et",
@@ -5666,7 +5666,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Nan, un ve sudan yapılan ekmektir. Süt şîr, et goşt, peynir penîr olarak geçer; hepsi temel besin adı olduğu için şıklar aynı sınıftandır.",
-    "explanationKu": "Nan, nanê ku ji ard û avê tê çêkirin e. Şîr tê wateya 'süt'ê, goşt tê wateya 'et'ê, penîr jî tê wateya 'peynir'ê; ji ber ku hemû navên xwarinên bingehîn in, vebijark di heman kategoriyê de ne.",
+    "explanationKu": "Nan, nanê ku ji ard û avê tê çêkirin e. Şîr tê wateya \"süt\"ê, goşt tê wateya \"et\"ê, penîr jî tê wateya \"peynir\"ê; ji ber ku hemû navên xwarinên bingehîn in, vebijark di heman kategoriyê de ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5680,7 +5680,7 @@
   {
     "id": "ziman_x_0003",
     "category": "Ziman",
-    "prompt": "Navdêra «mal» mê ye. Ji bo wateya «evim» kîjan form rast e?",
+    "prompt": "Navdêra \"mal\" mê ye. Ji bo wateya \"evim\" kîjan form rast e?",
     "answers": [
       "malê min",
       "mala min",
@@ -5688,7 +5688,7 @@
       "malek min"
     ],
     "correctAnswer": "mala min",
-    "promptTr": "«Mal» adı dişildir. «Evim» anlamı için doğru biçim hangisidir?",
+    "promptTr": "\"Mal\" adı dişildir. \"Evim\" anlamı için doğru biçim hangisidir?",
     "answersTr": [
       "malê min",
       "mala min",
@@ -5696,11 +5696,11 @@
       "malek min"
     ],
     "correctAnswerTr": "mala min",
-    "explanation": "Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden «mala min» denir. -ê eril tekile, -ên çoğula aittir; «malek» ise belirsiz tekildir.",
+    "explanation": "Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden \"mala min\" denir. -ê eril tekile, -ên çoğula aittir; \"malek\" ise belirsiz tekildir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden «mala min» denir. -ê eril tekile, -ên çoğula aittir; «malek» ise belirsiz tekildir.",
-    "explanationKu": "Di kurmancî de nîşana îzafeyê ya navdêrên mê yên yekjimar -a ye, ji ber vê yekê tê gotin «mala min». -ê ji bo nêrê yekjimar e, -ên jî ji bo pirjimar e; «malek» jî forma nediyar a yekjimar e.",
+    "explanationTr": "Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden \"mala min\" denir. -ê eril tekile, -ên çoğula aittir; \"malek\" ise belirsiz tekildir.",
+    "explanationKu": "Di kurmancî de nîşana îzafeyê ya navdêrên mê yên yekjimar -a ye, ji ber vê yekê tê gotin \"mala min\". -ê ji bo nêrê yekjimar e, -ên jî ji bo pirjimar e; \"malek\" jî forma nediyar a yekjimar e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5714,7 +5714,7 @@
   {
     "id": "ziman_x_0004",
     "category": "Ziman",
-    "prompt": "Cînavka «hûn» bi tirkî çi ye?",
+    "prompt": "Cînavka \"hûn\" bi tirkî çi ye?",
     "answers": [
       "Biz",
       "Siz",
@@ -5722,7 +5722,7 @@
       "Sen"
     ],
     "correctAnswer": "Siz",
-    "promptTr": "«Hûn» zamirinin Türkçe karşılığı nedir?",
+    "promptTr": "\"Hûn\" zamirinin Türkçe karşılığı nedir?",
     "answersTr": [
       "Biz",
       "Siz",
@@ -5730,11 +5730,11 @@
       "Sen"
     ],
     "correctAnswerTr": "Siz",
-    "explanation": "Hûn, çoğul ikinci kişiyi yani «siz» anlamına gelir. «Biz» em, «onlar» ew, «sen» ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.",
+    "explanation": "Hûn, çoğul ikinci kişiyi yani \"siz\" anlamına gelir. \"Biz\" em, \"onlar\" ew, \"sen\" ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Hûn, çoğul ikinci kişiyi yani «siz» anlamına gelir. «Biz» em, «onlar» ew, «sen» ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.",
-    "explanationKu": "Hûn cînavka kesê duyem a pirjimar e û wateya wê «siz» e. Em ji bo peyva «biz», ew ji bo «onlar», tu jî ji bo «sen» tê bikaranîn; her çar jî cînavkên kesane ne.",
+    "explanationTr": "Hûn, çoğul ikinci kişiyi yani \"siz\" anlamına gelir. \"Biz\" em, \"onlar\" ew, \"sen\" ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.",
+    "explanationKu": "Hûn cînavka kesê duyem a pirjimar e û wateya wê \"siz\" e. Em ji bo peyva \"biz\", ew ji bo \"onlar\", tu jî ji bo \"sen\" tê bikaranîn; her çar jî cînavkên kesane ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5802,7 +5802,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Eş anlamlı sözcükler farklı yazılır, aynı anlamı taşır: yıl ile sene gibi. Zıt anlamlı karşıtlığı, eş sesli ise aynı yazılışta farklı anlamı gösterir.",
-    "explanationKu": "Peyvên hevwate bi awayên cuda tên nivîsandin lê heman wateyê dihewînin, wek «sal» û «sene». Peyvên dijwate wateya berevajî, peyvên hevdeng jî heman nivîsê lê wateyên cuda nîşan didin.",
+    "explanationKu": "Peyvên hevwate bi awayên cuda tên nivîsandin lê heman wateyê dihewînin, wek \"sal\" û \"sene\". Peyvên dijwate wateya berevajî, peyvên hevdeng jî heman nivîsê lê wateyên cuda nîşan didin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5816,7 +5816,7 @@
   {
     "id": "ziman_x_0007",
     "category": "Ziman",
-    "prompt": "Rengê «kesk» di tirkî de kîjan reng e?",
+    "prompt": "Rengê \"kesk\" di tirkî de kîjan reng e?",
     "answers": [
       "Sarı",
       "Yeşil",
@@ -5824,7 +5824,7 @@
       "Kırmızı"
     ],
     "correctAnswer": "Yeşil",
-    "promptTr": "«Kesk» rengi Türkçede hangi renktir?",
+    "promptTr": "\"Kesk\" rengi Türkçede hangi renktir?",
     "answersTr": [
       "Sarı",
       "Yeşil",
@@ -5836,7 +5836,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Kesk yeşil demektir. Sarı zer, mavi şîn, kırmızı ise sordur; dördü de temel renk adı olduğu için aynı kavram sınıfındadır.",
-    "explanationKu": "Kesk tê wateya 'yeşil'ê. Zer 'sarı'yê, şîn 'mavi'yê, sor jî 'kırmızı'yê nîşan dide; ji ber ku her çar jî navên rengên bingehîn in, di heman kategoriyê de ne.",
+    "explanationKu": "Kesk tê wateya \"yeşil\"ê. Zer \"sarı\"yê, şîn \"mavi\"yê, sor jî \"kırmızı\"yê nîşan dide; ji ber ku her çar jî navên rengên bingehîn in, di heman kategoriyê de ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5850,7 +5850,7 @@
   {
     "id": "ziman_x_0008",
     "category": "Ziman",
-    "prompt": "Kîjan hevok wateya «Ekmeği yedim» bi rêziman rast dide?",
+    "prompt": "Kîjan hevok wateya \"Ekmeği yedim\" bi rêziman rast dide?",
     "answers": [
       "Ez nan xwar",
       "Min nan xwar",
@@ -5858,7 +5858,7 @@
       "Min nan dixwe"
     ],
     "correctAnswer": "Min nan xwar",
-    "promptTr": "«Ekmeği yedim» anlamını dilbilgisi açısından doğru veren cümle hangisidir?",
+    "promptTr": "\"Ekmeği yedim\" anlamını dilbilgisi açısından doğru veren cümle hangisidir?",
     "answersTr": [
       "Ez nan xwar",
       "Min nan xwar",
@@ -5866,11 +5866,11 @@
       "Min nan dixwe"
     ],
     "correctAnswerTr": "Min nan xwar",
-    "explanation": "Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden «ez» yerine «min» gelir. «Ez nan dixwim» ise ekmek yiyorum demektir.",
+    "explanation": "Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden \"ez\" yerine \"min\" gelir. \"Ez nan dixwim\" ise ekmek yiyorum demektir.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden «ez» yerine «min» gelir. «Ez nan dixwim» ise ekmek yiyorum demektir.",
-    "explanationKu": "Di dema borî ya lêkerên gerguhêz de kirde vediguhere forma xwar, ji ber vê yekê li şûna «ez», «min» tê bikaranîn. Hevoka «Ez nan dixwim» wateya xwarina nên dide.",
+    "explanationTr": "Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden \"ez\" yerine \"min\" gelir. \"Ez nan dixwim\" ise ekmek yiyorum demektir.",
+    "explanationKu": "Di dema borî ya lêkerên gerguhêz de kirde vediguhere forma xwar, ji ber vê yekê li şûna \"ez\", \"min\" tê bikaranîn. Hevoka \"Ez nan dixwim\" wateya xwarina nên dide.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5884,7 +5884,7 @@
   {
     "id": "ziman_x_0009",
     "category": "Ziman",
-    "prompt": "Di malbatê de «dayik» kê nîşan dide?",
+    "prompt": "Di malbatê de \"dayik\" kê nîşan dide?",
     "answers": [
       "Abla",
       "Teyze",
@@ -5892,7 +5892,7 @@
       "Nine"
     ],
     "correctAnswer": "Anne",
-    "promptTr": "Ailede «dayik» kimi belirtir?",
+    "promptTr": "Ailede \"dayik\" kimi belirtir?",
     "answersTr": [
       "Abla",
       "Teyze",
@@ -5904,7 +5904,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Dayik, kısa biçimiyle dê, anne demektir. Teyze xaltî, nine dapîr olarak geçer; hepsi kadın akraba adı olduğu için karıştırılabilir.",
-    "explanationKu": "Dayik, ku bi kurtasî wek «dê» jî tê gotin, wateya peyva «anne» dide. Xaltî ji bo «teyze», dapîr jî ji bo «nine» tê bikaranîn; hemû navên merivên jin in.",
+    "explanationKu": "Dayik, ku bi kurtasî wek \"dê\" jî tê gotin, wateya peyva \"anne\" dide. Xaltî ji bo \"teyze\", dapîr jî ji bo \"nine\" tê bikaranîn; hemû navên merivên jin in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5918,7 +5918,7 @@
   {
     "id": "ziman_x_0010",
     "category": "Ziman",
-    "prompt": "Kîjan form wateya «kitaplarım» bi kurmancî rast dide?",
+    "prompt": "Kîjan form wateya \"kitaplarım\" bi kurmancî rast dide?",
     "answers": [
       "pirtûka min",
       "pirtûkan min",
@@ -5926,7 +5926,7 @@
       "pirtûkek min"
     ],
     "correctAnswer": "pirtûkên min",
-    "promptTr": "«Kitaplarım» anlamını doğru veren biçim hangisidir?",
+    "promptTr": "\"Kitaplarım\" anlamını doğru veren biçim hangisidir?",
     "answersTr": [
       "pirtûka min",
       "pirtûkan min",
@@ -5934,11 +5934,11 @@
       "pirtûkek min"
     ],
     "correctAnswerTr": "pirtûkên min",
-    "explanation": "Çoğul izafe eki -ên'dir. «Pirtûka min» tekil dişil biçimdir, «pirtûkek» bir kitap demektir, «pirtûkan» ise tek başına izafe kuramaz.",
+    "explanation": "Çoğul izafe eki -ên'dir. \"Pirtûka min\" tekil dişil biçimdir, \"pirtûkek\" bir kitap demektir, \"pirtûkan\" ise tek başına izafe kuramaz.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Çoğul izafe eki -ên'dir. «Pirtûka min» tekil dişil biçimdir, «pirtûkek» bir kitap demektir, «pirtûkan» ise tek başına izafe kuramaz.",
-    "explanationKu": "Nîşana îzafeyê ya pirjimar -ên e. «Pirtûka min» forma yekjimar a mê ye, «pirtûkek» jî tê wateya kitêbek, lê «pirtûkan» bi tena serê xwe nikare îzafeyê ava bike.",
+    "explanationTr": "Çoğul izafe eki -ên'dir. \"Pirtûka min\" tekil dişil biçimdir, \"pirtûkek\" bir kitap demektir, \"pirtûkan\" ise tek başına izafe kuramaz.",
+    "explanationKu": "Nîşana îzafeyê ya pirjimar -ên e. \"Pirtûka min\" forma yekjimar a mê ye, \"pirtûkek\" jî tê wateya kitêbek, lê \"pirtûkan\" bi tena serê xwe nikare îzafeyê ava bike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5972,7 +5972,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Heft yedidir. Beş pênc, altı şeş, sekiz heşttir; şeş ile heşt sesçe yakın olduğu için sık karıştırılır.",
-    "explanationKu": "Heft tê wateya 'yedi'yê. Pênc 'beş'ê, şeş 'altı'yê, heşt jî 'sekiz'ê nîşan dide; ji ber ku şeş û heşt di deng de nêzî hev in, pir caran tên tevlihevkirin.",
+    "explanationKu": "Heft tê wateya \"yedi\"yê. Pênc \"beş\"ê, şeş \"altı\"yê, heşt jî \"sekiz\"ê nîşan dide; ji ber ku şeş û heşt di deng de nêzî hev in, pir caran tên tevlihevkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6020,7 +6020,7 @@
   {
     "id": "ziman_x_0013",
     "category": "Ziman",
-    "prompt": "Hevoka «Ez diçim» çawa tê neyînîkirin?",
+    "prompt": "Hevoka \"Ez diçim\" çawa tê neyînîkirin?",
     "answers": [
       "Ez neçim",
       "Ez nediçim",
@@ -6028,7 +6028,7 @@
       "Ez naçim"
     ],
     "correctAnswer": "Ez naçim",
-    "promptTr": "«Ez diçim» cümlesi nasıl olumsuz yapılır?",
+    "promptTr": "\"Ez diçim\" cümlesi nasıl olumsuz yapılır?",
     "answersTr": [
       "Ez neçim",
       "Ez nediçim",
@@ -6036,11 +6036,11 @@
       "Ez naçim"
     ],
     "correctAnswerTr": "Ez naçim",
-    "explanation": "Bildirme kipinde di- öneki yerini na- ekine bırakır: diçim olumsuzda naçim olur. «Neçim» ile «biçim» istek kipine aittir.",
+    "explanation": "Bildirme kipinde di- öneki yerini na- ekine bırakır: diçim olumsuzda naçim olur. \"Neçim\" ile \"biçim\" istek kipine aittir.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Bildirme kipinde di- öneki yerini na- ekine bırakır: diçim olumsuzda naçim olur. «Neçim» ile «biçim» istek kipine aittir.",
-    "explanationKu": "Di kipa nîşandekê de pêşgira di- cihê xwe dide na-yê: «diçim» di neyînî de dibe «naçim». «Neçim» û «biçim» jî ên kipa daxwazê ne.",
+    "explanationTr": "Bildirme kipinde di- öneki yerini na- ekine bırakır: diçim olumsuzda naçim olur. \"Neçim\" ile \"biçim\" istek kipine aittir.",
+    "explanationKu": "Di kipa nîşandekê de pêşgira di- cihê xwe dide na-yê: \"diçim\" di neyînî de dibe \"naçim\". \"Neçim\" û \"biçim\" jî ên kipa daxwazê ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6054,7 +6054,7 @@
   {
     "id": "ziman_x_0014",
     "category": "Ziman",
-    "prompt": "Ajalê ku bi tirkî «at» e, bi kurmancî çi ye?",
+    "prompt": "Ajalê ku bi tirkî \"at\" e, bi kurmancî çi ye?",
     "answers": [
       "Ker",
       "Ga",
@@ -6062,7 +6062,7 @@
       "Bizin"
     ],
     "correctAnswer": "Hesp",
-    "promptTr": "«At» hayvanının Kurmancî adı hangisidir?",
+    "promptTr": "\"At\" hayvanının Kurmancî adı hangisidir?",
     "answersTr": [
       "Ker",
       "Ga",
@@ -6074,7 +6074,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Hesp at demektir. Ker eşek, ga öküz, kûçik ise köpektir; dördü de evcil hayvan adı olduğu için şıklar aynı sınıftandır.",
-    "explanationKu": "Hesp tê wateya 'at'ê. Ker 'eşek'ê, ga 'öküz'ê, kûçik jî 'köpek'ê nîşan dide; ji ber ku her çar jî navên heywanên kedî ne, vebijark di heman kategoriyê de ne.",
+    "explanationKu": "Hesp tê wateya \"at\"ê. Ker \"eşek\"ê, ga \"öküz\"ê, kûçik jî \"köpek\"ê nîşan dide; ji ber ku her çar jî navên heywanên kedî ne, vebijark di heman kategoriyê de ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6088,7 +6088,7 @@
   {
     "id": "ziman_x_0015",
     "category": "Ziman",
-    "prompt": "Peyva «kulîlk» ji çend kîteyan pêk tê?",
+    "prompt": "Peyva \"kulîlk\" ji çend kîteyan pêk tê?",
     "answers": [
       "Du",
       "Çar",
@@ -6096,7 +6096,7 @@
       "Sê"
     ],
     "correctAnswer": "Du",
-    "promptTr": "«Kulîlk» kelimesi kaç heceden oluşur?",
+    "promptTr": "\"Kulîlk\" kelimesi kaç heceden oluşur?",
     "answersTr": [
       "İki",
       "Dört",
@@ -6156,7 +6156,7 @@
   {
     "id": "ziman_x_0017",
     "category": "Ziman",
-    "prompt": "Ji bo wateya «evde» kîjan bikaranîn rast e?",
+    "prompt": "Ji bo wateya \"evde\" kîjan bikaranîn rast e?",
     "answers": [
       "ji malê",
       "li malê",
@@ -6164,7 +6164,7 @@
       "ser malê"
     ],
     "correctAnswer": "li malê",
-    "promptTr": "«Evde» anlamı için doğru kullanım hangisidir?",
+    "promptTr": "\"Evde\" anlamı için doğru kullanım hangisidir?",
     "answersTr": [
       "ji malê",
       "li malê",
@@ -6172,11 +6172,11 @@
       "ser malê"
     ],
     "correctAnswerTr": "li malê",
-    "explanation": "Bulunma anlamını «li» daçeki verir. «Ji» ayrılma yani -den, «bi» araç yani ile anlamındadır; «ser» tek başına daçek olarak kullanılmaz.",
+    "explanation": "Bulunma anlamını \"li\" daçeki verir. \"Ji\" ayrılma yani -den, \"bi\" araç yani ile anlamındadır; \"ser\" tek başına daçek olarak kullanılmaz.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Bulunma anlamını «li» daçeki verir. «Ji» ayrılma yani -den, «bi» araç yani ile anlamındadır; «ser» tek başına daçek olarak kullanılmaz.",
-    "explanationKu": "Wateya cihbûnê («-de») daçeka «li» dide. «Ji» wateya dûrbûnê ango «-den», «bi» jî wateya amûrê ango «ile» dide; «ser» bi tena serê xwe wek daçek nayê bikaranîn.",
+    "explanationTr": "Bulunma anlamını \"li\" daçeki verir. \"Ji\" ayrılma yani -den, \"bi\" araç yani ile anlamındadır; \"ser\" tek başına daçek olarak kullanılmaz.",
+    "explanationKu": "Wateya cihbûnê (\"-de\") daçeka \"li\" dide. \"Ji\" wateya dûrbûnê ango \"-den\", \"bi\" jî wateya amûrê ango \"ile\" dide; \"ser\" bi tena serê xwe wek daçek nayê bikaranîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6190,7 +6190,7 @@
   {
     "id": "ziman_x_0018",
     "category": "Ziman",
-    "prompt": "Peyva «derî» bi tirkî çi ye?",
+    "prompt": "Peyva \"derî\" bi tirkî çi ye?",
     "answers": [
       "Pencere",
       "Duvar",
@@ -6198,7 +6198,7 @@
       "Kapı"
     ],
     "correctAnswer": "Kapı",
-    "promptTr": "«Derî» kelimesinin Türkçesi nedir?",
+    "promptTr": "\"Derî\" kelimesinin Türkçesi nedir?",
     "answersTr": [
       "Pencere",
       "Duvar",
@@ -6210,7 +6210,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Derî kapı demektir. Duvar dîwar, çatı banî olarak geçer; pencere ise Kurmancîde de aynı biçimde söylenir. Hepsi ev bölümü adıdır.",
-    "explanationKu": "Derî wateya peyva «kapı» dide. Dîwar ji bo «duvar», banî ji bo «çatı» tê gotin; peyva «pencere» di kurmancî de jî bi heman awayî tê bikaranîn. Hemû navên perçeyên malê ne.",
+    "explanationKu": "Derî wateya peyva \"kapı\" dide. Dîwar ji bo \"duvar\", banî ji bo \"çatı\" tê gotin; peyva \"pencere\" di kurmancî de jî bi heman awayî tê bikaranîn. Hemû navên perçeyên malê ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6224,7 +6224,7 @@
   {
     "id": "ziman_x_0020",
     "category": "Ziman",
-    "prompt": "Forma fermanî ya lêkera «xwendin» ji bo yekjimar kîjan e?",
+    "prompt": "Forma fermanî ya lêkera \"xwendin\" ji bo yekjimar kîjan e?",
     "answers": [
       "xwend",
       "bixwîne",
@@ -6232,7 +6232,7 @@
       "xwendiye"
     ],
     "correctAnswer": "bixwîne",
-    "promptTr": "«Xwendin» fiilinin tekil emir biçimi hangisidir?",
+    "promptTr": "\"Xwendin\" fiilinin tekil emir biçimi hangisidir?",
     "answersTr": [
       "xwend",
       "bixwîne",
@@ -6240,11 +6240,11 @@
       "xwendiye"
     ],
     "correctAnswerTr": "bixwîne",
-    "explanation": "Emir kipi bi- öneki ve fiil köküyle kurulur: bi + xwîn + e. «Dixwîne» o okuyor, «xwend» geçmiş kök, «xwendiye» ise bitmiş geçmiştir.",
+    "explanation": "Emir kipi bi- öneki ve fiil köküyle kurulur: bi + xwîn + e. \"Dixwîne\" o okuyor, \"xwend\" geçmiş kök, \"xwendiye\" ise bitmiş geçmiştir.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Emir kipi bi- öneki ve fiil köküyle kurulur: bi + xwîn + e. «Dixwîne» o okuyor, «xwend» geçmiş kök, «xwendiye» ise bitmiş geçmiştir.",
-    "explanationKu": "Kipa fermanî bi pêşgira bi- û koka lêkerê tê avakirin: bi + xwîn + e. «Dixwîne» tê wateya «o okuyor», «xwend» koka dema borî ye, «xwendiye» jî dema borî ya tekûz e.",
+    "explanationTr": "Emir kipi bi- öneki ve fiil köküyle kurulur: bi + xwîn + e. \"Dixwîne\" o okuyor, \"xwend\" geçmiş kök, \"xwendiye\" ise bitmiş geçmiştir.",
+    "explanationKu": "Kipa fermanî bi pêşgira bi- û koka lêkerê tê avakirin: bi + xwîn + e. \"Dixwîne\" tê wateya \"o okuyor\", \"xwend\" koka dema borî ye, \"xwendiye\" jî dema borî ya tekûz e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6258,7 +6258,7 @@
   {
     "id": "ziman_x_0021",
     "category": "Ziman",
-    "prompt": "Bi kurmancî ji 'yıldız'ê re çi tê gotin?",
+    "prompt": "Bi kurmancî ji \"yıldız\"ê re çi tê gotin?",
     "answers": [
       "Stêrk",
       "Heyv",
@@ -6266,7 +6266,7 @@
       "Ewr"
     ],
     "correctAnswer": "Stêrk",
-    "promptTr": "«Yıldız» için Kurmancîde ne denir?",
+    "promptTr": "\"Yıldız\" için Kurmancîde ne denir?",
     "answersTr": [
       "Stêrk",
       "Heyv",
@@ -6278,7 +6278,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Stêrk yıldız demektir. Heyv ay, roj hem güneş hem gün, ewr ise buluttur; hepsi gökyüzüyle ilgili olduğu için birlikte öğrenilir.",
-    "explanationKu": "Stêrk wateya peyva «yıldız» dide. Heyv ji bo «ay», roj hem ji bo «güneş» hem ji bo «gün», ewr jî ji bo «bulut» tê gotin; hemû bi ezmên ve girêdayî ne.",
+    "explanationKu": "Stêrk wateya peyva \"yıldız\" dide. Heyv ji bo \"ay\", roj hem ji bo \"güneş\" hem ji bo \"gün\", ewr jî ji bo \"bulut\" tê gotin; hemû bi ezmên ve girêdayî ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6312,7 +6312,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Diller birbirinden sözcük alır; bunlara alıntı ya da ödünç kelime denir. Türkçedeki kalem Arapçadan, vapur Fransızcadan gelmiştir.",
-    "explanationKu": "Ziman ji hev peyvan digirin; ji van peyvan re peyvên deynkirî tê gotin. Peyva tirkî «kalem» ji erebî, «vapur» jî ji fransî hatiye wergirtin.",
+    "explanationKu": "Ziman ji hev peyvan digirin; ji van peyvan re peyvên deynkirî tê gotin. Peyva tirkî \"kalem\" ji erebî, \"vapur\" jî ji fransî hatiye wergirtin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6342,11 +6342,11 @@
       "Nan"
     ],
     "correctAnswerTr": "Nan",
-    "explanation": "Eril olduğu için izafede «nanê germ» denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.",
+    "explanation": "Eril olduğu için izafede \"nanê germ\" denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Eril olduğu için izafede «nanê germ» denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.",
-    "explanationKu": "Ji ber ku nêr e, di îzafeyê de tê gotin «nanê germ». Mal, roj û şev mê ne: mala me, roja yekşemê, şeva sar. Zayend ji nîşana îzafeyê tê fêmkirin.",
+    "explanationTr": "Eril olduğu için izafede \"nanê germ\" denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.",
+    "explanationKu": "Ji ber ku nêr e, di îzafeyê de tê gotin \"nanê germ\". Mal, roj û şev mê ne: mala me, roja yekşemê, şeva sar. Zayend ji nîşana îzafeyê tê fêmkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6376,11 +6376,11 @@
       "Sabah"
     ],
     "correctAnswerTr": "Dün",
-    "explanation": "Duh, bazı yörelerde do, dün demektir. Kurmancîde «sibe» hem sabah hem ertesi gün anlamı taşır, bu yüzden bağlam belirleyicidir.",
+    "explanation": "Duh, bazı yörelerde do, dün demektir. Kurmancîde \"sibe\" hem sabah hem ertesi gün anlamı taşır, bu yüzden bağlam belirleyicidir.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Duh, bazı yörelerde do, dün demektir. Kurmancîde «sibe» hem sabah hem ertesi gün anlamı taşır, bu yüzden bağlam belirleyicidir.",
-    "explanationKu": "Duh, li hin deveran do, wateya peyva «dün» dide. Di kurmancî de «sibe» hem «sabah» hem jî roja pêş nîşan dide; ji ber vê yekê hevok wateyê diyar dike.",
+    "explanationTr": "Duh, bazı yörelerde do, dün demektir. Kurmancîde \"sibe\" hem sabah hem ertesi gün anlamı taşır, bu yüzden bağlam belirleyicidir.",
+    "explanationKu": "Duh, li hin deveran do, wateya peyva \"dün\" dide. Di kurmancî de \"sibe\" hem \"sabah\" hem jî roja pêş nîşan dide; ji ber vê yekê hevok wateyê diyar dike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6394,7 +6394,7 @@
   {
     "id": "ziman_x_0025",
     "category": "Ziman",
-    "prompt": "Di hevoka «Ez ... dibînim» de ji bo «seni» kîjan cînavk rast e?",
+    "prompt": "Di hevoka \"Ez ... dibînim\" de ji bo \"seni\" kîjan cînavk rast e?",
     "answers": [
       "te",
       "tu",
@@ -6402,7 +6402,7 @@
       "wî"
     ],
     "correctAnswer": "te",
-    "promptTr": "«Ez ... dibînim» cümlesinde «seni» için hangi zamir gelir?",
+    "promptTr": "\"Ez ... dibînim\" cümlesinde \"seni\" için hangi zamir gelir?",
     "answersTr": [
       "te",
       "tu",
@@ -6410,11 +6410,11 @@
       "wî"
     ],
     "correctAnswerTr": "te",
-    "explanation": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. «Tu» yalın öznedir, «wî» eril üçüncü kişi, «ew» ise yalın üçüncü kişidir.",
+    "explanation": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. \"Tu\" yalın öznedir, \"wî\" eril üçüncü kişi, \"ew\" ise yalın üçüncü kişidir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. «Tu» yalın öznedir, «wî» eril üçüncü kişi, «ew» ise yalın üçüncü kişidir.",
-    "explanationKu": "Cînavka di rewşa bireserê de vediguhere forma xwar: forma «tu» dibe «te». «Tu» kirdeyê rasterast e, «wî» kesê sêyem ê nêr, «ew» jî kesê sêyem ê rasterast e.",
+    "explanationTr": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. \"Tu\" yalın öznedir, \"wî\" eril üçüncü kişi, \"ew\" ise yalın üçüncü kişidir.",
+    "explanationKu": "Cînavka di rewşa bireserê de vediguhere forma xwar: forma \"tu\" dibe \"te\". \"Tu\" kirdeyê rasterast e, \"wî\" kesê sêyem ê nêr, \"ew\" jî kesê sêyem ê rasterast e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6428,7 +6428,7 @@
   {
     "id": "ziman_x_0026",
     "category": "Ziman",
-    "prompt": "Rengê «reş» bi tirkî çi ye?",
+    "prompt": "Rengê \"reş\" bi tirkî çi ye?",
     "answers": [
       "Beyaz",
       "Siyah",
@@ -6436,7 +6436,7 @@
       "Sarı"
     ],
     "correctAnswer": "Siyah",
-    "promptTr": "«Reş» rengi Türkçede nedir?",
+    "promptTr": "\"Reş\" rengi Türkçede nedir?",
     "answersTr": [
       "Beyaz",
       "Siyah",
@@ -6448,7 +6448,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Reş siyah demektir; beyaz spî, yeşil kesk, sarı ise zerdir. Reş ile spî birbirinin karşıtı olduğu için ikisi birlikte öğretilir.",
-    "explanationKu": "Reş tê wateya 'siyah'ê; spî 'beyaz'ê, kesk 'yeşil'ê, zer jî 'sarı'yê nîşan dide. Ji ber ku reş û spî li hember hev in, ev herdu bi hev re tên hînkirin.",
+    "explanationKu": "Reş tê wateya \"siyah\"ê; spî \"beyaz\"ê, kesk \"yeşil\"ê, zer jî \"sarı\"yê nîşan dide. Ji ber ku reş û spî li hember hev in, ev herdu bi hev re tên hînkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6496,7 +6496,7 @@
   {
     "id": "ziman_x_0028",
     "category": "Ziman",
-    "prompt": "Lêkera «çûn» bi pêşgira di- ji bo kesê sêyem ê yekjimar çawa tê?",
+    "prompt": "Lêkera \"çûn\" bi pêşgira di- ji bo kesê sêyem ê yekjimar çawa tê?",
     "answers": [
       "diçim",
       "diçe",
@@ -6504,7 +6504,7 @@
       "diçî"
     ],
     "correctAnswer": "diçe",
-    "promptTr": "«Çûn» fiili di- önekiyle tekil üçüncü kişide nasıl olur?",
+    "promptTr": "\"Çûn\" fiili di- önekiyle tekil üçüncü kişide nasıl olur?",
     "answersTr": [
       "diçim",
       "diçe",
@@ -6512,11 +6512,11 @@
       "diçî"
     ],
     "correctAnswerTr": "diçe",
-    "explanation": "Kişi ekleri sırasıyla -im, -î, -e, -in biçimindedir; üçüncü tekilde -e gelir. «Diçim» ben, «diçî» sen, «diçin» ise çoğul kişiler içindir.",
+    "explanation": "Kişi ekleri sırasıyla -im, -î, -e, -in biçimindedir; üçüncü tekilde -e gelir. \"Diçim\" ben, \"diçî\" sen, \"diçin\" ise çoğul kişiler içindir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Kişi ekleri sırasıyla -im, -î, -e, -in biçimindedir; üçüncü tekilde -e gelir. «Diçim» ben, «diçî» sen, «diçin» ise çoğul kişiler içindir.",
-    "explanationKu": "Nîşanên kesane bi rêzê -im, -î, -e, -in in; di kesê sêyem ê yekjimar de -e tê. «Diçim» ji bo min, «diçî» ji bo te, «diçin» jî ji bo kesên pirjimar e.",
+    "explanationTr": "Kişi ekleri sırasıyla -im, -î, -e, -in biçimindedir; üçüncü tekilde -e gelir. \"Diçim\" ben, \"diçî\" sen, \"diçin\" ise çoğul kişiler içindir.",
+    "explanationKu": "Nîşanên kesane bi rêzê -im, -î, -e, -in in; di kesê sêyem ê yekjimar de -e tê. \"Diçim\" ji bo min, \"diçî\" ji bo te, \"diçin\" jî ji bo kesên pirjimar e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6530,7 +6530,7 @@
   {
     "id": "ziman_x_0029",
     "category": "Ziman",
-    "prompt": "Peyva «şîr» li ser sifreyê çi ye?",
+    "prompt": "Peyva \"şîr\" li ser sifreyê çi ye?",
     "answers": [
       "Süt",
       "Bal",
@@ -6538,7 +6538,7 @@
       "Yağ"
     ],
     "correctAnswer": "Süt",
-    "promptTr": "Sofradaki «şîr» nedir?",
+    "promptTr": "Sofradaki \"şîr\" nedir?",
     "answersTr": [
       "Süt",
       "Bal",
@@ -6550,7 +6550,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Şîr süttür. Bal hingiv, yoğurt mast, yağ ise rûn olarak geçer; dördü de süt sofrasında bulunduğu için birbirine yakın şıklardır.",
-    "explanationKu": "Şîr tê wateya 'süt'ê. Hingiv 'bal'ê, mast 'yoğurt'ê, rûn jî 'yağ'ê nîşan dide; ji ber ku her çar jî li ser sifreya şîr in, vebijark nêzî hev in.",
+    "explanationKu": "Şîr tê wateya \"süt\"ê. Hingiv \"bal\"ê, mast \"yoğurt\"ê, rûn jî \"yağ\"ê nîşan dide; ji ber ku her çar jî li ser sifreya şîr in, vebijark nêzî hev in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6618,7 +6618,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Pisîk kedidir. Kûçik köpek, mişk fare, rovî ise tilkidir; dördü de memeli hayvan adı olduğu için şıklar aynı sınıftandır.",
-    "explanationKu": "Pisîk tê wateya 'kedi'yê. Kûçik 'köpek'ê, mişk 'fare'yê, rovî jî 'tilki'yê nîşan dide; ji ber ku her çar jî navên heywanên bêzîndar in, vebijark di heman kategoriyê de ne.",
+    "explanationKu": "Pisîk tê wateya \"kedi\"yê. Kûçik \"köpek\"ê, mişk \"fare\"yê, rovî jî \"tilki\"yê nîşan dide; ji ber ku her çar jî navên heywanên bêzîndar in, vebijark di heman kategoriyê de ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6632,7 +6632,7 @@
   {
     "id": "ziman_x_0032",
     "category": "Ziman",
-    "prompt": "Ji bo wateya «odanın içinde» kîjan avanî rast e?",
+    "prompt": "Ji bo wateya \"odanın içinde\" kîjan avanî rast e?",
     "answers": [
       "di odeyê de",
       "li odeyê ser",
@@ -6640,7 +6640,7 @@
       "bi odeyê re"
     ],
     "correctAnswer": "di odeyê de",
-    "promptTr": "«Odanın içinde» anlamı için doğru yapı hangisidir?",
+    "promptTr": "\"Odanın içinde\" anlamı için doğru yapı hangisidir?",
     "answersTr": [
       "di odeyê de",
       "li odeyê ser",
@@ -6648,11 +6648,11 @@
       "bi odeyê re"
     ],
     "correctAnswerTr": "di odeyê de",
-    "explanation": "Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik «di ... de» ile kurulur; «bi ... re» birliktelik, «ji» ise ayrılma bildirir.",
+    "explanation": "Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik \"di ... de\" ile kurulur; \"bi ... re\" birliktelik, \"ji\" ise ayrılma bildirir.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik «di ... de» ile kurulur; «bi ... re» birliktelik, «ji» ise ayrılma bildirir.",
-    "explanationKu": "Di kurmancî de hin daçek du perçe ne û navdêr di navberê de digirin. Wateya hundir bi «di ... de» tê dayîn; «bi ... re» hevaltiyê, «ji» jî dûrbûnê nîşan dide.",
+    "explanationTr": "Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik \"di ... de\" ile kurulur; \"bi ... re\" birliktelik, \"ji\" ise ayrılma bildirir.",
+    "explanationKu": "Di kurmancî de hin daçek du perçe ne û navdêr di navberê de digirin. Wateya hundir bi \"di ... de\" tê dayîn; \"bi ... re\" hevaltiyê, \"ji\" jî dûrbûnê nîşan dide.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6700,7 +6700,7 @@
   {
     "id": "ziman_x_0034",
     "category": "Ziman",
-    "prompt": "Di hevoka «Ez ji ... hez dikim» de ji bo wateya «çocukları» kîjan form tê?",
+    "prompt": "Di hevoka \"Ez ji ... hez dikim\" de ji bo wateya \"çocukları\" kîjan form tê?",
     "answers": [
       "zarok",
       "zarokan",
@@ -6708,7 +6708,7 @@
       "zarokên"
     ],
     "correctAnswer": "zarokan",
-    "promptTr": "«Ez ji ... hez dikim» cümlesinde «çocukları» için hangi biçim gelir?",
+    "promptTr": "\"Ez ji ... hez dikim\" cümlesinde \"çocukları\" için hangi biçim gelir?",
     "answersTr": [
       "zarok",
       "zarokan",
@@ -6716,11 +6716,11 @@
       "zarokên"
     ],
     "correctAnswerTr": "zarokan",
-    "explanation": "Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an'dır. «Zarokên» izafe biçimidir, ardından bir niteleyici ya da sahip ister.",
+    "explanation": "Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an'dır. \"Zarokên\" izafe biçimidir, ardından bir niteleyici ya da sahip ister.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an'dır. «Zarokên» izafe biçimidir, ardından bir niteleyici ya da sahip ister.",
-    "explanationKu": "Piştî daçekê navdêr vediguhere forma xwar û nîşana xwar a pirjimar -an e. «Zarokên» forma îzafeyê ye, li pey xwe pêdiviya wê bi rengdêrek an xwedîkerek heye.",
+    "explanationTr": "Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an'dır. \"Zarokên\" izafe biçimidir, ardından bir niteleyici ya da sahip ister.",
+    "explanationKu": "Piştî daçekê navdêr vediguhere forma xwar û nîşana xwar a pirjimar -an e. \"Zarokên\" forma îzafeyê ye, li pey xwe pêdiviya wê bi rengdêrek an xwedîkerek heye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6754,7 +6754,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Çav gözdür. Guh kulak, dev ağız, poz ise burundur; dördü de baştaki organ adıdır ama yalnız biri görmeyle ilgilidir.",
-    "explanationKu": "Çav tê wateya 'göz'ê. Guh 'kulak'ê, dev 'ağız'ê, poz jî 'burun'ê nîşan dide; her çar jî navên endamên serî ne lê tenê yek ji wan bi dîtinê ve girêdayî ye.",
+    "explanationKu": "Çav tê wateya \"göz\"ê. Guh \"kulak\"ê, dev \"ağız\"ê, poz jî \"burun\"ê nîşan dide; her çar jî navên endamên serî ne lê tenê yek ji wan bi dîtinê ve girêdayî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6802,7 +6802,7 @@
   {
     "id": "ziman_x_0037",
     "category": "Ziman",
-    "prompt": "Hevoka «Ezê biçim» kîjan demê nîşan dide?",
+    "prompt": "Hevoka \"Ezê biçim\" kîjan demê nîşan dide?",
     "answers": [
       "Dema borî",
       "Fermanî",
@@ -6810,7 +6810,7 @@
       "Daxwazî"
     ],
     "correctAnswer": "Dema bê",
-    "promptTr": "«Ezê biçim» cümlesi hangi zamanı gösterir?",
+    "promptTr": "\"Ezê biçim\" cümlesi hangi zamanı gösterir?",
     "answersTr": [
       "Geçmiş zaman",
       "Emir kipi",
@@ -6836,7 +6836,7 @@
   {
     "id": "ziman_x_0039",
     "category": "Ziman",
-    "prompt": "Peyva tirkî ya «pencere» ji kîjan zimanî hatiye wergirtin?",
+    "prompt": "Peyva tirkî ya \"pencere\" ji kîjan zimanî hatiye wergirtin?",
     "answers": [
       "Ji erebî",
       "Ji farisî",
@@ -6844,7 +6844,7 @@
       "Ji yewnanî"
     ],
     "correctAnswer": "Ji farisî",
-    "promptTr": "Türkçedeki «pencere» kelimesi hangi dilden alınmıştır?",
+    "promptTr": "Türkçedeki \"pencere\" kelimesi hangi dilden alınmıştır?",
     "answersTr": [
       "Arapçadan",
       "Farsçadan",
@@ -6856,7 +6856,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Bu sözcük Farsça pencere biçiminden gelir. Türkçeye Arapçadan kitap, Fransızcadan vapur, Yunancadan ise liman geçmiştir.",
-    "explanationKu": "Ev peyv ji forma farisî ya peyva «pencere» tê. Peyva «kitap» ji erebî, «vapur» ji fransî, «liman» jî ji yewnanî ketiye tirkî.",
+    "explanationKu": "Ev peyv ji forma farisî ya peyva \"pencere\" tê. Peyva \"kitap\" ji erebî, \"vapur\" ji fransî, \"liman\" jî ji yewnanî ketiye tirkî.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6890,7 +6890,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; hepsi yazı ortamıyla ilgilidir ama yalnız biri yazma aracıdır.",
-    "explanationKu": "Qelem tê wateya 'kalem'ê. Pirtûk 'kitap'ê, kaxez 'kâğıt'ê, mase jî 'masa'yê nîşan dide; hemû bi hawirdora nivîsê ve girêdayî ne lê tenê yek ji wan amûra nivîsandinê ye.",
+    "explanationKu": "Qelem tê wateya \"kalem\"ê. Pirtûk \"kitap\"ê, kaxez \"kâğıt\"ê, mase jî \"masa\"yê nîşan dide; hemû bi hawirdora nivîsê ve girêdayî ne lê tenê yek ji wan amûra nivîsandinê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6904,7 +6904,7 @@
   {
     "id": "ziman_x_0041",
     "category": "Ziman",
-    "prompt": "Peyva pirsyarî ya «kengî» li ser çi disekine?",
+    "prompt": "Peyva pirsyarî ya \"kengî\" li ser çi disekine?",
     "answers": [
       "Dem",
       "Cih",
@@ -6912,7 +6912,7 @@
       "Sedem"
     ],
     "correctAnswer": "Dem",
-    "promptTr": "«Kengî» soru sözcüğü neyi sorar?",
+    "promptTr": "\"Kengî\" soru sözcüğü neyi sorar?",
     "answersTr": [
       "Zaman",
       "Yer",
@@ -6920,11 +6920,11 @@
       "Sebep"
     ],
     "correctAnswerTr": "Zaman",
-    "explanation": "Kengî «ne zaman» demektir ve zamanı sorar. Yeri «li ku», kişiyi «kî», sebebi ise «çima» sorar; her biri farklı bir öge arar.",
+    "explanation": "Kengî \"ne zaman\" demektir ve zamanı sorar. Yeri \"li ku\", kişiyi \"kî\", sebebi ise \"çima\" sorar; her biri farklı bir öge arar.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Kengî «ne zaman» demektir ve zamanı sorar. Yeri «li ku», kişiyi «kî», sebebi ise «çima» sorar; her biri farklı bir öge arar.",
-    "explanationKu": "Kengî tê wateya «ne zaman» e û pirsa demê dike. «Li ku» pirsa cihî, «kî» pirsa kesî, «çima» jî pirsa sedemê dike; her yek li elementek cuda digere.",
+    "explanationTr": "Kengî \"ne zaman\" demektir ve zamanı sorar. Yeri \"li ku\", kişiyi \"kî\", sebebi ise \"çima\" sorar; her biri farklı bir öge arar.",
+    "explanationKu": "Kengî tê wateya \"ne zaman\" e û pirsa demê dike. \"Li ku\" pirsa cihî, \"kî\" pirsa kesî, \"çima\" jî pirsa sedemê dike; her yek li elementek cuda digere.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6938,7 +6938,7 @@
   {
     "id": "ziman_x_0042",
     "category": "Ziman",
-    "prompt": "Peyva kurmancî «çiya» di tirkî de rasterast çi ye?",
+    "prompt": "Peyva kurmancî \"çiya\" di tirkî de rasterast çi ye?",
     "answers": [
       "Ova",
       "Nehir",
@@ -6946,7 +6946,7 @@
       "Orman"
     ],
     "correctAnswer": "Dağ",
-    "promptTr": "Kurmancî «çiya» sözcüğünün Türkçe doğrudan karşılığı nedir?",
+    "promptTr": "Kurmancî \"çiya\" sözcüğünün Türkçe doğrudan karşılığı nedir?",
     "answersTr": [
       "Ova",
       "Nehir",
@@ -6958,7 +6958,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Çiya dağ demektir. Ova deşt, nehir çem ya da robar, orman ise daristan olarak geçer; dördü de coğrafya terimidir.",
-    "explanationKu": "Çiya tê wateya 'dağ'ê. Ova 'düz'ê, çem an jî robar 'nehir'ê, daristan jî 'orman'ê nîşan dide; her çar jî têgehên erdnîgariyê ne.",
+    "explanationKu": "Çiya tê wateya \"dağ\"ê. Ova \"düz\"ê, çem an jî robar \"nehir\"ê, daristan jî \"orman\"ê nîşan dide; her çar jî têgehên erdnîgariyê ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6972,7 +6972,7 @@
   {
     "id": "ziman_x_0043",
     "category": "Ziman",
-    "prompt": "Tîpa «û» di kurmancî de dikeve kîjan komê?",
+    "prompt": "Tîpa \"û\" di kurmancî de dikeve kîjan komê?",
     "answers": [
       "Dengdar",
       "Dengdêr",
@@ -6980,7 +6980,7 @@
       "Daçek"
     ],
     "correctAnswer": "Dengdêr",
-    "promptTr": "Kurmancîde «û» harfi hangi gruba girer?",
+    "promptTr": "Kurmancîde \"û\" harfi hangi gruba girer?",
     "answersTr": [
       "Ünsüz",
       "Ünlü",
@@ -7006,7 +7006,7 @@
   {
     "id": "ziman_x_0044",
     "category": "Ziman",
-    "prompt": "Ji bo wateya «O kadın mektup yazdı» kîjan hevok rast e?",
+    "prompt": "Ji bo wateya \"O kadın mektup yazdı\" kîjan hevok rast e?",
     "answers": [
       "Ew name nivîsî",
       "Wê nameyê dinivîse",
@@ -7014,7 +7014,7 @@
       "Ew nameyê nivîsî"
     ],
     "correctAnswer": "Wê name nivîsî",
-    "promptTr": "«O kadın mektup yazdı» anlamı için hangi cümle doğrudur?",
+    "promptTr": "\"O kadın mektup yazdı\" anlamı için hangi cümle doğrudur?",
     "answersTr": [
       "Ew name nivîsî",
       "Wê nameyê dinivîse",
@@ -7026,7 +7026,7 @@
     "difficulty": 5,
     "type": "multipleChoice",
     "explanationTr": "Geçmiş zamanda geçişli fiilin öznesi bükümlü hâle girer: ew biçimi wê olur. Nesne yalın kalır ve fiil nesneye göre çekilir.",
-    "explanationKu": "Di dema borî de kirdeya lêkera gerguhêz dikeve rewşa tewandî: awayê «ew» dibe «wê». Bireser di rewşa xwerû de dimîne û lêker li gorî bireserê tê kişandin.",
+    "explanationKu": "Di dema borî de kirdeya lêkera gerguhêz dikeve rewşa tewandî: awayê \"ew\" dibe \"wê\". Bireser di rewşa xwerû de dimîne û lêker li gorî bireserê tê kişandin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7060,7 +7060,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Ap, bazı yörelerde mam, amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
-    "explanationKu": "Ap li hin herêman wateya 'mam'ê dide. Xal birayê dayikê ye, met xwişka bavê ye, bapîr jî bavê bav an bavê dayikê ye; navên lêzimtiyê li gorî aliyê dayikê û bavê ji hev cuda dibin.",
+    "explanationKu": "Ap li hin herêman wateya \"mam\"ê dide. Xal birayê dayikê ye, met xwişka bavê ye, bapîr jî bavê bav an bavê dayikê ye; navên lêzimtiyê li gorî aliyê dayikê û bavê ji hev cuda dibin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7108,7 +7108,7 @@
   {
     "id": "ziman_x_0047",
     "category": "Ziman",
-    "prompt": "Navdêra «sêv» mê ye. Wateya «kırmızı elma» çawa tê nivîsîn?",
+    "prompt": "Navdêra \"sêv\" mê ye. Wateya \"kırmızı elma\" çawa tê nivîsîn?",
     "answers": [
       "sêv sor",
       "sêva sor",
@@ -7116,7 +7116,7 @@
       "sêvên sor"
     ],
     "correctAnswer": "sêva sor",
-    "promptTr": "«Sêv» adı dişildir. «Kırmızı elma» nasıl yazılır?",
+    "promptTr": "\"Sêv\" adı dişildir. \"Kırmızı elma\" nasıl yazılır?",
     "answersTr": [
       "sêv sor",
       "sêva sor",
@@ -7176,7 +7176,7 @@
   {
     "id": "ziman_x_0049",
     "category": "Ziman",
-    "prompt": "Peyva tirkî ya «yüz» hem rû hem 100 e. Ev rewş çi ye?",
+    "prompt": "Peyva tirkî ya \"yüz\" hem rû hem 100 e. Ev rewş çi ye?",
     "answers": [
       "Hevdeng",
       "Hevwate",
@@ -7184,7 +7184,7 @@
       "Peyva deynkirî"
     ],
     "correctAnswer": "Hevdeng",
-    "promptTr": "Türkçedeki «yüz» hem surat hem 100 demektir. Bu duruma ne denir?",
+    "promptTr": "Türkçedeki \"yüz\" hem surat hem 100 demektir. Bu duruma ne denir?",
     "answersTr": [
       "Eş seslilik",
       "Eş anlamlılık",
@@ -7210,7 +7210,7 @@
   {
     "id": "ziman_x_0050",
     "category": "Ziman",
-    "prompt": "Li ser sifreyê «goşt» heye. Ev xwarin bi tirkî çi tê gotin?",
+    "prompt": "Li ser sifreyê \"goşt\" heye. Ev xwarin bi tirkî çi tê gotin?",
     "answers": [
       "Balık",
       "Et",
@@ -7218,7 +7218,7 @@
       "Çorba"
     ],
     "correctAnswer": "Et",
-    "promptTr": "Sofrada «goşt» var. Bu yiyeceğe Türkçede ne denir?",
+    "promptTr": "Sofrada \"goşt\" var. Bu yiyeceğe Türkçede ne denir?",
     "answersTr": [
       "Balık",
       "Et",
@@ -7230,7 +7230,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Goşt et demektir. Balık masî, ekmek nan, çorba ise şorbe olarak geçer; dördü de yemek adı olduğu için aynı kavram sınıfındadır.",
-    "explanationKu": "Goşt tê wateya «et». Masî balîk e, nan ekmek e, şorbe jî çorbe ye; her çar jî navên xwarinê ne, loma di heman refa têgehî de ne.",
+    "explanationKu": "Goşt tê wateya \"et\". Masî balîk e, nan ekmek e, şorbe jî çorbe ye; her çar jî navên xwarinê ne, loma di heman refa têgehî de ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7244,7 +7244,7 @@
   {
     "id": "ziman_x_0051",
     "category": "Ziman",
-    "prompt": "Hevoka bi wateya «bana söyle» bi kurmancî çawa tê avakirin?",
+    "prompt": "Hevoka bi wateya \"bana söyle\" bi kurmancî çawa tê avakirin?",
     "answers": [
       "li min bêje",
       "bi min bêje",
@@ -7252,7 +7252,7 @@
       "ji min re bêje"
     ],
     "correctAnswer": "ji min re bêje",
-    "promptTr": "«Bana söyle» cümlesi Kurmancîde nasıl kurulur?",
+    "promptTr": "\"Bana söyle\" cümlesi Kurmancîde nasıl kurulur?",
     "answersTr": [
       "li min bêje",
       "bi min bêje",
@@ -7260,11 +7260,11 @@
       "ji min re bêje"
     ],
     "correctAnswerTr": "ji min re bêje",
-    "explanation": "Yönelme anlamı iki parçalı «ji ... re» daçekiyle verilir. «Li» bulunma, «bi» araç, «di ... de» ise içindelik bildirir.",
+    "explanation": "Yönelme anlamı iki parçalı \"ji ... re\" daçekiyle verilir. \"Li\" bulunma, \"bi\" araç, \"di ... de\" ise içindelik bildirir.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "Yönelme anlamı iki parçalı «ji ... re» daçekiyle verilir. «Li» bulunma, «bi» araç, «di ... de» ise içindelik bildirir.",
-    "explanationKu": "Wateya arastebûnê (bo kesekî) bi daçeka du-perçeyî «ji ... re» tê dayîn. «Li» cihbûnê, «bi» amûrê, «di ... de» jî hundirbûnê nîşan dide.",
+    "explanationTr": "Yönelme anlamı iki parçalı \"ji ... re\" daçekiyle verilir. \"Li\" bulunma, \"bi\" araç, \"di ... de\" ise içindelik bildirir.",
+    "explanationKu": "Wateya arastebûnê (bo kesekî) bi daçeka du-perçeyî \"ji ... re\" tê dayîn. \"Li\" cihbûnê, \"bi\" amûrê, \"di ... de\" jî hundirbûnê nîşan dide.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7278,7 +7278,7 @@
   {
     "id": "ziman_x_0052",
     "category": "Ziman",
-    "prompt": "Ji bo xwedîtiya nêr, wateya «onun kitabı» kîjan form e?",
+    "prompt": "Ji bo xwedîtiya nêr, wateya \"onun kitabı\" kîjan form e?",
     "answers": [
       "pirtûka wê",
       "pirtûkên wî",
@@ -7286,7 +7286,7 @@
       "pirtûka wan"
     ],
     "correctAnswer": "pirtûka wî",
-    "promptTr": "Eril sahiplik için «onun kitabı» hangi biçimdir?",
+    "promptTr": "Eril sahiplik için \"onun kitabı\" hangi biçimdir?",
     "answersTr": [
       "pirtûka wê",
       "pirtûkên wî",
@@ -7298,7 +7298,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "İzafe eki adın cinsiyetine, zamir ise sahibin cinsiyetine bakar. Kitap dişil olduğu için -a gelir; eril sahip wî, dişil wê, çoğul ise wan olur.",
-    "explanationKu": "Hevalbendiya îzafeyê li gorî zayenda navdêrê ye, lê cînavk li gorî zayenda xwedî ye. Ji ber ku «kitêb» mê ye, -a tê; xwedîyê nêr wî ye, yê mê wê ye, pirjimar jî wan e.",
+    "explanationKu": "Hevalbendiya îzafeyê li gorî zayenda navdêrê ye, lê cînavk li gorî zayenda xwedî ye. Ji ber ku \"kitêb\" mê ye, -a tê; xwedîyê nêr wî ye, yê mê wê ye, pirjimar jî wan e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7366,7 +7366,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; ilk üçü yabani memeli, sonuncusu kuş adıdır.",
-    "explanationKu": "Gur bi tirkî «kurt» tê gotin. Hirç ango ayî ye, rovî tilkî ye, kew jî keklîk e; sê yên pêşî navên heywanên kûvî ne, ya dawîn navê çûkekê ye.",
+    "explanationKu": "Gur bi tirkî \"kurt\" tê gotin. Hirç ango ayî ye, rovî tilkî ye, kew jî keklîk e; sê yên pêşî navên heywanên kûvî ne, ya dawîn navê çûkekê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7380,7 +7380,7 @@
   {
     "id": "ziman_x_0055",
     "category": "Ziman",
-    "prompt": "Di hevoka «Ez dixwazim ku ez ...» de lêkera «çûn» çawa tê?",
+    "prompt": "Di hevoka \"Ez dixwazim ku ez ...\" de lêkera \"çûn\" çawa tê?",
     "answers": [
       "diçim",
       "çûm",
@@ -7388,7 +7388,7 @@
       "biçim"
     ],
     "correctAnswer": "biçim",
-    "promptTr": "«Ez dixwazim ku ez ...» cümlesinde «çûn» fiili nasıl gelir?",
+    "promptTr": "\"Ez dixwazim ku ez ...\" cümlesinde \"çûn\" fiili nasıl gelir?",
     "answersTr": [
       "diçim",
       "çûm",
@@ -7396,11 +7396,11 @@
       "biçim"
     ],
     "correctAnswerTr": "biçim",
-    "explanation": "İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. «Diçim» bildirme, «çûm» geçmiş, «naçim» ise olumsuzdur.",
+    "explanation": "İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. \"Diçim\" bildirme, \"çûm\" geçmiş, \"naçim\" ise olumsuzdur.",
     "difficulty": 4,
     "type": "multipleChoice",
-    "explanationTr": "İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. «Diçim» bildirme, «çûm» geçmiş, «naçim» ise olumsuzdur.",
-    "explanationKu": "Hevoka alîkar a piştî lêkera xwestin (ku daxwazê nîşan dide) bi dema subjunktîf a pêşgira bi- tê avakirin. «Diçim» dema niha ya erênî nîşan dide, «çûm» dema borî ye, «naçim» jî neyînî ye.",
+    "explanationTr": "İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. \"Diçim\" bildirme, \"çûm\" geçmiş, \"naçim\" ise olumsuzdur.",
+    "explanationKu": "Hevoka alîkar a piştî lêkera xwestin (ku daxwazê nîşan dide) bi dema subjunktîf a pêşgira bi- tê avakirin. \"Diçim\" dema niha ya erênî nîşan dide, \"çûm\" dema borî ye, \"naçim\" jî neyînî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",

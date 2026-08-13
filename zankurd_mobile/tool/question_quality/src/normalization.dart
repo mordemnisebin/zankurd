@@ -25,8 +25,20 @@ String normalizeUnicode(String value) {
   return result;
 }
 
+/// Tırnak biçimi denklikleri.
+///
+/// Guillemet (`«»`) buraya 2026-08-12'de eklendi. O tarihte banka
+/// guillemet'ten düz çift tırnağa geçirildi ve kapı 1562 "yeni sorun"
+/// bildirdi — oysa tek bir yeni kusur yoktu: parmak izi
+/// `normalizeText(prompt)` üzerinden hesaplanıyor ve normalleştirme eğri
+/// tırnağı düzleştirirken guillemet'e dokunmuyordu, dolayısıyla aynı sorun
+/// yeni bir kimlikle görünüyordu.
+///
+/// Bunun bedeli yalnız gürültü değildi: 1562 kalemlik bir liste içinde
+/// GERÇEK bir gerileme fark edilmez. Tipografik bir değişiklik, kalite
+/// borcunun kimliğini değiştirmemeli.
 String _normalizeBase(String value) => normalizeUnicode(value)
-    .replaceAll(RegExp('[“”]'), '"')
+    .replaceAll(RegExp('[“”«»]'), '"')
     .replaceAll(RegExp('[‘’´`]'), "'")
     .trim()
     .toLowerCase()
