@@ -31,6 +31,24 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   bool _dailyLoading = false;
   bool _roomActionLoading = false;
 
+  /// Oda kodu alanının denetleyicisi. Ömrü sayfaya değil EKRANA bağlıdır.
+  ///
+  /// Sayfaya bağlıyken (her açılışta `TextEditingController()`, kapanışta
+  /// `whenComplete` + `addPostFrameCallback` ile `dispose`) kodla katılma
+  /// yolunda uygulama hata ekranına düşüyordu: katılma başarılı olunca
+  /// sayfa kapanır ve hemen ardından oda ekranı itilir; sayfanın kapanış
+  /// animasyonu ise sürmeye devam eder. `TextField`in imleç animasyonu
+  /// denetleyiciyi `listenable` olarak tutar ve o animasyon bir sonraki
+  /// karede `addListener` çağırır — denetleyici bir kare önce atılmıştır.
+  /// Tek kare beklemek yetmez, çünkü kapanış animasyonu onlarca kare sürer.
+  final TextEditingController _joinCodeController = TextEditingController();
+
+  @override
+  void dispose() {
+    _joinCodeController.dispose();
+    super.dispose();
+  }
+
   Future<void> _openDailyQuiz() async {
     setState(() => _dailyLoading = true);
     try {
@@ -153,7 +171,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 
   Future<void> _showJoinSheet() async {
-    final controller = TextEditingController();
+    final controller = _joinCodeController..clear();
     final formKey = GlobalKey<FormState>();
     final inputTextStyle = TextStyle(
       color: AppTheme.textPrimaryColor(context),
@@ -263,9 +281,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
           ),
         );
       },
-    ).whenComplete(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
-    });
+    );
   }
 
   @override
