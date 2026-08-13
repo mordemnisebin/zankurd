@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 void main() {
   test(
@@ -251,7 +252,7 @@ class _AwardRepository extends MockZanKurdRepository {
   List<Object?>? lastFacts;
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -261,7 +262,7 @@ class _AwardRepository extends MockZanKurdRepository {
     calls++;
     lastFacts = [score, correctCount, bestStreak, totalQuestions, room?.id];
     if (error case final error?) throw error;
-    return result!;
+    return (amount: result!, dailyCapReached: false);
   }
 }
 
@@ -274,15 +275,15 @@ class _DeferredIdentityAwardRepository extends MockZanKurdRepository {
   String? get currentUserId => userId;
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
     GameRoom? room,
-  }) {
+  }) async {
     calls++;
-    return gate.future;
+    return (amount: await gate.future, dailyCapReached: false);
   }
 }
 

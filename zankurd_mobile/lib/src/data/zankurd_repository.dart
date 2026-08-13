@@ -51,6 +51,27 @@ class StreakFreezeChargeResult {
       outcome == StreakFreezeChargeOutcome.alreadyCharged;
 }
 
+/// Bir tur ödül talebinin sonucu.
+///
+/// Sunucu yalnız MİKTAR döndürmüyor; solo talepte günlük tavana varılıp
+/// varılmadığını da söylüyor (`claim_solo_reward` yanıtındaki
+/// `cap_reached`). İstemci bir zamanlar yalnız miktarı okuyup gerisini
+/// atıyordu ve bunun bedeli sessizdi: tavana varan oyuncu "+0 jeton"
+/// görüyor, sebebini hiçbir yerden öğrenemiyordu. Sıfır tek başına
+/// belirsizdir — tavan da sıfır verir, arıza da, göçün uygulanmamış olması
+/// da (2026-08-12 denetimi).
+typedef QuizRewardClaim = ({
+  /// Deftere yazılan jeton. Sunucu belirler; istemci hesaplamaz.
+  int amount,
+
+  /// Günlük tavana varıldığı için mi sıfır?
+  ///
+  /// Yalnız sunucu açıkça söylediğinde doğrudur. Bilinmiyorsa yanlıştır:
+  /// "bilmiyorum"u "tavana vardın" diye göstermek, olmayan bir sebep
+  /// uydurmaktır.
+  bool dailyCapReached,
+});
+
 abstract class ZanKurdRepository {
   List<String> get categories;
   List<QuizQuestion> get questions;
@@ -212,7 +233,7 @@ abstract class ZanKurdRepository {
   /// Gerçek backend bu miktarı sunucuda belirlemelidir; istemci yalnızca
   /// dönen miktara göre animasyonu hedefler.
   Future<int> awardSpinCoins();
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,

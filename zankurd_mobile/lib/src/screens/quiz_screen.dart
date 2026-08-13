@@ -117,6 +117,12 @@ typedef _QuizCoinSettlement = ({
   bool rewardQueued,
   bool isDurable,
   String ownerUserId,
+
+  /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
+  ///
+  /// Sonuç ekranı bunu ayırt edemezse oyuncuya "+0 jeton" gösterip
+  /// sebebini söylemez; sıfır tek başına belirsizdir.
+  bool dailyCapReached,
 });
 
 class _OpponentAnswer {
@@ -2354,6 +2360,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
 
+  /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
+  ///
+  /// Sonuç ekranı bunu bilmezse "+0 jeton" gösterip sebebini söylemez.
+  bool _rewardDailyCapReached = false;
+
   /// Sayacı UYGULAMA ARKA PLANA GİTTİĞİ için biz mi durdurduk?
   ///
   /// Dönüşte yalnız kendi durdurduğumuzu sürdürürüz. "Duruyor ve değeri
@@ -2382,11 +2393,13 @@ class _QuizScreenState extends State<QuizScreen>
         rewardQueued: false,
         isDurable: true,
         ownerUserId: rewardOwnerId,
+        dailyCapReached: false,
       );
     }
     var amount = 0;
     var rewardQueued = false;
     var durable = false;
+    var dailyCapReached = false;
     // "Sunucu 0 verdi" ile "sunucuya ulaşılamadı" aynı şey değil.
     //
     // Eskiden yalnız `amount <= 0`a bakılıyordu. Sunucu düşük skora
@@ -2398,13 +2411,15 @@ class _QuizScreenState extends State<QuizScreen>
     // ekranında görüldü.
     var awardFailed = false;
     try {
-      amount = await widget.repository.awardQuizCoins(
+      final claim = await widget.repository.awardQuizCoins(
         score: score,
         correctCount: correctCount,
         bestStreak: bestStreak,
         totalQuestions: totalQuestions,
         room: widget.room,
       );
+      amount = claim.amount;
+      dailyCapReached = claim.dailyCapReached;
       durable = true;
     } catch (error, stack) {
       awardFailed = true;
@@ -2421,6 +2436,7 @@ class _QuizScreenState extends State<QuizScreen>
         return (
           coinsAwarded: amount,
           rewardQueued: false,
+          dailyCapReached: dailyCapReached,
           isDurable: false,
           ownerUserId: rewardOwnerId,
         );
@@ -2452,6 +2468,7 @@ class _QuizScreenState extends State<QuizScreen>
       rewardQueued: rewardQueued,
       isDurable: durable,
       ownerUserId: rewardOwnerId,
+      dailyCapReached: dailyCapReached,
     );
   }
 
@@ -2486,11 +2503,16 @@ class _QuizScreenState extends State<QuizScreen>
       bestStreak: bestStreak,
       totalQuestions: totalQuestions,
     );
+    // Açık if/else bilerek korunuyor: `quiz_reward_offline_claim_test`
+    // kaynağı okuyup `_rewardQueued = true;` atamasının YALNIZ kuyruk
+    // gerçekten dolduğunda yapıldığını doğruluyor. Tek satırlık atama aynı
+    // şeyi yapar ama o bekçiyi kör eder.
     if (settlement.rewardQueued) {
       _rewardQueued = true;
     } else {
       _rewardQueued = false;
     }
+    _rewardDailyCapReached = settlement.dailyCapReached;
     return settlement.coinsAwarded;
   }
 
@@ -3405,6 +3427,7 @@ class _QuizScreenState extends State<QuizScreen>
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
             rewardQueued: _rewardQueued,
+            dailyCapReached: _rewardDailyCapReached,
             opponents: widget.is1v1 && widget.room.id != null
                 ? _opponents.toList()
                 : (_botRace?.toPlayers() ?? const []),

@@ -61,13 +61,13 @@ class QuizRewardSettlementService {
 
     late final int amount;
     try {
-      amount = await _repository.awardQuizCoins(
+      amount = (await _repository.awardQuizCoins(
         score: score,
         correctCount: correctCount,
         bestStreak: bestStreak,
         totalQuestions: totalQuestions,
         room: room,
-      );
+      )).amount;
     } catch (error, stack) {
       _errorRecorder(error, stack, reason: 'awardQuizCoins failed');
       final currentOwnerId = _repository.currentUserId?.trim() ?? '';

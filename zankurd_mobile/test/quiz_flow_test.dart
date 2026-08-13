@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'support/widget_test_helpers.dart';
 
 class _RoomQuizBroadcastRepository extends MockZanKurdRepository {
@@ -163,7 +164,7 @@ class _SameNameDuelRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -173,8 +174,10 @@ class _SameNameDuelRepository extends MockZanKurdRepository {
     awardCalls++;
     awardedScore = score;
     final gate = awardGate;
-    if (gate != null) return gate.future;
-    return 5;
+    if (gate != null) {
+      return (amount: await gate.future, dailyCapReached: false);
+    }
+    return (amount: 5, dailyCapReached: false);
   }
 }
 

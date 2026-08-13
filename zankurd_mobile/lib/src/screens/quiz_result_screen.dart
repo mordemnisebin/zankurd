@@ -73,6 +73,7 @@ class QuizResultScreen extends StatefulWidget {
     required this.coinsAwarded,
     this.opponents = const [],
     this.rewardQueued = false,
+    this.dailyCapReached = false,
     this.practice = false,
     this.dailyQuiz = false,
     this.contestId,
@@ -92,6 +93,15 @@ class QuizResultScreen extends StatefulWidget {
   final int bestStreak;
   final List<AnswerRecord> answerRecords;
   final int coinsAwarded;
+
+  /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
+  ///
+  /// Sunucu `claim_solo_reward` yanıtında bunu açıkça söylüyor. İstemci bir
+  /// zamanlar yalnız miktarı okuyup gerisini atıyordu: tavana varan oyuncu
+  /// "+0 jeton" görüyor ve sebebini hiçbir yerden öğrenemiyordu. Sıfır tek
+  /// başına belirsizdir — tavan da sıfır verir, arıza da, göçün henüz
+  /// uygulanmamış olması da (2026-08-12 denetimi).
+  final bool dailyCapReached;
 
   /// Bot yarışındaki rakiplerin son durumu; boşsa panel gizlenir.
   final List<Player> opponents;
@@ -1232,6 +1242,43 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                       ),
                                   ],
                                 ),
+                                // Günlük tavana varıldıysa SEBEBİ söyle.
+                                //
+                                // Jeton rozeti yalnız miktar sıfırdan
+                                // büyükken çiziliyor, dolayısıyla tavana
+                                // varan tur ekranda hiçbir iz bırakmıyordu:
+                                // oyuncu "+0" bile görmüyor, yalnız hiçbir
+                                // şey görmüyordu. Sıfır tek başına
+                                // belirsizdir — tavan da sıfır verir, arıza
+                                // da. Sebebi yazmak, sessizliği bilgiye
+                                // çevirir (2026-08-12 denetimi).
+                                if (widget.dailyCapReached &&
+                                    coinsAwarded <= 0) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  Row(
+                                    key: const ValueKey(
+                                      'result-daily-cap-notice',
+                                    ),
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        AppIcons.coins,
+                                        size: 14,
+                                        color: Colors.white70,
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Flexible(
+                                        child: Text(
+                                          context.t(K.soloDailyCapReached),
+                                          textAlign: TextAlign.center,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                                 // Ödül kuyrukta bekliyorsa bunu söyle.
                                 // Rozet yalnız miktar sıfırdan büyükse
                                 // çizildiği için çevrimdışı turda ekranda

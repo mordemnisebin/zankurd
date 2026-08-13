@@ -1695,7 +1695,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -1744,8 +1744,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (currentUserId?.trim() != user.id) {
         throw StateError('Quiz reward owner changed during claim RPC.');
       }
-      if (isSolo) return _amountFromRpcResponse(response) ?? 0;
-      return _verifiedQuizRewardAmount(response, userId: user.id);
+      if (isSolo) {
+        final amount = _amountFromRpcResponse(response) ?? 0;
+        // `cap_reached` yalnız sunucu açıkça söylediğinde doğrudur.
+        // Eksik alanı "tavana varıldı" saymak, olmayan bir sebep
+        // uydurmak olurdu.
+        final capReached = response is Map && response['cap_reached'] == true;
+        return (amount: amount, dailyCapReached: capReached);
+      }
+      return (
+        amount: _verifiedQuizRewardAmount(response, userId: user.id),
+        dailyCapReached: false,
+      );
     } on PostgrestException catch (error, stack) {
       // Göç henüz üretime uygulanmadıysa `claim_solo_reward` yoktur
       // (42883 undefined_function). Bu bir arıza değil, beklenen ara
@@ -1758,7 +1768,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           stack,
           reason: 'claim_solo_reward missing — migration not applied yet',
         );
-        return 0;
+        return (amount: 0, dailyCapReached: false);
       }
       _recordError(error, stack, reason: 'claim quiz reward failed');
       rethrow;

@@ -710,7 +710,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -728,14 +728,20 @@ class MockZanKurdRepository implements ZanKurdRepository {
         _mockSoloEarnedToday = 0;
       }
       final remaining = CoinCalculator.soloDailyCap - _mockSoloEarnedToday;
-      if (remaining <= 0) return 0;
+      // Çevrimdışı yol da tavanı SEBEBİYLE bildirir; aksi hâlde mock'ta
+      // "+0 jeton"un niçin sıfır olduğu görünmez ve arayüzün tavan
+      // mesajı hiçbir zaman sınanamaz.
+      if (remaining <= 0) return (amount: 0, dailyCapReached: true);
       final earned = CoinCalculator.soloAward(
         correctCount: correctCount,
         bestStreak: bestStreak,
       ).clamp(0, remaining);
       _mockSoloEarnedToday += earned;
       _mockCoins += earned;
-      return earned;
+      return (
+        amount: earned,
+        dailyCapReached: _mockSoloEarnedToday >= CoinCalculator.soloDailyCap,
+      );
     }
 
     final earned = _calculateCoinAward(
@@ -745,7 +751,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       totalQuestions: totalQuestions,
     );
     _mockCoins += earned;
-    return earned;
+    return (amount: earned, dailyCapReached: false);
   }
 
   int _calculateCoinAward({

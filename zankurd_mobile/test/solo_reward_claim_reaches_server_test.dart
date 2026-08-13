@@ -5,6 +5,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -179,7 +180,7 @@ class _SpyRepository extends MockZanKurdRepository {
   String? get currentUserId => 'solo-user';
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -189,6 +190,6 @@ class _SpyRepository extends MockZanKurdRepository {
     awardCalls++;
     sawRoomArgument = room != null;
     lastRoomId = room?.id;
-    return 0;
+    return (amount: 0, dailyCapReached: false);
   }
 }

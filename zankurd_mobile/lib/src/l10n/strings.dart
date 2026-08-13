@@ -1142,6 +1142,10 @@ class Tr {
     // Kurmancî'de "zêr"in `z`si. Sabit `c` yazıldığında Kurmancî oyuncu
     // fiyat rozetinde anlamsız bir harf görüyordu (2026-08-01).
     K.coinAbbrev: {'ku': 'z', 'tr': 'c'},
+    K.soloDailyCapReached: {
+      'ku': 'Sînorê jetonan ê îro tije bû — sibê ji nû ve dest pê dike.',
+      'tr': 'Bugünün jeton sınırına ulaştın — yarın sıfırlanır.',
+    },
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
     K.listenExplanation: {'ku': 'Şîroveyê bibihîze', 'tr': 'Açıklamayı dinle'},
     K.listenQuestion: {'ku': 'Pirsê bibihîze', 'tr': 'Soruyu dinle'},
@@ -2786,6 +2790,12 @@ class K {
   static const streakWord = 'quiz.streak';
   static const coinWord = 'quiz.coin';
   static const coinAbbrev = 'quiz.coin.abbrev';
+
+  /// Solo turda günlük jeton tavanına varıldığında gösterilen satır.
+  ///
+  /// Sunucu tavanı açıkça bildiriyor; istemci bunu göstermezse oyuncu
+  /// "+0 jeton" görüp sebebini öğrenemez.
+  static const soloDailyCapReached = 'quiz.reward.soloDailyCap';
   static const stopAction = 'common.stop';
   static const listenExplanation = 'quiz.listenExplanation';
   static const listenQuestion = 'quiz.listenQuestion';
