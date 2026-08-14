@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/quiz_question.dart';
 import '../models/tournament.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -35,6 +36,47 @@ int tournamentOpponentScore(Object? result) {
   return value is num ? value.toInt() : 0;
 }
 
+/// `matchId`den türeyen SABİT bir seçimle aynı maçtaki her iki oyuncuya
+/// da AYNI soruları verir.
+///
+/// Gerçek turnuvada `loadQuestions` her oyuncuda farklı sonuç verirdi:
+/// seçim `SeenQuestionStore`ye (cihaz başına yerel "görülen soru" durumu)
+/// dayanıyordu — sunucu soru ataması yapmıyor, yalnız skoru kaydediyor.
+/// Aynı maçın iki oyuncusu birbirinden habersiz farklı sorularla
+/// oynuyordu (2026-08-14 denetimi).
+///
+/// `String.hashCode` platformlar arası aynı garantisi TAŞIMAZ (dil
+/// spesifikasyonu bunu vaat etmez); bu yüzden kendi basit, saf tamsayı
+/// aritmetiğiyle çalışan bir özet (FNV-1a) kullanılır — iOS ve Android
+/// aynı `matchId` için her zaman aynı sonucu üretir. Havuz önce kimliğe
+/// göre sıralanır (statik paket her cihazda aynı sırada gelmese bile bu,
+/// sırayı sabitler), sonra özetten türeyen bir döndürmeyle seçilir.
+List<QuizQuestion> deterministicMatchQuestions(
+  List<QuizQuestion> pool,
+  String matchId,
+  int limit,
+) {
+  if (pool.isEmpty || limit <= 0) return const [];
+  final sorted = [...pool]..sort((a, b) => a.id.compareTo(b.id));
+  var hash = 0x811c9dc5;
+  for (final unit in matchId.codeUnits) {
+    hash = ((hash ^ unit) * 0x01000193) & 0xFFFFFFFF;
+  }
+  final offset = hash % sorted.length;
+  final rotated = [...sorted.skip(offset), ...sorted.take(offset)];
+  return rotated.take(limit).toList();
+}
+
+/// Maçın hükmen kapanacağı anı `GG.AA SS:dd` biçiminde yerel saate çevirir.
+String formatMatchDeadline(DateTime deadline) {
+  final local = deadline.toLocal();
+  final day = local.day.toString().padLeft(2, '0');
+  final month = local.month.toString().padLeft(2, '0');
+  final hour = local.hour.toString().padLeft(2, '0');
+  final minute = local.minute.toString().padLeft(2, '0');
+  return '$day.$month $hour:$minute';
+}
+
 /// Günlük turnuva: 16 oyuncu, 4 tur, tur başına 4 soruluk maç.
 /// Lobi → şema → maç (bot yarışı quiz) → tur ilerlemesi.
 class TournamentScreen extends StatefulWidget {
@@ -52,6 +94,22 @@ class _TournamentScreenState extends State<TournamentScreen> {
   static List<String> get _botNames => BotNames.pool;
 
   TournamentBracket? _bracket;
+
+  /// "Yeni Turnuvaya Katıl" düğmesinin çift dokunuşla iki kez
+  /// `join_tournament` çağırmasını engeller.
+  bool _startingNewTournament = false;
+
+  /// Bu oturumda skorumuzu gönderdiğimiz maç kimlikleri.
+  ///
+  /// `get_tournament_bracket` "ben gönderdim mi" bilgisini AYRI bir alan
+  /// olarak taşımıyor; istemci bunu skorun sıfırdan büyük olmasından
+  /// çıkarıyordu (`_awaitingOpponent`). Turu 0 puanla bitiren (bütün
+  /// sorulara yanlış cevap veren ya da süresi dolan) oyuncu için bu
+  /// çıkarım YANLIŞ sonuç veriyordu: "Maçı başlat" düğmesi geri geliyor,
+  /// tekrar basınca sunucu skoru tek sefer kabul ettiği için sessizce
+  /// hiçbir şey olmuyordu (2026-08-14 denetimi). Bu küme yanlış
+  /// çıkarımı düzeltir.
+  final Set<String> _submittedMatchIds = {};
 
   /// Şema sunucudan mı geldi?
   ///
@@ -117,7 +175,29 @@ class _TournamentScreenState extends State<TournamentScreen> {
       setState(() {
         // Oyuncu yerleştirilmemiş (boş) şema lobi sayılır.
         final seeded = bracket != null && _isSeeded(bracket);
-        _bracket = seeded ? bracket : null;
+        // `get_tournament_bracket` RPC'si `totalScore` HİÇ döndürmüyor
+        // (yalnız tournamentId/userId/currentRound/status/rounds) —
+        // Şampiyon banner'ındaki "Final skoru" bu yüzden gerçek turnuvada
+        // her zaman 0 kalıyordu. Kullanıcının kendi skoru zaten
+        // `rounds[].matches[]`te duruyor; sunucuya yeni bir alan
+        // eklemeden burada toplanır (2026-08-14 denetimi). Kaynak zaten
+        // dolu bir değer verdiyse (yerel benzetimin kendi hesabı) o
+        // korunur — yalnız 0/boşken türetilir.
+        _bracket = seeded
+            ? bracket.copyWith(
+                totalScore: bracket.totalScore != 0
+                    ? bracket.totalScore
+                    : _sumUserScore(
+                        bracket.rounds,
+                        real != null
+                            ? (bracket.userId.isNotEmpty
+                                  ? bracket.userId
+                                  : (widget.repository.currentUserId ??
+                                        _simulatedUserId))
+                            : _simulatedUserId,
+                      ),
+              )
+            : null;
         _serverBracket = seeded && real != null;
         _waitingForPlayers = real != null && !_isSeeded(real);
         _standings = standings;
@@ -136,9 +216,44 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
   }
 
+  /// Kullanıcının brakete kayıtlı tüm maçlardaki toplam skoru.
+  ///
+  /// Ne sunucu (`get_tournament_bracket`) ne de yerel benzetim
+  /// `TournamentBracket.totalScore`ı hiçbir yerde dolduruyordu; alan
+  /// `Şampiyon` banner'ında ve sıralamada hep 0 gösteriyordu. Skorun
+  /// kendisi zaten her maçta duruyor, yalnız toplanmamıştı
+  /// (2026-08-14 denetimi).
+  int _sumUserScore(List<TournamentRound> rounds, String userId) {
+    var total = 0;
+    for (final round in rounds) {
+      for (final match in round.matches) {
+        if (match.playerOneId == userId) {
+          total += match.playerOneScore;
+        } else if (match.playerTwoId == userId) {
+          total += match.playerTwoScore;
+        }
+      }
+    }
+    return total;
+  }
+
   bool _isSeeded(TournamentBracket bracket) =>
       bracket.rounds.isNotEmpty &&
       bracket.rounds.first.matches.any((m) => m.playerOneId.isNotEmpty);
+
+  /// Bitmiş bir şemanın (`_bracket.status != 'active'`) üzerinden yeni bir
+  /// turnuvaya katılır. `_startTournament`in kendisi `_bracket`i her
+  /// durumda üzerine yazdığı için tek fark burada yalnız çift dokunuşu
+  /// engellemek.
+  Future<void> _startNewTournamentAfterFinish() async {
+    if (_startingNewTournament) return;
+    setState(() => _startingNewTournament = true);
+    try {
+      await _startTournament();
+    } finally {
+      if (mounted) setState(() => _startingNewTournament = false);
+    }
+  }
 
   Future<void> _startTournament() async {
     String name = '';
@@ -214,7 +329,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
       );
     });
     // Sunucuya kaydet; hata sessizce yutulur (yerel oyun sürer).
-    widget.repository.saveTournamentProgress('r16', 0, 0, const []).catchError((
+    //
+    // `save_tournament_progress`in geçerli `p_stage` kümesi ('lobby',
+    // 'quarter', 'semi', 'final', 'won', 'lost' —
+    // 2026-07-14_tournament_integrity_hardening.sql) 'r16' İÇERMEZ; bu
+    // çağrı her yerel turnuva başlangıcında sessizce reddediliyor,
+    // kaydın işi zaten yerel oyunu etkilemediği için kimse fark etmiyordu
+    // (2026-08-14 denetimi). Hiçbir eleme turu henüz tamamlanmadığı için
+    // doğru karşılık 'lobby'dir.
+    widget.repository.saveTournamentProgress('lobby', 0, 0, const []).catchError((
       error,
       stack,
     ) {
@@ -277,6 +400,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
   bool get _awaitingOpponent {
     final match = _userMatch;
     if (match == null || match.status == 'completed') return false;
+    if (_submittedMatchIds.contains(match.id)) return true;
     final myScore = match.playerOneId == _userId
         ? match.playerOneScore
         : match.playerTwoScore;
@@ -297,16 +421,43 @@ class _TournamentScreenState extends State<TournamentScreen> {
     return null;
   }
 
+  List<QuizQuestion> _matchQuestions(String matchId) {
+    final pool = widget.repository.playableQuestions
+        .where((q) => q.category == TournamentConfig.tournamentCategory)
+        .toList();
+    return deterministicMatchQuestions(
+      pool,
+      matchId,
+      TournamentConfig.questionsPerMatch,
+    );
+  }
+
   Future<void> _startMatch() async {
     if (_matchLoading) return;
     setState(() => _matchLoading = true);
     try {
-      var questions = await widget.repository.loadQuestions(
-        categoryId: TournamentConfig.tournamentCategory,
-        limit: TournamentConfig.questionsPerMatch,
-      );
+      final match = _userMatch;
+      List<QuizQuestion> questions;
+      if (_serverBracket && match != null) {
+        // Gerçek turnuvada `loadQuestions` HER OYUNCUDA farklı sonuç
+        // verirdi: seçim `SeenQuestionStore`ye (cihaz başına yerel "görülen
+        // soru" durumu) dayanıyordu. Aynı maçın iki oyuncusu birbirinden
+        // habersiz farklı sorularla oynuyordu — sunucu soru ataması
+        // yapmıyor, yalnız skoru kaydediyor (2026-08-14 denetimi).
+        //
+        // Sunucuya dokunmadan adillik: seçim `match.id`den (iki oyuncuda
+        // da aynı, `get_tournament_bracket`ten gelir) türeyen SABİT bir
+        // döndürmeyle yapılır — aynı statik pakete, aynı sırayla, aynı
+        // ofsetle bakan iki cihaz aynı soruları seçer.
+        questions = _matchQuestions(match.id);
+      } else {
+        questions = await widget.repository.loadQuestions(
+          categoryId: TournamentConfig.tournamentCategory,
+          limit: TournamentConfig.questionsPerMatch,
+        );
+      }
       if (questions.isEmpty) {
-        questions = widget.repository.questions
+        questions = widget.repository.playableQuestions
             .take(TournamentConfig.questionsPerMatch)
             .toList();
       }
@@ -316,12 +467,12 @@ class _TournamentScreenState extends State<TournamentScreen> {
       final ku = context.isKu;
       final bracket = _bracket;
       String? versusBanner;
-      final match = _userMatch;
       if (bracket != null && match != null) {
         final opponentName = match.playerOneId == _userId
             ? match.playerTwoName
             : match.playerOneName;
-        final roundName = _roundNames(ku)[bracket.currentRound];
+        final roundName =
+            _roundNames(ku, bracket.rounds.length)[bracket.currentRound];
         versusBanner = context.t(K.yourMatchVs, {
           'round': roundName,
           'opponent': opponentName,
@@ -344,6 +495,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
           // Gerçek turnuvada sonucu istemci belirlemez: skorumuzu bildirip
           // şemayı sunucudan yeniden okuruz. Rakip henüz oynamadıysa maç
           // 'completed' olmaz ve ekran bekleme durumunu gösterir.
+          var submitFailed = false;
           await widget.repository
               .submitTournamentMatch(
                 matchId: match.id,
@@ -356,9 +508,27 @@ class _TournamentScreenState extends State<TournamentScreen> {
                   stack,
                   reason: 'tournament_submit_match',
                 );
+                submitFailed = true;
                 return match;
               });
           if (!mounted) return;
+          if (submitFailed) {
+            // Skor sunucuya yazılamadı; sessiz kalırsa kullanıcı az önce
+            // oynadığı maçın boşa gittiğini hiçbir yerde göremezdi
+            // (2026-08-14 denetimi). RPC skoru tek sefer kabul ettiği
+            // için "tekrar oyna" güvenlidir.
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.t(K.tournamentMatchSubmitFailed)),
+              ),
+            );
+          } else {
+            // Skor 0 olsa bile (bütün sorular yanlış/süre doldu)
+            // gönderildi sayılır — `_awaitingOpponent` skorun sıfırdan
+            // büyük olmasına bakınca bu durumu kaçırıyordu (2026-08-14
+            // denetimi).
+            _submittedMatchIds.add(match.id);
+          }
           await _load();
         } else {
           _advanceRound(
@@ -465,6 +635,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
         currentRound: isFinal ? roundIndex : roundIndex + 1,
         status: userLost ? 'eliminated' : (isFinal ? 'won' : 'active'),
         completedAt: userLost || isFinal ? DateTime.now() : null,
+        totalScore: _sumUserScore(rounds, _userId),
       );
     });
 
@@ -499,9 +670,27 @@ class _TournamentScreenState extends State<TournamentScreen> {
         });
   }
 
-  List<String> _roundNames(bool ku) => ku
-      ? const ['Dawiya 16an', 'Çaryeka Fînalê', 'Nîv-Fînal', 'Fînal']
-      : const ['Son 16', 'Çeyrek Final', 'Yarı Final', 'Final'];
+  /// Tur adları SONDAN sayılır: son tur her zaman Final'dir.
+  ///
+  /// Gerçek turnuva `tournaments.size` varsayılanı 4 ile 2 tur (yarı final
+  /// + final) oynanıyor; yerel bot benzetimi (`TournamentConfig`) hep 4 tur
+  /// (16 oyuncu). Sabit, BAŞTAN sayan tek bir liste ikisine birden
+  /// uygulanamaz — gerçek turnuvanın final maçı "Çeyrek Final" diye
+  /// etiketleniyordu (2026-08-14 denetimi). `totalRounds`, o an elde olan
+  /// `bracket.rounds.length`dir.
+  List<String> _roundNames(bool ku, int totalRounds) {
+    final namesFromFinal = ku
+        ? const ['Fînal', 'Nîv-Fînal', 'Çaryeka Fînalê', 'Dawiya 16an']
+        : const ['Final', 'Yarı Final', 'Çeyrek Final', 'Son 16'];
+    return List.generate(totalRounds, (i) {
+      final distanceFromFinal = totalRounds - 1 - i;
+      if (distanceFromFinal < namesFromFinal.length) {
+        return namesFromFinal[distanceFromFinal];
+      }
+      // Bilinen 4 addan taşan (32+ oyuncu) erken turlar için genel yedek.
+      return Tr.forKu(K.tournamentRoundGeneric, ku, {'n': '${i + 1}'});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -553,7 +742,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
   Widget _buildBracket(BuildContext context, bool ku) {
     final bracket = _bracket!;
     final userMatch = _userMatch;
-    final roundNames = _roundNames(ku);
+    final roundNames = _roundNames(ku, bracket.rounds.length);
 
     // 2026-07-22 canlı UX denetimi: dikey ortalama
     // IntrinsicHeight KULLANILMADI: LayoutBuilder içinde IntrinsicHeight
@@ -608,6 +797,40 @@ class _TournamentScreenState extends State<TournamentScreen> {
                         ? _rewardState
                         : _CupRewardState.localOnly,
                     rewardAmount: _rewardAmount,
+                  ),
+                ],
+                if (bracket.status != 'active') ...[
+                  // Turnuva bittikten sonra `get_tournament_bracket`
+                  // kullanıcının EN SON kaydını döndürmeye devam eder —
+                  // biten turnuva sonsuza kadar "en son" kalır. `_bracket`
+                  // bu yüzden bir daha hiç null olmuyor ve lobideki "Katıl"
+                  // düğmesi kalıcı olarak kayboluyordu; oyuncu bir daha hiç
+                  // turnuvaya giremiyordu (2026-08-14 denetimi). Sunucu
+                  // tarafı zaten doğru: `join_tournament` yalnız `open`/
+                  // `running` turnuvalara bakar, bitmiş olanı yok sayar.
+                  const SizedBox(height: AppSpacing.md),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      key: const ValueKey('tournament-join-new-cta'),
+                      onPressed: _startingNewTournament
+                          ? null
+                          : _startNewTournamentAfterFinish,
+                      icon: const Icon(AppIcons.trophy, size: 20),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.md,
+                        ),
+                        backgroundColor: AppTheme.brand,
+                        foregroundColor: Colors.white,
+                      ),
+                      label: Text(
+                        context.t(K.joinTournament),
+                        style: AppTypography.bodyLarge.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
                 // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz
@@ -766,13 +989,10 @@ class _LobbyView extends StatelessWidget {
           label: context.t(K.cupNotStarted),
           onSolid: true,
         ),
-        // Ödül GERÇEK sabitlerden gelir; uydurulmaz.
-        RewardToken(
-          kind: RewardKind.coin,
-          value: '${TournamentConfig.coinRewardPerMatch}',
-          label: context.t(K.cupPerMatchReward),
-          onSolid: true,
-        ),
+        // Ödül GERÇEK sabitlerden gelir; uydurulmaz. Maç başı jeton
+        // kasıtlı olarak yok: sunucu maç başına hiçbir coin ödemiyor
+        // (2026-08-14 denetimi) — "0 coin" göstermek de bir ödül vaadi
+        // gibi okunurdu.
         RewardToken(
           kind: RewardKind.coin,
           value: '${TournamentConfig.coinBonusChampion}',
@@ -1585,6 +1805,22 @@ class _UserMatchCard extends StatelessWidget {
               ),
             ],
           ),
+          if (match.deadline != null) ...[
+            const SizedBox(height: 10),
+            Text(
+              key: const ValueKey('tournament-match-deadline'),
+              match.deadline!.isBefore(DateTime.now())
+                  ? context.t(K.tournamentMatchDeadlinePassed)
+                  : Tr.forKu(K.tournamentMatchDeadline, ku, {
+                      'time': formatMatchDeadline(match.deadline!),
+                    }),
+              style: TextStyle(
+                color: AppTheme.textMutedColor(context),
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
           const SizedBox(height: 14),
           SizedBox(
             width: double.infinity,

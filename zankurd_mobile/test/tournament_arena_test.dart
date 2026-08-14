@@ -50,19 +50,25 @@ void main() {
 
   // ── Ödül ────────────────────────────────────────────────────────────────
 
-  testWidgets('kupanın ödülü lobide görünür', (tester) async {
+  testWidgets('kupanın şampiyonluk ödülü lobide görünür', (tester) async {
     await _pump(tester);
-    // Değerler `TournamentConfig`ten gelir; ekrana sabit yazılmaz.
-    expect(
-      find.text('${TournamentConfig.coinRewardPerMatch}'),
-      findsOneWidget,
-      reason: 'maç başı ödül görünmüyor',
-    );
+    // Değer `TournamentConfig`ten gelir; ekrana sabit yazılmaz. Sunucu
+    // (`claim_tournament_reward`) sabit 200 ödüyor — 2026-08-14'e kadar
+    // burada 500 yazıyordu.
     expect(
       find.text('${TournamentConfig.coinBonusChampion}'),
       findsOneWidget,
       reason: 'şampiyonluk ödülü görünmüyor',
     );
+  });
+
+  testWidgets('maç başı sahte bir ödül vaat edilmiyor', (tester) async {
+    // `submit_tournament_match` maç başına hiçbir coin ödemiyor
+    // (2026-08-14 denetimi). Lobi eskiden `TournamentConfig.
+    // coinRewardPerMatch` (50) değerini "maç başı" etiketiyle
+    // gösteriyordu — sunucu hiç ödemediği bir ödülü vaat ediyordu.
+    await _pump(tester);
+    expect(find.text('maç başı'), findsNothing);
   });
 
   testWidgets('ödül ortak jeton bileşeniyle çizilir', (tester) async {

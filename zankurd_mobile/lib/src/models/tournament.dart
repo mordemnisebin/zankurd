@@ -14,6 +14,14 @@ class TournamentMatch {
   final String questionCategory;
   final int questionsAnswered;
 
+  /// Maçın süresi dolduğunda hükmen kapanacağı an
+  /// (`resolve_expired_tournament_matches`, sunucuda round_hours'a göre
+  /// hesaplanır — varsayılan 24 saat). `get_tournament_bracket` bunu HER
+  /// maç için gönderiyordu ama model hiç bir alan taşımadığı için
+  /// `fromJson` onu sessizce atıyordu; ekranda "ne zamana kadar
+  /// oynamalıyım" hiçbir yerde görünmüyordu (2026-08-14 denetimi).
+  final DateTime? deadline;
+
   const TournamentMatch({
     required this.id,
     required this.playerOneId,
@@ -26,6 +34,7 @@ class TournamentMatch {
     required this.winnerId,
     this.questionCategory = '',
     this.questionsAnswered = 0,
+    this.deadline,
   });
 
   TournamentMatch copyWith({
@@ -40,6 +49,7 @@ class TournamentMatch {
     String? winnerId,
     String? questionCategory,
     int? questionsAnswered,
+    DateTime? deadline,
   }) => TournamentMatch(
     id: id ?? this.id,
     playerOneId: playerOneId ?? this.playerOneId,
@@ -52,6 +62,7 @@ class TournamentMatch {
     winnerId: winnerId ?? this.winnerId,
     questionCategory: questionCategory ?? this.questionCategory,
     questionsAnswered: questionsAnswered ?? this.questionsAnswered,
+    deadline: deadline ?? this.deadline,
   );
 
   factory TournamentMatch.fromJson(Map<String, dynamic> json) =>
@@ -67,6 +78,9 @@ class TournamentMatch {
         winnerId: json['winnerId'] as String? ?? '',
         questionCategory: json['questionCategory'] as String? ?? '',
         questionsAnswered: json['questionsAnswered'] as int? ?? 0,
+        deadline: json['deadline'] is String
+            ? DateTime.tryParse(json['deadline'] as String)
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,6 +95,7 @@ class TournamentMatch {
     'winnerId': winnerId,
     'questionCategory': questionCategory,
     'questionsAnswered': questionsAnswered,
+    if (deadline != null) 'deadline': deadline!.toIso8601String(),
   };
 }
 
@@ -261,8 +276,12 @@ class TournamentConfig {
   static const int totalPlayers = 16;
   static const int roundCount = 4;
   static const int questionsPerMatch = 4;
-  static const int coinRewardPerMatch = 50;
-  static const int coinBonusChampion = 500;
+  // `submit_tournament_match` (2026-07-26_real_player_tournament.sql) maç
+  // başına HİÇBİR coin ödemiyor — yalnız `claim_tournament_reward`
+  // şampiyonluğa sabit 200 coin veriyor. Lobi eskiden 50/500 vaat
+  // ediyordu; ikisi de sunucu gerçeğiyle uyuşmuyordu (2026-08-14
+  // denetimi). Maç başı ödül yok; ilgili jeton ekrandan kaldırıldı.
+  static const int coinBonusChampion = 200;
   static const String tournamentCategory = 'Ziman';
 
   /// Generate bracket structure: 16→8→4→2→1 (4 rounds)

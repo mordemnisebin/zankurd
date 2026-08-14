@@ -296,7 +296,60 @@ void main() {
 
     expect(repository.championClaims, 1);
     expect(find.textContaining('200 coin'), findsOneWidget);
+    // `TournamentBracket.totalScore` hiçbir yolda doldurulmuyordu —
+    // "Final skoru" her zaman 0 gösteriyordu. Skor zaten maçta duruyor
+    // (playerOneScore: 900); ekran onu toplayıp göstermeli
+    // (2026-08-14 denetimi).
+    // Geniş ekranda iki sütunlu düzen aynı metni iki kez çizebilir
+    // (bkz. bu dosyadaki diğer testlerdeki `findsWidgets` deseni).
+    expect(find.textContaining('Final skoru: 900'), findsWidgets);
   });
+
+  testWidgets(
+    'bitmiş turnuvadan sonra yeni turnuvaya katılma düğmesi görünür',
+    (tester) async {
+      // `get_tournament_bracket` kullanıcının EN SON kaydını döndürmeye
+      // devam eder — biten turnuva sonsuza kadar "en son" kalır. Düzeltme
+      // öncesi `_bracket` bu yüzden bir daha hiç null olmuyor, lobideki
+      // "Katıl" düğmesi kalıcı olarak kayboluyordu (2026-08-14 denetimi).
+      final repository = _RealTournamentRepository(
+        _bracketWith(const [
+          TournamentMatch(
+            id: 'm1',
+            playerOneId: 'me',
+            playerOneName: 'Ben',
+            playerTwoId: 'p2',
+            playerTwoName: 'Rojda',
+            playerOneScore: 300,
+            playerTwoScore: 900,
+            status: 'completed',
+            winnerId: 'p2',
+          ),
+        ], status: 'eliminated'),
+      );
+
+      await tester.pumpWidget(
+        testShell(child: TournamentScreen(repository: repository)),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      final joinAgain = find.byKey(
+        const ValueKey('tournament-join-new-cta'),
+      );
+      expect(joinAgain, findsOneWidget);
+
+      await tester.tap(joinAgain);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+
+      // `_load()` yalnız `loadRealTournamentBracket` çağırır; `Katıl`
+      // düğmesine dokununca `joinRealTournament` (ve dolayısıyla
+      // sunucudaki `join_tournament`) İLK KEZ çağrılır — bu, yeni bir
+      // turnuvaya katılma girişiminin kanıtıdır.
+      expect(repository.joinCalls, 1);
+    },
+  );
 
   testWidgets('şampiyon olmayan oyuncu ödül istemez', (tester) async {
     // Karşı taraf: her açılışta istemek, sunucunun "şampiyon değilsin"
