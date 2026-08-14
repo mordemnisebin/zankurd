@@ -96,7 +96,13 @@ void main() {
 
     // Yalnız-ekleme tabloları muaf: eski satırları hiç olmadığı için
     // UPDATE olayı da doğmaz, tam satırı loglamanın karşılığı yoktur.
-    const appendOnly = {'room_messages', 'matchmaking_queue'};
+    //
+    // `matchmaking_queue` burada YOKTU (yanlışlıkla) — ama append-only
+    // değil: `join_matchmaking()` rakip bulununca bekleyen oyuncunun
+    // satırını `room_id` ile UPDATE ediyor ve istemci tam bu UPDATE'i
+    // realtime ile dinliyor (2026-08-14 denetimi, bkz.
+    // `supabase/2026-08-14_matchmaking_queue_replica_identity.sql`).
+    const appendOnly = {'room_messages'};
 
     final missing = addedTables.difference(withIdentity).difference(appendOnly);
     expect(

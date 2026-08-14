@@ -1,0 +1,40 @@
+-- Eşleşince bekleyen oyuncu bunu hiç öğrenmiyordu.
+--
+-- ## Kusur
+--
+-- `join_matchmaking()` (2026-08-02_multiplayer_session_hardening.sql)
+-- rakip bulunca YENİ bir satır INSERT etmiyor, rakibin BEKLEYEN kuyruk
+-- satırını güncelliyor: `update public.matchmaking_queue set room_id =
+-- v_room_id where player_id = v_opponent`. İstemci tarafında
+-- `subscribeMatchmakingQueue()` tam da bu UPDATE'i görmek için kendi
+-- `matchmaking_queue` satırını realtime ile dinliyor — bunu
+-- 2026-07-03_matchmaking_fix.sql'deki yorum da doğruluyor: "istemci
+-- stream'i room_id atamasini bununla goruyor".
+--
+-- `matchmaking_queue` RLS açık bir tablo (`Allow read own matchmaking
+-- queue entry`, `player_id = auth.uid()`). RLS açık bir tabloda Realtime,
+-- UPDATE olayını aboneye iletmeden önce yetkilendirme için WAL'daki ESKİ
+-- satıra bakar; `REPLICA IDENTITY DEFAULT` (Postgres varsayılanı) WAL'a
+-- yalnız birincil anahtar (`player_id`) yazar, geri kalan sütunlar eksik
+-- kalınca Realtime bu olayı sessizce düşürür — tıpkı 2026-08-01'de
+-- `rooms`/`room_players` için bulunan ve
+-- `2026-08-01_room_realtime_replica_identity.sql` ile düzeltilen kusurun
+-- aynısı, burada gözden kaçmış (2026-08-14 denetimi).
+--
+-- Sonuç: eşleşen iki oyuncudan yalnız `join_matchmaking()`'i ÇAĞIRAN
+-- (odayı yaratan) taraf `room_id`yi RPC'nin dönüş değerinden doğrudan
+-- alıyor; BEKLEYEN taraf yalnız bu realtime UPDATE'e güveniyor ve o hiç
+-- gelmiyor — bekleyen oyuncu eşleşmeyi ya asla görmüyor ya da yalnız
+-- yerel 20sn zaman aşımı/yeniden deneme dolaylı yoldan yakalarsa fark
+-- ediyor.
+--
+-- `matchmaking_queue` bu yüzden `room_realtime_replica_identity_test.dart`
+-- içindeki "append-only, replica identity full gerekmez" muafiyetinden
+-- YANLIŞ şekilde muaftı — append-only değil, tam da yukarıdaki UPDATE
+-- yüzünden. Bu göç tabloyu tam replica identity'ye çevirir, ilgili test
+-- güncellenerek muafiyet kaldırıldı.
+--
+-- Tablo zaten `supabase_realtime` publication'ında (2026-07-03), bu göç
+-- yalnız replica identity ayarlıyor.
+
+alter table public.matchmaking_queue replica identity full;
