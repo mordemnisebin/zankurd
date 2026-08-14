@@ -21,6 +21,9 @@ class _FailingRoomRepository extends MockZanKurdRepository {
   }
 }
 
+/// `StateError` burada KASITLI olarak `RoomJoinException` DEĞİL — bir ağ/
+/// bilinmeyen hatasını temsil eder (bkz. `joinRoomErrorKey` içindeki
+/// `error is! RoomJoinException` dalı, `lib/src/screens/play_hub_screen.dart`).
 class _FailingJoinRoomRepository extends MockZanKurdRepository {
   int joinCalls = 0;
 
@@ -104,7 +107,13 @@ void main() {
     expect(find.byType(RoomScreen), findsNothing);
     expect(find.text('Rojda'), findsNothing);
     expect(find.text('Baran'), findsNothing);
-    expect(find.text('Bu kodla oda bulunamadı.'), findsOneWidget);
+    // Eskiden HER hata (bu dahil, aslında bir ağ/bilinmeyen hatası, oda var
+    // olmayabilir de olmayabilir de) "Bu kodla oda bulunamadı." metnine
+    // sabitleniyordu — kullanıcıya sahte bir kesinlik söylüyordu. Artık
+    // yalnız `RoomJoinException(notFound)` bu metni üretir; tanınmayan
+    // hatalar jenerik "katılamadın" metnine düşer (2026-08-14 denetimi,
+    // bkz. `joinRoomErrorKey` ve `test/room_join_error_mapping_test.dart`).
+    expect(find.text('Odaya katılamadın. Lütfen tekrar dene.'), findsOneWidget);
   });
 
   testWidgets('empty room code is validated locally before online join', (

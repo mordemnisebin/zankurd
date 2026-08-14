@@ -64,6 +64,20 @@ class _RoomScreenState extends State<RoomScreen> {
   /// iOS'tan katılınca ortaya çıktı.
   bool? _readyOverride;
 
+  /// Bu oturumda engellenen oyuncuların kimlikleri; satırları buradan
+  /// süzülür.
+  ///
+  /// `PlayerModerationButton.onBlocked` tanımlıydı ama HİÇBİR çağrı
+  /// yerinde bağlanmamıştı — engelleme sunucuda başarıyla işleniyor,
+  /// düğme "Oyuncu engellendi" diyordu, ama aynı kişinin satırı odada
+  /// durmaya devam ediyordu; kullanıcı ekranı kapatıp açana kadar
+  /// (o zaman `room.players` yeniden çekiliyordu) engellediği kişiyi
+  /// görmeye devam ediyordu (2026-08-14 denetimi). `room.players`ın
+  /// kendisi değişmiyor bilerek: engelleme oyuncuyu odadan ATMAZ, yalnız
+  /// istemcide GÖRÜNMEZ kılar — `room_chat.dart`taki `_blockedSenderIds`
+  /// ile aynı yerel süzgeç deseni.
+  final Set<String> _blockedPlayerIds = <String>{};
+
   bool get ready {
     final chosen = _readyOverride;
     if (chosen != null) return chosen;
@@ -81,6 +95,19 @@ class _RoomScreenState extends State<RoomScreen> {
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
   int _subscriptionGeneration = 0;
+
+  /// `_navigateToQuiz` soru yüklemesi kaç kez üst üste başarısız oldu.
+  ///
+  /// Eskiden bu sayaç yoktu: yükleme düşünce `_resumeLobbyMonitoring()`
+  /// lobi izlemesini yeniden açıyordu, izleme de sunucuda oda hâlâ
+  /// `active` gördüğü için `_navigateToQuiz`ı HEMEN yeniden çağırıyordu —
+  /// sunucu tarafı sorun sürdükçe host'u 3 saniyede bir aynı hatayı
+  /// tekrarlayan sessiz bir döngüye sokuyordu (2026-08-14 denetimi).
+  /// Sınır aşılınca `_questionLoadExhausted` otomatik tetiklemeyi durdurur;
+  /// kullanıcı görünür bir hata + "yeniden dene" düğmesiyle karşılaşır.
+  static const _maxQuestionLoadAttempts = 3;
+  int _questionLoadAttempts = 0;
+  bool _questionLoadExhausted = false;
 
   /// Realtime yetersiz kalırsa devreye giren polling fallback.
   /// Yalnızca lobide en az 2 oyuncu görülünce durur; aksi halde devam eder.
@@ -154,7 +181,9 @@ class _RoomScreenState extends State<RoomScreen> {
               _handleLobbyFinished();
               return;
             }
-            if (status == RoomStatus.active && !quizOpened) {
+            if (status == RoomStatus.active &&
+                !quizOpened &&
+                !_questionLoadExhausted) {
               _pausePolling();
               _pauseStatusPolling();
               _navigateToQuiz();
@@ -261,7 +290,9 @@ class _RoomScreenState extends State<RoomScreen> {
         _handleLobbyFinished();
         return;
       }
-      if (status == RoomStatus.active && !quizOpened) {
+      if (status == RoomStatus.active &&
+          !quizOpened &&
+          !_questionLoadExhausted) {
         _pausePolling();
         _pauseStatusPolling();
         await _navigateToQuiz();
@@ -335,6 +366,30 @@ class _RoomScreenState extends State<RoomScreen> {
 
     if (!mounted) return;
     _returnToPreviousRoute();
+  }
+
+  /// "Hazırım" anahtarına dokunuşu sunucuya yazar.
+  ///
+  /// Eskiden anahtar iyimser (optimistic) güncelleniyor ve `updateReady`
+  /// çağrısı fire-and-forget bırakılıyordu: sunucu yazması RPC/ağ
+  /// hatasıyla düşse bile `_readyOverride` asla geri alınmıyordu.
+  /// Kullanıcı anahtarı "açık" görürken sunucudaki gerçek satır hâlâ eski
+  /// değerdeydi — host'un `allPlayersReady` kontrolü sessizce takılıyordu
+  /// (2026-08-14 denetimi). Şimdi hata durumunda önceki değere dönülür ve
+  /// kullanıcı bir snackbar ile bilgilendirilir.
+  Future<void> _toggleReady(bool v) async {
+    final previousOverride = _readyOverride;
+    setState(() => _readyOverride = v);
+    try {
+      await widget.repository.updateReady(room, v);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room_update_ready_failed');
+      if (!mounted) return;
+      setState(() => _readyOverride = previousOverride);
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(context.t(K.readyUpdateFailed))));
+    }
   }
 
   void _resumeLobbyMonitoring() {
@@ -428,6 +483,12 @@ class _RoomScreenState extends State<RoomScreen> {
     final ku = context.isKu;
     final sorted = [...room.players]
       ..sort((a, b) => b.score.compareTo(a.score));
+    // `room.players` (yukarıdaki `sorted`) kasten süzülmez: oda üyeliği,
+    // `canStart`/`allPlayersReady` gibi oyun mantığı hâlâ GERÇEK listeye
+    // bakmalı. Yalnız EKRANDA çizilen satırlar süzülür.
+    final visiblePlayers = sorted
+        .where((p) => p.id == null || !_blockedPlayerIds.contains(p.id))
+        .toList();
     final currentUserId = widget.repository.currentUserId;
     final isHost = room.hostId == null || room.hostId == currentUserId;
     final allPlayersReady = room.players.every(
@@ -775,7 +836,10 @@ class _RoomScreenState extends State<RoomScreen> {
                                           ),
                                           const SizedBox(width: AppSpacing.xs),
                                           Text(
-                                            '${sorted.length}',
+                                            // Aşağıdaki listeyle aynı sayıyı
+                                            // gösterir: `visiblePlayers`
+                                            // (engellenenler süzülmüş).
+                                            '${visiblePlayers.length}',
                                             style: AppTypography.caption
                                                 .copyWith(
                                                   color:
@@ -821,7 +885,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                         ),
                                       ],
                                       const SizedBox(height: AppSpacing.sm),
-                                      if (sorted.isEmpty)
+                                      if (visiblePlayers.isEmpty)
                                         Text(
                                           context.t(K.noPlayersYet),
                                           style: AppTypography.bodyMedium
@@ -832,24 +896,38 @@ class _RoomScreenState extends State<RoomScreen> {
                                               ),
                                         )
                                       else
-                                        for (var i = 0; i < sorted.length; i++)
+                                        for (
+                                          var i = 0;
+                                          i < visiblePlayers.length;
+                                          i++
+                                        )
                                           _PlayerTile(
                                             key: ValueKey(
                                               'room-player-tile-${i + 1}',
                                             ),
                                             rank: i + 1,
-                                            player: sorted[i],
+                                            player: visiblePlayers[i],
                                             isKu: ku,
                                             repository: widget.repository,
                                             isSelf:
-                                                sorted[i].id == null ||
-                                                sorted[i].id ==
+                                                visiblePlayers[i].id == null ||
+                                                visiblePlayers[i].id ==
                                                     widget
                                                         .repository
                                                         .currentUserId,
                                             isHost:
                                                 room.hostId != null &&
-                                                sorted[i].id == room.hostId,
+                                                visiblePlayers[i].id ==
+                                                    room.hostId,
+                                            onBlocked: () {
+                                              final id = visiblePlayers[i].id;
+                                              if (id == null) return;
+                                              setState(
+                                                () => _blockedPlayerIds.add(
+                                                  id,
+                                                ),
+                                              );
+                                            },
                                           ),
                                       if (room.players.length < 2) ...[
                                         const SizedBox(height: AppSpacing.sm),
@@ -897,13 +975,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                           activeThumbColor: AppTheme.playCyan,
                                           activeTrackColor: AppTheme.playCyan
                                               .withValues(alpha: 0.45),
-                                          onChanged: (v) {
-                                            setState(() => _readyOverride = v);
-                                            widget.repository.updateReady(
-                                              room,
-                                              v,
-                                            );
-                                          },
+                                          onChanged: _toggleReady,
                                           title: Text(
                                             context.t(K.imReady),
                                             style: AppTypography.bodyLarge
@@ -977,7 +1049,46 @@ class _RoomScreenState extends State<RoomScreen> {
                                         ),
                                         const SizedBox(height: AppSpacing.xs),
                                       ],
-                                      if (isHost) ...[
+                                      if (_questionLoadExhausted) ...[
+                                        // 3 otomatik denemeden sonra sessiz
+                                        // döngü durur; kullanıcı burada
+                                        // gerçek durumu görür ve elle karar
+                                        // verir (2026-08-14 denetimi).
+                                        Container(
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: AppSpacing.sm,
+                                            vertical: AppSpacing.xs + 2,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.wrong.withValues(
+                                              alpha: 0.08,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              AppRadius.sm,
+                                            ),
+                                            border: Border.all(
+                                              color: AppTheme.wrong.withValues(
+                                                alpha: 0.25,
+                                              ),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            context.t(K.questionsLoadExhausted),
+                                            style: AppTypography.caption
+                                                .copyWith(
+                                                  color: AppTheme.wrong,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: AppSpacing.xs),
+                                        GeometricGradientButton(
+                                          label: context.t(K.retry),
+                                          icon: AppIcons.play,
+                                          onPressed: _retryLoadingQuestions,
+                                        ),
+                                      ] else if (isHost) ...[
                                         GeometricGradientButton(
                                           label: starting
                                               ? (context.t(K.preparingShort))
@@ -1148,21 +1259,38 @@ class _RoomScreenState extends State<RoomScreen> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'loadRoomQuestions failed');
       if (room.id == null || !widget.repository.usesServerHiddenAnswers) {
-        questions = widget.repository.questions;
+        questions = widget.repository.playableQuestions;
       } else {
+        _questionLoadAttempts++;
+        final exhausted = _questionLoadAttempts >= _maxQuestionLoadAttempts;
         if (!mounted) return;
         setState(() {
           quizOpened = false;
           starting = false;
+          _questionLoadExhausted = exhausted;
         });
+        // İzleme her durumda devam eder — oyuncu listesi ve "host çıktı"
+        // olayları hâlâ gerekli. Yeniden deneme döngüsünü yukarıdaki
+        // `!_questionLoadExhausted` koşulu keser, bu çağrı değil.
         _resumeLobbyMonitoring();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.t(K.gameStartFailed))));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(
+                context.t(
+                  exhausted ? K.questionsLoadExhausted : K.gameStartFailed,
+                ),
+              ),
+            ),
+          );
         return;
       }
     }
     if (!mounted) return;
+    _questionLoadAttempts = 0;
+    _questionLoadExhausted = false;
     setState(() => starting = false);
     Navigator.of(context).push(
       AppRoute.to(
@@ -1170,12 +1298,22 @@ class _RoomScreenState extends State<RoomScreen> {
           repository: widget.repository,
           room: room,
           questions: questions.isEmpty
-              ? widget.repository.questions
+              ? widget.repository.playableQuestions
               : questions,
           is1v1: room.id != null && room.players.length == 2,
         ),
       ),
     );
+  }
+
+  /// Kullanıcının otomatik döngü durduktan sonra elle tekrar denemesi.
+  /// Sayaç ve bayrak sıfırlanır ki yeni deneme de kendi 3 hakkını alsın.
+  void _retryLoadingQuestions() {
+    setState(() {
+      _questionLoadAttempts = 0;
+      _questionLoadExhausted = false;
+    });
+    _navigateToQuiz();
   }
 }
 
@@ -1236,6 +1374,7 @@ class _PlayerTile extends StatelessWidget {
     required this.repository,
     required this.isSelf,
     this.isHost = false,
+    this.onBlocked,
   });
 
   final int rank;
@@ -1248,6 +1387,9 @@ class _PlayerTile extends StatelessWidget {
 
   /// Kendi satırında moderasyon düğmesi çizilmez.
   final bool isSelf;
+
+  /// Engelleme başarılıysa çağıranın (oda ekranının) satırı süzmesi için.
+  final VoidCallback? onBlocked;
 
   /// Yerel oyuncunun görünen adı.
   ///
@@ -1385,6 +1527,7 @@ class _PlayerTile extends StatelessWidget {
             playerName: player.name,
             isSelf: isSelf,
             compact: true,
+            onBlocked: onBlocked,
           ),
         ],
       ),

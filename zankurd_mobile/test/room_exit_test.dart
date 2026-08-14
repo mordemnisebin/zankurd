@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -23,6 +24,7 @@ class _RoomExitRepository extends MockZanKurdRepository {
   bool failNextLeave = false;
   bool failReadyUpdate = false;
   bool failQuestionLoad = false;
+  int questionLoadCalls = 0;
   bool failSubscriptionCancel = false;
   Completer<void>? pendingLeave;
 
@@ -103,6 +105,7 @@ class _RoomExitRepository extends MockZanKurdRepository {
 
   @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
+    questionLoadCalls++;
     if (failQuestionLoad) throw StateError('question fetch failed');
     return super.loadRoomQuestions(room);
   }
@@ -283,6 +286,40 @@ void main() {
     expect(find.byType(RoomScreen), findsNothing);
   });
 
+  /// Kusur: "Hazırım" anahtarı iyimser (optimistic) güncelleniyordu ve
+  /// `updateReady` sunucu hatasıyla düşerse anahtar hiç geri alınmıyordu —
+  /// kullanıcı "hazır değilim" görürken sunucudaki satır hâlâ eski
+  /// değerdeydi ve host'un `allPlayersReady` kontrolü sessizce yanılıyordu.
+  /// Düzeltme: hata durumunda önceki değere dönülür ve bir snackbar
+  /// gösterilir (bkz. `room_screen.dart` `_toggleReady`).
+  testWidgets('ready toggle failure restores the previous value', (
+    tester,
+  ) async {
+    final repository = _RoomExitRepository()..failReadyUpdate = true;
+    addTearDown(repository.close);
+    await _openRoom(tester, repository, repository.onlineLobby());
+
+    await tester.ensureVisible(find.byType(Switch));
+    await tester.pump();
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+
+    // Sunucu çağrısı burada gerçek bir gecikme içermediği (mock, senkron
+    // fırlatır) için iyimser "kapalı" ara durumu ile geri alınmış hâl aynı
+    // pump turunda birleşir; asıl doğrulanan şey SON durumun eski değere
+    // (true) dönmüş olmasıdır — anahtar yanlış "hazır değilim" göstererek
+    // takılı kalmaz.
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+    await tester.pump();
+
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+    expect(
+      find.text('Hazır durumun kaydedilemedi. Önceki durumuna döndürüldü.'),
+      findsOneWidget,
+    );
+    expect(repository.updateReadyCalls, 1);
+  });
+
   testWidgets('local room keeps best-effort ready reset and exits safely', (
     tester,
   ) async {
@@ -375,4 +412,63 @@ void main() {
 
     expect(repository.statusPollCount, greaterThan(0));
   });
+
+  /// Kusur: soru yükleme sürekli başarısız olan bir oda, host'u 3 saniyede
+  /// bir aynı hatayı sessizce tekrarlayan bir döngüye sokuyordu.
+  ///
+  /// `_navigateToQuiz` başarısız olunca `_resumeLobbyMonitoring()`ı
+  /// çağırıyordu; bu da durum yoklamasını yeniden açıyordu, yoklama da
+  /// sunucuda oda hâlâ `active` olduğu için `_navigateToQuiz`ı HEMEN yeniden
+  /// tetikliyordu — sınır yoktu. Düzeltme `_questionLoadAttempts` sayacı ve
+  /// `_maxQuestionLoadAttempts` (3) sınırıyla döngüyü keser; sınır aşılınca
+  /// ekranda görünür bir hata + "Tekrar dene" düğmesi belirir ve otomatik
+  /// tetikleme durur (bkz. `room_screen.dart` `_questionLoadExhausted`).
+  testWidgets(
+    'question load failures stop retrying after a cap and offer manual retry',
+    (tester) async {
+      // Başarılı yeniden deneme `loadRoomQuestions` → `SeenQuestionStore`
+      // üzerinden `SharedPreferences`e ulaşır; mock değerler olmadan bu
+      // çağrı testte hiç tamamlanmaz (ne hata ne sonuç — sessizce asılı
+      // kalır) ve QuizScreen'e asla geçilmez.
+      SharedPreferences.setMockInitialValues({});
+      final repository = _RoomExitRepository()..failQuestionLoad = true;
+      addTearDown(repository.close);
+      await _openRoom(tester, repository, repository.onlineLobby());
+
+      repository.emitStatus(RoomStatus.active);
+      await _pumpRouteTransition(tester);
+      expect(repository.questionLoadCalls, 1);
+
+      // Yoklama her 3 saniyede sunucudaki 'active' durumunu tekrar görür.
+      // Sınır olmasaydı bu döngü `questionLoadCalls`ı sınırsız artırırdı.
+      for (var i = 0; i < 6; i++) {
+        await tester.pump(const Duration(seconds: 3));
+        await tester.pump();
+      }
+
+      // Sınıra ulaşana kadar tam üç deneme yapıldı, dördüncüsü yok — asıl
+      // kusur (döngünün SINIRSIZ olması) burada kanıtlanıyor. Ekrandaki
+      // geçici SnackBar'ın hangi anda göründüğü animasyona bağlıdır ve bu
+      // testin konusu değil; kalıcı gösterge aşağıda doğrulanıyor.
+      expect(repository.questionLoadCalls, 3);
+      expect(
+        find.textContaining('Sorular yüklenemedi'),
+        findsOneWidget,
+      );
+
+      // Sınıra ulaşınca da "Odadan ayrıl" hâlâ çalışır — kullanıcı kilitli
+      // kalmaz.
+      expect(find.byTooltip('Odadan ayrıl'), findsOneWidget);
+
+      // Elle "Tekrar dene" sayaçları sıfırlar ve sunucu artık cevap
+      // verdiğinde yarış normal şekilde açılır.
+      repository.failQuestionLoad = false;
+      await tester.ensureVisible(find.text('Tekrar dene'));
+      await tester.pump();
+      await tester.tap(find.text('Tekrar dene'));
+      await _pumpRouteTransition(tester);
+
+      expect(find.byType(QuizScreen), findsOneWidget);
+    },
+  );
 }

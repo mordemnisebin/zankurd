@@ -534,6 +534,37 @@ void main() {
     expect(find.text('Oyun başlatılamadı. Tekrar dene.'), findsOneWidget);
   });
 
+  /// Kusur: gerçek rakip için sunucudan gelen bir seviye verisi hiç yoktu,
+  /// ama ekran `_myLevel + Random().nextInt(3) - 1` ile bir sayı UYDURUP
+  /// gerçekmiş gibi gösteriyordu. Sunucuya yazılamayan bir başarıyı
+  /// bildirmekle aynı sınıf hata: var olmayan veriyi gerçekmiş gibi sunmak.
+  /// Düzeltme: gerçek eşleşmede seviye rozeti sayı göstermez, "Seviye
+  /// bilinmiyor" placeholder'ı gösterir (bkz. `_opponentLevelKnown`,
+  /// `lib/src/screens/matchmaking_screen.dart`).
+  testWidgets('gerçek eşleşmede rakip seviyesi uydurulmaz, gizlenir', (
+    tester,
+  ) async {
+    final repository = _HiddenAnswerMatchRepository(_RoomQuestionResult.empty);
+    addTearDown(tester.view.reset);
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+
+    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    // 1500 ms'lik "zafer geçişi" gecikmesinin İÇİNDE, "eşleşti" durumu
+    // görünür görünmez durdurulur — asıl UI burada.
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Rojda'), findsOneWidget);
+    expect(find.text('Seviye bilinmiyor'), findsOneWidget);
+
+    // "Zafer geçişi" zamanlayıcısını tükterek testi temiz bırak.
+    await tester.pump(const Duration(milliseconds: 1600));
+    await tester.pump();
+  });
+
   testWidgets(
     'hızlı eşleştirme sahte oda kurmaz, tam sunucu snapshotını kullanır',
     (tester) async {

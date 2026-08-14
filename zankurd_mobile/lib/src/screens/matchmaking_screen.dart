@@ -85,7 +85,29 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   /// Bot rakipte `null` kalır: bot bildirilebilir bir kullanıcı değildir
   /// ve sunucuya gönderilecek bir kimliği yoktur.
   String? _opponentId;
+
+  /// Rakip bu oturumda engellendi mi; VS kartındaki fotoğraf/ad bunun
+  /// yerine geçer.
+  ///
+  /// `PlayerModerationButton.onBlocked` tanımlıydı ama bu ekranda hiçbir
+  /// yere bağlı değildi: rakip engellendiğinde düğme "Oyuncu engellendi"
+  /// diyordu ama aynı fotoğraf ve ad tam ekran VS kartında görünmeye
+  /// devam ediyordu — kullanıcı tam da engellemek istediği şeyi görmeye
+  /// devam ediyordu (2026-08-14 denetimi). Eşleşmenin kendisi iptal
+  /// edilmez (oyun sunucuda zaten kurulu); yalnız istemcide gösterilen
+  /// UGC (fotoğraf + ad) gizlenir.
+  bool _opponentBlocked = false;
   int _opponentLevel = 1;
+
+  /// `_opponentLevel` gerçek bir veriyi mi yansıtıyor.
+  ///
+  /// Eskiden gerçek rakip için de `_myLevel + Random().nextInt(3) - 1`
+  /// hesaplanıyordu — sunucu opponent'ın gerçek seviyesini hiç döndürmüyor,
+  /// bu tamamen uydurmaydı ve sunucuya yazılamayan bir başarıyı bildirmekle
+  /// aynı sınıf hata: kullanıcıya var olmayan bir veriyi gerçekmiş gibi
+  /// sunuyordu (2026-08-14 denetimi). Yalnız bot düellosunda (kasıtlı
+  /// sentetik rakip) `true` olur; gerçek eşleşmede seviye rozeti gizlenir.
+  bool _opponentLevelKnown = false;
   String? _profileName;
 
   String get _myName => _profileName ?? (context.t(K.playerWord));
@@ -435,6 +457,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       _matchmakingErrorMessage = null;
       _opponentIdentity = const AvatarIdentity();
       _opponentId = null;
+      // Yeni arama yeni bir rakip getirir; önceki rakibin engeli bu
+      // ekranın yerel görüntüsünde kalıcı değil (gerçek engel sunucuda
+      // duruyor, bir sonraki eşleşmede yine rakip olmaz zaten — bkz.
+      // eşleştirme kuyruğu engellenenleri süzer).
+      _opponentBlocked = false;
       _secondsElapsed = 0;
     });
 
@@ -454,7 +481,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         // Matched immediately!
         var matchedName = matchRes['opponent_name'] as String? ?? 'Raqîb';
         var opponentIdentity = const AvatarIdentity();
-        final matchedLevel = max(1, _myLevel + Random().nextInt(3) - 1);
         // C-2: null-safe cast — Supabase schema hatası veya edge-case'de
         // String? null dönebilir; null ise navigasyon iptal edilir.
         final roomId = matchRes['room_id'] as String?;
@@ -474,7 +500,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
         await _onMatched(
           matchedName,
-          matchedLevel,
           opponentIdentity,
           matchedRoom,
           chosenCategory,
@@ -514,10 +539,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 opponentIdentity = _identityFromPlayer(opponent);
               }
 
-              final matchedLevel = max(1, _myLevel + Random().nextInt(3) - 1);
               await _onMatched(
                 matchedName,
-                matchedLevel,
                 opponentIdentity,
                 matchedRoom,
                 chosenCategory,
@@ -615,16 +638,20 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               // M-3: Bot isimleri merkezi config'den; inline liste kaldırıldı.
               final matchedName =
                   BotNames.pool[Random().nextInt(BotNames.pool.length)];
-              final matchedLevel = max(1, _myLevel + Random().nextInt(5) - 2);
+              // Bot kendi beyan edilmiş sentetik bir rakiptir — burada
+              // "seviye" gerçek bir kişiyi temsil etmediği için jitter
+              // uydurma kuralına takılmaz (bkz. `_opponentLevelKnown`
+              // yorumu).
+              final botLevel = max(1, _myLevel + Random().nextInt(5) - 2);
 
               await _onMatched(
                 matchedName,
-                matchedLevel,
                 const AvatarIdentity(),
                 null,
                 chosenCategory,
                 ku,
                 attempt,
+                opponentLevel: botLevel,
               );
             } else {
               _isCancelled = true;
@@ -768,7 +795,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final matchedName = opponent?.name ?? opponentPlaceholder;
     await _onMatched(
       matchedName,
-      max(1, _myLevel + Random().nextInt(3) - 1),
       opponent == null ? const AvatarIdentity() : _identityFromPlayer(opponent),
       room,
       category,
@@ -780,20 +806,23 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
   Future<void> _onMatched(
     String matchedName,
-    int matchedLevel,
     AvatarIdentity opponentIdentity,
     GameRoom? matchedRoom,
     String category,
     bool ku,
     int attempt, {
     String? opponentId,
+    // `null` = gerçek rakip, gerçek seviye verisi yok → rozet gizlenir.
+    // Yalnız bot dalı gerçek bir sayı geçer (bkz. `_opponentLevelKnown`).
+    int? opponentLevel,
   }) async {
     if (!_isAttemptActive(attempt)) return;
     AnalyticsService.instance.logActivationStep('matchmaking_matched');
     setState(() {
       _found = true;
       _opponentName = matchedName;
-      _opponentLevel = matchedLevel;
+      _opponentLevelKnown = opponentLevel != null;
+      if (opponentLevel != null) _opponentLevel = opponentLevel;
       _opponentIdentity = opponentIdentity;
       _opponentId = opponentId;
       _statusTextKu = 'Lîstikvanek hat dîtin: $matchedName!';
@@ -894,7 +923,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         );
       }
       if (matchQuestions.isEmpty) {
-        matchQuestions = widget.repository.questions;
+        matchQuestions = widget.repository.playableQuestions;
       }
       if (!_isAttemptActive(attempt)) return;
     }
@@ -1492,7 +1521,24 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                     ]
                                   : [],
                             ),
-                            child: _found
+                            child: _found && _opponentBlocked
+                                // Engellenen rakibin YÜKLEDİĞİ fotoğrafı
+                                // artık çizilmez — bu tam da kullanıcının
+                                // engelleyerek bir daha görmek istemediği
+                                // şey.
+                                ? CircleAvatar(
+                                    backgroundColor: AppColors.disabledSurface(
+                                      context,
+                                    ),
+                                    child: Icon(
+                                      AppIcons.circleXmark,
+                                      color: AppTheme.isLight(context)
+                                          ? AppTheme.textMutedColor(context)
+                                          : Colors.white24,
+                                      size: 32,
+                                    ),
+                                  )
+                                : _found
                                 ? PlayerAvatar(
                                     radius: 33,
                                     photoUrl: _opponentIdentity.photoUrl,
@@ -1528,7 +1574,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                             children: [
                               Flexible(
                                 child: Text(
-                                  _found ? (_opponentName ?? '') : '?',
+                                  !_found
+                                      ? '?'
+                                      : _opponentBlocked
+                                      ? context.t(K.chatBlocked)
+                                      : (_opponentName ?? ''),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
@@ -1541,12 +1591,14 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   ),
                                 ),
                               ),
-                              if (_found)
+                              if (_found && !_opponentBlocked)
                                 PlayerModerationButton(
                                   repository: widget.repository,
                                   playerId: _opponentId,
                                   playerName: _opponentName ?? '',
                                   compact: true,
+                                  onBlocked: () =>
+                                      setState(() => _opponentBlocked = true),
                                 ),
                             ],
                           ),
@@ -1565,11 +1617,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              _found
+                              !_found
+                                  ? '?'
+                                  : _opponentLevelKnown
                                   ? (context.t(K.levelPrefix, {
                                       'level': '$_opponentLevel',
                                     }))
-                                  : '?',
+                                  : context.t(K.levelUnknown),
                               style: TextStyle(
                                 color: _found
                                     ? AppTheme.correct

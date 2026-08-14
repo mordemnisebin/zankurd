@@ -249,7 +249,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                           Navigator.of(sheetCtx).pop();
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(context.t(K.roomNotFound))),
+                            SnackBar(
+                              content: Text(context.t(joinRoomErrorKey(error))),
+                            ),
                           );
                         }
                       },
@@ -516,6 +518,25 @@ class _PlaySectionHeading extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Oda katılma hatasını gösterilecek K.* anahtarına çevirir.
+///
+/// Eskiden `joinOnlineRoom`ın her hatası (dolu oda, kullanıcı zaten başka
+/// bir odada, ağ hatası...) TEK `K.roomNotFound` metnine iniyordu — oda
+/// gerçekten var olsa bile kullanıcı hep "bulunamadı" görüyordu. Sunucu
+/// tarafının ayırt ettiği sebep artık `RoomJoinException.reason` ile
+/// buraya kadar taşınıyor; tanınmayan/ağ kaynaklı hatalar (RoomJoinException
+/// DEĞİLSE) kasıtlı olarak "bulunamadı" değil, jenerik `K.roomJoinFailed`
+/// döner — yanlış bir kesinlik iddia etmez (2026-08-14 denetimi).
+String joinRoomErrorKey(Object error) {
+  if (error is! RoomJoinException) return K.roomJoinFailed;
+  return switch (error.reason) {
+    RoomJoinFailureReason.notFound => K.roomNotFound,
+    RoomJoinFailureReason.full => K.roomFull,
+    RoomJoinFailureReason.alreadyInAnotherRoom => K.roomAlreadyInAnotherRoom,
+    RoomJoinFailureReason.unknown => K.roomJoinFailed,
+  };
 }
 
 /// Oda kodu alanını yazılırken kanonik biçime çeker.

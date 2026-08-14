@@ -26,8 +26,21 @@ void main() {
     expect(screenCode, contains('_startStatusPolling();'));
     expect(
       screenCode,
-      contains('if (status == RoomStatus.active && !quizOpened)'),
+      contains(
+        'if (status == RoomStatus.active &&\n'
+        '          !quizOpened &&\n'
+        '          !_questionLoadExhausted) {',
+      ),
     );
     expect(screenCode, contains('_navigateToQuiz()'));
+  });
+
+  // 2026-08-14 denetimi: soru yükleme sunucu tarafında sürekli başarısız
+  // olursa (bkz. `test/room_question_load_retry_cap_test.dart`), bu koşul
+  // ikinci bir kilit olmadan sonsuz döngüye izin verirdi — poll her 3
+  // saniyede aktif durumu görüp `_navigateToQuiz`ı tekrar tetiklerdi.
+  // `_questionLoadExhausted` bayrağı olmadan bu satır eksik kalır.
+  test('active status re-check is gated by the question load retry cap', () {
+    expect(screenCode, contains('bool _questionLoadExhausted = false;'));
   });
 }
