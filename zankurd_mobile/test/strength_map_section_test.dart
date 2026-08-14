@@ -63,6 +63,33 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  // 2026-08-14 denetim bulgusu: `StrengthMapSection._categories` yalnız
+  // sekiz kategori taşıyordu; `Sînema` (2026-07'de eklendi) ve `Teknolojî`
+  // (2026-07-26'da dolduruldu) MockZanKurdRepository._allCategories'in
+  // gerçek kümesinde olmasına rağmen bu listede yoktu. Sonuç: bu iki
+  // kategoride ne kadar hata/ustalık birikirse birikisin, panel onları hiç
+  // aday olarak görmüyordu (aynı kusur profile_widgets.dart'ta ayrı bir
+  // kopya için zaten düzeltilmişti, ama bu widget'ın kendi kopyası o
+  // konsolidasyonun dışında kalmıştı). Bekçi, yalnız `Teknolojî`de yoğun
+  // hata varken panelin onu "Geliştirilecek" olarak gösterdiğini doğrular.
+  testWidgets('Teknolojî ve Sînema kategorileri haritada aday olabilir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      // StrengthAnalysis.analyze varsayılan `minTotalData: 5` eşiği var —
+      // az veride "kesin yargı üretme" moduna düşmemek için beş hata.
+      'zankurd.mistakeQuestionIds': ['m1', 'm2', 'm3', 'm4', 'm5'],
+      'zankurd.mistakeMetadata':
+          '{"m1":{"category":"Teknolojî"},"m2":{"category":"Teknolojî"},'
+          '"m3":{"category":"Teknolojî"},"m4":{"category":"Teknolojî"},'
+          '"m5":{"category":"Teknolojî"}}',
+    });
+    await pump(tester);
+    expect(find.text('Geliştirilecek'), findsOneWidget);
+    expect(find.text('Teknoloji'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('tablet ve açık temada overflow oluşmaz', (tester) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.mastery.Ziman': 40,

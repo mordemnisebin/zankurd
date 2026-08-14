@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -71,5 +72,31 @@ void main() {
       );
     }
     expect(find.text('15 sn'), findsNothing);
+  });
+
+  // 2026-08-14 denetim bulgusu: süre çiplerindeki birim, `'$seconds sn'`
+  // olarak hardcoded'du — Kurmancî arayüzde de aynen Türkçe "sn" kısaltması
+  // basılıyordu. Artık `context.t(K.secondsShortUnit)` üzerinden dile
+  // duyarlı ("sn" / "çirke"). Bekçi, Kurmancî arayüzde "çirke" göründüğünü
+  // ve Türkçe "sn" hiç kalmadığını doğrular. Sayfayı açan kart metinle değil
+  // ValueKey ile bulunur, çünkü metin zaten dile göre değişir.
+  testWidgets('Kurmancî arayüzde süre birimi "çirke" olur, "sn" değil', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(
+        child: PlayHubScreen(repository: MockZanKurdRepository()),
+        languageProvider: kurmanciLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await tester.pumpAndSettle();
+
+    for (final seconds in GameRoom.allowedSecondsPerQuestion) {
+      expect(find.text('$seconds çirke'), findsOneWidget);
+      expect(find.text('$seconds sn'), findsNothing);
+    }
   });
 }

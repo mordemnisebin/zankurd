@@ -121,7 +121,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         for (final seconds in options)
                           ChoiceChip(
                             key: ValueKey('room-duration-$seconds'),
-                            label: Text('$seconds sn'),
+                            label: Text(
+                              '$seconds ${context.t(K.secondsShortUnit)}',
+                            ),
                             selected: selected == seconds,
                             onSelected: (_) =>
                                 setSheetState(() => selected = seconds),

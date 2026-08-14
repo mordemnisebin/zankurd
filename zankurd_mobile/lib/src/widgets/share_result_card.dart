@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -117,7 +118,11 @@ class ShareResultCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.badge),
             ),
             child: Text(
-              category,
+              // `category` çağırandan Kurmancî kimlik olarak gelir (bkz.
+              // `CategoryNames`); paylaşım kartı Türkçe modda ham kimliği
+              // basıyordu, kartı gören herkes görüyordu (2026-08-14
+              // denetimi).
+              CategoryNames.localized(category, isKu),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,

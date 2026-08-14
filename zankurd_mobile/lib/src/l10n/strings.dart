@@ -348,6 +348,10 @@ class Tr {
       'ku': 'Ev dem ji bo hemû lîstikvanên vê odeyê derbasdar e.',
       'tr': 'Bu süre odadaki tüm oyuncular için geçerli olur.',
     },
+    // Süre seçim çipindeki birim etiketi. Önceden "sn" hardcoded'du ve
+    // Kurmancî arayüzde de aynen "sn" basıyordu; contestSeconds'daki
+    // ('çirke/pirs') gibi Kurmancî tam kelimeyi kullanır (2026-08-14 denetimi).
+    K.secondsShortUnit: {'ku': 'çirke', 'tr': 'sn'},
     K.openRoom: {'ku': 'Odeyê Veke', 'tr': 'Odayı Aç'},
     K.joinRoomTitle: {'ku': 'Tevlî Odeyê Bibe', 'tr': 'Odaya Katıl'},
     K.joinRoomBody: {
@@ -560,7 +564,6 @@ class Tr {
     K.joinTournament: {'ku': 'Tevlî Kûpayê Bibe', 'tr': 'Turnuvaya Katıl'},
     K.cupPlayers: {'ku': 'lîstikvan', 'tr': 'oyuncu'},
     K.cupRounds: {'ku': 'ger', 'tr': 'tur'},
-    K.cupPerMatchReward: {'ku': 'her maç', 'tr': 'maç başı'},
     K.cupChampionReward: {'ku': 'şampiyon', 'tr': 'şampiyon'},
     K.cupLadder: {'ku': 'Rêya kûpayê', 'tr': 'Kupa yolu'},
     K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
@@ -585,6 +588,14 @@ class Tr {
       'ku': 'Tu li {round} derketî',
       'tr': '{round} turunda elendin',
     },
+    // 2026-08-14: gerçek turnuvanın kontenjanı `tournaments.size`
+    // varsayılanıyla küçük, yerel benzetim ise büyük bir kadroyla
+    // kurulur — ama tur adları hep büyük kadronun sabit dört adını
+    // (Son 16/Çeyrek/Yarı/Final) baştan sayıyordu; küçük kontenjanda
+    // final maçı "Çeyrek Final" görünüyordu. Ad artık SONDAN sayılır;
+    // kontenjan büyürse (yorum: "kod hiçbir yerde dört sayısına bağlı
+    // değil") bilinen adlardan taşan erken turlar için genel yedek.
+    K.tournamentRoundGeneric: {'ku': 'Tura {n}an', 'tr': '{n}. Tur'},
     K.contestToday: {'ku': 'Îro', 'tr': 'Bugün'},
     K.contestDifficulty: {'ku': 'zehmetî', 'tr': 'zorluk'},
     K.contestCategoryLabel: {'ku': 'beş', 'tr': 'kategori'},
@@ -602,6 +613,18 @@ class Tr {
       'tr': 'Tebrikler! ZanKurd Kupası şampiyonusun!',
     },
     K.yourMatchRound: {'ku': 'Maça Te · {round}', 'tr': 'Maçın · {round}'},
+    // 2026-08-14: `resolve_expired_tournament_matches` süresi dolan maçı
+    // hükmen kapatır (round_hours, varsayılan 24 saat) ama sunucunun
+    // gönderdiği bu tarih hiçbir ekranda görünmüyordu — oyuncu ne zamana
+    // kadar oynaması gerektiğini bilmiyordu.
+    K.tournamentMatchDeadline: {
+      'ku': 'Heta {time} lîstin, an jî tu wê bihata jêbirin',
+      'tr': '{time} tarihine kadar oyna, yoksa hükmen kaybedersin',
+    },
+    K.tournamentMatchDeadlinePassed: {
+      'ku': 'Dema vê maçê derbas bûye',
+      'tr': 'Bu maçın süresi doldu',
+    },
     K.yourMatchVs: {
       'ku': 'Maça Te · {round} · Li dijî {opponent}',
       'tr': 'Maçın · {round} · Rakip: {opponent}',
@@ -824,6 +847,15 @@ class Tr {
       'ku': 'Dş,Sş,Çş,Pş,În,Şm,Yş',
       'tr': 'Pt,Sa,Ça,Pe,Cu,Ct,Pz',
     },
+    // Haftalık ritim işaretlerinin ekran okuyucu anonsu (2026-08-14
+    // denetimi): Semantics etiketi ham `StreakDayState.name`i (ör.
+    // "completed") okuyordu, TalkBack/VoiceOver kullanıcısı İngilizce
+    // kelime duyuyordu. Görsel ikon/renk kalır, yalnız anons çevrilir.
+    K.streakDayStateCompleted: {'ku': 'Hate temamkirin', 'tr': 'Tamamlandı'},
+    K.streakDayStateToday: {'ku': 'Îro', 'tr': 'Bugün'},
+    K.streakDayStateMissed: {'ku': 'Winda bû', 'tr': 'Kaçırıldı'},
+    K.streakDayStateUpcoming: {'ku': 'Hîn nehatiye', 'tr': 'Henüz gelmedi'},
+    K.streakDayStateFrozen: {'ku': 'Hate cemidandin', 'tr': 'Donduruldu'},
     K.seriDondurmaKorumasi: {
       'ku': 'Karta Parastina Zincîrê',
       'tr': 'Seri Dondurma Koruması',
@@ -856,6 +888,14 @@ class Tr {
       'tr': 'Çeviri için dokun',
     },
     K.dersTamamlandi: {'ku': 'Ders qediya!', 'tr': 'Ders tamamlandı'},
+    // 2026-08-14: sunucuya yazılamayan tamamlama yine de "Ders tamamlandı"
+    // deyip ekranı kapatıyordu; ders listede tamamlanmamış görünmeye devam
+    // ediyor, kullanıcı niçin olduğunu hiç göremiyordu.
+    K.lessonCompleteFailed: {
+      'ku':
+          'Ders nehat tomarkirin. Girêdana xwe kontrol bike û dîsa biceribîne.',
+      'tr': 'Ders kaydedilemedi. Bağlantını kontrol edip tekrar dene.',
+    },
     K.buSeviyeninSorulariYuklenemedi: {
       'ku': 'Pirsên vê astê neyên barkirin.',
       'tr': 'Bu seviyenin soruları yüklenemedi.',
@@ -915,6 +955,10 @@ class Tr {
     K.bulutlaSenkronize: {
       'ku': 'Tev rêzkirî ye (Bulut)',
       'tr': 'Bulutla senkronize',
+    },
+    K.pSenkronizeEdilemedi: {
+      'ku': '{p0} tomar nehat rêzkirin',
+      'tr': '{p0} kayıt senkronize edilemedi',
     },
     K.seri: {'ku': 'Rêz!', 'tr': 'Seri!'},
     K.sureDolduDogruCevap: {
@@ -1104,6 +1148,13 @@ class Tr {
     K.blockedEmpty: {
       'ku': 'Te kes asteng nekiriye.',
       'tr': 'Kimseyi engellemedin.',
+    },
+    // 2026-08-14: liste okunamadığında sessizce "kimseyi engellemedin"
+    // gösteriliyordu — engellenmiş biri kalıcı olarak kaybolmuş gibi
+    // görünüyordu, engeli kaldırma yolu da onunla birlikte kayboluyordu.
+    K.blockedLoadFailed: {
+      'ku': 'Lîsteya astengkiriyan nehat barkirin.',
+      'tr': 'Engellenenler listesi yüklenemedi.',
     },
     K.unblockAction: {'ku': 'Astengiyê rake', 'tr': 'Engeli kaldır'},
     K.unblockDone: {'ku': 'Astengî hat rakirin.', 'tr': 'Engel kaldırıldı.'},
@@ -1297,6 +1348,7 @@ class Tr {
     },
     K.categoryPrefix: {'ku': 'Kategorî: {name}', 'tr': 'Kategori: {name}'},
     K.levelPrefix: {'ku': 'Ast {level}', 'tr': 'Seviye {level}'},
+    K.levelUnknown: {'ku': 'Ast nediyar', 'tr': 'Seviye bilinmiyor'},
     K.startingSoon: {'ku': 'Dest pê dike…', 'tr': 'Başlamak üzere…'},
     K.searchingNote: {
       'ku':
@@ -1360,6 +1412,28 @@ class Tr {
       'ku': 'Lîstik nehat destpêkirin. Dîsa biceribîne.',
       'tr': 'Oyun başlatılamadı. Tekrar dene.',
     },
+    K.questionsLoadExhausted: {
+      'ku':
+          'Pirs nehatin barkirin. Ev pirsgirêk hin caran çareser dibe; '
+          'dikarî dîsa biceribînî an ji odeyê derkevî.',
+      'tr':
+          'Sorular yüklenemedi. Sorun sürüyor olabilir; tekrar deneyebilir '
+          'ya da odadan ayrılabilirsin.',
+    },
+    K.readyUpdateFailed: {
+      'ku':
+          'Rewşa te ya amadebûnê nehat tomarkirin. Rewşa berê hat vegerandin.',
+      'tr': 'Hazır durumun kaydedilemedi. Önceki durumuna döndürüldü.',
+    },
+    K.roomFull: {'ku': 'Ode tije ye.', 'tr': 'Oda dolu.'},
+    K.roomAlreadyInAnotherRoom: {
+      'ku': 'Tu jixwe di odeyeke din a zindî de yî.',
+      'tr': 'Zaten başka bir canlı odadasın.',
+    },
+    K.roomJoinFailed: {
+      'ku': 'Tevlîbûn têk çû. Ji kerema xwe dîsa biceribîne.',
+      'tr': 'Odaya katılamadın. Lütfen tekrar dene.',
+    },
     K.yourBalance: {
       'ku': 'Hejmara zêrên te: {coins}',
       'tr': 'Bakiyen: {coins} coin',
@@ -1408,6 +1482,17 @@ class Tr {
     K.championRewardGranted: {
       'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} zêr',
       'tr': 'Tebrikler! Şampiyonluk ödülün: {coins} coin',
+    },
+    // 2026-08-14: skor sunucuya yazılamazsa hata yutuluyor, kullanıcı
+    // maçının sessizce boşa gittiğini hiçbir yerde görmüyordu. Sunucu
+    // skoru tek sefer kabul ettiği için tekrar denemek güvenlidir.
+    K.tournamentMatchSubmitFailed: {
+      'ku':
+          'Skora te negihîşt serverê. Tu dikarî ji nû ve biceribînî — '
+          'maça te hê nehatiye tomarkirin.',
+      'tr':
+          'Skorun sunucuya ulaşmadı. Tekrar deneyebilirsin — maçın henüz '
+          'kaydedilmedi.',
     },
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
     K.buyItemForCoins: {
@@ -1628,6 +1713,13 @@ class Tr {
     K.noSavedQuestions: {
       'ku': 'Hîn pirsên tomarkirî tune.',
       'tr': 'Henüz kaydedilmiş soru yok.',
+    },
+    // 2026-08-14: çevrimiçi oda maçında kaydedilen favoriler doğru cevabı
+    // istemciye hiç göndermiyor (hile önlemi) — bu yüzden yerel olarak
+    // yeniden puanlanamaz, yalnız gözden geçirilebilir.
+    K.favoriteAnswerHiddenHint: {
+      'ku': 'Bersiv li ser serverê ye — dubare nayê lîstin, tenê tê dîtin.',
+      'tr': 'Cevap sunucuda saklı — yeniden oynatılamaz, yalnız görüntülenir.',
     },
     K.noSavedQuestionsHint: {
       'ku':
@@ -2205,6 +2297,29 @@ class Tr {
           'cevap görünür.',
     },
     K.correctAnswerLabel: {'ku': 'Bersiva rast', 'tr': 'Doğru cevap'},
+
+    // ── Çocuk modu ────────────────────────────────────────────────────
+    K.childSafetyMode: {'ku': 'Moda Zarokan', 'tr': 'Çocuk Modu'},
+    K.childSafetyModeSub: {
+      'ku': 'Lêgerîna hevalan û parvekirina derve digire',
+      'tr': 'Arkadaş aramayı ve dışa paylaşımı kapatır',
+    },
+    K.childSafetyConfirmTitle: {
+      'ku': 'Moda zarokan were vekirin?',
+      'tr': 'Çocuk modu açılsın mı?',
+    },
+    K.childSafetyConfirmBody: {
+      'ku':
+          'Vekirin lêgerîna heval û parvekirina encaman a derve digire. Ev '
+          'mîhengek amûrê ye; li aliyê pêşkêşkerê parastinek din tune.',
+      'tr':
+          'Açmak arkadaş aramayı ve sonuçları dışa paylaşmayı kapatır. Bu '
+          'yalnız cihaz ayarıdır; sunucu tarafında ek bir koruma yoktur.',
+    },
+    K.childSafetyFriendSearchBlocked: {
+      'ku': 'Moda zarokan vekirî ye — lêgerîna hevalan girtî ye.',
+      'tr': 'Çocuk modu açık — arkadaş arama kapalı.',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -2384,6 +2499,7 @@ class K {
   // ── Yarış sekmesi ──────────────────────────────────────────────────
   static const secondsPerQuestion = 'play.secondsPerQuestion';
   static const secondsPerQuestionNote = 'play.secondsPerQuestion.note';
+  static const secondsShortUnit = 'play.secondsPerQuestion.shortUnit';
   static const openRoom = 'play.openRoom';
   static const joinRoomTitle = 'play.joinRoom.title';
   static const joinRoomBody = 'play.joinRoom.body';
@@ -2490,7 +2606,6 @@ class K {
   // ekranda hiç görünmüyordu; ödül de öyle.
   static const cupPlayers = 'tournament.players';
   static const cupRounds = 'tournament.rounds';
-  static const cupPerMatchReward = 'tournament.perMatchReward';
   static const cupChampionReward = 'tournament.championRewardLabel';
   static const cupLadder = 'tournament.ladder';
   static const cupFormatTitle = 'tournament.formatTitle';
@@ -2507,6 +2622,7 @@ class K {
   static const cupRewardLocal = 'tournament.rewardLocal';
   static const cupFinalScore = 'tournament.finalScore';
   static const cupEliminatedRound = 'tournament.eliminatedRound';
+  static const tournamentRoundGeneric = 'tournament.roundGeneric';
 
   // Yarışma hızlı bilgi ve ödül şeridi (2026-08-04). `Contest` modeli
   // zorluk aralığını ve dört ödül basamağını taşıyordu; ekran hiçbirini
@@ -2525,6 +2641,8 @@ class K {
   static const status = 'tournament.status';
   static const championCongrats = 'tournament.championCongrats';
   static const yourMatchRound = 'tournament.yourMatch.round';
+  static const tournamentMatchDeadline = 'tournament.matchDeadline';
+  static const tournamentMatchDeadlinePassed = 'tournament.matchDeadlinePassed';
   static const yourMatchVs = 'tournament.yourMatch.vs';
   static const startMatch = 'tournament.startMatch';
   static const unknown = 'common.unknown';
@@ -2634,6 +2752,11 @@ class K {
   static const streakProtectAction = 'streak.protect.action';
   static const streakDayUnit = 'streak.day.unit';
   static const streakWeekdays = 'streak.weekdays';
+  static const streakDayStateCompleted = 'streak.day.state.completed';
+  static const streakDayStateToday = 'streak.day.state.today';
+  static const streakDayStateMissed = 'streak.day.state.missed';
+  static const streakDayStateUpcoming = 'streak.day.state.upcoming';
+  static const streakDayStateFrozen = 'streak.day.state.frozen';
   static const seriDondurmaKorumasi = 'screen.seriDondurmaKorumasi';
   static const oynamayiUnuttugunGunlerdeSerin =
       'screen.oynamayiUnuttugunGunlerdeSerin';
@@ -2646,6 +2769,7 @@ class K {
   static const flasKart = 'screen.flasKart';
   static const ceviriIcinDokun = 'screen.ceviriIcinDokun';
   static const dersTamamlandi = 'screen.dersTamamlandi';
+  static const lessonCompleteFailed = 'screen.lessonCompleteFailed';
   static const buSeviyeninSorulariYuklenemedi =
       'screen.buSeviyeninSorulariYuklenemedi';
   static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';
@@ -2668,6 +2792,7 @@ class K {
   static const pAktifYanlisSoru = 'screen.pAktifYanlisSoru';
   static const senkronizeEdiliyor = 'screen.senkronizeEdiliyor';
   static const bulutlaSenkronize = 'screen.bulutlaSenkronize';
+  static const pSenkronizeEdilemedi = 'screen.pSenkronizeEdilemedi';
   static const seri = 'screen.seri';
   static const sureDolduDogruCevap = 'screen.sureDolduDogruCevap';
   static const tebriklerSeviyeAtladinYeni = 'screen.tebriklerSeviyeAtladinYeni';
@@ -2754,6 +2879,7 @@ class K {
   static const reportProfileDone = 'report.profileDone';
   static const secBlocked = 'settings.secBlocked';
   static const blockedEmpty = 'settings.blockedEmpty';
+  static const blockedLoadFailed = 'settings.blockedLoadFailed';
   static const unblockAction = 'settings.unblockAction';
   static const unblockDone = 'settings.unblockDone';
   static const questionSaved = 'quiz.questionSaved';
@@ -2841,6 +2967,7 @@ class K {
   static const categoriesNotFound = 'match.categoriesNotFound';
   static const categoryPrefix = 'match.categoryPrefix';
   static const levelPrefix = 'match.levelPrefix';
+  static const levelUnknown = 'match.levelUnknown';
   static const startingSoon = 'match.startingSoon';
   static const searchingNote = 'match.searchingNote';
   static const cancelAction = 'common.cancelAction';
@@ -2868,6 +2995,11 @@ class K {
   static const startRace = 'room.startRace';
   static const waitingHost = 'room.waitingHost';
   static const gameStartFailed = 'room.gameStartFailed';
+  static const questionsLoadExhausted = 'room.questionsLoadExhausted';
+  static const readyUpdateFailed = 'room.readyUpdateFailed';
+  static const roomFull = 'room.full';
+  static const roomAlreadyInAnotherRoom = 'room.alreadyInAnotherRoom';
+  static const roomJoinFailed = 'room.joinFailed';
   static const yourBalance = 'shop.yourBalance';
   static const earnCoins = 'shop.earnCoins';
   static const cancelShort = 'common.cancelShort';
@@ -2880,6 +3012,7 @@ class K {
   static const tournamentWaitingBody = 'tournament.waitingBody';
   static const tournamentWaitingOpponent = 'tournament.waitingOpponent';
   static const championRewardGranted = 'tournament.championReward';
+  static const tournamentMatchSubmitFailed = 'tournament.matchSubmitFailed';
   static const buyAction = 'shop.buy';
   static const buyItemForCoins = 'shop.buyItemForCoins';
   static const insufficientBalance = 'shop.insufficientBalance';
@@ -2979,6 +3112,7 @@ class K {
   static const playSavedQuestions = 'favorites.play';
   static const noSavedQuestions = 'favorites.none';
   static const noSavedQuestionsHint = 'favorites.none.hint';
+  static const favoriteAnswerHiddenHint = 'favorites.answerHidden.hint';
 
   // ── Profil ekranı ──────────────────────────────────────────────────
   static const profileTitle = 'profile.title';
@@ -3221,6 +3355,14 @@ class K {
   static const matchSemantics = 'tournament.match.semantics';
   static const matchFinished = 'tournament.match.finished';
   static const unknownPlayer = 'tournament.player.unknown';
+
+  // ── Çocuk modu ──────────────────────────────────────────────────
+  static const childSafetyMode = 'childSafety.mode';
+  static const childSafetyModeSub = 'childSafety.mode.sub';
+  static const childSafetyConfirmTitle = 'childSafety.confirm.title';
+  static const childSafetyConfirmBody = 'childSafety.confirm.body';
+  static const childSafetyFriendSearchBlocked =
+      'childSafety.friendSearch.blocked';
 
   // ── Görsel künyesi ─────────────────────────────────────────────────
   static const imageCredits = 'credits.images';

@@ -201,6 +201,22 @@ void main() {
             'sonra buradan değiştirebilir',
       );
     });
+
+    // 2026-08-14 denetimi: üçüncü yazma yolu (kayıt formu) hiç
+    // çağırmıyordu — engellenen sözcük/marka taklidi içeren bir ad
+    // kapıdan hiç geçmeden doğrudan üretilen profile yazılabiliyordu.
+    test('kayıt formu', () {
+      final src = File(
+        'lib/src/screens/sign_up_screen.dart',
+      ).readAsStringSync();
+      expect(
+        src,
+        contains('DisplayNamePolicy.review'),
+        reason:
+            'kayıt formu süzülmüyor — engellenen sözcük/marka taklidi içeren '
+            'bir ad kapıdan hiç geçmeden sunucuya yazılabilir',
+      );
+    });
   });
 
   group('sunucu tarafı kapı', () {

@@ -21,12 +21,30 @@ class LegalLinksRow extends StatelessWidget {
     _ => WrapAlignment.start,
   };
 
-  static Future<void> _open(String url) async {
+  /// KVKK/gizlilik/şartlar bağlantısını açar.
+  ///
+  /// Eskiden `launchUrl`ın dönen `bool` sonucu (cihazda bu şemayı açacak
+  /// bir uygulama yoksa `false` döner, İSTİSNA FIRLATMAZ) hiç okunmuyordu
+  /// — yalnız `catch` vardı. Kullanıcı yasal bir bağlantıya dokunuyor,
+  /// hiçbir şey açılmıyor, hiçbir geri bildirim de yok: dokunuşun işe
+  /// yaradığından bile emin olamıyordu (2026-08-14 denetimi). Ayarlar
+  /// ekranındaki `_openAbuseReport`/`_openBetaFeedback` ile aynı desen:
+  /// `ok == false` ve `catch` ikisi de aynı görünür SnackBar'a çıkar.
+  static Future<void> _open(BuildContext context, String url) async {
+    final failed = context.t(K.linkOpenFailed);
     try {
       final uri = Uri.parse(url);
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (ok || !context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(failed)));
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'legal link open: $url');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(failed)));
     }
   }
 
@@ -38,7 +56,7 @@ class LegalLinksRow extends StatelessWidget {
       fontWeight: FontWeight.w600,
     );
     Widget link(String label, String url) => InkWell(
-      onTap: () => _open(url),
+      onTap: () => _open(context, url),
       borderRadius: BorderRadius.circular(6),
       child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 44, minHeight: 44),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import 'arena_kit.dart';
 
@@ -9,6 +11,20 @@ import 'arena_kit.dart';
 /// "kaçırdım" ile "henüz gelmedi" arasındaki fark yalnız tonla anlatılırsa
 /// renk körü oyuncu için kaybolur.
 enum StreakDayState { completed, today, missed, upcoming, frozen }
+
+/// Gün durumunun ekran okuyucu anonsu için l10n anahtarı.
+///
+/// `Semantics.label` eskiden `'$label: ${state.name}'` üretiyordu — yani
+/// TalkBack/VoiceOver "Pt: completed" gibi ham İngilizce enum adını
+/// okuyordu (2026-08-14 denetimi). Görsel ikon/renk dilden bağımsız
+/// kalabilir ama anons kalamaz; bu yüzden saf bir eşleme fonksiyonu.
+String streakDayStateKey(StreakDayState state) => switch (state) {
+  StreakDayState.completed => K.streakDayStateCompleted,
+  StreakDayState.today => K.streakDayStateToday,
+  StreakDayState.missed => K.streakDayStateMissed,
+  StreakDayState.upcoming => K.streakDayStateUpcoming,
+  StreakDayState.frozen => K.streakDayStateFrozen,
+};
 
 /// Streak-freeze'in o andaki durumu.
 ///
@@ -258,7 +274,7 @@ class _DayMark extends StatelessWidget {
     };
 
     return Semantics(
-      label: '$label: ${state.name}',
+      label: '$label: ${context.t(streakDayStateKey(state))}',
       child: ExcludeSemantics(
         child: Column(
           mainAxisSize: MainAxisSize.min,

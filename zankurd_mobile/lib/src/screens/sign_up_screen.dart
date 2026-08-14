@@ -6,6 +6,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../services/analytics_service.dart';
+import '../services/display_name_policy.dart';
 import '../theme/app_theme.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
@@ -455,14 +456,18 @@ class _SignUpScreenState extends State<SignUpScreen>
                 controller: _usernameController,
                 prefixIcon: AppIcons.user,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                // Kayıt burada YALNIZ boşluk/uzunluğa bakıyordu —
+                // `DisplayNamePolicy` (isim kapısı ve ayarlarda zaten
+                // zorunlu) hiç çağrılmıyordu. Kayıt formu üçüncü bir
+                // yazma yolu: engellenen sözcük/bağlantı/kimlik taklidi
+                // içeren bir ad, kapıdan hiç geçmeden doğrudan üretilen
+                // profile yazılabiliyordu (2026-08-14 denetimi). Sunucu
+                // tetikleyicisi yine de reddeder, ama kullanıcı NİÇİN
+                // reddedildiğini görmeden "Hesap oluştur"da tıkanırdı.
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return context.t(K.usernameRequired);
-                  }
-                  if (value.length < 2) {
-                    return context.t(K.usernameMin2);
-                  }
-                  return null;
+                  final verdict = DisplayNamePolicy.review(value ?? '');
+                  if (verdict == DisplayNameVerdict.allowed) return null;
+                  return context.t(DisplayNamePolicy.messageKeyFor(verdict));
                 },
               ),
             ],

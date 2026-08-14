@@ -100,4 +100,34 @@ void main() {
     expect(find.byIcon(AppIcons.xmark), findsOneWidget);
     expect(find.text('Açıklama metni burada.'), findsOneWidget);
   });
+
+  testWidgets(
+    'flashcard kategori çipi Türkçe turda çevrilmiş görünür (2026-08-14)',
+    (tester) async {
+      // Kategori kimliği veri katmanında Kurmancî sabittir (`CategoryNames`
+      // deftere göre "Ziman" → "Dil"). Kart eskiden `record.category`yi
+      // ham basıyordu; Türkçe turda kart hâlâ "Ziman" yazıyordu.
+      const records = [
+        AnswerRecord(
+          id: 'q1',
+          category: 'Ziman',
+          prompt: 'Hilbijêre',
+          answers: ['Rast', 'Şaş'],
+          correctAnswer: 'Rast',
+          selectedAnswer: 'Şaş',
+          explanation: '',
+        ),
+      ];
+
+      await tester.pumpWidget(
+        _wrap(const ReviewScreen(records: records, room: _room)),
+      );
+
+      await tester.tap(find.text('Hafıza Kartları'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dil'), findsOneWidget);
+      expect(find.text('Ziman'), findsNothing);
+    },
+  );
 }

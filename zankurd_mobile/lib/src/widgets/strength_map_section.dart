@@ -20,6 +20,14 @@ class StrengthMapSection extends StatefulWidget {
   final bool isKu;
   final Listenable? refreshSignal;
 
+  // MockZanKurdRepository._allCategories (gerçek kategori kümesi) ile aynı
+  // kalmalı. Bu liste eskiden yalnız sekiz kategoriyi taşıyordu; `Sînema`
+  // (2026-07'de eklendi) ve `Teknolojî` (2026-07-26'da dolduruldu) eksikti.
+  // profile_widgets.dart'taki `_kProfileAnalysisCategories` aynı kusur için
+  // zaten düzeltilmişti (2026-08-14 denetimi) ama bu widget'ın kendi
+  // kopyası o konsolidasyonun DIŞINDA kalmıştı — bu iki kategoride ne kadar
+  // oynanırsa oynansın "Güçlü ve Geliştirilecek Alanlar" paneli onları hiç
+  // aday olarak görmüyordu.
   static const _categories = [
     'Ziman',
     'Çand',
@@ -29,6 +37,8 @@ class StrengthMapSection extends StatefulWidget {
     'Muzîk',
     'Siyaset',
     'Paradigma',
+    'Sînema',
+    'Teknolojî',
   ];
 
   @override

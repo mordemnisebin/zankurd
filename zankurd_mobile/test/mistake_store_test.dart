@@ -171,6 +171,59 @@ void main() {
     expect(restored.totalCorrect, greaterThan(0));
   });
 
+  // 2026-08-14 denetim bulgusu: `_recordAnswer` her yeni cevaptan sonra
+  // _history map'inden 7 günden eski GÜNLERİ siliyordu. `totalCorrect`/
+  // `totalWrong`/`accuracyPercent` bu map'in TAMAMI üzerinden toplandığı
+  // ve profilde "tüm zamanların toplamı" olarak gösterildiği için, eski
+  // günler her hafta sessizce düşüyor ve kullanıcı aylarca oynasa bile
+  // "Cevaplanan Soru" karosu yalnız son 7 günü gösteriyordu. Bekçi, 7
+  // günden eski bir günün diskten yüklendikten sonra bile toplamlara
+  // dahil kaldığını doğrular.
+  test('7 günden eski günler tüm-zamanlar toplamından silinmez', () async {
+    final store = await MistakeStore.load();
+
+    // Doğrudan private _history yerine gerçek genel API üzerinden bugüne
+    // birkaç cevap yazdırıp, eski bir günü SharedPreferences'a elle
+    // enjekte ediyoruz — bu, "uygulama haftalar sonra tekrar açıldı"
+    // senaryosunu temsil eder.
+    await store.markResolved('bugun-1');
+    expect(store.totalCorrect, 1);
+
+    final prefs = await SharedPreferences.getInstance();
+    final oldDay = DateTime.now().subtract(const Duration(days: 30));
+    final oldKey =
+        '${oldDay.year.toString().padLeft(4, '0')}-'
+        '${oldDay.month.toString().padLeft(2, '0')}-'
+        '${oldDay.day.toString().padLeft(2, '0')}';
+    await prefs.setString(
+      'zankurd.dailyPerformance',
+      '{"$oldKey":{"correct":5,"wrong":2}}',
+    );
+
+    MistakeStore.resetInstance();
+    final restored = await MistakeStore.load();
+    expect(
+      restored.totalCorrect,
+      5,
+      reason: '30 gün önceki gün, diskten yüklendiğinde toplama dahil olmalı',
+    );
+
+    // Yeni bir cevap kaydetmek (eski hatalı davranışta tam burada tetiklenen
+    // budama adımı) 30 gün önceki günü SİLMEMELİ.
+    await restored.markResolved('bugun-2');
+    expect(
+      restored.totalCorrect,
+      6,
+      reason:
+          '30 günlük gün, yeni bir cevap kaydedilirken sessizce silinmemeli',
+    );
+
+    // Haftalık grafik yine de yalnız son 7 günü döndürür — 30 gün önceki
+    // gün orada görünmemeli, ama toplamlarda kaybolmamalı.
+    final weekly = restored.getLast7DaysHistory();
+    expect(weekly.containsKey(oldKey), isFalse);
+  });
+
   test('karışık turda doğruluk oranı gerçek değeri verir', () async {
     final store = await MistakeStore.load();
     await store.markResolved('d1');

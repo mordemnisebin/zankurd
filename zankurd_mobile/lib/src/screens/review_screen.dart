@@ -616,7 +616,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  record.category,
+                  // Kategori kimliği veri katmanında Kurmancî sabittir
+                  // (bkz. `CategoryNames`); Türkçe turda ham "Ziman" gibi
+                  // çevrilmeden basılıyordu (2026-08-14 denetimi).
+                  CategoryNames.localized(record.category, context.isKu),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

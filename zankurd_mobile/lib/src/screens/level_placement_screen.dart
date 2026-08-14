@@ -43,7 +43,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   void initState() {
     super.initState();
     _questions = PlacementScoring.selectQuestions(
-      widget.repository.questions,
+      widget.repository.playableQuestions,
       count: widget.questionCount,
     );
   }
@@ -131,7 +131,11 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   }
 
   Widget _buildQuestion(BuildContext context, bool ku) {
-    final question = _questions[_index];
+    // Banka Kurmancî sabittir; `.localized` olmadan Türkçe turda da
+    // Kurmancî soru/şık metni basılıyordu — quiz_screen.dart'ın 2026-07'de
+    // kurduğu desenin aynısı burada eksikti (2026-08-14 denetimi).
+    // Çevirisi eksik sorularda alanlar Kurmancî kalır (bkz. `answersFor`).
+    final question = _questions[_index].localized(isKu: ku);
     final progress = (_index + 1) / _questions.length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

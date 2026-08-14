@@ -108,6 +108,15 @@ class _SubcategoryProgressHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tint = gradient.colors.first;
+    // Bu kart yalnız BİLGİLENDİRİR: hangi alt kategoriye ait olduğu
+    // belirsiz olduğu için tıklanınca gidebileceği anlamlı tek bir hedef
+    // yok (seviye seçimi her zaman bir alt kategoriye bağlı —
+    // `_SubcategoryCard.onTap` bunu zaten yapıyor). Eskiden sağ ucunda
+    // `chevronRight` ikonu vardı; listedeki her tıklanabilir alt kategori
+    // satırı aynı ikonla bitiyor, o yüzden bu kart da dokunulabilir
+    // görünüyordu ama `onTap` yoktu — dokunan kullanıcı hiçbir tepki
+    // almıyordu (2026-08-14 denetimi). Düzeltme: sahte "buraya dokun"
+    // ipucunu kaldır, kartı InkWell'siz bırak.
     return AppPanel(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
@@ -159,7 +168,6 @@ class _SubcategoryProgressHint extends StatelessWidget {
               ],
             ),
           ),
-          Icon(AppIcons.chevronRight, color: AppTheme.textMutedColor(context)),
         ],
       ),
     );

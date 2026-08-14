@@ -139,7 +139,10 @@ void main() {
       // Adım 1'de kullanıcı adı boş — "İleri"ye bas
       await tapButton(tester, 'İleri');
 
-      expect(find.text('Kullanıcı adı gerekli'), findsOneWidget);
+      // 2026-08-14: alan artık `DisplayNamePolicy.review` çağırıyor (bkz.
+      // aşağıdaki grup) — boş/kısa ad ikisi de aynı politika mesajını
+      // paylaşır, isim kapısı ve ayarlarla aynı metin.
+      expect(find.text('Ad en az 2 karakter olmalı'), findsOneWidget);
       expect(hasSnackBar(tester), isFalse);
     });
 
@@ -152,12 +155,62 @@ void main() {
 
         await tapButton(tester, 'İleri');
 
-        expect(
-          find.text('Kullanıcı adı en az 2 karakter olmalı'),
-          findsOneWidget,
-        );
+        expect(find.text('Ad en az 2 karakter olmalı'), findsOneWidget);
         expect(hasSnackBar(tester), isFalse);
       },
     );
+  });
+
+  group('Adım 1 — kullanıcı adı DisplayNamePolicy kontrolünden geçer', () {
+    // 2026-08-14 denetimi: kayıt formu üçüncü bir yazma yoluydu — isim
+    // kapısı (`profile_name_gate_screen.dart`) ve ayarlar
+    // (`settings_screen.dart` `_savePlayerName`) zaten `DisplayNamePolicy`
+    // çağırıyordu, kayıt hiç çağırmıyordu. Engellenen bir sözcük ya da
+    // marka/yetkili taklidi içeren bir ad, kapıdan hiç geçmeden doğrudan
+    // sunucuya (`updateProfileName` üzerinden) yazılabiliyordu.
+    Future<void> goToStep1(WidgetTester tester) async {
+      await pumpSignUpScreen(tester);
+
+      await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
+      await tester.enterText(textFieldByLabel('Parola'), '123456');
+      await tester.enterText(textFieldByLabel('Parolayı Onayla'), '123456');
+
+      await tapButton(tester, 'İleri');
+    }
+
+    testWidgets('engellenen sözcük içeren ad reddedilir', (tester) async {
+      await goToStep1(tester);
+
+      await tester.enterText(textFieldByLabel('Kullanıcı adı'), 'siktir');
+      await tapButton(tester, 'İleri');
+
+      // `DisplayNameVerdict.blockedWord` → `K.nameBlockedWord`.
+      expect(find.text('Bu ad uygunsuz bir sözcük içeriyor'), findsOneWidget);
+      expect(hasSnackBar(tester), isFalse);
+    });
+
+    testWidgets('yetkili/destek taklidi eden ad reddedilir', (tester) async {
+      await goToStep1(tester);
+
+      await tester.enterText(textFieldByLabel('Kullanıcı adı'), 'ZanKurd Destek');
+      await tapButton(tester, 'İleri');
+
+      // `DisplayNameVerdict.reservedName` → `K.nameReserved`.
+      expect(find.text('Bu ad korumalı, kullanılamaz'), findsOneWidget);
+      expect(hasSnackBar(tester), isFalse);
+    });
+
+    testWidgets('masum bir Kurmancî ad kabul edilir, sonraki adıma geçilir', (
+      tester,
+    ) async {
+      await goToStep1(tester);
+
+      await tester.enterText(textFieldByLabel('Kullanıcı adı'), 'Zelal');
+      await tapButton(tester, 'İleri');
+
+      // Adım 2 (gözden geçir) alana ait etiketi gösterir; reddedilseydi
+      // sihirbaz Adım 1'de kalırdı.
+      expect(find.text('Kullanıcı adı:'), findsOneWidget);
+    });
   });
 }

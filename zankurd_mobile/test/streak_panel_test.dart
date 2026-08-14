@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/streak_panel.dart';
 
@@ -9,12 +11,20 @@ import 'package:zankurd_mobile/src/widgets/streak_panel.dart';
 /// Panelin işi seriyi göstermek değil, oyuncunun onu KORUYABİLMESİ için
 /// gereken bilgiyi vermek: hangi günler oynandı, bugün ne durumda, dondurma
 /// niçin kullanılabilir ya da kullanılamaz.
+///
+/// Gün işaretinin ekran okuyucu anonsu `context.t` üzerinden defterden
+/// okur (2026-08-14 denetimi) — gerçek ekranlarda kök widget'ın sağladığı
+/// `LanguageProvider` burada da olmalı, aksi hâlde `Provider.of` bulunamaz
+/// hatası atar.
 Widget _wrap(Widget child, {Brightness brightness = Brightness.light}) =>
-    MaterialApp(
-      theme: brightness == Brightness.light
-          ? AppTheme.light()
-          : AppTheme.dark(),
-      home: Scaffold(body: SingleChildScrollView(child: child)),
+    ChangeNotifierProvider<LanguageProvider>(
+      create: (_) => LanguageProvider()..setLang('tr'),
+      child: MaterialApp(
+        theme: brightness == Brightness.light
+            ? AppTheme.light()
+            : AppTheme.dark(),
+        home: Scaffold(body: SingleChildScrollView(child: child)),
+      ),
     );
 
 const _days = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
@@ -51,6 +61,26 @@ StreakPanel _panel({
 );
 
 void main() {
+  testWidgets(
+    'gün durumu anonsu ham enum adını değil çevrilmiş etiketi okur '
+    '(2026-08-14)',
+    (tester) async {
+      // `Semantics.label` eskiden '$label: ${state.name}' üretiyordu — yani
+      // TalkBack/VoiceOver "Pt: completed" gibi ham İngilizce enum adını
+      // okuyordu. Görsel ikon/renk dilden bağımsız kalabilir ama anons
+      // kalamaz.
+      await tester.pumpWidget(
+        _wrap(_panel(days: const [StreakDayState.completed])),
+      );
+      final dayMarkFinder = find.byWidgetPredicate(
+        (widget) => widget is Semantics && (widget.properties.label ?? '').contains('Pt'),
+      );
+      final semantics = tester.getSemantics(dayMarkFinder);
+      expect(semantics.label, isNot(contains('completed')));
+      expect(semantics.label, contains('Tamamlandı'));
+    },
+  );
+
   testWidgets('her gün durumu ayrı ikon taşır', (tester) async {
     // Renk tek kanal olamaz: "kaçırdım" ile "henüz gelmedi" arasındaki fark
     // yalnız tonla anlatılırsa renk körü oyuncu için kaybolur.
@@ -144,20 +174,23 @@ void main() {
     tester.view.physicalSize = const Size(390, 844) * 3;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
-      MaterialApp(
-        theme: AppTheme.dark(),
-        home: MediaQuery(
-          data: const MediaQueryData(textScaler: TextScaler.linear(2.0)),
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: _panel(
-                current: 12,
-                freezeState: StreakFreezeState.available,
-                freezeLabel: 'Amade ye ji bo parastinê',
-                freezeActionLabel: 'Rêzê biparêze',
-                nextMilestone: 30,
-                freezeCost: 50,
-                onFreeze: () {},
+      ChangeNotifierProvider<LanguageProvider>(
+        create: (_) => LanguageProvider()..setLang('tr'),
+        child: MaterialApp(
+          theme: AppTheme.dark(),
+          home: MediaQuery(
+            data: const MediaQueryData(textScaler: TextScaler.linear(2.0)),
+            child: Scaffold(
+              body: SingleChildScrollView(
+                child: _panel(
+                  current: 12,
+                  freezeState: StreakFreezeState.available,
+                  freezeLabel: 'Amade ye ji bo parastinê',
+                  freezeActionLabel: 'Rêzê biparêze',
+                  nextMilestone: 30,
+                  freezeCost: 50,
+                  onFreeze: () {},
+                ),
               ),
             ),
           ),

@@ -274,17 +274,15 @@ class MistakeStore {
       dayData['wrong'] = (dayData['wrong'] ?? 0) + 1;
     }
 
-    // Keep history clean: remove older than 7 days
-    final cutoff = DateTime.now().subtract(const Duration(days: 7));
-    _history.removeWhere((key, _) {
-      try {
-        final parsed = DateTime.parse(key);
-        return parsed.isBefore(cutoff);
-      } catch (error, stack) {
-        ErrorReporter.record(error, stack, reason: 'mistake_store_date_parse');
-        return true;
-      }
-    });
+    // Günlük kayıtlar burada 7 günden eskilerini SİLMİYOR. `totalCorrect`/
+    // `totalWrong` (ve dolayısıyla profildeki "Cevaplanan Soru"/"Doğruluk"
+    // karoları) bu _history map'inin TAMAMI üzerinden toplanıyor ve "tüm
+    // zamanların toplamı" olarak belgelenip gösteriliyor. Eskiden burada her
+    // cevaptan sonra 7 günden eski günler silinirdi; bu, "tüm zamanlar"
+    // sayaçlarını sessizce her hafta küçültüyordu — kullanıcı aylarca
+    // oynasa bile profilde son 7 günün toplamını görüyordu (2026-08-14
+    // denetimi). Haftalık grafik zaten `getLast7DaysHistory()` ile son 7
+    // güne kendi filtreliyor; günlük kayıtları budamaya gerek yok.
   }
 
   Map<String, Map<String, int>> getLast7DaysHistory() {

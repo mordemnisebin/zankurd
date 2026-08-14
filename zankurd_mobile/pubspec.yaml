@@ -98,6 +98,10 @@ dev_dependencies:
   # Supabase repository hata-enjeksiyon testlerinde sahte http.Client için
   # (test/supabase_offline_fallback_test.dart).
   http: ^1.2.0
+  # `UrlLauncherPlatform.instance`i sahte bir uygulamayla değiştirip
+  # "hedefi açacak uygulama yok" durumunu simüle etmek için
+  # (test/legal_link_open_failure_test.dart).
+  url_launcher_platform_interface: ^2.3.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
