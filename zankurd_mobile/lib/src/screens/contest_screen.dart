@@ -60,7 +60,7 @@ class _ContestScreenState extends State<ContestScreen> {
         limit: contest.questionCount,
       );
       if (questions.isEmpty) {
-        questions = widget.repository.questions
+        questions = widget.repository.playableQuestions
             .take(contest.questionCount)
             .toList();
       }

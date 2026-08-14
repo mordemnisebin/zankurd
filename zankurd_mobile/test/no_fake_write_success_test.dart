@@ -45,6 +45,11 @@ void main() {
     'acceptFriendRequest failed',
     'rejectFriendRequest failed',
     'saveTournamentProgress failed',
+    // 2026-08-14: `_offline.markLessonCompleted` yalnız bellek içi bir
+    // kümeye ekliyor (SharedPreferences'a bile yazmıyor). Kullanıcı
+    // "Ders tamamlandı" görüp çıkıyor, sunucudan okuyan
+    // `loadCompletedLessonIds` dersi hâlâ tamamlanmamış gösteriyordu.
+    'markLessonCompleted failed',
   ];
 
   for (final reason in serverOnlyWrites) {
@@ -127,7 +132,13 @@ void main() {
   /// görünmelidir; ağ kaynaklı geçici hata sessiz kalır, çünkü yerel kopya
   /// zaten yazılmıştır ve çevrimdışı kullanım bozulmamalıdır.
   group('sunucu reddi yutulmuyor', () {
-    test('updateAvatarIdentity PostgrestException geçiriyor', () {
+    // 2026-08-14: yazma mantığı `_pushAvatarIdentity` özel yardımcısına
+    // taşındı — hem `updateAvatarIdentity` hem de `loadAvatarIdentity`nin
+    // bekleyen-değişiklik tekrar deneme yolu onu paylaşır. Bekçi artık
+    // metnin `updateAvatarIdentity` içinde iç içe olmasını değil, ortak
+    // yardımcının kendisinin doğru davrandığını ve her iki çağıranın onu
+    // gerçekten kullandığını ölçer.
+    test('_pushAvatarIdentity PostgrestException geçiriyor', () {
       final at = repo.indexOf("reason: 'updateAvatarIdentity rejected'");
       expect(
         at,
@@ -148,7 +159,9 @@ void main() {
 
       // Yakalanan tür gerçekten PostgrestException olmalı: düz `catch`
       // yeniden fırlatılırsa çevrimdışı kayıt da hata verirdi.
-      final methodStart = repo.indexOf('Future<void> updateAvatarIdentity(');
+      final methodStart = repo.indexOf(
+        'Future<bool> _pushAvatarIdentity(',
+      );
       expect(methodStart, greaterThan(-1));
       expect(
         repo.substring(methodStart, at),
@@ -169,6 +182,22 @@ void main() {
         reason:
             'Geçici ağ hatası da fırlatılırsa çevrimdışı avatar değişikliği '
             'her seferinde hata gösterir — düzeltme fazla geniş uygulanmış',
+      );
+    });
+
+    test('updateAvatarIdentity ve loadAvatarIdentity ortak yolu kullanır', () {
+      expect(
+        repo,
+        contains('await _pushAvatarIdentity(identity);'),
+        reason: 'updateAvatarIdentity artık ortak yardımcıyı çağırmalı',
+      );
+      expect(
+        repo,
+        contains('await _pushAvatarIdentity(local);'),
+        reason:
+            'loadAvatarIdentity, bekleyen bir değişikliği okumadan önce '
+            'tekrar göndermeyi denemeli — yoksa sunucudaki eski satır '
+            'kullanıcının az önce kaydettiği değişikliği geri getirir',
       );
     });
 

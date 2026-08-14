@@ -787,7 +787,7 @@ extension _QuizScreenUI on _QuizScreenState {
     bool usable(QuizQuestion q) => _isKu || q.hasTurkishTranslation;
 
     // Önce aynı kategori + zorlukta aday ara
-    var candidates = widget.repository.questions
+    var candidates = widget.repository.playableQuestions
         .where(
           (q) =>
               q.category == category &&
@@ -799,7 +799,7 @@ extension _QuizScreenUI on _QuizScreenState {
 
     // Yeterli yoksa aynı kategoride herhangi bir zorluk
     if (candidates.isEmpty) {
-      candidates = widget.repository.questions
+      candidates = widget.repository.playableQuestions
           .where(
             (q) =>
                 q.category == category && !usedIds.contains(q.id) && usable(q),

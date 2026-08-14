@@ -95,6 +95,27 @@ bool _useCompactLandscapeLayout(double width, double height) =>
     width > height &&
     height <= _compactLandscapeMaxHeight;
 
+/// Bot düellosunda ekranda gösterilecek rakip adını seçer.
+///
+/// `matchmaking_screen.dart` bot rakibi bulunca kullanıcıya "X ile
+/// eşleştin" diye duyurur VE `room.players`e o adı yazar. Ama bu ekran
+/// eskiden o ismi hiç okumuyordu — kendi rastgele adını `BotNames.pool`dan
+/// yeniden çekiyordu. Sonuç: duyurulan isim ile yarış boyunca görünen isim
+/// farklıydı (2026-08-14 denetimi). `roomPlayers`de ikinci oyuncu (index 1,
+/// matchmaking'in kurduğu sabit sıra: [sen, bot]) varsa onun adı kullanılır;
+/// yoksa (ör. bu ekranı doğrudan kuran testler) eski rastgele seçime düşülür.
+String botOpponentDisplayName(
+  List<Player> roomPlayers,
+  List<String> pool,
+  Random random,
+) {
+  if (roomPlayers.length > 1) {
+    final name = roomPlayers[1].name.trim();
+    if (name.isNotEmpty) return name;
+  }
+  return pool[random.nextInt(pool.length)];
+}
+
 /// Multiplayer quiz turlarının ortak faz durumu.
 enum _MultiplayerPhase {
   /// Oyuncular cevap veriyor.
@@ -626,7 +647,11 @@ class _QuizScreenState extends State<QuizScreen>
           // Bot fallback 1v1 match
           final rng = Random();
           const botNames = BotNames.pool;
-          final botName = botNames[rng.nextInt(botNames.length)];
+          final botName = botOpponentDisplayName(
+            widget.room.players,
+            botNames,
+            rng,
+          );
           final botSkill = 0.65 + rng.nextDouble() * 0.25;
           _botRace = BotRace([
             BotOpponent(name: botName, skill: botSkill, random: rng),
@@ -1179,9 +1204,19 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   void _loadCoinBalance() {
-    widget.repository.loadCoinBalance().then((balance) {
-      if (mounted) setState(() => _coinBalance = balance);
-    });
+    widget.repository
+        .loadCoinBalance()
+        .then((balance) {
+          if (mounted) setState(() => _coinBalance = balance);
+        })
+        // `loadCoinBalance` artık ağ hatasında yukarı fırlatıyor
+        // (shop_screen'in çevrimdışı durumunu tetiklemek için). Burada
+        // ele alınmazsa yakalanmamış bir Future hatası olurdu; en son
+        // bilinen bakiye (başlangıçta 0) korunur, jokerler o değere göre
+        // kapalı kalır ama ekran çökmez (2026-08-14 denetimi).
+        .catchError((error, stack) {
+          ErrorReporter.record(error, stack, reason: 'quiz coin load failed');
+        });
   }
 
   List<Player> _composeBotRacePlayers() {

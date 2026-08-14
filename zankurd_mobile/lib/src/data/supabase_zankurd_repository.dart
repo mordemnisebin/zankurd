@@ -16,9 +16,12 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../providers/analytics_consent_provider.dart';
 import '../utils/error_reporter.dart';
+import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
+import 'xp_store.dart';
 import 'zankurd_repository.dart';
 import '../services/question_content_policy.dart';
 
@@ -184,6 +187,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
   @override
   List<QuizQuestion> get questions => _offline.questions;
+
+  @override
+  List<QuizQuestion> get playableQuestions => _offline.playableQuestions;
 
   @override
   String? get currentUserId => client.auth.currentUser?.id;
@@ -365,8 +371,77 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// Ağ hatasıyla sunucuya yazılamayan bir avatar değişikliği varken
+  /// açık kalır. `loadAvatarIdentity` bu bayrak açıkken sunucu satırını
+  /// okumaz — yoksa bağlantı dönünce eski avatar kullanıcının yüzüne geri
+  /// gelirdi (yerel kopya zaten güncel, sunucu satırı henüz değil).
+  static const _avatarIdentityDirtyKey = 'zankurd.avatarIdentity.dirtyPending';
+
+  Future<bool> _avatarIdentityDirty() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_avatarIdentityDirtyKey) ?? false;
+  }
+
+  Future<void> _setAvatarIdentityDirty(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (value) {
+      await prefs.setBool(_avatarIdentityDirtyKey, true);
+    } else {
+      await prefs.remove(_avatarIdentityDirtyKey);
+    }
+  }
+
+  /// Sunucuya yazmayı bir kez dener; başarırsa bekleyen bayrağı temizler.
+  Future<bool> _pushAvatarIdentity(AvatarIdentity identity) async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return false;
+      await client
+          .from('profiles')
+          .update({
+            'avatar_icon': identity.iconId,
+            'avatar_color': identity.colorHex,
+            'avatar_url': identity.photoUrl,
+            'avatar_frame': identity.frameId,
+            'showcase_title': identity.showcaseTitle,
+            'updated_at': DateTime.now().toUtc().toIso8601String(),
+          })
+          .eq('id', user.id);
+      await _setAvatarIdentityDirty(false);
+      return true;
+    } on PostgrestException catch (error, stack) {
+      // Sunucu veriyi REDDETTİ. Bu kalıcı bir rettir, geçici bir ağ
+      // sorunu değil — ve yutulduğu için kullanıcıya yalan söylüyordu:
+      // `avatar_editor_screen._save()` başarı sayıp `pop(true)` ile
+      // kapanıyordu. 600 coin ödenen Neon çerçevesi tam buradan
+      // kayboluyordu; `protect_paid_profile_cosmetics` `neon` değerini
+      // reddediyor, istisna burada yutuluyor, ekran "kaydedildi" gibi
+      // kapanıyordu (2026-08-06 denetimi).
+      //
+      // Kalıcı ret beklemede bırakılmaz — tekrar denemek de reddedilir.
+      await _setAvatarIdentityDirty(false);
+      _recordError(error, stack, reason: 'updateAvatarIdentity rejected');
+      rethrow;
+    } catch (error, stack) {
+      // Ağ/bağlantı kaynaklı geçici hata: beklemede bırak, bir daha
+      // denenebilsin.
+      await _setAvatarIdentityDirty(true);
+      _recordError(error, stack, reason: 'updateAvatarIdentity failed');
+      return false;
+    }
+  }
+
   @override
   Future<AvatarIdentity> loadAvatarIdentity() async {
+    if (await _avatarIdentityDirty()) {
+      // Bekleyen bir yerel değişiklik var. Önce tekrar göndermeyi dene
+      // (bağlantı dönmüş olabilir); olmazsa sunucudan OKUMA — bu, az önce
+      // "kaydedildi" denen değişikliği kullanıcının yüzüne geri getirirdi
+      // (2026-08-14 denetimi, bkz. updateAvatarIdentity).
+      final local = await _offline.loadAvatarIdentity();
+      final pushed = await _pushAvatarIdentity(local);
+      if (!pushed) return local;
+    }
     try {
       final user = client.auth.currentUser;
       if (user == null) return _offline.loadAvatarIdentity();
@@ -395,37 +470,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
     // Yereli her durumda güncelle: çevrimdışı görünürlük + fallback tutarlılığı.
     await _offline.updateAvatarIdentity(identity);
-    try {
-      final user = client.auth.currentUser;
-      if (user == null) return;
-      await client
-          .from('profiles')
-          .update({
-            'avatar_icon': identity.iconId,
-            'avatar_color': identity.colorHex,
-            'avatar_url': identity.photoUrl,
-            'avatar_frame': identity.frameId,
-            'showcase_title': identity.showcaseTitle,
-            'updated_at': DateTime.now().toUtc().toIso8601String(),
-          })
-          .eq('id', user.id);
-    } on PostgrestException catch (error, stack) {
-      // Sunucu veriyi REDDETTİ. Bu kalıcı bir rettir, geçici bir ağ
-      // sorunu değil — ve yutulduğu için kullanıcıya yalan söylüyordu:
-      // `avatar_editor_screen._save()` başarı sayıp `pop(true)` ile
-      // kapanıyordu. 600 coin ödenen Neon çerçevesi tam buradan
-      // kayboluyordu; `protect_paid_profile_cosmetics` `neon` değerini
-      // reddediyor, istisna burada yutuluyor, ekran "kaydedildi" gibi
-      // kapanıyordu (2026-08-06 denetimi).
-      //
-      // Çağıran zaten yerelleştirilmiş `K.saveFailed` gösteriyor.
-      _recordError(error, stack, reason: 'updateAvatarIdentity rejected');
-      rethrow;
-    } catch (error, stack) {
-      // Ağ/bağlantı kaynaklı geçici hatalar sessiz kalır: yerel kopya
-      // yukarıda yazıldı ve çevrimdışı görünürlük bozulmamalı.
-      _recordError(error, stack, reason: 'updateAvatarIdentity failed');
-    }
+    if (client.auth.currentUser == null) return;
+    await _pushAvatarIdentity(identity);
   }
 
   @override
@@ -668,10 +714,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
 
-    final response = await client.rpc(
-      'join_room_by_code',
-      params: {'p_code': normalizedCode},
-    );
+    late final dynamic response;
+    try {
+      response = await client.rpc(
+        'join_room_by_code',
+        params: {'p_code': normalizedCode},
+      );
+    } on PostgrestException catch (error, stack) {
+      _recordError(error, stack, reason: 'joinOnlineRoom rejected');
+      throw RoomJoinException(
+        roomJoinFailureReasonForMessage(error.message),
+        error.message,
+      );
+    }
     final rawSnapshot = response is List ? response.firstOrNull : response;
     if (rawSnapshot == null) {
       throw StateError('join_room_by_code boş yanıt döndürdü: oda bulunamadı');
@@ -684,6 +739,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
     final joined = createRoom(category: category).copyWith(
       id: roomId,
+      // `createRoom()` yerel/solo oda için 'Hevalên Zanînê' adını taşır;
+      // burada üzerine yazılmazsa katılan oyuncu aynı odayı ev sahibinin
+      // gördüğü '1vs1' yerine bu adla görüyordu — aynı oda iki farklı
+      // başlıkla açılıyordu. `createOnlineRoom`/`loadRoomSnapshot`
+      // (ev sahibi ve sonraki yeniden-yüklemeler) zaten '1vs1' kullanıyor
+      // (2026-08-14 denetimi).
+      name: '1vs1',
       code: room['code'] as String,
       questionCount: room['question_count'] as int? ?? 10,
       players: players,
@@ -1286,15 +1348,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<PlayerSearchResult>> loadBlockedPlayers() async {
     try {
-      final rows = await client
-          .from('blocked_users')
-          .select(
-            'blocked_id, profiles!blocked_users_blocked_id_fkey(display_name, player_tag)',
-          );
-      return rows.map((row) {
-        final profile = row['profiles'] as Map<String, dynamic>?;
+      // `profiles!blocked_users_blocked_id_fkey(...)` embed'i PostgREST'te
+      // HİÇBİR ZAMAN çalışmadı: `blocked_users.blocked_id` şemadaki tek
+      // kısıtıyla `auth.users(id)`e bakıyor (2026-07-31_chat_moderation.sql),
+      // `profiles`e değil — o isimde bir FK yok. Her çağrı şema/embed
+      // hatasıyla düşüyor, catch onu boş listeye çeviriyordu; Ayarlar >
+      // Engellenenler bu yüzden GERÇEKTEN engellenmiş kişisi olan bir
+      // kullanıcıya bile "Kimseyi engellemedin" gösteriyor, "engeli
+      // kaldır" düğmesi hiç çizilemiyordu (2026-08-14 denetimi).
+      //
+      // `loadBlockedPlayerIds` zaten aynı tabloyu embed'siz, iki adımda
+      // okuyor — aynı deseni burada da kullan.
+      final ids = await loadBlockedPlayerIds();
+      if (ids.isEmpty) return const [];
+      final profiles = await client
+          .from('profiles')
+          .select('id, display_name, player_tag')
+          .inFilter('id', ids.toList());
+      final byId = {for (final p in profiles) p['id'] as String: p};
+      return ids.map((id) {
+        final profile = byId[id];
         return PlayerSearchResult(
-          id: row['blocked_id'] as String,
+          id: id,
           displayName:
               (profile?['display_name'] as String?) ?? 'ZanKurd Oyuncusu',
           playerTag: profile?['player_tag'] as String?,
@@ -1302,9 +1377,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }).toList();
     } catch (e, s) {
       _recordError(e, s, reason: 'loadBlockedPlayers failed');
-      // Liste okunamazsa BOŞ dön: burada `_offline`a düşmek sahte bir
-      // "kimseyi engellemedin" tablosu çizerdi.
-      return const [];
+      // Okunamayan liste "kimse engelli değil" anlamına gelmez —
+      // `loadBlockedPlayerIds`teki aynı gerekçeyle yukarı taşınır; ekran
+      // hata durumunu gösterir, engellenmiş kişi sessizce kaybolmaz.
+      rethrow;
     }
   }
 
@@ -1326,10 +1402,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return rows.map((row) => row['blocked_id'] as String).toSet();
     } catch (e, s) {
       _recordError(e, s, reason: 'loadBlockedPlayerIds failed');
-      // Engel listesi okunamazsa hiç kimseyi engelli SAYMA: sohbet
-      // çalışmaya devam etsin. Ters yön (herkesi engelli saymak) sohbeti
-      // sessizce boşaltırdı.
-      return const <String>{};
+      // Okunamayan engel durumu "kimse engelli değil" anlamına gelmez.
+      // Hatayı çağırana taşı: ekran güvenli hata durumunu gösterebilsin ve
+      // engellenmiş içeriği sessizce yeniden göstermesin.
+      rethrow;
     }
   }
 
@@ -1533,20 +1609,86 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .eq('player_id', user.id)
           .order('created_at', ascending: false);
 
+      final orderedIds = rows
+          .map((row) => row['question_id'] as String)
+          .toList();
       final byId = {
         for (final question in _offline.questions) question.id: question,
       };
-      final questions = rows
-          .map((row) => byId[row['question_id'] as String])
-          .whereType<QuizQuestion>()
+      final unresolvedIds = orderedIds
+          .where((id) => !byId.containsKey(id))
           .toList();
 
+      // `unresolvedIds` çevrimiçi oda maçında kaydedilmiş favorilerdir:
+      // `toggleFavoriteQuestion` gerçek `questions.id` uuid'sini yazar,
+      // paketli bankada karşılığı yoktur. Eskiden bunlar süzülüp
+      // atılıyordu — kayıt sunucuda dururken "Kaydedilen Sorular" hep
+      // boş görünüyordu (2026-08-14 denetimi). Sunucudan çözülürler;
+      // `correct_option` taşımadıkları için `hasHiddenAnswer` ile
+      // işaretlenip yeniden oynatma bu soruları dışarıda bırakır
+      // (favorite_questions_screen.dart).
+      if (unresolvedIds.isNotEmpty) {
+        try {
+          final resolved = await _resolveServerFavoriteQuestions(
+            unresolvedIds,
+          );
+          byId.addAll(resolved);
+        } catch (error, stack) {
+          _recordError(
+            error,
+            stack,
+            reason: 'loadFavoriteQuestions server resolve failed',
+          );
+        }
+      }
+
+      final questions = orderedIds
+          .map((id) => byId[id])
+          .whereType<QuizQuestion>()
+          .toList();
       if (questions.isNotEmpty) return questions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadFavoriteQuestions failed');
       return const [];
     }
     return const [];
+  }
+
+  Future<Map<String, QuizQuestion>> _resolveServerFavoriteQuestions(
+    List<String> ids,
+  ) async {
+    final rows = await client
+        .from('quiz_public_questions')
+        .select(
+          'id, category_id, prompt, option_a, option_b, option_c, '
+          'option_d, question_type, image_url, difficulty',
+        )
+        .inFilter('id', ids);
+    if (rows.isEmpty) return const {};
+
+    final categoryIds = rows
+        .map((row) => row['category_id'] as String?)
+        .whereType<String>()
+        .toSet()
+        .toList();
+    final categoryNames = <String, String>{};
+    if (categoryIds.isNotEmpty) {
+      final categories = await client
+          .from('categories')
+          .select('id, name')
+          .inFilter('id', categoryIds);
+      for (final row in categories) {
+        categoryNames[row['id'] as String] = row['name'] as String? ?? 'Ziman';
+      }
+    }
+
+    return {
+      for (final row in rows)
+        row['id'] as String: _roomQuestionFromRow({
+          ...row,
+          'category_name': categoryNames[row['category_id']] ?? 'Ziman',
+        }),
+    };
   }
 
   @override
@@ -1564,6 +1706,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadCoinBalance failed');
+      // Ağ hatasında 0 dönmek, 3000 coini olan bir oyuncuya uçak modunda
+      // "bakiyen bitti" gösterip dört jokeri birden kilitliyordu — hiçbir
+      // yerde "çevrimdışısın" yazmıyordu, oyuncu coinlerini kaybettiğini
+      // sanıyordu. Etki alanı hataları (yetki, şema) için 0 hâlâ makul bir
+      // varsayılan; yalnız TAŞIMA hatasını yukarı taşı, çağıran (shop/home/
+      // quiz ekranları) son bilinen bakiyeyi koruyup çevrimdışı durumunu
+      // gösterebilsin (2026-08-14 denetimi).
+      if (isLikelyOfflineError(error)) rethrow;
       return 0;
     }
   }
@@ -1656,6 +1806,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return rows.isNotEmpty;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'hasPurchased failed');
+      // `loadCoinBalance`teki aynı gerekçe: taşıma hatasını yut, çağıranı
+      // ("satın alınmadı") yalana zorla. `shop_screen.dart`ın dış catch'i
+      // zaten `isLikelyOfflineError` ile çevrimdışı durumunu kuruyordu —
+      // bu metod hiç fırlatmadığı için o dal hiç tetiklenemiyordu.
+      if (isLikelyOfflineError(error)) rethrow;
       return false;
     }
   }
@@ -1829,7 +1984,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return freeSpinAvailable || await _hasUnusedExtraSpin();
     } catch (error, stack) {
       _recordError(error, stack, reason: 'canSpinToday failed');
-      return _offline.canSpinToday();
+      // `_offline.canSpinToday()`nin yerel bir "bugün çevirdim" kaydı yok
+      // — bu geri düşüş HER hatada sahte bir "hakkın var" üretiyordu.
+      // Kullanıcı çevrimdışıyken düğme AÇIK görünüyor, "Çevir!"e basınca
+      // `awardSpinCoins` de hatayı yutup 0 döndürüyor, ekran bunu "sunucu
+      // reddetti" sayıp "Bugün zaten çevirdin." yazıyordu — oysa o gün
+      // hiç çevrilmemişti. `spin_wheel_screen.dart` bu durum için doğru
+      // yazılmıştı (`_statusOffline`, `isLikelyOfflineError` ile) ama bu
+      // metod hiç fırlatmadığı için o dal ölü koddu (2026-08-14 denetimi).
+      rethrow;
     }
   }
 
@@ -1866,7 +2029,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return amount;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'awardSpinCoins failed');
-      return 0;
+      // `canSpinToday`teki aynı gerekçe: 0 dönmek sunucunun bilinçli
+      // reddiyle (gün sınırı) bir taşıma hatasını ayırt edilemez kılıyor,
+      // ikisi de ekranda "Bugün zaten çevirdin." oluyordu. `RPC` gerçekten
+      // `success:false` döndüğünde bu satıra hiç düşülmez (yukarıda ayrı
+      // ele alınır) — buraya yalnız gerçek hata düşer, rethrow doğru olan.
+      rethrow;
     }
   }
 
@@ -2201,7 +2369,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return true;
     } catch (e, s) {
       _recordError(e, s, reason: 'markLessonCompleted failed');
-      return _offline.markLessonCompleted(lessonId);
+      // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME (addFriend'deki aynı kural).
+      //
+      // `_offline.markLessonCompleted` yalnız BELLEK İÇİ bir kümeye ekliyor
+      // — SharedPreferences'a bile yazmıyor. Kullanıcı "Ders tamamlandı"
+      // görüp ekrandan çıkıyor, ama `loadCompletedLessonIds` sunucudan
+      // okuduğu için ders "tamamlanmadı" görünmeye devam ediyordu; ne bir
+      // kuyruğa alınıyordu (SyncManager yalnız quiz ödülünü kuyruklar) ne
+      // de kullanıcıya bir hata gösteriliyordu — uygulama kapanınca işaret
+      // de kayboluyordu (2026-08-14 denetimi).
+      return false;
     }
   }
 
@@ -2325,7 +2502,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           .toList();
     } catch (e, s) {
       _recordError(e, s, reason: 'searchPlayers failed');
-      return _offline.searchPlayers(query);
+      // BAŞARISIZLIĞI SIFIR SONUÇMUŞ GİBİ GÖSTERME.
+      //
+      // `_offline.searchPlayers` de boş liste döner (gerçek oyuncu havuzu
+      // taklit edilemez), yani buraya düşmek `friends_screen.dart`ın
+      // gözünde ağ hatasıyla "gerçekten kimse bulunamadı"yı ayırt
+      // edilemez kılıyordu: ekran zaten `K.searchFailed` metnini catch
+      // bloğunda taşıyordu ama bu metod hiç fırlatmadığı için o metin
+      // hiçbir zaman görünemiyordu, kullanıcı her ağ hıçkırığında
+      // "Oyuncu bulunamadı" görüyordu (2026-08-14 denetimi). rethrow,
+      // ekranın kendi ayrımını yapmasına izin verir.
+      rethrow;
     }
   }
 
@@ -2333,9 +2520,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<Friend>> loadFriends() async {
     try {
       final res = await client.rpc<List<dynamic>>('list_friends');
-      return res
-          .map((row) => Friend.fromJson(Map<String, dynamic>.from(row as Map)))
-          .toList();
+      return res.map((row) {
+        final friend = Friend.fromJson(Map<String, dynamic>.from(row as Map));
+        // `list_friends` seviye döndürmez (yalnız `total_score` = xp);
+        // Arkadaşlar sekmesi rozet olarak seviye gösteriyor
+        // (leaderboard_screen.dart _FriendRankRow). Aynı XP→seviye
+        // formülü sunucudaki liderlik view'ının kullandığı `xp` ile
+        // tutarlı olsun diye burada, tek yerde hesaplanır.
+        return friend.copyWith(
+          level: XPStore.calculateLevel(friend.totalScore),
+        );
+      }).toList();
     } catch (e, s) {
       _recordError(e, s, reason: 'loadFriends failed');
       return _offline.loadFriends();
@@ -2399,6 +2594,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     String eventName,
     Map<String, dynamic>? params,
   ) async {
+    // Ayarlar > Gizlilik'teki "Kullanım analizi" anahtarı yalnız Firebase
+    // Analytics'i durduruyordu; bu ikinci ölçüm yolu anahtar kapalıyken
+    // (varsayılan da kapalı) bile kullanıcı kimliğiyle Supabase'e yazmaya
+    // devam ediyordu (2026-08-14 denetimi). Tek boğaz noktası.
+    if (!AnalyticsConsentProvider.isEnabled) return false;
     try {
       final response = await client.rpc<dynamic>(
         'log_analytics_event',
@@ -2553,14 +2753,22 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         opponentScore: opponentScore,
       );
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'submitTournamentMatch failed');
+      // Göç uygulanmamışsa (`_isMissingFunction`) benzetime düşmek meşru.
+      // Başka her hatada sahte depoya düşmek "Bot Opponent"lı, durumu
+      // 'completed' bir sahte maç uyduruyordu; ekran dönen değeri
+      // kullanmayıp brakete güvendiği için kullanıcı hiçbir hata
+      // görmüyordu — ama skoru sunucuya HİÇ YAZILMAMIŞTI, maç hâlâ açık
+      // ve az önce oynanan tur boşa gitmişti. Sunucu skoru tek sefer
+      // kabul ettiği için tekrar denemek güvenlidir (2026-08-14 denetimi).
+      if (_isMissingFunction(e)) {
+        return _offline.submitTournamentMatch(
+          matchId: matchId,
+          playerScore: playerScore,
+          opponentScore: opponentScore,
+        );
       }
-      return _offline.submitTournamentMatch(
-        matchId: matchId,
-        playerScore: playerScore,
-        opponentScore: opponentScore,
-      );
+      _recordError(e, s, reason: 'submitTournamentMatch failed');
+      rethrow;
     }
   }
 
@@ -2568,36 +2776,93 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<List<TournamentStandings>> loadTournamentStandings({
     int limit = 16,
   }) async {
-    try {
-      final rows = await client
-          .from('profiles')
-          .select('id, display_name, total_score')
-          .order('total_score', ascending: false)
-          .limit(limit);
-      if (rows.isEmpty) return _offline.loadTournamentStandings(limit: limit);
-      return List.generate(rows.length, (i) {
-        final row = rows[i];
-        final score = (row['total_score'] as num?)?.toInt() ?? 0;
-        final String status;
-        if (i == 0) {
-          status = 'champion';
-        } else if (i < 4) {
-          status = 'finalist';
-        } else {
-          status = 'eliminated';
-        }
-        return TournamentStandings(
-          rank: i + 1,
-          playerId: row['id'] as String? ?? '',
-          playerName: row['display_name'] as String? ?? '—',
-          totalScore: score,
-          status: status,
-        );
-      });
-    } catch (e, s) {
-      _recordError(e, s, reason: 'loadTournamentStandings failed');
-      return _offline.loadTournamentStandings(limit: limit);
+    // Bu metod `profiles.total_score` kolonunu sorguyordu — böyle bir kolon
+    // YOK (`total_score` yalnız `leaderboard_entries` view'ında ve
+    // `profiles.xp`den türetilir). PostgREST her çağrıda 42703 döndürüyor,
+    // catch sahte depoya düşüyor ve ekran gerçek turnuvaya hiç katılmamış
+    // sabit üç sahte oyuncu ("Şampyon 400" vb.) gösteriyordu. Sorgu doğru
+    // kolona çevrilse bile bu YİNE yanlış olurdu: `profiles` genel puan
+    // liderleridir, turnuva katılımcısı değil — turnuvaya girmemiş yüksek
+    // puanlı biri "turnuva sıralaması" diye listelenirdi.
+    //
+    // Doğru kaynak zaten elde: `get_tournament_bracket` RPC'si (bkz.
+    // `loadRealTournamentBracket`) turnuvadaki HER oyuncuyu, her maçın
+    // skorunu ve kazananını taşıyor. Sıralama sunucuya yeni bir RPC
+    // eklemeden bu veriden türetilir (2026-08-14 denetimi).
+    final bracket = await loadRealTournamentBracket();
+    if (bracket == null) return _offline.loadTournamentStandings(limit: limit);
+    final standings = _standingsFromBracket(bracket);
+    if (standings.isEmpty) return _offline.loadTournamentStandings(limit: limit);
+    return standings.take(limit).toList();
+  }
+
+  /// Bracket'teki maçlardan sıralama türetir — `champion`/`finalist` yalnız
+  /// bracket TEK maçlık bir tura ulaştıysa (yani final oynandıysa) verilir;
+  /// erken turda kaybeden `eliminated`, henüz elenmemiş/final oynanmamış
+  /// herkes `active` kalır.
+  List<TournamentStandings> _standingsFromBracket(TournamentBracket bracket) {
+    final names = <String, String>{};
+    final scores = <String, int>{};
+    final status = <String, String>{};
+
+    int? finalRound;
+    for (final round in bracket.rounds) {
+      if (round.matches.length == 1) finalRound = round.roundNumber;
     }
+
+    void touch(String id, String name) {
+      if (id.isEmpty) return;
+      names[id] = name;
+      scores.putIfAbsent(id, () => 0);
+      status.putIfAbsent(id, () => 'active');
+    }
+
+    for (final round in bracket.rounds) {
+      for (final match in round.matches) {
+        touch(match.playerOneId, match.playerOneName);
+        touch(match.playerTwoId, match.playerTwoName);
+        if (match.playerOneId.isNotEmpty) {
+          scores[match.playerOneId] =
+              (scores[match.playerOneId] ?? 0) + match.playerOneScore;
+        }
+        if (match.playerTwoId.isNotEmpty) {
+          scores[match.playerTwoId] =
+              (scores[match.playerTwoId] ?? 0) + match.playerTwoScore;
+        }
+        if (match.status != 'completed' || match.winnerId.isEmpty) continue;
+        final loserId = match.playerOneId == match.winnerId
+            ? match.playerTwoId
+            : match.playerOneId;
+        final isFinal = finalRound != null && round.roundNumber == finalRound;
+        if (isFinal) {
+          status[match.winnerId] = 'champion';
+          if (loserId.isNotEmpty) status[loserId] = 'finalist';
+        } else if (loserId.isNotEmpty) {
+          status[loserId] = 'eliminated';
+        }
+      }
+    }
+
+    const statusWeight = {'champion': 0, 'finalist': 1, 'active': 2, 'eliminated': 3};
+    final ids = names.keys.toList()
+      ..sort((a, b) {
+        final byStatus = (statusWeight[status[a]] ?? 2).compareTo(
+          statusWeight[status[b]] ?? 2,
+        );
+        if (byStatus != 0) return byStatus;
+        return (scores[b] ?? 0).compareTo(scores[a] ?? 0);
+      });
+
+    return List.generate(
+      ids.length,
+      (i) => TournamentStandings(
+        rank: i + 1,
+        playerId: ids[i],
+        playerName: names[ids[i]] ?? '—',
+        totalScore: scores[ids[i]] ?? 0,
+        status: status[ids[i]] ?? 'active',
+      ),
+    );
   }
 
   @override
@@ -2610,8 +2875,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final response = await client.rpc<dynamic>('claim_tournament_reward');
       return _amountFromRpcResponse(response) ?? 0;
     } catch (e, s) {
+      // Göç uygulanmamışsa (`_isMissingFunction`) benzetime düşmek meşru.
+      // Başka her hatada (ağ, sunucu, 500) sahte depoya düşmek koşulsuz
+      // 500 coin uyduruyordu: kullanıcı gerçek turnuvayı kazanıyor, RPC
+      // geçici bir hatayla düşüyor, ekran "+500 coin" gösteriyor ama
+      // `coin_transactions`ta hiçbir satır yok — bakiyeye hiçbir şey
+      // eklenmiyor. `tournament_screen.dart`ın bu durum için yazılmış
+      // dürüst `unverified` ("ödül henüz doğrulanmadı") durumu, depo
+      // istisnayı yutup pozitif sayı döndürdüğü için hiç devreye
+      // giremiyordu (2026-08-14 denetimi).
+      if (_isMissingFunction(e)) {
+        return _offline.claimTournamentChampionReward();
+      }
       _recordError(e, s, reason: 'claimTournamentChampionReward failed');
-      return _offline.claimTournamentChampionReward();
+      rethrow;
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 
 /// Bir kategori isteği gelirse yerel bankadan bilinçli olarak farklı bir
@@ -29,6 +30,107 @@ class _ServerCategoriesHttpClient extends http.BaseClient {
     return http.StreamedResponse(
       Stream.value(bytes),
       200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+class _BlockedPlayersErrorHttpClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final bytes = utf8.encode(jsonEncode({'message': 'temporary failure'}));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      503,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+/// `list_friends`in gerçek dönüş şekli: `user_id` YOK, `total_score` ve
+/// `last_active_at` VAR (2026-08-14_list_friends_score_and_activity.sql).
+/// Eski `Friend.fromJson` bu satırlarda çöküyordu; bu istemci canlı
+/// sözleşmeyi taklit ederek o regresyonu bir daha mümkün kılmaz.
+class _FriendsScoreHttpClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final bytes = utf8.encode(
+      jsonEncode([
+        {
+          'id': 'f1',
+          'friend_id': 'friend-1',
+          'friend_name': 'Rojda',
+          'friend_avatar_color': '#2AA6A1',
+          'created_at': '2026-08-01T00:00:00Z',
+          'total_score': 8420,
+          'last_active_at': '2026-08-14T09:00:00Z',
+        },
+      ]),
+    );
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      200,
+      request: request,
+      contentLength: bytes.length,
+      headers: const {'content-type': 'application/json; charset=utf-8'},
+    );
+  }
+}
+
+/// `favorite_questions` + `quiz_public_questions` + `categories` uçlarını
+/// taklit eder. Bir favori paketli bankada (`local-bank-id`), diğeri
+/// yalnız sunucuda (`server-only-id`, gerçek oda maçında kaydedilmiş)
+/// çözülür — 2026-08-14 denetimindeki "favoriler ekranı sunucu kaydını
+/// asla çözmüyor" kusurunu taklit eder.
+class _FavoriteQuestionsHttpClient extends http.BaseClient {
+  final requestedPaths = <String>[];
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    requestedPaths.add(request.url.path);
+    if (request.url.path == '/rest/v1/favorite_questions') {
+      return _jsonResponse(request, [
+        {'question_id': 'server-only-id'},
+        {'question_id': 'curated_movement_0001'},
+      ]);
+    }
+    if (request.url.path == '/rest/v1/quiz_public_questions') {
+      return _jsonResponse(request, [
+        {
+          'id': 'server-only-id',
+          'category_id': 'cat-1',
+          'prompt': 'Sunucu sorusu?',
+          'option_a': 'A',
+          'option_b': 'B',
+          'option_c': 'C',
+          'option_d': 'D',
+          'question_type': 'multiple_choice',
+          'image_url': null,
+          'difficulty': 2,
+        },
+      ]);
+    }
+    if (request.url.path == '/rest/v1/categories') {
+      return _jsonResponse(request, [
+        {'id': 'cat-1', 'name': 'Ziman'},
+      ]);
+    }
+    return _jsonResponse(request, [], statusCode: 404);
+  }
+
+  http.StreamedResponse _jsonResponse(
+    http.BaseRequest request,
+    Object? body, {
+    int statusCode = 200,
+  }) {
+    final bytes = utf8.encode(jsonEncode(body));
+    return http.StreamedResponse(
+      Stream.value(bytes),
+      statusCode,
       request: request,
       contentLength: bytes.length,
       headers: const {'content-type': 'application/json; charset=utf-8'},
@@ -109,6 +211,7 @@ class _RoomSessionHttpClient extends http.BaseClient {
       'forfeited_by': 'host-id',
     },
     this.rpcErrorCode,
+    this.joinRoomErrorMessage,
     this.roomPlayersResponse = const [
       {
         'player_id': 'host-id',
@@ -131,6 +234,11 @@ class _RoomSessionHttpClient extends http.BaseClient {
   final Object? resultResponse;
   final Object? leaveResponse;
   final String? rpcErrorCode;
+
+  /// Set edilirse `join_room_by_code` başarı yerine bu mesajla 400 döner
+  /// (bkz. `join_room_by_code`'un `raise exception` metinleri,
+  /// `supabase/2026-08-02_multiplayer_session_hardening.sql`).
+  final String? joinRoomErrorMessage;
   final Object roomPlayersResponse;
   final requestedPaths = <String>[];
   final requestBodies = <Map<String, dynamic>>[];
@@ -158,6 +266,15 @@ class _RoomSessionHttpClient extends http.BaseClient {
       case '/rest/v1/rpc/create_online_room':
         return _jsonResponse(request, _roomRpcSnapshot);
       case '/rest/v1/rpc/join_room_by_code':
+        final message = joinRoomErrorMessage;
+        if (message != null) {
+          return _jsonResponse(request, {
+            'code': null,
+            'message': message,
+            'details': null,
+            'hint': null,
+          }, statusCode: 400);
+        }
         return _jsonResponse(request, _roomRpcSnapshot);
       case '/rest/v1/rpc/get_my_resumable_room':
         return _jsonResponse(request, resumeResponse);
@@ -310,6 +427,46 @@ class _SignedInRoomSessionRepository extends SupabaseZanKurdRepository {
 }
 
 void main() {
+  test('engel listesi okunamazsa hata boş listeye dönüştürülmez', () async {
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: _BlockedPlayersErrorHttpClient(),
+      ),
+    );
+
+    await expectLater(
+      repository.loadBlockedPlayerIds(),
+      throwsA(isA<PostgrestException>()),
+    );
+  });
+
+  test(
+    'list_friends user_id döndürmese de arkadaş listesi çökmez ve seviye xp\'den hesaplanır',
+    () async {
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _FriendsScoreHttpClient(),
+        ),
+      );
+
+      final friends = await repository.loadFriends();
+
+      expect(friends, hasLength(1));
+      final friend = friends.single;
+      expect(friend.friendName, 'Rojda');
+      expect(friend.totalScore, 8420);
+      // XPStore.xpRequiredForLevel(5) = 7000, (6) = 10000 — 8420 tam
+      // olarak seviye 5'i karşılar. Değer sabit değil: sunucudan hiç
+      // gelmeyen bir alanın istemcide doğru hesaplandığını kanıtlıyor.
+      expect(friend.level, 5);
+      expect(friend.lastActiveAt, isNotNull);
+    },
+  );
+
   test(
     'kategoriler sunucudan farklı olsa bile yerel soru bankasıyla aynı kalır',
     () async {
@@ -394,6 +551,9 @@ void main() {
     expect(room.id, '00000000-0000-0000-0000-000000000099');
     expect(room.code, 'ZK-ABCDEF0123');
     expect(room.hostId, 'host-id');
+    // Katılan tarafın da göreceği ad budur — bkz. aşağıdaki
+    // 'online room join trusts the RPC host snapshot' testi.
+    expect(room.name, '1vs1');
     expect(room.category, 'Ziman');
     expect(room.secondsPerQuestion, 20);
     expect(room.status, RoomStatus.lobby);
@@ -423,6 +583,11 @@ void main() {
       final room = await repository.joinOnlineRoom('zk abcdef0123');
 
       expect(room.hostId, 'host-id');
+      // `createRoom()` (yerel/solo oda) 'Hevalên Zanînê' adını taşır ve
+      // `joinOnlineRoom` onu üzerine yazmazsa katılan, ev sahibinin
+      // gördüğü '1vs1' yerine bu adı görürdü — aynı oda iki başlıkla
+      // açılırdı (2026-08-14 denetimi).
+      expect(room.name, '1vs1');
       expect(httpClient.requestedPaths, [
         '/rest/v1/rpc/join_room_by_code',
         '/rest/v1/room_players',
@@ -430,6 +595,68 @@ void main() {
       ]);
       expect(httpClient.requestedPaths, isNot(contains('/rest/v1/rooms')));
       expect(httpClient.requestBodies.first, {'p_code': 'ZK-ABCDEF0123'});
+    },
+  );
+
+  /// Kusur: `joinOnlineRoom` sunucu RPC'sinin fırlattığı `PostgrestException`ı
+  /// ham hâliyle yukarı fırlatıyordu; `play_hub_screen.dart` her hatayı
+  /// (bu dahil) TEK bir "oda bulunamadı" metnine indirgiyordu. Düzeltme
+  /// repository katmanında: `PostgrestException.message` ayrıştırılıp
+  /// `RoomJoinException(reason)` olarak yeniden fırlatılıyor — UI katmanı
+  /// artık gerçek sebebe göre farklı metin gösterebiliyor
+  /// (bkz. `test/room_join_error_mapping_test.dart`).
+  test(
+    'sunucunun "oda dolu" reddi RoomJoinFailureReason.full olarak yükselir',
+    () async {
+      final httpClient = _RoomSessionHttpClient(
+        joinRoomErrorMessage: 'Room is full',
+      );
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await expectLater(
+        repository.joinOnlineRoom('zk abcdef0123'),
+        throwsA(
+          isA<RoomJoinException>().having(
+            (error) => error.reason,
+            'reason',
+            RoomJoinFailureReason.full,
+          ),
+        ),
+      );
+    },
+  );
+
+  test(
+    'sunucunun "zaten başka odada" reddi RoomJoinFailureReason.'
+    'alreadyInAnotherRoom olarak yükselir',
+    () async {
+      final httpClient = _RoomSessionHttpClient(
+        joinRoomErrorMessage: 'Player is already in another live room',
+      );
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      await expectLater(
+        repository.joinOnlineRoom('zk abcdef0123'),
+        throwsA(
+          isA<RoomJoinException>().having(
+            (error) => error.reason,
+            'reason',
+            RoomJoinFailureReason.alreadyInAnotherRoom,
+          ),
+        ),
+      );
     },
   );
 
@@ -1609,6 +1836,42 @@ void main() {
       await expectLater(
         repository.sendRoomBroadcast('room_123', {'test': 'data'}),
         completes,
+      );
+    },
+  );
+
+  test(
+    'loadFavoriteQuestions çevrimiçi oda maçında kaydedilmiş favoriyi de çözer',
+    () async {
+      // Kayıt uuid ile yazılır (gerçek oda sorusu), okuma paketli banka
+      // kimlikleriyle eşleştiriyordu — sunucuda duran bir favori hiçbir
+      // zaman listede görünmüyordu (2026-08-14 denetimi).
+      final httpClient = _FavoriteQuestionsHttpClient();
+      final repository = _SignedInRoomSessionRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final questions = await repository.loadFavoriteQuestions();
+
+      expect(questions, hasLength(2));
+      // Sunucu satırının sırası korunur (created_at desc).
+      expect(questions.first.id, 'server-only-id');
+      expect(questions.first.prompt, 'Sunucu sorusu?');
+      // Cevap istemciye hiç gönderilmedi — yeniden puanlanamaz.
+      expect(questions.first.hasHiddenAnswer, isTrue);
+      expect(questions.last.id, 'curated_movement_0001');
+      expect(questions.last.hasHiddenAnswer, isFalse);
+      expect(
+        httpClient.requestedPaths,
+        containsAll([
+          '/rest/v1/favorite_questions',
+          '/rest/v1/quiz_public_questions',
+          '/rest/v1/categories',
+        ]),
       );
     },
   );

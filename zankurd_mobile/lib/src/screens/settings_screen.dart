@@ -1826,6 +1826,10 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
     _future = widget.repository.loadBlockedPlayers();
   }
 
+  void _retry() => setState(() {
+    _future = widget.repository.loadBlockedPlayers();
+  });
+
   Future<void> _unblock(PlayerSearchResult player) async {
     setState(() => _working.add(player.id));
     final ok = await widget.repository.unblockPlayer(player.id);
@@ -1854,6 +1858,34 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
                   height: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            // `loadBlockedPlayers` artık okunamayan listeyi yutup boş
+            // dönmüyor (rethrow) — burada da yutup "kimseyi engellemedin"
+            // gösterirsek aynı sessiz kırılma boş durum kılığına girer.
+            // Gerçekten engellenmiş biri kalıcı kaybolmuş gibi görünürdü,
+            // engeli kaldırma yolu da onunla birlikte kaybolurdu
+            // (2026-08-14 denetimi).
+            return Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.blockedLoadFailed),
+                    key: const ValueKey('blocked-error'),
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  TextButton(
+                    onPressed: _retry,
+                    child: Text(context.t(K.retry)),
+                  ),
+                ],
               ),
             );
           }

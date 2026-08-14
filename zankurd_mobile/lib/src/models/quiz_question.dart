@@ -74,6 +74,12 @@ class QuizQuestion {
 
   bool get hasImage => imageUrl != null && imageUrl!.trim().isNotEmpty;
   bool get hasAudio => audioUrl != null && audioUrl!.trim().isNotEmpty;
+
+  /// Doğru cevap istemciye hiç gönderilmemiş (`_roomQuestionFromRow`
+  /// deseni — sunucu odalarında hile önlemi için `correctAnswer: ''`
+  /// verilir, gerçek doğrulama sunucuda yapılır). Böyle bir soru yerel
+  /// olarak (sunucu doğrulaması olmadan) yeniden puanlanamaz.
+  bool get hasHiddenAnswer => correctAnswer.trim().isEmpty;
   bool get hasHint =>
       (hintKu != null && hintKu!.trim().isNotEmpty) ||
       (hintTr != null && hintTr!.trim().isNotEmpty);
@@ -194,6 +200,14 @@ class QuizQuestion {
   }
 
   String optionKeyForAnswer(String answer) {
+    // Cümle kurmada `answers` şık listesi değil kelime havuzudur;
+    // gönderilen değer bir seçenek metni değil, kullanıcının birleştirdiği
+    // cümledir. Havuzda böyle bir dize aramak `indexOf`'u hep -1'e
+    // düşürüyor, cevap sessizce boş dizeye indirgeniyor ve bu tip sorular
+    // yerel puanlama hattında HİÇ doğru işaretlenemiyordu (2026-08-14
+    // denetimi). Ham cümle olduğu gibi taşınır; karşılaştırma
+    // `correctAnswer`la doğrudan yapılır (bkz. `MockZanKurdRepository`).
+    if (type == QuestionType.wordOrdering) return answer;
     final index = answers.indexOf(answer);
     return switch (index) {
       0 => 'A',

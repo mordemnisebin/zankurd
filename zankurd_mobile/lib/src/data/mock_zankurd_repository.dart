@@ -70,6 +70,9 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  List<QuizQuestion> get playableQuestions => _playableQuestions;
+
+  @override
   String? get currentUserId => 'user';
 
   @override
@@ -546,15 +549,29 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required String selectedOptionOptionKey,
     required int responseMs,
   }) async {
-    final correctIndex = question.answers.indexOf(question.correctAnswer);
-    final correctOptionKey = switch (correctIndex) {
-      0 => 'A',
-      1 => 'B',
-      2 => 'C',
-      _ => 'D',
-    };
-
-    final isCorrect = selectedOptionOptionKey == correctOptionKey;
+    bool isCorrect;
+    if (question.type == QuestionType.wordOrdering) {
+      // Cümle kurmada `answers` şık listesi değil kelime havuzudur; A-D
+      // indeks eşlemesi burada anlamsız — `correctAnswer` (birleştirilmiş
+      // doğru cümle) hiçbir zaman tek bir kelimeye eşit olmadığından
+      // `indexOf` hep -1'e, dolayısıyla eşleme hep 'D'ye düşüyordu. Gelen
+      // cevap da (bkz. `optionKeyForAnswer`) zaten boş dizeye
+      // indirgendiği için karşılaştırma hep başarısızdı: bu tip sorular
+      // yerel modda HİÇ doğru işaretlenemiyordu (2026-08-14 denetimi).
+      // Doğruluk artık gönderilen cümlenin `correctAnswer`la birebir
+      // (kenar boşlukları dışında) eşleşmesiyle ölçülür.
+      isCorrect =
+          selectedOptionOptionKey.trim() == question.correctAnswer.trim();
+    } else {
+      final correctIndex = question.answers.indexOf(question.correctAnswer);
+      final correctOptionKey = switch (correctIndex) {
+        0 => 'A',
+        1 => 'B',
+        2 => 'C',
+        _ => 'D',
+      };
+      isCorrect = selectedOptionOptionKey == correctOptionKey;
+    }
     return {
       'is_correct': isCorrect,
       'points': SpeedScore.calculate(

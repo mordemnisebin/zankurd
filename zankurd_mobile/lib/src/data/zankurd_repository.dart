@@ -51,9 +51,59 @@ class StreakFreezeChargeResult {
       outcome == StreakFreezeChargeOutcome.alreadyCharged;
 }
 
+/// `joinOnlineRoom`ın ayırt edebildiği ret sebepleri.
+///
+/// Sunucu (`join_room_by_code`) farklı sebepler için farklı düz metin
+/// istisnalar fırlatır (bkz.
+/// `supabase/2026-08-02_multiplayer_session_hardening.sql`), ama arayüz
+/// katmanı `PostgrestException`ı doğrudan bilmemeli — mimari UI'nin yalnız
+/// bu repository soyutlamasına bağlı kalmasını ister. `unknown`, ağ hatası
+/// ya da sunucunun tanınmayan bir mesajı için düşer; bu durumda "oda
+/// bulunamadı" gibi YANLIŞ bir kesinlik iddia edilmemelidir (2026-08-14
+/// denetimi).
+enum RoomJoinFailureReason { notFound, full, alreadyInAnotherRoom, unknown }
+
+class RoomJoinException implements Exception {
+  const RoomJoinException(this.reason, [this.message]);
+
+  final RoomJoinFailureReason reason;
+  final String? message;
+
+  @override
+  String toString() => 'RoomJoinException($reason, $message)';
+}
+
+/// `join_room_by_code`ın ham `raise exception` metnini bir sebebe eşler.
+///
+/// Sunucu hata kodu değil düz metin döndürüyor, o yüzden eşleme metin
+/// üzerinden yapılır. "Room not found or already started" iki durumu
+/// KASITLI olarak tek mesajda birleştiriyor (RPC hangi sebebi kesin
+/// açıklamıyor); istemci de bunu ayıramaz, `notFound` bu birleşik durumu
+/// temsil eder.
+RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
+  if (message.contains('Room is full')) {
+    return RoomJoinFailureReason.full;
+  }
+  if (message.contains('already in another live room')) {
+    return RoomJoinFailureReason.alreadyInAnotherRoom;
+  }
+  if (message.contains('Room not found') || message.contains('already started')) {
+    return RoomJoinFailureReason.notFound;
+  }
+  return RoomJoinFailureReason.unknown;
+}
+
 abstract class ZanKurdRepository {
   List<String> get categories;
   List<QuizQuestion> get questions;
+
+  /// Son kullanıcı akışlarında gösterilebilecek, kalite politikası ve yapı
+  /// doğrulamasından geçmiş sorular.
+  ///
+  /// [questions] ham bankayı temsil eder; ekranlar bu listeyi doğrudan
+  /// kullanmamalıdır.
+  List<QuizQuestion> get playableQuestions;
+
   String? get currentUserId;
 
   /// Oda sorularında doğru cevap yalnız yanıt RPC'sinden sonra açıklanıyorsa

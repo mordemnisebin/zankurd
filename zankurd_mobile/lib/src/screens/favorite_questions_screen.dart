@@ -143,7 +143,13 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: _FavoriteQuestionTile(
                       question: question,
-                      onPlay: () => _playFrom(index - 2, questions),
+                      // Çevrimiçi oda maçında kaydedilen favoriler doğru
+                      // cevabı taşımaz (hile önlemi); yerel yeniden
+                      // puanlama imkansız — oynatma kapatılır, yalnız
+                      // görüntülenebilir (2026-08-14 denetimi).
+                      onPlay: question.hasHiddenAnswer
+                          ? null
+                          : () => _playFrom(index - 2, questions),
                       onRemove: () => _removeFavorite(question),
                     ),
                   );
@@ -159,7 +165,13 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
   void _playFrom(int index, List<QuizQuestion> questions) {
     final selected = [
       questions[index],
-      ...questions.where((question) => question.id != questions[index].id),
+      // Cevabı sunucuda saklı (hasHiddenAnswer) sorular yerel olarak
+      // puanlanamaz; destede ikinci sorudan sonra çıksalar bile turu
+      // bozardı (2026-08-14 denetimi).
+      ...questions.where(
+        (question) =>
+            question.id != questions[index].id && !question.hasHiddenAnswer,
+      ),
     ];
     final room = widget.repository
         .createRoom(category: questions[index].category)
@@ -183,6 +195,13 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     BuildContext context,
     List<QuizQuestion> questions,
   ) {
+    // Cevabı sunucuda saklı sorular yerel olarak puanlanamaz; "Tümünü
+    // Oyna" yalnız yeniden oynatılabilir sorularla kurulur. Hiçbiri
+    // oynatılabilir değilse düğme hiç çizilmez (2026-08-14 denetimi).
+    final playable = questions
+        .where((question) => !question.hasHiddenAnswer)
+        .toList();
+    if (playable.isEmpty) return const SizedBox.shrink();
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       width: double.infinity,
@@ -212,14 +231,14 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
               .createRoom(category: 'Tomarkirî')
               .copyWith(
                 name: context.t(K.savedQuestions),
-                questionCount: questions.length,
+                questionCount: playable.length,
               );
           Navigator.of(context).push(
             AppRoute.to(
               QuizScreen(
                 repository: widget.repository,
                 room: room,
-                questions: questions,
+                questions: playable,
               ),
             ),
           );
@@ -242,7 +261,9 @@ class _FavoriteQuestionTile extends StatelessWidget {
   });
 
   final QuizQuestion question;
-  final VoidCallback onPlay;
+  // null: cevabı sunucuda saklı (question.hasHiddenAnswer) — yeniden
+  // oynatılamaz, yalnız görüntülenir.
+  final VoidCallback? onPlay;
   final VoidCallback onRemove;
 
   @override
@@ -298,6 +319,18 @@ class _FavoriteQuestionTile extends StatelessWidget {
                         ),
                       ],
                     ),
+                    if (question.hasHiddenAnswer) ...[
+                      const SizedBox(height: 6),
+                      Text(
+                        context.t(K.favoriteAnswerHiddenHint),
+                        key: const ValueKey('favorite-answer-hidden-hint'),
+                        style: TextStyle(
+                          color: AppTheme.textMutedColor(context),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 8),
                     Text(
                       question.promptText,
@@ -320,7 +353,13 @@ class _FavoriteQuestionTile extends StatelessWidget {
                   color: AppTheme.textMutedColor(context),
                 ),
               ),
-              const Icon(AppIcons.play, color: AppTheme.primaryGradientStart),
+              if (onPlay != null)
+                const Icon(
+                  AppIcons.play,
+                  color: AppTheme.primaryGradientStart,
+                )
+              else
+                Icon(AppIcons.eye, color: AppTheme.textMutedColor(context)),
             ],
           ),
         ),

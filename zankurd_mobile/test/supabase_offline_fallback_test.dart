@@ -16,6 +16,18 @@ class _AlwaysFailingHttpClient extends http.BaseClient {
   }
 }
 
+/// `isLikelyOfflineError`nin gerçekten tanıdığı bir mesajla düşer —
+/// gerçek `SocketException: Failed host lookup` metnini taklit eder.
+/// `_AlwaysFailingHttpClient`in mesajı bilerek İngilizce taşıyıcı
+/// kelimelerden hiçbirini içermiyor, yani onunla yazılan testler "ağ
+/// hatası" değil "sınıflandırılamayan hata" yolunu ölçüyor.
+class _NetworkUnreachableHttpClient extends http.BaseClient {
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    throw Exception('SocketException: Failed host lookup: example.supabase.co');
+  }
+}
+
 class _QuizRewardHttpClient extends http.BaseClient {
   _QuizRewardHttpClient(this.response);
 
@@ -148,10 +160,85 @@ void main() {
     },
   );
 
-  test('loadCoinBalance ağ hatasında throw etmez, 0 döner', () async {
+  test(
+    'loadCoinBalance sınıflandırılamayan hatada throw etmez, 0 döner',
+    () async {
+      final repo = unreachableRepo();
+      expect(await repo.loadCoinBalance(), 0);
+    },
+  );
+
+  SupabaseZanKurdRepository networkUnreachableRepo() =>
+      SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _NetworkUnreachableHttpClient(),
+        ),
+      );
+
+  test(
+    'loadCoinBalance GERÇEK ağ hatasını yukarı taşır — 3000 coinlik oyuncu '
+    '"0 coin" görmesin',
+    () async {
+      // 2026-08-14 denetimi: eskiden her hata 0'a çevriliyordu; uçak
+      // modundaki bir oyuncu bakiyesini kaybettiğini sanıyordu ve
+      // mağazanın hazır çevrimdışı durumu (`shop_screen.dart`)
+      // tetiklenemiyordu.
+      final repo = networkUnreachableRepo();
+      await expectLater(repo.loadCoinBalance(), throwsA(anything));
+    },
+  );
+
+  test(
+    'hasPurchased GERÇEK ağ hatasını yukarı taşır — "satın alınmadı" '
+    'yalanı söylenmez',
+    () async {
+      final repo = networkUnreachableRepo();
+      await expectLater(
+        repo.hasPurchased('avatar_frame_gold'),
+        throwsA(anything),
+      );
+    },
+  );
+
+  test(
+    'hasPurchased sınıflandırılamayan hatada throw etmez, false döner',
+    () async {
+      final repo = unreachableRepo();
+      expect(await repo.hasPurchased('avatar_frame_gold'), isFalse);
+    },
+  );
+
+  test(
+    'canSpinToday hatayı yukarı taşır — sahte depo "hakkın var" uydurmaz',
+    () async {
+      // `_offline.canSpinToday()`nin yerel "bugün çevirdim" kaydı yok,
+      // yani HER hatada sahte bir "hakkın var" üretirdi. Çevrimdışı
+      // kullanıcı düğmeyi açık görür, çevirir, `awardSpinCoins` de
+      // hatayı yutup 0 döndürürdü — ekran "Bugün zaten çevirdin." derdi,
+      // oysa o gün hiç çevrilmemişti (2026-08-14 denetimi).
+      final repo = unreachableRepo();
+      await expectLater(repo.canSpinToday(), throwsA(anything));
+    },
+  );
+
+  test('awardSpinCoins hatayı yukarı taşır — sessizce 0 dönmez', () async {
     final repo = unreachableRepo();
-    expect(await repo.loadCoinBalance(), 0);
+    await expectLater(repo.awardSpinCoins(), throwsA(anything));
   });
+
+  test(
+    'markLessonCompleted ağ hatasında false döner — "tamamlandı" yalanı yok',
+    () async {
+      // `_offline.markLessonCompleted` yalnız bellek içi bir kümeye
+      // ekliyor; eskiden bu geri düşüş "başarı" sayılıp kullanıcıya
+      // "Ders tamamlandı" gösteriliyor, ders sunucuda hiç tamamlanmamış
+      // kalıyordu (2026-08-14 denetimi).
+      final repo = unreachableRepo();
+      expect(await repo.markLessonCompleted('everyday_1'), isFalse);
+    },
+  );
 
   test(
     'spendCoins ağ hatasında false döner — coin sahte harcanmış sayılmaz',
