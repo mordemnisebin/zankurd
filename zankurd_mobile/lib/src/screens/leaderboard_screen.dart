@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -168,6 +169,51 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 720) {
+          // 2026-08-14 görsel denetimi: podyum + banner içerik olmadığında
+          // (ör. yalnız ilk 3 kişi, kendi sıra satırı da yoksa) `ListView`
+          // içeriği tepede bırakıyor ve ekranın alt yarısı boş krem renginde
+          // kalıyordu — yarım yüklenmiş gibi görünüyordu.
+          //
+          // Yalnız `rest.isEmpty` (sıralama listesi hiç yoksa) dalında
+          // ortalanır — kasıtlı olarak dar tutuldu. `_RankListSurface` /
+          // `_RankRow` bir `Expanded`li satır taşıyor; bu satır bir
+          // `ConstrainedBox(minHeight)` + `crossAxisAlignment.stretch`
+          // zincirinin İÇİNE (SIKI genişlik verilerek) alındığında, uzun ad +
+          // "Sen" etiketi olan satırlarda `Expanded`in payı yanlış
+          // hesaplanıp 33px'e sıkışıyor ve taşıyordu (2x yazı ölçeği
+          // testinde yakalanan, ayrı bir Flutter kısıtı — bkz.
+          // `test/leaderboard_rank_list_test.dart` "uzun ad" testi). Liste
+          // varken bu riske hiç girilmez: `ListView` aynen korunur; boşluk
+          // sorunu zaten yalnız listesiz halde görülüyordu.
+          if (rest.isEmpty) {
+            final minH = math.max(
+              0.0,
+              constraints.maxHeight - AppSpacing.xs - AppSpacing.xl,
+            );
+            return SingleChildScrollView(
+              controller: widget.scrollController,
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.page,
+                AppSpacing.xs,
+                AppSpacing.page,
+                AppSpacing.xl,
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: minH),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (banner != null) ...[
+                      banner,
+                      const SizedBox(height: AppSpacing.cardGap),
+                    ],
+                    podium,
+                  ],
+                ),
+              ),
+            );
+          }
           return ListView(
             controller: widget.scrollController,
             padding: const EdgeInsets.fromLTRB(
@@ -182,10 +228,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 const SizedBox(height: AppSpacing.cardGap),
               ],
               podium,
-              if (rest.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.cardGap),
-                _RankListSurface(rows: rankRows()),
-              ],
+              const SizedBox(height: AppSpacing.cardGap),
+              _RankListSurface(rows: rankRows()),
             ],
           );
         }

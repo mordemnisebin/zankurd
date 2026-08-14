@@ -640,8 +640,16 @@ class _RoomScreenState extends State<RoomScreen> {
                                                   icon: AppIcons.tableCells,
                                                 ),
                                                 _Pill(
+                                                  // 2026-08-14 görsel
+                                                  // denetimi: "sn" sabit
+                                                  // kodlanmıştı,
+                                                  // Kurmancî ekranda da
+                                                  // aynen basılıyordu —
+                                                  // play_hub_screen.dart'ta
+                                                  // düzeltilen aynı kusur,
+                                                  // burada gözden kaçmış.
                                                   label:
-                                                      '${room.secondsPerQuestion} sn',
+                                                      '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
                                                   icon: AppIcons.stopwatch,
                                                 ),
                                                 if (isHost)

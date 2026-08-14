@@ -1070,13 +1070,21 @@ class _LobbyView extends StatelessWidget {
         // kısa kaldığında alt boşluk yerine dikeyde ortalanır; içerik
         // uzunsa scroll. IntrinsicHeight KULLANILMADI: LayoutBuilder içinde
         // "LayoutBuilder does not support returning intrinsic dimensions"
-        // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli.
+        // hatası veriyor.
+        //
+        // 2026-08-14 denetimi: yorum "ConstrainedBox(minHeight) tek başına
+        // yeterli" diyordu ama YETERLİ DEĞİLDİ — `Column`un varsayılan
+        // `mainAxisAlignment.start`ı, minHeight'in eklediği fazla boşluğu
+        // en ALTA bırakıyordu (ortalamıyordu). Kısa viewport'ta (ör. lobi
+        // kartı tek başına) ekranın alt yarısı boş kalıyordu — ekran turu
+        // görsel denetiminde yakalandı. `mainAxisAlignment.center` eksikti.
         final minH = math.max(0.0, constraints.maxHeight - AppSpacing.lg * 2);
         return SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: minH),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 hero,
