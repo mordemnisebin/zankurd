@@ -135,6 +135,13 @@ extension LangContext on BuildContext {
         return 'Şaşiyeke nediyar çêbû.';
       case 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.':
         return 'Têketina Google niha ne çalak e. Google di panela Supabase de çalak bike.';
+      // 2026-08-14 denetimi: profil ekranındaki Google hesabı bağlama
+      // hatası bu sözlükten hiç geçmiyordu VE bu iki mesajın Kurmancî
+      // karşılığı da yoktu — Kurmancî kullanıcı Türkçe hata görüyordu.
+      case 'Bu Google hesabı zaten başka bir hesaba bağlı.':
+        return 'Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.';
+      case 'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.':
+        return 'Girêdana hesaban niha girtî ye. Di panela Supabase de girêdana destan veke.';
       case 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.':
         return 'Girêdana têketinê nehate piştrastkirin. Saziyên arastekirina sepanê kontrol bike.';
       case 'E-posta veya parola hatalı.':

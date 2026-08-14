@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/achievement_store.dart';
+import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
@@ -607,6 +608,27 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       remainingMistakes: mistakeStore.count,
       opponents: opponents,
     );
+
+    // `BadgeService`in beş rozeti (streak_30, questions_500,
+    // questions_1000, perfect_game, speed_demon) hiçbir yerden
+    // çağrılmıyordu — `evaluate*` metotları vardı ama uygulama kodu
+    // hiçbirini kullanmıyordu. Sonuç: bu beş rozet kullanıcı ne
+    // yaparsa yapsın asla açılamıyordu (2026-08-14 denetimi). Tur
+    // sonucunun zaten hesapladığı verilerle (seri, toplam soru,
+    // doğru/toplam, yanıt süreleri) burada değerlendirilirler.
+    final badgeService = await BadgeService.load();
+    await badgeService.evaluateStreakBadges(streak);
+    await badgeService.evaluateQuestionBadges(achievementStore.answeredQuestions);
+    await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
+    if (totalQuestions > 0) {
+      final totalResponseMs = answerRecords.fold<int>(
+        0,
+        (sum, record) => sum + (record.responseMs ?? 0),
+      );
+      await badgeService.evaluateSpeedDemon(
+        Duration(milliseconds: totalResponseMs),
+      );
+    }
 
     final masteryStore = await MasteryStore.load();
     final correctByCategory = <String, int>{};

@@ -128,12 +128,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _refreshMistakes();
   }
 
+  /// `store`teki kimlikleri GERÇEKTEN AÇILABİLECEK sorularla kesiştirir.
+  ///
+  /// `MistakeStore.count`/`readyCount` yalnız kayıtlı kimlik sayısını
+  /// verir — hangi kaynaktan geldiğine bakmaz. Çevrimiçi maçlarda yanlış
+  /// yapılan sorular sunucu UUID'siyle kaydediliyor
+  /// (`get_room_questions` satırın `id`sini döndürür); bu UUID'ler
+  /// paketli bankada hiç yoktur ve içerik kalite karantinasıyla
+  /// (`2026-08-01_live_question_*_quarantine.sql`) bankadan tamamen
+  /// çıkarılmış sorular da aynı şekilde asla çözülemez. Satır bu yüzden
+  /// sıfırdan büyük bir sayı gösterip dokunulunca "bekliyor" diyordu —
+  /// oysa gerçek neden o sorunun artık hiçbir yerde bulunamamasıydı
+  /// (2026-08-14 denetimi; `todays_review_card.dart`taki 2026-08-06
+  /// düzeltmesiyle aynı kök neden).
+  Set<String> _launchableMistakeIds(Set<String> ids) {
+    final launchableIds = widget.repository.playableQuestions
+        .map((question) => question.id)
+        .toSet();
+    return ids.where(launchableIds.contains).toSet();
+  }
+
   Future<void> _refreshMistakes() async {
     final store = await MistakeStore.load();
     if (mounted) {
       setState(() {
-        _mistakeCount = store.count;
-        _readyMistakeCount = store.readyCount;
+        _mistakeCount = _launchableMistakeIds(store.ids).length;
+        _readyMistakeCount = _launchableMistakeIds(store.readyIds).length;
       });
     }
   }
@@ -141,15 +161,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _startMistakePractice() async {
     final store = await MistakeStore.load();
     if (!mounted) return;
-    final mistakeIds = store.readyIds;
-    final questions = widget.repository.questions
+    final mistakeIds = _launchableMistakeIds(store.readyIds);
+    final questions = widget.repository.playableQuestions
         .where((question) => mistakeIds.contains(question.id))
         .toList();
     if (questions.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            store.count > 0
+            _launchableMistakeIds(store.ids).isNotEmpty
                 ? (context.t(K.allMistakesWaiting))
                 : (context.t(K.noMistakesPlayFirst)),
           ),
@@ -182,7 +202,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
     final raceQuestions = questions.isEmpty
-        ? widget.repository.questions
+        ? widget.repository.playableQuestions
         : questions;
     Navigator.of(context).push(
       AppRoute.to(
@@ -871,10 +891,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppRadius.md),
                 ),
-                onTap: () {
-                  Navigator.of(context).push(
+                onTap: () async {
+                  // Mağazadan satın alınan çerçeve/unvan buradan güncellenene
+                  // kadar görünmüyordu — `_openAvatarEditor` zaten dönüşte
+                  // yeniden yüklüyordu, Mağaza/Ayarlar yolu aynı deseni
+                  // izlemiyordu (2026-08-14 denetimi).
+                  await Navigator.of(context).push(
                     AppRoute.to(ShopScreen(repository: widget.repository)),
                   );
+                  if (mounted) _load();
                 },
               ),
               divider,
@@ -886,10 +911,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 iconColor: AppTheme.secondaryAccent,
                 title: context.t(K.settings),
-                onTap: () {
-                  Navigator.of(context).push(
+                onTap: () async {
+                  // Ayarlar'da değiştirilen ad geri dönüldüğünde eski
+                  // hâliyle kalıyordu (2026-08-14 denetimi).
+                  await Navigator.of(context).push(
                     AppRoute.to(SettingsScreen(repository: widget.repository)),
                   );
+                  if (mounted) _load();
                 },
               ),
               divider,
@@ -1111,9 +1139,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!mounted) return;
     LoadingOverlay.hide(context);
     if (!success && auth.errorMessage != null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(auth.errorMessage!)));
+      // Sunucu metni Türkçe sabittir; hemen üstteki `emailFailure` dalı
+      // gibi burada da anahtar defterinden çevrilmesi gerekir — yoksa
+      // Kurmancî kullanıcı Google bağlama hatasını Türkçe görür
+      // (2026-08-14 denetimi).
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.translateAuthError(auth.errorMessage!))),
+      );
     }
   }
 
@@ -1170,48 +1202,79 @@ class _SyncStatusChip extends StatelessWidget {
         return ValueListenableBuilder<int>(
           valueListenable: SyncManager.pendingCountNotifier,
           builder: (context, pending, _) {
-            final isSynced = !syncing && pending == 0;
-            final color = isSynced ? AppTheme.correct : AppTheme.gold;
-            final icon = syncing
-                ? AppIcons.arrowsRotate
-                : (isSynced ? AppIcons.circleCheck : AppIcons.cloud);
-            final label = syncing
-                ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
-                : (isSynced
-                      ? (Tr.forKu(K.bulutlaSenkronize, isKu))
-                      : (isKu
-                            // "kayd" bankada başka hiçbir yerde geçmiyor;
-                            // yerleşik sözcük "tomar"dır (bkz. "pirsên
-                            // tomarkirî" — strings.dart).
-                            ? '$pending tomar li amûrê ye'
-                            : '$pending çevrimdışı kaydı'));
+            return ValueListenableBuilder<int>(
+              valueListenable: SyncManager.failedCountNotifier,
+              builder: (context, failed, _) {
+                final isSynced = !syncing && pending == 0 && failed == 0;
+                // `pending == 0` retry'ları tükenip kalıcı olarak
+                // düşürülmüş ödülleri de gizleyebiliyordu — o kayıt
+                // artık `failed`te durur, "senkronize" burada YALAN
+                // söylememeli (2026-08-14 denetimi).
+                final hasFailed = !syncing && failed > 0;
+                final color = hasFailed
+                    ? AppTheme.wrong
+                    : (isSynced ? AppTheme.correct : AppTheme.gold);
+                final icon = syncing
+                    ? AppIcons.arrowsRotate
+                    : (hasFailed
+                          ? AppIcons.triangleExclamation
+                          : (isSynced ? AppIcons.circleCheck : AppIcons.cloud));
+                final label = syncing
+                    ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
+                    : (hasFailed
+                          ? Tr.forKu(K.pSenkronizeEdilemedi, isKu, {
+                              'p0': '$failed',
+                            })
+                          : (isSynced
+                                ? (Tr.forKu(K.bulutlaSenkronize, isKu))
+                                : (isKu
+                                      // "kayd" bankada başka hiçbir yerde
+                                      // geçmiyor; yerleşik sözcük
+                                      // "tomar"dır (bkz. "pirsên
+                                      // tomarkirî" — strings.dart).
+                                      ? '$pending tomar li amûrê ye'
+                                      : '$pending çevrimdışı kaydı')));
 
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: color.withValues(alpha: 0.3)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(icon, size: 14, color: color),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: Text(
-                      label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: color,
-                      ),
-                    ),
+                final chip = Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
                   ),
-                ],
-              ),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: color.withValues(alpha: 0.3)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(icon, size: 14, color: color),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: color,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (!hasFailed) return chip;
+                // Kullanıcı elle yeniden deneyebilsin — otomatik retry
+                // burada yok, aksi hâlde kalıcı bir hata (ör. eksik
+                // migration) sonsuz döngüye girer.
+                return GestureDetector(
+                  onTap: () => SyncManager.maybeInstance?.retryFailedItems(),
+                  child: chip,
+                );
+              },
             );
           },
         );

@@ -154,6 +154,12 @@ class AchievementStore {
       .where((achievement) => _unlockedIds.contains(achievement.id))
       .toList(growable: false);
 
+  /// Tüm oturumlar boyunca cevaplanan toplam soru sayısı.
+  ///
+  /// `BadgeService.evaluateQuestionBadges` bu değeri ister — ayrı bir
+  /// sayaç tutmak yerine burada zaten birikmiş olan tek kaynağa bağlanır.
+  int get answeredQuestions => _answeredQuestions;
+
   bool isUnlocked(String id) => _unlockedIds.contains(id);
 
   Future<List<Achievement>> recordQuizResult({

@@ -55,10 +55,59 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   /// gereksiz bir silme çağrısı gitmesin.
   bool _hadPhotoOnOpen = false;
 
+  /// Bu OTURUMDA (ekran açıkken) yeni bir fotoğraf yüklendi mi?
+  ///
+  /// `uploadAvatarPhoto` her zaman aynı sabit yola (`{user_id}/avatar.ext`)
+  /// yazar, yani bu oturumda kaç kez seçilirse seçilsin depoda tek bir
+  /// nesne durur. Ama `_save()`in silme koşulu yalnız `_hadPhotoOnOpen`e
+  /// bakıyordu — kullanıcı ekranı hiç fotoğrafsız açıp YENİ bir fotoğraf
+  /// yükleyip sonra vazgeçtiğinde (kaldırıp kaydetti YA DA hiç kaydetmeden
+  /// geri gitti) bu bayrak hep `false` kalıyordu, silme hiç tetiklenmiyor
+  /// ve az önce yüklenen nesne herkese açık kovada yetim kalıyordu
+  /// (2026-08-14 denetimi).
+  bool _uploadedNewPhotoThisSession = false;
+
+  /// `_save()` başarıyla tamamlandı mı? `dispose()`teki yetim temizliği
+  /// yalnız kullanıcı GERÇEKTEN kaydetmeden ekrandan ayrılırsa çalışır.
+  bool _savedSuccessfully = false;
+
   @override
   void initState() {
     super.initState();
     _load();
+  }
+
+  @override
+  void dispose() {
+    // Kaydedilmeden ekrandan çıkılırsa (geri tuşu, kaydırma, vb. — hepsi
+    // `dispose()`u tetikler) bu oturumda yüklenip hiç saklanmamış
+    // fotoğrafı temizle. `deleteAvatarPhoto` var olmayan yolu sorun
+    // etmediği için burada `_identity.photoUrl` durumuna bakmaya gerek
+    // yok: kaydedilmemişse zaten hiçbir profil satırı ona işaret etmiyor.
+    if (_uploadedNewPhotoThisSession && !_savedSuccessfully) {
+      widget.repository.deleteAvatarPhoto().catchError((error, stack) {
+        ErrorReporter.record(
+          error,
+          stack,
+          reason: 'avatar photo orphan cleanup',
+        );
+      });
+    }
+    super.dispose();
+  }
+
+  /// `hasPurchased` artık ağ hatasında yukarı fırlatıyor (shop_screen'in
+  /// çevrimdışı durumunu tetiklemek için) — bu ekranın böyle bir durumu
+  /// yok, üç çağrıdan biri geçici bir hıçkırıkla düşerse `_load()`ın
+  /// TAMAMI (avatar kimliği, ad, ustalık) da kaybolmasın diye tek tek
+  /// yutulur; kazanılmış çerçeve/rozet o denemede görünmez, ekranın geri
+  /// kalanı yine de açılır.
+  Future<bool> _safeHasPurchased(String itemId) async {
+    try {
+      return await widget.repository.hasPurchased(itemId);
+    } catch (_) {
+      return false;
+    }
   }
 
   Future<void> _load() async {
@@ -68,16 +117,16 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
-      final hasGoldFrame = await widget.repository.hasPurchased(
+      final hasGoldFrame = await _safeHasPurchased(
         'avatar_frame_gold',
       );
       // Neon çerçeve 2026-07-31'e kadar mağaza kataloğunda tanımlıydı ama
       // hiçbir yerde açılmıyordu: 600 coin ödeyen oyuncu karşılığında
       // hiçbir şey görmüyordu. Altın çerçevenin birebir aynı deseni.
-      final hasNeonFrame = await widget.repository.hasPurchased(
+      final hasNeonFrame = await _safeHasPurchased(
         'avatar_frame_neon',
       );
-      final hasVipBadge = await widget.repository.hasPurchased(
+      final hasVipBadge = await _safeHasPurchased(
         'profile_badge_vip',
       );
 
@@ -146,6 +195,10 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         Uint8List.fromList(bytes),
         contentType,
       );
+      // Widget dispose olsa bile (mounted=false) nesne artık depoda —
+      // `dispose()` bunu görüp temizleyebilsin diye `mounted` kontrolünden
+      // ÖNCE işaretlenir.
+      _uploadedNewPhotoThisSession = true;
       if (!mounted) return;
       setState(() => _identity = _identity.copyWith(photoUrl: url));
     } catch (error, stack) {
@@ -176,10 +229,18 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       // Sıra da önemli: önce depo, sonra profil. Ters sırada silme
       // başarısız olursa sütun boşalmış ama dosya erişilebilir kalırdı —
       // yani düzeltmek istediğimiz durumun aynısı.
-      if (_identity.photoUrl == null && _hadPhotoOnOpen) {
+      //
+      // `_hadPhotoOnOpen` yalnız ekran açıldığında ZATEN kayıtlı bir
+      // fotoğrafı kapsar; `_uploadedNewPhotoThisSession` bu oturumda YENİ
+      // yüklenip sonra vazgeçilen fotoğrafı da kapsar — ikisi ayrı
+      // senaryolar, ikisi de aynı silme çağrısını gerektirir
+      // (2026-08-14 denetimi).
+      if (_identity.photoUrl == null &&
+          (_hadPhotoOnOpen || _uploadedNewPhotoThisSession)) {
         await widget.repository.deleteAvatarPhoto();
       }
       await widget.repository.updateAvatarIdentity(_identity);
+      _savedSuccessfully = true;
       if (mounted) Navigator.of(context).pop(true);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'avatar save failed');

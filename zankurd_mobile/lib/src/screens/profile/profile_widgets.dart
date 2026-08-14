@@ -1,5 +1,31 @@
 part of '../profile_screen.dart';
 
+/// Profil analiz panellerinin (ustalık, en güçlü/en zayıf konu) taradığı
+/// kategori kümesi.
+///
+/// Bu liste `MockZanKurdRepository._allCategories`teki (ve sunucudaki)
+/// GERÇEK kategori kümesiyle aynı olmalı. Eskiden burada İKİ AYRI kopyası
+/// vardı (`_MasterySection._categories` ve en güçlü/en zayıf hesabının
+/// yerel `categories` sabiti) ve ikisi de yalnız sekiz kategoriyi
+/// taşıyordu — `Sînema` (2026-07'de eklendi) ve `Teknolojî` (2026-07-26'da
+/// dolduruldu) hiçbirinde yoktu. Sonuç: bu iki kategoride ne kadar
+/// oynanırsa oynansın, ustalık paneli o kategoriyi hiç göstermiyor, "en
+/// güçlü/en zayıf konu" hesabı o kategoriyi hiç adayı olarak görmüyordu
+/// (2026-08-14 denetimi). Tek kopya, iki yerden kullanılır — bir kategori
+/// eklendiğinde tek satır güncellenir.
+const List<String> _kProfileAnalysisCategories = [
+  'Ziman',
+  'Çand',
+  'Dîrok',
+  'Edebiyat',
+  'Cografya',
+  'Muzîk',
+  'Siyaset',
+  'Paradigma',
+  'Sînema',
+  'Teknolojî',
+];
+
 class _ProfileHeroCard extends StatelessWidget {
   const _ProfileHeroCard({
     required this.ku,
@@ -703,6 +729,11 @@ class _UnifiedRewardsSection extends StatelessWidget {
     final totalBadge = BadgeService.badgeDefinitions.length;
     final totalUnlocked = achievements.length + badgeUnlocked.length;
     final totalAll = totalAch + totalBadge;
+    // Tanım sırasına göre SABİT bir gösterim sırası — `badgeUnlocked`
+    // bir `Set` olduğu için kendi sırası garanti değildir.
+    final unlockedBadgeIds = BadgeService.badgeDefinitions.keys
+        .where(badgeUnlocked.contains)
+        .toList();
 
     return AppPanel(
       child: Column(
@@ -779,10 +810,19 @@ class _UnifiedRewardsSection extends StatelessWidget {
                     );
                   }
                   // Badge chip
+                  //
+                  // ESKİ KUSUR (2026-08-14 denetimi): dizin doğrudan
+                  // `BadgeService.badgeDefinitions.entries`e (TÜM beş
+                  // rozetin sabit tanım sırasına) uygulanıyordu —
+                  // `badgeUnlocked`e (kullanıcının GERÇEKTEN açtığı
+                  // kümeye) hiç bakmıyordu. Kullanıcı yalnız
+                  // `speed_demon`ı açmışsa bile ilk sırada duran
+                  // `streak_30`ın tanımı gösteriliyordu; şerit "açılan
+                  // rozeti" değil, tanım listesinin ilk N elemanını
+                  // gösteriyordu.
                   final badgeIndex = index - achievements.length;
-                  final badgeEntry = BadgeService.badgeDefinitions.entries
-                      .elementAt(badgeIndex);
-                  final data = badgeEntry.value;
+                  final data =
+                      BadgeService.badgeDefinitions[unlockedBadgeIds[badgeIndex]]!;
                   final title = isKu
                       ? (data['titleKu'] ?? '')
                       : (data['titleTr'] ?? '');
@@ -838,16 +878,7 @@ class _MasterySection extends StatelessWidget {
   final MasteryStore store;
   final bool isKu;
 
-  static const _categories = [
-    'Ziman',
-    'Çand',
-    'Dîrok',
-    'Edebiyat',
-    'Cografya',
-    'Muzîk',
-    'Siyaset',
-    'Paradigma',
-  ];
+  static const _categories = _kProfileAnalysisCategories;
 
   @override
   Widget build(BuildContext context) {
@@ -1062,16 +1093,7 @@ class _PedagogicalAnalyticsSectionState
         String? weakestCat;
         int maxMistakes = -1;
 
-        const categories = [
-          'Ziman',
-          'Çand',
-          'Dîrok',
-          'Edebiyat',
-          'Cografya',
-          'Muzîk',
-          'Siyaset',
-          'Paradigma',
-        ];
+        const categories = _kProfileAnalysisCategories;
 
         var masteryCategoriesPlayed = 0;
         var mistakeCategoriesPlayed = 0;
