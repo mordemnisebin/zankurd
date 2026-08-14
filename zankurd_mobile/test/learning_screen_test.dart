@@ -38,6 +38,14 @@ class _RetryableSlidesRepository extends MockZanKurdRepository {
   }
 }
 
+/// Hiçbir kategoride ders döndürmeyen depo — "kategori boş" durumunu
+/// taklit eder.
+class _NoLessonsRepository extends MockZanKurdRepository {
+  @override
+  Future<List<Lesson>> loadLessonsByCategory(String category) async =>
+      const [];
+}
+
 const _testLesson = Lesson(
   id: 'lesson-test',
   slug: 'lesson-test',
@@ -195,7 +203,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('seviye kaydı varsa önerilen başlangıç rozeti gösterilir', (
+  testWidgets('seviye kaydı varsa önerilen ilk düğümde SIKIŞMAZ', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({
@@ -209,10 +217,28 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Önerilen düğüm işaretlenir (kilit/tamamlanma değişmeden).
+    // 2026-08-14 düzeltmesinden önce öneri HER ZAMAN ilk düğüme
+    // geriliyordu (kilitli bir düğüme düşmemek için) — yerleştirme
+    // sınavının öğrenme yolunda görünür hiçbir etkisi yoktu.
+    // `learningRecommendedIndex` bu ekranın kullandığı GERÇEK
+    // fonksiyondur (bkz. test/learning_recommended_index_test.dart);
+    // burada yalnız ekranın onu gerçekten çağırdığını ve ilk düğümün
+    // artık koşulsuz "önerilen" olmadığını doğrularız — kaydırmaya
+    // bağımlı olmayan, ilk kareden görünür bir kanıt.
+    final firstNode = find.byKey(
+      const ValueKey('learning-path-node-everyday_1'),
+    );
+    expect(firstNode, findsOneWidget);
     expect(
-      find.byKey(const ValueKey('lesson-recommended-badge')),
-      findsOneWidget,
+      find.descendant(
+        of: firstNode,
+        matching: find.byKey(const ValueKey('lesson-recommended-badge')),
+      ),
+      findsNothing,
+      reason:
+          'placementIndex ilk düğümden ileri (everyday_2) olmalı; rozet '
+          'yine ilk düğümde kalırsa yerleştirme hiçbir şeyi değiştirmiyor '
+          'demektir',
     );
   });
 
@@ -286,4 +312,39 @@ void main() {
     expect(miniQuizLabel.softWrap, isFalse);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'kategoride ders yokken "Dersler" düğmesi kapalı görünür ve dokunuşta '
+    'hiçbir şey yapmaz',
+    (tester) async {
+      // 2026-08-14 denetimi: `enabled: true` sabitti — diğer iki düğme
+      // (Soru Çöz/Flaş Kart) `hasLesson`e bakarken bu hep AÇIK
+      // görünüyordu. Dokununca `_openCategoryFlashcards`in erken dönüşü
+      // yüzünden sessizce hiçbir şey olmuyordu.
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: _NoLessonsRepository())),
+      );
+      await tester.pumpAndSettle();
+
+      final lessonsButton = find.ancestor(
+        of: find.text('Dersler'),
+        matching: find.byType(Semantics),
+      );
+      final semantics = tester
+          .widgetList<Semantics>(lessonsButton)
+          .firstWhere((s) => s.properties.button == true);
+      expect(
+        semantics.properties.enabled,
+        isFalse,
+        reason: 'ders yokken düğme erişilebilirlik ağacında da kapalı olmalı',
+      );
+
+      await tester.tap(find.text('Dersler'));
+      await tester.pumpAndSettle();
+
+      // Kapalı düğmeye dokunmak hiçbir sayfa açmamalı — hâlâ öğrenme
+      // ekranındayız.
+      expect(find.byType(LearningScreen), findsOneWidget);
+    },
+  );
 }

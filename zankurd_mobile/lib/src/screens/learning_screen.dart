@@ -23,6 +23,55 @@ import '../widgets/todays_review_card.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+/// Öğrenme yolunda "şu an aktif/önerilen" düğümün indeksi.
+///
+/// Yerleştirme sınavı yalnız hiçbir ders tamamlanmamışken öğrenme yoluna
+/// GERÇEK bir başlangıç noktası önerir — ileri seviyeye yerleşen kullanıcı
+/// en baştan başlamaz. `PlacementScoring.recommendedStartIndex`in kendi
+/// belgesi önceki dersleri "tamamlandı" YAPMADIĞINI söylüyor; burada da
+/// öyle — yalnız erişilebilir/işaretli kılınırlar, sahte bir tamamlanma
+/// uydurulmaz.
+///
+/// Bir kez gerçek ilerleme kaydedildiyse (herhangi bir ders tamamlandıysa)
+/// doğal sıralı ilerleme placement'ın önüne geçer ve bir daha geri
+/// dönülmez.
+///
+/// ESKİ KUSUR (2026-08-14 denetimi): öneri kilitli bir düğüme düşerse HER
+/// ZAMAN ilk açık derse geriliyordu — bu, ileri seviyeli hiçbir kullanıcıda
+/// yerleştirmenin görünür bir etkisi olmadığı anlamına geliyordu (sınav
+/// sonucu yolu değiştirmiyordu). İlk ders tamamlanır tamamlanmaz da aynı
+/// geri dönüş öneriyi o tamamlanan derste sonsuza dek KİLİTLİYORDU —
+/// "Sana önerilen" rozeti bir daha hiçbir karta düşmüyordu.
+int learningRecommendedIndex({
+  required List<Lesson> lessons,
+  required Set<String> completedLessonIds,
+  required int placementIndex,
+}) {
+  if (completedLessonIds.isEmpty) return placementIndex;
+  return lessons.indexWhere((lesson) => !completedLessonIds.contains(lesson.id));
+}
+
+/// Öğrenme konusunu (`Lesson.category`) soru bankası kategorisine çevirir.
+///
+/// İki taraf FARKLI isim uzayında yaşıyordu: dersler konuşma/dilbilgisi
+/// konularıyla (`everyday`, `grammar`, `food`, `animals`, `emotions`,
+/// `time`) etiketlenir, soru bankası ise geniş konu alanlarıyla (`Ziman`,
+/// `Çand`, `Cografya`...). `loadLevelQuestions(category: lesson.category)`
+/// hiçbir zaman eşleşmiyordu; havuz boş kalınca depo TÜM kategorilerin
+/// karışımına düşüyordu — "Soru Çöz" ve mini quiz dersle hiç ilgisi
+/// olmayan rastgele sorular getiriyordu (2026-08-14 denetimi).
+///
+/// `culture`/`geography` soru bankasında birebir karşılığı olan (Çand,
+/// Cografya) tek konulardır — uydurulmadı. Geri kalan altısı (günlük
+/// konuşma, dilbilgisi, yemek, hayvan, duygu, zaman kelime dağarcığı)
+/// hepsi temelde Kürtçe SÖZ VARLIĞI dersleridir; bankanın buna karşılık
+/// gelen tek geniş kategorisi `Ziman`dır (dil).
+String quizCategoryForLesson(String lessonCategory) => switch (lessonCategory) {
+  'culture' => 'Çand',
+  'geography' => 'Cografya',
+  _ => 'Ziman',
+};
+
 /// Kurmancî ders kategorilerini ve dersleri gösterir.
 class LearningScreen extends StatefulWidget {
   const LearningScreen({required this.repository, super.key});
@@ -329,21 +378,16 @@ class _LearningScreenState extends State<LearningScreen> {
             onAction: _loadLessons,
           );
         }
-        final firstOpenIndex = lessons.indexWhere(
-          (lesson) => !_completedIds.contains(lesson.id),
-        );
-        // Seviye belirlemeye göre önerilen başlangıç düğümü.
-        // Yalnız görsel işaret: kilit/tamamlanma değişmez.
         final placementIndex = PlacementScoring.recommendedStartIndex(
           _placementLevel,
           lessons.length,
         );
-        // Öneri kilitli bir düğüme düşerse kullanıcıyı erişemeyeceği
-        // bir karta yönlendirme; ilk açık dersi işaretle.
-        final recommendedIndex =
-            firstOpenIndex >= 0 && placementIndex > firstOpenIndex
-            ? firstOpenIndex
-            : placementIndex;
+        final firstOpenIndex = learningRecommendedIndex(
+          lessons: lessons,
+          completedLessonIds: _completedIds,
+          placementIndex: placementIndex,
+        );
+        final recommendedIndex = firstOpenIndex;
         return ListView.builder(
           shrinkWrap: embedded,
           physics: embedded ? const NeverScrollableScrollPhysics() : null,
@@ -397,16 +441,17 @@ class _LearningScreenState extends State<LearningScreen> {
   Future<void> _openCategoryPractice() async {
     if (_currentLessons.isEmpty || !mounted) return;
     final lesson = _currentLessons.first;
+    final quizCategory = quizCategoryForLesson(lesson.category);
     try {
       final questions = await widget.repository.loadLevelQuestions(
-        category: lesson.category,
+        category: quizCategory,
         difficultyMin: 1,
         difficultyMax: 5,
         limit: 10,
       );
       if (!mounted || questions.isEmpty) return;
       final room = widget.repository
-          .createRoom(category: lesson.category)
+          .createRoom(category: quizCategory)
           .copyWith(questionCount: questions.length);
       await Navigator.of(context).push(
         AppRoute(
@@ -565,7 +610,12 @@ class _LearningModeBar extends StatelessWidget {
           child: _LearningModeButton(
             icon: AppIcons.bookOpen,
             label: Tr.forKu(K.lessons, isKu),
-            enabled: true,
+            // Diğer ikisi (Soru Çöz/Flaş Kart) `hasLesson`e bakıyordu, bu
+            // hep `true` idi: kategoride ders yokken düğme AÇIK
+            // görünüyor, dokununca `_openCategoryFlashcards`in erken
+            // dönüşü (`if (_currentLessons.isEmpty) return;`) yüzünden
+            // sessizce hiçbir şey olmuyordu (2026-08-14 denetimi).
+            enabled: hasLesson,
             onTap: onLesson,
           ),
         ),
@@ -799,7 +849,7 @@ class _LessonCard extends StatelessWidget {
               ),
               child: Center(
                 child: Icon(
-                  _iconForLesson(lesson.slug),
+                  iconForLesson(lesson),
                   color: Colors.white,
                   size: 26,
                 ),
@@ -914,51 +964,87 @@ class _LessonCard extends StatelessWidget {
     );
   }
 
-  /// Ders slug'ından ikon.
-  ///
-  /// Harita bir zamanlar `alphabet`, `numbers`, `colors` gibi anlamsal
-  /// adlarla anahtarlanıyordu — ama gerçek ders slug'ları `everyday_1`,
-  /// `grammar_2`, `culture_1` biçiminde numaralı ailelerdir. Hiçbiri
-  /// eşleşmiyordu, dolayısıyla HER ders yedek ikona (mezuniyet külahı)
-  /// düşüyordu ve ders listesi üst üste aynı sembolü gösteriyordu
-  /// (2026-07-31 denetimi, görsel tekdüzelik).
-  ///
-  /// Artık önce tam slug, sonra ailesi (sondaki `_1`, `_2` atılarak)
-  /// aranıyor; böylece hem bugünkü numaralı slug'lar hem ileride
-  /// eklenecek anlamsal adlar çalışır.
-  IconData _iconForLesson(String slug) {
-    const icons = {
-      // Gerçek ders aileleri.
-      'everyday': AppIcons.comment,
-      'grammar': AppIcons.barsStaggered,
-      'culture': AppIcons.peopleGroup,
-      'food': AppIcons.utensils,
-      'animals': AppIcons.paw,
-      'geography': AppIcons.globe,
-      'emotions': AppIcons.faceSmile,
-      'time': AppIcons.clock,
-      'alphabet': AppIcons.font,
-      'numbers': AppIcons.hashtag,
-      'colors': AppIcons.palette,
-      'family': AppIcons.peopleRoof,
-      'greetings': AppIcons.hand,
-      'grammar_noun': AppIcons.font,
-      'grammar_verb': AppIcons.barsStaggered,
-      'newroz': AppIcons.champagneGlasses,
-      'body': AppIcons.personCircleCheck,
-      'clothing': AppIcons.shirt,
-      'weather': AppIcons.cloud,
-      'prepositions': AppIcons.locationDot,
-      'house': AppIcons.house,
-      'profession': AppIcons.briefcase,
-      'daily_phrases': AppIcons.comment,
-    };
-    final exact = icons[slug];
-    if (exact != null) return exact;
-    // `everyday_2` → `everyday`
-    final family = slug.replaceFirst(RegExp(r'_\d+$'), '');
-    return icons[family] ?? AppIcons.graduationCap;
-  }
+}
+
+/// Sunucunun gönderdiği Material ikon adı (`icon_name`, ör. `numbers`,
+/// `waving_hand`) → uygulamanın kendi ikon kümesi.
+///
+/// `2026-07-06_lesson_seed.sql`deki gerçek 15 dersin HER SATIRINDA bu
+/// sütun dolu; ders başına ayrı, anlamlı bir ikon taşır.
+const Map<String, IconData> _lessonIconNameMap = {
+  'waving_hand': AppIcons.hand,
+  'numbers': AppIcons.hashtag,
+  'person': AppIcons.user,
+  'local_fire_department': AppIcons.fire,
+  'music_note': AppIcons.music,
+  'restaurant': AppIcons.utensils,
+  'eco': AppIcons.leaf,
+  'pets': AppIcons.paw,
+  'forest': AppIcons.tree,
+  'landscape': AppIcons.mountain,
+  'map': AppIcons.locationDot,
+  'favorite': AppIcons.heart,
+  'calendar_today': AppIcons.calendarDays,
+  'wb_sunny': AppIcons.sun,
+};
+
+/// Ders KONUSUNDAN (`Lesson.category`) ikon — sunucu/mock her ikisinde de
+/// aynı sekiz aile kullanılır (`_kLearningCategoryIds`).
+const Map<String, IconData> _lessonCategoryIconMap = {
+  'everyday': AppIcons.comment,
+  'grammar': AppIcons.barsStaggered,
+  'culture': AppIcons.peopleGroup,
+  'food': AppIcons.utensils,
+  'animals': AppIcons.paw,
+  'geography': AppIcons.globe,
+  'emotions': AppIcons.faceSmile,
+  'time': AppIcons.clock,
+};
+
+/// Yerel (mock) banka için: bugünkü numaralı slug'lar (`everyday_1`) VE
+/// ileride eklenebilecek anlamsal adlar.
+const Map<String, IconData> _lessonMockSlugIconMap = {
+  'alphabet': AppIcons.font,
+  'numbers': AppIcons.hashtag,
+  'colors': AppIcons.palette,
+  'family': AppIcons.peopleRoof,
+  'greetings': AppIcons.hand,
+  'grammar_noun': AppIcons.font,
+  'grammar_verb': AppIcons.barsStaggered,
+  'newroz': AppIcons.champagneGlasses,
+  'body': AppIcons.personCircleCheck,
+  'clothing': AppIcons.shirt,
+  'weather': AppIcons.cloud,
+  'prepositions': AppIcons.locationDot,
+  'house': AppIcons.house,
+  'profession': AppIcons.briefcase,
+  'daily_phrases': AppIcons.comment,
+};
+
+/// Ders için ikon: önce sunucunun tam `icon_name`i, sonra konu ailesi
+/// (`category`), sonra yerel banka slug eşleşmesi denenir; hiçbiri
+/// tutmazsa mezuniyet külahına düşülür.
+///
+/// ESKİ KUSUR (2026-08-14 denetimi): harita yalnız SLUG'a bakıyordu ve
+/// yalnız mock'un numaralı ailelerini (`everyday_1` → `everyday`)
+/// tanıyordu. `2026-07-06_lesson_seed.sql`deki 15 gerçek dersin
+/// slug'ları Kurmancî bileşik sözcüklerdir (`silav-u-nasin`, `hejmar`,
+/// `cinavk`...) — hiçbiri ne tam ne aile olarak eşleşmiyordu, hepsi aynı
+/// yedek ikona düşüyordu. Oysa sunucu tam da bu ders için özel seçilmiş
+/// bir `icon_name` (`waving_hand`, `numbers`...) VE `category` (mock ile
+/// aynı sekiz aile) gönderiyordu — bu iki alan hiç kullanılmıyordu.
+IconData iconForLesson(Lesson lesson) {
+  final byIconName = lesson.iconName == null
+      ? null
+      : _lessonIconNameMap[lesson.iconName];
+  if (byIconName != null) return byIconName;
+  final byCategory = _lessonCategoryIconMap[lesson.category];
+  if (byCategory != null) return byCategory;
+  final exact = _lessonMockSlugIconMap[lesson.slug];
+  if (exact != null) return exact;
+  // `everyday_2` → `everyday`
+  final family = lesson.slug.replaceFirst(RegExp(r'_\d+$'), '');
+  return _lessonMockSlugIconMap[family] ?? AppIcons.graduationCap;
 }
 
 class _LearningPathNode extends StatelessWidget {
@@ -1121,9 +1207,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       _miniQuizEmpty = false;
       _miniQuizErrorMessage = null;
     });
+    final quizCategory = quizCategoryForLesson(widget.lesson.category);
     try {
       final questions = await widget.repository.loadLevelQuestions(
-        category: widget.lesson.category,
+        category: quizCategory,
         difficultyMin: 1,
         difficultyMax: 5,
         limit: 5,
@@ -1140,7 +1227,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       }
 
       final room = widget.repository
-          .createRoom(category: widget.lesson.category)
+          .createRoom(category: quizCategory)
           .copyWith(questionCount: questions.length);
 
       if (!mounted) return;
@@ -1313,6 +1400,13 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
         ),
       );
       Navigator.pop(context);
+    } else if (!success && mounted) {
+      // Sunucuya yazılamadı: "tamamlandı" demeden, ekranı kapatmadan
+      // kullanıcının tekrar deneyebilmesi için son slaytta bırak
+      // (2026-08-14 denetimi).
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t(K.lessonCompleteFailed))),
+      );
     }
   }
 
