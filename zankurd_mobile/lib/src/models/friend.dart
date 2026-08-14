@@ -78,7 +78,13 @@ class Friend {
 
   static Friend fromJson(Map<String, dynamic> json) => Friend(
     id: json['id'] as String,
-    userId: json['user_id'] as String,
+    // list_friends RPC'si user_id döndürmez — satır zaten çağıran
+    // kullanıcıya aittir (sunucu tarafında `where f.user_id = auth.uid()`).
+    // Zorunlu cast burada her satırı çökertip listeyi sessizce
+    // boşaltıyordu: arkadaşlık kabul edilir edilmez FriendsScreen ve
+    // Liderlik > Arkadaşlar sekmesi "Arkadaş yok" göstermeye devam
+    // ediyordu (2026-08-14 denetimi).
+    userId: json['user_id'] as String? ?? '',
     friendId: json['friend_id'] as String,
     friendName: json['friend_name'] as String,
     friendAvatarColor: json['friend_avatar_color'] as String?,

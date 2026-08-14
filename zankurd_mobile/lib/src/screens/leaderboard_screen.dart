@@ -281,10 +281,25 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     unawaited(_refreshPendingRequests());
     if (_tabController.index == 3) {
       setState(() {
-        _friendsFuture = widget.repository
-            .loadFriendsLeaderboard()
-            .timeout(const Duration(seconds: 10))
-            .then((friends) => _lastFriends = friends);
+        // Genel liderlik sekmesi engellenen oyuncuyu 2026-08-02'den beri
+        // süzüyor (yukarıdaki yorum); Arkadaşlar sekmesi aynı süzgeci hiç
+        // uygulamıyordu. Engellenen kişi arkadaşsa listede "Odaya davet
+        // et" düğmesiyle durmaya devam ediyordu — Apple 1.2'nin istediği
+        // "bu kişiyi bir daha görmeyeyim" sözü tek yüzeyde tutulmuyordu
+        // (2026-08-14 denetimi).
+        _friendsFuture =
+            Future.wait([
+              widget.repository.loadFriendsLeaderboard(),
+              widget.repository.loadBlockedPlayerIds(),
+            ]).timeout(const Duration(seconds: 10)).then((results) {
+              final friends = results[0] as List<Friend>;
+              final blocked = results[1] as Set<String>;
+              final visible = friends
+                  .where((f) => !blocked.contains(f.friendId))
+                  .toList();
+              _lastFriends = visible;
+              return visible;
+            });
       });
     } else {
       setState(() {
@@ -442,7 +457,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     final questions = await widget.repository.loadQuestions(limit: 10);
     if (!mounted) return;
     final raceQuestions = questions.isEmpty
-        ? widget.repository.questions
+        ? widget.repository.playableQuestions
         : questions;
     Navigator.of(context).push(
       AppRoute.to(

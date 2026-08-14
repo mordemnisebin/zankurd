@@ -50,6 +50,37 @@ void main() {
     expect(player.formattedTag, 'ZK-9XQM');
   });
 
+  /// Bir fonksiyonu tanımlayan en yeni tarihli göçün gövdesi.
+  ///
+  /// Tarihli dosya adları sıralanabilir olduğu için sözlük sırasındaki son
+  /// eleman, uygulanma sırasındaki son tanımdır. `search_profiles` için bu
+  /// önemli: 2026-07-28_player_tag.sql önek soymayı EKLEDİ,
+  /// 2026-07-31_exposure_hardening.sql fonksiyonu `create or replace` ile
+  /// baştan yazarken o satırı taşımadan LIKE kaçırmayı ekledi. Sabit dosya
+  /// adına bakan bir bekçi ikinci göçü hiç görmez ve canlıda artık
+  /// çalışmayan bir davranışı yeşil gösterir (2026-08-14 denetimi).
+  String newestDefinitionOf(String function) {
+    final pattern = RegExp(
+      'create\\s+(?:or\\s+replace\\s+)?function\\s+public\\.$function\\b',
+      caseSensitive: false,
+    );
+    final dated =
+        Directory('supabase')
+            .listSync()
+            .whereType<File>()
+            .where((f) => f.path.endsWith('.sql'))
+            .where((f) => RegExp(r'/\d{4}-\d{2}-\d{2}_').hasMatch(f.path))
+            .where((f) => pattern.hasMatch(f.readAsStringSync()))
+            .toList()
+          ..sort((a, b) => a.path.compareTo(b.path));
+    expect(
+      dated,
+      isNotEmpty,
+      reason: '$function hiçbir tarihli göçte tanımlanmıyor',
+    );
+    return dated.last.readAsStringSync();
+  }
+
   group('göç betiği', () {
     late String sql;
 
@@ -84,12 +115,21 @@ void main() {
       }
     });
 
-    test('arama hem koda hem ada bakar ve kodu öne alır', () {
-      expect(sql, contains('p.player_tag = v_tag or p.display_name ilike'));
-      expect(sql, contains('order by (p.player_tag = v_tag) desc'));
+    test('en yeni search_profiles tanımı önek soymayı korur', () {
+      // Bilerek 2026-07-28 dosyasına DEĞİL, en yeni tanıma bakar — bu
+      // sözleşmeyi ezen her yeni göç burada kırılır.
+      final newest = newestDefinitionOf('search_profiles');
+      expect(
+        newest,
+        contains('p.player_tag = v_tag or p.display_name ilike'),
+      );
+      expect(newest, contains('order by (p.player_tag = v_tag) desc'));
       // "ZK-4F7K", "zk 4f7k" ve "4F7K" aynı kodu aramalı: kod ekranda
       // önekle görünüyor, elle yazarken öneki beklemek gereksiz sürtünme.
-      expect(sql, contains("regexp_replace(v_query, '^[zZ][kK][-\\s]*', '')"));
+      expect(
+        newest,
+        contains("regexp_replace(v_query, '^[zZ][kK][-\\s]*', '')"),
+      );
     });
   });
 }
