@@ -46,6 +46,12 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+#variable_conflict use_column
+-- RETURNS TABLE'ın OUT parametreleri (day_key dahil) fonksiyon gövdesinde
+-- örtük plpgsql değişkenleri olur; hiçbiri burada değişken olarak
+-- kullanılmıyor (hepsi son SELECT'te c.* takma adıyla dönüyor), bu yüzden
+-- `on conflict (day_key)` içindeki bare identifier ile OUT parametresi
+-- arasındaki "ambiguous" hatasını önlemek için sütun her zaman kazanır.
 declare
   -- Yedi günlük sabit bir tema rotasyonu: ayrı bir "contest_themes" tablosu
   -- kurmak bu ölçekte gereksiz soyutlama olurdu, sabit dizi yeterli.

@@ -20,7 +20,13 @@
 
 begin;
 
-create or replace function public.list_friends()
+-- `create or replace` reddediyor: yeni sürüm `total_score`/`last_active_at`
+-- OUT sütunlarını ekliyor, dönüş satır tipi değişiyor. Önce düşürüp
+-- ardından yeniden oluşturmak gerekiyor; grantlar bu yüzden aşağıda
+-- (eski haliyle, anon/authenticated/service_role) yeniden verilir.
+drop function if exists public.list_friends();
+
+create function public.list_friends()
 returns table(
   id uuid,
   friend_id uuid,
@@ -57,5 +63,9 @@ begin
   order by f.created_at desc;
 end;
 $function$;
+
+grant all on function public.list_friends() to anon;
+grant all on function public.list_friends() to authenticated;
+grant all on function public.list_friends() to service_role;
 
 commit;
