@@ -12,6 +12,7 @@ import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/analytics_consent_provider.dart';
+import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
@@ -393,18 +394,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               AppPanel(
                 padding: EdgeInsets.zero,
-                child: Consumer<AnalyticsConsentProvider>(
-                  builder: (context, consent, _) => _SettingsToggleRow(
-                    icon: AppIcons.shieldHalved,
-                    color: AppTheme.violet,
-                    title: context.t(K.analyticsConsent),
-                    subtitle: context.t(K.analyticsConsentSub),
-                    trailing: Switch(
-                      key: const ValueKey('analytics-consent-switch'),
-                      value: consent.enabled,
-                      onChanged: _setAnalyticsConsent,
+                child: Column(
+                  children: [
+                    Consumer<AnalyticsConsentProvider>(
+                      builder: (context, consent, _) => _SettingsToggleRow(
+                        icon: AppIcons.shieldHalved,
+                        color: AppTheme.violet,
+                        title: context.t(K.analyticsConsent),
+                        subtitle: context.t(K.analyticsConsentSub),
+                        trailing: Switch(
+                          key: const ValueKey('analytics-consent-switch'),
+                          value: consent.enabled,
+                          onChanged: _setAnalyticsConsent,
+                        ),
+                      ),
                     ),
-                  ),
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    Consumer<ChildSafetyProvider>(
+                      builder: (context, childSafety, _) =>
+                          _SettingsToggleRow(
+                            icon: AppIcons.shield,
+                            color: AppTheme.violet,
+                            title: context.t(K.childSafetyMode),
+                            subtitle: context.t(K.childSafetyModeSub),
+                            trailing: Switch(
+                              key: const ValueKey('child-safety-switch'),
+                              value: childSafety.enabled,
+                              onChanged: _toggleChildSafety,
+                            ),
+                          ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: AppSpacing.cardGap),
@@ -1102,6 +1126,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// Çocuk modunu değiştirir. Açarken ne değiştiğini açıklayan bir onay
   /// dialogu gösterir. (Yalnız cihaz tarafı — sunucu koruması yoktur.)
+  ///
+  /// Bu yorum uzun süre yetim kaldı: altındaki gövde hiç yazılmamıştı ve
+  /// `ChildSafetyProvider` hiçbir yerde (ne bu ekranda ne widget ağacında)
+  /// kayıtlı değildi — anahtar yoktu, kapı da çalışmıyordu (2026-08-14
+  /// denetimi). Kapatmak onay istemez; yalnız AÇMAK isteği doğrular.
+  Future<void> _toggleChildSafety(bool enabled) async {
+    if (enabled) {
+      final confirmed = await _confirmChildSafetyEnable();
+      if (confirmed != true || !mounted) return;
+    }
+    if (!mounted) return;
+    await context.read<ChildSafetyProvider>().setEnabled(enabled);
+  }
+
+  Future<bool?> _confirmChildSafetyEnable() {
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppTheme.surfaceOf(context),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          side: BorderSide(color: AppTheme.borderColor(context)),
+        ),
+        title: Text(context.t(K.childSafetyConfirmTitle)),
+        content: Text(context.t(K.childSafetyConfirmBody)),
+        actions: [
+          OutlinedButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(context.t(K.cancel)),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(context.t(K.continueAction)),
+          ),
+        ],
+      ),
+    );
+  }
 
   Future<void> _openPlacement() async {
     await Navigator.of(

@@ -22,6 +22,7 @@ import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
+import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../widgets/kilim_reveal.dart';
 import '../theme/app_theme.dart';
@@ -1479,20 +1480,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           label: nextActionLabel,
                           onTap: completeResultAction,
                         ),
-                      _ResultSideAction(
-                        key: const ValueKey('result-share-button'),
-                        icon: AppIcons.shareNodes,
-                        label: context.t(K.share),
-                        onTap: () => ResultSharer.share(
-                          context,
-                          isKu: context.isKu,
-                          score: score,
-                          correctCount: correctCount,
-                          totalQuestions: totalQuestions,
-                          bestStreak: bestStreak,
-                          category: room.category,
+                      // Çocuk modu açıkken dışa paylaşım hiç çizilmez —
+                      // sağlayıcı eskiden kayıtlı olmadığı ve hiçbir ekran
+                      // okumadığı için bu kapı hiç çalışmıyordu (2026-08-14
+                      // denetimi).
+                      if (context.watch<ChildSafetyProvider>().allowExternalShare)
+                        _ResultSideAction(
+                          key: const ValueKey('result-share-button'),
+                          icon: AppIcons.shareNodes,
+                          label: context.t(K.share),
+                          onTap: () => ResultSharer.share(
+                            context,
+                            isKu: context.isKu,
+                            score: score,
+                            correctCount: correctCount,
+                            totalQuestions: totalQuestions,
+                            bestStreak: bestStreak,
+                            category: room.category,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 10),

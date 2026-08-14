@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
+import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -197,6 +199,39 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Widget _buildSearchSection(bool ku) {
+    // `ChildSafetyProvider` eskiden hiçbir ekrandan okunmuyordu — çocuk
+    // modu açılsa da kapansa da davranış aynı kalıyordu, ayarlardaki
+    // anahtar süs düğmesiydi (2026-08-14 denetimi). Bu ekran onun ilk
+    // gerçek kapısı: çocuk modu açıkken oyuncu arama kutusu hiç
+    // gösterilmez.
+    if (!context.watch<ChildSafetyProvider>().allowFriendSearch) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ScreenSectionLabel(
+            label: context.t(K.findFriend),
+            accent: AppTheme.cyan,
+          ),
+          const SizedBox(height: 12),
+          AppPanel(
+            key: const ValueKey('friends-search-blocked'),
+            color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
+            child: Row(
+              children: [
+                const Icon(AppIcons.shield, color: AppTheme.cyan),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    context.t(K.childSafetyFriendSearchBlocked),
+                    style: TextStyle(color: AppTheme.textPrimaryColor(context)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

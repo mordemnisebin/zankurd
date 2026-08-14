@@ -21,6 +21,7 @@ import 'src/l10n/lang.dart';
 import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
+import 'src/providers/child_safety_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
@@ -159,6 +160,7 @@ Future<void> main() async {
       final soundFuture = SoundProvider.load();
       final reducedMotionFuture = ReducedMotionProvider.load();
       final analyticsConsentFuture = AnalyticsConsentProvider.load();
+      final childSafetyFuture = ChildSafetyProvider.load();
 
       // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
       // tercihleri. `AnalyticsService.initialize()` ve
@@ -176,6 +178,7 @@ Future<void> main() async {
         soundFuture,
         reducedMotionFuture,
         analyticsConsentFuture,
+        childSafetyFuture,
       ]);
 
       final languageProvider = await languageFuture;
@@ -187,6 +190,7 @@ Future<void> main() async {
       final soundProvider = await soundFuture;
       final reducedMotionProvider = await reducedMotionFuture;
       final analyticsConsentProvider = await analyticsConsentFuture;
+      final childSafetyProvider = await childSafetyFuture;
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
       // hiçbiri uygulamanın açılmasını engellemez.
@@ -216,6 +220,7 @@ Future<void> main() async {
           soundProvider: soundProvider,
           reducedMotionProvider: reducedMotionProvider,
           analyticsConsentProvider: analyticsConsentProvider,
+          childSafetyProvider: childSafetyProvider,
           premiumService: premiumService,
         ),
       );
@@ -287,6 +292,7 @@ class ZanKurdApp extends StatelessWidget {
     SoundProvider? soundProvider,
     ReducedMotionProvider? reducedMotionProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
+    ChildSafetyProvider? childSafetyProvider,
     PremiumService? premiumService,
     super.key,
   }) : authProvider = authProvider ?? AuthProvider.test(),
@@ -296,6 +302,7 @@ class ZanKurdApp extends StatelessWidget {
        reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
+       childSafetyProvider = childSafetyProvider ?? ChildSafetyProvider(),
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
@@ -305,6 +312,7 @@ class ZanKurdApp extends StatelessWidget {
   final SoundProvider soundProvider;
   final ReducedMotionProvider reducedMotionProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
+  final ChildSafetyProvider childSafetyProvider;
   final PremiumService premiumService;
 
   @override
@@ -327,6 +335,9 @@ class ZanKurdApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,
+        ),
+        ChangeNotifierProvider<ChildSafetyProvider>.value(
+          value: childSafetyProvider,
         ),
         ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],

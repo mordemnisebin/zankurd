@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
+import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -53,6 +54,9 @@ Widget _wrap(Widget child) {
       ),
       // FriendsScreen oyuncu aramayı çocuk moduna göre kapatıyor; sağlayıcı
       // olmadan açılamıyor.
+      ChangeNotifierProvider<ChildSafetyProvider>(
+        create: (_) => ChildSafetyProvider(),
+      ),
     ],
     child: MaterialApp(
       theme: AppTheme.light(),

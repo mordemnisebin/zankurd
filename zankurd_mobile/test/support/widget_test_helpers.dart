@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
+import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -81,6 +82,7 @@ Widget testShell({
   AuthProvider? authProvider,
   LanguageProvider? languageProvider,
   ThemeProvider? themeProvider,
+  ChildSafetyProvider? childSafetyProvider,
 }) {
   return MultiProvider(
     providers: [
@@ -99,6 +101,9 @@ Widget testShell({
       ),
       ChangeNotifierProvider<AnalyticsConsentProvider>(
         create: (_) => AnalyticsConsentProvider(),
+      ),
+      ChangeNotifierProvider<ChildSafetyProvider>(
+        create: (_) => childSafetyProvider ?? ChildSafetyProvider(),
       ),
       ChangeNotifierProvider<PremiumService>(
         create: (_) => PremiumService.fallback(),
