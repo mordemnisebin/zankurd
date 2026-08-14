@@ -47,7 +47,7 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenPlay: () {},
-          onOpenCategories: () {},
+          onOpenCategories: () async {},
         ),
       ),
     );
@@ -95,8 +95,12 @@ void main() {
           repository: MockZanKurdRepository(),
           displayName: 'Zelal',
           scrollController: ScrollController(),
-          onOpenLearning: () => lessons++,
-          onOpenCategories: () => categories++,
+          onOpenLearning: () async {
+            lessons++;
+          },
+          onOpenCategories: () async {
+            categories++;
+          },
           onOpenPlay: () => play++,
         ),
       ),
@@ -125,7 +129,7 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenPlay: () {},
-          onOpenCategories: () {},
+          onOpenCategories: () async {},
         ),
       ),
     );
@@ -163,7 +167,7 @@ void main() {
               displayName: 'Zelal',
               scrollController: ScrollController(),
               onOpenPlay: () {},
-              onOpenCategories: () {},
+              onOpenCategories: () async {},
             ),
           ),
         );

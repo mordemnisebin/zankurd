@@ -426,9 +426,11 @@ class _AppShellState extends State<AppShell>
         repository: widget.repository,
         scrollController: _homeScrollController,
         refreshSignal: _homeRefresh,
-        onOpenLearning: () => Navigator.of(
-          context,
-        ).push(AppRoute.to(LearningScreen(repository: widget.repository))),
+        onOpenLearning: () async {
+          await Navigator.of(
+            context,
+          ).push(AppRoute.to(LearningScreen(repository: widget.repository)));
+        },
         onOpenPlay: () => _selectTab(1),
       ),
       1 => PlayHubScreen(repository: widget.repository),

@@ -18,6 +18,7 @@ import '../utils/test_environment.dart';
 import '../data/daily_mission_store.dart';
 import '../data/achievement_store.dart';
 import '../models/daily_mission.dart';
+import '../models/quiz_question.dart';
 import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
@@ -31,6 +32,25 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
 
+/// [MistakeStore.readyIds] içindeki kimlikleri gerçekten açılabilir
+/// (`playableQuestions`) sorularla kesiştirir.
+///
+/// Ham `readyCount` yalnız kayıtlı kimlik sayısını verir, kaynağa bakmaz.
+/// Çevrimiçi maçlarda yanlış yapılan sorular sunucu UUID'siyle kaydedilir
+/// ve içerik kalite karantinasıyla bankadan çıkarılan sorular da aynı
+/// şekilde asla çözülemez — "Tekrar zamanı" satırı bu yüzden Öğren
+/// sekmesinin gerçekte sunabileceğinden daha yüksek bir sayı gösteriyordu
+/// (2026-08-14 denetimi; `profile_screen.dart`taki `_launchableMistakeIds`
+/// ve `todays_review_card.dart`taki 2026-08-06 düzeltmesiyle aynı kök
+/// neden).
+int launchableReviewCount(
+  Set<String> readyIds,
+  List<QuizQuestion> playableQuestions,
+) {
+  final launchableIds = playableQuestions.map((q) => q.id).toSet();
+  return readyIds.where(launchableIds.contains).length;
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     required this.repository,
@@ -40,6 +60,7 @@ class HomeScreen extends StatefulWidget {
     this.onOpenLearning,
     this.onOpenPlay,
     this.onOpenCategories,
+    this.onOpenCategory,
     super.key,
   });
 
@@ -48,20 +69,39 @@ class HomeScreen extends StatefulWidget {
   final ScrollController? scrollController;
 
   /// Ana Sayfa sekmesi yeniden seçildiğinde tetiklenir; coin bakiyesi ve
-  /// görevler tazelenir. Kategoriler sekmesinden başlatılan solo seviye
-  /// quizleri bu ekranın _refreshCoins'ini doğrudan çağıramaz (farklı bir
-  /// Navigator dalında yaşarlar), bu yüzden dönüşte sekmeye tekrar
-  /// basıldığında tazeleme burada yapılır.
+  /// görevler tazelenir. Bu, ana ekranın KENDİ push'larından (Öğren/
+  /// Kategoriler) bağımsız bir ikinci tazeleme yoludur: örn. Yarış
+  /// sekmesinde oynanan bir maçtan sonra Öğren'e dönmek de burayı tetikler
+  /// (bkz. [onOpenLearning]/[onOpenCategories] — onlar yalnız KENDİ
+  /// push'larının dönüşünü kapsar).
   final Listenable? refreshSignal;
-  final VoidCallback? onOpenLearning;
+
+  /// Öğrenme akışına geçiş. Dönüşü (Future) BEKLENİR: eskiden `VoidCallback`
+  /// idi ve push'un tamamlanması hiç izlenmiyordu, bu yüzden Fêr Bibe
+  /// sekmesinde push/pop ile kalan bir oyuncu ders/quiz bitirip geri
+  /// döndüğünde coin/XP/tekrar sayısı/"kaldığın yer" YALNIZ sekmeye tekrar
+  /// basılırsa (bir sekme değişimiyle) tazeleniyordu — aynı sekme içi
+  /// push/pop dönüşünde asla (2026-08-14 denetimi). Artık dönüşte
+  /// doğrudan tazelenir.
+  final Future<void> Function()? onOpenLearning;
 
   /// "Zû Bilîze" bölümü kaldırıldı (Bilîze sekmesiyle bire bir aynıydı);
   /// bunun yerine Bilîze sekmesine geçiş yapan kısa bir teaser gösterilir.
   final VoidCallback? onOpenPlay;
 
   /// Kategorî akışına geçiş (Faz 3: kategoriler ayrı sekme değil, Fêr Bibe
-  /// sekmesi içinden açılır).
-  final VoidCallback? onOpenCategories;
+  /// sekmesi içinden açılır). [onOpenLearning] ile aynı sebeple dönüş
+  /// beklenir.
+  final Future<void> Function()? onOpenCategories;
+
+  /// Belirli bir kategoriyi doğrudan açar ("Kaldığın yer" satırları).
+  ///
+  /// Verilmezse [onOpenCategories] genel listeye düşer. Eskiden "Kaldığın
+  /// yer" satırındaki kategori argümanı `(_) => onOpenCategories?.call()`
+  /// ile YOK SAYILIYORDU — kullanıcı "Tarîx %40" satırına dokununca genel
+  /// kategori listesine düşüyordu, doğrudan Tarîx'e değil (2026-08-14
+  /// denetimi).
+  final Future<void> Function(String category)? onOpenCategory;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -113,6 +153,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshFirstSession();
     _refreshXpLevel();
     _refreshReviewCount();
+    // "Kaldığın yer" ilk açılışta hiç çağrılmıyordu — yalnız
+    // `_handleRefreshSignal` içinden tetikleniyordu, o da yalnız sekmeye
+    // TEKRAR basıldığında çalışır. Öğren zaten açılış sekmesi olduğu için
+    // (bkz. app_shell.dart `_tab = 0`) o ilk seçim asla bir sekme
+    // DEĞİŞİMİ tetiklemiyor — kullanıcı başka bir sekmeye gidip dönene
+    // kadar bölüm hep boş kalıyordu (2026-08-14 denetimi).
+    _refreshProgress();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
 
@@ -134,6 +181,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _refreshProgress();
     _refreshReviewCount();
     setState(() => _refreshCounter++);
+  }
+
+  /// Öğrenme akışına gider ve dönüşte ana ekranı tazeler.
+  ///
+  /// Push tab-içi kaldığı (bir sekme değişimi olmadığı) için tek tazeleme
+  /// fırsatı bu dönüştür — bkz. [onOpenLearning] doc yorumu.
+  Future<void> _openLearning() async {
+    await widget.onOpenLearning?.call();
+    if (mounted) _handleRefreshSignal();
+  }
+
+  /// Genel kategori listesine gider ve dönüşte ana ekranı tazeler.
+  Future<void> _openCategories() async {
+    await widget.onOpenCategories?.call();
+    if (mounted) _handleRefreshSignal();
+  }
+
+  /// Belirli bir kategoriyi açar (varsa [HomeScreen.onOpenCategory]
+  /// aracılığıyla, yoksa genel listeye düşer) ve dönüşte tazeler.
+  Future<void> _openCategory(String category) async {
+    final specific = widget.onOpenCategory;
+    if (specific != null) {
+      await specific(category);
+    } else {
+      await widget.onOpenCategories?.call();
+    }
+    if (mounted) _handleRefreshSignal();
   }
 
   Future<void> _refreshXpLevel() async {
@@ -167,7 +241,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshReviewCount() async {
     try {
       final store = await MistakeStore.load();
-      if (mounted) setState(() => _reviewReadyCount = store.readyCount);
+      if (mounted) {
+        setState(
+          () => _reviewReadyCount = launchableReviewCount(
+            store.readyIds,
+            repo.playableQuestions,
+          ),
+        );
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_load');
     }
@@ -310,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               subtitle: context.t(K.homeReviewTimeSub, {
                 'count': '$_reviewReadyCount',
               }),
-              onTap: () => widget.onOpenLearning?.call(),
+              onTap: _openLearning,
             ),
           ],
           const SizedBox(height: AppSpacing.md),
@@ -336,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               accent: const Color(0xFF0E7A57),
               title: context.t(K.homeLearningPath),
               subtitle: context.t(K.homeLessonsSub),
-              onTap: () => widget.onOpenLearning?.call(),
+              onTap: _openLearning,
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -348,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             accent: const Color(0xFF1E4FA6),
             title: context.t(K.homeTopicPicker),
             subtitle: context.t(K.categoriesSubtitle),
-            onTap: () => widget.onOpenCategories?.call(),
+            onTap: _openCategories,
           ),
         ],
       ),
@@ -371,15 +452,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () => widget.onOpenPlay?.call(),
             ),
           ),
-          if (_categoryProgress.any((entry) => entry.ratio > 0)) ...[
-            const SizedBox(height: AppSpacing.xs),
-            ContinueSection(
-              isKu: ku,
-              entries: _categoryProgress,
-              onOpenCategory: (_) => widget.onOpenCategories?.call(),
-              onBrowseCategories: () => widget.onOpenCategories?.call(),
-            ),
-          ],
+          // Dıştaki koşul BİLEREK yok: `ContinueSection` kendi içinde zaten
+          // "ilerleme varsa liste, yoksa keşif daveti" ayrımını yapıyor
+          // (bkz. `home_rows.dart` `_buildDiscovery`). Eskiden bölüm
+          // yalnız `_categoryProgress.any(ratio > 0)` doğruyken
+          // çiziliyordu — ilerleme boşken widget'ın kendi keşif dalı hiç
+          // ÇAĞRILMIYORDU, "Başlayalım" daveti asla görünmüyordu
+          // (2026-08-14 denetimi).
+          const SizedBox(height: AppSpacing.xs),
+          ContinueSection(
+            isKu: ku,
+            entries: _categoryProgress,
+            onOpenCategory: _openCategory,
+            onBrowseCategories: _openCategories,
+          ),
           const SizedBox(height: AppSpacing.md),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
           // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
