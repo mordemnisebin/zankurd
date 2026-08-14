@@ -11,6 +11,7 @@ import '../l10n/strings.dart';
 import '../providers/sound_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
+import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../widgets/app_panel.dart';
@@ -30,7 +31,9 @@ class SpinWheelScreen extends StatefulWidget {
 }
 
 class _SpinWheelScreenState extends State<SpinWheelScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, RouteAware {
+  ModalRoute<dynamic>? _route;
+
   late final AnimationController _spinController;
   late Animation<double> _rotation;
   bool _canSpin = false;
@@ -99,6 +102,31 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     _startCountdown();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of<dynamic>(context);
+    if (identical(route, _route)) return;
+    if (_route != null) appRouteObserver.unsubscribe(this);
+    _route = route;
+    if (route != null) appRouteObserver.subscribe(this, route);
+  }
+
+  // Mağazada ekstra çark satın alma (`spin_wheel_extra`) bu ekranı
+  // kapatmadan gerçekleşebilir: örn. bu ekran üstüne mağaza push edilip
+  // satın alma sonrası buraya geri dönülür. `_canSpin` yalnız
+  // `initState`teki tek seferlik kontrolden geliyordu; ekran hâlâ
+  // mount'lu (dispose olmadığı için initState tekrar çalışmıyor) kalınca
+  // ekstra hak satın alınsa bile buton "yarın gel" olarak kilitli
+  // kalıyordu — kullanıcının ekranı tamamen kapatıp yeniden açması
+  // gerekiyordu. `RouteAware.didPopNext` bu ekran yeniden görünür
+  // olduğunda çağrılır; durumu sunucudan (extra hak dahil) tazeler
+  // (2026-08-14 denetimi).
+  @override
+  void didPopNext() {
+    _checkSpin();
+  }
+
   void _startCountdown() {
     _countdownTimer?.cancel();
     _updateCountdown();
@@ -152,6 +180,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
   @override
   void dispose() {
+    appRouteObserver.unsubscribe(this);
     _spinController.dispose();
     _prizeAnimController.dispose();
     _countdownTimer?.cancel();

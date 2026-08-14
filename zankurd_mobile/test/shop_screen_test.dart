@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/avatar_identity.dart';
@@ -49,6 +50,11 @@ Widget _shell(Widget child) {
 }
 
 void main() {
+  // Neon/altın çerçeve satın alma `loadAvatarIdentity`/`updateAvatarIdentity`
+  // üzerinden `SharedPreferences`e dokunur; mock'lanmazsa platform kanalı
+  // hiç yanıt vermediği için widget testi sonsuza kadar asılı kalır.
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+
   test('mağaza kozmetik etkileri profil kimliğine uygulanır', () {
     const identity = AvatarIdentity(iconId: 'roj', colorHex: '#E94560');
 
@@ -62,6 +68,35 @@ void main() {
     );
     expect(applyShopPurchaseEffect('spin_wheel_extra', identity), identity);
   });
+
+  // 2026-08-14 denetimi: 'avatar_frame_neon' bu iki yerin (etki
+  // fonksiyonu + _applyPurchaseEffect koruması) İKİSİNDE de eksikti.
+  // Satın alma coini düşürüp kutlama dialog'unu gösteriyordu ama
+  // `frameId` hiç 'neon' olmuyordu — profile dönünce çerçeve yoktu.
+  test('neon çerçeve satın alınca frameId "neon" olur', () {
+    const identity = AvatarIdentity(iconId: 'roj', colorHex: '#E94560');
+
+    expect(
+      applyShopPurchaseEffect('avatar_frame_neon', identity).frameId,
+      'neon',
+    );
+  });
+
+  testWidgets(
+    'neon çerçeve satın alınca depoya yazılan kimlikte frameId "neon" olur',
+    (tester) async {
+      final repository = _ShopRepository(coins: 1000);
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Neon Çerçeve'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Satın Al'));
+      await tester.pumpAndSettle();
+
+      expect((await repository.loadAvatarIdentity()).frameId, 'neon');
+    },
+  );
 
   // 2026-07-31: katalog 13 ürün tanımlıyordu ama yalnız 3'ü yayınlanıyordu;
   // kalan 10'u ölü veriydi ve `_supportedItemIds`e yanlışlıkla eklenirlerse
@@ -93,6 +128,27 @@ void main() {
     expect(find.text('Premium Renkler'), findsNothing);
     expect(tester.takeException(), isNull);
   });
+
+  // 2026-08-14 denetimi: çarka giden TEK yol, bakiye TAM 0 iken görünen
+  // `_buildEarnCoinCta`ydı. Bakiyesi 0'dan farklı bir oyuncu (ör. burada
+  // 500 coin) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
+  // bakiyeden bağımsız her zaman görünmeli ve çarka götürmeli.
+  testWidgets(
+    'çark girişi bakiye sıfır olmasa da görünür ve çarka götürür',
+    (tester) async {
+      final repository = _ShopRepository(coins: 500);
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      final entry = find.byKey(const ValueKey('shop-spin-wheel-entry'));
+      expect(entry, findsOneWidget);
+
+      await tester.tap(entry);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Günün Çarkı'), findsOneWidget);
+    },
+  );
 
   testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
     tester,

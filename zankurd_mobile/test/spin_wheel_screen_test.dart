@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/utils/app_route.dart';
 
 /// Çark durumunu deterministik kontrol eden sahte depo.
 class _SpinRepository extends MockZanKurdRepository {
@@ -157,6 +158,62 @@ void main() {
     expect(find.text('Tekrar'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  // 2026-08-14 denetimi: mağazadan ekstra çark satın alma bu ekranı
+  // kapatmadan olabilir (ör. bu ekran üstüne mağaza push edilip satın
+  // alma sonrası geri dönülür). `_canSpin` yalnız `initState`teki tek
+  // seferlik kontrolden geliyordu; ekran hâlâ mount'lu kaldığı için
+  // (dispose olup initState tekrar çalışmadığı için) sunucuda hak
+  // açılsa bile buton "yarın gel" kilidinde kalıyordu. `RouteAware`
+  // aboneliği bu ekran yeniden görünür olduğunda durumu tazeler.
+  testWidgets(
+    'üstüne başka rota push edilip geri dönülünce (aynı ekran oturumu) '
+    'hak yeniden değerlendirilir',
+    (tester) async {
+      await useTallPhoneViewport(tester);
+      final repository = _SpinRepository(canSpin: false);
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider<LanguageProvider>(
+              create: (_) => LanguageProvider()..setLang('tr'),
+            ),
+            ChangeNotifierProvider<SoundProvider>(
+              create: (_) => SoundProvider(),
+            ),
+            ChangeNotifierProvider<ReducedMotionProvider>(
+              create: (_) => ReducedMotionProvider(),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.dark(),
+            navigatorObservers: [appRouteObserver],
+            home: SpinWheelScreen(repository: repository),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+
+      final navigator = tester.state<NavigatorState>(find.byType(Navigator));
+      navigator.push(MaterialPageRoute<void>(builder: (_) => const SizedBox()));
+      await tester.pumpAndSettle();
+
+      // Sunucuda ekstra hak açıldı (ör. mağazadan satın alındı) — bu
+      // SpinWheelScreen instance'ı hiç dispose olmadı.
+      repository.canSpin = true;
+
+      navigator.pop();
+      await tester.pumpAndSettle();
+
+      expect(find.text('Çevir!'), findsOneWidget);
+      final button = tester.widget<FilledButton>(find.byType(FilledButton));
+      expect(button.onPressed, isNotNull);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('çark durum hatası görünür ve kontrol yeniden denenir', (
     tester,

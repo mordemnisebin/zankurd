@@ -48,6 +48,13 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   if (itemId == 'avatar_frame_gold') {
     return identity.copyWith(frameId: 'gold');
   }
+  // Neon çerçeve satın alındığında kutlama dialog'u çıkıyor ama profile
+  // dönünce hiçbir şey görünmüyordu: bu dal hiç yoktu, yani `frameId`
+  // asla 'neon' olarak yazılmıyordu — sahiplik `hasPurchased` ile
+  // kaydediliyor ama AKTİF çerçeve hiç değişmiyordu (2026-08-14 denetimi).
+  if (itemId == 'avatar_frame_neon') {
+    return identity.copyWith(frameId: 'neon');
+  }
   if (itemId == 'profile_badge_vip') {
     return identity.copyWith(showcaseTitle: 'VIP');
   }
@@ -510,7 +517,14 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> _applyPurchaseEffect(String itemId) async {
-    if (itemId != 'avatar_frame_gold' && itemId != 'profile_badge_vip') {
+    // Bu koruma `applyShopPurchaseEffect`in gerçekten bir şey yaptığı
+    // ürünlerle senkron kalmalı — 'avatar_frame_neon' burada yoktu ve dal
+    // hiç açılmıyordu, yani neon satın alan oyuncu için
+    // `loadAvatarIdentity`/`updateAvatarIdentity` hiç çağrılmıyordu
+    // (2026-08-14 denetimi).
+    if (itemId != 'avatar_frame_gold' &&
+        itemId != 'avatar_frame_neon' &&
+        itemId != 'profile_badge_vip') {
       return;
     }
     try {
@@ -613,6 +627,30 @@ class _ShopScreenState extends State<ShopScreen> {
         iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
 
         actions: [
+          // Günlük çarka giden TEK kalıcı yol. Öncesinde çarka erişim
+          // yalnız bakiye TAM 0 iken görünen `_buildEarnCoinCta` ve
+          // yetersiz-bakiye dialog'undaki "coin kazan" düğmesiyle sınırlıydı
+          // — bakiyesi 0'dan farklı bir oyuncu çarkı bir daha hiç
+          // bulamıyordu. Bu düğme bakiyeden bağımsız her zaman görünür
+          // (2026-08-14 denetimi).
+          Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: IconButton(
+              key: const ValueKey('shop-spin-wheel-entry'),
+              icon: Icon(
+                AppIcons.dice,
+                color: AppTheme.textPrimaryColor(context),
+              ),
+              tooltip: context.t(K.wheelTitle),
+              onPressed: () {
+                Navigator.of(context).push(
+                  AppRoute<void>(
+                    page: SpinWheelScreen(repository: widget.repository),
+                  ),
+                );
+              },
+            ),
+          ),
           // Dalga 5: devasa bakiye kartı yerine kompakt coin chip'i.
           Padding(
             padding: const EdgeInsets.only(right: 12),
