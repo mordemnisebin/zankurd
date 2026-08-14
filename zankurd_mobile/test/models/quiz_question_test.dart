@@ -97,6 +97,28 @@ void main() {
       },
     );
 
+    // Cümle kurmada `answers` bir şık listesi değil kelime havuzudur ve
+    // gönderilen cevap havuzdaki tek bir kelimeyle değil `correctAnswer`
+    // (birleştirilmiş cümle) ile karşılaştırılmalı. Eskiden bu metot
+    // `answers.indexOf(answer)` çalıştırıyordu — cümle asla havuzdaki tek
+    // bir kelimeye eşit olmadığı için sonuç hep -1'e, dolayısıyla cevap hep
+    // boş dizeye düşüyordu; sonraki karşılaştırma bu yüzden hep başarısız
+    // oluyordu (bkz. `MockZanKurdRepository.submitAnswer` testi altta).
+    test('optionKeyForAnswer cümle kurmada ham cümleyi olduğu gibi taşır', () {
+      const question = QuizQuestion(
+        id: 'q_word_order',
+        category: 'Ziman',
+        prompt: 'Cümleyi kur',
+        answers: ['im', 'xwendekar', 'Ez'],
+        correctAnswer: 'Ez xwendekar im',
+        explanation: 'Doğru cümle',
+        type: QuestionType.wordOrdering,
+      );
+
+      expect(question.optionKeyForAnswer('Ez xwendekar im'), 'Ez xwendekar im');
+      expect(question.optionKeyForAnswer('im Ez xwendekar'), 'im Ez xwendekar');
+    });
+
     test('true false display order stays stable', () {
       const question = QuizQuestion(
         id: 'q_tf',
@@ -183,6 +205,67 @@ void main() {
         first.map((question) => question.id),
         isNot(second.map((q) => q.id)),
       );
+    });
+
+    // ## Kusur
+    //
+    // `submitAnswer` her soru tipi için `answers.indexOf(correctAnswer)`u
+    // A-D anahtarına çevirip gelen cevapla karşılaştırıyordu. Cümle
+    // kurmada `answers` kelime havuzu, `correctAnswer` ise birleştirilmiş
+    // cümledir — `indexOf` bu cümleyi tek bir kelime arasında asla bulamaz,
+    // sonuç hep -1'e, eşleme hep 'D'ye düşer. `optionKeyForAnswer` da
+    // (yukarıdaki eski davranışıyla) gelen cevabı boş dizeye indirgediği
+    // için karşılaştırma hep başarısızdı: cümle kurma soruları yerel
+    // (offline/mock) puanlama hattında HER ZAMAN yanlış işaretleniyordu,
+    // kullanıcı doğru cümleyi kursa bile (2026-08-14 denetimi).
+    //
+    // ## Düzeltme
+    //
+    // `submitAnswer` artık cümle kurma tipini ayrı ele alır: doğruluk,
+    // gönderilen cevabın `correctAnswer`la (kenar boşlukları hariç)
+    // birebir eşleşmesiyle ölçülür.
+    group('submitAnswer cümle kurma sorularını doğru puanlar', () {
+      const question = QuizQuestion(
+        id: 'q_word_order',
+        category: 'Ziman',
+        prompt: 'Cümleyi kur',
+        answers: ['im', 'xwendekar', 'Ez'],
+        correctAnswer: 'Ez xwendekar im',
+        explanation: 'Doğru cümle',
+        type: QuestionType.wordOrdering,
+      );
+
+      test('doğru sırayla kurulan cümle doğru sayılır', () async {
+        final repository = MockZanKurdRepository();
+        final room = repository.createRoom();
+
+        final result = await repository.submitAnswer(
+          room: room,
+          question: question,
+          selectedOptionOptionKey: question.optionKeyForAnswer(
+            'Ez xwendekar im',
+          ),
+          responseMs: 2000,
+        );
+
+        expect(result['is_correct'], isTrue);
+      });
+
+      test('yanlış sırayla kurulan cümle yanlış sayılır', () async {
+        final repository = MockZanKurdRepository();
+        final room = repository.createRoom();
+
+        final result = await repository.submitAnswer(
+          room: room,
+          question: question,
+          selectedOptionOptionKey: question.optionKeyForAnswer(
+            'im Ez xwendekar',
+          ),
+          responseMs: 2000,
+        );
+
+        expect(result['is_correct'], isFalse);
+      });
     });
   });
 }

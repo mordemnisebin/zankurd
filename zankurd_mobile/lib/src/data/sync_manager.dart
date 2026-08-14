@@ -54,6 +54,7 @@ class SyncManager {
   static const _legacyQueueKey = 'zankurd.syncQueue';
   static const _legacyQuarantineKey = 'zankurd.syncQueue.legacyQuarantine';
   static const _queueKeyPrefix = 'zankurd.syncQueue.v2.';
+  static const _failedQueueKeyPrefix = 'zankurd.syncQueue.failed.v1.';
   static const _maxRetries = 5;
   static int _queueSequence = 0;
   static SyncManager? _instance;
@@ -62,6 +63,8 @@ class SyncManager {
   final ConnectivityMonitor _connectivityMonitor;
   final String? _ownerUserId;
   final List<Map<String, dynamic>> _queue = [];
+  // Retry'ları tükenmiş ödüller — bkz. [_recordExhaustedItem].
+  final List<Map<String, dynamic>> _failedItems = [];
   StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
   /// Aynı anda tek bir senkronizasyon turu çalışır. İkinci bir tetikleme
@@ -75,11 +78,24 @@ class SyncManager {
 
   static final ValueNotifier<int> pendingCountNotifier = ValueNotifier<int>(0);
   static final ValueNotifier<bool> syncingNotifier = ValueNotifier<bool>(false);
+  // Kalıcı olarak düşürülmüş (retry'ları tükenmiş) kayıt sayısı. `pending`
+  // sıfıra düştüğünde UI "bulutla senkronize" diyordu; oysa bu, kayıp bir
+  // ödülü de gizleyebiliyordu (2026-08-14 denetimi) — bkz. [_SyncStatusChip].
+  static final ValueNotifier<int> failedCountNotifier = ValueNotifier<int>(0);
 
   @visibleForTesting
   int get pendingCount => _queue.length;
 
+  @visibleForTesting
+  int get failedCount => _failedItems.length;
+
   String get _queueKey => _queueKeyForUser(_ownerUserId ?? 'signed-out');
+
+  String get _failedQueueKey =>
+      _failedQueueKeyForUser(_ownerUserId ?? 'signed-out');
+
+  static String _failedQueueKeyForUser(String userId) =>
+      '$_failedQueueKeyPrefix${Uri.encodeComponent(userId)}';
 
   static String _queueKeyForUser(String userId) =>
       '$_queueKeyPrefix${Uri.encodeComponent(userId)}';
@@ -116,6 +132,7 @@ class SyncManager {
   void _notifyNotifiers() {
     pendingCountNotifier.value = _queue.length;
     syncingNotifier.value = _syncing;
+    failedCountNotifier.value = _failedItems.length;
   }
 
   /// [restart] için saklanır: `shutdown` singleton'ı boşaltır ama
@@ -256,9 +273,11 @@ class SyncManager {
     inst.dispose();
     if (discardQueue && inst._ownerUserId != null) {
       await _removeStoredQueueForUser(inst._ownerUserId);
+      await _removeStoredFailedQueueForUser(inst._ownerUserId);
     }
     pendingCountNotifier.value = 0;
     syncingNotifier.value = false;
+    failedCountNotifier.value = 0;
   }
 
   /// Sunucuda başarıyla silinen hesabın yalnız kendi kalıcı kuyruğunu atar.
@@ -301,6 +320,12 @@ class SyncManager {
           cleanupStack ??= stack;
         }
         try {
+          await _removeStoredFailedQueueForUser(normalized, prefs: prefs);
+        } catch (error, stack) {
+          cleanupError ??= error;
+          cleanupStack ??= stack;
+        }
+        try {
           await _removeStorageKeyDurably(_legacyQuarantineKey, prefs: prefs);
         } catch (error, stack) {
           cleanupError ??= error;
@@ -328,6 +353,7 @@ class SyncManager {
     _queueSequence = 0;
     pendingCountNotifier.value = 0;
     syncingNotifier.value = false;
+    failedCountNotifier.value = 0;
   }
 
   void _startConnectivityListener() {
@@ -423,6 +449,31 @@ class SyncManager {
       _queue
         ..clear()
         ..addAll(decoded.map((item) => Map<String, dynamic>.from(item as Map)));
+    }
+
+    // Bozuk bir kayıt burada asıl kuyruğun yüklenmesini engellememeli —
+    // bu liste yalnız bilgilendirici (bkz. [_recordExhaustedItem]), kritik
+    // finansal veri değil.
+    try {
+      final failedStr = prefs.getString(_failedQueueKey);
+      if (failedStr != null) {
+        final decodedFailed = jsonDecode(failedStr);
+        if (decodedFailed is List) {
+          _failedItems
+            ..clear()
+            ..addAll(
+              decodedFailed
+                  .whereType<Map>()
+                  .map((item) => Map<String, dynamic>.from(item)),
+            );
+        }
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'SyncManager load failed queue',
+      );
     }
     _notifyNotifiers();
   }
@@ -566,6 +617,12 @@ class SyncManager {
     SharedPreferences? prefs,
   }) => _removeStorageKeyDurably(_queueKeyForUser(userId), prefs: prefs);
 
+  static Future<void> _removeStoredFailedQueueForUser(
+    String userId, {
+    SharedPreferences? prefs,
+  }) =>
+      _removeStorageKeyDurably(_failedQueueKeyForUser(userId), prefs: prefs);
+
   static Future<void> _removeStorageKeyDurably(
     String key, {
     SharedPreferences? prefs,
@@ -613,6 +670,16 @@ class SyncManager {
       ErrorReporter.record(e, stack, reason: 'SyncManager save queue');
       developer.log('Failed to save sync queue: $e', name: 'SyncManager');
       if (propagateFailure) rethrow;
+    }
+  }
+
+  Future<void> _saveFailedQueue() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_failedQueueKey, jsonEncode(_failedItems));
+    } catch (e, stack) {
+      ErrorReporter.record(e, stack, reason: 'SyncManager save failed queue');
+      developer.log('Failed to save failed queue: $e', name: 'SyncManager');
     }
   }
 
@@ -833,6 +900,7 @@ class SyncManager {
             'Max retries reached for item ($item): $e. Dropping.',
             name: 'SyncManager',
           );
+          _recordExhaustedItem(item);
         } else {
           item['retries'] = retries;
           failedItems.add(item);
@@ -851,6 +919,7 @@ class SyncManager {
             'Max retries reached for item ($item): $e. Dropping.',
             name: 'SyncManager',
           );
+          _recordExhaustedItem(item);
         } else {
           item['retries'] = retries;
           failedItems.add(item);
@@ -868,7 +937,40 @@ class SyncManager {
       _queue.remove(item);
     }
     _queue.insertAll(0, failedItems);
+    _notifyNotifiers();
     await _saveQueue();
+  }
+
+  /// Retry'ları tükenmiş bir ödülü kalıcı "senkronize edilemedi" listesine
+  /// taşır.
+  ///
+  /// Eskiden bu noktada kayıt yalnız `ErrorReporter.record` ile loglanıp
+  /// kuyruktan düşüyordu — `_queue`ya geri eklenmediği için `pendingCount`
+  /// hemen 0'a iniyor, `_SyncStatusChip` de "bulutla senkronize" diyordu.
+  /// Oysa ödül (ör. tur sonunda kazanılan coin) sunucuya HİÇ ulaşmamıştı;
+  /// kullanıcı bunu asla öğrenemiyordu (2026-08-14 denetimi). Bu liste
+  /// [failedCountNotifier] ile UI'a sızar ve [retryFailedItems] ile
+  /// kullanıcı elle yeniden deneyebilir.
+  void _recordExhaustedItem(Map<String, dynamic> item) {
+    _failedItems.add(item);
+    unawaited(_saveFailedQueue());
+  }
+
+  /// Kalıcı olarak düşürülmüş kayıtları kuyruğa geri koyup yeniden dener.
+  /// Kullanıcı [failedCountNotifier] uyarısına elle karşılık verdiğinde
+  /// çağrılır — otomatik tekrar denemez, aksi hâlde aynı kalıcı hata
+  /// (ör. eksik migration) sonsuz döngüye girer.
+  Future<void> retryFailedItems() async {
+    if (_failedItems.isEmpty) return;
+    for (final item in _failedItems) {
+      item['retries'] = 0;
+    }
+    _queue.addAll(_failedItems);
+    _failedItems.clear();
+    _notifyNotifiers();
+    await _saveFailedQueue();
+    await _saveQueue();
+    unawaited(sync());
   }
 
   Future<void> clearQueue() async {

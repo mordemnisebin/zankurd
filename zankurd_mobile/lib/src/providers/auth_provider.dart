@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/xp_store.dart';
@@ -33,6 +34,11 @@ class AccountLocalCleanupException implements Exception {
 class AuthProvider extends ChangeNotifier {
   static String get authRedirectUri =>
       kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
+
+  /// Cihazın son sahibi olarak kaydedilen kullanıcı kimliği — bkz.
+  /// [_resetLocalProgressIfForeignUser].
+  static const _deviceOwnerUserIdKey =
+      'zankurd.localProgress.deviceOwnerUserId';
 
   final SupabaseClient? _client;
   StreamSubscription<AuthState>? _authSub;
@@ -78,20 +84,67 @@ class AuthProvider extends ChangeNotifier {
       // cihaza değil hesaba ait olmasını ve cihaz paylaşımında entitlement
       // sızmamasını sağlar.
       if (changed) _syncPremiumIdentity(next);
-      // `signOut()` SyncManager'ı kapatıyor; yeni bir oturum açıldığında
-      // onu geri kuran hiçbir yer yoktu. Aynı oturumda çıkıp tekrar giren
-      // kullanıcıda çevrimdışı ödül kuyruğu ölü kalıyor ve `instance`
-      // getter'ı `StateError` fırlatıyordu (2026-07-31 denetimi).
-      if (changed && next != null) {
-        unawaited(
-          SyncManager.restart().catchError((Object error, StackTrace stack) {
-            ErrorReporter.record(error, stack, reason: 'SyncManager restart');
-          }),
-        );
+      if (next != null) {
+        // Sırayla: önce yabancı kullanıcı denetimi (yerel ilerleme yeni
+        // sahibe devrolmasın), sonra SyncManager restart — aksi hâlde
+        // eski kullanıcının kuyruğu yeni kullanıcı adına senkron olabilir.
+        unawaited(_handleSessionUser(next, restartSync: changed));
       }
       notifyListeners();
     });
   }
+
+  Future<void> _handleSessionUser(
+    User user, {
+    required bool restartSync,
+  }) async {
+    try {
+      await _resetLocalProgressIfForeignUser(user);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'foreign user progress guard');
+    }
+    // `signOut()` SyncManager'ı kapatıyor; yeni bir oturum açıldığında onu
+    // geri kuran hiçbir yer yoktu. Aynı oturumda çıkıp tekrar giren
+    // kullanıcıda çevrimdışı ödül kuyruğu ölü kalıyor ve `instance` getter'ı
+    // `StateError` fırlatıyordu (2026-07-31 denetimi).
+    if (restartSync) {
+      try {
+        await SyncManager.restart();
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'SyncManager restart');
+      }
+    }
+  }
+
+  /// Aynı cihazda önceki oturumdan FARKLI bir kullanıcı geldiğinde yerel
+  /// ilerlemeyi (XP/streak/mistake/rozet/...) temizler.
+  ///
+  /// `XPStore`, `StreakStore`, `MistakeStore` vb. SharedPreferences'ta
+  /// GLOBAL anahtarlarla tutulur — kullanıcıya özel değil. `signOut()`
+  /// bunları temizler, ama sunucu tarafında bir oturumun yerini BAŞKA bir
+  /// oturum aldığında (ör. aktif bir anonim/hesap oturumu üzerinden
+  /// `signInWithPassword` ile farklı bir hesaba giriş — ara bir
+  /// `signedOut` olayı hiç gelmez, GoTrue oturumu doğrudan değiştirir)
+  /// `signOut()` hiç çağrılmaz. Önceki kullanıcının XP/streak/rozetleri
+  /// sessizce yeni kullanıcıya devrolurdu (2026-08-14 denetimi).
+  ///
+  /// Cihazın son sahibi bu yüzden ayrıca saklanır. İlk okuma (henüz hiç
+  /// kayıt yoksa) sıfırlamaz: bu alan uygulamaya sonradan eklendiği için,
+  /// hâlihazırda oturum açmış bir kullanıcının kendi ilerlemesini ilk
+  /// açılışta yanlışlıkla silmemek gerekir — misafirden hesaba yükseltme
+  /// de kimliği koruduğu için (`upgradeGuestAccount`/`linkIdentity`) etkilenmez.
+  Future<void> _resetLocalProgressIfForeignUser(User user) async {
+    final prefs = await SharedPreferences.getInstance();
+    final previousOwner = prefs.getString(_deviceOwnerUserIdKey);
+    if (previousOwner != null && previousOwner != user.id) {
+      await _clearLocalProgressStores();
+    }
+    await prefs.setString(_deviceOwnerUserIdKey, user.id);
+  }
+
+  @visibleForTesting
+  Future<void> debugResetLocalProgressIfForeignUser(User user) =>
+      _resetLocalProgressIfForeignUser(user);
 
   /// Test/mock constructor — Supabase başlatılmadan kullanım için.
   AuthProvider.test({bool authenticated = false})
@@ -357,6 +410,93 @@ class AuthProvider extends ChangeNotifier {
     await signOut();
   }
 
+  /// Yerel ilerleme store'larını (XP/streak/mistake/rozet/...) temizler.
+  ///
+  /// [signOut] ve [_resetLocalProgressIfForeignUser] arasında paylaşılır:
+  /// her ikisi de aynı "bu cihaz artık başka birine ait" durumunu ele alır,
+  /// yalnız tetikleyicileri farklıdır (açık çıkış / sessiz hesap değişimi).
+  Future<void> _clearLocalProgressStores() async {
+    try {
+      final xpStore = await XPStore.load();
+      await xpStore.clear();
+      XPStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'XPStore clear failed');
+    }
+
+    try {
+      final streakStore = await StreakStore.load();
+      await streakStore.clear();
+      StreakStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'StreakStore clear failed');
+    }
+
+    try {
+      final mistakeStore = await MistakeStore.load();
+      await mistakeStore.clear();
+      MistakeStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'MistakeStore clear failed');
+    }
+
+    try {
+      final seenStore = await SeenQuestionStore.load();
+      await seenStore.clear();
+      SeenQuestionStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'SeenQuestionStore clear failed');
+    }
+
+    try {
+      final achievementStore = await AchievementStore.load();
+      await achievementStore.clear();
+      AchievementStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'AchievementStore clear failed');
+    }
+
+    try {
+      final masteryStore = await MasteryStore.load();
+      await masteryStore.clear();
+      MasteryStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'MasteryStore clear failed');
+    }
+
+    try {
+      final missionStore = await DailyMissionStore.load();
+      await missionStore.clear();
+      DailyMissionStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'DailyMissionStore clear failed');
+    }
+
+    try {
+      final placementStore = await PlacementStore.load();
+      await placementStore.clear();
+      PlacementStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'PlacementStore clear failed');
+    }
+
+    try {
+      final storyStore = await StoryProgressStore.load();
+      await storyStore.clear();
+      StoryProgressStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'StoryProgressStore clear failed');
+    }
+
+    try {
+      final levelStore = await LevelProgressStore.load();
+      await levelStore.clear();
+      LevelProgressStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'LevelProgressStore clear failed');
+    }
+  }
+
   Future<void> signOut({
     bool discardPendingRewards = false,
     String? pendingRewardsOwnerId,
@@ -390,117 +530,7 @@ class AuthProvider extends ChangeNotifier {
       ErrorReporter.record(e, s, reason: 'PremiumService logout on signOut');
     }
 
-    try {
-      final xpStore = await XPStore.load();
-      await xpStore.clear();
-      XPStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'XPStore clear on signOut failed');
-    }
-
-    try {
-      final streakStore = await StreakStore.load();
-      await streakStore.clear();
-      StreakStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'StreakStore clear on signOut failed');
-    }
-
-    try {
-      final mistakeStore = await MistakeStore.load();
-      await mistakeStore.clear();
-      MistakeStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'MistakeStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final seenStore = await SeenQuestionStore.load();
-      await seenStore.clear();
-      SeenQuestionStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'SeenQuestionStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final achievementStore = await AchievementStore.load();
-      await achievementStore.clear();
-      AchievementStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'AchievementStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final masteryStore = await MasteryStore.load();
-      await masteryStore.clear();
-      MasteryStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'MasteryStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final missionStore = await DailyMissionStore.load();
-      await missionStore.clear();
-      DailyMissionStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'DailyMissionStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final placementStore = await PlacementStore.load();
-      await placementStore.clear();
-      PlacementStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'PlacementStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final storyStore = await StoryProgressStore.load();
-      await storyStore.clear();
-      StoryProgressStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'StoryProgressStore clear on signOut failed',
-      );
-    }
-
-    try {
-      final levelStore = await LevelProgressStore.load();
-      await levelStore.clear();
-      LevelProgressStore.resetInstance();
-    } catch (e, s) {
-      ErrorReporter.record(
-        e,
-        s,
-        reason: 'LevelProgressStore clear on signOut failed',
-      );
-    }
+    await _clearLocalProgressStores();
 
     final client = _client;
     if (client == null) {

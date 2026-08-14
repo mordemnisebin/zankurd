@@ -123,6 +123,35 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
   }
 }
 
+/// `awardQuizCoins` her seferinde başarısız olur — retry tükenmesini
+/// gerçek bir HTTP çağrısına ihtiyaç duymadan tetikler.
+class _AlwaysFailingRewardRepository extends SupabaseZanKurdRepository {
+  _AlwaysFailingRewardRepository({required this.userId})
+    : super(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+  String? userId;
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<int> awardQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    GameRoom? room,
+  }) async {
+    throw Exception('injected: reward RPC always fails');
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -630,5 +659,71 @@ void main() {
     // biter.
     expect(raw.contains('"amount"'), isFalse);
     expect(raw.contains('"coins"'), isFalse);
+  });
+
+  /// ## Kusur
+  ///
+  /// Retry'ları tükenen bir çevrimdışı ödül (`_maxRetries` = 5), her iki
+  /// `catch` dalında da yalnız `ErrorReporter.record` ile loglanıp
+  /// `_queue`ya geri eklenmeden düşüyordu. `_queue` boşaldığı için
+  /// `pendingCountNotifier` hemen 0'a iniyor, profil ekranındaki
+  /// `_SyncStatusChip` de "Bulutla senkronize" yazıyordu — oysa
+  /// `awardQuizCoins` RPC'si sunucuda HİÇ çalışmamıştı. Kullanıcı tur
+  /// sonunda "kazandığı" coin'in aslında hiç hesabına geçmediğini asla
+  /// öğrenemiyordu (2026-08-14 denetimi).
+  ///
+  /// ## Düzeltme
+  ///
+  /// Retry tükenince kayıt artık `_failedItems`e taşınır, ayrı bir
+  /// `zankurd.syncQueue.failed.v1.<userId>` anahtarında kalıcılaşır ve
+  /// `SyncManager.failedCountNotifier` ile UI'a sızar. `retryFailedItems()`
+  /// kullanıcı elle karşılık verdiğinde kaydı kuyruğa geri koyup yeniden
+  /// dener; otomatik değildir — aksi hâlde kalıcı bir hata (ör. eksik
+  /// migration, bkz. 42883 dalı) sonsuz döngüye girerdi.
+  test('retry tükenen ödül sessizce kaybolmaz, "senkronize edilemedi" '
+      'durumuna taşınır ve elle yeniden denenebilir', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue.v2.user-a': jsonEncode([
+        {
+          'queueId': 'q-exhausted-1',
+          'type': 'sync_quiz_reward',
+          'score': 100,
+          'correctCount': 1,
+          'bestStreak': 1,
+          'totalQuestions': 1,
+          'roomId': 'room-1',
+          'playerId': 'user-a',
+          'timestamp': 1,
+          // Bu turda başarısız olursa 5'e (maxRetries) ulaşır.
+          'retries': 4,
+        },
+      ]),
+    });
+    final repository = _AlwaysFailingRewardRepository(userId: 'user-a');
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.sync();
+
+    // Kayıt kuyruktan düştü ama SESSİZCE kaybolmadı.
+    expect(manager.pendingCount, 0);
+    expect(manager.failedCount, 1);
+    expect(SyncManager.pendingCountNotifier.value, 0);
+    expect(SyncManager.failedCountNotifier.value, 1);
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(
+      prefs.getString('zankurd.syncQueue.failed.v1.user-a'),
+      contains('room-1'),
+    );
+
+    // Kullanıcı elle yeniden dener.
+    await manager.retryFailedItems();
+    expect(manager.failedCount, 0);
+    expect(manager.pendingCount, 1);
+    expect(SyncManager.failedCountNotifier.value, 0);
+    expect(prefs.getString('zankurd.syncQueue.v2.user-a'), contains('room-1'));
   });
 }
