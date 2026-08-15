@@ -142,7 +142,7 @@ class _AlwaysFailingRewardRepository extends SupabaseZanKurdRepository {
   String? get currentUserId => userId;
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,

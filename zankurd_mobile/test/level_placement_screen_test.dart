@@ -88,7 +88,30 @@ void main() {
       final questions = state as dynamic;
       // ignore: avoid_dynamic_calls
       final QuizQuestion current = questions.currentQuestionForTest;
-      await tester.tap(find.text(current.correctAnswer).last);
+      // `fillInBlank`/`wordOrdering` şık listesi değil ayrı arayüzler
+      // gösterir; doğru cevap `find.text` ile bulunacak bir buton değildir
+      // (content genişlemesinin getirdiği türler, 2026-08-15 birleştirmesi).
+      if (current.type == QuestionType.fillInBlank) {
+        await tester.enterText(
+          find.byKey(const ValueKey('fill-in-blank-input')),
+          current.correctAnswer,
+        );
+        await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
+      } else if (current.type == QuestionType.wordOrdering) {
+        for (final word in current.correctAnswer.split(' ')) {
+          await tester.tap(find.text(word).first);
+          await tester.pumpAndSettle();
+        }
+        await tester.tap(find.text('Kontrol et'));
+      } else {
+        // `wrap()` Türkçe kuruyor; %100 çeviri kapsamasıyla artık pek çok
+        // soru `correctAnswerTr`yi çiziyor, ham `correctAnswer` (Kurmancî)
+        // değil (content genişlemesinin getirdiği kapsama, 2026-08-15
+        // birleştirmesi).
+        await tester.tap(
+          find.text(current.correctAnswerFor(isKu: false)).last,
+        );
+      }
       await tester.pumpAndSettle();
     }
 
