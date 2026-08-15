@@ -1,0 +1,374 @@
+[
+  {
+    "questionId": "sf_cand_0001",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_flatbread",
+    "claimId": "cand_nan_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/flatbread-making-and-sharing-culture-lavash-katyrma-jupka-yufka-01181",
+    "exactSupportingFact": "It is baked using a tandyr/tanūr (an earth or stone oven in the ground), sāj (a metal plate) or kazan (a cauldron).",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, ev nanê kevneşopî ji bilî tenûrê li ser çi jî tê patin?",
+    "promptTr": "UNESCO'ya göre bu geleneksel ekmek, tandır dışında başka neyin üzerinde pişirilir?",
+    "answersKu": [
+      "Li ser kevirê sar",
+      "Li ser sêla hesinî",
+      "Li ser agirê vekirî",
+      "Di nav ava germ de"
+    ],
+    "answersTr": [
+      "Soğuk taş üzerinde",
+      "Demir sac üzerinde",
+      "Açık ateş üzerinde",
+      "Sıcak su içinde"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO dibêje ku ev nan di tenûrê de an li ser sêlê tê patin.",
+    "explanationTr": "UNESCO bu ekmeğin tandırda ya da sac üzerinde pişirildiğini belirtir."
+  },
+  {
+    "questionId": "sf_cand_0002",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_flatbread",
+    "claimId": "cand_nan_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/flatbread-making-and-sharing-culture-lavash-katyrma-jupka-yufka-01181",
+    "exactSupportingFact": "a tandyr/tanūr (an earth or stone oven in the ground)",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, tenûr ji çi tê çêkirin?",
+    "promptTr": "UNESCO'ya göre tandır neden yapılır?",
+    "answersKu": [
+      "Ji hesin an sifir",
+      "Ji ax an kevir",
+      "Ji dar an qamîş",
+      "Ji ard an hevîr"
+    ],
+    "answersTr": [
+      "Demir ya da bakırdan",
+      "Toprak ya da taştan",
+      "Ağaç ya da kamıştan",
+      "Un ya da hamurdan"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO dibêje ku tenûr ji ax an kevir tê çêkirin û di erdê de tê danîn.",
+    "explanationTr": "UNESCO tandırı, toprağa gömülü, toprak ya da taştan yapılan bir fırın olarak tanıtır."
+  },
+  {
+    "questionId": "sf_cand_0003",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_flatbread",
+    "claimId": "cand_nan_03",
+    "sourceReference": "https://ich.unesco.org/en/RL/flatbread-making-and-sharing-culture-lavash-katyrma-jupka-yufka-01181",
+    "exactSupportingFact": "Besides regular meals, flatbread is shared at weddings, births, funerals, various holidays and during prayers.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, ev nan ji bilî xwarina rojane di kîjan rewşan de jî tê parvekirin?",
+    "promptTr": "UNESCO'ya göre bu ekmek, günlük yemek dışında hangi durumlarda da paylaşılır?",
+    "answersKu": [
+      "Di dersên dibistanên gundan de",
+      "Di lîstikên zarokan de",
+      "Di dawet û jidayikbûnan de",
+      "Di karên çandiniyê yên biharê de"
+    ],
+    "answersTr": [
+      "Köy okullarının derslerinde",
+      "Çocuk oyunlarında",
+      "Düğün ve doğumlarda",
+      "Bahar dönemi tarım işlerinde"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "UNESCO di nav van rewşan de dawet, jidayikbûn û cejnan diyar dike.",
+    "explanationTr": "UNESCO bu durumlar arasında düğün, doğum ve bayramları sayar."
+  },
+  {
+    "questionId": "sf_cand_0004",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_cay",
+    "claimId": "cand_cay_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/culture-of-cay-tea-a-symbol-of-identity-hospitality-and-social-interaction-01685",
+    "exactSupportingFact": "Tea culture in Azerbaijan and Türkiye is an important social practice that shows hospitality, builds and maintains social ties, and is used to celebrate important moments in the lives of communities.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, çanda çayê berî her tiştî çi nîşan dide?",
+    "promptTr": "UNESCO'ya göre çay kültürü her şeyden önce neyi gösterir?",
+    "answersKu": [
+      "Mêvandarî û girêdana civakî",
+      "Hêza aborî ya malbatên bajêr",
+      "Zanîna zanistî ya gelên herêmê",
+      "Şiyana leşkerî ya welatên cîran"
+    ],
+    "answersTr": [
+      "Misafirperverlik ve toplumsal bağ",
+      "Kentli ailelerin ekonomik gücü",
+      "Bölge halklarının bilimsel bilgisi",
+      "Komşu ülkelerin askerî kapasitesi"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "UNESCO dibêje ku çanda çayê mêvandariyê nîşan dide û girêdanên civakî ava dike û diparêze.",
+    "explanationTr": "UNESCO, çay kültürünün misafirperverliği gösterdiğini, toplumsal bağları kurup koruduğunu belirtir."
+  },
+  {
+    "questionId": "sf_cand_0005",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_cay",
+    "claimId": "cand_cay_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/culture-of-cay-tea-a-symbol-of-identity-hospitality-and-social-interaction-01685",
+    "exactSupportingFact": "Inscribed in 2022 (17.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Çanda çayê di kîjan salî de ket Lîsteya Nûnertiyê ya UNESCOyê?",
+    "promptTr": "Çay kültürü UNESCO Temsilî Liste'ye hangi yıl girdi?",
+    "answersKu": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "answersTr": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Ew di sala 2022an de (17.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2022'de (17.COM) UNESCO Temsilî Liste'ye girdi."
+  },
+  {
+    "questionId": "sf_cand_0006",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_alnaoor",
+    "claimId": "cand_naoor_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/traditional-craft-skills-and-arts-of-al-naoor-01694",
+    "exactSupportingFact": "Al-naoor is a wooden wheel that rotates on its axis.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, al-naoor çi ye?",
+    "promptTr": "UNESCO'ya göre al-naoor nedir?",
+    "answersKu": [
+      "Kaniyeke di bin erdê de",
+      "Bircek ji kevir a li ber çem",
+      "Bendaveke ji ax û kevir",
+      "Çerxeke dar a ku dizivire"
+    ],
+    "answersTr": [
+      "Yer altındaki bir kaynak",
+      "Nehir kıyısında taş bir kule",
+      "Toprak ve taştan bir baraj",
+      "Dönen ahşap bir çark"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "UNESCO al-naoorê wek çerxeke dar a ku li ser xwe dizivire dide nasîn.",
+    "explanationTr": "UNESCO al-naoor'u kendi ekseni etrafında dönen ahşap bir çark olarak tanıtır."
+  },
+  {
+    "questionId": "sf_cand_0007",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_alnaoor",
+    "claimId": "cand_naoor_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/traditional-craft-skills-and-arts-of-al-naoor-01694",
+    "exactSupportingFact": "It is used on the streams of the Euphrates River in Iraq, where water levels are lower than the adjacent fields.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, al-naoor li ser kîjan çemî tê bikaranîn?",
+    "promptTr": "UNESCO'ya göre al-naoor hangi nehir üzerinde kullanılır?",
+    "answersKu": [
+      "Dîcle",
+      "Firat",
+      "Zapa Mezin",
+      "Xabûr"
+    ],
+    "answersTr": [
+      "Dicle",
+      "Fırat",
+      "Büyük Zap",
+      "Habur"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO dibêje ku ew li ser çemikên Firatê tê bikaranîn, li cihên ku asta avê ji deştên nêzîk kêmtir e.",
+    "explanationTr": "UNESCO, su seviyesinin komşu tarlalardan düşük olduğu Fırat kollarında kullanıldığını belirtir."
+  },
+  {
+    "questionId": "sf_cand_0008",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 4,
+    "sourcePackId": "pack_unesco_alnaoor",
+    "claimId": "cand_naoor_03",
+    "sourceReference": "https://ich.unesco.org/en/RL/traditional-craft-skills-and-arts-of-al-naoor-01694",
+    "exactSupportingFact": "The wheel is made of twenty-four columns of wooden sticks and twenty-four clay jugs attached to the outer circumference with palm leaf ropes",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, li ser çerxa al-naoorê çend stûnên dar hene?",
+    "promptTr": "UNESCO'ya göre al-naoor çarkında kaç ahşap sütun bulunur?",
+    "answersKu": [
+      "12",
+      "18",
+      "24",
+      "36"
+    ],
+    "answersTr": [
+      "12",
+      "18",
+      "24",
+      "36"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "UNESCO dibêje ku çerx ji 24 stûnên dar pêk tê.",
+    "explanationTr": "UNESCO, çarkın 24 ahşap sütun ve 24 toprak testiden oluştuğunu belirtir."
+  },
+  {
+    "questionId": "sf_cand_0009",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 4,
+    "sourcePackId": "pack_unesco_alnaoor",
+    "claimId": "cand_naoor_04",
+    "sourceReference": "https://ich.unesco.org/en/RL/traditional-craft-skills-and-arts-of-al-naoor-01694",
+    "exactSupportingFact": "the wheel is installed vertically between two stone pedestals on the streams of the river",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, çerxa al-naoorê di navbera çi de tê danîn?",
+    "promptTr": "UNESCO'ya göre al-naoor çarkı neyin arasına kurulur?",
+    "answersKu": [
+      "Di navbera du stûnên kevirî de",
+      "Di navbera du darên bilind de",
+      "Di navbera du dîwarên hesinî de",
+      "Di navbera du bircên axê de"
+    ],
+    "answersTr": [
+      "İki taş ayak arasına",
+      "İki yüksek ağaç arasına",
+      "İki demir duvar arasına",
+      "İki toprak kule arasına"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "UNESCO dibêje ku çerx di navbera du stûnên kevirî de tê danîn.",
+    "explanationTr": "UNESCO, çarkın dikey biçimde iki taş ayak arasına kurulduğunu belirtir."
+  },
+  {
+    "questionId": "sf_cand_0010",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_khidr_elias",
+    "claimId": "cand_khidr_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/khidr-elias-feast-and-its-vows-01159",
+    "exactSupportingFact": "during the last three days of the month",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, cejna Khidr Elias di kîjan rojên mehê de tê pîrozkirin?",
+    "promptTr": "UNESCO'ya göre Khidr Elias bayramı ayın hangi günlerinde kutlanır?",
+    "answersKu": [
+      "Di sê rojên pêşî de",
+      "Di heft rojên dawî de",
+      "Tenê di roja yekem de",
+      "Di sê rojên dawî de"
+    ],
+    "answersTr": [
+      "İlk üç günde",
+      "Son yedi günde",
+      "Yalnız ilk günde",
+      "Son üç günde"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "UNESCO dibêje ku ew di sê rojên dawî yên mehê de tê pîrozkirin.",
+    "explanationTr": "UNESCO, ayın son üç gününde kutlandığını belirtir."
+  },
+  {
+    "questionId": "sf_cand_0011",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_khidr_elias",
+    "claimId": "cand_khidr_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/khidr-elias-feast-and-its-vows-01159",
+    "exactSupportingFact": "Younger generations learn about the practice from older family members and at school.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, ciwan vê kevneşopiyê ji ku fêr dibin?",
+    "promptTr": "UNESCO'ya göre gençler bu geleneği nereden öğrenir?",
+    "answersKu": [
+      "Ji mezinên malbatê û li dibistanê",
+      "Tenê ji pirtûkên fermî yên dewletê",
+      "Tenê ji stranên gelêrî yên kevnar",
+      "Tenê ji wêneyên malbatê yên kevin"
+    ],
+    "answersTr": [
+      "Ailenin büyüklerinden ve okulda",
+      "Yalnız devletin resmî kitaplarından",
+      "Yalnız eski halk türkülerinden",
+      "Yalnız eski aile fotoğraflarından"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "UNESCO dibêje ku ciwan wê ji mezinên malbatê û li dibistanê fêr dibin.",
+    "explanationTr": "UNESCO, gençlerin bunu ailenin büyüklerinden ve okulda öğrendiğini belirtir."
+  },
+  {
+    "questionId": "sf_cand_0012",
+    "category": "Çand",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_khidr_elias",
+    "claimId": "cand_khidr_03",
+    "sourceReference": "https://ich.unesco.org/en/RL/khidr-elias-feast-and-its-vows-01159",
+    "exactSupportingFact": "Inscribed in 2016 (11.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "UNESCOyê cejna Khidr Elias di kîjan salî de tomar kir?",
+    "promptTr": "UNESCO Khidr Elias bayramını hangi yıl kaydetti?",
+    "answersKu": [
+      "2010",
+      "2013",
+      "2016",
+      "2019"
+    ],
+    "answersTr": [
+      "2010",
+      "2013",
+      "2016",
+      "2019"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Ew di sala 2016an de (11.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2016'da (11.COM) UNESCO Temsilî Liste'ye girdi."
+  }
+]

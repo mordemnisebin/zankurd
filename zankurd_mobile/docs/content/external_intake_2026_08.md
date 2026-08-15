@@ -638,3 +638,121 @@ alanında kayıtlı.
 3. Kol C (Kürdistan coğrafyası) Risk-A: iki bağımsız akademik kaynak
    bulunmadan tek soru üretilmeyecek.
 4. Ortak havuz 13; eşik 100. Aktivasyon yok.
+
+## Tur 10 (2026-08-07) — Çand/Muzîk, dengeli kaynak-önce üretim
+
+Branch: `content/source-first-culture-music-2026-08-07`
+
+Tur 9 sırayı "Çand/Muzîk" olarak bırakmıştı. Bu tur o sırayı, dış aday
+kurtarmayla değil, doğrudan açılmış kurumsal sayfalardan üretimle kapattı.
+
+    Çand   12 soru   Muzîk  12 soru   hepsi FETCHED_DIRECT
+    ortak havuz  25 -> 49   (dış 13, source-first 36)   eşik 100   aktivasyon: HAYIR
+
+"Dengeli" dört ayrı ölçüde tutuldu ve dördü de ölçülüyor: kategori başına
+eşit sayı, cevap pozisyonu (Çand 3/3/3/3, Muzîk 2/4/4/2), zorluk dağılımı,
+ve bölgesel/dünya içerik karışımı (Muzîk'te 7 bölgesel + 5 bölge dışı).
+
+### Erişilebilen tek kurumsal alan adı
+
+Denenen kaynakların çoğu bu ortamda kapalı çıktı ve hiçbiri arama özetiyle
+ikame edilmedi:
+
+    ich.unesco.org            açık    9 eleman sayfası okundu
+    folkways.si.edu           403     üç Kürt müziği albümü
+    metmuseum.org             429     tanbur / Ehl-i Hak sergisi
+    iranicaonline.org         403     "Kurdish music" maddesi
+    whc.unesco.org            403     Hewlêr Kalesi künyesi
+    loc.gov                   403
+    ich.unesco.org/.../00282  301     sonsuz yönlendirme (eski Nowruz kaydı)
+
+Tam liste ve gerekçeler `source_catalog.json` dosyalarının `failedSources`
+alanında.
+
+### Kürt içeriği: sıfır — ve niçin
+
+**Bu turda Kürt kültürüne/müziğine özgü tek soru üretilmedi.** Kürt içeriğini
+adıyla anan bütün kurumsal kaynaklar yukarıdaki listede: hepsi kapalı. Risk-A
+iki bağımsız kaynak ister; sıfır açıldı. Bellekten yazmak, Tur 1'de
+reddedilen DeepSeek atıf pratiğinin aynısı olurdu.
+
+Newroz da bu yüzden üretilmedi. UNESCO'nun çok uluslu Nowruz sayfası (02097)
+açıldı, ama okunabilen betimleyici cümleler ülke ülke ayrılmış ve dönen bölüm
+Moğolistan Kazaklarının Nauryz'ını anlatıyor: *"On 22 March, the Kazakh people
+of Mongolia rise early to greet the sunrise of the new year."* O cümleyi Kürt
+Newrozuna genellemek kaynağı esnetmek olurdu.
+
+Bu, bu turun en önemli eksiğidir ve kapatılması gereken asıl iştir.
+
+### Beşinci kapı deliği: kanıtsız Kurmancî sözcük
+
+Tur 9 "uydurulmuş bilimsel terim yazma" kararını doğru vermişti ama karar
+ÖLÇÜLEBİLİR değildi; bir sözcüğün yerleşik olduğuna göz kararı karar
+veriliyordu. `tool/content_authoring/check_kurmanji_attestation.py` kararı
+sayıya çevirir: oyuncuya görünen her Kurmancî sözcük 2050 soruluk korpusta
+en az bir kez geçmeli.
+
+İlk geçişte 24 sorunun görünür alanlarında **60 kanıtsız sözcük** çıktı.
+Hepsi tek tek incelendi ve üç yola ayrıldı:
+
+* özel ad (21) — `daff`, `tshalghi`, `sevdalinka`, `al-naoor`: kaynağın
+  yazdığı gibi bırakıldı, `allow_proper_nouns.json` içinde kayıtlı;
+* kanıtlı bir biçimin çekimi (19) — `tenûr` <- `tenûrê` x26, `çerx` <-
+  `çerxên` x3: her biri lemmasıyla `allow_inflections.json` içinde, ve bir
+  test her lemmanın korpusta gerçekten bulunduğunu doğruluyor;
+* kanıtsız (20) — `lût`, `firneke`, `qazan`, `nizm`, `erka`, `cenaze`,
+  `nimêjan`, `firaqên`, `stûnî`, `eksê`, `televîzyonê`, `endamên`,
+  `lêdervanên`, `pireke`, `rêbernameyên`, `xuyakirin`: **soru yeniden
+  yazıldı**, sözcük uydurulmadı.
+
+`pireke` ayrı bir ders: "köprü" diye yazılmıştı, ama korpusta `pir` ezici
+çoğunlukla *"çok"* demek (*"Hewa îro pir xweş e"*). Kanıt sayısına bakmak
+yetmiyor; kanıtın hangi anlamda olduğuna da bakmak gerekiyor.
+
+Kına (hena) kaydı bu yüzden düştü: Kurmancî'de kına «hene»dir ve korpusta
+«hene» ezici çoğunlukla *"vardır"* fiilidir (*"Di destê mirov de pênc tilî
+hene"*). İkinci bir yazım icat etmek yerine kayıt bekletildi.
+
+### Ölçümle çıkan üç kusur
+
+`tool/content_authoring/measure_source_first_batch.py` ölçümü üretir, insan
+yalnız yorumlar — Sînema turunda uzunluk oranı commit gövdesine elle ve
+yanlış yazılmıştı.
+
+    cevap pozisyonu   Çand 6/12 üçüncü şıkta, dördüncü şık HİÇ doğru değil
+                      (%50 / %0). 3/3/3/3'e çekildi.
+    uzunluk sinyali   3 soruda doğru şık tek başına en uzun (%25).
+                      Çeldiriciler aynı ayrıntı düzeyine çekildi; şimdi %0.
+    kalıp yinelemesi  5 yıl sorusu neredeyse aynı kökü paylaşıyordu; ölçüm
+                      bunları turdaş-yineleme olarak gösterdi, kalıp kırıldı.
+
+Dördüncüsü çeldirici uzunluğundaydı ve özel ad olduğu için soruyu
+değiştirmek gerekti: `daff` dört harf, diğer üç çalgı adı altı. Aynı kaynak
+cümlesinin başka bir olgusu soruldu.
+
+### `build_verified_pool.py`: iki düzeltme
+
+1. Source-first yolu tek kategoriye (`cinema/cinema_questions.json`)
+   sabitlenmişti; Çand/Muzîk eklendiğinde araç onları **görmezdi** ve havuz
+   sessizce eksik kalırdı. Artık dizin taranıyor.
+2. Intake dizini bulunamazsa dış kayıtlar sessizce sıfırlanıyor ve araç yine
+   de başarıyla çıkıyordu. Artık havuzda dış kayıt varken intake yoksa hata
+   veriyor; düşüş isteniyorsa `--allow-missing-intake` açıkça yazılmalı.
+
+Havuz `--check` ile idempotent doğrulandı: 49 -> 49.
+
+### Aktive edilen: 0
+
+Eşik 100, havuz 49. Aktivasyon yok, banka değişmedi, question-quality
+baseline hash'i değişmedi. Bekçi (`test/source_first_culture_music_test.dart`)
+staged kayıtların runtime bankasına sızmadığını ayrıca doğruluyor.
+
+### Sıradaki iş
+
+1. **Kürt içeriği için kaynak erişimi.** Bu tek engel Çand/Muzîk'in asıl
+   değerini kilitliyor. Kapalı olanların açık alternatifleri aranmalı:
+   üniversite Kürt çalışmaları merkezleri, ulusal kütüphane katalogları,
+   Kürdistan Bölgesi kurumlarının kendi arşivleri.
+2. Kına kaydı için «hene» belirsizliğini çözecek terminoloji kararı.
+3. Havuzu 100'e taşımak: kalan UNESCO Çand/Muzîk elemanları aynı hatla
+   üretilebilir; sınırlayıcı etken artık doğrulama değil, kaynak çeşitliliği.

@@ -23,9 +23,9 @@ bile.
 from __future__ import annotations
 import argparse, glob, hashlib, json, os, collections
 
-INTAKE = "scratchpad/external_authoring/opus_intake_2026_08"
+DEFAULT_INTAKE = "scratchpad/external_authoring/opus_intake_2026_08"
 POOL = "docs/content/verified_external_pool_2026_08"
-RAW = {"deepseek": f"{INTAKE}/raw/deepseek", "grok": f"{INTAKE}/raw/grok"}
+SOURCE_FIRST = "docs/content/source_first_expansion_2026_08"
 
 CONTENT_FIELDS = ["prompt", "promptTr", "answers", "answersTr",
                   "correctAnswer", "correctAnswerTr",
@@ -38,27 +38,54 @@ def content_hash(q: dict) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
 
 
-def load_candidates() -> dict:
+def load_candidates(intake: str) -> dict:
     out = {}
-    for pool, d in RAW.items():
-        for f in sorted(glob.glob(f"{d}/batch_*_questions.json")):
+    for pool in ("deepseek", "grok"):
+        for f in sorted(glob.glob(f"{intake}/raw/{pool}/batch_*_questions.json")):
             for q in json.load(open(f, encoding="utf-8")):
                 out[q["id"]] = (pool, q)
     return out
+
+
+def existing_external_count() -> int:
+    path = f"{POOL}/provenance.json"
+    if not os.path.exists(path):
+        return 0
+    with open(path, encoding="utf-8") as fh:
+        return sum(1 for p in json.load(fh)
+                   if p.get("origin") != "source_first_verified")
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
                     help="yazma; yalnız mevcut havuzla farkı bildir")
+    ap.add_argument("--intake", default=DEFAULT_INTAKE,
+                    help="dış aday intake dizini (varsayılan repo içi yol)")
+    ap.add_argument("--allow-missing-intake", action="store_true",
+                    help="dış kayıtları BİLEREK düşür; gerekçe commit gövdesine yazılmalı")
     a = ap.parse_args()
 
-    cands = load_candidates()
+    # Girdiler repoda duruyor (`scratchpad/.../opus_intake_2026_08`, 32 dosya),
+    # yani havuz repodan üretilebilir. Ama yol yoksa — yanlış çalışma dizini,
+    # budanmış bir checkout, taşınmış bir klasör — glob boş döner, dış kayıtlar
+    # sessizce sıfırlanır ve araç YİNE DE başarıyla çıkar. Havuzun küçülmesi
+    # sessiz bir başarıya benzemeyecek; aracın kendi kuralının aynası budur:
+    # doğrulanmamış kayıt havuza giremediği gibi, doğrulanmış kayıt da havuzdan
+    # sessizce düşmemeli.
+    if not os.path.isdir(a.intake) and existing_external_count() and not a.allow_missing_intake:
+        print(f"HATA: intake dizini yok ({a.intake}) ama havuzda "
+              f"{existing_external_count()} dış kayıt var. Yazmak onları silerdi.\n"
+              f"    --intake <yol> ile girdileri göster, ya da düşüşü bilerek "
+              f"kabul ediyorsan --allow-missing-intake kullan.")
+        return 2
+
+    cands = load_candidates(a.intake)
     questions, provenance, decisions = [], [], []
     metrics = collections.Counter()
     skipped = collections.Counter()
 
-    for path in sorted(glob.glob(f"{INTAKE}/decisions_*.json")):
+    for path in sorted(glob.glob(f"{a.intake}/decisions_*.json")):
         if path.endswith("decisions_grok_rejected.json"):
             continue
         for r in json.load(open(path, encoding="utf-8")):
@@ -106,13 +133,18 @@ def main() -> int:
     # modeldir, source_first_verified'ın kaynağı doğrudan açılmış kurumsal
     # sayfadır. Ayrımı kaybetmek, iki farklı kanıt rejimini tek sayıya
     # eritirdi.
-    SF_FILES = [
-        "docs/content/source_first_expansion_2026_08/cinema/cinema_questions.json",
-        "docs/content/source_first_expansion_2026_08/geography/geography_questions.json",
-        "docs/content/source_first_expansion_2026_08/technology_pilot/technology_pilot_claims.json",
-        "docs/content/source_first_expansion_2026_08/nature/nature_questions.json",
-    ]
-    for SF in [f for f in SF_FILES if os.path.exists(f)]:
+    #
+    # Yol tek bir kategoriye (cinema) sabitlenmişti; Çand/Muzîk eklendiğinde
+    # araç onları GÖRMEZDİ ve havuz sessizce eksik kalırdı. Artık dizin
+    # taranıyor: `<kategori>/<kategori>_questions.json` deseni yeter.
+    for SF in sorted(glob.glob(f"{SOURCE_FIRST}/*/*_questions.json")):
+        batch_dir = os.path.dirname(SF)
+        name = os.path.basename(batch_dir)
+        dec_path = f"{batch_dir}/{name}_decisions.json"
+        verified_at = "2026-08-06"
+        if os.path.exists(dec_path):
+            with open(dec_path, encoding="utf-8") as fh:
+                verified_at = json.load(fh).get("timestamp", verified_at)
         for q in json.load(open(SF, encoding="utf-8")):
             h = hashlib.sha256(json.dumps(
                 {k: q.get(k) for k in ("promptKu", "promptTr", "answersKu",
@@ -137,7 +169,7 @@ def main() -> int:
                 "verificationLevel": q.get("sourceAccessLevel", "FETCHED_DIRECT"),
                 "sourceReference": q["sourceReference"],
                 "exactSupportingFact": q["exactSupportingFact"],
-                "verifiedAt": "2026-08-06", "reviewer": "opus-5",
+                "verifiedAt": verified_at, "reviewer": "opus-5",
                 "finalContentHash": h, "activationStatus": "STAGED_VERIFIED"})
             decisions.append({"originalQuestionId": q["questionId"],
                               "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",

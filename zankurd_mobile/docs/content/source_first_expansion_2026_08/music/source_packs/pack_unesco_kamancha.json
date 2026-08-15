@@ -1,0 +1,20 @@
+{
+  "sourcePackId": "pack_unesco_kamancha",
+  "sourceTitle": "Art of crafting and playing with Kamantcheh/Kamancha — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/art-of-crafting-and-playing-with-kamantcheh-kamancha-a-bowed-string-musical-instrument-01286",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2017 (12.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "Contemporary practitioners mainly use a four-stringed Kamantcheh/Kamancha comprising a body and bow made with horsehair and players perform either individually or as part of orchestras."
+  ],
+  "extractedClaimIds": [
+    "muz_kam_01"
+  ],
+  "sourceHash": "9af51b418d16332e"
+}

@@ -1,0 +1,374 @@
+[
+  {
+    "questionId": "sf_muz_0001",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_oud",
+    "claimId": "muz_oud_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/crafting-and-playing-the-oud-01867",
+    "exactSupportingFact": "The oud is a traditional, lute-type instrument played in Iran and Syria.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, ud dikeve nav kîjan koma amûran?",
+    "promptTr": "UNESCO'ya göre ud hangi çalgı grubuna girer?",
+    "answersKu": [
+      "Amûrên lêdanê",
+      "Amûrên têlî",
+      "Amûrên pifê",
+      "Amûrên elektronîk"
+    ],
+    "answersTr": [
+      "Vurmalı çalgılar",
+      "Telli çalgılar",
+      "Üflemeli çalgılar",
+      "Elektronik çalgılar"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO udê wek amûreke kevneşopî ya têlî dide nasîn; ew ne amûreke lêdanê ye û ne jî ya pifê ye.",
+    "explanationTr": "UNESCO udu lut türünden geleneksel bir çalgı olarak tanımlar; lut telli bir çalgıdır."
+  },
+  {
+    "questionId": "sf_muz_0002",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_oud",
+    "claimId": "muz_oud_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/crafting-and-playing-the-oud-01867",
+    "exactSupportingFact": "Inscribed in 2022 (17.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Hunera çêkirin û lêdana udê ji kîjan salê ve di lîsteya UNESCOyê de ye?",
+    "promptTr": "Ud yapımı ve çalımı sanatı hangi yıldan beri UNESCO listesindedir?",
+    "answersKu": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "answersTr": [
+      "2013",
+      "2016",
+      "2019",
+      "2022"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Ew di sala 2022an de (17.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2022'de (17.COM) UNESCO Temsilî Liste'ye girdi."
+  },
+  {
+    "questionId": "sf_muz_0003",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_iraqi_maqam",
+    "claimId": "muz_maqam_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+    "exactSupportingFact": "Widely recognized as Iraq's predominant classical music tradition, the Maqam encompasses a vast repertory of songs, accompanied by traditional instruments.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, Makamê Iraqî çi ye?",
+    "promptTr": "UNESCO'ya göre Irak Makamı nedir?",
+    "answersKu": [
+      "Kevneşopiya muzîka leşkerî",
+      "Kevneşopiya muzîka klasîk",
+      "Kevneşopiya muzîka zarokan",
+      "Kevneşopiya muzîka elektronîk"
+    ],
+    "answersTr": [
+      "Askerî müzik geleneği",
+      "Klasik müzik geleneği",
+      "Çocuk müziği geleneği",
+      "Elektronik müzik geleneği"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO wê wek kevneşopiya muzîka klasîk a sereke ya Iraqê dide nasîn; ew komeke mezin a stranan digire nav xwe.",
+    "explanationTr": "UNESCO onu Irak'ın başlıca klasik müzik geleneği olarak tanıtır; geniş bir şarkı dağarcığını kapsar."
+  },
+  {
+    "questionId": "sf_muz_0004",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 4,
+    "sourcePackId": "pack_unesco_iraqi_maqam",
+    "claimId": "muz_maqam_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+    "exactSupportingFact": "tshalghi",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Koma amûran a ku bi Makamê Iraqî re lê dide bi kîjan navî tê nasîn?",
+    "promptTr": "Irak Makamı'na eşlik eden çalgı topluluğu hangi adla bilinir?",
+    "answersKu": [
+      "jawzah",
+      "santur",
+      "tshalghi",
+      "dumbak"
+    ],
+    "answersTr": [
+      "jawzah",
+      "santur",
+      "tshalghi",
+      "dumbak"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Navê wê komê tshalghi ye; jawzah, santur û dumbak navên amûrên di nav wê komê de ne.",
+    "explanationTr": "Topluluğun adı tshalghi'dir; jawzah, santur ve dumbak ise o topluluktaki çalgıların adlarıdır."
+  },
+  {
+    "questionId": "sf_muz_0005",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 4,
+    "sourcePackId": "pack_unesco_iraqi_maqam",
+    "claimId": "muz_maqam_06",
+    "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+    "exactSupportingFact": "a low-pitched hand-drum (dumbak)",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, di koma tshalghi de kîjan amûra lêdanê ya bi dengê kûr e?",
+    "promptTr": "UNESCO'ya göre tshalghi topluluğunda pes sesli vurmalı çalgı hangisidir?",
+    "answersKu": [
+      "santur",
+      "jawzah",
+      "dumbak",
+      "daff"
+    ],
+    "answersTr": [
+      "santur",
+      "jawzah",
+      "dumbak",
+      "daff"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "UNESCO dumbakê wek amûreke lêdanê ya bi dengê kûr dide nasîn; daff defeke piçûk e.",
+    "explanationTr": "UNESCO dumbak'ı pes sesli bir el davulu olarak tanımlar; daff ise küçük bir teftir."
+  },
+  {
+    "questionId": "sf_muz_0006",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_iraqi_maqam",
+    "claimId": "muz_maqam_04",
+    "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+    "exactSupportingFact": "a four-string spike fiddle (jawzah)",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, li ser jawzahê çend têl hene?",
+    "promptTr": "UNESCO'ya göre jawzah'ta kaç tel bulunur?",
+    "answersKu": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "answersTr": [
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "UNESCO jawzahê wek amûreke têlî ya bi çar têlan bi nav dike.",
+    "explanationTr": "UNESCO jawzah'ı dört telli bir yaylı çalgı olarak tanımlar."
+  },
+  {
+    "questionId": "sf_muz_0007",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 4,
+    "sourcePackId": "pack_unesco_iraqi_maqam",
+    "claimId": "muz_maqam_05",
+    "sourceReference": "https://ich.unesco.org/en/RL/iraqi-maqam-00076",
+    "exactSupportingFact": "Inscribed in 2008 (3.COM) on the Representative List of the Intangible Cultural Heritage of Humanity (originally proclaimed in 2003)",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "UNESCOyê Makamê Iraqî di kîjan salî de li Lîsteya Nûnertiyê zêde kir?",
+    "promptTr": "UNESCO Irak Makamı'nı Temsilî Liste'ye hangi yıl ekledi?",
+    "answersKu": [
+      "2008",
+      "2011",
+      "2014",
+      "2017"
+    ],
+    "answersTr": [
+      "2008",
+      "2011",
+      "2014",
+      "2017"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Ew di sala 2003yan de hat ragihandin, lê di sala 2008an de (3.COM) ket Lîsteya Nûnertiyê.",
+    "explanationTr": "2003'te ilan edildi, ancak Temsilî Liste'ye 2008'de (3.COM) girdi."
+  },
+  {
+    "questionId": "sf_muz_0008",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_kamancha",
+    "claimId": "muz_kam_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/art-of-crafting-and-playing-with-kamantcheh-kamancha-a-bowed-string-musical-instrument-01286",
+    "exactSupportingFact": "Contemporary practitioners mainly use a four-stringed Kamantcheh/Kamancha comprising a body and bow made with horsehair and players perform either individually or as part of orchestras.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, li ser Kamancha ya ku îro herî zêde tê bikaranîn çend têl hene?",
+    "promptTr": "UNESCO'ya göre bugün en çok kullanılan Kamancha'da kaç tel bulunur?",
+    "answersKu": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "answersTr": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO dibêje ku îro bi giranî Kamancha ya çar têlî tê bikaranîn.",
+    "explanationTr": "UNESCO, bugünkü icracıların ağırlıkla dört telli Kamancha kullandığını belirtir."
+  },
+  {
+    "questionId": "sf_muz_0009",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 4,
+    "sourcePackId": "pack_unesco_reggae",
+    "claimId": "muz_reg_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/reggae-music-of-jamaica-01398",
+    "exactSupportingFact": "gradually transforming Ska into Rock Steady and then into Reggae",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, rêza guhertina van şêwazên muzîkê çawa ye?",
+    "promptTr": "UNESCO'ya göre bu müzik biçimlerinin dönüşüm sırası nasıldır?",
+    "answersKu": [
+      "Ska, paşê Rock Steady, paşê Reggae",
+      "Reggae, paşê Ska, paşê Rock Steady",
+      "Rock Steady, paşê Reggae, paşê Ska",
+      "Ska, paşê Reggae, paşê Rock Steady"
+    ],
+    "answersTr": [
+      "Ska, sonra Rock Steady, sonra Reggae",
+      "Reggae, sonra Ska, sonra Rock Steady",
+      "Rock Steady, sonra Reggae, sonra Ska",
+      "Ska, sonra Reggae, sonra Rock Steady"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "UNESCO dibêje ku Ska hêdî hêdî bû Rock Steady û paşê bû Reggae.",
+    "explanationTr": "UNESCO, Ska'nın yavaş yavaş Rock Steady'ye, ardından Reggae'ye dönüştüğünü belirtir."
+  },
+  {
+    "questionId": "sf_muz_0010",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_reggae",
+    "claimId": "muz_reg_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/reggae-music-of-jamaica-01398",
+    "exactSupportingFact": "Inscribed in 2018 (13.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Muzîka reggae kengî ket lîsteya UNESCOyê?",
+    "promptTr": "Reggae müziği UNESCO listesine ne zaman girdi?",
+    "answersKu": [
+      "2012",
+      "2015",
+      "2018",
+      "2021"
+    ],
+    "answersTr": [
+      "2012",
+      "2015",
+      "2018",
+      "2021"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Ew di sala 2018an de (13.COM) ket Lîsteya Nûnertiyê ya UNESCOyê.",
+    "explanationTr": "2018'de (13.COM) UNESCO Temsilî Liste'ye girdi."
+  },
+  {
+    "questionId": "sf_muz_0011",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 3,
+    "sourcePackId": "pack_unesco_sevdalinka",
+    "claimId": "muz_sev_01",
+    "sourceReference": "https://ich.unesco.org/en/RL/sevdalinka-traditional-urban-folk-song-01872",
+    "exactSupportingFact": "Sevdalinka is a form of traditional urban singing that is practised in Bosnia and Herzegovina.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "B",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, sevdalinka çi ye?",
+    "promptTr": "UNESCO'ya göre sevdalinka nedir?",
+    "answersKu": [
+      "Stranbêjiya olî ya kevneşopî",
+      "Stranbêjiya zarokan a kevneşopî",
+      "Stranbêjiya leşkerî ya kevneşopî",
+      "Stranbêjiya bajarî ya kevneşopî"
+    ],
+    "answersTr": [
+      "Geleneksel dinî şarkı söyleme biçimi",
+      "Geleneksel çocuk şarkısı söyleme biçimi",
+      "Geleneksel askerî şarkı söyleme biçimi",
+      "Geleneksel kentli şarkı söyleme biçimi"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "UNESCO sevdalinkayê wek şêwazeke stranbêjiya bajarî ya kevneşopî bi nav dike.",
+    "explanationTr": "UNESCO sevdalinka'yı geleneksel kentli bir şarkı söyleme biçimi olarak tanımlar."
+  },
+  {
+    "questionId": "sf_muz_0012",
+    "category": "Muzîk",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_unesco_sevdalinka",
+    "claimId": "muz_sev_02",
+    "sourceReference": "https://ich.unesco.org/en/RL/sevdalinka-traditional-urban-folk-song-01872",
+    "exactSupportingFact": "Performed a capella or with the accompaniment of traditional instruments, the main function of sevdalinka is to tell a story.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "promptKu": "Li gorî UNESCOyê, karê sereke yê sevdalinkayê çi ye?",
+    "promptTr": "UNESCO'ya göre sevdalinka'nın temel işlevi nedir?",
+    "answersKu": [
+      "Dayîna rîtmê ji govendê re",
+      "Vegotina çîrokekê",
+      "Hînkirina hejmaran ji zarokan re",
+      "Pîrozkirina serkeftina werzîşê"
+    ],
+    "answersTr": [
+      "Halaya ritim vermek",
+      "Bir hikâye anlatmak",
+      "Çocuklara sayıları öğretmek",
+      "Spor başarısını kutlamak"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "UNESCO dibêje ku karê sereke yê sevdalinkayê vegotina çîrokekê ye.",
+    "explanationTr": "UNESCO, sevdalinka'nın temel işlevinin bir hikâye anlatmak olduğunu belirtir."
+  }
+]

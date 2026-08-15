@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_unesco_khidr_elias",
+  "sourceTitle": "Khidr Elias feast and its vows — UNESCO Representative List",
+  "institution": "UNESCO Intangible Cultural Heritage",
+  "sourceReference": "https://ich.unesco.org/en/RL/khidr-elias-feast-and-its-vows-01159",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-07",
+  "pageSectionsRead": [
+    "inscription line / description / transmission"
+  ],
+  "copyrightNotes": "Yalnız kısa olgu ifadeleri alındı; pasaj kopyalanmadı, tanımlar yeniden ifade edildi.",
+  "exactSourceStatements": [
+    "Inscribed in 2016 (11.COM) on the Representative List of the Intangible Cultural Heritage of Humanity",
+    "Every year in February communities in Iraq honour Alkhidr",
+    "during the last three days of the month",
+    "They deliver sugar, salt, henna, sweets and myrtle leaves and at night send lit candles on wood along the river, making vows for their wishes to be granted.",
+    "Younger generations learn about the practice from older family members and at school."
+  ],
+  "extractedClaimIds": [
+    "cand_khidr_01",
+    "cand_khidr_02",
+    "cand_khidr_03"
+  ],
+  "sourceHash": "5c48d4d6c10fb475"
+}
