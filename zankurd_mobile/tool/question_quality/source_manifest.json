@@ -1078,6 +1078,48 @@
       }
     },
     {
+      "id": "external_candidate_grok_wave_01_original",
+      "description": "External grok wave-01 candidates (original authoring location)",
+      "glob": "scratchpad/external_authoring/grok_wave_01/batch_*_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_candidates_grok",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 320,
+      "expectedRecordCount": 407,
+      "notes": "Original authoring location from content/author-grok-wave-01-2026-08-06@8f68a50 (branch merged 2026-08-15). Byte-identical to external_candidate_grok_wave_01's opus_intake_2026_08 copy — reportIncluded is false here to avoid double-counting the same 407 candidates in reports. Never loaded by the app and deliberately NOT gate-eligible: no record carries a verifiable sourceReference. See docs/content/external_intake_2026_08.md",
+      "columns": {
+        "id": "id",
+        "prompt": "prompt",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
+      "id": "external_rejected_grok_wave_01_original",
+      "description": "Grok's own pre-screen rejects, original authoring location",
+      "path": "scratchpad/external_authoring/grok_wave_01/rejected_questions.json",
+      "role": "candidate_pool",
+      "parser": "json",
+      "canonicalGroup": "external_rejected_grok",
+      "reportIncluded": false,
+      "gateIncluded": false,
+      "productionLike": false,
+      "precedence": 0,
+      "expectedRecordCount": null,
+      "notes": "Byte-identical to external_rejected_grok_wave_01's opus_intake_2026_08 copy. Never a runtime source.",
+      "columns": {
+        "id": "questionId",
+        "prompt": "oldPromptKu",
+        "options": "answers",
+        "correctAnswer": "correctAnswer",
+        "category": "category"
+      }
+    },
+    {
       "id": "external_candidate_deepseek_wave_01",
       "description": "External deepseek wave-01 candidates (read-only intake copy)",
       "glob": "scratchpad/external_authoring/opus_intake_2026_08/raw/deepseek/batch_*_questions.json",
