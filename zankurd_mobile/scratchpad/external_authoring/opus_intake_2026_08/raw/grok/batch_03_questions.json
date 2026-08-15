@@ -1,0 +1,3642 @@
+[
+ {
+  "id": "grok26_geo_nature_0001",
+  "category": "Cografya",
+  "prompt": "Li ser rûyê Erdê bi kevneşopî çend parzemîn têne hejmartin?",
+  "answers": [
+   "7 parzemîn ya standard",
+   "3 parzemîn — ne rastîn e",
+   "12 parzemîn",
+   "2 parzemîn"
+  ],
+  "correctAnswer": "7 parzemîn ya standard",
+  "promptTr": "Yeryüzünde geleneksel olarak kaç kıta sayılır?",
+  "answersTr": [
+   "7 kıta (standart)",
+   "3 kıta — doğru değil",
+   "12 kıta",
+   "2 kıta"
+  ],
+  "correctAnswerTr": "7 kıta (standart)",
+  "explanation": "Yaygın model 7 kıta sayar: Afrika, Antarktika, Asya, Avrupa, Kuzey Amerika, Güney Amerika ve Avustralya.",
+  "explanationTr": "Yaygın model 7 kıta sayar: Afrika, Antarktika, Asya, Avrupa, Kuzey Amerika, Güney Amerika ve Avustralya.",
+  "explanationKu": "Modela gelemperî 7 parzemînan digire: Afrîka, Antarktîka, Asya, Ewrûpa, Amerîkaya Bakur, Amerîkaya Başûr û Awistralya.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=3bb2e26c77ec9d29",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "parzemîn",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "3bb2e26c77ec9d29"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0002",
+  "category": "Cografya",
+  "prompt": "Kîjan okyanûs ji hemûyan mezintir e?",
+  "answers": [
+   "Okyanûsa Atlasê",
+   "Okyanûsa Pasîfîk",
+   "Okyanûsa Hindê (ne rast)",
+   "Okyanûsa Arktîk"
+  ],
+  "correctAnswer": "Okyanûsa Pasîfîk",
+  "promptTr": "Hangisi en büyük okyanustur?",
+  "answersTr": [
+   "Atlas Okyanusu",
+   "Pasifik Okyanusu",
+   "Hint Okyanusu (yanlış)",
+   "Arktik Okyanusu"
+  ],
+  "correctAnswerTr": "Pasifik Okyanusu",
+  "explanation": "Pasifik okyanus sularının en büyük yüzölçümü ve hacmini kaplar.",
+  "explanationTr": "Pasifik okyanus sularının en büyük yüzölçümü ve hacmini kaplar.",
+  "explanationKu": "Pasîfîk rûber û qebareya herî mezin a avên okyanûsê digire.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=fd7d5252ab4d1951",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "okyanûs",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "fd7d5252ab4d1951"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0003",
+  "category": "Cografya",
+  "prompt": "Okyanûsa Atlasê bi giranî di navbera kîjan parzemînan de ye?",
+  "answers": [
+   "Asya û Antarktîka",
+   "Tenê di nav Awistralyayê de",
+   "Amerîka û Ewrûpa/Afrîka",
+   "Tenê di nav Asyayê de"
+  ],
+  "correctAnswer": "Amerîka û Ewrûpa/Afrîka",
+  "promptTr": "Atlas Okyanusu esas olarak hangi kıtalar arasındadır?",
+  "answersTr": [
+   "Asya ile Antarktika",
+   "Yalnızca Avustralya içinde",
+   "Amerika ile Avrupa/Afrika",
+   "Yalnızca Asya içinde"
+  ],
+  "correctAnswerTr": "Amerika ile Avrupa/Afrika",
+  "explanation": "Atlas batıda Amerika ile doğuda Avrupa-Afrika'yı bağlar.",
+  "explanationTr": "Atlas batıda Amerika ile doğuda Avrupa-Afrika'yı bağlar.",
+  "explanationKu": "Atlas rojava Amerîka û rojhilat Ewrûpa-Afrîka digihîne hev.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0ef80a1f1df3ad82",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "okyanûs",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "0ef80a1f1df3ad82"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0004",
+  "category": "Cografya",
+  "prompt": "Ekvator bi giranî çi ye?",
+  "answers": [
+   "Çiyayekî herî bilind (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Çemekî herî dirêj",
+   "Bajarekî paytext (ne rast)",
+   "Xeta xeyalî ya ku Erdê dike du nîvkûreyên wekhev"
+  ],
+  "correctAnswer": "Xeta xeyalî ya ku Erdê dike du nîvkûreyên wekhev",
+  "promptTr": "Ekvator esas olarak nedir?",
+  "answersTr": [
+   "En yüksek dağ (geçersiz) (geçersiz) (geçersiz)",
+   "En uzun ırmak",
+   "Bir başkent (yanlış)",
+   "Dünyayı iki eşit yarımküreye bölen hayali çizgi"
+  ],
+  "correctAnswerTr": "Dünyayı iki eşit yarımküreye bölen hayali çizgi",
+  "explanation": "Ekvator 0 derece enlemdir; kuzey ve güney yarımküreleri ayırır.",
+  "explanationTr": "Ekvator 0 derece enlemdir; kuzey ve güney yarımküreleri ayırır.",
+  "explanationKu": "Ekvator 0 pileyê firehiyê ye û nîvkûreyên bakur û başûr vediqetîne.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=59822f301e0f049e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "59822f301e0f049e"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0005",
+  "category": "Cografya",
+  "prompt": "Firehî (latitude) çi dipîve?",
+  "answers": [
+   "Dûrbûna rojhilat-rojava ji Greenwichê — ne rastîn e",
+   "Dûrbûna bakur-başûr ji ekvatorê ya standard",
+   "Bilindahiya çiyê",
+   "Kûrahiya deryayê"
+  ],
+  "correctAnswer": "Dûrbûna bakur-başûr ji ekvatorê ya standard",
+  "promptTr": "Enlem neyi ölçer?",
+  "answersTr": [
+   "Greenwich'ten doğu-batı uzaklığı — doğru değil",
+   "Ekvatordan kuzey-güney uzaklığı (standart)",
+   "Dağ yüksekliği",
+   "Deniz derinliği"
+  ],
+  "correctAnswerTr": "Ekvatordan kuzey-güney uzaklığı (standart)",
+  "explanation": "Enlem derecelerle ölçülür; 90° kuzey Kuzey Kutbu'dur.",
+  "explanationTr": "Enlem derecelerle ölçülür; 90° kuzey Kuzey Kutbu'dur.",
+  "explanationKu": "Firehî bi pileyan tê pîvandin; 90° bakur Polê Bakur e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=9536b73b20f09caf",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "9536b73b20f09caf"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0006",
+  "category": "Cografya",
+  "prompt": "Dirêjahî (longitude) çi dipîve?",
+  "answers": [
+   "Dûrbûna rojhilat-rojava ji meridian a sereke",
+   "Bilindahiya ewr — ne rastîn e",
+   "Leza bayê (ne rast)",
+   "Germahiya avê (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Dûrbûna rojhilat-rojava ji meridian a sereke",
+  "promptTr": "Boylam neyi ölçer?",
+  "answersTr": [
+   "Baş meridyenden doğu-batı uzaklığı",
+   "Bulut yüksekliği — doğru değil",
+   "Rüzgar hızı (yanlış)",
+   "Su sıcaklığı (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Baş meridyenden doğu-batı uzaklığı",
+  "explanation": "Baş meridyen geleneksel olarak Greenwich'ten geçer.",
+  "explanationTr": "Baş meridyen geleneksel olarak Greenwich'ten geçer.",
+  "explanationKu": "Meridiana sereke bi kevneşopî ji Greenwichê derbas dibe.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=31cce16f15ff2880",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "31cce16f15ff2880"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0007",
+  "category": "Cografya",
+  "prompt": "Çem ber bi ku diherike bi gelemperî?",
+  "answers": [
+   "Ji deryayê ber bi çiyê her tim — şaş e — şaş e — şaş e",
+   "Tenê di hewayê de (ne rast)",
+   "Tenê di bin erdê de asê dimîne",
+   "Ji cihên bilind ber bi cihên nizm / ber bi deryayê"
+  ],
+  "correctAnswer": "Ji cihên bilind ber bi cihên nizm / ber bi deryayê",
+  "promptTr": "Irmak genellikle nereye akar?",
+  "answersTr": [
+   "Denizden dağa her zaman — hatalı — hatalı — hatalı",
+   "Yalnızca havada (yanlış)",
+   "Yalnızca yeraltında kalır",
+   "Yüksek yerlerden alçaklara / denize doğru"
+  ],
+  "correctAnswerTr": "Yüksek yerlerden alçaklara / denize doğru",
+  "explanation": "Yerçekimi suyu alçağa ve çoğu kez denize götürür.",
+  "explanationTr": "Yerçekimi suyu alçağa ve çoğu kez denize götürür.",
+  "explanationKu": "Hêza kişandina Erdê avê ber bi nizm û gelek caran ber bi deryayê dibe.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=5fda501aa0771767",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "5fda501aa0771767"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0008",
+  "category": "Cografya",
+  "prompt": "Delta a çemî kengê çêdibe?",
+  "answers": [
+   "Dema çem diçile qet",
+   "Dema çem dibe çiya (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Dema çem berî deryayê sediment diavêje û belav dike",
+   "Dema çem dibe ewr (ne rast)"
+  ],
+  "correctAnswer": "Dema çem berî deryayê sediment diavêje û belav dike",
+  "promptTr": "Irmak deltası ne zaman oluşur?",
+  "answersTr": [
+   "Irmak hiç akmayınca",
+   "Irmak dağ olunca (geçersiz) (geçersiz) (geçersiz)",
+   "Irmak deniz önünde tortu bırakıp yayılınca",
+   "Irmak bulut olunca (yanlış)"
+  ],
+  "correctAnswerTr": "Irmak deniz önünde tortu bırakıp yayılınca",
+  "explanation": "Tortu ırmak ağzında birikip yeni kara oluşturur.",
+  "explanationTr": "Tortu ırmak ağzında birikip yeni kara oluşturur.",
+  "explanationKu": "Sediment li devê çem kom dibe û erdê nû ava dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=541b7a6f2fb6409b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "541b7a6f2fb6409b"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0009",
+  "category": "Cografya",
+  "prompt": "Kîjan çem bi gelemperî wek yê herî dirêj ê cîhanê tê nîqaş kirin?",
+  "answers": [
+   "Nîl ya standard",
+   "Thames — ne rastîn e",
+   "Seine",
+   "Tiber"
+  ],
+  "correctAnswer": "Nîl ya standard",
+  "promptTr": "Hangisi genellikle dünyanın en uzun ırmağı olarak tartışılır?",
+  "answersTr": [
+   "Nil (standart)",
+   "Thames — doğru değil",
+   "Sen",
+   "Tiber"
+  ],
+  "correctAnswerTr": "Nil (standart)",
+  "explanation": "Nil ve Amazon uzunlukta öndedir; birçok kaynak Nil'i alır.",
+  "explanationTr": "Nil ve Amazon uzunlukta öndedir; birçok kaynak Nil'i alır.",
+  "explanationKu": "Nîl û Amazon di pîvanên dirêjahiyê de pêşeng in; gelek çavkanî Nîlê digirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=8cb358bb46d871c9",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "8cb358bb46d871c9"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0010",
+  "category": "Cografya",
+  "prompt": "Everest li kîjan zincîra çiyayan e?",
+  "answers": [
+   "Alp (ne rast)",
+   "Hîmalaya",
+   "And",
+   "Atlas"
+  ],
+  "correctAnswer": "Hîmalaya",
+  "promptTr": "Everest hangi dağ silsilesindedir?",
+  "answersTr": [
+   "Alpler (yanlış)",
+   "Himalaya",
+   "Andlar",
+   "Atlas"
+  ],
+  "correctAnswerTr": "Himalaya",
+  "explanation": "Everest Himalayalar'dadır ve deniz seviyesinden en yüksek zirve kabul edilir.",
+  "explanationTr": "Everest Himalayalar'dadır ve deniz seviyesinden en yüksek zirve kabul edilir.",
+  "explanationKu": "Everest di Hîmalayayê de ye û wek lûtkeya herî bilind a li ser asta deryayê tê pejirandin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=a3cfbb5d668ff81f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "çiya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "a3cfbb5d668ff81f"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0011",
+  "category": "Cografya",
+  "prompt": "And çiyayên sereke yên kîjan parzemînê ne?",
+  "answers": [
+   "Ewrûpa (ne rast)",
+   "Afrîka",
+   "Amerîkaya Başûr",
+   "Antarktîka"
+  ],
+  "correctAnswer": "Amerîkaya Başûr",
+  "promptTr": "And dağları hangi kıtanın ana dağlarıdır?",
+  "answersTr": [
+   "Avrupa (yanlış)",
+   "Afrika",
+   "Güney Amerika",
+   "Antarktika"
+  ],
+  "correctAnswerTr": "Güney Amerika",
+  "explanation": "Andlar Güney Amerika'nın batısında uzanır.",
+  "explanationTr": "Andlar Güney Amerika'nın batısında uzanır.",
+  "explanationKu": "And li rojavayê Amerîkaya Başûr dirêj dibin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d07be15cba66d906",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "çiya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "d07be15cba66d906"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0013",
+  "category": "Cografya",
+  "prompt": "Baran a barînê bi giranî ji ku tê?",
+  "answers": [
+   "Ji kevirên hişk ên çiyê — ne rastîn e",
+   "Ji ewrên ku ava hilkişiyayî digirin",
+   "Ji tîrêjên rasterast ên Heyvê",
+   "Ji qûm a çolê ya hişk (ne rast)"
+  ],
+  "correctAnswer": "Ji ewrên ku ava hilkişiyayî digirin",
+  "promptTr": "Yağmur yağışı esas olarak nereden gelir?",
+  "answersTr": [
+   "Dağın sert kayalarından — doğru değil",
+   "Yükselen suyu tutan bulutlardan",
+   "Ay'ın doğrudan ışınlarından",
+   "Çölün kuru kumundan (yanlış)"
+  ],
+  "correctAnswerTr": "Yükselen suyu tutan bulutlardan",
+  "explanation": "Suyun yükselmesi, soğuması ve yoğuşması bulut ve yağmur oluşturur.",
+  "explanationTr": "Suyun yükselmesi, soğuması ve yoğuşması bulut ve yağmur oluşturur.",
+  "explanationKu": "Hilkişîna avê, sarbûn û kondensasyon ewr û baranê çêdikin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=b26f01e2c20ddedd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "b26f01e2c20ddedd"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0014",
+  "category": "Cografya",
+  "prompt": "Çol bi giranî bi kîjan taybetmendiyê tê naskirin?",
+  "answers": [
+   "Barîna pir kêm",
+   "Daristan a pir stûr",
+   "Qeşa herheyî li ser rûyê erdê her tim",
+   "Av a zêde ya rojane"
+  ],
+  "correctAnswer": "Barîna pir kêm",
+  "promptTr": "Çöl esas olarak hangi özellikle tanınır?",
+  "answersTr": [
+   "Çok az yağış",
+   "Çok sık orman",
+   "Yüzeyde her zaman kalıcı buz",
+   "Her gün aşırı su"
+  ],
+  "correctAnswerTr": "Çok az yağış",
+  "explanation": "Çöl az yağış demektir; sıcaklık yüksek veya düşük . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationTr": "Çöl az yağış demektir; sıcaklık yüksek veya düşük . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationKu": "Çol tê wateya kêmbaranî; germahî dikare bilind an nizm be.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=592eb5df204b0cae",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "592eb5df204b0cae"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0015",
+  "category": "Cografya",
+  "prompt": "Efekta sera a xwezayî çi dike?",
+  "answers": [
+   "Erdê bi tevahî sar dike her tim",
+   "Hemû avê diavêje fezayê",
+   "Hemû oksîjenê jê dibe (ne rast) — şaş e — şaş e — şaş e",
+   "Hin germê di atmosferê de digire û Erdê germtir dike"
+  ],
+  "correctAnswer": "Hin germê di atmosferê de digire û Erdê germtir dike",
+  "promptTr": "Doğal sera etkisi ne yapar?",
+  "answersTr": [
+   "Dünyayı her zaman tamamen soğutur",
+   "Tüm suyu uzaya atar",
+   "Tüm oksijeni siler (yanlış) — hatalı — hatalı — hatalı",
+   "Atmosferde bir miktar ısı tutup Dünyayı daha sıcak tutar"
+  ],
+  "correctAnswerTr": "Atmosferde bir miktar ısı tutup Dünyayı daha sıcak tutar",
+  "explanation": "Doğal sera etkisi olmasa Dünya çok daha soğuk olurdu.",
+  "explanationTr": "Doğal sera etkisi olmasa Dünya çok daha soğuk olurdu.",
+  "explanationKu": "Bêyî efekta sera ya xwezayî Erd pir sartir dibû.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=592b735267561845",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "592b735267561845"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0016",
+  "category": "Cografya",
+  "prompt": "Bay bi giranî çawa çêdibe?",
+  "answers": [
+   "Ji ber ku derya radiweste (ne rastîn) (ne rastîn)",
+   "Ji ber ku çiya dimirin (ne rast)",
+   "Ji ber ferqa zexta hewayê di navbera herêman de",
+   "Ji ber ku roj vedimire her roj"
+  ],
+  "correctAnswer": "Ji ber ferqa zexta hewayê di navbera herêman de",
+  "promptTr": "Rüzgar esas olarak nasıl oluşur?",
+  "answersTr": [
+   "Deniz durduğu için (geçersiz) (geçersiz)",
+   "Dağlar öldüğü için (yanlış)",
+   "Bölgeler arası hava basıncı farkından",
+   "Güneş her gün söndüğü için"
+  ],
+  "correctAnswerTr": "Bölgeler arası hava basıncı farkından",
+  "explanation": "Hava yüksek basıçtan alçak basınca akar ve rüzgar oluşur.",
+  "explanationTr": "Hava yüksek basıçtan alçak basınca akar ve rüzgar oluşur.",
+  "explanationKu": "Hewa ji zexta bilind ber bi zexta nizm diherike û bay çêdibe.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=b92c77eda7a66a6d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "b92c77eda7a66a6d"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0017",
+  "category": "Cografya",
+  "prompt": "Fotosentez di riwekan de bi giranî çi dike?",
+  "answers": [
+   "Ronahiyê bikar tîne da ku şekir û oksîjenê çêbike",
+   "Tenê keviran dişewitîne — ne rastîn e",
+   "Tenê qûmê dike av (ne rast)",
+   "Tenê hewayê dike zêr"
+  ],
+  "correctAnswer": "Ronahiyê bikar tîne da ku şekir û oksîjenê çêbike",
+  "promptTr": "Bitkilerde fotosentez esas olarak ne yapar?",
+  "answersTr": [
+   "Işığı kullanarak şeker ve oksijen üretir",
+   "Yalnızca taş yakar — doğru değil",
+   "Yalnızca kumu su yapar (yanlış)",
+   "Yalnızca havayı altın yapar"
+  ],
+  "correctAnswerTr": "Işığı kullanarak şeker ve oksijen üretir",
+  "explanation": "Klorofil ışığı alır; CO₂ ve su glikoz ve O₂ olur.",
+  "explanationTr": "Klorofil ışığı alır; CO₂ ve su glikoz ve O₂ olur.",
+  "explanationKu": "Klorofîl ronahiyê digire; CO₂ û av dibin glukoz û O₂.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=6611a6c0cdf72e5e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "6611a6c0cdf72e5e"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0018",
+  "category": "Cografya",
+  "prompt": "Zincîra xurekî çi nîşan dide?",
+  "answers": [
+   "Tenê rengê kulîlkan (ne rast)",
+   "Enerjî çawa di nav zindiyan de diherike",
+   "Tenê dirêjahiya çeman",
+   "Tenê bilindahiya çiyayan (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Enerjî çawa di nav zindiyan de diherike",
+  "promptTr": "Besin zinciri neyi gösterir?",
+  "answersTr": [
+   "Yalnızca çiçek rengi (yanlış)",
+   "Enerjinin canlılar arasında nasıl aktığını",
+   "Yalnızca ırmak uzunluğu",
+   "Yalnızca dağ yüksekliği (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Enerjinin canlılar arasında nasıl aktığını",
+  "explanation": "Üretici, tüketici ve ayrıştırıcılar zincirde yer alır.",
+  "explanationTr": "Üretici, tüketici ve ayrıştırıcılar zincirde yer alır.",
+  "explanationKu": "Hilberîner, bikarhêner û hilweşîner di zincîrê de cih digirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=5e1decc4b10c6b1f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "5e1decc4b10c6b1f"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0019",
+  "category": "Cografya",
+  "prompt": "Hilweşîner di ekosîstemê de çi dikin?",
+  "answers": [
+   "Tenê rojê dişewitînin — şaş e — şaş e — şaş e — ne rastîn e",
+   "Tenê keviran mezin dikin",
+   "Madeyên organîk ên mirî dişkînin û vedigerînin axê",
+   "Tenê bayê rawestînin (ne rast)"
+  ],
+  "correctAnswer": "Madeyên organîk ên mirî dişkînin û vedigerînin axê",
+  "promptTr": "Ekosistemde ayrıştırıcılar ne yapar?",
+  "answersTr": [
+   "Yalnızca güneşi yakar — hatalı — hatalı — hatalı — doğru değil",
+   "Yalnızca taş büyütür",
+   "Ölü organik maddeyi parçalayıp toprağa kazandırır",
+   "Yalnızca rüzgarı durdurur (yanlış)"
+  ],
+  "correctAnswerTr": "Ölü organik maddeyi parçalayıp toprağa kazandırır",
+  "explanation": "Mantar ve bakteriler maddeleri doğa döngüsüne döndürür.",
+  "explanationTr": "Mantar ve bakteriler maddeleri doğa döngüsüne döndürür.",
+  "explanationKu": "Kerpîç û bakterî madeyan vedigerînin çerxa xwezayê.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d589a7a608310886",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "d589a7a608310886"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0020",
+  "category": "Cografya",
+  "prompt": "Biyom çi ye?",
+  "answers": [
+   "Tenê yek dareke piçûk",
+   "Tenê yek kevirek (ne rast) (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Tenê yek dilopeke avê",
+   "Herêma mezin a jîngehê bi îklîm û zindiyên têkildar"
+  ],
+  "correctAnswer": "Herêma mezin a jîngehê bi îklîm û zindiyên têkildar",
+  "promptTr": "Biyom nedir?",
+  "answersTr": [
+   "Yalnızca tek küçük ağaç",
+   "Yalnızca tek taş (yanlış) (geçersiz) (geçersiz) (geçersiz)",
+   "Yalnızca tek su damlası",
+   "İklim ve ilgili canlılarla büyük yaşam bölgesi"
+  ],
+  "correctAnswerTr": "İklim ve ilgili canlılarla büyük yaşam bölgesi",
+  "explanation": "Yağmur ormanı, savan, tundra biyom örnekleridir.",
+  "explanationTr": "Yağmur ormanı, savan, tundra biyom örnekleridir.",
+  "explanationKu": "Daristan a baranê, savana, tundra mînakên biyomê ne.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=003f6b2f417d042a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "003f6b2f417d042a"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0021",
+  "category": "Cografya",
+  "prompt": "Daristan a baranê ya tropîkal bi giranî li ku tê dîtin?",
+  "answers": [
+   "Tenê li polên sar (ne rast) — ne rastîn e",
+   "Nêzî ekvatorê ku baran û germ zêde ne",
+   "Tenê li ser lûtkeyên qeşagirtî",
+   "Tenê di nav çolên hişk de"
+  ],
+  "correctAnswer": "Nêzî ekvatorê ku baran û germ zêde ne",
+  "promptTr": "Tropikal yağmur ormanı esas olarak nerede görülür?",
+  "answersTr": [
+   "Yalnızca soğuk kutuplarda (yanlış) — doğru değil",
+   "Yağış ve ısının yüksek olduğu ekvator yakını",
+   "Yalnızca buzlu zirvelerde",
+   "Yalnızca kuru çöllerde"
+  ],
+  "correctAnswerTr": "Yağış ve ısının yüksek olduğu ekvator yakını",
+  "explanation": "Amazon ile Afrika ve Asya'nın bazı bölgeleri ana örneklerdir.",
+  "explanationTr": "Amazon ile Afrika ve Asya'nın bazı bölgeleri ana örneklerdir.",
+  "explanationKu": "Amazon û hin herêmên Afrîka û Asyayê mînak ên sereke ne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=a0791ccae724ee8a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "a0791ccae724ee8a"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0023",
+  "category": "Cografya",
+  "prompt": "Erdhej bi giranî ji ber çi çêdibe?",
+  "answers": [
+   "Ji ber ku heyv winda dibe",
+   "Ji ber ku roj sor dibe",
+   "Ji ber ku bayê nerm e (ne rast)",
+   "Tevgera nişkave ya qalikê Erdê"
+  ],
+  "correctAnswer": "Tevgera nişkave ya qalikê Erdê",
+  "promptTr": "Deprem esas olarak neden oluşur?",
+  "answersTr": [
+   "Ay kaybolduğu için",
+   "Güneş kızardığı için",
+   "Rüzgar yumuşak olduğu için (yanlış)",
+   "Yer kabuğunun ani hareketi"
+  ],
+  "correctAnswerTr": "Yer kabuğunun ani hareketi",
+  "explanation": "Plaka sınırlarında biriken enerji aniden salınır.",
+  "explanationTr": "Plaka sınırlarında biriken enerji aniden salınır.",
+  "explanationKu": "Enerjiya di têkiliya plakan de kom dibe û nişka ve berdayî dibe.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=b7ef5411dc7685ca",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "b7ef5411dc7685ca"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0024",
+  "category": "Cografya",
+  "prompt": "Teoriya plakayên tektonîk çi dibêje?",
+  "answers": [
+   "Erd qet netevigere",
+   "Erd tenê av e (ne rast)",
+   "Qalikê Erdê ji parçeyên mezin ên tevger pêk tê",
+   "Erd tenê hewa ye (ne rastîn) (ne rastîn) (ne rastîn)"
+  ],
+  "correctAnswer": "Qalikê Erdê ji parçeyên mezin ên tevger pêk tê",
+  "promptTr": "Levha tektoniği kuramı neyi söyler?",
+  "answersTr": [
+   "Dünya hiç hareket etmez",
+   "Dünya yalnızca sudur (yanlış)",
+   "Yer kabuğu hareketli büyük parçalardan oluşur",
+   "Dünya yalnızca havadır (geçersiz) (geçersiz) (geçersiz)"
+  ],
+  "correctAnswerTr": "Yer kabuğu hareketli büyük parçalardan oluşur",
+  "explanation": "Levhalar yaklaşır, ayrılır veya alta dalar.",
+  "explanationTr": "Levhalar yaklaşır, ayrılır veya alta dalar.",
+  "explanationKu": "Plaka digihîjin hev, vediqetin an diibin hev.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=2b856453f2e97918",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "2b856453f2e97918"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0025",
+  "category": "Cografya",
+  "prompt": "Fosil bi giranî çi ne?",
+  "answers": [
+   "Şop an mayînên zindiyên kevn di keviran de",
+   "Tenê kevirên nû yên plastîk — ne rastîn e",
+   "Tenê ewrên spî (ne rast)",
+   "Tenê pêlên deryayê yên îro"
+  ],
+  "correctAnswer": "Şop an mayînên zindiyên kevn di keviran de",
+  "promptTr": "Fosiller esas olarak nedir?",
+  "answersTr": [
+   "Kayalardaki eski canlı iz veya kalıntıları",
+   "Yalnızca yeni plastik taşlar — doğru değil",
+   "Yalnızca beyaz bulutlar (yanlış)",
+   "Yalnızca bugünün deniz dalgaları"
+  ],
+  "correctAnswerTr": "Kayalardaki eski canlı iz veya kalıntıları",
+  "explanation": "Fosiller yaşam tarihini ve eski ortamları gösterir.",
+  "explanationTr": "Fosiller yaşam tarihini ve eski ortamları gösterir.",
+  "explanationKu": "Fosil dîroka jiyanê û jîngehên kevn nîşan didin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=06f469dc70fb6860",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "06f469dc70fb6860"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0026",
+  "category": "Cografya",
+  "prompt": "Nexşeya siyasî bi giranî çi nîşan dide?",
+  "answers": [
+   "Kûrahiya okyanûsan tenê",
+   "Sînor û yekîneyên rêveberiyê",
+   "Germahiya hewayê tenê (çewt) (çewt)",
+   "Cureyên axê tenê (ne rast)"
+  ],
+  "correctAnswer": "Sînor û yekîneyên rêveberiyê",
+  "promptTr": "Siyasi harita esas olarak neyi gösterir?",
+  "answersTr": [
+   "Yalnızca okyanus derinlikleri",
+   "Sınır ve yönetim birimleri",
+   "Yalnızca hava sıcaklığı (yanlış) (yanlış)",
+   "Yalnızca toprak türleri (yanlış)"
+  ],
+  "correctAnswerTr": "Sınır ve yönetim birimleri",
+  "explanation": "Ülke, başkent ve sınırlar siyasi haritalarda görünür.",
+  "explanationTr": "Ülke, başkent ve sınırlar siyasi haritalarda görünür.",
+  "explanationKu": "Welat, paytext û sînor di nexşeyên siyasî de xuya dibin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=3425dc5cf0444794",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nexşe",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "nexşe-amûr",
+   "contentHash": "3425dc5cf0444794"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0027",
+  "category": "Cografya",
+  "prompt": "Nexşeya fîzîkî bi giranî çi nîşan dide?",
+  "answers": [
+   "Tenê partiyên siyasî",
+   "Tenê hejmara niştecihan",
+   "Şêweyên erdê mîna çiya, deşt û av",
+   "Tenê zimanên fermî (ne rast) — şaş e"
+  ],
+  "correctAnswer": "Şêweyên erdê mîna çiya, deşt û av",
+  "promptTr": "Fiziki harita esas olarak neyi gösterir?",
+  "answersTr": [
+   "Yalnızca siyasi partiler",
+   "Yalnızca nüfus sayısı",
+   "Dağ, ova ve su gibi yer şekilleri",
+   "Yalnızca resmi diller (yanlış) — hatalı"
+  ],
+  "correctAnswerTr": "Dağ, ova ve su gibi yer şekilleri",
+  "explanation": "Yükseklik ve doğal şekiller fiziki haritada önemlidir.",
+  "explanationTr": "Yükseklik ve doğal şekiller fiziki haritada önemlidir.",
+  "explanationKu": "Bilindahî û şêweyên xwezayî di nexşeya fîzîkî de girîng in.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=106e577fa370d755",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nexşe",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "nexşe-amûr",
+   "contentHash": "106e577fa370d755"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0028",
+  "category": "Cografya",
+  "prompt": "Pîvana nexşeyê çi dike?",
+  "answers": [
+   "Rengê okyanûsê diguherîne (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Navê bajaran diguherîne — ne rastîn e",
+   "Salê diguherîne (ne rast)",
+   "Têkiliya di navbera dûrahiya nexşeyê û ya rastîn de diyar dike"
+  ],
+  "correctAnswer": "Têkiliya di navbera dûrahiya nexşeyê û ya rastîn de diyar dike",
+  "promptTr": "Harita ölçeği ne yapar?",
+  "answersTr": [
+   "Okyanus rengini değiştirir (geçersiz) (geçersiz) (geçersiz)",
+   "Şehir adlarını değiştirir — doğru değil",
+   "Yılı değiştirir (yanlış)",
+   "Haritadaki uzaklıkla gerçek uzaklık ilişkisini belirtir"
+  ],
+  "correctAnswerTr": "Haritadaki uzaklıkla gerçek uzaklık ilişkisini belirtir",
+  "explanation": "Ölçek haritadaki 1 cm'nin gerçekte kaç km olduğunu söyler.",
+  "explanationTr": "Ölçek haritadaki 1 cm'nin gerçekte kaç km olduğunu söyler.",
+  "explanationKu": "Pîvan dibêje 1 cm li ser nexşeyê çiqas km yê rastîn e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0998844315e23cf5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nexşe",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "nexşe-amûr",
+   "contentHash": "0998844315e23cf5"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0029",
+  "category": "Cografya",
+  "prompt": "Legend a nexşeyê çi ye?",
+  "answers": [
+   "Çîroka kevnar a bajarê — ne rastîn e",
+   "Şiroveya nîşan û rengan ên li ser nexşeyê",
+   "Strana neteweyî (ne rast)",
+   "Lîsteya şîfreyan"
+  ],
+  "correctAnswer": "Şiroveya nîşan û rengan ên li ser nexşeyê",
+  "promptTr": "Harita lejantı nedir?",
+  "answersTr": [
+   "Kentin eski öyküsü — doğru değil",
+   "Haritadaki işaret ve renklerin açıklaması",
+   "Ulusal marş (yanlış)",
+   "Parola listesi"
+  ],
+  "correctAnswerTr": "Haritadaki işaret ve renklerin açıklaması",
+  "explanation": "Lejant olmadan işaretleri anlamak zordur.",
+  "explanationTr": "Lejant olmadan işaretleri anlamak zordur.",
+  "explanationKu": "Bê legend fêmkirina nîşanan zehmet e.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=e46034847b769314",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nexşe",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "nexşe-amûr",
+   "contentHash": "e46034847b769314"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0030",
+  "category": "Cografya",
+  "prompt": "Gol çi ye?",
+  "answers": [
+   "Av a mezin a ku bi piranî bi erdê ve dorpêçkirî ye",
+   "Av a ku her tim diherike ber bi deryayê wek çem",
+   "Tenê av a di şûşeyê de",
+   "Tenê qeşa fezayê (ne rast) (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Av a mezin a ku bi piranî bi erdê ve dorpêçkirî ye",
+  "promptTr": "Göl nedir?",
+  "answersTr": [
+   "Çoğunlukla kara ile çevrili büyük su kütlesi",
+   "Her zaman ırmak gibi denize akan su",
+   "Yalnızca şişedeki su",
+   "Yalnızca uzay buzu (yanlış) (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Çoğunlukla kara ile çevrili büyük su kütlesi",
+  "explanation": "Göl tatlı veya tuzlu . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationTr": "Göl tatlı veya tuzlu . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationKu": "Gol dikare şîrîn an xwê be.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=4e070e3265f8a87b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "4e070e3265f8a87b"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0031",
+  "category": "Cografya",
+  "prompt": "Bendav bi giranî ji bo çi tê çêkirin?",
+  "answers": [
+   "Zêdekirina erdhejan bi armanc — şaş e",
+   "Jêbirina hemû masiyan (ne rast)",
+   "Girtina bayê bi tevahî",
+   "Kontrola avê, enerji an hilanîna avê"
+  ],
+  "correctAnswer": "Kontrola avê, enerji an hilanîna avê",
+  "promptTr": "Baraj esas olarak ne için yapılır?",
+  "answersTr": [
+   "Bilerek deprem artırmak — hatalı",
+   "Tüm balıkları silmek (yanlış)",
+   "Rüzgarı tamamen kesmek",
+   "Su kontrolü, enerji veya su depolama"
+  ],
+  "correctAnswerTr": "Su kontrolü, enerji veya su depolama",
+  "explanation": "Baraj suyu tutar; çevre etkisi de değerlendirilmelidir.",
+  "explanationTr": "Baraj suyu tutar; çevre etkisi de değerlendirilmelidir.",
+  "explanationKu": "Bendav avê digire; bandora jîngehê jî divê were nirxandin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d26319128c4679d7",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "d26319128c4679d7"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0032",
+  "category": "Cografya",
+  "prompt": "Çerxa avê kîjan gavan digire?",
+  "answers": [
+   "Tenê şewitandina keviran",
+   "Tenê qeşa heyvê (ne rast) (ne rastîn) (ne rastîn)",
+   "Hilkişîn, kondensasyon, barîn û herikîn",
+   "Tenê tevgera stêrkan"
+  ],
+  "correctAnswer": "Hilkişîn, kondensasyon, barîn û herikîn",
+  "promptTr": "Su döngüsü hangi adımları kapsar?",
+  "answersTr": [
+   "Yalnızca taşların yanması",
+   "Yalnızca ay buzu (yanlış) (geçersiz) (geçersiz)",
+   "Buharlaşma, yoğuşma, yağış ve akış",
+   "Yalnızca yıldız hareketi"
+  ],
+  "correctAnswerTr": "Buharlaşma, yoğuşma, yağış ve akış",
+  "explanation": "Su kara, hava ve deniz arasında değişir ve dolaşır.",
+  "explanationTr": "Su kara, hava ve deniz arasında değişir ve dolaşır.",
+  "explanationKu": "Av di nav erd, hewa û deryayê de diguhere û digere.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=214dde7141f618ea",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "214dde7141f618ea"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0033",
+  "category": "Cografya",
+  "prompt": "Vezîvirandin çi armanc dike?",
+  "answers": [
+   "Ji nû ve bikaranîna madeyan da ku çop û çavkanî kêm bibin",
+   "Zêdekirina çopê bi armanc (ne rast)",
+   "Şewitandina hemû plastîkê li kolanan",
+   "Avêtina bataryayan nav çem"
+  ],
+  "correctAnswer": "Ji nû ve bikaranîna madeyan da ku çop û çavkanî kêm bibin",
+  "promptTr": "Geri dönüşüm neyi amaçlar?",
+  "answersTr": [
+   "Atık ve kaynak azalsın diye maddeleri yeniden kullanmak",
+   "Bilerek atığı artırmak (yanlış)",
+   "Tüm plastiği sokakta yakmak",
+   "Pilleri ırmağa atmak"
+  ],
+  "correctAnswerTr": "Atık ve kaynak azalsın diye maddeleri yeniden kullanmak",
+  "explanation": "Kâğıt, cam, metal ve bazı plastikler geri dönüştürülebilir.",
+  "explanationTr": "Kâğıt, cam, metal ve bazı plastikler geri dönüştürülebilir.",
+  "explanationKu": "Kaxez, cam, metal û hin plastîk dikarin werin vezîvirandin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=ede5501c946cbb97",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "ede5501c946cbb97"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0034",
+  "category": "Cografya",
+  "prompt": "Biyocurebûn çi ye?",
+  "answers": [
+   "Tenê yek cureyê hesp (çewt) (çewt) (çewt)",
+   "Cureyên cuda yên zindiyan di jîngehê de",
+   "Tenê yek cureyê kevir",
+   "Tenê yek cureyê ewr (ne rast)"
+  ],
+  "correctAnswer": "Cureyên cuda yên zindiyan di jîngehê de",
+  "promptTr": "Biyoçeşitlilik nedir?",
+  "answersTr": [
+   "Yalnızca tek at türü (yanlış) (yanlış) (yanlış)",
+   "Ortamdaki canlı türlerinin çeşitliliği",
+   "Yalnızca tek taş türü",
+   "Yalnızca tek bulut türü (yanlış)"
+  ],
+  "correctAnswerTr": "Ortamdaki canlı türlerinin çeşitliliği",
+  "explanation": "Biyoçeşitlilik ekosistemleri güçlendirir.",
+  "explanationTr": "Biyoçeşitlilik ekosistemleri güçlendirir.",
+  "explanationKu": "Biyocurebûn ekosîsteman xurt dike.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=6e5f7ed131daf17b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "6e5f7ed131daf17b"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0035",
+  "category": "Cografya",
+  "prompt": "Qirêjiya hewayê bi giranî ji ku tê?",
+  "answers": [
+   "Ji stêrkên dûr (ne rast)",
+   "Ji qeşa polê tenê — şaş e — şaş e — şaş e",
+   "Ji şewitandina sotemeniyan û çavkaniyên pîşesaziyê",
+   "Ji dengê çûkan"
+  ],
+  "correctAnswer": "Ji şewitandina sotemeniyan û çavkaniyên pîşesaziyê",
+  "promptTr": "Hava kirliliği esas olarak nereden gelir?",
+  "answersTr": [
+   "Uzak yıldızlardan (yanlış)",
+   "Yalnızca kutup buzundan — hatalı — hatalı — hatalı",
+   "Yakıt yanması ve endüstri kaynaklarından",
+   "Kuş sesinden"
+  ],
+  "correctAnswerTr": "Yakıt yanması ve endüstri kaynaklarından",
+  "explanation": "Zararlı gaz ve parçacıklar sağlığı ve iklimi etkiler.",
+  "explanationTr": "Zararlı gaz ve parçacıklar sağlığı ve iklimi etkiler.",
+  "explanationKu": "Gaz û parçikên zirardar tenduristî û îklîmê bandor dikin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=c614e1822a353f2e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "c614e1822a353f2e"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0036",
+  "category": "Cografya",
+  "prompt": "Qirêjiya avê çima xeternak e?",
+  "answers": [
+   "Avê dike zêr (ne rast)",
+   "Avê dike hewa",
+   "Avê dike kevir (ne rastîn) (ne rastîn)",
+   "Zindî û mirov ji ava paqij bêpar dike"
+  ],
+  "correctAnswer": "Zindî û mirov ji ava paqij bêpar dike",
+  "promptTr": "Su kirliliği neden tehlikelidir?",
+  "answersTr": [
+   "Suyu altın yapar (yanlış)",
+   "Suyu hava yapar",
+   "Suyu taş yapar (geçersiz) (geçersiz)",
+   "Canlı ve insanı temiz sudan yoksun bırakır"
+  ],
+  "correctAnswerTr": "Canlı ve insanı temiz sudan yoksun bırakır",
+  "explanation": "Kimyasal, plastik ve kaçak deşarj ırmak ve gölleri bozar.",
+  "explanationTr": "Kimyasal, plastik ve kaçak deşarj ırmak ve gölleri bozar.",
+  "explanationKu": "Kîmyewî, plastîk û avêtinên nefermî çem û golan xera dikin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=082a18a4fc32bdd2",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "082a18a4fc32bdd2"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0040",
+  "category": "Cografya",
+  "prompt": "Amazon daristana baranê bi giranî li kîjan parzemînê ye?",
+  "answers": [
+   "Ewrûpa (ne rast)",
+   "Antarktîka",
+   "Amerîkaya Başûr",
+   "Afrîkaya Bakur"
+  ],
+  "correctAnswer": "Amerîkaya Başûr",
+  "promptTr": "Amazon yağmur ormanı esas olarak hangi kıtadadır?",
+  "answersTr": [
+   "Avrupa (yanlış)",
+   "Antarktika",
+   "Güney Amerika",
+   "Kuzey Afrika"
+  ],
+  "correctAnswerTr": "Güney Amerika",
+  "explanation": "Amazon havzası Güney Amerika'nın büyük kısmını kaplar.",
+  "explanationTr": "Amazon havzası Güney Amerika'nın büyük kısmını kaplar.",
+  "explanationKu": "Hewza Amazonê beşek mezin a Amerîkaya Başûr digire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0e2c1f2e26590422",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "0e2c1f2e26590422"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0043",
+  "category": "Cografya",
+  "prompt": "Çemê Yangtze bi giranî li kîjan welatî diherike?",
+  "answers": [
+   "Brezîlya",
+   "Misir",
+   "Çîn",
+   "Kanada"
+  ],
+  "correctAnswer": "Çîn",
+  "promptTr": "Yangtze ırmağı esas olarak hangi ülkede akar?",
+  "answersTr": [
+   "Brezilya",
+   "Mısır",
+   "Çin",
+   "Kanada"
+  ],
+  "correctAnswerTr": "Çin",
+  "explanation": "Yangtze Asya'nın en uzun ırmaklarındandır.",
+  "explanationTr": "Yangtze Asya'nın en uzun ırmaklarındandır.",
+  "explanationKu": "Yangtze yek ji çemên herî dirêj ên Asyayê ye.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=507966c64e4d3f9f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "507966c64e4d3f9f"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0045",
+  "category": "Cografya",
+  "prompt": "Zagros bi giranî kîjan cureyê şêweyê erdê ye?",
+  "answers": [
+   "Okyanûseke vekirî",
+   "Zincîra çiyayan ya standard",
+   "Deşteke qeşagirtî",
+   "Giraveke tenê"
+  ],
+  "correctAnswer": "Zincîra çiyayan ya standard",
+  "promptTr": "Zagros esas olarak ne tür bir yer şeklidir?",
+  "answersTr": [
+   "Açık okyanus",
+   "Dağ silsilesi (standart)",
+   "Buzul ova",
+   "Tek ada"
+  ],
+  "correctAnswerTr": "Dağ silsilesi (standart)",
+  "explanation": "Zagros Orta Doğu'da bir dağ silsilesidir.",
+  "explanationTr": "Zagros Orta Doğu'da bir dağ silsilesidir.",
+  "explanationKu": "Zagros zincîreke çiyayî ye li rojhilata Navîn.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=8091c02bc2b97218",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kurdistan-xweza",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "herêm",
+   "contentHash": "8091c02bc2b97218"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0047",
+  "category": "Cografya",
+  "prompt": "Gola Wanê li kîjan welatî ye?",
+  "answers": [
+   "Arjantîn",
+   "Awistralya",
+   "Kenya",
+   "Tirkiye"
+  ],
+  "correctAnswer": "Tirkiye",
+  "promptTr": "Van Gölü hangi ülkededir?",
+  "answersTr": [
+   "Arjantin",
+   "Avustralya",
+   "Kenya",
+   "Türkiye"
+  ],
+  "correctAnswerTr": "Türkiye",
+  "explanation": "Van Gölü Türkiye'nin en büyük göllerinden biridir.",
+  "explanationTr": "Van Gölü Türkiye'nin en büyük göllerinden biridir.",
+  "explanationKu": "Gola Wanê yek ji golên herî mezin ên Tirkiyeyê ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=299a040c218d55ae",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kurdistan-xweza",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "herêm",
+   "contentHash": "299a040c218d55ae"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0049",
+  "category": "Cografya",
+  "prompt": "Çemê Firat yek ji çemên sereke yên kîjan herêma dîrokî ye?",
+  "answers": [
+   "Mezopotamya ya standard",
+   "Patagonia",
+   "Sîbîrya",
+   "Sahara ya navîn"
+  ],
+  "correctAnswer": "Mezopotamya ya standard",
+  "promptTr": "Fırat hangi tarihi bölgenin ana ırmaklarındandır?",
+  "answersTr": [
+   "Mezopotamya (standart)",
+   "Patagonya",
+   "Sibirya",
+   "Orta Sahra"
+  ],
+  "correctAnswerTr": "Mezopotamya (standart)",
+  "explanation": "Fırat Dicle ile birlikte iki ırmak arasını sular.",
+  "explanationTr": "Fırat Dicle ile birlikte iki ırmak arasını sular.",
+  "explanationKu": "Firat digel Dîjleyê axa di navbera çeman de av dide.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=fdb4abdf862ada2e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kurdistan-xweza",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "herêm",
+   "contentHash": "fdb4abdf862ada2e"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0050",
+  "category": "Cografya",
+  "prompt": "Çiyayê Ararat bi giranî li kîjan welatî ye?",
+  "answers": [
+   "Şîle",
+   "Tirkiye",
+   "Zelandaya Nû",
+   "Îzlanda"
+  ],
+  "correctAnswer": "Tirkiye",
+  "promptTr": "Ağrı Dağı esas olarak hangi ülkededir?",
+  "answersTr": [
+   "Şili",
+   "Türkiye",
+   "Yeni Zelanda",
+   "İzlanda"
+  ],
+  "correctAnswerTr": "Türkiye",
+  "explanation": "Ağrı Türkiye'nin doğusunda yüksek bir zirvedir.",
+  "explanationTr": "Ağrı Türkiye'nin doğusunda yüksek bir zirvedir.",
+  "explanationKu": "Ararat lûtkeyeke bilind a li rojhilatê Tirkiyeyê ye.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=89fc91d0dd32a7ad",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kurdistan-xweza",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "herêm",
+   "contentHash": "89fc91d0dd32a7ad"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0052",
+  "category": "Cografya",
+  "prompt": "Barometre bi giranî çi dipîve?",
+  "answers": [
+   "Leza çem",
+   "Kûrahiya axê",
+   "Tîrbûna daristanê",
+   "Zexta atmosferê"
+  ],
+  "correctAnswer": "Zexta atmosferê",
+  "promptTr": "Barometre esas olarak neyi ölçer?",
+  "answersTr": [
+   "Irmak hızını",
+   "Toprak derinliğini",
+   "Orman sıklığını",
+   "Atmosfer basıncını"
+  ],
+  "correctAnswerTr": "Atmosfer basıncını",
+  "explanation": "Hava basıncı hava tahmini için önemlidir.",
+  "explanationTr": "Hava basıncı hava tahmini için önemlidir.",
+  "explanationKu": "Zexta hewayê ji bo pêşbîniya hewayê girîng e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=68063a4337773abf",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "68063a4337773abf"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0053",
+  "category": "Cografya",
+  "prompt": "Termometre çi dipîve?",
+  "answers": [
+   "Dirêjahiya çem",
+   "Germahiyê ya standard",
+   "Rûbera welatî",
+   "Hejmara niştecihan"
+  ],
+  "correctAnswer": "Germahiyê ya standard",
+  "promptTr": "Termometre neyi ölçer?",
+  "answersTr": [
+   "Irmak uzunluğu",
+   "Sıcaklığı (standart)",
+   "Ülke yüzölçümü",
+   "Nüfus sayısı"
+  ],
+  "correctAnswerTr": "Sıcaklığı (standart)",
+  "explanation": "Termometre hava ve laboratuvarda kullanılır.",
+  "explanationTr": "Termometre hava ve laboratuvarda kullanılır.",
+  "explanationKu": "Termometre di hewa û laboratûwaran de tê bikaranîn.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=ae8ccb58319a1fb5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "ae8ccb58319a1fb5"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0054",
+  "category": "Cografya",
+  "prompt": "Muson bayên demsalî bi giranî kîjan herêmê bandor dikin?",
+  "answers": [
+   "Başûrê Asyayê",
+   "Navenda Antarktîkayê",
+   "Bakurê Greenlandê",
+   "Navenda Sahra ya herî hişk her dem"
+  ],
+  "correctAnswer": "Başûrê Asyayê",
+  "promptTr": "Mevsimlik muson rüzgarları esas olarak hangi bölgeyi etkiler?",
+  "answersTr": [
+   "Güney Asya",
+   "Antarktika'nın ortası",
+   "Grönland'ın kuzeyi",
+   "Sahra'nın en kurak ortası her zaman"
+  ],
+  "correctAnswerTr": "Güney Asya",
+  "explanation": "Muson Asya'nın bazı bölgelerine yazın yoğun yağış getirir.",
+  "explanationTr": "Muson Asya'nın bazı bölgelerine yazın yoğun yağış getirir.",
+  "explanationKu": "Muson baranên giran ên havînê tîne hin herêmên Asyayê.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=1657e13811c3e2ef",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "1657e13811c3e2ef"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0055",
+  "category": "Cografya",
+  "prompt": "Deşt çi ye?",
+  "answers": [
+   "Lûtkeya herî tûj a çiyê — şaş e — şaş e — şaş e",
+   "Kûrahiya herî mezin a okyanûsê",
+   "Ewrê herî bilind (ne rast)",
+   "Erdê fireh û bi piranî nizm û hêşîn an çandinî"
+  ],
+  "correctAnswer": "Erdê fireh û bi piranî nizm û hêşîn an çandinî",
+  "promptTr": "Ova nedir?",
+  "answersTr": [
+   "Dağın en sivri zirvesi — hatalı — hatalı — hatalı",
+   "Okyanusun en büyük derinliği",
+   "En yüksek bulut (yanlış)",
+   "Geniş çoğunlukla alçak ve yeşil veya tarımsal arazi"
+  ],
+  "correctAnswerTr": "Geniş çoğunlukla alçak ve yeşil veya tarımsal arazi",
+  "explanation": "Ovalar tarım için çoğu kez elverişlidir.",
+  "explanationTr": "Ovalar tarım için çoğu kez elverişlidir.",
+  "explanationKu": "Deşt ji bo çandinî gelek caran guncan in.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=e746fdb9cf24e7e2",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "e746fdb9cf24e7e2"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0056",
+  "category": "Cografya",
+  "prompt": "Girav çi ye?",
+  "answers": [
+   "Erdê ku qet av nêzîk nîne",
+   "Tenê ewrê spî (ne rast) (ne rastîn) (ne rastîn)",
+   "Erdê ku bi tevahî bi avê ve dorpêçkirî ye",
+   "Tenê pêla deng"
+  ],
+  "correctAnswer": "Erdê ku bi tevahî bi avê ve dorpêçkirî ye",
+  "promptTr": "Ada nedir?",
+  "answersTr": [
+   "Hiç suya yakın olmayan kara",
+   "Yalnızca beyaz bulut (yanlış) (geçersiz) (geçersiz)",
+   "Tamamen suyla çevrili kara",
+   "Yalnızca ses dalgası"
+  ],
+  "correctAnswerTr": "Tamamen suyla çevrili kara",
+  "explanation": "Adalar deniz veya gölde . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationTr": "Adalar deniz veya gölde . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationKu": "Girav di derya an golê de dikarin bin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=f79925df7d24006a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "f79925df7d24006a"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0057",
+  "category": "Cografya",
+  "prompt": "Nîvgirav çi ye?",
+  "answers": [
+   "Erdê ku sê aliyên wê av e û yek alî bi parzemînê ve girêdayî ye",
+   "Erdê ku bi tevahî di nav avê de ye mîna keştî",
+   "Tenê çiyayekî di nav ewr de",
+   "Tenê gola bin erdê (ne rast)"
+  ],
+  "correctAnswer": "Erdê ku sê aliyên wê av e û yek alî bi parzemînê ve girêdayî ye",
+  "promptTr": "Yarımada nedir?",
+  "answersTr": [
+   "Üç yanı su bir yanı karaya bağlı kara parçası",
+   "Geminin tamamı sudaki kara",
+   "Yalnızca bulut içi dağ",
+   "Yalnızca yeraltı gölü (yanlış)"
+  ],
+  "correctAnswerTr": "Üç yanı su bir yanı karaya bağlı kara parçası",
+  "explanation": "Yarımada örnekleri haritada kolayca görülür.",
+  "explanationTr": "Yarımada örnekleri haritada kolayca görülür.",
+  "explanationKu": "Mînakên nîvgiravan li ser nexşeyê bi hêsanî têne dîtin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=6603a12ee1a7aced",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "6603a12ee1a7aced"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0058",
+  "category": "Cografya",
+  "prompt": "Oksîjen a ku em dilivînin bi giranî ji ku tê?",
+  "answers": [
+   "Ji şewitandina benzînê (çewt) (çewt)",
+   "Ji fotosenteza riwek û algayan",
+   "Ji qeşa safî (ne rast)",
+   "Ji kevirên metal"
+  ],
+  "correctAnswer": "Ji fotosenteza riwek û algayan",
+  "promptTr": "Soluduğumuz oksijen esas olarak nereden gelir?",
+  "answersTr": [
+   "Benzin yanmasından (yanlış) (yanlış)",
+   "Bitki ve alg fotosentezinden",
+   "Saf buzdan (yanlış)",
+   "Metal kayalardan"
+  ],
+  "correctAnswerTr": "Bitki ve alg fotosentezinden",
+  "explanation": "Yeşil canlılar şeker üretirken O₂ salar.",
+  "explanationTr": "Yeşil canlılar şeker üretirken O₂ salar.",
+  "explanationKu": "Zindiyên kesk O₂ berdidin dema şekir çêdikin.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=f6eea57feb82da9f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "f6eea57feb82da9f"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0059",
+  "category": "Cografya",
+  "prompt": "Çerxa karbonê çima girîng e?",
+  "answers": [
+   "Karbon qet naguhere û asê dimîne",
+   "Karbon tenê di zêr de ye (ne rast) — şaş e — şaş e — şaş e",
+   "Karbon di nav hewa, zindî û erdê de diguhere û jiyanê digire",
+   "Karbon tenê di plastîkê de ye"
+  ],
+  "correctAnswer": "Karbon di nav hewa, zindî û erdê de diguhere û jiyanê digire",
+  "promptTr": "Karbon döngüsü neden önemlidir?",
+  "answersTr": [
+   "Karbon hiç değişmez ve sabit kalır",
+   "Karbon yalnızca altındadır (yanlış) — hatalı — hatalı — hatalı",
+   "Karbon hava canlı ve toprak arasında dolaşır ve yaşamı taşır",
+   "Karbon yalnızca plastiktedir"
+  ],
+  "correctAnswerTr": "Karbon hava canlı ve toprak arasında dolaşır ve yaşamı taşır",
+  "explanation": "Yanma ve ormansızlaşma karbon dengesini değiştirir.",
+  "explanationTr": "Yanma ve ormansızlaşma karbon dengesini değiştirir.",
+  "explanationKu": "Şewitandin û birrîna daristanan balansa karbonê diguherînin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=dc423be26d344d6f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "dc423be26d344d6f"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0062",
+  "category": "Cografya",
+  "prompt": "Havîn di nîvkûreya bakur de kengê tê bi gelemperî?",
+  "answers": [
+   "Mehên hezîran-tebax",
+   "Mehên kanûn-sibat",
+   "Tenê meha çile",
+   "Tenê meha çiriya pêşîn"
+  ],
+  "correctAnswer": "Mehên hezîran-tebax",
+  "promptTr": "Kuzey yarımkürede yaz genellikle ne zamandır?",
+  "answersTr": [
+   "Haziran-ağustos ayları",
+   "Aralık-şubat ayları",
+   "Yalnızca ocak ayı",
+   "Yalnızca ekim ayı"
+  ],
+  "correctAnswerTr": "Haziran-ağustos ayları",
+  "explanation": "Dünya ekseninin eğimi nedeniyle mevsimler değişir.",
+  "explanationTr": "Dünya ekseninin eğimi nedeniyle mevsimler değişir.",
+  "explanationKu": "Ji ber meyla tewerê Erdê demsal diguherin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=f11b106f2d4b78be",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "f11b106f2d4b78be"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0063",
+  "category": "Cografya",
+  "prompt": "Meyla tewerê Erdê bi giranî çi diguherîne?",
+  "answers": [
+   "Leza ronahiyê di fezayê de",
+   "Hejmara okyanûsan (ne rast)",
+   "Hejmara parzemînan — şaş e — şaş e — şaş e",
+   "Dabeşkirina ronahiya rojê û demsalan"
+  ],
+  "correctAnswer": "Dabeşkirina ronahiya rojê û demsalan",
+  "promptTr": "Dünya ekseninin eğimi esas olarak neyi değiştirir?",
+  "answersTr": [
+   "Uzayda ışık hızını",
+   "Okyanus sayısını (yanlış)",
+   "Kıta sayısını — hatalı — hatalı — hatalı",
+   "Güneş ışığı dağılımı ve mevsimleri"
+  ],
+  "correctAnswerTr": "Güneş ışığı dağılımı ve mevsimleri",
+  "explanation": "Eğim olmasa bugünkü güçlü mevsimler görülmezdi.",
+  "explanationTr": "Eğim olmasa bugünkü güçlü mevsimler görülmezdi.",
+  "explanationKu": "Bê meyl demsalên xurt ên îroyîn nedihatin dîtin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=3bf0b3c25f9e4fc5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "3bf0b3c25f9e4fc5"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0066",
+  "category": "Cografya",
+  "prompt": "Birûsk di bahozê de çi ye?",
+  "answers": [
+   "Tenê dengê bayê",
+   "Derketina elektrîkê di nav ewr an erdê de",
+   "Tenê barana nerm",
+   "Tenê mij a spî (ne rast) (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Derketina elektrîkê di nav ewr an erdê de",
+  "promptTr": "Fırtınada şimşek nedir?",
+  "answersTr": [
+   "Yalnızca rüzgar sesi",
+   "Bulut veya yer arasında elektrik boşalması",
+   "Yalnızca hafif yağmur",
+   "Yalnızca beyaz sis (yanlış) (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Bulut veya yer arasında elektrik boşalması",
+  "explanation": "Şimşek çok yüksek sıcaklık oluşturur; sesi gök gürültüsüdür.",
+  "explanationTr": "Şimşek çok yüksek sıcaklık oluşturur; sesi gök gürültüsüdür.",
+  "explanationKu": "Birûsk germahiyeke pir bilind çêdike; dengê wê girr e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=9e949e4ef13d0e1d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "9e949e4ef13d0e1d"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0067",
+  "category": "Cografya",
+  "prompt": "Glacier çi ye?",
+  "answers": [
+   "Gol a ava germ (ne rast) — şaş e — şaş e",
+   "Deşta qûmê ya hişk",
+   "Girê qeşa ya mezin a ku hêdî dihere",
+   "Ewrê tenê yê havînê"
+  ],
+  "correctAnswer": "Girê qeşa ya mezin a ku hêdî dihere",
+  "promptTr": "Buzul nedir?",
+  "answersTr": [
+   "Sıcak su gölü (yanlış) — hatalı — hatalı",
+   "Kuru kum ovası",
+   "Yavaş akan büyük buz kütlesi",
+   "Yalnızca yaz bulutu"
+  ],
+  "correctAnswerTr": "Yavaş akan büyük buz kütlesi",
+  "explanation": "Buzullar yer şekillerini değiştirir ve su depolar.",
+  "explanationTr": "Buzullar yer şekillerini değiştirir ve su depolar.",
+  "explanationKu": "Qeşasûr şêweyên erdê diguherînin û avê hildigirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=89c2cda31f581558",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "89c2cda31f581558"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0068",
+  "category": "Cografya",
+  "prompt": "Şikeft çawa dikare çêbibe?",
+  "answers": [
+   "Bi çapkirina kaxezê (ne rast)",
+   "Bi guhertina temayê (ne rastîn) (ne rastîn)",
+   "Bi şandina e-nameyê",
+   "Bi hilweşandina keviran bi avê an lava"
+  ],
+  "correctAnswer": "Bi hilweşandina keviran bi avê an lava",
+  "promptTr": "Mağara nasıl oluşabilir?",
+  "answersTr": [
+   "Kâğıt basmakla (yanlış)",
+   "Tema değiştirmekle (geçersiz) (geçersiz)",
+   "E-posta göndermekle",
+   "Suyun veya lavın kayayı aşındırmasıyla"
+  ],
+  "correctAnswerTr": "Suyun veya lavın kayayı aşındırmasıyla",
+  "explanation": "Kimyasal su kireçtaşını eritip boşluğu genişletir.",
+  "explanationTr": "Kimyasal su kireçtaşını eritip boşluğu genişletir.",
+  "explanationKu": "Av a kîmyewî kevirên kilsê dişkîne û valahiyê fireh dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0fa7f5fdadb8343b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "0fa7f5fdadb8343b"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0070",
+  "category": "Cografya",
+  "prompt": "GPS di erdnîgariyê de bi giranî çi dide?",
+  "answers": [
+   "Koordînatên cihê li ser Erdê",
+   "Germahiya navenda Erdê",
+   "Kûrahiya tevahî a okyanûsê ya yek hejmar",
+   "Hejmara hemû çemên cîhanê"
+  ],
+  "correctAnswer": "Koordînatên cihê li ser Erdê",
+  "promptTr": "Coğrafyada GPS esas olarak ne sağlar?",
+  "answersTr": [
+   "Yeryüzünde konum koordinatları",
+   "Dünya merkezi sıcaklığı",
+   "Tek sayıyla tüm okyanus derinliği",
+   "Dünyadaki tüm ırmak sayısı"
+  ],
+  "correctAnswerTr": "Yeryüzünde konum koordinatları",
+  "explanation": "Uydular alıcının konumunu hesaplaması için sinyal gönderir.",
+  "explanationTr": "Uydular alıcının konumunu hesaplaması için sinyal gönderir.",
+  "explanationKu": "Peyk sînyalan dişînin da ku wergir cihê xwe hesab bike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=1b16b88979256b90",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nexşe",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "nexşe-amûr",
+   "contentHash": "1b16b88979256b90"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0071",
+  "category": "Cografya",
+  "prompt": "Kanala Panama kîjan okyanûsan nêzîk dike?",
+  "answers": [
+   "Arktîk û Hindê tenê",
+   "Tenê Deryaya Spî û Xazerê",
+   "Tenê Gola Wanê û Urmiyê",
+   "Atlantîk û Pasîfîk"
+  ],
+  "correctAnswer": "Atlantîk û Pasîfîk",
+  "promptTr": "Panama Kanalı hangi okyanusları yaklaştırır?",
+  "answersTr": [
+   "Yalnızca Arktik ve Hint",
+   "Yalnızca Akdeniz ve Hazar",
+   "Yalnızca Van ve Urmiye gölleri",
+   "Atlas ve Pasifik"
+  ],
+  "correctAnswerTr": "Atlas ve Pasifik",
+  "explanation": "Kanal gemileri Güney Amerika dolanmasından kurtarır.",
+  "explanationTr": "Kanal gemileri Güney Amerika dolanmasından kurtarır.",
+  "explanationKu": "Kanal keştîyan ji dorê dirêj ê Amerîkaya Başûr xilas dike.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=8623ff36e3fa94ab",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "8623ff36e3fa94ab"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0072",
+  "category": "Cografya",
+  "prompt": "Kanala Suez bi giranî kîjan deryayan digihîne hev?",
+  "answers": [
+   "Deryaya Reş û Xazerê",
+   "Deryaya Baltîk û Spî ya bakur",
+   "Deryaya Spî û Deryaya Sor",
+   "Gola Superior û Michigan"
+  ],
+  "correctAnswer": "Deryaya Spî û Deryaya Sor",
+  "promptTr": "Süveyş Kanalı esas olarak hangi denizleri bağlar?",
+  "answersTr": [
+   "Karadeniz ve Hazar",
+   "Baltık ve Kuzey Denizi",
+   "Akdeniz ve Kızıldeniz",
+   "Superior ve Michigan gölleri"
+  ],
+  "correctAnswerTr": "Akdeniz ve Kızıldeniz",
+  "explanation": "Süveyş Avrupa ile Asya arasını kısaltır.",
+  "explanationTr": "Süveyş Avrupa ile Asya arasını kısaltır.",
+  "explanationKu": "Suez rêya di navbera Ewrûpa û Asyayê de kurt dike.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=a70238e462765f4f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "a70238e462765f4f"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0073",
+  "category": "Cografya",
+  "prompt": "Deryaya Reş li bakurê kîjan deryayê ye bi rêya Bosporus?",
+  "answers": [
+   "Deryaya Spî ya standard",
+   "Okyanûsa Pasîfîk",
+   "Okyanûsa Başûr",
+   "Deryaya Japon"
+  ],
+  "correctAnswer": "Deryaya Spî ya standard",
+  "promptTr": "Karadeniz Boğaz yoluyla hangi denizin kuzeyindedir?",
+  "answersTr": [
+   "Akdeniz (standart)",
+   "Pasifik Okyanusu",
+   "Güney Okyanusu",
+   "Japon Denizi"
+  ],
+  "correctAnswerTr": "Akdeniz (standart)",
+  "explanation": "İstanbul ve Çanakkale boğazları Karadeniz'i Akdeniz'e bağlar.",
+  "explanationTr": "İstanbul ve Çanakkale boğazları Karadeniz'i Akdeniz'e bağlar.",
+  "explanationKu": "Bosporus û Çanakkale Deryaya Reş bi Spî ve girê didin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=18e878b5a91783d4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "18e878b5a91783d4"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0074",
+  "category": "Cografya",
+  "prompt": "Gola Xazerê çima wek gol an derya tê nîqaş kirin?",
+  "answers": [
+   "Ji ber ku qet av tê de nîne",
+   "Av a xwê ye û sînorên welatan digire lê bi okyanûsê ve girêdayî nîne",
+   "Ji ber ku li ser Heyvê ye (ne rast) (çewt) (çewt) (çewt)",
+   "Ji ber ku tenê yek metre fireh e"
+  ],
+  "correctAnswer": "Av a xwê ye û sînorên welatan digire lê bi okyanûsê ve girêdayî nîne",
+  "promptTr": "Hazar neden göl veya deniz diye tartışılır?",
+  "answersTr": [
+   "Hiç suyu yoktur",
+   "Tuzlu suyu ve ülke sınırları vardır ama okyanusa bağlı değildir",
+   "Ay'dadır (yanlış) (yanlış) (yanlış) (yanlış)",
+   "Yalnızca bir metre geniştir"
+  ],
+  "correctAnswerTr": "Tuzlu suyu ve ülke sınırları vardır ama okyanusa bağlı değildir",
+  "explanation": "Hazar dünyanın en büyük gölü olarak da anılır.",
+  "explanationTr": "Hazar dünyanın en büyük gölü olarak da anılır.",
+  "explanationKu": "Xazer wek gola herî mezin a cîhanê jî tê binavkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=eb2bb3ba0e585b2e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "eb2bb3ba0e585b2e"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0075",
+  "category": "Cografya",
+  "prompt": "Dar çandin çima ji bo jîngehê baş e?",
+  "answers": [
+   "Germahiyê automatic dike 100°C",
+   "Hemû masiyan dikuje",
+   "CO₂ digire, oksîjenê dide û axê diparêze",
+   "Hemû avê hişk dike (ne rast) — şaş e — şaş e"
+  ],
+  "correctAnswer": "CO₂ digire, oksîjenê dide û axê diparêze",
+  "promptTr": "Ağaç dikmek çevre için neden iyidir?",
+  "answersTr": [
+   "Sıcaklığı otomatik 100°C yapar",
+   "Tüm balıkları öldürür",
+   "CO₂ alır oksijen verir ve toprağı korur",
+   "Tüm suyu kurutur (yanlış) — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "CO₂ alır oksijen verir ve toprağı korur",
+  "explanation": "Orman erozyonu azaltır ve yaşam alanı verir.",
+  "explanationTr": "Orman erozyonu azaltır ve yaşam alanı verir.",
+  "explanationKu": "Daristan erozyonê kêm dike û jîngehê dide.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=efc285e072a51405",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "efc285e072a51405"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0076",
+  "category": "Cografya",
+  "prompt": "Enerjiya rojê ji kîjan çavkaniyê tê?",
+  "answers": [
+   "Ji şewitandina komirê tenê",
+   "Ji gaz a xwezayî tenê",
+   "Ji uranyumê tenê",
+   "Ji tîrêjên rojê"
+  ],
+  "correctAnswer": "Ji tîrêjên rojê",
+  "promptTr": "Güneş enerjisi hangi kaynaktan gelir?",
+  "answersTr": [
+   "Yalnızca kömür yanmasından",
+   "Yalnızca doğal gazdan",
+   "Yalnızca uranyumdan",
+   "Güneş ışınlarından"
+  ],
+  "correctAnswerTr": "Güneş ışınlarından",
+  "explanation": "Güneş panelleri ışını elektrik veya ısıya çevirir.",
+  "explanationTr": "Güneş panelleri ışını elektrik veya ısıya çevirir.",
+  "explanationKu": "Panelên rojê tîrêjê dikin elektrîk an germê.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=1b6157beeb0323e9",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "1b6157beeb0323e9"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0079",
+  "category": "Cografya",
+  "prompt": "Sotemeniyên fosîl mînakên kîjan in?",
+  "answers": [
+   "Tîrêja rojê û bayê tenê — şaş e",
+   "Tenê ava çem (ne rast)",
+   "Tenê germiya laş",
+   "Komir, petrol û gaza xwezayî"
+  ],
+  "correctAnswer": "Komir, petrol û gaza xwezayî",
+  "promptTr": "Fosil yakıt örnekleri hangileridir?",
+  "answersTr": [
+   "Yalnızca güneş ışığı ve rüzgar — hatalı",
+   "Yalnızca ırmak suyu (yanlış)",
+   "Yalnızca vücut ısısı",
+   "Kömür petrol ve doğal gaz"
+  ],
+  "correctAnswerTr": "Kömür petrol ve doğal gaz",
+  "explanation": "Eski organik kalıntılardan oluşur ve yanınca CO₂ salar.",
+  "explanationTr": "Eski organik kalıntılardan oluşur ve yanınca CO₂ salar.",
+  "explanationKu": "Ev ji mayînên organîk ên kevn çêdibin û dema şewitandinê CO₂ berdidin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=52f7f58106959f40",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "52f7f58106959f40"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0080",
+  "category": "Cografya",
+  "prompt": "Enerjiya nûjenbûyî çi tê wateya?",
+  "answers": [
+   "Çavkanî carekê heye û qet nabe",
+   "Tenê ji komirê tê (ne rast) (ne rastîn) (ne rastîn)",
+   "Çavkanî bi dema mirovî ve dîsa tê dagirtin",
+   "Tenê ji plastîkê tê"
+  ],
+  "correctAnswer": "Çavkanî bi dema mirovî ve dîsa tê dagirtin",
+  "promptTr": "Yenilenebilir enerji ne demektir?",
+  "answersTr": [
+   "Kaynak bir kez vardır ve tükenir",
+   "Yalnızca kömürden gelir (yanlış) (geçersiz) (geçersiz)",
+   "Kaynak insan ölçeğinde yeniden dolar",
+   "Yalnızca plastikten gelir"
+  ],
+  "correctAnswerTr": "Kaynak insan ölçeğinde yeniden dolar",
+  "explanation": "Güneş rüzgar ve birçok hidro yenilenebilir sayılır.",
+  "explanationTr": "Güneş rüzgar ve birçok hidro yenilenebilir sayılır.",
+  "explanationKu": "Roj, ba û gelek hîdro nûjenbûyî têne hesibandin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=9a78586a37cf6be9",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "9a78586a37cf6be9"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0081",
+  "category": "Cografya",
+  "prompt": "El Niño bi giranî çi ye?",
+  "answers": [
+   "Guherîna germahî û hewayê ya li Pasîfîka tropîkal ku cîhanê bandor dike",
+   "Tenê navê çiyayekî li Ewrûpayê",
+   "Tenê cureyê masiyê herêmî",
+   "Tenê pîvana nexşeyê (ne rast)"
+  ],
+  "correctAnswer": "Guherîna germahî û hewayê ya li Pasîfîka tropîkal ku cîhanê bandor dike",
+  "promptTr": "El Niño esas olarak nedir?",
+  "answersTr": [
+   "Tropikal Pasifik'te dünyayı etkileyen sıcaklık ve hava değişimi",
+   "Yalnızca Avrupa'da bir dağ adı",
+   "Yalnızca yerel balık türü",
+   "Yalnızca harita ölçeği (yanlış)"
+  ],
+  "correctAnswerTr": "Tropikal Pasifik'te dünyayı etkileyen sıcaklık ve hava değişimi",
+  "explanation": "El Niño yağış ve sıcaklık düzenini değiştirir.",
+  "explanationTr": "El Niño yağış ve sıcaklık düzenini değiştirir.",
+  "explanationKu": "El Niño şêwazên baran û germahiyê diguherîne.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=26076fcc6c03b5ba",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "26076fcc6c03b5ba"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0082",
+  "category": "Cografya",
+  "prompt": "Tundra bi giranî bi kîjan şertan tê naskirin?",
+  "answers": [
+   "Tropîkal, daristana stûr, germahiya bilind her dem",
+   "Sar, darên bilind kêm, ax a cemidî di bin de",
+   "Çol a germ a bêsînor tenê",
+   "Deşta tropîkal a şil tenê"
+  ],
+  "correctAnswer": "Sar, darên bilind kêm, ax a cemidî di bin de",
+  "promptTr": "Tundra esas olarak hangi koşullarla tanınır?",
+  "answersTr": [
+   "Tropikal sık orman hep yüksek sıcaklık",
+   "Soğuk yüksek ağaç az altta donmuş toprak",
+   "Yalnızca sınırsız sıcak çöl",
+   "Yalnızca nemli tropikal ova"
+  ],
+  "correctAnswerTr": "Soğuk yüksek ağaç az altta donmuş toprak",
+  "explanation": "Tundra uzak kuzey ve yüksek bölgelerde görülür.",
+  "explanationTr": "Tundra uzak kuzey ve yüksek bölgelerde görülür.",
+  "explanationKu": "Tundra li bakurê dûr û herêmên bilind tê dîtin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0afac4c44a566579",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "0afac4c44a566579"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0083",
+  "category": "Cografya",
+  "prompt": "Habitat çi ye?",
+  "answers": [
+   "Tenê qefesa zindî ya bajêr",
+   "Tenê laboratûwara girtî (ne rast) — şaş e",
+   "Cihê xwezayî yê ku cureyek tê de dijî",
+   "Tenê pirtûkxaneya dîjîtal"
+  ],
+  "correctAnswer": "Cihê xwezayî yê ku cureyek tê de dijî",
+  "promptTr": "Habitat nedir?",
+  "answersTr": [
+   "Yalnızca kent hayvanat bahçesi kafesi",
+   "Yalnızca kapalı laboratuvar (yanlış) — hatalı",
+   "Bir türün yaşadığı doğal yer",
+   "Yalnızca dijital kütüphane"
+  ],
+  "correctAnswerTr": "Bir türün yaşadığı doğal yer",
+  "explanation": "Habitat kaybı birçok tür için ana tehlikedir.",
+  "explanationTr": "Habitat kaybı birçok tür için ana tehlikedir.",
+  "explanationKu": "Wendabûna habitatê xetereya sereke ye ji bo gelek cureyan.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=b3e0a5c78b044f14",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "b3e0a5c78b044f14"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0084",
+  "category": "Cografya",
+  "prompt": "Cureyên xeternak çi ne?",
+  "answers": [
+   "Cureyên ku her derê zêde ne (ne rast)",
+   "Cureyên ku tenê di mîtolojiyê de ne",
+   "Cureyên ku tenê di xewnê de ne (ne rastîn) (ne rastîn) (ne rastîn)",
+   "Cureyên ku hejmara wan pir kêm bûye û xetera wendanê heye"
+  ],
+  "correctAnswer": "Cureyên ku hejmara wan pir kêm bûye û xetera wendanê heye",
+  "promptTr": "Nesli tehlikedeki türler nedir?",
+  "answersTr": [
+   "Her yerde aşırı olan türler (yanlış)",
+   "Yalnızca mitolojide olan türler",
+   "Yalnızca rüyada olan türler (geçersiz) (geçersiz) (geçersiz)",
+   "Sayıları çok azalmış ve yok olma tehlikesi olan türler"
+  ],
+  "correctAnswerTr": "Sayıları çok azalmış ve yok olma tehlikesi olan türler",
+  "explanation": "Ortam koruması ve yasalar onlara yardım eder.",
+  "explanationTr": "Ortam koruması ve yasalar onlara yardım eder.",
+  "explanationKu": "Parastina jîngehê û qanûn alîkariya wan dikin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=817a80fbe7e494b8",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ekolojî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "817a80fbe7e494b8"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0086",
+  "category": "Cografya",
+  "prompt": "Ava bin erdê çi ye?",
+  "answers": [
+   "Ava ku di valahiyên ax û keviran de di bin rûyê erdê de ye",
+   "Ava ku tenê di ewrên jor de ye",
+   "Ava ku tenê di stêrkan de ye (ne rast) (çewt) (çewt) (çewt)",
+   "Ava ku tenê di şûşeyên plastîk de ye"
+  ],
+  "correctAnswer": "Ava ku di valahiyên ax û keviran de di bin rûyê erdê de ye",
+  "promptTr": "Yeraltı suyu nedir?",
+  "answersTr": [
+   "Yeryüzü altında toprak ve kaya boşluklarındaki su",
+   "Yalnızca üst bulutlardaki su",
+   "Yalnızca yıldızlardaki su (yanlış) (yanlış) (yanlış) (yanlış)",
+   "Yalnızca plastik şişelerdeki su"
+  ],
+  "correctAnswerTr": "Yeryüzü altında toprak ve kaya boşluklarındaki su",
+  "explanation": "Kuyular yeraltı suyunu çeker; aşırı kullanım seviyeyi düşürür.",
+  "explanationTr": "Kuyular yeraltı suyunu çeker; aşırı kullanım seviyeyi düşürür.",
+  "explanationKu": "Bîr ava bin erdê derdixin; zêde bikaranîn astê dadixe.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=734ab1766d14cf74",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "734ab1766d14cf74"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0087",
+  "category": "Cografya",
+  "prompt": "Çavkaniya çemî çi ye?",
+  "answers": [
+   "Cihê ku çem digihîje deryayê",
+   "Cihê ku çem dibe okyanûsê",
+   "Cihê ku çem diqede bi tevahî dibe hewa",
+   "Cihê ku çem jê dest pê dike"
+  ],
+  "correctAnswer": "Cihê ku çem jê dest pê dike",
+  "promptTr": "Irmak kaynağı nedir?",
+  "answersTr": [
+   "Irmağın denize ulaştığı yer",
+   "Irmağın okyanus olduğu yer",
+   "Irmağın tamamen hava olup bittiği yer",
+   "Irmağın başladığı yer"
+  ],
+  "correctAnswerTr": "Irmağın başladığı yer",
+  "explanation": "Kaynak göl pınar veya buzul . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationTr": "Kaynak göl pınar veya buzul . Bu temel bir eğitim gerçeğidir ve açık örneklerle anlaşılır.",
+  "explanationKu": "Çavkanî dikare gol, çav an qeşa be.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=79960d00eed34753",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "79960d00eed34753"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0089",
+  "category": "Cografya",
+  "prompt": "Afrîka li kîjan aliyê Ewrûpayê ye bi giranî?",
+  "answers": [
+   "Başûr ya standard ya standard",
+   "Bakur",
+   "Tenê rojhilatê Japonyayê",
+   "Tenê navenda Pasîfîkê"
+  ],
+  "correctAnswer": "Başûr ya standard ya standard",
+  "promptTr": "Afrika Avrupa'nın esas olarak hangi tarafındadır?",
+  "answersTr": [
+   "Güney (standart) (standart)",
+   "Kuzey",
+   "Yalnızca Japonya'nın doğusu",
+   "Yalnızca Pasifik'in ortası"
+  ],
+  "correctAnswerTr": "Güney (standart) (standart)",
+  "explanation": "Akdeniz Avrupa ile Afrika'yı buluşturur.",
+  "explanationTr": "Akdeniz Avrupa ile Afrika'yı buluşturur.",
+  "explanationKu": "Deryaya Spî Ewrûpa û Afrîkayê digihîne hev.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=ffd12955b33fa3b4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "ffd12955b33fa3b4"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0090",
+  "category": "Cografya",
+  "prompt": "Asya ji Ewrûpayê bi gelemperî li kîjan alî ye?",
+  "answers": [
+   "Rojavayê dûr ê Amerîkayê tenê",
+   "Rojhilat",
+   "Başûrê Antarktîkayê tenê",
+   "Navenda okyanûsa Arktîk tenê"
+  ],
+  "correctAnswer": "Rojhilat",
+  "promptTr": "Asya Avrupa'nın genellikle hangi tarafındadır?",
+  "answersTr": [
+   "Yalnızca Amerika'nın uzak batısı",
+   "Doğu",
+   "Yalnızca Antarktika'nın güneyi",
+   "Yalnızca Arktik okyanus ortası"
+  ],
+  "correctAnswerTr": "Doğu",
+  "explanation": "Avrupa-Asya sınırı geleneksel olarak Ural üzerinden tartışılır.",
+  "explanationTr": "Avrupa-Asya sınırı geleneksel olarak Ural üzerinden tartışılır.",
+  "explanationKu": "Sînorê di navbera Ewrûpa û Asyayê de bi kevneşopî li ser Ûral tê nîqaş kirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=92efd21df48cd7e3",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "92efd21df48cd7e3"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0093",
+  "category": "Cografya",
+  "prompt": "Mid-ocean ridge çi ye?",
+  "answers": [
+   "Tenê çemê li ser çiyê (ne rast)",
+   "Zincîra çiyayan a bin deryayê li cihê veqetîna plakan",
+   "Tenê gola li ser deştê",
+   "Tenê bajarê li ser giravê"
+  ],
+  "correctAnswer": "Zincîra çiyayan a bin deryayê li cihê veqetîna plakan",
+  "promptTr": "Orta okyanus sırtı nedir?",
+  "answersTr": [
+   "Yalnızca dağdaki ırmak (yanlış)",
+   "Levhaların ayrıldığı yerdeki denizaltı dağ silsilesi",
+   "Yalnızca ovadaki göl",
+   "Yalnızca adadaki kent"
+  ],
+  "correctAnswerTr": "Levhaların ayrıldığı yerdeki denizaltı dağ silsilesi",
+  "explanation": "Magma çıkar ve yeni okyanus kabuğu oluşturur.",
+  "explanationTr": "Magma çıkar ve yeni okyanus kabuğu oluşturur.",
+  "explanationKu": "Magma derdikeve û qalikê nû yê okyanûsê çêdike.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=58d5f1ca917c4b8d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "58d5f1ca917c4b8d"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0094",
+  "category": "Cografya",
+  "prompt": "Tsunami bi giranî çawa dest pê dike?",
+  "answers": [
+   "Bi tevgera nişkave ya bin deryayê mînak erdhej",
+   "Bi barana nerm a havînê (çewt) (çewt) (çewt)",
+   "Bi guhertina temayê ya têlefonê",
+   "Bi şandina e-nameyê (ne rast)"
+  ],
+  "correctAnswer": "Bi tevgera nişkave ya bin deryayê mînak erdhej",
+  "promptTr": "Tsunami esas olarak nasıl başlar?",
+  "answersTr": [
+   "Deniz tabanının ani hareketiyle örneğin deprem",
+   "Yazın hafif yağmurla (yanlış) (yanlış) (yanlış)",
+   "Telefon teması değişince",
+   "E-posta gönderince (yanlış)"
+  ],
+  "correctAnswerTr": "Deniz tabanının ani hareketiyle örneğin deprem",
+  "explanation": "Uzun dalgalar okyanusta ilerler ve kıyıda yükselir.",
+  "explanationTr": "Uzun dalgalar okyanusta ilerler ve kıyıda yükselir.",
+  "explanationKu": "Pêlên dirêj di okyanûsê de digerin û li peravê bilind dibin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=68fe6cca620557b3",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "68fe6cca620557b3"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0097",
+  "category": "Cografya",
+  "prompt": "Bakur li ser gelek nexşeyên standard li ku ye?",
+  "answers": [
+   "Li jorê nexşeyê ya standard",
+   "Li jêrê nexşeyê her tim",
+   "Li navenda rastê her tim",
+   "Li derveyî kaxezê her tim"
+  ],
+  "correctAnswer": "Li jorê nexşeyê ya standard",
+  "promptTr": "Birçok standart haritada kuzey nerededir?",
+  "answersTr": [
+   "Haritanın üstünde (standart)",
+   "Her zaman haritanın altında",
+   "Her zaman tam ortada",
+   "Her zaman kâğıdın dışında"
+  ],
+  "correctAnswerTr": "Haritanın üstünde (standart)",
+  "explanation": "Bu gelenektir; ölçek ve pusulayı kontrol edin.",
+  "explanationTr": "Bu gelenektir; ölçek ve pusulayı kontrol edin.",
+  "explanationKu": "Ev kevneşopî ye; pîvan û kompas kontrol bikin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=b6386bd0ef1b8529",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "nexşe",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "nexşe-amûr",
+   "contentHash": "b6386bd0ef1b8529"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0100",
+  "category": "Cografya",
+  "prompt": "Herêma Mezopotamyayê bi wateya navê xwe çi ye?",
+  "answers": [
+   "Erdê di navbera okyanûsan de",
+   "Erdê di navbera polan de",
+   "Erdê di navbera stêrkan de",
+   "Erdê di navbera çeman de"
+  ],
+  "correctAnswer": "Erdê di navbera çeman de",
+  "promptTr": "Mezopotamya adı anlam olarak nedir?",
+  "answersTr": [
+   "Okyanuslar arasındaki ülke",
+   "Kutuplar arasındaki ülke",
+   "Yıldızlar arasındaki ülke",
+   "Irmaklar arasındaki ülke"
+  ],
+  "correctAnswerTr": "Irmaklar arasındaki ülke",
+  "explanation": "Ad Yunancadan gelir ve Dicle-Fırat'ı anlatır.",
+  "explanationTr": "Ad Yunancadan gelir ve Dicle-Fırat'ı anlatır.",
+  "explanationKu": "Nav ji yewnanî tê û Dîjle-Firatê vedibêje.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=8342833c382f9226",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kurdistan-xweza",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "herêm",
+   "contentHash": "8342833c382f9226"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0101",
+  "category": "Cografya",
+  "prompt": "Hadley cell bi sade çi ye?",
+  "answers": [
+   "Tenê gola piçûk a gund",
+   "Çerxa hewayê ya mezin a di navbera ekvator û firehiyên navîn de",
+   "Tenê çemê bajarê (ne rast)",
+   "Tenê kevirê li ser maseyê"
+  ],
+  "correctAnswer": "Çerxa hewayê ya mezin a di navbera ekvator û firehiyên navîn de",
+  "promptTr": "Hadley hücresi yalın olarak nedir?",
+  "answersTr": [
+   "Yalnızca köyün küçük gölü",
+   "Ekvator ile orta enlemler arasında büyük hava döngüsü",
+   "Yalnızca kent ırmağı (yanlış)",
+   "Yalnızca masadaki taş"
+  ],
+  "correctAnswerTr": "Ekvator ile orta enlemler arasında büyük hava döngüsü",
+  "explanation": "Bu döngü tropikal yağış ve bazı enlemlerin kuraklığını açıklar.",
+  "explanationTr": "Bu döngü tropikal yağış ve bazı enlemlerin kuraklığını açıklar.",
+  "explanationKu": "Ev çerx baranên tropîkal û hişkbûna hin firehiyan rave dike.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=56bf7d9148181525",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "56bf7d9148181525"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0104",
+  "category": "Cografya",
+  "prompt": "Ozon a stratosferê çi dike?",
+  "answers": [
+   "Hemû oksîjenê jê dibe",
+   "Hemû hewayê dike CO₂ (ne rastîn)",
+   "Beşek tîrêjên UV yên rojê digire",
+   "Hemû ewr an digire (ne rast)"
+  ],
+  "correctAnswer": "Beşek tîrêjên UV yên rojê digire",
+  "promptTr": "Stratosferdeki ozon ne yapar?",
+  "answersTr": [
+   "Tüm oksijeni siler",
+   "Tüm havayı CO₂ yapar (geçersiz)",
+   "Güneşin UV ışınlarının bir kısmını tutar",
+   "Tüm bulutları yok eder (yanlış)"
+  ],
+  "correctAnswerTr": "Güneşin UV ışınlarının bir kısmını tutar",
+  "explanation": "Ozon tabakası yeryüzündeki yaşama koruma sağlar.",
+  "explanationTr": "Ozon tabakası yeryüzündeki yaşama koruma sağlar.",
+  "explanationKu": "Qata ozonê parastinê dide jiyanê li ser erdê.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=259640ddd8e19d1c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "259640ddd8e19d1c"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0109",
+  "category": "Cografya",
+  "prompt": "Awistralya hem welat e hem jî bi gelemperî wek çi tê hejmartin?",
+  "answers": [
+   "Tenê çemek",
+   "Parzemîn ya standard",
+   "Tenê gol a piçûk",
+   "Tenê stêrk"
+  ],
+  "correctAnswer": "Parzemîn ya standard",
+  "promptTr": "Avustralya hem ülkedir hem de genellikle ne olarak sayılır?",
+  "answersTr": [
+   "Yalnızca ırmak",
+   "Kıta (standart)",
+   "Yalnızca küçük göl",
+   "Yalnızca yıldız"
+  ],
+  "correctAnswerTr": "Kıta (standart)",
+  "explanation": "Avustralya 7 kıta modelinin en küçük kıtasıdır.",
+  "explanationTr": "Avustralya 7 kıta modelinin en küçük kıtasıdır.",
+  "explanationKu": "Awistralya parzemîna herî piçûk a modela 7 parzemînan e.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=bcc251c1db369c7c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "bcc251c1db369c7c"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0110",
+  "category": "Cografya",
+  "prompt": "Subduction zone de bi gelemperî çi çêdibe?",
+  "answers": [
+   "Yek plak diçe bin ya din; volkan û erdhej zêde dibin",
+   "Her du plak dimirin û dibin ewr",
+   "Plak dibin kaxez (ne rast) (çewt) (çewt) (çewt)",
+   "Plak dibin şîfre"
+  ],
+  "correctAnswer": "Yek plak diçe bin ya din; volkan û erdhej zêde dibin",
+  "promptTr": "Dalma-batma zonunda genellikle ne olur?",
+  "answersTr": [
+   "Bir levha diğerinin altına girer; volkan ve deprem artar",
+   "İki levha ölüp bulut olur",
+   "Levha kâğıt olur (yanlış) (yanlış) (yanlış) (yanlış)",
+   "Levha parola olur"
+  ],
+  "correctAnswerTr": "Bir levha diğerinin altına girer; volkan ve deprem artar",
+  "explanation": "Bu bölgelerde volkan zincirleri sık oluşur.",
+  "explanationTr": "Bu bölgelerde volkan zincirleri sık oluşur.",
+  "explanationKu": "Li van herêman zincîrên volkanî gelek caran çêdibin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=121e2bd0d61bfd1a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "121e2bd0d61bfd1a"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0111",
+  "category": "Cografya",
+  "prompt": "Humidity çi ye?",
+  "answers": [
+   "Mîqdara qûmê di hewayê de",
+   "Mîqdara zêr di hewayê de (ne rast)",
+   "Mîqdara plastîk di hewayê de — şaş e",
+   "Mîqdara ava hilkişiyayî di hewayê de"
+  ],
+  "correctAnswer": "Mîqdara ava hilkişiyayî di hewayê de",
+  "promptTr": "Nem nedir?",
+  "answersTr": [
+   "Havadaki kum miktarı",
+   "Havadaki altın miktarı (yanlış)",
+   "Havadaki plastik miktarı — hatalı",
+   "Havadaki buharlaşmış su miktarı"
+  ],
+  "correctAnswerTr": "Havadaki buharlaşmış su miktarı",
+  "explanation": "Yüksek nem terlemeyi yavaşlatır ve sıcaklık hissini artırır.",
+  "explanationTr": "Yüksek nem terlemeyi yavaşlatır ve sıcaklık hissini artırır.",
+  "explanationKu": "Nem bilind xwêdanê hêdî dike û hest bi germê zêde dike.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=ed414a9b5091c06d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "hewa",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "ed414a9b5091c06d"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0113",
+  "category": "Cografya",
+  "prompt": "Av a vexwarinê divê çawa be?",
+  "answers": [
+   "Paqij û ji qirêjiyê dûr ya standard",
+   "Tijî plastîk û kîmyewî",
+   "Tijî rûnê motorê",
+   "Tijî avêtinên pîşesaziyê"
+  ],
+  "correctAnswer": "Paqij û ji qirêjiyê dûr ya standard",
+  "promptTr": "İçme suyu nasıl olmalıdır?",
+  "answersTr": [
+   "Temiz ve kirlilikten uzak (standart)",
+   "Plastik ve kimyasalla dolu",
+   "Motor yağıyla dolu",
+   "Endüstri atığıyla dolu"
+  ],
+  "correctAnswerTr": "Temiz ve kirlilikten uzak (standart)",
+  "explanation": "Arıtma ve kaynak koruması sağlığı korur.",
+  "explanationTr": "Arıtma ve kaynak koruması sağlığı korur.",
+  "explanationKu": "Paqijkirin û parastina çavkaniyan tenduristiyê digire.",
+  "difficulty": 1,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0f9c1c7c0bfc0391",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "0f9c1c7c0bfc0391"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0114",
+  "category": "Cografya",
+  "prompt": "Kompost çi dike?",
+  "answers": [
+   "Plastîkê dike zêr",
+   "Bermahiyên organîk vediguherîne madeya bikêr ji bo axê",
+   "Metalê dike hewa (ne rast)",
+   "Camê dike benzin (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Bermahiyên organîk vediguherîne madeya bikêr ji bo axê",
+  "promptTr": "Kompost ne yapar?",
+  "answersTr": [
+   "Plastiği altın yapar",
+   "Organik artıkları toprağa yararlı maddeye çevirir",
+   "Metali hava yapar (yanlış)",
+   "Camı benzin yapar (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Organik artıkları toprağa yararlı maddeye çevirir",
+  "explanation": "Kompost atığı azaltır ve toprağı güçlendirir.",
+  "explanationTr": "Kompost atığı azaltır ve toprağı güçlendirir.",
+  "explanationKu": "Kompost çopê kêm dike û axê xurt dike.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=0b21ffdf9af29a96",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "0b21ffdf9af29a96"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0115",
+  "category": "Cografya",
+  "prompt": "Çemê Kongo bi giranî li kîjan parzemînê diherike?",
+  "answers": [
+   "Ewrûpa",
+   "Amerîkaya Bakur",
+   "Afrîka",
+   "Antarktîka"
+  ],
+  "correctAnswer": "Afrîka",
+  "promptTr": "Kongo ırmağı esas olarak hangi kıtada akar?",
+  "answersTr": [
+   "Avrupa",
+   "Kuzey Amerika",
+   "Afrika",
+   "Antarktika"
+  ],
+  "correctAnswerTr": "Afrika",
+  "explanation": "Kongo Afrika'nın büyük ırmaklarındandır.",
+  "explanationTr": "Kongo Afrika'nın büyük ırmaklarındandır.",
+  "explanationKu": "Kongo yek ji çemên mezin ên Afrîkayê ye.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d4447ca84f4e2e34",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "d4447ca84f4e2e34"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0116",
+  "category": "Cografya",
+  "prompt": "Çiyayê Kilimanjaro li kîjan parzemînê ye?",
+  "answers": [
+   "Asya",
+   "Ewrûpa",
+   "Amerîkaya Başûr",
+   "Afrîka"
+  ],
+  "correctAnswer": "Afrîka",
+  "promptTr": "Kilimanjaro dağı hangi kıtadadır?",
+  "answersTr": [
+   "Asya",
+   "Avrupa",
+   "Güney Amerika",
+   "Afrika"
+  ],
+  "correctAnswerTr": "Afrika",
+  "explanation": "Kilimanjaro Doğu Afrika'da yüksek bir zirvedir.",
+  "explanationTr": "Kilimanjaro Doğu Afrika'da yüksek bir zirvedir.",
+  "explanationKu": "Kilimanjaro lûtkeyeke bilind a Afrîkaya Rojhilat e.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=a9a2611c5801172b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "a9a2611c5801172b"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0117",
+  "category": "Cografya",
+  "prompt": "Sedimentary rock çawa çêdibe?",
+  "answers": [
+   "Bi yek carî bûyîna ewr",
+   "Bi komkirin û pêçandina sedimentan bi demê re",
+   "Bi guhertina şîfreya Wi-Fi",
+   "Bi şandina SMS (ne rast)"
+  ],
+  "correctAnswer": "Bi komkirin û pêçandina sedimentan bi demê re",
+  "promptTr": "Tortul kaya nasıl oluşur?",
+  "answersTr": [
+   "Bir anda bulut oluşmasıyla",
+   "Tortuların zamanla birikip sıkışmasıyla",
+   "Wi-Fi parolası değişince",
+   "SMS gönderince (yanlış)"
+  ],
+  "correctAnswerTr": "Tortuların zamanla birikip sıkışmasıyla",
+  "explanation": "Fosiller çoğu kez tortul kayalarda bulunur.",
+  "explanationTr": "Fosiller çoğu kez tortul kayalarda bulunur.",
+  "explanationKu": "Fosil gelek caran di kevirên sedimenter de têne dîtin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=6366d618c57b9e02",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "6366d618c57b9e02"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0118",
+  "category": "Cografya",
+  "prompt": "Igneous rock ji ku tê?",
+  "answers": [
+   "Ji sarbûna magma an lava",
+   "Ji tenê barana nerm",
+   "Ji tenê bayê nerm (ne rast)",
+   "Ji tenê mij a spî"
+  ],
+  "correctAnswer": "Ji sarbûna magma an lava",
+  "promptTr": "Magmatik kaya nereden gelir?",
+  "answersTr": [
+   "Magma veya lavın soğumasından",
+   "Yalnızca hafif yağmurdan",
+   "Yalnızca hafif rüzgardan (yanlış)",
+   "Yalnızca beyaz sisten"
+  ],
+  "correctAnswerTr": "Magma veya lavın soğumasından",
+  "explanation": "Granit ve bazalt magmatik kaya örnekleridir.",
+  "explanationTr": "Granit ve bazalt magmatik kaya örnekleridir.",
+  "explanationKu": "Granît û bazalt mînak ên kevirên îgneous in.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d948ea760ac7cf17",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "d948ea760ac7cf17"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0119",
+  "category": "Cografya",
+  "prompt": "Metamorphic rock çawa çêdibe?",
+  "answers": [
+   "Kevir dibin e-name",
+   "Kevir dibin lîstik — şaş e — şaş e — şaş e",
+   "Kevir dibin şîfre (ne rast)",
+   "Kevirên heyî di bin germ û zextê de diguherin"
+  ],
+  "correctAnswer": "Kevirên heyî di bin germ û zextê de diguherin",
+  "promptTr": "Başkalaşım kayası nasıl oluşur?",
+  "answersTr": [
+   "Kayalar e-posta olur",
+   "Kayalar oyun olur — hatalı — hatalı — hatalı",
+   "Kayalar parola olur (yanlış)",
+   "Var olan kayalar ısı ve basınç altında değişir"
+  ],
+  "correctAnswerTr": "Var olan kayalar ısı ve basınç altında değişir",
+  "explanation": "Mermer kireçtaşından başkalaşımla oluşabilir.",
+  "explanationTr": "Mermer kireçtaşından başkalaşımla oluşabilir.",
+  "explanationKu": "Mermer ji kilsê di bin guherînê de dikare çêbibe.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=e67867c9e9554d2b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "erd",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "e67867c9e9554d2b"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0120",
+  "category": "Cografya",
+  "prompt": "Kîjan parzemîn hem li nîvkûreya bakur hem jî başûr dirêj dibe?",
+  "answers": [
+   "Antarktîka tenê",
+   "Ewrûpa tenê bakur",
+   "Afrîka",
+   "Awistralya tenê bakur"
+  ],
+  "correctAnswer": "Afrîka",
+  "promptTr": "Hangi kıta hem kuzey hem güney yarımküreye uzanır?",
+  "answersTr": [
+   "Yalnızca Antarktika",
+   "Yalnızca kuzey Avrupa",
+   "Afrika",
+   "Yalnızca kuzey Avustralya"
+  ],
+  "correctAnswerTr": "Afrika",
+  "explanation": "Afrika ekvatoru keser ve her iki yarımküreyi kapsar.",
+  "explanationTr": "Afrika ekvatoru keser ve her iki yarımküreyi kapsar.",
+  "explanationKu": "Afrîka ekvatorê dibire û her du nîvkûreyan digire.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d1e4c836cb5242bc",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "cîhan",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erdnîgarî-giştî",
+   "contentHash": "d1e4c836cb5242bc"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0122",
+  "category": "Cografya",
+  "prompt": "Polên Erdê bi giranî çima sartir in ji ekvatorê?",
+  "answers": [
+   "Ji ber ku li wir roj her tim nêztir e",
+   "Tîrêjên rojê li wir belavtir û nizm dikevin",
+   "Ji ber ku li wir volkan zêde ne (ne rast) (çewt)",
+   "Ji ber ku li wir daristan zêde ne"
+  ],
+  "correctAnswer": "Tîrêjên rojê li wir belavtir û nizm dikevin",
+  "promptTr": "Dünya kutupları ekvatordan neden daha soğuktur?",
+  "answersTr": [
+   "Güneş orada her zaman daha yakındır",
+   "Güneş ışınları orada daha yayvan ve alçak gelir",
+   "Volkan orada fazladır (yanlış) (yanlış)",
+   "Orman orada fazladır"
+  ],
+  "correctAnswerTr": "Güneş ışınları orada daha yayvan ve alçak gelir",
+  "explanation": "Işın açısı ve atmosfer yolu sıcaklığı değiştirir.",
+  "explanationTr": "Işın açısı ve atmosfer yolu sıcaklığı değiştirir.",
+  "explanationKu": "Goşeya tîrêjê û dirêjahiya rêya atmosferê germahiyê diguherîne.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=7b1e4565f09e5e5c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "îklîm",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "hewa-îklîm",
+   "contentHash": "7b1e4565f09e5e5c"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0123",
+  "category": "Cografya",
+  "prompt": "Çemê Mississippi bi giranî li kîjan parzemînê diherike?",
+  "answers": [
+   "Afrîka (ne rast)",
+   "Ewrûpa",
+   "Amerîkaya Bakur",
+   "Antarktîka"
+  ],
+  "correctAnswer": "Amerîkaya Bakur",
+  "promptTr": "Mississippi ırmağı esas olarak hangi kıtada akar?",
+  "answersTr": [
+   "Afrika (yanlış)",
+   "Avrupa",
+   "Kuzey Amerika",
+   "Antarktika"
+  ],
+  "correctAnswerTr": "Kuzey Amerika",
+  "explanation": "Mississippi ABD'nin ana ırmaklarındandır.",
+  "explanationTr": "Mississippi ABD'nin ana ırmaklarındandır.",
+  "explanationKu": "Mississippi yek ji çemên sereke yên Dewletên Yekbûyî ye.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=e9ffde7fdf48bd0c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "av",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "av-çem",
+   "contentHash": "e9ffde7fdf48bd0c"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0124",
+  "category": "Cografya",
+  "prompt": "Kîjan zincîra çiyayan rojavayê Amerîkaya Başûr digire?",
+  "answers": [
+   "Alp",
+   "Hîmalaya",
+   "Toros",
+   "And"
+  ],
+  "correctAnswer": "And",
+  "promptTr": "Hangi dağ silsilesi Güney Amerika'nın batısını kaplar?",
+  "answersTr": [
+   "Alpler",
+   "Himalayalar",
+   "Toroslar",
+   "Andlar"
+  ],
+  "correctAnswerTr": "Andlar",
+  "explanation": "Andlar uzunlukça dünyanın en uzun dağ silsilesidir.",
+  "explanationTr": "Andlar uzunlukça dünyanın en uzun dağ silsilesidir.",
+  "explanationKu": "And dirêjtirîn zincîra çiyayî ya cîhanê ye bi dirêjahiyê.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=d16b7437d3a8e439",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "çiya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "erd-şekl",
+   "contentHash": "d16b7437d3a8e439"
+  }
+ },
+ {
+  "id": "grok26_geo_nature_0125",
+  "category": "Cografya",
+  "prompt": "Karbon footprint tê wateya çi?",
+  "answers": [
+   "Mezinahiya pêyê mirov bi santîmetre",
+   "Mîqdara gazên sera yên ku çalakiyên mirov berdide",
+   "Dirêjahiya kabloyê elektrîkê",
+   "Hejmara taban ên gerokê (ne rast)"
+  ],
+  "correctAnswer": "Mîqdara gazên sera yên ku çalakiyên mirov berdide",
+  "promptTr": "Karbon ayak izi ne demektir?",
+  "answersTr": [
+   "İnsan ayağının santimetre boyutu",
+   "İnsan etkinliklerinin saldığı sera gazı miktarı",
+   "Elektrik kablosu uzunluğu",
+   "Tarayıcı sekme sayısı (yanlış)"
+  ],
+  "correctAnswerTr": "İnsan etkinliklerinin saldığı sera gazı miktarı",
+  "explanation": "Ayak izini azaltmak iklim için yardımcıdır.",
+  "explanationTr": "Ayak izini azaltmak iklim için yardımcıdır.",
+  "explanationKu": "Kêm kirina footprint ji bo îklîmê alîkar e.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Cografya û xweza — zanyariya bingehîn a perwerdeyê",
+   "sourceReference": "textbook:geography-environment-basics#hash=798ba1faa319b4d7",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "subcategory": "jîngeh",
+   "contentHash": "798ba1faa319b4d7"
+  }
+ }
+]

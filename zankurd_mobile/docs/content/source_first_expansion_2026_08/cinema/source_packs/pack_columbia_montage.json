@@ -1,0 +1,13 @@
+{
+  "sourcePackId": "pack_columbia_montage",
+  "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/term/montage/",
+  "sourceAccessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "copyrightNotes": "Tek kısa tanım cümlesi.",
+  "exactSourceStatements": [
+    "montage comes from the French 'monter', to assemble; a single shot has meaning only in relation to another shot."
+  ],
+  "sourceHash": "02df8423925a6ccf"
+}

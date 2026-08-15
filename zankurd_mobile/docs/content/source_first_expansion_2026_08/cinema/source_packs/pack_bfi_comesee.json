@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_comesee",
+  "sourceTitle": "BFI — Come and See künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/7400501f-e65d-5e1c-9ba7-847a1a680978/come-and-see",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: Come and See",
+    "Directed by: Elem Klimov",
+    "Year: 1985",
+    "Country: USSR, Byelorussian SSR, Russian SFSR"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "39e549bb9350a3c6"
+}

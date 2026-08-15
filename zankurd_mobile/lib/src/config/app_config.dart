@@ -1,6 +1,6 @@
 import 'dart:io' show Platform;
 
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 
 import 'release_config_validator.dart';
 
@@ -128,6 +128,28 @@ class AppConfig {
     return issues;
   }
 
+  /// Yerel geliştirme arka ucuna (yani `supabase start`) yalnız hata ayıklama
+  /// derlemesinde ve `APP_ENV=development` iken izin verilir.
+  ///
+  /// Bu kapı olmadan uygulamayı gerçek bir arka uçla denemenin tek yolu
+  /// ÜRETİM projesine bağlanmaktı: `isSafeSupabaseUrl` yalnız
+  /// `https://<proje>.supabase.co` kabul eder ve yerel yığın `http` +
+  /// `127.0.0.1:54321` konuşur. Yani iki cihazlı oda denemesi ya hiç
+  /// yapılamıyor ya da üretim verisine yazılarak yapılıyordu (2026-08-13
+  /// iki simülatörlü denetimi). Gevşetme derleme kipine bağlıdır:
+  /// `kDebugMode` yayın derlemesinde sabit `false`'tur, dolayısıyla
+  /// mağazaya giden ikili bu daldan hiç geçmez.
+  static bool isDevelopmentSupabaseUrl(String value) {
+    if (!kDebugMode || _appEnvironment != 'development') return false;
+    final uri = Uri.tryParse(value.trim());
+    if (uri == null || !uri.hasAuthority || uri.userInfo.isNotEmpty) {
+      return false;
+    }
+    if (uri.scheme != 'http' && uri.scheme != 'https') return false;
+    const localHosts = {'127.0.0.1', 'localhost', '10.0.2.2', '10.0.3.2'};
+    return localHosts.contains(uri.host.toLowerCase());
+  }
+
   /// Açık yapılandırma kısmen verilmişse veya şablonsa bundled değerlerle
   /// sessizce karıştırmaz. Bundled fallback yalnız iki açık alan da boşken
   /// kullanılabilir.
@@ -141,7 +163,10 @@ class AppConfig {
     final hasAnyExplicitValue =
         explicitUrl.trim().isNotEmpty || explicitAnonKey.trim().isNotEmpty;
     if (hasAnyExplicitValue) {
-      return ReleaseConfigValidator.isSafeSupabaseUrl(explicitUrl) &&
+      final urlOk =
+          ReleaseConfigValidator.isSafeSupabaseUrl(explicitUrl) ||
+          isDevelopmentSupabaseUrl(explicitUrl);
+      return urlOk &&
           ReleaseConfigValidator.isSafeSupabaseClientKey(explicitAnonKey);
     }
     return useBundledDefaults &&

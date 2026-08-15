@@ -1,0 +1,3902 @@
+[
+ {
+  "id": "grok26_tech_advanced_0001",
+  "category": "Teknolojî",
+  "prompt": "«algoritma» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "Dem bi mezinahiya têketinê re nêzî lineer mezin dibe",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Dem bi mezinahiya têketinê re nêzî lineer mezin dibe",
+  "promptTr": "«algoritma» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "Süre girdi boyutuyla kabaca doğrusal artar",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Süre girdi boyutuyla kabaca doğrusal artar",
+  "explanation": "Süre girdi boyutuyla kabaca doğrusal artar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Süre girdi boyutuyla kabaca doğrusal artar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Dem bi mezinahiya têketinê re nêzî lineer mezin dibe. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=ee8c8cb5b8dcc1ac",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "algoritma",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ee8c8cb5b8dcc1ac"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0002",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «algoritma» rast dinirxîne?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Her gav nîvê qadê davêje li ser lîsteya rêzkirî",
+   "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Her gav nîvê qadê davêje li ser lîsteya rêzkirî",
+  "promptTr": "Şu seçeneklerden hangisi «algoritma»i doğru değerlendirir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Sıralı listede her adımda aralığın yarısını eled",
+   "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Sıralı listede her adımda aralığın yarısını eled",
+  "explanation": "Sıralı listede her adımda aralığın yarısını eled. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Sıralı listede her adımda aralığın yarısını eled. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Her gav nîvê qadê davêje li ser lîsteya rêzkirî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=7adc6763d7b211cd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "algoritma",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "7adc6763d7b211cd"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0003",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «algoritma» çi ye?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Hêmanên cîran berawird dike û diguherîne",
+   "Tenê ikonê mezin dike (ne rast) — şaş e — şaş e"
+  ],
+  "correctAnswer": "Hêmanên cîran berawird dike û diguherîne",
+  "promptTr": "İleri eğitimde «algoritma» nedir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Komşu öğeleri karşılaştırıp yer değiştirir",
+   "Yalnızca simgeyi büyütür (yanlış) — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Komşu öğeleri karşılaştırıp yer değiştirir",
+  "explanation": "Komşu öğeleri karşılaştırıp yer değiştirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Komşu öğeleri karşılaştırıp yer değiştirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Hêmanên cîran berawird dike û diguherîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d425488a97d280d0",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "algoritma",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d425488a97d280d0"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0004",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «algoritma» kîjan e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast) (ne rastîn) (ne rastîn)",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Fonksiyon xwe bi pirsgirêka piçûktir vedixwîne"
+  ],
+  "correctAnswer": "Fonksiyon xwe bi pirsgirêka piçûktir vedixwîne",
+  "promptTr": "«algoritma»in ana amacı hangisidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış) (geçersiz) (geçersiz)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Fonksiyon kendini daha küçük sorunla çağırır"
+  ],
+  "correctAnswerTr": "Fonksiyon kendini daha küçük sorunla çağırır",
+  "explanation": "Fonksiyon kendini daha küçük sorunla çağırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Fonksiyon kendini daha küçük sorunla çağırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Fonksiyon xwe bi pirsgirêka piçûktir vedixwîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=b11b9aaa61a2c73d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "algoritma",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b11b9aaa61a2c73d"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0005",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «struktur» re li hev dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "LIFO — yê dawîn tê yê pêşî derdikeve ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "LIFO — yê dawîn tê yê pêşî derdikeve ya standard",
+  "promptTr": "Hangi açıklama «struktur» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "LIFO — son giren ilk çıkar (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "LIFO — son giren ilk çıkar (standart)",
+  "explanation": "LIFO — son giren ilk çıkar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "LIFO — son giren ilk çıkar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "LIFO — yê dawîn tê yê pêşî derdikeve. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=cd499d82ee8a390d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "struktur",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "cd499d82ee8a390d"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0006",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «struktur» bi giranî çi dike?",
+  "answers": [
+   "FIFO — yê pêşî tê yê pêşî derdikeve",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt) (çewt)"
+  ],
+  "correctAnswer": "FIFO — yê pêşî tê yê pêşî derdikeve",
+  "promptTr": "«struktur» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "FIFO — ilk giren ilk çıkar",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "FIFO — ilk giren ilk çıkar",
+  "explanation": "FIFO — ilk giren ilk çıkar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "FIFO — ilk giren ilk çıkar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "FIFO — yê pêşî tê yê pêşî derdikeve. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=71d904c97916e39c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "struktur",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "71d904c97916e39c"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0007",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «struktur» çawa tê fêm kirin?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Kilîdê dike îndeks û rasterast digihîje"
+  ],
+  "correctAnswer": "Kilîdê dike îndeks û rasterast digihîje",
+  "promptTr": "Bilgisayar bilimine göre «struktur» nasıl anlaşılır?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Anahtarı indise çevirip doğrudan erişir"
+  ],
+  "correctAnswerTr": "Anahtarı indise çevirip doğrudan erişir",
+  "explanation": "Anahtarı indise çevirip doğrudan erişir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Anahtarı indise çevirip doğrudan erişir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kilîdê dike îndeks û rasterast digihîje. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=ab6bb27b8c8235b5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "struktur",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ab6bb27b8c8235b5"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0008",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «database» çima girîng e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn)",
+   "Sorgû û birêvebirina danegehên têkilî",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Sorgû û birêvebirina danegehên têkilî",
+  "promptTr": "Dijital yaşamda «database» neden önemlidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz)",
+   "İlişkisel veritabanı sorgulama ve yönetimi",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "İlişkisel veritabanı sorgulama ve yönetimi",
+  "explanation": "İlişkisel veritabanı sorgulama ve yönetimi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İlişkisel veritabanı sorgulama ve yönetimi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Sorgû û birêvebirina danegehên têkilî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=ec0fa68b4c3148d8",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ec0fa68b4c3148d8"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0009",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «database» kîjan e?",
+  "answers": [
+   "Rêzên ji tabloyên cuda li gorî şertê digihîne hev",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Rêzên ji tabloyên cuda li gorî şertê digihîne hev",
+  "promptTr": "Temel tanım: «database» hangisidir?",
+  "answersTr": [
+   "Farklı tablolardaki satırları şarta göre birleştirir",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Farklı tablolardaki satırları şarta göre birleştirir",
+  "explanation": "Farklı tablolardaki satırları şarta göre birleştirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Farklı tablolardaki satırları şarta göre birleştirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Rêzên ji tabloyên cuda li gorî şertê digihîne hev. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d06aee99d6ac7ca7",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d06aee99d6ac7ca7"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0010",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «database» kîjan e?",
+  "answers": [
+   "Tenê pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Lêgerînê bileztir dike bi struktur a zêde",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Lêgerînê bileztir dike bi struktur a zêde",
+  "promptTr": "«database» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "Ek yapıyla aramayı hızlandırır",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Ek yapıyla aramayı hızlandırır",
+  "explanation": "Ek yapıyla aramayı hızlandırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Ek yapıyla aramayı hızlandırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Lêgerînê bileztir dike bi struktur a zêde. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=3b8a5be47b0cc10f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "3b8a5be47b0cc10f"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0011",
+  "category": "Teknolojî",
+  "prompt": "Di sêwirana nermalavê de «tor» çi dide?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e",
+   "Destpêkirina pêwendiyeke pêbawer",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "Destpêkirina pêwendiyeke pêbawer",
+  "promptTr": "Yazılım tasarımında «tor» ne sağlar?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı",
+   "Güvenilir bağlantı başlatmak",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Güvenilir bağlantı başlatmak",
+  "explanation": "Güvenilir bağlantı başlatmak. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Güvenilir bağlantı başlatmak. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Destpêkirina pêwendiyeke pêbawer. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=56ce5716e3ec3919",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "56ce5716e3ec3919"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0012",
+  "category": "Teknolojî",
+  "prompt": "Ewlehiya dîjîtal: «tor» çi tê wateya?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn) (ne rastîn)",
+   "TCP pêbawerî dide; UDP sivik û bê garantî ye"
+  ],
+  "correctAnswer": "TCP pêbawerî dide; UDP sivik û bê garantî ye",
+  "promptTr": "Dijital güvenlik: «tor» ne demektir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz) (geçersiz)",
+   "TCP güvenilirlik verir; UDP hafif ve garantisizdir"
+  ],
+  "correctAnswerTr": "TCP güvenilirlik verir; UDP hafif ve garantisizdir",
+  "explanation": "TCP güvenilirlik verir; UDP hafif ve garantisizdir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "TCP güvenilirlik verir; UDP hafif ve garantisizdir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "TCP pêbawerî dide; UDP sivik û bê garantî ye. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=535e5f595250fe2e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "535e5f595250fe2e"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0013",
+  "category": "Teknolojî",
+  "prompt": "Modela «tor» bi kurtasî çi dibêje?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne",
+   "Şîfrekirin û pejirandina aliyan ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Şîfrekirin û pejirandina aliyan ya standard",
+  "promptTr": "«tor» modeli kısaca ne söyler?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir",
+   "Şifreleme ve tarafları doğrulama (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Şifreleme ve tarafları doğrulama (standart)",
+  "explanation": "Şifreleme ve tarafları doğrulama. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Şifreleme ve tarafları doğrulama. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Şîfrekirin û pejirandina aliyan. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=fcaec6acb02b4693",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "fcaec6acb02b4693"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0014",
+  "category": "Teknolojî",
+  "prompt": "Karê sereke yê «şîfre» çi ye?",
+  "answers": [
+   "Heman mifte hem dişîfre dike hem vedike",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Heman mifte hem dişîfre dike hem vedike",
+  "promptTr": "«şîfre»in ana işi nedir?",
+  "answersTr": [
+   "Aynı anahtar hem şifreler hem çözer",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Aynı anahtar hem şifreler hem çözer",
+  "explanation": "Aynı anahtar hem şifreler hem çözer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Aynı anahtar hem şifreler hem çözer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Heman mifte hem dişîfre dike hem vedike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=8685f03979d66424",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "şîfre",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "8685f03979d66424"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0015",
+  "category": "Teknolojî",
+  "prompt": "Di tor û protokolan de «şîfre» çi dike?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast) — şaş e",
+   "Mifteya gelemperî û taybet a cot"
+  ],
+  "correctAnswer": "Mifteya gelemperî û taybet a cot",
+  "promptTr": "Ağ ve protokollerde «şîfre» ne yapar?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış) — hatalı",
+   "Çift halinde genel ve özel anahtar"
+  ],
+  "correctAnswerTr": "Çift halinde genel ve özel anahtar",
+  "explanation": "Çift halinde genel ve özel anahtar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Çift halinde genel ve özel anahtar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Mifteya gelemperî û taybet a cot. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=eb54e52d57c69ebd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "şîfre",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "eb54e52d57c69ebd"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0016",
+  "category": "Teknolojî",
+  "prompt": "«şîfre (0016)» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast) (ne rastîn)",
+   "Tenê IP diguherîne bi zorê",
+   "Kesayet û yekbûna peyamê îsbat dike",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Kesayet û yekbûna peyamê îsbat dike",
+  "promptTr": "«şîfre (0016)» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış) (geçersiz)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "İleti kimliği ve bütünlüğünü kanıtlar",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "İleti kimliği ve bütünlüğünü kanıtlar",
+  "explanation": "İleti kimliği ve bütünlüğünü kanıtlar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İleti kimliği ve bütünlüğünü kanıtlar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kesayet û yekbûna peyamê îsbat dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=a8a5365db49fc974",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "şîfre",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a8a5365db49fc974"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0017",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «AI (0017)» rast dinirxîne?",
+  "answers": [
+   "Ji daneyan model fêr dibe ji bo pêşbînîyê",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Ji daneyan model fêr dibe ji bo pêşbînîyê",
+  "promptTr": "Şu seçeneklerden hangisi «AI (0017)»i doğru değerlendirir?",
+  "answersTr": [
+   "Tahmin için veriden model öğrenir",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Tahmin için veriden model öğrenir",
+  "explanation": "Tahmin için veriden model öğrenir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Tahmin için veriden model öğrenir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Ji daneyan model fêr dibe ji bo pêşbînîyê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=66154dc1e774a7fd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "AI",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "66154dc1e774a7fd"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0018",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «AI (0018)» çi ye?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Model pir li perwerdeyê digire û li nû xirab e",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Model pir li perwerdeyê digire û li nû xirab e",
+  "promptTr": "İleri eğitimde «AI (0018)» nedir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Model eğitime fazla uyup yenide bozulur",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Model eğitime fazla uyup yenide bozulur",
+  "explanation": "Model eğitime fazla uyup yenide bozulur. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Model eğitime fazla uyup yenide bozulur. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Model pir li perwerdeyê digire û li nû xirab e. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=1244ea1f481def28",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "AI",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1244ea1f481def28"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0019",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «AI (0019)» kîjan e?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Performansê li ser daneyên nedîtî dipîve",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "Performansê li ser daneyên nedîtî dipîve",
+  "promptTr": "«AI (0019)»in ana amacı hangisidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Görülmemiş veride performansı ölçer",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Görülmemiş veride performansı ölçer",
+  "explanation": "Görülmemiş veride performansı ölçer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Görülmemiş veride performansı ölçer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Performansê li ser daneyên nedîtî dipîve. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=f0591990f827ca3c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "AI",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f0591990f827ca3c"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0021",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «zanist (0021)» re li hev dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Pêşniyaza ceribandinê ya ku tê ceribandin",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Pêşniyaza ceribandinê ya ku tê ceribandin",
+  "promptTr": "Hangi açıklama «zanist (0021)» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Sınanabilir deneme önerisi",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Sınanabilir deneme önerisi",
+  "explanation": "Sınanabilir deneme önerisi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Sınanabilir deneme önerisi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Pêşniyaza ceribandinê ya ku tê ceribandin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=87b2f3658cfb5e5a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "zanist",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "87b2f3658cfb5e5a"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0022",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «zanist (0022)» bi giranî çi dike?",
+  "answers": [
+   "Bandora guhêrbar bi berawirdê diyar dike",
+   "Tenê pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Bandora guhêrbar bi berawirdê diyar dike",
+  "promptTr": "«zanist (0022)» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "Değişken etkisini karşılaştırmayla gösterir",
+   "Yalnızca pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Değişken etkisini karşılaştırmayla gösterir",
+  "explanation": "Değişken etkisini karşılaştırmayla gösterir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Değişken etkisini karşılaştırmayla gösterir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Bandora guhêrbar bi berawirdê diyar dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=027628ab70be5b01",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "zanist",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "027628ab70be5b01"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0023",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «zanist (0023)» çawa tê fêm kirin?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Bi hev re guherîn neçar e ku sedem be"
+  ],
+  "correctAnswer": "Bi hev re guherîn neçar e ku sedem be",
+  "promptTr": "Bilgisayar bilimine göre «zanist (0023)» nasıl anlaşılır?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Birlikte değişim zorunlu neden değildir"
+  ],
+  "correctAnswerTr": "Birlikte değişim zorunlu neden değildir",
+  "explanation": "Birlikte değişim zorunlu neden değildir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Birlikte değişim zorunlu neden değildir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Bi hev re guherîn neçar e ku sedem be. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d0edf43e707a5bf3",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "zanist",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d0edf43e707a5bf3"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0024",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «zanist (0024)» çima girîng e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê",
+   "Kesên din dikarin encamên nêzîk bistînin",
+   "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)"
+  ],
+  "correctAnswer": "Kesên din dikarin encamên nêzîk bistînin",
+  "promptTr": "Dijital yaşamda «zanist (0024)» neden önemlidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Başkaları yakın sonuç alabilir",
+   "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)"
+  ],
+  "correctAnswerTr": "Başkaları yakın sonuç alabilir",
+  "explanation": "Başkaları yakın sonuç alabilir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Başkaları yakın sonuç alabilir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kesên din dikarin encamên nêzîk bistînin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=9309b3f339d673df",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "zanist",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9309b3f339d673df"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0025",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «ewle (0025)» kîjan e?",
+  "answers": [
+   "HTTPS an VPN ji bo karên hesaskirî",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "HTTPS an VPN ji bo karên hesaskirî",
+  "promptTr": "Temel tanım: «ewle (0025)» hangisidir?",
+  "answersTr": [
+   "Hassas işler için HTTPS veya VPN",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Hassas işler için HTTPS veya VPN",
+  "explanation": "Hassas işler için HTTPS veya VPN. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Hassas işler için HTTPS veya VPN. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "HTTPS an VPN ji bo karên hesaskirî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=9ebaabc8d6aad2a9",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9ebaabc8d6aad2a9"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0026",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «ewle (0026)» kîjan e?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Xapandina mirovan ji bo agahiyê",
+   "Tenê kaxezê çap dike (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Xapandina mirovan ji bo agahiyê",
+  "promptTr": "«ewle (0026)» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Bilgi için insanları kandırma",
+   "Yalnızca kâğıt basar (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Bilgi için insanları kandırma",
+  "explanation": "Bilgi için insanları kandırma. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Bilgi için insanları kandırma. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Xapandina mirovan ji bo agahiyê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=4499fe716e57dfcd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "4499fe716e57dfcd"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0027",
+  "category": "Teknolojî",
+  "prompt": "Di sêwirana nermalavê de «ewle (0027)» çi dide?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "URL û şanderê berî tikandinê kontrol bike",
+   "Tenê ikonê mezin dike (ne rast) — şaş e — şaş e"
+  ],
+  "correctAnswer": "URL û şanderê berî tikandinê kontrol bike",
+  "promptTr": "Yazılım tasarımında «ewle (0027)» ne sağlar?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Tıklamadan önce URL ve göndereni kontrol et",
+   "Yalnızca simgeyi büyütür (yanlış) — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Tıklamadan önce URL ve göndereni kontrol et",
+  "explanation": "Tıklamadan önce URL ve göndereni kontrol et. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Tıklamadan önce URL ve göndereni kontrol et. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "URL û şanderê berî tikandinê kontrol bike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=78a1bdd86d7ee283",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "78a1bdd86d7ee283"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0028",
+  "category": "Teknolojî",
+  "prompt": "Ewlehiya dîjîtal: «ewle (0028)» çi tê wateya?",
+  "answers": [
+   "Tenê dîrokê jê dibe",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Tenê mafên pêwîst ên karê"
+  ],
+  "correctAnswer": "Tenê mafên pêwîst ên karê",
+  "promptTr": "Dijital güvenlik: «ewle (0028)» ne demektir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Yalnızca iş için gereken haklar"
+  ],
+  "correctAnswerTr": "Yalnızca iş için gereken haklar",
+  "explanation": "Yalnızca iş için gereken haklar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Yalnızca iş için gereken haklar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tenê mafên pêwîst ên karê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=501205ab95b74f74",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "501205ab95b74f74"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0029",
+  "category": "Teknolojî",
+  "prompt": "Modela «ewle (0029)» bi kurtasî çi dibêje?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne",
+   "Kêmasî bêyî yama ya gelemperî ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Kêmasî bêyî yama ya gelemperî ya standard",
+  "promptTr": "«ewle (0029)» modeli kısaca ne söyler?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir",
+   "Henüz genel yaması olmayan açık (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Henüz genel yaması olmayan açık (standart)",
+  "explanation": "Henüz genel yaması olmayan açık. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Henüz genel yaması olmayan açık. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kêmasî bêyî yama ya gelemperî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=067f4e8779428378",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "067f4e8779428378"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0030",
+  "category": "Teknolojî",
+  "prompt": "Karê sereke yê «ewle (0030)» çi ye?",
+  "answers": [
+   "3 kopî, 2 medya, 1 dûr",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "3 kopî, 2 medya, 1 dûr",
+  "promptTr": "«ewle (0030)»in ana işi nedir?",
+  "answersTr": [
+   "3 kopya, 2 ortam, 1 uzak",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "3 kopya, 2 ortam, 1 uzak",
+  "explanation": "3 kopya, 2 ortam, 1 uzak. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "3 kopya, 2 ortam, 1 uzak. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "3 kopî, 2 medya, 1 dûr. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=912ca69a3a601f53",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "912ca69a3a601f53"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0031",
+  "category": "Teknolojî",
+  "prompt": "Di tor û protokolan de «lîsans (0031)» çi dike?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Mercên qanûnî yên bikaranînê"
+  ],
+  "correctAnswer": "Mercên qanûnî yên bikaranînê",
+  "promptTr": "Ağ ve protokollerde «lîsans (0031)» ne yapar?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Kullanımın yasal koşulları"
+  ],
+  "correctAnswerTr": "Kullanımın yasal koşulları",
+  "explanation": "Kullanımın yasal koşulları. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kullanımın yasal koşulları. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Mercên qanûnî yên bikaranînê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=eae49dd784a7edd8",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "lîsans",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "eae49dd784a7edd8"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0032",
+  "category": "Teknolojî",
+  "prompt": "«lîsans (0032)» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn)",
+   "Destûrên parvekirinê yên standard",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Destûrên parvekirinê yên standard",
+  "promptTr": "«lîsans (0032)» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz)",
+   "Standart paylaşım izinleri",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "Standart paylaşım izinleri",
+  "explanation": "Standart paylaşım izinleri. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Standart paylaşım izinleri. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Destûrên parvekirinê yên standard. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=44833f295bf2db54",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "lîsans",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "44833f295bf2db54"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0033",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «gihîştin (0033)» rast dinirxîne?",
+  "answers": [
+   "Kesên bi pêdiviyên cuda jî bikar bînin",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Kesên bi pêdiviyên cuda jî bikar bînin",
+  "promptTr": "Şu seçeneklerden hangisi «gihîştin (0033)»i doğru değerlendirir?",
+  "answersTr": [
+   "Farklı gereksinimliler de kullanabilsin",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Farklı gereksinimliler de kullanabilsin",
+  "explanation": "Farklı gereksinimliler de kullanabilsin. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Farklı gereksinimliler de kullanabilsin. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kesên bi pêdiviyên cuda jî bikar bînin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=dd3e907ccaddbb2b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "gihîştin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "dd3e907ccaddbb2b"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0034",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «gihîştin (0034)» çi ye?",
+  "answers": [
+   "Tenê pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Danasîna wêneyê ji bo xwînerên ekranê",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Danasîna wêneyê ji bo xwînerên ekranê",
+  "promptTr": "İleri eğitimde «gihîştin (0034)» nedir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "Ekran okuyucu için görsel betimlemesi",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Ekran okuyucu için görsel betimlemesi",
+  "explanation": "Ekran okuyucu için görsel betimlemesi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Ekran okuyucu için görsel betimlemesi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Danasîna wêneyê ji bo xwînerên ekranê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=9720ea046053c83d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "gihîştin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9720ea046053c83d"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0035",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «gihîştin (0035)» kîjan e?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e",
+   "Hin bikarhêner mouse bikar nayînin",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "Hin bikarhêner mouse bikar nayînin",
+  "promptTr": "«gihîştin (0035)»in ana amacı hangisidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı",
+   "Bazı kullanıcılar fare kullanmaz",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Bazı kullanıcılar fare kullanmaz",
+  "explanation": "Bazı kullanıcılar fare kullanmaz. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Bazı kullanıcılar fare kullanmaz. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Hin bikarhêner mouse bikar nayînin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=0d22c2e9a15b323d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "gihîştin",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0d22c2e9a15b323d"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0036",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «sîstem (0036)» re li hev dike?",
+  "answers": [
+   "Tenê dîrokê jê dibe",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Pêvajo li bendê hev dimînin"
+  ],
+  "correctAnswer": "Pêvajo li bendê hev dimînin",
+  "promptTr": "Hangi açıklama «sîstem (0036)» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca geçmişi siler",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Süreçler birbirini bekler"
+  ],
+  "correctAnswerTr": "Süreçler birbirini bekler",
+  "explanation": "Süreçler birbirini bekler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Süreçler birbirini bekler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Pêvajo li bendê hev dimînin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=272a3b0de944ae43",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "272a3b0de944ae43"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0037",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «sîstem (0037)» bi giranî çi dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Encam bi rêza demkî ya hevdem ve girêdayî ye",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Encam bi rêza demkî ya hevdem ve girêdayî ye",
+  "promptTr": "«sîstem (0037)» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Sonuç eşzamanlı zaman sırasına bağlıdır",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Sonuç eşzamanlı zaman sırasına bağlıdır",
+  "explanation": "Sonuç eşzamanlı zaman sırasına bağlıdır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Sonuç eşzamanlı zaman sırasına bağlıdır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Encam bi rêza demkî ya hevdem ve girêdayî ye. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=123c5467b7931415",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "123c5467b7931415"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0038",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «sîstem (0038)» çawa tê fêm kirin?",
+  "answers": [
+   "Tenê yek pêvajo bikeve beşa krîtîk",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Tenê yek pêvajo bikeve beşa krîtîk",
+  "promptTr": "Bilgisayar bilimine göre «sîstem (0038)» nasıl anlaşılır?",
+  "answersTr": [
+   "Kritik bölüme yalnızca bir süreç girsin",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Kritik bölüme yalnızca bir süreç girsin",
+  "explanation": "Kritik bölüme yalnızca bir süreç girsin. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kritik bölüme yalnızca bir süreç girsin. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tenê yek pêvajo bikeve beşa krîtîk. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=a4ee3afcea3f91fc",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a4ee3afcea3f91fc"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0039",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «git (0039)» çima girîng e?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast) — şaş e",
+   "Pergala kontrola guhertoyan a belavbûyî"
+  ],
+  "correctAnswer": "Pergala kontrola guhertoyan a belavbûyî",
+  "promptTr": "Dijital yaşamda «git (0039)» neden önemlidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış) — hatalı",
+   "Dağıtık sürüm kontrol sistemi"
+  ],
+  "correctAnswerTr": "Dağıtık sürüm kontrol sistemi",
+  "explanation": "Dağıtık sürüm kontrol sistemi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Dağıtık sürüm kontrol sistemi. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Pergala kontrola guhertoyan a belavbûyî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=ea965bae8ae467cb",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "git",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ea965bae8ae467cb"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0040",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «git (0040)» kîjan e?",
+  "answers": [
+   "Tenê dîrokê jê dibe",
+   "Tenê IP diguherîne bi zorê",
+   "Tomara guhertinan bi peyamekê",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Tomara guhertinan bi peyamekê",
+  "promptTr": "Temel tanım: «git (0040)» hangisidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Mesajlı değişiklik kaydı",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "Mesajlı değişiklik kaydı",
+  "explanation": "Mesajlı değişiklik kaydı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Mesajlı değişiklik kaydı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tomara guhertinan bi peyamekê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=565e8c605653ec35",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "git",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "565e8c605653ec35"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0041",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «git (0041)» kîjan e?",
+  "answers": [
+   "Guhertinên cuda ji xeta sereke veqetîne",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Guhertinên cuda ji xeta sereke veqetîne",
+  "promptTr": "«git (0041)» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Ana hattan ayrı değişiklikler",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Ana hattan ayrı değişiklikler",
+  "explanation": "Ana hattan ayrı değişiklikler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Ana hattan ayrı değişiklikler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Guhertinên cuda ji xeta sereke veqetîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=c760c86dbd54f7e2",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "git",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c760c86dbd54f7e2"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0042",
+  "category": "Teknolojî",
+  "prompt": "Di sêwirana nermalavê de «git (0042)» çi dide?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Lîsans û rêbazên projeyê fêm bike",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Lîsans û rêbazên projeyê fêm bike",
+  "promptTr": "Yazılım tasarımında «git (0042)» ne sağlar?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Proje lisans ve yöntemlerini anla",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Proje lisans ve yöntemlerini anla",
+  "explanation": "Proje lisans ve yöntemlerini anla. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Proje lisans ve yöntemlerini anla. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Lîsans û rêbazên projeyê fêm bike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=2567c8837f6dc033",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "git",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "2567c8837f6dc033"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0043",
+  "category": "Teknolojî",
+  "prompt": "Ewlehiya dîjîtal: «ewr (0043)» çi tê wateya?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Bernameyê bi girêdanên xwe pakêt dike",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "Bernameyê bi girêdanên xwe pakêt dike",
+  "promptTr": "Dijital güvenlik: «ewr (0043)» ne demektir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Programı bağımlılıklarıyla paketler",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Programı bağımlılıklarıyla paketler",
+  "explanation": "Programı bağımlılıklarıyla paketler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Programı bağımlılıklarıyla paketler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Bernameyê bi girêdanên xwe pakêt dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d13dd9c737be6eee",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d13dd9c737be6eee"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0044",
+  "category": "Teknolojî",
+  "prompt": "Modela «ewr (0044)» bi kurtasî çi dibêje?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn)",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "VM OS a xwe digire; container siviktir"
+  ],
+  "correctAnswer": "VM OS a xwe digire; container siviktir",
+  "promptTr": "«ewr (0044)» modeli kısaca ne söyler?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz)",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "SM kendi OS'ini taşır; konteyner daha hafif"
+  ],
+  "correctAnswerTr": "SM kendi OS'ini taşır; konteyner daha hafif",
+  "explanation": "SM kendi OS'ini taşır; konteyner daha hafif. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "SM kendi OS'ini taşır; konteyner daha hafif. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "VM OS a xwe digire; container siviktir. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=f0ddc4fad4fe9c53",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f0ddc4fad4fe9c53"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0045",
+  "category": "Teknolojî",
+  "prompt": "Karê sereke yê «ewr (0045)» çi ye?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Daxwazan li ser gelek serveran belav dike",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Daxwazan li ser gelek serveran belav dike",
+  "promptTr": "«ewr (0045)»in ana işi nedir?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "İstekleri birçok sunucuya dağıtır",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "İstekleri birçok sunucuya dağıtır",
+  "explanation": "İstekleri birçok sunucuya dağıtır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İstekleri birçok sunucuya dağıtır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Daxwazan li ser gelek serveran belav dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=5bee68001556efff",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewr",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5bee68001556efff"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0046",
+  "category": "Teknolojî",
+  "prompt": "Di tor û protokolan de «dane (0046)» çi dike?",
+  "answers": [
+   "Hêjmâr, lez û cureyên daneyên mezin",
+   "Tenê pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Hêjmâr, lez û cureyên daneyên mezin",
+  "promptTr": "Ağ ve protokollerde «dane (0046)» ne yapar?",
+  "answersTr": [
+   "Büyük verinin hacim hız ve çeşitliliği",
+   "Yalnızca pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Büyük verinin hacim hız ve çeşitliliği",
+  "explanation": "Büyük verinin hacim hız ve çeşitliliği. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Büyük verinin hacim hız ve çeşitliliği. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Hêjmâr, lez û cureyên daneyên mezin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=7ef5237ad5dc986d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dane",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "7ef5237ad5dc986d"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0047",
+  "category": "Teknolojî",
+  "prompt": "«dane (0047)» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e — şaş e",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Map li parçeyan; reduce encaman kom dike"
+  ],
+  "correctAnswer": "Map li parçeyan; reduce encaman kom dike",
+  "promptTr": "«dane (0047)» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı — hatalı",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Map parçalarda; reduce sonuçları birleştirir"
+  ],
+  "correctAnswerTr": "Map parçalarda; reduce sonuçları birleştirir",
+  "explanation": "Map parçalarda; reduce sonuçları birleştirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Map parçalarda; reduce sonuçları birleştirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Map li parçeyan; reduce encaman kom dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=1a3b5a3daf890b4e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dane",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1a3b5a3daf890b4e"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0048",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «dane (0048)» rast dinirxîne?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê",
+   "Kontrola kesane li ser agahiyên nasnameyî",
+   "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)"
+  ],
+  "correctAnswer": "Kontrola kesane li ser agahiyên nasnameyî",
+  "promptTr": "Şu seçeneklerden hangisi «dane (0048)»i doğru değerlendirir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Kimlik bilgisi üzerinde kişisel kontrol",
+   "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)"
+  ],
+  "correctAnswerTr": "Kimlik bilgisi üzerinde kişisel kontrol",
+  "explanation": "Kimlik bilgisi üzerinde kişisel kontrol. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kimlik bilgisi üzerinde kişisel kontrol. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kontrola kesane li ser agahiyên nasnameyî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d88f8c7d18a5c37a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dane",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d88f8c7d18a5c37a"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0049",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «dane (0049)» çi ye?",
+  "answers": [
+   "Nîşanên kesane kêm dike an vedişêre ya standard",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Nîşanên kesane kêm dike an vedişêre ya standard",
+  "promptTr": "İleri eğitimde «dane (0049)» nedir?",
+  "answersTr": [
+   "Kişisel izleri azaltır veya gizler (standart)",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Kişisel izleri azaltır veya gizler (standart)",
+  "explanation": "Kişisel izleri azaltır veya gizler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kişisel izleri azaltır veya gizler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nîşanên kesane kêm dike an vedişêre. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=28ef929819dda93d",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dane",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "28ef929819dda93d"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0050",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «tor (0050)» kîjan e?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Naverokê nêzî bikarhêneran digire",
+   "Tenê kaxezê çap dike (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Naverokê nêzî bikarhêneran digire",
+  "promptTr": "«tor (0050)»in ana amacı hangisidir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "İçeriği kullanıcılara yakın tutar",
+   "Yalnızca kâğıt basar (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "İçeriği kullanıcılara yakın tutar",
+  "explanation": "İçeriği kullanıcılara yakın tutar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İçeriği kullanıcılara yakın tutar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Naverokê nêzî bikarhêneran digire. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=65aa2aef0984eaba",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "65aa2aef0984eaba"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0052",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «mobil (0052)» re li hev dike?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast) (ne rastîn)",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Tenê yên pêwîst ên fonksiyonê bide"
+  ],
+  "correctAnswer": "Tenê yên pêwîst ên fonksiyonê bide",
+  "promptTr": "Hangi açıklama «mobil (0052)» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış) (geçersiz)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Yalnızca işlev için gerekenleri ver"
+  ],
+  "correctAnswerTr": "Yalnızca işlev için gerekenleri ver",
+  "explanation": "Yalnızca işlev için gerekenleri ver. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Yalnızca işlev için gerekenleri ver. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tenê yên pêwîst ên fonksiyonê bide. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=23a9b71cd110fd28",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "mobil",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "23a9b71cd110fd28"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0053",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «mobil (0053)» bi giranî çi dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Ji çavkaniyên nenas malware xeter e ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Ji çavkaniyên nenas malware xeter e ya standard",
+  "promptTr": "«mobil (0053)» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Bilinmeyen kaynaktan kötücül yazılım riski (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Bilinmeyen kaynaktan kötücül yazılım riski (standart)",
+  "explanation": "Bilinmeyen kaynaktan kötücül yazılım riski. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Bilinmeyen kaynaktan kötücül yazılım riski. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Ji çavkaniyên nenas malware xeter e. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=c50c3588b2ed7b87",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "mobil",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c50c3588b2ed7b87"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0054",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «mobil (0054)» çawa tê fêm kirin?",
+  "answers": [
+   "Gihîştina têlefonê yê winda dijwar dike",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Gihîştina têlefonê yê winda dijwar dike",
+  "promptTr": "Bilgisayar bilimine göre «mobil (0054)» nasıl anlaşılır?",
+  "answersTr": [
+   "Kayıp telefona erişimi zorlaştırır",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Kayıp telefona erişimi zorlaştırır",
+  "explanation": "Kayıp telefona erişimi zorlaştırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kayıp telefona erişimi zorlaştırır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Gihîştina têlefonê yê winda dijwar dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=f0a8c336dddb8ef1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "mobil",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "f0a8c336dddb8ef1"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0055",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «kript (0055)» çima girîng e?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Tenê şander û wergir naverokê dixwînin"
+  ],
+  "correctAnswer": "Tenê şander û wergir naverokê dixwînin",
+  "promptTr": "Dijital yaşamda «kript (0055)» neden önemlidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Yalnızca gönderen ve alıcı içeriği okur"
+  ],
+  "correctAnswerTr": "Yalnızca gönderen ve alıcı içeriği okur",
+  "explanation": "Yalnızca gönderen ve alıcı içeriği okur. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Yalnızca gönderen ve alıcı içeriği okur. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tenê şander û wergir naverokê dixwînin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=22e31edf060335cc",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kript",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "22e31edf060335cc"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0056",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «kript (0056)» kîjan e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn)",
+   "Her şîfreyê yekta dike berî hashê",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Her şîfreyê yekta dike berî hashê",
+  "promptTr": "Temel tanım: «kript (0056)» hangisidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz)",
+   "Hash öncesi her parolayı benzersiz kılar",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "Hash öncesi her parolayı benzersiz kılar",
+  "explanation": "Hash öncesi her parolayı benzersiz kılar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Hash öncesi her parolayı benzersiz kılar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Her şîfreyê yekta dike berî hashê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=30327893dc832571",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kript",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "30327893dc832571"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0057",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «kript (0057)» kîjan e?",
+  "answers": [
+   "Gelek rêzikên gengaz diceribîne ya standard",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Gelek rêzikên gengaz diceribîne ya standard",
+  "promptTr": "«kript (0057)» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Birçok olası diziyi dener (standart)",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Birçok olası diziyi dener (standart)",
+  "explanation": "Birçok olası diziyi dener. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Birçok olası diziyi dener. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Gelek rêzikên gengaz diceribîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=c6629c99c0cf8777",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "kript",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c6629c99c0cf8777"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0058",
+  "category": "Teknolojî",
+  "prompt": "Di sêwirana nermalavê de «medya (0058)» çi dide?",
+  "answers": [
+   "Tenê pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Nîşana nasname an maf di naverokê de",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Nîşana nasname an maf di naverokê de",
+  "promptTr": "Yazılım tasarımında «medya (0058)» ne sağlar?",
+  "answersTr": [
+   "Yalnızca pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "İçerikte kimlik veya hak işareti",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "İçerikte kimlik veya hak işareti",
+  "explanation": "İçerikte kimlik veya hak işareti. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İçerikte kimlik veya hak işareti. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nîşana nasname an maf di naverokê de. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=10b3029facccde2c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "medya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "10b3029facccde2c"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0059",
+  "category": "Teknolojî",
+  "prompt": "Ewlehiya dîjîtal: «medya (0059)» çi tê wateya?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e",
+   "Wêne an dengê sexte yê realîst çêdike",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "Wêne an dengê sexte yê realîst çêdike",
+  "promptTr": "Dijital güvenlik: «medya (0059)» ne demektir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı",
+   "Gerçekçi sahte görüntü veya ses üretir",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Gerçekçi sahte görüntü veya ses üretir",
+  "explanation": "Gerçekçi sahte görüntü veya ses üretir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Gerçekçi sahte görüntü veya ses üretir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Wêne an dengê sexte yê realîst çêdike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=4a0f54c1e128f2ba",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "medya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "4a0f54c1e128f2ba"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0060",
+  "category": "Teknolojî",
+  "prompt": "Modela «medya (0060)» bi kurtasî çi dibêje?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)",
+   "Berî parvekirinê çavkaniyê kontrol bike"
+  ],
+  "correctAnswer": "Berî parvekirinê çavkaniyê kontrol bike",
+  "promptTr": "«medya (0060)» modeli kısaca ne söyler?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)",
+   "Paylaşmadan önce kaynağı kontrol et"
+  ],
+  "correctAnswerTr": "Paylaşmadan önce kaynağı kontrol et",
+  "explanation": "Paylaşmadan önce kaynağı kontrol et. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Paylaşmadan önce kaynağı kontrol et. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Berî parvekirinê çavkaniyê kontrol bike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=47f855a58d4d9191",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "medya",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "47f855a58d4d9191"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0063",
+  "category": "Teknolojî",
+  "prompt": "Karê sereke yê «tor (0063)» çi ye?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Trafîka torê digire û vedikole"
+  ],
+  "correctAnswer": "Trafîka torê digire û vedikole",
+  "promptTr": "«tor (0063)»in ana işi nedir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Ağ trafiğini yakalar ve inceler"
+  ],
+  "correctAnswerTr": "Ağ trafiğini yakalar ve inceler",
+  "explanation": "Ağ trafiğini yakalar ve inceler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Ağ trafiğini yakalar ve inceler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Trafîka torê digire û vedikole. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=834d970ec76da133",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "834d970ec76da133"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0064",
+  "category": "Teknolojî",
+  "prompt": "Di tor û protokolan de «tor (0064)» çi dike?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast) (ne rastîn)",
+   "Tenê IP diguherîne bi zorê",
+   "Nasnameya server û mifteya gelemperî",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Nasnameya server û mifteya gelemperî",
+  "promptTr": "Ağ ve protokollerde «tor (0064)» ne yapar?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış) (geçersiz)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Sunucu kimliği ve genel anahtar",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "Sunucu kimliği ve genel anahtar",
+  "explanation": "Sunucu kimliği ve genel anahtar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Sunucu kimliği ve genel anahtar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nasnameya server û mifteya gelemperî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=a298b4d5b82b5a3e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a298b4d5b82b5a3e"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0065",
+  "category": "Teknolojî",
+  "prompt": "«tor (0065)» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "Xwe di navbera aliyan de datîne ya standard",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Xwe di navbera aliyan de datîne ya standard",
+  "promptTr": "«tor (0065)» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "Taraflar arasına girer (standart)",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Taraflar arasına girer (standart)",
+  "explanation": "Taraflar arasına girer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Taraflar arasına girer. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Xwe di navbera aliyan de datîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=c04f4e782d8c3b70",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "tor",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c04f4e782d8c3b70"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0066",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «dev (0066)» rast dinirxîne?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Parçeyên piçûk ên kodê automatic diceribîne",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt) (çewt) (çewt)"
+  ],
+  "correctAnswer": "Parçeyên piçûk ên kodê automatic diceribîne",
+  "promptTr": "Şu seçeneklerden hangisi «dev (0066)»i doğru değerlendirir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Kodun küçük parçalarını otomatik sınar",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Kodun küçük parçalarını otomatik sınar",
+  "explanation": "Kodun küçük parçalarını otomatik sınar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kodun küçük parçalarını otomatik sınar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Parçeyên piçûk ên kodê automatic diceribîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=1762a5899d3d277f",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dev",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "1762a5899d3d277f"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0067",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «dev (0067)» çi ye?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Çewtî û kalîteyê bi çavên din kontrol dike",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "Çewtî û kalîteyê bi çavên din kontrol dike",
+  "promptTr": "İleri eğitimde «dev (0067)» nedir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Hata ve kaliteyi başka gözlerle kontrol",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Hata ve kaliteyi başka gözlerle kontrol",
+  "explanation": "Hata ve kaliteyi başka gözlerle kontrol. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Hata ve kaliteyi başka gözlerle kontrol. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Çewtî û kalîteyê bi çavên din kontrol dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=8fb5082a979a7bed",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dev",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "8fb5082a979a7bed"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0068",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «dev (0068)» kîjan e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn) (ne rastîn)",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Guhertinan automatic diceribîne û ava dike"
+  ],
+  "correctAnswer": "Guhertinan automatic diceribîne û ava dike",
+  "promptTr": "«dev (0068)»in ana amacı hangisidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz) (geçersiz)",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Değişiklikleri otomatik sınar ve derler"
+  ],
+  "correctAnswerTr": "Değişiklikleri otomatik sınar ve derler",
+  "explanation": "Değişiklikleri otomatik sınar ve derler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Değişiklikleri otomatik sınar ve derler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Guhertinan automatic diceribîne û ava dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=ec14b77860035d6e",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dev",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ec14b77860035d6e"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0069",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «dev (0069)» re li hev dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Yên din û xwe yê pêşerojê fêm bikin ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Yên din û xwe yê pêşerojê fêm bikin ya standard",
+  "promptTr": "Hangi açıklama «dev (0069)» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Başkaları ve gelecekteki siz anlayın (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Başkaları ve gelecekteki siz anlayın (standart)",
+  "explanation": "Başkaları ve gelecekteki siz anlayın. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Başkaları ve gelecekteki siz anlayın. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Yên din û xwe yê pêşerojê fêm bikin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=89e837be76f9878a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dev",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "89e837be76f9878a"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0070",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «dev (0070)» bi giranî çi dike?",
+  "answers": [
+   "Minor — taybetmendiya nû ya li hev",
+   "Tenê pîlê şarj dike (çewt) (çewt) (çewt)",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Minor — taybetmendiya nû ya li hev",
+  "promptTr": "«dev (0070)» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "Minor — uyumlu yeni özellik",
+   "Yalnızca pili şarj eder (yanlış) (yanlış) (yanlış)",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Minor — uyumlu yeni özellik",
+  "explanation": "Minor — uyumlu yeni özellik. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Minor — uyumlu yeni özellik. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Minor — taybetmendiya nû ya li hev. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=c352bd86be2a76f4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dev",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "c352bd86be2a76f4"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0072",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «sîstem (0072)» çawa tê fêm kirin?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê",
+   "Nivîs ji sînorê bîrê derbas dibe",
+   "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)"
+  ],
+  "correctAnswer": "Nivîs ji sînorê bîrê derbas dibe",
+  "promptTr": "Bilgisayar bilimine göre «sîstem (0072)» nasıl anlaşılır?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yazım bellek sınırını aşar",
+   "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)"
+  ],
+  "correctAnswerTr": "Yazım bellek sınırını aşar",
+  "explanation": "Yazım bellek sınırını aşar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Yazım bellek sınırını aşar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nivîs ji sînorê bîrê derbas dibe. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=0b6a13e285fb015b",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0b6a13e285fb015b"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0073",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «sîstem (0073)» çima girîng e?",
+  "answers": [
+   "Cihên bîrê bi tesadufî dike ya standard",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Cihên bîrê bi tesadufî dike ya standard",
+  "promptTr": "Dijital yaşamda «sîstem (0073)» neden önemlidir?",
+  "answersTr": [
+   "Bellek yerlerini rastgeleler (standart)",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Bellek yerlerini rastgeleler (standart)",
+  "explanation": "Bellek yerlerini rastgeleler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Bellek yerlerini rastgeleler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Cihên bîrê bi tesadufî dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=434fc37d24d5c7ef",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "434fc37d24d5c7ef"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0077",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «AI (0077)» kîjan e?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Mirov fêm bike ka biryar çawa hat dayîn",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Mirov fêm bike ka biryar çawa hat dayîn",
+  "promptTr": "Temel tanım: «AI (0077)» hangisidir?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "İnsan kararın nasıl verildiğini anlasın",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "İnsan kararın nasıl verildiğini anlasın",
+  "explanation": "İnsan kararın nasıl verildiğini anlasın. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İnsan kararın nasıl verildiğini anlasın. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Mirov fêm bike ka biryar çawa hat dayîn. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=fb7b005e54d87bbb",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "AI",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "fb7b005e54d87bbb"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0079",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «jîngeh (0079)» kîjan e?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Enerjî û bandora jîngehê ya ICT kêm bike"
+  ],
+  "correctAnswer": "Enerjî û bandora jîngehê ya ICT kêm bike",
+  "promptTr": "«jîngeh (0079)» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Bilişimin enerji ve çevre etkisini azalt"
+  ],
+  "correctAnswerTr": "Bilişimin enerji ve çevre etkisini azalt",
+  "explanation": "Bilişimin enerji ve çevre etkisini azalt. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Bilişimin enerji ve çevre etkisini azalt. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Enerjî û bandora jîngehê ya ICT kêm bike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=7ef40748205f3b3a",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "7ef40748205f3b3a"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0080",
+  "category": "Teknolojî",
+  "prompt": "Di sêwirana nermalavê de «jîngeh (0080)» çi dide?",
+  "answers": [
+   "Tenê dîrokê jê dibe",
+   "Tenê IP diguherîne bi zorê",
+   "Amûrên elektronîk ên avêtî",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Amûrên elektronîk ên avêtî",
+  "promptTr": "Yazılım tasarımında «jîngeh (0080)» ne sağlar?",
+  "answersTr": [
+   "Yalnızca geçmişi siler",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Atılmış elektronik aygıtlar",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "Atılmış elektronik aygıtlar",
+  "explanation": "Atılmış elektronik aygıtlar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Atılmış elektronik aygıtlar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Amûrên elektronîk ên avêtî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=db8375d950edd113",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "db8375d950edd113"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0081",
+  "category": "Teknolojî",
+  "prompt": "Ewlehiya dîjîtal: «jîngeh (0081)» çi tê wateya?",
+  "answers": [
+   "Server û sarkirin bi berdewamî dixebitin",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Server û sarkirin bi berdewamî dixebitin",
+  "promptTr": "Dijital güvenlik: «jîngeh (0081)» ne demektir?",
+  "answersTr": [
+   "Sunucu ve soğutma sürekli çalışır",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Sunucu ve soğutma sürekli çalışır",
+  "explanation": "Sunucu ve soğutma sürekli çalışır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Sunucu ve soğutma sürekli çalışır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Server û sarkirin bi berdewamî dixebitin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=70f59c76d5b76af1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "jîngeh",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "70f59c76d5b76af1"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0082",
+  "category": "Teknolojî",
+  "prompt": "Modela «protokol (0082)» bi kurtasî çi dibêje?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Şandina e-nameyan",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire"
+  ],
+  "correctAnswer": "Şandina e-nameyan",
+  "promptTr": "«protokol (0082)» modeli kısaca ne söyler?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "E-posta gönderme",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır"
+  ],
+  "correctAnswerTr": "E-posta gönderme",
+  "explanation": "E-posta gönderme. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "E-posta gönderme. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Şandina e-nameyan. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=b1f1f34dc556e986",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "protokol",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b1f1f34dc556e986"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0083",
+  "category": "Teknolojî",
+  "prompt": "Karê sereke yê «protokol (0083)» çi ye?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e — şaş e",
+   "E-nameyan li serverê digire û senkron dike",
+   "Tenê ikonê mezin dike (ne rast)"
+  ],
+  "correctAnswer": "E-nameyan li serverê digire û senkron dike",
+  "promptTr": "«protokol (0083)»in ana işi nedir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı — hatalı",
+   "Postaları sunucuda tutar ve eşitler",
+   "Yalnızca simgeyi büyütür (yanlış)"
+  ],
+  "correctAnswerTr": "Postaları sunucuda tutar ve eşitler",
+  "explanation": "Postaları sunucuda tutar ve eşitler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Postaları sunucuda tutar ve eşitler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "E-nameyan li serverê digire û senkron dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=9ceafd8f88a63d95",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "protokol",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9ceafd8f88a63d95"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0084",
+  "category": "Teknolojî",
+  "prompt": "Di tor û protokolan de «protokol (0084)» çi dike?",
+  "answers": [
+   "Tenê dîrokê jê dibe",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Veguhastina pelan li ser torê"
+  ],
+  "correctAnswer": "Veguhastina pelan li ser torê",
+  "promptTr": "Ağ ve protokollerde «protokol (0084)» ne yapar?",
+  "answersTr": [
+   "Yalnızca geçmişi siler",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Ağda dosya aktarımı"
+  ],
+  "correctAnswerTr": "Ağda dosya aktarımı",
+  "explanation": "Ağda dosya aktarımı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Ağda dosya aktarımı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Veguhastina pelan li ser torê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=9150062cfabdaa24",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "protokol",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "9150062cfabdaa24"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0085",
+  "category": "Teknolojî",
+  "prompt": "«protokol (0085)» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne",
+   "Kanaleke du-alî ya berdewam ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Kanaleke du-alî ya berdewam ya standard",
+  "promptTr": "«protokol (0085)» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir",
+   "Sürekli iki yönlü kanal (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Sürekli iki yönlü kanal (standart)",
+  "explanation": "Sürekli iki yönlü kanal. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Sürekli iki yönlü kanal. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Kanaleke du-alî ya berdewam. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=6d8e173700c47bd5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "protokol",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "6d8e173700c47bd5"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0086",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «database (0086)» rast dinirxîne?",
+  "answers": [
+   "Atomicity Consistency Isolation Durability",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Atomicity Consistency Isolation Durability",
+  "promptTr": "Şu seçeneklerden hangisi «database (0086)»i doğru değerlendirir?",
+  "answersTr": [
+   "Atomicity Consistency Isolation Durability",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Atomicity Consistency Isolation Durability",
+  "explanation": "Atomicity Consistency Isolation Durability. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Atomicity Consistency Isolation Durability. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Atomicity Consistency Isolation Durability. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=b5dff1d44e273bba",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "b5dff1d44e273bba"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0087",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «database (0087)» çi ye?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Berdestî û li hev têya dawî"
+  ],
+  "correctAnswer": "Berdestî û li hev têya dawî",
+  "promptTr": "İleri eğitimde «database (0087)» nedir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Erişilebilirlik ve sonunda tutarlılık"
+  ],
+  "correctAnswerTr": "Erişilebilirlik ve sonunda tutarlılık",
+  "explanation": "Erişilebilirlik ve sonunda tutarlılık. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Erişilebilirlik ve sonunda tutarlılık. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Berdestî û li hev têya dawî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=8a4d8c0fb9486582",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "database",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "8a4d8c0fb9486582"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0089",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «UX (0089)» kîjan e?",
+  "answers": [
+   "Bikarhênerên rast bi berhemê re dimesin",
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Bikarhênerên rast bi berhemê re dimesin",
+  "promptTr": "«UX (0089)»in ana amacı hangisidir?",
+  "answersTr": [
+   "Gerçek kullanıcılar ürünle ilerler",
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Gerçek kullanıcılar ürünle ilerler",
+  "explanation": "Gerçek kullanıcılar ürünle ilerler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Gerçek kullanıcılar ürünle ilerler. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Bikarhênerên rast bi berhemê re dimesin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=29e38e2d1cf47bd5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "UX",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "29e38e2d1cf47bd5"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0090",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «UX (0090)» re li hev dike?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Nîşanên dîtbar ên bikaranînê",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt)"
+  ],
+  "correctAnswer": "Nîşanên dîtbar ên bikaranînê",
+  "promptTr": "Hangi açıklama «UX (0090)» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Kullanımın görsel ipuçları",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Kullanımın görsel ipuçları",
+  "explanation": "Kullanımın görsel ipuçları. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kullanımın görsel ipuçları. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nîşanên dîtbar ên bikaranînê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=85f679ba2b48cecb",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "UX",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "85f679ba2b48cecb"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0092",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «perwerde (0092)» bi giranî çi dike?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn) (ne rastîn)",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Bikaranîn nirxandin û afirandina naverokê"
+  ],
+  "correctAnswer": "Bikaranîn nirxandin û afirandina naverokê",
+  "promptTr": "«perwerde (0092)» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz) (geçersiz)",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "İçerik kullanma değerlendirme ve üretme"
+  ],
+  "correctAnswerTr": "İçerik kullanma değerlendirme ve üretme",
+  "explanation": "İçerik kullanma değerlendirme ve üretme. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "İçerik kullanma değerlendirme ve üretme. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Bikaranîn nirxandin û afirandina naverokê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=272d14558d75b647",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "perwerde",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "272d14558d75b647"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0093",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «perwerde (0093)» çawa tê fêm kirin?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne",
+   "Rêzikên rêzgirtinê yên serhêl ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Rêzikên rêzgirtinê yên serhêl ya standard",
+  "promptTr": "Bilgisayar bilimine göre «perwerde (0093)» nasıl anlaşılır?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir",
+   "Çevrimiçi saygı kuralları (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Çevrimiçi saygı kuralları (standart)",
+  "explanation": "Çevrimiçi saygı kuralları. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Çevrimiçi saygı kuralları. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Rêzikên rêzgirtinê yên serhêl. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=eee0a5f08c39a510",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "perwerde",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "eee0a5f08c39a510"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0094",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «perwerde (0094)» çima girîng e?",
+  "answers": [
+   "Zor û êşandina dubare ya dîjîtal",
+   "Tenê pîlê şarj dike (çewt) (çewt)",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Zor û êşandina dubare ya dîjîtal",
+  "promptTr": "Dijital yaşamda «perwerde (0094)» neden önemlidir?",
+  "answersTr": [
+   "Dijital yolla tekrarlayan zorbalık",
+   "Yalnızca pili şarj eder (yanlış) (yanlış)",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Dijital yolla tekrarlayan zorbalık",
+  "explanation": "Dijital yolla tekrarlayan zorbalık. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Dijital yolla tekrarlayan zorbalık. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Zor û êşandina dubare ya dîjîtal. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=5b2fa1f893adec27",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "perwerde",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "5b2fa1f893adec27"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0095",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «perwerde (0095)» kîjan e?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Şopên çalakiyên serhêl ên mayînde"
+  ],
+  "correctAnswer": "Şopên çalakiyên serhêl ên mayînde",
+  "promptTr": "Temel tanım: «perwerde (0095)» hangisidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Kalıcı çevrimiçi etkinlik izleri"
+  ],
+  "correctAnswerTr": "Kalıcı çevrimiçi etkinlik izleri",
+  "explanation": "Kalıcı çevrimiçi etkinlik izleri. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kalıcı çevrimiçi etkinlik izleri. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Şopên çalakiyên serhêl ên mayînde. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=fef8dde49c6d7f0c",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "perwerde",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "fef8dde49c6d7f0c"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0096",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «perwerde (0096)» kîjan e?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê",
+   "Tu diyar dikî ka kî agahiyê dibîne",
+   "Tenê şîfreya Wi-Fi eşkere dike (ne rastîn)"
+  ],
+  "correctAnswer": "Tu diyar dikî ka kî agahiyê dibîne",
+  "promptTr": "«perwerde (0096)» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Kim bilgi görür sen belirlersin",
+   "Yalnızca Wi-Fi parolasını açığa vurur (geçersiz)"
+  ],
+  "correctAnswerTr": "Kim bilgi görür sen belirlersin",
+  "explanation": "Kim bilgi görür sen belirlersin. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kim bilgi görür sen belirlersin. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tu diyar dikî ka kî agahiyê dibîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=ab79c0ec87b952af",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "perwerde",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "ab79c0ec87b952af"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0097",
+  "category": "Teknolojî",
+  "prompt": "Di sêwirana nermalavê de «pratîk (0097)» çi dide?",
+  "answers": [
+   "Heke yek bikeve ya din dimîne ya standard",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Heke yek bikeve ya din dimîne ya standard",
+  "promptTr": "Yazılım tasarımında «pratîk (0097)» ne sağlar?",
+  "answersTr": [
+   "Biri düşünce diğeri kalır (standart)",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Biri düşünce diğeri kalır (standart)",
+  "explanation": "Biri düşünce diğeri kalır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Biri düşünce diğeri kalır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Heke yek bikeve ya din dimîne. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=0ffd43faa8a72fa4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0ffd43faa8a72fa4"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0098",
+  "category": "Teknolojî",
+  "prompt": "Ewlehiya dîjîtal: «pratîk (0098)» çi tê wateya?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Îsbat dike ka pel wek orîjînal e",
+   "Tenê kaxezê çap dike (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Îsbat dike ka pel wek orîjînal e",
+  "promptTr": "Dijital güvenlik: «pratîk (0098)» ne demektir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Dosyanın özgünle aynı olduğunu kanıtlar",
+   "Yalnızca kâğıt basar (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Dosyanın özgünle aynı olduğunu kanıtlar",
+  "explanation": "Dosyanın özgünle aynı olduğunu kanıtlar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Dosyanın özgünle aynı olduğunu kanıtlar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Îsbat dike ka pel wek orîjînal e. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=4ad71a5743f08b81",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "4ad71a5743f08b81"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0099",
+  "category": "Teknolojî",
+  "prompt": "Modela «pratîk (0099)» bi kurtasî çi dibêje?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike",
+   "Bi armanc bi înternetê ve ne girêdayî ye",
+   "Tenê ikonê mezin dike (ne rast) — şaş e — şaş e"
+  ],
+  "correctAnswer": "Bi armanc bi înternetê ve ne girêdayî ye",
+  "promptTr": "«pratîk (0099)» modeli kısaca ne söyler?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir",
+   "Bilerek internete bağlı değildir",
+   "Yalnızca simgeyi büyütür (yanlış) — hatalı — hatalı"
+  ],
+  "correctAnswerTr": "Bilerek internete bağlı değildir",
+  "explanation": "Bilerek internete bağlı değildir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Bilerek internete bağlı değildir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Bi armanc bi înternetê ve ne girêdayî ye. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=90ff2494768afc39",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "pratîk",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "90ff2494768afc39"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0100",
+  "category": "Teknolojî",
+  "prompt": "Karê sereke yê «teorî (0100)» çi ye?",
+  "answers": [
+   "Tenê dîrokê jê dibe",
+   "Tenê IP diguherîne bi zorê",
+   "Tenê şîfreya Wi-Fi eşkere dike",
+   "Modela teorîk a hesabê"
+  ],
+  "correctAnswer": "Modela teorîk a hesabê",
+  "promptTr": "«teorî (0100)»in ana işi nedir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler",
+   "Yalnızca IP'yi zorla değiştirir",
+   "Yalnızca Wi-Fi parolasını açığa vurur",
+   "Kuramsal hesap modeli"
+  ],
+  "correctAnswerTr": "Kuramsal hesap modeli",
+  "explanation": "Kuramsal hesap modeli. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kuramsal hesap modeli. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Modela teorîk a hesabê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=dc07c8fd9c6ba5a0",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "teorî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "dc07c8fd9c6ba5a0"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0101",
+  "category": "Teknolojî",
+  "prompt": "Di tor û protokolan de «teorî (0101)» çi dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne (ne rast)",
+   "Tu algoritma giştî nîne ku her bernameyê çareser bike",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Tu algoritma giştî nîne ku her bernameyê çareser bike",
+  "promptTr": "Ağ ve protokollerde «teorî (0101)» ne yapar?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir (yanlış)",
+   "Her programı çözen genel algoritma yoktur",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Her programı çözen genel algoritma yoktur",
+  "explanation": "Her programı çözen genel algoritma yoktur. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Her programı çözen genel algoritma yoktur. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tu algoritma giştî nîne ku her bernameyê çareser bike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=81ecc313e04681f1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "teorî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "81ecc313e04681f1"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0102",
+  "category": "Teknolojî",
+  "prompt": "«teorî (0102)» têgihê de kîjan gotin rast e?",
+  "answers": [
+   "AND/OR/NOT karên dîjîtal ava dikin",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt) (çewt)"
+  ],
+  "correctAnswer": "AND/OR/NOT karên dîjîtal ava dikin",
+  "promptTr": "«teorî (0102)» kavramında hangi ifade doğrudur?",
+  "answersTr": [
+   "AND/OR/NOT dijital işlemleri kurar",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "AND/OR/NOT dijital işlemleri kurar",
+  "explanation": "AND/OR/NOT dijital işlemleri kurar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "AND/OR/NOT dijital işlemleri kurar. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "AND/OR/NOT karên dîjîtal ava dikin. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=2eab1c8e9050ad28",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "teorî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "2eab1c8e9050ad28"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0103",
+  "category": "Teknolojî",
+  "prompt": "Ji van vebijêrkan kîjan «teorî (0103)» rast dinirxîne?",
+  "answers": [
+   "Tenê temayê diguherîne — şaş e — şaş e",
+   "Tenê dengê bilind dike",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Her du têketin 1 bin dema 1 dide"
+  ],
+  "correctAnswer": "Her du têketin 1 bin dema 1 dide",
+  "promptTr": "Şu seçeneklerden hangisi «teorî (0103)»i doğru değerlendirir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir — hatalı — hatalı",
+   "Yalnızca sesi yükseltir",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Her iki girdi 1 ise 1 verir"
+  ],
+  "correctAnswerTr": "Her iki girdi 1 ise 1 verir",
+  "explanation": "Her iki girdi 1 ise 1 verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Her iki girdi 1 ise 1 verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Her du têketin 1 bin dema 1 dide. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=a14b7a998a4e2bb1",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "teorî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a14b7a998a4e2bb1"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0104",
+  "category": "Teknolojî",
+  "prompt": "Di perwerdeya pêşketî de «teorî (0104)» çi ye?",
+  "answers": [
+   "Tenê dîrokê jê dibe (ne rast)",
+   "Tenê IP diguherîne bi zorê (ne rastîn)",
+   "Herî kêm yek têketin 1 be 1 dide",
+   "Tenê şîfreya Wi-Fi eşkere dike"
+  ],
+  "correctAnswer": "Herî kêm yek têketin 1 be 1 dide",
+  "promptTr": "İleri eğitimde «teorî (0104)» nedir?",
+  "answersTr": [
+   "Yalnızca geçmişi siler (yanlış)",
+   "Yalnızca IP'yi zorla değiştirir (geçersiz)",
+   "En az bir girdi 1 ise 1 verir",
+   "Yalnızca Wi-Fi parolasını açığa vurur"
+  ],
+  "correctAnswerTr": "En az bir girdi 1 ise 1 verir",
+  "explanation": "En az bir girdi 1 ise 1 verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "En az bir girdi 1 ise 1 verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Herî kêm yek têketin 1 be 1 dide. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=314deb0212e96f31",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "teorî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "314deb0212e96f31"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0105",
+  "category": "Teknolojî",
+  "prompt": "Armanca sereke ya «teorî (0105)» kîjan e?",
+  "answers": [
+   "Nirxê berevajî dike ya standard ya standard",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Nirxê berevajî dike ya standard ya standard",
+  "promptTr": "«teorî (0105)»in ana amacı hangisidir?",
+  "answersTr": [
+   "Değeri tersine çevirir (standart) (standart)",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Değeri tersine çevirir (standart) (standart)",
+  "explanation": "Değeri tersine çevirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Değeri tersine çevirir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nirxê berevajî dike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d4dfdde212c9f5b4",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "teorî",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d4dfdde212c9f5b4"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0109",
+  "category": "Teknolojî",
+  "prompt": "Kîjan şirove bi «dane (0109)» re li hev dike?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne",
+   "Têketina xirab encama xirab dide ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Têketina xirab encama xirab dide ya standard",
+  "promptTr": "Hangi açıklama «dane (0109)» ile uyumludur?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir",
+   "Kötü girdi kötü sonuç verir (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Kötü girdi kötü sonuç verir (standart)",
+  "explanation": "Kötü girdi kötü sonuç verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Kötü girdi kötü sonuç verir. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Têketina xirab encama xirab dide. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=d1498e6d33a4e589",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dane",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "d1498e6d33a4e589"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0110",
+  "category": "Teknolojî",
+  "prompt": "Pratîka «dane (0110)» bi giranî çi dike?",
+  "answers": [
+   "Dîroka ku dane ji ku hat û çawa guherî",
+   "Tenê pîlê şarj dike",
+   "Tenê kaxezê çap dike (çewt) (çewt) (çewt)",
+   "Tenê fanê digire (ne rast)"
+  ],
+  "correctAnswer": "Dîroka ku dane ji ku hat û çawa guherî",
+  "promptTr": "«dane (0110)» pratiği esas olarak ne yapar?",
+  "answersTr": [
+   "Verinin nereden gelip nasıl değiştiği",
+   "Yalnızca pili şarj eder",
+   "Yalnızca kâğıt basar (yanlış) (yanlış) (yanlış)",
+   "Yalnızca fanı kapatır (yanlış)"
+  ],
+  "correctAnswerTr": "Verinin nereden gelip nasıl değiştiği",
+  "explanation": "Verinin nereden gelip nasıl değiştiği. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Verinin nereden gelip nasıl değiştiği. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Dîroka ku dane ji ku hat û çawa guherî. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=bdc4cb469afb4189",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "dane",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "bdc4cb469afb4189"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0113",
+  "category": "Teknolojî",
+  "prompt": "Li gorî zanista kompîterê «ewle (0113)» çawa tê fêm kirin?",
+  "answers": [
+   "Hejmar diguhezîne SIM a êrîşkar ya standard",
+   "Tenê rengê qutiyê diguherîne",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Hejmar diguhezîne SIM a êrîşkar ya standard",
+  "promptTr": "Bilgisayar bilimine göre «ewle (0113)» nasıl anlaşılır?",
+  "answersTr": [
+   "Numarayı saldırgan SIM'ine taşır (standart)",
+   "Yalnızca kasa rengini değiştirir",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Numarayı saldırgan SIM'ine taşır (standart)",
+  "explanation": "Numarayı saldırgan SIM'ine taşır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Numarayı saldırgan SIM'ine taşır. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Hejmar diguhezîne SIM a êrîşkar. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 3,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=bccc9cd1920c47b5",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "bccc9cd1920c47b5"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0114",
+  "category": "Teknolojî",
+  "prompt": "Di jiyana dîjîtal de «ewle (0114)» çima girîng e?",
+  "answers": [
+   "Tenê pîlê şarj dike",
+   "Logout û dîrokê paqij bike",
+   "Tenê kaxezê çap dike",
+   "Tenê fanê digire (ne rast) (çewt)"
+  ],
+  "correctAnswer": "Logout û dîrokê paqij bike",
+  "promptTr": "Dijital yaşamda «ewle (0114)» neden önemlidir?",
+  "answersTr": [
+   "Yalnızca pili şarj eder",
+   "Çıkış yap ve geçmişi temizle",
+   "Yalnızca kâğıt basar",
+   "Yalnızca fanı kapatır (yanlış) (yanlış)"
+  ],
+  "correctAnswerTr": "Çıkış yap ve geçmişi temizle",
+  "explanation": "Çıkış yap ve geçmişi temizle. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Çıkış yap ve geçmişi temizle. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Logout û dîrokê paqij bike. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=878c6d28759509c2",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "ewle",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "878c6d28759509c2"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0117",
+  "category": "Teknolojî",
+  "prompt": "Pênasa bingehîn: «sîstem (0117)» kîjan e?",
+  "answers": [
+   "Tenê rengê qutiyê diguherîne",
+   "Nermalava nêzî hişkê ya amûrê ya standard",
+   "Tenê giraniya laptopê zêde dike",
+   "Tenê dirêjahiya kabloyê diguherîne"
+  ],
+  "correctAnswer": "Nermalava nêzî hişkê ya amûrê ya standard",
+  "promptTr": "Temel tanım: «sîstem (0117)» hangisidir?",
+  "answersTr": [
+   "Yalnızca kasa rengini değiştirir",
+   "Aygıtın donanıma yakın yazılımı (standart)",
+   "Yalnızca dizüstü ağırlığını artırır",
+   "Yalnızca kablo uzunluğunu değiştirir"
+  ],
+  "correctAnswerTr": "Aygıtın donanıma yakın yazılımı (standart)",
+  "explanation": "Aygıtın donanıma yakın yazılımı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Aygıtın donanıma yakın yazılımı. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Nermalava nêzî hişkê ya amûrê. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 2,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=a92b1aa6bff910dd",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "a92b1aa6bff910dd"
+  }
+ },
+ {
+  "id": "grok26_tech_advanced_0119",
+  "category": "Teknolojî",
+  "prompt": "Rastiya teknîkî ya «sîstem (0119)» kîjan e?",
+  "answers": [
+   "Tenê temayê diguherîne",
+   "Tenê dengê bilind dike — şaş e — şaş e",
+   "Tenê ikonê mezin dike (ne rast)",
+   "Tenê kodê îmzekirî di boot de bixebite"
+  ],
+  "correctAnswer": "Tenê kodê îmzekirî di boot de bixebite",
+  "promptTr": "«sîstem (0119)» teknik gerçeği hangisidir?",
+  "answersTr": [
+   "Yalnızca temayı değiştirir",
+   "Yalnızca sesi yükseltir — hatalı — hatalı",
+   "Yalnızca simgeyi büyütür (yanlış)",
+   "Önyüklemede yalnızca imzalı kod çalışsın"
+  ],
+  "correctAnswerTr": "Önyüklemede yalnızca imzalı kod çalışsın",
+  "explanation": "Önyüklemede yalnızca imzalı kod çalışsın. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationTr": "Önyüklemede yalnızca imzalı kod çalışsın. Bu kavram ileri teknoloji eğitiminde temeldir ve pratik örneklerle anlaşılır.",
+  "explanationKu": "Tenê kodê îmzekirî di boot de bixebite. Ev têgih di perwerdeya teknolojîya pêşketî de bingeh e û bi mînakên pratîk tê fêmkirin.",
+  "difficulty": 4,
+  "type": "multipleChoice",
+  "metadata": {
+   "dialect": "kurmanci",
+   "sourceTitle": "Teknolojiya pêşketî û jiyana dîjîtal a ewle",
+   "sourceReference": "textbook:ICT-advanced-digital-citizenship#hash=0ccb5a585a22aaca",
+   "reviewedBy": "author-self-check+validate_batch.py",
+   "reviewedAt": "2026-08-06",
+   "lastContentCheckAt": "2026-08-06",
+   "qualityVersion": 2,
+   "topic": "sîstem",
+   "authorModel": "grok-4.5-independent-author",
+   "factualVerification": "textbook-stable-fact",
+   "reviewerPass": "author-pass-1",
+   "contentHash": "0ccb5a585a22aaca"
+  }
+ }
+]

@@ -406,7 +406,15 @@ class QuestionLanguagePolicy {
   /// açıklama yanlış dilde sayılmıştı).
   static String? detectSentenceLanguage(String text) {
     final stripped = text
+        // Alıntılanan terim cümlenin dilini BELİRLEMEZ: "Peyva 'ateş' bi
+        // Kurmancî çi ye?" Kurmancî bir sorudur, içindeki Türkçe sözcük
+        // sorunun konusudur. Bu yüzden alıntı aralıkları atılır.
+        //
+        // Düz çift tırnak 2026-08-12'de eklendi: banka o gün guillemet'ten
+        // düz tırnağa geçti ve yalnız guillemet atıldığı için sekiz Kurmancî
+        // açıklama bir anda "Türkçe" sayıldı — kural değil, işaret değişmişti.
         .replaceAll(RegExp('«[^»]*»'), ' ')
+        .replaceAll(RegExp('"[^"]*"'), ' ')
         .replaceAll(RegExp('"[^"]*"'), ' ')
         .replaceAll(RegExp("'[^']*'"), ' ')
         // Parantez içi karşılık da terimdir, cümlenin dili değil:

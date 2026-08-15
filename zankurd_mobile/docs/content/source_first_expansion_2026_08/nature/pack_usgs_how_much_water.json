@@ -1,0 +1,20 @@
+{
+  "sourcePackId": "pack_usgs_how_much_water",
+  "sourceTitle": "USGS — How Much Water is There on Earth?",
+  "institution": "USGS",
+  "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "the oceans hold about 96.5 percent of all Earth's water",
+    "Of total freshwater, over 68 percent is locked up in ice and glaciers.",
+    "Another 30 percent of freshwater is in the ground."
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac",
+  "notUsed": "Toplam su hacmi (332.5 milyon mil küp) soruya çevrilmedi: birim dönüşümü Kurmancî'de doğrulanmamış.",
+  "sourceHash": "8c2867da5107221c"
+}

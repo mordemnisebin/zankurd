@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_caligari",
+  "sourceTitle": "BFI — Das Cabinet des Dr. Caligari künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/b249ad93-f1e7-5cff-bb6c-c77695f6ab3c/das-cabinet-des-dr-caligari",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Original Title: Das Cabinet des Dr. Caligari",
+    "Director: Robert Wiene",
+    "Year: 1919",
+    "Country: Germany"
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac (paralel künye toplama); her sayfa ajan tarafından WebFetch ile açıldı",
+  "notUsed": "Süre ve anket sıralaması istenmedi — sürüme göre değişiyor.",
+  "sourceHash": "b726608cb7b75523"
+}

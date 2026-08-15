@@ -5,18 +5,41 @@ import '../models/daily_mission.dart';
 import '../utils/error_reporter.dart';
 
 class DailyMissionStore {
-  DailyMissionStore._(this._prefs, this._missions);
+  DailyMissionStore._(this._prefs, this._missions, this._correctAnswersToday);
 
   static const _dateKey = 'zankurd.missions.date';
   static const _progressKey = 'zankurd.missions.progress';
   static const _completedKey = 'zankurd.missions.completed';
 
+  /// Bugün verilen doğru cevap sayısı — günlük göreve BAĞLI DEĞİL.
+  ///
+  /// ## Kusur
+  ///
+  /// Ana ekranın birincil kartı ("Erkê Îro / Dersê rojane") ilerlemesini
+  /// `MissionType.answerCorrect` görevinden ödünç alıyordu. Ama günün üç
+  /// görevi on altı tanelik havuzdan gün tohumuyla çekiliyor ve havuzda o
+  /// türden yalnız üç tanım var; çoğu gün seçilmiyor. O günlerde kart
+  /// sabah açılıyor, oyuncu on soru doğru cevaplıyor, XP artıyor, zincir
+  /// uzuyor — kart hâlâ 0/10 yazıyor. Uygulamanın en görünür ilerleme
+  /// göstergesi gün boyu kıpırdamıyordu (2026-08-12 simülatör turu).
+  ///
+  /// Sessizdi çünkü bir görev seçildiği günlerde her şey çalışıyordu;
+  /// kusur takvime bağlıydı ve testler sabit görev listesiyle koşuyordu.
+  ///
+  /// Sayaç buraya konuyor çünkü "bugün" kavramının sahibi bu depo: tarih
+  /// anahtarı, sıfırlama ve kalıcılık zaten burada.
+  static const _answeredKey = 'zankurd.missions.answeredToday';
+
   static DailyMissionStore? _instance;
 
   final SharedPreferences? _prefs;
   final List<DailyMission> _missions;
+  int _correctAnswersToday;
 
   List<DailyMission> get missions => List.unmodifiable(_missions);
+
+  /// Bugün verilen doğru cevap sayısı. Gün dönünce sıfırlanır.
+  int get correctAnswersToday => _correctAnswersToday;
 
   static bool _isSameCategory(String c1, String? c2) {
     if (c2 == null) return false;
@@ -46,6 +69,7 @@ class DailyMissionStore {
     final todayKey = _dateString(today);
     final storedDate = prefs?.getString(_dateKey);
     final missions = MissionDefinitions.forDay(today);
+    var answeredToday = 0;
 
     if (storedDate == todayKey) {
       final progressList = prefs?.getStringList(_progressKey) ?? [];
@@ -58,9 +82,12 @@ class DailyMissionStore {
           missions[i].completed = completedList[i] == 'true';
         }
       }
+      // Tarih anahtarı görevlerle ORTAK: gün dönünce ikisi birlikte
+      // sıfırlanır ve sayaç dünün doğrularını bugüne taşıyamaz.
+      answeredToday = prefs?.getInt(_answeredKey) ?? 0;
     }
 
-    return _instance = DailyMissionStore._(prefs, missions);
+    return _instance = DailyMissionStore._(prefs, missions, answeredToday);
   }
 
   @visibleForTesting
@@ -77,7 +104,7 @@ class DailyMissionStore {
         reason: 'daily_mission_test_preferences',
       );
     }
-    return _instance = DailyMissionStore._(prefs, missions);
+    return _instance = DailyMissionStore._(prefs, missions, 0);
   }
 
   static void resetInstance() => _instance = null;
@@ -87,9 +114,11 @@ class DailyMissionStore {
       mission.progress = 0;
       mission.completed = false;
     }
+    _correctAnswersToday = 0;
     await _prefs?.remove(_dateKey);
     await _prefs?.remove(_progressKey);
     await _prefs?.remove(_completedKey);
+    await _prefs?.remove(_answeredKey);
   }
 
   Future<List<DailyMission>> reportQuizCompleted({
@@ -98,6 +127,9 @@ class DailyMissionStore {
     required bool streakAlive,
   }) async {
     final completed = <DailyMission>[];
+    // Görev listesinden ÖNCE ve ondan bağımsız: bugünün doğruları o gün
+    // hangi görevlerin çekildiğine bakmaksızın sayılır.
+    if (correctAnswers > 0) _correctAnswersToday += correctAnswers;
     for (final mission in _missions) {
       if (mission.completed) continue;
       switch (mission.type) {
@@ -150,5 +182,6 @@ class DailyMissionStore {
       _completedKey,
       _missions.map((m) => m.completed.toString()).toList(),
     );
+    await _prefs?.setInt(_answeredKey, _correctAnswersToday);
   }
 }

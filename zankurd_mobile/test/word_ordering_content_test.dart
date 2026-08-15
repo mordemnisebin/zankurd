@@ -60,30 +60,66 @@ void main() {
     );
   });
 
-  test(
-    'cümle kurma asset bankası yapısal olarak geçer ama onaysızken oynatılmaz',
-    () async {
-      final raw = await File(
-        'assets/data/sentence_building_questions.json',
-      ).readAsString();
-      final decoded = jsonDecode(raw) as List;
-      final questions = decoded
-          .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
-          .toList();
+  /// 2026-08-07: banka onaylandı ve tip artık gerçekten oynanıyor.
+  ///
+  /// Sekiz cümlenin sekizi de tek tek denetlendi (`metadata.reviewNote`
+  /// içinde her birinin dilbilgisi gerekçesi yazılı) ve `approved` yapıldı.
+  /// Öncesinde bu bekçi `isPlayable`ın **false** olmasını sabitliyordu:
+  /// banka yapısal olarak geçiyor ama editör onayı beklediği için oyuncuya
+  /// hiç ulaşmıyordu. Yani uygulama beş soru tipi duyururken bunlardan biri
+  /// fiilen boştu.
+  ///
+  /// Onaylamanın alternatifi tipi özellik listesinden düşürmekti; sekiz
+  /// cümle de doğru olduğu için düşürmek yerine açmak seçildi.
+  test('cümle kurma asset bankası onaylı ve oynanabilir', () async {
+    final raw = await File(
+      'assets/data/sentence_building_questions.json',
+    ).readAsString();
+    final decoded = jsonDecode(raw) as List;
+    final questions = decoded
+        .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
+        .toList();
 
-      expect(questions, isNotEmpty);
-      final ids = questions.map((q) => q.id).toSet();
-      expect(ids.length, questions.length, reason: 'Tekrar eden kimlik var');
+    expect(questions, isNotEmpty);
+    final ids = questions.map((q) => q.id).toSet();
+    expect(ids.length, questions.length, reason: 'Tekrar eden kimlik var');
 
-      for (final q in questions) {
-        expect(
-          q.type,
-          QuestionType.wordOrdering,
-          reason: '${q.id} yanlış tipte',
-        );
-        expect(_policy.validate(q), isEmpty, reason: q.id);
-        expect(_policy.isPlayable(q), isFalse, reason: q.id);
-      }
-    },
-  );
+    for (final q in questions) {
+      expect(q.type, QuestionType.wordOrdering, reason: '${q.id} yanlış tipte');
+      expect(_policy.validate(q), isEmpty, reason: q.id);
+      expect(
+        _policy.isPlayable(q),
+        isTrue,
+        reason:
+            '${q.id} oyuncuya ulaşmıyor. `metadata.reviewStatus` `approved` '
+            'değilse soru sessizce elenir ve tip yine boş kalır.',
+      );
+    }
+  });
+
+  test('kelime havuzu ile doğru cümle her kayıtta birebir örtüşüyor', () async {
+    // Yapısal kural `validate` içinde de var; burada açıkça ölçülüyor çünkü
+    // bu banka artık oynanıyor ve havuz-cümle uyuşmazlığı doğrudan çözülemez
+    // bir soru üretir: ya artık kelime kalır ya eksik kelime istenir.
+    final raw = await File(
+      'assets/data/sentence_building_questions.json',
+    ).readAsString();
+    final questions = (jsonDecode(raw) as List)
+        .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    for (final q in questions) {
+      final pool = List<String>.of(q.answers)..sort();
+      final sentence = q.correctAnswer.split(RegExp(r'\s+'))
+        ..removeWhere((t) => t.isEmpty)
+        ..sort();
+      expect(
+        pool,
+        sentence,
+        reason:
+            '${q.id}: kelime havuzu «${q.answers.join(" / ")}» ile doğru '
+            'cümle «${q.correctAnswer}» örtüşmüyor',
+      );
+    }
+  });
 }

@@ -1,0 +1,1446 @@
+[
+  {
+    "questionId": "sf_nat_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_01",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "Oceans store 96% of all water on Earth.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Li gorî USGSê, ji sedî çend ava cîhanê di okyanûsan de ye?",
+    "promptTr": "USGS'e göre dünyadaki suyun yüzde kaçı okyanuslardadır?",
+    "answersKu": [
+      "Ji sedî 30",
+      "Ji sedî 50",
+      "Ji sedî 71",
+      "Ji sedî 96"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 50",
+      "Yüzde 71",
+      "Yüzde 96"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "USGS dibêje ku ji sedî 96ê ava cîhanê di okyanûsan de tê hilanîn.",
+    "explanationTr": "USGS'e göre dünyadaki suyun yüzde 96'sı okyanuslarda bulunur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "0c9491c4226af16b"
+  },
+  {
+    "questionId": "sf_nat_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_02",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "Ocean water is saline, meaning it's salty.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Ava okyanûsê çawa ye?",
+    "promptTr": "Okyanus suyu nasıldır?",
+    "answersKu": [
+      "Bêtam e",
+      "Şor e",
+      "Şêrîn e",
+      "Tirş e"
+    ],
+    "answersTr": [
+      "Tatsızdır",
+      "Tuzludur",
+      "Tatlıdır",
+      "Ekşidir"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Ava okyanûsê şor e; ev ji ava çeman cuda dike.",
+    "explanationTr": "Okyanus suyu tuzludur; bu onu akarsu suyundan ayırır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "c722b2719e8d06bb"
+  },
+  {
+    "questionId": "sf_nat_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_03",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "The sun's energy causes liquid water to evaporate into water vapor.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_water_vapour"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_water_vapour": "98ae367018c2fc2d"
+    },
+    "promptKu": "Bi enerjiya rojê ava şil vediguhere çi?",
+    "promptTr": "Güneş enerjisiyle sıvı su neye dönüşür?",
+    "answersKu": [
+      "Berfê",
+      "Qeşayê",
+      "Hilmê",
+      "Xwêyê"
+    ],
+    "answersTr": [
+      "Kara",
+      "Buza",
+      "Buhara",
+      "Tuza"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Enerjiya rojê dibe sedem ku ava şil vegere hilmê û hilkeve hewayê.",
+    "explanationTr": "Güneş enerjisi sıvı suyun buhara dönüşüp havaya yükselmesine yol açar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "fe6e1223e9db06fc"
+  },
+  {
+    "questionId": "sf_nat_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_water_cycle_v2",
+    "claimId": "usgs_wc_04",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "exactSupportingFact": "Clouds are formed by water condensing in the atmosphere.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Ewr bi giranî ji çi pêk tên?",
+    "promptTr": "Bulutlar esas olarak neyden oluşur?",
+    "answersKu": [
+      "Ji ava di hewayê de",
+      "Ji xweliyê",
+      "Ji dûmanê",
+      "Ji qumê"
+    ],
+    "answersTr": [
+      "Havadaki sudan",
+      "Topraktan",
+      "Dumandan",
+      "Kumdan"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Ewr bi ava ku di hewayê de kom dibe pêk tên.",
+    "explanationTr": "Bulutlar, havada bir araya gelen sudan oluşur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "USGS'te birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs+hilm açık; süreç adı kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada su döngüsü sorusu yok"
+    },
+    "finalContentHash": "fb9e86710963a40a"
+  },
+  {
+    "questionId": "sf_nat_0005",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_01",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "Our solar system includes the Sun, eight planets",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Di sîstema rojê de çend gerstêrk hene?",
+    "promptTr": "Güneş sisteminde kaç gezegen vardır?",
+    "answersKu": [
+      "Şeş",
+      "Heft",
+      "Heşt",
+      "Neh"
+    ],
+    "answersTr": [
+      "Altı",
+      "Yedi",
+      "Sekiz",
+      "Dokuz"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Li gorî NASAyê sîstema rojê heşt gerstêrkan dihewîne.",
+    "explanationTr": "NASA'ya göre güneş sistemi sekiz gezegen içerir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "5a0e0160c7ef14c7"
+  },
+  {
+    "questionId": "sf_nat_0006",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_02",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "The largest planet is Jupiter.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Gerstêrka herî mezin a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en büyük gezegeni hangisidir?",
+    "answersKu": [
+      "Saturn",
+      "Jupiter",
+      "Neptun",
+      "Mars"
+    ],
+    "answersTr": [
+      "Satürn",
+      "Jüpiter",
+      "Neptün",
+      "Mars"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Jupiter gerstêrka herî mezin a sîstema rojê ye.",
+    "explanationTr": "Jüpiter, güneş sisteminin en büyük gezegenidir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "1973d4da63982164"
+  },
+  {
+    "questionId": "sf_nat_0007",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_03",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "The hottest planet in our solar system is Venus, even though Mercury is closer to the Sun.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Gerstêrka herî germ a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en sıcak gezegeni hangisidir?",
+    "answersKu": [
+      "Jupiter",
+      "Merkur",
+      "Mars",
+      "Venus"
+    ],
+    "answersTr": [
+      "Jüpiter",
+      "Merkür",
+      "Mars",
+      "Venüs"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Venus gerstêrka herî germ e, tevî ku Merkur nêzîktirî rojê ye.",
+    "explanationTr": "Merkür güneşe daha yakın olsa da en sıcak gezegen Venüs'tür.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "84bb86f7e3f8fc45"
+  },
+  {
+    "questionId": "sf_nat_0008",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_solar_system",
+    "claimId": "nasa_04",
+    "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+    "exactSupportingFact": "Our solar system formed about 4.6 billion years ago",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Sîstema rojê berî nêzîkî çend milyar salan pêk hat?",
+    "promptTr": "Güneş sistemi yaklaşık kaç milyar yıl önce oluştu?",
+    "answersKu": [
+      "2.4 milyar",
+      "4.6 milyar",
+      "13.8 milyar",
+      "8.2 milyar"
+    ],
+    "answersTr": [
+      "2,4 milyar",
+      "4,6 milyar",
+      "13,8 milyar",
+      "8,2 milyar"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Li gorî NASAyê sîstema rojê berî nêzîkî 4.6 milyar salan pêk hatiye.",
+    "explanationTr": "NASA'ya göre güneş sistemi yaklaşık 4,6 milyar yıl önce oluşmuştur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "gerstêrk açık; gezegen adları özel ad"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada güneş sistemi sorusu yok"
+    },
+    "finalContentHash": "99a3d3ed63f7c217"
+  },
+  {
+    "questionId": "sf_nat_0009",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_01",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "365.25 days to complete one trip around the Sun",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Cîhan di çend rojan de li dora rojê yek car digere?",
+    "promptTr": "Dünya, Güneş çevresindeki bir turunu kaç günde tamamlar?",
+    "answersKu": [
+      "365.25 roj",
+      "30 roj",
+      "24 roj",
+      "687 roj"
+    ],
+    "answersTr": [
+      "365,25 gün",
+      "30 gün",
+      "24 gün",
+      "687 gün"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Cîhan di 365.25 rojan de li dora rojê yek car digere.",
+    "explanationTr": "Dünya, Güneş çevresindeki turunu 365,25 günde tamamlar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "468c85a856f9aa86"
+  },
+  {
+    "questionId": "sf_nat_0010",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_02",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "23.9 hours",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Zivirîna Cîhanê ya li dora xwe çend saetan didome?",
+    "promptTr": "Dünya'nın kendi çevresindeki dönüşü kaç saat sürer?",
+    "answersKu": [
+      "12 saet",
+      "48 saet",
+      "23.9 saet",
+      "6 saet"
+    ],
+    "answersTr": [
+      "12 saat",
+      "48 saat",
+      "23,9 saat",
+      "6 saat"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Cîhan di nêzîkî 23.9 saetan de li dora xwe yek car dizivire.",
+    "explanationTr": "Dünya kendi çevresindeki turunu yaklaşık 23,9 saatte tamamlar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "b1423959d14ed985"
+  },
+  {
+    "questionId": "sf_nat_0011",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_03",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "Earth is the only planet in our solar system with only one moon",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_planet"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_planet": "302c135fb94f0685"
+    },
+    "promptKu": "Cîhan çend heyvên xwe hene?",
+    "promptTr": "Dünya'nın kaç uydusu vardır?",
+    "answersKu": [
+      "Du",
+      "Sê",
+      "Çar",
+      "Yek"
+    ],
+    "answersTr": [
+      "İki",
+      "Üç",
+      "Dört",
+      "Bir"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "Cîhan tenê yek heyvê xwe heye; ew di sîstema rojê de yekane gerstêrka wisa ye.",
+    "explanationTr": "Dünya'nın tek bir uydusu vardır; güneş sisteminde tek uydusu olan tek gezegendir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "56b88ae322267fb5"
+  },
+  {
+    "questionId": "sf_nat_0012",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_04",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "Earth's global ocean, which covers about 71% of the planet's surface",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Nêzîkî ji sedî çend rûyê Cîhanê bi okyanûsê pêçayî ye?",
+    "promptTr": "Dünya yüzeyinin yaklaşık yüzde kaçı okyanusla kaplıdır?",
+    "answersKu": [
+      "Ji sedî 30",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 90"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 90"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Okyanûsa cîhanî nêzîkî ji sedî 71ê rûyê Cîhanê digire.",
+    "explanationTr": "Küresel okyanus, Dünya yüzeyinin yaklaşık yüzde 71'ini kaplar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada bu olgular yok"
+    },
+    "finalContentHash": "c73d947e012d15e6"
+  },
+  {
+    "questionId": "sf_nat_0013",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_05",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "78% nitrogen, 21% oxygen, and 1% other gases",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_oxygen"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_oxygen": "8f630738df072cb7"
+    },
+    "promptKu": "Li gorî NASAyê, ji sedî çend ê atmosfera Cîhanê oksîjen e?",
+    "promptTr": "NASA'ya göre Dünya atmosferinin yüzde kaçı oksijendir?",
+    "answersKu": [
+      "Ji sedî 21",
+      "Ji sedî 50",
+      "Ji sedî 78",
+      "Ji sedî 5"
+    ],
+    "answersTr": [
+      "Yüzde 21",
+      "Yüzde 50",
+      "Yüzde 78",
+      "Yüzde 5"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Atmosfera Cîhanê ji sedî 21 oksîjen dihewîne; para herî mezin gazeke din e.",
+    "explanationTr": "Dünya atmosferinin yüzde 21'i oksijendir; en büyük payı başka bir gaz oluşturur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "oksîjen açık; nîtrojen kullanılmadı"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi yüzde, tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif bankada atmosfer sorusu yok"
+    },
+    "finalContentHash": "c1ab728965a896c1"
+  },
+  {
+    "questionId": "sf_nat_0014",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_earth_facts",
+    "claimId": "earth_06",
+    "sourceReference": "https://science.nasa.gov/earth/facts/",
+    "exactSupportingFact": "78% nitrogen, 21% oxygen, and 1% other gases",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_sci_nitrogen",
+      "ku_sci_oxygen"
+    ],
+    "terminologyRecordHashes": {
+      "ku_sci_nitrogen": "387db121d3f36dd2",
+      "ku_sci_oxygen": "8f630738df072cb7"
+    },
+    "promptKu": "Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?",
+    "promptTr": "Dünya atmosferinin en büyük payını hangi gaz oluşturur?",
+    "answersKu": [
+      "Oksîjen",
+      "Nîtrojen",
+      "Karbondîoksît",
+      "Argon"
+    ],
+    "answersTr": [
+      "Oksijen",
+      "Azot",
+      "Karbondioksit",
+      "Argon"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Nîtrojen bi ji sedî 78 para herî mezin a atmosferê pêk tîne; oksîjen ji sedî 21 e.",
+    "explanationTr": "Azot yüzde 78 ile atmosferin en büyük payını oluşturur; oksijen yüzde 21'dir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NASA'da birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "nîtrojen ve oksîjen açık; karbondîoksît/argon uluslararası biçim, çeldirici olarak"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "hepsi gaz adı, tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "sf_nat_0013 oksijen ORANINI soruyor; bu soru en büyük payı soruyor — farklı bilgi noktası"
+    },
+    "finalContentHash": "1f41af37cc7c977c"
+  },
+  {
+    "questionId": "sf_nat_0015",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_how_much_water",
+    "claimId": "usgs_hm_01",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth",
+    "exactSupportingFact": "the oceans hold about 96.5 percent of all Earth's water",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Li gorî USGSê, okyanûs ji sedî çend ava Cîhanê digirin?",
+    "promptTr": "USGS'e göre okyanuslar Dünya'daki suyun yüzde kaçını tutar?",
+    "answersKu": [
+      "Ji sedî 96.5",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 30"
+    ],
+    "answersTr": [
+      "Yüzde 96,5",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 30"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Okyanûs ji sedî 96.5ê ava Cîhanê digirin; ya mayî av a şêrîn e.",
+    "explanationTr": "Okyanuslar Dünya'daki suyun yüzde 96,5'ini tutar; kalanı tatlı sudur.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "99ac369f54e15117"
+  },
+  {
+    "questionId": "sf_nat_0016",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_usgs_how_much_water",
+    "claimId": "usgs_hm_02",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/how-much-water-there-earth",
+    "exactSupportingFact": "Of total freshwater, over 68 percent is locked up in ice and glaciers.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Piraniya ava şêrîn a Cîhanê li ku ye?",
+    "promptTr": "Dünya'daki tatlı suyun çoğu nerededir?",
+    "answersKu": [
+      "Di golan de",
+      "Di qeşa û cemedan de",
+      "Di çeman de",
+      "Di baranê de"
+    ],
+    "answersTr": [
+      "Göllerde",
+      "Buz ve buzullarda",
+      "Akarsularda",
+      "Yağmurda"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Zêdetirî ji sedî 68ê ava şêrîn di qeşa û cemedan de girtî ye.",
+    "explanationTr": "Tatlı suyun yüzde 68'den fazlası buz ve buzullarda kilitlidir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "ad9f4c3086d25e0c"
+  },
+  {
+    "questionId": "sf_nat_0017",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_moon",
+    "claimId": "moon_01",
+    "sourceReference": "https://science.nasa.gov/moon/facts/",
+    "exactSupportingFact": "The Moon is an average of 238,855 miles (384,400 kilometers) away.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
+    "promptTr": "Dünya ile Ay arasındaki ortalama uzaklık kaç kilometredir?",
+    "answersKu": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "answersTr": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Heyv bi navînî 384.400 kîlometre ji Cîhanê dûr e.",
+    "explanationTr": "Ay, Dünya'dan ortalama 384.400 kilometre uzaktadır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "3533d880008f024c"
+  },
+  {
+    "questionId": "sf_nat_0018",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_nasa_moon",
+    "claimId": "moon_02",
+    "sourceReference": "https://science.nasa.gov/moon/facts/",
+    "exactSupportingFact": "The Moon makes a complete orbit around Earth in 27 Earth days.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
+    "promptTr": "Ay, Dünya çevresindeki turunu kaç günde tamamlar?",
+    "answersKu": [
+      "7 roj",
+      "14 roj",
+      "27 roj",
+      "365 roj"
+    ],
+    "answersTr": [
+      "7 gün",
+      "14 gün",
+      "27 gün",
+      "365 gün"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Heyv di 27 rojan de li dora Cîhanê yek car digere.",
+    "explanationTr": "Ay, Dünya çevresindeki turunu 27 günde tamamlar.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "04987307e8f6a9a5"
+  },
+  {
+    "questionId": "sf_nat_0019",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_ocean_depth",
+    "claimId": "deep_01",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+    "exactSupportingFact": "The deepest part of the ocean is called the Challenger Deep and is located beneath the western Pacific Ocean",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "promptKu": "Cihê herî kûr ê okyanûsê bi çi navî tê nasîn?",
+    "promptTr": "Okyanusun en derin yeri hangi adla bilinir?",
+    "answersKu": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "answersTr": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Cihê herî kûr ê okyanûsê Challenger Deep e û li bin okyanûsa Aramê ya rojava ye.",
+    "explanationTr": "Okyanusun en derin yeri Challenger Deep'tir ve batı Pasifik'in altındadır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "5dbda2f3b2abc94f"
+  },
+  {
+    "questionId": "sf_nat_0020",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_ocean_depth",
+    "claimId": "deep_02",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+    "exactSupportingFact": "It is named after the HMS Challenger, whose crew first sounded the depths of the trench in 1875.",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [],
+    "terminologyRecordHashes": {},
+    "promptKu": "Navê Challenger Deepê ji ku tê?",
+    "promptTr": "Challenger Deep adı nereden gelir?",
+    "answersKu": [
+      "Ji navê keştiyekê",
+      "Ji navê zanyarekî",
+      "Ji navê giravekê",
+      "Ji navê welatekî"
+    ],
+    "answersTr": [
+      "Bir geminin adından",
+      "Bir bilim insanının adından",
+      "Bir adanın adından",
+      "Bir ülkenin adından"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Nav ji keştiya HMS Challenger tê; ekîba wê di 1875an de kûrahî pîva.",
+    "explanationTr": "Ad, HMS Challenger gemisinden gelir; mürettebatı 1875'te derinliği ölçmüştür.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "kaynakta birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "yalnız açık terimler + gündelik Kurmancî"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "tek sınıf"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "batch içinde ve aktif bankada bu olgu yok"
+    },
+    "finalContentHash": "51b27f83419fba9c"
+  }
+]

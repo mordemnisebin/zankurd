@@ -1,0 +1,659 @@
+[
+  {
+    "id": "fill_ziman_0001",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Navdêra \"mirov\" bi nîşaneya nenaskirî ya yekjimar û paşgira tewangê temam bike: \"Ez ___ dibînim.\"",
+    "promptTr": "\"Mirov\" adını tekil belirsizlik ve büküm ekleriyle tamamla: \"Ez ___ dibînim.\"",
+    "answers": [
+      "mirovekî"
+    ],
+    "answersTr": [
+      "mirovekî"
+    ],
+    "correctAnswer": "mirovekî",
+    "correctAnswerTr": "mirovekî",
+    "acceptedAnswers": [
+      "miroveki"
+    ],
+    "acceptedAnswersTr": [
+      "miroveki"
+    ],
+    "explanation": "Navdêra nêr a yekjimar \"mirov\" bi \"-ek\" û paşgira tewangê \"-î\" dibe \"mirovekî\".",
+    "explanationKu": "Navdêra nêr a yekjimar \"mirov\" bi nîşaneya nenaskirî \"-ek\" û paşgira tewangê \"-î\" dibe \"mirovekî\": \"Ez mirovekî dibînim.\"",
+    "explanationTr": "Eril tekil \"mirov\" adı, belirsizlik eki \"-ek\" ve büküm eki \"-î\" ile \"mirovekî\" olur: \"Ez mirovekî dibînim.\"",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Nouns: indefinite masculine oblique)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0002",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Ji bo gotina ku qehwe ya axêver e, forma tewandî ya cînavka \"ez\" binivîse: \"Qehwe ya ___ e.\"",
+    "promptTr": "\"Kahve benimdir\" anlamını vermek için \"ez\" zamirinin bükümlü biçimiyle tamamla: \"Qehwe ya ___ e.\"",
+    "answers": [
+      "min"
+    ],
+    "answersTr": [
+      "min"
+    ],
+    "correctAnswer": "min",
+    "correctAnswerTr": "min",
+    "acceptedAnswers": [],
+    "explanation": "\"Min\" forma tewandî ya \"ez\" e; hevoka tam \"Qehwe ya min e.\" ye.",
+    "explanationKu": "\"Min\" forma tewandî ya cînavka \"ez\" e. Piştî izafeya \"ya\" xwediyê qehweyê nîşan dide: \"Qehwe ya min e.\"",
+    "explanationTr": "\"Min\", \"ez\" zamirinin bükümlü hâlidir. \"Ya\" izafesinden sonra kahvenin sahibini gösterir: \"Qehwe ya min e.\"",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Pronouns: possessive constructions)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0003",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Di hevoka \"Ez ... mirovî dibînim.\" de forma tewandî ya nîşandera nêr a yekjimar binivîse: \"Ez ___ mirovî dibînim.\"",
+    "promptTr": "\"O adamı görüyorum\" cümlesinde eril tekil işaret sözcüğünün bükümlü biçimini yaz: \"Ez ___ mirovî dibînim.\"",
+    "answers": [
+      "wî"
+    ],
+    "answersTr": [
+      "wî"
+    ],
+    "correctAnswer": "wî",
+    "correctAnswerTr": "wî",
+    "acceptedAnswers": [
+      "wi"
+    ],
+    "acceptedAnswersTr": [
+      "wi"
+    ],
+    "explanation": "Di koma \"wî mirovî\" de hem nîşander û hem navdêr forma tewandî ya nêr a yekjimar digirin.",
+    "explanationKu": "Di koma \"wî mirovî\" de \"wî\" forma tewandî ya nîşandera nêr a yekjimar e û bi \"mirovî\" re li hev dike.",
+    "explanationTr": "\"Wî\", eril tekil işaret sözcüğünün bükümlü biçimidir ve \"mirovî\" ile uyumludur. Tam cümle \"Ez wî mirovî dibînim.\" olur.",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Pronouns and noun case)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0004",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Li ser bingeha navdêra \"çivîk\", forma nenaskirî ya yekjimar binivîse: \"Min ___ dît.\"",
+    "promptTr": "\"Çivîk\" adının tekil belirsiz biçimiyle cümleyi tamamla: \"Min ___ dît.\"",
+    "answers": [
+      "çivîkek"
+    ],
+    "answersTr": [
+      "çivîkek"
+    ],
+    "correctAnswer": "çivîkek",
+    "correctAnswerTr": "çivîkek",
+    "acceptedAnswers": [
+      "çivikek"
+    ],
+    "acceptedAnswersTr": [
+      "çivikek"
+    ],
+    "explanation": "\"Çivîk\" navê teyrê biçûk ê li nêzîkî malan e; paşgira \"-ek\" wateya nenaskirî ya yekjimar dide.",
+    "explanationKu": "\"Çivîk\" navê teyr e. Bi paşgira nenaskirî ya yekjimar \"-ek\" dibe \"çivîkek\": \"Min çivîkek dît.\"",
+    "explanationTr": "\"Çivîk\" kuş demektir; tekil belirsizlik eki \"-ek\" ile \"çivîkek\" olur. Tam cümle \"Min çivîkek dît.\" şeklindedir.",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Verbs: past transitive examples)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0005",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 3,
+    "prompt": "Di dema borî ya lêkera derbasdar de, kirdeya kesê duyemîn a yekjimar bi forma tewandî binivîse: \"___ ew dît.\"",
+    "promptTr": "Geçmiş zamanda geçişli fiilin ikinci tekil kişi öznesini bükümlü biçimde yaz: \"___ ew dît.\"",
+    "answers": [
+      "Te"
+    ],
+    "answersTr": [
+      "Te"
+    ],
+    "correctAnswer": "Te",
+    "correctAnswerTr": "Te",
+    "acceptedAnswers": [],
+    "explanation": "Di dema borî ya lêkera derbasdar de cînavka kirdeyê tewandî ye; forma \"tu\" dibe \"te\".",
+    "explanationKu": "Di dema borî ya lêkera derbasdar de kirde forma tewandî digire. Forma tewandî ya \"tu\" \"te\" ye: \"Te ew dît.\"",
+    "explanationTr": "Geçmiş zamanda geçişli fiilin öznesi bükümlü durumdadır. \"Tu\" zamirinin bükümlü biçimi \"te\"dir: \"Te ew dît.\"",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Verbs: past transitive agents)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0006",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 3,
+    "prompt": "Di dema borî ya lêkera derbasdar de, lêkerê li gorî berkara kesê yekem a yekjimar temam bike: \"Wî ez ___.\"",
+    "promptTr": "Geçmiş zamanda geçişli fiili birinci tekil kişi nesnesine göre tamamla: \"Wî ez ___.\"",
+    "answers": [
+      "dîtim"
+    ],
+    "answersTr": [
+      "dîtim"
+    ],
+    "correctAnswer": "dîtim",
+    "correctAnswerTr": "dîtim",
+    "acceptedAnswers": [
+      "ditim"
+    ],
+    "acceptedAnswersTr": [
+      "ditim"
+    ],
+    "explanation": "Di \"Wî ez dîtim.\" de paşgira \"-im\" li gorî berkara \"ez\" e.",
+    "explanationKu": "Di dema borî ya lêkera derbasdar de lêker bi berkarê re li hev dike. Ji ber ku berkar \"ez\" e, forma lêkerê \"dîtim\" e.",
+    "explanationTr": "Geçmiş zamanda geçişli fiil nesneyle uyum gösterir. Nesne \"ez\" olduğu için fiil \"dîtim\" biçimini alır: \"Wî ez dîtim.\"",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Verbs: past transitive patient agreement)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0007",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Di dema niha de lêkera \"nivîsîn\" bi cînavka \"em\" re bikişîne: \"Em ___.\"",
+    "promptTr": "\"Nivîsîn\" fiilini şimdiki zamanda \"em\" zamirine göre çek: \"Em ___.\"",
+    "answers": [
+      "dinivîsin"
+    ],
+    "answersTr": [
+      "dinivîsin"
+    ],
+    "correctAnswer": "dinivîsin",
+    "correctAnswerTr": "dinivîsin",
+    "acceptedAnswers": [
+      "dinivisin"
+    ],
+    "acceptedAnswersTr": [
+      "dinivisin"
+    ],
+    "explanation": "Forma dema niha ya \"nivîsîn\" bi \"em\" re \"dinivîsin\" e.",
+    "explanationKu": "Di dema niha de lêkera \"nivîsîn\" bi cînavka pirjimar \"em\" re dibe \"dinivîsin\": \"Em dinivîsin.\"",
+    "explanationTr": "Bu cümlede \"em\" ile kullanılan doğru şimdiki zaman biçimi \"dinivîsin\" olur. Tam cümle \"Em dinivîsin.\" biçimindedir.",
+    "metadata": {
+      "sourceTitle": "Perwîz Cîhanî — Dîsan Ergatîv, Nûbihar 115 (2011)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/AG57RE34YC.pdf (nivîsîn çekim tablosu, basılı s. 25; PDF s. 26)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0008",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Ji bo \"ew\" a yekjimar, forma dema niha ya \"nivîsîn\" di valahiyê de binivîse: \"Ew ___.\"",
+    "promptTr": "\"Nivîsîn\" fiilini şimdiki zamanda tekil \"ew\" zamirine göre çek: \"Ew ___.\"",
+    "answers": [
+      "dinivîse"
+    ],
+    "answersTr": [
+      "dinivîse"
+    ],
+    "correctAnswer": "dinivîse",
+    "correctAnswerTr": "dinivîse",
+    "acceptedAnswers": [
+      "dinivise"
+    ],
+    "acceptedAnswersTr": [
+      "dinivise"
+    ],
+    "explanation": "Forma dema niha ya \"nivîsîn\" bi \"ew\" a yekjimar re \"dinivîse\" ye.",
+    "explanationKu": "Di dema niha de lêkera \"nivîsîn\" bi cînavka \"ew\" a yekjimar re dibe \"dinivîse\": \"Ew dinivîse.\"",
+    "explanationTr": "Bu cümlede tekil \"ew\" ile kullanılan doğru şimdiki zaman biçimi \"dinivîse\" olur. Tam cümle \"Ew dinivîse.\" biçimindedir.",
+    "metadata": {
+      "sourceTitle": "Perwîz Cîhanî — Dîsan Ergatîv, Nûbihar 115 (2011)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/AG57RE34YC.pdf (nivîsîn çekim tablosu, basılı s. 25; PDF s. 26)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0009",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Forma dema borî ya \"hatin\" bi cînavka \"tu\" re di valahiyê de binivîse: \"Tu ___.\"",
+    "promptTr": "\"Hatin\" fiilini geçmiş zamanda \"tu\" zamirine göre çek: \"Tu ___.\"",
+    "answers": [
+      "hatî"
+    ],
+    "answersTr": [
+      "hatî"
+    ],
+    "correctAnswer": "hatî",
+    "correctAnswerTr": "hatî",
+    "acceptedAnswers": [
+      "hati"
+    ],
+    "acceptedAnswersTr": [
+      "hati"
+    ],
+    "explanation": "Forma dema borî ya \"hatin\" bi \"tu\" re \"hatî\" ye.",
+    "explanationKu": "\"Hatin\" lêkereke nederbasdar e; forma wê ya dema borî bi cînavka \"tu\" re \"hatî\" ye: \"Tu hatî.\"",
+    "explanationTr": "\"Hatin\" geçişsiz bir fiildir; \"tu\" zamiriyle geçmiş zaman biçimi \"hatî\"dir: \"Tu hatî.\"",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Verbs: past intransitive conjugation)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0010",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 3,
+    "prompt": "Navdêra \"jin\" di forma tewandî ya pirjimar de binivîse: \"Ez ___ dibînim.\"",
+    "promptTr": "\"Jin\" adını çoğul bükümlü biçimde yaz: \"Ez ___ dibînim.\"",
+    "answers": [
+      "jinan"
+    ],
+    "answersTr": [
+      "jinan"
+    ],
+    "correctAnswer": "jinan",
+    "correctAnswerTr": "jinan",
+    "acceptedAnswers": [],
+    "explanation": "Forma tewandî ya pirjimar a \"jin\" bi paşgira \"-an\" \"jinan\" e.",
+    "explanationKu": "Navdêrên pirjimar di forma tewandî de bi gelemperî paşgira \"-an\" digirin; \"jin\" dibe \"jinan\": \"Ez jinan dibînim.\"",
+    "explanationTr": "Çoğul adların bükümlü biçimi genellikle \"-an\" ekiyle kurulur; \"jin\", \"jinan\" olur: \"Ez jinan dibînim.\"",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Nouns: plural oblique)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0011",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Ji bo pirsîna rawestoka otobosê ku ji hemûyan kêmtir dûr e, hevokê temam bike: \"Rawestoka otobosê ya herî ___ li kû ye?\"",
+    "promptTr": "En yakın otobüs durağını sormak için cümleyi tamamla: \"Rawestoka otobosê ya herî ___ li kû ye?\"",
+    "answers": [
+      "nêzîk"
+    ],
+    "answersTr": [
+      "nêzîk"
+    ],
+    "correctAnswer": "nêzîk",
+    "correctAnswerTr": "nêzîk",
+    "acceptedAnswers": [
+      "nezik"
+    ],
+    "acceptedAnswersTr": [
+      "nezik"
+    ],
+    "explanation": "\"Nêzîk\" wateya \"yakın\" dide; \"ya herî nêzîk\" dibe \"en yakın olan\".",
+    "explanationKu": "\"Nêzîk\" dijberê \"dûr\" e. Pêkhatina \"ya herî nêzîk\" dereceya herî bilind nîşan dide.",
+    "explanationTr": "\"Nêzîk\", \"yakın\" demektir. \"Ya herî nêzîk\" yapısı \"en yakın olan\" anlamını verir.",
+    "metadata": {
+      "sourceTitle": "Institut kurde de Paris / Doz Publications — Kurdish Guide with Dictionary (1998)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/DTP48ZMAL1.pdf (Travel, PDF p. 41)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0012",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Dema ku tu riya xwe nabînî, hevokê temam bike: \"Min riya xwe ___ kir.\"",
+    "promptTr": "Yolunu kaybettiğini söylemek için cümleyi tamamla: \"Min riya xwe ___ kir.\"",
+    "answers": [
+      "winda"
+    ],
+    "answersTr": [
+      "winda"
+    ],
+    "correctAnswer": "winda",
+    "correctAnswerTr": "winda",
+    "acceptedAnswers": [],
+    "explanation": "Pêkhatina \"winda kirin\" wateya \"kaybetmek\" dide.",
+    "explanationKu": "Di Kurmancî de \"winda kirin\" lêkereke pêkhatî ye û wateya tiştek an rêyek ji dest danê dide.",
+    "explanationTr": "Kurmancîde \"winda kirin\" birleşik fiili \"kaybetmek\" anlamına gelir. Tam cümle \"Min riya xwe winda kir.\" olur.",
+    "metadata": {
+      "sourceTitle": "Institut kurde de Paris / Doz Publications — Kurdish Guide with Dictionary (1998)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/DTP48ZMAL1.pdf (Travel, PDF p. 41)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0013",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Ji bo gotina ku axêver dixwaze biçe cihê rabûn û daketina balafiran, hevokê temam bike: \"Ez dixwazim herim ___.\"",
+    "promptTr": "Havalimanına gitmek istediğini söylemek için cümleyi tamamla: \"Ez dixwazim herim ___.\"",
+    "answers": [
+      "balafirgehê"
+    ],
+    "answersTr": [
+      "balafirgehê"
+    ],
+    "correctAnswer": "balafirgehê",
+    "correctAnswerTr": "balafirgehê",
+    "acceptedAnswers": [
+      "balafirgehe"
+    ],
+    "acceptedAnswersTr": [
+      "balafirgehe"
+    ],
+    "explanation": "Piştî lêkera arasteyê \"herim\", \"balafirgeh\" forma tewandî digire û dibe \"balafirgehê\".",
+    "explanationKu": "\"Balafirgeh\" cihê rabûn û daketina balafiran e. Di vê hevokê de armanca hereketê ye, ji ber vê yekê dibe \"balafirgehê\".",
+    "explanationTr": "\"Balafirgeh\" havalimanıdır. Bu cümlede hareketin yöneldiği yer olduğu için bükümlü \"balafirgehê\" biçimi kullanılır.",
+    "metadata": {
+      "sourceTitle": "Institut kurde de Paris / Doz Publications — Kurdish Guide with Dictionary (1998)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/DTP48ZMAL1.pdf (Travel, PDF p. 40)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0014",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Daxwaza rûniştinê bi rêzdarî temam bike: \"Kerem bike ___.\"",
+    "promptTr": "Nazikçe oturmasını söylemek için cümleyi tamamla: \"Kerem bike ___.\"",
+    "answers": [
+      "rûne"
+    ],
+    "answersTr": [
+      "rûne"
+    ],
+    "correctAnswer": "rûne",
+    "correctAnswerTr": "rûne",
+    "acceptedAnswers": [
+      "rune"
+    ],
+    "acceptedAnswersTr": [
+      "rune"
+    ],
+    "explanation": "\"Rûne\" forma fermandana yekjimar a lêkera \"rûniştin\" e; \"Kerem bike\" daxwazê bi rêzdarî dike.",
+    "explanationKu": "\"Rûne\" forma fermandana kesê duyemîn a yekjimar a lêkera \"rûniştin\" e. \"Kerem bike\" fermanê dike daxwazeke rêzdar.",
+    "explanationTr": "\"Rûne\", \"rûniştin\" fiilinin ikinci tekil kişi emir biçimidir. \"Kerem bike\" sözü isteği nazikleştirir.",
+    "metadata": {
+      "sourceTitle": "Institut kurde de Paris / Doz Publications — Kurdish Guide with Dictionary (1998)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/DTP48ZMAL1.pdf (Requests, PDF p. 18)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0015",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Ji bo gotina ku axêver dixwaze pirsekê bike, hevokê temam bike: \"Ez dixwazim tiştekî ji te ___.\"",
+    "promptTr": "Bir şey sormak istediğini belirtmek için cümleyi tamamla: \"Ez dixwazim tiştekî ji te ___.\"",
+    "answers": [
+      "bipirsim"
+    ],
+    "answersTr": [
+      "bipirsim"
+    ],
+    "correctAnswer": "bipirsim",
+    "correctAnswerTr": "bipirsim",
+    "acceptedAnswers": [],
+    "explanation": "Piştî \"dixwazim\", lêkera \"pirsîn\" di forma daxwazî de dibe \"bipirsim\".",
+    "explanationKu": "Di pêkhatina \"dixwazim ...\" de lêkera duyemîn forma daxwazî digire. Forma kesê yekem a yekjimar a \"pirsîn\" \"bipirsim\" e.",
+    "explanationTr": "\"Dixwazim ...\" yapısından sonra ikinci fiil istek kipine girer. \"Pirsîn\" fiilinin birinci tekil kişi biçimi \"bipirsim\"dir.",
+    "metadata": {
+      "sourceTitle": "Institut kurde de Paris / Doz Publications — Kurdish Guide with Dictionary (1998)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/DTP48ZMAL1.pdf (Requests, PDF p. 20)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0016",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 2,
+    "prompt": "Di dema xatirxwestinê de daxwaza başbûnê temam bike: \"Bimîne di ___ de!\"",
+    "promptTr": "Vedalaşırken esenlik dileğini tamamla: \"Bimîne di ___ de!\"",
+    "answers": [
+      "xweşiyê"
+    ],
+    "answersTr": [
+      "xweşiyê"
+    ],
+    "correctAnswer": "xweşiyê",
+    "correctAnswerTr": "xweşiyê",
+    "acceptedAnswers": [
+      "xweşiye"
+    ],
+    "acceptedAnswersTr": [
+      "xweşiye"
+    ],
+    "explanation": "\"Bimîne di xweşiyê de!\" daxwazeke xatirxwestinê ye û wateya \"esenlikte kal\" dide.",
+    "explanationKu": "Pêkhatina \"di ... de\" forma tewandî dixwaze; ji ber vê yekê \"xweşî\" dibe \"xweşiyê\". Hevok daxwaza başbûnê dike.",
+    "explanationTr": "\"Di ... de\" yapısı bükümlü biçim ister; bu yüzden \"xweşî\", \"xweşiyê\" olur. Söz, \"esenlikte kal\" anlamında bir vedalaşma dileğidir.",
+    "metadata": {
+      "sourceTitle": "Institut kurde de Paris / Doz Publications — Kurdish Guide with Dictionary (1998)",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/DTP48ZMAL1.pdf (Farewells, PDF p. 16)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0017",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Peyva ku wateya \"feyde\" dide û dengdêra \"û\" di navê de heye, bi rastnivîsa Kurmancî binivîse: \"___.\"",
+    "promptTr": "\"Yarar\" anlamına gelen ve \"û\" ünlüsünü içeren Kurmancî sözcüğü doğru yaz: \"___.\"",
+    "answers": [
+      "sûd"
+    ],
+    "answersTr": [
+      "sûd"
+    ],
+    "correctAnswer": "sûd",
+    "correctAnswerTr": "sûd",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Peyva \"sûd\" wateya \"feyde\" dide û bi dengdêra dirêj \"û\" tê nivîsîn.",
+    "explanationKu": "\"Sûd\" di Kurmancî de wateya \"feyde\" dide. Tîpa navîn \"û\" ye; \"u\" û \"û\" du dengdêrên cuda ne.",
+    "explanationTr": "Kurmancîde \"yarar\" sözcüğü \"sûd\"dur ve uzun \"û\" ünlüsüyle yazılır. \"U\" ile \"û\" ayrı ünlülerdir.",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Phonology and writing system)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0018",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Navê teyrê avî yê ku bi tîpa \"q\" dest pê dike, bi rastnivîsa Kurmancî binivîse: \"___.\"",
+    "promptTr": "\"Kaz\" anlamına gelen ve \"q\" harfiyle başlayan Kurmancî sözcüğü doğru yaz: \"___.\"",
+    "answers": [
+      "qaz"
+    ],
+    "answersTr": [
+      "qaz"
+    ],
+    "correctAnswer": "qaz",
+    "correctAnswerTr": "qaz",
+    "acceptedAnswers": [],
+    "explanation": "Di rastnivîsa Kurmancî de peyva \"kaz\" bi \"q\" tê nivîsîn: \"qaz\".",
+    "explanationKu": "Tîpa \"q\" di alfabeya Kurmancî de dengê /q/ nîşan dide. Di tabloya dengdêran a çavkaniyê de mînaka standard \"qaz\" e.",
+    "explanationTr": "Kurmancî alfabesinde \"q\" harfi /q/ sesini gösterir. Kaynağın ünlü tablosundaki standart örnek \"qaz\"dır.",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Phonology and writing system)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0019",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Navê beşa laşê ku li derdora dev e û dengdêra \"ê\" di navê de heye, bi rastnivîsa Kurmancî binivîse: \"___.\"",
+    "promptTr": "\"Dudak\" anlamına gelen ve \"ê\" ünlüsünü içeren Kurmancî sözcüğü doğru yaz: \"___.\"",
+    "answers": [
+      "lêv"
+    ],
+    "answersTr": [
+      "lêv"
+    ],
+    "correctAnswer": "lêv",
+    "correctAnswerTr": "lêv",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Peyva Kurmancî ya \"dudak\" \"lêv\" e û bi dengdêra dirêj \"ê\" tê nivîsîn.",
+    "explanationKu": "\"Lêv\" di Kurmancî de wateya \"dudak\" dide. Tîpa navîn \"ê\" ye; \"e\" û \"ê\" du dengdêrên cuda ne.",
+    "explanationTr": "Kurmancîde \"dudak\" sözcüğü \"lêv\"dir ve uzun \"ê\" ünlüsüyle yazılır. \"E\" ile \"ê\" ayrı ünlülerdir.",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Phonology and writing system)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  },
+  {
+    "id": "fill_ziman_0020",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Peyva ku dijberê \"xerab\" e û bi tîpa \"ç\" dest pê dike, bi rastnivîsa Kurmancî binivîse: \"___.\"",
+    "promptTr": "\"İyi\" anlamına gelen ve \"ç\" harfiyle başlayan Kurmancî sözcüğü doğru yaz: \"___.\"",
+    "answers": [
+      "çak"
+    ],
+    "answersTr": [
+      "çak"
+    ],
+    "correctAnswer": "çak",
+    "correctAnswerTr": "çak",
+    "acceptedAnswers": [],
+    "explanation": "Peyva \"çak\" wateya \"iyi\" dide û bi tîpa taybet a Kurmancî \"ç\" dest pê dike.",
+    "explanationKu": "Tîpa \"ç\" di alfabeya Kurmancî de dengê /tʃ/ nîşan dide. Mînaka standard a çavkaniyê peyva \"çak\" e.",
+    "explanationTr": "Kurmancî alfabesinde \"ç\" harfi /tʃ/ sesini gösterir. Kaynağın standart örneği \"çak\" sözcüğüdür.",
+    "metadata": {
+      "sourceTitle": "University of Arizona Iranian Languages — Kurmanji Kurdish",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7 (Phonology and writing system)",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-08-10",
+      "reviewedBy": "Codex kaynak denetimi + bağımsız Kurmancî QA",
+      "qualityVersion": 3,
+      "dialect": "Kurmancî",
+      "lastContentCheckAt": "2026-08-10"
+    }
+  }
+]

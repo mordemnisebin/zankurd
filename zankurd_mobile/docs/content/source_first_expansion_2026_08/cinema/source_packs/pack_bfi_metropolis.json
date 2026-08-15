@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_bfi_metropolis",
+  "sourceTitle": "BFI — Metropolis (1927) künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/bda6ff8a-ed7e-5942-980d-c2910c0120ec/metropolis",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları; eleştiri metni ALINMADI.",
+  "exactSourceStatements": [
+    "Original Title: Metropolis",
+    "Director: Fritz Lang",
+    "Year: 1927",
+    "Country: Germany",
+    "Running Time: 137 minutes"
+  ],
+  "extractedClaimIds": [
+    "cin_bfi_05",
+    "cin_bfi_06"
+  ],
+  "notUsed": "SÜRE soruya çevrilmedi: arama özeti 147 dakikalık restorasyon sürümünden söz ediyordu, künye sayfası 137 diyor. Restorasyon sürümleri farklı süreler veriyor — volatil. Sayfa esas alındı ama olgu kullanılmadı. 2022 anket sıralaması da volatil.",
+  "sourceHash": "d016151ee2147dd6"
+}

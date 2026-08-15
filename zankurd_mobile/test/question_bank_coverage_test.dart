@@ -67,7 +67,10 @@ void main() {
       }
       // Elle yazılmış bir banka yolu kalmışsa liste yine ayrışır.
       final hardcoded = RegExp(
-        r"'assets/data/[a-z_]*questions\.json'",
+        // Karakter kümesi dar bırakılırsa bekçi kör kalır: `[a-z_]*` adında
+        // rakam geçen bankayı (expansion_2026_08_questions.json) elle
+        // yazılmış saymıyordu (2026-08-06).
+        r"'assets/data/[a-z0-9_]*questions\.json'",
       ).allMatches(code).map((m) => m.group(0)!).toSet();
       if (hardcoded.isNotEmpty) {
         offenders.add('$path: elle yazılmış yol ${hardcoded.join(", ")}');
@@ -80,6 +83,39 @@ void main() {
           'Bu dosya(lar) kendi banka listesini tutuyor; denetim ile '
           'uygulamanın gördüğü bankalar yeniden ayrışır:\n'
           '${offenders.join("\n")}',
+    );
+  });
+
+  test('araçların yol deseni her bankayı yakalıyor', () {
+    // Paylaşılan listeyi okumak yetmez: okuyan taraf listeyi bir DESENLE
+    // süzüyorsa, desene uymayan banka yine görünmez olur. `questionBank
+    // Assets`ten okuyan `rebalance_answer_positions.py`, yolları
+    // `assets/data/[a-z_]+\.json` ile arıyordu; adında RAKAM geçen
+    // `expansion_2026_08_questions.json` desene uymadığı için sessizce
+    // dışarıda kaldı (2026-08-06). Tek liste kuralı korunuyordu, kapsam
+    // yine eksikti — 2026-08-01'deki kusurun aynısı, bir katman aşağıda.
+    //
+    // Bu bekçi desenin kendisini sınar: araç kaynağındaki regex, listedeki
+    // HER yolu eşlemek zorunda.
+    const patternHolders = ['tool/rebalance_answer_positions.py'];
+    final offenders = <String>[];
+    for (final path in patternHolders) {
+      final source = File(path).readAsStringSync();
+      final decl = RegExp('re\\.findall\\(r?"([^"]+)"').firstMatch(source);
+      expect(decl, isNotNull, reason: '$path: yol deseni bulunamadı');
+      final tool = RegExp(decl!.group(1)!);
+      for (final asset in questionBankAssets) {
+        if (!tool.hasMatch("'$asset'")) {
+          offenders.add('$path: $asset deseni eşlemiyor');
+        }
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'Araç bu bankaları hiç açmaz; denetimi "temiz" der çünkü '
+          'baktığı yerde kusur yoktur:\n${offenders.join("\n")}',
     );
   });
 }

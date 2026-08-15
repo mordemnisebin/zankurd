@@ -1,0 +1,22 @@
+{
+  "sourcePackId": "pack_http_404",
+  "sourceTitle": "MDN — HTTP 404 Not Found",
+  "sourceInstitution": "Mozilla (MDN Web Docs)",
+  "sourceReference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/404",
+  "accessStatus": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "copyrightNotes": "Tek tanım cümlesi alıntılandı.",
+  "exactSourceStatements": [
+    "The HTTP 404 Not Found client error response status code indicates that the server cannot find the requested resource."
+  ],
+  "extractedClaims": [
+    {
+      "claimId": "http_404",
+      "claim": "HTTP 404 çavkanî nehat dîtin tê wateyê.",
+      "supports": "the server cannot find the requested resource"
+    }
+  ],
+  "sourceHash": "dbe0943b5cdc8ab0"
+}

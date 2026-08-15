@@ -228,8 +228,11 @@ void main() {
       QuizQuestion question, {
       required bool last,
     }) async {
+      // Arayüz Türkçe: şık ekranda `localized(isKu: false)` ile yansıtılıyor.
+      // Kurmancî ham cevabı aramak, curated banka çevrilene kadar tesadüfen
+      // çalışıyordu (2026-08-10).
       final option = find.ancestor(
-        of: find.text(question.correctAnswer),
+        of: find.text(question.localized(isKu: false).correctAnswer),
         matching: find.byType(InkWell),
       );
       await tester.ensureVisible(option.first);

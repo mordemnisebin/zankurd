@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_seven_samurai",
+  "sourceTitle": "BFI — Seven Samurai künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/01391b07-5940-5d02-aa47-1158142f2b64/seven-samurai",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Original Title: Seven Samurai",
+    "Director: Akira Kurosawa",
+    "Year: 1954",
+    "Country: Japan"
+  ],
+  "harvestedBy": "workflow wf_824c5bf4-3ac (paralel künye toplama); her sayfa ajan tarafından WebFetch ile açıldı",
+  "notUsed": "Süre ve anket sıralaması istenmedi — sürüme göre değişiyor.",
+  "sourceHash": "42d7e3d043623eb2"
+}

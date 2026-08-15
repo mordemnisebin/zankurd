@@ -21,7 +21,7 @@ class CategoryDistractorPool {
   Map<String, List<String>> buildPools() {
     final pools = <String, Set<String>>{};
     for (final q in questions) {
-      if (q.type == QuestionType.trueFalse) continue;
+      if (!_usesDistractors(q)) continue;
       final correct = q.correctAnswer.trim();
       if (correct.isEmpty) continue;
       pools.putIfAbsent(q.category, () => <String>{}).add(correct);
@@ -37,7 +37,7 @@ class CategoryDistractorPool {
   /// Doğru cevap korunur; diğer şıklar kategori havuzundan seçilir.
   /// Havuz yetersizse mevcut çeldiriciler doldurma olarak kalır.
   List<String> rebuildAnswers(QuizQuestion q, Map<String, List<String>> pools) {
-    if (q.type == QuestionType.trueFalse) {
+    if (!_usesDistractors(q)) {
       return List<String>.from(q.answers);
     }
     final correct = q.correctAnswer.trim();
@@ -118,20 +118,7 @@ class CategoryDistractorPool {
   List<QuizQuestion> rebuildAll() {
     final pools = buildPools();
     return [
-      for (final q in questions)
-        QuizQuestion(
-          id: q.id,
-          category: q.category,
-          prompt: q.prompt,
-          answers: rebuildAnswers(q, pools),
-          correctAnswer: q.correctAnswer,
-          explanation: q.explanation,
-          difficulty: q.difficulty,
-          type: q.type,
-          imageUrl: q.imageUrl,
-          explanationKu: q.explanationKu,
-          explanationTr: q.explanationTr,
-        ),
+      for (final q in questions) q.copyWith(answers: rebuildAnswers(q, pools)),
     ];
   }
 
@@ -140,7 +127,7 @@ class CategoryDistractorPool {
     QuizQuestion q,
     Map<String, List<String>> pools,
   ) {
-    if (q.type == QuestionType.trueFalse) return 1;
+    if (!_usesDistractors(q)) return 1;
     final poolNorm = {
       for (final c in pools[q.category] ?? const <String>[]) _norm(c),
     };
@@ -154,6 +141,10 @@ class CategoryDistractorPool {
   }
 
   static String _norm(String s) => s.trim().toLowerCase();
+
+  static bool _usesDistractors(QuizQuestion question) =>
+      question.type == QuestionType.multipleChoice ||
+      question.type == QuestionType.visual;
 }
 
 /// Küçük deterministik PRNG (test ve yeniden üretilebilir tool çıktısı).

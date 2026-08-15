@@ -1,0 +1,317 @@
+[
+  {
+    "category": "Çand",
+    "promptKu": "Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?",
+    "promptTr": "Kürt düğün ve şenliklerinde yeni evlilere verilen para hediyesi hangi adla bilinir?",
+    "answersKu": [
+      "şabaş",
+      "metelok",
+      "kelaş",
+      "hewran"
+    ],
+    "answersTr": [
+      "şabaş",
+      "metelok",
+      "kelaş",
+      "hewran"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Şabaş kevneşopiya diyarîkirina pereyan e ku di dawetan de tê kirin û piştgiriya civakê ya ji malbata nû re nîşan dide. Metelok gotineke kurt a pêşiyan e, kelaş pêlava hûnandî ye, hewran jî çadira reş a koçeran e.",
+    "explanationTr": "Şabaş, düğünlerde para hediye etme geleneğidir ve topluluğun yeni aileye desteğini gösterir. Metelok kısa bir atasözü, kelaş örülerek yapılan ayakkabı, hewran ise göçerlerin kara çadırıdır.",
+    "difficulty": 2
+  },
+  {
+    "category": "Çand",
+    "promptKu": "Pêlava kurdî ya kevneşopî ya ku bi tayan tê hûnandin bi kîjan navî tê nasîn?",
+    "promptTr": "İplik örülerek yapılan geleneksel Kürt ayakkabısı hangi adla bilinir?",
+    "answersKu": [
+      "şûtik",
+      "kelaş",
+      "kolos",
+      "elek"
+    ],
+    "answersTr": [
+      "şûtik",
+      "kelaş",
+      "kolos",
+      "elek"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Kelaş bi destan ji tayan tê hûnandin û sivik e; bi taybetî li herêmên çiyayî tê lixwekirin. Şûtik pişteynê navtengê ye, kolos serpoş e, elek jî berstûkeke bêmil e.",
+    "explanationTr": "Kelaş elde iplikten örülür ve hafiftir; özellikle dağlık yörelerde giyilir. Şûtik bel kuşağı, kolos başlık, elek ise kolsuz yelektir.",
+    "difficulty": 3
+  },
+  {
+    "category": "Çand",
+    "promptKu": "Di kurmancî de gotina kurt a pêşiyan ku ezmûneke civakî bi çend peyvan vedibêje çi ye?",
+    "promptTr": "Kurmancîde toplumsal bir deneyimi birkaç sözcükle anlatan kısa atasözüne ne denir?",
+    "answersKu": [
+      "metelok",
+      "şabaş",
+      "mêvanperwerî",
+      "govend"
+    ],
+    "answersTr": [
+      "metelok",
+      "şabaş",
+      "mêvanperwerî",
+      "govend"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Metelok gotineke kurt û tije wate ye ku ezmûna nifşan digihîne nifşên nû. Şabaş diyariya pereyan e, mêvanperwerî rêzgirtina li mêvan e, govend jî lîstika komî ye.",
+    "explanationTr": "Metelok, kuşakların deneyimini yeni kuşaklara taşıyan kısa ve yoğun anlamlı sözdür. Şabaş para hediyesi, mêvanperwerî konuğa gösterilen saygı, govend ise toplu halk oyunudur.",
+    "difficulty": 3
+  },
+  {
+    "category": "Çand",
+    "promptKu": "Çadira reş a ji hiriya bizinê ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
+    "promptTr": "Göçerlerin yazın yaylalarda kurduğu, keçi kılından yapılan kara çadır hangi adla bilinir?",
+    "answersKu": [
+      "hewran",
+      "kelaş",
+      "şûtik",
+      "metelok"
+    ],
+    "answersTr": [
+      "hewran",
+      "kelaş",
+      "şûtik",
+      "metelok"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Hewran ji hiriya bizinê tê çêkirin; ew di germê de hênik dimîne û baranê nade hundir. Ew perçeyeke bingehîn a çanda koçeriyê ye ku di navbera zozan û germiyanê de digere.",
+    "explanationTr": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
+    "difficulty": 3
+  },
+  {
+    "category": "Dîrok",
+    "promptKu": "Hejmara yekem a «Rojnameya Kurdistan» (1898) li kîjan bajarî derket?",
+    "promptTr": "«Rojnameya Kurdistan»ın ilk sayısı (1898) hangi şehirde çıktı?",
+    "answersKu": [
+      "Şam",
+      "Qahîre",
+      "Stenbol",
+      "Bexda"
+    ],
+    "answersTr": [
+      "Şam",
+      "Kahire",
+      "İstanbul",
+      "Bağdat"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Rojnameya Kurdistan a ku Mîqdat Mîdhad Bedirxan derxist, di 1898an de li Qahîreyê hat çapkirin û wek rojnameya kurdî ya yekem tê hesibandin. Paşê hejmarên wê li bajarên din jî derketin.",
+    "explanationTr": "Mîqdat Mîdhad Bedirxan'ın çıkardığı Rojnameya Kurdistan 1898'de Kahire'de basıldı ve ilk Kürt gazetesi sayılır. Sonraki sayıları başka şehirlerde de çıktı.",
+    "difficulty": 3
+  },
+  {
+    "category": "Dîrok",
+    "promptKu": "«Şerefname», dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?",
+    "promptTr": "Kürt mirliklerinin tarihi olan «Şerefname»yi kim yazmıştır?",
+    "answersKu": [
+      "Ehmedê Xanî",
+      "Mîqdat Mîdhad Bedirxan",
+      "Şerefxanê Bidlîsî",
+      "Feqiyê Teyran"
+    ],
+    "answersTr": [
+      "Ehmedê Xanî",
+      "Mîqdat Mîdhad Bedirxan",
+      "Şerefxanê Bidlîsî",
+      "Feqiyê Teyran"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Şerefxanê Bidlîsî Şerefname di dawiya sedsala 16an de nivîsand; ew dîroka mîrektiyên kurdan berhev dike. Ehmedê Xanî Mem û Zîn nivîsand, Mîqdat Mîdhad Bedirxan Rojnameya Kurdistanê derxist, Feqiyê Teyran jî helbestvanekî klasîk e.",
+    "explanationTr": "Şerefxanê Bidlîsî, Şerefname'yi 16. yüzyılın sonunda yazdı; eser Kürt mirliklerinin tarihini derler. Ehmedê Xanî Mem û Zîn'i yazdı, Mîqdat Mîdhad Bedirxan Rojnameya Kurdistan'ı çıkardı, Feqiyê Teyran ise klasik bir şairdir.",
+    "difficulty": 2
+  },
+  {
+    "category": "Cografya",
+    "promptKu": "Çiyayê Cûdî li kîjan perçeyê Kurdistanê ye?",
+    "promptTr": "Cûdî Dağı Kurdistanê'nin hangi parçasındadır?",
+    "answersKu": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Çiyayê Cûdî li herêma Şirnexê ya li Bakur e. Li gorî baweriyên herêmê keştiya Nûh Pêxember li ser vî çiyayî rûniştiye; ev bawerî di gelek çavkaniyên herêmî de tê dubarekirin.",
+    "explanationTr": "Cûdî Dağı, Bakur'daki Şirnex yöresindedir. Yöre inanışına göre Nuh'un gemisi bu dağa oturmuştur; bu inanış birçok yerel kaynakta yinelenir.",
+    "difficulty": 2
+  },
+  {
+    "category": "Cografya",
+    "promptKu": "Deşta Amedê bi kîjan taybetmendiya axa xwe ji deştên derdorê vediqete?",
+    "promptTr": "Amed ovası toprağının hangi özelliğiyle çevresindeki ovalardan ayrılır?",
+    "answersKu": [
+      "axa bazaltî ya berdar",
+      "axa şor a bêber",
+      "axa qûmî ya hişk",
+      "axa çiyayî ya kevirîn"
+    ],
+    "answersTr": [
+      "verimli bazalt toprağı",
+      "tuzlu ve çorak toprak",
+      "kuru kumlu toprak",
+      "taşlık dağ toprağı"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Deşta Amedê li ser lavên bazaltî yên Karacadaxê ava bûye; ev ax berdar e û çandiniya genim li wê derê bi hêsanî tê kirin. Kevirê bazalt ê reş di avahiyên bajêr de jî tê dîtin.",
+    "explanationTr": "Amed ovası Karacadağ'ın bazalt lavları üzerinde oluşmuştur; bu toprak verimlidir ve buğday tarımına elverişlidir. Siyah bazalt taşı şehrin yapılarında da görülür.",
+    "difficulty": 3
+  },
+  {
+    "category": "Muzîk",
+    "promptKu": "Amûra lêdanê ya mezin a ku bi du daran tê lêxistin û pir caran bi zurneyê re li derve tê lêxistin çi ye?",
+    "promptTr": "İki değnekle çalınan ve çoğunlukla zurnayla birlikte açık havada çalınan büyük vurmalı çalgı hangisidir?",
+    "answersKu": [
+      "dahol",
+      "bilûr",
+      "tembûr",
+      "erbane"
+    ],
+    "answersTr": [
+      "dahol",
+      "bilûr",
+      "tembûr",
+      "erbane"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Dahol dengekî bilind derdixe û lêdana govendê diyar dike; loma bi zurneyê re li meydanan tê lêxistin. Bilûr amûra bayê ye, tembûr amûra têlî ye, erbane jî def a destan e.",
+    "explanationTr": "Dahol yüksek ses çıkarır ve halayın vuruşunu belirler; bu yüzden zurnayla birlikte meydanlarda çalınır. Bilûr üflemeli, tembûr telli, erbane ise el defidir.",
+    "difficulty": 2
+  },
+  {
+    "category": "Muzîk",
+    "promptKu": "Amûra bayê ya bi dengê bilind ku li meydanan bi dahol re tê lêxistin çi ye?",
+    "promptTr": "Meydanlarda davulla birlikte çalınan, yüksek sesli üflemeli çalgı hangisidir?",
+    "answersKu": [
+      "zurna",
+      "bilûr",
+      "tembûr",
+      "dahol"
+    ],
+    "answersTr": [
+      "zurna",
+      "bilûr",
+      "tembûr",
+      "dahol"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Zurna dengê xwe yê tûj û bilind heye, ji ber vê yekê li derve ji dûr ve tê bihîstin û ji bo govendê guncaw e. Bilûr dengekî nerm ê şivanan e, tembûr têlî ye, dahol jî amûra lêdanê ye.",
+    "explanationTr": "Zurnanın sesi keskin ve yüksektir; bu yüzden açık havada uzaktan duyulur ve halaya uygundur. Bilûr çobanların yumuşak sesli kavalı, tembûr telli, dahol ise vurmalı çalgıdır.",
+    "difficulty": 2
+  },
+  {
+    "category": "Muzîk",
+    "promptKu": "Awaza dirêj a dengbêjan a ku bûyerek an çîrokek vedibêje bi kîjan navî tê nasîn?",
+    "promptTr": "Dengbêjlerin bir olayı ya da hikâyeyi anlatan uzun ezgisi hangi adla bilinir?",
+    "answersKu": [
+      "kilam",
+      "govend",
+      "şabaş",
+      "metelok"
+    ],
+    "answersTr": [
+      "kilam",
+      "govend",
+      "şabaş",
+      "metelok"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Kilam bi gotinên xwe yên dirêj bûyerekê an çîrokekê vedibêje û bêyî amûrê tê gotin; ew bîra devkî ya civakê hildigire. Govend lîstika komî ye, şabaş diyariya pereyan e, metelok jî gotina pêşiyan e.",
+    "explanationTr": "Kilam uzun sözleriyle bir olayı ya da hikâyeyi anlatır ve çalgısız söylenir; toplumun sözlü belleğini taşır. Govend toplu halk oyunu, şabaş para hediyesi, metelok ise atasözüdür.",
+    "difficulty": 2
+  },
+  {
+    "category": "Muzîk",
+    "promptKu": "Cudahiya sereke ya di navbera kilamê û stranên govendê de çi ye?",
+    "promptTr": "Kilam ile halay şarkıları arasındaki temel fark nedir?",
+    "answersKu": [
+      "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
+      "Kilam bi zurneyê tê gotin, stranên govendê bêdeng in",
+      "Kilam tenê ji hêla jinan ve tê gotin",
+      "Kilam tenê di dawetan de tê gotin"
+    ],
+    "answersTr": [
+      "Kilam hikâye anlatır, halay şarkıları ritmiktir",
+      "Kilam zurnayla söylenir, halay şarkıları sessizdir",
+      "Kilam yalnızca kadınlar tarafından söylenir",
+      "Kilam yalnızca düğünlerde söylenir"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Kilam dirêj e, azad e û bûyerekê vedibêje; stranên govendê kurt û bilez in û li gorî lêdanê tên gotin ji ber ku pêwîstiya lîstikê bi rîtmê heye. Herdu jî di çanda muzîkê de li kêleka hev dijîn.",
+    "explanationTr": "Kilam uzundur, serbest ritimlidir ve bir olayı anlatır; halay şarkıları kısa ve hızlıdır, oyunun ritme ihtiyacı olduğu için vuruşa göre söylenir. İkisi de müzik kültüründe yan yana yaşar.",
+    "difficulty": 4
+  },
+  {
+    "category": "Muzîk",
+    "promptKu": "Amûra bayê ya şivanan a ji qamîş an dar ku bi dengekî nerm tê lêxistin çi ye?",
+    "promptTr": "Kamıştan ya da ağaçtan yapılan, yumuşak sesle çalınan çoban üflemeli çalgısı hangisidir?",
+    "answersKu": [
+      "bilûr",
+      "dahol",
+      "erbane",
+      "zurna"
+    ],
+    "answersTr": [
+      "bilûr",
+      "dahol",
+      "erbane",
+      "zurna"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Bilûr amûreke sivik e ku şivan li zozanan pê distirên; dengê wê nerm e û ji bo govendê ne guncaw e. Dahol û erbane amûrên lêdanê ne, zurna jî dengekî pir bilind derdixe.",
+    "explanationTr": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve halay için uygun değildir. Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
+    "difficulty": 2
+  },
+  {
+    "category": "Cografya",
+    "promptKu": "Bajarê Colemêrgê li kîjan perçeyê Kurdistanê ye?",
+    "promptTr": "Colemêrg şehri Kurdistanê'nin hangi parçasındadır?",
+    "answersKu": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Colemêrg li Bakur e; ew bi çiyayên xwe yên bilind û geliyên kûr tê nasîn û yek ji herêmên herî bilind ên deverê ye.",
+    "explanationTr": "Colemêrg Bakur'dadır; yüksek dağları ve derin vadileriyle bilinir, bölgenin en yüksek yörelerinden biridir.",
+    "difficulty": 2
+  },
+  {
+    "category": "Cografya",
+    "promptKu": "Gola Wanê li kîjan perçeyê Kurdistanê ye?",
+    "promptTr": "Wan Gölü Kurdistanê'nin hangi parçasındadır?",
+    "answersKu": [
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
+    ],
+    "answersTr": [
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Gola Wanê li Bakur e; ava wê sodadar e, ji ber vê yekê ne ji bo vexwarinê ne jî ji bo avdanê tê bikaranîn.",
+    "explanationTr": "Wan Gölü Bakur'dadır; suyu sodalıdır, bu yüzden ne içme ne de sulama için kullanılır.",
+    "difficulty": 2
+  }
+]

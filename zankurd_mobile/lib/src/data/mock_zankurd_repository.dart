@@ -90,6 +90,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   int _mockUsedExtraSpins = 0;
   final Set<String> _mockPurchases = {};
 
+  /// Solo tavanı gün bazında tutulur; gün dönünce sıfırlanır.
+  DateTime? _mockSoloDay;
+  int _mockSoloEarnedToday = 0;
+
   @override
   Future<void> ensureProfile() async {}
 
@@ -629,6 +633,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return _mockExtraSpins > _mockUsedExtraSpins;
   }
 
+  /// Sahte depoda sunucu XP'si tutulmaz; yalnız çağrının yapıldığı görülür.
+  int awardedXpTotal = 0;
+
+  @override
+  Future<int> awardXp(int delta) async {
+    if (delta <= 0) return awardedXpTotal;
+    awardedXpTotal += delta;
+    return awardedXpTotal;
+  }
+
   @override
   Future<int> awardSpinCoins() async {
     const rewards = [10, 25, 50, 15, 75, 20, 100, 30];
@@ -713,13 +727,40 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
     GameRoom? room,
   }) async {
+    // Solo tur üretimde ayrı bir RPC'ye gider (`claim_solo_reward`): küçük
+    // formül + günlük tavan. Çevrimdışı yol aynı davranışı göstermeli,
+    // yoksa mock'ta oynanan ekonomi üretimdekiyle ilgisiz olur.
+    if (room?.id == null) {
+      final today = DateTime.now();
+      final day = DateTime(today.year, today.month, today.day);
+      if (_mockSoloDay != day) {
+        _mockSoloDay = day;
+        _mockSoloEarnedToday = 0;
+      }
+      final remaining = CoinCalculator.soloDailyCap - _mockSoloEarnedToday;
+      // Çevrimdışı yol da tavanı SEBEBİYLE bildirir; aksi hâlde mock'ta
+      // "+0 jeton"un niçin sıfır olduğu görünmez ve arayüzün tavan
+      // mesajı hiçbir zaman sınanamaz.
+      if (remaining <= 0) return (amount: 0, dailyCapReached: true);
+      final earned = CoinCalculator.soloAward(
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+      ).clamp(0, remaining);
+      _mockSoloEarnedToday += earned;
+      _mockCoins += earned;
+      return (
+        amount: earned,
+        dailyCapReached: _mockSoloEarnedToday >= CoinCalculator.soloDailyCap,
+      );
+    }
+
     final earned = _calculateCoinAward(
       score: score,
       correctCount: correctCount,
@@ -727,7 +768,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       totalQuestions: totalQuestions,
     );
     _mockCoins += earned;
-    return earned;
+    return (amount: earned, dailyCapReached: false);
   }
 
   int _calculateCoinAward({

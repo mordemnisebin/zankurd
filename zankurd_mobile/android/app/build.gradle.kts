@@ -51,9 +51,35 @@ if (isReleaseTaskRequested && releaseSigningProblems.isNotEmpty()) {
     )
 }
 
+// Play Console 31 Ağustos 2026'dan sonra targetSdk 36'nın altındaki yeni
+// yayın sürümlerini kabul etmiyor.
+//
+// `flutter.targetSdkVersion` bugün 36 döndürüyor (Flutter 3.44.7,
+// FlutterExtension.kt:34), yani zorunluluk şu an karşılanıyor — ama ÖRTÜK
+// olarak: değer bizim değil, kurulu Flutter sürümünün kararı. Daha eski bir
+// Flutter ile alınan bir release sessizce 35'e düşer ve bunu ancak Play
+// Console reddedince öğreniriz. Bu, derleme zamanında yakalanabilecek bir
+// hatayı yayın zamanına erteler.
+//
+// Değerler bu yüzden açıkça yazılır; alttaki kontrol, kurulu Flutter'ın
+// varsayımın gerisine düşmesi hâlinde derlemeyi durdurur.
+// Yükseltirken önce cihazda Android 16 davranış değişikliklerini doğrula:
+// zorunlu edge-to-edge çizim, bildirim ve ön plan servis kısıtları.
+val zankurdCompileSdk = 36
+val zankurdTargetSdk = 36
+val zankurdMinSdk = 24
+
+if (flutter.targetSdkVersion < zankurdTargetSdk) {
+    throw GradleException(
+        "Kurulu Flutter targetSdk ${flutter.targetSdkVersion} veriyor; bu proje " +
+            "$zankurdTargetSdk gerektiriyor (Play 2026-08-31 zorunluluğu). " +
+            "Flutter'ı güncelleyin.",
+    )
+}
+
 android {
     namespace = "com.zankurd.app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = zankurdCompileSdk
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -64,10 +90,9 @@ android {
 
     defaultConfig {
         applicationId = "com.zankurd.app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        // Sürümler yukarıda açıkça sabitlendi; gerekçesi orada yazılı.
+        minSdk = zankurdMinSdk
+        targetSdk = zankurdTargetSdk
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

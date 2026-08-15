@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_usgs_water_cycle_v2",
+  "sourceTitle": "USGS Water Science School — The Water Cycle",
+  "institution": "USGS",
+  "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "targetCategory": "Cografya",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "Oceans store 96% of all water on Earth.",
+    "Ocean water is saline, meaning it's salty.",
+    "The sun's energy causes liquid water to evaporate into water vapor.",
+    "Clouds are formed by water condensing in the atmosphere."
+  ],
+  "terminologyResolvedBy": {
+    "conceptId": "ku_sci_water_vapour",
+    "evidencePage": "https://ku.wiktionary.org/wiki/hilm"
+  },
+  "notAuthored": "'evaporation', 'condensation', 'infiltration', 'runoff' SÜREÇ adları hâlâ açık değil. Sorular süreç adı kullanmadan kuruldu: 'neye dönüşür', 'nereden oluşur'.",
+  "sourceHash": "bfca21fe1ae42d56"
+}

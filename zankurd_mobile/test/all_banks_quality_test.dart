@@ -54,12 +54,23 @@ void main() {
       'community': fromJson('assets/data/community_questions.json'),
       'editorial': fromJson('assets/data/editorial_questions.json'),
       'sentence': fromJson('assets/data/sentence_building_questions.json'),
+      'fill': fromJson('assets/data/fill_in_blank_2026_08_questions.json'),
+      'expansion': fromJson('assets/data/expansion_2026_08_questions.json'),
+      'sourceFirst': fromJson(
+        'assets/data/source_first_2026_08_questions.json',
+      ),
+      'visual': fromJson('assets/data/visual_2026_08_07_questions.json'),
+      'restore': fromJson('assets/data/restore_2026_08_07_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
       for (final entry in banks.entries)
         entry.key: entry.value
-            .where((q) => q.type != QuestionType.wordOrdering)
+            .where(
+              (q) =>
+                  q.type != QuestionType.wordOrdering &&
+                  q.type != QuestionType.fillInBlank,
+            )
             .toList(growable: false),
     };
   });
@@ -70,13 +81,23 @@ void main() {
     });
   });
 
-  test('runtime yükleyici aynı sıra ve kapsamla beş kaynağı birleştiriyor', () {
+  test('runtime yükleyici aynı sıra ve kapsamla on kaynağı birleştiriyor', () {
     final expected = [
       ...curatedQuestionBank,
       ...fromJson('assets/data/sentence_building_questions.json'),
+      ...fromJson('assets/data/fill_in_blank_2026_08_questions.json'),
       ...fromJson('assets/data/community_questions.json'),
       ...fromJson('assets/data/editorial_questions.json'),
       ...fromJson('assets/data/offline_questions.json'),
+      // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
+      // aynı id birden çok bankada varsa SONRAKİ kazanır.
+      ...fromJson('assets/data/expansion_2026_08_questions.json'),
+      ...fromJson('assets/data/source_first_2026_08_questions.json'),
+      // 2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine
+      // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
+      // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
+      ...fromJson('assets/data/visual_2026_08_07_questions.json'),
+      ...fromJson('assets/data/restore_2026_08_07_questions.json'),
     ];
 
     final runtime = QuestionBankLoader.instance.allQuestions;
@@ -271,7 +292,7 @@ void main() {
       lessThanOrEqualTo(ceiling),
       reason:
           'Türkçe arayüzde Kurmancî açıklama arttı (${offenders.length} > '
-          '$ceiling): ${offenders.take(6).join(", ")}',
+          '$ceiling): ${offenders.join(", ")}',
     );
   });
 

@@ -1,0 +1,2527 @@
+[
+  {
+    "prompt": "Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?",
+    "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
+    "answers": [
+      "planê nêzîk (yakın çekim)",
+      "planê dûr (uzak çekim)",
+      "planê navîn (orta çekim)",
+      "plana damezrîner (establishing shot)"
+    ],
+    "answersTr": [
+      "yakın çekim",
+      "uzak çekim",
+      "orta çekim",
+      "geniş açılış çekimi"
+    ],
+    "correctAnswer": "planê nêzîk (yakın çekim)",
+    "correctAnswerTr": "yakın çekim",
+    "explanationKu": "Plana nêzîk rûyê lîstikvan an hûrgiliyekê bi awayekî mezin nîşan dide; bi vî awayî hest û reaksiyonên karakterê dibin navenda dîmenê. Planê dûr jî cih û têkiliyên di navbera hêmanan de nîşan dide.",
+    "explanationTr": "Yakın çekim, oyuncunun yüzünü ya da bir ayrıntıyı büyük ölçüde gösterir; böylece karakterin duygu ve tepkileri çerçevenin merkezine gelir. Uzak çekim ise mekânı ve öğeler arasındaki ilişkileri gösterir.",
+    "id": "ds26_cinema_0001",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?",
+    "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
+    "answers": [
+      "planê nêzîk (yakın çekim)",
+      "plana damezrîner (establishing shot)",
+      "planê serpîrî (baş üstü çekim)",
+      "çapa cemidî (freeze frame)"
+    ],
+    "answersTr": [
+      "yakın çekim",
+      "geniş açılış çekimi (establishing shot)",
+      "tepe çekimi",
+      "dondurulmuş kare"
+    ],
+    "correctAnswer": "plana damezrîner (establishing shot)",
+    "correctAnswerTr": "geniş açılış çekimi (establishing shot)",
+    "explanationKu": "Plana damezrîner di destpêka dîmenekî de cihê bûyerê, dem û hawîrdora giştî nîşanî temaşevan dide. Ev plan bi gelemperî ji dûr ve tê kişandin da ku temaşevan berî çîrokê cihê bûyerê nas bike.",
+    "explanationTr": "Geniş açılış çekimi (establishing shot), bir sahnenin başında olayın geçtiği yeri, zamanı ve genel çevreyi izleyiciye tanıtır. Bu plan genellikle uzaktan çekilir; izleyici öyküye girmeden önce mekânı kavrar.",
+    "id": "ds26_cinema_0002",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 1,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Dengê ku temaşevan dibihîze lê kesê ku dipeyive di dîmenê de xuya nake çi ye?",
+    "promptTr": "İzleyicinin duyduğu ama konuşan kişinin ekranda görünmediği ses hangisidir?",
+    "answers": [
+      "dengê dîjejîk (diegetic sound)",
+      "foley",
+      "playback",
+      "voice-over (dengê derveyî dîmenê)"
+    ],
+    "answersTr": [
+      "diejetik ses",
+      "foley sesi",
+      "playback",
+      "dış ses (voice-over)"
+    ],
+    "correctAnswer": "voice-over (dengê derveyî dîmenê)",
+    "correctAnswerTr": "dış ses (voice-over)",
+    "explanationKu": "Voice-over dengê derveyî dîmenê ye: gotinê dibihîzin lê kesê axivînir di çarçoveyê de tune. Ev teknîk bi gelemperî ji bo vegotina hundirîn, zanîna paşîn an jî vegotinekî derveyî çîrokê tê bikaranîn.",
+    "explanationTr": "Dış ses (voice-over), ekranda görünmeyen birinin sesidir; sözleri duyarız ama konuşan kişi çerçevede yoktur. Bu teknik iç monolog, arka plan bilgisi ya da öykü dışı bir anlatıcı için kullanılır.",
+    "id": "ds26_cinema_0004",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Qutbûna ku di nav dîmenekî de ji nişkê ve demê dide pêşerojê an paşerojê çi ye?",
+    "promptTr": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
+    "answers": [
+      "fade out (vedimirîn)",
+      "jump cut (qutbûna ji nişkê)",
+      "dissolve (tevlîhevî)",
+      "pan (gerandina panoramîk)"
+    ],
+    "answersTr": [
+      "karartma (fade out)",
+      "atlama kesme (jump cut)",
+      "zincirleme geçiş (dissolve)",
+      "kamera kaydırma (pan)"
+    ],
+    "correctAnswer": "jump cut (qutbûna ji nişkê)",
+    "correctAnswerTr": "atlama kesme (jump cut)",
+    "explanationKu": "Jump cut di nav dîmenekî de ji nişkê ve di dem, mekan an pozîsyonê de çavkaniyekê diafirîne û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn.",
+    "explanationTr": "Atlama kesme (jump cut), bir sahne içinde zaman, mekân ya da konumda ani bir sıçrama yaratır ve doğal bir geçiş olmadan izleyiciyi farklı bir ana taşır. Fransız Yeni Dalgası'nda bu teknik belirgin biçimde kullanılmıştır.",
+    "id": "ds26_cinema_0005",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekî de berhev dike çi ye?",
+    "promptTr": "Çerçeve içindeki tüm görsel öğeleri (dekor, ışık, oyunculuk) birleştiren kavram hangisidir?",
+    "answers": [
+      "sînematografî",
+      "montaj",
+      "mise-en-scène",
+      "senaryo"
+    ],
+    "answersTr": [
+      "sinematografi",
+      "kurgu",
+      "mise-en-scène",
+      "senaryo"
+    ],
+    "correctAnswer": "mise-en-scène",
+    "correctAnswerTr": "mise-en-scène",
+    "explanationKu": "Mise-en-scène hemû hêmanên dîtbarî yên di çarçoveyê de ye: dekor, cil, ronahî, pozîsyon û lîstika lîstikvanan. Sînematografî ji vê cuda ye; ew bi kamerayê û kişandina dîmenê ve mijûl dibe.",
+    "explanationTr": "Mise-en-scène, çerçeve içindeki tüm görsel öğelerdir: dekor, kostüm, ışık, konum ve oyunculuk. Sinematografi bundan farklıdır; kamera ve görüntü çekimiyle ilgilenir.",
+    "id": "ds26_cinema_0035",
+    "category": "Sînema",
+    "subcategory": "Fîlm û Derhêner",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Xelatên Oscarê cara yekem di kîjan salê de hatin pêşkêşkirin?",
+    "promptTr": "Oscar ödülleri ilk kez hangi yıl verildi?",
+    "answers": [
+      "1919",
+      "1939",
+      "1949",
+      "1929"
+    ],
+    "answersTr": [
+      "1919",
+      "1939",
+      "1949",
+      "1929"
+    ],
+    "correctAnswer": "1929",
+    "correctAnswerTr": "1929",
+    "explanationKu": "Merasima yekem a Xelatên Akademiyê (Oscar) di 16'ê gulana 1929'an de li Hollywoodê hate lidarxistin. Ji wê demê vir ve Oscar her sal tê dayîn û bûye xelata herî bi prestîj a pîşesaziya fîlmê.",
+    "explanationTr": "Akademi Ödülleri'nin (Oscar) ilk töreni 16 Mayıs 1929'da Hollywood'da yapıldı. O zamandan beri Oscar her yıl verilir ve film endüstrisinin en prestijli ödülü hâline geldi.",
+    "id": "ds26_cinema_0087",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
+    "promptTr": "Altın Palmiye hangi festivalin en büyük ödülüdür?",
+    "answers": [
+      "Festîvala Cannesê",
+      "Festîvala Venedîkê",
+      "Festîvala Berlînê",
+      "Festîvala Torontoyê"
+    ],
+    "answersTr": [
+      "Cannes Film Festivali",
+      "Venedik Film Festivali",
+      "Berlin Film Festivali",
+      "Toronto Film Festivali"
+    ],
+    "correctAnswer": "Festîvala Cannesê",
+    "correctAnswerTr": "Cannes Film Festivali",
+    "explanationKu": "Palmiya Zêrîn ji sala 1955'an vir ve xelata sereke ya Festîvala Cannesê ye ku her sal li Fransa tê lidarxistin. Venedîk xelata Şêra Zêrîn, Berlîn jî xelata Xirçika Zêrîn dide.",
+    "explanationTr": "Altın Palmiye, 1955'ten beri her yıl Fransa'da düzenlenen Cannes Film Festivali'nin ana ödülüdür. Venedik Altın Aslan, Berlin ise Altın Ayı ödülünü verir.",
+    "id": "ds26_cinema_0089",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Kîjan festîvala fîlman a herî kevn a cîhanê ye?",
+    "promptTr": "Dünyanın en eski film festivali hangisidir?",
+    "answers": [
+      "Festîvala Cannesê",
+      "Festîvala Venedîkê",
+      "Festîvala Berlînê",
+      "Festîvala Lokarnoyê"
+    ],
+    "answersTr": [
+      "Cannes Film Festivali",
+      "Venedik Film Festivali",
+      "Berlin Film Festivali",
+      "Locarno Film Festivali"
+    ],
+    "correctAnswer": "Festîvala Venedîkê",
+    "correctAnswerTr": "Venedik Film Festivali",
+    "explanationKu": "Festîvala Venedîkê di sala 1932'an de hate damezrandin û wek festîvala fîlman a herî kevn a cîhanê tê zanîn. Cannes di sala 1946'an, Berlîn jî di sala 1951'ê de dest pê kirin.",
+    "explanationTr": "Venedik Film Festivali 1932'de kuruldu ve dünyanın en eski film festivali olarak kabul edilir. Cannes 1946'da, Berlin ise 1951'de başladı.",
+    "id": "ds26_cinema_0090",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Festîvala Cannesê di kîjan welatî de tê lidarxistin?",
+    "promptTr": "Cannes Film Festivali hangi ülkede düzenlenir?",
+    "answers": [
+      "Îtalya",
+      "Fransa",
+      "Spanya",
+      "Swîsre"
+    ],
+    "answersTr": [
+      "İtalya",
+      "Fransa",
+      "İspanya",
+      "İsviçre"
+    ],
+    "correctAnswer": "Fransa",
+    "correctAnswerTr": "Fransa",
+    "explanationKu": "Festîvala Cannesê ji sala 1946'an vir ve her gulan li bajarê Cannesê ya li başûrê Fransa tê lidarxistin. Xelata wê ya sereke Palmiya Zêrîn e û festîval yek ji bûyerên herî girîng ên pîşesaziya fîlmê ye.",
+    "explanationTr": "Cannes Film Festivali, 1946'dan beri her mayıs Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir.",
+    "id": "ds26_cinema_0109",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Fîlma ku di merasima yekem a Oscarê de xelata Fîlmê ya Herî Baş wergirt çi ye?",
+    "promptTr": "İlk Oscar töreninde En İyi Film ödülünü kazanan yapım hangisidir?",
+    "answers": [
+      "The Jazz Singer",
+      "Citizen Kane",
+      "Gone with the Wind",
+      "Wings"
+    ],
+    "answersTr": [
+      "Jazz Singer",
+      "Yurttaş Kane",
+      "Rüzgâr Gibi Geçti",
+      "Kanatlar (Wings)"
+    ],
+    "correctAnswer": "Wings",
+    "correctAnswerTr": "Kanatlar (Wings)",
+    "explanationKu": "Wings (1927) di merasima yekem a Oscarê ya 1929'an de xelata Fîlmê ya Herî Baş wergirt. Ev fîlm derbarê pilotekî Şerê Cîhanê yê Yekem de ye û bi dîmenên xwe yên hewayî tê nasîn.",
+    "explanationTr": "Kanatlar (Wings, 1927), 1929'daki ilk Oscar töreninde En İyi Film ödülünü kazandı. I. Dünya Savaşı pilotlarını konu alır ve hava sahneleriyle tanınır.",
+    "id": "ds26_cinema_0111",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Kîjan saziya ku Oscarê dide di sala 1927'an de hate damezrandin?",
+    "promptTr": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
+    "answers": [
+      "AMPAS",
+      "Cannes Film Society",
+      "British Academy (BAFTA)",
+      "Tribeca Institute"
+    ],
+    "answersTr": [
+      "AMPAS",
+      "Cannes Film Cemiyeti",
+      "İngiliz Akademisi (BAFTA)",
+      "Tribeca Enstitüsü"
+    ],
+    "correctAnswer": "AMPAS",
+    "correctAnswerTr": "AMPAS",
+    "explanationKu": "Akademiya Huner û Zanistên Fîlmê (AMPAS) di sala 1927'an de li Hollywoodê hate damezrandin û ji 1929'an vir ve Xelatên Akademiyê (Oscar) dide. BAFTA ya Brîtanî û saziyên din ên ku xelatên xwe hene ji vê akademiyê cuda ne.",
+    "explanationTr": "Sinema Sanatları ve Bilimleri Akademisi (AMPAS) 1927'de Hollywood'da kuruldu ve 1929'dan beri Akademi Ödülleri'ni (Oscar) verir. İngiliz BAFTA ve kendi ödülleri olan diğer kurumlar bu akademiden farklıdır.",
+    "id": "ds26_cinema_0113",
+    "category": "Sînema",
+    "subcategory": "Belgefîlm û Festîval",
+    "difficulty": 4,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "HTTP koda 404 bi gelemperî çi tê wateya?",
+    "promptTr": "HTTP 404 kodu genellikle ne anlama gelir?",
+    "answers": [
+      "Hemû tişt serkeftî ye",
+      "Pêwîstî bi têketinê heye",
+      "Çavkanî nehat dîtin",
+      "Server veguherî"
+    ],
+    "answersTr": [
+      "Her şey başarılı",
+      "Giriş gerekli",
+      "Kaynak bulunamadı",
+      "Sunucu yönlendirdi"
+    ],
+    "correctAnswer": "Çavkanî nehat dîtin",
+    "correctAnswerTr": "Kaynak bulunamadı",
+    "explanationKu": "404 dibêje ku server hate gihiştin lê rûpel an pelê xwestî li wir nîne.",
+    "explanationTr": "404, sunucuya ulaşıldığını ama istenen sayfa veya dosyanın orada olmadığını söyler.",
+    "id": "grok26_tech_core_0040",
+    "category": "Teknolojî",
+    "subcategory": "Teknolojiya Bingehîn",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "prompt": "Hejmara dual 1010 di dehî de çend e?",
+    "promptTr": "İkili 1010 sayısı onlukta kaçtır?",
+    "answers": [
+      "5",
+      "8",
+      "12",
+      "10"
+    ],
+    "answersTr": [
+      "5",
+      "8",
+      "12",
+      "10"
+    ],
+    "correctAnswer": "10",
+    "correctAnswerTr": "10",
+    "explanationKu": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her cîh hêza 2yê ye.",
+    "explanationTr": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her basamak 2'nin kuvvetidir.",
+    "id": "grok26_tech_core_0071",
+    "category": "Teknolojî",
+    "subcategory": "Teknolojiya Bingehîn",
+    "difficulty": 3,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0001",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?",
+    "promptTr": "Film dili sözlüğüne göre montajda anlam esas olarak nereden doğar?",
+    "answers": [
+      "Ji dirêjahiya giştî ya fîlmê",
+      "Ji têkiliya di navbera dîmenan de",
+      "Ji hevahengiya rengên kincan",
+      "Ji şêwaza kesane ya derhêner"
+    ],
+    "answersTr": [
+      "Filmin toplam uzunluğundan",
+      "Sahneler arasındaki ilişkiden",
+      "Kostümlerin renk uyumundan",
+      "Yönetmenin kişisel tarzından"
+    ],
+    "correctAnswer": "Ji têkiliya di navbera dîmenan de",
+    "correctAnswerTr": "Sahneler arasındaki ilişkiden",
+    "explanationKu": "Di montajê de dîmenek tenê bi têkiliya xwe ya bi dîmenekî din re wateyê digire.",
+    "explanationTr": "Montajda bir sahne, anlamını ancak başka bir sahneyle kurduğu ilişkiden alır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0002",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Di teknîka «deep focus» de çi tê bidestxistin?",
+    "promptTr": "«Deep focus» tekniğinde ne elde edilir?",
+    "answers": [
+      "Tenê paşxaneya dûr zelal dibe",
+      "Rengên dîmenê hemû winda dibin",
+      "Leza dîmenê pir hêdî dibe",
+      "Nêzîk û dûr bi hev re zelal dibin"
+    ],
+    "answersTr": [
+      "Yalnız uzak arka plan netleşir",
+      "Görüntünün renkleri tümden kaybolur",
+      "Görüntünün hızı belirgin yavaşlar",
+      "Yakın ve uzak birlikte net olur"
+    ],
+    "correctAnswer": "Nêzîk û dûr bi hev re zelal dibin",
+    "correctAnswerTr": "Yakın ve uzak birlikte net olur",
+    "explanationKu": "Deep focus de cîhên nêzîk û yên dûr di heman demê de zelal têne nîşandan.",
+    "explanationTr": "Deep focus'ta yakın ve uzak düzlemler aynı anda net gösterilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0003",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?",
+    "promptTr": "Venedik Film Festivali hangi yılda kuruldu?",
+    "answers": [
+      "1932",
+      "1946",
+      "1951",
+      "1955"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1951",
+      "1955"
+    ],
+    "correctAnswer": "1932",
+    "correctAnswerTr": "1932",
+    "explanationKu": "Pêşangeha yekem a hunera sînemayê ya Venedîkê di sala 1932an de dest pê kir.",
+    "explanationTr": "Venedik'in ilk sinema sanatı sergisi 1932 yılında başladı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0004",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Xelata «Şêrê Zêrîn» ji bo fîlmê herî baş di kîjan salê de hate danîn?",
+    "promptTr": "«Altın Aslan» ödülü en iyi film için hangi yılda konuldu?",
+    "answers": [
+      "1932",
+      "1936",
+      "1949",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1936",
+      "1949",
+      "1968"
+    ],
+    "correctAnswer": "1949",
+    "correctAnswerTr": "1949",
+    "explanationKu": "Şêrê Zêrîn ê Aziz Marko di sala 1949an de ji bo fîlmê herî baş hate danîn.",
+    "explanationTr": "Aziz Marko'nun Altın Aslanı, en iyi film için 1949 yılında konuldu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0005",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê yekem ê ku di dîroka Festîvala Venedîkê de hate nîşandan kîjan e?",
+    "promptTr": "Venedik Festivali tarihinde gösterilen ilk film hangisidir?",
+    "answers": [
+      "Dr. Jekyll and Mr. Hyde",
+      "The Cabinet of Dr. Caligari",
+      "The Birth of a Nation",
+      "Battleship Potemkin"
+    ],
+    "answersTr": [
+      "Dr. Jekyll and Mr. Hyde",
+      "The Cabinet of Dr. Caligari",
+      "The Birth of a Nation",
+      "Battleship Potemkin"
+    ],
+    "correctAnswer": "Dr. Jekyll and Mr. Hyde",
+    "correctAnswerTr": "Dr. Jekyll and Mr. Hyde",
+    "explanationKu": "Fîlmê yekem ê festîvalê Dr. Jekyll and Mr. Hyde a Rouben Mamoulian bû.",
+    "explanationTr": "Festivalin ilk filmi Rouben Mamoulian'ın Dr. Jekyll and Mr. Hyde'ıydı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0006",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?",
+    "promptTr": "Resmî yarışma ilk kez hangi yılda festivale girdi?",
+    "answers": [
+      "1932",
+      "1934",
+      "1949",
+      "1937"
+    ],
+    "answersTr": [
+      "1932",
+      "1934",
+      "1949",
+      "1937"
+    ],
+    "correctAnswer": "1934",
+    "correctAnswerTr": "1934",
+    "explanationKu": "Festîvala duyem a 1934an cara yekem pêşbazî lê zêde kir.",
+    "explanationTr": "1934'teki ikinci festival, ilk kez bir yarışma içeriyordu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0007",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?",
+    "promptTr": "Uluslararası jüri ilk kez hangi yılda atandı?",
+    "answers": [
+      "1934",
+      "1932",
+      "1949",
+      "1936"
+    ],
+    "answersTr": [
+      "1934",
+      "1932",
+      "1949",
+      "1936"
+    ],
+    "correctAnswer": "1936",
+    "correctAnswerTr": "1936",
+    "explanationKu": "Di sala 1936an de cara yekem jûriyeke navneteweyî hate destnîşankirin.",
+    "explanationTr": "1936 yılında ilk kez uluslararası bir jüri atandı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0008",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Edîsyona yekem li ku hate lidarxistin?",
+    "promptTr": "İlk edisyon nerede düzenlendi?",
+    "answers": [
+      "Li salona Palazzo del Cinema",
+      "Li terasa Hotel Excelsior",
+      "Li meydana Piazza San Marco",
+      "Li sahneya Teatro La Fenice"
+    ],
+    "answersTr": [
+      "Palazzo del Cinema salonunda",
+      "Hotel Excelsior terasında",
+      "Piazza San Marco meydanında",
+      "Teatro La Fenice sahnesinde"
+    ],
+    "correctAnswer": "Li terasa Hotel Excelsior",
+    "correctAnswerTr": "Hotel Excelsior terasında",
+    "explanationKu": "Edîsyona yekem li terasa Hotel Excelsior a li Lido ya Venedîkê hate lidarxistin.",
+    "explanationTr": "İlk edisyon, Venedik Lido'daki Hotel Excelsior'un terasında düzenlendi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0009",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "La Biennale di Venezia di kîjan salê de hate damezrandin?",
+    "promptTr": "La Biennale di Venezia hangi yılda kuruldu?",
+    "answers": [
+      "1895",
+      "1932",
+      "1949",
+      "1980"
+    ],
+    "answersTr": [
+      "1895",
+      "1932",
+      "1949",
+      "1980"
+    ],
+    "correctAnswer": "1895",
+    "correctAnswerTr": "1895",
+    "explanationKu": "La Biennale di Venezia di sala 1895an de hate damezrandin.",
+    "explanationTr": "La Biennale di Venezia 1895 yılında kuruldu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0010",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Pêşangeha Hunerî ya Navneteweyî ya yekem di kîjan salê de hate lidarxistin?",
+    "promptTr": "İlk Uluslararası Sanat Sergisi hangi yılda düzenlendi?",
+    "answers": [
+      "1932",
+      "1895",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1932",
+      "1895",
+      "1980",
+      "1999"
+    ],
+    "correctAnswer": "1895",
+    "correctAnswerTr": "1895",
+    "explanationKu": "Pêşangeha Hunerî ya Navneteweyî ya yekem di sala 1895an de hate lidarxistin.",
+    "explanationTr": "İlk Uluslararası Sanat Sergisi 1895 yılında düzenlendi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0011",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di kîjan salê de pêk hat?",
+    "promptTr": "İlk Uluslararası Mimarlık Sergisi hangi yılda gerçekleşti?",
+    "answers": [
+      "1949",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1949",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "correctAnswer": "1980",
+    "correctAnswerTr": "1980",
+    "explanationKu": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di sala 1980yî de pêk hat.",
+    "explanationTr": "İlk Uluslararası Mimarlık Sergisi 1980 yılında gerçekleşti.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0012",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Dans di kîjan salê de beşdarî La Biennale bû?",
+    "promptTr": "Dans hangi yılda La Biennale'ye katıldı?",
+    "answers": [
+      "1895",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "answersTr": [
+      "1895",
+      "1932",
+      "1980",
+      "1999"
+    ],
+    "correctAnswer": "1999",
+    "correctAnswerTr": "1999",
+    "explanationKu": "Dans di sala 1999an de beşdarî La Biennale bû.",
+    "explanationTr": "Dans 1999 yılında La Biennale'ye katıldı.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0013",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «À bout de souffle» (1960) kî ye?",
+    "promptTr": "«À bout de souffle» (1960) filminin yönetmeni kimdir?",
+    "answers": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Alain Resnais"
+    ],
+    "answersTr": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Alain Resnais"
+    ],
+    "correctAnswer": "Jean-Luc Godard",
+    "correctAnswerTr": "Jean-Luc Godard",
+    "explanationKu": "Li gorî kataloga BFIyê, derhênerê fîlmê Jean-Luc Godard e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Jean-Luc Godard'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0014",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «À bout de souffle» di kîjan salê de derket?",
+    "promptTr": "«À bout de souffle» filmi hangi yılda çıktı?",
+    "answers": [
+      "1954",
+      "1966",
+      "1960",
+      "1972"
+    ],
+    "answersTr": [
+      "1954",
+      "1966",
+      "1960",
+      "1972"
+    ],
+    "correctAnswer": "1960",
+    "correctAnswerTr": "1960",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1960 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1960'tır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0015",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Battleship Potemkin» kî ye?",
+    "promptTr": "«Battleship Potemkin» filminin yönetmeni kimdir?",
+    "answers": [
+      "Dziga Vertov",
+      "Lev Kuleshov",
+      "Sergei M. Eisenstein",
+      "Vsevolod Pudovkin"
+    ],
+    "answersTr": [
+      "Dziga Vertov",
+      "Lev Kuleshov",
+      "Sergei M. Eisenstein",
+      "Vsevolod Pudovkin"
+    ],
+    "correctAnswer": "Sergei M. Eisenstein",
+    "correctAnswerTr": "Sergei M. Eisenstein",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Sergei M. Eisenstein e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Sergei M. Eisenstein'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0016",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Battleship Potemkin» di kîjan salê de derket?",
+    "promptTr": "«Battleship Potemkin» filmi hangi yılda çıktı?",
+    "answers": [
+      "1919",
+      "1922",
+      "1929",
+      "1925"
+    ],
+    "answersTr": [
+      "1919",
+      "1922",
+      "1929",
+      "1925"
+    ],
+    "correctAnswer": "1925",
+    "correctAnswerTr": "1925",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1925 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1925'tir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0017",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Metropolis» (1927) kî ye?",
+    "promptTr": "«Metropolis» (1927) filminin yönetmeni kimdir?",
+    "answers": [
+      "F. W. Murnau",
+      "Robert Wiene",
+      "Fritz Lang",
+      "G. W. Pabst"
+    ],
+    "answersTr": [
+      "F. W. Murnau",
+      "Robert Wiene",
+      "Fritz Lang",
+      "G. W. Pabst"
+    ],
+    "correctAnswer": "Fritz Lang",
+    "correctAnswerTr": "Fritz Lang",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Metropolisê Fritz Lang e.",
+    "explanationTr": "BFI kataloğuna göre Metropolis'in yönetmeni Fritz Lang'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0018",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Metropolis» (1927) hilberîna kîjan welatî ye?",
+    "promptTr": "«Metropolis» (1927) hangi ülkenin yapımıdır?",
+    "answers": [
+      "Fransa",
+      "Almanya",
+      "Îtalya",
+      "Sovyet"
+    ],
+    "answersTr": [
+      "Fransa",
+      "Almanya",
+      "Îtalya",
+      "Sovyet"
+    ],
+    "correctAnswer": "Almanya",
+    "correctAnswerTr": "Almanya",
+    "explanationKu": "Li gorî kataloga BFIyê Metropolis hilberîneke Almanyayê ye.",
+    "explanationTr": "BFI kataloğuna göre Metropolis bir Almanya yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0019",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Nosferatu» (1922) kî ye?",
+    "promptTr": "«Nosferatu» (1922) filminin yönetmeni kimdir?",
+    "answers": [
+      "F. W. Murnau",
+      "Fritz Lang",
+      "Robert Wiene",
+      "Paul Wegener"
+    ],
+    "answersTr": [
+      "F. W. Murnau",
+      "Fritz Lang",
+      "Robert Wiene",
+      "Paul Wegener"
+    ],
+    "correctAnswer": "F. W. Murnau",
+    "correctAnswerTr": "F. W. Murnau",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Nosferatuyê F. W. Murnau ye.",
+    "explanationTr": "BFI kataloğuna göre Nosferatu'nun yönetmeni F. W. Murnau'dur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0020",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Nosferatu» di kîjan salê de derket?",
+    "promptTr": "«Nosferatu» filmi hangi yılda çıktı?",
+    "answers": [
+      "1916",
+      "1919",
+      "1927",
+      "1922"
+    ],
+    "answersTr": [
+      "1916",
+      "1919",
+      "1927",
+      "1922"
+    ],
+    "correctAnswer": "1922",
+    "correctAnswerTr": "1922",
+    "explanationKu": "Li gorî kataloga BFIyê sala Nosferatuyê 1922 e.",
+    "explanationTr": "BFI kataloğuna göre Nosferatu'nun yılı 1922'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0021",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Tokyo Story» (1953) kî ye?",
+    "promptTr": "«Tokyo Story» (1953) filminin yönetmeni kimdir?",
+    "answers": [
+      "Akira Kurosawa",
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "answersTr": [
+      "Akira Kurosawa",
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "correctAnswer": "Yasujirō Ozu",
+    "correctAnswerTr": "Yasujirō Ozu",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Tokyo Storyê Yasujirō Ozu ye.",
+    "explanationTr": "BFI kataloğuna göre Tokyo Story'nin yönetmeni Yasujirō Ozu'dur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0022",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Tokyo Story» hilberîna kîjan welatî ye?",
+    "promptTr": "«Tokyo Story» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Çîn",
+      "Kore",
+      "Japonya",
+      "Taywan"
+    ],
+    "answersTr": [
+      "Çîn",
+      "Kore",
+      "Japonya",
+      "Taywan"
+    ],
+    "correctAnswer": "Japonya",
+    "correctAnswerTr": "Japonya",
+    "explanationKu": "Li gorî kataloga BFIyê Tokyo Story hilberîneke Japonyayê ye.",
+    "explanationTr": "BFI kataloğuna göre Tokyo Story bir Japonya yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0023",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Pather Panchali» (1955) kî ye?",
+    "promptTr": "«Pather Panchali» (1955) filminin yönetmeni kimdir?",
+    "answers": [
+      "Ritwik Ghatak",
+      "Mrinal Sen",
+      "Satyajit Ray",
+      "Guru Dutt"
+    ],
+    "answersTr": [
+      "Ritwik Ghatak",
+      "Mrinal Sen",
+      "Satyajit Ray",
+      "Guru Dutt"
+    ],
+    "correctAnswer": "Satyajit Ray",
+    "correctAnswerTr": "Satyajit Ray",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê Pather Panchaliyê Satyajit Ray e.",
+    "explanationTr": "BFI kataloğuna göre Pather Panchali'nin yönetmeni Satyajit Ray'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0024",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Pather Panchali» hilberîna kîjan welatî ye?",
+    "promptTr": "«Pather Panchali» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Bangladeş",
+      "Hindistan",
+      "Pakistan",
+      "Sri Lanka"
+    ],
+    "answersTr": [
+      "Bangladeş",
+      "Hindistan",
+      "Pakistan",
+      "Sri Lanka"
+    ],
+    "correctAnswer": "Hindistan",
+    "correctAnswerTr": "Hindistan",
+    "explanationKu": "Li gorî kataloga BFIyê Pather Panchali hilberîneke Hindistanê ye.",
+    "explanationTr": "BFI kataloğuna göre Pather Panchali bir Hindistan yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0025",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Bicycle Thieves» kî ye?",
+    "promptTr": "«Bicycle Thieves» filminin yönetmeni kimdir?",
+    "answers": [
+      "Roberto Rossellini",
+      "Vittorio De Sica",
+      "Luchino Visconti",
+      "Federico Fellini"
+    ],
+    "answersTr": [
+      "Roberto Rossellini",
+      "Vittorio De Sica",
+      "Luchino Visconti",
+      "Federico Fellini"
+    ],
+    "correctAnswer": "Vittorio De Sica",
+    "correctAnswerTr": "Vittorio De Sica",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Vittorio De Sica e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Vittorio De Sica'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0026",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Bicycle Thieves» hilberîna kîjan welatî ye?",
+    "promptTr": "«Bicycle Thieves» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Fransa",
+      "Îspanya",
+      "Îtalya",
+      "Yewnanistan"
+    ],
+    "answersTr": [
+      "Fransa",
+      "İspanya",
+      "İtalya",
+      "Yunanistan"
+    ],
+    "correctAnswer": "Îtalya",
+    "correctAnswerTr": "İtalya",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke İtalyayê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İtalya yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0027",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Citizen Kane» kî ye?",
+    "promptTr": "«Citizen Kane» filminin yönetmeni kimdir?",
+    "answers": [
+      "John Ford",
+      "Howard Hawks",
+      "Orson Welles",
+      "Frank Capra"
+    ],
+    "answersTr": [
+      "John Ford",
+      "Howard Hawks",
+      "Orson Welles",
+      "Frank Capra"
+    ],
+    "correctAnswer": "Orson Welles",
+    "correctAnswerTr": "Orson Welles",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Orson Welles e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Orson Welles'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0028",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Citizen Kane» hilberîna kîjan welatî ye?",
+    "promptTr": "«Citizen Kane» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Brîtanya",
+      "Kanada",
+      "Awistralya",
+      "DYA"
+    ],
+    "answersTr": [
+      "Britanya",
+      "Kanada",
+      "Avustralya",
+      "ABD"
+    ],
+    "correctAnswer": "DYA",
+    "correctAnswerTr": "ABD",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke ABDyê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir ABD yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0029",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Das Cabinet des Dr. Caligari» kî ye?",
+    "promptTr": "«Das Cabinet des Dr. Caligari» filminin yönetmeni kimdir?",
+    "answers": [
+      "Robert Wiene",
+      "Fritz Lang",
+      "F. W. Murnau",
+      "G. W. Pabst"
+    ],
+    "answersTr": [
+      "Robert Wiene",
+      "Fritz Lang",
+      "F. W. Murnau",
+      "G. W. Pabst"
+    ],
+    "correctAnswer": "Robert Wiene",
+    "correctAnswerTr": "Robert Wiene",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Robert Wiene e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0030",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Rashomon» kî ye?",
+    "promptTr": "«Rashomon» filminin yönetmeni kimdir?",
+    "answers": [
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Mikio Naruse"
+    ],
+    "answersTr": [
+      "Yasujirō Ozu",
+      "Kenji Mizoguchi",
+      "Akira Kurosawa",
+      "Mikio Naruse"
+    ],
+    "correctAnswer": "Akira Kurosawa",
+    "correctAnswerTr": "Akira Kurosawa",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Akira Kurosawa e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Akira Kurosawa'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0031",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Rashomon» di kîjan salê de derket?",
+    "promptTr": "«Rashomon» filmi hangi yılda çıktı?",
+    "answers": [
+      "1935",
+      "1950",
+      "1961",
+      "1972"
+    ],
+    "answersTr": [
+      "1935",
+      "1950",
+      "1961",
+      "1972"
+    ],
+    "correctAnswer": "1950",
+    "correctAnswerTr": "1950",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1950 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1950'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0032",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «The 400 Blows» kî ye?",
+    "promptTr": "«The 400 Blows» filminin yönetmeni kimdir?",
+    "answers": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Éric Rohmer"
+    ],
+    "answersTr": [
+      "Jean-Luc Godard",
+      "François Truffaut",
+      "Claude Chabrol",
+      "Éric Rohmer"
+    ],
+    "correctAnswer": "François Truffaut",
+    "correctAnswerTr": "François Truffaut",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê François Truffaut e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0033",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «The 400 Blows» hilberîna kîjan welatî ye?",
+    "promptTr": "«The 400 Blows» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Belçîka",
+      "Swîsre",
+      "Fransa",
+      "Portekîz"
+    ],
+    "answersTr": [
+      "Belçika",
+      "İsviçre",
+      "Fransa",
+      "Portekiz"
+    ],
+    "correctAnswer": "Fransa",
+    "correctAnswerTr": "Fransa",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Fransayê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir Fransa yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0034",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Seven Samurai» di kîjan salê de derket?",
+    "promptTr": "«Seven Samurai» filmi hangi yılda çıktı?",
+    "answers": [
+      "1948",
+      "1954",
+      "1963",
+      "1970"
+    ],
+    "answersTr": [
+      "1948",
+      "1954",
+      "1963",
+      "1970"
+    ],
+    "correctAnswer": "1954",
+    "correctAnswerTr": "1954",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1954 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1954'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0035",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?",
+    "promptTr": "Berlin Film Festivali hangi yılda kuruldu?",
+    "answers": [
+      "1932",
+      "1946",
+      "1951",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1951",
+      "1968"
+    ],
+    "correctAnswer": "1951",
+    "correctAnswerTr": "1951",
+    "explanationKu": "Berlinale di sala 1951an de ji bo temaşevanên Berlînê hate avakirin.",
+    "explanationTr": "Berlinale 1951 yılında Berlin izleyicisi için kuruldu.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0036",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Xelata herî girîng a Berlinaleyê kîjan e?",
+    "promptTr": "Berlinale'nin en önemli ödülü hangisidir?",
+    "answers": [
+      "Şêrê Zêrîn",
+      "Palmiyeya Zêrîn",
+      "Hirça Zêrîn",
+      "Ayiyê Zêrîn"
+    ],
+    "answersTr": [
+      "Altın Aslan",
+      "Altın Palmiye",
+      "Altın Ayı",
+      "Altın Küre"
+    ],
+    "correctAnswer": "Hirça Zêrîn",
+    "correctAnswerTr": "Altın Ayı",
+    "explanationKu": "Xelatên herî girîng ên Berlinaleyê Hirça Zêrîn û Hirçên Zîvîn in.",
+    "explanationTr": "Berlinale'nin en önemli ödülleri Altın Ayı ve Gümüş Ayılar'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0037",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Persona» kî ye?",
+    "promptTr": "«Persona» filminin yönetmeni kimdir?",
+    "answers": [
+      "Ingmar Bergman",
+      "Lars von Trier",
+      "Roy Andersson",
+      "Victor Sjöström"
+    ],
+    "answersTr": [
+      "Ingmar Bergman",
+      "Lars von Trier",
+      "Roy Andersson",
+      "Victor Sjöström"
+    ],
+    "correctAnswer": "Ingmar Bergman",
+    "correctAnswerTr": "Ingmar Bergman",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Ingmar Bergman e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Ingmar Bergman'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0038",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Persona» hilberîna kîjan welatî ye?",
+    "promptTr": "«Persona» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Swêd",
+      "Norwec",
+      "Danîmarka",
+      "Fînlanda"
+    ],
+    "answersTr": [
+      "İsveç",
+      "Norveç",
+      "Danimarka",
+      "Finlandiya"
+    ],
+    "correctAnswer": "Fînlanda",
+    "correctAnswerTr": "Finlandiya",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Swêdê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İsveç yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0039",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «8½» kî ye?",
+    "promptTr": "«8½» filminin yönetmeni kimdir?",
+    "answers": [
+      "Federico Fellini",
+      "Michelangelo Antonioni",
+      "Luchino Visconti",
+      "Pier Paolo Pasolini"
+    ],
+    "answersTr": [
+      "Federico Fellini",
+      "Michelangelo Antonioni",
+      "Luchino Visconti",
+      "Pier Paolo Pasolini"
+    ],
+    "correctAnswer": "Federico Fellini",
+    "correctAnswerTr": "Federico Fellini",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Federico Fellini e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Federico Fellini'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0040",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «8½» di kîjan salê de derket?",
+    "promptTr": "«8½» filmi hangi yılda çıktı?",
+    "answers": [
+      "1949",
+      "1955",
+      "1958",
+      "1963"
+    ],
+    "answersTr": [
+      "1949",
+      "1955",
+      "1958",
+      "1963"
+    ],
+    "correctAnswer": "1963",
+    "correctAnswerTr": "1963",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1963 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1963'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0041",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «The Godfather» kî ye?",
+    "promptTr": "«The Godfather» filminin yönetmeni kimdir?",
+    "answers": [
+      "Francis Ford Coppola",
+      "Martin Scorsese",
+      "Sidney Lumet",
+      "Sam Peckinpah"
+    ],
+    "answersTr": [
+      "Francis Ford Coppola",
+      "Martin Scorsese",
+      "Sidney Lumet",
+      "Sam Peckinpah"
+    ],
+    "correctAnswer": "Francis Ford Coppola",
+    "correctAnswerTr": "Francis Ford Coppola",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Francis Ford Coppola e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Francis Ford Coppola'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0042",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «The Godfather» di kîjan salê de derket?",
+    "promptTr": "«The Godfather» filmi hangi yılda çıktı?",
+    "answers": [
+      "1965",
+      "1969",
+      "1980",
+      "1972"
+    ],
+    "answersTr": [
+      "1965",
+      "1969",
+      "1980",
+      "1972"
+    ],
+    "correctAnswer": "1972",
+    "correctAnswerTr": "1972",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1972 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1972'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0043",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Vertigo» kî ye?",
+    "promptTr": "«Vertigo» filminin yönetmeni kimdir?",
+    "answers": [
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Huston",
+      "Otto Preminger"
+    ],
+    "answersTr": [
+      "Alfred Hitchcock",
+      "Billy Wilder",
+      "John Huston",
+      "Otto Preminger"
+    ],
+    "correctAnswer": "Alfred Hitchcock",
+    "correctAnswerTr": "Alfred Hitchcock",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Alfred Hitchcock e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0044",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Vertigo» di kîjan salê de derket?",
+    "promptTr": "«Vertigo» filmi hangi yılda çıktı?",
+    "answers": [
+      "1944",
+      "1951",
+      "1966",
+      "1958"
+    ],
+    "answersTr": [
+      "1944",
+      "1951",
+      "1966",
+      "1958"
+    ],
+    "correctAnswer": "1958",
+    "correctAnswerTr": "1958",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1958 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1958'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0045",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Sunrise A Song of Two Humans» di kîjan salê de derket?",
+    "promptTr": "«Sunrise A Song of Two Humans» filmi hangi yılda çıktı?",
+    "answers": [
+      "1927",
+      "1935",
+      "1941",
+      "1919"
+    ],
+    "answersTr": [
+      "1927",
+      "1935",
+      "1941",
+      "1919"
+    ],
+    "correctAnswer": "1927",
+    "correctAnswerTr": "1927",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1927 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1927'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0046",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Man with a Movie Camera» kî ye?",
+    "promptTr": "«Man with a Movie Camera» filminin yönetmeni kimdir?",
+    "answers": [
+      "Sergei Eisenstein",
+      "Lev Kuleshov",
+      "Vsevolod Pudovkin",
+      "Dziga Vertov"
+    ],
+    "answersTr": [
+      "Sergei Eisenstein",
+      "Lev Kuleshov",
+      "Vsevolod Pudovkin",
+      "Dziga Vertov"
+    ],
+    "correctAnswer": "Dziga Vertov",
+    "correctAnswerTr": "Dziga Vertov",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Dziga Vertov e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Dziga Vertov'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0047",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Man with a Movie Camera» di kîjan salê de derket?",
+    "promptTr": "«Man with a Movie Camera» filmi hangi yılda çıktı?",
+    "answers": [
+      "1929",
+      "1917",
+      "1938",
+      "1945"
+    ],
+    "answersTr": [
+      "1929",
+      "1917",
+      "1938",
+      "1945"
+    ],
+    "correctAnswer": "1929",
+    "correctAnswerTr": "1929",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1929 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1929'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0048",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Mirror» kî ye?",
+    "promptTr": "«Mirror» filminin yönetmeni kimdir?",
+    "answers": [
+      "Sergei Parajanov",
+      "Larisa Shepitko",
+      "Andrei Konchalovsky",
+      "Andrei Tarkovsky"
+    ],
+    "answersTr": [
+      "Sergei Parajanov",
+      "Larisa Shepitko",
+      "Andrei Konchalovsky",
+      "Andrei Tarkovsky"
+    ],
+    "correctAnswer": "Andrei Tarkovsky",
+    "correctAnswerTr": "Andrei Tarkovsky",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Andrei Tarkovsky e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0049",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Mirror» di kîjan salê de derket?",
+    "promptTr": "«Mirror» filmi hangi yılda çıktı?",
+    "answers": [
+      "1975",
+      "1962",
+      "1988",
+      "1953"
+    ],
+    "answersTr": [
+      "1975",
+      "1962",
+      "1988",
+      "1953"
+    ],
+    "correctAnswer": "1975",
+    "correctAnswerTr": "1975",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1975 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 1975'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0050",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «In the Mood for Love» kî ye?",
+    "promptTr": "«In the Mood for Love» filminin yönetmeni kimdir?",
+    "answers": [
+      "John Woo",
+      "Tsai Ming-liang",
+      "Hou Hsiao-hsien",
+      "Wong Kar Wai"
+    ],
+    "answersTr": [
+      "John Woo",
+      "Tsai Ming-liang",
+      "Hou Hsiao-hsien",
+      "Wong Kar Wai"
+    ],
+    "correctAnswer": "Wong Kar Wai",
+    "correctAnswerTr": "Wong Kar Wai",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Wong Kar Wai e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Wong Kar Wai'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0051",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «In the Mood for Love» di kîjan salê de derket?",
+    "promptTr": "«In the Mood for Love» filmi hangi yılda çıktı?",
+    "answers": [
+      "2000",
+      "1988",
+      "1994",
+      "2008"
+    ],
+    "answersTr": [
+      "2000",
+      "1988",
+      "1994",
+      "2008"
+    ],
+    "correctAnswer": "2000",
+    "correctAnswerTr": "2000",
+    "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 2000 e.",
+    "explanationTr": "BFI kataloğuna göre filmin yılı 2000'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0052",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Come and See» kî ye?",
+    "promptTr": "«Come and See» filminin yönetmeni kimdir?",
+    "answers": [
+      "Elem Klimov",
+      "Andrei Tarkovsky",
+      "Nikita Mikhalkov",
+      "Sergei Bondarchuk"
+    ],
+    "answersTr": [
+      "Elem Klimov",
+      "Andrei Tarkovsky",
+      "Nikita Mikhalkov",
+      "Sergei Bondarchuk"
+    ],
+    "correctAnswer": "Elem Klimov",
+    "correctAnswerTr": "Elem Klimov",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Elem Klimov e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0053",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Derhênerê fîlmê «Close-up» kî ye?",
+    "promptTr": "«Close-up» filminin yönetmeni kimdir?",
+    "answers": [
+      "Mohsen Makhmalbaf",
+      "Jafar Panahi",
+      "Abbas Kiarostami",
+      "Asghar Farhadi"
+    ],
+    "answersTr": [
+      "Mohsen Makhmalbaf",
+      "Jafar Panahi",
+      "Abbas Kiarostami",
+      "Asghar Farhadi"
+    ],
+    "correctAnswer": "Abbas Kiarostami",
+    "correctAnswerTr": "Abbas Kiarostami",
+    "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Abbas Kiarostami e.",
+    "explanationTr": "BFI kataloğuna göre filmin yönetmeni Abbas Kiarostami'dır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_cin_0054",
+    "category": "Sînema",
+    "subcategory": null,
+    "prompt": "Fîlmê «Close-up» hilberîna kîjan welatî ye?",
+    "promptTr": "«Close-up» hangi ülkenin yapımıdır?",
+    "answers": [
+      "Tirkiye",
+      "Iraq",
+      "Efxanistan",
+      "Îran"
+    ],
+    "answersTr": [
+      "Türkiye",
+      "Irak",
+      "Afganistan",
+      "İran"
+    ],
+    "correctAnswer": "Îran",
+    "correctAnswerTr": "İran",
+    "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Îranê ye.",
+    "explanationTr": "BFI kataloğuna göre bu film bir İran yapımıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Di dîrokê de çend okyanûsên bi nav hebûn?",
+    "promptTr": "Tarihsel olarak kaç adlandırılmış okyanus vardı?",
+    "answers": [
+      "Çar",
+      "Sê",
+      "Pênc",
+      "Şeş"
+    ],
+    "answersTr": [
+      "Dört",
+      "Üç",
+      "Beş",
+      "Altı"
+    ],
+    "correctAnswer": "Çar",
+    "correctAnswerTr": "Dört",
+    "explanationKu": "Di dîrokê de çar okyanûsên bi nav hebûn: Atlas, Aram, Hindî û Bakur.",
+    "explanationTr": "Tarihsel olarak dört adlandırılmış okyanus vardı: Atlas, Pasifik, Hint ve Arktik.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Kîjan okyanûs wek okyanûsa pêncem tê naskirin?",
+    "promptTr": "Beşinci okyanus olarak hangisi tanınır?",
+    "answers": [
+      "Okyanûsa Hindî",
+      "Okyanûsa Başûr",
+      "Okyanûsa Atlas",
+      "Okyanûsa Aram"
+    ],
+    "answersTr": [
+      "Hint Okyanusu",
+      "Güney Okyanusu",
+      "Atlas Okyanusu",
+      "Pasifik Okyanusu"
+    ],
+    "correctAnswer": "Okyanûsa Başûr",
+    "correctAnswerTr": "Güney Okyanusu",
+    "explanationKu": "Okyanûsa Başûr (Antarktîk) îro ji aliyê piraniya welatan ve wek okyanûsa pêncem tê naskirin.",
+    "explanationTr": "Güney (Antarktika) Okyanusu bugün çoğu ülke tarafından beşinci okyanus olarak tanınır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Sînorên Okyanûsa Başûr di kîjan salê de ji IHOyê re hatin pêşniyarkirin?",
+    "promptTr": "Güney Okyanusu'nun sınırları hangi yılda IHO'ya önerildi?",
+    "answers": [
+      "1982",
+      "1994",
+      "2000",
+      "2010"
+    ],
+    "answersTr": [
+      "1982",
+      "1994",
+      "2000",
+      "2010"
+    ],
+    "correctAnswer": "2000",
+    "correctAnswerTr": "2000",
+    "explanationKu": "Sînorên vê okyanûsê di sala 2000î de ji Rêxistina Hîdrografîk a Navneteweyî re hatin pêşniyarkirin.",
+    "explanationTr": "Bu okyanusun sınırları 2000 yılında Uluslararası Hidrografi Örgütü'ne önerildi.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_geo_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî NOAAyê, ji hêla fizîkî ve li cîhanê çend okyanûs hene?",
+    "promptTr": "NOAA'ya göre fiziksel olarak dünyada kaç okyanus vardır?",
+    "answers": [
+      "Çar okyanûsên cuda",
+      "Pênc okyanûsên cuda",
+      "Sê okyanûsên cuda",
+      "Tenê yek okyanûsa gerdûnî"
+    ],
+    "answersTr": [
+      "Dört ayrı okyanus",
+      "Beş ayrı okyanus",
+      "Üç ayrı okyanus",
+      "Tek bir küresel okyanus"
+    ],
+    "correctAnswer": "Tenê yek okyanûsa gerdûnî",
+    "correctAnswerTr": "Tek bir küresel okyanus",
+    "explanationKu": "NOAA dibêje ku tenê yek okyanûsa gerdûnî heye; nav li herêmên wê yên cuda tên kirin.",
+    "explanationTr": "NOAA'ya göre tek bir küresel okyanus vardır; adlar onun ayrı bölgelerine verilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî USGSê, ji sedî çend ava cîhanê di okyanûsan de ye?",
+    "promptTr": "USGS'e göre dünyadaki suyun yüzde kaçı okyanuslardadır?",
+    "answers": [
+      "Ji sedî 30",
+      "Ji sedî 50",
+      "Ji sedî 71",
+      "Ji sedî 96"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 50",
+      "Yüzde 71",
+      "Yüzde 96"
+    ],
+    "correctAnswer": "Ji sedî 96",
+    "correctAnswerTr": "Yüzde 96",
+    "explanationKu": "USGS dibêje ku ji sedî 96ê ava cîhanê di okyanûsan de tê hilanîn.",
+    "explanationTr": "USGS'e göre dünyadaki suyun yüzde 96'sı okyanuslarda bulunur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Ava okyanûsê çawa ye?",
+    "promptTr": "Okyanus suyu nasıldır?",
+    "answers": [
+      "Bêtam e",
+      "Şor e",
+      "Şêrîn e",
+      "Tirş e"
+    ],
+    "answersTr": [
+      "Tatsızdır",
+      "Tuzludur",
+      "Tatlıdır",
+      "Ekşidir"
+    ],
+    "correctAnswer": "Şor e",
+    "correctAnswerTr": "Tuzludur",
+    "explanationKu": "Ava okyanûsê şor e; ev ji ava çeman cuda dike.",
+    "explanationTr": "Okyanus suyu tuzludur; bu onu akarsu suyundan ayırır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Bi enerjiya rojê ava şil vediguhere çi?",
+    "promptTr": "Güneş enerjisiyle sıvı su neye dönüşür?",
+    "answers": [
+      "Berfê",
+      "Qeşayê",
+      "Hilmê",
+      "Xwêyê"
+    ],
+    "answersTr": [
+      "Kara",
+      "Buza",
+      "Buhara",
+      "Tuza"
+    ],
+    "correctAnswer": "Hilmê",
+    "correctAnswerTr": "Buhara",
+    "explanationKu": "Enerjiya rojê dibe sedem ku ava şil vegere hilmê û hilkeve hewayê.",
+    "explanationTr": "Güneş enerjisi sıvı suyun buhara dönüşüp havaya yükselmesine yol açar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Ewr bi giranî ji çi pêk tên?",
+    "promptTr": "Bulutlar esas olarak neyden oluşur?",
+    "answers": [
+      "Ji ava di hewayê de",
+      "Ji xweliyê",
+      "Ji dûmanê",
+      "Ji qumê"
+    ],
+    "answersTr": [
+      "Havadaki sudan",
+      "Topraktan",
+      "Dumandan",
+      "Kumdan"
+    ],
+    "correctAnswer": "Ji ava di hewayê de",
+    "correctAnswerTr": "Havadaki sudan",
+    "explanationKu": "Ewr bi ava ku di hewayê de kom dibe pêk tên.",
+    "explanationTr": "Bulutlar, havada bir araya gelen sudan oluşur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0005",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Di sîstema rojê de çend gerstêrk hene?",
+    "promptTr": "Güneş sisteminde kaç gezegen vardır?",
+    "answers": [
+      "Şeş",
+      "Heft",
+      "Heşt",
+      "Neh"
+    ],
+    "answersTr": [
+      "Altı",
+      "Yedi",
+      "Sekiz",
+      "Dokuz"
+    ],
+    "correctAnswer": "Heşt",
+    "correctAnswerTr": "Sekiz",
+    "explanationKu": "Li gorî NASAyê sîstema rojê heşt gerstêrkan dihewîne.",
+    "explanationTr": "NASA'ya göre güneş sistemi sekiz gezegen içerir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0006",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Gerstêrka herî mezin a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en büyük gezegeni hangisidir?",
+    "answers": [
+      "Saturn",
+      "Jupiter",
+      "Neptun",
+      "Mars"
+    ],
+    "answersTr": [
+      "Satürn",
+      "Jüpiter",
+      "Neptün",
+      "Mars"
+    ],
+    "correctAnswer": "Jupiter",
+    "correctAnswerTr": "Jüpiter",
+    "explanationKu": "Jupiter gerstêrka herî mezin a sîstema rojê ye.",
+    "explanationTr": "Jüpiter, güneş sisteminin en büyük gezegenidir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0007",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Gerstêrka herî germ a sîstema rojê kîjan e?",
+    "promptTr": "Güneş sisteminin en sıcak gezegeni hangisidir?",
+    "answers": [
+      "Jupiter",
+      "Merkur",
+      "Mars",
+      "Venus"
+    ],
+    "answersTr": [
+      "Jüpiter",
+      "Merkür",
+      "Mars",
+      "Venüs"
+    ],
+    "correctAnswer": "Venus",
+    "correctAnswerTr": "Venüs",
+    "explanationKu": "Venus gerstêrka herî germ e, tevî ku Merkur nêzîktirî rojê ye.",
+    "explanationTr": "Merkür güneşe daha yakın olsa da en sıcak gezegen Venüs'tür.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0008",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Sîstema rojê berî nêzîkî çend milyar salan pêk hat?",
+    "promptTr": "Güneş sistemi yaklaşık kaç milyar yıl önce oluştu?",
+    "answers": [
+      "2.4 milyar",
+      "4.6 milyar",
+      "13.8 milyar",
+      "8.2 milyar"
+    ],
+    "answersTr": [
+      "2,4 milyar",
+      "4,6 milyar",
+      "13,8 milyar",
+      "8,2 milyar"
+    ],
+    "correctAnswer": "4.6 milyar",
+    "correctAnswerTr": "4,6 milyar",
+    "explanationKu": "Li gorî NASAyê sîstema rojê berî nêzîkî 4.6 milyar salan pêk hatiye.",
+    "explanationTr": "NASA'ya göre güneş sistemi yaklaşık 4,6 milyar yıl önce oluşmuştur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0009",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Cîhan di çend rojan de li dora rojê yek car digere?",
+    "promptTr": "Dünya, Güneş çevresindeki bir turunu kaç günde tamamlar?",
+    "answers": [
+      "365.25 roj",
+      "30 roj",
+      "24 roj",
+      "687 roj"
+    ],
+    "answersTr": [
+      "365,25 gün",
+      "30 gün",
+      "24 gün",
+      "687 gün"
+    ],
+    "correctAnswer": "365.25 roj",
+    "correctAnswerTr": "365,25 gün",
+    "explanationKu": "Cîhan di 365.25 rojan de li dora rojê yek car digere.",
+    "explanationTr": "Dünya, Güneş çevresindeki turunu 365,25 günde tamamlar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0010",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Zivirîna Cîhanê ya li dora xwe çend saetan didome?",
+    "promptTr": "Dünya'nın kendi çevresindeki dönüşü kaç saat sürer?",
+    "answers": [
+      "12 saet",
+      "48 saet",
+      "23.9 saet",
+      "6 saet"
+    ],
+    "answersTr": [
+      "12 saat",
+      "48 saat",
+      "23,9 saat",
+      "6 saat"
+    ],
+    "correctAnswer": "23.9 saet",
+    "correctAnswerTr": "23,9 saat",
+    "explanationKu": "Cîhan di nêzîkî 23.9 saetan de li dora xwe yek car dizivire.",
+    "explanationTr": "Dünya kendi çevresindeki turunu yaklaşık 23,9 saatte tamamlar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0011",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Cîhan çend heyvên xwe hene?",
+    "promptTr": "Dünya'nın kaç uydusu vardır?",
+    "answers": [
+      "Du",
+      "Sê",
+      "Çar",
+      "Yek"
+    ],
+    "answersTr": [
+      "İki",
+      "Üç",
+      "Dört",
+      "Bir"
+    ],
+    "correctAnswer": "Yek",
+    "correctAnswerTr": "Bir",
+    "explanationKu": "Cîhan tenê yek heyvê xwe heye; ew di sîstema rojê de yekane gerstêrka wisa ye.",
+    "explanationTr": "Dünya'nın tek bir uydusu vardır; güneş sisteminde tek uydusu olan tek gezegendir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0012",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Nêzîkî ji sedî çend rûyê Cîhanê bi okyanûsê pêçayî ye?",
+    "promptTr": "Dünya yüzeyinin yaklaşık yüzde kaçı okyanusla kaplıdır?",
+    "answers": [
+      "Ji sedî 30",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 90"
+    ],
+    "answersTr": [
+      "Yüzde 30",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 90"
+    ],
+    "correctAnswer": "Ji sedî 71",
+    "correctAnswerTr": "Yüzde 71",
+    "explanationKu": "Okyanûsa cîhanî nêzîkî ji sedî 71ê rûyê Cîhanê digire.",
+    "explanationTr": "Küresel okyanus, Dünya yüzeyinin yaklaşık yüzde 71'ini kaplar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0013",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî NASAyê, ji sedî çend ê atmosfera Cîhanê oksîjen e?",
+    "promptTr": "NASA'ya göre Dünya atmosferinin yüzde kaçı oksijendir?",
+    "answers": [
+      "Ji sedî 21",
+      "Ji sedî 50",
+      "Ji sedî 78",
+      "Ji sedî 5"
+    ],
+    "answersTr": [
+      "Yüzde 21",
+      "Yüzde 50",
+      "Yüzde 78",
+      "Yüzde 5"
+    ],
+    "correctAnswer": "Ji sedî 21",
+    "correctAnswerTr": "Yüzde 21",
+    "explanationKu": "Atmosfera Cîhanê ji sedî 21 oksîjen dihewîne; para herî mezin gazeke din e.",
+    "explanationTr": "Dünya atmosferinin yüzde 21'i oksijendir; en büyük payı başka bir gaz oluşturur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0014",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?",
+    "promptTr": "Dünya atmosferinin en büyük payını hangi gaz oluşturur?",
+    "answers": [
+      "Oksîjen",
+      "Nîtrojen",
+      "Karbondîoksît",
+      "Argon"
+    ],
+    "answersTr": [
+      "Oksijen",
+      "Azot",
+      "Karbondioksit",
+      "Argon"
+    ],
+    "correctAnswer": "Nîtrojen",
+    "correctAnswerTr": "Azot",
+    "explanationKu": "Nîtrojen bi ji sedî 78 para herî mezin a atmosferê pêk tîne; oksîjen ji sedî 21 e.",
+    "explanationTr": "Azot yüzde 78 ile atmosferin en büyük payını oluşturur; oksijen yüzde 21'dir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0015",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Li gorî USGSê, okyanûs ji sedî çend ava Cîhanê digirin?",
+    "promptTr": "USGS'e göre okyanuslar Dünya'daki suyun yüzde kaçını tutar?",
+    "answers": [
+      "Ji sedî 96.5",
+      "Ji sedî 71",
+      "Ji sedî 50",
+      "Ji sedî 30"
+    ],
+    "answersTr": [
+      "Yüzde 96,5",
+      "Yüzde 71",
+      "Yüzde 50",
+      "Yüzde 30"
+    ],
+    "correctAnswer": "Ji sedî 96.5",
+    "correctAnswerTr": "Yüzde 96,5",
+    "explanationKu": "Okyanûs ji sedî 96.5ê ava Cîhanê digirin; ya mayî av a şêrîn e.",
+    "explanationTr": "Okyanuslar Dünya'daki suyun yüzde 96,5'ini tutar; kalanı tatlı sudur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0016",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Piraniya ava şêrîn a Cîhanê li ku ye?",
+    "promptTr": "Dünya'daki tatlı suyun çoğu nerededir?",
+    "answers": [
+      "Di golan de",
+      "Di qeşa û cemedan de",
+      "Di çeman de",
+      "Di baranê de"
+    ],
+    "answersTr": [
+      "Göllerde",
+      "Buz ve buzullarda",
+      "Akarsularda",
+      "Yağmurda"
+    ],
+    "correctAnswer": "Di qeşa û cemedan de",
+    "correctAnswerTr": "Buz ve buzullarda",
+    "explanationKu": "Zêdetirî ji sedî 68ê ava şêrîn di qeşa û cemedan de girtî ye.",
+    "explanationTr": "Tatlı suyun yüzde 68'den fazlası buz ve buzullarda kilitlidir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0017",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
+    "promptTr": "Dünya ile Ay arasındaki ortalama uzaklık kaç kilometredir?",
+    "answers": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "answersTr": [
+      "150.000 km",
+      "384.400 km",
+      "1.740 km",
+      "12.000 km"
+    ],
+    "correctAnswer": "384.400 km",
+    "correctAnswerTr": "384.400 km",
+    "explanationKu": "Heyv bi navînî 384.400 kîlometre ji Cîhanê dûr e.",
+    "explanationTr": "Ay, Dünya'dan ortalama 384.400 kilometre uzaktadır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0018",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
+    "promptTr": "Ay, Dünya çevresindeki turunu kaç günde tamamlar?",
+    "answers": [
+      "7 roj",
+      "14 roj",
+      "27 roj",
+      "365 roj"
+    ],
+    "answersTr": [
+      "7 gün",
+      "14 gün",
+      "27 gün",
+      "365 gün"
+    ],
+    "correctAnswer": "27 roj",
+    "correctAnswerTr": "27 gün",
+    "explanationKu": "Heyv di 27 rojan de li dora Cîhanê yek car digere.",
+    "explanationTr": "Ay, Dünya çevresindeki turunu 27 günde tamamlar.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0019",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Cihê herî kûr ê okyanûsê bi çi navî tê nasîn?",
+    "promptTr": "Okyanusun en derin yeri hangi adla bilinir?",
+    "answers": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "answersTr": [
+      "Challenger Deep",
+      "Mariana Rise",
+      "Pacific Basin",
+      "Atlas Trench"
+    ],
+    "correctAnswer": "Challenger Deep",
+    "correctAnswerTr": "Challenger Deep",
+    "explanationKu": "Cihê herî kûr ê okyanûsê Challenger Deep e û li bin okyanûsa Aramê ya rojava ye.",
+    "explanationTr": "Okyanusun en derin yeri Challenger Deep'tir ve batı Pasifik'in altındadır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_nat_0020",
+    "category": "Cografya",
+    "subcategory": null,
+    "prompt": "Navê Challenger Deepê ji ku tê?",
+    "promptTr": "Challenger Deep adı nereden gelir?",
+    "answers": [
+      "Ji navê keştiyekê",
+      "Ji navê zanyarekî",
+      "Ji navê giravekê",
+      "Ji navê welatekî"
+    ],
+    "answersTr": [
+      "Bir geminin adından",
+      "Bir bilim insanının adından",
+      "Bir adanın adından",
+      "Bir ülkenin adından"
+    ],
+    "correctAnswer": "Ji navê keştiyekê",
+    "correctAnswerTr": "Bir geminin adından",
+    "explanationKu": "Nav ji keştiya HMS Challenger tê; ekîba wê di 1875an de kûrahî pîva.",
+    "explanationTr": "Ad, HMS Challenger gemisinden gelir; mürettebatı 1875'te derinliği ölçmüştür.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0001",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Malper bi giştî li ser çi têne hilanîn?",
+    "promptTr": "Web siteleri genel olarak neyin üzerinde saklanır?",
+    "answers": [
+      "Li ser komputeran",
+      "Li ser kaxizê",
+      "Li ser dengbêjan",
+      "Li ser nexşeyan"
+    ],
+    "answersTr": [
+      "Bilgisayarların üzerinde",
+      "Kâğıt üzerinde",
+      "Anlatıcıların belleğinde",
+      "Haritalar üzerinde"
+    ],
+    "correctAnswer": "Li ser komputeran",
+    "correctAnswerTr": "Bilgisayarların üzerinde",
+    "explanationKu": "Malper li ser komputeran têne hilanîn û ji wir ji bikarhêneran re têne şandin.",
+    "explanationTr": "Web siteleri bilgisayarlarda saklanır ve oradan kullanıcılara gönderilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0004",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "DNS di gihîştina malperekê de çi kar dike?",
+    "promptTr": "DNS bir web sitesine erişimde ne işe yarar?",
+    "answers": [
+      "Bataryayê şarj dike",
+      "Wêneyan biçûk dike",
+      "Navnîşana rastîn peyda dike",
+      "Dengê vîdeoyê zêde dike"
+    ],
+    "answersTr": [
+      "Pili şarj eder",
+      "Görselleri küçültür",
+      "Gerçek adresi bulur",
+      "Videonun sesini artırır"
+    ],
+    "correctAnswer": "Navnîşana rastîn peyda dike",
+    "correctAnswerTr": "Gerçek adresi bulur",
+    "explanationKu": "DNS navnîşana rastîn a malperê peyda dike, da ku daxwaz bigihîje cihê rast.",
+    "explanationTr": "DNS, web sitesinin gerçek adresini bulur; böylece istek doğru yere ulaşır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0007",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Kurtenivîsa «URL» li ser çi tê avakirin?",
+    "promptTr": "«URL» kısaltması neyin karşılığıdır?",
+    "answers": [
+      "Universal Reading Language",
+      "Uniform Resource Locator",
+      "Unique Router Link",
+      "Upper Range Layer"
+    ],
+    "answersTr": [
+      "Universal Reading Language",
+      "Uniform Resource Locator",
+      "Unique Router Link",
+      "Upper Range Layer"
+    ],
+    "correctAnswer": "Uniform Resource Locator",
+    "correctAnswerTr": "Uniform Resource Locator",
+    "explanationKu": "«URL» kurtenivîsa «Uniform Resource Locator» e.",
+    "explanationTr": "«URL», «Uniform Resource Locator» ifadesinin kısaltmasıdır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0008",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "URL bi giranî çi diyar dike?",
+    "promptTr": "URL esas olarak neyi belirtir?",
+    "answers": [
+      "Rengê rûpelê",
+      "Mezinahiya wêneyan",
+      "Dema xwendinê",
+      "Navnîşana çavkaniyekê"
+    ],
+    "answersTr": [
+      "Sayfanın rengini",
+      "Görsellerin boyutunu",
+      "Okuma süresini",
+      "Bir kaynağın adresini"
+    ],
+    "correctAnswer": "Navnîşana çavkaniyekê",
+    "correctAnswerTr": "Bir kaynağın adresini",
+    "explanationKu": "URL navnîşana çavkaniyekê ye; bi wê navnîşanê çavkanî tê dîtin.",
+    "explanationTr": "URL bir kaynağın adresidir; o adres sayesinde kaynağa ulaşılır.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0009",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Dane di înternetê de bi çi awayî têne şandin?",
+    "promptTr": "Veriler internette nasıl gönderilir?",
+    "answers": [
+      "Bi perçeyên biçûk",
+      "Bi carekê û bi tevahî",
+      "Bi rêza tîpan",
+      "Bi dengê bilind"
+    ],
+    "answersTr": [
+      "Küçük parçalar hâlinde",
+      "Tek seferde ve bütün olarak",
+      "Harf sırasına göre",
+      "Yüksek sesle"
+    ],
+    "correctAnswer": "Bi perçeyên biçûk",
+    "correctAnswerTr": "Küçük parçalar hâlinde",
+    "explanationKu": "Dane bi perçeyên biçûk têne şandin û li dawiyê ji nû ve têne hev kirin.",
+    "explanationTr": "Veriler küçük parçalar hâlinde gönderilir ve sonunda yeniden birleştirilir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0010",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Di HTTPê de peyama «200 OK» çi nîşan dide?",
+    "promptTr": "HTTP'de «200 OK» mesajı neyi gösterir?",
+    "answers": [
+      "Girêdan hat birîn",
+      "Daxwaz hat qebûlkirin",
+      "Rûpel hat guhertin",
+      "Navnîşan çewt e"
+    ],
+    "answersTr": [
+      "Bağlantı kesildi",
+      "İstek kabul edildi",
+      "Sayfa değiştirildi",
+      "Adres hatalı"
+    ],
+    "correctAnswer": "Daxwaz hat qebûlkirin",
+    "correctAnswerTr": "İstek kabul edildi",
+    "explanationKu": "Peyama «200 OK» nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
+    "explanationTr": "«200 OK» mesajı, isteğin kabul edildiğini ve yanıtın gönderildiğini gösterir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0011",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Li gorî NISTê şîfre divê herî kêm çend tîp be?",
+    "promptTr": "NIST'e göre parola en az kaç karakter olmalı?",
+    "answers": [
+      "6",
+      "8",
+      "15",
+      "4"
+    ],
+    "answersTr": [
+      "6",
+      "8",
+      "15",
+      "4"
+    ],
+    "correctAnswer": "15",
+    "correctAnswerTr": "15",
+    "explanationKu": "NIST pêşniyar dike ku şîfre herî kêm 15 tîp be; dirêjî girîngtirîn faktor e.",
+    "explanationTr": "NIST parolanın en az 15 karakter olmasını önerir; uzunluk en önemli etkendir.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0012",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?",
+    "promptTr": "NIST'in yeni rehberine göre özel karakterler zorunlu mudur?",
+    "answers": [
+      "Erê, her dem mecbûr in",
+      "Na, êdî mecbûr nayên pêşniyarkirin",
+      "Tenê ji bo bankan mecbûr in",
+      "Tenê ji bo e-nameyê mecbûr in"
+    ],
+    "answersTr": [
+      "Evet, her zaman zorunlu",
+      "Hayır, artık zorunlu önerilmiyor",
+      "Sadece bankalar için zorunlu",
+      "Sadece e-posta için zorunlu"
+    ],
+    "correctAnswer": "Na, êdî mecbûr nayên pêşniyarkirin",
+    "correctAnswerTr": "Hayır, artık zorunlu önerilmiyor",
+    "explanationKu": "NIST êdî pêşniyar nake ku şîfre bi mecbûrî tîpên taybet û hejmaran bihewîne.",
+    "explanationTr": "NIST artık parolaların zorunlu olarak özel karakter ve sayı içermesini önermiyor.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0013",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "«Passphrase» çi ye?",
+    "promptTr": "«Passphrase» nedir?",
+    "answers": [
+      "Yek tîpa dubarekirî",
+      "Hejmarek bi tenê",
+      "Navê bikarhêner",
+      "Çend peyvên rastîn ên li hev hatî"
+    ],
+    "answersTr": [
+      "Tekrarlanan tek harf",
+      "Yalnızca bir sayı",
+      "Kullanıcı adı",
+      "Birleştirilmiş birkaç gerçek sözcük"
+    ],
+    "correctAnswer": "Çend peyvên rastîn ên li hev hatî",
+    "correctAnswerTr": "Birleştirilmiş birkaç gerçek sözcük",
+    "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir tê bîrîn hem dirêjtir e.",
+    "explanationTr": "Passphrase birkaç gerçek sözcüğü birleştirir; hem akılda kalıcı hem daha uzundur.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  },
+  {
+    "id": "sf_tech_0014",
+    "category": "Teknolojî",
+    "subcategory": null,
+    "prompt": "Çima şîfreya yekseb li gelek malperan xeter e?",
+    "promptTr": "Aynı parolayı birçok sitede kullanmak neden risklidir?",
+    "answers": [
+      "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+      "Ji ber ku malper hêdî dibin",
+      "Ji ber ku bîranîn zehmet e",
+      "Ji ber ku înternet zêde tê bikaranîn"
+    ],
+    "answersTr": [
+      "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+      "Siteler yavaşladığı için",
+      "Hatırlaması zor olduğu için",
+      "İnternet çok kullanıldığı için"
+    ],
+    "correctAnswer": "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+    "correctAnswerTr": "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+    "explanationKu": "Ger şîfreya heman li malperekê bikeve destan, hemû hesabên bi wê şîfreyê dikevin xetereyê.",
+    "explanationTr": "Aynı parola bir sitede ele geçerse, o parolayı kullanan tüm hesaplar tehlikeye girer.",
+    "difficulty": 2,
+    "type": "multipleChoice"
+  }
+]

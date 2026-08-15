@@ -841,13 +841,13 @@ class SyncManager {
             failedItems.addAll(batch.skip(index));
             break;
           }
-          final amount = await repo.awardQuizCoins(
+          final amount = (await repo.awardQuizCoins(
             score: (item['score'] as num?)?.toInt() ?? 0,
             correctCount: (item['correctCount'] as num?)?.toInt() ?? 0,
             bestStreak: (item['bestStreak'] as num?)?.toInt() ?? 0,
             totalQuestions: (item['totalQuestions'] as num?)?.toInt() ?? 0,
             room: room,
-          );
+          )).amount;
           if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
             // RPC tamamlandıktan sonra kimlik değiştiyse sonucu güvenle
             // atfedemeyiz. Oda ödülü idempotent olduğu için kaydı korumak,

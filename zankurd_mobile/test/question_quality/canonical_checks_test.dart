@@ -102,6 +102,26 @@ void main() {
     );
   });
 
+  test(
+    'fill in blank canonical answer is not treated as an option shortage',
+    () {
+      final record = question(
+        sourceId: 'runtime',
+        sourcePath: 'fill.json',
+        row: 1,
+        options: const ['pirtûk'],
+        correctIndex: 0,
+        correctText: 'pirtûk',
+        questionType: 'fillInBlank',
+      );
+
+      expect(
+        runChecks([record]).map((issue) => issue.checkId),
+        isNot(contains('insufficient_options')),
+      );
+    },
+  );
+
   test('valid answer index is not invalidated by a duplicate option', () {
     final record = question(
       sourceId: 'runtime',

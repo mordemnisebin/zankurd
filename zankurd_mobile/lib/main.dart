@@ -23,6 +23,8 @@ import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/child_safety_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
+import 'src/providers/untimed_mode_provider.dart';
+import 'src/utils/boot_step.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
@@ -115,11 +117,22 @@ Future<void> main() async {
       }
 
       // Crash raporlama (web'de Crashlytics desteklenmez).
-      try {
-        await Firebase.initializeApp(
+      // Zaman sınırlı: Firebase'in yanıt vermemesi uygulamanın açılmasını
+      // engellememeli. `catch` yalnız fırlatmayı yakalar, asılı kalmayı
+      // yakalamaz — bkz. `bootStep`.
+      var firebaseReady = true;
+      await bootStepVoid(
+        Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform,
-        );
-        if (!kIsWeb) {
+        ).catchError((Object _, StackTrace _) {
+          // Firebase yapılandırması olmayan platformlarda sessizce devam et.
+          firebaseReady = false;
+          return Firebase.app();
+        }),
+        reason: 'firebase init',
+      );
+      try {
+        if (firebaseReady && !kIsWeb) {
           FlutterError.onError =
               FirebaseCrashlytics.instance.recordFlutterFatalError;
           PlatformDispatcher.instance.onError = (error, stack) {
@@ -133,15 +146,29 @@ Future<void> main() async {
 
       // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
       // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.
-      final premiumService = await PremiumService.load();
+      final premiumService = await bootStep(
+        PremiumService.load(),
+        reason: 'premium load',
+        fallback: PremiumService.fallback,
+      );
 
       final ZanKurdRepository repository;
       final AuthProvider authProvider;
+      // Supabase açılamazsa uygulama ÇEVRİMDIŞI açılır. Banka cihazda
+      // olduğu için bu tam bir deneyim sunar; alternatif olan "hiç açılmama"
+      // ise hiçbir şey sunmaz.
+      var remoteReady = false;
       if (AppConfig.hasSupabaseConfig) {
-        await Supabase.initialize(
-          url: AppConfig.supabaseUrl,
-          publishableKey: AppConfig.supabaseAnonKey,
+        remoteReady = await bootStep(
+          Supabase.initialize(
+            url: AppConfig.supabaseUrl,
+            publishableKey: AppConfig.supabaseAnonKey,
+          ).then((_) => true),
+          reason: 'supabase init',
+          fallback: () => false,
         );
+      }
+      if (remoteReady) {
         repository = SupabaseZanKurdRepository(Supabase.instance.client);
         authProvider = AuthProvider(Supabase.instance.client);
       } else {
@@ -149,7 +176,10 @@ Future<void> main() async {
         authProvider = AuthProvider.test(authenticated: true);
       }
 
-      await SyncManager.initialize(repository);
+      await bootStepVoid(
+        SyncManager.initialize(repository),
+        reason: 'sync init',
+      );
 
       // Bağımsız servis ve provider'ları paralel yükle. Sonuçlar indeksle
       // değil kendi future'larıyla okunur: `results[3] as ThemeProvider`
@@ -159,6 +189,7 @@ Future<void> main() async {
       final themeFuture = ThemeProvider.load();
       final soundFuture = SoundProvider.load();
       final reducedMotionFuture = ReducedMotionProvider.load();
+      final untimedModeFuture = UntimedModeProvider.load();
       final analyticsConsentFuture = AnalyticsConsentProvider.load();
       final childSafetyFuture = ChildSafetyProvider.load();
 
@@ -171,26 +202,67 @@ Future<void> main() async {
       // bütün saat dilimi veritabanını okuyor ve cihaz saat dilimi için
       // platform kanalına iniyor — bildirimler kapalı olsa bile
       // (2026-07-31 denetimi).
-      await Future.wait<void>([
+      // Soru bankasına daha geniş bir pay veriliyor: yerel varlık okuması
+      // ağdan bağımsızdır ve içeriğin gelmemesi boş kategori demektir.
+      // Yine de sınırsız değil — hiç açılmayan bir uygulama, eksik içerikli
+      // bir uygulamadan kötüdür.
+      await bootStepVoid(
         QuestionBankLoader.instance.load(),
-        languageFuture,
-        themeFuture,
-        soundFuture,
-        reducedMotionFuture,
-        analyticsConsentFuture,
-        childSafetyFuture,
-      ]);
+        reason: 'question bank load',
+        timeout: const Duration(seconds: 8),
+      );
+      await bootStepVoid(
+        Future.wait<void>([
+          languageFuture,
+          themeFuture,
+          soundFuture,
+          reducedMotionFuture,
+          untimedModeFuture,
+          analyticsConsentFuture,
+          childSafetyFuture,
+        ]),
+        reason: 'preferences load',
+      );
 
-      final languageProvider = await languageFuture;
+      final languageProvider = await bootStep(
+        languageFuture,
+        reason: 'LanguageProvider load',
+        fallback: LanguageProvider.new,
+      );
       errorScreenIsKu = languageProvider.isKu;
       languageProvider.addListener(() {
         errorScreenIsKu = languageProvider.isKu;
       });
-      final themeProvider = await themeFuture;
-      final soundProvider = await soundFuture;
-      final reducedMotionProvider = await reducedMotionFuture;
-      final analyticsConsentProvider = await analyticsConsentFuture;
-      final childSafetyProvider = await childSafetyFuture;
+      final themeProvider = await bootStep(
+        themeFuture,
+        reason: 'ThemeProvider load',
+        fallback: ThemeProvider.new,
+      );
+      final soundProvider = await bootStep(
+        soundFuture,
+        reason: 'SoundProvider load',
+        fallback: SoundProvider.new,
+      );
+      final reducedMotionProvider = await bootStep(
+        reducedMotionFuture,
+        reason: 'ReducedMotionProvider load',
+        fallback: ReducedMotionProvider.new,
+      );
+      final untimedModeProvider = await bootStep(
+        untimedModeFuture,
+        reason: 'UntimedModeProvider load',
+        fallback: UntimedModeProvider.new,
+      );
+      final analyticsConsentProvider = await bootStep(
+        analyticsConsentFuture,
+        reason: 'AnalyticsConsentProvider load',
+        fallback: AnalyticsConsentProvider.new,
+      );
+      final childSafetyProvider = await bootStep(
+        childSafetyFuture,
+        reason: 'ChildSafetyProvider load',
+        fallback: ChildSafetyProvider.new,
+      );
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
       // hiçbiri uygulamanın açılmasını engellemez.
@@ -219,6 +291,7 @@ Future<void> main() async {
           themeProvider: themeProvider,
           soundProvider: soundProvider,
           reducedMotionProvider: reducedMotionProvider,
+          untimedModeProvider: untimedModeProvider,
           analyticsConsentProvider: analyticsConsentProvider,
           childSafetyProvider: childSafetyProvider,
           premiumService: premiumService,
@@ -291,6 +364,7 @@ class ZanKurdApp extends StatelessWidget {
     ThemeProvider? themeProvider,
     SoundProvider? soundProvider,
     ReducedMotionProvider? reducedMotionProvider,
+    UntimedModeProvider? untimedModeProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
     ChildSafetyProvider? childSafetyProvider,
     PremiumService? premiumService,
@@ -300,6 +374,7 @@ class ZanKurdApp extends StatelessWidget {
        themeProvider = themeProvider ?? ThemeProvider(),
        soundProvider = soundProvider ?? SoundProvider(),
        reducedMotionProvider = reducedMotionProvider ?? ReducedMotionProvider(),
+       untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
        childSafetyProvider = childSafetyProvider ?? ChildSafetyProvider(),
@@ -311,6 +386,7 @@ class ZanKurdApp extends StatelessWidget {
   final ThemeProvider themeProvider;
   final SoundProvider soundProvider;
   final ReducedMotionProvider reducedMotionProvider;
+  final UntimedModeProvider untimedModeProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
   final ChildSafetyProvider childSafetyProvider;
   final PremiumService premiumService;
@@ -333,6 +409,9 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<ReducedMotionProvider>.value(
           value: reducedMotionProvider,
         ),
+        ChangeNotifierProvider<UntimedModeProvider>.value(
+          value: untimedModeProvider,
+        ),
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,
         ),
@@ -350,7 +429,7 @@ class ZanKurdApp extends StatelessWidget {
           themeMode: themeProvider.mode,
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
-          navigatorObservers: [appRouteObserver],
+          navigatorObservers: [appRouteObserver, appPageRouteObserver],
           home: SplashScreen(
             // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
             // önce tercih deposunu ısıtır. Profil adı ağdan arka planda

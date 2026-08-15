@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_nasa_solar_system",
+  "sourceTitle": "NASA Science — Solar System Facts",
+  "institution": "NASA",
+  "sourceReference": "https://science.nasa.gov/solar-system/facts/",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "targetCategory": "Cografya",
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "Our solar system includes the Sun, eight planets, five officially named dwarf planets",
+    "The largest planet is Jupiter.",
+    "The hottest planet in our solar system is Venus, even though Mercury is closer to the Sun.",
+    "Our solar system formed about 4.6 billion years ago from a dense cloud of interstellar gas and dust."
+  ],
+  "terminologyResolvedBy": {
+    "conceptId": "ku_sci_planet",
+    "evidencePage": "https://ku.wiktionary.org/wiki/gerst%C3%AArk"
+  },
+  "notAuthored": "'Yüzlerce ay' claim'i sayı vermiyor (kesin değer yok); soruya çevrilmedi.",
+  "sourceHash": "114f74eb5e7c21c7"
+}

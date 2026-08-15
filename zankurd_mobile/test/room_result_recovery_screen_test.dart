@@ -16,6 +16,7 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/services/quiz_reward_settlement_service.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -567,7 +568,7 @@ class _RecoveryRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -581,8 +582,10 @@ class _RecoveryRepository extends MockZanKurdRepository {
       [30, 1, 1, 2, 'room-1'],
     );
     final gate = awardGate;
-    if (gate != null) return gate.future;
-    return 24;
+    if (gate != null) {
+      return (amount: await gate.future, dailyCapReached: false);
+    }
+    return (amount: 24, dailyCapReached: false);
   }
 
   @override

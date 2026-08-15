@@ -109,9 +109,15 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       // Beklenen: yalnızca 1. soruya (index 1) geçilmiş olmalı.
-      expect(find.text(questions[1].prompt), findsOneWidget);
+      expect(
+        find.text(questions[1].localized(isKu: false).prompt),
+        findsOneWidget,
+      );
       // Hatalı davranış: index doğrudan 2'ye atlar, 1. soru hiç gösterilmez.
-      expect(find.text(questions[2].prompt), findsNothing);
+      expect(
+        find.text(questions[2].localized(isKu: false).prompt),
+        findsNothing,
+      );
     },
   );
 }

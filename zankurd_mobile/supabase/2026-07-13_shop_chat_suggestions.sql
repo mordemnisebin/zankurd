@@ -26,6 +26,12 @@ CREATE POLICY "shop_items_read" ON shop_items FOR SELECT USING (true);
 -- Statik yedek listedeki (shop_screen.dart _items) 10 ürünle birebir
 -- aynı id/başlık/açıklama/fiyat/ikon/renk — dinamik ve yedek liste aynı
 -- görünsün diye. id çakışırsa güncellenir (yeniden çalıştırma güvenli).
+--
+-- ⚠ FİYATLAR AÇISINDAN AŞILDI — bkz. `2026-08-12_shop_price_anchor.sql`.
+-- Yukarıdaki "yeniden çalıştırma güvenli" cümlesi yalnız ŞEMA için doğruydu:
+-- upsert `spin_wheel_extra`yı 200'e, `profile_badge_vip`i 1000'e geri
+-- yazıyordu ve bunu sessizce yapıyordu. Çözüm aşağıda, `ON CONFLICT`
+-- listesinde: `cost` artık güncellenmiyor.
 INSERT INTO shop_items (id, title_ku, title_tr, desc_ku, desc_tr, cost, icon_name, theme_color)
 VALUES
   ('joker_bundle', 'Paketa Jokeran', 'Joker Paketi',
@@ -68,12 +74,24 @@ VALUES
    'Profîla te de rozeteke taybet a VIP xuya dibe.',
    'Profilinde özel VIP rozeti görünsün.',
    1000, 'diamond_rounded', '38BDF8')
+-- ⚠ FİYAT SÜTUNU BU DOSYANIN İŞİ DEĞİL — bkz.
+-- `2026-08-12_shop_price_anchor.sql`.
+--
+-- Bu dosya katalog METNİNİ Dart listesiyle eşitler: başlık, açıklama,
+-- ikon, renk. Fiyat başka bir yerde, ölçülerek belirleniyor.
+--
+-- Çakışmada `cost` bilerek GÜNCELLENMİYOR. Eskiden güncelleniyordu ve
+-- bedeli sessizdi: çıpa uygulandıktan sonra bu dosyayı yeniden koşmak
+-- fiyatları eski değerlerine döndürüyor, üstelik hiçbir uyarı vermiyordu
+-- (2026-08-12'de yerelde ölçüldü — 120/480 tek komutla 200/750 oldu).
+--
+-- İlk INSERT'te `cost` yine yazılır; sıfırdan kurulan bir zincirde
+-- katalog fiyatsız kalmaz, çıpa göçü sonradan kendi değerini koyar.
 ON CONFLICT (id) DO UPDATE SET
   title_ku = EXCLUDED.title_ku,
   title_tr = EXCLUDED.title_tr,
   desc_ku = EXCLUDED.desc_ku,
   desc_tr = EXCLUDED.desc_tr,
-  cost = EXCLUDED.cost,
   icon_name = EXCLUDED.icon_name,
   theme_color = EXCLUDED.theme_color;
 

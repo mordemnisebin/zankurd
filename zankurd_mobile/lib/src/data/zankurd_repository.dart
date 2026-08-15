@@ -51,6 +51,27 @@ class StreakFreezeChargeResult {
       outcome == StreakFreezeChargeOutcome.alreadyCharged;
 }
 
+/// Bir tur ödül talebinin sonucu.
+///
+/// Sunucu yalnız MİKTAR döndürmüyor; solo talepte günlük tavana varılıp
+/// varılmadığını da söylüyor (`claim_solo_reward` yanıtındaki
+/// `cap_reached`). İstemci bir zamanlar yalnız miktarı okuyup gerisini
+/// atıyordu ve bunun bedeli sessizdi: tavana varan oyuncu "+0 jeton"
+/// görüyor, sebebini hiçbir yerden öğrenemiyordu. Sıfır tek başına
+/// belirsizdir — tavan da sıfır verir, arıza da, göçün uygulanmamış olması
+/// da (2026-08-12 denetimi).
+typedef QuizRewardClaim = ({
+  /// Deftere yazılan jeton. Sunucu belirler; istemci hesaplamaz.
+  int amount,
+
+  /// Günlük tavana varıldığı için mi sıfır?
+  ///
+  /// Yalnız sunucu açıkça söylediğinde doğrudur. Bilinmiyorsa yanlıştır:
+  /// "bilmiyorum"u "tavana vardın" diye göstermek, olmayan bir sebep
+  /// uydurmaktır.
+  bool dailyCapReached,
+});
+
 /// `joinOnlineRoom`ın ayırt edebildiği ret sebepleri.
 ///
 /// Sunucu (`join_room_by_code`) farklı sebepler için farklı düz metin
@@ -262,13 +283,35 @@ abstract class ZanKurdRepository {
   /// Gerçek backend bu miktarı sunucuda belirlemelidir; istemci yalnızca
   /// dönen miktara göre animasyonu hedefler.
   Future<int> awardSpinCoins();
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
     GameRoom? room,
   });
+
+  /// Kazanılan XP'yi SUNUCUYA bildirir ve sunucudaki güncel toplamı döner.
+  ///
+  /// ## Niçin var
+  ///
+  /// XP iki yerde yaşıyordu ve yalnız biri gerçekti. Cihazdaki `XPStore`
+  /// seviye ve ilerleme çubuğunu besliyordu; `profiles.xp` ise sıralamanın,
+  /// toplam puanın ve lig rozetinin kaynağı. İkincisine hiçbir zaman
+  /// yazılmadı: `award_xp_delta` RPC'si 2026-07-25'te yazıldı, iki test
+  /// SQL dosyasında VARLIĞINI doğruladı ve hiçbir istemci kodu onu çağırmadı.
+  ///
+  /// Ölçüldü (2026-08-12, üretim yedeğinin yerel klonu): 21 profilin
+  /// hiçbirinde `xp > 0` yok. Yani `get_leaderboard`ın `total_score`u herkes
+  /// için sıfır, profil ekranındaki «Sıralama» ve «Toplam Puan» her oyuncuda
+  /// «—», lig rozeti hiç açılmıyor. Sıralama özelliğinin verisi yoktu.
+  ///
+  /// Miktarı sunucu belirler: RPC çağrı başına 2000, günde 20000 ile
+  /// sınırlar. İstemci yalnız bildirir.
+  ///
+  /// Bu çağrı oyuncuyu BEKLETMEZ ve hata fırlatmaz: XP'nin cihazdaki hâli
+  /// zaten yazılmıştır, sunucu yazımı en iyi çabadır.
+  Future<int> awardXp(int delta);
 
   /// Oyuncunun görsel kimliğini (avatar/çerçeve/unvan) yükler.
   Future<AvatarIdentity> loadAvatarIdentity();

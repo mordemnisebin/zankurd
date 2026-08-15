@@ -130,4 +130,52 @@ void main() {
       expect(find.text('Ziman'), findsNothing);
     },
   );
+
+  testWidgets('şık listesinde olmayan yazılı kullanıcı yanıtını gösterir', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'fill-1',
+        category: 'Ziman',
+        prompt: 'Ez ___ dixwînim.',
+        answers: ['pirtûk'],
+        correctAnswer: 'pirtûk',
+        selectedAnswer: 'PIRTIK',
+        explanation: '',
+        adjudicatedCorrect: false,
+      ),
+    ];
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+
+    expect(find.text('Senin cevabın: PIRTIK'), findsOneWidget);
+    expect(find.text('pirtûk'), findsOneWidget);
+  });
+
+  testWidgets('süre aşımı teknik yanıt metni olarak gösterilmez', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'timeout-1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'TIMEOUT',
+        explanation: '',
+        adjudicatedCorrect: false,
+      ),
+    ];
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+
+    expect(find.byKey(const ValueKey('review-typed-answer')), findsNothing);
+    expect(find.textContaining('TIMEOUT'), findsNothing);
+  });
 }

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "createdDate": "2026-08-06",
+  "sources": [
+    {
+      "sourceId": "columbia-film-language-glossary",
+      "title": "Columbia Film Language Glossary",
+      "institution": "Columbia University",
+      "sourceType": "university_glossary",
+      "sourceReference": "https://filmglossary.ccnmtl.columbia.edu/",
+      "sourceAccessLevel": "FETCHED_DIRECT",
+      "reliabilityTier": 2,
+      "termsReadThisSession": [
+        "montage",
+        "deep-focus",
+        "long-take"
+      ],
+      "note": "`long-take` sayfası biçimsel tanım vermiyor — yalnız 'a shot of some duration' diyor. Soru üretmek için fazla belirsiz; claim çıkarılmadı."
+    }
+  ]
+}

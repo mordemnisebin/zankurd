@@ -33,11 +33,15 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     final repository = freshMockRepository();
+    // Oda turu gibi tohumla: `room` verilmezse çağrı 2026-08-10'dan beri
+    // SOLO sayılır ve günlük tavanlı küçük ödülü verir; joker alacak bakiye
+    // oluşmaz. Buradaki amaç bakiye kurmak, ekonomiyi sınamak değil.
     await repository.awardQuizCoins(
       score: 1000,
       correctCount: 20,
       totalQuestions: 20,
       bestStreak: 10,
+      room: repository.createRoom().copyWith(id: 'seed-room'),
     );
     await tester.pumpWidget(
       testShell(
@@ -93,7 +97,7 @@ void main() {
 
       // İpucu görünür, Piştre kilitli (answered değil) ama ekran takılı değil:
       // kalan şıklar hâlâ seçilebilir.
-      expect(find.text('Çift cevap: bir şık daha seç'), findsOneWidget);
+      expect(find.text('Çift cevap: bir cevap daha ver'), findsOneWidget);
       expect(nextButtonCallback(tester), isNull);
 
       // İkinci deneme: doğru şık → reveal → Piştre aktif

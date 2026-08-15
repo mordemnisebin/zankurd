@@ -5,6 +5,28 @@ import '../providers/reduced_motion_provider.dart';
 final RouteObserver<ModalRoute<dynamic>> appRouteObserver =
     RouteObserver<ModalRoute<dynamic>>();
 
+/// Yalnız SAYFA geçişlerini bildiren gözlemci.
+///
+/// [appRouteObserver] her `ModalRoute` için haber verir — diyaloglar ve alt
+/// sayfalar dâhil, çünkü ikisi de `PopupRoute extends ModalRoute`. Oda devam
+/// mantığı bunu ister: bir açılır pencere kapandığında kabuk yeniden
+/// "görünür" olur ve ertelenmiş devam denemesi orada uyanır.
+///
+/// Sekme tazelemesi istemez. 2026-08-12'de tazeleme de aynı gözlemciye
+/// bağlanmıştı ve bedeli görünürdü: profil sekmesinde "Çıkış yap" diyaloğunu
+/// İPTAL etmek ekranı iskelete döndürüyor; ad, istatistik, etiket ve avatar
+/// yeniden çekiliyordu — hiçbir şeyi değiştirmemiş bir iptalden sonra. Ana
+/// ekranda zincir dondurma sayfasını kapatmak yedi yükleme tetikliyordu,
+/// biri ağ üzerinden bakiye.
+///
+/// Ayrı bir gözlemci gerekiyor, mevcut olanın türünü daraltmak yetmiyor: oda
+/// devamının uyanışı bütün `ModalRoute` kapanışlarını görmek zorunda.
+///
+/// `AppRoute` bir `PageRouteBuilder`, kabuğun kendi rotası da bir
+/// `PageRoute`; dolayısıyla tur → sonuç → geri yolu buradan da haber alır.
+final RouteObserver<PageRoute<dynamic>> appPageRouteObserver =
+    RouteObserver<PageRoute<dynamic>>();
+
 /// Tüm sayfa geçişleri için standart fade+slide animasyonu.
 class AppRoute<T> extends PageRouteBuilder<T> {
   AppRoute({required Widget page, super.settings})

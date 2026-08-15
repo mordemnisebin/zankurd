@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_closeup",
+  "sourceTitle": "BFI — Close-up künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/3b863389-5735-5b97-86c2-7e52217a7517/close-up",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: Close-up",
+    "Directed by: Abbas Kiarostami",
+    "Year: 1989",
+    "Country: Iran"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "447acfadf475f7d1"
+}

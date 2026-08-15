@@ -13,6 +13,7 @@ import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
 import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
+import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
@@ -29,10 +30,12 @@ import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
 import '../services/room_result_presentation.dart';
 import '../services/tts_service.dart';
+import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/mission_toast.dart';
@@ -135,6 +138,12 @@ typedef _QuizCoinSettlement = ({
   bool rewardQueued,
   bool isDurable,
   String ownerUserId,
+
+  /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
+  ///
+  /// Sonuç ekranı bunu ayırt edemezse oyuncuya "+0 jeton" gösterip
+  /// sebebini söylemez; sıfır tek başına belirsizdir.
+  bool dailyCapReached,
 });
 
 class _OpponentAnswer {
@@ -210,7 +219,32 @@ class _QuizScreenState extends State<QuizScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
-  bool get _usesTimer => widget.enableTimer && !_isLearningExperience;
+
+  /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik
+  /// turlar.
+  ///
+  /// Sınır keyfî değil, ödül yerleşiminin sınırıyla aynı:
+  /// `_settleQuizReward` bu koşulda erken dönüp sıfır coin veriyor
+  /// (`widget.practice || widget.room.id == null`). Yani burada sayacı
+  /// kapatmak hiçbir sunucu ödülünü, lig puanını ya da rakip karşılaşmasını
+  /// etkilemiyor — kapanan tek şey oyuncunun kendi üzerindeki baskı.
+  ///
+  /// Oda, 1v1, günlük tur, bot yarışı ve turnuva her hâlükârda sayaçlı
+  /// kalır: orada süre puanın parçasıdır.
+  bool get _isRewardNeutralSolo =>
+      !widget.is1v1 &&
+      !widget.dailyQuiz &&
+      !widget.botRace &&
+      (widget.practice || widget.room.id == null);
+
+  /// Kullanıcı tercihi build sırasında okunur; `_untimedPreference`
+  /// `didChangeDependencies` içinde tazelenir (sağlayıcı yoksa `false`).
+  bool _untimedPreference = false;
+
+  bool get _usesTimer =>
+      widget.enableTimer &&
+      !_isLearningExperience &&
+      !(_untimedPreference && _isRewardNeutralSolo);
 
   /// Analytics'te "hangi modda oynanıyor" ayrımı için (quiz_start event'i).
   String get _quizModeLabel {
@@ -375,6 +409,13 @@ class _QuizScreenState extends State<QuizScreen>
 
   QuizQuestion get question => _questions[index];
   bool get answered => selectedAnswer.isNotEmpty;
+  bool? get _currentAnswerAdjudication {
+    for (final record in answerRecords.reversed) {
+      if (record.id == question.id) return record.isCorrect;
+    }
+    return null;
+  }
+
   bool get isLastQuestion => index == widget.questions.length - 1;
   bool get _isSoloMode => widget.room.id == null;
 
@@ -393,6 +434,14 @@ class _QuizScreenState extends State<QuizScreen>
     final myIndex = livePlayers.indexWhere(_isMe);
     if (myIndex == -1) return widget.room;
     return widget.room.copyWith(players: [livePlayers[myIndex], ..._opponents]);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Tercih tur BAŞLARKEN okunur ve tur boyunca sabit kalır: oyuncu tur
+    // ortasında ayarı değiştirse bile sayaç ortada belirip kaybolmamalı.
+    _untimedPreference = UntimedModeProvider.isEnabledIn(context);
   }
 
   @override
@@ -1327,10 +1376,27 @@ class _QuizScreenState extends State<QuizScreen>
         if (_timerController.isAnimating) {
           _timerController.stop();
           _questionStopwatch.stop();
+          _timerPausedByLifecycle = true;
         }
       case AppLifecycleState.resumed:
         // Süre baştan başlamaz; kaldığı yerden akar.
-        if (!_timerController.isAnimating && _timerController.value > 0) {
+        //
+        // Koşul YALNIZCA "biz durdurduysak" olmalı. Eskiden
+        // `!isAnimating && value > 0` yeterdi ve bu, HİÇ BAŞLAMAMIŞ bir
+        // sayacı da geçiriyordu: `AnimationController` 1.0 değeriyle
+        // kurulur, yani soru henüz açılmamışken de `value > 0` doğrudur.
+        // Soru açılışı beklemek zorunda kalabilir — görsel yüklenene kadar
+        // akış kapıda durur ve ilk turda rehber örtüsü okunur. O pencerede
+        // uygulamayı arka plana atıp dönen oyuncunun sayacı, soru daha
+        // ekranda yokken işlemeye başlıyordu; yavaş bir görselde soru hiç
+        // görülmeden süresi dolabiliyordu (2026-08-12 denetimi).
+        final resume = shouldResumeQuestionTimer(
+          pausedByLifecycle: _timerPausedByLifecycle,
+          isAnimating: _timerController.isAnimating,
+          timerValue: _timerController.value,
+        );
+        _timerPausedByLifecycle = false;
+        if (resume) {
           _timerController.reverse();
           _questionStopwatch.start();
         }
@@ -2329,6 +2395,18 @@ class _QuizScreenState extends State<QuizScreen>
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
 
+  /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
+  ///
+  /// Sonuç ekranı bunu bilmezse "+0 jeton" gösterip sebebini söylemez.
+  bool _rewardDailyCapReached = false;
+
+  /// Sayacı UYGULAMA ARKA PLANA GİTTİĞİ için biz mi durdurduk?
+  ///
+  /// Dönüşte yalnız kendi durdurduğumuzu sürdürürüz. "Duruyor ve değeri
+  /// sıfırdan büyük" ölçütü yetmez: `AnimationController` 1.0 ile kurulur,
+  /// yani hiç başlamamış bir sayaç da o ölçütü geçer.
+  bool _timerPausedByLifecycle = false;
+
   Future<_QuizCoinSettlement> _settleCoins({
     required int score,
     required int correctCount,
@@ -2336,17 +2414,27 @@ class _QuizScreenState extends State<QuizScreen>
     required int totalQuestions,
   }) async {
     final rewardOwnerId = widget.repository.currentUserId?.trim() ?? '';
-    if (widget.practice || widget.room.id == null) {
+    // Alıştırma (yanlış tekrarı) bilerek ödülsüz: aynı sorular tekrar
+    // çözülüyor, yeni bir tur değil.
+    //
+    // Solo tur ise 2026-08-10'a kadar burada erken dönüyordu ve sıfır
+    // jeton veriyordu — yani ürünün ANA döngüsü, çevrimdışı tek başına
+    // oynamak, hiçbir şey kazandırmıyordu. Artık `claim_solo_reward`
+    // RPC'sine gidiyor: sunucu turu doğrulayamaz (çevrimdışı banka
+    // istemcide) ama talebi günlük tavanla sınırlar.
+    if (widget.practice) {
       return (
         coinsAwarded: 0,
         rewardQueued: false,
         isDurable: true,
         ownerUserId: rewardOwnerId,
+        dailyCapReached: false,
       );
     }
     var amount = 0;
     var rewardQueued = false;
     var durable = false;
+    var dailyCapReached = false;
     // "Sunucu 0 verdi" ile "sunucuya ulaşılamadı" aynı şey değil.
     //
     // Eskiden yalnız `amount <= 0`a bakılıyordu. Sunucu düşük skora
@@ -2358,13 +2446,15 @@ class _QuizScreenState extends State<QuizScreen>
     // ekranında görüldü.
     var awardFailed = false;
     try {
-      amount = await widget.repository.awardQuizCoins(
+      final claim = await widget.repository.awardQuizCoins(
         score: score,
         correctCount: correctCount,
         bestStreak: bestStreak,
         totalQuestions: totalQuestions,
         room: widget.room,
       );
+      amount = claim.amount;
+      dailyCapReached = claim.dailyCapReached;
       durable = true;
     } catch (error, stack) {
       awardFailed = true;
@@ -2381,6 +2471,7 @@ class _QuizScreenState extends State<QuizScreen>
         return (
           coinsAwarded: amount,
           rewardQueued: false,
+          dailyCapReached: dailyCapReached,
           isDurable: false,
           ownerUserId: rewardOwnerId,
         );
@@ -2412,6 +2503,7 @@ class _QuizScreenState extends State<QuizScreen>
       rewardQueued: rewardQueued,
       isDurable: durable,
       ownerUserId: rewardOwnerId,
+      dailyCapReached: dailyCapReached,
     );
   }
 
@@ -2422,19 +2514,40 @@ class _QuizScreenState extends State<QuizScreen>
     required int totalQuestions,
   }) async {
     _rewardQueued = false;
+    // Alıştırma turu bilerek ödülsüz: aynı sorular tekrar çözülüyor.
     if (widget.practice) return 0;
-    if (widget.room.id == null) return 0;
+    // Burada bir zamanlar `if (widget.room.id == null) return 0;` duruyordu
+    // ve solo turu ödül yolundan tamamen çıkarıyordu.
+    //
+    // Kapı, sunucunun odasız turu ödüllendiremediği dönemde doğruydu:
+    // `claim_quiz_reward` `p_room_id is null` gördüğünde `verification_
+    // required` dönüyordu, yani çağrı boşunaydı. 2026-08-10'da solo tur için
+    // ayrı bir RPC yazıldı (`claim_solo_reward`) ve depo odasız çağrıyı ona
+    // yönlendirmeye başladı — ama BU kapı yerinde kaldı. Sonuç: yeni RPC
+    // istemciden hiç çağrılmadı; ölü koda göç yazılmıştı.
+    //
+    // Sessizdi çünkü kapının `_settleCoins` içinde bir ikizi vardı; oradaki
+    // kaldırılınca sorun çözülmüş göründü ve solo ödülü uçtan uca kuran bir
+    // test yoktu (2026-08-12 denetimi).
+    //
+    // Göç uygulanmamışken de güvenli: depo `42883`ü yakalar, sıfır döner ve
+    // kuyruğa hiçbir şey koymaz.
     final settlement = await _settleCoins(
       score: score,
       correctCount: correctCount,
       bestStreak: bestStreak,
       totalQuestions: totalQuestions,
     );
+    // Açık if/else bilerek korunuyor: `quiz_reward_offline_claim_test`
+    // kaynağı okuyup `_rewardQueued = true;` atamasının YALNIZ kuyruk
+    // gerçekten dolduğunda yapıldığını doğruluyor. Tek satırlık atama aynı
+    // şeyi yapar ama o bekçiyi kör eder.
     if (settlement.rewardQueued) {
       _rewardQueued = true;
     } else {
       _rewardQueued = false;
     }
+    _rewardDailyCapReached = settlement.dailyCapReached;
     return settlement.coinsAwarded;
   }
 
@@ -3079,7 +3192,7 @@ class _QuizScreenState extends State<QuizScreen>
     if (!_usesServerHiddenAnswers &&
         _wildcard.doubleAnswerActivated &&
         _firstAttemptAnswer.isEmpty &&
-        answer != question.correctAnswer) {
+        !question.acceptsAnswer(answer)) {
       HapticFeedback.heavyImpact();
       setState(() => _firstAttemptAnswer = answer);
       // Geri sayımı SÜRDÜR. `_answer` en başta `_timerController.stop()`
@@ -3213,6 +3326,7 @@ class _QuizScreenState extends State<QuizScreen>
         }
         _recordAnswer(
           answer,
+          isCorrect: isCorrect,
           responseMs: responseMs,
           pointsEarned: result['points'] as int? ?? 0,
         );
@@ -3262,7 +3376,7 @@ class _QuizScreenState extends State<QuizScreen>
       }
       // Fallback local logic if network fails during answer submit
       if (!mounted || index != questionIndex) return;
-      final correct = answer == question.correctAnswer;
+      final correct = question.acceptsAnswer(answer);
       _trackMistake(correct);
       if (correct) {
         HapticFeedback.mediumImpact();
@@ -3292,6 +3406,7 @@ class _QuizScreenState extends State<QuizScreen>
         }
         _recordAnswer(
           answer,
+          isCorrect: correct,
           responseMs: responseMs,
           pointsEarned: correct ? (100 + (streak * 10).clamp(0, 50)) : 0,
         );
@@ -3347,6 +3462,7 @@ class _QuizScreenState extends State<QuizScreen>
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
             rewardQueued: _rewardQueued,
+            dailyCapReached: _rewardDailyCapReached,
             opponents: widget.is1v1 && widget.room.id != null
                 ? _opponents.toList()
                 : (_botRace?.toPlayers() ?? const []),
@@ -3404,6 +3520,7 @@ class _QuizScreenState extends State<QuizScreen>
 
   void _recordAnswer(
     String answer, {
+    required bool isCorrect,
     required int responseMs,
     required int pointsEarned,
   }) {
@@ -3423,6 +3540,7 @@ class _QuizScreenState extends State<QuizScreen>
       imageUrl: question.imageUrl,
       responseMs: responseMs,
       pointsEarned: pointsEarned,
+      adjudicatedCorrect: isCorrect,
     );
 
     if (existingIndex == -1) {

@@ -111,6 +111,14 @@ class Tr {
     K.appLanguage: {'ku': 'Zimanê sepanê', 'tr': 'Uygulama dili'},
     K.darkLightMode: {'ku': 'Moda tarî/ronahî', 'tr': 'Karanlık/Aydınlık mod'},
     K.reduceMotion: {'ku': 'Tevgerê kêm bike', 'tr': 'Hareketi azalt'},
+    // Görselin kendi betimlemesi yoksa ekran okuyucuya okunan genel etiket.
+    K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
+    K.untimedSolo: {'ku': 'Moda bêsînor', 'tr': 'Süresiz mod'},
+    K.untimedSoloSub: {
+      'ku': 'Di tûrên tenê de saet nasekine; oda, 1v1 û turnûva naguhere.',
+      'tr':
+          'Tek kişilik turlarda sayaç çalışmaz; oda, 1v1 ve turnuva değişmez.',
+    },
     K.secSoundNotif: {'ku': 'Deng û Agahdarî', 'tr': 'Ses ve Bildirim'},
     K.soundEffects: {'ku': 'Deng û mûzîk', 'tr': 'Ses efektleri'},
     K.dailyReminder: {'ku': 'Bîranîna rojane', 'tr': 'Günlük hatırlatıcı'},
@@ -1185,6 +1193,10 @@ class Tr {
     // Kurmancî'de "zêr"in `z`si. Sabit `c` yazıldığında Kurmancî oyuncu
     // fiyat rozetinde anlamsız bir harf görüyordu (2026-08-01).
     K.coinAbbrev: {'ku': 'z', 'tr': 'c'},
+    K.soloDailyCapReached: {
+      'ku': 'Sînorê jetonan ê îro tije bû — sibê ji nû ve dest pê dike.',
+      'tr': 'Bugünün jeton sınırına ulaştın — yarın sıfırlanır.',
+    },
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
     K.listenExplanation: {'ku': 'Şîroveyê bibihîze', 'tr': 'Açıklamayı dinle'},
     K.listenQuestion: {'ku': 'Pirsê bibihîze', 'tr': 'Soruyu dinle'},
@@ -1197,8 +1209,8 @@ class Tr {
       'tr': 'Yeşil = doğru, kırmızı = yanlış',
     },
     K.doubleAnswerHint: {
-      'ku': 'Bersiva ducarî: bijareke din hilbijêre',
-      'tr': 'Çift cevap: bir şık daha seç',
+      'ku': 'Bersiva ducarî: bersiveke din bide',
+      'tr': 'Çift cevap: bir cevap daha ver',
     },
     K.difficultyHard: {'ku': 'Dijwar', 'tr': 'Zor'},
     K.difficultyMedium: {'ku': 'Navîn', 'tr': 'Orta'},
@@ -1400,6 +1412,14 @@ class Tr {
     K.needTwoPlayers: {
       'ku': 'Ji bo destpêkirina pêşbirkê herî kêm 2 lîstikvan divên.',
       'tr': 'Yarışı başlatmak için en az 2 oyuncu olmalı.',
+    },
+    K.waitingOpponentReady: {
+      'ku': 'Li bendê ne ku hemû lîstikvan amade bibin.',
+      'tr': 'Tüm oyuncuların hazır olması bekleniyor.',
+    },
+    K.tapReadyToStart: {
+      'ku': 'Gava amade bî, "Ez amade me" veke.',
+      'tr': 'Hazır olduğunda "Hazırım" anahtarını aç.',
     },
     K.preparingShort: {'ku': 'Tê Amadekirin', 'tr': 'Hazırlanıyor'},
     K.startRace: {'ku': 'Dest bi Pêşbirkê Bike', 'tr': 'Yarışı Başlat'},
@@ -2141,6 +2161,10 @@ class Tr {
     K.correctBadge: {'ku': 'RAST', 'tr': 'DOĞRU'},
     K.wrongBadge: {'ku': 'ŞAŞ', 'tr': 'YANLIŞ'},
     K.questionIndex: {'ku': 'Pirs {index}', 'tr': 'Soru {index}'},
+    K.yourAnswer: {
+      'ku': 'Bersiva te: {answer}',
+      'tr': 'Senin cevabın: {answer}',
+    },
 
     // ── Ayarlar — kalan metinler ──────────────────────────────────
     K.playerNameLoadFailed: {
@@ -2439,6 +2463,9 @@ class K {
   static const appLanguage = 'settings.appLanguage';
   static const darkLightMode = 'settings.darkLightMode';
   static const reduceMotion = 'settings.reduceMotion';
+  static const questionImage = 'quiz.questionImage';
+  static const untimedSolo = 'settings.untimedSolo';
+  static const untimedSoloSub = 'settings.untimedSoloSub';
   static const secSoundNotif = 'settings.section.soundNotif';
   static const soundEffects = 'settings.soundEffects';
   static const dailyReminder = 'settings.dailyReminder';
@@ -2897,6 +2924,12 @@ class K {
   static const streakWord = 'quiz.streak';
   static const coinWord = 'quiz.coin';
   static const coinAbbrev = 'quiz.coin.abbrev';
+
+  /// Solo turda günlük jeton tavanına varıldığında gösterilen satır.
+  ///
+  /// Sunucu tavanı açıkça bildiriyor; istemci bunu göstermezse oyuncu
+  /// "+0 jeton" görüp sebebini öğrenemez.
+  static const soloDailyCapReached = 'quiz.reward.soloDailyCap';
   static const stopAction = 'common.stop';
   static const listenExplanation = 'quiz.listenExplanation';
   static const listenQuestion = 'quiz.listenQuestion';
@@ -2991,6 +3024,8 @@ class K {
   static const imReady = 'room.imReady';
   static const readyStateNote = 'room.readyStateNote';
   static const needTwoPlayers = 'room.needTwoPlayers';
+  static const waitingOpponentReady = 'room.waitingOpponentReady';
+  static const tapReadyToStart = 'room.tapReadyToStart';
   static const preparingShort = 'room.preparing';
   static const startRace = 'room.startRace';
   static const waitingHost = 'room.waitingHost';
@@ -3297,6 +3332,7 @@ class K {
   static const correctBadge = 'review.badge.correct';
   static const wrongBadge = 'review.badge.wrong';
   static const questionIndex = 'review.questionIndex';
+  static const yourAnswer = 'review.yourAnswer';
 
   // ── Ayarlar — kalan metinler ──────────────────────────────────
   static const playerNameLoadFailed = 'settings.playerName.loadFailed';

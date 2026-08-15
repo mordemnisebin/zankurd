@@ -1,0 +1,45 @@
+{
+  "sourcePackId": "pack_noaa_weather_climate",
+  "sourceTitle": "NOAA — What is the difference between weather and climate?",
+  "institution": "NOAA",
+  "sourceReference": "https://oceanservice.noaa.gov/facts/weather_climate.html",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "targetCategory": "Cografya",
+  "packStatus": "REJECTED_LANGUAGE_CONCEPT_MISMATCH",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "Weather refers to short term atmospheric conditions on a given day",
+    "Climate is the average of daily weather for a location over a long period of time",
+    "Weather can change from minute-to-minute, hour-to-hour, day-to-day, and season-to-season"
+  ],
+  "extractedClaims": [
+    {
+      "claimId": "noaa_wc_01",
+      "claim": "Hava kısa vadeli atmosfer koşullarıdır.",
+      "status": "REJECTED_CONCEPT_MISMATCH"
+    },
+    {
+      "claimId": "noaa_wc_02",
+      "claim": "İklim, uzun bir dönemde havaların ortalamasıdır.",
+      "status": "REJECTED_CONCEPT_MISMATCH"
+    },
+    {
+      "claimId": "noaa_wc_03",
+      "claim": "Hava dakikadan dakikaya değişebilir.",
+      "status": "REJECTED_CONCEPT_MISMATCH"
+    }
+  ],
+  "authoringBlocker": {
+    "blockedDistinction": "weather (hava) vs climate (iklim)",
+    "resolution": "ARAŞTIRILDI VE ÇÖZÜLDÜ — ama sonuç: soru Kurmancî'de doğal kurulamıyor.",
+    "evidence": "ku.wiktionary `avhewa` -> `avûhewa` varyantı. `avûhewa` girdisi: \"îklîm, seqa, keş, hewa\" — yani TEK sözcük hem iklimi hem havayı kapsıyor. Etimoloji: av (su) + û (ve) + hewa (hava).",
+    "whyRejectedNotDeferred": "Bu bir terim EKSİKLİĞİ değil, kavram HARİTASI farkı. NOAA'nın üç claim'i de İngilizce'nin weather/climate keskin ayrımına dayanıyor; Kurmancî bu ayrımı aynı biçimde yapmıyor. Terim bulunsa bile soru, dilin kendi kavram yapısına aykırı bir ayrımı dayatırdı.",
+    "whatWouldBeWrong": "`hewa` = hava, `avûhewa` = iklim diye zorlamak sözlüğün söylemediği bir sınır çizmek olurdu. Oyuncu yanlış bir ayrımı doğru sanıp öğrenirdi — uydurma terimden farkı yok.",
+    "lessonRecorded": "Yeni blokaj türü: kaynak sağlam, terimler yerleşik, ama SORU kaynak dilin kavram ayrımını taşıyor ve hedef dilde o ayrım yok. Çeviri değil, kavramsallaştırma sorunu."
+  },
+  "sourceHash": "65fa87fb90f9696c",
+  "alternativeUse": "Aynı sayfadaki 'hava dakikadan dakikaya değişir' olgusu, ayrım kurmadan tek başına sorulabilir; ileride `hewa` girdisi okunursa değerlendirilecek."
+}

@@ -1,0 +1,59 @@
+{
+  "sourcePackId": "pack_noaa_how_many_oceans",
+  "sourceTitle": "NOAA Ocean Service — How many oceans are there?",
+  "institution": "NOAA (National Oceanic and Atmospheric Administration)",
+  "sourceReference": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "targetCategory": "Cografya",
+  "copyrightNotes": "Kısa olgu ifadeleri.",
+  "exactSourceStatements": [
+    "There is only one global ocean",
+    "Historically, there are four named oceans: the Atlantic, Pacific, Indian, and Arctic",
+    "most countries - including the United States - now recognize the Southern (Antarctic) as the fifth ocean",
+    "The boundaries of this ocean were proposed to the International Hydrographic Organization in 2000",
+    "not all countries agree on the proposed boundaries, so this has yet to be ratified by members of the IHO"
+  ],
+  "extractedClaims": [
+    {
+      "claimId": "geo_ocean_01",
+      "claim": "Tarihsel olarak dört adlandırılmış okyanus vardır.",
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "geo_ocean_02",
+      "claim": "Beşinci okyanus olarak Güney (Antarktika) tanınır.",
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "geo_ocean_03",
+      "claim": "Güney Okyanusu sınırları 2000'de IHO'ya önerildi.",
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "geo_ocean_04",
+      "claim": "Yeryüzünde coğrafi olarak tek bir küresel okyanus vardır.",
+      "status": "READY_FOR_AUTHORING"
+    }
+  ],
+  "packStatus": "UNBLOCKED_AUTHORED",
+  "authoringBlocker": {
+    "blockedTerm": "ocean / okyanus",
+    "evidence": "Aktif corpus'ta (2050 soru) `okyan*` deseni SIFIR kez geçiyor. Buna karşılık `çem` 104, `çiya` 119, `gol` 61, `derya` 7, `behr` 6 kez yerleşik. Yani coğrafya terminolojisi genel olarak sağlam ama tam da bu paketin ihtiyaç duyduğu terim yok.",
+    "whyNotSubstituted": "`derya`/`behr` DENİZ demek; okyanus değil. Dört claim de okyanus ile deniz ayrımına dayandığı için ikame yapmak soruyu olgusal olarak bozardı — kaynağın söylemediğini söyletmek olurdu.",
+    "unblockedBy": [
+      "gerçek Kurmancî lexicon girdisi",
+      "yayımlanmış Kurmancî coğrafya metni",
+      "proje editörü kararı (technology_human_review_packet ile aynı akış)"
+    ]
+  },
+  "readyWhenUnblocked": "Terim açıldığı anda dört soru doğrudan yazılabilir; kaynak tarafı tamamlanmış durumda.",
+  "sourceHash": "e134f1c1db49e8c5",
+  "terminologyResolvedBy": {
+    "conceptId": "ku_geo_okyanus",
+    "evidencePage": "https://ku.wiktionary.org/wiki/okyan%C3%BBs",
+    "note": "ku.wiktionary (Wîkîferheng) doğrudan okundu; İngilizce Wiktionary'de denenmemişti."
+  }
+}

@@ -96,42 +96,48 @@ const curatedQuestionBank = <QuizQuestion>[
     // Gövde terimi soruyor, doğru cevap da terimin kendisiydi: soru
     // okumaktan başka bir şey ölçmüyordu (2026-07-26 denetimi). Artık
     // terimin Türkçe karşılığı sorulur.
-    prompt: 'Di gotina «Jin, Jiyan, Azadî» de «jiyan» bi Tirkî çi ye?',
+    prompt: 'Di gotina "Jin, Jiyan, Azadî" de "jiyan" bi Tirkî çi ye?',
     answers: ['yaşam', 'kadın', 'özgürlük', 'örgüt'],
     correctAnswer: 'yaşam',
+    promptTr: '"Jin, Jiyan, Azadî" sözündeki "jiyan" Türkçede ne demektir?',
+    answersTr: ['yaşam', 'kadın', 'özgürlük', 'örgüt'],
+    correctAnswerTr: 'yaşam',
     explanation:
-        '«Jiyan» bi Tirkî «yaşam» e. Di vê gotinê de sê têgeh — jin, jiyan û azadî — bi hev ve tên girêdan.',
+        '"Jiyan" bi Tirkî "yaşam" e. Di vê gotinê de sê têgeh — jin, jiyan û azadî — bi hev ve tên girêdan.',
     difficulty: 1,
     metadata: _anfSource,
     explanationKu:
-        '«Jiyan» bi Tirkî «yaşam» e. Di vê gotinê de sê têgeh — jin, jiyan '
+        '"Jiyan" bi Tirkî "yaşam" e. Di vê gotinê de sê têgeh — jin, jiyan '
         'û azadî — bi hev ve tên girêdan.',
     explanationTr:
-        '«Jiyan» Türkçede «yaşam» demektir. Bu sözde üç kavram — kadın, '
+        '"Jiyan" Türkçede "yaşam" demektir. Bu sözde üç kavram — kadın, '
         'yaşam ve özgürlük — birbirine bağlanır.',
   ),
   QuizQuestion(
     id: 'curated_movement_0002',
     category: 'Siyaset',
-    prompt: 'Peyva Kurmancî «azadî» bi Tirkî çi tê gotin?',
+    prompt: 'Peyva Kurmancî "azadî" bi Tirkî çi tê gotin?',
     answers: ['özgürlük', 'takas', 'tarih', 'yol'],
     correctAnswer: 'özgürlük',
+    promptTr: 'Kurmancî "azadî" sözcüğü Türkçede ne denir?',
+    answersTr: ['özgürlük', 'takas', 'tarih', 'yol'],
+    correctAnswerTr: 'özgürlük',
     explanation:
-        '«Azadî» wateya azadiyê dide; peyv di slogan û gotûbêja mafan de jî gelek tê bikaranîn.',
+        '"Azadî" wateya azadiyê dide; peyv di slogan û gotûbêja mafan de jî gelek tê bikaranîn.',
     difficulty: 1,
     metadata: _anfSource,
     explanationKu:
-        '«Azadî» wateya azadiyê dide; peyv di slogan û gotûbêja mafan de '
+        '"Azadî" wateya azadiyê dide; peyv di slogan û gotûbêja mafan de '
         'gelek tê bikaranîn.',
     explanationTr:
-        '«Azadî» özgürlük demektir; sözcük sloganlarda ve hak '
+        '"Azadî" özgürlük demektir; sözcük sloganlarda ve hak '
         'tartışmalarında sıkça kullanılır.',
   ),
   QuizQuestion(
     id: 'curated_movement_0003',
     category: 'Paradigma',
     prompt:
-        'Di gotûbêja jinan de «jineolojî» bi kîjan ravekirinê re zêdetir tê girêdan?',
+        'Di gotûbêja jinan de "jineolojî" bi kîjan ravekirinê re zêdetir tê girêdan?',
     answers: [
       'Nêzîkatiya zanistî ya li ser jiyana jinan û civakê',
       'Tenê zanista astronomiyê',
@@ -139,6 +145,15 @@ const curatedQuestionBank = <QuizQuestion>[
       'Navê celebekî muzîkê',
     ],
     correctAnswer: 'Nêzîkatiya zanistî ya li ser jiyana jinan û civakê',
+    promptTr:
+        'Kadın tartışmasında "jineolojî" hangi tanımla daha çok ilişkilendirilir?',
+    answersTr: [
+      'Kadın yaşamı ve toplum üzerine bilimsel yaklaşım',
+      'Yalnızca gökbilim',
+      'Para hesaplamak için bir yöntem',
+      'Bir müzik türünün adı',
+    ],
+    correctAnswerTr: 'Kadın yaşamı ve toplum üzerine bilimsel yaklaşım',
     explanation:
         'Jineolojî di edebiyata tevgerê de wek nêzîkatiyek ji bo xwendina jiyana jinan, civakê û têkiliyên hêzê tê pênasekirin.',
     difficulty: 3,
@@ -161,21 +176,29 @@ const curatedQuestionBank = <QuizQuestion>[
       'Cihê ku pirtûk bê xwendin tên veşartin',
     ],
     correctAnswer: 'Cihê ku endam li ser pirsgirêkan diaxivin û biryaran didin',
+    promptTr: 'Toplumda meclis ne yapar?',
+    answersTr: [
+      'Üyelerin sorunları konuşup karar aldığı yer',
+      'Yalnızca şarkı dinlenen yer',
+      'Bir spor dalının adı',
+      'Kitapların okunmadan saklandığı yer',
+    ],
+    correctAnswerTr: 'Üyelerin sorunları konuşup karar aldığı yer',
     explanation:
-        '«Meclîs» civîna hevbeş e. Di modelên xwe-rêxistinkirî de meclîs cihê gotûbêj û biryargirtinê ye.',
+        '"Meclîs" civîna hevbeş e. Di modelên xwe-rêxistinkirî de meclîs cihê gotûbêj û biryargirtinê ye.',
     difficulty: 2,
     metadata: _anfSource,
     explanationKu:
-        '«Meclîs» civîna hevbeş e. Di modelên xwe-rêxistinkirî de meclîs '
+        '"Meclîs" civîna hevbeş e. Di modelên xwe-rêxistinkirî de meclîs '
         'cihê gotûbêj û biryargirtinê ye.',
     explanationTr:
-        '«Meclîs» ortak toplantı demektir. Öz örgütlü modellerde meclis, '
+        '"Meclîs" ortak toplantı demektir. Öz örgütlü modellerde meclis, '
         'tartışma ve karar yeridir.',
   ),
   QuizQuestion(
     id: 'curated_movement_0005',
     category: 'Paradigma',
-    prompt: 'Kîjan ravekirin ji bo «xwe-rêxistin» rast e?',
+    prompt: 'Kîjan ravekirin ji bo "xwe-rêxistin" rast e?',
     answers: [
       'Maf û erkên xwe bi hevkarî rêxistin kirin',
       'Biryarên hemû kesan ji kesekê re hiştin',
@@ -183,22 +206,30 @@ const curatedQuestionBank = <QuizQuestion>[
       'Tenê li ser navên kesan nivîsandin',
     ],
     correctAnswer: 'Maf û erkên xwe bi hevkarî rêxistin kirin',
+    promptTr: '"Öz örgütlenme" için hangi tanım doğrudur?',
+    answersTr: [
+      'Hak ve görevleri dayanışmayla örgütlemek',
+      'Herkesin kararını tek kişiye bırakmak',
+      'Toplumdan uzaklaşmak',
+      'Yalnızca kişi adlarını yazmak',
+    ],
+    correctAnswerTr: 'Hak ve görevleri dayanışmayla örgütlemek',
     explanation:
-        '«Xwe-rêxistin» tê wateya ku kes û kom bi hevkarî kar û biryarên xwe rêxistin dikin.',
+        '"Xwe-rêxistin" tê wateya ku kes û kom bi hevkarî kar û biryarên xwe rêxistin dikin.',
     difficulty: 2,
     metadata: _kjarSource,
     explanationKu:
-        '«Xwe-rêxistin» tê wateya ku kes û kom bi hevkarî kar û biryarên '
+        '"Xwe-rêxistin" tê wateya ku kes û kom bi hevkarî kar û biryarên '
         'xwe bi xwe rêxistin dikin.',
     explanationTr:
-        '«Xwe-rêxistin», kişi ve grupların işlerini ve kararlarını '
+        '"Xwe-rêxistin", kişi ve grupların işlerini ve kararlarını '
         'dayanışmayla kendilerinin örgütlemesidir.',
   ),
   QuizQuestion(
     id: 'curated_movement_0006',
     category: 'Paradigma',
     prompt:
-        'Di vê hevokê de peyva «berxwedan» çi dide zanîn? «Berxwedana wan dom kir.»',
+        'Di vê hevokê de peyva "berxwedan" çi dide zanîn? "Berxwedana wan dom kir."',
     answers: [
       'Ragirtina li hember zordariyê',
       'Rêwîtiya bi balafirê',
@@ -206,21 +237,29 @@ const curatedQuestionBank = <QuizQuestion>[
       'Xwarina taştê',
     ],
     correctAnswer: 'Ragirtina li hember zordariyê',
+    promptTr: 'Şu cümlede "berxwedan" ne anlatır? "Berxwedana wan dom kir."',
+    answersTr: [
+      'Baskıya karşı direnmek',
+      'Uçakla yolculuk',
+      'Alışveriş yapmak',
+      'Kahvaltı etmek',
+    ],
+    correctAnswerTr: 'Baskıya karşı direnmek',
     explanation:
-        '«Berxwedan» di vê hevokê de wateya rawestan û li hember zordariyê ragirtinê dide.',
+        '"Berxwedan" di vê hevokê de wateya rawestan û li hember zordariyê ragirtinê dide.',
     difficulty: 2,
     metadata: _kjarSource,
     explanationKu:
-        '«Berxwedan» di vê hevokê de wateya rawestan û li hember zordariyê '
+        '"Berxwedan" di vê hevokê de wateya rawestan û li hember zordariyê '
         'ragirtinê dide.',
     explanationTr:
-        '«Berxwedan» bu cümlede direnmek ve baskı karşısında ayakta kalmak '
+        '"Berxwedan" bu cümlede direnmek ve baskı karşısında ayakta kalmak '
         'anlamındadır.',
   ),
   QuizQuestion(
     id: 'curated_movement_0007',
     category: 'Siyaset',
-    prompt: 'Di zimanê tevgerên civakî de «serhildan» bi kîjan têgehê nêzîk e?',
+    prompt: 'Di zimanê tevgerên civakî de "serhildan" bi kîjan têgehê nêzîk e?',
     answers: [
       'Rakirina civakî li hember zordariyê',
       'Rojekî bêbaran',
@@ -228,15 +267,24 @@ const curatedQuestionBank = <QuizQuestion>[
       'Rengê kesk',
     ],
     correctAnswer: 'Rakirina civakî li hember zordariyê',
+    promptTr:
+        'Toplumsal hareketlerin dilinde "serhildan" hangi kavrama yakındır?',
+    answersTr: [
+      'Baskıya karşı toplumsal ayağa kalkış',
+      'Yağmursuz bir gün',
+      'Bir çocuk oyunu',
+      'Yeşil rengi',
+    ],
+    correctAnswerTr: 'Baskıya karşı toplumsal ayağa kalkış',
     explanation:
-        '«Serhildan» bi rabûn û hereketeke civakî li hember zordariyê re têkildar e. Wateya wê li gorî kontekstê dikare hinekî biguhere.',
+        '"Serhildan" bi rabûn û hereketeke civakî li hember zordariyê re têkildar e. Wateya wê li gorî kontekstê dikare hinekî biguhere.',
     difficulty: 3,
     metadata: _kjarSource,
     explanationKu:
-        '«Serhildan» bi rabûn û tevgereke civakî ya li hember zordariyê re '
+        '"Serhildan" bi rabûn û tevgereke civakî ya li hember zordariyê re '
         'têkildar e; wateya wê li gorî kontekstê diguhere.',
     explanationTr:
-        '«Serhildan», baskıya karşı ayaklanma ve toplumsal hareketle '
+        '"Serhildan", baskıya karşı ayaklanma ve toplumsal hareketle '
         'ilgilidir; anlamı bağlama göre değişir.',
   ),
   QuizQuestion(
@@ -251,6 +299,15 @@ const curatedQuestionBank = <QuizQuestion>[
       'Zivistan û sarma',
     ],
     correctAnswer: 'Hêvî û vejîn',
+    promptTr:
+        'Görselde Newroz ateşi görünüyor. Kültürde ve toplumsal bellekte ateş hangi kavramla daha çok ilişkilendirilir?',
+    answersTr: [
+      'Umut ve yeniden doğuş',
+      'Sessizlik ve unutuş',
+      'Pazar ve ticaret',
+      'Kış ve soğuk',
+    ],
+    correctAnswerTr: 'Umut ve yeniden doğuş',
     explanation:
         'Agirê Newrozê di gelek vegotinên Kurdan de bi ronahî, hêvî û vejîna nû re tê girêdan.',
     difficulty: 2,
@@ -267,42 +324,48 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_movement_0009',
     category: 'Çand',
-    prompt: '«Newroz» ji aliyê wateya peyvê ve bi kîjan ravekirinê re nêzîk e?',
+    prompt: '"Newroz" ji aliyê wateya peyvê ve bi kîjan ravekirinê re nêzîk e?',
     answers: ['Roja nû', 'Şeva dirêj', 'Bara kevn', 'Dengê bilind'],
     correctAnswer: 'Roja nû',
+    promptTr: '"Newroz" sözcük anlamı bakımından hangi karşılığa yakındır?',
+    answersTr: ['Yeni gün', 'Uzun gece', 'Eski yük', 'Yüksek ses'],
+    correctAnswerTr: 'Yeni gün',
     explanation:
-        'Newroz bi têgeha «roja nû» re tê şirovekirin û wek destpêka demsala biharê tê pîroz kirin.',
+        'Newroz bi têgeha "roja nû" re tê şirovekirin û wek destpêka demsala biharê tê pîroz kirin.',
     difficulty: 2,
     metadata: _kongraStarSource,
     explanationKu:
-        'Newroz bi têgeha «roja nû» re tê şirovekirin û wek destpêka '
+        'Newroz bi têgeha "roja nû" re tê şirovekirin û wek destpêka '
         'demsala biharê tê pîrozkirin.',
     explanationTr:
-        'Newroz «yeni gün» kavramıyla açıklanır ve baharın başlangıcı '
+        'Newroz "yeni gün" kavramıyla açıklanır ve baharın başlangıcı '
         'olarak kutlanır.',
   ),
   QuizQuestion(
     id: 'curated_movement_0010',
     category: 'Siyaset',
-    prompt: 'Peyva Kurmancî «rêxistin» bi Tirkî çi tê gotin?',
+    prompt: 'Peyva Kurmancî "rêxistin" bi Tirkî çi tê gotin?',
     answers: ['örgüt', 'su', 'kitap', 'yağmur'],
     correctAnswer: 'örgüt',
-    explanation: '«Rêxistin» wateya rêkxistin û rêxistina kesan an koman dide.',
+    promptTr: 'Kurmancî "rêxistin" sözcüğü Türkçede ne denir?',
+    answersTr: ['örgüt', 'su', 'kitap', 'yağmur'],
+    correctAnswerTr: 'örgüt',
+    explanation: '"Rêxistin" wateya rêkxistin û rêxistina kesan an koman dide.',
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/cat_siyaset.webp',
     metadata: _kongraStarSource,
     explanationKu:
-        '«Rêxistin» wateya rêkxistinê û rêxistina kes an koman dide.',
+        '"Rêxistin" wateya rêkxistinê û rêxistina kes an koman dide.',
     explanationTr:
-        '«Rêxistin», düzenleme ve kişilerin ya da grupların örgütlenmesi'
+        '"Rêxistin", düzenleme ve kişilerin ya da grupların örgütlenmesi'
         'anlamına gelir.',
   ),
   QuizQuestion(
     id: 'curated_movement_0011',
     category: 'Paradigma',
     prompt:
-        'Kîjan hevok li ser «demokratîk konfederalîzm» bi awayekî herî rast têgihiştinê dide?',
+        'Kîjan hevok li ser "demokratîk konfederalîzm" bi awayekî herî rast têgihiştinê dide?',
     answers: [
       'Modela hevkarî û meclîsan a ku ji civakê ber bi jor ve ava dibe',
       'Rêbazek ku hemû biryarên civakê dide destê yek kesî',
@@ -311,6 +374,16 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer:
         'Modela hevkarî û meclîsan a ku ji civakê ber bi jor ve ava dibe',
+    promptTr:
+        '"Demokratik konfederalizm" için hangi cümle en doğru anlayışı verir?',
+    answersTr: [
+      'Toplumdan yukarı doğru kurulan meclis ve dayanışma modeli',
+      'Toplumun bütün kararlarını tek kişiye veren yöntem',
+      'Yalnızca futbol seçimi için bir yöntem',
+      'Bir meteoroloji sisteminin adı',
+    ],
+    correctAnswerTr:
+        'Toplumdan yukarı doğru kurulan meclis ve dayanışma modeli',
     explanation:
         'Di nivîsarên tevgerê de ev têgeh bi meclîs, komîn, hevkarî û biryargirtina ji jêr ve tê şirovekirin.',
     difficulty: 4,
@@ -326,7 +399,7 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0012',
     category: 'Siyaset',
     prompt:
-        'Di hevoka «Jin di meclîsê de dengê xwe bilind kir» de «dengê xwe bilind kir» çi tê wate kirin?',
+        'Di hevoka "Jin di meclîsê de dengê xwe bilind kir" de "dengê xwe bilind kir" çi tê wate kirin?',
     answers: [
       'Raman û daxwaza xwe eşkere kir',
       'Bi dengê muzîkê razî bû',
@@ -334,15 +407,24 @@ const curatedQuestionBank = <QuizQuestion>[
       'Pirtûkek danî serê xwe',
     ],
     correctAnswer: 'Raman û daxwaza xwe eşkere kir',
+    promptTr:
+        '"Jin di meclîsê de dengê xwe bilind kir" cümlesinde "dengê xwe bilind kir" ne anlama gelir?',
+    answersTr: [
+      'Düşüncesini ve talebini açıkça dile getirdi',
+      'Müziğin sesine razı oldu',
+      'Meclisten çıktı',
+      'Başına kitap koydu',
+    ],
+    correctAnswerTr: 'Düşüncesini ve talebini açıkça dile getirdi',
     explanation:
-        'Di zimanê civakî de «dengê xwe bilind kirin» pir caran wateya axaftin û parastina maf û daxwazên xwe dide.',
+        'Di zimanê civakî de "dengê xwe bilind kirin" pir caran wateya axaftin û parastina maf û daxwazên xwe dide.',
     difficulty: 3,
     metadata: _kongraStarSource,
     explanationKu:
-        'Di zimanê civakî de «dengê xwe bilind kirin» pir caran wateya '
+        'Di zimanê civakî de "dengê xwe bilind kirin" pir caran wateya '
         'axaftin û parastina maf û daxwazên xwe dide.',
     explanationTr:
-        'Toplumsal dilde «sesini yükseltmek» çoğu zaman konuşmak ve kendi '
+        'Toplumsal dilde "sesini yükseltmek" çoğu zaman konuşmak ve kendi '
         'hak ve taleplerini savunmak demektir.',
   ),
   QuizQuestion(
@@ -357,6 +439,16 @@ const curatedQuestionBank = <QuizQuestion>[
       'Hemû ziman di hemû cihan de yek in',
     ],
     correctAnswer: 'Ziman dikare hafiza, çand û nasnameya civakê hilgire',
+    promptTr:
+        'Dil ile kimlik arasındaki ilişkiyi anlamak için hangi cümle en uygundur?',
+    answersTr: [
+      'Dil toplumun belleğini, kültürünü ve kimliğini taşıyabilir',
+      'Dil yalnızca hesap yapmak içindir',
+      'Dilin kültürle ilişkisi yoktur',
+      'Bütün diller her yerde aynıdır',
+    ],
+    correctAnswerTr:
+        'Dil toplumun belleğini, kültürünü ve kimliğini taşıyabilir',
     explanation:
         'Ziman tenê amûra ragihandinê nîne; ew dikare çîrok, bîranîn û awayê dîtina civakê jî hilgire.',
     difficulty: 3,
@@ -372,7 +464,7 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0014',
     category: 'Siyaset',
     prompt:
-        '«Hevserokî» di rêxistina civakî de bi kîjan armancê re têkildar e?',
+        '"Hevserokî" di rêxistina civakî de bi kîjan armancê re têkildar e?',
     answers: [
       'Parvekirina berpirsiyariyê di navbera du hevserokan de',
       'Hilweşandina hemû meclîsan',
@@ -380,6 +472,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Rêxistina çalakiyên werzîşê',
     ],
     correctAnswer: 'Parvekirina berpirsiyariyê di navbera du hevserokan de',
+    promptTr: 'Toplumsal örgütlenmede "eşbaşkanlık" hangi amaçla ilgilidir?',
+    answersTr: [
+      'Sorumluluğun iki eşbaşkan arasında paylaşılması',
+      'Bütün meclislerin dağıtılması',
+      'Yalnızca tek bir sesin seçilmesi',
+      'Spor etkinliklerinin düzenlenmesi',
+    ],
+    correctAnswerTr: 'Sorumluluğun iki eşbaşkan arasında paylaşılması',
     explanation:
         'Hevserokî têgehek e ku berpirsiyariya rêveberiyê di navbera du kesan de parve dike; di nîqaşên tevgerê de bi wekheviyê re tê girêdan.',
     difficulty: 4,
@@ -395,9 +495,13 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0015',
     category: 'Paradigma',
     prompt:
-        'Rast e yan şaş e? «Xwe-rêxistin tenê ji bo kesên ku li bajarên mezin dijîn e.»',
+        'Rast e yan şaş e? "Xwe-rêxistin tenê ji bo kesên ku li bajarên mezin dijîn e."',
     answers: ['Rast e', 'Şaş e'],
     correctAnswer: 'Şaş e',
+    promptTr:
+        'Doğru mu yanlış mı? "Öz örgütlenme yalnızca büyük şehirlerde yaşayanlar içindir."',
+    answersTr: ['Doğru', 'Yanlış'],
+    correctAnswerTr: 'Yanlış',
     explanation:
         'Xwe-rêxistin têgehek e ku dikare di cihên cuda de, di nav kom û civakan de, bi awayên cuda were bikaranîn.',
     difficulty: 2,
@@ -414,9 +518,13 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0016',
     category: 'Siyaset',
     prompt:
-        'Rast e yan şaş e? «Berxwedan» her tim tenê bi awayê çekdarî tê pênasekirin.',
+        'Rast e yan şaş e? "Berxwedan" her tim tenê bi awayê çekdarî tê pênasekirin.',
     answers: ['Rast e', 'Şaş e'],
     correctAnswer: 'Şaş e',
+    promptTr:
+        'Doğru mu yanlış mı? "Direniş" her zaman yalnızca silahlı biçimde tanımlanır.',
+    answersTr: ['Doğru', 'Yanlış'],
+    correctAnswerTr: 'Yanlış',
     explanation:
         'Berxwedan dikare zimanî, çandî, siyasî, civakî û gelek awayên din hebin; ew ne tenê bi awayekê tê pênasekirin.',
     difficulty: 3,
@@ -441,6 +549,15 @@ const curatedQuestionBank = <QuizQuestion>[
       'Ji ber ku dîrok ne pêdivî ye ku were lêkolînkirin',
     ],
     correctAnswer: 'Ji ber ku ezmûn û dengê jinan di dîrokê de xuya dikin',
+    promptTr:
+        'Kadın hareketinin tarihi yazılırken kadınların tanıklığı ve anıları niçin önemlidir?',
+    answersTr: [
+      'Kadınların deneyimi ve sesi tarihte görünür olduğu için',
+      'Yalnızca büyük şehirlerin adları yazıldığı için',
+      'Bütün anılar birbirinin aynı olduğu için',
+      'Tarihin araştırılmasına gerek olmadığı için',
+    ],
+    correctAnswerTr: 'Kadınların deneyimi ve sesi tarihte görünür olduğu için',
     explanation:
         'Bîranîn û şahidî dikarin ezmûnên kesên ku di nivîsarên fermî de kêm tên dîtin nîşan bidin.',
     difficulty: 3,
@@ -456,7 +573,7 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_movement_0018',
     category: 'Cografya',
     prompt:
-        '«Rojava» di navbera têgehên herêmî de bi kîjan aliyê re têkildar e?',
+        '"Rojava" di navbera têgehên herêmî de bi kîjan aliyê re têkildar e?',
     answers: [
       'Rojavayê Kurdistanê',
       'Rojhilatê Kurdistanê',
@@ -464,15 +581,23 @@ const curatedQuestionBank = <QuizQuestion>[
       'Başûrê Kurdistanê',
     ],
     correctAnswer: 'Rojavayê Kurdistanê',
+    promptTr: '"Rojava" bölge kavramları arasında hangi yönle ilgilidir?',
+    answersTr: [
+      'Rojavayê Kurdistanê',
+      'Rojhilatê Kurdistanê',
+      'Bakurê Kurdistanê',
+      'Başûrê Kurdistanê',
+    ],
+    correctAnswerTr: 'Rojavayê Kurdistanê',
     explanation:
-        '«Rojava» di Kurmancî de bi wateya rojava û bi navê herêmî yê Rojavayê Kurdistanê tê bikaranîn.',
+        '"Rojava" di Kurmancî de bi wateya rojava û bi navê herêmî yê Rojavayê Kurdistanê tê bikaranîn.',
     difficulty: 2,
     metadata: _kongraStarSource,
     explanationKu:
-        '«Rojava» di Kurmancî de hem aliyê rojava hem navê herêmî yê '
+        '"Rojava" di Kurmancî de hem aliyê rojava hem navê herêmî yê '
         'Rojavayê Kurdistanê ye.',
     explanationTr:
-        '«Rojava» Kurmancîde hem batı yönü hem de Batı Kürdistan’ın '
+        '"Rojava" Kurmancîde hem batı yönü hem de Batı Kürdistan’ın '
         'bölgesel adıdır.',
   ),
   QuizQuestion(
@@ -486,6 +611,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Ragihandina di navbera mirovan de qebûl neke',
     ],
     correctAnswer: 'Bîranîn û peyamê bi dengê bigihîne',
+    promptTr: 'Kültürde ve direnişte şarkı ne yapabilir?',
+    answersTr: [
+      'Belleği ve mesajı sesle taşıyabilir',
+      'Yalnızca çalgıların adını değiştirir',
+      'Toplumun bütün dillerini ortadan kaldırır',
+      'İnsanlar arasındaki iletişimi reddeder',
+    ],
+    correctAnswerTr: 'Belleği ve mesajı sesle taşıyabilir',
     explanation:
         'Stran dikare bîranîn, hest û peyamên civakî bi awayekî dengdar û hevpar ragihîne.',
     difficulty: 3,
@@ -509,6 +642,15 @@ const curatedQuestionBank = <QuizQuestion>[
       'Rêbernameya rêwîtiyê',
     ],
     correctAnswer: 'Helbest',
+    promptTr:
+        'Hangi yazı türü özgürlük ve bellek duygusunu sanatsal dille aktarabilir?',
+    answersTr: [
+      'Şiir',
+      'Hesap raporu',
+      'Alışveriş listesi',
+      'Yolculuk rehberi',
+    ],
+    correctAnswerTr: 'Şiir',
     explanation:
         'Helbest dikare hest, bîranîn û daxwazên civakî bi zimanekî wêjeyî û xeyalî vegerîne.',
     difficulty: 2,
@@ -524,7 +666,7 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0001',
     category: 'Paradigma',
-    prompt: 'Peyva «jineolojî» çi dihundirîne?',
+    prompt: 'Peyva "jineolojî" çi dihundirîne?',
     answers: [
       'Zanistiya jinê',
       'Zanistiya azadiyê',
@@ -532,15 +674,23 @@ const curatedQuestionBank = <QuizQuestion>[
       'Zanistiya hunerê',
     ],
     correctAnswer: 'Zanistiya jinê',
+    promptTr: '"Jineolojî" sözcüğü neyi içerir?',
+    answersTr: [
+      'Kadın bilimi',
+      'Özgürlük bilimi',
+      'Doğa bilimi',
+      'Sanat bilimi',
+    ],
+    correctAnswerTr: 'Kadın bilimi',
     explanation:
-        'Jineolojî ji «jin» û «lojî» (zanist) pêk tê; zanistiya jinê û rêxistinkirina civaka azad e.',
+        'Jineolojî ji "jin" û "lojî" (zanist) pêk tê; zanistiya jinê û rêxistinkirina civaka azad e.',
     difficulty: 1,
     metadata: _bozukKurmanciBekliyor,
     explanationKu:
-        'Jineolojî ji «jin» û «lojî» (zanist) pêk tê; zanistiya jinê û '
+        'Jineolojî ji "jin" û "lojî" (zanist) pêk tê; zanistiya jinê û '
         'rêxistinkirina civaka azad e.',
     explanationTr:
-        'Jineolojî «jin» (kadın) ve «loji» (bilim) sözcüklerinden oluşur; '
+        'Jineolojî "jin" (kadın) ve "loji" (bilim) sözcüklerinden oluşur; '
         'kadın bilimi ve özgür toplumun örgütlenmesidir.',
   ),
   QuizQuestion(
@@ -554,6 +704,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Kolonyalîzm',
     ],
     correctAnswer: 'Kom-xwebûn rêxistin',
+    promptTr: 'Hangi kavram "konfederalizm"e en yakındır?',
+    answersTr: [
+      'Topluluk özyönetimi örgütlenmesi',
+      'Tüketicilik',
+      'Tek bir yönetici',
+      'Sömürgecilik',
+    ],
+    correctAnswerTr: 'Topluluk özyönetimi örgütlenmesi',
     explanation:
         'Konfederalîzmek modela ku rêxistinên xwe-bixwe yên herêmî yên xwebûn-bixwe li ser wekheviyê tên girêdan e.',
     difficulty: 2,
@@ -568,7 +726,7 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0003',
     category: 'Paradigma',
-    prompt: '«Hevaltî» di vê paradîgmayê de çi dixwaze?',
+    prompt: '"Hevaltî" di vê paradîgmayê de çi dixwaze?',
     answers: [
       'Wekhevî û pîvana rêxistinê',
       'Tenê pûl bi pûl',
@@ -576,6 +734,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Mîrata dadwerî',
     ],
     correctAnswer: 'Wekhevî û pîvana rêxistinê',
+    promptTr: 'Bu paradigmada "hevaltî" (yoldaşlık) neyi amaçlar?',
+    answersTr: [
+      'Eşitlik ve örgütlenme ölçüsü',
+      'Yalnızca puan puan ilerlemek',
+      'Örgütün bütün üyelerinin ayrılması',
+      'Yargı mirası',
+    ],
+    correctAnswerTr: 'Eşitlik ve örgütlenme ölçüsü',
     explanation:
         'Hevaltî endamên rêxistinê li ser bingeha wekheviyê digihîne hev, ne li ser serdestiyê.',
     difficulty: 2,
@@ -590,7 +756,7 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0004',
     category: 'Paradigma',
-    prompt: 'Abdullah Öcalan di gotarên xwe de kîjan «-îzm»ê pêşniyar kir?',
+    prompt: 'Abdullah Öcalan di gotarên xwe de kîjan "-îzm"ê pêşniyar kir?',
     answers: [
       'Konfederalîzma demokratîk',
       'Fakltîzm',
@@ -598,8 +764,16 @@ const curatedQuestionBank = <QuizQuestion>[
       'Medyatîkdemokrasî',
     ],
     correctAnswer: 'Konfederalîzma demokratîk',
+    promptTr: 'Abdullah Öcalan yazılarında hangi "-izm"i önerdi?',
+    answersTr: [
+      'Demokratik konfederalizm',
+      'Faklitizm',
+      'Fermendizm',
+      'Medyatik demokrasi',
+    ],
+    correctAnswerTr: 'Demokratik konfederalizm',
     explanation:
-        'Di «Demokratik Konfederalîzm» de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
+        'Di "Demokratik Konfederalîzm" de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
     difficulty: 2,
     metadata: _bozukKurmanciBekliyor,
     explanationKu:
@@ -620,6 +794,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Hiqûqa malbatê ya nepenî',
     ],
     correctAnswer: 'Demokrasîxerbirîna gelemperî',
+    promptTr: 'Ulus-devlet yerine hangi model önerilir?',
+    answersTr: [
+      'Kardeşliğin örgütsel dağıtımı',
+      'Toplumun geneline yayılan demokratikleşme',
+      'Askerî hiyerarşi',
+      'Gizli aile hukuku',
+    ],
+    correctAnswerTr: 'Toplumun geneline yayılan demokratikleşme',
     explanation:
         'Paradîgma demokratîk a civakî rêxistinên demokratîk û rihevketa gelemperî hene dihundirîne.',
     difficulty: 3,
@@ -642,6 +824,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Peydakerî û bazirganî',
     ],
     correctAnswer: 'Avakirina parastina jinê û şoreşa civakî',
+    promptTr: 'Jineolojî Rojava Devrimi\'nde hangi rolü oynadı?',
+    answersTr: [
+      'Kadın savunmasının ve toplumsal devrimin kurulması',
+      'Yalnızca askerî denetim',
+      'Tarih yazıcılığı',
+      'Tedarik ve ticaret',
+    ],
+    correctAnswerTr: 'Kadın savunmasının ve toplumsal devrimin kurulması',
     explanation:
         'Jineolojî li Rojavayê Kurdistanê bû pîvana rastînên mirovan û azadiya ziman, şoreş û rêxistinên jin.',
     difficulty: 2,
@@ -664,6 +854,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Veşartina topan',
     ],
     correctAnswer: 'Hemahengbûna jiyanê bi xwezayê re (ne serdestî)',
+    promptTr: 'Paradigmada "ekoloji" ne anlama gelir?',
+    answersTr: [
+      'Yaşamın doğayla uyumu (tahakküm değil)',
+      'Yalnızca kimya',
+      'Ekonomik ticaret',
+      'Topların saklanması',
+    ],
+    correctAnswerTr: 'Yaşamın doğayla uyumu (tahakküm değil)',
     explanation:
         'Ekolojiyê demokratîk dixwaze ku mirov bi xweza re lihevhatî bixwîne, tune serdestiyê.',
     difficulty: 2,
@@ -687,6 +885,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Girtinên gelemperî yên girtîgehê',
     ],
     correctAnswer: 'Konsensus û şûnartî',
+    promptTr: 'Demokratik toplumu örgütlemede "doğru ölçü" ne anlama gelir?',
+    answersTr: [
+      'Tek elden buyruk ve teslimiyet',
+      'Uzlaşı ve yerinden karar',
+      'Meclis başkanının üstünlüğü',
+      'Toplu tutuklamalar',
+    ],
+    correctAnswerTr: 'Uzlaşı ve yerinden karar',
     explanation:
         'Biryarên civakî bi şiklê konsensus û şûnartî tên standin, ne bi werdêjin.',
     difficulty: 3,
@@ -708,15 +914,23 @@ const curatedQuestionBank = <QuizQuestion>[
       'Damezirandina Komara Mehabadê (1946)',
     ],
     correctAnswer: 'Berxwedana jinên Kobanî (2014)',
+    promptTr: 'Hangi olay "Jin, Jiyan, Azadî" sloganıyla çok bağlantılıdır?',
+    answersTr: [
+      'Kobanê\'de kadınların direnişi (2014)',
+      'Lozan Antlaşması (1923)',
+      'Şêx Said Hareketi (1925)',
+      'Mehabad Cumhuriyeti\'nin kuruluşu (1946)',
+    ],
+    correctAnswerTr: 'Kobanê\'de kadınların direnişi (2014)',
     explanation:
         'Jinên di şerê Kobanî de gayeyên azadî û berxwedanê bi xwe-şehîdî li ber xwe dan û bûne ramana jin, jiyan, azadî.',
     difficulty: 2,
     metadata: _kjarSource,
     explanationKu:
-        'Jinên di berxwedana Kobanê de bûne sembola gotina «jin, jiyan, '
-        'azadî».',
+        'Jinên di berxwedana Kobanê de bûne sembola gotina "jin, jiyan, '
+        'azadî".',
     explanationTr:
-        'Kobanê direnişindeki kadınlar «jin, jiyan, azadî» sözünün simgesi '
+        'Kobanê direnişindeki kadınlar "jin, jiyan, azadî" sözünün simgesi '
         'hâline geldi.',
   ),
   QuizQuestion(
@@ -730,6 +944,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Kîmoka zîvkirî',
     ],
     correctAnswer: 'Li xebatê rengîn û alîserdestiyê jin',
+    promptTr: 'Rojava Devrimi\'nde kadınların simgesi neyi öne çıkarır?',
+    answersTr: [
+      'Renkli bir kumaş',
+      'Büyük bir ayı',
+      'Emekte ve öz savunmada yer alan kadın',
+      'Gümüş bir takı',
+    ],
+    correctAnswerTr: 'Emekte ve öz savunmada yer alan kadın',
     explanation:
         'Sembola rengîn a jinên parastina jinê ye, ku azadiyê û bicihbûna civakê destnîşan dike.',
     difficulty: 2,
@@ -748,6 +970,9 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Komara Mehabad kengî hat îlan kirin?',
     answers: ['1946', '1925', '1961', '1984'],
     correctAnswer: '1946',
+    promptTr: 'Mehabad Cumhuriyeti ne zaman ilan edildi?',
+    answersTr: ['1946', '1925', '1961', '1984'],
+    correctAnswerTr: '1946',
     explanation:
         'Komara Mehabad (22ê Çileya 1946 — 15ê Kanûna 1946) li rojhilatê Kurdistanê yekemîn komara kurdî ye.',
     difficulty: 2,
@@ -770,6 +995,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Mistefa Barzanî',
     ],
     correctAnswer: 'Qazî Mihemed',
+    promptTr: 'Mehabad Cumhuriyeti\'ne kim başkanlık etti?',
+    answersTr: [
+      'Qazî Mihemed',
+      'Şêx Mehmûd Berzencî',
+      'Simko Şikak',
+      'Mistefa Barzanî',
+    ],
+    correctAnswerTr: 'Qazî Mihemed',
     explanation:
         'Qazî Mihemed (1893 — 1947) serokdarê Komara Mehabadê bû, di 31ê Adara 1947an de hat darvekirin.',
     difficulty: 2,
@@ -792,6 +1025,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Girêdana Kurdistanê bi Fransayê ve',
     ],
     correctAnswer: 'Xweseriya herêmî û îhtîmala serxwebûnê',
+    promptTr: 'Sevr Antlaşması (1920) Kürtlere neyin sözünü verdi?',
+    answersTr: [
+      'Bölgesel özerklik ve bağımsızlık ihtimali',
+      'Kürt şehirlerinin birleştirilmesi',
+      'Kürtçenin kaldırılması',
+      'Kurdistanê\'nin Fransa\'ya bağlanması',
+    ],
+    correctAnswerTr: 'Bölgesel özerklik ve bağımsızlık ihtimali',
     explanation:
         'Peymana Sêvrê (1920) ji Kurdistanê re xweseriyek soz da û rê li ber serxwebûnê vekir, lê Peymana Lozanê (1923) ev soz betal kir.',
     difficulty: 3,
@@ -810,6 +1051,10 @@ const curatedQuestionBank = <QuizQuestion>[
         'Herêma Kurdistanê (Îraq) di çi salî de xweseriya xwe bi dest xist?',
     answers: ['1970', '1991', '2003', '2005'],
     correctAnswer: '1970',
+    promptTr:
+        'Kurdistan Bölgesi (Irak) hangi yılki anlaşmayla özerklik sözü aldı?',
+    answersTr: ['1970', '1991', '2003', '2005'],
+    correctAnswerTr: '1970',
     explanation:
         'Di 1970î de Şoreşa Îraqê li herêma Kurdistanê dest bi xweseriyê kir; paşê di 1991î de ew herêm bû herêmî îraqî xwe-bixwe.',
     difficulty: 2,
@@ -827,6 +1072,9 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Şerê Kobanê yê li dijî DAIŞê çi salî dest pê kir?',
     answers: ['2014', '2003', '2011', '2017'],
     correctAnswer: '2014',
+    promptTr: 'Kobanê\'de DAİŞ\'e karşı savaş hangi yıl başladı?',
+    answersTr: ['2014', '2003', '2011', '2017'],
+    correctAnswerTr: '2014',
     explanation:
         'Şerê Kobanê (Îlon 2014 — Adar 2015) roleke girîng lîst di têkoşîna li dijî DAIŞê de.',
     difficulty: 2,
@@ -849,6 +1097,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Rojhilatê Kurdistanê (Îran)',
     ],
     correctAnswer: 'Rojavayê Bakurûrê Sûrîyê',
+    promptTr: 'Demokratik konfederalizm hangi bölgede uygulandı?',
+    answersTr: [
+      'Rojava (Kuzey Suriye)',
+      'Bakurê Kurdistanê (Türkiye)',
+      'Başûrê Kurdistanê (Irak)',
+      'Rojhilatê Kurdistanê (İran)',
+    ],
+    correctAnswerTr: 'Rojava (Kuzey Suriye)',
     explanation:
         'DMC (Xebûna Demokratîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demokratîk a Sûrîyê Bakûr.',
     difficulty: 2,
@@ -872,6 +1128,15 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswer:
         'Berxwedan li dijî rakirina xîlafetê û siyasetên yekbûyî yên dewleta nû',
+    promptTr: 'Şêx Said Hareketi\'nin (1925) temel nedeni neydi?',
+    answersTr: [
+      'Hilafetin kaldırılmasına ve yeni devletin tekleştirici siyasetine karşı direniş',
+      'Tarım arazisi üzerine bir anlaşmazlık',
+      'Ulusal paranın değişmesi',
+      'Bir ticaret ve ulaşım anlaşması',
+    ],
+    correctAnswerTr:
+        'Hilafetin kaldırılmasına ve yeni devletin tekleştirici siyasetine karşı direniş',
     explanation:
         'Şoreşa Şêx Said (Sibat 1925) yek ji berxwedanên yekem ên girîng ên kurdan li Tirkiyeyê bû, li dijî rakirina xîlafetê û siyasetên yekbûyî yên dewleta nû ya komarê.',
     difficulty: 3,
@@ -894,6 +1159,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Vekirina sînorekî nû li Rojhilata Navîn',
     ],
     correctAnswer: 'Betalkirina soza xweseriya Peymana Sêvrê',
+    promptTr: 'Lozan Antlaşması (1923) Kürtler açısından neyle sonuçlandı?',
+    answersTr: [
+      'Sevr\'in özerklik sözünün geçersiz kılınması',
+      'Kürtçe dil haklarının tanınması',
+      'Özerk bir Kürt bölgesinin kurulması',
+      'Ortadoğu\'da yeni bir sınırın açılması',
+    ],
+    correctAnswerTr: 'Sevr\'in özerklik sözünün geçersiz kılınması',
     explanation:
         'Peymana Lozanê (1923) soza xweseriya Peymana Sêvrê betal kir û axa kurdan di navbera çend dewletan de hate parvekirin.',
     difficulty: 3,
@@ -916,6 +1189,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Celal Talabanî',
     ],
     correctAnswer: 'Mistefa Barzanî (1903 — 1979)',
+    promptTr: 'Barzanî hareketinin ilk önderi kimdi?',
+    answersTr: [
+      'Mistefa Barzanî (1903 — 1979)',
+      'Mesûd Barzanî',
+      'Êlihêçî Kaplan',
+      'Celal Talabanî',
+    ],
+    correctAnswerTr: 'Mistefa Barzanî (1903 — 1979)',
     explanation:
         'Mistefa Barzanî (1903-1979) yekemîn rêberê tevgera neteweyî ya başûr bû û di 1979an de koça dawî kir.',
     difficulty: 2,
@@ -933,6 +1214,9 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Hikûmeta Herêma Kurdistanê (HKK) di çi salî de hat ava kirin?',
     answers: ['1992', '2003', '2005', '2017'],
     correctAnswer: '1992',
+    promptTr: 'Kurdistan Bölgesel Hükümeti (KBH) hangi yıl kuruldu?',
+    answersTr: ['1992', '2003', '2005', '2017'],
+    correctAnswerTr: '1992',
     explanation:
         'Di 1992î de piştî rizgarbûnê, HKK (Hikumeta Herêma Kurdistanê) ava kirin; ew yekem hikûmeta kurdî ya nûdem bû.',
     difficulty: 2,
@@ -956,6 +1240,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Nivîskarê stranên nûjen',
     ],
     correctAnswer: 'Stranbêj-çîrokbêjê ku bê enstruman distirê',
+    promptTr: 'Kürt kültüründe dengbêj kimdir?',
+    answersTr: [
+      'Çalgısız söyleyen anlatıcı-şarkıcı',
+      'Profesyonel tembûr icracısı',
+      'Halay düzenleyicisi',
+      'Modern şarkı yazarı',
+    ],
+    correctAnswerTr: 'Çalgısız söyleyen anlatıcı-şarkıcı',
     explanation:
         'Dengbêj stran û çîrokên kevneşopî yên kurdan bi dengê xwe, bê alîkariya enstrumanan, vedibêje.',
     difficulty: 1,
@@ -978,6 +1270,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Amûrek zengilan',
     ],
     correctAnswer: 'Amûrek têlî',
+    promptTr: 'Tembûr ne tür bir çalgıdır?',
+    answersTr: [
+      'Telli çalgı',
+      'Üflemeli çalgı',
+      'Derili vurmalı çalgı',
+      'Zilli çalgı',
+    ],
+    correctAnswerTr: 'Telli çalgı',
     explanation:
         'Tembûr amûrekî muzîkê yê kevneşopî yê têlî ye, li herêma Kurdistanê û Rojhilata Navîn belav e.',
     difficulty: 2,
@@ -1000,6 +1300,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Amûrekî muzîkê yê têlî',
     ],
     correctAnswer: 'Reqsa kollektîf a bi dest-gihîştin',
+    promptTr: 'Govend, Kürt şenlik ve düğünlerinde nedir?',
+    answersTr: [
+      'El ele tutuşularak oynanan toplu oyun',
+      'Sessiz bir ezgi',
+      'Resmî bir devlet kurumu',
+      'Telli bir çalgı',
+    ],
+    correctAnswerTr: 'El ele tutuşularak oynanan toplu oyun',
     explanation:
         'Govend reqseke kollektîf e ku lîstikvan destên hev digirin û bi rêza li pey muzîkê dileyizin; li şahî û dawetan pir belav e.',
     difficulty: 1,
@@ -1022,6 +1330,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Amûrekî elektronîkî',
     ],
     correctAnswer: 'Amûrekî çermî yê lêdanê (defê destan)',
+    promptTr: 'Def (erbane) ne tür bir çalgıdır?',
+    answersTr: [
+      'Elde çalınan derili vurmalı çalgı',
+      'Telli çalgı',
+      'Zurna gibi üflemeli çalgı',
+      'Elektronik çalgı',
+    ],
+    correctAnswerTr: 'Elde çalınan derili vurmalı çalgı',
     explanation:
         'Def/erbane amûrekî lêdanê yê çermî ye ku bi dest tê lêdan; di govend, sema û şahiyên kurdî de bi berfirehî tê bikaranîn.',
     difficulty: 1,
@@ -1044,6 +1360,14 @@ const curatedQuestionBank = <QuizQuestion>[
       'Rêbernameyên rêwîtiyê',
     ],
     correctAnswer: 'Berxwedan, xerîbî, azadî û bîranîna welêt',
+    promptTr: 'Şivan Perwer\'in şarkıları ağırlıklı olarak hangi konulardadır?',
+    answersTr: [
+      'Direniş, gurbet, özgürlük ve memleket özlemi',
+      'Yalnızca modern dans müziği',
+      'Ticari reklam',
+      'Yolculuk rehberleri',
+    ],
+    correctAnswerTr: 'Direniş, gurbet, özgürlük ve memleket özlemi',
     explanation:
         'Şivan Perwer stranbêjekî navdar ê kurd e; stranên wî bi giranî li ser berxwedan, sirgûnî, azadî û bîranîna welêt in.',
     difficulty: 2,

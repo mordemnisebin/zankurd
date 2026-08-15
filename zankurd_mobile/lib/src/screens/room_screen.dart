@@ -82,10 +82,18 @@ class _RoomScreenState extends State<RoomScreen> {
     final chosen = _readyOverride;
     if (chosen != null) return chosen;
     final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
-    // Liste henüz gelmediyse ev sahibinin varsayılanı doğrudur.
-    if (me == null) return true;
+    // Liste henüz gelmediyse rolün varsayılanı doğrudur: odayı kuran
+    // `is_ready: true` ile eklenir, katılan `is_ready = false` ile. Burada
+    // koşulsuz `true` demek, katılanın ekranında anahtarı bir an açık
+    // gösterip sonra kapatıyordu — hazır olmadığı hâlde hazır sandıran bir
+    // kırpışma.
+    if (me == null) return _isHost;
     return me.state == Player.readyState;
   }
+
+  /// Oda sahibi miyim? `hostId` boşsa oda yerel/sahte depodadır ve tek
+  /// oyuncu ev sahibidir.
+  bool get _isHost => room.hostId == null || room.hostId == _currentUserId;
 
   String? get _currentUserId => widget.repository.currentUserId;
   bool starting = false;
@@ -137,8 +145,11 @@ class _RoomScreenState extends State<RoomScreen> {
     //   4. bu satır sunucuya false yazar ve 1. adımı siler.
     //
     // Ev sahibi katılanı sonsuza dek "Li bendê" görüyordu. Yazma yolu
-    // artık tek: ya `createOnlineRoom`/`joinOnlineRoom` (giriş varsayılanı)
-    // ya da kullanıcının anahtara dokunması (2026-08-01).
+    // artık tek: giriş varsayılanını sunucu koyar (`create_online_room`
+    // ev sahibini hazır, `join_room_by_code` katılanı hazır DEĞİL ekler),
+    // sonrasında yalnız kullanıcının anahtara dokunması yazar
+    // (2026-08-01, 2026-08-13'te katılanın otomatik hazır sayılması
+    // kaldırılınca güncellendi).
   }
 
   void _startSubscriptions() {
@@ -489,11 +500,15 @@ class _RoomScreenState extends State<RoomScreen> {
     final visiblePlayers = sorted
         .where((p) => p.id == null || !_blockedPlayerIds.contains(p.id))
         .toList();
-    final currentUserId = widget.repository.currentUserId;
-    final isHost = room.hostId == null || room.hostId == currentUserId;
+    final isHost = _isHost;
     final allPlayersReady = room.players.every(
       (player) => player.state == Player.readyState,
     );
+    // Yeterli oyuncu var ama biri hazır değil: düğme kapalı kalır ve
+    // SEBEBİ yazılır. Tek satırlık uyarı şeridi eskiden yalnız "2 oyuncu
+    // gerekli" diyordu; katılan hazır olmadan başlanamadığı hâlde ev
+    // sahibi kapalı düğmeye bakıp niçinini bilemiyordu.
+    final waitingForReady = room.players.length >= 2 && !allPlayersReady;
     final canStart =
         isHost &&
         ready &&
@@ -1009,6 +1024,70 @@ class _RoomScreenState extends State<RoomScreen> {
                                         ),
                                       ),
                                       const SizedBox(height: AppSpacing.sm),
+                                      if (waitingForReady) ...[
+                                        // Oyuncu sayısı yeter ama biri hazır
+                                        // değil. Mesaj role göre değişir:
+                                        // hazır olmayan kişiye ne yapacağı,
+                                        // ötekine niçin beklediği söylenir.
+                                        Container(
+                                          key: const ValueKey(
+                                            'room-ready-hint',
+                                          ),
+                                          width: double.infinity,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: AppSpacing.sm,
+                                            vertical: AppSpacing.xs + 2,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.gold.withValues(
+                                              alpha: 0.10,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              AppRadius.sm,
+                                            ),
+                                            border: Border.all(
+                                              color: AppTheme.gold.withValues(
+                                                alpha: 0.30,
+                                              ),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                AppIcons.circleCheck,
+                                                color: AppColors.readableAccent(
+                                                  context,
+                                                  AppTheme.gold,
+                                                ),
+                                                size: 18,
+                                              ),
+                                              const SizedBox(
+                                                width: AppSpacing.xs,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  context.t(
+                                                    ready
+                                                        ? K.waitingOpponentReady
+                                                        : K.tapReadyToStart,
+                                                  ),
+                                                  style: AppTypography.caption
+                                                      .copyWith(
+                                                        color:
+                                                            AppColors.readableAccent(
+                                                              context,
+                                                              AppTheme.gold,
+                                                            ),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: AppSpacing.xs),
+                                      ],
                                       if (room.players.length < 2) ...[
                                         // Tek inline uyarı şeridi: "2 oyuncu gerekli"
                                         // mesajı yalnızca burada görünür.

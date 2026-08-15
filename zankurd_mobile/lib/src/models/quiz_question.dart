@@ -1,6 +1,7 @@
 import '../l10n/explanation_ku.dart';
 import '../l10n/explanation_overrides.dart';
 import '../l10n/strings.dart';
+import '../utils/free_text_answer_matcher.dart';
 import 'question_metadata.dart';
 
 enum QuestionType {
@@ -11,6 +12,23 @@ enum QuestionType {
   fillInBlank,
 }
 
+enum AnswerLanguage { kurmanji, turkish }
+
+/// JSON assetleri camelCase, Supabase satırları ise snake_case tür adı
+/// taşıyabilir. İki taşıma biçimini tek sözleşmede ayrıştırır; bilinmeyen bir
+/// değer asset bankasını sessizce yanlış türe çevirmek yerine hata verir.
+QuestionType questionTypeFromStorage(Object? raw) {
+  final value = raw as String? ?? 'multipleChoice';
+  return switch (value) {
+    'multipleChoice' || 'multiple_choice' => QuestionType.multipleChoice,
+    'trueFalse' || 'true_false' => QuestionType.trueFalse,
+    'visual' => QuestionType.visual,
+    'wordOrdering' || 'word_ordering' => QuestionType.wordOrdering,
+    'fillInBlank' || 'fill_in_blank' => QuestionType.fillInBlank,
+    _ => throw ArgumentError.value(value, 'type', 'Bilinmeyen soru türü'),
+  };
+}
+
 class QuizQuestion {
   const QuizQuestion({
     required this.id,
@@ -18,6 +36,9 @@ class QuizQuestion {
     required this.prompt,
     required this.answers,
     required this.correctAnswer,
+    this.acceptedAnswers = const [],
+    this.acceptedAnswersTr,
+    this.answerLanguage = AnswerLanguage.kurmanji,
     required this.explanation,
     this.explanationKu,
     this.explanationTr,
@@ -29,6 +50,8 @@ class QuizQuestion {
     this.audioUrl,
     this.type = QuestionType.multipleChoice,
     this.imageUrl,
+    this.imageAltKu,
+    this.imageAltTr,
     this.difficulty = 2,
     this.metadata,
   });
@@ -38,6 +61,20 @@ class QuizQuestion {
   final String prompt;
   final List<String> answers;
   final String correctAnswer;
+
+  /// Serbest metinli sorularda kanonik cevabın yanında kabul edilen açık
+  /// yazım veya anlatım alternatifleri. Kanonik cevap daima ayrıca kabul
+  /// edilir; bu liste onu tekrar etmek zorunda değildir.
+  final List<String> acceptedAnswers;
+
+  /// Türkçe yansıtma için kabul edilen açık alternatifler. Tek dildeki
+  /// varyant diğer dile taşınmaz; aksi hâlde Türkçe tur Kurmancî eşanlamlıyı
+  /// kabul edip Türkçe eşanlamlıyı reddedebilir.
+  final List<String>? acceptedAnswersTr;
+
+  /// [correctAnswer] alanının gerçek dili. Kaynak sorular Kurmancî'dir;
+  /// [localized] tam Türkçe cevap kümesine geçtiğinde bu bilgi de taşınır.
+  final AnswerLanguage answerLanguage;
   final String explanation;
   final String? explanationKu;
   final String? explanationTr;
@@ -65,7 +102,34 @@ class QuizQuestion {
   final String? audioUrl;
   final QuestionType type;
   final String? imageUrl;
+
+  /// Görselin ekran okuyucuya okunan betimlemesi.
+  ///
+  /// 2026-08-07 denetimi: 126 görselli sorunun hiçbirinde alt metin yoktu,
+  /// yani TalkBack/VoiceOver kullanan bir oyuncu için görsel **hiç yoktu**.
+  /// Kimi soruda görsel süstür, ama kimi soruda sorunun kendisidir
+  /// ("görseldeki çalgı hangisidir?") — orada alt metnin yokluğu soruyu
+  /// çözülemez yapar.
+  ///
+  /// Alan bilinçli olarak nullable ve doldurulması ZORUNLU DEĞİL: uydurma
+  /// bir betimleme, betimlemenin yokluğundan kötüdür. Yalnız görseli
+  /// gerçekten açıp bakan biri tarafından yazılır; boş olduğunda arayüz
+  /// yerelleştirilmiş genel bir etiket kullanır (bkz. `_QuestionImage`).
+  final String? imageAltKu;
+  final String? imageAltTr;
   final int difficulty;
+
+  /// Seçili dile göre görsel betimlemesi. Yoksa `null` döner ve etiketi
+  /// çağıran arayüz katmanı belirler — model l10n'a bağlı değildir.
+  String? imageAltFor({required bool isKu}) {
+    final preferred = isKu ? imageAltKu : imageAltTr;
+    final trimmed = preferred?.trim();
+    if (trimmed != null && trimmed.isNotEmpty) return trimmed;
+    // Bir dilde yazılmış betimleme, hiç betimleme olmamasından iyidir:
+    // ekran okuyucu yanlış aksanla da olsa içeriği duyurur.
+    final fallback = (isKu ? imageAltTr : imageAltKu)?.trim();
+    return (fallback == null || fallback.isEmpty) ? null : fallback;
+  }
 
   /// Editör/kalite meta verisi (opsiyonel, geriye uyumlu). Eski verilerde
   /// `null`'dır ve [ContentQualityPolicy] bunu "uygun ama doğrulanmamış"
@@ -124,12 +188,36 @@ class QuizQuestion {
     return correctAnswerTr!.trim();
   }
 
+  /// Seçili dilde kabul edilen açık serbest-metin alternatifleri.
+  List<String> acceptedAnswersFor({required bool isKu}) {
+    if (isKu || !_hasConsistentTurkishAnswers) return acceptedAnswers;
+    return acceptedAnswersTr ?? const [];
+  }
+
+  /// Oyuncunun gönderdiği yanıt bu soru için doğru kabul ediliyor mu?
+  ///
+  /// Şıklı türlerin mevcut tam-eşitlik sözleşmesi korunur. Yalnız serbest
+  /// metinli boşluk doldurmada klavye toleransı uygulanır.
+  bool acceptsAnswer(String candidate) {
+    if (type != QuestionType.fillInBlank) return candidate == correctAnswer;
+    final isTurkish = answerLanguage == AnswerLanguage.turkish;
+    final normalized = normalizeFreeTextAnswer(candidate, isTurkish: isTurkish);
+    if (normalized.isEmpty) return false;
+    return <String>[correctAnswer, ...acceptedAnswers].any(
+      (accepted) =>
+          normalized == normalizeFreeTextAnswer(accepted, isTurkish: isTurkish),
+    );
+  }
+
   /// Alanların bir bölümünü değiştirerek kopya üretir. Yalnız [localized]
   /// yansıtması için gereken alanlar parametreleşmiştir; gerisi taşınır.
   QuizQuestion copyWith({
     String? prompt,
     List<String>? answers,
     String? correctAnswer,
+    List<String>? acceptedAnswers,
+    List<String>? acceptedAnswersTr,
+    AnswerLanguage? answerLanguage,
   }) {
     return QuizQuestion(
       id: id,
@@ -137,6 +225,9 @@ class QuizQuestion {
       prompt: prompt ?? this.prompt,
       answers: answers ?? this.answers,
       correctAnswer: correctAnswer ?? this.correctAnswer,
+      acceptedAnswers: acceptedAnswers ?? this.acceptedAnswers,
+      acceptedAnswersTr: acceptedAnswersTr ?? this.acceptedAnswersTr,
+      answerLanguage: answerLanguage ?? this.answerLanguage,
       explanation: explanation,
       explanationKu: explanationKu,
       explanationTr: explanationTr,
@@ -148,6 +239,8 @@ class QuizQuestion {
       audioUrl: audioUrl,
       type: type,
       imageUrl: imageUrl,
+      imageAltKu: imageAltKu,
+      imageAltTr: imageAltTr,
       difficulty: difficulty,
       metadata: metadata,
     );
@@ -167,14 +260,25 @@ class QuizQuestion {
   QuizQuestion localized({required bool isKu}) {
     if (isKu) return this;
     final localizedAnswers = answersFor(isKu: false);
+    final localizedAcceptedAnswers = acceptedAnswersFor(isKu: false);
+    final localizedAnswerLanguage =
+        _hasConsistentTurkishAnswers &&
+            (answerLanguage == AnswerLanguage.turkish ||
+                correctAnswerFor(isKu: false) != correctAnswer)
+        ? AnswerLanguage.turkish
+        : AnswerLanguage.kurmanji;
     if (identical(localizedAnswers, answers) &&
-        promptFor(isKu: false) == prompt) {
+        identical(localizedAcceptedAnswers, acceptedAnswers) &&
+        promptFor(isKu: false) == prompt &&
+        answerLanguage == localizedAnswerLanguage) {
       return this;
     }
     return copyWith(
       prompt: promptFor(isKu: false),
       answers: localizedAnswers,
       correctAnswer: correctAnswerFor(isKu: false),
+      acceptedAnswers: localizedAcceptedAnswers,
+      answerLanguage: localizedAnswerLanguage,
     );
   }
 
@@ -183,7 +287,11 @@ class QuizQuestion {
   bool get hasTurkishTranslation {
     final translatedPrompt = promptTr?.trim();
     if (translatedPrompt == null || translatedPrompt.isEmpty) return false;
-    return _hasConsistentTurkishAnswers;
+    if (!_hasConsistentTurkishAnswers) return false;
+    final translatedAccepted = acceptedAnswersTr;
+    return acceptedAnswers.isEmpty ||
+        (translatedAccepted != null &&
+            translatedAccepted.every((answer) => answer.trim().isNotEmpty));
   }
 
   List<String> get displayAnswers {
@@ -208,7 +316,11 @@ class QuizQuestion {
     // denetimi). Ham cümle olduğu gibi taşınır; karşılaştırma
     // `correctAnswer`la doğrudan yapılır (bkz. `MockZanKurdRepository`).
     if (type == QuestionType.wordOrdering) return answer;
-    final index = answers.indexOf(answer);
+    final storedAnswer =
+        type == QuestionType.fillInBlank && acceptsAnswer(answer)
+        ? correctAnswer
+        : answer;
+    final index = answers.indexOf(storedAnswer);
     return switch (index) {
       0 => 'A',
       1 => 'B',
@@ -244,6 +356,9 @@ class QuizQuestion {
       prompt: prompt,
       answers: answers,
       correctAnswer: correctAnswer,
+      acceptedAnswers: acceptedAnswers,
+      acceptedAnswersTr: acceptedAnswersTr,
+      answerLanguage: answerLanguage,
       explanation: explanation ?? this.explanation,
       explanationKu: explanationKu ?? this.explanationKu,
       explanationTr: explanationTr ?? this.explanationTr,
@@ -309,6 +424,9 @@ class QuizQuestion {
       prompt: json['prompt'] as String,
       answers: List<String>.from(json['answers'] as List),
       correctAnswer: json['correctAnswer'] as String,
+      acceptedAnswers:
+          (json['acceptedAnswers'] as List?)?.cast<String>() ?? const [],
+      acceptedAnswersTr: (json['acceptedAnswersTr'] as List?)?.cast<String>(),
       explanation:
           (json['explanation'] as String?) ??
           (json['explanationTr'] as String?) ??
@@ -323,10 +441,10 @@ class QuizQuestion {
       hintKu: json['hintKu'] as String?,
       hintTr: json['hintTr'] as String?,
       audioUrl: json['audioUrl'] as String?,
-      type: QuestionType.values.byName(
-        (json['type'] as String?) ?? 'multipleChoice',
-      ),
+      type: questionTypeFromStorage(json['type']),
       imageUrl: json['imageUrl'] as String?,
+      imageAltKu: json['imageAltKu'] as String?,
+      imageAltTr: json['imageAltTr'] as String?,
       difficulty: (json['difficulty'] as num?)?.toInt() ?? 2,
       metadata: json['metadata'] == null
           ? null
@@ -340,6 +458,8 @@ class QuizQuestion {
     'prompt': prompt,
     'answers': answers,
     'correctAnswer': correctAnswer,
+    if (acceptedAnswers.isNotEmpty) 'acceptedAnswers': acceptedAnswers,
+    if (acceptedAnswersTr != null) 'acceptedAnswersTr': acceptedAnswersTr,
     'explanation': explanation,
     if (explanationKu != null) 'explanationKu': explanationKu,
     if (explanationTr != null) 'explanationTr': explanationTr,
@@ -351,6 +471,8 @@ class QuizQuestion {
     if (audioUrl != null) 'audioUrl': audioUrl,
     'type': type.name,
     if (imageUrl != null) 'imageUrl': imageUrl,
+    if (imageAltKu != null) 'imageAltKu': imageAltKu,
+    if (imageAltTr != null) 'imageAltTr': imageAltTr,
     'difficulty': difficulty,
     if (metadata != null) 'metadata': metadata!.toJson(),
   };

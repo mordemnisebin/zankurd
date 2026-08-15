@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'support/widget_test_helpers.dart';
 
 class _RoomQuizBroadcastRepository extends MockZanKurdRepository {
@@ -163,7 +164,7 @@ class _SameNameDuelRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -173,8 +174,10 @@ class _SameNameDuelRepository extends MockZanKurdRepository {
     awardCalls++;
     awardedScore = score;
     final gate = awardGate;
-    if (gate != null) return gate.future;
-    return 5;
+    if (gate != null) {
+      return (amount: await gate.future, dailyCapReached: false);
+    }
+    return (amount: 5, dailyCapReached: false);
   }
 }
 
@@ -199,15 +202,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text(question.prompt), findsOneWidget);
+    // Arayüz Türkçe: soru ekranda `localized(isKu: false)` ile
+    // yansıtılıyor. Kurmancî ham metni aramak, curated banka
+    // çevrilene kadar tesadüfen çalışıyordu (2026-08-10).
+    final shown = question.localized(isKu: false);
+    expect(find.text(shown.prompt), findsOneWidget);
     expect(
       find.byKey(const ValueKey('quiz-landscape-content')),
       findsOneWidget,
     );
-    expect(find.text(question.displayAnswers.first), findsWidgets);
+    expect(find.text(shown.displayAnswers.first), findsWidgets);
 
-    await tester.ensureVisible(find.text(question.displayAnswers.first).first);
-    await tester.tap(find.text(question.displayAnswers.first).first);
+    await tester.ensureVisible(find.text(shown.displayAnswers.first).first);
+    await tester.tap(find.text(shown.displayAnswers.first).first);
     await tester.pumpAndSettle();
 
     // Yarışma modunda tur içi açıklama gösterilmez (çözümler oyun sonunda).
@@ -896,7 +903,11 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byType(QuizResultScreen), findsNothing);
-    expect(find.text(question.prompt), findsOneWidget);
+    // Arayüz Türkçe: soru ekranda `localized(isKu: false)` ile
+    // yansıtılıyor. Kurmancî ham metni aramak, curated banka
+    // çevrilene kadar tesadüfen çalışıyordu (2026-08-10).
+    final shown = question.localized(isKu: false);
+    expect(find.text(shown.prompt), findsOneWidget);
     expect(teamRepository.resultCalls, 0);
     expect(teamRepository.awardCalls, 0);
     expect(teamRepository.finishCalls, 0);

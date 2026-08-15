@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "authoredAt": "2026-08-07",
+  "reviewer": "opus-5",
+  "rationale": "2026-08-07 denetiminde yayımdaki bankada üç kusur sınıfı bulundu: (1) kendi kategorisini soran döngüsel «kategori eşleştirme» soruları, (2) Kurmancî şıklar arasında Türkçe tümce, (3) içeriksiz/döngüsel açıklama ve saçma çeldirici. Bu manifest her kaydı tek tek adlandırır; toplu regex YOKTUR.",
+
+  "remove": [
+    {
+      "reason": "circular_category_match",
+      "detail": "Soru «X hangi kategoriye girer?» diye soruyor ve doğru cevap sorunun OYNANDIĞI kategorinin ta kendisi. Muzîk turunda «dengbêj hangi kategoriye girer?» sorusunun cevabı Muzîk'tir ve oyuncu kategoriyi zaten seçmiştir — soru bilgi ölçmez, ekranın başlığını okumayı ölçer. Dahası sınıf kendi içinde ÇELİŞİYOR: offline_0389 «dengbêj» için doğru cevabı Çand, offline_0871 aynı terim için Muzîk sayıyor. Aynı oyuncu ikisini de görebilir. Sınıfın 15 üyesinde ayrıca uygulamada var olmayan kategori adları (Kimya, Spor, «Dil bilgisi») çeldirici olarak kullanılmış.",
+      "ids": [
+        "offline_0379", "offline_0389", "offline_0399", "offline_0404",
+        "offline_0409", "offline_0414", "offline_0419",
+        "offline_0529", "offline_0533", "offline_0537", "offline_0541",
+        "offline_0549", "offline_0553", "offline_0557", "offline_0561",
+        "offline_0656", "offline_0659", "offline_0674", "offline_0677",
+        "offline_0764", "offline_0776", "offline_0780",
+        "offline_0871", "offline_0875", "offline_0883", "offline_0887",
+        "offline_0891", "offline_0894", "offline_0898", "offline_0902",
+        "offline_0906"
+      ]
+    },
+    {
+      "reason": "trivially_true_statement",
+      "detail": "Doğru/Yanlış sorusu ama önerme konuyu hiç bilmeyen için bile açıkça doğru: «Dengbêj Kürt müziğiyle ilişkilendirilir» ya da «Birincil kaynak Kürt tarihini anlamak için kullanılabilir». Yanlış seçeneği hiçbir koşulda savunulabilir değil, yani soru bir seçim sunmuyor. Açıklamaları da döngüseldi (« ... bir kavramdır»).",
+      "ids": ["offline_0527", "offline_0869"]
+    }
+  ],
+
+  "patchOptions": [
+    {
+      "id": "offline_2270",
+      "reason": "language_mixing",
+      "detail": "Kurmancî şıklar arasında tek Türkçe tümce. İki dil bilen oyuncu için dilsel aykırılık doğru cevabı eleme yoluyla ele verir; yalnız Kurmancî bilen için de şık okunmaz.",
+      "replace": { "tam bireysel izolasyonu": "tenêtiya kesane" }
+    },
+    {
+      "id": "offline_2336",
+      "reason": "language_mixing",
+      "detail": "Aynı kusur. Karşılık, sorunun kendi açıklamasında geçen «radestkirin» ve «nûner» sözcükleriyle kuruldu.",
+      "replace": { "Temsilcilere tam yetki devreder": "Hemû desthilatê radestî nûneran dike" }
+    },
+    {
+      "id": "offline_0381",
+      "reason": "equivalent_options",
+      "detail": "«Reqsa gelêrî ya komî» ile «lîstika gelêrî ya komî» aynı şeyi söylüyor (komî halk dansı); biri doğru biri yanlış sayılmış. Oyuncu doğru bilse de ayırt edemez. Eşdeğer olan çeldirici, govendin oynandığı bağlamla değiştirildi.",
+      "replace": { "Reqsa gelêrî ya komî": "Nêçîra li çiyayan" }
+    },
+    {
+      "id": "offline_0395",
+      "reason": "absurd_distractors",
+      "detail": "Çeldiriciler «yalnızca bir sayı sistemidir / yalnızca gök cismidir / yalnızca trafik işaretidir». Hiçbiri kilim motifi için düşünülebilir değil; soru tek makul şıkkı seçmeye indirgeniyor. Aynı alandan gerçekten ayırt edici çeldiricilerle değiştirildi.",
+      "replace": {
+        "tenê pergaleke hejmaran e": "bi hunera dengbêjiyê ve girêdayî ye",
+        "tenê laşeke asîmanî ye": "bi rênivîsa Hawarê ve girêdayî ye",
+        "tenê nîşaneke trafîkê ye": "bi avhewaya deştê ve girêdayî ye"
+      }
+    },
+    {
+      "id": "offline_0415",
+      "reason": "absurd_distractors",
+      "detail": "Aynı sabit saçma çeldirici havuzu. Çîrok vegotinê için ayırt edici alanlarla değiştirildi.",
+      "replace": {
+        "tenê pergaleke hejmaran e": "bi hunera kilimçêkirinê ve girêdayî ye",
+        "tenê nîşaneke trafîkê ye": "bi rêzimana kurdî ve girêdayî ye",
+        "tenê laşeke asîmanî ye": "bi avahiyên dîrokî ve girêdayî ye"
+      }
+    },
+    {
+      "id": "offline_0425",
+      "reason": "absurd_distractors",
+      "detail": "Aynı havuz. Xwarinên gelêrî için ayırt edici alanlarla değiştirildi.",
+      "replace": {
+        "tenê pergaleke hejmaran e": "bi amûrên muzîkê ve girêdayî ye",
+        "tenê laşeke asîmanî ye": "bi helbesta klasîk ve girêdayî ye",
+        "tenê nîşaneke trafîkê ye": "bi rêzeçiyayan ve girêdayî ye"
+      }
+    },
+    {
+      "id": "offline_0678",
+      "reason": "absurd_distractors",
+      "detail": "«diyalog» için çeldiriciler coğrafi yön / matematik sembolü / maden türü. Edebiyat alanından gerçek anlatı terimleriyle değiştirildi; artık dört şık da bir anlatı kavramı ve yalnız biri diyaloğun tanımı.",
+      "replace": {
+        "alîyê erdnîgarî": "vegotina bi tenê deng",
+        "sembola matematîkê": "danasîna cîh û demê",
+        "cureyê madenê": "dubarekirina dengan di dawiya rêzan de"
+      }
+    },
+    {
+      "id": "offline_0873",
+      "reason": "absurd_distractors",
+      "detail": "«rîtm» için çeldiriciler fiil çekimi / harita çizimi / toprak ölçümü. Müzik alanından ayırt edici terimlerle değiştirildi.",
+      "replace": {
+        "tewandina lêkeran": "bilindbûna dengê stranê",
+        "xêzkirina nexşeyê": "hejmara amûrên di komê de",
+        "pîvana axê": "dirêjahiya stranê"
+      }
+    }
+  ],
+
+  "patchExplanations": [
+    {
+      "id": "offline_0381",
+      "reason": "empty_explanation",
+      "detail": "Açıklama «govend, Kürt kültüründe düğün ve kutlama bağlamında değerlendirilir» — sorunun cevabını tekrarlıyor, hiçbir şey öğretmiyor. Ku/Tr alanları da boştu.",
+      "explanationKu": "Govend lîstikeke gelêrî ya komî ye: mirov dest bi dest digirin, li ser rêzekê an çemberekê digerin û bi dahol û zurneyê an bi stranê tê gerandin. Di dawet, cejn û Newrozê de tê lîstin.",
+      "explanationTr": "Govend, insanların el ele tutuşup sıra ya da halka biçiminde döndüğü toplu bir halk oyunudur; davul-zurna ya da şarkı eşliğinde düğünlerde, bayramlarda ve Newroz'da oynanır."
+    },
+    {
+      "id": "offline_0395",
+      "reason": "empty_explanation",
+      "detail": "Açıklama motifin ne olduğunu söylemiyordu, yalnız «el sanatı alanıyla bağlantılıdır» diyordu.",
+      "explanationKu": "Motîfên kilimê bi destan tên hûnandin û her nexş wateyeke xwe heye: berxwedan, zarokbûn, parastin an bereket. Ev huner bi giranî ji dayikê re ji keçê tê veguhastin.",
+      "explanationTr": "Kilim motifleri elde dokunur ve her nakışın bir anlamı vardır: direniş, doğurganlık, korunma ya da bereket. Bu el sanatı çoğunlukla anneden kıza aktarılarak sürer."
+    },
+    {
+      "id": "offline_0415",
+      "reason": "empty_explanation",
+      "detail": "Açıklama «sözlü kültür alanıyla bağlantılıdır» ile sınırlıydı.",
+      "explanationKu": "Vegotina çîrokan beşek ji çanda devkî ye: çîrok bi devkî ji nifşekî re tê nifşekî din, bi bîr tê parastin û her vebêj tê de şopa xwe dihêle. Ji ber vê yekê heman çîrok ji herêmê bi herêmê hinekî diguhere.",
+      "explanationTr": "Masal anlatımı sözlü kültürün parçasıdır: hikâye kuşaktan kuşağa ağızdan aktarılır, bellekte saklanır ve her anlatıcı ona kendi izini bırakır. Bu yüzden aynı masal yöreden yöreye değişir."
+    },
+    {
+      "id": "offline_0425",
+      "reason": "empty_explanation",
+      "detail": "Açıklama «sofra kültürü alanıyla bağlantılıdır» ile sınırlıydı.",
+      "explanationKu": "Xwarina gelêrî ne tenê xwarin e; bi sifreya hevpar, parvekirin û mêvanperweriyê ve girêdayî ye. Xwarin bi sêniya mezin tê danîn û bi hev re tê xwarin — ev jî têkiliyên malbat û cîranan xurt dike.",
+      "explanationTr": "Halk mutfağı yalnızca yemek değildir; ortak sofra, paylaşım ve misafirperverlikle iç içedir. Yemek büyük bir tepsiyle ortaya konur ve birlikte yenir — bu da aile ve komşuluk bağlarını güçlendirir."
+    },
+    {
+      "id": "offline_0678",
+      "reason": "empty_explanation",
+      "detail": "Açıklama terimi tanımlamak yerine «karşılıklı konuşma anlamında kullanılır» diyordu; şıklar onarıldığı için açıklama da ayırt edici hâle getirildi.",
+      "explanationKu": "Diyalog axaftina hevbeş e: du kes an zêdetir bi dor diaxivin û bûyer bi gotinên wan pêş dikeve. Ji monologê cuda ye — di monologê de tenê yek deng heye.",
+      "explanationTr": "Diyalog karşılıklı konuşmadır: iki ya da daha çok kişi sırayla konuşur ve olay onların sözleriyle ilerler. Monologdan ayrılır — monologda tek bir ses vardır."
+    },
+    {
+      "id": "offline_0873",
+      "reason": "empty_explanation",
+      "detail": "Açıklama «düzenli vuruş ile ilişkilidir» diyordu; sorunun cevabının tekrarıydı.",
+      "explanationKu": "Rîtm lêdana rêkûpêk e: dem li perçeyên wekhev tê parvekirin û stran û govend li ser vê parvekirinê tên avakirin. Di muzîka kurdî de dahol vê lêdanê diyar dike û govend li gorî wê tê gerandin.",
+      "explanationTr": "Ritim düzenli vuruştur: zaman eşit parçalara bölünür ve şarkı ile halay bu bölünmenin üzerine kurulur. Kürt müziğinde bu vuruşu çoğunlukla davul belirler, halay da ona göre döner."
+    }
+  ]
+}

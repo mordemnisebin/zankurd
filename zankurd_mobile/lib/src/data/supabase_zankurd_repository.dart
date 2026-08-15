@@ -755,19 +755,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           GameRoom.defaultSecondsPerQuestion,
     );
 
-    // `join_room_by_code` katılanı `is_ready = false` ile ekliyor, oysa
-    // `createOnlineRoom` ev sahibini `is_ready: true` ile ekliyor ve oda
-    // ekranının anahtarı iki rolde de "hazır" varsayılanını gösteriyor.
-    // Katılan kişi bu yüzden hazır olduğunu sanıp bekliyordu. Varsayılanı
-    // sunucuya bildirmek, ekranın gösterdiğiyle veritabanının söylediğini
-    // aynı yere getirir (2026-08-01).
-    try {
-      await updateReady(joined, true);
-    } catch (error, stack) {
-      // Bildirim düşerse oda yine de açılmalı: ekran artık gerçek durumu
-      // okuduğu için kullanıcı anahtarı kendisi açabilir.
-      _recordError(error, stack, reason: 'joinOnlineRoom ready sync failed');
-    }
+    // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
+    //
+    // Burada bir zamanlar `updateReady(joined, true)` vardı. Amacı meşruydu:
+    // ekranın anahtarı iki rolde de "açık" çiziliyordu, katılan kendini hazır
+    // sanıyor ama listede "Bekliyor" görünüyordu ve ev sahibi yarışı hiç
+    // başlatamıyordu (2026-08-01). O uyuşmazlığın asıl çaresi ekranın gerçek
+    // durumu okuması oldu — `room_screen.dart` içindeki `ready` alıcısı.
+    // Sunucuya zorla `true` yazmak ise ayrı ve istenmeyen bir şey yaptı:
+    // odaya yeni giren kişi hiçbir şeye dokunmadan hazır sayılıyor ve ev
+    // sahibi, öteki daha ekranı görmeden yarışı başlatabiliyordu
+    // (2026-08-13 iki cihazlı denetimi, uygulama sahibinin bildirimi).
+    //
+    // "Hazırım" bir onaydır; onayı katılan kişi verir.
     return joined;
   }
 
@@ -1850,40 +1850,120 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
     required int totalQuestions,
     GameRoom? room,
   }) async {
-    // Ödül miktarını yalnızca sunucu belirler (claim_quiz_reward RPC).
-    // İstemciden coin_transactions'a yazma yolu yoktur. RPC/transport/parse
-    // hatası yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
+    // Ödül miktarını yalnızca sunucu belirler. İstemciden
+    // coin_transactions'a yazma yolu yoktur. RPC/transport/parse hatası
+    // yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
     // sunucunun başarıyla döndürdüğü 0 ise geçerli bir sonuçtur.
+    //
+    // İki ayrı RPC var çünkü iki ayrı doğrulama rejimi var:
+    //
+    //   oda turu  → `claim_quiz_reward`: sunucu odayı, oyuncuları ve
+    //               cevapları görebildiği için turu DOĞRULAR.
+    //   solo tur  → `claim_solo_reward`: çevrimdışı banka istemcide
+    //               olduğu için sunucu turu doğrulayamaz; talep
+    //               doğrulanmadan kabul edilir ama günlük tavanla
+    //               sınırlanır (bkz. 2026-08-10_solo_round_reward.sql).
+    final isSolo = room?.id == null;
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
       if (currentUserId?.trim() != user.id) {
         throw StateError('Quiz reward owner changed before claim RPC.');
       }
-      final response = await client.rpc(
-        'claim_quiz_reward',
-        params: {
-          'p_room_id': room?.id,
-          'p_score': score,
-          'p_correct_count': correctCount,
-          'p_best_streak': bestStreak,
-          'p_total_questions': totalQuestions,
-        },
-      );
+      final response = isSolo
+          ? await client.rpc(
+              'claim_solo_reward',
+              params: {
+                'p_correct_count': correctCount,
+                'p_total_questions': totalQuestions,
+                'p_best_streak': bestStreak,
+              },
+            )
+          : await client.rpc(
+              'claim_quiz_reward',
+              params: {
+                'p_room_id': room?.id,
+                'p_score': score,
+                'p_correct_count': correctCount,
+                'p_best_streak': bestStreak,
+                'p_total_questions': totalQuestions,
+              },
+            );
       if (currentUserId?.trim() != user.id) {
         throw StateError('Quiz reward owner changed during claim RPC.');
       }
-      return _verifiedQuizRewardAmount(response, userId: user.id);
-    } catch (error, stack) {
-      _recordError(error, stack, reason: 'claim_quiz_reward failed');
+      if (isSolo) {
+        final amount = _amountFromRpcResponse(response) ?? 0;
+        // `cap_reached` yalnız sunucu açıkça söylediğinde doğrudur.
+        // Eksik alanı "tavana varıldı" saymak, olmayan bir sebep
+        // uydurmak olurdu.
+        final capReached = response is Map && response['cap_reached'] == true;
+        return (amount: amount, dailyCapReached: capReached);
+      }
+      return (
+        amount: _verifiedQuizRewardAmount(response, userId: user.id),
+        dailyCapReached: false,
+      );
+    } on PostgrestException catch (error, stack) {
+      // Göç henüz üretime uygulanmadıysa `claim_solo_reward` yoktur
+      // (42883 undefined_function). Bu bir arıza değil, beklenen ara
+      // durumdur: eski davranışa — solo turda sıfır jeton — sessizce
+      // düşülür. Kuyruğa alınırsa hiç başarılamayacak bir talep birikir
+      // ve oyuncuya yanlışlıkla "ödülün kaydedildi" denir.
+      if (isSolo && error.code == '42883') {
+        _recordError(
+          error,
+          stack,
+          reason: 'claim_solo_reward missing — migration not applied yet',
+        );
+        return (amount: 0, dailyCapReached: false);
+      }
+      _recordError(error, stack, reason: 'claim quiz reward failed');
       rethrow;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'claim quiz reward failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> awardXp(int delta) async {
+    if (delta <= 0) return 0;
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      if (currentUserId?.trim() != user.id) return 0;
+      final response = await client.rpc<dynamic>(
+        'award_xp_delta',
+        params: {'p_delta': delta},
+      );
+      if (response is int) return response;
+      if (response is num) return response.toInt();
+      return 0;
+    } on PostgrestException catch (error, stack) {
+      // Göç uygulanmamışsa fonksiyon yoktur (42883). Bu bir arıza değil:
+      // XP'nin cihazdaki hâli zaten yazıldı, sunucu tarafı sessizce
+      // beklemeye devam eder.
+      _recordError(
+        error,
+        stack,
+        reason: error.code == '42883'
+            ? 'award_xp_delta missing — migration not applied yet'
+            : 'award_xp_delta failed',
+      );
+      return 0;
+    } catch (error, stack) {
+      // Ödül yolu OYUNCUYU BEKLETMEZ ve turu düşürmez: sunucuya XP
+      // yazılamaması, tamamlanmış bir turu geçersiz kılmaz.
+      _recordError(error, stack, reason: 'award_xp_delta failed');
+      return 0;
     }
   }
 
@@ -2156,14 +2236,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   QuestionType _questionTypeFromRow(Map<String, dynamic> row) {
-    final value = row['question_type'] as String?;
-    return switch (value) {
-      'true_false' => QuestionType.trueFalse,
-      'visual' => QuestionType.visual,
-      'word_ordering' || 'wordOrdering' => QuestionType.wordOrdering,
-      'fill_in_blank' || 'fillInBlank' => QuestionType.fillInBlank,
-      _ => QuestionType.multipleChoice,
-    };
+    try {
+      return questionTypeFromStorage(row['question_type']);
+    } on ArgumentError {
+      return QuestionType.multipleChoice;
+    }
   }
 
   @override

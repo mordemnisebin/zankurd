@@ -285,7 +285,11 @@ extension _QuizScreenUI on _QuizScreenState {
       child: Tooltip(
         message: context.t(K.progressLegendShort),
         child: Row(
-          key: const ValueKey('quiz-wildcard-row'),
+          // Bu satır İLERLEME ÇUBUĞU. Anahtarı bir zamanlar
+          // `quiz-wildcard-row`du ve iki test onunla "joker satırı ekranda"
+          // diye iddia ediyordu; ilerleme çubuğu her zaman ekranda olduğu
+          // için o iki iddia hiçbir şey korumuyordu (2026-08-12 denetimi).
+          key: const ValueKey('quiz-progress-bar'),
           children: [
             for (var i = 0; i < total; i++) ...[
               Expanded(
@@ -295,8 +299,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   height: i == index ? 8 : 6,
                   decoration: BoxDecoration(
                     color: i < answerRecords.length
-                        ? (answerRecords[i].selectedAnswer ==
-                                  answerRecords[i].correctAnswer
+                        ? (answerRecords[i].isCorrect
                               ? AppTheme.correct
                               : AppTheme.wrong)
                         : i == index
@@ -373,7 +376,9 @@ extension _QuizScreenUI on _QuizScreenState {
     final bool showRatingBar =
         widget.practice &&
         answered &&
-        selectedAnswer == question.correctAnswer &&
+        answerRecords.any(
+          (record) => record.id == question.id && record.isCorrect,
+        ) &&
         !completing;
 
     // Multiplayer'da "Sonraki" butonu devre dışı: geçiş otomatik.
@@ -395,16 +400,21 @@ extension _QuizScreenUI on _QuizScreenState {
           SizedBox(height: isCompact ? AppSpacing.xxs : AppSpacing.xs),
         ],
         // Çift Cevap ilk denemesi yanlışsa: reveal görüntüsü olmadan
-        // ikinci şık beklenir; kullanıcıya net ipucu verilir.
+        // ikinci cevap beklenir; kullanıcıya net ipucu verilir.
         if (!answered && _firstAttemptAnswer.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-            child: Text(
-              context.t(K.doubleAnswerHint),
-              textAlign: TextAlign.center,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.gold,
-                fontWeight: FontWeight.w800,
+            child: Semantics(
+              liveRegion: true,
+              label: context.t(K.doubleAnswerHint),
+              excludeSemantics: true,
+              child: Text(
+                context.t(K.doubleAnswerHint),
+                textAlign: TextAlign.center,
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.gold,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ),
@@ -535,13 +545,17 @@ extension _QuizScreenUI on _QuizScreenState {
   // ─── Joker satırı ────────────────────────────────────────────────────────
 
   Widget _buildWildcardRow() {
+    // Eleme jokerleri iki şıklı soruda cevabın kendisini satar; orada hiç
+    // GÖSTERİLMEZLER. Pasif bir düğme bırakmak da olurdu ama oyuncuya
+    // sebebini anlatmayan ölü bir düğme, olmayan düğmeden kötüdür.
     final jokers = [
-      WildcardType.fiftyFifty,
-      WildcardType.audience,
-      WildcardType.doubleAnswer,
+      if (_supportsEliminationWildcards) WildcardType.fiftyFifty,
+      if (_supportsOptionWildcards) WildcardType.audience,
+      if (_supportsDoubleAnswer) WildcardType.doubleAnswer,
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
     return Column(
+      key: const ValueKey('quiz-wildcard-row'),
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
@@ -641,6 +655,45 @@ extension _QuizScreenUI on _QuizScreenState {
 
   // ─── Joker mekanikleri ───────────────────────────────────────────────────
 
+  bool get _supportsOptionWildcards =>
+      question.type != QuestionType.fillInBlank &&
+      question.type != QuestionType.wordOrdering;
+
+  /// Şık ELEYEN jokerler için ek koşul: en az dört şık.
+  ///
+  /// ## Kusur
+  ///
+  /// 50/50 iki yanlışı gizler. İki şıklı bir doğru/yanlış sorusunda tek bir
+  /// yanlış vardır; `take(2)` onu gizler ve geriye YALNIZ doğru cevap kalır.
+  /// Oyuncu 20 jeton ödeyip cevabın kendisini satın alıyordu.
+  ///
+  /// Çift cevap aynı kapıdan geçiyordu ve orada daha da kötüydü: iki şıklı
+  /// bir soruda iki kez cevaplama hakkı kazanmayı GARANTİ eder — 50 jeton
+  /// karşılığında kesin puan.
+  ///
+  /// Banka doğru/yanlış sorularıyla dolu; ikisi de kuramsal değil.
+  ///
+  /// Sessizdi çünkü kapı soru TÜRÜNE bakıyordu (`fillInBlank` ve
+  /// `wordOrdering` dışarıda) ve doğru/yanlış da şıklı bir türdür. Eleme
+  /// jokerlerini anlamlı kılan şey tür değil, ŞIK SAYISIdır (2026-08-12).
+  ///
+  /// Seyirci jokeri bu kapıdan geçmez: iki şıkta da dürüst bir dağılım
+  /// gösterir, cevabı ele vermez.
+  bool get _supportsEliminationWildcards =>
+      _supportsOptionWildcards && question.answers.length >= 4;
+
+  /// Çift cevap hakkı bu soruda anlamlı mı?
+  ///
+  /// Kısıt yalnız ŞIKLI sorular için geçerli. Serbest metinli türlerde
+  /// (boşluk doldurma, sıralama) şık yoktur, dolayısıyla iki deneme hakkı
+  /// hiçbir şeyi garanti etmez — oyuncu yine doğru sözcüğü yazmak zorunda.
+  ///
+  /// İlk taslak bu ayrımı yapmıyor ve `answers.length >= 4` diyordu; boşluk
+  /// doldurma sorusunun şık listesi BOŞ olduğu için çift cevap orada da
+  /// kapanmıştı. Kusuru iki mevcut test yakaladı.
+  bool get _supportsDoubleAnswer =>
+      !_supportsOptionWildcards || question.answers.length >= 4;
+
   Future<void> _trackWildcardMission() async {
     final store = await DailyMissionStore.load();
     final completed = await store.reportWildcardUsed();
@@ -672,7 +725,12 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _useFiftyFifty() {
     final cost = WildcardType.fiftyFifty.coinCost;
-    if (_wildcard.fiftyFiftyUsed || _coinBalance < cost || answered) return;
+    if (!_supportsEliminationWildcards ||
+        _wildcard.fiftyFiftyUsed ||
+        _coinBalance < cost ||
+        answered) {
+      return;
+    }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
@@ -698,7 +756,12 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _useAudience() {
     final cost = WildcardType.audience.coinCost;
-    if (_wildcard.audienceUsed || _coinBalance < cost || answered) return;
+    if (!_supportsOptionWildcards ||
+        _wildcard.audienceUsed ||
+        _coinBalance < cost ||
+        answered) {
+      return;
+    }
     HapticFeedback.selectionClick();
     context.read<SoundProvider>().playWildcard();
     _trackWildcardMission();
@@ -746,7 +809,8 @@ extension _QuizScreenUI on _QuizScreenState {
 
   void _activateDoubleAnswer() {
     final cost = WildcardType.doubleAnswer.coinCost;
-    if (_wildcard.doubleAnswerActivated ||
+    if (!_supportsDoubleAnswer ||
+        _wildcard.doubleAnswerActivated ||
         _coinBalance < cost ||
         answered ||
         _firstAttemptAnswer.isNotEmpty) {
@@ -828,6 +892,18 @@ extension _QuizScreenUI on _QuizScreenState {
       _audiencePoll = null;
       favorite = false;
       _favoriteTouched = false;
+      // İlk deneme ATILAN soruya aitti; yeni soruya taşınamaz.
+      //
+      // Taşındığında Çift Cevap hakkı sessizce yanıyordu: oyuncu 50 jeton
+      // ödeyip iki cevap hakkı alıyor, ilkini yanlış kullanıyor (bu aşamada
+      // `answered` hâlâ yanlıştır, o yüzden soru değiştirme açıktır), 40
+      // jetonla soruyu değiştiriyor ve yeni soruda İLK dokunuşu ikinci
+      // deneme sayılıyordu — tek şansı kalıyordu. Ödediği iki hakkın biri,
+      // artık görmediği bir soruda harcanmış oluyordu (2026-08-12 denetimi).
+      //
+      // `doubleAnswerActivated` bilerek korunuyor: hak duruyor, yalnız o
+      // hakkın atılan soruda kullanılmış YARISI siliniyor.
+      _firstAttemptAnswer = '';
     });
     _markQuestionSeen();
     _loadFavoriteState();
@@ -969,6 +1045,7 @@ extension _QuizScreenUI on _QuizScreenState {
                       width: 164,
                       child: _QuestionImage(
                         url: question.imageUrl!,
+                        alt: question.imageAltFor(isKu: context.isKu),
                         isCompact: isCompact,
                         layoutSize: size,
                         onReady: questionVisualReady,
@@ -981,6 +1058,7 @@ extension _QuizScreenUI on _QuizScreenState {
                         promptFontSize: 20,
                         question: question,
                         selectedAnswer: selectedAnswer,
+                        adjudicatedCorrect: _currentAnswerAdjudication,
                         answered: answered,
                         hiddenAnswers: hiddenAnswers,
                         firstAttemptAnswer: _firstAttemptAnswer,
@@ -1002,6 +1080,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 if (question.hasImage) ...[
                   _QuestionImage(
                     url: question.imageUrl!,
+                    alt: question.imageAltFor(isKu: context.isKu),
                     isCompact: isCompact,
                     layoutSize: size,
                     onReady: questionVisualReady,
@@ -1013,6 +1092,7 @@ extension _QuizScreenUI on _QuizScreenState {
                   promptFontSize: compactLandscape ? 21 : (isCompact ? 21 : 25),
                   question: question,
                   selectedAnswer: selectedAnswer,
+                  adjudicatedCorrect: _currentAnswerAdjudication,
                   answered: answered,
                   hiddenAnswers: hiddenAnswers,
                   firstAttemptAnswer: _firstAttemptAnswer,

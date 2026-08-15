@@ -1,0 +1,28 @@
+{
+  "sourcePackId": "pack_what_is_a_url",
+  "sourceTitle": "MDN — What is a URL?",
+  "sourceInstitution": "Mozilla (MDN Web Docs)",
+  "sourceReference": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL",
+  "accessStatus": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "riskClass": "C",
+  "volatility": "low",
+  "copyrightNotes": "Tek tanım cümlesi ve kısaltma açılımı alındı.",
+  "exactSourceStatements": [
+    "A URL (Uniform Resource Locator) is the address of a unique resource on the internet.",
+    "It is one of the key mechanisms used by browsers to retrieve published resources, such as HTML pages, CSS documents, images, and so on."
+  ],
+  "extractedClaims": [
+    {
+      "claimId": "url_01",
+      "claim": "URL = Uniform Resource Locator.",
+      "supports": "A URL (Uniform Resource Locator)"
+    },
+    {
+      "claimId": "url_02",
+      "claim": "URL navnîşana çavkaniyekê ye.",
+      "supports": "is the address of a unique resource on the internet"
+    }
+  ],
+  "sourceHash": "be0bdb752d965e46"
+}

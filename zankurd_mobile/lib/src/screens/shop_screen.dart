@@ -18,7 +18,7 @@ import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
-/// Statik yedek listedeki (`ShopItem._items`) her ikon burada da
+/// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
 /// tanımlı olmalı — aksi halde canlı katalog jenerik çanta ikonuna düşer.
 ///
 /// Map tabanlı arama kasıtlı: bir switch-expression'la yazıldığında web
@@ -63,10 +63,22 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
 
 /// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
 /// [Color]'a çevirir.
+/// Uzunluk denetimi `try/catch`ten ÖNCE gelir ve şart.
+///
+/// `int.parse('FF' + clean, radix: 16)` eksik bir hex için hata ATMAZ,
+/// sessizce yanlış bir sayı üretir: boş dize `0xFF` yani
+/// `Color(0x000000FF)` verir — alfası sıfır, tamamen saydam. Üç haneli
+/// `FFF` de `0x000FFFFF` verir, yine saydam. Yani `catch` bloğu bu
+/// durumların hiçbirinde çalışmıyordu ve uzak katalogdaki kısa ya da boş
+/// bir `theme_color`, vitrinde görünmez bir karo tonu üretiyordu.
+///
+/// Mevcut test bunu göremiyordu: yalnız `isNotNull` denetliyordu ve saydam
+/// bir renk de null değildir (2026-08-12 denetimi).
 Color shopColorForHex(String? hex) {
   if (hex == null) return AppTheme.accent;
+  final cleanHex = hex.replaceAll('#', '').trim();
+  if (!RegExp(r'^[0-9a-fA-F]{6}$').hasMatch(cleanHex)) return AppTheme.accent;
   try {
-    final cleanHex = hex.replaceAll('#', '');
     return Color(int.parse('FF$cleanHex', radix: 16));
   } catch (_) {
     return AppTheme.accent;
@@ -93,13 +105,90 @@ class ShopItem {
     required this.icon,
     required this.themeColor,
   });
+
+  // 2026-07-22 canlı UX denetimi: giriş ürünleri
+  // 2026-07-23 M24: themeColor dağılımı playPink/playCyan/playPurple
+  // (marka dışı) ağırlıklıydı — turuncu/altın/koyu-yeşil marka kimliğinden
+  // uzaklaşıyordu. Yalnız themeColor alanları yeniden dağıtıldı; cost,
+  // id, başlık ve ikonlara dokunulmadı. playPurple/playCyan'de kalan 3
+  // ürün (emoji_ster, name_color_purple, frame_simple) bilinçli bırakıldı
+  // çünkü açıklama metinleri o rengi ismen anıyor ("mor", "cyan").
+  // ── Fiyat çıpası (2026-08-10) ────────────────────────────────────────
+  //
+  // Fiyatlar ÖLÇÜLEN gelire göre belirlendi, sezgiye göre değil.
+  //
+  // Çevrimdışı oynayan bir oyuncunun TEK jeton kaynağı günlük çarktır.
+  // Solo tur sıfır jeton verir ve bu bir eksiklik değil: `claim_quiz_reward`
+  // RPC'si `p_room_id is null` olduğunda `verification_required` dönüyor —
+  // sunucu doğrulayamadığı bir turu ödüllendirmiyor. Oda/1v1 turları ödül
+  // veriyor ama rakip ve bağlantı istiyor.
+  //
+  // Çark: [10, 25, 50, 15, 75, 20, 100, 30] → günde ortalama 40,6 jeton.
+  //
+  // Eski fiyatlarla ilk satın alma 4,9 gün, katalogun tamamı 24,6 gün
+  // sürüyordu; yeni oyuncu mağazaya girip hiçbir şey alamıyor ve yakın bir
+  // hedef de göremiyordu (2026-08-10 simülatör gezisi).
+  //
+  // İki kısıt var:
+  //
+  //   1. `spin_wheel_extra` çarkın kendisini veriyor. Fiyatı çarkın AZAMİ
+  //      ödülünün (100) altına inerse döngü kâr eder ve sınırsız jeton
+  //      pompasına döner. 120 seçildi: her satın alma her sonuçta net
+  //      zarardır, yani kolaylık olarak kalır, arbitraj olmaz.
+  //   2. Jeton satan bir IAP YOK. Fiyatların gelire etkisi sıfır; yalnız
+  //      kozmetik döngünün temposunu belirliyorlar. Bu yüzden indirim bir
+  //      gelir kaybı değil, erişilebilirlik kazancıdır.
+  //
+  // Yeni tempo: ilk satın alma 3,0 gün; katalog 17,7 gün.
+  static const List<ShopItem> catalog = [
+    ShopItem(
+      id: 'spin_wheel_extra',
+      titleKu: 'Zivirîna Zêde',
+      titleTr: 'Ekstra Çevirme',
+      descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
+      descTr: 'Bugün çarkı tekrar çevirmek için ekstra hak verir.',
+      cost: 120,
+      icon: AppIcons.dice,
+      themeColor: AppTheme.correct,
+    ),
+    ShopItem(
+      id: 'avatar_frame_gold',
+      titleKu: 'Çarçoveya Zêrîn',
+      titleTr: 'Altın Çerçeve',
+      descKu: 'Ji bo avatarê te çarçoveyeke zêrîn a taybet.',
+      descTr: 'Avatarın için özel altın çerçeve.',
+      cost: 480,
+      icon: AppIcons.star,
+      themeColor: AppTheme.gold,
+    ),
+    ShopItem(
+      id: 'avatar_frame_neon',
+      titleKu: 'Çarçoveya Neon',
+      titleTr: 'Neon Çerçeve',
+      descKu: 'Avatarê te bi rengên neon ên geş dibiriqe.',
+      descTr: 'Avatarın neon renklerle parıldasın.',
+      cost: 350,
+      icon: AppIcons.wandMagicSparkles,
+      themeColor: AppTheme.accent,
+    ),
+    ShopItem(
+      id: 'profile_badge_vip',
+      titleKu: 'Rozeta VIP',
+      titleTr: 'VIP Rozeti',
+      descKu: 'Profîla te de rozeteke taybet a VIP xuya dibe.',
+      descTr: 'Profilinde özel VIP rozeti görünsün.',
+      cost: 720,
+      icon: AppIcons.gem,
+      themeColor: AppTheme.gold,
+    ),
+  ];
 }
 
 /// Test-only erişim: mağaza kataloğunun statik yedek listesi.
 ///
 /// Yalnız etkisi gerçekten uygulanmış yayın ürünlerini döndürür.
 @visibleForTesting
-List<ShopItem> get debugShopItems => _ShopScreenState._items
+List<ShopItem> get debugShopItems => ShopItem.catalog
     .where((item) => _ShopScreenState._supportedItemIds.contains(item.id))
     .toList(growable: false);
 
@@ -155,56 +244,6 @@ class _ShopScreenState extends State<ShopScreen> {
   };
   static const Set<String> _repeatableItemIds = {'spin_wheel_extra'};
 
-  // 2026-07-22 canlı UX denetimi: giriş ürünleri
-  // 2026-07-23 M24: themeColor dağılımı playPink/playCyan/playPurple
-  // (marka dışı) ağırlıklıydı — turuncu/altın/koyu-yeşil marka kimliğinden
-  // uzaklaşıyordu. Yalnız themeColor alanları yeniden dağıtıldı; cost,
-  // id, başlık ve ikonlara dokunulmadı. playPurple/playCyan'de kalan 3
-  // ürün (emoji_ster, name_color_purple, frame_simple) bilinçli bırakıldı
-  // çünkü açıklama metinleri o rengi ismen anıyor ("mor", "cyan").
-  static const List<ShopItem> _items = [
-    ShopItem(
-      id: 'spin_wheel_extra',
-      titleKu: 'Zivirîna Zêde',
-      titleTr: 'Ekstra Çevirme',
-      descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
-      descTr: 'Bugün çarkı tekrar çevirmek için ekstra hak verir.',
-      cost: 200,
-      icon: AppIcons.dice,
-      themeColor: AppTheme.correct,
-    ),
-    ShopItem(
-      id: 'avatar_frame_gold',
-      titleKu: 'Çarçoveya Zêrîn',
-      titleTr: 'Altın Çerçeve',
-      descKu: 'Ji bo avatarê te çarçoveyeke zêrîn a taybet.',
-      descTr: 'Avatarın için özel altın çerçeve.',
-      cost: 750,
-      icon: AppIcons.star,
-      themeColor: AppTheme.gold,
-    ),
-    ShopItem(
-      id: 'avatar_frame_neon',
-      titleKu: 'Çarçoveya Neon',
-      titleTr: 'Neon Çerçeve',
-      descKu: 'Avatarê te bi rengên neon ên geş dibiriqe.',
-      descTr: 'Avatarın neon renklerle parıldasın.',
-      cost: 600,
-      icon: AppIcons.wandMagicSparkles,
-      themeColor: AppTheme.accent,
-    ),
-    ShopItem(
-      id: 'profile_badge_vip',
-      titleKu: 'Rozeta VIP',
-      titleTr: 'VIP Rozeti',
-      descKu: 'Profîla te de rozeteke taybet a VIP xuya dibe.',
-      descTr: 'Profilinde özel VIP rozeti görünsün.',
-      cost: 1000,
-      icon: AppIcons.gem,
-      themeColor: AppTheme.gold,
-    ),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -221,7 +260,7 @@ class _ShopScreenState extends State<ShopScreen> {
     });
     try {
       final balance = await widget.repository.loadCoinBalance();
-      List<ShopItem> dynamicItems = _items
+      List<ShopItem> dynamicItems = ShopItem.catalog
           .where((item) => _supportedItemIds.contains(item.id))
           .toList(growable: false);
 
@@ -229,7 +268,25 @@ class _ShopScreenState extends State<ShopScreen> {
         try {
           final client =
               (widget.repository as SupabaseZanKurdRepository).client;
-          final rows = await client.from('shop_items').select().order('cost');
+          final rows = await client
+              // Tablo adı `shop_items`.
+              //
+              // Burada bir zamanlar `shopShopItem.catalog` yazıyordu: bir
+              // toplu isim değiştirmenin `shop_items` dizesini de yakalayıp
+              // bozduğu bir kalıntı. PostgREST böyle bir tabloyu hiçbir
+              // zaman bulamadı, sorgu her açılışta hata verdi ve ekran
+              // sessizce statik yedek listeye düştü. Yani "uzaktan
+              // güncellenebilir katalog" özelliği hiç çalışmadı ve bunu
+              // yalnız hata günlüğü biliyordu (2026-08-12 denetimi).
+              //
+              // DİKKAT: bu düzeltme, uzak tablonun fiyatlarını yeniden
+              // devreye sokar. `shop_items` üretimde 2026-07-13 tohumundaki
+              // ESKİ fiyatları taşıyor; `2026-08-12_shop_price_anchor.sql`
+              // uygulanmadan bu sürüm yayınlanırsa fiyat çıpası
+              // (`ShopItem.catalog`) sessizce eskiye döner.
+              .from('shop_items')
+              .select()
+              .order('cost');
           if (rows.isNotEmpty) {
             dynamicItems = rows
                 .map((row) {

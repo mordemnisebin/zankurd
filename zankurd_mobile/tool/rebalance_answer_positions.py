@@ -40,7 +40,18 @@ ASSETS = 'lib/src/data/question_bank_assets.dart'
 def bank_paths():
     """Uygulamanın yüklediği banka yolları — tek kaynaktan."""
     source = open(ASSETS, encoding='utf-8').read()
-    return re.findall(r"'(assets/data/[a-z_]+\.json)'", source)
+    # Karakter kümesi DAR tutulmamalı. `[a-z_]+` yazılmıştı ve adında rakam
+    # geçen `expansion_2026_08_questions.json` sessizce dışarıda kaldı
+    # (2026-08-06): araç paylaşılan listeyi doğru okuyordu ama okuduğunu
+    # kendi deseniyle süzüyordu, yani 2026-08-01'deki "araç bütün bankaları
+    # görmüyor" kusuru bir katman aşağıda geri gelmişti.
+    paths = re.findall(r"'(assets/data/[^']+\.json)'", source)
+    # Sessiz eksilme bu aracın bilinen kusuru; sayı tutmuyorsa gürültü çıkar.
+    declared = source.count("'assets/data/")
+    if len(paths) != declared:
+        raise SystemExit(
+            'banka yolu ayrıştırma eksik: %d/%d' % (len(paths), declared))
+    return paths
 
 
 def offset(question_id, length=4):
@@ -78,9 +89,19 @@ def main() -> int:
     for row in movable:
         target = counts.index(min(counts))
         stored = (target + offset(row['id'])) % 4
-        others = [a for a in row['answers'] if a != row['correctAnswer']]
-        others.insert(stored, row['correctAnswer'])
-        row['answers'] = others
+        # Şıkları DEĞERLE değil İNDEKSLE taşı: aynı devrişimi `answersTr`ye
+        # de uygulayabilelim diye. İki dilli bankalarda yalnız `answers`
+        # yeniden sıralanırsa Türkçe oynayan oyuncunun gördüğü sıra
+        # dengelemenin dışında kalır — bu bekçi tam da onu engellemek için
+        # var (2026-08-06, expansion_2026_08 bankası eklendiğinde).
+        answers = row['answers']
+        correct = answers.index(row['correctAnswer'])
+        order = [i for i in range(len(answers)) if i != correct]
+        order.insert(stored, correct)
+        row['answers'] = [answers[i] for i in order]
+        answers_tr = row.get('answersTr')
+        if isinstance(answers_tr, list) and len(answers_tr) == len(answers):
+            row['answersTr'] = [answers_tr[i] for i in order]
         counts[target] += 1
 
     for path, rows in banks.items():

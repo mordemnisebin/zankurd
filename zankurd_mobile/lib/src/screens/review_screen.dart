@@ -211,6 +211,12 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isCorrect = record.isCorrect;
     final bool isUnanswered = record.isUnanswered;
+    final selectedText = record.selectedAnswer?.trim();
+    final showTypedAnswer =
+        selectedText != null &&
+        selectedText.isNotEmpty &&
+        selectedText != 'TIMEOUT' &&
+        !record.answers.contains(selectedText);
     // Yazılmış açıklama > override > şablon eleme > kural motoru.
     //
     // Burası doğrudan kural motoruna gidiyordu ve sorunun elle yazılmış
@@ -427,6 +433,11 @@ class _ReviewCard extends StatelessWidget {
                     ),
                   );
                 }),
+                if (showTypedAnswer)
+                  _TypedAnswerRow(
+                    answer: selectedText,
+                    isCorrect: record.isCorrect,
+                  ),
                 if (explanationText.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   Container(
@@ -465,6 +476,50 @@ class _ReviewCard extends StatelessWidget {
                 ],
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TypedAnswerRow extends StatelessWidget {
+  const _TypedAnswerRow({required this.answer, required this.isCorrect});
+
+  final String answer;
+  final bool isCorrect;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isCorrect ? AppTheme.correct : AppTheme.wrong;
+    return Container(
+      key: const ValueKey('review-typed-answer'),
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.onAccentTint(context, color),
+          width: 1.5,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              context.t(K.yourAnswer, {'answer': answer}),
+              style: TextStyle(
+                color: AppColors.onAccentTint(context, color),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Icon(
+            isCorrect ? AppIcons.check : AppIcons.xmark,
+            color: AppColors.onAccentTint(context, color),
+            size: 20,
           ),
         ],
       ),

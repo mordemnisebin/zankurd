@@ -1,0 +1,78 @@
+[
+ {
+  "question": {
+   "id": "ziman_x_0038",
+   "category": "Ziman",
+   "prompt": "Hejmara «deh» bi tirkî çend e?",
+   "answers": [
+    "On",
+    "Dokuz",
+    "Yirmi",
+    "Yüz"
+   ],
+   "correctAnswer": "On",
+   "promptTr": "«Deh» sayısı Türkçede kaçtır?",
+   "answersTr": [
+    "On",
+    "Dokuz",
+    "Yirmi",
+    "Yüz"
+   ],
+   "correctAnswerTr": "On",
+   "explanation": "Deh on demektir. Dokuz neh, yirmi bîst, yüz ise sed'dir; neh ile deh tek harfle ayrıldığı için sık karıştırılır.",
+   "difficulty": 1,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Ziman û rêziman — Kurmancî",
+    "sourceReference": "internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=8fd616c763449992",
+    "reviewedBy": "automated:validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2
+   }
+  },
+  "reasons": [
+   "semantic_duplicate_of_existing:offline_2035"
+  ],
+  "note": "Mevcut «deh» sorusunun yeniden ifadesi; mevcut kayda dokunulmadı."
+ },
+ {
+  "question": {
+   "id": "ziman_x_0019",
+   "category": "Ziman",
+   "prompt": "Dijwateya peyva «germ» kîjan e?",
+   "answers": [
+    "Nerm",
+    "Sar",
+    "Şil",
+    "Giran"
+   ],
+   "correctAnswer": "Sar",
+   "promptTr": "«Germ» kelimesinin zıt anlamlısı nedir?",
+   "answersTr": [
+    "Nerm (yumuşak)",
+    "Sar (soğuk)",
+    "Şil (ıslak)",
+    "Giran (ağır)"
+   ],
+   "correctAnswerTr": "Sar (soğuk)",
+   "explanation": "Germ sıcak demektir; karşıtı sar yani soğuktur. Nerm, şil ve giran da sıfattır ama hiçbiri sıcaklık ekseninde yer almaz.",
+   "difficulty": 3,
+   "type": "multipleChoice",
+   "metadata": {
+    "dialect": "kurmanci",
+    "sourceTitle": "Ziman û rêziman — Kurmancî",
+    "sourceReference": "internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=8dfee7bf7664ed33",
+    "reviewedBy": "automated:validate_batch.py",
+    "reviewedAt": "2026-08-06",
+    "lastContentCheckAt": "2026-08-06",
+    "qualityVersion": 2
+   }
+  },
+  "reasons": [
+   "near-duplicate-of-existing"
+  ],
+  "note": "Yayımlanmış bankadaki bir soruyla aynı bilgiyi soruyor; mevcut kayda dokunulmadı."
+ }
+]

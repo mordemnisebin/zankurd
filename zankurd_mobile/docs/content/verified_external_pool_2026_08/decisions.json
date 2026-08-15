@@ -1,0 +1,911 @@
+[
+  {
+    "originalQuestionId": "ds26_cinema_0001",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
+    "OpusReviewReasons": [
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
+    ],
+    "subcategoryOld": "Fîlm û Derhêner",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0002",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
+    "OpusReviewReasons": [
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
+    ],
+    "subcategoryOld": "Fîlm û Derhêner",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0004",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
+    "OpusReviewReasons": [
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
+    ],
+    "subcategoryOld": "Fîlm û Derhêner",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0005",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
+    "OpusReviewReasons": [
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
+    ],
+    "subcategoryOld": "Fîlm û Derhêner",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0035",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_DIRECT",
+    "OpusReviewReasons": [
+      "Columbia sözlüğünde terim sayfası açıldı ve tanım okundu"
+    ],
+    "subcategoryOld": "Fîlm û Derhêner",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0087",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
+    "OpusReviewReasons": [
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
+    ],
+    "subcategoryOld": "Belgefîlm û Festîval",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0089",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
+    "OpusReviewReasons": [
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
+    ],
+    "subcategoryOld": "Belgefîlm û Festîval",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0090",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
+    "OpusReviewReasons": [
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
+    ],
+    "subcategoryOld": "Belgefîlm û Festîval",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0109",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
+    "OpusReviewReasons": [
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
+    ],
+    "subcategoryOld": "Belgefîlm û Festîval",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0111",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
+    "OpusReviewReasons": [
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
+    ],
+    "subcategoryOld": "Belgefîlm û Festîval",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "ds26_cinema_0113",
+    "OpusReviewDecision": "ACCEPTED_VERIFIED_CORROBORATED",
+    "OpusReviewReasons": [
+      "iki bağımsız kurumsal kaynak aynı olguyu destekliyor"
+    ],
+    "subcategoryOld": "Belgefîlm û Festîval",
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "grok26_tech_core_0040",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "risk sınıfı C: tek doğrudan açılmış kurumsal kaynak yeterli"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": "Teknolojiya Bingehîn"
+  },
+  {
+    "originalQuestionId": "grok26_tech_core_0071",
+    "OpusReviewDecision": "ACCEPTED_SELF_CONTAINED",
+    "OpusReviewReasons": [
+      "risk sınıfı D: kendi içinde çözülebilir"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": "Teknolojiya Bingehîn"
+  },
+  {
+    "originalQuestionId": "sf_cin_0001",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0002",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0003",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0004",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0005",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0006",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0007",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0008",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0009",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0010",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0011",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0012",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0013",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0014",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0015",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0016",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0017",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0018",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0019",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0020",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0021",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0022",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0023",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0024",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0025",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0026",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0027",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0028",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0029",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0030",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0031",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0032",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0033",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0034",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0035",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0036",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0037",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0038",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0039",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0040",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0041",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0042",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0043",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0044",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0045",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0046",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0047",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0048",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0049",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0050",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0051",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0052",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0053",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_cin_0054",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_geo_0001",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_geo_0002",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_geo_0003",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_geo_0004",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0001",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0002",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0003",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0004",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0005",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0006",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0007",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0008",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0009",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0010",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0011",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0012",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0013",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0014",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0015",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0016",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0017",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0018",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0019",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_nat_0020",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0001",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0004",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0007",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0008",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0009",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0010",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0011",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0012",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0013",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  },
+  {
+    "originalQuestionId": "sf_tech_0014",
+    "OpusReviewDecision": "ACCEPTED_PRIMARY_DIRECT",
+    "OpusReviewReasons": [
+      "doğrudan açılmış kurumsal sayfa"
+    ],
+    "subcategoryOld": null,
+    "subcategoryNew": null
+  }
+]

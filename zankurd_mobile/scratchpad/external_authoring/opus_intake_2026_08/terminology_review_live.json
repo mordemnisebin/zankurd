@@ -1,0 +1,2962 @@
+[
+  {
+    "questionId": "comm_cog_0001",
+    "sourceFile": "assets/data/community_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Amed li kîjan parçeyê Kurdistanê ye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Amed Kürdistan'ın neresindedir?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Amed (Diyarbekir) li herêma bakur a Kurdistanê ye û bajarê herî mezin ê wê herêmê tê hesibandin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Amed (Diyarbakır) Kürdistan'ın kuzey bölgesindedir ve o bölgenin en büyük şehri sayılır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "comm_cog_0003",
+    "sourceFile": "assets/data/community_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Batman', 'Nisêbîn']",
+      "exonim: Diyarbakır->Amed, Mardin->Mêrdîn, Nusaybin->Nisêbîn, Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Nisêbîn navçeya kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Nisêbîn (Nusaybin) hangi ile bağlı bir ilçedir?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Nisêbîn navçeyeke li ser sînorê Sûriyeyê ye û bi Mêrdînê ve girêdayî ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Nisêbîn (Nusaybin) Suriye sınırında bir ilçedir ve Mardin'e bağlıdır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "comm_cog_0004",
+    "sourceFile": "assets/data/community_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed, Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Behra Wanê li kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Behra Wanê (Van Gölü) nereye bağlı bir göldür?",
+    "newPromptTr": null,
+    "oldExplanationKu": "Behra Wanê gola herî mezin a herêmê ye û navê xwe ji bajarê li kêleka xwe digire.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Van Gölü bölgenin en büyük gölüdür ve adını kıyısındaki şehirden alır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "comm_siy_0001",
+    "sourceFile": "assets/data/community_questions.json",
+    "category": "Siyaset",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Siyasetmedarê ku wek «Bavê Welat» tê nasîn kî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": "Rojava direnişiyle bütünleşen ve «Bavê Welat» olarak tanınan siyasetçi kimdir?",
+    "newPromptTr": null,
+    "oldExplanationKu": "",
+    "newExplanationKu": null,
+    "oldExplanationTr": "",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_dirok_0008",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr, Sanandaj->Sine"
+    ],
+    "oldPromptKu": "Mîrektiya Botan bi kîjan navendê tê nasîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Mîrektiya Botan navenda xwe Cizîra Botan bû; Bedirxan Beg mîrê wê yê navdar e.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Botan Emirliği'nin merkezi Cizre idi; ünlü emiri Bedirhan Bey'dir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_dirok_0015",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Sanandaj->Sine"
+    ],
+    "oldPromptKu": "Hûrî û Mîtanî bi giştî li kîjan herêmê dijiyan?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Hûrî û Mîtanî li Mezopotamyaya jorîn — herêma Dîcle û Firatê ya jorîn — dijiyan.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hurriler ve Mitanniler Yukarı Mezopotamya'da, Dicle-Fırat'ın yukarı havzasında yaşadı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0002",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Agirî']",
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "Çiyayê herî bilind ê Tirkiyeyê ku li herêma kurdî ye kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Çiyayê Agirî bi 5.137 metreyî çiyayê herî bilind ê Tirkiyeyê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Ağrı Dağı 5.137 metreyle Türkiye'nin en yüksek dağıdır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0005",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Erbil->Hewlêr"
+    ],
+    "oldPromptKu": "Bajarê Hewlêr (Erbil) navenda kîjan herêmê ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Hewlêr paytexta Herêma Kurdistanê ya Federal a Iraqê ye; qelaya wê di lîsteya UNESCOyê de ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Erbil, Irak Federal Kürdistan Bölgesi'nin başkentidir; kalesi UNESCO listesindedir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0006",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Sûrên bazaltî yên ku di lîsteya mîrateya cîhanî ya UNESCOyê de ne li kîjan bajarî ne?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Sûrên Amedê û Baxçeyên Hewselê di 2015an de ketin lîsteya UNESCOyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Diyarbakır Surları ve Hevsel Bahçeleri 2015'te UNESCO listesine girdi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0007",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Urfa->Riha"
+    ],
+    "oldPromptKu": "Girê Navokê (Göbeklitepe) li nêzîkî kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Girê Navokê li nêzîkî Rihayê ye û yek ji kevintirîn cihên olî yên cîhanê tê hesibandin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Göbeklitepe Urfa yakınlarındadır ve dünyanın en eski tapınak alanlarından sayılır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0014",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "POLITICAL_STATUS_QUESTION_REJECTED"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Sine']",
+      "exonim: Sanandaj->Sine"
+    ],
+    "oldPromptKu": "Bajarê Sanandaj (Sine) li kîjan welatî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Sine (Sanandaj) navenda parêzgeha Kurdistanê ya Îranê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Sine (Sanandaj), İran'ın Kürdistan eyaletinin merkezidir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_dirok_0018",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Mîrektiya Baban navenda xwe bi giştî li ku derê bû?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Mîrektiya Baban di sedsala 18-19em de navenda xwe Silêmanî bû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Baban Emirliği 18-19. yüzyılda merkezini Süleymaniye'de kurdu.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_dirok_0024",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Erbil->Hewlêr"
+    ],
+    "oldPromptKu": "Qelaya Hewlêrê bi çi taybetî tê nasîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Qelaya Hewlêrê di 2014an de ket lîsteya mîrateya cîhanî ya UNESCOyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Erbil Kalesi 2014'te UNESCO Dünya Mirası listesine girdi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0017",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "POLITICAL_STATUS_QUESTION_REJECTED"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Silêmanî']",
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Bajarê Silêmaniyê li kîjan welatî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Silêmanî li Herêma Kurdistanê ya Iraqê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Süleymaniye, Irak Kürdistan Bölgesi'ndedir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0018",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Amed', 'Mêrdîn', 'Zaxo']",
+      "exonim: Mardin->Mêrdîn"
+    ],
+    "oldPromptKu": "Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Mêrdîn bi avahiyên kevirî yên li ser bejahiyê ku li deşta Mezopotamyayê dinêrin navdar e.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0019",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Çiyayê Cûdî di sînorên kîjan bajarî de dimîne?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Çiyayê Cûdî li herêma Şirnexê ye û di çîrokên olî de jî derbas dibe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Cudi Dağı Şırnak bölgesindedir ve dini anlatılarda da geçer.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0021",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî, Bitlis->Bedlîs, Muş->Mûş"
+    ],
+    "oldPromptKu": "Herêma «Serhed» bi giştî kîjan derdorê digire?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Serhed navê herêma bilind a bakur e: Agirî, Wan, Mûş, Bidlîs.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Serhed, kuzeydeki yüksek bölgenin adıdır: Ağrı, Van, Muş, Bitlis.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0023",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Çiyayê Agirî çiyayekî volkanîk e.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Agirî çiyayekî volkanîk ê nefeal e.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Ağrı Dağı sönmüş bir volkanik dağdır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_siyaset_0014",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Siyaset",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Amed']"
+    ],
+    "oldPromptKu": "«Kurdên Feylî» bi giştî li kîjan herêmê dijîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Feylî kurdên şîî ne; di 1980î de bi sed hezaran ji Iraqê hatin dersînorkirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Feyli Kürtler Şii Kürtlerdir; 1980'de yüz binlercesi Irak'tan sürüldü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_dirok_0026",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Sanandaj->Sine"
+    ],
+    "oldPromptKu": "Xanedaniya Mervaniyan bi giştî li ku derê hukum kir?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Mervanî (990-1085) li Amed û Meyafarqînê hukum kirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Mervaniler (990-1085) Amed ve Silvan çevresinde hüküm sürdü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_dirok_0031",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Sanandaj->Sine"
+    ],
+    "oldPromptKu": "Mîrektiya Erdelan navenda xwe li ku derê bû?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erdelan mîrektiyeke rojhilatê Kurdistanê bû; navenda wê Sine bû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Erdelan, Doğu Kürdistan'da bir emirlikti; merkezi Sine (Senendec) idi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_edebiyat_0020",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Melayê Cizîrî li kîjan bajarî jiya?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Melayê Cizîrî li Cizîra Botan jiya û navê xwe ji wir girt.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Melayê Cizîrî Cizre'de yaşadı ve adını oradan aldı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0025",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Sûrên dîrokî yên Amedê ji kîjan kevirê volkanîk hatine çêkirin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Sûrên Amedê ji kevirê bazaltî yê reş hatine çêkirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Diyarbakır surları siyah bazalt taşındandır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0027",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Erbil->Hewlêr, Süleymaniye->Silêmanî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Herêma Kurdistanê ya Iraqê ji çend parêzgehên sereke pêk tê?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Sê parêzgehên bingehîn: Hewlêr, Silêmanî û Dihok.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Üç temel il: Erbil, Süleymaniye ve Duhok.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0031",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Urmiye']"
+    ],
+    "oldPromptKu": "Gola Urmiyê li kîjan welatî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Gola Urmiyê li rojhilatê Kurdistanê, li bakurê rojavayê Îranê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Urmiye Gölü, Doğu Kürdistan'da, İran'ın kuzeybatısındadır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0033",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Duhok']"
+    ],
+    "oldPromptKu": "Bajarê Dihokê li kîjan welatî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Dihok li Herêma Kurdistanê ya Iraqê, li nêzî sînorê Tirkiyeyê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Duhok, Irak Kürdistan Bölgesi'nde, Türkiye sınırına yakındır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_cografya_0037",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Efrîn']",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Bajarê Efrînê li kîjan welatî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Efrîn li bakurê rojavayê Sûriyeyê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Efrin, Suriye'nin kuzeybatısındadır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "edit_sinema_0003",
+    "sourceFile": "assets/data/editorial_questions.json",
+    "category": "Sînema",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Bûyera fîlmê «Kûsî jî Difirin» li ku derê diqewime?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Fîlm berî şerê sala 2003'yan, di nav zarokên kampekê de derbas dibe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Film, 2003 savaşının hemen öncesinde bir mülteci kampındaki çocuklar arasında geçer.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_0534",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Ji bo dîroka Kurd û Kurdistanê ravekirina herî guncav a têgeha dîroka devkî kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Ravekirina rast: rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Doğru açıklama: tanıklık ve anlatılarla geçmişi anlama yöntemi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_0546",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Ji bo dîroka Kurd û Kurdistanê ravekirina herî guncav a têgeha Mezopotamyayê kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Ravekirina rast: herêma dîrokî ya derdora Dîcle û Firatê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Doğru açıklama: Dicle ve Fırat çevresindeki tarihsel bölge.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2092",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Sine']"
+    ],
+    "oldPromptKu": "Mîrgeha Erdelanê navenda xwe li kîjan bajarî bû?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2102",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Urartû navenda xwe li kîjan derê bû?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2106",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Mîrgeha Baban navenda xwe li kîjan bajarî bû?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2108",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Çar birca navdar a Amedê ya li ser sûran kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2110",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Şanlıurfa->Riha"
+    ],
+    "oldPromptKu": "Xirabreşk (Girê Mirazan / Göbekli Tepe) li nêzîkî kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2141",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "Çiyayê herî bilind ê Tirkiyeyê kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2147",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Çiyayê Cûdî li nêzîkî kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Çiyayê Cûdî li parêzgeha Şirnexê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Cudi Dağı, Şırnak ilindedir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2175",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Mahabad']",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Mehabad li kîjan welatî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Mehabad li bakurê rojava yê Îranê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Mahabad, İran'ın kuzeybatısındadır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2199",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Muzîk",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Bokan']",
+      "yalnız devlet çerçevesi: ['Bokan']"
+    ],
+    "oldPromptKu": "Hesen Zîrek ji kîjan welatî bû?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Hesen Zîrek dengekî navdar ê ji bajarê Bokanê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hesen Zîrek, İran'ın Bokan kentinden ünlü bir sestir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2354",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Kobanê']",
+      "yalnız devlet çerçevesi: ['Kobanê']"
+    ],
+    "oldPromptKu": "Bajarê Kobanê di nav sînorên kîjan welatî de ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Kobanê bajarekî bakurê Sûriyeyê ye, nêzî sînorê Tirkiyeyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Kobanê, Suriye'nin kuzeyinde, Türkiye sınırına yakın bir şehirdir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2376",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Erbil->Hewlêr"
+    ],
+    "oldPromptKu": "Bajarê ku bi erebî «Erbîl» tê gotin, navê wî yê kurdî çi ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Hewlêr navê kurdî yê navenda Herêma Kurdistanê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hewlêr, Irak Kürdistan Bölgesi'nin merkezi Erbil'in Kürtçe adıdır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2430",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Mahabad']"
+    ],
+    "oldPromptKu": "Komara Mahabadê di kîjan salê de hatiye damezrandin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Komara Mehabadê di sala 1946an de, di nav sînorên îroyîn ên Îranê de hat avakirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Mahabad Cumhuriyeti 1946'da, bugünkü İran sınırları içinde kurulmuştur.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2458",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Merwaniyan di kîjan serdemê de li derdora Amedê hukum kiriye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Merwanî xanedaniyeke kurd e ku di sedsalên 10-11em de li Amedê û derdora wê hukum kir.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Mervanîler, 10-11. yüzyıllarda Diyarbakır (Amed) ve çevresinde hüküm süren bir Kürt hanedanıdır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2464",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Malatya->Meletî"
+    ],
+    "oldPromptKu": "«Semsûr» navê Kurdî yê kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Semsûr» navê kurdî yê bajarê Semsûrê (Adiyaman) e.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Semsûr», Adıyaman şehrinin Kürtçe adıdır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2497",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Bajarên wek Amed, Riha ve Mêrdîn li kîjan herêma dîrokî cih digirin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Ev bajar li herêma Mezopotamyaya Jorîn a di navbera Dîcle û Firatê de ne.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Bu şehirler, Dicle-Fırat arasındaki Yukarı Mezopotamya bölgesinde yer alır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2538",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Ziman",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "«Çiya» tê çi wateyê?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Çiya» bilindahiya erdê ye (mînak: Çiyayê Agirî).",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Çiya» dağ demektir (ör. Çiyayê Agirî = Ağrı Dağı).",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2556",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "POLITICAL_STATUS_QUESTION_REJECTED",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "ülke/devlet cevabına zorluyor: ['Duhok']",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Herêma «Behdînan» bi piranî di kîjan welatî de ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Behdînan devereke kurdî ye ku bi giranî dora Dihokê digire nav xwe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Behdînan, ağırlıkla Irak'ın Duhok çevresini kapsayan bir Kürt bölgesidir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2644",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî, Erzurum->Erzirom, Kars->Qers"
+    ],
+    "oldPromptKu": "«Erzirom» bilêvkirina Kurdî-herêmî ya kîjan bajarî ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Erzirom» bilêvkirina kurdî ya bajarê Erzeromê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Erzirom», Erzurum şehrinin Kürtçe-yerel söylenişidir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2818",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Navên «Cizîr ve Botan» bi kîjan herêma dîrokî ve tên bibîranîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Cizîr û Botan bi herêma dîrokî ya Botan-Cizîrê tên naskirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Cizîr ve Botan, güneydoğudaki tarihî Botan-Cizre bölgesiyle anılır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_2826",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Bitlis->Bedlîs",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Şerefname» ji aliyê kê ve hatiye nivîsandin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Şerefname di sala 1597an de ji aliyê Şerefxanê Bidlîsî ve hatiye nivîsandin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Şerefname, Bitlis beyi Şeref Han tarafından 1597'de yazılmıştır.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_5638",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Ziman",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Ji bo gotina «şehir» di Kurmancî de kîjan peyv tê bikaranîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«bajar» = «şehir». Mînak: Amed bajarekî kevnar e.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«bajar» = «şehir». Örnek: Diyarbakır eski bir şehirdir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7011",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Rojnameya «Jiyan» çi bû?",
+    "newPromptKu": null,
+    "oldPromptTr": "«Jiyan» gazetesi neydi?",
+    "newPromptTr": null,
+    "oldExplanationKu": "«Jiyan» li Silêmaniyê derket û ji rojnameyên kurdî yên destpêkê ye; wê nivîs û helbestên kurdî belav kirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Jiyan» Süleymaniye’de çıktı ve erken dönem Kürtçe gazetelerdendir; Kürtçe yazı ve şiirleri yaydı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7015",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Di zanîna dîrokê de der barê «Eyaleta Kurdistanê» de ya rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7053",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Bitlis->Bedlîs"
+    ],
+    "oldPromptKu": "«Barzani Hareketi» tê çi wateyê?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Tevgera Barzanî»: tevgera neteweyî ya ku bi salan li başûrê Kurdistanê berdewam kir.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Barzani Hareketi»: Güney Kürdistan'da uzun yıllar süren ulusal hareket.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7066",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Dersim 1937» bi kîjan aliyê xwe ve tê nasîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Dêrsim 1937»: operasyona leşkerî û krîza ku li herêma Dêrsimê jiya.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Dersim 1937»: Dersim bölgesinde yaşanan askeri harekat ve kriz.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7151",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "«Mîrgeha Babanê» bi awayekî rast çawa tê ravekirin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Mîrgeha Babanê»: mîrnişîna kurd a bihêz a bi navenda Silêmaniyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Baban Emirliği»: Süleymaniye merkezli güçlü Kürt prensliği.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7247",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Li jêr ji bo «Şengal» kîjan rast e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Şengal»: herêma niştecihbûna dîrokî ya kurdên êzidî û kela wan.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Şengal»: Êzidî Kürtlerin tarihsel yerleşim bölgesi ve kalesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7293",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "«Serhildanên Agirî» bi kîjan aliyê xwe ve tê nasîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Serhildanên Agirî»: berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Ağrı İsyanları»: 1927-1930 yılları arasında Ağrı dağı çevresindeki direniş.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7360",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Ji bo «Mîrgeha Soran» ravekirina herî dirust kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Mîrgeha Soran»: mîrnişîna bi navenda Rewandizê ya ku hêza leşkerî kom kir.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Soran Emirliği»: Ravanduz merkezli askeri güç biriktiren beylik.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7443",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Eyyubiler» çawa tê pênasekirin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Eyûbî»: dewleta mezin a ku Selahedînê Eyûbî damezrand.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Eyyubiler»: Selahaddin Eyyubi tarafından kurulan büyük devlet.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7480",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Kîjan vebijêrk tê wateya «Cizre»?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Cizîr»: bajarê ku dergûşa mîrgeha Botan û çanda dîrokî ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Cizre»: Botan emirliğinin ve tarihsel kültürün beşiği olan şehir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7527",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "«Amida» di mijara dîrokê de çi vedibêje?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Amida»: navê dîrokî yê Amedê di serdema antîk de û kela wê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Amida»: Diyarbakır'ın antik çağdaki tarihi ismi ve kalesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7644",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Ji bo «Amida» ravekirina herî dirust kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Amida»: navê dîrokî yê Amedê di serdema antîk de û kela wê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Amida»: Diyarbakır'ın antik çağdaki tarihi ismi ve kalesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7657",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Bitlis->Bedlîs",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Kîjan kesê/a «Mîrgeha Bidlîsê» rast dide nasîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Mîrgeha Bidlîsê»: hukumdariya kurd a ku di serdema Osmanî de xweser mabû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Bitlis Prensliği»: Osmanlı döneminde özerk kalmış Kürt hükümdarlığı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7680",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Ji aliyê Dîrokê ve ji bo «Jiyan gazetesi» îfadeya rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7763",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Derbarê «Mîrgeha Botan» de vebijêrka rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Mîrgeha Botan»: mîrnişîna kurd a girîng a bi navenda Cizîrê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Bohtan Emirliği»: Cizre merkezli önemli Kürt beyliği.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7778",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "«Mervaniler» çi îfade dike?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Merwanî»: xanedaniya kurd a serdema navîn a bi navenda Amedê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Mervaniler»: Diyarbakır merkezli ortaçağ Kürt hanedanlığı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_7983",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Bitlis']",
+      "exonim: Bitlis->Bedlîs"
+    ],
+    "oldPromptKu": "Berambera rast a biwêja «jiyana nîştecîh» kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«jiyana niştecih»: pergala niştecihbûna domdar.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«yerleşik yaşam»: kalıcı yerleşim düzeni.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8149",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Tunceli->Dêrsim"
+    ],
+    "oldPromptKu": "«Munzur vadisi» çawa divê bê fêmkirin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8181",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "yalnız devlet çerçevesi: ['Siirt']",
+      "exonim: Siirt->Sêrt"
+    ],
+    "oldPromptKu": "«daristan» di mijara erdnîgariyê de çi vedibêje?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«daristan» = «orman». Mînak: Daristan hewayê paqij dike û avê diparêze.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«daristan» = «orman». Örnek: Orman havayı temizler ve suyu korur.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8212",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Çiyayên Munzurê li ku derê ne?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Çiyayên Mûnzûrê»: rêzeçiyayên herî asê yên erdnîgariya Dêrsimê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Munzur dağları»: Dersim coğrafyasının en engebeli sıradağları.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8263",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Siirt->Sêrt",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Li jêr ji bo «Çemê Botanê» kîjan rast e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8479",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Hakkari->Colemêrg"
+    ],
+    "oldPromptKu": "Ji bo Gevera (Yüksekova) ravekirina herî dirust kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8480",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Derbarê «Karacadax» de vebijêrka rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Karacadax»: volkana bazaltî ya berfireh a li deşta Amedê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Karacadağ»: Diyarbakır ovasında yer alan yayvan bazaltik volkan.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8523",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Di zanîna erdnîgariyê de der barê «Dicle nehri» de ya rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Çemê Dîcleyê»: çemê ku ji binê sûrên Amedê derbas dibe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Dicle nehri»: Diyarbakır surlarının altından geçen nehir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8532",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Gola Dokanê li ku derê ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Gola Dokanê»: bendava çêkirî ya li nêzîkî Silêmaniyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Dokan gölü»: Süleymaniye yakınlarında yer alan yapay baraj gölü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8585",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Kîjan têgeha «Deşta Şehrezorê» di nav erdnîgariyê de rast bi cih dike?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Deşta Şehrezorê»: deşta dîrokî û berdar a başûrê Silêmaniyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Şehrizor ovası»: Süleymaniye güneyindeki tarihi verimli düzlük.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8615",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Derbarê «çem» de kîjan rast e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«çem» = «akarsu». Mînak: Çemê Dîcleyê di nav Amedê re derbas dibe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«çem» = «akarsu». Örnek: Dicle nehri Diyarbakır içinden geçer.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8672",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed, Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Ji bo Cografyaê derbarê «Beşa Dîcleyê» de vebijêrka rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Beşa Dîcleyê»: hewza çem a ku Amed û Şirnexê digire nav xwe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Dicle bölümü»: Diyarbakır ve Şırnak'ı kapsayan nehir havzası.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8828",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Çemê Garzanê» tê çi wateyê?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8830",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Li jêr ji bo «herêma Behdînan» kîjan rast e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Herêma Behdînan»: devera çiyayî ya li dora Zaxo û Dihokê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«herêma Behdînan»: Zaho ve Duhok civarındaki dağlık coğrafi alan.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8833",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "«Çiyayê Agirî» di mijara erdnîgariyê de çi vedibêje?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Çiyayê Agirî»: lûtkeya herî bilind a erdnîgariya Kurdistanê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Ağrı dağı»: Kürdistan coğrafyasının en yüksek zirvesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8916",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Iğdır->Îdir, Kars->Qers",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Derbarê «Aras nehri» de ya rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Çemê Araksê»: çemê ku ji sînorên Qersê û Îdirê derbas dibe û dirijê Deryaya Xezerê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Aras nehri»: Kars ve Iğdır sınırlarından geçip Hazar'a dökülen su.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8950",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Gola Dokanê» ji aliyê erdnîgarî ve çi vedibêje?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Gola Dokanê»: bendava çêkirî ya li nêzîkî Silêmaniyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Dokan gölü»: Süleymaniye yakınlarında yer alan yapay baraj gölü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8965",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Hakkari->Colemêrg",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Li jêr kîjan têgiha «Colemêrg» rave dike?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_8986",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Çiyayê Şengalê» kîjan hêmana erdnîgariyê ye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Çiyayê Şengalê»: çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Şengal dağı»: Musul ovasının ortasında yükselen stratejik dağ.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_9008",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Muş->Mûş",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "«Deşta Mûşê» ji aliyê erdnîgarî ve çi vedibêje?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Deşta Mûşê»: deşta mezin a çandiniyê ya ku şaxên Firatê av didin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Muş ovası»: Fırat'ın kollarının suladığı büyük tarım ovası.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_9087",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Muş->Mûş"
+    ],
+    "oldPromptKu": "«deşt» tê çi wateyê?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«deşt» = «ova». Mînak: Deşta Mûşê bi genimê xwe tê naskirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«deşt» = «ova». Örnek: Muş ovası buğdayıyla bilinir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_9096",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Ji aliyê Cografyaê ve ji bo «Çemê Garzanê» îfadeya rast kîjan e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": null,
+    "newExplanationKu": null,
+    "oldExplanationTr": null,
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_9942",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Edebiyat",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Hakkari->Colemêrg"
+    ],
+    "oldPromptKu": "«Pertew Begê Hkarî» bi kîjan aliyê xwe ve tê nasîn?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Pertew Begê Hekarî»: helbestvanê dîwanê yê klasîk ê ku li mîrgeha Colemêrgê mezin bû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Pertew Begê Hkarî»: Hakkari emirliğinde yetişmiş klasik divan şairi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_10314",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Muzîk",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî, Kars->Qers"
+    ],
+    "oldPromptKu": "Bi «serhad ezgileri» çi tê xwestin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«awazên Serhedê»: şêwaza muzîka lîrîk a taybetî ya devera Qers, Agirî û Wanê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«serhad ezgileri»: Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_10480",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Muzîk",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr, Şırnak->Şirnex"
+    ],
+    "oldPromptKu": "Dema «botan ezgileri» tê gotin, çi tê xwestin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«awazên Botan»: muzîka rîtmîk û makamî ya devera Şirnex û Cizîrê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«botan ezgileri»: Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_10930",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Muzîk",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Têgiha «dengbêj evi» çi pêk tîne?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«mala dengbêjan»: cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«dengbêj evi»: Van ve Diyarbakır'da dengbêjlerin dinlendiği kültürel mekan.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_curated_20651",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike'?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Mîrê Kor» tê vê wateyê: mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Mîrê Kor» şu anlama gelir: 19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_curated_20704",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha «Mîrgeha Erdelanê» bi awayekî rast temam dike?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Ravekirina rast ji bo «Mîrgeha Erdelanê» ev e: mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Mîrgeha Erdelanê» için doğru açıklama şudur: merkezi Sine olan, doğudaki kadim bir Kürt beyliği.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_curated_20851",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Urfa->Riha"
+    ],
+    "oldPromptKu": "Kîjan têgeh bi vê ravekirinê tê nasîn: «şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye»?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "«Girê Mirazan» tê vê wateyê: şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Girê Mirazan» şu anlama gelir: Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_curated_20854",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Urfa->Riha"
+    ],
+    "oldPromptKu": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha «Girê Mirazan» bi awayekî rast temam dike?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Ravekirina rast ji bo «Girê Mirazan» ev e: şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "«Girê Mirazan» için doğru açıklama şudur: Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_0014",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Geliyê Zapê» tê vê wateyê: geliyê kûr û teng ê ku ava Zapê ya hov tê re diherike ber bi başûr ve.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê. Ji heman qadê têgeheke din: «Geliyê Botan» tê vê wateyê: geliyê kûr ê ku çemê Botanê di nav zinaran de vekiriye û Cizîrê dorpêç dike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet. Aynı alandan bir başka kavram: «Geliyê Botan» şu anlama gelir: Botan çayının kayalar arasında açtığı, Cizre'yi çevreleyen derin vadi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_0017",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Urfa->Riha"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Girê Mirazan» tê vê wateyê: bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Heskîf» e; «Girê Mirazan» tê vê wateyê: şûna herî kevn a perestgehên mirovahiyê ku li nêzîkî bajarê Rihayê ye.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Heskîf» kavramına ait; «Girê Mirazan» şu anlama gelir: Riha (Urfa) yakınlarındaki, insanlığın en eski tapınak yeri.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_0053",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Mîrê Kor» tê vê wateyê: peymana navdewletî ya sala 1923an ku Kurdistan li ser çar dewletan dabeş kir.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Peymana Lozanê» e; «Mîrê Kor» tê vê wateyê: mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Peymana Lozanê» kavramına ait; «Mîrê Kor» şu anlama gelir: 19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0004",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Cizre->Cizîr"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Geliyê Botan» ev e — geliyê teng ê başûrê Colemêrgê ku ava Zapê ya hov tê re derbas dibe. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Geliyê Zapê» e; «Geliyê Botan» tê vê wateyê: geliyê kûr ê ku çemê Botanê di nav zinaran de vekiriye û Cizîrê dorpêç dike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Geliyê Zapê» kavramına ait; «Geliyê Botan» şu anlama gelir: Botan çayının kayalar arasında açtığı, Cizre'yi çevreleyen derin vadi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0007",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Siirt->Sêrt"
+    ],
+    "oldPromptKu": "Ev ravekirin ji bo «Newal» rast e an şaş e: geliyê teng û kûr ê ku av bi demê re di nav axê de vekiriye?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê, ravekirin li cih e. «Çemê Garzanê» têgeheke cuda ye: çemê ku ji çiyayên Sêrtê dadikeve û digihîje Dîcleyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet, tanım yerinde. «Çemê Garzanê» ayrı bir kavramdır: Siirt dağlarından inip Dicle'ye kavuşan akarsu.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0010",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Siirt->Sêrt"
+    ],
+    "oldPromptKu": "Têgeha «Çemê Garzanê» wiha tê ravekirin: hêmana bingehîn a ku jiyanê dide û şêwaza niştecihbûnê diyar dike. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Av» e; «Çemê Garzanê» tê vê wateyê: çemê ku ji çiyayên Sêrtê dadikeve û digihîje Dîcleyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Av» kavramına ait; «Çemê Garzanê» şu anlama gelir: Siirt dağlarından inip Dicle'ye kavuşan akarsu.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0011",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Siirt->Sêrt"
+    ],
+    "oldPromptKu": "Têgeha «Av» wiha tê ravekirin: hêmana bingehîn a ku jiyanê dide û şêwaza niştecihbûnê diyar dike. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê. Ji heman qadê têgeheke din: «Çemê Garzanê» tê vê wateyê: çemê ku ji çiyayên Sêrtê dadikeve û digihîje Dîcleyê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet. Aynı alandan bir başka kavram: «Çemê Garzanê» şu anlama gelir: Siirt dağlarından inip Dicle'ye kavuşan akarsu.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0013",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Avhewaya Kurdistanê» ev e — avhewaya parzemînî ya bi zivistanên sar û havînên hişk ku bi bilindahiyê ve diguhere. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê, ravekirin li cih e. «Colemêrg» têgeheke cuda ye: bajarê çiyayî yê herî bilind ê herêmê ku bi zozan û geliyên xwe tê naskirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet, tanım yerinde. «Colemêrg» ayrı bir kavramdır: yayla ve vadileriyle bilinen, bölgenin en yüksek dağlık kenti.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0017",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî, Muş->Mûş"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Erd» tê vê wateyê: rûyê axê yê ku çandinî, niştecihbûn û jiyana rojane li ser tê avakirin.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê. Ji heman qadê têgeheke din: «Herêma Serhedê» tê vê wateyê: herêma bilind a bakur ku Agirî, Wan û Muşê digire nav xwe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet. Aynı alandan bir başka kavram: «Herêma Serhedê» şu anlama gelir: Ağrı, Van ve Muş’u içine alan yüksek kuzey bölgesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0020",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî, Muş->Mûş"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Herêma Serhedê» ev e — bilindahiya erdê ya ku avhewa, çandinî û rêyên veguhastinê diyar dike. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Çiya» e; «Herêma Serhedê» tê vê wateyê: herêma bilind a bakur ku Agirî, Wan û Muşê digire nav xwe.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Çiya» kavramına ait; «Herêma Serhedê» şu anlama gelir: Ağrı, Van ve Muş’u içine alan yüksek kuzey bölgesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0034",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Têgeha «Çemê Dîcleyê» wiha tê ravekirin: çemê herî dirêj ê Asyaya Rojava ku ji çiyayên Erzeromê dertê. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Çemê Firatê» e; «Çemê Dîcleyê» tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Çemê Firatê» kavramına ait; «Çemê Dîcleyê» şu anlama gelir: Amed'den doğup Fırat ile Mezopotamya'yı besleyen nehir.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0050",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Urfa->Riha"
+    ],
+    "oldPromptKu": "Têgeha «Karacadax» wiha tê ravekirin: rêzeçiyayên ku serekaniya gelek çeman in û bi zozanên xwe tên naskirin. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Çiyayên Bîngolê» e; «Karacadax» tê vê wateyê: çiyayê volkanîk ê bazaltî yê ku deşta Amedê ji ya Rihayê vediqetîne.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Çiyayên Bîngolê» kavramına ait; «Karacadax» şu anlama gelir: Amed ovasını Urfa ovasından ayıran bazaltik volkanik dağ.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0058",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Têgeha «Çiyayê Tendûrekê» wiha tê ravekirin: lûtkeya herî bilind a başûrê Kurdistanê li ser sînorê Îranê. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Çiyayê Halgurdê» e; «Çiyayê Tendûrekê» tê vê wateyê: çiyayê volkanîk ê feal ê li navbera Agirî û Wanê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Çiyayê Halgurdê» kavramına ait; «Çiyayê Tendûrekê» şu anlama gelir: Ağrı ile Van arasındaki aktif volkanik dağ.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0059",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE",
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî",
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Têgeha «Çiyayê Halgurdê» wiha tê ravekirin: lûtkeya herî bilind a başûrê Kurdistanê li ser sînorê Îranê. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê. Ji heman qadê têgeheke din: «Çiyayê Tendûrekê» tê vê wateyê: çiyayê volkanîk ê feal ê li navbera Agirî û Wanê.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet. Aynı alandan bir başka kavram: «Çiyayê Tendûrekê» şu anlama gelir: Ağrı ile Van arasındaki aktif volkanik dağ.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0061",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Rêzeçiyayên Zagrosê» ev e — rêzeçiyayên mezin ên ku sînorê xwezayî yê welatê kurdan pêk tînin. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê, ravekirin li cih e. «Gola Dokanê» têgeheke cuda ye: bendava mezin a li ser Zapa Biçûk a ku Silêmaniyê bi av û elektrîkê xwedî dike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet, tanım yerinde. «Gola Dokanê» ayrı bir kavramdır: Küçük Zap üzerinde, Süleymaniye'yi su ve elektrikle besleyen büyük baraj gölü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0064",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Gola Dokanê» tê vê wateyê: bendava li ser çemê Sîrwanê ya ku deşta Germiyanê av dide.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Gola Derbendîxanê» e; «Gola Dokanê» tê vê wateyê: bendava mezin a li ser Zapa Biçûk a ku Silêmaniyê bi av û elektrîkê xwedî dike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Gola Derbendîxanê» kavramına ait; «Gola Dokanê» şu anlama gelir: Küçük Zap üzerinde, Süleymaniye'yi su ve elektrikle besleyen büyük baraj gölü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0065",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Gola Derbendîxanê» tê vê wateyê: bendava li ser çemê Sîrwanê ya ku deşta Germiyanê av dide.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê. Ji heman qadê têgeheke din: «Gola Dokanê» tê vê wateyê: bendava mezin a li ser Zapa Biçûk a ku Silêmaniyê bi av û elektrîkê xwedî dike.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet. Aynı alandan bir başka kavram: «Gola Dokanê» şu anlama gelir: Küçük Zap üzerinde, Süleymaniye'yi su ve elektrikle besleyen büyük baraj gölü.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0068",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Herêma Behdînan» ev e — avhewaya bi zivistanên şil û havînên germ ku li başûrê rojava tê dîtin. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Avhewaya Deryaya Navîn» e; «Herêma Behdînan» tê vê wateyê: herêma başûrê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Avhewaya Deryaya Navîn» kavramına ait; «Herêma Behdînan» şu anlama gelir: Duhok merkezli, behdinî lehçesiyle bilinen kuzeybatı bölgesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_cog_0069",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Cografya",
+    "classes": [
+      "REGION_FRAME_REWRITE"
+    ],
+    "findings": [
+      "KU/TR coğrafi çerçeve farklı"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Avhewaya Deryaya Navîn» ev e — avhewaya bi zivistanên şil û havînên germ ku li başûrê rojava tê dîtin. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Rast e. Li kêleka wê «Herêma Behdînan» jî heye; ew tê vê wateyê: herêma başûrê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Doğru. Yanı sıra «Herêma Behdînan» de vardır; şu anlama gelir: Duhok merkezli, behdinî lehçesiyle bilinen kuzeybatı bölgesi.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_dir_0003",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Süleymaniye->Silêmanî"
+    ],
+    "oldPromptKu": "Têgeha «Mîrgeha Babanê» wiha tê ravekirin: serhildana kurdî ya sala 1921ê ya li derdora Sêwasê. Ev rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Serhildana Koçgirî» e; «Mîrgeha Babanê» tê vê wateyê: mîrnişîna kurd a bi navenda Silêmaniyê ku di sedsala 18em de bihêz bû.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Serhildana Koçgirî» kavramına ait; «Mîrgeha Babanê» şu anlama gelir: 18. yüzyılda güçlenen, merkezi Süleymaniye olan Kürt beyliği.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_dir_0004",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "Binirxîne: li gorî vê ravekirinê «Serhildana Koçgirî» ev e — serhildana kurdî ya sala 1921ê ya li derdora Sêwasê. Rast e an şaş e?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê, ravekirin li cih e. «Serhildanên Agirî» têgeheke cuda ye: berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet, tanım yerinde. «Serhildanên Agirî» ayrı bir kavramdır: 1927-1930 arasında Ağrı Dağı çevresindeki direniş.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_dir_0007",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "Ev ravekirin ji bo «Serhildanên Agirî» rast e an şaş e: êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Na — ev ravekirina «Komkujiya Helebceyê» e; «Serhildanên Agirî» tê vê wateyê: berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Hayır — bu tanım «Komkujiya Helebceyê» kavramına ait; «Serhildanên Agirî» şu anlama gelir: 1927-1930 arasında Ağrı Dağı çevresindeki direniş.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_tf_dir_0008",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Dîrok",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Ağrı->Agirî"
+    ],
+    "oldPromptKu": "Rast e an şaş e: Têgeha «Komkujiya Helebceyê» tê vê wateyê: êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin.",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Erê. Ji heman qadê têgeheke din: «Serhildanên Agirî» tê vê wateyê: berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Evet. Aynı alandan bir başka kavram: «Serhildanên Agirî» şu anlama gelir: 1927-1930 arasında Ağrı Dağı çevresindeki direniş.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  },
+  {
+    "questionId": "offline_muz_2009",
+    "sourceFile": "assets/data/offline_questions.json",
+    "category": "Muzîk",
+    "classes": [
+      "KURDISH_ENDONYM_REWRITE"
+    ],
+    "findings": [
+      "exonim: Diyarbakır->Amed"
+    ],
+    "oldPromptKu": "Ayşe Şan û Meryem Xan di dîroka muzîka kurdî de bi kîjan aliyê xwe dişibin hev?",
+    "newPromptKu": null,
+    "oldPromptTr": null,
+    "newPromptTr": null,
+    "oldExplanationKu": "Meryem Xanê li Bexdayê, Ayşe Şanê li Amedê dest bi kar kir; di demekê de ku dengê jinan kêm dihat bihîstin, herduyan jî rê ji yên piştî xwe re vekirin.",
+    "newExplanationKu": null,
+    "oldExplanationTr": "Meryem Xan Bağdat'ta, Ayşe Şan Diyarbakır'da işe başladı; kadın sesinin az duyulduğu bir dönemde ikisi de kendinden sonrakilere yol açtı.",
+    "newExplanationTr": null,
+    "decision": null,
+    "reason": null,
+    "supportingSource": null,
+    "reviewer": null,
+    "timestamp": null
+  }
+]

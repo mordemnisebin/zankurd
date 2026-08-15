@@ -1,0 +1,322 @@
+[
+  {
+    "questionId": "sf_geo_0001",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_how_many_oceans",
+    "claimId": "geo_ocean_01",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+    "exactSupportingFact": "Historically, there are four named oceans: the Atlantic, Pacific, Indian, and Arctic",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "terminologyAllowedSenses": {
+      "ku_geo_okyanus": "ocean (geographic body of water)"
+    },
+    "promptKu": "Di dîrokê de çend okyanûsên bi nav hebûn?",
+    "promptTr": "Tarihsel olarak kaç adlandırılmış okyanus vardı?",
+    "answersKu": [
+      "Çar",
+      "Sê",
+      "Pênc",
+      "Şeş"
+    ],
+    "answersTr": [
+      "Dört",
+      "Üç",
+      "Beş",
+      "Altı"
+    ],
+    "correctIndex": 0,
+    "explanationKu": "Di dîrokê de çar okyanûsên bi nav hebûn: Atlas, Aram, Hindî û Bakur.",
+    "explanationTr": "Tarihsel olarak dört adlandırılmış okyanus vardı: Atlas, Pasifik, Hint ve Arktik.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NOAA sayfasında birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs Wîkîferheng girdisiyle açık; okyanus adları da aynı girdide"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif Cografya bankasında okyanus sorusu yok (okyan* = 0)"
+    },
+    "finalContentHash": "b60c45a84df10145"
+  },
+  {
+    "questionId": "sf_geo_0002",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_how_many_oceans",
+    "claimId": "geo_ocean_02",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+    "exactSupportingFact": "most countries - including the United States - now recognize the Southern (Antarctic) as the fifth ocean",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "terminologyAllowedSenses": {
+      "ku_geo_okyanus": "ocean (geographic body of water)"
+    },
+    "promptKu": "Kîjan okyanûs wek okyanûsa pêncem tê naskirin?",
+    "promptTr": "Beşinci okyanus olarak hangisi tanınır?",
+    "answersKu": [
+      "Okyanûsa Hindî",
+      "Okyanûsa Başûr",
+      "Okyanûsa Atlas",
+      "Okyanûsa Aram"
+    ],
+    "answersTr": [
+      "Hint Okyanusu",
+      "Güney Okyanusu",
+      "Atlas Okyanusu",
+      "Pasifik Okyanusu"
+    ],
+    "correctIndex": 1,
+    "explanationKu": "Okyanûsa Başûr (Antarktîk) îro ji aliyê piraniya welatan ve wek okyanûsa pêncem tê naskirin.",
+    "explanationTr": "Güney (Antarktika) Okyanusu bugün çoğu ülke tarafından beşinci okyanus olarak tanınır.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NOAA sayfasında birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs Wîkîferheng girdisiyle açık; okyanus adları da aynı girdide"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif Cografya bankasında okyanus sorusu yok (okyan* = 0)"
+    },
+    "finalContentHash": "a21b7410a51f5365"
+  },
+  {
+    "questionId": "sf_geo_0003",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_how_many_oceans",
+    "claimId": "geo_ocean_03",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+    "exactSupportingFact": "The boundaries of this ocean were proposed to the International Hydrographic Organization in 2000",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "terminologyAllowedSenses": {
+      "ku_geo_okyanus": "ocean (geographic body of water)"
+    },
+    "promptKu": "Sînorên Okyanûsa Başûr di kîjan salê de ji IHOyê re hatin pêşniyarkirin?",
+    "promptTr": "Güney Okyanusu'nun sınırları hangi yılda IHO'ya önerildi?",
+    "answersKu": [
+      "1982",
+      "1994",
+      "2000",
+      "2010"
+    ],
+    "answersTr": [
+      "1982",
+      "1994",
+      "2000",
+      "2010"
+    ],
+    "correctIndex": 2,
+    "explanationKu": "Sînorên vê okyanûsê di sala 2000î de ji Rêxistina Hîdrografîk a Navneteweyî re hatin pêşniyarkirin.",
+    "explanationTr": "Bu okyanusun sınırları 2000 yılında Uluslararası Hidrografi Örgütü'ne önerildi.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NOAA sayfasında birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs Wîkîferheng girdisiyle açık; okyanus adları da aynı girdide"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif Cografya bankasında okyanus sorusu yok (okyan* = 0)"
+    },
+    "finalContentHash": "67cebac0837f97ec"
+  },
+  {
+    "questionId": "sf_geo_0004",
+    "category": "Cografya",
+    "subcategory": null,
+    "questionType": "multipleChoice",
+    "difficulty": 2,
+    "sourcePackId": "pack_noaa_how_many_oceans",
+    "claimId": "geo_ocean_04",
+    "sourceReference": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+    "exactSupportingFact": "There is only one global ocean",
+    "sourceAccessLevel": "FETCHED_DIRECT",
+    "riskClass": "C",
+    "requiredTerminology": [
+      "ku_geo_okyanus"
+    ],
+    "terminologyRecordHashes": {
+      "ku_geo_okyanus": "7d8ba0d5eac6ff42"
+    },
+    "terminologyAllowedSenses": {
+      "ku_geo_okyanus": "ocean (geographic body of water)"
+    },
+    "promptKu": "Li gorî NOAAyê, ji hêla fizîkî ve li cîhanê çend okyanûs hene?",
+    "promptTr": "NOAA'ya göre fiziksel olarak dünyada kaç okyanus vardır?",
+    "answersKu": [
+      "Çar okyanûsên cuda",
+      "Pênc okyanûsên cuda",
+      "Sê okyanûsên cuda",
+      "Tenê yek okyanûsa gerdûnî"
+    ],
+    "answersTr": [
+      "Dört ayrı okyanus",
+      "Beş ayrı okyanus",
+      "Üç ayrı okyanus",
+      "Tek bir küresel okyanus"
+    ],
+    "correctIndex": 3,
+    "explanationKu": "NOAA dibêje ku tenê yek okyanûsa gerdûnî heye; nav li herêmên wê yên cuda tên kirin.",
+    "explanationTr": "NOAA'ya göre tek bir küresel okyanus vardır; adlar onun ayrı bölgelerine verilir.",
+    "factualReview": {
+      "reviewer": "opus-5-factual",
+      "result": "PASS",
+      "note": "NOAA sayfasında birebir"
+    },
+    "bilingualReview": {
+      "reviewer": "opus-5-bilingual",
+      "result": "PASS",
+      "note": "aynı olgu, aynı cevap"
+    },
+    "terminologyReview": {
+      "reviewer": "opus-5-terminology",
+      "result": "PASS",
+      "note": "okyanûs Wîkîferheng girdisiyle açık; okyanus adları da aynı girdide"
+    },
+    "distractorReview": {
+      "reviewer": "opus-5-distractor",
+      "result": "PASS",
+      "note": "seçenekler tek sınıfta"
+    },
+    "circularityReview": {
+      "reviewer": "opus-5-adversarial",
+      "result": "PASS",
+      "note": "kök cevabı açık etmiyor"
+    },
+    "lengthBiasReview": {
+      "reviewer": "opus-5-length",
+      "result": "PASS",
+      "note": "benzer uzunluk"
+    },
+    "copyrightReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "kısa olgu"
+    },
+    "duplicateReview": {
+      "reviewer": "opus-5",
+      "result": "PASS",
+      "note": "aktif Cografya bankasında okyanus sorusu yok (okyan* = 0)"
+    },
+    "finalContentHash": "752c1328c32cb2c5"
+  }
+]

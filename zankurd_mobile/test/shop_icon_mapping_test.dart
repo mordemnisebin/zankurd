@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -39,5 +40,45 @@ void main() {
   test('geçersiz/null renk varsayılana düşer', () {
     expect(shopColorForHex(null), isNotNull);
     expect(shopColorForHex('gecersiz'), isNotNull);
+  });
+
+  // Kısa ya da boş `theme_color` değerinin GÖRÜNMEZ renk üretmediğinin
+  // bekçisi.
+  //
+  // ## Kusur
+  //
+  // `shopColorForHex` hex'i `int.parse('FF$clean', radix: 16)` ile
+  // çözüyordu ve eksik bir değerde bu çağrı hata ATMAZ — sessizce yanlış bir
+  // sayı üretir. Boş dize `0xFF` yani `Color(0x000000FF)` verir: alfası
+  // sıfır, tamamen saydam. `FFF` de `0x000FFFFF` verir, yine saydam.
+  // Dolayısıyla `catch` bloğu bu durumların hiçbirinde çalışmıyordu ve uzak
+  // katalogdaki eksik bir renk, vitrinde görünmez bir karo tonuna dönüyordu.
+  //
+  // Sessizdi çünkü var olan test yalnız `isNotNull` diyordu ve saydam bir
+  // renk de null değildir.
+
+  test('eksik hex saydam renk üretmiyor, markaya düşüyor', () {
+    for (final broken in const ['', '   ', 'FFF', '12345', 'ZZZZZZ', '#']) {
+      final color = shopColorForHex(broken);
+      expect(
+        color.a,
+        1.0,
+        reason:
+            '«$broken» için üretilen renk saydam; vitrinde karo tonu hiç '
+            'görünmez.',
+      );
+      expect(
+        color,
+        AppTheme.accent,
+        reason: 'Çözülemeyen bir değer marka rengine düşmeli.',
+      );
+    }
+  });
+
+  test('geçerli hex hâlâ birebir çözülüyor', () {
+    // Korumanın öteki yarısı: uzunluk denetimi meşru değerleri elemesin.
+    expect(shopColorForHex('FF3B81'), const Color(0xFFFF3B81));
+    expect(shopColorForHex('#38BDF8'), const Color(0xFF38BDF8));
+    expect(shopColorForHex('3da968'), const Color(0xFF3DA968));
   });
 }

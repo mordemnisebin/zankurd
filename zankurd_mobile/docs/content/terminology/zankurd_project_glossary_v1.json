@@ -1,0 +1,813 @@
+{
+  "version": 2,
+  "createdDate": "2026-08-06",
+  "status": "CANONICAL_PROJECT_GLOSSARY_v1",
+  "note": "v2: dilbilimsel kanıt (`linguisticEvidenceStatus`) ile proje içi yazım izni (`projectAuthoringStatus`) AYRI alanlar. Düşük dilbilimsel kanıt otomatik authoring bloğu değildir; yüksek corpus kullanımı da otomatik izin değildir. Her iki karar ayrı gerekçelidir.",
+  "humanReviewStatement": "Hiçbir kayıt insan dil editörü tarafından incelenmedi. NATIVE_SPEAKER_APPROVED / HUMAN_APPROVED / LINGUIST_APPROVED kullanılmadı. AUTHORING_ALLOWED_* 'Kurmancîde kesin standarttır' demek DEĞİLDİR; yalnız 'ZanKurd v1 içeriklerinde belirtilen anlam sınırları içinde kullanılabilir' kararıdır.",
+  "concepts": [
+    {
+      "conceptId": "ku_tech_malper",
+      "EnglishConcept": "website / homepage",
+      "TurkishConcept": "Web sitesi",
+      "domain": "tor_and_web",
+      "projectPreferredKurmanji": "malper",
+      "alternativeKurmanjiForms": [
+        "serrûpel"
+      ],
+      "partOfSpeech": "noun (f)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "website",
+        "homepage"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/malper",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, f: '(Internet) homepage'; 'website'. Compound mal (home) + per (page). Synonym: serrûpel.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_curated_30010",
+        "offline_tek_0025",
+        "offline_tek_0042",
+        "offline_tek_0044",
+        "offline_tek_0052",
+        "offline_tek_0080"
+      ],
+      "corpusAttestationCount": 17,
+      "spellingDecision": "Sözlük girdisi ile corpus yazımı aynı: `malper`.",
+      "dialectNotes": "Girdi açıkça Northern Kurdish etiketli; lehçe varsayımı yapılmadı.",
+      "ambiguityNotes": "YALNIZ 'website' ve 'homepage' anlamlarında açık. 'web page' (tek sayfa) anlamı girdide ayrı görünmüyor; o anlam için kullanılmayacak. Bütün web kavramları için topluca onaylanmadı.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "5c863dbdb899e2b2"
+    },
+    {
+      "conceptId": "ku_tech_pergal",
+      "EnglishConcept": "system (general)",
+      "TurkishConcept": "Sistem (genel)",
+      "domain": "computing",
+      "projectPreferredKurmanji": "pergal",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "noun (f)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "system (general sense)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/pergal",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, f: 'system'.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_0395",
+        "offline_0415",
+        "offline_0425",
+        "offline_2232",
+        "offline_2233",
+        "offline_2241"
+      ],
+      "corpusAttestationCount": 78,
+      "spellingDecision": "Corpus yazımı `pergal` girdiyle uyuşuyor.",
+      "dialectNotes": "Northern Kurdish bölümü ayrı; İngilizce 'pergal' (süt kutusu) maddesiyle karıştırılmadı.",
+      "ambiguityNotes": "YALNIZ genel 'system' anlamında açık. operating system, information system, political system, biological system anlamlarının HİÇBİRİ otomatik açılmadı; her biri ayrı kanıt ister.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "cbe27ff7a92b8fed"
+    },
+    {
+      "conceptId": "ku_tech_komputer",
+      "EnglishConcept": "computer",
+      "TurkishConcept": "Bilgisayar",
+      "domain": "computing",
+      "projectPreferredKurmanji": "komputer",
+      "alternativeKurmanjiForms": [
+        "kompûter"
+      ],
+      "partOfSpeech": "noun (f)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_BORROWED_TERM",
+      "allowedSenses": [
+        "computer (device)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/komputer",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, f: alternative form of `kompûter`.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_5325",
+        "offline_curated_30001",
+        "offline_curated_30010",
+        "offline_tek_0003",
+        "offline_tek_0004",
+        "offline_tek_0049"
+      ],
+      "corpusAttestationCount": 9,
+      "spellingDecision": "ÖNEMLİ: Wiktionary ana biçim olarak `kompûter`i, `komputer`i alternatif biçim olarak veriyor. ZanKurd corpus'u tutarlı biçimde `komputer` kullanıyor (8 geçiş). Proje yazımı `komputer` olarak KORUNDU; otomatik `kompûter`e dönüştürme YAPILMADI — corpus tutarlılığı kullanıcı deneyimi için bağlayıcı.",
+      "dialectNotes": "Her iki biçim de Northern Kurdish; lehçe uyuşmazlığı yok, yalnız ortografik varyant.",
+      "ambiguityNotes": "Ödünç uluslararası terim. Yalnız 'cihaz olarak bilgisayar' anlamında açık.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "bca8dedccfd25610"
+    },
+    {
+      "conceptId": "ku_tech_internet",
+      "EnglishConcept": "internet",
+      "TurkishConcept": "İnternet",
+      "domain": "tor_and_web",
+      "projectPreferredKurmanji": "înternet",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_BORROWED_TERM",
+      "allowedSenses": [
+        "the Internet"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/%C3%AEnternet",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m); madde ana 'Internet' maddesine yönlendiriyor",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_curated_30007",
+        "offline_tek_0018",
+        "offline_tek_0053",
+        "offline_tek_0055",
+        "offline_tek_0085",
+        "offline_tek_0086"
+      ],
+      "corpusAttestationCount": 17,
+      "spellingDecision": "Corpus yazımı `înternet`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "Madde YÖNLENDİRME: sözcük türü (navdêr, m) ve Kurmancî yazımı `înternet` doğrulandı, ama tanım ana maddede ve o sayfa OKUNMADI. Ödünç uluslararası terim olarak açıldı; yazım + corpus'taki 17 tutarlı kullanım yeterli sayıldı. `web` ve genel `network` anlamları AÇILMADI.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "6e16f8e51843897d"
+    },
+    {
+      "conceptId": "ku_tech_dane",
+      "EnglishConcept": "data",
+      "TurkishConcept": "Veri",
+      "domain": "computing",
+      "projectPreferredKurmanji": "dane",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "data (computing sense)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/dane",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr; bilişim anlamı: 'Tiştên ku ji baytan pêk tên, gelek caran ji bo nivîs û tiştên bernameyê re tê gotin'",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_13556",
+        "offline_curated_30007",
+        "offline_curated_30011",
+        "offline_tek_0008",
+        "offline_tek_0010",
+        "offline_tek_0013"
+      ],
+      "corpusAttestationCount": 37,
+      "spellingDecision": "Corpus yazımı `dane`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "Wîkîferheng girdisi BİLİŞİM anlamını ayrıca veriyor — genel anlamı 'lib/heb/tane' (adet). YALNIZ bilişim 'data' anlamı açık; 'adet/tane' anlamı bu projede kullanılmaz. Girdide cinsiyet çelişkili aktarılıyor (navdêr mê), bu yüzden cinsiyet iddia edilmiyor. Corpus'ta 34 tutarlı kullanım ikinci kanıt katmanı.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "bf4debaf57a9374f"
+    },
+    {
+      "conceptId": "ku_tech_nermalav",
+      "EnglishConcept": "software",
+      "TurkishConcept": "Yazılım",
+      "domain": "computing",
+      "projectPreferredKurmanji": "nermalav",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "software"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/nermalav",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m); bilişimde 'software': bilgisayar işi için gereken programlar. Etimoloji: nerm + alav. Eşanlamlı: nivîsbarî",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_tek_0027",
+        "offline_tek_0044",
+        "offline_tek_0063",
+        "offline_tek_0064",
+        "offline_tek_0065",
+        "tech_core_0005"
+      ],
+      "corpusAttestationCount": 14,
+      "spellingDecision": "Corpus yazımı `nermalav`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "YALNIZ 'software' anlamı açık. Girdi uygulama ve işletim sistemini ÖRNEK olarak veriyor; bu, `application` ve `operating system` terimlerinin açıldığı anlamına GELMEZ — onlar ayrı kanıt ister. Corpus'ta 14 kullanım.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "e3653e3ebb8db393"
+    },
+    {
+      "conceptId": "ku_tech_sepan",
+      "EnglishConcept": "application",
+      "TurkishConcept": "Uygulama",
+      "domain": "computing",
+      "projectPreferredKurmanji": "sepan",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "1) kesa/ê ku genimê yan cehê kesek dî didirû  2) xulam, noker",
+      "definitionTr": "1) başkasının buğday veya arpasını işleyen kişi  2) hizmetçi, görevli",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_INSUFFICIENT_EVIDENCE",
+      "allowedSenses": [],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/sepan",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m): 1) kesa/ê ku genimê yan cehê kesek dî bo didirû 2) xulam, noker. Fiil formu: sepîn / hatin sepandin.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_curated_30011",
+        "offline_tek_0050",
+        "offline_tek_0051",
+        "offline_tek_0052",
+        "offline_tek_0053",
+        "offline_tek_0055"
+      ],
+      "corpusAttestationCount": 10,
+      "spellingDecision": "Corpus yazımı `sepan`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "GİRDİ 'APPLICATION' ANLAMINI DESTEKLEMİYOR. Tanımlar tarımsal ('başkasının buğdayını işleyen kişi') ve 'hizmetçi/görevli'. Çeviri listesinde app/aplikasyon görünüyor ama sözcüğün o anlamda kullanıldığı AÇIKÇA belirtilmemiş — çeviri listesi tanım değildir. Ayrıca `sepîn` fiil formu var, yani isim/fiil ayrımı da çözülmemiş. Corpus'taki 9 kullanım bu anlamı KANITLAMIYOR: yerleşiklik doğruluk değildir.",
+      "approvedForQuestionAuthoring": false,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "8db2b1ea31bb35b0",
+      "corpusWarning": "Aktif bankada `sepan` 9 kez geçiyor. Sözlük 'uygulama' anlamını desteklemediği için bu kullanımlar AYRI bir inceleme gerektirebilir. Bu turda hiçbir yayımlanmış soru DEĞİŞTİRİLMEDİ — 'eski doğru soruları sessizce değiştirme' kuralı gereği yalnız görünür kılındı."
+    },
+    {
+      "conceptId": "ku_tech_elektrik",
+      "EnglishConcept": "electricity",
+      "TurkishConcept": "Elektrik",
+      "domain": "physics",
+      "projectPreferredKurmanji": "elektrîk",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "noun (f)",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "electricity (noun)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://en.wiktionary.org/wiki/elektr%C3%AEk",
+          "evidencePageType": "community_lexicon_entry",
+          "exactVisibleDefinition": "Northern Kurdish, noun, feminine: 'electricity'.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_tf_cog_0062",
+        "offline_tf_cog_0063",
+        "offline_tek_0012",
+        "offline_tek_2001",
+        "offline_tek_2002",
+        "offline_tek_2004"
+      ],
+      "corpusAttestationCount": 31,
+      "spellingDecision": "Corpus yazımı `elektrîk`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "YALNIZ isim 'electricity' anlamı açık. 'electric' sıfatı ve 'electrical' alan sıfatı AÇILMADI; girdi yalnız isim veriyor. Corpus'ta 25 tutarlı kullanım ikinci kanıt katmanıdır.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "413b2c09f264a622"
+    },
+    {
+      "conceptId": "ku_tech_sifre_password",
+      "EnglishConcept": "password",
+      "TurkishConcept": "Parola",
+      "domain": "computing",
+      "projectPreferredKurmanji": "şîfre",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "Peyv an hevokek ku divê were nivîsandin da ku mirov destûra gihîştinê bi dest bixe",
+      "definitionTr": "Bir şeye erişim izni almak için girilmesi gereken sözcük veya ifade",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "password (authentication)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/%C5%9F%C3%AEfre",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m): erişim/izin almak için kullanılan sözcük veya ifade; örnek: e-postayı açmak için ad ve şîfre girilmeli. İngilizce karşılık: password. Etimoloji: Fransızca chiffre. Türevler: deşîfre, şîfrekirî, şîfrekirin.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [
+        "offline_curated_30004",
+        "offline_tek_0006",
+        "offline_tek_0007",
+        "offline_tek_0009",
+        "offline_tek_0013",
+        "offline_tek_0015"
+      ],
+      "corpusAttestationCount": 35,
+      "spellingDecision": "Corpus yazımı `şîfre`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "Girdi açıkça PAROLA anlamını tanımlıyor ve örneği de kimlik doğrulama (e-posta girişi). İngilizce karşılık 'password'. ŞİFRELEME anlamı AÇILMADI: girdi `şîfrekirin`/`deşîfre` türevlerini AYRI biçimler olarak listeliyor — kökün parola anlamı, türevin şifreleme anlamını kanıtlamaz. `ku_tech_sifre_encryption` bloke kalıyor. Corpus'ta 35 kullanım ikinci katman.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "c268eebe198cbc90"
+    },
+    {
+      "conceptId": "ku_tech_sifre_encryption",
+      "EnglishConcept": "encryption",
+      "TurkishConcept": "Şifreleme",
+      "domain": "computing",
+      "projectPreferredKurmanji": "şîfre",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "noun",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
+      "corpusAttestations": [
+        "offline_curated_30004",
+        "offline_tek_0006",
+        "offline_tek_0007",
+        "offline_tek_0009",
+        "offline_tek_0013",
+        "offline_tek_0015"
+      ],
+      "corpusAttestationCount": 35,
+      "spellingDecision": "Corpus yazımı `şîfre`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "'password' kanıtı 'encryption'ı desteklemez.",
+      "approvedForQuestionAuthoring": false,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "1a8f405a4963c0ec"
+    },
+    {
+      "conceptId": "ku_tech_tor_network",
+      "EnglishConcept": "computer network",
+      "TurkishConcept": "Bilgisayar ağı",
+      "domain": "tor_and_web",
+      "projectPreferredKurmanji": "tor",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "noun",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
+      "corpusAttestations": [
+        "offline_2276",
+        "offline_2304",
+        "offline_2307",
+        "offline_6020",
+        "offline_curated_30010",
+        "offline_curated_30011"
+      ],
+      "corpusAttestationCount": 22,
+      "spellingDecision": "Corpus yazımı `tor`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "Bu kaydın yerini ku_tech_network aldı (tanım satırı doğrudan okundu).",
+      "approvedForQuestionAuthoring": false,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "f8b24922b1abfa82"
+    },
+    {
+      "conceptId": "ku_tech_tor_internet",
+      "EnglishConcept": "the Internet",
+      "TurkishConcept": "İnternet ağı",
+      "domain": "tor_and_web",
+      "projectPreferredKurmanji": "tor",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "noun",
+      "definitionKu": null,
+      "definitionTr": null,
+      "linguisticEvidenceStatus": "MULTIPLE_SENSES_UNRESOLVED",
+      "projectAuthoringStatus": "AUTHORING_BLOCKED_AMBIGUOUS_SENSE",
+      "allowedSenses": [],
+      "evidenceChain": [],
+      "corpusAttestations": [
+        "offline_2276",
+        "offline_2304",
+        "offline_2307",
+        "offline_6020",
+        "offline_curated_30010",
+        "offline_curated_30011"
+      ],
+      "corpusAttestationCount": 22,
+      "spellingDecision": "Corpus yazımı `tor`.",
+      "dialectNotes": null,
+      "ambiguityNotes": "ku_tech_network (pêşkêşker turunda) `tor`un BİLGİSAYAR AĞI anlamını açtı. Bu kayıt kapalı kalıyor: 'the Internet' anlamı ayrı ve doğrulanmadı.",
+      "approvedForQuestionAuthoring": false,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "a853bdf7c13c73e6"
+    },
+    {
+      "conceptId": "ku_geo_okyanus",
+      "EnglishConcept": "ocean",
+      "TurkishConcept": "Okyanus",
+      "domain": "geography",
+      "projectPreferredKurmanji": "okyanûs",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "Deryayên mezin ên cîhanê",
+      "definitionTr": "Dünyada bulunan büyük denizler",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "ocean (geographic body of water)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/okyan%C3%BBs",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m), (Coğrafya) Dünyada bulunan 5 büyük deniz. Örnek: Okyanûsa Aram, Okyanûsa Atlas, Okyanûsa Hindî, Okyanûsa Bakur, Okyanûsa Başûr",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "Wîkîferheng yazımı `okyanûs`; corpus'ta hiç geçmiyor, çelişki yok.",
+      "dialectNotes": "Kurmancî Wiktionary (ku.wiktionary) ana dil sürümü — lehçe doğrudan Kurmancî.",
+      "ambiguityNotes": "Girdi okyanus ADLARINI da veriyor (Aram/Atlas/Hindî/Bakur/Başûr), bu yüzden soru içinde ad kullanımı da aynı kaynakla desteklidir. YALNIZ coğrafi 'okyanus' anlamında açık; mecazi kullanım açılmadı.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "7d8ba0d5eac6ff42"
+    },
+    {
+      "conceptId": "ku_sci_water_vapour",
+      "EnglishConcept": "water vapour / steam",
+      "TurkishConcept": "Su buharı",
+      "domain": "hydrology",
+      "projectPreferredKurmanji": "hilm",
+      "alternativeKurmanjiForms": [
+        "helm"
+      ],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "ava kel ya dibe gaz û hildikeve",
+      "definitionTr": "Sıvı hâlden gaz hâline geçen su",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "water vapour / steam"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/hilm",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "hilm (m): 1) ava kel ya dibe gaz û hildikeve (buhar); çeviriler: steam, vapor, buhar",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 1,
+      "spellingDecision": "`hilm` ana biçim; `helm` girdide varyant olarak veriliyor. Proje `hilm` kullanır.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Girdi ÜÇ anlam veriyor: buhar, nefes, koku. YALNIZ 'buhar/su buharı' anlamı açıldı. 'Buharlaşma' SÜREÇ adı (evaporation) AÇILMADI — girdi isim veriyor, süreç adı ayrı kanıt ister. Bu yüzden sorular süreç adı kullanmadan, 'neye dönüşür' biçiminde kuruldu.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "98ae367018c2fc2d"
+    },
+    {
+      "conceptId": "ku_sci_planet",
+      "EnglishConcept": "planet",
+      "TurkishConcept": "Gezegen",
+      "domain": "astronomy",
+      "projectPreferredKurmanji": "gerstêrk",
+      "alternativeKurmanjiForms": [
+        "exter",
+        "hesare",
+        "planet"
+      ],
+      "partOfSpeech": "navdêr (m)",
+      "definitionKu": "Gogên mezin yên li dor stêrkan dizivirin lê bi xwe ronahiyê nadin derdorî xwe",
+      "definitionTr": "Yıldızların çevresinde dönen ama kendi ışık vermeyen büyük gök cisimleri",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "planet (astronomical body)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/gerst%C3%AArk",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr (m): Gogên mezin yên li dor stêrkan dizivirin lê bi xwe ronahiyê nadin derdorî xwe. Hevwate: exter, hesare, planet. Ger + stêr.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 1,
+      "spellingDecision": "`gerstêrk` tercih edildi; corpus'ta 1 kullanım (Voyager sorusu) bununla uyumlu.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Girdi NEOLOJİZM olduğunu açıkça söylüyor (ger + stêr, 'planet' çevirisi). Eşanlamlılar exter/hesare/planet kayıtlı ama proje `gerstêrk` kullanır. Corpus'ta yalnız 1 kullanım var; kabul Seviye 5'e değil, doğrudan okunmuş girdiye dayanıyor.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "302c135fb94f0685"
+    },
+    {
+      "conceptId": "ku_sci_oxygen",
+      "EnglishConcept": "oxygen",
+      "TurkishConcept": "Oksijen",
+      "domain": "chemistry",
+      "projectPreferredKurmanji": "oksîjen",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "Madeyek kîmyawî ya gazî ye û di nav hewayî de mişe ye û bo nefesdanê pêdivî ye",
+      "definitionTr": "Havada bol bulunan, solunum için gerekli gaz hâlindeki kimyasal madde",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "oxygen (chemical element)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/oks%C3%AEjen",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr: Madeyek kîmyawî ya gazî ye û di nav hewayî de mişe ye û bo nefesdanê pêdivî ye. Sembol: O, hejmara atomî: 8.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`oksîjen` girdideki biçim; corpus'ta geçmiyor, çelişki yok.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Girdide cinsiyet çelişkili aktarılıyor (navdêr mê / m), bu yüzden cinsiyet iddia edilmiyor. `nîtrojen` AÇILMADI — ayrı girdi ayrı kanıt ister; bu yüzden NASA'nın %78 azot claim'i hâlâ bekliyor.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "8f630738df072cb7"
+    },
+    {
+      "conceptId": "ku_sci_nitrogen",
+      "EnglishConcept": "nitrogen",
+      "TurkishConcept": "Azot",
+      "domain": "chemistry",
+      "projectPreferredKurmanji": "nîtrojen",
+      "alternativeKurmanjiForms": [
+        "nîtrocen",
+        "azot"
+      ],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "madeyê kîmyayî yê bi kurteya N û bi hejmara atomî 7 ku gazeke bêreng û bêbêhn e",
+      "definitionTr": "N kısaltmalı, atom numarası 7 olan, renksiz ve kokusuz gaz hâlindeki kimyasal madde",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "nitrogen (chemical element)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/n%C3%AEtrojen",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "navdêr: madeyê kîmyayî yê bi kurteya N û bi hejmara atomî 7 û giraniya atomî 14.0067 ku gazeke bêreng û bêbêhn e. Varyant: nîtrocen. Hevwate: azot.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`nîtrojen` tercih edildi; `nîtrocen` varyant, `azot` eşanlamlı olarak kayıtlı.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Tek teknik anlam; belirsizlik yok. Eşanlamlı `azot` da girdide kayıtlı.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "387db121d3f36dd2"
+    },
+    {
+      "conceptId": "ku_tech_server",
+      "EnglishConcept": "server",
+      "TurkishConcept": "Sunucu",
+      "domain": "computing",
+      "projectPreferredKurmanji": "pêşkêşker",
+      "alternativeKurmanjiForms": [
+        "rajekar",
+        "rajeker"
+      ],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "(enformatîk) server, rajeker, amûra ku weşana webê tê de tê kirin",
+      "definitionTr": "Web yayınının üzerinde yapıldığı aygıt",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "server (computing)"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/p%C3%AA%C5%9Fk%C3%AA%C5%9Fker",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "(enformatîk) server, rajeker, amûra ku weşana webê tê de tê kirin",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`pêşkêşker` girdideki biçim.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Teknik anlam ÇEVİRİ LİSTESİNDEN değil, tanım satırının kendisinden geliyor: satır (enformatîk) alan etiketi taşıyor. Girdide ayrıca 1. anlam 'pêşkêş eden kişi' var — yalnız bilişim anlamı açıldı. `rajekar` bağımsız bir maddede aynı anlamı veriyor (iki ayrı girdi), bu ikinci kanıt katmanıdır.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "d528293a3c452cf2"
+    },
+    {
+      "conceptId": "ku_tech_browser",
+      "EnglishConcept": "web browser",
+      "TurkishConcept": "Web tarayıcısı",
+      "domain": "computing",
+      "projectPreferredKurmanji": "gerok",
+      "alternativeKurmanjiForms": [
+        "gerrok"
+      ],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "(kompûternasî) Ew bernameya ku mirov pê di înternetê de digere.",
+      "definitionTr": "İnternette gezinmeye yarayan program",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "web browser"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/gerok",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "(kompûternasî) Ew bernameya ku mirov pê di înternetê de digere.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`gerok` girdideki biçim.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "(kompûternasî) alan etiketli tanım satırı. Girdide başka anlamlar da var: 'çok gezen kişi', 'gezgin/turist', 'dilenci' — bunların HİÇBİRİ açılmadı. Eşanlamlı listesindeki geştyar/turîst/parsek o anlamlara ait, tarayıcı anlamına DEĞİL.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "e486fc2ca33ef73b"
+    },
+    {
+      "conceptId": "ku_tech_network",
+      "EnglishConcept": "computer network",
+      "TurkishConcept": "Bilgisayar ağı",
+      "domain": "computing",
+      "projectPreferredKurmanji": "tor",
+      "alternativeKurmanjiForms": [],
+      "partOfSpeech": "navdêr",
+      "definitionKu": "(enformatîk) Avaniya ku ji pevgirêdana çend kombersan pêk tê.",
+      "definitionTr": "Birden çok bilgisayarın birbirine bağlanmasıyla oluşan yapı",
+      "linguisticEvidenceStatus": "COMMUNITY_LEXICON_ENTRY_READ",
+      "projectAuthoringStatus": "AUTHORING_ALLOWED_RESTRICTED_SENSE",
+      "allowedSenses": [
+        "computer network"
+      ],
+      "evidenceChain": [
+        {
+          "evidencePage": "https://ku.wiktionary.org/wiki/tor",
+          "evidencePageType": "community_lexicon_entry_kurmanci",
+          "exactVisibleDefinition": "(enformatîk) Avaniya ku ji pevgirêdana çend kombersan pêk tê.",
+          "citedOriginalSource": null,
+          "citedVolume": null,
+          "citedPageIfKnown": null,
+          "originalEntryReadDirectly": true,
+          "evidenceChainStatus": "COMMUNITY_ENTRY_ONLY"
+        }
+      ],
+      "corpusAttestations": [],
+      "corpusAttestationCount": 0,
+      "spellingDecision": "`tor` girdideki biçim.",
+      "dialectNotes": "Kurmancî Wiktionary ana dil sürümü.",
+      "ambiguityNotes": "Tanım satırı (enformatîk) etiketli ve 'çend komberan pevgirêdan' = birden çok bilgisayarın bağlanması diyor. YALNIZ bilgisayar ağı anlamı açıldı; `tor`un genel 'ağ/file' anlamı ve İngilizce 'Tor' anonimlik ağı özel adı AÇILMADI. Seçeneklerde ikisini karıştıracak soru yazılmayacak.",
+      "approvedForQuestionAuthoring": true,
+      "reviewer": "opus-5",
+      "reviewedAt": "2026-08-06",
+      "recordHash": "57e193192192a67c"
+    }
+  ],
+  "sourcesConsulted": []
+}

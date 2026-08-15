@@ -301,14 +301,22 @@ void main() {
         ),
       );
 
-      final amount = await repo.awardQuizCoins(
+      // Bu testler ODA ödül yolunu (doğrulanan tur) sınıyor. `room`
+      // verilmezse çağrı 2026-08-10'dan beri SOLO sayılır ve
+      // `claim_solo_reward`a gider — yani sınanan yol değişir.
+      final claim = await repo.awardQuizCoins(
         score: 100,
         correctCount: 2,
         bestStreak: 1,
         totalQuestions: 10,
+        room: repo.createRoom().copyWith(id: 'room-under-test'),
       );
 
-      expect(amount, 0);
+      expect(claim.amount, 0);
+      // Oda yolunda tavan kavramı yok; bayrak yalnız solo talepte anlamlı.
+      // Sunucu söylemediği sürece yanlış kalmalı — "bilmiyorum"u "tavana
+      // vardın" diye göstermek olmayan bir sebep uydurmaktır.
+      expect(claim.dailyCapReached, isFalse);
       expect(httpClient.requestedPaths, ['/rest/v1/rpc/claim_quiz_reward']);
     },
   );
@@ -334,6 +342,7 @@ void main() {
           correctCount: 2,
           bestStreak: 1,
           totalQuestions: 10,
+          room: repo.createRoom().copyWith(id: 'room-under-test'),
         ),
         throwsStateError,
       );

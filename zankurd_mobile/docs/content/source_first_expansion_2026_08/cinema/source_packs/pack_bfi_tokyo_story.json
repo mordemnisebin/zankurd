@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_bfi_tokyo_story",
+  "sourceTitle": "BFI — Tokyo Story (1953) künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/65edaa59-6546-57b5-9fa3-9409f93d1383/tokyo-story",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları; sinopsis ve eleştiri ALINMADI.",
+  "exactSourceStatements": [
+    "Title: Tokyo Story",
+    "Director: Yasujirō Ozu",
+    "Year: 1953",
+    "Country: Japan",
+    "Runtime: 135 minutes"
+  ],
+  "extractedClaimIds": [
+    "cin_bfi_09",
+    "cin_bfi_10"
+  ],
+  "notUsed": "Süre yine kullanılmadı (arama özeti 2 sa 16 dk = 136, sayfa 135). 2022 anket sıralaması volatil. Batch'e ilk Asya yapımı: coğrafi çeşitlilik bilinçli.",
+  "sourceHash": "5473cbfb151d46fe"
+}

@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 /// Her isteği anında reddeden HTTP client — gerçek soket açılmaz.
 class _AlwaysFailingHttpClient extends http.BaseClient {
@@ -109,7 +110,7 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
   String? get currentUserId => userId;
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -119,7 +120,7 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
     awardCalls += 1;
     awardStarted?.complete();
     await allowAward?.future;
-    return 1;
+    return (amount: 1, dailyCapReached: false);
   }
 }
 

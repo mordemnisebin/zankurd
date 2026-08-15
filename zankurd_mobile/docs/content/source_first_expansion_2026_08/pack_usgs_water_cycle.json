@@ -1,0 +1,65 @@
+{
+  "packId": "usgs_water_cycle_2026_08",
+  "branch": "KOL_B",
+  "riskClass": "C",
+  "source": {
+    "sourceId": "usgs-water-science-school",
+    "title": "USGS Water Science School — The Water Cycle",
+    "institution": "United States Geological Survey (USGS)",
+    "sourceType": "government_science_agency",
+    "sourceReference": "https://www.usgs.gov/special-topics/water-science-school/science/water-cycle",
+    "reliabilityTier": 1,
+    "verificationMethod": "FETCHED_DIRECT",
+    "verifiedOn": "2026-08-06",
+    "verifier": "opus-5"
+  },
+  "note": "Sayfa süreçleri ANLATIYOR ama terimleri resmî olarak TANIMLAMIYOR. Bu ayrım kayda geçirildi: yalnız sayfada açıkça yazan ifadeler claim sayıldı; 'evaporation şudur' biçiminde bir tanım cümlesi yok, bu yüzden tanım soruları bu paketten üretilemez.",
+  "claims": [
+    {
+      "claimId": "usgs_wc_01",
+      "exactSupportingFact": "Oceans store 96% of all water on Earth.",
+      "claimType": "quantity",
+      "questionable": true,
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "usgs_wc_02",
+      "exactSupportingFact": "Ocean water is saline, meaning it's salty.",
+      "claimType": "property",
+      "questionable": true,
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "usgs_wc_03",
+      "exactSupportingFact": "The sun's energy causes liquid water to evaporate into water vapor.",
+      "claimType": "process_cause",
+      "questionable": true,
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "usgs_wc_04",
+      "exactSupportingFact": "Clouds are formed by water condensing in the atmosphere.",
+      "claimType": "process_cause",
+      "questionable": true,
+      "status": "READY_FOR_AUTHORING"
+    },
+    {
+      "claimId": "usgs_wc_05",
+      "exactSupportingFact": "Water moves into the ground through infiltration.",
+      "claimType": "process_name",
+      "questionable": true,
+      "status": "READY_FOR_AUTHORING"
+    }
+  ],
+  "authoringBlocker": {
+    "reason": "Kurmancî bilimsel terminoloji doğrulanmadı. Mevcut 2050 soruluk korpus taranınca su döngüsü sözlüğü BULUNAMADI: 'hilm' yalnız bir kez ve türbin bağlamında geçiyor ('Hilma bin zextê'), diğer eşleşmeler alt-dizge yanlış pozitifi. Buharlaşma, yoğuşma, sızma ve yüzey akışı için Kurmancî karşılıkları uydurmak gerekirdi.",
+    "whyNotProceed": "Bu, reddedilen DeepSeek atıf pratiğinin dil tarafındaki karşılığı olurdu: doğrulanmamış bir şeyi doğrulanmış gibi sunmak. Kurmancî bir uygulamada uydurulmuş bilimsel terim, yanlış kaynak kadar zararlıdır ve düzeltilmesi daha zordur.",
+    "unblockedBy": [
+      "proje glossary'sinde doğrulanmış Kurmancî bilim terimleri",
+      "akademik Kurmancî sözlük veya üniversite kaynağı",
+      "anadili Kurmancî olan editör incelemesi"
+    ]
+  },
+  "packStatus": "SOURCE_VERIFIED_TERMINOLOGY_BLOCKED",
+  "terminologyRegistry": "docs/content/terminology/kurmanji_science_terminology_2026_08.json"
+}

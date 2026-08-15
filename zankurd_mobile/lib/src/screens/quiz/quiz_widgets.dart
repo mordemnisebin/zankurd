@@ -126,12 +126,25 @@ class _LiveScoreRow extends StatelessWidget {
 class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     required this.url,
+    this.alt,
     this.isCompact = false,
     this.layoutSize,
     this.onReady,
   });
 
   final String url;
+
+  /// Görselin ekran okuyucuya okunan betimlemesi.
+  ///
+  /// 2026-08-07'ye kadar soru görselleri hiçbir semantik etiket taşımıyordu:
+  /// TalkBack/VoiceOver kullanan oyuncu için görsel yok sayılıyordu. Görselin
+  /// süs olduğu sorularda bu bir eksiklik, görselin sorunun KENDİSİ olduğu
+  /// sorularda ("görseldeki çalgı hangisidir?") soruyu çözülemez yapıyordu.
+  ///
+  /// `null` ise yerelleştirilmiş genel bir etiket kullanılır — sessiz
+  /// kalmaktansa "soru görseli" demek yeğdir, çünkü ekran okuyucu en azından
+  /// bir görselin var olduğunu duyurur.
+  final String? alt;
   final bool isCompact;
   final Size? layoutSize;
   final VoidCallback? onReady;
@@ -192,8 +205,20 @@ class _QuestionImage extends StatelessWidget {
             },
           );
 
+    // Dar ekranda görsel için ayrılan tavan.
+    //
+    // Eskiden `%15 → en çok 100pt`ti ve iPhone SE'de (667pt) tam 100'e
+    // oturuyordu. Ölçüldüğünde (2026-08-12, SE) aynı ekranda soru kartının
+    // ALTINDA ~110pt kullanılmayan boşluk duruyordu: düzen, harcamadığı
+    // yeri kısmak için görseli aç bırakıyordu. Bedeli somuttu — «kelaş»
+    // sorusu ayakkabıyı sorar, görselde ayakkabı 90pt'lik bir karede
+    // seçilemez; görselin sorunun KENDİSİ olduğu sorularda soru
+    // cevaplanamaz hâle geliyordu.
+    //
+    // Tavan o ölçülen boşluğun içinde kalacak kadar açıldı; `BoxFit.contain`
+    // korunduğu için görsel taşmaz, yalnız daha çok yer bulur.
     final double? forcedHeight = isCompact
-        ? (size.height * 0.15).clamp(60.0, 100.0)
+        ? (size.height * 0.19).clamp(64.0, 132.0)
         : null;
     // Portre düzende 16/9 çerçeve dar ama uzun görsellerde büyük boş
     // alan bırakıyordu; yüksekliği ekranın %30'u ile sınırla.
@@ -201,19 +226,30 @@ class _QuestionImage extends StatelessWidget {
       size.width * 9 / 16,
       size.height * 0.30,
     ).clamp(120.0, 260.0);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.sm),
-      child: (isLandscapeTablet || forcedHeight != null)
-          ? SizedBox(
-              width: double.infinity,
-              height: forcedHeight ?? maxHeight,
-              child: image,
-            )
-          : SizedBox(
-              width: double.infinity,
-              height: portraitHeight,
-              child: image,
-            ),
+    final label = (alt != null && alt!.trim().isNotEmpty)
+        ? alt!.trim()
+        : context.t(K.questionImage);
+
+    return Semantics(
+      image: true,
+      label: label,
+      // Alttaki `Image` widget'ları kendi (boş) semantiklerini üretiyor;
+      // dışlanmazsa ekran okuyucu etiketi iki kez ya da eksik okur.
+      excludeSemantics: true,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        child: (isLandscapeTablet || forcedHeight != null)
+            ? SizedBox(
+                width: double.infinity,
+                height: forcedHeight ?? maxHeight,
+                child: image,
+              )
+            : SizedBox(
+                width: double.infinity,
+                height: portraitHeight,
+                child: image,
+              ),
+      ),
     );
   }
 }
@@ -285,6 +321,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.promptFontSize,
     required this.question,
     required this.selectedAnswer,
+    required this.adjudicatedCorrect,
     required this.answered,
     required this.hiddenAnswers,
     required this.firstAttemptAnswer,
@@ -304,6 +341,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   final double promptFontSize;
   final QuizQuestion question;
   final String selectedAnswer;
+  final bool? adjudicatedCorrect;
   final bool answered;
   final Set<String> hiddenAnswers;
   final String firstAttemptAnswer;
@@ -360,6 +398,23 @@ class _QuestionTextAndAnswers extends StatelessWidget {
             builder: (context, areaConstraints) {
               // Landscape (844x390 gibi): dikey alan kıt — 4 şık 2x2
               // grid'e girer, Piştre butonu ekranda kalır.
+              if (question.type == QuestionType.fillInBlank) {
+                return FillInBlankWidget(
+                  key: ValueKey('fill-in-blank-${question.id}'),
+                  question: question,
+                  disabled: answered,
+                  showResult: answered && !suspense,
+                  adjudicatedCorrect: adjudicatedCorrect,
+                  excludedAnswer: firstAttemptAnswer.isEmpty
+                      ? null
+                      : firstAttemptAnswer,
+                  selectedAnswer: selectedAnswer.isEmpty
+                      ? null
+                      : selectedAnswer,
+                  onAnswerSubmitted: onAnswer,
+                );
+              }
+
               if (question.type == QuestionType.wordOrdering) {
                 return WordOrderingWidget(
                   // Soru kimliği key'e girer: aynı tipte bir sonraki soruya

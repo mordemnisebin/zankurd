@@ -167,7 +167,7 @@ void main() {
         // Kurdish mode uses local translation mapping (explanationToKu) on the base explanation
         expect(
           question.getLocalizedExplanation(true),
-          'Peyva «av» tê wateya «su».',
+          'Peyva "av" tê wateya "su".',
         );
         expect(
           question.getLocalizedExplanation(false),

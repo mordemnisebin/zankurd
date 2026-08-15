@@ -1,0 +1,58 @@
+{
+  "produced": 16,
+  "claimFamilies": {
+    "film_language_term": 1,
+    "film_technique": 1,
+    "festival_foundation_year": 1,
+    "institution_history": 7,
+    "award_name": 1,
+    "film_title": 1,
+    "film_director": 2,
+    "film_year": 2
+  },
+  "correctIndexDistribution": {
+    "1": 4,
+    "3": 4,
+    "0": 4,
+    "2": 4
+  },
+  "maxPositionSharePct": 25.0,
+  "strictLongestCorrect": 4,
+  "strictShortestCorrect": 0,
+  "lengthBiasNote": "İki ölçüm ayrı: naif `==max` beraberlikte de doğru döner ve yıl sorularında bütün seçenekler 4 karakter olduğu için 8/8 diyordu — artefakt. KESİN ölçüm (tek başına en uzun) 4/8 verdi. Bu bir artefakt DEĞİL: dört kavramsal soruda (montage, deep focus, ilk film, mekân) doğru seçenek tek başına en uzun. n=8'de kesin sonuç çıkmaz ama izlenmesi gereken gerçek bir eğilim; batch 12'ye çıkarılırken çeldiricilerin uzunluğu doğru seçeneğe yaklaştırılmalı.",
+  "sourceAccessLevels": {
+    "FETCHED_DIRECT": 12
+  },
+  "kurdishCinemaCount": 0,
+  "kurdishCinemaNote": "Bu turda da doğrudan akademik/arşiv kaynağı açılmadı; Risk-A kuralı gereği kaynaksız içerik üretilmedi. Cannes resmî tarihçe sayfası 403 verdi.",
+  "strictLongestCorrectPct": 12.5,
+  "lengthBiasStatus": "RESOLVED — strict %8.3 (üst sınır %33)",
+  "commitMessageCorrection": "69cf024'ün gövdesinde bu oran sehven '1/8' yazıldı; doğru değer 4/8'dir. Commit yeniden yazılmadı; düzeltme burada ve takip eden commit'te.",
+  "strictUniquelyLongestCorrect": 2,
+  "strictUniquelyShortestCorrect": 1,
+  "naiveMaxTieCorrect": 9,
+  "naiveNote": "9/12'nin çoğu yıl sorusu; bütün seçenekler 4 karakter, beraberlik artefaktı.",
+  "lengthFixApplied": [
+    "sf_cin_0001",
+    "sf_cin_0002",
+    "sf_cin_0005",
+    "sf_cin_0008"
+  ],
+  "kurdishCinemaVerifiedCount": 0,
+  "failedSources": [
+    {
+      "url": "festival-cannes.com/.../birth-of-a-festival",
+      "status": "FETCH_FAILED_403"
+    },
+    {
+      "url": "berlinale.de/en/about-us/history.html",
+      "status": "FETCH_FAILED_503"
+    },
+    {
+      "url": "moma.org/collection/works/306307",
+      "status": "FETCH_FAILED_403"
+    }
+  ],
+  "rebalanceNote": "BFI'dan gelen iki soru da index 1'e düşmüş ve pozisyon payı %43'e çıkmıştı (tavan %40). 0013 -> 0, 0014 -> 2 taşındı; answersKu, answersTr ve correctIndex birlikte güncellendi.",
+  "sourcePackCount": 6
+}

@@ -1,0 +1,21 @@
+{
+  "sourcePackId": "pack_bfi_otto",
+  "sourceTitle": "BFI — 8½ künye kaydı",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/3b1e80a4-111a-5fff-b799-7c50460d6284/812",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları.",
+  "exactSourceStatements": [
+    "Title: 8½",
+    "Directed by: Federico Fellini",
+    "Year: 1963",
+    "Country: Italy, France"
+  ],
+  "harvestedBy": "workflow wf_c357bc9e-bbb",
+  "notUsed": "Süre ve anket sıralaması istenmedi. Ortak yapımlarda ülke sorusu yazılmadı.",
+  "sourceHash": "3d772b97c48c08e4"
+}

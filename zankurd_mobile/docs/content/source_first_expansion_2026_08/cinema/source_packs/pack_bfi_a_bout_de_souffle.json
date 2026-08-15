@@ -1,0 +1,25 @@
+{
+  "sourcePackId": "pack_bfi_a_bout_de_souffle",
+  "sourceTitle": "BFI — À bout de souffle (1960) catalogue entry",
+  "institution": "British Film Institute",
+  "sourceReference": "https://www.bfi.org.uk/film/6d93c801-e069-50f3-98b0-b0070e43f7a5/a-bout-de-souffle",
+  "accessLevel": "FETCHED_DIRECT",
+  "fetchedAt": "2026-08-06",
+  "pageSectionsRead": [
+    "catalogue credits"
+  ],
+  "copyrightNotes": "Yalnız künye alanları; eleştiri metni ALINMADI.",
+  "exactSourceStatements": [
+    "Original Title: À bout de souffle",
+    "Director: Jean-Luc Godard",
+    "Year: 1960",
+    "Country: France",
+    "Running Time: 90 minutes"
+  ],
+  "extractedClaimIds": [
+    "cin_bfi_01",
+    "cin_bfi_02"
+  ],
+  "notUsed": "Cast, yapımcı ve 2022 anket sıralamaları claim'e çevrilmedi: sıralamalar volatil (anket her on yılda değişiyor), eleştiri metni telifli yorum.",
+  "sourceHash": "7255a58fd51234ad"
+}

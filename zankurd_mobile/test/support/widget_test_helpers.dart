@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
 import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
+import 'package:zankurd_mobile/src/providers/untimed_mode_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
@@ -99,6 +100,12 @@ Widget testShell({
       ChangeNotifierProvider<ReducedMotionProvider>(
         create: (_) => ReducedMotionProvider(),
       ),
+      // Süresiz mod: varsayılan kapalı, yani testlerde sayaç davranışı
+      // değişmez. Sağlayıcının burada olması gerekiyor çünkü Ayarlar ekranı
+      // anahtarı bir `Consumer` ile çiziyor.
+      ChangeNotifierProvider<UntimedModeProvider>(
+        create: (_) => UntimedModeProvider(),
+      ),
       ChangeNotifierProvider<AnalyticsConsentProvider>(
         create: (_) => AnalyticsConsentProvider(),
       ),
@@ -114,7 +121,7 @@ Widget testShell({
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: theme.mode,
-        navigatorObservers: [appRouteObserver],
+        navigatorObservers: [appRouteObserver, appPageRouteObserver],
         home: child,
       ),
     ),

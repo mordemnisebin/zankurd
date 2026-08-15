@@ -12,6 +12,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_timer_widget.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_result_recovery_screen.dart';
+import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -296,7 +297,7 @@ class _SessionRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<int> awardQuizCoins({
+  Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,
     required int bestStreak,
@@ -311,7 +312,7 @@ class _SessionRepository extends MockZanKurdRepository {
       totalQuestions,
       room?.id,
     ];
-    return 7;
+    return (amount: 7, dailyCapReached: false);
   }
 
   Future<void> close() => broadcasts.close();

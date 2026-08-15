@@ -14,6 +14,7 @@ import '../providers/auth_provider.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
+import '../providers/untimed_mode_provider.dart';
 import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/notification_service.dart';
@@ -483,6 +484,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           key: const ValueKey('reduce-motion-switch'),
                           value: motion.userReduce,
                           onChanged: (v) => motion.setUserReduce(v),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    // WCAG 2.2.1: zaman sınırı olan içerikte sınırı kapatma
+                    // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
+                    // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
+                    // hiçbir yolu yoktu.
+                    Consumer<UntimedModeProvider>(
+                      builder: (context, untimed, _) => _SettingsToggleRow(
+                        icon: AppIcons.stopwatch,
+                        color: AppTheme.violet,
+                        title: context.t(K.untimedSolo),
+                        subtitle: context.t(K.untimedSoloSub),
+                        trailing: Switch(
+                          key: const ValueKey('untimed-solo-switch'),
+                          value: untimed.enabled,
+                          onChanged: (v) => untimed.setEnabled(v),
                         ),
                       ),
                     ),

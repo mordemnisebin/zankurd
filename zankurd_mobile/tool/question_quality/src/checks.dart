@@ -37,7 +37,7 @@ List<AuditIssue> runChecks(
     if (record.prompt.trim().isEmpty) {
       add('empty_prompt', Severity.blocker, 'Question prompt is empty.');
     }
-    if (record.options.length < 2) {
+    if (record.questionType != 'fillInBlank' && record.options.length < 2) {
       add(
         'insufficient_options',
         Severity.blocker,
