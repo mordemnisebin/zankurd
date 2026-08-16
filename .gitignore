@@ -55,6 +55,21 @@ phase1-desktop-current.png
 __pycache__/
 *.pyc
 
+# Node bağımlılıkları ve araç çıktıları.
+# `sky_bird/` 74 MB'lık bir `node_modules` taşıyor ve `git status` her
+# çağrıda onunla doluyordu; kaynağın kendisi bilerek görünür bırakıldı —
+# ayrı bir repoya mı taşınacak yoksa buraya mı commit edilecek, bu karar
+# ürün sahibinin (2026-08-16).
+node_modules/
+**/node_modules/
+**/test-results/
+**/playwright-report/
+
+# Supabase CLI'nin yerel çalışma artığı. Ortama özgü bağlantı bilgisi
+# tutar; kökte de mobil klasörde de üretilir.
+supabase/.temp/
+**/supabase/.temp/
+
 # Denetim kanıtları: ekran görüntüleri, build/test logları, ham veri dökümleri.
 # Diskte kalır (raporlar buraya yol verir) ama git'e GİRMEZ — hem 36 MB'lık
 # ikili yığın, hem de logların içinde ortama özgü yollar ve kimlikler var.
