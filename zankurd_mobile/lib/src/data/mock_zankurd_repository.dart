@@ -313,10 +313,39 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // eleyeceği için tam limitte istemek turu eksik bırakırdı.
     final candidates = store.preferUnseen(pool, limit * 3);
     final clean = QuestionSetPolicy.withoutLeaks(candidates, limit: limit);
-    // Süzgeç limiti dolduramazsa (küçük havuz) elde kalanla devam edilir;
-    // eksik bir tur, kendi cevabını ele veren bir turdan iyidir ama boş
-    // bir tur ikisinden de kötüdür.
-    final selected = clean.isEmpty ? candidates.take(limit).toList() : clean;
+
+    // Süzgeç limiti dolduramazsa elde kalanla devam edilir: eksik bir tur,
+    // kendi cevabını ele veren bir turdan iyidir. Ama "eksik"in de bir
+    // tabanı olmalı.
+    //
+    // ## Kusur
+    //
+    // Eskiden yalnız `clean` BOŞSA yedeğe düşülüyordu. `clean` bir tek soru
+    // döndürdüğünde o tek soru turun tamamı oluyordu: "Dil › Kelime Bilgisi ›
+    // 1. Seviye" kartı "10 soru" yazıyor, oyuncu tek soru cevaplıyor ve
+    // ekranda "Yarış tamamlandı" çıkıyordu (2026-08-16 simülatör taraması).
+    //
+    // Sebep havuzun küçüklüğü değil, süzgeçlerin üst üste binmesi: bir
+    // kelime bilgisi havuzunda soruların neredeyse hepsi çeviri sorusudur,
+    // `_dedupeByTranslationPair` aynı kelime çiftini toplar, ardından
+    // sızıntı süzgeci kalanların birbirini ele verenlerini atar. Otuz
+    // adaydan geriye bir tane kalabiliyor.
+    //
+    // ## Kural
+    //
+    // Sızıntısız sorular her zaman önce gelir; tur onlarla dolmuyorsa
+    // elenmiş adaylarla, o da yetmezse havuzun geri kalanıyla tamamlanır.
+    // Tekrar eden bir soru, tek soruluk bir turdan iyidir.
+    final selected = <QuizQuestion>[...clean];
+    if (selected.length < limit) {
+      final chosen = selected.map((q) => q.id).toSet();
+      for (final source in [candidates, pool]) {
+        for (final question in source) {
+          if (selected.length >= limit) break;
+          if (chosen.add(question.id)) selected.add(question);
+        }
+      }
+    }
     return _withVisualBlend(selected, pool, limit);
   }
 
