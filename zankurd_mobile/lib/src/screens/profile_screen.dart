@@ -370,7 +370,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       _StatTile(
                         label: context.t(K.statRank),
-                        value: _hasServerScore ? '#${_stats!.rank}' : '—',
+                        value: _hasServerScore
+                            ? '#${_stats!.rank}'
+                            : context.t(K.statPending),
                         color: AppTheme.gold,
                         icon: AppIcons.chartColumn,
                       ),
@@ -381,7 +383,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         // gösteriliyor, aynı ekranda "0/1000 XP · Ast 1"
                         // yazıyordu — iki rakam birbirini yalanlıyordu
                         // (2026-07-25 canlı denetimi).
-                        value: _hasServerScore ? '${_stats!.totalScore}' : '—',
+                        value: _hasServerScore
+                            ? '${_stats!.totalScore}'
+                            : context.t(K.statPending),
                         color: AppTheme.accent,
                         icon: AppIcons.star,
                       ),

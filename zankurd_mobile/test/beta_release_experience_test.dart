@@ -64,7 +64,12 @@ void main() {
     expect(find.textContaining('5 soru'), findsOneWidget);
   });
 
-  testWidgets('settings exposes a direct beta feedback action', (tester) async {
+  // 2026-08-16: metin "Beta geri bildirimi gönder — bu erken sürümde…" idi
+  // ve App Store'a giden üretim sürümünde duruyordu (Kılavuz 2.2 riski).
+  // Özellik aynı; yalnız adı yayına uygun hâle getirildi. Test anahtarı
+  // (`settings-beta-feedback`) dokunulmadan bırakıldı: anahtar kullanıcıya
+  // görünmüyor ve değiştirmek başka bekçileri gereksizce kırardı.
+  testWidgets('settings exposes a direct feedback action', (tester) async {
     await tester.pumpWidget(
       testShell(child: SettingsScreen(repository: freshMockRepository())),
     );
@@ -79,7 +84,12 @@ void main() {
       find.byKey(const ValueKey('settings-beta-feedback')),
       findsOneWidget,
     );
-    expect(find.text('Beta geri bildirimi gönder'), findsOneWidget);
+    expect(find.text('Geri bildirim gönder'), findsOneWidget);
+    expect(
+      find.textContaining('erken sürüm'),
+      findsNothing,
+      reason: 'Üretim sürümü kendini beta ilan etmemeli.',
+    );
   });
 
   testWidgets('home starts the first session with five questions', (

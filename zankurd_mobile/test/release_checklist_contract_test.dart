@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('beta release checklist covers the complete user journey', () {
+  test('release checklist covers the complete user journey', () {
     final checklist = File('../docs/release-readiness.md').readAsStringSync();
 
     for (final gate in [
@@ -13,7 +13,7 @@ void main() {
       'oda kurma',
       'bildirim',
       'hesap silme',
-      'Beta geri bildirimi',
+      'Geri bildirim',
       'kozmetik',
     ]) {
       expect(checklist.toLowerCase(), contains(gate.toLowerCase()));

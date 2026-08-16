@@ -87,17 +87,22 @@ class Tr {
       'ku': 'Bikaranîna xerab ragihîne',
       'tr': 'Kötüye kullanım bildir',
     },
+    // Bu üç metin "beta"/"erken sürüm" diyordu. App Store'a giden 1.9.2
+    // bir beta değil; App Review Kılavuzu 2.2 beta/deneme sürümlerini
+    // reddeder ve inceleyen kişi uygulamanın İÇİNDE "bu erken sürümde"
+    // ibaresini görüyordu (2026-08-16 simülatör taraması, Ayarlar ekranı).
+    // Özellik aynı kaldı, yalnız adı yayına uygun hâle getirildi.
     K.betaFeedback: {
-      'ku': 'Ramanên beta parve bike',
-      'tr': 'Beta geri bildirimi gönder',
+      'ku': 'Ramanên xwe parve bike',
+      'tr': 'Geri bildirim gönder',
     },
     K.betaFeedbackSub: {
-      'ku': 'Di vê guhertoya pêşîn de çi dikare baştir bibe?',
-      'tr': 'Bu erken sürümde neyi daha iyi yapabiliriz?',
+      'ku': 'Em dikarin çi baştir bikin?',
+      'tr': 'Neyi daha iyi yapabiliriz?',
     },
     K.betaMailSubject: {
-      'ku': 'ZanKurd — ramanên beta',
-      'tr': 'ZanKurd — beta geri bildirimi',
+      'ku': 'ZanKurd — raman û pêşniyar',
+      'tr': 'ZanKurd — geri bildirim',
     },
     K.abuseMailSubject: {
       'ku': 'ZanKurd — ragihandina bikaranîna xerab',
@@ -1762,6 +1767,12 @@ class Tr {
     K.statTotalScore: {'ku': 'Tevahî Xal', 'tr': 'Toplam Puan'},
     K.statAnswered: {'ku': 'Pirsên Bersivandî', 'tr': 'Cevaplanan Soru'},
     K.statAccuracy: {'ku': 'Rastî', 'tr': 'Doğruluk'},
+    // Sunucu metriği yokken karolarda çıplak bir "—" duruyordu. Oyuncu
+    // 180 XP'si ve %70 doğruluğu görünürken "Sıralama —" ve "Toplam Puan —"
+    // okuyunca bunu kusur sanıyordu; oysa değer YOK değil, HENÜZ yok
+    // (çevrimdışı/misafir oturum). Kısa tutuldu: karo `FittedBox` ile
+    // küçülüyor, uzun metin puntoyu okunmaz yapıyordu (2026-08-16).
+    K.statPending: {'ku': 'Hîn tune', 'tr': 'Henüz yok'},
     K.myStats: {'ku': 'Statîstîkên Min', 'tr': 'İstatistiklerim'},
     K.detailedStats: {'ku': 'Analîza Berfireh', 'tr': 'Detaylı İstatistik'},
     K.weeklyPerformance: {
@@ -3155,6 +3166,7 @@ class K {
   static const checkConnection = 'common.checkConnection';
   static const statRank = 'profile.stat.rank';
   static const statTotalScore = 'profile.stat.totalScore';
+  static const statPending = 'profile.stat.pending';
   static const statAnswered = 'profile.stat.answered';
   static const statAccuracy = 'profile.stat.accuracy';
   static const myStats = 'profile.myStats';
