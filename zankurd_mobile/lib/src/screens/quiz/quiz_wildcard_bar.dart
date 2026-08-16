@@ -179,9 +179,18 @@ class _WildcardButtonState extends State<WildcardButton> {
                       ),
                     ),
                     const SizedBox(height: 2),
+                    // İki satır: Kurmancî etiketler tek satıra sığmıyor.
+                    // 390px'te dört sütuna bölünen barda her düğmeye ~80px
+                    // düşüyor; "Alîkariya Bersivê" ve "Pirsê Biguhere" orada
+                    // "Alîkariya Be…" / "Pirsê Biguhe…" diye kırpılıyordu.
+                    // Türkçe etiketler sığdığı için kusur yalnız ürünün ASIL
+                    // dilinde görünüyordu ve tur quiz ekranını Kurmancî'de
+                    // hiç basmadığı için kimse görmemişti (2026-08-16).
+                    // Tek satıra sıkıştırıp FittedBox ile küçültmek 2026-07-25'te
+                    // denenmiş ve reddedilmişti: punto ~8pt'ye düşüyordu.
                     Text(
                       widget.type.label(widget.isKu),
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: AppTypography.caption.copyWith(
