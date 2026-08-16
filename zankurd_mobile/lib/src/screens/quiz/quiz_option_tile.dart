@@ -26,6 +26,7 @@ class QuizOptionTile extends StatelessWidget {
     this.audiencePercent,
     this.opponentNamesWhoSelected,
     this.isCompact = false,
+    this.fixedHeight,
     this.optionCount = 4,
     this.dimmed = false,
     super.key,
@@ -47,6 +48,14 @@ class QuizOptionTile extends StatelessWidget {
   final List<String>? opponentNamesWhoSelected;
   final bool isCompact;
 
+  /// Şıkka AYRILAN yükseklik.
+  ///
+  /// Verildiğinde kutu tam bu boyu alır ve dikey dolgu hesaplanmaz: yükseklik
+  /// artık ekran boyu kademelerinden değil, karta gerçekten kalan alanın
+  /// şıklara eşit bölünmesinden gelir. Amaç her sorunun şıklarıyla birlikte
+  /// ekrana tam oturması (2026-08-16 kararı).
+  final double? fixedHeight;
+
   /// Sorudaki toplam şık sayısı.
   ///
   /// İki şıklı sorularda (doğru/yanlış) kart ekranın yarısını boş
@@ -61,8 +70,21 @@ class QuizOptionTile extends StatelessWidget {
   /// alır.
   ///
   /// İki şıklı soruda bir kademe daha açılır: hem boşluğun bir kısmını
-  /// kapatır hem dokunma hedefini büyütür. Boşluğu tamamen kapatmaz —
-  /// bunun için kartın kendisinin uzaması gerekir, o ayrı bir iş.
+  /// kapatır hem dokunma hedefini büyütür.
+  ///
+  /// 2026-08-16: burada bir zamanlar "boşluğu tamamen kapatmaz — bunun için
+  /// kartın kendisinin uzaması gerekir, o ayrı bir iş" notu vardı. İki şey
+  /// birden bulundu: kart gerçekten uzamıyordu (düzeltildi,
+  /// `_buildQuestionPanel`in `minHeight`i) VE bu kademelerin hiçbiri
+  /// çalışmıyordu, çünkü `isCompact` gövde yüksekliğine yanlış eşikle
+  /// bakıp her iPhone'u "dar ekran" ilan ediyordu; akış daima yukarıdaki
+  /// `AppSpacing.xs`e düşüyordu.
+  ///
+  /// Kademeler bilerek BÜYÜTÜLMEDİ. Simülatörde denendi: dolgu bir kademe
+  /// açılınca ders modunda cevaptan sonra açılan açıklama paneli ekranın
+  /// dışında kalıyor ve oyuncu doğru cevabın niçin doğru olduğunu görmek
+  /// için kaydırmak zorunda kalıyordu. Cevap öncesi kalan boşluk kusur
+  /// değil, o panelin yeri.
   double _verticalPadding(BuildContext context) {
     if (isCompact) return AppSpacing.xs;
     final height = MediaQuery.sizeOf(context).height;
@@ -200,9 +222,12 @@ class QuizOptionTile extends StatelessWidget {
                   // kalıyordu (2026-07-27, canlı gezinti). Yükseklik arttıkça
                   // şıklar da büyür: hem ekran dolar hem dokunma hedefi
                   // genişler.
+                  height: fixedHeight,
                   padding: EdgeInsets.symmetric(
                     horizontal: AppSpacing.md,
-                    vertical: _verticalPadding(context),
+                    vertical: fixedHeight != null
+                        ? AppSpacing.xs
+                        : _verticalPadding(context),
                   ),
                   decoration: BoxDecoration(
                     gradient: gradient,
@@ -236,6 +261,7 @@ class QuizOptionTile extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         children: [

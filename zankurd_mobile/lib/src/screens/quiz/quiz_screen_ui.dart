@@ -45,6 +45,51 @@ extension _QuizScreenUI on _QuizScreenState {
                     // ilişkisini korur; uzun içerik yine kaydırılabilir.
                     child: LayoutBuilder(
                       builder: (context, scrollConstraints) {
+                        // Kartın altına başka bir şey düşüyorsa (süre doldu
+                        // uyarısı, rakip bekleme perdesi, geri sayım, canlı
+                        // skor tablosu) kart alanı doldurmaz — yoksa o
+                        // öğeler ekranın dışına taşar ve her soruda
+                        // kaydırma gerekirdi.
+                        // Kartın ALTINA düşen öğelerin yer payı.
+                        //
+                        // Önce bu bir aç/kapa anahtarıydı: altta bir şey
+                        // varsa kart hiç dolmuyordu ve boşluk geri geliyordu
+                        // — süre dolduğunda ekranın alt üçte biri yine
+                        // bomboş kalıyordu (2026-08-16 simülatör taraması).
+                        // Oysa doğrusu doldurmayı kapatmak değil, o öğelere
+                        // pay ayırmak. Pay eksik kalırsa kart kaydırılır;
+                        // fazla kalırsa küçük bir boşluk olur — ikisi de
+                        // ekranın üçte birini boş bırakmaktan iyidir.
+                        var reservedBelowCard = 0.0;
+                        if (selectedAnswer == 'TIMEOUT' && !_suspense) {
+                          reservedBelowCard += 56;
+                        }
+                        if (_isMultiplayer &&
+                            answered &&
+                            _mpPhase == _MultiplayerPhase.waiting) {
+                          reservedBelowCard += 72;
+                        }
+                        if (_isMultiplayer &&
+                            _mpPhase == _MultiplayerPhase.reveal) {
+                          reservedBelowCard += 72;
+                        }
+                        if (widget.is1v1 && screenHeight >= 800) {
+                          reservedBelowCard += 104;
+                        }
+                        // Karta gerçekten kalan yükseklik. Doldurma
+                        // yapılmasa bile sıkışıklık kararı buna bakar.
+                        final availableCardHeight =
+                            scrollConstraints.hasBoundedHeight
+                            ? max(
+                                0.0,
+                                scrollConstraints.maxHeight - AppSpacing.md,
+                              )
+                            : null;
+                        final fillHeight = availableCardHeight == null
+                            ? null
+                            : (availableCardHeight - reservedBelowCard > 0
+                                  ? availableCardHeight - reservedBelowCard
+                                  : null);
                         return SingleChildScrollView(
                           key: const ValueKey('quiz-portrait-scroll'),
                           child: ConstrainedBox(
@@ -83,6 +128,8 @@ extension _QuizScreenUI on _QuizScreenState {
                                       questionVisualReady: !_questionVisualReady
                                           ? _handleQuestionVisualReady
                                           : null,
+                                      minHeight: fillHeight,
+                                      availableHeight: availableCardHeight,
                                     ),
                                     if (selectedAnswer == 'TIMEOUT' &&
                                         !_suspense)
@@ -333,6 +380,8 @@ extension _QuizScreenUI on _QuizScreenState {
     GlobalKey? answerAreaKey,
     GlobalKey? correctAnswerKey,
     VoidCallback? questionVisualReady,
+    double? minHeight,
+    double? availableHeight,
   }) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 220),
@@ -367,6 +416,8 @@ extension _QuizScreenUI on _QuizScreenState {
           answerAreaKey: answerAreaKey,
           correctAnswerKey: correctAnswerKey,
           questionVisualReady: questionVisualReady,
+          minHeight: minHeight,
+          availableHeight: availableHeight,
         ),
       ),
     );
@@ -558,14 +609,20 @@ extension _QuizScreenUI on _QuizScreenState {
       key: const ValueKey('quiz-wildcard-row'),
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          key: _wildcardKey,
-          children: [
-            for (var i = 0; i < jokers.length; i++) ...[
-              if (i > 0) const SizedBox(width: AppSpacing.xxs),
-              Expanded(child: _buildWildcardButton(jokers[i])),
+        // IntrinsicHeight + stretch: joker etiketi iki satıra sarabildiği
+        // için (Kurmancî'de sarıyor) düğmeler farklı yükseklikte kalıyor ve
+        // bar tırtıklı görünüyordu. Hepsi en uzunun boyuna çekilir.
+        IntrinsicHeight(
+          child: Row(
+            key: _wildcardKey,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < jokers.length; i++) ...[
+                if (i > 0) const SizedBox(width: AppSpacing.xxs),
+                Expanded(child: _buildWildcardButton(jokers[i])),
+              ],
             ],
-          ],
+          ),
         ),
         // Hiç coini olmayan yeni oyuncuya kilitler "her şey paralı" gibi
         // görünmesin: coinin nereden kazanılacağını tek satırla söyle.
@@ -927,6 +984,8 @@ extension _QuizScreenUI on _QuizScreenState {
     GlobalKey? answerAreaKey,
     GlobalKey? correctAnswerKey,
     VoidCallback? questionVisualReady,
+    double? minHeight,
+    double? availableHeight,
   }) {
     final promptText = question.promptText;
     // Yerleşim dalını seçen LayoutBuilder'ın gövde ölçüsünü kullan. Tam
@@ -942,7 +1001,44 @@ extension _QuizScreenUI on _QuizScreenState {
       size.width,
       size.height,
     );
-    final isCompact = size.height < 750;
+    // Sıkışıklık kararı KARTA KALAN alandan verilir; ne cihaz ne de gövde
+    // yüksekliğinden.
+    //
+    // Kusur 1: burada `size.height < 750` yazıyordu. 750 pencere yüksekliği
+    // için seçilmiş bir sayıydı, ama ölçü kaynağı sonradan `MediaQuery`den
+    // bu dalın `LayoutBuilder` gövdesine çevrildi (yerleşim dalıyla tipografi
+    // çelişmesin diye) ve eşik olduğu yerde kaldı. Gövde; durum çubuğu,
+    // başlık, ilerleme çubuğu ve alt güvenli alan düşüldükten sonra kalandır
+    // — iPhone 17'de 874 değil ~741. Yani **her iPhone "dar ekran"
+    // sayılıyordu**: şık dolgusu sabit `AppSpacing.xs`e düşüyor, punto küçük
+    // kalıyordu. 2026-07-27'de "uzun ekranda şıklar büyüsün, ekran dolsun"
+    // diye yazılan kademeli dolgu bu yüzden hiçbir telefonda çalışmadı ve
+    // soru ekranındaki boşluk şikâyeti buradan geliyordu.
+    //
+    // Kusur 2: gövde yüksekliği iki modda AYNI, oysa karta kalan alan çok
+    // farklı. Ders modunda kartın altında yalnız "Sonraki" var (~725pt
+    // kalır); yarışma modunda skor başlığı, joker barı ve ipucu satırı da
+    // var (~510pt kalır). Gövdeye bakan tek bir eşik ikisini ayıramaz:
+    // yarışmada şıklar büyüyünce D şıkkı joker barının altında kalıyordu
+    // (2026-08-16 simülatör taraması).
+    //
+    // Doğru ölçü, kartın gerçekten kullanabildiği yükseklik. 600: ders modu
+    // (~725) geniş, yarışma modu (~510) ve iPhone SE dar sayılır.
+    final isCompact = (availableHeight ?? size.height) < 600;
+
+    // Soru metni + şıklar (+ açıklama payı) için kartın İÇİNDE kalan
+    // yükseklik. Şıklar bu bütçeye göre boyutlanır; amaç her sorunun
+    // şıklarıyla birlikte ekrana tam oturması (2026-08-16 kararı).
+    //
+    // Düşülenler: kartın alt/üst iç dolgusu, üstteki kategori/tip/sayaç
+    // satırı ve onun altındaki boşluk. Kategori satırı 34pt'lik rozet
+    // etrafında kurulu; 40 onu çiplerle birlikte kapsayan ölçüdür.
+    final cardPadding = (isCompact ? 10.0 : 16.0) * 2;
+    final headerBlock = 40.0 + (isCompact ? 8.0 : 14.0);
+    final double? contentBudget = minHeight == null
+        ? null
+        : max(0.0, minHeight - cardPadding - headerBlock);
+
     final questionIcon = CategoryVisuals.icon(question.category);
     // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,
     // renkli kenarlık/parıltı ve kategori gradyanlı ikon rozeti.
@@ -950,6 +1046,21 @@ extension _QuizScreenUI on _QuizScreenState {
     final catColor = catGradient.colors.first;
     return Container(
       width: double.infinity,
+      // Kart, altında kullanılmayan alan kaldığında oraya kadar uzar.
+      //
+      // Kusur: dikey düzende kart doğal boyunda kalıyor, "Sonraki" düğmesi
+      // ekranın dibine sabitleniyordu ve arada kalan boşluk hiçbir şey
+      // göstermiyordu. iPhone 17'de dört şıklı kısa bir soruda ölçülen
+      // boşluk ~287pt — ekranın ÜÇTE BİRİ; cevaptan ve açıklama paneli
+      // açıldıktan sonra bile ~200pt kalıyordu (2026-08-16 simülatör
+      // taraması). Yani boşluk "açıklamaya ayrılmış alan" değildi.
+      //
+      // Kart yukarıdan başlamaya devam eder (ilerleme çubuğu → soru
+      // ilişkisi korunur, düğme başparmak erimindeki yerinde kalır); yalnız
+      // artan alan artık kartın İÇİNE düşer ve şıklar o alana yayılır.
+      constraints: minHeight == null
+          ? null
+          : BoxConstraints(minHeight: minHeight),
       padding: EdgeInsets.all(isCompact ? 10 : 16),
       decoration: BoxDecoration(
         color: Color.alphaBlend(
@@ -1069,6 +1180,18 @@ extension _QuizScreenUI on _QuizScreenState {
                         isCompact: isCompact,
                         answerAreaKey: answerAreaKey,
                         correctAnswerKey: correctAnswerKey,
+                        explanationKey: _explanationKey,
+                        contentHeight: contentBudget,
+                        reserveExplanation:
+                            // Pay YALNIZ cevaptan sonra ayrılır. Baştan ayrılsaydı
+                            // cevap verilmeden önce kartın altında açıklama boyunda
+                            // bir boşluk dururdu; hedef ise her iki durumda da
+                            // boşluksuz ve kaydırmasız bir ekran. Şık yükseklikleri
+                            // `AnimatedContainer` ile değiştiği için geçiş sıçrama
+                            // gibi değil, yer açılıyormuş gibi görünür.
+                            _isLearningExperience &&
+                            answered &&
+                            contentBudget != null,
                         onAnswer: _answer,
                         onListen: _listenCurrentQuestion,
                         canListen: _ttsCanListen,
@@ -1103,6 +1226,18 @@ extension _QuizScreenUI on _QuizScreenState {
                   isCompact: isCompact,
                   answerAreaKey: answerAreaKey,
                   correctAnswerKey: correctAnswerKey,
+                  explanationKey: _explanationKey,
+                  contentHeight: contentBudget,
+                  reserveExplanation:
+                      // Pay YALNIZ cevaptan sonra ayrılır. Baştan ayrılsaydı
+                      // cevap verilmeden önce kartın altında açıklama boyunda
+                      // bir boşluk dururdu; hedef ise her iki durumda da
+                      // boşluksuz ve kaydırmasız bir ekran. Şık yükseklikleri
+                      // `AnimatedContainer` ile değiştiği için geçiş sıçrama
+                      // gibi değil, yer açılıyormuş gibi görünür.
+                      _isLearningExperience &&
+                      answered &&
+                      contentBudget != null,
                   onAnswer: _answer,
                   onListen: _listenCurrentQuestion,
                   canListen: _ttsCanListen,

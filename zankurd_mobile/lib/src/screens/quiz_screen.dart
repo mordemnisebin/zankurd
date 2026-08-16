@@ -403,6 +403,40 @@ class _QuizScreenState extends State<QuizScreen>
     });
   }
 
+  /// Açıklama kutusu belirdikten SONRA onu görünür alana getirir.
+  ///
+  /// [_revealCorrectAnswer] doğru şıkkı yukarı alırken açıklamanın da aynı
+  /// ekranda kalmasını umuyordu (alignment 0.12). Ama o kaydırma, açıklama
+  /// kutusu daha ağaçta yokken çalışıyor: kutu 800 ms'lik denetleyicinin
+  /// bitişinde açılır, üstüne 350 ms'lik boy geçişi biner. Yani kutunun
+  /// yüksekliği hesaba hiç katılmıyordu.
+  ///
+  /// Sonuç: soru metni üç satıra çıktığında (ör. "«görmek» demek için
+  /// Kurmancî'de hangi sözcük kullanılır?") açıklama kutusu sabit "Sonraki"
+  /// düğmesinin ARKASINDA kalıyor, oyuncu yalnız "Doğru cevap" etiketini
+  /// görüyor, cevabın kendisini görmek için kaydırmak zorunda kalıyordu.
+  /// Ders modunun bütün değeri o kutuda olduğu için bu sessiz bir kayıptı
+  /// (2026-08-16 simülatör taraması, iPhone 17).
+  void _revealExplanation() {
+    if (isFlutterTestEnvironment) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final target = _explanationKey.currentContext;
+      if (target == null) return;
+      Scrollable.ensureVisible(
+        target,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
+        // 1.0: kutunun ALT kenarı görünür alanın altına yaslanır. Kutu
+        // zaten içeriğin en altındadır; hizayı yukarı çekmek soruyu
+        // gereksizce ekran dışına itiyordu.
+        alignment: 1.0,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+      );
+    });
+  }
+
+  final GlobalKey _explanationKey = GlobalKey();
   final GlobalKey _comboKey = GlobalKey();
   final GlobalKey _wildcardKey = GlobalKey();
   final GlobalKey _nextButtonKey = GlobalKey();
@@ -501,6 +535,7 @@ class _QuizScreenState extends State<QuizScreen>
     _explanationController.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
         setState(() => _showExplanation = true);
+        _revealExplanation();
       }
     });
     if (_usesTimer) {

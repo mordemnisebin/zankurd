@@ -1314,10 +1314,24 @@ void main() {
       inInclusiveRange(16, 72),
       reason: 'Kısa içerik ne üste yapışmalı ne ekran ortasına itilmelidir.',
     );
+
+    // Burada eskiden `gapBelow > gapAbove` bekleniyordu: "kalan esnek boşluk
+    // içeriğin altında kalmalı". O kural tam olarak şikâyet edilen kusuru
+    // ŞART KOŞUYORDU — iPhone 17'de soru kartı ile "Sonraki" düğmesi
+    // arasında ~287pt, yani ekranın üçte biri kadar bir ölü bant kalıyordu;
+    // cevap verilip açıklama paneli açıldıktan sonra bile ~200pt duruyordu
+    // (2026-08-16 simülatör taraması).
+    //
+    // Yeni kural: kart, altında kullanılmayan alan kaldığında oraya kadar
+    // uzar (`_buildQuestionPanel`in `minHeight`i). Yani içerik yukarıdan
+    // başlamaya devam eder ama ALTINDA ölü bant bırakmaz; artan alan kartın
+    // içine düşer ve cevaptan sonra açıklama panelinin yeri olur.
     expect(
       gapBelow,
-      greaterThan(gapAbove),
-      reason: 'Kalan esnek boşluk içeriğin altında kalmalıdır.',
+      lessThanOrEqualTo(1.0),
+      reason:
+          'Soru kartı ile alt eylem barı arasında ölü boşluk kalmamalı; '
+          'kart kalan alanı doldurur.',
     );
   });
 
