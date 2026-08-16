@@ -63,6 +63,29 @@ jobs:
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
 
+    # Ekran turu her ana ekranı gerçek widget ağacıyla açıp PNG'ye basar.
+    #
+    # Niçin CI'da: tur elle çalıştırılan bir araçtı ve kimse çalıştırmayınca
+    # hiçbir şey söylemiyordu. Oysa 2026-08-16'da Kurmancî joker
+    # etiketlerinin kırpıldığını bulan oydu — kusur widget testlerine
+    # görünmüyordu çünkü onlar metnin VARLIĞINI ölçüyor, genişliğini değil.
+    #
+    # Bu adım bir piksel karşılaştırması DEĞİLDİR: Linux koşucusu ile
+    # macOS aynı kareyi birebir çizmez, öyle bir kapı sürekli yanlış alarm
+    # verirdi. Ölçtüğü şey daha temel ve yine de değerli: her ekran
+    # istisnasız açılıyor ve çiziliyor mu. Kareler artefakt olarak
+    # yükleniyor; düzen bozulduğunda insan bakacak bir şey buluyor.
+    - name: Render screen tour
+      run: flutter test tool/screenshots/screen_tour_test.dart
+
+    - name: Upload screen tour
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: screen-tour
+        path: zankurd_mobile/docs/screenshots/tour/
+        retention-days: 14
+
     - name: Upload coverage report
       if: always()
       uses: actions/upload-artifact@v4
