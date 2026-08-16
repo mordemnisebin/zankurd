@@ -153,8 +153,16 @@ class _LevelScreenState extends State<LevelScreen> {
       final room = widget.repository
           .createRoom(category: level.category)
           .copyWith(
+            // Kategori KİMLİĞİ değil, kullanıcının dilindeki ADI.
+            //
+            // Burada `level.category` doğrudan yazılıyordu: kimlikler
+            // Kurmancî kökenli olduğu için Türkçe arayüzde soru ekranının
+            // başlığı "Ziman 1. Seviye" çıkıyor, aynı ekranın kategori çipi
+            // ise "Dil" diyordu. Aynı kategori iki adla, tek ekranda
+            // (2026-08-16 simülatör taraması).
             name:
-                '${level.category} ${level.number}. ${context.isKu ? "Ast" : "Seviye"}',
+                '${CategoryNames.localized(level.category, context.isKu)} '
+                '${level.number}. ${context.isKu ? "Ast" : "Seviye"}',
             questionCount: questions.length,
           );
       final result = await Navigator.of(context).push(

@@ -419,14 +419,29 @@ class _AppShellState extends State<AppShell>
       children: List.generate(4, (index) => _buildTab(context, index)),
     );
 
-    final content = Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: width >= 1200
-              ? 1140
-              : (width >= AppShell.desktopNavBreakpoint ? 920 : 800),
+    // Sekme içeriği durum çubuğunun ALTINA girmez.
+    //
+    // Kusur: sekmeler `SafeArea` olmadan çiziliyordu. Ekranlar kendi üst
+    // dolgularını verdiği için ilk kare doğru görünüyor, ama liste
+    // kaydırıldığında kartlar durum çubuğunun ve Dynamic Island'ın altından
+    // geçiyordu: ana ekranda "Ders yolu" başlığı saatin ve adacığın arkasında
+    // kayboluyordu (2026-08-16 simülatör taraması, iPhone 17).
+    //
+    // `SafeArea` iç içe geçtiğinde katlanmaz — dıştaki dolguyu tüketir ve
+    // içeridekiler sıfır görür; bu yüzden ekranların kendi dolguları iki
+    // katına çıkmaz. Alt taraf `bottomNavigationBar`ın işi olduğu için
+    // dışarıda bırakıldı.
+    final content = SafeArea(
+      bottom: false,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: width >= 1200
+                ? 1140
+                : (width >= AppShell.desktopNavBreakpoint ? 920 : 800),
+          ),
+          child: body,
         ),
-        child: body,
       ),
     );
 
