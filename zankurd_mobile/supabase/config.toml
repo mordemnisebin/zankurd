@@ -1,0 +1,4 @@
+project_id = "zankurd_mobile"
+
+[auth]
+enable_anonymous_sign_ins = true
