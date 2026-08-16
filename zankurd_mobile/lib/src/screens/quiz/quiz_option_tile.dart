@@ -222,7 +222,19 @@ class QuizOptionTile extends StatelessWidget {
                   // kalıyordu (2026-07-27, canlı gezinti). Yükseklik arttıkça
                   // şıklar da büyür: hem ekran dolar hem dokunma hedefi
                   // genişler.
-                  height: fixedHeight,
+                  // ALT SINIR, sabit yükseklik değil.
+                  //
+                  // Sabit `height` verildiğinde içerik ayrılan boydan uzun
+                  // olduğunda kutu taşıyordu: çok oyunculu odada şıkkın
+                  // altına seyirci yüzdesi/rakip rozeti eklenince
+                  // "RenderFlex overflowed by 26 pixels" çıkıyordu
+                  // (2026-08-16, room_lobby_test). Alt sınır hem alanı
+                  // doldurur hem taşmayı imkânsız kılar: içerik uzunsa kutu
+                  // büyür, toplam ekranı aşarsa kaydırma emniyet supabı
+                  // devreye girer.
+                  constraints: fixedHeight == null
+                      ? null
+                      : BoxConstraints(minHeight: fixedHeight!),
                   padding: EdgeInsets.symmetric(
                     horizontal: AppSpacing.md,
                     vertical: fixedHeight != null

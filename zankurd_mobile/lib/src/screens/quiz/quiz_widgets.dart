@@ -563,7 +563,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                               : AnimatedContainer(
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeOutCubic,
-                                  height: perOption,
+                                  constraints: BoxConstraints(
+                                    minHeight: perOption,
+                                  ),
                                   child: _buildAnswerButton(
                                     index,
                                     answer,
