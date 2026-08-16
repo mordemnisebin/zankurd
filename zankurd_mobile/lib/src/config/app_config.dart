@@ -18,6 +18,19 @@ class AppConfig {
     defaultValue: 'production',
   );
 
+  /// Google'ın mobil SDK'sına verilen public client ID'leri.
+  /// Client secret kesinlikle mobil uygulamaya konmaz.
+  static const googleWebClientId = String.fromEnvironment(
+    'GOOGLE_WEB_CLIENT_ID',
+    defaultValue:
+        '419853194959-7s176cj22617ndra8l4bctbuqnvgr8q3.apps.googleusercontent.com',
+  );
+  static const googleIosClientId = String.fromEnvironment(
+    'GOOGLE_IOS_CLIENT_ID',
+    defaultValue:
+        '419853194959-f0sft2254sc155j2rcv323r3ejg5kkqv.apps.googleusercontent.com',
+  );
+
   static const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
   static const _nextPublicSupabaseUrl = String.fromEnvironment(
     'NEXT_PUBLIC_SUPABASE_URL',
@@ -221,7 +234,8 @@ class AppConfig {
     queryParameters: {'subject': subject},
   );
 
-  /// Beta geri bildirimini de aynı, takip edilebilir destek kanalına yönlendirir.
+  /// Kullanıcı geri bildirimini de aynı, takip edilebilir destek kanalına
+  /// yönlendirir.
   static Uri feedbackUri({required String subject}) => Uri(
     scheme: 'mailto',
     path: supportEmail,

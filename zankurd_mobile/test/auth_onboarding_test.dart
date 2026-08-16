@@ -18,6 +18,18 @@ import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 
+class _AppleAuthProvider extends AuthProvider {
+  _AppleAuthProvider() : super.test();
+
+  bool appleSignInCalled = false;
+
+  @override
+  Future<bool> signInWithApple() async {
+    appleSignInCalled = true;
+    return true;
+  }
+}
+
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
@@ -67,7 +79,7 @@ void main() {
   });
 
   testWidgets(
-    'iOS giriş ekranı yalnız e-posta ve misafir seçeneklerini sunar',
+    'iOS giriş ekranı Google ve Apple seçeneklerini sunar',
     (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
@@ -80,10 +92,37 @@ void main() {
       await tester.pumpAndSettle();
       debugDefaultTargetPlatformOverride = null;
 
-      expect(find.text('Google ile giriş yap'), findsNothing);
-      expect(find.text('Apple ile giriş yap'), findsNothing);
+      expect(find.text('Google ile giriş yap'), findsOneWidget);
+      expect(find.text('Apple ile giriş yap'), findsOneWidget);
       expect(find.text('Misafir olarak devam et'), findsOneWidget);
       expect(find.text('Veya e-posta ile'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'desteklenen giriş ekranında Apple seçeneği görünür ve akışı başlatır',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+      final authProvider = _AppleAuthProvider();
+      await tester.pumpWidget(
+        testShell(
+          child: const SignInScreen(),
+          authProvider: authProvider,
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final appleButton = find.text('Apple ile giriş yap');
+      expect(appleButton, findsOneWidget);
+
+      await tester.tap(appleButton);
+      await tester.pumpAndSettle();
+
+      debugDefaultTargetPlatformOverride = null;
+      expect(authProvider.appleSignInCalled, isTrue);
       expect(tester.takeException(), isNull);
     },
   );

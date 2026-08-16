@@ -29,11 +29,8 @@
 	<!--
 	  OAuth geri dönüş şeması.
 	  ~
-	  Google/Apple ile giriş, Supabase'i tarayıcıda açar ve iş bitince
-	  `com.zankurd.app://login-callback/` adresine döner. Bu şema iOS
-	  tarafında hiç kayıtlı değildi (Android'de vardı): tarayıcı açılıyor,
-	  giriş tamamlanıyor ama uygulama geri çağrılmıyordu — yani iOS'ta
-	  sosyal giriş sessizce çalışmıyordu (2026-07-27 denetimi).
+	  Native Google/Apple akışı uygulama içinde tamamlanır. Bu şemalar,
+	  web ve geri dönüş gerektiren OAuth/password akışları için korunur.
 	-->
 	<key>CFBundleURLTypes</key>
 	<array>
@@ -44,6 +41,7 @@
 			<string>com.zankurd.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>com.googleusercontent.apps.419853194959-f0sft2254sc155j2rcv323r3ejg5kkqv</string>
 				<string>com.zankurd.app</string>
 			</array>
 		</dict>

@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart'
-    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -100,6 +98,24 @@ class _SignInScreenState extends State<SignInScreen>
 
     if (success) {
       AnalyticsService.instance.logSignIn('google');
+    }
+
+    if (mounted) {
+      LoadingOverlay.hide(context);
+
+      if (!success && authProvider.errorMessage != null) {
+        _showAuthError(authProvider.errorMessage!);
+      }
+    }
+  }
+
+  Future<void> _signInWithApple(AuthProvider authProvider) async {
+    LoadingOverlay.show(context, message: context.t(K.connectingApple));
+
+    final success = await authProvider.signInWithApple();
+
+    if (success) {
+      AnalyticsService.instance.logSignIn('apple');
     }
 
     if (mounted) {
@@ -338,6 +354,16 @@ class _SignInScreenState extends State<SignInScreen>
                                           ? null
                                           : () =>
                                                 _signInWithGoogle(authProvider),
+                                    ),
+                                    SizedBox(height: denseWide ? 4 : 8),
+                                  ],
+                                  if (_supportsAppleSignIn) ...[
+                                    _AppleSignInButton(
+                                      dense: denseWide,
+                                      onPressed: authProvider.isLoading
+                                          ? null
+                                          : () =>
+                                                _signInWithApple(authProvider),
                                     ),
                                     SizedBox(height: denseWide ? 4 : 8),
                                   ],
@@ -594,6 +620,14 @@ class _SignInScreenState extends State<SignInScreen>
                                   onPressed: authProvider.isLoading
                                       ? null
                                       : () => _signInWithGoogle(authProvider),
+                                ),
+                                const SizedBox(height: 8),
+                              ],
+                              if (_supportsAppleSignIn) ...[
+                                _AppleSignInButton(
+                                  onPressed: authProvider.isLoading
+                                      ? null
+                                      : () => _signInWithApple(authProvider),
                                 ),
                                 const SizedBox(height: 8),
                               ],
@@ -868,10 +902,13 @@ class _AuthFormPanel extends StatelessWidget {
   }
 }
 
-bool get _supportsGoogleSignIn =>
-    kIsWeb ||
-    (defaultTargetPlatform != TargetPlatform.iOS &&
-        defaultTargetPlatform != TargetPlatform.macOS);
+// Supabase OAuth, iOS'ta da sistem tarayıcısını açıp Info.plist'teki
+// `com.zankurd.app://login-callback/` şemasına döner. Bu yüzden sosyal
+// girişleri iOS'ta gizlemek hem Google'ı hem de zorunlu Apple seçeneğini
+// kaldırıyordu; desteklenen tüm ZanKurd yüzeylerinde gösterilir.
+bool get _supportsGoogleSignIn => true;
+
+bool get _supportsAppleSignIn => true;
 
 class _GoogleSignInButton extends StatelessWidget {
   const _GoogleSignInButton({required this.onPressed, this.dense = false});
@@ -933,6 +970,87 @@ class _GoogleSignInButton extends StatelessWidget {
                           maxLines: 1,
                           style: TextStyle(
                             color: AppTheme.bgDeep,
+                            fontWeight: FontWeight.w800,
+                            fontSize: dense ? 14 : 16,
+                            letterSpacing: 0.1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AppleSignInButton extends StatelessWidget {
+  const _AppleSignInButton({required this.onPressed, this.dense = false});
+
+  final VoidCallback? onPressed;
+  final bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    // Apple'ın kendi düğme kılavuzu iki varyant tanımlar: açık zeminde siyah,
+    // koyu zeminde beyaz. Düğme ilk yazıldığında yalnız siyah varyant vardı
+    // ve karanlık temada `Colors.black`, kartın `#181E1B` zeminine 1.24:1
+    // ile oturuyordu — gövde görünmüyor, yalnız beyaz yazı havada duruyordu
+    // (2026-08-16 ekran turu, 75_sign_in_dark). Yanındaki Google düğmesi aynı
+    // kusuru 2026-07-30'da konturla çözmüştü; Apple'ınki atlanmıştı.
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final surface = dark ? Colors.white : Colors.black;
+    final onSurface = dark ? Colors.black : Colors.white;
+    return IgnorePointer(
+      ignoring: !enabled,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.55,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          decoration: BoxDecoration(
+            color: surface,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.18),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
+                spreadRadius: -2,
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+              onTap: onPressed,
+              child: Container(
+                height: dense ? 48 : 54,
+                padding: EdgeInsets.symmetric(horizontal: dense ? 12 : 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.apple,
+                      color: onSurface,
+                      size: dense ? 18 : 21,
+                    ),
+                    SizedBox(width: dense ? 8 : 12),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          context.t(K.signInApple),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: onSurface,
                             fontWeight: FontWeight.w800,
                             fontSize: dense ? 14 : 16,
                             letterSpacing: 0.1,
