@@ -780,6 +780,54 @@ extension _QuizScreenUI on _QuizScreenState {
     }
   }
 
+  /// Jokerin ücretini sunucuya yazar ve gösterilen bakiyeyi gerçekle eşitler.
+  ///
+  /// Etki ÖNCE uygulanır, ücret sonra yazılır ve bu bilinçli: 50/50'nin
+  /// şıkları gizlemesi için bir ağ gidiş-dönüşü beklemek, sayaç işlerken
+  /// oyunu kilitlerdi ve çevrimdışı turda joker hiç çalışmazdı.
+  ///
+  /// Ama yerel düşüş bir VARSAYIMDIR ve doğrulanması gerekir. `spendCoins`
+  /// sunucu reddettiğinde (fiyat ayrışması, yetersiz sunucu bakiyesi, oturum
+  /// düşmesi) İSTİSNA FIRLATMAZ, yalnız `false` döner — ve bu dönüş hiç
+  /// okunmuyordu, çağrı `catchError` ile ateşlenip unutuluyordu. Sonuç:
+  /// ekranda jetonlar düşmüş görünüyor, sunucuda hiç düşmemiş oluyordu.
+  /// Kullanıcı olmayan bir borcu görüyor ve bir sonraki tazelemeye kadar
+  /// aslında alabileceği şeyleri alamıyordu (2026-08-17).
+  ///
+  /// Reddedilirse gösterilen bakiye sunucudan yeniden okunur — tahmin
+  /// edilmez. Jokerin ETKİSİ geri alınmaz: şıklar zaten gizlenmiştir, onları
+  /// geri getirmek verilmiş bir şeyi elden almak olurdu ve jokeri aynı soruda
+  /// yeniden kullanılabilir kılmak bedava tekrar demektir.
+  ///
+  /// Taşıma hatasında bakiye OLDUĞU GİBİ bırakılır: `loadCoinBalance`
+  /// çevrimdışı hatayı yukarı taşır ve son bilinen bakiye, uçak modunda
+  /// "bakiyen bitti" göstermekten iyidir (bkz. o metodun 2026-08-14 notu).
+  Future<void> _chargeWildcard(WildcardType type) async {
+    bool charged;
+    try {
+      charged = await widget.repository.spendCoins(
+        type.coinCost,
+        type.spendReason,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'spend_coins_${type.name}');
+      charged = false;
+    }
+    if (charged || !mounted) return;
+
+    try {
+      final balance = await widget.repository.loadCoinBalance();
+      if (!mounted) return;
+      setState(() => _coinBalance = balance);
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'wildcard balance resync ${type.name}',
+      );
+    }
+  }
+
   void _useFiftyFifty() {
     final cost = WildcardType.fiftyFifty.coinCost;
     if (!_supportsEliminationWildcards ||
@@ -802,13 +850,7 @@ extension _QuizScreenUI on _QuizScreenState {
               .take(2)
               .toSet();
     });
-    widget.repository.spendCoins(cost, WildcardType.fiftyFifty.spendReason).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_fifty_fifty');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.fiftyFifty));
   }
 
   void _useAudience() {
@@ -827,13 +869,7 @@ extension _QuizScreenUI on _QuizScreenState {
       _wildcard = _wildcard.copyWith(audienceUsed: true);
       _audiencePoll = _buildAudiencePoll();
     });
-    widget.repository.spendCoins(cost, WildcardType.audience.spendReason).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_audience');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.audience));
   }
 
   Map<String, double> _buildAudiencePoll() {
@@ -880,13 +916,7 @@ extension _QuizScreenUI on _QuizScreenState {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
     });
-    widget.repository.spendCoins(cost, WildcardType.doubleAnswer.spendReason).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_double_answer');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.doubleAnswer));
   }
 
   void _changeQuestion() {
@@ -965,13 +995,7 @@ extension _QuizScreenUI on _QuizScreenState {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
-    widget.repository.spendCoins(cost, WildcardType.changeQuestion.spendReason).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_change_question');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.changeQuestion));
   }
 
   // ─── Soru paneli ─────────────────────────────────────────────────────────
