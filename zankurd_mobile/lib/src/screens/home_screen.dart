@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
 
+import '../config/app_config.dart';
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_store.dart';
@@ -19,6 +20,8 @@ import '../data/daily_mission_store.dart';
 import '../data/achievement_store.dart';
 import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
+import '../services/premium_service.dart';
+import 'paywall_screen.dart';
 import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
@@ -475,6 +478,45 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
           // ekranın altına taşınıp öğrenme yollarını gömmez.
           DailyMissionsCard(isKu: ku, missions: _missions, compact: true),
+
+          // ── Abonelik girişi ────────────────────────────────────────────
+          //
+          // Satın alma ekranının TEK girişi ayarların en altındaydı: profil
+          // sekmesi → Ayarlar → aşağı kaydır → Premium. Para kazandıran tek
+          // yüzey için üç dokunuşluk, hiçbir yerde ilan edilmeyen bir yol.
+          // Coin rozetinin mağazaya taşınmasıyla aynı karar (bkz. başlık
+          // rozetleri): kazanan ya da destek olmak isteyen oyuncu nereye
+          // gideceğini bulabilmeli.
+          //
+          // Kart başlıkta değil GÖVDENİN SONUNDA durur ve birincil eylemle
+          // yarışmaz: ana ekranın ilk sorusu "şimdi ne yapmalıyım?"dır,
+          // cevabı da turuncu "Başla" düğmesidir. Üçüncü bir başlık rozeti
+          // ise dar ekranlarda (320pt) rozet satırını taşırıyordu.
+          //
+          // Zaten abone olana gösterilmez: satın alınmış bir şeyi satmaya
+          // devam etmek, ödemiş kullanıcıya reklam gibi görünür.
+          Consumer<PremiumService>(
+            builder: (context, premium, _) {
+              if (premium.isPremium) return const SizedBox.shrink();
+              return Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                child: AppRowCard(
+                  key: const ValueKey('home-premium-row'),
+                  icon: AppIcons.gem,
+                  // Altın ödül/ilerleme ailesine ayrılmış; abonelik de o
+                  // aileye girer ve paywall'ın kendi vurgusu da altındır.
+                  accent: AppTheme.gold,
+                  // Ad çevrilmez: App Store Connect'teki abonelik adının
+                  // kendisidir (bkz. `AppConfig.subscriptionDisplayName`).
+                  title: AppConfig.subscriptionDisplayName,
+                  subtitle: context.t(K.paywallSubtitle),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).push(AppRoute.to(PaywallScreen(repository: repo))),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

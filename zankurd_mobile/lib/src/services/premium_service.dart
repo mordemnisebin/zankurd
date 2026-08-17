@@ -122,6 +122,20 @@ class PremiumService extends ChangeNotifier {
     return fb;
   }
 
+  /// Abonesi olan bir oturumu taklit eder.
+  ///
+  /// Üretimde `_isPremium` yalnız RevenueCat'in müşteri bilgisinden gelir ve
+  /// dışarıdan yazılamaz — doğru olan da budur. Ama "abone olana satış
+  /// yüzeyi gösterilmez" kuralını ölçmenin başka yolu yok: o dalı sürmek
+  /// için abonelik durumu true olan bir servis gerekiyor.
+  @visibleForTesting
+  static PremiumService premiumForTesting() {
+    final fb = PremiumService._();
+    fb._initialized = true;
+    fb._isPremium = true;
+    return fb;
+  }
+
   @visibleForTesting
   factory PremiumService.forTesting({
     required Future<bool> Function() isAnonymous,

@@ -125,7 +125,7 @@ void main() {
   /// başka bir ekrandan da açılır hâle gelirse ya da ayarlardan kaldırılırsa
   /// test kırılır ve paketteki cümle güncellenene kadar kırmızı kalır.
   group('incelemeci yolu', () {
-    test('paywall yalnız ayarlar ekranından açılır', () {
+    test('paywall yalnız bilinen iki ekrandan açılır', () {
       final callers = Directory('lib')
           .listSync(recursive: true)
           .whereType<File>()
@@ -138,12 +138,11 @@ void main() {
 
       expect(
         callers,
-        ['settings_screen.dart'],
+        ['home_screen.dart', 'settings_screen.dart'],
         reason:
             'App Review paketi ve App Store Connect notları satın alma '
-            'ekranına ayarlardan gidildiğini yazıyor. Giriş noktası '
-            'değiştiyse o iki metin de değişmeli; yoksa incelemeci ekranı '
-            'bulamaz.',
+            'ekranına giden yolları sayıyor. Giriş noktaları değiştiyse o '
+            'iki metin de değişmeli; yoksa incelemeci ekranı bulamaz.',
       );
     });
 
@@ -165,9 +164,16 @@ void main() {
       expect(packet, contains('Premium'));
       expect(
         packet,
-        contains('single entry point'),
+        contains('Home tab'),
         reason:
-            'Paket, satın alma ekranının tek girişi olduğunu söylemeli; '
+            'Ana ekrandaki kısa yol pakette yazmalı; incelemeci en kolay '
+            'yolu bilmeli.',
+      );
+      expect(
+        packet,
+        contains('only two entry points'),
+        reason:
+            'Paket, satın alma ekranının kaç girişi olduğunu söylemeli; '
             'incelemeci başka yerlerde aramamalı.',
       );
     });

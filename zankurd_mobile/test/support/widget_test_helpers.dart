@@ -84,6 +84,7 @@ Widget testShell({
   LanguageProvider? languageProvider,
   ThemeProvider? themeProvider,
   ChildSafetyProvider? childSafetyProvider,
+  PremiumService? premiumService,
 }) {
   return MultiProvider(
     providers: [
@@ -113,7 +114,7 @@ Widget testShell({
         create: (_) => childSafetyProvider ?? ChildSafetyProvider(),
       ),
       ChangeNotifierProvider<PremiumService>(
-        create: (_) => PremiumService.fallback(),
+        create: (_) => premiumService ?? PremiumService.fallback(),
       ),
     ],
     child: Consumer<ThemeProvider>(

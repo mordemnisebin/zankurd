@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
@@ -23,6 +24,12 @@ Widget _wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => LanguageProvider()),
     ChangeNotifierProvider(create: (_) => AuthProvider.test()),
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
+    // Ana ekran abonelik satırını `Consumer<PremiumService>` ile çiziyor;
+    // uygulamada bu sağlayıcı her zaman var (bkz. `main.dart`), testin
+    // kendi kapsamında da olmalı.
+    ChangeNotifierProvider<PremiumService>(
+      create: (_) => PremiumService.fallback(),
+    ),
   ],
   child: MaterialApp(
     theme: AppTheme.light(),
