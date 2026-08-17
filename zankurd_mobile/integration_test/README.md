@@ -53,3 +53,29 @@ flutter drive \
 geçişleri, civak ekranı. Gerçekçi bir bakış için `average_frame_build_time_millis`
 ve `worst_frame_build_time_millis` değerleri incelenir; sabit bir eşik
 dayatılmaz (cihaz donanımına göre değişir).
+
+## İki rollü yerel backend testleri: derlemeyi önce ısıtın
+
+`local_backend_1v1_test.dart` ve `local_backend_durability_test.dart` iki
+EŞZAMANLI koşum ister: `host` odayı kurup kodu basar, `guest` o kodla
+katılır. Host guest'i **300 saniye** bekler.
+
+İlk denemede ikisi de kırılır ve ikisi de ürün kusuru gibi görünür:
+
+- host: `Expected: <2>  Actual: <1>` — "guest odaya katilmadi"
+- guest: `Expected: RoomStatus.active  Actual: RoomStatus.lobby`
+
+Sebep ürün değil, harness: guest cihazında ilk `flutter test` bir Xcode
+derlemesi yapar (~160 sn) ve host'un penceresi buna yetişmez. Guest aslında
+odaya KATILIR; yalnız host çoktan pes etmiştir.
+
+Doğru sıra (2026-08-17'de bu yolla doğrulandı):
+
+1. Her iki cihazda testi bir kez tek başına koşturup derlemeyi ısıtın.
+2. Sonra host'u başlatın, log'dan `ZK_ROOM_CODE=` satırını bekleyin.
+3. Kodu alıp guest'i ikinci cihazda hemen başlatın.
+
+Isıtılmış derlemeyle guest ~30 sn'de bağlanır ve ikisi de geçer. Geçtiğinde
+host ile guest'in `ZK_*_Q0` değerleri AYNI olmalıdır: iki ayrı anonim
+kullanıcının gerçek PostgreSQL'den aynı soru setini aynı sırada alması,
+çok oyunculu adaletin sözleşmesidir.
