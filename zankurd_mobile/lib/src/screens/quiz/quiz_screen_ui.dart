@@ -802,7 +802,7 @@ extension _QuizScreenUI on _QuizScreenState {
               .take(2)
               .toSet();
     });
-    widget.repository.spendCoins(cost, 'wildcard_fifty_fifty').catchError((
+    widget.repository.spendCoins(cost, WildcardType.fiftyFifty.spendReason).catchError((
       error,
       stack,
     ) {
@@ -827,7 +827,7 @@ extension _QuizScreenUI on _QuizScreenState {
       _wildcard = _wildcard.copyWith(audienceUsed: true);
       _audiencePoll = _buildAudiencePoll();
     });
-    widget.repository.spendCoins(cost, 'wildcard_audience').catchError((
+    widget.repository.spendCoins(cost, WildcardType.audience.spendReason).catchError((
       error,
       stack,
     ) {
@@ -880,7 +880,7 @@ extension _QuizScreenUI on _QuizScreenState {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
     });
-    widget.repository.spendCoins(cost, 'wildcard_double_answer').catchError((
+    widget.repository.spendCoins(cost, WildcardType.doubleAnswer.spendReason).catchError((
       error,
       stack,
     ) {
@@ -965,7 +965,7 @@ extension _QuizScreenUI on _QuizScreenState {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
-    widget.repository.spendCoins(cost, 'wildcard_change_question').catchError((
+    widget.repository.spendCoins(cost, WildcardType.changeQuestion.spendReason).catchError((
       error,
       stack,
     ) {

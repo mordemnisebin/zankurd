@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/coin_prices.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
@@ -390,7 +391,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   /// Kırılacak günlük seri için coin karşılığı dondurma teklif eder.
   /// Ödeme yapılıp seri korunursa yeni seri değerini, aksi halde null döner.
-  static const _streakFreezeCost = 50;
+  // Sunucu RPC'siyle eşitliği bekçili tek kaynak; üç ayrı kopya vardı.
+  static const _streakFreezeCost = CoinPrices.streakFreeze;
 
   /// Karar adımı hata verdiyse seri yine de kaydedilmeli.
   ///

@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
 
 import '../config/app_config.dart';
+import '../config/coin_prices.dart';
 import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_store.dart';
@@ -778,7 +779,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         : StreakFreezeState.insufficientCoins;
   }
 
-  static const _streakFreezeCost = 50;
+  // Sunucu RPC'siyle eşitliği bekçili tek kaynak; üç ayrı kopya vardı.
+  static const _streakFreezeCost = CoinPrices.streakFreeze;
 
   /// Bir sonraki kilometre taşı. Sabit eşikler; modelde ayrı bir milestone
   /// kaynağı yok, bu yüzden uydurma bir "maksimum" da tanımlanmaz.

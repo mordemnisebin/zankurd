@@ -14,6 +14,23 @@ extension WildcardTypeDetails on WildcardType {
     WildcardType.changeQuestion => 40,
   };
 
+  /// `spend_coins` RPC'sine gönderilen gerekçe dizesi.
+  ///
+  /// Sunucu tutarı bu dizeye göre doğrular: gönderilen miktar RPC'nin kendi
+  /// tablosundaki değerle BİREBİR aynı değilse çağrı
+  /// `{'success': false, 'error': 'invalid price'}` döner. Dizeler eskiden
+  /// `quiz_screen_ui` içinde tek tek yazılıydı; fiyatın yanında durmadıkları
+  /// için ikisinin birlikte değiştirilmesi de kimseye hatırlatılmıyordu.
+  /// Artık gerekçe ve fiyat aynı yerde yaşıyor ve
+  /// `wildcard_price_contract_test` ikisini birden göç dosyasıyla
+  /// karşılaştırıyor.
+  String get spendReason => switch (this) {
+    WildcardType.fiftyFifty => 'wildcard_fifty_fifty',
+    WildcardType.audience => 'wildcard_audience',
+    WildcardType.doubleAnswer => 'wildcard_double_answer',
+    WildcardType.changeQuestion => 'wildcard_change_question',
+  };
+
   IconData get icon => switch (this) {
     WildcardType.fiftyFifty => AppIcons.wandMagicSparkles,
     WildcardType.audience => AppIcons.peopleGroup,
