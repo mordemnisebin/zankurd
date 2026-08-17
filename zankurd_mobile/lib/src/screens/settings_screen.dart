@@ -23,7 +23,7 @@ import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/percent_format.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../utils/external_link.dart';
 
 import '../config/app_config.dart';
 import '../models/friend.dart';
@@ -134,43 +134,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ///
   /// Apple 1.2, UGC barındıran uygulamada iletişim bilgisinin
   /// yayımlanmasını şart koşar ve kullanıcı ona uygulamadan ulaşabilmeli.
-  Future<void> _openAbuseReport() async {
-    final uri = AppConfig.abuseReportUri(
-      subject: context.t(K.abuseMailSubject),
-    );
-    final failed = context.t(K.linkOpenFailed);
-    try {
-      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-      if (ok || !mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'abuse report mailto');
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    }
-  }
+  Future<void> _openAbuseReport() => openExternalUri(
+    context,
+    AppConfig.abuseReportUri(subject: context.t(K.abuseMailSubject)),
+    reason: 'abuse report mailto',
+  );
 
-  Future<void> _openBetaFeedback() async {
-    final uri = AppConfig.feedbackUri(subject: context.t(K.betaMailSubject));
-    final failed = context.t(K.linkOpenFailed);
-    try {
-      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-      if (ok || !mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'beta feedback mailto');
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    }
-  }
+  Future<void> _openBetaFeedback() => openExternalUri(
+    context,
+    AppConfig.feedbackUri(subject: context.t(K.betaMailSubject)),
+    reason: 'beta feedback mailto',
+  );
 
   Future<void> _setAnalyticsConsent(bool enabled) async {
     await context.read<AnalyticsConsentProvider>().setEnabled(enabled);

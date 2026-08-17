@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_config.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
-import '../utils/error_reporter.dart';
+import '../utils/external_link.dart';
 
 /// Gizlilik politikası ve kullanım koşulları bağlantıları. Mağaza şartıdır;
 /// hem Ayarlar (Hakkında) hem de Paywall'da gösterilir. URL'ler
@@ -23,30 +22,12 @@ class LegalLinksRow extends StatelessWidget {
 
   /// KVKK/gizlilik/şartlar bağlantısını açar.
   ///
-  /// Eskiden `launchUrl`ın dönen `bool` sonucu (cihazda bu şemayı açacak
-  /// bir uygulama yoksa `false` döner, İSTİSNA FIRLATMAZ) hiç okunmuyordu
-  /// — yalnız `catch` vardı. Kullanıcı yasal bir bağlantıya dokunuyor,
-  /// hiçbir şey açılmıyor, hiçbir geri bildirim de yok: dokunuşun işe
-  /// yaradığından bile emin olamıyordu (2026-08-14 denetimi). Ayarlar
-  /// ekranındaki `_openAbuseReport`/`_openBetaFeedback` ile aynı desen:
-  /// `ok == false` ve `catch` ikisi de aynı görünür SnackBar'a çıkar.
-  static Future<void> _open(BuildContext context, String url) async {
-    final failed = context.t(K.linkOpenFailed);
-    try {
-      final uri = Uri.parse(url);
-      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-      if (ok || !context.mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'legal link open: $url');
-      if (!context.mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    }
-  }
+  /// Açma mantığı burada DEĞİL, [openExternalLink] içindedir: aynı kusurun
+  /// ikinci örneği görsel künye ekranında çıkınca (2026-08-17) düzeltme
+  /// ortak bir kapıya taşındı. Kusurun ne olduğu ve niçin sessiz kaldığı o
+  /// dosyanın başında yazılıdır.
+  static Future<void> _open(BuildContext context, String url) =>
+      openExternalLink(context, url, reason: 'legal link open');
 
   @override
   Widget build(BuildContext context) {
