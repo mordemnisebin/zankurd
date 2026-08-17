@@ -44,9 +44,15 @@ Suggested review path:
 6. Open Profile and Settings. Account deletion is available at
    Settings → Account → Delete Account. The public fallback instructions are
    https://zankurd.com/delete-account.html.
-7. Open the optional subscription/premium screen. The basic learning flow is
-   usable without a subscription; Restore Purchases is available when store
-   products are configured.
+7. Open the optional subscription screen. It has a single entry point:
+   Profile tab (rightmost tab in the bottom tab bar) → the "Ayarlar" /
+   "Settings" row in the menu list (gear icon) → the "Premium" section →
+   the card in that section. That screen carries every item Guideline 3.1.2
+   requires: the subscription name "ZanKurd Pro", the length (monthly /
+   yearly), the localized price and the monthly equivalent of the yearly
+   plan, the auto-renewal terms, and functional Privacy Policy and Terms of
+   Use links. The basic learning flow is usable without a subscription;
+   Restore Purchases is available when store products are configured.
 
 The app uses Supabase Auth, Postgres, Storage, and Realtime for optional
 account synchronization, multiplayer rooms, leaderboard/friends, moderation,

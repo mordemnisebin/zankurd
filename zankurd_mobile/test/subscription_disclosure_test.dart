@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -101,6 +103,74 @@ void main() {
         );
       });
     }
+  });
+
+  /// İncelemeciye tarif edilen yol, uygulamadaki yolla aynı olmalı.
+  ///
+  /// ## Kusur
+  ///
+  /// App Review Notes'ta satın alma ekranına giden yol "Profile > Shop"
+  /// yazıyordu. Öyle bir yol yok: `PaywallScreen`in kod tabanında TEK bir
+  /// çağıranı var ve o da ayarlar ekranı. İncelemeci mağaza (jeton) ekranına
+  /// gider, aboneliği bulamaz ve 3.1.2 altında ikinci kez reddeder —
+  /// uygulamada eksik bir şey olmadığı hâlde (2026-08-17).
+  ///
+  /// Yanlış yol sessiz kaldı çünkü hiçbir şeyi kırmıyor: paket ve notlar
+  /// düzyazıdır, kod onları okumaz. Sürüklenme yalnız reddedildikten sonra
+  /// görünürdü.
+  ///
+  /// ## Kural
+  ///
+  /// Bekçi yolu tarif etmez — tarif edilenin DOĞRU KALMASINI sağlar: paywall
+  /// başka bir ekrandan da açılır hâle gelirse ya da ayarlardan kaldırılırsa
+  /// test kırılır ve paketteki cümle güncellenene kadar kırmızı kalır.
+  group('incelemeci yolu', () {
+    test('paywall yalnız ayarlar ekranından açılır', () {
+      final callers = Directory('lib')
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((file) => file.path.endsWith('.dart'))
+          .where((file) => !file.path.endsWith('paywall_screen.dart'))
+          .where((file) => file.readAsStringSync().contains('PaywallScreen('))
+          .map((file) => file.uri.pathSegments.last)
+          .toList()
+        ..sort();
+
+      expect(
+        callers,
+        ['settings_screen.dart'],
+        reason:
+            'App Review paketi ve App Store Connect notları satın alma '
+            'ekranına ayarlardan gidildiğini yazıyor. Giriş noktası '
+            'değiştiyse o iki metin de değişmeli; yoksa incelemeci ekranı '
+            'bulamaz.',
+      );
+    });
+
+    test('yayınlanacak paket bu yolu tarif eder', () {
+      final pubspec = File('pubspec.yaml').readAsStringSync();
+      final build = RegExp(
+        r'^version:\s*\d+\.\d+\.\d+\+(\d+)',
+        multiLine: true,
+      ).firstMatch(pubspec)!.group(1)!;
+
+      final packet = File(
+        'docs/app_review_packet_1.9.2_build$build.md',
+      ).readAsStringSync();
+
+      // Yolun iki durağı da yazılı olmalı: hangi sekmeden girileceği ve
+      // hangi bölüme inileceği. Yalnız "Settings" demek yetmez — ayarlar
+      // ekranı uzun ve premium kartı en altta.
+      expect(packet, contains('Settings'));
+      expect(packet, contains('Premium'));
+      expect(
+        packet,
+        contains('single entry point'),
+        reason:
+            'Paket, satın alma ekranının tek girişi olduğunu söylemeli; '
+            'incelemeci başka yerlerde aramamalı.',
+      );
+    });
   });
 
   group('birim fiyat', () {
