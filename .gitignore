@@ -66,9 +66,12 @@ node_modules/
 **/playwright-report/
 
 # Supabase CLI'nin yerel çalışma artığı. Ortama özgü bağlantı bilgisi
-# tutar; kökte de mobil klasörde de üretilir.
+# tutar; kökte de mobil klasörde de üretilir. `.branches` da aynı sınıfta:
+# yerel stack'in o anki dal adını tutar, paylaşılacak bir şey değildir.
 supabase/.temp/
 **/supabase/.temp/
+supabase/.branches/
+**/supabase/.branches/
 
 # Denetim kanıtları: ekran görüntüleri, build/test logları, ham veri dökümleri.
 # Diskte kalır (raporlar buraya yol verir) ama git'e GİRMEZ — hem 36 MB'lık

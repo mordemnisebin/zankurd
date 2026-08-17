@@ -1,0 +1,79 @@
+{
+  "identifier" : "7B0B0BBB-1D0E-4E2A-9E39-4A9F2C7D5E11",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6666666666",
+    "_developerTeamID" : "LOCALTEST",
+    "_lastSynchronizedDate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21543DF7",
+      "localizations" : [
+
+      ],
+      "name" : "ZanKurd Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6477365764",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "ZanKurd Pro — aylık",
+              "displayName" : "Pro (Aylık)",
+              "locale" : "tr_TR"
+            }
+          ],
+          "productID" : "com.zankurd.app.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro Monthly",
+          "subscriptionGroupID" : "21543DF7",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "299.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6477365765",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "ZanKurd Pro — yıllık",
+              "displayName" : "Pro (Yıllık)",
+              "locale" : "tr_TR"
+            }
+          ],
+          "productID" : "com.zankurd.app.premium.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Pro Yearly",
+          "subscriptionGroupID" : "21543DF7",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
