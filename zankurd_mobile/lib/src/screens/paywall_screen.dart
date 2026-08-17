@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../config/app_config.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -11,6 +12,38 @@ import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+/// Yıllık fiyatın aya düşen karşılığı — Apple 3.1.2'nin "price per unit if
+/// appropriate" maddesi.
+///
+/// Yıllık fiyat tek başına aylıkla kıyaslanamaz: kullanıcı "₺399,99/yıl"ı
+/// görüp bunun "₺39,99/ay"a göre ucuz mu pahalı mı olduğunu ekranda hesap
+/// yapmadan bilemez. Apple bu yüzden birim fiyatı ister.
+///
+/// Sayı, mağazanın kendi fiyat dizesinin BİÇİMİ korunarak yazılır: para
+/// birimi simgesi nerede duruyorsa orada kalır (öne, arkaya ya da boşlukla),
+/// ondalık ayırıcı mağazanın kullandığı ayırıcıdır. Kendi biçimimizi kurmak
+/// (ör. `'₺${x.toStringAsFixed(2)}'`) Türkçe yerelde "₺33.33" gibi yanlış bir
+/// metin üretirdi — hem ayırıcı hem simge yeri yanlış — ve `intl` bu projede
+/// doğrudan bağımlılık değil.
+///
+/// Ekrandan ayrı bir işlev olmasının sebebi ölçülebilirlik: RevenueCat
+/// `StoreProduct` nesnesi testte kurulamadığı için biçimlendirme widget
+/// testinden görünmez; kural burada, saf bir işlevde ölçülür.
+String? monthlyEquivalentPrice(String priceString, double annualPrice) {
+  if (annualPrice <= 0) return null;
+  final first = priceString.indexOf(RegExp(r'\d'));
+  final last = priceString.lastIndexOf(RegExp(r'\d'));
+  if (first < 0 || last < first) return null;
+
+  final separator = priceString.substring(first, last + 1).contains(',')
+      ? ','
+      : '.';
+  final monthly = (annualPrice / 12)
+      .toStringAsFixed(2)
+      .replaceFirst('.', separator);
+  return priceString.replaceRange(first, last + 1, monthly);
+}
 
 /// Premium abonelik satın alma ekranı. RevenueCat üzerinden aylık
 /// abonelikler sunar. Yapılandırma yoksa veya offerings boşsa
@@ -116,8 +149,15 @@ class _PaywallScreenState extends State<PaywallScreen> {
         child: SafeArea(
           child: Column(
             children: [
+              // Başlık 'Premium' değil, App Store Connect'teki abonelik
+              // adının kendisidir. Apple 3.1.2, otomatik yenilenen
+              // aboneliğin ADININ satın alma ekranında yazmasını ister ve
+              // 'Premium' bir özellik adıdır, ürün adı değil: mağazadaki
+              // ürünler "ZanKurd Pro Monthly/Yearly", grup "ZanKurd Pro".
+              // Bu başlıkla kart başlıkları ("Aylık"/"Yıllık") birleşince
+              // ekranda tam ürün adı okunur.
               ScreenIdentityHeader(
-                title: 'Premium',
+                title: AppConfig.subscriptionDisplayName,
                 subtitle: context.t(K.paywallSubtitle),
                 accent: AppTheme.gold,
                 icon: AppIcons.gem,
@@ -373,6 +413,16 @@ class _PackageRow extends StatelessWidget {
     return '';
   }
 
+  String? _perMonthEquivalent() {
+    if (package.packageType != PackageType.annual) return null;
+    final monthly = monthlyEquivalentPrice(
+      package.storeProduct.priceString,
+      package.storeProduct.price,
+    );
+    if (monthly == null) return null;
+    return '≈ $monthly${Tr.forKu(K.perMonthSuffix, isKu)}';
+  }
+
   /// Fiyatın yanında gösterilen yenileme dönemi. Apple 3.1.2, fiyatın
   /// hangi dönem için olduğunun paywall'da açıkça yazmasını ister.
   String _pricePeriodSuffix() {
@@ -472,6 +522,15 @@ class _PackageRow extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
+                if (_perMonthEquivalent() case final perMonth?) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    perMonth,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

@@ -214,6 +214,18 @@ class AppConfig {
   static const privacyPolicyUrl = 'https://www.zankurd.com/privacy.html';
   static const termsOfServiceUrl = 'https://www.zankurd.com/terms.html';
 
+  // ── Abonelik adı (Apple 3.1.2 şartı) ───────────────────────────────────
+  //
+  // Apple, otomatik yenilenen aboneliğin BAŞLIĞININ satın alma ekranında
+  // yazmasını ister ve bu başlığın mağazadaki ürün adıyla eşleşmesini
+  // bekler. App Store Connect'te abonelik grubu "ZanKurd Pro", ürünler
+  // "ZanKurd Pro Monthly" ve "ZanKurd Pro Yearly" adını taşır.
+  //
+  // Bu sabit çevrilmez, çünkü mağaza kaydındaki ad çevrilmiyor: paywall'da
+  // yerelleştirilmiş bir ad göstermek, incelemecinin ekranda gördüğü adla
+  // App Store Connect'teki adı eşleştirememesine yol açar.
+  static const subscriptionDisplayName = 'ZanKurd Pro';
+
   // ── Kötüye kullanım bildirimi (Apple 1.2 / Play UGC şartı) ─────────
   //
   // Kullanıcı üretimi içerik barındıran uygulamalarda iletişim bilgisinin
