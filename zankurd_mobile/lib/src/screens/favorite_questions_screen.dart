@@ -7,6 +7,7 @@ import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
@@ -38,8 +39,29 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
     });
   }
 
+  /// Favoriden çıkarır.
+  ///
+  /// Çağrı bir `try` içinde: `toggleFavoriteQuestion` sunucu tarafında
+  /// FIRLATIR (silme sorgusunun etrafında hiçbir yakalama yok). Burada
+  /// yakalama olmadığı için hata çağıran zincire düşüyor, ekranda hiçbir iz
+  /// bırakmıyordu — üstelik "çıkarıldı" mesajı `await`ten SONRA geldiği için
+  /// başarısızlıkta hiç görünmüyordu bile: kullanıcı dokunuyor, hiçbir şey
+  /// olmuyor, soru listede kalıyor ve niçin olduğunu söyleyen tek bir kelime
+  /// yok (2026-08-17).
+  ///
+  /// Aynı işi yapan `quiz_screen._toggleFavorite` bunu zaten doğru yapıyordu;
+  /// ayrışan yalnız bu ekrandı.
   Future<void> _removeFavorite(QuizQuestion question) async {
-    await widget.repository.toggleFavoriteQuestion(question, false);
+    try {
+      await widget.repository.toggleFavoriteQuestion(question, false);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'remove favorite failed');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.t(K.questionRemoveFailed))),
+      );
+      return;
+    }
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,

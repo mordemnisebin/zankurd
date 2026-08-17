@@ -1718,6 +1718,12 @@ class Tr {
       'ku': 'Pirs hate rakirin.',
       'tr': 'Soru kayıtlardan çıkarıldı.',
     },
+    // Kaldırma başarısızlığı questionSaveFailed'e düşürülemez: o metin
+    // "kaydedilemedi" der, oysa kullanıcı tam tersini yapmıştır.
+    K.questionRemoveFailed: {
+      'ku': 'Pirs ji tomaran nehate rakirin.',
+      'tr': 'Soru kayıtlardan çıkarılamadı.',
+    },
     K.favoritesLoadFailed: {
       'ku': 'Pirsên tomarkirî nehatin barkirin',
       'tr': 'Kaydedilen sorular yüklenemedi',
@@ -3151,6 +3157,7 @@ class K {
   static const refreshBoardA11y = 'leaderboard.refreshA11y';
   static const refreshAction = 'common.refresh';
   static const questionRemoved = 'favorites.removed';
+  static const questionRemoveFailed = 'favorites.removeFailed';
   static const favoritesLoadFailed = 'favorites.loadFailed';
   static const savedShort = 'favorites.savedShort';
   static const yourFavorites = 'favorites.yourFavorites';
