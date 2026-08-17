@@ -24,11 +24,8 @@ class SubcategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final canonicalCat = CategoryVisuals.canonicalName(category);
-    final rawList =
-        SubcategoryConfig.subcategories[category] ??
-        SubcategoryConfig.subcategories[canonicalCat];
-    final list = (rawList != null && rawList.isNotEmpty)
+    final rawList = SubcategoryConfig.forCategory(category);
+    final list = rawList.isNotEmpty
         ? rawList
         : [
             SubcategoryInfo(

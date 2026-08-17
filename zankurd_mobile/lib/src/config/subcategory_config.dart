@@ -1,4 +1,5 @@
 import '../models/quiz_question.dart';
+import 'category_visuals.dart';
 
 class SubcategoryInfo {
   final String id;
@@ -233,8 +234,26 @@ class SubcategoryConfig {
       ),
     ],
     'Sînema': _sinemaSubcategories,
-    'Sinema': _sinemaSubcategories,
   };
+
+  /// Kategori adını — takma ad olsa bile — alt kategori listesine çevirir.
+  ///
+  /// `CategoryVisuals` on bir takma ad tanır ('Dil'→'Ziman', 'Tarih'→'Dîrok',
+  /// 'Film'→'Sînema', …) çünkü kategori adı her zaman kanonik biçimde
+  /// gelmiyor. Bu haritada anahtarlar YALNIZ kanonik biçimdir; ham `[]`
+  /// erişimi bir takma adla çağrıldığında sessizce `null` döner ve çağıran
+  /// alt kategoriyi hiç yokmuş gibi ele alır — hata yok, yalnız kaybolmuş
+  /// bir başlık.
+  ///
+  /// Bu tam olarak bir kez yaşandı ve tek vakalık yamalandı: haritada
+  /// `'Sînema'` ile birebir aynı listeyi taşıyan ikinci bir `'Sinema'`
+  /// anahtarı duruyordu. Yama yalnız o takma adı kurtarıyor, kalan onunu
+  /// bırakıyordu. Çözüm kopya anahtar değil, kanonikleştiren tek bir
+  /// erişimci: çağıranın takma adı düşünmesi gerekmiyor (2026-08-17).
+  static List<SubcategoryInfo> forCategory(String category) =>
+      subcategories[category] ??
+      subcategories[CategoryVisuals.canonicalName(category)] ??
+      const [];
 
   static const List<SubcategoryInfo> _sinemaSubcategories = [
     SubcategoryInfo(

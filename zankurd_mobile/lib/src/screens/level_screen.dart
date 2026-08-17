@@ -240,7 +240,9 @@ class _CategoryHero extends StatelessWidget {
     String subtitle = Tr.forKu(K.kolaydanZoraDogruIlerle, isKu);
 
     if (subCategory != null) {
-      final list = SubcategoryConfig.subcategories[category] ?? const [];
+      // Ham `[]` erişimi DEĞİL: kategori adı takma ad olarak gelirse harita
+      // null döner ve alt kategori başlığı sessizce kaybolurdu.
+      final list = SubcategoryConfig.forCategory(category);
       final sub = list.firstWhere(
         (element) => element.id == subCategory,
         orElse: () => const SubcategoryInfo(
