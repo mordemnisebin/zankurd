@@ -12,11 +12,16 @@ Kurallar `tool/content_authoring/src/promotion.dart` içindeki
 
 Kullanım:
     python3 tool/content_authoring/precheck_batch.py parti.csv
+    python3 tool/content_authoring/precheck_batch.py parti.csv --check-urls
 """
 import csv
 import re
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 
 REQUIRED = [
     "id", "language_code", "category_key", "prompt",
@@ -41,9 +46,50 @@ def template_key(prompt: str) -> str:
     return " ".join(words[:3]) + f"|{len(words)//5}"
 
 
-def main(path: str) -> int:
+def url_alive(url: str) -> bool:
+    """Kaynak adresi gerçekten açılıyor mu.
+
+    Üretimi yapan ajana bu işi yaptırmak turlarını tüketiyordu ve CSV'ye hiç
+    sıra gelmiyordu. Adres denetimi mekanik bir iştir; LLM turuna değil
+    buraya ait.
+    """
+    # Yol kısmı yüzde-kodlanır: Kurmancî ve Türkçe başlıklar ASCII dışı harf
+    # taşır ("…/wiki/Înternet") ve ham hâlleriyle istendiğinde istek düşer.
+    # Kodlamayı atlamak bütün Kurmancî kaynaklarını "ölü" göstermek demekti.
+    split = urllib.parse.urlsplit(url)
+    encoded = urllib.parse.urlunsplit((
+        split.scheme, split.netloc,
+        urllib.parse.quote(split.path, safe="/%:@"),
+        urllib.parse.quote(split.query, safe="=&%"), split.fragment,
+    ))
+    request = urllib.request.Request(encoded, headers={"User-Agent": "zankurd-precheck"})
+    try:
+        with urllib.request.urlopen(request, timeout=12) as response:
+            return 200 <= response.status < 400
+    except urllib.error.HTTPError as error:
+        return 200 <= error.code < 400
+    except Exception:
+        return False
+
+
+def main(path: str, check_urls: bool = False) -> int:
+    with open(path, newline="", encoding="utf-8") as handle:
+        raw_rows = list(csv.reader(handle))
     with open(path, newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
+
+    # Alan sayısı önce ölçülür: bir satırda fazladan/eksik virgül varsa
+    # bütün sütunlar kayar ve geri kalan her kural ayrı ayrı patlar. O hâlde
+    # rapor sekiz gerekçe gösterir ve kök neden görünmez olur.
+    if raw_rows:
+        expected = len(raw_rows[0])
+        shifted = [i for i, r in enumerate(raw_rows[1:], start=2)
+                   if r and len(r) != expected]
+        if shifted:
+            print(f"HATA: {len(shifted)} satırda alan sayısı {expected} değil "
+                  f"(ilk örnekler: {shifted[:8]})")
+            print("Kök neden budur; sütunlar kaydığı için diğer kurallar da patlar.")
+            return 1
     if not rows:
         print("HATA: parti boş")
         return 1
@@ -145,6 +191,55 @@ def main(path: str) -> int:
         if bad:
             problems.append((i, rid or "?", bad))
 
+    if check_urls:
+        urls = sorted({(r.get("source_url") or "").strip() for r in rows
+                       if (r.get("source_url") or "").strip().startswith("https://")})
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            alive = dict(zip(urls, pool.map(url_alive, urls)))
+        dead = [u for u, ok in alive.items() if not ok]
+        for i, row in enumerate(rows, start=2):
+            url = (row.get("source_url") or "").strip()
+            if url in alive and not alive[url]:
+                problems.append((i, (row.get("id") or "?").strip(), ["dead_source_url"]))
+        if dead:
+            print(f"ölü kaynak adresi: {len(dead)}/{len(urls)}")
+            for u in dead[:10]:
+                print(f"   {u}")
+
+    # ── Parti geneli kalite ölçüleri ───────────────────────────────────
+    # Bunlar satır bazında kusur değil; ancak partinin TAMAMINA bakınca
+    # görünürler ve kapı onları hiç ölçmez. İlk gerçek üretimde doğru cevap
+    # on satırın onunda da A çıktı — oyuncu "hep A'yı seç" diye öğrenir.
+    letters = Counter()
+    for row in rows:
+        correct = (row.get("correct_option") or "").strip().upper()
+        if correct in "ABCD" and correct:
+            letters[correct] += 1
+    total_letters = sum(letters.values())
+    if total_letters >= 8:
+        top, top_n = letters.most_common(1)[0]
+        share = top_n / total_letters
+        dagilim = " ".join(f"{h}={letters.get(h, 0)}" for h in "ABCD")
+        if share > 0.45:
+            print(f"UYARI: doğru cevap {top} şıkkında yığılmış "
+                  f"(%{share * 100:.0f}) — dağılım: {dagilim}")
+            print("       Oyuncu konumu ezberler; promptta dağılım şart koş.")
+        else:
+            print(f"doğru cevap dağılımı dengeli: {dagilim}")
+
+    # Aynı çeldirici bütün partide dolaşıyorsa sorular birbirinin kopyası
+    # gibi hissettirir ve şıklar inandırıcılığını yitirir.
+    fillers = Counter()
+    for row in rows:
+        for col in "abcd":
+            value = norm(row.get(f"option_{col}", ""))
+            if value:
+                fillers[value] += 1
+    overused = [(v, n) for v, n in fillers.most_common(5) if n > max(3, len(rows) // 3)]
+    if overused:
+        print("UYARI: aşırı tekrar eden çeldiriciler: "
+              + ", ".join(f"{v} ({n}x)" for v, n in overused))
+
     print(f"satır: {len(rows)}   sorunlu: {len(problems)}   temiz: {len(rows) - len(problems)}")
     if problems:
         counts = Counter(r for _, _, reasons in problems for r in reasons)
@@ -158,7 +253,8 @@ def main(path: str) -> int:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if len(args) != 1:
         print(__doc__)
         sys.exit(2)
-    sys.exit(main(sys.argv[1]))
+    sys.exit(main(args[0], check_urls="--check-urls" in sys.argv))
