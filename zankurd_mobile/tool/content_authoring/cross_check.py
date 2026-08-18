@@ -93,9 +93,20 @@ def main(bank_path: str, out_path: str) -> int:
             if answers:
                 break
             time.sleep(4)
+        # Harf DEĞİL, şıkkın METNİ saklanır. Harf kaydetmek bir tuzaktı:
+        # `rebalance_answer_positions.py` şık sırasını değiştirdiğinde
+        # kaydedilen harfler başka şıkları göstermeye başlıyor ve doğrulama
+        # sessizce anlamsızlaşıyordu. Metin sıralamadan bağımsızdır.
+        index_by_id = {q["id"]: q for q in chunk}
         for item in answers:
-            if item.get("id"):
-                verdicts[item["id"]] = str(item.get("cevap", "?")).strip().upper()[:1]
+            qid = item.get("id")
+            letter = str(item.get("cevap", "?")).strip().upper()[:1]
+            if not qid or qid not in index_by_id:
+                continue
+            if letter in "ABCD" and letter:
+                verdicts[qid] = index_by_id[qid]["answers"]["ABCD".index(letter)]
+            else:
+                verdicts[qid] = "?"
         out.write_text(json.dumps(verdicts, ensure_ascii=False, indent=1),
                        encoding="utf-8")
         if index % (CHUNK * 10) == 0:
@@ -108,10 +119,7 @@ def main(bank_path: str, out_path: str) -> int:
         if not given or given == "?":
             unsure += 1
             continue
-        try:
-            correct = "ABCD"[question["answers"].index(question["correctAnswer"])]
-        except ValueError:
-            continue
+        correct = question["correctAnswer"]
         if given == correct:
             agree += 1
         else:
