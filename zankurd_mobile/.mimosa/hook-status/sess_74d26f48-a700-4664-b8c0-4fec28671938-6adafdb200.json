@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "mimosa-hook-status/v1",
+  "recordedAt": "2026-08-17T00:28:56.562Z",
+  "sessionId": "sess_74d26f48-a700-4664-b8c0-4fec28671938",
+  "event": "PostToolUse",
+  "toolName": "Write",
+  "file": "integration_test/notification_real_schedule_test.dart",
+  "outcome": "clear",
+  "coverage": "complete",
+  "findingCount": 0,
+  "durationMs": 1,
+  "hostState": "hook_complete",
+  "reportHint": ".mimosa/reports/"
+}
