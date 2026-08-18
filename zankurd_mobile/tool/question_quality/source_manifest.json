@@ -12,7 +12,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 1000,
-      "expectedRecordCount": 1389,
+      "expectedRecordCount": 1387,
       "notes": "Bundled JSON loaded by QuestionBankLoader",
       "columns": {
         "id": "id",
@@ -74,7 +74,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 985,
-      "expectedRecordCount": 218,
+      "expectedRecordCount": 217,
       "notes": "Bilingual KU+TR, deterministically rebuilt 2026-08-06",
       "columns": {
         "id": "id",
@@ -2222,7 +2222,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 101,
+      "expectedRecordCount": 97,
       "notes": "Her kayıt doğrudan açılmış kurumsal kaynağa dayanır; provenance verified_external_pool_2026_08 altında.",
       "columns": {
         "id": "id",
@@ -2353,7 +2353,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 1051,
+      "expectedRecordCount": 1012,
       "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
       "columns": {
         "id": "id",

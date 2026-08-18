@@ -19352,20 +19352,20 @@
   {
     "id": "offline_curated_30009",
     "category": "Teknolojî",
-    "prompt": "Peyva \"file\" di Kurmancî de tê çi wateyê?",
+    "prompt": "Peyva \"pel\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "Rûpel",
-      "Wêne",
+      "Sayfa",
+      "Resim",
       "Dosya",
-      "Stran"
+      "Şarkı"
     ],
     "correctAnswer": "Dosya",
-    "explanation": "Di Kurmancî de ji bo \"file\" peyva \"pel\" an \"dosya\" tê bikaranîn; \"peldank\" ne dosya ye, ew ji bo \"klasör\" e.",
+    "explanation": "\"Pel\" Türkçede \"dosya\" demektir; \"rûpel\" sayfa, \"wêne\" resim, \"stran\" şarkıdır.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationTr": "Kurmancîde \"file\" için \"pel\" ya da \"dosya\" kullanılır; \"peldank\" dosya değil, \"klasör\" demektir.",
-    "explanationKu": "Di Kurmancî de ji bo \"file\" peyva \"pel\" an \"dosya\" tê bikaranîn; \"peldank\" ne dosya ye, ew ji bo \"klasör\" e.",
-    "promptTr": "\"File\" sözcüğü Kurmancîde ne anlama gelir?",
+    "explanationTr": "\"Pel\" Türkçede \"dosya\" demektir; \"rûpel\" sayfa, \"wêne\" resim, \"stran\" şarkıdır.",
+    "explanationKu": "\"Pel\" bi Tirkî \"dosya\" ye; \"rûpel\" sayfa, \"wêne\" resim û \"stran\" şarkî ye.",
+    "promptTr": "\"Pel\" Türkçede ne demektir?",
     "answersTr": [
       "Sayfa",
       "Resim",
@@ -19400,31 +19400,6 @@
     "correctAnswerTr": "DNS"
   },
   {
-    "id": "offline_curated_30011",
-    "category": "Teknolojî",
-    "prompt": "Di sêwirana sepanên mobîl de \"widget\" bi giştî çi nîşan dide?",
-    "answers": [
-      "Depoya daneyan (DB)",
-      "Hêmana dîtbarî (UI)",
-      "Girêdana torê (net)",
-      "Rêbaza hesabê (algorîtma)"
-    ],
-    "correctAnswer": "Hêmana dîtbarî (UI)",
-    "explanation": "Di Flutter de her hêmaneke dîtbarî û sêwiranê wek \"Widget\" tê naskirin.",
-    "type": "multipleChoice",
-    "difficulty": 5,
-    "explanationTr": "Mobil uygulama tasarımında her görsel öge \"widget\" olarak adlandırılır.",
-    "explanationKu": "Di Flutter de her hêmaneke dîtbarî û sêwiranê wek \"Widget\" tê naskirin.",
-    "promptTr": "Mobil uygulama tasarımında \"widget\" genel olarak neyi gösterir?",
-    "answersTr": [
-      "Veri deposu (DB)",
-      "Görsel öge (UI)",
-      "Ağ bağlantısı (net)",
-      "Hesap yöntemi (algoritma)"
-    ],
-    "correctAnswerTr": "Görsel öge (UI)"
-  },
-  {
     "id": "offline_curated_30012",
     "category": "Teknolojî",
     "prompt": "Peyva \"ewr\" di warê teknolojiyê de ji bo \"cloud computing\" (bulut bilişim) tê bikaranîn?",
@@ -19450,8 +19425,8 @@
     "category": "Ziman",
     "prompt": "Peyva \"fermo\" di Tirkî de tê çi wateyê?",
     "answers": [
-      "Lütfen",
       "Buyurun",
+      "Lütfen",
       "Teşekkürler",
       "Özür dilerim"
     ],
@@ -19463,8 +19438,8 @@
     "explanationKu": "Di Kurmancî de ji bo \"buyurun\" peyva \"fermo\" tê bikaranîn.",
     "promptTr": "\"Fermo\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
-      "Lütfen",
       "Buyurun",
+      "Lütfen",
       "Teşekkürler",
       "Özür dilerim"
     ],
@@ -19498,8 +19473,8 @@
     "answers": [
       "Rast e",
       "Rojbaş",
-      "Kerem bike",
-      "Bibexşîne"
+      "Bibexşîne",
+      "Kerem bike"
     ],
     "correctAnswer": "Bibexşîne",
     "explanation": "Di Kurmancî de ji bo \"özür dilerim\" peyva \"bibexşîne\" an \"lêborînê dixwazim\" tê bikaranîn.",
@@ -19511,8 +19486,8 @@
     "answersTr": [
       "Rast e",
       "Rojbaş",
-      "Kerem bike",
-      "Bibexşîne"
+      "Bibexşîne",
+      "Kerem bike"
     ],
     "correctAnswerTr": "Bibexşîne"
   },
@@ -19544,8 +19519,8 @@
     "answers": [
       "Spas, ez baş im",
       "Rojbaş",
-      "Şevbaş",
-      "Êvarbaş"
+      "Êvarbaş",
+      "Şevbaş"
     ],
     "correctAnswer": "Êvarbaş",
     "explanation": "Dema kesek dibêje \"êvarbaş\", em bi heman şêweyî dibêjin \"êvarbaş\".",
@@ -19557,8 +19532,8 @@
     "answersTr": [
       "Spas, ez baş im",
       "Rojbaş",
-      "Şevbaş",
-      "Êvarbaş"
+      "Êvarbaş",
+      "Şevbaş"
     ],
     "correctAnswerTr": "Êvarbaş"
   },
@@ -19588,8 +19563,8 @@
     "category": "Çand",
     "prompt": "Tiştoka \"Bi roj hevalê min e, bi şev hevalê dîwêr e\" bersiva wê çi ye?",
     "answers": [
-      "Çire / Fener",
       "Sol / Pêlav",
+      "Çire / Fener",
       "Mifta / Kilît",
       "Dermên"
     ],
@@ -19601,8 +19576,8 @@
     "explanationKu": "Ev tiştokeke kurdî ya gelêrî ye, bersiva wê \"sol\" (pêlav) e.",
     "promptTr": "\"Gündüz benim arkadaşımdır, gece duvarın arkadaşıdır\" bilmecesinin cevabı nedir?",
     "answersTr": [
-      "Çıra / Fener",
       "Ayakkabı",
+      "Çıra / Fener",
       "Anahtar",
       "Dermên"
     ],
@@ -19615,8 +19590,8 @@
     "answers": [
       "Sabûn",
       "Şekir",
-      "Ar / Mird",
-      "Xwê"
+      "Xwê",
+      "Ar / Mird"
     ],
     "correctAnswer": "Xwê",
     "explanation": "Bersiva vê tiştokê \"xwê\" (tuz) e.",
@@ -19628,8 +19603,8 @@
     "answersTr": [
       "Sabun",
       "Şeker",
-      "Un",
-      "Tuz"
+      "Tuz",
+      "Un"
     ],
     "correctAnswerTr": "Tuz"
   },
@@ -19638,10 +19613,10 @@
     "category": "Çand",
     "prompt": "Tiştoka \"Heta jê nekirî mezin nabe\" bersiva wê çi ye?",
     "answers": [
-      "Kolin",
       "Dîwar",
       "Dar",
-      "Rê"
+      "Rê",
+      "Kolin"
     ],
     "correctAnswer": "Kolin",
     "explanation": "Ev tiştokeke zekayê ye, bersiva wê \"kolin\" an \"çal\" (çukur) e.",
@@ -19651,10 +19626,10 @@
     "explanationKu": "Ev tiştokeke zekayê ye, bersiva wê \"kolin\" an \"çal\" (çukur) e.",
     "promptTr": "\"Ondan alınmadıkça büyümez\" bilmecesinin cevabı nedir?",
     "answersTr": [
-      "Çukur",
       "Duvar",
       "Ağaç",
-      "Yol"
+      "Yol",
+      "Çukur"
     ],
     "correctAnswerTr": "Çukur"
   },
@@ -28630,10 +28605,10 @@
     "category": "Teknolojî",
     "prompt": "Amûra ku agahiyan li ser kaxizê çap dike bi Kurmancî çi ye?",
     "answers": [
-      "Çaper",
       "Nîşander",
       "Bilindgo",
-      "Kamera"
+      "Kamera",
+      "Çaper"
     ],
     "correctAnswer": "Çaper",
     "explanation": "Yazıcı, bilgiyi ekrandan kâğıda aktarır.",
@@ -28643,10 +28618,10 @@
     "difficulty": 1,
     "promptTr": "Bilgiyi kâğıda basan aygıta Kurmancîde ne denir?",
     "answersTr": [
-      "Çaper",
       "Nîşander",
       "Bilindgo",
-      "Kamera"
+      "Kamera",
+      "Çaper"
     ],
     "correctAnswerTr": "Çaper"
   },
@@ -28656,8 +28631,8 @@
     "prompt": "Peyva Kurmancî \"bîrge\" bi Tirkî çi tê gotin?",
     "answers": [
       "ekran",
-      "kablo",
       "bellek",
+      "kablo",
       "düğme"
     ],
     "correctAnswer": "bellek",
@@ -28669,8 +28644,8 @@
     "promptTr": "Kurmancî \"bîrge\" sözcüğü Türkçede ne denir?",
     "answersTr": [
       "ekran",
-      "kablo",
       "bellek",
+      "kablo",
       "düğme"
     ],
     "correctAnswerTr": "bellek"
@@ -28680,8 +28655,8 @@
     "category": "Teknolojî",
     "prompt": "Di komputerê de kîjan beş hesaban dike û fermanan bi rê ve dibe?",
     "answers": [
-      "Bîrge",
       "Pêvajoker",
+      "Bîrge",
       "Ekran",
       "Bilindgo"
     ],
@@ -28693,8 +28668,8 @@
     "difficulty": 2,
     "promptTr": "Bilgisayarda hangi bölüm hesapları yapar ve komutları yürütür?",
     "answersTr": [
-      "Bellek",
       "İşlemci",
+      "Bellek",
       "Ekran",
       "Hoparlör"
     ],
@@ -28706,8 +28681,8 @@
     "prompt": "Peyva Kurmancî \"tor\" di warê komputerê de bi Tirkî çi ye?",
     "answers": [
       "dosya",
-      "klasör",
       "ağ",
+      "klasör",
       "pencere"
     ],
     "correctAnswer": "ağ",
@@ -28719,8 +28694,8 @@
     "promptTr": "Kurmancî \"tor\" sözcüğü bilgisayar alanında Türkçede ne demektir?",
     "answersTr": [
       "dosya",
-      "klasör",
       "ağ",
+      "klasör",
       "pencere"
     ],
     "correctAnswerTr": "ağ"
@@ -28730,8 +28705,8 @@
     "category": "Teknolojî",
     "prompt": "Girêdana ku danûstandina di navbera geroker û serverê de şîfre dike kîjan e?",
     "answers": [
-      "FTP",
       "HTTPS",
+      "FTP",
       "SMTP",
       "IRC"
     ],
@@ -28743,8 +28718,8 @@
     "difficulty": 3,
     "promptTr": "Tarayıcı ile sunucu arasındaki alışverişi şifreleyen bağlantı hangisidir?",
     "answersTr": [
-      "FTP",
       "HTTPS",
+      "FTP",
       "SMTP",
       "IRC"
     ],
@@ -28755,10 +28730,10 @@
     "category": "Teknolojî",
     "prompt": "Di bernamesaziyê de \"xelek\" ji bo çi tê bikaranîn?",
     "answers": [
-      "Dubarekirina heman gavan",
       "Parastina şîfreyan",
       "Çapkirina kaxizê",
-      "Girêdana torê"
+      "Girêdana torê",
+      "Dubarekirina heman gavan"
     ],
     "correctAnswer": "Dubarekirina heman gavan",
     "explanation": "Döngü, aynı adımların bir koşul sağlanana dek tekrarlanmasını sağlar.",
@@ -28768,10 +28743,10 @@
     "difficulty": 4,
     "promptTr": "Programlamada \"xelek\" ne için kullanılır?",
     "answersTr": [
-      "Aynı adımların yinelenmesi için",
       "Parolaların korunması için",
       "Kâğıda baskı alınması için",
-      "Ağ bağlantısı kurulması için"
+      "Ağ bağlantısı kurulması için",
+      "Aynı adımların yinelenmesi için"
     ],
     "correctAnswerTr": "Aynı adımların yinelenmesi için"
   },
@@ -28780,8 +28755,8 @@
     "category": "Teknolojî",
     "prompt": "Di bernamesaziyê de \"guhêrbar\" çi dike?",
     "answers": [
-      "Hêmana dîtbarî (UI)",
       "Nirxekê bi navekî ve girê dide",
+      "Hêmana dîtbarî (UI)",
       "Nîşandana wêne û nivîsan",
       "Xizmet û daneyan digihîne amûrên din"
     ],
@@ -28793,8 +28768,8 @@
     "difficulty": 4,
     "promptTr": "Programlamada \"guhêrbar\" ne yapar?",
     "answersTr": [
-      "Görsel öge (UI) olur",
       "Bir değeri bir adla bağlar",
+      "Görsel öge (UI) olur",
       "Görüntü ve yazıları gösterir",
       "Hizmet ve verileri başka aygıtlara ulaştırır"
     ],
@@ -28807,8 +28782,8 @@
     "answers": [
       "Ji ber ku girêdanên bêqablo her tim hêdîtir dixebitin",
       "Ji ber ku amûrên bêqablo kêmtir enerjiyê xerc dikin",
-      "Ji ber ku qabloyên wan ji yên din kurttir tên çêkirin",
-      "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire"
+      "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire",
+      "Ji ber ku qabloyên wan ji yên din kurttir tên çêkirin"
     ],
     "correctAnswer": "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire",
     "explanation": "Kablosuz sinyal havada yayılır; yakındaki her cihaz onu dinleyebilir.",
@@ -28820,8 +28795,8 @@
     "answersTr": [
       "Çünkü kablosuz bağlantılar her zaman daha yavaş çalışır",
       "Çünkü kablosuz aygıtlar daha az enerji harcar",
-      "Çünkü kabloları diğerlerinden daha kısa üretilir",
-      "Çünkü sinyal havada yayılır ve herkes onu yakalayabilir"
+      "Çünkü sinyal havada yayılır ve herkes onu yakalayabilir",
+      "Çünkü kabloları diğerlerinden daha kısa üretilir"
     ],
     "correctAnswerTr": "Çünkü sinyal havada yayılır ve herkes onu yakalayabilir"
   },
@@ -28830,10 +28805,10 @@
     "category": "Teknolojî",
     "prompt": "Di daneparêziyê de \"paşvegirtin\" çi ye?",
     "answers": [
-      "Kopiyeke daneyan a li cihekî din",
       "Xizmet û daneyan digihîne amûrên din",
       "Nîşandana wêne û nivîsan",
-      "Nirxekê bi navekî ve girê dide"
+      "Nirxekê bi navekî ve girê dide",
+      "Kopiyeke daneyan a li cihekî din"
     ],
     "correctAnswer": "Kopiyeke daneyan a li cihekî din",
     "explanation": "Yedekleme, kaybı telafi etmek için veriyi ana cihaz dışında tutar.",
@@ -28843,10 +28818,10 @@
     "difficulty": 5,
     "promptTr": "Veri güvenliğinde \"paşvegirtin\" nedir?",
     "answersTr": [
-      "Verilerin başka bir yerdeki kopyasıdır",
       "Hizmet ve verileri başka aygıtlara ulaştırır",
       "Görüntü ve yazıları gösterir",
-      "Bir değeri bir adla bağlar"
+      "Bir değeri bir adla bağlar",
+      "Verilerin başka bir yerdeki kopyasıdır"
     ],
     "correctAnswerTr": "Verilerin başka bir yerdeki kopyasıdır"
   },
@@ -28856,8 +28831,8 @@
     "prompt": "Peyva Kurmancî \"pelgeh\" bi Tirkî çi tê gotin?",
     "answers": [
       "fare",
-      "ekran",
       "klasör",
+      "ekran",
       "kablo"
     ],
     "correctAnswer": "klasör",
@@ -28869,8 +28844,8 @@
     "promptTr": "Kurmancî \"pelgeh\" sözcüğü Türkçede ne denir?",
     "answersTr": [
       "fare",
-      "ekran",
       "klasör",
+      "ekran",
       "kablo"
     ],
     "correctAnswerTr": "klasör"
@@ -28880,8 +28855,8 @@
     "category": "Teknolojî",
     "prompt": "Kîjan amûr enerjiya elektrîkê ya amûrên guhêzbar hildigire?",
     "answers": [
-      "Çaper",
       "Batarya",
+      "Çaper",
       "Mişk",
       "Bilindgo"
     ],
@@ -28893,8 +28868,8 @@
     "difficulty": 3,
     "promptTr": "Taşınabilir aygıtların elektrik enerjisini hangi parça depolar?",
     "answersTr": [
-      "Yazıcı",
       "Batarya",
+      "Yazıcı",
       "Fare",
       "Hoparlör"
     ],
@@ -28906,8 +28881,8 @@
     "prompt": "Peyva Kurmancî \"ekran\" ji bo çi tê bikaranîn?",
     "answers": [
       "Tomarkirina deng",
-      "Şîfrekirina daneyan",
       "Nîşandana wêne û nivîsan",
+      "Şîfrekirina daneyan",
       "Çapkirina kaxizê"
     ],
     "correctAnswer": "Nîşandana wêne û nivîsan",
@@ -28919,8 +28894,8 @@
     "promptTr": "Kurmancî \"ekran\" sözcüğü ne için kullanılır?",
     "answersTr": [
       "Ses kaydetmek için",
-      "Verileri şifrelemek için",
       "Görüntü ve yazıları göstermek için",
+      "Verileri şifrelemek için",
       "Kâğıda baskı almak için"
     ],
     "correctAnswerTr": "Görüntü ve yazıları göstermek için"
@@ -28930,10 +28905,10 @@
     "category": "Teknolojî",
     "prompt": "Di torê de \"server\" çi kar dike?",
     "answers": [
-      "Xizmet û daneyan digihîne amûrên din",
       "Kopiyeke daneyan a li cihekî din",
       "Nirxekê bi navekî ve girê dide",
-      "Nîşandana wêne û nivîsan"
+      "Nîşandana wêne û nivîsan",
+      "Xizmet û daneyan digihîne amûrên din"
     ],
     "correctAnswer": "Xizmet û daneyan digihîne amûrên din",
     "explanation": "Sunucu, diğer cihazların isteklerini karşılar ve onlara veri ulaştırır.",
@@ -28943,10 +28918,10 @@
     "difficulty": 4,
     "promptTr": "Ağ içinde \"server\" ne iş yapar?",
     "answersTr": [
-      "Hizmet ve verileri başka aygıtlara ulaştırır",
       "Verilerin başka bir yerdeki kopyasıdır",
       "Bir değeri bir adla bağlar",
-      "Görüntü ve yazıları gösterir"
+      "Görüntü ve yazıları gösterir",
+      "Hizmet ve verileri başka aygıtlara ulaştırır"
     ],
     "correctAnswerTr": "Hizmet ve verileri başka aygıtlara ulaştırır"
   },
@@ -28956,8 +28931,8 @@
     "prompt": "Çima şîfreyeke dirêj ji ya kurt bihêztir e?",
     "answers": [
       "Ji ber ku şîfreyên dirêj hêsantir tên bîranîn û parastin",
-      "Ji ber ku şîfreyên dirêj di bîrê de kêmtir cih digirin",
       "Ji ber ku hejmara kombînasyonan bi dirêjiyê re bi lez zêde dibe",
+      "Ji ber ku şîfreyên dirêj di bîrê de kêmtir cih digirin",
       "Ji ber ku şîfreyên dirêj girêdana torê lezdar dikin"
     ],
     "correctAnswer": "Ji ber ku hejmara kombînasyonan bi dirêjiyê re bi lez zêde dibe",
@@ -28969,8 +28944,8 @@
     "promptTr": "Uzun bir parola kısa olandan neden daha güçlüdür?",
     "answersTr": [
       "Çünkü uzun parolalar daha kolay akılda tutulur ve korunur",
-      "Çünkü uzun parolalar bellekte daha az yer kaplar",
       "Çünkü olasılık sayısı uzunlukla birlikte hızla artar",
+      "Çünkü uzun parolalar bellekte daha az yer kaplar",
       "Çünkü uzun parolalar ağ bağlantısını hızlandırır"
     ],
     "correctAnswerTr": "Çünkü olasılık sayısı uzunlukla birlikte hızla artar"
@@ -29253,8 +29228,8 @@
     "category": "Teknolojî",
     "prompt": "Di fêrbûna makîneyan de model bi giranî ji çi hîn dibe?",
     "answers": [
-      "Ji rêzikên ku bernamevan bi destan dinivîse",
       "Ji daneyên perwerdehiyê",
+      "Ji rêzikên ku bernamevan bi destan dinivîse",
       "Ji zimanê bernamesaziyê",
       "Ji leza pêvajokerê"
     ],
@@ -29266,8 +29241,8 @@
     "explanationKu": "Di bernamesaziya asayî de rêzik bi destan tên nivîsandin; di fêrbûna makîneyan de model wan bi xwe ji daneyan derdixe.",
     "promptTr": "Makine öğrenmesinde model temel olarak neyden öğrenir?",
     "answersTr": [
-      "Programcının elle yazdığı kurallardan",
       "Eğitim verilerinden",
+      "Programcının elle yazdığı kurallardan",
       "Programlama dilinden",
       "İşlemcinin hızından"
     ],
@@ -29280,8 +29255,8 @@
     "answers": [
       "Zimanek ji bo nivîsandina bernameyan",
       "Hêmanek dîtbarî ya li ser ekranê",
-      "Pergalek ji bo hilanîna daneyan",
-      "Rêbazek bi gavên diyarkirî"
+      "Rêbazek bi gavên diyarkirî",
+      "Pergalek ji bo hilanîna daneyan"
     ],
     "correctAnswer": "Rêbazek bi gavên diyarkirî",
     "explanation": "Algorîtma rêbazek e: kîjan gav, bi kîjan rêzê û heta kîjan encamê. Ne amûr e, ne bername ye.",
@@ -29293,8 +29268,8 @@
     "answersTr": [
       "Program yazmak için bir dil",
       "Ekrandaki görsel bir öge",
-      "Veri saklamak için bir sistem",
-      "Adımları belirlenmiş bir yöntem"
+      "Adımları belirlenmiş bir yöntem",
+      "Veri saklamak için bir sistem"
     ],
     "correctAnswerTr": "Adımları belirlenmiş bir yöntem"
   },
@@ -29303,8 +29278,8 @@
     "category": "Teknolojî",
     "prompt": "Kîjan pergal li gorî tiştên ku te berê temaşe kirine tiştên nû nîşanî te dide?",
     "answers": [
-      "Pergala şîfrekirinê",
       "Pergala pêşniyaran",
+      "Pergala şîfrekirinê",
       "Pergala navên malperan",
       "Pergala paşvegirtinê"
     ],
@@ -29316,8 +29291,8 @@
     "explanationKu": "Pergala pêşniyaran ji tomarên hilbijartinên te fêr dibe û tiştên nêzîkî wan nîşan dide.",
     "promptTr": "Daha önce izlediklerine bakarak sana yeni şeyler gösteren sistem hangisidir?",
     "answersTr": [
-      "Şifreleme sistemi",
       "Öneri sistemi",
+      "Şifreleme sistemi",
       "Alan adı sistemi",
       "Yedekleme sistemi"
     ],
@@ -29328,10 +29303,10 @@
     "category": "Teknolojî",
     "prompt": "Heke daneyên perwerdehiyê kêm û çewt bin, encam çi dibe?",
     "answers": [
-      "Model şaşiyan dubare dike",
       "Model xwe bi xwe rast dike",
       "Model bêyî daneyan jî bê şaşî dixebite",
-      "Model daneyan ji nû ve dinivîse"
+      "Model daneyan ji nû ve dinivîse",
+      "Model şaşiyan dubare dike"
     ],
     "correctAnswer": "Model şaşiyan dubare dike",
     "explanation": "Model tenê ji daneyan fêr dibe; çewtiya di daneyan de derbasî encaman dibe.",
@@ -29341,10 +29316,10 @@
     "explanationKu": "Model tenê ji daneyan fêr dibe; çewtiya di daneyan de derbasî encaman dibe.",
     "promptTr": "Eğitim verileri az ve hatalıysa sonuç ne olur?",
     "answersTr": [
-      "Model hataları tekrarlar",
       "Model kendi kendini düzeltir",
       "Model verisiz de hatasız çalışır",
-      "Model verileri yeniden yazar"
+      "Model verileri yeniden yazar",
+      "Model hataları tekrarlar"
     ],
     "correctAnswerTr": "Model hataları tekrarlar"
   },
@@ -29353,8 +29328,8 @@
     "category": "Teknolojî",
     "prompt": "Bernameya ku bi deng fermanan digire û bersiv dide bi Kurmancî çi ye?",
     "answers": [
-      "Gerokerê malperan",
       "Alîkarê dîjîtal",
+      "Gerokerê malperan",
       "Nermalava paşvegirtinê",
       "Pergala xebitandinê"
     ],
@@ -29366,8 +29341,8 @@
     "explanationKu": "Alîkarê dîjîtal dengê mirov fêm dike, fermanê bi cih tîne û bi deng bersivê dide.",
     "promptTr": "Sesli komutları alıp yanıt veren programa ne ad verilir?",
     "answersTr": [
-      "Web tarayıcısı",
       "Dijital asistan",
+      "Web tarayıcısı",
       "Yedekleme yazılımı",
       "İşletim sistemi"
     ],
@@ -29380,8 +29355,8 @@
     "answers": [
       "Karê ku her car biryareke nû ya mirovî dixwaze",
       "Karê ku encama wî nayê pîvandin",
-      "Karê ku tenê carekê tê kirin",
-      "Karê ku gavên wî diyar in û naguherin"
+      "Karê ku gavên wî diyar in û naguherin",
+      "Karê ku tenê carekê tê kirin"
     ],
     "correctAnswer": "Karê ku gavên wî diyar in û naguherin",
     "explanation": "Otomasyon karên ku gavên wan diyar û dubare ne digire ser xwe; karê ku her car biryara mirov dixwaze bi vî awayî nayê kirin.",
@@ -29393,8 +29368,8 @@
     "answersTr": [
       "Her seferinde yeni bir insan kararı isteyen iş",
       "Sonucu ölçülemeyen iş",
-      "Yalnızca bir kez yapılan iş",
-      "Adımları belli olan ve değişmeyen iş"
+      "Adımları belli olan ve değişmeyen iş",
+      "Yalnızca bir kez yapılan iş"
     ],
     "correctAnswerTr": "Adımları belli olan ve değişmeyen iş"
   },
@@ -29487,10 +29462,10 @@
     "category": "Teknolojî",
     "prompt": "Bernameya ku li ser telefonên destan tê barkirin û tê bikaranîn bi Kurmancî çi ye?",
     "answers": [
-      "Sepan",
       "Pelgeh",
       "Bîrge",
-      "Çaper"
+      "Çaper",
+      "Sepan"
     ],
     "correctAnswer": "Sepan",
     "explanation": "Sepan bernameyek e ku ji bo amûrên mobîl tê çêkirin; ji dukanê tê barkirin û li ser amûrê dixebite.",
@@ -29500,10 +29475,10 @@
     "explanationKu": "Sepan bernameyek e ku ji bo amûrên mobîl tê çêkirin; ji dukanê tê barkirin û li ser amûrê dixebite.",
     "promptTr": "El telefonlarına yüklenip çalıştırılan programa ne ad verilir?",
     "answersTr": [
-      "Uygulama",
       "Dosya",
       "Bellek",
-      "Yazıcı"
+      "Yazıcı",
+      "Uygulama"
     ],
     "correctAnswerTr": "Uygulama"
   },
@@ -29513,8 +29488,8 @@
     "prompt": "Peyva Kurmancî \"agahdarî\" di sepanên mobîl de bi Tirkî çi tê gotin?",
     "answers": [
       "ayar",
-      "izin",
       "bildirim",
+      "izin",
       "güncelleme"
     ],
     "correctAnswer": "bildirim",
@@ -29526,8 +29501,8 @@
     "promptTr": "Kurmancî \"agahdarî\" sözcüğü mobil uygulamalarda Türkçe ne denir?",
     "answersTr": [
       "ayar",
-      "izin",
       "bildirim",
+      "izin",
       "güncelleme"
     ],
     "correctAnswerTr": "bildirim"
@@ -29537,8 +29512,8 @@
     "category": "Teknolojî",
     "prompt": "Ji bo barkirina sepaneke nû li ser telefonê, çavkaniya herî ewle kîjan e?",
     "answers": [
-      "Girêdanek ku di peyamekê de tê şandin",
       "Dukana fermî ya pergalê",
+      "Girêdanek ku di peyamekê de tê şandin",
       "Malpereke nenas",
       "Dosyeyek ku ji amûreke din tê"
     ],
@@ -29550,8 +29525,8 @@
     "explanationKu": "Sepanên di dukana fermî de berî weşanê tên kontrolkirin; çavkaniyên din ne ewle ne.",
     "promptTr": "Telefona yeni bir uygulama yüklemek için en güvenli kaynak hangisidir?",
     "answersTr": [
-      "Bir mesajla gönderilen bağlantı",
       "Sistemin resmi mağazası",
+      "Bir mesajla gönderilen bağlantı",
       "Tanınmayan bir web sitesi",
       "Başka bir cihazdan gelen dosya"
     ],
@@ -29563,8 +29538,8 @@
     "prompt": "Çima hin sepan bêyî girêdana înternetê jî dixebitin?",
     "answers": [
       "Ji ber ku ekrana wan biçûktir e",
-      "Ji ber ku her sepan bêyî serverekê tê nivîsandin",
       "Ji ber ku dane li ser amûrê hatine tomarkirin",
+      "Ji ber ku her sepan bêyî serverekê tê nivîsandin",
       "Ji ber ku ew tenê bi bataryayê dixebitin"
     ],
     "correctAnswer": "Ji ber ku dane li ser amûrê hatine tomarkirin",
@@ -29576,8 +29551,8 @@
     "promptTr": "Bazı uygulamalar internet bağlantısı olmadan da neden çalışır?",
     "answersTr": [
       "Ekranları daha küçük olduğu için",
-      "Her uygulama sunucusuz yazıldığı için",
       "Veriler cihaza kaydedildiği için",
+      "Her uygulama sunucusuz yazıldığı için",
       "Yalnızca bataryayla çalıştıkları için"
     ],
     "correctAnswerTr": "Veriler cihaza kaydedildiği için"
@@ -29587,10 +29562,10 @@
     "category": "Teknolojî",
     "prompt": "GPS di amûrên mobîl de bi giştî ji bo çi tê bikaranîn?",
     "answers": [
-      "Diyarkirina cihê amûrê",
       "Zêdekirina hêza bataryayê",
       "Şîfrekirina peyamên nivîskî",
-      "Mezinkirina bîrgeya amûrê"
+      "Mezinkirina bîrgeya amûrê",
+      "Diyarkirina cihê amûrê"
     ],
     "correctAnswer": "Diyarkirina cihê amûrê",
     "explanation": "GPS cihê amûrê li ser rûyê erdê diyar dike; nexşe û lêgerîna rê pê dixebitin.",
@@ -29600,10 +29575,10 @@
     "explanationKu": "GPS cihê amûrê li ser rûyê erdê diyar dike; nexşe û lêgerîna rê pê dixebitin.",
     "promptTr": "Mobil cihazlarda GPS genellikle ne için kullanılır?",
     "answersTr": [
-      "Cihazın konumunu belirlemek",
       "Bataryanın gücünü artırmak",
       "Yazılı mesajları şifrelemek",
-      "Cihazın belleğini büyütmek"
+      "Cihazın belleğini büyütmek",
+      "Cihazın konumunu belirlemek"
     ],
     "correctAnswerTr": "Cihazın konumunu belirlemek"
   },
@@ -29613,8 +29588,8 @@
     "prompt": "Gava sepanek cara yekem hewceyî mîkrofona amûrê dibe, pergal çi dike?",
     "answers": [
       "Girêdana înternetê digire",
-      "Sepanê ji dukanê radike",
       "Ji bikarhêner destûrê dixwaze",
+      "Sepanê ji dukanê radike",
       "Mîkrofonê bêyî ku destûrê bixwaze vedike"
     ],
     "correctAnswer": "Ji bikarhêner destûrê dixwaze",
@@ -29626,8 +29601,8 @@
     "promptTr": "Bir uygulama cihazın mikrofonuna ilk kez ihtiyaç duyduğunda sistem ne yapar?",
     "answersTr": [
       "İnternet bağlantısını keser",
-      "Uygulamayı mağazadan kaldırır",
       "Kullanıcıdan izin ister",
+      "Uygulamayı mağazadan kaldırır",
       "İzin istemeden mikrofonu açar"
     ],
     "correctAnswerTr": "Kullanıcıdan izin ister"
@@ -29723,8 +29698,8 @@
     "answers": [
       "Guhêrbar",
       "Şirove",
-      "Koda çavkaniyê",
-      "Fonksiyon"
+      "Fonksiyon",
+      "Koda çavkaniyê"
     ],
     "correctAnswer": "Fonksiyon",
     "explanation": "Fonksiyon carekê tê nivîsandin û paşê gelek caran tê bikaranîn; ev yek kodê kurt dike û dubarekirinê kêm dike.",
@@ -29736,8 +29711,8 @@
     "answersTr": [
       "Değişken",
       "Yorum",
-      "Kaynak kodu",
-      "Fonksiyon"
+      "Fonksiyon",
+      "Kaynak kodu"
     ],
     "correctAnswerTr": "Fonksiyon"
   },
@@ -29747,8 +29722,8 @@
     "prompt": "Kîjan hêman li gorî rewşê diyar dike ka bername kîjan rê bigire?",
     "answers": [
       "Xelek",
-      "Fonksiyon",
       "Şert",
+      "Fonksiyon",
       "Guhêrbara hejmarî"
     ],
     "correctAnswer": "Şert",
@@ -29760,8 +29735,8 @@
     "promptTr": "Programın hangi yolu izleyeceğini duruma göre belirleyen öge hangisidir?",
     "answersTr": [
       "Döngü",
-      "Fonksiyon",
       "Koşul",
+      "Fonksiyon",
       "Sayısal değişken"
     ],
     "correctAnswerTr": "Koşul"
@@ -29773,8 +29748,8 @@
     "answers": [
       "Şert",
       "Fonksiyon",
-      "Xeleka bêdawî",
-      "Lîste"
+      "Lîste",
+      "Xeleka bêdawî"
     ],
     "correctAnswer": "Lîste",
     "explanation": "Lîste gelek nirxan bi rêz digire; her nirx bi jimara cihê xwe tê xwendin.",
@@ -29786,8 +29761,8 @@
     "answersTr": [
       "Koşul",
       "Fonksiyon",
-      "Sonsuz döngü",
-      "Liste"
+      "Liste",
+      "Sonsuz döngü"
     ],
     "correctAnswerTr": "Liste"
   },
@@ -29796,8 +29771,8 @@
     "category": "Teknolojî",
     "prompt": "Kîjan nermalav koda ku mirov nivîsandiye vediguherîne fermanên ku pêvajoker dimeşîne?",
     "answers": [
-      "Geroker",
       "Berhevkar",
+      "Geroker",
       "Pergala parastinê",
       "Rêveberê pelgehan"
     ],
@@ -29809,8 +29784,8 @@
     "explanationKu": "Berhevkar (compiler) zimanê bernamesaziyê werdigerîne zimanê makîneyê; bêyî wî pêvajoker nikare kodê bimeşîne.",
     "promptTr": "İnsanın yazdığı kodu, işlemcinin çalıştırdığı komutlara hangi yazılım çevirir?",
     "answersTr": [
-      "Tarayıcı",
       "Derleyici",
+      "Tarayıcı",
       "Koruma sistemi",
       "Dosya yöneticisi"
     ],
@@ -29823,8 +29798,8 @@
     "answers": [
       "Linux",
       "Firefox",
-      "Photoshop",
-      "Git"
+      "Git",
+      "Photoshop"
     ],
     "correctAnswer": "Git",
     "explanation": "Guherto rewşeke nû ya heman kodê ye; Git her guhertoyekê tomar dike, loma vegera ser rewşa berê pêkan e.",
@@ -29836,8 +29811,8 @@
     "answersTr": [
       "Linux",
       "Firefox",
-      "Photoshop",
-      "Git"
+      "Git",
+      "Photoshop"
     ],
     "correctAnswerTr": "Git"
   },
@@ -29847,8 +29822,8 @@
     "prompt": "Çima di projeyeke nermalavê de pirtûkxaneyeke amade tê bikaranîn?",
     "answers": [
       "Ji ber ku pirtûkxane hemû çewtiyên bernameyê bi xwe rast dikin",
-      "Ji ber ku bêyî pirtûkxaneyê tu bername naxebite",
       "Ji ber ku pirtûkxane kodeke ceribandî pêşkêş dike",
+      "Ji ber ku bêyî pirtûkxaneyê tu bername naxebite",
       "Ji ber ku pirtûkxane cihê dîskê kêm dikin"
     ],
     "correctAnswer": "Ji ber ku pirtûkxane kodeke ceribandî pêşkêş dike",
@@ -29860,8 +29835,8 @@
     "promptTr": "Bir yazılım projesinde neden hazır bir kütüphane kullanılır?",
     "answersTr": [
       "Kütüphaneler programın bütün hatalarını kendisi düzelttiği için",
-      "Kütüphane olmadan hiçbir program çalışmadığı için",
       "Kütüphane denenmiş bir kod sunduğu için",
+      "Kütüphane olmadan hiçbir program çalışmadığı için",
       "Kütüphaneler diskte kapladığı yeri azalttığı için"
     ],
     "correctAnswerTr": "Kütüphane denenmiş bir kod sunduğu için"
@@ -29957,8 +29932,8 @@
     "answers": [
       "HTML",
       "JPG",
-      "PDF",
-      "MP3"
+      "MP3",
+      "PDF"
     ],
     "correctAnswer": "MP3",
     "explanation": "MP3 ji bo deng tê bikaranîn, PDF ji bo nivîsê ye. Bi Kurmancî \"deng\" tê wateya \"ses\".",
@@ -29970,8 +29945,8 @@
     "answersTr": [
       "HTML",
       "JPG",
-      "PDF",
-      "MP3"
+      "MP3",
+      "PDF"
     ],
     "correctAnswerTr": "MP3"
   },
@@ -29980,10 +29955,10 @@
     "category": "Teknolojî",
     "prompt": "Mezinahiya dosyayekê bi çi tê pîvandin?",
     "answers": [
-      "bi bayt û megabayt",
       "bi metre û kîlometre",
       "bi saet û deqîqe",
-      "bi kîlogram û ton"
+      "bi kîlogram û ton",
+      "bi bayt û megabayt"
     ],
     "correctAnswer": "bi bayt û megabayt",
     "explanation": "Mezinahiya daneyan bi bayt û megabaytê tê pîvandin; metre ji bo dirêjahiyê ye.",
@@ -29993,10 +29968,10 @@
     "explanationKu": "Mezinahiya daneyan bi bayt û megabaytê tê pîvandin; metre ji bo dirêjahiyê ye.",
     "promptTr": "Bir dosyanın boyutu neyle ölçülür?",
     "answersTr": [
-      "bayt ve megabaytla",
       "metre ve kilometreyle",
       "saat ve dakikayla",
-      "kilogram ve tonla"
+      "kilogram ve tonla",
+      "bayt ve megabaytla"
     ],
     "correctAnswerTr": "bayt ve megabaytla"
   },
@@ -30006,8 +29981,8 @@
     "prompt": "Ji ya herî biçûk ber bi ya herî mezin ve, rêza rast kîjan e?",
     "answers": [
       "kîlobayt, bayt, megabayt",
-      "megabayt, kîlobayt, bayt",
       "bayt, kîlobayt, megabayt",
+      "megabayt, kîlobayt, bayt",
       "kîlobayt, megabayt, bayt"
     ],
     "correctAnswer": "bayt, kîlobayt, megabayt",
@@ -30019,8 +29994,8 @@
     "promptTr": "En küçükten en büyüğe doğru sıralama hangisidir?",
     "answersTr": [
       "kilobayt, bayt, megabayt",
-      "megabayt, kilobayt, bayt",
       "bayt, kilobayt, megabayt",
+      "megabayt, kilobayt, bayt",
       "kilobayt, megabayt, bayt"
     ],
     "correctAnswerTr": "bayt, kilobayt, megabayt"
@@ -30030,10 +30005,10 @@
     "category": "Teknolojî",
     "prompt": "Bi gelemperî kîjan dosya ji hemûyan bêtir cih digire?",
     "answers": [
-      "Vîdyoyeke bi dirêjahiya deh deqîqeyan",
       "Dosyayeke nivîsê ya ku çend rêzên kurt digire nav xwe",
       "Wêneyek ji ekranê",
-      "Dosyayeke dengî ya bi çend deqîqeyan"
+      "Dosyayeke dengî ya bi çend deqîqeyan",
+      "Vîdyoyeke bi dirêjahiya deh deqîqeyan"
     ],
     "correctAnswer": "Vîdyoyeke bi dirêjahiya deh deqîqeyan",
     "explanation": "Vîdyo hem wêne hem deng bi hev re digire nav xwe; ji ber wê ji dosyayên nivîsê, wêneyê û dengê pir mezintir e.",
@@ -30043,10 +30018,10 @@
     "explanationKu": "Vîdyo hem wêne hem deng bi hev re digire nav xwe; ji ber wê ji dosyayên nivîsê, wêneyê û dengê pir mezintir e.",
     "promptTr": "Genellikle hangi dosya hepsinden çok yer kaplar?",
     "answersTr": [
-      "On dakika uzunluğunda bir video",
       "Birkaç kısa satır içeren bir metin dosyası",
       "Ekrandan alınmış bir görüntü",
-      "Birkaç dakikalık bir ses dosyası"
+      "Birkaç dakikalık bir ses dosyası",
+      "On dakika uzunluğunda bir video"
     ],
     "correctAnswerTr": "On dakika uzunluğunda bir video"
   },
@@ -30057,8 +30032,8 @@
     "answers": [
       "Pelgeh",
       "Bilindgo",
-      "Textê tiliyan",
-      "Danegeh"
+      "Danegeh",
+      "Textê tiliyan"
     ],
     "correctAnswer": "Danegeh",
     "explanation": "Danegeh agahiyan birêkûpêk digire; ji ber wê lêgerîn bilez pêk tê.",
@@ -30070,35 +30045,10 @@
     "answersTr": [
       "Dosya",
       "Hoparlör",
-      "Klavye",
-      "Veritabanı"
+      "Veritabanı",
+      "Klavye"
     ],
     "correctAnswerTr": "Veritabanı"
-  },
-  {
-    "id": "offline_tek_0075",
-    "category": "Teknolojî",
-    "prompt": "Çima lêgerîn di lîsteyeke rêzkirî de zûtir pêk tê?",
-    "answers": [
-      "Ji ber ku di her gavê de nîvê mayî tê avêtin",
-      "Ji ber ku lîsteyên rêzkirî her tim kurtir dibin",
-      "Ji ber ku her hêmanek cihê xwe bi xwe dibêje",
-      "Ji ber ku komputer hemû navên rêzkirî berê di bîrgeyê de tomar dike"
-    ],
-    "correctAnswer": "Ji ber ku di her gavê de nîvê mayî tê avêtin",
-    "explanation": "Di lîsteyeke rêzkirî de mirov dikare di her gavê de nîvê mayî bavêje; ji ber wê hejmara gavan pir kêm dibe.",
-    "type": "multipleChoice",
-    "difficulty": 5,
-    "explanationTr": "Sıralı listede her adımda kalanın yarısı elenebilir; bu yüzden adım sayısı çok azalır.",
-    "explanationKu": "Di lîsteyeke rêzkirî de mirov dikare di her gavê de nîvê mayî bavêje; ji ber wê hejmara gavan pir kêm dibe.",
-    "promptTr": "Sıralı bir listede arama neden daha hızlı olur?",
-    "answersTr": [
-      "Her adımda kalanın yarısı elendiği için",
-      "Sıralı listeler her zaman daha kısa olduğu için",
-      "Her öge kendi yerini kendisi söylediği için",
-      "Bilgisayar sıralı adları önceden belleğe kaydettiği için"
-    ],
-    "correctAnswerTr": "Her adımda kalanın yarısı elendiği için"
   },
   {
     "id": "offline_tek_0076",
@@ -30190,9 +30140,9 @@
     "prompt": "Bernameya ku pê rûpelên malperan têne vekirin bi Kurmancî çi ye?",
     "answers": [
       "Motora lêgerînê",
-      "Geroker",
       "Pergala xebitandinê",
-      "Bernameya e-nameyê"
+      "Bernameya e-nameyê",
+      "Geroker"
     ],
     "correctAnswer": "Geroker",
     "explanation": "Geroker rûpelên malperan tîne ser ekranê; motora lêgerînê tenê li wan digere, pergala xebitandinê jî amûrê bi rê ve dibe.",
@@ -30203,9 +30153,9 @@
     "promptTr": "Web sayfalarını açmaya yarayan programa ne ad verilir?",
     "answersTr": [
       "Arama motoru",
-      "Tarayıcı",
       "İşletim sistemi",
-      "E-posta programı"
+      "E-posta programı",
+      "Tarayıcı"
     ],
     "correctAnswerTr": "Tarayıcı"
   },
@@ -30215,9 +30165,9 @@
     "prompt": "Peyva Kurmancî \"lêgerîn\" bi Tirkî çi tê gotin?",
     "answers": [
       "yazma",
+      "arama",
       "silme",
-      "kaydetme",
-      "arama"
+      "kaydetme"
     ],
     "correctAnswer": "arama",
     "explanation": "Lêgerîn tê wateya ku mirov li tiştekî bigere; motora lêgerînê jî ji bo me li ser înternetê digere.",
@@ -30228,9 +30178,9 @@
     "promptTr": "Kurmancî \"lêgerîn\" sözcüğü Türkçe ne demektir?",
     "answersTr": [
       "yazma",
+      "arama",
       "silme",
-      "kaydetme",
-      "arama"
+      "kaydetme"
     ],
     "correctAnswerTr": "arama"
   },
@@ -30261,9 +30211,9 @@
     "prompt": "E-nameyek ji kesekî nenas bi pêvekekê re hat. Tevgera herî ewle kîjan e?",
     "answers": [
       "Pêvekê veke û bala xwe bide naverokê",
+      "Pêvekê veneke û e-nameyê jê bibe",
       "E-nameyê ji hevalên xwe re bişîne ku ew jî bibînin",
-      "Bersivê bide û navnîşana xwe ya malê bişîne",
-      "Pêvekê veneke û e-nameyê jê bibe"
+      "Bersivê bide û navnîşana xwe ya malê bişîne"
     ],
     "correctAnswer": "Pêvekê veneke û e-nameyê jê bibe",
     "explanation": "Pêvekên ku ji kesên nenas tên, gelek caran nermalava zirardar hildigirin; venekirin rêya herî ewle ye.",
@@ -30274,9 +30224,9 @@
     "promptTr": "Tanımadığın birinden ekli bir e-posta geldi. En güvenli davranış hangisidir?",
     "answersTr": [
       "Eki aç ve içeriğine dikkatlice bak",
+      "Eki açma ve e-postayı sil",
       "E-postayı arkadaşlarına gönder ki onlar da görsün",
-      "Yanıt ver ve kendi ev adresini gönder",
-      "Eki açma ve e-postayı sil"
+      "Yanıt ver ve kendi ev adresini gönder"
     ],
     "correctAnswerTr": "Eki açma ve e-postayı sil"
   },
@@ -30307,9 +30257,9 @@
     "prompt": "Dema tu li malperekê digerî, \"cookie\" çi dike?",
     "answers": [
       "Girêdana înternetê bileztir û bêqablo dike",
-      "Agahiyên gera te li ser amûrê tomar dike",
       "Şîfreyên te yên hesaban diguherîne û nû dike",
-      "Hemû reklaman ji rûpelên malperan radike û paqij dike"
+      "Hemû reklaman ji rûpelên malperan radike û paqij dike",
+      "Agahiyên gera te li ser amûrê tomar dike"
     ],
     "correctAnswer": "Agahiyên gera te li ser amûrê tomar dike",
     "explanation": "Cookie perçeyeke piçûk a daneyan e ku malper li ser amûra te dihêle, da ku cara din te nas bike.",
@@ -30320,9 +30270,9 @@
     "promptTr": "Bir web sitesinde gezerken \"çerez\" ne yapar?",
     "answersTr": [
       "İnternet bağlantısını hızlandırır ve kablosuz yapar",
-      "Gezinti bilgilerini cihazına kaydeder",
       "Hesaplarının parolalarını değiştirir ve yeniler",
-      "Web sayfalarındaki bütün reklamları kaldırır ve temizler"
+      "Web sayfalarındaki bütün reklamları kaldırır ve temizler",
+      "Gezinti bilgilerini cihazına kaydeder"
     ],
     "correctAnswerTr": "Gezinti bilgilerini cihazına kaydeder"
   },
@@ -30353,9 +30303,9 @@
     "prompt": "Berî kirînê li ser înternetê, divê mirov pêşî li çi binêre?",
     "answers": [
       "Bihayê herî erzan û dema gihandinê",
-      "Ewlehiya girêdanê û navûdengê dikanê",
       "Hejmara reklamên li ser rûpela sereke ya dikanê",
-      "Rengê rûpelê û mezinahiya wêneyên hilberê"
+      "Rengê rûpelê û mezinahiya wêneyên hilberê",
+      "Ewlehiya girêdanê û navûdengê dikanê"
     ],
     "correctAnswer": "Ewlehiya girêdanê û navûdengê dikanê",
     "explanation": "Bihayê erzan bi tenê nabe pîvana ewlehiyê; girêdaneke şîfrekirî û dikaneke bi navûdeng du pîvanên sereke ne.",
@@ -30366,9 +30316,9 @@
     "promptTr": "İnternetten alışveriş yapmadan önce ilk olarak neye bakmak gerekir?",
     "answersTr": [
       "En ucuz fiyata ve teslim süresine",
-      "Bağlantının güvenliğine ve mağazanın itibarına",
       "Mağazanın ana sayfasındaki reklam sayısına",
-      "Sayfanın rengine ve ürün görsellerinin boyutuna"
+      "Sayfanın rengine ve ürün görsellerinin boyutuna",
+      "Bağlantının güvenliğine ve mağazanın itibarına"
     ],
     "correctAnswerTr": "Bağlantının güvenliğine ve mağazanın itibarına"
   },
@@ -30399,9 +30349,9 @@
     "prompt": "Kîjan mîheng diyar dikin ka kî dikare agahiyên te yên hesabê bibîne?",
     "answers": [
       "Mîhengên dengê amûrê",
+      "Mîhengên nepenîtiyê",
       "Mîhengên zimên û herêmê",
-      "Mîhengên ronahiya ekranê",
-      "Mîhengên nepenîtiyê"
+      "Mîhengên ronahiya ekranê"
     ],
     "correctAnswer": "Mîhengên nepenîtiyê",
     "explanation": "Bi mîhengên nepenîtiyê tê diyarkirin ka kî dikare profîl, wêne û agahiyên hesabê bibîne.",
@@ -30412,9 +30362,9 @@
     "promptTr": "Hesap bilgilerini kimin görebileceğini hangi ayarlar belirler?",
     "answersTr": [
       "Cihazın ses ayarları",
+      "Gizlilik ayarları",
       "Dil ve bölge ayarları",
-      "Ekran parlaklığı ayarları",
-      "Gizlilik ayarları"
+      "Ekran parlaklığı ayarları"
     ],
     "correctAnswerTr": "Gizlilik ayarları"
   },
@@ -30423,9 +30373,9 @@
     "category": "Sînema",
     "prompt": "Çima \"Klamek ji bo Beko\" (1992) di dîroka sînemaya kurdî de xwedî cihekî taybet e?",
     "answers": [
-      "Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye",
       "Ew yekem anîmasyona dirêj a kurdî ye",
       "Ew yekem fîlmê kurdî ye ku Palmiya Zêrîn wergirt",
+      "Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye",
       "Ew yekem belgefîlmê li ser dengbêjan e"
     ],
     "correctAnswer": "Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye",
@@ -30436,9 +30386,9 @@
     "explanationKu": "Derhênerê wê Nizamettin Ariç berê stranbêj bû; piraniya dîmenan li Ermenistanê hatin kişandin.",
     "promptTr": "\"Klamek ji bo Beko\" (1992) Kürt sinema tarihinde neden özel bir yere sahiptir?",
     "answersTr": [
-      "Baştan sona Kürtçe çekilen ilk uzun metrajlı filmdir",
       "Kürtçe yapılan ilk uzun metrajlı animasyon filmidir",
       "Altın Palmiye kazanan ilk Kürtçe filmdir",
+      "Baştan sona Kürtçe çekilen ilk uzun metrajlı filmdir",
       "Dengbêjler üzerine çekilen ilk belgesel filmdir"
     ],
     "correctAnswerTr": "Baştan sona Kürtçe çekilen ilk uzun metrajlı filmdir"
@@ -30469,9 +30419,9 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Ji bo Azadiyê\" (2019) berhema komîneke sînemayê ye; ev komîn li kîjan herêmê hatiye damezrandin?",
     "answers": [
-      "Rojavayê Kurdistanê",
       "Bakurê Kurdistanê",
       "Başûrê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Rojavayê Kurdistanê",
@@ -30482,9 +30432,9 @@
     "explanationKu": "Ew komîn ji sala 2015'an ve dixebite û perwerdehiya sînemayê dide ciwanên herêmê.",
     "promptTr": "\"Ji bo Azadiyê\" (2019) bir sinema komününün yapıtıdır; bu komün hangi bölgede kurulmuştur?",
     "answersTr": [
-      "Rojavayê Kurdistanê",
       "Bakurê Kurdistanê",
       "Başûrê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswerTr": "Rojavayê Kurdistanê"
@@ -30495,9 +30445,9 @@
     "prompt": "Bûyerên fîlmê \"Kilomètre zéro\" di kîjan şerî de derbas dibin?",
     "answers": [
       "Şerê Iraq û Kuweytê",
-      "Şerê Îran û Iraqê",
       "Şerê Navxweyî yê Libnanê",
-      "Şerê Sovyetê û Efxanistanê"
+      "Şerê Sovyetê û Efxanistanê",
+      "Şerê Îran û Iraqê"
     ],
     "correctAnswer": "Şerê Îran û Iraqê",
     "explanation": "Yönetmeni Hiner Saleem'dir; film bir cenazenin cepheden bir köye taşınmasını gösterir.",
@@ -30508,9 +30458,9 @@
     "promptTr": "\"Kilomètre zéro\" filminin olayları hangi savaşta geçer?",
     "answersTr": [
       "Irak-Kuveyt Savaşı",
-      "İran-Irak Savaşı",
       "Lübnan İç Savaşı",
-      "Sovyet-Afganistan Savaşı"
+      "Sovyet-Afganistan Savaşı",
+      "İran-Irak Savaşı"
     ],
     "correctAnswerTr": "İran-Irak Savaşı"
   },
@@ -30540,9 +30490,9 @@
     "category": "Sînema",
     "prompt": "Yilmaz Guney berî ku bibe derhêner, karê wî yê sereke li sînemayê çi bû?",
     "answers": [
-      "Lîstikvanî",
       "Wênegirî",
       "Muzîkjenî",
+      "Lîstikvanî",
       "Dekorsazî"
     ],
     "correctAnswer": "Lîstikvanî",
@@ -30553,9 +30503,9 @@
     "explanationKu": "Di salên şêstî de bi navê \"Çirkin Kral\" bû stêrkeke gel; paşê derbasî pişt kamerayê bû.",
     "promptTr": "Yılmaz Güney yönetmen olmadan önce sinemadaki asıl işi neydi?",
     "answersTr": [
-      "Oyunculuk",
       "Kameramanlık",
       "Müzisyenlik",
+      "Oyunculuk",
       "Dekorculuk"
     ],
     "correctAnswerTr": "Oyunculuk"
@@ -30566,9 +30516,9 @@
     "prompt": "Jano Rosebiani di fîlmê \"Jiyan\" (2002) de li ser encamên kîjan bûyerê radiweste?",
     "answers": [
       "Rûxandina gundên Kurdistanê",
+      "Êrîşa kîmyayî ya Helebceyê",
       "Şerê Kendavê",
-      "Serhildana Amedê",
-      "Êrîşa kîmyayî ya Helebceyê"
+      "Serhildana Amedê"
     ],
     "correctAnswer": "Êrîşa kîmyayî ya Helebceyê",
     "explanation": "Film o günden sonraki yılları gösterir: öksüz çocuklar ve yeniden kurulan bir şehir.",
@@ -30579,9 +30529,9 @@
     "promptTr": "Jano Rosebiani \"Jiyan\" (2002) filminde hangi olayın sonuçları üzerinde durur?",
     "answersTr": [
       "Kurdistan köylerinin yıkılması",
+      "Helebce kimyasal saldırısı",
       "Körfez Savaşı",
-      "Amed serhildanı",
-      "Helebce kimyasal saldırısı"
+      "Amed serhildanı"
     ],
     "correctAnswerTr": "Helebce kimyasal saldırısı"
   },
@@ -30612,9 +30562,9 @@
     "prompt": "Karê ku tê de dîmenên kişandî li gorî rêzekê tên birîn û bi hev ve tên girêdan çi ye?",
     "answers": [
       "Senaryo",
-      "Montaj",
       "Dublaj",
-      "Dekor"
+      "Dekor",
+      "Montaj"
     ],
     "correctAnswer": "Montaj",
     "explanation": "Bu iş filmin uzunluğunu ve temposunu da belirler; aynı çekim başka bir kesimle başka bir etki verir.",
@@ -30625,9 +30575,9 @@
     "promptTr": "Çekilen görüntülerin bir sıraya göre kesilip birbirine bağlandığı işin adı nedir?",
     "answersTr": [
       "Senaryo",
-      "Montaj",
       "Dublaj",
-      "Dekor"
+      "Dekor",
+      "Montaj"
     ],
     "correctAnswerTr": "Montaj"
   },
@@ -30636,9 +30586,9 @@
     "category": "Sînema",
     "prompt": "Kîjan derhênerê îranî di sala 1997'an de Palmiya Zêrîn a Cannesê wergirt?",
     "answers": [
+      "Abbas Kiarostami",
       "Asghar Farhadi",
       "Jafar Panahi",
-      "Abbas Kiarostami",
       "Mohsen Makhmalbaf"
     ],
     "correctAnswer": "Abbas Kiarostami",
@@ -30649,9 +30599,9 @@
     "explanationKu": "Fîlmê wî zilamekî nîşan dide ku bi otomobîlê li derdorên Tehranê digere û bi kesên nenas re diaxive.",
     "promptTr": "1997 yılında Cannes'da Altın Palmiye'yi hangi İranlı yönetmen kazandı?",
     "answersTr": [
+      "Abbas Kiarostami",
       "Asghar Farhadi",
       "Jafar Panahi",
-      "Abbas Kiarostami",
       "Mohsen Makhmalbaf"
     ],
     "correctAnswerTr": "Abbas Kiarostami"
@@ -30682,9 +30632,9 @@
     "category": "Sînema",
     "prompt": "Sê fîlmên \"Pather Panchali\", \"Aparajito\" û \"Apur Sansar\" ji kîjan welatî ne?",
     "answers": [
+      "Hindistan",
       "Pakistan",
       "Bangladeş",
-      "Hindistan",
       "Afxanistan"
     ],
     "correctAnswer": "Hindistan",
@@ -30695,9 +30645,9 @@
     "explanationKu": "Derhênerê wan Satyajit Ray e; her sê fîlm jiyana heman kesî ji gund heta bajêr dişopînin.",
     "promptTr": "\"Pather Panchali\", \"Aparajito\" ve \"Apur Sansar\" filmleri hangi ülkedendir?",
     "answersTr": [
+      "Hindistan",
       "Pakistan",
       "Bangladeş",
-      "Hindistan",
       "Afganistan"
     ],
     "correctAnswerTr": "Hindistan"
@@ -30708,9 +30658,9 @@
     "prompt": "Ousmane Sembène, ku wek bavê sînemaya Afrîkayê tê hesibandin, ji kîjan welatî ye?",
     "answers": [
       "Misir",
+      "Senegal",
       "Nîjerya",
-      "Afrîkaya Başûr",
-      "Senegal"
+      "Afrîkaya Başûr"
     ],
     "correctAnswer": "Senegal",
     "explanation": "Önce romancıydı; halk okuma bilmeden de öykülerini duysun diye sinemaya yöneldi.",
@@ -30721,9 +30671,9 @@
     "promptTr": "Afrika sinemasının babası sayılan Ousmane Sembène hangi ülkedendir?",
     "answersTr": [
       "Mısır",
+      "Senegal",
       "Nijerya",
-      "Güney Afrika",
-      "Senegal"
+      "Güney Afrika"
     ],
     "correctAnswerTr": "Senegal"
   },
@@ -30753,9 +30703,9 @@
     "category": "Sînema",
     "prompt": "Peyva \"paparazzi\" ku îro ji bo wênegirên stêrkan tê bikaranîn, ji karakterekî kîjan fîlmî tê?",
     "answers": [
+      "La Dolce Vita",
       "Cinema Paradiso",
       "Diziyên Bîsikletê",
-      "La Dolce Vita",
       "Roma, Bajarê Vekirî"
     ],
     "correctAnswer": "La Dolce Vita",
@@ -30766,9 +30716,9 @@
     "explanationKu": "Derhênerê wê Federico Fellini ye; ew karakter wênegirekî rojnameyê bû ku li kolanên Romayê li pey kesên navdar digeriya.",
     "promptTr": "Bugün ünlülerin peşindeki fotoğrafçılar için kullanılan \"paparazzi\" sözcüğü hangi filmin bir karakterinden gelir?",
     "answersTr": [
+      "La Dolce Vita",
       "Cinema Paradiso",
       "Bisiklet Hırsızları",
-      "La Dolce Vita",
       "Roma, Açık Şehir"
     ],
     "correctAnswerTr": "La Dolce Vita"
@@ -30779,9 +30729,9 @@
     "prompt": "Kîjan derhênerê sovyetî bi planên xwe yên pir dirêj û bi vegotina xwe ya hêdî tê nasîn?",
     "answers": [
       "Sergey Eisenstein",
-      "Andrey Tarkovski",
       "Dziga Vertov",
-      "Andrey Konchalovski"
+      "Andrey Konchalovski",
+      "Andrey Tarkovski"
     ],
     "correctAnswer": "Andrey Tarkovski",
     "explanation": "\"Stalker\" ve \"Solaris\" gibi filmleri zamanı konu edinir; bazı çekimleri dakikalarca sürer.",
@@ -30792,9 +30742,9 @@
     "promptTr": "Hangi Sovyet yönetmen çok uzun planlarıyla ve ağır anlatımıyla tanınır?",
     "answersTr": [
       "Sergey Eisenstein",
-      "Andrey Tarkovski",
       "Dziga Vertov",
-      "Andrey Konchalovski"
+      "Andrey Konchalovski",
+      "Andrey Tarkovski"
     ],
     "correctAnswerTr": "Andrey Tarkovski"
   },
@@ -30825,9 +30775,9 @@
     "prompt": "Belgefîlma \"Der Imker\" ya Mano Khalil çîroka penaberekî kurd li kîjan welatî vedibêje?",
     "answers": [
       "Almanya",
+      "Swîsre",
       "Norwec",
-      "Hollanda",
-      "Swîsre"
+      "Hollanda"
     ],
     "correctAnswer": "Swîsre",
     "explanation": "Göçten önce işi arıcılıktı; yeni ülkesinde yine aynı işe döndü.",
@@ -30838,9 +30788,9 @@
     "promptTr": "Mano Khalil'in \"Der Imker\" belgeseli Kürt bir mültecinin hikâyesini hangi ülkede anlatır?",
     "answersTr": [
       "Almanya",
+      "İsviçre",
       "Norveç",
-      "Hollanda",
-      "İsviçre"
+      "Hollanda"
     ],
     "correctAnswerTr": "İsviçre"
   },
@@ -30850,9 +30800,9 @@
     "prompt": "Du zarokên fîlmê \"Bekas\" dixwazin biçin Amerîkayê da ku kê bibînin?",
     "answers": [
       "Charlie Chaplin",
-      "Superman",
       "Bruce Lee",
-      "Serokê Amerîkayê"
+      "Serokê Amerîkayê",
+      "Superman"
     ],
     "correctAnswer": "Superman",
     "explanation": "Film Irak Kürdistanı'nda çekildi; başrollerde iki yetim kardeş var.",
@@ -30863,9 +30813,9 @@
     "promptTr": "\"Bekas\" filmindeki iki çocuk kimi görmek için Amerika'ya gitmek ister?",
     "answersTr": [
       "Charlie Chaplin",
-      "Superman",
       "Bruce Lee",
-      "Amerika Başkanı"
+      "Amerika Başkanı",
+      "Superman"
     ],
     "correctAnswerTr": "Superman"
   },
@@ -30895,9 +30845,9 @@
     "category": "Teknolojî",
     "prompt": "Panelên li ser banan elektrîkê ji kîjan çavkaniyê çêdikin?",
     "answers": [
-      "Ji ronahiya tavê",
       "Ji bayê ku li deştan tê",
       "Ji germahiya ava kûr",
+      "Ji ronahiya tavê",
       "Ji tevgera nav erdê"
     ],
     "correctAnswer": "Ji ronahiya tavê",
@@ -30908,9 +30858,9 @@
     "explanationKu": "Panel ronahiya tavê digirin û wê dikin elektrîk; ji ber wê bi şev enerjî nayê hilberandin.",
     "promptTr": "Çatılardaki paneller elektriği hangi kaynaktan üretir?",
     "answersTr": [
-      "Güneş ışığından",
       "Ovalarda esen rüzgârdan",
       "Derin suyun sıcaklığından",
+      "Güneş ışığından",
       "Yer altındaki hareketten"
     ],
     "correctAnswerTr": "Güneş ışığından"
@@ -30941,9 +30891,9 @@
     "category": "Teknolojî",
     "prompt": "Ji van çavkaniyan kîjan piştî bikaranînê ji nû ve çênabe?",
     "answers": [
+      "Komira ku ji bin erdê tê derxistin",
       "Bayê ku li ser deştên fireh diherike",
       "Ava çeman û robaran",
-      "Komira ku ji bin erdê tê derxistin",
       "Ronahiya tavê ya rojane"
     ],
     "correctAnswer": "Komira ku ji bin erdê tê derxistin",
@@ -30954,9 +30904,9 @@
     "explanationKu": "Komir ji nebatên ku bi sedan mîlyon sal berê di bin axê de man pêk hatiye; ba û tav xwe her roj nû dikin, lê komir çavkaniyeke sînordar e.",
     "promptTr": "Bu kaynaklardan hangisi kullanıldıktan sonra yeniden oluşmaz?",
     "answersTr": [
+      "Yer altından çıkarılan kömür",
       "Geniş ovalarda esen rüzgâr",
       "Nehirlerin ve derelerin suyu",
-      "Yer altından çıkarılan kömür",
       "Her gün doğan güneşin ışığı"
     ],
     "correctAnswerTr": "Yer altından çıkarılan kömür"
@@ -30966,9 +30916,9 @@
     "category": "Teknolojî",
     "prompt": "Trimbêlên elektrîkî li şûna benzînê bi çi dixebitin?",
     "answers": [
-      "Bi bataryaya hundirîn",
       "Bi komira şewitî",
       "Bi ava germ a motorê",
+      "Bi bataryaya hundirîn",
       "Bi bayê ku li ser rê diherike"
     ],
     "correctAnswer": "Bi bataryaya hundirîn",
@@ -30979,9 +30929,9 @@
     "explanationKu": "Batarya bi elektrîkê tê barkirin û motorê dixebitîne; ji ber wê ji van trimbêlan dûman dernakeve.",
     "promptTr": "Elektrikli arabalar benzin yerine neyle çalışır?",
     "answersTr": [
-      "İçindeki bataryayla",
       "Yakılan kömürle",
       "Motorun sıcak suyuyla",
+      "İçindeki bataryayla",
       "Yolda esen rüzgârla"
     ],
     "correctAnswerTr": "İçindeki bataryayla"
@@ -31013,9 +30963,9 @@
     "prompt": "Çima avdana bi dilopan ji ya bi lehiyê kêmtir avê xerc dike?",
     "answers": [
       "Ji ber ku av di boriyan de sartir dibe û kêm dibe",
+      "Ji ber ku av rasterast digihîje kokan",
       "Ji ber ku dilop ji lehiyê giran in",
-      "Ji ber ku zeviyên biçûk kêmtir av dixwazin",
-      "Ji ber ku av rasterast digihîje kokan"
+      "Ji ber ku zeviyên biçûk kêmtir av dixwazin"
     ],
     "correctAnswer": "Ji ber ku av rasterast digihîje kokan",
     "explanation": "Bu yöntemde su bitkinin kökünün dibine dökülür; toprak yüzeyine yayılmaz ve daha azı kaybolur.",
@@ -31026,9 +30976,9 @@
     "promptTr": "Damlama sulama neden salma sulamadan daha az su harcar?",
     "answersTr": [
       "Çünkü su borularda soğur ve azalır",
+      "Çünkü su doğrudan köklere ulaşır",
       "Çünkü damlalar salma sudan daha ağırdır",
-      "Çünkü küçük tarlalar daha az su ister",
-      "Çünkü su doğrudan köklere ulaşır"
+      "Çünkü küçük tarlalar daha az su ister"
     ],
     "correctAnswerTr": "Çünkü su doğrudan köklere ulaşır"
   },
@@ -31058,9 +31008,9 @@
     "category": "Teknolojî",
     "prompt": "Kîjan amûr dihêle ku bijîşk hestiyên şikestî bêyî vekirina laş bibîne?",
     "answers": [
+      "Amûra tîrêjên X",
       "Mîkroskopa ronahiyê",
       "Pîvana germahiyê",
-      "Amûra tîrêjên X",
       "Amûra guhdarîkirina dil"
     ],
     "correctAnswer": "Amûra tîrêjên X",
@@ -31071,9 +31021,9 @@
     "explanationKu": "Tîrêj di goşt re derbas dibin lê di hestî re na; ji ber wê hestî li ser wêneyê spî xuya dike.",
     "promptTr": "Hangi cihaz hekimin kırık kemikleri vücudu açmadan görmesini sağlar?",
     "answersTr": [
+      "X ışını cihazı",
       "Işık mikroskobu",
       "Sıcaklık ölçer",
-      "X ışını cihazı",
       "Kalp dinleme cihazı"
     ],
     "correctAnswerTr": "X ışını cihazı"
@@ -31084,9 +31034,9 @@
     "prompt": "Çima çêkirina dermanekî nû bi salan didome?",
     "answers": [
       "Ji ber ku divê navê wî li her welatekî cuda were qeydkirin û parastin",
-      "Ji ber ku divê ewlehiya wî li ser gelek kesan bê ceribandin",
       "Ji ber ku derman tenê di demsala payizê de tên çêkirin",
-      "Ji ber ku her derman ji sed pêkhateyên cuda pêk tê"
+      "Ji ber ku her derman ji sed pêkhateyên cuda pêk tê",
+      "Ji ber ku divê ewlehiya wî li ser gelek kesan bê ceribandin"
     ],
     "correctAnswer": "Ji ber ku divê ewlehiya wî li ser gelek kesan bê ceribandin",
     "explanation": "İlaç eczaneye ulaşmadan önce birkaç aşamada büyük gruplar üzerinde denenir; bu aşamalar zaman ister.",
@@ -31097,9 +31047,9 @@
     "promptTr": "Yeni bir ilacın geliştirilmesi neden yıllar sürer?",
     "answersTr": [
       "Çünkü adının her ülkede ayrı ayrı tescil edilmesi gerekir",
-      "Çünkü güvenliğinin çok sayıda kişide denenmesi gerekir",
       "Çünkü ilaçlar yalnızca sonbahar mevsiminde üretilir",
-      "Çünkü her ilaç yüz ayrı bileşenden oluşur"
+      "Çünkü her ilaç yüz ayrı bileşenden oluşur",
+      "Çünkü güvenliğinin çok sayıda kişide denenmesi gerekir"
     ],
     "correctAnswerTr": "Çünkü güvenliğinin çok sayıda kişide denenmesi gerekir"
   },
@@ -31108,9 +31058,9 @@
     "category": "Teknolojî",
     "prompt": "Peykên li derdora Erdê bi giranî ji bo çi tên bikaranîn?",
     "answers": [
+      "Ji bo veguhastina sînyalan û wêneyan",
       "Ji bo hilanîna ava vexwarinê",
       "Ji bo hilberandina komirê li jor",
-      "Ji bo veguhastina sînyalan û wêneyan",
       "Ji bo hêdîkirina zivirîna Erdê li dora tavê"
     ],
     "correctAnswer": "Ji bo veguhastina sînyalan û wêneyan",
@@ -31121,9 +31071,9 @@
     "explanationKu": "Peyk sînyalê ji stasyoneke erdî digire û ji herêmeke fireh re dişîne; ji ber wê weşan digihîje cihên dûr.",
     "promptTr": "Dünya çevresindeki uydular çoğunlukla ne için kullanılır?",
     "answersTr": [
+      "Sinyal ve görüntü aktarmak için",
       "İçme suyu depolamak için",
       "Yukarıda kömür üretmek için",
-      "Sinyal ve görüntü aktarmak için",
       "Dünya'nın güneş çevresindeki dönüşünü yavaşlatmak için"
     ],
     "correctAnswerTr": "Sinyal ve görüntü aktarmak için"
@@ -31154,9 +31104,9 @@
     "category": "Teknolojî",
     "prompt": "Av di pîvana Celsius de li kîjan pileyê dikele?",
     "answers": [
-      "Li sed pileyan",
       "Li pêncî pileyan",
       "Li bîst pileyan",
+      "Li sed pileyan",
       "Li dused pileyan"
     ],
     "correctAnswer": "Li sed pileyan",
@@ -31167,9 +31117,9 @@
     "explanationKu": "Di vê pîvanê de av li sifir pileyan dicemide; ji cemidînê heta kelînê sed pile hene.",
     "promptTr": "Su, Celsius ölçeğinde kaç derecede kaynar?",
     "answersTr": [
-      "Yüz derecede",
       "Elli derecede",
       "Yirmi derecede",
+      "Yüz derecede",
       "İki yüz derecede"
     ],
     "correctAnswerTr": "Yüz derecede"
@@ -31179,9 +31129,9 @@
     "category": "Teknolojî",
     "prompt": "Yekîneya \"wat\" di jiyana rojane de çi dide zanîn?",
     "answers": [
+      "Hêza ku amûrek xerc dike",
       "Giraniya amûrê li ser mêzînê",
       "Dirêjahiya qabloya amûrê",
-      "Hêza ku amûrek xerc dike",
       "Dema ku amûr dixebite"
     ],
     "correctAnswer": "Hêza ku amûrek xerc dike",
@@ -31192,9 +31142,9 @@
     "explanationKu": "Çiqas wat zêde be, amûr ewqas zûtir elektrîkê dixwe; ji ber wê ampûlên kêm wat kêmtir xerc dikin.",
     "promptTr": "\"Watt\" birimi günlük hayatta neyi gösterir?",
     "answersTr": [
+      "Bir cihazın harcadığı gücü",
       "Cihazın terazideki ağırlığını",
       "Cihazın kablosunun uzunluğunu",
-      "Bir cihazın harcadığı gücü",
       "Cihazın çalıştığı süreyi"
     ],
     "correctAnswerTr": "Bir cihazın harcadığı gücü"
@@ -31226,9 +31176,9 @@
     "prompt": "Berî îcada motora buxarê, keştî bi giranî bi çi dimeşiyan?",
     "answers": [
       "Bi elektrîka bataryayan",
-      "Bi hêza bayê û ya mirovan",
       "Bi hêza motorên mazotê",
-      "Bi tîrêjên tavê yên rasterast"
+      "Bi tîrêjên tavê yên rasterast",
+      "Bi hêza bayê û ya mirovan"
     ],
     "correctAnswer": "Bi hêza bayê û ya mirovan",
     "explanation": "Eski gemiler gücünü rüzgârdan alırdı; rüzgâr esmediğinde gemiyi insanlar elle yürütürdü.",
@@ -31239,9 +31189,9 @@
     "promptTr": "Buhar makinesi icat edilmeden önce gemiler çoğunlukla neyle yol alırdı?",
     "answersTr": [
       "Pillerin elektriğiyle",
-      "Rüzgârın ve insanların gücüyle",
       "Mazot motorlarının gücüyle",
-      "Doğrudan güneş ışınlarıyla"
+      "Doğrudan güneş ışınlarıyla",
+      "Rüzgârın ve insanların gücüyle"
     ],
     "correctAnswerTr": "Rüzgârın ve insanların gücüyle"
   },
@@ -31250,9 +31200,9 @@
     "category": "Paradigma",
     "prompt": "Di nav van armancan de kîjan ne armanca \"femînîzmê\" ye?",
     "answers": [
-      "parastina serdestiya mêran di nav malbatê de",
       "wekheviya mafên jin û mêran",
       "bidawîkirina cudakariya ku li ser jinan tê kirin",
+      "parastina serdestiya mêran di nav malbatê de",
       "beşdariya jinan a di biryarên civakî de"
     ],
     "correctAnswer": "parastina serdestiya mêran di nav malbatê de",
@@ -31263,9 +31213,9 @@
     "explanationKu": "Femînîzm ji bo rakirina cudakariya zayendî xebat dike; ew serdestiya mêran naparêze, wê dixe ber pirsê. Peyv ji latînî \"femina\" tê.",
     "promptTr": "Bu amaçlardan hangisi \"feminizmin\" amacı değildir?",
     "answersTr": [
-      "aile içinde erkek egemenliğini korumak",
       "kadın ve erkeğin haklarının eşitliği",
       "kadınlara yönelik ayrımcılığa son vermek",
+      "aile içinde erkek egemenliğini korumak",
       "kadınların toplumsal kararlara katılımı"
     ],
     "correctAnswerTr": "aile içinde erkek egemenliğini korumak"
@@ -31276,9 +31226,9 @@
     "prompt": "Kîjan taybetî \"demokrasiya nûnertiyê\" ji demokrasiya rasterast cuda dike?",
     "answers": [
       "gel rasterast bi referandûmê biryarê dide",
+      "biryar bi destê kesên hilbijartî tên girtin",
       "biryarên herêmî di civînên gundan de tên girtin",
-      "her kes di civîna giştî de dengê xwe bilind dike",
-      "biryar bi destê kesên hilbijartî tên girtin"
+      "her kes di civîna giştî de dengê xwe bilind dike"
     ],
     "correctAnswer": "biryar bi destê kesên hilbijartî tên girtin",
     "explanation": "Temsili demokraside halk karar yetkisini seçtiği kişilere devreder ve onlar halk adına konuşur; doğrudan demokraside bu yetki halkın kendisinde kalır.",
@@ -31289,9 +31239,9 @@
     "promptTr": "Hangi özellik \"temsili demokrasiyi\" doğrudan demokrasiden ayırır?",
     "answersTr": [
       "halk doğrudan referandumla karar verir",
+      "kararlar seçilmiş kişilerin eliyle alınır",
       "yerel kararlar köy meclislerinde alınır",
-      "herkes genel mecliste sesini yükseltir",
-      "kararlar seçilmiş kişilerin eliyle alınır"
+      "herkes genel mecliste sesini yükseltir"
     ],
     "correctAnswerTr": "kararlar seçilmiş kişilerin eliyle alınır"
   },
@@ -31322,9 +31272,9 @@
     "prompt": "Çima \"mêtingerî\" tenê wek dagirkeriya axê nayê pênasekirin?",
     "answers": [
       "ji ber ku ew tenê di destê dewletan de tê meşandin",
-      "ji ber ku ew çand û zimanê gel jî bindest dike",
       "ji ber ku ew bi peymanên bazirganiyê ve girêdayî ye",
-      "ji ber ku ew bi razîbûna gelê herêmî pêk tê"
+      "ji ber ku ew bi razîbûna gelê herêmî pêk tê",
+      "ji ber ku ew çand û zimanê gel jî bindest dike"
     ],
     "correctAnswer": "ji ber ku ew çand û zimanê gel jî bindest dike",
     "explanation": "Sömürgecilik toprakla sınırlı kalmaz: işgalci, halkın dilini, tarihini ve belleğini de denetim altına alır; böylece direnişin dayanacağı zemin kalmaz.",
@@ -31335,9 +31285,9 @@
     "promptTr": "\"Sömürgecilik\" neden yalnızca toprak işgali olarak tanımlanmaz?",
     "answersTr": [
       "çünkü yalnızca devletlerin eliyle yürütülür",
-      "çünkü halkın kültürünü ve dilini de boyunduruk altına alır",
       "çünkü ticaret anlaşmalarına bağlı olarak işler",
-      "çünkü yerel halkın rızasıyla gerçekleşir"
+      "çünkü yerel halkın rızasıyla gerçekleşir",
+      "çünkü halkın kültürünü ve dilini de boyunduruk altına alır"
     ],
     "correctAnswerTr": "çünkü halkın kültürünü ve dilini de boyunduruk altına alır"
   },
@@ -31347,9 +31297,9 @@
     "prompt": "Di ramana civakî de \"şoreşa neolîtîk\" çima wek qonaxeke veguherînê tê dîtin?",
     "answers": [
       "nivîs hat vedîtin û dewletên yekem hatin damezrandin",
+      "mirov dest bi çandiniyê û xwedîkirina ajalan kir",
       "bajarên mezin ên pîşesaziyê li kêleka çeman ava bûn",
-      "hesin hat helandin û çekên nû derketin",
-      "mirov dest bi çandiniyê û xwedîkirina ajalan kir"
+      "hesin hat helandin û çekên nû derketin"
     ],
     "correctAnswer": "mirov dest bi çandiniyê û xwedîkirina ajalan kir",
     "explanation": "Tarımla birlikte insanlar bir yere yerleşti, ambarlar doldu ve artı ürün ortaya çıktı; o artı ürüne el koyanların belirmesiyle eşitsizlik de başladı.",
@@ -31360,9 +31310,9 @@
     "promptTr": "Toplumsal düşüncede \"neolitik devrim\" neden bir dönüşüm evresi sayılır?",
     "answersTr": [
       "yazı bulundu ve ilk devletler kuruldu",
+      "insan tarıma ve hayvan yetiştirmeye başladı",
       "nehir kıyılarında büyük sanayi kentleri kuruldu",
-      "demir eritildi ve yeni silahlar ortaya çıktı",
-      "insan tarıma ve hayvan yetiştirmeye başladı"
+      "demir eritildi ve yeni silahlar ortaya çıktı"
     ],
     "correctAnswerTr": "insan tarıma ve hayvan yetiştirmeye başladı"
   },
@@ -31392,9 +31342,9 @@
     "category": "Paradigma",
     "prompt": "Peyva \"utopya\" yekem car di pirtûka kê de wek navê giravekê derbas bû?",
     "answers": [
+      "Thomas More",
       "Karl Marx",
       "Jean-Jacques Rousseau",
-      "Thomas More",
       "Aristoteles"
     ],
     "correctAnswer": "Thomas More",
@@ -31405,9 +31355,9 @@
     "explanationKu": "Thomas More di sala 1516an de pirtûka xwe \"Utopia\" nivîsî; nav ji yewnanî tê û tê wateya \"cihê ku tune ye\". Ji wê rojê ve peyv ji bo civaka xeyalkirî tê bikaranîn.",
     "promptTr": "\"Ütopya\" sözcüğü ilk kez kimin kitabında bir adanın adı olarak geçti?",
     "answersTr": [
+      "Thomas More",
       "Karl Marx",
       "Jean-Jacques Rousseau",
-      "Thomas More",
       "Aristoteles"
     ],
     "correctAnswerTr": "Thomas More"
@@ -31439,9 +31389,9 @@
     "prompt": "Kîjan bingeh di ramana \"lîberalîzmê\" de cih nagire?",
     "answers": [
       "azadiya kesane li hember dewletê",
-      "milkiyeta hevpar a amûrên hilberînê",
       "aboriya bazara reqabeta azad",
-      "wekheviya hemû kesan li ber qanûnê"
+      "wekheviya hemû kesan li ber qanûnê",
+      "milkiyeta hevpar a amûrên hilberînê"
     ],
     "correctAnswer": "milkiyeta hevpar a amûrên hilberînê",
     "explanation": "Liberalizm bireysel özgürlüğü ve özel mülkiyeti merkeze alır; üretim araçlarının ortak mülkiyeti sosyalist düşüncelerin ayırt edici savıdır.",
@@ -31452,9 +31402,9 @@
     "promptTr": "Hangi temel, \"liberalizm\" düşüncesinde yer almaz?",
     "answersTr": [
       "devlet karşısında bireysel özgürlük",
-      "üretim araçlarının ortak mülkiyeti",
       "serbest rekabetçi pazar ekonomisi",
-      "herkesin yasa önünde eşitliği"
+      "herkesin yasa önünde eşitliği",
+      "üretim araçlarının ortak mülkiyeti"
     ],
     "correctAnswerTr": "üretim araçlarının ortak mülkiyeti"
   },
@@ -31463,9 +31413,9 @@
     "category": "Paradigma",
     "prompt": "Gava mirov dadperweriya civakî ji xêrxwaziyê cuda dike, xala herî bingehîn kîjan e?",
     "answers": [
+      "ew mafek e ku divê bê dayîn, ne bexşîşek e",
       "ew tenê ji aliyê dewletê ve tê birêvebirin",
       "ew li ser dilxwaziya kesên dewlemend ava dibe",
-      "ew mafek e ku divê bê dayîn, ne bexşîşek e",
       "ew tenê di dema krîzên aborî de tê nîqaşkirin"
     ],
     "correctAnswer": "ew mafek e ku divê bê dayîn, ne bexşîşek e",
@@ -31476,9 +31426,9 @@
     "explanationKu": "Xêrxwazî ji dilê kesekî tê û her gav dikare bê birîn; dadperwerî erkek e ku civak deyndara wê ye û bi rêbazên hevpar tê pêkanîn.",
     "promptTr": "Toplumsal adalet hayırseverlikten ayrılırken en temel nokta hangisidir?",
     "answersTr": [
+      "bağış değil, verilmesi gereken bir hak olmasıdır",
       "yalnızca devlet eliyle yürütülmesidir",
       "varlıklı kişilerin gönlüne dayanmasıdır",
-      "bağış değil, verilmesi gereken bir hak olmasıdır",
       "yalnızca ekonomik krizlerde tartışılmasıdır"
     ],
     "correctAnswerTr": "bağış değil, verilmesi gereken bir hak olmasıdır"
@@ -31530,9 +31480,9 @@
     "category": "Paradigma",
     "prompt": "Li bajarekî çend ziman, çend ol û çend çand bi hev re dijîn; ev rewş bi kîjan têgehê tê binavkirin?",
     "answers": [
+      "pirrengî",
       "yekrengî",
       "asîmîlasyon",
-      "pirrengî",
       "navendîbûn"
     ],
     "correctAnswer": "pirrengî",
@@ -31543,9 +31493,9 @@
     "explanationKu": "Pirrengî tê wê wateyê ku cudahî wek dewlemendî tên dîtin; li hemberî wê yekrengî hemû cudahiyan dixe bin qalibekî.",
     "promptTr": "Bir kentte birkaç dil, birkaç din ve birkaç kültür bir arada yaşıyor; bu durum hangi kavramla adlandırılır?",
     "answersTr": [
+      "çoğulluk",
       "tekçilik",
       "asimilasyon",
-      "çoğulluk",
       "merkezileşme"
     ],
     "correctAnswerTr": "çoğulluk"
@@ -31555,9 +31505,9 @@
     "category": "Paradigma",
     "prompt": "Gundiyên gundekî bi hev re nexweşxaneyeke biçûk ava dikin û lêçûnê parve dikin; ev helwest kîjan nirxa civakî nîşan dide?",
     "answers": [
-      "hevgirtin",
       "reqabet",
       "serdestî",
+      "hevgirtin",
       "bêaliyî"
     ],
     "correctAnswer": "hevgirtin",
@@ -31568,9 +31518,9 @@
     "explanationKu": "Hevgirtin ne alîkariya ji jor ve ye; barê giran bi hev re hilgirtin e — her kes hem dide hem jî werdigire, kes deyndar namîne.",
     "promptTr": "Bir köyün köylüleri birlikte küçük bir hastane kuruyor ve masrafı paylaşıyor; bu tutum hangi toplumsal değeri gösterir?",
     "answersTr": [
-      "dayanışma",
       "rekabet",
       "tahakküm",
+      "dayanışma",
       "tarafsızlık"
     ],
     "correctAnswerTr": "dayanışma"
@@ -31581,9 +31531,9 @@
     "prompt": "Serdestî û desthilat ne yek tişt in; kîjan gotin cudahiya wan rast tîne ziman?",
     "answers": [
       "her du jî tenê bi biryara meclîsan tên avakirin",
+      "ya yekem bi zorê dimîne, ya duyem bi razîbûnê jî dikare hebe",
       "ya yekem tenê di aboriyê de heye, ya duyem tenê di siyasetê de",
-      "her du jî bi hilbijartinê tên guhertin",
-      "ya yekem bi zorê dimîne, ya duyem bi razîbûnê jî dikare hebe"
+      "her du jî bi hilbijartinê tên guhertin"
     ],
     "correctAnswer": "ya yekem bi zorê dimîne, ya duyem bi razîbûnê jî dikare hebe",
     "explanation": "İktidar rızayla kurulabilir ve seçimle değiştirilebilir; tahakküm ise zora dayanır, rıza sormaz ve kendini kalıcı kılmak ister.",
@@ -31594,9 +31544,9 @@
     "promptTr": "Tahakküm ile iktidar aynı şey değildir; hangi ifade aralarındaki farkı doğru anlatır?",
     "answersTr": [
       "ikisi de yalnız meclislerin kararıyla kurulur",
+      "birincisi zorla ayakta kalır, ikincisi rızayla da var olabilir",
       "birincisi yalnız ekonomide, ikincisi yalnız siyasette olur",
-      "ikisi de seçimle değiştirilebilir",
-      "birincisi zorla ayakta kalır, ikincisi rızayla da var olabilir"
+      "ikisi de seçimle değiştirilebilir"
     ],
     "correctAnswerTr": "birincisi zorla ayakta kalır, ikincisi rızayla da var olabilir"
   },
@@ -31606,9 +31556,9 @@
     "prompt": "Çima Ehmedê Xanî berhema xwe ya mezin ne bi farisî, lê bi kurdî nivîsî?",
     "answers": [
       "Ji ber ku wî bi farisî û erebî nizanibû",
-      "Da ku bê zanîn ku kurdî jî zimanê hunerê ye",
       "Ji ber ku mîrê Botan wisa ferman kiribû",
-      "Da ku berhem li Stenbolê zûtir bê çapkirin û bêtir bê firotin"
+      "Da ku berhem li Stenbolê zûtir bê çapkirin û bêtir bê firotin",
+      "Da ku bê zanîn ku kurdî jî zimanê hunerê ye"
     ],
     "correctAnswer": "Da ku bê zanîn ku kurdî jî zimanê hunerê ye",
     "explanation": "Xanî bunu eserin giriş bölümünde açıkça yazar; amacı, kimsenin bu dili sanata elverişsiz saymamasıydı.",
@@ -31619,9 +31569,9 @@
     "promptTr": "Ehmedê Xanî büyük eserini neden Farsça değil de Kürtçe yazdı?",
     "answersTr": [
       "Farsça ve Arapça bilmediği için",
-      "Kürtçenin de bir sanat dili olduğu bilinsin diye",
       "Botan miri böyle buyurduğu için",
-      "Eser İstanbul'da daha hızlı basılıp daha çok satılsın diye"
+      "Eser İstanbul'da daha hızlı basılıp daha çok satılsın diye",
+      "Kürtçenin de bir sanat dili olduğu bilinsin diye"
     ],
     "correctAnswerTr": "Kürtçenin de bir sanat dili olduğu bilinsin diye"
   },
@@ -31631,9 +31581,9 @@
     "prompt": "Dîwan bi kîjan taybetiyê ji destanê cuda dibe?",
     "answers": [
       "Dîwan bi qafiye ye, destan bê qafiye ye",
+      "Dîwan berhevoka helbestan e, destan vegotinek e",
       "Dîwan bi kurmancî ye, destan bi soranî ye",
-      "Dîwan ji bo mezinan e, destan tenê ji bo zarokan tê gotin",
-      "Dîwan berhevoka helbestan e, destan vegotinek e"
+      "Dîwan ji bo mezinan e, destan tenê ji bo zarokan tê gotin"
     ],
     "correctAnswer": "Dîwan berhevoka helbestan e, destan vegotinek e",
     "explanation": "Divanda her şiir kendi başına durur; destan ise baştan sona tek bir olay anlatır.",
@@ -31644,9 +31594,9 @@
     "promptTr": "Divan hangi özelliğiyle destandan ayrılır?",
     "answersTr": [
       "Divan kafiyelidir, destan kafiyesizdir",
+      "Divan şiir derlemesidir, destan bir anlatıdır",
       "Divan Kurmancî'dir, destan Soranî'dir",
-      "Divan büyükler içindir, destan yalnız çocuklara söylenir",
-      "Divan şiir derlemesidir, destan bir anlatıdır"
+      "Divan büyükler içindir, destan yalnız çocuklara söylenir"
     ],
     "correctAnswerTr": "Divan şiir derlemesidir, destan bir anlatıdır"
   },
@@ -31655,9 +31605,9 @@
     "category": "Edebiyat",
     "prompt": "Ji van berheman kîjan ne ya Ehmedê Xanî ye?",
     "answers": [
+      "Şêxê Senan",
       "Mem û Zîn",
       "Nûbihara Biçûkan",
-      "Şêxê Senan",
       "Eqîdeya Îmanê"
     ],
     "correctAnswer": "Şêxê Senan",
@@ -31668,9 +31618,9 @@
     "explanationKu": "\"Şêxê Senan\" mesnewiya Feqiyê Teyran e; sê navên din bi qelemê Xanî hatine nivîsandin.",
     "promptTr": "Bu eserlerden hangisi Ehmedê Xanî'ye ait değildir?",
     "answersTr": [
+      "Şêxê Senan",
       "Mem û Zîn",
       "Nûbihara Biçûkan",
-      "Şêxê Senan",
       "Eqîdeya Îmanê"
     ],
     "correctAnswerTr": "Şêxê Senan"
@@ -31681,9 +31631,9 @@
     "prompt": "Ji van kovarên kurdî kîjan ya herî kevn e?",
     "answers": [
       "Ronahî",
+      "Hawar",
       "Nûbihar",
-      "Tîroj",
-      "Hawar"
+      "Tîroj"
     ],
     "correctAnswer": "Hawar",
     "explanation": "Hawar 1932 yılında Şam kentinde yayına başladı; diğer üç dergi ondan çok sonra çıktı.",
@@ -31694,9 +31644,9 @@
     "promptTr": "Bu Kürtçe dergilerden hangisi en eskisidir?",
     "answersTr": [
       "Ronahî",
+      "Hawar",
       "Nûbihar",
-      "Tîroj",
-      "Hawar"
+      "Tîroj"
     ],
     "correctAnswerTr": "Hawar"
   },
@@ -31726,9 +31676,9 @@
     "category": "Edebiyat",
     "prompt": "Cudahiya sereke di navbera destana \"Memê Alan\" û berhema Ehmedê Xanî de çi ye?",
     "answers": [
+      "Ya Xanî nivîskî ye, ya din devkî ye",
       "Ya Xanî bi soranî ye, ya din bi kurmancî ye",
       "Ya Xanî li ser şer e, ya din li ser evînê ye",
-      "Ya Xanî nivîskî ye, ya din devkî ye",
       "Ya Xanî kurt e, ya din pir dirêj e"
     ],
     "correctAnswer": "Ya Xanî nivîskî ye, ya din devkî ye",
@@ -31739,9 +31689,9 @@
     "explanationKu": "\"Memê Alan\" bi devê dengbêjan gihîştiye me; Xanî ew çîrok bi nivîskî û bi pîvana helbestê ji nû ve honand.",
     "promptTr": "\"Memê Alan\" destanı ile Ehmedê Xanî'nin eseri arasındaki temel fark nedir?",
     "answersTr": [
+      "Xanî'ninki yazılı, diğeri sözlüdür",
       "Xanî'ninki Soranî, diğeri Kurmancî'dir",
       "Xanî'ninki savaş üzerine, diğeri aşk üzerinedir",
-      "Xanî'ninki yazılı, diğeri sözlüdür",
       "Xanî'ninki kısa, diğeri çok uzundur"
     ],
     "correctAnswerTr": "Xanî'ninki yazılı, diğeri sözlüdür"
@@ -31773,9 +31723,9 @@
     "prompt": "Di şevbêrkên zivistanê de kesê ku efsane û bûyerên gelêrî bi devkî digihîne guhdaran, bi çi navî tê nasîn?",
     "answers": [
       "helbestvan",
-      "çîrokbêj",
       "wergêr",
-      "weşanger"
+      "weşanger",
+      "çîrokbêj"
     ],
     "correctAnswer": "çîrokbêj",
     "explanation": "Çîrokbêj kitapsız çalışır: hikâyeleri belleğinde tutar ve bir sonraki kuşağa aktarır.",
@@ -31786,9 +31736,9 @@
     "promptTr": "Kış şevbêrklerinde efsaneleri ve halk olaylarını sözlü olarak dinleyenlere aktaran kişi hangi adla bilinir?",
     "answersTr": [
       "şair",
-      "çîrokbêj",
       "çevirmen",
-      "yayıncı"
+      "yayıncı",
+      "çîrokbêj"
     ],
     "correctAnswerTr": "çîrokbêj"
   },
@@ -31798,9 +31748,9 @@
     "prompt": "Di nav helbestvanên klasîk ên kurd de kîjan nav yê jinekê ye?",
     "answers": [
       "Elî Herîrî",
+      "Mestûre Erdelan",
       "Mela Huseynê Bateyî",
-      "Feqiyê Teyran",
-      "Mestûre Erdelan"
+      "Feqiyê Teyran"
     ],
     "correctAnswer": "Mestûre Erdelan",
     "explanation": "Mestûre, Erdelan sarayında hem şiir hem de o bölgenin tarihini yazdı; kendi çağında bu yönüyle yalnızdı.",
@@ -31811,9 +31761,9 @@
     "promptTr": "Klasik Kürt şairleri arasında hangi ad bir kadına aittir?",
     "answersTr": [
       "Elî Herîrî",
+      "Mestûre Erdelan",
       "Mela Huseynê Bateyî",
-      "Feqiyê Teyran",
-      "Mestûre Erdelan"
+      "Feqiyê Teyran"
     ],
     "correctAnswerTr": "Mestûre Erdelan"
   },
@@ -31822,9 +31772,9 @@
     "category": "Edebiyat",
     "prompt": "Gava nivîskar çîrokê bi devê lehengê sereke vedibêje, ew kîjan awayê vegotinê bi kar tîne?",
     "answers": [
-      "vebêjê kesê yekem",
       "vebêjê kesê sêyem",
       "vegotina bi nameyan",
+      "vebêjê kesê yekem",
       "vegotina bi diyalogê"
     ],
     "correctAnswer": "vebêjê kesê yekem",
@@ -31835,9 +31785,9 @@
     "explanationKu": "Di vî awayî de leheng bi xwe dibe deng; xwîner tenê bi qasî wî dizane û yên din jê veşartî dimînin.",
     "promptTr": "Yazar hikâyeyi baş kahramanın ağzından anlattığında hangi anlatım biçimini kullanır?",
     "answersTr": [
-      "birinci kişi anlatıcı",
       "üçüncü kişi anlatıcı",
       "mektuplarla anlatım",
+      "birinci kişi anlatıcı",
       "diyalogla anlatım"
     ],
     "correctAnswerTr": "birinci kişi anlatıcı"
@@ -31868,9 +31818,9 @@
     "category": "Edebiyat",
     "prompt": "Kovara \"Nûdem\" ku li Swêdê derdiket ji aliyê kîjan nivîskarî ve dihat weşandin?",
     "answers": [
-      "Firat Cewerî",
       "Hesenê Metê",
       "Mehmed Uzun",
+      "Firat Cewerî",
       "Mehmed Emîn Bozarslan"
     ],
     "correctAnswer": "Firat Cewerî",
@@ -31881,9 +31831,9 @@
     "explanationKu": "Nûdem di salên 1990î de li Stokholmê derket û bû qada nivîsandinê ji bo nifşeke nû ya çîroknivîsan.",
     "promptTr": "İsveç'te çıkan \"Nûdem\" dergisi hangi yazar tarafından yayımlanıyordu?",
     "answersTr": [
-      "Firat Cewerî",
       "Hesenê Metê",
       "Mehmed Uzun",
+      "Firat Cewerî",
       "Mehmed Emîn Bozarslan"
     ],
     "correctAnswerTr": "Firat Cewerî"
@@ -31936,9 +31886,9 @@
     "prompt": "Kîjan cureyê wêjeya devkî li ser pirseke ku bersiva wê veşartî ye ava dibe?",
     "answers": [
       "destan",
+      "mamik",
       "pêkenok",
-      "gotina pêşiyan",
-      "mamik"
+      "gotina pêşiyan"
     ],
     "correctAnswer": "mamik",
     "explanation": "Mamik dinleyenin zihnini çalıştırır: ipuçlarını birleştirip gizlenen şeyin adını bulması gerekir.",
@@ -31949,9 +31899,9 @@
     "promptTr": "Sözlü edebiyatın hangi türü, cevabı gizlenmiş bir soru üzerine kurulur?",
     "answersTr": [
       "destan",
+      "bilmece",
       "fıkra",
-      "atasözü",
-      "bilmece"
+      "atasözü"
     ],
     "correctAnswerTr": "bilmece"
   },
@@ -31960,9 +31910,9 @@
     "category": "Muzîk",
     "prompt": "Çima dengbêjê kevneşopî kilamên xwe bêyî amûrên muzîkê dibêje?",
     "answers": [
+      "ji ber ku giranî li ser peyv û vegotinê ye",
       "ji ber ku amûr li her herêmê cuda bûn",
       "ji ber ku kilam tenê bi şev dihatin gotin",
-      "ji ber ku giranî li ser peyv û vegotinê ye",
       "ji ber ku amûr di dawetan de qedexe bûn"
     ],
     "correctAnswer": "ji ber ku giranî li ser peyv û vegotinê ye",
@@ -31973,9 +31923,9 @@
     "explanationKu": "Kilam çîrokekê vedibêje û divê her peyv bê fêmkirin; bêyî amûrê dengbêj dikare rîtmê li gorî hestê hêdî an bilez bike.",
     "promptTr": "Geleneksel dengbêj kilamlarını neden çalgı kullanmadan söyler?",
     "answersTr": [
+      "çünkü ağırlık söz ve anlatım üzerindedir",
       "çünkü çalgılar her yörede farklıydı",
       "çünkü kilamlar yalnızca geceleri söylenirdi",
-      "çünkü ağırlık söz ve anlatım üzerindedir",
       "çünkü çalgılar düğünlerde yasaktı"
     ],
     "correctAnswerTr": "çünkü ağırlık söz ve anlatım üzerindedir"
@@ -31986,9 +31936,9 @@
     "prompt": "Kîjan ji van amûran bi lêdanê deng nade?",
     "answers": [
       "def",
+      "bilûr",
       "dahol",
-      "erbane",
-      "bilûr"
+      "erbane"
     ],
     "correctAnswer": "bilûr",
     "explanation": "Def, dahol ve erbane vurularak ses verir; dahol bunların en büyüğüdür ve iki değnekle çalınır. Bilûr ise üflenerek çalınır.",
@@ -31999,9 +31949,9 @@
     "promptTr": "Bu çalgılardan hangisi vurularak ses vermez?",
     "answersTr": [
       "def",
+      "bilûr",
       "dahol",
-      "erbane",
-      "bilûr"
+      "erbane"
     ],
     "correctAnswerTr": "bilûr"
   },
@@ -32011,9 +31961,9 @@
     "prompt": "Sergovend di govendê de çi dike?",
     "answers": [
       "stranên dawetê ji bo bûk û zava dibêje",
-      "rêzê dibe pêş û destmalê dihejîne",
       "amûrên têlî berî govendê ahengdar dike",
-      "def û zirneyê li hev tîne"
+      "def û zirneyê li hev tîne",
+      "rêzê dibe pêş û destmalê dihejîne"
     ],
     "correctAnswer": "rêzê dibe pêş û destmalê dihejîne",
     "explanation": "Sergovend halayın hızını belirler: adımlar onun çekişine göre yavaşlar ya da hızlanır.",
@@ -32024,9 +31974,9 @@
     "promptTr": "Sergovend halayda ne yapar?",
     "answersTr": [
       "gelin ve damat için düğün şarkıları söyler",
-      "sıranın en önüne geçer ve mendili sallar",
       "halaydan önce telli çalgıları akort eder",
-      "davul ile zurnayı birbirine uydurur"
+      "davul ile zurnayı birbirine uydurur",
+      "sıranın en önüne geçer ve mendili sallar"
     ],
     "correctAnswerTr": "sıranın en önüne geçer ve mendili sallar"
   },
@@ -32036,9 +31986,9 @@
     "prompt": "Radyoya Erîvanê di kîjan salî de ji nû ve dest bi weşana kurdî kir?",
     "answers": [
       "1938",
+      "1955",
       "1946",
-      "1965",
-      "1955"
+      "1965"
     ],
     "correctAnswer": "1955",
     "explanation": "Kürtçe programlar 1930'larda da vardı ama kapatılmıştı; dönüşle birlikte pek çok Serhed dengbêji ilk kez kayda geçti.",
@@ -32049,9 +31999,9 @@
     "promptTr": "Erivan Radyosu hangi yılda yeniden Kürtçe yayına başladı?",
     "answersTr": [
       "1938",
+      "1955",
       "1946",
-      "1965",
-      "1955"
+      "1965"
     ],
     "correctAnswerTr": "1955"
   },
@@ -32060,9 +32010,9 @@
     "category": "Muzîk",
     "prompt": "Kîjan taybetmendî lawikî ji kilamên şer cuda dike?",
     "answers": [
+      "mijara wî ya evînî û kesane",
       "hejmara amûrên muzîkê",
       "herêma ku tê de tê gotin",
-      "mijara wî ya evînî û kesane",
       "dirêjahiya kilamê"
     ],
     "correctAnswer": "mijara wî ya evînî û kesane",
@@ -32073,9 +32023,9 @@
     "explanationKu": "Lawik li ser evîn û hesretê ye; kilamên şer êrîş û berxwedanê vedibêjin. Herdu jî di heman dîwanê de tên gotin, lê awaza wan ne yek e.",
     "promptTr": "Hangi özellik lawiki savaş kilamlarından ayırır?",
     "answersTr": [
+      "aşka ve kişiye dair konusu",
       "kullanılan çalgıların sayısı",
       "söylendiği yöre",
-      "aşka ve kişiye dair konusu",
       "kilamın uzunluğu"
     ],
     "correctAnswerTr": "aşka ve kişiye dair konusu"
@@ -32086,9 +32036,9 @@
     "prompt": "Berî ku tomarkirina bi kaset û plakê belav bibe, kilamên dengbêjan çawa ji nifşekî derbasî nifşê din dibûn?",
     "answers": [
       "bi arşîvên dibistanên fermî",
+      "bi guhdarî û ezberkirinê li dîwanan",
       "bi weşana televîzyonên herêmî",
-      "bi notayên di pirtûkan de",
-      "bi guhdarî û ezberkirinê li dîwanan"
+      "bi notayên di pirtûkan de"
     ],
     "correctAnswer": "bi guhdarî û ezberkirinê li dîwanan",
     "explanation": "Çırak yıllarca divanda dinlerdi; bu yüzden her yöre aynı kilamın kendi varyantını korudu.",
@@ -32099,9 +32049,9 @@
     "promptTr": "Kaset ve plak kaydı yaygınlaşmadan önce dengbêj kilamları kuşaktan kuşağa nasıl geçerdi?",
     "answersTr": [
       "resmî okulların arşivleriyle",
+      "divanlarda dinleyip ezberleyerek",
       "yerel televizyonların yayınıyla",
-      "kitaplardaki notalar aracılığıyla",
-      "divanlarda dinleyip ezberleyerek"
+      "kitaplardaki notalar aracılığıyla"
     ],
     "correctAnswerTr": "divanlarda dinleyip ezberleyerek"
   },
@@ -32111,9 +32061,9 @@
     "prompt": "Şêwaza dengbêjiyê ya Serhedê bi taybetî li dora kîjan deveran geş bûye?",
     "answers": [
       "Silêmanî, Kerkûk û Hewlêr",
-      "Agirî, Qers û Mûş",
       "Duhok û Amêdî",
-      "Cizîr û Şirnex"
+      "Cizîr û Şirnex",
+      "Agirî, Qers û Mûş"
     ],
     "correctAnswer": "Agirî, Qers û Mûş",
     "explanation": "\"Serhed\" bir yöre adıdır ve kuzeyin dağlık sınırı anlamına gelir; Botan ve Behdinan üslupları onun güneyinde kalır, ezgileri de farklıdır.",
@@ -32124,9 +32074,9 @@
     "promptTr": "Serhed dengbêjlik üslubu özellikle hangi yöreler çevresinde gelişmiştir?",
     "answersTr": [
       "Silêmanî, Kerkûk ve Hewlêr",
-      "Agirî, Qers ve Mûş",
       "Duhok ve Amêdî",
-      "Cizîr ve Şirnex"
+      "Cizîr ve Şirnex",
+      "Agirî, Qers ve Mûş"
     ],
     "correctAnswerTr": "Agirî, Qers ve Mûş"
   },
@@ -32136,9 +32086,9 @@
     "prompt": "Helbesta ku paşê bû sirûda neteweyî ya kurdan ji aliyê kîjan helbestvanî ve hatiye nivîsandin?",
     "answers": [
       "Feqiyê Teyran",
+      "Dildar",
       "Melayê Cizîrî",
-      "Cegerxwîn",
-      "Dildar"
+      "Cegerxwîn"
     ],
     "correctAnswer": "Dildar",
     "explanation": "Şiir 1938'de hapishanede yazıldı; sonra bestelendi ve 1946'da Mahabad Cumhuriyeti'nde kabul edildi.",
@@ -32149,9 +32099,9 @@
     "promptTr": "Sonradan Kürtlerin millî marşı olan şiiri hangi şair yazmıştır?",
     "answersTr": [
       "Feqiyê Teyran",
+      "Dildar",
       "Melayê Cizîrî",
-      "Cegerxwîn",
-      "Dildar"
+      "Cegerxwîn"
     ],
     "correctAnswerTr": "Dildar"
   },
@@ -32160,9 +32110,9 @@
     "category": "Muzîk",
     "prompt": "Ayşe Şan û Meryem Xan di dîroka muzîka kurdî de bi kîjan aliyê xwe dişibin hev?",
     "answers": [
+      "herdu jî stranbêjên jin ên pêşeng bûn",
       "herdu jî li Radyoya Erîvanê xebitîn",
       "herdu jî damezrînerên komeke muzîkê bûn",
-      "herdu jî stranbêjên jin ên pêşeng bûn",
       "herdu jî muzîkjenên tembûrê bûn"
     ],
     "correctAnswer": "herdu jî stranbêjên jin ên pêşeng bûn",
@@ -32173,9 +32123,9 @@
     "explanationKu": "Meryem Xanê li Bexdayê, Ayşe Şanê li Amedê dest bi kar kir; di demekê de ku dengê jinan kêm dihat bihîstin, herduyan jî rê ji yên piştî xwe re vekirin.",
     "promptTr": "Ayşe Şan ile Meryem Xan Kürt müziği tarihinde hangi yönleriyle birbirine benzer?",
     "answersTr": [
+      "ikisi de öncü kadın şarkıcılardı",
       "ikisi de Erivan Radyosu'nda çalıştı",
       "ikisi de bir müzik grubunun kurucusuydu",
-      "ikisi de öncü kadın şarkıcılardı",
       "ikisi de tembûr çalan müzisyenlerdi"
     ],
     "correctAnswerTr": "ikisi de öncü kadın şarkıcılardı"
@@ -32186,9 +32136,9 @@
     "prompt": "Bilûr bi gelemperî ji çi tê çêkirin?",
     "answers": [
       "hesin an sifir",
+      "qamîş an dar",
       "kevir an şûşe",
-      "çerm an hestî",
-      "qamîş an dar"
+      "çerm an hestî"
     ],
     "correctAnswer": "qamîş an dar",
     "explanation": "Kurutulmuş kamış yumuşak bir ses verir; bu yüzden çoban çoğunlukla kavalını kendi eliyle yapar.",
@@ -32199,9 +32149,9 @@
     "promptTr": "Bilûr genellikle neyden yapılır?",
     "answersTr": [
       "demir ya da bakır",
+      "kamış ya da ağaç",
       "taş ya da cam",
-      "deri ya da kemik",
-      "kamış ya da ağaç"
+      "deri ya da kemik"
     ],
     "correctAnswerTr": "kamış ya da ağaç"
   },
@@ -32318,9 +32268,9 @@
     "imageUrl": "asset://assets/question_images/kilim_motifleri.webp",
     "prompt": "Motîfên kilimê çawa çêdibin?",
     "answers": [
-      "Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê",
       "Piştî hûnandinê, bi derziyê tên dirûtin",
       "Bi qalibê darîn li ser kilimê tên çapkirin",
+      "Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê",
       "Bi firçe û boyaxê li ser rûyê kilimê tên nexşandin"
     ],
     "correctAnswer": "Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê",
@@ -32329,9 +32279,9 @@
     "explanation": "Motif dokumadan sonra değil, dokuma sırasında oluşur: renkli iplikler tezgâhta örgüye girer, bu yüzden motif kilimin iki yüzünde de görünür.",
     "promptTr": "Kilim motifleri nasıl oluşur?",
     "answersTr": [
-      "Dokuma sırasında, tezgâhtaki renkli ipliklerle",
       "Dokumadan sonra iğneyle işlenerek",
       "Ahşap kalıpla kilimin üstüne basılarak",
+      "Dokuma sırasında, tezgâhtaki renkli ipliklerle",
       "Fırça ve boyayla yüzeye çizilerek"
     ],
     "correctAnswerTr": "Dokuma sırasında, tezgâhtaki renkli ipliklerle"
@@ -32344,9 +32294,9 @@
     "imageUrl": "asset://assets/question_images/destan.webp",
     "prompt": "Destan bi kevneşopî çawa digihîje nifşên nû?",
     "answers": [
+      "Bi devkî, bi vegotin û gotina bi awaz",
       "Bi rojnameyên hefteyî yên çapkirî",
       "Bi lîstikên sehneyê yên bi dekor",
-      "Bi devkî, bi vegotin û gotina bi awaz",
       "Bi nameyên di navbera bajaran de"
     ],
     "correctAnswer": "Bi devkî, bi vegotin û gotina bi awaz",
@@ -32355,9 +32305,9 @@
     "explanation": "Destan yazıdan önce vardır ve dengbêj gibi anlatıcıların belleğiyle aktarılır; bu yüzden her anlatım biraz değişir.",
     "promptTr": "Destan geleneksel olarak yeni kuşaklara nasıl ulaşır?",
     "answersTr": [
+      "Sözlü olarak, anlatı ve ezgiyle",
       "Basılı haftalık gazetelerle",
       "Dekorlu sahne oyunlarıyla",
-      "Sözlü olarak, anlatı ve ezgiyle",
       "Şehirler arası mektuplarla"
     ],
     "correctAnswerTr": "Sözlü olarak, anlatı ve ezgiyle"
@@ -32370,9 +32320,9 @@
     "imageUrl": "asset://assets/question_images/govend.webp",
     "prompt": "Di govendê de govendger çawa li hev girêdayî ne?",
     "answers": [
-      "Destên hev digirin û rêz an nîvçember çêdikin",
       "Her kes bi tenê û ji hev dûr dilîze",
       "Du bi du, rû bi rû li hember hev radiwestin",
+      "Destên hev digirin û rêz an nîvçember çêdikin",
       "Rûniştî, tenê bi destan lê didin"
     ],
     "correctAnswer": "Destên hev digirin û rêz an nîvçember çêdikin",
@@ -32381,9 +32331,9 @@
     "explanation": "Govend toplu bir oyundur: el ele tutuşma diziyi birbirine bağlar, başı çeken (serçopî) diziyi yönetir.",
     "promptTr": "Govendde oynayanlar birbirine nasıl bağlanır?",
     "answersTr": [
-      "El ele tutuşup dizi ya da yarım çember oluştururlar",
       "Herkes tek başına ve birbirinden uzak oynar",
       "İkişer ikişer, karşılıklı dururlar",
+      "El ele tutuşup dizi ya da yarım çember oluştururlar",
       "Oturarak, yalnız elleriyle tempo tutarlar"
     ],
     "correctAnswerTr": "El ele tutuşup dizi ya da yarım çember oluştururlar"

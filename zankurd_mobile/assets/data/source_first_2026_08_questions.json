@@ -4,18 +4,18 @@
     "category": "Sînema",
     "prompt": "Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?",
     "answers": [
+      "planê nêzîk (yakın çekim)",
       "planê dûr (uzak çekim)",
       "planê navîn (orta çekim)",
-      "plana damezrîner (establishing shot)",
-      "planê nêzîk (yakın çekim)"
+      "plana damezrîner (establishing shot)"
     ],
     "correctAnswer": "planê nêzîk (yakın çekim)",
     "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
     "answersTr": [
+      "yakın çekim",
       "uzak çekim",
       "orta çekim",
-      "geniş açılış çekimi",
-      "yakın çekim"
+      "geniş açılış çekimi"
     ],
     "correctAnswerTr": "yakın çekim",
     "explanationKu": "Plana nêzîk rûyê lîstikvan an hûrgiliyekê bi awayekî mezin nîşan dide; bi vî awayî hest û reaksiyonên karakterê dibin navenda dîmenê. Planê dûr jî cih û têkiliyên di navbera hêmanan de nîşan dide.",
@@ -39,16 +39,16 @@
     "answers": [
       "planê nêzîk (yakın çekim)",
       "planê serpîrî (baş üstü çekim)",
-      "plana damezrîner (establishing shot)",
-      "çapa cemidî (freeze frame)"
+      "çapa cemidî (freeze frame)",
+      "plana damezrîner (establishing shot)"
     ],
     "correctAnswer": "plana damezrîner (establishing shot)",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "answersTr": [
       "yakın çekim",
       "tepe çekimi",
-      "geniş açılış çekimi (establishing shot)",
-      "dondurulmuş kare"
+      "dondurulmuş kare",
+      "geniş açılış çekimi (establishing shot)"
     ],
     "correctAnswerTr": "geniş açılış çekimi (establishing shot)",
     "explanationKu": "Plana damezrîner di destpêka dîmenekî de cihê bûyerê, dem û hawîrdora giştî nîşanî temaşevan dide. Ev plan bi gelemperî ji dûr ve tê kişandin da ku temaşevan berî çîrokê cihê bûyerê nas bike.",
@@ -70,16 +70,16 @@
     "category": "Sînema",
     "prompt": "Dengê ku temaşevan dibihîze lê kesê ku dipeyive di dîmenê de xuya nake çi ye?",
     "answers": [
-      "voice-over (dengê derveyî dîmenê)",
       "dengê dîjejîk (diegetic sound)",
+      "voice-over (dengê derveyî dîmenê)",
       "foley",
       "playback"
     ],
     "correctAnswer": "voice-over (dengê derveyî dîmenê)",
     "promptTr": "İzleyicinin duyduğu ama konuşan kişinin ekranda görünmediği ses hangisidir?",
     "answersTr": [
-      "dış ses (voice-over)",
       "diejetik ses",
+      "dış ses (voice-over)",
       "foley sesi",
       "playback"
     ],
@@ -105,16 +105,16 @@
     "answers": [
       "fade out (vedimirîn)",
       "dissolve (tevlîhevî)",
-      "jump cut (qutbûna ji nişkê)",
-      "pan (gerandina panoramîk)"
+      "pan (gerandina panoramîk)",
+      "jump cut (qutbûna ji nişkê)"
     ],
     "correctAnswer": "jump cut (qutbûna ji nişkê)",
     "promptTr": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
     "answersTr": [
       "karartma (fade out)",
       "zincirleme geçiş (dissolve)",
-      "atlama kesme (jump cut)",
-      "kamera kaydırma (pan)"
+      "kamera kaydırma (pan)",
+      "atlama kesme (jump cut)"
     ],
     "correctAnswerTr": "atlama kesme (jump cut)",
     "explanationKu": "Jump cut di nav dîmenekî de ji nişkê ve di dem, mekan an pozîsyonê de çavkaniyekê diafirîne û bêyî qutbûna xwezayî dihêle temaşevan xwe bigihîne. Di Pêla Nû ya Frensî de ev teknîk bi awayekî berbiçav hat bikaranîn.",
@@ -138,16 +138,16 @@
     "answers": [
       "sînematografî",
       "montaj",
-      "mise-en-scène",
-      "senaryo"
+      "senaryo",
+      "mise-en-scène"
     ],
     "correctAnswer": "mise-en-scène",
     "promptTr": "Çerçeve içindeki tüm görsel öğeleri (dekor, ışık, oyunculuk) birleştiren kavram hangisidir?",
     "answersTr": [
       "sinematografi",
       "kurgu",
-      "mise-en-scène",
-      "senaryo"
+      "senaryo",
+      "mise-en-scène"
     ],
     "correctAnswerTr": "mise-en-scène",
     "explanationKu": "Mise-en-scène hemû hêmanên dîtbarî yên di çarçoveyê de ye: dekor, cil, ronahî, pozîsyon û lîstika lîstikvanan. Sînematografî ji vê cuda ye; ew bi kamerayê û kişandina dîmenê ve mijûl dibe.",
@@ -171,16 +171,16 @@
     "answers": [
       "1919",
       "1939",
-      "1929",
-      "1949"
+      "1949",
+      "1929"
     ],
     "correctAnswer": "1929",
     "promptTr": "Oscar ödülleri ilk kez hangi yıl verildi?",
     "answersTr": [
       "1919",
       "1939",
-      "1929",
-      "1949"
+      "1949",
+      "1929"
     ],
     "correctAnswerTr": "1929",
     "explanationKu": "Merasima yekem a Xelatên Akademiyê (Oscar) di 16'ê gulana 1929'an de li Hollywoodê hate lidarxistin. Ji wê demê vir ve Oscar her sal tê dayîn û bûye xelata herî bi prestîj a pîşesaziya fîlmê.",
@@ -203,16 +203,16 @@
     "prompt": "Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
     "answers": [
       "Festîvala Venedîkê",
-      "Festîvala Cannesê",
       "Festîvala Berlînê",
+      "Festîvala Cannesê",
       "Festîvala Torontoyê"
     ],
     "correctAnswer": "Festîvala Cannesê",
     "promptTr": "Altın Palmiye hangi festivalin en büyük ödülüdür?",
     "answersTr": [
       "Venedik Film Festivali",
-      "Cannes Film Festivali",
       "Berlin Film Festivali",
+      "Cannes Film Festivali",
       "Toronto Film Festivali"
     ],
     "correctAnswerTr": "Cannes Film Festivali",
@@ -237,16 +237,16 @@
     "answers": [
       "Festîvala Cannesê",
       "Festîvala Berlînê",
-      "Festîvala Venedîkê",
-      "Festîvala Lokarnoyê"
+      "Festîvala Lokarnoyê",
+      "Festîvala Venedîkê"
     ],
     "correctAnswer": "Festîvala Venedîkê",
     "promptTr": "Dünyanın en eski film festivali hangisidir?",
     "answersTr": [
       "Cannes Film Festivali",
       "Berlin Film Festivali",
-      "Venedik Film Festivali",
-      "Locarno Film Festivali"
+      "Locarno Film Festivali",
+      "Venedik Film Festivali"
     ],
     "correctAnswerTr": "Venedik Film Festivali",
     "explanationKu": "Festîvala Venedîkê di sala 1932'an de hate damezrandin û wek festîvala fîlman a herî kevn a cîhanê tê zanîn. Cannes di sala 1946'an, Berlîn jî di sala 1951'ê de dest pê kirin.",
@@ -269,16 +269,16 @@
     "prompt": "Festîvala Cannesê di kîjan welatî de tê lidarxistin?",
     "answers": [
       "Îtalya",
-      "Fransa",
       "Spanya",
+      "Fransa",
       "Swîsre"
     ],
     "correctAnswer": "Fransa",
     "promptTr": "Cannes Film Festivali hangi ülkede düzenlenir?",
     "answersTr": [
       "İtalya",
-      "Fransa",
       "İspanya",
+      "Fransa",
       "İsviçre"
     ],
     "correctAnswerTr": "Fransa",
@@ -303,16 +303,16 @@
     "answers": [
       "The Jazz Singer",
       "Citizen Kane",
-      "Wings",
-      "Gone with the Wind"
+      "Gone with the Wind",
+      "Wings"
     ],
     "correctAnswer": "Wings",
     "promptTr": "İlk Oscar töreninde En İyi Film ödülünü kazanan yapım hangisidir?",
     "answersTr": [
       "Jazz Singer",
       "Yurttaş Kane",
-      "Kanatlar (Wings)",
-      "Rüzgâr Gibi Geçti"
+      "Rüzgâr Gibi Geçti",
+      "Kanatlar (Wings)"
     ],
     "correctAnswerTr": "Kanatlar (Wings)",
     "explanationKu": "Wings (1927) di merasima yekem a Oscarê ya 1929'an de xelata Fîlmê ya Herî Baş wergirt. Ev fîlm derbarê pilotekî Şerê Cîhanê yê Yekem de ye û bi dîmenên xwe yên hewayî tê nasîn.",
@@ -335,16 +335,16 @@
     "prompt": "Kîjan saziya ku Oscarê dide di sala 1927'an de hate damezrandin?",
     "answers": [
       "Cannes Film Society",
-      "AMPAS",
       "British Academy (BAFTA)",
+      "AMPAS",
       "Tribeca Institute"
     ],
     "correctAnswer": "AMPAS",
     "promptTr": "Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?",
     "answersTr": [
       "Cannes Film Cemiyeti",
-      "AMPAS",
       "İngiliz Akademisi (BAFTA)",
+      "AMPAS",
       "Tribeca Enstitüsü"
     ],
     "correctAnswerTr": "AMPAS",
@@ -367,16 +367,16 @@
     "category": "Teknolojî",
     "prompt": "HTTP koda 404 bi gelemperî çi tê wateya?",
     "answers": [
-      "Çavkanî nehat dîtin",
       "Hemû tişt serkeftî ye",
+      "Çavkanî nehat dîtin",
       "Pêwîstî bi têketinê heye",
       "Server veguherî"
     ],
     "correctAnswer": "Çavkanî nehat dîtin",
     "promptTr": "HTTP 404 kodu genellikle ne anlama gelir?",
     "answersTr": [
-      "Kaynak bulunamadı",
       "Her şey başarılı",
+      "Kaynak bulunamadı",
       "Giriş gerekli",
       "Sunucu yönlendirdi"
     ],
@@ -401,16 +401,16 @@
     "prompt": "Hejmara dual 1010 di dehî de çend e?",
     "answers": [
       "5",
-      "10",
       "8",
+      "10",
       "12"
     ],
     "correctAnswer": "10",
     "promptTr": "İkili 1010 sayısı onlukta kaçtır?",
     "answersTr": [
       "5",
-      "10",
       "8",
+      "10",
       "12"
     ],
     "correctAnswerTr": "10",
@@ -433,18 +433,18 @@
     "category": "Sînema",
     "prompt": "Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?",
     "answers": [
+      "Ji têkiliya di navbera dîmenan de",
       "Ji dirêjahiya giştî ya fîlmê",
       "Ji hevahengiya rengên kincan",
-      "Ji şêwaza kesane ya derhêner",
-      "Ji têkiliya di navbera dîmenan de"
+      "Ji şêwaza kesane ya derhêner"
     ],
     "correctAnswer": "Ji têkiliya di navbera dîmenan de",
     "promptTr": "Film dili sözlüğüne göre montajda anlam esas olarak nereden doğar?",
     "answersTr": [
+      "Sahneler arasındaki ilişkiden",
       "Filmin toplam uzunluğundan",
       "Kostümlerin renk uyumundan",
-      "Yönetmenin kişisel tarzından",
-      "Sahneler arasındaki ilişkiden"
+      "Yönetmenin kişisel tarzından"
     ],
     "correctAnswerTr": "Sahneler arasındaki ilişkiden",
     "explanationKu": "Di montajê de dîmenek tenê bi têkiliya xwe ya bi dîmenekî din re wateyê digire.",
@@ -467,16 +467,16 @@
     "prompt": "Di teknîka \"deep focus\" de çi tê bidestxistin?",
     "answers": [
       "Tenê paşxaneya dûr zelal dibe",
-      "Nêzîk û dûr bi hev re zelal dibin",
       "Rengên dîmenê hemû winda dibin",
+      "Nêzîk û dûr bi hev re zelal dibin",
       "Leza dîmenê pir hêdî dibe"
     ],
     "correctAnswer": "Nêzîk û dûr bi hev re zelal dibin",
     "promptTr": "\"Deep focus\" tekniğinde ne elde edilir?",
     "answersTr": [
       "Yalnız uzak arka plan netleşir",
-      "Yakın ve uzak birlikte net olur",
       "Görüntünün renkleri tümden kaybolur",
+      "Yakın ve uzak birlikte net olur",
       "Görüntünün hızı belirgin yavaşlar"
     ],
     "correctAnswerTr": "Yakın ve uzak birlikte net olur",
@@ -499,16 +499,16 @@
     "category": "Sînema",
     "prompt": "Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?",
     "answers": [
-      "1932",
       "1946",
+      "1932",
       "1951",
       "1955"
     ],
     "correctAnswer": "1932",
     "promptTr": "Venedik Film Festivali hangi yılda kuruldu?",
     "answersTr": [
-      "1932",
       "1946",
+      "1932",
       "1951",
       "1955"
     ],
@@ -533,16 +533,16 @@
     "prompt": "Xelata \"Şêrê Zêrîn\" ji bo fîlmê herî baş di kîjan salê de hate danîn?",
     "answers": [
       "1932",
-      "1949",
       "1936",
+      "1949",
       "1968"
     ],
     "correctAnswer": "1949",
     "promptTr": "\"Altın Aslan\" ödülü en iyi film için hangi yılda konuldu?",
     "answersTr": [
       "1932",
-      "1949",
       "1936",
+      "1949",
       "1968"
     ],
     "correctAnswerTr": "1949",
@@ -565,18 +565,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê yekem ê ku di dîroka Festîvala Venedîkê de hate nîşandan kîjan e?",
     "answers": [
+      "Dr. Jekyll and Mr. Hyde",
       "The Cabinet of Dr. Caligari",
       "The Birth of a Nation",
-      "Battleship Potemkin",
-      "Dr. Jekyll and Mr. Hyde"
+      "Battleship Potemkin"
     ],
     "correctAnswer": "Dr. Jekyll and Mr. Hyde",
     "promptTr": "Venedik Festivali tarihinde gösterilen ilk film hangisidir?",
     "answersTr": [
+      "Dr. Jekyll and Mr. Hyde",
       "The Cabinet of Dr. Caligari",
       "The Birth of a Nation",
-      "Battleship Potemkin",
-      "Dr. Jekyll and Mr. Hyde"
+      "Battleship Potemkin"
     ],
     "correctAnswerTr": "Dr. Jekyll and Mr. Hyde",
     "explanationKu": "Fîlmê yekem ê festîvalê Dr. Jekyll and Mr. Hyde a Rouben Mamoulian bû.",
@@ -599,16 +599,16 @@
     "prompt": "Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?",
     "answers": [
       "1932",
-      "1934",
       "1949",
+      "1934",
       "1937"
     ],
     "correctAnswer": "1934",
     "promptTr": "Resmî yarışma ilk kez hangi yılda festivale girdi?",
     "answersTr": [
       "1932",
-      "1934",
       "1949",
+      "1934",
       "1937"
     ],
     "correctAnswerTr": "1934",
@@ -631,16 +631,16 @@
     "category": "Sînema",
     "prompt": "Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?",
     "answers": [
-      "1936",
       "1934",
+      "1936",
       "1932",
       "1949"
     ],
     "correctAnswer": "1936",
     "promptTr": "Uluslararası jüri ilk kez hangi yılda atandı?",
     "answersTr": [
-      "1936",
       "1934",
+      "1936",
       "1932",
       "1949"
     ],
@@ -665,16 +665,16 @@
     "prompt": "Edîsyona yekem li ku hate lidarxistin?",
     "answers": [
       "Li salona Palazzo del Cinema",
-      "Li terasa Hotel Excelsior",
       "Li meydana Piazza San Marco",
+      "Li terasa Hotel Excelsior",
       "Li sahneya Teatro La Fenice"
     ],
     "correctAnswer": "Li terasa Hotel Excelsior",
     "promptTr": "İlk edisyon nerede düzenlendi?",
     "answersTr": [
       "Palazzo del Cinema salonunda",
-      "Hotel Excelsior terasında",
       "Piazza San Marco meydanında",
+      "Hotel Excelsior terasında",
       "Teatro La Fenice sahnesinde"
     ],
     "correctAnswerTr": "Hotel Excelsior terasında",
@@ -697,18 +697,18 @@
     "category": "Sînema",
     "prompt": "La Biennale di Venezia di kîjan salê de hate damezrandin?",
     "answers": [
+      "1895",
       "1932",
       "1949",
-      "1980",
-      "1895"
+      "1980"
     ],
     "correctAnswer": "1895",
     "promptTr": "La Biennale di Venezia hangi yılda kuruldu?",
     "answersTr": [
+      "1895",
       "1932",
       "1949",
-      "1980",
-      "1895"
+      "1980"
     ],
     "correctAnswerTr": "1895",
     "explanationKu": "La Biennale di Venezia di sala 1895an de hate damezrandin.",
@@ -730,16 +730,16 @@
     "category": "Sînema",
     "prompt": "Pêşangeha Hunerî ya Navneteweyî ya yekem di kîjan salê de hate lidarxistin?",
     "answers": [
-      "1895",
       "1932",
+      "1895",
       "1980",
       "1999"
     ],
     "correctAnswer": "1895",
     "promptTr": "İlk Uluslararası Sanat Sergisi hangi yılda düzenlendi?",
     "answersTr": [
-      "1895",
       "1932",
+      "1895",
       "1980",
       "1999"
     ],
@@ -765,16 +765,16 @@
     "answers": [
       "1949",
       "1932",
-      "1980",
-      "1999"
+      "1999",
+      "1980"
     ],
     "correctAnswer": "1980",
     "promptTr": "İlk Uluslararası Mimarlık Sergisi hangi yılda gerçekleşti?",
     "answersTr": [
       "1949",
       "1932",
-      "1980",
-      "1999"
+      "1999",
+      "1980"
     ],
     "correctAnswerTr": "1980",
     "explanationKu": "Pêşangeha Mîmarî ya Navneteweyî ya yekem di sala 1980yî de pêk hat.",
@@ -797,16 +797,16 @@
     "prompt": "Dans di kîjan salê de beşdarî La Biennale bû?",
     "answers": [
       "1895",
-      "1999",
       "1932",
+      "1999",
       "1980"
     ],
     "correctAnswer": "1999",
     "promptTr": "Dans hangi yılda La Biennale'ye katıldı?",
     "answersTr": [
       "1895",
-      "1999",
       "1932",
+      "1999",
       "1980"
     ],
     "correctAnswerTr": "1999",
@@ -831,16 +831,16 @@
     "answers": [
       "François Truffaut",
       "Claude Chabrol",
-      "Jean-Luc Godard",
-      "Alain Resnais"
+      "Alain Resnais",
+      "Jean-Luc Godard"
     ],
     "correctAnswer": "Jean-Luc Godard",
     "promptTr": "\"À bout de souffle\" (1960) filminin yönetmeni kimdir?",
     "answersTr": [
       "François Truffaut",
       "Claude Chabrol",
-      "Jean-Luc Godard",
-      "Alain Resnais"
+      "Alain Resnais",
+      "Jean-Luc Godard"
     ],
     "correctAnswerTr": "Jean-Luc Godard",
     "explanationKu": "Li gorî kataloga BFIyê, derhênerê fîlmê Jean-Luc Godard e.",
@@ -862,16 +862,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"À bout de souffle\" di kîjan salê de derket?",
     "answers": [
-      "1960",
       "1954",
+      "1960",
       "1966",
       "1972"
     ],
     "correctAnswer": "1960",
     "promptTr": "\"À bout de souffle\" filmi hangi yılda çıktı?",
     "answersTr": [
-      "1960",
       "1954",
+      "1960",
       "1966",
       "1972"
     ],
@@ -897,16 +897,16 @@
     "answers": [
       "Dziga Vertov",
       "Lev Kuleshov",
-      "Sergei M. Eisenstein",
-      "Vsevolod Pudovkin"
+      "Vsevolod Pudovkin",
+      "Sergei M. Eisenstein"
     ],
     "correctAnswer": "Sergei M. Eisenstein",
     "promptTr": "\"Battleship Potemkin\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Dziga Vertov",
       "Lev Kuleshov",
-      "Sergei M. Eisenstein",
-      "Vsevolod Pudovkin"
+      "Vsevolod Pudovkin",
+      "Sergei M. Eisenstein"
     ],
     "correctAnswerTr": "Sergei M. Eisenstein",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Sergei M. Eisenstein e.",
@@ -929,16 +929,16 @@
     "prompt": "Fîlmê \"Battleship Potemkin\" di kîjan salê de derket?",
     "answers": [
       "1919",
-      "1925",
       "1922",
+      "1925",
       "1929"
     ],
     "correctAnswer": "1925",
     "promptTr": "\"Battleship Potemkin\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1919",
-      "1925",
       "1922",
+      "1925",
       "1929"
     ],
     "correctAnswerTr": "1925",
@@ -963,16 +963,16 @@
     "answers": [
       "F. W. Murnau",
       "Robert Wiene",
-      "Fritz Lang",
-      "G. W. Pabst"
+      "G. W. Pabst",
+      "Fritz Lang"
     ],
     "correctAnswer": "Fritz Lang",
     "promptTr": "\"Metropolis\" (1927) filminin yönetmeni kimdir?",
     "answersTr": [
       "F. W. Murnau",
       "Robert Wiene",
-      "Fritz Lang",
-      "G. W. Pabst"
+      "G. W. Pabst",
+      "Fritz Lang"
     ],
     "correctAnswerTr": "Fritz Lang",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê Metropolisê Fritz Lang e.",
@@ -994,16 +994,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Metropolis\" (1927) hilberîna kîjan welatî ye?",
     "answers": [
-      "Almanya",
       "Fransa",
+      "Almanya",
       "Îtalya",
       "Sovyet"
     ],
     "correctAnswer": "Almanya",
     "promptTr": "\"Metropolis\" (1927) hangi ülkenin yapımıdır?",
     "answersTr": [
-      "Almanya",
       "Fransa",
+      "Almanya",
       "Îtalya",
       "Sovyet"
     ],
@@ -1029,16 +1029,16 @@
     "answers": [
       "Fritz Lang",
       "Robert Wiene",
-      "F. W. Murnau",
-      "Paul Wegener"
+      "Paul Wegener",
+      "F. W. Murnau"
     ],
     "correctAnswer": "F. W. Murnau",
     "promptTr": "\"Nosferatu\" (1922) filminin yönetmeni kimdir?",
     "answersTr": [
       "Fritz Lang",
       "Robert Wiene",
-      "F. W. Murnau",
-      "Paul Wegener"
+      "Paul Wegener",
+      "F. W. Murnau"
     ],
     "correctAnswerTr": "F. W. Murnau",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê Nosferatuyê F. W. Murnau ye.",
@@ -1060,18 +1060,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Nosferatu\" di kîjan salê de derket?",
     "answers": [
+      "1922",
       "1916",
       "1919",
-      "1927",
-      "1922"
+      "1927"
     ],
     "correctAnswer": "1922",
     "promptTr": "\"Nosferatu\" filmi hangi yılda çıktı?",
     "answersTr": [
+      "1922",
       "1916",
       "1919",
-      "1927",
-      "1922"
+      "1927"
     ],
     "correctAnswerTr": "1922",
     "explanationKu": "Li gorî kataloga BFIyê sala Nosferatuyê 1922 e.",
@@ -1095,16 +1095,16 @@
     "answers": [
       "Akira Kurosawa",
       "Kenji Mizoguchi",
-      "Yasujirō Ozu",
-      "Masaki Kobayashi"
+      "Masaki Kobayashi",
+      "Yasujirō Ozu"
     ],
     "correctAnswer": "Yasujirō Ozu",
     "promptTr": "\"Tokyo Story\" (1953) filminin yönetmeni kimdir?",
     "answersTr": [
       "Akira Kurosawa",
       "Kenji Mizoguchi",
-      "Yasujirō Ozu",
-      "Masaki Kobayashi"
+      "Masaki Kobayashi",
+      "Yasujirō Ozu"
     ],
     "correctAnswerTr": "Yasujirō Ozu",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê Tokyo Storyê Yasujirō Ozu ye.",
@@ -1126,18 +1126,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Tokyo Story\" hilberîna kîjan welatî ye?",
     "answers": [
+      "Japonya",
       "Çîn",
       "Kore",
-      "Taywan",
-      "Japonya"
+      "Taywan"
     ],
     "correctAnswer": "Japonya",
     "promptTr": "\"Tokyo Story\" hangi ülkenin yapımıdır?",
     "answersTr": [
+      "Japonya",
       "Çîn",
       "Kore",
-      "Taywan",
-      "Japonya"
+      "Taywan"
     ],
     "correctAnswerTr": "Japonya",
     "explanationKu": "Li gorî kataloga BFIyê Tokyo Story hilberîneke Japonyayê ye.",
@@ -1160,16 +1160,16 @@
     "prompt": "Derhênerê fîlmê \"Pather Panchali\" (1955) kî ye?",
     "answers": [
       "Ritwik Ghatak",
-      "Satyajit Ray",
       "Mrinal Sen",
+      "Satyajit Ray",
       "Guru Dutt"
     ],
     "correctAnswer": "Satyajit Ray",
     "promptTr": "\"Pather Panchali\" (1955) filminin yönetmeni kimdir?",
     "answersTr": [
       "Ritwik Ghatak",
-      "Satyajit Ray",
       "Mrinal Sen",
+      "Satyajit Ray",
       "Guru Dutt"
     ],
     "correctAnswerTr": "Satyajit Ray",
@@ -1192,18 +1192,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Pather Panchali\" hilberîna kîjan welatî ye?",
     "answers": [
+      "Hindistan",
       "Bangladeş",
       "Pakistan",
-      "Sri Lanka",
-      "Hindistan"
+      "Sri Lanka"
     ],
     "correctAnswer": "Hindistan",
     "promptTr": "\"Pather Panchali\" hangi ülkenin yapımıdır?",
     "answersTr": [
+      "Hindistan",
       "Bangladeş",
       "Pakistan",
-      "Sri Lanka",
-      "Hindistan"
+      "Sri Lanka"
     ],
     "correctAnswerTr": "Hindistan",
     "explanationKu": "Li gorî kataloga BFIyê Pather Panchali hilberîneke Hindistanê ye.",
@@ -1227,16 +1227,16 @@
     "answers": [
       "Roberto Rossellini",
       "Luchino Visconti",
-      "Vittorio De Sica",
-      "Federico Fellini"
+      "Federico Fellini",
+      "Vittorio De Sica"
     ],
     "correctAnswer": "Vittorio De Sica",
     "promptTr": "\"Bicycle Thieves\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Roberto Rossellini",
       "Luchino Visconti",
-      "Vittorio De Sica",
-      "Federico Fellini"
+      "Federico Fellini",
+      "Vittorio De Sica"
     ],
     "correctAnswerTr": "Vittorio De Sica",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Vittorio De Sica e.",
@@ -1258,18 +1258,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Bicycle Thieves\" hilberîna kîjan welatî ye?",
     "answers": [
+      "Îtalya",
       "Fransa",
       "Îspanya",
-      "Yewnanistan",
-      "Îtalya"
+      "Yewnanistan"
     ],
     "correctAnswer": "Îtalya",
     "promptTr": "\"Bicycle Thieves\" hangi ülkenin yapımıdır?",
     "answersTr": [
+      "İtalya",
       "Fransa",
       "İspanya",
-      "Yunanistan",
-      "İtalya"
+      "Yunanistan"
     ],
     "correctAnswerTr": "İtalya",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke İtalyayê ye.",
@@ -1292,16 +1292,16 @@
     "prompt": "Derhênerê fîlmê \"Citizen Kane\" kî ye?",
     "answers": [
       "John Ford",
-      "Orson Welles",
       "Howard Hawks",
+      "Orson Welles",
       "Frank Capra"
     ],
     "correctAnswer": "Orson Welles",
     "promptTr": "\"Citizen Kane\" filminin yönetmeni kimdir?",
     "answersTr": [
       "John Ford",
-      "Orson Welles",
       "Howard Hawks",
+      "Orson Welles",
       "Frank Capra"
     ],
     "correctAnswerTr": "Orson Welles",
@@ -1324,18 +1324,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Citizen Kane\" hilberîna kîjan welatî ye?",
     "answers": [
+      "DYA",
       "Brîtanya",
       "Kanada",
-      "Awistralya",
-      "DYA"
+      "Awistralya"
     ],
     "correctAnswer": "DYA",
     "promptTr": "\"Citizen Kane\" hangi ülkenin yapımıdır?",
     "answersTr": [
+      "ABD",
       "Britanya",
       "Kanada",
-      "Avustralya",
-      "ABD"
+      "Avustralya"
     ],
     "correctAnswerTr": "ABD",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke ABDyê ye.",
@@ -1359,16 +1359,16 @@
     "answers": [
       "Fritz Lang",
       "F. W. Murnau",
-      "Robert Wiene",
-      "G. W. Pabst"
+      "G. W. Pabst",
+      "Robert Wiene"
     ],
     "correctAnswer": "Robert Wiene",
     "promptTr": "\"Das Cabinet des Dr. Caligari\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Fritz Lang",
       "F. W. Murnau",
-      "Robert Wiene",
-      "G. W. Pabst"
+      "G. W. Pabst",
+      "Robert Wiene"
     ],
     "correctAnswerTr": "Robert Wiene",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Robert Wiene e.",
@@ -1390,18 +1390,18 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"Rashomon\" kî ye?",
     "answers": [
+      "Akira Kurosawa",
       "Yasujirō Ozu",
       "Kenji Mizoguchi",
-      "Mikio Naruse",
-      "Akira Kurosawa"
+      "Mikio Naruse"
     ],
     "correctAnswer": "Akira Kurosawa",
     "promptTr": "\"Rashomon\" filminin yönetmeni kimdir?",
     "answersTr": [
+      "Akira Kurosawa",
       "Yasujirō Ozu",
       "Kenji Mizoguchi",
-      "Mikio Naruse",
-      "Akira Kurosawa"
+      "Mikio Naruse"
     ],
     "correctAnswerTr": "Akira Kurosawa",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Akira Kurosawa e.",
@@ -1423,16 +1423,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Rashomon\" di kîjan salê de derket?",
     "answers": [
-      "1950",
       "1935",
+      "1950",
       "1961",
       "1972"
     ],
     "correctAnswer": "1950",
     "promptTr": "\"Rashomon\" filmi hangi yılda çıktı?",
     "answersTr": [
-      "1950",
       "1935",
+      "1950",
       "1961",
       "1972"
     ],
@@ -1458,16 +1458,16 @@
     "answers": [
       "Jean-Luc Godard",
       "Claude Chabrol",
-      "François Truffaut",
-      "Éric Rohmer"
+      "Éric Rohmer",
+      "François Truffaut"
     ],
     "correctAnswer": "François Truffaut",
     "promptTr": "\"The 400 Blows\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Jean-Luc Godard",
       "Claude Chabrol",
-      "François Truffaut",
-      "Éric Rohmer"
+      "Éric Rohmer",
+      "François Truffaut"
     ],
     "correctAnswerTr": "François Truffaut",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê François Truffaut e.",
@@ -1489,16 +1489,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"The 400 Blows\" hilberîna kîjan welatî ye?",
     "answers": [
-      "Fransa",
       "Belçîka",
+      "Fransa",
       "Swîsre",
       "Portekîz"
     ],
     "correctAnswer": "Fransa",
     "promptTr": "\"The 400 Blows\" hangi ülkenin yapımıdır?",
     "answersTr": [
-      "Fransa",
       "Belçika",
+      "Fransa",
       "İsviçre",
       "Portekiz"
     ],
@@ -1522,18 +1522,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Seven Samurai\" di kîjan salê de derket?",
     "answers": [
+      "1954",
       "1948",
       "1963",
-      "1970",
-      "1954"
+      "1970"
     ],
     "correctAnswer": "1954",
     "promptTr": "\"Seven Samurai\" filmi hangi yılda çıktı?",
     "answersTr": [
+      "1954",
       "1948",
       "1963",
-      "1970",
-      "1954"
+      "1970"
     ],
     "correctAnswerTr": "1954",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1954 e.",
@@ -1555,16 +1555,16 @@
     "category": "Sînema",
     "prompt": "Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?",
     "answers": [
-      "1951",
       "1932",
+      "1951",
       "1946",
       "1968"
     ],
     "correctAnswer": "1951",
     "promptTr": "Berlin Film Festivali hangi yılda kuruldu?",
     "answersTr": [
-      "1951",
       "1932",
+      "1951",
       "1946",
       "1968"
     ],
@@ -1590,16 +1590,16 @@
     "answers": [
       "Şêrê Zêrîn",
       "Palmiyeya Zêrîn",
-      "Hirça Zêrîn",
-      "Ayiyê Zêrîn"
+      "Ayiyê Zêrîn",
+      "Hirça Zêrîn"
     ],
     "correctAnswer": "Hirça Zêrîn",
     "promptTr": "Berlinale'nin en önemli ödülü hangisidir?",
     "answersTr": [
       "Altın Aslan",
       "Altın Palmiye",
-      "Altın Ayı",
-      "Altın Küre"
+      "Altın Küre",
+      "Altın Ayı"
     ],
     "correctAnswerTr": "Altın Ayı",
     "explanationKu": "Xelatên herî girîng ên Berlinaleyê Hirça Zêrîn û Hirçên Zîvîn in.",
@@ -1621,16 +1621,16 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"Persona\" kî ye?",
     "answers": [
-      "Ingmar Bergman",
       "Lars von Trier",
+      "Ingmar Bergman",
       "Roy Andersson",
       "Victor Sjöström"
     ],
     "correctAnswer": "Ingmar Bergman",
     "promptTr": "\"Persona\" filminin yönetmeni kimdir?",
     "answersTr": [
-      "Ingmar Bergman",
       "Lars von Trier",
+      "Ingmar Bergman",
       "Roy Andersson",
       "Victor Sjöström"
     ],
@@ -1654,18 +1654,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Persona\" hilberîna kîjan welatî ye?",
     "answers": [
+      "Swêd",
       "Norwec",
       "Danîmarka",
-      "Fînlanda",
-      "Swêd"
+      "Fînlanda"
     ],
     "correctAnswer": "Swêd",
     "promptTr": "\"Persona\" hangi ülkenin yapımıdır?",
     "answersTr": [
+      "İsveç",
       "Norveç",
       "Danimarka",
-      "Finlandiya",
-      "İsveç"
+      "Finlandiya"
     ],
     "correctAnswerTr": "İsveç",
     "explanationKu": "Li gorî kataloga BFIyê ev fîlm hilberîneke Swêdê ye.",
@@ -1687,16 +1687,16 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"8½\" kî ye?",
     "answers": [
-      "Federico Fellini",
       "Michelangelo Antonioni",
+      "Federico Fellini",
       "Luchino Visconti",
       "Pier Paolo Pasolini"
     ],
     "correctAnswer": "Federico Fellini",
     "promptTr": "\"8½\" filminin yönetmeni kimdir?",
     "answersTr": [
-      "Federico Fellini",
       "Michelangelo Antonioni",
+      "Federico Fellini",
       "Luchino Visconti",
       "Pier Paolo Pasolini"
     ],
@@ -1721,16 +1721,16 @@
     "prompt": "Fîlmê \"8½\" di kîjan salê de derket?",
     "answers": [
       "1949",
-      "1963",
       "1955",
+      "1963",
       "1958"
     ],
     "correctAnswer": "1963",
     "promptTr": "\"8½\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1949",
-      "1963",
       "1955",
+      "1963",
       "1958"
     ],
     "correctAnswerTr": "1963",
@@ -1753,18 +1753,18 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"The Godfather\" kî ye?",
     "answers": [
+      "Francis Ford Coppola",
       "Martin Scorsese",
       "Sidney Lumet",
-      "Sam Peckinpah",
-      "Francis Ford Coppola"
+      "Sam Peckinpah"
     ],
     "correctAnswer": "Francis Ford Coppola",
     "promptTr": "\"The Godfather\" filminin yönetmeni kimdir?",
     "answersTr": [
+      "Francis Ford Coppola",
       "Martin Scorsese",
       "Sidney Lumet",
-      "Sam Peckinpah",
-      "Francis Ford Coppola"
+      "Sam Peckinpah"
     ],
     "correctAnswerTr": "Francis Ford Coppola",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Francis Ford Coppola e.",
@@ -1787,16 +1787,16 @@
     "prompt": "Fîlmê \"The Godfather\" di kîjan salê de derket?",
     "answers": [
       "1965",
-      "1972",
       "1969",
+      "1972",
       "1980"
     ],
     "correctAnswer": "1972",
     "promptTr": "\"The Godfather\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1965",
-      "1972",
       "1969",
+      "1972",
       "1980"
     ],
     "correctAnswerTr": "1972",
@@ -1819,16 +1819,16 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"Vertigo\" kî ye?",
     "answers": [
-      "Alfred Hitchcock",
       "Billy Wilder",
+      "Alfred Hitchcock",
       "John Huston",
       "Otto Preminger"
     ],
     "correctAnswer": "Alfred Hitchcock",
     "promptTr": "\"Vertigo\" filminin yönetmeni kimdir?",
     "answersTr": [
-      "Alfred Hitchcock",
       "Billy Wilder",
+      "Alfred Hitchcock",
       "John Huston",
       "Otto Preminger"
     ],
@@ -1853,16 +1853,16 @@
     "prompt": "Fîlmê \"Vertigo\" di kîjan salê de derket?",
     "answers": [
       "1944",
-      "1958",
       "1951",
+      "1958",
       "1966"
     ],
     "correctAnswer": "1958",
     "promptTr": "\"Vertigo\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1944",
-      "1958",
       "1951",
+      "1958",
       "1966"
     ],
     "correctAnswerTr": "1958",
@@ -1885,18 +1885,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Sunrise A Song of Two Humans\" di kîjan salê de derket?",
     "answers": [
+      "1927",
       "1935",
       "1941",
-      "1919",
-      "1927"
+      "1919"
     ],
     "correctAnswer": "1927",
     "promptTr": "\"Sunrise A Song of Two Humans\" filmi hangi yılda çıktı?",
     "answersTr": [
+      "1927",
       "1935",
       "1941",
-      "1919",
-      "1927"
+      "1919"
     ],
     "correctAnswerTr": "1927",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1927 e.",
@@ -1919,16 +1919,16 @@
     "prompt": "Derhênerê fîlmê \"Man with a Movie Camera\" kî ye?",
     "answers": [
       "Sergei Eisenstein",
-      "Dziga Vertov",
       "Lev Kuleshov",
+      "Dziga Vertov",
       "Vsevolod Pudovkin"
     ],
     "correctAnswer": "Dziga Vertov",
     "promptTr": "\"Man with a Movie Camera\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Sergei Eisenstein",
-      "Dziga Vertov",
       "Lev Kuleshov",
+      "Dziga Vertov",
       "Vsevolod Pudovkin"
     ],
     "correctAnswerTr": "Dziga Vertov",
@@ -1951,16 +1951,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Man with a Movie Camera\" di kîjan salê de derket?",
     "answers": [
-      "1929",
       "1917",
+      "1929",
       "1938",
       "1945"
     ],
     "correctAnswer": "1929",
     "promptTr": "\"Man with a Movie Camera\" filmi hangi yılda çıktı?",
     "answersTr": [
-      "1929",
       "1917",
+      "1929",
       "1938",
       "1945"
     ],
@@ -1985,16 +1985,16 @@
     "prompt": "Derhênerê fîlmê \"Mirror\" kî ye?",
     "answers": [
       "Sergei Parajanov",
-      "Andrei Tarkovsky",
       "Larisa Shepitko",
+      "Andrei Tarkovsky",
       "Andrei Konchalovsky"
     ],
     "correctAnswer": "Andrei Tarkovsky",
     "promptTr": "\"Mirror\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Sergei Parajanov",
-      "Andrei Tarkovsky",
       "Larisa Shepitko",
+      "Andrei Tarkovsky",
       "Andrei Konchalovsky"
     ],
     "correctAnswerTr": "Andrei Tarkovsky",
@@ -2017,18 +2017,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Mirror\" di kîjan salê de derket?",
     "answers": [
+      "1975",
       "1962",
       "1988",
-      "1953",
-      "1975"
+      "1953"
     ],
     "correctAnswer": "1975",
     "promptTr": "\"Mirror\" filmi hangi yılda çıktı?",
     "answersTr": [
+      "1975",
       "1962",
       "1988",
-      "1953",
-      "1975"
+      "1953"
     ],
     "correctAnswerTr": "1975",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 1975 e.",
@@ -2050,16 +2050,16 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"In the Mood for Love\" kî ye?",
     "answers": [
-      "Wong Kar Wai",
       "John Woo",
+      "Wong Kar Wai",
       "Tsai Ming-liang",
       "Hou Hsiao-hsien"
     ],
     "correctAnswer": "Wong Kar Wai",
     "promptTr": "\"In the Mood for Love\" filminin yönetmeni kimdir?",
     "answersTr": [
-      "Wong Kar Wai",
       "John Woo",
+      "Wong Kar Wai",
       "Tsai Ming-liang",
       "Hou Hsiao-hsien"
     ],
@@ -2085,16 +2085,16 @@
     "answers": [
       "1988",
       "1994",
-      "2000",
-      "2008"
+      "2008",
+      "2000"
     ],
     "correctAnswer": "2000",
     "promptTr": "\"In the Mood for Love\" filmi hangi yılda çıktı?",
     "answersTr": [
       "1988",
       "1994",
-      "2000",
-      "2008"
+      "2008",
+      "2000"
     ],
     "correctAnswerTr": "2000",
     "explanationKu": "Li gorî kataloga BFIyê sala fîlmê 2000 e.",
@@ -2117,16 +2117,16 @@
     "prompt": "Derhênerê fîlmê \"Come and See\" kî ye?",
     "answers": [
       "Andrei Tarkovsky",
-      "Elem Klimov",
       "Nikita Mikhalkov",
+      "Elem Klimov",
       "Sergei Bondarchuk"
     ],
     "correctAnswer": "Elem Klimov",
     "promptTr": "\"Come and See\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Andrei Tarkovsky",
-      "Elem Klimov",
       "Nikita Mikhalkov",
+      "Elem Klimov",
       "Sergei Bondarchuk"
     ],
     "correctAnswerTr": "Elem Klimov",
@@ -2151,16 +2151,16 @@
     "answers": [
       "Mohsen Makhmalbaf",
       "Jafar Panahi",
-      "Abbas Kiarostami",
-      "Asghar Farhadi"
+      "Asghar Farhadi",
+      "Abbas Kiarostami"
     ],
     "correctAnswer": "Abbas Kiarostami",
     "promptTr": "\"Close-up\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Mohsen Makhmalbaf",
       "Jafar Panahi",
-      "Abbas Kiarostami",
-      "Asghar Farhadi"
+      "Asghar Farhadi",
+      "Abbas Kiarostami"
     ],
     "correctAnswerTr": "Abbas Kiarostami",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Abbas Kiarostami e.",
@@ -2182,16 +2182,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Close-up\" hilberîna kîjan welatî ye?",
     "answers": [
-      "Îran",
       "Tirkiye",
+      "Îran",
       "Iraq",
       "Efxanistan"
     ],
     "correctAnswer": "Îran",
     "promptTr": "\"Close-up\" hangi ülkenin yapımıdır?",
     "answersTr": [
-      "İran",
       "Türkiye",
+      "İran",
       "Irak",
       "Afganistan"
     ],
@@ -2217,16 +2217,16 @@
     "answers": [
       "Sê",
       "Pênc",
-      "Çar",
-      "Şeş"
+      "Şeş",
+      "Çar"
     ],
     "correctAnswer": "Çar",
     "promptTr": "Tarihsel olarak kaç adlandırılmış okyanus vardı?",
     "answersTr": [
       "Üç",
       "Beş",
-      "Dört",
-      "Altı"
+      "Altı",
+      "Dört"
     ],
     "correctAnswerTr": "Dört",
     "explanationKu": "Di dîrokê de çar okyanûsên bi nav hebûn: Atlas, Aram, Hindî û Bakur.",
@@ -2249,16 +2249,16 @@
     "prompt": "Kîjan okyanûs wek okyanûsa pêncem tê naskirin?",
     "answers": [
       "Okyanûsa Hindî",
-      "Okyanûsa Başûr",
       "Okyanûsa Atlas",
+      "Okyanûsa Başûr",
       "Okyanûsa Aram"
     ],
     "correctAnswer": "Okyanûsa Başûr",
     "promptTr": "Beşinci okyanus olarak hangisi tanınır?",
     "answersTr": [
       "Hint Okyanusu",
-      "Güney Okyanusu",
       "Atlas Okyanusu",
+      "Güney Okyanusu",
       "Pasifik Okyanusu"
     ],
     "correctAnswerTr": "Güney Okyanusu",
@@ -2283,16 +2283,16 @@
     "answers": [
       "1982",
       "1994",
-      "2000",
-      "2010"
+      "2010",
+      "2000"
     ],
     "correctAnswer": "2000",
     "promptTr": "Güney Okyanusu'nun sınırları hangi yılda IHO'ya önerildi?",
     "answersTr": [
       "1982",
       "1994",
-      "2000",
-      "2010"
+      "2010",
+      "2000"
     ],
     "correctAnswerTr": "2000",
     "explanationKu": "Sînorên vê okyanûsê di sala 2000î de ji Rêxistina Hîdrografîk a Navneteweyî re hatin pêşniyarkirin.",
@@ -2314,16 +2314,16 @@
     "category": "Cografya",
     "prompt": "Li gorî NOAAyê, ji hêla fizîkî ve li cîhanê çend okyanûs hene?",
     "answers": [
-      "Tenê yek okyanûsa gerdûnî",
       "Çar okyanûsên cuda",
+      "Tenê yek okyanûsa gerdûnî",
       "Pênc okyanûsên cuda",
       "Sê okyanûsên cuda"
     ],
     "correctAnswer": "Tenê yek okyanûsa gerdûnî",
     "promptTr": "NOAA'ya göre fiziksel olarak dünyada kaç okyanus vardır?",
     "answersTr": [
-      "Tek bir küresel okyanus",
       "Dört ayrı okyanus",
+      "Tek bir küresel okyanus",
       "Beş ayrı okyanus",
       "Üç ayrı okyanus"
     ],
@@ -2349,16 +2349,16 @@
     "answers": [
       "Ji sedî 30",
       "Ji sedî 50",
-      "Ji sedî 96",
-      "Ji sedî 71"
+      "Ji sedî 71",
+      "Ji sedî 96"
     ],
     "correctAnswer": "Ji sedî 96",
     "promptTr": "USGS'e göre dünyadaki suyun yüzde kaçı okyanuslardadır?",
     "answersTr": [
       "Yüzde 30",
       "Yüzde 50",
-      "Yüzde 96",
-      "Yüzde 71"
+      "Yüzde 71",
+      "Yüzde 96"
     ],
     "correctAnswerTr": "Yüzde 96",
     "explanationKu": "USGS dibêje ku ji sedî 96ê ava cîhanê di okyanûsan de tê hilanîn.",
@@ -2381,16 +2381,16 @@
     "prompt": "Ava okyanûsê çawa ye?",
     "answers": [
       "Bêtam e",
-      "Şor e",
       "Şêrîn e",
+      "Şor e",
       "Tirş e"
     ],
     "correctAnswer": "Şor e",
     "promptTr": "Okyanus suyu nasıldır?",
     "answersTr": [
       "Tatsızdır",
-      "Tuzludur",
       "Tatlıdır",
+      "Tuzludur",
       "Ekşidir"
     ],
     "correctAnswerTr": "Tuzludur",
@@ -2415,16 +2415,16 @@
     "answers": [
       "Berfê",
       "Qeşayê",
-      "Hilmê",
-      "Xwêyê"
+      "Xwêyê",
+      "Hilmê"
     ],
     "correctAnswer": "Hilmê",
     "promptTr": "Güneş enerjisiyle sıvı su neye dönüşür?",
     "answersTr": [
       "Kara",
       "Buza",
-      "Buhara",
-      "Tuza"
+      "Tuza",
+      "Buhara"
     ],
     "correctAnswerTr": "Buhara",
     "explanationKu": "Enerjiya rojê dibe sedem ku ava şil vegere hilmê û hilkeve hewayê.",
@@ -2446,16 +2446,16 @@
     "category": "Cografya",
     "prompt": "Ewr bi giranî ji çi pêk tên?",
     "answers": [
-      "Ji ava di hewayê de",
       "Ji xweliyê",
+      "Ji ava di hewayê de",
       "Ji dûmanê",
       "Ji qumê"
     ],
     "correctAnswer": "Ji ava di hewayê de",
     "promptTr": "Bulutlar esas olarak neyden oluşur?",
     "answersTr": [
-      "Havadaki sudan",
       "Topraktan",
+      "Havadaki sudan",
       "Dumandan",
       "Kumdan"
     ],
@@ -2481,16 +2481,16 @@
     "answers": [
       "Şeş",
       "Heft",
-      "Heşt",
-      "Neh"
+      "Neh",
+      "Heşt"
     ],
     "correctAnswer": "Heşt",
     "promptTr": "Güneş sisteminde kaç gezegen vardır?",
     "answersTr": [
       "Altı",
       "Yedi",
-      "Sekiz",
-      "Dokuz"
+      "Dokuz",
+      "Sekiz"
     ],
     "correctAnswerTr": "Sekiz",
     "explanationKu": "Li gorî NASAyê sîstema rojê heşt gerstêrkan dihewîne.",
@@ -2513,16 +2513,16 @@
     "prompt": "Gerstêrka herî mezin a sîstema rojê kîjan e?",
     "answers": [
       "Saturn",
-      "Jupiter",
       "Neptun",
+      "Jupiter",
       "Mars"
     ],
     "correctAnswer": "Jupiter",
     "promptTr": "Güneş sisteminin en büyük gezegeni hangisidir?",
     "answersTr": [
       "Satürn",
-      "Jüpiter",
       "Neptün",
+      "Jüpiter",
       "Mars"
     ],
     "correctAnswerTr": "Jüpiter",
@@ -2547,16 +2547,16 @@
     "answers": [
       "Jupiter",
       "Merkur",
-      "Venus",
-      "Mars"
+      "Mars",
+      "Venus"
     ],
     "correctAnswer": "Venus",
     "promptTr": "Güneş sisteminin en sıcak gezegeni hangisidir?",
     "answersTr": [
       "Jüpiter",
       "Merkür",
-      "Venüs",
-      "Mars"
+      "Mars",
+      "Venüs"
     ],
     "correctAnswerTr": "Venüs",
     "explanationKu": "Venus gerstêrka herî germ e, tevî ku Merkur nêzîktirî rojê ye.",
@@ -2578,16 +2578,16 @@
     "category": "Cografya",
     "prompt": "Sîstema rojê berî nêzîkî çend milyar salan pêk hat?",
     "answers": [
-      "4.6 milyar",
       "2.4 milyar",
+      "4.6 milyar",
       "13.8 milyar",
       "8.2 milyar"
     ],
     "correctAnswer": "4.6 milyar",
     "promptTr": "Güneş sistemi yaklaşık kaç milyar yıl önce oluştu?",
     "answersTr": [
-      "4,6 milyar",
       "2,4 milyar",
+      "4,6 milyar",
       "13,8 milyar",
       "8,2 milyar"
     ],
@@ -2613,16 +2613,16 @@
     "answers": [
       "30 roj",
       "24 roj",
-      "365.25 roj",
-      "687 roj"
+      "687 roj",
+      "365.25 roj"
     ],
     "correctAnswer": "365.25 roj",
     "promptTr": "Dünya, Güneş çevresindeki bir turunu kaç günde tamamlar?",
     "answersTr": [
       "30 gün",
       "24 gün",
-      "365,25 gün",
-      "687 gün"
+      "687 gün",
+      "365,25 gün"
     ],
     "correctAnswerTr": "365,25 gün",
     "explanationKu": "Cîhan di 365.25 rojan de li dora rojê yek car digere.",
@@ -2644,18 +2644,18 @@
     "category": "Cografya",
     "prompt": "Zivirîna Cîhanê ya li dora xwe çend saetan didome?",
     "answers": [
+      "23.9 saet",
       "12 saet",
       "48 saet",
-      "6 saet",
-      "23.9 saet"
+      "6 saet"
     ],
     "correctAnswer": "23.9 saet",
     "promptTr": "Dünya'nın kendi çevresindeki dönüşü kaç saat sürer?",
     "answersTr": [
+      "23,9 saat",
       "12 saat",
       "48 saat",
-      "6 saat",
-      "23,9 saat"
+      "6 saat"
     ],
     "correctAnswerTr": "23,9 saat",
     "explanationKu": "Cîhan di nêzîkî 23.9 saetan de li dora xwe yek car dizivire.",
@@ -2679,16 +2679,16 @@
     "answers": [
       "Du",
       "Sê",
-      "Yek",
-      "Çar"
+      "Çar",
+      "Yek"
     ],
     "correctAnswer": "Yek",
     "promptTr": "Dünya'nın kaç uydusu vardır?",
     "answersTr": [
       "İki",
       "Üç",
-      "Bir",
-      "Dört"
+      "Dört",
+      "Bir"
     ],
     "correctAnswerTr": "Bir",
     "explanationKu": "Cîhan tenê yek heyvê xwe heye; ew di sîstema rojê de yekane gerstêrka wisa ye.",
@@ -2710,18 +2710,18 @@
     "category": "Cografya",
     "prompt": "Nêzîkî ji sedî çend rûyê Cîhanê bi okyanûsê pêçayî ye?",
     "answers": [
+      "Ji sedî 71",
       "Ji sedî 30",
       "Ji sedî 50",
-      "Ji sedî 90",
-      "Ji sedî 71"
+      "Ji sedî 90"
     ],
     "correctAnswer": "Ji sedî 71",
     "promptTr": "Dünya yüzeyinin yaklaşık yüzde kaçı okyanusla kaplıdır?",
     "answersTr": [
+      "Yüzde 71",
       "Yüzde 30",
       "Yüzde 50",
-      "Yüzde 90",
-      "Yüzde 71"
+      "Yüzde 90"
     ],
     "correctAnswerTr": "Yüzde 71",
     "explanationKu": "Okyanûsa cîhanî nêzîkî ji sedî 71ê rûyê Cîhanê digire.",
@@ -2744,16 +2744,16 @@
     "prompt": "Li gorî NASAyê, ji sedî çend ê atmosfera Cîhanê oksîjen e?",
     "answers": [
       "Ji sedî 50",
-      "Ji sedî 21",
       "Ji sedî 78",
+      "Ji sedî 21",
       "Ji sedî 5"
     ],
     "correctAnswer": "Ji sedî 21",
     "promptTr": "NASA'ya göre Dünya atmosferinin yüzde kaçı oksijendir?",
     "answersTr": [
       "Yüzde 50",
-      "Yüzde 21",
       "Yüzde 78",
+      "Yüzde 21",
       "Yüzde 5"
     ],
     "correctAnswerTr": "Yüzde 21",
@@ -2776,18 +2776,18 @@
     "category": "Cografya",
     "prompt": "Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?",
     "answers": [
+      "Nîtrojen",
       "Oksîjen",
       "Karbondîoksît",
-      "Argon",
-      "Nîtrojen"
+      "Argon"
     ],
     "correctAnswer": "Nîtrojen",
     "promptTr": "Dünya atmosferinin en büyük payını hangi gaz oluşturur?",
     "answersTr": [
+      "Azot",
       "Oksijen",
       "Karbondioksit",
-      "Argon",
-      "Azot"
+      "Argon"
     ],
     "correctAnswerTr": "Azot",
     "explanationKu": "Nîtrojen bi ji sedî 78 para herî mezin a atmosferê pêk tîne; oksîjen ji sedî 21 e.",
@@ -2811,16 +2811,16 @@
     "answers": [
       "Ji sedî 71",
       "Ji sedî 50",
-      "Ji sedî 96.5",
-      "Ji sedî 30"
+      "Ji sedî 30",
+      "Ji sedî 96.5"
     ],
     "correctAnswer": "Ji sedî 96.5",
     "promptTr": "USGS'e göre okyanuslar Dünya'daki suyun yüzde kaçını tutar?",
     "answersTr": [
       "Yüzde 71",
       "Yüzde 50",
-      "Yüzde 96,5",
-      "Yüzde 30"
+      "Yüzde 30",
+      "Yüzde 96,5"
     ],
     "correctAnswerTr": "Yüzde 96,5",
     "explanationKu": "Okyanûs ji sedî 96.5ê ava Cîhanê digirin; ya mayî av a şêrîn e.",
@@ -2842,18 +2842,18 @@
     "category": "Cografya",
     "prompt": "Piraniya ava şêrîn a Cîhanê li ku ye?",
     "answers": [
+      "Di qeşa û cemedan de",
       "Di golan de",
       "Di çeman de",
-      "Di baranê de",
-      "Di qeşa û cemedan de"
+      "Di baranê de"
     ],
     "correctAnswer": "Di qeşa û cemedan de",
     "promptTr": "Dünya'daki tatlı suyun çoğu nerededir?",
     "answersTr": [
+      "Buz ve buzullarda",
       "Göllerde",
       "Akarsularda",
-      "Yağmurda",
-      "Buz ve buzullarda"
+      "Yağmurda"
     ],
     "correctAnswerTr": "Buz ve buzullarda",
     "explanationKu": "Zêdetirî ji sedî 68ê ava şêrîn di qeşa û cemedan de girtî ye.",
@@ -2876,16 +2876,16 @@
     "prompt": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
     "answers": [
       "150.000 km",
-      "384.400 km",
       "1.740 km",
+      "384.400 km",
       "12.000 km"
     ],
     "correctAnswer": "384.400 km",
     "promptTr": "Dünya ile Ay arasındaki ortalama uzaklık kaç kilometredir?",
     "answersTr": [
       "150.000 km",
-      "384.400 km",
       "1.740 km",
+      "384.400 km",
       "12.000 km"
     ],
     "correctAnswerTr": "384.400 km",
@@ -2908,18 +2908,18 @@
     "category": "Cografya",
     "prompt": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
     "answers": [
+      "27 roj",
       "7 roj",
       "14 roj",
-      "365 roj",
-      "27 roj"
+      "365 roj"
     ],
     "correctAnswer": "27 roj",
     "promptTr": "Ay, Dünya çevresindeki turunu kaç günde tamamlar?",
     "answersTr": [
+      "27 gün",
       "7 gün",
       "14 gün",
-      "365 gün",
-      "27 gün"
+      "365 gün"
     ],
     "correctAnswerTr": "27 gün",
     "explanationKu": "Heyv di 27 rojan de li dora Cîhanê yek car digere.",
@@ -2943,16 +2943,16 @@
     "answers": [
       "Mariana Rise",
       "Pacific Basin",
-      "Challenger Deep",
-      "Atlas Trench"
+      "Atlas Trench",
+      "Challenger Deep"
     ],
     "correctAnswer": "Challenger Deep",
     "promptTr": "Okyanusun en derin yeri hangi adla bilinir?",
     "answersTr": [
       "Mariana Rise",
       "Pacific Basin",
-      "Challenger Deep",
-      "Atlas Trench"
+      "Atlas Trench",
+      "Challenger Deep"
     ],
     "correctAnswerTr": "Challenger Deep",
     "explanationKu": "Cihê herî kûr ê okyanûsê Challenger Deep e û li bin okyanûsa Aramê ya rojava ye.",
@@ -2974,88 +2974,22 @@
     "category": "Cografya",
     "prompt": "Navê Challenger Deepê ji ku tê?",
     "answers": [
+      "Ji navê keştiyekê",
       "Ji navê zanyarekî",
       "Ji navê giravekê",
-      "Ji navê welatekî",
-      "Ji navê keştiyekê"
+      "Ji navê welatekî"
     ],
     "correctAnswer": "Ji navê keştiyekê",
     "promptTr": "Challenger Deep adı nereden gelir?",
     "answersTr": [
+      "Bir geminin adından",
       "Bir bilim insanının adından",
       "Bir adanın adından",
-      "Bir ülkenin adından",
-      "Bir geminin adından"
+      "Bir ülkenin adından"
     ],
     "correctAnswerTr": "Bir geminin adından",
     "explanationKu": "Nav ji keştiya HMS Challenger tê; ekîba wê di 1875an de kûrahî pîva.",
     "explanationTr": "Ad, HMS Challenger gemisinden gelir; mürettebatı 1875'te derinliği ölçmüştür.",
-    "difficulty": 2,
-    "type": "multipleChoice",
-    "metadata": {
-      "dialect": "kurmanci",
-      "sourceTitle": "Source-first verified expansion 2026-08",
-      "sourceReference": "internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json",
-      "reviewedBy": "opus-5 + kurumsal kaynak doğrulaması",
-      "reviewedAt": "2026-08-06",
-      "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "id": "sf_tech_0001",
-    "category": "Teknolojî",
-    "prompt": "Malper bi giştî li ser çi têne hilanîn?",
-    "answers": [
-      "Li ser komputeran",
-      "Li ser kaxizê",
-      "Li ser dengbêjan",
-      "Li ser nexşeyan"
-    ],
-    "correctAnswer": "Li ser komputeran",
-    "promptTr": "Web siteleri genel olarak neyin üzerinde saklanır?",
-    "answersTr": [
-      "Bilgisayarların üzerinde",
-      "Kâğıt üzerinde",
-      "Anlatıcıların belleğinde",
-      "Haritalar üzerinde"
-    ],
-    "correctAnswerTr": "Bilgisayarların üzerinde",
-    "explanationKu": "Malper li ser komputeran têne hilanîn û ji wir ji bikarhêneran re têne şandin.",
-    "explanationTr": "Web siteleri bilgisayarlarda saklanır ve oradan kullanıcılara gönderilir.",
-    "difficulty": 2,
-    "type": "multipleChoice",
-    "metadata": {
-      "dialect": "kurmanci",
-      "sourceTitle": "Source-first verified expansion 2026-08",
-      "sourceReference": "internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json",
-      "reviewedBy": "opus-5 + kurumsal kaynak doğrulaması",
-      "reviewedAt": "2026-08-06",
-      "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "id": "sf_tech_0004",
-    "category": "Teknolojî",
-    "prompt": "DNS di gihîştina malperekê de çi kar dike?",
-    "answers": [
-      "Bataryayê şarj dike",
-      "Wêneyan biçûk dike",
-      "Dengê vîdeoyê zêde dike",
-      "Navnîşana rastîn peyda dike"
-    ],
-    "correctAnswer": "Navnîşana rastîn peyda dike",
-    "promptTr": "DNS bir web sitesine erişimde ne işe yarar?",
-    "answersTr": [
-      "Pili şarj eder",
-      "Görselleri küçültür",
-      "Videonun sesini artırır",
-      "Gerçek adresi bulur"
-    ],
-    "correctAnswerTr": "Gerçek adresi bulur",
-    "explanationKu": "DNS navnîşana rastîn a malperê peyda dike, da ku daxwaz bigihîje cihê rast.",
-    "explanationTr": "DNS, web sitesinin gerçek adresini bulur; böylece istek doğru yere ulaşır.",
     "difficulty": 2,
     "type": "multipleChoice",
     "metadata": {
@@ -3075,16 +3009,16 @@
     "answers": [
       "Universal Reading Language",
       "Unique Router Link",
-      "Upper Range Layer",
-      "Uniform Resource Locator"
+      "Uniform Resource Locator",
+      "Upper Range Layer"
     ],
     "correctAnswer": "Uniform Resource Locator",
     "promptTr": "\"URL\" kısaltması neyin karşılığıdır?",
     "answersTr": [
       "Universal Reading Language",
       "Unique Router Link",
-      "Upper Range Layer",
-      "Uniform Resource Locator"
+      "Uniform Resource Locator",
+      "Upper Range Layer"
     ],
     "correctAnswerTr": "Uniform Resource Locator",
     "explanationKu": "\"URL\" kurtenivîsa \"Uniform Resource Locator\" e.",
@@ -3106,16 +3040,16 @@
     "category": "Teknolojî",
     "prompt": "URL bi giranî çi diyar dike?",
     "answers": [
-      "Rengê rûpelê",
       "Navnîşana çavkaniyekê",
+      "Rengê rûpelê",
       "Mezinahiya wêneyan",
       "Dema xwendinê"
     ],
     "correctAnswer": "Navnîşana çavkaniyekê",
     "promptTr": "URL esas olarak neyi belirtir?",
     "answersTr": [
-      "Sayfanın rengini",
       "Bir kaynağın adresini",
+      "Sayfanın rengini",
       "Görsellerin boyutunu",
       "Okuma süresini"
     ],
@@ -3135,55 +3069,22 @@
     }
   },
   {
-    "id": "sf_tech_0009",
-    "category": "Teknolojî",
-    "prompt": "Dane di înternetê de bi çi awayî têne şandin?",
-    "answers": [
-      "Bi perçeyên biçûk",
-      "Bi carekê û bi tevahî",
-      "Bi rêza tîpan",
-      "Bi dengê bilind"
-    ],
-    "correctAnswer": "Bi perçeyên biçûk",
-    "promptTr": "Veriler internette nasıl gönderilir?",
-    "answersTr": [
-      "Küçük parçalar hâlinde",
-      "Tek seferde ve bütün olarak",
-      "Harf sırasına göre",
-      "Yüksek sesle"
-    ],
-    "correctAnswerTr": "Küçük parçalar hâlinde",
-    "explanationKu": "Dane bi perçeyên biçûk têne şandin û li dawiyê ji nû ve têne hev kirin.",
-    "explanationTr": "Veriler küçük parçalar hâlinde gönderilir ve sonunda yeniden birleştirilir.",
-    "difficulty": 2,
-    "type": "multipleChoice",
-    "metadata": {
-      "dialect": "kurmanci",
-      "sourceTitle": "Source-first verified expansion 2026-08",
-      "sourceReference": "internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json",
-      "reviewedBy": "opus-5 + kurumsal kaynak doğrulaması",
-      "reviewedAt": "2026-08-06",
-      "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
-    }
-  },
-  {
     "id": "sf_tech_0010",
     "category": "Teknolojî",
     "prompt": "Di HTTPê de peyama \"200 OK\" çi nîşan dide?",
     "answers": [
       "Girêdan hat birîn",
-      "Daxwaz hat qebûlkirin",
       "Rûpel hat guhertin",
-      "Navnîşan çewt e"
+      "Navnîşan çewt e",
+      "Daxwaz hat qebûlkirin"
     ],
     "correctAnswer": "Daxwaz hat qebûlkirin",
     "promptTr": "HTTP'de \"200 OK\" mesajı neyi gösterir?",
     "answersTr": [
       "Bağlantı kesildi",
-      "İstek kabul edildi",
       "Sayfa değiştirildi",
-      "Adres hatalı"
+      "Adres hatalı",
+      "İstek kabul edildi"
     ],
     "correctAnswerTr": "İstek kabul edildi",
     "explanationKu": "Peyama \"200 OK\" nîşan dide ku daxwaz hat qebûlkirin û bersiv tê şandin.",
@@ -3201,53 +3102,20 @@
     }
   },
   {
-    "id": "sf_tech_0011",
-    "category": "Teknolojî",
-    "prompt": "Li gorî NISTê şîfre divê herî kêm çend tîp be?",
-    "answers": [
-      "6",
-      "8",
-      "15",
-      "4"
-    ],
-    "correctAnswer": "15",
-    "promptTr": "NIST'e göre parola en az kaç karakter olmalı?",
-    "answersTr": [
-      "6",
-      "8",
-      "15",
-      "4"
-    ],
-    "correctAnswerTr": "15",
-    "explanationKu": "NIST pêşniyar dike ku şîfre herî kêm 15 tîp be; dirêjî girîngtirîn faktor e.",
-    "explanationTr": "NIST parolanın en az 15 karakter olmasını önerir; uzunluk en önemli etkendir.",
-    "difficulty": 2,
-    "type": "multipleChoice",
-    "metadata": {
-      "dialect": "kurmanci",
-      "sourceTitle": "Source-first verified expansion 2026-08",
-      "sourceReference": "internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json",
-      "reviewedBy": "opus-5 + kurumsal kaynak doğrulaması",
-      "reviewedAt": "2026-08-06",
-      "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
-    }
-  },
-  {
     "id": "sf_tech_0012",
     "category": "Teknolojî",
     "prompt": "Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?",
     "answers": [
-      "Na, êdî mecbûr nayên pêşniyarkirin",
       "Erê, her dem mecbûr in",
+      "Na, êdî mecbûr nayên pêşniyarkirin",
       "Tenê ji bo bankan mecbûr in",
       "Tenê ji bo e-nameyê mecbûr in"
     ],
     "correctAnswer": "Na, êdî mecbûr nayên pêşniyarkirin",
     "promptTr": "NIST'in yeni rehberine göre özel karakterler zorunlu mudur?",
     "answersTr": [
-      "Hayır, artık zorunlu önerilmiyor",
       "Evet, her zaman zorunlu",
+      "Hayır, artık zorunlu önerilmiyor",
       "Sadece bankalar için zorunlu",
       "Sadece e-posta için zorunlu"
     ],
@@ -3273,16 +3141,16 @@
     "answers": [
       "Yek tîpa dubarekirî",
       "Hejmarek bi tenê",
-      "Çend peyvên rastîn ên li hev hatî",
-      "Navê bikarhêner"
+      "Navê bikarhêner",
+      "Çend peyvên rastîn ên li hev hatî"
     ],
     "correctAnswer": "Çend peyvên rastîn ên li hev hatî",
     "promptTr": "\"Passphrase\" nedir?",
     "answersTr": [
       "Tekrarlanan tek harf",
       "Yalnızca bir sayı",
-      "Birleştirilmiş birkaç gerçek sözcük",
-      "Kullanıcı adı"
+      "Kullanıcı adı",
+      "Birleştirilmiş birkaç gerçek sözcük"
     ],
     "correctAnswerTr": "Birleştirilmiş birkaç gerçek sözcük",
     "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir tê bîrîn hem dirêjtir e.",
@@ -3305,16 +3173,16 @@
     "prompt": "Çima şîfreya yekseb li gelek malperan xeter e?",
     "answers": [
       "Ji ber ku malper hêdî dibin",
-      "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
       "Ji ber ku bîranîn zehmet e",
+      "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
       "Ji ber ku înternet zêde tê bikaranîn"
     ],
     "correctAnswer": "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
     "promptTr": "Aynı parolayı birçok sitede kullanmak neden risklidir?",
     "answersTr": [
       "Siteler yavaşladığı için",
-      "Bir site ele geçerse tüm hesaplar tehlikeye girer",
       "Hatırlaması zor olduğu için",
+      "Bir site ele geçerse tüm hesaplar tehlikeye girer",
       "İnternet çok kullanıldığı için"
     ],
     "correctAnswerTr": "Bir site ele geçerse tüm hesaplar tehlikeye girer",
