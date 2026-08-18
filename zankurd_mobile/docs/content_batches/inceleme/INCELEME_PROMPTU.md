@@ -77,3 +77,31 @@ buldun, kategorinin genel kalitesi hakkında bir cümle.
 Emin olmadığın bir iddiayı "yanlış" diye işaretleme; "şüpheli" de ve niçin
 şüphelendiğini yaz. Yanlış alarm da gerçek hata kadar maliyetlidir — biz
 buna göre soru sileceğiz.
+
+## 2026-08-18 eki: ÖNCÜLÜ yalan olan soru
+
+Altı kategorinin incelemesi, ne mekanik kapının ne de çapraz kontrolün
+görebildiği bir kusur sınıfını ortaya çıkardı: **soru kendi içinde
+kusursuz, önermesi uydurma.**
+
+Üç örnek — üçü de bankadan çıkarıldı ya da düzeltildi:
+
+* "Dengbêjlik 2018'de UNESCO tarafından tanındı" — tanınmadı. 2018'de
+  Türkiye'nin yazdırdığı miras Dede Korkut'tu. Banka bunun üstüne ikinci
+  bir soru daha kurmuştu.
+* "2021 Nobel Edebiyat Ödülü'nü hangi **Nijeryalı** yazar kazandı?" —
+  hiçbiri. 2021 Gurnah'ındır (Tanzanya) ve banka bunu başka bir soruda
+  doğru soruyordu.
+* "Nobel alan ilk kadın Gabriela Mistral" — ilk kadın 1909'da Selma
+  Lagerlöf'tür; Lagerlöf sorunun kendi çeldiricisiydi.
+
+Çapraz kontrol üçünü de onayladı, onaylaması da beklenirdi: modele "şu
+dört addan hangisi" diye sorulur, "bu soru anlamlı mı" diye sorulmaz.
+
+**Bu yüzden incelemeden özellikle şu isteniyor:** bir soruyu okurken önce
+şıklara değil KÖKE bak. Kökün varsaydığı şey gerçekten oldu mu? Verilen
+kurum, ödül, tarih ya da unvan gerçekten var mı? Doğru şık listedeki en
+iyi seçenek olabilir ve soru yine de yalan olabilir.
+
+Emin olamadığında "yanlış" değil **"şüpheli"** yaz — hangi iddianın
+doğrulanması gerektiğini belirtmen yeter.
