@@ -2790,8 +2790,8 @@
       "Yüzde 30"
     ],
     "correctAnswerTr": "Yüzde 96,5",
-    "explanationKu": "Okyanûs ji sedî 96.5ê ava Cîhanê digirin; ya mayî av a şêrîn e.",
-    "explanationTr": "Okyanuslar Dünya'daki suyun yüzde 96,5'ini tutar; kalanı tatlı sudur.",
+    "explanationKu": "Li gorî USGS okyanûs nêzî ji sedî 96.5ê ava dinyayê digirin; tenê nêzî ji sedî 2.5ê ava giştî ava şirîn e.",
+    "explanationTr": "USGS'e göre okyanuslar Dünya'daki suyun yaklaşık %96,5'ini tutar; toplam suyun yalnızca yaklaşık %2,5'i tatlı sudur.",
     "difficulty": 2,
     "type": "multipleChoice",
     "metadata": {
@@ -2802,7 +2802,8 @@
       "reviewedAt": "2026-08-06",
       "lastContentCheckAt": "2026-08-06",
       "qualityVersion": 2
-    }
+    },
+    "explanation": "USGS'e göre okyanuslar Dünya'daki suyun yaklaşık %96,5'ini tutar; toplam suyun yalnızca yaklaşık %2,5'i tatlı sudur."
   },
   {
     "id": "sf_nat_0016",

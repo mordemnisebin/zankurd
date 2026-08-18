@@ -102,6 +102,13 @@ void main() {
       // (IJOKS, DergiPark 1641754). Model "başlık → erkek" sezgisini
       // izleyip yanılıyor.
       'ds_cand_0064': 'Li ser serê jinan',
+      // National Geographic 1995'te imza dünya haritalarında Robinson'u
+      // bırakıp Winkel Tripel'e geçti (NG Education, "Selecting a Map
+      // Projection"). Model eski yaygın bilgiyi, Robinson'u veriyor.
+      'ds_cografya_0193': 'Projeksiyona Winkel Tripel',
+      // Kralkızı Barajı Dicle havzasındaki Maden Çayı üzerindedir; model
+      // aynı havzadaki daha bilindik Batman Çayı'nı seçiyor.
+      'ds_cografya_0235': 'Çemê Madenê',
     };
 
     final contradicting = <String>[];

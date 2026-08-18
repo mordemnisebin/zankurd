@@ -52,9 +52,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Gılgamış Destanı'nda Gılgamış ölümsüzlüğün peşinde neden arar?
 -    A) Ji bo ku bibe padîşah
 -    B) Ji bo ku cîhanê bigire
--    C) Ji bo ku xwedayan bibîne
-- ✅ D) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
-**Doğru:** D) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
+- ✅ C) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
+-    D) Ji bo ku xwedayan bibîne
+**Doğru:** C) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
 **Açıklama:** Enkidu'nun ölümü Gılgamış'a kendi ölümlülüğünü gösterir; bundan sonra ölümden kaçmanın yolunu, ebedî yaşamı arar. Arayış Enkidu'yu diriltmek için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Epic_of_Gilgamesh
 
@@ -62,21 +62,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di destana Îlyadayê de, kîjan lehenga yekem car tê nasîn?
 **TR:** İlyada Destanı'nda ilk olarak hangi kahraman tanıtılır?
 -    A) Hektor
--    B) Odîseus
-- ✅ C) Aşîl
+- ✅ B) Aşîl
+-    C) Odîseus
 -    D) Agamemnon
-**Doğru:** C) Aşîl
+**Doğru:** B) Aşîl
 **Açıklama:** İlyada Destanı'nda Aşil, Truva'ya karşı öfkesi ve savaşıyla tanınan ana kahramandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Iliad
 
 ## ds_edebiyat_0088  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di destana "Îlyadayê" de, kîjan lehenga yekem car tê nasîn?
 **TR:** "İlyada" destanında ilk olarak hangi kahraman tanıtılır?
--    A) Hektor
-- ✅ B) Aşîl
+- ✅ A) Aşîl
+-    B) Hektor
 -    C) Odîseus
 -    D) Agamemnon
-**Doğru:** B) Aşîl
+**Doğru:** A) Aşîl
 **Açıklama:** "İlyada" destanında Aşil, Truva'ya karşı öfkesi ve savaşıyla tanınan ana kahramandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Iliad
 
@@ -84,10 +84,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan çîrok di nav "Hezar û Yek Şev" de derbas dibe?
 **TR:** "Binbir Gece Masalları"nda hangi hikaye geçer?
 -    A) Çîroka Gilgameş
--    B) Çîroka Beowulf
-- ✅ C) Çîroka Sindbad
+- ✅ B) Çîroka Sindbad
+-    C) Çîroka Beowulf
 -    D) Çîroka Kalevala
-**Doğru:** C) Çîroka Sindbad
+**Doğru:** B) Çîroka Sindbad
 **Açıklama:** "Binbir Gece Masalları"nda, Denizci Sindbad'ın hikayesi, onun deniz maceralarını anlatan en ünlü hikayelerden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights
 
@@ -96,31 +96,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Firdevsi'nin "Şehname" destanında hangi karakter yer alır?
 -    A) Gilgameş
 -    B) Aşîl
--    C) Beowulf
-- ✅ D) Rustem
-**Doğru:** D) Rustem
+- ✅ C) Rustem
+-    D) Beowulf
+**Doğru:** C) Rustem
 **Açıklama:** Rüstem, Firdevsi'nin "Şehname" destanının gücü ve yiğitliğiyle tanınan ana kahramanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Shahnameh
 
 ## ds_edebiyat_0082  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di destana "Beowulf" de, Beowulf bi kîjan dijmin re şer dike?
 **TR:** "Beowulf" destanında Beowulf hangi düşmanla savaşır?
--    A) Aşîl
-- ✅ B) Grendel
+- ✅ A) Grendel
+-    B) Aşîl
 -    C) Rustem
 -    D) Odîseus
-**Doğru:** B) Grendel
+**Doğru:** A) Grendel
 **Açıklama:** "Beowulf" destanında Beowulf, bir canavar olarak bilinen düşmanı Grendel ile savaşır.
 **Kaynak:** https://en.wikipedia.org/wiki/Beowulf
 
 ## ds_edebiyat_0084  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di destana "Odîseya" de, Odîseus çi demê vedigere malê?
 **TR:** "Odysseia" destanında Odysseus ne zaman eve döner?
--    A) Piştî mirina xwe
-- ✅ B) Piştî şerê Troyayê
+- ✅ A) Piştî şerê Troyayê
+-    B) Piştî mirina xwe
 -    C) Piştî ku bibe padîşah
 -    D) Piştî ku cîhanê bigire
-**Doğru:** B) Piştî şerê Troyayê
+**Doğru:** A) Piştî şerê Troyayê
 **Açıklama:** "Odysseia" destanında Odysseus, Truva Savaşı'ndan sonra eve döner, ancak yolculuğu birçok macerayla geçer.
 **Kaynak:** https://en.wikipedia.org/wiki/Odyssey
 
@@ -128,32 +128,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan berhem destaneke neteweyî ya Îraniyan e?
 **TR:** Hangi eser İranlıların milli destanıdır?
 -    A) Kalevala
--    B) Îlyada
-- ✅ C) Şahname
+- ✅ B) Şahname
+-    C) Îlyada
 -    D) Beowulf
-**Doğru:** C) Şahname
+**Doğru:** B) Şahname
 **Açıklama:** Şehname, Firdevsi tarafından yazılan İranlıların milli destanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Shahnameh
 
 ## ds_edebiyat_0086  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di destana "Gilgameş" de, Enkîdu kî ye?
 **TR:** "Gılgamış" destanında Enkidu kimdir?
-- ✅ A) Hevalê Gilgameş
--    B) Dijminê Gilgameş
--    C) Padîşahê Urukê
--    D) Xwedayekî
-**Doğru:** A) Hevalê Gilgameş
+-    A) Dijminê Gilgameş
+-    B) Padîşahê Urukê
+-    C) Xwedayekî
+- ✅ D) Hevalê Gilgameş
+**Doğru:** D) Hevalê Gilgameş
 **Açıklama:** Enkidu, Gılgamış'ı kontrol etmesi için tanrılar tarafından yaratılan, ancak daha sonra onun arkadaşı olan Gılgamış'ın arkadaşıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Enkidu
 
 ## ds_edebiyat_0101  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Madame Bovary" de, Emma Bovary bi kîjan taybetmendiyê tê nasîn?
 **TR:** "Madame Bovary" romanında Emma Bovary hangi özelliğiyle tanınır?
--    A) Dilsoziya xwe ya ji mêrê xwe re
-- ✅ B) Nexweşiya romantîk û nerazîbûna xwe
+- ✅ A) Nexweşiya romantîk û nerazîbûna xwe
+-    B) Dilsoziya xwe ya ji mêrê xwe re
 -    C) Jiyana xwe ya hêsan a gundî
 -    D) Karê xwe yê bijîşkiyê
-**Doğru:** B) Nexweşiya romantîk û nerazîbûna xwe
+**Doğru:** A) Nexweşiya romantîk û nerazîbûna xwe
 **Açıklama:** Emma Bovary, sıradan hayatından duyduğu memnuniyetsizlik ve romantik hayalleriyle tanınır. Hayallerinin içinde yaşar ve gerçek hayatından kaçar.
 **Kaynak:** https://en.wikipedia.org/wiki/Madame_Bovary
 
@@ -162,9 +162,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Fyodor Dostoyevski tarafından yazılmıştır?
 -    A) Sava û Aşitî
 -    B) Anna Karenina
--    C) Karderî
-- ✅ D) Tawan û Ceza
-**Doğru:** D) Tawan û Ceza
+- ✅ C) Tawan û Ceza
+-    D) Karderî
+**Doğru:** C) Tawan û Ceza
 **Açıklama:** Suç ve Ceza, Fyodor Dostoyevski tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve suç, vicdan ve kurtuluş üzerinedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Crime_and_Punishment
 
@@ -172,21 +172,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di romana "Sava û Aşitî" ya Lev Tolstoy de, kîjan bûyer dîrokî wek paşxaneyê tê bikaranîn?
 **TR:** Lev Tolstoy'un "Savaş ve Barış" romanında hangi tarihi olay arka plan olarak kullanılır?
 -    A) Şerê cîhanî yê yekem
--    B) Şoreşa Fransî
-- ✅ C) Şerê Napoleon ê li Rûsyayê
+- ✅ B) Şerê Napoleon ê li Rûsyayê
+-    C) Şoreşa Fransî
 -    D) Şerê navxweyî yê Amerîkayê
-**Doğru:** C) Şerê Napoleon ê li Rûsyayê
+**Doğru:** B) Şerê Napoleon ê li Rûsyayê
 **Açıklama:** Savaş ve Barış, Napolyon'un Rusya Seferi'nin arka planında geçer. Tolstoy bu romanda savaş sırasında Rus toplumunun yaşamını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/War_and_Peace
 
 ## ds_edebiyat_0105  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Anna Karenina" de, Anna ji ber çi têk diçe?
 **TR:** "Anna Karenina" romanında Anna neden çöküşe uğrar?
-- ✅ A) Ji ber evîna xwe ya qedexe
--    B) Ji ber mirina mêrê xwe
--    C) Ji ber karê xwe yê siyasî
--    D) Ji ber koçberiya xwe
-**Doğru:** A) Ji ber evîna xwe ya qedexe
+-    A) Ji ber mirina mêrê xwe
+-    B) Ji ber karê xwe yê siyasî
+-    C) Ji ber koçberiya xwe
+- ✅ D) Ji ber evîna xwe ya qedexe
+**Doğru:** D) Ji ber evîna xwe ya qedexe
 **Açıklama:** Anna Karenina, evliliği dışında olan Vronski'ye duyduğu aşk yüzünden çöküşe uğrar. Bu yasak aşk onu toplumdan ve kendinden uzaklaştırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Anna_Karenina
 
@@ -194,21 +194,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Charles Dickens ve hatiye nivîsandin?
 **TR:** Hangi roman Charles Dickens tarafından yazılmıştır?
 -    A) Mîzrab
--    B) Bekirê Londonê
-- ✅ C) Hêviyên Mezin
+- ✅ B) Hêviyên Mezin
+-    C) Bekirê Londonê
 -    D) Karderî
-**Doğru:** C) Hêviyên Mezin
+**Doğru:** B) Hêviyên Mezin
 **Açıklama:** Büyük Umutlar (Great Expectations), Charles Dickens tarafından yazılmıştır. Onun en ünlü romanlarından biridir ve Pip'in büyümesi ile hayallerini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Great_Expectations
 
 ## ds_edebiyat_0107  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di romana "Mîzrab" (The Hunchback of Notre-Dame) de, Quasimodo li kû dijî?
 **TR:** "Notre Dame"ın Kamburu' romanında Quasimodo nerede yaşar?
--    A) Di qesra padîşah de
-- ✅ B) Di katedrala Notre-Dame de
+- ✅ A) Di katedrala Notre-Dame de
+-    B) Di qesra padîşah de
 -    C) Di birca Londonê de
 -    D) Di keleha Parisê de
-**Doğru:** B) Di katedrala Notre-Dame de
+**Doğru:** A) Di katedrala Notre-Dame de
 **Açıklama:** Quasimodo, Notre Dame Katedrali'nde yaşar. Katedralin çan görevlisidir ve sıra dışı yüzü yüzünden toplumdan gizlenmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Hunchback_of_Notre-Dame
 
@@ -216,32 +216,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Emily Brontë ve hatiye nivîsandin?
 **TR:** Hangi roman Emily Brontë tarafından yazılmıştır?
 -    A) Jane Eyre
--    B) Pîrika
-- ✅ C) Bilindahiyên Wuthering
+- ✅ B) Bilindahiyên Wuthering
+-    C) Pîrika
 -    D) Hêviyên Mezin
-**Doğru:** C) Bilindahiyên Wuthering
+**Doğru:** B) Bilindahiyên Wuthering
 **Açıklama:** Uğultulu Tepeler (Wuthering Heights), Emily Brontë tarafından yazılmıştır. Onun tek romanıdır ve Heathcliff ile Catherine'in tutkulu aşkıyla bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wuthering_Heights
 
 ## ds_edebiyat_0109  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Jane Eyre" de, Jane beriya ku here Thornfieldê li ku dixebite?
 **TR:** "Jane Eyre" romanında Jane, Thornfield'a gitmeden önce nerede çalışır?
-- ✅ A) Li dibistanekê
--    B) Li nexweşxaneyekê
--    C) Li maleke gundan
--    D) Li kargehekê
-**Doğru:** A) Li dibistanekê
+-    A) Li nexweşxaneyekê
+-    B) Li maleke gundan
+-    C) Li kargehekê
+- ✅ D) Li dibistanekê
+**Doğru:** D) Li dibistanekê
 **Açıklama:** Jane önce Lowood Okulu'nda öğretmenlik yapar; oradan ayrıldıktan sonra Thornfield'da mürebbiye olarak çalışır.
 **Kaynak:** https://en.wikipedia.org/wiki/Jane_Eyre
 
 ## ds_edebiyat_0110  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê Victor Hugo ve hatiye nivîsandin?
 **TR:** Hangi roman Victor Hugo tarafından yazılmıştır?
--    A) Sava û Aşitî
-- ✅ B) Sefîl
+- ✅ A) Sefîl
+-    B) Sava û Aşitî
 -    C) Tawan û Ceza
 -    D) Karderî
-**Doğru:** B) Sefîl
+**Doğru:** A) Sefîl
 **Açıklama:** Sefiller (Les Misérables), Victor Hugo tarafından yazılmıştır; adalet, kurtuluş ve toplumsal mücadele üzerinedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Les_Mis%C3%A9rables
 
@@ -250,9 +250,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Sefiller" romanında hangi karakter çaldığı ekmek yüzünden tutuklanır?
 -    A) Cosette
 -    B) Javert
--    C) Marius
-- ✅ D) Jean Valjean
-**Doğru:** D) Jean Valjean
+- ✅ C) Jean Valjean
+-    D) Marius
+**Doğru:** C) Jean Valjean
 **Açıklama:** Jean Valjean, kız kardeşinin aç çocukları için ekmek çaldığı için tutuklanır ve yıllarca ceza görür. Bu olay onun hikayesinin başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Les_Mis%C3%A9rables
 
@@ -260,10 +260,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Herman Melville ve hatiye nivîsandin?
 **TR:** Hangi roman Herman Melville tarafından yazılmıştır?
 -    A) Pîrika
--    B) Jane Eyre
-- ✅ C) Moby-Dick
+- ✅ B) Moby-Dick
+-    C) Jane Eyre
 -    D) Wuthering Heights
-**Doğru:** C) Moby-Dick
+**Doğru:** B) Moby-Dick
 **Açıklama:** Moby-Dick, Herman Melville tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve balina avcılığı ile beyaz bir balinayla mücadeleyi anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Moby-Dick
 
@@ -272,20 +272,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Moby-Dick" romanında Kaptan Ahab, Moby-Dick'i neden arar?
 -    A) Ji bo zanistê
 -    B) Ji bo dewlemendiyê
--    C) Ji bo navdariyê
-- ✅ D) Ji bo tolhildanê
-**Doğru:** D) Ji bo tolhildanê
+- ✅ C) Ji bo tolhildanê
+-    D) Ji bo navdariyê
+**Doğru:** C) Ji bo tolhildanê
 **Açıklama:** Kaptan Ahab, Moby-Dick bacağını kopardığı için ondan intikam almak ister. Balinayla olan bu mücadelesi onun yıkımına neden olur.
 **Kaynak:** https://en.wikipedia.org/wiki/Moby-Dick
 
 ## ds_edebiyat_0114  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê Mark Twain ve hatiye nivîsandin?
 **TR:** Hangi roman Mark Twain tarafından yazılmıştır?
--    A) Oliver Twist
-- ✅ B) Huckleberry Finn
+- ✅ A) Huckleberry Finn
+-    B) Oliver Twist
 -    C) David Copperfield
 -    D) Pîrika
-**Doğru:** B) Huckleberry Finn
+**Doğru:** A) Huckleberry Finn
 **Açıklama:** Huckleberry Finn (Adventures of Huckleberry Finn), Mark Twain tarafından yazılmıştır. Ünlü bir Amerikan romanıdır ve Huck ile Jim'in maceralarını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Adventures_of_Huckleberry_Finn
 
@@ -294,9 +294,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Huckleberry Finn" romanında hangi karakter kaçak bir köledir?
 -    A) Tom Sawyer
 -    B) Pap
--    C) Judge Thatcher
-- ✅ D) Jim
-**Doğru:** D) Jim
+- ✅ C) Jim
+-    D) Judge Thatcher
+**Doğru:** C) Jim
 **Açıklama:** Jim, Huck ile birlikte Mississippi Nehri'nde sal ile yolculuk eden kaçak bir köledir. Romanda özgürlüğün sembolüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Adventures_of_Huckleberry_Finn
 
@@ -304,65 +304,65 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Leo Tolstoy ve hatiye nivîsandin?
 **TR:** Hangi roman Leo Tolstoy tarafından yazılmıştır?
 -    A) Moby-Dick
--    B) Madame Bovary
-- ✅ C) Anna Karenina
+- ✅ B) Anna Karenina
+-    C) Madame Bovary
 -    D) Jane Eyre
-**Doğru:** C) Anna Karenina
+**Doğru:** B) Anna Karenina
 **Açıklama:** Anna Karenina, Leo Tolstoy tarafından yazılmıştır. Onun en ünlü romanlarından biridir ve aşk, evlilik ile toplum üzerinedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Anna_Karenina
 
 ## ds_edebiyat_0119  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di romana "Oliver Twist" de, Oliver li kîjan bajarî dijî?
 **TR:** "Oliver Twist" romanında Oliver hangi şehirde yaşar?
--    A) Parîs
-- ✅ B) London
+- ✅ A) London
+-    B) Parîs
 -    C) New York
 -    D) Dublin
-**Doğru:** B) London
+**Doğru:** A) London
 **Açıklama:** Oliver Twist, Londra'da yaşar. Bu, Charles Dickens'ın bir romanıdır ve yetim bir çocuğun yoksulluk ile suçlar arasındaki yaşamını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oliver_Twist
 
 ## ds_edebiyat_0121  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Tawan û Ceza" de, Raskolnikov ji ber çi tawanekê dike?
 **TR:** "Suç ve Ceza" romanında Raskolnikov neden bir suç işler?
-- ✅ A) Ji ber teoriya xwe ya felsefî
--    B) Ji ber xizanîyê
--    C) Ji ber tolhildanê
--    D) Ji ber zexta civakê
-**Doğru:** A) Ji ber teoriya xwe ya felsefî
+-    A) Ji ber xizanîyê
+-    B) Ji ber tolhildanê
+-    C) Ji ber zexta civakê
+- ✅ D) Ji ber teoriya xwe ya felsefî
+**Doğru:** D) Ji ber teoriya xwe ya felsefî
 **Açıklama:** Raskolnikov, bazı insanların yasaların üzerinde olduğunu söyleyen felsefi teorisi yüzünden bir suç işler. Yaşlı bir tefeci kadını öldürerek bir iyilik yapabileceğini düşünür.
 **Kaynak:** https://en.wikipedia.org/wiki/Crime_and_Punishment
 
 ## ds_edebiyat_0122  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê Gustave Flaubert ve hatiye nivîsandin?
 **TR:** Hangi roman Gustave Flaubert tarafından yazılmıştır?
--    A) Anna Karenina
-- ✅ B) Madame Bovary
+- ✅ A) Madame Bovary
+-    B) Anna Karenina
 -    C) Oliver Twist
 -    D) Pîrika
-**Doğru:** B) Madame Bovary
+**Doğru:** A) Madame Bovary
 **Açıklama:** Madame Bovary, Gustave Flaubert tarafından yazılmıştır. Ünlü bir Fransız romanıdır ve Emma Bovary'nin hayatını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Madame_Bovary
 
 ## ds_edebiyat_0182  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê Gustave Flaubert ve hatiye nivîsandin û wek mînaka realîzmê tê naskirin?
 **TR:** Hangi roman Gustave Flaubert tarafından yazılmıştır ve gerçekçiliğin bir örneği olarak kabul edilir?
-- ✅ A) Madame Bovary
--    B) Les Misérables
--    C) Moby-Dick
--    D) Oliver Twist
-**Doğru:** A) Madame Bovary
+-    A) Les Misérables
+-    B) Moby-Dick
+-    C) Oliver Twist
+- ✅ D) Madame Bovary
+**Doğru:** D) Madame Bovary
 **Açıklama:** Flaubert'in "Madame Bovary"si, Fransız toplumsal yaşamının gerçekliğini anlattığı için gerçekçiliğin temel eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Madame_Bovary
 
 ## ds_edebiyat_0123  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Bilindahiyên Wuthering" de, Mr. Earnshaw Heathcliff li kîjan bajarî dibîne?
 **TR:** "Uğultulu Tepeler" romanında Mr Earnshaw, Heathcliff'i hangi şehirde bulur?
-- ✅ A) Ji Liverpoolê
--    B) Ji Londonê
--    C) Ji Dublinê
--    D) Ji Edinburghê
-**Doğru:** A) Ji Liverpoolê
+-    A) Ji Londonê
+-    B) Ji Dublinê
+-    C) Ji Edinburghê
+- ✅ D) Ji Liverpoolê
+**Doğru:** D) Ji Liverpoolê
 **Açıklama:** Mr Earnshaw, Heathcliff'i Liverpool'da bulup eve getirir. Romanda çocuğun kökeni hiçbir zaman açıklanmaz.
 **Kaynak:** https://en.wikipedia.org/wiki/Wuthering_Heights
 
@@ -370,21 +370,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Charlotte Brontë ve hatiye nivîsandin?
 **TR:** Hangi roman Charlotte Brontë tarafından yazılmıştır?
 -    A) Bilindahiyên Wuthering
--    B) Pîrika
-- ✅ C) Jane Eyre
+- ✅ B) Jane Eyre
+-    C) Pîrika
 -    D) Madame Bovary
-**Doğru:** C) Jane Eyre
+**Doğru:** B) Jane Eyre
 **Açıklama:** Jane Eyre, Charlotte Brontë tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve Jane Eyre'in hayatını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Jane_Eyre
 
 ## ds_edebiyat_0126  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** William Shakespeare di kîjan sedsalê de ji dayik bûye?
 **TR:** William Shakespeare hangi yüzyılda doğmuştur?
--    A) Sedsala 14an
-- ✅ B) Sedsala 16an
+- ✅ A) Sedsala 16an
+-    B) Sedsala 14an
 -    C) Sedsala 15an
 -    D) Sedsala 17an
-**Doğru:** B) Sedsala 16an
+**Doğru:** A) Sedsala 16an
 **Açıklama:** Shakespeare 1564'te, yani 16. yüzyılda doğdu; 1616'da, 17. yüzyılda öldü. Yaşamı iki yüzyıla yayılır.
 **Kaynak:** https://en.wikipedia.org/wiki/William_Shakespeare
 
@@ -393,31 +393,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aşağıdaki eserlerden hangisi William Shakespeare tarafından yazılmıştır?
 -    A) Dîwana Mem û Zîn
 -    B) Şahname
--    C) Îlyada
-- ✅ D) Hamlet
-**Doğru:** D) Hamlet
+- ✅ C) Hamlet
+-    D) Îlyada
+**Doğru:** C) Hamlet
 **Açıklama:** Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn Divanı Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir.
 **Kaynak:** https://en.wikipedia.org/wiki/Hamlet
 
 ## ds_edebiyat_0128  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di Shakespeare de, çi tê wateya "To be or not to be"?
 **TR:** Shakespeare'de "To be or not to be" ne anlama gelir?
--    A) Evîn an nefret
-- ✅ B) Jiyan an mirin
+- ✅ A) Jiyan an mirin
+-    B) Evîn an nefret
 -    C) Şer an aşitî
 -    D) Xewn an rastî
-**Doğru:** B) Jiyan an mirin
+**Doğru:** A) Jiyan an mirin
 **Açıklama:** "To be or not to be" Hamlet'te geçer ve yaşam ile ölüm sorununu ele alır. Bu, Shakespeare'in en ünlü dizelerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/To_be,_or_not_to_be
 
 ## ds_edebiyat_0129  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** "Romeo" di kîjan berhema Shakespeare de cih digire?
 **TR:** "Romeo" Shakespeare'in hangi eserinde yer alır?
-- ✅ A) Romeo û Juliet
--    B) Macbeth
--    C) King Lear
--    D) Othello
-**Doğru:** A) Romeo û Juliet
+-    A) Macbeth
+-    B) King Lear
+-    C) Othello
+- ✅ D) Romeo û Juliet
+**Doğru:** D) Romeo û Juliet
 **Açıklama:** Romeo ve Juliet, Shakespeare'in en ünlü eserlerinden biridir. Romeo ve Juliet, düşman ailelerden gelen genç aşıklardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
@@ -426,9 +426,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Shakespeare'de "Juliet" adıyla bilinen karakter kimdir?
 -    A) Keça King Lear
 -    B) Jina Macbeth
--    C) Xwişka Hamlet
-- ✅ D) Evîndara Romeo
-**Doğru:** D) Evîndara Romeo
+- ✅ C) Evîndara Romeo
+-    D) Xwişka Hamlet
+**Doğru:** C) Evîndara Romeo
 **Açıklama:** Juliet, Romeo'nun sevgilisidir. Romeo'nun ailesi Montague'un düşmanı olan Capulet ailesindendir.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
@@ -436,109 +436,109 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Berhema Shakespeare ya bi navê "Macbeth" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Macbeth" adlı eseri hangi edebî türdendir?
 -    A) Komîdî
--    B) Dîrok
-- ✅ C) Trajedî
+- ✅ B) Trajedî
+-    C) Dîrok
 -    D) Pastoral
-**Doğru:** C) Trajedî
+**Doğru:** B) Trajedî
 **Açıklama:** Macbeth, güç arzusunu ve sonuçlarını anlatan bir trajedidir. Shakespeare onu 17. yüzyılda yazmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Macbeth
 
 ## ds_edebiyat_0132  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Berhema Shakespeare ya bi navê "King Lear" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Kral Lear" adlı eseri hangi edebî türdendir?
-- ✅ A) Trajedî
--    B) Komîdî
--    C) Dîrok
--    D) Romance
-**Doğru:** A) Trajedî
+-    A) Komîdî
+-    B) Dîrok
+-    C) Romance
+- ✅ D) Trajedî
+**Doğru:** D) Trajedî
 **Açıklama:** Kral Lear, yaşlılık, güç ve aile ilişkilerini konu alan bir trajedidir. Lear, gücünü kızlarına devreden bir kraldır.
 **Kaynak:** https://en.wikipedia.org/wiki/King_Lear
 
 ## ds_edebiyat_0136  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Berhema Shakespeare ya bi navê "A Midsummer Night's Dream" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Bir Yaz Gecesi Rüyası" adlı eseri hangi edebî türdendir?
--    A) Trajedî
-- ✅ B) Komîdî
+- ✅ A) Komîdî
+-    B) Trajedî
 -    C) Dîrok
 -    D) Pastoral
-**Doğru:** B) Komîdî
+**Doğru:** A) Komîdî
 **Açıklama:** Bir Yaz Gecesi Rüyası, aşkı ve hayalleri konu alan bir komedidir. Shakespeare'in en ünlü komedilerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Midsummer_Night%27s_Dream
 
 ## ds_edebiyat_0138  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Berhema Shakespeare ya bi navê "The Merchant of Venice" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Venedik Taciri" adlı eseri hangi edebî türdendir?
--    A) Trajedî
-- ✅ B) Komîdî
+- ✅ A) Komîdî
+-    B) Trajedî
 -    C) Dîrok
 -    D) Romance
-**Doğru:** B) Komîdî
+**Doğru:** A) Komîdî
 **Açıklama:** Venedik Taciri, Antonio adında bir taciri anlatan bir komedidir. Trajik yönleri de olan bir komedidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Merchant_of_Venice
 
 ## ds_edebiyat_0133  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa evîna du ciwanan dike?
 **TR:** Shakespeare tarafından yazılan ve iki gencin aşkını anlatan eser hangisidir?
-- ✅ A) Romeo û Juliet
--    B) Hamlet
--    C) Macbeth
--    D) Othello
-**Doğru:** A) Romeo û Juliet
+-    A) Hamlet
+-    B) Macbeth
+-    C) Othello
+- ✅ D) Romeo û Juliet
+**Doğru:** D) Romeo û Juliet
 **Açıklama:** Romeo ve Juliet, düşman ailelerden gelen iki gencin aşkını anlatır. Shakespeare'in en ünlü eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
 ## ds_edebiyat_0141  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa du malbatên dijmin dike?
 **TR:** Shakespeare tarafından yazılan ve iki düşman aileyi anlatan eser hangisidir?
-- ✅ A) Romeo û Juliet
--    B) Hamlet
--    C) Macbeth
--    D) Othello
-**Doğru:** A) Romeo û Juliet
+-    A) Hamlet
+-    B) Macbeth
+-    C) Othello
+- ✅ D) Romeo û Juliet
+**Doğru:** D) Romeo û Juliet
 **Açıklama:** Romeo ve Juliet, iki düşman aileyi anlatır: Montague ve Capulet. Bu aileler arasında aşk yasaktır.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
 ## ds_edebiyat_0145  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa bazirganekî bi navê Antonio dike?
 **TR:** Shakespeare tarafından yazılan ve Antonio adında bir taciri anlatan eser hangisidir?
--    A) A Midsummer Night's Dream
-- ✅ B) The Merchant of Venice
+- ✅ A) The Merchant of Venice
+-    B) A Midsummer Night's Dream
 -    C) Much Ado About Nothing
 -    D) The Tempest
-**Doğru:** B) The Merchant of Venice
+**Doğru:** A) The Merchant of Venice
 **Açıklama:** Venedik Taciri, Antonio adında bir taciri anlatır. Borç ve cezaları konu alan bir komedidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Merchant_of_Venice
 
 ## ds_edebiyat_0134  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di Shakespeare de, kîjan kesayet bi navê "Hamlet" tê naskirin?
 **TR:** Shakespeare'de "Hamlet" adıyla bilinen karakter kimdir?
--    A) Padîşahê Îngilistanê
-- ✅ B) Mîrê Danîmarkayê
+- ✅ A) Mîrê Danîmarkayê
+-    B) Padîşahê Îngilistanê
 -    C) Generalê Romayê
 -    D) Bazirganê Venedîkê
-**Doğru:** B) Mîrê Danîmarkayê
+**Doğru:** A) Mîrê Danîmarkayê
 **Açıklama:** Hamlet, Danimarka prensidir. Amcası tarafından öldürülen babasının intikamını almak ister.
 **Kaynak:** https://en.wikipedia.org/wiki/Hamlet
 
 ## ds_edebiyat_0146  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di Shakespeare de, kîjan kesayet bi navê "Prospero" tê naskirin?
 **TR:** Shakespeare'de "Prospero" adıyla bilinen karakter kimdir?
-- ✅ A) Sihirbazê The Tempest
--    B) Mîrê Danîmarkayê
--    C) Generalê Romayê
--    D) Bazirganê Venedîkê
-**Doğru:** A) Sihirbazê The Tempest
+-    A) Mîrê Danîmarkayê
+-    B) Generalê Romayê
+-    C) Bazirganê Venedîkê
+- ✅ D) Sihirbazê The Tempest
+**Doğru:** D) Sihirbazê The Tempest
 **Açıklama:** Prospero, Fırtına'nın büyücüsüdür. Bir adada yaşar ve büyüsüyle bir fırtına koparır.
 **Kaynak:** https://en.wikipedia.org/wiki/Prospero
 
 ## ds_edebiyat_0151  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di helbesta klasîk a Kurmancî de, ji lihevhatina dengên dawiya rêzikan re çi tê gotin?
 **TR:** Klasik Kürtçe şiirde dize sonlarındaki ses uyuşmasına ne denir?
--    A) Îmge
-- ✅ B) Kafiye
+- ✅ A) Kafiye
+-    B) Îmge
 -    C) Metn
 -    D) Serhatî
-**Doğru:** B) Kafiye
+**Doğru:** A) Kafiye
 **Açıklama:** Kafiye, dize sonlarındaki seslerin uyuşmasıdır; klasik şiirin temel unsurlarındandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhyme
 
@@ -546,21 +546,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di helbesta klasîk a Kurmancî de, kîjan têgeh ji bo rêzkirina dengan tê bikaranîn?
 **TR:** Klasik Kürtçe şiirde, seslerin dizilişi için hangi terim kullanılır?
 -    A) Îmge
--    B) Metn
-- ✅ C) Rîtim
+- ✅ B) Rîtim
+-    C) Metn
 -    D) Serhatî
-**Doğru:** C) Rîtim
+**Doğru:** B) Rîtim
 **Açıklama:** Ritim, şiirde seslerin dizilişidir; ahenk için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
 ## ds_edebiyat_0157  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di helbesta Ehmedê Xanî de, kîjan hêman ji bo pîvana kêşeyê tê bikaranîn?
 **TR:** Ahmedê Xanî'nin şiirinde, ölçü için hangi öğe kullanılır?
--    A) Kafiye
-- ✅ B) Metr
+- ✅ A) Metr
+-    B) Kafiye
 -    C) Îmge
 -    D) Rîwayet
-**Doğru:** B) Metr
+**Doğru:** A) Metr
 **Açıklama:** Metr, şiirde ölçüdür; ahenk için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Metre_(poetry)
 
@@ -568,10 +568,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan nivîskar bi berhema xwe ya "Faust" ve tê naskirin?
 **TR:** Hangi yazar "Faust" adlı eseriyle tanınır?
 -    A) Charles Dickens
--    B) Fyodor Dostoyevskî
-- ✅ C) Johann Wolfgang von Goethe
+- ✅ B) Johann Wolfgang von Goethe
+-    C) Fyodor Dostoyevskî
 -    D) Mark Twain
-**Doğru:** C) Johann Wolfgang von Goethe
+**Doğru:** B) Johann Wolfgang von Goethe
 **Açıklama:** "Faust" Johann Wolfgang von Goethe'nin başyapıtıdır. Goethe, Sturm und Drang ve Weimar Klasisizmiyle anılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe
 
@@ -580,20 +580,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Realizm, edebi bir akım olarak hangi yüzyılda ortaya çıktı?
 -    A) Sedsala 18an
 -    B) Sedsala 20an
--    C) Sedsala 17an
-- ✅ D) Sedsala 19an
-**Doğru:** D) Sedsala 19an
+- ✅ C) Sedsala 19an
+-    D) Sedsala 17an
+**Doğru:** C) Sedsala 19an
 **Açıklama:** Realizm, 19. yüzyılın ortalarında Fransa'da ortaya çıktı ve hayalci romantizme bir tepkiydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_realism
 
 ## ds_edebiyat_0181  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di edebiyata realîzmê de, kîjan hêman zêde tê dîtin?
 **TR:** Realizm edebiyatında hangi öğe daha çok görülür?
--    A) Xeyalên berfireh
-- ✅ B) Rastiya rojane
+- ✅ A) Rastiya rojane
+-    B) Xeyalên berfireh
 -    C) Mîtolojî
 -    D) Efsaneyên dîrokî
-**Doğru:** B) Rastiya rojane
+**Doğru:** A) Rastiya rojane
 **Açıklama:** Realizm, günlük gerçekliğe, sıradan yaşama ve topluma odaklanır; hayal ve mitolojiye değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_realism
 
@@ -602,9 +602,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Modernizm hangi yüzyılda edebi bir akım olarak ortaya çıktı?
 -    A) Sedsala 19an
 -    B) Sedsala 18an
--    C) Sedsala 21an
-- ✅ D) Sedsala 20an
-**Doğru:** D) Sedsala 20an
+- ✅ C) Sedsala 20an
+-    D) Sedsala 21an
+**Doğru:** C) Sedsala 20an
 **Açıklama:** Modernizm, 20. yüzyılın başlarında ortaya çıkmış ve geleneksel gerçekçiliğe bir tepki olmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_modernism
 
@@ -612,10 +612,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di edebiyata modernîzmê de, kîjan hêman zêde tê dîtin?
 **TR:** Modernizm edebiyatında hangi öğe daha çok görülür?
 -    A) Rastiya objektîf
--    B) Zimanê sade
-- ✅ C) Şikandina rêzikên kevneşopî
+- ✅ B) Şikandina rêzikên kevneşopî
+-    C) Zimanê sade
 -    D) Dîroka xêzî
-**Doğru:** C) Şikandina rêzikên kevneşopî
+**Doğru:** B) Şikandina rêzikên kevneşopî
 **Açıklama:** Modernizm, geleneksel kuralların yıkılması, biçim ve dil üzerine denemeler yapılmasıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_modernism
 
@@ -624,20 +624,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman James Joyce tarafından yazılmıştır ve modernizmin bir örneği olarak kabul edilir?
 -    A) Madame Bovary
 -    B) Moby-Dick
--    C) War and Peace
-- ✅ D) Ulysses
-**Doğru:** D) Ulysses
+- ✅ C) Ulysses
+-    D) War and Peace
+**Doğru:** C) Ulysses
 **Açıklama:** Joyce'un "Ulysses"i, bilinç akışı tekniğini kullandığı için modernizmin temel eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ulysses_(novel)
 
 ## ds_edebiyat_0189  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Ulysses" de, kîjan teknîk zêde tê bikaranîn?
 **TR:** "Ulysses" romanında hangi teknik daha çok kullanılır?
--    A) Rêzika kronolojîk
-- ✅ B) Herika hişê
+- ✅ A) Herika hişê
+-    B) Rêzika kronolojîk
 -    C) Zimanê helbestî
 -    D) Diyalogên dirêj
-**Doğru:** B) Herika hişê
+**Doğru:** A) Herika hişê
 **Açıklama:** Joyce, "Ulysses"te bilinç akışı tekniğini kullanır; bu da modernizmin bir özelliğidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ulysses_(novel)
 
@@ -645,21 +645,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Virginia Woolf ve hatiye nivîsandin û wek mînaka modernîzmê tê naskirin?
 **TR:** Hangi roman Virginia Woolf tarafından yazılmıştır ve modernizmin bir örneği olarak kabul edilir?
 -    A) Ulysses
--    B) The Great Gatsby
-- ✅ C) Mrs Dalloway
+- ✅ B) Mrs Dalloway
+-    C) The Great Gatsby
 -    D) One Hundred Years of Solitude
-**Doğru:** C) Mrs Dalloway
+**Doğru:** B) Mrs Dalloway
 **Açıklama:** Woolf'un "Mrs Dalloway"i bilinç akışı tekniğiyle tanınır ve modernizmin eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mrs_Dalloway
 
 ## ds_edebiyat_0191  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Mrs Dalloway" de, kîjan mijar zêde tê dîtin?
 **TR:** "Mrs Dalloway" romanında hangi tema daha çok işlenir?
-- ✅ A) Hiş û bîranîn
--    B) Şer û pevçûn
--    C) Aborî û bazirganî
--    D) Xweza û çiya
-**Doğru:** A) Hiş û bîranîn
+-    A) Şer û pevçûn
+-    B) Aborî û bazirganî
+-    C) Xweza û çiya
+- ✅ D) Hiş û bîranîn
+**Doğru:** D) Hiş û bîranîn
 **Açıklama:** Woolf, "Mrs Dalloway"de zihni, anıları ve insan ilişkilerini araştırır; bu da modernizmin bir özelliğidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mrs_Dalloway
 
@@ -668,31 +668,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi eser Franz Kafka tarafından yazılmıştır ve modernizmin bir örneği kabul edilir?
 -    A) Ulysses
 -    B) Madame Bovary
--    C) Les Misérables
-- ✅ D) The Metamorphosis
-**Doğru:** D) The Metamorphosis
+- ✅ C) The Metamorphosis
+-    D) Les Misérables
+**Doğru:** C) The Metamorphosis
 **Açıklama:** Kafka'nın "Dönüşüm"ü gerçeküstü ve modernist bakış açısıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Metamorphosis
 
 ## ds_edebiyat_0193  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di berhema "The Metamorphosis" de, kîjan bûyer diqewime?
 **TR:** "Dönüşüm" adlı eserde hangi olay gerçekleşir?
-- ✅ A) Gregor Samsa dibe kêzikek
--    B) Emma Bovary dimire
--    C) Odîseus vedigere malê
--    D) Gilgameş dibe padîşah
-**Doğru:** A) Gregor Samsa dibe kêzikek
+-    A) Emma Bovary dimire
+-    B) Odîseus vedigere malê
+-    C) Gilgameş dibe padîşah
+- ✅ D) Gregor Samsa dibe kêzikek
+**Doğru:** D) Gregor Samsa dibe kêzikek
 **Açıklama:** "Dönüşüm"de Gregor Samsa uykudan uyanır ve bir böceğe dönüştüğünü görür. Eser bir novelladır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Metamorphosis
 
 ## ds_edebiyat_0202  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskara şîlî di sala 1945an de bû jina yekem a Amerîkaya Latîn a ku Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Şilili yazar 1945'te Nobel Edebiyat Ödülü'nü alan ilk Latin Amerikalı kadın oldu?
--    A) Selma Lagerlöf
-- ✅ B) Gabriela Mistral
+- ✅ A) Gabriela Mistral
+-    B) Selma Lagerlöf
 -    C) Pearl S. Buck
 -    D) Nadine Gordimer
-**Doğru:** B) Gabriela Mistral
+**Doğru:** A) Gabriela Mistral
 **Açıklama:** Şilili şair Gabriela Mistral 1945'te Nobel Edebiyat Ödülü'nü kazandı ve bu ödülü alan ilk Latin Amerikalı kadın oldu. Ödülü alan ilk kadın ise 1909'da Selma Lagerlöf'tür.
 **Kaynak:** https://en.wikipedia.org/wiki/Gabriela_Mistral
 
@@ -700,54 +700,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di sala 1954an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Amerîkî re hat dayîn?
 **TR:** 1954'te Nobel Edebiyat Ödülü hangi Amerikalı yazara verildi?
 -    A) William Faulkner
--    B) John Steinbeck
-- ✅ C) Ernest Hemingway
+- ✅ B) Ernest Hemingway
+-    C) John Steinbeck
 -    D) T.S. Eliot
-**Doğru:** C) Ernest Hemingway
+**Doğru:** B) Ernest Hemingway
 **Açıklama:** Ernest Hemingway, 1954'te Nobel Edebiyat Ödülü'nü kazandı. Kısa romanları ve kendine özgü yazım tarzıyla tanınır, örneğin "İhtiyar Balıkçı".
 **Kaynak:** https://en.wikipedia.org/wiki/Ernest_Hemingway
 
 ## ds_edebiyat_0204  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê Kolombiyayî di sala 1982an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Kolombiyalı yazar 1982'de Nobel Edebiyat Ödülü'nü kazandı?
-- ✅ A) Gabriel García Márquez
--    B) Mario Vargas Llosa
--    C) Jorge Luis Borges
--    D) Pablo Neruda
-**Doğru:** A) Gabriel García Márquez
+-    A) Mario Vargas Llosa
+-    B) Jorge Luis Borges
+-    C) Pablo Neruda
+- ✅ D) Gabriel García Márquez
+**Doğru:** D) Gabriel García Márquez
 **Açıklama:** Gabriel García Márquez, 1982'de Nobel Edebiyat Ödülü'nü kazandı. Büyülü gerçekçilik tarzındaki romanlarıyla tanınır, örneğin "Yüzyıllık Yalnızlık".
 **Kaynak:** https://en.wikipedia.org/wiki/Gabriel_García_Márquez
 
 ## ds_edebiyat_0206  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 2016an de Xelata Nobelê ya Edebiyatê ji kîjan stranbêj û nivîskarê Amerîkî re hat dayîn?
 **TR:** 2016'da Nobel Edebiyat Ödülü hangi Amerikalı şarkıcı ve yazara verildi?
-- ✅ A) Bob Dylan
--    B) Leonard Cohen
--    C) Bruce Springsteen
--    D) Paul Simon
-**Doğru:** A) Bob Dylan
+-    A) Leonard Cohen
+-    B) Bruce Springsteen
+-    C) Paul Simon
+- ✅ D) Bob Dylan
+**Doğru:** D) Bob Dylan
 **Açıklama:** Bob Dylan, 2016'da Nobel Edebiyat Ödülü'nü kazandı. Müziğindeki şiirleriyle tanınır ve bu nedenle ödül verilmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bob_Dylan
 
 ## ds_edebiyat_0207  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskara Alman di sala 2009an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Alman yazar 2009'da Nobel Edebiyat Ödülü'nü kazandı?
--    A) Elfriede Jelinek
-- ✅ B) Herta Müller
+- ✅ A) Herta Müller
+-    B) Elfriede Jelinek
 -    C) Günter Grass
 -    D) Peter Handke
-**Doğru:** B) Herta Müller
+**Doğru:** A) Herta Müller
 **Açıklama:** Herta Müller, 2009'da Nobel Edebiyat Ödülü'nü kazandı. Komünist diktatörlük altındaki yaşamı anlatan romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Herta_Müller
 
 ## ds_edebiyat_0210  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 2003an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Afrîkaya Başûr re hat dayîn?
 **TR:** 2003'te Nobel Edebiyat Ödülü hangi Güney Afrikalı yazara verildi?
-- ✅ A) J.M. Coetzee
--    B) Nadine Gordimer
--    C) Wole Soyinka
--    D) Doris Lessing
-**Doğru:** A) J.M. Coetzee
+-    A) Nadine Gordimer
+-    B) Wole Soyinka
+-    C) Doris Lessing
+- ✅ D) J.M. Coetzee
+**Doğru:** D) J.M. Coetzee
 **Açıklama:** J.M. Coetzee, 2003'te Nobel Edebiyat Ödülü'nü kazandı. Yaşamın zorluklarını ve ahlakı anlatan romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/J._M._Coetzee
 
@@ -756,20 +756,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi Mısırlı yazar 1988'de Nobel Edebiyat Ödülü'nü kazanan ilk Arap yazar oldu?
 -    A) Taha Hussein
 -    B) Nizar Qabbani
--    C) Adonis
-- ✅ D) Naguib Mahfouz
-**Doğru:** D) Naguib Mahfouz
+- ✅ C) Naguib Mahfouz
+-    D) Adonis
+**Doğru:** C) Naguib Mahfouz
 **Açıklama:** Necib Mahfuz, 1988'de Nobel Edebiyat Ödülü'nü kazandı ve bu ödülü alan ilk Arap yazar oldu. "Kahire Üçlemesi" adlı romanıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Naguib_Mahfouz
 
 ## ds_edebiyat_0213  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskara Îngilîz di sala 2007an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi İngiliz yazar 2007'de Nobel Edebiyat Ödülü'nü kazandı?
--    A) V.S. Naipaul
-- ✅ B) Doris Lessing
+- ✅ A) Doris Lessing
+-    B) V.S. Naipaul
 -    C) Harold Pinter
 -    D) Kazuo Ishiguro
-**Doğru:** B) Doris Lessing
+**Doğru:** A) Doris Lessing
 **Açıklama:** Doris Lessing, 2007'de Nobel Edebiyat Ödülü'nü kazandı. Farklı toplumlardaki kadınların yaşamını anlatan romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Doris_Lessing
 
@@ -778,20 +778,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 2021'de Nobel Edebiyat Ödülü hangi Tanzanyalı yazara verildi?
 -    A) Ngũgĩ wa Thiong'o
 -    B) Chinua Achebe
--    C) Wole Soyinka
-- ✅ D) Abdulrazak Gurnah
-**Doğru:** D) Abdulrazak Gurnah
+- ✅ C) Abdulrazak Gurnah
+-    D) Wole Soyinka
+**Doğru:** C) Abdulrazak Gurnah
 **Açıklama:** Abdulrazak Gurnah, 2021'de Nobel Edebiyat Ödülü'nü kazandı. Sömürgecilik ve göç üzerine romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Abdulrazak_Gurnah
 
 ## ds_edebiyat_0218  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 1998an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Portekîzî re hat dayîn?
 **TR:** 1998'de Nobel Edebiyat Ödülü hangi Portekizli yazara verildi?
-- ✅ A) José Saramago
--    B) Fernando Pessoa
--    C) Eça de Queiroz
--    D) Miguel Torga
-**Doğru:** A) José Saramago
+-    A) Fernando Pessoa
+-    B) Eça de Queiroz
+-    C) Miguel Torga
+- ✅ D) José Saramago
+**Doğru:** D) José Saramago
 **Açıklama:** José Saramago, 1998'de Nobel Edebiyat Ödülü'nü kazandı. Alegorik tarzdaki romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/José_Saramago
 
@@ -800,20 +800,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1961'de Nobel Edebiyat Ödülü hangi Yugoslav yazara verildi?
 -    A) Miroslav Krleža
 -    B) Miloš Crnjanski
--    C) Danilo Kiš
-- ✅ D) Ivo Andrić
-**Doğru:** D) Ivo Andrić
+- ✅ C) Ivo Andrić
+-    D) Danilo Kiš
+**Doğru:** C) Ivo Andrić
 **Açıklama:** Ivo Andrić, 1961'de Nobel Edebiyat Ödülü'nü kazandı. "Drina Köprüsü" adlı romanıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Ivo_Andrić
 
 ## ds_edebiyat_0221  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê Îrlandî di sala 1923an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** 1923'te Nobel Edebiyat Ödülü'nü hangi İrlandalı yazar kazandı?
-- ✅ A) W.B. Yeats
--    B) Samuel Beckett
--    C) George Bernard Shaw
--    D) James Joyce
-**Doğru:** A) W.B. Yeats
+-    A) Samuel Beckett
+-    B) George Bernard Shaw
+-    C) James Joyce
+- ✅ D) W.B. Yeats
+**Doğru:** D) W.B. Yeats
 **Açıklama:** W.B. Yeats, 1923'te Nobel Edebiyat Ödülü'nü kazandı. İrlanda kimliğini konu alan şiirleriyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/W._B._Yeats
 
@@ -821,10 +821,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di sala 1969an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Îrlandî re hat dayîn?
 **TR:** 1969'da Nobel Edebiyat Ödülü hangi İrlandalı yazara verildi?
 -    A) W.B. Yeats
--    B) George Bernard Shaw
-- ✅ C) Samuel Beckett
+- ✅ B) Samuel Beckett
+-    C) George Bernard Shaw
 -    D) Seamus Heaney
-**Doğru:** C) Samuel Beckett
+**Doğru:** B) Samuel Beckett
 **Açıklama:** Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. "Godot"yu Beklerken' adlı eseriyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Samuel_Beckett
 
@@ -832,21 +832,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di sala 1991an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskara Afrîkaya Başûr re hat dayîn?
 **TR:** 1991'de Nobel Edebiyat Ödülü hangi Güney Afrikalı yazara verildi?
 -    A) J.M. Coetzee
--    B) Doris Lessing
-- ✅ C) Nadine Gordimer
+- ✅ B) Nadine Gordimer
+-    C) Doris Lessing
 -    D) Chimamanda Ngozi Adichie
-**Doğru:** C) Nadine Gordimer
+**Doğru:** B) Nadine Gordimer
 **Açıklama:** Nadine Gordimer, 1991'de Nobel Edebiyat Ödülü'nü kazandı. Apartheid hakkındaki romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nadine_Gordimer
 
 ## ds_edebiyat_0226  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çîroka Kurdî ya klasîk de, kîjan ajel bi xapandinê tê nasîn?
 **TR:** Klasik Kürt masallarında hangi hayvan kurnazlığıyla bilinir?
-- ✅ A) rovî
--    B) gur
--    C) hirç
--    D) kûsî
-**Doğru:** A) rovî
+-    A) gur
+-    B) hirç
+-    C) kûsî
+- ✅ D) rovî
+**Doğru:** D) rovî
 **Açıklama:** Tilki, Kürt masallarında kurnazlığı ve zekâsıyla bilinir; bu özellik birçok halk masalında tekrarlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Fox
 
@@ -854,32 +854,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan berhem ji aliyê La Fontaine ve hatiye nivîsandin û tê de ajel bi zaravayê mirovan dipeyivin?
 **TR:** La Fontaine tarafından yazılan ve hayvanların insan diliyle konuştuğu eser hangisidir?
 -    A) Çîrokên Grimm
--    B) Hezar û Yek Şev
-- ✅ C) Fablên La Fontaine
+- ✅ B) Fablên La Fontaine
+-    C) Hezar û Yek Şev
 -    D) Şahname
-**Doğru:** C) Fablên La Fontaine
+**Doğru:** B) Fablên La Fontaine
 **Açıklama:** La Fontaine Masalları, hayvanların insan diliyle konuştuğu ve ahlaki dersler veren ünlü bir eserdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Jean_de_La_Fontaine
 
 ## ds_edebiyat_0234  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fabla "Kûsî û Dûpişk" de, dûpişk çima kûsî diqelişîne?
 **TR:** "Kaplumbağa ve Akrep" masalında akrep kaplumbağayı neden sokar?
--    A) ji ber ku kûsî wî aciz kir
-- ✅ B) ji ber ku ew xwezaya wî ye
+- ✅ A) ji ber ku ew xwezaya wî ye
+-    B) ji ber ku kûsî wî aciz kir
 -    C) ji ber ku ew birçî bû
 -    D) ji ber ku ew bi kûsî re dijmin bû
-**Doğru:** B) ji ber ku ew xwezaya wî ye
+**Doğru:** A) ji ber ku ew xwezaya wî ye
 **Açıklama:** "Kaplumbağa ve Akrep" masalında akrep kaplumbağayı sokar çünkü bu onun doğasında vardır, birlikte yolculuk etseler bile.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Scorpion_and_the_Frog
 
 ## ds_edebiyat_0241  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fabla "Şêr û Rovî" de, gava roviyê şêr cara sêyem dît çi kir?
 **TR:** "Aslan ve Tilki" masalında tilki aslanı üçüncü kez gördüğünde ne yaptı?
-- ✅ A) Çû ba wî û pê re axivî
--    B) Reviya û xwe veşart
--    C) Ji tirsan ket erdê
--    D) Ji şêr re xwarin anî
-**Doğru:** A) Çû ba wî û pê re axivî
+-    A) Reviya û xwe veşart
+-    B) Ji tirsan ket erdê
+-    C) Ji şêr re xwarin anî
+- ✅ D) Çû ba wî û pê re axivî
+**Doğru:** D) Çû ba wî û pê re axivî
 **Açıklama:** Tilki aslanı ilk gördüğünde çok korkar, ikincisinde daha az, üçüncüsünde yanına gidip konuşacak kadar alışır. Fablın dersi, aşinalığın korkuyu eritmesidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Lion_and_the_Fox
 
@@ -888,20 +888,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Kurt ve Tilki" masalında kurt, tilki söz dinlemezse ne yapmakla tehdit eder?
 -    A) Wê wî ji hêlînê derxe
 -    B) Wê wî bide şêr
--    C) Wê wî bike xulamê xwe yê hertimî
-- ✅ D) Wê wî bixwe
-**Doğru:** D) Wê wî bixwe
+- ✅ C) Wê wî bixwe
+-    D) Wê wî bike xulamê xwe yê hertimî
+**Doğru:** C) Wê wî bixwe
 **Açıklama:** Fablda kurt, tilkiyi kendisine yiyecek bulmaya zorlar ve itaat etmezse onu yemekle tehdit eder. Tilki sonunda zekâsıyla kurtulur.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Wolf_and_the_Fox
 
 ## ds_edebiyat_0223  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê nîjeryayî di sala 1986an de bû afrîkiyê yekem ê ku Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Nijeryalı yazar 1986'da Nobel Edebiyat Ödülü'nü alan ilk Afrikalı oldu?
-- ✅ A) Wole Soyinka
--    B) Ben Okri
--    C) Chimamanda Ngozi Adichie
--    D) Ngũgĩ wa Thiong'o
-**Doğru:** A) Wole Soyinka
+-    A) Ben Okri
+-    B) Chimamanda Ngozi Adichie
+-    C) Ngũgĩ wa Thiong'o
+- ✅ D) Wole Soyinka
+**Doğru:** D) Wole Soyinka
 **Açıklama:** Nijeryalı oyun yazarı ve şair Wole Soyinka, 1986'da Nobel Edebiyat Ödülü'nü kazandı ve ödülü alan ilk Afrikalı yazar oldu.
 **Kaynak:** —
 

@@ -1035,23 +1035,25 @@
   "category": "Cografya",
   "prompt": "Ji bo gotina \"su\" peyva Kurmancî ya herî guncav kîjan e?",
   "answers": [
-   "çiya",
+   "ax",
    "av",
-   "ağrı",
-   "muş"
+   "ba",
+   "agir"
   ],
   "correctAnswer": "av",
-  "explanation": "Su için doğru kelime \"av\"tir.",
+  "explanation": "\"su\" sözcüğünün Kurmancî karşılığı \"av\"dır. Ax toprak, ba rüzgâr, agir ateştir.",
   "type": "multipleChoice",
   "difficulty": 3,
   "promptTr": "\"Su\" demek için en uygun Kurmancî kelime hangisidir?",
   "answersTr": [
-   "çiya",
+   "ax",
    "av",
-   "ağrı",
-   "muş"
+   "ba",
+   "agir"
   ],
-  "correctAnswerTr": "av"
+  "correctAnswerTr": "av",
+  "explanationTr": "\"su\" sözcüğünün Kurmancî karşılığı \"av\"dır. Ax toprak, ba rüzgâr, agir ateştir.",
+  "explanationKu": "Peyva kurmancî ya \"su\" \"av\" e. Ax, ba û agir wateyên din in."
  },
  {
   "id": "offline_0760",
@@ -1820,7 +1822,7 @@
   "difficulty": 3,
   "explanationKu": "Mehabad li Rojhilat e; di 1946an de Komara Kurdistanê li vê bajarê hat ragihandin.",
   "explanationTr": "Mehabad Rojhilat'tadır; 1946'da Kurdistan Cumhuriyeti bu şehirde ilan edilmiştir.",
-  "promptTr": "Mehabad şehri Kurdistanê'nin hangi parçasındadır?",
+  "promptTr": "Mehabad şehri Kürdistan'ın hangi parçasındadır?",
   "answersTr": [
    "Bakur (Kuzey)",
    "Rojhilat (Doğu)",
@@ -1920,7 +1922,7 @@
   "difficulty": 5,
   "explanationKu": "Hesen Zîrek li Bokanê, li Rojhilat, ji dayik bû û bi sedan stranên gelêrî tomar kirin.",
   "explanationTr": "Hesen Zîrek Rojhilat'taki Bokan'da doğdu ve yüzlerce halk şarkısı kaydetti.",
-  "promptTr": "Şarkıcı Hesen Zîrek Kurdistanê'nin hangi parçasındandı?",
+  "promptTr": "Şarkıcı Hesen Zîrek Kürdistan'ın hangi parçasındandı?",
   "answersTr": [
    "Bakur (Kuzey)",
    "Rojava (Batı)",
@@ -2566,7 +2568,7 @@
   "difficulty": 2,
   "explanationKu": "Kobanê li Rojava ye; navê wê yê din Eyn el-Ereb e û bi berxwedana 2014-2015an tê bibîranîn.",
   "explanationTr": "Kobanê Rojava'dadır; diğer adı Ayn el-Arab'dır ve 2014-2015 direnişiyle anılır.",
-  "promptTr": "Kobanê şehri Kurdistanê'nin hangi parçasındadır?",
+  "promptTr": "Kobanê şehri Kürdistan'ın hangi parçasındadır?",
   "answersTr": [
    "Bakur (Kuzey)",
    "Başûr (Güney)",
@@ -3294,7 +3296,7 @@
   "difficulty": 5,
   "explanationKu": "Behdînan devera Dihokê ya li Başûr e; navê wê ji mîrektiya Behdînan tê û zaravayê behdînî li wir tê axaftin.",
   "explanationTr": "Behdînan, Başûr'daki Dihok yöresidir; adını Behdînan mirliğinden alır ve orada Behdînî ağzı konuşulur.",
-  "promptTr": "Behdînan bölgesi büyük ölçüde Kurdistanê'nin hangi parçasındadır?",
+  "promptTr": "Behdînan bölgesi büyük ölçüde Kürdistan'ın hangi parçasındadır?",
   "answersTr": [
    "Bakur (Kuzey)",
    "Rojava (Batı)",
@@ -7929,9 +7931,9 @@
    "Hoybûn cemiyeti adına askerî liderlik yapan subay",
    "Kürdistan gazetesini çıkaran ilk Kürt gazeteci",
    "Irak rejimi tarafından idam edilen Kürt kadın aktivist",
-   "Başûrê Kurdistanê'de uzun yıllar süren ulusal hareket"
+   "Başûrê Kürdistan'da uzun yıllar süren ulusal hareket"
   ],
-  "correctAnswerTr": "Başûrê Kurdistanê'de uzun yıllar süren ulusal hareket"
+  "correctAnswerTr": "Başûrê Kürdistan'da uzun yıllar süren ulusal hareket"
  },
  {
   "id": "offline_7335",
@@ -8372,7 +8374,7 @@
   "explanationTr": "\"Amida\": Diyarbakır'ın antik çağdaki tarihi ismi ve kalesi.",
   "promptTr": "\"Amida\" için en doğru açıklama hangisidir?",
   "answersTr": [
-   "Başûrê Kurdistanê'de uzun yıllar süren ulusal hareket",
+   "Başûrê Kürdistan'da uzun yıllar süren ulusal hareket",
    "Amed'in eski çağlardaki tarihî adı ve kalesi",
    "Selahaddin Eyyubi tarafından kurulan büyük devlet",
    "Kürt hareketinin efsanevi askerî ve siyasi lideri"
@@ -8758,7 +8760,7 @@
   "prompt": "Li jêr ji bo \"Gola Derbendîxanê\" kîjan rast e?",
   "answers": [
    "geliyê kanyonê yê kûr ê ku çemê Botan ava kiriye",
-   "deşta çandiniyê ya herî bibereket a başûrê Kurdistanê",
+   "deşteke bibereket a çandiniyê ya başûrê Kurdistanê",
    "çemê mezin ê ku jiyanê dide Mezopotamyayê",
    "gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin"
   ],
@@ -8772,7 +8774,7 @@
   "promptTr": "Aşağıdakilerden hangisi \"Derbendîxan Gölü\" için doğrudur?",
   "answersTr": [
    "Botan çayının oluşturduğu derin kanyon vadisi",
-   "Güney Kürdistan'ın en verimli tarım ovası",
+   "Güney Kürdistan'ın verimli tarım ovalarından biri",
    "Mezopotamya'ya hayat veren büyük nehir",
    "Diyala nehri üzerinde kurulmuş baraj gölü"
   ],
@@ -8827,28 +8829,28 @@
  {
   "id": "offline_8181",
   "category": "Cografya",
-  "prompt": "\"daristan\" di mijara erdnîgariyê de çi vedibêje?",
+  "prompt": "Peyva \"daristan\" bi tirkî çi ye?",
   "answers": [
-   "Siirt",
-   "Fırat",
-   "Orman",
-   "Iraq"
+   "çöl",
+   "ova",
+   "orman",
+   "çayır"
   ],
-  "correctAnswer": "Orman",
+  "correctAnswer": "orman",
   "explanation": "\"daristan\" = \"orman\". Mînak: Daristan hewayê paqij dike û avê diparêze.",
   "type": "visual",
   "difficulty": 1,
   "imageUrl": "asset://assets/question_images/daristan.webp",
   "explanationKu": "\"daristan\" = \"orman\". Mînak: Daristan hewayê paqij dike û avê diparêze.",
   "explanationTr": "\"daristan\" = \"orman\". Örnek: Orman havayı temizler ve suyu korur.",
-  "promptTr": "\"daristan\" coğrafya konusunda neyi anlatır?",
+  "promptTr": "\"daristan\" sözcüğünün Türkçesi nedir?",
   "answersTr": [
-   "Siirt",
-   "Fırat",
-   "Orman",
-   "Iraq"
+   "çöl",
+   "ova",
+   "orman",
+   "çayır"
   ],
-  "correctAnswerTr": "Orman"
+  "correctAnswerTr": "orman"
  },
  {
   "id": "offline_8200",
@@ -8881,7 +8883,7 @@
   "category": "Cografya",
   "prompt": "Çiyayên Munzurê li ku derê ne?",
   "answers": [
-   "deşta çandiniyê ya herî bibereket a başûrê Kurdistanê",
+   "deşteke bibereket a çandiniyê ya başûrê Kurdistanê",
    "herêma çiyayî ya derdora Zaxo û Dihokê",
    "rêzeçiyayên herî asê yên erdnîgariya Dêrsimê",
    "hewza çem a ku Amed û Şirnexê digire"
@@ -8894,7 +8896,7 @@
   "explanationTr": "\"Munzur dağları\": Dersim coğrafyasının en engebeli sıradağları.",
   "promptTr": "Munzur Dağları nerededir?",
   "answersTr": [
-   "Güney Kürdistan'ın en verimli tarım ovası",
+   "Güney Kürdistan'ın verimli tarım ovalarından biri",
    "Zaxo ve Dihok çevresindeki dağlık bölge",
    "Dêrsim coğrafyasının en sarp sıradağları",
    "Amed ve Şirnex'i kapsayan nehir havzası"
@@ -9080,7 +9082,7 @@
  {
   "id": "offline_8331",
   "category": "Cografya",
-  "prompt": "Ji bo Cografyaê derbarê \"Gola Ûrmiyeyê\" de vebijêrka rast kîjan e?",
+  "prompt": "Ji aliyê erdnîgariyê ve derbarê \"Gola Ûrmiyeyê\" de vebijêrka rast kîjan e?",
   "answers": [
    "hewza gola şor a li rojhilatê Kurdistanê",
    "çiyayê dîrokî yê ku tê bawerkirin keştiya Nuh lê daketiye",
@@ -9157,7 +9159,7 @@
  {
   "id": "offline_8367",
   "category": "Cografya",
-  "prompt": "Ji aliyê Cografyaê ve ji bo \"gol\" îfadeya rast kîjan e?",
+  "prompt": "Ji aliyê erdnîgariyê ve ji bo \"gol\" îfadeya rast kîjan e?",
   "answers": [
    "göl",
    "çiya",
@@ -9185,36 +9187,36 @@
   "category": "Cografya",
   "prompt": "Di zanîna erdnîgariyê de der barê \"Deşta Hewlêrê\" de ya rast kîjan e?",
   "answers": [
-   "deşta çandiniyê ya herî bibereket a başûrê Kurdistanê",
+   "deşteke bibereket a çandiniyê ya başûrê Kurdistanê",
    "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
    "gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin",
    "gola tektonîk a di sînorên Elezîzê de"
   ],
-  "correctAnswer": "deşta çandiniyê ya herî bibereket a başûrê Kurdistanê",
-  "explanation": "\"Hewler ovası\": Güney Kürdistan'ın en verimli tarım ovası.",
+  "correctAnswer": "deşteke bibereket a çandiniyê ya başûrê Kurdistanê",
+  "explanation": "\"Hewlêr ovası\": Güney Kürdistan'ın verimli tarım ovalarından biri.",
   "type": "visual",
   "difficulty": 4,
   "imageUrl": "asset://assets/question_images/desta_muse.webp",
   "explanationKu": "\"Deşta Hewlêrê\": deşta çandiniyê ya herî berdar a başûrê Kurdistanê.",
-  "explanationTr": "\"Hewler ovası\": Güney Kürdistan'ın en verimli tarım ovası.",
+  "explanationTr": "\"Hewlêr ovası\": Güney Kürdistan'ın verimli tarım ovalarından biri.",
   "promptTr": "Coğrafya bilgisinde \"Hewlêr Ovası\" hakkında doğru olan hangisidir?",
   "answersTr": [
-   "Güney Kürdistan'ın en verimli tarım ovası",
+   "Güney Kürdistan'ın verimli tarım ovalarından biri",
    "Karacadağ lavlarından oluşan taşlık ova",
    "Diyala nehri üzerinde kurulmuş baraj gölü",
    "Elazığ sınırları içindeki tektonik göl"
   ],
-  "correctAnswerTr": "Güney Kürdistan'ın en verimli tarım ovası"
+  "correctAnswerTr": "Güney Kürdistan'ın verimli tarım ovalarından biri"
  },
  {
   "id": "offline_8406",
   "category": "Cografya",
   "prompt": "Kîjan li gorî pênaseya \"erd\" ye?",
   "answers": [
-   "daristan",
+   "gökyüzü",
    "yer/toprak",
-   "viranşehir",
-   "nusaybin"
+   "deniz",
+   "bulut"
   ],
   "correctAnswer": "yer/toprak",
   "explanation": "\"erd\" hem \"yer\" hem \"toprak\" tê wateyê. Mînak: Erdê vê deverê bi bereket e.",
@@ -9224,10 +9226,10 @@
   "explanationTr": "\"erd\" hem \"yer\" hem \"toprak\" anlamına gelir. Örnek: Bu yörenin toprağı bereketlidir.",
   "promptTr": "\"erd\" tanımına hangisi uyar?",
   "answersTr": [
-   "daristan",
+   "gökyüzü",
    "yer/toprak",
-   "viranşehir",
-   "nusaybin"
+   "deniz",
+   "bulut"
   ],
   "correctAnswerTr": "yer/toprak"
  },
@@ -9485,12 +9487,12 @@
  {
   "id": "offline_8615",
   "category": "Cografya",
-  "prompt": "Derbarê \"çem\" de kîjan rast e?",
+  "prompt": "Peyva \"çem\" bi tirkî çi ye?",
   "answers": [
-   "bitlis",
+   "göl",
    "akarsu",
-   "dêrsim",
-   "bugün"
+   "pınar",
+   "vadi"
   ],
   "correctAnswer": "akarsu",
   "explanation": "\"çem\" = \"akarsu\". Mînak: Çemê Dîcleyê di nav Amedê re derbas dibe.",
@@ -9499,19 +9501,19 @@
   "imageUrl": "asset://assets/question_images/ava_zape.webp",
   "explanationKu": "\"çem\" = \"akarsu\". Mînak: Çemê Dîcleyê di nav Amedê re derbas dibe.",
   "explanationTr": "\"çem\" = \"akarsu\". Örnek: Dicle nehri Diyarbakır içinden geçer.",
-  "promptTr": "\"çem\" hakkında hangisi doğrudur?",
+  "promptTr": "\"çem\" sözcüğünün Türkçesi nedir?",
   "answersTr": [
-   "bitlis",
+   "göl",
    "akarsu",
-   "dêrsim",
-   "bugün"
+   "pınar",
+   "vadi"
   ],
   "correctAnswerTr": "akarsu"
  },
  {
   "id": "offline_8672",
   "category": "Cografya",
-  "prompt": "Ji bo Cografyaê derbarê \"Beşa Dîcleyê\" de vebijêrka rast kîjan e?",
+  "prompt": "Ji aliyê erdnîgariyê ve derbarê \"Beşa Dîcleyê\" de vebijêrka rast kîjan e?",
   "answers": [
    "bi yek ji cihên niştecihbûna berdewam a herî kevn a cîhanê bûyîna xwe",
    "hewza çem a ku Amed û Şirnexê digire",
@@ -9791,7 +9793,7 @@
   "answers": [
    "lûtkeya herî bilind a erdnîgariya Kurdistanê",
    "hewza gola şor a li rojhilatê Kurdistanê",
-   "deşta çandiniyê ya herî bibereket a başûrê Kurdistanê",
+   "deşteke bibereket a çandiniyê ya başûrê Kurdistanê",
    "gola tektonîk a di sînorên Elezîzê de"
   ],
   "correctAnswer": "lûtkeya herî bilind a erdnîgariya Kurdistanê",
@@ -9805,7 +9807,7 @@
   "answersTr": [
    "Kürdistan coğrafyasının en yüksek zirvesi",
    "Doğu Kürdistan'daki tuzlu göl havzası",
-   "Güney Kürdistan'ın en verimli tarım ovası",
+   "Güney Kürdistan'ın verimli tarım ovalarından biri",
    "Elazığ sınırları içindeki tektonik göl"
   ],
   "correctAnswerTr": "Kürdistan coğrafyasının en yüksek zirvesi"
@@ -9815,10 +9817,10 @@
   "category": "Cografya",
   "prompt": "Derbarê \"newal\" de vebijêrka rast kîjan e?",
   "answers": [
-   "îran",
+   "tepe",
    "vadi",
-   "ateş",
-   "irak"
+   "ada",
+   "kıyı"
   ],
   "correctAnswer": "vadi",
   "explanation": "\"newal\" = \"vadi\". Mînak: Newal di navbera du çiyan de ye.",
@@ -9829,10 +9831,10 @@
   "explanationTr": "\"newal\" = \"vadi\". Örnek: Vadi iki dağın arasındadır.",
   "promptTr": "\"newal\" hakkında doğru seçenek hangisidir?",
   "answersTr": [
-   "îran",
+   "tepe",
    "vadi",
-   "ateş",
-   "irak"
+   "ada",
+   "kıyı"
   ],
   "correctAnswerTr": "vadi"
  },
@@ -9916,25 +9918,25 @@
  {
   "id": "offline_8965",
   "category": "Cografya",
-  "prompt": "Li jêr kîjan têgiha \"Colemêrg\" rave dike?",
+  "prompt": "Kîjan vebijark têgeha \"Gever (Yüksekova)\" rave dike?",
   "answers": [
    "Bi bûyîna yek ji niştecihiyên herî kevn ên domdar ên dinyayê",
    "ava ku ji sînorên Qers û Îdirê derbas dibe û dikeve Deryaya Hazarê",
-   "Deşta tektonîkî ya bi bilindahiya zêde li Colemêrgê",
+   "Deşta tektonîkî ya bilind a Geverê",
    "Lûtkeya herî bilind a li sînorên Kurdistana Iraqê"
   ],
-  "correctAnswer": "Deşta tektonîkî ya bi bilindahiya zêde li Colemêrgê",
+  "correctAnswer": "Deşta tektonîkî ya bilind a Geverê",
   "explanation": "\"Yüksekova\": Hakkari'de yer alan yüksek rakımlı tektonik ova.",
   "type": "multipleChoice",
   "difficulty": 4,
-  "promptTr": "Aşağıdakilerden hangisi \"Colemêrg\" kavramını açıklar?",
+  "promptTr": "Aşağıdakilerden hangisi \"Gever (Yüksekova)\" kavramını açıklar?",
   "answersTr": [
    "dünyanın en eski kesintisiz yerleşimlerinden biri olması",
    "Kars ve Iğdır sınırlarından geçip Hazar Denizi'ne dökülen su",
-   "Colemêrg'de yüksek rakımlı tektonik ova",
+   "Gever'de yüksek rakımlı tektonik ova",
    "Irak Kürdistanı sınırlarındaki en yüksek zirve"
   ],
-  "correctAnswerTr": "Colemêrg'de yüksek rakımlı tektonik ova"
+  "correctAnswerTr": "Gever'de yüksek rakımlı tektonik ova"
  },
  {
   "id": "offline_8986",
@@ -10018,10 +10020,10 @@
   "category": "Cografya",
   "prompt": "\"deşt\" tê çi wateyê?",
   "answers": [
-   "leğen",
-   "muş",
+   "vadi",
+   "dağ",
    "ova",
-   "amed"
+   "yayla"
   ],
   "correctAnswer": "ova",
   "explanation": "\"deşt\" = \"ova\". Mînak: Deşta Mûşê bi genimê xwe tê naskirin.",
@@ -10032,17 +10034,17 @@
   "explanationTr": "\"deşt\" = \"ova\". Örnek: Muş ovası buğdayıyla bilinir.",
   "promptTr": "\"deşt\" ne anlama gelir?",
   "answersTr": [
-   "leğen",
-   "muş",
+   "vadi",
+   "dağ",
    "ova",
-   "amed"
+   "yayla"
   ],
   "correctAnswerTr": "ova"
  },
  {
   "id": "offline_9096",
   "category": "Cografya",
-  "prompt": "Ji aliyê Cografyaê ve ji bo \"Çemê Garzanê\" îfadeya rast kîjan e?",
+  "prompt": "Ji aliyê erdnîgariyê ve ji bo \"Çemê Garzanê\" îfadeya rast kîjan e?",
   "answers": [
    "zozanên bilind ên ku çemeke gelek jê serê xwe digirin",
    "Çiyayê dîrokî yê ku bawer tê kirin keştiya Nûh lê rûniştiye",
@@ -11081,7 +11083,7 @@
   "promptTr": "Edebiyat açısından \"Dîwana Melayê Cizîrî\" için doğru ifade hangisidir?",
   "answersTr": [
    "Colemêrg mîrliğinde yetişen klasik divan şairi",
-   "Rojhilatê Kurdistanê'nin ünlü modern şair ve yazarı",
+   "Rojhilatê Kürdistan'ın ünlü modern şair ve yazarı",
    "mistik aşk ve felsefe içeren ünlü şiir divanı",
    "Şam'da Latin alfabesiyle çıkan edebiyat dergisi"
   ],
@@ -23162,9 +23164,9 @@
    "Şaş"
   ],
   "correctAnswer": "Rast",
-  "explanation": "Rast e. Li kêleka wê \"Çiyayên Mûnzûrê\" jî heye; ew tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî.",
-  "explanationKu": "Rast e. Li kêleka wê \"Çiyayên Mûnzûrê\" jî heye; ew tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî.",
-  "explanationTr": "Doğru. Yanı sıra \"Çiyayên Mûnzûrê\" de vardır; şu anlama gelir: Dersim’in karlı sıradağları ve aynı adlı millî park.",
+  "explanation": "Rast e. Li kêleka wê \"Çiyayên Mûnzûrê\" jî heye; ew tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
+  "explanationKu": "Rast e. Li kêleka wê \"Çiyayên Mûnzûrê\" jî heye; ew tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
+  "explanationTr": "Doğru. Yanı sıra \"Çiyayên Mûnzûrê\" de vardır; şu anlama gelir: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.",
   "type": "trueFalse",
   "difficulty": 3,
   "promptTr": "\"Çiyayên Bîngolê\" terimi şöyle tanımlanır: birçok nehrin kaynağı olan, yaylalarıyla bilinen sıradağlar. Bu doğru mu yanlış mı?",
@@ -23177,7 +23179,7 @@
  {
   "id": "offline_tf_cog_0052",
   "category": "Cografya",
-  "prompt": "Binirxîne: li gorî vê ravekirinê \"Çiyayên Bîngolê\" ev e — rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî. Rast e an şaş e?",
+  "prompt": "Binirxîne: li gorî vê ravekirinê \"Çiyayên Bîngolê\" ev e — rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê. Rast e an şaş e?",
   "answers": [
    "Rast",
    "Şaş"
@@ -23188,7 +23190,7 @@
   "explanationTr": "Hayır — bu tanım \"Çiyayên Mûnzûrê\" kavramına ait; \"Çiyayên Bîngolê\" şu anlama gelir: birçok nehrin kaynağı olan, yaylalarıyla bilinen sıradağlar.",
   "type": "trueFalse",
   "difficulty": 4,
-  "promptTr": "Değerlendir: bu açıklamaya göre \"Çiyayên Bîngolê\" şudur — Dêrsim'in karlı sıradağları ve aynı adlı millî park. Doğru mu yanlış mı?",
+  "promptTr": "Değerlendir: bu açıklamaya göre \"Çiyayên Bîngolê\" şudur — Dêrsim'in karlı sıradağları ve Munzur Vadisi Millî Parkı. Doğru mu yanlış mı?",
   "answersTr": [
    "Doğru",
    "Yanlış"
@@ -23198,7 +23200,7 @@
  {
   "id": "offline_tf_cog_0053",
   "category": "Cografya",
-  "prompt": "Binirxîne: li gorî vê ravekirinê \"Çiyayên Mûnzûrê\" ev e — rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî. Rast e an şaş e?",
+  "prompt": "Binirxîne: li gorî vê ravekirinê \"Çiyayên Mûnzûrê\" ev e — rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê. Rast e an şaş e?",
   "answers": [
    "Rast",
    "Şaş"
@@ -23209,7 +23211,7 @@
   "explanationTr": "Evet. Aynı alandan bir başka kavram: \"Çiyayên Bîngolê\" şu anlama gelir: birçok nehrin kaynağı olan, yaylalarıyla bilinen sıradağlar.",
   "type": "trueFalse",
   "difficulty": 3,
-  "promptTr": "Değerlendir: bu açıklamaya göre \"Çiyayên Mûnzûrê\" şudur — Dêrsim'in karlı sıradağları ve aynı adlı millî park. Doğru mu yanlış mı?",
+  "promptTr": "Değerlendir: bu açıklamaya göre \"Çiyayên Mûnzûrê\" şudur — Dêrsim'in karlı sıradağları ve Munzur Vadisi Millî Parkı. Doğru mu yanlış mı?",
   "answersTr": [
    "Doğru",
    "Yanlış"
@@ -23225,9 +23227,9 @@
    "Şaş"
   ],
   "correctAnswer": "Şaş",
-  "explanation": "Na — ev ravekirina \"Geliyê Mûnzûrê\" e; \"Çiyayên Mûnzûrê\" tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî.",
-  "explanationKu": "Na — ev ravekirina \"Geliyê Mûnzûrê\" e; \"Çiyayên Mûnzûrê\" tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî.",
-  "explanationTr": "Hayır — bu tanım \"Geliyê Mûnzûrê\" kavramına ait; \"Çiyayên Mûnzûrê\" şu anlama gelir: Dersim’in karlı sıradağları ve aynı adlı millî park.",
+  "explanation": "Na — ev ravekirina \"Geliyê Mûnzûrê\" e; \"Çiyayên Mûnzûrê\" tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
+  "explanationKu": "Na — ev ravekirina \"Geliyê Mûnzûrê\" e; \"Çiyayên Mûnzûrê\" tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
+  "explanationTr": "Hayır — bu tanım \"Geliyê Mûnzûrê\" kavramına ait; \"Çiyayên Mûnzûrê\" şu anlama gelir: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.",
   "type": "trueFalse",
   "difficulty": 4,
   "promptTr": "Bu açıklama \"Çiyayên Mûnzûrê\" için doğru mu yanlış mı: Mûnzûr çayının kireç kayalarında açtığı derin vadi?",
@@ -23246,9 +23248,9 @@
    "Şaş"
   ],
   "correctAnswer": "Rast",
-  "explanation": "Erê, ravekirin li cih e. \"Çiyayên Mûnzûrê\" têgeheke cuda ye: rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî.",
-  "explanationKu": "Erê, ravekirin li cih e. \"Çiyayên Mûnzûrê\" têgeheke cuda ye: rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî.",
-  "explanationTr": "Evet, tanım yerinde. \"Çiyayên Mûnzûrê\" ayrı bir kavramdır: Dersim’in karlı sıradağları ve aynı adlı millî park.",
+  "explanation": "Erê, ravekirin li cih e. \"Çiyayên Mûnzûrê\" têgeheke cuda ye: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
+  "explanationKu": "Erê, ravekirin li cih e. \"Çiyayên Mûnzûrê\" têgeheke cuda ye: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
+  "explanationTr": "Evet, tanım yerinde. \"Çiyayên Mûnzûrê\" ayrı bir kavramdır: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.",
   "type": "trueFalse",
   "difficulty": 4,
   "promptTr": "Bu açıklama \"Geliyê Mûnzûrê\" için doğru mu yanlış mı: Mûnzûr çayının kireç kayalarında açtığı derin vadi?",
@@ -23471,7 +23473,7 @@
  {
   "id": "offline_tf_cog_0066",
   "category": "Cografya",
-  "prompt": "Têgeha \"Gola Derbendîxanê\" wiha tê ravekirin: herêma başûrê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?",
+  "prompt": "Têgeha \"Gola Derbendîxanê\" wiha tê ravekirin: herêma bakurê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?",
   "answers": [
    "Rast",
    "Şaş"
@@ -23492,7 +23494,7 @@
  {
   "id": "offline_tf_cog_0067",
   "category": "Cografya",
-  "prompt": "Têgeha \"Herêma Behdînan\" wiha tê ravekirin: herêma başûrê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?",
+  "prompt": "Têgeha \"Herêma Behdînan\" wiha tê ravekirin: herêma bakurê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?",
   "answers": [
    "Rast",
    "Şaş"
