@@ -2382,10 +2382,10 @@
     "category": "Cografya",
     "prompt": "Bajarê Sineyê (Sanandaj) li kîjan perçeyê Kurdistanê ye?",
     "answers": [
+      "Rojhilatê Kurdistanê",
       "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
-      "Başûrê Kurdistanê",
-      "Rojhilatê Kurdistanê"
+      "Başûrê Kurdistanê"
     ],
     "correctAnswer": "Rojhilatê Kurdistanê",
     "explanation": "Sine, Rojhilat'taki Kürt bölgesinin merkezidir ve müzik ile şiir geleneğiyle tanınır.",
@@ -2400,10 +2400,10 @@
     },
     "promptTr": "Sine (Sanandaj) şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
+      "Rojhilat (Doğu)",
       "Bakur (Kuzey)",
       "Rojava (Batı)",
-      "Başûr (Güney)",
-      "Rojhilat (Doğu)"
+      "Başûr (Güney)"
     ],
     "correctAnswerTr": "Rojhilat (Doğu)"
   },
@@ -7511,9 +7511,9 @@
     "prompt": "Bajarê Kirmanşanê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
       "Bakurê Kurdistanê",
+      "Rojhilatê Kurdistanê",
       "Rojavayê Kurdistanê",
-      "Başûrê Kurdistanê",
-      "Rojhilatê Kurdistanê"
+      "Başûrê Kurdistanê"
     ],
     "correctAnswer": "Rojhilatê Kurdistanê",
     "explanation": "Kirmanşan Rojhilat'tadır; yöresinde ağırlıklı olarak güney Kürtçesi konuşulur.",
@@ -7529,9 +7529,9 @@
     "promptTr": "Kirmanşan şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
+      "Rojhilat (Doğu)",
       "Rojava (Batı)",
-      "Başûr (Güney)",
-      "Rojhilat (Doğu)"
+      "Başûr (Güney)"
     ],
     "correctAnswerTr": "Rojhilat (Doğu)"
   },
@@ -7667,8 +7667,8 @@
     "prompt": "Bajarê Dihokê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
       "Bakurê Kurdistanê",
-      "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Başûrê Kurdistanê",
@@ -7685,8 +7685,8 @@
     "promptTr": "Dihok şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
-      "Rojava (Batı)",
       "Başûr (Güney)",
+      "Rojava (Batı)",
       "Rojhilat (Doğu)"
     ],
     "correctAnswerTr": "Başûr (Güney)"

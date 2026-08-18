@@ -2341,6 +2341,35 @@
       "productionLike": false,
       "precedence": 10,
       "notes": "Yapısal denetim ve kaynak URL canlılığı geçildi; olgusal denetim BEKLİYOR"
+    },
+    {
+      "id": "deepseek_2026_08_18",
+      "description": "DeepSeek boru hattıyla üretilen iki dilli genişletme",
+      "path": "assets/data/deepseek_2026_08_18_questions.json",
+      "role": "runtime_secondary",
+      "parser": "json",
+      "canonicalGroup": "runtime_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": true,
+      "precedence": 980,
+      "expectedRecordCount": 1298,
+      "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
+      "columns": {
+        "id": "id",
+        "category": "category",
+        "prompt": "prompt",
+        "options": "answers",
+        "correct": "correctAnswer",
+        "explanation": "explanationKu",
+        "difficulty": "difficulty",
+        "type": "type",
+        "dialect": "metadata.dialect",
+        "sourceTitle": "metadata.sourceTitle",
+        "sourceUrl": "metadata.sourceReference",
+        "reviewedAt": "metadata.reviewedAt",
+        "locale": "ku-kmr"
+      }
     }
   ]
 }

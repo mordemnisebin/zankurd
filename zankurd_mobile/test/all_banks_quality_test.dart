@@ -98,6 +98,8 @@ void main() {
       // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
       ...fromJson('assets/data/visual_2026_08_07_questions.json'),
       ...fromJson('assets/data/restore_2026_08_07_questions.json'),
+      // 2026-08-18: DeepSeek boru hattıyla eklenen 1298 iki dilli soru.
+      ...fromJson('assets/data/deepseek_2026_08_18_questions.json'),
     ];
 
     final runtime = QuestionBankLoader.instance.allQuestions;

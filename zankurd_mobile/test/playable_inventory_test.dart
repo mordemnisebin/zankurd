@@ -27,6 +27,8 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// testler yeşil kalır ve oynanabilir içerik hiç büyümez.
 ///
 /// Bu bekçi farkı görünür kılar ve sabitler.
+///
+/// 2026-08-18: DeepSeek boru hattıyla 1298 iki dilli soru eklendi (bkz. question_bank_assets.dart). Sayaç bilerek güncellendi.
 void main() {
   const policy = QuestionContentPolicy();
 
@@ -43,14 +45,14 @@ void main() {
   test('oynanabilir soru sayısı beklenen değerde', () {
     expect(
       loaded.length,
-      2173,
+      3413,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
     );
     expect(
       playable.length,
-      2120,
+      3360,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

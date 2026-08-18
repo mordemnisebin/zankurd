@@ -19,7 +19,8 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 ///
 /// ## Ölçülen durum
 ///
-/// Tarama anında banka 2120 oynanabilir soru taşıyordu ve beş tipin
+/// Tarama anında banka 2120 oynanabilir soru taşıyordu (2026-08-18'de
+/// 3418'e çıktı) ve beş tipin
 /// tamamında Türkçe karşılık **%100**'dü:
 /// çoktan seçmeli 1396, doğru/yanlış 568, görsel 128, boşluk doldurma 20,
 /// kelime sıralama 8. Yani şu an bir kusur YOK; bekçi bunu kilitliyor.

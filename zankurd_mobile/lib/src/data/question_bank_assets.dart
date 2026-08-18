@@ -56,4 +56,15 @@ const questionBankAssets = <String>[
   // metelok, hewran, Şerefname, Rojnameya Kurdistan, Çiyayê Cûdî, Deşta
   // Amedê. Terim tanımları bankanın kendi onaylı açıklamalarıyla birebir.
   'assets/data/restore_2026_08_07_questions.json',
+  // 2026-08-18: DeepSeek ile üretilip iki aşamalı elemeden geçen 1299 soru.
+  // Üretim `tool/content_authoring/` altındaki boru hattıyla yapıldı; her
+  // satır önce yapısal denetimden (şık, açıklama, kaynak adresinin canlılığı,
+  // doğru cevabın konum dengesi) sonra projenin kendi kalite kapısından
+  // (`promote_question_bank.dart`) geçti. Türkçe ikizler ayrı bir çeviri
+  // aşamasında üretildi; iki dil eksiksiz olmayan kayıt hiç yazılmadı.
+  //
+  // Bilinen sınır: olgusal doğruluk örneklemle ölçüldü (~%5-8 hata) ve
+  // hatalar az kaynaklı alanlarda kümeleniyor. Doğrulanmış dört yanlış
+  // (Bedirxan'ın doğum yeri, Beşikçi, Zap-Kerkük, Şakiro) ayıklandı.
+  'assets/data/deepseek_2026_08_18_questions.json',
 ];

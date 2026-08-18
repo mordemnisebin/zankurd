@@ -49,6 +49,14 @@ gibi adresler YOKTUR ve otomatik denetimde düşer). Kural:
 - Türkiye ve bölgeye dair -> tr.wikipedia.org
 - ku.wikipedia.org'u yalnız o başlığın orada gerçekten bulunduğundan
   eminsen kullan (ör. Kurmancî'ye özgü kavramlar)
+
+KÜRT'E ÖZGÜ KONULARDA KAYNAK: bu konularda ku.wikipedia'da sayfa çoğu zaman
+YOKTUR. Kürtçe bir başlık uydurmak yerine konunun İngilizce ya da Türkçe
+Wikipedia sayfasını kullan (ör. Newroz -> en.wikipedia.org/wiki/Nowruz,
+dengbêj -> en.wikipedia.org/wiki/Dengbej, Şerefname ->
+en.wikipedia.org/wiki/Sharafnama). Kurmancî soruyu yaz, kaynağı İngilizce ver.
+Bu partide üretilen soruların kaynak adresleri otomatik denetlenecek ve
+uydurma adres taşıyan satır doğrudan çöpe gidecek.
 Emin değilsen en.wikipedia.org'u seç; küçük Wikipedia'da uydurma başlık
 denemekten iyidir.
 
