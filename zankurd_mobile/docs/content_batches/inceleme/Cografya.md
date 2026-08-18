@@ -1,4 +1,4 @@
-# Cografya — 378 soru
+# Cografya — 369 soru
 
 Her kayıt: soru (Kurmancî) / Türkçe karşılığı / şıklar / doğru cevap /
 açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
@@ -36,14 +36,14 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## comm_cog_0004  ·  zorluk 1  ·  community
-**KU:** Behra Wanê li kîjan bajarî ye?
-**TR:** Behra Wanê (Van Gölü) nereye bağlı bir göldür?
--    A) Diyarbakır
--    B) Batman
-- ✅ C) Van
--    D) Şırnak
-**Doğru:** C) Van
-**Açıklama:** Van Gölü bölgenin en büyük gölüdür ve adını kıyısındaki şehirden alır.
+**KU:** Behra Wanê di nav sînorên kîjan du parêzgehan de ye?
+**TR:** Van Gölü hangi iki ilin sınırları içindedir?
+-    A) Amed û Êlih
+-    B) Şirnex û Colemêrg
+- ✅ C) Wan û Bidlîs
+-    D) Muş û Agirî
+**Doğru:** C) Wan û Bidlîs
+**Açıklama:** Van Gölü'nün önemli bir bölümü Bitlis sınırları içindedir; göl iki ilin topraklarına yayılır.
 **Kaynak:** —
 
 ## comm_cog_0005  ·  zorluk 2  ·  community
@@ -68,36 +68,25 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Açıklama:** Ağrı Dağı, yani Ararat, Türkiye'nin kuzeydoğusundadır ve Türkiye'nin en yüksek dağıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Mount_Ararat
 
-## ds_cografya_0002  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan çem ji Çiyayê Zagrosê diherike û dikeve Derya Qezwînê?
-**TR:** Hangi nehir Zagros Dağları'ndan doğar ve Hazar Denizi'ne dökülür?
-- ✅ A) Çemê Firatê
--    B) Çemê Dîcleyê
--    C) Çemê Seyhanê
--    D) Çemê Ceyhanê
-**Doğru:** A) Çemê Firatê
-**Açıklama:** Fırat Nehri Zagros Dağları'ndan doğar ve Hazar Denizi'ne doğru akar, ayrıca Kürdistan'dan da geçer.
-**Kaynak:** https://en.wikipedia.org/wiki/Euphrates
-
 ## ds_cografya_0009  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan çem ji Çiyayê Zagrosê derdikeve û bi çemê Dîcleyê ve girêdide?
 **TR:** Hangi nehir Zagros Dağları'ndan doğar ve Dicle Nehri'ne bağlanır?
-- ✅ A) Çemê Zapê
--    B) Çemê Muratê
--    C) Çemê Karûnê
--    D) Çemê Arasê
-**Doğru:** A) Çemê Zapê
+-    A) Çemê Muratê
+-    B) Çemê Karûnê
+-    C) Çemê Arasê
+- ✅ D) Çemê Zapê
+**Doğru:** D) Çemê Zapê
 **Açıklama:** Zap Nehri, yani Büyük Zap, Zagros'tan doğar ve Güney Kürdistan'da Dicle'ye dökülür.
 **Kaynak:** https://en.wikipedia.org/wiki/Great_Zab
 
 ## ds_cografya_0004  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di navbera çemê Dîcleyê û çemê Firatê de kîjan herêm dimîne?
 **TR:** Dicle Nehri ile Fırat Nehri arasında hangi bölge yer alır?
-- ✅ A) Mezopotamya
--    B) Anadolu
--    C) Azerbaycan
--    D) Xorasan
-**Doğru:** A) Mezopotamya
+-    A) Anadolu
+-    B) Azerbaycan
+-    C) Xorasan
+- ✅ D) Mezopotamya
+**Doğru:** D) Mezopotamya
 **Açıklama:** Mezopotamya, yani iki nehir arası, Dicle ile Fırat arasındadır ve kadim bir medeniyet tarihine sahiptir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mesopotamia
 
@@ -105,43 +94,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Çiyayê Qendîlê li kîjan devera Kurdistanê ye?
 **TR:** Kandil Dağı Kürdistan'ın hangi bölgesindedir?
 -    A) Bakur
--    B) Rojava
-- ✅ C) Başûr
+- ✅ B) Başûr
+-    C) Rojava
 -    D) Rojhilat
-**Doğru:** C) Başûr
+**Doğru:** B) Başûr
 **Açıklama:** Kandil Dağı, Kürdistan'ın güneyinde, Irak ve İran sınırındadır ve tarihi dağlık merkezidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Qandil_Mountains
-
-## ds_cografya_0006  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan gol li rojhilatê Kurdistanê ye û navê wê bi kurdî tê wateya "gola sor"?
-**TR:** Hangi göl Kürdistan'ın doğusundadır ve Kürtçe adı "kırmızı göl" anlamına gelir?
-- ✅ A) Gola Urmiyê
--    B) Gola Wanê
--    C) Gola Hezarê
--    D) Gola Nemrûdê
-**Doğru:** A) Gola Urmiyê
-**Açıklama:** Urmiye Gölü, Kürdistan'ın doğusundadır ve adı, yüksek tuzluluk nedeniyle suyunun kırmızı renginden gelir.
-**Kaynak:** https://en.wikipedia.org/wiki/Lake_Urmia
 
 ## ds_cografya_0236  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan gol li Rojhilatê Kurdistanê ye û yek ji golên herî şor ên cîhanê ye?
 **TR:** Doğu Kürdistan'da bulunan ve dünyanın en tuzlu göllerinden biri olan göl hangisidir?
 -    A) Gola Wanê
--    B) Gola Xatûniyê
--    C) Gola Tuz
-- ✅ D) Gola Urmiyê
-**Doğru:** D) Gola Urmiyê
+- ✅ B) Gola Urmiyê
+-    C) Gola Xatûniyê
+-    D) Gola Tuz
+**Doğru:** B) Gola Urmiyê
 **Açıklama:** Urmiye Gölü Doğu Kürdistan'dadır ve dünyanın en tuzlu göllerinden biridir. Van Gölü de tuzludur ancak o kadar tuzlu değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lake_Urmia
 
 ## ds_cografya_0007  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan çem di nav bajarê Amedê re derbas dibe?
 **TR:** Hangi nehir Diyarbakır şehrinin içinden geçer?
-- ✅ A) Çemê Dîcleyê
--    B) Çemê Firatê
--    C) Çemê Muratê
+-    A) Çemê Firatê
+-    B) Çemê Muratê
+- ✅ C) Çemê Dîcleyê
 -    D) Çemê Zapê
-**Doğru:** A) Çemê Dîcleyê
+**Doğru:** C) Çemê Dîcleyê
 **Açıklama:** Dicle Nehri Diyarbakır'ın içinden geçer ve şehir onun kıyısında kurulmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Tigris
 
@@ -149,56 +127,34 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan çem di nav bajarê Hesîçeyê re derbas dibe?
 **TR:** Hangi nehir Haseke şehrinin içinden geçer?
 -    A) Çemê Firatê
--    B) Çemê Dîcleyê
--    C) Çemê Ceyhanê
-- ✅ D) Çemê Xabûrê
-**Doğru:** D) Çemê Xabûrê
-**Açıklama:** Habur Nehri Batı Kürdistan'dadır ve Haseke'nin içinden geçer.
+- ✅ B) Çemê Xabûrê
+-    C) Çemê Dîcleyê
+-    D) Çemê Ceyhanê
+**Doğru:** B) Çemê Xabûrê
+**Açıklama:** Xabûrê Firatê, Rojava'dan geçer, Haseke'nin içinden akar ve Fırat'a katılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Khabur_(Tigris)
 
 ## ds_cografya_0017  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan çem di nav bajarê Mûsilê re derbas dibe?
 **TR:** Hangi nehir Musul şehrinin içinden geçer?
--    A) Çemê Firatê
--    B) Çemê Zapê
-- ✅ C) Çemê Dîcleyê
+- ✅ A) Çemê Dîcleyê
+-    B) Çemê Firatê
+-    C) Çemê Zapê
 -    D) Çemê Xabûrê
-**Doğru:** C) Çemê Dîcleyê
+**Doğru:** A) Çemê Dîcleyê
 **Açıklama:** Dicle Nehri Musul'un içinden geçer ve şehir onun kıyısında kurulmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Tigris
-
-## ds_cografya_0008  ·  zorluk 3  ·  deepseek_2026_08_18
-**KU:** Kîjan çiyayê herî bilind ê Rojavayê Kurdistanê ye?
-**TR:** Batı Kürdistan'ın en yüksek dağı hangisidir?
--    A) Çiyayê Cûdî
--    B) Çiyayê Sîpanê Xelatê
--    C) Çiyayê Nemrûdê
-- ✅ D) Çiyayê Kurmênc
-**Doğru:** D) Çiyayê Kurmênc
-**Açıklama:** Kurmênc Dağı, Batı Kürdistan'ın en yüksek dağıdır ve Suriye'nin kuzeyindedir.
-**Kaynak:** https://en.wikipedia.org/wiki/Kurd_Mountain
 
 ## ds_cografya_0013  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan gol li bakurê Kurdistanê ye û bi qasî 3.713 km² ye?
 **TR:** Kürdistan'ın kuzeyinde bulunan ve yaklaşık 3.713 km² olan göl hangisidir?
-- ✅ A) Gola Wanê
--    B) Gola Urmiyê
+-    A) Gola Urmiyê
+- ✅ B) Gola Wanê
 -    C) Gola Hezarê
 -    D) Gola Nemrûdê
-**Doğru:** A) Gola Wanê
+**Doğru:** B) Gola Wanê
 **Açıklama:** Van Gölü, Kürdistan'ın kuzeyindedir, yaklaşık 3.713 km²'dir ve Türkiye'nin en büyük göllerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lake_Van
-
-## ds_cografya_0022  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan gol li bakurê Kurdistanê ye û bi qasî 3.713 km² ye, lê ne Gola Wanê ye?
-**TR:** Kuzey Kürdistan'da bulunan, yaklaşık 3.713 km² olan ancak Van Gölü olmayan göl hangisidir?
--    A) Gola Hezarê
-- ✅ B) Gola Urmiyê
--    C) Gola Nemrûdê
--    D) Gola Tuzê
-**Doğru:** B) Gola Urmiyê
-**Açıklama:** Urmiye Gölü, Kuzey Kürdistan'da yer alır, yaklaşık 3.713 km²'dir ancak Van Gölü değildir; Doğu Kürdistan'dadır.
-**Kaynak:** https://en.wikipedia.org/wiki/Lake_Urmia
 
 ## ds_cografya_0229  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan gol li Bakurê Kurdistanê ye û yek ji golên herî mezin ên Tirkiyeyê ye?
@@ -230,28 +186,17 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 -    C) Çiyayê Qendîlê
 -    D) Çiyayê Cûdî
 **Doğru:** B) Çiyayê Nemrûdê
-**Açıklama:** Nemrut Dağı volkaniktir ve Kürdistan'ın kuzeyinde büyük bir krateri vardır; Van ilindedir.
+**Açıklama:** Nemrut volkanı Bitlis'te, Tatvan-Ahlat çevresindedir ve dünyanın en büyük krater göllerinden birini barındırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Mount_Nemrut
-
-## ds_cografya_0027  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan çemê herî dirêj ê Rojhilata Navîn e ku ji Çiyayê Zagrosê derdikeve?
-**TR:** Zagros Dağları'ndan doğan Orta Doğu'nun en uzun nehri hangisidir?
--    A) Firat
--    B) Zabê Biçûk
-- ✅ C) Dîcle
--    D) Karker
-**Doğru:** C) Dîcle
-**Açıklama:** Dicle, Zagros Dağları'ndan doğar ve uzunluğu yaklaşık 1.900 km'dir. Fırat, Zagros'tan değil, Ağrı Dağı'ndan doğar.
-**Kaynak:** https://en.wikipedia.org/wiki/Tigris
 
 ## ds_cografya_0030  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan çemê navdar di nav bajarê Mûsilê re derbas dibe?
 **TR:** Musul şehrinin içinden geçen ünlü nehir hangisidir?
 -    A) Firat
--    B) Zabê Biçûk
-- ✅ C) Dîcle
+- ✅ B) Dîcle
+-    C) Zabê Biçûk
 -    D) Xabûr
-**Doğru:** C) Dîcle
+**Doğru:** B) Dîcle
 **Açıklama:** Dicle, Musul şehrinin içinden geçer ve şehir nehrin iki yakasına kurulmuştur. Fırat, Musul'dan uzaktır ve şehrin batısından geçer.
 **Kaynak:** https://en.wikipedia.org/wiki/Mosul
 
@@ -260,64 +205,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Zagros Dağları'ndan doğup Dicle'ye bağlanan ünlü nehir hangisidir?
 -    A) Firat
 -    B) Xabûr
--    C) Karker
-- ✅ D) Zabê Mezin
-**Doğru:** D) Zabê Mezin
+- ✅ C) Zabê Mezin
+-    D) Karker
+**Doğru:** C) Zabê Mezin
 **Açıklama:** Büyük Zap, Zagros Dağları'ndan doğar ve Musul'un kuzeyinde Dicle'ye bağlanır. Fırat, Zagros'tan doğmaz ve Dicle'ye Irak'ın güneyinde bağlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Great_Zab
 
 ## ds_cografya_0032  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan çemê navdar ji Çiyayê Zagrosê derdikeve û bi Dîcleyê ve girêdide, lê ne Zabê Mezin e?
 **TR:** Zagros Dağları'ndan doğup Dicle'ye bağlanan ancak Büyük Zap olmayan ünlü nehir hangisidir?
--    A) Firat
-- ✅ B) Zabê Biçûk
+- ✅ A) Zabê Biçûk
+-    B) Firat
 -    C) Xabûr
 -    D) Karker
-**Doğru:** B) Zabê Biçûk
+**Doğru:** A) Zabê Biçûk
 **Açıklama:** Küçük Zap, Zagros Dağları'ndan doğar ve Musul'un güneyinde Dicle'ye bağlanır. Fırat, Zagros'tan doğmaz ve Dicle'ye Irak'ın güneyinde bağlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Little_Zab
-
-## ds_cografya_0034  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan çemê navdar ji Çiyayê Zagrosê derdikeve û dikeve Derya Qezwînê, lê ne Aras e?
-**TR:** Zagros Dağları'ndan doğup Hazar Denizi'ne dökülen ancak Aras olmayan ünlü nehir hangisidir?
--    A) Dîcle
-- ✅ B) Karker
--    C) Firat
--    D) Zabê Biçûk
-**Doğru:** B) Karker
-**Açıklama:** Karkheh, Zagros Dağları'ndan doğar ve Hazar Denizi'ne dökülür. Dicle ve Fırat, Hazar Denizi'ne dökülmez, Basra Körfezi'ne dökülür.
-**Kaynak:** https://en.wikipedia.org/wiki/Karkheh_River
 
 ## ds_cografya_0051  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li herêmên nêzîkî ekvatorê, bi germahî û barîna zêde, kîjan cure daristan tê dîtin?
 **TR:** Ekvatora yakın, yüksek sıcaklık ve yağışın olduğu bölgelerde hangi tür orman bulunur?
-- ✅ A) Daristana baranê
--    B) Daristana çamê
--    C) Daristana pelçikan
+-    A) Daristana çamê
+-    B) Daristana pelçikan
+- ✅ C) Daristana baranê
 -    D) Daristana derûdorê
-**Doğru:** A) Daristana baranê
+**Doğru:** C) Daristana baranê
 **Açıklama:** Yağmur ormanı, ekvatora yakın, yüksek sıcaklık ve yağışın olduğu bölgelerde bulunur ve birçok bitki türüne ev sahipliği yapar.
 **Kaynak:** https://en.wikipedia.org/wiki/Tropical_rainforest
-
-## ds_cografya_0059  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Li herêmên nêzîkî ekvatorê, bi germahî û barîna zêde, kîjan cure giyayî bi piranî tê dîtin?
-**TR:** Ekvatora yakın, yüksek sıcaklık ve yağışın olduğu bölgelerde en çok hangi tür ot bulunur?
--    A) Giyayên çolê
-- ✅ B) Giyayên mêrgê
--    C) Giyayên zozanan
--    D) Giyayên çayîrê
-**Doğru:** B) Giyayên mêrgê
-**Açıklama:** Bozkır otları, ekvatora yakın, yüksek sıcaklık ve yağışın olduğu bölgelerde en çok bulunur.
-**Kaynak:** https://en.wikipedia.org/wiki/Steppe
 
 ## ds_cografya_0052  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li deverên ziwa û hişk, bi barîna kêm, kîjan cure giyayî bi piranî tê dîtin?
 **TR:** Kurak ve kuru, az yağışlı bölgelerde en çok hangi tür ot bulunur?
-- ✅ A) Giyayên çolê
--    B) Giyayên çayîrê
+-    A) Giyayên çayîrê
+- ✅ B) Giyayên çolê
 -    C) Giyayên mêrgê
 -    D) Giyayên zozanan
-**Doğru:** A) Giyayên çolê
+**Doğru:** B) Giyayên çolê
 **Açıklama:** Çöl otları, kurak ve kuru, az yağışlı bölgelerde en çok bulunur.
 **Kaynak:** https://en.wikipedia.org/wiki/Desert
 
@@ -325,10 +248,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li herêmên sar, bi zivistanên dirêj û havînên kurt, kîjan cure daristan tê dîtin?
 **TR:** Uzun kışlar ve kısa yazlar ile soğuk bölgelerde hangi tür orman bulunur?
 -    A) Daristana baranê
-- ✅ B) Daristana taygayê
--    C) Daristana pelçikan
+-    B) Daristana pelçikan
+- ✅ C) Daristana taygayê
 -    D) Daristana derûdorê
-**Doğru:** B) Daristana taygayê
+**Doğru:** C) Daristana taygayê
 **Açıklama:** Tayga ormanı, uzun kışlar ve kısa yazlar ile soğuk bölgelerde bulunur.
 **Kaynak:** https://en.wikipedia.org/wiki/Taiga
 
@@ -337,20 +260,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Düşük sıcaklıklarla yüksek dağlık bölgelerde en çok hangi tür ot bulunur?
 -    A) Giyayên çolê
 -    B) Giyayên mêrgê
-- ✅ C) Giyayên zozanan
--    D) Giyayên çayîrê
-**Doğru:** C) Giyayên zozanan
+-    C) Giyayên çayîrê
+- ✅ D) Giyayên zozanan
+**Doğru:** D) Giyayên zozanan
 **Açıklama:** Yayla otları, düşük sıcaklıklarla yüksek dağlık bölgelerde en çok bulunur.
 **Kaynak:** https://en.wikipedia.org/wiki/Alpine_meadow
 
 ## ds_cografya_0062  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li herêmên bilind ên çiyayan, bi germahiya nizm, kîjan cure daristan tê dîtin?
 **TR:** Düşük sıcaklıklarla yüksek dağlık bölgelerde hangi tür orman bulunur?
--    A) Daristana baranê
--    B) Daristana pelçikan
--    C) Daristana taygayê
-- ✅ D) Daristana çamê
-**Doğru:** D) Daristana çamê
+- ✅ A) Daristana çamê
+-    B) Daristana baranê
+-    C) Daristana pelçikan
+-    D) Daristana taygayê
+**Doğru:** A) Daristana çamê
 **Açıklama:** Çam ormanı, düşük sıcaklıklarla yüksek dağlık bölgelerde bulunur.
 **Kaynak:** https://en.wikipedia.org/wiki/Pine_forest
 
@@ -358,10 +281,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li herêmên germ û ziwa, bi barîna kêm, kîjan cure riwek bi piranî tê dîtin?
 **TR:** Az yağışlı sıcak ve kurak bölgelerde en çok hangi tür bitki bulunur?
 -    A) Daristana baranê
-- ✅ B) Kaktûs
--    C) Giyayên mêrgê
+-    B) Giyayên mêrgê
+- ✅ C) Kaktûs
 -    D) Daristana çamê
-**Doğru:** B) Kaktûs
+**Doğru:** C) Kaktûs
 **Açıklama:** Kaktüs, az yağışlı sıcak ve kurak bölgelerde en çok bulunur.
 **Kaynak:** https://en.wikipedia.org/wiki/Cactus
 
@@ -370,31 +293,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sıcak ve kurak, az yağışlı bölgelerde en çok hangi bitki türü görülür?
 -    A) Giyayên mêrgê
 -    B) Giyayên zozanan
-- ✅ C) Giyayên çolê
--    D) Giyayên çayîrê
-**Doğru:** C) Giyayên çolê
+-    C) Giyayên çayîrê
+- ✅ D) Giyayên çolê
+**Doğru:** D) Giyayên çolê
 **Açıklama:** Çöl bitkileri, sıcak ve kurak, az yağışlı bölgelerde en yaygın olarak görülür.
 **Kaynak:** https://en.wikipedia.org/wiki/Desert
 
 ## ds_cografya_0076  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li navbera Amerîkaya Bakur û Ewropayê ye?
 **TR:** Kuzey Amerika ile Avrupa arasında hangi okyanus bulunur?
--    A) Okyanûsa Aram
--    B) Okyanûsa Hindî
--    C) Okyanûsa Başûr
-- ✅ D) Okyanûsa Atlantîk
-**Doğru:** D) Okyanûsa Atlantîk
+- ✅ A) Okyanûsa Atlantîk
+-    B) Okyanûsa Aram
+-    C) Okyanûsa Hindî
+-    D) Okyanûsa Başûr
+**Doğru:** A) Okyanûsa Atlantîk
 **Açıklama:** Atlas Okyanusu, Kuzey Amerika'nın doğusunda ve Avrupa'nın batısındadır. Pasifik Okyanusu, Kuzey Amerika'nın batısındadır, doğusunda değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Atlantic_Ocean
 
 ## ds_cografya_0087  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li navbera Amerîkaya Başûr û Afrîkayê ye?
 **TR:** Güney Amerika ile Afrika arasında hangi okyanus bulunur?
--    A) Okyanûsa Aram
--    B) Okyanûsa Hindî
--    C) Okyanûsa Arktîk
-- ✅ D) Okyanûsa Atlantîk
-**Doğru:** D) Okyanûsa Atlantîk
+- ✅ A) Okyanûsa Atlantîk
+-    B) Okyanûsa Aram
+-    C) Okyanûsa Hindî
+-    D) Okyanûsa Arktîk
+**Doğru:** A) Okyanûsa Atlantîk
 **Açıklama:** Atlas Okyanusu, Güney Amerika ile Afrika arasındadır. Yaklaşık 106,4 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Atlantic_Ocean
 
@@ -403,9 +326,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi kıta tamamen güney yarımkürede yer alır?
 -    A) Asya
 -    B) Afrîka
-- ✅ C) Awistralya
--    D) Amerîkaya Bakur
-**Doğru:** C) Awistralya
+-    C) Amerîkaya Bakur
+- ✅ D) Awistralya
+**Doğru:** D) Awistralya
 **Açıklama:** Avustralya tamamen güney yarımkürededir. Asya ve Kuzey Amerika çoğunlukla kuzey yarımkürededir, Afrika ise her iki yarımküre arasında uzanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Australia_(continent)
 
@@ -413,10 +336,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan okyanûs ji aliyê rûberê ve ji hemûyan mezintir e?
 **TR:** Yüzölçümü bakımından en büyük okyanus hangisidir?
 -    A) Okyanûsa Atlantîk
-- ✅ B) Okyanûsa Aram
--    C) Okyanûsa Hindî
+-    B) Okyanûsa Hindî
+- ✅ C) Okyanûsa Aram
 -    D) Okyanûsa Başûr
-**Doğru:** B) Okyanûsa Aram
+**Doğru:** C) Okyanûsa Aram
 **Açıklama:** Pasifik Okyanusu yaklaşık 165 milyon km²'dir ve tüm okyanusların en büyüğüdür. Dünya yüzeyinin %30'unu kaplar.
 **Kaynak:** https://en.wikipedia.org/wiki/Pacific_Ocean
 
@@ -425,64 +348,64 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dünya nüfusunun yaklaşık %60'ını hangi kıta barındırır?
 -    A) Ewropa
 -    B) Afrîka
-- ✅ C) Asya
--    D) Amerîkaya Başûr
-**Doğru:** C) Asya
+-    C) Amerîkaya Başûr
+- ✅ D) Asya
+**Doğru:** D) Asya
 **Açıklama:** Asya'nın nüfusu yaklaşık 4,7 milyar kişidir ve bu, dünya nüfusunun %60'ından fazlasıdır. En kalabalık kıtadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Asia
 
 ## ds_cografya_0082  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan parzemîn bi qasî ji %30 ji rûyê erdê digire û li rojhilatê Okyanûsa Aram e?
-**TR:** Dünya yüzeyinin yaklaşık %30'unu kaplayan ve Pasifik Okyanusu'nun doğusunda yer alan kıta hangisidir?
+**KU:** Kîjan parzemîn nêzî ji sedî 30ê axa cîhanê digire û li rojavayê Okyanûsa Pasîfîkê ye?
+**TR:** Hangi kıta dünya kara alanının yaklaşık %30'unu kaplar ve Pasifik Okyanusu'nun batısındadır?
 -    A) Afrîka
-- ✅ B) Asya
--    C) Ewropa
+-    B) Ewropa
+- ✅ C) Asya
 -    D) Awistralya
-**Doğru:** B) Asya
-**Açıklama:** Asya, Pasifik Okyanusu'nun doğusundadır ve yaklaşık 44,5 milyon km²'dir. Tüm kıtaların en büyüğüdür.
+**Doğru:** C) Asya
+**Açıklama:** Asya, Pasifik Okyanusu'nun batısındadır ve yaklaşık 44,5 milyon km² ile dünya kara alanının yaklaşık %30'unu kaplar.
 **Kaynak:** https://en.wikipedia.org/wiki/Asia
 
 ## ds_cografya_0084  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan parzemîn bi qasî ji %20 ji rûyê erdê digire û li rojhilatê Okyanûsa Atlantîk e?
-**TR:** Dünya yüzeyinin yaklaşık %20'sini kaplayan ve Atlas Okyanusu'nun doğusunda yer alan kıta hangisidir?
-- ✅ A) Afrîka
--    B) Ewropa
+**KU:** Kîjan parzemîn nêzî ji sedî 20ê axa cîhanê digire û li rojhilatê Okyanûsa Atlasê ye?
+**TR:** Hangi kıta dünya kara alanının yaklaşık %20'sini kaplar ve Atlas Okyanusu'nun doğusundadır?
+-    A) Ewropa
+- ✅ B) Afrîka
 -    C) Asya
 -    D) Amerîkaya Başûr
-**Doğru:** A) Afrîka
-**Açıklama:** Afrika, Atlas Okyanusu'nun doğusundadır ve yaklaşık 30,3 milyon km²'dir. İkinci büyük kıtadır.
+**Doğru:** B) Afrîka
+**Açıklama:** Afrika, Atlas Okyanusu'nun doğusundadır ve yaklaşık 30,3 milyon km² ile dünya kara alanının yaklaşık %20'sini kaplar.
 **Kaynak:** https://en.wikipedia.org/wiki/Africa
 
 ## ds_cografya_0086  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan parzemîn bi qasî ji %30 ji rûyê erdê digire û li bakurê Okyanûsa Hindî ye?
-**TR:** Dünya yüzeyinin yaklaşık %30'unu kaplayan ve Hint Okyanusu'nun kuzeyinde yer alan kıta hangisidir?
--    A) Afrîka
--    B) Ewropa
--    C) Awistralya
-- ✅ D) Asya
-**Doğru:** D) Asya
-**Açıklama:** Asya, Hint Okyanusu'nun kuzeyindedir ve yaklaşık 44,5 milyon km²'dir. Tüm kıtaların en büyüğüdür.
+**KU:** Kîjan parzemîn nêzî ji sedî 30ê axa cîhanê digire û li bakurê Okyanûsa Hindê ye?
+**TR:** Hangi kıta dünya kara alanının yaklaşık %30'unu kaplar ve Hint Okyanusu'nun kuzeyindedir?
+- ✅ A) Asya
+-    B) Afrîka
+-    C) Ewropa
+-    D) Awistralya
+**Doğru:** A) Asya
+**Açıklama:** Asya, Hint Okyanusu'nun kuzeyindedir ve dünya kara alanının yaklaşık %30'unu kaplar.
 **Kaynak:** https://en.wikipedia.org/wiki/Asia
 
 ## ds_cografya_0081  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li bakurê Asyayê ye?
 **TR:** Asya'nın kuzeyinde hangi okyanus bulunur?
--    A) Okyanûsa Başûr
--    B) Okyanûsa Atlantîk
--    C) Okyanûsa Hindî
-- ✅ D) Okyanûsa Arktîk
-**Doğru:** D) Okyanûsa Arktîk
+- ✅ A) Okyanûsa Arktîk
+-    B) Okyanûsa Başûr
+-    C) Okyanûsa Atlantîk
+-    D) Okyanûsa Hindî
+**Doğru:** A) Okyanûsa Arktîk
 **Açıklama:** Arktik Okyanusu, Asya'nın kuzeyindedir. Yaklaşık 14 milyon km²'dir ve buzla kaplıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Arctic_Ocean
 
 ## ds_cografya_0083  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li başûrê Asyayê ye?
 **TR:** Asya'nın güneyinde hangi okyanus bulunur?
--    A) Okyanûsa Atlantîk
--    B) Okyanûsa Arktîk
--    C) Okyanûsa Başûr
-- ✅ D) Okyanûsa Hindî
-**Doğru:** D) Okyanûsa Hindî
+- ✅ A) Okyanûsa Hindî
+-    B) Okyanûsa Atlantîk
+-    C) Okyanûsa Arktîk
+-    D) Okyanûsa Başûr
+**Doğru:** A) Okyanûsa Hindî
 **Açıklama:** Hint Okyanusu, Asya'nın güneyindedir. Yaklaşık 70,5 milyon km²'dir ve üçüncü büyük okyanustur.
 **Kaynak:** https://en.wikipedia.org/wiki/Indian_Ocean
 
@@ -490,10 +413,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan okyanûs li navbera Afrîkayê û Awistralyayê ye?
 **TR:** Afrika ile Avustralya arasında hangi okyanus bulunur?
 -    A) Okyanûsa Atlantîk
-- ✅ B) Okyanûsa Hindî
--    C) Okyanûsa Aram
+-    B) Okyanûsa Aram
+- ✅ C) Okyanûsa Hindî
 -    D) Okyanûsa Arktîk
-**Doğru:** B) Okyanûsa Hindî
+**Doğru:** C) Okyanûsa Hindî
 **Açıklama:** Hint Okyanusu, Afrika ile Avustralya arasındadır. Yaklaşık 70,5 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Indian_Ocean
 
@@ -501,21 +424,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan okyanûs li navbera Afrîkayê û Amerîkaya Başûr e?
 **TR:** Afrika ile Güney Amerika arasında hangi okyanus bulunur?
 -    A) Okyanûsa Aram
-- ✅ B) Okyanûsa Atlantîk
--    C) Okyanûsa Hindî
+-    B) Okyanûsa Hindî
+- ✅ C) Okyanûsa Atlantîk
 -    D) Okyanûsa Arktîk
-**Doğru:** B) Okyanûsa Atlantîk
+**Doğru:** C) Okyanûsa Atlantîk
 **Açıklama:** Atlas Okyanusu, Afrika ile Güney Amerika arasındadır. Yaklaşık 106,4 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Atlantic_Ocean
 
 ## ds_cografya_0089  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li bakurê Ewropayê ye?
 **TR:** Avrupa'nın kuzeyinde hangi okyanus bulunur?
--    A) Okyanûsa Atlantîk
--    B) Okyanûsa Hindî
--    C) Okyanûsa Başûr
-- ✅ D) Okyanûsa Arktîk
-**Doğru:** D) Okyanûsa Arktîk
+- ✅ A) Okyanûsa Arktîk
+-    B) Okyanûsa Atlantîk
+-    C) Okyanûsa Hindî
+-    D) Okyanûsa Başûr
+**Doğru:** A) Okyanûsa Arktîk
 **Açıklama:** Arktik Okyanusu, Avrupa'nın kuzeyindedir. Yaklaşık 14 milyon km²'dir ve buzla kaplıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Arctic_Ocean
 
@@ -523,43 +446,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan okyanûs li navbera Ewropayê û Amerîkaya Bakur e?
 **TR:** Avrupa ile Kuzey Amerika arasında hangi okyanus bulunur?
 -    A) Okyanûsa Arktîk
-- ✅ B) Okyanûsa Atlantîk
--    C) Okyanûsa Hindî
+-    B) Okyanûsa Hindî
+- ✅ C) Okyanûsa Atlantîk
 -    D) Okyanûsa Başûr
-**Doğru:** B) Okyanûsa Atlantîk
+**Doğru:** C) Okyanûsa Atlantîk
 **Açıklama:** Atlas Okyanusu, Avrupa ile Kuzey Amerika arasındadır. Yaklaşık 106,4 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Atlantic_Ocean
 
 ## ds_cografya_0093  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li başûrê Awistralyayê ye?
 **TR:** Avustralya'nın güneyinde hangi okyanus bulunur?
-- ✅ A) Okyanûsa Başûr
--    B) Okyanûsa Hindî
+-    A) Okyanûsa Hindî
+- ✅ B) Okyanûsa Başûr
 -    C) Okyanûsa Atlantîk
 -    D) Okyanûsa Arktîk
-**Doğru:** A) Okyanûsa Başûr
+**Doğru:** B) Okyanûsa Başûr
 **Açıklama:** Güney Okyanusu, Avustralya'nın güneyindedir. Yaklaşık 20,3 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Southern_Ocean
 
 ## ds_cografya_0095  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li navbera Asyayê û Amerîkaya Bakur e?
 **TR:** Asya ile Kuzey Amerika arasında hangi okyanus bulunur?
--    A) Okyanûsa Atlantîk
--    B) Okyanûsa Hindî
--    C) Okyanûsa Arktîk
-- ✅ D) Okyanûsa Aram
-**Doğru:** D) Okyanûsa Aram
+- ✅ A) Okyanûsa Aram
+-    B) Okyanûsa Atlantîk
+-    C) Okyanûsa Hindî
+-    D) Okyanûsa Arktîk
+**Doğru:** A) Okyanûsa Aram
 **Açıklama:** Pasifik Okyanusu, Asya ile Kuzey Amerika arasındadır. Yaklaşık 165 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Pacific_Ocean
 
 ## ds_cografya_0099  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan okyanûs li bakurê Amerîkaya Bakur e?
 **TR:** Kuzey Amerika'nın kuzeyinde hangi okyanus bulunur?
-- ✅ A) Okyanûsa Arktîk
--    B) Okyanûsa Atlantîk
+-    A) Okyanûsa Atlantîk
+- ✅ B) Okyanûsa Arktîk
 -    C) Okyanûsa Aram
 -    D) Okyanûsa Hindî
-**Doğru:** A) Okyanûsa Arktîk
+**Doğru:** B) Okyanûsa Arktîk
 **Açıklama:** Arktik Okyanusu, Kuzey Amerika'nın kuzeyindedir. Yaklaşık 14 milyon km²'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Arctic_Ocean
 
@@ -567,21 +490,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê welatê Kanada kîjan bajar e?
 **TR:** Kanada'nın başkenti hangi şehirdir?
 -    A) Toronto
-- ✅ B) Ottawa
--    C) Vancouver
+-    B) Vancouver
+- ✅ C) Ottawa
 -    D) Montreal
-**Doğru:** B) Ottawa
+**Doğru:** C) Ottawa
 **Açıklama:** Ottawa, Kanada'nın başkentidir. Toronto, Vancouver ve Montreal büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Ottawa
 
 ## ds_cografya_0102  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan welat paytexta wî Tokyo ye?
 **TR:** Başkenti Tokyo olan ülke hangisidir?
-- ✅ A) Japonya
--    B) Çîn
+-    A) Çîn
+- ✅ B) Japonya
 -    C) Korêya Başûr
 -    D) Viyetnam
-**Doğru:** A) Japonya
+**Doğru:** B) Japonya
 **Açıklama:** Tokyo, Japonya'nın başkentidir. Çin Pekin, Güney Kore Seul ve Vietnam Hanoi'yi başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tokyo
 
@@ -589,21 +512,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Awistralyayê kîjan bajar e?
 **TR:** Avustralya'nın başkenti hangi şehirdir?
 -    A) Sidney
-- ✅ B) Canberra
--    C) Melbourne
+-    B) Melbourne
+- ✅ C) Canberra
 -    D) Perth
-**Doğru:** B) Canberra
+**Doğru:** C) Canberra
 **Açıklama:** Canberra, Avustralya'nın başkentidir. Sidney, Melbourne ve Perth büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Canberra
 
 ## ds_cografya_0104  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan welat paytexta wî Ankara ye?
 **TR:** Başkenti Ankara olan ülke hangisidir?
--    A) Îran
--    B) Yewnanistan
--    C) Bulgaristan
-- ✅ D) Tirkiye
-**Doğru:** D) Tirkiye
+- ✅ A) Tirkiye
+-    B) Îran
+-    C) Yewnanistan
+-    D) Bulgaristan
+**Doğru:** A) Tirkiye
 **Açıklama:** Ankara, Türkiye'nin başkentidir. İran Tahran, Yunanistan Atina ve Bulgaristan Sofya'yı başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Ankara
 
@@ -611,21 +534,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Misirê kîjan bajar e?
 **TR:** Mısır'ın başkenti hangi şehirdir?
 -    A) Îskenderiye
-- ✅ B) Qahîre
--    C) Gize
+-    B) Gize
+- ✅ C) Qahîre
 -    D) Luksor
-**Doğru:** B) Qahîre
+**Doğru:** C) Qahîre
 **Açıklama:** Kahire, Mısır'ın başkentidir. İskenderiye, Gize ve Lüksor diğer şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Cairo
 
 ## ds_cografya_0106  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan welat paytexta wî Parîs e?
 **TR:** Başkenti Paris olan ülke hangisidir?
-- ✅ A) Fransa
--    B) Almanya
+-    A) Almanya
+- ✅ B) Fransa
 -    C) Spanya
 -    D) Portekîz
-**Doğru:** A) Fransa
+**Doğru:** B) Fransa
 **Açıklama:** Paris, Fransa'nın başkentidir. Almanya Berlin, İspanya Madrid ve Portekiz Lizbon'u başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Paris
 
@@ -633,21 +556,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Rûsyayê kîjan bajar e?
 **TR:** Rusya'nın başkenti hangi şehirdir?
 -    A) Sankt Petersburg
-- ✅ B) Moskova
--    C) Novosîbîrsk
+-    B) Novosîbîrsk
+- ✅ C) Moskova
 -    D) Yekaterinburg
-**Doğru:** B) Moskova
+**Doğru:** C) Moskova
 **Açıklama:** Moskova, Rusya'nın başkentidir. Sankt Petersburg, Novosibirsk ve Yekaterinburg büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Moscow
 
 ## ds_cografya_0108  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan welat paytexta wî Londra ye?
 **TR:** Başkenti Londra olan ülke hangisidir?
--    A) Skotland
--    B) Wales
--    C) Îrlenda
-- ✅ D) Îngilistan
-**Doğru:** D) Îngilistan
+- ✅ A) Îngilistan
+-    B) Skotland
+-    C) Wales
+-    D) Îrlenda
+**Doğru:** A) Îngilistan
 **Açıklama:** Londra, İngiltere'nin başkentidir. İskoçya Edinburgh, Galler Cardiff ve İrlanda Dublin'i başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/London
 
@@ -655,10 +578,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Brezîlyayê kîjan bajar e?
 **TR:** Brezilya'nın başkenti hangi şehirdir?
 -    A) Rio de Janeiro
-- ✅ B) Brasilia
--    C) Sao Paulo
+-    B) Sao Paulo
+- ✅ C) Brasilia
 -    D) Salvador
-**Doğru:** B) Brasilia
+**Doğru:** C) Brasilia
 **Açıklama:** Brasilia, Brezilya'nın başkentidir. Rio de Janeiro, Sao Paulo ve Salvador büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Brasília
 
@@ -667,9 +590,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Washington D.C. olan ülke hangisidir?
 -    A) Kanada
 -    B) Meksîk
-- ✅ C) Dewletên Yekbûyî
--    D) Kûba
-**Doğru:** C) Dewletên Yekbûyî
+-    C) Kûba
+- ✅ D) Dewletên Yekbûyî
+**Doğru:** D) Dewletên Yekbûyî
 **Açıklama:** Washington D.C., Amerika Birleşik Devletleri'nin başkentidir. Kanada Ottawa, Meksika Meksiko ve Küba Havana'yı başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Washington,_D.C.
 
@@ -677,10 +600,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Îtalyayê kîjan bajar e?
 **TR:** İtalya'nın başkenti hangi şehirdir?
 -    A) Mîlano
-- ✅ B) Roma
--    C) Napolî
+-    B) Napolî
+- ✅ C) Roma
 -    D) Tûrîn
-**Doğru:** B) Roma
+**Doğru:** C) Roma
 **Açıklama:** Roma, İtalya'nın başkentidir. Milano, Napoli ve Torino büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Rome
 
@@ -689,20 +612,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Berlin olan ülke hangisidir?
 -    A) Awistirya
 -    B) Swîsre
-- ✅ C) Almanya
--    D) Holenda
-**Doğru:** C) Almanya
+-    C) Holenda
+- ✅ D) Almanya
+**Doğru:** D) Almanya
 **Açıklama:** Berlin, Almanya'nın başkentidir. Avusturya Viyana, İsviçre Bern ve Hollanda Amsterdam'ı başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Berlin
 
 ## ds_cografya_0113  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Paytextê Spanyayê kîjan bajar e?
 **TR:** İspanya'nın başkenti hangi şehirdir?
-- ✅ A) Madrîd
--    B) Barselona
+-    A) Barselona
+- ✅ B) Madrîd
 -    C) Valensiya
 -    D) Sevîlla
-**Doğru:** A) Madrîd
+**Doğru:** B) Madrîd
 **Açıklama:** Madrid, İspanya'nın başkentidir. Barselona, Valensiya ve Sevilla büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Madrid
 
@@ -711,9 +634,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Pekin olan ülke hangisidir?
 -    A) Japonya
 -    B) Korêya Bakur
-- ✅ C) Çîn
--    D) Taywan
-**Doğru:** C) Çîn
+-    C) Taywan
+- ✅ D) Çîn
+**Doğru:** D) Çîn
 **Açıklama:** Pekin, Çin'in başkentidir. Japonya Tokyo, Kuzey Kore Pyongyang ve Tayvan Taipei'yi başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Beijing
 
@@ -721,10 +644,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Meksîkê kîjan bajar e?
 **TR:** Meksika'nın başkenti hangi şehirdir?
 -    A) Guadalajara
-- ✅ B) Mexico City
--    C) Monterrey
+-    B) Monterrey
+- ✅ C) Mexico City
 -    D) Cancún
-**Doğru:** B) Mexico City
+**Doğru:** C) Mexico City
 **Açıklama:** Meksiko, Meksika'nın başkentidir. Guadalajara, Monterrey ve Cancún büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Mexico_City
 
@@ -733,21 +656,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Atina olan ülke hangisidir?
 -    A) Tirkiye
 -    B) Îtalya
-- ✅ C) Yewnanistan
--    D) Kîpros
-**Doğru:** C) Yewnanistan
+-    C) Kîpros
+- ✅ D) Yewnanistan
+**Doğru:** D) Yewnanistan
 **Açıklama:** Atina, Yunanistan'ın başkentidir. Türkiye Ankara, İtalya Roma ve Kıbrıs Lefkoşa'yı başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Athens
 
 ## ds_cografya_0117  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Paytextê Hindistanê kîjan bajar e?
 **TR:** Hindistan'ın başkenti hangi şehirdir?
-- ✅ A) Delhî
--    B) Mumbaî
+-    A) Mumbaî
+- ✅ B) Delhiya Nû
 -    C) Kolkata
 -    D) Bengaluru
-**Doğru:** A) Delhî
-**Açıklama:** Delhi, Hindistan'ın başkentidir. Mumbai, Kolkata ve Bengaluru büyük şehirlerdir ancak başkent değildirler.
+**Doğru:** B) Delhiya Nû
+**Açıklama:** Hindistan'ın resmî başkenti New Delhi'dir; Delhi ise New Delhi'yi de içine alan daha büyük şehir alanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/New_Delhi
 
 ## ds_cografya_0118  ·  zorluk 1  ·  deepseek_2026_08_18
@@ -755,9 +678,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Seul olan ülke hangisidir?
 -    A) Korêya Bakur
 -    B) Japonya
-- ✅ C) Korêya Başûr
--    D) Çîn
-**Doğru:** C) Korêya Başûr
+-    C) Çîn
+- ✅ D) Korêya Başûr
+**Doğru:** D) Korêya Başûr
 **Açıklama:** Seul, Güney Kore'nin başkentidir. Kuzey Kore Pyongyang, Japonya Tokyo ve Çin Pekin'i başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Seoul
 
@@ -765,10 +688,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Paytextê Arjantînê kîjan bajar e?
 **TR:** Arjantin'in başkenti hangi şehirdir?
 -    A) Córdoba
-- ✅ B) Buenos Aires
--    C) Rosario
+-    B) Rosario
+- ✅ C) Buenos Aires
 -    D) Mendoza
-**Doğru:** B) Buenos Aires
+**Doğru:** C) Buenos Aires
 **Açıklama:** Buenos Aires, Arjantin'in başkentidir. Córdoba, Rosario ve Mendoza büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Buenos_Aires
 
@@ -777,42 +700,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Viyana olan ülke hangisidir?
 -    A) Almanya
 -    B) Swîsre
-- ✅ C) Awistirya
--    D) Macaristan
-**Doğru:** C) Awistirya
+-    C) Macaristan
+- ✅ D) Awistirya
+**Doğru:** D) Awistirya
 **Açıklama:** Viyana, Avusturya'nın başkentidir. Almanya Berlin, İsviçre Bern ve Macaristan Budapeşte'yi başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Vienna
 
 ## ds_cografya_0121  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Paytextê Afrîkaya Başûr kîjan bajar e?
-**TR:** Güney Afrika'nın başkenti hangi şehirdir?
--    A) Johannesburg
--    B) Cape Town
--    C) Durban
-- ✅ D) Pretoria
-**Doğru:** D) Pretoria
-**Açıklama:** Pretoria, Güney Afrika'nın resmi başkentidir. Johannesburg, Cape Town ve Durban büyük şehirlerdir ancak başkent değildirler.
+**KU:** Paytexta îdarî ya Afrîkaya Başûr kîjan bajar e?
+**TR:** Güney Afrika'nın idari başkenti hangi şehirdir?
+- ✅ A) Pretoria
+-    B) Johannesburg
+-    C) Cape Town
+-    D) Durban
+**Doğru:** A) Pretoria
+**Açıklama:** Güney Afrika'nın üç başkenti vardır: Pretoria idari, Cape Town yasama, Bloemfontein yargı başkentidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Pretoria
 
 ## ds_cografya_0122  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan welat paytexta wî Stockholm e?
 **TR:** Başkenti Stockholm olan ülke hangisidir?
 -    A) Norwêc
-- ✅ B) Swêd
--    C) Danîmarka
+-    B) Danîmarka
+- ✅ C) Swêd
 -    D) Fînlenda
-**Doğru:** B) Swêd
+**Doğru:** C) Swêd
 **Açıklama:** Stockholm, İsveç'in başkentidir. Norveç Oslo, Danimarka Kopenhag ve Finlandiya Helsinki'yi başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Stockholm
 
 ## ds_cografya_0123  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Paytextê Polonyayê kîjan bajar e?
 **TR:** Polonya'nın başkenti hangi şehirdir?
--    A) Kraków
--    B) Gdańsk
--    C) Wrocław
-- ✅ D) Warsaw
-**Doğru:** D) Warsaw
+- ✅ A) Warsaw
+-    B) Kraków
+-    C) Gdańsk
+-    D) Wrocław
+**Doğru:** A) Warsaw
 **Açıklama:** Varşova, Polonya'nın başkentidir. Kraków, Gdańsk ve Wrocław büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Warsaw
 
@@ -821,42 +744,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başkenti Tahran olan ülke hangisidir?
 -    A) Iraq
 -    B) Efxanistan
-- ✅ C) Îran
--    D) Sûrî
-**Doğru:** C) Îran
+-    C) Sûrî
+- ✅ D) Îran
+**Doğru:** D) Îran
 **Açıklama:** Tahran, İran'ın başkentidir. Irak Bağdat, Afganistan Kabil ve Suriye Şam'ı başkent olarak kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tehran
 
 ## ds_cografya_0125  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Paytextê Nîjeryayê kîjan bajar e?
 **TR:** Nijerya'nın başkenti hangi şehirdir?
--    A) Lagos
--    B) Kano
--    C) Ibadan
-- ✅ D) Abuja
-**Doğru:** D) Abuja
+- ✅ A) Abuja
+-    B) Lagos
+-    C) Kano
+-    D) Ibadan
+**Doğru:** A) Abuja
 **Açıklama:** Abuja, Nijerya'nın başkentidir. Lagos, Kano ve Ibadan büyük şehirlerdir ancak başkent değildirler.
 **Kaynak:** https://en.wikipedia.org/wiki/Abuja
 
 ## ds_cografya_0126  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Ji bo çemekî ku di nav zinaran re derbas dibe û dikeve deştekê, kîjan têgih tê bikaranîn?
-**TR:** Kayalıkların arasından geçip bir ovaya dökülen bir akarsu için hangi terim kullanılır?
+**KU:** Ji bo şiklê erdê yê dirêj ê ku ji derdora xwe nizmtir e kîjan têgeh tê bikaranîn?
+**TR:** Çevresine göre alçak, uzanan yeryüzü şekli için hangi terim kullanılır?
 -    A) Zinar
-- ✅ B) Vadî
--    C) Çem
+-    B) Çem
+- ✅ C) Vadî
 -    D) Gol
-**Doğru:** B) Vadî
-**Açıklama:** Vadi, kayalıkların arasından geçip bir ovaya dökülen akarsuya Kürtçe'de verilen isimdir. Kaya ve akarsu bu tanım için doğru terimler değildir.
+**Doğru:** C) Vadî
+**Açıklama:** Vadi, çevresindeki yükseltilere göre alçakta kalan, uzanan yeryüzü şeklidir; içinde akarsu bulunabilir ama vadi akarsuyun kendisi değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Valley
 
 ## ds_cografya_0127  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgih ji bo erdekî bilind û pan re tê bikaranîn?
 **TR:** Çevresine göre yüksekte kalan geniş düzlükler için hangi terim kullanılır?
--    A) Deşta
--    B) Zinar
--    C) Vadî
-- ✅ D) Plateau
-**Doğru:** D) Plateau
+- ✅ A) Plateau
+-    B) Deşta
+-    C) Zinar
+-    D) Vadî
+**Doğru:** A) Plateau
 **Açıklama:** Plato, çevresine göre yüksekte kalan geniş düzlüklerdir. Ova yüksek değildir, kaya geniş değildir, vadi de yüksek değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Plateau
 
@@ -865,31 +788,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İçinden bir akarsuyun geçtiği alçak ve geniş düzlükler için hangi terim kullanılır?
 -    A) Zinar
 -    B) Plateau
-- ✅ C) Deşta
--    D) Vadî
-**Doğru:** C) Deşta
+-    C) Vadî
+- ✅ D) Deşta
+**Doğru:** D) Deşta
 **Açıklama:** Ova, içinden bir akarsuyun geçtiği alçak ve geniş düzlüklerdir. Kaya alçak değildir, plato yüksektir, vadi de geniş değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Plain
 
 ## ds_cografya_0131  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgih ji bo erdekî bilind û pan re tê bikaranîn ku ji derdora xwe bilindtir e?
 **TR:** Çevresine göre yüksekte kalan geniş düzlükler için hangi terim kullanılır?
-- ✅ A) Plateau
--    B) Zinar
+-    A) Zinar
+- ✅ B) Plateau
 -    C) Vadî
 -    D) Deşta
-**Doğru:** A) Plateau
+**Doğru:** B) Plateau
 **Açıklama:** Plato, çevresine göre yüksekte kalan geniş düzlüklerdir. Kaya geniş değildir, vadi alçaktır, ova da yüksek değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Plateau
 
 ## ds_cografya_0133  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgih ji bo erdekî nizm û pan re tê bikaranîn ku ji aliyê çemekî ve tê avdan?
 **TR:** Bir akarsu tarafından sulanan alçak ve geniş düzlükler için hangi terim kullanılır?
-- ✅ A) Deşta
--    B) Zinar
+-    A) Zinar
+- ✅ B) Deşta
 -    C) Plateau
 -    D) Vadî
-**Doğru:** A) Deşta
+**Doğru:** B) Deşta
 **Açıklama:** Ova, bir akarsu tarafından sulanan alçak ve geniş düzlüklerdir. Kaya alçak değildir, plato yüksektir, vadi de geniş değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Plain
 
@@ -898,22 +821,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Çevresine göre yüksekte kalan, genellikle akarsular tarafından yarılmış geniş düzlükler için hangi terim kullanılır?
 -    A) Zinar
 -    B) Vadî
-- ✅ C) Plateau
--    D) Deşta
-**Doğru:** C) Plateau
+-    C) Deşta
+- ✅ D) Plateau
+**Doğru:** D) Plateau
 **Açıklama:** Plato, çevresine göre yüksekte kalan ve genellikle akarsular tarafından yarılmış geniş düzlüklerdir. Kaya geniş değildir, vadi alçaktır, ova da yüksek değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Plateau
-
-## ds_cografya_0128  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Li deverekê ku çemekî bi lez diherike û bi xwe re axê dibe, kîjan têgih tê bikaranîn?
-**TR:** Hızlı akan ve beraberinde toprak taşıyan bir akarsuyun bulunduğu yer için hangi terim kullanılır?
--    A) Vadî
--    B) Çem
-- ✅ C) Delta
--    D) Gol
-**Doğru:** C) Delta
-**Açıklama:** Delta, beraberinde toprak taşıyıp bir yerde biriktiren akarsuya denir. Vadi ve akarsu bu tanım için doğru terimler değildir.
-**Kaynak:** https://en.wikipedia.org/wiki/River_delta
 
 ## ds_cografya_0132  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Li deverekê ku çemekî bi xwe re axê dibe û li ber devê deryayê kom dike, kîjan têgih tê bikaranîn?
@@ -993,8 +905,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Geographic_coordinate_system
 
 ## ds_cografya_0178  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan projeksiyon ji bo nexşeyên cîhanê yên ku rûberan nîşan didin herî zêde tê bikaranîn?
-**TR:** Yüzeyleri gösteren dünya haritaları için en çok hangi projeksiyon kullanılır?
+**KU:** Kîjan projeksiyon dixwaze xerabûnên qad, teşe û dûrahiyê bi hev re hevseng bike?
+**TR:** Hangi projeksiyon alan, biçim ve uzaklık bozulmalarını dengelemeyi amaçlar?
 -    A) Projeksiyona Mercator
 -    B) Projeksiyona Peters
 - ✅ C) Projeksiyona Robinson
@@ -1059,19 +971,19 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Equator
 
 ## ds_cografya_0187  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan xet li ser nexşeyê hêlîdirêja 180 derece ye?
-**TR:** Haritada 180 derece boylamı hangi çizgidir?
-- ✅ A) Xeta tarîxê
--    B) Xeta ekvatorê
--    C) Xeta Greenwich
--    D) Xeta tropîkê
-**Doğru:** A) Xeta tarîxê
-**Açıklama:** Tarih çizgisi (International Date Line) 180 derece boylamına yakındır. Greenwich sıfır boylamıdır, ekvator ise sıfır enlemidir.
+**KU:** Xeta Tarîxê ya Navneteweyî bi texmînî kîjan meridyenê dişopîne?
+**TR:** Uluslararası Tarih Çizgisi yaklaşık hangi meridyeni izler?
+- ✅ A) 180 derece
+-    B) 0 derece
+-    C) 90 derece
+-    D) 45 derece
+**Doğru:** A) 180 derece
+**Açıklama:** Uluslararası Tarih Çizgisi yaklaşık 180° meridyenini izler; siyasi ve coğrafi nedenlerle yer yer bu meridyenden sapar.
 **Kaynak:** https://en.wikipedia.org/wiki/International_Date_Line
 
 ## ds_cografya_0186  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan têgih ji bo nexşeya ku rûberên erdê nîşan dide tê bikaranîn?
-**TR:** Dünya yüzeyini gösteren harita için hangi terim kullanılır?
+**KU:** Kîjan nexşe bilindahî û şiklên erdê bi hûrgulî nîşan dide?
+**TR:** Hangi harita yükselti ve yer şekillerini ayrıntılı gösterir?
 -    A) Nexşeya siyasî
 - ✅ B) Nexşeya topografîk
 -    C) Nexşeya aborî
@@ -1114,14 +1026,14 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Scale_(map)
 
 ## ds_cografya_0193  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan projeksiyon ji bo nexşeya cîhanê ya ku ji aliyê National Geographic ve tê bikaranîn tê nasîn?
-**TR:** National Geographic tarafından kullanılan dünya haritasıyla hangi projeksiyon tanınır?
+**KU:** National Geographic ji 1995an ve di nexşeyên xwe yên cîhanê de kîjan projeksiyonê bikartîne?
+**TR:** National Geographic 1995'ten beri dünya haritalarında hangi projeksiyonu kullanır?
 -    A) Projeksiyona Mercator
 -    B) Projeksiyona Peters
-- ✅ C) Projeksiyona Robinson
--    D) Projeksiyona Azîmûtal
-**Doğru:** C) Projeksiyona Robinson
-**Açıklama:** Robinson Projeksiyonu, yüzeyleri ve şekilleri dengeli bir şekilde gösterdiği için National Geographic dünya haritasında kullanılır. Mercator yüzeyleri büyütür.
+- ✅ C) Projeksiyona Winkel Tripel
+-    D) Projeksiyona Robinson
+**Doğru:** C) Projeksiyona Winkel Tripel
+**Açıklama:** National Geographic 1995'te imza dünya haritalarında Robinson'u bırakıp Winkel Tripel projeksiyonuna geçti.
 **Kaynak:** https://en.wikipedia.org/wiki/Robinson_projection
 
 ## ds_cografya_0197  ·  zorluk 2  ·  deepseek_2026_08_18
@@ -1136,14 +1048,14 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Robinson_projection
 
 ## ds_cografya_0195  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan têgih ji bo goşeya ku ji hêlîpana bakur tê pîvan tê bikaranîn?
-**TR:** Kuzey enleminden ölçülen açı için hangi terim kullanılır?
+**KU:** Goşeya ku ji aliyê bakur ve li ser rûyekî asoyî tê pîvandin çi ye?
+**TR:** Kuzey yönünden yatay düzlemde ölçülen açıya ne denir?
 -    A) Hêlîdirêj
 -    B) Hêlîpan
 -    C) Bilindahî
 - ✅ D) Azîmût
 **Doğru:** D) Azîmût
-**Açıklama:** Azimut, kuzey enleminden dairesel olarak ölçülen açıdır. Boylam ve enlem koordinattır, açı değil.
+**Açıklama:** Azimut, kuzey yönünden saat yönünde, yatay düzlemde ölçülen açıdır. Enlem ve boylam ise koordinattır, açı değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Azimuth
 
 ## ds_cografya_0199  ·  zorluk 2  ·  deepseek_2026_08_18
@@ -1169,8 +1081,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Urbanization
 
 ## ds_cografya_0225  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan têgih ji bo zêdebûna nifûsê ya ku ji ber zayînê çêdibe tê bikaranîn?
-**TR:** Doğumdan kaynaklanan nüfus artışını ifade etmek için hangi terim kullanılır?
+**KU:** Guhertina nifûsê ya ku ji ferqa navbera zayîn û mirinan tê çi tê gotin?
+**TR:** Doğumlarla ölümler arasındaki farktan kaynaklanan nüfus değişimine ne denir?
 -    A) Zêdebûna koçberiyê
 -    B) Zêdebûna tevayî
 -    C) Zêdebûna demkî
@@ -1213,8 +1125,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/World_population
 
 ## ds_cografya_0204  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan bajar li Bakurê Kurdistanê yek ji wan bajaran e ku nifûsa wî herî zêde ye?
-**TR:** Kuzey Kürdistan'da nüfusu en fazla olan şehirlerden biri hangisidir?
+**KU:** Li Bakurê Kurdistanê kîjan bajar xwedî nifûsa parêzgehê ya herî mezin e?
+**TR:** Kuzey Kürdistan'da il nüfusu en yüksek olan şehir hangisidir?
 - ✅ A) Amed
 -    B) Wan
 -    C) Riha
@@ -1312,8 +1224,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Asia
 
 ## ds_cografya_0215  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan têgih ji bo belavbûna nifûsê li ser rûyê erdê tê bikaranîn?
-**TR:** Nüfusun yeryüzüne dağılışını ifade etmek için hangi terim kullanılır?
+**KU:** Hejmara kesan a ku dikeve ser yekîneyeke qadê çi tê gotin?
+**TR:** Birim alana düşen kişi sayısına ne denir?
 -    A) Nifûsa tevayî
 -    B) Rêjeya zayînê
 -    C) Rêjeya mirinê
@@ -1323,14 +1235,14 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Population_density
 
 ## ds_cografya_0222  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan welat li Ewropayê xwediyê nifûsa herî zêde ye?
-**TR:** Avrupa'da nüfusu en fazla olan ülke hangisidir?
+**KU:** Kîjan welat di Yekîtiya Ewropayê de xwedî nifûsa herî mezin e?
+**TR:** Avrupa Birliği'nde nüfusu en fazla olan ülke hangisidir?
 -    A) Fransa
 -    B) Brîtanya
 - ✅ C) Almanya
 -    D) Îtalya
 **Doğru:** C) Almanya
-**Açıklama:** Almanya'nın nüfusu yaklaşık 84 milyondur ve Avrupa'daki en yüksek nüfustur. Fransa, Britanya ve İtalya da büyüktür ancak en fazlası Almanya'dadır.
+**Açıklama:** Almanya, yaklaşık 84 milyonla Avrupa Birliği'nin en kalabalık ülkesidir. Kıta genelinde ise Rusya daha kalabalıktır.
 **Kaynak:** https://en.wikipedia.org/wiki/Demographics_of_Germany
 
 ## ds_cografya_0227  ·  zorluk 2  ·  deepseek_2026_08_18
@@ -1345,25 +1257,25 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** https://en.wikipedia.org/wiki/Atatürk_Dam
 
 ## ds_cografya_0230  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan çem li Rojavayê Kurdistanê ye û dikeve Firatê?
-**TR:** Batı Kürdistan'da bulunup Fırat'a dökülen nehir hangisidir?
+**KU:** Kîjan çem di Hesîçeyê re derbas dibe û dikeve Firatê?
+**TR:** Hangi nehir Haseke'den geçip Fırat'a dökülür?
 -    A) Çemê Balix
 -    B) Çemê Ceyhan
 -    C) Çemê Seyhan
 - ✅ D) Çemê Xabûr
 **Doğru:** D) Çemê Xabûr
-**Açıklama:** Habur Çayı Batı Kürdistan'dadır ve Fırat'a dökülür. Balih Çayı da Batı Kürdistan'dadır ve Fırat'a dökülür, ancak Habur daha büyüktür.
+**Açıklama:** Xabûrê Firatê, Haseke'den geçer ve Fırat'a katılır. Balix da Fırat'a dökülür ama Haseke'den geçmez.
 **Kaynak:** https://en.wikipedia.org/wiki/Khabur_(Euphrates)
 
 ## ds_cografya_0246  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan çem li Rojavayê Kurdistanê ye û dikeve Dîcleyê?
-**TR:** Batı Kürdistan'da bulunup Dicle'ye dökülen nehir hangisidir?
+**KU:** Kîjan çem li sînorê Iraq-Sûriyê dikeve Dîcleyê?
+**TR:** Hangi nehir Irak-Suriye sınırında Dicle'ye dökülür?
 -    A) Çemê Balix
 -    B) Çemê Ceyhan
 -    C) Çemê Seyhan
-- ✅ D) Çemê Xabûr
-**Doğru:** D) Çemê Xabûr
-**Açıklama:** Habur Çayı Batı Kürdistan'dadır ve Dicle'ye dökülür. Balih Çayı Fırat'a dökülür.
+- ✅ D) Feşxabûr
+**Doğru:** D) Feşxabûr
+**Açıklama:** Feşxabûr (Dicle Habur'u), Irak-Suriye sınırında Dicle'ye katılır. Fırat'ın Habur'u ise ayrı bir nehirdir ve Haseke'den geçer.
 **Kaynak:** https://en.wikipedia.org/wiki/Khabur_(Tigris)
 
 ## ds_cografya_0231  ·  zorluk 2  ·  deepseek_2026_08_18
@@ -1388,58 +1300,47 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Açıklama:** Musul Barajı Dicle üzerindedir ve Güney Kürdistan'dadır. Ilısu Barajı Kuzey Kürdistan'dadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Mosul_Dam
 
-## ds_cografya_0232  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan çem li Rojhilatê Kurdistanê ye û dikeve Deryaya Qezwînê?
-**TR:** Doğu Kürdistan'da bulunup Hazar Denizi'ne dökülen nehir hangisidir?
--    A) Çemê Aras
--    B) Çemê Zap
-- ✅ C) Çemê Sirwan
--    D) Çemê Xabûr
-**Doğru:** C) Çemê Sirwan
-**Açıklama:** Siran Nehri Doğu Kürdistan'dadır ve Hazar Denizi'ne dökülür. Aras Nehri de Doğu Kürdistan'dadır ancak Hazar Denizi'ne dökülür.
-**Kaynak:** https://en.wikipedia.org/wiki/Diyala_River
-
 ## ds_cografya_0235  ·  zorluk 3  ·  deepseek_2026_08_18
-**KU:** Kîjan bendav li ser Çemê Zê ye û li Bakurê Kurdistanê ye?
-**TR:** Zap Suyu üzerinde bulunan ve Kuzey Kürdistan'daki baraj hangisidir?
--    A) Bendava Derbendîxan
-- ✅ B) Bendava Kralkizi
--    C) Bendava Duhok
--    D) Bendava Batman
-**Doğru:** B) Bendava Kralkizi
-**Açıklama:** Kralkızı Barajı Zap Suyu üzerindedir ve Kuzey Kürdistan'dadır. Derbendihan Barajı Siran Nehri üzerindedir.
+**KU:** Bendava Kralkizi li ser kîjan çemî hatiye avakirin?
+**TR:** Kralkızı Barajı hangi akarsu üzerinde kurulmuştur?
+- ✅ A) Çemê Madenê
+-    B) Çemê Zapê
+-    C) Çemê Batmanê
+-    D) Çemê Xabûrê
+**Doğru:** A) Çemê Madenê
+**Açıklama:** Kralkızı Barajı, Dicle havzasındaki Maden Çayı üzerinde kurulmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Kralkızı_Dam
 
 ## ds_cografya_0238  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan bendav li ser Çemê Sirwanê ye û li Başûrê Kurdistanê ye?
 **TR:** Siran Nehri üzerinde bulunan ve Güney Kürdistan'daki baraj hangisidir?
--    A) Bendava Duhok
-- ✅ B) Bendava Derbendîxan
+- ✅ A) Bendava Derbendîxan
+-    B) Bendava Duhok
 -    C) Bendava Mosul
 -    D) Bendava Haditha
-**Doğru:** B) Bendava Derbendîxan
+**Doğru:** A) Bendava Derbendîxan
 **Açıklama:** Derbendihan Barajı Siran Nehri üzerindedir ve Güney Kürdistan'dadır. Duhok Barajı başka bir nehir üzerindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Darbandikhan_Dam
 
 ## ds_cografya_0245  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan bendav li ser Çemê Zap e û li Başûrê Kurdistanê ye?
 **TR:** Zap Suyu üzerinde bulunan ve Güney Kürdistan'daki baraj hangisidir?
--    A) Bendava Derbendîxan
-- ✅ B) Bendava Bekme
+- ✅ A) Bendava Bekme
+-    B) Bendava Derbendîxan
 -    C) Bendava Duhok
 -    D) Bendava Mosul
-**Doğru:** B) Bendava Bekme
+**Doğru:** A) Bendava Bekme
 **Açıklama:** Bekme Barajı Zap Suyu üzerindedir ve Güney Kürdistan'dadır. Derbendihan Barajı Siran Nehri üzerindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bekhme_Dam
 
 ## ds_cografya_0244  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan çem li Bakurê Kurdistanê ye û dikeve Dîcleyê?
 **TR:** Kuzey Kürdistan'da bulunup Dicle'ye dökülen nehir hangisidir?
-- ✅ A) Çemê Batman
--    B) Çemê Ceyhan
--    C) Çemê Seyhan
--    D) Çemê Firat
-**Doğru:** A) Çemê Batman
+-    A) Çemê Ceyhan
+-    B) Çemê Seyhan
+-    C) Çemê Firat
+- ✅ D) Çemê Batman
+**Doğru:** D) Çemê Batman
 **Açıklama:** Batman Çayı Kuzey Kürdistan'dadır ve Dicle'ye dökülür. Ceyhan ve Seyhan nehirleri Akdeniz'e dökülür.
 **Kaynak:** https://en.wikipedia.org/wiki/Batman_River
 
@@ -1559,7 +1460,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
-**Açıklama:** Van Gölü suyu sodalı ve tuzludur; bu yüzden yalnızca inci kefali yaşar.
+**Açıklama:** Van Gölü suyu sodalı ve tuzludur; inci kefali gölün en bilinen ve ekonomik açıdan en önemli balığıdır.
 **Kaynak:** Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)
 
 ## edit_cografya_0012  ·  zorluk 5  ·  editorial
@@ -1586,7 +1487,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## edit_cografya_0014  ·  zorluk 4  ·  editorial
 **KU:** Bajarê Sineyê (Sanandaj) li kîjan perçeyê Kurdistanê ye?
-**TR:** Sine (Sanandaj) şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Sine (Sanandaj) şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 -    B) Rojavayê Kurdistanê
 - ✅ C) Rojhilatê Kurdistanê
@@ -1619,7 +1520,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## edit_cografya_0017  ·  zorluk 3  ·  editorial
 **KU:** Bajarê Silêmaniyê li kîjan perçeyê Kurdistanê ye?
-**TR:** Silêmanî şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Silêmanî şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 -    B) Rojavayê Kurdistanê
 -    C) Rojhilatê Kurdistanê
@@ -1632,9 +1533,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?
 **TR:** Mêrdîn şehri hangi mimari özelliğiyle ünlüdür?
 - ✅ A) Avahiyên kevirî yên li ser çiyê
--    B) Iraq (derdora Dihokê)
--    C) hewza çem a ku Amed û Şirnexê digire
--    D) herêma çiyayî ya derdora Zaxo û Dihokê
+-    B) Avahiyên kerpîçî yên li deştê
+-    C) Avahiyên darîn ên du qatî
+-    D) Avahiyên kelpîçî yên bi qubeyên gilover
 **Doğru:** A) Avahiyên kevirî yên li ser çiyê
 **Açıklama:** Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.
 **Kaynak:** Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)
@@ -1664,10 +1565,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## edit_cografya_0021  ·  zorluk 4  ·  editorial
 **KU:** Herêma "Serhed" bi giştî kîjan derdorê digire?
 **TR:** "Serhed" bölgesi genel olarak hangi yöreyi kapsar?
--    A) Warê havînê û warê zivistanê
+-    A) Herêma Botanê ya derdora Cizîrê
 - ✅ B) Herêma bilind a Agirî-Wan-Mûşê
--    C) hewza çem a ku Amed û Şirnexê digire
--    D) gola tektonîk a di sînorên Elezîzê de
+-    C) Herêma Behdînan a derdora Dihokê
+-    D) Herêma Serhedê ya derdora Kerkûkê
 **Doğru:** B) Herêma bilind a Agirî-Wan-Mûşê
 **Açıklama:** Serhed, kuzeydeki yüksek bölgenin adıdır: Ağrı, Van, Muş, Bitlis.
 **Kaynak:** Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)
@@ -1689,7 +1590,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
-**Açıklama:** Ağrı Dağı sönmüş bir volkanik dağdır.
+**Açıklama:** Ağrı Dağı volkanik bir dağdır; son doğrulanmış püskürmesi 1840 yılındadır.
 **Kaynak:** Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)
 
 ## edit_cografya_0024  ·  zorluk 2  ·  editorial
@@ -1729,16 +1630,16 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Herêma Kurdistanê ya Iraqê ji çend parêzgehên sereke pêk tê?
 **TR:** Irak Kürdistan Bölgesi kaç temel ilden oluşur?
 -    A) Du
--    B) Çar
--    C) Pênc
-- ✅ D) Sê
-**Doğru:** D) Sê
-**Açıklama:** Üç temel il: Erbil, Süleymaniye ve Duhok.
+-    B) Pênc
+-    C) Sê
+- ✅ D) Çar
+**Doğru:** D) Çar
+**Açıklama:** Dört vilayet: Erbil, Süleymaniye, Duhok ve Halepçe.
 **Kaynak:** Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)
 
 ## edit_cografya_0028  ·  zorluk 3  ·  editorial
 **KU:** Bajarê Kirmanşanê li kîjan perçeyê Kurdistanê ye?
-**TR:** Kirmanşan şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Kirmanşan şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 - ✅ B) Rojhilatê Kurdistanê
 -    C) Rojavayê Kurdistanê
@@ -1771,7 +1672,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## edit_cografya_0031  ·  zorluk 3  ·  editorial
 **KU:** Gola Urmiyê li kîjan perçeyê Kurdistanê ye?
-**TR:** Urmiye Gölü Kurdistanê'nin hangi parçasındadır?
+**TR:** Urmiye Gölü Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 -    B) Rojavayê Kurdistanê
 -    C) Başûrê Kurdistanê
@@ -1791,7 +1692,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## edit_cografya_0033  ·  zorluk 4  ·  editorial
 **KU:** Bajarê Dihokê li kîjan perçeyê Kurdistanê ye?
-**TR:** Dihok şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Dihok şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 - ✅ B) Başûrê Kurdistanê
 -    C) Rojavayê Kurdistanê
@@ -1803,9 +1704,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## edit_cografya_0034  ·  zorluk 3  ·  editorial
 **KU:** "Zozan" û "germiyan" di jiyana koçeran de çi diyar dikin?
 **TR:** Göçer yaşamında "zozan" ve "germiyan" neyi belirtir?
--    A) Girseya çiyayî ya nêzî Çemê Xerzan
--    B) deşta tektonîk a bilind a li Colemêrgê
--    C) Avahiyên kevirî yên li ser çiyê
+-    A) Riya koçberiyê û bêhnvedana rê
+-    B) Çadira reş û kona biçûk
+-    C) Keriyê pêz û garanê dewaran
 - ✅ D) Warê havînê û warê zivistanê
 **Doğru:** D) Warê havînê û warê zivistanê
 **Açıklama:** Göçerler yazın yaylada, kışın kışlakta kalır.
@@ -1835,7 +1736,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## edit_cografya_0037  ·  zorluk 4  ·  editorial
 **KU:** Bajarê Efrînê li kîjan perçeyê Kurdistanê ye?
-**TR:** Efrîn şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Efrîn şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 - ✅ B) Rojavayê Kurdistanê
 -    C) Başûrê Kurdistanê
@@ -1889,12 +1790,12 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_0757  ·  zorluk 3  ·  offline
 **KU:** Ji bo gotina "su" peyva Kurmancî ya herî guncav kîjan e?
 **TR:** "Su" demek için en uygun Kurmancî kelime hangisidir?
--    A) çiya
+-    A) ax
 - ✅ B) av
--    C) ağrı
--    D) muş
+-    C) ba
+-    D) agir
 **Doğru:** B) av
-**Açıklama:** Su için doğru kelime "av"tir.
+**Açıklama:** "su" sözcüğünün Kurmancî karşılığı "av"dır. Ax toprak, ba rüzgâr, agir ateştir.
 **Kaynak:** —
 
 ## offline_0760  ·  zorluk 4  ·  offline
@@ -1963,7 +1864,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## offline_2175  ·  zorluk 3  ·  offline
 **KU:** Bajarê Mehabadê li kîjan perçeyê Kurdistanê ye?
-**TR:** Mehabad şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Mehabad şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 - ✅ B) Rojhilatê Kurdistanê
 -    C) Rojavayê Kurdistanê
@@ -1974,7 +1875,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## offline_2354  ·  zorluk 2  ·  offline
 **KU:** Bajarê Kobanê li kîjan perçeyê Kurdistanê ye?
-**TR:** Kobanê şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Kobanê şehri Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 -    B) Başûrê Kurdistanê
 - ✅ C) Rojavayê Kurdistanê
@@ -2040,7 +1941,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## offline_2556  ·  zorluk 5  ·  offline
 **KU:** Herêma Behdînan bi piranî li kîjan perçeyê Kurdistanê ye?
-**TR:** Behdînan bölgesi büyük ölçüde Kurdistanê'nin hangi parçasındadır?
+**TR:** Behdînan bölgesi büyük ölçüde Kürdistan'ın hangi parçasındadır?
 -    A) Bakurê Kurdistanê
 -    B) Rojavayê Kurdistanê
 -    C) Rojhilatê Kurdistanê
@@ -2108,7 +2009,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li jêr ji bo "Gola Derbendîxanê" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "Derbendîxan Gölü" için doğrudur?
 -    A) geliyê kanyonê yê kûr ê ku çemê Botan ava kiriye
--    B) deşta çandiniyê ya herî bibereket a başûrê Kurdistanê
+-    B) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
 -    C) çemê mezin ê ku jiyanê dide Mezopotamyayê
 - ✅ D) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
 **Doğru:** D) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
@@ -2138,13 +2039,13 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_8181  ·  zorluk 1  ·  offline
-**KU:** "daristan" di mijara erdnîgariyê de çi vedibêje?
-**TR:** "daristan" coğrafya konusunda neyi anlatır?
--    A) Siirt
--    B) Fırat
-- ✅ C) Orman
--    D) Iraq
-**Doğru:** C) Orman
+**KU:** Peyva "daristan" bi tirkî çi ye?
+**TR:** "daristan" sözcüğünün Türkçesi nedir?
+-    A) çöl
+-    B) ova
+- ✅ C) orman
+-    D) çayır
+**Doğru:** C) orman
 **Açıklama:** "daristan" = "orman". Örnek: Orman havayı temizler ve suyu korur.
 **Kaynak:** —
 
@@ -2162,7 +2063,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_8212  ·  zorluk 3  ·  offline
 **KU:** Çiyayên Munzurê li ku derê ne?
 **TR:** Munzur Dağları nerededir?
--    A) deşta çandiniyê ya herî bibereket a başûrê Kurdistanê
+-    A) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
 -    B) herêma çiyayî ya derdora Zaxo û Dihokê
 - ✅ C) rêzeçiyayên herî asê yên erdnîgariya Dêrsimê
 -    D) hewza çem a ku Amed û Şirnexê digire
@@ -2248,7 +2149,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_8331  ·  zorluk 5  ·  offline
-**KU:** Ji bo Cografyaê derbarê "Gola Ûrmiyeyê" de vebijêrka rast kîjan e?
+**KU:** Ji aliyê erdnîgariyê ve derbarê "Gola Ûrmiyeyê" de vebijêrka rast kîjan e?
 **TR:** Coğrafya açısından "Urmiye Gölü" hakkında doğru seçenek hangisidir?
 - ✅ A) hewza gola şor a li rojhilatê Kurdistanê
 -    B) çiyayê dîrokî yê ku tê bawerkirin keştiya Nuh lê daketiye
@@ -2281,7 +2182,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_8367  ·  zorluk 5  ·  offline
-**KU:** Ji aliyê Cografyaê ve ji bo "gol" îfadeya rast kîjan e?
+**KU:** Ji aliyê erdnîgariyê ve ji bo "gol" îfadeya rast kîjan e?
 **TR:** Coğrafya açısından "gol" için doğru ifade hangisidir?
 - ✅ A) göl
 -    B) çiya
@@ -2294,21 +2195,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_8384  ·  zorluk 4  ·  offline
 **KU:** Di zanîna erdnîgariyê de der barê "Deşta Hewlêrê" de ya rast kîjan e?
 **TR:** Coğrafya bilgisinde "Hewlêr Ovası" hakkında doğru olan hangisidir?
-- ✅ A) deşta çandiniyê ya herî bibereket a başûrê Kurdistanê
+- ✅ A) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
 -    B) deşta keviran a ku ji lavên Karacadaxê pêk hatiye
 -    C) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
 -    D) gola tektonîk a di sînorên Elezîzê de
-**Doğru:** A) deşta çandiniyê ya herî bibereket a başûrê Kurdistanê
-**Açıklama:** "Hewler ovası": Güney Kürdistan'ın en verimli tarım ovası.
+**Doğru:** A) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
+**Açıklama:** "Hewlêr ovası": Güney Kürdistan'ın verimli tarım ovalarından biri.
 **Kaynak:** —
 
 ## offline_8406  ·  zorluk 1  ·  offline
 **KU:** Kîjan li gorî pênaseya "erd" ye?
 **TR:** "erd" tanımına hangisi uyar?
--    A) daristan
+-    A) gökyüzü
 - ✅ B) yer/toprak
--    C) viranşehir
--    D) nusaybin
+-    C) deniz
+-    D) bulut
 **Doğru:** B) yer/toprak
 **Açıklama:** "erd" hem "yer" hem "toprak" anlamına gelir. Örnek: Bu yörenin toprağı bereketlidir.
 **Kaynak:** —
@@ -2424,18 +2325,18 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_8615  ·  zorluk 1  ·  offline
-**KU:** Derbarê "çem" de kîjan rast e?
-**TR:** "çem" hakkında hangisi doğrudur?
--    A) bitlis
+**KU:** Peyva "çem" bi tirkî çi ye?
+**TR:** "çem" sözcüğünün Türkçesi nedir?
+-    A) göl
 - ✅ B) akarsu
--    C) dêrsim
--    D) bugün
+-    C) pınar
+-    D) vadi
 **Doğru:** B) akarsu
 **Açıklama:** "çem" = "akarsu". Örnek: Dicle nehri Diyarbakır içinden geçer.
 **Kaynak:** —
 
 ## offline_8672  ·  zorluk 4  ·  offline
-**KU:** Ji bo Cografyaê derbarê "Beşa Dîcleyê" de vebijêrka rast kîjan e?
+**KU:** Ji aliyê erdnîgariyê ve derbarê "Beşa Dîcleyê" de vebijêrka rast kîjan e?
 **TR:** Coğrafya açısından "Dicle bölümü" hakkında doğru seçenek hangisidir?
 -    A) bi yek ji cihên niştecihbûna berdewam a herî kevn a cîhanê bûyîna xwe
 - ✅ B) hewza çem a ku Amed û Şirnexê digire
@@ -2560,7 +2461,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Ağrı Dağı" coğrafya konusunda neyi anlatır?
 - ✅ A) lûtkeya herî bilind a erdnîgariya Kurdistanê
 -    B) hewza gola şor a li rojhilatê Kurdistanê
--    C) deşta çandiniyê ya herî bibereket a başûrê Kurdistanê
+-    C) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
 -    D) gola tektonîk a di sînorên Elezîzê de
 **Doğru:** A) lûtkeya herî bilind a erdnîgariya Kurdistanê
 **Açıklama:** "Ağrı dağı": Kürdistan coğrafyasının en yüksek zirvesi.
@@ -2569,10 +2470,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_8902  ·  zorluk 1  ·  offline
 **KU:** Derbarê "newal" de vebijêrka rast kîjan e?
 **TR:** "newal" hakkında doğru seçenek hangisidir?
--    A) îran
+-    A) tepe
 - ✅ B) vadi
--    C) ateş
--    D) irak
+-    C) ada
+-    D) kıyı
 **Doğru:** B) vadi
 **Açıklama:** "newal" = "vadi". Örnek: Vadi iki dağın arasındadır.
 **Kaynak:** —
@@ -2611,13 +2512,13 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_8965  ·  zorluk 4  ·  offline
-**KU:** Li jêr kîjan têgiha "Colemêrg" rave dike?
-**TR:** Aşağıdakilerden hangisi "Colemêrg" kavramını açıklar?
+**KU:** Kîjan vebijark têgeha "Gever (Yüksekova)" rave dike?
+**TR:** Aşağıdakilerden hangisi "Gever (Yüksekova)" kavramını açıklar?
 -    A) Bi bûyîna yek ji niştecihiyên herî kevn ên domdar ên dinyayê
 -    B) ava ku ji sînorên Qers û Îdirê derbas dibe û dikeve Deryaya Hazarê
-- ✅ C) Deşta tektonîkî ya bi bilindahiya zêde li Colemêrgê
+- ✅ C) Deşta tektonîkî ya bilind a Geverê
 -    D) Lûtkeya herî bilind a li sînorên Kurdistana Iraqê
-**Doğru:** C) Deşta tektonîkî ya bi bilindahiya zêde li Colemêrgê
+**Doğru:** C) Deşta tektonîkî ya bilind a Geverê
 **Açıklama:** "Yüksekova": Hakkari'de yer alan yüksek rakımlı tektonik ova.
 **Kaynak:** —
 
@@ -2657,16 +2558,16 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_9087  ·  zorluk 2  ·  offline
 **KU:** "deşt" tê çi wateyê?
 **TR:** "deşt" ne anlama gelir?
--    A) leğen
--    B) muş
+-    A) vadi
+-    B) dağ
 - ✅ C) ova
--    D) amed
+-    D) yayla
 **Doğru:** C) ova
 **Açıklama:** "deşt" = "ova". Örnek: Muş ovası buğdayıyla bilinir.
 **Kaynak:** —
 
 ## offline_9096  ·  zorluk 3  ·  offline
-**KU:** Ji aliyê Cografyaê ve ji bo "Çemê Garzanê" îfadeya rast kîjan e?
+**KU:** Ji aliyê erdnîgariyê ve ji bo "Çemê Garzanê" îfadeya rast kîjan e?
 **TR:** Coğrafya açısından "Garzan Çayı" için doğru ifade hangisidir?
 -    A) zozanên bilind ên ku çemeke gelek jê serê xwe digirin
 -    B) Çiyayê dîrokî yê ku bawer tê kirin keştiya Nûh lê rûniştiye
@@ -3489,12 +3390,12 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
-**Açıklama:** Doğru. Yanı sıra "Çiyayên Mûnzûrê" de vardır; şu anlama gelir: Dersim’in karlı sıradağları ve aynı adlı millî park.
+**Açıklama:** Doğru. Yanı sıra "Çiyayên Mûnzûrê" de vardır; şu anlama gelir: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.
 **Kaynak:** —
 
 ## offline_tf_cog_0052  ·  zorluk 4  ·  offline
-**KU:** Binirxîne: li gorî vê ravekirinê "Çiyayên Bîngolê" ev e — rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî. Rast e an şaş e?
-**TR:** Değerlendir: bu açıklamaya göre "Çiyayên Bîngolê" şudur — Dêrsim'in karlı sıradağları ve aynı adlı millî park. Doğru mu yanlış mı?
+**KU:** Binirxîne: li gorî vê ravekirinê "Çiyayên Bîngolê" ev e — rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê. Rast e an şaş e?
+**TR:** Değerlendir: bu açıklamaya göre "Çiyayên Bîngolê" şudur — Dêrsim'in karlı sıradağları ve Munzur Vadisi Millî Parkı. Doğru mu yanlış mı?
 -    A) Rast
 - ✅ B) Şaş
 **Doğru:** B) Şaş
@@ -3502,8 +3403,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_cog_0053  ·  zorluk 3  ·  offline
-**KU:** Binirxîne: li gorî vê ravekirinê "Çiyayên Mûnzûrê" ev e — rêzeçiyayên Dêrsimê yên bi berf û parka neteweyî ya bi heman navî. Rast e an şaş e?
-**TR:** Değerlendir: bu açıklamaya göre "Çiyayên Mûnzûrê" şudur — Dêrsim'in karlı sıradağları ve aynı adlı millî park. Doğru mu yanlış mı?
+**KU:** Binirxîne: li gorî vê ravekirinê "Çiyayên Mûnzûrê" ev e — rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê. Rast e an şaş e?
+**TR:** Değerlendir: bu açıklamaya göre "Çiyayên Mûnzûrê" şudur — Dêrsim'in karlı sıradağları ve Munzur Vadisi Millî Parkı. Doğru mu yanlış mı?
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
@@ -3516,7 +3417,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 -    A) Rast
 - ✅ B) Şaş
 **Doğru:** B) Şaş
-**Açıklama:** Hayır — bu tanım "Geliyê Mûnzûrê" kavramına ait; "Çiyayên Mûnzûrê" şu anlama gelir: Dersim’in karlı sıradağları ve aynı adlı millî park.
+**Açıklama:** Hayır — bu tanım "Geliyê Mûnzûrê" kavramına ait; "Çiyayên Mûnzûrê" şu anlama gelir: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.
 **Kaynak:** —
 
 ## offline_tf_cog_0055  ·  zorluk 4  ·  offline
@@ -3525,7 +3426,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
-**Açıklama:** Evet, tanım yerinde. "Çiyayên Mûnzûrê" ayrı bir kavramdır: Dersim’in karlı sıradağları ve aynı adlı millî park.
+**Açıklama:** Evet, tanım yerinde. "Çiyayên Mûnzûrê" ayrı bir kavramdır: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.
 **Kaynak:** —
 
 ## offline_tf_cog_0056  ·  zorluk 5  ·  offline
@@ -3619,7 +3520,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_cog_0066  ·  zorluk 5  ·  offline
-**KU:** Têgeha "Gola Derbendîxanê" wiha tê ravekirin: herêma başûrê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?
+**KU:** Têgeha "Gola Derbendîxanê" wiha tê ravekirin: herêma bakurê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?
 **TR:** "Gola Derbendîxanê" terimi şöyle tanımlanır: Dihok merkezli, behdinî lehçesiyle bilinen kuzeybatı bölgesi. Bu doğru mu yanlış mı?
 -    A) Rast
 - ✅ B) Şaş
@@ -3628,7 +3529,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_cog_0067  ·  zorluk 4  ·  offline
-**KU:** Têgeha "Herêma Behdînan" wiha tê ravekirin: herêma başûrê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?
+**KU:** Têgeha "Herêma Behdînan" wiha tê ravekirin: herêma bakurê rojava ya bi navenda Dihokê ku bi zaravayê behdînî tê naskirin. Ev rast e an şaş e?
 **TR:** "Herêma Behdînan" terimi şöyle tanımlanır: Dihok merkezli, behdinî lehçesiyle bilinen kuzeybatı bölgesi. Bu doğru mu yanlış mı?
 - ✅ A) Rast
 -    B) Şaş
@@ -3665,7 +3566,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## restore_2026_08_07_0007  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Çiyayê Cûdî li kîjan perçeyê Kurdistanê ye?
-**TR:** Cûdî Dağı Kurdistanê'nin hangi parçasındadır?
+**TR:** Cûdî Dağı Kürdistan'ın hangi parçasındadır?
 - ✅ A) Bakurê Kurdistanê
 -    B) Rojavayê Kurdistanê
 -    C) Başûrê Kurdistanê
@@ -3687,7 +3588,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## restore_2026_08_07_0014  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Bajarê Colemêrgê li kîjan perçeyê Kurdistanê ye?
-**TR:** Colemêrg şehri Kurdistanê'nin hangi parçasındadır?
+**TR:** Colemêrg şehri Kürdistan'ın hangi parçasındadır?
 - ✅ A) Bakurê Kurdistanê
 -    B) Rojavayê Kurdistanê
 -    C) Başûrê Kurdistanê
@@ -3698,7 +3599,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 
 ## restore_2026_08_07_0015  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Gola Wanê li kîjan perçeyê Kurdistanê ye?
-**TR:** Wan Gölü Kurdistanê'nin hangi parçasındadır?
+**TR:** Wan Gölü Kürdistan'ın hangi parçasındadır?
 -    A) Rojavayê Kurdistanê
 -    B) Başûrê Kurdistanê
 - ✅ C) Bakurê Kurdistanê
@@ -3913,7 +3814,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 - ✅ C) Ji sedî 96.5
 -    D) Ji sedî 30
 **Doğru:** C) Ji sedî 96.5
-**Açıklama:** Okyanuslar Dünya'daki suyun yüzde 96,5'ini tutar; kalanı tatlı sudur.
+**Açıklama:** USGS'e göre okyanuslar Dünya'daki suyun yaklaşık %96,5'ini tutar; toplam suyun yalnızca yaklaşık %2,5'i tatlı sudur.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_nat_0016  ·  zorluk 2  ·  source_first_2026_08

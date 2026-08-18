@@ -7,21 +7,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyv di Kurmancî de ji bo "wedding" tê bikaranîn?
 **TR:** Kurmanci'de "düğün" için hangi kelime kullanılır?
 -    A) Cejn
--    B) Şahî
-- ✅ C) Dawet
+- ✅ B) Dawet
+-    C) Şahî
 -    D) Pîroz
-**Doğru:** C) Dawet
+**Doğru:** B) Dawet
 **Açıklama:** Dawet, Kurmanci'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir.
 **Kaynak:** https://en.wiktionary.org/wiki/dawet
 
 ## ds_cand_0035  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv di Kurmancî de ji bo "bridegroom" tê bikaranîn?
 **TR:** Kurmanci'de "damat" için hangi kelime kullanılır?
--    A) Bûk
-- ✅ B) Zava
+- ✅ A) Zava
+-    B) Bûk
 -    C) Xesû
 -    D) Bira
-**Doğru:** B) Zava
+**Doğru:** A) Zava
 **Açıklama:** Zava, Kurmanci'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar.
 **Kaynak:** https://en.wiktionary.org/wiki/zava
 
@@ -29,10 +29,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyv di kurmancî de ji bo reqsa gelêrî ya bi destan girtî tê bikaranîn?
 **TR:** Kurmancîde el ele tutuşularak oynanan toplu halk dansına ne denir?
 -    A) Stran
--    B) Muzîk
-- ✅ C) Govend
+- ✅ B) Govend
+-    C) Muzîk
 -    D) Def
-**Doğru:** C) Govend
+**Doğru:** B) Govend
 **Açıklama:** Govend, Kürtçede düğün ve kutlamalarda oynanan kolektif danstır. Govend genellikle el ele tutuşarak ve müziğin ritmine uyarak oynanır.
 **Kaynak:** https://en.wiktionary.org/wiki/govend
 
@@ -41,31 +41,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancîde "başlık parası" (bride price) için hangi kelime kullanılır?
 -    A) Nexş
 -    B) Beras
--    C) Kinc
-- ✅ D) Qelen
-**Doğru:** D) Qelen
+- ✅ C) Qelen
+-    D) Kinc
+**Doğru:** C) Qelen
 **Açıklama:** Qelen, damadın ailesinin gelinin ailesine verdiği para ya da maldır (bridewealth). Çeyiz (dowry) ise ters yönde, gelinin ailesinden gelen ayrı bir aktarımdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bride_price
 
 ## ds_cand_0082  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan peyva Kurmancî ji bo "rhythm" di govendê de tê bikaranîn?
 **TR:** Halayda "ritim" anlamına gelen Kurmanci kelime hangisidir?
--    A) Lez
-- ✅ B) Aheng
+- ✅ A) Aheng
+-    B) Lez
 -    C) Deng
 -    D) Muzîk
-**Doğru:** B) Aheng
+**Doğru:** A) Aheng
 **Açıklama:** Aheng, Kurmanci'de müziğin ritmi ve uyumu için kullanılır ve halay ona göre oynanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
 ## ds_cand_0080  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan peyva Kurmancî ji bo "handkerchief" tê bikaranîn ku di govendê de tê bikaranîn?
 **TR:** Halayda kullanılan ve "handkerchief" anlamına gelen Kurmanci kelime hangisidir?
-- ✅ A) Kefî
--    B) Şal
--    C) Kum
--    D) Pusî
-**Doğru:** A) Kefî
+-    A) Şal
+-    B) Kum
+-    C) Pusî
+- ✅ D) Kefî
+**Doğru:** D) Kefî
 **Açıklama:** Kefi, Kürt halayında dansçıların ellerinde tutup çevirdikleri mendil için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
@@ -74,31 +74,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi efsanevi anlatı Newroz ile ilişkilidir?
 -    A) Şoreşa Fransî
 -    B) Şerê Cîhanê yê Yekem
--    C) Ronesansa Ewropayê
-- ✅ D) Serhildana Kawayê Hesinkar
-**Doğru:** D) Serhildana Kawayê Hesinkar
+- ✅ C) Serhildana Kawayê Hesinkar
+-    D) Ronesansa Ewropayê
+**Doğru:** C) Serhildana Kawayê Hesinkar
 **Açıklama:** Şehname geleneğindeki Demirci Kawa efsanesi Newroz'la ilişkilendirilir: Kawa zalim Dehak'a başkaldırır. Bu doğrulanmış bir tarihsel olay değil, mitolojik bir anlatıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
 ## ds_cand_0015  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan efsane bi Newrozê ve girêdayî ye?
 **TR:** Hangi efsane Newroz ile ilişkilidir?
-- ✅ A) Efsaneya Kawayê Hesinkar
--    B) Efsaneya Gilgameş
--    C) Efsaneya Romulus
--    D) Efsaneya Osiris
-**Doğru:** A) Efsaneya Kawayê Hesinkar
+-    A) Efsaneya Gilgameş
+-    B) Efsaneya Romulus
+-    C) Efsaneya Osiris
+- ✅ D) Efsaneya Kawayê Hesinkar
+**Doğru:** D) Efsaneya Kawayê Hesinkar
 **Açıklama:** Demirci Kawa Efsanesi Newroz ile ilişkilidir. Bu efsaneye göre Kawa, zalim Dehaq'a karşı ayaklandı ve Newroz bu isyandan doğdu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
 ## ds_cand_0028  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di dawetên kurdan de, kîjan amûra muzîkê ya kevneşopî tê bikaranîn?
 **TR:** Kürt düğünlerinde hangi geleneksel müzik aleti kullanılır?
--    A) Piyano
-- ✅ B) Tembûr
+- ✅ A) Tembûr
+-    B) Piyano
 -    C) Keman
 -    D) Gîtar
-**Doğru:** B) Tembûr
+**Doğru:** A) Tembûr
 **Açıklama:** Tembûr, Kürtlerin geleneksel müzik aletidir ve düğünlerde ve halaylarda çalınır. Piyano, keman ve gitar geleneksel değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
@@ -106,10 +106,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dawetên kurdan de, kîjan amûra muzîkê bi gelemperî tê lêxistin?
 **TR:** Kürt düğünlerinde genellikle hangi müzik aleti çalınır?
 -    A) Piyano
--    B) Keman
-- ✅ C) Def
+- ✅ B) Def
+-    C) Keman
 -    D) Gîtar
-**Doğru:** C) Def
+**Doğru:** B) Def
 **Açıklama:** Def, elle çalınan zilli bir çerçeve davuldur ve Kürt düğünlerinde yaygındır. Davul (dahol) ise ayrı, daha büyük bir vurmalıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
@@ -118,31 +118,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt düğünlerinde hangi müzik aleti genellikle tembûr ile birlikte çalınır?
 -    A) Piyano
 -    B) Keman
--    C) Gîtar
-- ✅ D) Def
-**Doğru:** D) Def
+- ✅ C) Def
+-    D) Gîtar
+**Doğru:** C) Def
 **Açıklama:** Def (davul) genellikle tembûr ile birlikte çalınır çünkü halayın ritmini artırır. Diğer aletler geleneksel değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
 ## ds_cand_0077  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûra muzîkê bi gelemperî di govendê de tê bikaranîn?
 **TR:** Halayda genellikle hangi müzik aleti kullanılır?
-- ✅ A) Tembûr
--    B) Piyano
--    C) Gîtar
--    D) Keman
-**Doğru:** A) Tembûr
+-    A) Piyano
+-    B) Gîtar
+-    C) Keman
+- ✅ D) Tembûr
+**Doğru:** D) Tembûr
 **Açıklama:** Tembûr, halayda çok kullanılan geleneksel bir müzik aletidir. Özellikle Kürt müziğinde önemli bir yere sahiptir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tembur
 
 ## ds_cand_0086  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di govendê de, kîjan amûra muzîkê ya biçûk bi gelemperî tê lêxistin?
 **TR:** Halayda genellikle çalınan küçük müzik aleti hangisidir?
--    A) Bilûr
-- ✅ B) Erbane
+- ✅ A) Erbane
+-    B) Bilûr
 -    C) Tembûr
 -    D) Zirne
-**Doğru:** B) Erbane
+**Doğru:** A) Erbane
 **Açıklama:** Erbane, halayda çalınan küçük bir müzik aletidir. Genellikle ritim için kullanılır ve elle çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Daf
 
@@ -150,32 +150,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûra muzîkê ya ku ji qamîşan tê çêkirin di govendê de tê bikaranîn?
 **TR:** Kamıştan yapılan ve halayda kullanılan müzik aleti hangisidir?
 -    A) Tembûr
--    B) Def
-- ✅ C) Bilûr
+- ✅ B) Bilûr
+-    C) Def
 -    D) Erbane
-**Doğru:** C) Bilûr
+**Doğru:** B) Bilûr
 **Açıklama:** Bilûr, kamıştan yapılan ve halayda kullanılan bir müzik aletidir. Hoş ve süslü sesiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaval
 
 ## ds_cand_0096  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûra muzîkê ya ku bi têlan tê lêxistin di govendê de tê bikaranîn?
 **TR:** Tellerle çalınan ve halayda kullanılan müzik aleti hangisidir?
-- ✅ A) Tembûr
--    B) Bilûr
--    C) Def
--    D) Erbane
-**Doğru:** A) Tembûr
+-    A) Bilûr
+-    B) Def
+-    C) Erbane
+- ✅ D) Tembûr
+**Doğru:** D) Tembûr
 **Açıklama:** Tembûr, tellerle çalınan ve halayda kullanılan bir müzik aletidir. Derin ve süslü sesiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tembur
 
 ## ds_cand_0157  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûra têldar di muzîka govendê ya kurdî de tê bikaranîn?
 **TR:** Kürt halay müziğinde hangi telli çalgı kullanılır?
-- ✅ A) Tembûr
--    B) Keman
--    C) Pîyano
--    D) Gîtar
-**Doğru:** A) Tembûr
+-    A) Keman
+-    B) Pîyano
+-    C) Gîtar
+- ✅ D) Tembûr
+**Doğru:** D) Tembûr
 **Açıklama:** Tembûr, halay müziğinde kullanılan telli çalgılardandır. Hangi çalgının öne çıktığı bölgeye göre değişir: zurna-davul, def ve tembûr farklı yörelerde farklı ağırlıktadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tembur
 
@@ -183,10 +183,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kutilk çi ye?
 **TR:** Kutilk nedir?
 -    A) Şorbeyeke nîskê
--    B) Nanê ku li tenûrê tê pehtin
-- ✅ C) Xwarinek bi hevîrê savarê û navika goştê
+- ✅ B) Xwarinek bi hevîrê savarê û navika goştê
+-    C) Nanê ku li tenûrê tê pehtin
 -    D) Şîraniya ku bi rûn û şekir tê çêkirin
-**Doğru:** C) Xwarinek bi hevîrê savarê û navika goştê
+**Doğru:** B) Xwarinek bi hevîrê savarê û navika goştê
 **Açıklama:** Kutilk, bulgur/irmik hamurundan kabuk ve kıymalı iç harçla yapılan bir yemektir; yörelere göre çeşitlenir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_cuisine
 
@@ -194,10 +194,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di çanda kurdî de, kîjan tişt bi gelemperî ji mêvanan re tê pêşkêş kirin?
 **TR:** Kürt kültüründe, misafirlere genellikle ne ikram edilir?
 -    A) Şerab û penîr
--    B) Qehwe û hingiv
-- ✅ C) Çay û nan
+- ✅ B) Çay û nan
+-    C) Qehwe û hingiv
 -    D) Av û xwê
-**Doğru:** C) Çay û nan
+**Doğru:** B) Çay û nan
 **Açıklama:** Kürt misafirperverliğinde, misafirlere genellikle çay ve ekmek ikram edilir, bazen şeker ve diğer yiyeceklerle birlikte. Şarap, peynir, kahve, bal, su ve tuz olağan adetler değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
@@ -206,20 +206,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt kültüründe çocuklara genellikle kim masal anlatır?
 -    A) Dayik
 -    B) Bav
--    C) Xwişk
-- ✅ D) Dapîr
-**Doğru:** D) Dapîr
+- ✅ C) Dapîr
+-    D) Xwişk
+**Doğru:** C) Dapîr
 **Açıklama:** Kürt kültüründe çocuklara genellikle babaanne masal anlatır. Bunun nedeni babaannenin deneyimli olması ve masal bilgisine sahip olmasıdır; bu iş genellikle onun tarafından yapılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0265  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, kîjan xwarin bi gelemperî ji bo dayika ku pitik kiriye tê çêkirin?
 **TR:** Kürt kültüründe doğum yapan anne için genellikle hangi yemek yapılır?
-- ✅ A) Şorbe
--    B) Kutilk
--    C) Birinç
--    D) Nan
-**Doğru:** A) Şorbe
+-    A) Kutilk
+-    B) Birinç
+-    C) Nan
+- ✅ D) Şorbe
+**Doğru:** D) Şorbe
 **Açıklama:** Kürt kültüründe doğum yapan anne için genellikle çorba yapılır. Bu yemek annenin gücü için hazırlanır ve genellikle komşular tarafından getirilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
@@ -228,9 +228,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yün eğirmede hangi alet kullanılır?
 -    A) Mekîk
 -    B) Dûzen
--    C) Şûjîn
-- ✅ D) Teşî
-**Doğru:** D) Teşî
+- ✅ C) Teşî
+-    D) Şûjîn
+**Doğru:** C) Teşî
 **Açıklama:** Teşi (öreke) yün ve pamuğu eğirip iplik yapar. Dokuma ise tezgâhta (tevn) yapılır; eğirme ile dokuma ayrı işlemlerdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
@@ -238,10 +238,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dokumaya kurdî de, kîjan materyal bi gelemperî tê bikaranîn?
 **TR:** Kürt dokumacılığında genellikle hangi malzeme kullanılır?
 -    A) Pembû
--    B) Hevrîşim
-- ✅ C) Hirî
+- ✅ B) Hirî
+-    C) Hevrîşim
 -    D) Ketan
-**Doğru:** C) Hirî
+**Doğru:** B) Hirî
 **Açıklama:** Yün, dağlık bölgede koyunlar çok beslendiği için Kürt dokumacılığında en yaygın malzemedir. Pamuk ve ipek de kullanılır ancak ilk sırada yün gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wool
 
@@ -250,20 +250,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt dokumacılığında yünü eğirmek için kullanılan aletin adı nedir?
 -    A) Mekîk
 -    B) Dûzen
--    C) Şûjîn
-- ✅ D) Teşî
-**Doğru:** D) Teşî
+- ✅ C) Teşî
+-    D) Şûjîn
+**Doğru:** C) Teşî
 **Açıklama:** Teşi, Kürt dokumacılığında yünü ipliğe dönüştürmeyi sağladığı için eğirmek amacıyla kullanılır. Mekik dokuma içindir, teşi ise eğirme içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
 ## ds_cand_0190  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, kilîm bi gelemperî ji kîjan materyalî tê çêkirin?
 **TR:** Kürt kültüründe kilim genellikle hangi malzemeden yapılır?
-- ✅ A) Hirî
--    B) Pembû
--    C) Hevrîşim
--    D) Ketan
-**Doğru:** A) Hirî
+-    A) Pembû
+-    B) Hevrîşim
+-    C) Ketan
+- ✅ D) Hirî
+**Doğru:** D) Hirî
 **Açıklama:** Kürt kültüründe kilim genellikle yünden yapılır çünkü yün dağlık bölgede bolca bulunur. Pamuk ve ipek de kullanılır ancak ilk sırada yün gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wool
 
@@ -271,10 +271,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan cejn bi qurbanîkirina heywanan tê pîrozkirin?
 **TR:** Hangi bayram hayvan kurban edilerek kutlanır?
 -    A) Cejna Remezanê
--    B) Newroz
-- ✅ C) Cejna Qurbanê
+- ✅ B) Cejna Qurbanê
+-    C) Newroz
 -    D) Cejna Mîladê
-**Doğru:** C) Cejna Qurbanê
+**Doğru:** B) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, hayvan kurban edilerek kutlanır. Bu bayram Zilhicce ayında gerçekleşir ve İbrahim'in kurban sunma olayını anmak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -282,21 +282,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Cejna Qurbanê di kîjan meha hicrî de tê pîrozkirin?
 **TR:** Kurban Bayramı hicri takvimin hangi ayında kutlanır?
 -    A) Meha Remezanê
--    B) Meha Zilqedê
-- ✅ C) Meha Zilhecê
+- ✅ B) Meha Zilhecê
+-    C) Meha Zilqedê
 -    D) Meha Şewalê
-**Doğru:** C) Meha Zilhecê
+**Doğru:** B) Meha Zilhecê
 **Açıklama:** Kurban Bayramı, Zilhicce ayının 10. gününde kutlanır. Bu ay hicri yılın sonudur ve Kurban Bayramı da bu ay içindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0209  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi bîranîna Îbrahîm û kurê wî ve girêdayî ye?
 **TR:** Hangi bayram İbrahim ve oğlunun anısıyla ilişkilidir?
-- ✅ A) Cejna Qurbanê
--    B) Cejna Remezanê
--    C) Newroz
--    D) Cejna Mîladê
-**Doğru:** A) Cejna Qurbanê
+-    A) Cejna Remezanê
+-    B) Newroz
+-    C) Cejna Mîladê
+- ✅ D) Cejna Qurbanê
+**Doğru:** D) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, oğlunu kurban etmeye hazır olan İbrahim'in anısıyla ilişkilidir. Bu bayram kurban sunmak için kutlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -304,10 +304,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Newroz çima di 21'ê adarê de tê pîrozkirin?
 **TR:** Newroz neden 21 Mart'ta kutlanır?
 -    A) Ji ber ku havîn dest pê dike
--    B) Ji ber ku zivistan dirêj dibe
-- ✅ C) Ji ber ku roj û şev wekhev in
+- ✅ B) Ji ber ku roj û şev wekhev in
+-    C) Ji ber ku zivistan dirêj dibe
 -    D) Ji ber ku baran zêde dibare
-**Doğru:** C) Ji ber ku roj û şev wekhev in
+**Doğru:** B) Ji ber ku roj û şev wekhev in
 **Açıklama:** Newroz ekinoks ile bağlantılıdır; 21 Mart'ta gece ve gündüz eşitlenir ve bu baharın başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -316,9 +316,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz'da ateş neyi simgeler?
 -    A) Xemgîniyê
 -    B) Tirsê
--    C) Bêhêvîtiyê
-- ✅ D) Paqijî û nûbûnê
-**Doğru:** D) Paqijî û nûbûnê
+- ✅ C) Paqijî û nûbûnê
+-    D) Bêhêvîtiyê
+**Doğru:** C) Paqijî û nûbûnê
 **Açıklama:** Newroz'da ateş temizliği ve yenilenmeyi simgeler; insanlar arınmak için ateşin üzerinden atlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -326,21 +326,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Newroz bi kîjan zimanî tê wateya "roja nû"?
 **TR:** Newroz hangi dilde "yeni gün" anlamına gelir?
 -    A) Erebî
--    B) Tirkî
-- ✅ C) Farisî
+- ✅ B) Farisî
+-    C) Tirkî
 -    D) Îngilîzî
-**Doğru:** C) Farisî
+**Doğru:** B) Farisî
 **Açıklama:** Newroz iki kelimeden oluşur: "new" (yeni) ve "roz" (gün), Farsça'dan gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0005  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de çi tê amadekirin?
 **TR:** Newroz'da ne hazırlanır?
--    A) Cilên reş
-- ✅ B) Xwarinên taybet
+- ✅ A) Xwarinên taybet
+-    B) Cilên reş
 -    C) Mala vala
 -    D) Derya
-**Doğru:** B) Xwarinên taybet
+**Doğru:** A) Xwarinên taybet
 **Açıklama:** Newroz'da özel yemekler hazırlanır ve insanlar birlikte yer; bu kutlamanın bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -349,9 +349,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz'da ne yakılır?
 -    A) Av
 -    B) Ba
--    C) Erd
-- ✅ D) Agir
-**Doğru:** D) Agir
+- ✅ C) Agir
+-    D) Erd
+**Doğru:** C) Agir
 **Açıklama:** Newroz'da ateş yakılır; bu arınma içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -360,31 +360,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz'da ne yenir?
 -    A) Xwarinên hişk
 -    B) Xwarinên sar
--    C) Xwarinên şor
-- ✅ D) Xwarinên taybet
-**Doğru:** D) Xwarinên taybet
+- ✅ C) Xwarinên taybet
+-    D) Xwarinên şor
+**Doğru:** C) Xwarinên taybet
 **Açıklama:** Newroz'da özel yiyecekler yenir; bu kutlamanın bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0024  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de çi tê kirin?
 **TR:** Newroz'da ne yapılır?
-- ✅ A) Dans
--    B) Şer
--    C) Xew
--    D) Kar
-**Doğru:** A) Dans
+-    A) Şer
+-    B) Xew
+-    C) Kar
+- ✅ D) Dans
+**Doğru:** D) Dans
 **Açıklama:** Newroz'da dans edilir; bu kutlamanın bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0006  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan welat Newrozê wekî betlaneya fermî pîroz dike?
 **TR:** Hangi ülke Newroz'u resmi tatil olarak kutlar?
--    A) Fransa
-- ✅ B) Îran
+- ✅ A) Îran
+-    B) Fransa
 -    C) Almanya
 -    D) Spanya
-**Doğru:** B) Îran
+**Doğru:** A) Îran
 **Açıklama:** İran Newroz'u resmi tatil olarak kutlar; bu gün orada çok önemlidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -393,9 +393,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz kiminle ilişkilendirilir?
 -    A) Eskender
 -    B) Dara
--    C) Zerdeşt
-- ✅ D) Cemşîd
-**Doğru:** D) Cemşîd
+- ✅ C) Cemşîd
+-    D) Zerdeşt
+**Doğru:** C) Cemşîd
 **Açıklama:** Newroz, Cemşid ile ilişkilendirilir; o, Fars mitolojisinde efsanevi bir kraldır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -404,20 +404,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz hangi ayda kutlanır?
 -    A) Nîsan
 -    B) Gulan
--    C) Hezîran
-- ✅ D) Adar
-**Doğru:** D) Adar
+- ✅ C) Adar
+-    D) Hezîran
+**Doğru:** C) Adar
 **Açıklama:** Newroz, Mart ayında kutlanır; bu ekinoks ayıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0011  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Newroz bi kîjan dînî ve tê girêdan?
 **TR:** Newroz hangi dinle ilişkilendirilir?
-- ✅ A) Zerdeştî
--    B) Îslam
--    C) Xiristiyanî
--    D) Cihûtî
-**Doğru:** A) Zerdeştî
+-    A) Îslam
+-    B) Xiristiyanî
+-    C) Cihûtî
+- ✅ D) Zerdeştî
+**Doğru:** D) Zerdeştî
 **Açıklama:** Newroz, Zerdüştlükle ilişkilendirilir; bu, eski İran dinidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -425,10 +425,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Newrozê de mirov çi dikin?
 **TR:** Newroz'da insanlar ne yapar?
 -    A) Di bin erdê de dimînin
--    B) Diçin deryayê
-- ✅ C) Di ser agir re baz didin
+- ✅ B) Di ser agir re baz didin
+-    C) Diçin deryayê
 -    D) Diçin çiyayan
-**Doğru:** C) Di ser agir re baz didin
+**Doğru:** B) Di ser agir re baz didin
 **Açıklama:** Newroz'da insanlar ateşin üzerinden atlar; bu arınma içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -436,43 +436,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Newrozê de mirov çi li xwe dikin?
 **TR:** Newroz'da insanlar ne giyer?
 -    A) Cilên kevn
--    B) Cilên reş
-- ✅ C) Cilên nû
+- ✅ B) Cilên nû
+-    C) Cilên reş
 -    D) Cilên spî
-**Doğru:** C) Cilên nû
+**Doğru:** B) Cilên nû
 **Açıklama:** Newroz'da insanlar yeni kıyafetler giyer; bu yenilenme içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0013  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Newroz ji bo kê ye?
 **TR:** Newroz kimin içindir?
--    A) Tenê kurdan
-- ✅ B) Hemû mirovan
+- ✅ A) Hemû mirovan
+-    B) Tenê kurdan
 -    C) Tenê farisan
 -    D) Tenê tirkên
-**Doğru:** B) Hemû mirovan
+**Doğru:** A) Hemû mirovan
 **Açıklama:** Newroz tüm insanlar içindir; evrensel bir kutlamadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_1015  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Newroz di kîjan rojê de tê pîrozkirin?
 **TR:** Newroz hangi gün kutlanır?
--    A) 1'ê kanûnê
-- ✅ B) 21'ê adarê
+- ✅ A) 21'ê adarê
+-    B) 1'ê kanûnê
 -    C) 15'ê tebaxê
 -    D) 31'ê çiriya
-**Doğru:** B) 21'ê adarê
+**Doğru:** A) 21'ê adarê
 **Açıklama:** Newroz 21 Mart'ta kutlanır; bu ekinoks günüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0019  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Newroz bi kîjan çandê ve girêdayî ye?
 **TR:** Newroz hangi kültürle bağlantılıdır?
--    A) Çanda erebî
-- ✅ B) Çanda farisî
+- ✅ A) Çanda farisî
+-    B) Çanda erebî
 -    C) Çanda tirkî
 -    D) Çanda îngilîzî
-**Doğru:** B) Çanda farisî
+**Doğru:** A) Çanda farisî
 **Açıklama:** Newroz, Fars kültürüyle bağlantılıdır; Zerdüşt dininden gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -481,9 +481,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz hangi mevsimle ilişkilendirilir?
 -    A) Zivistanê
 -    B) Havînê
--    C) Payîzê
-- ✅ D) Biharê
-**Doğru:** D) Biharê
+- ✅ C) Biharê
+-    D) Payîzê
+**Doğru:** C) Biharê
 **Açıklama:** Newroz ilkbaharla ilişkilendirilir; ilkbaharın başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -492,20 +492,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dengbêj kilamı geleneksel olarak nasıl söylenir?
 -    A) Bi tembûrê
 -    B) Bi zirne û daholê
--    C) Bi kemanê
-- ✅ D) Bê amûr, bi dengê tenê
-**Doğru:** D) Bê amûr, bi dengê tenê
+- ✅ C) Bê amûr, bi dengê tenê
+-    D) Bi kemanê
+**Doğru:** C) Bê amûr, bi dengê tenê
 **Açıklama:** Dengbêj geleneğinde kilam çalgısız, yalnız insan sesiyle söylenir. Kilamın gücü sesin ve sözün kendisindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tanbur
 
 ## ds_cand_0050  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di daweta kurdî de, kîjan çalakî bi gelemperî piştî xwarinê tê kirin?
 **TR:** Kürt düğünlerinde yemekten sonra genellikle hangi aktivite yapılır?
-- ✅ A) Govend
--    B) Xew
--    C) Stran
--    D) Axaftin
-**Doğru:** A) Govend
+-    A) Xew
+-    B) Stran
+-    C) Axaftin
+- ✅ D) Govend
+**Doğru:** D) Govend
 **Açıklama:** Yemekten sonra genellikle govend oynanır. Govend, insanların el ele tutuşup müziğin ritmine göre döndüğü kolektif bir Kürt dansıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
@@ -514,9 +514,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yün eğirmek için genellikle hangi alet kullanılır?
 -    A) Mekik
 -    B) Şûtik
--    C) Nîvend
-- ✅ D) Teşî
-**Doğru:** D) Teşî
+- ✅ C) Teşî
+-    D) Nîvend
+**Doğru:** C) Teşî
 **Açıklama:** Teşi, yün eğirmek için kullanılan geleneksel bir alettir. Mekik dokumada kullanılır, şutik halı dövmek içindir ve nîvend ise oturma yeridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
@@ -524,10 +524,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li kû xalîçeya kurdî bi gelemperî tê çêkirin?
 **TR:** Kürt halısı genellikle nerede yapılır?
 -    A) Li bajarên mezin
--    B) Li fabrîqeyan
-- ✅ C) Li malan
+- ✅ B) Li malan
+-    C) Li fabrîqeyan
 -    D) Li dibistanan
-**Doğru:** C) Li malan
+**Doğru:** B) Li malan
 **Açıklama:** Kürt halısı geleneksel olarak evlerde, Kürt kadınlarının elleriyle yapılır. Bu sanat nesilden nesile aktarılır ve her evde özel bir şekilde geliştirilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_carpet
 
@@ -536,20 +536,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt halılarında genellikle hangi renk kullanılır?
 -    A) Şîn
 -    B) Zer
--    C) Kesk
-- ✅ D) Sor
-**Doğru:** D) Sor
+- ✅ C) Sor
+-    D) Kesk
+**Doğru:** C) Sor
 **Açıklama:** Kırmızı renk, bitki köklerinden elde edildiği ve yaşamın sembolü olduğu için Kürt halılarında sıklıkla kullanılır. Diğer renkler de kullanılır ancak kırmızı özellikle Kürtler arasında ünlüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_carpet
 
 ## ds_cand_0064  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li kû kofî bi gelemperî tê li xwe kirin?
 **TR:** Kofî genellikle nereye giyilir?
-- ✅ A) Li ser serê jinan
--    B) Li ser serê mêran
--    C) Li pişta mêran
--    D) Li pişta jinan
-**Doğru:** A) Li ser serê jinan
+-    A) Li ser serê mêran
+-    B) Li pişta mêran
+-    C) Li pişta jinan
+- ✅ D) Li ser serê jinan
+**Doğru:** D) Li ser serê jinan
 **Açıklama:** Kofî, Kürt kültüründe kadınlara özgü bir başlıktır; üzerine genellikle örtü sarılır ve yöreye göre biçimi değişir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_clothing
 
@@ -558,42 +558,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yün eğirmek için hangi alet kullanılır?
 -    A) Derzî
 -    B) Şûtik
--    C) Mekik
-- ✅ D) Teşî
-**Doğru:** D) Teşî
+- ✅ C) Teşî
+-    D) Mekik
+**Doğru:** C) Teşî
 **Açıklama:** Teşi, yün eğirmek için kullanılan geleneksel bir alettir. İğne dikiş içindir, şutik halı içindir ve mekik de dokumada kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
 ## ds_cand_0079  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li gorî kevneşopiya kurdî, govend bi gelemperî di kîjan demê de tê dans kirin?
 **TR:** Kürt geleneğine göre, halay genellikle hangi zamanda oynanır?
-- ✅ A) Di dawetê de
--    B) Di şînê de
--    C) Di rojiyê de
--    D) Di mirinê de
-**Doğru:** A) Di dawetê de
+-    A) Di şînê de
+-    B) Di rojiyê de
+-    C) Di mirinê de
+- ✅ D) Di dawetê de
+**Doğru:** D) Di dawetê de
 **Açıklama:** Halay, Kürt düğünlerinde ve bayramlarında oynanır ve sevinç ile kutlama içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0092  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li gorî kevneşopiya kurdî, govend bi gelemperî li kû tê dans kirin?
 **TR:** Kürt geleneğine göre, halay genellikle nerede oynanır?
-- ✅ A) Li derve, li ser axê
--    B) Li hundir, li ser xalîçeyê
--    C) Li ser çîmenê
--    D) Li ser kevir
-**Doğru:** A) Li derve, li ser axê
+-    A) Li hundir, li ser xalîçeyê
+-    B) Li ser çîmenê
+-    C) Li ser kevir
+- ✅ D) Li derve, li ser axê
+**Doğru:** D) Li derve, li ser axê
 **Açıklama:** Halay genellikle dışarıda, toprak üzerinde veya bayram ve düğün gibi açık alanlarda oynanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0081  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di govenda kurdî de, dansvan bi gelemperî çawa destên xwe digirin?
 **TR:** Kürt halayında dansçılar genellikle ellerini nasıl tutar?
-- ✅ A) Bi hev ve girê didin
--    B) Li pişt xwe didin
--    C) Li ser serê xwe dikin
--    D) Di berîka xwe de dikin
-**Doğru:** A) Bi hev ve girê didin
+-    A) Li pişt xwe didin
+-    B) Li ser serê xwe dikin
+-    C) Di berîka xwe de dikin
+- ✅ D) Bi hev ve girê didin
+**Doğru:** D) Bi hev ve girê didin
 **Açıklama:** Kürt halayında dansçılar birbirlerinin ellerini tutarak bir zincir oluştururlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
@@ -602,9 +602,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Halay için yaygın olarak kullanılan ve kemana benzeyen Kürt müzik aleti hangisidir?
 -    A) Tembûr
 -    B) Zirna
--    C) Def
-- ✅ D) Kemançe
-**Doğru:** D) Kemançe
+- ✅ C) Kemançe
+-    D) Def
+**Doğru:** C) Kemançe
 **Açıklama:** Kemançe, yayla çalınan ve kemana benzeyen, ancak sesi farklı olan bir Kürt müzik aletidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kamancheh
 
@@ -612,10 +612,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûra muzîkê ya kurdî bi gelemperî ji bo govendê tê bikaranîn û ji çerm tê çêkirin?
 **TR:** Halay için yaygın olarak kullanılan ve deriden yapılan Kürt müzik aleti hangisidir?
 -    A) Zirna
--    B) Tembûr
-- ✅ C) Def
+- ✅ B) Def
+-    C) Tembûr
 -    D) Kemançe
-**Doğru:** C) Def
+**Doğru:** B) Def
 **Açıklama:** Def, deriden yapılan ve çalınarak halay için ritim sağlayan bir müzik aletidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Daf
 
@@ -624,20 +624,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt halayında dansçılara genellikle kim düzen verir?
 -    A) Dengbêj
 -    B) Zirnazan
--    C) Mêvan
-- ✅ D) Serokê govendê
-**Doğru:** D) Serokê govendê
+- ✅ C) Serokê govendê
+-    D) Mêvan
+**Doğru:** C) Serokê govendê
 **Açıklama:** Halay başkanı, boş eli ve hızıyla dansçıların düzenini ve hareketini kontrol eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0094  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di govenda kurdî de, kîjan amûra muzîkê bi gelemperî ji bo destpêkirina govendê tê bikaranîn?
 **TR:** Kürt halayında genellikle halayı başlatmak için hangi müzik aleti kullanılır?
-- ✅ A) Zirna
--    B) Tembûr
--    C) Kemançe
--    D) Bilûr
-**Doğru:** A) Zirna
+-    A) Tembûr
+-    B) Kemançe
+-    C) Bilûr
+- ✅ D) Zirna
+**Doğru:** D) Zirna
 **Açıklama:** Zirna, yüksek sesiyle halayın başladığını bildirir ve dansçıları halka olmaya davet eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
@@ -645,21 +645,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di govenda kurdî ya botan de, dansvan bi gelemperî çawa tevdigerin?
 **TR:** Botan Kürt halayında dansçılar genellikle nasıl hareket eder?
 -    A) Bi lez û bez
--    B) Bi bazdan
-- ✅ C) Bi hêdî û bi rêz
+- ✅ B) Bi hêdî û bi rêz
+-    C) Bi bazdan
 -    D) Bi rûniştin
-**Doğru:** C) Bi hêdî û bi rêz
+**Doğru:** B) Bi hêdî û bi rêz
 **Açıklama:** Botan halayı, yavaş temposu ve görkemli düzeniyle bilinir; dansçılar yumuşak adımlarla hareket eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0097  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Li gorî kevneşopiya kurdî, kîjan dans bi gelemperî ji bo şîna û mirinê tê dans kirin?
 **TR:** Kürt geleneğine göre, genellikle yas ve ölüm için hangi dans oynanır?
-- ✅ A) Govenda şînê
--    B) Govenda dawetê
--    C) Govenda cejnê
--    D) Govenda nûjen
-**Doğru:** A) Govenda şînê
+-    A) Govenda dawetê
+-    B) Govenda cejnê
+-    C) Govenda nûjen
+- ✅ D) Govenda şînê
+**Doğru:** D) Govenda şînê
 **Açıklama:** Yas halayı, Kürt kültüründe üzüntü için oynanır, ancak genellikle halay sevinç içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
@@ -668,31 +668,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Farklı bölgelerdeki Kürt halaylarında genellikle hangi müzik aleti kullanılır?
 -    A) Tembûr
 -    B) Zirna
--    C) Def
-- ✅ D) Hemî jorîn
-**Doğru:** D) Hemî jorîn
+- ✅ C) Hemî jorîn
+-    D) Def
+**Doğru:** C) Hemî jorîn
 **Açıklama:** Kürt halayında bölgeye göre tembûr, zirna, def ve diğer aletler kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
 ## ds_cand_0101  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan xwarina kurdî bi hevîrê savarê û goştê hûrkirî tê çêkirin?
 **TR:** Bulgur hamuru ve kıyma ile yapılan Kürt yemeği hangisidir?
-- ✅ A) Kutilk
--    B) Birinç
--    C) Şorbeya nîskê
--    D) Fasûlî
-**Doğru:** A) Kutilk
+-    A) Birinç
+-    B) Şorbeya nîskê
+-    C) Fasûlî
+- ✅ D) Kutilk
+**Doğru:** D) Kutilk
 **Açıklama:** Kutilk, bulgur/irmik hamurundan kabuk ve kıymalı iç harçla yapılır. Yörelere göre dış hamuru ve iç harcı değişir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kubba
 
 ## ds_cand_0127  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kurmancî de "Destê vala bi serê xwe ve nayê" ev gotin çi dide zanîn?
 **TR:** Kürtçe "Destê vala bi serê xwe ve nayê" (Eli boş başa gelmez) bu söz neyi ifade eder?
--    A) Divê mirov bi tena serê xwe kar bike
-- ✅ B) Divê mirov bi destê vala neçe serdana kesî
+- ✅ A) Divê mirov bi destê vala neçe serdana kesî
+-    B) Divê mirov bi tena serê xwe kar bike
 -    C) Divê mirov ji kesên din re alîkariyê bike
 -    D) Divê mirov her dem bi destê xwe ve be
-**Doğru:** B) Divê mirov bi destê vala neçe serdana kesî
+**Doğru:** A) Divê mirov bi destê vala neçe serdana kesî
 **Açıklama:** Bu söz, insanın eli boş birinin ziyaretine gitmemesi gerektiğini ifade eder, çünkü Kürt kültüründe misafirler hediyelerle karşılanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
@@ -701,31 +701,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt kültüründe, eve bir misafir geldiğinde ona genellikle ne ikram edilir?
 -    A) Qehwe û nan
 -    B) Şerab û penîr
--    C) Hingiv û rûn
-- ✅ D) Çay û şekir
-**Doğru:** D) Çay û şekir
+- ✅ C) Çay û şekir
+-    D) Hingiv û rûn
+**Doğru:** C) Çay û şekir
 **Açıklama:** Kürt kültüründe misafirperverlik çok önemlidir ve misafirlere genellikle çay ikram edilir, bazen şeker ve özel ekmekle birlikte.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0159  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema mêvanek tê, kîjan tişt bi gelemperî tê kirin?
 **TR:** Kürt kültüründe, bir misafir geldiğinde genellikle ne yapılır?
-- ✅ A) Xwarin tê amadekirin
--    B) Derî tê girtin
--    C) Çira tê vemirandin
--    D) Mizgeft tê xwendin
-**Doğru:** A) Xwarin tê amadekirin
+-    A) Derî tê girtin
+-    B) Çira tê vemirandin
+-    C) Mizgeft tê xwendin
+- ✅ D) Xwarin tê amadekirin
+**Doğru:** D) Xwarin tê amadekirin
 **Açıklama:** Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve cami okumak misafirperverlik adetleri değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_1165  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema mêvanek tê, kîjan tişt bi gelemperî nayê kirin?
 **TR:** Kürt kültüründe, bir misafir geldiğinde genellikle ne yapılmaz?
-- ✅ A) Derî tê girtin
--    B) Xwarin tê amadekirin
--    C) Çay tê vexwarin
--    D) Sohbet tê kirin
-**Doğru:** A) Derî tê girtin
+-    A) Xwarin tê amadekirin
+-    B) Çay tê vexwarin
+-    C) Sohbet tê kirin
+- ✅ D) Derî tê girtin
+**Doğru:** D) Derî tê girtin
 **Açıklama:** Kürt misafirperverliğinde, kapı misafirler için genellikle açık kalır, kapalı değil. Yemek hazırlamak, çay içmek ve sohbet etmek misafirperverlik adetleridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
@@ -733,54 +733,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di çanda kurdî de, dema koçberiyê, kîjan tişt bi gelemperî li ser pişta ajalên bar tê barkirin?
 **TR:** Kürt kültüründe göç zamanı, yük hayvanlarının sırtına genellikle ne yüklenir?
 -    A) Xalîçe
--    B) Nan
-- ✅ C) Çadir
+- ✅ B) Çadir
+-    C) Nan
 -    D) Av
-**Doğru:** C) Çadir
+**Doğru:** B) Çadir
 **Açıklama:** Çadır göç sırasında barınak olarak kullanılır. Halı, ekmek ve su diğer şeylerdir, ancak çadır temeldir.
 **Kaynak:** https://en.wikipedia.org/wiki/Yurt
 
 ## ds_cand_0251  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema pitikek tê dinyayê, kîjan tişt bi gelemperî tê kirin?
 **TR:** Kürt kültüründe bir bebek dünyaya geldiğinde genellikle ne yapılır?
-- ✅ A) Şahî û pîrozbahî
--    B) Şîna girî
--    C) Koçberî
--    D) Rojîgirtin
-**Doğru:** A) Şahî û pîrozbahî
+-    A) Şîna girî
+-    B) Koçberî
+-    C) Rojîgirtin
+- ✅ D) Şahî û pîrozbahî
+**Doğru:** D) Şahî û pîrozbahî
 **Açıklama:** Kürt kültüründe bir bebek dünyaya geldiğinde şenlik ve kutlama yapılır. Bu gelenek ailenin mutluluğunun bir göstergesidir ve yeni bir hayatı kutlamak için düzenlenir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0263  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema pitik tê dinyayê, kîjan kes bi gelemperî mizgîniyê dide malbatê?
 **TR:** Kürt kültüründe bebek dünyaya geldiğinde aileye genellikle kim müjdeyi verir?
-- ✅ A) Pîrik
--    B) Dayik
--    C) Bav
--    D) Xwişk
-**Doğru:** A) Pîrik
+-    A) Dayik
+-    B) Bav
+-    C) Xwişk
+- ✅ D) Pîrik
+**Doğru:** D) Pîrik
 **Açıklama:** Kürt kültüründe ebe genellikle aileye müjdeyi verir. Bunun nedeni ebenin doğumda hazır bulunması ve müjdeyi veren ilk kişi olmasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0271  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema zarok dest bi meşê dike, kîjan tişt bi gelemperî tê kirin?
 **TR:** Kürt kültüründe çocuk yürümeye başladığında genellikle ne yapılır?
-- ✅ A) Şahî
--    B) Şîn
--    C) Rojî
--    D) Koçberî
-**Doğru:** A) Şahî
+-    A) Şîn
+-    B) Rojî
+-    C) Koçberî
+- ✅ D) Şahî
+**Doğru:** D) Şahî
 **Açıklama:** Kürt kültüründe çocuk yürümeye başladığında şenlik yapılır. Bu gelenek çocuğun hayatındaki bu önemli aşamayı kutlamak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_1178  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Koçberiya berbi zozanan di kîjan demsalê de dest pê dike?
 **TR:** Yaylaya çıkış hangi mevsimde başlar?
--    A) Havîn
-- ✅ B) Bihar
+- ✅ A) Bihar
+-    B) Havîn
 -    C) Payîz
 -    D) Zivistan
-**Doğru:** B) Bihar
+**Doğru:** A) Bihar
 **Açıklama:** Yaylaya çıkış ilkbaharda, kar eridiğinde başlar; sonbaharda ise germiyana dönülür. Yıllık göç hareketi iki geçişi birden içerir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
@@ -789,9 +789,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yazın köylüler genellikle yaylalara nasıl giderler?
 -    A) Bi peyan
 -    B) Bi traktorê
--    C) Bi otomobîlê
-- ✅ D) Bi ker û hespan
-**Doğru:** D) Bi ker û hespan
+- ✅ C) Bi ker û hespan
+-    D) Bi otomobîlê
+**Doğru:** C) Bi ker û hespan
 **Açıklama:** Kürt geleneğinde göç, eşek ve atlarla yapılır. Traktör ve araba moderndir, geleneksel değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
@@ -800,20 +800,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yaylalarda hayvanlar genellikle ne yer?
 -    A) Berû
 -    B) Kakil
--    C) Keskesor
-- ✅ D) Giya
-**Doğru:** D) Giya
+- ✅ C) Giya
+-    D) Keskesor
+**Doğru:** C) Giya
 **Açıklama:** Yaylalar zengin otlarıyla bilinir. Meşe palamudu, çekirdek ve gökkuşağı hayvanların ana yemeği değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mountain_meadow
 
 ## ds_cand_0188  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di zivistanê de, koçer bi gelemperî li ku dimînin?
 **TR:** Kışın göçerler genellikle nerede kalır?
-- ✅ A) Li deştan
--    B) Li zozanan
--    C) Li çiyayan
--    D) Li bajaran
-**Doğru:** A) Li deştan
+-    A) Li zozanan
+-    B) Li çiyayan
+-    C) Li bajaran
+- ✅ D) Li deştan
+**Doğru:** D) Li deştan
 **Açıklama:** Kışın yaylalar soğuktur, bu yüzden göçerler ovalarda kalır. Yaylalar, dağlar ve şehirler kışlık yer değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
@@ -822,20 +822,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yazın yaylalar genellikle ne için kullanılır?
 -    A) Ji bo avdanê
 -    B) Ji bo xanî
--    C) Ji bo karxaneyê
-- ✅ D) Ji bo çêrandinê
-**Doğru:** D) Ji bo çêrandinê
+- ✅ C) Ji bo çêrandinê
+-    D) Ji bo karxaneyê
+**Doğru:** C) Ji bo çêrandinê
 **Açıklama:** Yaylalar yazın hayvanları otlatmak için kullanılır. Sulama, ev ve fabrika yaylalar için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mountain_meadow
 
 ## ds_cand_0196  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di zivistanê de, ajal bi gelemperî çi dixwin?
 **TR:** Kışın hayvanlar genellikle ne yer?
-- ✅ A) Giya hişk
--    B) Giya kesk
--    C) Berû
--    D) Kakil
-**Doğru:** A) Giya hişk
+-    A) Giya kesk
+-    B) Berû
+-    C) Kakil
+- ✅ D) Giya hişk
+**Doğru:** D) Giya hişk
 **Açıklama:** Kışın yeşil ot olmaz, bu yüzden hayvanlar kuru ot yer. Meşe palamudu ve çekirdek ana yiyecek değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Hay
 
@@ -844,31 +844,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İlkbaharda göçerler genellikle nereden başlar?
 -    A) Ji zozanan
 -    B) Ji çiyayan
--    C) Ji bajaran
-- ✅ D) Ji deştan
-**Doğru:** D) Ji deştan
+- ✅ C) Ji deştan
+-    D) Ji bajaran
+**Doğru:** C) Ji deştan
 **Açıklama:** Göçerler ilkbaharda ovalardan başlar ve yaylalara doğru gider. Yaylalar, dağlar ve şehirler göçün başlangıcı değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
 ## ds_cand_0203  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di xalîçeyên kurdî de, kîjan reng bi gelemperî ji bo xeml û nîşanan tê bikaranîn?
 **TR:** Kürt halılarında genellikle süsleme ve desenler için hangi renk kullanılır?
-- ✅ A) Sor
--    B) Şîn
--    C) Zer
--    D) Reş
-**Doğru:** A) Sor
+-    A) Şîn
+-    B) Zer
+-    C) Reş
+- ✅ D) Sor
+**Doğru:** D) Sor
 **Açıklama:** Kürt halılarında kırmızı en yaygın renktir ve süsleme ile desenler için kullanılır. Mavi, sarı ve siyah da kullanılır ancak kırmızı en karakteristik olanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_carpet
 
 ## ds_cand_0226  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de, kîjan agir bi gelemperî tê vêxistin?
 **TR:** Newroz'da genellikle hangi ateş yakılır?
--    A) agirê tirsê
-- ✅ B) agirê pîroz
+- ✅ A) agirê pîroz
+-    B) agirê tirsê
 -    C) agirê mirinê
 -    D) agirê xemê
-**Doğru:** B) agirê pîroz
+**Doğru:** A) agirê pîroz
 **Açıklama:** Newroz'da kutsal ateş yakılır çünkü Newroz bahar bayramıdır ve ateş saflık ile yenilenmenin sembolüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -877,9 +877,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Genellikle 21 Mart'ta hangi bayram kutlanır?
 -    A) Sersal
 -    B) Cejna Remezanê
--    C) Cejna Qurbanê
-- ✅ D) Newroz
-**Doğru:** D) Newroz
+- ✅ C) Newroz
+-    D) Cejna Qurbanê
+**Doğru:** C) Newroz
 **Açıklama:** Newroz 21 Mart'ta kutlanır çünkü o gün baharın başlangıcıdır ve Kürt kültüründe önemli bir bayramdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -888,9 +888,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi bayram genellikle Zilhicce'nin 10'unda kutlanır?
 -    A) Cejna Remezanê
 -    B) Newroz
--    C) Sersal
-- ✅ D) Cejna Qurbanê
-**Doğru:** D) Cejna Qurbanê
+- ✅ C) Cejna Qurbanê
+-    D) Sersal
+**Doğru:** C) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, Zilhicce'nin 10'unda kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -898,54 +898,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di cejna Newrozê de, kîjan tişt bi gelemperî tê amadekirin?
 **TR:** Newroz bayramında genellikle ne hazırlanır?
 -    A) xwarinên sar
--    B) xwarinên bêxwê
-- ✅ C) xwarinên taybet
+- ✅ B) xwarinên taybet
+-    C) xwarinên bêxwê
 -    D) xwarinên hişk
-**Doğru:** C) xwarinên taybet
+**Doğru:** B) xwarinên taybet
 **Açıklama:** Newroz'da özel yemekler hazırlanır çünkü bayram birlikte kutlanır ve yemek geleneğin bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0229  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî ji bo dawiya meha Remezanê tê pîrozkirin?
 **TR:** Hangi bayram genellikle Ramazan ayının sonu için kutlanır?
--    A) Cejna Qurbanê
-- ✅ B) Cejna Remezanê
+- ✅ A) Cejna Remezanê
+-    B) Cejna Qurbanê
 -    C) Newroz
 -    D) Sersal
-**Doğru:** B) Cejna Remezanê
+**Doğru:** A) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, Ramazan ayının sonu için kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0233  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî ji bo bîranîna îbrahîm pêxember tê pîrozkirin?
 **TR:** Hangi bayram genellikle Hz. İbrahim'i anmak için kutlanır?
-- ✅ A) Cejna Qurbanê
--    B) Cejna Remezanê
--    C) Newroz
--    D) Sersal
-**Doğru:** A) Cejna Qurbanê
+-    A) Cejna Remezanê
+-    B) Newroz
+-    C) Sersal
+- ✅ D) Cejna Qurbanê
+**Doğru:** D) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, Hz. İbrahim'i anmak için kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0237  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî ji bo destpêka biharê tê pîrozkirin?
 **TR:** Hangi bayram genellikle baharın başlangıcı için kutlanır?
--    A) Cejna Remezanê
-- ✅ B) Newroz
+- ✅ A) Newroz
+-    B) Cejna Remezanê
 -    C) Cejna Qurbanê
 -    D) Sersal
-**Doğru:** B) Newroz
+**Doğru:** A) Newroz
 **Açıklama:** Newroz, baharın başlangıcı için kutlanır çünkü o bahar bayramıdır ve 21 Mart'ta kutlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0241  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî ji bo bîranîna bûyera qurbaniyê tê pîrozkirin?
 **TR:** Hangi bayram genellikle kurban olayını anmak için kutlanır?
--    A) Cejna Remezanê
-- ✅ B) Cejna Qurbanê
+- ✅ A) Cejna Qurbanê
+-    B) Cejna Remezanê
 -    C) Newroz
 -    D) Sersal
-**Doğru:** B) Cejna Qurbanê
+**Doğru:** A) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, kurban olayını anmak için kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -953,10 +953,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan cejn bi gelemperî ji bo pîrozkirina rojiyê tê pîrozkirin?
 **TR:** Hangi bayram genellikle orucu kutlamak için kutlanır?
 -    A) Cejna Qurbanê
--    B) Newroz
-- ✅ C) Cejna Remezanê
+- ✅ B) Cejna Remezanê
+-    C) Newroz
 -    D) Sersal
-**Doğru:** C) Cejna Remezanê
+**Doğru:** B) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, orucu kutlamak için kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
@@ -964,10 +964,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di cejna Qurbanê de, kîjan heywan bi gelemperî tê serjêkirin?
 **TR:** Kurban Bayramı'nda genellikle hangi hayvan kesilir?
 -    A) mirîşk
--    B) masî
-- ✅ C) pez
+- ✅ B) pez
+-    C) masî
 -    D) ker
-**Doğru:** C) pez
+**Doğru:** B) pez
 **Açıklama:** Kurban Bayramı'nda koyun kesilir çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -976,9 +976,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurban Bayramı'nda genellikle ne dağıtılır?
 -    A) xurma
 -    B) nan
--    C) şîr
-- ✅ D) goşt
-**Doğru:** D) goşt
+- ✅ C) goşt
+-    D) şîr
+**Doğru:** C) goşt
 **Açıklama:** Kurban Bayramı'nda et dağıtılır çünkü o kurban bayramıdır ve et genellikle fakirlere dağıtılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -986,21 +986,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di cejna Qurbanê de, kîjan kes bi gelemperî qurbanî dike?
 **TR:** Kurban Bayramı'nda genellikle kim kurban keser?
 -    A) zarok
--    B) jin
-- ✅ C) serokê malê
+- ✅ B) serokê malê
+-    C) jin
 -    D) mêvan
-**Doğru:** C) serokê malê
+**Doğru:** B) serokê malê
 **Açıklama:** Kurban Bayramı'nda evin reisi kurban keser çünkü o kurban bayramıdır ve kurban genellikle evin reisi tarafından kesilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0231  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî di dawiya meha Remezanê de tê pîrozkirin?
 **TR:** Hangi bayram genellikle Ramazan ayının sonunda kutlanır?
--    A) Cejna Qurbanê
-- ✅ B) Cejna Remezanê
+- ✅ A) Cejna Remezanê
+-    B) Cejna Qurbanê
 -    C) Newroz
 -    D) Sersal
-**Doğru:** B) Cejna Remezanê
+**Doğru:** A) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, Ramazan ayının sonunda kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
@@ -1008,10 +1008,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Cejna Remezanê di kîjan meha kamerî de tê pîrozkirin?
 **TR:** Ramazan Bayramı hangi kamerî ayda kutlanır?
 -    A) Meha Remezanê
--    B) Meha Muherremê
-- ✅ C) Meha Şewalê
+- ✅ B) Meha Şewalê
+-    C) Meha Muherremê
 -    D) Meha Zîlhicceyê
-**Doğru:** C) Meha Şewalê
+**Doğru:** B) Meha Şewalê
 **Açıklama:** Ramazan Bayramı (Eid al-Fitr), Ramazan bittikten sonra Şevval ayının ilk günü kutlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
@@ -1020,20 +1020,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi bayram genellikle Zilhicce ayında kutlanır?
 -    A) Cejna Remezanê
 -    B) Newroz
--    C) Sersal
-- ✅ D) Cejna Qurbanê
-**Doğru:** D) Cejna Qurbanê
+- ✅ C) Cejna Qurbanê
+-    D) Sersal
+**Doğru:** C) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, Zilhicce ayında kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0247  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî di meha Şewalê de tê pîrozkirin?
 **TR:** Hangi bayram genellikle Şevval ayında kutlanır?
-- ✅ A) Cejna Remezanê
--    B) Cejna Qurbanê
--    C) Newroz
--    D) Sersal
-**Doğru:** A) Cejna Remezanê
+-    A) Cejna Qurbanê
+-    B) Newroz
+-    C) Sersal
+- ✅ D) Cejna Remezanê
+**Doğru:** D) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, Şevval ayında kutlanır çünkü o oruç bayramıdır ve Ramazan ayından sonra gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
@@ -1041,10 +1041,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Newrozê de kîjan sê reng bi hev re tên bikaranîn?
 **TR:** Newroz'da hangi üç renk birlikte kullanılır?
 -    A) Reş, spî û gewr
--    B) Şîn, mor û qehweyî
-- ✅ C) Sor, kesk û zer
+- ✅ B) Sor, kesk û zer
+-    C) Şîn, mor û qehweyî
 -    D) Spî, şîn û pembe
-**Doğru:** C) Sor, kesk û zer
+**Doğru:** B) Sor, kesk û zer
 **Açıklama:** Newroz kutlamalarında kırmızı, yeşil ve sarı birlikte kullanılır; tek bir "doğru renk" yoktur.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -1052,43 +1052,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di meha Remezanê de rojî bi gelemperî bi kîjan xwarinê tê vekirin?
 **TR:** Ramazan ayında oruç genellikle hangi yiyecekle açılır?
 -    A) goşt
--    B) masî
-- ✅ C) xurma
+- ✅ B) xurma
+-    C) masî
 -    D) nan
-**Doğru:** C) xurma
+**Doğru:** B) xurma
 **Açıklama:** Ramazan'da oruç geleneksel olarak hurmayla açılır. Bayram sofrası ise yöreden yöreye değişir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0242  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di cejna Remezanê de, kîjan tişt bi gelemperî tê dayîn?
 **TR:** Ramazan Bayramı'nda genellikle ne verilir?
--    A) goşt
-- ✅ B) zekata fitreyê
+- ✅ A) zekata fitreyê
+-    B) goşt
 -    C) nan
 -    D) şîr
-**Doğru:** B) zekata fitreyê
+**Doğru:** A) zekata fitreyê
 **Açıklama:** Ramazan Bayramı öncesinde verilen sadaka fitredir (zakat al-fitr). Genel zekât ayrı ve yıllık bir yükümlülüktür.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0240  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de, kîjan tişt bi gelemperî tê vêxistin?
 **TR:** Newroz'da genellikle ne yakılır?
-- ✅ A) agir
--    B) av
--    C) ax
--    D) hewa
-**Doğru:** A) agir
+-    A) av
+-    B) ax
+-    C) hewa
+- ✅ D) agir
+**Doğru:** D) agir
 **Açıklama:** Newroz'da ateş yakılır çünkü o saflığın ve yenilenmenin sembolüdür ve genellikle bayramı kutlamak için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0278  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çîroka kurdî ya "Zembîlfiroş" de, qehreman bi kîjan karî ve mijûl e?
 **TR:** Kürt masalı "Zembilci"de kahraman hangi işle uğraşır?
--    A) Çêkirina xalîçeyan
-- ✅ B) Firotina zembîlan
+- ✅ A) Firotina zembîlan
+-    B) Çêkirina xalîçeyan
 -    C) Ristina hiriyê
 -    D) Çandina genim
-**Doğru:** B) Firotina zembîlan
+**Doğru:** A) Firotina zembîlan
 **Açıklama:** Zembilci masalında kahraman zembil satar ve bu şekilde geçimini sağlar; bu masal onun doğa hakkındaki zekası ve bilgisiyle hatırlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_literature
 
@@ -1096,10 +1096,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di çîroka "Kawayê Hesinker" de, Kawa li dijî kîjan zordar serî hildide?
 **TR:** "Demirci Kawa" masalında Kawa hangi zalime karşı ayaklanır?
 -    A) Efrîdûn
--    B) Cemşîd
-- ✅ C) Dehak
+- ✅ B) Dehak
+-    C) Cemşîd
 -    D) Rustem
-**Doğru:** C) Dehak
+**Doğru:** B) Dehak
 **Açıklama:** Efsanede Demirci Kawa, zalim Dehak'a (Zahhak) karşı ayaklanır. Efrîdûn, Cemşîd ve Rustem Şehname'nin başka kahramanlarıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
@@ -1108,31 +1108,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Demirci Kawa" hikayesinde Kawa hangi yolla ayaklanır?
 -    A) Bi şûrê
 -    B) Bi kêrê
--    C) Bi rimê
-- ✅ D) Bi çakûçê
-**Doğru:** D) Bi çakûçê
+- ✅ C) Bi çakûçê
+-    D) Bi rimê
+**Doğru:** C) Bi çakûçê
 **Açıklama:** Demirci Kawa hikayesinde Kawa, çekiciyle ayaklanır ve Dehak'ı öldürür; bu olay Newroz efsanesinde anlatılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
 ## ds_cand_0285  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di "Mem û Zîn" de Zîn ji kê hez dike?
 **TR:** "Mem û Zîn"de Zîn kime âşıktır?
--    A) Zîn
-- ✅ B) Mem
+- ✅ A) Mem
+-    B) Zîn
 -    C) Beko
 -    D) Tacdîn
-**Doğru:** B) Mem
+**Doğru:** A) Mem
 **Açıklama:** Mem û Zîn, Mem ile Zîn'in aşkı üzerine kurulu bir mesnevidir; Ehmedê Xanî 1695'te yazmıştır. Beko araya giren fesatçı, Tacdîn ise Mem'in dostudur.
 **Kaynak:** https://en.wikipedia.org/wiki/Mem_and_Zin
 
 ## ds_cand_0297  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çîroka "Mem û Zîn" de, evîn bi kîjan awayî bi dawî dibe?
 **TR:** "Mem ile Zîn" hikayesinde aşk hangi şekilde sona erer?
--    A) Bi zewacê
-- ✅ B) Bi trajediyê
+- ✅ A) Bi trajediyê
+-    B) Bi zewacê
 -    C) Bi hevberdanê
 -    D) Bi koçberiyê
-**Doğru:** B) Bi trajediyê
+**Doğru:** A) Bi trajediyê
 **Açıklama:** Mem ile Zîn hikayesinde aşk trajediyle sona erer; Mem ve Zîn, olumsuz kader ve Beko'nun hileleri yüzünden ölürler.
 **Kaynak:** https://en.wikipedia.org/wiki/Mem_and_Zin
 

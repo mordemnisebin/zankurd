@@ -2266,9 +2266,9 @@
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Van Gölü suyu sodalı ve tuzludur; bu yüzden yalnızca inci kefali yaşar.",
-    "explanationKu": "Ava Gola Wanê sodalî û şor e; loma tenê masiyê darex (înci kefalî) tê de dijî.",
-    "explanationTr": "Van Gölü suyu sodalı ve tuzludur; bu yüzden yalnızca inci kefali yaşar.",
+    "explanation": "Van Gölü suyu sodalı ve tuzludur; inci kefali gölün en bilinen ve ekonomik açıdan en önemli balığıdır.",
+    "explanationKu": "Ava Behra Wanê xwêdar û sodadar e; masiya herî navdar a golê \"inci kefali\" ye.",
+    "explanationTr": "Van Gölü suyu sodalı ve tuzludur; inci kefali gölün en bilinen ve ekonomik açıdan en önemli balığıdır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2370,7 +2370,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Sine (Sanandaj) şehri Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Sine (Sanandaj) şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",
@@ -4618,7 +4618,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Silêmanî şehri Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Silêmanî şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",
@@ -4635,9 +4635,9 @@
     "prompt": "Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?",
     "answers": [
       "Avahiyên kevirî yên li ser çiyê",
-      "Iraq (derdora Dihokê)",
-      "hewza çem a ku Amed û Şirnexê digire",
-      "herêma çiyayî ya derdora Zaxo û Dihokê"
+      "Avahiyên kerpîçî yên li deştê",
+      "Avahiyên darîn ên du qatî",
+      "Avahiyên kelpîçî yên bi qubeyên gilover"
     ],
     "correctAnswer": "Avahiyên kevirî yên li ser çiyê",
     "explanation": "Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.",
@@ -4653,9 +4653,9 @@
     "promptTr": "Mêrdîn şehri hangi mimari özelliğiyle ünlüdür?",
     "answersTr": [
       "Yamaca kurulmuş taş yapılar",
-      "Irak (Dihok çevresi)",
-      "Amed ve Şirnex'i kapsayan nehir havzası",
-      "Zaxo ve Dihok çevresindeki dağlık bölge"
+      "Ovada kerpiç yapılar",
+      "İki katlı ahşap yapılar",
+      "Kubbeli tuğla yapılar"
     ],
     "correctAnswerTr": "Yamaca kurulmuş taş yapılar"
   },
@@ -4730,10 +4730,10 @@
     "category": "Cografya",
     "prompt": "Herêma \"Serhed\" bi giştî kîjan derdorê digire?",
     "answers": [
-      "Warê havînê û warê zivistanê",
+      "Herêma Botanê ya derdora Cizîrê",
       "Herêma bilind a Agirî-Wan-Mûşê",
-      "hewza çem a ku Amed û Şirnexê digire",
-      "gola tektonîk a di sînorên Elezîzê de"
+      "Herêma Behdînan a derdora Dihokê",
+      "Herêma Serhedê ya derdora Kerkûkê"
     ],
     "correctAnswer": "Herêma bilind a Agirî-Wan-Mûşê",
     "explanation": "Serhed, kuzeydeki yüksek bölgenin adıdır: Ağrı, Van, Muş, Bitlis.",
@@ -4748,10 +4748,10 @@
     },
     "promptTr": "\"Serhed\" bölgesi genel olarak hangi yöreyi kapsar?",
     "answersTr": [
-      "Yaylak ve kışlak alanları",
+      "Cizre çevresindeki Botan bölgesi",
       "Agirî-Wan-Mûş çevresindeki yüksek bölge",
-      "Amed ve Şirnex'i kapsayan nehir havzası",
-      "Elezîz sınırları içindeki tektonik göl"
+      "Dihok çevresindeki Behdînan bölgesi",
+      "Kerkük çevresindeki bölge"
     ],
     "correctAnswerTr": "Agirî-Wan-Mûş çevresindeki yüksek bölge"
   },
@@ -4798,9 +4798,9 @@
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Ağrı Dağı sönmüş bir volkanik dağdır.",
-    "explanationKu": "Agirî çiyayekî volkanîk ê nefeal e.",
-    "explanationTr": "Ağrı Dağı sönmüş bir volkanik dağdır.",
+    "explanation": "Ağrı Dağı volkanik bir dağdır; son doğrulanmış püskürmesi 1840 yılındadır.",
+    "explanationKu": "Çiyayê Agirî çiyayekî volkanîk e; teqîna wê ya dawî ya piştrastkirî 1840 e.",
+    "explanationTr": "Ağrı Dağı volkanik bir dağdır; son doğrulanmış püskürmesi 1840 yılındadır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7259,14 +7259,14 @@
     "prompt": "Herêma Kurdistanê ya Iraqê ji çend parêzgehên sereke pêk tê?",
     "answers": [
       "Du",
-      "Çar",
       "Pênc",
-      "Sê"
+      "Sê",
+      "Çar"
     ],
-    "correctAnswer": "Sê",
-    "explanation": "Üç temel il: Erbil, Süleymaniye ve Duhok.",
-    "explanationKu": "Sê parêzgehên bingehîn: Hewlêr, Silêmanî û Dihok.",
-    "explanationTr": "Üç temel il: Erbil, Süleymaniye ve Duhok.",
+    "correctAnswer": "Çar",
+    "explanation": "Dört vilayet: Erbil, Süleymaniye, Duhok ve Halepçe.",
+    "explanationKu": "Çar parêzgeh: Hewlêr, Silêmanî, Dihok û Helebce.",
+    "explanationTr": "Dört vilayet: Erbil, Süleymaniye, Duhok ve Halepçe.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7277,11 +7277,11 @@
     "promptTr": "Irak Kürdistan Bölgesi kaç temel ilden oluşur?",
     "answersTr": [
       "İki",
-      "Dört",
       "Beş",
-      "Üç"
+      "Üç",
+      "Dört"
     ],
-    "correctAnswerTr": "Üç"
+    "correctAnswerTr": "Dört"
   },
   {
     "type": "multipleChoice",
@@ -7306,7 +7306,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Kirmanşan şehri Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Kirmanşan şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojhilat (Doğu)",
@@ -7402,7 +7402,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Urmiye Gölü Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Urmiye Gölü Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",
@@ -7462,7 +7462,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Dihok şehri Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Dihok şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Başûr (Güney)",
@@ -7478,9 +7478,9 @@
     "category": "Cografya",
     "prompt": "\"Zozan\" û \"germiyan\" di jiyana koçeran de çi diyar dikin?",
     "answers": [
-      "Girseya çiyayî ya nêzî Çemê Xerzan",
-      "deşta tektonîk a bilind a li Colemêrgê",
-      "Avahiyên kevirî yên li ser çiyê",
+      "Riya koçberiyê û bêhnvedana rê",
+      "Çadira reş û kona biçûk",
+      "Keriyê pêz û garanê dewaran",
       "Warê havînê û warê zivistanê"
     ],
     "correctAnswer": "Warê havînê û warê zivistanê",
@@ -7496,9 +7496,9 @@
     },
     "promptTr": "Göçer yaşamında \"zozan\" ve \"germiyan\" neyi belirtir?",
     "answersTr": [
-      "Xerzan Çayı yakınındaki dağ kütlesi",
-      "Colemêrg'deki yüksek tektonik ova",
-      "Yamaca kurulmuş taş yapılar",
+      "Göç yolu ve konaklama molası",
+      "Kara çadır ve küçük çadır",
+      "Koyun sürüsü ve sığır sürüsü",
       "Yaylak ve kışlak alanları"
     ],
     "correctAnswerTr": "Yaylak ve kışlak alanları"
@@ -7590,7 +7590,7 @@
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
       "qualityVersion": 2
     },
-    "promptTr": "Efrîn şehri Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Efrîn şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",

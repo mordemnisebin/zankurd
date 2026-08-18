@@ -97,25 +97,25 @@
     "difficulty": 1,
     "id": "comm_cog_0004",
     "category": "Cografya",
-    "prompt": "Behra Wanê li kîjan bajarî ye?",
-    "promptTr": "Behra Wanê (Van Gölü) nereye bağlı bir göldür?",
+    "prompt": "Behra Wanê di nav sînorên kîjan du parêzgehan de ye?",
+    "promptTr": "Van Gölü hangi iki ilin sınırları içindedir?",
     "answers": [
-      "Diyarbakır",
-      "Batman",
-      "Van",
-      "Şırnak"
+      "Amed û Êlih",
+      "Şirnex û Colemêrg",
+      "Wan û Bidlîs",
+      "Muş û Agirî"
     ],
     "answersTr": [
-      "Diyarbakır",
-      "Batman",
-      "Van",
-      "Şırnak"
+      "Diyarbakır ve Batman",
+      "Şırnak ve Hakkâri",
+      "Van ve Bitlis",
+      "Muş ve Ağrı"
     ],
-    "correctAnswer": "Van",
-    "correctAnswerTr": "Van",
-    "explanation": "Van Gölü bölgenin en büyük gölüdür ve adını kıyısındaki şehirden alır.",
-    "explanationKu": "Behra Wanê gola herî mezin a herêmê ye û navê xwe ji bajarê li kêleka xwe digire.",
-    "explanationTr": "Van Gölü bölgenin en büyük gölüdür ve adını kıyısındaki şehirden alır.",
+    "correctAnswer": "Wan û Bidlîs",
+    "correctAnswerTr": "Van ve Bitlis",
+    "explanation": "Van Gölü'nün önemli bir bölümü Bitlis sınırları içindedir; göl iki ilin topraklarına yayılır.",
+    "explanationKu": "Beşeke girîng a Behra Wanê di nav sînorên Bidlîsê de ye.",
+    "explanationTr": "Van Gölü'nün önemli bir bölümü Bitlis sınırları içindedir; göl iki ilin topraklarına yayılır.",
     "metadata": {
       "reviewStatus": "needsReview",
       "dialect": "Kurmancî",
@@ -1339,7 +1339,7 @@
     "id": "comm_sin_0112",
     "category": "Sînema",
     "prompt": "Derhêner Bahman Ghobadi ji kîjan perçeyê Kurdistanê ye?",
-    "promptTr": "Yönetmen Bahman Ghobadi Kurdistanê'nin hangi parçasındandır?",
+    "promptTr": "Yönetmen Bahman Ghobadi Kürdistan'ın hangi parçasındandır?",
     "answers": [
       "Rojhilatê Kurdistanê",
       "Bakurê Kurdistanê",
