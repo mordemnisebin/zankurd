@@ -50,11 +50,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## ds_edebiyat_0076  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di destana Gilgameş de, Gilgameş ji bo çi li riya nemiriyê digere?
 **TR:** Gılgamış Destanı'nda Gılgamış ölümsüzlüğün peşinde neden arar?
-- ✅ A) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
--    B) Ji bo ku bibe padîşah
--    C) Ji bo ku cîhanê bigire
--    D) Ji bo ku xwedayan bibîne
-**Doğru:** A) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
+-    A) Ji bo ku bibe padîşah
+-    B) Ji bo ku cîhanê bigire
+-    C) Ji bo ku xwedayan bibîne
+- ✅ D) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
+**Doğru:** D) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
 **Açıklama:** Enkidu'nun ölümü Gılgamış'a kendi ölümlülüğünü gösterir; bundan sonra ölümden kaçmanın yolunu, ebedî yaşamı arar. Arayış Enkidu'yu diriltmek için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Epic_of_Gilgamesh
 
@@ -63,9 +63,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İlyada Destanı'nda ilk olarak hangi kahraman tanıtılır?
 -    A) Hektor
 -    B) Odîseus
--    C) Agamemnon
-- ✅ D) Aşîl
-**Doğru:** D) Aşîl
+- ✅ C) Aşîl
+-    D) Agamemnon
+**Doğru:** C) Aşîl
 **Açıklama:** İlyada Destanı'nda Aşil, Truva'ya karşı öfkesi ve savaşıyla tanınan ana kahramandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Iliad
 
@@ -73,10 +73,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di destana "Îlyadayê" de, kîjan lehenga yekem car tê nasîn?
 **TR:** "İlyada" destanında ilk olarak hangi kahraman tanıtılır?
 -    A) Hektor
--    B) Odîseus
-- ✅ C) Aşîl
+- ✅ B) Aşîl
+-    C) Odîseus
 -    D) Agamemnon
-**Doğru:** C) Aşîl
+**Doğru:** B) Aşîl
 **Açıklama:** "İlyada" destanında Aşil, Truva'ya karşı öfkesi ve savaşıyla tanınan ana kahramandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Iliad
 
@@ -85,20 +85,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Binbir Gece Masalları"nda hangi hikaye geçer?
 -    A) Çîroka Gilgameş
 -    B) Çîroka Beowulf
--    C) Çîroka Kalevala
-- ✅ D) Çîroka Sindbad
-**Doğru:** D) Çîroka Sindbad
+- ✅ C) Çîroka Sindbad
+-    D) Çîroka Kalevala
+**Doğru:** C) Çîroka Sindbad
 **Açıklama:** "Binbir Gece Masalları"nda, Denizci Sindbad'ın hikayesi, onun deniz maceralarını anlatan en ünlü hikayelerden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights
 
 ## ds_edebiyat_0081  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayet di destana "Şahname" ya Fîrdewsî de cih digire?
 **TR:** Firdevsi'nin "Şehname" destanında hangi karakter yer alır?
-- ✅ A) Rustem
--    B) Gilgameş
--    C) Aşîl
--    D) Beowulf
-**Doğru:** A) Rustem
+-    A) Gilgameş
+-    B) Aşîl
+-    C) Beowulf
+- ✅ D) Rustem
+**Doğru:** D) Rustem
 **Açıklama:** Rüstem, Firdevsi'nin "Şehname" destanının gücü ve yiğitliğiyle tanınan ana kahramanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Shahnameh
 
@@ -106,10 +106,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di destana "Beowulf" de, Beowulf bi kîjan dijmin re şer dike?
 **TR:** "Beowulf" destanında Beowulf hangi düşmanla savaşır?
 -    A) Aşîl
--    B) Rustem
-- ✅ C) Grendel
+- ✅ B) Grendel
+-    C) Rustem
 -    D) Odîseus
-**Doğru:** C) Grendel
+**Doğru:** B) Grendel
 **Açıklama:** "Beowulf" destanında Beowulf, bir canavar olarak bilinen düşmanı Grendel ile savaşır.
 **Kaynak:** https://en.wikipedia.org/wiki/Beowulf
 
@@ -117,10 +117,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di destana "Odîseya" de, Odîseus çi demê vedigere malê?
 **TR:** "Odysseia" destanında Odysseus ne zaman eve döner?
 -    A) Piştî mirina xwe
--    B) Piştî ku bibe padîşah
-- ✅ C) Piştî şerê Troyayê
+- ✅ B) Piştî şerê Troyayê
+-    C) Piştî ku bibe padîşah
 -    D) Piştî ku cîhanê bigire
-**Doğru:** C) Piştî şerê Troyayê
+**Doğru:** B) Piştî şerê Troyayê
 **Açıklama:** "Odysseia" destanında Odysseus, Truva Savaşı'ndan sonra eve döner, ancak yolculuğu birçok macerayla geçer.
 **Kaynak:** https://en.wikipedia.org/wiki/Odyssey
 
@@ -129,20 +129,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi eser İranlıların milli destanıdır?
 -    A) Kalevala
 -    B) Îlyada
--    C) Beowulf
-- ✅ D) Şahname
-**Doğru:** D) Şahname
+- ✅ C) Şahname
+-    D) Beowulf
+**Doğru:** C) Şahname
 **Açıklama:** Şehname, Firdevsi tarafından yazılan İranlıların milli destanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Shahnameh
 
 ## ds_edebiyat_0086  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di destana "Gilgameş" de, Enkîdu kî ye?
 **TR:** "Gılgamış" destanında Enkidu kimdir?
--    A) Dijminê Gilgameş
-- ✅ B) Hevalê Gilgameş
+- ✅ A) Hevalê Gilgameş
+-    B) Dijminê Gilgameş
 -    C) Padîşahê Urukê
 -    D) Xwedayekî
-**Doğru:** B) Hevalê Gilgameş
+**Doğru:** A) Hevalê Gilgameş
 **Açıklama:** Enkidu, Gılgamış'ı kontrol etmesi için tanrılar tarafından yaratılan, ancak daha sonra onun arkadaşı olan Gılgamış'ın arkadaşıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Enkidu
 
@@ -150,21 +150,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di romana "Madame Bovary" de, Emma Bovary bi kîjan taybetmendiyê tê nasîn?
 **TR:** "Madame Bovary" romanında Emma Bovary hangi özelliğiyle tanınır?
 -    A) Dilsoziya xwe ya ji mêrê xwe re
--    B) Jiyana xwe ya hêsan a gundî
-- ✅ C) Nexweşiya romantîk û nerazîbûna xwe
+- ✅ B) Nexweşiya romantîk û nerazîbûna xwe
+-    C) Jiyana xwe ya hêsan a gundî
 -    D) Karê xwe yê bijîşkiyê
-**Doğru:** C) Nexweşiya romantîk û nerazîbûna xwe
+**Doğru:** B) Nexweşiya romantîk û nerazîbûna xwe
 **Açıklama:** Emma Bovary, sıradan hayatından duyduğu memnuniyetsizlik ve romantik hayalleriyle tanınır. Hayallerinin içinde yaşar ve gerçek hayatından kaçar.
 **Kaynak:** https://en.wikipedia.org/wiki/Madame_Bovary
 
 ## ds_edebiyat_0102  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê Fyodor Dostoyevskî ve hatiye nivîsandin?
 **TR:** Hangi roman Fyodor Dostoyevski tarafından yazılmıştır?
-- ✅ A) Tawan û Ceza
--    B) Sava û Aşitî
--    C) Anna Karenina
--    D) Karderî
-**Doğru:** A) Tawan û Ceza
+-    A) Sava û Aşitî
+-    B) Anna Karenina
+-    C) Karderî
+- ✅ D) Tawan û Ceza
+**Doğru:** D) Tawan û Ceza
 **Açıklama:** Suç ve Ceza, Fyodor Dostoyevski tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve suç, vicdan ve kurtuluş üzerinedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Crime_and_Punishment
 
@@ -173,20 +173,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Lev Tolstoy'un "Savaş ve Barış" romanında hangi tarihi olay arka plan olarak kullanılır?
 -    A) Şerê cîhanî yê yekem
 -    B) Şoreşa Fransî
--    C) Şerê navxweyî yê Amerîkayê
-- ✅ D) Şerê Napoleon ê li Rûsyayê
-**Doğru:** D) Şerê Napoleon ê li Rûsyayê
+- ✅ C) Şerê Napoleon ê li Rûsyayê
+-    D) Şerê navxweyî yê Amerîkayê
+**Doğru:** C) Şerê Napoleon ê li Rûsyayê
 **Açıklama:** Savaş ve Barış, Napolyon'un Rusya Seferi'nin arka planında geçer. Tolstoy bu romanda savaş sırasında Rus toplumunun yaşamını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/War_and_Peace
 
 ## ds_edebiyat_0105  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Anna Karenina" de, Anna ji ber çi têk diçe?
 **TR:** "Anna Karenina" romanında Anna neden çöküşe uğrar?
--    A) Ji ber mirina mêrê xwe
-- ✅ B) Ji ber evîna xwe ya qedexe
+- ✅ A) Ji ber evîna xwe ya qedexe
+-    B) Ji ber mirina mêrê xwe
 -    C) Ji ber karê xwe yê siyasî
 -    D) Ji ber koçberiya xwe
-**Doğru:** B) Ji ber evîna xwe ya qedexe
+**Doğru:** A) Ji ber evîna xwe ya qedexe
 **Açıklama:** Anna Karenina, evliliği dışında olan Vronski'ye duyduğu aşk yüzünden çöküşe uğrar. Bu yasak aşk onu toplumdan ve kendinden uzaklaştırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Anna_Karenina
 
@@ -195,9 +195,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Charles Dickens tarafından yazılmıştır?
 -    A) Mîzrab
 -    B) Bekirê Londonê
--    C) Karderî
-- ✅ D) Hêviyên Mezin
-**Doğru:** D) Hêviyên Mezin
+- ✅ C) Hêviyên Mezin
+-    D) Karderî
+**Doğru:** C) Hêviyên Mezin
 **Açıklama:** Büyük Umutlar (Great Expectations), Charles Dickens tarafından yazılmıştır. Onun en ünlü romanlarından biridir ve Pip'in büyümesi ile hayallerini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Great_Expectations
 
@@ -205,10 +205,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di romana "Mîzrab" (The Hunchback of Notre-Dame) de, Quasimodo li kû dijî?
 **TR:** "Notre Dame"ın Kamburu' romanında Quasimodo nerede yaşar?
 -    A) Di qesra padîşah de
--    B) Di birca Londonê de
-- ✅ C) Di katedrala Notre-Dame de
+- ✅ B) Di katedrala Notre-Dame de
+-    C) Di birca Londonê de
 -    D) Di keleha Parisê de
-**Doğru:** C) Di katedrala Notre-Dame de
+**Doğru:** B) Di katedrala Notre-Dame de
 **Açıklama:** Quasimodo, Notre Dame Katedrali'nde yaşar. Katedralin çan görevlisidir ve sıra dışı yüzü yüzünden toplumdan gizlenmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Hunchback_of_Notre-Dame
 
@@ -217,20 +217,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Emily Brontë tarafından yazılmıştır?
 -    A) Jane Eyre
 -    B) Pîrika
--    C) Hêviyên Mezin
-- ✅ D) Bilindahiyên Wuthering
-**Doğru:** D) Bilindahiyên Wuthering
+- ✅ C) Bilindahiyên Wuthering
+-    D) Hêviyên Mezin
+**Doğru:** C) Bilindahiyên Wuthering
 **Açıklama:** Uğultulu Tepeler (Wuthering Heights), Emily Brontë tarafından yazılmıştır. Onun tek romanıdır ve Heathcliff ile Catherine'in tutkulu aşkıyla bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wuthering_Heights
 
 ## ds_edebiyat_0109  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Jane Eyre" de, Jane beriya ku here Thornfieldê li ku dixebite?
 **TR:** "Jane Eyre" romanında Jane, Thornfield'a gitmeden önce nerede çalışır?
--    A) Li nexweşxaneyekê
-- ✅ B) Li dibistanekê
+- ✅ A) Li dibistanekê
+-    B) Li nexweşxaneyekê
 -    C) Li maleke gundan
 -    D) Li kargehekê
-**Doğru:** B) Li dibistanekê
+**Doğru:** A) Li dibistanekê
 **Açıklama:** Jane önce Lowood Okulu'nda öğretmenlik yapar; oradan ayrıldıktan sonra Thornfield'da mürebbiye olarak çalışır.
 **Kaynak:** https://en.wikipedia.org/wiki/Jane_Eyre
 
@@ -238,21 +238,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Victor Hugo ve hatiye nivîsandin?
 **TR:** Hangi roman Victor Hugo tarafından yazılmıştır?
 -    A) Sava û Aşitî
--    B) Tawan û Ceza
-- ✅ C) Sefîl
+- ✅ B) Sefîl
+-    C) Tawan û Ceza
 -    D) Karderî
-**Doğru:** C) Sefîl
+**Doğru:** B) Sefîl
 **Açıklama:** Sefiller (Les Misérables), Victor Hugo tarafından yazılmıştır; adalet, kurtuluş ve toplumsal mücadele üzerinedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Les_Mis%C3%A9rables
 
 ## ds_edebiyat_0111  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di romana "Les Misérables" de, kîjan kesayet ji ber nanê dizî tê girtin?
 **TR:** "Sefiller" romanında hangi karakter çaldığı ekmek yüzünden tutuklanır?
-- ✅ A) Jean Valjean
--    B) Cosette
--    C) Javert
--    D) Marius
-**Doğru:** A) Jean Valjean
+-    A) Cosette
+-    B) Javert
+-    C) Marius
+- ✅ D) Jean Valjean
+**Doğru:** D) Jean Valjean
 **Açıklama:** Jean Valjean, kız kardeşinin aç çocukları için ekmek çaldığı için tutuklanır ve yıllarca ceza görür. Bu olay onun hikayesinin başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Les_Mis%C3%A9rables
 
@@ -261,20 +261,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Herman Melville tarafından yazılmıştır?
 -    A) Pîrika
 -    B) Jane Eyre
--    C) Wuthering Heights
-- ✅ D) Moby-Dick
-**Doğru:** D) Moby-Dick
+- ✅ C) Moby-Dick
+-    D) Wuthering Heights
+**Doğru:** C) Moby-Dick
 **Açıklama:** Moby-Dick, Herman Melville tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve balina avcılığı ile beyaz bir balinayla mücadeleyi anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Moby-Dick
 
 ## ds_edebiyat_0113  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Moby-Dick" de, kaptan Ahab ji bo çi li Moby-Dick digere?
 **TR:** "Moby-Dick" romanında Kaptan Ahab, Moby-Dick'i neden arar?
-- ✅ A) Ji bo tolhildanê
--    B) Ji bo zanistê
--    C) Ji bo dewlemendiyê
--    D) Ji bo navdariyê
-**Doğru:** A) Ji bo tolhildanê
+-    A) Ji bo zanistê
+-    B) Ji bo dewlemendiyê
+-    C) Ji bo navdariyê
+- ✅ D) Ji bo tolhildanê
+**Doğru:** D) Ji bo tolhildanê
 **Açıklama:** Kaptan Ahab, Moby-Dick bacağını kopardığı için ondan intikam almak ister. Balinayla olan bu mücadelesi onun yıkımına neden olur.
 **Kaynak:** https://en.wikipedia.org/wiki/Moby-Dick
 
@@ -282,21 +282,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Mark Twain ve hatiye nivîsandin?
 **TR:** Hangi roman Mark Twain tarafından yazılmıştır?
 -    A) Oliver Twist
--    B) David Copperfield
-- ✅ C) Huckleberry Finn
+- ✅ B) Huckleberry Finn
+-    C) David Copperfield
 -    D) Pîrika
-**Doğru:** C) Huckleberry Finn
+**Doğru:** B) Huckleberry Finn
 **Açıklama:** Huckleberry Finn (Adventures of Huckleberry Finn), Mark Twain tarafından yazılmıştır. Ünlü bir Amerikan romanıdır ve Huck ile Jim'in maceralarını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Adventures_of_Huckleberry_Finn
 
 ## ds_edebiyat_0115  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Huckleberry Finn" de, kîjan kesayet koleyekî reviyayî ye?
 **TR:** "Huckleberry Finn" romanında hangi karakter kaçak bir köledir?
-- ✅ A) Jim
--    B) Tom Sawyer
--    C) Pap
--    D) Judge Thatcher
-**Doğru:** A) Jim
+-    A) Tom Sawyer
+-    B) Pap
+-    C) Judge Thatcher
+- ✅ D) Jim
+**Doğru:** D) Jim
 **Açıklama:** Jim, Huck ile birlikte Mississippi Nehri'nde sal ile yolculuk eden kaçak bir köledir. Romanda özgürlüğün sembolüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Adventures_of_Huckleberry_Finn
 
@@ -305,9 +305,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Leo Tolstoy tarafından yazılmıştır?
 -    A) Moby-Dick
 -    B) Madame Bovary
--    C) Jane Eyre
-- ✅ D) Anna Karenina
-**Doğru:** D) Anna Karenina
+- ✅ C) Anna Karenina
+-    D) Jane Eyre
+**Doğru:** C) Anna Karenina
 **Açıklama:** Anna Karenina, Leo Tolstoy tarafından yazılmıştır. Onun en ünlü romanlarından biridir ve aşk, evlilik ile toplum üzerinedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Anna_Karenina
 
@@ -315,21 +315,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di romana "Oliver Twist" de, Oliver li kîjan bajarî dijî?
 **TR:** "Oliver Twist" romanında Oliver hangi şehirde yaşar?
 -    A) Parîs
--    B) New York
-- ✅ C) London
+- ✅ B) London
+-    C) New York
 -    D) Dublin
-**Doğru:** C) London
+**Doğru:** B) London
 **Açıklama:** Oliver Twist, Londra'da yaşar. Bu, Charles Dickens'ın bir romanıdır ve yetim bir çocuğun yoksulluk ile suçlar arasındaki yaşamını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oliver_Twist
 
 ## ds_edebiyat_0121  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Tawan û Ceza" de, Raskolnikov ji ber çi tawanekê dike?
 **TR:** "Suç ve Ceza" romanında Raskolnikov neden bir suç işler?
--    A) Ji ber xizanîyê
-- ✅ B) Ji ber teoriya xwe ya felsefî
+- ✅ A) Ji ber teoriya xwe ya felsefî
+-    B) Ji ber xizanîyê
 -    C) Ji ber tolhildanê
 -    D) Ji ber zexta civakê
-**Doğru:** B) Ji ber teoriya xwe ya felsefî
+**Doğru:** A) Ji ber teoriya xwe ya felsefî
 **Açıklama:** Raskolnikov, bazı insanların yasaların üzerinde olduğunu söyleyen felsefi teorisi yüzünden bir suç işler. Yaşlı bir tefeci kadını öldürerek bir iyilik yapabileceğini düşünür.
 **Kaynak:** https://en.wikipedia.org/wiki/Crime_and_Punishment
 
@@ -337,32 +337,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan roman ji aliyê Gustave Flaubert ve hatiye nivîsandin?
 **TR:** Hangi roman Gustave Flaubert tarafından yazılmıştır?
 -    A) Anna Karenina
--    B) Oliver Twist
-- ✅ C) Madame Bovary
+- ✅ B) Madame Bovary
+-    C) Oliver Twist
 -    D) Pîrika
-**Doğru:** C) Madame Bovary
+**Doğru:** B) Madame Bovary
 **Açıklama:** Madame Bovary, Gustave Flaubert tarafından yazılmıştır. Ünlü bir Fransız romanıdır ve Emma Bovary'nin hayatını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Madame_Bovary
 
 ## ds_edebiyat_0182  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê Gustave Flaubert ve hatiye nivîsandin û wek mînaka realîzmê tê naskirin?
 **TR:** Hangi roman Gustave Flaubert tarafından yazılmıştır ve gerçekçiliğin bir örneği olarak kabul edilir?
--    A) Les Misérables
-- ✅ B) Madame Bovary
+- ✅ A) Madame Bovary
+-    B) Les Misérables
 -    C) Moby-Dick
 -    D) Oliver Twist
-**Doğru:** B) Madame Bovary
+**Doğru:** A) Madame Bovary
 **Açıklama:** Flaubert'in "Madame Bovary"si, Fransız toplumsal yaşamının gerçekliğini anlattığı için gerçekçiliğin temel eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Madame_Bovary
 
 ## ds_edebiyat_0123  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Bilindahiyên Wuthering" de, Mr. Earnshaw Heathcliff li kîjan bajarî dibîne?
 **TR:** "Uğultulu Tepeler" romanında Mr Earnshaw, Heathcliff'i hangi şehirde bulur?
--    A) Ji Londonê
-- ✅ B) Ji Liverpoolê
+- ✅ A) Ji Liverpoolê
+-    B) Ji Londonê
 -    C) Ji Dublinê
 -    D) Ji Edinburghê
-**Doğru:** B) Ji Liverpoolê
+**Doğru:** A) Ji Liverpoolê
 **Açıklama:** Mr Earnshaw, Heathcliff'i Liverpool'da bulup eve getirir. Romanda çocuğun kökeni hiçbir zaman açıklanmaz.
 **Kaynak:** https://en.wikipedia.org/wiki/Wuthering_Heights
 
@@ -371,9 +371,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Charlotte Brontë tarafından yazılmıştır?
 -    A) Bilindahiyên Wuthering
 -    B) Pîrika
--    C) Madame Bovary
-- ✅ D) Jane Eyre
-**Doğru:** D) Jane Eyre
+- ✅ C) Jane Eyre
+-    D) Madame Bovary
+**Doğru:** C) Jane Eyre
 **Açıklama:** Jane Eyre, Charlotte Brontë tarafından yazılmıştır. Yazarın en çok okunan romanlarındandır ve Jane Eyre'in hayatını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Jane_Eyre
 
@@ -381,21 +381,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** William Shakespeare di kîjan sedsalê de ji dayik bûye?
 **TR:** William Shakespeare hangi yüzyılda doğmuştur?
 -    A) Sedsala 14an
--    B) Sedsala 15an
-- ✅ C) Sedsala 16an
+- ✅ B) Sedsala 16an
+-    C) Sedsala 15an
 -    D) Sedsala 17an
-**Doğru:** C) Sedsala 16an
+**Doğru:** B) Sedsala 16an
 **Açıklama:** Shakespeare 1564'te, yani 16. yüzyılda doğdu; 1616'da, 17. yüzyılda öldü. Yaşamı iki yüzyıla yayılır.
 **Kaynak:** https://en.wikipedia.org/wiki/William_Shakespeare
 
 ## ds_edebiyat_0127  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê William Shakespeare ve hatiye nivîsandin?
 **TR:** Aşağıdaki eserlerden hangisi William Shakespeare tarafından yazılmıştır?
-- ✅ A) Hamlet
--    B) Dîwana Mem û Zîn
--    C) Şahname
--    D) Îlyada
-**Doğru:** A) Hamlet
+-    A) Dîwana Mem û Zîn
+-    B) Şahname
+-    C) Îlyada
+- ✅ D) Hamlet
+**Doğru:** D) Hamlet
 **Açıklama:** Hamlet, Shakespeare'in en ünlü eserlerinden biridir. Mem û Zîn Divanı Ahmedê Xanî'ye, Şahname Firdevsî'ye, İlyada ise Homeros'a aittir.
 **Kaynak:** https://en.wikipedia.org/wiki/Hamlet
 
@@ -403,32 +403,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Shakespeare de, çi tê wateya "To be or not to be"?
 **TR:** Shakespeare'de "To be or not to be" ne anlama gelir?
 -    A) Evîn an nefret
--    B) Şer an aşitî
-- ✅ C) Jiyan an mirin
+- ✅ B) Jiyan an mirin
+-    C) Şer an aşitî
 -    D) Xewn an rastî
-**Doğru:** C) Jiyan an mirin
+**Doğru:** B) Jiyan an mirin
 **Açıklama:** "To be or not to be" Hamlet'te geçer ve yaşam ile ölüm sorununu ele alır. Bu, Shakespeare'in en ünlü dizelerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/To_be,_or_not_to_be
 
 ## ds_edebiyat_0129  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** "Romeo" di kîjan berhema Shakespeare de cih digire?
 **TR:** "Romeo" Shakespeare'in hangi eserinde yer alır?
--    A) Macbeth
-- ✅ B) Romeo û Juliet
+- ✅ A) Romeo û Juliet
+-    B) Macbeth
 -    C) King Lear
 -    D) Othello
-**Doğru:** B) Romeo û Juliet
+**Doğru:** A) Romeo û Juliet
 **Açıklama:** Romeo ve Juliet, Shakespeare'in en ünlü eserlerinden biridir. Romeo ve Juliet, düşman ailelerden gelen genç aşıklardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
 ## ds_edebiyat_0137  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayet di Shakespeare de bi navê "Juliet" tê naskirin?
 **TR:** Shakespeare'de "Juliet" adıyla bilinen karakter kimdir?
-- ✅ A) Evîndara Romeo
--    B) Keça King Lear
--    C) Jina Macbeth
--    D) Xwişka Hamlet
-**Doğru:** A) Evîndara Romeo
+-    A) Keça King Lear
+-    B) Jina Macbeth
+-    C) Xwişka Hamlet
+- ✅ D) Evîndara Romeo
+**Doğru:** D) Evîndara Romeo
 **Açıklama:** Juliet, Romeo'nun sevgilisidir. Romeo'nun ailesi Montague'un düşmanı olan Capulet ailesindendir.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
@@ -437,20 +437,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Shakespeare'in "Macbeth" adlı eseri hangi edebî türdendir?
 -    A) Komîdî
 -    B) Dîrok
--    C) Pastoral
-- ✅ D) Trajedî
-**Doğru:** D) Trajedî
+- ✅ C) Trajedî
+-    D) Pastoral
+**Doğru:** C) Trajedî
 **Açıklama:** Macbeth, güç arzusunu ve sonuçlarını anlatan bir trajedidir. Shakespeare onu 17. yüzyılda yazmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Macbeth
 
 ## ds_edebiyat_0132  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Berhema Shakespeare ya bi navê "King Lear" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Kral Lear" adlı eseri hangi edebî türdendir?
--    A) Komîdî
-- ✅ B) Trajedî
+- ✅ A) Trajedî
+-    B) Komîdî
 -    C) Dîrok
 -    D) Romance
-**Doğru:** B) Trajedî
+**Doğru:** A) Trajedî
 **Açıklama:** Kral Lear, yaşlılık, güç ve aile ilişkilerini konu alan bir trajedidir. Lear, gücünü kızlarına devreden bir kraldır.
 **Kaynak:** https://en.wikipedia.org/wiki/King_Lear
 
@@ -458,10 +458,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Berhema Shakespeare ya bi navê "A Midsummer Night's Dream" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Bir Yaz Gecesi Rüyası" adlı eseri hangi edebî türdendir?
 -    A) Trajedî
--    B) Dîrok
-- ✅ C) Komîdî
+- ✅ B) Komîdî
+-    C) Dîrok
 -    D) Pastoral
-**Doğru:** C) Komîdî
+**Doğru:** B) Komîdî
 **Açıklama:** Bir Yaz Gecesi Rüyası, aşkı ve hayalleri konu alan bir komedidir. Shakespeare'in en ünlü komedilerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Midsummer_Night%27s_Dream
 
@@ -469,32 +469,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Berhema Shakespeare ya bi navê "The Merchant of Venice" ji kîjan cureya wêjeyî ye?
 **TR:** Shakespeare'in "Venedik Taciri" adlı eseri hangi edebî türdendir?
 -    A) Trajedî
--    B) Dîrok
-- ✅ C) Komîdî
+- ✅ B) Komîdî
+-    C) Dîrok
 -    D) Romance
-**Doğru:** C) Komîdî
+**Doğru:** B) Komîdî
 **Açıklama:** Venedik Taciri, Antonio adında bir taciri anlatan bir komedidir. Trajik yönleri de olan bir komedidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Merchant_of_Venice
 
 ## ds_edebiyat_0133  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa evîna du ciwanan dike?
 **TR:** Shakespeare tarafından yazılan ve iki gencin aşkını anlatan eser hangisidir?
--    A) Hamlet
-- ✅ B) Romeo û Juliet
+- ✅ A) Romeo û Juliet
+-    B) Hamlet
 -    C) Macbeth
 -    D) Othello
-**Doğru:** B) Romeo û Juliet
+**Doğru:** A) Romeo û Juliet
 **Açıklama:** Romeo ve Juliet, düşman ailelerden gelen iki gencin aşkını anlatır. Shakespeare'in en ünlü eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
 ## ds_edebiyat_0141  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa du malbatên dijmin dike?
 **TR:** Shakespeare tarafından yazılan ve iki düşman aileyi anlatan eser hangisidir?
--    A) Hamlet
-- ✅ B) Romeo û Juliet
+- ✅ A) Romeo û Juliet
+-    B) Hamlet
 -    C) Macbeth
 -    D) Othello
-**Doğru:** B) Romeo û Juliet
+**Doğru:** A) Romeo û Juliet
 **Açıklama:** Romeo ve Juliet, iki düşman aileyi anlatır: Montague ve Capulet. Bu aileler arasında aşk yasaktır.
 **Kaynak:** https://en.wikipedia.org/wiki/Romeo_and_Juliet
 
@@ -502,10 +502,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa bazirganekî bi navê Antonio dike?
 **TR:** Shakespeare tarafından yazılan ve Antonio adında bir taciri anlatan eser hangisidir?
 -    A) A Midsummer Night's Dream
--    B) Much Ado About Nothing
-- ✅ C) The Merchant of Venice
+- ✅ B) The Merchant of Venice
+-    C) Much Ado About Nothing
 -    D) The Tempest
-**Doğru:** C) The Merchant of Venice
+**Doğru:** B) The Merchant of Venice
 **Açıklama:** Venedik Taciri, Antonio adında bir taciri anlatır. Borç ve cezaları konu alan bir komedidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Merchant_of_Venice
 
@@ -513,21 +513,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Shakespeare de, kîjan kesayet bi navê "Hamlet" tê naskirin?
 **TR:** Shakespeare'de "Hamlet" adıyla bilinen karakter kimdir?
 -    A) Padîşahê Îngilistanê
--    B) Generalê Romayê
-- ✅ C) Mîrê Danîmarkayê
+- ✅ B) Mîrê Danîmarkayê
+-    C) Generalê Romayê
 -    D) Bazirganê Venedîkê
-**Doğru:** C) Mîrê Danîmarkayê
+**Doğru:** B) Mîrê Danîmarkayê
 **Açıklama:** Hamlet, Danimarka prensidir. Amcası tarafından öldürülen babasının intikamını almak ister.
 **Kaynak:** https://en.wikipedia.org/wiki/Hamlet
 
 ## ds_edebiyat_0146  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di Shakespeare de, kîjan kesayet bi navê "Prospero" tê naskirin?
 **TR:** Shakespeare'de "Prospero" adıyla bilinen karakter kimdir?
--    A) Mîrê Danîmarkayê
-- ✅ B) Sihirbazê The Tempest
+- ✅ A) Sihirbazê The Tempest
+-    B) Mîrê Danîmarkayê
 -    C) Generalê Romayê
 -    D) Bazirganê Venedîkê
-**Doğru:** B) Sihirbazê The Tempest
+**Doğru:** A) Sihirbazê The Tempest
 **Açıklama:** Prospero, Fırtına'nın büyücüsüdür. Bir adada yaşar ve büyüsüyle bir fırtına koparır.
 **Kaynak:** https://en.wikipedia.org/wiki/Prospero
 
@@ -535,10 +535,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di helbesta klasîk a Kurmancî de, ji lihevhatina dengên dawiya rêzikan re çi tê gotin?
 **TR:** Klasik Kürtçe şiirde dize sonlarındaki ses uyuşmasına ne denir?
 -    A) Îmge
--    B) Metn
-- ✅ C) Kafiye
+- ✅ B) Kafiye
+-    C) Metn
 -    D) Serhatî
-**Doğru:** C) Kafiye
+**Doğru:** B) Kafiye
 **Açıklama:** Kafiye, dize sonlarındaki seslerin uyuşmasıdır; klasik şiirin temel unsurlarındandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhyme
 
@@ -547,9 +547,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Klasik Kürtçe şiirde, seslerin dizilişi için hangi terim kullanılır?
 -    A) Îmge
 -    B) Metn
--    C) Serhatî
-- ✅ D) Rîtim
-**Doğru:** D) Rîtim
+- ✅ C) Rîtim
+-    D) Serhatî
+**Doğru:** C) Rîtim
 **Açıklama:** Ritim, şiirde seslerin dizilişidir; ahenk için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
@@ -557,10 +557,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di helbesta Ehmedê Xanî de, kîjan hêman ji bo pîvana kêşeyê tê bikaranîn?
 **TR:** Ahmedê Xanî'nin şiirinde, ölçü için hangi öğe kullanılır?
 -    A) Kafiye
--    B) Îmge
-- ✅ C) Metr
+- ✅ B) Metr
+-    C) Îmge
 -    D) Rîwayet
-**Doğru:** C) Metr
+**Doğru:** B) Metr
 **Açıklama:** Metr, şiirde ölçüdür; ahenk için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Metre_(poetry)
 
@@ -569,20 +569,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi yazar "Faust" adlı eseriyle tanınır?
 -    A) Charles Dickens
 -    B) Fyodor Dostoyevskî
--    C) Mark Twain
-- ✅ D) Johann Wolfgang von Goethe
-**Doğru:** D) Johann Wolfgang von Goethe
+- ✅ C) Johann Wolfgang von Goethe
+-    D) Mark Twain
+**Doğru:** C) Johann Wolfgang von Goethe
 **Açıklama:** "Faust" Johann Wolfgang von Goethe'nin başyapıtıdır. Goethe, Sturm und Drang ve Weimar Klasisizmiyle anılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe
 
 ## ds_edebiyat_0180  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Realîzm di kîjan sedsalê de wekî tevgereke edebî derket pêş?
 **TR:** Realizm, edebi bir akım olarak hangi yüzyılda ortaya çıktı?
-- ✅ A) Sedsala 19an
--    B) Sedsala 18an
--    C) Sedsala 20an
--    D) Sedsala 17an
-**Doğru:** A) Sedsala 19an
+-    A) Sedsala 18an
+-    B) Sedsala 20an
+-    C) Sedsala 17an
+- ✅ D) Sedsala 19an
+**Doğru:** D) Sedsala 19an
 **Açıklama:** Realizm, 19. yüzyılın ortalarında Fransa'da ortaya çıktı ve hayalci romantizme bir tepkiydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_realism
 
@@ -590,21 +590,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di edebiyata realîzmê de, kîjan hêman zêde tê dîtin?
 **TR:** Realizm edebiyatında hangi öğe daha çok görülür?
 -    A) Xeyalên berfireh
--    B) Mîtolojî
-- ✅ C) Rastiya rojane
+- ✅ B) Rastiya rojane
+-    C) Mîtolojî
 -    D) Efsaneyên dîrokî
-**Doğru:** C) Rastiya rojane
+**Doğru:** B) Rastiya rojane
 **Açıklama:** Realizm, günlük gerçekliğe, sıradan yaşama ve topluma odaklanır; hayal ve mitolojiye değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_realism
 
 ## ds_edebiyat_0186  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Modernîzm di kîjan sedsalê de wekî tevgereke edebî derket holê?
 **TR:** Modernizm hangi yüzyılda edebi bir akım olarak ortaya çıktı?
-- ✅ A) Sedsala 20an
--    B) Sedsala 19an
--    C) Sedsala 18an
--    D) Sedsala 21an
-**Doğru:** A) Sedsala 20an
+-    A) Sedsala 19an
+-    B) Sedsala 18an
+-    C) Sedsala 21an
+- ✅ D) Sedsala 20an
+**Doğru:** D) Sedsala 20an
 **Açıklama:** Modernizm, 20. yüzyılın başlarında ortaya çıkmış ve geleneksel gerçekçiliğe bir tepki olmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_modernism
 
@@ -613,20 +613,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Modernizm edebiyatında hangi öğe daha çok görülür?
 -    A) Rastiya objektîf
 -    B) Zimanê sade
--    C) Dîroka xêzî
-- ✅ D) Şikandina rêzikên kevneşopî
-**Doğru:** D) Şikandina rêzikên kevneşopî
+- ✅ C) Şikandina rêzikên kevneşopî
+-    D) Dîroka xêzî
+**Doğru:** C) Şikandina rêzikên kevneşopî
 **Açıklama:** Modernizm, geleneksel kuralların yıkılması, biçim ve dil üzerine denemeler yapılmasıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Literary_modernism
 
 ## ds_edebiyat_0188  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan roman ji aliyê James Joyce ve hatiye nivîsandin û wek mînaka modernîzmê tê naskirin?
 **TR:** Hangi roman James Joyce tarafından yazılmıştır ve modernizmin bir örneği olarak kabul edilir?
-- ✅ A) Ulysses
--    B) Madame Bovary
--    C) Moby-Dick
--    D) War and Peace
-**Doğru:** A) Ulysses
+-    A) Madame Bovary
+-    B) Moby-Dick
+-    C) War and Peace
+- ✅ D) Ulysses
+**Doğru:** D) Ulysses
 **Açıklama:** Joyce'un "Ulysses"i, bilinç akışı tekniğini kullandığı için modernizmin temel eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ulysses_(novel)
 
@@ -634,10 +634,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di romana "Ulysses" de, kîjan teknîk zêde tê bikaranîn?
 **TR:** "Ulysses" romanında hangi teknik daha çok kullanılır?
 -    A) Rêzika kronolojîk
--    B) Zimanê helbestî
-- ✅ C) Herika hişê
+- ✅ B) Herika hişê
+-    C) Zimanê helbestî
 -    D) Diyalogên dirêj
-**Doğru:** C) Herika hişê
+**Doğru:** B) Herika hişê
 **Açıklama:** Joyce, "Ulysses"te bilinç akışı tekniğini kullanır; bu da modernizmin bir özelliğidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ulysses_(novel)
 
@@ -646,42 +646,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi roman Virginia Woolf tarafından yazılmıştır ve modernizmin bir örneği olarak kabul edilir?
 -    A) Ulysses
 -    B) The Great Gatsby
--    C) One Hundred Years of Solitude
-- ✅ D) Mrs Dalloway
-**Doğru:** D) Mrs Dalloway
+- ✅ C) Mrs Dalloway
+-    D) One Hundred Years of Solitude
+**Doğru:** C) Mrs Dalloway
 **Açıklama:** Woolf'un "Mrs Dalloway"i bilinç akışı tekniğiyle tanınır ve modernizmin eserlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mrs_Dalloway
 
 ## ds_edebiyat_0191  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di romana "Mrs Dalloway" de, kîjan mijar zêde tê dîtin?
 **TR:** "Mrs Dalloway" romanında hangi tema daha çok işlenir?
--    A) Şer û pevçûn
-- ✅ B) Hiş û bîranîn
+- ✅ A) Hiş û bîranîn
+-    B) Şer û pevçûn
 -    C) Aborî û bazirganî
 -    D) Xweza û çiya
-**Doğru:** B) Hiş û bîranîn
+**Doğru:** A) Hiş û bîranîn
 **Açıklama:** Woolf, "Mrs Dalloway"de zihni, anıları ve insan ilişkilerini araştırır; bu da modernizmin bir özelliğidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mrs_Dalloway
 
 ## ds_edebiyat_0192  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem ji aliyê Franz Kafka ve hatiye nivîsandin û wek mînaka modernîzmê tê naskirin?
 **TR:** Hangi eser Franz Kafka tarafından yazılmıştır ve modernizmin bir örneği kabul edilir?
-- ✅ A) The Metamorphosis
--    B) Ulysses
--    C) Madame Bovary
--    D) Les Misérables
-**Doğru:** A) The Metamorphosis
+-    A) Ulysses
+-    B) Madame Bovary
+-    C) Les Misérables
+- ✅ D) The Metamorphosis
+**Doğru:** D) The Metamorphosis
 **Açıklama:** Kafka'nın "Dönüşüm"ü gerçeküstü ve modernist bakış açısıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Metamorphosis
 
 ## ds_edebiyat_0193  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di berhema "The Metamorphosis" de, kîjan bûyer diqewime?
 **TR:** "Dönüşüm" adlı eserde hangi olay gerçekleşir?
--    A) Emma Bovary dimire
-- ✅ B) Gregor Samsa dibe kêzikek
+- ✅ A) Gregor Samsa dibe kêzikek
+-    B) Emma Bovary dimire
 -    C) Odîseus vedigere malê
 -    D) Gilgameş dibe padîşah
-**Doğru:** B) Gregor Samsa dibe kêzikek
+**Doğru:** A) Gregor Samsa dibe kêzikek
 **Açıklama:** "Dönüşüm"de Gregor Samsa uykudan uyanır ve bir böceğe dönüştüğünü görür. Eser bir novelladır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Metamorphosis
 
@@ -689,10 +689,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan nivîskara şîlî di sala 1945an de bû jina yekem a Amerîkaya Latîn a ku Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Şilili yazar 1945'te Nobel Edebiyat Ödülü'nü alan ilk Latin Amerikalı kadın oldu?
 -    A) Selma Lagerlöf
--    B) Pearl S. Buck
-- ✅ C) Gabriela Mistral
+- ✅ B) Gabriela Mistral
+-    C) Pearl S. Buck
 -    D) Nadine Gordimer
-**Doğru:** C) Gabriela Mistral
+**Doğru:** B) Gabriela Mistral
 **Açıklama:** Şilili şair Gabriela Mistral 1945'te Nobel Edebiyat Ödülü'nü kazandı ve bu ödülü alan ilk Latin Amerikalı kadın oldu. Ödülü alan ilk kadın ise 1909'da Selma Lagerlöf'tür.
 **Kaynak:** https://en.wikipedia.org/wiki/Gabriela_Mistral
 
@@ -701,31 +701,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1954'te Nobel Edebiyat Ödülü hangi Amerikalı yazara verildi?
 -    A) William Faulkner
 -    B) John Steinbeck
--    C) T.S. Eliot
-- ✅ D) Ernest Hemingway
-**Doğru:** D) Ernest Hemingway
+- ✅ C) Ernest Hemingway
+-    D) T.S. Eliot
+**Doğru:** C) Ernest Hemingway
 **Açıklama:** Ernest Hemingway, 1954'te Nobel Edebiyat Ödülü'nü kazandı. Kısa romanları ve kendine özgü yazım tarzıyla tanınır, örneğin "İhtiyar Balıkçı".
 **Kaynak:** https://en.wikipedia.org/wiki/Ernest_Hemingway
 
 ## ds_edebiyat_0204  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê Kolombiyayî di sala 1982an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Kolombiyalı yazar 1982'de Nobel Edebiyat Ödülü'nü kazandı?
--    A) Mario Vargas Llosa
-- ✅ B) Gabriel García Márquez
+- ✅ A) Gabriel García Márquez
+-    B) Mario Vargas Llosa
 -    C) Jorge Luis Borges
 -    D) Pablo Neruda
-**Doğru:** B) Gabriel García Márquez
+**Doğru:** A) Gabriel García Márquez
 **Açıklama:** Gabriel García Márquez, 1982'de Nobel Edebiyat Ödülü'nü kazandı. Büyülü gerçekçilik tarzındaki romanlarıyla tanınır, örneğin "Yüzyıllık Yalnızlık".
 **Kaynak:** https://en.wikipedia.org/wiki/Gabriel_García_Márquez
 
 ## ds_edebiyat_0206  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 2016an de Xelata Nobelê ya Edebiyatê ji kîjan stranbêj û nivîskarê Amerîkî re hat dayîn?
 **TR:** 2016'da Nobel Edebiyat Ödülü hangi Amerikalı şarkıcı ve yazara verildi?
--    A) Leonard Cohen
-- ✅ B) Bob Dylan
+- ✅ A) Bob Dylan
+-    B) Leonard Cohen
 -    C) Bruce Springsteen
 -    D) Paul Simon
-**Doğru:** B) Bob Dylan
+**Doğru:** A) Bob Dylan
 **Açıklama:** Bob Dylan, 2016'da Nobel Edebiyat Ödülü'nü kazandı. Müziğindeki şiirleriyle tanınır ve bu nedenle ödül verilmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bob_Dylan
 
@@ -733,32 +733,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan nivîskara Alman di sala 2009an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Alman yazar 2009'da Nobel Edebiyat Ödülü'nü kazandı?
 -    A) Elfriede Jelinek
--    B) Günter Grass
-- ✅ C) Herta Müller
+- ✅ B) Herta Müller
+-    C) Günter Grass
 -    D) Peter Handke
-**Doğru:** C) Herta Müller
+**Doğru:** B) Herta Müller
 **Açıklama:** Herta Müller, 2009'da Nobel Edebiyat Ödülü'nü kazandı. Komünist diktatörlük altındaki yaşamı anlatan romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Herta_Müller
 
 ## ds_edebiyat_0210  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 2003an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Afrîkaya Başûr re hat dayîn?
 **TR:** 2003'te Nobel Edebiyat Ödülü hangi Güney Afrikalı yazara verildi?
--    A) Nadine Gordimer
-- ✅ B) J.M. Coetzee
+- ✅ A) J.M. Coetzee
+-    B) Nadine Gordimer
 -    C) Wole Soyinka
 -    D) Doris Lessing
-**Doğru:** B) J.M. Coetzee
+**Doğru:** A) J.M. Coetzee
 **Açıklama:** J.M. Coetzee, 2003'te Nobel Edebiyat Ödülü'nü kazandı. Yaşamın zorluklarını ve ahlakı anlatan romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/J._M._Coetzee
 
 ## ds_edebiyat_0211  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê Mîsrî di sala 1988an de bû yekem nivîskarê Ereb ku Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Mısırlı yazar 1988'de Nobel Edebiyat Ödülü'nü kazanan ilk Arap yazar oldu?
-- ✅ A) Naguib Mahfouz
--    B) Taha Hussein
--    C) Nizar Qabbani
--    D) Adonis
-**Doğru:** A) Naguib Mahfouz
+-    A) Taha Hussein
+-    B) Nizar Qabbani
+-    C) Adonis
+- ✅ D) Naguib Mahfouz
+**Doğru:** D) Naguib Mahfouz
 **Açıklama:** Necib Mahfuz, 1988'de Nobel Edebiyat Ödülü'nü kazandı ve bu ödülü alan ilk Arap yazar oldu. "Kahire Üçlemesi" adlı romanıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Naguib_Mahfouz
 
@@ -766,54 +766,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan nivîskara Îngilîz di sala 2007an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi İngiliz yazar 2007'de Nobel Edebiyat Ödülü'nü kazandı?
 -    A) V.S. Naipaul
--    B) Harold Pinter
-- ✅ C) Doris Lessing
+- ✅ B) Doris Lessing
+-    C) Harold Pinter
 -    D) Kazuo Ishiguro
-**Doğru:** C) Doris Lessing
+**Doğru:** B) Doris Lessing
 **Açıklama:** Doris Lessing, 2007'de Nobel Edebiyat Ödülü'nü kazandı. Farklı toplumlardaki kadınların yaşamını anlatan romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Doris_Lessing
 
 ## ds_edebiyat_0214  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 2021an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Tanzaniyayî re hat dayîn?
 **TR:** 2021'de Nobel Edebiyat Ödülü hangi Tanzanyalı yazara verildi?
-- ✅ A) Abdulrazak Gurnah
--    B) Ngũgĩ wa Thiong'o
--    C) Chinua Achebe
--    D) Wole Soyinka
-**Doğru:** A) Abdulrazak Gurnah
+-    A) Ngũgĩ wa Thiong'o
+-    B) Chinua Achebe
+-    C) Wole Soyinka
+- ✅ D) Abdulrazak Gurnah
+**Doğru:** D) Abdulrazak Gurnah
 **Açıklama:** Abdulrazak Gurnah, 2021'de Nobel Edebiyat Ödülü'nü kazandı. Sömürgecilik ve göç üzerine romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Abdulrazak_Gurnah
 
 ## ds_edebiyat_0218  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 1998an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Portekîzî re hat dayîn?
 **TR:** 1998'de Nobel Edebiyat Ödülü hangi Portekizli yazara verildi?
--    A) Fernando Pessoa
-- ✅ B) José Saramago
+- ✅ A) José Saramago
+-    B) Fernando Pessoa
 -    C) Eça de Queiroz
 -    D) Miguel Torga
-**Doğru:** B) José Saramago
+**Doğru:** A) José Saramago
 **Açıklama:** José Saramago, 1998'de Nobel Edebiyat Ödülü'nü kazandı. Alegorik tarzdaki romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/José_Saramago
 
 ## ds_edebiyat_0220  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di sala 1961an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Yugoslavî re hat dayîn?
 **TR:** 1961'de Nobel Edebiyat Ödülü hangi Yugoslav yazara verildi?
-- ✅ A) Ivo Andrić
--    B) Miroslav Krleža
--    C) Miloš Crnjanski
--    D) Danilo Kiš
-**Doğru:** A) Ivo Andrić
+-    A) Miroslav Krleža
+-    B) Miloš Crnjanski
+-    C) Danilo Kiš
+- ✅ D) Ivo Andrić
+**Doğru:** D) Ivo Andrić
 **Açıklama:** Ivo Andrić, 1961'de Nobel Edebiyat Ödülü'nü kazandı. "Drina Köprüsü" adlı romanıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Ivo_Andrić
 
 ## ds_edebiyat_0221  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê Îrlandî di sala 1923an de Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** 1923'te Nobel Edebiyat Ödülü'nü hangi İrlandalı yazar kazandı?
--    A) Samuel Beckett
-- ✅ B) W.B. Yeats
+- ✅ A) W.B. Yeats
+-    B) Samuel Beckett
 -    C) George Bernard Shaw
 -    D) James Joyce
-**Doğru:** B) W.B. Yeats
+**Doğru:** A) W.B. Yeats
 **Açıklama:** W.B. Yeats, 1923'te Nobel Edebiyat Ödülü'nü kazandı. İrlanda kimliğini konu alan şiirleriyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/W._B._Yeats
 
@@ -822,9 +822,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1969'da Nobel Edebiyat Ödülü hangi İrlandalı yazara verildi?
 -    A) W.B. Yeats
 -    B) George Bernard Shaw
--    C) Seamus Heaney
-- ✅ D) Samuel Beckett
-**Doğru:** D) Samuel Beckett
+- ✅ C) Samuel Beckett
+-    D) Seamus Heaney
+**Doğru:** C) Samuel Beckett
 **Açıklama:** Samuel Beckett, 1969'da Nobel Edebiyat Ödülü'nü kazandı. "Godot"yu Beklerken' adlı eseriyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Samuel_Beckett
 
@@ -833,20 +833,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1991'de Nobel Edebiyat Ödülü hangi Güney Afrikalı yazara verildi?
 -    A) J.M. Coetzee
 -    B) Doris Lessing
--    C) Chimamanda Ngozi Adichie
-- ✅ D) Nadine Gordimer
-**Doğru:** D) Nadine Gordimer
+- ✅ C) Nadine Gordimer
+-    D) Chimamanda Ngozi Adichie
+**Doğru:** C) Nadine Gordimer
 **Açıklama:** Nadine Gordimer, 1991'de Nobel Edebiyat Ödülü'nü kazandı. Apartheid hakkındaki romanlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nadine_Gordimer
 
 ## ds_edebiyat_0226  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çîroka Kurdî ya klasîk de, kîjan ajel bi xapandinê tê nasîn?
 **TR:** Klasik Kürt masallarında hangi hayvan kurnazlığıyla bilinir?
--    A) gur
-- ✅ B) rovî
+- ✅ A) rovî
+-    B) gur
 -    C) hirç
 -    D) kûsî
-**Doğru:** B) rovî
+**Doğru:** A) rovî
 **Açıklama:** Tilki, Kürt masallarında kurnazlığı ve zekâsıyla bilinir; bu özellik birçok halk masalında tekrarlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Fox
 
@@ -855,9 +855,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** La Fontaine tarafından yazılan ve hayvanların insan diliyle konuştuğu eser hangisidir?
 -    A) Çîrokên Grimm
 -    B) Hezar û Yek Şev
--    C) Şahname
-- ✅ D) Fablên La Fontaine
-**Doğru:** D) Fablên La Fontaine
+- ✅ C) Fablên La Fontaine
+-    D) Şahname
+**Doğru:** C) Fablên La Fontaine
 **Açıklama:** La Fontaine Masalları, hayvanların insan diliyle konuştuğu ve ahlaki dersler veren ünlü bir eserdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Jean_de_La_Fontaine
 
@@ -865,43 +865,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di fabla "Kûsî û Dûpişk" de, dûpişk çima kûsî diqelişîne?
 **TR:** "Kaplumbağa ve Akrep" masalında akrep kaplumbağayı neden sokar?
 -    A) ji ber ku kûsî wî aciz kir
--    B) ji ber ku ew birçî bû
-- ✅ C) ji ber ku ew xwezaya wî ye
+- ✅ B) ji ber ku ew xwezaya wî ye
+-    C) ji ber ku ew birçî bû
 -    D) ji ber ku ew bi kûsî re dijmin bû
-**Doğru:** C) ji ber ku ew xwezaya wî ye
+**Doğru:** B) ji ber ku ew xwezaya wî ye
 **Açıklama:** "Kaplumbağa ve Akrep" masalında akrep kaplumbağayı sokar çünkü bu onun doğasında vardır, birlikte yolculuk etseler bile.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Scorpion_and_the_Frog
 
 ## ds_edebiyat_0241  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fabla "Şêr û Rovî" de, gava roviyê şêr cara sêyem dît çi kir?
 **TR:** "Aslan ve Tilki" masalında tilki aslanı üçüncü kez gördüğünde ne yaptı?
--    A) Reviya û xwe veşart
-- ✅ B) Çû ba wî û pê re axivî
+- ✅ A) Çû ba wî û pê re axivî
+-    B) Reviya û xwe veşart
 -    C) Ji tirsan ket erdê
 -    D) Ji şêr re xwarin anî
-**Doğru:** B) Çû ba wî û pê re axivî
+**Doğru:** A) Çû ba wî û pê re axivî
 **Açıklama:** Tilki aslanı ilk gördüğünde çok korkar, ikincisinde daha az, üçüncüsünde yanına gidip konuşacak kadar alışır. Fablın dersi, aşinalığın korkuyu eritmesidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Lion_and_the_Fox
 
 ## ds_edebiyat_0243  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fabla "Gur û Rovî" de, gur gef li rovî dixwe ku eger guh nede wê çi bike?
 **TR:** "Kurt ve Tilki" masalında kurt, tilki söz dinlemezse ne yapmakla tehdit eder?
-- ✅ A) Wê wî bixwe
--    B) Wê wî ji hêlînê derxe
--    C) Wê wî bide şêr
--    D) Wê wî bike xulamê xwe yê hertimî
-**Doğru:** A) Wê wî bixwe
+-    A) Wê wî ji hêlînê derxe
+-    B) Wê wî bide şêr
+-    C) Wê wî bike xulamê xwe yê hertimî
+- ✅ D) Wê wî bixwe
+**Doğru:** D) Wê wî bixwe
 **Açıklama:** Fablda kurt, tilkiyi kendisine yiyecek bulmaya zorlar ve itaat etmezse onu yemekle tehdit eder. Tilki sonunda zekâsıyla kurtulur.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Wolf_and_the_Fox
 
 ## ds_edebiyat_0223  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan nivîskarê nîjeryayî di sala 1986an de bû afrîkiyê yekem ê ku Xelata Nobelê ya Edebiyatê wergirt?
 **TR:** Hangi Nijeryalı yazar 1986'da Nobel Edebiyat Ödülü'nü alan ilk Afrikalı oldu?
--    A) Ben Okri
-- ✅ B) Wole Soyinka
+- ✅ A) Wole Soyinka
+-    B) Ben Okri
 -    C) Chimamanda Ngozi Adichie
 -    D) Ngũgĩ wa Thiong'o
-**Doğru:** B) Wole Soyinka
+**Doğru:** A) Wole Soyinka
 **Açıklama:** Nijeryalı oyun yazarı ve şair Wole Soyinka, 1986'da Nobel Edebiyat Ödülü'nü kazandı ve ödülü alan ilk Afrikalı yazar oldu.
 **Kaynak:** —
 
@@ -1441,55 +1441,55 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_9207  ·  zorluk 1  ·  offline
 **KU:** Kovara "Ronahî" çi bû?
 **TR:** "Ronahî" dergisi neydi?
--    A) rojnameya kurdî ya yekem a ku li Qahîreyê derket
-- ✅ B) kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket
+- ✅ A) kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket
+-    B) rojnameya kurdî ya yekem a ku li Qahîreyê derket
 -    C) kovara ku li Erîvanê bi alfabeya krîlî dihat çapkirin
 -    D) kovara zanistî ya ku li Bexdayê bi erebî derdiket
-**Doğru:** B) kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket
+**Doğru:** A) kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket
 **Açıklama:** "Ronahî dergisi": Şam'da Latin alfabesiyle çıkarılan edebi dergi.
 **Kaynak:** —
 
 ## offline_9215  ·  zorluk 5  ·  offline
 **KU:** Kîjan cureya vegotinê bi gelemperî kurt e û li ser bûyerek an çend bûyeran e?
 **TR:** Hangi anlatı türü genellikle kısadır ve bir ya da birkaç olayı konu alır?
-- ✅ A) Çîrok
--    B) Helbest
--    C) Destan
--    D) Şano
-**Doğru:** A) Çîrok
+-    A) Helbest
+-    B) Destan
+-    C) Şano
+- ✅ D) Çîrok
+**Doğru:** D) Çîrok
 **Açıklama:** "çîrok" = "hikâye". Örnek: Nineler geceleri çocuklara hikâye anlatırdı.
 **Kaynak:** —
 
 ## offline_9227  ·  zorluk 1  ·  offline
 **KU:** "Cegerxwîn" çi îfade dike?
 **TR:** "Cegerxwîn" kimi ifade eder?
-- ✅ A) helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen
--    B) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
--    C) belavbûna alfabeya kurdî ya bi bingehê latînî
--    D) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
-**Doğru:** A) helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen
+-    A) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+-    B) belavbûna alfabeya kurdî ya bi bingehê latînî
+-    C) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+- ✅ D) helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen
+**Doğru:** D) helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen
 **Açıklama:** "Cegerxwîn": modern Kürt şiirinin öncü toplumcu şairi.
 **Kaynak:** —
 
 ## offline_9266  ·  zorluk 1  ·  offline
 **KU:** Dema "diyalog" tê gotin, çi tê xwestin?
 **TR:** "diyalog" dendiğinde ne kastedilir?
-- ✅ A) axaftina bi hev re
--    B) vegotina lehengiyê
--    C) axaftina dirêj a kesekî tenê
--    D) cihê ku bûyer tê de diqewime
-**Doğru:** A) axaftina bi hev re
+-    A) vegotina lehengiyê
+-    B) axaftina dirêj a kesekî tenê
+-    C) cihê ku bûyer tê de diqewime
+- ✅ D) axaftina bi hev re
+**Doğru:** D) axaftina bi hev re
 **Açıklama:** "diyalog" tiyatroda temeldir; onsuz karakter tanınmaz.
 **Kaynak:** —
 
 ## offline_9280  ·  zorluk 2  ·  offline
 **KU:** Li jêr ji bo "roman" ya rast kîjan e?
 **TR:** Aşağıdakilerden hangisi "roman" için doğrudur?
--    A) helbesteke kurt a bi qafiye
-- ✅ B) vegotina dirêj a bi pexşan
+- ✅ A) vegotina dirêj a bi pexşan
+-    B) helbesteke kurt a bi qafiye
 -    C) berhevoka gotinên pêşiyan
 -    D) lîstika ku ji bo dikê tê nivîsandin
-**Doğru:** B) vegotina dirêj a bi pexşan
+**Doğru:** A) vegotina dirêj a bi pexşan
 **Açıklama:** "roman" uzun bir anlatıdır. Örnek: İlk Kürt romanı "Şivanê Kurmanca"dır (1935).
 **Kaynak:** —
 
@@ -1497,54 +1497,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "karakter" di mijara wêjeyê de çi vedibêje?
 **TR:** Edebiyat alanında "karakter" neyi anlatır?
 -    A) cihê ku bûyer diqewime
--    B) ramana sereke ya berhemê
-- ✅ C) kesayeta vegotinê
+- ✅ B) kesayeta vegotinê
+-    C) ramana sereke ya berhemê
 -    D) dengê ku çîrokê radigihîne
-**Doğru:** C) kesayeta vegotinê
+**Doğru:** B) kesayeta vegotinê
 **Açıklama:** "karakter" olayların üzerinden geçtiği kişidir. Örnek: Mem ile Zîn iki ana karakterdir.
 **Kaynak:** —
 
 ## offline_9344  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeha "Hejar Mukriyanî" di nav wêjeyê de rast bi cih dike?
 **TR:** "Hejar Mukriyanî"yi edebiyat içinde hangisi doğru konumlandırır?
-- ✅ A) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
--    B) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
--    C) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
--    D) yekem ferhenga kurdî ya ku Ehmedê Xanî nivîsî
-**Doğru:** A) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+-    A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+-    B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
+-    C) yekem ferhenga kurdî ya ku Ehmedê Xanî nivîsî
+- ✅ D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+**Doğru:** D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
 **Açıklama:** "Hejar Mukriyanî": Şerefname ve Mem û Zîn'i Soraniceye çeviren yazar.
 **Kaynak:** —
 
 ## offline_9378  ·  zorluk 5  ·  offline
 **KU:** Derbarê "Feqiyê Teyran" de ya rast kîjan e?
 **TR:** "Feqiyê Teyran" hakkında doğru olan hangisidir?
-- ✅ A) helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî
--    B) destana gelêrî ya ku bingeha Mem û Zînê ye
--    C) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
--    D) çîrok, destan û vegotinên dengbêjan
-**Doğru:** A) helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî
+-    A) destana gelêrî ya ku bingeha Mem û Zînê ye
+-    B) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+-    C) çîrok, destan û vegotinên dengbêjan
+- ✅ D) helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî
+**Doğru:** D) helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî
 **Açıklama:** "Feqiyê Teyran": kuşların diliyle yazan meşhur Kürt şair.
 **Kaynak:** —
 
 ## offline_9405  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê Edebiyatê ve ji bo "Mem û Zîn" îfadeya rast kîjan e?
 **TR:** Edebiyat açısından "Mem û Zîn" için doğru ifade hangisidir?
--    A) berhevoka helbestên sofîyane yên Melayê Cizîrî
-- ✅ B) mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye
+- ✅ A) mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye
+-    B) berhevoka helbestên sofîyane yên Melayê Cizîrî
 -    C) romana kurdî ya nûjen a ku li Ermenistanê hat çapkirin
 -    D) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
-**Doğru:** B) mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye
+**Doğru:** A) mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye
 **Açıklama:** "Mem û Zîn": Ehmedê Xanî'nin 1695'te yazdığı klasik aşk mesnevisi.
 **Kaynak:** —
 
 ## offline_9408  ·  zorluk 3  ·  offline
 **KU:** "Mestûre Kurdistanî" tê çi wateyê?
 **TR:** "Mestûre Kurdistanî" ne anlama gelir?
-- ✅ A) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
--    B) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
--    C) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
--    D) yek ji şanonivîsên damezrîner ên şanoya kurdî
-**Doğru:** A) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
+-    A) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+-    B) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+-    C) yek ji şanonivîsên damezrîner ên şanoya kurdî
+- ✅ D) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
+**Doğru:** D) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
 **Açıklama:** "Mestûre Kurdistanî": Erdelan beyliğinde yaşamış ünlü kadın şair.
 **Kaynak:** —
 
@@ -1553,20 +1553,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Edebiyat açısından "Ehmedê Xasî" hakkında doğru seçenek hangisidir?
 -    A) Mehmed Uzun
 -    B) çîrok, destan û vegotinên dengbêjan
--    C) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî
-- ✅ D) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
-**Doğru:** D) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
+- ✅ C) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
+-    D) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî
+**Doğru:** C) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
 **Açıklama:** "Ehmedê Xasî": Zazaca ilk mevlidi yazan şair ve din alimi.
 **Kaynak:** —
 
 ## offline_9410  ·  zorluk 4  ·  offline
 **KU:** Derbarê "destana Memê Alan" de ya rast a zanîn çi ye?
 **TR:** "Memê Alan destanı" hakkında bilinen doğru bilgi nedir?
-- ✅ A) destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn
--    B) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
--    C) bi weşandina yekem rojnameya kurdî, Kurdistanê re girêdayî ye
--    D) pêşketina cureyên wek roman û rojnameyê di serdema nûjen de
-**Doğru:** A) destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn
+-    A) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
+-    B) bi weşandina yekem rojnameya kurdî, Kurdistanê re girêdayî ye
+-    C) pêşketina cureyên wek roman û rojnameyê di serdema nûjen de
+- ✅ D) destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn
+**Doğru:** D) destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn
 **Açıklama:** "destana Memê Alan": Ehmedê Xanî'nin Mem û Zîn'e ilham aldığı halk destanı.
 **Kaynak:** —
 
@@ -1574,10 +1574,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Rojnameya "Riya Taza" çawa tê pênasekirin?
 **TR:** "Riya Taza" gazetesi nasıl tanımlanır?
 -    A) rojnameya kurdî ya ku li Stenbolê bi osmanî derket
--    B) kovara wêjeyî ya ku li Şamê bi latînî derket
-- ✅ C) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
+- ✅ B) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
+-    C) kovara wêjeyî ya ku li Şamê bi latînî derket
 -    D) rojnameya ku li Bexdayê ji aliyê dewletê ve dihat weşandin
-**Doğru:** C) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
+**Doğru:** B) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
 **Açıklama:** "Riya Taza gazetesi": Erivan'da uzun yıllar basılan Kürtçe gazete.
 **Kaynak:** —
 
@@ -1586,9 +1586,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Xanî Mektebi" için en doğru açıklama hangisidir?
 -    A) tevgera ku bi kovara Hawarê re li Şamê pêk hat
 -    B) dibistana helbesta klasîk a ku li derdora Babanê geş bû
--    C) tevgera romannivîsiyê ya ku li Ermenistanê dest pê kir
-- ✅ D) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
-**Doğru:** D) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
+- ✅ C) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
+-    D) tevgera romannivîsiyê ya ku li Ermenistanê dest pê kir
+**Doğru:** C) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
 **Açıklama:** "Xanî Mektebi": Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol.
 **Kaynak:** —
 
@@ -1597,20 +1597,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "vebêj" terimi neyi ifade eder?
 -    A) kesayeta sereke ya çîrokê
 -    B) cihê ku bûyer tê de diqewime
--    C) ramana sereke ya berhemê
-- ✅ D) dengê ku çîrokê vedibêje
-**Doğru:** D) dengê ku çîrokê vedibêje
+- ✅ C) dengê ku çîrokê vedibêje
+-    D) ramana sereke ya berhemê
+**Doğru:** C) dengê ku çîrokê vedibêje
 **Açıklama:** "anlatıcı": hikayeyi aktaran ses.
 **Kaynak:** —
 
 ## offline_9473  ·  zorluk 4  ·  offline
 **KU:** "Arabê Şamo" di mijara wêjeyê de çi vedibêje?
 **TR:** "Arabê Şamo" edebiyat konusunda neyi ifade eder?
-- ✅ A) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
--    B) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
--    C) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî
--    D) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
-**Doğru:** A) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+-    A) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
+-    B) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî
+-    C) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+- ✅ D) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+**Doğru:** D) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
 **Açıklama:** "Arabê Şamo" (Erebê Şemo), "Şivanê Kurmanca" adlı eserin yazarıdır; 1935'te basılan bu roman ilk modern Kürtçe roman sayılır ve sonradan "Şivanê Kurd" adıyla da bilinir.
 **Kaynak:** —
 
@@ -1618,54 +1618,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Der barê "Abdulla Goran" de ji bo wêjeyê bijardeya rast kîjan e?
 **TR:** Edebiyat açısından "Abdulla Goran" hakkında doğru seçenek hangisidir?
 -    A) yek ji şanonivîsên damezrîner ên şanoya kurdî
--    B) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
-- ✅ C) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+- ✅ B) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+-    C) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
 -    D) belavbûna alfabeya kurdî ya bi bingehê latînî
-**Doğru:** C) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+**Doğru:** B) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
 **Açıklama:** "Abdulla Goran": Sorani Kürtçe şiirinde modernleşmenin öncüsü.
 **Kaynak:** —
 
 ## offline_9529  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeha "Şivanê Kurd" di nav wêjeyê de rast bi cih dike?
 **TR:** Hangi seçenek "Şivanê Kurd" terimini edebiyat içinde doğru konumlandırır?
-- ✅ A) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
--    B) destana evînê ya herî mezin a wêjeya klasîk a kurdî
--    C) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
--    D) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
-**Doğru:** A) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+-    A) destana evînê ya herî mezin a wêjeya klasîk a kurdî
+-    B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
+-    C) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+- ✅ D) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+**Doğru:** D) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
 **Açıklama:** "Şivanê Kurd": 1935 yılında basılan ilk modern Kürtçe roman.
 **Kaynak:** —
 
 ## offline_9552  ·  zorluk 5  ·  offline
 **KU:** Di zanîna wêjeyê de der barê "Masture Erdelan" de ya rast kîjan e?
 **TR:** Edebiyat bilgisinde "Masture Erdelan" hakkında doğru olan hangisidir?
--    A) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
-- ✅ B) yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî
+- ✅ A) yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî
+-    B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
 -    C) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
 -    D) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
-**Doğru:** B) yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî
+**Doğru:** A) yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî
 **Açıklama:** "Masture Erdelan": tarihte divan yazmış ilk Kürt kadın tarihçi ve şair.
 **Kaynak:** —
 
 ## offline_9579  ·  zorluk 5  ·  offline
 **KU:** "Ferhad û Şîrîn" di mijara wêjeyê de çi vedibêje?
 **TR:** "Ferhad û Şîrîn" edebiyat konusunda neyi ifade eder?
-- ✅ A) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
--    B) destana şer a li ser mîrektiyên kurdan
--    C) berhevoka gotinên pêşiyan a ku ji devkî hat nivîsandin
--    D) lîstika şanoyî ya yekem a bi kurmancî
-**Doğru:** A) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
+-    A) destana şer a li ser mîrektiyên kurdan
+-    B) berhevoka gotinên pêşiyan a ku ji devkî hat nivîsandin
+-    C) lîstika şanoyî ya yekem a bi kurmancî
+- ✅ D) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
+**Doğru:** D) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
 **Açıklama:** "Ferhad û Şîrîn": Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.
 **Kaynak:** —
 
 ## offline_9594  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgiha "Nûbihara Biçukan" rast şirove dike?
 **TR:** Hangi seçenek "Nûbihara Biçukan" terimini doğru açıklar?
--    A) mesnewiya evînê ya klasîk a Ehmedê Xanî
-- ✅ B) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+- ✅ A) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+-    B) mesnewiya evînê ya klasîk a Ehmedê Xanî
 -    C) berhevoka helbestên sofîyane yên Melayê Cizîrî
 -    D) destana gelêrî ya li ser Memê Alan
-**Doğru:** B) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+**Doğru:** A) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
 **Açıklama:** "Nûbihara Biçukan": Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.
 **Kaynak:** —
 
@@ -1673,32 +1673,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Têgiha "kafiye" çi pêk tîne?
 **TR:** "kafiye" terimi neyi ifade eder?
 -    A) pîvana kîteyên rêzikê
--    B) ramana sereke ya helbestê
-- ✅ C) lihevhatina dengên dawiya rêzikan
+- ✅ B) lihevhatina dengên dawiya rêzikan
+-    C) ramana sereke ya helbestê
 -    D) dubarekirina peyvekê di destpêkê de
-**Doğru:** C) lihevhatina dengên dawiya rêzikan
+**Doğru:** B) lihevhatina dengên dawiya rêzikan
 **Açıklama:** "kafiye" dize sonlarındaki sesleri uyumlu kılar ve ezberlemeyi kolaylaştırır.
 **Kaynak:** —
 
 ## offline_9623  ·  zorluk 2  ·  offline
 **KU:** Derbarê "tema" de vebijêrka rast kîjan e?
 **TR:** "tema" hakkında doğru seçenek hangisidir?
-- ✅ A) ramana sereke ya berhemê
--    B) bûyera sereke ya vegotinê
--    C) kesayeta sereke ya çîrokê
--    D) cihê ku bûyer diqewime
-**Doğru:** A) ramana sereke ya berhemê
+-    A) bûyera sereke ya vegotinê
+-    B) kesayeta sereke ya çîrokê
+-    C) cihê ku bûyer diqewime
+- ✅ D) ramana sereke ya berhemê
+**Doğru:** D) ramana sereke ya berhemê
 **Açıklama:** "tema" olay değildir; olayların ardında duran düşüncedir.
 **Kaynak:** —
 
 ## offline_9625  ·  zorluk 1  ·  offline
 **KU:** "Osman Sabri" wek kî tê naskirin?
 **TR:** "Osman Sabri" kim olarak tanınır?
-- ✅ A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
--    B) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
--    C) nîşandana nirxa ziman û yekîtiya kurdî
--    D) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
-**Doğru:** A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+-    A) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+-    B) nîşandana nirxa ziman û yekîtiya kurdî
+-    C) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+- ✅ D) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+**Doğru:** D) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
 **Açıklama:** "Osman Sabri": modern Kürt hikayeciliğinin kurucu isimlerinden.
 **Kaynak:** —
 
@@ -1707,9 +1707,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangisi "Dewrêşê Evdî destanı"nın tanımına uyar?
 -    A) yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî
 -    B) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
--    C) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
-- ✅ D) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
-**Doğru:** D) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
+- ✅ C) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
+-    D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+**Doğru:** C) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
 **Açıklama:** "destana Dewrêşê Evdî": Kürt sözlü edebiyatının en hüzünlü destanlarından biri.
 **Kaynak:** —
 
@@ -1717,10 +1717,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "Hêmin Mukriyanî" de ya rast kîjan e?
 **TR:** "Hêmin Mukriyanî" hakkında doğru olan hangisidir?
 -    A) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist
--    B) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire
-- ✅ C) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+- ✅ B) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+-    C) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire
 -    D) damezrîner û pêşengê romana kurdî ya nûjen
-**Doğru:** C) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+**Doğru:** B) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
 **Açıklama:** "Hêmin Mukriyanî": Doğu Kürdistan'ın meşhur modern şair ve yazarı.
 **Kaynak:** —
 
@@ -1729,20 +1729,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Hawar Ekolü" için en doğru açıklama hangisidir?
 -    A) dibistana helbesta klasîk a ku li Babanê geş bû
 -    B) tevgera romannivîsiyê ya ku li Erîvanê pêk hat
--    C) ekola ramanî ya ku Ehmedê Xanî dest pê kir
-- ✅ D) tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir
-**Doğru:** D) tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir
+- ✅ C) tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir
+-    D) ekola ramanî ya ku Ehmedê Xanî dest pê kir
+**Doğru:** C) tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir
 **Açıklama:** "Hawar Ekolü": Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.
 **Kaynak:** —
 
 ## offline_9730  ·  zorluk 2  ·  offline
 **KU:** Di zanîna wêjeyê de der barê "Şêrko Bêkes" de ya rast kîjan e?
 **TR:** Edebiyat bilgisinde "Şêrko Bêkes" hakkında doğru olan hangisidir?
-- ✅ A) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
--    B) helbestvanê klasîk ê dîwana Babanê
--    C) romannivîsê yekem ê kurdî yê nûjen
--    D) damezrînerê kovara Hawarê
-**Doğru:** A) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+-    A) helbestvanê klasîk ê dîwana Babanê
+-    B) romannivîsê yekem ê kurdî yê nûjen
+-    C) damezrînerê kovara Hawarê
+- ✅ D) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+**Doğru:** D) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
 **Açıklama:** "Şêrko Bêkes": Kürt şiirine serbest tarzı getiren büyük şair.
 **Kaynak:** —
 
@@ -1751,20 +1751,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Edebiyat açısından "Qanadê Kurdo" hakkında doğru seçenek hangisidir?
 -    A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
 -    B) ji ber ku xebatên ziman û alfabeyê belav kir
--    C) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
-- ✅ D) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
-**Doğru:** D) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
+- ✅ C) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
+-    D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+**Doğru:** C) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
 **Açıklama:** "Qanadê Kurdo": Kürt dili ve edebiyatı üzerine çalışan akademisyen.
 **Kaynak:** —
 
 ## offline_9754  ·  zorluk 2  ·  offline
 **KU:** Berhema bi navê "Şivanê Kurmanca" çi ye?
 **TR:** "Şivanê Kurmanca" adlı eser nedir?
-- ✅ A) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
--    B) yekem berhevoka çîrokên kurdî ya ku di 1913an de derket
--    C) destana gelêrî ya ku di 1898an de hat tomarkirin
--    D) ferhenga kurdî-erebî ya ku di 1683an de hat nivîsandin
-**Doğru:** A) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+-    A) yekem berhevoka çîrokên kurdî ya ku di 1913an de derket
+-    B) destana gelêrî ya ku di 1898an de hat tomarkirin
+-    C) ferhenga kurdî-erebî ya ku di 1683an de hat nivîsandin
+- ✅ D) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+**Doğru:** D) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
 **Açıklama:** "Şivanê Kurmanca": Erebê Şemo'nun 1935'te basılan ve ilk modern Kürtçe roman sayılan eseri; sonradan "Şivanê Kurd" adıyla da bilinir.
 **Kaynak:** —
 
@@ -1773,31 +1773,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Edebiyat bilgisinde "Nalî" hakkında doğru olan hangisidir?
 -    A) damezrînerê ekola wêjeyî ya kovara Hawarê
 -    B) nivîskarê yekem romana kurdî ya nûjen
--    C) zimannasê ku rêzimana kurmancî nivîsî
-- ✅ D) yek ji helbestvanên sereke yên dibistana klasîk a Babanê
-**Doğru:** D) yek ji helbestvanên sereke yên dibistana klasîk a Babanê
+- ✅ C) yek ji helbestvanên sereke yên dibistana klasîk a Babanê
+-    D) zimannasê ku rêzimana kurmancî nivîsî
+**Doğru:** C) yek ji helbestvanên sereke yên dibistana klasîk a Babanê
 **Açıklama:** "Nalî": Soranice klasik şiirin Baban okulunun başlıca adlarından divan şairi.
 **Kaynak:** —
 
 ## offline_9918  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeha "Evdirehîm Rehmî Hekarî" di nav wêjeyê de rast bi cih dike?
 **TR:** Hangi seçenek "Evdirehîm Rehmî Hekarî"yi edebiyat içinde doğru konumlandırır?
-- ✅ A) yek ji şanonivîsên damezrîner ên şanoya kurdî
--    B) nîşandana nirxa ziman û yekîtiya kurdî
--    C) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist
--    D) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
-**Doğru:** A) yek ji şanonivîsên damezrîner ên şanoya kurdî
+-    A) nîşandana nirxa ziman û yekîtiya kurdî
+-    B) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist
+-    C) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
+- ✅ D) yek ji şanonivîsên damezrîner ên şanoya kurdî
+**Doğru:** D) yek ji şanonivîsên damezrîner ên şanoya kurdî
 **Açıklama:** "Evdirehîm Rehmî Hekarî": Kürt tiyatrosunun kurucu oyun yazarlarından.
 **Kaynak:** —
 
 ## offline_9936  ·  zorluk 1  ·  offline
 **KU:** Ji bo Edebiyatê derbarê "Qedrîcan" de vebijêrka rast kîjan e?
 **TR:** Edebiyat açısından "Qedrîcan" hakkında doğru seçenek hangisidir?
--    A) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
-- ✅ B) nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye
+- ✅ A) nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye
+-    B) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
 -    C) ji ber ku xebatên ziman û alfabeyê belav kir
 -    D) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
-**Doğru:** B) nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye
+**Doğru:** A) nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye
 **Açıklama:** "Qedrîcan": modern Kürt şiirinde ve nesrinde iz bırakmış yazar.
 **Kaynak:** —
 
@@ -1806,9 +1806,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Pertew Begê Hkarî" hangi yönüyle tanınır?
 -    A) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
 -    B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
--    C) ji ber ku gelek nivîskar li derveyî welêt berhem didin
-- ✅ D) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
-**Doğru:** D) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
+- ✅ C) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
+-    D) ji ber ku gelek nivîskar li derveyî welêt berhem didin
+**Doğru:** C) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
 **Açıklama:** "Pertew Begê Hkarî": Hakkari emirliğinde yetişmiş klasik divan şairi.
 **Kaynak:** —
 
@@ -1817,31 +1817,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tarihte "Melayê Bateyî" kimdir?
 -    A) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
 -    B) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
--    C) belavbûna alfabeya kurdî ya bi bingehê latînî
-- ✅ D) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
-**Doğru:** D) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+- ✅ C) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+-    D) belavbûna alfabeya kurdî ya bi bingehê latînî
+**Doğru:** C) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
 **Açıklama:** "Melayê Bateyî": Mevlid-i Şerif'i Kürtçe yazan klasik şair.
 **Kaynak:** —
 
 ## offline_9953  ·  zorluk 1  ·  offline
 **KU:** Harisê Bidlîsî kî ye?
 **TR:** Harisê Bidlîsî kimdir?
-- ✅ A) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
--    B) çîrok, destan û vegotinên dengbêjan
--    C) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
--    D) yek ji şanonivîsên damezrîner ên şanoya kurdî
-**Doğru:** A) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+-    A) çîrok, destan û vegotinên dengbêjan
+-    B) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
+-    C) yek ji şanonivîsên damezrîner ên şanoya kurdî
+- ✅ D) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+**Doğru:** D) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
 **Açıklama:** "Haris Bitlisî": klasik dönemde Kürtçe eserler yazmış şair.
 **Kaynak:** —
 
 ## offline_10002  ·  zorluk 1  ·  offline
 **KU:** "Kamuran Bedirxan" tê çi wateyê?
 **TR:** "Kamuran Bedirxan" kimdir?
--    A) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
-- ✅ B) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+- ✅ A) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+-    B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
 -    C) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
 -    D) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire
-**Doğru:** B) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+**Doğru:** A) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
 **Açıklama:** "Kamuran Bedirxan": Kürtçe gramer kitapları yazan dilbilimci ve yazar.
 **Kaynak:** —
 
@@ -1849,87 +1849,87 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Der barê "Melayê Cizîrî" de ji bo wêjeyê bijardeya rast kîjan e?
 **TR:** Edebiyat açısından "Melayê Cizîrî" için doğru seçenek hangisidir?
 -    A) vegotina devkî û veguhastina çîroka bi avaz
--    B) belavbûna alfabeya kurdî ya bi bingehê latînî
-- ✅ C) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+- ✅ B) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+-    C) belavbûna alfabeya kurdî ya bi bingehê latînî
 -    D) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
-**Doğru:** C) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+**Doğru:** B) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
 **Açıklama:** "Melayê Cizîrî": Kürt tasavvuf şiirinin klasik divan şairi.
 **Kaynak:** —
 
 ## offline_10071  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê Edebiyatê ve ji bo "Elî Herîrî" îfadeya rast kîjan e?
 **TR:** Edebiyat açısından "Elî Herîrî" için doğru ifade hangisidir?
--    A) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
-- ✅ B) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
+- ✅ A) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
+-    B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
 -    C) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
 -    D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
-**Doğru:** B) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
+**Doğru:** A) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
 **Açıklama:** "Elî Herîrî": Kürt edebiyatının bilinen en eski klasik şairlerinden.
 **Kaynak:** —
 
 ## offline_10074  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê wêjeyê ve ji bo "Dîwana Melayê Cizîrî" gotina rast kîjan e?
 **TR:** Edebiyat açısından "Dîwana Melayê Cizîrî" için doğru ifade hangisidir?
--    A) mesnewiya evînê ya ku Ehmedê Xanî nivîsandiye
-- ✅ B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+- ✅ A) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+-    B) mesnewiya evînê ya ku Ehmedê Xanî nivîsandiye
 -    C) berhevoka çîrokên gelêrî yên herêma Botanê
 -    D) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
-**Doğru:** B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+**Doğru:** A) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
 **Açıklama:** "Dîwana Melayê Cizîrî": mistik aşk ve felsefe içeren meşhur şiir divanı.
 **Kaynak:** —
 
 ## offline_10104  ·  zorluk 5  ·  offline
 **KU:** "Yaşar Kemal" çi îfade dike?
 **TR:** "Yaşar Kemal" kimdir?
--    A) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
-- ✅ B) romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin
+- ✅ A) romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin
+-    B) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
 -    C) ji ber ku gelek nivîskar li derveyî welêt berhem didin
 -    D) damezrîner û pêşengê romana kurdî ya nûjen
-**Doğru:** B) romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin
+**Doğru:** A) romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin
 **Açıklama:** "Yaşar Kemal": Kürt kökenli, dünya çapında tanınan usta romancı.
 **Kaynak:** —
 
 ## offline_10228  ·  zorluk 5  ·  offline
 **KU:** "destan" çawa divê bê fêmkirin?
 **TR:** "destan" nasıl anlaşılmalıdır?
-- ✅ A) vegotina lehengiyê
--    B) helbesta klasîk a kurdî
--    C) xwendekarê medreseyê / feqî
--    D) helbesta tesewufî (dîwan)
-**Doğru:** A) vegotina lehengiyê
+-    A) helbesta klasîk a kurdî
+-    B) xwendekarê medreseyê / feqî
+-    C) helbesta tesewufî (dîwan)
+- ✅ D) vegotina lehengiyê
+**Doğru:** D) vegotina lehengiyê
 **Açıklama:** "destan" kahramanlık anlatısıdır. Örnek: "Memê Alan" en ünlü Kürt destanıdır.
 **Kaynak:** —
 
 ## offline_10237  ·  zorluk 2  ·  offline
 **KU:** Peyva "helbest" bi Tirkî çi tê gotin?
 **TR:** "Helbest" kelimesine Türkçede ne denir?
--    A) roman
-- ✅ B) şiir
+- ✅ A) şiir
+-    B) roman
 -    C) deneme
 -    D) oyun
-**Doğru:** B) şiir
+**Doğru:** A) şiir
 **Açıklama:** "helbest" = "şiir". Örnek: Cegerxwîn toplumsal şiirleriyle tanınır.
 **Kaynak:** —
 
 ## offline_curated_20251  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin'?
 **TR:** Hangi kavram şu açıklamayla tanınır: "felsefî ve tasavvufî divanıyla tanınan büyük klasik şair"?
--    A) Ehmedê Xanî
-- ✅ B) Melayê Cizîrî
+- ✅ A) Melayê Cizîrî
+-    B) Ehmedê Xanî
 -    C) kovara Hawarê
 -    D) Helbesta Azad
-**Doğru:** B) Melayê Cizîrî
+**Doğru:** A) Melayê Cizîrî
 **Açıklama:** "Melayê Cizîrî" şu anlama gelir: felsefî ve tasavvufî divanıyla tanınan büyük klasik şair.
 **Kaynak:** —
 
 ## offline_curated_20254  ·  zorluk 5  ·  offline
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Melayê Cizîrî" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Melayê Cizîrî" teriminin açıklamasını doğru biçimde tamamlar?
--    A) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
-- ✅ B) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
+- ✅ A) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
+-    B) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
 -    C) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
 -    D) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
-**Doğru:** B) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
+**Doğru:** A) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
 **Açıklama:** "Melayê Cizîrî" için doğru açıklama şudur: felsefî ve tasavvufî divanıyla tanınan büyük klasik şair.
 **Kaynak:** —
 
@@ -1937,10 +1937,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: helbestvanê klasîk ê ku bi berhema "Şêx Sen'an" û axaftina bi çûkan re navdar e?
 **TR:** Hangi kavram şu açıklamayla tanınır: "Şêx Sen'an" eseri ve kuşlarla konuşmasıyla tanınan klasik şair?
 -    A) şevbêrkên wêjeyî
--    B) Arabê Şamo
-- ✅ C) Feqiyê Teyran
+- ✅ B) Feqiyê Teyran
+-    C) Arabê Şamo
 -    D) Cegerxwîn
-**Doğru:** C) Feqiyê Teyran
+**Doğru:** B) Feqiyê Teyran
 **Açıklama:** "Feqiyê Teyran" şu anlama gelir: "Şêx Sen'an" eseri ve kuşlarla konuşmasıyla tanınan klasik şair.
 **Kaynak:** —
 
@@ -1948,43 +1948,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Feqiyê Teyran" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Feqiyê Teyran" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
--    B) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
-- ✅ C) helbestvanê klasîk ê ku bi berhema "Şêx Sen"an' û axaftina bi çûkan re navdar e
+- ✅ B) helbestvanê klasîk ê ku bi berhema "Şêx Sen"an' û axaftina bi çûkan re navdar e
+-    C) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
 -    D) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
-**Doğru:** C) helbestvanê klasîk ê ku bi berhema "Şêx Sen"an' û axaftina bi çûkan re navdar e
+**Doğru:** B) helbestvanê klasîk ê ku bi berhema "Şêx Sen"an' û axaftina bi çûkan re navdar e
 **Açıklama:** "Feqiyê Teyran" için doğru açıklama şudur: "Şêx Sen"an' eseri ve kuşlarla konuşmasıyla tanınan klasik şair.
 **Kaynak:** —
 
 ## offline_curated_20304  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Ehmedê Xanî" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Ehmedê Xanî" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
--    B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
--    C) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
--    D) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
-**Doğru:** A) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
+-    A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
+-    B) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
+-    C) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
+- ✅ D) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
+**Doğru:** D) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
 **Açıklama:** "Ehmedê Xanî" için doğru açıklama şudur: Kürtlük düşüncesinin temelini atan ölümsüz "Mem û Zîn" destanının yazarı.
 **Kaynak:** —
 
 ## offline_curated_20326  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye"?
 **TR:** Hangi kavram şu açıklamayla tanınır: "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair"?
--    A) Ehmedê Xanî
-- ✅ B) Melayê Bateyî
+- ✅ A) Melayê Bateyî
+-    B) Ehmedê Xanî
 -    C) Mehmed Uzun
 -    D) Melayê Cizîrî
-**Doğru:** B) Melayê Bateyî
+**Doğru:** A) Melayê Bateyî
 **Açıklama:** "Melayê Bateyî" şu anlama gelir: ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair.
 **Kaynak:** —
 
 ## offline_curated_20329  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Melayê Bateyî" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Melayê Bateyî" teriminin açıklamasını doğru biçimde tamamlar?
--    A) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
-- ✅ B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
+- ✅ A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
+-    B) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
 -    C) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
 -    D) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
-**Doğru:** B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
+**Doğru:** A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
 **Açıklama:** "Melayê Bateyî" için doğru açıklama şudur: ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair.
 **Kaynak:** —
 
@@ -1992,32 +1992,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye'?
 **TR:** Hangi kavram şu açıklamayla tanınır: "1932"de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi'?
 -    A) Arabê Şamo
--    B) Feqiyê Teyran
-- ✅ C) kovara Hawarê
+- ✅ B) kovara Hawarê
+-    C) Feqiyê Teyran
 -    D) Mehmed Uzun
-**Doğru:** C) kovara Hawarê
+**Doğru:** B) kovara Hawarê
 **Açıklama:** "kovara Hawarê" şu anlama gelir: 1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi.
 **Kaynak:** —
 
 ## offline_curated_20354  ·  zorluk 4  ·  offline
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "kovara Hawarê" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Kovara Hawar" teriminin açıklamasını doğru biçimde tamamlar?
--    A) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
-- ✅ B) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
+- ✅ A) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
+-    B) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
 -    C) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
 -    D) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
-**Doğru:** B) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
+**Doğru:** A) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
 **Açıklama:** "kovara Hawarê" için doğru açıklama şudur: 1932'de Şam'da Bedirhanlar eliyle çıkan edebî ve kültürel dergi.
 **Kaynak:** —
 
 ## offline_curated_20375  ·  zorluk 1  ·  offline
 **KU:** Têgeha "Cegerxwîn" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "Cegerxwîn" terimi hangi açıklamayla daha iyi anlaşılır?
--    A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
-- ✅ B) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
+- ✅ A) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
+-    B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
 -    C) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
 -    D) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
-**Doğru:** B) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
+**Doğru:** A) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
 **Açıklama:** "Cegerxwîn" şu anlama gelir: modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair.
 **Kaynak:** —
 
@@ -2026,9 +2026,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi kavram şu açıklamayla tanınır: "modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair"?
 -    A) Feqiyê Teyran
 -    B) Arabê Şamo
--    C) Melayê Cizîrî
-- ✅ D) Cegerxwîn
-**Doğru:** D) Cegerxwîn
+- ✅ C) Cegerxwîn
+-    D) Melayê Cizîrî
+**Doğru:** C) Cegerxwîn
 **Açıklama:** "Cegerxwîn" şu anlama gelir: modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair.
 **Kaynak:** —
 
@@ -2036,21 +2036,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin'?
 **TR:** Hangi kavram şu açıklamayla tanınır: "ilk Kürtçe roman kabul edilen "Şivanê Kurd" romanının yazarı"?
 -    A) Ehmedê Xanî
--    B) kovara Hawarê
-- ✅ C) Arabê Şamo
+- ✅ B) Arabê Şamo
+-    C) kovara Hawarê
 -    D) Melayê Bateyî
-**Doğru:** C) Arabê Şamo
+**Doğru:** B) Arabê Şamo
 **Açıklama:** "Arabê Şamo" şu anlama gelir: ilk Kürtçe roman kabul edilen "Şivanê Kurd"ün yazarı.
 **Kaynak:** —
 
 ## offline_curated_20404  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Arabê Şamo" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Arabê Şamo" teriminin açıklamasını doğru biçimde tamamlar?
--    A) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
-- ✅ B) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
+- ✅ A) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
+-    B) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
 -    C) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
 -    D) civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin
-**Doğru:** B) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
+**Doğru:** A) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
 **Açıklama:** "Arabê Şamo" için doğru açıklama şudur: ilk Kürtçe roman kabul edilen "Şivanê Kurd"ün yazarı.
 **Kaynak:** —
 
@@ -2058,10 +2058,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir'?
 **TR:** Hangi kavram şu açıklamayla tanınır: "derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı"?
 -    A) Ehmedê Xanî
--    B) Helbesta Azad
-- ✅ C) Mehmed Uzun
+- ✅ B) Mehmed Uzun
+-    C) Helbesta Azad
 -    D) kovara Hawarê
-**Doğru:** C) Mehmed Uzun
+**Doğru:** B) Mehmed Uzun
 **Açıklama:** "Mehmed Uzun" şu anlama gelir: derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı.
 **Kaynak:** —
 
@@ -2069,10 +2069,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Mehmed Uzun" bi awayekî rast temam dike?
 **TR:** Edebiyat dersi için hangi seçenek "Mehmed Uzun" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye
--    B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
-- ✅ C) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
+- ✅ B) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
+-    C) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
 -    D) civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin
-**Doğru:** C) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
+**Doğru:** B) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
 **Açıklama:** "Mehmed Uzun" için doğru açıklama şudur: derin ve edebî diliyle Kürt romanında devrim yapan modern Kürt romancısı.
 **Kaynak:** —
 
@@ -2080,10 +2080,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin'?
 **TR:** Hangi kavram şu açıklamayla tanınır: "klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları"?
 -    A) Melayê Cizîrî
--    B) kovara Hawarê
-- ✅ C) şevbêrkên wêjeyî
+- ✅ B) şevbêrkên wêjeyî
+-    C) kovara Hawarê
 -    D) Ehmedê Xanî
-**Doğru:** C) şevbêrkên wêjeyî
+**Doğru:** B) şevbêrkên wêjeyî
 **Açıklama:** "şevbêrkên wêjeyî" şu anlama gelir: klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları.
 **Kaynak:** —
 
@@ -2092,20 +2092,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Edebiyat dersi için hangi seçenek "şevbêrkên wêjeyî" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
 -    B) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
--    C) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
-- ✅ D) civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin
-**Doğru:** D) civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin
+- ✅ C) civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin
+-    D) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin
+**Doğru:** C) civînên şevê yên ku tê de helbest û çîrokên klasîk û modern dihatin xwendin
 **Açıklama:** "şevbêrkên wêjeyî" için doğru açıklama şudur: klasik ve modern şiir ile hikâyelerin okunduğu gece toplantıları.
 **Kaynak:** —
 
 ## offline_curated_20476  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide'?
 **TR:** Hangi kavram şu açıklamayla tanınır: "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi"?
-- ✅ A) Helbesta Azad
--    B) kovara Hawarê
--    C) Arabê Şamo
--    D) Ehmedê Xanî
-**Doğru:** A) Helbesta Azad
+-    A) kovara Hawarê
+-    B) Arabê Şamo
+-    C) Ehmedê Xanî
+- ✅ D) Helbesta Azad
+**Doğru:** D) Helbesta Azad
 **Açıklama:** "Helbesta Azad" şu anlama gelir: ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi.
 **Kaynak:** —
 
@@ -2114,9 +2114,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Edebiyat dersi için hangi seçenek "Helbesta Azad" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
 -    B) romannivîsê kurd ê modern ku bi zimanekî kûr û edebî şoreşek di romana kurdî de çêkir
--    C) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
-- ✅ D) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
-**Doğru:** D) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
+- ✅ C) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
+-    D) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye
+**Doğru:** C) rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide
 **Açıklama:** "Helbesta Azad" için doğru açıklama şudur: ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi.
 **Kaynak:** —
 
@@ -2573,11 +2573,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_ede_2001  ·  zorluk 3  ·  offline
 **KU:** Çima Ehmedê Xanî berhema xwe ya mezin ne bi farisî, lê bi kurdî nivîsî?
 **TR:** Ehmedê Xanî büyük eserini neden Farsça değil de Kürtçe yazdı?
--    A) Ji ber ku wî bi farisî û erebî nizanibû
-- ✅ B) Da ku bê zanîn ku kurdî jî zimanê hunerê ye
+- ✅ A) Da ku bê zanîn ku kurdî jî zimanê hunerê ye
+-    B) Ji ber ku wî bi farisî û erebî nizanibû
 -    C) Ji ber ku mîrê Botan wisa ferman kiribû
 -    D) Da ku berhem li Stenbolê zûtir bê çapkirin û bêtir bê firotin
-**Doğru:** B) Da ku bê zanîn ku kurdî jî zimanê hunerê ye
+**Doğru:** A) Da ku bê zanîn ku kurdî jî zimanê hunerê ye
 **Açıklama:** Xanî bunu eserin giriş bölümünde açıkça yazar; amacı, kimsenin bu dili sanata elverişsiz saymamasıydı.
 **Kaynak:** —
 
@@ -2586,9 +2586,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Divan hangi özelliğiyle destandan ayrılır?
 -    A) Dîwan bi qafiye ye, destan bê qafiye ye
 -    B) Dîwan bi kurmancî ye, destan bi soranî ye
--    C) Dîwan ji bo mezinan e, destan tenê ji bo zarokan tê gotin
-- ✅ D) Dîwan berhevoka helbestan e, destan vegotinek e
-**Doğru:** D) Dîwan berhevoka helbestan e, destan vegotinek e
+- ✅ C) Dîwan berhevoka helbestan e, destan vegotinek e
+-    D) Dîwan ji bo mezinan e, destan tenê ji bo zarokan tê gotin
+**Doğru:** C) Dîwan berhevoka helbestan e, destan vegotinek e
 **Açıklama:** Divanda her şiir kendi başına durur; destan ise baştan sona tek bir olay anlatır.
 **Kaynak:** —
 
@@ -2596,10 +2596,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji van berheman kîjan ne ya Ehmedê Xanî ye?
 **TR:** Bu eserlerden hangisi Ehmedê Xanî'ye ait değildir?
 -    A) Mem û Zîn
--    B) Nûbihara Biçûkan
-- ✅ C) Şêxê Senan
+- ✅ B) Şêxê Senan
+-    C) Nûbihara Biçûkan
 -    D) Eqîdeya Îmanê
-**Doğru:** C) Şêxê Senan
+**Doğru:** B) Şêxê Senan
 **Açıklama:** "Şêxê Senan" mesnevisini Feqiyê Teyran yazdı; diğer üç eser Xanî imzasını taşır.
 **Kaynak:** —
 
@@ -2608,9 +2608,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bu Kürtçe dergilerden hangisi en eskisidir?
 -    A) Ronahî
 -    B) Nûbihar
--    C) Tîroj
-- ✅ D) Hawar
-**Doğru:** D) Hawar
+- ✅ C) Hawar
+-    D) Tîroj
+**Doğru:** C) Hawar
 **Açıklama:** Hawar 1932 yılında Şam kentinde yayına başladı; diğer üç dergi ondan çok sonra çıktı.
 **Kaynak:** —
 
@@ -2627,10 +2627,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Cudahiya sereke di navbera destana "Memê Alan" û berhema Ehmedê Xanî de çi ye?
 **TR:** "Memê Alan" destanı ile Ehmedê Xanî'nin eseri arasındaki temel fark nedir?
 -    A) Ya Xanî bi soranî ye, ya din bi kurmancî ye
--    B) Ya Xanî li ser şer e, ya din li ser evînê ye
-- ✅ C) Ya Xanî nivîskî ye, ya din devkî ye
+- ✅ B) Ya Xanî nivîskî ye, ya din devkî ye
+-    C) Ya Xanî li ser şer e, ya din li ser evînê ye
 -    D) Ya Xanî kurt e, ya din pir dirêj e
-**Doğru:** C) Ya Xanî nivîskî ye, ya din devkî ye
+**Doğru:** B) Ya Xanî nivîskî ye, ya din devkî ye
 **Açıklama:** "Memê Alan" bize dengbêjlerin ağzından ulaştı; Xanî aynı konuyu ölçülü ve yazılı bir mesneviye dönüştürdü.
 **Kaynak:** —
 
@@ -2646,11 +2646,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_ede_2008  ·  zorluk 1  ·  offline
 **KU:** Di şevbêrkên zivistanê de kesê ku efsane û bûyerên gelêrî bi devkî digihîne guhdaran, bi çi navî tê nasîn?
 **TR:** Kış şevbêrklerinde efsaneleri ve halk olaylarını sözlü olarak dinleyenlere aktaran kişi hangi adla bilinir?
--    A) helbestvan
-- ✅ B) çîrokbêj
+- ✅ A) çîrokbêj
+-    B) helbestvan
 -    C) wergêr
 -    D) weşanger
-**Doğru:** B) çîrokbêj
+**Doğru:** A) çîrokbêj
 **Açıklama:** Çîrokbêj kitapsız çalışır: hikâyeleri belleğinde tutar ve bir sonraki kuşağa aktarır.
 **Kaynak:** —
 
@@ -2659,20 +2659,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Klasik Kürt şairleri arasında hangi ad bir kadına aittir?
 -    A) Elî Herîrî
 -    B) Mela Huseynê Bateyî
--    C) Feqiyê Teyran
-- ✅ D) Mestûre Erdelan
-**Doğru:** D) Mestûre Erdelan
+- ✅ C) Mestûre Erdelan
+-    D) Feqiyê Teyran
+**Doğru:** C) Mestûre Erdelan
 **Açıklama:** Mestûre, Erdelan sarayında hem şiir hem de o bölgenin tarihini yazdı; kendi çağında bu yönüyle yalnızdı.
 **Kaynak:** —
 
 ## offline_ede_2010  ·  zorluk 2  ·  offline
 **KU:** Gava nivîskar çîrokê bi devê lehengê sereke vedibêje, ew kîjan awayê vegotinê bi kar tîne?
 **TR:** Yazar hikâyeyi baş kahramanın ağzından anlattığında hangi anlatım biçimini kullanır?
-- ✅ A) vebêjê kesê yekem
--    B) vebêjê kesê sêyem
--    C) vegotina bi nameyan
--    D) vegotina bi diyalogê
-**Doğru:** A) vebêjê kesê yekem
+-    A) vebêjê kesê sêyem
+-    B) vegotina bi nameyan
+-    C) vegotina bi diyalogê
+- ✅ D) vebêjê kesê yekem
+**Doğru:** D) vebêjê kesê yekem
 **Açıklama:** Bu anlatımda kahramanın kendisi ses olur; okur ancak onun bildiği kadarını bilir, gerisi gizli kalır.
 **Kaynak:** —
 
@@ -2688,11 +2688,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_ede_2012  ·  zorluk 5  ·  offline
 **KU:** Kovara "Nûdem" ku li Swêdê derdiket ji aliyê kîjan nivîskarî ve dihat weşandin?
 **TR:** İsveç'te çıkan "Nûdem" dergisi hangi yazar tarafından yayımlanıyordu?
-- ✅ A) Firat Cewerî
--    B) Hesenê Metê
--    C) Mehmed Uzun
--    D) Mehmed Emîn Bozarslan
-**Doğru:** A) Firat Cewerî
+-    A) Hesenê Metê
+-    B) Mehmed Uzun
+-    C) Mehmed Emîn Bozarslan
+- ✅ D) Firat Cewerî
+**Doğru:** D) Firat Cewerî
 **Açıklama:** Nûdem doksanlı yıllarda Stockholm kentinde çıktı ve yeni bir öykücü kuşağının yazı alanı oldu.
 **Kaynak:** —
 
@@ -2719,9 +2719,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sözlü edebiyatın hangi türü, cevabı gizlenmiş bir soru üzerine kurulur?
 -    A) destan
 -    B) pêkenok
--    C) gotina pêşiyan
-- ✅ D) mamik
-**Doğru:** D) mamik
+- ✅ C) mamik
+-    D) gotina pêşiyan
+**Doğru:** C) mamik
 **Açıklama:** Mamik dinleyenin zihnini çalıştırır: ipuçlarını birleştirip gizlenen şeyin adını bulması gerekir.
 **Kaynak:** —
 
@@ -2729,10 +2729,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Destan bi kevneşopî çawa digihîje nifşên nû?
 **TR:** Destan geleneksel olarak yeni kuşaklara nasıl ulaşır?
 -    A) Bi rojnameyên hefteyî yên çapkirî
--    B) Bi lîstikên sehneyê yên bi dekor
-- ✅ C) Bi devkî, bi vegotin û gotina bi awaz
+- ✅ B) Bi devkî, bi vegotin û gotina bi awaz
+-    C) Bi lîstikên sehneyê yên bi dekor
 -    D) Bi nameyên di navbera bajaran de
-**Doğru:** C) Bi devkî, bi vegotin û gotina bi awaz
+**Doğru:** B) Bi devkî, bi vegotin û gotina bi awaz
 **Açıklama:** Destan yazıdan önce vardır ve dengbêj gibi anlatıcıların belleğiyle aktarılır; bu yüzden her anlatım biraz değişir.
 **Kaynak:** —
 
@@ -2741,9 +2741,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Görselde boş bir kâğıt üzerinde bir kalem var. Şiir çoğunlukla hangi yapısal birimlerle düzenlenir?
 -    A) Bi paragraf û beşan
 -    B) Bi perde û dîmenan
--    C) Bi bendên qanûnî
-- ✅ D) Bi rêzik û bendan
-**Doğru:** D) Bi rêzik û bendan
+- ✅ C) Bi rêzik û bendan
+-    D) Bi bendên qanûnî
+**Doğru:** C) Bi rêzik û bendan
 **Açıklama:** Şiir dize ve bentler halinde örülür; ses ahengi, ölçü ve uyak orada anlam kadar önemlidir. Düz yazı cümle ve paragraflarla akar, sahne diyaloğu ise tiyatroya aittir.
 **Kaynak:** —
 
@@ -2751,10 +2751,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wêne kitêbeke stûr û girtî nîşan dide. Berhemeke dirêj a pexşanî bi gelemperî li perçeyên li pey hev tê dabeşkirin; ev perçe çi tên navandin?
 **TR:** Görselde kalın, kapalı bir kitap var. Uzun bir düzyazı eseri genellikle art arda gelen parçalara ayrılır; bu parçalara ne denir?
 -    A) Perde
--    B) Malik
-- ✅ C) Beş
+- ✅ B) Beş
+-    C) Malik
 -    D) Kîte
-**Doğru:** C) Beş
+**Doğru:** B) Beş
 **Açıklama:** Uzun düzyazı eserleri bölümlere ayrılır ve her bölüm olayların bir aşamasını taşır. Perde tiyatronun birimi, beyit klasik şiirin birimi, hece ise sözcüğün ses parçasıdır.
 **Kaynak:** —
 
@@ -2763,19 +2763,19 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Görselde el yazısıyla yazılmış bir şiir var. Şiirde dize sonlarındaki seslerin birbirini tutmasına ne denir?
 -    A) Kîte
 -    B) Rêzik
--    C) Malik
-- ✅ D) Qafiye
-**Doğru:** D) Qafiye
+- ✅ C) Qafiye
+-    D) Malik
+**Doğru:** C) Qafiye
 **Açıklama:** Kafiye, dize sonlarındaki seslerin uyuşmasıdır ve şiirin ahengini kurar. Hece sözcüğün ses parçası, dize şiirin bir satırı, beyit ise klasik şiirin birimidir.
 **Kaynak:** —
 
 ## visual_2026_08_07_0014  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Wêne kesekî nîşan dide ku bi mîkrofonê diaxive û tiştekî digihîne guhdaran. Di çîrok û romanan de dengê ku bûyeran ji xwendevan re radigihîne çi tê navandin?
 **TR:** Görselde mikrofonla konuşup dinleyicilere bir şey aktaran biri var. Öykü ve romanlarda olayları okura aktaran sese ne denir?
--    A) Nivîskar
-- ✅ B) Vebêj
+- ✅ A) Vebêj
+-    B) Nivîskar
 -    C) Rexnegir
 -    D) Leheng
-**Doğru:** B) Vebêj
+**Doğru:** A) Vebêj
 **Açıklama:** Anlatıcı, olayları aktaran sestir; yazarla her zaman aynı kişi değildir, çünkü yazar kurgusal bir anlatıcı yaratabilir. Kahraman olayları yaşayan kişi, eleştirmen ise eseri yorumlayan kişidir.
 **Kaynak:** —

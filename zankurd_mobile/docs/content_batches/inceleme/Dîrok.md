@@ -87,10 +87,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Şerefxanê Bidlîsî li ku derê hatiye dinyayê?
 **TR:** Şerefhan Bitlisi nerede dünyaya gelmiştir?
 -    A) Bidlîs
--    B) Cizîra Botan
-- ✅ C) Karahrûd (nêzî Qumê)
+- ✅ B) Karahrûd (nêzî Qumê)
+-    C) Cizîra Botan
 -    D) Hekarî
-**Doğru:** C) Karahrûd (nêzî Qumê)
+**Doğru:** B) Karahrûd (nêzî Qumê)
 **Açıklama:** Şerefhan Bitlisi 1543'te Kum yakınlarındaki Karahrud'da doğdu; Bitlis beyleri ailesindendi ve adını o beylikten alır.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
@@ -99,9 +99,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şerefhan Bitlisi hangi dinden idi?
 -    A) Şîa
 -    B) Elewî
--    C) Yarsan
-- ✅ D) Sunnî
-**Doğru:** D) Sunnî
+- ✅ C) Sunnî
+-    D) Yarsan
+**Doğru:** C) Sunnî
 **Açıklama:** Şerefhan Bitlisi Sünni bir Müslümandı. Kitabında Kürtlerin din ve inancından da bahseder.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
@@ -109,10 +109,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Şerefname ji aliyê kîjan malbatê ve hatiye piştgirîkirin?
 **TR:** Şerefname hangi aile tarafından desteklenmiştir?
 -    A) Malbata Osmanî
--    B) Malbata Sefewî
-- ✅ C) Malbata Mîrên Bidlîsê
+- ✅ B) Malbata Mîrên Bidlîsê
+-    C) Malbata Sefewî
 -    D) Malbata Memlûkan
-**Doğru:** C) Malbata Mîrên Bidlîsê
+**Doğru:** B) Malbata Mîrên Bidlîsê
 **Açıklama:** Şerefname, Bitlis Beyleri ailesi tarafından desteklenmiştir. Şerefhan Bitlisi de bu ailenin bir üyesiydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
@@ -121,20 +121,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şerefhan Bitlisi hayatının son döneminde hangi devletin hizmetindeydi?
 -    A) Împaratoriya Sefewî
 -    B) Împaratoriya Memlûkan
--    C) Împaratoriya Bîzansê
-- ✅ D) Împaratoriya Osmanî
-**Doğru:** D) Împaratoriya Osmanî
+- ✅ C) Împaratoriya Osmanî
+-    D) Împaratoriya Bîzansê
+**Doğru:** C) Împaratoriya Osmanî
 **Açıklama:** Şerefhan önce Safevî sarayında yetişti, sonra Osmanlı tarafına geçti ve Bitlis beyi olarak Şerefname'yi orada yazdı.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
 ## ds_dirok_0016  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Şerefxanê Bidlîsî ji kîjan mîrektiyê bû?
 **TR:** Şerefxanê Bidlîsî hangi beylikten idi?
-- ✅ A) Mîrektiya Bidlîsê
--    B) Mîrektiya Cizîrê
--    C) Mîrektiya Botanê
--    D) Mîrektiya Hekarîyê
-**Doğru:** A) Mîrektiya Bidlîsê
+-    A) Mîrektiya Cizîrê
+-    B) Mîrektiya Botanê
+-    C) Mîrektiya Hekarîyê
+- ✅ D) Mîrektiya Bidlîsê
+**Doğru:** D) Mîrektiya Bidlîsê
 **Açıklama:** Şerefxanê Bidlîsî, Bitlis Beyliği'ndendi. Bu beyliğin mir ailesine mensuptu ve daha sonra kendisi de Bitlis beyi oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
@@ -143,9 +143,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şerefxanê Bidlîsî yaklaşık hangi yılda vefat etmiştir?
 -    A) 1613
 -    B) 1623
--    C) 1633
-- ✅ D) 1603
-**Doğru:** D) 1603
+- ✅ C) 1603
+-    D) 1633
+**Doğru:** C) 1603
 **Açıklama:** Şerefxanê Bidlîsî'nin ölümü kaynaklarda 1603-04 olarak verilir; Şerefname'yi 1597'de tamamlamıştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
@@ -153,10 +153,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Şerefxanê Bidlîsî ji bo kîjan dewletê xebitiye?
 **TR:** Şerefxanê Bidlîsî hangi devlet için çalışmıştır?
 -    A) Împaratoriya Osmanî
--    B) Împaratoriya Sefewî
-- ✅ C) Her du dewletan
+- ✅ B) Her du dewletan
+-    C) Împaratoriya Sefewî
 -    D) Ti dewletê
-**Doğru:** C) Her du dewletan
+**Doğru:** B) Her du dewletan
 **Açıklama:** Şerefxanê Bidlîsî, hem Osmanlı İmparatorluğu hem de Safevi İmparatorluğu için çalışmıştır. İki devlet arasında manevra yapmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
@@ -165,20 +165,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şerefxanê Bidlîsî hangi isimle de bilinir?
 -    A) Şeref Beg
 -    B) Şeref Paşa
--    C) Şeref Mîr
-- ✅ D) Şeref Xan
-**Doğru:** D) Şeref Xan
+- ✅ C) Şeref Xan
+-    D) Şeref Mîr
+**Doğru:** C) Şeref Xan
 **Açıklama:** Şerefxanê Bidlîsî, Şeref Han adıyla da bilinir. Kürt bir bey ve ünlü bir tarihçi olarak tanınmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi
 
 ## ds_dirok_0026  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kovara Hawarê belavbûna kîjan alfabeyê pêş xist?
 **TR:** Hawar dergisi hangi alfabenin yaygınlaşmasını sağladı?
--    A) Alfabeya erebî
-- ✅ B) Alfabeya latînî
+- ✅ A) Alfabeya latînî
+-    B) Alfabeya erebî
 -    C) Alfabeya krîlî
 -    D) Alfabeya aramî
-**Doğru:** B) Alfabeya latînî
+**Doğru:** A) Alfabeya latînî
 **Açıklama:** Hawar 1932'de Şam'da çıktı ve Celadet Bedirxan'ın hazırladığı Latin esaslı Kurmancî alfabesinin yerleşmesinde belirleyici oldu. 1932'den önce de Kürtçe süreli yayınlar vardı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -187,9 +187,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hawar'ı hangi kişilik çıkardı ve yönetti?
 -    A) Nûredîn Zaza
 -    B) Qedrîcan
--    C) Osman Sebrî
-- ✅ D) Celadet Alî Bedirxan
-**Doğru:** D) Celadet Alî Bedirxan
+- ✅ C) Celadet Alî Bedirxan
+-    D) Osman Sebrî
+**Doğru:** C) Celadet Alî Bedirxan
 **Açıklama:** Emîr Emin Alî Bedirxan'ın oğlu Celadet Alî Bedirxan, Hawar'ı çıkardı ve yönetti. Latin Kürt alfabesinin kurucularından biriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Celadet_Alî_Bedirxan
 
@@ -197,10 +197,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hawar di kîjan bajarî de hate weşandin?
 **TR:** Hawar hangi şehirde yayımlandı?
 -    A) Stenbol
--    B) Qahîre
-- ✅ C) Şam
+- ✅ B) Şam
+-    C) Qahîre
 -    D) Bexda
-**Doğru:** C) Şam
+**Doğru:** B) Şam
 **Açıklama:** Hawar, Suriye'nin başkenti Şam'da yayımlandı. Celadet Alî Bedirxan, Türkiye'den göç ettikten sonra oraya yerleşmişti.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -209,20 +209,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hawar hangi yılda başladı?
 -    A) 1925
 -    B) 1943
--    C) 1950
-- ✅ D) 1932
-**Doğru:** D) 1932
+- ✅ C) 1932
+-    D) 1950
+**Doğru:** C) 1932
 **Açıklama:** Hawar, 15 Mayıs 1932'de yayın hayatına başladı. 1943 yılına kadar aralıklarla yayımlandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
 ## ds_dirok_0031  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Hawar ji bilî kovarê, di warê çi de jî girîng bû?
 **TR:** Hawar, dergi olmanın yanı sıra hangi alanda da önemliydi?
--    A) Çandina genim
-- ✅ B) Alfabeya Kurdî
+- ✅ A) Alfabeya Kurdî
+-    B) Çandina genim
 -    C) Avakirina rêyan
 -    D) Çêkirina çekan
-**Doğru:** B) Alfabeya Kurdî
+**Doğru:** A) Alfabeya Kurdî
 **Açıklama:** Hawar, Celadet Alî Bedirxan'ın geliştirdiği Latin Kürt alfabesinin kabulünde temel bir rol oynadı. Dergi bu alfabeyi yaydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -231,9 +231,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bedirxan Paşa hangi yüzyılda Cizre bölgesinde hüküm sürüyordu?
 -    A) Sedsala 18an
 -    B) Sedsala 20an
--    C) Sedsala 17an
-- ✅ D) Sedsala 19an
-**Doğru:** D) Sedsala 19an
+- ✅ C) Sedsala 19an
+-    D) Sedsala 17an
+**Doğru:** C) Sedsala 19an
 **Açıklama:** Bedirxan Paşa, 19. yüzyılın ortalarında, özellikle 1842 ile 1847 yılları arasında Cizre Beyliği'nde hüküm sürüyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
@@ -241,21 +241,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Piştî têkçûna serhildana Bedirxan Paşa, ew bi kîjan dewletê re têkildar bû?
 **TR:** Bedirxan Paşa'nın isyanının bastırılmasından sonra, o hangi devletle ilişkiliydi?
 -    A) Împaratoriya Rûsî
--    B) Împaratoriya Brîtanî
-- ✅ C) Împaratoriya Osmanî
+- ✅ B) Împaratoriya Osmanî
+-    C) Împaratoriya Brîtanî
 -    D) Împaratoriya Fransî
-**Doğru:** C) Împaratoriya Osmanî
+**Doğru:** B) Împaratoriya Osmanî
 **Açıklama:** Bedirxan Paşa, Osmanlı İmparatorluğu'na karşı isyan etti, ancak yenilgiden sonra tutuklandı ve sürgüne gönderildi. Aslen bu devletin tebaasıydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
 ## ds_dirok_0035  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Hawar çend hejmar bi giştî derketin?
 **TR:** Hawar toplam kaç sayı çıktı?
-- ✅ A) 57
--    B) 23
--    C) 30
--    D) 100
-**Doğru:** A) 57
+-    A) 23
+-    B) 30
+-    C) 100
+- ✅ D) 57
+**Doğru:** D) 57
 **Açıklama:** Hawar toplam 57 sayı çıktı. Bu sayılar 1932 ile 1943 yılları arasında yayımlandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -263,21 +263,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Celadet Alî Bedirxan xebata rêzimana kurmancî bi kê re amade kir?
 **TR:** Celadet Alî Bedirxan, Kurmancî gramer çalışmasını kiminle birlikte hazırladı?
 -    A) Vladimir Minorsky
--    B) Basil Nikitin
-- ✅ C) Roger Lescot
+- ✅ B) Roger Lescot
+-    C) Basil Nikitin
 -    D) Thomas Bois
-**Doğru:** C) Roger Lescot
+**Doğru:** B) Roger Lescot
 **Açıklama:** Celadet Alî Bedirxan, Kurmancî grameri Fransız şarkiyatçı Roger Lescot ile birlikte hazırladı.
 **Kaynak:** https://en.wikipedia.org/wiki/Roger_Lescot
 
 ## ds_dirok_0037  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Hawar çi cure kovar bû?
 **TR:** Hawar ne tür bir dergiydi?
--    A) Kovara zanistî
-- ✅ B) Kovara edebî û çandî
+- ✅ A) Kovara edebî û çandî
+-    B) Kovara zanistî
 -    C) Kovara sporê
 -    D) Kovara aborî
-**Doğru:** B) Kovara edebî û çandî
+**Doğru:** A) Kovara edebî û çandî
 **Açıklama:** Hawar, içinde şiir, öykü, makale ve Kürt dili ile kültürü üzerine araştırmaların yayımlandığı edebi ve kültürel bir dergiydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -285,21 +285,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bedirxan Paşa bi kîjan navî jî tê zanîn?
 **TR:** Bedirxan Paşa hangi isimle de bilinir?
 -    A) Mîr Bedir
--    B) Xan Bedir
-- ✅ C) Bedirxan Beg
+- ✅ B) Bedirxan Beg
+-    C) Xan Bedir
 -    D) Begê Bedir
-**Doğru:** C) Bedirxan Beg
+**Doğru:** B) Bedirxan Beg
 **Açıklama:** Bedirxan Paşa, Bedirxan Beg adıyla da bilinir. Cizre Beyliği'nin lideriydi ve Osmanlı Türkçesi adıyla da tanınırdı.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
 ## ds_dirok_0040  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Hawar di kîjan welatî de hate weşandin?
 **TR:** Hawar hangi ülkede yayımlandı?
-- ✅ A) Sûriye
--    B) Tirkiye
--    C) Iraq
--    D) Îran
-**Doğru:** A) Sûriye
+-    A) Tirkiye
+-    B) Iraq
+-    C) Îran
+- ✅ D) Sûriye
+**Doğru:** D) Sûriye
 **Açıklama:** Hawar, Suriye'de, özellikle Şam'da yayımlandı. Bu, Celadet Alî Bedirxan'ın göç etmesinden kaynaklanıyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -307,32 +307,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bedirxan Paşa li dijî kîjan dewletê serhildan kir?
 **TR:** Bedirhan Paşa hangi devlete karşı isyan etti?
 -    A) Împaratoriya Farisî
--    B) Împaratoriya Rûsî
-- ✅ C) Împaratoriya Osmanî
+- ✅ B) Împaratoriya Osmanî
+-    C) Împaratoriya Rûsî
 -    D) Împaratoriya Brîtanî
-**Doğru:** C) Împaratoriya Osmanî
+**Doğru:** B) Împaratoriya Osmanî
 **Açıklama:** Bedirhan Paşa 1840'lı yıllarda Osmanlı İmparatorluğu'na karşı isyan etti. Cizre'deki beyliğini korumak istiyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
 ## ds_dirok_0043  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Hawar ji bo kîjan alfabeyê wek çavkaniya sereke tê zanîn?
 **TR:** Hawar, hangi alfabe için ana kaynak olarak bilinir?
--    A) Alfabeya Erebî ya Kurdî
-- ✅ B) Alfabeya Latînî ya Kurdî
+- ✅ A) Alfabeya Latînî ya Kurdî
+-    B) Alfabeya Erebî ya Kurdî
 -    C) Alfabeya Kirîlî ya Kurdî
 -    D) Alfabeya Tirkî
-**Doğru:** B) Alfabeya Latînî ya Kurdî
+**Doğru:** A) Alfabeya Latînî ya Kurdî
 **Açıklama:** Hawar, Kürtçe Latin alfabesinin yayılması için ana kaynak olarak bilinir. Bu alfabe Celadet Ali Bedirhan tarafından geliştirilmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
 ## ds_dirok_0045  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Celadet Alî Bedirxan di kîjan bajarî de hatiye dinyayê?
 **TR:** Celadet Ali Bedirhan hangi şehirde doğdu?
-- ✅ A) Stenbol
--    B) Şam
--    C) Qahîre
--    D) Bexda
-**Doğru:** A) Stenbol
+-    A) Şam
+-    B) Qahîre
+-    C) Bexda
+- ✅ D) Stenbol
+**Doğru:** D) Stenbol
 **Açıklama:** Celadet Ali Bedirhan 1893 yılında İstanbul'da doğdu. Bedirhani ailesindendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Celadet_Alî_Bedirxan
 
@@ -341,20 +341,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hawar hangi yılda sona erdi?
 -    A) 1945
 -    B) 1950
--    C) 1938
-- ✅ D) 1943
-**Doğru:** D) 1943
+- ✅ C) 1943
+-    D) 1938
+**Doğru:** C) 1943
 **Açıklama:** Hawar 1943 yılında sona erdi. Toplam 57 sayı çıktı ve ardından yayınını bitirdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
 ## ds_dirok_0048  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Hawar bi kîjan awayî hate weşandin?
 **TR:** Hawar hangi alfabeyle yayımlandı?
--    A) Bi alfabeya Erebî
-- ✅ B) Bi alfabeya Latînî
+- ✅ A) Bi alfabeya Latînî
+-    B) Bi alfabeya Erebî
 -    C) Bi alfabeya Kirîlî
 -    D) Bi alfabeya Îbranî
-**Doğru:** B) Bi alfabeya Latînî
+**Doğru:** A) Bi alfabeya Latînî
 **Açıklama:** Hawar, Kürtçe Latin alfabesiyle yayımlandı. Bu, onun en önemli özelliklerinden biriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -363,20 +363,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bedirhan Paşa hangi yılda vefat etti?
 -    A) 1875
 -    B) 1880
--    C) 1850
-- ✅ D) 1868
-**Doğru:** D) 1868
+- ✅ C) 1868
+-    D) 1850
+**Doğru:** C) 1868
 **Açıklama:** Bedirhan Paşa 1868'de Şam'da sürgünde öldü. Bazı kaynaklar 1867 verir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
 ## ds_dirok_0050  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayetî bi navê Hawarê ve têkildar e?
 **TR:** Hangi kişilik Hawar adıyla ilişkilidir?
-- ✅ A) Celadet Alî Bedirxan
--    B) Qedrîcan
--    C) Nûredîn Zaza
--    D) Osman Sebrî
-**Doğru:** A) Celadet Alî Bedirxan
+-    A) Qedrîcan
+-    B) Nûredîn Zaza
+-    C) Osman Sebrî
+- ✅ D) Celadet Alî Bedirxan
+**Doğru:** D) Celadet Alî Bedirxan
 **Açıklama:** Celadet Ali Bedirhan, Hawar'ı çıkardığı ve yönettiği için onunla ilişkilidir. Hawar dergisinin en önemli kişiliklerinden biriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Hawar_(magazine)
 
@@ -385,20 +385,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Mezopotamya'dan bulunan en eski yazılı dil hangisidir?
 -    A) Akkadî
 -    B) Elamî
--    C) Aramî
-- ✅ D) Sumerî
-**Doğru:** D) Sumerî
+- ✅ C) Sumerî
+-    D) Aramî
+**Doğru:** C) Sumerî
 **Açıklama:** Sümerce, milattan önce 3000 civarında yazılı olarak bulunan en eski dildir. Akadca daha sonra ortaya çıktı, Elamca ve Aramice ise bölgenin diğer dilleriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Sumerian_language
 
 ## ds_dirok_0053  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayetî qanûnên navdar ên Babîlê çêkirin?
 **TR:** Hangi kişilik Babil'in ünlü kanunlarını oluşturdu?
--    A) Sargon
-- ✅ B) Hamûrabî
+- ✅ A) Hamûrabî
+-    B) Sargon
 -    C) Naram-Sîn
 -    D) Gudea
-**Doğru:** B) Hamûrabî
+**Doğru:** A) Hamûrabî
 **Açıklama:** Babil kralı Hammurabi, kendi adıyla bilinen kanunları oluşturdu. Sargon ve Naram-Sin Akkad krallarıydı, Gudea ise Lagaş hükümdarıydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hammurabi
 
@@ -407,9 +407,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Çivi yazısı hangi uygarlık döneminde gelişti?
 -    A) Babîlî
 -    B) Asûrî
--    C) Akkadî
-- ✅ D) Sumerî
-**Doğru:** D) Sumerî
+- ✅ C) Sumerî
+-    D) Akkadî
+**Doğru:** C) Sumerî
 **Açıklama:** Çivi yazısı Sümerler tarafından icat edildi ve geliştirildi. Babilliler, Asurlular ve Akkadlar daha sonra bu yazıyı kullandılar.
 **Kaynak:** https://en.wikipedia.org/wiki/Cuneiform
 
@@ -417,32 +417,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan bajarê Sumeriyan wekî navenda perestgeha girîng a Enlil dihat naskirin?
 **TR:** Sümerlerin hangi şehri Enlil'in önemli tapınağının merkezi olarak biliniyordu?
 -    A) Ur
--    B) Uruk
-- ✅ C) Nippur
+- ✅ B) Nippur
+-    C) Uruk
 -    D) Lagash
-**Doğru:** C) Nippur
+**Doğru:** B) Nippur
 **Açıklama:** Nippur, Enlil tapınağının bulunduğu Sümerlerin kutsal şehriydi. Ur, Uruk ve Lagaş da önemli şehirlerdi, ancak Nippur Enlil için biliniyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Nippur
 
 ## ds_dirok_0072  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan bajarê Sumeriyan wekî navenda perestgeha Inanna dihat naskirin?
 **TR:** İnanna tapınağının merkezi olarak bilinen Sümer şehri hangisiydi?
--    A) Ur
-- ✅ B) Uruk
+- ✅ A) Uruk
+-    B) Ur
 -    C) Nippur
 -    D) Eridu
-**Doğru:** B) Uruk
+**Doğru:** A) Uruk
 **Açıklama:** Uruk, Sümerlerin en önemli tanrıçalarından biri olan İnanna'nın (İştar) tapınağının merkezi olan şehirdi. Ur, Nippur ve Eridu da diğer şehirlerdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Uruk
 
 ## ds_dirok_0056  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan împaratoriya Mezopotamyayê yekem car yekîtiya siyasî ya herêmê ava kir?
 **TR:** Hangi Mezopotamya imparatorluğu bölgenin ilk siyasi birliğini kurdu?
-- ✅ A) Akkad
--    B) Sumer
--    C) Babîl
--    D) Asûr
-**Doğru:** A) Akkad
+-    A) Sumer
+-    B) Babîl
+-    C) Asûr
+- ✅ D) Akkad
+**Doğru:** D) Akkad
 **Açıklama:** Sargon tarafından kurulan Akkad İmparatorluğu, Mezopotamya'yı birleştiren ilk imparatorluktu. Sümer, Babil ve Asur daha sonra geldi.
 **Kaynak:** https://en.wikipedia.org/wiki/Akkadian_Empire
 
@@ -450,21 +450,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li gorî vegotina kevneşopî, kîjan padîşahê Babîlê baxçeyên daleqandî ava kirin?
 **TR:** Geleneksel anlatıya göre Babil'in asma bahçelerini hangi kral yaptırdı?
 -    A) Hamûrabî
--    B) Sargon
-- ✅ C) Nebukadnezar II
+- ✅ B) Nebukadnezar II
+-    C) Sargon
 -    D) Aşurbanipal
-**Doğru:** C) Nebukadnezar II
+**Doğru:** B) Nebukadnezar II
 **Açıklama:** Geleneksel anlatı asma bahçelerini II. Nebukadnezar'a atfeder; doğrudan çağdaş belge ya da arkeolojik kanıt bulunmamıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nebuchadnezzar_II
 
 ## ds_dirok_0058  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan bajarê Mezopotamyayê paytexta împaratoriya Asûrê bû?
 **TR:** Mezopotamya'nın hangi şehri Asur İmparatorluğu'nun başkentiydi?
-- ✅ A) Nînova
--    B) Babîl
--    C) Ur
--    D) Uruk
-**Doğru:** A) Nînova
+-    A) Babîl
+-    B) Ur
+-    C) Uruk
+- ✅ D) Nînova
+**Doğru:** D) Nînova
 **Açıklama:** Ninova, özellikle Sanherib döneminde Asur İmparatorluğu'nun başkentiydi. Babil, Babil'in başkentiydi, Ur ve Uruk ise Sümer şehirleriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Nineveh
 
@@ -473,31 +473,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi Akkad kralı dünyanın ilk imparatorluğunu kurdu?
 -    A) Naram-Sîn
 -    B) Rimush
--    C) Manishtushu
-- ✅ D) Sargon
-**Doğru:** D) Sargon
+- ✅ C) Sargon
+-    D) Manishtushu
+**Doğru:** C) Sargon
 **Açıklama:** Sargon, ilk çok uluslu imparatorluk olan Akkad İmparatorluğu'nun kurucusu olarak bilinir. Naram-Sin onun torunuydu, Rimuş ve Maniştuşu ise oğullarıydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Sargon_of_Akkad
 
 ## ds_dirok_0060  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan şaristaniya Mezopotamyayê ji bo îcadkirina çerxê tê naskirin?
 **TR:** Hangi Mezopotamya uygarlığı tekerleğin icadıyla tanınır?
-- ✅ A) Sumerî
--    B) Akkadî
--    C) Babîlî
--    D) Asûrî
-**Doğru:** A) Sumerî
+-    A) Akkadî
+-    B) Babîlî
+-    C) Asûrî
+- ✅ D) Sumerî
+**Doğru:** D) Sumerî
 **Açıklama:** Sümerler, araçlar ve seramik yapımı için önemli olan tekerleği icat ettiler. Akkadlar, Babilliler ve Asurlular daha sonra bu teknolojiyi kullandılar.
 **Kaynak:** https://en.wikipedia.org/wiki/Wheel
 
 ## ds_dirok_0061  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Babîl di kîjan serdemê de bû navenda stêrnasî û matematîkê ya herêmê?
 **TR:** Babil hangi dönemde bölgenin astronomi ve matematik merkezi oldu?
--    A) Serdema Paleo-Babîl
-- ✅ B) Serdema Neo-Babîl
+- ✅ A) Serdema Neo-Babîl
+-    B) Serdema Paleo-Babîl
 -    C) Serdema Sumerî
 -    D) Serdema Akkadî
-**Doğru:** B) Serdema Neo-Babîl
+**Doğru:** A) Serdema Neo-Babîl
 **Açıklama:** Yeni Babil döneminde (MÖ 626-539) Babil astronomi ve matematik çalışmalarının merkeziydi; gök gözlem kayıtları bu dönemden gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Neo-Babylonian_Empire
 
@@ -506,42 +506,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yeni Babil Devleti hangi güç tarafından sona erdirildi?
 -    A) Asûrî
 -    B) Akkadî
--    C) Sumerî
-- ✅ D) Farisî (Hexamenişî)
-**Doğru:** D) Farisî (Hexamenişî)
+- ✅ C) Farisî (Hexamenişî)
+-    D) Sumerî
+**Doğru:** C) Farisî (Hexamenişî)
 **Açıklama:** MÖ 539'da Pers kralı Kyros Babil'i aldı ve Yeni Babil Devleti sona erdi. Kent büyük bir yıkım savaşı olmadan el değiştirdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Fall_of_Babylon
 
 ## ds_dirok_0062  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan padîşahê Asûrê pirtûkxaneya navdar a Nînovayê ava kir?
 **TR:** Ninova'nın ünlü kütüphanesini hangi Asur kralı inşa ettirdi?
-- ✅ A) Aşurbanipal
--    B) Sargon II
--    C) Sennacherib
--    D) Tiglath-Pileser III
-**Doğru:** A) Aşurbanipal
+-    A) Sargon II
+-    B) Sennacherib
+-    C) Tiglath-Pileser III
+- ✅ D) Aşurbanipal
+**Doğru:** D) Aşurbanipal
 **Açıklama:** Aşurbanipal, içinde binlerce çivi yazılı metin bulunan ünlü Ninova Kütüphanesi'ni inşa ettirdi. Sargon II, Sennacherib ve Tiglath-Pileser III ise diğer krallardı.
 **Kaynak:** https://en.wikipedia.org/wiki/Ashurbanipal
 
 ## ds_dirok_0064  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan destkeftiya Sumeriyan ji bo çandiniyê bû sedema pêşketina şaristaniyê?
 **TR:** Sümerlerin medeniyetin gelişmesine yol açan tarımsal başarısı hangisiydi?
-- ✅ A) Avdanî
--    B) Çerx
--    C) Nivîsîn
--    D) Metal
-**Doğru:** A) Avdanî
+-    A) Çerx
+-    B) Nivîsîn
+-    C) Metal
+- ✅ D) Avdanî
+**Doğru:** D) Avdanî
 **Açıklama:** Sulama, Sümerlerin kurak topraklarda tarım yapmasına olanak sağladığı için tarım için önemliydi. Tekerlek, yazı ve maden de önemliydi, ancak temel olan sulamaydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Agriculture_in_Mesopotamia
 
 ## ds_dirok_0065  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan padîşahê Babîlê qanûnên ku bi navê wî têne zanîn nivîsand?
 **TR:** Kendi adıyla bilinen kanunları yazan Babil kralı hangisiydi?
--    A) Nebukadnezar I
-- ✅ B) Hamûrabî
+- ✅ A) Hamûrabî
+-    B) Nebukadnezar I
 -    C) Nabopolassar
 -    D) Marduk-zakir-shumi
-**Doğru:** B) Hamûrabî
+**Doğru:** A) Hamûrabî
 **Açıklama:** Babil kralı Hammurabi, bilinen en eski yazılı kanunlardan biri olan ünlü Hammurabi Kanunları'nı yazdı. Nebukadnezar I, Nabopolassar ve Marduk-zakir-shumi ise diğer krallardı.
 **Kaynak:** https://en.wikipedia.org/wiki/Code_of_Hammurabi
 
@@ -550,42 +550,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Akat İmparatorluğu hangi dönemde çöktü?
 -    A) Piştî mirina Sargon
 -    B) Piştî Gudea
--    C) Piştî Hamûrabî
-- ✅ D) Piştî Naram-Sîn
-**Doğru:** D) Piştî Naram-Sîn
+- ✅ C) Piştî Naram-Sîn
+-    D) Piştî Hamûrabî
+**Doğru:** C) Piştî Naram-Sîn
 **Açıklama:** Akat İmparatorluğu, Guti saldırıları nedeniyle Naram-Sin'in yönetiminden sonra çöktü. Sargon imparatorluğu kurdu, Gudea Lagaş hükümdarıydı ve Hammurabi de Babil'deydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Akkadian_Empire
 
 ## ds_dirok_0067  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan bajarê Mezopotamyayê wekî navenda bazirganiya deryayî dihat naskirin?
 **TR:** Deniz ticaretinin merkezi olarak bilinen Mezopotamya şehri hangisiydi?
--    A) Uruk
-- ✅ B) Ur
+- ✅ A) Ur
+-    B) Uruk
 -    C) Eridu
 -    D) Lagash
-**Doğru:** B) Ur
+**Doğru:** A) Ur
 **Açıklama:** Ur, Basra Körfezi'ne bağlı olduğu için deniz ticareti yapılan bir şehirdi. Uruk, Eridu ve Lagash da önemli şehirlerdi, ancak Ur ticaretiyle tanınıyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Ur
 
 ## ds_dirok_0091  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan bajarê Mezopotamyayê wekî navenda perestgeha Enlil dihat naskirin?
 **TR:** Mezopotamya'da Enlil tapınağının merkezi olarak bilinen şehir hangisidir?
-- ✅ A) Nîppur
--    B) Babîl
--    C) Ur
--    D) Eridu
-**Doğru:** A) Nîppur
+-    A) Babîl
+-    B) Ur
+-    C) Eridu
+- ✅ D) Nîppur
+**Doğru:** D) Nîppur
 **Açıklama:** Nippur, Sümerlerin en önemli tanrısı olan Enlil'in tapınağının merkeziydi ve bu nedenle bölgenin dini merkezi haline geldi.
 **Kaynak:** https://en.wikipedia.org/wiki/Nippur
 
 ## ds_dirok_0068  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di serdema Babîla Kevn de zimanê nivîsê yê fermî çi bû?
 **TR:** Eski Babil döneminde resmî yazı dili hangisiydi?
--    A) Sumerî
-- ✅ B) Akkadî
+- ✅ A) Akkadî
+-    B) Sumerî
 -    C) Aramî
 -    D) Elamî
-**Doğru:** B) Akkadî
+**Doğru:** A) Akkadî
 **Açıklama:** Eski Babil döneminde resmî belgeler Akadca yazılıyordu. Aramice ise çok daha sonra, Yeni Babil döneminden itibaren yaygınlaştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Akkadian_language
 
@@ -593,10 +593,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan padîşahê Asûrê Nînova ava kir wekî paytexta xwe?
 **TR:** Ninova'yı başkent yapan Asur kralı hangisiydi?
 -    A) Sargon II
--    B) Tiglath-Pileser III
-- ✅ C) Sennacherib
+- ✅ B) Sennacherib
+-    C) Tiglath-Pileser III
 -    D) Esarhaddon
-**Doğru:** C) Sennacherib
+**Doğru:** B) Sennacherib
 **Açıklama:** Sennacherib, Ninova'yı Asur'un başkenti yaptı ve şehri inşa ettirdi. Sargon II, Tiglath-Pileser III ve Esarhaddon diğer krallardı, ancak Ninova'yı Sennacherib inşa ettirdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Sennacherib
 
@@ -605,20 +605,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kendisini tanrısı olarak gören Akat kralı hangisiydi?
 -    A) Sargon
 -    B) Rimush
--    C) Manishtushu
-- ✅ D) Naram-Sîn
-**Doğru:** D) Naram-Sîn
+- ✅ C) Naram-Sîn
+-    D) Manishtushu
+**Doğru:** C) Naram-Sîn
 **Açıklama:** Naram-Sin, kendisini tanrı olarak gören ilk kraldı. Sargon onun babasıydı, Rimush ve Manishtushu ise Sargon'un oğullarıydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Naram-Sin
 
 ## ds_dirok_0075  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Med împaratoriyê di kîjan serdemê de li Rojhilata Navîn hukum kiriye?
 **TR:** Med İmparatorluğu Ortadoğu'da hangi dönemde hüküm sürdü?
--    A) Sedsalên 5an û 4an berî zayînê
-- ✅ B) Sedsalên 7an û 6an berî zayînê
+- ✅ A) Sedsalên 7an û 6an berî zayînê
+-    B) Sedsalên 5an û 4an berî zayînê
 -    C) Sedsalên 2an û 3an piştî zayînê
 -    D) Sedsalên 10an û 11an piştî zayînê
-**Doğru:** B) Sedsalên 7an û 6an berî zayînê
+**Doğru:** A) Sedsalên 7an û 6an berî zayînê
 **Açıklama:** Med siyasal gücünün imparatorluk dönemi esasen MÖ 7. ve 6. yüzyıllardır; MÖ 550'de Ahamenişlere geçti.
 **Kaynak:** https://en.wikipedia.org/wiki/Medes
 
@@ -627,20 +627,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Medlerin başkenti olarak bilinen şehir hangisiydi?
 -    A) Babilon
 -    B) Nînova
--    C) Persepolis
-- ✅ D) Ekbatan
-**Doğru:** D) Ekbatan
+- ✅ C) Ekbatan
+-    D) Persepolis
+**Doğru:** C) Ekbatan
 **Açıklama:** Ekbatan, yani günümüzdeki Hemedan, Medlerin başkentiydi ve tarihçiler tarafından onların siyasi merkezi olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ecbatana
 
 ## ds_dirok_0081  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan qanûnên navdar ên Babîlê di sedsala 18'an berî zayînê de hatin nivîsandin?
 **TR:** MÖ 18. yüzyılda yazılan ünlü Babil kanunları hangileridir?
-- ✅ A) Qanûnên Hammurabi
--    B) Qanûnên Nînovayê
--    C) Qanûnên Ekbatanê
--    D) Qanûnên Persepolisê
-**Doğru:** A) Qanûnên Hammurabi
+-    A) Qanûnên Nînovayê
+-    B) Qanûnên Ekbatanê
+-    C) Qanûnên Persepolisê
+- ✅ D) Qanûnên Hammurabi
+**Doğru:** D) Qanûnên Hammurabi
 **Açıklama:** Hammurabi Kanunları, dünyanın en eski yazılı kanunlarından biridir ve Babil'de oluşturulmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Code_of_Hammurabi
 
@@ -649,20 +649,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Medler ve Babilliler Asur'u hangi savaşta birlikte yıktılar?
 -    A) Şerê Karkemîşê
 -    B) Şerê Megîdoyê
--    C) Şerê Salamînê
-- ✅ D) Şerê Nînovayê
-**Doğru:** D) Şerê Nînovayê
+- ✅ C) Şerê Nînovayê
+-    D) Şerê Salamînê
+**Doğru:** C) Şerê Nînovayê
 **Açıklama:** MÖ 612'de Medler ve Babilliler birlikte Asur'un başkenti Ninova'yı yıktılar ve bu, Asur İmparatorluğu'nun sonu oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Nineveh_(612_BC)
 
 ## ds_dirok_0084  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan împaratorî piştî hilweşandina Medan li herêmê derket holê?
 **TR:** Medlerin yıkılmasından sonra bölgede hangi imparatorluk ortaya çıktı?
--    A) Împaratoriya Seleukî
-- ✅ B) Împaratoriya Hexamenişî
+- ✅ A) Împaratoriya Hexamenişî
+-    B) Împaratoriya Seleukî
 -    C) Împaratoriya Efxanî
 -    D) Împaratoriya Sasaniyan
-**Doğru:** B) Împaratoriya Hexamenişî
+**Doğru:** A) Împaratoriya Hexamenişî
 **Açıklama:** Kyros, Astyages'i yenerek Med egemenliğine son verdi ve Ahameniş İmparatorluğu'nu kurdu. Kyros (Keyhüsrev) ile Kiyaksar ayrı hükümdarlardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Achaemenid_Empire
 
@@ -671,20 +671,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürdistan'da bulunan ve Med İmparatorluğu'nun merkezi olan antik şehir hangisidir?
 -    A) Babîl
 -    B) Nînova
--    C) Ur
-- ✅ D) Ekbatan
-**Doğru:** D) Ekbatan
+- ✅ C) Ekbatan
+-    D) Ur
+**Doğru:** C) Ekbatan
 **Açıklama:** Bugün Hemedan olarak bilinen Ekbatan, Medlerin başkentiydi ve Kürdistan'ın kuzeydoğusunda yer alır.
 **Kaynak:** https://en.wikipedia.org/wiki/Ecbatana
 
 ## ds_dirok_0090  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kîjan serdemê de Medan bi împaratoriya Hexamenişî re têkildar bûn?
 **TR:** Medler hangi dönemde Ahameniş İmparatorluğu ile ilişki içindeydi?
-- ✅ A) Sedsala 6'an berî zayînê
--    B) Sedsala 3'yan piştî zayînê
--    C) Sedsala 1'ê piştî zayînê
--    D) Sedsala 9'an berî zayînê
-**Doğru:** A) Sedsala 6'an berî zayînê
+-    A) Sedsala 3'yan piştî zayînê
+-    B) Sedsala 1'ê piştî zayînê
+-    C) Sedsala 9'an berî zayînê
+- ✅ D) Sedsala 6'an berî zayînê
+**Doğru:** D) Sedsala 6'an berî zayînê
 **Açıklama:** MÖ 6. yüzyılda Kyros, Astyages'i yenip Medleri de içine alan Ahameniş İmparatorluğu'nu kurdu.
 **Kaynak:** https://en.wikipedia.org/wiki/Medes
 
@@ -693,9 +693,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ninova'yı başkent olarak kuran Asur kralı hangisidir?
 -    A) Aşurbanipal
 -    B) Sargon
--    C) Hammurabi
-- ✅ D) Sennacherib
-**Doğru:** D) Sennacherib
+- ✅ C) Sennacherib
+-    D) Hammurabi
+**Doğru:** C) Sennacherib
 **Açıklama:** Sennacherib, MÖ 7. yüzyılda Ninova'yı Asur İmparatorluğu'nun başkenti yaptı ve onu dünyanın en büyük şehri haline getirdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Sennacherib
 
@@ -703,21 +703,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bedirxan Paşa di bin desthilatdariya kîjan dewletê de bû?
 **TR:** Bedirhan Paşa hangi devletin egemenliği altındaydı?
 -    A) Împaratoriya Sefewî
--    B) Împaratoriya Qacar
-- ✅ C) Împaratoriya Osmanî
+- ✅ B) Împaratoriya Osmanî
+-    C) Împaratoriya Qacar
 -    D) Împaratoriya Rûsî
-**Doğru:** C) Împaratoriya Osmanî
+**Doğru:** B) Împaratoriya Osmanî
 **Açıklama:** Botan Emiri Bedirhan Paşa, yarı özerk bir şekilde yönetmesine rağmen Osmanlı İmparatorluğu'nun egemenliği altındaydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
 ## ds_dirok_0109  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Mîrektiya Hakkariyê bi giranî ji aliyê kîjan kesayetiyan ve dihat birêvebirin?
 **TR:** Hakkari Emirliği büyük ölçüde hangi kişilikler tarafından yönetiliyordu?
--    A) Mîrên Botan
-- ✅ B) Mîrên Hakkariyê
+- ✅ A) Mîrên Hakkariyê
+-    B) Mîrên Botan
 -    C) Mîrên Soran
 -    D) Mîrên Babanê
-**Doğru:** B) Mîrên Hakkariyê
+**Doğru:** A) Mîrên Hakkariyê
 **Açıklama:** Hakkari Emirliği, Hakkari Emirleri olarak bilinen yerel emirler tarafından yönetiliyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Hakkari_(historical_region)
 
@@ -725,10 +725,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bedirxan Paşa piştî têkçûna serhildana xwe li kîjan giravê hate sirgûnkirin?
 **TR:** Bedirhan Paşa, isyanının başarısız olmasının ardından hangi adaya sürgün edildi?
 -    A) Qibris
--    B) Ryodos
-- ✅ C) Girît
+- ✅ B) Girît
+-    C) Ryodos
 -    D) Sakiz
-**Doğru:** C) Girît
+**Doğru:** B) Girît
 **Açıklama:** Bedirhan Paşa, 1847'deki isyanının başarısız olmasının ardından tüm ailesiyle birlikte Girit Adaları'na sürgün edildi.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
@@ -737,31 +737,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hakkari Emirliği hangi yıllar arasında varlığını sürdürdü?
 -    A) Di navbera 1500 û 1850'an de
 -    B) Di navbera 1600 û 1900'an de
--    C) Di navbera 1700 û 1920'an de
-- ✅ D) Di navbera 1400 û 1847'an de
-**Doğru:** D) Di navbera 1400 û 1847'an de
+- ✅ C) Di navbera 1400 û 1847'an de
+-    D) Di navbera 1700 û 1920'an de
+**Doğru:** C) Di navbera 1400 û 1847'an de
 **Açıklama:** Hakkari Emirliği, 1400 ile 1847 yılları arasında Hakkari bölgesinde varlığını sürdürdü.
 **Kaynak:** https://en.wikipedia.org/wiki/Hakkari_(historical_region)
 
 ## ds_dirok_0116  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan mîrê Botanê bi navê Mîrê Cizîrê jî tê zanîn?
 **TR:** Cizre Emiri olarak da bilinen Botan Emiri hangisidir?
--    A) Mîr Mihemed
-- ✅ B) Bedirxan Paşa
+- ✅ A) Bedirxan Paşa
+-    B) Mîr Mihemed
 -    C) Şerefxanê Bidlîsî
 -    D) Xanê Lepzêrîn
-**Doğru:** B) Bedirxan Paşa
+**Doğru:** A) Bedirxan Paşa
 **Açıklama:** Botan Emiri Bedirhan Paşa, başkenti Cizre şehri olduğu için Cizre Emiri olarak da bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bedir_Khan_Beg
 
 ## ds_dirok_0124  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan mîrektiya kurdan di sedsala 16'an de li herêma Hakkariyê hukum dikir?
 **TR:** 16. yüzyılda Hakkari bölgesinde hüküm süren Kürt emirliği hangisidir?
--    A) Mîrektiya Botanê
-- ✅ B) Mîrektiya Hakkariyê
+- ✅ A) Mîrektiya Hakkariyê
+-    B) Mîrektiya Botanê
 -    C) Mîrektiya Babanê
 -    D) Mîrektiya Soran
-**Doğru:** B) Mîrektiya Hakkariyê
+**Doğru:** A) Mîrektiya Hakkariyê
 **Açıklama:** Hakkari Emirliği, 16. yüzyılda Hakkari bölgesinde hüküm sürdü ve Osmanlılar ile Safeviler arasında önemli bir rol oynadı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hakkari_(historical_region)
 
@@ -770,42 +770,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtlerin ilk gazetesi olan Kürdistan, Kahire'de hangi yıl yayımlandı?
 -    A) 1908
 -    B) 1918
--    C) 1928
-- ✅ D) 1898
-**Doğru:** D) 1898
+- ✅ C) 1898
+-    D) 1928
+**Doğru:** C) 1898
 **Açıklama:** Kürdistan, ilk Kürtçe gazete olarak 1898'de Mîqdad Mîdhat Bedirhan tarafından Kahire'de yayımlandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0126  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayetî Kurdistan rojnameya ewil derxist?
 **TR:** İlk Kürdistan gazetesini çıkaran kişi kimdir?
--    A) Celadet Alî Bedirxan
-- ✅ B) Mîqdad Mîdhat Bedirxan
+- ✅ A) Mîqdad Mîdhat Bedirxan
+-    B) Celadet Alî Bedirxan
 -    C) Hesen Cemil Paşa
 -    D) Emîn Alî Bedirxan
-**Doğru:** B) Mîqdad Mîdhat Bedirxan
+**Doğru:** A) Mîqdad Mîdhat Bedirxan
 **Açıklama:** Bedirhan Paşa'nın oğlu Mîqdad Mîdhat Bedirhan, 1898'de Kürdistan'ı Kahire'de çıkardı ve bu ilk Kürtçe gazete oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0127  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kurdistan rojnameyê di kîjan bajarî de dest bi weşanê kir?
 **TR:** Kurdistan gazetesi hangi şehirde yayın hayatına başladı?
-- ✅ A) Qahîre
--    B) Stenbol
--    C) Bexda
--    D) Şam
-**Doğru:** A) Qahîre
+-    A) Stenbol
+-    B) Bexda
+-    C) Şam
+- ✅ D) Qahîre
+**Doğru:** D) Qahîre
 **Açıklama:** İlk Kürt gazetesi olan Kurdistan, 1898'de Mısır'ın başkenti Kahire'de yayımlandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0128  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Rojnameya Kurdistanê bi kîjan zaravayê kurdî derdiket?
 **TR:** Kurdistan gazetesi hangi Kürtçe lehçesiyle çıkıyordu?
--    A) Tirkî
-- ✅ B) Kurmancî
+- ✅ A) Kurmancî
+-    B) Tirkî
 -    C) Erebî
 -    D) Farisî
-**Doğru:** B) Kurmancî
+**Doğru:** A) Kurmancî
 **Açıklama:** Kurdistan gazetesi Kurmancî yayımlandı; 31 sayılık yayın hayatında Osmanlı Türkçesi de kullanıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -814,20 +814,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurdistan gazetesi yayınını hangi yılda durdurdu?
 -    A) 1905
 -    B) 1910
--    C) 1915
-- ✅ D) 1902
-**Doğru:** D) 1902
+- ✅ C) 1902
+-    D) 1915
+**Doğru:** C) 1902
 **Açıklama:** Kurdistan gazetesi 1898 ile 1902 yılları arasında toplam 31 sayı çıktı ve ardından yayınını durdurdu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0130  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kurdistan rojnameya ewil a kurdan di kîjan serdemê de derket?
 **TR:** Kürtlerin ilk gazetesi olan Kurdistan hangi dönemde çıktı?
-- ✅ A) Serdema Osmanî
--    B) Serdema Sefewî
--    C) Serdema Memlûkan
--    D) Serdema Emevîyan
-**Doğru:** A) Serdema Osmanî
+-    A) Serdema Sefewî
+-    B) Serdema Memlûkan
+-    C) Serdema Emevîyan
+- ✅ D) Serdema Osmanî
+**Doğru:** D) Serdema Osmanî
 **Açıklama:** Kurdistan, Kürtlerin Osmanlı merkeziyetçi politikasına karşı seslerini yükselttiği Osmanlı İmparatorluğu döneminde çıktı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -835,21 +835,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kurdistan rojnameyê ji bo kîjan armancê hate derxistin?
 **TR:** Kurdistan gazetesi hangi amaçla çıkarıldı?
 -    A) Belavkirina îslamê
--    B) Piştgiriya dewleta Osmanî
-- ✅ C) Parastina nasnameya kurdî
+- ✅ B) Parastina nasnameya kurdî
+-    C) Piştgiriya dewleta Osmanî
 -    D) Pêşxistina zimanê tirkî
-**Doğru:** C) Parastina nasnameya kurdî
+**Doğru:** B) Parastina nasnameya kurdî
 **Açıklama:** Kurdistan gazetesi Kürt kimliğini, dilini ve kültürünü korumak için çıkarıldı ve Kürtlerin ulusal bilinçlenmesi için çalıştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0145  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kurdistan rojnameyê ji bo kîjan gelî hate derxistin?
 **TR:** Kurdistan gazetesi hangi halk için çıkarıldı?
--    A) Gelê ereb
-- ✅ B) Gelê kurd
+- ✅ A) Gelê kurd
+-    B) Gelê ereb
 -    C) Gelê tirk
 -    D) Gelê faris
-**Doğru:** B) Gelê kurd
+**Doğru:** A) Gelê kurd
 **Açıklama:** Kurdistan gazetesi özellikle Kürt halkı için çıkarıldı ve onları bilinçlendirmek için yayımlanıyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -857,10 +857,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kurdistan rojnameyê di kîjan warî de bandor li ser kurdan kir?
 **TR:** Kurdistan gazetesi Kürtler üzerinde hangi alanda etki yarattı?
 -    A) Bazirganiya navneteweyî
--    B) Çandiniyê
-- ✅ C) Hişyariya neteweyî
+- ✅ B) Hişyariya neteweyî
+-    C) Çandiniyê
 -    D) Pîşesaziyê
-**Doğru:** C) Hişyariya neteweyî
+**Doğru:** B) Hişyariya neteweyî
 **Açıklama:** Kurdistan gazetesi, ulusal fikirleri yayarak ve Kürtleri hakları konusunda bilinçlendirerek Kürtlerin ulusal bilincinin gelişmesine yol açtı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -869,20 +869,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurdistan gazetesi hangi alanda ilk olarak bilinir?
 -    A) Yekem rojnameya erebî
 -    B) Yekem rojnameya tirkî
--    C) Yekem rojnameya farisî
-- ✅ D) Yekem rojnameya kurdî
-**Doğru:** D) Yekem rojnameya kurdî
+- ✅ C) Yekem rojnameya kurdî
+-    D) Yekem rojnameya farisî
+**Doğru:** C) Yekem rojnameya kurdî
 **Açıklama:** Kurdistan, dünyanın ilk Kürt gazetesi olarak bilinir ve Kürt basın tarihinde özel bir yere sahiptir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0146  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kurdistan rojnameyê di kîjan warî de bû sedema pêşketinê?
 **TR:** Kurdistan gazetesi hangi alanda gelişmeye yol açtı?
-- ✅ A) Pêşketina çand û edebiyata kurdî
--    B) Pêşketina çand û edebiyata erebî
--    C) Pêşketina çand û edebiyata tirkî
--    D) Pêşketina çand û edebiyata farisî
-**Doğru:** A) Pêşketina çand û edebiyata kurdî
+-    A) Pêşketina çand û edebiyata erebî
+-    B) Pêşketina çand û edebiyata tirkî
+-    C) Pêşketina çand û edebiyata farisî
+- ✅ D) Pêşketina çand û edebiyata kurdî
+**Doğru:** D) Pêşketina çand û edebiyata kurdî
 **Açıklama:** Kurdistan gazetesi, yayınıyla Kürt kültür ve edebiyatının gelişmesine yol açtı ve Kürt yazarlar için bir platform oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -890,21 +890,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hejmara yekem a rojnameya Kurdistanê li kîjan bajarî hat çapkirin?
 **TR:** Kurdistan gazetesinin ilk sayısı hangi şehirde basıldı?
 -    A) Stenbol
--    B) Şam
-- ✅ C) Qahîre
+- ✅ B) Qahîre
+-    C) Şam
 -    D) Cenevre
-**Doğru:** C) Qahîre
+**Doğru:** B) Qahîre
 **Açıklama:** Kurdistan gazetesinin ilk sayısı 1898'de Kahire'de basıldı; sonraki sayılar Cenevre, Londra ve Folkestone gibi merkezlere taşındı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0135  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Rojnameya Kurdistanê li kîjan bajaran hat weşandin?
 **TR:** Kurdistan gazetesi hangi şehirlerde yayımlandı?
-- ✅ A) Qahîre, Cenevre û London
--    B) Stenbol, Îzmîr û Bursa
--    C) Tehran, Bexda û Şam
--    D) Moskova, Erîvan û Tiflîs
-**Doğru:** A) Qahîre, Cenevre û London
+-    A) Stenbol, Îzmîr û Bursa
+-    B) Tehran, Bexda û Şam
+-    C) Moskova, Erîvan û Tiflîs
+- ✅ D) Qahîre, Cenevre û London
+**Doğru:** D) Qahîre, Cenevre û London
 **Açıklama:** Kurdistan gazetesi 1898'de Kahire'de başladı; sonra Cenevre, Londra ve Folkestone gibi merkezlerde çıkarıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -913,20 +913,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İlk Kürt gazetesi olan Kurdistan hangi aile tarafından çıkarıldı?
 -    A) Malbata Babanan
 -    B) Malbata Soran
--    C) Malbata Hakkariyê
-- ✅ D) Malbata Bedirxaniyan
-**Doğru:** D) Malbata Bedirxaniyan
+- ✅ C) Malbata Bedirxaniyan
+-    D) Malbata Hakkariyê
+**Doğru:** C) Malbata Bedirxaniyan
 **Açıklama:** Kurdistan gazetesi, ünlü bir Kürt ailesi olan Bedirhani ailesi tarafından çıkarıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0137  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kurdistan rojnameyê di kîjan çarçoveyê de derket?
 **TR:** Kurdistan gazetesi hangi çerçevede çıktı?
-- ✅ A) Rojnameyeke neteweyî
--    B) Rojnameyeke olî
--    C) Rojnameyeke zanistî
--    D) Rojnameyeke werzişî
-**Doğru:** A) Rojnameyeke neteweyî
+-    A) Rojnameyeke olî
+-    B) Rojnameyeke zanistî
+-    C) Rojnameyeke werzişî
+- ✅ D) Rojnameyeke neteweyî
+**Doğru:** D) Rojnameyeke neteweyî
 **Açıklama:** Kurdistan, Kürtlerin hakları ve kimliği için yayımlanan ulusal bir gazeteydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -935,9 +935,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurdistan gazetesi hangi alanda ilk olarak kabul edilir?
 -    A) Çapemeniya erebî
 -    B) Çapemeniya tirkî
--    C) Çapemeniya farisî
-- ✅ D) Çapemeniya kurdî
-**Doğru:** D) Çapemeniya kurdî
+- ✅ C) Çapemeniya kurdî
+-    D) Çapemeniya farisî
+**Doğru:** C) Çapemeniya kurdî
 **Açıklama:** Kurdistan gazetesi, Kürt basınındaki ilk gazete olarak kabul edilir ve Kürt gazeteciliği için bir başlangıç olmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -945,21 +945,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kurdistan rojnameyê ji aliyê kîjan kesayetên kurd ve hate birêvebirin?
 **TR:** Kurdistan gazetesi hangi Kürt kişilikler tarafından yönetildi?
 -    A) Celadet û Kamiran Bedirxan
--    B) Hesen Cemil û Qedrî Cemil
-- ✅ C) Mîqdad Mîdhat û Ebdurehman Bedirxan
+- ✅ B) Mîqdad Mîdhat û Ebdurehman Bedirxan
+-    C) Hesen Cemil û Qedrî Cemil
 -    D) Sureyya û Mehmed Bedirxan
-**Doğru:** C) Mîqdad Mîdhat û Ebdurehman Bedirxan
+**Doğru:** B) Mîqdad Mîdhat û Ebdurehman Bedirxan
 **Açıklama:** Kurdistan gazetesi, Mikdad Midhat ve Abdurrahman Bedirhan kardeşler tarafından yönetildi.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0143  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Hejmara yekem a rojnameya Kurdistanê di kîjan salê de derket?
 **TR:** Kurdistan gazetesinin ilk sayısı hangi yılda çıktı?
-- ✅ A) 1898
--    B) 1908
--    C) 1920
--    D) 1940
-**Doğru:** A) 1898
+-    A) 1908
+-    B) 1920
+-    C) 1940
+- ✅ D) 1898
+**Doğru:** D) 1898
 **Açıklama:** Kurdistan gazetesinin ilk sayısı 22 Nisan 1898'de Kahire'de çıktı; yayın 1902'ye kadar 31 sayı sürdü.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
@@ -967,21 +967,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kurdistan rojnameyê bi kîjan tîpan dihat nivîsandin?
 **TR:** Kurdistan gazetesi hangi harflerle yazılıyordu?
 -    A) Tîpên latînî
--    B) Tîpên kîrîlî
-- ✅ C) Tîpên erebî
+- ✅ B) Tîpên erebî
+-    C) Tîpên kîrîlî
 -    D) Tîpên çînî
-**Doğru:** C) Tîpên erebî
+**Doğru:** B) Tîpên erebî
 **Açıklama:** O dönemde Kürtçe Arap harfleriyle yazılıyordu; Kurdistan gazetesi de bu harflerle yayımlanıyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdistan_(newspaper)
 
 ## ds_dirok_0150  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Şerê Cîhanê yê Yekem di kîjan sala de dest pê kir?
 **TR:** Birinci Dünya Savaşı hangi yılda başladı?
--    A) 1912
-- ✅ B) 1914
+- ✅ A) 1914
+-    B) 1912
 -    C) 1916
 -    D) 1918
-**Doğru:** B) 1914
+**Doğru:** A) 1914
 **Açıklama:** Birinci Dünya Savaşı, Arşidük Franz Ferdinand'ın öldürülmesinin ardından 28 Temmuz 1914'te başladı. Bu olay, uluslararası savaşa yol açan bir dizi olayın tetikleyicisi oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/World_War_I
 
@@ -989,21 +989,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan şer di navbera 1939 û 1945'an de li çaraliyê cîhanê pêk hat?
 **TR:** 1939 ile 1945 yılları arasında dünya genelinde hangi savaş yaşandı?
 -    A) Şerê Cîhanê yê Yekem
--    B) Şerê Sar
-- ✅ C) Şerê Cîhanê yê Duyem
+- ✅ B) Şerê Cîhanê yê Duyem
+-    C) Şerê Sar
 -    D) Şerê Koreyê
-**Doğru:** C) Şerê Cîhanê yê Duyem
+**Doğru:** B) Şerê Cîhanê yê Duyem
 **Açıklama:** İkinci Dünya Savaşı 1 Eylül 1939'da başladı ve 2 Eylül 1945'te sona erdi. Bu savaş, Almanya'nın Polonya'yı işgaliyle başladı.
 **Kaynak:** https://en.wikipedia.org/wiki/World_War_II
 
 ## ds_dirok_0152  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Peymana ku piştî Şerê Cîhanê yê Yekem aştiya bi Almanyayê saz kir kîjan e?
 **TR:** Birinci Dünya Savaşı'ndan sonra Almanya ile barışı düzenleyen antlaşma hangisidir?
-- ✅ A) Peymana Versayê
--    B) Peymana Lozanê
--    C) Peymana Sevrê
--    D) Peymana Berlînê
-**Doğru:** A) Peymana Versayê
+-    A) Peymana Lozanê
+-    B) Peymana Sevrê
+-    C) Peymana Berlînê
+- ✅ D) Peymana Versayê
+**Doğru:** D) Peymana Versayê
 **Açıklama:** Savaş 11 Kasım 1918 Ateşkesiyle durdu. Versay Antlaşması 28 Haziran 1919'da imzalandı ve Almanya ile barışı düzenledi.
 **Kaynak:** https://en.wikipedia.org/wiki/Treaty_of_Versailles
 
@@ -1011,10 +1011,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Şerê Cîhanê yê Duyem de kîjan bûyer bû sedema ketina Dewletên Yekbûyî yên Amerîkayê (DYA) nav şer?
 **TR:** İkinci Dünya Savaşı'nda hangi olay Amerika Birleşik Devletleri'nin (ABD) savaşa girmesine neden oldu?
 -    A) Dagirkirina Polonyayê
--    B) Şerê Stalingradê
-- ✅ C) Şerê Pearl Harborê
+- ✅ B) Şerê Pearl Harborê
+-    C) Şerê Stalingradê
 -    D) Dagirkirina Fransayê
-**Doğru:** C) Şerê Pearl Harborê
+**Doğru:** B) Şerê Pearl Harborê
 **Açıklama:** 7 Aralık 1941'deki Pearl Harbor saldırısının ardından ABD Japonya'ya savaş ilan etti. Almanya ve İtalya ise birkaç gün sonra ABD'ye savaş ilan etti.
 **Kaynak:** https://en.wikipedia.org/wiki/Attack_on_Pearl_Harbor
 
@@ -1022,10 +1022,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Şerê Cîhanê yê Duyem de kîjan şer bû xaleka zivirînê li eniya Rojhilat?
 **TR:** İkinci Dünya Savaşı'nda Doğu Cephesi'nde hangi savaş dönüm noktası oldu?
 -    A) Şerê Moskowê
--    B) Şerê Kurskê
-- ✅ C) Şerê Stalingradê
+- ✅ B) Şerê Stalingradê
+-    C) Şerê Kurskê
 -    D) Şerê Leningradê
-**Doğru:** C) Şerê Stalingradê
+**Doğru:** B) Şerê Stalingradê
 **Açıklama:** Stalingrad Savaşı (1942-1943) Doğu Cephesi'nin dönüm noktası olarak kabul edilir. Almanların Stalingrad'daki yenilgisi, Doğu Cephesi'ndeki geri çekilmelerinin başlangıcı oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Stalingrad
 
@@ -1033,21 +1033,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan şer di sala 1066'an de li Îngilîstanê qewimî?
 **TR:** 1066 yılında İngiltere'de hangi savaş gerçekleşti?
 -    A) Şerê Trafalgarê
--    B) Şerê Waterlooê
-- ✅ C) Şerê Hastingsê
+- ✅ B) Şerê Hastingsê
+-    C) Şerê Waterlooê
 -    D) Şerê Azincourtê
-**Doğru:** C) Şerê Hastingsê
+**Doğru:** B) Şerê Hastingsê
 **Açıklama:** Hastings Savaşı 14 Ekim 1066'da gerçekleşti. Bu savaşta Fatih William liderliğindeki Norman ordusu, Harold II liderliğindeki İngiliz ordusunu yendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Hastings
 
 ## ds_dirok_0156  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Şerê Waterlooê di kîjan sala de pêk hat?
 **TR:** Waterloo Savaşı hangi yılda gerçekleşti?
-- ✅ A) 1815
--    B) 1805
--    C) 1812
--    D) 1820
-**Doğru:** A) 1815
+-    A) 1805
+-    B) 1812
+-    C) 1820
+- ✅ D) 1815
+**Doğru:** D) 1815
 **Açıklama:** Waterloo Savaşı 18 Haziran 1815'te gerçekleşti. Bu savaşta Wellington ve Blücher liderliğindeki İngiliz ve Prusya kuvvetleri, Napolyon Bonapart'ı yendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Waterloo
 
@@ -1055,32 +1055,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kîjan serdemê de Şerê Sed Salan qewimî?
 **TR:** Yüz Yıl Savaşları hangi dönemde gerçekleşti?
 -    A) Sedsala 12'an û 13'an
--    B) Sedsala 13'an û 14'an
-- ✅ C) Sedsala 14'an û 15'an
+- ✅ B) Sedsala 14'an û 15'an
+-    C) Sedsala 13'an û 14'an
 -    D) Sedsala 15'an û 16'an
-**Doğru:** C) Sedsala 14'an û 15'an
+**Doğru:** B) Sedsala 14'an û 15'an
 **Açıklama:** Yüz Yıl Savaşları 1337 ile 1453 yılları arasında, yani 14. ve 15. yüzyılda gerçekleşti. Bu savaş İngiltere ve Fransa arasında yapıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hundred_Years%27_War
 
 ## ds_dirok_0158  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan şerê navdar di navbera Yewnanistan û Persiyayê de li derdora 490'an berî zayînê qewimî?
 **TR:** Yunanistan ile Pers İmparatorluğu arasında yaklaşık MÖ 490'da hangi ünlü savaş gerçekleşti?
--    A) Şerê Termopîlê
-- ✅ B) Şerê Maratonê
+- ✅ A) Şerê Maratonê
+-    B) Şerê Termopîlê
 -    C) Şerê Salamîsê
 -    D) Şerê Plateaê
-**Doğru:** B) Şerê Maratonê
+**Doğru:** A) Şerê Maratonê
 **Açıklama:** Maraton Savaşı MÖ 490'da gerçekleşti. Bu savaşta Atinalı Yunanlılar, sayıları çok daha az olmasına rağmen Pers ordusunu yendiler.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Marathon
 
 ## ds_dirok_0188  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan şerê navdar di navbera Romayê û Kartacayê de qewimî?
 **TR:** Roma ile Kartaca arasında yapılan ünlü savaşlar hangileridir?
-- ✅ A) Şerên Pûnîk
--    B) Şerên Medî
--    C) Şerên Yewnanî
--    D) Şerên Galî
-**Doğru:** A) Şerên Pûnîk
+-    A) Şerên Medî
+-    B) Şerên Yewnanî
+-    C) Şerên Galî
+- ✅ D) Şerên Pûnîk
+**Doğru:** D) Şerên Pûnîk
 **Açıklama:** Pön Savaşları, MÖ 264 ile 146 yılları arasında Roma ile Kartaca arasında yapıldı. Üç büyük savaş yaşandı ve sonucunda Kartaca yıkıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Punic_Wars
 
@@ -1089,20 +1089,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Termopil Savaşı hangi güçler arasında gerçekleşti?
 -    A) Romayî û Kartacayan
 -    B) Mongol û Çîniyan
--    C) Osmanî û Sefewiyan
-- ✅ D) Yewnan û Persan
-**Doğru:** D) Yewnan û Persan
+- ✅ C) Yewnan û Persan
+-    D) Osmanî û Sefewiyan
+**Doğru:** C) Yewnan û Persan
 **Açıklama:** Termopil Savaşı MÖ 480'de Yunanlar ve Persler arasında gerçekleşti. Leonidas ve 300 Spartalı, büyük Pers ordusuna karşı savaştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Thermopylae
 
 ## ds_dirok_0160  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di Şerê Cîhanê yê Yekem de kîjan koma welatan wekî "Hêzên Navendî" dihat naskirin?
 **TR:** Birinci Dünya Savaşı'nda hangi ülke grubu "İttifak Devletleri" olarak biliniyordu?
-- ✅ A) Almanya, Awistirya-Mecaristan, Osmanî
--    B) Fransa, Brîtanya, Rûsya
--    C) DYA, Îtalya, Japon
--    D) Çîn, Hindistan, Brezîlya
-**Doğru:** A) Almanya, Awistirya-Mecaristan, Osmanî
+-    A) Fransa, Brîtanya, Rûsya
+-    B) DYA, Îtalya, Japon
+-    C) Çîn, Hindistan, Brezîlya
+- ✅ D) Almanya, Awistirya-Mecaristan, Osmanî
+**Doğru:** D) Almanya, Awistirya-Mecaristan, Osmanî
 **Açıklama:** Birinci Dünya Savaşı'ndaki İttifak Devletleri Almanya, Avusturya-Macaristan, Osmanlı İmparatorluğu ve Bulgaristan'dan oluşuyordu. Bu ülkeler İtilaf Devletleri'ne (Fransa, İngiltere, Rusya) karşı savaştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Central_Powers
 
@@ -1110,21 +1110,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan şer di sala 1805'an de qewimî û tê de Napoleon artêşa Rûs û Awistirî têk bir?
 **TR:** 1805 yılında gerçekleşen ve Napolyon'un Rus ve Avusturya ordularını yendiği savaş hangisidir?
 -    A) Şerê Jenaê
--    B) Şerê Borodinoê
-- ✅ C) Şerê Austerlitzê
+- ✅ B) Şerê Austerlitzê
+-    C) Şerê Borodinoê
 -    D) Şerê Leipzigê
-**Doğru:** C) Şerê Austerlitzê
+**Doğru:** B) Şerê Austerlitzê
 **Açıklama:** "Üç İmparator Savaşı" olarak da bilinen Austerlitz Savaşı, 2 Aralık 1805'te gerçekleşti. Napolyon bu savaşta Çar I. Alexander ve İmparator II. Francis liderliğindeki Rus ve Avusturya ordularını yendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Austerlitz
 
 ## ds_dirok_0162  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Şerê Verdunê di kîjan sala de qewimî?
 **TR:** Verdun Savaşı hangi yılda gerçekleşti?
-- ✅ A) 1916
--    B) 1914
--    C) 1915
--    D) 1917
-**Doğru:** A) 1916
+-    A) 1914
+-    B) 1915
+-    C) 1917
+- ✅ D) 1916
+**Doğru:** D) 1916
 **Açıklama:** Verdun Savaşı 21 Şubat 1916'da başladı ve 18 Aralık 1916'ya kadar sürdü. Bu savaş, Birinci Dünya Savaşı'nın en uzun ve en kanlı savaşlarından biriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Verdun
 
@@ -1133,20 +1133,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1805'te gerçekleşen ve Horatio Nelson'ın İngiliz donanmasını yönettiği deniz savaşı hangisidir?
 -    A) Şerê Jutlandê
 -    B) Şerê Lepantoê
--    C) Şerê Midwayê
-- ✅ D) Şerê Trafalgarê
-**Doğru:** D) Şerê Trafalgarê
+- ✅ C) Şerê Trafalgarê
+-    D) Şerê Midwayê
+**Doğru:** C) Şerê Trafalgarê
 **Açıklama:** Trafalgar Savaşı 21 Ekim 1805'te gerçekleşti. Bu savaşta Amiral Horatio Nelson liderliğindeki İngiliz donanması, Fransa ve İspanya donanmalarına karşı zafer kazandı, ancak Nelson savaşta öldürüldü.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Trafalgar
 
 ## ds_dirok_0164  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Şerê Jutlandê di navbera kîjan hêzên deryayî de qewimî?
 **TR:** Jutland Savaşı hangi deniz kuvvetleri arasında gerçekleşti?
-- ✅ A) Brîtanya û Almanya
--    B) DYA û Japon
--    C) Fransa û Îtalya
--    D) Rûsya û Osmanî
-**Doğru:** A) Brîtanya û Almanya
+-    A) DYA û Japon
+-    B) Fransa û Îtalya
+-    C) Rûsya û Osmanî
+- ✅ D) Brîtanya û Almanya
+**Doğru:** D) Brîtanya û Almanya
 **Açıklama:** Jutland Savaşı, 31 Mayıs ve 1 Haziran 1916'da İngiliz Kraliyet Donanması ile Alman İmparatorluk Donanması arasında gerçekleşti. Bu, Birinci Dünya Savaşı'nın en büyük deniz savaşlarından biriydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Jutland
 
@@ -1155,9 +1155,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "D-Day" olarak bilinen ve 6 Haziran 1944'te gerçekleşen operasyon hangisidir?
 -    A) Şerê Bulge
 -    B) Şerê Anzio
--    C) Şerê Monte Cassino
-- ✅ D) Derketina Normandiyayê
-**Doğru:** D) Derketina Normandiyayê
+- ✅ C) Derketina Normandiyayê
+-    D) Şerê Monte Cassino
+**Doğru:** C) Derketina Normandiyayê
 **Açıklama:** D-Day, 6 Haziran 1944'teki Normandiya çıkarmalarının günüdür. Normandiya Savaşı ise çıkarmayla başlayıp ağustosa kadar süren daha geniş harekâttır.
 **Kaynak:** https://en.wikipedia.org/wiki/Normandy_landings
 
@@ -1165,10 +1165,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Şerê Bulgeyê di kîjan salê de qewimî?
 **TR:** Bulge Muharebesi hangi yılda gerçekleşti?
 -    A) 1943
--    B) 1945
-- ✅ C) 1944
+- ✅ B) 1944
+-    C) 1945
 -    D) 1946
-**Doğru:** C) 1944
+**Doğru:** B) 1944
 **Açıklama:** Bulge Muharebesi 16 Aralık 1944'te başladı ve 25 Ocak 1945'te sona erdi. Bu, Almanların Batı Cephesi'ndeki son büyük taarruzuydu.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_the_Bulge
 
@@ -1177,20 +1177,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** MÖ 3. yüzyılda gerçekleşen ve Hannibal'ın Roma ordusunu bozguna uğrattığı ünlü savaş hangisidir?
 -    A) Şerê Zamaê
 -    B) Şerê Trebiaê
--    C) Şerê Trasimenê
-- ✅ D) Şerê Cannaeê
-**Doğru:** D) Şerê Cannaeê
+- ✅ C) Şerê Cannaeê
+-    D) Şerê Trasimenê
+**Doğru:** C) Şerê Cannaeê
 **Açıklama:** Cannae Muharebesi MÖ 216'da gerçekleşti. Bu savaşta Kartacalı general Hannibal, kuşatma taktiğiyle Roma ordusunu bozguna uğrattı. Bu savaş, tarihin en büyük askeri taktiklerinden biri olarak bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Cannae
 
 ## ds_dirok_0169  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Şerê Zamaê di navbera kîjan hêzan de qewimî?
 **TR:** Zama Muharebesi hangi güçler arasında gerçekleşti?
--    A) Yewnanistan û Persiya
-- ✅ B) Kartaca û Roma
+- ✅ A) Kartaca û Roma
+-    B) Yewnanistan û Persiya
 -    C) Makedonya û Roma
 -    D) Kartaca û Yewnanistan
-**Doğru:** B) Kartaca û Roma
+**Doğru:** A) Kartaca û Roma
 **Açıklama:** Zama Muharebesi MÖ 202'de Kartaca ile Roma arasında gerçekleşti. Bu savaşta Scipio Africanus, Hannibal'ı yendi ve böylece İkinci Pön Savaşı sona erdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Zama
 
@@ -1198,10 +1198,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di sala 1453'an de kîjan bûyera mezin qewimî ku bandor li ser dîroka Ewropayê kir?
 **TR:** 1453 yılında Avrupa tarihini etkileyen büyük olay hangisidir?
 -    A) Dagirkirina Romayê
--    B) Dagirkirina Parîsê
-- ✅ C) Dagirkirina Konstantînopolîsê
+- ✅ B) Dagirkirina Konstantînopolîsê
+-    C) Dagirkirina Parîsê
 -    D) Dagirkirina Viyanayê
-**Doğru:** C) Dagirkirina Konstantînopolîsê
+**Doğru:** B) Dagirkirina Konstantînopolîsê
 **Açıklama:** 29 Mayıs 1453'te Osmanlı İmparatorluğu, II. Mehmed'in önderliğinde Konstantinopolis'i fethetti. Bu olay, Bizans İmparatorluğu'nun sonu ve Osmanlıların bölgedeki hakimiyetinin başlangıcı oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Fall_of_Constantinople
 
@@ -1209,10 +1209,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Şerê Cîhanê yê Duyem di kîjan salê de bi dawî bû?
 **TR:** İkinci Dünya Savaşı hangi yılda sona erdi?
 -    A) 1944
--    B) 1946
-- ✅ C) 1945
+- ✅ B) 1945
+-    C) 1946
 -    D) 1947
-**Doğru:** C) 1945
+**Doğru:** B) 1945
 **Açıklama:** İkinci Dünya Savaşı, Japonya'nın teslim olmasının ardından 2 Eylül 1945'te sona erdi. Bu teslimiyet, Hiroşima ve Nagazaki'ye atılan atom bombalarından sonra gerçekleşti.
 **Kaynak:** https://en.wikipedia.org/wiki/End_of_World_War_II_in_Asia
 
@@ -1221,20 +1221,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1950 ile 1953 yılları arasında Kore Yarımadası'nda hangi savaş gerçekleşti?
 -    A) Şerê Viyetnamê
 -    B) Şerê Çîn-Japonê
--    C) Şerê Rûs-Japonê
-- ✅ D) Şerê Koreyê
-**Doğru:** D) Şerê Koreyê
+- ✅ C) Şerê Koreyê
+-    D) Şerê Rûs-Japonê
+**Doğru:** C) Şerê Koreyê
 **Açıklama:** Kore Savaşı 25 Haziran 1950'de başladı ve 27 Temmuz 1953'te ateşkesle sona erdi. Bu savaş, Kuzey Kore (Çin ve Sovyetler Birliği'nin desteğiyle) ile Güney Kore (ABD ve Birleşmiş Milletler'in desteğiyle) arasında gerçekleşti.
 **Kaynak:** https://en.wikipedia.org/wiki/Korean_War
 
 ## ds_dirok_0174  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Şerê Viyetnamê di kîjan salê de bi dawî bû?
 **TR:** Vietnam Savaşı hangi yılda sona erdi?
--    A) 1973
-- ✅ B) 1975
+- ✅ A) 1975
+-    B) 1973
 -    C) 1974
 -    D) 1976
-**Doğru:** B) 1975
+**Doğru:** A) 1975
 **Açıklama:** Vietnam Savaşı, Kuzey Vietnam Komünist güçlerinin Saigon'u (Güney Vietnam'ın başkenti) ele geçirmesiyle 30 Nisan 1975'te sona erdi. Bu olay Vietnam Savaşı'nın sonu oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Fall_of_Saigon
 
@@ -1243,9 +1243,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Roma geleneğine göre MÖ 753 yılında hangi şehir kuruldu?
 -    A) Atîna
 -    B) Sparta
--    C) Korînt
-- ✅ D) Roma
-**Doğru:** D) Roma
+- ✅ C) Roma
+-    D) Korînt
+**Doğru:** C) Roma
 **Açıklama:** Roma geleneğine göre Romulus ve Remus, MÖ 753 yılında Roma şehrini kurdular. Bu tarih antik tarihçiler tarafından kabul edilmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Rome
 
@@ -1253,10 +1253,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan kesayetî wek yekem împaratorê Romayê tê zanîn?
 **TR:** Roma'nın ilk imparatoru olarak bilinen kişi kimdir?
 -    A) Jules Cesar
--    B) Neron
-- ✅ C) Augustus
+- ✅ B) Augustus
+-    C) Neron
 -    D) Kaligula
-**Doğru:** C) Augustus
+**Doğru:** B) Augustus
 **Açıklama:** Octavian olarak da bilinen Augustus, MÖ 27'de Roma'nın ilk imparatoru oldu. Jül Sezar'ın ölümüyle başlayan iç savaştan sonra iktidara geldi.
 **Kaynak:** https://en.wikipedia.org/wiki/Augustus
 
@@ -1265,20 +1265,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Batı Roma İmparatorluğu hangi yüzyılda yıkıldı?
 -    A) Sedsala 3'an
 -    B) Sedsala 4'an
--    C) Sedsala 6'an
-- ✅ D) Sedsala 5'an
-**Doğru:** D) Sedsala 5'an
+- ✅ C) Sedsala 5'an
+-    D) Sedsala 6'an
+**Doğru:** C) Sedsala 5'an
 **Açıklama:** Batı Roma İmparatorluğu, Romulus Augustus'un Odoacer tarafından tahttan indirilmesiyle 476 yılında yıkıldı. Bu, 5. yüzyılda gerçekleşti.
 **Kaynak:** https://en.wikipedia.org/wiki/Fall_of_the_Western_Roman_Empire
 
 ## ds_dirok_0183  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kîjan sedsalê de Împaratoriya Bîzansê ji aliyê Osmaniyan ve hate hilweşandin?
 **TR:** Bizans İmparatorluğu Osmanlılar tarafından hangi yüzyılda yıkıldı?
--    A) Sedsala 14'an
-- ✅ B) Sedsala 15'an
+- ✅ A) Sedsala 15'an
+-    B) Sedsala 14'an
 -    C) Sedsala 16'an
 -    D) Sedsala 17'an
-**Doğru:** B) Sedsala 15'an
+**Doğru:** A) Sedsala 15'an
 **Açıklama:** Bizans İmparatorluğu, 1453 yılında Osmanlılar tarafından yıkıldı. Bu, 15. yüzyılda gerçekleşti.
 **Kaynak:** https://en.wikipedia.org/wiki/Fall_of_Constantinople
 
@@ -1287,9 +1287,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Pers Ahameniş İmparatorluğu, Büyük İskender tarafından hangi yüzyılda yıkıldı?
 -    A) Sedsala 5'an berî zayînê
 -    B) Sedsala 3'an berî zayînê
--    C) Sedsala 6'an berî zayînê
-- ✅ D) Sedsala 4'an berî zayînê
-**Doğru:** D) Sedsala 4'an berî zayînê
+- ✅ C) Sedsala 4'an berî zayînê
+-    D) Sedsala 6'an berî zayînê
+**Doğru:** C) Sedsala 4'an berî zayînê
 **Açıklama:** Pers Ahameniş İmparatorluğu, MÖ 330 yılında Büyük İskender tarafından yıkıldı. Bu, MÖ 4. yüzyılda gerçekleşti.
 **Kaynak:** https://en.wikipedia.org/wiki/Achaemenid_Empire
 
@@ -1297,21 +1297,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kîjan sedsalê de Împaratoriya Romayê bû du parçe?
 **TR:** Roma İmparatorluğu hangi yüzyılda ikiye bölündü?
 -    A) Sedsala 3'an
--    B) Sedsala 5'an
-- ✅ C) Sedsala 4'an
+- ✅ B) Sedsala 4'an
+-    C) Sedsala 5'an
 -    D) Sedsala 6'an
-**Doğru:** C) Sedsala 4'an
+**Doğru:** B) Sedsala 4'an
 **Açıklama:** Roma İmparatorluğu, 395 yılında ikiye bölündü. Bu, İmparator Theodosius'un ölümüyle 4. yüzyılda gerçekleşti.
 **Kaynak:** https://en.wikipedia.org/wiki/Roman_Empire
 
 ## ds_dirok_0178  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Peymana ku bi texmînî di sala 449an berî zayînê de aştiya di navbera Atîna û Faris de saz kir kîjan e?
 **TR:** Yaklaşık MÖ 449'da Atina ile Persler arasında barışı sağladığı söylenen antlaşma hangisidir?
-- ✅ A) Peymana Kallias
--    B) Peymana Antalkidas
--    C) Peymana Nikias
--    D) Peymana Apamea
-**Doğru:** A) Peymana Kallias
+-    A) Peymana Antalkidas
+-    B) Peymana Nikias
+-    C) Peymana Apamea
+- ✅ D) Peymana Kallias
+**Doğru:** D) Peymana Kallias
 **Açıklama:** Kallias Barışı genellikle MÖ 449 civarına tarihlenir; kimi tarihçiler antlaşmanın gerçekten yapılıp yapılmadığını tartışır.
 **Kaynak:** https://en.wikipedia.org/wiki/Peace_of_Callias
 
@@ -1319,10 +1319,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Şerê Thermopylae de kîjan padîşahê Spartan artêşa xwe birêvebir?
 **TR:** Thermopylae Muharebesi'nde Spartalı ordusunu hangi kral yönetti?
 -    A) Xerxes
--    B) Themistocles
-- ✅ C) Leonidas
+- ✅ B) Leonidas
+-    C) Themistocles
 -    D) Pericles
-**Doğru:** C) Leonidas
+**Doğru:** B) Leonidas
 **Açıklama:** Leonidas, MÖ 480'de Thermopylae Muharebesi'nde Spartalı ordusuna komuta etti. Askerleriyle birlikte büyük Pers ordusuna karşı savaştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Thermopylae
 
@@ -1331,9 +1331,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Platon'un öğrencisi olan Yunan filozof hangisidir?
 -    A) Sokrates
 -    B) Epikuros
--    C) Herakleitos
-- ✅ D) Aristoteles
-**Doğru:** D) Aristoteles
+- ✅ C) Aristoteles
+-    D) Herakleitos
+**Doğru:** C) Aristoteles
 **Açıklama:** Aristoteles, MÖ 367 ile 347 yılları arasında Platon'un Akademisi'nde okudu. Daha sonra Yunanistan'ın en ünlü filozofu oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Aristotle
 
@@ -1341,10 +1341,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kîjan sala de Pompeii ji ber teqîna çiyayê Vesuvius hate veşartin?
 **TR:** Pompeii, Vezüv Yanardağı'nın patlaması sonucu hangi yılda kül altında kaldı?
 -    A) 64
--    B) 98
-- ✅ C) 79
+- ✅ B) 79
+-    C) 98
 -    D) 117
-**Doğru:** C) 79
+**Doğru:** B) 79
 **Açıklama:** Pompeii, 24 Ağustos 79 yılında Vezüv Yanardağı'nın patlaması sonucu kül altında kaldı. Şehir bir kül ve toprak tabakasıyla örtüldü.
 **Kaynak:** https://en.wikipedia.org/wiki/Pompeii
 
@@ -1353,31 +1353,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Tarihin Babası" olarak bilinen kişi kimdir?
 -    A) Homeros
 -    B) Thukydides
--    C) Hesiodos
-- ✅ D) Herodotos
-**Doğru:** D) Herodotos
+- ✅ C) Herodotos
+-    D) Hesiodos
+**Doğru:** C) Herodotos
 **Açıklama:** Herodotos, "Tarih" adlı eseri nedeniyle Tarihin Babası olarak bilinir. MÖ 5. yüzyılda yaşamış ve Yunan-Pers savaşlarının tarihini yazmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Herodotus
 
 ## ds_dirok_0185  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan împaratorê Romayê dîwarê ku bi navê wî tê zanîn li Brîtanyayê ava kir?
 **TR:** Hangi Roma imparatoru, kendi adıyla anılan duvarı Britanya'da inşa ettirdi?
-- ✅ A) Hadrian
--    B) Trajan
--    C) Marcus Aurelius
--    D) Septimius Severus
-**Doğru:** A) Hadrian
+-    A) Trajan
+-    B) Marcus Aurelius
+-    C) Septimius Severus
+- ✅ D) Hadrian
+**Doğru:** D) Hadrian
 **Açıklama:** İmparator Hadrian, 122 yılında kendi adıyla anılan duvarı Britanya'nın kuzeyinde inşa ettirdi. Bu duvar, kuzeydeki halkların saldırılarına karşı korunmak için yapıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Hadrian%27s_Wall
 
 ## ds_dirok_0186  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kîjan sala de Jules Cesar ji aliyê senatoran ve hate kuştin?
 **TR:** Jül Sezar hangi yılda senatörler tarafından öldürüldü?
--    A) 49 berî zayînê
-- ✅ B) 44 berî zayînê
+- ✅ A) 44 berî zayînê
+-    B) 49 berî zayînê
 -    C) 27 berî zayînê
 -    D) 31 berî zayînê
-**Doğru:** B) 44 berî zayînê
+**Doğru:** A) 44 berî zayînê
 **Açıklama:** Jül Sezar, MÖ 44 yılının 15 Mart'ında bir grup senatör tarafından öldürüldü. Bu olay "Mart İdesi" olarak bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Assassination_of_Julius_Caesar
 
@@ -1386,9 +1386,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Roma'da iç savaşın ardından süresiz diktatörlük yetkisini kim aldı?
 -    A) Gaius Marius
 -    B) Pompey
--    C) Cato
-- ✅ D) Lucius Cornelius Sulla
-**Doğru:** D) Lucius Cornelius Sulla
+- ✅ C) Lucius Cornelius Sulla
+-    D) Cato
+**Doğru:** C) Lucius Cornelius Sulla
 **Açıklama:** Sulla MÖ 82'de süresiz diktatörlük yetkisini aldı. Diktatörlük makamının kendisi Cumhuriyet'in çok daha erken döneminden beri vardı.
 **Kaynak:** https://en.wikipedia.org/wiki/Sulla
 
@@ -1397,31 +1397,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Batı Roma İmparatorluğu hangi yıl sona erdi?
 -    A) 410
 -    B) 455
--    C) 507
-- ✅ D) 476
-**Doğru:** D) 476
+- ✅ C) 476
+-    D) 507
+**Doğru:** C) 476
 **Açıklama:** Batı Roma İmparatorluğu, 476 yılında sona erdi. Bu, Odoacer'ın son imparator Romulus Augustus'u tahttan indirdiği dönemdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Romulus_Augustulus
 
 ## ds_dirok_0190  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayetî wek "Bavê Tibê" tê zanîn?
 **TR:** "Tıbbın Babası" olarak bilinen kişi kimdir?
-- ✅ A) Hippokrates
--    B) Galen
--    C) Aristoteles
--    D) Pythagoras
-**Doğru:** A) Hippokrates
+-    A) Galen
+-    B) Aristoteles
+-    C) Pythagoras
+- ✅ D) Hippokrates
+**Doğru:** D) Hippokrates
 **Açıklama:** Hipokrat, tıbbı bağımsız bir bilim olarak kuran ilk kişi olduğu için Tıbbın Babası olarak bilinir. MÖ 5. yüzyılda yaşamıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Hippocrates
 
 ## ds_dirok_0191  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kîjan sala de Xanedana Ptolemaîk a Mîsirê ji aliyê Romayê ve hate hilweşandin?
 **TR:** Mısır'daki Ptolemaios Hanedanı hangi yıl Roma tarafından yıkıldı?
--    A) 44 berî zayînê
-- ✅ B) 30 berî zayînê
+- ✅ A) 30 berî zayînê
+-    B) 44 berî zayînê
 -    C) 27 berî zayînê
 -    D) 14 berî zayînê
-**Doğru:** B) 30 berî zayînê
+**Doğru:** A) 30 berî zayînê
 **Açıklama:** Ptolemaios Hanedanı, MÖ 30 yılında Kleopatra'nın ölümüyle sona erdi. Bu olaydan sonra Mısır, Roma'nın bir eyaleti oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Ptolemaic_Kingdom
 
@@ -1430,9 +1430,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** MÖ 216'da Hannibal'ın Roma ordusunu yendiği ünlü savaş hangisidir?
 -    A) Şerê Zama
 -    B) Şerê Trebia
--    C) Şerê Trasimene
-- ✅ D) Şerê Cannae
-**Doğru:** D) Şerê Cannae
+- ✅ C) Şerê Cannae
+-    D) Şerê Trasimene
+**Doğru:** C) Şerê Cannae
 **Açıklama:** Cannae Savaşı, MÖ 216 yılının 2 Ağustos'unda yapıldı. Hannibal, kuşatma taktiğiyle Roma ordusunu yendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Cannae
 
@@ -1441,9 +1441,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Komedinin Babası" olarak bilinen kişi kimdir?
 -    A) Sophokles
 -    B) Euripides
--    C) Aiskhylos
-- ✅ D) Aristophanes
-**Doğru:** D) Aristophanes
+- ✅ C) Aristophanes
+-    D) Aiskhylos
+**Doğru:** C) Aristophanes
 **Açıklama:** Aristofanes, Komedinin Babası olarak bilinir. MÖ 5. yüzyılda Atina'da ünlü komediler yazmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Aristophanes
 
@@ -1451,21 +1451,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kîjan sala de şerê navdar ê Actium qewimî?
 **TR:** Ünlü Actium Savaşı hangi yıl yapıldı?
 -    A) 27 berî zayînê
--    B) 44 berî zayînê
-- ✅ C) 31 berî zayînê
+- ✅ B) 31 berî zayînê
+-    C) 44 berî zayînê
 -    D) 49 berî zayînê
-**Doğru:** C) 31 berî zayînê
+**Doğru:** B) 31 berî zayînê
 **Açıklama:** Actium Savaşı, MÖ 31 yılının 2 Eylül'ünde yapıldı. Bu savaşta Octavian, Marcus Antonius ve Kleopatra'nın ordusunu yendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Battle_of_Actium
 
 ## ds_dirok_0201  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan keşfvan di sala 1492'an de gihîşt Amerîkayê?
 **TR:** Hangi kaşif 1492'de Amerika'ya ulaştı?
--    A) Vasco da Gama
-- ✅ B) Christopher Columbus
+- ✅ A) Christopher Columbus
+-    B) Vasco da Gama
 -    C) Ferdinand Magellan
 -    D) James Cook
-**Doğru:** B) Christopher Columbus
+**Doğru:** A) Christopher Columbus
 **Açıklama:** Kristof Kolomb, İspanya bayrağı altında 1492'de Amerika'ya ulaştı. Bu olay, Avrupa ile Amerika arasındaki ilişkinin başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Christopher_Columbus
 
@@ -1473,10 +1473,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di serdema keşfên deryayî de kîjan welatê Ewropayê yekem bû ku rêya deryayî ya Hindistanê dît?
 **TR:** Coğrafi keşifler döneminde Hindistan'a deniz yolunu bulan ilk Avrupa ülkesi hangisidir?
 -    A) Spanya
--    B) Fransa
-- ✅ C) Portûgal
+- ✅ B) Portûgal
+-    C) Fransa
 -    D) Îngilîstan
-**Doğru:** C) Portûgal
+**Doğru:** B) Portûgal
 **Açıklama:** Portekiz, Vasco da Gama gibi kaşiflerin önderliğinde Hindistan'a giden deniz yolunu ilk kez 1498'de buldu. Bu, Portekiz'in deniz ticaretindeki üstünlüğünün başlangıcı oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Portuguese_discoveries
 
@@ -1485,31 +1485,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi kaşif 1500'de Brezilya'yı Portekiz adına sahiplendi?
 -    A) Vasco da Gama
 -    B) Fernando Magellan
--    C) Bartolomeu Dias
-- ✅ D) Pedro Álvares Cabral
-**Doğru:** D) Pedro Álvares Cabral
+- ✅ C) Pedro Álvares Cabral
+-    D) Bartolomeu Dias
+**Doğru:** C) Pedro Álvares Cabral
 **Açıklama:** Pedro Álvares Cabral 1500'de Brezilya kıyısına vardı ve toprağı Portekiz adına sahiplendi. İspanyol Vicente Yáñez Pinzón aynı yıl biraz önce kıyıya ulaşmıştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Pedro_%C3%81lvares_Cabral
 
 ## ds_dirok_0220  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di serdema keşfên deryayî de kîjan keşfvanê Portûgalî yekem car derbasî Kapê Hêvîyê Baş bû?
 **TR:** Coğrafi keşifler döneminde Ümit Burnu'nu ilk kez geçen Portekizli kaşif kimdir?
--    A) Vasco da Gama
-- ✅ B) Bartolomeu Dias
+- ✅ A) Bartolomeu Dias
+-    B) Vasco da Gama
 -    C) Pedro Álvares Cabral
 -    D) Diogo Cão
-**Doğru:** B) Bartolomeu Dias
+**Doğru:** A) Bartolomeu Dias
 **Açıklama:** Bartolomeu Dias, 1488'de Ümit Burnu'nu ilk kez geçti. Bu, Hindistan'a giden deniz yolunun önünü açtı.
 **Kaynak:** https://en.wikipedia.org/wiki/Bartolomeu_Dias
 
 ## ds_dirok_0205  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan keşfvanê Îtalyan bi navê Amerîkayê ve têkildar e?
 **TR:** Amerika'nın adıyla ilişkilendirilen İtalyan kaşif kimdir?
--    A) Marco Polo
-- ✅ B) Amerigo Vespucci
+- ✅ A) Amerigo Vespucci
+-    B) Marco Polo
 -    C) John Cabot
 -    D) Giovanni da Verrazzano
-**Doğru:** B) Amerigo Vespucci
+**Doğru:** A) Amerigo Vespucci
 **Açıklama:** İtalyan kaşif Amerigo Vespucci, Kolomb'un gördüğü yeni toprakların ayrı bir kıta olduğunu öne süren ilk kişiydi. Bu nedenle kıtaya onun adı verildi.
 **Kaynak:** https://en.wikipedia.org/wiki/Amerigo_Vespucci
 
@@ -1518,9 +1518,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1519'da dünyanın ilk çevresini dolaşma seferine hangi kaşif başladı?
 -    A) Hernán Cortés
 -    B) Francisco Pizarro
--    C) Juan Sebastián Elcano
-- ✅ D) Ferdinand Magellan
-**Doğru:** D) Ferdinand Magellan
+- ✅ C) Ferdinand Magellan
+-    D) Juan Sebastián Elcano
+**Doğru:** C) Ferdinand Magellan
 **Açıklama:** Ferdinand Macellan, 1519'da dünyanın ilk çevresini dolaşma seferine başladı. Yolda ölmesine rağmen, ekibi seferi 1522'de tamamladı.
 **Kaynak:** https://en.wikipedia.org/wiki/Ferdinand_Magellan
 
@@ -1529,42 +1529,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1519'da Meksika'nın fethine hangi İspanyol kaşif başladı?
 -    A) Francisco Pizarro
 -    B) Vasco Núñez de Balboa
--    C) Pedro de Valdivia
-- ✅ D) Hernán Cortés
-**Doğru:** D) Hernán Cortés
+- ✅ C) Hernán Cortés
+-    D) Pedro de Valdivia
+**Doğru:** C) Hernán Cortés
 **Açıklama:** Hernán Cortés, 1519'da Meksika'daki Aztek İmparatorluğu'nun fethine başladı. Bu, Aztek İmparatorluğu'nun yıkılmasına neden oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Hern%C3%A1n_Cort%C3%A9s
 
 ## ds_dirok_0211  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan gerok di 1497an de bi navê Îngilîstanê gihîşt peravên Amerîkaya Bakur?
 **TR:** 1497'de İngiltere adına Kuzey Amerika kıyılarına ulaşan kaşif kimdir?
--    A) Walter Raleigh
-- ✅ B) John Cabot
+- ✅ A) John Cabot
+-    B) Walter Raleigh
 -    C) Henry Hudson
 -    D) Francis Drake
-**Doğru:** B) John Cabot
+**Doğru:** A) John Cabot
 **Açıklama:** Venedikli Giovanni Caboto — İngilizcede John Cabot — 1497'de İngiltere adına Kuzey Amerika kıyılarına ulaştı. İngiliz değil, İngiltere hizmetinde çalışan bir İtalyandı.
 **Kaynak:** https://en.wikipedia.org/wiki/John_Cabot
 
 ## ds_dirok_0222  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di sala 1533'an de kîjan kesayetê Spanyolî Împaratoriya Înkan hilweşand?
 **TR:** 1533'te İnka İmparatorluğu'nu yıkan İspanyol kişi kimdir?
--    A) Hernán Cortés
-- ✅ B) Francisco Pizarro
+- ✅ A) Francisco Pizarro
+-    B) Hernán Cortés
 -    C) Diego de Almagro
 -    D) Pedro de Valdivia
-**Doğru:** B) Francisco Pizarro
+**Doğru:** A) Francisco Pizarro
 **Açıklama:** Francisco Pizarro, 1533'te İnka İmparatorluğu'nu yıktı. Bu, Peru'nun İspanya tarafından işgal edilmesine neden oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Francisco_Pizarro
 
 ## ds_dirok_0225  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Şoreşa Pîşesaziyê di kîjan welatî de dest pê kir?
 **TR:** Sanayi Devrimi hangi ülkede başladı?
-- ✅ A) Brîtanya
--    B) Fransa
--    C) Almanya
--    D) Îtalya
-**Doğru:** A) Brîtanya
+-    A) Fransa
+-    B) Almanya
+-    C) Îtalya
+- ✅ D) Brîtanya
+**Doğru:** D) Brîtanya
 **Açıklama:** Sanayi Devrimi 18. yüzyılda Britanya'da başladı çünkü orada sermaye, kömür ve büyük bir pazar mevcuttu.
 **Kaynak:** https://en.wikipedia.org/wiki/Industrial_Revolution
 
@@ -1573,20 +1573,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sanayi Devrimi'nin başlangıcında eğirme için hangi makine icat edildi?
 -    A) Makîneya hilmê
 -    B) Makîneya çapê
--    C) Tevnvê ya mekanîk
-- ✅ D) Jenny ya ristinê
-**Doğru:** D) Jenny ya ristinê
+- ✅ C) Jenny ya ristinê
+-    D) Tevnvê ya mekanîk
+**Doğru:** C) Jenny ya ristinê
 **Açıklama:** James Hargreaves tarafından 1764'te icat edilen Eğirme Jenny'si, Sanayi Devrimi'nin başlangıcında tekstil endüstrisinde bir devrim yarattı.
 **Kaynak:** https://en.wikipedia.org/wiki/Spinning_jenny
 
 ## ds_dirok_0228  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayetî makîneya hilmê ya pêşkeftî di sala 1769'an de çêkir?
 **TR:** 1769'da geliştirilmiş buhar makinesini hangi kişi yaptı?
--    A) Richard Arkwright
-- ✅ B) James Watt
+- ✅ A) James Watt
+-    B) Richard Arkwright
 -    C) Samuel Crompton
 -    D) Edmund Cartwright
-**Doğru:** B) James Watt
+**Doğru:** A) James Watt
 **Açıklama:** James Watt, 1769'da fabrikalar ve ulaşım için enerji sağlayan ve Sanayi Devrimi'ni hızlandıran gelişmiş buhar makinesini yaptı.
 **Kaynak:** https://en.wikipedia.org/wiki/James_Watt
 
@@ -1595,9 +1595,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sanayi Devrimi'nde şehirlerin büyümesine hangi olay neden oldu?
 -    A) Zêdebûna çandiniyê
 -    B) Kêmbûna nifûsê
--    C) Pêşketina karwanan
-- ✅ D) Koçberiya gundiyan bo kargehan
-**Doğru:** D) Koçberiya gundiyan bo kargehan
+- ✅ C) Koçberiya gundiyan bo kargehan
+-    D) Pêşketina karwanan
+**Doğru:** C) Koçberiya gundiyan bo kargehan
 **Açıklama:** Fabrikalar şehirlerde kurulduğu için birçok köylü iş ve daha iyi bir yaşam için şehirlere göç etti, bu da şehir nüfusunun artmasına neden oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Urbanization
 
@@ -1605,32 +1605,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Makîneya bihûrê pêşî ji bo çi di pîşesaziyê de hat bikaranîn?
 **TR:** Buhar makinesi sanayide ilk olarak ne için kullanıldı?
 -    A) Ji bo rêsandina tekstîlê
--    B) Ji bo veguhastina trênê
-- ✅ C) Ji bo pompekirina avê ji kanan
+- ✅ B) Ji bo pompekirina avê ji kanan
+-    C) Ji bo veguhastina trênê
 -    D) Ji bo çapkirina rojnameyan
-**Doğru:** C) Ji bo pompekirina avê ji kanan
+**Doğru:** B) Ji bo pompekirina avê ji kanan
 **Açıklama:** Newcomen ve ardından Watt makinelerinin ilk önemli sanayi kullanımı kömür madenlerinden su pompalamaktı; tekstil ve ulaşım sonra geldi.
 **Kaynak:** https://en.wikipedia.org/wiki/Textile_industry
 
 ## ds_dirok_0233  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Şoreşa Pîşesaziyê de kîjan çîna civakî ya nû derket holê?
 **TR:** Sanayi Devrimi'nde ortaya çıkan yeni toplumsal sınıf hangisiydi?
-- ✅ A) Çîna karkeran
--    B) Çîna esilzadeyan
--    C) Çîna cotkaran
--    D) Çîna keşîşan
-**Doğru:** A) Çîna karkeran
+-    A) Çîna esilzadeyan
+-    B) Çîna cotkaran
+-    C) Çîna keşîşan
+- ✅ D) Çîna karkeran
+**Doğru:** D) Çîna karkeran
 **Açıklama:** Sanayi Devrimi'nde işçi sınıfı (proletarya) ortaya çıktı çünkü birçok kişi fabrikalarda çalışmaya başladı ve yeni çalışma koşulları oluştu.
 **Kaynak:** https://en.wikipedia.org/wiki/Working_class
 
 ## ds_dirok_0241  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan makîneya çandiniyê berhemdariya hesadê zêde kir?
 **TR:** Hangi tarım makinesi hasat verimliliğini artırdı?
-- ✅ A) Makîneya hesadê
--    B) Xerata destan
--    C) Aşê bayê
--    D) Kelûpelê hûnandinê
-**Doğru:** A) Makîneya hesadê
+-    A) Xerata destan
+-    B) Aşê bayê
+-    C) Kelûpelê hûnandinê
+- ✅ D) Makîneya hesadê
+**Doğru:** D) Makîneya hesadê
 **Açıklama:** Mekanik hasat makineleri tarımda işgücü ihtiyacını azaltıp verimi artırdı. Ürün rotasyonu da üretimi artıran ayrı bir yeniliktir.
 **Kaynak:** https://en.wikipedia.org/wiki/Agricultural_Revolution
 
@@ -1639,9 +1639,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sanayi Devrimi'nde hangi Avrupa ülkesi dünyanın finans merkezi olarak öne çıktı?
 -    A) Fransa
 -    B) Hollanda
--    C) Spanya
-- ✅ D) Brîtanya
-**Doğru:** D) Brîtanya
+- ✅ C) Brîtanya
+-    D) Spanya
+**Doğru:** C) Brîtanya
 **Açıklama:** Britanya, Sanayi Devrimi'nde güçlü bankaları ve borsaları olduğu için dünyanın finans merkezi olarak öne çıktı.
 **Kaynak:** https://en.wikipedia.org/wiki/Financial_centre
 
@@ -1649,32 +1649,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan pêvajo para kar bi destan di hilberînê de kêm kir?
 **TR:** Hangi süreç üretimde el işçiliğinin payını azalttı?
 -    A) Pîşesaziya çandiniyê
--    B) Pîşesaziya keştiyan
-- ✅ C) Pîşesaziya makîneyan
+- ✅ B) Pîşesaziya makîneyan
+-    C) Pîşesaziya keştiyan
 -    D) Pîşesaziya madenê
-**Doğru:** C) Pîşesaziya makîneyan
+**Doğru:** B) Pîşesaziya makîneyan
 **Açıklama:** Makineleşme üretimi hızlandırıp ucuzlattığı için el işçiliğinin payı azaldı; el zanaatları tümüyle ortadan kalkmadı.
 **Kaynak:** https://en.wikipedia.org/wiki/Industrialisation
 
 ## ds_dirok_0230  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan wesayît di sedsala 19an de veguhastina bejahiyê guhert?
 **TR:** 19. yüzyılda kara taşımacılığını hangi araç dönüştürdü?
--    A) Balafiran
-- ✅ B) Trênan
+- ✅ A) Trênan
+-    B) Balafiran
 -    C) Tirimpêlan
 -    D) Keştiyên bazirganiyê
-**Doğru:** B) Trênan
+**Doğru:** A) Trênan
 **Açıklama:** Demiryolu ve buharlı lokomotif 19. yüzyılda kara taşımacılığını dönüştürdü; otomobil ve uçak 20. yüzyıl gelişmeleridir.
 **Kaynak:** https://en.wikipedia.org/wiki/History_of_rail_transport
 
 ## ds_dirok_0232  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan prosesa ku pola bi awayekî erzan dihat hilberandin di sala 1856'an de hate îcad kirin?
 **TR:** 1856'da çeliğin ucuz bir şekilde üretilmesini sağlayan hangi süreç icat edildi?
-- ✅ A) Prosesa Bessemer
--    B) Prosesa Siemens
--    C) Prosesa Gilchrist
--    D) Prosesa Martin
-**Doğru:** A) Prosesa Bessemer
+-    A) Prosesa Siemens
+-    B) Prosesa Gilchrist
+-    C) Prosesa Martin
+- ✅ D) Prosesa Bessemer
+**Doğru:** D) Prosesa Bessemer
 **Açıklama:** Henry Bessemer tarafından icat edilen Bessemer süreci, 1856'da çeliğin ucuz ve seri üretimini mümkün kıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Bessemer_process
 
@@ -1683,9 +1683,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1811'de Britanya'da işçilerin makineleri tahrip ettiği hangi olay meydana geldi?
 -    A) Serhildana Chartîstan
 -    B) Serhildana Swing
--    C) Serhildana Peterloo
-- ✅ D) Serhildana Luddîtan
-**Doğru:** D) Serhildana Luddîtan
+- ✅ C) Serhildana Luddîtan
+-    D) Serhildana Peterloo
+**Doğru:** C) Serhildana Luddîtan
 **Açıklama:** Luddite İsyanı 1811'de Britanya'da meydana geldi; makineler yüzünden işlerini kaybeden işçiler makineleri tahrip etmeye başladı.
 **Kaynak:** https://en.wikipedia.org/wiki/Luddite
 
@@ -1693,10 +1693,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan kesayetî di sala 1776'an de pirtûka "Lêkolîna li ser Dewlemendiya Neteweyan" nivîsand?
 **TR:** 1776'da "Ulusların Zenginliği" kitabını hangi kişi yazdı?
 -    A) David Ricardo
--    B) Karl Marx
-- ✅ C) Adam Smith
+- ✅ B) Adam Smith
+-    C) Karl Marx
 -    D) John Stuart Mill
-**Doğru:** C) Adam Smith
+**Doğru:** B) Adam Smith
 **Açıklama:** Adam Smith, 1776'da "Ulusların Zenginliği" kitabını yazdı; bu kitap klasik ekonominin temelini attı ve Sanayi Devrimi'ni etkiledi.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Wealth_of_Nations
 
@@ -1705,20 +1705,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sanayi Devrimi'nde Britanya'nın hangi şehri tekstilin merkezi olarak biliniyordu?
 -    A) Londra
 -    B) Edinburgh
--    C) Dublin
-- ✅ D) Manchester
-**Doğru:** D) Manchester
+- ✅ C) Manchester
+-    D) Dublin
+**Doğru:** C) Manchester
 **Açıklama:** Manchester, Sanayi Devrimi'nde tekstilin merkeziydi çünkü orada birçok eğirme ve dokuma fabrikası kuruldu.
 **Kaynak:** https://en.wikipedia.org/wiki/Manchester
 
 ## ds_dirok_0242  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kê di 1814an de lokomotîfa "Blücher" çêkir?
 **TR:** 1814'te "Blücher" lokomotifini kim yaptı?
--    A) Isambard Brunel
-- ✅ B) George Stephenson
+- ✅ A) George Stephenson
+-    B) Isambard Brunel
 -    C) Robert Trevithick
 -    D) Richard Trevithick
-**Doğru:** B) George Stephenson
+**Doğru:** A) George Stephenson
 **Açıklama:** George Stephenson 1814'te kömür taşımak için Blücher lokomotifini yaptı. İlk doğrulanmış buharlı lokomotif seferi ise 1804'te Richard Trevithick'e aittir.
 **Kaynak:** https://en.wikipedia.org/wiki/George_Stephenson
 
@@ -1726,10 +1726,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan keşfê di warê ragihandinê de di Şoreşa Pîşesaziyê de pêşket?
 **TR:** Sanayi Devrimi'nde iletişim alanında hangi keşif gelişti?
 -    A) Telefon
--    B) Radyo
-- ✅ C) Telgraf
+- ✅ B) Telgraf
+-    C) Radyo
 -    D) Televîzyon
-**Doğru:** C) Telgraf
+**Doğru:** B) Telgraf
 **Açıklama:** 1837'de icat edilen telgraf, Sanayi Devrimi'nde gelişti çünkü uzak mesafelere hızlı iletişimin ilk yöntemiydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Electrical_telegraph
 
@@ -1737,10 +1737,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan kesayetî di sala 1793'an de makîneya pembûyê ya ku ji bo veqetandina pembûyê dihat bikaranîn îcad kir?
 **TR:** 1793'te pamuğu ayırmak için kullanılan çırçır makinesini hangi kişi icat etti?
 -    A) Samuel Slater
--    B) Francis Cabot Lowell
-- ✅ C) Eli Whitney
+- ✅ B) Eli Whitney
+-    C) Francis Cabot Lowell
 -    D) John Kay
-**Doğru:** C) Eli Whitney
+**Doğru:** B) Eli Whitney
 **Açıklama:** Eli Whitney, 1793'te pamuğu tohumundan ayırmak için kullanılan çırçır makinesini icat etti; bu da pamuk üretimini artırdı.
 **Kaynak:** https://en.wikipedia.org/wiki/Cotton_gin
 
@@ -1749,20 +1749,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sözlü tarih, tarih araştırmaları için neden önemlidir?
 -    A) Ji ber ku ew tenê bûyerên siyasî vedikole
 -    B) Ji ber ku ew bi taybetî li ser şeran dinivîse
--    C) Ji ber ku ew tenê li ser padîşahan diaxive
-- ✅ D) Ji ber ku ew agahiyên ku di belgeyan de tune ne diparêze
-**Doğru:** D) Ji ber ku ew agahiyên ku di belgeyan de tune ne diparêze
+- ✅ C) Ji ber ku ew agahiyên ku di belgeyan de tune ne diparêze
+-    D) Ji ber ku ew tenê li ser padîşahan diaxive
+**Doğru:** C) Ji ber ku ew agahiyên ku di belgeyan de tune ne diparêze
 **Açıklama:** Sözlü tarih, özellikle yazılı belgeleri az olan toplumlar için arşivlerde bulunmayan önemli bilgileri korur ve aktarır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
 ## ds_dirok_0251  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan rêbaz di lêkolîna dîroka devkî de herî zêde tê bikaranîn?
 **TR:** Sözlü tarih araştırmalarında en çok hangi yöntem kullanılır?
--    A) Analîza statîstîkî
-- ✅ B) Hevpeyvîna bi şahidan re
+- ✅ A) Hevpeyvîna bi şahidan re
+-    B) Analîza statîstîkî
 -    C) Kolana arkeolojîk
 -    D) Ceribandina laboratûwarê
-**Doğru:** B) Hevpeyvîna bi şahidan re
+**Doğru:** A) Hevpeyvîna bi şahidan re
 **Açıklama:** Olayları gören veya bunlara katılan kişilerle yapılan görüşmeler sözlü tarihin temelini oluşturur; bu yöntem kişisel ve doğrudan bilgiler sağlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
@@ -1771,9 +1771,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sözlü tarihte, araştırmacının kişiliğinin görüşme üzerindeki etkisini tanımlamak için hangi kavram kullanılır?
 -    A) Transkrîpsiyon
 -    B) Arşîv
--    C) Metodolojî
-- ✅ D) Refleksîvîte
-**Doğru:** D) Refleksîvîte
+- ✅ C) Refleksîvîte
+-    D) Metodolojî
+**Doğru:** C) Refleksîvîte
 **Açıklama:** Düşünümsellik, araştırmacının kendisinin de araştırma sürecinin bir parçası olduğu ve görüşme üzerindeki kişisel etkisini fark etmesi ve kontrol etmesi gerektiği anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Reflexivity_(social_theory)
 
@@ -1781,21 +1781,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dîroka devkî de, kîjan têgeh ji bo ravekirina pêvajoya guherandina çîrokê di nav nifşan de tê bikaranîn?
 **TR:** Sözlü tarihte, hikayenin nesiller arasında değişim sürecini tanımlamak için hangi terim kullanılır?
 -    A) Transkrîpsiyon
--    B) Refleksîvîte
-- ✅ C) Veguherîna çîrokê
+- ✅ B) Veguherîna çîrokê
+-    C) Refleksîvîte
 -    D) Arşîvkirin
-**Doğru:** C) Veguherîna çîrokê
+**Doğru:** B) Veguherîna çîrokê
 **Açıklama:** Hikayenin dönüşümü, hikayenin zamanla ve nesiller arasında değişmesi anlamına gelir; bu da sözlü tarih için dikkate alınması gereken önemli bir noktadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
 ## ds_dirok_0265  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di dîroka devkî de, kîjan pirsgirêk ji ber ziman û wergeran derdikeve?
 **TR:** Sözlü tarihte dil ve çevirilerden dolayı hangi sorun ortaya çıkar?
--    A) Zêdebûna agahiyan
-- ✅ B) Wendabûna wateyê di wergerê de
+- ✅ A) Wendabûna wateyê di wergerê de
+-    B) Zêdebûna agahiyan
 -    C) Kêmasiya şahidan
 -    D) Zêdebûna belgeyan
-**Doğru:** B) Wendabûna wateyê di wergerê de
+**Doğru:** A) Wendabûna wateyê di wergerê de
 **Açıklama:** Sözlü tarih bir dilden başka bir dile çevrildiğinde, anlatıcının özgün anlamı kaybolabilir veya değişebilir; bu da bilgilerin doğruluğunu azaltır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
@@ -1803,32 +1803,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dîroka devkî de, kîjan têgeh ji bo ravekirina alîgiriya çîrokbêj tê bikaranîn?
 **TR:** Sözlü tarihte, anlatıcının yanlılığını tanımlamak için hangi kavram kullanılır?
 -    A) Objektîvîte
--    B) Neutralîte
-- ✅ C) Subjektîvîte
+- ✅ B) Subjektîvîte
+-    C) Neutralîte
 -    D) Rastî
-**Doğru:** C) Subjektîvîte
+**Doğru:** B) Subjektîvîte
 **Açıklama:** Sözlü tarihte öznellik, anlatıcının aktarımının kişisel bakış açısından ve deneyimlerinden etkilenmesi anlamına gelir; bu da araştırmacılar için önemli bir noktadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
 ## ds_dirok_0267  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di dîroka devkî de, kîjan têgeh ji bo ravekirina bîranînên kolektîf tê bikaranîn?
 **TR:** Sözlü tarihte, kolektif anıları tanımlamak için hangi kavram kullanılır?
--    A) Bîra kesane
-- ✅ B) Bîra civakî
+- ✅ A) Bîra civakî
+-    B) Bîra kesane
 -    C) Bîra dîrokî
 -    D) Bîra fermî
-**Doğru:** B) Bîra civakî
+**Doğru:** A) Bîra civakî
 **Açıklama:** Toplumsal bellek, bir toplum tarafından paylaşılan ve zamanla toplum içinde aktarılan anılar anlamına gelir; bu sözlü tarih için önemlidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Collective_memory
 
 ## ds_dirok_0274  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di dîroka devkî de, kîjan qonax ji bo parastina agahiyan ji bo nifşên pêşerojê tê kirin?
 **TR:** Sözlü tarihte, bilgileri gelecek nesiller için korumak amacıyla hangi aşama gerçekleştirilir?
-- ✅ A) Arşîvkirin
--    B) Amadekirina pirsan
--    C) Analîz
--    D) Weşandin
-**Doğru:** A) Arşîvkirin
+-    A) Amadekirina pirsan
+-    B) Analîz
+-    C) Weşandin
+- ✅ D) Arşîvkirin
+**Doğru:** D) Arşîvkirin
 **Açıklama:** Arşivleme, sözlü tarih kayıtlarını gelecek nesiller için korumak amacıyla yapılır; bu aşama transkripsiyon ve analizden sonra gelir ve bilgileri kaybolmaktan korur.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
@@ -1837,31 +1837,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Modern tarihçiler sözlü tarihe neden değer verir?
 -    A) Ji ber ku ew bûyerên kevnar bi awayekî objektîf dinivîse
 -    B) Ji ber ku ew tenê li ser dîroka leşkerî disekine
--    C) Ji ber ku ew bi taybetî li ser aboriyê dinivîse
-- ✅ D) Ji ber ku ew dengê komên ku di dîroka fermî de têne paşguh kirin radigihîne
-**Doğru:** D) Ji ber ku ew dengê komên ku di dîroka fermî de têne paşguh kirin radigihîne
+- ✅ C) Ji ber ku ew dengê komên ku di dîroka fermî de têne paşguh kirin radigihîne
+-    D) Ji ber ku ew bi taybetî li ser aboriyê dinivîse
+**Doğru:** C) Ji ber ku ew dengê komên ku di dîroka fermî de têne paşguh kirin radigihîne
 **Açıklama:** Sözlü tarih, resmi tarihte yer bulamayan kadınların, işçilerin, azınlıkların ve diğer grupların seslerinin duyulmasına ve kaydedilmesine olanak tanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
 ## ds_dirok_0254  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di lêkolîna dîroka devkî de, kîjan pirsên ji bo berhevkirina agahiyan herî bi bandor in?
 **TR:** Sözlü tarih araştırmalarında bilgi toplamak için hangi sorular en etkilidir?
-- ✅ A) Pirsên vekirî yên ku çîrokbêj azad dihêlin
--    B) Pirsên girtî yên ku bersiva erê an na dixwazin
--    C) Pirsên ku tenê bi dîrokên rast re têkildar in
--    D) Pirsên ku bi zanistiya siyasî ve girêdayî ne
-**Doğru:** A) Pirsên vekirî yên ku çîrokbêj azad dihêlin
+-    A) Pirsên girtî yên ku bersiva erê an na dixwazin
+-    B) Pirsên ku tenê bi dîrokên rast re têkildar in
+-    C) Pirsên ku bi zanistiya siyasî ve girêdayî ne
+- ✅ D) Pirsên vekirî yên ku çîrokbêj azad dihêlin
+**Doğru:** D) Pirsên vekirî yên ku çîrokbêj azad dihêlin
 **Açıklama:** Açık uçlu sorular anlatıcının serbestçe konuşmasını sağlar ve beklenmedik, derin bilgilerin ortaya çıkmasına olanak tanır; bu da sözlü tarih için daha faydalıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
 ## ds_dirok_0263  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di lêkolîna dîroka devkî de, kîjan qonax piştî hevpeyvînê tê?
 **TR:** Sözlü tarih araştırmalarında görüşmeden sonra hangi aşama gelir?
--    A) Amadekirina pirsan
-- ✅ B) Transkrîpsiyon û analîz
+- ✅ A) Transkrîpsiyon û analîz
+-    B) Amadekirina pirsan
 -    C) Dîtina şahidan
 -    D) Kolana arşîvan
-**Doğru:** B) Transkrîpsiyon û analîz
+**Doğru:** A) Transkrîpsiyon û analîz
 **Açıklama:** Görüşmeden sonra transkripsiyon ve analiz aşaması gelir; bu aşamada ses yazıya dökülür ve toplanan bilgiler analiz edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
@@ -1870,31 +1870,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Modern sözlü tarihin öncüsü olarak bilinen bilim insanı hangisidir?
 -    A) Herodotus
 -    B) Thucydides
--    C) Leopold von Ranke
-- ✅ D) Allan Nevins
-**Doğru:** D) Allan Nevins
+- ✅ C) Allan Nevins
+-    D) Leopold von Ranke
+**Doğru:** C) Allan Nevins
 **Açıklama:** Allan Nevins, 1948'de Columbia Üniversitesi'nde modern sözlü tarih projesini kurdu ve bu yöntemi akademik olarak geliştirdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Allan_Nevins
 
 ## ds_dirok_0259  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Li gorî dîroknasan, dîroka devkî di kîjan serdemê de wekî rêbazek akademîk hate qebûl kirin?
 **TR:** Tarihçilere göre sözlü tarih hangi dönemde akademik bir yöntem olarak kabul edildi?
-- ✅ A) Di nîvê sedsala 20'an de
--    B) Di sedsala 18'an de
--    C) Di sedsala 19'an de
--    D) Di destpêka sedsala 21'an de
-**Doğru:** A) Di nîvê sedsala 20'an de
+-    A) Di sedsala 18'an de
+-    B) Di sedsala 19'an de
+-    C) Di destpêka sedsala 21'an de
+- ✅ D) Di nîvê sedsala 20'an de
+**Doğru:** D) Di nîvê sedsala 20'an de
 **Açıklama:** Sözlü tarih, 20. yüzyılın ortasında, özellikle Amerika Birleşik Devletleri ve Avrupa'da akademik projelerin kurulmasından sonra akademik bir yöntem olarak kabul edildi.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
 ## ds_dirok_0260  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan berhem wek yek ji dîroknivîsên kurdî yên herî berfireh ên destpêkê tê nasîn?
 **TR:** Hangi eser erken dönem kapsamlı Kürt tarih yazımı eserlerinden biri sayılır?
--    A) Mem û Zîn
-- ✅ B) Şerefname
+- ✅ A) Şerefname
+-    B) Mem û Zîn
 -    C) Dîroka Kurdistanê
 -    D) Cejna Azadiyê
-**Doğru:** B) Şerefname
+**Doğru:** A) Şerefname
 **Açıklama:** Şerefxanê Bidlîsî'nin 1597'de Farsça yazdığı Şerefname, Kürt emirliklerini anlatan erken ve kapsamlı bir tarih eseridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Sharafnama
 
@@ -1902,10 +1902,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan rêbaz ji bo rastbûna agahiyên dîroka devkî zêde dike?
 **TR:** Sözlü tarih bilgilerinin doğruluğunu artıran yöntem hangisidir?
 -    A) Bikaranîna yek çavkaniyê
--    B) Tenê guhdarîkirina çîrokbêj
-- ✅ C) Berhevkirina gelek çavkaniyan
+- ✅ B) Berhevkirina gelek çavkaniyan
+-    C) Tenê guhdarîkirina çîrokbêj
 -    D) Nivîsandina bêyî kontrolê
-**Doğru:** C) Berhevkirina gelek çavkaniyan
+**Doğru:** B) Berhevkirina gelek çavkaniyan
 **Açıklama:** Birçok kaynaktan bilgi toplamak ve bunları birbiriyle karşılaştırmak sözlü tarihin doğruluğunu artırır ve yanlış hatıraların tespit edilmesine yardımcı olur.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
@@ -1913,10 +1913,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan rêbaz di dîroka devkî de ji bo kêmkirina şaşbîriyan tê bikaranîn?
 **TR:** Sözlü tarihte yanlışlıkları azaltmak için hangi yöntem kullanılır?
 -    A) Bikaranîna tenê çavkaniyeke tekane
--    B) Paşguhkirina bîranînên bersivderan
-- ✅ C) Berhevdana agahiyan bi belgeyên nivîskî re
+- ✅ B) Berhevdana agahiyan bi belgeyên nivîskî re
+-    C) Paşguhkirina bîranînên bersivderan
 -    D) Zêdekirina pirsên girtî yên erê/na
-**Doğru:** C) Berhevdana agahiyan bi belgeyên nivîskî re
+**Doğru:** B) Berhevdana agahiyan bi belgeyên nivîskî re
 **Açıklama:** Sözlü bilgilerin mevcut yazılı belgelerle karşılaştırılması, yanlışlıkların tespit edilmesine yardımcı olur ve bilgilerin doğruluğunu artırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Oral_history
 
@@ -1925,31 +1925,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İpek Yolu ticaret ağı çoğunlukla hangi hanedanla ilişkilendirilir?
 -    A) Xanedana Ming
 -    B) Xanedana Qing
--    C) Xanedana Tang
-- ✅ D) Xanedana Han
-**Doğru:** D) Xanedana Han
+- ✅ C) Xanedana Han
+-    D) Xanedana Tang
+**Doğru:** C) Xanedana Han
 **Açıklama:** Organize İpek Yolu ağı MÖ 2. yüzyılda Han hanedanı döneminde kuruldu; Tang döneminde yeniden canlandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
 ## ds_dirok_0293  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Ewlehiya Riya Hevirmêş di kîjan serdemê de bi "Pax Mongolica" ve zêde bû?
 **TR:** İpek Yolu'nun güvenliği hangi dönemde "Pax Mongolica" ile arttı?
-- ✅ A) Serdema Mongol
--    B) Serdema Kevir
--    C) Serdema Bronz
--    D) Serdema Nûjen
-**Doğru:** A) Serdema Mongol
+-    A) Serdema Kevir
+-    B) Serdema Bronz
+-    C) Serdema Nûjen
+- ✅ D) Serdema Mongol
+**Doğru:** D) Serdema Mongol
 **Açıklama:** Moğol egemenliği döneminde (13.-14. yy) tek bir siyasal çatı altında yol güvenliği arttı; buna Pax Mongolica denir.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
 ## ds_dirok_0276  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan welat wekî destpêka Riya Îpekê tê zanîn?
 **TR:** Hangi ülke İpek Yolu'nun başlangıcı olarak bilinir?
--    A) Hindistan
-- ✅ B) Çîn
+- ✅ A) Çîn
+-    B) Hindistan
 -    C) Misir
 -    D) Yewnanistan
-**Doğru:** B) Çîn
+**Doğru:** A) Çîn
 **Açıklama:** Çin, İpek Yolu'nun başlangıcı olarak bilinir çünkü ipek ticaretinin en eski geçiş noktasıydı.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -1958,9 +1958,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İpek Yolu adını hangi üründen alır?
 -    A) Zêr
 -    B) Qehwe
--    C) Çerm
-- ✅ D) Hevrîşim
-**Doğru:** D) Hevrîşim
+- ✅ C) Hevrîşim
+-    D) Çerm
+**Doğru:** C) Hevrîşim
 **Açıklama:** Yol adını Çin'den batıya taşınan ipekten alır. Yolda kâğıt, baharat, cam ve at gibi birçok mal da taşındı.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -1969,9 +1969,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi şehir İpek Yolu'nun başlıca merkezlerinden biriydi?
 -    A) Parîs
 -    B) London
--    C) Berlîn
-- ✅ D) Semerkand
-**Doğru:** D) Semerkand
+- ✅ C) Semerkand
+-    D) Berlîn
+**Doğru:** C) Semerkand
 **Açıklama:** Semerkant, Buhara ve Merv gibi Orta Asya şehirleri İpek Yolu'nun başlıca merkezlerindendi.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -1979,10 +1979,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Riya Îpekê de kîjan rêbazê veguhestinê dihat bikaranîn?
 **TR:** İpek Yolu'nda hangi ulaşım yöntemi kullanılıyordu?
 -    A) Trenên elektrîkê
--    B) Balafirên bazirganî
-- ✅ C) Karwanên deveyan
+- ✅ B) Karwanên deveyan
+-    C) Balafirên bazirganî
 -    D) Keştiyên buharê
-**Doğru:** C) Karwanên deveyan
+**Doğru:** B) Karwanên deveyan
 **Açıklama:** İpek Yolu'nda deve kervanları kullanılıyordu çünkü develer çölde kolayca yürüyor ve yük taşıyorlardı.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -1990,10 +1990,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Riya Îpekê de kîjan tişt ji Çînê dihat?
 **TR:** İpek Yolu'nda hangi ürün Çin'den geliyordu?
 -    A) Zêr
--    B) Qehwe
-- ✅ C) Hevrîşim
+- ✅ B) Hevrîşim
+-    C) Qehwe
 -    D) Şekir
-**Doğru:** C) Hevrîşim
+**Doğru:** B) Hevrîşim
 **Açıklama:** İpek, Çin'de üretildiği ve batıda çok değerli olduğu için Çin'den geliyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -2001,43 +2001,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Riya Îpekê de kîjan tişt ji Hindistanê dihat?
 **TR:** İpek Yolu'nda hangi ürün Hindistan'dan geliyordu?
 -    A) Hevrîşim
--    B) Çerm
-- ✅ C) Biharat
+- ✅ B) Biharat
+-    C) Çerm
 -    D) Zêr
-**Doğru:** C) Biharat
+**Doğru:** B) Biharat
 **Açıklama:** Baharat, Hindistan'da üretildiği ve batıda çok değerli olduğu için Hindistan'dan geliyordu.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
 ## ds_dirok_0278  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Riya Îpekê di navbera kîjan herêman de dirêj bû?
 **TR:** İpek Yolu hangi bölgeler arasında uzanıyordu?
--    A) Hindistan û Afrîka
-- ✅ B) Çîn û Ewropa
+- ✅ A) Çîn û Ewropa
+-    B) Hindistan û Afrîka
 -    C) Rûsya û Amerîka
 -    D) Japonya û Awistralya
-**Doğru:** B) Çîn û Ewropa
+**Doğru:** A) Çîn û Ewropa
 **Açıklama:** İpek Yolu, Çin ve Avrupa arasında uzanıyordu çünkü doğuyu batıya bağlayan tarihi bir ticaret yoluydu.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
 ## ds_dirok_0282  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan kesayetî bi Riya Îpekê re têkildar e?
 **TR:** Hangi kişilik İpek Yolu ile ilişkilidir?
--    A) Julius Caesar
-- ✅ B) Marko Polo
+- ✅ A) Marko Polo
+-    B) Julius Caesar
 -    C) Napoleon
 -    D) Alexander Mezin
-**Doğru:** B) Marko Polo
+**Doğru:** A) Marko Polo
 **Açıklama:** Marko Polo İpek Yolu ile ilişkilidir çünkü o yolla Çin'e gitti ve seyahatlerini yazdı.
 **Kaynak:** https://en.wikipedia.org/wiki/Marco_Polo
 
 ## ds_dirok_0289  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan bajarê Kurdistanê li ser riyên bazirganiyê yên navbera Anatolya û Mezopotamyayê navendek bû?
 **TR:** Hangi Kürt şehri Anadolu ile Mezopotamya arasındaki ticaret yollarında merkezdi?
--    A) Stenbol
-- ✅ B) Amed
+- ✅ A) Amed
+-    B) Stenbol
 -    C) Qahîre
 -    D) Şam
-**Doğru:** B) Amed
+**Doğru:** A) Amed
 **Açıklama:** Amed (Diyarbakır), Anadolu ile Mezopotamya arasındaki kara ticaret yollarında önemli bir kavşak ve pazar merkeziydi.
 **Kaynak:** https://en.wikipedia.org/wiki/Diyarbakır
 
@@ -2046,9 +2046,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Avrupa-Hindistan deniz ticaretinde hangi rota önem kazandı?
 -    A) Rêya Pasîfîkê
 -    B) Rêya Atlantîkê
--    C) Rêya Arktîkê
-- ✅ D) Rêya Kapê Hêvîyê Baş
-**Doğru:** D) Rêya Kapê Hêvîyê Baş
+- ✅ C) Rêya Kapê Hêvîyê Baş
+-    D) Rêya Arktîkê
+**Doğru:** C) Rêya Kapê Hêvîyê Baş
 **Açıklama:** Vasco da Gama'nın 1498'de Ümit Burnu üzerinden Hindistan'a ulaşmasıyla bu deniz rotası önem kazandı; kara yolları göreli önemini yitirdi.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -2057,9 +2057,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi din Hindistan'dan Orta Asya üzerinden Çin'e İpek Yolu boyunca yayıldı?
 -    A) Xiristiyanî
 -    B) Cihûtî
--    C) Zerdeştî
-- ✅ D) Budîzm
-**Doğru:** D) Budîzm
+- ✅ C) Budîzm
+-    D) Zerdeştî
+**Doğru:** C) Budîzm
 **Açıklama:** Budizm Hindistan'dan Orta Asya üzerinden Çin'e İpek Yolu boyunca yayıldı. Yol üzerinde Helenistik sanat etkileri de dolaştı.
 **Kaynak:** https://en.wikipedia.org/wiki/Silk_Road
 
@@ -2775,33 +2775,33 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_7011  ·  zorluk 2  ·  offline
 **KU:** Rojnameya "Jiyan" çi bû?
 **TR:** "Jiyan" gazetesi neydi?
-- ✅ A) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
--    B) pergala niştecihbûna domdar
--    C) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
--    D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
-**Doğru:** A) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+-    A) pergala niştecihbûna domdar
+-    B) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+-    C) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+- ✅ D) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+**Doğru:** D) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
 **Açıklama:** "Jiyan" Süleymaniye’de çıktı ve erken dönem Kürtçe gazetelerdendir; Kürtçe yazı ve şiirleri yaydı.
 **Kaynak:** —
 
 ## offline_7015  ·  zorluk 1  ·  offline
 **KU:** Di zanîna dîrokê de der barê "Eyaleta Kurdistanê" de ya rast kîjan e?
 **TR:** Tarih bilgisinde "Kürdistan Eyaleti" hakkında doğru olan hangisidir?
--    A) mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da
-- ✅ B) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
+- ✅ A) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
+-    B) mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da
 -    C) 1923
 -    D) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
-**Doğru:** B) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
+**Doğru:** A) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
 **Açıklama:** "Kürdistan Eyaleti": Osmanlı'da 1847'de kurulan kısa süreli idari eyalet.
 **Kaynak:** —
 
 ## offline_7053  ·  zorluk 2  ·  offline
 **KU:** "Tevgera Barzanî" tê çi wateyê?
 **TR:** "Tevgera Barzanî" ne anlama gelir?
-- ✅ A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
--    B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
--    C) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
--    D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
-**Doğru:** A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+-    A) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+-    B) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+-    C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+- ✅ D) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+**Doğru:** D) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
 **Açıklama:** "Barzanî Hareketi": Güney Kürdistan'da uzun yıllar süren ulusal hareket.
 **Kaynak:** —
 
@@ -2809,10 +2809,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li jêr kîjan têgiha "Mezopotamya" rave dike?
 **TR:** Aşağıdakilerden hangisi "Mezopotamya" terimini açıklar?
 -    A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
--    B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
-- ✅ C) herêma dîrokî ya derdora Dîcle û Firatê
+- ✅ B) herêma dîrokî ya derdora Dîcle û Firatê
+-    C) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
 -    D) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
-**Doğru:** C) herêma dîrokî ya derdora Dîcle û Firatê
+**Doğru:** B) herêma dîrokî ya derdora Dîcle û Firatê
 **Açıklama:** "Mezopotamya": Dicle ve Fırat çevresindeki tarihsel bölge.
 **Kaynak:** —
 
@@ -2820,43 +2820,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Dersim 1937" bi kîjan aliyê xwe ve tê nasîn?
 **TR:** "Dersim 1937" hangi yönüyle bilinir?
 -    A) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
--    B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
-- ✅ C) operasyona leşkerî û kuştinên girseyî yên li herêma Dêrsimê
+- ✅ B) operasyona leşkerî û kuştinên girseyî yên li herêma Dêrsimê
+-    C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
 -    D) Mîrê Kor
-**Doğru:** C) operasyona leşkerî û kuştinên girseyî yên li herêma Dêrsimê
+**Doğru:** B) operasyona leşkerî û kuştinên girseyî yên li herêma Dêrsimê
 **Açıklama:** "Dersim 1937": 1937-38 Dersim harekâtı, çatışmalar ve kitlesel öldürmeler.
 **Kaynak:** —
 
 ## offline_7145  ·  zorluk 3  ·  offline
 **KU:** "Şeyh Said" di mijara dîrokê de çi vedibêje?
 **TR:** "Şeyh Said" tarih konusunda neyi ifade eder?
--    A) Kahire
-- ✅ B) serokê sereke yê Serhildana Şêx Seîd a 1925an
+- ✅ A) serokê sereke yê Serhildana Şêx Seîd a 1925an
+-    B) Kahire
 -    C) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
 -    D) yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin
-**Doğru:** B) serokê sereke yê Serhildana Şêx Seîd a 1925an
+**Doğru:** A) serokê sereke yê Serhildana Şêx Seîd a 1925an
 **Açıklama:** "Şeyh Said": 1925 Şeyh Said İsyanı'nın başlıca lideri.
 **Kaynak:** —
 
 ## offline_7151  ·  zorluk 3  ·  offline
 **KU:** "Mîrgeha Babanê" bi awayekî rast çawa tê ravekirin?
 **TR:** "Baban Emirliği" en doğru biçimde nasıl açıklanır?
-- ✅ A) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
--    B) dewleta mezin a ku Selahedînê Eyûbî damezrand
--    C) hêza mezin a serdema kevnar a bi navenda Zagrosê
--    D) mîrektiya kurd a girîng a bi navenda Cizîrê
-**Doğru:** A) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+-    A) dewleta mezin a ku Selahedînê Eyûbî damezrand
+-    B) hêza mezin a serdema kevnar a bi navenda Zagrosê
+-    C) mîrektiya kurd a girîng a bi navenda Cizîrê
+- ✅ D) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+**Doğru:** D) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
 **Açıklama:** "Baban Emirliği": Süleymaniye merkezli güçlü Kürt prensliği.
 **Kaynak:** —
 
 ## offline_7201  ·  zorluk 5  ·  offline
 **KU:** "Celadet Bedirxan" wek kî tê naskirin?
 **TR:** "Celadet Bedirxan" kim olarak bilinir?
--    A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
-- ✅ B) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+- ✅ A) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+-    B) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
 -    C) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
 -    D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
-**Doğru:** B) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+**Doğru:** A) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
 **Açıklama:** "Celadet Bedirxan": Kürt alfabesini geliştiren yayıncı ve aydın.
 **Kaynak:** —
 
@@ -2864,10 +2864,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan kesê/a "Mîrê Kor" rast dide nasîn?
 **TR:** Hangi seçenek "Mîrê Kor"u doğru tanıtır?
 -    A) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
--    B) belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)
-- ✅ C) serokê bihêz ê mîrektiya Soranê yê bi leqeba kor
+- ✅ B) serokê bihêz ê mîrektiya Soranê yê bi leqeba kor
+-    C) belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)
 -    D) mîrektiya kurd a ku li başûrê Gola Wanê hukum kir
-**Doğru:** C) serokê bihêz ê mîrektiya Soranê yê bi leqeba kor
+**Doğru:** B) serokê bihêz ê mîrektiya Soranê yê bi leqeba kor
 **Açıklama:** "Mîrê Kor": Soran emirliğinin kör lakaplı güçlü lideri.
 **Kaynak:** —
 
@@ -2876,20 +2876,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Kasr-ı Şirin Antlaşması" için en doğru açıklama hangisidir?
 -    A) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
 -    B) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
--    C) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
-- ✅ D) peymana ku sînorê Osmanî û Sefewî diyar kir
-**Doğru:** D) peymana ku sînorê Osmanî û Sefewî diyar kir
+- ✅ C) peymana ku sînorê Osmanî û Sefewî diyar kir
+-    D) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
+**Doğru:** C) peymana ku sînorê Osmanî û Sefewî diyar kir
 **Açıklama:** "Kasr-ı Şirin Antlaşması": Osmanlı ve Safevi sınırını belirleyen antlaşma.
 **Kaynak:** —
 
 ## offline_7242  ·  zorluk 2  ·  offline
 **KU:** Li jêr kîjan têgiha "Peymana Lozanê" rave dike?
 **TR:** Aşağıdakilerden hangisi "Lozan Antlaşması" terimini açıklar?
-- ✅ A) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
--    B) mîrektiya kurd a ku li başûrê Gola Wanê hukum kir
--    C) berhema dîroka kurdan a ku Şerefxan nivîsî
--    D) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
-**Doğru:** A) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+-    A) mîrektiya kurd a ku li başûrê Gola Wanê hukum kir
+-    B) berhema dîroka kurdan a ku Şerefxan nivîsî
+-    C) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
+- ✅ D) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+**Doğru:** D) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
 **Açıklama:** "Lozan Antlaşması": Sevr'in yerini alan ve Kürtlere özel statü öngörmeyen 1923 antlaşması.
 **Kaynak:** —
 
@@ -2897,10 +2897,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li jêr ji bo "Şengal" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "Şengal" için doğrudur?
 -    A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
--    B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
-- ✅ C) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+- ✅ B) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+-    C) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
 -    D) herêma dîrokî ya derdora Dîcle û Firatê
-**Doğru:** C) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+**Doğru:** B) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
 **Açıklama:** "Şengal": Êzidîlerin tarihî yerleşim ve kutsal bölgelerinden biri.
 **Kaynak:** —
 
@@ -2908,21 +2908,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dîrokê de "Şeyh Mahmud Berzenci" kî ye?
 **TR:** Tarihte "Şeyh Mahmud Berzenci" kimdir?
 -    A) serokê Komara Mehabadê
--    B) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
-- ✅ C) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
+- ✅ B) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
+-    C) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
 -    D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
-**Doğru:** C) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
+**Doğru:** B) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
 **Açıklama:** "Şeyh Mahmud Berzenci": Irak'ta kendini Kürdistan kralı ilan eden lider.
 **Kaynak:** —
 
 ## offline_7257  ·  zorluk 3  ·  offline
 **KU:** "Qazi Muhammed" çi îfade dike?
 **TR:** "Qazi Muhammed" neyi ifade eder?
--    A) Ji bo herêmeke kurdî ya xweser madde dihewand
-- ✅ B) serokkomarê Komara Kurd a Mehabadê
+- ✅ A) serokkomarê Komara Kurd a Mehabadê
+-    B) Ji bo herêmeke kurdî ya xweser madde dihewand
 -    C) Vegirtina Qudsê di 1187an de
 -    D) Navbeynkariya di navbera Osmanî û mîrên kurd de
-**Doğru:** B) serokkomarê Komara Kurd a Mehabadê
+**Doğru:** A) serokkomarê Komara Kurd a Mehabadê
 **Açıklama:** "Qazi Muhammed": Mahabad Kürt Cumhuriyeti'nin cumhurbaşkanı.
 **Kaynak:** —
 
@@ -2930,32 +2930,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Serhildanên Agirî" bi kîjan aliyê xwe ve tê nasîn?
 **TR:** "Agirî İsyanları" hangi yönüyle tanınır?
 -    A) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
--    B) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
-- ✅ C) berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de
+- ✅ B) berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de
+-    C) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
 -    D) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
-**Doğru:** C) berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de
+**Doğru:** B) berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de
 **Açıklama:** "Ağrı İsyanları": 1927-1930 yılları arasında Ağrı dağı çevresindeki direniş.
 **Kaynak:** —
 
 ## offline_7300  ·  zorluk 3  ·  offline
 **KU:** Li jêr ji bo "Mela Mahmude Bayazidi" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "Mela Mahmude Bayazidi" için doğrudur?
--    A) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
-- ✅ B) yekem lêkolînerê ku edet û kevneşopiyên kurdî berhev kirin
+- ✅ A) yekem lêkolînerê ku edet û kevneşopiyên kurdî berhev kirin
+-    B) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
 -    C) belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)
 -    D) peymana ku sînorê Osmanî û Sefewî diyar kir
-**Doğru:** B) yekem lêkolînerê ku edet û kevneşopiyên kurdî berhev kirin
+**Doğru:** A) yekem lêkolînerê ku edet û kevneşopiyên kurdî berhev kirin
 **Açıklama:** "Mela Mahmude Bayazidi": Kürt örf adetlerini derleyen ilk araştırmacı.
 **Kaynak:** —
 
 ## offline_7334  ·  zorluk 1  ·  offline
 **KU:** Têgiha "Tevgera Barzanî" çi pêk tîne?
 **TR:** "Tevgera Barzanî" terimi neyi anlatır?
-- ✅ A) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
--    B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
--    C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
--    D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
-**Doğru:** A) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
+-    A) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+-    B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+-    C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+- ✅ D) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
+**Doğru:** D) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
 **Açıklama:** "Barzanî Hareketi": Güney Kürdistan'da uzun yıllar süren ulusal hareket.
 **Kaynak:** —
 
@@ -2964,20 +2964,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Ehmedê Xanî" hakkında doğru bilgi hangisidir?
 -    A) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
 -    B) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
--    C) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
-- ✅ D) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
-**Doğru:** D) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
+- ✅ C) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
+-    D) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
+**Doğru:** C) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
 **Açıklama:** "Ehmedê Xanî": 17. yüzyılda Kürt aydınlanma fikrini yazan şair.
 **Kaynak:** —
 
 ## offline_7360  ·  zorluk 1  ·  offline
 **KU:** Ji bo "Mîrgeha Soran" ravekirina herî dirust kîjan e?
 **TR:** "Soran Emirliği" için en doğru açıklama hangisidir?
--    A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
-- ✅ B) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
+- ✅ A) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
+-    B) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
 -    C) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
 -    D) xanedaniya kurd a serdema navîn a bi navenda Amedê
-**Doğru:** B) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
+**Doğru:** A) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
 **Açıklama:** "Soran Emirliği": Ravanduz merkezli askeri güç biriktiren beylik.
 **Kaynak:** —
 
@@ -2986,9 +2986,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Mahabad Cumhuriyeti" tanımına hangisi uyar?
 -    A) derdora Colemêrg/Cizîrê (başûrê rojhilat ê çiyayî)
 -    B) Kerkûk
--    C) Azadî û berxwedan li hember zulmê
-- ✅ D) yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin
-**Doğru:** D) yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin
+- ✅ C) yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin
+-    D) Azadî û berxwedan li hember zulmê
+**Doğru:** C) yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin
 **Açıklama:** "Mahabad Cumhuriyeti": 1946'da kurulan ilk kısa ömürlü Kürt devleti.
 **Kaynak:** —
 
@@ -2996,10 +2996,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan pênase bi "Serhildana Koçgirî" re li hev tê?
 **TR:** Hangi tanım "Koçgiri İsyanı" ile örtüşür?
 -    A) sedsala 16em
--    B) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
-- ✅ C) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
+- ✅ B) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
+-    C) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
 -    D) sedsala 19em
-**Doğru:** C) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
+**Doğru:** B) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
 **Açıklama:** "Koçgiri İsyanı": 1921'de Sivas yöresinde gelişen Kürt hareketi.
 **Kaynak:** —
 
@@ -3008,31 +3008,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "şîroveya dîrokî" neyi ifade eder?
 -    A) bandorkirina civakan li hev
 -    B) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
--    C) veguhastina cih a civakan
-- ✅ D) ji delîlan wate derxistin
-**Doğru:** D) ji delîlan wate derxistin
+- ✅ C) ji delîlan wate derxistin
+-    D) veguhastina cih a civakan
+**Doğru:** C) ji delîlan wate derxistin
 **Açıklama:** "şîroveya dîrokî": kanıtlardan anlam çıkarma.
 **Kaynak:** —
 
 ## offline_7443  ·  zorluk 3  ·  offline
 **KU:** "Eyûbî" çawa tê pênasekirin?
 **TR:** "Eyûbî" nasıl tanımlanır?
-- ✅ A) dewleta mezin a ku Selahedînê Eyûbî damezrand
--    B) hêza mezin a serdema kevnar a bi navenda Zagrosê
--    C) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
--    D) mîrektiya kurd a girîng a bi navenda Cizîrê
-**Doğru:** A) dewleta mezin a ku Selahedînê Eyûbî damezrand
+-    A) hêza mezin a serdema kevnar a bi navenda Zagrosê
+-    B) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+-    C) mîrektiya kurd a girîng a bi navenda Cizîrê
+- ✅ D) dewleta mezin a ku Selahedînê Eyûbî damezrand
+**Doğru:** D) dewleta mezin a ku Selahedînê Eyûbî damezrand
 **Açıklama:** "Eyûbî": Selahaddin Eyyubi tarafından kurulan büyük devlet.
 **Kaynak:** —
 
 ## offline_7474  ·  zorluk 1  ·  offline
 **KU:** Berambera rast a biwêja "dîroka devkî" kîjan e?
 **TR:** "dîroka devkî" teriminin doğru karşılığı hangisidir?
--    A) bandorkirina civakan li hev
-- ✅ B) têgihiştina rabirdûyê bi şahidiyan
+- ✅ A) têgihiştina rabirdûyê bi şahidiyan
+-    B) bandorkirina civakan li hev
 -    C) ji delîlan wate derxistin
 -    D) veguhastina cih a civakan
-**Doğru:** B) têgihiştina rabirdûyê bi şahidiyan
+**Doğru:** A) têgihiştina rabirdûyê bi şahidiyan
 **Açıklama:** "sözlü tarih": tanıklık ve anlatılarla geçmişi anlama yöntemi.
 **Kaynak:** —
 
@@ -3040,10 +3040,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan vebijêrk tê wateya "Cizîr"?
 **TR:** Hangi seçenek "Cizîr" anlamına gelir?
 -    A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
--    B) herêma dîrokî ya derdora Dîcle û Firatê
-- ✅ C) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+- ✅ B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+-    C) herêma dîrokî ya derdora Dîcle û Firatê
 -    D) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
-**Doğru:** C) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+**Doğru:** B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
 **Açıklama:** "Cizîr": Botan emirliğinin ve tarihsel kültürün beşiği olan şehir.
 **Kaynak:** —
 
@@ -3052,42 +3052,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Qadî Mihemed kimdir?
 -    A) Împeratoriya Medan (berî Faris)
 -    B) payîz / Îlon
--    C) Madrîd û Lîzbon
-- ✅ D) serokkomarê Komara Kurd a Mehabadê
-**Doğru:** D) serokkomarê Komara Kurd a Mehabadê
+- ✅ C) serokkomarê Komara Kurd a Mehabadê
+-    D) Madrîd û Lîzbon
+**Doğru:** C) serokkomarê Komara Kurd a Mehabadê
 **Açıklama:** "Qazi Muhammed": Mahabad Kürt Cumhuriyeti'nin cumhurbaşkanı.
 **Kaynak:** —
 
 ## offline_7497  ·  zorluk 2  ·  offline
 **KU:** "Mustafa Barzani" bi kîjan aliyê xwe ve tê nasîn?
 **TR:** "Mustafa Barzani" hangi yönüyle tanınır?
-- ✅ A) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
--    B) Çemê Batmanê
--    C) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
--    D) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
-**Doğru:** A) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
+-    A) Çemê Batmanê
+-    B) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+-    C) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+- ✅ D) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
+**Doğru:** D) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
 **Açıklama:** "Mustafa Barzani": Kürt ulusal hareketinin askerî ve siyasî liderlerinden biri.
 **Kaynak:** —
 
 ## offline_7507  ·  zorluk 3  ·  offline
 **KU:** "koçberî" çawa tê pênasekirin?
 **TR:** "göç" nasıl tanımlanır?
--    A) bandorkirina civakan li hev
-- ✅ B) veguhastina cih a civakan
+- ✅ A) veguhastina cih a civakan
+-    B) bandorkirina civakan li hev
 -    C) ji delîlan wate derxistin
 -    D) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
-**Doğru:** B) veguhastina cih a civakan
+**Doğru:** A) veguhastina cih a civakan
 **Açıklama:** "göç": toplulukların yer değiştirmesi.
 **Kaynak:** —
 
 ## offline_7527  ·  zorluk 1  ·  offline
 **KU:** "Amida" di mijara dîrokê de çi vedibêje?
 **TR:** "Amida" tarih konusunda neyi anlatır?
-- ✅ A) navê dîrokî yê Amedê yê serdema kevnar û kela wê
--    B) Selaheddînê Eyûbî
--    C) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
--    D) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
-**Doğru:** A) navê dîrokî yê Amedê yê serdema kevnar û kela wê
+-    A) Selaheddînê Eyûbî
+-    B) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+-    C) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
+- ✅ D) navê dîrokî yê Amedê yê serdema kevnar û kela wê
+**Doğru:** D) navê dîrokî yê Amedê yê serdema kevnar û kela wê
 **Açıklama:** "Amida": Diyarbakır'ın antik çağdaki tarihi ismi ve kalesi.
 **Kaynak:** —
 
@@ -3096,9 +3096,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "kronoloji" hakkında bilinmesi gereken doğru bilgi nedir?
 -    A) Serokkomarê Iraqê
 -    B) Kafkasya (derdora Gence-Aniyê)
--    C) bandorkirina civakan li hev
-- ✅ D) rêzkirina bûyeran li gorî demê
-**Doğru:** D) rêzkirina bûyeran li gorî demê
+- ✅ C) rêzkirina bûyeran li gorî demê
+-    D) bandorkirina civakan li hev
+**Doğru:** C) rêzkirina bûyeran li gorî demê
 **Açıklama:** "kronoloji": olayları zaman sırasına koyma.
 **Kaynak:** —
 
@@ -3106,21 +3106,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Dema "Rojnameya Kurdistan" tê gotin, çi tê xwestin?
 **TR:** "Kürdistan gazetesi" denince ne kastedilir?
 -    A) sedsala 16em
--    B) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
-- ✅ C) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
+- ✅ B) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
+-    C) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
 -    D) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
-**Doğru:** C) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
+**Doğru:** B) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
 **Açıklama:** "Kürdistan gazetesi": Kahire'de 1898'de basılan ilk Kürt gazetesi.
 **Kaynak:** —
 
 ## offline_7605  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeha "çavkaniya yekemîn" di nav dîrokê de rast bi cih dike?
 **TR:** Tarihte "birincil kaynak" terimini hangisi doğru karşılar?
--    A) serokkomarê Komara Kurd a Mehabadê
-- ✅ B) belge an tiştê ku rasterast ji wê serdemê maye
+- ✅ A) belge an tiştê ku rasterast ji wê serdemê maye
+-    B) serokkomarê Komara Kurd a Mehabadê
 -    C) Împeratoriya Medan (berî Faris)
 -    D) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
-**Doğru:** B) belge an tiştê ku rasterast ji wê serdemê maye
+**Doğru:** A) belge an tiştê ku rasterast ji wê serdemê maye
 **Açıklama:** "birincil kaynak": Döneminden kalan belge veya nesne (birincil kaynak).
 **Kaynak:** —
 
@@ -3128,21 +3128,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan kesê/a "Leyla Qasim" rast dide nasîn?
 **TR:** Hangi seçenek "Leyla Qasim"i doğru tanıtır?
 -    A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
--    B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
-- ✅ C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+- ✅ B) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+-    C) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
 -    D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
-**Doğru:** C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+**Doğru:** B) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
 **Açıklama:** "Leyla Qasim": Irak rejimi tarafından idam edilen Kürt kadın aktivist.
 **Kaynak:** —
 
 ## offline_7643  ·  zorluk 5  ·  offline
 **KU:** "Mikdat Mithat Bedirxan" çawa divê bê fêmkirin?
 **TR:** "Mikdat Mithat Bedirxan" nasıl anlaşılmalıdır?
-- ✅ A) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
--    B) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
--    C) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
--    D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
-**Doğru:** A) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+-    A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+-    B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+-    C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+- ✅ D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+**Doğru:** D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
 **Açıklama:** "Mikdat Mithat Bedirxan": 1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi.
 **Kaynak:** —
 
@@ -3150,10 +3150,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo "Amida" ravekirina herî dirust kîjan e?
 **TR:** "Amida" için en doğru açıklama hangisidir?
 -    A) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
--    B) Dewleta mezin a ku ji aliyê Selahedînê Eyûbî ve hatiye avakirin
-- ✅ C) navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de
+- ✅ B) navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de
+-    C) Dewleta mezin a ku ji aliyê Selahedînê Eyûbî ve hatiye avakirin
 -    D) Rêberê efsaneyî yê leşkerî û siyasî yê tevgera kurd
-**Doğru:** C) navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de
+**Doğru:** B) navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de
 **Açıklama:** "Amida": Diyarbakır'ın antik çağdaki tarihi ismi ve kalesi.
 **Kaynak:** —
 
@@ -3162,9 +3162,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi seçenek "Bidlîs Prensliği"ni doğru tanıtır?
 -    A) hêza mezin a serdema kevnar a bi navenda Zagrosê
 -    B) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
--    C) xanedaniya kurd a serdema navîn a bi navenda Amedê
-- ✅ D) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
-**Doğru:** D) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+- ✅ C) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+-    D) xanedaniya kurd a serdema navîn a bi navenda Amedê
+**Doğru:** C) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
 **Açıklama:** "Bitlis Prensliği": Osmanlı döneminde özerk kalmış Kürt hükümdarlığı.
 **Kaynak:** —
 
@@ -3172,54 +3172,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Dema "Komkujiya Helebceyê" tê gotin, çi tê xwestin?
 **TR:** "Helebce Katliamı" denince ne kastedilir?
 -    A) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
--    B) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
-- ✅ C) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
+- ✅ B) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
+-    C) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
 -    D) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
-**Doğru:** C) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
+**Doğru:** B) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
 **Açıklama:** "Halepçe katliamı": 1988'de Kürtlere karşı yapılan kimyasal saldırı.
 **Kaynak:** —
 
 ## offline_7680  ·  zorluk 2  ·  offline
 **KU:** Ji aliyê Dîrokê ve ji bo "Rojnameya Jiyan" îfadeya rast kîjan e?
 **TR:** Tarih açısından "Rojnameya Jiyan" için doğru ifade hangisidir?
--    A) pergala niştecihbûna domdar
-- ✅ B) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+- ✅ A) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+-    B) pergala niştecihbûna domdar
 -    C) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
 -    D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
-**Doğru:** B) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+**Doğru:** A) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
 **Açıklama:** "Rojnameya Jiyan": Süleymaniye'de basılan erken dönem Kürtçe gazete.
 **Kaynak:** —
 
 ## offline_7717  ·  zorluk 3  ·  offline
 **KU:** Kîjan vebijêrk tê wateya "Cemiyeta Tealiya Kurdan"?
 **TR:** Hangi seçenek "Kürt Teali Cemiyeti" anlamına gelir?
-- ✅ A) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
--    B) 1991
--    C) Şerê Hittînê (1187)
--    D) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
-**Doğru:** A) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
+-    A) 1991
+-    B) Şerê Hittînê (1187)
+-    C) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
+- ✅ D) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
+**Doğru:** D) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
 **Açıklama:** "Kürt Teali Cemiyeti": 20. yüzyıl başında kurulan Kürt örgütü.
 **Kaynak:** —
 
 ## offline_7763  ·  zorluk 3  ·  offline
 **KU:** Derbarê "Mîrgeha Botan" de vebijêrka rast kîjan e?
 **TR:** "Botan Emirliği" hakkında doğru seçenek hangisidir?
--    A) dewleta mezin a ku Selahedînê Eyûbî damezrand
-- ✅ B) mîrektiya kurd a girîng a bi navenda Cizîrê
+- ✅ A) mîrektiya kurd a girîng a bi navenda Cizîrê
+-    B) dewleta mezin a ku Selahedînê Eyûbî damezrand
 -    C) hêza mezin a serdema kevnar a bi navenda Zagrosê
 -    D) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
-**Doğru:** B) mîrektiya kurd a girîng a bi navenda Cizîrê
+**Doğru:** A) mîrektiya kurd a girîng a bi navenda Cizîrê
 **Açıklama:** "Bohtan Emirliği": Cizre merkezli önemli Kürt beyliği.
 **Kaynak:** —
 
 ## offline_7778  ·  zorluk 4  ·  offline
 **KU:** "Merwanî" çi îfade dike?
 **TR:** "Merwanî" neyi ifade eder?
-- ✅ A) xanedaniya kurd a serdema navîn a bi navenda Amedê
--    B) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
--    C) hêza mezin a serdema kevnar a bi navenda Zagrosê
--    D) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
-**Doğru:** A) xanedaniya kurd a serdema navîn a bi navenda Amedê
+-    A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+-    B) hêza mezin a serdema kevnar a bi navenda Zagrosê
+-    C) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+- ✅ D) xanedaniya kurd a serdema navîn a bi navenda Amedê
+**Doğru:** D) xanedaniya kurd a serdema navîn a bi navenda Amedê
 **Açıklama:** "Merwanî": Diyarbakır merkezli ortaçağ Kürt hanedanlığı.
 **Kaynak:** —
 
@@ -3228,31 +3228,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aşağıdakilerden hangisi "Îhsan Nûrî Paşa" için doğrudur?
 -    A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
 -    B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
--    C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
-- ✅ D) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
-**Doğru:** D) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+- ✅ C) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+-    D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+**Doğru:** C) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
 **Açıklama:** "Îhsan Nûrî Paşa": Hoybun cemiyeti adına askeri liderlik yapan subay.
 **Kaynak:** —
 
 ## offline_7852  ·  zorluk 2  ·  offline
 **KU:** "Kovara Hawar" çawa tê pênasekirin?
 **TR:** "Kovara Hawar" nasıl tanımlanır?
-- ✅ A) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
--    B) pergala niştecihbûna domdar
--    C) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
--    D) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
-**Doğru:** A) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+-    A) pergala niştecihbûna domdar
+-    B) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+-    C) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+- ✅ D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+**Doğru:** D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
 **Açıklama:** "Kovara Hawar": Latin alfabesiyle basılan ilk Kürtçe dergi.
 **Kaynak:** —
 
 ## offline_7866  ·  zorluk 2  ·  offline
 **KU:** Derbarê "arkeoloji" de agahiya herî rast kîjan e?
 **TR:** "arkeoloji" hakkında en doğru bilgi hangisidir?
--    A) Şerê Enqereyê
-- ✅ B) lêkolîna borî bi rêya bermahiyên maddî
+- ✅ A) lêkolîna borî bi rêya bermahiyên maddî
+-    B) Şerê Enqereyê
 -    C) yek ji wargehên herî kevn ên domdar
 -    D) bandorkirina civakan li hev
-**Doğru:** B) lêkolîna borî bi rêya bermahiyên maddî
+**Doğru:** A) lêkolîna borî bi rêya bermahiyên maddî
 **Açıklama:** "arkeoloji": maddi kalıntılarla geçmişi araştırma.
 **Kaynak:** —
 
@@ -3260,21 +3260,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Împaratoriya Medî" bi kîjan aliyê xwe ve tê nasîn?
 **TR:** "Med İmparatorluğu" hangi yönüyle tanınır?
 -    A) dewleta mezin a ku Selahedînê Eyûbî damezrand
--    B) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
-- ✅ C) hêza mezin a serdema kevnar a bi navenda Zagrosê
+- ✅ B) hêza mezin a serdema kevnar a bi navenda Zagrosê
+-    C) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
 -    D) xanedaniya kurd a serdema navîn a bi navenda Amedê
-**Doğru:** C) hêza mezin a serdema kevnar a bi navenda Zagrosê
+**Doğru:** B) hêza mezin a serdema kevnar a bi navenda Zagrosê
 **Açıklama:** "Med İmparatorluğu": antik çağda Zagros merkezli büyük güç.
 **Kaynak:** —
 
 ## offline_7881  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê dîrokê ve ji bo "bandora çandî" gotina rast kîjan e?
 **TR:** Tarih açısından "kültürel etkileşim" için doğru ifade hangisidir?
-- ✅ A) bandorkirina civakan li hev
--    B) ji delîlan wate derxistin
--    C) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
--    D) veguhastina cih a civakan
-**Doğru:** A) bandorkirina civakan li hev
+-    A) ji delîlan wate derxistin
+-    B) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
+-    C) veguhastina cih a civakan
+- ✅ D) bandorkirina civakan li hev
+**Doğru:** D) bandorkirina civakan li hev
 **Açıklama:** "kültürel etkileşim": toplumların birbirini etkilemesi.
 **Kaynak:** —
 
@@ -3282,32 +3282,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di zanîna dîrokê de der barê "Kampanyaya Enfalê" de ya rast kîjan e?
 **TR:** Tarih bilgisinde "Kampanyaya Enfalê" hakkında doğru olan hangisidir?
 -    A) Qahîre û Şam
--    B) navê dîrokî yê Amedê yê serdema kevnar û kela wê
-- ✅ C) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+- ✅ B) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+-    C) navê dîrokî yê Amedê yê serdema kevnar û kela wê
 -    D) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
-**Doğru:** C) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+**Doğru:** B) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
 **Açıklama:** "Kampanyaya Enfalê": Irak rejimi tarafından Kürtlere yönelik soykırım.
 **Kaynak:** —
 
 ## offline_7983  ·  zorluk 1  ·  offline
 **KU:** Berambera rast a biwêja "jiyana nîştecîh" kîjan e?
 **TR:** "yerleşik yaşam" deyiminin doğru karşılığı hangisidir?
--    A) Celadet Alî Bedirxan
-- ✅ B) pergala niştecihbûna domdar
+- ✅ A) pergala niştecihbûna domdar
+-    B) Celadet Alî Bedirxan
 -    C) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
 -    D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
-**Doğru:** B) pergala niştecihbûna domdar
+**Doğru:** A) pergala niştecihbûna domdar
 **Açıklama:** "yerleşik yaşam": kalıcı yerleşim düzeni.
 **Kaynak:** —
 
 ## offline_8023  ·  zorluk 3  ·  offline
 **KU:** Kîjan di Dîrokê de têgiha "Heskîf" rast bi cih dike?
 **TR:** Tarihte "Heskîf (Hasankeyf)" terimini hangisi doğru karşılar?
-- ✅ A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
--    B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
--    C) herêma dîrokî ya derdora Dîcle û Firatê
--    D) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
-**Doğru:** A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+-    A) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+-    B) herêma dîrokî ya derdora Dîcle û Firatê
+-    C) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+- ✅ D) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+**Doğru:** D) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
 **Açıklama:** "Heskîf": Dicle nehri üzerinde yer alan binlerce yıllık tarihi kent.
 **Kaynak:** —
 
@@ -3315,10 +3315,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'hêza mezin a antik a li Zagrosê ku di hin vegotinên kurdî de bi kalan ve girêdayî ye'?
 **TR:** Hangi terim şu açıklamayla tanınır: "bazı Kürt tarih anlatılarında atalara bağlanan, Zagros dağlarındaki antik güç"?
 -    A) Mîrê Kor
--    B) Şerefname
-- ✅ C) Împaratoriya Medî
+- ✅ B) Împaratoriya Medî
+-    C) Şerefname
 -    D) Mîrgeha Erdelanê
-**Doğru:** C) Împaratoriya Medî
+**Doğru:** B) Împaratoriya Medî
 **Açıklama:** "Împaratoriya Medî" şu anlama gelir: bazı Kürt tarih anlatılarında atalara bağlanan, Zagros dağlarındaki antik güç.
 **Kaynak:** —
 
@@ -3327,20 +3327,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tarih dersi için hangi seçenek "Împaratoriya Medî" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
 -    B) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
--    C) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
-- ✅ D) hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin
-**Doğru:** D) hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin
+- ✅ C) hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin
+-    D) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
+**Doğru:** C) hêza mezin a antik a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin
 **Açıklama:** "Împaratoriya Medî" için doğru açıklama şudur: bazı Kürt tarih anlatılarında atalara bağlanan, Zagros dağlarındaki antik güç.
 **Kaynak:** —
 
 ## offline_curated_20526  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn"?
 **TR:** Hangi terim şu açıklamayla tanınır: "merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı"?
-- ✅ A) Dewleta Merwaniyan
--    B) Şerefname
--    C) Mîrgeha Erdelanê
--    D) Mîrgeha Botan
-**Doğru:** A) Dewleta Merwaniyan
+-    A) Şerefname
+-    B) Mîrgeha Erdelanê
+-    C) Mîrgeha Botan
+- ✅ D) Dewleta Merwaniyan
+**Doğru:** D) Dewleta Merwaniyan
 **Açıklama:** "Dewleta Merwaniyan" şu anlama gelir: merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı.
 **Kaynak:** —
 
@@ -3349,9 +3349,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tarih dersi için hangi seçenek "Dewleta Merwaniyan" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin
 -    B) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
--    C) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
-- ✅ D) xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn
-**Doğru:** D) xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn
+- ✅ C) xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn
+-    D) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
+**Doğru:** C) xanedaniya kurdî ya serdema navîn ku navenda wê Amed û doralên wê bûn
 **Açıklama:** "Dewleta Merwaniyan" için doğru açıklama şudur: merkezi Amed ve çevresi olan ortaçağ Kürt hanedanı.
 **Kaynak:** —
 
@@ -3360,9 +3360,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanınır: "merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği"?
 -    A) Rojnameya Kurdistan
 -    B) Şerefname
--    C) Kovara Jîn
-- ✅ D) Mîrgeha Botan
-**Doğru:** D) Mîrgeha Botan
+- ✅ C) Mîrgeha Botan
+-    D) Kovara Jîn
+**Doğru:** C) Mîrgeha Botan
 **Açıklama:** "Mîrgeha Botan" şu anlama gelir: merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği.
 **Kaynak:** —
 
@@ -3371,31 +3371,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tarih dersi için hangi seçenek "Mîrgeha Botan" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
 -    B) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
--    C) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
-- ✅ D) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
-**Doğru:** D) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
+- ✅ C) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
+-    D) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
+**Doğru:** C) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
 **Açıklama:** "Mîrgeha Botan" için doğru açıklama şudur: merkezi Cizîra Botan olan, kültürel bağımsızlığa sahip güçlü Kürt beyliği.
 **Kaynak:** —
 
 ## offline_curated_20576  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin'?
 **TR:** Hangi terim şu açıklamayla tanınır: "1597"de Şerefxanê Bedlîsî tarafından yazılan Kürt beylikleri tarihi kitabı'?
-- ✅ A) Şerefname
--    B) Selaheddînê Eyûbî
--    C) Împaratoriya Medî
--    D) Mîrê Kor
-**Doğru:** A) Şerefname
+-    A) Selaheddînê Eyûbî
+-    B) Împaratoriya Medî
+-    C) Mîrê Kor
+- ✅ D) Şerefname
+**Doğru:** D) Şerefname
 **Açıklama:** "Şerefname" şu anlama gelir: 1597'de Bitlisli Şerefhan tarafından yazılan Kürt beylikleri tarihi kitabı.
 **Kaynak:** —
 
 ## offline_curated_20579  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa dîrok kîjan vebijark ravekirina têgeha "Şerefname" bi awayekî rast temam dike?
 **TR:** Tarih dersi için hangi seçenek "Şerefname" teriminin açıklamasını doğru biçimde tamamlar?
--    A) Şerefxanê Bidlîsî
-- ✅ B) pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin
+- ✅ A) pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin
+-    B) Şerefxanê Bidlîsî
 -    C) serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir
 -    D) rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin
-**Doğru:** B) pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin
+**Doğru:** A) pirtûka dîroka mîrgehên kurdî ku di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve hatibû nivîsandin
 **Açıklama:** "Şerefname" için doğru açıklama şudur: 1597'de Bitlisli Şerefhan tarafından yazılan Kürt beylikleri tarihi kitabı.
 **Kaynak:** —
 
@@ -3404,9 +3404,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanınır: "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını"?
 -    A) Rojnameya Kurdistan
 -    B) Peymana Lozanê
--    C) Şerefname
-- ✅ D) Kovara Jîn
-**Doğru:** D) Kovara Jîn
+- ✅ C) Kovara Jîn
+-    D) Şerefname
+**Doğru:** C) Kovara Jîn
 **Açıklama:** "Kovara Jîn" şu anlama gelir: 20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını.
 **Kaynak:** —
 
@@ -3415,31 +3415,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tarih dersi için hangi seçenek "Kovara Jîn" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
 -    B) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
--    C) Serdema Navîn (sedsalên 10-11em)
-- ✅ D) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
-**Doğru:** D) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
+- ✅ C) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
+-    D) Serdema Navîn (sedsalên 10-11em)
+**Doğru:** C) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
 **Açıklama:** "Kovara Jîn" için doğru açıklama şudur: 20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını.
 **Kaynak:** —
 
 ## offline_curated_20625  ·  zorluk 1  ·  offline
 **KU:** Têgeha "Selaheddînê Eyûbî" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "Selaheddînê Eyûbî" terimi hangi açıklamayla daha iyi anlaşılır?
-- ✅ A) serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir
--    B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
--    C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
--    D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
-**Doğru:** A) serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir
+-    A) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+-    B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+-    C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+- ✅ D) serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir
+**Doğru:** D) serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir
 **Açıklama:** "Selaheddînê Eyûbî" şu anlama gelir: Kudüs'ü Haçlılardan geri alan ve Eyyubi hanedanını kuran büyük Kürt önder.
 **Kaynak:** —
 
 ## offline_curated_20626  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir'?
 **TR:** Hangi terim şu açıklamayla tanınır: "Kudüs"ü Haçlılardan kurtaran ve Eyyubi hanedanını kuran büyük Kürt önder'?
--    A) Împaratoriya Medî
-- ✅ B) Selaheddînê Eyûbî
+- ✅ A) Selaheddînê Eyûbî
+-    B) Împaratoriya Medî
 -    C) Mîrgeha Botan
 -    D) Dewleta Merwaniyan
-**Doğru:** B) Selaheddînê Eyûbî
+**Doğru:** A) Selaheddînê Eyûbî
 **Açıklama:** "Selaheddînê Eyûbî" şu anlama gelir: Kudüs'ü Haçlılardan geri alan ve Eyyubi hanedanını kuran büyük Kürt önder.
 **Kaynak:** —
 
@@ -3448,86 +3448,86 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Mîrê Kor" terimi hangi açıklamayla daha iyi anlaşılır?
 -    A) 1923
 -    B) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
--    C) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
-- ✅ D) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
-**Doğru:** D) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
+- ✅ C) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
+-    D) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
+**Doğru:** C) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
 **Açıklama:** "Mîrê Kor" şu anlama gelir: 19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi.
 **Kaynak:** —
 
 ## offline_curated_20651  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike'?
 **TR:** Hangi terim şu açıklamayla tanınır: "19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi"?
--    A) Şerefname
-- ✅ B) Mîrê Kor
+- ✅ A) Mîrê Kor
+-    B) Şerefname
 -    C) Selaheddînê Eyûbî
 -    D) Rojnameya Kurdistan
-**Doğru:** B) Mîrê Kor
+**Doğru:** A) Mîrê Kor
 **Açıklama:** "Mîrê Kor" şu anlama gelir: 19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi.
 **Kaynak:** —
 
 ## offline_curated_20676  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'rojnameya yekem a kurdî ku di sala 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve hat weşandin'?
 **TR:** Hangi terim şu açıklamayla tanınır: "1898"de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi'?
--    A) Mîrgeha Botan
-- ✅ B) Rojnameya Kurdistan
+- ✅ A) Rojnameya Kurdistan
+-    B) Mîrgeha Botan
 -    C) Împaratoriya Medî
 -    D) Mîrgeha Erdelanê
-**Doğru:** B) Rojnameya Kurdistan
+**Doğru:** A) Rojnameya Kurdistan
 **Açıklama:** "Rojnameya Kurdistan" şu anlama gelir: 1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürt gazetesi.
 **Kaynak:** —
 
 ## offline_curated_20679  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa dîrok kîjan vebijark ravekirina têgeha "Rojnameya Kurdistan" bi awayekî rast temam dike?
 **TR:** Tarih dersi için hangi seçenek "Rojnameya Kurdistan" teriminin açıklamasını doğru biçimde tamamlar?
--    A) rojnameya kurdî ya destpêkê ya ku li Silêmaniyê hat çapkirin
-- ✅ B) rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket
+- ✅ A) rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket
+-    B) rojnameya kurdî ya destpêkê ya ku li Silêmaniyê hat çapkirin
 -    C) kovara kurdî ya yekem a bi alfabeya latînî
 -    D) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
-**Doğru:** B) rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket
+**Doğru:** A) rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket
 **Açıklama:** "Rojnameya Kurdistan": 1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürtçe gazete.
 **Kaynak:** —
 
 ## offline_curated_20701  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû"?
 **TR:** Hangi terim şu açıklamayla tanınır: "merkezi Sine olan, doğudaki kadim bir Kürt beyliği"?
-- ✅ A) Mîrgeha Erdelanê
--    B) Selaheddînê Eyûbî
--    C) Împaratoriya Medî
--    D) Dewleta Merwaniyan
-**Doğru:** A) Mîrgeha Erdelanê
+-    A) Selaheddînê Eyûbî
+-    B) Împaratoriya Medî
+-    C) Dewleta Merwaniyan
+- ✅ D) Mîrgeha Erdelanê
+**Doğru:** D) Mîrgeha Erdelanê
 **Açıklama:** "Mîrgeha Erdelanê" şu anlama gelir: merkezi Sine olan, doğudaki kadim bir Kürt beyliği.
 **Kaynak:** —
 
 ## offline_curated_20704  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa dîrok kîjan vebijark ravekirina têgeha "Mîrgeha Erdelanê" bi awayekî rast temam dike?
 **TR:** Tarih dersi için hangi seçenek "Mîrgeha Erdelanê" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
--    B) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
--    C) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
--    D) xanedaniya kurd a serdema navîn a bi navenda Amedê
-**Doğru:** A) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
+-    A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+-    B) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
+-    C) xanedaniya kurd a serdema navîn a bi navenda Amedê
+- ✅ D) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
+**Doğru:** D) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
 **Açıklama:** "Mîrgeha Erdelanê" için doğru açıklama şudur: merkezi Sine olan, doğudaki kadim bir Kürt beyliği.
 **Kaynak:** —
 
 ## offline_curated_20726  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'peymana navdewletî ya 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand'?
 **TR:** Hangi kavram şu açıklamayla tanımlanır: "Kürdistan"ı dört devlet arasında bölen 1923 tarihli uluslararası antlaşma'?
--    A) Selaheddînê Eyûbî
-- ✅ B) Peymana Lozanê
+- ✅ A) Peymana Lozanê
+-    B) Selaheddînê Eyûbî
 -    C) Dewleta Merwaniyan
 -    D) Rojnameya Kurdistan
-**Doğru:** B) Peymana Lozanê
+**Doğru:** A) Peymana Lozanê
 **Açıklama:** "Peymana Lozanê" şu anlama gelir: Sevr'in yerini alan, Kürtlere statü tanımayan 1923 tarihli uluslararası antlaşma.
 **Kaynak:** —
 
 ## offline_curated_20729  ·  zorluk 4  ·  offline
 **KU:** Ji bo dersa dîrok kîjan vebijark ravekirina têgeha "Peymana Lozanê" bi awayekî rast temam dike?
 **TR:** Tarih dersi için hangi seçenek "Peymana Lozanê" kavramının açıklamasını doğru biçimde tamamlar?
--    A) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
-- ✅ B) peymana navdewletî ya 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+- ✅ A) peymana navdewletî ya 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+-    B) mîrnişîna kurdî ya bihêz a ku navenda wê Cizîra Botan bû û xwedî serxwebûneke çandî bû
 -    C) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
 -    D) serokê mezin ê kurd ku Quds ji xaçperestan rizgar kir û xanedaniya Eyûbiyan ava kir
-**Doğru:** B) peymana navdewletî ya 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+**Doğru:** A) peymana navdewletî ya 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
 **Açıklama:** "Peymana Lozanê" için doğru açıklama şudur: Sevr'in yerini alan, Kürtlere statü tanımayan 1923 tarihli uluslararası antlaşma.
 **Kaynak:** —
 
@@ -3984,11 +3984,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## restore_2026_08_07_0005  ·  zorluk 3  ·  restore_2026_08_07
 **KU:** Hejmara yekem a "Rojnameya Kurdistan" (1898) li kîjan bajarî derket?
 **TR:** "Rojnameya Kurdistan"ın ilk sayısı (1898) hangi şehirde çıktı?
-- ✅ A) Qahîre
--    B) Şam
--    C) Stenbol
--    D) Bexda
-**Doğru:** A) Qahîre
+-    A) Şam
+-    B) Stenbol
+-    C) Bexda
+- ✅ D) Qahîre
+**Doğru:** D) Qahîre
 **Açıklama:** Mîqdat Mîdhad Bedirxan'ın çıkardığı Rojnameya Kurdistan 1898'de Kahire'de basıldı ve ilk Kürt gazetesi sayılır. Sonraki sayıları başka şehirlerde de çıktı.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
@@ -3996,10 +3996,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Şerefname", dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?
 **TR:** Kürt mirliklerinin tarihi olan "Şerefname"yi kim yazmıştır?
 -    A) Ehmedê Xanî
--    B) Mîqdat Mîdhad Bedirxan
-- ✅ C) Şerefxanê Bidlîsî
+- ✅ B) Şerefxanê Bidlîsî
+-    C) Mîqdat Mîdhad Bedirxan
 -    D) Feqiyê Teyran
-**Doğru:** C) Şerefxanê Bidlîsî
+**Doğru:** B) Şerefxanê Bidlîsî
 **Açıklama:** Şerefxanê Bidlîsî, Şerefname'yi 16. yüzyılın sonunda yazdı; eser Kürt mirliklerinin tarihini derler. Ehmedê Xanî Mem û Zîn'i yazdı, Mîqdat Mîdhad Bedirxan Rojnameya Kurdistan'ı çıkardı, Feqiyê Teyran ise klasik bir şairdir.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
@@ -4007,21 +4007,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wêne belgeyên destnivîs ên kevn nîşan dide. Dîroknas di lêkolînên xwe de cihekî taybet didin belgeyên weha. Sedema vê yekê çi ye?
 **TR:** Görsel eski el yazması belgeleri gösteriyor. Tarihçiler araştırmalarında bu tür belgelere özel bir yer verir. Bunun nedeni nedir?
 -    A) Ew ji bo dersên dibistanê hatine amadekirin
--    B) Ew ji zanyarên îro re hatine kurtkirin
-- ✅ C) Ew di dema bûyerê de hatine çêkirin
+- ✅ B) Ew di dema bûyerê de hatine çêkirin
+-    C) Ew ji zanyarên îro re hatine kurtkirin
 -    D) Ew ji gelek pirtûkên nû hatine berhevkirin
-**Doğru:** C) Ew di dema bûyerê de hatine çêkirin
+**Doğru:** B) Ew di dema bûyerê de hatine çêkirin
 **Açıklama:** Olayın yaşandığı dönemde üretilen belge — el yazması, mektup, ferman, hesap defteri, antlaşma — birincil kaynaktır. Sonradan bunlar üzerine yazılanlar ikincil kaynaktır: başkasının yorumudur, dönemin tanıklığı değil. Bu yüzden tarihçiler her şeyden önce birincil kaynağı görmek ister.
 **Kaynak:** —
 
 ## visual_2026_08_07_0005  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Di wêneyê de kalek bîranînên xwe vedibêje û gotinên wî tên tomarkirin. Ev şêwaza lêkolînê bi taybetî ji bo kîjan rewşê girîng e?
 **TR:** Görselde yaşlı bir adam anılarını anlatıyor ve sözleri kayda alınıyor. Bu araştırma biçimi özellikle hangi durumda önemlidir?
-- ✅ A) Ji bo civakên ku bîra wan neketiye arşîvan
--    B) Ji bo civakên ku belgeyên wan pir zêde ne
--    C) Ji bo bûyerên ku bi hejmaran tên pîvandin
--    D) Ji bo demên ku şahidên wan nemane
-**Doğru:** A) Ji bo civakên ku bîra wan neketiye arşîvan
+-    A) Ji bo civakên ku belgeyên wan pir zêde ne
+-    B) Ji bo bûyerên ku bi hejmaran tên pîvandin
+-    C) Ji bo demên ku şahidên wan nemane
+- ✅ D) Ji bo civakên ku bîra wan neketiye arşîvan
+**Doğru:** D) Ji bo civakên ku bîra wan neketiye arşîvan
 **Açıklama:** Sözlü tarih, kayıt altına alınan görüşmelerle yaşayan tanıkların tanıklığını toplar. Dili resmî arşivlerde yer bulmamış topluluklar için bu, çoğu zaman belleğin yitmesini önleyen tek yoldur. Ancak yaşayan tanığa bağlıdır: hiç tanığı kalmamış dönemler için kullanılamaz.
 **Kaynak:** —
 
@@ -4029,21 +4029,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Qûmsaeta di wêneyê de derbasbûna demê dipîve. Dîroknas jî bûyeran li gorî demê rêz dikin. Ev rêzkirin berî her tiştî çi diyar dike?
 **TR:** Görseldeki kum saati zamanın akışını ölçer. Tarihçiler de olayları zamana göre sıralar. Bu sıralama her şeyden önce neyi gösterir?
 -    A) Kîjan bûyer ji ya din girîngtir e
--    B) Kîjan bûyer bêtir hatiye nivîsandin
-- ✅ C) Kîjan bûyer berî ya din qewimiye
+- ✅ B) Kîjan bûyer berî ya din qewimiye
+-    C) Kîjan bûyer bêtir hatiye nivîsandin
 -    D) Kîjan bûyer li dever firehtir belav bûye
-**Doğru:** C) Kîjan bûyer berî ya din qewimiye
+**Doğru:** B) Kîjan bûyer berî ya din qewimiye
 **Açıklama:** Kronoloji olayları gerçekleşme zamanına göre sıralar ve yalnızca önce-sonra ilişkisini gösterir; hangisinin daha önemli olduğunu söylemez. Önem ve neden-sonuç değerlendirmesi ayrı bir iştir. Yine de doğru zaman sırası bilinmeden hangi olayın diğerine neden olabileceği anlaşılmaz.
 **Kaynak:** —
 
 ## visual_2026_08_07_0007  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Di kolandina arkeolojîk a wêneyê de ax tebeqe bi tebeqe hatiye rakirin. Di rewşeke asayî de tebeqeyên jêrîn li gorî yên jorîn çawa ne?
 **TR:** Görseldeki arkeolojik kazıda toprak katman katman kaldırılmış. Olağan bir durumda alttaki katmanlar üsttekilere göre nasıldır?
--    A) Ji yên jorîn nûtir in
-- ✅ B) Ji yên jorîn kevntir in
+- ✅ A) Ji yên jorîn kevntir in
+-    B) Ji yên jorîn nûtir in
 -    C) Bi yên jorîn re hevdem in
 -    D) Ji yên jorîn stûrtir in
-**Doğru:** B) Ji yên jorîn kevntir in
+**Doğru:** A) Ji yên jorîn kevntir in
 **Açıklama:** Toprak zamanla üst üste birikir: üstteki katman en son, alttaki daha önce oluşmuştur. Bu yüzden arkeologlar kazıyı yavaş yapar ve her buluntunun yerini kaydeder — buluntunun çıktığı katman, onun yaşı hakkında bilgi verir. Katmanlar karışırsa bu bilgi yok olur.
 **Kaynak:** —
 
@@ -4051,31 +4051,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wêne komeke ku bi barên xwe ve ber bi niştecihiyeke dûr ve dimeşe nîşan dide. Di dîrokê de cihguhertineke bi vî rengî ji hereketa demsalî ya koçeran bi çi tê cudakirin?
 **TR:** Görselde yükleriyle uzaktaki bir yerleşime doğru yürüyen bir grup var. Tarihte bu türden bir yer değiştirme, göçerlerin mevsimlik hareketinden hangi yönüyle ayrılır?
 -    A) Bi tevahî bêyî heywan û barên giran pêk tê
--    B) Her tim di demsala zivistanê de tê kirin
-- ✅ C) Vegera demsalî ya bo heman cihî çênabe
+- ✅ B) Vegera demsalî ya bo heman cihî çênabe
+-    C) Her tim di demsala zivistanê de tê kirin
 -    D) Di nav sînorên yek gundî de tê sînordarkirin
-**Doğru:** C) Vegera demsalî ya bo heman cihî çênabe
+**Doğru:** B) Vegera demsalî ya bo heman cihî çênabe
 **Açıklama:** Koçberlik, yaşanılan yeri bırakıp başka bir yere yerleşmektir; mevsimlik bir dönüş içermediği için göçerlerin hareketinden ayrılır. Göçerler yazın zozanlara çıkar, sonbaharda kışlaklarına döner.
 **Kaynak:** —
 
 ## visual_2026_08_07_0009  ·  zorluk 2  ·  visual_2026_08_07
 **KU:** Wêne gundekî çiyayî yê bi xaniyên keviran û bi ajelên kedîkirî nîşan dide. Derbasbûna mirovan ji jiyaneke gerok bo jiyaneke wiha ya domdar bi giranî bi kîjan pêşketinê ve girêdayî ye?
 **TR:** Görsel, taş evleri ve evcilleştirilmiş hayvanlarıyla dağlık bir köyü gösteriyor. İnsanların gezgin bir yaşamdan böyle kalıcı bir yaşama geçişi asıl olarak hangi gelişmeye bağlıdır?
-- ✅ A) Destpêkirina çandinî û hilanîna genim
--    B) Kifşkirina metalên bihagiran ên kanan
--    C) Belavbûna çapxane û pirtûkên çapkirî
--    D) Avakirina keştiyên mezin ên deryayî
-**Doğru:** A) Destpêkirina çandinî û hilanîna genim
+-    A) Kifşkirina metalên bihagiran ên kanan
+-    B) Belavbûna çapxane û pirtûkên çapkirî
+-    C) Avakirina keştiyên mezin ên deryayî
+- ✅ D) Destpêkirina çandinî û hilanîna genim
+**Doğru:** D) Destpêkirina çandinî û hilanîna genim
 **Açıklama:** Tarımla birlikte insanlar besinlerini tek bir yerde üretip depolayabildi; sürekli dolaşma gereği azaldı ve taştan, kerpiçten kalıcı köyler kuruldu.
 **Kaynak:** —
 
 ## visual_2026_08_07_0010  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Wêne bazareke nixumandî nîşan dide ku bazirgan û kirrûbirên ji deverên cuda tê de tên cem hev. Gava du civak bi salan bi vî awayî têkilî datînin, di zimanên wan de bi piranî çi diqewime?
 **TR:** Görsel, farklı yörelerden tüccar ve alıcıların bir araya geldiği kapalı bir çarşıyı gösteriyor. İki toplum yıllarca bu biçimde ilişki kurunca, dillerinde çoğunlukla ne olur?
--    A) Rêzimana herdu zimanan dibe yek rêziman
-- ✅ B) Peyvên nû ji hev tên girtin û bi kar tên
+- ✅ A) Peyvên nû ji hev tên girtin û bi kar tên
+-    B) Rêzimana herdu zimanan dibe yek rêziman
 -    C) Zimanê ku kêmtir tê axaftin yekser winda dibe
 -    D) Dengên herdu zimanan ji nişka ve diguherin
-**Doğru:** B) Peyvên nû ji hev tên girtin û bi kar tên
+**Doğru:** A) Peyvên nû ji hev tên girtin û bi kar tên
 **Açıklama:** Uzun süreli ticaret ve komşuluk ilişkisi önce sözcükleri taşır: her dil ötekinden yeni nesnelerin, yemeklerin ve mesleklerin adlarını alır. Ödünç sözcükler kültürel etkileşimin işaretidir; dilbilgisi ve ses düzeni çok daha yavaş değişir.
 **Kaynak:** —

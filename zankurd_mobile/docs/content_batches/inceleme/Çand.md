@@ -1,4 +1,4 @@
-# Çand — 304 soru
+# Çand — 291 soru
 
 Her kayıt: soru (Kurmancî) / Türkçe karşılığı / şıklar / doğru cevap /
 açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
@@ -8,9 +8,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmanci'de "düğün" için hangi kelime kullanılır?
 -    A) Cejn
 -    B) Şahî
--    C) Pîroz
-- ✅ D) Dawet
-**Doğru:** D) Dawet
+- ✅ C) Dawet
+-    D) Pîroz
+**Doğru:** C) Dawet
 **Açıklama:** Dawet, Kurmanci'de evliliğin kutlandığı törendir. Bu kelime özellikle evlilik töreni için kullanılır ve Kürt kültüründe önemli bir yere sahiptir.
 **Kaynak:** https://en.wiktionary.org/wiki/dawet
 
@@ -18,76 +18,76 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyv di Kurmancî de ji bo "bridegroom" tê bikaranîn?
 **TR:** Kurmanci'de "damat" için hangi kelime kullanılır?
 -    A) Bûk
--    B) Xesû
-- ✅ C) Zava
+- ✅ B) Zava
+-    C) Xesû
 -    D) Bira
-**Doğru:** C) Zava
+**Doğru:** B) Zava
 **Açıklama:** Zava, Kurmanci'de evlenen kişidir. Düğünde damat özel kıyafetlerle süslenir ve birçok geleneksel uygulamada merkezi bir rol oynar.
 **Kaynak:** https://en.wiktionary.org/wiki/zava
 
 ## ds_cand_0039  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan peyv di Kurmancî de ji bo "dance" tê bikaranîn?
-**TR:** Kürtçede "dans" için hangi kelime kullanılır?
+**KU:** Kîjan peyv di kurmancî de ji bo reqsa gelêrî ya bi destan girtî tê bikaranîn?
+**TR:** Kurmancîde el ele tutuşularak oynanan toplu halk dansına ne denir?
 -    A) Stran
 -    B) Muzîk
--    C) Def
-- ✅ D) Govend
-**Doğru:** D) Govend
+- ✅ C) Govend
+-    D) Def
+**Doğru:** C) Govend
 **Açıklama:** Govend, Kürtçede düğün ve kutlamalarda oynanan kolektif danstır. Govend genellikle el ele tutuşarak ve müziğin ritmine uyarak oynanır.
 **Kaynak:** https://en.wiktionary.org/wiki/govend
 
 ## ds_cand_0027  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan peyva Kurmancî ji bo "dowry" an jî "bride price" tê bikaranîn?
-**TR:** Kurmanci'de "başlık parası" için hangi kelime kullanılır?
-- ✅ A) Qelen
--    B) Nexş
--    C) Beras
--    D) Kinc
-**Doğru:** A) Qelen
-**Açıklama:** Qelen, Kürt kültüründe damadın gelinin ailesine verdiği para veya maldır. Bu gelenek hala bazı bölgelerde sürdürülmekte ve saygı sembolü olarak görülmektedir.
+**KU:** Kîjan peyva kurmancî ji bo "başlık parası" (bride price) tê bikaranîn?
+**TR:** Kurmancîde "başlık parası" (bride price) için hangi kelime kullanılır?
+-    A) Nexş
+-    B) Beras
+-    C) Kinc
+- ✅ D) Qelen
+**Doğru:** D) Qelen
+**Açıklama:** Qelen, damadın ailesinin gelinin ailesine verdiği para ya da maldır (bridewealth). Çeyiz (dowry) ise ters yönde, gelinin ailesinden gelen ayrı bir aktarımdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bride_price
 
 ## ds_cand_0082  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan peyva Kurmancî ji bo "rhythm" di govendê de tê bikaranîn?
 **TR:** Halayda "ritim" anlamına gelen Kurmanci kelime hangisidir?
 -    A) Lez
--    B) Deng
-- ✅ C) Aheng
+- ✅ B) Aheng
+-    C) Deng
 -    D) Muzîk
-**Doğru:** C) Aheng
+**Doğru:** B) Aheng
 **Açıklama:** Aheng, Kurmanci'de müziğin ritmi ve uyumu için kullanılır ve halay ona göre oynanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
 ## ds_cand_0080  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan peyva Kurmancî ji bo "handkerchief" tê bikaranîn ku di govendê de tê bikaranîn?
 **TR:** Halayda kullanılan ve "handkerchief" anlamına gelen Kurmanci kelime hangisidir?
--    A) Şal
-- ✅ B) Kefî
+- ✅ A) Kefî
+-    B) Şal
 -    C) Kum
 -    D) Pusî
-**Doğru:** B) Kefî
+**Doğru:** A) Kefî
 **Açıklama:** Kefi, Kürt halayında dansçıların ellerinde tutup çevirdikleri mendil için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0009  ·  zorluk 3  ·  deepseek_2026_08_18
-**KU:** Kîjan dîrokî bi Newrozê ve girêdayî ye?
-**TR:** Hangi tarihi olay Newroz ile ilişkilidir?
-- ✅ A) Serhildana Kawayê Hesinkar
--    B) Şoreşa Fransî
--    C) Şerê Cîhanê yê Yekem
--    D) Ronesansa Ewropayê
-**Doğru:** A) Serhildana Kawayê Hesinkar
-**Açıklama:** Demirci Kawa'nın İsyanı Newroz ile ilişkilidir. Efsanelere göre Kawa, zalim Dehaq'a karşı ayaklandı ve Newroz bu isyandan doğdu.
+**KU:** Kîjan efsane bi Newrozê ve girêdayî ye?
+**TR:** Hangi efsanevi anlatı Newroz ile ilişkilidir?
+-    A) Şoreşa Fransî
+-    B) Şerê Cîhanê yê Yekem
+-    C) Ronesansa Ewropayê
+- ✅ D) Serhildana Kawayê Hesinkar
+**Doğru:** D) Serhildana Kawayê Hesinkar
+**Açıklama:** Şehname geleneğindeki Demirci Kawa efsanesi Newroz'la ilişkilendirilir: Kawa zalim Dehak'a başkaldırır. Bu doğrulanmış bir tarihsel olay değil, mitolojik bir anlatıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
 ## ds_cand_0015  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan efsane bi Newrozê ve girêdayî ye?
 **TR:** Hangi efsane Newroz ile ilişkilidir?
--    A) Efsaneya Gilgameş
-- ✅ B) Efsaneya Kawayê Hesinkar
+- ✅ A) Efsaneya Kawayê Hesinkar
+-    B) Efsaneya Gilgameş
 -    C) Efsaneya Romulus
 -    D) Efsaneya Osiris
-**Doğru:** B) Efsaneya Kawayê Hesinkar
+**Doğru:** A) Efsaneya Kawayê Hesinkar
 **Açıklama:** Demirci Kawa Efsanesi Newroz ile ilişkilidir. Bu efsaneye göre Kawa, zalim Dehaq'a karşı ayaklandı ve Newroz bu isyandan doğdu.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
@@ -95,10 +95,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dawetên kurdan de, kîjan amûra muzîkê ya kevneşopî tê bikaranîn?
 **TR:** Kürt düğünlerinde hangi geleneksel müzik aleti kullanılır?
 -    A) Piyano
--    B) Keman
-- ✅ C) Tembûr
+- ✅ B) Tembûr
+-    C) Keman
 -    D) Gîtar
-**Doğru:** C) Tembûr
+**Doğru:** B) Tembûr
 **Açıklama:** Tembûr, Kürtlerin geleneksel müzik aletidir ve düğünlerde ve halaylarda çalınır. Piyano, keman ve gitar geleneksel değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
@@ -107,42 +107,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt düğünlerinde genellikle hangi müzik aleti çalınır?
 -    A) Piyano
 -    B) Keman
--    C) Gîtar
-- ✅ D) Def
-**Doğru:** D) Def
-**Açıklama:** Def (davul) Kürt düğünlerinde çalınan geleneksel bir müzik aletidir. Genellikle tembûr ile birlikte kullanılır.
+- ✅ C) Def
+-    D) Gîtar
+**Doğru:** C) Def
+**Açıklama:** Def, elle çalınan zilli bir çerçeve davuldur ve Kürt düğünlerinde yaygındır. Davul (dahol) ise ayrı, daha büyük bir vurmalıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
 ## ds_cand_0041  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di dawetên kurdan de, kîjan amûra muzîkê bi gelemperî bi tembûrê re tê lêxistin?
 **TR:** Kürt düğünlerinde hangi müzik aleti genellikle tembûr ile birlikte çalınır?
-- ✅ A) Def
--    B) Piyano
--    C) Keman
--    D) Gîtar
-**Doğru:** A) Def
+-    A) Piyano
+-    B) Keman
+-    C) Gîtar
+- ✅ D) Def
+**Doğru:** D) Def
 **Açıklama:** Def (davul) genellikle tembûr ile birlikte çalınır çünkü halayın ritmini artırır. Diğer aletler geleneksel değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
 ## ds_cand_0077  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûra muzîkê bi gelemperî di govendê de tê bikaranîn?
 **TR:** Halayda genellikle hangi müzik aleti kullanılır?
--    A) Piyano
-- ✅ B) Tembûr
+- ✅ A) Tembûr
+-    B) Piyano
 -    C) Gîtar
 -    D) Keman
-**Doğru:** B) Tembûr
+**Doğru:** A) Tembûr
 **Açıklama:** Tembûr, halayda çok kullanılan geleneksel bir müzik aletidir. Özellikle Kürt müziğinde önemli bir yere sahiptir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tembur
 
 ## ds_cand_0086  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di govendê de, kîjan amûra muzîkê ya biçûk bi gelemperî tê lêxistin?
 **TR:** Halayda genellikle çalınan küçük müzik aleti hangisidir?
--    A) Def
--    B) Tembûr
-- ✅ C) Erbane
--    D) Bilûr
-**Doğru:** C) Erbane
+-    A) Bilûr
+- ✅ B) Erbane
+-    C) Tembûr
+-    D) Zirne
+**Doğru:** B) Erbane
 **Açıklama:** Erbane, halayda çalınan küçük bir müzik aletidir. Genellikle ritim için kullanılır ve elle çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Daf
 
@@ -151,76 +151,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kamıştan yapılan ve halayda kullanılan müzik aleti hangisidir?
 -    A) Tembûr
 -    B) Def
--    C) Erbane
-- ✅ D) Bilûr
-**Doğru:** D) Bilûr
+- ✅ C) Bilûr
+-    D) Erbane
+**Doğru:** C) Bilûr
 **Açıklama:** Bilûr, kamıştan yapılan ve halayda kullanılan bir müzik aletidir. Hoş ve süslü sesiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaval
 
 ## ds_cand_0096  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûra muzîkê ya ku bi têlan tê lêxistin di govendê de tê bikaranîn?
 **TR:** Tellerle çalınan ve halayda kullanılan müzik aleti hangisidir?
--    A) Bilûr
-- ✅ B) Tembûr
+- ✅ A) Tembûr
+-    B) Bilûr
 -    C) Def
 -    D) Erbane
-**Doğru:** B) Tembûr
+**Doğru:** A) Tembûr
 **Açıklama:** Tembûr, tellerle çalınan ve halayda kullanılan bir müzik aletidir. Derin ve süslü sesiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tembur
 
 ## ds_cand_0157  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan amûra muzîkê di govenda kurdî de zêdetir tê bikaranîn?
-**TR:** Kürt halayında en çok hangi müzik aleti kullanılır?
--    A) Keman
-- ✅ B) Tembûr
+**KU:** Kîjan amûra têldar di muzîka govendê ya kurdî de tê bikaranîn?
+**TR:** Kürt halay müziğinde hangi telli çalgı kullanılır?
+- ✅ A) Tembûr
+-    B) Keman
 -    C) Pîyano
 -    D) Gîtar
-**Doğru:** B) Tembûr
-**Açıklama:** Tembûr, Kürt halayında ana müzik aletidir. Tellerle çalınır ve sesi halay hareketleriyle uyumludur.
+**Doğru:** A) Tembûr
+**Açıklama:** Tembûr, halay müziğinde kullanılan telli çalgılardandır. Hangi çalgının öne çıktığı bölgeye göre değişir: zurna-davul, def ve tembûr farklı yörelerde farklı ağırlıktadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tembur
 
-## ds_cand_0075  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çanda kurdî de, kîjan cil bi gelemperî ji bo zivistanê tê bikaranîn?
-**TR:** Kürt kültüründe kış için genellikle hangi kıyafet kullanılır?
-- ✅ A) Cûm
--    B) Pembû
--    C) Hevrîşim
--    D) Ketan
-**Doğru:** A) Cûm
-**Açıklama:** Cûm, Kürt kültüründe yünden yapılan ve kışın kullanılan kıyafettir. Yün sıcaktır ve bu nedenle cûm kışa özgüdür. Pamuk, ipek ve keten yaz içindir.
-**Kaynak:** https://en.wikipedia.org/wiki/Wool
-
 ## ds_cand_0155  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çanda kurdî de, kîjan xwarin bi gelemperî ji mêvanan re tê pêşkêş kirin?
-**TR:** Kürt kültüründe, misafirlere genellikle hangi yemek ikram edilir?
-- ✅ A) Kutilk
--    B) Birinc
--    C) Xurme
--    D) Şorbe
-**Doğru:** A) Kutilk
-**Açıklama:** Kutilk, et ve nohutla yapılan bir Kürt yemeğidir ve genellikle misafirperverlikte ikram edilir. Pirinç, hurma ve çorba da yenir ancak kutilk misafirperverliğin özelliğidir.
-**Kaynak:** https://en.wikipedia.org/wiki/Kurdish_cuisine
-
-## ds_cand_0167  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çanda kurdî de, kîjan xwarin bi gelemperî di mêvanperweriyê de tê pêşkêş kirin?
-**TR:** Kürt kültüründe, misafirperverlikte genellikle hangi yemek ikram edilir?
-- ✅ A) Kutilk
--    B) Şorbe
--    C) Birinç
--    D) Xurme
-**Doğru:** A) Kutilk
-**Açıklama:** Kutilk, et ve nohutla yapılan bir Kürt yemeğidir ve genellikle misafirperverlikte ikram edilir. Çorba, pirinç ve hurma da yenir ancak kutilk misafirperverliğin özelliğidir.
-**Kaynak:** https://en.wikipedia.org/wiki/Kurdish_cuisine
-
-## ds_cand_0161  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çanda kurdî de, kîjan xwarin bi gelemperî di cejnên mîna Newrozê de ji mêvanan re tê pêşkêş kirin?
-**TR:** Kürt kültüründe, Newroz gibi bayramlarda misafirlere genellikle hangi yemek ikram edilir?
--    A) Şorbe
--    B) Birinç
--    C) Xurme
-- ✅ D) Kutilk
-**Doğru:** D) Kutilk
-**Açıklama:** Kutilk, Newroz gibi bayramlarda genellikle yapılan ve misafirlere ikram edilen özel bir yemektir. Çorba, pirinç ve hurma da yenir ancak kutilk bayramların özelliğidir.
+**KU:** Kutilk çi ye?
+**TR:** Kutilk nedir?
+-    A) Şorbeyeke nîskê
+-    B) Nanê ku li tenûrê tê pehtin
+- ✅ C) Xwarinek bi hevîrê savarê û navika goştê
+-    D) Şîraniya ku bi rûn û şekir tê çêkirin
+**Doğru:** C) Xwarinek bi hevîrê savarê û navika goştê
+**Açıklama:** Kutilk, bulgur/irmik hamurundan kabuk ve kıymalı iç harçla yapılan bir yemektir; yörelere göre çeşitlenir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_cuisine
 
 ## ds_cand_1169  ·  zorluk 2  ·  deepseek_2026_08_18
@@ -256,26 +223,15 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Açıklama:** Kürt kültüründe doğum yapan anne için genellikle çorba yapılır. Bu yemek annenin gücü için hazırlanır ve genellikle komşular tarafından getirilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
-## ds_cand_0118  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çanda kurdî de, kîjan xwarin bi gelemperî di cejnên remezanê de tê hazirkirin?
-**TR:** Kürt kültüründe, Ramazan bayramlarında genellikle hangi yemek hazırlanır?
--    A) Şorba
-- ✅ B) Kutilk
--    C) Birinç
--    D) Fasûlî
-**Doğru:** B) Kutilk
-**Açıklama:** Kutilk genellikle Ramazan bayramlarında hazırlanır ve ünlü bir Kürt yemeğidir. Bu yemek bu bayramlarda yapılır ve misafirlere ikram edilir.
-**Kaynak:** https://en.wikipedia.org/wiki/Kubba
-
 ## ds_cand_0178  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di dokumaya kurdî de, kîjan amûr bi gelemperî tê bikaranîn?
-**TR:** Kürt dokumacılığında genellikle hangi alet kullanılır?
-- ✅ A) Teşî
--    B) Mekîk
--    C) Dûzen
--    D) Şûjîn
-**Doğru:** A) Teşî
-**Açıklama:** Teşi, yün ve pamuğu eğirmek için kullanıldığından Kürt dokumacılığındaki en geleneksel alettir. Mekik de kullanılır ancak ilk sırada teşi gelir.
+**KU:** Di ristina hiriyê de kîjan amûr tê bikaranîn?
+**TR:** Yün eğirmede hangi alet kullanılır?
+-    A) Mekîk
+-    B) Dûzen
+-    C) Şûjîn
+- ✅ D) Teşî
+**Doğru:** D) Teşî
+**Açıklama:** Teşi (öreke) yün ve pamuğu eğirip iplik yapar. Dokuma ise tezgâhta (tevn) yapılır; eğirme ile dokuma ayrı işlemlerdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
 ## ds_cand_0181  ·  zorluk 1  ·  deepseek_2026_08_18
@@ -283,31 +239,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt dokumacılığında genellikle hangi malzeme kullanılır?
 -    A) Pembû
 -    B) Hevrîşim
--    C) Ketan
-- ✅ D) Hirî
-**Doğru:** D) Hirî
+- ✅ C) Hirî
+-    D) Ketan
+**Doğru:** C) Hirî
 **Açıklama:** Yün, dağlık bölgede koyunlar çok beslendiği için Kürt dokumacılığında en yaygın malzemedir. Pamuk ve ipek de kullanılır ancak ilk sırada yün gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wool
 
 ## ds_cand_0197  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di dokumaya kurdî de, kîjan navê amûrê ye ku ji bo ristina hirî tê bikaranîn?
 **TR:** Kürt dokumacılığında yünü eğirmek için kullanılan aletin adı nedir?
-- ✅ A) Teşî
--    B) Mekîk
--    C) Dûzen
--    D) Şûjîn
-**Doğru:** A) Teşî
+-    A) Mekîk
+-    B) Dûzen
+-    C) Şûjîn
+- ✅ D) Teşî
+**Doğru:** D) Teşî
 **Açıklama:** Teşi, Kürt dokumacılığında yünü ipliğe dönüştürmeyi sağladığı için eğirmek amacıyla kullanılır. Mekik dokuma içindir, teşi ise eğirme içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
 ## ds_cand_0190  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, kilîm bi gelemperî ji kîjan materyalî tê çêkirin?
 **TR:** Kürt kültüründe kilim genellikle hangi malzemeden yapılır?
--    A) Pembû
-- ✅ B) Hirî
+- ✅ A) Hirî
+-    B) Pembû
 -    C) Hevrîşim
 -    D) Ketan
-**Doğru:** B) Hirî
+**Doğru:** A) Hirî
 **Açıklama:** Kürt kültüründe kilim genellikle yünden yapılır çünkü yün dağlık bölgede bolca bulunur. Pamuk ve ipek de kullanılır ancak ilk sırada yün gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wool
 
@@ -316,9 +272,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi bayram hayvan kurban edilerek kutlanır?
 -    A) Cejna Remezanê
 -    B) Newroz
--    C) Cejna Mîladê
-- ✅ D) Cejna Qurbanê
-**Doğru:** D) Cejna Qurbanê
+- ✅ C) Cejna Qurbanê
+-    D) Cejna Mîladê
+**Doğru:** C) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, hayvan kurban edilerek kutlanır. Bu bayram Zilhicce ayında gerçekleşir ve İbrahim'in kurban sunma olayını anmak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -327,20 +283,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurban Bayramı hicri takvimin hangi ayında kutlanır?
 -    A) Meha Remezanê
 -    B) Meha Zilqedê
--    C) Meha Şewalê
-- ✅ D) Meha Zilhecê
-**Doğru:** D) Meha Zilhecê
+- ✅ C) Meha Zilhecê
+-    D) Meha Şewalê
+**Doğru:** C) Meha Zilhecê
 **Açıklama:** Kurban Bayramı, Zilhicce ayının 10. gününde kutlanır. Bu ay hicri yılın sonudur ve Kurban Bayramı da bu ay içindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0209  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi bîranîna Îbrahîm û kurê wî ve girêdayî ye?
 **TR:** Hangi bayram İbrahim ve oğlunun anısıyla ilişkilidir?
--    A) Cejna Remezanê
-- ✅ B) Cejna Qurbanê
+- ✅ A) Cejna Qurbanê
+-    B) Cejna Remezanê
 -    C) Newroz
 -    D) Cejna Mîladê
-**Doğru:** B) Cejna Qurbanê
+**Doğru:** A) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, oğlunu kurban etmeye hazır olan İbrahim'in anısıyla ilişkilidir. Bu bayram kurban sunmak için kutlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -349,20 +305,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz neden 21 Mart'ta kutlanır?
 -    A) Ji ber ku havîn dest pê dike
 -    B) Ji ber ku zivistan dirêj dibe
--    C) Ji ber ku baran zêde dibare
-- ✅ D) Ji ber ku roj û şev wekhev in
-**Doğru:** D) Ji ber ku roj û şev wekhev in
+- ✅ C) Ji ber ku roj û şev wekhev in
+-    D) Ji ber ku baran zêde dibare
+**Doğru:** C) Ji ber ku roj û şev wekhev in
 **Açıklama:** Newroz ekinoks ile bağlantılıdır; 21 Mart'ta gece ve gündüz eşitlenir ve bu baharın başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0002  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de agir beramberî çi ye?
 **TR:** Newroz'da ateş neyi simgeler?
-- ✅ A) Paqijî û nûbûnê
--    B) Xemgîniyê
--    C) Tirsê
--    D) Bêhêvîtiyê
-**Doğru:** A) Paqijî û nûbûnê
+-    A) Xemgîniyê
+-    B) Tirsê
+-    C) Bêhêvîtiyê
+- ✅ D) Paqijî û nûbûnê
+**Doğru:** D) Paqijî û nûbûnê
 **Açıklama:** Newroz'da ateş temizliği ve yenilenmeyi simgeler; insanlar arınmak için ateşin üzerinden atlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -371,9 +327,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz hangi dilde "yeni gün" anlamına gelir?
 -    A) Erebî
 -    B) Tirkî
--    C) Îngilîzî
-- ✅ D) Farisî
-**Doğru:** D) Farisî
+- ✅ C) Farisî
+-    D) Îngilîzî
+**Doğru:** C) Farisî
 **Açıklama:** Newroz iki kelimeden oluşur: "new" (yeni) ve "roz" (gün), Farsça'dan gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -381,43 +337,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Newrozê de çi tê amadekirin?
 **TR:** Newroz'da ne hazırlanır?
 -    A) Cilên reş
--    B) Mala vala
-- ✅ C) Xwarinên taybet
+- ✅ B) Xwarinên taybet
+-    C) Mala vala
 -    D) Derya
-**Doğru:** C) Xwarinên taybet
+**Doğru:** B) Xwarinên taybet
 **Açıklama:** Newroz'da özel yemekler hazırlanır ve insanlar birlikte yer; bu kutlamanın bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0016  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de çi tê şewitandin?
 **TR:** Newroz'da ne yakılır?
-- ✅ A) Agir
--    B) Av
--    C) Ba
--    D) Erd
-**Doğru:** A) Agir
+-    A) Av
+-    B) Ba
+-    C) Erd
+- ✅ D) Agir
+**Doğru:** D) Agir
 **Açıklama:** Newroz'da ateş yakılır; bu arınma içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0020  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de çi tê xwarin?
 **TR:** Newroz'da ne yenir?
-- ✅ A) Xwarinên taybet
--    B) Xwarinên hişk
--    C) Xwarinên sar
--    D) Xwarinên şor
-**Doğru:** A) Xwarinên taybet
+-    A) Xwarinên hişk
+-    B) Xwarinên sar
+-    C) Xwarinên şor
+- ✅ D) Xwarinên taybet
+**Doğru:** D) Xwarinên taybet
 **Açıklama:** Newroz'da özel yiyecekler yenir; bu kutlamanın bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0024  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de çi tê kirin?
 **TR:** Newroz'da ne yapılır?
--    A) Şer
-- ✅ B) Dans
+- ✅ A) Dans
+-    B) Şer
 -    C) Xew
 -    D) Kar
-**Doğru:** B) Dans
+**Doğru:** A) Dans
 **Açıklama:** Newroz'da dans edilir; bu kutlamanın bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -425,43 +381,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan welat Newrozê wekî betlaneya fermî pîroz dike?
 **TR:** Hangi ülke Newroz'u resmi tatil olarak kutlar?
 -    A) Fransa
--    B) Almanya
-- ✅ C) Îran
+- ✅ B) Îran
+-    C) Almanya
 -    D) Spanya
-**Doğru:** C) Îran
+**Doğru:** B) Îran
 **Açıklama:** İran Newroz'u resmi tatil olarak kutlar; bu gün orada çok önemlidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0007  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Newroz bi kê ve tê girêdan?
 **TR:** Newroz kiminle ilişkilendirilir?
-- ✅ A) Cemşîd
--    B) Eskender
--    C) Dara
--    D) Zerdeşt
-**Doğru:** A) Cemşîd
+-    A) Eskender
+-    B) Dara
+-    C) Zerdeşt
+- ✅ D) Cemşîd
+**Doğru:** D) Cemşîd
 **Açıklama:** Newroz, Cemşid ile ilişkilendirilir; o, Fars mitolojisinde efsanevi bir kraldır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_1009  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Newroz di kîjan mehê de tê pîrozkirin?
 **TR:** Newroz hangi ayda kutlanır?
-- ✅ A) Adar
--    B) Nîsan
--    C) Gulan
--    D) Hezîran
-**Doğru:** A) Adar
+-    A) Nîsan
+-    B) Gulan
+-    C) Hezîran
+- ✅ D) Adar
+**Doğru:** D) Adar
 **Açıklama:** Newroz, Mart ayında kutlanır; bu ekinoks ayıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0011  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Newroz bi kîjan dînî ve tê girêdan?
 **TR:** Newroz hangi dinle ilişkilendirilir?
--    A) Îslam
-- ✅ B) Zerdeştî
+- ✅ A) Zerdeştî
+-    B) Îslam
 -    C) Xiristiyanî
 -    D) Cihûtî
-**Doğru:** B) Zerdeştî
+**Doğru:** A) Zerdeştî
 **Açıklama:** Newroz, Zerdüştlükle ilişkilendirilir; bu, eski İran dinidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -470,9 +426,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz'da insanlar ne yapar?
 -    A) Di bin erdê de dimînin
 -    B) Diçin deryayê
--    C) Diçin çiyayan
-- ✅ D) Ser agir de dikevin
-**Doğru:** D) Ser agir de dikevin
+- ✅ C) Di ser agir re baz didin
+-    D) Diçin çiyayan
+**Doğru:** C) Di ser agir re baz didin
 **Açıklama:** Newroz'da insanlar ateşin üzerinden atlar; bu arınma içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -481,9 +437,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz'da insanlar ne giyer?
 -    A) Cilên kevn
 -    B) Cilên reş
--    C) Cilên spî
-- ✅ D) Cilên nû
-**Doğru:** D) Cilên nû
+- ✅ C) Cilên nû
+-    D) Cilên spî
+**Doğru:** C) Cilên nû
 **Açıklama:** Newroz'da insanlar yeni kıyafetler giyer; bu yenilenme içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -491,10 +447,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Newroz ji bo kê ye?
 **TR:** Newroz kimin içindir?
 -    A) Tenê kurdan
--    B) Tenê farisan
-- ✅ C) Hemû mirovan
+- ✅ B) Hemû mirovan
+-    C) Tenê farisan
 -    D) Tenê tirkên
-**Doğru:** C) Hemû mirovan
+**Doğru:** B) Hemû mirovan
 **Açıklama:** Newroz tüm insanlar içindir; evrensel bir kutlamadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -502,10 +458,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Newroz di kîjan rojê de tê pîrozkirin?
 **TR:** Newroz hangi gün kutlanır?
 -    A) 1'ê kanûnê
--    B) 15'ê tebaxê
-- ✅ C) 21'ê adarê
+- ✅ B) 21'ê adarê
+-    C) 15'ê tebaxê
 -    D) 31'ê çiriya
-**Doğru:** C) 21'ê adarê
+**Doğru:** B) 21'ê adarê
 **Açıklama:** Newroz 21 Mart'ta kutlanır; bu ekinoks günüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -513,54 +469,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Newroz bi kîjan çandê ve girêdayî ye?
 **TR:** Newroz hangi kültürle bağlantılıdır?
 -    A) Çanda erebî
--    B) Çanda tirkî
-- ✅ C) Çanda farisî
+- ✅ B) Çanda farisî
+-    C) Çanda tirkî
 -    D) Çanda îngilîzî
-**Doğru:** C) Çanda farisî
+**Doğru:** B) Çanda farisî
 **Açıklama:** Newroz, Fars kültürüyle bağlantılıdır; Zerdüşt dininden gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0021  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Newroz bi kîjan demsalê ve tê girêdan?
 **TR:** Newroz hangi mevsimle ilişkilendirilir?
-- ✅ A) Biharê
--    B) Zivistanê
--    C) Havînê
--    D) Payîzê
-**Doğru:** A) Biharê
+-    A) Zivistanê
+-    B) Havînê
+-    C) Payîzê
+- ✅ D) Biharê
+**Doğru:** D) Biharê
 **Açıklama:** Newroz ilkbaharla ilişkilendirilir; ilkbaharın başlangıcıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0046  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di daweta kurdî de, kîjan amûra muzîkê bi gelemperî ji bo stranên dengbêj tê bikaranîn?
-**TR:** Kürt düğünlerinde dengbêj şarkıları için genellikle hangi müzik aleti kullanılır?
-- ✅ A) Tembûr
--    B) Bilûr
--    C) Keman
--    D) Gîtar
-**Doğru:** A) Tembûr
-**Açıklama:** Tembûr, dengbêj şarkıları için genellikle kullanılan bir Kürt müzik aletidir. Tembûrun sesi, dengbêj şarkılarıyla özel bir ahenk oluşturur.
+**KU:** Kilama dengbêjî bi kevneşopî çawa tê gotin?
+**TR:** Dengbêj kilamı geleneksel olarak nasıl söylenir?
+-    A) Bi tembûrê
+-    B) Bi zirne û daholê
+-    C) Bi kemanê
+- ✅ D) Bê amûr, bi dengê tenê
+**Doğru:** D) Bê amûr, bi dengê tenê
+**Açıklama:** Dengbêj geleneğinde kilam çalgısız, yalnız insan sesiyle söylenir. Kilamın gücü sesin ve sözün kendisindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tanbur
 
 ## ds_cand_0050  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di daweta kurdî de, kîjan çalakî bi gelemperî piştî xwarinê tê kirin?
 **TR:** Kürt düğünlerinde yemekten sonra genellikle hangi aktivite yapılır?
--    A) Xew
-- ✅ B) Govend
+- ✅ A) Govend
+-    B) Xew
 -    C) Stran
 -    D) Axaftin
-**Doğru:** B) Govend
+**Doğru:** A) Govend
 **Açıklama:** Yemekten sonra genellikle govend oynanır. Govend, insanların el ele tutuşup müziğin ritmine göre döndüğü kolektif bir Kürt dansıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0053  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr bi gelemperî ji bo ristina hirî tê bikaranîn?
 **TR:** Yün eğirmek için genellikle hangi alet kullanılır?
-- ✅ A) Teşî
--    B) Mekik
--    C) Şûtik
--    D) Nîvend
-**Doğru:** A) Teşî
+-    A) Mekik
+-    B) Şûtik
+-    C) Nîvend
+- ✅ D) Teşî
+**Doğru:** D) Teşî
 **Açıklama:** Teşi, yün eğirmek için kullanılan geleneksel bir alettir. Mekik dokumada kullanılır, şutik halı dövmek içindir ve nîvend ise oturma yeridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
@@ -569,86 +525,86 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt halısı genellikle nerede yapılır?
 -    A) Li bajarên mezin
 -    B) Li fabrîqeyan
--    C) Li dibistanan
-- ✅ D) Li malan
-**Doğru:** D) Li malan
+- ✅ C) Li malan
+-    D) Li dibistanan
+**Doğru:** C) Li malan
 **Açıklama:** Kürt halısı geleneksel olarak evlerde, Kürt kadınlarının elleriyle yapılır. Bu sanat nesilden nesile aktarılır ve her evde özel bir şekilde geliştirilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_carpet
 
 ## ds_cand_0055  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan reng di xalîçeyên kurdî de bi gelemperî tê bikaranîn?
 **TR:** Kürt halılarında genellikle hangi renk kullanılır?
-- ✅ A) Sor
--    B) Şîn
--    C) Zer
--    D) Kesk
-**Doğru:** A) Sor
+-    A) Şîn
+-    B) Zer
+-    C) Kesk
+- ✅ D) Sor
+**Doğru:** D) Sor
 **Açıklama:** Kırmızı renk, bitki köklerinden elde edildiği ve yaşamın sembolü olduğu için Kürt halılarında sıklıkla kullanılır. Diğer renkler de kullanılır ancak kırmızı özellikle Kürtler arasında ünlüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_carpet
 
 ## ds_cand_0064  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li kû kofî bi gelemperî tê li xwe kirin?
 **TR:** Kofî genellikle nereye giyilir?
--    A) Li ser serê jinan
-- ✅ B) Li ser serê mêran
+- ✅ A) Li ser serê jinan
+-    B) Li ser serê mêran
 -    C) Li pişta mêran
 -    D) Li pişta jinan
-**Doğru:** B) Li ser serê mêran
-**Açıklama:** Kofî, Kürt kültüründe erkeklere özgü bir başlıktır. Kadınlar genellikle pate veya şapik takar. Kofî genellikle yünden yapılır ve erkeklerin başını soğuktan korur.
+**Doğru:** A) Li ser serê jinan
+**Açıklama:** Kofî, Kürt kültüründe kadınlara özgü bir başlıktır; üzerine genellikle örtü sarılır ve yöreye göre biçimi değişir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_clothing
 
 ## ds_cand_0071  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr ji bo ristina hirî tê bikaranîn?
 **TR:** Yün eğirmek için hangi alet kullanılır?
-- ✅ A) Teşî
--    B) Derzî
--    C) Şûtik
--    D) Mekik
-**Doğru:** A) Teşî
+-    A) Derzî
+-    B) Şûtik
+-    C) Mekik
+- ✅ D) Teşî
+**Doğru:** D) Teşî
 **Açıklama:** Teşi, yün eğirmek için kullanılan geleneksel bir alettir. İğne dikiş içindir, şutik halı içindir ve mekik de dokumada kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Spindle_(textiles)
 
 ## ds_cand_0079  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li gorî kevneşopiya kurdî, govend bi gelemperî di kîjan demê de tê dans kirin?
 **TR:** Kürt geleneğine göre, halay genellikle hangi zamanda oynanır?
--    A) Di şînê de
-- ✅ B) Di dawetê de
+- ✅ A) Di dawetê de
+-    B) Di şînê de
 -    C) Di rojiyê de
 -    D) Di mirinê de
-**Doğru:** B) Di dawetê de
+**Doğru:** A) Di dawetê de
 **Açıklama:** Halay, Kürt düğünlerinde ve bayramlarında oynanır ve sevinç ile kutlama içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0092  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Li gorî kevneşopiya kurdî, govend bi gelemperî li kû tê dans kirin?
 **TR:** Kürt geleneğine göre, halay genellikle nerede oynanır?
--    A) Li hundir, li ser xalîçeyê
-- ✅ B) Li derve, li ser axê
+- ✅ A) Li derve, li ser axê
+-    B) Li hundir, li ser xalîçeyê
 -    C) Li ser çîmenê
 -    D) Li ser kevir
-**Doğru:** B) Li derve, li ser axê
+**Doğru:** A) Li derve, li ser axê
 **Açıklama:** Halay genellikle dışarıda, toprak üzerinde veya bayram ve düğün gibi açık alanlarda oynanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0081  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di govenda kurdî de, dansvan bi gelemperî çawa destên xwe digirin?
 **TR:** Kürt halayında dansçılar genellikle ellerini nasıl tutar?
--    A) Li pişt xwe didin
-- ✅ B) Bi hev ve girê didin
+- ✅ A) Bi hev ve girê didin
+-    B) Li pişt xwe didin
 -    C) Li ser serê xwe dikin
 -    D) Di berîka xwe de dikin
-**Doğru:** B) Bi hev ve girê didin
+**Doğru:** A) Bi hev ve girê didin
 **Açıklama:** Kürt halayında dansçılar birbirlerinin ellerini tutarak bir zincir oluştururlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0084  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan amûra muzîkê ya kurdî bi gelemperî ji bo govendê tê bikaranîn û dişibe kemanê?
 **TR:** Halay için yaygın olarak kullanılan ve kemana benzeyen Kürt müzik aleti hangisidir?
-- ✅ A) Kemançe
--    B) Tembûr
--    C) Zirna
--    D) Def
-**Doğru:** A) Kemançe
+-    A) Tembûr
+-    B) Zirna
+-    C) Def
+- ✅ D) Kemançe
+**Doğru:** D) Kemançe
 **Açıklama:** Kemançe, yayla çalınan ve kemana benzeyen, ancak sesi farklı olan bir Kürt müzik aletidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kamancheh
 
@@ -657,31 +613,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Halay için yaygın olarak kullanılan ve deriden yapılan Kürt müzik aleti hangisidir?
 -    A) Zirna
 -    B) Tembûr
--    C) Kemançe
-- ✅ D) Def
-**Doğru:** D) Def
+- ✅ C) Def
+-    D) Kemançe
+**Doğru:** C) Def
 **Açıklama:** Def, deriden yapılan ve çalınarak halay için ritim sağlayan bir müzik aletidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Daf
 
 ## ds_cand_0085  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di govenda kurdî de, kîjan kes bi gelemperî rêzê didin dansvanan?
 **TR:** Kürt halayında dansçılara genellikle kim düzen verir?
-- ✅ A) Serokê govendê
--    B) Dengbêj
--    C) Zirnazan
--    D) Mêvan
-**Doğru:** A) Serokê govendê
+-    A) Dengbêj
+-    B) Zirnazan
+-    C) Mêvan
+- ✅ D) Serokê govendê
+**Doğru:** D) Serokê govendê
 **Açıklama:** Halay başkanı, boş eli ve hızıyla dansçıların düzenini ve hareketini kontrol eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0094  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di govenda kurdî de, kîjan amûra muzîkê bi gelemperî ji bo destpêkirina govendê tê bikaranîn?
 **TR:** Kürt halayında genellikle halayı başlatmak için hangi müzik aleti kullanılır?
--    A) Tembûr
-- ✅ B) Zirna
+- ✅ A) Zirna
+-    B) Tembûr
 -    C) Kemançe
 -    D) Bilûr
-**Doğru:** B) Zirna
+**Doğru:** A) Zirna
 **Açıklama:** Zirna, yüksek sesiyle halayın başladığını bildirir ve dansçıları halka olmaya davet eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
@@ -690,86 +646,86 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Botan Kürt halayında dansçılar genellikle nasıl hareket eder?
 -    A) Bi lez û bez
 -    B) Bi bazdan
--    C) Bi rûniştin
-- ✅ D) Bi hêdî û bi rêz
-**Doğru:** D) Bi hêdî û bi rêz
+- ✅ C) Bi hêdî û bi rêz
+-    D) Bi rûniştin
+**Doğru:** C) Bi hêdî û bi rêz
 **Açıklama:** Botan halayı, yavaş temposu ve görkemli düzeniyle bilinir; dansçılar yumuşak adımlarla hareket eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0097  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Li gorî kevneşopiya kurdî, kîjan dans bi gelemperî ji bo şîna û mirinê tê dans kirin?
 **TR:** Kürt geleneğine göre, genellikle yas ve ölüm için hangi dans oynanır?
--    A) Govenda dawetê
-- ✅ B) Govenda şînê
+- ✅ A) Govenda şînê
+-    B) Govenda dawetê
 -    C) Govenda cejnê
 -    D) Govenda nûjen
-**Doğru:** B) Govenda şînê
+**Doğru:** A) Govenda şînê
 **Açıklama:** Yas halayı, Kürt kültüründe üzüntü için oynanır, ancak genellikle halay sevinç içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_dance
 
 ## ds_cand_0099  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di govenda kurdî ya herêmên cuda de, kîjan amûra muzîkê bi gelemperî tê bikaranîn?
 **TR:** Farklı bölgelerdeki Kürt halaylarında genellikle hangi müzik aleti kullanılır?
-- ✅ A) Hemî jorîn
--    B) Tembûr
--    C) Zirna
--    D) Def
-**Doğru:** A) Hemî jorîn
+-    A) Tembûr
+-    B) Zirna
+-    C) Def
+- ✅ D) Hemî jorîn
+**Doğru:** D) Hemî jorîn
 **Açıklama:** Kürt halayında bölgeye göre tembûr, zirna, def ve diğer aletler kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
 ## ds_cand_0101  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan xwarina kurdî bi nanê tenûrê û goştê hûrkirî tê çêkirin?
-**TR:** Tandır ekmeği ve kıyma ile yapılan Kürt yemeği hangisidir?
--    A) Birinç
-- ✅ B) Kutilk
+**KU:** Kîjan xwarina kurdî bi hevîrê savarê û goştê hûrkirî tê çêkirin?
+**TR:** Bulgur hamuru ve kıyma ile yapılan Kürt yemeği hangisidir?
+- ✅ A) Kutilk
+-    B) Birinç
 -    C) Şorbeya nîskê
 -    D) Fasûlî
-**Doğru:** B) Kutilk
-**Açıklama:** Kutilk, kıyma ve bulgurdan yapılan ve genellikle tandır ekmeğiyle yenen bir Kürt yemeğidir. Bu yemek Kürdistan'ın farklı bölgelerinde farklı şekillerde hazırlanır.
+**Doğru:** A) Kutilk
+**Açıklama:** Kutilk, bulgur/irmik hamurundan kabuk ve kıymalı iç harçla yapılır. Yörelere göre dış hamuru ve iç harcı değişir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kubba
 
 ## ds_cand_0127  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kurmancî de "Destê vala bi serê xwe ve nayê" ev gotin çi dide zanîn?
 **TR:** Kürtçe "Destê vala bi serê xwe ve nayê" (Eli boş başa gelmez) bu söz neyi ifade eder?
 -    A) Divê mirov bi tena serê xwe kar bike
--    B) Divê mirov ji kesên din re alîkariyê bike
-- ✅ C) Divê mirov bi destê vala neçe serdana kesî
+- ✅ B) Divê mirov bi destê vala neçe serdana kesî
+-    C) Divê mirov ji kesên din re alîkariyê bike
 -    D) Divê mirov her dem bi destê xwe ve be
-**Doğru:** C) Divê mirov bi destê vala neçe serdana kesî
+**Doğru:** B) Divê mirov bi destê vala neçe serdana kesî
 **Açıklama:** Bu söz, insanın eli boş birinin ziyaretine gitmemesi gerektiğini ifade eder, çünkü Kürt kültüründe misafirler hediyelerle karşılanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0151  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema mêvanek tê malê, kîjan tişt bi gelemperî ji wî re tê pêşkêş kirin?
 **TR:** Kürt kültüründe, eve bir misafir geldiğinde ona genellikle ne ikram edilir?
-- ✅ A) Çay û şekir
--    B) Qehwe û nan
--    C) Şerab û penîr
--    D) Hingiv û rûn
-**Doğru:** A) Çay û şekir
+-    A) Qehwe û nan
+-    B) Şerab û penîr
+-    C) Hingiv û rûn
+- ✅ D) Çay û şekir
+**Doğru:** D) Çay û şekir
 **Açıklama:** Kürt kültüründe misafirperverlik çok önemlidir ve misafirlere genellikle çay ikram edilir, bazen şeker ve özel ekmekle birlikte.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0159  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema mêvanek tê, kîjan tişt bi gelemperî tê kirin?
 **TR:** Kürt kültüründe, bir misafir geldiğinde genellikle ne yapılır?
--    A) Derî tê girtin
-- ✅ B) Xwarin tê amadekirin
+- ✅ A) Xwarin tê amadekirin
+-    B) Derî tê girtin
 -    C) Çira tê vemirandin
 -    D) Mizgeft tê xwendin
-**Doğru:** B) Xwarin tê amadekirin
+**Doğru:** A) Xwarin tê amadekirin
 **Açıklama:** Kürt misafirperverliğinde, misafirler için genellikle yemek hazırlanır, böylece misafir iyi ağırlanır. Kapı kapatmak, ışık söndürmek ve cami okumak misafirperverlik adetleri değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_1165  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema mêvanek tê, kîjan tişt bi gelemperî nayê kirin?
 **TR:** Kürt kültüründe, bir misafir geldiğinde genellikle ne yapılmaz?
--    A) Xwarin tê amadekirin
-- ✅ B) Derî tê girtin
+- ✅ A) Derî tê girtin
+-    B) Xwarin tê amadekirin
 -    C) Çay tê vexwarin
 -    D) Sohbet tê kirin
-**Doğru:** B) Derî tê girtin
+**Doğru:** A) Derî tê girtin
 **Açıklama:** Kürt misafirperverliğinde, kapı misafirler için genellikle açık kalır, kapalı değil. Yemek hazırlamak, çay içmek ve sohbet etmek misafirperverlik adetleridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
@@ -778,130 +734,130 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt kültüründe göç zamanı, yük hayvanlarının sırtına genellikle ne yüklenir?
 -    A) Xalîçe
 -    B) Nan
--    C) Av
-- ✅ D) Çadir
-**Doğru:** D) Çadir
+- ✅ C) Çadir
+-    D) Av
+**Doğru:** C) Çadir
 **Açıklama:** Çadır göç sırasında barınak olarak kullanılır. Halı, ekmek ve su diğer şeylerdir, ancak çadır temeldir.
 **Kaynak:** https://en.wikipedia.org/wiki/Yurt
 
 ## ds_cand_0251  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema pitikek tê dinyayê, kîjan tişt bi gelemperî tê kirin?
 **TR:** Kürt kültüründe bir bebek dünyaya geldiğinde genellikle ne yapılır?
--    A) Şîna girî
-- ✅ B) Şahî û pîrozbahî
+- ✅ A) Şahî û pîrozbahî
+-    B) Şîna girî
 -    C) Koçberî
 -    D) Rojîgirtin
-**Doğru:** B) Şahî û pîrozbahî
+**Doğru:** A) Şahî û pîrozbahî
 **Açıklama:** Kürt kültüründe bir bebek dünyaya geldiğinde şenlik ve kutlama yapılır. Bu gelenek ailenin mutluluğunun bir göstergesidir ve yeni bir hayatı kutlamak için düzenlenir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0263  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema pitik tê dinyayê, kîjan kes bi gelemperî mizgîniyê dide malbatê?
 **TR:** Kürt kültüründe bebek dünyaya geldiğinde aileye genellikle kim müjdeyi verir?
--    A) Dayik
-- ✅ B) Pîrik
+- ✅ A) Pîrik
+-    B) Dayik
 -    C) Bav
 -    D) Xwişk
-**Doğru:** B) Pîrik
+**Doğru:** A) Pîrik
 **Açıklama:** Kürt kültüründe ebe genellikle aileye müjdeyi verir. Bunun nedeni ebenin doğumda hazır bulunması ve müjdeyi veren ilk kişi olmasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_0271  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çanda kurdî de, dema zarok dest bi meşê dike, kîjan tişt bi gelemperî tê kirin?
 **TR:** Kürt kültüründe çocuk yürümeye başladığında genellikle ne yapılır?
--    A) Şîn
-- ✅ B) Şahî
+- ✅ A) Şahî
+-    B) Şîn
 -    C) Rojî
 -    D) Koçberî
-**Doğru:** B) Şahî
+**Doğru:** A) Şahî
 **Açıklama:** Kürt kültüründe çocuk yürümeye başladığında şenlik yapılır. Bu gelenek çocuğun hayatındaki bu önemli aşamayı kutlamak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_culture
 
 ## ds_cand_1178  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Di kevneşopiya kurdî de, kîjan demsal wexta koçberiyê ye?
-**TR:** Kürt geleneğinde göç zamanı hangi mevsimdir?
+**KU:** Koçberiya berbi zozanan di kîjan demsalê de dest pê dike?
+**TR:** Yaylaya çıkış hangi mevsimde başlar?
 -    A) Havîn
--    B) Payîz
-- ✅ C) Bihar
+- ✅ B) Bihar
+-    C) Payîz
 -    D) Zivistan
-**Doğru:** C) Bihar
-**Açıklama:** Göç genellikle ilkbaharda başlar, kar eridiğinde ve yaylalar açıldığında. Yaz, sonbahar ve kış göç zamanı değildir.
+**Doğru:** B) Bihar
+**Açıklama:** Yaylaya çıkış ilkbaharda, kar eridiğinde başlar; sonbaharda ise germiyana dönülür. Yıllık göç hareketi iki geçişi birden içerir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
 ## ds_cand_0182  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di havînê de, gundî bi gelemperî çawa li zozanan diçin?
 **TR:** Yazın köylüler genellikle yaylalara nasıl giderler?
-- ✅ A) Bi ker û hespan
--    B) Bi peyan
--    C) Bi traktorê
--    D) Bi otomobîlê
-**Doğru:** A) Bi ker û hespan
+-    A) Bi peyan
+-    B) Bi traktorê
+-    C) Bi otomobîlê
+- ✅ D) Bi ker û hespan
+**Doğru:** D) Bi ker û hespan
 **Açıklama:** Kürt geleneğinde göç, eşek ve atlarla yapılır. Traktör ve araba moderndir, geleneksel değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
 ## ds_cand_0184  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di zozanan de, ajal bi gelemperî çi dixwin?
 **TR:** Yaylalarda hayvanlar genellikle ne yer?
-- ✅ A) Giya
--    B) Berû
--    C) Kakil
--    D) Keskesor
-**Doğru:** A) Giya
+-    A) Berû
+-    B) Kakil
+-    C) Keskesor
+- ✅ D) Giya
+**Doğru:** D) Giya
 **Açıklama:** Yaylalar zengin otlarıyla bilinir. Meşe palamudu, çekirdek ve gökkuşağı hayvanların ana yemeği değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mountain_meadow
 
 ## ds_cand_0188  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di zivistanê de, koçer bi gelemperî li ku dimînin?
 **TR:** Kışın göçerler genellikle nerede kalır?
--    A) Li zozanan
-- ✅ B) Li deştan
+- ✅ A) Li deştan
+-    B) Li zozanan
 -    C) Li çiyayan
 -    D) Li bajaran
-**Doğru:** B) Li deştan
+**Doğru:** A) Li deştan
 **Açıklama:** Kışın yaylalar soğuktur, bu yüzden göçerler ovalarda kalır. Yaylalar, dağlar ve şehirler kışlık yer değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
 ## ds_cand_0192  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di havînê de, zozan bi gelemperî ji bo çi tên bikaranîn?
 **TR:** Yazın yaylalar genellikle ne için kullanılır?
-- ✅ A) Ji bo çêrandinê
--    B) Ji bo avdanê
--    C) Ji bo xanî
--    D) Ji bo karxaneyê
-**Doğru:** A) Ji bo çêrandinê
+-    A) Ji bo avdanê
+-    B) Ji bo xanî
+-    C) Ji bo karxaneyê
+- ✅ D) Ji bo çêrandinê
+**Doğru:** D) Ji bo çêrandinê
 **Açıklama:** Yaylalar yazın hayvanları otlatmak için kullanılır. Sulama, ev ve fabrika yaylalar için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mountain_meadow
 
 ## ds_cand_0196  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di zivistanê de, ajal bi gelemperî çi dixwin?
 **TR:** Kışın hayvanlar genellikle ne yer?
--    A) Giya kesk
-- ✅ B) Giya hişk
+- ✅ A) Giya hişk
+-    B) Giya kesk
 -    C) Berû
 -    D) Kakil
-**Doğru:** B) Giya hişk
+**Doğru:** A) Giya hişk
 **Açıklama:** Kışın yeşil ot olmaz, bu yüzden hayvanlar kuru ot yer. Meşe palamudu ve çekirdek ana yiyecek değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Hay
 
 ## ds_cand_0200  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di biharê de, koçer bi gelemperî ji kû derê dest pê dikin?
 **TR:** İlkbaharda göçerler genellikle nereden başlar?
-- ✅ A) Ji deştan
--    B) Ji zozanan
--    C) Ji çiyayan
--    D) Ji bajaran
-**Doğru:** A) Ji deştan
+-    A) Ji zozanan
+-    B) Ji çiyayan
+-    C) Ji bajaran
+- ✅ D) Ji deştan
+**Doğru:** D) Ji deştan
 **Açıklama:** Göçerler ilkbaharda ovalardan başlar ve yaylalara doğru gider. Yaylalar, dağlar ve şehirler göçün başlangıcı değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transhumance
 
 ## ds_cand_0203  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di xalîçeyên kurdî de, kîjan reng bi gelemperî ji bo xeml û nîşanan tê bikaranîn?
 **TR:** Kürt halılarında genellikle süsleme ve desenler için hangi renk kullanılır?
--    A) Şîn
-- ✅ B) Sor
+- ✅ A) Sor
+-    B) Şîn
 -    C) Zer
 -    D) Reş
-**Doğru:** B) Sor
+**Doğru:** A) Sor
 **Açıklama:** Kürt halılarında kırmızı en yaygın renktir ve süsleme ile desenler için kullanılır. Mavi, sarı ve siyah da kullanılır ancak kırmızı en karakteristik olanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_carpet
 
@@ -909,32 +865,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Newrozê de, kîjan agir bi gelemperî tê vêxistin?
 **TR:** Newroz'da genellikle hangi ateş yakılır?
 -    A) agirê tirsê
--    B) agirê mirinê
-- ✅ C) agirê pîroz
+- ✅ B) agirê pîroz
+-    C) agirê mirinê
 -    D) agirê xemê
-**Doğru:** C) agirê pîroz
+**Doğru:** B) agirê pîroz
 **Açıklama:** Newroz'da kutsal ateş yakılır çünkü Newroz bahar bayramıdır ve ateş saflık ile yenilenmenin sembolüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0227  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî li ser 21ê Adarê tê pîrozkirin?
 **TR:** Genellikle 21 Mart'ta hangi bayram kutlanır?
-- ✅ A) Newroz
--    B) Sersal
--    C) Cejna Remezanê
--    D) Cejna Qurbanê
-**Doğru:** A) Newroz
+-    A) Sersal
+-    B) Cejna Remezanê
+-    C) Cejna Qurbanê
+- ✅ D) Newroz
+**Doğru:** D) Newroz
 **Açıklama:** Newroz 21 Mart'ta kutlanır çünkü o gün baharın başlangıcıdır ve Kürt kültüründe önemli bir bayramdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0235  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî li ser 10ê Zilhicceyê tê pîrozkirin?
 **TR:** Hangi bayram genellikle Zilhicce'nin 10'unda kutlanır?
-- ✅ A) Cejna Qurbanê
--    B) Cejna Remezanê
--    C) Newroz
--    D) Sersal
-**Doğru:** A) Cejna Qurbanê
+-    A) Cejna Remezanê
+-    B) Newroz
+-    C) Sersal
+- ✅ D) Cejna Qurbanê
+**Doğru:** D) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, Zilhicce'nin 10'unda kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -943,9 +899,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Newroz bayramında genellikle ne hazırlanır?
 -    A) xwarinên sar
 -    B) xwarinên bêxwê
--    C) xwarinên hişk
-- ✅ D) xwarinên taybet
-**Doğru:** D) xwarinên taybet
+- ✅ C) xwarinên taybet
+-    D) xwarinên hişk
+**Doğru:** C) xwarinên taybet
 **Açıklama:** Newroz'da özel yemekler hazırlanır çünkü bayram birlikte kutlanır ve yemek geleneğin bir parçasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -953,21 +909,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan cejn bi gelemperî ji bo dawiya meha Remezanê tê pîrozkirin?
 **TR:** Hangi bayram genellikle Ramazan ayının sonu için kutlanır?
 -    A) Cejna Qurbanê
--    B) Newroz
-- ✅ C) Cejna Remezanê
+- ✅ B) Cejna Remezanê
+-    C) Newroz
 -    D) Sersal
-**Doğru:** C) Cejna Remezanê
+**Doğru:** B) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, Ramazan ayının sonu için kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0233  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî ji bo bîranîna îbrahîm pêxember tê pîrozkirin?
 **TR:** Hangi bayram genellikle Hz. İbrahim'i anmak için kutlanır?
--    A) Cejna Remezanê
-- ✅ B) Cejna Qurbanê
+- ✅ A) Cejna Qurbanê
+-    B) Cejna Remezanê
 -    C) Newroz
 -    D) Sersal
-**Doğru:** B) Cejna Qurbanê
+**Doğru:** A) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, Hz. İbrahim'i anmak için kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -975,10 +931,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan cejn bi gelemperî ji bo destpêka biharê tê pîrozkirin?
 **TR:** Hangi bayram genellikle baharın başlangıcı için kutlanır?
 -    A) Cejna Remezanê
--    B) Cejna Qurbanê
-- ✅ C) Newroz
+- ✅ B) Newroz
+-    C) Cejna Qurbanê
 -    D) Sersal
-**Doğru:** C) Newroz
+**Doğru:** B) Newroz
 **Açıklama:** Newroz, baharın başlangıcı için kutlanır çünkü o bahar bayramıdır ve 21 Mart'ta kutlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -986,10 +942,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan cejn bi gelemperî ji bo bîranîna bûyera qurbaniyê tê pîrozkirin?
 **TR:** Hangi bayram genellikle kurban olayını anmak için kutlanır?
 -    A) Cejna Remezanê
--    B) Newroz
-- ✅ C) Cejna Qurbanê
+- ✅ B) Cejna Qurbanê
+-    C) Newroz
 -    D) Sersal
-**Doğru:** C) Cejna Qurbanê
+**Doğru:** B) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, kurban olayını anmak için kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -998,9 +954,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi bayram genellikle orucu kutlamak için kutlanır?
 -    A) Cejna Qurbanê
 -    B) Newroz
--    C) Sersal
-- ✅ D) Cejna Remezanê
-**Doğru:** D) Cejna Remezanê
+- ✅ C) Cejna Remezanê
+-    D) Sersal
+**Doğru:** C) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, orucu kutlamak için kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
@@ -1009,20 +965,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurban Bayramı'nda genellikle hangi hayvan kesilir?
 -    A) mirîşk
 -    B) masî
--    C) ker
-- ✅ D) pez
-**Doğru:** D) pez
+- ✅ C) pez
+-    D) ker
+**Doğru:** C) pez
 **Açıklama:** Kurban Bayramı'nda koyun kesilir çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0238  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di cejna Qurbanê de, kîjan tişt bi gelemperî tê belavkirin?
 **TR:** Kurban Bayramı'nda genellikle ne dağıtılır?
-- ✅ A) goşt
--    B) xurma
--    C) nan
--    D) şîr
-**Doğru:** A) goşt
+-    A) xurma
+-    B) nan
+-    C) şîr
+- ✅ D) goşt
+**Doğru:** D) goşt
 **Açıklama:** Kurban Bayramı'nda et dağıtılır çünkü o kurban bayramıdır ve et genellikle fakirlere dağıtılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -1031,9 +987,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurban Bayramı'nda genellikle kim kurban keser?
 -    A) zarok
 -    B) jin
--    C) mêvan
-- ✅ D) serokê malê
-**Doğru:** D) serokê malê
+- ✅ C) serokê malê
+-    D) mêvan
+**Doğru:** C) serokê malê
 **Açıklama:** Kurban Bayramı'nda evin reisi kurban keser çünkü o kurban bayramıdır ve kurban genellikle evin reisi tarafından kesilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
@@ -1041,98 +997,87 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan cejn bi gelemperî di dawiya meha Remezanê de tê pîrozkirin?
 **TR:** Hangi bayram genellikle Ramazan ayının sonunda kutlanır?
 -    A) Cejna Qurbanê
--    B) Newroz
-- ✅ C) Cejna Remezanê
+- ✅ B) Cejna Remezanê
+-    C) Newroz
 -    D) Sersal
-**Doğru:** C) Cejna Remezanê
+**Doğru:** B) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, Ramazan ayının sonunda kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0239  ·  zorluk 1  ·  deepseek_2026_08_18
-**KU:** Kîjan cejn bi gelemperî di meha Remezanê de tê pîrozkirin?
-**TR:** Hangi bayram genellikle Ramazan ayında kutlanır?
--    A) Cejna Qurbanê
--    B) Newroz
--    C) Sersal
-- ✅ D) Cejna Remezanê
-**Doğru:** D) Cejna Remezanê
-**Açıklama:** Ramazan Bayramı, Ramazan ayında kutlanır çünkü o oruç bayramıdır ve bir aylık orucun ardından gelir.
+**KU:** Cejna Remezanê di kîjan meha kamerî de tê pîrozkirin?
+**TR:** Ramazan Bayramı hangi kamerî ayda kutlanır?
+-    A) Meha Remezanê
+-    B) Meha Muherremê
+- ✅ C) Meha Şewalê
+-    D) Meha Zîlhicceyê
+**Doğru:** C) Meha Şewalê
+**Açıklama:** Ramazan Bayramı (Eid al-Fitr), Ramazan bittikten sonra Şevval ayının ilk günü kutlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0243  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî di meha Zilhicceyê de tê pîrozkirin?
 **TR:** Hangi bayram genellikle Zilhicce ayında kutlanır?
-- ✅ A) Cejna Qurbanê
--    B) Cejna Remezanê
--    C) Newroz
--    D) Sersal
-**Doğru:** A) Cejna Qurbanê
+-    A) Cejna Remezanê
+-    B) Newroz
+-    C) Sersal
+- ✅ D) Cejna Qurbanê
+**Doğru:** D) Cejna Qurbanê
 **Açıklama:** Kurban Bayramı, Zilhicce ayında kutlanır çünkü o kurban bayramıdır ve kurban genellikle koyun veya sığırdan verilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Adha
 
 ## ds_cand_0247  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan cejn bi gelemperî di meha Şewalê de tê pîrozkirin?
 **TR:** Hangi bayram genellikle Şevval ayında kutlanır?
--    A) Cejna Qurbanê
-- ✅ B) Cejna Remezanê
+- ✅ A) Cejna Remezanê
+-    B) Cejna Qurbanê
 -    C) Newroz
 -    D) Sersal
-**Doğru:** B) Cejna Remezanê
+**Doğru:** A) Cejna Remezanê
 **Açıklama:** Ramazan Bayramı, Şevval ayında kutlanır çünkü o oruç bayramıdır ve Ramazan ayından sonra gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0232  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di Newrozê de, kîjan reng bi gelemperî tê bikaranîn?
-**TR:** Newroz'da genellikle hangi renk kullanılır?
--    A) reş
--    B) spî
--    C) şîn
-- ✅ D) zer
-**Doğru:** D) zer
-**Açıklama:** Newroz'da sarı renk kullanılır çünkü o ateşin ve güneşin rengidir ve baharın sembolüdür.
+**KU:** Di Newrozê de kîjan sê reng bi hev re tên bikaranîn?
+**TR:** Newroz'da hangi üç renk birlikte kullanılır?
+-    A) Reş, spî û gewr
+-    B) Şîn, mor û qehweyî
+- ✅ C) Sor, kesk û zer
+-    D) Spî, şîn û pembe
+**Doğru:** C) Sor, kesk û zer
+**Açıklama:** Newroz kutlamalarında kırmızı, yeşil ve sarı birlikte kullanılır; tek bir "doğru renk" yoktur.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0234  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di cejna Remezanê de, kîjan xwarin bi gelemperî tê xwarin?
-**TR:** Ramazan Bayramı'nda genellikle hangi yiyecek yenir?
+**KU:** Di meha Remezanê de rojî bi gelemperî bi kîjan xwarinê tê vekirin?
+**TR:** Ramazan ayında oruç genellikle hangi yiyecekle açılır?
 -    A) goşt
 -    B) masî
--    C) nan
-- ✅ D) xurma
-**Doğru:** D) xurma
-**Açıklama:** Ramazan Bayramı'nda hurma yenir çünkü o oruç bayramıdır ve hurma genellikle iftar için kullanılır.
+- ✅ C) xurma
+-    D) nan
+**Doğru:** C) xurma
+**Açıklama:** Ramazan'da oruç geleneksel olarak hurmayla açılır. Bayram sofrası ise yöreden yöreye değişir.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
 
 ## ds_cand_0242  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di cejna Remezanê de, kîjan tişt bi gelemperî tê dayîn?
 **TR:** Ramazan Bayramı'nda genellikle ne verilir?
 -    A) goşt
--    B) nan
-- ✅ C) zakat
+- ✅ B) zekata fitreyê
+-    C) nan
 -    D) şîr
-**Doğru:** C) zakat
-**Açıklama:** Ramazan Bayramı'nda zekat verilir çünkü o oruç bayramıdır ve zekat genellikle fakirlere verilir.
+**Doğru:** B) zekata fitreyê
+**Açıklama:** Ramazan Bayramı öncesinde verilen sadaka fitredir (zakat al-fitr). Genel zekât ayrı ve yıllık bir yükümlülüktür.
 **Kaynak:** https://en.wikipedia.org/wiki/Eid_al-Fitr
-
-## ds_cand_0236  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di Newrozê de, kîjan tişt bi gelemperî tê avêtin ser avê?
-**TR:** Newroz'da genellikle suya ne atılır?
--    A) kevir
--    B) dar
-- ✅ C) gul
--    D) ax
-**Doğru:** C) gul
-**Açıklama:** Newroz'da suya çiçek atılır çünkü o baharın sembolüdür ve genellikle bayramı kutlamak için kullanılır.
-**Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
 ## ds_cand_0240  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di Newrozê de, kîjan tişt bi gelemperî tê vêxistin?
 **TR:** Newroz'da genellikle ne yakılır?
--    A) av
--    B) ax
-- ✅ C) agir
+- ✅ A) agir
+-    B) av
+-    C) ax
 -    D) hewa
-**Doğru:** C) agir
+**Doğru:** A) agir
 **Açıklama:** Newroz'da ateş yakılır çünkü o saflığın ve yenilenmenin sembolüdür ve genellikle bayramı kutlamak için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nowruz
 
@@ -1140,87 +1085,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di çîroka kurdî ya "Zembîlfiroş" de, qehreman bi kîjan karî ve mijûl e?
 **TR:** Kürt masalı "Zembilci"de kahraman hangi işle uğraşır?
 -    A) Çêkirina xalîçeyan
--    B) Ristina hiriyê
--    C) Çandina genim
-- ✅ D) Firotina zembîlan
-**Doğru:** D) Firotina zembîlan
+- ✅ B) Firotina zembîlan
+-    C) Ristina hiriyê
+-    D) Çandina genim
+**Doğru:** B) Firotina zembîlan
 **Açıklama:** Zembilci masalında kahraman zembil satar ve bu şekilde geçimini sağlar; bu masal onun doğa hakkındaki zekası ve bilgisiyle hatırlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_literature
 
 ## ds_cand_0280  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çîroka "Kawayê Hesinker" de, Kawa li dijî kîjan zordar serî hildide?
 **TR:** "Demirci Kawa" masalında Kawa hangi zalime karşı ayaklanır?
-- ✅ A) Dehak
--    B) Efrîdûn
--    C) Cemşîd
--    D) Zahhak
-**Doğru:** A) Dehak
-**Açıklama:** Nevruz efsanesinde Demirci Kawa, çocukların kanını içen zalim hükümdar Dehak'a karşı ayaklanır ve başarılı olur; bu, Kürt kültüründe özgürlüğün sembolü olarak kutlanır.
+-    A) Efrîdûn
+-    B) Cemşîd
+- ✅ C) Dehak
+-    D) Rustem
+**Doğru:** C) Dehak
+**Açıklama:** Efsanede Demirci Kawa, zalim Dehak'a (Zahhak) karşı ayaklanır. Efrîdûn, Cemşîd ve Rustem Şehname'nin başka kahramanlarıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
 ## ds_cand_0296  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çîroka "Kawayê Hesinker" de, Kawa bi kîjan awayî serî hildide?
 **TR:** "Demirci Kawa" hikayesinde Kawa hangi yolla ayaklanır?
 -    A) Bi şûrê
-- ✅ B) Bi çakûçê
--    C) Bi kêrê
--    D) Bi rimê
-**Doğru:** B) Bi çakûçê
+-    B) Bi kêrê
+-    C) Bi rimê
+- ✅ D) Bi çakûçê
+**Doğru:** D) Bi çakûçê
 **Açıklama:** Demirci Kawa hikayesinde Kawa, çekiciyle ayaklanır ve Dehak'ı öldürür; bu olay Newroz efsanesinde anlatılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaveh_the_Blacksmith
 
-## ds_cand_0282  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çîroka "Feqîyê Teyran" de, Feqî bi kîjan taybetmendiyê tê nasîn?
-**TR:** "Feqiyê Teyran" masalında Feqi hangi özelliğiyle tanınır?
-- ✅ A) Zanîna xwe ya bi pêxemberan
--    B) Hêza xwe ya laşî
--    C) Dewlemendiya xwe
--    D) Zanîna xwe ya çandiniyê
-**Doğru:** A) Zanîna xwe ya bi pêxemberan
-**Açıklama:** Feqiyê Teyran masallarda manevi ve peygamberane bilgiye sahip biri olarak tanınır; rüyalar ve alametlerle doğru yolu gösterir.
-**Kaynak:** https://en.wikipedia.org/wiki/Feqiyê_Teyran
-
 ## ds_cand_0285  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Kîjan kes di çîroka "Mem û Zîn" de wekî qehremanê serekî tê nasîn?
-**TR:** "Mem ile Zin" masalında ana kahraman olarak kim tanınır?
-- ✅ A) Mem
--    B) Zîn
+**KU:** Di "Mem û Zîn" de Zîn ji kê hez dike?
+**TR:** "Mem û Zîn"de Zîn kime âşıktır?
+-    A) Zîn
+- ✅ B) Mem
 -    C) Beko
 -    D) Tacdîn
-**Doğru:** A) Mem
-**Açıklama:** Mem ile Zin masalında Mem, Zin'e olan aşkı eserin konusu olan ana kahramandır; bu masal Ehmedê Xanî tarafından yazılmıştır.
+**Doğru:** B) Mem
+**Açıklama:** Mem û Zîn, Mem ile Zîn'in aşkı üzerine kurulu bir mesnevidir; Ehmedê Xanî 1695'te yazmıştır. Beko araya giren fesatçı, Tacdîn ise Mem'in dostudur.
 **Kaynak:** https://en.wikipedia.org/wiki/Mem_and_Zin
-
-## ds_cand_0286  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çîroka "Bêbûn" de, Bêbûn bi kîjan taybetmendiyê tê nasîn?
-**TR:** "Bêbûn" hikayesinde Bêbûn hangi özelliğiyle tanınır?
--    A) Hêza xwe ya laşî
--    B) Dewlemendiya xwe
-- ✅ C) Zanîna xwe ya bi riwekan
--    D) Zanîna xwe ya çandiniyê
-**Doğru:** C) Zanîna xwe ya bi riwekan
-**Açıklama:** Bêbûn hikayesinde Bêbûn, bitkiler ve ilaçlar hakkındaki bilgisiyle tanınır; bu bilgisi sayesinde hastalıkları iyileştirir.
-**Kaynak:** https://en.wikipedia.org/wiki/Kurdish_mythology
-
-## ds_cand_0292  ·  zorluk 2  ·  deepseek_2026_08_18
-**KU:** Di çîroka "Feqî û Xanima" de, Feqî bi kîjan awayî dilê Xanimê dixe?
-**TR:** "Feqî ile Hanım" hikayesinde Feqî, Hanım'ın gönlünü hangi yolla kazanır?
--    A) Bi hêza xwe
-- ✅ B) Bi zanîna xwe
--    C) Bi dewlemendiya xwe
--    D) Bi xweşikbûna xwe
-**Doğru:** B) Bi zanîna xwe
-**Açıklama:** Feqî ile Hanım hikayesinde Feqî, bilgisi ve zekasıyla Hanım'ın gönlünü kazanır; rüyalar ve işaretler yardımıyla doğru yolu gösterir.
-**Kaynak:** https://en.wikipedia.org/wiki/Kurdish_mythology
 
 ## ds_cand_0297  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di çîroka "Mem û Zîn" de, evîn bi kîjan awayî bi dawî dibe?
 **TR:** "Mem ile Zîn" hikayesinde aşk hangi şekilde sona erer?
 -    A) Bi zewacê
--    B) Bi hevberdanê
-- ✅ C) Bi trajediyê
+- ✅ B) Bi trajediyê
+-    C) Bi hevberdanê
 -    D) Bi koçberiyê
-**Doğru:** C) Bi trajediyê
+**Doğru:** B) Bi trajediyê
 **Açıklama:** Mem ile Zîn hikayesinde aşk trajediyle sona erer; Mem ve Zîn, olumsuz kader ve Beko'nun hileleri yüzünden ölürler.
 **Kaynak:** https://en.wikipedia.org/wiki/Mem_and_Zin
 
@@ -1522,11 +1434,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## edit_cand_0028  ·  zorluk 4  ·  editorial
 **KU:** "Çadira reş" bi giştî ji çi tê çêkirin?
 **TR:** "Kara çadır" genellikle neyden yapılır?
-- ✅ A) hiriyê bizinê
+- ✅ A) mûyê bizinê
 -    B) çanda koçeriyê
 -    C) kilimên kurdî
 -    D) diyarî/xelat
-**Doğru:** A) hiriyê bizinê
+**Doğru:** A) mûyê bizinê
 **Açıklama:** Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.
 **Kaynak:** Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz
 
@@ -1630,7 +1542,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## edit_cand_0038  ·  zorluk 3  ·  editorial
 **KU:** Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?
 **TR:** Kürt halı ve kilimleri genellikle neyle bezenir?
--    A) Wêneyên fotoğrafî
+-    A) Wêneyên fotografî
 - ✅ B) Motîfên hêjmarî û sembolîk
 -    C) Nivîsên dirêj
 -    D) Rengên tenê reş û spî
@@ -1789,14 +1701,14 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_2362  ·  zorluk 2  ·  offline
-**KU:** Êzidîtî bi kevneşopî yek ji baweriyên kîjan civakê ye?
-**TR:** Êzidîlik geleneksel olarak hangi toplumun inançlarından biridir?
--    A) Ereb
-- ✅ B) Kurd
--    C) Suryanî
--    D) Tirkmen
-**Doğru:** B) Kurd
-**Açıklama:** Êzidîlik, Kürtçe konuşan Êzidî topluluğunun geleneksel inancıdır.
+**KU:** Zimanê kevneşopî yê civaka êzidî kîjan zarava ye?
+**TR:** Êzidî topluluğunun geleneksel dili hangi Kürtçe lehçesidir?
+-    A) Soranî
+- ✅ B) Kurmancî
+-    C) Zazakî
+-    D) Hewramî
+**Doğru:** B) Kurmancî
+**Açıklama:** Êzidî topluluğunun geleneksel dili Kurmancîdir; dinî metinler ve ilahiler de bu lehçededir.
 **Kaynak:** —
 
 ## offline_2388  ·  zorluk 3  ·  offline
@@ -1942,47 +1854,36 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Açıklama:** "şahmaran": doğu kültüründe mitolojik figür.
 **Kaynak:** —
 
-## offline_5973  ·  zorluk 1  ·  offline
-**KU:** Dema "şax" tê gotin, çi tê xwestin?
-**TR:** "Şax" dendiğinde ne kastedilir?
--    A) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin
--    B) berxwedana li dijî zilmê û ji nû ve jidayikbûn
--    C) kevneşopiya gula çolê û çaya nebatî
-- ✅ D) reqsa kevneşopî ya herêma Şirnexê
-**Doğru:** D) reqsa kevneşopî ya herêma Şirnexê
-**Açıklama:** "şax": şırnak yöresine ait geleneksel dans.
-**Kaynak:** —
-
 ## offline_6020  ·  zorluk 4  ·  offline
 **KU:** Ji aliyê Çandê ve ji bo "govendên herêmî" îfadeya rast kîjan e?
 **TR:** Kültür açısından "yöresel govendler" için doğru ifade hangisidir?
-- ✅ A) reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
--    B) tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî
--    C) mêvanperwerî û daxwaza avakirina têkiliyê
--    D) govend tê girtin û li ser agir tê banzdan
-**Doğru:** A) reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
+-    A) tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî
+-    B) mêvanperwerî û daxwaza avakirina têkiliyê
+-    C) govend tê girtin û li ser agir tê banzdan
+- ✅ D) reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
+**Doğru:** D) reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
 **Açıklama:** "govendên herêmî": yöresel halk dansları.
 **Kaynak:** —
 
 ## offline_6042  ·  zorluk 5  ·  offline
-**KU:** Dema "pêncşem" tê gotin, çi tê xwestin?
-**TR:** "Pêncşem" dendiğinde ne kastedilir?
--    A) sembola çandî û bîra rengan
-- ✅ B) roja ziyaret û bibîranînê ya kevneşopî
--    C) îlahî û nivîsên pîroz ên devkî
--    D) pîroziya ku ji ronahî/rojê re tê dayîn
-**Doğru:** B) roja ziyaret û bibîranînê ya kevneşopî
-**Açıklama:** "pêncşem": geleneksel ziyaret ve anma günü.
+**KU:** Peyva "pêncşem" bi tirkî çi ye?
+**TR:** "pêncşem" sözcüğünün Türkçesi nedir?
+- ✅ A) Perşembe
+-    B) Çarşamba
+-    C) Cuma
+-    D) Cumartesi
+**Doğru:** A) Perşembe
+**Açıklama:** "pêncşem" Kurmancîde haftanın günü Perşembe demektir.
 **Kaynak:** —
 
 ## offline_6053  ·  zorluk 3  ·  offline
 **KU:** Derbarê "şal û şapik" de ravekirina rast kîjan e?
 **TR:** "Şal û şapik" hakkında doğru açıklama hangisidir?
--    A) amûra kevneşopî ya dişibe bilûrê
-- ✅ B) cilûbergê kevneşopî yê mêran
+- ✅ A) cilûbergê kevneşopî yê mêran
+-    B) amûra kevneşopî ya dişibe bilûrê
 -    C) çanda pêşkêşkirina dew û avê
 -    D) vejîna xwezayê û bereket
-**Doğru:** B) cilûbergê kevneşopî yê mêran
+**Doğru:** A) cilûbergê kevneşopî yê mêran
 **Açıklama:** "şal û şapik": geleneksel erkek giyim takımı.
 **Kaynak:** —
 
@@ -1991,10 +1892,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Hewran" için geçerli tanım hangisidir?
 -    A) "Nû" (nû) + "roj" (roj)
 -    B) Girêdanên civak û malbatê
--    C) hatina biharê û nûbûn
-- ✅ D) çêkirina kevneşopî ya konê ji mûyî
-**Doğru:** D) çêkirina kevneşopî ya konê ji mûyî
-**Açıklama:** "hewran": geleneksel kıl çadır yapımı.
+- ✅ C) çêkirina kevneşopî ya konê ji mûyî
+-    D) hatina biharê û nûbûn
+**Doğru:** C) çêkirina kevneşopî ya konê ji mûyî
+**Açıklama:** "hewran": diğer giysilerin üstüne giyilen uzun üstlük (aba).
 **Kaynak:** —
 
 ## offline_6067  ·  zorluk 4  ·  offline
@@ -2002,31 +1903,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "çilkez" hakkında doğru bilgi hangisidir?
 -    A) îlahiyên olî/nivîsarên pîroz ên devkî
 -    B) sembola çandî û bîranîna rengan
--    C) tûrikê hunandî yê ji bo hilgirtina xwarinê
-- ✅ D) modela kevneşopî ya rêsê porê kurdî
-**Doğru:** D) modela kevneşopî ya rêsê porê kurdî
+- ✅ C) modela kevneşopî ya rêsê porê kurdî
+-    D) tûrikê hunandî yê ji bo hilgirtina xwarinê
+**Doğru:** C) modela kevneşopî ya rêsê porê kurdî
 **Açıklama:** "çilkez": geleneksel Kürt saç örgüsü modeli.
 **Kaynak:** —
 
 ## offline_6083  ·  zorluk 2  ·  offline
-**KU:** "destmal" tê çi wateyê?
-**TR:** "destmal" ne anlama gelir?
--    A) fîgura mîtolojîk a çanda rojhilat
--    B) reqsa kevneşopî ya herêma Şirnexê
-- ✅ C) perçeya qumaşî ya serokê govendê
--    D) rola çandî ya jinên ku pez didoşin
-**Doğru:** C) perçeya qumaşî ya serokê govendê
-**Açıklama:** "destmal": halay başının elinde salladığı mendil.
+**KU:** Peyva "destmal" bi tirkî çi ye?
+**TR:** "destmal" sözcüğünün Türkçesi nedir?
+-    A) halı
+- ✅ B) mendil
+-    C) yastık
+-    D) battaniye
+**Doğru:** B) mendil
+**Açıklama:** "destmal": mendil. Govendin başındaki kişinin salladığı mendil de bu sözcükle anılır.
 **Kaynak:** —
 
 ## offline_6093  ·  zorluk 5  ·  offline
 **KU:** Ji bo "tûrik" pênaseya derbasdar kîjan e?
 **TR:** "tûrik" için geçerli tanım hangisidir?
--    A) şivantiya kevneşopî û zanîna xwezayê
-- ✅ B) tûra hûnandî ya ku xwarin tê de tê hilgirtin
+- ✅ A) tûra hûnandî ya ku xwarin tê de tê hilgirtin
+-    B) şivantiya kevneşopî û zanîna xwezayê
 -    C) cejna berdana beran û ajaldariyê
 -    D) çîrok û kilam/stran
-**Doğru:** B) tûra hûnandî ya ku xwarin tê de tê hilgirtin
+**Doğru:** A) tûra hûnandî ya ku xwarin tê de tê hilgirtin
 **Açıklama:** "tûrik": yiyecek taşımak için dokunan torba.
 **Kaynak:** —
 
@@ -2034,43 +1935,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "nanê tenûrê" de kîjan rast e?
 **TR:** "nanê tenûrê" hakkında hangisi doğrudur?
 -    A) berxwedana li dijî zilmê û ji nû ve jidayikbûn
--    B) xwarina sebzeyê ya bi tirş/goşt an yaxnî
-- ✅ C) nanê ku li dîwarê firna axî tê pehtin
+- ✅ B) nanê ku li dîwarê firna axî tê pehtin
+-    C) xwarina sebzeyê ya bi tirş/goşt an yaxnî
 -    D) vegotina bûyerên balkêş ên jiyayî
-**Doğru:** C) nanê ku li dîwarê firna axî tê pehtin
+**Doğru:** B) nanê ku li dîwarê firna axî tê pehtin
 **Açıklama:** "nanê tenûrê": tandırda pişirilen geleneksel ekmek.
 **Kaynak:** —
 
 ## offline_6136  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgiha "koçerî" rast şirove dike?
 **TR:** "koçerî" terimini hangisi doğru açıklar?
-- ✅ A) jiyana ku bi demsalan di navbera zozan û warî de digere
--    B) îlahiyên olî/nivîsarên pîroz ên devkî
--    C) hesinkarê ku li dijî zilmê rabû
--    D) vegotina ku ji nifşî bo nifşî hatiye veguhastin
-**Doğru:** A) jiyana ku bi demsalan di navbera zozan û warî de digere
+-    A) îlahiyên olî/nivîsarên pîroz ên devkî
+-    B) hesinkarê ku li dijî zilmê rabû
+-    C) vegotina ku ji nifşî bo nifşî hatiye veguhastin
+- ✅ D) jiyana ku bi demsalan di navbera zozan û warî de digere
+**Doğru:** D) jiyana ku bi demsalan di navbera zozan û warî de digere
 **Açıklama:** "koçerî": göçer yaşam tarzı ve dans ritmi.
-**Kaynak:** —
-
-## offline_6143  ·  zorluk 2  ·  offline
-**KU:** Derbarê "helase" de ya rast a zanîn çi ye?
-**TR:** "helase" hakkında doğru bilgi hangisidir?
-- ✅ A) cejna dirûn û bereketê ya kevneşopî
--    B) vegotina bûyerên balkêş ên jiyayî
--    C) şivantiya kevneşopî û zanîna xwezayê
--    D) aîdiyeta çandî û bîra erdnîgarî
-**Doğru:** A) cejna dirûn û bereketê ya kevneşopî
-**Açıklama:** "helase": geleneksel hasat ve bereket şenliği.
 **Kaynak:** —
 
 ## offline_6182  ·  zorluk 4  ·  offline
 **KU:** "memê alan" çi îfade dike?
 **TR:** "memê alan" neyi ifade eder?
 -    A) xwarina kevneşopî ya ku bi mirîşk û birincê tê çêkirin
--    B) ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê
--    C) ji ber ku bîra çandî, wêje, vegotina devkî û aîdiyetê hildigire
-- ✅ D) vegotina gelêrî ya kurdî ya destanî
-**Doğru:** D) vegotina gelêrî ya kurdî ya destanî
+- ✅ B) vegotina gelêrî ya kurdî ya destanî
+-    C) ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê
+-    D) ji ber ku bîra çandî, wêje, vegotina devkî û aîdiyetê hildigire
+**Doğru:** B) vegotina gelêrî ya kurdî ya destanî
 **Açıklama:** "memê alan": destansı Kürt halk anlatısı.
 **Kaynak:** —
 
@@ -2078,10 +1968,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Îfadeya ku têgiha "cîranî" rast vedibêje kîjan e?
 **TR:** "cîranî" terimini doğru anlatan ifade hangisidir?
 -    A) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin
--    B) Melek Tawis û motîfa ronahî/rojê
--    C) cejna berdana beran û ajaldariyê
-- ✅ D) peywendiya alîkariya di navbera malên nêzîk de
-**Doğru:** D) peywendiya alîkariya di navbera malên nêzîk de
+- ✅ B) peywendiya alîkariya di navbera malên nêzîk de
+-    C) Melek Tawis û motîfa ronahî/rojê
+-    D) cejna berdana beran û ajaldariyê
+**Doğru:** B) peywendiya alîkariya di navbera malên nêzîk de
 **Açıklama:** "cîranî": komşuluk ve toplumsal yardımlaşma.
 **Kaynak:** —
 
@@ -2089,32 +1979,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "dengbêj" çawa tê pênasekirin?
 **TR:** "dengbêj" nasıl tanımlanır?
 -    A) xurtkirina girêdanên civakî
--    B) amûra kevneşopî ya dişibe bilûrê
--    C) ji bo vegotina ku devkî an ji ber tê veguhastin
-- ✅ D) vegotina devkî û çîroka bi avaz
-**Doğru:** D) vegotina devkî û çîroka bi avaz
+- ✅ B) vegotina devkî û çîroka bi avaz
+-    C) amûra kevneşopî ya dişibe bilûrê
+-    D) ji bo vegotina ku devkî an ji ber tê veguhastin
+**Doğru:** B) vegotina devkî û çîroka bi avaz
 **Açıklama:** "dengbêj": sözlü anlatım ve ezgili hikaye.
 **Kaynak:** —
 
 ## offline_6260  ·  zorluk 1  ·  offline
 **KU:** Kîjan pênase bi "Newroz" re li hev tê?
 **TR:** Hangi tanım "Newroz" ile örtüşür?
-- ✅ A) hatina biharê û nûbûn
--    B) "Nû" (nû) + "roj" (roj)
--    C) Melek Tavus (Tawûsî Melek)
+-    A) "Nû" (nû) + "roj" (roj)
+-    B) Melek Tavus (Tawûsî Melek)
+- ✅ C) hatina biharê û nûbûn
 -    D) keça û kurê apê (pismam)
-**Doğru:** A) hatina biharê û nûbûn
+**Doğru:** C) hatina biharê û nûbûn
 **Açıklama:** "Newroz": baharın gelişi ve yenilenme.
 **Kaynak:** —
 
 ## offline_6325  ·  zorluk 4  ·  offline
 **KU:** Derbarê "bilûr" de ya rast a zanîn çi ye?
 **TR:** "bilûr" hakkında doğru bilgi hangisidir?
--    A) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
--    B) govend tê girtin û li ser agir tê banzdan
-- ✅ C) amûreke pifê ya kevneşopî ya şivanan
+- ✅ A) amûreke pifê ya kevneşopî ya şivanan
+-    B) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
+-    C) govend tê girtin û li ser agir tê banzdan
 -    D) rola çandî ya jinên ku pez didoşin
-**Doğru:** C) amûreke pifê ya kevneşopî ya şivanan
+**Doğru:** A) amûreke pifê ya kevneşopî ya şivanan
 **Açıklama:** "bilûr": kaval benzeri geleneksel üflemeli çalgı.
 **Kaynak:** —
 
@@ -2122,21 +2012,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li jêr ji bo "tûtik" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "tûtik" için doğrudur?
 -    A) çanda pêşkêşkirina dew û avê
--    B) kevneşopiya muzîk û rîtûel/avazê
--    C) xurtkirina girêdanên civakî
-- ✅ D) amûra kevneşopî ya dişibe bilûrê
-**Doğru:** D) amûra kevneşopî ya dişibe bilûrê
+- ✅ B) amûra kevneşopî ya dişibe bilûrê
+-    C) kevneşopiya muzîk û rîtûel/avazê
+-    D) xurtkirina girêdanên civakî
+**Doğru:** B) amûra kevneşopî ya dişibe bilûrê
 **Açıklama:** "tûtik": geleneksel kaval benzeri çalgı.
 **Kaynak:** —
 
 ## offline_6365  ·  zorluk 2  ·  offline
 **KU:** Derbarê "zembîlfiroş" de kîjan rast e?
 **TR:** "zembîlfiroş" hakkında hangisi doğrudur?
-- ✅ A) çîroka gelêrî ya kurdî ya navdar
--    B) lehengên destaneke evînê
--    C) pîrozbahiyeke komî/kolektîf
+-    A) lehengên destaneke evînê
+-    B) pîrozbahiyeke komî/kolektîf
+- ✅ C) çîroka gelêrî ya kurdî ya navdar
 -    D) hest û bîra civakî
-**Doğru:** A) çîroka gelêrî ya kurdî ya navdar
+**Doğru:** C) çîroka gelêrî ya kurdî ya navdar
 **Açıklama:** "zembîlfiroş": meşhur Kürt halk hikayesi.
 **Kaynak:** —
 
@@ -2144,10 +2034,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Berambera rast a biwêja "govend" kîjan e?
 **TR:** "govend" sözcüğünün doğru karşılığı hangisidir?
 -    A) yöresel kıyafet
-- ✅ B) toplu halk oyunu
--    C) kültürel ritüel
--    D) baharatlı pirinç
-**Doğru:** B) toplu halk oyunu
+-    B) kültürel ritüel
+-    C) baharatlı pirinç
+- ✅ D) toplu halk oyunu
+**Doğru:** D) toplu halk oyunu
 **Açıklama:** "govend": toplu halk oyunu.
 **Kaynak:** —
 
@@ -2155,32 +2045,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "şabaş" çawa tê pênasekirin?
 **TR:** "şabaş" nasıl tanımlanır?
 -    A) îlahiyên olî/nivîsarên pîroz ên devkî
-- ✅ B) kevneşopiya bexşîş dayîna muzîkjenan
--    C) zêrên ku di dawetan de li bûkê tên kirin
--    D) konê eşîrên kurdên koçer
-**Doğru:** B) kevneşopiya bexşîş dayîna muzîkjenan
+-    B) zêrên ku di dawetan de li bûkê tên kirin
+-    C) konê eşîrên kurdên koçer
+- ✅ D) kevneşopiya bexşîş dayîna muzîkjenan
+**Doğru:** D) kevneşopiya bexşîş dayîna muzîkjenan
 **Açıklama:** "şabaş": müzisyenlere bahşiş atma geleneği.
 **Kaynak:** —
 
 ## offline_6465  ·  zorluk 4  ·  offline
 **KU:** Ji bo Çandê derbarê "sersal" de vebijêrka rast kîjan e?
 **TR:** Kültür alanında "sersal" için doğru seçenek hangisidir?
-- ✅ A) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
--    B) amûra pifê ya kevneşopî ya bilûrî
--    C) kewa bi hene û sembola hezkirina xwezayê
+-    A) amûra pifê ya kevneşopî ya bilûrî
+-    B) kewa bi hene û sembola hezkirina xwezayê
+- ✅ C) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
 -    D) rola çandî ya jinên ku pez didoşin
-**Doğru:** A) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
+**Doğru:** C) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
 **Açıklama:** "sersal": Kürt halk takviminde yılbaşı kutlaması.
 **Kaynak:** —
 
 ## offline_6509  ·  zorluk 2  ·  offline
 **KU:** Li jêr ji bo "koçerî" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "koçerî" için doğrudur?
-- ✅ A) jiyana ku bi demsalan di navbera zozan û warî de digere
--    B) kesayetiyeke mîtolojîk a çanda rojhilat
--    C) mêvanperwerî
+-    A) kesayetiyeke mîtolojîk a çanda rojhilat
+-    B) mêvanperwerî
+- ✅ C) jiyana ku bi demsalan di navbera zozan û warî de digere
 -    D) îlahiyên olî/nivîsarên pîroz ên devkî
-**Doğru:** A) jiyana ku bi demsalan di navbera zozan û warî de digere
+**Doğru:** C) jiyana ku bi demsalan di navbera zozan û warî de digere
 **Açıklama:** "koçerî": göçer yaşam tarzı ve dans ritmi.
 **Kaynak:** —
 
@@ -2188,10 +2078,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "şîlan" çawa divê bê fêmkirin?
 **TR:** "şîlan" nasıl anlaşılmalıdır?
 -    A) nanê kevneşopî yê ku di tenûrê de tê patin
-- ✅ B) kevneşopiya gula çolê û çaya nebatî
--    C) berxwedana li dijî zilmê û ji nû ve jidayikbûn
--    D) çîrok û kilam/stran
-**Doğru:** B) kevneşopiya gula çolê û çaya nebatî
+-    B) berxwedana li dijî zilmê û ji nû ve jidayikbûn
+-    C) çîrok û kilam/stran
+- ✅ D) kevneşopiya gula çolê û çaya nebatî
+**Doğru:** D) kevneşopiya gula çolê û çaya nebatî
 **Açıklama:** "şîlan": yabani gül ve bitkisel çay geleneği.
 **Kaynak:** —
 
@@ -2199,21 +2089,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Dema "kelaş" tê gotin, çi tê xwestin?
 **TR:** "kelaş" dendiğinde ne kastedilir?
 -    A) berxwedana gel û hêviya azadiyê
-- ✅ B) pêlava kurdî ya kevneşopî ya destçêkirî
--    C) hunermendê ku kilaman ji ber dibêje
--    D) cejna dirûn û bereketê ya kevneşopî
-**Doğru:** B) pêlava kurdî ya kevneşopî ya destçêkirî
+-    B) hunermendê ku kilaman ji ber dibêje
+-    C) cejna dirûn û bereketê ya kevneşopî
+- ✅ D) pêlava kurdî ya kevneşopî ya destçêkirî
+**Doğru:** D) pêlava kurdî ya kevneşopî ya destçêkirî
 **Açıklama:** "kelaş": el yapımı geleneksel Kürt ayakkabısı.
 **Kaynak:** —
 
 ## offline_6533  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgiha "vegotina çîrokan" rast şirove dike?
 **TR:** "masal anlatımı" terimini hangisi doğru açıklar?
-- ✅ A) mîrateya devkî ya ku ji nifşî bo nifşî tê veguhastin
--    B) modela kevneşopî ya rêsê porê kurdî
--    C) konê ji mûyê bizina reş
+-    A) modela kevneşopî ya rêsê porê kurdî
+-    B) konê ji mûyê bizina reş
+- ✅ C) mîrateya devkî ya ku ji nifşî bo nifşî tê veguhastin
 -    D) reqsa gelêrî ya kevneşopî ya sê lingan
-**Doğru:** A) mîrateya devkî ya ku ji nifşî bo nifşî tê veguhastin
+**Doğru:** C) mîrateya devkî ya ku ji nifşî bo nifşî tê veguhastin
 **Açıklama:** "masal anlatımı": kuşaktan kuşağa aktarılan anlatı.
 **Kaynak:** —
 
@@ -2221,54 +2111,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bi "şevbêrk" çi tê xwestin?
 **TR:** "şevbêrk" ile ne kastedilir?
 -    A) bi jiyana di erdnîgariya çiyayî de di dirêjahiya dîrokê de
--    B) kincên rengîn, gelek-tebeqe û dirêj (kras)
--    C) lîstik an reqsên kevneşopî yên jinan
-- ✅ D) civînên axaftinê yên şevên zivistanê
-**Doğru:** D) civînên axaftinê yên şevên zivistanê
+- ✅ B) civînên axaftinê yên şevên zivistanê
+-    C) kincên rengîn, gelek-tebeqe û dirêj (kras)
+-    D) lîstik an reqsên kevneşopî yên jinan
+**Doğru:** B) civînên axaftinê yên şevên zivistanê
 **Açıklama:** "şevbêrk": kış gecelerinde yapılan sohbet toplantıları.
-**Kaynak:** —
-
-## offline_6541  ·  zorluk 3  ·  offline
-**KU:** Derbarê "qazîn" de vebijêrka rast kîjan e?
-**TR:** "qazîn" hakkında doğru seçenek hangisidir?
--    A) aîdiyeta çandî û bîra erdnîgarî
-- ✅ B) lîstik an reqsên kevneşopî yên jinan
--    C) destmala ku serê govendê dihejîne
--    D) amûra pifê ya kevneşopî ya bilûrî
-**Doğru:** B) lîstik an reqsên kevneşopî yên jinan
-**Açıklama:** "qazîn": geleneksel kadın oyunları veya dansları.
 **Kaynak:** —
 
 ## offline_6555  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgiha "serzêr" rast şirove dike?
 **TR:** "serzêr" terimini hangisi doğru açıklar?
--    A) nanê kevneşopî yê di tenûrê de tê pijandin
--    B) konê ji mûyê bizina reş
--    C) hunermendê ku kilaman ji ber dibêje
-- ✅ D) zêrên ku di dawetan de li bûkê tên kirin
-**Doğru:** D) zêrên ku di dawetan de li bûkê tên kirin
+- ✅ A) zêrên ku di dawetan de li bûkê tên kirin
+-    B) nanê kevneşopî yê di tenûrê de tê pijandin
+-    C) konê ji mûyê bizina reş
+-    D) hunermendê ku kilaman ji ber dibêje
+**Doğru:** A) zêrên ku di dawetan de li bûkê tên kirin
 **Açıklama:** "serzêr": düğünlerde geline takılan altınlar.
 **Kaynak:** —
 
 ## offline_6560  ·  zorluk 4  ·  offline
 **KU:** Derbarê "çilkez" de agahiya herî rast kîjan e?
 **TR:** "çilkez" hakkında en doğru bilgi hangisidir?
-- ✅ A) modela kezîkirina kurdî ya kevneşopî
--    B) ji ber ku herêm, zarava, avhewa, çandinî û danûstandina bi mitbaxên cîran re cuda ne
+-    A) ji ber ku herêm, zarava, avhewa, çandinî û danûstandina bi mitbaxên cîran re cuda ne
+- ✅ B) modela kezîkirina kurdî ya kevneşopî
 -    C) ji ber ku zanîna jiyana rojane, motîf û estetîka herêmî hildigire
 -    D) ji ber ku li avhewaya çiyayî berxwedana demsalî û ewlehiya xwarinê peyda dike
-**Doğru:** A) modela kezîkirina kurdî ya kevneşopî
+**Doğru:** B) modela kezîkirina kurdî ya kevneşopî
 **Açıklama:** "çilkez": geleneksel Kürt saç örgüsü modeli.
 **Kaynak:** —
 
 ## offline_6575  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgiha "şabaş" rast şirove dike?
 **TR:** "şabaş" terimini hangisi doğru açıklar?
--    A) Melek Tawis û motîfa ronahî/rojê
--    B) roja ziyaret û bibîranînê ya kevneşopî
--    C) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin
-- ✅ D) kevneşopiya avêtina baxşîşê ji muzîkjenan re
-**Doğru:** D) kevneşopiya avêtina baxşîşê ji muzîkjenan re
+- ✅ A) kevneşopiya avêtina baxşîşê ji muzîkjenan re
+-    B) Melek Tawis û motîfa ronahî/rojê
+-    C) roja ziyaret û bibîranînê ya kevneşopî
+-    D) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin
+**Doğru:** A) kevneşopiya avêtina baxşîşê ji muzîkjenan re
 **Açıklama:** "şabaş": müzisyenlere bahşiş atma geleneği.
 **Kaynak:** —
 
@@ -2276,55 +2155,44 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "nanê sêlê" de ravekirina rast kîjan e?
 **TR:** "nanê sêlê" hakkında doğru açıklama hangisidir?
 -    A) bi kevneşopiya devkî ve girêdayî ye
-- ✅ B) nanê ku li ser sacê tê pijandin
--    C) şorbeya kevneşopî ya heft dexlan
+-    B) şorbeya kevneşopî ya heft dexlan
+- ✅ C) nanê ku li ser sacê tê pijandin
 -    D) kevneşopiya muzîk û risim/awazê
-**Doğru:** B) nanê ku li ser sacê tê pijandin
+**Doğru:** C) nanê ku li ser sacê tê pijandin
 **Açıklama:** "nanê sêlê": sac üzerinde pişirilen ekmek.
 **Kaynak:** —
 
 ## offline_6610  ·  zorluk 3  ·  offline
 **KU:** "lûr" çawa tê pênasekirin?
 **TR:** "lûr" nasıl tanımlanır?
--    A) pêlava kurdî ya kevneşopî ya destçêkirî
--    B) kewa bi hene û sembola hezkirina xwezayê
--    C) berxwedana gel û hêviya azadiyê
-- ✅ D) avaza şînî ya di muzîka gelêrî ya kurdî de
-**Doğru:** D) avaza şînî ya di muzîka gelêrî ya kurdî de
+- ✅ A) avaza şînî ya di muzîka gelêrî ya kurdî de
+-    B) pêlava kurdî ya kevneşopî ya destçêkirî
+-    C) kewa bi hene û sembola hezkirina xwezayê
+-    D) berxwedana gel û hêviya azadiyê
+**Doğru:** A) avaza şînî ya di muzîka gelêrî ya kurdî de
 **Açıklama:** "lûr": Kürt halk müziğinde ağıt benzeri ezgi.
 **Kaynak:** —
 
 ## offline_6626  ·  zorluk 5  ·  offline
 **KU:** Derbarê "şînî" de agahiya herî rast kîjan e?
 **TR:** "ağıt" hakkında en doğru bilgi hangisidir?
--    A) çînên olî-civakî
--    B) çîroka gelêrî ya kurdî ya navdar
--    C) destaneke gelêrî ya klasîk
-- ✅ D) hest û bîra civakî
-**Doğru:** D) hest û bîra civakî
+- ✅ A) hest û bîra civakî
+-    B) çînên olî-civakî
+-    C) çîroka gelêrî ya kurdî ya navdar
+-    D) destaneke gelêrî ya klasîk
+**Doğru:** A) hest û bîra civakî
 **Açıklama:** "ağıt": duygu ve toplumsal hafıza.
 **Kaynak:** —
 
 ## offline_6642  ·  zorluk 2  ·  offline
-**KU:** Dema "misafirperverlik" tê gotin, çi tê xwestin?
+**KU:** Dema "mêvanperwerî" tê gotin, çi tê xwestin?
 **TR:** "misafirperverlik" dendiğinde ne kastedilir?
--    A) kal û pîran
--    B) rîtûela demsalî
--    C) kevneşopiya devkî/muzîkal
-- ✅ D) hevgirtina civakî
-**Doğru:** D) hevgirtina civakî
-**Açıklama:** "misafirperverlik" köyde yalnız görgü değil bir yükümlülüktür: misafir üç gün evin misafiridir.
-**Kaynak:** —
-
-## offline_6684  ·  zorluk 2  ·  offline
-**KU:** "heftegiyan" tê çi wateyê?
-**TR:** "heftegiyan" ne anlama gelir?
--    A) modela kevneşopî ya rêsê porê kurdî
-- ✅ B) şorbeya kevneşopî ya bi heft dexlan
--    C) vegotina gelêrî ya kurdî ya destanî
--    D) civînên axaftinê yên şevên zivistanê
-**Doğru:** B) şorbeya kevneşopî ya bi heft dexlan
-**Açıklama:** "heftegiyan": geleneksel yedi tahıllı çorba.
+- ✅ A) mêvan bi rûmet pêşwazîkirin
+-    B) hevgirtina civakî
+-    C) alîkariya di navbera cîranan de
+-    D) diyarîkirina di dawetan de
+**Doğru:** A) mêvan bi rûmet pêşwazîkirin
+**Açıklama:** "mêvanperwerî": misafiri saygıyla karşılama.
 **Kaynak:** —
 
 ## offline_6716  ·  zorluk 4  ·  offline
@@ -2360,25 +2228,14 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Açıklama:** "serpêhatî": yaşanmış ilginç olayların anlatımı.
 **Kaynak:** —
 
-## offline_6809  ·  zorluk 4  ·  offline
-**KU:** Li jêr ji bo "sînan" kîjan rast e?
-**TR:** Aşağıdakilerden hangisi "sînan" için doğrudur?
-- ✅ A) karê kevneşopî yê kevirî
--    B) bi 21ê Adarê ve girêdayî ye
--    C) Civaka etnîkî û zimanî
--    D) Rêberê olî/rênîşander
-**Doğru:** A) karê kevneşopî yê kevirî
-**Açıklama:** "sînan": geleneksel taş işçiliği.
-**Kaynak:** —
-
 ## offline_6823  ·  zorluk 2  ·  offline
-**KU:** Kîjan têgiha "kilim motifleri" rast şirove dike?
+**KU:** Kîjan têgiha "motîfên kilimê" rast şirove dike?
 **TR:** "kilim motifleri" terimini hangisi doğru açıklar?
--    A) motîfa qesra zêrîn a çîrokan
-- ✅ B) sembola çandî û bîranîna rengan
+- ✅ A) sembola çandî û bîranîna rengan
+-    B) motîfa qesra zêrîn a çîrokan
 -    C) îlahiyên olî/nivîsarên pîroz ên devkî
 -    D) bi dawet û pîrozbahiyê ve girêdayî ye
-**Doğru:** B) sembola çandî û bîranîna rengan
+**Doğru:** A) sembola çandî û bîranîna rengan
 **Açıklama:** "kilim motifleri": kültürel sembol ve renk hafızası.
 **Kaynak:** —
 
@@ -2386,10 +2243,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "qutik" de ravekirina rast kîjan e?
 **TR:** "qutik" hakkında doğru açıklama hangisidir?
 -    A) zêrên ku di dawetan de li bûkê tên kirin
--    B) berxwedan û ji nû ve jidayikbûn li hember zulmê
-- ✅ C) yelek an cilê kevneşopî yê kurdî
+- ✅ B) yelek an cilê kevneşopî yê kurdî
+-    C) berxwedan û ji nû ve jidayikbûn li hember zulmê
 -    D) konê eşîrên kurdên koçer
-**Doğru:** C) yelek an cilê kevneşopî yê kurdî
+**Doğru:** B) yelek an cilê kevneşopî yê kurdî
 **Açıklama:** "qutik": geleneksel Kürt yeleği veya giysisi.
 **Kaynak:** —
 
@@ -2398,42 +2255,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "reşmal" nasıl anlaşılmalıdır?
 -    A) Ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê
 -    B) Ji ber ku di avhewaya çiyayî de xurtiya werzî û ewleyiya xwarinê peyda dike
--    C) Ji ber ku ezmûn û bîranînên di arşîvên fermî de nediyar tomar dike
-- ✅ D) Konê ji mûyê bizina reş
-**Doğru:** D) Konê ji mûyê bizina reş
+- ✅ C) Konê ji mûyê bizina reş
+-    D) Ji ber ku ezmûn û bîranînên di arşîvên fermî de nediyar tomar dike
+**Doğru:** C) Konê ji mûyê bizina reş
 **Açıklama:** "reşmal": siyah keçi kılından yapılan çadır.
 **Kaynak:** —
 
 ## offline_6882  ·  zorluk 2  ·  offline
 **KU:** Li jêr ji bo "mitbaxa gel" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "halk mutfağı" için doğrudur?
--    A) Sor, kesk û zer
-- ✅ B) Jiyana herêmî û parvekirin
+- ✅ A) Jiyana herêmî û parvekirin
+-    B) Sor, kesk û zer
 -    C) Mafên ziman û çandî
 -    D) Heval-hevaltî û hevgirtin
-**Doğru:** B) Jiyana herêmî û parvekirin
+**Doğru:** A) Jiyana herêmî û parvekirin
 **Açıklama:** "halk mutfağı": yerel yaşam ve paylaşım.
 **Kaynak:** —
 
 ## offline_6971  ·  zorluk 4  ·  offline
 **KU:** Ji bo "sêpê" pênaseya derbasdar kîjan e?
 **TR:** "sêpê" için geçerli tanım hangisidir?
--    A) bi çanda rojane ve girêdayî ye
-- ✅ B) reqsa gelêrî ya kevneşopî ya sê lingan
+- ✅ A) reqsa gelêrî ya kevneşopî ya sê gavan
+-    B) bi çanda rojane ve girêdayî ye
 -    C) sembola çandî û bîranîna rengan
 -    D) kesayetiyeke mîtolojîk a çanda rojhilat
-**Doğru:** B) reqsa gelêrî ya kevneşopî ya sê lingan
-**Açıklama:** "sêpê": üç ayaklı geleneksel halk dansı.
+**Doğru:** A) reqsa gelêrî ya kevneşopî ya sê gavan
+**Açıklama:** "sêpê": üç adımlı geleneksel halk dansı.
 **Kaynak:** —
 
 ## offline_curated_21000  ·  zorluk 1  ·  offline
 **KU:** Têgeha "Sazîbûna Dengbêjiyê" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "Dengbêjlik Kurumu" terimi hangi açıklamayla daha iyi anlaşılır?
--    A) çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze
--    B) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
-- ✅ C) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
+-    A) kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin
+- ✅ B) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
+-    C) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
 -    D) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
-**Doğru:** C) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
+**Doğru:** B) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
 **Açıklama:** "Sazîbûna Dengbêjiyê" şu anlama gelir: dengbêjlerin stran ve kilamlarıyla yürüyen, dili ve tarihi koruyan kale.
 **Kaynak:** —
 
@@ -2442,20 +2299,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şu açıklamayla hangi terim tanınır: "dengbêjlerin stran ve kilamlarıyla yürütülen, dili ve tarihi koruyan kale"?
 -    A) şevbêrk
 -    B) çanda koçeriyê
--    C) Destana Memê Alan
-- ✅ D) Sazîbûna Dengbêjiyê
-**Doğru:** D) Sazîbûna Dengbêjiyê
+- ✅ C) Sazîbûna Dengbêjiyê
+-    D) Destana Memê Alan
+**Doğru:** C) Sazîbûna Dengbêjiyê
 **Açıklama:** "Sazîbûna Dengbêjiyê" şu anlama gelir: dengbêjlerin stran ve kilamlarıyla yürüyen, dili ve tarihi koruyan kale.
 **Kaynak:** —
 
 ## offline_curated_21026  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye'?
 **TR:** Şu açıklamayla hangi terim tanınır: "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı"?
-- ✅ A) Newroz
--    B) misafirperweriya kurdî
--    C) Destana Memê Alan
--    D) Kalo û Sersal
-**Doğru:** A) Newroz
+-    A) misafirperweriya kurdî
+-    B) Destana Memê Alan
+-    C) Kalo û Sersal
+- ✅ D) Newroz
+**Doğru:** D) Newroz
 **Açıklama:** "Newroz" şu anlama gelir: başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı.
 **Kaynak:** —
 
@@ -2464,9 +2321,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kültür dersi için hangi seçenek "Newroz" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
 -    B) têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin
--    C) çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze
-- ✅ D) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
-**Doğru:** D) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
+- ✅ C) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
+-    D) kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin
+**Doğru:** C) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
 **Açıklama:** "Newroz" için doğru açıklama şudur: başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı.
 **Kaynak:** —
 
@@ -2475,9 +2332,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şu açıklamayla hangi terim tanınır: "yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu"?
 -    A) Sazîbûna Dengbêjiyê
 -    B) Govenda Kurdî
--    C) kilimên kurdî
-- ✅ D) Kalo û Sersal
-**Doğru:** D) Kalo û Sersal
+- ✅ C) Kalo û Sersal
+-    D) kilimên kurdî
+**Doğru:** C) Kalo û Sersal
 **Açıklama:** "Kalo û Sersal" şu anlama gelir: yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu.
 **Kaynak:** —
 
@@ -2486,31 +2343,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kültür dersi için hangi seçenek "Kalo û Sersal" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
 -    B) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
--    C) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
-- ✅ D) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
-**Doğru:** D) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
+- ✅ C) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
+-    D) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
+**Doğru:** C) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
 **Açıklama:** "Kalo û Sersal" için doğru açıklama şudur: yılbaşı döneminde köylerde oynanan Kürt halk oyunu ve tiyatrosu.
 **Kaynak:** —
 
 ## offline_curated_21076  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin'?
 **TR:** Şu açıklamayla hangi terim tanınır: "el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı"?
-- ✅ A) Govenda Kurdî
--    B) Sazîbûna Dengbêjiyê
--    C) kilimên kurdî
--    D) Destana Memê Alan
-**Doğru:** A) Govenda Kurdî
+-    A) Sazîbûna Dengbêjiyê
+-    B) kilimên kurdî
+-    C) Destana Memê Alan
+- ✅ D) Govenda Kurdî
+**Doğru:** D) Govenda Kurdî
 **Açıklama:** "Govenda Kurdî" şu anlama gelir: el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı.
 **Kaynak:** —
 
 ## offline_curated_21079  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa çand kîjan vebijark ravekirina têgeha "Govenda Kurdî" bi awayekî rast temam dike?
 **TR:** Kültür dersi için hangi seçenek "Kürt govendi" teriminin açıklamasını doğru biçimde tamamlar?
--    A) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
-- ✅ B) dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin
+- ✅ A) dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin
+-    B) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
 -    C) têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin
 -    D) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
-**Doğru:** B) dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin
+**Doğru:** A) dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin
 **Açıklama:** "Govenda Kurdî" için doğru açıklama şudur: el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı.
 **Kaynak:** —
 
@@ -2519,9 +2376,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şu açıklamayla hangi terim tanınır: "yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi"?
 -    A) şevbêrk
 -    B) hewran
--    C) kilimên kurdî
-- ✅ D) çanda koçeriyê
-**Doğru:** D) çanda koçeriyê
+- ✅ C) çanda koçeriyê
+-    D) kilimên kurdî
+**Doğru:** C) çanda koçeriyê
 **Açıklama:** "çanda koçeriyê" şu anlama gelir: yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi.
 **Kaynak:** —
 
@@ -2530,75 +2387,75 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kültür dersi için hangi seçenek "göçerlik kültürü" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
 -    B) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
--    C) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
-- ✅ D) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
-**Doğru:** D) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
+- ✅ C) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
+-    D) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
+**Doğru:** C) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
 **Açıklama:** "çanda koçeriyê" için doğru açıklama şudur: yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi.
 **Kaynak:** —
 
 ## offline_curated_21126  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin"?
 **TR:** Şu açıklamayla hangi terim tanınır: "konuğun evin bereketi sayıldığı toplumsal ilişki"?
-- ✅ A) misafirperweriya kurdî
--    B) çîmena çiyayî ya havînê
--    C) bi çanda sifrê ve girêdayî ye
--    D) sor, spî û kesk
-**Doğru:** A) misafirperweriya kurdî
+-    A) çîmena çiyayî ya havînê
+-    B) bi çanda sifrê ve girêdayî ye
+-    C) sor, spî û kesk
+- ✅ D) misafirperweriya kurdî
+**Doğru:** D) misafirperweriya kurdî
 **Açıklama:** "misafirperweriya kurdî" şu anlama gelir: konuğun evin bereketi sayıldığı toplumsal ilişki.
 **Kaynak:** —
 
 ## offline_curated_21129  ·  zorluk 5  ·  offline
 **KU:** Ji bo dersa çand kîjan vebijark ravekirina têgeha "misafirperweriya kurdî" bi awayekî rast temam dike?
 **TR:** Kültür dersi için hangi seçenek "Kürt misafirperverliği" teriminin açıklamasını doğru biçimde tamamlar?
--    A) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
-- ✅ B) têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin
+- ✅ A) têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin
+-    B) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
 -    C) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
 -    D) elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin
-**Doğru:** B) têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin
+**Doğru:** A) têkiliya civakî ya ku tê de mêvan wekî bereketa malê tê qebûl kirin
 **Açıklama:** "misafirperweriya kurdî" için doğru açıklama şudur: konuğun evin bereketi sayıldığı toplumsal ilişki.
 **Kaynak:** —
 
 ## offline_curated_21151  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin'?
 **TR:** Şu açıklamayla hangi terim tanınır: "motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı"?
-- ✅ A) kilimên kurdî
--    B) Sazîbûna Dengbêjiyê
--    C) hewran
--    D) çanda koçeriyê
-**Doğru:** A) kilimên kurdî
+-    A) Sazîbûna Dengbêjiyê
+-    B) hewran
+-    C) çanda koçeriyê
+- ✅ D) kilimên kurdî
+**Doğru:** D) kilimên kurdî
 **Açıklama:** "kilimên kurdî" şu anlama gelir: motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı.
 **Kaynak:** —
 
 ## offline_curated_21154  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa çand kîjan vebijark ravekirina têgeha "kilimên kurdî" bi awayekî rast temam dike?
 **TR:** Kültür dersi için hangi seçenek "Kürt kilimleri" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin
--    B) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
--    C) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
--    D) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
-**Doğru:** A) elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin
+-    A) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
+-    B) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
+-    C) kela parastina ziman û dîrokê ku bi riya stran û klamên dengbêjan tê meşandin
+- ✅ D) elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin
+**Doğru:** D) elhunera kevnar a jinên kurd ku motîfên li ser wan çîrokên dîrokî vedibêjin
 **Açıklama:** "kilimên kurdî" için doğru açıklama şudur: motifleri tarihî hikâyeler anlatan, Kürt kadınlarının kadim el sanatı.
 **Kaynak:** —
 
 ## offline_curated_21176  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne"?
 **TR:** Şu açıklamayla hangi terim tanınır: "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı"?
--    A) Newroz
-- ✅ B) Destana Memê Alan
+- ✅ A) Destana Memê Alan
+-    B) Newroz
 -    C) Sazîbûna Dengbêjiyê
 -    D) çanda koçeriyê
-**Doğru:** B) Destana Memê Alan
+**Doğru:** A) Destana Memê Alan
 **Açıklama:** "Destana Memê Alan" şu anlama gelir: Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı.
 **Kaynak:** —
 
 ## offline_curated_21179  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa çand kîjan vebijark ravekirina têgeha "Destana Memê Alan" bi awayekî rast temam dike?
 **TR:** Kültür dersi için hangi seçenek "Memê Alan Destanı" teriminin açıklamasını doğru biçimde tamamlar?
--    A) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
-- ✅ B) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
--    C) çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze
+- ✅ A) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
+-    B) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
+-    C) kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin
 -    D) cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye
-**Doğru:** B) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
+**Doğru:** A) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
 **Açıklama:** "Destana Memê Alan" için doğru açıklama şudur: Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı.
 **Kaynak:** —
 
@@ -2607,42 +2464,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "hewran" terimi hangi açıklamayla daha iyi anlaşılır?
 -    A) şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye
 -    B) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
--    C) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
-- ✅ D) çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze
-**Doğru:** D) çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze
-**Açıklama:** "hewran" şu anlama gelir: keçi kılından dokunan, göçerleri sıcaktan ve soğuktan koruyan kara çadır.
+- ✅ C) kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin
+-    D) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
+**Doğru:** C) kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin
+**Açıklama:** "hewran" şu anlama gelir: diğer giysilerin üstüne giyilen uzun üstlük/aba.
 **Kaynak:** —
 
 ## offline_curated_21201  ·  zorluk 5  ·  offline
-**KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze'?
+**KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin"?
 **TR:** Şu açıklamayla hangi terim tanınır: "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır"?
--    A) Sazîbûna Dengbêjiyê
-- ✅ B) hewran
+- ✅ A) hewran
+-    B) Sazîbûna Dengbêjiyê
 -    C) misafirperweriya kurdî
 -    D) Kalo û Sersal
-**Doğru:** B) hewran
-**Açıklama:** "hewran" şu anlama gelir: keçi kılından dokunan, göçerleri sıcaktan ve soğuktan koruyan kara çadır.
+**Doğru:** A) hewran
+**Açıklama:** "hewran" şu anlama gelir: diğer giysilerin üstüne giyilen uzun üstlük/aba.
 **Kaynak:** —
 
 ## offline_curated_21226  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin'?
 **TR:** Şu açıklamayla hangi terim tanınır: "halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları"?
--    A) Newroz
-- ✅ B) şevbêrk
+- ✅ A) şevbêrk
+-    B) Newroz
 -    C) kilimên kurdî
 -    D) Kalo û Sersal
-**Doğru:** B) şevbêrk
+**Doğru:** A) şevbêrk
 **Açıklama:** "şevbêrk" şu anlama gelir: halk masalları ve bilmecelerin anlatıldığı kış gecesi toplantıları.
 **Kaynak:** —
 
 ## offline_curated_21229  ·  zorluk 4  ·  offline
 **KU:** Ji bo dersa çand kîjan vebijark ravekirina têgeha "şevbêrk" bi awayekî rast temam dike?
 **TR:** Kültür dersi için hangi seçenek "şevbêrk" teriminin açıklamasını doğru biçimde tamamlar?
--    A) dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin
-- ✅ B) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
+- ✅ A) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
+-    B) dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin
 -    C) şano û lîstika gelêrî ya kurdî ku di dema sersalê de li gundan tê lîstin
 -    D) destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne
-**Doğru:** B) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
+**Doğru:** A) civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin
 **Açıklama:** "şevbêrk" için doğru açıklama şudur: halk masalları ve bilmecelerin anlatıldığı kış gecesi toplantıları.
 **Kaynak:** —
 
@@ -2651,20 +2508,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Gündüz benim arkadaşımdır, gece duvarın arkadaşıdır" bilmecesinin cevabı nedir?
 -    A) Çire / Fener
 -    B) Mifta / Kilît
--    C) Dermên
-- ✅ D) Sol / Pêlav
-**Doğru:** D) Sol / Pêlav
+- ✅ C) Sol / Pêlav
+-    D) Dermên
+**Doğru:** C) Sol / Pêlav
 **Açıklama:** Bu bir Kürt halk bilmecesidir; cevabı "sol" (ayakkabı).
 **Kaynak:** —
 
 ## offline_curated_30025  ·  zorluk 3  ·  offline
 **KU:** Tiştoka "Reng spî ye lê ne berf e, dixwure lê ne heywan e" bersiva wê çi ye?
 **TR:** "Rengi beyazdır ama kar değildir, yer ama hayvan değildir" bilmecesinin cevabı nedir?
--    A) Sabûn
-- ✅ B) Xwê
+- ✅ A) Xwê
+-    B) Sabûn
 -    C) Şekir
 -    D) Ar / Mird
-**Doğru:** B) Xwê
+**Doğru:** A) Xwê
 **Açıklama:** Bu bilmecenin cevabı "xwê" (tuz).
 **Kaynak:** —
 
@@ -2672,10 +2529,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Tiştoka "Heta jê nekirî mezin nabe" bersiva wê çi ye?
 **TR:** "Ondan alınmadıkça büyümez" bilmecesinin cevabı nedir?
 -    A) Dîwar
--    B) Dar
-- ✅ C) Kolin
+- ✅ B) Kolin
+-    C) Dar
 -    D) Rê
-**Doğru:** C) Kolin
+**Doğru:** B) Kolin
 **Açıklama:** Bu bir zekâ bilmecesidir; cevabı "kolin" ya da "çal" (çukur).
 **Kaynak:** —
 
@@ -2779,8 +2636,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_0100  ·  zorluk 3  ·  offline
-**KU:** Rast e an şaş e: Têgeha "hewran" tê vê wateyê: çadira reş a ku ji mûyê bizinan tê çêkirin û koçeran ji germ û sermayê diparêze.
-**TR:** Doğru mu yanlış mı: "hewran" terimi şu anlama gelir: keçi kılından dokunan, göçerleri sıcaktan ve soğuktan koruyan kara çadır.
+**KU:** Rast e an şaş e: Têgeha "hewran" tê vê wateyê: kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin.
+**TR:** Doğru mu yanlış mı: "hewran" terimi şu anlama gelir: diğer giysilerin üstüne giyilen uzun üstlük/aba.
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
@@ -2793,7 +2650,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 -    A) Rast
 - ✅ B) Şaş
 **Doğru:** B) Şaş
-**Açıklama:** Hayır — bu tanım "çanda koçeriyê" kavramına ait; "hewran" şu anlama gelir: keçi kılından dokunan, göçerleri sıcaktan ve soğuktan koruyan kara çadır.
+**Açıklama:** Hayır — bu tanım "çanda koçeriyê" kavramına ait; "hewran" şu anlama gelir: diğer giysilerin üstüne giyilen uzun üstlük/aba.
 **Kaynak:** —
 
 ## offline_tf_0106  ·  zorluk 3  ·  offline
@@ -3058,8 +2915,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_can_0021  ·  zorluk 4  ·  offline
-**KU:** Binirxîne: li gorî vê ravekirinê "metelok" ev e — baweriya kevnar a ku ronahî û rojê pîroz dihesibîne. Rast e an şaş e?
-**TR:** Değerlendir: bu açıklamaya göre "metelok" şudur — ışığı ve güneşi kutsal sayan kadim inanç. Doğru mu yanlış mı?
+**KU:** Binirxîne: li gorî vê ravekirinê "metelok" ev e — baweriya ku li dora Xwedê, heft hebûnên pîroz û Tawûsê Melek hatiye avakirin. Rast e an şaş e?
+**TR:** Değerlendir: bu açıklamaya göre "metelok" şudur — Tanrı, yedi kutsal varlık ve Tawûsê Melek çevresinde kurulu inanç. Doğru mu yanlış mı?
 -    A) Rast
 - ✅ B) Şaş
 **Doğru:** B) Şaş
@@ -3067,8 +2924,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_can_0022  ·  zorluk 3  ·  offline
-**KU:** Ev ravekirin ji bo "Êzidîtî" rast e an şaş e: baweriya kevnar a ku ronahî û rojê pîroz dihesibîne?
-**TR:** Bu açıklama "Êzidîtî" için doğru mu yanlış mı: ışığı ve güneşi kutsal sayan kadim inanç?
+**KU:** Ev ravekirin ji bo "Êzidîtî" rast e an şaş e: baweriya ku li dora Xwedê, heft hebûnên pîroz û Tawûsê Melek hatiye avakirin?
+**TR:** Bu açıklama "Êzidîtî" için doğru mu yanlış mı: Tanrı, yedi kutsal varlık ve Tawûsê Melek çevresinde kurulu inanç?
 - ✅ A) Rast
 -    B) Şaş
 **Doğru:** A) Rast
@@ -3081,7 +2938,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 -    A) Rast
 - ✅ B) Şaş
 **Doğru:** B) Şaş
-**Açıklama:** Hayır — bu tanım "Melek Tawis" kavramına ait; "Êzidîtî" şu anlama gelir: ışığı ve güneşi kutsal sayan kadim inanç.
+**Açıklama:** Hayır — bu tanım "Melek Tawis" kavramına ait; "Êzidîtî" şu anlama gelir: Tanrı, yedi kutsal varlık ve Tawûsê Melek çevresinde kurulu inanç.
 **Kaynak:** —
 
 ## offline_tf_can_0024  ·  zorluk 4  ·  offline
@@ -3141,33 +2998,33 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_9101  ·  zorluk 2  ·  offline
 **KU:** Motîfên kilimê çawa çêdibin?
 **TR:** Kilim motifleri nasıl oluşur?
-- ✅ A) Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
--    B) Piştî hûnandinê, bi derziyê tên dirûtin
--    C) Bi qalibê darîn li ser kilimê tên çapkirin
--    D) Bi firçe û boyaxê li ser rûyê kilimê tên nexşandin
-**Doğru:** A) Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
+-    A) Piştî hûnandinê, bi derziyê tên dirûtin
+-    B) Bi qalibê darîn li ser kilimê tên çapkirin
+-    C) Bi firçe û boyaxê li ser rûyê kilimê tên nexşandin
+- ✅ D) Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
+**Doğru:** D) Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
 **Açıklama:** Motif dokumadan sonra değil, dokuma sırasında oluşur: renkli iplikler tezgâhta örgüye girer, bu yüzden motif kilimin iki yüzünde de görünür.
 **Kaynak:** —
 
 ## offline_9103  ·  zorluk 1  ·  offline
 **KU:** Di govendê de govendger çawa li hev girêdayî ne?
 **TR:** Govendde oynayanlar birbirine nasıl bağlanır?
-- ✅ A) Destên hev digirin û rêz an nîvçember çêdikin
--    B) Her kes bi tenê û ji hev dûr dilîze
--    C) Du bi du, rû bi rû li hember hev radiwestin
--    D) Rûniştî, tenê bi destan lê didin
-**Doğru:** A) Destên hev digirin û rêz an nîvçember çêdikin
+-    A) Her kes bi tenê û ji hev dûr dilîze
+-    B) Du bi du, rû bi rû li hember hev radiwestin
+-    C) Rûniştî, tenê bi destan lê didin
+- ✅ D) Destên hev digirin û rêz an nîvçember çêdikin
+**Doğru:** D) Destên hev digirin û rêz an nîvçember çêdikin
 **Açıklama:** Govend toplu bir oyundur: el ele tutuşma diziyi birbirine bağlar, başı çeken (serçopî) diziyi yönetir.
 **Kaynak:** —
 
 ## restore_2026_08_07_0001  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?
 **TR:** Kürt düğün ve şenliklerinde yeni evlilere verilen para hediyesi hangi adla bilinir?
-- ✅ A) şabaş
--    B) metelok
--    C) kelaş
--    D) hewran
-**Doğru:** A) şabaş
+-    A) metelok
+-    B) kelaş
+-    C) hewran
+- ✅ D) şabaş
+**Doğru:** D) şabaş
 **Açıklama:** Şabaş, düğünlerde para hediye etme geleneğidir ve topluluğun yeni aileye desteğini gösterir. Metelok kısa bir atasözü, kelaş örülerek yapılan ayakkabı, hewran ise göçerlerin kara çadırıdır.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
@@ -3175,43 +3032,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Pêlava kurdî ya kevneşopî ya ku bi tayan tê hûnandin bi kîjan navî tê nasîn?
 **TR:** İplik örülerek yapılan geleneksel Kürt ayakkabısı hangi adla bilinir?
 -    A) şûtik
--    B) kolos
-- ✅ C) kelaş
+- ✅ B) kelaş
+-    C) kolos
 -    D) elek
-**Doğru:** C) kelaş
+**Doğru:** B) kelaş
 **Açıklama:** Kelaş elde iplikten örülür ve hafiftir; özellikle dağlık yörelerde giyilir. Şûtik bel kuşağı, kolos başlık, elek ise kolsuz yelektir.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
 ## restore_2026_08_07_0003  ·  zorluk 3  ·  restore_2026_08_07
 **KU:** Di kurmancî de gotina kurt a pêşiyan ku ezmûneke civakî bi çend peyvan vedibêje çi ye?
 **TR:** Kurmancîde toplumsal bir deneyimi birkaç sözcükle anlatan kısa atasözüne ne denir?
--    A) şabaş
-- ✅ B) metelok
+- ✅ A) metelok
+-    B) şabaş
 -    C) mêvanperwerî
 -    D) govend
-**Doğru:** B) metelok
+**Doğru:** A) metelok
 **Açıklama:** Metelok, kuşakların deneyimini yeni kuşaklara taşıyan kısa ve yoğun anlamlı sözdür. Şabaş para hediyesi, mêvanperwerî konuğa gösterilen saygı, govend ise toplu halk oyunudur.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
 ## restore_2026_08_07_0004  ·  zorluk 3  ·  restore_2026_08_07
-**KU:** Çadira reş a ji hiriya bizinê ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?
+**KU:** Çadira reş a ji mûyê bizinan ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?
 **TR:** Göçerlerin yazın yaylalarda kurduğu, keçi kılından yapılan kara çadır hangi adla bilinir?
 -    A) kelaş
--    B) şûtik
-- ✅ C) hewran
+- ✅ B) reşmal
+-    C) şûtik
 -    D) metelok
-**Doğru:** C) hewran
-**Açıklama:** Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.
+**Doğru:** B) reşmal
+**Açıklama:** Reşmal keçi kılından dokunur; sıcakta serin tutar ve yağmuru geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır. "Hewran" ise giysidir, çadır değil.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
 ## visual_2026_08_07_0001  ·  zorluk 2  ·  visual_2026_08_07
 **KU:** Wêne mêrekî nîşan dide ku destê xwe daniye ser guhê xwe û bi dengekî bilind kilamekê dibêje. Kilamên dengbêjan bi kevneşopî çawa têne pêşkêşkirin?
 **TR:** Görsel, elini kulağına götürüp yüksek sesle bir kilam söyleyen bir adamı gösteriyor. Dengbêj kilamları geleneksel olarak nasıl icra edilir?
-- ✅ A) Bi tenê dengê mirov, bê amûr
--    B) Bi zurne û def a li ber govendê
--    C) Bi tembûr û bilûrê bi hev re
--    D) Bi koroyeke ji gelek stranbêjan
-**Doğru:** A) Bi tenê dengê mirov, bê amûr
+-    A) Bi zurne û def a li ber govendê
+-    B) Bi tembûr û bilûrê bi hev re
+-    C) Bi koroyeke ji gelek stranbêjan
+- ✅ D) Bi tenê dengê mirov, bê amûr
+**Doğru:** D) Bi tenê dengê mirov, bê amûr
 **Açıklama:** Kilam geleneksel olarak çalgısız, yalnızca insan sesiyle söylenir; bu yüzden ses, nefes ve ezgi bu sanatın temelidir. Elin kulağa götürülmesi, söyleyenin kendi sesini iyi duyup perdesini korumasına yardım eder.
 **Kaynak:** —
 
@@ -3219,20 +3076,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di wêneyê de çay ji kesekî nû gihîştî re tê dirêjkirin. Di kurmancî de xwediyê malê bi kîjan gotinê kesê ku li ber derî peyda dibe pêşwazî dike?
 **TR:** Görselde yeni gelen birine çay uzatılıyor. Kurmancîde ev sahibi, kapıda beliren kişiyi hangi sözle karşılar?
 -    A) Bi xatirê te
--    B) Serê te sax be
-- ✅ C) Bi xêr hatî
+- ✅ B) Bi xêr hatî
+-    C) Serê te sax be
 -    D) Roj li te xweş
-**Doğru:** C) Bi xêr hatî
+**Doğru:** B) Bi xêr hatî
 **Açıklama:** "Bi xêr hatî" karşılama sözüdür; bu sözle misafir içeri buyur edilir ve âdet gereği önce bir çay ikram edilir. "Bi xatirê te" vedalaşmada, "Serê te sax be" başsağlığında, "Roj li te xweş" ise günlük selamlaşmada kullanılır.
 **Kaynak:** —
 
 ## visual_2026_08_07_0003  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Di wêneyê de cilên kevneşopî xuya dikin. Qumaşê dirêj û fireh ê ku di cilê mêran ê kevneşopî de çend caran li dora navtengê tê pêçandin, bi kîjan navî tê nasîn?
 **TR:** Görselde geleneksel giysiler görünüyor. Erkeklerin geleneksel giyiminde bele birkaç kez dolanan uzun ve geniş kumaş parçası hangi adla bilinir?
--    A) kolos
-- ✅ B) şûtik
+- ✅ A) şûtik
+-    B) kolos
 -    C) kiras
 -    D) elek
-**Doğru:** B) şûtik
+**Doğru:** A) şûtik
 **Açıklama:** Şûtik, şal û şapikin üzerine belin çevresine birkaç kez dolanan uzun ve geniş kumaştır; beli sıkı tutup destekler. Kolos bir başlık, kiras kollu üst giysi, elek ise kolsuz yelektir.
 **Kaynak:** —

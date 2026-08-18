@@ -319,32 +319,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "aştiya civakî" çawa tê pênasekirin?
 **TR:** "toplumsal barış" nasıl tanımlanır?
 -    A) Ji ber ku wek şerta azadbûna civakê bi tevahî tê hesibandin
--    B) Rêzikên qanûnî û gavên entegrasyona demokratîk
-- ✅ C) Hevjiyana aram a komên etnîkî û baweriyê yên cuda
+- ✅ B) Hevjiyana aram a komên etnîkî û baweriyê yên cuda
+-    C) Rêzikên qanûnî û gavên entegrasyona demokratîk
 -    D) Nîqaşa konfederalîzma demokratîk û netewa demokratîk
-**Doğru:** C) Hevjiyana aram a komên etnîkî û baweriyê yên cuda
+**Doğru:** B) Hevjiyana aram a komên etnîkî û baweriyê yên cuda
 **Açıklama:** "toplumsal barış": farklı etnik ve inanç gruplarının huzurlu birlikte yaşamı.
 **Kaynak:** —
 
 ## offline_12703  ·  zorluk 1  ·  offline
 **KU:** "komîsyona rastiyê" bi awayekî rast çawa tê ravekirin?
 **TR:** "hakikat komisyonu" doğru biçimde nasıl açıklanır?
--    A) danûstandin, reforma demokratîk û misogerkirina mafan
-- ✅ B) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
+- ✅ A) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
+-    B) danûstandin, reforma demokratîk û misogerkirina mafan
 -    C) hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî
 -    D) statûya xweseriyê û biryargirtinê li herêmê
-**Doğru:** B) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
+**Doğru:** A) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
 **Açıklama:** "hakikat komisyonu": geçmişin acılarını araştırıp toplumsal barışı kuran komite.
 **Kaynak:** —
 
 ## offline_12742  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgiha "demokrasiya temsîlî" rast şirove dike?
 **TR:** Hangisi "temsili demokrasi" kavramını doğru açıklar?
--    A) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
-- ✅ B) pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin
+- ✅ A) pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin
+-    B) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
 -    C) diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan
 -    D) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
-**Doğru:** B) pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin
+**Doğru:** A) pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin
 **Açıklama:** "temsili demokrasi": halkın yönetime yalnız seçimlerle katıldığı sistem.
 **Kaynak:** —
 
@@ -353,9 +353,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "yerel demokrasi" neyi ifade eder?
 -    A) platforma hevbeş a aştiyê ya komên muxalif ên cuda
 -    B) beşdariya rasterast û berdewam a ji binî pêş dixe
--    C) parastina komên ku ji piraniyê cuda ne
-- ✅ D) girtina biryaran li yekîneyên herî nêzî gel
-**Doğru:** D) girtina biryaran li yekîneyên herî nêzî gel
+- ✅ C) girtina biryaran li yekîneyên herî nêzî gel
+-    D) parastina komên ku ji piraniyê cuda ne
+**Doğru:** C) girtina biryaran li yekîneyên herî nêzî gel
 **Açıklama:** "yerel demokrasi": kararların halka en yakın birimlerde alınması.
 **Kaynak:** —
 
@@ -363,10 +363,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "demokrasiya pirreng" tê çi wateyê?
 **TR:** "çoğulcu demokrasi" ne anlama gelir?
 -    A) qebûlkirina wekhev a nasname û baweriyên cuda
--    B) hevgirtina wekhev û piştgir a gelên cuda
-- ✅ C) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+- ✅ B) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+-    C) hevgirtina wekhev û piştgir a gelên cuda
 -    D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
-**Doğru:** C) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+**Doğru:** B) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
 **Açıklama:** "çoğulcu demokrasi": yalnız çoğunluğun değil azınlığın da dinlendiği yapı.
 **Kaynak:** —
 
@@ -375,42 +375,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi tanım "demokratik siyaset" ile örtüşür?
 -    A) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
 -    B) hevgirtina wekhev û piştgir a gelên cuda
--    C) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
-- ✅ D) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
-**Doğru:** D) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
+- ✅ C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
+-    D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+**Doğru:** C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
 **Açıklama:** "demokratik siyaset": bastırma ve tasfiye yerine diyaloğu seçen siyaset biçimi.
 **Kaynak:** —
 
 ## offline_12760  ·  zorluk 1  ·  offline
 **KU:** Di zanîna siyasetê de der barê "xweseriya demokratîk" de ya rast kîjan e?
 **TR:** Siyaset bilgisinde "demokratik özerklik" hakkında doğru olan hangisidir?
--    A) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
-- ✅ B) statûya xweseriyê û biryargirtinê li herêmê
+- ✅ A) statûya xweseriyê û biryargirtinê li herêmê
+-    B) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
 -    C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
 -    D) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
-**Doğru:** B) statûya xweseriyê û biryargirtinê li herêmê
+**Doğru:** A) statûya xweseriyê û biryargirtinê li herêmê
 **Açıklama:** "demokratik özerklik": bölgede özyönetim ve karar alma statüsü.
 **Kaynak:** —
 
 ## offline_12771  ·  zorluk 2  ·  offline
 **KU:** Têgiha "hevpeymaniyên demokratîk" çi pêk tîne?
 **TR:** "demokratik ittifaklar" kavramı neyi oluşturur?
--    A) hêza ji navendekê bo yekîneyên herêmî belavkirin
-- ✅ B) platforma hevbeş a aştiyê ya komên muxalif ên cuda
+- ✅ A) platforma hevbeş a aştiyê ya komên muxalif ên cuda
+-    B) hêza ji navendekê bo yekîneyên herêmî belavkirin
 -    C) daxwaza misogeriya destûrî û naskirina mafên çandî
 -    D) mafê parastinê li dadgehên serbixwe û bêalî
-**Doğru:** B) platforma hevbeş a aştiyê ya komên muxalif ên cuda
+**Doğru:** A) platforma hevbeş a aştiyê ya komên muxalif ên cuda
 **Açıklama:** "demokratik ittifaklar": farklı muhalif grupların ortak barış platformu.
 **Kaynak:** —
 
 ## offline_12774  ·  zorluk 3  ·  offline
 **KU:** "lihevkirina demokratîk" tê çi wateyê?
 **TR:** "demokratik uzlaşı" ne anlama gelir?
-- ✅ A) hevkombûna aliyan li ser berjewendiya hevbeş
--    B) parastina mafan bi qanûnê
--    C) wek pirsgirêka nasname, ziman, statû û mafan
--    D) mafê birêvebirina bûçe û xizmetên herêmî bi xwe
-**Doğru:** A) hevkombûna aliyan li ser berjewendiya hevbeş
+-    A) parastina mafan bi qanûnê
+-    B) wek pirsgirêka nasname, ziman, statû û mafan
+-    C) mafê birêvebirina bûçe û xizmetên herêmî bi xwe
+- ✅ D) hevkombûna aliyan li ser berjewendiya hevbeş
+**Doğru:** D) hevkombûna aliyan li ser berjewendiya hevbeş
 **Açıklama:** "demokratik uzlaşı": tarafların ortak çıkar üzerinde buluşması.
 **Kaynak:** —
 
@@ -419,31 +419,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "toplumsal uzlaşı" kavramı neyi oluşturur?
 -    A) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
 -    B) awayekî xwepêşandana aştiyane ya li dijî qanûnên bêadalet
--    C) di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de
-- ✅ D) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane
-**Doğru:** D) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane
+- ✅ C) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane
+-    D) di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de
+**Doğru:** C) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane
 **Açıklama:** "toplumsal uzlaşı": toplumun barışçıl çözüm için ortak karara varması.
 **Kaynak:** —
 
 ## offline_12779  ·  zorluk 1  ·  offline
 **KU:** Bi "mafê statuyê" çi tê xwestin?
 **TR:** "statü hakkı" ile ne kastedilir?
-- ✅ A) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
--    B) nîqaşa konfederalîzma demokratîk û netewa demokratîk
--    C) qebûlkirina wekhev a nasname û baweriyên cuda
--    D) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
-**Doğru:** A) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
+-    A) nîqaşa konfederalîzma demokratîk û netewa demokratîk
+-    B) qebûlkirina wekhev a nasname û baweriyên cuda
+-    C) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
+- ✅ D) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
+**Doğru:** D) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
 **Açıklama:** "statü hakkı": halkların kendi kimliğiyle tanınma ve yönetilme hakkı.
 **Kaynak:** —
 
 ## offline_12780  ·  zorluk 1  ·  offline
 **KU:** Derbarê "muxalefeta civakî" de vebijêrka rast kîjan e?
 **TR:** "toplumsal muhalefet" hakkında doğru seçenek hangisidir?
--    A) demokrasiya herêmî, azadiya jinê, ekolojî û pirrengî
-- ✅ B) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
+- ✅ A) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
+-    B) demokrasiya herêmî, azadiya jinê, ekolojî û pirrengî
 -    C) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
 -    D) rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî
-**Doğru:** B) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
+**Doğru:** A) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
 **Açıklama:** "toplumsal muhalefet": halkın resmî yönetime karşı barışçıl tepkilerinin örgütlenmesi.
 **Kaynak:** —
 
@@ -452,31 +452,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "doğrudan katılım" hakkında doğru açıklama hangisidir?
 -    A) nûnertiya wekhev a jin-mêr û rêveberiya hevbeş
 -    B) hevkombûna aliyan li ser berjewendiya hevbeş
--    C) meclîsên gel ên ku biryarên herêmî lê tên girtin
-- ✅ D) beşdariya rasterast a gel di biryarên siyasî de
-**Doğru:** D) beşdariya rasterast a gel di biryarên siyasî de
+- ✅ C) beşdariya rasterast a gel di biryarên siyasî de
+-    D) meclîsên gel ên ku biryarên herêmî lê tên girtin
+**Doğru:** C) beşdariya rasterast a gel di biryarên siyasî de
 **Açıklama:** "doğrudan katılım": halkın siyasal kararlara doğrudan katılması.
 **Kaynak:** —
 
 ## offline_12832  ·  zorluk 4  ·  offline
 **KU:** "Çareseriya aştiyane" çawa tê pênasekirin?
 **TR:** "Barışçıl çözüm" nasıl tanımlanır?
-- ✅ A) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
--    B) prensîba parvekirina wekhev a çavkanî û mafan
--    C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
--    D) daxwaza misogeriya destûrî û naskirina mafên çandî
-**Doğru:** A) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+-    A) prensîba parvekirina wekhev a çavkanî û mafan
+-    B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+-    C) daxwaza misogeriya destûrî û naskirina mafên çandî
+- ✅ D) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+**Doğru:** D) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
 **Açıklama:** "barışçıl çözüm": çatışmayı silahla değil diyalogla çözme iradesi.
 **Kaynak:** —
 
 ## offline_12875  ·  zorluk 4  ·  offline
 **KU:** Îfadeya ku têgiha "veqetandina hêzan" rast vedibêje kîjan e?
 **TR:** "kuvvetler ayrılığı" kavramını doğru anlatan ifade hangisidir?
-- ✅ A) serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî
--    B) danûstandin, reforma demokratîk û misogerkirina mafan
--    C) hevjiyana aram a komên etnîkî û baweriyê yên cuda
--    D) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
-**Doğru:** A) serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî
+-    A) danûstandin, reforma demokratîk û misogerkirina mafan
+-    B) hevjiyana aram a komên etnîkî û baweriyê yên cuda
+-    C) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
+- ✅ D) serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî
+**Doğru:** D) serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî
 **Açıklama:** "kuvvetler ayrılığı": yasama, yürütme ve yargının birbirinden bağımsızlığı.
 **Kaynak:** —
 
@@ -485,42 +485,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "barış süreci" hakkında doğru seçenek hangisidir?
 -    A) mafê parastinê li dadgehên serbixwe û bêalî
 -    B) hêza ji navendekê bo yekîneyên herêmî belavkirin
--    C) pergaleke ku jin di partiyan de wekhev xwedî deng in
-- ✅ D) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
-**Doğru:** D) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
+- ✅ C) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
+-    D) pergaleke ku jin di partiyan de wekhev xwedî deng in
+**Doğru:** C) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
 **Açıklama:** "barış süreci": çatışma durumunun diyalogla sonlandırılma aşaması.
 **Kaynak:** —
 
 ## offline_12891  ·  zorluk 1  ·  offline
 **KU:** Di zanîna siyasetê de der barê "daxwaza statuyê" de ya rast kîjan e?
 **TR:** Siyaset bilgisinde "statü talebi" hakkında doğru olan hangisidir?
-- ✅ A) daxwaza misogeriya destûrî û naskirina mafên çandî
--    B) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
--    C) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
--    D) parastina komên ku ji piraniyê cuda ne
-**Doğru:** A) daxwaza misogeriya destûrî û naskirina mafên çandî
+-    A) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
+-    B) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+-    C) parastina komên ku ji piraniyê cuda ne
+- ✅ D) daxwaza misogeriya destûrî û naskirina mafên çandî
+**Doğru:** D) daxwaza misogeriya destûrî û naskirina mafên çandî
 **Açıklama:** "statü talebi": anayasal güvence ve kültürel hakların tanınması talebi.
 **Kaynak:** —
 
 ## offline_12899  ·  zorluk 3  ·  offline
 **KU:** Ji bo "ademî-navendîbûn" ravekirina herî dirust kîjan e?
 **TR:** "ademi merkeziyetçilik" için en doğru açıklama hangisidir?
--    A) wek her du sosyalîzma reel û kapîtalîzmê red dike
-- ✅ B) hêza ji navendekê bo yekîneyên herêmî belavkirin
+- ✅ A) hêza ji navendekê bo yekîneyên herêmî belavkirin
+-    B) wek her du sosyalîzma reel û kapîtalîzmê red dike
 -    C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
 -    D) prensîba parvekirina wekhev a çavkanî û mafan
-**Doğru:** B) hêza ji navendekê bo yekîneyên herêmî belavkirin
+**Doğru:** A) hêza ji navendekê bo yekîneyên herêmî belavkirin
 **Açıklama:** "ademi merkeziyetçilik": yetkinin merkezden yerel birimlere dağıtılması.
 **Kaynak:** —
 
 ## offline_12946  ·  zorluk 1  ·  offline
 **KU:** Derbarê "dadgehkirina dadperwer" de vebijêrka rast kîjan e?
 **TR:** "adil yargılanma" hakkında doğru seçenek hangisidir?
-- ✅ A) mafê parastinê li dadgehên serbixwe û bêalî
--    B) platforma hevbeş a aştiyê ya komên muxalif ên cuda
--    C) daxwaza misogeriya destûrî û naskirina mafên çandî
--    D) jiyana bi hev re ya nasname û baweriyên cuda
-**Doğru:** A) mafê parastinê li dadgehên serbixwe û bêalî
+-    A) platforma hevbeş a aştiyê ya komên muxalif ên cuda
+-    B) daxwaza misogeriya destûrî û naskirina mafên çandî
+-    C) jiyana bi hev re ya nasname û baweriyên cuda
+- ✅ D) mafê parastinê li dadgehên serbixwe û bêalî
+**Doğru:** D) mafê parastinê li dadgehên serbixwe û bêalî
 **Açıklama:** "adil yargılanma": bağımsız ve tarafsız mahkemelerde savunma hakkı.
 **Kaynak:** —
 
@@ -529,9 +529,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi tanım "siyasi katılım" ile örtüşür?
 -    A) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe
 -    B) statûya xweseriyê û biryargirtinê li herêmê
--    C) mafê gerdûnî yê civakê ê jiyana bêyî şer
-- ✅ D) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
-**Doğru:** D) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
+- ✅ C) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
+-    D) mafê gerdûnî yê civakê ê jiyana bêyî şer
+**Doğru:** C) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
 **Açıklama:** "siyasi katılım": yurttaşların karar süreçlerine dâhil olması.
 **Kaynak:** —
 
@@ -539,21 +539,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Der barê "meclîsên herêmî" de ji bo siyasetê bijardeya rast kîjan e?
 **TR:** Siyaset açısından "yerel meclisler" hakkında doğru seçenek hangisidir?
 -    A) wek pirsgirêka nasname, ziman, statû û mafan
--    B) kanalên lêgerîna maf li meclîsê û li kolanan
-- ✅ C) meclîsên gel ên ku biryarên herêmî lê tên girtin
+- ✅ B) meclîsên gel ên ku biryarên herêmî lê tên girtin
+-    C) kanalên lêgerîna maf li meclîsê û li kolanan
 -    D) mafê gelan ê perwerdehiyê bi zimanê xwe
-**Doğru:** C) meclîsên gel ên ku biryarên herêmî lê tên girtin
+**Doğru:** B) meclîsên gel ên ku biryarên herêmî lê tên girtin
 **Açıklama:** "yerel meclisler": yerel kararların alındığı halk meclisleri.
 **Kaynak:** —
 
 ## offline_12981  ·  zorluk 1  ·  offline
 **KU:** Derbarê "perwerdehiya bi zimanê zikmakî" de vebijêrka rast kîjan e?
 **TR:** "anadilinde eğitim" hakkında doğru seçenek hangisidir?
--    A) hemwelatîbûna wekhev û naskirina mafan
-- ✅ B) mafê gelan ê perwerdehiyê bi zimanê xwe
+- ✅ A) mafê gelan ê perwerdehiyê bi zimanê xwe
+-    B) hemwelatîbûna wekhev û naskirina mafan
 -    C) girtina biryaran li yekîneyên herî nêzî gel
 -    D) meclîsên gel ên ku biryarên herêmî lê tên girtin
-**Doğru:** B) mafê gelan ê perwerdehiyê bi zimanê xwe
+**Doğru:** A) mafê gelan ê perwerdehiyê bi zimanê xwe
 **Açıklama:** "anadilinde eğitim": halkların kendi diliyle eğitim görme hakkı.
 **Kaynak:** —
 
@@ -561,10 +561,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "demokrasiya radîkal" de vebijêrka rast kîjan e?
 **TR:** "radikal demokrasi" hakkında doğru seçenek hangisidir?
 -    A) nîqaşa konfederalîzma demokratîk û netewa demokratîk
--    B) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
-- ✅ C) demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire
+- ✅ B) demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire
+-    C) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
 -    D) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
-**Doğru:** C) demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire
+**Doğru:** B) demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire
 **Açıklama:** "radikal demokrasi": aşağıdan doğrudan katılımı öne alan demokrasi.
 **Kaynak:** —
 
@@ -573,9 +573,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "idari özerklik" nasıl anlaşılmalıdır?
 -    A) ji bo veguhastina nasname û çandê ji nifşekî bo yê din
 -    B) beşdariya rasterast û berdewam a ji binî pêş dixe
--    C) mafê parastinê li dadgehên serbixwe û bêalî
-- ✅ D) mafê birêvebirina bûçe û xizmetên herêmî bi xwe
-**Doğru:** D) mafê birêvebirina bûçe û xizmetên herêmî bi xwe
+- ✅ C) mafê birêvebirina bûçe û xizmetên herêmî bi xwe
+-    D) mafê parastinê li dadgehên serbixwe û bêalî
+**Doğru:** C) mafê birêvebirina bûçe û xizmetên herêmî bi xwe
 **Açıklama:** "idari özerklik": yerel bütçe ve hizmetleri kendi yönetme hakkı.
 **Kaynak:** —
 
@@ -584,20 +584,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "azınlık hakları" için en doğru açıklama hangisidir?
 -    A) platforma hevbeş a aştiyê ya komên muxalif ên cuda
 -    B) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
--    C) hêza ji navendekê bo yekîneyên herêmî belavkirin
-- ✅ D) parastina komên ku ji piraniyê cuda ne
-**Doğru:** D) parastina komên ku ji piraniyê cuda ne
+- ✅ C) parastina komên ku ji piraniyê cuda ne
+-    D) hêza ji navendekê bo yekîneyên herêmî belavkirin
+**Doğru:** C) parastina komên ku ji piraniyê cuda ne
 **Açıklama:** "azınlık hakları": çoğunluktan farklı grupların korunması.
 **Kaynak:** —
 
 ## offline_13117  ·  zorluk 2  ·  offline
 **KU:** "exlaqê siyasî" tê çi wateyê?
 **TR:** "siyasi ahlak" ne anlama gelir?
--    A) hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî
-- ✅ B) prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de
+- ✅ A) prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de
+-    B) hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî
 -    C) danûstandin, reforma demokratîk û misogerkirina mafan
 -    D) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
-**Doğru:** B) prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de
+**Doğru:** A) prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de
 **Açıklama:** "siyasi ahlak": siyasette dürüstlük ve toplum yararını önceleme ilkeleri.
 **Kaynak:** —
 
@@ -605,21 +605,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji aliyê Siyasetê ve ji bo "mafê aştiyê" îfadeya rast kîjan e?
 **TR:** Siyaset açısından "barış hakkı" için doğru ifade hangisidir?
 -    A) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
--    B) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
-- ✅ C) mafê gerdûnî yê civakê ê jiyana bêyî şer
+- ✅ B) mafê gerdûnî yê civakê ê jiyana bêyî şer
+-    C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
 -    D) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
-**Doğru:** C) mafê gerdûnî yê civakê ê jiyana bêyî şer
+**Doğru:** B) mafê gerdûnî yê civakê ê jiyana bêyî şer
 **Açıklama:** "barış hakkı": toplumun savaşsız yaşama dair evrensel hakkı.
 **Kaynak:** —
 
 ## offline_13124  ·  zorluk 4  ·  offline
 **KU:** Derbarê "mafê zimanê zikmakî" de ya rast a zanîn çi ye?
 **TR:** "anadili hakkı" hakkında bilinmesi gereken doğru bilgi nedir?
--    A) mafê gerdûnî yê civakê ê jiyana bêyî şer
-- ✅ B) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
+- ✅ A) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
+-    B) mafê gerdûnî yê civakê ê jiyana bêyî şer
 -    C) tevlêbûna rêveberiyê bi rêya komele û înîsiyatîfan
 -    D) banga danîna çekan û hilweşandina avahiya rêxistinî
-**Doğru:** B) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
+**Doğru:** A) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
 **Açıklama:** "anadili hakkı": ana dilin resmî ve kamusal alanlarda kullanılması.
 **Kaynak:** —
 
@@ -628,20 +628,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi tanım "yerel yönetim" ile örtüşür?
 -    A) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
 -    B) mafê gerdûnî yê civakê ê jiyana bêyî şer
--    C) qebûlkirina wekhev a nasname û baweriyên cuda
-- ✅ D) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
-**Doğru:** D) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
+- ✅ C) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
+-    D) qebûlkirina wekhev a nasname û baweriyên cuda
+**Doğru:** C) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
 **Açıklama:** "yerel yönetim": belediye ve yerel komitelerden oluşan yönetim.
 **Kaynak:** —
 
 ## offline_13169  ·  zorluk 2  ·  offline
 **KU:** "dadperweriya civakî" tê çi wateyê?
 **TR:** "toplumsal adalet" ne anlama gelir?
-- ✅ A) prensîba parvekirina wekhev a çavkanî û mafan
--    B) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
--    C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
--    D) banga danîna çekan û hilweşandina avahiya rêxistinî
-**Doğru:** A) prensîba parvekirina wekhev a çavkanî û mafan
+-    A) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+-    B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+-    C) banga danîna çekan û hilweşandina avahiya rêxistinî
+- ✅ D) prensîba parvekirina wekhev a çavkanî û mafan
+**Doğru:** D) prensîba parvekirina wekhev a çavkanî û mafan
 **Açıklama:** "toplumsal adalet": kaynakların ve hakların eşit paylaşımı ilkesi.
 **Kaynak:** —
 
@@ -649,10 +649,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "mafên mirovan" di mijara siyasetê de çi vedibêje?
 **TR:** "insan hakları" siyaset konusunda neyi anlatır?
 -    A) parastina komên ku ji piraniyê cuda ne
--    B) awayekî xwepêşandana aştiyane ya li dijî qanûnên bêadalet
-- ✅ C) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e
+- ✅ B) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e
+-    C) awayekî xwepêşandana aştiyane ya li dijî qanûnên bêadalet
 -    D) prensîba parvekirina wekhev a çavkanî û mafan
-**Doğru:** C) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e
+**Doğru:** B) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e
 **Açıklama:** "insan hakları": herkesin doğuştan sahip olduğu evrensel haklar.
 **Kaynak:** —
 
@@ -661,9 +661,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "sivil itaatsizlik" hakkında bilinmesi gereken doğru bilgi nedir?
 -    A) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane
 -    B) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e
--    C) diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan
-- ✅ D) redkirina eşkere û bêşiddet a qanûnekê, bi binpêkirina wê ji bo guhertinê
-**Doğru:** D) redkirina eşkere û bêşiddet a qanûnekê, bi binpêkirina wê ji bo guhertinê
+- ✅ C) redkirina eşkere û bêşiddet a qanûnekê, bi binpêkirina wê ji bo guhertinê
+-    D) diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan
+**Doğru:** C) redkirina eşkere û bêşiddet a qanûnekê, bi binpêkirina wê ji bo guhertinê
 **Açıklama:** "sivil itaatsizlik": adaletsiz yasalara karşı barışçıl gösteri biçimi.
 **Kaynak:** —
 
@@ -672,42 +672,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "meşruiyet" hakkında bilinmesi gereken doğru bilgi nedir?
 -    A) banga danîna çekan û hilweşandina avahiya rêxistinî
 -    B) prensîba parvekirina wekhev a çavkanî û mafan
--    C) parastina komên ku ji piraniyê cuda ne
-- ✅ D) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
-**Doğru:** D) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
+- ✅ C) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
+-    D) parastina komên ku ji piraniyê cuda ne
+**Doğru:** C) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
 **Açıklama:** "meşruiyet": yönetimin halkın rızasına ve hukuka uygunluğu.
 **Kaynak:** —
 
 ## offline_13394  ·  zorluk 1  ·  offline
 **KU:** "xweseriya siyasî" bi awayekî rast çawa tê ravekirin?
 **TR:** "siyasi özerklik" doğru biçimde nasıl açıklanır?
-- ✅ A) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
--    B) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe
--    C) qebûlkirina wekhev a nasname û baweriyên cuda
--    D) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
-**Doğru:** A) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+-    A) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe
+-    B) qebûlkirina wekhev a nasname û baweriyên cuda
+-    C) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
+- ✅ D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+**Doğru:** D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
 **Açıklama:** "siyasi özerklik": kendi yasasını yapabilen yerel parlamentonun yetkisi.
 **Kaynak:** —
 
 ## offline_13486  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê siyasetê ve ji bo "mafê xwerêveberiyê" gotina rast kîjan e?
 **TR:** Siyaset açısından "özyönetim hakkı" için doğru ifade hangisidir?
-- ✅ A) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
--    B) statûya xweseriyê û biryargirtinê li herêmê
--    C) banga danîna çekan û hilweşandina avahiya rêxistinî
--    D) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe
-**Doğru:** A) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
+-    A) statûya xweseriyê û biryargirtinê li herêmê
+-    B) banga danîna çekan û hilweşandina avahiya rêxistinî
+-    C) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe
+- ✅ D) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
+**Doğru:** D) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
 **Açıklama:** "özyönetim hakkı": toplumun dış baskı olmadan kendini yönetme hakkı.
 **Kaynak:** —
 
 ## offline_13600  ·  zorluk 5  ·  offline
 **KU:** Derbarê "pergala meclîsan" de agahiya herî rast kîjan e?
 **TR:** "meclis sistemi" hakkında en doğru bilgi hangisidir?
--    A) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
-- ✅ B) pergaleke ku biryar bi rêya meclîsên gel tên girtin
+- ✅ A) pergaleke ku biryar bi rêya meclîsên gel tên girtin
+-    B) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
 -    C) destûreke azadîxwaz a ku hemû beşên cuda vedihewîne
 -    D) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
-**Doğru:** B) pergaleke ku biryar bi rêya meclîsên gel tên girtin
+**Doğru:** A) pergaleke ku biryar bi rêya meclîsên gel tên girtin
 **Açıklama:** "meclis sistemi": kararın tek bir başkan yerine komitelerce alındığı düzen.
 **Kaynak:** —
 
@@ -715,10 +715,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Îfadeya ku têgiha "mafên demokratîk" rast vedibêje kîjan e?
 **TR:** "demokratik haklar" kavramını doğru anlatan ifade hangisidir?
 -    A) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
--    B) daxwaza misogeriya destûrî û naskirina mafên çandî
-- ✅ C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+- ✅ B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+-    C) daxwaza misogeriya destûrî û naskirina mafên çandî
 -    D) di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de
-**Doğru:** C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+**Doğru:** B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
 **Açıklama:** "demokratik haklar": gösteri, örgütlenme ve ifade özgürlüğü hakları.
 **Kaynak:** —
 
@@ -727,20 +727,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Siyaset açısından "eş başkanlık" hakkında doğru seçenek hangisidir?
 -    A) Meclîs, xwerêxistin û danûstandin
 -    B) belgeyeke damezrîner a ku mafên bingehîn rêz dike
--    C) Avahiyên siyasî yên Kurdan û şaredarî
-- ✅ D) pergaleke nûnertiya wekhev a di rêveberiyê de ye
-**Doğru:** D) pergaleke nûnertiya wekhev a di rêveberiyê de ye
+- ✅ C) pergaleke nûnertiya wekhev a di rêveberiyê de ye
+-    D) Avahiyên siyasî yên Kurdan û şaredarî
+**Doğru:** C) pergaleke nûnertiya wekhev a di rêveberiyê de ye
 **Açıklama:** "eş başkanlık": yönetim organlarında kadın-erkek eşit temsil sistemi.
 **Kaynak:** —
 
 ## offline_13729  ·  zorluk 5  ·  offline
 **KU:** Derbarê "danûstandin" de ravekirina rast kîjan e?
 **TR:** "müzakere" hakkında doğru açıklama hangisidir?
-- ✅ A) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
--    B) nûnertiya wekhev a jin-mêr û rêveberiya hevbeş
--    C) xwerêveberiyeke ku dewletê derbas dike û alternatîfa wê ye
--    D) bi azadiya jinê û xwerêveberiya pirreng
-**Doğru:** A) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
+-    A) nûnertiya wekhev a jin-mêr û rêveberiya hevbeş
+-    B) xwerêveberiyeke ku dewletê derbas dike û alternatîfa wê ye
+-    C) bi azadiya jinê û xwerêveberiya pirreng
+- ✅ D) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
+**Doğru:** D) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
 **Açıklama:** "müzakere": sorunları diyalog yoluyla çözme yöntemi.
 **Kaynak:** —
 
@@ -748,10 +748,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "pirrengî" de agahiya herî rast kîjan e?
 **TR:** "çoğulculuk" hakkında en doğru bilgi hangisidir?
 -    A) rêzikên qanûnî û gavên entegrasyona demokratîk
--    B) nîqaşa konfederalîzma demokratîk û netewa demokratîk
-- ✅ C) qebûlkirina wekhev a nasname û baweriyên cuda
+- ✅ B) qebûlkirina wekhev a nasname û baweriyên cuda
+-    C) nîqaşa konfederalîzma demokratîk û netewa demokratîk
 -    D) hevgirtina wekhev û piştgir a gelên cuda
-**Doğru:** C) qebûlkirina wekhev a nasname û baweriyên cuda
+**Doğru:** B) qebûlkirina wekhev a nasname û baweriyên cuda
 **Açıklama:** "çoğulculuk": farklı kimlik ve inançların eşit kabulü.
 **Kaynak:** —
 
@@ -760,9 +760,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi tanım "demokratik muhalefet" ile örtüşür?
 -    A) xwerêveberiyeke ku dewletê derbas dike û alternatîfa wê ye
 -    B) meclîsên gel ên ku biryarên herêmî lê tên girtin
--    C) parastina mafan bi qanûnê
-- ✅ D) kanalên lêgerîna maf li meclîsê û li kolanan
-**Doğru:** D) kanalên lêgerîna maf li meclîsê û li kolanan
+- ✅ C) kanalên lêgerîna maf li meclîsê û li kolanan
+-    D) parastina mafan bi qanûnê
+**Doğru:** C) kanalên lêgerîna maf li meclîsê û li kolanan
 **Açıklama:** "demokratik muhalefet": mecliste ve sokakta hak arama kanalları.
 **Kaynak:** —
 
@@ -771,31 +771,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Radikal demokrasi" terimi hangi açıklamayla daha iyi anlaşılır?
 -    A) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
 -    B) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
--    C) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
-- ✅ D) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
-**Doğru:** D) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
+- ✅ C) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
+-    D) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
+**Doğru:** C) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
 **Açıklama:** "Radikal demokrasi" şu anlama gelir: kararlarda halkın doğrudan katılımını savunan siyasal teori.
 **Kaynak:** —
 
 ## offline_curated_21501  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "kararlarda halkın doğrudan katılımını savunan siyasal teori"?
--    A) parastina rewa
-- ✅ B) demokrasiya radîkal
+- ✅ A) demokrasiya radîkal
+-    B) parastina rewa
 -    C) ademi-merkeziyet
 -    D) eşseroktî
-**Doğru:** B) demokrasiya radîkal
+**Doğru:** A) demokrasiya radîkal
 **Açıklama:** "Radikal demokrasi" şu anlama gelir: kararlarda halkın doğrudan katılımını savunan siyasal teori.
 **Kaynak:** —
 
 ## offline_curated_21526  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin'?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem"?
--    A) hevpeymaniya demokratîk
-- ✅ B) eşseroktî
+- ✅ A) eşseroktî
+-    B) hevpeymaniya demokratîk
 -    C) demokrasiya radîkal
 -    D) parastina rewa
-**Doğru:** B) eşseroktî
+**Doğru:** A) eşseroktî
 **Açıklama:** "eşseroktî" şu anlama gelir: kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem.
 **Kaynak:** —
 
@@ -803,43 +803,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa siyaset kîjan vebijark ravekirina têgeha "eşseroktî" bi awayekî rast temam dike?
 **TR:** Siyaset dersi için hangi seçenek "eşseroktî" teriminin açıklamasını doğru şekilde tamamlar?
 -    A) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
--    B) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
-- ✅ C) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
+- ✅ B) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
+-    C) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
 -    D) têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de
-**Doğru:** C) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
+**Doğru:** B) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
 **Açıklama:** "eşseroktî" için doğru açıklama şudur: kadın ve erkeğin tüm kurumlarda birlikte başkanlık ettiği dengeli sistem.
 **Kaynak:** —
 
 ## offline_curated_21551  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "mahalle ve köylerde halkın öz yönetiminin en temel yapıları"?
--    A) demokrasiya rasterast
-- ✅ B) komûn û meclîs
+- ✅ A) komûn û meclîs
+-    B) demokrasiya rasterast
 -    C) hevpeymaniya demokratîk
 -    D) pirrengî
-**Doğru:** B) komûn û meclîs
+**Doğru:** A) komûn û meclîs
 **Açıklama:** "komûn û meclîs" şu anlama gelir: mahalle ve köylerde halkın öz yönetiminin en temel yapıları.
 **Kaynak:** —
 
 ## offline_curated_21554  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa siyaset kîjan vebijark ravekirina têgeha "komûn û meclîs" bi awayekî rast temam dike?
 **TR:** Siyaset dersi için hangi seçenek "komûn û meclîs" teriminin açıklamasını doğru şekilde tamamlar?
--    A) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
-- ✅ B) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
+- ✅ A) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
+-    B) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
 -    C) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
 -    D) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
-**Doğru:** B) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
+**Doğru:** A) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
 **Açıklama:** "komûn û meclîs" için doğru açıklama şudur: mahalle ve köylerde halkın öz yönetiminin en temel yapıları.
 **Kaynak:** —
 
 ## offline_curated_21575  ·  zorluk 4  ·  offline
 **KU:** Têgeha "peymana civakî" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "peymana civakî" terimi hangi açıklamayla daha iyi anlaşılır?
--    A) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
-- ✅ B) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
+- ✅ A) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
+-    B) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
 -    C) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
 -    D) têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de
-**Doğru:** B) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
+**Doğru:** A) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
 **Açıklama:** "peymana civakî" şu anlama gelir: halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge.
 **Kaynak:** —
 
@@ -848,31 +848,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanımlanır: "halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge"?
 -    A) pirrengî
 -    B) komûn û meclîs
--    C) parastina rewa
-- ✅ D) peymana civakî
-**Doğru:** D) peymana civakî
+- ✅ C) peymana civakî
+-    D) parastina rewa
+**Doğru:** C) peymana civakî
 **Açıklama:** "peymana civakî" şu anlama gelir: halkların ortak ve özgür yaşam ilkelerini belirleyen temel belge.
 **Kaynak:** —
 
 ## offline_curated_21601  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması"?
--    A) xweseriya demokratîk
-- ✅ B) ademi-merkeziyet
+- ✅ A) ademi-merkeziyet
+-    B) xweseriya demokratîk
 -    C) demokrasiya radîkal
 -    D) hevpeymaniya demokratîk
-**Doğru:** B) ademi-merkeziyet
+**Doğru:** A) ademi-merkeziyet
 **Açıklama:** "ademi-merkeziyet" şu anlama gelir: iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması.
 **Kaynak:** —
 
 ## offline_curated_21604  ·  zorluk 4  ·  offline
 **KU:** Ji bo dersa siyaset kîjan vebijark ravekirina têgeha "ademi-merkeziyet" bi awayekî rast temam dike?
 **TR:** Siyaset dersi için hangi seçenek "ademi-merkeziyet" teriminin açıklamasını doğru şekilde tamamlar?
--    A) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
-- ✅ B) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
+- ✅ A) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
+-    B) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
 -    C) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
 -    D) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
-**Doğru:** B) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
+**Doğru:** A) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
 **Açıklama:** "ademi-merkeziyet" için doğru açıklama şudur: iktidarın merkezden bölgelere ve özerk yönetimlere dağıtılması.
 **Kaynak:** —
 
@@ -880,10 +880,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "mafê parastina xwezayî ya civakê li dijî êrîşên derveyî"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "toplumun dış saldırılara karşı doğal savunma hakkı"?
 -    A) komûn û meclîs
--    B) xweseriya demokratîk
-- ✅ C) parastina rewa
+- ✅ B) parastina rewa
+-    C) xweseriya demokratîk
 -    D) eşseroktî
-**Doğru:** C) parastina rewa
+**Doğru:** B) parastina rewa
 **Açıklama:** "parastina rewa" şu anlama gelir: toplumun dış saldırılara karşı doğal savunma hakkı.
 **Kaynak:** —
 
@@ -891,10 +891,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa siyaset kîjan vebijark ravekirina têgeha "parastina rewa" bi awayekî rast temam dike?
 **TR:** Siyaset dersi için hangi seçenek "parastina rewa" teriminin açıklamasını doğru şekilde tamamlar?
 -    A) şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide
--    B) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
-- ✅ C) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
+- ✅ B) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
+-    C) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
 -    D) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
-**Doğru:** C) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
+**Doğru:** B) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
 **Açıklama:** "parastina rewa" için doğru açıklama şudur: toplumun dış saldırılara karşı doğal savunma hakkı.
 **Kaynak:** —
 
@@ -903,9 +903,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanımlanır: "toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi"?
 -    A) demokrasiya rasterast
 -    B) parastina rewa
--    C) peymana civakî
-- ✅ D) pirrengî
-**Doğru:** D) pirrengî
+- ✅ C) pirrengî
+-    D) peymana civakî
+**Doğru:** C) pirrengî
 **Açıklama:** "pirrengî" şu anlama gelir: toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi.
 **Kaynak:** —
 
@@ -913,10 +913,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa siyaset kîjan vebijark ravekirina têgeha "pirrengî" bi awayekî rast temam dike?
 **TR:** Siyaset dersi için hangi seçenek "pirrengî" teriminin açıklamasını doğru şekilde tamamlar?
 -    A) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
--    B) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
-- ✅ C) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
+- ✅ B) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
+-    C) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
 -    D) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
-**Doğru:** C) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
+**Doğru:** B) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
 **Açıklama:** "pirrengî" için doğru açıklama şudur: toplumdaki bütün farklı kimliklerin korunması ve kabul edilmesi ilkesi.
 **Kaynak:** —
 
@@ -925,9 +925,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanımlanır: "halkın temsilciler olmadan karar verdiği yönetim biçimi"?
 -    A) xweseriya demokratîk
 -    B) komûn û meclîs
--    C) pirrengî
-- ✅ D) demokrasiya rasterast
-**Doğru:** D) demokrasiya rasterast
+- ✅ C) demokrasiya rasterast
+-    D) pirrengî
+**Doğru:** C) demokrasiya rasterast
 **Açıklama:** "demokrasiya rasterast" şu anlama gelir: halkın temsilciler olmadan karar verdiği yönetim biçimi.
 **Kaynak:** —
 
@@ -936,9 +936,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Siyaset dersi için hangi seçenek "demokrasiya rasterast" teriminin açıklamasını doğru şekilde tamamlar?
 -    A) prensîba parastin û pejirandina hemû nasnameyên cuda yê di civakê de
 -    B) avahiyên herî bingehîn ên xwe-rêveberiya gel li tax û gundan
--    C) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
-- ✅ D) şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide
-**Doğru:** D) şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide
+- ✅ C) şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide
+-    D) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
+**Doğru:** C) şêwazê rêveberiyê ku tê de gel bêyî nûneran biryaran dide
 **Açıklama:** "demokrasiya rasterast" için doğru açıklama şudur: halkın temsilciler olmadan karar verdiği yönetim biçimi.
 **Kaynak:** —
 
@@ -947,9 +947,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanımlanır: "bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model"?
 -    A) demokrasiya rasterast
 -    B) demokrasiya radîkal
--    C) hevpeymaniya demokratîk
-- ✅ D) xweseriya demokratîk
-**Doğru:** D) xweseriya demokratîk
+- ✅ C) xweseriya demokratîk
+-    D) hevpeymaniya demokratîk
+**Doğru:** C) xweseriya demokratîk
 **Açıklama:** "xweseriya demokratîk" şu anlama gelir: bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model.
 **Kaynak:** —
 
@@ -957,10 +957,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa siyaset kîjan vebijark ravekirina têgeha "xweseriya demokratîk" bi awayekî rast temam dike?
 **TR:** Siyaset dersi için hangi seçenek "xweseriya demokratîk" teriminin açıklamasını doğru şekilde tamamlar?
 -    A) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
--    B) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
-- ✅ C) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
+- ✅ B) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
+-    C) teoriya siyasî ya ku beşdariya rasterast a gel di biryaran de diparêze
 -    D) mafê parastina xwezayî ya civakê li dijî êrîşên derveyî
-**Doğru:** C) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
+**Doğru:** B) modela siyasî ya ku tê de gelên herêmê saziyên xwe bi xwe birêve dibin
 **Açıklama:** "xweseriya demokratîk" için doğru açıklama şudur: bölge halklarının kendi kurumlarını kendilerinin yönettiği siyasal model.
 **Kaynak:** —
 
@@ -969,9 +969,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla tanımlanır: "toplumun değişim güçleri arasındaki stratejik ilişki"?
 -    A) xweseriya demokratîk
 -    B) parastina rewa
--    C) demokrasiya rasterast
-- ✅ D) hevpeymaniya demokratîk
-**Doğru:** D) hevpeymaniya demokratîk
+- ✅ C) hevpeymaniya demokratîk
+-    D) demokrasiya rasterast
+**Doğru:** C) hevpeymaniya demokratîk
 **Açıklama:** "hevpeymaniya demokratîk" şu anlama gelir: toplumun değişim güçleri arasındaki stratejik ilişki.
 **Kaynak:** —
 
@@ -980,9 +980,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Siyaset dersi için hangi seçenek "hevpeymaniya demokratîk" teriminin açıklamasını doğru şekilde tamamlar?
 -    A) parvekirina desthilatê ji navendê ber bi herêm û rêveberiyên xweser ve
 -    B) sîstema hevseng a ku tê de jin û mêr bi hev re di hemû saziyan de seroktiyê dikin
--    C) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
-- ✅ D) têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de
-**Doğru:** D) têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de
+- ✅ C) têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de
+-    D) belgeya bingehîn a ku prensîbên jiyana hevbeş û azad a gelan diyar dike
+**Doğru:** C) têkiliya stratejîk a di navbera hêzên guhertinê yê civakê de
 **Açıklama:** "hevpeymaniya demokratîk" için doğru açıklama şudur: toplumun değişim güçleri arasındaki stratejik ilişki.
 **Kaynak:** —
 
