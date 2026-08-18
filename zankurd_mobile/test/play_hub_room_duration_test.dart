@@ -6,29 +6,35 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 
 import 'support/widget_test_helpers.dart';
 
-/// 2026-07-21 denetiminde bulundu: oda kurucusunun soru başına süre
-/// belirleme tercihi diye bir UI hiç yoktu — repository/DB katmanı
-/// `secondsPerQuestion` alanını destekliyordu ama hiçbir ekran bunu
-/// kullanıcıya sormuyordu, her zaman varsayılan (30sn) kullanılıyordu.
 class _CapturingRepository extends MockZanKurdRepository {
   int? capturedSeconds;
+  int? capturedQuestionCount;
+  int? capturedEntryFee;
+  String? capturedCategory;
 
   @override
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
+    capturedCategory = category;
     capturedSeconds = secondsPerQuestion;
+    capturedQuestionCount = questionCount;
+    capturedEntryFee = entryFee;
     return super.createOnlineRoom(
       category: category,
       secondsPerQuestion: secondsPerQuestion,
+      questionCount: questionCount,
+      entryFee: entryFee,
     );
   }
 }
 
 void main() {
   testWidgets(
-    'oda kurucusu soru başına süreyi seçebilir ve seçim odaya uygulanır',
+    'oda kurucusu kategori, soru sayısı, süre ve giriş ücretini seçebilir ve seçim odaya uygulanır',
     (tester) async {
       final repository = _CapturingRepository();
       await tester.pumpWidget(
@@ -39,20 +45,33 @@ void main() {
       await tester.tap(find.text('Oda Kur'));
       await tester.pumpAndSettle();
 
-      // Varsayılan seçim 30 sn olmalı; 45 sn'yi seçip onaylayalım.
-      expect(find.text('30 sn'), findsOneWidget);
-      await tester.tap(find.text('45 sn'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Odayı Aç'));
+      // Süre seçimi (20 sn varsayılan; 30 sn seçelim)
+      expect(find.text('20 sn'), findsOneWidget);
+      await tester.tap(find.text('30 sn'));
       await tester.pumpAndSettle();
 
-      expect(repository.capturedSeconds, 45);
+      // Soru sayısı seçimi (5 soru seçelim)
+      expect(find.text('5 soru'), findsOneWidget);
+      await tester.tap(find.text('5 soru'));
+      await tester.pumpAndSettle();
+
+      // Sayfa `SingleChildScrollView`; kategori/soru/süre/bahis satırları
+      // eklendikten sonra onay düğmesi görünür alanın altında kalıyor.
+      // `ensureVisible` olmadan `tap` sessizce boşa düşüyordu — istisna
+      // yok, çağrı da yok. Aradaki `pump` şart: bu depoda bir kez
+      // kaydırma tamamlanmadan dokunulup eski konuma vurulmuştu.
+      final openButton = find.text('Odayı Aç');
+      await tester.ensureVisible(openButton);
+      await tester.pump();
+      await tester.tap(openButton);
+      await tester.pumpAndSettle();
+
+      expect(repository.capturedSeconds, 30);
+      expect(repository.capturedQuestionCount, 5);
+      expect(repository.capturedEntryFee, 0);
     },
   );
 
-  /// 2026-07-22 canlı denetimi: sayfa 15 sn seçeneği de sunuyordu, ama bu
-  /// değer GameRoom.allowedSecondsPerQuestion içinde yok. UI kendi listesini
-  /// tutmasın; tek kaynak model olsun.
   testWidgets('süre seçenekleri modelin izinli kümesiyle birebir aynı', (
     tester,
   ) async {
@@ -64,22 +83,15 @@ void main() {
     await tester.tap(find.text('Oda Kur'));
     await tester.pumpAndSettle();
 
-    for (final seconds in GameRoom.allowedSecondsPerQuestion) {
+    for (final seconds in GameRoom.allowedDurations) {
       expect(
         find.text('$seconds sn'),
         findsOneWidget,
         reason: '$seconds sn seçeneği eksik',
       );
     }
-    expect(find.text('15 sn'), findsNothing);
   });
 
-  // 2026-08-14 denetim bulgusu: süre çiplerindeki birim, `'$seconds sn'`
-  // olarak hardcoded'du — Kurmancî arayüzde de aynen Türkçe "sn" kısaltması
-  // basılıyordu. Artık `context.t(K.secondsShortUnit)` üzerinden dile
-  // duyarlı ("sn" / "çirke"). Bekçi, Kurmancî arayüzde "çirke" göründüğünü
-  // ve Türkçe "sn" hiç kalmadığını doğrular. Sayfayı açan kart metinle değil
-  // ValueKey ile bulunur, çünkü metin zaten dile göre değişir.
   testWidgets('Kurmancî arayüzde süre birimi "çirke" olur, "sn" değil', (
     tester,
   ) async {
@@ -94,7 +106,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();
 
-    for (final seconds in GameRoom.allowedSecondsPerQuestion) {
+    for (final seconds in GameRoom.allowedDurations) {
       expect(find.text('$seconds çirke'), findsOneWidget);
       expect(find.text('$seconds sn'), findsNothing);
     }

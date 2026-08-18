@@ -247,8 +247,11 @@ bool isSupportedRoomCode(String input) {
 }
 
 class GameRoom {
-  static const allowedSecondsPerQuestion = [20, 30, 45, 60];
-  static const defaultSecondsPerQuestion = 30;
+  static const allowedSecondsPerQuestion = [10, 15, 20, 30, 45, 60];
+  static const allowedEntryFees = [0, 25, 50, 100];
+  static const allowedQuestionCounts = [5, 10, 15];
+  static const allowedDurations = [10, 15, 20, 30];
+  static const defaultSecondsPerQuestion = 20;
 
   const GameRoom({
     this.id,
@@ -257,8 +260,9 @@ class GameRoom {
     required this.category,
     required this.players,
     required this.status,
-    required this.questionCount,
+    this.questionCount = 10,
     this.secondsPerQuestion = defaultSecondsPerQuestion,
+    this.entryFee = 0,
     this.hostId,
   });
 
@@ -270,6 +274,7 @@ class GameRoom {
   final RoomStatus status;
   final int questionCount;
   final int secondsPerQuestion;
+  final int entryFee;
   final String? hostId;
 
   GameRoom copyWith({
@@ -281,6 +286,7 @@ class GameRoom {
     RoomStatus? status,
     int? questionCount,
     int? secondsPerQuestion,
+    int? entryFee,
     String? hostId,
   }) {
     return GameRoom(
@@ -292,6 +298,7 @@ class GameRoom {
       status: status ?? this.status,
       questionCount: questionCount ?? this.questionCount,
       secondsPerQuestion: secondsPerQuestion ?? this.secondsPerQuestion,
+      entryFee: entryFee ?? this.entryFee,
       // DİKKAT: `?? this.hostId` deseni `hostId`i TEMİZLEYEMEZ. Null
       // geçmek alanı boşaltmaz, eski değeri korur.
       //

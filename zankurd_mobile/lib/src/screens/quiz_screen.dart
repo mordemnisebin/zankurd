@@ -38,10 +38,11 @@ import '../utils/error_reporter.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
-import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
-import '../widgets/player_avatar.dart';
+import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/kilim_progress_bar.dart';
+import '../widgets/mission_toast.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';
@@ -271,6 +272,8 @@ class _QuizScreenState extends State<QuizScreen>
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
+  final FloatingReactionController _reactionController =
+      FloatingReactionController();
   final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
   final Set<String> _answeredPlayerKeys = {};
   Timer? _autoNextTimer;
@@ -596,6 +599,14 @@ class _QuizScreenState extends State<QuizScreen>
                 id: _myId,
                 legacyName: name,
               );
+              if (payload['type'] == 'reaction') {
+                final text = payload['text'] as String?;
+                final sender = payload['sender_name'] as String? ?? senderName;
+                if (text != null && !isSelf) {
+                  _reactionController.triggerReaction(text, senderName: sender);
+                }
+                return;
+              }
               if (!_usesServerHiddenAnswers &&
                   senderName != null &&
                   !isSelf &&
@@ -1681,6 +1692,13 @@ class _QuizScreenState extends State<QuizScreen>
           // yoksa kategoriye düşülür.
           title: Text(_roundTitle(context)),
           actions: [
+            if (_isMultiplayer)
+              IconButton(
+                key: const ValueKey('quiz-reaction-menu-button'),
+                onPressed: () => _showLiveReactionMenu(context),
+                tooltip: context.t(K.chat),
+                icon: const Icon(AppIcons.faceSmile),
+              ),
             IconButton(
               onPressed: _toggleFavorite,
               tooltip: favoriteActionLabel,
@@ -1763,6 +1781,23 @@ class _QuizScreenState extends State<QuizScreen>
                               !_opponentClientReady &&
                               !_questionFlowStarted))
                         _OpponentWaitingOverlay(isKu: _isKu),
+                      // Canlı çok oyunculu reaksiyon baloncukları.
+                      //
+                      // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
+                      // gibi `FloatingReactionOverlay`e devredilir. Elde
+                      // yazılan sürüm `_SingleAnimatedReactionBubble`ı
+                      // çağırıyordu; o sınıf `floating_reaction_overlay.dart`
+                      // içinde `_` önekli, yani dosya dışından görünmez —
+                      // kod derlenmiyordu. Tek çizim yolu olması ayrıca
+                      // animasyon süresi/eğrisi iki ekranda ayrışmasın diye.
+                      Positioned.fill(
+                        child: IgnorePointer(
+                          child: FloatingReactionOverlay(
+                            controller: _reactionController,
+                            child: const SizedBox.expand(),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -1889,6 +1924,67 @@ class _QuizScreenState extends State<QuizScreen>
         }
       }
     });
+  }
+
+  Future<void> _sendLiveReaction(String text) async {
+    final roomId = widget.room.id;
+    _reactionController.triggerReaction(text, senderName: _myName);
+    if (roomId == null) return;
+    try {
+      await widget.repository.sendRoomBroadcast(roomId, {
+        'type': 'reaction',
+        'text': text,
+        'sender_name': _myName,
+        'sender_id': _myId,
+      });
+    } catch (_) {}
+  }
+
+  void _showLiveReactionMenu(BuildContext context) {
+    final reactions = [
+      (context.t(K.reactionBravo), '👏'),
+      (context.t(K.reactionGoodLuck), '🍀'),
+      (context.t(K.reactionFast), '⚡'),
+      (context.t(K.reactionSmiley), '😊'),
+      (context.t(K.reactionFire), '🔥'),
+    ];
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: AppTheme.bgOf(ctx),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(AppRadius.card),
+          ),
+        ),
+        child: Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          alignment: WrapAlignment.center,
+          children: [
+            for (final r in reactions)
+              ActionChip(
+                key: ValueKey('live-quiz-reaction-${r.$2}'),
+                label: Text(
+                  r.$1,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(ctx),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                backgroundColor: AppTheme.surfaceColor(ctx),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  _sendLiveReaction(r.$1);
+                },
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Rakip cevap vermese bile bekleme fazını sınırlı tutar. Host yaşıyorsa

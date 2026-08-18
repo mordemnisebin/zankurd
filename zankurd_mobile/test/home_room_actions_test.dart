@@ -51,8 +51,13 @@ void main() {
     await tester.pumpAndSettle();
 
     // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
-    expect(find.text('Odayı Aç'), findsOneWidget);
-    await tester.tap(find.text('Odayı Aç'));
+    // Sheet kaydırılabilir; onay düğmesi görünür alanın altında kalıyor.
+    // `ensureVisible` olmadan `tap` sessizce boşa düşer.
+    final openButton = find.text('Odayı Aç');
+    expect(openButton, findsOneWidget);
+    await tester.ensureVisible(openButton);
+    await tester.pump();
+    await tester.tap(openButton);
     await tester.pumpAndSettle();
 
     expect(find.text('Hevalên Zanînê'), findsOneWidget);

@@ -16,6 +16,8 @@ class _FailingRoomRepository extends MockZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) {
     return Future<GameRoom>.error(StateError('online room unavailable'));
   }

@@ -86,6 +86,22 @@ void main() {
         if (line.contains('RegExp(')) continue;
         for (final match in stringLiteral.allMatches(line)) {
           final literal = match.group(1) ?? match.group(2) ?? '';
+          // TEK BAŞINA duran emoji muaftır; cümlenin içindeki emoji değil.
+          //
+          // Kuralın derdi yazı tipinin CÜMLE ORTASINDA değişmesiydi:
+          // "Tüm görevler tamam! 🎉" okunurken Rubik'ten sistem tipine
+          // atlıyor ve cihazdan cihaza başka görünüyor. Ama bir emoji
+          // kendi başına, resim olarak kullanılıyorsa (uçuşan reaksiyon
+          // baloncukları, 2026-08-19) sistem tipine düşmesi kusur değil
+          // amaçtır — Rubik'in emoji taşıması zaten beklenmez.
+          //
+          // Ayrım mekanik: sabitte harf/rakam varsa o bir CÜMLEDİR ve
+          // kural işler; yalnız pictograph varsa gliftir ve geçilir.
+          final hasText = literal.runes.any(
+            (r) => (r >= 0x30 && r <= 0x39) || (r >= 0x41 && r <= 0x5A) ||
+                (r >= 0x61 && r <= 0x7A) || (r >= 0xC0 && r < 0x2000),
+          );
+          if (!hasText) continue;
           for (final rune in literal.runes) {
             if (isPlain(rune) || covered.contains(rune)) continue;
             offenders.add(

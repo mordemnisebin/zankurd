@@ -14,6 +14,7 @@ import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
@@ -102,6 +103,9 @@ class _RoomScreenState extends State<RoomScreen> {
   bool _terminalHandled = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
+  StreamSubscription? _broadcastSub;
+  final FloatingReactionController _reactionController =
+      FloatingReactionController();
   int _subscriptionGeneration = 0;
 
   /// `_navigateToQuiz` soru yüklemesi kaç kez üst üste başarısız oldu.
@@ -211,6 +215,23 @@ class _RoomScreenState extends State<RoomScreen> {
             _startPolling();
           },
         );
+
+    final roomId = room.id;
+    if (roomId != null && _broadcastSub == null) {
+      _broadcastSub = widget.repository.subscribeRoomBroadcast(roomId).listen((
+        payload,
+      ) {
+        if (!mounted || generation != _subscriptionGeneration) return;
+        if (payload['type'] == 'reaction') {
+          final text = payload['text'] as String?;
+          final senderId = payload['sender_id'] as String?;
+          final senderName = payload['sender_name'] as String?;
+          if (text != null && senderId != _currentUserId) {
+            _reactionController.triggerReaction(text, senderName: senderName);
+          }
+        }
+      });
+    }
   }
 
   void _applyPlayerList(List<Player> players) {
@@ -413,8 +434,10 @@ class _RoomScreenState extends State<RoomScreen> {
   void _cancelSubscriptionsBestEffort(String failureReason) {
     final playersSub = _playersSub;
     final statusSub = _statusSub;
+    final broadcastSub = _broadcastSub;
     _playersSub = null;
     _statusSub = null;
+    _broadcastSub = null;
     // Bazı Stream uygulamaları `cancel()` Future'ını geç veya hiç
     // tamamlamaz. Nesil anahtarı eski olayları hemen geçersiz kılar;
     // fiziksel temizliği beklemek çıkış RPC'sini bloke etmez.
@@ -425,6 +448,25 @@ class _RoomScreenState extends State<RoomScreen> {
     if (statusSub != null) {
       unawaited(_cancelSubscription(statusSub, failureReason));
     }
+    if (broadcastSub != null) {
+      unawaited(_cancelSubscription(broadcastSub, failureReason));
+    }
+  }
+
+  Future<void> _sendReaction(String text) async {
+    final roomId = room.id;
+    final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
+    final myName = me?.name ?? 'Tu';
+    _reactionController.triggerReaction(text, senderName: myName);
+    if (roomId == null) return;
+    try {
+      await widget.repository.sendRoomBroadcast(roomId, {
+        'type': 'reaction',
+        'text': text,
+        'sender_name': myName,
+        'sender_id': _currentUserId,
+      });
+    } catch (_) {}
   }
 
   Future<void> _cancelSubscription(
@@ -549,516 +591,449 @@ class _RoomScreenState extends State<RoomScreen> {
         await _leaveRoom();
       },
       child: Scaffold(
-        body: Container(
-          color: AppTheme.bgOf(context),
-          child: SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.page,
-                      AppSpacing.md,
-                      AppSpacing.page,
-                      AppSpacing.lg,
-                    ),
-                    children: [
-                      Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 680),
-                          child: SizedBox(
-                            key: const ValueKey('room-content-width'),
-                            width: double.infinity,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: _leaving ? null : _leaveRoom,
-                                      tooltip: context.t(K.leaveRoom),
-                                      icon: Icon(
-                                        AppIcons.arrowLeft,
-                                        color: AppTheme.textSubColor(context),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    // Serbest metin oda sohbeti; raporlama,
-                                    // engelleme ve moderasyon tamamlanana kadar
-                                    // mağaza sürümünde erişilemez.
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.xxs),
-
-                                // Brand hero — deep green (not generic blue Material)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.card,
-                                  ),
-                                  child: Stack(
+        body: FloatingReactionOverlay(
+          controller: _reactionController,
+          child: Container(
+            color: AppTheme.bgOf(context),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.page,
+                        AppSpacing.md,
+                        AppSpacing.page,
+                        AppSpacing.lg,
+                      ),
+                      children: [
+                        Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 680),
+                            child: SizedBox(
+                              key: const ValueKey('room-content-width'),
+                              width: double.infinity,
+                              child: Column(
+                                children: [
+                                  Row(
                                     children: [
-                                      AppPanel(
-                                        gradient: const LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            AppTheme.playCyan,
-                                            Color(0xFF168E8A),
-                                          ],
+                                      IconButton(
+                                        onPressed: _leaving ? null : _leaveRoom,
+                                        tooltip: context.t(K.leaveRoom),
+                                        icon: Icon(
+                                          AppIcons.arrowLeft,
+                                          color: AppTheme.textSubColor(context),
                                         ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              context.t(K.privateRoom),
-                                              style: AppTypography.caption
-                                                  .copyWith(
-                                                    color: Colors.white
-                                                        .withValues(
-                                                          alpha: 0.75,
-                                                        ),
-                                                  ),
-                                            ),
-                                            const SizedBox(
-                                              height: AppSpacing.xs,
-                                            ),
-                                            Text(
-                                              room.name,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTypography.heading1
-                                                  .copyWith(
-                                                    color: Colors.white,
-                                                    fontSize: 26,
-                                                  ),
-                                            ),
-                                            const SizedBox(
-                                              height: AppSpacing.sm,
-                                            ),
-                                            Wrap(
-                                              spacing: AppSpacing.xs,
-                                              runSpacing: AppSpacing.xs,
-                                              children: [
-                                                _Pill(
-                                                  // Ham kategori kimliği
-                                                  // gösteriliyordu: TR
-                                                  // arayüzde oda "Ziman",
-                                                  // kategori sekmesinde ise
-                                                  // aynı kategori "Dil"
-                                                  // görünüyordu (2026-07-22
-                                                  // canlı UX denetimi).
-                                                  label:
-                                                      CategoryNames.localized(
-                                                        room.category,
-                                                        context.isKu,
-                                                      ),
-                                                  icon: AppIcons.tableCells,
-                                                ),
-                                                _Pill(
-                                                  // 2026-08-14 görsel
-                                                  // denetimi: "sn" sabit
-                                                  // kodlanmıştı,
-                                                  // Kurmancî ekranda da
-                                                  // aynen basılıyordu —
-                                                  // play_hub_screen.dart'ta
-                                                  // düzeltilen aynı kusur,
-                                                  // burada gözden kaçmış.
-                                                  label:
-                                                      '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
-                                                  icon: AppIcons.stopwatch,
-                                                ),
-                                                if (isHost)
-                                                  _Pill(
-                                                    label: context.t(K.host),
-                                                    icon: AppIcons.star,
-                                                  ),
-                                                // Guest tarafında da mêvandar bilgisi
-                                                // görünsün: host'ta 3 çip, guest'te 2
-                                                // çip kalıyordu (bilgi asimetrisi).
-                                                if (!isHost)
-                                                  _Pill(
-                                                    label: context.t(
-                                                      K.hostNamed,
-                                                      {'name': _hostName(room)},
+                                      ),
+                                      const Spacer(),
+                                      // Serbest metin oda sohbeti; raporlama,
+                                      // engelleme ve moderasyon tamamlanana kadar
+                                      // mağaza sürümünde erişilemez.
+                                    ],
+                                  ),
+                                  const SizedBox(height: AppSpacing.xxs),
+
+                                  // Brand hero — deep green (not generic blue Material)
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.card,
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        AppPanel(
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              AppTheme.playCyan,
+                                              Color(0xFF168E8A),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                context.t(K.privateRoom),
+                                                style: AppTypography.caption
+                                                    .copyWith(
+                                                      color: Colors.white
+                                                          .withValues(
+                                                            alpha: 0.75,
+                                                          ),
                                                     ),
-                                                    icon: AppIcons.star,
-                                                  ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: AppSpacing.md,
-                                            ),
-                                            // Large invite code for sharing
-                                            Material(
-                                              color: Colors.transparent,
-                                              child: InkWell(
-                                                key: const ValueKey(
-                                                  'room-code-copy',
-                                                ),
-                                                onTap: () =>
-                                                    _copyRoomCode(context, ku),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                      AppRadius.sm,
+                                              ),
+                                              const SizedBox(
+                                                height: AppSpacing.xs,
+                                              ),
+                                              Text(
+                                                room.name,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTypography.heading1
+                                                    .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 26,
                                                     ),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            AppSpacing.md,
-                                                        vertical: AppSpacing.md,
-                                                      ),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white
-                                                        .withValues(
-                                                          alpha: 0.96,
+                                              ),
+                                              const SizedBox(
+                                                height: AppSpacing.sm,
+                                              ),
+                                              Wrap(
+                                                spacing: AppSpacing.xs,
+                                                runSpacing: AppSpacing.xs,
+                                                children: [
+                                                  _Pill(
+                                                    // Ham kategori kimliği
+                                                    // gösteriliyordu: TR
+                                                    // arayüzde oda "Ziman",
+                                                    // kategori sekmesinde ise
+                                                    // aynı kategori "Dil"
+                                                    // görünüyordu (2026-07-22
+                                                    // canlı UX denetimi).
+                                                    label:
+                                                        CategoryNames.localized(
+                                                          room.category,
+                                                          context.isKu,
                                                         ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          AppRadius.sm,
-                                                        ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black
-                                                            .withValues(
-                                                              alpha: 0.12,
-                                                            ),
-                                                        blurRadius: 12,
-                                                        offset: const Offset(
-                                                          0,
-                                                          4,
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    icon: AppIcons.tableCells,
                                                   ),
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              context.t(
-                                                                K.roomCodeTapCopy,
-                                                              ),
-                                                              style: AppTypography
-                                                                  .caption
-                                                                  .copyWith(
-                                                                    color: AppTheme
-                                                                        .lightTextSub,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                  ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 4,
-                                                            ),
-                                                            FittedBox(
-                                                              fit: BoxFit
-                                                                  .scaleDown,
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                room.code,
-                                                                key: const ValueKey(
-                                                                  'room-code',
-                                                                ),
-                                                                maxLines: 1,
-                                                                softWrap: false,
-                                                                style: AppTypography.display.copyWith(
-                                                                  color: AppTheme
-                                                                      .playCyan,
-                                                                  letterSpacing:
-                                                                      3,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w900,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                  _Pill(
+                                                    // 2026-08-14 görsel
+                                                    // denetimi: "sn" sabit
+                                                    // kodlanmıştı,
+                                                    // Kurmancî ekranda da
+                                                    // aynen basılıyordu —
+                                                    // play_hub_screen.dart'ta
+                                                    // düzeltilen aynı kusur,
+                                                    // burada gözden kaçmış.
+                                                    label:
+                                                        '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
+                                                    icon: AppIcons.stopwatch,
+                                                  ),
+                                                  _Pill(
+                                                    label:
+                                                        '${room.questionCount} ${context.t(K.soru)}',
+                                                    icon:
+                                                        AppIcons.circleQuestion,
+                                                  ),
+                                                  if (room.entryFee > 0)
+                                                    _Pill(
+                                                      label:
+                                                          '${room.entryFee} ${context.t(K.coinWord)}',
+                                                      icon: AppIcons.coins,
+                                                    ),
+                                                  if (isHost)
+                                                    _Pill(
+                                                      label: context.t(K.host),
+                                                      icon: AppIcons.star,
+                                                    ),
+                                                  // Guest tarafında da mêvandar bilgisi
+                                                  // görünsün: host'ta 3 çip, guest'te 2
+                                                  // çip kalıyordu (bilgi asimetrisi).
+                                                  if (!isHost)
+                                                    _Pill(
+                                                      label: context.t(
+                                                        K.hostNamed,
+                                                        {
+                                                          'name': _hostName(
+                                                            room,
+                                                          ),
+                                                        },
                                                       ),
-                                                      Container(
-                                                        width: 40,
-                                                        height: 40,
-                                                        alignment:
-                                                            Alignment.center,
-                                                        decoration: BoxDecoration(
-                                                          color: AppTheme
-                                                              .playCyan
+                                                      icon: AppIcons.star,
+                                                    ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: AppSpacing.md,
+                                              ),
+                                              // Large invite code for sharing
+                                              Material(
+                                                color: Colors.transparent,
+                                                child: InkWell(
+                                                  key: const ValueKey(
+                                                    'room-code-copy',
+                                                  ),
+                                                  onTap: () => _copyRoomCode(
+                                                    context,
+                                                    ku,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        AppRadius.sm,
+                                                      ),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              AppSpacing.md,
+                                                          vertical:
+                                                              AppSpacing.md,
+                                                        ),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white
+                                                          .withValues(
+                                                            alpha: 0.96,
+                                                          ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            AppRadius.sm,
+                                                          ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black
                                                               .withValues(
                                                                 alpha: 0.12,
                                                               ),
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                AppRadius.sm,
+                                                          blurRadius: 12,
+                                                          offset: const Offset(
+                                                            0,
+                                                            4,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                context.t(
+                                                                  K.roomCodeTapCopy,
+                                                                ),
+                                                                style: AppTypography
+                                                                    .caption
+                                                                    .copyWith(
+                                                                      color: AppTheme
+                                                                          .lightTextSub,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                    ),
                                                               ),
+                                                              const SizedBox(
+                                                                height: 4,
+                                                              ),
+                                                              FittedBox(
+                                                                fit: BoxFit
+                                                                    .scaleDown,
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Text(
+                                                                  room.code,
+                                                                  key: const ValueKey(
+                                                                    'room-code',
+                                                                  ),
+                                                                  maxLines: 1,
+                                                                  softWrap:
+                                                                      false,
+                                                                  style: AppTypography.display.copyWith(
+                                                                    color: AppTheme
+                                                                        .playCyan,
+                                                                    letterSpacing:
+                                                                        3,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w900,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                        child: const Icon(
-                                                          AppIcons.copy,
-                                                          color:
-                                                              AppTheme.playCyan,
+                                                        Container(
+                                                          width: 40,
+                                                          height: 40,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          decoration: BoxDecoration(
+                                                            color: AppTheme
+                                                                .playCyan
+                                                                .withValues(
+                                                                  alpha: 0.12,
+                                                                ),
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  AppRadius.sm,
+                                                                ),
+                                                          ),
+                                                          child: const Icon(
+                                                            AppIcons.copy,
+                                                            color: AppTheme
+                                                                .playCyan,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.cardGap),
-
-                                AppPanel(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            AppIcons.peopleGroup,
-                                            color: AppTheme.textSubColor(
-                                              context,
-                                            ),
-                                            size: 20,
+                                            ],
                                           ),
-                                          const SizedBox(width: AppSpacing.xs),
-                                          // Esnek olmalı: başlık `heading2`
-                                          // ve sayaçla aynı satırda duruyor.
-                                          // Sabit `Text` + `Spacer` ikilisi
-                                          // %200 sistem yazısında satırı 57
-                                          // piksel taşırıyordu — `Spacer`
-                                          // kalan yeri yeniden dağıtamaz,
-                                          // çünkü esnemeyen başlık zaten
-                                          // hepsini yemiş oluyor (2026-08-03).
-                                          // `Expanded` + tek satır kısaltma
-                                          // sayacı yine sağa yaslar.
-                                          Expanded(
-                                            child: Text(
-                                              context.t(K.playersWord),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTypography.heading2
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  AppPanel(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              AppIcons.peopleGroup,
+                                              color: AppTheme.textSubColor(
+                                                context,
+                                              ),
+                                              size: 20,
+                                            ),
+                                            const SizedBox(
+                                              width: AppSpacing.xs,
+                                            ),
+                                            // Esnek olmalı: başlık `heading2`
+                                            // ve sayaçla aynı satırda duruyor.
+                                            // Sabit `Text` + `Spacer` ikilisi
+                                            // %200 sistem yazısında satırı 57
+                                            // piksel taşırıyordu — `Spacer`
+                                            // kalan yeri yeniden dağıtamaz,
+                                            // çünkü esnemeyen başlık zaten
+                                            // hepsini yemiş oluyor (2026-08-03).
+                                            // `Expanded` + tek satır kısaltma
+                                            // sayacı yine sağa yaslar.
+                                            Expanded(
+                                              child: Text(
+                                                context.t(K.playersWord),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTypography.heading2
+                                                    .copyWith(
+                                                      color:
+                                                          AppTheme.textPrimaryColor(
+                                                            context,
+                                                          ),
+                                                    ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: AppSpacing.xs,
+                                            ),
+                                            Text(
+                                              // Aşağıdaki listeyle aynı sayıyı
+                                              // gösterir: `visiblePlayers`
+                                              // (engellenenler süzülmüş).
+                                              '${visiblePlayers.length}',
+                                              style: AppTypography.caption
                                                   .copyWith(
                                                     color:
-                                                        AppTheme.textPrimaryColor(
+                                                        AppTheme.textMutedColor(
                                                           context,
                                                         ),
                                                   ),
                                             ),
-                                          ),
-                                          const SizedBox(width: AppSpacing.xs),
-                                          Text(
-                                            // Aşağıdaki listeyle aynı sayıyı
-                                            // gösterir: `visiblePlayers`
-                                            // (engellenenler süzülmüş).
-                                            '${visiblePlayers.length}',
-                                            style: AppTypography.caption
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textMutedColor(
-                                                        context,
+                                          ],
+                                        ),
+                                        if (room.players.length < 2) ...[
+                                          const SizedBox(height: AppSpacing.xs),
+                                          Row(
+                                            key: const ValueKey(
+                                              'room-connection-state',
+                                            ),
+                                            children: [
+                                              SizedBox(
+                                                width: 10,
+                                                height: 10,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      strokeWidth: 1.5,
+                                                      color: AppTheme.playCyan
+                                                          .withValues(
+                                                            alpha: 0.85,
+                                                          ),
+                                                    ),
+                                              ),
+                                              const SizedBox(
+                                                width: AppSpacing.xs,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  context.t(
+                                                    K.playerListUpdating,
+                                                  ),
+                                                  style: AppTypography.caption
+                                                      .copyWith(
+                                                        color:
+                                                            AppTheme.textMutedColor(
+                                                              context,
+                                                            ),
                                                       ),
                                                 ),
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                      if (room.players.length < 2) ...[
-                                        const SizedBox(height: AppSpacing.xs),
-                                        Row(
-                                          key: const ValueKey(
-                                            'room-connection-state',
-                                          ),
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                              height: 10,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 1.5,
-                                                color: AppTheme.playCyan
-                                                    .withValues(alpha: 0.85),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: AppSpacing.xs,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                context.t(K.playerListUpdating),
-                                                style: AppTypography.caption
-                                                    .copyWith(
-                                                      color:
-                                                          AppTheme.textMutedColor(
-                                                            context,
-                                                          ),
-                                                    ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                      const SizedBox(height: AppSpacing.sm),
-                                      if (visiblePlayers.isEmpty)
-                                        Text(
-                                          context.t(K.noPlayersYet),
-                                          style: AppTypography.bodyMedium
-                                              .copyWith(
-                                                color: AppTheme.textMutedColor(
-                                                  context,
-                                                ),
-                                              ),
-                                        )
-                                      else
-                                        for (
-                                          var i = 0;
-                                          i < visiblePlayers.length;
-                                          i++
-                                        )
-                                          _PlayerTile(
-                                            key: ValueKey(
-                                              'room-player-tile-${i + 1}',
-                                            ),
-                                            rank: i + 1,
-                                            player: visiblePlayers[i],
-                                            isKu: ku,
-                                            repository: widget.repository,
-                                            isSelf:
-                                                visiblePlayers[i].id == null ||
-                                                visiblePlayers[i].id ==
-                                                    widget
-                                                        .repository
-                                                        .currentUserId,
-                                            isHost:
-                                                room.hostId != null &&
-                                                visiblePlayers[i].id ==
-                                                    room.hostId,
-                                            onBlocked: () {
-                                              final id = visiblePlayers[i].id;
-                                              if (id == null) return;
-                                              setState(
-                                                () => _blockedPlayerIds.add(
-                                                  id,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                      if (room.players.length < 2) ...[
                                         const SizedBox(height: AppSpacing.sm),
-                                        // Tek inline şerit: davet ipucu (başlatma
-                                        // uyarısı aşağıdaki hazır panelinde).
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              AppIcons.userPlus,
-                                              color: AppTheme.gold,
-                                              size: 18,
-                                            ),
-                                            const SizedBox(
-                                              width: AppSpacing.xs,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                context.t(K.inviteFriendByCode),
-                                                style: AppTypography.caption
-                                                    .copyWith(
-                                                      color:
-                                                          AppTheme.textMutedColor(
-                                                            context,
-                                                          ),
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.cardGap),
-
-                                AppPanel(
-                                  child: Column(
-                                    children: [
-                                      Material(
-                                        color: Colors.transparent,
-                                        child: SwitchListTile(
-                                          value: ready,
-                                          activeThumbColor: AppTheme.playCyan,
-                                          activeTrackColor: AppTheme.playCyan
-                                              .withValues(alpha: 0.45),
-                                          onChanged: _toggleReady,
-                                          title: Text(
-                                            context.t(K.imReady),
-                                            style: AppTypography.bodyLarge
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textPrimaryColor(
-                                                        context,
-                                                      ),
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                          ),
-                                          subtitle: Text(
-                                            context.t(K.readyStateNote),
-                                            style: AppTypography.caption
+                                        if (visiblePlayers.isEmpty)
+                                          Text(
+                                            context.t(K.noPlayersYet),
+                                            style: AppTypography.bodyMedium
                                                 .copyWith(
                                                   color:
                                                       AppTheme.textMutedColor(
                                                         context,
                                                       ),
                                                 ),
-                                          ),
-                                          contentPadding: EdgeInsets.zero,
-                                        ),
-                                      ),
-                                      const SizedBox(height: AppSpacing.sm),
-                                      if (waitingForReady) ...[
-                                        // Oyuncu sayısı yeter ama biri hazır
-                                        // değil. Mesaj role göre değişir:
-                                        // hazır olmayan kişiye ne yapacağı,
-                                        // ötekine niçin beklediği söylenir.
-                                        Container(
-                                          key: const ValueKey(
-                                            'room-ready-hint',
-                                          ),
-                                          width: double.infinity,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: AppSpacing.sm,
-                                            vertical: AppSpacing.xs + 2,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.gold.withValues(
-                                              alpha: 0.10,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              AppRadius.sm,
-                                            ),
-                                            border: Border.all(
-                                              color: AppTheme.gold.withValues(
-                                                alpha: 0.30,
+                                          )
+                                        else
+                                          for (
+                                            var i = 0;
+                                            i < visiblePlayers.length;
+                                            i++
+                                          )
+                                            _PlayerTile(
+                                              key: ValueKey(
+                                                'room-player-tile-${i + 1}',
                                               ),
+                                              rank: i + 1,
+                                              player: visiblePlayers[i],
+                                              isKu: ku,
+                                              repository: widget.repository,
+                                              isSelf:
+                                                  visiblePlayers[i].id ==
+                                                      null ||
+                                                  visiblePlayers[i].id ==
+                                                      widget
+                                                          .repository
+                                                          .currentUserId,
+                                              isHost:
+                                                  room.hostId != null &&
+                                                  visiblePlayers[i].id ==
+                                                      room.hostId,
+                                              onBlocked: () {
+                                                final id = visiblePlayers[i].id;
+                                                if (id == null) return;
+                                                setState(
+                                                  () =>
+                                                      _blockedPlayerIds.add(id),
+                                                );
+                                              },
                                             ),
-                                          ),
-                                          child: Row(
+                                        if (room.players.length < 2) ...[
+                                          const SizedBox(height: AppSpacing.sm),
+                                          // Tek inline şerit: davet ipucu (başlatma
+                                          // uyarısı aşağıdaki hazır panelinde).
+                                          Row(
                                             children: [
-                                              Icon(
-                                                AppIcons.circleCheck,
-                                                color: AppColors.readableAccent(
-                                                  context,
-                                                  AppTheme.gold,
-                                                ),
+                                              const Icon(
+                                                AppIcons.userPlus,
+                                                color: AppTheme.gold,
                                                 size: 18,
                                               ),
                                               const SizedBox(
@@ -1067,244 +1042,354 @@ class _RoomScreenState extends State<RoomScreen> {
                                               Expanded(
                                                 child: Text(
                                                   context.t(
-                                                    ready
-                                                        ? K.waitingOpponentReady
-                                                        : K.tapReadyToStart,
+                                                    K.inviteFriendByCode,
                                                   ),
                                                   style: AppTypography.caption
                                                       .copyWith(
                                                         color:
-                                                            AppColors.readableAccent(
+                                                            AppTheme.textMutedColor(
                                                               context,
-                                                              AppTheme.gold,
                                                             ),
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                            FontWeight.w600,
                                                       ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        const SizedBox(height: AppSpacing.xs),
+                                        ],
                                       ],
-                                      if (room.players.length < 2) ...[
-                                        // Tek inline uyarı şeridi: "2 oyuncu gerekli"
-                                        // mesajı yalnızca burada görünür.
-                                        Container(
-                                          width: double.infinity,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: AppSpacing.sm,
-                                            vertical: AppSpacing.xs + 2,
+                                    ),
+                                  ),
+                                  const SizedBox(height: AppSpacing.cardGap),
+
+                                  AppPanel(
+                                    child: Column(
+                                      children: [
+                                        Material(
+                                          color: Colors.transparent,
+                                          child: SwitchListTile(
+                                            value: ready,
+                                            activeThumbColor: AppTheme.playCyan,
+                                            activeTrackColor: AppTheme.playCyan
+                                                .withValues(alpha: 0.45),
+                                            onChanged: _toggleReady,
+                                            title: Text(
+                                              context.t(K.imReady),
+                                              style: AppTypography.bodyLarge
+                                                  .copyWith(
+                                                    color:
+                                                        AppTheme.textPrimaryColor(
+                                                          context,
+                                                        ),
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                            ),
+                                            subtitle: Text(
+                                              context.t(K.readyStateNote),
+                                              style: AppTypography.caption
+                                                  .copyWith(
+                                                    color:
+                                                        AppTheme.textMutedColor(
+                                                          context,
+                                                        ),
+                                                  ),
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
                                           ),
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.wrong.withValues(
-                                              alpha: 0.08,
+                                        ),
+                                        const SizedBox(height: AppSpacing.sm),
+                                        if (waitingForReady) ...[
+                                          // Oyuncu sayısı yeter ama biri hazır
+                                          // değil. Mesaj role göre değişir:
+                                          // hazır olmayan kişiye ne yapacağı,
+                                          // ötekine niçin beklediği söylenir.
+                                          Container(
+                                            key: const ValueKey(
+                                              'room-ready-hint',
                                             ),
-                                            borderRadius: BorderRadius.circular(
-                                              AppRadius.sm,
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: AppSpacing.sm,
+                                              vertical: AppSpacing.xs + 2,
                                             ),
-                                            border: Border.all(
-                                              color: AppTheme.wrong.withValues(
-                                                alpha: 0.25,
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.gold.withValues(
+                                                alpha: 0.10,
                                               ),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              const Icon(
-                                                AppIcons.userPlus,
-                                                color: AppTheme.wrong,
-                                                size: 18,
-                                              ),
-                                              const SizedBox(
-                                                width: AppSpacing.xs,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  context.t(K.needTwoPlayers),
-                                                  style: AppTypography.caption
-                                                      .copyWith(
-                                                        color: AppTheme.wrong,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    AppRadius.sm,
+                                                  ),
+                                              border: Border.all(
+                                                color: AppTheme.gold.withValues(
+                                                  alpha: 0.30,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(height: AppSpacing.xs),
-                                      ],
-                                      if (_questionLoadExhausted) ...[
-                                        // 3 otomatik denemeden sonra sessiz
-                                        // döngü durur; kullanıcı burada
-                                        // gerçek durumu görür ve elle karar
-                                        // verir (2026-08-14 denetimi).
-                                        Container(
-                                          width: double.infinity,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: AppSpacing.sm,
-                                            vertical: AppSpacing.xs + 2,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.wrong.withValues(
-                                              alpha: 0.08,
                                             ),
-                                            borderRadius: BorderRadius.circular(
-                                              AppRadius.sm,
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  AppIcons.circleCheck,
+                                                  color:
+                                                      AppColors.readableAccent(
+                                                        context,
+                                                        AppTheme.gold,
+                                                      ),
+                                                  size: 18,
+                                                ),
+                                                const SizedBox(
+                                                  width: AppSpacing.xs,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    context.t(
+                                                      ready
+                                                          ? K.waitingOpponentReady
+                                                          : K.tapReadyToStart,
+                                                    ),
+                                                    style: AppTypography.caption
+                                                        .copyWith(
+                                                          color:
+                                                              AppColors.readableAccent(
+                                                                context,
+                                                                AppTheme.gold,
+                                                              ),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            border: Border.all(
+                                          ),
+                                          const SizedBox(height: AppSpacing.xs),
+                                        ],
+                                        if (room.players.length < 2) ...[
+                                          // Tek inline uyarı şeridi: "2 oyuncu gerekli"
+                                          // mesajı yalnızca burada görünür.
+                                          Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: AppSpacing.sm,
+                                              vertical: AppSpacing.xs + 2,
+                                            ),
+                                            decoration: BoxDecoration(
                                               color: AppTheme.wrong.withValues(
-                                                alpha: 0.25,
+                                                alpha: 0.08,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    AppRadius.sm,
+                                                  ),
+                                              border: Border.all(
+                                                color: AppTheme.wrong
+                                                    .withValues(alpha: 0.25),
                                               ),
                                             ),
-                                          ),
-                                          child: Text(
-                                            context.t(K.questionsLoadExhausted),
-                                            style: AppTypography.caption
-                                                .copyWith(
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                  AppIcons.userPlus,
                                                   color: AppTheme.wrong,
-                                                  fontWeight: FontWeight.bold,
+                                                  size: 18,
                                                 ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: AppSpacing.xs),
-                                        GeometricGradientButton(
-                                          label: context.t(K.retry),
-                                          icon: AppIcons.play,
-                                          onPressed: _retryLoadingQuestions,
-                                        ),
-                                      ] else if (isHost) ...[
-                                        GeometricGradientButton(
-                                          label: starting
-                                              ? (context.t(K.preparingShort))
-                                              : (context.t(K.startRace)),
-                                          icon: AppIcons.play,
-                                          isLoading: starting,
-                                          onPressed: canStart
-                                              ? _startGameHost
-                                              : null,
-                                        ),
-                                      ] else ...[
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: AppSpacing.sm,
-                                            horizontal: AppSpacing.md,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: AppTheme.primaryGradientStart
-                                                .withValues(alpha: 0.1),
-                                            borderRadius: BorderRadius.circular(
-                                              AppRadius.sm,
+                                                const SizedBox(
+                                                  width: AppSpacing.xs,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    context.t(K.needTwoPlayers),
+                                                    style: AppTypography.caption
+                                                        .copyWith(
+                                                          color: AppTheme.wrong,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            border: Border.all(
+                                          ),
+                                          const SizedBox(height: AppSpacing.xs),
+                                        ],
+                                        if (_questionLoadExhausted) ...[
+                                          // 3 otomatik denemeden sonra sessiz
+                                          // döngü durur; kullanıcı burada
+                                          // gerçek durumu görür ve elle karar
+                                          // verir (2026-08-14 denetimi).
+                                          Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: AppSpacing.sm,
+                                              vertical: AppSpacing.xs + 2,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: AppTheme.wrong.withValues(
+                                                alpha: 0.08,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    AppRadius.sm,
+                                                  ),
+                                              border: Border.all(
+                                                color: AppTheme.wrong
+                                                    .withValues(alpha: 0.25),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              context.t(
+                                                K.questionsLoadExhausted,
+                                              ),
+                                              style: AppTypography.caption
+                                                  .copyWith(
+                                                    color: AppTheme.wrong,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: AppSpacing.xs),
+                                          GeometricGradientButton(
+                                            label: context.t(K.retry),
+                                            icon: AppIcons.play,
+                                            onPressed: _retryLoadingQuestions,
+                                          ),
+                                        ] else if (isHost) ...[
+                                          GeometricGradientButton(
+                                            label: starting
+                                                ? (context.t(K.preparingShort))
+                                                : (context.t(K.startRace)),
+                                            icon: AppIcons.play,
+                                            isLoading: starting,
+                                            onPressed: canStart
+                                                ? _startGameHost
+                                                : null,
+                                          ),
+                                        ] else ...[
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: AppSpacing.sm,
+                                              horizontal: AppSpacing.md,
+                                            ),
+                                            decoration: BoxDecoration(
                                               color: AppTheme
                                                   .primaryGradientStart
-                                                  .withValues(alpha: 0.28),
+                                                  .withValues(alpha: 0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    AppRadius.sm,
+                                                  ),
+                                              border: Border.all(
+                                                color: AppTheme
+                                                    .primaryGradientStart
+                                                    .withValues(alpha: 0.28),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 16,
+                                                  height: 16,
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                          Color
+                                                        >(
+                                                          AppTheme
+                                                              .primaryGradientStart,
+                                                        ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: AppSpacing.sm,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    context.t(K.waitingHost),
+                                                    style: AppTypography.caption
+                                                        .copyWith(
+                                                          color: AppTheme
+                                                              .primaryGradientStart,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 13,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          child: Row(
-                                            children: [
-                                              const SizedBox(
-                                                width: 16,
-                                                height: 16,
-                                                child: CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                        Color
-                                                      >(
-                                                        AppTheme
-                                                            .primaryGradientStart,
-                                                      ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: AppSpacing.sm,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  context.t(K.waitingHost),
-                                                  style: AppTypography.caption
-                                                      .copyWith(
-                                                        color: AppTheme
-                                                            .primaryGradientStart,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 13,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        ],
                                       ],
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(height: AppSpacing.sm),
+                                  _buildQuickReactionChips(context),
+                                  const SizedBox(height: AppSpacing.sm),
 
-                                // ── Oda sohbeti ───────────────────────
-                                //
-                                // 411 satırlık `RoomChat` yazılmış, testi
-                                // ve çevirileri hazırdı ama aa42044
-                                // ("kalabalık ekranları seyrelt") onu
-                                // RoomScreen'den çıkarmıştı ve commit
-                                // gövdesi sohbetin kaldırıldığını hiç
-                                // anmıyordu. Geriye canlı akışa bağlı,
-                                // hiçbir ekranın mount etmediği bir widget
-                                // kaldı (2026-07-31 denetimi).
-                                //
-                                // Arkadaşla oynamanın en sosyal anında —
-                                // kod paylaşıldı, karşı taraf girdi —
-                                // hiçbir iletişim kanalı yoktu. Sohbet
-                                // katlanabilir bir panel olarak geri
-                                // geldi; kalabalık kaygısı kapalı
-                                // başlayarak karşılanıyor.
-                                //
-                                // Moderasyon onunla BİRLİKTE geldi
-                                // (Apple 1.2): gönderimde küfür/bağlantı
-                                // süzgeci, mesaja uzun basınca bildir ve
-                                // engelle. Sunucu tarafı karşılığı
-                                // supabase/2026-07-31_chat_moderation.sql.
-                                if (room.id != null) ...[
-                                  const SizedBox(height: AppSpacing.cardGap),
-                                  // Kapalıyken dış satır, açıkken RoomChat'in
-                                  // KENDİ başlığı görünür. `_ChatToggleRow`
-                                  // koşulsuz basıldığında ikisi üst üste
-                                  // biniyor ve odada alt alta iki "Sohbet"
-                                  // başlığı çıkıyordu (2026-08-01, iOS
-                                  // simülatöründe görüldü). Sohbeti geri
-                                  // getirirken `RoomChat`in zaten katlanabilir
-                                  // bir başlığı ve `onToggle` geri çağrısı
-                                  // olduğu gözden kaçmıştı.
-                                  if (!_chatOpen)
-                                    _ChatToggleRow(
-                                      open: _chatOpen,
-                                      onToggle: () => setState(
-                                        () => _chatOpen = !_chatOpen,
+                                  // ── Oda sohbeti ───────────────────────
+                                  //
+                                  // 411 satırlık `RoomChat` yazılmış, testi
+                                  // ve çevirileri hazırdı ama aa42044
+                                  // ("kalabalık ekranları seyrelt") onu
+                                  // RoomScreen'den çıkarmıştı ve commit
+                                  // gövdesi sohbetin kaldırıldığını hiç
+                                  // anmıyordu. Geriye canlı akışa bağlı,
+                                  // hiçbir ekranın mount etmediği bir widget
+                                  // kaldı (2026-07-31 denetimi).
+                                  //
+                                  // Arkadaşla oynamanın en sosyal anında —
+                                  // kod paylaşıldı, karşı taraf girdi —
+                                  // hiçbir iletişim kanalı yoktu. Sohbet
+                                  // katlanabilir bir panel olarak geri
+                                  // geldi; kalabalık kaygısı kapalı
+                                  // başlayarak karşılanıyor.
+                                  //
+                                  // Moderasyon onunla BİRLİKTE geldi
+                                  // (Apple 1.2): gönderimde küfür/bağlantı
+                                  // süzgeci, mesaja uzun basınca bildir ve
+                                  // engelle. Sunucu tarafı karşılığı
+                                  // supabase/2026-07-31_chat_moderation.sql.
+                                  if (room.id != null) ...[
+                                    const SizedBox(height: AppSpacing.cardGap),
+                                    // Kapalıyken dış satır, açıkken RoomChat'in
+                                    // KENDİ başlığı görünür. `_ChatToggleRow`
+                                    // koşulsuz basıldığında ikisi üst üste
+                                    // biniyor ve odada alt alta iki "Sohbet"
+                                    // başlığı çıkıyordu (2026-08-01, iOS
+                                    // simülatöründe görüldü). Sohbeti geri
+                                    // getirirken `RoomChat`in zaten katlanabilir
+                                    // bir başlığı ve `onToggle` geri çağrısı
+                                    // olduğu gözden kaçmıştı.
+                                    if (!_chatOpen)
+                                      _ChatToggleRow(
+                                        open: _chatOpen,
+                                        onToggle: () => setState(
+                                          () => _chatOpen = !_chatOpen,
+                                        ),
                                       ),
-                                    ),
-                                  if (_chatOpen)
-                                    RoomChat(
-                                      key: const ValueKey('room-chat'),
-                                      repository: widget.repository,
-                                      roomId: room.id!,
-                                      visible: true,
-                                      onToggle: () => setState(
-                                        () => _chatOpen = !_chatOpen,
+                                    if (_chatOpen)
+                                      RoomChat(
+                                        key: const ValueKey('room-chat'),
+                                        repository: widget.repository,
+                                        roomId: room.id!,
+                                        visible: true,
+                                        onToggle: () => setState(
+                                          () => _chatOpen = !_chatOpen,
+                                        ),
                                       ),
-                                    ),
+                                  ],
                                 ],
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -1401,6 +1486,44 @@ class _RoomScreenState extends State<RoomScreen> {
       _questionLoadExhausted = false;
     });
     _navigateToQuiz();
+  }
+
+  Widget _buildQuickReactionChips(BuildContext context) {
+    final reactions = [
+      (context.t(K.reactionBravo), '👏'),
+      (context.t(K.reactionGoodLuck), '🍀'),
+      (context.t(K.reactionFast), '⚡'),
+      (context.t(K.reactionSmiley), '😊'),
+      (context.t(K.reactionFire), '🔥'),
+    ];
+
+    return Wrap(
+      spacing: AppSpacing.xs,
+      runSpacing: AppSpacing.xs,
+      alignment: WrapAlignment.center,
+      children: [
+        for (final r in reactions)
+          ActionChip(
+            key: ValueKey('room-reaction-${r.$2}'),
+            label: Text(
+              r.$1,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
+                fontWeight: FontWeight.w700,
+                fontSize: 12.5,
+              ),
+            ),
+            backgroundColor: AppTheme.surfaceColor(context),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.badge),
+              side: BorderSide(
+                color: AppTheme.borderOf(context).withValues(alpha: 0.5),
+              ),
+            ),
+            onPressed: () => _sendReaction(r.$1),
+          ),
+      ],
+    );
   }
 }
 

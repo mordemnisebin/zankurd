@@ -404,10 +404,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
     return createRoom(
       category: category,
-    ).copyWith(secondsPerQuestion: secondsPerQuestion);
+    ).copyWith(
+      secondsPerQuestion: secondsPerQuestion,
+      questionCount: questionCount,
+      entryFee: entryFee,
+    );
   }
 
   @override
