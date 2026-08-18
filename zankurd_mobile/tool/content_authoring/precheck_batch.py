@@ -41,9 +41,20 @@ def norm(value: str) -> str:
 
 
 def template_key(prompt: str) -> str:
-    """Kapının şablon ölçüsünün kaba karşılığı: ilk üç sözcük + soru uzunluğu."""
-    words = norm(prompt).split()
-    return " ".join(words[:3]) + f"|{len(words)//5}"
+    """Kapının `templateKey` ölçüsünün BİREBİR karşılığı.
+
+    İlk hâli "ilk üç sözcük + uzunluk kovası" idi ve fazla katıydı: aynı üç
+    sözcükle başlayan her soruyu şablon sayıyordu. Gerçek kapı ise TÜM soru
+    cümlesini karşılaştırır, yalnız tırnak içindeki terimleri ve sayıları
+    maskeleyerek — yani iki soru ancak neredeyse aynı cümleyse çakışır.
+    Yaklaşık ölçü 2149 satırlık ilk üretimde 800'den fazla iyi soruyu
+    eliyordu (yalnız Ziman'da 237); ölçü kaynağına eşitlendi.
+    """
+    masked = re.sub(r'"[^"]*"', " TERM ", prompt)
+    masked = re.sub(r"'[^']*'", " TERM ", masked)
+    masked = re.sub(r"[«“][^»”]+[»”]", " TERM ", masked)
+    masked = re.sub(r"\b\d+\b", " NUM ", masked)
+    return norm(masked)
 
 
 def url_alive(url: str) -> bool:
@@ -72,7 +83,7 @@ def url_alive(url: str) -> bool:
         return False
 
 
-def main(path: str, check_urls: bool = False) -> int:
+def main(path: str, check_urls: bool = False, write_clean: str | None = None) -> int:
     with open(path, newline="", encoding="utf-8") as handle:
         raw_rows = list(csv.reader(handle))
     with open(path, newline="", encoding="utf-8") as handle:
@@ -250,6 +261,15 @@ def main(path: str, check_urls: bool = False) -> int:
             merged[line] = (line, rid, list(reasons))
     problems = [merged[k] for k in sorted(merged)]
 
+    if write_clean:
+        bad_lines = {line for line, _, _ in problems}
+        keep = [row for i, row in enumerate(rows, start=2) if i not in bad_lines]
+        with open(write_clean, "w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(keep)
+        print(f"temiz satırlar yazıldı -> {write_clean} ({len(keep)})")
+
     print(f"satır: {len(rows)}   sorunlu: {len(problems)}   temiz: {len(rows) - len(problems)}")
     if problems:
         counts = Counter(r for _, _, reasons in problems for r in reasons)
@@ -267,4 +287,9 @@ if __name__ == "__main__":
     if len(args) != 1:
         print(__doc__)
         sys.exit(2)
-    sys.exit(main(args[0], check_urls="--check-urls" in sys.argv))
+    clean_out = None
+    for arg in sys.argv:
+        if arg.startswith("--write-clean="):
+            clean_out = arg.split("=", 1)[1]
+    sys.exit(main(args[0], check_urls="--check-urls" in sys.argv,
+                  write_clean=clean_out))

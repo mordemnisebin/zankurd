@@ -2328,6 +2328,19 @@
         "status": "metadata.reviewStatus",
         "locale": "ku-kmr"
       }
+    },
+    {
+      "id": "deepseek_expansion_2026_08_18",
+      "description": "DeepSeek ile üretilip precheck_batch.py'den geçmiş aday havuzu",
+      "path": "docs/content_batches/aday_2026_08_18.csv",
+      "role": "candidate_pool",
+      "parser": "csv",
+      "canonicalGroup": "candidate_questions",
+      "reportIncluded": true,
+      "gateIncluded": true,
+      "productionLike": false,
+      "precedence": 10,
+      "notes": "Yapısal denetim ve kaynak URL canlılığı geçildi; olgusal denetim BEKLİYOR"
     }
   ]
 }
