@@ -78,3 +78,17 @@ supabase/.branches/
 # ikili yığın, hem de logların içinde ortama özgü yollar ve kimlikler var.
 # Yedeği: ~/Documents/ZanKurd-Backups/zankurd-audit-*.tar.gz
 audit_artifacts/
+
+# Başka araçların proje içine yazdığı çalışma klasörleri (2026-08-19).
+# Üretim kodu değil; 63M + 3.7M yer kaplıyorlar ve her oturumda değişiyorlar.
+.mimosa/
+.superpowers/
+.zcode/
+zankurd_mobile/.mimosa/
+
+# Üretilmiş rapor/plan/spec dosyaları. AGENTS.md kuralı: bulgular testte,
+# commit gövdesinde ve kod yorumunda yaşar — yeni rapor dosyası üretilmez.
+docs/superpowers/
+
+# Bu repoya ait olmayan ayrı bir proje (node_modules dahil 83M).
+sky_bird/
