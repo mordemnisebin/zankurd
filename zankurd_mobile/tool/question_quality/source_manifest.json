@@ -12,7 +12,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 1000,
-      "expectedRecordCount": 1352,
+      "expectedRecordCount": 1347,
       "notes": "Bundled JSON loaded by QuestionBankLoader",
       "columns": {
         "id": "id",
@@ -2353,7 +2353,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 926,
+      "expectedRecordCount": 918,
       "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
       "columns": {
         "id": "id",

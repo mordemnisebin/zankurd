@@ -97,6 +97,11 @@ void main() {
       // Kurdistan gazetesinin ilk sayısı 1898'de Kahire'de basıldı; model
       // Osmanlı basınının merkezi olduğu için İstanbul'u seçiyor.
       'ds_dirok_0134': 'Qahîre',
+      // Kofî kadın başlığıdır: bankanın kendi editoryal kaydı da öyle
+      // diyor ve akademik çalışma kürt kadınlarının kofîsini inceliyor
+      // (IJOKS, DergiPark 1641754). Model "başlık → erkek" sezgisini
+      // izleyip yanılıyor.
+      'ds_cand_0064': 'Li ser serê jinan',
     };
 
     final contradicting = <String>[];

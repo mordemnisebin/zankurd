@@ -330,11 +330,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_11493  ·  zorluk 4  ·  offline
 **KU:** Kîjan vebijêrk tê wateya "hevgirtina demokratîk"?
 **TR:** Hangi seçenek "demokratik ittifak" anlamına gelir?
-- ✅ A) yekîtiya wekhev a beşên cuda yên bindest
--    B) awayê xwerêveberî û rêxistinbûna gel
--    C) beşdariya civaka herêmî di pêvajoyên biryarê de
--    D) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
-**Doğru:** A) yekîtiya wekhev a beşên cuda yên bindest
+-    A) awayê xwerêveberî û rêxistinbûna gel
+-    B) beşdariya civaka herêmî di pêvajoyên biryarê de
+-    C) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+- ✅ D) yekîtiya wekhev a beşên cuda yên bindest
+**Doğru:** D) yekîtiya wekhev a beşên cuda yên bindest
 **Açıklama:** "demokratik ittifak": ezilen farklı kesimlerin eşit birliği.
 **Kaynak:** —
 
@@ -343,9 +343,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Hiyerarşi" doğru biçimde nasıl açıklanır?
 -    A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
 -    B) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
--    C) beşdariya civaka herêmî di pêvajoyên biryarê de
-- ✅ D) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
-**Doğru:** D) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+- ✅ C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+-    D) beşdariya civaka herêmî di pêvajoyên biryarê de
+**Doğru:** C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
 **Açıklama:** "hiyerarşi": toplumda alt-üst ilişkisi kuran baskıcı örgütlenme.
 **Kaynak:** —
 
@@ -353,10 +353,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Der barê "pîşesaziya ekolojîk" de ji bo paradîgmayê bijardeya rast kîjan e?
 **TR:** "Ekolojik endüstri" için paradigmaya göre doğru seçenek hangisidir?
 -    A) yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye
--    B) qadên xwerêxistina civakî yên derveyî dewletê
-- ✅ C) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+- ✅ B) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+-    C) qadên xwerêxistina civakî yên derveyî dewletê
 -    D) hevpariya nasnameyan bêyî zora dewletê
-**Doğru:** C) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+**Doğru:** B) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
 **Açıklama:** "ekolojik endüstri": doğayla uyumlu ve geri dönüşümlü üretim biçimi.
 **Kaynak:** —
 
@@ -365,31 +365,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Özgürlük ölçütü" denince ne kastedilir?
 -    A) organeke hevrêzî û biryarê ya li ser komînan
 -    B) reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye
--    C) belgeya destûrî ya ku prensîbên damezrîner û bingehên rêveberiyê diyar dike
-- ✅ D) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
-**Doğru:** D) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+- ✅ C) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+-    D) belgeya destûrî ya ku prensîbên damezrîner û bingehên rêveberiyê diyar dike
+**Doğru:** C) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
 **Açıklama:** "özgürlük ölçütü": toplumun genel özgürlüğünün kadının özgürlüğüyle ölçülmesi.
 **Kaynak:** —
 
 ## offline_11543  ·  zorluk 1  ·  offline
 **KU:** "jiyana hevpar a azad" çawa tê pênasekirin?
 **TR:** "Jiyana hevpar a azad" nasıl tanımlanır?
-- ✅ A) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
--    B) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
--    C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
--    D) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
-**Doğru:** A) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
+-    A) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
+-    B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+-    C) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+- ✅ D) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
+**Doğru:** D) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
 **Açıklama:** "özgür eş yaşam": baskı ve sahiplenme üzerine kurulmayan eşit ortak yaşam.
 **Kaynak:** —
 
 ## offline_11556  ·  zorluk 3  ·  offline
 **KU:** "peymana civakî" tê çi wateyê?
 **TR:** "Toplumsal sözleşme" ne anlama gelir?
--    A) pergaleke li ser bingeha jiyana komînal û hevgirtinê
-- ✅ B) metna damezrîner a hevbeş a kanton û komînan
+- ✅ A) metna damezrîner a hevbeş a kanton û komînan
+-    B) pergaleke li ser bingeha jiyana komînal û hevgirtinê
 -    C) mafê civakê yê xwe parastin û xwerêxistinê
 -    D) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
-**Doğru:** B) metna damezrîner a hevbeş a kanton û komînan
+**Doğru:** A) metna damezrîner a hevbeş a kanton û komînan
 **Açıklama:** "sosyal sözleşme": kantonların ve komünlerin ortak kurucu metni.
 **Kaynak:** —
 
@@ -397,10 +397,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Têgiha "komîn" çi pêk tîne?
 **TR:** "Komîn" kavramı neyi ifade eder?
 -    A) organeke hevrêzî û biryarê ya li ser komînan
--    B) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
-- ✅ C) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+- ✅ B) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+-    C) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
 -    D) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
-**Doğru:** C) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+**Doğru:** B) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
 **Açıklama:** "komün": toplum yönetiminin en küçük ve doğrudan katılımlı birimi.
 **Kaynak:** —
 
@@ -409,64 +409,64 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Cinsiyet özgürlükçülüğü" hakkında en doğru bilgi hangisidir?
 -    A) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
 -    B) beşdariya civaka herêmî di pêvajoyên biryarê de
--    C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
-- ✅ D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
-**Doğru:** D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+- ✅ C) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+-    D) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+**Doğru:** C) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
 **Açıklama:** "cinsiyet özgürlükçü": cinsiyet baskısına ve ayrımcılığına karşı eşitlikçi ilke.
 **Kaynak:** —
 
 ## offline_11588  ·  zorluk 2  ·  offline
 **KU:** "hêza exlaqî" çi îfade dike?
 **TR:** "Ahlaki güç" neyi ifade eder?
-- ✅ A) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
--    B) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
--    C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
--    D) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
-**Doğru:** A) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+-    A) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+-    B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+-    C) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+- ✅ D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+**Doğru:** D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
 **Açıklama:** "ahlaki güç": toplumun yasaya ihtiyaç duymadan kendini düzenleme yetisi.
 **Kaynak:** —
 
 ## offline_11597  ·  zorluk 5  ·  offline
 **KU:** Bi "rexneya patriyarkayê" çi tê xwestin?
 **TR:** "Patriyarka eleştirisi" ile ne kastedilir?
--    A) federasyoneke ne-dewletgir a li ser bingeha binî
-- ✅ B) eşkerekirina avahiya pergala serdestiya zilaman
+- ✅ A) eşkerekirina avahiya pergala serdestiya zilaman
+-    B) federasyoneke ne-dewletgir a li ser bingeha binî
 -    C) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
 -    D) yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye
-**Doğru:** B) eşkerekirina avahiya pergala serdestiya zilaman
+**Doğru:** A) eşkerekirina avahiya pergala serdestiya zilaman
 **Açıklama:** "patriyarka eleştirisi": eşkerekirina avahiya pergala serdestiya zilaman.
 **Kaynak:** —
 
 ## offline_11599  ·  zorluk 5  ·  offline
 **KU:** Têgiha "aboriya komûnal" çi pêk tîne?
 **TR:** "Komünal ekonomi" kavramı neyi ifade eder?
-- ✅ A) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
--    B) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
--    C) biryargirtina rasterast a gel bêyî nûneran
--    D) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
-**Doğru:** A) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+-    A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+-    B) biryargirtina rasterast a gel bêyî nûneran
+-    C) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
+- ✅ D) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+**Doğru:** D) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
 **Açıklama:** "komünal ekonomi": kâr yerine ihtiyaç ve paylaşımı esas alan ekonomi.
 **Kaynak:** —
 
 ## offline_11605  ·  zorluk 4  ·  offline
 **KU:** Der barê "konfederalîzma demokratîk" de bijardeya rast kîjan e?
 **TR:** "Demokratik konfederalizm" için doğru seçenek hangisidir?
--    A) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê
-- ✅ B) modeleke rêveberiya civakî ya derveyî dewletê
+- ✅ A) modeleke rêveberiya civakî ya derveyî dewletê
+-    B) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê
 -    C) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
 -    D) têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de
-**Doğru:** B) modeleke rêveberiya civakî ya derveyî dewletê
+**Doğru:** A) modeleke rêveberiya civakî ya derveyî dewletê
 **Açıklama:** "demokratik konfederalizm": devletin dışında bir toplum yönetimi modeli.
 **Kaynak:** —
 
 ## offline_11624  ·  zorluk 2  ·  offline
 **KU:** "azadiya jinê" çi îfade dike?
 **TR:** "Kadın özgürlüğü" neyi ifade eder?
-- ✅ A) pîvana herî bingehîn a azadbûna civakî
--    B) krîzên ekolojî, jin û demokrasiyê
--    C) azadiya jinê, ekolojî û demokrasî
--    D) dibistana lêgerîna zanist û jiyaneke alternatîf
-**Doğru:** A) pîvana herî bingehîn a azadbûna civakî
+-    A) krîzên ekolojî, jin û demokrasiyê
+-    B) azadiya jinê, ekolojî û demokrasî
+-    C) dibistana lêgerîna zanist û jiyaneke alternatîf
+- ✅ D) pîvana herî bingehîn a azadbûna civakî
+**Doğru:** D) pîvana herî bingehîn a azadbûna civakî
 **Açıklama:** "kadın özgürlüğü": toplumsal özgürleşmenin en temel ölçüsü.
 **Kaynak:** —
 
@@ -475,20 +475,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Meclis" için geçerli tanım hangisidir?
 -    A) avahiyeke dewletê ya yekreng û sînoran pîroz dike
 -    B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
--    C) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
-- ✅ D) organeke hevrêzî û biryarê ya li ser komînan
-**Doğru:** D) organeke hevrêzî û biryarê ya li ser komînan
+- ✅ C) organeke hevrêzî û biryarê ya li ser komînan
+-    D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+**Doğru:** C) organeke hevrêzî û biryarê ya li ser komînan
 **Açıklama:** "meclis": komünlerin üzerinde eşgüdüm ve karar organı.
 **Kaynak:** —
 
 ## offline_11713  ·  zorluk 5  ·  offline
 **KU:** "civaka exlaqî-polîtîk" bi awayekî rast çawa tê ravekirin?
 **TR:** "Ahlaki-politik toplum" doğru biçimde nasıl açıklanır?
-- ✅ A) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
--    B) xeteke pêşketina komînal a gelan a ne-dewletgir
--    C) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
--    D) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
-**Doğru:** A) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
+-    A) xeteke pêşketina komînal a gelan a ne-dewletgir
+-    B) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+-    C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+- ✅ D) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
+**Doğru:** D) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
 **Açıklama:** "ahlaki-politik toplum": ahlaki değerleri olan ve kararını kendi veren toplum.
 **Kaynak:** —
 
@@ -497,9 +497,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aşağıdakilerden hangisi "ulus devlet" için doğrudur?
 -    A) organeke hevrêzî û biryarê ya li ser komînan
 -    B) reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye
--    C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
-- ✅ D) avahiyeke dewletê ya yekreng û sînoran pîroz dike
-**Doğru:** D) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+- ✅ C) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+-    D) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+**Doğru:** C) avahiyeke dewletê ya yekreng û sînoran pîroz dike
 **Açıklama:** "ulus devlet": tek biçimli ve sınırları kutsayan devlet yapısı.
 **Kaynak:** —
 
@@ -507,21 +507,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Der barê "modernîteya kapîtalîst" de ji bo paradîgmayê bijardeya rast kîjan e?
 **TR:** "Kapitalist modernite" için paradigmaya göre doğru seçenek hangisidir?
 -    A) komîteya ku gel li taxan û gundan biryaran dide
--    B) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
-- ✅ C) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+- ✅ B) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+-    C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
 -    D) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
-**Doğru:** C) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+**Doğru:** B) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
 **Açıklama:** "kapitalist modernite": endüstriyalizm, ulus-devlet ve kapitalizm üçlüsü.
 **Kaynak:** —
 
 ## offline_11782  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeha "tekelparêzî" di nav paradîgmayê de rast bi cih dike?
 **TR:** "Tekelcilik" kavramını paradigma içinde doğru yerleştiren hangisidir?
--    A) federasyoneke ne-dewletgir a li ser bingeha binî
-- ✅ B) krîza navendîbûna aborî û siyasî ya destekî yekane
+- ✅ A) krîza navendîbûna aborî û siyasî ya destekî yekane
+-    B) federasyoneke ne-dewletgir a li ser bingeha binî
 -    C) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
 -    D) dibistana lêgerîna zanist û jiyaneke alternatîf
-**Doğru:** B) krîza navendîbûna aborî û siyasî ya destekî yekane
+**Doğru:** A) krîza navendîbûna aborî û siyasî ya destekî yekane
 **Açıklama:** "tekelcilik": ekonomik ve siyasal gücün tek elde toplanması krizi.
 **Kaynak:** —
 
@@ -529,32 +529,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "Akademiya Modernîteya Demokratîk" de kîjan rast e?
 **TR:** "Demokratik modernite akademisi" hakkında hangisi doğrudur?
 -    A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
--    B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
-- ✅ C) dibistana lêgerîna zanist û jiyaneke alternatîf
+- ✅ B) dibistana lêgerîna zanist û jiyaneke alternatîf
+-    C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
 -    D) avahiyeke dewletê ya yekreng û sînoran pîroz dike
-**Doğru:** C) dibistana lêgerîna zanist û jiyaneke alternatîf
+**Doğru:** B) dibistana lêgerîna zanist û jiyaneke alternatîf
 **Açıklama:** "demokratik modernite akademisi": alternatif bilim ve yaşam arayışının okulu.
 **Kaynak:** —
 
 ## offline_11792  ·  zorluk 1  ·  offline
 **KU:** Derbarê "zanistiya demokratîk" de kîjan rast e?
 **TR:** "Demokratik bilim" hakkında hangisi doğrudur?
-- ✅ A) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
--    B) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
--    C) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
--    D) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
-**Doğru:** A) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+-    A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+-    B) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
+-    C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+- ✅ D) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+**Doğru:** D) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
 **Açıklama:** "demokratik bilim": tekelleşmemiş, topluma hizmet eden bilim anlayışı.
 **Kaynak:** —
 
 ## offline_11813  ·  zorluk 4  ·  offline
 **KU:** Ji bo "netewa demokratîk" pênaseya derbasdar kîjan e?
 **TR:** "Demokratik ulus" için geçerli tanım hangisidir?
-- ✅ A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
--    B) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
--    C) belgeya ku prensîbên hevjiyana civakê diyar dike
--    D) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
-**Doğru:** A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+-    A) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
+-    B) belgeya ku prensîbên hevjiyana civakê diyar dike
+-    C) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+- ✅ D) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+**Doğru:** D) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
 **Açıklama:** "demokratik ulus": ortak bir ülkede çok kültürlü ve eşit birliktelik.
 **Kaynak:** —
 
@@ -562,43 +562,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "civaka sivîl" di mijara paradîgmayê de çi vedibêje?
 **TR:** Paradigma konusunda "sivil toplum" neyi anlatır?
 -    A) milkiyeta axê û amûran a gişî civakê
--    B) yekîneya bingehîn a hevgirtinê ya aboriya komînal
-- ✅ C) qadên xwerêxistina civakî yên derveyî dewletê
+- ✅ B) qadên xwerêxistina civakî yên derveyî dewletê
+-    C) yekîneya bingehîn a hevgirtinê ya aboriya komînal
 -    D) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
-**Doğru:** C) qadên xwerêxistina civakî yên derveyî dewletê
+**Doğru:** B) qadên xwerêxistina civakî yên derveyî dewletê
 **Açıklama:** "sivil toplum": devletin dışındaki toplumsal öz örgütlenme alanları.
 **Kaynak:** —
 
 ## offline_11838  ·  zorluk 4  ·  offline
 **KU:** Derbarê "şaristaniya demokratîk" de ravekirina rast kîjan e?
 **TR:** "Demokratik uygarlık" hakkında doğru açıklama hangisidir?
-- ✅ A) xeteke pêşketina komînal a gelan a ne-dewletgir
--    B) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
--    C) ji ber ku têkiliya civak-xweza bi rexneya desthilatdarî û aboriyê ve tevî hev vedihewîne
--    D) ji ber ku ji bo pratîka perwerdehiyê fêrbûneke ewle, analîtîk û demokratîk armanc kirî ye
-**Doğru:** A) xeteke pêşketina komînal a gelan a ne-dewletgir
+-    A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+-    B) ji ber ku têkiliya civak-xweza bi rexneya desthilatdarî û aboriyê ve tevî hev vedihewîne
+-    C) ji ber ku ji bo pratîka perwerdehiyê fêrbûneke ewle, analîtîk û demokratîk armanc kirî ye
+- ✅ D) xeteke pêşketina komînal a gelan a ne-dewletgir
+**Doğru:** D) xeteke pêşketina komînal a gelan a ne-dewletgir
 **Açıklama:** "demokratik uygarlık": halkların devletçi olmayan komünal gelişim çizgisi.
 **Kaynak:** —
 
 ## offline_11846  ·  zorluk 1  ·  offline
 **KU:** Têgiha "kantona demokratîk" çi pêk tîne?
 **TR:** "Demokratik kanton" kavramı neyi ifade eder?
-- ✅ A) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
--    B) li seranserê cîhanê bûye sembola azadiya jinê
--    C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
--    D) metna damezrîner a hevbeş a kanton û komînan
-**Doğru:** A) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+-    A) li seranserê cîhanê bûye sembola azadiya jinê
+-    B) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+-    C) metna damezrîner a hevbeş a kanton û komînan
+- ✅ D) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+**Doğru:** D) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
 **Açıklama:** "demokratik kanton": yerel özerkliğe sahip idari ve toplumsal birim.
 **Kaynak:** —
 
 ## offline_11864  ·  zorluk 5  ·  offline
 **KU:** Kîjan li gorî pênaseya "konfederalîzma demokratîk" ye?
 **TR:** Hangisi "demokratik konfederal" tanımına uygundur?
--    A) mafê civakê yê xweparastin û xwerêxistinê
-- ✅ B) federasyoneke ne-dewletgir a li ser bingeha binî
+- ✅ A) federasyoneke ne-dewletgir a li ser bingeha binî
+-    B) mafê civakê yê xweparastin û xwerêxistinê
 -    C) pîvana herî bingehîn a azadbûna civakî
 -    D) eşkerekirina avahiya pergala serdestiya zilaman
-**Doğru:** B) federasyoneke ne-dewletgir a li ser bingeha binî
+**Doğru:** A) federasyoneke ne-dewletgir a li ser bingeha binî
 **Açıklama:** "demokratik konfederal": aşağıdan kurulan, devletçi olmayan federasyon.
 **Kaynak:** —
 
@@ -607,9 +607,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Toplumsal ekoloji" kavramını paradigma içinde doğru yerleştiren hangisidir?
 -    A) avahiyeke dewletê ya yekreng û sînoran pîroz dike
 -    B) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
--    C) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
-- ✅ D) zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike
-**Doğru:** D) zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike
+- ✅ C) zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike
+-    D) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+**Doğru:** C) zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike
 **Açıklama:** "toplumsal ekoloji": doğanın tahribi ile hiyerarşi arasındaki bağı kuran bilim.
 **Kaynak:** —
 
@@ -618,9 +618,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Peymana civakî" hakkında doğru seçenek hangisidir?
 -    A) avahiyeke dewletê ya yekreng û sînoran pîroz dike
 -    B) dîtina azadiya jinê wek bingeha azadiya civakî
--    C) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
-- ✅ D) belgeya ku prensîbên hevjiyana civakê diyar dike
-**Doğru:** D) belgeya ku prensîbên hevjiyana civakê diyar dike
+- ✅ C) belgeya ku prensîbên hevjiyana civakê diyar dike
+-    D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+**Doğru:** C) belgeya ku prensîbên hevjiyana civakê diyar dike
 **Açıklama:** "toplumsal sözleşme": toplumun birlikte yaşama ilkelerini belirleyen belge.
 **Kaynak:** —
 
@@ -629,31 +629,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aşağıdakilerden hangisi "ekolojik toplum" kavramını açıklar?
 -    A) hevpariya nasnameyan bêyî zora dewletê
 -    B) yekîtiya wekhev a beşên cuda yên bindest
--    C) li seranserê cîhanê bûye sembola azadiya jinê
-- ✅ D) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
-**Doğru:** D) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
+- ✅ C) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
+-    D) li seranserê cîhanê bûye sembola azadiya jinê
+**Doğru:** C) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
 **Açıklama:** "ekolojik toplum": doğayı tüketmeyen, onunla uyum içinde yaşayan toplum.
 **Kaynak:** —
 
 ## offline_11917  ·  zorluk 1  ·  offline
 **KU:** Li jêr kîjan têgiha "eşseroktî" rave dike?
 **TR:** Aşağıdakilerden hangisi "eş başkanlık" kavramını açıklar?
-- ✅ A) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
--    B) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
--    C) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
--    D) têgihiştina mirov a ku ew parçeyekî xwezayê ye
-**Doğru:** A) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+-    A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+-    B) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+-    C) têgihiştina mirov a ku ew parçeyekî xwezayê ye
+- ✅ D) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+**Doğru:** D) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
 **Açıklama:** "eş başkanlık": yönetim organlarında kadın-erkek eşit temsil sistemi.
 **Kaynak:** —
 
 ## offline_11957  ·  zorluk 5  ·  offline
 **KU:** Dema "zayenda civakî" tê gotin, çi tê xwestin?
 **TR:** "Toplumsal cinsiyet" denince ne kastedilir?
--    A) krîza navendîbûna aborî û siyasî ya destekî yekane
-- ✅ B) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+- ✅ A) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+-    B) krîza navendîbûna aborî û siyasî ya destekî yekane
 -    C) kapitalist moderniteye alternatif yaşam sistemi
 -    D) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
-**Doğru:** B) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+**Doğru:** A) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
 **Açıklama:** "toplumsal cinsiyet": toplumun kadın ve erkeğe yüklediği kurgulanmış roller.
 **Kaynak:** —
 
@@ -661,32 +661,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "antîkapîtalîzm" çi îfade dike?
 **TR:** "antikapitalizm" neyi ifade eder?
 -    A) ku rêxistinbûna demokratîk tenê bi dewleta navendî re sînordar nîne
--    B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
-- ✅ C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+- ✅ B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+-    C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
 -    D) nêrîna ku li dora zanista jinê û rexneya baviksalariyê pêş dikeve
-**Doğru:** C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+**Doğru:** B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
 **Açıklama:** "antikapitalizm": kapitalizmin kâr ve sömürü mantığına karşı duruş.
 **Kaynak:** —
 
 ## offline_12036  ·  zorluk 3  ·  offline
 **KU:** Ji aliyê paradîgmayê ve ji bo "pîşesazîparêzî" gotina rast kîjan e?
 **TR:** Paradigma açısından "endüstriyalizm" için doğru ifade hangisidir?
-- ✅ A) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
--    B) têkiliya di navbera serdestiyê û xerakirina xwezayê de
--    C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
--    D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
-**Doğru:** A) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
+-    A) têkiliya di navbera serdestiyê û xerakirina xwezayê de
+-    B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+-    C) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+- ✅ D) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
+**Doğru:** D) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
 **Açıklama:** "endüstriyalizm": kâr için doğayı tahrip eden sanayi modeli.
 **Kaynak:** —
 
 ## offline_12069  ·  zorluk 5  ·  offline
 **KU:** Dema "milkiyeta komûnal" tê gotin, çi tê xwestin?
 **TR:** "komünal mülkiyet" denildiğinde ne kastedilir?
-- ✅ A) milkiyeta axê û amûran a gişî civakê
--    B) pîvana herî bingehîn a azadbûna civakî
--    C) azadiya jinê, ekolojî û demokrasî
--    D) eşkerekirina avahiya pergala serdestiya zilaman
-**Doğru:** A) milkiyeta axê û amûran a gişî civakê
+-    A) pîvana herî bingehîn a azadbûna civakî
+-    B) azadiya jinê, ekolojî û demokrasî
+-    C) eşkerekirina avahiya pergala serdestiya zilaman
+- ✅ D) milkiyeta axê û amûran a gişî civakê
+**Doğru:** D) milkiyeta axê û amûran a gişî civakê
 **Açıklama:** "komünal mülkiyet": toprağın ve araçların topluma ait ortak mülkiyeti.
 **Kaynak:** —
 
@@ -695,9 +695,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "kadın akademileri" hakkında hangisi doğrudur?
 -    A) têgihiştina mirov a ku ew parçeyekî xwezayê ye
 -    B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
--    C) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
-- ✅ D) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
-**Doğru:** D) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
+- ✅ C) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
+-    D) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+**Doğru:** C) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
 **Açıklama:** "kadın akademileri": kadın bilincini ve jineolojiyi geliştiren okullar.
 **Kaynak:** —
 
@@ -706,42 +706,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "ataerkillik" hakkında doğru seçenek hangisidir?
 -    A) nîzameke wekhev a bêyî serdestî û mêtinkirinê
 -    B) li seranserê cîhanê bûye sembola azadiya jinê
--    C) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
-- ✅ D) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
-**Doğru:** D) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+- ✅ C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+-    D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+**Doğru:** C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
 **Açıklama:** "ataerkillik": erkeği egemen kılan ve kadını bastıran toplumsal sistem.
 **Kaynak:** —
 
 ## offline_12261  ·  zorluk 3  ·  offline
 **KU:** "civaka bêhiyerarşî" tê çi wateyê?
 **TR:** "hiyerarşisiz toplum" ne anlama gelir?
-- ✅ A) nîzameke wekhev a bêyî serdestî û mêtinkirinê
--    B) têkiliya di navbera serdestiyê û xerakirina xwezayê de
--    C) biryargirtina rasterast a gel bêyî nûneran
--    D) yekîtiya wekhev a beşên cuda yên bindest
-**Doğru:** A) nîzameke wekhev a bêyî serdestî û mêtinkirinê
+-    A) têkiliya di navbera serdestiyê û xerakirina xwezayê de
+-    B) biryargirtina rasterast a gel bêyî nûneran
+-    C) yekîtiya wekhev a beşên cuda yên bindest
+- ✅ D) nîzameke wekhev a bêyî serdestî û mêtinkirinê
+**Doğru:** D) nîzameke wekhev a bêyî serdestî û mêtinkirinê
 **Açıklama:** "hiyerarşisiz toplum": tahakküm ve sömürü olmayan eşitlikçi düzen.
 **Kaynak:** —
 
 ## offline_12291  ·  zorluk 1  ·  offline
 **KU:** "politîkbûn" bi awayekî rast çawa tê ravekirin?
 **TR:** "politikleşme" doğru biçimde nasıl açıklanır?
-- ✅ A) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
--    B) organeke hevrêzî û biryarê ya li ser komînan
--    C) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê
--    D) belgeya ku prensîbên hevjiyana civakê diyar dike
-**Doğru:** A) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+-    A) organeke hevrêzî û biryarê ya li ser komînan
+-    B) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê
+-    C) belgeya ku prensîbên hevjiyana civakê diyar dike
+- ✅ D) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+**Doğru:** D) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
 **Açıklama:** "politikleşme": toplumun sözle ve kararla kendi kaderine sahip çıkması.
 **Kaynak:** —
 
 ## offline_12331  ·  zorluk 1  ·  offline
 **KU:** Derbarê "demokrasiya rasterast" de agahiya herî rast kîjan e?
 **TR:** "doğrudan demokrasi" hakkında en doğru bilgi hangisidir?
--    A) têkiliya di navbera serdestiyê û xerakirina xwezayê de
-- ✅ B) biryargirtina rasterast a gel bêyî nûneran
+- ✅ A) biryargirtina rasterast a gel bêyî nûneran
+-    B) têkiliya di navbera serdestiyê û xerakirina xwezayê de
 -    C) beşdariya civaka herêmî di pêvajoyên biryarê de
 -    D) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
-**Doğru:** B) biryargirtina rasterast a gel bêyî nûneran
+**Doğru:** A) biryargirtina rasterast a gel bêyî nûneran
 **Açıklama:** "doğrudan demokrasi": halkın temsilciler olmadan doğrudan karar vermesi.
 **Kaynak:** —
 
@@ -749,10 +749,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "kooperatîfvanî" çawa divê bê fêmkirin?
 **TR:** "kooperatifçilik" nasıl anlaşılmalıdır?
 -    A) federasyoneke ne-dewletgir a li ser bingeha binî
--    B) pergaleke li ser bingeha jiyana komînal û hevgirtinê
-- ✅ C) yekîneya bingehîn a hevgirtinê ya aboriya komînal
+- ✅ B) yekîneya bingehîn a hevgirtinê ya aboriya komînal
+-    C) pergaleke li ser bingeha jiyana komînal û hevgirtinê
 -    D) krîza navendîbûna aborî û siyasî ya destekî yekane
-**Doğru:** C) yekîneya bingehîn a hevgirtinê ya aboriya komînal
+**Doğru:** B) yekîneya bingehîn a hevgirtinê ya aboriya komînal
 **Açıklama:** "kooperatifçilik": komünal ekonominin temel dayanışma birimi.
 **Kaynak:** —
 
@@ -761,20 +761,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "öz savunma" hakkında doğru açıklama hangisidir?
 -    A) pergaleke li ser bingeha jiyana komînal û hevgirtinê
 -    B) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
--    C) milkiyeta axê û amûran a gişî civakê
-- ✅ D) mafê civakê yê xwe parastin û xwerêxistinê
-**Doğru:** D) mafê civakê yê xwe parastin û xwerêxistinê
+- ✅ C) mafê civakê yê xwe parastin û xwerêxistinê
+-    D) milkiyeta axê û amûran a gişî civakê
+**Doğru:** C) mafê civakê yê xwe parastin û xwerêxistinê
 **Açıklama:** "öz savunma": toplumun kendini koruma ve örgütleme hakkı.
 **Kaynak:** —
 
 ## offline_12391  ·  zorluk 3  ·  offline
 **KU:** "şaristaniya dewletparêz" tê çi wateyê?
 **TR:** "devletçi uygarlık" ne anlama gelir?
--    A) xeteke pêşketina komînal a gelan a ne-dewletgir
-- ✅ B) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+- ✅ A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+-    B) xeteke pêşketina komînal a gelan a ne-dewletgir
 -    C) beşdariya civaka herêmî di pêvajoyên biryarê de
 -    D) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
-**Doğru:** B) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+**Doğru:** A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
 **Açıklama:** "devletçi uygarlık": sınıflı, hiyerarşik ve merkezinde devlet olan tarihsel çizgi.
 **Kaynak:** —
 
@@ -782,10 +782,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li jêr ji bo "komunalîzma demokratîk" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "demokratik komünalizm" için doğrudur?
 -    A) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
--    B) krîza navendîbûna aborî û siyasî ya destekî yekane
-- ✅ C) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+- ✅ B) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+-    C) krîza navendîbûna aborî û siyasî ya destekî yekane
 -    D) dibistana lêgerîna zanist û jiyaneke alternatîf
-**Doğru:** C) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+**Doğru:** B) pergaleke li ser bingeha jiyana komînal û hevgirtinê
 **Açıklama:** "demokratik komünalizm": komünal yaşam ve dayanışma temelli sistem.
 **Kaynak:** —
 
@@ -794,42 +794,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bu açıklamayla hangi kavram tanınır: "ulus-devlet sisteminin dışında bir toplum yönetimi modeli"?
 -    A) civaka exlaqî-polîtîk
 -    B) Modernîteya Demokratîk
--    C) Ekolojiya Civakî
-- ✅ D) Konfederalîzma Demokratîk
-**Doğru:** D) Konfederalîzma Demokratîk
+- ✅ C) Konfederalîzma Demokratîk
+-    D) Ekolojiya Civakî
+**Doğru:** C) Konfederalîzma Demokratîk
 **Açıklama:** "Konfederalîzma Demokratîk" şu anlama gelir: ulus-devlet sisteminin dışında bir toplum yönetimi modeli.
 **Kaynak:** —
 
 ## offline_curated_21754  ·  zorluk 5  ·  offline
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "Konfederalîzma Demokratîk" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "Konfederalîzma Demokratîk" kavramının açıklamasını doğru biçimde tamamlar?
-- ✅ A) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
--    B) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
--    C) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
--    D) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
-**Doğru:** A) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
+-    A) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
+-    B) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
+-    C) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
+- ✅ D) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
+**Doğru:** D) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
 **Açıklama:** "Konfederalîzma Demokratîk" için doğru açıklama şudur: ulus-devlet sisteminin dışında bir toplum yönetimi modeli.
 **Kaynak:** —
 
 ## offline_curated_21776  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "modela alternatîf a jiyanê ya li dijî kapîtalîzma modern"?
 **TR:** Bu açıklamayla hangi kavram tanınır: "modern kapitalizme karşı alternatif yaşam modeli"?
--    A) civaka exlaqî-polîtîk
-- ✅ B) Modernîteya Demokratîk
+- ✅ A) Modernîteya Demokratîk
+-    B) civaka exlaqî-polîtîk
 -    C) Jineolojî
 -    D) azadiya zayendî
-**Doğru:** B) Modernîteya Demokratîk
+**Doğru:** A) Modernîteya Demokratîk
 **Açıklama:** "Moderniteya Demokratîk" şu anlama gelir: modern kapitalizme karşı alternatif yaşam modeli.
 **Kaynak:** —
 
 ## offline_curated_21779  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "Modernîteya Demokratîk" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "Moderniteya Demokratîk" kavramının açıklamasını doğru biçimde tamamlar?
-- ✅ A) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
--    B) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
--    C) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
--    D) avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike
-**Doğru:** A) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
+-    A) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
+-    B) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
+-    C) avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike
+- ✅ D) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
+**Doğru:** D) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
 **Açıklama:** "Moderniteya Demokratîk" için doğru açıklama şudur: modern kapitalizme karşı alternatif yaşam modeli.
 **Kaynak:** —
 
@@ -838,75 +838,75 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Jineolojî" kavramı hangi açıklamayla daha iyi anlaşılır?
 -    A) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
 -    B) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
--    C) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
-- ✅ D) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
-**Doğru:** D) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
+- ✅ C) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
+-    D) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
+**Doğru:** C) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
 **Açıklama:** "Jineolojî" şu anlama gelir: toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi.
 **Kaynak:** —
 
 ## offline_curated_21801  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike"?
 **TR:** Bu açıklamayla hangi kavram tanınır: "toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi"?
-- ✅ A) Jineolojî
--    B) civaka exlaqî-polîtîk
--    C) Modernîteya Demokratîk
--    D) aboriya komûnal
-**Doğru:** A) Jineolojî
+-    A) civaka exlaqî-polîtîk
+-    B) Modernîteya Demokratîk
+-    C) aboriya komûnal
+- ✅ D) Jineolojî
+**Doğru:** D) Jineolojî
 **Açıklama:** "Jineolojî" şu anlama gelir: toplumun özgürlüğünü kadının özgürlüğü üzerine kuran kadın bilimi.
 **Kaynak:** —
 
 ## offline_curated_21826  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de"?
 **TR:** Bu açıklamayla hangi kavram tanınır: "toplum ile doğa arasındaki dengeli ve dostça ilişki"?
--    A) rexneya patriyarkayê
-- ✅ B) Ekolojiya Civakî
+- ✅ A) Ekolojiya Civakî
+-    B) rexneya patriyarkayê
 -    C) zanistiya azad
 -    D) civaka exlaqî-polîtîk
-**Doğru:** B) Ekolojiya Civakî
+**Doğru:** A) Ekolojiya Civakî
 **Açıklama:** "Ekolojiya Civakî" şu anlama gelir: toplum ile doğa arasındaki dengeli ve dostça ilişki.
 **Kaynak:** —
 
 ## offline_curated_21829  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "Ekolojiya Civakî" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "Ekolojiya Civakî" kavramının açıklamasını doğru biçimde tamamlar?
-- ✅ A) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
--    B) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
--    C) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
--    D) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
-**Doğru:** A) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
+-    A) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
+-    B) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
+-    C) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
+- ✅ D) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
+**Doğru:** D) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
 **Açıklama:** "Ekolojiya Civakî" için doğru açıklama şudur: toplum ile doğa arasındaki dengeli ve dostça ilişki.
 **Kaynak:** —
 
 ## offline_curated_21851  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê'?
 **TR:** Bu açıklamayla hangi kavram tanınır: "kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli"?
-- ✅ A) aboriya komûnal
--    B) civaka exlaqî-polîtîk
--    C) Konfederalîzma Demokratîk
--    D) Ekolojiya Civakî
-**Doğru:** A) aboriya komûnal
+-    A) civaka exlaqî-polîtîk
+-    B) Konfederalîzma Demokratîk
+-    C) Ekolojiya Civakî
+- ✅ D) aboriya komûnal
+**Doğru:** D) aboriya komûnal
 **Açıklama:** "aboriya komûnal" şu anlama gelir: kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli.
 **Kaynak:** —
 
 ## offline_curated_21854  ·  zorluk 4  ·  offline
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "aboriya komûnal" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "aboriya komûnal" kavramının açıklamasını doğru biçimde tamamlar?
-- ✅ A) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
--    B) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
--    C) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
--    D) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
-**Doğru:** A) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
+-    A) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
+-    B) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
+-    C) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
+- ✅ D) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
+**Doğru:** D) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
 **Açıklama:** "aboriya komûnal" için doğru açıklama şudur: kâr üzerine değil, paylaşım ve ihtiyaç üzerine kurulu ekonomi modeli.
 **Kaynak:** —
 
 ## offline_curated_21876  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide"?
 **TR:** Bu açıklamayla hangi kavram tanınır: "kararlarını ahlaki ve politik bilinçle veren özgür toplum"?
--    A) aboriya komûnal
-- ✅ B) civaka exlaqî-polîtîk
+- ✅ A) civaka exlaqî-polîtîk
+-    B) aboriya komûnal
 -    C) Ekolojiya Civakî
 -    D) Modernîteya Demokratîk
-**Doğru:** B) civaka exlaqî-polîtîk
+**Doğru:** A) civaka exlaqî-polîtîk
 **Açıklama:** "civaka exlaqî-polîtîk" şu anlama gelir: kararlarını ahlaki ve politik bilinçle veren özgür toplum.
 **Kaynak:** —
 
@@ -914,43 +914,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "civaka exlaqî-polîtîk" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "civaka exlaqî-polîtîk" kavramının açıklamasını doğru biçimde tamamlar?
 -    A) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
--    B) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
-- ✅ C) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
+- ✅ B) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
+-    C) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
 -    D) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
-**Doğru:** C) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
+**Doğru:** B) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
 **Açıklama:** "civaka exlaqî-polîtîk" için doğru açıklama şudur: kararlarını ahlaki ve politik bilinçle veren özgür toplum.
 **Kaynak:** —
 
 ## offline_curated_21901  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê"?
 **TR:** Bu açıklamayla hangi kavram tanınır: "toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması"?
-- ✅ A) rexneya patriyarkayê
--    B) Ekolojiya Civakî
--    C) aboriya komûnal
--    D) Modernîteya Demokratîk
-**Doğru:** A) rexneya patriyarkayê
+-    A) Ekolojiya Civakî
+-    B) aboriya komûnal
+-    C) Modernîteya Demokratîk
+- ✅ D) rexneya patriyarkayê
+**Doğru:** D) rexneya patriyarkayê
 **Açıklama:** "rexneya patriyarkayê" şu anlama gelir: toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması.
 **Kaynak:** —
 
 ## offline_curated_21904  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "rexneya patriyarkayê" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "rexneya patriyarkayê" kavramının açıklamasını doğru biçimde tamamlar?
-- ✅ A) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
--    B) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
--    C) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
--    D) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
-**Doğru:** A) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
+-    A) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
+-    B) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
+-    C) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
+- ✅ D) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
+**Doğru:** D) analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê
 **Açıklama:** "rexneya patriyarkayê" için doğru açıklama şudur: toplum üzerindeki erkek egemen sistemin çözümlenmesi ve yıkılması.
 **Kaynak:** —
 
 ## offline_curated_21926  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike"?
 **TR:** Bu açıklamayla hangi kavram tanınır: "toplumu üst ve alt sınıflara bölen tahakküm yapısı"?
--    A) Modernîteya Demokratîk
-- ✅ B) hiyerarşiya civakî
+- ✅ A) hiyerarşiya civakî
+-    B) Modernîteya Demokratîk
 -    C) azadiya zayendî
 -    D) Konfederalîzma Demokratîk
-**Doğru:** B) hiyerarşiya civakî
+**Doğru:** A) hiyerarşiya civakî
 **Açıklama:** "hiyerarşiya civakî" şu anlama gelir: toplumu üst ve alt sınıflara bölen tahakküm yapısı.
 **Kaynak:** —
 
@@ -958,43 +958,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "hiyerarşiya civakî" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "hiyerarşiya civakî" kavramının açıklamasını doğru biçimde tamamlar?
 -    A) modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê
--    B) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
-- ✅ C) avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike
+- ✅ B) avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike
+-    C) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
 -    D) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
-**Doğru:** C) avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike
+**Doğru:** B) avahiya serdestiyê ya ku civakê dabeşî çînên jor û jêr dike
 **Açıklama:** "hiyerarşiya civakî" için doğru açıklama şudur: toplumu üst ve alt sınıflara bölen tahakküm yapısı.
 **Kaynak:** —
 
 ## offline_curated_21951  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike'?
 **TR:** Bu açıklamayla hangi kavram tanınır: "iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç"?
--    A) hiyerarşiya civakî
-- ✅ B) zanistiya azad
+- ✅ A) zanistiya azad
+-    B) hiyerarşiya civakî
 -    C) Ekolojiya Civakî
 -    D) azadiya zayendî
-**Doğru:** B) zanistiya azad
+**Doğru:** A) zanistiya azad
 **Açıklama:** "zanistiya azad" şu anlama gelir: iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç.
 **Kaynak:** —
 
 ## offline_curated_21954  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa paradigma kîjan vebijark ravekirina têgeha "zanistiya azad" bi awayekî rast temam dike?
 **TR:** Paradigma dersi için hangi seçenek "zanistiya azad" kavramının açıklamasını doğru biçimde tamamlar?
--    A) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
-- ✅ B) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
+- ✅ A) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
+-    B) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
 -    C) têkiliya hevseng û dostane ya di navbera civakê û xwezayê de
 -    D) modela aboriyê ya ku li ser bingeha parvekirin û hewcedariyê ava dibe, ne li ser qezencê
-**Doğru:** B) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
+**Doğru:** A) hişmendiya zanistî ya ku ji bin tekelên desthilatê derketiye û ji civakê re xizmet dike
 **Açıklama:** "zanistiya azad" için doğru açıklama şudur: iktidar tekellerinden çıkmış, topluma hizmet eden bilimsel bilinç.
 **Kaynak:** —
 
 ## offline_curated_21975  ·  zorluk 5  ·  offline
 **KU:** Têgeha "azadiya zayendî" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "azadiya zayendî" kavramı hangi açıklamayla daha iyi anlaşılır?
--    A) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
-- ✅ B) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
+- ✅ A) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
+-    B) modela alternatîf a jiyanê ya li dijî kapîtalîzma modern
 -    C) civaka azad a ku biryarên xwe bi hişmendiya exlakî û polîtîk dide
 -    D) zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike
-**Doğru:** B) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
+**Doğru:** A) prensîba azadiya jin û mêr û wekheviya wan a di her qada jiyanê de
 **Açıklama:** "azadiya zayendî" şu anlama gelir: kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi.
 **Kaynak:** —
 
@@ -1003,9 +1003,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bu açıklamayla hangi kavram tanınır: "kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi"?
 -    A) aboriya komûnal
 -    B) Ekolojiya Civakî
--    C) hiyerarşiya civakî
-- ✅ D) azadiya zayendî
-**Doğru:** D) azadiya zayendî
+- ✅ C) azadiya zayendî
+-    D) hiyerarşiya civakî
+**Doğru:** C) azadiya zayendî
 **Açıklama:** "azadiya zayendî" şu anlama gelir: kadın ve erkeğin özgürlüğü ile yaşamın her alanında eşitliği ilkesi.
 **Kaynak:** —
 
@@ -1453,22 +1453,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_par_2001  ·  zorluk 2  ·  offline
 **KU:** Di nav van armancan de kîjan ne armanca "femînîzmê" ye?
 **TR:** Bu amaçlardan hangisi "feminizmin" amacı değildir?
--    A) wekheviya mafên jin û mêran
-- ✅ B) parastina serdestiya mêran di nav malbatê de
+- ✅ A) parastina serdestiya mêran di nav malbatê de
+-    B) wekheviya mafên jin û mêran
 -    C) bidawîkirina cudakariya ku li ser jinan tê kirin
 -    D) beşdariya jinan a di biryarên civakî de
-**Doğru:** B) parastina serdestiya mêran di nav malbatê de
+**Doğru:** A) parastina serdestiya mêran di nav malbatê de
 **Açıklama:** Feminizm cinsiyet ayrımcılığını ortadan kaldırmak için çalışır; erkek egemenliğini korumaz, tersine onu sorgular. Terim Latince "femina" (kadın) sözcüğünden gelir.
 **Kaynak:** —
 
 ## offline_par_2002  ·  zorluk 3  ·  offline
 **KU:** Kîjan taybetî "demokrasiya nûnertiyê" ji demokrasiya rasterast cuda dike?
 **TR:** Hangi özellik "temsili demokrasiyi" doğrudan demokrasiden ayırır?
-- ✅ A) biryar bi destê kesên hilbijartî tên girtin
--    B) gel rasterast bi referandûmê biryarê dide
--    C) biryarên herêmî di civînên gundan de tên girtin
--    D) her kes di civîna giştî de dengê xwe bilind dike
-**Doğru:** A) biryar bi destê kesên hilbijartî tên girtin
+-    A) gel rasterast bi referandûmê biryarê dide
+-    B) biryarên herêmî di civînên gundan de tên girtin
+-    C) her kes di civîna giştî de dengê xwe bilind dike
+- ✅ D) biryar bi destê kesên hilbijartî tên girtin
+**Doğru:** D) biryar bi destê kesên hilbijartî tên girtin
 **Açıklama:** Temsili demokraside halk karar yetkisini seçtiği kişilere devreder ve onlar halk adına konuşur; doğrudan demokraside bu yetki halkın kendisinde kalır.
 **Kaynak:** —
 
@@ -1485,21 +1485,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Çima "mêtingerî" tenê wek dagirkeriya axê nayê pênasekirin?
 **TR:** "Sömürgecilik" neden yalnızca toprak işgali olarak tanımlanmaz?
 -    A) ji ber ku ew tenê di destê dewletan de tê meşandin
--    B) ji ber ku ew bi peymanên bazirganiyê ve girêdayî ye
-- ✅ C) ji ber ku ew çand û zimanê gel jî bindest dike
+- ✅ B) ji ber ku ew çand û zimanê gel jî bindest dike
+-    C) ji ber ku ew bi peymanên bazirganiyê ve girêdayî ye
 -    D) ji ber ku ew bi razîbûna gelê herêmî pêk tê
-**Doğru:** C) ji ber ku ew çand û zimanê gel jî bindest dike
+**Doğru:** B) ji ber ku ew çand û zimanê gel jî bindest dike
 **Açıklama:** Sömürgecilik toprakla sınırlı kalmaz: işgalci, halkın dilini, tarihini ve belleğini de denetim altına alır; böylece direnişin dayanacağı zemin kalmaz.
 **Kaynak:** —
 
 ## offline_par_2005  ·  zorluk 5  ·  offline
 **KU:** Di ramana civakî de "şoreşa neolîtîk" çima wek qonaxeke veguherînê tê dîtin?
 **TR:** Toplumsal düşüncede "neolitik devrim" neden bir dönüşüm evresi sayılır?
-- ✅ A) mirov dest bi çandiniyê û xwedîkirina ajalan kir
--    B) nivîs hat vedîtin û dewletên yekem hatin damezrandin
--    C) bajarên mezin ên pîşesaziyê li kêleka çeman ava bûn
--    D) hesin hat helandin û çekên nû derketin
-**Doğru:** A) mirov dest bi çandiniyê û xwedîkirina ajalan kir
+-    A) nivîs hat vedîtin û dewletên yekem hatin damezrandin
+-    B) bajarên mezin ên pîşesaziyê li kêleka çeman ava bûn
+-    C) hesin hat helandin û çekên nû derketin
+- ✅ D) mirov dest bi çandiniyê û xwedîkirina ajalan kir
+**Doğru:** D) mirov dest bi çandiniyê û xwedîkirina ajalan kir
 **Açıklama:** Tarımla birlikte insanlar bir yere yerleşti, ambarlar doldu ve artı ürün ortaya çıktı; o artı ürüne el koyanların belirmesiyle birçok toplumda servet birikimi ve eşitsizliğin artması için yeni koşullar doğdu.
 **Kaynak:** —
 
@@ -1517,9 +1517,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Ütopya" sözcüğü ilk kez kimin kitabında bir adanın adı olarak geçti?
 -    A) Karl Marx
 -    B) Jean-Jacques Rousseau
--    C) Aristoteles
-- ✅ D) Thomas More
-**Doğru:** D) Thomas More
+- ✅ C) Thomas More
+-    D) Aristoteles
+**Doğru:** C) Thomas More
 **Açıklama:** Thomas More 1516'da "Utopia" adlı kitabını yazdı; ad Yunancadan gelir ve "olmayan yer" anlamındadır. O gün bugündür sözcük, kurulmamış ama düşünülmüş toplumu anlatır.
 **Kaynak:** —
 
@@ -1536,10 +1536,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan bingeh di ramana "lîberalîzmê" de cih nagire?
 **TR:** Hangi temel, "liberalizm" düşüncesinde yer almaz?
 -    A) azadiya kesane li hember dewletê
--    B) aboriya bazara reqabeta azad
-- ✅ C) milkiyeta hevpar a amûrên hilberînê
+- ✅ B) milkiyeta hevpar a amûrên hilberînê
+-    C) aboriya bazara reqabeta azad
 -    D) wekheviya hemû kesan li ber qanûnê
-**Doğru:** C) milkiyeta hevpar a amûrên hilberînê
+**Doğru:** B) milkiyeta hevpar a amûrên hilberînê
 **Açıklama:** Liberalizm bireysel özgürlüğü ve özel mülkiyeti merkeze alır; üretim araçlarının ortak mülkiyeti sosyalist düşüncelerin ayırt edici savıdır.
 **Kaynak:** —
 
@@ -1548,9 +1548,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Toplumsal adalet hayırseverlikten ayrılırken en temel nokta hangisidir?
 -    A) ew tenê ji aliyê dewletê ve tê birêvebirin
 -    B) ew li ser dilxwaziya kesên dewlemend ava dibe
--    C) ew tenê di dema krîzên aborî de tê nîqaşkirin
-- ✅ D) ew mafek e ku divê bê dayîn, ne bexşîşek e
-**Doğru:** D) ew mafek e ku divê bê dayîn, ne bexşîşek e
+- ✅ C) ew mafek e ku divê bê dayîn, ne bexşîşek e
+-    D) ew tenê di dema krîzên aborî de tê nîqaşkirin
+**Doğru:** C) ew mafek e ku divê bê dayîn, ne bexşîşek e
 **Açıklama:** Hayırseverlik kişinin gönlünden gelir ve her an kesilebilir; toplumsal adalet ise toplumun borçlu olduğu bir yükümlülüktür ve ortak kurallarla yerine getirilir.
 **Kaynak:** —
 
@@ -1577,19 +1577,19 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bir kentte birkaç dil, birkaç din ve birkaç kültür bir arada yaşıyor; bu durum hangi kavramla adlandırılır?
 -    A) yekrengî
 -    B) asîmîlasyon
--    C) navendîbûn
-- ✅ D) pirrengî
-**Doğru:** D) pirrengî
+- ✅ C) pirrengî
+-    D) navendîbûn
+**Doğru:** C) pirrengî
 **Açıklama:** Çoğulluk, farklılıkların zenginlik sayılmasıdır; karşısındaki tekçilik ise bütün farklılıkları tek kalıba sokmayı hedefler.
 **Kaynak:** —
 
 ## offline_par_2014  ·  zorluk 2  ·  offline
 **KU:** Gundiyên gundekî bi hev re nexweşxaneyeke biçûk ava dikin û lêçûnê parve dikin; ev helwest kîjan nirxa civakî nîşan dide?
 **TR:** Bir köyün köylüleri birlikte küçük bir hastane kuruyor ve masrafı paylaşıyor; bu tutum hangi toplumsal değeri gösterir?
--    A) reqabet
-- ✅ B) hevgirtin
+- ✅ A) hevgirtin
+-    B) reqabet
 -    C) serdestî
 -    D) bêaliyî
-**Doğru:** B) hevgirtin
+**Doğru:** A) hevgirtin
 **Açıklama:** Dayanışma yukarıdan yapılan bir yardım değildir; ağır yükü birlikte taşımaktır — herkes hem verir hem alır, kimse borçlu duruma düşmez.
 **Kaynak:** —

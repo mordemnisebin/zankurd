@@ -4,18 +4,18 @@
     "category": "Çand",
     "prompt": "Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?",
     "answers": [
-      "şabaş",
       "metelok",
       "kelaş",
-      "hewran"
+      "hewran",
+      "şabaş"
     ],
     "correctAnswer": "şabaş",
     "promptTr": "Kürt düğün ve şenliklerinde yeni evlilere verilen para hediyesi hangi adla bilinir?",
     "answersTr": [
-      "şabaş",
       "metelok",
       "kelaş",
-      "hewran"
+      "hewran",
+      "şabaş"
     ],
     "correctAnswerTr": "şabaş",
     "explanation": "Şabaş, düğünlerde para hediye etme geleneğidir ve topluluğun yeni aileye desteğini gösterir. Metelok kısa bir atasözü, kelaş örülerek yapılan ayakkabı, hewran ise göçerlerin kara çadırıdır.",
@@ -38,16 +38,16 @@
     "prompt": "Pêlava kurdî ya kevneşopî ya ku bi tayan tê hûnandin bi kîjan navî tê nasîn?",
     "answers": [
       "şûtik",
-      "kolos",
       "kelaş",
+      "kolos",
       "elek"
     ],
     "correctAnswer": "kelaş",
     "promptTr": "İplik örülerek yapılan geleneksel Kürt ayakkabısı hangi adla bilinir?",
     "answersTr": [
       "şûtik",
-      "kolos",
       "kelaş",
+      "kolos",
       "elek"
     ],
     "correctAnswerTr": "kelaş",
@@ -70,16 +70,16 @@
     "category": "Çand",
     "prompt": "Di kurmancî de gotina kurt a pêşiyan ku ezmûneke civakî bi çend peyvan vedibêje çi ye?",
     "answers": [
-      "şabaş",
       "metelok",
+      "şabaş",
       "mêvanperwerî",
       "govend"
     ],
     "correctAnswer": "metelok",
     "promptTr": "Kurmancîde toplumsal bir deneyimi birkaç sözcükle anlatan kısa atasözüne ne denir?",
     "answersTr": [
-      "şabaş",
       "metelok",
+      "şabaş",
       "mêvanperwerî",
       "govend"
     ],
@@ -101,25 +101,25 @@
   {
     "id": "restore_2026_08_07_0004",
     "category": "Çand",
-    "prompt": "Çadira reş a ji hiriya bizinê ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
+    "prompt": "Çadira reş a ji mûyê bizinan ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
     "answers": [
       "kelaş",
+      "reşmal",
       "şûtik",
-      "hewran",
       "metelok"
     ],
-    "correctAnswer": "hewran",
+    "correctAnswer": "reşmal",
     "promptTr": "Göçerlerin yazın yaylalarda kurduğu, keçi kılından yapılan kara çadır hangi adla bilinir?",
     "answersTr": [
       "kelaş",
+      "reşmal",
       "şûtik",
-      "hewran",
       "metelok"
     ],
-    "correctAnswerTr": "hewran",
-    "explanation": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
-    "explanationKu": "Hewran ji hiriya bizinê tê çêkirin; ew di germê de hênik dimîne û baranê nade hundir. Ew perçeyeke bingehîn a çanda koçeriyê ye ku di navbera zozan û germiyanê de digere.",
-    "explanationTr": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
+    "correctAnswerTr": "reşmal",
+    "explanation": "Reşmal keçi kılından dokunur; sıcakta serin tutar ve yağmuru geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır. \"Hewran\" ise giysidir, çadır değil.",
+    "explanationKu": "Reşmal ji mûyê bizinan tê hûnandin; di germê de hênik dimîne û baranê nade hundir. \"Hewran\" kinc e, ne çadir.",
+    "explanationTr": "Reşmal keçi kılından dokunur; sıcakta serin tutar ve yağmuru geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır. \"Hewran\" ise giysidir, çadır değil.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -136,18 +136,18 @@
     "category": "Dîrok",
     "prompt": "Hejmara yekem a \"Rojnameya Kurdistan\" (1898) li kîjan bajarî derket?",
     "answers": [
-      "Qahîre",
       "Şam",
       "Stenbol",
-      "Bexda"
+      "Bexda",
+      "Qahîre"
     ],
     "correctAnswer": "Qahîre",
     "promptTr": "\"Rojnameya Kurdistan\"ın ilk sayısı (1898) hangi şehirde çıktı?",
     "answersTr": [
-      "Kahire",
       "Şam",
       "İstanbul",
-      "Bağdat"
+      "Bağdat",
+      "Kahire"
     ],
     "correctAnswerTr": "Kahire",
     "explanation": "Mîqdat Mîdhad Bedirxan'ın çıkardığı Rojnameya Kurdistan 1898'de Kahire'de basıldı ve ilk Kürt gazetesi sayılır. Sonraki sayıları başka şehirlerde de çıktı.",
@@ -170,16 +170,16 @@
     "prompt": "\"Şerefname\", dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?",
     "answers": [
       "Ehmedê Xanî",
-      "Mîqdat Mîdhad Bedirxan",
       "Şerefxanê Bidlîsî",
+      "Mîqdat Mîdhad Bedirxan",
       "Feqiyê Teyran"
     ],
     "correctAnswer": "Şerefxanê Bidlîsî",
     "promptTr": "Kürt mirliklerinin tarihi olan \"Şerefname\"yi kim yazmıştır?",
     "answersTr": [
       "Ehmedê Xanî",
-      "Mîqdat Mîdhad Bedirxan",
       "Şerefxanê Bidlîsî",
+      "Mîqdat Mîdhad Bedirxan",
       "Feqiyê Teyran"
     ],
     "correctAnswerTr": "Şerefxanê Bidlîsî",
@@ -202,16 +202,16 @@
     "category": "Cografya",
     "prompt": "Çiyayê Cûdî li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Rojavayê Kurdistanê",
       "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Bakurê Kurdistanê",
     "promptTr": "Cûdî Dağı Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Rojava (Batı)",
       "Bakur (Kuzey)",
+      "Rojava (Batı)",
       "Başûr (Güney)",
       "Rojhilat (Doğu)"
     ],
@@ -236,16 +236,16 @@
     "prompt": "Deşta Amedê bi kîjan taybetmendiya axa xwe ji deştên derdorê vediqete?",
     "answers": [
       "axa şor a bêber",
-      "axa qûmî ya hişk",
       "axa bazaltî ya berdar",
+      "axa qûmî ya hişk",
       "axa çiyayî ya kevirîn"
     ],
     "correctAnswer": "axa bazaltî ya berdar",
     "promptTr": "Amed ovası toprağının hangi özelliğiyle çevresindeki ovalardan ayrılır?",
     "answersTr": [
       "tuzlu ve çorak toprak",
-      "kuru kumlu toprak",
       "verimli bazalt toprağı",
+      "kuru kumlu toprak",
       "taşlık dağ toprağı"
     ],
     "correctAnswerTr": "verimli bazalt toprağı",
@@ -268,18 +268,18 @@
     "category": "Muzîk",
     "prompt": "Amûra lêdanê ya mezin a ku bi du daran tê lêxistin û pir caran bi zurneyê re li derve tê lêxistin çi ye?",
     "answers": [
-      "dahol",
       "bilûr",
       "tembûr",
-      "erbane"
+      "erbane",
+      "dahol"
     ],
     "correctAnswer": "dahol",
     "promptTr": "İki değnekle çalınan ve çoğunlukla zurnayla birlikte açık havada çalınan büyük vurmalı çalgı hangisidir?",
     "answersTr": [
-      "dahol",
       "bilûr",
       "tembûr",
-      "erbane"
+      "erbane",
+      "dahol"
     ],
     "correctAnswerTr": "dahol",
     "explanation": "Dahol yüksek ses çıkarır ve halayın vuruşunu belirler; bu yüzden zurnayla birlikte meydanlarda çalınır. Bilûr üflemeli, tembûr telli, erbane ise el defidir.",
@@ -301,16 +301,16 @@
     "category": "Muzîk",
     "prompt": "Amûra bayê ya bi dengê bilind ku li meydanan bi dahol re tê lêxistin çi ye?",
     "answers": [
-      "bilûr",
       "zurna",
+      "bilûr",
       "tembûr",
       "dahol"
     ],
     "correctAnswer": "zurna",
     "promptTr": "Meydanlarda davulla birlikte çalınan, yüksek sesli üflemeli çalgı hangisidir?",
     "answersTr": [
-      "bilûr",
       "zurna",
+      "bilûr",
       "tembûr",
       "dahol"
     ],
@@ -336,16 +336,16 @@
     "answers": [
       "govend",
       "şabaş",
-      "metelok",
-      "kilam"
+      "kilam",
+      "metelok"
     ],
     "correctAnswer": "kilam",
     "promptTr": "Dengbêjlerin bir olayı ya da hikâyeyi anlatan uzun ezgisi hangi adla bilinir?",
     "answersTr": [
       "govend",
       "şabaş",
-      "metelok",
-      "kilam"
+      "kilam",
+      "metelok"
     ],
     "correctAnswerTr": "kilam",
     "explanation": "Kilam uzun sözleriyle bir olayı ya da hikâyeyi anlatır ve çalgısız söylenir; toplumun sözlü belleğini taşır. Govend toplu halk oyunu, şabaş para hediyesi, metelok ise atasözüdür.",
@@ -368,16 +368,16 @@
     "prompt": "Cudahiya sereke ya di navbera kilamê û stranên govendê de çi ye?",
     "answers": [
       "Kilam bi zurneyê tê gotin, stranên govendê bêdeng in",
-      "Kilam tenê ji hêla jinan ve tê gotin",
       "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
+      "Kilam tenê ji hêla jinan ve tê gotin",
       "Kilam tenê di dawetan de tê gotin"
     ],
     "correctAnswer": "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
     "promptTr": "Kilam ile halay şarkıları arasındaki temel fark nedir?",
     "answersTr": [
       "Kilam zurnayla söylenir, halay şarkıları sessizdir",
-      "Kilam yalnızca kadınlar tarafından söylenir",
       "Kilam hikâye anlatır, halay şarkıları ritmiktir",
+      "Kilam yalnızca kadınlar tarafından söylenir",
       "Kilam yalnızca düğünlerde söylenir"
     ],
     "correctAnswerTr": "Kilam hikâye anlatır, halay şarkıları ritmiktir",
@@ -402,16 +402,16 @@
     "answers": [
       "dahol",
       "erbane",
-      "zurna",
-      "bilûr"
+      "bilûr",
+      "zurna"
     ],
     "correctAnswer": "bilûr",
     "promptTr": "Kamıştan ya da ağaçtan yapılan, yumuşak sesle çalınan çoban üflemeli çalgısı hangisidir?",
     "answersTr": [
       "dahol",
       "erbane",
-      "zurna",
-      "bilûr"
+      "bilûr",
+      "zurna"
     ],
     "correctAnswerTr": "bilûr",
     "explanation": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
@@ -433,16 +433,16 @@
     "category": "Cografya",
     "prompt": "Bajarê Colemêrgê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Rojavayê Kurdistanê",
       "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Bakurê Kurdistanê",
     "promptTr": "Colemêrg şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Rojava (Batı)",
       "Bakur (Kuzey)",
+      "Rojava (Batı)",
       "Başûr (Güney)",
       "Rojhilat (Doğu)"
     ],
@@ -468,16 +468,16 @@
     "answers": [
       "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",
-      "Rojhilatê Kurdistanê",
-      "Bakurê Kurdistanê"
+      "Bakurê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Bakurê Kurdistanê",
     "promptTr": "Wan Gölü Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
       "Rojava (Batı)",
       "Başûr (Güney)",
-      "Rojhilat (Doğu)",
-      "Bakur (Kuzey)"
+      "Bakur (Kuzey)",
+      "Rojhilat (Doğu)"
     ],
     "correctAnswerTr": "Bakur (Kuzey)",
     "explanation": "Wan Gölü Bakur'dadır; suyu sodalıdır, bu yüzden ne içme ne de sulama için kullanılır.",

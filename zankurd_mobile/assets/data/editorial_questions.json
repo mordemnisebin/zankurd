@@ -5926,14 +5926,14 @@
     "category": "Çand",
     "prompt": "\"Çadira reş\" bi giştî ji çi tê çêkirin?",
     "answers": [
-      "hiriyê bizinê",
+      "mûyê bizinê",
       "çanda koçeriyê",
       "kilimên kurdî",
       "diyarî/xelat"
     ],
-    "correctAnswer": "hiriyê bizinê",
+    "correctAnswer": "mûyê bizinê",
     "explanation": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
-    "explanationKu": "Çadira koçeran ji hiriyê bizinê tê hûnandin; av derbas nake û bayê digire.",
+    "explanationKu": "Çadira koçeran ji mûyê bizinê tê hûnandin; av derbas nake û bayê digire.",
     "explanationTr": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
     "metadata": {
       "reviewStatus": "approved",
@@ -6242,7 +6242,7 @@
     "category": "Çand",
     "prompt": "Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?",
     "answers": [
-      "Wêneyên fotoğrafî",
+      "Wêneyên fotografî",
       "Motîfên hêjmarî û sembolîk",
       "Nivîsên dirêj",
       "Rengên tenê reş û spî"

@@ -227,65 +227,65 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan fîlmê Bahman Ghobadi di sala 2000î de derketiye?
 **TR:** Bahman Ghobadi'nin hangi filmi 2000 yılında gösterime girmiştir?
 -    A) Turtles Can Fly
--    B) Half Moon
-- ✅ C) A Time for Drunken Horses
+- ✅ B) A Time for Drunken Horses
+-    C) Half Moon
 -    D) No One Knows About Persian Cats
-**Doğru:** C) A Time for Drunken Horses
+**Doğru:** B) A Time for Drunken Horses
 **Açıklama:** "Sarhoş Atlar Zamanı" filmi 2000 yılında gösterime girmiştir. Bu film Bahman Ghobadi'nin ilk uzun metrajlı filmidir ve İran-Irak sınırındaki Kürt çocuklarının hayatı hakkındadır.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses
 
 ## ds_sinema_0037  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma "A Time for Drunken Horses" a Bahman Ghobadi çîroka kîjan kesan vedibêje?
 **TR:** Bahman Ghobadi'nin "Sarhoş Atlar Zamanı" filmi kimlerin hikayesini anlatır?
--    A) Muzîkjenên kurd
-- ✅ B) Zarokên êtîm ên kurd
+- ✅ A) Zarokên êtîm ên kurd
+-    B) Muzîkjenên kurd
 -    C) Leşkerên kurd
 -    D) Gundiyên kurd
-**Doğru:** B) Zarokên êtîm ên kurd
+**Doğru:** A) Zarokên êtîm ên kurd
 **Açıklama:** "Sarhoş Atlar Zamanı" filmi, İran-Irak sınırında yaşayan iki Kürt yetim kardeşin hikayesini anlatır. Kardeşlerden biri hastadır ve ağabeyi ona bir ilaç bulmaya çalışır.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses
 
 ## ds_sinema_0045  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Bahman Ghobadi di kîjan fîlmê xwe de li ser jiyana zarokên êtîm ên kurd fîlm çêkiriye?
 **TR:** Bahman Ghobadi hangi filminde Kürt yetim çocukların hayatı hakkında film yapmıştır?
-- ✅ A) A Time for Drunken Horses
--    B) Turtles Can Fly
--    C) Half Moon
--    D) No One Knows About Persian Cats
-**Doğru:** A) A Time for Drunken Horses
+-    A) Turtles Can Fly
+-    B) Half Moon
+-    C) No One Knows About Persian Cats
+- ✅ D) A Time for Drunken Horses
+**Doğru:** D) A Time for Drunken Horses
 **Açıklama:** "Sarhoş Atlar Zamanı" filmi iki Kürt yetim kardeşin hikayesini anlatır. Bu film 2000 yılında gösterime girmiştir ve Bahman Ghobadi'nin ilk uzun metrajlı filmidir.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses
 
 ## ds_sinema_0048  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Bahman Ghobadi di kîjan fîlmê xwe de li ser jiyana gundiyên kurd fîlm çêkiriye?
 **TR:** Bahman Ghobadi hangi filminde Kürt köylülerin hayatı hakkında film yapmıştır?
-- ✅ A) A Time for Drunken Horses
--    B) Turtles Can Fly
--    C) Half Moon
--    D) No One Knows About Persian Cats
-**Doğru:** A) A Time for Drunken Horses
+-    A) Turtles Can Fly
+-    B) Half Moon
+-    C) No One Knows About Persian Cats
+- ✅ D) A Time for Drunken Horses
+**Doğru:** D) A Time for Drunken Horses
 **Açıklama:** "Sarhoş Atlar Zamanı" filmi, İran-Irak sınırındaki Kürt köylülerin hayatı hakkındadır. Bu film 2000 yılında gösterime girmiştir ve Bahman Ghobadi'nin ilk uzun metrajlı filmidir.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses
 
 ## ds_sinema_0053  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênera kurd fîlma "Dort Augen" derxistiye?
 **TR:** Hangi Kürt yönetmen "Dort Augen" filmini çekmiştir?
--    A) Nizamettin Ariç
-- ✅ B) Yüksel Yavuz
+- ✅ A) Yüksel Yavuz
+-    B) Nizamettin Ariç
 -    C) Hiner Saleem
 -    D) Mahmut Kaya
-**Doğru:** B) Yüksel Yavuz
+**Doğru:** A) Yüksel Yavuz
 **Açıklama:** Yüksel Yavuz, "Dort Augen" filmini çeken Kürt yönetmendir. Bu film Kürtlerin hayatı hakkındadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Yüksel_Yavuz
 
 ## ds_sinema_0106  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kîjan salê de fîlma yekem a bi navê "La Sortie de l"usine Lumière à Lyon' ji aliyê Auguste û Louis Lumière ve hate kişandin?
 **TR:** Auguste ve Louis Lumière tarafından çekilen "La Sortie de l"usine Lumière à Lyon' adlı ilk film hangi yılda çekildi?
--    A) 1905
-- ✅ B) 1895
+- ✅ A) 1895
+-    B) 1905
 -    C) 1915
 -    D) 1925
-**Doğru:** B) 1895
+**Doğru:** A) 1895
 **Açıklama:** "La Sortie de l"usine Lumière à Lyon' filmi 1895'te Lumière kardeşler tarafından çekildi. Bu film tarihin ilk filmlerinden biridir ve sinemanın başlangıcını gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Workers_Leaving_the_Lumi%C3%A8re_Factory
 
@@ -294,9 +294,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İlk sesli film olan "The Jazz Singer" hangi yılda gösterime girdi?
 -    A) 1937
 -    B) 1947
--    C) 1957
-- ✅ D) 1927
-**Doğru:** D) 1927
+- ✅ C) 1927
+-    D) 1957
+**Doğru:** C) 1927
 **Açıklama:** "The Jazz Singer" 1927'de gösterime girdi ve sesliye geçişi hızlandıran film olarak bilinir. Bu film, sesli filmler döneminin başlangıcıdır ve sessiz sinemayı değiştirmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Jazz_Singer
 
@@ -305,20 +305,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Vittorio De Sica'nın "Bicycle Thieves" filmi hangi yılda gösterime girdi?
 -    A) 1950
 -    B) 1946
--    C) 1952
-- ✅ D) 1948
-**Doğru:** D) 1948
+- ✅ C) 1948
+-    D) 1952
+**Doğru:** C) 1948
 **Açıklama:** Bu İtalyan Yeni Gerçekçilik filmi 1948'de gösterime girdi ve bu akımın en önemli eserlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bicycle_Thieves
 
 ## ds_sinema_0099  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kîjan salê de fîlma "The Bicycle Thief" a Vittorio De Sica derket?
 **TR:** Vittorio De Sica'nın "The Bicycle Thief" filmi hangi yılda gösterime girdi?
-- ✅ A) 1948
--    B) 1947
--    C) 1949
--    D) 1950
-**Doğru:** A) 1948
+-    A) 1947
+-    B) 1949
+-    C) 1950
+- ✅ D) 1948
+**Doğru:** D) 1948
 **Açıklama:** Bu İtalyan filmi 1948'de gösterime girdi ve Yeni Gerçekçiliğin en önemli eserlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bicycle_Thieves
 
@@ -327,9 +327,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Gone with the Wind" filmi hangi yılda gösterime girdi?
 -    A) 1940
 -    B) 1938
--    C) 1941
-- ✅ D) 1939
-**Doğru:** D) 1939
+- ✅ C) 1939
+-    D) 1941
+**Doğru:** C) 1939
 **Açıklama:** Bu Amerikan epik filmi 1939'da gösterime girdi ve döneminin en yüksek hasılat yapan filmlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)
 
@@ -337,32 +337,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kîjan salê de fîlma "Citizen Kane" a Orson Welles derket?
 **TR:** Orson Welles'in "Citizen Kane" filmi hangi yılda gösterime girdi?
 -    A) 1942
--    B) 1940
-- ✅ C) 1941
+- ✅ B) 1941
+-    C) 1940
 -    D) 1943
-**Doğru:** C) 1941
+**Doğru:** B) 1941
 **Açıklama:** Bu efsanevi film 1941'de gösterime girdi ve genellikle tarihin en iyi filmlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Citizen_Kane
 
 ## ds_sinema_0089  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kîjan salê de fîlma "The Godfather" a Francis Ford Coppola derket?
 **TR:** Francis Ford Coppola'nın "The Godfather" filmi hangi yılda gösterime girdi?
--    A) 1971
-- ✅ B) 1972
+- ✅ A) 1972
+-    B) 1971
 -    C) 1973
 -    D) 1974
-**Doğru:** B) 1972
+**Doğru:** A) 1972
 **Açıklama:** "The Godfather" filmi 1972'de gösterime girdi ve sinema tarihinin en önemli filmlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Godfather
 
 ## ds_sinema_0077  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Fîlma "The Jazz Singer" ku derbasbûna bo sînemaya bi deng lez kir, di kîjan salê de derket?
 **TR:** Sesli sinemaya geçişi hızlandıran "The Jazz Singer" filmi hangi yılda gösterime girdi?
-- ✅ A) 1927
--    B) 1929
--    C) 1931
--    D) 1925
-**Doğru:** A) 1927
+-    A) 1929
+-    B) 1931
+-    C) 1925
+- ✅ D) 1927
+**Doğru:** D) 1927
 **Açıklama:** "The Jazz Singer" 1927'de gösterime girdi. İlk sesli film değildir — senkron diyalog bölümleri taşıyan ilk uzun metrajdır ve sesliye geçişi hızlandırmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Jazz_Singer
 
@@ -370,10 +370,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan derhênerê amerîkî fîlma "The Birth of a Nation" derxist?
 **TR:** Hangi Amerikalı yönetmen "The Birth of a Nation" filmini çekmiştir?
 -    A) Cecil B. DeMille
--    B) Charlie Chaplin
-- ✅ C) D.W. Griffith
+- ✅ B) D.W. Griffith
+-    C) Charlie Chaplin
 -    D) Buster Keaton
-**Doğru:** C) D.W. Griffith
+**Doğru:** B) D.W. Griffith
 **Açıklama:** D.W. Griffith, 1915'te gösterime giren ve sinema teknikleriyle bilinen bu tartışmalı filmin yönetmenidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Birth_of_a_Nation
 
@@ -381,10 +381,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan derhênerê amerîkî fîlma "The Godfather Part II" derxist?
 **TR:** Hangi Amerikalı yönetmen "Baba II" filmini çekti?
 -    A) Martin Scorsese
--    B) Steven Spielberg
-- ✅ C) Francis Ford Coppola
+- ✅ B) Francis Ford Coppola
+-    C) Steven Spielberg
 -    D) Quentin Tarantino
-**Doğru:** C) Francis Ford Coppola
+**Doğru:** B) Francis Ford Coppola
 **Açıklama:** Francis Ford Coppola, "Baba II" filminin yönetmenidir. Bu film 1974'te gösterime girdi ve En İyi Film dalında Oscar Ödülü kazandı. Film hem Michael Corleone'nin hikayesini hem de babası genç Vito Corleone'nin hikayesini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Godfather_Part_II
 
@@ -393,31 +393,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi İngiliz yönetmen "The Lodger: A Story of the London Fog" filmini yönetti?
 -    A) Michael Powell
 -    B) David Lean
--    C) Carol Reed
-- ✅ D) Alfred Hitchcock
-**Doğru:** D) Alfred Hitchcock
+- ✅ C) Alfred Hitchcock
+-    D) Carol Reed
+**Doğru:** C) Alfred Hitchcock
 **Açıklama:** Alfred Hitchcock, 1927'de gösterime giren bu sessiz filmin yönetmenidir ve onun ilk dönem işlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Lodger:_A_Story_of_the_London_Fog
 
 ## ds_sinema_0084  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê rûs fîlma "The Man with a Movie Camera" derxist?
 **TR:** Hangi Rus yönetmen "The Man with a Movie Camera" filmini yönetti?
--    A) Sergei Eisenstein
-- ✅ B) Dziga Vertov
+- ✅ A) Dziga Vertov
+-    B) Sergei Eisenstein
 -    C) Vsevolod Pudovkin
 -    D) Alexander Dovzhenko
-**Doğru:** B) Dziga Vertov
+**Doğru:** A) Dziga Vertov
 **Açıklama:** Dziga Vertov, 1929'da gösterime giren bu deneysel belgeselin yönetmenidir ve montaj teknikleriyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Man_with_a_Movie_Camera
 
 ## ds_sinema_0086  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê japonî fîlma "Rashomon" derxist?
 **TR:** Hangi Japon yönetmen "Rashomon" filmini yönetti?
--    A) Kenji Mizoguchi
-- ✅ B) Akira Kurosawa
+- ✅ A) Akira Kurosawa
+-    B) Kenji Mizoguchi
 -    C) Yasujirō Ozu
 -    D) Masaki Kobayashi
-**Doğru:** B) Akira Kurosawa
+**Doğru:** A) Akira Kurosawa
 **Açıklama:** Akira Kurosawa, 1950'de gösterime giren bu filmin yönetmenidir ve Japon sinemasını dünyaya tanıtmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rashomon
 
@@ -426,20 +426,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi Amerikalı kadın yönetmen "The Hurt Locker" filmini yönetti?
 -    A) Sofia Coppola
 -    B) Ava DuVernay
--    C) Greta Gerwig
-- ✅ D) Kathryn Bigelow
-**Doğru:** D) Kathryn Bigelow
+- ✅ C) Kathryn Bigelow
+-    D) Greta Gerwig
+**Doğru:** C) Kathryn Bigelow
 **Açıklama:** Kathryn Bigelow bu filmin yönetmenidir ve bu filmle En İyi Yönetmen Oscar'ını kazanan ilk kadın olmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Hurt_Locker
 
 ## ds_sinema_0090  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê polonî fîlma "The Pianist" derxist?
 **TR:** Hangi Polonyalı yönetmen "The Pianist" filmini yönetti?
--    A) Andrzej Wajda
-- ✅ B) Roman Polanski
+- ✅ A) Roman Polanski
+-    B) Andrzej Wajda
 -    C) Krzysztof Kieślowski
 -    D) Paweł Pawlikowski
-**Doğru:** B) Roman Polanski
+**Doğru:** A) Roman Polanski
 **Açıklama:** Roman Polanski, 2002'de gösterime giren ve Władysław Szpilman'ın hayatını konu alan bu filmin yönetmenidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Pianist_(2002_film)
 
@@ -447,32 +447,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan derhênerê îranî fîlma "A Separation" derxist?
 **TR:** Hangi İranlı yönetmen "A Separation" filmini yönetti?
 -    A) Abbas Kiarostami
--    B) Jafar Panahi
-- ✅ C) Asghar Farhadi
+- ✅ B) Asghar Farhadi
+-    C) Jafar Panahi
 -    D) Mohsen Makhmalbaf
-**Doğru:** C) Asghar Farhadi
+**Doğru:** B) Asghar Farhadi
 **Açıklama:** Asghar Farhadi, 2011'de gösterime giren bu filmin yönetmenidir ve film En İyi Yabancı Film Oscar'ını kazanmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/A_Separation
 
 ## ds_sinema_0096  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê meksîkî fîlma "Birdman" derxist?
 **TR:** Hangi Meksikalı yönetmen "Birdman" filmini yönetti?
--    A) Alfonso Cuarón
-- ✅ B) Alejandro González Iñárritu
+- ✅ A) Alejandro González Iñárritu
+-    B) Alfonso Cuarón
 -    C) Guillermo del Toro
 -    D) Carlos Reygadas
-**Doğru:** B) Alejandro González Iñárritu
+**Doğru:** A) Alejandro González Iñárritu
 **Açıklama:** Alejandro González Iñárritu, 2014'te gösterime giren bu filmin yönetmenidir ve En İyi Yönetmen Oscar'ını kazanmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Birdman_(film)
 
 ## ds_sinema_0100  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê amerîkî fîlma "Schindler"s List' derxist?
 **TR:** Hangi Amerikalı yönetmen "Schindler"s List' filmini yönetti?
-- ✅ A) Steven Spielberg
--    B) Martin Scorsese
--    C) Francis Ford Coppola
--    D) George Lucas
-**Doğru:** A) Steven Spielberg
+-    A) Martin Scorsese
+-    B) Francis Ford Coppola
+-    C) George Lucas
+- ✅ D) Steven Spielberg
+**Doğru:** D) Steven Spielberg
 **Açıklama:** Steven Spielberg, 1993'te gösterime giren ve Holokost'u konu alan bu filmin yönetmenidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Schindler%27s_List
 
@@ -481,31 +481,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Çekimden sonra kırpılıp birleştirilen görüntü dizisi için hangi sinema terimi kullanılır?
 -    A) Senaryo
 -    B) Kadraj
--    C) Diyalog
-- ✅ D) Montaj
-**Doğru:** D) Montaj
+- ✅ C) Montaj
+-    D) Diyalog
+**Doğru:** C) Montaj
 **Açıklama:** Montaj (kurgu), bir film oluşturmak için görüntüleri seçme, kesme ve birleştirme sürecidir. Senaryo filmin hikayesidir, kadraj kamerada görülen görüntüdür, diyalog ise karakterlerin konuşmasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Film_editing
 
 ## ds_sinema_0107  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan têgeha sînemayê ji bo rêbaza ku tê de kameraya ji cihê xwe diçe û wêneyê dişopîne tê bikaranîn?
 **TR:** Kameranın yerinden hareket edip görüntüyü takip ettiği yöntem için hangi sinema terimi kullanılır?
--    A) Kadra sabît
-- ✅ B) Kadra tevger
+- ✅ A) Kadra tevger
+-    B) Kadra sabît
 -    C) Kadra statîk
 -    D) Kadra rast
-**Doğru:** B) Kadra tevger
+**Doğru:** A) Kadra tevger
 **Açıklama:** Hareketli kadraj (moving shot), kameranın hareketiyle oluşturulan bir görüntüdür. Bu hareket el kamerası, dolly veya vinç ile yapılabilir. Sabit kadraj ise kameranın yerinde sabit kaldığı görüntüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Shot_(filmmaking)
 
 ## ds_sinema_0109  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgeha sînemayê ji bo pêvajoya hilbijartina wêneyan û lihevxistina wan ji bo çêkirina fîlmekî tê bikaranîn?
 **TR:** Bir film oluşturmak için görüntüleri seçme ve birleştirme süreci için hangi sinema terimi kullanılır?
--    A) Kadraj
-- ✅ B) Montaj
+- ✅ A) Montaj
+-    B) Kadraj
 -    C) Senaryo
 -    D) Diyalog
-**Doğru:** B) Montaj
+**Doğru:** A) Montaj
 **Açıklama:** Montaj (kurgu), bir film oluşturmak için görüntüleri seçme, kesme ve birleştirme sürecidir. Bu süreç filmin ritmini ve hikaye anlatımını kontrol etmek için önemlidir. Kadraj görülen görüntüdür, senaryo hikayedir, diyalog ise konuşmadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Film_editing
 
@@ -513,43 +513,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeha sînemayê ji bo rêbaza ku tê de kamera bi tevgera xwe re wêneyekî nû çêdike tê bikaranîn?
 **TR:** Kameranın hareketiyle yeni bir görüntü oluşturduğu sinema terimi hangisidir?
 -    A) Kadra statîk
--    B) Kadra sabît
-- ✅ C) Kadra tevger
+- ✅ B) Kadra tevger
+-    C) Kadra sabît
 -    D) Kadra rast
-**Doğru:** C) Kadra tevger
+**Doğru:** B) Kadra tevger
 **Açıklama:** Hareketli çekim, kameranın hareketiyle oluşturulan görüntüdür. Bu hareket dolly, vinç veya elle yapılabilir. Statik veya sabit çekim ise kameranın yerinde sabit kaldığı görüntüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Shot_(filmmaking)
 
 ## ds_sinema_0104  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fîlmekî de, kîjan kes berpirsiyarê biryara cihê kamerayê û tevgera aktoran e?
 **TR:** Bir filmde, kamera konumu ve oyuncuların hareketine karar vermekten kim sorumludur?
--    A) Senarîst
-- ✅ B) Derhêner
+- ✅ A) Derhêner
+-    B) Senarîst
 -    C) Montajker
 -    D) Kameraman
-**Doğru:** B) Derhêner
+**Doğru:** A) Derhêner
 **Açıklama:** Yönetmen (rejisör) filmin vizyonundan sorumludur ve kameranın nerede olacağına ve oyuncuların nasıl hareket edeceğine karar verir. Senarist hikayeyi yazar, montajcı görüntüleri kesip birleştirir, kameraman ise görüntüleri çeker.
 **Kaynak:** https://en.wikipedia.org/wiki/Film_director
 
 ## ds_sinema_0110  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fîlmekî de, kîjan kes berpirsiyarê nivîsandina çîrok û diyalogan e?
 **TR:** Bir filmde, hikayeyi ve diyalogları yazmaktan hangi kişi sorumludur?
-- ✅ A) Senarîst
--    B) Derhêner
--    C) Montajker
--    D) Kameraman
-**Doğru:** A) Senarîst
+-    A) Derhêner
+-    B) Montajker
+-    C) Kameraman
+- ✅ D) Senarîst
+**Doğru:** D) Senarîst
 **Açıklama:** Senarist, filmin hikayesini, diyaloglarını ve senaryosunu yazan kişidir. Yönetmen filmin vizyonunu kontrol eder, montajcı görüntüleri keser, kameraman ise görüntüleri çeker. Senaryo filmin temelidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Screenwriter
 
 ## ds_sinema_0118  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fîlmekî de, kîjan kes berpirsiyarê birîna wêneyan û lihevxistina wan e?
 **TR:** Bir filmde, görüntülerin kesilmesinden ve birleştirilmesinden hangi kişi sorumludur?
--    A) Derhêner
-- ✅ B) Montajker
+- ✅ A) Montajker
+-    B) Derhêner
 -    C) Senarîst
 -    D) Kameraman
-**Doğru:** B) Montajker
+**Doğru:** A) Montajker
 **Açıklama:** Montajcı, görüntüleri kesmek, seçmek ve bir film oluşturmak için birleştirmekten sorumludur. Yönetmen filmin vizyonunu kontrol eder, senarist hikayeyi yazar, kameraman ise görüntüleri çeker.
 **Kaynak:** https://en.wikipedia.org/wiki/Film_editor
 
@@ -557,10 +557,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan derhênerê îtalyan fîlma "Bicycle Thieves" derxistiye?
 **TR:** "Bicycle Thieves" filmini hangi İtalyan yönetmen çekmiştir?
 -    A) Federico Fellini
--    B) Roberto Rossellini
-- ✅ C) Vittorio De Sica
+- ✅ B) Vittorio De Sica
+-    C) Roberto Rossellini
 -    D) Luchino Visconti
-**Doğru:** C) Vittorio De Sica
+**Doğru:** B) Vittorio De Sica
 **Açıklama:** "Bicycle Thieves", 1948'de Vittorio De Sica tarafından çekilen ünlü bir neorealizm filmidir. Bu film, çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bicycle_Thieves
 
@@ -569,31 +569,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İtalyan neorealizminin başlangıçlarından biri olan "Rome, Open City" filmi hangi yönetmen tarafından çekilmiştir?
 -    A) Michelangelo Antonioni
 -    B) Pier Paolo Pasolini
--    C) Bernardo Bertolucci
-- ✅ D) Roberto Rossellini
-**Doğru:** D) Roberto Rossellini
+- ✅ C) Roberto Rossellini
+-    D) Bernardo Bertolucci
+**Doğru:** C) Roberto Rossellini
 **Açıklama:** "Rome, Open City" 1945'te Roberto Rossellini tarafından çekilmiş ve İtalyan neorealizminin temel filmlerinden biri olarak kabul edilir. Film, İtalyanların Nazi işgaline karşı direnişini konu alır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rome,_Open_City
 
 ## ds_sinema_0130  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan fîlmê François Truffaut yek ji fîlmên destpêkê yên Pêla Nû ya Fransî ye?
 **TR:** François Truffaut'un hangi filmi Fransız Yeni Dalgası'nın ilk filmlerinden biridir?
--    A) Breathless
-- ✅ B) The 400 Blows
+- ✅ A) The 400 Blows
+-    B) Breathless
 -    C) Last Year at Marienbad
 -    D) Hiroshima mon amour
-**Doğru:** B) The 400 Blows
+**Doğru:** A) The 400 Blows
 **Açıklama:** "The 400 Blows" (Les Quatre Cents Coups) 1959'da François Truffaut tarafından çekilmiş ve Fransız Yeni Dalgası'nın temel filmlerinden biri olarak kabul edilir. Film, Antoine Doinel adlı bir gencin hikayesini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_400_Blows
 
 ## ds_sinema_0132  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma "Breathless" (À bout de souffle) a Jean-Luc Godard di kîjan salê de derketiye?
 **TR:** Jean-Luc Godard'ın "Breathless" (À bout de souffle) filmi hangi yılda gösterime girmiştir?
--    A) 1955
-- ✅ B) 1960
+- ✅ A) 1960
+-    B) 1955
 -    C) 1965
 -    D) 1970
-**Doğru:** B) 1960
+**Doğru:** A) 1960
 **Açıklama:** "Breathless" 1960'ta Jean-Luc Godard tarafından çekilmiştir. Bu film, Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir ve "jump cut" tekniğiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Breathless_(1960_film)
 
@@ -602,20 +602,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** François Truffaut'un "The 400 Blows" filmi kimin hikayesini anlatır?
 -    A) Kesekî mezin ê dewlemend
 -    B) Jinekî bi navê Gelsomina
--    C) Mêrekî bi navê Zampanò
-- ✅ D) Xortekî bi navê Antoine Doinel
-**Doğru:** D) Xortekî bi navê Antoine Doinel
+- ✅ C) Xortekî bi navê Antoine Doinel
+-    D) Mêrekî bi navê Zampanò
+**Doğru:** C) Xortekî bi navê Antoine Doinel
 **Açıklama:** "The 400 Blows", Paris'te yaşayan ve birçok sorunla karşı karşıya kalan Antoine Doinel adlı bir gencin hikayesini anlatır. Film, Fransız Yeni Dalgası'nın temel filmlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_400_Blows
 
 ## ds_sinema_0139  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê îtalyan fîlma "Umberto D." derxistiye?
 **TR:** "Umberto D." filmini hangi İtalyan yönetmen çekmiştir?
--    A) Federico Fellini
-- ✅ B) Vittorio De Sica
+- ✅ A) Vittorio De Sica
+-    B) Federico Fellini
 -    C) Roberto Rossellini
 -    D) Luchino Visconti
-**Doğru:** B) Vittorio De Sica
+**Doğru:** A) Vittorio De Sica
 **Açıklama:** "Umberto D." 1952'de Vittorio De Sica tarafından çekilmiştir. Bu film, İtalyan neorealizminin son filmlerinden biridir ve yaşlı bir adam ile köpeğinin hikayesini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Umberto_D.
 
@@ -623,21 +623,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlma "Breathless" a Jean-Luc Godard bi kîjan teknîkê tê nasîn?
 **TR:** Jean-Luc Godard'ın "Breathless" filmi hangi teknikle tanınır?
 -    A) Teknîka "long take"
--    B) Teknîka "slow motion"
-- ✅ C) Teknîka "jump cut"
+- ✅ B) Teknîka "jump cut"
+-    C) Teknîka "slow motion"
 -    D) Teknîka "stop motion"
-**Doğru:** C) Teknîka "jump cut"
+**Doğru:** B) Teknîka "jump cut"
 **Açıklama:** "Breathless", "jump cut" tekniğiyle tanınır. Bu teknikte görüntüler aniden ve süreklilik olmadan kesilir ve Fransız Yeni Dalgası'nın işaretlerinden biri haline gelmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Breathless_(1960_film)
 
 ## ds_sinema_0172  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma "Breathless" a Jean-Luc Godard di kîjan salê de derket?
 **TR:** Jean-Luc Godard'ın "Breathless" (Serseri Aşıklar) filmi hangi yılda gösterime girdi?
--    A) 1958
-- ✅ B) 1960
+- ✅ A) 1960
+-    B) 1958
 -    C) 1962
 -    D) 1964
-**Doğru:** B) 1960
+**Doğru:** A) 1960
 **Açıklama:** Jean-Luc Godard'ın "Breathless" filmi 1960 yılında gösterime girdi. Bu film, Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Breathless_(1960_film)
 
@@ -645,32 +645,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan fîlmê Roberto Rossellini yek ji fîlmên destpêkê yên neorealîzma îtalyan e?
 **TR:** Roberto Rossellini'nin hangi filmi İtalyan neorealizminin ilk filmlerinden biridir?
 -    A) Bicycle Thieves
--    B) La dolce vita
-- ✅ C) Rome, Open City
+- ✅ B) Rome, Open City
+-    C) La dolce vita
 -    D) The 400 Blows
-**Doğru:** C) Rome, Open City
+**Doğru:** B) Rome, Open City
 **Açıklama:** "Rome, Open City" 1945'te Roberto Rossellini tarafından çekilmiş ve İtalyan neorealizminin ilk filmlerinden biri olarak kabul edilir. Film, İtalyanların Nazilere karşı direnişini konu alır.
 **Kaynak:** https://en.wikipedia.org/wiki/Rome,_Open_City
 
 ## ds_sinema_0143  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma "Bicycle Thieves" a Vittorio De Sica çîroka kîjan kesan vedibêje?
 **TR:** Vittorio De Sica'nın "Bicycle Thieves" filmi kimlerin hikayesini anlatır?
-- ✅ A) Bavekî û kurê wî
--    B) Jinekî û keça wê
--    C) Xortekî û hevala wî
--    D) Mêrekî û jina wî
-**Doğru:** A) Bavekî û kurê wî
+-    A) Jinekî û keça wê
+-    B) Xortekî û hevala wî
+-    C) Mêrekî û jina wî
+- ✅ D) Bavekî û kurê wî
+**Doğru:** D) Bavekî û kurê wî
 **Açıklama:** "Bicycle Thieves", çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır. Bu film, İtalyan neorealizminin en ünlü filmlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bicycle_Thieves
 
 ## ds_sinema_0156  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma "Bicycle Thieves" a Vittorio De Sica di kîjan salê de derket?
 **TR:** Vittorio De Sica'nın "Bicycle Thieves" filmi hangi yılda gösterime girdi?
--    A) 1944
-- ✅ B) 1948
+- ✅ A) 1948
+-    B) 1944
 -    C) 1946
 -    D) 1950
-**Doğru:** B) 1948
+**Doğru:** A) 1948
 **Açıklama:** Vittorio De Sica'nın "Bicycle Thieves" filmi 1948'de gösterime girdi. Bu film, İtalyan neorealizminin en ünlü örneklerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bicycle_Thieves
 
@@ -679,9 +679,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Jules and Jim" filmini hangi Fransız yönetmen çekmiştir?
 -    A) Jean-Luc Godard
 -    B) Alain Resnais
--    C) Claude Chabrol
-- ✅ D) François Truffaut
-**Doğru:** D) François Truffaut
+- ✅ C) François Truffaut
+-    D) Claude Chabrol
+**Doğru:** C) François Truffaut
 **Açıklama:** "Jules and Jim" 1962'de François Truffaut tarafından çekilmiştir. Bu film, Fransız Yeni Dalgası'nın ünlü filmlerinden biridir ve üç arkadaşın hikayesini anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Jules_and_Jim
 
@@ -689,10 +689,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan fîlmê Jean-Luc Godard yek ji fîlmên herî navdar ên Pêla Nû ya Fransî ye?
 **TR:** Jean-Luc Godard'ın hangi filmi Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir?
 -    A) The 400 Blows
--    B) Jules and Jim
-- ✅ C) Breathless
+- ✅ B) Breathless
+-    C) Jules and Jim
 -    D) Hiroshima mon amour
-**Doğru:** C) Breathless
+**Doğru:** B) Breathless
 **Açıklama:** "Breathless" (À bout de souffle) 1960'ta Jean-Luc Godard tarafından çekilmiş ve Fransız Yeni Dalgası'nın en ünlü filmlerinden biridir. Film, "jump cut" tekniğiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Breathless_(1960_film)
 
@@ -701,31 +701,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1972'de "The Godfather" filmini hangi Amerikalı yönetmen çekti?
 -    A) Stanley Kubrick
 -    B) Martin Scorsese
--    C) Steven Spielberg
-- ✅ D) Francis Ford Coppola
-**Doğru:** D) Francis Ford Coppola
+- ✅ C) Francis Ford Coppola
+-    D) Steven Spielberg
+**Doğru:** C) Francis Ford Coppola
 **Açıklama:** Francis Ford Coppola, "The Godfather" filminin yönetmenidir. Film 1972'de gösterime girdi ve sinema tarihinin en ünlü filmlerinden biri oldu.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Godfather
 
 ## ds_sinema_0152  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma "Schindler"s List' a Steven Spielberg di kîjan salê de derket?
 **TR:** Steven Spielberg'in "Schindler"s List' filmi hangi yılda gösterime girdi?
--    A) 1990
-- ✅ B) 1993
+- ✅ A) 1993
+-    B) 1990
 -    C) 1995
 -    D) 1998
-**Doğru:** B) 1993
+**Doğru:** A) 1993
 **Açıklama:** Steven Spielberg'in "Schindler"s List' filmi 1993'te gösterime girdi. Bu film, Holokost sırasında birçok Yahudi'yi kurtaran Oskar Schindler'i konu alır.
 **Kaynak:** https://en.wikipedia.org/wiki/Schindler%27s_List
 
 ## ds_sinema_0160  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Fîlma "Psycho" a Alfred Hitchcock di kîjan salê de derket?
 **TR:** Alfred Hitchcock'un "Psycho" filmi hangi yılda gösterime girdi?
--    A) 1958
-- ✅ B) 1960
+- ✅ A) 1960
+-    B) 1958
 -    C) 1962
 -    D) 1964
-**Doğru:** B) 1960
+**Doğru:** A) 1960
 **Açıklama:** Alfred Hitchcock'un "Psycho" filmi 1960'ta gösterime girdi. Bu film, en ünlü korku filmlerinden biridir ve duş sahnesiyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Psycho_(1960_film)
 
@@ -733,10 +733,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlma "The Birth of a Nation" a D.W. Griffith di kîjan salê de derket?
 **TR:** D.W. Griffith'in "The Birth of a Nation" filmi hangi yılda gösterime girdi?
 -    A) 1913
--    B) 1917
-- ✅ C) 1915
+- ✅ B) 1915
+-    C) 1917
 -    D) 1919
-**Doğru:** C) 1915
+**Doğru:** B) 1915
 **Açıklama:** D.W. Griffith'in "The Birth of a Nation" filmi 1915 yılında gösterime girdi. Bu film, ırkçı içeriği nedeniyle eleştirilir, ancak teknik açıdan önemlidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Birth_of_a_Nation
 
@@ -745,20 +745,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hayao Miyazaki'nin "Spirited Away" (Ruhların Kaçışı) filmi hangi yılda gösterime girdi?
 -    A) 1997
 -    B) 2004
--    C) 2008
-- ✅ D) 2001
-**Doğru:** D) 2001
+- ✅ C) 2001
+-    D) 2008
+**Doğru:** C) 2001
 **Açıklama:** Hayao Miyazaki'nin "Spirited Away" filmi 2001 yılında gösterime girdi. Bu film, En İyi Animasyon Filmi dalında Oscar kazandı ve Miyazaki'nin ününü artırdı.
 **Kaynak:** https://en.wikipedia.org/wiki/Spirited_Away
 
 ## ds_sinema_0177  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan stûdyoya animasyonê fîlma "Toy Story" ya yekem derxist?
 **TR:** İlk "Toy Story" filmini hangi animasyon stüdyosu yayınladı?
-- ✅ A) Pixar
--    B) DreamWorks
--    C) Blue Sky Studios
--    D) Illumination
-**Doğru:** A) Pixar
+-    A) DreamWorks
+-    B) Blue Sky Studios
+-    C) Illumination
+- ✅ D) Pixar
+**Doğru:** D) Pixar
 **Açıklama:** İlk "Toy Story" filmi 1995 yılında Pixar stüdyosu tarafından yayınlandı. Bu film, tamamen bilgisayarla yapılan ilk uzun metrajlı filmdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Toy_Story
 
@@ -766,21 +766,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di animasyona "The Lion King" de, kîjan karakter bavê Simba ye?
 **TR:** "The Lion King" (Aslan Kral) animasyonunda, Simba'nın babası hangi karakterdir?
 -    A) Scar
--    B) Timon
-- ✅ C) Mufasa
+- ✅ B) Mufasa
+-    C) Timon
 -    D) Zazu
-**Doğru:** C) Mufasa
+**Doğru:** B) Mufasa
 **Açıklama:** Mufasa, Simba'nın babasıdır ve "The Lion King" filminde kralların kralıdır. Scar, Mufasa'nın krallığı ele geçirmek isteyen kardeşidir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Lion_King
 
 ## ds_sinema_0179  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan derhêner fîlma belgesel a "Waltz with Bashir" derxist?
 **TR:** "Waltz with Bashir" (Başir'le Vals) belgesel filmini hangi yönetmen yayınladı?
-- ✅ A) Ari Folman
--    B) Werner Herzog
--    C) Errol Morris
--    D) Michael Moore
-**Doğru:** A) Ari Folman
+-    A) Werner Herzog
+-    B) Errol Morris
+-    C) Michael Moore
+- ✅ D) Ari Folman
+**Doğru:** D) Ari Folman
 **Açıklama:** İsrailli yönetmen Ari Folman, "Waltz with Bashir" belgesel filmini yayınladı. Bu film animasyon tekniğiyle yapılmıştır ve Folman'ın Lübnan Savaşı'ndaki deneyimleri hakkındadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Waltz_with_Bashir
 
@@ -789,20 +789,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "The Incredibles" (İnanılmaz Aile) animasyonunda, gerçek adı Bob Parr olan karakter hangisidir?
 -    A) Dash
 -    B) Frozone
--    C) Syndrome
-- ✅ D) Mr. Incredible
-**Doğru:** D) Mr. Incredible
+- ✅ C) Mr. Incredible
+-    D) Syndrome
+**Doğru:** C) Mr. Incredible
 **Açıklama:** Bob Parr, "Mr. Incredible" süper kahramanı olarak bilinir. Dash onun oğludur, Frozone onun arkadaşıdır ve Syndrome onun düşmanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Incredibles
 
 ## ds_sinema_0186  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan derhênerê belgeselê fîlma "Grizzly Man" li ser jiyana Timothy Treadwell derxist?
 **TR:** Timothy Treadwell'in hayatı hakkındaki "Grizzly Man" belgesel filmini hangi belgesel yönetmeni yayınladı?
-- ✅ A) Werner Herzog
--    B) Ken Burns
--    C) Errol Morris
--    D) Alex Gibney
-**Doğru:** A) Werner Herzog
+-    A) Ken Burns
+-    B) Errol Morris
+-    C) Alex Gibney
+- ✅ D) Werner Herzog
+**Doğru:** D) Werner Herzog
 **Açıklama:** Alman yönetmen Werner Herzog, "Grizzly Man" filmini yayınladı. Bu belgesel, boz ayılarla birlikte yaşayan Timothy Treadwell'in hayatı hakkındadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Grizzly_Man
 
@@ -810,21 +810,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di animasyona "Frozen" de, kîjan karakter xwişka Elsa ye?
 **TR:** "Frozen" (Karlar Ülkesi) animasyonunda, Elsa'nın kız kardeşi hangi karakterdir?
 -    A) Kristoff
--    B) Olaf
-- ✅ C) Anna
+- ✅ B) Anna
+-    C) Olaf
 -    D) Hans
-**Doğru:** C) Anna
+**Doğru:** B) Anna
 **Açıklama:** Anna, "Frozen" filminde Elsa'nın kız kardeşidir. Kristoff, Anna'nın arkadaşıdır, Olaf bir kardan adamdır ve Hans bir prenstir.
 **Kaynak:** https://en.wikipedia.org/wiki/Frozen_(2013_film)
 
 ## ds_sinema_0188  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Fîlma belgesel a "An Inconvenient Truth" a ku li ser guherîna avhewayê ye, ji aliyê kîjan kesî ve hatiye pêşkêşkirin?
 **TR:** İklim değişikliği hakkındaki "An Inconvenient Truth" (Uygunsuz Gerçek) belgesel filmi kim tarafından sunuldu?
-- ✅ A) Al Gore
--    B) Barack Obama
--    C) Bill Clinton
--    D) John Kerry
-**Doğru:** A) Al Gore
+-    A) Barack Obama
+-    B) Bill Clinton
+-    C) John Kerry
+- ✅ D) Al Gore
+**Doğru:** D) Al Gore
 **Açıklama:** "An Inconvenient Truth" filmi, Amerika Birleşik Devletleri'nin eski başkan yardımcısı Al Gore tarafından sunuldu. Bu belgesel iklim değişikliği ve etkileri hakkındadır.
 **Kaynak:** https://en.wikipedia.org/wiki/An_Inconvenient_Truth
 
@@ -833,20 +833,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Up" (Yukarı Bak) animasyonunda, Carl Fredricksen ile Güney Amerika'ya giden küçük çocuk hangi karakterdir?
 -    A) Dug
 -    B) Kevin
--    C) Charles Muntz
-- ✅ D) Russell
-**Doğru:** D) Russell
+- ✅ C) Russell
+-    D) Charles Muntz
+**Doğru:** C) Russell
 **Açıklama:** Russell, "Up" filminde Carl Fredricksen ile Güney Amerika'ya giden küçük çocuktur. Dug bir köpektir, Kevin bir kuştur ve Charles Muntz düşmandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Up_(2009_film)
 
 ## ds_sinema_0191  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di animasyona "Ratatouille" de, kîjan karakter mişkekî ku xwesteka wî ya xwarinçêkirinê ye?
 **TR:** "Ratatouille" animasyonunda, yemek yapma arzusu olan fare hangi karakterdir?
-- ✅ A) Remy
--    B) Linguini
--    C) Colette
--    D) Anton Ego
-**Doğru:** A) Remy
+-    A) Linguini
+-    B) Colette
+-    C) Anton Ego
+- ✅ D) Remy
+**Doğru:** D) Remy
 **Açıklama:** Remy, "Ratatouille" filminde yemek yapma arzusu olan faredir. Linguini, Remy ile çalışan genç bir adamdır, Colette bir aşçıdır ve Anton Ego bir yemek eleştirmenidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ratatouille_(film)
 
@@ -855,9 +855,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Moana" animasyonunda Maui'nin kalbini çaldığı ada tanrıçası hangi karakterdir?
 -    A) Maui
 -    B) Moana
--    C) Tamatoa
-- ✅ D) Te Fiti
-**Doğru:** D) Te Fiti
+- ✅ C) Te Fiti
+-    D) Tamatoa
+**Doğru:** C) Te Fiti
 **Açıklama:** Te Fiti, "Moana" filminde ada tanrıçasıdır. Maui, Te Fiti'nin kalbini geri getirmek isteyen yarı tanrıdır, Moana yola çıkan bir kızdır ve Tamatoa dev bir yengeçtir.
 **Kaynak:** https://en.wikipedia.org/wiki/Moana_(2016_film)
 
@@ -865,10 +865,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlma belgesel a "Senna" li ser jiyana kîjan ajokarê yarîşê ye?
 **TR:** "Senna" belgesel filmi hangi yarış pilotunun hayatı hakkındadır?
 -    A) Michael Schumacher
--    B) Alain Prost
-- ✅ C) Ayrton Senna
+- ✅ B) Ayrton Senna
+-    C) Alain Prost
 -    D) Niki Lauda
-**Doğru:** C) Ayrton Senna
+**Doğru:** B) Ayrton Senna
 **Açıklama:** "Senna" filmi, Brezilyalı yarış pilotu Ayrton Senna'nın hayatı hakkındadır. Bu belgesel, kariyerinin başlangıcından San Marino yarışındaki ölümüne kadar hayatını anlatır.
 **Kaynak:** https://en.wikipedia.org/wiki/Senna_(film)
 
@@ -877,20 +877,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Zootopia" (Zootropolis) animasyonunda, polis memuru Judy Hopps ile birlikte çalışan tilki hangi karakterdir?
 -    A) Chief Bogo
 -    B) Flash
--    C) Clawhauser
-- ✅ D) Nick Wilde
-**Doğru:** D) Nick Wilde
+- ✅ C) Nick Wilde
+-    D) Clawhauser
+**Doğru:** C) Nick Wilde
 **Açıklama:** Nick Wilde, "Zootopia" filminde Judy Hopps ile birlikte çalışan tilkidir. Chief Bogo polis şefidir, Flash bir tembelhayvandır ve Clawhauser şişman bir polis memurudur.
 **Kaynak:** https://en.wikipedia.org/wiki/Zootopia
 
 ## ds_sinema_0196  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan belgeselvanê fransî fîlma "Shoah" li ser Holokostê derxist?
 **TR:** Holokost hakkındaki "Shoah" filmini hangi Fransız belgesel yönetmeni çekti?
--    A) Marcel Ophüls
-- ✅ B) Claude Lanzmann
+- ✅ A) Claude Lanzmann
+-    B) Marcel Ophüls
 -    C) Leni Riefenstahl
 -    D) Alain Resnais
-**Doğru:** B) Claude Lanzmann
+**Doğru:** A) Claude Lanzmann
 **Açıklama:** Fransız yönetmen Claude Lanzmann, "Shoah" filmini yayınladı. Bu belgesel, 9 saatlik uzunluğuyla Holokost hakkındadır ve tanıklar ve diğer kişilerle yapılan röportajlarla oluşturulmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Shoah_(film)
 
@@ -899,9 +899,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Coco" animasyonunda, müzisyen olmak isteyen çocuk hangi karakterdir?
 -    A) Héctor
 -    B) Ernesto de la Cruz
--    C) Dante
-- ✅ D) Miguel
-**Doğru:** D) Miguel
+- ✅ C) Miguel
+-    D) Dante
+**Doğru:** C) Miguel
 **Açıklama:** Miguel, "Coco" filminde müzisyen olmak isteyen çocuktur. Héctor, Ölüler Diyarı'nda olan biridir, Ernesto de la Cruz ünlü bir müzisyendir ve Dante, Miguel'in köpeğidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Coco_(2017_film)
 
@@ -909,10 +909,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan belgeselvanê amerîkî fîlma "The Act of Killing" derxist?
 **TR:** "The Act of Killing" (Öldürme Eylemi) filmini hangi belgesel yönetmeni yayınladı?
 -    A) Adam Curtis
--    B) Nick Broomfield
-- ✅ C) Joshua Oppenheimer
+- ✅ B) Joshua Oppenheimer
+-    C) Nick Broomfield
 -    D) Louis Theroux
-**Doğru:** C) Joshua Oppenheimer
+**Doğru:** B) Joshua Oppenheimer
 **Açıklama:** Amerikalı yönetmen Joshua Oppenheimer, "The Act of Killing" filmini yayınladı. Bu belgesel Endonezya'daki katliamlar hakkındadır ve katliamı yapanlarla röportajlar yapar.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Act_of_Killing
 
@@ -921,20 +921,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Pulp Fiction" (Ucuz Roman) filmini 1994 yılında hangi Amerikalı yönetmen yayınladı?
 -    A) Steven Spielberg
 -    B) Martin Scorsese
--    C) Francis Ford Coppola
-- ✅ D) Quentin Tarantino
-**Doğru:** D) Quentin Tarantino
+- ✅ C) Quentin Tarantino
+-    D) Francis Ford Coppola
+**Doğru:** C) Quentin Tarantino
 **Açıklama:** Quentin Tarantino, "Pulp Fiction" filminin yönetmenidir. Bu film 1994 yılında gösterime girdi ve Cannes Film Festivali'nde Altın Palmiye Ödülü kazandı. Steven Spielberg, Martin Scorsese ve Francis Ford Coppola da ünlü yönetmenlerdir ancak bu film onlara ait değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Pulp_Fiction
 
 ## ds_sinema_0202  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Fîlma "The Godfather" a Francis Ford Coppola di kîjan salê de derket?
 **TR:** Francis Ford Coppola'nın "Baba" filmi hangi yılda gösterime girdi?
--    A) 1968
-- ✅ B) 1972
+- ✅ A) 1972
+-    B) 1968
 -    C) 1975
 -    D) 1980
-**Doğru:** B) 1972
+**Doğru:** A) 1972
 **Açıklama:** "Baba" filmi 1972'de gösterime girdi ve sinema tarihinin en ünlü filmlerinden biri oldu. Film, Corleone mafya ailesinin hayatını konu alır ve Marlon Brando ile Al Pacino'nun rolleriyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Godfather
 
@@ -943,9 +943,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi Japon yönetmen "Yedi Samuray" filmini çekti?
 -    A) Hayao Miyazaki
 -    B) Yasujirō Ozu
--    C) Takashi Miike
-- ✅ D) Akira Kurosawa
-**Doğru:** D) Akira Kurosawa
+- ✅ C) Akira Kurosawa
+-    D) Takashi Miike
+**Doğru:** C) Akira Kurosawa
 **Açıklama:** Akira Kurosawa, "Yedi Samuray" filminin yönetmenidir. Bu film 1954'te gösterime girdi ve sinema tarihinin en etkili filmlerinden biri olarak kabul edilir. Hayao Miyazaki animasyon filmleriyle tanınır, Yasujirō Ozu ise aile filmlerinin yönetmenidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Seven_Samurai
 
@@ -953,10 +953,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di fîlma "Pulp Fiction" de, kîjan aktor rola Jules Winnfield lîstiye?
 **TR:** "Ucuz Roman" filminde Jules Winnfield rolünü hangi aktör canlandırdı?
 -    A) John Travolta
--    B) Bruce Willis
-- ✅ C) Samuel L. Jackson
+- ✅ B) Samuel L. Jackson
+-    C) Bruce Willis
 -    D) Uma Thurman
-**Doğru:** C) Samuel L. Jackson
+**Doğru:** B) Samuel L. Jackson
 **Açıklama:** Samuel L. Jackson, Quentin Tarantino'nun "Ucuz Roman" filminde Jules Winnfield rolünü canlandırdı. Bu rol, kariyerinin en ünlü rollerinden biridir. John Travolta Vincent Vega, Bruce Willis Butch Coolidge ve Uma Thurman ise Mia Wallace rolünü oynadı.
 **Kaynak:** https://en.wikipedia.org/wiki/Pulp_Fiction
 
@@ -965,20 +965,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Steven Spielberg'in "Schindler"in Listesi' filminde Oskar Schindler rolünü hangi aktör canlandırdı?
 -    A) Ben Kingsley
 -    B) Ralph Fiennes
--    C) Daniel Day-Lewis
-- ✅ D) Liam Neeson
-**Doğru:** D) Liam Neeson
+- ✅ C) Liam Neeson
+-    D) Daniel Day-Lewis
+**Doğru:** C) Liam Neeson
 **Açıklama:** Liam Neeson, Steven Spielberg'in "Schindler"in Listesi' filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı.
 **Kaynak:** https://en.wikipedia.org/wiki/Schindler%27s_List
 
 ## ds_sinema_0210  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Fîlma "Rashomon" a Akira Kurosawa di kîjan salê de derket?
 **TR:** Akira Kurosawa'nın "Rashomon" filmi hangi yılda gösterime girdi?
-- ✅ A) 1950
--    B) 1945
--    C) 1955
--    D) 1960
-**Doğru:** A) 1950
+-    A) 1945
+-    B) 1955
+-    C) 1960
+- ✅ D) 1950
+**Doğru:** D) 1950
 **Açıklama:** "Rashomon" filmi 1950'de gösterime girdi ve sinema tarihinin en önemli filmlerinden biri oldu. Bu film, hikayeyi farklı bakış açılarından anlatma konusundaki yenilikçi tekniğiyle tanınır. Kurosawa bu filmle Venedik Film Festivali'nde Altın Aslan Ödülü'nü kazandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Rashomon
 
@@ -987,20 +987,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Orson Welles'in "Yurttaş Kane" filminde Charles Foster Kane'in son sözü hangisidir?
 -    A) Xanadu
 -    B) Power
--    C) Love
-- ✅ D) Rosebud
-**Doğru:** D) Rosebud
+- ✅ C) Rosebud
+-    D) Love
+**Doğru:** C) Rosebud
 **Açıklama:** "Yurttaş Kane" filminde Charles Foster Kane'in son sözü "Rosebud"dur. Bu kelime sembolik olarak kaybettiği çocukluğunu temsil eder. Film 1941'de gösterime girdi ve genellikle sinema tarihinin en iyi filmlerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Citizen_Kane
 
 ## ds_sinema_0216  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Fîlma "Gone with the Wind" di kîjan salê de derket?
 **TR:** "Rüzgar Gibi Geçti" filmi hangi yılda gösterime girdi?
-- ✅ A) 1939
--    B) 1935
--    C) 1945
--    D) 1950
-**Doğru:** A) 1939
+-    A) 1935
+-    B) 1945
+-    C) 1950
+- ✅ D) 1939
+**Doğru:** D) 1939
 **Açıklama:** "Rüzgar Gibi Geçti" filmi 1939'da gösterime girdi ve sinema tarihinin en ünlü filmlerinden biri oldu. Film, Amerikan İç Savaşı sırasında Scarlett O'Hara'nın hayatını konu alır. Film, En İyi Film dalında Oscar Ödülü kazandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)
 
@@ -1009,20 +1009,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Esaretin Bedeli" filminde Andy Dufresne rolünü hangi aktör canlandırdı?
 -    A) Morgan Freeman
 -    B) Bob Gunton
--    C) William Sadler
-- ✅ D) Tim Robbins
-**Doğru:** D) Tim Robbins
+- ✅ C) Tim Robbins
+-    D) William Sadler
+**Doğru:** C) Tim Robbins
 **Açıklama:** Tim Robbins, "Esaretin Bedeli" filminde Andy Dufresne rolünü canlandırdı. Bu film 1994'te gösterime girdi ve haksız yere hapsedilen bir adamın hayatını konu alır. Morgan Freeman ise Ellis "Red" Redding rolünü oynadı.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Shawshank_Redemption
 
 ## ds_sinema_0249  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan têgeh ji bo nîşandana bûyerekê ya ku di pêşerojê de qewimiye tê bikaranîn?
 **TR:** Gelecekte meydana gelmiş bir olayı göstermek için hangi terim kullanılır?
-- ✅ A) Flashforward
--    B) Flashback
--    C) Pêşketin
--    D) Epîlog
-**Doğru:** A) Flashforward
+-    A) Flashback
+-    B) Pêşketin
+-    C) Epîlog
+- ✅ D) Flashforward
+**Doğru:** D) Flashforward
 **Açıklama:** İleri sıçrama, gelecekte meydana gelmiş bir olayı gösterir. Geriye dönüş geçmişi gösterir, gelişme çatışma aşamasıdır ve sonsöz ise sondur.
 **Kaynak:** https://en.wikipedia.org/wiki/Flashforward
 
@@ -1359,11 +1359,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## cinema_0001  ·  zorluk 1  ·  expansion_2026_08
 **KU:** Di komeka fîlmekî de kî lîstikvanan bi rê ve dibe û biryara dawî ya hunerî dide?
 **TR:** Bir film setinde oyuncuları yöneten ve son sanatsal kararı veren kişi kimdir?
--    A) Sazkerê dengî
-- ✅ B) Derhêner
+- ✅ A) Derhêner
+-    B) Sazkerê dengî
 -    C) Berpirsê kostuman
 -    D) Alîkarê ronahiyê
-**Doğru:** B) Derhêner
+**Doğru:** A) Derhêner
 **Açıklama:** Yönetmen, senaryonun görüntüye dönüşmesindeki tüm sanatsal seçimlerden sorumludur; oyunculuk, kadraj ve ritim onun kararıyla şekillenir. Ses, kostüm ve ışık ekipleri kendi alanlarında ona bağlı çalışır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=5eb742216ddc9db3
 
@@ -1372,42 +1372,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 28 Aralık 1895'te Paris'te ilk biletli film gösterimini hangi kardeşler düzenledi?
 -    A) Birayên Warner
 -    B) Birayên Skladanowsky
--    C) Birayên Pathé
-- ✅ D) Birayên Lumière
-**Doğru:** D) Birayên Lumière
+- ✅ C) Birayên Lumière
+-    D) Birayên Pathé
+**Doğru:** C) Birayên Lumière
 **Açıklama:** Auguste ve Louis Lumière, Grand Café'de Cinématographe'la para karşılığı gösterim yaptı; bu tarih ticari sinemanın başlangıcı sayılır. Skladanowsky kardeşler bir ay önce Berlin'de gösterim yapmıştı ama sistemleri yaygınlaşmadı.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=1384e546118a06f7
 
 ## cinema_0003  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Fîlmê "Rashomon" ê ku sala 1951ê li Venedîkê Şêrê Zêrîn wergirt, ji aliyê kîjan derhênerî ve hat kişandin?
 **TR:** 1951'de Venedik'te Altın Aslan kazanan "Rashomon" filmini hangi yönetmen çekti?
--    A) Yasujirô Ozu
-- ✅ B) Akira Kurosawa
+- ✅ A) Akira Kurosawa
+-    B) Yasujirô Ozu
 -    C) Kenji Mizoguchi
 -    D) Nagisa Ôshima
-**Doğru:** B) Akira Kurosawa
+**Doğru:** A) Akira Kurosawa
 **Açıklama:** Kurosawa'nın 1950 yapımı filmi aynı olayı birbirini tutmayan tanıklıklarla anlatır; Venedik ödülü Japon sinemasını Batı seyircisine tanıttı. Ozu, Mizoguchi ve Oshima da Japon sinemasının büyük adlarıdır ama bu film onların değil.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=7fbb4c92a174c30a
 
 ## cinema_0004  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Ji bo dîmenê ku rûyê lîstikvanî perdeyê tije dike, di zimanê sînemayê de kîjan têgeh tê bikaranîn?
 **TR:** Oyuncunun yüzünün perdeyi doldurduğu çekim ölçeğine ne ad verilir?
-- ✅ A) Plana nêzîk
--    B) Plana giştî
--    C) Plana navîn
--    D) Plana dûr
-**Doğru:** A) Plana nêzîk
+-    A) Plana giştî
+-    B) Plana navîn
+-    C) Plana dûr
+- ✅ D) Plana nêzîk
+**Doğru:** D) Plana nêzîk
 **Açıklama:** Yakın plan yüzü ya da küçük bir ayrıntıyı kadrajın tamamına yayar; duyguyu ve tepkiyi izleyiciye en doğrudan aktaran ölçek budur. Genel ve uzak planlar figürü mekân içinde küçültür, orta plan belden yukarısını alır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=89bf99e43eaf88ba
 
 ## cinema_0005  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Nûbûna sereke ya fîlmê 1927an "The Jazz Singer" di dîroka sînemayê de çi bû?
 **TR:** 1927 yapımı "The Jazz Singer" filminin sinema tarihindeki temel yeniliği neydi?
--    A) Karanîna pêşîn a Technicolorê
-- ✅ B) Diyaloga hevaheng a bi deng
+- ✅ A) Diyaloga hevaheng a bi deng
+-    B) Karanîna pêşîn a Technicolorê
 -    C) Yekem fîlmê sê-alîkî
 -    D) Yekem animasyona dirêj
-**Doğru:** B) Diyaloga hevaheng a bi deng
+**Doğru:** A) Diyaloga hevaheng a bi deng
 **Açıklama:** Vitaphone sistemiyle konuşma ve şarkı görüntüyle eşzamanlı verildi; bu, sessiz dönemin birkaç yıl içinde kapanmasına yol açtı. Renkli süreç ve uzun metraj animasyon yenilikleri 1930'ların sonunu bekledi.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=26d9d477945368f2
 
@@ -1416,42 +1416,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1982'de Altın Palmiye kazanan "Yol" filminin senaryosunu kim yazdı?
 -    A) Şerîf Gören
 -    B) Zekî Ökten
--    C) Atif Yilmaz
-- ✅ D) Yilmaz Güney
-**Doğru:** D) Yilmaz Güney
+- ✅ C) Yilmaz Güney
+-    D) Atif Yilmaz
+**Doğru:** C) Yilmaz Güney
 **Açıklama:** Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın "Kayıp" filmiyle paylaşıldı.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=16bc5556ee90b48d
 
 ## cinema_0007  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Kî ji hev-girêdana dîmenên kişandî û rêza dawî ya wan berpirsiyar e?
 **TR:** Çekilen görüntülerin birleştirilip son sıralamasının belirlenmesinden kim sorumludur?
--    A) Derhênerê dîmenê
-- ✅ B) Montajkar
+- ✅ A) Montajkar
+-    B) Derhênerê dîmenê
 -    C) Berpirsê dekorê
 -    D) Nivîskarê senaryoyê
-**Doğru:** B) Montajkar
+**Doğru:** A) Montajkar
 **Açıklama:** Kurgucu, çekilen malzemeyi seçip sıralayarak filmin ritmini ve süresini belirler; aynı çekimlerden çok farklı filmler çıkarılabilir. Görüntü yönetmeni ışık ve kamerayla, sanat yönetmeni mekân ve dekorla ilgilenir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=955ac556188fe09b
 
 ## cinema_0008  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Dîmena navdar a pêpelûkên Odessayê di kîjan fîlmê Sergey Eisenstein ê 1925an de derbas dibe?
 **TR:** Ünlü Odessa merdivenleri sahnesi Sergey Ayzenştayn'ın 1925 tarihli hangi filminde yer alır?
-- ✅ A) Keştiya Şer Potemkin
--    B) Oktobre
--    C) Grev
--    D) Îvanê Tirsnak
-**Doğru:** A) Keştiya Şer Potemkin
+-    A) Oktobre
+-    B) Grev
+-    C) Îvanê Tirsnak
+- ✅ D) Keştiya Şer Potemkin
+**Doğru:** D) Keştiya Şer Potemkin
 **Açıklama:** Ayzenştayn bu sahnede çarpışan görüntülerle duygu üreten kurgu anlayışını gösterdi. Grev de 1925 yapımıdır ama merdiven sahnesi ona ait değildir; Ekim 1928, Korkunç İvan ise 1944 tarihlidir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=0f120fcbc5c8f3ed
 
 ## cinema_0009  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Kîjan derhênerî fîlmê "Kış Uykusu" kişand, ku sala 2014an li Cannesê Palme d'Or wergirt?
 **TR:** 2014'te Cannes'da Altın Palmiye kazanan "Kış Uykusu" filmini hangi yönetmen çekti?
--    A) Zekî Demîrkubuz
-- ✅ B) Nurî Bîlge Ceylan
+- ✅ A) Nurî Bîlge Ceylan
+-    B) Zekî Demîrkubuz
 -    C) Reha Erdem
 -    D) Yeşîm Ustaoglu
-**Doğru:** B) Nurî Bîlge Ceylan
+**Doğru:** A) Nurî Bîlge Ceylan
 **Açıklama:** Kapadokya'da geçen film, Türkiye sinemasının Cannes'daki ikinci büyük ödülüdür; ilki 1982'de "Yol" ile gelmişti. Demirkubuz, Erdem ve Ustaoğlu aynı kuşaktandır ama bu filmin yönetmeni değildir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=c0a4dbcbd208d2f9
 
@@ -1459,21 +1459,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Dîmenek ku bêyî qutkirinê bi kişandineke domdar tê tomarkirin, çi tê navandin?
 **TR:** Kesintisiz tek bir çekimle kaydedilen sahneye ne denir?
 -    A) Montaja paralel
--    B) Fondu
-- ✅ C) Plan-sekans
+- ✅ B) Plan-sekans
+-    C) Fondu
 -    D) Qutkirina xwêrû
-**Doğru:** C) Plan-sekans
+**Doğru:** B) Plan-sekans
 **Açıklama:** Plan sekansta kamera durmadan çalışır ve sahne kurguyla parçalanmaz; zaman izleyiciye olduğu gibi akar. Paralel kurgu ile sıçramalı kesme kesmeye dayanır, kararma ise bir geçiş efektidir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=1f51513a5cf141bc
 
 ## cinema_0011  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Fîlmê 1902yan "Le Voyage dans la Lune" ku bi hîleyên dîmenî yên pêşîn navdar e, berhema kê ye?
 **TR:** İlk görsel hileleriyle ünlü 1902 yapımı "Aya Yolculuk" kimin filmidir?
-- ✅ A) Georges Méliès
--    B) Edwin S. Porter
--    C) Louis Feuillade
--    D) Émile Cohl
-**Doğru:** A) Georges Méliès
+-    A) Edwin S. Porter
+-    B) Louis Feuillade
+-    C) Émile Cohl
+- ✅ D) Georges Méliès
+**Doğru:** D) Georges Méliès
 **Açıklama:** Sahne sihirbazlığından gelen Méliès, durdur-çek ve üst üste pozlama gibi numaraları anlatının hizmetine soktu. Porter aynı yıllarda Amerikan kurgusunu geliştirdi, Cohl animasyona, Feuillade ise dizi filme yöneldi.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=ce8d1ccf62cec31d
 
@@ -1481,21 +1481,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Navê "Bollywood" ji bo pîşesaziya fîlmên hindî yên kîjan bajarî tê bikaranîn?
 **TR:** "Bollywood" adı hangi şehirdeki Hint film endüstrisi için kullanılır?
 -    A) Kolkata
--    B) Çennaî
-- ✅ C) Mumbai
+- ✅ B) Mumbai
+-    C) Çennaî
 -    D) Delhî
-**Doğru:** C) Mumbai
+**Doğru:** B) Mumbai
 **Açıklama:** Ad, şehrin eski adı Bombay ile Hollywood'un birleşiminden gelir ve Hintçe film üretimini anlatır. Chennai'deki Tamil sineması Kollywood, Kolkata'daki Bengalce sinema ise Tollywood diye anılır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=df151daa9a6608c5
 
 ## cinema_0013  ·  zorluk 1  ·  expansion_2026_08
 **KU:** Fîlmê ku bûyer û mirovên rastîn bêyî senaryoyeke çîrokî tomar dike, di kîjan cûreyê de ye?
 **TR:** Gerçek olay ve kişileri kurgusal bir senaryo olmadan kaydeden film türü hangisidir?
--    A) Zanistî-xeyalî
-- ✅ B) Belgefîlm
+- ✅ A) Belgefîlm
+-    B) Zanistî-xeyalî
 -    C) Animasyon
 -    D) Muzîkal
-**Doğru:** B) Belgefîlm
+**Doğru:** A) Belgefîlm
 **Açıklama:** Belgesel gerçekliği doğrudan gözler; yönetmenin seçimi kadraj ve kurguda görünür ama olaylar oyuncularca canlandırılmaz. Diğer üç tür baştan yazılmış kurmaca dünyalara dayanır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=450a92110c825c88
 
@@ -1503,21 +1503,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê 1948an "Ladri di biciclette" (Duzê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?
 **TR:** 1948 yapımı "Bisiklet Hırsızları" hangi sinema akımının örneğidir?
 -    A) Ekspresyonîzma almanî
--    B) Dogme 95
-- ✅ C) Neorealîzma îtalî
+- ✅ B) Neorealîzma îtalî
+-    C) Dogme 95
 -    D) Sînemaya Nû ya Almanî
-**Doğru:** C) Neorealîzma îtalî
+**Doğru:** B) Neorealîzma îtalî
 **Açıklama:** De Sica filmi savaş sonrası Roma'da, gerçek sokaklarda ve profesyonel olmayan oyuncularla çekti; yoksulluğu süslemeden göstermek akımın temel tavrıdır. Dışavurumculuk stüdyo dekoruna dayanır, Dogma 95 ise 1990'lara aittir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=f07f50f2b4639121
 
 ## cinema_0015  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Rêzefîlma Apu bi berhema 1955an "Pather Panchali" dest pê dike; derhênerê wê kî ye?
 **TR:** Apu üçlemesi 1955 yapımı "Pather Panchali" ile başlar; bu filmin yönetmeni kimdir?
-- ✅ A) Satyajit Ray
--    B) Ritwik Ghatak
--    C) Mrinal Sen
--    D) Guru Dutt
-**Doğru:** A) Satyajit Ray
+-    A) Ritwik Ghatak
+-    B) Mrinal Sen
+-    C) Guru Dutt
+- ✅ D) Satyajit Ray
+**Doğru:** D) Satyajit Ray
 **Açıklama:** Ray, Bengal kırsalındaki bir ailenin yoksulluğunu sade bir gözlemle anlattı ve Hint sinemasını uluslararası festivallerde görünür kıldı. Ghatak ile Sen aynı dönemin diğer Bengalli yönetmenleridir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=9796fabf8de0bdba
 
@@ -1525,21 +1525,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Berî kişandinê plansaziya dîmenan bi rêzeyeke wêneyên xêzkirî tê amadekirin; navê vê amrazê çi ye?
 **TR:** Çekimden önce planların çizimlerle sıralandığı hazırlık aracına ne ad verilir?
 -    A) Sînopsîs
--    B) Senaryoya teknîkî
-- ✅ C) Storyboard
+- ✅ B) Storyboard
+-    C) Senaryoya teknîkî
 -    D) Lîsteya kişandinê
-**Doğru:** C) Storyboard
+**Doğru:** B) Storyboard
 **Açıklama:** Storyboard her planı bir kare çizimle gösterir; kamera açısı ve hareket böylece çekime girmeden sınanır. Sinopsis öykünün kısa özetidir, çekim listesi ise yalnızca yazılı bir sıralamadır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=f02323b0d1cc5363
 
 ## cinema_0017  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Fîlmê 1920yî "Kabîneya Doktor Caligari" bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?
 **TR:** Çarpık dekorları ve keskin gölgeleriyle 1920 yapımı "Dr. Caligari'nin Muayenehanesi" hangi akımın örneğidir?
--    A) Realîzma poetîk
-- ✅ B) Ekspresyonîzma almanî
+- ✅ A) Ekspresyonîzma almanî
+-    B) Realîzma poetîk
 -    C) Sînema-çav
 -    D) Film noir a fransî
-**Doğru:** B) Ekspresyonîzma almanî
+**Doğru:** A) Ekspresyonîzma almanî
 **Açıklama:** Bu akımda dekor ve ışık karakterin ruh halini dışarı taşır; gerçekçi mekân yerine boyanmış, eğri bir dünya kurulur. Şiirsel gerçekçilik 1930'lar Fransa'sına, sine-göz ise Sovyet belgeseline aittir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=a7f3735e54740257
 
@@ -1547,32 +1547,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê 2000î "Demê ku Hesp Serxweş Dibin" ku li Cannesê Caméra d'Or wergirt, ji kîjan derhênerî ye?
 **TR:** Cannes'da Altın Kamera kazanan 2000 yapımı "Sarhoş Atlar Zamanı" hangi yönetmenin filmidir?
 -    A) Hîner Salêm
--    B) Cafer Panahî
-- ✅ C) Bahman Ghobadî
+- ✅ B) Bahman Ghobadî
+-    C) Cafer Panahî
 -    D) Mohsen Mexmelbaf
-**Doğru:** C) Bahman Ghobadî
+**Doğru:** B) Bahman Ghobadî
 **Açıklama:** Ghobadi'nin ilk uzun metrajı, İran-Irak sınırındaki bir Kürt köyünde sınır ticaretiyle ayakta kalmaya çalışan çocukları izler. Altın Kamera yalnız ilk filmlere verilir; diğer üç isim de tanınmış yönetmenlerdir ama bu film onların değildir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=5a6257d449d74a7f
 
 ## cinema_0019  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Dengên wek gavan an vekirina derî yên ku piştî kişandinê li stûdyoyê ji nû ve tên çêkirin, çi tên navandin?
 **TR:** Ayak sesi ya da kapı gıcırtısı gibi seslerin çekimden sonra stüdyoda yeniden üretilmesine ne denir?
-- ✅ A) Dengên foley
--    B) Muzîka fîlmî
--    C) Dublaj
--    D) Dengê rasterast
-**Doğru:** A) Dengên foley
+-    A) Muzîka fîlmî
+-    B) Dublaj
+-    C) Dengê rasterast
+- ✅ D) Dengên foley
+**Doğru:** D) Dengên foley
 **Açıklama:** Foley sanatçısı sahneyi izleyerek sesleri elle canlandırır, çünkü sette kaydedilen ses çoğu zaman temiz değildir. Dublaj yalnız konuşmayı yeniden kaydeder, doğrudan ses ise çekim anındaki kaydı anlatır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=690832fd44ffd1cb
 
 ## cinema_0020  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Kîjan lîstikvan û derhêner bi karakterê "Serserê Piçûk" ê dema sînemaya bêdeng tê nasîn?
 **TR:** Sessiz sinema döneminin "Küçük Serseri" tipiyle tanınan oyuncu-yönetmen kimdir?
--    A) Buster Keaton
-- ✅ B) Charlie Chaplin
+- ✅ A) Charlie Chaplin
+-    B) Buster Keaton
 -    C) Harold Lloyd
 -    D) Roscoe Arbuckle
-**Doğru:** B) Charlie Chaplin
+**Doğru:** A) Charlie Chaplin
 **Açıklama:** Bastonu, melon şapkası ve bol pantolonuyla bu tip 1914'ten itibaren geliştirildi ve sessiz komedinin simgesi oldu. Keaton, Lloyd ve Arbuckle da dönemin büyük komedyenleriydi, ancak her birinin kendi tipi vardı.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=4bbf72ac950ae952
 
@@ -1581,9 +1581,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1957 yapımı "Yedinci Mühür" filminin İsveçli yönetmeni kimdir?
 -    A) Victor Sjöström
 -    B) Bo Widerberg
--    C) Jan Troell
-- ✅ D) Ingmar Bergman
-**Doğru:** D) Ingmar Bergman
+- ✅ C) Ingmar Bergman
+-    D) Jan Troell
+**Doğru:** C) Ingmar Bergman
 **Açıklama:** Film, Haçlı seferinden dönen bir şövalyenin Ölüm'le satranç oynamasını anlatır; inanç ve ölüm sorusu yönetmenin bütün işlerinde sürer. Sjöström, Widerberg ve Troell de İsveç sinemasının önemli adlarıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=d1b7689e4eef818d
 
@@ -1591,10 +1591,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kî diyalog û avahiya çîroka fîlmekî li ser kaxezê datîne?
 **TR:** Bir filmin diyaloglarını ve öykü yapısını kâğıt üzerinde kim kurar?
 -    A) Montajkar
--    B) Derhênerê dîmenê
-- ✅ C) Senarîst
+- ✅ B) Senarîst
+-    C) Derhênerê dîmenê
 -    D) Berpirsê dekorê
-**Doğru:** C) Senarîst
+**Doğru:** B) Senarîst
 **Açıklama:** Senaryo, filmin sahne sahne planıdır; konuşmalar ve olay örgüsü burada belirlenir. Kurgucu çekilmiş görüntüyle, görüntü yönetmeni kamerayla, sanat yönetmeni mekân ve dekorla çalışır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=2aa139272a4ca432
 
@@ -1603,20 +1603,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Başlıca uluslararası film festivallerinin en eskisi olan, 1932'de kurulan festival hangisidir?
 -    A) Cannes
 -    B) Berlînale
--    C) Karlovy Vary
-- ✅ D) Venedîk
-**Doğru:** D) Venedîk
+- ✅ C) Venedîk
+-    D) Karlovy Vary
+**Doğru:** C) Venedîk
 **Açıklama:** 1932'de başlayan bu festivalin büyük ödülü Altın Aslan'dır. Cannes ve Karlovy Vary 1946'da düzenli hale geldi, Berlinale ise 1951'de kuruldu.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=2e3edeb909338378
 
 ## cinema_0024  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Krîza afirînerî ya derhênerekî di fîlmê 1963yan "8½" de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?
 **TR:** 1963 yapımı "8½" bir yönetmenin yaratıcılık bunalımını anlatır; film hangi İtalyan yönetmenindir?
--    A) Luchino Visconti
-- ✅ B) Federico Fellini
+- ✅ A) Federico Fellini
+-    B) Luchino Visconti
 -    C) Michelangelo Antonioni
 -    D) Pier Paolo Pasolini
-**Doğru:** B) Federico Fellini
+**Doğru:** A) Federico Fellini
 **Açıklama:** Yönetmen kendi tıkanmışlığını rüya, anı ve gerçeği iç içe geçirerek anlattı; başlık o güne dek çektiği film sayısına gönderme yapar. Visconti, Antonioni ve Pasolini de aynı dönemin İtalyan ustalarıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=068e0b93748efb97
 
@@ -1625,9 +1625,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Klasik 35 mm sinema standardında saniyede kaç kare gösterilir?
 -    A) 16
 -    B) 30
--    C) 48
-- ✅ D) 24
-**Doğru:** D) 24
+- ✅ C) 24
+-    D) 48
+**Doğru:** C) 24
 **Açıklama:** Sesli sinemaya geçişle birlikte bu hız standart oldu, çünkü ses bandının düzgün okunması sabit bir hız gerektiriyordu. Sessiz dönemde çekim hızı 16 ile 18 arasında değişebiliyordu.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=e1f37b20f11a9dd5
 
@@ -1635,10 +1635,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê 1959an "Les 400 coups" ku destpêka Tevgera Nû ya Fransî tê hesibandin, ji kê ye?
 **TR:** Fransız Yeni Dalgası'nın başlangıcı sayılan 1959 yapımı "Dört Yüz Darbe" kimin filmidir?
 -    A) Jean-Luc Godard
--    B) Claude Chabrol
-- ✅ C) François Truffaut
+- ✅ B) François Truffaut
+-    C) Claude Chabrol
 -    D) Jean-Pierre Melville
-**Doğru:** C) François Truffaut
+**Doğru:** B) François Truffaut
 **Açıklama:** Yönetmen ilk uzun metrajıyla Cannes'da en iyi yönetmen ödülünü aldı; film kendi çocukluğundan izler taşır. Godard ve Chabrol da Cahiers du cinéma yazarlığından yönetmenliğe geçti; Melville ise bu kuşaktan önce gelen, onların örnek aldığı bir yönetmendi.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=749ef2a6e4dc39bd
 
@@ -1647,20 +1647,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1964'te "Susuz Yaz" filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?
 -    A) Lütfî Ö. Akad
 -    B) Atif Yilmaz
--    C) Halît Refîg
-- ✅ D) Metîn Erksan
-**Doğru:** D) Metîn Erksan
+- ✅ C) Metîn Erksan
+-    D) Halît Refîg
+**Doğru:** C) Metîn Erksan
 **Açıklama:** Film su hakkı üzerinden kırsal bir çatışmayı anlatır ve Türkiye sinemasının Berlin'deki ilk büyük ödülüdür. Akad, Atıf Yılmaz ve Refiğ de aynı dönemin öne çıkan yönetmenleridir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=c7d7d7d804f790c6
 
 ## cinema_0028  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Dîmenê ku tê de kamera rasterast ji jor ve li cihê bûyerê dinêre, çi tê navandin?
 **TR:** Kameranın olay yerine tam tepeden baktığı çekime ne ad verilir?
--    A) Plana ji jêr
-- ✅ B) Plana çavê teyr
+- ✅ A) Plana çavê teyr
+-    B) Plana ji jêr
 -    C) Plana hemwaz
 -    D) Plana xwar
-**Doğru:** B) Plana çavê teyr
+**Doğru:** A) Plana çavê teyr
 **Açıklama:** Bu açı mekânı harita gibi açar ve kişileri küçültür. Alt açı tersine figürü büyütür, göz hizası nötr durur, eğik açı ise kadrajı yana yatırarak tedirginlik yaratır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=eca8c6bf350d692e
 
@@ -1669,20 +1669,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Walt Disney stüdyosunun 1937'de gösterime giren ilk uzun metrajlı animasyon filmi hangisidir?
 -    A) Pînokyo
 -    B) Fantasia
--    C) Dumbo
-- ✅ D) Sipîberf û Heft Cûceyan
-**Doğru:** D) Sipîberf û Heft Cûceyan
+- ✅ C) Sipîberf û Heft Cûceyan
+-    D) Dumbo
+**Doğru:** C) Sipîberf û Heft Cûceyan
 **Açıklama:** Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo ile Fantasia 1940, Dumbo ise 1941 yapımıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=15a5ab2a729d8715
 
 ## cinema_0030  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Derhênerê senegalî yê ku bi fîlmê 1966an "La Noire de…" tê nasîn kî ye?
 **TR:** 1966 yapımı "Kara Kız" filmiyle tanınan Senegalli yönetmen kimdir?
-- ✅ A) Ousmane Sembène
--    B) Djibril Diop Mambéty
--    C) Souleymane Cissé
--    D) Med Hondo
-**Doğru:** A) Ousmane Sembène
+-    A) Djibril Diop Mambéty
+-    B) Souleymane Cissé
+-    C) Med Hondo
+- ✅ D) Ousmane Sembène
+**Doğru:** D) Ousmane Sembène
 **Açıklama:** Roman yazarlığından gelen yönetmen, Fransa'da çalışan bir Senegalli kadının öyküsüyle Sahra altı Afrika'nın uluslararası ilgi gören ilk uzun metrajlarından birini verdi. Mambéty, Cissé ve Hondo da Afrika sinemasının önemli adlarıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=615e259e084a335b
 
@@ -1691,20 +1691,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bir filmin bütçesini bulan ve yapım sürecini yürüten kişi kimdir?
 -    A) Derhêner
 -    B) Senarîst
--    C) Montajkar
-- ✅ D) Berhemhêner
-**Doğru:** D) Berhemhêner
+- ✅ C) Berhemhêner
+-    D) Montajkar
+**Doğru:** C) Berhemhêner
 **Açıklama:** Yapımcı finansmanı, takvimi ve ekibi bir arada tutar; sanatsal kararlar yönetmende kalır. Senarist metni yazar, kurgucu ise çekim sonrası aşamada çalışır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=992b6fbd2986716f
 
 ## cinema_0032  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Manîfestoya "Dogme 95" ku qedexeyên tund li ronahiya sûnî û muzîka lêzêdekirî danî, li kîjan welatî hat ragihandin?
 **TR:** Yapay ışığa ve sonradan eklenen müziğe katı yasaklar koyan "Dogme 95" bildirisi hangi ülkenin yönetmenlerince başlatıldı?
-- ✅ A) Danîmarka
--    B) Awistirya
--    C) Norwêc
--    D) Hollanda
-**Doğru:** A) Danîmarka
+-    A) Awistirya
+-    B) Norwêc
+-    C) Hollanda
+- ✅ D) Danîmarka
+**Doğru:** D) Danîmarka
 **Açıklama:** Bildiriyi 1995'te Danimarkalı yönetmenler Lars von Trier ve Thomas Vinterberg Lars von Trier ile Thomas Vinterberg kaleme aldı; amaç yapımı sadeleştirip oyunculuğu öne çıkarmaktı. İlk iki Dogma filmi de aynı ülkenin yapımıdır. Manifesto ilk kez Mart 1995'te Paris'te kamuya sunuldu.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=a5ca49c59f3ef21c
 
@@ -1712,21 +1712,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê hongkongî yê fîlmê 2000î "In the Mood for Love" kî ye?
 **TR:** 2000 yapımı "Aşk Zamanı" filminin Hong Konglu yönetmeni kimdir?
 -    A) John Woo
--    B) Tsui Hark
-- ✅ C) Wong Kar-waî
+- ✅ B) Wong Kar-waî
+-    C) Tsui Hark
 -    D) Ann Hui
-**Doğru:** C) Wong Kar-waî
+**Doğru:** B) Wong Kar-waî
 **Açıklama:** Film, 1960'ların Hong Kong'unda iki komşunun söze dökülmeyen yakınlığını dar kadrajlar ve yavaşlatılmış geçişlerle anlatır. Woo, Tsui Hark ve Ann Hui aynı sinemanın başka damarlarını temsil eder.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=d6b205f55ff99827
 
 ## cinema_0034  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Dîmenê destpêkê yê ku cih û dema sekansekê dide nasîn, çi tê navandin?
 **TR:** Bir sekansın geçtiği yeri ve zamanı tanıtan açılış çekimine ne denir?
-- ✅ A) Plana danasînê
--    B) Plana berevajî
--    C) Plana detayê
--    D) Plana subjektîf
-**Doğru:** A) Plana danasînê
+-    A) Plana berevajî
+-    B) Plana detayê
+-    C) Plana subjektîf
+- ✅ D) Plana danasînê
+**Doğru:** D) Plana danasînê
 **Açıklama:** Tanıtım planı çoğunlukla geniş bir kadrajdır ve izleyiciyi mekâna yerleştirir; sonraki yakın planlar bu haritaya oturur. Ters açı diyalogda, öznel çekim ise karakterin gözünden bakarken kullanılır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=fec9c9b0d4ed323d
 
@@ -1735,20 +1735,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Geniş alan derinliği 1941 yapımı "Yurttaş Kane" ile ün kazandı; bu filmin yönetmeni kimdir?
 -    A) Howard Hawks
 -    B) John Ford
--    C) Billy Wilder
-- ✅ D) Orson Welles
-**Doğru:** D) Orson Welles
+- ✅ C) Orson Welles
+-    D) Billy Wilder
+**Doğru:** C) Orson Welles
 **Açıklama:** Yönetmen filmi 25 yaşında çekti; ön ve arka planın birlikte net kaldığı görüntüleri görüntü yönetmeni Gregg Toland'la geliştirdi. Ford, Hawks ve Wilder aynı stüdyo döneminin diğer büyük adlarıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=51d0979d01d1cb29
 
 ## cinema_0036  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Sala 2010an li Berlînê Hirça Zêrîn ji fîlmê "Bal" re hat dayîn; derhênerê vî fîlmî kî ye?
 **TR:** 2010'da Berlin'de Altın Ayı "Bal" filmine verildi; bu filmin yönetmeni kimdir?
-- ✅ A) Semîh Kaplanoglu
--    B) Derviş Zaîm
--    C) Özcan Alper
--    D) Kazim Öz
-**Doğru:** A) Semîh Kaplanoglu
+-    A) Derviş Zaîm
+-    B) Özcan Alper
+-    C) Kazim Öz
+- ✅ D) Semîh Kaplanoglu
+**Doğru:** D) Semîh Kaplanoglu
 **Açıklama:** Bal, yönetmenin Yusuf üçlemesinin son halkasıdır; üçleme zamanda geriye doğru ilerleyip çocukluğa varır. Zaim, Alper ve Öz de aynı dönemin bağımsız yönetmenleridir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=1b281b92de4c017e
 
@@ -1756,21 +1756,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Cûreyê fîlmî yê ku li rojavayê Amerîkayê ya sedsala 19an, bi kovboy û şerên sînoran derbas dibe kîjan e?
 **TR:** 19. yüzyıl Amerikan batısında, kovboylar ve sınır çatışmaları etrafında geçen film türü hangisidir?
 -    A) Melodram
--    B) Film noir
-- ✅ C) Western
+- ✅ B) Western
+-    C) Film noir
 -    D) Trîler
-**Doğru:** C) Western
+**Doğru:** B) Western
 **Açıklama:** Bu tür sınır bölgesinin efsanesini at, silah ve açık arazi üzerinden kurar. Kara film kentin gecesinde geçer, melodram duygusal çatışmaya, gerilim ise tehlike beklentisine dayanır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=5ae34d13da9e5f81
 
 ## cinema_0038  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Kîjan kovara fransî di salên 1950î de nêrîna "derhêner nivîskarê fîlmî ye" belav kir?
 **TR:** 1950'lerde "yönetmen filmin yazarıdır" görüşünü hangi Fransız dergi yaydı?
-- ✅ A) Cahiers du cinéma
--    B) Sight and Sound
--    C) Positif
--    D) Variety
-**Doğru:** A) Cahiers du cinéma
+-    A) Sight and Sound
+-    B) Positif
+-    C) Variety
+- ✅ D) Cahiers du cinéma
+**Doğru:** D) Cahiers du cinéma
 **Açıklama:** Dergi çevresindeki genç eleştirmenler, stüdyo düzeni içinde bile bir yönetmenin kişisel damgasının okunabileceğini savundu; sonra kendileri film çekti. Positif rakip Fransız dergisi, Sight and Sound İngiliz, Variety ise Amerikan sektör yayınıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=812f622118f6e513
 
@@ -1779,31 +1779,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 2019 Altın Palmiye'si "Parazit" filmine verildi; bu film hangi ülkenindir?
 -    A) Japonya
 -    B) Çîn
--    C) Taywan
-- ✅ D) Koreya Başûr
-**Doğru:** D) Koreya Başûr
+- ✅ C) Koreya Başûr
+-    D) Taywan
+**Doğru:** C) Koreya Başûr
 **Açıklama:** Bong Joon-ho'nun filmi iki ailenin sınıf farkını tek bir evin katmanlarında anlatır. Aynı film ertesi yıl Oscar'da en iyi film seçilerek bu ödülü kazanan ilk İngilizce olmayan yapım oldu.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=65df1ffb99815f0a
 
 ## cinema_0040  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Dengê ku çavkaniya wî di cîhana çîroka fîlmî de heye, wek radyoyeke di odeyê de, çi tê navandin?
 **TR:** Kaynağı filmin öykü dünyasında bulunan, örneğin odadaki bir radyodan gelen ses nasıl adlandırılır?
-- ✅ A) Dengê dîegetîk
--    B) Dengê off
--    C) Muzîka lêzêdekirî
--    D) Vegotina derveyî
-**Doğru:** A) Dengê dîegetîk
+-    A) Dengê off
+-    B) Muzîka lêzêdekirî
+-    C) Vegotina derveyî
+- ✅ D) Dengê dîegetîk
+**Doğru:** D) Dengê dîegetîk
 **Açıklama:** Diegetik ses karakterlerin de duyduğu sestir, kaynağı sahnenin içindedir. Perde arkasından gelen müzik ve dış anlatıcı ise yalnızca izleyiciye seslenir; karakterler onları duymaz.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=54f806de7b927010
 
 ## cinema_0041  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Dîmena duşê ya fîlmê 1960î "Psycho" berhema kîjan derhênerî ye?
 **TR:** 1960 yapımı "Sapık" filminin duş sahnesi hangi yönetmenin işidir?
--    A) Henri-Georges Clouzot
-- ✅ B) Alfred Hitchcock
+- ✅ A) Alfred Hitchcock
+-    B) Henri-Georges Clouzot
 -    C) Otto Preminger
 -    D) Robert Aldrich
-**Doğru:** B) Alfred Hitchcock
+**Doğru:** A) Alfred Hitchcock
 **Açıklama:** Yönetmen sahneyi çok sayıda kısa çekimin hızlı kurgusuyla kurdu; bıçağın bedene değdiği hiç gösterilmez, şiddet izleyicinin zihninde tamamlanır. Clouzot, Preminger ve Aldrich de gerilim türünde çalışmıştır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=5e36186d4c9561f8
 
@@ -1812,42 +1812,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 2003 yapımı "Vodka Lemon" hangi Kürt yönetmenin filmidir?
 -    A) Bahman Ghobadî
 -    B) Kazim Öz
--    C) Mano Xelîl
-- ✅ D) Hîner Salêm
-**Doğru:** D) Hîner Salêm
+- ✅ C) Hîner Salêm
+-    D) Mano Xelîl
+**Doğru:** C) Hîner Salêm
 **Açıklama:** Ermenistan'daki bir Kürt köyünde geçen film, kışın yoksulluğunu kuru bir mizahla anlatır ve yönetmenin en tanınan işidir. Ghobadi, Öz ve Khalil de Kürt sinemasının başka yönetmenleridir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=be14e17a135d62f2
 
 ## cinema_0043  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Di sînemayê de şeklê çarçoveya dîmenê bi kîjan pîvanê tê diyarkirin?
 **TR:** Sinemada görüntü çerçevesinin biçimi hangi ölçüyle belirlenir?
--    A) Hejmara kadroyên ku di saniyeyekê de tên nîşandan
-- ✅ B) Rêjeya firehî û bilindahiyê
+- ✅ A) Rêjeya firehî û bilindahiyê
+-    B) Hejmara kadroyên ku di saniyeyekê de tên nîşandan
 -    C) Kûrahiya zeviya di navbera pêş û paş de
 -    D) Asta bilindbûna dengê tomarkirî
-**Doğru:** B) Rêjeya firehî û bilindahiyê
+**Doğru:** A) Rêjeya firehî û bilindahiyê
 **Açıklama:** En-boy oranı görüntünün çerçeve biçimini verir; 1.85:1 ya da 2.39:1 gibi değerler perdenin ne kadar geniş olacağını belirler. Kare sayısı hızla, alan derinliği ise netlik alanıyla ilgilidir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=c0442b60c998408d
 
 ## cinema_0044  ·  zorluk 5  ·  expansion_2026_08
 **KU:** Ceribandina ku nîşan da wateya heman dîmenê rû li gorî dîmenê pê re diguhere, bi navê kê tê zanîn?
 **TR:** Aynı yüz görüntüsünün anlamının yanına konan çekime göre değiştiğini gösteren deney kimin adıyla anılır?
-- ✅ A) Lev Kuleşov
--    B) Dziga Vertov
--    C) Vsevolod Pudovkin
--    D) Aleksandr Dovjenko
-**Doğru:** A) Lev Kuleşov
+-    A) Dziga Vertov
+-    B) Vsevolod Pudovkin
+-    C) Aleksandr Dovjenko
+- ✅ D) Lev Kuleşov
+**Doğru:** D) Lev Kuleşov
 **Açıklama:** Deneyde aynı nötr yüz; çorba, tabut ve çocuk görüntüleriyle eşleştirilince izleyiciler sırasıyla açlık, keder ve şefkat okudu. Anlamın tek çekimde değil çekimlerin ilişkisinde doğduğu fikri Sovyet kurgu okulunun temelidir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=0969a18fb8881f36
 
 ## cinema_0045  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Di sînemaya tirkî de navê "Yeşilçam" behsa çi dike?
 **TR:** Türk sinemasında "Yeşilçam" adı neyi anlatır?
--    A) Festîvaleke fîlman li Anqereyê
-- ✅ B) Pîşesaziya fîlman a Îstenbolê
+- ✅ A) Pîşesaziya fîlman a Îstenbolê
+-    B) Festîvaleke fîlman li Anqereyê
 -    C) Xelateke sînemayê ya salane
 -    D) Kovareke sînemayê ya kevn
-**Doğru:** B) Pîşesaziya fîlman a Îstenbolê
+**Doğru:** A) Pîşesaziya fîlman a Îstenbolê
 **Açıklama:** Ad, Beyoğlu'ndaki bir sokaktan gelir; yapım şirketleri orada toplandığı için dönemin popüler film üretimi bu adla anıldı. Bir festivalin, ödülün ya da derginin adı değildir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=705a147766e26479
 
@@ -1856,42 +1856,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aynı anda farklı yerlerde geçen iki olayın dönüşümlü gösterilmesine ne denir?
 -    A) Montaja domdar
 -    B) Elipsa demî
--    C) Fondu ya zincîrî
-- ✅ D) Montaja paralel
-**Doğru:** D) Montaja paralel
+- ✅ C) Montaja paralel
+-    D) Fondu ya zincîrî
+**Doğru:** C) Montaja paralel
 **Açıklama:** Paralel kurgu iki hattı sırayla keserek gerilimi büyütür; kovalamaca sahnelerinin temelidir. Süreklilik kurgusu tek bir akışı pürüzsüz bağlar, zaman atlaması ise araya giren süreyi atar.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=7620dc048fe4b052
 
 ## cinema_0047  ·  zorluk 5  ·  expansion_2026_08
 **KU:** Di merasîma yekem a Oscarê de (1929), xelata berhema herî baş ji bo kîjan fîlmî hat dayîn?
 **TR:** 1929'daki ilk Oscar töreninde en iyi yapım ödülü hangi filme verildi?
--    A) The Broadway Melody
-- ✅ B) Wings
+- ✅ A) Wings
+-    B) The Broadway Melody
 -    C) Sunrise
 -    D) The Jazz Singer
-**Doğru:** B) Wings
+**Doğru:** A) Wings
 **Açıklama:** Sessiz bir savaş uçağı filmi olan Wings, ilk törende en iyi yapım seçildi. Sunrise o gece ayrı bir sanatsal yapım dalında ödüllendirildi, The Broadway Melody ise ertesi yılın kazananıdır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=97e8053659d59d5a
 
 ## cinema_0048  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Derhênerê spanî yê ku bi fîlmê xwe yê 1999an "Dayika Min" Oscara fîlmê biyanî wergirt kî ye?
 **TR:** 1999 yapımı "Annem Hakkında Her Şey" ile yabancı film Oscarı kazanan İspanyol yönetmen kimdir?
-- ✅ A) Pedro Almodóvar
--    B) Carlos Saura
--    C) Luis Buñuel
--    D) Alejandro Amenábar
-**Doğru:** A) Pedro Almodóvar
+-    A) Carlos Saura
+-    B) Luis Buñuel
+-    C) Alejandro Amenábar
+- ✅ D) Pedro Almodóvar
+**Doğru:** D) Pedro Almodóvar
 **Açıklama:** Film ödülü 2000'deki törende aldı; yönetmen canlı renkleri ve melodrama yaslanan anlatısıyla tanınır. Buñuel çok daha önceki kuşaktandır, Saura ve Amenábar ise başka filmlerle anılır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=592225b188cb079d
 
 ## cinema_0049  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Dema ku kamera li ser rêyekê bi lîstikvanî re dilive, ev tevger çi tê navandin?
 **TR:** Kameranın bir ray üzerinde oyuncuyla birlikte yer değiştirmesine ne denir?
--    A) Nêzîkkirina optîk
-- ✅ B) Travelling
+- ✅ A) Travelling
+-    B) Nêzîkkirina optîk
 -    C) Çerxa serdakî
 -    D) Çerxa berwarî
-**Doğru:** B) Travelling
+**Doğru:** A) Travelling
 **Açıklama:** Kaydırmada kameranın kendisi yer değiştirdiği için arka plan da gerçekten kayar ve derinlik duygusu değişir. Optik yaklaştırmada kamera durur, yalnız objektif odak uzaklığı değişir; çevrinmelerde ise kamera sabit noktada döner.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=54b1f24b084cf2dd
 
@@ -1899,21 +1899,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê fîlmê 1979an "Stalker" ê ku li Yekîtiya Sovyetê hat kişandin kî ye?
 **TR:** Sovyetler Birliği'nde çekilen 1979 yapımı "İz Sürücü" filminin yönetmeni kimdir?
 -    A) Sergey Parajanov
--    B) Elem Klimov
-- ✅ C) Andrey Tarkovskî
+- ✅ B) Andrey Tarkovskî
+-    C) Elem Klimov
 -    D) Nikita Mihalkov
-**Doğru:** C) Andrey Tarkovskî
+**Doğru:** B) Andrey Tarkovskî
 **Açıklama:** Yönetmen uzun çekimleri ve ağır ritmiyle bilimkurgunun aksiyonunu değil inanç sorusunu öne aldı; film Strugatski kardeşlerin romanından uyarlandı. Parajanov, Klimov ve Mihalkov aynı dönemin diğer Sovyet yönetmenleridir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=4011f53fddfab8b4
 
 ## cinema_0051  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Kîjan derhêner sala 2004an bi fîlmê "Gegen die Wand" li Berlînê Hirça Zêrîn wergirt?
 **TR:** 2004'te "Duvara Karşı" filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?
-- ✅ A) Fatîh Akin
--    B) Ferzan Özpetek
--    C) Thomas Arslan
--    D) Yüksel Yavuz
-**Doğru:** A) Fatîh Akin
+-    A) Ferzan Özpetek
+-    B) Thomas Arslan
+-    C) Yüksel Yavuz
+- ✅ D) Fatîh Akin
+**Doğru:** D) Fatîh Akin
 **Açıklama:** Hamburg doğumlu yönetmenin filmi, Almanya'daki iki Türkiyelinin anlaşmalı evliliğinden doğan sert bir aşk öyküsüdür. Özpetek İtalya'da çalışır; Arslan ve Yavuz da Almanya'daki diğer yönetmenlerdir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=1589679e6313aa96
 
@@ -1921,21 +1921,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di zimanê Hitchcock de, tişta ku lehengan dide tevgerê lê bi xwe ne girîng e, çi tê navandin?
 **TR:** Hitchcock'un diliyle, karakterleri harekete geçiren ama kendisi önemsiz olan öğeye ne ad verilir?
 -    A) Deus ex machina
--    B) Vegera paşve
-- ✅ C) MacGuffin
+- ✅ B) MacGuffin
+-    C) Vegera paşve
 -    D) Mîzansen
-**Doğru:** C) MacGuffin
+**Doğru:** B) MacGuffin
 **Açıklama:** Bu öğe bir belge, valiz ya da formül olabilir; işlevi kovalamacayı başlatmaktır, içeriği değil. Deus ex machina tersine düğümü sonda dışarıdan çözer, mizansen ise kadraj içi düzenlemeyi anlatır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=115e530809b63791
 
 ## cinema_0053  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Palme d'Or a 1997an çû fîlmê "Ta'm-e Guilass"; ev berhem ya kîjan derhênerê îranî ye?
 **TR:** 1997 Altın Palmiye'si "Kiraz Tadı" filmine gitti; bu film hangi İranlı yönetmenindir?
--    A) Asghar Ferhadî
-- ✅ B) Abbas Kiarostamî
+- ✅ A) Abbas Kiarostamî
+-    B) Asghar Ferhadî
 -    C) Macîd Macîdî
 -    D) Daryûş Mehrcûî
-**Doğru:** B) Abbas Kiarostamî
+**Doğru:** A) Abbas Kiarostamî
 **Açıklama:** Film, ölmek isteyen bir adamın araba içinde geçen konuşmalarını izler; ödül o yıl Shohei Imamura'nın filmiyle paylaşıldı. Farhadi sonraki kuşaktandır, Macidi ve Mehrcui ise başka işlerle anılır.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=cc432c29410303c9
 
@@ -1943,32 +1943,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Amûra "Kinetoscope" ku fîlm tenê ji bo temaşevanekî bi qulikekê nîşan dida, li kîjan laboratûvarê hat pêşxistin?
 **TR:** Filmi tek bir izleyiciye delikten gösteren "Kinetoskop" hangi laboratuvarda geliştirildi?
 -    A) Laboratûvara Lumière
--    B) Stûdyoya Pathé
-- ✅ C) Laboratûvara Edison
+- ✅ B) Laboratûvara Edison
+-    C) Stûdyoya Pathé
 -    D) Enstîtuya Marey
-**Doğru:** C) Laboratûvara Edison
+**Doğru:** B) Laboratûvara Edison
 **Açıklama:** W.K.L. Dickson'ın geliştirdiği kinetoskop 1890'ların başında salonlarda çalıştı ama görüntüyü perdeye yansıtmıyordu; izleyici tek tek bakıyordu. Perdeye yansıtmayı yaygınlaştıran Lumière'lerin sinematografı oldu.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=0475f38b93e975a8
 
 ## cinema_0055  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Fîlmê 1999an "Güneşe Yolculuk" ji kîjan derhênerî ye?
 **TR:** 1999 yapımı "Güneşe Yolculuk" hangi yönetmenin filmidir?
-- ✅ A) Yeşîm Ustaoglu
--    B) Zekî Demîrkubuz
--    C) Handan Îpekçî
--    D) Serdar Akar
-**Doğru:** A) Yeşîm Ustaoglu
+-    A) Zekî Demîrkubuz
+-    B) Handan Îpekçî
+-    C) Serdar Akar
+- ✅ D) Yeşîm Ustaoglu
+**Doğru:** D) Yeşîm Ustaoglu
 **Açıklama:** Film, İstanbul'da tanışan iki genç adamın ülkenin doğusuna uzanan yolculuğunu izler ve Berlin'de ödül almıştır. Demirkubuz, İpekçi ve Akar da 1990'ların sonunda öne çıkan yönetmenlerdir.
 **Kaynak:** internal:expansion_2026_08/cinema#gate=validate_batch.py#hash=1ab0586141398909
 
 ## offline_sin_2001  ·  zorluk 3  ·  offline
 **KU:** Çima "Klamek ji bo Beko" (1992) di dîroka sînemaya kurdî de xwedî cihekî taybet e?
 **TR:** "Klamek ji bo Beko" (1992) Kürt sinema tarihinde neden özel bir yere sahiptir?
--    A) Ew yekem anîmasyona dirêj a kurdî ye
-- ✅ B) Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye
+- ✅ A) Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye
+-    B) Ew yekem anîmasyona dirêj a kurdî ye
 -    C) Ew yekem fîlmê kurdî ye ku Palmiya Zêrîn wergirt
 -    D) Ew yekem belgefîlmê li ser dengbêjan e
-**Doğru:** B) Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye
+**Doğru:** A) Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye
 **Açıklama:** Yönetmeni Nizamettin Ariç önceden şarkıcıydı; sahnelerin çoğu Ermenistan'da çekildi.
 **Kaynak:** —
 
@@ -1984,11 +1984,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_sin_2003  ·  zorluk 2  ·  offline
 **KU:** Fîlmê "Ji bo Azadiyê" (2019) berhema komîneke sînemayê ye; ev komîn li kîjan herêmê hatiye damezrandin?
 **TR:** "Ji bo Azadiyê" (2019) bir sinema komününün yapıtıdır; bu komün hangi bölgede kurulmuştur?
--    A) Bakurê Kurdistanê
-- ✅ B) Rojavayê Kurdistanê
+- ✅ A) Rojavayê Kurdistanê
+-    B) Bakurê Kurdistanê
 -    C) Başûrê Kurdistanê
 -    D) Rojhilatê Kurdistanê
-**Doğru:** B) Rojavayê Kurdistanê
+**Doğru:** A) Rojavayê Kurdistanê
 **Açıklama:** Bu komün 2015'ten beri çalışıyor ve bölge gençlerine sinema eğitimi veriyor.
 **Kaynak:** —
 
@@ -1996,10 +1996,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bûyerên fîlmê "Kilomètre zéro" di kîjan şerî de derbas dibin?
 **TR:** "Kilomètre zéro" filminin olayları hangi savaşta geçer?
 -    A) Şerê Iraq û Kuweytê
--    B) Şerê Navxweyî yê Libnanê
-- ✅ C) Şerê Îran û Iraqê
+- ✅ B) Şerê Îran û Iraqê
+-    C) Şerê Navxweyî yê Libnanê
 -    D) Şerê Sovyetê û Efxanistanê
-**Doğru:** C) Şerê Îran û Iraqê
+**Doğru:** B) Şerê Îran û Iraqê
 **Açıklama:** Yönetmeni Hiner Saleem'dir; film bir cenazenin cepheden bir köye taşınmasını gösterir.
 **Kaynak:** —
 
@@ -2015,22 +2015,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_sin_2006  ·  zorluk 2  ·  offline
 **KU:** Yilmaz Guney berî ku bibe derhêner, karê wî yê sereke li sînemayê çi bû?
 **TR:** Yılmaz Güney yönetmen olmadan önce sinemadaki asıl işi neydi?
--    A) Wênegirî
-- ✅ B) Lîstikvanî
+- ✅ A) Lîstikvanî
+-    B) Wênegirî
 -    C) Muzîkjenî
 -    D) Dekorsazî
-**Doğru:** B) Lîstikvanî
+**Doğru:** A) Lîstikvanî
 **Açıklama:** Altmışlı yıllarda "Çirkin Kral" adıyla halkın yıldızı oldu; sonra kameranın arkasına geçti.
 **Kaynak:** —
 
 ## offline_sin_2007  ·  zorluk 4  ·  offline
 **KU:** Jano Rosebiani di fîlmê "Jiyan" (2002) de li ser encamên kîjan bûyerê radiweste?
 **TR:** Jano Rosebiani "Jiyan" (2002) filminde hangi olayın sonuçları üzerinde durur?
-- ✅ A) Êrîşa kîmyayî ya Helebceyê
--    B) Rûxandina gundên Kurdistanê
--    C) Şerê Kendavê
--    D) Serhildana Amedê
-**Doğru:** A) Êrîşa kîmyayî ya Helebceyê
+-    A) Rûxandina gundên Kurdistanê
+-    B) Şerê Kendavê
+-    C) Serhildana Amedê
+- ✅ D) Êrîşa kîmyayî ya Helebceyê
+**Doğru:** D) Êrîşa kîmyayî ya Helebceyê
 **Açıklama:** Film o günden sonraki yılları gösterir: öksüz çocuklar ve yeniden kurulan bir şehir.
 **Kaynak:** —
 
@@ -2047,10 +2047,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Karê ku tê de dîmenên kişandî li gorî rêzekê tên birîn û bi hev ve tên girêdan çi ye?
 **TR:** Çekilen görüntülerin bir sıraya göre kesilip birbirine bağlandığı işin adı nedir?
 -    A) Senaryo
--    B) Dublaj
-- ✅ C) Montaj
+- ✅ B) Montaj
+-    C) Dublaj
 -    D) Dekor
-**Doğru:** C) Montaj
+**Doğru:** B) Montaj
 **Açıklama:** Bu iş filmin uzunluğunu ve temposunu da belirler; aynı çekim başka bir kesimle başka bir etki verir.
 **Kaynak:** —
 
@@ -2059,9 +2059,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1997 yılında Cannes'da Altın Palmiye'yi hangi İranlı yönetmen kazandı?
 -    A) Asghar Farhadi
 -    B) Jafar Panahi
--    C) Mohsen Makhmalbaf
-- ✅ D) Abbas Kiarostami
-**Doğru:** D) Abbas Kiarostami
+- ✅ C) Abbas Kiarostami
+-    D) Mohsen Makhmalbaf
+**Doğru:** C) Abbas Kiarostami
 **Açıklama:** Filmi, arabayla Tahran çevresinde dolaşan ve tanımadığı kişilerle konuşan bir adamı gösterir.
 **Kaynak:** —
 
@@ -2079,20 +2079,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Pather Panchali", "Aparajito" ve "Apur Sansar" filmleri hangi ülkedendir?
 -    A) Pakistan
 -    B) Bangladeş
--    C) Afxanistan
-- ✅ D) Hindistan
-**Doğru:** D) Hindistan
+- ✅ C) Hindistan
+-    D) Afxanistan
+**Doğru:** C) Hindistan
 **Açıklama:** Yönetmenleri Satyajit Ray'dir; üç film aynı kişinin köyden şehre uzanan yaşamını izler.
 **Kaynak:** —
 
 ## offline_sin_2013  ·  zorluk 4  ·  offline
 **KU:** Ousmane Sembène, ku wek bavê sînemaya Afrîkayê tê hesibandin, ji kîjan welatî ye?
 **TR:** Afrika sinemasının babası sayılan Ousmane Sembène hangi ülkedendir?
-- ✅ A) Senegal
--    B) Misir
--    C) Nîjerya
--    D) Afrîkaya Başûr
-**Doğru:** A) Senegal
+-    A) Misir
+-    B) Nîjerya
+-    C) Afrîkaya Başûr
+- ✅ D) Senegal
+**Doğru:** D) Senegal
 **Açıklama:** Önce romancıydı; halk okuma bilmeden de öykülerini duysun diye sinemaya yöneldi.
 **Kaynak:** —
 
@@ -2110,9 +2110,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bugün ünlülerin peşindeki fotoğrafçılar için kullanılan "paparazzi" sözcüğü hangi filmin bir karakterinden gelir?
 -    A) Cinema Paradiso
 -    B) Diziyên Bîsikletê
--    C) Roma, Bajarê Vekirî
-- ✅ D) La Dolce Vita
-**Doğru:** D) La Dolce Vita
+- ✅ C) La Dolce Vita
+-    D) Roma, Bajarê Vekirî
+**Doğru:** C) La Dolce Vita
 **Açıklama:** Yönetmeni Federico Fellini'dir; o karakter, Roma sokaklarında ünlülerin peşinden koşan bir gazete fotoğrafçısıydı.
 **Kaynak:** —
 
@@ -2120,10 +2120,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan derhênerê sovyetî bi planên xwe yên pir dirêj û bi vegotina xwe ya hêdî tê nasîn?
 **TR:** Hangi Sovyet yönetmen çok uzun planlarıyla ve ağır anlatımıyla tanınır?
 -    A) Sergey Eisenstein
--    B) Dziga Vertov
-- ✅ C) Andrey Tarkovski
+- ✅ B) Andrey Tarkovski
+-    C) Dziga Vertov
 -    D) Andrey Konchalovski
-**Doğru:** C) Andrey Tarkovski
+**Doğru:** B) Andrey Tarkovski
 **Açıklama:** "Stalker" ve "Solaris" gibi filmleri zamanı konu edinir; bazı çekimleri dakikalarca sürer.
 **Kaynak:** —
 
@@ -2139,11 +2139,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_sin_2018  ·  zorluk 5  ·  offline
 **KU:** Belgefîlma "Der Imker" ya Mano Khalil çîroka penaberekî kurd li kîjan welatî vedibêje?
 **TR:** Mano Khalil'in "Der Imker" belgeseli Kürt bir mültecinin hikâyesini hangi ülkede anlatır?
-- ✅ A) Swîsre
--    B) Almanya
--    C) Norwec
--    D) Hollanda
-**Doğru:** A) Swîsre
+-    A) Almanya
+-    B) Norwec
+-    C) Hollanda
+- ✅ D) Swîsre
+**Doğru:** D) Swîsre
 **Açıklama:** Göçten önce işi arıcılıktı; yeni ülkesinde yine aynı işe döndü.
 **Kaynak:** —
 
@@ -2151,10 +2151,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Du zarokên fîlmê "Bekas" dixwazin biçin Amerîkayê da ku kê bibînin?
 **TR:** "Bekas" filmindeki iki çocuk kimi görmek için Amerika'ya gitmek ister?
 -    A) Charlie Chaplin
--    B) Bruce Lee
-- ✅ C) Superman
+- ✅ B) Superman
+-    C) Bruce Lee
 -    D) Serokê Amerîkayê
-**Doğru:** C) Superman
+**Doğru:** B) Superman
 **Açıklama:** Film Irak Kürdistanı'nda çekildi; başrollerde iki yetim kardeş var.
 **Kaynak:** —
 
@@ -2170,22 +2170,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## ds26_cinema_0001  ·  zorluk 1  ·  source_first_2026_08
 **KU:** Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?
 **TR:** Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?
--    A) planê dûr (uzak çekim)
-- ✅ B) planê nêzîk (yakın çekim)
+- ✅ A) planê nêzîk (yakın çekim)
+-    B) planê dûr (uzak çekim)
 -    C) planê navîn (orta çekim)
 -    D) plana damezrîner (establishing shot)
-**Doğru:** B) planê nêzîk (yakın çekim)
+**Doğru:** A) planê nêzîk (yakın çekim)
 **Açıklama:** Yakın çekim, oyuncunun yüzünü ya da bir ayrıntıyı büyük ölçüde gösterir; böylece karakterin duygu ve tepkileri çerçevenin merkezine gelir. Uzak çekim ise mekânı ve öğeler arasındaki ilişkileri gösterir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## ds26_cinema_0002  ·  zorluk 1  ·  source_first_2026_08
 **KU:** Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?
 **TR:** Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?
-- ✅ A) plana damezrîner (establishing shot)
--    B) planê nêzîk (yakın çekim)
--    C) planê serpîrî (baş üstü çekim)
--    D) çapa cemidî (freeze frame)
-**Doğru:** A) plana damezrîner (establishing shot)
+-    A) planê nêzîk (yakın çekim)
+-    B) planê serpîrî (baş üstü çekim)
+-    C) çapa cemidî (freeze frame)
+- ✅ D) plana damezrîner (establishing shot)
+**Doğru:** D) plana damezrîner (establishing shot)
 **Açıklama:** Geniş açılış çekimi (establishing shot), bir sahnenin başında olayın geçtiği yeri, zamanı ve genel çevreyi izleyiciye tanıtır. Bu plan genellikle uzaktan çekilir; izleyici öyküye girmeden önce mekânı kavrar.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2194,9 +2194,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?
 -    A) fade out (vedimirîn)
 -    B) dissolve (tevlîhevî)
--    C) pan (gerandina panoramîk)
-- ✅ D) jump cut (qutbûna ji nişkê)
-**Doğru:** D) jump cut (qutbûna ji nişkê)
+- ✅ C) jump cut (qutbûna ji nişkê)
+-    D) pan (gerandina panoramîk)
+**Doğru:** C) jump cut (qutbûna ji nişkê)
 **Açıklama:** Atlama kesme (jump cut), bir sahne içinde zaman, mekân ya da konumda ani bir sıçrama yaratır ve doğal bir geçiş olmadan izleyiciyi farklı bir ana taşır. Fransız Yeni Dalgası'nda bu teknik belirgin biçimde kullanılmıştır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2205,9 +2205,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Çerçeve içindeki tüm görsel öğeleri (dekor, ışık, oyunculuk) birleştiren kavram hangisidir?
 -    A) sînematografî
 -    B) montaj
--    C) senaryo
-- ✅ D) mise-en-scène
-**Doğru:** D) mise-en-scène
+- ✅ C) mise-en-scène
+-    D) senaryo
+**Doğru:** C) mise-en-scène
 **Açıklama:** Mise-en-scène, çerçeve içindeki tüm görsel öğelerdir: dekor, kostüm, ışık, konum ve oyunculuk. Sinematografi bundan farklıdır; kamera ve görüntü çekimiyle ilgilenir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2216,9 +2216,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Oscar ödülleri ilk kez hangi yıl verildi?
 -    A) 1919
 -    B) 1939
--    C) 1949
-- ✅ D) 1929
-**Doğru:** D) 1929
+- ✅ C) 1929
+-    D) 1949
+**Doğru:** C) 1929
 **Açıklama:** Akademi Ödülleri'nin (Oscar) ilk töreni 16 Mayıs 1929'da Hollywood'da yapıldı. O zamandan beri Oscar her yıl verilir ve film endüstrisinin en prestijli ödülü hâline geldi.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2226,10 +2226,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?
 **TR:** Altın Palmiye hangi festivalin en büyük ödülüdür?
 -    A) Festîvala Venedîkê
--    B) Festîvala Berlînê
-- ✅ C) Festîvala Cannesê
+- ✅ B) Festîvala Cannesê
+-    C) Festîvala Berlînê
 -    D) Festîvala Torontoyê
-**Doğru:** C) Festîvala Cannesê
+**Doğru:** B) Festîvala Cannesê
 **Açıklama:** Altın Palmiye, 1955'ten beri her yıl Fransa'da düzenlenen Cannes Film Festivali'nin ana ödülüdür. Venedik Altın Aslan, Berlin ise Altın Ayı ödülünü verir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2238,9 +2238,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dünyanın en eski film festivali hangisidir?
 -    A) Festîvala Cannesê
 -    B) Festîvala Berlînê
--    C) Festîvala Lokarnoyê
-- ✅ D) Festîvala Venedîkê
-**Doğru:** D) Festîvala Venedîkê
+- ✅ C) Festîvala Venedîkê
+-    D) Festîvala Lokarnoyê
+**Doğru:** C) Festîvala Venedîkê
 **Açıklama:** Venedik Film Festivali 1932'de kuruldu ve dünyanın en eski film festivali olarak kabul edilir. Cannes 1946'da, Berlin ise 1951'de başladı.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2248,10 +2248,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Festîvala Cannesê di kîjan welatî de tê lidarxistin?
 **TR:** Cannes Film Festivali hangi ülkede düzenlenir?
 -    A) Îtalya
--    B) Spanya
-- ✅ C) Fransa
+- ✅ B) Fransa
+-    C) Spanya
 -    D) Swîsre
-**Doğru:** C) Fransa
+**Doğru:** B) Fransa
 **Açıklama:** Cannes Film Festivali, 1946'dan beri her mayıs Fransa'nın güneyindeki Cannes şehrinde düzenlenir. Ana ödülü Altın Palmiye'dir ve festival, film endüstrisinin en önemli etkinliklerindendir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2260,9 +2260,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İlk Oscar töreninde En İyi Film ödülünü kazanan yapım hangisidir?
 -    A) The Jazz Singer
 -    B) Citizen Kane
--    C) Gone with the Wind
-- ✅ D) Wings
-**Doğru:** D) Wings
+- ✅ C) Wings
+-    D) Gone with the Wind
+**Doğru:** C) Wings
 **Açıklama:** Kanatlar (Wings, 1927), 1929'daki ilk Oscar töreninde En İyi Film ödülünü kazandı. I. Dünya Savaşı pilotlarını konu alır ve hava sahneleriyle tanınır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2270,21 +2270,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan saziya ku Oscarê dide di sala 1927'an de hate damezrandin?
 **TR:** Oscar'ı veren kurum hangisidir ve hangi yıl kurulmuştur?
 -    A) Cannes Film Society
--    B) British Academy (BAFTA)
-- ✅ C) AMPAS
+- ✅ B) AMPAS
+-    C) British Academy (BAFTA)
 -    D) Tribeca Institute
-**Doğru:** C) AMPAS
+**Doğru:** B) AMPAS
 **Açıklama:** Sinema Sanatları ve Bilimleri Akademisi (AMPAS) 1927'de Hollywood'da kuruldu ve 1929'dan beri Akademi Ödülleri'ni (Oscar) verir. İngiliz BAFTA ve kendi ödülleri olan diğer kurumlar bu akademiden farklıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0001  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?
 **TR:** Film dili sözlüğüne göre montajda anlam esas olarak nereden doğar?
-- ✅ A) Ji têkiliya di navbera dîmenan de
--    B) Ji dirêjahiya giştî ya fîlmê
--    C) Ji hevahengiya rengên kincan
--    D) Ji şêwaza kesane ya derhêner
-**Doğru:** A) Ji têkiliya di navbera dîmenan de
+-    A) Ji dirêjahiya giştî ya fîlmê
+-    B) Ji hevahengiya rengên kincan
+-    C) Ji şêwaza kesane ya derhêner
+- ✅ D) Ji têkiliya di navbera dîmenan de
+**Doğru:** D) Ji têkiliya di navbera dîmenan de
 **Açıklama:** Montajda bir sahne, anlamını ancak başka bir sahneyle kurduğu ilişkiden alır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2292,21 +2292,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di teknîka "deep focus" de çi tê bidestxistin?
 **TR:** "Deep focus" tekniğinde ne elde edilir?
 -    A) Tenê paşxaneya dûr zelal dibe
--    B) Rengên dîmenê hemû winda dibin
-- ✅ C) Nêzîk û dûr bi hev re zelal dibin
+- ✅ B) Nêzîk û dûr bi hev re zelal dibin
+-    C) Rengên dîmenê hemû winda dibin
 -    D) Leza dîmenê pir hêdî dibe
-**Doğru:** C) Nêzîk û dûr bi hev re zelal dibin
+**Doğru:** B) Nêzîk û dûr bi hev re zelal dibin
 **Açıklama:** Deep focus'ta yakın ve uzak düzlemler aynı anda net gösterilir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0003  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?
 **TR:** Venedik Film Festivali hangi yılda kuruldu?
--    A) 1946
-- ✅ B) 1932
+- ✅ A) 1932
+-    B) 1946
 -    C) 1951
 -    D) 1955
-**Doğru:** B) 1932
+**Doğru:** A) 1932
 **Açıklama:** Venedik'in ilk sinema sanatı sergisi 1932 yılında başladı.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2314,21 +2314,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Xelata "Şêrê Zêrîn" ji bo fîlmê herî baş di kîjan salê de hate danîn?
 **TR:** "Altın Aslan" ödülü en iyi film için hangi yılda konuldu?
 -    A) 1932
--    B) 1936
-- ✅ C) 1949
+- ✅ B) 1949
+-    C) 1936
 -    D) 1968
-**Doğru:** C) 1949
+**Doğru:** B) 1949
 **Açıklama:** Aziz Marko'nun Altın Aslanı, en iyi film için 1949 yılında konuldu.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0005  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê yekem ê ku di dîroka Festîvala Venedîkê de hate nîşandan kîjan e?
 **TR:** Venedik Festivali tarihinde gösterilen ilk film hangisidir?
-- ✅ A) Dr. Jekyll and Mr. Hyde
--    B) The Cabinet of Dr. Caligari
--    C) The Birth of a Nation
--    D) Battleship Potemkin
-**Doğru:** A) Dr. Jekyll and Mr. Hyde
+-    A) The Cabinet of Dr. Caligari
+-    B) The Birth of a Nation
+-    C) Battleship Potemkin
+- ✅ D) Dr. Jekyll and Mr. Hyde
+**Doğru:** D) Dr. Jekyll and Mr. Hyde
 **Açıklama:** Festivalin ilk filmi Rouben Mamoulian'ın Dr. Jekyll and Mr. Hyde'ıydı.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2336,21 +2336,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?
 **TR:** Resmî yarışma ilk kez hangi yılda festivale girdi?
 -    A) 1932
--    B) 1949
-- ✅ C) 1934
+- ✅ B) 1934
+-    C) 1949
 -    D) 1937
-**Doğru:** C) 1934
+**Doğru:** B) 1934
 **Açıklama:** 1934'teki ikinci festival, ilk kez bir yarışma içeriyordu.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0007  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?
 **TR:** Uluslararası jüri ilk kez hangi yılda atandı?
--    A) 1934
-- ✅ B) 1936
+- ✅ A) 1936
+-    B) 1934
 -    C) 1932
 -    D) 1949
-**Doğru:** B) 1936
+**Doğru:** A) 1936
 **Açıklama:** 1936 yılında ilk kez uluslararası bir jüri atandı.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2358,32 +2358,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Edîsyona yekem li ku hate lidarxistin?
 **TR:** İlk edisyon nerede düzenlendi?
 -    A) Li salona Palazzo del Cinema
--    B) Li meydana Piazza San Marco
-- ✅ C) Li terasa Hotel Excelsior
+- ✅ B) Li terasa Hotel Excelsior
+-    C) Li meydana Piazza San Marco
 -    D) Li sahneya Teatro La Fenice
-**Doğru:** C) Li terasa Hotel Excelsior
+**Doğru:** B) Li terasa Hotel Excelsior
 **Açıklama:** İlk edisyon, Venedik Lido'daki Hotel Excelsior'un terasında düzenlendi.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0009  ·  zorluk 2  ·  source_first_2026_08
 **KU:** La Biennale di Venezia di kîjan salê de hate damezrandin?
 **TR:** La Biennale di Venezia hangi yılda kuruldu?
-- ✅ A) 1895
--    B) 1932
--    C) 1949
--    D) 1980
-**Doğru:** A) 1895
+-    A) 1932
+-    B) 1949
+-    C) 1980
+- ✅ D) 1895
+**Doğru:** D) 1895
 **Açıklama:** La Biennale di Venezia 1895 yılında kuruldu.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0010  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Pêşangeha Hunerî ya Navneteweyî ya yekem di kîjan salê de hate lidarxistin?
 **TR:** İlk Uluslararası Sanat Sergisi hangi yılda düzenlendi?
--    A) 1932
-- ✅ B) 1895
+- ✅ A) 1895
+-    B) 1932
 -    C) 1980
 -    D) 1999
-**Doğru:** B) 1895
+**Doğru:** A) 1895
 **Açıklama:** İlk Uluslararası Sanat Sergisi 1895 yılında düzenlendi.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2392,9 +2392,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** İlk Uluslararası Mimarlık Sergisi hangi yılda gerçekleşti?
 -    A) 1949
 -    B) 1932
--    C) 1999
-- ✅ D) 1980
-**Doğru:** D) 1980
+- ✅ C) 1980
+-    D) 1999
+**Doğru:** C) 1980
 **Açıklama:** İlk Uluslararası Mimarlık Sergisi 1980 yılında gerçekleşti.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2402,10 +2402,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Dans di kîjan salê de beşdarî La Biennale bû?
 **TR:** Dans hangi yılda La Biennale'ye katıldı?
 -    A) 1895
--    B) 1932
-- ✅ C) 1999
+- ✅ B) 1999
+-    C) 1932
 -    D) 1980
-**Doğru:** C) 1999
+**Doğru:** B) 1999
 **Açıklama:** Dans 1999 yılında La Biennale'ye katıldı.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2414,20 +2414,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "À bout de souffle" (1960) filminin yönetmeni kimdir?
 -    A) François Truffaut
 -    B) Claude Chabrol
--    C) Alain Resnais
-- ✅ D) Jean-Luc Godard
-**Doğru:** D) Jean-Luc Godard
+- ✅ C) Jean-Luc Godard
+-    D) Alain Resnais
+**Doğru:** C) Jean-Luc Godard
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Jean-Luc Godard'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0014  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "À bout de souffle" di kîjan salê de derket?
 **TR:** "À bout de souffle" filmi hangi yılda çıktı?
--    A) 1954
-- ✅ B) 1960
+- ✅ A) 1960
+-    B) 1954
 -    C) 1966
 -    D) 1972
-**Doğru:** B) 1960
+**Doğru:** A) 1960
 **Açıklama:** BFI kataloğuna göre filmin yılı 1960'tır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2436,9 +2436,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Battleship Potemkin" filminin yönetmeni kimdir?
 -    A) Dziga Vertov
 -    B) Lev Kuleshov
--    C) Vsevolod Pudovkin
-- ✅ D) Sergei M. Eisenstein
-**Doğru:** D) Sergei M. Eisenstein
+- ✅ C) Sergei M. Eisenstein
+-    D) Vsevolod Pudovkin
+**Doğru:** C) Sergei M. Eisenstein
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Sergei M. Eisenstein'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2446,10 +2446,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê "Battleship Potemkin" di kîjan salê de derket?
 **TR:** "Battleship Potemkin" filmi hangi yılda çıktı?
 -    A) 1919
--    B) 1922
-- ✅ C) 1925
+- ✅ B) 1925
+-    C) 1922
 -    D) 1929
-**Doğru:** C) 1925
+**Doğru:** B) 1925
 **Açıklama:** BFI kataloğuna göre filmin yılı 1925'tir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2458,20 +2458,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Metropolis" (1927) filminin yönetmeni kimdir?
 -    A) F. W. Murnau
 -    B) Robert Wiene
--    C) G. W. Pabst
-- ✅ D) Fritz Lang
-**Doğru:** D) Fritz Lang
+- ✅ C) Fritz Lang
+-    D) G. W. Pabst
+**Doğru:** C) Fritz Lang
 **Açıklama:** BFI kataloğuna göre Metropolis'in yönetmeni Fritz Lang'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0018  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Metropolis" (1927) hilberîna kîjan welatî ye?
 **TR:** "Metropolis" (1927) hangi ülkenin yapımıdır?
--    A) Fransa
-- ✅ B) Almanya
+- ✅ A) Almanya
+-    B) Fransa
 -    C) Îtalya
 -    D) Sovyet
-**Doğru:** B) Almanya
+**Doğru:** A) Almanya
 **Açıklama:** BFI kataloğuna göre Metropolis bir Almanya yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2480,20 +2480,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Nosferatu" (1922) filminin yönetmeni kimdir?
 -    A) Fritz Lang
 -    B) Robert Wiene
--    C) Paul Wegener
-- ✅ D) F. W. Murnau
-**Doğru:** D) F. W. Murnau
+- ✅ C) F. W. Murnau
+-    D) Paul Wegener
+**Doğru:** C) F. W. Murnau
 **Açıklama:** BFI kataloğuna göre Nosferatu'nun yönetmeni F. W. Murnau'dur.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0020  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Nosferatu" di kîjan salê de derket?
 **TR:** "Nosferatu" filmi hangi yılda çıktı?
-- ✅ A) 1922
--    B) 1916
--    C) 1919
--    D) 1927
-**Doğru:** A) 1922
+-    A) 1916
+-    B) 1919
+-    C) 1927
+- ✅ D) 1922
+**Doğru:** D) 1922
 **Açıklama:** BFI kataloğuna göre Nosferatu'nun yılı 1922'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2502,20 +2502,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Tokyo Story" (1953) filminin yönetmeni kimdir?
 -    A) Akira Kurosawa
 -    B) Kenji Mizoguchi
--    C) Masaki Kobayashi
-- ✅ D) Yasujirō Ozu
-**Doğru:** D) Yasujirō Ozu
+- ✅ C) Yasujirō Ozu
+-    D) Masaki Kobayashi
+**Doğru:** C) Yasujirō Ozu
 **Açıklama:** BFI kataloğuna göre Tokyo Story'nin yönetmeni Yasujirō Ozu'dur.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0022  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Tokyo Story" hilberîna kîjan welatî ye?
 **TR:** "Tokyo Story" hangi ülkenin yapımıdır?
-- ✅ A) Japonya
--    B) Çîn
--    C) Kore
--    D) Taywan
-**Doğru:** A) Japonya
+-    A) Çîn
+-    B) Kore
+-    C) Taywan
+- ✅ D) Japonya
+**Doğru:** D) Japonya
 **Açıklama:** BFI kataloğuna göre Tokyo Story bir Japonya yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2523,21 +2523,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê fîlmê "Pather Panchali" (1955) kî ye?
 **TR:** "Pather Panchali" (1955) filminin yönetmeni kimdir?
 -    A) Ritwik Ghatak
--    B) Mrinal Sen
-- ✅ C) Satyajit Ray
+- ✅ B) Satyajit Ray
+-    C) Mrinal Sen
 -    D) Guru Dutt
-**Doğru:** C) Satyajit Ray
+**Doğru:** B) Satyajit Ray
 **Açıklama:** BFI kataloğuna göre Pather Panchali'nin yönetmeni Satyajit Ray'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0024  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Pather Panchali" hilberîna kîjan welatî ye?
 **TR:** "Pather Panchali" hangi ülkenin yapımıdır?
-- ✅ A) Hindistan
--    B) Bangladeş
--    C) Pakistan
--    D) Sri Lanka
-**Doğru:** A) Hindistan
+-    A) Bangladeş
+-    B) Pakistan
+-    C) Sri Lanka
+- ✅ D) Hindistan
+**Doğru:** D) Hindistan
 **Açıklama:** BFI kataloğuna göre Pather Panchali bir Hindistan yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2546,20 +2546,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Bicycle Thieves" filminin yönetmeni kimdir?
 -    A) Roberto Rossellini
 -    B) Luchino Visconti
--    C) Federico Fellini
-- ✅ D) Vittorio De Sica
-**Doğru:** D) Vittorio De Sica
+- ✅ C) Vittorio De Sica
+-    D) Federico Fellini
+**Doğru:** C) Vittorio De Sica
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Vittorio De Sica'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0026  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Bicycle Thieves" hilberîna kîjan welatî ye?
 **TR:** "Bicycle Thieves" hangi ülkenin yapımıdır?
-- ✅ A) Îtalya
--    B) Fransa
--    C) Îspanya
--    D) Yewnanistan
-**Doğru:** A) Îtalya
+-    A) Fransa
+-    B) Îspanya
+-    C) Yewnanistan
+- ✅ D) Îtalya
+**Doğru:** D) Îtalya
 **Açıklama:** BFI kataloğuna göre bu film bir İtalya yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2567,21 +2567,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê fîlmê "Citizen Kane" kî ye?
 **TR:** "Citizen Kane" filminin yönetmeni kimdir?
 -    A) John Ford
--    B) Howard Hawks
-- ✅ C) Orson Welles
+- ✅ B) Orson Welles
+-    C) Howard Hawks
 -    D) Frank Capra
-**Doğru:** C) Orson Welles
+**Doğru:** B) Orson Welles
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Orson Welles'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0028  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Citizen Kane" hilberîna kîjan welatî ye?
 **TR:** "Citizen Kane" hangi ülkenin yapımıdır?
-- ✅ A) DYA
--    B) Brîtanya
--    C) Kanada
--    D) Awistralya
-**Doğru:** A) DYA
+-    A) Brîtanya
+-    B) Kanada
+-    C) Awistralya
+- ✅ D) DYA
+**Doğru:** D) DYA
 **Açıklama:** BFI kataloğuna göre bu film bir ABD yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2590,31 +2590,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Das Cabinet des Dr. Caligari" filminin yönetmeni kimdir?
 -    A) Fritz Lang
 -    B) F. W. Murnau
--    C) G. W. Pabst
-- ✅ D) Robert Wiene
-**Doğru:** D) Robert Wiene
+- ✅ C) Robert Wiene
+-    D) G. W. Pabst
+**Doğru:** C) Robert Wiene
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Robert Wiene'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0030  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Derhênerê fîlmê "Rashomon" kî ye?
 **TR:** "Rashomon" filminin yönetmeni kimdir?
-- ✅ A) Akira Kurosawa
--    B) Yasujirō Ozu
--    C) Kenji Mizoguchi
--    D) Mikio Naruse
-**Doğru:** A) Akira Kurosawa
+-    A) Yasujirō Ozu
+-    B) Kenji Mizoguchi
+-    C) Mikio Naruse
+- ✅ D) Akira Kurosawa
+**Doğru:** D) Akira Kurosawa
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Akira Kurosawa'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0031  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Rashomon" di kîjan salê de derket?
 **TR:** "Rashomon" filmi hangi yılda çıktı?
--    A) 1935
-- ✅ B) 1950
+- ✅ A) 1950
+-    B) 1935
 -    C) 1961
 -    D) 1972
-**Doğru:** B) 1950
+**Doğru:** A) 1950
 **Açıklama:** BFI kataloğuna göre filmin yılı 1950'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2623,42 +2623,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "The 400 Blows" filminin yönetmeni kimdir?
 -    A) Jean-Luc Godard
 -    B) Claude Chabrol
--    C) Éric Rohmer
-- ✅ D) François Truffaut
-**Doğru:** D) François Truffaut
+- ✅ C) François Truffaut
+-    D) Éric Rohmer
+**Doğru:** C) François Truffaut
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni François Truffaut'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0033  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "The 400 Blows" hilberîna kîjan welatî ye?
 **TR:** "The 400 Blows" hangi ülkenin yapımıdır?
--    A) Belçîka
-- ✅ B) Fransa
+- ✅ A) Fransa
+-    B) Belçîka
 -    C) Swîsre
 -    D) Portekîz
-**Doğru:** B) Fransa
+**Doğru:** A) Fransa
 **Açıklama:** BFI kataloğuna göre bu film bir Fransa yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0034  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Seven Samurai" di kîjan salê de derket?
 **TR:** "Seven Samurai" filmi hangi yılda çıktı?
-- ✅ A) 1954
--    B) 1948
--    C) 1963
--    D) 1970
-**Doğru:** A) 1954
+-    A) 1948
+-    B) 1963
+-    C) 1970
+- ✅ D) 1954
+**Doğru:** D) 1954
 **Açıklama:** BFI kataloğuna göre filmin yılı 1954'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0035  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?
 **TR:** Berlin Film Festivali hangi yılda kuruldu?
--    A) 1932
-- ✅ B) 1951
+- ✅ A) 1951
+-    B) 1932
 -    C) 1946
 -    D) 1968
-**Doğru:** B) 1951
+**Doğru:** A) 1951
 **Açıklama:** Berlinale 1951 yılında Berlin izleyicisi için kuruldu.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2667,42 +2667,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Berlinale'nin en önemli ödülü hangisidir?
 -    A) Şêrê Zêrîn
 -    B) Palmiyeya Zêrîn
--    C) Ayiyê Zêrîn
-- ✅ D) Hirça Zêrîn
-**Doğru:** D) Hirça Zêrîn
+- ✅ C) Hirça Zêrîn
+-    D) Ayiyê Zêrîn
+**Doğru:** C) Hirça Zêrîn
 **Açıklama:** Berlinale'nin en önemli ödülleri Altın Ayı ve Gümüş Ayılar'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0037  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Derhênerê fîlmê "Persona" kî ye?
 **TR:** "Persona" filminin yönetmeni kimdir?
--    A) Lars von Trier
-- ✅ B) Ingmar Bergman
+- ✅ A) Ingmar Bergman
+-    B) Lars von Trier
 -    C) Roy Andersson
 -    D) Victor Sjöström
-**Doğru:** B) Ingmar Bergman
+**Doğru:** A) Ingmar Bergman
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Ingmar Bergman'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0038  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Persona" hilberîna kîjan welatî ye?
 **TR:** "Persona" hangi ülkenin yapımıdır?
-- ✅ A) Swêd
--    B) Norwec
--    C) Danîmarka
--    D) Fînlanda
-**Doğru:** A) Swêd
+-    A) Norwec
+-    B) Danîmarka
+-    C) Fînlanda
+- ✅ D) Swêd
+**Doğru:** D) Swêd
 **Açıklama:** BFI kataloğuna göre bu film bir İsveç yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0039  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Derhênerê fîlmê "8½" kî ye?
 **TR:** "8½" filminin yönetmeni kimdir?
--    A) Michelangelo Antonioni
-- ✅ B) Federico Fellini
+- ✅ A) Federico Fellini
+-    B) Michelangelo Antonioni
 -    C) Luchino Visconti
 -    D) Pier Paolo Pasolini
-**Doğru:** B) Federico Fellini
+**Doğru:** A) Federico Fellini
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Federico Fellini'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2710,21 +2710,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê "8½" di kîjan salê de derket?
 **TR:** "8½" filmi hangi yılda çıktı?
 -    A) 1949
--    B) 1955
-- ✅ C) 1963
+- ✅ B) 1963
+-    C) 1955
 -    D) 1958
-**Doğru:** C) 1963
+**Doğru:** B) 1963
 **Açıklama:** BFI kataloğuna göre filmin yılı 1963'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0041  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Derhênerê fîlmê "The Godfather" kî ye?
 **TR:** "The Godfather" filminin yönetmeni kimdir?
-- ✅ A) Francis Ford Coppola
--    B) Martin Scorsese
--    C) Sidney Lumet
--    D) Sam Peckinpah
-**Doğru:** A) Francis Ford Coppola
+-    A) Martin Scorsese
+-    B) Sidney Lumet
+-    C) Sam Peckinpah
+- ✅ D) Francis Ford Coppola
+**Doğru:** D) Francis Ford Coppola
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Francis Ford Coppola'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2732,21 +2732,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê "The Godfather" di kîjan salê de derket?
 **TR:** "The Godfather" filmi hangi yılda çıktı?
 -    A) 1965
--    B) 1969
-- ✅ C) 1972
+- ✅ B) 1972
+-    C) 1969
 -    D) 1980
-**Doğru:** C) 1972
+**Doğru:** B) 1972
 **Açıklama:** BFI kataloğuna göre filmin yılı 1972'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0043  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Derhênerê fîlmê "Vertigo" kî ye?
 **TR:** "Vertigo" filminin yönetmeni kimdir?
--    A) Billy Wilder
-- ✅ B) Alfred Hitchcock
+- ✅ A) Alfred Hitchcock
+-    B) Billy Wilder
 -    C) John Huston
 -    D) Otto Preminger
-**Doğru:** B) Alfred Hitchcock
+**Doğru:** A) Alfred Hitchcock
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Alfred Hitchcock'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2754,21 +2754,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Fîlmê "Vertigo" di kîjan salê de derket?
 **TR:** "Vertigo" filmi hangi yılda çıktı?
 -    A) 1944
--    B) 1951
-- ✅ C) 1958
+- ✅ B) 1958
+-    C) 1951
 -    D) 1966
-**Doğru:** C) 1958
+**Doğru:** B) 1958
 **Açıklama:** BFI kataloğuna göre filmin yılı 1958'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0045  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Sunrise A Song of Two Humans" di kîjan salê de derket?
 **TR:** "Sunrise A Song of Two Humans" filmi hangi yılda çıktı?
-- ✅ A) 1927
--    B) 1935
--    C) 1941
--    D) 1919
-**Doğru:** A) 1927
+-    A) 1935
+-    B) 1941
+-    C) 1919
+- ✅ D) 1927
+**Doğru:** D) 1927
 **Açıklama:** BFI kataloğuna göre filmin yılı 1927'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2776,21 +2776,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê fîlmê "Man with a Movie Camera" kî ye?
 **TR:** "Man with a Movie Camera" filminin yönetmeni kimdir?
 -    A) Sergei Eisenstein
--    B) Lev Kuleshov
-- ✅ C) Dziga Vertov
+- ✅ B) Dziga Vertov
+-    C) Lev Kuleshov
 -    D) Vsevolod Pudovkin
-**Doğru:** C) Dziga Vertov
+**Doğru:** B) Dziga Vertov
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Dziga Vertov'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0047  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Man with a Movie Camera" di kîjan salê de derket?
 **TR:** "Man with a Movie Camera" filmi hangi yılda çıktı?
--    A) 1917
-- ✅ B) 1929
+- ✅ A) 1929
+-    B) 1917
 -    C) 1938
 -    D) 1945
-**Doğru:** B) 1929
+**Doğru:** A) 1929
 **Açıklama:** BFI kataloğuna göre filmin yılı 1929'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2798,32 +2798,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê fîlmê "Mirror" kî ye?
 **TR:** "Mirror" filminin yönetmeni kimdir?
 -    A) Sergei Parajanov
--    B) Larisa Shepitko
-- ✅ C) Andrei Tarkovsky
+- ✅ B) Andrei Tarkovsky
+-    C) Larisa Shepitko
 -    D) Andrei Konchalovsky
-**Doğru:** C) Andrei Tarkovsky
+**Doğru:** B) Andrei Tarkovsky
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Andrei Tarkovsky'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0049  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Mirror" di kîjan salê de derket?
 **TR:** "Mirror" filmi hangi yılda çıktı?
-- ✅ A) 1975
--    B) 1962
--    C) 1988
--    D) 1953
-**Doğru:** A) 1975
+-    A) 1962
+-    B) 1988
+-    C) 1953
+- ✅ D) 1975
+**Doğru:** D) 1975
 **Açıklama:** BFI kataloğuna göre filmin yılı 1975'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0050  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Derhênerê fîlmê "In the Mood for Love" kî ye?
 **TR:** "In the Mood for Love" filminin yönetmeni kimdir?
--    A) John Woo
-- ✅ B) Wong Kar Wai
+- ✅ A) Wong Kar Wai
+-    B) John Woo
 -    C) Tsai Ming-liang
 -    D) Hou Hsiao-hsien
-**Doğru:** B) Wong Kar Wai
+**Doğru:** A) Wong Kar Wai
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Wong Kar Wai'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2832,9 +2832,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "In the Mood for Love" filmi hangi yılda çıktı?
 -    A) 1988
 -    B) 1994
--    C) 2008
-- ✅ D) 2000
-**Doğru:** D) 2000
+- ✅ C) 2000
+-    D) 2008
+**Doğru:** C) 2000
 **Açıklama:** BFI kataloğuna göre filmin yılı 2000'dir.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2842,10 +2842,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derhênerê fîlmê "Come and See" kî ye?
 **TR:** "Come and See" filminin yönetmeni kimdir?
 -    A) Andrei Tarkovsky
--    B) Nikita Mikhalkov
-- ✅ C) Elem Klimov
+- ✅ B) Elem Klimov
+-    C) Nikita Mikhalkov
 -    D) Sergei Bondarchuk
-**Doğru:** C) Elem Klimov
+**Doğru:** B) Elem Klimov
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Elem Klimov'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
@@ -2854,19 +2854,19 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Close-up" filminin yönetmeni kimdir?
 -    A) Mohsen Makhmalbaf
 -    B) Jafar Panahi
--    C) Asghar Farhadi
-- ✅ D) Abbas Kiarostami
-**Doğru:** D) Abbas Kiarostami
+- ✅ C) Abbas Kiarostami
+-    D) Asghar Farhadi
+**Doğru:** C) Abbas Kiarostami
 **Açıklama:** BFI kataloğuna göre filmin yönetmeni Abbas Kiarostami'dır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
 
 ## sf_cin_0054  ·  zorluk 2  ·  source_first_2026_08
 **KU:** Fîlmê "Close-up" hilberîna kîjan welatî ye?
 **TR:** "Close-up" hangi ülkenin yapımıdır?
--    A) Tirkiye
-- ✅ B) Îran
+- ✅ A) Îran
+-    B) Tirkiye
 -    C) Iraq
 -    D) Efxanistan
-**Doğru:** B) Îran
+**Doğru:** A) Îran
 **Açıklama:** BFI kataloğuna göre bu film bir İran yapımıdır.
 **Kaynak:** internal:source_first_expansion_2026_08#see=docs/content/verified_external_pool_2026_08/provenance.json
