@@ -7,8 +7,8 @@
     "prompt": "Alfabeya Kurdî ya latînî ji çend tîpan pêk tê?",
     "answers": [
       "29",
-      "26",
       "31",
+      "26",
       "34"
     ],
     "correctAnswer": "31",
@@ -25,8 +25,8 @@
     "promptTr": "Kürtçe Latin alfabesi kaç harften oluşur?",
     "answersTr": [
       "29",
-      "26",
       "31",
+      "26",
       "34"
     ],
     "correctAnswerTr": "31"
@@ -40,8 +40,8 @@
     "answers": [
       "Ehmedê Xanî",
       "Melayê Cizîrî",
-      "Şerefxanê Bidlîsî",
-      "Celadet Alî Bedirxan"
+      "Celadet Alî Bedirxan",
+      "Şerefxanê Bidlîsî"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
     "explanation": "Celadet Ali Bedirhan 1930'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.",
@@ -58,8 +58,8 @@
     "answersTr": [
       "Ehmedê Xanî",
       "Melayê Cizîrî",
-      "Şerefxanê Bidlîsî",
-      "Celadet Alî Bedirxan"
+      "Celadet Alî Bedirxan",
+      "Şerefxanê Bidlîsî"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },
@@ -70,8 +70,8 @@
     "category": "Ziman",
     "prompt": "Di alfabeya kurdî ya latînî de çend dengdêr (vowel) hene?",
     "answers": [
-      "5",
       "8",
+      "5",
       "6",
       "10"
     ],
@@ -88,8 +88,8 @@
     },
     "promptTr": "Kürtçe Latin alfabesinde kaç sesli harf (dengdêr) vardır?",
     "answersTr": [
-      "5",
       "8",
+      "5",
       "6",
       "10"
     ],
@@ -104,8 +104,8 @@
     "answers": [
       "Daçek",
       "Cînav",
-      "Bêjeya pirsê",
-      "Veqetandek (izafe)"
+      "Veqetandek (izafe)",
+      "Bêjeya pirsê"
     ],
     "correctAnswer": "Veqetandek (izafe)",
     "explanation": "İzafe (veqetandek) ismi sıfata veya başka bir isme bağlar: \"kitêba min\", \"mala mezin\".",
@@ -122,8 +122,8 @@
     "answersTr": [
       "Edat (daçek)",
       "Zamir (cînav)",
-      "Soru sözcüğü (bêjeya pirsê)",
-      "İzafe (veqetandek)"
+      "İzafe (veqetandek)",
+      "Soru sözcüğü (bêjeya pirsê)"
     ],
     "correctAnswerTr": "İzafe (veqetandek)"
   },
@@ -135,8 +135,8 @@
     "prompt": "Di Kurmancî de peyva \"jin\" ji kîjan zayendê ye?",
     "answers": [
       "Nêr",
-      "Bêzayend",
       "Mê",
+      "Bêzayend",
       "Herdu jî"
     ],
     "correctAnswer": "Mê",
@@ -153,8 +153,8 @@
     "promptTr": "Kurmancî'de \"jin\" sözcüğü hangi cinstendir?",
     "answersTr": [
       "Eril",
-      "Cinsiyetsiz",
       "Dişil",
+      "Cinsiyetsiz",
       "Her ikisi de"
     ],
     "correctAnswerTr": "Dişil"
@@ -168,8 +168,8 @@
     "answers": [
       "-ek",
       "-ê",
-      "-ne",
-      "-an"
+      "-an",
+      "-ne"
     ],
     "correctAnswer": "-an",
     "explanation": "Bükünlü (oblique) durumda çoğul isimler \"-an\" alır: \"Ez pirtûkan dixwînim\".",
@@ -186,8 +186,8 @@
     "answersTr": [
       "-ek",
       "-ê",
-      "-ne",
-      "-an"
+      "-an",
+      "-ne"
     ],
     "correctAnswerTr": "-an"
   },
@@ -198,8 +198,8 @@
     "category": "Ziman",
     "prompt": "Lêkera \"kirin\" di dema niha de ji bo kesê sêyemîn ê yekjimar çawa tê kişandin?",
     "answers": [
-      "Ew kir",
       "Ew dike",
+      "Ew kir",
       "Ew bike",
       "Ew kiriye"
     ],
@@ -216,8 +216,8 @@
     },
     "promptTr": "\"Kirin\" fiili şimdiki zamanda üçüncü tekil kişi için nasıl çekilir?",
     "answersTr": [
-      "Ew kir",
       "Ew dike",
+      "Ew kir",
       "Ew bike",
       "Ew kiriye"
     ],
@@ -232,8 +232,8 @@
     "answers": [
       "Xwendin (dibistan: cihê xwendinê)",
       "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
-      "Belavkirina alfabeya latînî ya kurdî",
-      "Di dema borî ya lêkerên gerguhêz de bikerê tewandî"
+      "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
+      "Belavkirina alfabeya latînî ya kurdî"
     ],
     "correctAnswer": "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
     "explanation": "Ergatif: geçmiş zamanda geçişli fiillerde özne büküme girer ve fiil nesneye göre çekimlenir — \"Min pirtûk xwend\".",
@@ -250,8 +250,8 @@
     "answersTr": [
       "Okuma (dibistan: okuma yeri)",
       "\"Tu\" tekil, \"hûn\" çoğul/saygı biçimidir",
-      "Kürtçe Latin alfabesinin yaygınlaştırılması",
-      "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi"
+      "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi",
+      "Kürtçe Latin alfabesinin yaygınlaştırılması"
     ],
     "correctAnswerTr": "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi"
   },
@@ -263,8 +263,8 @@
     "prompt": "Peyva \"rojname\" ji kîjan du peyvan pêk tê?",
     "answers": [
       "Ro + jname",
-      "Rojan + me",
       "Roj + name",
+      "Rojan + me",
       "Roja + nem"
     ],
     "correctAnswer": "Roj + name",
@@ -281,8 +281,8 @@
     "promptTr": "\"Rojname\" sözcüğü hangi iki sözcükten oluşur?",
     "answersTr": [
       "Ro + jname",
-      "Rojan + me",
       "Roj + name",
+      "Rojan + me",
       "Roja + nem"
     ],
     "correctAnswerTr": "Roj + name"
@@ -296,8 +296,8 @@
     "answers": [
       "ateş",
       "ekmek",
-      "taş",
-      "su"
+      "su",
+      "taş"
     ],
     "correctAnswer": "su",
     "explanation": "\"Av\" Türkçede \"su\" demektir.",
@@ -314,8 +314,8 @@
     "answersTr": [
       "ateş",
       "ekmek",
-      "taş",
-      "su"
+      "su",
+      "taş"
     ],
     "correctAnswerTr": "su"
   },
@@ -326,10 +326,10 @@
     "category": "Ziman",
     "prompt": "Peyva Kurmancî \"hesp\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "at",
       "köpek",
       "kuş",
-      "koyun"
+      "koyun",
+      "at"
     ],
     "correctAnswer": "at",
     "explanation": "\"Hesp\" Türkçede \"at\" demektir.",
@@ -344,10 +344,10 @@
     },
     "promptTr": "Kurmancî \"hesp\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
-      "at",
       "köpek",
       "kuş",
-      "koyun"
+      "koyun",
+      "at"
     ],
     "correctAnswerTr": "at"
   },
@@ -359,8 +359,8 @@
     "prompt": "Peyva Kurmancî \"zanîn\" bi Tirkî çi tê wateyê?",
     "answers": [
       "görmek",
-      "gitmek",
       "bilmek",
+      "gitmek",
       "almak"
     ],
     "correctAnswer": "bilmek",
@@ -377,8 +377,8 @@
     "promptTr": "Kurmancî \"zanîn\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
       "görmek",
-      "gitmek",
       "bilmek",
+      "gitmek",
       "almak"
     ],
     "correctAnswerTr": "bilmek"
@@ -390,10 +390,10 @@
     "category": "Ziman",
     "prompt": "Hevwateya peyva \"dilgeş\" di Kurmancî de kîjan e?",
     "answers": [
-      "Şa",
       "Xemgîn",
       "Westiyayî",
-      "Tirsonek"
+      "Tirsonek",
+      "Şa"
     ],
     "correctAnswer": "Şa",
     "explanation": "\"Dilgeş\" ve \"şa\" ikisi de neşeli/sevinçli anlamına gelir.",
@@ -408,10 +408,10 @@
     },
     "promptTr": "Kurmancî'de \"dilgeş\" sözcüğünün eş anlamlısı hangisidir?",
     "answersTr": [
-      "Şa",
       "Xemgîn",
       "Westiyayî",
-      "Tirsonek"
+      "Tirsonek",
+      "Şa"
     ],
     "correctAnswerTr": "Şa"
   },
@@ -424,8 +424,8 @@
     "answers": [
       "Nerm",
       "Tarî",
-      "Giran",
-      "Sar"
+      "Sar",
+      "Giran"
     ],
     "correctAnswer": "Sar",
     "explanation": "\"Germ\" (sıcak) ile \"sar\" (soğuk) zıt anlamlıdır.",
@@ -442,8 +442,8 @@
     "answersTr": [
       "Nerm",
       "Tarî",
-      "Giran",
-      "Sar"
+      "Sar",
+      "Giran"
     ],
     "correctAnswerTr": "Sar"
   },
@@ -454,10 +454,10 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de \"daçek\" (preposition/postposition) çi ye?",
     "answers": [
-      "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
       "avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide",
       "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
-      "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"
+      "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de",
+      "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin"
     ],
     "correctAnswer": "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin",
     "explanation": "Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: \"li malê\", \"bi destan\".",
@@ -472,10 +472,10 @@
     },
     "promptTr": "Kurmancî'de \"daçek\" (edat) nedir?",
     "answersTr": [
-      "İsimlerin ilişkisini belirten \"di, bi, ji, li\" gibi sözcükler",
       "eylemin çok uzak bir geçmişte olduğunu gösteren fiil yapısı",
       "\"Tu\" tekil, \"hûn\" çoğul/saygı biçimidir",
-      "isim ya da zamirlerin cümledeki rolüne göre ekinin değişmesi"
+      "isim ya da zamirlerin cümledeki rolüne göre ekinin değişmesi",
+      "İsimlerin ilişkisini belirten \"di, bi, ji, li\" gibi sözcükler"
     ],
     "correctAnswerTr": "İsimlerin ilişkisini belirten \"di, bi, ji, li\" gibi sözcükler"
   },
@@ -487,8 +487,8 @@
     "prompt": "Di Kurmancî de \"raweya fermanî\" ya lêkera \"hatin\" ji bo kesê duyemîn ê yekjimar kîjan e?",
     "answers": [
       "Hat",
-      "Tê",
       "Were",
+      "Tê",
       "Hatiye"
     ],
     "correctAnswer": "Were",
@@ -505,8 +505,8 @@
     "promptTr": "Kurmancî'de \"hatin\" fiilinin ikinci tekil kişi için emir kipi (raweya fermanî) hangisidir?",
     "answersTr": [
       "Hat",
-      "Tê",
       "Were",
+      "Tê",
       "Hatiye"
     ],
     "correctAnswerTr": "Were"
@@ -547,8 +547,8 @@
     "prompt": "Kovara \"Hawar\" bi taybetî ji bo çi girîng e?",
     "answers": [
       "Weşandina romana yekem a kurdî",
-      "Amadekirina ferhenga mezin a kurdî",
       "Belavkirina alfabeya latînî ya kurdî",
+      "Amadekirina ferhenga mezin a kurdî",
       "Tomarkirina stranên dengbêjên Serhedê"
     ],
     "correctAnswer": "Belavkirina alfabeya latînî ya kurdî",
@@ -565,8 +565,8 @@
     "promptTr": "\"Hawar\" dergisi özellikle neden önemlidir?",
     "answersTr": [
       "İlk Kürtçe romanı yayımladığı için",
-      "Büyük Kürtçe sözlüğü hazırladığı için",
       "Kürtçe Latin alfabesini yaygınlaştırdığı için",
+      "Büyük Kürtçe sözlüğü hazırladığı için",
       "Serhed dengbêjlerinin kilamlarını kaydettiği için"
     ],
     "correctAnswerTr": "Kürtçe Latin alfabesini yaygınlaştırdığı için"
@@ -580,8 +580,8 @@
     "answers": [
       "Herdu jî heman in",
       "\"Min\" pirjimar e",
-      "\"Ez\" tenê di dema borî de tê bikaranîn",
-      "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye"
+      "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye",
+      "\"Ez\" tenê di dema borî de tê bikaranîn"
     ],
     "correctAnswer": "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye",
     "explanation": "\"Ez diçim\" (yalın) ama \"Min got\" (bükünlü) — durum, fiilin zamanına ve geçişliliğine göre değişir.",
@@ -598,8 +598,8 @@
     "answersTr": [
       "İkisi de aynıdır",
       "\"Min\" çoğuldur",
-      "\"Ez\" yalnızca geçmiş zamanda kullanılır",
-      "\"Ez\" yalın durum, \"min\" bükünlü durumdur"
+      "\"Ez\" yalın durum, \"min\" bükünlü durumdur",
+      "\"Ez\" yalnızca geçmiş zamanda kullanılır"
     ],
     "correctAnswerTr": "\"Ez\" yalın durum, \"min\" bükünlü durumdur"
   },
@@ -611,8 +611,8 @@
     "prompt": "Newroz her sal di kîjan rojê de tê pîrozkirin?",
     "answers": [
       "1ê Gulanê",
-      "21ê Îlonê",
       "21ê Adarê",
+      "21ê Îlonê",
       "1ê Çileyê"
     ],
     "correctAnswer": "21ê Adarê",
@@ -629,8 +629,8 @@
     "promptTr": "Newroz her yıl hangi günde kutlanır?",
     "answersTr": [
       "1 Mayıs",
-      "21 Eylül",
       "21 Mart",
+      "21 Eylül",
       "1 Ocak"
     ],
     "correctAnswerTr": "21 Mart"
@@ -642,8 +642,8 @@
     "category": "Çand",
     "prompt": "Li gorî efsaneya Newrozê, Kawa pîşeya wî çi bû?",
     "answers": [
-      "Şivan",
       "Hesinker",
+      "Şivan",
       "Cotkar",
       "Bazirgan"
     ],
@@ -660,8 +660,8 @@
     },
     "promptTr": "Newroz efsanesine göre Kawa'nın mesleği neydi?",
     "answersTr": [
-      "Çoban",
       "Demirci",
+      "Çoban",
       "Çiftçi",
       "Tüccar"
     ],
@@ -675,8 +675,8 @@
     "prompt": "Reqsa gelêrî ya kurdî ya ku bi destgirtin û bi rêz tê kirin çi ye?",
     "answers": [
       "Semah",
-      "Zeybek",
       "Govend",
+      "Zeybek",
       "Horon"
     ],
     "correctAnswer": "Govend",
@@ -693,8 +693,8 @@
     "promptTr": "El ele tutuşarak ve sıra hâlinde oynanan Kürt halk dansı hangisidir?",
     "answersTr": [
       "Semah",
-      "Zeybek",
       "Govend",
+      "Zeybek",
       "Horon"
     ],
     "correctAnswerTr": "Govend"
@@ -706,10 +706,10 @@
     "category": "Çand",
     "prompt": "Di çanda kurdî de \"tiştonek\" çi ye?",
     "answers": [
-      "Mamik / bilmece",
       "Stranek dînî",
       "Cureyekî xwarinê",
-      "Reqsek gelêrî"
+      "Reqsek gelêrî",
+      "Mamik / bilmece"
     ],
     "correctAnswer": "Mamik / bilmece",
     "explanation": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.",
@@ -724,10 +724,10 @@
     },
     "promptTr": "Kürt kültüründe \"tiştonek\" nedir?",
     "answersTr": [
-      "Mamik / bilmece",
       "Dinî bir ezgi",
       "Bir yemek türü",
-      "Bir halk dansı"
+      "Bir halk dansı",
+      "Mamik / bilmece"
     ],
     "correctAnswerTr": "Mamik / bilmece"
   },
@@ -739,8 +739,8 @@
     "prompt": "Cilê jinan ê kurdî yê ku li ser serî tê girêdan û bi pûl tê xemilandin bi giştî çi navê digire?",
     "answers": [
       "Şal û şapik",
-      "Kras",
       "Klîtik / kofî",
+      "Kras",
       "Şûtik"
     ],
     "correctAnswer": "Klîtik / kofî",
@@ -757,8 +757,8 @@
     "promptTr": "Kürt kadın giysisinde başa bağlanan ve pullarla süslenen parça genel olarak ne adla anılır?",
     "answersTr": [
       "Şal û şapik",
-      "Kras",
       "Klîtik / kofî",
+      "Kras",
       "Şûtik"
     ],
     "correctAnswerTr": "Klîtik / kofî"
@@ -770,8 +770,8 @@
     "category": "Çand",
     "prompt": "Di kevneşopiya kurdî de \"şevbihêrk\" çi ye?",
     "answers": [
-      "girêdanên civak û malbatê",
       "civîna şevê ya çîrok û stranan",
+      "girêdanên civak û malbatê",
       "xurtkirina girêdanên civakî",
       "cilûbergê kevneşopî yê mêran"
     ],
@@ -788,8 +788,8 @@
     },
     "promptTr": "Kürt geleneğinde \"şevbihêrk\" nedir?",
     "answersTr": [
-      "toplum ve aile arasındaki bağlar",
       "hikâye ve türkü anlatılan gece toplantısı",
+      "toplum ve aile arasındaki bağlar",
       "toplumsal bağların güçlendirilmesi",
       "erkeklerin geleneksel giysisi"
     ],
@@ -803,8 +803,8 @@
     "prompt": "Xwarina kurdî ya ku ji savar û goşt tê çêkirin û bi destan tê gilover kirin çi ye?",
     "answers": [
       "Dolme",
-      "Sarma",
       "Kutilk",
+      "Sarma",
       "Kadayîf"
     ],
     "correctAnswer": "Kutilk",
@@ -821,8 +821,8 @@
     "promptTr": "Bulgur ve etten yapılan, elde yuvarlanarak şekillendirilen Kürt yemeği hangisidir?",
     "answersTr": [
       "Dolma",
-      "Sarma",
       "Kutilk",
+      "Sarma",
       "Kadayıf"
     ],
     "correctAnswerTr": "Kutilk"
@@ -834,10 +834,10 @@
     "category": "Çand",
     "prompt": "Di çanda kurdî de \"heval\" bi giştî çi tê wateyê?",
     "answers": [
-      "Hogir / dost",
       "Toplu halk oyunu",
       "Mamik / bilmece",
-      "Atalar/ecdat"
+      "Atalar/ecdat",
+      "Hogir / dost"
     ],
     "correctAnswer": "Hogir / dost",
     "explanation": "\"Heval\" arkadaş/yoldaş anlamını taşır.",
@@ -852,10 +852,10 @@
     },
     "promptTr": "Kürt kültüründe \"heval\" genel olarak ne anlama gelir?",
     "answersTr": [
-      "Hogir / dost",
       "Toplu halk oyunu",
       "Mamik / bilmece",
-      "Atalar/ecdat"
+      "Atalar/ecdat",
+      "Hogir / dost"
     ],
     "correctAnswerTr": "Hogir / dost"
   },
@@ -867,8 +867,8 @@
     "prompt": "Destana \"Mem û Zîn\" bi giştî çîroka çi ye?",
     "answers": [
       "nasname û cihêrengiya herêmî",
-      "misafirperweriya kurdî",
       "Evîna Mem û Zînê ya ku nagihîje hev",
+      "misafirperweriya kurdî",
       "bi çanda devkî ve girêdayî ye"
     ],
     "correctAnswer": "Evîna Mem û Zînê ya ku nagihîje hev",
@@ -885,8 +885,8 @@
     "promptTr": "\"Mem û Zîn\" destanı genel olarak neyin hikâyesidir?",
     "answersTr": [
       "kimlik ve yöresel çeşitlilik",
-      "Kürt misafirperverliği",
       "Kavuşamayan Mem ile Zîn'in aşkı",
+      "Kürt misafirperverliği",
       "sözlü kültüre bağlı olması"
     ],
     "correctAnswerTr": "Kavuşamayan Mem ile Zîn'in aşkı"
@@ -926,8 +926,8 @@
     "category": "Çand",
     "prompt": "Di dawetên kurdî de \"berbû\" kî ne?",
     "answers": [
-      "Muzîkjenên dawetê",
       "Kesên ku bûkê ji mala wê tînin",
+      "Muzîkjenên dawetê",
       "Mêvanên ji dûr",
       "Xwarinçêkerên dawetê"
     ],
@@ -944,8 +944,8 @@
     },
     "promptTr": "Kürt düğünlerinde \"berbû\" kimlerdir?",
     "answersTr": [
-      "Düğünde çalan müzisyenler",
       "Gelini evinden alıp getirenler",
+      "Düğünde çalan müzisyenler",
       "Uzaktan gelen misafirler",
       "Düğünde yemek yapanlar"
     ],
@@ -959,8 +959,8 @@
     "prompt": "Rêûresma \"kirîvatî\" di civaka kurdî de çi ye?",
     "answers": [
       "reqsa kevneşopî ya herêma Şirnexê",
-      "amûra kevneşopî ya dişibe bilûrê",
       "Girêdana malbatan bi rêya sinetê",
+      "amûra kevneşopî ya dişibe bilûrê",
       "bi çanda sifrê ve girêdayî ye"
     ],
     "correctAnswer": "Girêdana malbatan bi rêya sinetê",
@@ -977,8 +977,8 @@
     "promptTr": "Kürt toplumunda \"kirîvatî\" geleneği nedir?",
     "answersTr": [
       "Şirnex yöresinin geleneksel dansı",
-      "bilûra benzeyen geleneksel çalgı",
       "Ailelerin sünnet yoluyla bağ kurması",
+      "bilûra benzeyen geleneksel çalgı",
       "sofra kültürüne bağlı olması"
     ],
     "correctAnswerTr": "Ailelerin sünnet yoluyla bağ kurması"
@@ -990,10 +990,10 @@
     "category": "Çand",
     "prompt": "Rengên ku bi gelemperî di ala kurdî de derbas dibin kîjan in?",
     "answers": [
-      "Sor, spî, kesk û zer",
       "Şîn, spî û sor",
       "Reş, spî û kesk",
-      "Zer, mor û sor"
+      "Zer, mor û sor",
+      "Sor, spî, kesk û zer"
     ],
     "correctAnswer": "Sor, spî, kesk û zer",
     "explanation": "Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.",
@@ -1008,10 +1008,10 @@
     },
     "promptTr": "Kürt bayrağında genel olarak geçen renkler hangileridir?",
     "answersTr": [
-      "Kırmızı, beyaz, yeşil ve sarı",
       "Mavi, beyaz ve kırmızı",
       "Siyah, beyaz ve yeşil",
-      "Sarı, mor ve kırmızı"
+      "Sarı, mor ve kırmızı",
+      "Kırmızı, beyaz, yeşil ve sarı"
     ],
     "correctAnswerTr": "Kırmızı, beyaz, yeşil ve sarı"
   },
@@ -1023,8 +1023,8 @@
     "prompt": "Di çanda kurdî de \"gotinên pêşiyan\" çi ne?",
     "answers": [
       "stranên olî yên ku di dua û ayînan de tên gotin",
-      "navên gundên kevn ên ku di nexşeyan de dijîn",
       "gotinên kurt ên ku ezmûna nifşan digihînin hev",
+      "navên gundên kevn ên ku di nexşeyan de dijîn",
       "rêzikên rêzimanî yên ku hevoksaziyê diyar dikin"
     ],
     "correctAnswer": "gotinên kurt ên ku ezmûna nifşan digihînin hev",
@@ -1041,8 +1041,8 @@
     "promptTr": "Kürt kültüründe \"gotinên pêşiyan\" nedir?",
     "answersTr": [
       "dua ve ayinlerde söylenen dinî ezgiler",
-      "haritalarda yaşamaya devam eden eski köy adları",
       "kuşakların deneyimini aktaran kısa sözler",
+      "haritalarda yaşamaya devam eden eski köy adları",
       "cümle kuruluşunu belirleyen dilbilgisi kuralları"
     ],
     "correctAnswerTr": "kuşakların deneyimini aktaran kısa sözler"
@@ -1054,8 +1054,8 @@
     "category": "Çand",
     "prompt": "Xwarina \"dew\" ji çi tê çêkirin?",
     "answers": [
-      "Ard û av",
       "Mast û av",
+      "Ard û av",
       "Şîr û şekir",
       "Genim û rûn"
     ],
@@ -1072,8 +1072,8 @@
     },
     "promptTr": "\"Dew\" neyden yapılır?",
     "answersTr": [
-      "Un ve su",
       "Yoğurt ve su",
+      "Un ve su",
       "Süt ve şeker",
       "Buğday ve yağ"
     ],
@@ -1087,8 +1087,8 @@
     "prompt": "Di kevneşopiya kurdî de \"rîspî\" kî ye?",
     "answers": [
       "pîrozbahiya serê salê di salnameya gelêrî ya kurdî de",
-      "reqsa kevneşopî ya herêma Şirnexê",
       "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
+      "reqsa kevneşopî ya herêma Şirnexê",
       "vegotina ku ji nifşî bo nifşî hatiye veguhastin"
     ],
     "correctAnswer": "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike",
@@ -1105,8 +1105,8 @@
     "promptTr": "Kürt geleneğinde \"rîspî\" kimdir?",
     "answersTr": [
       "Kürt halk takvimindeki yılbaşı kutlaması",
-      "Şirnex yöresinin geleneksel dansı",
       "Anlaşmazlıkları çözen saygın yaşlı kişi",
+      "Şirnex yöresinin geleneksel dansı",
       "kuşaktan kuşağa aktarılan anlatı"
     ],
     "correctAnswerTr": "Anlaşmazlıkları çözen saygın yaşlı kişi"
@@ -1118,10 +1118,10 @@
     "category": "Dîrok",
     "prompt": "Kovara \"Hawar\" di kîjan salê de dest bi weşanê kir?",
     "answers": [
-      "1932",
       "1898",
       "1945",
-      "1960"
+      "1960",
+      "1932"
     ],
     "correctAnswer": "1932",
     "explanation": "Hawar, 15 Mayıs 1932'de Şam'da Celadet Ali Bedirhan tarafından yayımlandı.",
@@ -1136,10 +1136,10 @@
     },
     "promptTr": "\"Hawar\" dergisi hangi yılda yayımlanmaya başladı?",
     "answersTr": [
-      "1932",
       "1898",
       "1945",
-      "1960"
+      "1960",
+      "1932"
     ],
     "correctAnswerTr": "1932"
   },
@@ -1151,8 +1151,8 @@
     "prompt": "Yekem rojnameya kurdî \"Kurdistan\" di kîjan salê û li ku derê hat weşandin?",
     "answers": [
       "1908, Stenbol",
-      "1920, Bexda",
       "1898, Qahîre",
+      "1920, Bexda",
       "1932, Şam"
     ],
     "correctAnswer": "1898, Qahîre",
@@ -1169,8 +1169,8 @@
     "promptTr": "İlk Kürtçe gazete \"Kurdistan\" hangi yılda ve nerede yayımlandı?",
     "answersTr": [
       "1908, İstanbul",
-      "1920, Bağdat",
       "1898, Kahire",
+      "1920, Bağdat",
       "1932, Şam"
     ],
     "correctAnswerTr": "1898, Kahire"
@@ -1182,8 +1182,8 @@
     "category": "Dîrok",
     "prompt": "Selahedînê Eyûbî bi taybetî bi çi tê nasîn?",
     "answers": [
-      "Damezrandina Împeratoriya Osmanî",
       "Vegirtina Qudsê di 1187an de",
+      "Damezrandina Împeratoriya Osmanî",
       "Nivîsandina Mem û Zînê",
       "Vedîtina alfabeya kurdî"
     ],
@@ -1200,8 +1200,8 @@
     },
     "promptTr": "Selahedînê Eyûbî özellikle neyle tanınır?",
     "answersTr": [
-      "Osmanlı İmparatorluğu'nu kurmasıyla",
       "1187'de Kudüs'ü almasıyla",
+      "Osmanlı İmparatorluğu'nu kurmasıyla",
       "Mem û Zîn'i yazmasıyla",
       "Kürt alfabesini bulmasıyla"
     ],
@@ -1215,8 +1215,8 @@
     "prompt": "Peymana Lozanê di kîjan salê de hat îmzekirin?",
     "answers": [
       "1920",
-      "1918",
       "1923",
+      "1918",
       "1932"
     ],
     "correctAnswer": "1923",
@@ -1233,8 +1233,8 @@
     "promptTr": "Lozan Antlaşması hangi yılda imzalandı?",
     "answersTr": [
       "1920",
-      "1918",
       "1923",
+      "1918",
       "1932"
     ],
     "correctAnswerTr": "1923"
@@ -1246,10 +1246,10 @@
     "category": "Dîrok",
     "prompt": "Peymana Sevrê (1920) ji bo kurdan çima tê gotin ku girîng e?",
     "answers": [
-      "Ji bo herêmeke kurdî ya xweser madde dihewand",
       "bandorkirina civakan li hev",
       "mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir",
-      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan"
+      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
+      "Ji bo herêmeke kurdî ya xweser madde dihewand"
     ],
     "correctAnswer": "Ji bo herêmeke kurdî ya xweser madde dihewand",
     "explanation": "Sevr, Kürtler için olası bir özerklik maddesi içeriyordu ancak antlaşma uygulanmadı.",
@@ -1264,10 +1264,10 @@
     },
     "promptTr": "Sevr Antlaşması (1920) Kürtler açısından neden önemli sayılır?",
     "answersTr": [
-      "Özerk bir Kürt bölgesi için madde içermesi",
       "Toplumların birbirini etkilemesi",
       "Rewandiz merkezli, askerî güç toplayan emirlik",
-      "Suriye Kürtlerinin 1962 sayımı sonrası vatansızlığı"
+      "Suriye Kürtlerinin 1962 sayımı sonrası vatansızlığı",
+      "Özerk bir Kürt bölgesi için madde içermesi"
     ],
     "correctAnswerTr": "Özerk bir Kürt bölgesi için madde içermesi"
   },
@@ -1279,8 +1279,8 @@
     "prompt": "Împeratoriya Medan bi giştî di kîjan sedsalê de hat damezrandin?",
     "answers": [
       "Sedsala 3em a piştî zayînê",
-      "Sedsala 12em",
       "Sedsala 7em a berî zayînê",
+      "Sedsala 12em",
       "Sedsala 1em a berî zayînê"
     ],
     "correctAnswer": "Sedsala 7em a berî zayînê",
@@ -1297,8 +1297,8 @@
     "promptTr": "Med İmparatorluğu genel olarak hangi yüzyılda kuruldu?",
     "answersTr": [
       "M.S. 3. yüzyıl",
-      "12. yüzyıl",
       "M.Ö. 7. yüzyıl",
+      "12. yüzyıl",
       "M.Ö. 1. yüzyıl"
     ],
     "correctAnswerTr": "M.Ö. 7. yüzyıl"
@@ -1310,8 +1310,8 @@
     "category": "Dîrok",
     "prompt": "Ehmedê Xanî \"Mem û Zîn\" di kîjan salê de nivîsî?",
     "answers": [
-      "1592",
       "1692",
+      "1592",
       "1792",
       "1892"
     ],
@@ -1328,8 +1328,8 @@
     },
     "promptTr": "Ehmedê Xanî \"Mem û Zîn\"'i hangi yılda yazdı?",
     "answersTr": [
-      "1592",
       "1692",
+      "1592",
       "1792",
       "1892"
     ],
@@ -1343,8 +1343,8 @@
     "prompt": "Mîrektiya Botan bi kîjan navendê tê nasîn?",
     "answers": [
       "Hewlêr",
-      "Sanandaj",
       "Cizîr",
+      "Sanandaj",
       "Kirmanşan"
     ],
     "correctAnswer": "Cizîr",
@@ -1361,8 +1361,8 @@
     "promptTr": "Botan Emirliği hangi merkeziyle tanınır?",
     "answersTr": [
       "Hewlêr",
-      "Sanandaj",
       "Cizîr",
+      "Sanandaj",
       "Kirmanşan"
     ],
     "correctAnswerTr": "Cizîr"
@@ -1374,10 +1374,10 @@
     "category": "Dîrok",
     "prompt": "\"Şerefname\" ya Şerefxanê Bidlîsî çi ye?",
     "answers": [
-      "Dîroknameya mîrektiyên kurdan",
       "Dîwanek helbestî",
       "Ferhengek kurdî-erebî",
-      "Pirtûkeke rêzimanî"
+      "Pirtûkeke rêzimanî",
+      "Dîroknameya mîrektiyên kurdan"
     ],
     "correctAnswer": "Dîroknameya mîrektiyên kurdan",
     "explanation": "Şerefname (1597), Kürtlerin ilk kapsamlı tarih kitabıdır; emirlikleri ve aşiretleri tanıtır.",
@@ -1392,10 +1392,10 @@
     },
     "promptTr": "Şerefxanê Bidlîsî'nin \"Şerefname\" adlı eseri nedir?",
     "answersTr": [
-      "Kürt emirliklerinin tarihi",
       "Bir şiir divanı",
       "Kürtçe-Arapça bir sözlük",
-      "Bir dilbilgisi kitabı"
+      "Bir dilbilgisi kitabı",
+      "Kürt emirliklerinin tarihi"
     ],
     "correctAnswerTr": "Kürt emirliklerinin tarihi"
   },
@@ -1435,8 +1435,8 @@
     "prompt": "Komara Mehabadê di kîjan salê de hat damezrandin?",
     "answers": [
       "1936",
-      "1958",
       "1946",
+      "1958",
       "1961"
     ],
     "correctAnswer": "1946",
@@ -1453,8 +1453,8 @@
     "promptTr": "Mehabad Cumhuriyeti hangi yılda kuruldu?",
     "answersTr": [
       "1936",
-      "1958",
       "1946",
+      "1958",
       "1961"
     ],
     "correctAnswerTr": "1946"
@@ -1466,8 +1466,8 @@
     "category": "Dîrok",
     "prompt": "Qadî Mihemed bi çi tê nasîn?",
     "answers": [
-      "Nivîskarê Şerefnameyê",
       "Serokê Komara Mehabadê",
+      "Nivîskarê Şerefnameyê",
       "Damezrînerê kovara Hawarê",
       "Mîrê Botan"
     ],
@@ -1484,8 +1484,8 @@
     },
     "promptTr": "Qadî Mihemed neyle tanınır?",
     "answersTr": [
-      "Şerefname'nin yazarı olmasıyla",
       "Mehabad Cumhuriyeti'ne önderlik etmesiyle",
+      "Şerefname'nin yazarı olmasıyla",
       "Hawar dergisini kurmasıyla",
       "Botan emiri olmasıyla"
     ],
@@ -1499,8 +1499,8 @@
     "prompt": "Bajarê Amedê di dîrokê de bi kîjan navê latînî jî tê nasîn?",
     "answers": [
       "Ninova",
-      "Palmyra",
       "Amida",
+      "Palmyra",
       "Edessa"
     ],
     "correctAnswer": "Amida",
@@ -1517,8 +1517,8 @@
     "promptTr": "Amed şehri tarihte hangi Latince adla da bilinir?",
     "answersTr": [
       "Ninova",
-      "Palmyra",
       "Amida",
+      "Palmyra",
       "Edessa"
     ],
     "correctAnswerTr": "Amida"
@@ -1530,10 +1530,10 @@
     "category": "Dîrok",
     "prompt": "Gundê \"Xerabreşk\" an bi giştî wêrankirina gundan di salên 1990î de bi kîjan têgînê tê nasîn?",
     "answers": [
-      "Koçberiya bi darê zorê",
       "Reforma erdê",
       "Bajarvanîkirin",
-      "Kolonîzasyona çandinî"
+      "Kolonîzasyona çandinî",
+      "Koçberiya bi darê zorê"
     ],
     "correctAnswer": "Koçberiya bi darê zorê",
     "explanation": "1990'larda birçok köy boşaltıldı ve halk zorunlu göçe tabi tutuldu.",
@@ -1548,10 +1548,10 @@
     },
     "promptTr": "\"Xerabreşk\" köyünün ya da genel olarak 1990'larda köylerin yakılıp yıkılmasının sonucu hangi kavramla anılır?",
     "answersTr": [
-      "Zorunlu göç",
       "Toprak reformu",
       "Kentleşme",
-      "Tarımsal kolonizasyon"
+      "Tarımsal kolonizasyon",
+      "Zorunlu göç"
     ],
     "correctAnswerTr": "Zorunlu göç"
   },
@@ -1563,8 +1563,8 @@
     "prompt": "Hûrî û Mîtanî bi giştî li kîjan herêmê dijiyan?",
     "answers": [
       "Sine (Sanandaj)",
-      "Amed û derdora wê",
       "Mezopotamyaya jorîn",
+      "Amed û derdora wê",
       "Kafkasya (Gence-Anî)"
     ],
     "correctAnswer": "Mezopotamyaya jorîn",
@@ -1581,8 +1581,8 @@
     "promptTr": "Hûrî ve Mîtanîler genel olarak hangi bölgede yaşadı?",
     "answersTr": [
       "Sine (Sanandaj)",
-      "Amed ve çevresi",
       "Yukarı Mezopotamya",
+      "Amed ve çevresi",
       "Kafkasya (Gence-Anî)"
     ],
     "correctAnswerTr": "Yukarı Mezopotamya"
@@ -1594,8 +1594,8 @@
     "category": "Edebiyat",
     "prompt": "Nivîskarê \"Mem û Zîn\" kî ye?",
     "answers": [
-      "Melayê Cizîrî",
       "Ehmedê Xanî",
+      "Melayê Cizîrî",
       "Feqiyê Teyran",
       "Elî Herîrî"
     ],
@@ -1612,8 +1612,8 @@
     },
     "promptTr": "\"Mem û Zîn\"in yazarı kimdir?",
     "answersTr": [
-      "Melayê Cizîrî",
       "Ehmedê Xanî",
+      "Melayê Cizîrî",
       "Feqiyê Teyran",
       "Elî Herîrî"
     ],
@@ -1627,8 +1627,8 @@
     "prompt": "Melayê Cizîrî bi giştî bi çi tê nasîn?",
     "answers": [
       "Yekem romana kurdî",
-      "Ferhenga kurdî-erebî",
       "Dîwana xwe ya helbestên sofîyane",
+      "Ferhenga kurdî-erebî",
       "Dîroknameya mîrektiyan"
     ],
     "correctAnswer": "Dîwana xwe ya helbestên sofîyane",
@@ -1645,8 +1645,8 @@
     "promptTr": "Melayê Cizîrî genel olarak neyle tanınır?",
     "answersTr": [
       "Kürtçedeki ilk roman",
-      "Kürtçe-Arapça sözlük",
       "Tasavvufi şiirlerden oluşan Divanı",
+      "Kürtçe-Arapça sözlük",
       "Beyliklerin tarihnamesi"
     ],
     "correctAnswerTr": "Tasavvufi şiirlerden oluşan Divanı"
@@ -1658,10 +1658,10 @@
     "category": "Edebiyat",
     "prompt": "\"Feqiyê Teyran\" di wêjeya kurdî de bi çi hate naskirin?",
     "answers": [
-      "helbestên xwe yên li ser xweza û teyran",
       "helbestvanê mezin ê ku şêwaza azad anî helbesta kurdî",
       "helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen",
-      "akademîsyenê ku li ser ziman û wêjeya kurdî dixebite"
+      "akademîsyenê ku li ser ziman û wêjeya kurdî dixebite",
+      "helbestên xwe yên li ser xweza û teyran"
     ],
     "correctAnswer": "helbestên xwe yên li ser xweza û teyran",
     "explanation": "Feqiyê Teyran (16-17. yy) şiirlerinde kuşlar ve doğayla konuşur.",
@@ -1676,10 +1676,10 @@
     },
     "promptTr": "\"Feqiyê Teyran\" Kürt edebiyatında neyle tanınmıştır?",
     "answersTr": [
-      "doğa ve kuşlar üzerine yazdığı şiirlerle",
       "Kürt şiirine serbest üslubu getiren büyük şair olmasıyla",
       "modern Kürt şiirinin öncü toplumcu şairi olmasıyla",
-      "Kürt dili ve edebiyatı üzerine çalışan akademisyen olmasıyla"
+      "Kürt dili ve edebiyatı üzerine çalışan akademisyen olmasıyla",
+      "doğa ve kuşlar üzerine yazdığı şiirlerle"
     ],
     "correctAnswerTr": "doğa ve kuşlar üzerine yazdığı şiirlerle"
   },
@@ -1691,8 +1691,8 @@
     "prompt": "Mehmed Uzun bi giştî bi kîjan cureya wêjeyî tê nasîn?",
     "answers": [
       "Helbesta klasîk",
-      "Şano",
       "Roman",
+      "Şano",
       "Ferhengnasî"
     ],
     "correctAnswer": "Roman",
@@ -1709,8 +1709,8 @@
     "promptTr": "Mehmed Uzun genel olarak hangi edebî türle tanınır?",
     "answersTr": [
       "Klasik şiir",
-      "Tiyatro",
       "Roman",
+      "Tiyatro",
       "Sözlükçülük"
     ],
     "correctAnswerTr": "Roman"
@@ -1722,8 +1722,8 @@
     "category": "Edebiyat",
     "prompt": "Şêrko Bêkes bi kîjan zaravayî nivîsandiye?",
     "answers": [
-      "Kurmancî",
       "Soranî",
+      "Kurmancî",
       "Zazakî",
       "Goranî"
     ],
@@ -1740,8 +1740,8 @@
     },
     "promptTr": "Şêrko Bêkes hangi lehçeyle yazmıştır?",
     "answersTr": [
-      "Kurmancî",
       "Soranî",
+      "Kurmancî",
       "Zazakî",
       "Goranî"
     ],
@@ -1755,8 +1755,8 @@
     "prompt": "Di wêjeya kurdî de \"dîwan\" çi tê wateyê?",
     "answers": [
       "Forma helbestî ya çîrokî bi beytên qafiyedar",
-      "Helbesta kurt a çar rêzikî",
       "Berhevoka helbestên helbestvanekî",
+      "Helbesta kurt a çar rêzikî",
       "Berhevoka gotinên pêşiyan"
     ],
     "correctAnswer": "Berhevoka helbestên helbestvanekî",
@@ -1773,8 +1773,8 @@
     "promptTr": "Kürt edebiyatında \"dîwan\" ne anlama gelir?",
     "answersTr": [
       "Kafiyeli beyitlerle kurulan anlatı şiiri biçimi",
-      "Bir şairin şiirlerinin derlemesi",
       "Bir şairin tasavvufi şiirlerinden oluşan kitap",
+      "Bir şairin şiirlerinin derlemesi",
       "Kültür ve edebiyat dergileri"
     ],
     "correctAnswerTr": "Bir şairin şiirlerinin derlemesi"
@@ -1786,10 +1786,10 @@
     "category": "Edebiyat",
     "prompt": "Cegerxwîn bi giştî çi bû?",
     "answers": [
-      "Helbestvan",
       "Romannivîs",
       "Dîroknas",
-      "Muzîkjen"
+      "Muzîkjen",
+      "Helbestvan"
     ],
     "correctAnswer": "Helbestvan",
     "explanation": "Cegerxwîn (1903-1984) ünlü Kürt şairidir; adı \"ciğeri yanık\" anlamına gelir.",
@@ -1804,10 +1804,10 @@
     },
     "promptTr": "Cegerxwîn genel olarak ne olarak tanınır?",
     "answersTr": [
-      "Şair",
       "Romancı",
       "Tarihçi",
-      "Müzisyen"
+      "Müzisyen",
+      "Şair"
     ],
     "correctAnswerTr": "Şair"
   },
@@ -1846,10 +1846,10 @@
     "category": "Edebiyat",
     "prompt": "Di helbesta klasîk a kurdî de bandora kîjan wêjeyan zêde xuya dike?",
     "answers": [
-      "Farisî û erebî",
       "Yewnanî û latînî",
       "Slavî û rûsî",
-      "Çînî û hindî"
+      "Çînî û hindî",
+      "Farisî û erebî"
     ],
     "correctAnswer": "Farisî û erebî",
     "explanation": "Klasik Kürt şiiri, ölçü ve mecaz açısından Fars ve Arap edebiyatıyla etkileşim içindeydi.",
@@ -1864,10 +1864,10 @@
     },
     "promptTr": "Klasik Kürt şiirinde hangi edebiyatların etkisi daha çok görülür?",
     "answersTr": [
-      "Fars ve Arap",
       "Yunan ve Latin",
       "Slav ve Rus",
-      "Çin ve Hint"
+      "Çin ve Hint",
+      "Fars ve Arap"
     ],
     "correctAnswerTr": "Fars ve Arap"
   },
@@ -1878,8 +1878,8 @@
     "category": "Edebiyat",
     "prompt": "Berhema \"Nûbihara Biçûkan\" a Ehmedê Xanî çi ye?",
     "answers": [
-      "mesnewiya evînê ya Mem û Zînê",
       "ferhengeke helbestî ya kurdî-erebî ji bo zarokan",
+      "mesnewiya evînê ya Mem û Zînê",
       "dîwaneke helbestên sofîyane",
       "destaneke gelêrî ya li ser Memê Alan"
     ],
@@ -1896,8 +1896,8 @@
     },
     "promptTr": "Ehmedê Xanî'nin \"Nûbihara Biçûkan\" adlı eseri nedir?",
     "answersTr": [
-      "çocuklar için manzum Kürtçe-Arapça sözlük",
       "klasik eğitim ve şairlerin yetiştirilmesi",
+      "çocuklar için manzum Kürtçe-Arapça sözlük",
       "Kürt tiyatrosunun kurucu oyun yazarlarından biri",
       "divan yazan ilk Kürt kadın tarihçi ve şair"
     ],
@@ -1912,8 +1912,8 @@
     "answers": [
       "Cegerxwîn",
       "Mehmed Uzun",
-      "Ehmedê Xanî",
-      "Erebê Şemo"
+      "Erebê Şemo",
+      "Ehmedê Xanî"
     ],
     "correctAnswer": "Erebê Şemo",
     "explanation": "Erebê Şemo, ilk Kürt romanı sayılan \"Şivanê Kurmanca\"yı (1935) yazdı.",
@@ -1930,8 +1930,8 @@
     "answersTr": [
       "Cegerxwîn",
       "Mehmed Uzun",
-      "Ehmedê Xanî",
-      "Erebê Şemo"
+      "Erebê Şemo",
+      "Ehmedê Xanî"
     ],
     "correctAnswerTr": "Erebê Şemo"
   },
@@ -1944,8 +1944,8 @@
     "answers": [
       "Alp",
       "Kafkas",
-      "Toros Rojava",
-      "Zagros"
+      "Zagros",
+      "Toros Rojava"
     ],
     "correctAnswer": "Zagros",
     "explanation": "Zagros dağları, İran'ın kuzeybatısından Güney Kürdistan'a uzanır.",
@@ -1962,8 +1962,8 @@
     "answersTr": [
       "Alpler",
       "Kafkaslar",
-      "Batı Toroslar",
-      "Zagros"
+      "Zagros",
+      "Batı Toroslar"
     ],
     "correctAnswerTr": "Zagros"
   },
@@ -1974,8 +1974,8 @@
     "category": "Cografya",
     "prompt": "Çiyayê herî bilind ê Tirkiyeyê ku li herêma kurdî ye kîjan e?",
     "answers": [
-      "Çiyayê Cûdî",
       "Çiyayê Agirî",
+      "Çiyayê Cûdî",
       "Çiyayê Nemrûd",
       "Çiyayê Erciyes"
     ],
@@ -1992,8 +1992,8 @@
     },
     "promptTr": "Türkiye'nin Kürt bölgesinde yer alan en yüksek dağı hangisidir?",
     "answersTr": [
-      "Cûdî Dağı",
       "Agirî Dağı",
+      "Cûdî Dağı",
       "Nemrûd Dağı",
       "Erciyes Dağı"
     ],
@@ -2008,8 +2008,8 @@
     "answers": [
       "Gola Tuzê",
       "Gola Beyşehîrê",
-      "Gola Îznîkê",
-      "Gola Wanê"
+      "Gola Wanê",
+      "Gola Îznîkê"
     ],
     "correctAnswer": "Gola Wanê",
     "explanation": "Van Gölü yaklaşık 3.700 km² ile Türkiye'nin en büyük gölüdür.",
@@ -2026,8 +2026,8 @@
     "answersTr": [
       "Tuz Gölü",
       "Beyşehir Gölü",
-      "İznik Gölü",
-      "Wan Gölü"
+      "Wan Gölü",
+      "İznik Gölü"
     ],
     "correctAnswerTr": "Wan Gölü"
   },
@@ -2039,8 +2039,8 @@
     "prompt": "Herdu çemên sereke yên Mezopotamyayê kîjan in?",
     "answers": [
       "Nîl û Kongo",
-      "Volga û Don",
       "Dîcle û Firat",
+      "Volga û Don",
       "Ganj û Îndus"
     ],
     "correctAnswer": "Dîcle û Firat",
@@ -2057,8 +2057,8 @@
     "promptTr": "Mezopotamya'nın iki ana nehri hangileridir?",
     "answersTr": [
       "Nil ve Kongo",
-      "Volga ve Don",
       "Dicle ve Fırat",
+      "Volga ve Don",
       "Ganj ve İndus"
     ],
     "correctAnswerTr": "Dicle ve Fırat"
@@ -2072,8 +2072,8 @@
     "answers": [
       "Rojavayê Kurdistanê",
       "Bakurê Kurdistanê",
-      "Rojhilatê Kurdistanê",
-      "Herêma Kurdistanê ya Iraqê"
+      "Herêma Kurdistanê ya Iraqê",
+      "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Herêma Kurdistanê ya Iraqê",
     "explanation": "Erbil, Irak Federal Kürdistan Bölgesi'nin başkentidir; kalesi UNESCO listesindedir.",
@@ -2090,8 +2090,8 @@
     "answersTr": [
       "Rojava (Batı Kürdistan)",
       "Bakur (Kuzey Kürdistan)",
-      "Rojhilat (Doğu Kürdistan)",
-      "Irak Kürdistan Bölgesi"
+      "Irak Kürdistan Bölgesi",
+      "Rojhilat (Doğu Kürdistan)"
     ],
     "correctAnswerTr": "Irak Kürdistan Bölgesi"
   },
@@ -2102,8 +2102,8 @@
     "category": "Cografya",
     "prompt": "Sûrên bazaltî yên ku di lîsteya mîrateya cîhanî ya UNESCOyê de ne li kîjan bajarî ne?",
     "answers": [
-      "Wan",
       "Amed",
+      "Wan",
       "Mêrdîn",
       "Riha"
     ],
@@ -2120,8 +2120,8 @@
     },
     "promptTr": "UNESCO Dünya Mirası listesinde yer alan bazalt surlar hangi şehirdedir?",
     "answersTr": [
-      "Wan",
       "Amed",
+      "Wan",
       "Mêrdîn",
       "Riha"
     ],
@@ -2136,8 +2136,8 @@
     "answers": [
       "Wan",
       "Amed",
-      "Elezîz",
-      "Riha"
+      "Riha",
+      "Elezîz"
     ],
     "correctAnswer": "Riha",
     "explanation": "Göbeklitepe Urfa yakınlarındadır ve dünyanın en eski tapınak alanlarından sayılır.",
@@ -2154,8 +2154,8 @@
     "answersTr": [
       "Wan",
       "Amed",
-      "Elezîz",
-      "Riha"
+      "Riha",
+      "Elezîz"
     ],
     "correctAnswerTr": "Riha"
   },
@@ -2167,8 +2167,8 @@
     "prompt": "Bendava Îlisûyê li ser kîjan çemî hatiye avakirin?",
     "answers": [
       "Firat",
-      "Murat",
       "Dîcle",
+      "Murat",
       "Zap"
     ],
     "correctAnswer": "Dîcle",
@@ -2185,8 +2185,8 @@
     "promptTr": "Ilısu Barajı hangi nehir üzerine kurulmuştur?",
     "answersTr": [
       "Fırat",
-      "Murat",
       "Dicle",
+      "Murat",
       "Zap"
     ],
     "correctAnswerTr": "Dicle"
@@ -2200,8 +2200,8 @@
     "answers": [
       "Firat",
       "Botan",
-      "Zap",
-      "Dîcle"
+      "Dîcle",
+      "Zap"
     ],
     "correctAnswer": "Dîcle",
     "explanation": "Hasankeyf, Dicle kıyısında tarihi bir yerleşimdi.",
@@ -2218,8 +2218,8 @@
     "answersTr": [
       "Fırat",
       "Botan",
-      "Zap",
-      "Dicle"
+      "Dicle",
+      "Zap"
     ],
     "correctAnswerTr": "Dicle"
   },
@@ -2230,10 +2230,10 @@
     "category": "Cografya",
     "prompt": "Çemê Zap bi giştî diherike nav kîjan çemî?",
     "answers": [
-      "Dîcle",
       "Firat",
       "Erez",
-      "Çoruh"
+      "Çoruh",
+      "Dîcle"
     ],
     "correctAnswer": "Dîcle",
     "explanation": "Büyük Zap, Hakkâri'den doğar ve Dicle'ye karışır.",
@@ -2248,10 +2248,10 @@
     },
     "promptTr": "Zap Suyu genel olarak hangi nehre karışır?",
     "answersTr": [
-      "Dicle",
       "Fırat",
       "Erez",
-      "Çoruh"
+      "Çoruh",
+      "Dicle"
     ],
     "correctAnswerTr": "Dicle"
   },
@@ -2292,8 +2292,8 @@
     "answers": [
       "Bakur",
       "Rojava",
-      "Rojhilat",
-      "Başûr"
+      "Başûr",
+      "Rojhilat"
     ],
     "correctAnswer": "Başûr",
     "explanation": "Behdinan, Güney Kürdistan'dadır; ana merkezi Duhok'tur.",
@@ -2310,8 +2310,8 @@
     "answersTr": [
       "Bakur",
       "Rojava",
-      "Rojhilat",
-      "Başûr"
+      "Başûr",
+      "Rojhilat"
     ],
     "correctAnswerTr": "Başûr"
   },
@@ -2323,8 +2323,8 @@
     "prompt": "Bajarê Qamişlo li kîjan parçeyê Kurdistanê ye?",
     "answers": [
       "Bakur",
-      "Başûr",
       "Rojava",
+      "Başûr",
       "Rojhilat"
     ],
     "correctAnswer": "Rojava",
@@ -2341,8 +2341,8 @@
     "promptTr": "Qamişlo şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur",
-      "Başûr",
       "Rojava",
+      "Başûr",
       "Rojhilat"
     ],
     "correctAnswerTr": "Rojava"
@@ -2356,8 +2356,8 @@
     "answers": [
       "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
-      "Başûrê Kurdistanê",
-      "Rojhilatê Kurdistanê"
+      "Rojhilatê Kurdistanê",
+      "Başûrê Kurdistanê"
     ],
     "correctAnswer": "Rojhilatê Kurdistanê",
     "explanation": "Sine, Rojhilat'taki Kürt bölgesinin merkezidir ve müzik ile şiir geleneğiyle tanınır.",
@@ -2374,8 +2374,8 @@
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",
-      "Başûr (Güney)",
-      "Rojhilat (Doğu)"
+      "Rojhilat (Doğu)",
+      "Başûr (Güney)"
     ],
     "correctAnswerTr": "Rojhilat (Doğu)"
   },
@@ -2386,8 +2386,8 @@
     "category": "Cografya",
     "prompt": "Peyva \"çiya\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "nehir",
       "dağ",
+      "nehir",
       "göl",
       "ova"
     ],
@@ -2404,8 +2404,8 @@
     },
     "promptTr": "\"Çiya\" kelimesi Türkçede ne anlama gelir?",
     "answersTr": [
-      "nehir",
       "dağ",
+      "nehir",
       "göl",
       "ova"
     ],
@@ -2418,8 +2418,8 @@
     "category": "Muzîk",
     "prompt": "\"Dengbêj\" kî ye?",
     "answers": [
-      "hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan",
       "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje",
+      "hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan",
       "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
       "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin"
     ],
@@ -2436,8 +2436,8 @@
     },
     "promptTr": "\"Dengbêj\" kimdir?",
     "answersTr": [
-      "Behdînan yöresinin sevilen klasik halk sanatçısı",
       "Hikâyeleri kilamlarla anlatan sözlü icracı",
+      "Behdînan yöresinin sevilen klasik halk sanatçısı",
       "Sesini plağa kaydeden ilk Kürt kadın şarkıcı",
       "Daha çok aşk ve yiğitlik üzerine söylenen müzik türü"
     ],
@@ -2452,8 +2452,8 @@
     "answers": [
       "Bilûr",
       "Def",
-      "Zirne",
-      "Tembûr"
+      "Tembûr",
+      "Zirne"
     ],
     "correctAnswer": "Tembûr",
     "explanation": "Tembûr telli bir çalgıdır ve Kürt müziğinde merkezi yer tutar.",
@@ -2470,8 +2470,8 @@
     "answersTr": [
       "Bilûr",
       "Davul",
-      "Zurna",
-      "Tembûr"
+      "Tembûr",
+      "Zurna"
     ],
     "correctAnswerTr": "Tembûr"
   },
@@ -2482,8 +2482,8 @@
     "category": "Muzîk",
     "prompt": "\"Bilûr\" cureyekî çi amûrê ye?",
     "answers": [
-      "Amûra têlî",
       "Amûra pifê",
+      "Amûra têlî",
       "Amûra lêdanê",
       "Amûra elektronîk"
     ],
@@ -2500,8 +2500,8 @@
     },
     "promptTr": "\"Bilûr\" ne tür bir çalgıdır?",
     "answersTr": [
-      "Telli çalgı",
       "Üflemeli çalgı",
+      "Telli çalgı",
       "Vurmalı çalgı",
       "Elektronik çalgı"
     ],
@@ -2514,10 +2514,10 @@
     "category": "Muzîk",
     "prompt": "\"Dahol û zirne\" bi gelemperî di kîjan rewşê de tên lêxistin?",
     "answers": [
-      "Dawet û govendê",
       "Rêûresma şînê",
       "Dersên dibistanê",
-      "Nimêja sibehê"
+      "Nimêja sibehê",
+      "Dawet û govendê"
     ],
     "correctAnswer": "Dawet û govendê",
     "explanation": "Davul ve zurna, düğün ve halayın klasik ikilisidir.",
@@ -2532,10 +2532,10 @@
     },
     "promptTr": "Davul ve zurna genellikle hangi durumda çalınır?",
     "answersTr": [
-      "Düğün ve govendde",
       "Yas töreninde",
       "Okul derslerinde",
-      "Sabah namazında"
+      "Sabah namazında",
+      "Düğün ve govendde"
     ],
     "correctAnswerTr": "Düğün ve govendde"
   },
@@ -2546,8 +2546,8 @@
     "category": "Muzîk",
     "prompt": "Şivan Perwer bi giştî bi çi tê nasîn?",
     "answers": [
-      "Koma stranbêj û muzîkjenan",
       "Stranbêjiya kurdî ya nûjen û siyasî",
+      "Koma stranbêj û muzîkjenan",
       "Dengbêjeke jin a navdar a sedsala 20em",
       "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje"
     ],
@@ -2564,8 +2564,8 @@
     },
     "promptTr": "Şivan Perwer genel olarak neyle tanınır?",
     "answersTr": [
-      "Şarkıcı ve müzisyenlerden oluşan topluluk",
       "Modern ve siyasi Kürt şarkıcılığı",
+      "Şarkıcı ve müzisyenlerden oluşan topluluk",
       "20. yüzyılın ünlü bir kadın dengbêji",
       "Hikâyeleri kilamlarla anlatan sözlü icracı"
     ],
@@ -2580,8 +2580,8 @@
     "answers": [
       "Reqsa komî",
       "Amûreke têlî",
-      "Cureyekî xwarinê",
-      "Stranên dirêj ên çîrokî"
+      "Stranên dirêj ên çîrokî",
+      "Cureyekî xwarinê"
     ],
     "correctAnswer": "Stranên dirêj ên çîrokî",
     "explanation": "Kilam genelde bir hikâye anlatır: aşk, savaş, göç ya da yas.",
@@ -2598,8 +2598,8 @@
     "answersTr": [
       "Toplu dans",
       "Telli bir çalgı",
-      "Bir yemek türü",
-      "Uzun, hikâye anlatan ezgiler"
+      "Uzun, hikâye anlatan ezgiler",
+      "Bir yemek türü"
     ],
     "correctAnswerTr": "Uzun, hikâye anlatan ezgiler"
   },
@@ -2610,8 +2610,8 @@
     "category": "Muzîk",
     "prompt": "Ayşe Şan di dîroka muzîka kurdî de çima girîng e?",
     "answers": [
-      "amûra pifê ya bidengê bilind a ku li derve tê lêxistin",
       "yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
+      "amûra pifê ya bidengê bilind a ku li derve tê lêxistin",
       "yekem hunermenda kurd a jin a ku plak dagirt",
       "sazê rîtmê yê ku bi zirneyê re tê lêxistin"
     ],
@@ -2628,8 +2628,8 @@
     },
     "promptTr": "Ayşe Şan, Kürt müziği tarihinde neden önemlidir?",
     "answersTr": [
-      "açık havada çalınan yüksek sesli üflemeli çalgıdır",
       "Kürt müziğinin öncü kadın seslerinden biridir",
+      "açık havada çalınan yüksek sesli üflemeli çalgıdır",
       "plak dolduran ilk Kürt kadın sanatçıdır",
       "zurnayla birlikte çalınan ritim sazıdır"
     ],
@@ -2642,10 +2642,10 @@
     "category": "Muzîk",
     "prompt": "\"Lawik\" di muzîka kurdî de bi giştî çi ye?",
     "answers": [
-      "Cureyekî kilamê yê bi gelemperî evîndar",
       "Yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
       "Belavbûna cîhanî ya stran û tomarkirinê",
-      "Bi tiliyan an bi mizrabê"
+      "Bi tiliyan an bi mizrabê",
+      "Cureyekî kilamê yê bi gelemperî evîndar"
     ],
     "correctAnswer": "Cureyekî kilamê yê bi gelemperî evîndar",
     "explanation": "Lawik bir kilam türüdür; çoğunlukla aşk ve hasret üzerinedir.",
@@ -2660,10 +2660,10 @@
     },
     "promptTr": "Kürt müziğinde \"lawik\" genel olarak nedir?",
     "answersTr": [
-      "Çoğunlukla aşk üzerine bir kilam türüdür",
       "Kürt müziğinin öncü kadın seslerinden biridir",
       "Şarkı ve kayıtların dünyaya yayılmasıdır",
-      "Parmakla ya da mızrapla çalınır"
+      "Parmakla ya da mızrapla çalınır",
+      "Çoğunlukla aşk üzerine bir kilam türüdür"
     ],
     "correctAnswerTr": "Çoğunlukla aşk üzerine bir kilam türüdür"
   },
@@ -2703,8 +2703,8 @@
     "prompt": "Koma Mizgîn, Koma Amed û Koma Dengê Azadî bi giştî çi ne?",
     "answers": [
       "Rojnameyên kurdî",
-      "Partiyên siyasî",
       "Komên muzîka kurdî ya nûjen",
+      "Partiyên siyasî",
       "Weşanxaneyên pirtûkan"
     ],
     "correctAnswer": "Komên muzîka kurdî ya nûjen",
@@ -2721,8 +2721,8 @@
     "promptTr": "Koma Mizgîn, Koma Amed ve Koma Dengê Azadî genel olarak nedir?",
     "answersTr": [
       "Kürtçe gazetelerdir",
-      "Siyasi partilerdir",
       "Modern Kürt müziği gruplarıdır",
+      "Siyasi partilerdir",
       "Kitap yayınevleridir"
     ],
     "correctAnswerTr": "Modern Kürt müziği gruplarıdır"
@@ -2734,10 +2734,10 @@
     "category": "Muzîk",
     "prompt": "Peyva \"stran\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "şarkı",
       "dans",
       "saz",
-      "ses"
+      "ses",
+      "şarkı"
     ],
     "correctAnswer": "şarkı",
     "explanation": "\"Stran\" Türkçede \"şarkı/türkü\" demektir.",
@@ -2752,10 +2752,10 @@
     },
     "promptTr": "\"Stran\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
-      "şarkı",
       "dans",
       "saz",
-      "ses"
+      "ses",
+      "şarkı"
     ],
     "correctAnswerTr": "şarkı"
   },
@@ -2768,8 +2768,8 @@
     "answers": [
       "Avaz û qalibê kilamê",
       "Reqsa gelêrî ya komî",
-      "Bûyerên şer û berxwedanê",
-      "Amûra lêdanê ya wek def"
+      "Amûra lêdanê ya wek def",
+      "Bûyerên şer û berxwedanê"
     ],
     "correctAnswer": "Amûra lêdanê ya wek def",
     "explanation": "Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.",
@@ -2786,8 +2786,8 @@
     "answersTr": [
       "Kilamın ezgi ve kalıbıdır",
       "Toplu oynanan halk dansıdır",
-      "Savaş ve direniş olaylarıdır",
-      "Def gibi vurmalı bir çalgıdır"
+      "Def gibi vurmalı bir çalgıdır",
+      "Savaş ve direniş olaylarıdır"
     ],
     "correctAnswerTr": "Def gibi vurmalı bir çalgıdır"
   },
@@ -2799,8 +2799,8 @@
     "prompt": "Kurd bi giştî li çend welatên sereke belav bûne?",
     "answers": [
       "Du",
-      "Şeş",
       "Çar",
+      "Şeş",
       "Heşt"
     ],
     "correctAnswer": "Çar",
@@ -2817,8 +2817,8 @@
     "promptTr": "Kürtler genel olarak başlıca kaç ülkeye yayılmış durumdadır?",
     "answersTr": [
       "İki",
-      "Altı",
       "Dört",
+      "Altı",
       "Sekiz"
     ],
     "correctAnswerTr": "Dört"
@@ -2830,8 +2830,8 @@
     "category": "Siyaset",
     "prompt": "\"Hevserokatî\" di siyaseta kurdî de çi ye?",
     "answers": [
-      "Hilbijartina du salane",
       "Rêveberiya bi jin û mêrekî bi hev re",
+      "Hilbijartina du salane",
       "Sîstema du meclîsan",
       "Serokatiya dorveger a bajaran"
     ],
@@ -2848,8 +2848,8 @@
     },
     "promptTr": "Kürt siyasetinde \"hevserokatî\" ne demektir?",
     "answersTr": [
-      "İki yılda bir yapılan seçim",
       "Bir kadın ve bir erkeğin ortak yönetimi",
+      "İki yılda bir yapılan seçim",
       "Çift meclisli yönetim sistemi",
       "Kentler arasında dönüşümlü başkanlık"
     ],
@@ -2862,10 +2862,10 @@
     "category": "Siyaset",
     "prompt": "Kongra Star bi giştî li ser çi kar dike?",
     "answers": [
-      "Rêxistinbûna jinan li Rojava",
       "Weşana rojnameyan",
       "Bazirganiya navneteweyî",
-      "Perwerdehiya leşkerî ya giştî"
+      "Perwerdehiya leşkerî ya giştî",
+      "Rêxistinbûna jinan li Rojava"
     ],
     "correctAnswer": "Rêxistinbûna jinan li Rojava",
     "explanation": "Kongra Star, Rojava'da kadın hareketinin çatı örgütüdür.",
@@ -2880,10 +2880,10 @@
     },
     "promptTr": "Kongra Star genel olarak hangi alanda çalışır?",
     "answersTr": [
-      "Rojava'da kadınların örgütlenmesi",
       "Gazete ve dergi yayıncılığı",
       "Uluslararası ticaret ilişkileri",
-      "Genel askeri eğitim programları"
+      "Genel askeri eğitim programları",
+      "Rojava'da kadınların örgütlenmesi"
     ],
     "correctAnswerTr": "Rojava'da kadınların örgütlenmesi"
   },
@@ -2896,8 +2896,8 @@
     "answers": [
       "Beşdariya rasterast û berdewam a ji binî pêş dixe",
       "mafên xwepêşandan, xwerêxistin û azadiya îfadeyê",
-      "hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî",
-      "Komelgeha Jinên Azad a Rojhilatê Kurdistanê"
+      "Komelgeha Jinên Azad a Rojhilatê Kurdistanê",
+      "hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî"
     ],
     "correctAnswer": "Komelgeha Jinên Azad a Rojhilatê Kurdistanê",
     "explanation": "KJAR (Doğu Kürdistan Özgür Kadınlar Topluluğu), doğuda kadın özgürlüğü üzerine çalışır.",
@@ -2914,8 +2914,8 @@
     "answersTr": [
       "Aşağıdan doğrudan ve sürekli katılımı geliştirir",
       "gösteri, örgütlenme ve ifade özgürlüğü hakları",
-      "merkezden atanan kayyum yerine seçilmiş yerel yöneticinin yetkisi",
-      "Komelgeha Jinên Azad a Rojhilatê Kurdistanê (Doğu Kürdistan Özgür Kadınlar Topluluğu)"
+      "Komelgeha Jinên Azad a Rojhilatê Kurdistanê (Doğu Kürdistan Özgür Kadınlar Topluluğu)",
+      "merkezden atanan kayyum yerine seçilmiş yerel yöneticinin yetkisi"
     ],
     "correctAnswerTr": "Komelgeha Jinên Azad a Rojhilatê Kurdistanê (Doğu Kürdistan Özgür Kadınlar Topluluğu)"
   },
@@ -2954,8 +2954,8 @@
     "category": "Siyaset",
     "prompt": "Referandûma serxwebûnê ya Herêma Kurdistanê ya Iraqê di kîjan salê de pêk hat?",
     "answers": [
-      "2005",
       "2017",
+      "2005",
       "2011",
       "2020"
     ],
@@ -2972,8 +2972,8 @@
     },
     "promptTr": "Irak Kürdistan Bölgesi'nin bağımsızlık referandumu hangi yıl yapıldı?",
     "answersTr": [
-      "2005",
       "2017",
+      "2005",
       "2011",
       "2020"
     ],
@@ -2988,8 +2988,8 @@
     "answers": [
       "daxwaza misogeriya destûrî û naskirina mafên çandî",
       "hêza ji navendekê bo yekîneyên herêmî belavkirin",
-      "statûya xweseriyê û biryargirtinê li herêmê",
-      "nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e"
+      "nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e",
+      "statûya xweseriyê û biryargirtinê li herêmê"
     ],
     "correctAnswer": "nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e",
     "explanation": "Demokratik ulus, devletin zorla tekleştirmesi yerine çoğulculuğu ve öz yönetimi koyar.",
@@ -3006,8 +3006,8 @@
     "answersTr": [
       "anayasal güvence ve kültürel hakların tanınması talebi",
       "yetkinin merkezden yerel birimlere dağıtılması",
-      "bölgede özerklik ve karar alma statüsü",
-      "farklı kimlikler tek toplum içinde korunur, devlet zorunlu değildir"
+      "farklı kimlikler tek toplum içinde korunur, devlet zorunlu değildir",
+      "bölgede özerklik ve karar alma statüsü"
     ],
     "correctAnswerTr": "farklı kimlikler tek toplum içinde korunur, devlet zorunlu değildir"
   },
@@ -3019,8 +3019,8 @@
     "prompt": "Peyva \"azadî\" bi Tirkî çi tê wateyê?",
     "answers": [
       "eşitlik",
-      "adalet",
       "özgürlük",
+      "adalet",
       "barış"
     ],
     "correctAnswer": "özgürlük",
@@ -3037,8 +3037,8 @@
     "promptTr": "\"Azadî\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
       "eşitlik",
-      "adalet",
       "özgürlük",
+      "adalet",
       "barış"
     ],
     "correctAnswerTr": "özgürlük"
@@ -3052,8 +3052,8 @@
     "answers": [
       "mafê parastinê li dadgehên serbixwe û bêalî",
       "beşdariya rasterast a gel di biryarên siyasî de",
-      "avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin",
-      "yekeya biryardayînê ya herî biçûk a taxê an gund"
+      "yekeya biryardayînê ya herî biçûk a taxê an gund",
+      "avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin"
     ],
     "correctAnswer": "yekeya biryardayînê ya herî biçûk a taxê an gund",
     "explanation": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.",
@@ -3070,8 +3070,8 @@
     "answersTr": [
       "bağımsız ve tarafsız mahkemelerde savunma hakkı",
       "halkın siyasi kararlara doğrudan katılımı",
-      "yalnız çoğunluğun değil azınlığın da dinlendiği yapı",
-      "mahallenin ya da köyün en küçük karar birimi"
+      "mahallenin ya da köyün en küçük karar birimi",
+      "yalnız çoğunluğun değil azınlığın da dinlendiği yapı"
     ],
     "correctAnswerTr": "mahallenin ya da köyün en küçük karar birimi"
   },
@@ -3083,8 +3083,8 @@
     "prompt": "\"Jineolojî\" bi gelemperî çi tê wateyê?",
     "answers": [
       "Hunera nîgarkêşiyê",
-      "Zanista erdnîgariyê",
       "Zanista jinê û jiyanê",
+      "Zanista erdnîgariyê",
       "Rêbaza aboriyê"
     ],
     "correctAnswer": "Zanista jinê û jiyanê",
@@ -3101,8 +3101,8 @@
     "promptTr": "\"Jineolojî\" genel olarak ne anlama gelir?",
     "answersTr": [
       "Resim sanatı",
-      "Coğrafya bilimi",
       "Kadın ve yaşam bilimi",
+      "Coğrafya bilimi",
       "Ekonomi yöntemi"
     ],
     "correctAnswerTr": "Kadın ve yaşam bilimi"
@@ -3114,8 +3114,8 @@
     "category": "Paradigma",
     "prompt": "Di paradîgmaya ekolojîk de armanca sereke çi ye?",
     "answers": [
-      "Zêdekirina hilberînê bi her awayî",
       "Lihevhatina civak û xwezayê",
+      "Zêdekirina hilberînê bi her awayî",
       "Bazirganiya azad a bêsînor",
       "Bajarvanîkirina bilez"
     ],
@@ -3132,8 +3132,8 @@
     },
     "promptTr": "Ekolojik paradigmada temel amaç nedir?",
     "answersTr": [
-      "Üretimi her yolla artırmak",
       "Toplum ile doğanın uyumu",
+      "Üretimi her yolla artırmak",
       "Sınırsız serbest ticaret",
       "Hızlı kentleşme"
     ],
@@ -3147,8 +3147,8 @@
     "prompt": "\"Xwe-parastin\" di vê paradîgmayê de bi giştî çi tê wateyê?",
     "answers": [
       "Bazirganiya çekan",
-      "Veqetîna ji cîhanê",
       "Parastina civakê bi rêxistinbûna wê ya xwe",
+      "Veqetîna ji cîhanê",
       "Rêveberiya bi tenê bi hilbijartinan"
     ],
     "correctAnswer": "Parastina civakê bi rêxistinbûna wê ya xwe",
@@ -3165,8 +3165,8 @@
     "promptTr": "\"Öz savunma\" bu paradigmada genel olarak ne anlama gelir?",
     "answersTr": [
       "Silah ticareti yapmak",
-      "Dünyadan tümüyle kopmak",
       "Toplumun kendi örgütlenmesiyle korunması",
+      "Dünyadan tümüyle kopmak",
       "Yönetimin yalnızca seçimlerle yürütülmesi"
     ],
     "correctAnswerTr": "Toplumun kendi örgütlenmesiyle korunması"
@@ -3178,10 +3178,10 @@
     "category": "Paradigma",
     "prompt": "Têgîna \"modernîteya demokratîk\" li hember çi tê danîn?",
     "answers": [
-      "Modernîteya kapîtalîst",
       "Serdema navîn",
       "Şoreşa pîşesazî",
-      "Felsefeya antîk"
+      "Felsefeya antîk",
+      "Modernîteya kapîtalîst"
     ],
     "correctAnswer": "Modernîteya kapîtalîst",
     "explanation": "Demokratik modernite, kapitalist moderniteye alternatif olarak sunulur: komün, ekoloji ve kadın özgürlüğü.",
@@ -3196,10 +3196,10 @@
     },
     "promptTr": "\"Demokratik modernite\" kavramı neyin karşısına konur?",
     "answersTr": [
-      "Kapitalist modernite",
       "Orta Çağ",
       "Sanayi devrimi",
-      "Antik felsefe"
+      "Antik felsefe",
+      "Kapitalist modernite"
     ],
     "correctAnswerTr": "Kapitalist modernite"
   },
@@ -3211,8 +3211,8 @@
     "prompt": "Di vê paradîgmayê de \"civaka exlaqî û polîtîk\" çi tê wateyê?",
     "answers": [
       "Civaka ku tenê bi qanûnan tê birêvebirin",
-      "Civaka bêrêxistin",
       "Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin",
+      "Civaka bêrêxistin",
       "Civaka ku ji aliyê pisporan ve tê rêvebirin"
     ],
     "correctAnswer": "Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin",
@@ -3229,8 +3229,8 @@
     "promptTr": "Bu paradigmada \"ahlaki ve politik toplum\" ne anlama gelir?",
     "answersTr": [
       "Yalnızca yasalarla yönetilen toplum",
-      "Hiç örgütlenmemiş toplum",
       "Ortak değer ve kararla yönetilen toplum",
+      "Hiç örgütlenmemiş toplum",
       "Uzmanlar tarafından yönetilen toplum"
     ],
     "correctAnswerTr": "Ortak değer ve kararla yönetilen toplum"
@@ -3270,8 +3270,8 @@
     "category": "Paradigma",
     "prompt": "Di têgîna \"aboriya komunal\" de xala sereke çi ye?",
     "answers": [
-      "mafê civakê yê xwe parastin û xwerêxistinê",
       "hilberîn li gorî pêdiviya civakê, ne li gorî qezencê",
+      "mafê civakê yê xwe parastin û xwerêxistinê",
       "civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire",
       "pîvana herî bingehîn a azadbûna civakî"
     ],
@@ -3288,8 +3288,8 @@
     },
     "promptTr": "\"Komünal ekonomi\" kavramında temel nokta nedir?",
     "answersTr": [
-      "toplumun öz savunma ve öz örgütlenme hakkı",
       "üretim kâra göre değil, toplumun ihtiyacına göre",
+      "toplumun öz savunma ve öz örgütlenme hakkı",
       "ahlaki değerleri olan ve kararını kendi veren toplum",
       "toplumsal özgürleşmenin en temel ölçüsü"
     ],
@@ -3304,8 +3304,8 @@
     "answers": [
       "Wek rewşên xwezayî yên neguherbar",
       "Wek diyardeyên tenê aborî",
-      "Wek pirsgirêkên teknîkî",
-      "Wek pêvajoyên dîrokî yên ku dikarin bên guhertin"
+      "Wek pêvajoyên dîrokî yên ku dikarin bên guhertin",
+      "Wek pirsgirêkên teknîkî"
     ],
     "correctAnswer": "Wek pêvajoyên dîrokî yên ku dikarin bên guhertin",
     "explanation": "Hiyerarşi tarihsel bir oluşum olarak görülür; tarihsel olduğu için değiştirilebilir.",
@@ -3322,8 +3322,8 @@
     "answersTr": [
       "Değişmez doğal durumlar olarak",
       "Yalnızca ekonomik olgular olarak",
-      "Teknik sorunlar olarak",
-      "Değiştirilebilir tarihsel süreçler olarak"
+      "Değiştirilebilir tarihsel süreçler olarak",
+      "Teknik sorunlar olarak"
     ],
     "correctAnswerTr": "Değiştirilebilir tarihsel süreçler olarak"
   },
@@ -3334,8 +3334,8 @@
     "category": "Paradigma",
     "prompt": "Peyva \"jiyan\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "özgürlük",
       "yaşam",
+      "özgürlük",
       "toplum",
       "doğa"
     ],
@@ -3352,8 +3352,8 @@
     },
     "promptTr": "\"Jiyan\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
-      "özgürlük",
       "yaşam",
+      "özgürlük",
       "toplum",
       "doğa"
     ],
@@ -3367,8 +3367,8 @@
     "prompt": "Di paradîgmayê de \"azadiya jinê\" çima wek pîvana azadiya civakê tê dîtin?",
     "answers": [
       "krîza navendîbûna aborî û siyasî ya destekî yekane",
-      "jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe",
       "ji ber ku koletiya yekem li ser jinê hatiye avakirin",
+      "jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe",
       "pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de"
     ],
     "correctAnswer": "ji ber ku koletiya yekem li ser jinê hatiye avakirin",
@@ -3385,8 +3385,8 @@
     "promptTr": "Paradigmada \"kadın özgürlüğü\" neden toplumun özgürlük ölçüsü sayılır?",
     "answersTr": [
       "ekonomik ve siyasal gücün tek elde toplanma krizi",
-      "baskı ve sahiplenme üzerine kurulmayan eşit ortak yaşam",
       "ilk kölelik kadın üzerinde kurulduğu için",
+      "baskı ve sahiplenme üzerine kurulmayan eşit ortak yaşam",
       "yönetim organlarında kadın-erkek eşit temsil sistemi"
     ],
     "correctAnswerTr": "ilk kölelik kadın üzerinde kurulduğu için"
@@ -3399,8 +3399,8 @@
     "prompt": "Peyva Kurmancî \"dar\" bi Tirkî çi tê wateyê?",
     "answers": [
       "taş",
-      "yol",
       "ağaç",
+      "yol",
       "kapı"
     ],
     "correctAnswer": "ağaç",
@@ -3417,8 +3417,8 @@
     "promptTr": "Kurmancî \"dar\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
       "taş",
-      "yol",
       "ağaç",
+      "yol",
       "kapı"
     ],
     "correctAnswerTr": "ağaç"
@@ -3430,10 +3430,10 @@
     "category": "Ziman",
     "prompt": "Peyva Kurmancî \"nan\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "ekmek",
       "tuz",
       "şeker",
-      "et"
+      "et",
+      "ekmek"
     ],
     "correctAnswer": "ekmek",
     "explanation": "\"Nan\" Türkçede \"ekmek\" demektir.",
@@ -3448,10 +3448,10 @@
     },
     "promptTr": "Kurmancî \"nan\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
-      "ekmek",
       "tuz",
       "şeker",
-      "et"
+      "et",
+      "ekmek"
     ],
     "correctAnswerTr": "ekmek"
   },
@@ -3464,8 +3464,8 @@
     "answers": [
       "7",
       "12",
-      "20",
-      "10"
+      "10",
+      "20"
     ],
     "correctAnswer": "10",
     "explanation": "Temel sayılar: yek, du, sê, çar, pênc, şeş, heft, heşt, neh, deh (10).",
@@ -3482,8 +3482,8 @@
     "answersTr": [
       "7",
       "12",
-      "20",
-      "10"
+      "10",
+      "20"
     ],
     "correctAnswerTr": "10"
   },
@@ -3494,8 +3494,8 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de \"-ek\" wek paşgir çi diyar dike?",
     "answers": [
-      "cînavkên kesane",
       "nebinavkirîbûn (yek/bir)",
+      "cînavkên kesane",
       "kesê ku karekî dike",
       "lêkera gerguhêz"
     ],
@@ -3512,8 +3512,8 @@
     },
     "promptTr": "Kurmancî'de \"-ek\" eki neyi gösterir?",
     "answersTr": [
-      "kişi zamirlerini",
       "belirsizliği (yek/bir)",
+      "kişi zamirlerini",
       "bir işi yapan kişiyi",
       "geçişli fiili"
     ],
@@ -3526,8 +3526,8 @@
     "category": "Ziman",
     "prompt": "Di hevoka \"Min ew dît\" de lêker li gorî kê tê kişandin?",
     "answers": [
-      "Li gorî bikerê (min)",
       "Li gorî bireserê (ew)",
+      "Li gorî bikerê (min)",
       "Li gorî demê",
       "Li gorî zayendê"
     ],
@@ -3544,8 +3544,8 @@
     },
     "promptTr": "\"Min ew dît\" cümlesinde fiil neye göre çekilir?",
     "answersTr": [
-      "Özneye göre (min)",
       "Nesneye göre (ew)",
+      "Özneye göre (min)",
       "Zamana göre",
       "Cinsiyete göre"
     ],
@@ -3559,8 +3559,8 @@
     "prompt": "Peyva \"xwendegeh\" ji kîjan koka lêkerê tê?",
     "answers": [
       "Gotin",
-      "Xwarin",
       "Xwendin",
+      "Xwarin",
       "Nivîsîn"
     ],
     "correctAnswer": "Xwendin",
@@ -3577,8 +3577,8 @@
     "promptTr": "\"Xwendegeh\" sözcüğü hangi fiil kökünden gelir?",
     "answersTr": [
       "Gotin",
-      "Xwarin",
       "Xwendin",
+      "Xwarin",
       "Nivîsîn"
     ],
     "correctAnswerTr": "Xwendin"
@@ -3590,10 +3590,10 @@
     "category": "Ziman",
     "prompt": "Paşgira \"-istan/-stan\" di peyvên wek \"Kurdistan\" de çi diyar dike?",
     "answers": [
-      "Cih / war",
       "Kesayet",
       "Dem",
-      "Hejmar"
+      "Hejmar",
+      "Cih / war"
     ],
     "correctAnswer": "Cih / war",
     "explanation": "\"-stan\" yer ekidir: Kürtlerin yurdu.",
@@ -3608,10 +3608,10 @@
     },
     "promptTr": "\"Kurdistan\" gibi sözcüklerdeki \"-istan/-stan\" eki neyi gösterir?",
     "answersTr": [
-      "Yer / mekân",
       "Kişilik",
       "Zaman",
-      "Sayı"
+      "Sayı",
+      "Yer / mekân"
     ],
     "correctAnswerTr": "Yer / mekân"
   },
@@ -3622,8 +3622,8 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de cudahiya \"tu\" û \"hûn\" çi ye?",
     "answers": [
-      "Herdu jî pirjimar in",
       "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+      "Herdu jî pirjimar in",
       "\"Tu\" tenê ji bo jinan e",
       "\"Hûn\" tenê di nivîsê de tê bikaranîn"
     ],
@@ -3640,8 +3640,8 @@
     },
     "promptTr": "Kurmancî'de \"tu\" ile \"hûn\" arasındaki fark nedir?",
     "answersTr": [
-      "İkisi de çoğuldur",
       "\"Tu\" tekil, \"hûn\" çoğul/saygı biçimidir",
+      "İkisi de çoğuldur",
       "\"Tu\" yalnızca kadınlar için kullanılır",
       "\"Hûn\" yalnızca yazıda kullanılır"
     ],
@@ -3656,8 +3656,8 @@
     "answers": [
       "di-",
       "na-",
-      "ne-",
-      "bi-"
+      "bi-",
+      "ne-"
     ],
     "correctAnswer": "bi-",
     "explanation": "İstek kipi \"bi-\" ile kurulur: \"ez biçim\" (gideyim).",
@@ -3674,8 +3674,8 @@
     "answersTr": [
       "di-",
       "na-",
-      "ne-",
-      "bi-"
+      "bi-",
+      "ne-"
     ],
     "correctAnswerTr": "bi-"
   },
@@ -3687,8 +3687,8 @@
     "prompt": "Nîşana neyîniyê ya dema niha di Kurmancî de kîjan e?",
     "answers": [
       "ne-",
-      "bi-",
       "na-",
+      "bi-",
       "di-"
     ],
     "correctAnswer": "na-",
@@ -3705,8 +3705,8 @@
     "promptTr": "Kurmancî'de şimdiki zamanın olumsuzluk eki hangisidir?",
     "answersTr": [
       "ne-",
-      "bi-",
       "na-",
+      "bi-",
       "di-"
     ],
     "correctAnswerTr": "na-"
@@ -3746,10 +3746,10 @@
     "category": "Ziman",
     "prompt": "Peyva \"xwendekar\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "öğrenci",
       "öğretmen",
       "okul",
-      "kitap"
+      "kitap",
+      "öğrenci"
     ],
     "correctAnswer": "öğrenci",
     "explanation": "\"Xwendekar\" Türkçede \"öğrenci\" demektir.",
@@ -3764,10 +3764,10 @@
     },
     "promptTr": "\"Xwendekar\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
-      "öğrenci",
       "öğretmen",
       "okul",
-      "kitap"
+      "kitap",
+      "öğrenci"
     ],
     "correctAnswerTr": "öğrenci"
   },
@@ -3778,8 +3778,8 @@
     "category": "Çand",
     "prompt": "Di kevneşopiya kurdî de \"berxwedan\" bi giştî çi tê wateyê?",
     "answers": [
-      "Amûra hûnandina xalîçe û bêrîkan",
       "Li ber xwe dan / direniş",
+      "Amûra hûnandina xalîçe û bêrîkan",
       "Kesên ku bûkê ji mala wê tînin",
       "Destana Memê Alan"
     ],
@@ -3796,8 +3796,8 @@
     },
     "promptTr": "Kürt geleneğinde \"berxwedan\" genel olarak ne anlama gelir?",
     "answersTr": [
-      "Halı ve heybe dokuma aracı",
       "Li ber xwe dan / direniş",
+      "Halı ve heybe dokuma aracı",
       "Gelini evinden alıp getirenler",
       "Memê Alan destanı"
     ],
@@ -3812,8 +3812,8 @@
     "answers": [
       "Amûra hûnandina xalîçe û bêrîkan",
       "Li ber xwe dan / direniş",
-      "Şeva herî dirêj a salê",
-      "Belg û sebzeyên dagirtî"
+      "Belg û sebzeyên dagirtî",
+      "Şeva herî dirêj a salê"
     ],
     "correctAnswer": "Belg û sebzeyên dagirtî",
     "explanation": "Dolma; asma yaprağı ya da patlıcan, biber gibi sebzelerin pirinç/bulgurla doldurulmasıdır.",
@@ -3830,8 +3830,8 @@
     "answersTr": [
       "Halı ve heybe dokuma aracı",
       "Li ber xwe dan / direniş",
-      "Yılın en uzun gecesi",
-      "Doldurulmuş yaprak ve sebzeler"
+      "Doldurulmuş yaprak ve sebzeler",
+      "Yılın en uzun gecesi"
     ],
     "correctAnswerTr": "Doldurulmuş yaprak ve sebzeler"
   },
@@ -3843,8 +3843,8 @@
     "prompt": "Cejna Newrozê bi kîjan sembola sereke tê nasîn?",
     "answers": [
       "Av",
-      "Berf",
       "Agir",
+      "Berf",
       "Bager"
     ],
     "correctAnswer": "Agir",
@@ -3861,8 +3861,8 @@
     "promptTr": "Newroz bayramı hangi ana sembolle tanınır?",
     "answersTr": [
       "Su",
-      "Kar",
       "Ateş",
+      "Kar",
       "Fırtına"
     ],
     "correctAnswerTr": "Ateş"
@@ -3876,8 +3876,8 @@
     "answers": [
       "Bi hunera destan ve girêdayî ye",
       "Komeke malbatên bi xizmî girêdayî",
-      "Civîna şevê ya çîrok û stranan",
-      "Yê ku li pêşiya mirinê ye"
+      "Yê ku li pêşiya mirinê ye",
+      "Civîna şevê ya çîrok û stranan"
     ],
     "correctAnswer": "Yê ku li pêşiya mirinê ye",
     "explanation": "\"Pêş\" (ön) + \"merg\" (ölüm): ölümün önüne duran.",
@@ -3894,8 +3894,8 @@
     "answersTr": [
       "El sanatlarıyla bağlantılı olması",
       "Akrabalıkla bağlı aile topluluğu",
-      "Hikâye ve türkü anlatılan gece toplantısı",
-      "Ölümün önünde duran kişi"
+      "Ölümün önünde duran kişi",
+      "Hikâye ve türkü anlatılan gece toplantısı"
     ],
     "correctAnswerTr": "Ölümün önünde duran kişi"
   },
@@ -3906,10 +3906,10 @@
     "category": "Çand",
     "prompt": "Di civaka kurdî de \"eşîret\" çi ye?",
     "answers": [
-      "Komeke malbatên bi xizmî girêdayî",
       "Rêxistineke siyasî ya nûjen",
       "Cureyekî xwarinê",
-      "Navê herêmeke bajarî"
+      "Navê herêmeke bajarî",
+      "Komeke malbatên bi xizmî girêdayî"
     ],
     "correctAnswer": "Komeke malbatên bi xizmî girêdayî",
     "explanation": "Aşiret, akrabalıkla bağlı büyük topluluktur ve geleneksel olarak toplumsal yönetim rolü üstlenir.",
@@ -3924,10 +3924,10 @@
     },
     "promptTr": "Kürt toplumunda \"eşîret\" nedir?",
     "answersTr": [
-      "Akrabalıkla bağlı aile topluluğu",
       "Modern bir siyasi örgütlenme",
       "Bir tür geleneksel yemek",
-      "Kentsel bir bölgenin adı"
+      "Kentsel bir bölgenin adı",
+      "Akrabalıkla bağlı aile topluluğu"
     ],
     "correctAnswerTr": "Akrabalıkla bağlı aile topluluğu"
   },
@@ -3939,8 +3939,8 @@
     "prompt": "\"Şeva Yeldayê\" (Şeva Zivistanê) çi ye?",
     "answers": [
       "Yekem roja biharê",
-      "Roja dawî ya havînê",
       "Şeva herî dirêj a salê",
+      "Roja dawî ya havînê",
       "Şeva Newrozê"
     ],
     "correctAnswer": "Şeva herî dirêj a salê",
@@ -3957,8 +3957,8 @@
     "promptTr": "\"Şeva Yeldayê\" (Şeva Zivistanê) nedir?",
     "answersTr": [
       "Baharın ilk günü",
-      "Yazın son günü",
       "Yılın en uzun gecesi",
+      "Yazın son günü",
       "Newroz gecesi"
     ],
     "correctAnswerTr": "Yılın en uzun gecesi"
@@ -3970,10 +3970,10 @@
     "category": "Çand",
     "prompt": "Di dawetên kurdî de \"qelen\" çi ye?",
     "answers": [
-      "diyariya ku ji bo bûkê tê dayîn",
       "komeke malbatên bi xizmî girêdayî",
       "cilûbergê kevneşopî yê mêran",
-      "şêwaza jiyana koçerî û rîtma reqsê"
+      "şêwaza jiyana koçerî û rîtma reqsê",
+      "diyariya ku ji bo bûkê tê dayîn"
     ],
     "correctAnswer": "diyariya ku ji bo bûkê tê dayîn",
     "explanation": "Başlık (qelen), geleneksel olarak damat ailesinin gelin ailesine verdiği mal/hediyedir.",
@@ -3988,10 +3988,10 @@
     },
     "promptTr": "Kürt düğünlerinde \"qelen\" nedir?",
     "answersTr": [
-      "gelin için verilen mal ve hediye",
       "akrabalıkla bağlı aile topluluğu",
       "erkeklerin geleneksel giysisi",
-      "göçebe yaşam biçimi ve dans ritmi"
+      "göçebe yaşam biçimi ve dans ritmi",
+      "gelin için verilen mal ve hediye"
     ],
     "correctAnswerTr": "gelin için verilen mal ve hediye"
   },
@@ -4004,8 +4004,8 @@
     "answers": [
       "Mêvan bi rûmet pêşwazîkirin",
       "Hest û bîra civakî",
-      "Belg û sebzeyên dagirtî",
-      "Odeya mêvanan û civînê"
+      "Odeya mêvanan û civînê",
+      "Belg û sebzeyên dagirtî"
     ],
     "correctAnswer": "Odeya mêvanan û civînê",
     "explanation": "Dîwanxane, misafir ağırlama ve toplumsal karar alma yeridir.",
@@ -4022,8 +4022,8 @@
     "answersTr": [
       "Misafiri saygıyla ağırlamak",
       "Toplumsal duygu ve hafıza",
-      "Doldurulmuş yaprak ve sebzeler",
-      "Misafir ve toplantı odası"
+      "Misafir ve toplantı odası",
+      "Doldurulmuş yaprak ve sebzeler"
     ],
     "correctAnswerTr": "Misafir ve toplantı odası"
   },
@@ -4034,10 +4034,10 @@
     "category": "Çand",
     "prompt": "Peyva \"mal\" di Kurmancî de bi Tirkî çi tê wateyê?",
     "answers": [
-      "ev",
       "yol",
       "dağ",
-      "su"
+      "su",
+      "ev"
     ],
     "correctAnswer": "ev",
     "explanation": "\"Mal\" Türkçede \"ev\" demektir.",
@@ -4052,10 +4052,10 @@
     },
     "promptTr": "Kurmancîdeki \"mal\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
-      "ev",
       "yol",
       "dağ",
-      "su"
+      "su",
+      "ev"
     ],
     "correctAnswerTr": "ev"
   },
@@ -4066,8 +4066,8 @@
     "category": "Dîrok",
     "prompt": "Şerefxanê Bidlîsî Şerefname di kîjan salê de temam kir?",
     "answers": [
-      "1497",
       "1597",
+      "1497",
       "1697",
       "1797"
     ],
@@ -4084,8 +4084,8 @@
     },
     "promptTr": "Şerefxanê Bidlîsî, Şerefname'yi hangi yılda tamamladı?",
     "answersTr": [
-      "1497",
       "1597",
+      "1497",
       "1697",
       "1797"
     ],
@@ -4099,8 +4099,8 @@
     "prompt": "Bedirxan Beg mîrê kîjan mîrektiyê bû?",
     "answers": [
       "Baban",
-      "Erdelan",
       "Botan",
+      "Erdelan",
       "Soran"
     ],
     "correctAnswer": "Botan",
@@ -4117,8 +4117,8 @@
     "promptTr": "Bedirxan Beg hangi emirliğin emiriydi?",
     "answersTr": [
       "Baban",
-      "Erdelan",
       "Botan",
+      "Erdelan",
       "Soran"
     ],
     "correctAnswerTr": "Botan"
@@ -4130,10 +4130,10 @@
     "category": "Dîrok",
     "prompt": "Mîrektiya Baban navenda xwe bi giştî li ku derê bû?",
     "answers": [
-      "Silêmanî",
       "Hewlêr",
       "Wan",
-      "Kirmanşan"
+      "Kirmanşan",
+      "Silêmanî"
     ],
     "correctAnswer": "Silêmanî",
     "explanation": "Baban Emirliği 18-19. yüzyılda merkezini Süleymaniye'de kurdu.",
@@ -4148,10 +4148,10 @@
     },
     "promptTr": "Baban Emirliği merkezini genel olarak nerede kurmuştu?",
     "answersTr": [
-      "Silêmanî",
       "Hewlêr",
       "Wan",
-      "Kirmanşan"
+      "Kirmanşan",
+      "Silêmanî"
     ],
     "correctAnswerTr": "Silêmanî"
   },
@@ -4163,8 +4163,8 @@
     "prompt": "Peymana Zuhabê (Qesr-î Şîrîn, 1639) ji bo kurdan çima girîng e?",
     "answers": [
       "herêma dîrokî ya li dora Dîcle û Feratê",
-      "mîrektiya kurd a girîng a bi navenda Cizîrê",
       "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin",
+      "mîrektiya kurd a girîng a bi navenda Cizîrê",
       "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de"
     ],
     "correctAnswer": "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin",
@@ -4181,8 +4181,8 @@
     "promptTr": "Zuhab (Qesr-î Şîrîn, 1639) Antlaşması Kürtler için neden önemlidir?",
     "answersTr": [
       "Dicle ile Fırat çevresindeki tarihî bölgedir",
-      "Cizîr merkezli önemli bir Kürt emirliğidir",
       "Kürt bölgesi Osmanlı ile Safevîler arasında bölündü",
+      "Cizîr merkezli önemli bir Kürt emirliğidir",
       "Amed'in eski çağlardaki tarihî adı ve kalesidir"
     ],
     "correctAnswerTr": "Kürt bölgesi Osmanlı ile Safevîler arasında bölündü"
@@ -4196,8 +4196,8 @@
     "answers": [
       "Salên 1890î",
       "Salên 1950î",
-      "Salên 1970yî",
-      "Salên 1918-1919an"
+      "Salên 1918-1919an",
+      "Salên 1970yî"
     ],
     "correctAnswer": "Salên 1918-1919an",
     "explanation": "Jîn dergisi İstanbul'da 1918-1919'da çıktı ve ulusal bilinç için önemliydi.",
@@ -4214,8 +4214,8 @@
     "answersTr": [
       "1890'lı yıllar",
       "1950'li yıllar",
-      "1970'li yıllar",
-      "1918-1919 yılları"
+      "1918-1919 yılları",
+      "1970'li yıllar"
     ],
     "correctAnswerTr": "1918-1919 yılları"
   },
@@ -4227,8 +4227,8 @@
     "prompt": "\"Xoybûn\" çi bû?",
     "answers": [
       "navendîbûn û rêveberiya rasterast",
-      "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de",
       "Rêxistineke siyasî ya kurdan a salên 1920î",
+      "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de",
       "lêkolîna borî bi rêya bermahiyên maddî"
     ],
     "correctAnswer": "Rêxistineke siyasî ya kurdan a salên 1920î",
@@ -4245,8 +4245,8 @@
     "promptTr": "\"Xoybûn\" neydi?",
     "answersTr": [
       "merkezileşme ve doğrudan yönetim",
-      "Amed kalesinin eski çağdaki tarihî adı",
       "1920'li yılların bir Kürt siyasi örgütü",
+      "Amed kalesinin eski çağdaki tarihî adı",
       "maddi kalıntılar yoluyla geçmişi araştırma"
     ],
     "correctAnswerTr": "1920'li yılların bir Kürt siyasi örgütü"
@@ -4286,10 +4286,10 @@
     "category": "Dîrok",
     "prompt": "Di dîroka nûjen de \"Kurdên Sor\" (Sûriye) bi çi têkildar e?",
     "answers": [
-      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
       "serokê bihêz ê mîrektiya Soranê yê bi leqeba kor",
       "peymana ku sînorê Osmanî û Sefewî diyar kir",
-      "Ji bo herêmeke kurdî ya xweser madde dihewand"
+      "Ji bo herêmeke kurdî ya xweser madde dihewand",
+      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan"
     ],
     "correctAnswer": "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
     "explanation": "1962 Cezire sayımı yüz binlerce Kürdü vatansız bıraktı.",
@@ -4304,10 +4304,10 @@
     },
     "promptTr": "Modern tarihte \"Kurdên Sor\" (Suriye) neyle ilgilidir?",
     "answersTr": [
-      "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı",
       "Soran emirliğinin kör lakaplı güçlü lideri",
       "Osmanlı-Safevi sınırını belirleyen antlaşma",
-      "Özerk bir Kürt bölgesi için madde içermesi"
+      "Özerk bir Kürt bölgesi için madde içermesi",
+      "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı"
     ],
     "correctAnswerTr": "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı"
   },
@@ -4319,8 +4319,8 @@
     "prompt": "Qelaya Hewlêrê bi çi taybetî tê nasîn?",
     "answers": [
       "weşanger û ronakbîrê ku alfabeya kurdî pêş xist",
-      "dewleta mezin a ku Selahedînê Eyûbî damezrand",
       "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê",
+      "dewleta mezin a ku Selahedînê Eyûbî damezrand",
       "peymana ku sînorê Osmanî û Sefewî diyar kir"
     ],
     "correctAnswer": "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê",
@@ -4337,8 +4337,8 @@
     "promptTr": "Hewlêr (Erbil) Kalesi hangi özelliğiyle tanınır?",
     "answersTr": [
       "Kürt alfabesini geliştiren yayıncı ve aydın",
-      "Selahedînê Eyûbî'nin kurduğu büyük devlet",
       "Dünyanın en eski sürekli yerleşim yerlerinden biri",
+      "Selahedînê Eyûbî'nin kurduğu büyük devlet",
       "Osmanlı-Safevi sınırını belirleyen antlaşma"
     ],
     "correctAnswerTr": "Dünyanın en eski sürekli yerleşim yerlerinden biri"
@@ -4352,8 +4352,8 @@
     "answers": [
       "Romannivîsê yekem ê kurdî",
       "Damezrînerê kovara Hawarê",
-      "Zimannasê rêzimana kurmancî",
-      "Helbestvanekî klasîk ê pêşîn"
+      "Helbestvanekî klasîk ê pêşîn",
+      "Zimannasê rêzimana kurmancî"
     ],
     "correctAnswer": "Helbestvanekî klasîk ê pêşîn",
     "explanation": "Elî Herîrî, klasik Kürt şiirinin ilk adlarından sayılır. Yaşadığı dönem kaynaklara göre değişir; kesin bir yüzyıl vermek doğru olmaz.",
@@ -4370,8 +4370,8 @@
     "answersTr": [
       "Dize sonlarındaki seslerin uyumu",
       "Bir şairin şiirlerinden derleme",
-      "Öncü klasik şairlerden biri olması",
-      "Tasavvufi şiirlerden oluşan divanı"
+      "Tasavvufi şiirlerden oluşan divanı",
+      "Öncü klasik şairlerden biri olması"
     ],
     "correctAnswerTr": "Öncü klasik şairlerden biri olması"
   },
@@ -4383,8 +4383,8 @@
     "prompt": "Berhema \"Rewşenbîr\" an kovarên edebî yên kurdî bi giştî çi rol lîstin?",
     "answers": [
       "Berhevkirina destanên devkî yên gelêrî",
-      "Wergerandina berhemên klasîk bo erebî",
       "Pêşxistina zimanê nivîskî yê kurdî",
+      "Wergerandina berhemên klasîk bo erebî",
       "Amadekirina ferhengên dibistanê"
     ],
     "correctAnswer": "Pêşxistina zimanê nivîskî yê kurdî",
@@ -4401,8 +4401,8 @@
     "promptTr": "\"Rewşenbîr\" ve Kürtçe edebiyat dergileri genel olarak hangi rolü oynadı?",
     "answersTr": [
       "Bir şairin şiirlerinden derleme",
-      "Kürtçe yazı dilinin geliştirilmesi",
       "Doğa ve kuşlar üzerine şiirler yazması",
+      "Kürtçe yazı dilinin geliştirilmesi",
       "Tasavvufi şiirlerden oluşan divanı"
     ],
     "correctAnswerTr": "Kürtçe yazı dilinin geliştirilmesi"
@@ -4416,8 +4416,8 @@
     "answers": [
       "kalem",
       "defter",
-      "masa",
-      "kitap"
+      "kitap",
+      "masa"
     ],
     "correctAnswer": "kitap",
     "explanation": "\"Pirtûk\" Türkçede \"kitap\" demektir.",
@@ -4434,8 +4434,8 @@
     "answersTr": [
       "kalem",
       "defter",
-      "masa",
-      "kitap"
+      "kitap",
+      "masa"
     ],
     "correctAnswerTr": "kitap"
   },
@@ -4446,8 +4446,8 @@
     "category": "Edebiyat",
     "prompt": "Di \"Mem û Zîn\" de karakterê ku bûye sedema veqetîna evîndaran kî ye?",
     "answers": [
-      "Tacdîn",
       "Bekir",
+      "Tacdîn",
       "Mîr Zeynedîn",
       "Sitî"
     ],
@@ -4464,8 +4464,8 @@
     },
     "promptTr": "\"Mem û Zîn\"de âşıkların ayrılmasına sebep olan karakter kimdir?",
     "answersTr": [
-      "Tacdîn",
       "Bekir",
+      "Tacdîn",
       "Mîr Zeynedîn",
       "Sitî"
     ],
@@ -4480,8 +4480,8 @@
     "answers": [
       "Berhevoka helbestên helbestvanekî",
       "Destaneke evînî ya gelêrî",
-      "Vegotineke dirêj a lehengiyê",
-      "Welatparêzî, azadî û jiyana gel"
+      "Welatparêzî, azadî û jiyana gel",
+      "Vegotineke dirêj a lehengiyê"
     ],
     "correctAnswer": "Welatparêzî, azadî û jiyana gel",
     "explanation": "Cegerxwîn şiirini halkın davası ve özgürlükle ilişkilendirdi.",
@@ -4498,8 +4498,8 @@
     "answersTr": [
       "Bir şairin şiirlerinden derleme",
       "Halk arasında yayılan aşk destanı",
-      "Uzun bir kahramanlık anlatısı",
-      "Yurtseverlik, özgürlük ve halk yaşamı"
+      "Yurtseverlik, özgürlük ve halk yaşamı",
+      "Uzun bir kahramanlık anlatısı"
     ],
     "correctAnswerTr": "Yurtseverlik, özgürlük ve halk yaşamı"
   },
@@ -4511,8 +4511,8 @@
     "prompt": "\"Bahoz\" an romanên nûjen ên kurdî bi piranî di kîjan serdemê de zêde bûn?",
     "answers": [
       "Di sedsala 17em de",
-      "Berî 1900î",
       "Piştî salên 1980î",
+      "Berî 1900î",
       "Di 1930î de"
     ],
     "correctAnswer": "Piştî salên 1980î",
@@ -4529,8 +4529,8 @@
     "promptTr": "\"Bahoz\" gibi modern Kürt romanları çoğunlukla hangi dönemde çoğaldı?",
     "answersTr": [
       "17. yüzyılda",
-      "1900'den önce",
       "1980'den sonra",
+      "1900'den önce",
       "1930'da"
     ],
     "correctAnswerTr": "1980'den sonra"
@@ -4570,8 +4570,8 @@
     "category": "Cografya",
     "prompt": "Çemê Firat ji kîjan herêmê diherike?",
     "answers": [
-      "gola tektonîk a di sînorên Elezîzê de",
       "Çiyayên rojhilatê Anatolyayê",
+      "gola tektonîk a di sînorên Elezîzê de",
       "nebat û dara tîpîk a çiyayên Kurdistanê",
       "Girseya çiyayî ya nêzî Çemê Xerzan"
     ],
@@ -4588,8 +4588,8 @@
     },
     "promptTr": "Fırat Nehri hangi bölgeden kaynağını alır?",
     "answersTr": [
-      "Elezîz sınırları içindeki tektonik göl",
       "Doğu Anadolu'nun yüksek dağları",
+      "Elezîz sınırları içindeki tektonik göl",
       "Kürdistan dağlarının tipik bitki ve ağacı",
       "Xerzan Çayı yakınındaki dağ kütlesi"
     ],
@@ -4602,10 +4602,10 @@
     "category": "Cografya",
     "prompt": "Bajarê Silêmaniyê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Başûrê Kurdistanê",
       "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
-      "Rojhilatê Kurdistanê"
+      "Rojhilatê Kurdistanê",
+      "Başûrê Kurdistanê"
     ],
     "correctAnswer": "Başûrê Kurdistanê",
     "explanation": "Silêmanî Başûr'dadır; 18. yüzyılda Baban mirliğinin merkezi olarak kurulmuş, önemli bir edebiyat merkezidir.",
@@ -4620,10 +4620,10 @@
     },
     "promptTr": "Silêmanî şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Başûr (Güney)",
       "Bakur (Kuzey)",
       "Rojava (Batı)",
-      "Rojhilat (Doğu)"
+      "Rojhilat (Doğu)",
+      "Başûr (Güney)"
     ],
     "correctAnswerTr": "Başûr (Güney)"
   },
@@ -4634,8 +4634,8 @@
     "category": "Cografya",
     "prompt": "Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?",
     "answers": [
-      "Iraq (derdora Dihokê)",
       "Avahiyên kevirî yên li ser çiyê",
+      "Iraq (derdora Dihokê)",
       "hewza çem a ku Amed û Şirnexê digire",
       "herêma çiyayî ya derdora Zaxo û Dihokê"
     ],
@@ -4652,8 +4652,8 @@
     },
     "promptTr": "Mêrdîn şehri hangi mimari özelliğiyle ünlüdür?",
     "answersTr": [
-      "Irak (Dihok çevresi)",
       "Yamaca kurulmuş taş yapılar",
+      "Irak (Dihok çevresi)",
       "Amed ve Şirnex'i kapsayan nehir havzası",
       "Zaxo ve Dihok çevresindeki dağlık bölge"
     ],
@@ -4668,8 +4668,8 @@
     "answers": [
       "Wan",
       "Amed",
-      "Riha",
-      "Şirnex"
+      "Şirnex",
+      "Riha"
     ],
     "correctAnswer": "Şirnex",
     "explanation": "Cudi Dağı Şırnak bölgesindedir ve dini anlatılarda da geçer.",
@@ -4686,8 +4686,8 @@
     "answersTr": [
       "Wan",
       "Amed",
-      "Riha",
-      "Şirnex"
+      "Şirnex",
+      "Riha"
     ],
     "correctAnswerTr": "Şirnex"
   },
@@ -4698,10 +4698,10 @@
     "category": "Cografya",
     "prompt": "Peyva \"gund\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "köy",
       "şehir",
       "dağ",
-      "ova"
+      "ova",
+      "köy"
     ],
     "correctAnswer": "köy",
     "explanation": "\"Gund\" Türkçede \"köy\" demektir.",
@@ -4716,10 +4716,10 @@
     },
     "promptTr": "\"Gund\" kelimesi Türkçede ne anlama gelir?",
     "answersTr": [
-      "köy",
       "şehir",
       "dağ",
-      "ova"
+      "ova",
+      "köy"
     ],
     "correctAnswerTr": "köy"
   },
@@ -4731,8 +4731,8 @@
     "prompt": "Herêma \"Serhed\" bi giştî kîjan derdorê digire?",
     "answers": [
       "Warê havînê û warê zivistanê",
-      "hewza çem a ku Amed û Şirnexê digire",
       "Herêma bilind a Agirî-Wan-Mûşê",
+      "hewza çem a ku Amed û Şirnexê digire",
       "gola tektonîk a di sînorên Elezîzê de"
     ],
     "correctAnswer": "Herêma bilind a Agirî-Wan-Mûşê",
@@ -4749,8 +4749,8 @@
     "promptTr": "\"Serhed\" bölgesi genel olarak hangi yöreyi kapsar?",
     "answersTr": [
       "Yaylak ve kışlak alanları",
-      "Amed ve Şirnex'i kapsayan nehir havzası",
       "Agirî-Wan-Mûş çevresindeki yüksek bölge",
+      "Amed ve Şirnex'i kapsayan nehir havzası",
       "Elezîz sınırları içindeki tektonik göl"
     ],
     "correctAnswerTr": "Agirî-Wan-Mûş çevresindeki yüksek bölge"
@@ -4762,8 +4762,8 @@
     "category": "Cografya",
     "prompt": "Deşta Cizîrê bi giştî li ku derê ye?",
     "answers": [
-      "deşta dîrokî ya bibereket a li başûrê Silêmaniyê",
       "Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê",
+      "deşta dîrokî ya bibereket a li başûrê Silêmaniyê",
       "deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan",
       "gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin"
     ],
@@ -4780,8 +4780,8 @@
     },
     "promptTr": "Cizîr Ovası genel olarak nerede yer alır?",
     "answersTr": [
-      "Silêmanî'nin güneyindeki verimli tarihi ova",
       "Dicle ile Fırat arasında, Suriye'nin kuzeydoğusunda",
+      "Silêmanî'nin güneyindeki verimli tarihi ova",
       "Fırat kollarıyla sulanan büyük tarım ovası",
       "Diyala nehri üzerine kurulmuş baraj gölü"
     ],
@@ -4823,8 +4823,8 @@
     "prompt": "\"Zirne\" cureyekî çi amûrê ye?",
     "answers": [
       "Amûra têlî",
-      "Amûra lêdanê",
       "Amûra pifê",
+      "Amûra lêdanê",
       "Amûra kevanî"
     ],
     "correctAnswer": "Amûra pifê",
@@ -4841,8 +4841,8 @@
     "promptTr": "\"Zirne\" ne tür bir çalgıdır?",
     "answersTr": [
       "Telli çalgı",
-      "Vurmalı çalgı",
       "Üflemeli çalgı",
+      "Vurmalı çalgı",
       "Yaylı çalgı"
     ],
     "correctAnswerTr": "Üflemeli çalgı"
@@ -4854,10 +4854,10 @@
     "category": "Muzîk",
     "prompt": "\"Heyranok\" di muzîka kurdî de bi giştî çi ye?",
     "answers": [
-      "stranên kurt ên bi gelemperî evîndar",
       "avaza ku ji rêzbûna dengan pêk tê",
       "stranbêjî an lêxistina bi tenê ya hunermendekî",
-      "navê yekem koma rocka kurdî di dîrokê de"
+      "navê yekem koma rocka kurdî di dîrokê de",
+      "stranên kurt ên bi gelemperî evîndar"
     ],
     "correctAnswer": "stranên kurt ên bi gelemperî evîndar",
     "explanation": "Heyranok kısa ezgilerdir, sık sık soru-cevap biçiminde söylenir.",
@@ -4872,10 +4872,10 @@
     },
     "promptTr": "Kürt müziğinde \"heyranok\" genel olarak nedir?",
     "answersTr": [
-      "çoğunlukla aşk üzerine söylenen kısa ezgiler",
       "seslerin ardışık dizilmesiyle oluşan ezgi",
       "bir sanatçının tek başına söylemesi ya da çalması",
-      "tarihteki ilk Kürt rock grubunun adı"
+      "tarihteki ilk Kürt rock grubunun adı",
+      "çoğunlukla aşk üzerine söylenen kısa ezgiler"
     ],
     "correctAnswerTr": "çoğunlukla aşk üzerine söylenen kısa ezgiler"
   },
@@ -4887,8 +4887,8 @@
     "prompt": "Meryem Xan di muzîka kurdî de kî ye?",
     "answers": [
       "Nivîskareke romanên dîrokî yên sedsala 20em",
-      "Damezrînera kovareke edebî ya Stenbolê",
       "Dengbêjeke jin a navdar a sedsala 20em",
+      "Damezrînera kovareke edebî ya Stenbolê",
       "Lêdera yekem a jin a tembûrê li Amedê"
     ],
     "correctAnswer": "Dengbêjeke jin a navdar a sedsala 20em",
@@ -4905,8 +4905,8 @@
     "promptTr": "Meryem Xan Kürt müziğinde kimdir?",
     "answersTr": [
       "20. yüzyılın tarihî roman yazarlarındandır",
-      "İstanbul'da bir edebiyat dergisinin kurucusudur",
       "20. yüzyılın tanınmış bir kadın dengbêjidir",
+      "İstanbul'da bir edebiyat dergisinin kurucusudur",
       "Amed'de tembûr çalan ilk kadındır"
     ],
     "correctAnswerTr": "20. yüzyılın tanınmış bir kadın dengbêjidir"
@@ -4918,8 +4918,8 @@
     "category": "Muzîk",
     "prompt": "Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?",
     "answers": [
-      "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin",
       "ji salên 1950î ve stranên kurdî belav kir",
+      "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin",
       "veguhastina muzîkal a bi têkiliya hoste-şagird",
       "edeta ku ji muzîkjenan re pere tê avêtin"
     ],
@@ -4936,8 +4936,8 @@
     },
     "promptTr": "Erivan Radyosu Kürt müziği için neden önemlidir?",
     "answersTr": [
-      "kilamların söylendiği serbest ritimli ses üslubudur",
       "1950'lerden bu yana Kürtçe şarkıları yaydı",
+      "kilamların söylendiği serbest ritimli ses üslubudur",
       "usta-çırak ilişkisiyle yürüyen müzikal aktarımdır",
       "müzisyenlere para atma âdetidir"
     ],
@@ -4951,8 +4951,8 @@
     "prompt": "Peyva \"deng\" bi Tirkî çi tê wateyê?",
     "answers": [
       "söz",
-      "saz",
       "ses",
+      "saz",
       "şarkı"
     ],
     "correctAnswer": "ses",
@@ -4969,8 +4969,8 @@
     "promptTr": "\"Deng\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
       "söz",
-      "saz",
       "ses",
+      "saz",
       "şarkı"
     ],
     "correctAnswerTr": "ses"
@@ -4982,10 +4982,10 @@
     "category": "Muzîk",
     "prompt": "Di dengbêjiyê de \"kilamên şer\" bi giştî li ser çi ne?",
     "answers": [
-      "Bûyerên şer û berxwedanê",
       "Avaz û qalibê kilamê",
       "Awayê stranbêjiya bi kom",
-      "Dawet û govendê"
+      "Dawet û govendê",
+      "Bûyerên şer û berxwedanê"
     ],
     "correctAnswer": "Bûyerên şer û berxwedanê",
     "explanation": "Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.",
@@ -5000,10 +5000,10 @@
     },
     "promptTr": "Dengbêjlikte \"kilamên şer\" genel olarak ne üzerinedir?",
     "answersTr": [
-      "Savaş ve direniş olayları",
       "Kilamın ezgi ve kalıbı",
       "Toplu söyleme biçimi",
-      "Düğün ve govend"
+      "Düğün ve govend",
+      "Savaş ve direniş olayları"
     ],
     "correctAnswerTr": "Savaş ve direniş olayları"
   },
@@ -5042,8 +5042,8 @@
     "category": "Siyaset",
     "prompt": "Di sîstema meclîsên gel de biryar bi giştî çawa tên girtin?",
     "answers": [
-      "Ji aliyê pisporan ve bi tenê",
       "Bi nîqaş û lihevkirina beşdaran",
+      "Ji aliyê pisporan ve bi tenê",
       "Bi fermana navendî",
       "Bi hilbijartina her deh salan"
     ],
@@ -5060,8 +5060,8 @@
     },
     "promptTr": "Halk meclisleri sisteminde kararlar genel olarak nasıl alınır?",
     "answersTr": [
-      "Yalnızca uzmanlar tarafından",
       "Katılımcıların tartışıp uzlaşmasıyla",
+      "Yalnızca uzmanlar tarafından",
       "Merkezden gelen buyrukla",
       "On yılda bir yapılan seçimle"
     ],
@@ -5076,8 +5076,8 @@
     "answers": [
       "Amed û derdora wê",
       "Mezopotamyaya jorîn",
-      "Kafkasya (Gence-Anî)",
-      "Sînorê Iraq-Îranê, herêma Bexda û Îlamê"
+      "Sînorê Iraq-Îranê, herêma Bexda û Îlamê",
+      "Kafkasya (Gence-Anî)"
     ],
     "correctAnswer": "Sînorê Iraq-Îranê, herêma Bexda û Îlamê",
     "explanation": "Feyli Kürtler Şii Kürtlerdir; 1980'de yüz binlercesi Irak'tan sürüldü.",
@@ -5094,8 +5094,8 @@
     "answersTr": [
       "Amed ve çevre bölgeler",
       "Yukarı Mezopotamya bölgesi",
-      "Kafkasya bölgesi (Gence-Anî)",
-      "Irak-İran sınırı, Bağdat ve Îlam"
+      "Irak-İran sınırı, Bağdat ve Îlam",
+      "Kafkasya bölgesi (Gence-Anî)"
     ],
     "correctAnswerTr": "Irak-İran sınırı, Bağdat ve Îlam"
   },
@@ -5107,8 +5107,8 @@
     "prompt": "Peyva \"gel\" bi Tirkî çi tê wateyê?",
     "answers": [
       "devlet",
-      "ordu",
       "halk",
+      "ordu",
       "şehir"
     ],
     "correctAnswer": "halk",
@@ -5125,8 +5125,8 @@
     "promptTr": "\"Gel\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
       "devlet",
-      "ordu",
       "halk",
+      "ordu",
       "şehir"
     ],
     "correctAnswerTr": "halk"
@@ -5140,8 +5140,8 @@
     "answers": [
       "Maddeya 5em",
       "Maddeya 61ê",
-      "Maddeya 100î",
-      "Maddeya 140î"
+      "Maddeya 140î",
+      "Maddeya 100î"
     ],
     "correctAnswer": "Maddeya 140î",
     "explanation": "140. madde, tartışmalı bölgeler için normalleşme, sayım ve referandum sürecini tanımlar.",
@@ -5158,8 +5158,8 @@
     "answersTr": [
       "5. madde",
       "61. madde",
-      "100. madde",
-      "140. madde"
+      "140. madde",
+      "100. madde"
     ],
     "correctAnswerTr": "140. madde"
   },
@@ -5199,8 +5199,8 @@
     "prompt": "\"Diaspora\" ya kurdî bi giştî li ku derê herî zêde ye?",
     "answers": [
       "Amerîkaya Başûr",
-      "Afrîkaya Başûr",
       "Ewropaya Rojava",
+      "Afrîkaya Başûr",
       "Awustralya"
     ],
     "correctAnswer": "Ewropaya Rojava",
@@ -5217,8 +5217,8 @@
     "promptTr": "Kürt \"diasporası\" genel olarak en çok nerededir?",
     "answersTr": [
       "Güney Amerika",
-      "Güney Afrika",
       "Batı Avrupa",
+      "Güney Afrika",
       "Avustralya"
     ],
     "correctAnswerTr": "Batı Avrupa"
@@ -5230,8 +5230,8 @@
     "category": "Paradigma",
     "prompt": "Di paradîgmayê de \"kooperatîf\" çima girîng e?",
     "answers": [
-      "Kapîtalîzm, pîşesazîparêzî û dewleta netewe",
       "Hilberîna hevpar li şûna kara kesane",
+      "Kapîtalîzm, pîşesazîparêzî û dewleta netewe",
       "Guhertin bi perwerdehî û hişmendiyê dest pê dike",
       "Parastina civakê bi rêxistinbûna wê ya xwe"
     ],
@@ -5248,8 +5248,8 @@
     },
     "promptTr": "Paradigmada \"kooperatif\" neden önemlidir?",
     "answersTr": [
-      "Kapitalizm, endüstriyalizm ve ulus-devlet",
       "Bireysel kâr yerine ortak üretim",
+      "Kapitalizm, endüstriyalizm ve ulus-devlet",
       "Değişim eğitim ve bilinçle başlar",
       "Toplumun kendi örgütlenmesiyle korunması"
     ],
@@ -5263,8 +5263,8 @@
     "prompt": "\"Akademî\" di modela civakî ya Rojava de çi rol dilîze?",
     "answers": [
       "Tenê perwerdehiya teknîkî",
-      "Rêveberiya darayî",
       "Perwerdehiya civakî û ramanî",
+      "Rêveberiya darayî",
       "Kontrola sînoran"
     ],
     "correctAnswer": "Perwerdehiya civakî û ramanî",
@@ -5281,8 +5281,8 @@
     "promptTr": "\"Akademî\" Rojava'daki toplumsal modelde hangi rolü oynar?",
     "answersTr": [
       "Yalnızca teknik eğitim",
-      "Mali işlerin yönetimi",
       "Toplumsal ve düşünsel eğitim",
+      "Mali işlerin yönetimi",
       "Sınırların denetimi"
     ],
     "correctAnswerTr": "Toplumsal ve düşünsel eğitim"
@@ -5294,10 +5294,10 @@
     "category": "Paradigma",
     "prompt": "Rexneya \"pozîtîvîzmê\" di vê paradîgmayê de li ser çi ye?",
     "answers": [
-      "zanist ji civak û exlaqê nayê veqetandin",
       "mafê civakê yê xwe parastin û xwerêxistinê",
       "têgihiştina mirov a ku ew parçeyekî xwezayê ye",
-      "yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî"
+      "yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî",
+      "zanist ji civak û exlaqê nayê veqetandin"
     ],
     "correctAnswer": "zanist ji civak û exlaqê nayê veqetandin",
     "explanation": "Pozitivizm \"tarafsız bilim\" iddiasıyla eleştirilir; her bilgi toplum içinde üretilir.",
@@ -5312,10 +5312,10 @@
     },
     "promptTr": "Bu paradigmada \"pozitivizm\" eleştirisi neyin üzerinedir?",
     "answersTr": [
-      "bilim toplumdan ve ahlaktan ayrılamaz",
       "toplumun öz savunma ve öz örgütlenme hakkı",
       "insanın doğanın bir parçası olduğunu kavraması",
-      "yerel özerkliğe sahip idari ve toplumsal birim"
+      "yerel özerkliğe sahip idari ve toplumsal birim",
+      "bilim toplumdan ve ahlaktan ayrılamaz"
     ],
     "correctAnswerTr": "bilim toplumdan ve ahlaktan ayrılamaz"
   },
@@ -5327,8 +5327,8 @@
     "prompt": "Peyva \"xweza\" bi Tirkî çi tê wateyê?",
     "answers": [
       "şehir",
-      "insan",
       "doğa",
+      "insan",
       "toplum"
     ],
     "correctAnswer": "doğa",
@@ -5345,8 +5345,8 @@
     "promptTr": "\"Xweza\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
       "şehir",
-      "insan",
       "doğa",
+      "insan",
       "toplum"
     ],
     "correctAnswerTr": "doğa"
@@ -5388,8 +5388,8 @@
     "answers": [
       "kulak",
       "burun",
-      "el",
-      "göz"
+      "göz",
+      "el"
     ],
     "correctAnswer": "göz",
     "explanation": "\"Çav\" Türkçede \"göz\" demektir.",
@@ -5406,8 +5406,8 @@
     "answersTr": [
       "kulak",
       "burun",
-      "el",
-      "göz"
+      "göz",
+      "el"
     ],
     "correctAnswerTr": "göz"
   },
@@ -5419,8 +5419,8 @@
     "prompt": "Peyva Kurmancî \"dest\" bi Tirkî çi tê wateyê?",
     "answers": [
       "ayak",
-      "baş",
       "el",
+      "baş",
       "sırt"
     ],
     "correctAnswer": "el",
@@ -5437,8 +5437,8 @@
     "promptTr": "Kurmancî \"dest\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
       "ayak",
-      "baş",
       "el",
+      "baş",
       "sırt"
     ],
     "correctAnswerTr": "el"
@@ -5452,8 +5452,8 @@
     "answers": [
       "yaşlı",
       "komşu",
-      "misafir",
-      "çocuk"
+      "çocuk",
+      "misafir"
     ],
     "correctAnswer": "çocuk",
     "explanation": "\"Zarok\" Türkçede \"çocuk\" demektir.",
@@ -5470,8 +5470,8 @@
     "answersTr": [
       "yaşlı",
       "komşu",
-      "misafir",
-      "çocuk"
+      "çocuk",
+      "misafir"
     ],
     "correctAnswerTr": "çocuk"
   },
@@ -5482,8 +5482,8 @@
     "category": "Ziman",
     "prompt": "Peyva Kurmancî \"spas\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "merhaba",
       "teşekkür",
+      "merhaba",
       "hoşça kal",
       "lütfen"
     ],
@@ -5500,8 +5500,8 @@
     },
     "promptTr": "Kurmancî \"spas\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
-      "merhaba",
       "teşekkür",
+      "merhaba",
       "hoşça kal",
       "lütfen"
     ],
@@ -5516,8 +5516,8 @@
     "answers": [
       "Fireh",
       "Giran",
-      "Nerm",
-      "Kurt"
+      "Kurt",
+      "Nerm"
     ],
     "correctAnswer": "Kurt",
     "explanation": "\"Dirêj\" (uzun) ile \"kurt\" (kısa) zıt anlamlıdır.",
@@ -5534,8 +5534,8 @@
     "answersTr": [
       "Fireh",
       "Giran",
-      "Nerm",
-      "Kurt"
+      "Kurt",
+      "Nerm"
     ],
     "correctAnswerTr": "Kurt"
   },
@@ -5546,10 +5546,10 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de \"ez dixwazim\" hevoka çi demê ye?",
     "answers": [
-      "Dema niha",
       "Dema borî",
       "Dema bê",
-      "Raweya fermanî"
+      "Raweya fermanî",
+      "Dema niha"
     ],
     "correctAnswer": "Dema niha",
     "explanation": "\"di-\" ön eki şimdiki zamanı gösterir: \"ez dixwazim\".",
@@ -5564,10 +5564,10 @@
     },
     "promptTr": "Kurmancî'de \"ez dixwazim\" hangi zamanın cümlesidir?",
     "answersTr": [
-      "Şimdiki zaman",
       "Geçmiş zaman",
       "Gelecek zaman",
-      "Emir kipi"
+      "Emir kipi",
+      "Şimdiki zaman"
     ],
     "correctAnswerTr": "Şimdiki zaman"
   },
@@ -5580,8 +5580,8 @@
     "answers": [
       "cînavkên tewandî",
       "rênivîsa Hawarê",
-      "Zayend: \"-ê\" nêr, \"-a\" mê",
-      "Kesê ku karekî dike"
+      "Kesê ku karekî dike",
+      "Zayend: \"-ê\" nêr, \"-a\" mê"
     ],
     "correctAnswer": "Kesê ku karekî dike",
     "explanation": "\"-van\" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.",
@@ -5598,8 +5598,8 @@
     "answersTr": [
       "bükünlü zamirleri",
       "Hawar imlasını",
-      "Cinsiyeti: \"-ê\" eril, \"-a\" dişil",
-      "Bir işi yapan kişiyi"
+      "Bir işi yapan kişiyi",
+      "Cinsiyeti: \"-ê\" eril, \"-a\" dişil"
     ],
     "correctAnswerTr": "Bir işi yapan kişiyi"
   },
@@ -5610,10 +5610,10 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de \"were\" û \"biçe\" kîjan raweyê nîşan didin?",
     "answers": [
-      "Raweya fermanî",
       "Raweya bilanî",
       "Dema borî",
-      "Dema bê"
+      "Dema bê",
+      "Raweya fermanî"
     ],
     "correctAnswer": "Raweya fermanî",
     "explanation": "İkisi de emirdir: \"were\" (gel), \"biçe\" (git).",
@@ -5628,10 +5628,10 @@
     },
     "promptTr": "Kurmancî'de \"were\" ve \"biçe\" hangi kipi gösterir?",
     "answersTr": [
-      "Emir kipi",
       "İstek kipi",
       "Geçmiş zaman",
-      "Gelecek zaman"
+      "Gelecek zaman",
+      "Emir kipi"
     ],
     "correctAnswerTr": "Emir kipi"
   },
@@ -5643,8 +5643,8 @@
     "prompt": "Di Kurmancî de \"min got\" û \"ez gotim\" — kîjan rast e?",
     "answers": [
       "\"Ez gotim\" rast e",
-      "Herdu jî rast in",
       "\"Min got\" rast e",
+      "Herdu jî rast in",
       "Herdu jî şaş in"
     ],
     "correctAnswer": "\"Min got\" rast e",
@@ -5661,8 +5661,8 @@
     "promptTr": "Kurmancî'de \"min got\" ile \"ez gotim\" — hangisi doğrudur?",
     "answersTr": [
       "\"Ez gotim\" doğrudur",
-      "İkisi de doğrudur",
       "\"Min got\" doğrudur",
+      "İkisi de doğrudur",
       "İkisi de yanlıştır"
     ],
     "correctAnswerTr": "\"Min got\" doğrudur"
@@ -5674,10 +5674,10 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de cudahiya \"-ê\" û \"-a\" ya veqetandekê çi ye?",
     "answers": [
-      "Zayend: \"-ê\" nêr, \"-a\" mê",
       "Hejmar: \"-ê\" yekjimar, \"-a\" pirjimar",
       "Dem: \"-ê\" borî, \"-a\" niha",
-      "Rewş: \"-ê\" xwerû, \"-a\" tewandî"
+      "Rewş: \"-ê\" xwerû, \"-a\" tewandî",
+      "Zayend: \"-ê\" nêr, \"-a\" mê"
     ],
     "correctAnswer": "Zayend: \"-ê\" nêr, \"-a\" mê",
     "explanation": "\"Bavê min\" (eril) ama \"diya min\" (dişil) — izafe cinsiyeti gösterir.",
@@ -5692,10 +5692,10 @@
     },
     "promptTr": "Kurmancî'de izafedeki \"-ê\" ile \"-a\" arasındaki fark nedir?",
     "answersTr": [
-      "Cinsiyet: \"-ê\" eril, \"-a\" dişil",
       "Sayı: \"-ê\" tekil, \"-a\" çoğul",
       "Zaman: \"-ê\" geçmiş, \"-a\" şimdiki",
-      "Durum: \"-ê\" yalın, \"-a\" bükünlü"
+      "Durum: \"-ê\" yalın, \"-a\" bükünlü",
+      "Cinsiyet: \"-ê\" eril, \"-a\" dişil"
     ],
     "correctAnswerTr": "Cinsiyet: \"-ê\" eril, \"-a\" dişil"
   },
@@ -5708,8 +5708,8 @@
     "answers": [
       "peynir",
       "tuz",
-      "yağ",
-      "hamur"
+      "hamur",
+      "yağ"
     ],
     "correctAnswer": "hamur",
     "explanation": "\"Hevîr\" Türkçede \"hamur\" demektir.",
@@ -5726,8 +5726,8 @@
     "answersTr": [
       "peynir",
       "tuz",
-      "yağ",
-      "hamur"
+      "hamur",
+      "yağ"
     ],
     "correctAnswerTr": "hamur"
   },
@@ -5738,10 +5738,10 @@
     "category": "Ziman",
     "prompt": "Hevwateya peyva \"westiyayî\" di Kurmancî de kîjan e?",
     "answers": [
-      "Betilî",
       "Kêfxweş",
       "Bilez",
-      "Nexweş"
+      "Nexweş",
+      "Betilî"
     ],
     "correctAnswer": "Betilî",
     "explanation": "\"Westiyayî\" ve \"betilî\" ikisi de yorgunluk anlamındadır.",
@@ -5756,10 +5756,10 @@
     },
     "promptTr": "Kurmancî'de \"westiyayî\" sözcüğünün eş anlamlısı hangisidir?",
     "answersTr": [
-      "Betilî",
       "Kêfxweş",
       "Bilez",
-      "Nexweş"
+      "Nexweş",
+      "Betilî"
     ],
     "correctAnswerTr": "Betilî"
   },
@@ -5800,8 +5800,8 @@
     "answers": [
       "güneş",
       "yıldız",
-      "gök",
-      "ay"
+      "ay",
+      "gök"
     ],
     "correctAnswer": "ay",
     "explanation": "\"Heyv\" Türkçede \"ay\" demektir.",
@@ -5818,8 +5818,8 @@
     "answersTr": [
       "güneş",
       "yıldız",
-      "gök",
-      "ay"
+      "ay",
+      "gök"
     ],
     "correctAnswerTr": "ay"
   },
@@ -5831,8 +5831,8 @@
     "prompt": "Peyva \"zanîngeh\" ji kîjan beşan pêk tê?",
     "answers": [
       "Zan + îng",
-      "Za + nîngeh",
       "Zanîn + geh (cih)",
+      "Za + nîngeh",
       "Zanî + gehîn"
     ],
     "correctAnswer": "Zanîn + geh (cih)",
@@ -5849,8 +5849,8 @@
     "promptTr": "\"Zanîngeh\" sözcüğü hangi parçalardan oluşur?",
     "answersTr": [
       "Zan + îng",
-      "Za + nîngeh",
       "Zanîn + geh (yer)",
+      "Za + nîngeh",
       "Zanî + gehîn"
     ],
     "correctAnswerTr": "Zanîn + geh (yer)"
@@ -5862,10 +5862,10 @@
     "category": "Çand",
     "prompt": "Xwarina \"savar\" ji çi tê çêkirin?",
     "answers": [
-      "Genim",
       "Birinc",
       "Ard",
-      "Nok"
+      "Nok",
+      "Genim"
     ],
     "correctAnswer": "Genim",
     "explanation": "Bulgur, haşlanıp kırılmış buğdaydan yapılır.",
@@ -5880,10 +5880,10 @@
     },
     "promptTr": "\"Savar\" (bulgur) neyden yapılır?",
     "answersTr": [
-      "Buğday",
       "Pirinç",
       "Un",
-      "Nohut"
+      "Nohut",
+      "Buğday"
     ],
     "correctAnswerTr": "Buğday"
   },
@@ -5895,8 +5895,8 @@
     "prompt": "Di kevneşopiya kurdî de \"mêvanperwerî\" çi tê wateyê?",
     "answers": [
       "civînên axaftinê yên şevên zivistanê",
-      "girêdanên civak û malbatê",
       "mêvan bi rûmet pêşwazîkirin",
+      "girêdanên civak û malbatê",
       "belg û sebzeyên dagirtî"
     ],
     "correctAnswer": "mêvan bi rûmet pêşwazîkirin",
@@ -5913,8 +5913,8 @@
     "promptTr": "Kürt geleneğinde \"mêvanperwerî\" ne anlama gelir?",
     "answersTr": [
       "kış gecelerinin sohbet toplantıları",
-      "toplum ve aile bağları",
       "misafiri saygıyla ağırlamak",
+      "toplum ve aile bağları",
       "doldurulmuş yaprak ve sebzeler"
     ],
     "correctAnswerTr": "misafiri saygıyla ağırlamak"
@@ -5926,8 +5926,8 @@
     "category": "Çand",
     "prompt": "\"Çadira reş\" bi giştî ji çi tê çêkirin?",
     "answers": [
-      "çanda koçeriyê",
       "hiriyê bizinê",
+      "çanda koçeriyê",
       "kilimên kurdî",
       "diyarî/xelat"
     ],
@@ -5944,8 +5944,8 @@
     },
     "promptTr": "\"Kara çadır\" genellikle neyden yapılır?",
     "answersTr": [
-      "göçebe kültüründen",
       "keçi kılından",
+      "göçebe kültüründen",
       "Kürt kilimlerinden",
       "hediye/ödülden"
     ],
@@ -5959,8 +5959,8 @@
     "prompt": "Di çanda kurdî de \"koçerî\" çi ye?",
     "answers": [
       "Evîna trajîk a li çiyê",
-      "Sor, spî, kesk û zer",
       "Jiyana bi ajalan re ya guhêrbar",
+      "Sor, spî, kesk û zer",
       "Roja ziyaret û bibîranînê ya kevneşopî"
     ],
     "correctAnswer": "Jiyana bi ajalan re ya guhêrbar",
@@ -5977,8 +5977,8 @@
     "promptTr": "Kürt kültüründe \"koçerî\" nedir?",
     "answersTr": [
       "Dağdaki trajik aşk",
-      "Kırmızı, beyaz, yeşil ve sarı",
       "Sürülerle yer değiştiren yaşam",
+      "Kırmızı, beyaz, yeşil ve sarı",
       "Geleneksel ziyaret ve anma günü"
     ],
     "correctAnswerTr": "Sürülerle yer değiştiren yaşam"
@@ -5992,8 +5992,8 @@
     "answers": [
       "çanda koçeriyê",
       "vegotina devkî û çîroka bi avaz",
-      "şeva herî dirêj a salê",
-      "çîmena çiyayî ya havînê"
+      "çîmena çiyayî ya havînê",
+      "şeva herî dirêj a salê"
     ],
     "correctAnswer": "çîmena çiyayî ya havînê",
     "explanation": "Zozan (yayla), yazın sürüler için kullanılan yüksek otlaklardır.",
@@ -6010,8 +6010,8 @@
     "answersTr": [
       "göçebe kültürü",
       "sözlü anlatı ve ezgili hikâye",
-      "yılın en uzun gecesi",
-      "yazın kullanılan dağ çayırı"
+      "yazın kullanılan dağ çayırı",
+      "yılın en uzun gecesi"
     ],
     "correctAnswerTr": "yazın kullanılan dağ çayırı"
   },
@@ -6022,8 +6022,8 @@
     "category": "Çand",
     "prompt": "Di rêûresma şînê ya kurdî de \"şînbêj\" kî ye?",
     "answers": [
-      "civaka olî-çandî ya taybet û trawmayên dîrokî",
       "kesa ku bi dengekî bilind lorî û şîn dibêje",
+      "civaka olî-çandî ya taybet û trawmayên dîrokî",
       "xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin",
       "vegotina ku ji nifşî bo nifşî hatiye veguhastin"
     ],
@@ -6040,8 +6040,8 @@
     },
     "promptTr": "Kürt yas geleneğinde \"şînbêj\" kimdir?",
     "answersTr": [
-      "özgün dinî-kültürel topluluk ve tarihsel travmalar",
       "yüksek sesle ağıt ve şîn söyleyen kişi",
+      "özgün dinî-kültürel topluluk ve tarihsel travmalar",
       "harçla doldurulan sebze ya da yaprak yemeği",
       "kuşaktan kuşağa aktarılan sözlü anlatı"
     ],
@@ -6056,8 +6056,8 @@
     "answers": [
       "çanda koçeriyê",
       "hest û bîra civakî",
-      "çîmena çiyayî ya havînê",
-      "serê sibê / şafak"
+      "serê sibê / şafak",
+      "çîmena çiyayî ya havînê"
     ],
     "correctAnswer": "serê sibê / şafak",
     "explanation": "\"Berbang\" ışığın söktüğü an, şafaktır.",
@@ -6074,8 +6074,8 @@
     "answersTr": [
       "göçebe kültürü",
       "toplumsal duygu ve hafıza",
-      "yazın kullanılan dağ çayırı",
-      "sabahın ilk anı / şafak"
+      "sabahın ilk anı / şafak",
+      "yazın kullanılan dağ çayırı"
     ],
     "correctAnswerTr": "sabahın ilk anı / şafak"
   },
@@ -6087,8 +6087,8 @@
     "prompt": "Di destana \"Siyabend û Xecê\" de mijara sereke çi ye?",
     "answers": [
       "Şerê du eşîran",
-      "Rêwîtiya bazirganekî",
       "Evîna trajîk a li çiyê",
+      "Rêwîtiya bazirganekî",
       "Damezrandina gundekî"
     ],
     "correctAnswer": "Evîna trajîk a li çiyê",
@@ -6105,8 +6105,8 @@
     "promptTr": "\"Siyabend û Xecê\" destanının ana konusu nedir?",
     "answersTr": [
       "İki aşiretin savaşı",
-      "Bir tüccarın yolculuğu",
       "Dağdaki trajik aşk",
+      "Bir tüccarın yolculuğu",
       "Bir köyün kuruluşu"
     ],
     "correctAnswerTr": "Dağdaki trajik aşk"
@@ -6146,10 +6146,10 @@
     "category": "Çand",
     "prompt": "Xwarina \"serê salê\" an xwarinên cejnê bi giştî çima girîng in?",
     "answers": [
-      "Ji ber ku civak û malbatê tînin cem hev",
       "Ji ber ku erzan in",
       "Ji ber ku zû tên çêkirin",
-      "Ji ber ku tenê ji bo mêvanan in"
+      "Ji ber ku tenê ji bo mêvanan in",
+      "Ji ber ku civak û malbatê tînin cem hev"
     ],
     "correctAnswer": "Ji ber ku civak û malbatê tînin cem hev",
     "explanation": "Bayram sofrası toplumsal bir işlev taşır: akraba ve komşuyu bir araya getirir.",
@@ -6164,10 +6164,10 @@
     },
     "promptTr": "\"Yılbaşı\" yemekleri ya da bayram yemekleri genelde neden önemlidir?",
     "answersTr": [
-      "Toplumu ve aileyi bir araya getirdikleri için",
       "Ucuz oldukları için",
       "Çabuk hazırlandıkları için",
-      "Yalnızca misafirler için oldukları için"
+      "Yalnızca misafirler için oldukları için",
+      "Toplumu ve aileyi bir araya getirdikleri için"
     ],
     "correctAnswerTr": "Toplumu ve aileyi bir araya getirdikleri için"
   },
@@ -6179,8 +6179,8 @@
     "prompt": "\"Hevrîşk\" an \"hevrîşim\" di destkariya kurdî de çi ye?",
     "answers": [
       "amûra kevneşopî ya dişibe bilûrê",
-      "mêvan bi rûmet pêşwazîkirin",
       "hevrîşim (ipek) — ji bo tevn û xemlê",
+      "mêvan bi rûmet pêşwazîkirin",
       "fîgura mîtolojîk a çanda rojhilat"
     ],
     "correctAnswer": "hevrîşim (ipek) — ji bo tevn û xemlê",
@@ -6197,8 +6197,8 @@
     "promptTr": "Kürt el sanatlarında \"hevrîşk\" ya da \"hevrîşim\" nedir?",
     "answersTr": [
       "kavala benzeyen geleneksel çalgı",
-      "misafiri saygıyla ağırlamak",
       "ipek — dokuma ve süsleme için",
+      "misafiri saygıyla ağırlamak",
       "doğu kültürünün mitolojik figürü"
     ],
     "correctAnswerTr": "ipek — dokuma ve süsleme için"
@@ -6210,8 +6210,8 @@
     "category": "Çand",
     "prompt": "\"Tevn\" di destkariya kurdî de çi ye?",
     "answers": [
-      "danûstandina civakî û biryardayîn",
       "amûra hûnandina xalîçe û bêrîkan",
+      "danûstandina civakî û biryardayîn",
       "amûra kevneşopî ya dişibe bilûrê",
       "bi hunera destan ve girêdayî ye"
     ],
@@ -6228,8 +6228,8 @@
     },
     "promptTr": "Kürt el sanatlarında \"tevn\" nedir?",
     "answersTr": [
-      "toplumsal müzakere ve karar alma",
       "halı ve heybe dokuma tezgâhı",
+      "toplumsal müzakere ve karar alma",
       "kavala benzeyen geleneksel çalgı",
       "el sanatlarıyla bağlantılıdır"
     ],
@@ -6243,8 +6243,8 @@
     "prompt": "Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?",
     "answers": [
       "Wêneyên fotoğrafî",
-      "Nivîsên dirêj",
       "Motîfên hêjmarî û sembolîk",
+      "Nivîsên dirêj",
       "Rengên tenê reş û spî"
     ],
     "correctAnswer": "Motîfên hêjmarî û sembolîk",
@@ -6261,8 +6261,8 @@
     "promptTr": "Kürt halı ve kilimleri genellikle neyle bezenir?",
     "answersTr": [
       "Fotoğraf görüntüleriyle",
-      "Uzun yazılarla",
       "Geometrik ve sembolik motiflerle",
+      "Uzun yazılarla",
       "Yalnızca siyah ve beyaz renklerle"
     ],
     "correctAnswerTr": "Geometrik ve sembolik motiflerle"
@@ -6274,10 +6274,10 @@
     "category": "Çand",
     "prompt": "Di civaka kurdî de \"xwarina şîvê ya hevpar\" li dîwanxaneyê bi giştî çi fonksiyonê digire?",
     "answers": [
-      "danûstandina civakî û biryardayîn",
       "pîroziya ku ji ronahî/rojê re tê dayîn",
       "şeva herî dirêj a salê",
-      "misafirperweriya kurdî"
+      "misafirperweriya kurdî",
+      "danûstandina civakî û biryardayîn"
     ],
     "correctAnswer": "danûstandina civakî û biryardayîn",
     "explanation": "Dîwanxane toplumsal tartışma ve karar yeridir; yemek bu toplantıyı çerçeveler.",
@@ -6292,10 +6292,10 @@
     },
     "promptTr": "Kürt toplumunda dîwanxanede \"ortak akşam yemeği\" genelde hangi işlevi üstlenir?",
     "answersTr": [
-      "toplumsal müzakere ve karar alma",
       "ışığa/güneşe verilen kutsallık",
       "yılın en uzun gecesi",
-      "Kürt misafirperverliği"
+      "Kürt misafirperverliği",
+      "toplumsal müzakere ve karar alma"
     ],
     "correctAnswerTr": "toplumsal müzakere ve karar alma"
   },
@@ -6306,10 +6306,10 @@
     "category": "Dîrok",
     "prompt": "Bajarê Amedê di serdema Romayê de çi rolê digirt?",
     "answers": [
-      "Bajarekî sînor ê stratejîk",
       "Paytexta împeratoriyê",
       "Navenda olî ya sereke",
-      "Girava bazirganiyê"
+      "Girava bazirganiyê",
+      "Bajarekî sînor ê stratejîk"
     ],
     "correctAnswer": "Bajarekî sînor ê stratejîk",
     "explanation": "Amida, Roma ile Sasaniler arasında stratejik bir sınır kentiydi.",
@@ -6324,10 +6324,10 @@
     },
     "promptTr": "Amed kenti Roma döneminde hangi rolü üstleniyordu?",
     "answersTr": [
-      "Stratejik bir sınır kenti",
       "İmparatorluğun başkenti",
       "Başlıca dinî merkez",
-      "Ticaret adası"
+      "Ticaret adası",
+      "Stratejik bir sınır kenti"
     ],
     "correctAnswerTr": "Stratejik bir sınır kenti"
   },
@@ -6338,8 +6338,8 @@
     "category": "Dîrok",
     "prompt": "Xanedaniya Mervaniyan bi giştî li ku derê hukum kir?",
     "answers": [
-      "Silêmanî",
       "Amed û derdora wê",
+      "Silêmanî",
       "Sine (Sanandaj)",
       "Mezopotamyaya jorîn"
     ],
@@ -6356,8 +6356,8 @@
     },
     "promptTr": "Mervani hanedanı genel olarak nerede hüküm sürdü?",
     "answersTr": [
-      "Silêmanî",
       "Amed ve çevresi",
+      "Silêmanî",
       "Sine (Sanandaj)",
       "Yukarı Mezopotamya"
     ],
@@ -6372,8 +6372,8 @@
     "answers": [
       "Amed û derdora wê",
       "Mezopotamyaya jorîn",
-      "Peymana Lozanê",
-      "Kafkasya (Gence-Anî)"
+      "Kafkasya (Gence-Anî)",
+      "Peymana Lozanê"
     ],
     "correctAnswer": "Kafkasya (Gence-Anî)",
     "explanation": "Şeddadiler, Kafkasya'da Gence ve Ani çevresinde hüküm süren Kürt hanedanıydı.",
@@ -6390,8 +6390,8 @@
     "answersTr": [
       "Amed ve çevresi",
       "Yukarı Mezopotamya",
-      "Lozan Antlaşması",
-      "Kafkasya (Gence-Anî)"
+      "Kafkasya (Gence-Anî)",
+      "Lozan Antlaşması"
     ],
     "correctAnswerTr": "Kafkasya (Gence-Anî)"
   },
@@ -6402,8 +6402,8 @@
     "category": "Dîrok",
     "prompt": "Selahedînê Eyûbî li kîjan bajarî ji dayik bû?",
     "answers": [
-      "Şam",
       "Tikrît",
+      "Şam",
       "Qahîre",
       "Musil"
     ],
@@ -6420,8 +6420,8 @@
     },
     "promptTr": "Selahedînê Eyûbî hangi kentte doğdu?",
     "answersTr": [
-      "Şam",
       "Tikrit",
+      "Şam",
       "Kahire",
       "Musul"
     ],
@@ -6434,10 +6434,10 @@
     "category": "Dîrok",
     "prompt": "Şerê Çaldiranê (1514) di navbera kê de bû?",
     "answers": [
-      "Osmanî û Sefewî",
       "Roma û Sasanî",
       "Med û Asûrî",
-      "Eyûbî û Xaçparêz"
+      "Eyûbî û Xaçparêz",
+      "Osmanî û Sefewî"
     ],
     "correctAnswer": "Osmanî û Sefewî",
     "explanation": "Çaldıran Savaşı doğudaki güç dengesini değiştirdi; Kürt bölgesi iki güç arasında kaldı.",
@@ -6452,10 +6452,10 @@
     },
     "promptTr": "Çaldıran Savaşı (1514) kimler arasında oldu?",
     "answersTr": [
-      "Osmanlılar ve Safeviler",
       "Roma ve Sasaniler",
       "Medler ve Asurlular",
-      "Eyyubiler ve Haçlılar"
+      "Eyyubiler ve Haçlılar",
+      "Osmanlılar ve Safeviler"
     ],
     "correctAnswerTr": "Osmanlılar ve Safeviler"
   },
@@ -6466,8 +6466,8 @@
     "category": "Dîrok",
     "prompt": "Îdrîsê Bidlîsî di dîroka Osmanî de bi çi tê nasîn?",
     "answers": [
-      "xanedaniya kurd a serdema navîn a bi navenda Amedê",
       "Navbeynkariya di navbera Osmanî û mîrên kurd de",
+      "xanedaniya kurd a serdema navîn a bi navenda Amedê",
       "serokkomarê Komara Kurd a Mehabadê",
       "çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin"
     ],
@@ -6484,10 +6484,10 @@
     },
     "promptTr": "Îdrîsê Bidlîsî Osmanlı tarihinde neyle tanınır?",
     "answersTr": [
-      "merkezi Amed olan ortaçağ Kürt hanedanı",
       "Osmanlı ile Kürt beyleri arasında arabuluculuk",
+      "merkezi Amed olan ortaçağ Kürt hanedanı",
       "Mehabad Kürt Cumhuriyeti'nin cumhurbaşkanı",
-      "Irak rejimi tarafından idam edilen Kürt kadın aktivist"
+      "çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin"
     ],
     "correctAnswerTr": "Osmanlı ile Kürt beyleri arasında arabuluculuk"
   },
@@ -6499,8 +6499,8 @@
     "prompt": "Mîrektiya Erdelan navenda xwe li ku derê bû?",
     "answers": [
       "Silêmanî",
-      "Amed û derdora wê",
       "Sine (Sanandaj)",
+      "Amed û derdora wê",
       "Kafkasya (Gence-Anî)"
     ],
     "correctAnswer": "Sine (Sanandaj)",
@@ -6517,8 +6517,8 @@
     "promptTr": "Erdelan Emirliği'nin merkezi neredeydi?",
     "answersTr": [
       "Silêmanî",
-      "Amed ve çevresi",
       "Sine (Sanandaj)",
+      "Amed ve çevresi",
       "Kafkasya (Gence-Anî)"
     ],
     "correctAnswerTr": "Sine (Sanandaj)"
@@ -6558,10 +6558,10 @@
     "category": "Dîrok",
     "prompt": "Kovara \"Ronahî\" ji aliyê kê ve hat weşandin?",
     "answers": [
-      "Arabê Şamo",
       "Celadet Alî Bedirxan",
-      "Ehmedê Xanî",
-      "Şerefxanê Bidlîsî"
+      "pergala niştecihbûna domdar",
+      "rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin",
+      "yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
     "explanation": "Ronahî (1942), Hawar'dan sonra Celadet tarafından Şam'da çıkarıldı.",
@@ -6576,10 +6576,10 @@
     },
     "promptTr": "\"Ronahî\" dergisi kim tarafından çıkarıldı?",
     "answersTr": [
-      "Arabê Şamo",
       "Celadet Alî Bedirxan",
-      "Ehmedê Xanî",
-      "Şerefxanê Bidlîsî"
+      "kalıcı yerleşim düzeni",
+      "Süleymaniye’de basılan erken dönem Kürtçe gazete",
+      "Latin alfabesiyle basılan ilk Kürtçe dergi"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },
@@ -6590,10 +6590,10 @@
     "category": "Dîrok",
     "prompt": "Kurdên Kafkasyayê (Ermenistan-Gurcistan) bi giştî di kîjan serdemê de li wir bi cih bûn?",
     "answers": [
-      "Sedsalên 19-20em",
       "Sedsala 12em",
       "Berî zayînê",
-      "Sedsala 21em"
+      "Sedsala 21em",
+      "Sedsalên 19-20em"
     ],
     "correctAnswer": "Sedsalên 19-20em",
     "explanation": "19-20. yüzyıl savaş ve göçleriyle Kafkasya'da bir Kürt topluluğu oluştu.",
@@ -6608,10 +6608,10 @@
     },
     "promptTr": "Kafkasya Kürtleri (Ermenistan-Gürcistan) genel olarak hangi dönemde oraya yerleşti?",
     "answersTr": [
-      "19-20. yüzyıllar",
       "12. yüzyıl",
       "Milattan önce",
-      "21. yüzyıl"
+      "21. yüzyıl",
+      "19-20. yüzyıllar"
     ],
     "correctAnswerTr": "19-20. yüzyıllar"
   },
@@ -6622,8 +6622,8 @@
     "category": "Dîrok",
     "prompt": "Yekem weşana radyoyê ya bi kurdî li Erîvanê di kîjan salan de dest pê kir?",
     "answers": [
-      "Salên 1920î",
       "Salên 1950î",
+      "Salên 1920î",
       "Salên 1980î",
       "Salên 2000î"
     ],
@@ -6640,8 +6640,8 @@
     },
     "promptTr": "Erivan'da ilk Kürtçe radyo yayını hangi yıllarda başladı?",
     "answersTr": [
-      "1920'li yıllar",
       "1950'li yıllar",
+      "1920'li yıllar",
       "1980'li yıllar",
       "2000'li yıllar"
     ],
@@ -6656,8 +6656,8 @@
     "answers": [
       "Kurmancî",
       "Erebî",
-      "Tirkî",
-      "Farisî"
+      "Farisî",
+      "Tirkî"
     ],
     "correctAnswer": "Farisî",
     "explanation": "Şerefhan Bitlisi eserini Farsça yazdı; sonradan çevrildi.",
@@ -6674,8 +6674,8 @@
     "answersTr": [
       "Kurmancî",
       "Arapça",
-      "Türkçe",
-      "Farsça"
+      "Farsça",
+      "Türkçe"
     ],
     "correctAnswerTr": "Farsça"
   },
@@ -6686,8 +6686,8 @@
     "category": "Dîrok",
     "prompt": "Qelaya Dimdimê di dîroka kurdî de bi çi tê nasîn?",
     "answers": [
-      "lêkolîna borî bi rêya bermahiyên maddî",
       "Berxwedana li dijî hêzeke mezin",
+      "lêkolîna borî bi rêya bermahiyên maddî",
       "peymana ku sînorê Osmanî û Sefewî diyar kir",
       "padîşahekî/tîranekî zalim"
     ],
@@ -6704,8 +6704,8 @@
     },
     "promptTr": "Dimdim Kalesi Kürt tarihinde neyle tanınır?",
     "answersTr": [
-      "maddi kalıntılar yoluyla geçmişi araştırma",
       "Büyük bir güce karşı direniş",
+      "maddi kalıntılar yoluyla geçmişi araştırma",
       "Osmanlı-Safevi sınırını belirleyen antlaşma",
       "zalim bir kral/tiran"
     ],
@@ -6718,10 +6718,10 @@
     "category": "Dîrok",
     "prompt": "Peyva \"dîrok\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "tarih",
       "coğrafya",
       "edebiyat",
-      "müzik"
+      "müzik",
+      "tarih"
     ],
     "correctAnswer": "tarih",
     "explanation": "\"Dîrok\" Türkçede \"tarih\" demektir.",
@@ -6736,10 +6736,10 @@
     },
     "promptTr": "\"Dîrok\" sözcüğü Türkçede ne anlama gelir?",
     "answersTr": [
-      "tarih",
       "coğrafya",
       "edebiyat",
-      "müzik"
+      "müzik",
+      "tarih"
     ],
     "correctAnswerTr": "tarih"
   },
@@ -6750,8 +6750,8 @@
     "category": "Dîrok",
     "prompt": "Mîrektiyên kurd bi giştî di kîjan sedsalê de hatin ji holê rakirin?",
     "answers": [
-      "Sedsala 15em",
       "Sedsala 19em",
+      "Sedsala 15em",
       "Sedsala 21em",
       "Sedsala 10em"
     ],
@@ -6768,8 +6768,8 @@
     },
     "promptTr": "Kürt emirlikleri genel olarak hangi yüzyılda ortadan kaldırıldı?",
     "answersTr": [
-      "15. yüzyıl",
       "19. yüzyıl",
+      "15. yüzyıl",
       "21. yüzyıl",
       "10. yüzyıl"
     ],
@@ -6783,8 +6783,8 @@
     "prompt": "Melayê Cizîrî li kîjan bajarî jiya?",
     "answers": [
       "Hewlêr",
-      "Wan",
       "Cizîr",
+      "Wan",
       "Şam"
     ],
     "correctAnswer": "Cizîr",
@@ -6801,8 +6801,8 @@
     "promptTr": "Melayê Cizîrî hangi şehirde yaşadı?",
     "answersTr": [
       "Hewlêr",
-      "Wan",
       "Cizîr",
+      "Wan",
       "Şam"
     ],
     "correctAnswerTr": "Cizîr"
@@ -6814,10 +6814,10 @@
     "category": "Edebiyat",
     "prompt": "Di wêjeya kurdî de \"medrese\" çi rol lîst?",
     "answers": [
-      "perwerdehiya klasîk û perwerdekirina helbestvanan",
       "belavkirina çapkirin û weşangeriyê",
       "veguhastina devkî ya destanan ji nifşî bo nifşî",
-      "piştgiriya seraya mîran ji hunermendan re"
+      "piştgiriya seraya mîran ji hunermendan re",
+      "perwerdehiya klasîk û perwerdekirina helbestvanan"
     ],
     "correctAnswer": "perwerdehiya klasîk û perwerdekirina helbestvanan",
     "explanation": "Klasik Kürt şairlerinin çoğu medreselerde yetişti.",
@@ -6832,10 +6832,10 @@
     },
     "promptTr": "Kürt edebiyatında \"medrese\" hangi rolü oynadı?",
     "answersTr": [
-      "klasik eğitim ve şairlerin yetiştirilmesi",
       "dize sonlarındaki seslerin uyumu",
       "dünyada tanınan, Kürt kökenli usta romancı",
-      "Kürt edebiyatının en eski klasik şairlerinden biri"
+      "Kürt edebiyatının en eski klasik şairlerinden biri",
+      "klasik eğitim ve şairlerin yetiştirilmesi"
     ],
     "correctAnswerTr": "klasik eğitim ve şairlerin yetiştirilmesi"
   },
@@ -6847,8 +6847,8 @@
     "prompt": "Peyva \"çîrok\" bi Tirkî çi tê wateyê?",
     "answers": [
       "şiir",
-      "roman",
       "hikâye",
+      "roman",
       "tiyatro"
     ],
     "correctAnswer": "hikâye",
@@ -6865,8 +6865,8 @@
     "promptTr": "\"Çîrok\" kelimesi Türkçede ne anlama gelir?",
     "answersTr": [
       "şiir",
-      "roman",
       "hikâye",
+      "roman",
       "tiyatro"
     ],
     "correctAnswerTr": "hikâye"
@@ -6878,8 +6878,8 @@
     "category": "Edebiyat",
     "prompt": "\"Nûbihar\" û \"Tîroj\" bi giştî çi ne?",
     "answers": [
-      "Romanên nûjen",
       "Kovarên çand û wêjeyê",
+      "Romanên nûjen",
       "Komên muzîkê",
       "Partiyên siyasî"
     ],
@@ -6896,8 +6896,8 @@
     },
     "promptTr": "\"Nûbihar\" ve \"Tîroj\" genel olarak nedir?",
     "answersTr": [
-      "Modern romanlar",
       "Edebiyat dergileri",
+      "Modern romanlar",
       "Müzik grupları",
       "Siyasi partiler"
     ],
@@ -6911,8 +6911,8 @@
     "prompt": "Berhema \"Şivanê Kurmanca\" di kîjan salê de derket?",
     "answers": [
       "1965",
-      "1905",
       "1935",
+      "1905",
       "1985"
     ],
     "correctAnswer": "1935",
@@ -6929,8 +6929,8 @@
     "promptTr": "\"Şivanê Kurmanca\" hangi yıl yayımlandı?",
     "answersTr": [
       "1965",
-      "1905",
       "1935",
+      "1905",
       "1985"
     ],
     "correctAnswerTr": "1935"
@@ -6942,10 +6942,10 @@
     "category": "Edebiyat",
     "prompt": "Di helbesta kurdî de \"qafiye\" çi ye?",
     "answers": [
-      "Lihevhatina dengên dawiya rêzikan",
       "Kovarên çand û wêjeyê",
       "Dengbêj û çîrokbêjan",
-      "Helbestên xwe yên li ser xweza û teyran"
+      "Helbestên xwe yên li ser xweza û teyran",
+      "Lihevhatina dengên dawiya rêzikan"
     ],
     "correctAnswer": "Lihevhatina dengên dawiya rêzikan",
     "explanation": "Kafiye, dize sonlarındaki ses uyumudur.",
@@ -6960,10 +6960,10 @@
     },
     "promptTr": "Kürt şiirinde \"kafiye\" nedir?",
     "answersTr": [
-      "Dize sonlarındaki seslerin uyumu",
       "Kültür ve edebiyat dergileri",
       "Dengbêj ve masalcılar",
-      "Doğa ve kuşlar üzerine şiirler"
+      "Doğa ve kuşlar üzerine şiirler",
+      "Dize sonlarındaki seslerin uyumu"
     ],
     "correctAnswerTr": "Dize sonlarındaki seslerin uyumu"
   },
@@ -6975,8 +6975,8 @@
     "prompt": "Di klasîkên kurdî de \"mesnewî\" çi ye?",
     "answers": [
       "helbesta çar rêzikî ya bi qafiyeya yekgirtî",
-      "berhevoka helbestên helbestvanekî",
       "forma helbestî ya çîrokî bi beytên qafiyedar",
+      "berhevoka helbestên helbestvanekî",
       "helbesta azad a bêyî pîvan û qafiye"
     ],
     "correctAnswer": "forma helbestî ya çîrokî bi beytên qafiyedar",
@@ -6993,8 +6993,8 @@
     "promptTr": "Kürt klasiklerinde \"mesnevî\" nedir?",
     "answersTr": [
       "kuşların diliyle yazan ünlü Kürt şair",
-      "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi",
       "Latin temelli Kürt alfabesinin yayılması",
+      "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi",
       "Kürtçe gramer kitapları yazan dilbilimci ve yazar"
     ],
     "correctAnswerTr": "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi"
@@ -7034,8 +7034,8 @@
     "category": "Edebiyat",
     "prompt": "Wêjeya devkî ya kurdî bi piranî bi çi hatiye veguhastin?",
     "answers": [
-      "Pirtûkên çapkirî",
       "Dengbêj û çîrokbêjan",
+      "Pirtûkên çapkirî",
       "Rojnameyan",
       "Fîlman"
     ],
@@ -7052,8 +7052,8 @@
     },
     "promptTr": "Kürt sözlü edebiyatı çoğunlukla neyle aktarılmıştır?",
     "answersTr": [
-      "Basılı kitaplarla",
       "Dengbêj ve masalcılarla",
+      "Basılı kitaplarla",
       "Gazetelerle",
       "Filmlerle"
     ],
@@ -7068,8 +7068,8 @@
     "answers": [
       "Destaneke şer a li ser mîrektiyan",
       "Berhevokeke gotinên pêşiyan",
-      "Mesnewiyeke perwerdehiyê ya ji bo zarokan",
-      "Destaneke evînî ya gelêrî"
+      "Destaneke evînî ya gelêrî",
+      "Mesnewiyeke perwerdehiyê ya ji bo zarokan"
     ],
     "correctAnswer": "Destaneke evînî ya gelêrî",
     "explanation": "Zembîlfiroş, yoksul bir âşığın hikâyesidir; sözlü ve yazılı olarak yayılmıştır.",
@@ -7086,8 +7086,8 @@
     "answersTr": [
       "Tasavvufi şiirlerden oluşan divanı",
       "Edebî gece toplantıları",
-      "Halk arasında bir aşk destanı",
-      "Mela Ehmedê Xasî"
+      "Mela Ehmedê Xasî",
+      "Halk arasında bir aşk destanı"
     ],
     "correctAnswerTr": "Halk arasında bir aşk destanı"
   },
@@ -7098,10 +7098,10 @@
     "category": "Edebiyat",
     "prompt": "Wergera berhemên cîhanî bo kurdî çima girîng tê dîtin?",
     "answers": [
-      "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
       "Berhemên kurdî li derve dide naskirin",
       "Ji bo dibistanan pirtûkên fermî amade dike",
-      "Alfabeya latînî li şûna ya erebî datîne"
+      "Alfabeya latînî li şûna ya erebî datîne",
+      "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike"
     ],
     "correctAnswer": "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
     "explanation": "Çeviri yeni kavramlar getirir ve yazılı dili geliştirir.",
@@ -7116,10 +7116,10 @@
     },
     "promptTr": "Dünya eserlerinin Kürtçeye çevrilmesi neden önemli görülür?",
     "answersTr": [
-      "Yazı dilini genişletir ve söz varlığını zenginleştirir",
       "Kürt sözlü edebiyatının en hüzünlü destanlarından biri",
       "ilk Kürt romanı Şivanê Kurmanca'nın yazarı",
-      "Latin temelli Kürt alfabesinin yayılması"
+      "Latin temelli Kürt alfabesinin yayılması",
+      "Yazı dilini genişletir ve söz varlığını zenginleştirir"
     ],
     "correctAnswerTr": "Yazı dilini genişletir ve söz varlığını zenginleştirir"
   },
@@ -7131,8 +7131,8 @@
     "prompt": "Di Mem û Zînê de \"Tacdîn\" kî ye?",
     "answers": [
       "Kesa ku stranan dibêje",
-      "Kesên ku bûkê ji mala wê tînin",
       "Hevalê dilsoz ê Mem",
+      "Kesên ku bûkê ji mala wê tînin",
       "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike"
     ],
     "correctAnswer": "Hevalê dilsoz ê Mem",
@@ -7149,8 +7149,8 @@
     "promptTr": "Mem û Zîn'de \"Tacdîn\" kimdir?",
     "answersTr": [
       "Şarkıları söyleyen kişi",
-      "Gelini evinden alıp getirenler",
       "Mem'in vefalı dostu",
+      "Gelini evinden alıp getirenler",
       "Sorunları çözen saygın yaşlı kişi"
     ],
     "correctAnswerTr": "Mem'in vefalı dostu"
@@ -7163,8 +7163,8 @@
     "prompt": "Bajarê Wanê li kêleka çi ye?",
     "answers": [
       "Behra Reş",
-      "Çemê Firat",
       "Gola Wanê",
+      "Çemê Firat",
       "Behra Spî"
     ],
     "correctAnswer": "Gola Wanê",
@@ -7181,8 +7181,8 @@
     "promptTr": "Wan şehri neyin kıyısındadır?",
     "answersTr": [
       "Karadeniz",
-      "Fırat Nehri",
       "Wan Gölü",
+      "Fırat Nehri",
       "Akdeniz"
     ],
     "correctAnswerTr": "Wan Gölü"
@@ -7194,10 +7194,10 @@
     "category": "Cografya",
     "prompt": "Sûrên dîrokî yên Amedê ji kîjan kevirê volkanîk hatine çêkirin?",
     "answers": [
-      "Bazalt",
       "Mermer",
       "Granit",
-      "Kilsin"
+      "Kilsin",
+      "Bazalt"
     ],
     "correctAnswer": "Bazalt",
     "explanation": "Diyarbakır surları siyah bazalt taşındandır.",
@@ -7212,10 +7212,10 @@
     },
     "promptTr": "Amed'in tarihi surları hangi volkanik taştan yapılmıştır?",
     "answersTr": [
-      "Bazalt",
       "Mermer",
       "Granit",
-      "Kireç taşı"
+      "Kireç taşı",
+      "Bazalt"
     ],
     "correctAnswerTr": "Bazalt"
   },
@@ -7228,8 +7228,8 @@
     "answers": [
       "Firat",
       "Zap",
-      "Murat",
-      "Dîcle"
+      "Dîcle",
+      "Murat"
     ],
     "correctAnswer": "Dîcle",
     "explanation": "Botan Çayı Hakkâri'den gelir ve Dicle'ye karışır.",
@@ -7246,8 +7246,8 @@
     "answersTr": [
       "Fırat",
       "Zap",
-      "Murat",
-      "Dicle"
+      "Dicle",
+      "Murat"
     ],
     "correctAnswerTr": "Dicle"
   },
@@ -7258,10 +7258,10 @@
     "category": "Cografya",
     "prompt": "Herêma Kurdistanê ya Iraqê ji çend parêzgehên sereke pêk tê?",
     "answers": [
-      "Sê",
       "Du",
       "Çar",
-      "Pênc"
+      "Pênc",
+      "Sê"
     ],
     "correctAnswer": "Sê",
     "explanation": "Üç temel il: Erbil, Süleymaniye ve Duhok.",
@@ -7276,10 +7276,10 @@
     },
     "promptTr": "Irak Kürdistan Bölgesi kaç temel ilden oluşur?",
     "answersTr": [
-      "Üç",
       "İki",
       "Dört",
-      "Beş"
+      "Beş",
+      "Üç"
     ],
     "correctAnswerTr": "Üç"
   },
@@ -7291,8 +7291,8 @@
     "prompt": "Bajarê Kirmanşanê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
       "Bakurê Kurdistanê",
-      "Rojavayê Kurdistanê",
       "Rojhilatê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê"
     ],
     "correctAnswer": "Rojhilatê Kurdistanê",
@@ -7309,8 +7309,8 @@
     "promptTr": "Kirmanşan şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
-      "Rojava (Batı)",
       "Rojhilat (Doğu)",
+      "Rojava (Batı)",
       "Başûr (Güney)"
     ],
     "correctAnswerTr": "Rojhilat (Doğu)"
@@ -7322,10 +7322,10 @@
     "category": "Cografya",
     "prompt": "Deşta Herîrê an deştên çandiniyê yên başûrê Kurdistanê bi giştî bi çi tên nasîn?",
     "answers": [
-      "Çandiniya genim û ceh",
       "Masîgirî",
       "Pîşesaziya giran",
-      "Turîzma peravê"
+      "Turîzma peravê",
+      "Çandiniya genim û ceh"
     ],
     "correctAnswer": "Çandiniya genim û ceh",
     "explanation": "Güneydeki ovalar buğday ve arpa tarımına elverişlidir.",
@@ -7340,10 +7340,10 @@
     },
     "promptTr": "Herîr Ovası ve Başûr'un tarım ovaları genel olarak neyle tanınır?",
     "answersTr": [
-      "Buğday ve arpa tarımı",
       "Deniz balıkçılığı",
       "Ağır sanayi tesisleri",
-      "Deniz kıyısı turizmi"
+      "Deniz kıyısı turizmi",
+      "Buğday ve arpa tarımı"
     ],
     "correctAnswerTr": "Buğday ve arpa tarımı"
   },
@@ -7354,8 +7354,8 @@
     "category": "Cografya",
     "prompt": "Çiyayê Sîpanê li nêzîkî kîjan golê ye?",
     "answers": [
-      "Gola Urmiyê",
       "Gola Wanê",
+      "Gola Urmiyê",
       "Gola Tuzê",
       "Gola Beyşehîrê"
     ],
@@ -7372,8 +7372,8 @@
     },
     "promptTr": "Sîpan Dağı hangi gölün yakınındadır?",
     "answersTr": [
-      "Urmiye Gölü",
       "Wan Gölü",
+      "Urmiye Gölü",
       "Tuz Gölü",
       "Beyşehir Gölü"
     ],
@@ -7386,10 +7386,10 @@
     "category": "Cografya",
     "prompt": "Gola Urmiyê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Rojhilatê Kurdistanê",
       "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
-      "Başûrê Kurdistanê"
+      "Başûrê Kurdistanê",
+      "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Rojhilatê Kurdistanê",
     "explanation": "Urmiye Gölü bölgenin en büyük gölüdür, suyu tuzludur ve Rojhilat'ta kalır; su seviyesi son on yılda büyük ölçüde düşmüştür.",
@@ -7404,10 +7404,10 @@
     },
     "promptTr": "Urmiye Gölü Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
-      "Rojhilat (Doğu)",
       "Bakur (Kuzey)",
       "Rojava (Batı)",
-      "Başûr (Güney)"
+      "Başûr (Güney)",
+      "Rojhilat (Doğu)"
     ],
     "correctAnswerTr": "Rojhilat (Doğu)"
   },
@@ -7447,8 +7447,8 @@
     "prompt": "Bajarê Dihokê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
       "Bakurê Kurdistanê",
-      "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",
+      "Rojavayê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Başûrê Kurdistanê",
@@ -7465,8 +7465,8 @@
     "promptTr": "Dihok şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
-      "Rojava (Batı)",
       "Başûr (Güney)",
+      "Rojava (Batı)",
       "Rojhilat (Doğu)"
     ],
     "correctAnswerTr": "Başûr (Güney)"
@@ -7478,10 +7478,10 @@
     "category": "Cografya",
     "prompt": "\"Zozan\" û \"germiyan\" di jiyana koçeran de çi diyar dikin?",
     "answers": [
-      "Warê havînê û warê zivistanê",
       "Girseya çiyayî ya nêzî Çemê Xerzan",
       "deşta tektonîk a bilind a li Colemêrgê",
-      "Avahiyên kevirî yên li ser çiyê"
+      "Avahiyên kevirî yên li ser çiyê",
+      "Warê havînê û warê zivistanê"
     ],
     "correctAnswer": "Warê havînê û warê zivistanê",
     "explanation": "Göçerler yazın yaylada, kışın kışlakta kalır.",
@@ -7496,10 +7496,10 @@
     },
     "promptTr": "Göçer yaşamında \"zozan\" ve \"germiyan\" neyi belirtir?",
     "answersTr": [
-      "Yaylak ve kışlak alanları",
       "Xerzan Çayı yakınındaki dağ kütlesi",
       "Colemêrg'deki yüksek tektonik ova",
-      "Yamaca kurulmuş taş yapılar"
+      "Yamaca kurulmuş taş yapılar",
+      "Yaylak ve kışlak alanları"
     ],
     "correctAnswerTr": "Yaylak ve kışlak alanları"
   },
@@ -7512,8 +7512,8 @@
     "answers": [
       "Asûrî",
       "Ermenî",
-      "Turkmen",
-      "Êzidî"
+      "Êzidî",
+      "Turkmen"
     ],
     "correctAnswer": "Êzidî",
     "explanation": "Şengal, Ezidi toplumunun ana yurdudur.",
@@ -7530,8 +7530,8 @@
     "answersTr": [
       "Asuri",
       "Ermeni",
-      "Türkmen",
-      "Êzidî"
+      "Êzidî",
+      "Türkmen"
     ],
     "correctAnswerTr": "Êzidî"
   },
@@ -7542,10 +7542,10 @@
     "category": "Cografya",
     "prompt": "Peyva \"behr\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "deniz",
       "göl",
       "nehir",
-      "çeşme"
+      "çeşme",
+      "deniz"
     ],
     "correctAnswer": "deniz",
     "explanation": "\"Behr\" Türkçede \"deniz\" demektir.",
@@ -7560,10 +7560,10 @@
     },
     "promptTr": "\"Behr\" kelimesi Türkçede ne anlama gelir?",
     "answersTr": [
-      "deniz",
       "göl",
       "nehir",
-      "çeşme"
+      "çeşme",
+      "deniz"
     ],
     "correctAnswerTr": "deniz"
   },
@@ -7575,8 +7575,8 @@
     "prompt": "Bajarê Efrînê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
       "Bakurê Kurdistanê",
-      "Başûrê Kurdistanê",
       "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Rojavayê Kurdistanê",
@@ -7593,8 +7593,8 @@
     "promptTr": "Efrîn şehri Kurdistanê'nin hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
-      "Başûr (Güney)",
       "Rojava (Batı)",
+      "Başûr (Güney)",
       "Rojhilat (Doğu)"
     ],
     "correctAnswerTr": "Rojava (Batı)"
@@ -7606,10 +7606,10 @@
     "category": "Muzîk",
     "prompt": "\"Şeştar\" an amûrên têlî yên kurdî bi giştî çawa tên lêxistin?",
     "answers": [
-      "Bi tiliyan an bi mizrabê",
       "Dawet û govendê",
       "Koma stranbêj û muzîkjenan",
-      "Awayê stranbêjiya bi kom"
+      "Awayê stranbêjiya bi kom",
+      "Bi tiliyan an bi mizrabê"
     ],
     "correctAnswer": "Bi tiliyan an bi mizrabê",
     "explanation": "Şeştar, tembûr ve saz parmakla ya da mızrapla çalınır.",
@@ -7624,10 +7624,10 @@
     },
     "promptTr": "\"Şeştar\" ya da Kürt telli çalgıları genel olarak nasıl çalınır?",
     "answersTr": [
-      "Parmakla ya da mızrapla",
       "Düğün ve govendle",
       "Şarkıcı ve müzisyen topluluğuyla",
-      "Toplu söyleme biçimiyle"
+      "Toplu söyleme biçimiyle",
+      "Parmakla ya da mızrapla"
     ],
     "correctAnswerTr": "Parmakla ya da mızrapla"
   },
@@ -7640,8 +7640,8 @@
     "answers": [
       "Kesê ku amûrê çêdike",
       "Kesê ku reqsê hîn dike",
-      "Kesê ku helbestê dinivîse",
-      "Kesa ku stranan dibêje"
+      "Kesa ku stranan dibêje",
+      "Kesê ku helbestê dinivîse"
     ],
     "correctAnswer": "Kesa ku stranan dibêje",
     "explanation": "\"Stranbêj\", \"stran\" ve \"bêj\" (söylemek) sözcüklerinden oluşur.",
@@ -7658,8 +7658,8 @@
     "answersTr": [
       "Çalgı yapan kişi",
       "Dans öğreten kişi",
-      "Şiir yazan kişi",
-      "Şarkıları söyleyen kişi"
+      "Şarkıları söyleyen kişi",
+      "Şiir yazan kişi"
     ],
     "correctAnswerTr": "Şarkıları söyleyen kişi"
   },
@@ -7670,10 +7670,10 @@
     "category": "Muzîk",
     "prompt": "Di muzîka kurdî de \"makam\" an \"avaz\" çi diyar dike?",
     "answers": [
-      "Qalibê dengî yê stranê",
       "Hejmara stranbêjan",
       "Dirêjahiya dawetê",
-      "Navê amûrê"
+      "Navê amûrê",
+      "Qalibê dengî yê stranê"
     ],
     "correctAnswer": "Qalibê dengî yê stranê",
     "explanation": "Avaz, şarkının üzerine kurulduğu makam kalıbıdır.",
@@ -7688,10 +7688,10 @@
     },
     "promptTr": "Kürt müziğinde \"makam\" ya da \"avaz\" neyi belirtir?",
     "answersTr": [
-      "Şarkının ses kalıbını",
       "Şarkıcıların sayısını",
       "Düğünün uzunluğunu",
-      "Çalgının adını"
+      "Çalgının adını",
+      "Şarkının ses kalıbını"
     ],
     "correctAnswerTr": "Şarkının ses kalıbını"
   },
@@ -7703,8 +7703,8 @@
     "prompt": "Di dawetên kurdî de reqsa komî bi gelemperî bi kîjan amûran tê meşandin?",
     "answers": [
       "Tembûr û bilûr",
-      "Piano û gîtar",
       "Dahol û zirne",
+      "Piano û gîtar",
       "Erbane û ney"
     ],
     "correctAnswer": "Dahol û zirne",
@@ -7721,8 +7721,8 @@
     "promptTr": "Kürt düğünlerinde toplu dans genellikle hangi çalgılarla yürütülür?",
     "answersTr": [
       "Tembûr ve bilûr",
-      "Piyano ve gitar",
       "Def ve zurna",
+      "Piyano ve gitar",
       "Erbane ve ney"
     ],
     "correctAnswerTr": "Def ve zurna"
@@ -7734,10 +7734,10 @@
     "category": "Muzîk",
     "prompt": "Di kilamên dengbêjan de \"vegotin\" çima girîng e?",
     "answers": [
-      "Kilam çîrokeke dîrokî diguhezîne",
       "Tenê ahenga dengî girîng e",
       "Reqs pê re tê kirin",
-      "Amûr pê re tên lêxistin"
+      "Amûr pê re tên lêxistin",
+      "Kilam çîrokeke dîrokî diguhezîne"
     ],
     "correctAnswer": "Kilam çîrokeke dîrokî diguhezîne",
     "explanation": "Dengbêjlik hem müzik hem sözlü arşivdir: olaylar kilamla korunur.",
@@ -7752,10 +7752,10 @@
     },
     "promptTr": "Dengbêj kilamlarında anlatı neden önemlidir?",
     "answersTr": [
-      "Kilam tarihî bir hikâyeyi aktarır",
       "Yalnızca ses ahengi önemlidir",
       "Yanında dans edilir",
-      "Yanında çalgı çalınır"
+      "Yanında çalgı çalınır",
+      "Kilam tarihî bir hikâyeyi aktarır"
     ],
     "correctAnswerTr": "Kilam tarihî bir hikâyeyi aktarır"
   },
@@ -7768,8 +7768,8 @@
     "answers": [
       "dans",
       "saz",
-      "düğün",
-      "türkü"
+      "türkü",
+      "düğün"
     ],
     "correctAnswer": "türkü",
     "explanation": "\"Kilam\", hikâye anlatan uzun ezgilerdir.",
@@ -7786,8 +7786,8 @@
     "answersTr": [
       "dans",
       "saz",
-      "düğün",
-      "türkü"
+      "türkü",
+      "düğün"
     ],
     "correctAnswerTr": "türkü"
   },
@@ -7798,10 +7798,10 @@
     "category": "Muzîk",
     "prompt": "Di muzîka kurdî ya nûjen de \"kom\" çi ye?",
     "answers": [
-      "Koma stranbêj û muzîkjenan",
       "Bûyerên şer û berxwedanê",
       "Stranên kurt ên bi gelemperî evîndar",
-      "Kilam çîrokeke dîrokî diguhezîne"
+      "Kilam çîrokeke dîrokî diguhezîne",
+      "Koma stranbêj û muzîkjenan"
     ],
     "correctAnswer": "Koma stranbêj û muzîkjenan",
     "explanation": "\"Kom\", birlikte söyleyip çalan topluluktur; 1990'ların toplu müziği bununla anılır.",
@@ -7816,10 +7816,10 @@
     },
     "promptTr": "Modern Kürt müziğinde \"kom\" nedir?",
     "answersTr": [
-      "Şarkıcı ve müzisyen topluluğudur",
       "Savaş ve direniş olaylarıdır",
       "Çoğunlukla aşk üzerine kısa şarkılardır",
-      "Kilamın tarihî bir hikâyeyi aktarmasıdır"
+      "Kilamın tarihî bir hikâyeyi aktarmasıdır",
+      "Şarkıcı ve müzisyen topluluğudur"
     ],
     "correctAnswerTr": "Şarkıcı ve müzisyen topluluğudur"
   },
@@ -7860,8 +7860,8 @@
     "answers": [
       "cureyekî kilamê yê bi gelemperî evîndar",
       "kesa ku bi giştî stranan dibêje",
-      "edeta ku ji muzîkjenan re pere tê avêtin",
-      "awayê gotinê yê taybetî yê herêmekê"
+      "awayê gotinê yê taybetî yê herêmekê",
+      "edeta ku ji muzîkjenan re pere tê avêtin"
     ],
     "correctAnswer": "awayê gotinê yê taybetî yê herêmekê",
     "explanation": "Her yöre — Serhed, Botan, Behdinan — kendi dengbêj üslubuna sahiptir.",
@@ -7878,8 +7878,8 @@
     "answersTr": [
       "çoğunlukla aşk üzerine bir kilam türü",
       "genel olarak şarkıları söyleyen kişi",
-      "müzisyenlere para atma âdeti",
-      "bir yörenin kendine özgü söyleyiş biçimi"
+      "bir yörenin kendine özgü söyleyiş biçimi",
+      "müzisyenlere para atma âdeti"
     ],
     "correctAnswerTr": "bir yörenin kendine özgü söyleyiş biçimi"
   },
@@ -7890,10 +7890,10 @@
     "category": "Muzîk",
     "prompt": "Di stranên zarokan ên kurdî de \"lorî\" çi ye?",
     "answers": [
-      "Strana razanê",
       "Strana dawetê",
       "Kilama şer",
-      "Strana cejnê"
+      "Strana cejnê",
+      "Strana razanê"
     ],
     "correctAnswer": "Strana razanê",
     "explanation": "Lorî (ninni), çocuğu uyutmak için söylenir.",
@@ -7908,10 +7908,10 @@
     },
     "promptTr": "Kürtçe çocuk şarkılarında \"lorî\" nedir?",
     "answersTr": [
-      "Uyku şarkısı",
       "Düğün şarkısı",
       "Savaş kilamı",
-      "Bayram şarkısı"
+      "Bayram şarkısı",
+      "Uyku şarkısı"
     ],
     "correctAnswerTr": "Uyku şarkısı"
   },
@@ -7924,8 +7924,8 @@
     "answers": [
       "Komên muzîka kurdî ya nûjen",
       "veguhastina muzîkal a bi têkiliya hoste-şagird",
-      "muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê",
-      "Belavbûna cîhanî ya stran û tomarkirinê"
+      "Belavbûna cîhanî ya stran û tomarkirinê",
+      "muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê"
     ],
     "correctAnswer": "Belavbûna cîhanî ya stran û tomarkirinê",
     "explanation": "Diaspora yeni stüdyo, yayın ve festivaller getirdi; şarkılar dünyaya yayıldı.",
@@ -7942,8 +7942,8 @@
     "answersTr": [
       "Modern Kürt müziği gruplarını",
       "usta-çırak ilişkisiyle yürüyen müzikal aktarımı",
-      "Şirnex ve Cizîr yöresinin ritmik ve makamsal müziğini",
-      "Şarkı ve kayıtların dünyaya yayılmasını"
+      "Şarkı ve kayıtların dünyaya yayılmasını",
+      "Şirnex ve Cizîr yöresinin ritmik ve makamsal müziğini"
     ],
     "correctAnswerTr": "Şarkı ve kayıtların dünyaya yayılmasını"
   },
@@ -7954,10 +7954,10 @@
     "category": "Muzîk",
     "prompt": "Peyva \"govend\" bi Tirkî çi tê wateyê?",
     "answers": [
-      "halay",
       "şarkı",
       "saz",
-      "düğün"
+      "düğün",
+      "halay"
     ],
     "correctAnswer": "halay",
     "explanation": "\"Govend\" Türkçede \"halay\" demektir.",
@@ -7972,10 +7972,10 @@
     },
     "promptTr": "\"Govend\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
-      "halay",
       "şarkı",
       "saz",
-      "düğün"
+      "düğün",
+      "halay"
     ],
     "correctAnswerTr": "halay"
   },
@@ -7986,8 +7986,8 @@
     "category": "Siyaset",
     "prompt": "Di siyaseta herêmî de \"komîsyon\" bi giştî çi ye?",
     "answers": [
-      "Dadgeheke taybet",
       "Koma xebatê ya li ser mijarekê",
+      "Dadgeheke taybet",
       "Yekîneyeke leşkerî",
       "Sendîkayeke karkeran"
     ],
@@ -8004,8 +8004,8 @@
     },
     "promptTr": "Yerel siyasette \"komisyon\" genel olarak nedir?",
     "answersTr": [
-      "Özel yetkili mahkeme",
       "Konu bazlı çalışma grubu",
+      "Özel yetkili mahkeme",
       "Askerî bir birlik",
       "İşçilerin sendikası"
     ],
@@ -8019,8 +8019,8 @@
     "prompt": "Peyva \"wekhevî\" bi Tirkî çi tê wateyê?",
     "answers": [
       "özgürlük",
-      "barış",
       "eşitlik",
+      "barış",
       "adalet"
     ],
     "correctAnswer": "eşitlik",
@@ -8037,8 +8037,8 @@
     "promptTr": "\"Wekhevî\" kelimesi Türkçede ne anlama gelir?",
     "answersTr": [
       "özgürlük",
-      "barış",
       "eşitlik",
+      "barış",
       "adalet"
     ],
     "correctAnswerTr": "eşitlik"
@@ -8050,10 +8050,10 @@
     "category": "Siyaset",
     "prompt": "Êzidiyên Şengalê di 2014an de bi kîjan bûyerê rû bi rû man?",
     "answers": [
-      "Êrîşa Şengalê",
       "Referandûma serxwebûnê",
       "Peymana Lozanê",
-      "Serjimara Cizîrê"
+      "Serjimara Cizîrê",
+      "Êrîşa Şengalê"
     ],
     "correctAnswer": "Êrîşa Şengalê",
     "explanation": "Ağustos 2014'te Şengal saldırıya uğradı; binlerce Ezidi katledildi veya kaçırıldı.",
@@ -8068,10 +8068,10 @@
     },
     "promptTr": "Ezidi Kürtler 2014'te hangi olayla karşı karşıya kaldı?",
     "answersTr": [
-      "Şengal saldırısı",
       "Bağımsızlık referandumu",
       "Lozan Antlaşması",
-      "Cizîr sayımı"
+      "Cizîr sayımı",
+      "Şengal saldırısı"
     ],
     "correctAnswerTr": "Şengal saldırısı"
   },
@@ -8083,8 +8083,8 @@
     "prompt": "Zimanê perwerdehiyê li Herêma Kurdistanê ya Iraqê bi giştî çi ye?",
     "answers": [
       "Erebî",
-      "Îngilîzî",
       "Kurdî",
+      "Îngilîzî",
       "Farisî"
     ],
     "correctAnswer": "Kurdî",
@@ -8101,8 +8101,8 @@
     "promptTr": "Irak Kürdistan Bölgesi'nde eğitim dili genel olarak nedir?",
     "answersTr": [
       "Arapça",
-      "İngilizce",
       "Kürtçe",
+      "İngilizce",
       "Farsça"
     ],
     "correctAnswerTr": "Kürtçe"
@@ -8143,8 +8143,8 @@
     "prompt": "Di paradîgmayê de \"civaka xwezayî\" çi tê wateyê?",
     "answers": [
       "civaka exlaqî-polîtîk",
-      "rexneya patriyarkayê",
       "civaka berî hiyerarşiya dewletê",
+      "rexneya patriyarkayê",
       "yekîtiya wekhev a beşên cuda yên bindest"
     ],
     "correctAnswer": "civaka berî hiyerarşiya dewletê",
@@ -8161,8 +8161,8 @@
     "promptTr": "Paradigmada \"doğal toplum\" ne anlama gelir?",
     "answersTr": [
       "ahlaki-politik toplum",
-      "patriyarka eleştirisi",
       "devlet hiyerarşisinden önceki toplum",
+      "patriyarka eleştirisi",
       "ezilen farklı kesimlerin eşit birliği"
     ],
     "correctAnswerTr": "devlet hiyerarşisinden önceki toplum"
@@ -8174,10 +8174,10 @@
     "category": "Paradigma",
     "prompt": "\"Hişmendiya civakî\" di vê paradîgmayê de çima girîng e?",
     "answers": [
-      "guhertin bi perwerdehî û hişmendiyê dest pê dike",
       "biryargirtina rasterast a gel bêyî nûneran",
       "modela birêvebirina civakê ya li derveyî sîstema dewlet-neteweyê",
-      "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de"
+      "têkiliya hevseng û dostane ya di navbera civakê û xwezayê de",
+      "guhertin bi perwerdehî û hişmendiyê dest pê dike"
     ],
     "correctAnswer": "guhertin bi perwerdehî û hişmendiyê dest pê dike",
     "explanation": "Akademiler ve toplumsal eğitim, dönüşümün ana araçlarıdır.",
@@ -8192,10 +8192,10 @@
     },
     "promptTr": "\"Toplumsal bilinç\" bu paradigmada neden önemlidir?",
     "answersTr": [
-      "değişim eğitim ve bilinçle başlar",
       "halkın temsilcisiz doğrudan karar alması",
       "ulus-devlet sisteminin dışındaki toplum yönetimi modeli",
-      "toplum ile doğa arasındaki dengeli ve dostça ilişki"
+      "toplum ile doğa arasındaki dengeli ve dostça ilişki",
+      "değişim eğitim ve bilinçle başlar"
     ],
     "correctAnswerTr": "değişim eğitim ve bilinçle başlar"
   },
@@ -8208,8 +8208,8 @@
     "answers": [
       "Azadiya jinê, ekolojî û demokrasî",
       "Hilberîna hevpar li şûna kara kesane",
-      "Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin",
-      "Pirrengiyê bi zorê yek dike"
+      "Pirrengiyê bi zorê yek dike",
+      "Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin"
     ],
     "correctAnswer": "Pirrengiyê bi zorê yek dike",
     "explanation": "Ulus-devlet farklı dil, kültür ve kimlikleri tek kalıba sokar.",
@@ -8226,8 +8226,8 @@
     "answersTr": [
       "Kadın özgürlüğü, ekoloji ve demokrasi",
       "Bireysel kâr yerine ortak üretim",
-      "Ortak değer ve kararla yönetilen toplum",
-      "Çokrenkliliği zorla tekleştirmesi"
+      "Çokrenkliliği zorla tekleştirmesi",
+      "Ortak değer ve kararla yönetilen toplum"
     ],
     "correctAnswerTr": "Çokrenkliliği zorla tekleştirmesi"
   },
@@ -8238,10 +8238,10 @@
     "category": "Paradigma",
     "prompt": "Peyva \"azadî\" û \"wekhevî\" bi hev re di vê paradîgmayê de bi çi ve girêdayî ne?",
     "answers": [
-      "Bi azadiya jinê ve",
       "Bi aboriya bazarê ve",
       "Bi hêza leşkerî ve",
-      "Bi sînoran ve"
+      "Bi sînoran ve",
+      "Bi azadiya jinê ve"
     ],
     "correctAnswer": "Bi azadiya jinê ve",
     "explanation": "Toplumun özgürlüğü, kadının özgürlük düzeyiyle ölçülür.",
@@ -8256,10 +8256,10 @@
     },
     "promptTr": "Bu paradigmada \"özgürlük\" ile \"eşitlik\" birlikte neye bağlanır?",
     "answersTr": [
-      "Kadın özgürlüğüne",
       "Pazar ekonomisine",
       "Askeri güce",
-      "Sınırlara"
+      "Sınırlara",
+      "Kadın özgürlüğüne"
     ],
     "correctAnswerTr": "Kadın özgürlüğüne"
   },
@@ -8299,8 +8299,8 @@
     "prompt": "\"Perwerdehiya bi zimanê zikmakî\" di vê paradîgmayê de çima girîng tê dîtin?",
     "answers": [
       "Ji ber ku koletiya yekem li ser jinê hatiye avakirin",
-      "Zanist ji civak û exlaqê nayê veqetandin",
       "Nasname û hişmendî bi ziman tê veguhastin",
+      "Zanist ji civak û exlaqê nayê veqetandin",
       "Hilberîn li gorî pêdiviya civakê, ne li gorî qezencê"
     ],
     "correctAnswer": "Nasname û hişmendî bi ziman tê veguhastin",
@@ -8317,8 +8317,8 @@
     "promptTr": "\"Anadilde eğitim\" bu paradigmada neden önemli görülür?",
     "answersTr": [
       "İlk kölelik kadın üzerinde kurulduğu için",
-      "Bilim toplumdan ve ahlaktan ayrılamaz",
       "Kimlik ve bilinç dil aracılığıyla aktarılır",
+      "Bilim toplumdan ve ahlaktan ayrılamaz",
       "Üretim kâra göre değil, toplumun ihtiyacına göre"
     ],
     "correctAnswerTr": "Kimlik ve bilinç dil aracılığıyla aktarılır"
@@ -8330,10 +8330,10 @@
     "category": "Paradigma",
     "prompt": "Di têgîna \"modernîteya kapîtalîst\" de sê stûnên rexnekirî çi ne?",
     "answers": [
-      "kapîtalîzm, pîşesazîparêzî û dewleta netewe",
       "xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e",
       "pergaleke li ser bingeha jiyana komînal û hevgirtinê",
-      "milkiyeta axê û amûran a gişî civakê"
+      "milkiyeta axê û amûran a gişî civakê",
+      "kapîtalîzm, pîşesazîparêzî û dewleta netewe"
     ],
     "correctAnswer": "kapîtalîzm, pîşesazîparêzî û dewleta netewe",
     "explanation": "Bu üç sütun, toplumsal ve ekolojik krizin kökü olarak değerlendirilir.",
@@ -8348,10 +8348,10 @@
     },
     "promptTr": "\"Kapitalist modernite\" kavramında eleştirilen üç sütun nedir?",
     "answersTr": [
-      "kapitalizm, endüstriyalizm ve ulus-devlet",
       "sınıflı, hiyerarşik ve merkezinde devlet olan tarihsel çizgi",
       "komünal yaşam ve dayanışma temelli bir sistem",
-      "toprağın ve araçların toplumun ortak mülkiyeti"
+      "toprağın ve araçların toplumun ortak mülkiyeti",
+      "kapitalizm, endüstriyalizm ve ulus-devlet"
     ],
     "correctAnswerTr": "kapitalizm, endüstriyalizm ve ulus-devlet"
   },
@@ -8364,8 +8364,8 @@
     "answers": [
       "hilberîn li gorî pêdiviya civakê, ne li gorî qezencê",
       "zanistiya jinê ku bingeha azadiya civakê li ser azadiya jinê ava dike",
-      "biryargirtina rasterast a gel bêyî nûneran",
-      "pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe"
+      "pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe",
+      "biryargirtina rasterast a gel bêyî nûneran"
     ],
     "correctAnswer": "pêdiviya herêmê bi xwe tê dîtin, veguhastin kêm dibe",
     "explanation": "Yerel üretim, enerji tüketimini ve dışa bağımlılığı azaltır.",
@@ -8382,8 +8382,8 @@
     "answersTr": [
       "üretim kâra göre değil, toplumun ihtiyacına göre",
       "toplumun özgürlüğünü kadın özgürlüğü üzerine kuran kadın bilimi",
-      "halkın temsilcisiz doğrudan karar alması",
-      "bölgenin ihtiyacı yerinde karşılanır, taşıma azalır"
+      "bölgenin ihtiyacı yerinde karşılanır, taşıma azalır",
+      "halkın temsilcisiz doğrudan karar alması"
     ],
     "correctAnswerTr": "bölgenin ihtiyacı yerinde karşılanır, taşıma azalır"
   },
@@ -8394,8 +8394,8 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Yol\" di sala 1982'an de Palmiya Zêrîn a Cannesê bi kîjan fîlmî re parve kir?",
     "answers": [
-      "Gandhi",
       "Missing",
+      "Gandhi",
       "E.T.",
       "Fanny û Alexander"
     ],
@@ -8412,8 +8412,8 @@
     },
     "promptTr": "\"Yol\" filmi 1982'de Cannes'da Altın Palmiye'yi hangi filmle paylaştı?",
     "answersTr": [
-      "Gandhi",
       "Missing",
+      "Gandhi",
       "E.T.",
       "Fanny ve Alexander"
     ],
@@ -8428,8 +8428,8 @@
     "answers": [
       "Palmiya Zêrîn",
       "Xelata Mezin a Jûriyê",
-      "Şêrê Zêrîn",
-      "Caméra d'Or"
+      "Caméra d'Or",
+      "Şêrê Zêrîn"
     ],
     "correctAnswer": "Caméra d'Or",
     "explanation": "Caméra d'Or, bir yönetmenin ilk filmine verilen ödüldür; Bahman Ghobadi bu ödülü 2000 yılında aldı.",
@@ -8446,8 +8446,8 @@
     "answersTr": [
       "Altın Palmiye",
       "Jüri Büyük Ödülü",
-      "Altın Aslan",
-      "Caméra d'Or"
+      "Caméra d'Or",
+      "Altın Aslan"
     ],
     "correctAnswerTr": "Caméra d'Or"
   },
@@ -8459,8 +8459,8 @@
     "prompt": "Bûyera fîlmê \"Kûsî jî Difirin\" li ku derê diqewime?",
     "answers": [
       "Li zozanên bilind ên Çiyayê Agirî",
-      "Li taxeke koçberan a bajarekî mezin",
       "Li kampeke penaberan a Kurdistana Iraqê",
+      "Li taxeke koçberan a bajarekî mezin",
       "Li gundekî çiyayî yê li ser sînorê Îranê"
     ],
     "correctAnswer": "Li kampeke penaberan a Kurdistana Iraqê",
@@ -8477,8 +8477,8 @@
     "promptTr": "\"Kûsî jî Difirin\" filminin olayları nerede geçer?",
     "answersTr": [
       "Çiyayê Agirî'nin yüksek yaylalarında",
-      "Büyük bir kentin göçmen mahallesinde",
       "Irak Kürdistanı'ndaki bir mülteci kampında",
+      "Büyük bir kentin göçmen mahallesinde",
       "Îran sınırındaki bir dağ köyünde"
     ],
     "correctAnswerTr": "Irak Kürdistanı'ndaki bir mülteci kampında"
@@ -8492,8 +8492,8 @@
     "answers": [
       "Gurcistan",
       "Azerbaycan",
-      "Ûkrayna",
-      "Ermenistan"
+      "Ermenistan",
+      "Ûkrayna"
     ],
     "correctAnswer": "Ermenistan",
     "explanation": "Hiner Saleem, filmi Ezidi Kürtlerin yaşadığı bir köyde çekti.",
@@ -8510,8 +8510,8 @@
     "answersTr": [
       "Gürcistan",
       "Azerbaycan",
-      "Ukrayna",
-      "Ermenistan"
+      "Ermenistan",
+      "Ukrayna"
     ],
     "correctAnswerTr": "Ermenistan"
   },
@@ -8522,8 +8522,8 @@
     "category": "Sînema",
     "prompt": "Kazim Öz di destpêka kariyera xwe de li kîjan saziya çandî xebitî?",
     "answers": [
-      "Enstîtuya Kurdî ya Parîsê",
       "Navenda Çanda Mezopotamyayê",
+      "Enstîtuya Kurdî ya Parîsê",
       "Akademiya Fîlman a Berlînê",
       "Yekîtiya Nivîskarên Tirkiyeyê"
     ],
@@ -8540,8 +8540,8 @@
     },
     "promptTr": "Kazim Öz kariyerinin başında hangi kültür kurumunda çalıştı?",
     "answersTr": [
-      "Paris Kürt Enstitüsü",
       "Mezopotamya Kültür Merkezi",
+      "Paris Kürt Enstitüsü",
       "Berlin Film Akademisi",
       "Türkiye Yazarlar Birliği"
     ],
@@ -8556,8 +8556,8 @@
     "answers": [
       "Stenbol",
       "Adana",
-      "Berlîn",
-      "Parîs"
+      "Parîs",
+      "Berlîn"
     ],
     "correctAnswer": "Parîs",
     "explanation": "1984'te sürgünde hayatını kaybetti ve Père-Lachaise mezarlığına defnedildi.",
@@ -8574,8 +8574,8 @@
     "answersTr": [
       "İstanbul",
       "Adana",
-      "Berlin",
-      "Paris"
+      "Paris",
+      "Berlin"
     ],
     "correctAnswerTr": "Paris"
   },
@@ -8587,8 +8587,8 @@
     "prompt": "Fîlmê \"Klama Dayîka Min\" xelata fîlmê herî baş li kîjan festîvalê wergirt?",
     "answers": [
       "Festîvala Cannesê",
-      "Festîvala Berlînê",
       "Festîvala Fîlman a Saraybosnayê",
+      "Festîvala Berlînê",
       "Festîvala Venedîkê"
     ],
     "correctAnswer": "Festîvala Fîlman a Saraybosnayê",
@@ -8605,8 +8605,8 @@
     "promptTr": "\"Klama Dayîka Min\" filmi en iyi film ödülünü hangi festivalde aldı?",
     "answersTr": [
       "Cannes Festivali",
-      "Berlin Festivali",
       "Saraybosna Film Festivali",
+      "Berlin Festivali",
       "Venedik Festivali"
     ],
     "correctAnswerTr": "Saraybosna Film Festivali"
@@ -8620,8 +8620,8 @@
     "answers": [
       "Îran",
       "Sûriye",
-      "Ermenistan",
-      "Iraq"
+      "Iraq",
+      "Ermenistan"
     ],
     "correctAnswer": "Iraq",
     "explanation": "Festival Kürdistan Bölgesi'nde düzenlenir ve yeni Kürt filmleri orada gösterilir.",
@@ -8638,8 +8638,8 @@
     "answersTr": [
       "İran",
       "Suriye",
-      "Ermenistan",
-      "Irak"
+      "Irak",
+      "Ermenistan"
     ],
     "correctAnswerTr": "Irak"
   },
@@ -8650,8 +8650,8 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Zare\" (1926), yek ji fîlmên herî kevn ên li ser jiyana kurdan, li kîjan welatî hatiye kişandin?",
     "answers": [
-      "Swêd",
       "Yekîtiya Soviyetê",
+      "Swêd",
       "Îtalya",
       "Koreya Başûr"
     ],
@@ -8668,8 +8668,8 @@
     },
     "promptTr": "Kürtlerin yaşamını anlatan en eski filmlerden \"Zare\" (1926) hangi ülkede çekilmiştir?",
     "answersTr": [
-      "İsveç",
       "Sovyetler Birliği",
+      "İsveç",
       "İtalya",
       "Güney Kore"
     ],
@@ -8683,8 +8683,8 @@
     "prompt": "Di fîlmê \"Dema Hespên Serxweş\" de lîstikvan bi piranî ji kîjan komê hatine hilbijartin?",
     "answers": [
       "Ji lîstikvanên şanoya Tehranê",
-      "Ji lîstikvanên navdar ên Hollywoodê",
       "Ji gundiyên herêmê yên ne pîşeyî",
+      "Ji lîstikvanên navdar ên Hollywoodê",
       "Ji stranbêjên navdar ên herêmê"
     ],
     "correctAnswer": "Ji gundiyên herêmê yên ne pîşeyî",
@@ -8701,8 +8701,8 @@
     "promptTr": "\"Dema Hespên Serxweş\" filminde oyuncular çoğunlukla hangi gruptan seçildi?",
     "answersTr": [
       "Tahran tiyatrosunun oyuncularından",
-      "Hollywood'un ünlü oyuncularından",
       "Yörenin profesyonel olmayan köylülerinden",
+      "Hollywood'un ünlü oyuncularından",
       "Yörenin tanınmış şarkıcılarından"
     ],
     "correctAnswerTr": "Yörenin profesyonel olmayan köylülerinden"
@@ -8714,10 +8714,10 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Parazît\" ji kîjan welatî ye?",
     "answers": [
-      "Koreya Başûr",
       "Japonya",
       "Çîn",
-      "Taylandistan"
+      "Taylandistan",
+      "Koreya Başûr"
     ],
     "correctAnswer": "Koreya Başûr",
     "explanation": "Filmin yönetmeni Bong Joon-ho'dur; film 2019 yılında gösterime girdi.",
@@ -8732,10 +8732,10 @@
     },
     "promptTr": "\"Parazît\" filmi hangi ülkenindir?",
     "answersTr": [
-      "Güney Kore",
       "Japonya",
       "Çin",
-      "Tayland"
+      "Tayland",
+      "Güney Kore"
     ],
     "correctAnswerTr": "Güney Kore"
   },
@@ -8748,8 +8748,8 @@
     "answers": [
       "Roma",
       "Amélie",
-      "Rashomon",
-      "Parazît"
+      "Parazît",
+      "Rashomon"
     ],
     "correctAnswer": "Parazît",
     "explanation": "Bu 2020 yılında gerçekleşti ve Oscar tarihinde ilk kez yaşandı.",
@@ -8766,8 +8766,8 @@
     "answersTr": [
       "Roma",
       "Amélie",
-      "Rashomon",
-      "Parazît"
+      "Parazît",
+      "Rashomon"
     ],
     "correctAnswerTr": "Parazît"
   },
@@ -8778,10 +8778,10 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"Heft Samurai\" (1954) kî ye?",
     "answers": [
-      "Akira Kurosawa",
       "Yasujiro Ozu",
       "Kenji Mizoguchi",
-      "Hirokazu Kore-eda"
+      "Hirokazu Kore-eda",
+      "Akira Kurosawa"
     ],
     "correctAnswer": "Akira Kurosawa",
     "explanation": "Film dünya sinemasını derinden etkiledi ve defalarca yeniden çevrildi.",
@@ -8796,10 +8796,10 @@
     },
     "promptTr": "\"Yedi Samuray\" (1954) filminin yönetmeni kimdir?",
     "answersTr": [
-      "Akira Kurosawa",
       "Yasujiro Ozu",
       "Kenji Mizoguchi",
-      "Hirokazu Kore-eda"
+      "Hirokazu Kore-eda",
+      "Akira Kurosawa"
     ],
     "correctAnswerTr": "Akira Kurosawa"
   },
@@ -8811,8 +8811,8 @@
     "prompt": "Fîlmê yekem ê bi diyalogên bideng ê Charlie Chaplin kîjan e?",
     "answers": [
       "Ronahiyên Bajêr",
-      "Demên Nûjen",
       "Dîktatorê Mezin",
+      "Demên Nûjen",
       "Zarok"
     ],
     "correctAnswer": "Dîktatorê Mezin",
@@ -8829,8 +8829,8 @@
     "promptTr": "Charlie Chaplin'in sesli diyaloglu ilk filmi hangisidir?",
     "answersTr": [
       "Şehir Işıkları",
-      "Modern Zamanlar",
       "Büyük Diktatör",
+      "Modern Zamanlar",
       "Çocuk"
     ],
     "correctAnswerTr": "Büyük Diktatör"
@@ -8842,10 +8842,10 @@
     "category": "Sînema",
     "prompt": "Derhênerê anîmasyona \"Spirited Away\" kî ye?",
     "answers": [
-      "Hayao Miyazaki",
       "Isao Takahata",
       "Makoto Shinkai",
-      "Satoshi Kon"
+      "Satoshi Kon",
+      "Hayao Miyazaki"
     ],
     "correctAnswer": "Hayao Miyazaki",
     "explanation": "Film 2003 yılında en iyi animasyon Oscar'ını kazandı.",
@@ -8860,10 +8860,10 @@
     },
     "promptTr": "\"Spirited Away\" animasyonunun yönetmeni kimdir?",
     "answersTr": [
-      "Hayao Miyazaki",
       "Isao Takahata",
       "Makoto Shinkai",
-      "Satoshi Kon"
+      "Satoshi Kon",
+      "Hayao Miyazaki"
     ],
     "correctAnswerTr": "Hayao Miyazaki"
   },
@@ -8876,8 +8876,8 @@
     "answers": [
       "Orson Welles",
       "Billy Wilder",
-      "John Ford",
-      "Alfred Hitchcock"
+      "Alfred Hitchcock",
+      "John Ford"
     ],
     "correctAnswer": "Alfred Hitchcock",
     "explanation": "Gerilim ve tansiyon filmleriyle tanınır.",
@@ -8894,8 +8894,8 @@
     "answersTr": [
       "Orson Welles",
       "Billy Wilder",
-      "John Ford",
-      "Alfred Hitchcock"
+      "Alfred Hitchcock",
+      "John Ford"
     ],
     "correctAnswerTr": "Alfred Hitchcock"
   },
@@ -8906,10 +8906,10 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"2001: A Space Odyssey\" kî ye?",
     "answers": [
-      "Stanley Kubrick",
       "Ridley Scott",
       "George Lucas",
-      "Steven Spielberg"
+      "Steven Spielberg",
+      "Stanley Kubrick"
     ],
     "correctAnswer": "Stanley Kubrick",
     "explanation": "Film 1968'de gösterime girdi ve bilim kurgu sinemasının görsel dilini değiştirdi.",
@@ -8924,10 +8924,10 @@
     },
     "promptTr": "\"2001: A Space Odyssey\" filminin yönetmeni kimdir?",
     "answersTr": [
-      "Stanley Kubrick",
       "Ridley Scott",
       "George Lucas",
-      "Steven Spielberg"
+      "Steven Spielberg",
+      "Stanley Kubrick"
     ],
     "correctAnswerTr": "Stanley Kubrick"
   },
@@ -8939,8 +8939,8 @@
     "prompt": "Yekem pêşandana fîlman a ji bo gel di sala 1895'an de li Parîsê ji hêla kê ve hate lidarxistin?",
     "answers": [
       "Thomas Edison",
-      "Georges Méliès",
       "Birayên Lumière",
+      "Georges Méliès",
       "Birayên Warner"
     ],
     "correctAnswer": "Birayên Lumière",
@@ -8957,8 +8957,8 @@
     "promptTr": "1895 yılında Paris'te halka açık ilk film gösterimini kim düzenledi?",
     "answersTr": [
       "Thomas Edison",
-      "Georges Méliès",
       "Lumière Kardeşler",
+      "Georges Méliès",
       "Warner Kardeşler"
     ],
     "correctAnswerTr": "Lumière Kardeşler"
@@ -8970,10 +8970,10 @@
     "category": "Sînema",
     "prompt": "Xelata herî mezin a Festîvala Venedîkê çi ye?",
     "answers": [
-      "Şêrê Zêrîn",
       "Hirça Zêrîn",
       "Palmiya Zêrîn",
-      "Globa Zêrîn"
+      "Globa Zêrîn",
+      "Şêrê Zêrîn"
     ],
     "correctAnswer": "Şêrê Zêrîn",
     "explanation": "Bu festivalin simgesi aslandır; Berlin ayıyı, Cannes ise palmiyeyi kullanır.",
@@ -8988,10 +8988,10 @@
     },
     "promptTr": "Venedik Festivali'nin en büyük ödülü nedir?",
     "answersTr": [
-      "Altın Aslan",
       "Altın Ayı",
       "Altın Palmiye",
-      "Altın Küre"
+      "Altın Küre",
+      "Altın Aslan"
     ],
     "correctAnswerTr": "Altın Aslan"
   },
@@ -9002,8 +9002,8 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Cinema Paradiso\" ji kîjan welatî ye?",
     "answers": [
-      "Fransa",
       "Îtalya",
+      "Fransa",
       "Spanya",
       "Yûnanistan"
     ],
@@ -9020,8 +9020,8 @@
     },
     "promptTr": "\"Cinema Paradiso\" filmi hangi ülkenindir?",
     "answersTr": [
-      "Fransa",
       "İtalya",
+      "Fransa",
       "İspanya",
       "Yunanistan"
     ],
@@ -9034,10 +9034,10 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Diziyên Bîsikletê\" (1948) mînaka kîjan tevgera sînemayî ye?",
     "answers": [
-      "Neorealîzma Îtalî",
       "Ekspresyonîzma Alman",
       "Pêla Nû ya Fransî",
-      "Sînemaya Sovyetî"
+      "Sînemaya Sovyetî",
+      "Neorealîzma Îtalî"
     ],
     "correctAnswer": "Neorealîzma Îtalî",
     "explanation": "Bu akım savaş sonrasında sokakta çekim yapmasıyla ve profesyonel olmayan oyuncularıyla tanınır.",
@@ -9052,10 +9052,10 @@
     },
     "promptTr": "\"Bisiklet Hırsızları\" (1948) hangi sinema akımının örneğidir?",
     "answersTr": [
-      "İtalyan Yeni Gerçekçiliği",
       "Alman Dışavurumculuğu",
       "Fransız Yeni Dalgası",
-      "Sovyet Sineması"
+      "Sovyet Sineması",
+      "İtalyan Yeni Gerçekçiliği"
     ],
     "correctAnswerTr": "İtalyan Yeni Gerçekçiliği"
   },
@@ -9066,8 +9066,8 @@
     "category": "Sînema",
     "prompt": "Derhênerê fîlmê \"Keştiya Şer Potemkin\" (1925) û teorîsyenê montajê kî ye?",
     "answers": [
-      "Dziga Vertov",
       "Sergey Eisenstein",
+      "Dziga Vertov",
       "Lev Kuleşov",
       "Andrey Tarkovski"
     ],
@@ -9084,8 +9084,8 @@
     },
     "promptTr": "\"Potemkin Zırhlısı\" (1925) filminin yönetmeni ve montaj kuramcısı kimdir?",
     "answersTr": [
-      "Dziga Vertov",
       "Sergey Eisenstein",
+      "Dziga Vertov",
       "Lev Kuleşov",
       "Andrey Tarkovski"
     ],
@@ -9100,8 +9100,8 @@
     "answers": [
       "Danîmarka",
       "Norwec",
-      "Fînlandiya",
-      "Swêd"
+      "Swêd",
+      "Fînlandiya"
     ],
     "correctAnswer": "Swêd",
     "explanation": "Filmleri varoluş sorularıyla ve kuzeyin sert görüntüleriyle tanınır.",
@@ -9118,8 +9118,8 @@
     "answersTr": [
       "Danimarka",
       "Norveç",
-      "Finlandiya",
-      "İsveç"
+      "İsveç",
+      "Finlandiya"
     ],
     "correctAnswerTr": "İsveç"
   },
@@ -9130,8 +9130,8 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Rashomon\" (1950) bi kîjan taybetmendiya vegotinê tê nasîn?",
     "answers": [
-      "Fîlm bi tevahî di yek plana dirêj de hatiye kişandin",
       "Heman bûyer ji devê şahidên cuda bi awayên nakok tê vegotin",
+      "Fîlm bi tevahî di yek plana dirêj de hatiye kişandin",
       "Di fîlm de qet diyalog tune ye",
       "Bûyer ji dawiyê ber bi destpêkê ve tê vegotin"
     ],
@@ -9148,8 +9148,8 @@
     },
     "promptTr": "\"Rashomon\" (1950) filmi hangi anlatım özelliğiyle tanınır?",
     "answersTr": [
-      "Film baştan sona tek bir uzun planda çekilmiştir",
       "Aynı olay farklı tanıkların ağzından çelişkili anlatılır",
+      "Film baştan sona tek bir uzun planda çekilmiştir",
       "Filmde baştan sona hiç diyalog kullanılmaz",
       "Olaylar sondan başa doğru geriye giderek anlatılır"
     ],
@@ -9162,10 +9162,10 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Sûrû\" (1978) ji hêla kîjan derhêner ve hatiye kişandin?",
     "answers": [
-      "Zeki Ökten",
       "Şerîf Gören",
       "Atif Yilmaz",
-      "Ömer Lütfi Akad"
+      "Ömer Lütfi Akad",
+      "Zeki Ökten"
     ],
     "correctAnswer": "Zeki Ökten",
     "explanation": "Senaryo Yılmaz Güney'e aitti; cezaevinde yazdı ve yönetmenlik Zeki Ökten'e kaldı.",
@@ -9180,10 +9180,10 @@
     },
     "promptTr": "\"Sürü\" (1978) filmi hangi yönetmen tarafından çekilmiştir?",
     "answersTr": [
-      "Zeki Ökten",
       "Şerif Gören",
       "Atıf Yılmaz",
-      "Ömer Lütfi Akad"
+      "Ömer Lütfi Akad",
+      "Zeki Ökten"
     ],
     "correctAnswerTr": "Zeki Ökten"
   },
@@ -9194,8 +9194,8 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Dema Hespên Serxweş\" bi kîjan zimanî hatiye kişandin?",
     "answers": [
-      "Farisî (bi devoka herêmê)",
       "Kurdî (Soranî û Kurmancî)",
+      "Farisî (bi devoka herêmê)",
       "Erebî (bi devoka Iraqê)",
       "Tirkî (bi jêrnivîsa kurdî)"
     ],
@@ -9212,8 +9212,8 @@
     },
     "promptTr": "\"Sarhoş Atlar Zamanı\" filmi hangi dilde çekilmiştir?",
     "answersTr": [
-      "Farsça (yörenin ağzıyla)",
       "Kürtçe (Soranî ve Kurmancî)",
+      "Farsça (yörenin ağzıyla)",
       "Arapça (Irak ağzıyla)",
       "Türkçe (Kürtçe altyazıyla)"
     ],
@@ -9228,8 +9228,8 @@
     "answers": [
       "Toei Animation",
       "Madhouse",
-      "Pixar",
-      "Studio Ghibli"
+      "Studio Ghibli",
+      "Pixar"
     ],
     "correctAnswer": "Studio Ghibli",
     "explanation": "Totoro karakteri sonradan aynı stüdyonun resmî simgesi oldu.",
@@ -9246,8 +9246,8 @@
     "answersTr": [
       "Toei Animation",
       "Madhouse",
-      "Pixar",
-      "Studio Ghibli"
+      "Studio Ghibli",
+      "Pixar"
     ],
     "correctAnswerTr": "Studio Ghibli"
   },
@@ -9258,8 +9258,8 @@
     "category": "Sînema",
     "prompt": "Di sînemayê de \"plansekans\" çi ye?",
     "answers": [
-      "Dîmenek ku tenê bi dengê derve tê vegotin",
       "Dîmenek ku bêyî qutkirinê di yek girtinê de tê kişandin",
+      "Dîmenek ku tenê bi dengê derve tê vegotin",
       "Rêza dîmenên ku ji dawiyê ber bi destpêkê ve diçin",
       "Dîmenek ku bi du kameran ji heman goşeyê tê girtin"
     ],
@@ -9276,8 +9276,8 @@
     },
     "promptTr": "Sinemada \"plansekans\" nedir?",
     "answersTr": [
-      "Yalnızca dış sesle anlatılan bir sahne",
       "Kesme olmadan tek çekimde alınan bir sahne",
+      "Yalnızca dış sesle anlatılan bir sahne",
       "Sondan başa doğru giden sahneler dizisi",
       "Aynı açıdan iki kamerayla çekilen bir sahne"
     ],
@@ -9290,10 +9290,10 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Yol\" ji ber çi sedemî demek dirêj li Tirkiyeyê nehat nîşandan?",
     "answers": [
-      "Fîlm hate qedexekirin",
       "Kopyayên fîlm winda bûbûn",
       "Derhêner nexwest ku li Tirkiyeyê were nîşandan",
-      "Fîlm hîn nehatibû qedandin"
+      "Fîlm hîn nehatibû qedandin",
+      "Fîlm hate qedexekirin"
     ],
     "correctAnswer": "Fîlm hate qedexekirin",
     "explanation": "Film, Cannes'dan sonra yıllarca Türkiye'de gösterilemedi; resmî gösterimi çok sonra gerçekleşti.",
@@ -9308,10 +9308,10 @@
     },
     "promptTr": "\"Yol\" filmi neden uzun süre Türkiye'de gösterilemedi?",
     "answersTr": [
-      "Filme yasak konulmuştu",
       "Filmin kopyaları kaybolmuştu",
       "Yönetmen Türkiye'de gösterilmesini istemedi",
-      "Film henüz tamamlanmamıştı"
+      "Film henüz tamamlanmamıştı",
+      "Filme yasak konulmuştu"
     ],
     "correctAnswerTr": "Filme yasak konulmuştu"
   },
@@ -9322,8 +9322,8 @@
     "category": "Sînema",
     "prompt": "Festîvala Berlînê xelata xwe ya sereke bi kîjan navî dide?",
     "answers": [
-      "Şêrê Zêrîn",
       "Hirça Zêrîn",
+      "Şêrê Zêrîn",
       "Palmiya Zêrîn",
       "Globa Zêrîn"
     ],
@@ -9340,8 +9340,8 @@
     },
     "promptTr": "Berlin Festivali ana ödülünü hangi adla verir?",
     "answersTr": [
-      "Altın Aslan",
       "Altın Ayı",
+      "Altın Aslan",
       "Altın Palmiye",
       "Altın Küre"
     ],

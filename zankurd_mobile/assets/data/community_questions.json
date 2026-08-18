@@ -808,37 +808,6 @@
   },
   {
     "type": "multipleChoice",
-    "difficulty": 4,
-    "id": "comm_dir_0005",
-    "category": "Dîrok",
-    "prompt": "Fermandarê pêşeng ê berxwedana Kobanê kî bû?",
-    "promptTr": "Kobanê direnişinde büyük fedakârlıklar yapan öncü komutan kimdi?",
-    "answers": [
-      "Gelhat Gever",
-      "Mazlum Kobanê",
-      "Murat Karayılan",
-      "Mustafa Karasu"
-    ],
-    "answersTr": [
-      "Gelhat Gever",
-      "Mazlum Kobanê",
-      "Murat Karayılan",
-      "Mustafa Karasu"
-    ],
-    "correctAnswer": "Gelhat Gever",
-    "correctAnswerTr": "Gelhat Gever",
-    "explanation": "",
-    "explanationKu": "",
-    "explanationTr": "",
-    "metadata": {
-      "reviewStatus": "rejected",
-      "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
-      "qualityVersion": 2
-    }
-  },
-  {
-    "type": "multipleChoice",
     "difficulty": 3,
     "id": "comm_dir_0006",
     "category": "Dîrok",
@@ -846,14 +815,14 @@
     "promptTr": "\"Laz Kemal\" olarak bilinen Kemal Pir nerelidir?",
     "answers": [
       "Amed",
-      "Qamişlo",
       "Gümüşhane",
+      "Qamişlo",
       "Hewraman"
     ],
     "answersTr": [
       "Amed",
-      "Qamişlo",
       "Gümüşhane",
+      "Qamişlo",
       "Hewraman"
     ],
     "correctAnswer": "Gümüşhane",
@@ -876,14 +845,14 @@
     "prompt": "Hakî Karer xelkê ku derê ye?",
     "promptTr": "Haki Karer nerelidir?",
     "answers": [
-      "Giresun",
       "Ordu",
+      "Giresun",
       "Rize",
       "Gümüşhane"
     ],
     "answersTr": [
-      "Giresun",
       "Ordu",
+      "Giresun",
       "Rize",
       "Gümüşhane"
     ],
@@ -908,14 +877,14 @@
     "promptTr": "Öcalan'ın \"ruh ikizim\" olarak tanımladığı arkadaş kimdir?",
     "answers": [
       "Kemal Pir",
-      "Dibistan",
       "Hakî Karer",
+      "Dibistan",
       "Mehmet Karasungur"
     ],
     "answersTr": [
       "Kemal Pir",
-      "Mazlum Doğan",
       "Hakî Karer",
+      "Mazlum Doğan",
       "Mehmet Karasungur"
     ],
     "correctAnswer": "Hakî Karer",
@@ -938,16 +907,16 @@
     "prompt": "Şanogerê ku di berxwedana benda Tişrînê de şehîd ket kî ye?",
     "promptTr": "Tişrin barajındaki direniş sırasında şehit olan tiyatrocu kimdir?",
     "answers": [
-      "Bavê Teyar",
       "Nazmi Karaman",
       "Mirza Metin",
-      "Biçûk"
+      "Biçûk",
+      "Bavê Teyar"
     ],
     "answersTr": [
-      "Bavê Teyar",
       "Nazmi Karaman",
       "Mirza Metin",
-      "Aydın Orak"
+      "Aydın Orak",
+      "Bavê Teyar"
     ],
     "correctAnswer": "Bavê Teyar",
     "correctAnswerTr": "Bavê Teyar",
@@ -969,16 +938,16 @@
     "prompt": "Siyasetmedarê ku wek \"Bavê Welat\" tê nasîn kî ye?",
     "promptTr": "Rojava direnişiyle bütünleşen ve \"Bavê Welat\" olarak tanınan siyasetçi kimdir?",
     "answers": [
-      "Salih Mislim",
       "Aldar Xelîl",
       "Mazlum Kobanê",
-      "Bavê Teyar"
+      "Bavê Teyar",
+      "Salih Mislim"
     ],
     "answersTr": [
-      "Salih Mislim",
       "Aldar Xelîl",
       "Mazlum Kobanê",
-      "Bavê Teyar"
+      "Bavê Teyar",
+      "Salih Mislim"
     ],
     "correctAnswer": "Salih Mislim",
     "correctAnswerTr": "Salih Mislim",
@@ -1000,14 +969,14 @@
     "prompt": "Yekîneya şervanên jin a li Rojava kîjan e?",
     "promptTr": "Rojava'daki kadın savaşçı birliği hangisidir?",
     "answers": [
-      "YJA-Star",
       "YPJ",
+      "YJA-Star",
       "YPG",
       "HPJ"
     ],
     "answersTr": [
-      "YJA-Star",
       "YPJ",
+      "YJA-Star",
       "YPG",
       "HPJ"
     ],
@@ -1033,14 +1002,14 @@
     "answers": [
       "Jüri Özel Ödülü",
       "En İyi Yönetmen",
-      "Altın Ayı",
-      "Altın Palmiye"
+      "Altın Palmiye",
+      "Altın Ayı"
     ],
     "answersTr": [
       "Jüri Özel Ödülü",
       "En İyi Yönetmen",
-      "Altın Ayı",
-      "Altın Palmiye"
+      "Altın Palmiye",
+      "Altın Ayı"
     ],
     "correctAnswer": "Altın Palmiye",
     "correctAnswerTr": "Altın Palmiye",
@@ -1062,14 +1031,14 @@
     "prompt": "Ji ber ku Yilmaz Guney di girtîgehê de bû, derhêneriya fîlmê \"Yol\" kê kir?",
     "promptTr": "Yılmaz Güney cezaevinde olduğu için \"Yol\" filminin yönetmenliğini kim üstlendi?",
     "answers": [
-      "Zeki Ökten",
       "Şerif Gören",
+      "Zeki Ökten",
       "Atıf Yılmaz",
       "Ömer Lütfi Akad"
     ],
     "answersTr": [
-      "Zeki Ökten",
       "Şerif Gören",
+      "Zeki Ökten",
       "Atıf Yılmaz",
       "Ömer Lütfi Akad"
     ],
@@ -1093,16 +1062,16 @@
     "prompt": "Fîlmê \"Sûrû\" (1978) senaryoya wê ya kê ye?",
     "promptTr": "\"Sürü\" (1978) filminin senaryosu kime aittir?",
     "answers": [
-      "Yılmaz Güney",
       "Zeki Ökten",
       "Kazım Öz",
-      "Hiner Saleem"
+      "Hiner Saleem",
+      "Yılmaz Güney"
     ],
     "answersTr": [
-      "Yılmaz Güney",
       "Zeki Ökten",
       "Kazım Öz",
-      "Hiner Saleem"
+      "Hiner Saleem",
+      "Yılmaz Güney"
     ],
     "correctAnswer": "Yılmaz Güney",
     "correctAnswerTr": "Yılmaz Güney",
@@ -1124,14 +1093,14 @@
     "prompt": "Derhênerê fîlmê \"Dema Hespên Serxweş\" kî ye?",
     "promptTr": "\"Sarhoş Atlar Zamanı\" filminin yönetmeni kimdir?",
     "answers": [
-      "Hiner Saleem",
       "Bahman Ghobadi",
+      "Hiner Saleem",
       "Kazım Öz",
       "Yılmaz Güney"
     ],
     "answersTr": [
-      "Hiner Saleem",
       "Bahman Ghobadi",
+      "Hiner Saleem",
       "Kazım Öz",
       "Yılmaz Güney"
     ],
@@ -1157,14 +1126,14 @@
     "answers": [
       "Hiner Saleem",
       "Erol Mintaş",
-      "Hüseyin Karabey",
-      "Bahman Ghobadi"
+      "Bahman Ghobadi",
+      "Hüseyin Karabey"
     ],
     "answersTr": [
       "Hiner Saleem",
       "Erol Mintaş",
-      "Hüseyin Karabey",
-      "Bahman Ghobadi"
+      "Bahman Ghobadi",
+      "Hüseyin Karabey"
     ],
     "correctAnswer": "Bahman Ghobadi",
     "correctAnswerTr": "Bahman Ghobadi",
@@ -1186,14 +1155,14 @@
     "prompt": "Derhênerê fîlmê \"Vodka Lemon\" kî ye?",
     "promptTr": "\"Vodka Lemon\" filminin yönetmeni kimdir?",
     "answers": [
-      "Bahman Ghobadi",
       "Hiner Saleem",
+      "Bahman Ghobadi",
       "Kazım Öz",
       "Şerif Gören"
     ],
     "answersTr": [
-      "Bahman Ghobadi",
       "Hiner Saleem",
+      "Bahman Ghobadi",
       "Kazım Öz",
       "Şerif Gören"
     ],
@@ -1217,16 +1186,16 @@
     "prompt": "Fîlmên \"Fotoğraf\", \"Bahoz\" û \"Zer\" ji hêla kîjan derhêner ve hatine çêkirin?",
     "promptTr": "\"Fotoğraf\", \"Bahoz\" ve \"Zer\" filmleri hangi yönetmene aittir?",
     "answers": [
-      "Kazım Öz",
       "Erol Mintaş",
       "Hüseyin Karabey",
-      "Ersin Çelik"
+      "Ersin Çelik",
+      "Kazım Öz"
     ],
     "answersTr": [
-      "Kazım Öz",
       "Erol Mintaş",
       "Hüseyin Karabey",
-      "Ersin Çelik"
+      "Ersin Çelik",
+      "Kazım Öz"
     ],
     "correctAnswer": "Kazım Öz",
     "correctAnswerTr": "Kazım Öz",
@@ -1248,14 +1217,14 @@
     "prompt": "Yilmaz Guney di sala kîjan de li Parîsê koça dawî kir?",
     "promptTr": "Yılmaz Güney hangi yıl Paris'te hayatını kaybetti?",
     "answers": [
-      "1980",
       "1984",
+      "1980",
       "1988",
       "1992"
     ],
     "answersTr": [
-      "1980",
       "1984",
+      "1980",
       "1988",
       "1992"
     ],
@@ -1281,14 +1250,14 @@
     "answers": [
       "Yol",
       "Sürü",
-      "Umut",
-      "Duvar"
+      "Duvar",
+      "Umut"
     ],
     "answersTr": [
       "Yol",
       "Sürü",
-      "Umut",
-      "Duvar"
+      "Duvar",
+      "Umut"
     ],
     "correctAnswer": "Duvar",
     "correctAnswerTr": "Duvar",
@@ -1310,16 +1279,16 @@
     "prompt": "Derhênerê fîlmê \"Klama Dayîka Min\" kî ye?",
     "promptTr": "\"Annemin Şarkısı\" (Klama Dayîka Min) filminin yönetmeni kimdir?",
     "answers": [
-      "Erol Mintaş",
       "Kazım Öz",
       "Hüseyin Karabey",
-      "Ersin Çelik"
+      "Ersin Çelik",
+      "Erol Mintaş"
     ],
     "answersTr": [
-      "Erol Mintaş",
       "Kazım Öz",
       "Hüseyin Karabey",
-      "Ersin Çelik"
+      "Ersin Çelik",
+      "Erol Mintaş"
     ],
     "correctAnswer": "Erol Mintaş",
     "correctAnswerTr": "Erol Mintaş",
@@ -1342,14 +1311,14 @@
     "promptTr": "\"Umut\" (1970) filminin yönetmeni kimdir?",
     "answers": [
       "Zeki Ökten",
-      "Şerif Gören",
       "Yılmaz Güney",
+      "Şerif Gören",
       "Atıf Yılmaz"
     ],
     "answersTr": [
       "Zeki Ökten",
-      "Şerif Gören",
       "Yılmaz Güney",
+      "Şerif Gören",
       "Atıf Yılmaz"
     ],
     "correctAnswer": "Yılmaz Güney",
@@ -1372,14 +1341,14 @@
     "prompt": "Derhêner Bahman Ghobadi ji kîjan perçeyê Kurdistanê ye?",
     "promptTr": "Yönetmen Bahman Ghobadi Kurdistanê'nin hangi parçasındandır?",
     "answers": [
-      "Bakurê Kurdistanê",
       "Rojhilatê Kurdistanê",
+      "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê"
     ],
     "answersTr": [
-      "Bakur (Kuzey)",
       "Rojhilat (Doğu)",
+      "Bakur (Kuzey)",
       "Rojava (Batı)",
       "Başûr (Güney)"
     ],

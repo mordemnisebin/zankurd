@@ -105,7 +105,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 45,
+      "expectedRecordCount": 44,
       "notes": "Approved community questions bundled with the app",
       "columns": {
         "id": "id",
@@ -2353,7 +2353,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 950,
+      "expectedRecordCount": 926,
       "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
       "columns": {
         "id": "id",

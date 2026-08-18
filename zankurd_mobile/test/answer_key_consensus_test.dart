@@ -75,13 +75,41 @@ void main() {
     // ve doğrulama sessizce anlamsızlaşıyor. Bu tuzağa bir kez düşüldü —
     // dengeleme aracı çalıştıktan sonra bekçi 90'dan fazla sahte çelişki
     // bildirdi.
+    // İnsan incelemesiyle BİLEREK aşılan çelişkiler.
+    //
+    // Bekçi baştan şu varsayımla yazıldı: model bankayla çelişiyorsa şüphe
+    // bankanın üzerindedir. Bu çoğu zaman doğru. Ama 2026-08-19'da Dîrok
+    // incelemesi tersi bir durumu ortaya çıkardı: soru DÜZELTİLDİKTEN sonra
+    // çelişki BAŞLADI, çünkü artık doğru cevap yaygın yanlış kanıyı yeniyor.
+    // Modelin sezgisel yanıtı verip yanılması, sorunun kötü değil ZOR
+    // olduğunun işareti — kategoride en çok eksik olan da buydu.
+    //
+    // Buraya bir kayıt eklemek, kaynağını yazmayı gerektirir. Liste kısa
+    // kalmalı; uzarsa bekçi anlamını yitirir.
+    const reviewedOverrides = <String, String>{
+      // Şerefxan adını Bidlîs mîrektiyêndan alır ama orada doğmadı: 1543'te
+      // Qum yakınlarındaki Karahrud'da doğdu (Encyclopaedia Iranica,
+      // "BEDLĪSĪ, ŠARAF-AL-DĪN KHAN"). Model adına bakıp "Bidlîs" diyor.
+      'ds_dirok_0005': 'Karahrûd (nêzî Qumê)',
+      // Bedirxan Paşa 1847 yenilgisinden sonra Girit'e sürüldü; model
+      // Osmanlı sürgünleri için daha bilindik olan Kıbrıs'ı seçiyor.
+      'ds_dirok_0114': 'Girît',
+      // Kurdistan gazetesinin ilk sayısı 1898'de Kahire'de basıldı; model
+      // Osmanlı basınının merkezi olduğu için İstanbul'u seçiyor.
+      'ds_dirok_0134': 'Qahîre',
+    };
+
     final contradicting = <String>[];
     for (final question in generated) {
       final given = verdicts[question['id']] as String?;
       if (given == null || given == '?') continue;
-      if (given != question['correctAnswer']) {
-        contradicting.add(question['id'] as String);
-      }
+      final id = question['id'] as String;
+      final answer = question['correctAnswer'];
+      if (given == answer) continue;
+      // Aşma yalnız hâlâ AYNI cevap için geçerlidir: soru sonradan
+      // değişirse aşma düşer ve çelişki yeniden görünür olur.
+      if (reviewedOverrides[id] == answer) continue;
+      contradicting.add(id);
     }
     expect(
       contradicting,

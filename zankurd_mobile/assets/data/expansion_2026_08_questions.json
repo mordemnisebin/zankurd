@@ -5,16 +5,16 @@
     "prompt": "Di komeka fîlmekî de kî lîstikvanan bi rê ve dibe û biryara dawî ya hunerî dide?",
     "answers": [
       "Sazkerê dengî",
-      "Berpirsê kostuman",
       "Derhêner",
+      "Berpirsê kostuman",
       "Alîkarê ronahiyê"
     ],
     "correctAnswer": "Derhêner",
     "promptTr": "Bir film setinde oyuncuları yöneten ve son sanatsal kararı veren kişi kimdir?",
     "answersTr": [
       "Ses teknisyeni",
-      "Kostüm sorumlusu",
       "Yönetmen",
+      "Kostüm sorumlusu",
       "Işık asistanı"
     ],
     "correctAnswerTr": "Yönetmen",
@@ -38,18 +38,18 @@
     "category": "Sînema",
     "prompt": "Di 28ê Kanûna Pêşîn a 1895an de li Parîsê yekem pêşandana fîlman a bi bilêt ji aliyê kîjan birayan ve hat lidarxistin?",
     "answers": [
-      "Birayên Lumière",
       "Birayên Warner",
       "Birayên Skladanowsky",
-      "Birayên Pathé"
+      "Birayên Pathé",
+      "Birayên Lumière"
     ],
     "correctAnswer": "Birayên Lumière",
     "promptTr": "28 Aralık 1895'te Paris'te ilk biletli film gösterimini hangi kardeşler düzenledi?",
     "answersTr": [
-      "Lumière Kardeşler",
       "Warner Kardeşler",
       "Skladanowsky Kardeşler",
-      "Pathé Kardeşler"
+      "Pathé Kardeşler",
+      "Lumière Kardeşler"
     ],
     "correctAnswerTr": "Lumière Kardeşler",
     "explanation": "Auguste ve Louis Lumière, Grand Café'de Cinématographe'la para karşılığı gösterim yaptı; bu tarih ticari sinemanın başlangıcı sayılır. Skladanowsky kardeşler bir ay önce Berlin'de gösterim yapmıştı ama sistemleri yaygınlaşmadı.",
@@ -73,16 +73,16 @@
     "prompt": "Fîlmê \"Rashomon\" ê ku sala 1951ê li Venedîkê Şêrê Zêrîn wergirt, ji aliyê kîjan derhênerî ve hat kişandin?",
     "answers": [
       "Yasujirô Ozu",
-      "Kenji Mizoguchi",
       "Akira Kurosawa",
+      "Kenji Mizoguchi",
       "Nagisa Ôshima"
     ],
     "correctAnswer": "Akira Kurosawa",
     "promptTr": "1951'de Venedik'te Altın Aslan kazanan \"Rashomon\" filmini hangi yönetmen çekti?",
     "answersTr": [
       "Yasujiro Ozu",
-      "Kenji Mizoguchi",
       "Akira Kurosawa",
+      "Kenji Mizoguchi",
       "Nagisa Oshima"
     ],
     "correctAnswerTr": "Akira Kurosawa",
@@ -106,16 +106,16 @@
     "category": "Sînema",
     "prompt": "Ji bo dîmenê ku rûyê lîstikvanî perdeyê tije dike, di zimanê sînemayê de kîjan têgeh tê bikaranîn?",
     "answers": [
-      "Plana giştî",
       "Plana nêzîk",
+      "Plana giştî",
       "Plana navîn",
       "Plana dûr"
     ],
     "correctAnswer": "Plana nêzîk",
     "promptTr": "Oyuncunun yüzünün perdeyi doldurduğu çekim ölçeğine ne ad verilir?",
     "answersTr": [
-      "Genel plan",
       "Yakın plan",
+      "Genel plan",
       "Orta plan",
       "Uzak plan"
     ],
@@ -141,16 +141,16 @@
     "prompt": "Nûbûna sereke ya fîlmê 1927an \"The Jazz Singer\" di dîroka sînemayê de çi bû?",
     "answers": [
       "Karanîna pêşîn a Technicolorê",
-      "Yekem fîlmê sê-alîkî",
       "Diyaloga hevaheng a bi deng",
+      "Yekem fîlmê sê-alîkî",
       "Yekem animasyona dirêj"
     ],
     "correctAnswer": "Diyaloga hevaheng a bi deng",
     "promptTr": "1927 yapımı \"The Jazz Singer\" filminin sinema tarihindeki temel yeniliği neydi?",
     "answersTr": [
       "İlk Technicolor kullanımı",
-      "İlk üç boyutlu film",
       "Sesle eşzamanlı diyalog",
+      "İlk üç boyutlu film",
       "İlk uzun animasyon"
     ],
     "correctAnswerTr": "Sesle eşzamanlı diyalog",
@@ -174,18 +174,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê \"Yol\" ê ku sala 1982yan Palme d'Or wergirt, senaryoya wî ji aliyê kê ve hat nivîsîn?",
     "answers": [
-      "Yilmaz Güney",
       "Şerîf Gören",
       "Zekî Ökten",
-      "Atif Yilmaz"
+      "Atif Yilmaz",
+      "Yilmaz Güney"
     ],
     "correctAnswer": "Yilmaz Güney",
     "promptTr": "1982'de Altın Palmiye kazanan \"Yol\" filminin senaryosunu kim yazdı?",
     "answersTr": [
-      "Yılmaz Güney",
       "Şerif Gören",
       "Zeki Ökten",
-      "Atıf Yılmaz"
+      "Atıf Yılmaz",
+      "Yılmaz Güney"
     ],
     "correctAnswerTr": "Yılmaz Güney",
     "explanation": "Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın \"Kayıp\" filmiyle paylaşıldı.",
@@ -209,16 +209,16 @@
     "prompt": "Kî ji hev-girêdana dîmenên kişandî û rêza dawî ya wan berpirsiyar e?",
     "answers": [
       "Derhênerê dîmenê",
-      "Berpirsê dekorê",
       "Montajkar",
+      "Berpirsê dekorê",
       "Nivîskarê senaryoyê"
     ],
     "correctAnswer": "Montajkar",
     "promptTr": "Çekilen görüntülerin birleştirilip son sıralamasının belirlenmesinden kim sorumludur?",
     "answersTr": [
       "Görüntü yönetmeni",
-      "Sanat yönetmeni",
       "Kurgucu",
+      "Sanat yönetmeni",
       "Senarist"
     ],
     "correctAnswerTr": "Kurgucu",
@@ -242,16 +242,16 @@
     "category": "Sînema",
     "prompt": "Dîmena navdar a pêpelûkên Odessayê di kîjan fîlmê Sergey Eisenstein ê 1925an de derbas dibe?",
     "answers": [
-      "Oktobre",
       "Keştiya Şer Potemkin",
+      "Oktobre",
       "Grev",
       "Îvanê Tirsnak"
     ],
     "correctAnswer": "Keştiya Şer Potemkin",
     "promptTr": "Ünlü Odessa merdivenleri sahnesi Sergey Ayzenştayn'ın 1925 tarihli hangi filminde yer alır?",
     "answersTr": [
-      "Ekim",
       "Potemkin Zırhlısı",
+      "Ekim",
       "Grev",
       "Korkunç İvan"
     ],
@@ -277,16 +277,16 @@
     "prompt": "Kîjan derhênerî fîlmê \"Kış Uykusu\" kişand, ku sala 2014an li Cannesê Palme d'Or wergirt?",
     "answers": [
       "Zekî Demîrkubuz",
-      "Reha Erdem",
       "Nurî Bîlge Ceylan",
+      "Reha Erdem",
       "Yeşîm Ustaoglu"
     ],
     "correctAnswer": "Nurî Bîlge Ceylan",
     "promptTr": "2014'te Cannes'da Altın Palmiye kazanan \"Kış Uykusu\" filmini hangi yönetmen çekti?",
     "answersTr": [
       "Zeki Demirkubuz",
-      "Reha Erdem",
       "Nuri Bilge Ceylan",
+      "Reha Erdem",
       "Yeşim Ustaoğlu"
     ],
     "correctAnswerTr": "Nuri Bilge Ceylan",
@@ -312,16 +312,16 @@
     "answers": [
       "Montaja paralel",
       "Fondu",
-      "Qutkirina xwêrû",
-      "Plan-sekans"
+      "Plan-sekans",
+      "Qutkirina xwêrû"
     ],
     "correctAnswer": "Plan-sekans",
     "promptTr": "Kesintisiz tek bir çekimle kaydedilen sahneye ne denir?",
     "answersTr": [
       "Paralel kurgu",
       "Kararma",
-      "Sıçramalı kesme",
-      "Plan sekans"
+      "Plan sekans",
+      "Sıçramalı kesme"
     ],
     "correctAnswerTr": "Plan sekans",
     "explanation": "Plan sekansta kamera durmadan çalışır ve sahne kurguyla parçalanmaz; zaman izleyiciye olduğu gibi akar. Paralel kurgu ile sıçramalı kesme kesmeye dayanır, kararma ise bir geçiş efektidir.",
@@ -344,16 +344,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê 1902yan \"Le Voyage dans la Lune\" ku bi hîleyên dîmenî yên pêşîn navdar e, berhema kê ye?",
     "answers": [
-      "Edwin S. Porter",
       "Georges Méliès",
+      "Edwin S. Porter",
       "Louis Feuillade",
       "Émile Cohl"
     ],
     "correctAnswer": "Georges Méliès",
     "promptTr": "İlk görsel hileleriyle ünlü 1902 yapımı \"Aya Yolculuk\" kimin filmidir?",
     "answersTr": [
-      "Edwin S. Porter",
       "Georges Méliès",
+      "Edwin S. Porter",
       "Louis Feuillade",
       "Émile Cohl"
     ],
@@ -380,16 +380,16 @@
     "answers": [
       "Kolkata",
       "Çennaî",
-      "Delhî",
-      "Mumbai"
+      "Mumbai",
+      "Delhî"
     ],
     "correctAnswer": "Mumbai",
     "promptTr": "\"Bollywood\" adı hangi şehirdeki Hint film endüstrisi için kullanılır?",
     "answersTr": [
       "Kolkata",
       "Chennai",
-      "Delhi",
-      "Mumbai"
+      "Mumbai",
+      "Delhi"
     ],
     "correctAnswerTr": "Mumbai",
     "explanation": "Ad, şehrin eski adı Bombay ile Hollywood'un birleşiminden gelir ve Hintçe film üretimini anlatır. Chennai'deki Tamil sineması Kollywood, Kolkata'daki Bengalce sinema ise Tollywood diye anılır.",
@@ -413,16 +413,16 @@
     "prompt": "Fîlmê ku bûyer û mirovên rastîn bêyî senaryoyeke çîrokî tomar dike, di kîjan cûreyê de ye?",
     "answers": [
       "Zanistî-xeyalî",
-      "Animasyon",
       "Belgefîlm",
+      "Animasyon",
       "Muzîkal"
     ],
     "correctAnswer": "Belgefîlm",
     "promptTr": "Gerçek olay ve kişileri kurgusal bir senaryo olmadan kaydeden film türü hangisidir?",
     "answersTr": [
       "Bilimkurgu",
-      "Animasyon",
       "Belgesel",
+      "Animasyon",
       "Müzikal"
     ],
     "correctAnswerTr": "Belgesel",
@@ -448,16 +448,16 @@
     "answers": [
       "Ekspresyonîzma almanî",
       "Dogme 95",
-      "Sînemaya Nû ya Almanî",
-      "Neorealîzma îtalî"
+      "Neorealîzma îtalî",
+      "Sînemaya Nû ya Almanî"
     ],
     "correctAnswer": "Neorealîzma îtalî",
     "promptTr": "1948 yapımı \"Bisiklet Hırsızları\" hangi sinema akımının örneğidir?",
     "answersTr": [
       "Alman dışavurumculuğu",
       "Dogma 95",
-      "Yeni Alman Sineması",
-      "İtalyan yeni gerçekçiliği"
+      "İtalyan yeni gerçekçiliği",
+      "Yeni Alman Sineması"
     ],
     "correctAnswerTr": "İtalyan yeni gerçekçiliği",
     "explanation": "De Sica filmi savaş sonrası Roma'da, gerçek sokaklarda ve profesyonel olmayan oyuncularla çekti; yoksulluğu süslemeden göstermek akımın temel tavrıdır. Dışavurumculuk stüdyo dekoruna dayanır, Dogma 95 ise 1990'lara aittir.",
@@ -480,16 +480,16 @@
     "category": "Sînema",
     "prompt": "Rêzefîlma Apu bi berhema 1955an \"Pather Panchali\" dest pê dike; derhênerê wê kî ye?",
     "answers": [
-      "Ritwik Ghatak",
       "Satyajit Ray",
+      "Ritwik Ghatak",
       "Mrinal Sen",
       "Guru Dutt"
     ],
     "correctAnswer": "Satyajit Ray",
     "promptTr": "Apu üçlemesi 1955 yapımı \"Pather Panchali\" ile başlar; bu filmin yönetmeni kimdir?",
     "answersTr": [
-      "Ritwik Ghatak",
       "Satyajit Ray",
+      "Ritwik Ghatak",
       "Mrinal Sen",
       "Guru Dutt"
     ],
@@ -516,16 +516,16 @@
     "answers": [
       "Sînopsîs",
       "Senaryoya teknîkî",
-      "Lîsteya kişandinê",
-      "Storyboard"
+      "Storyboard",
+      "Lîsteya kişandinê"
     ],
     "correctAnswer": "Storyboard",
     "promptTr": "Çekimden önce planların çizimlerle sıralandığı hazırlık aracına ne ad verilir?",
     "answersTr": [
       "Sinopsis",
       "Teknik senaryo",
-      "Çekim listesi",
-      "Storyboard"
+      "Storyboard",
+      "Çekim listesi"
     ],
     "correctAnswerTr": "Storyboard",
     "explanation": "Storyboard her planı bir kare çizimle gösterir; kamera açısı ve hareket böylece çekime girmeden sınanır. Sinopsis öykünün kısa özetidir, çekim listesi ise yalnızca yazılı bir sıralamadır.",
@@ -549,16 +549,16 @@
     "prompt": "Fîlmê 1920yî \"Kabîneya Doktor Caligari\" bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?",
     "answers": [
       "Realîzma poetîk",
-      "Sînema-çav",
       "Ekspresyonîzma almanî",
+      "Sînema-çav",
       "Film noir a fransî"
     ],
     "correctAnswer": "Ekspresyonîzma almanî",
     "promptTr": "Çarpık dekorları ve keskin gölgeleriyle 1920 yapımı \"Dr. Caligari'nin Muayenehanesi\" hangi akımın örneğidir?",
     "answersTr": [
       "Şiirsel gerçekçilik",
-      "Sine-göz",
       "Alman dışavurumculuğu",
+      "Sine-göz",
       "Fransız kara filmi"
     ],
     "correctAnswerTr": "Alman dışavurumculuğu",
@@ -584,16 +584,16 @@
     "answers": [
       "Hîner Salêm",
       "Cafer Panahî",
-      "Mohsen Mexmelbaf",
-      "Bahman Ghobadî"
+      "Bahman Ghobadî",
+      "Mohsen Mexmelbaf"
     ],
     "correctAnswer": "Bahman Ghobadî",
     "promptTr": "Cannes'da Altın Kamera kazanan 2000 yapımı \"Sarhoş Atlar Zamanı\" hangi yönetmenin filmidir?",
     "answersTr": [
       "Hiner Saleem",
       "Cafer Panahi",
-      "Mohsen Mahmelbaf",
-      "Bahman Ghobadi"
+      "Bahman Ghobadi",
+      "Mohsen Mahmelbaf"
     ],
     "correctAnswerTr": "Bahman Ghobadi",
     "explanation": "Ghobadi'nin ilk uzun metrajı, İran-Irak sınırındaki bir Kürt köyünde sınır ticaretiyle ayakta kalmaya çalışan çocukları izler. Altın Kamera yalnız ilk filmlere verilir; diğer üç isim de tanınmış yönetmenlerdir ama bu film onların değildir.",
@@ -616,16 +616,16 @@
     "category": "Sînema",
     "prompt": "Dengên wek gavan an vekirina derî yên ku piştî kişandinê li stûdyoyê ji nû ve tên çêkirin, çi tên navandin?",
     "answers": [
-      "Muzîka fîlmî",
       "Dengên foley",
+      "Muzîka fîlmî",
       "Dublaj",
       "Dengê rasterast"
     ],
     "correctAnswer": "Dengên foley",
     "promptTr": "Ayak sesi ya da kapı gıcırtısı gibi seslerin çekimden sonra stüdyoda yeniden üretilmesine ne denir?",
     "answersTr": [
-      "Film müziği",
       "Foley",
+      "Film müziği",
       "Dublaj",
       "Doğrudan ses"
     ],
@@ -651,16 +651,16 @@
     "prompt": "Kîjan lîstikvan û derhêner bi karakterê \"Serserê Piçûk\" ê dema sînemaya bêdeng tê nasîn?",
     "answers": [
       "Buster Keaton",
-      "Harold Lloyd",
       "Charlie Chaplin",
+      "Harold Lloyd",
       "Roscoe Arbuckle"
     ],
     "correctAnswer": "Charlie Chaplin",
     "promptTr": "Sessiz sinema döneminin \"Küçük Serseri\" tipiyle tanınan oyuncu-yönetmen kimdir?",
     "answersTr": [
       "Buster Keaton",
-      "Harold Lloyd",
       "Charlie Chaplin",
+      "Harold Lloyd",
       "Roscoe Arbuckle"
     ],
     "correctAnswerTr": "Charlie Chaplin",
@@ -684,18 +684,18 @@
     "category": "Sînema",
     "prompt": "Derhênerê swêdî yê fîlmê 1957an \"Det sjunde inseglet\" (Mohra Heftemîn) kî ye?",
     "answers": [
-      "Ingmar Bergman",
       "Victor Sjöström",
       "Bo Widerberg",
-      "Jan Troell"
+      "Jan Troell",
+      "Ingmar Bergman"
     ],
     "correctAnswer": "Ingmar Bergman",
     "promptTr": "1957 yapımı \"Yedinci Mühür\" filminin İsveçli yönetmeni kimdir?",
     "answersTr": [
-      "Ingmar Bergman",
       "Victor Sjöström",
       "Bo Widerberg",
-      "Jan Troell"
+      "Jan Troell",
+      "Ingmar Bergman"
     ],
     "correctAnswerTr": "Ingmar Bergman",
     "explanation": "Film, Haçlı seferinden dönen bir şövalyenin Ölüm'le satranç oynamasını anlatır; inanç ve ölüm sorusu yönetmenin bütün işlerinde sürer. Sjöström, Widerberg ve Troell de İsveç sinemasının önemli adlarıdır.",
@@ -720,16 +720,16 @@
     "answers": [
       "Montajkar",
       "Derhênerê dîmenê",
-      "Berpirsê dekorê",
-      "Senarîst"
+      "Senarîst",
+      "Berpirsê dekorê"
     ],
     "correctAnswer": "Senarîst",
     "promptTr": "Bir filmin diyaloglarını ve öykü yapısını kâğıt üzerinde kim kurar?",
     "answersTr": [
       "Kurgucu",
       "Görüntü yönetmeni",
-      "Sanat yönetmeni",
-      "Senarist"
+      "Senarist",
+      "Sanat yönetmeni"
     ],
     "correctAnswerTr": "Senarist",
     "explanation": "Senaryo, filmin sahne sahne planıdır; konuşmalar ve olay örgüsü burada belirlenir. Kurgucu çekilmiş görüntüyle, görüntü yönetmeni kamerayla, sanat yönetmeni mekân ve dekorla çalışır.",
@@ -752,18 +752,18 @@
     "category": "Sînema",
     "prompt": "Kîjan festîvala fîlman a navneteweyî ya sereke di sala 1932yan de, berî yên din, hat damezrandin?",
     "answers": [
-      "Venedîk",
       "Cannes",
       "Berlînale",
-      "Karlovy Vary"
+      "Karlovy Vary",
+      "Venedîk"
     ],
     "correctAnswer": "Venedîk",
     "promptTr": "Başlıca uluslararası film festivallerinin en eskisi olan, 1932'de kurulan festival hangisidir?",
     "answersTr": [
-      "Venedik",
       "Cannes",
       "Berlinale",
-      "Karlovy Vary"
+      "Karlovy Vary",
+      "Venedik"
     ],
     "correctAnswerTr": "Venedik",
     "explanation": "1932'de başlayan bu festivalin büyük ödülü Altın Aslan'dır. Cannes ve Karlovy Vary 1946'da düzenli hale geldi, Berlinale ise 1951'de kuruldu.",
@@ -787,16 +787,16 @@
     "prompt": "Krîza afirînerî ya derhênerekî di fîlmê 1963yan \"8½\" de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?",
     "answers": [
       "Luchino Visconti",
-      "Michelangelo Antonioni",
       "Federico Fellini",
+      "Michelangelo Antonioni",
       "Pier Paolo Pasolini"
     ],
     "correctAnswer": "Federico Fellini",
     "promptTr": "1963 yapımı \"8½\" bir yönetmenin yaratıcılık bunalımını anlatır; film hangi İtalyan yönetmenindir?",
     "answersTr": [
       "Luchino Visconti",
-      "Michelangelo Antonioni",
       "Federico Fellini",
+      "Michelangelo Antonioni",
       "Pier Paolo Pasolini"
     ],
     "correctAnswerTr": "Federico Fellini",
@@ -820,18 +820,18 @@
     "category": "Sînema",
     "prompt": "Di standarda klasîk a sînemaya 35 mm de di saniyeyekê de çend kadro tên nîşandan?",
     "answers": [
-      "24",
       "16",
       "30",
-      "48"
+      "48",
+      "24"
     ],
     "correctAnswer": "24",
     "promptTr": "Klasik 35 mm sinema standardında saniyede kaç kare gösterilir?",
     "answersTr": [
-      "24",
       "16",
       "30",
-      "48"
+      "48",
+      "24"
     ],
     "correctAnswerTr": "24",
     "explanation": "Sesli sinemaya geçişle birlikte bu hız standart oldu, çünkü ses bandının düzgün okunması sabit bir hız gerektiriyordu. Sessiz dönemde çekim hızı 16 ile 18 arasında değişebiliyordu.",
@@ -856,16 +856,16 @@
     "answers": [
       "Jean-Luc Godard",
       "Claude Chabrol",
-      "Jean-Pierre Melville",
-      "François Truffaut"
+      "François Truffaut",
+      "Jean-Pierre Melville"
     ],
     "correctAnswer": "François Truffaut",
     "promptTr": "Fransız Yeni Dalgası'nın başlangıcı sayılan 1959 yapımı \"Dört Yüz Darbe\" kimin filmidir?",
     "answersTr": [
       "Jean-Luc Godard",
       "Claude Chabrol",
-      "Jean-Pierre Melville",
-      "François Truffaut"
+      "François Truffaut",
+      "Jean-Pierre Melville"
     ],
     "correctAnswerTr": "François Truffaut",
     "explanation": "Yönetmen ilk uzun metrajıyla Cannes'da en iyi yönetmen ödülünü aldı; film kendi çocukluğundan izler taşır. Godard ve Chabrol da Cahiers du cinéma yazarlığından yönetmenliğe geçti; Melville ise bu kuşaktan önce gelen, onların örnek aldığı bir yönetmendi.",
@@ -888,18 +888,18 @@
     "category": "Sînema",
     "prompt": "Kîjan derhêner sala 1964an bi fîlmê \"Susuz Yaz\" li Berlînê Hirça Zêrîn wergirt?",
     "answers": [
-      "Metîn Erksan",
       "Lütfî Ö. Akad",
       "Atif Yilmaz",
-      "Halît Refîg"
+      "Halît Refîg",
+      "Metîn Erksan"
     ],
     "correctAnswer": "Metîn Erksan",
     "promptTr": "1964'te \"Susuz Yaz\" filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?",
     "answersTr": [
-      "Metin Erksan",
       "Lütfi Ö. Akad",
       "Atıf Yılmaz",
-      "Halit Refiğ"
+      "Halit Refiğ",
+      "Metin Erksan"
     ],
     "correctAnswerTr": "Metin Erksan",
     "explanation": "Film su hakkı üzerinden kırsal bir çatışmayı anlatır ve Türkiye sinemasının Berlin'deki ilk büyük ödülüdür. Akad, Atıf Yılmaz ve Refiğ de aynı dönemin öne çıkan yönetmenleridir.",
@@ -923,16 +923,16 @@
     "prompt": "Dîmenê ku tê de kamera rasterast ji jor ve li cihê bûyerê dinêre, çi tê navandin?",
     "answers": [
       "Plana ji jêr",
-      "Plana hemwaz",
       "Plana çavê teyr",
+      "Plana hemwaz",
       "Plana xwar"
     ],
     "correctAnswer": "Plana çavê teyr",
     "promptTr": "Kameranın olay yerine tam tepeden baktığı çekime ne ad verilir?",
     "answersTr": [
       "Alt açı",
-      "Göz hizası",
       "Kuşbakışı",
+      "Göz hizası",
       "Eğik açı"
     ],
     "correctAnswerTr": "Kuşbakışı",
@@ -956,18 +956,18 @@
     "category": "Sînema",
     "prompt": "Yekem fîlmê animasyonê yê dirêj ê stûdyoya Walt Disney, ku sala 1937an derket, kîjan e?",
     "answers": [
-      "Sipîberf û Heft Cûceyan",
       "Pînokyo",
       "Fantasia",
-      "Dumbo"
+      "Dumbo",
+      "Sipîberf û Heft Cûceyan"
     ],
     "correctAnswer": "Sipîberf û Heft Cûceyan",
     "promptTr": "Walt Disney stüdyosunun 1937'de gösterime giren ilk uzun metrajlı animasyon filmi hangisidir?",
     "answersTr": [
-      "Pamuk Prenses ve Yedi Cüceler",
       "Pinokyo",
       "Fantasia",
-      "Dumbo"
+      "Dumbo",
+      "Pamuk Prenses ve Yedi Cüceler"
     ],
     "correctAnswerTr": "Pamuk Prenses ve Yedi Cüceler",
     "explanation": "Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo ile Fantasia 1940, Dumbo ise 1941 yapımıdır.",
@@ -990,16 +990,16 @@
     "category": "Sînema",
     "prompt": "Derhênerê senegalî yê ku bi fîlmê 1966an \"La Noire de…\" tê nasîn kî ye?",
     "answers": [
-      "Djibril Diop Mambéty",
       "Ousmane Sembène",
+      "Djibril Diop Mambéty",
       "Souleymane Cissé",
       "Med Hondo"
     ],
     "correctAnswer": "Ousmane Sembène",
     "promptTr": "1966 yapımı \"Kara Kız\" filmiyle tanınan Senegalli yönetmen kimdir?",
     "answersTr": [
-      "Djibril Diop Mambéty",
       "Ousmane Sembène",
+      "Djibril Diop Mambéty",
       "Souleymane Cissé",
       "Med Hondo"
     ],
@@ -1024,18 +1024,18 @@
     "category": "Sînema",
     "prompt": "Kî budçeya fîlmekî peyda dike û pêvajoya berhemanînê birêve dibe?",
     "answers": [
-      "Berhemhêner",
       "Derhêner",
       "Senarîst",
-      "Montajkar"
+      "Montajkar",
+      "Berhemhêner"
     ],
     "correctAnswer": "Berhemhêner",
     "promptTr": "Bir filmin bütçesini bulan ve yapım sürecini yürüten kişi kimdir?",
     "answersTr": [
-      "Yapımcı",
       "Yönetmen",
       "Senarist",
-      "Kurgucu"
+      "Kurgucu",
+      "Yapımcı"
     ],
     "correctAnswerTr": "Yapımcı",
     "explanation": "Yapımcı finansmanı, takvimi ve ekibi bir arada tutar; sanatsal kararlar yönetmende kalır. Senarist metni yazar, kurgucu ise çekim sonrası aşamada çalışır.",
@@ -1058,16 +1058,16 @@
     "category": "Sînema",
     "prompt": "Manîfestoya \"Dogme 95\" ku qedexeyên tund li ronahiya sûnî û muzîka lêzêdekirî danî, li kîjan welatî hat ragihandin?",
     "answers": [
-      "Awistirya",
       "Danîmarka",
+      "Awistirya",
       "Norwêc",
       "Hollanda"
     ],
     "correctAnswer": "Danîmarka",
     "promptTr": "Yapay ışığa ve sonradan eklenen müziğe katı yasaklar koyan \"Dogme 95\" bildirisi hangi ülkenin yönetmenlerince başlatıldı?",
     "answersTr": [
-      "Avusturya",
       "Danimarka",
+      "Avusturya",
       "Norveç",
       "Hollanda"
     ],
@@ -1094,16 +1094,16 @@
     "answers": [
       "John Woo",
       "Tsui Hark",
-      "Ann Hui",
-      "Wong Kar-waî"
+      "Wong Kar-waî",
+      "Ann Hui"
     ],
     "correctAnswer": "Wong Kar-waî",
     "promptTr": "2000 yapımı \"Aşk Zamanı\" filminin Hong Konglu yönetmeni kimdir?",
     "answersTr": [
       "John Woo",
       "Tsui Hark",
-      "Ann Hui",
-      "Wong Kar-wai"
+      "Wong Kar-wai",
+      "Ann Hui"
     ],
     "correctAnswerTr": "Wong Kar-wai",
     "explanation": "Film, 1960'ların Hong Kong'unda iki komşunun söze dökülmeyen yakınlığını dar kadrajlar ve yavaşlatılmış geçişlerle anlatır. Woo, Tsui Hark ve Ann Hui aynı sinemanın başka damarlarını temsil eder.",
@@ -1126,16 +1126,16 @@
     "category": "Sînema",
     "prompt": "Dîmenê destpêkê yê ku cih û dema sekansekê dide nasîn, çi tê navandin?",
     "answers": [
-      "Plana berevajî",
       "Plana danasînê",
+      "Plana berevajî",
       "Plana detayê",
       "Plana subjektîf"
     ],
     "correctAnswer": "Plana danasînê",
     "promptTr": "Bir sekansın geçtiği yeri ve zamanı tanıtan açılış çekimine ne denir?",
     "answersTr": [
-      "Ters açı",
       "Tanıtım planı",
+      "Ters açı",
       "Ayrıntı planı",
       "Öznel çekim"
     ],
@@ -1160,18 +1160,18 @@
     "category": "Sînema",
     "prompt": "Kûrahiya zeviyê ya berfireh bi fîlmê 1941ê \"Citizen Kane\" navdar bû; derhênerê wî kî ye?",
     "answers": [
-      "Orson Welles",
       "Howard Hawks",
       "John Ford",
-      "Billy Wilder"
+      "Billy Wilder",
+      "Orson Welles"
     ],
     "correctAnswer": "Orson Welles",
     "promptTr": "Geniş alan derinliği 1941 yapımı \"Yurttaş Kane\" ile ün kazandı; bu filmin yönetmeni kimdir?",
     "answersTr": [
-      "Orson Welles",
       "Howard Hawks",
       "John Ford",
-      "Billy Wilder"
+      "Billy Wilder",
+      "Orson Welles"
     ],
     "correctAnswerTr": "Orson Welles",
     "explanation": "Yönetmen filmi 25 yaşında çekti; ön ve arka planın birlikte net kaldığı görüntüleri görüntü yönetmeni Gregg Toland'la geliştirdi. Ford, Hawks ve Wilder aynı stüdyo döneminin diğer büyük adlarıdır.",
@@ -1194,16 +1194,16 @@
     "category": "Sînema",
     "prompt": "Sala 2010an li Berlînê Hirça Zêrîn ji fîlmê \"Bal\" re hat dayîn; derhênerê vî fîlmî kî ye?",
     "answers": [
-      "Derviş Zaîm",
       "Semîh Kaplanoglu",
+      "Derviş Zaîm",
       "Özcan Alper",
       "Kazim Öz"
     ],
     "correctAnswer": "Semîh Kaplanoglu",
     "promptTr": "2010'da Berlin'de Altın Ayı \"Bal\" filmine verildi; bu filmin yönetmeni kimdir?",
     "answersTr": [
-      "Derviş Zaim",
       "Semih Kaplanoğlu",
+      "Derviş Zaim",
       "Özcan Alper",
       "Kazım Öz"
     ],
@@ -1230,16 +1230,16 @@
     "answers": [
       "Melodram",
       "Film noir",
-      "Trîler",
-      "Western"
+      "Western",
+      "Trîler"
     ],
     "correctAnswer": "Western",
     "promptTr": "19. yüzyıl Amerikan batısında, kovboylar ve sınır çatışmaları etrafında geçen film türü hangisidir?",
     "answersTr": [
       "Melodram",
       "Kara film",
-      "Gerilim",
-      "Western"
+      "Western",
+      "Gerilim"
     ],
     "correctAnswerTr": "Western",
     "explanation": "Bu tür sınır bölgesinin efsanesini at, silah ve açık arazi üzerinden kurar. Kara film kentin gecesinde geçer, melodram duygusal çatışmaya, gerilim ise tehlike beklentisine dayanır.",
@@ -1262,16 +1262,16 @@
     "category": "Sînema",
     "prompt": "Kîjan kovara fransî di salên 1950î de nêrîna \"derhêner nivîskarê fîlmî ye\" belav kir?",
     "answers": [
-      "Sight and Sound",
       "Cahiers du cinéma",
+      "Sight and Sound",
       "Positif",
       "Variety"
     ],
     "correctAnswer": "Cahiers du cinéma",
     "promptTr": "1950'lerde \"yönetmen filmin yazarıdır\" görüşünü hangi Fransız dergi yaydı?",
     "answersTr": [
-      "Sight and Sound",
       "Cahiers du cinéma",
+      "Sight and Sound",
       "Positif",
       "Variety"
     ],
@@ -1296,18 +1296,18 @@
     "category": "Sînema",
     "prompt": "Palme d'Or a sala 2019an ji fîlmê \"Parasite\" re hat dayîn; ev fîlm ji kîjan welatî ye?",
     "answers": [
-      "Koreya Başûr",
       "Japonya",
       "Çîn",
-      "Taywan"
+      "Taywan",
+      "Koreya Başûr"
     ],
     "correctAnswer": "Koreya Başûr",
     "promptTr": "2019 Altın Palmiye'si \"Parazit\" filmine verildi; bu film hangi ülkenindir?",
     "answersTr": [
-      "Güney Kore",
       "Japonya",
       "Çin",
-      "Tayvan"
+      "Tayvan",
+      "Güney Kore"
     ],
     "correctAnswerTr": "Güney Kore",
     "explanation": "Bong Joon-ho'nun filmi iki ailenin sınıf farkını tek bir evin katmanlarında anlatır. Aynı film ertesi yıl Oscar'da en iyi film seçilerek bu ödülü kazanan ilk İngilizce olmayan yapım oldu.",
@@ -1330,16 +1330,16 @@
     "category": "Sînema",
     "prompt": "Dengê ku çavkaniya wî di cîhana çîroka fîlmî de heye, wek radyoyeke di odeyê de, çi tê navandin?",
     "answers": [
-      "Dengê off",
       "Dengê dîegetîk",
+      "Dengê off",
       "Muzîka lêzêdekirî",
       "Vegotina derveyî"
     ],
     "correctAnswer": "Dengê dîegetîk",
     "promptTr": "Kaynağı filmin öykü dünyasında bulunan, örneğin odadaki bir radyodan gelen ses nasıl adlandırılır?",
     "answersTr": [
-      "Dış ses",
       "Diegetik ses",
+      "Dış ses",
       "Eklenen film müziği",
       "Dış anlatıcı"
     ],
@@ -1365,16 +1365,16 @@
     "prompt": "Dîmena duşê ya fîlmê 1960î \"Psycho\" berhema kîjan derhênerî ye?",
     "answers": [
       "Henri-Georges Clouzot",
-      "Otto Preminger",
       "Alfred Hitchcock",
+      "Otto Preminger",
       "Robert Aldrich"
     ],
     "correctAnswer": "Alfred Hitchcock",
     "promptTr": "1960 yapımı \"Sapık\" filminin duş sahnesi hangi yönetmenin işidir?",
     "answersTr": [
       "Henri-Georges Clouzot",
-      "Otto Preminger",
       "Alfred Hitchcock",
+      "Otto Preminger",
       "Robert Aldrich"
     ],
     "correctAnswerTr": "Alfred Hitchcock",
@@ -1398,18 +1398,18 @@
     "category": "Sînema",
     "prompt": "Fîlmê 2003yan \"Vodka Lemon\" ji kîjan derhênerê kurd e?",
     "answers": [
-      "Hîner Salêm",
       "Bahman Ghobadî",
       "Kazim Öz",
-      "Mano Xelîl"
+      "Mano Xelîl",
+      "Hîner Salêm"
     ],
     "correctAnswer": "Hîner Salêm",
     "promptTr": "2003 yapımı \"Vodka Lemon\" hangi Kürt yönetmenin filmidir?",
     "answersTr": [
-      "Hiner Saleem",
       "Bahman Ghobadi",
       "Kazım Öz",
-      "Mano Khalil"
+      "Mano Khalil",
+      "Hiner Saleem"
     ],
     "correctAnswerTr": "Hiner Saleem",
     "explanation": "Ermenistan'daki bir Kürt köyünde geçen film, kışın yoksulluğunu kuru bir mizahla anlatır ve yönetmenin en tanınan işidir. Ghobadi, Öz ve Khalil de Kürt sinemasının başka yönetmenleridir.",
@@ -1433,16 +1433,16 @@
     "prompt": "Di sînemayê de şeklê çarçoveya dîmenê bi kîjan pîvanê tê diyarkirin?",
     "answers": [
       "Hejmara kadroyên ku di saniyeyekê de tên nîşandan",
-      "Kûrahiya zeviya di navbera pêş û paş de",
       "Rêjeya firehî û bilindahiyê",
+      "Kûrahiya zeviya di navbera pêş û paş de",
       "Asta bilindbûna dengê tomarkirî"
     ],
     "correctAnswer": "Rêjeya firehî û bilindahiyê",
     "promptTr": "Sinemada görüntü çerçevesinin biçimi hangi ölçüyle belirlenir?",
     "answersTr": [
       "Saniyede gösterilen kare sayısı",
-      "Ön ve arka plan arasındaki netlik derinliği",
       "Genişliğin yüksekliğe oranı",
+      "Ön ve arka plan arasındaki netlik derinliği",
       "Kaydedilen sesin yükseklik düzeyi"
     ],
     "correctAnswerTr": "Genişliğin yüksekliğe oranı",
@@ -1466,16 +1466,16 @@
     "category": "Sînema",
     "prompt": "Ceribandina ku nîşan da wateya heman dîmenê rû li gorî dîmenê pê re diguhere, bi navê kê tê zanîn?",
     "answers": [
-      "Dziga Vertov",
       "Lev Kuleşov",
+      "Dziga Vertov",
       "Vsevolod Pudovkin",
       "Aleksandr Dovjenko"
     ],
     "correctAnswer": "Lev Kuleşov",
     "promptTr": "Aynı yüz görüntüsünün anlamının yanına konan çekime göre değiştiğini gösteren deney kimin adıyla anılır?",
     "answersTr": [
-      "Dziga Vertov",
       "Lev Kuleşov",
+      "Dziga Vertov",
       "Vsevolod Pudovkin",
       "Aleksandr Dovjenko"
     ],
@@ -1501,16 +1501,16 @@
     "prompt": "Di sînemaya tirkî de navê \"Yeşilçam\" behsa çi dike?",
     "answers": [
       "Festîvaleke fîlman li Anqereyê",
-      "Xelateke sînemayê ya salane",
       "Pîşesaziya fîlman a Îstenbolê",
+      "Xelateke sînemayê ya salane",
       "Kovareke sînemayê ya kevn"
     ],
     "correctAnswer": "Pîşesaziya fîlman a Îstenbolê",
     "promptTr": "Türk sinemasında \"Yeşilçam\" adı neyi anlatır?",
     "answersTr": [
       "Ankara'daki bir film festivali",
-      "Yıllık bir sinema ödülü",
       "İstanbul merkezli film endüstrisi",
+      "Yıllık bir sinema ödülü",
       "Eski bir sinema dergisi"
     ],
     "correctAnswerTr": "İstanbul merkezli film endüstrisi",
@@ -1534,18 +1534,18 @@
     "category": "Sînema",
     "prompt": "Du bûyerên ku di heman demê de li cihên cuda diqewimin bi dor tên nîşandan; ev şêwaza montajê çi ye?",
     "answers": [
-      "Montaja paralel",
       "Montaja domdar",
       "Elipsa demî",
-      "Fondu ya zincîrî"
+      "Fondu ya zincîrî",
+      "Montaja paralel"
     ],
     "correctAnswer": "Montaja paralel",
     "promptTr": "Aynı anda farklı yerlerde geçen iki olayın dönüşümlü gösterilmesine ne denir?",
     "answersTr": [
-      "Paralel kurgu",
       "Süreklilik kurgusu",
       "Zaman atlaması",
-      "Zincirleme geçiş"
+      "Zincirleme geçiş",
+      "Paralel kurgu"
     ],
     "correctAnswerTr": "Paralel kurgu",
     "explanation": "Paralel kurgu iki hattı sırayla keserek gerilimi büyütür; kovalamaca sahnelerinin temelidir. Süreklilik kurgusu tek bir akışı pürüzsüz bağlar, zaman atlaması ise araya giren süreyi atar.",
@@ -1569,16 +1569,16 @@
     "prompt": "Di merasîma yekem a Oscarê de (1929), xelata berhema herî baş ji bo kîjan fîlmî hat dayîn?",
     "answers": [
       "The Broadway Melody",
-      "Sunrise",
       "Wings",
+      "Sunrise",
       "The Jazz Singer"
     ],
     "correctAnswer": "Wings",
     "promptTr": "1929'daki ilk Oscar töreninde en iyi yapım ödülü hangi filme verildi?",
     "answersTr": [
       "The Broadway Melody",
-      "Sunrise",
       "Wings",
+      "Sunrise",
       "The Jazz Singer"
     ],
     "correctAnswerTr": "Wings",
@@ -1602,16 +1602,16 @@
     "category": "Sînema",
     "prompt": "Derhênerê spanî yê ku bi fîlmê xwe yê 1999an \"Dayika Min\" Oscara fîlmê biyanî wergirt kî ye?",
     "answers": [
-      "Carlos Saura",
       "Pedro Almodóvar",
+      "Carlos Saura",
       "Luis Buñuel",
       "Alejandro Amenábar"
     ],
     "correctAnswer": "Pedro Almodóvar",
     "promptTr": "1999 yapımı \"Annem Hakkında Her Şey\" ile yabancı film Oscarı kazanan İspanyol yönetmen kimdir?",
     "answersTr": [
-      "Carlos Saura",
       "Pedro Almodóvar",
+      "Carlos Saura",
       "Luis Buñuel",
       "Alejandro Amenábar"
     ],
@@ -1637,16 +1637,16 @@
     "prompt": "Dema ku kamera li ser rêyekê bi lîstikvanî re dilive, ev tevger çi tê navandin?",
     "answers": [
       "Nêzîkkirina optîk",
-      "Çerxa serdakî",
       "Travelling",
+      "Çerxa serdakî",
       "Çerxa berwarî"
     ],
     "correctAnswer": "Travelling",
     "promptTr": "Kameranın bir ray üzerinde oyuncuyla birlikte yer değiştirmesine ne denir?",
     "answersTr": [
       "Optik yaklaştırma",
-      "Dikey çevrinme",
       "Kaydırma",
+      "Dikey çevrinme",
       "Yatay çevrinme"
     ],
     "correctAnswerTr": "Kaydırma",
@@ -1672,16 +1672,16 @@
     "answers": [
       "Sergey Parajanov",
       "Elem Klimov",
-      "Nikita Mihalkov",
-      "Andrey Tarkovskî"
+      "Andrey Tarkovskî",
+      "Nikita Mihalkov"
     ],
     "correctAnswer": "Andrey Tarkovskî",
     "promptTr": "Sovyetler Birliği'nde çekilen 1979 yapımı \"İz Sürücü\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Sergey Parajanov",
       "Elem Klimov",
-      "Nikita Mihalkov",
-      "Andrey Tarkovski"
+      "Andrey Tarkovski",
+      "Nikita Mihalkov"
     ],
     "correctAnswerTr": "Andrey Tarkovski",
     "explanation": "Yönetmen uzun çekimleri ve ağır ritmiyle bilimkurgunun aksiyonunu değil inanç sorusunu öne aldı; film Strugatski kardeşlerin romanından uyarlandı. Parajanov, Klimov ve Mihalkov aynı dönemin diğer Sovyet yönetmenleridir.",
@@ -1704,16 +1704,16 @@
     "category": "Sînema",
     "prompt": "Kîjan derhêner sala 2004an bi fîlmê \"Gegen die Wand\" li Berlînê Hirça Zêrîn wergirt?",
     "answers": [
-      "Ferzan Özpetek",
       "Fatîh Akin",
+      "Ferzan Özpetek",
       "Thomas Arslan",
       "Yüksel Yavuz"
     ],
     "correctAnswer": "Fatîh Akin",
     "promptTr": "2004'te \"Duvara Karşı\" filmiyle Berlin'de Altın Ayı'yı hangi yönetmen kazandı?",
     "answersTr": [
-      "Ferzan Özpetek",
       "Fatih Akın",
+      "Ferzan Özpetek",
       "Thomas Arslan",
       "Yüksel Yavuz"
     ],
@@ -1740,16 +1740,16 @@
     "answers": [
       "Deus ex machina",
       "Vegera paşve",
-      "Mîzansen",
-      "MacGuffin"
+      "MacGuffin",
+      "Mîzansen"
     ],
     "correctAnswer": "MacGuffin",
     "promptTr": "Hitchcock'un diliyle, karakterleri harekete geçiren ama kendisi önemsiz olan öğeye ne ad verilir?",
     "answersTr": [
       "Deus ex machina",
       "Geriye dönüş",
-      "Mizansen",
-      "MacGuffin"
+      "MacGuffin",
+      "Mizansen"
     ],
     "correctAnswerTr": "MacGuffin",
     "explanation": "Bu öğe bir belge, valiz ya da formül olabilir; işlevi kovalamacayı başlatmaktır, içeriği değil. Deus ex machina tersine düğümü sonda dışarıdan çözer, mizansen ise kadraj içi düzenlemeyi anlatır.",
@@ -1773,16 +1773,16 @@
     "prompt": "Palme d'Or a 1997an çû fîlmê \"Ta'm-e Guilass\"; ev berhem ya kîjan derhênerê îranî ye?",
     "answers": [
       "Asghar Ferhadî",
-      "Macîd Macîdî",
       "Abbas Kiarostamî",
+      "Macîd Macîdî",
       "Daryûş Mehrcûî"
     ],
     "correctAnswer": "Abbas Kiarostamî",
     "promptTr": "1997 Altın Palmiye'si \"Kiraz Tadı\" filmine gitti; bu film hangi İranlı yönetmenindir?",
     "answersTr": [
       "Asghar Farhadi",
-      "Macid Macidi",
       "Abbas Kiarostami",
+      "Macid Macidi",
       "Daryuş Mehrcui"
     ],
     "correctAnswerTr": "Abbas Kiarostami",
@@ -1808,16 +1808,16 @@
     "answers": [
       "Laboratûvara Lumière",
       "Stûdyoya Pathé",
-      "Enstîtuya Marey",
-      "Laboratûvara Edison"
+      "Laboratûvara Edison",
+      "Enstîtuya Marey"
     ],
     "correctAnswer": "Laboratûvara Edison",
     "promptTr": "Filmi tek bir izleyiciye delikten gösteren \"Kinetoskop\" hangi laboratuvarda geliştirildi?",
     "answersTr": [
       "Lumière laboratuvarı",
       "Pathé stüdyosu",
-      "Marey enstitüsü",
-      "Edison laboratuvarı"
+      "Edison laboratuvarı",
+      "Marey enstitüsü"
     ],
     "correctAnswerTr": "Edison laboratuvarı",
     "explanation": "W.K.L. Dickson'ın geliştirdiği kinetoskop 1890'ların başında salonlarda çalıştı ama görüntüyü perdeye yansıtmıyordu; izleyici tek tek bakıyordu. Perdeye yansıtmayı yaygınlaştıran Lumière'lerin sinematografı oldu.",
@@ -1840,16 +1840,16 @@
     "category": "Sînema",
     "prompt": "Fîlmê 1999an \"Güneşe Yolculuk\" ji kîjan derhênerî ye?",
     "answers": [
-      "Zekî Demîrkubuz",
       "Yeşîm Ustaoglu",
+      "Zekî Demîrkubuz",
       "Handan Îpekçî",
       "Serdar Akar"
     ],
     "correctAnswer": "Yeşîm Ustaoglu",
     "promptTr": "1999 yapımı \"Güneşe Yolculuk\" hangi yönetmenin filmidir?",
     "answersTr": [
-      "Zeki Demirkubuz",
       "Yeşim Ustaoğlu",
+      "Zeki Demirkubuz",
       "Handan İpekçi",
       "Serdar Akar"
     ],
@@ -1874,16 +1874,16 @@
     "category": "Teknolojî",
     "prompt": "Yek bayt ji çend bîtan pêk tê?",
     "answers": [
-      "4 bît",
       "8 bît",
+      "4 bît",
       "6 bît",
       "16 bît"
     ],
     "correctAnswer": "8 bît",
     "promptTr": "Bir bayt kaç bitten oluşur?",
     "answersTr": [
-      "4 bit",
       "8 bit",
+      "4 bit",
       "6 bit",
       "16 bit"
     ],
@@ -1909,16 +1909,16 @@
     "prompt": "Kîjan parçeyê kompîterê fermanên bernameyan bi cih tîne û wek \"mejî\" tê nasîn?",
     "answers": [
       "Dîska hişk",
-      "Karta grafîkê",
       "Pêvajoker (CPU)",
+      "Karta grafîkê",
       "Çavkaniya enerjiyê"
     ],
     "correctAnswer": "Pêvajoker (CPU)",
     "promptTr": "Program komutlarını yürüten ve bilgisayarın \"beyni\" sayılan parça hangisidir?",
     "answersTr": [
       "Sabit disk",
-      "Ekran kartı",
       "İşlemci (CPU)",
+      "Ekran kartı",
       "Güç kaynağı"
     ],
     "correctAnswerTr": "İşlemci (CPU)",
@@ -1942,18 +1942,18 @@
     "category": "Teknolojî",
     "prompt": "Gava ceryana kompîterê tê birîn, naveroka kîjan bîrê winda dibe?",
     "answers": [
-      "Bîra RAM",
       "Dîska hişk",
       "Bîra SSD",
-      "Bîra USB"
+      "Bîra USB",
+      "Bîra RAM"
     ],
     "correctAnswer": "Bîra RAM",
     "promptTr": "Bilgisayarın elektriği kesildiğinde içeriği kaybolan bellek hangisidir?",
     "answersTr": [
-      "RAM belleği",
       "Sabit disk",
       "SSD belleği",
-      "USB belleği"
+      "USB belleği",
+      "RAM belleği"
     ],
     "correctAnswerTr": "RAM belleği",
     "explanation": "RAM uçucu bellektir; içeriğini korumak için sürekli elektrik ister. Sabit disk, SSD ve USB bellek elektrik kesilse de veriyi tutmayı sürdürür.",
@@ -1977,16 +1977,16 @@
     "prompt": "Kîjan yekîneya daneyê ji megabaytê mezintir e?",
     "answers": [
       "Kilobayt",
-      "Bayt",
       "Gîgabayt",
+      "Bayt",
       "Bît"
     ],
     "correctAnswer": "Gîgabayt",
     "promptTr": "Megabayttan daha büyük olan veri birimi hangisidir?",
     "answersTr": [
       "Kilobayt",
-      "Bayt",
       "Gigabayt",
+      "Bayt",
       "Bit"
     ],
     "correctAnswerTr": "Gigabayt",
@@ -2010,16 +2010,16 @@
     "category": "Teknolojî",
     "prompt": "Windows, Linux û macOS mînakên kîjan cureyê nermalavê ne?",
     "answers": [
-      "Gerokên înternetê",
       "Pergalên xebitandinê",
+      "Gerokên înternetê",
       "Bernameyên antîvîrus",
       "Zimanên bernamesaziyê"
     ],
     "correctAnswer": "Pergalên xebitandinê",
     "promptTr": "Windows, Linux ve macOS hangi tür yazılıma örnektir?",
     "answersTr": [
-      "İnternet tarayıcıları",
       "İşletim sistemleri",
+      "İnternet tarayıcıları",
       "Antivirüs programları",
       "Programlama dilleri"
     ],
@@ -2045,16 +2045,16 @@
     "prompt": "Hejmara binary 1100 di pergala dehanî de dibe çi?",
     "answers": [
       "6",
-      "10",
       "12",
+      "10",
       "14"
     ],
     "correctAnswer": "12",
     "promptTr": "İkili sistemdeki 1100 sayısının onlu sistemdeki karşılığı kaçtır?",
     "answersTr": [
       "6",
-      "10",
       "12",
+      "10",
       "14"
     ],
     "correctAnswerTr": "12",
@@ -2078,18 +2078,18 @@
     "category": "Teknolojî",
     "prompt": "Taybetiya ku SSDyê ji dîska hişk a klasîk cuda dike çi ye?",
     "answers": [
-      "Parçeyên wê yên tevger tune ne",
       "Bi dîskên zivirok ên magnetîk dixebite",
       "Gava ceryan biqete dane jê tên jêbirin",
-      "Tenê ji bo bernameyên grafîkê hatiye çêkirin"
+      "Tenê ji bo bernameyên grafîkê hatiye çêkirin",
+      "Parçeyên wê yên tevger tune ne"
     ],
     "correctAnswer": "Parçeyên wê yên tevger tune ne",
     "promptTr": "SSD'yi klasik sabit diskten ayıran temel özellik nedir?",
     "answersTr": [
-      "Hareketli parçası yoktur",
       "Dönen manyetik disklerle çalışır",
       "Elektrik kesilince verisi silinir",
-      "Yalnızca grafik programları için üretilmiştir"
+      "Yalnızca grafik programları için üretilmiştir",
+      "Hareketli parçası yoktur"
     ],
     "correctAnswerTr": "Hareketli parçası yoktur",
     "explanation": "SSD veriyi flash çiplerde tutar; dönen tabla ve okuma kolu bulunmaz, bu yüzden sessiz ve darbeye dayanıklıdır. Verisi elektrik kesilse de kalır.",
@@ -2113,16 +2113,16 @@
     "prompt": "Bi sê bîtan çend nirxên cuda dikarin bên nîşandan?",
     "answers": [
       "3",
-      "6",
       "8",
+      "6",
       "7"
     ],
     "correctAnswer": "8",
     "promptTr": "Üç bit ile kaç farklı değer gösterilebilir?",
     "answersTr": [
       "3",
-      "6",
       "8",
+      "6",
       "7"
     ],
     "correctAnswerTr": "8",
@@ -2146,16 +2146,16 @@
     "category": "Teknolojî",
     "prompt": "Bîra cache ji bo çi tê bikaranîn?",
     "answers": [
-      "Ji bo hilanîna domdar a pelên mezin ên vîdyoyê",
       "Ji bo gihandina zû ya daneyên pir tên xwestin",
+      "Ji bo hilanîna domdar a pelên mezin ên vîdyoyê",
       "Ji bo zelaltirkirina wêneyê ekranê",
       "Ji bo bêtêlkirina girêdana înternetê"
     ],
     "correctAnswer": "Ji bo gihandina zû ya daneyên pir tên xwestin",
     "promptTr": "Önbellek (cache) ne amaçla kullanılır?",
     "answersTr": [
-      "Büyük video dosyalarını kalıcı olarak saklamak için",
       "Sık istenen veriye hızla ulaşmak için",
+      "Büyük video dosyalarını kalıcı olarak saklamak için",
       "Ekran görüntüsünü netleştirmek için",
       "Bağlantıyı kablosuz yapmak için"
     ],
@@ -2181,16 +2181,16 @@
     "prompt": "Pergala hexadecimal ji çend sembolên cuda pêk tê?",
     "answers": [
       "8",
-      "10",
       "16",
+      "10",
       "32"
     ],
     "correctAnswer": "16",
     "promptTr": "On altılık (hexadecimal) sistemde kaç farklı sembol kullanılır?",
     "answersTr": [
       "8",
-      "10",
       "16",
+      "10",
       "32"
     ],
     "correctAnswerTr": "16",
@@ -2216,16 +2216,16 @@
     "answers": [
       "Çaper",
       "Bilindgoh",
-      "Ekran",
-      "Klavye"
+      "Klavye",
+      "Ekran"
     ],
     "correctAnswer": "Klavye",
     "promptTr": "Bilgisayara veri girişi yapan aygıt hangisidir?",
     "answersTr": [
       "Yazıcı",
       "Hoparlör",
-      "Ekran",
-      "Klavye"
+      "Klavye",
+      "Ekran"
     ],
     "correctAnswerTr": "Klavye",
     "explanation": "Klavye kullanıcıdan veri alıp bilgisayara iletir. Yazıcı, hoparlör ve ekran ise bilgisayardan çıkan veriyi dışarı verir.",
@@ -2248,16 +2248,16 @@
     "category": "Teknolojî",
     "prompt": "Hejmara dehanî 13 di pergala binary de çawa tê nivîsandin?",
     "answers": [
-      "1011",
       "1101",
+      "1011",
       "1110",
       "1001"
     ],
     "correctAnswer": "1101",
     "promptTr": "Onlu sistemdeki 13 sayısı ikili sistemde nasıl yazılır?",
     "answersTr": [
-      "1011",
       "1101",
+      "1011",
       "1110",
       "1001"
     ],
@@ -2284,16 +2284,16 @@
     "answers": [
       "Parçeyên fizîkî yên ku mirov dikare bi dest bigire",
       "Kabloyên ku amûran bi hev ve girê didin",
-      "Enerjiya elektrîkê ya ku kompîter dixwe",
-      "Bername û fermanên ku li ser kompîterê dixebitin"
+      "Bername û fermanên ku li ser kompîterê dixebitin",
+      "Enerjiya elektrîkê ya ku kompîter dixwe"
     ],
     "correctAnswer": "Bername û fermanên ku li ser kompîterê dixebitin",
     "promptTr": "Yazılım kavramı neyi anlatır?",
     "answersTr": [
       "Elle tutulup gözle görülebilen fiziksel parçaları",
       "Aygıtları birbirine bağlayan kabloları",
-      "Bilgisayarın harcadığı elektriği",
-      "Bilgisayarda çalışan program ve komutları"
+      "Bilgisayarda çalışan program ve komutları",
+      "Bilgisayarın harcadığı elektriği"
     ],
     "correctAnswerTr": "Bilgisayarda çalışan program ve komutları",
     "explanation": "Yazılım, donanıma ne yapacağını söyleyen komut ve program bütünüdür. Elle tutulan parçalar ve kablolar donanım sayılır.",
@@ -2317,16 +2317,16 @@
     "prompt": "Kîjan bîr bi giranî tenê ji bo xwendinê ye û naveroka xwe bêyî ceryan diparêze?",
     "answers": [
       "RAM",
-      "Cache",
       "ROM",
+      "Cache",
       "Bîra virtual"
     ],
     "correctAnswer": "ROM",
     "promptTr": "Ağırlıkla salt okunur olan ve elektrik olmadan da içeriğini koruyan bellek hangisidir?",
     "answersTr": [
       "RAM",
-      "Önbellek",
       "ROM",
+      "Önbellek",
       "Sanal bellek"
     ],
     "correctAnswerTr": "ROM",
@@ -2352,16 +2352,16 @@
     "answers": [
       "Mezinahiya bîra hilanînê ya li ser dîska hişk",
       "Hejmara pelên vekirî",
-      "Asta germahiya kompîterê",
-      "Hejmara çerxên demjimêrê di çirkeyekê de"
+      "Hejmara çerxên demjimêrê di çirkeyekê de",
+      "Asta germahiya kompîterê"
     ],
     "correctAnswer": "Hejmara çerxên demjimêrê di çirkeyekê de",
     "promptTr": "İşlemcilerde gigahertz (GHz) birimi neyi ölçer?",
     "answersTr": [
       "Sabit diskteki depolama alanının büyüklüğünü",
       "Açık dosya sayısını",
-      "Bilgisayarın sıcaklık düzeyini",
-      "Saniyedeki saat çevrimi sayısını"
+      "Saniyedeki saat çevrimi sayısını",
+      "Bilgisayarın sıcaklık düzeyini"
     ],
     "correctAnswerTr": "Saniyedeki saat çevrimi sayısını",
     "explanation": "Hertz saniyedeki çevrim sayısıdır, 1 GHz saniyede bir milyar çevrim demektir. Depolama baytla, sıcaklık dereceyle ölçülür.",
@@ -2384,16 +2384,16 @@
     "category": "Teknolojî",
     "prompt": "Paşgira pelê (wek .txt an .jpg) bi giştî çi diyar dike?",
     "answers": [
-      "Mezinahiya pelê bi bayt, kilobayt an megabaytan",
       "Cureya naverokê û bernameya ku wê vedike",
+      "Mezinahiya pelê bi bayt, kilobayt an megabaytan",
       "Dîroka çêkirina pelê",
       "Cihê ku pel lê hatiye hilanîn"
     ],
     "correctAnswer": "Cureya naverokê û bernameya ku wê vedike",
     "promptTr": "Dosya uzantısı (.txt, .jpg gibi) genellikle neyi belirtir?",
     "answersTr": [
-      "Dosyanın bayt ya da megabayt cinsinden boyutunu",
       "İçeriğin türünü ve onu açacak programı",
+      "Dosyanın bayt ya da megabayt cinsinden boyutunu",
       "Dosyanın oluşturulma tarihini",
       "Dosyanın saklandığı konumu"
     ],
@@ -2420,16 +2420,16 @@
     "answers": [
       "Mezinkirina ekranan",
       "Kurtkirina kabloyan",
-      "Piçûkkirina pelên nivîsê û belgeyên ofîsê",
-      "Bikaranîna bîreke sereke ya pir mezintir"
+      "Bikaranîna bîreke sereke ya pir mezintir",
+      "Piçûkkirina pelên nivîsê û belgeyên ofîsê"
     ],
     "correctAnswer": "Bikaranîna bîreke sereke ya pir mezintir",
     "promptTr": "32 bitten 64 bit sistemlere geçişin başlıca nedeni neydi?",
     "answersTr": [
       "Ekranları büyütmek",
       "Kabloları kısaltmak",
-      "Metin ve ofis belgelerinin boyutunu küçültmek",
-      "Çok daha büyük ana bellek kullanabilmek"
+      "Çok daha büyük ana bellek kullanabilmek",
+      "Metin ve ofis belgelerinin boyutunu küçültmek"
     ],
     "correctAnswerTr": "Çok daha büyük ana bellek kullanabilmek",
     "explanation": "32 bitlik adresleme yaklaşık 4 GB belleği gösterebilir; 64 bitlik adres alanı bu sınırı pratikte kaldırır. Ekran, kablo ve dosya boyutuyla ilgisi yoktur.",
@@ -2453,16 +2453,16 @@
     "prompt": "Dema kompîter vedibe, kîjan nermalav berî pergala xebitandinê dixebite?",
     "answers": [
       "Geroka înternetê ya standard",
-      "Bernameya antîvîrus",
       "Firmware (BIOS/UEFI)",
+      "Bernameya antîvîrus",
       "Edîtora nivîsê"
     ],
     "correctAnswer": "Firmware (BIOS/UEFI)",
     "promptTr": "Bilgisayar açılırken işletim sisteminden önce hangi yazılım çalışır?",
     "answersTr": [
       "Sistemde kurulu internet tarayıcısı",
-      "Antivirüs programı",
       "Ürün yazılımı (BIOS/UEFI)",
+      "Antivirüs programı",
       "Metin düzenleyici"
     ],
     "correctAnswerTr": "Ürün yazılımı (BIOS/UEFI)",
@@ -2488,16 +2488,16 @@
     "answers": [
       "127",
       "128",
-      "254",
-      "255"
+      "255",
+      "254"
     ],
     "correctAnswer": "255",
     "promptTr": "İkili sistemdeki 11111111 sayısının onlu karşılığı kaçtır?",
     "answersTr": [
       "127",
       "128",
-      "254",
-      "255"
+      "255",
+      "254"
     ],
     "correctAnswerTr": "255",
     "explanation": "Sekiz basamağın hepsi 1 olduğunda toplam 2 üzeri 8 eksi 1, yani 255 eder; bu yüzden bir bayt en çok 255 değerini tutar. 256 ise farklı değerlerin adedidir.",
@@ -2520,18 +2520,18 @@
     "category": "Teknolojî",
     "prompt": "Erka sereke ya pergala DNSê çi ye?",
     "answers": [
-      "Navên malperan vediguherîne navnîşanên IPê",
       "Pelên mezin şîfre dike",
       "Leza girêdanê zêde dike",
-      "E-nameyên nexwestî berî gihîştina qutîkê digire"
+      "E-nameyên nexwestî berî gihîştina qutîkê digire",
+      "Navên malperan vediguherîne navnîşanên IPê"
     ],
     "correctAnswer": "Navên malperan vediguherîne navnîşanên IPê",
     "promptTr": "DNS sisteminin temel görevi nedir?",
     "answersTr": [
-      "Alan adlarını IP adreslerine çevirir",
       "Büyük dosyaları şifreler",
       "Bağlantı hızını artırır",
-      "İstenmeyen e-postaları kutuya girmeden engeller"
+      "İstenmeyen e-postaları kutuya girmeden engeller",
+      "Alan adlarını IP adreslerine çevirir"
     ],
     "correctAnswerTr": "Alan adlarını IP adreslerine çevirir",
     "explanation": "İnsanlar alan adı yazar, bilgisayarlar IP adresiyle konuşur; DNS ikisi arasında çeviri yapar. Şifreleme ve spam süzme başka sistemlerin işidir.",
@@ -2555,16 +2555,16 @@
     "prompt": "HTTPS bi çi awayî ji HTTPê cuda dibe?",
     "answers": [
       "Rûpel zûtir tên barkirin",
-      "Rûpel bêyî wêne tên nîşandan",
       "Danûstandin bi şîfrekirinê tê parastin",
+      "Rûpel bêyî wêne tên nîşandan",
       "Tenê li ser têlefonan dixebite"
     ],
     "correctAnswer": "Danûstandin bi şîfrekirinê tê parastin",
     "promptTr": "HTTPS, HTTP'den hangi yönüyle ayrılır?",
     "answersTr": [
       "Sayfalar daha hızlı yüklenir",
-      "Sayfalar resimsiz gösterilir",
       "İletişim şifrelenerek korunur",
+      "Sayfalar resimsiz gösterilir",
       "Yalnızca telefonlarda çalışır"
     ],
     "correctAnswerTr": "İletişim şifrelenerek korunur",
@@ -2588,18 +2588,18 @@
     "category": "Teknolojî",
     "prompt": "Navnîşana IPê di torê de çi diyar dike?",
     "answers": [
-      "Nasnameya hejmarî ya amûrê",
       "Cureya gerokê û pergala xebitandinê",
       "Leza girêdanê",
-      "Mezinahiya pelê"
+      "Mezinahiya pelê",
+      "Nasnameya hejmarî ya amûrê"
     ],
     "correctAnswer": "Nasnameya hejmarî ya amûrê",
     "promptTr": "IP adresi bir ağda neyi belirtir?",
     "answersTr": [
-      "Aygıtın sayısal kimliğini",
       "Tarayıcının ve işletim sisteminin türünü",
       "Bağlantının hızını",
-      "Dosyanın boyutunu"
+      "Dosyanın boyutunu",
+      "Aygıtın sayısal kimliğini"
     ],
     "correctAnswerTr": "Aygıtın sayısal kimliğini",
     "explanation": "Paketlerin doğru makineye ulaşması için her aygıta sayısal bir adres verilir. Hız, tarayıcı ve dosya boyutu bu adresten bağımsızdır.",
@@ -2624,16 +2624,16 @@
     "answers": [
       "Ji bo veguhastina daneyan di navbera bajaran de",
       "Ji bo belavkirina înternetê li tevahiya avahiyê",
-      "Ji bo girêdana serverên navneteweyî",
-      "Ji bo girêdana amûrên nêzîk bi enerjiyeke kêm"
+      "Ji bo girêdana amûrên nêzîk bi enerjiyeke kêm",
+      "Ji bo girêdana serverên navneteweyî"
     ],
     "correctAnswer": "Ji bo girêdana amûrên nêzîk bi enerjiyeke kêm",
     "promptTr": "Bluetooth, Wi-Fi yerine ağırlıkla ne için tercih edilir?",
     "answersTr": [
       "Şehirler arasında veri taşımak için",
       "İnterneti tüm binaya dağıtmak için",
-      "Uluslararası sunuculara bağlanmak için",
-      "Yakındaki aygıtları az enerjiyle bağlamak için"
+      "Yakındaki aygıtları az enerjiyle bağlamak için",
+      "Uluslararası sunuculara bağlanmak için"
     ],
     "correctAnswerTr": "Yakındaki aygıtları az enerjiyle bağlamak için",
     "explanation": "Bluetooth kısa mesafede düşük güçle çalışır; kulaklık, klavye ve saat gibi aygıtları bağlar. Geniş alana internet dağıtmak Wi-Fi'nin işidir.",
@@ -2656,18 +2656,18 @@
     "category": "Teknolojî",
     "prompt": "Koda 404 ya HTTPê çi tê wateyê?",
     "answers": [
-      "Çavkanî li ser server nehat dîtin",
       "Server zêde bar girtiye",
       "Daxwaz bi serkeftî hat temamkirin",
-      "Bikarhêner xwedî destûr nîne"
+      "Bikarhêner xwedî destûr nîne",
+      "Çavkanî li ser server nehat dîtin"
     ],
     "correctAnswer": "Çavkanî li ser server nehat dîtin",
     "promptTr": "HTTP'deki 404 kodu ne anlama gelir?",
     "answersTr": [
-      "Kaynak sunucuda bulunamadı",
       "Sunucu aşırı yüklendi",
       "İstek başarıyla tamamlandı",
-      "Kullanıcının yetkisi yok"
+      "Kullanıcının yetkisi yok",
+      "Kaynak sunucuda bulunamadı"
     ],
     "correctAnswerTr": "Kaynak sunucuda bulunamadı",
     "explanation": "404 kodu sunucuya ulaşıldığını ama istenen adresin orada olmadığını bildirir. Başarı için 200, yetki sorunları için 401 ve 403 kullanılır.",
@@ -2691,16 +2691,16 @@
     "prompt": "Kîjan protokol ji bo şandina e-nameyan tê bikaranîn?",
     "answers": [
       "IMAP",
-      "POP3",
       "SMTP",
+      "POP3",
       "FTP"
     ],
     "correctAnswer": "SMTP",
     "promptTr": "E-posta göndermek için hangi protokol kullanılır?",
     "answersTr": [
       "IMAP",
-      "POP3",
       "SMTP",
+      "POP3",
       "FTP"
     ],
     "correctAnswerTr": "SMTP",
@@ -2724,18 +2724,18 @@
     "category": "Teknolojî",
     "prompt": "Çerez (cookie) di gerokê de bi giranî ji bo çi tê bikaranîn?",
     "answers": [
-      "Ji bo bîranîna rewşa bikarhêner",
       "Ji bo zêdekirina leza pêvajoker",
       "Ji bo şîfrekirina trafîka ku di torê re derbas dibe",
-      "Ji bo çapkirina rûpelan"
+      "Ji bo çapkirina rûpelan",
+      "Ji bo bîranîna rewşa bikarhêner"
     ],
     "correctAnswer": "Ji bo bîranîna rewşa bikarhêner",
     "promptTr": "Tarayıcıdaki çerezler ağırlıkla ne için kullanılır?",
     "answersTr": [
-      "Kullanıcının durumunu hatırlamak için",
       "İşlemci hızını artırmak için",
       "Ağ üzerinden geçen trafiği şifrelemek için",
-      "Sayfaları yazdırmak için"
+      "Sayfaları yazdırmak için",
+      "Kullanıcının durumunu hatırlamak için"
     ],
     "correctAnswerTr": "Kullanıcının durumunu hatırlamak için",
     "explanation": "Çerez, sitenin tarayıcıya bıraktığı küçük bir kayıttır; oturum açık kalsın ya da tercihler korunsun diye tutulur. Şifrelemeyi TLS üstlenir.",
@@ -2760,16 +2760,16 @@
     "answers": [
       "Daneyên amûrên li ser torê bi awayekî domdar hiltîne",
       "Ekranê bi înternetê ve girê dide",
-      "Ji bo bikarhêner şîfreyan çêdike",
-      "Trafîka navbera tora malê û derve birêve dibe"
+      "Trafîka navbera tora malê û derve birêve dibe",
+      "Ji bo bikarhêner şîfreyan çêdike"
     ],
     "correctAnswer": "Trafîka navbera tora malê û derve birêve dibe",
     "promptTr": "Ev ağındaki yönlendiricinin (router) görevi nedir?",
     "answersTr": [
       "Ağa bağlı aygıtların verilerini kalıcı olarak saklar",
       "Ekranı internete bağlar",
-      "Kullanıcı için parola üretir",
-      "Ev ağı ile dış ağ arasındaki trafiği yönlendirir"
+      "Ev ağı ile dış ağ arasındaki trafiği yönlendirir",
+      "Kullanıcı için parola üretir"
     ],
     "correctAnswerTr": "Ev ağı ile dış ağ arasındaki trafiği yönlendirir",
     "explanation": "Yönlendirici paketlere hangi yoldan gideceklerini söyler ve yerel ağı dış ağa bağlar. Veri saklamak ve parola üretmek onun işi değildir.",
@@ -2792,18 +2792,18 @@
     "category": "Teknolojî",
     "prompt": "Cudahiya sereke ya di navbera TCP û UDPyê de çi ye?",
     "answers": [
-      "TCP gihandina rêzdar piştrast dike, UDP nake",
       "TCP tenê wêne, UDP tenê nivîs vediguhêze",
       "TCP bêtêl e, UDP bi kablo ye",
-      "TCP şîfre dike, UDP navnîşan diguherîne"
+      "TCP şîfre dike, UDP navnîşan diguherîne",
+      "TCP gihandina rêzdar piştrast dike, UDP nake"
     ],
     "correctAnswer": "TCP gihandina rêzdar piştrast dike, UDP nake",
     "promptTr": "TCP ile UDP arasındaki temel fark nedir?",
     "answersTr": [
-      "TCP sıralı teslimi doğrular, UDP doğrulamaz",
       "TCP yalnız resim, UDP yalnız metin taşır",
       "TCP kablosuz, UDP kablolu çalışır",
-      "TCP şifreler, UDP adres değiştirir"
+      "TCP şifreler, UDP adres değiştirir",
+      "TCP sıralı teslimi doğrular, UDP doğrulamaz"
     ],
     "correctAnswerTr": "TCP sıralı teslimi doğrular, UDP doğrulamaz",
     "explanation": "TCP paketlerin ulaştığını ve sırasını denetler, kaybolanı yeniden gönderir. UDP bu denetimi yapmadığı için daha hızlıdır ama teslim güvencesi vermez.",
@@ -2827,16 +2827,16 @@
     "prompt": "Kîjan ziman avaniya rûpelên webê pênase dike?",
     "answers": [
       "CSS",
-      "SQL",
       "HTML",
+      "SQL",
       "Python"
     ],
     "correctAnswer": "HTML",
     "promptTr": "Web sayfalarının yapısını tanımlayan dil hangisidir?",
     "answersTr": [
       "CSS",
-      "SQL",
       "HTML",
+      "SQL",
       "Python"
     ],
     "correctAnswerTr": "HTML",
@@ -2862,16 +2862,16 @@
     "answers": [
       "8",
       "16",
-      "128",
-      "32"
+      "32",
+      "128"
     ],
     "correctAnswer": "32",
     "promptTr": "Bir IPv4 adresi kaç bitten oluşur?",
     "answersTr": [
       "8",
       "16",
-      "128",
-      "32"
+      "32",
+      "128"
     ],
     "correctAnswerTr": "32",
     "explanation": "IPv4 adresleri 32 bittir ve dört sekizli sayı olarak yazılır; her sekizli 0 ile 255 arasındadır. 128 bitlik uzunluk IPv6 adreslerine aittir.",
@@ -2894,16 +2894,16 @@
     "category": "Teknolojî",
     "prompt": "Di navnîşana e-nameyê de sembola @ çi ji hev vediqetîne?",
     "answers": [
-      "Sernav û naveroka nameyê",
       "Navê bikarhêner û navê domainê",
+      "Sernav û naveroka nameyê",
       "Şîfre û navê bikarhêner",
       "Dîrok û demjimêra şandinê"
     ],
     "correctAnswer": "Navê bikarhêner û navê domainê",
     "promptTr": "E-posta adresindeki @ işareti neyi birbirinden ayırır?",
     "answersTr": [
-      "Konuyu ve ileti metnini",
       "Kullanıcı adını ve alan adını",
+      "Konuyu ve ileti metnini",
       "Parolayı ve kullanıcı adını",
       "Gönderim tarihini ve saatini"
     ],
@@ -2928,18 +2928,18 @@
     "category": "Teknolojî",
     "prompt": "Gava navnîşanek di qada BCCyê de tê nivîsandin, çi diqewime?",
     "answers": [
-      "Wergirên din wê navnîşanê nabînin",
       "Name piştî demekê tê şandin",
       "Name bixweber tê şîfrekirin",
-      "Name du caran tê şandin"
+      "Name du caran tê şandin",
+      "Wergirên din wê navnîşanê nabînin"
     ],
     "correctAnswer": "Wergirên din wê navnîşanê nabînin",
     "promptTr": "Bir adres BCC alanına yazıldığında ne olur?",
     "answersTr": [
-      "Diğer alıcılar o adresi göremez",
       "İleti bir süre sonra gönderilir",
       "İleti kendiliğinden şifrelenir",
-      "İleti iki kez gönderilir"
+      "İleti iki kez gönderilir",
+      "Diğer alıcılar o adresi göremez"
     ],
     "correctAnswerTr": "Diğer alıcılar o adresi göremez",
     "explanation": "BCC gizli kopya alanıdır; oradaki kişi iletiyi alır ama adresi öteki alıcıların listesinde görünmez. CC alanındaki adresler ise herkese açıktır.",
@@ -2962,16 +2962,16 @@
     "category": "Teknolojî",
     "prompt": "Li gorî bendika 5 GHz, bendika 2.4 GHz a Wi-Fiyê çi taybetî nîşan dide?",
     "answers": [
-      "Kêmtir dûr diçe lê zûtir e",
       "Dûrtir digihîje lê hêdîtir e",
+      "Kêmtir dûr diçe lê zûtir e",
       "Tenê bi kabloyê dixebite",
       "Tenê ji bo çaperan hatiye çêkirin"
     ],
     "correctAnswer": "Dûrtir digihîje lê hêdîtir e",
     "promptTr": "Wi-Fi'de 2.4 GHz bandı, 5 GHz bandına göre hangi özelliği gösterir?",
     "answersTr": [
-      "Daha az uzağa ulaşır ama daha hızlıdır",
       "Daha uzağa ulaşır ama daha yavaştır",
+      "Daha az uzağa ulaşır ama daha hızlıdır",
       "Yalnızca kabloyla çalışır",
       "Yalnızca yazıcılar için üretilmiştir"
     ],
@@ -2998,16 +2998,16 @@
     "answers": [
       "Şîfreyan diparêze",
       "Pelên bikarhêner li ser dîska xwe ya hundirîn tomar dike",
-      "Rûpelan çap dike",
-      "Sînyalê ji formekê bo ya din vediguherîne"
+      "Sînyalê ji formekê bo ya din vediguherîne",
+      "Rûpelan çap dike"
     ],
     "correctAnswer": "Sînyalê ji formekê bo ya din vediguherîne",
     "promptTr": "Modem internet bağlantısında ne yapar?",
     "answersTr": [
       "Parolaları saklar",
       "Kullanıcı dosyalarını kendi diskinde depolar",
-      "Sayfaları yazdırır",
-      "Sinyali bir biçimden ötekine çevirir"
+      "Sinyali bir biçimden ötekine çevirir",
+      "Sayfaları yazdırır"
     ],
     "correctAnswerTr": "Sinyali bir biçimden ötekine çevirir",
     "explanation": "Modem hattan gelen sinyali bilgisayarın anlayacağı sayısal veriye, giden veriyi de hatta uygun sinyale çevirir. Yönlendirme ve depolama başka aygıtların işidir.",
@@ -3030,16 +3030,16 @@
     "category": "Teknolojî",
     "prompt": "Têgeha \"latency\" di torê de çi dipîve?",
     "answers": [
-      "Hejmara amûrên girêdayî",
       "Dema ku dane heta bigihîje derbas dike",
+      "Hejmara amûrên girêdayî",
       "Mezinahiya giştî ya pelên hatine daxistin",
       "Hejmara malperên vekirî"
     ],
     "correctAnswer": "Dema ku dane heta bigihîje derbas dike",
     "promptTr": "Ağlarda gecikme (latency) neyi ölçer?",
     "answersTr": [
-      "Bağlı aygıt sayısını",
       "Verinin ulaşması için geçen süreyi",
+      "Bağlı aygıt sayısını",
       "İndirilen dosyaların toplam boyutunu",
       "Açık site sayısını"
     ],
@@ -3064,18 +3064,18 @@
     "category": "Teknolojî",
     "prompt": "Di modela xerîdar-server de erka serverê çi ye?",
     "answers": [
-      "Daxwazan werdigire û bersivê vedigerîne",
       "Ji malperên din re bi domdarî daxwazan dişîne",
       "Tenê wêneyan hilberîne",
-      "Kabloyên torê dirêj dike"
+      "Kabloyên torê dirêj dike",
+      "Daxwazan werdigire û bersivê vedigerîne"
     ],
     "correctAnswer": "Daxwazan werdigire û bersivê vedigerîne",
     "promptTr": "İstemci-sunucu modelinde sunucunun görevi nedir?",
     "answersTr": [
-      "İstekleri alır ve yanıt döner",
       "Başka sitelere sürekli istek gönderir",
       "Yalnızca görsel üretir",
-      "Ağ kablolarını uzatır"
+      "Ağ kablolarını uzatır",
+      "İstekleri alır ve yanıt döner"
     ],
     "correctAnswerTr": "İstekleri alır ve yanıt döner",
     "explanation": "Sunucu bekler, gelen isteği işler ve yanıtı geri gönderir; isteği başlatan taraf istemcidir. Tarayıcı bu modelde istemci konumundadır.",
@@ -3098,16 +3098,16 @@
     "category": "Teknolojî",
     "prompt": "Porta standard a trafîka HTTPSê kîjan e?",
     "answers": [
-      "21",
       "443",
+      "21",
       "80",
       "25"
     ],
     "correctAnswer": "443",
     "promptTr": "HTTPS trafiğinin standart port numarası hangisidir?",
     "answersTr": [
-      "21",
       "443",
+      "21",
       "80",
       "25"
     ],
@@ -3134,16 +3134,16 @@
     "answers": [
       "Şîfreyê dirêjtir dike",
       "Girêdanê zûtir dike",
-      "E-nameyan bixweber şîfre dike",
-      "Ji bilî şîfreyê belgeyeke duyem dixwaze"
+      "Ji bilî şîfreyê belgeyeke duyem dixwaze",
+      "E-nameyan bixweber şîfre dike"
     ],
     "correctAnswer": "Ji bilî şîfreyê belgeyeke duyem dixwaze",
     "promptTr": "İki adımlı doğrulama güvenliği nasıl artırır?",
     "answersTr": [
       "Parolayı daha uzun yapar",
       "Bağlantıyı hızlandırır",
-      "E-postaları kendiliğinden şifreler",
-      "Paroladan başka ikinci bir kanıt ister"
+      "Paroladan başka ikinci bir kanıt ister",
+      "E-postaları kendiliğinden şifreler"
     ],
     "correctAnswerTr": "Paroladan başka ikinci bir kanıt ister",
     "explanation": "Parola çalınsa bile saldırganda telefona gelen kod ya da güvenlik anahtarı gibi ikinci kanıt bulunmaz, giriş bu yüzden tamamlanamaz.",
@@ -3166,16 +3166,16 @@
     "category": "Teknolojî",
     "prompt": "Êrîşa phishing bi giranî çawa dixebite?",
     "answers": [
-      "Bi qutkirina ceryana serveran",
       "Bi peyamên sexte yên xwe wek çavkaniyeke pêbawer nîşandidin",
+      "Bi qutkirina ceryana serveran",
       "Bi bilindkirina germahiya pêvajoker",
       "Bi guhertina rengên malperê"
     ],
     "correctAnswer": "Bi peyamên sexte yên xwe wek çavkaniyeke pêbawer nîşandidin",
     "promptTr": "Oltalama (phishing) saldırısı ağırlıkla nasıl işler?",
     "answersTr": [
-      "Sunucuların elektriğini keserek",
       "Güvenilir görünen sahte iletilerle",
+      "Sunucuların elektriğini keserek",
       "İşlemcinin sıcaklığını yükselterek",
       "Sitenin renklerini değiştirerek"
     ],
@@ -3201,16 +3201,16 @@
     "prompt": "Kîjan taybetî şîfreyekê li hember texmînkirinê xurttir dike?",
     "answers": [
       "Bikaranîna paşnavê malbatê",
-      "Bikaranîna dîroka jidayikbûnê",
       "Dirêjahiya zêde û tevliheviya karakteran",
+      "Bikaranîna dîroka jidayikbûnê",
       "Bikaranîna heman şîfreyê li her malperê û hesabê"
     ],
     "correctAnswer": "Dirêjahiya zêde û tevliheviya karakteran",
     "promptTr": "Bir parolayı tahmin edilmeye karşı asıl güçlendiren özellik nedir?",
     "answersTr": [
       "Soyadı kullanmak",
-      "Doğum tarihi kullanmak",
       "Uzunluğun fazla, karakterlerin karışık olması",
+      "Doğum tarihi kullanmak",
       "Aynı parolayı her sitede ve her hesapta kullanmak"
     ],
     "correctAnswerTr": "Uzunluğun fazla, karakterlerin karışık olması",
@@ -3234,16 +3234,16 @@
     "category": "Teknolojî",
     "prompt": "Çima divê kopiyeke ewlehiyê li cihekî fizîkî yê din bê hilanîn?",
     "answers": [
-      "Ji ber ku wisa pel piçûktir dibin",
       "Ji ber ku agir an dizî nikare her duyan bibe",
+      "Ji ber ku wisa pel piçûktir dibin",
       "Ji ber ku wisa şîfre ne hewce ye",
       "Ji ber ku wisa înternet zûtir dibe"
     ],
     "correctAnswer": "Ji ber ku agir an dizî nikare her duyan bibe",
     "promptTr": "Yedek kopya neden başka bir fiziksel yerde saklanmalıdır?",
     "answersTr": [
-      "Dosyalar böylece küçülür",
       "Yangın ya da hırsızlık ikisini birden alamaz",
+      "Dosyalar böylece küçülür",
       "Böylece parolaya gerek kalmaz",
       "Böylece internet hızlanır"
     ],
@@ -3269,16 +3269,16 @@
     "prompt": "Sedema sereke ya sazkirina nûvekirinên ewlehiyê çi ye?",
     "answers": [
       "Ji bo ku ekran ronîtir û rengên wê zelaltir bibin",
-      "Ji bo kêmkirina cihê dîskê",
       "Ji bo girtina qulikên naskirî yên nermalavê",
+      "Ji bo kêmkirina cihê dîskê",
       "Ji bo guhertina zimanê pergalê"
     ],
     "correctAnswer": "Ji bo girtina qulikên naskirî yên nermalavê",
     "promptTr": "Güvenlik güncellemelerini kurmanın asıl nedeni nedir?",
     "answersTr": [
       "Ekran daha parlak ve renkler daha canlı olsun diye",
-      "Disk alanını azaltmak için",
       "Yazılımdaki bilinen açıkları kapatmak için",
+      "Disk alanını azaltmak için",
       "Sistem dilini değiştirmek için"
     ],
     "correctAnswerTr": "Yazılımdaki bilinen açıkları kapatmak için",
@@ -3302,18 +3302,18 @@
     "category": "Teknolojî",
     "prompt": "Feydeya sereke ya rêvebirê şîfreyan çi ye?",
     "answers": [
-      "Ji bo her hesabê şîfreyeke cuda û xurt hiltîne",
       "Leza înternetê zêde dike",
       "Vîrus û bernameyên fesadî ji pergalê radike",
-      "Pelên mezin piçûk dike"
+      "Pelên mezin piçûk dike",
+      "Ji bo her hesabê şîfreyeke cuda û xurt hiltîne"
     ],
     "correctAnswer": "Ji bo her hesabê şîfreyeke cuda û xurt hiltîne",
     "promptTr": "Parola yöneticisinin başlıca yararı nedir?",
     "answersTr": [
-      "Her hesap için ayrı ve güçlü parola tutar",
       "İnternet hızını artırır",
       "Sistemdeki virüs ve zararlı programları temizler",
-      "Büyük dosyaları küçültür"
+      "Büyük dosyaları küçültür",
+      "Her hesap için ayrı ve güçlü parola tutar"
     ],
     "correctAnswerTr": "Her hesap için ayrı ve güçlü parola tutar",
     "explanation": "Kullanıcı tek bir ana parolayı hatırlar, araç geri kalanını üretip saklar; böylece aynı parolanın onlarca sitede tekrarlanması önlenir.",
@@ -3337,16 +3337,16 @@
     "prompt": "Risk di tora Wi-Fi ya giştî de çi ye?",
     "answers": [
       "Bataryaya amûrê zû diqede",
-      "Pelên li ser dîskê bixweber tên jêbirin",
       "Kesên din dikarin trafîka neşîfrekirî bibînin",
+      "Pelên li ser dîskê bixweber tên jêbirin",
       "Ekran hêdî hêdî tarî dibe"
     ],
     "correctAnswer": "Kesên din dikarin trafîka neşîfrekirî bibînin",
     "promptTr": "Herkese açık Wi-Fi ağlarındaki temel risk nedir?",
     "answersTr": [
       "Aygıtın pili çabuk biter",
-      "Diskteki dosyalar kendiliğinden silinir",
       "Başkaları şifresiz trafiği görebilir",
+      "Diskteki dosyalar kendiliğinden silinir",
       "Ekran yavaşça kararır"
     ],
     "correctAnswerTr": "Başkaları şifresiz trafiği görebilir",
@@ -3370,16 +3370,16 @@
     "category": "Teknolojî",
     "prompt": "Kîjan nîşan e-nameyekê gumanbar dike?",
     "answers": [
-      "Bikaranîna zimanekî fermî",
       "Daxwaza lezgîn a tikandina girêdanekê",
+      "Bikaranîna zimanekî fermî",
       "Hebûna logoya sazîyê",
       "Şandin di roja xebatê de"
     ],
     "correctAnswer": "Daxwaza lezgîn a tikandina girêdanekê",
     "promptTr": "Bir e-postayı şüpheli kılan işaret hangisidir?",
     "answersTr": [
-      "Resmi bir dil kullanılması",
       "Bir bağlantıya acilen tıklanması isteği",
+      "Resmi bir dil kullanılması",
       "Kurum logosunun bulunması",
       "İş günü içinde gönderilmesi"
     ],
@@ -3405,16 +3405,16 @@
     "prompt": "Şîfrekirina daneyan çi peyda dike?",
     "answers": [
       "Daneyan piçûktir dike",
-      "Daneyan zûtir vediguhêze",
       "Daneyan bêyî mifteya rast nexwendî dike",
+      "Daneyan zûtir vediguhêze",
       "Daneyan bixweber li ser gelek amûran zêde dike"
     ],
     "correctAnswer": "Daneyan bêyî mifteya rast nexwendî dike",
     "promptTr": "Verinin şifrelenmesi neyi sağlar?",
     "answersTr": [
       "Veriyi küçültür",
-      "Veriyi daha hızlı taşır",
       "Doğru anahtar olmadan veriyi okunmaz kılar",
+      "Veriyi daha hızlı taşır",
       "Veriyi birçok aygıtta kendiliğinden çoğaltır"
     ],
     "correctAnswerTr": "Doğru anahtar olmadan veriyi okunmaz kılar",
@@ -3438,18 +3438,18 @@
     "category": "Teknolojî",
     "prompt": "Nermalava fesadî ya bi navê ransomware çi dike?",
     "answers": [
-      "Pelan şîfre dike û ji bo vekirinê pere dixwaze",
       "Leza torê dişkîne",
       "Rengên ekranê diguherîne",
-      "Bernameyan bixweber nûve dike"
+      "Bernameyan bixweber nûve dike",
+      "Pelan şîfre dike û ji bo vekirinê pere dixwaze"
     ],
     "correctAnswer": "Pelan şîfre dike û ji bo vekirinê pere dixwaze",
     "promptTr": "Fidye yazılımı (ransomware) ne yapar?",
     "answersTr": [
-      "Dosyaları şifreler ve açmak için para ister",
       "Ağ hızını düşürür",
       "Ekran renklerini değiştirir",
-      "Programları kendiliğinden günceller"
+      "Programları kendiliğinden günceller",
+      "Dosyaları şifreler ve açmak için para ister"
     ],
     "correctAnswerTr": "Dosyaları şifreler ve açmak için para ister",
     "explanation": "Fidye yazılımı dosyaları şifreleyip anahtar karşılığında ödeme ister. Güncel ve ayrı tutulan bir yedek, ödeme yapmadan kurtulmanın en sağlam yoludur.",
@@ -3473,16 +3473,16 @@
     "prompt": "Kîjan rêbaza gava duyem li hember phishingê xurttir e?",
     "answers": [
       "Koda bi SMSê tê",
-      "Koda bi e-nameyê tê",
       "Mifteya ewlehiyê ya fizîkî",
+      "Koda bi e-nameyê tê",
       "Pirsa ewlehiyê ya kesane"
     ],
     "correctAnswer": "Mifteya ewlehiyê ya fizîkî",
     "promptTr": "İkinci adım yöntemlerinden hangisi oltalamaya karşı daha güçlüdür?",
     "answersTr": [
       "SMS ile gelen kod",
-      "E-posta ile gelen kod",
       "Fiziksel güvenlik anahtarı",
+      "E-posta ile gelen kod",
       "Kişisel güvenlik sorusu"
     ],
     "correctAnswerTr": "Fiziksel güvenlik anahtarı",
@@ -3506,16 +3506,16 @@
     "category": "Teknolojî",
     "prompt": "Zirara bikaranîna heman şîfreyê li gelek malperan çi ye?",
     "answers": [
-      "Şîfre bi demê re bixweber dirêjtir û tevlihevtir dibe",
       "Derketina daneyan a li yek malperê hesaban vedike",
+      "Şîfre bi demê re bixweber dirêjtir û tevlihevtir dibe",
       "Malper hêdîtir vedibin",
       "Gerok şîfreyê ji bîr dike"
     ],
     "correctAnswer": "Derketina daneyan a li yek malperê hesaban vedike",
     "promptTr": "Aynı parolayı birçok sitede kullanmanın zararı nedir?",
     "answersTr": [
-      "Parola zamanla kendiliğinden uzayıp karmaşıklaşır",
       "Tek bir sızıntı öteki hesapları da açar",
+      "Parola zamanla kendiliğinden uzayıp karmaşıklaşır",
       "Siteler daha yavaş açılır",
       "Tarayıcı parolayı unutur"
     ],
@@ -3541,16 +3541,16 @@
     "prompt": "Dîwarê agir (firewall) di torê de çi dike?",
     "answers": [
       "Pelên jêbirî vedigerîne",
-      "Şîfreyên qels xurt dike",
       "Trafîka têketî û derketî li gorî rêzikan fîltre dike",
+      "Şîfreyên qels xurt dike",
       "Vîrusên li ser dîskê dibîne û qerantîne dike"
     ],
     "correctAnswer": "Trafîka têketî û derketî li gorî rêzikan fîltre dike",
     "promptTr": "Güvenlik duvarı (firewall) ağda ne yapar?",
     "answersTr": [
       "Silinen dosyaları geri getirir",
-      "Zayıf parolaları güçlendirir",
       "Gelen ve giden trafiği kurallara göre süzer",
+      "Zayıf parolaları güçlendirir",
       "Diskteki virüsleri bulur, temizler ve karantinaya alır"
     ],
     "correctAnswerTr": "Gelen ve giden trafiği kurallara göre süzer",
@@ -3576,16 +3576,16 @@
     "answers": [
       "Malper ji aliyê dewletê ve hatiye pejirandin",
       "Agahiya li ser malperê rast e",
-      "Malper ji vîrusan paqij e",
-      "Girêdan şîfrekirî ye"
+      "Girêdan şîfrekirî ye",
+      "Malper ji vîrusan paqij e"
     ],
     "correctAnswer": "Girêdan şîfrekirî ye",
     "promptTr": "Tarayıcıda adresin yanındaki kilit simgesi neyi güvence altına alır?",
     "answersTr": [
       "Sitenin devletçe onaylandığını",
       "Sitedeki bilginin doğru olduğunu",
-      "Sitenin virüsten temiz olduğunu",
-      "Bağlantının şifreli olduğunu"
+      "Bağlantının şifreli olduğunu",
+      "Sitenin virüsten temiz olduğunu"
     ],
     "correctAnswerTr": "Bağlantının şifreli olduğunu",
     "explanation": "Kilit yalnızca trafiğin şifrelendiğini söyler. Sahtekârlar da sertifika alabildiği için simge sitenin dürüst ya da temiz olduğu anlamına gelmez.",
@@ -3608,16 +3608,16 @@
     "category": "Teknolojî",
     "prompt": "Çima divê kopiya ewlehiyê ji dem bi dem bi vegerandinê bê ceribandin?",
     "answers": [
-      "Ji ber ku pelên di kopiyê de bi demê re mezintir dibin",
       "Ji ber ku kopiyeke xerabûyî tenê hingê xuya dibe",
+      "Ji ber ku pelên di kopiyê de bi demê re mezintir dibin",
       "Ji ber ku şîfre her mehê diguhere",
       "Ji ber ku dîsk bi ceribandinê zûtir dibe"
     ],
     "correctAnswer": "Ji ber ku kopiyeke xerabûyî tenê hingê xuya dibe",
     "promptTr": "Yedekler neden zaman zaman geri yükleme denenerek sınanmalıdır?",
     "answersTr": [
-      "Yedekteki dosyalar zamanla kendiliğinden büyür",
       "Bozuk bir yedek ancak o anda belli olur",
+      "Yedekteki dosyalar zamanla kendiliğinden büyür",
       "Parola her ay değişir",
       "Disk denemeyle hızlanır"
     ],
@@ -3644,16 +3644,16 @@
     "answers": [
       "Nîvê şîfreyê jê re gotin",
       "Şîfreyê guhertin û paşê ya nû bi têlefonê jê re gotin",
-      "Şîfreyê bi peyamekê şandin",
-      "Nedan û bi kanaleke fermî ya naskirî piştrastkirin"
+      "Nedan û bi kanaleke fermî ya naskirî piştrastkirin",
+      "Şîfreyê bi peyamekê şandin"
     ],
     "correctAnswer": "Nedan û bi kanaleke fermî ya naskirî piştrastkirin",
     "promptTr": "Telefonda biri hesap parolanızı isterse doğru davranış nedir?",
     "answersTr": [
       "Parolanın yarısını söylemek",
       "Parolayı değiştirip yenisini telefonda söylemek",
-      "Parolayı mesajla göndermek",
-      "Vermeyip bilinen resmî kanaldan doğrulamak"
+      "Vermeyip bilinen resmî kanaldan doğrulamak",
+      "Parolayı mesajla göndermek"
     ],
     "correctAnswerTr": "Vermeyip bilinen resmî kanaldan doğrulamak",
     "explanation": "Kurumlar parolayı telefonda istemez. Arayan numarayı değil kendi bildiğiniz resmî numarayı aramak gerekir; parolanın bir parçası bile saldırgana ipucu verir.",
@@ -3677,16 +3677,16 @@
     "prompt": "Xetereya vekirina pêveka e-nameyeke nenas çi ye?",
     "answers": [
       "Bataryaya têlefonê zû diqede",
-      "E-name bixweber tê jêbirin",
       "Nermalava fesadî li ser amûrê tê sazkirin",
+      "E-name bixweber tê jêbirin",
       "Navnîşana IPê diguhere"
     ],
     "correctAnswer": "Nermalava fesadî li ser amûrê tê sazkirin",
     "promptTr": "Tanımadığınız bir e-postanın ekini açmanın riski nedir?",
     "answersTr": [
       "Telefonun pili çabuk biter",
-      "E-posta kendiliğinden silinir",
       "Aygıta zararlı yazılım kurulur",
+      "E-posta kendiliğinden silinir",
       "IP adresi değişir"
     ],
     "correctAnswerTr": "Aygıta zararlı yazılım kurulur",
@@ -3712,16 +3712,16 @@
     "answers": [
       "Tenê server dikare peyaman bixwîne",
       "Peyam tenê bi girêdana zexm tên şandin",
-      "Peyam piştî demekê bixweber tên jêbirin",
-      "Tenê şander û wergir dikarin peyaman bixwînin"
+      "Tenê şander û wergir dikarin peyaman bixwînin",
+      "Peyam piştî demekê bixweber tên jêbirin"
     ],
     "correctAnswer": "Tenê şander û wergir dikarin peyaman bixwînin",
     "promptTr": "Uçtan uca şifreleme ne anlama gelir?",
     "answersTr": [
       "İletileri yalnız sunucu okuyabilir",
       "İletiler yalnız güçlü bağlantıda gider",
-      "İletiler bir süre sonra silinir",
-      "İletileri yalnız gönderen ve alan okuyabilir"
+      "İletileri yalnız gönderen ve alan okuyabilir",
+      "İletiler bir süre sonra silinir"
     ],
     "correctAnswerTr": "İletileri yalnız gönderen ve alan okuyabilir",
     "explanation": "Çözme anahtarı yalnız iki uçtaki cihazlarda durur; iletiyi taşıyan sunucu bile içeriği açamaz. Kendiliğinden silinme bundan ayrı bir özelliktir.",
@@ -3745,16 +3745,16 @@
     "prompt": "Di derdora sala 1450an de li Ewrûpayê makîneya çapê ya bi tîpên tevger kî pêş xist?",
     "answers": [
       "Nicolaus Copernicus",
-      "Isaac Newton",
       "Johannes Gutenberg",
+      "Isaac Newton",
       "Leonardo da Vinci"
     ],
     "correctAnswer": "Johannes Gutenberg",
     "promptTr": "1450 dolaylarında Avrupa'da hareketli harfli baskı makinesini kim geliştirdi?",
     "answersTr": [
       "Nicolaus Copernicus",
-      "Isaac Newton",
       "Johannes Gutenberg",
+      "Isaac Newton",
       "Leonardo da Vinci"
     ],
     "correctAnswerTr": "Johannes Gutenberg",
@@ -3778,16 +3778,16 @@
     "category": "Teknolojî",
     "prompt": "Di sala 1876an de patenta telefonê bi navê kê hat qeydkirin?",
     "answers": [
-      "Wilhelm Conrad Röntgen",
       "Alexander Graham Bell",
+      "Wilhelm Conrad Röntgen",
       "Samuel Morse",
       "Guglielmo Marconi"
     ],
     "correctAnswer": "Alexander Graham Bell",
     "promptTr": "1876'da telefonun patenti kimin adına tescillendi?",
     "answersTr": [
-      "Wilhelm Conrad Röntgen",
       "Alexander Graham Bell",
+      "Wilhelm Conrad Röntgen",
       "Samuel Morse",
       "Guglielmo Marconi"
     ],
@@ -3813,16 +3813,16 @@
     "prompt": "Transîstor di sala 1947an de li kîjan laboratûwarê hat pêşxistin?",
     "answers": [
       "Laboratûwara Cavendish",
-      "Laboratûwara Los Alamos",
       "Bell Labs",
+      "Laboratûwara Los Alamos",
       "CERN"
     ],
     "correctAnswer": "Bell Labs",
     "promptTr": "Transistor 1947'de hangi laboratuvarda geliştirildi?",
     "answersTr": [
       "Cavendish Laboratuvarı",
-      "Los Alamos Laboratuvarı",
       "Bell Laboratuvarları",
+      "Los Alamos Laboratuvarı",
       "CERN"
     ],
     "correctAnswerTr": "Bell Laboratuvarları",
@@ -3846,18 +3846,18 @@
     "category": "Teknolojî",
     "prompt": "Di 1879an de li Amerîkayê ampûla elektrîkê ya ku demeke dirêj dişewitî kê pêş xist?",
     "answers": [
-      "Thomas Edison",
       "Nikola Tesla",
       "Michael Faraday",
-      "Alessandro Volta"
+      "Alessandro Volta",
+      "Thomas Edison"
     ],
     "correctAnswer": "Thomas Edison",
     "promptTr": "1879'da ABD'de uzun süre yanabilen akkor ampulü kim geliştirdi?",
     "answersTr": [
-      "Thomas Edison",
       "Nikola Tesla",
       "Michael Faraday",
-      "Alessandro Volta"
+      "Alessandro Volta",
+      "Thomas Edison"
     ],
     "correctAnswerTr": "Thomas Edison",
     "explanation": "Edison'un ekibi 1879'da yüksek dirençli karbon flamanla saatlerce yanan bir ampul üretti ve bunu bir elektrik dağıtım sistemiyle birleştirdi. Volta pili, Faraday indüksiyonu, Tesla ise alternatif akım motorlarıyla anılır.",
@@ -3881,16 +3881,16 @@
     "prompt": "Rêbaza wênekêşiyê ya ku di sala 1839an de li Fransayê hat ragihandin bi navê kê tê nasîn?",
     "answers": [
       "George Eastman",
-      "Joseph Swan",
       "Louis Daguerre",
+      "Joseph Swan",
       "Auguste Lumière"
     ],
     "correctAnswer": "Louis Daguerre",
     "promptTr": "1839'da Fransa'da duyurulan fotoğraf yöntemi kimin adıyla anılır?",
     "answersTr": [
       "George Eastman",
-      "Joseph Swan",
       "Louis Daguerre",
+      "Joseph Swan",
       "Auguste Lumière"
     ],
     "correctAnswerTr": "Louis Daguerre",
@@ -3914,16 +3914,16 @@
     "category": "Teknolojî",
     "prompt": "Gutenberg çapxaneya xwe ya bi tîpên tevger li kîjan bajarê Almanyayê damezrand?",
     "answers": [
-      "Köln",
       "Mainz",
+      "Köln",
       "Nürnberg",
       "Frankfurt"
     ],
     "correctAnswer": "Mainz",
     "promptTr": "Gutenberg hareketli harfli matbaasını Almanya'nın hangi kentinde kurdu?",
     "answersTr": [
-      "Köln",
       "Mainz",
+      "Köln",
       "Nürnberg",
       "Frankfurt"
     ],
@@ -3949,16 +3949,16 @@
     "prompt": "Amûra fonograf a ku dengê tomarkirî ji nû ve dilîze di sala 1877an de ji aliyê kê ve hat çêkirin?",
     "answers": [
       "Emile Berliner",
-      "Werner von Siemens",
       "Thomas Edison",
+      "Werner von Siemens",
       "Guglielmo Marconi"
     ],
     "correctAnswer": "Thomas Edison",
     "promptTr": "Kaydedilmiş sesi yeniden çalan fonograf 1877'de kim tarafından yapıldı?",
     "answersTr": [
       "Emile Berliner",
-      "Werner von Siemens",
       "Thomas Edison",
+      "Werner von Siemens",
       "Guglielmo Marconi"
     ],
     "correctAnswerTr": "Thomas Edison",
@@ -3982,18 +3982,18 @@
     "category": "Teknolojî",
     "prompt": "Transîstora yekem a sala 1947an ji kîjan maddeya nîv-derbasker hat çêkirin?",
     "answers": [
-      "Germanyûm",
       "Sîlîkon",
       "Selenyûm",
-      "Galyûm arsenît"
+      "Galyûm arsenît",
+      "Germanyûm"
     ],
     "correctAnswer": "Germanyûm",
     "promptTr": "1947'deki ilk transistor hangi yarı iletken malzemeden yapıldı?",
     "answersTr": [
-      "Germanyum",
       "Silisyum",
       "Selenyum",
-      "Galyum arsenit"
+      "Galyum arsenit",
+      "Germanyum"
     ],
     "correctAnswerTr": "Germanyum",
     "explanation": "İlk nokta temaslı transistor germanyum kristali üzerine kuruldu; silisyum ancak 1950'lerde saflaştırma kolaylaşınca öne geçti. Galyum arsenit çok daha sonraki yüksek hızlı devrelerin malzemesidir.",
@@ -4017,16 +4017,16 @@
     "prompt": "Alfabeya xet û xalan a ku di telegrafê de tê bikaranîn bi navê kîjan dahêner tê nasîn?",
     "answers": [
       "Charles Wheatstone",
-      "Alexander Graham Bell",
       "Samuel Morse",
+      "Alexander Graham Bell",
       "Thomas Edison"
     ],
     "correctAnswer": "Samuel Morse",
     "promptTr": "Telgrafta kullanılan nokta ve çizgi alfabesi hangi mucidin adını taşır?",
     "answersTr": [
       "Charles Wheatstone",
-      "Alexander Graham Bell",
       "Samuel Morse",
+      "Alexander Graham Bell",
       "Thomas Edison"
     ],
     "correctAnswerTr": "Samuel Morse",
@@ -4052,16 +4052,16 @@
     "answers": [
       "Henri Becquerel",
       "Marie Curie",
-      "J.J. Thomson",
-      "Wilhelm Röntgen"
+      "Wilhelm Röntgen",
+      "J.J. Thomson"
     ],
     "correctAnswer": "Wilhelm Röntgen",
     "promptTr": "X ışınları 1895'te kim tarafından keşfedildi?",
     "answersTr": [
       "Henri Becquerel",
       "Marie Curie",
-      "J.J. Thomson",
-      "Wilhelm Röntgen"
+      "Wilhelm Röntgen",
+      "J.J. Thomson"
     ],
     "correctAnswerTr": "Wilhelm Röntgen",
     "explanation": "Röntgen katot ışını tüpüyle çalışırken karanlıkta parlayan bir ekran fark etti ve bilinmeyen ışına X adını verdi; bu buluş 1901'de ilk Nobel Fizik Ödülü'nü kazandı. Becquerel ve Curie radyoaktiflik, Thomson elektron üzerine çalıştı.",
@@ -4085,16 +4085,16 @@
     "prompt": "Di sala 1901ê de yekem sînyala radyoyî ya di ser Atlantîkê re ji aliyê kê ve hat wergirtin?",
     "answers": [
       "Heinrich Hertz",
-      "Nikola Tesla",
       "Guglielmo Marconi",
+      "Nikola Tesla",
       "Alexander Graham Bell"
     ],
     "correctAnswer": "Guglielmo Marconi",
     "promptTr": "1901'de Atlantik ötesine gönderilen ilk telsiz sinyalini kim aldı?",
     "answersTr": [
       "Heinrich Hertz",
-      "Nikola Tesla",
       "Guglielmo Marconi",
+      "Nikola Tesla",
       "Alexander Graham Bell"
     ],
     "correctAnswerTr": "Guglielmo Marconi",
@@ -4120,16 +4120,16 @@
     "answers": [
       "Walter Brattain",
       "William Shockley",
-      "Robert Noyce",
-      "John Bardeen"
+      "John Bardeen",
+      "Robert Noyce"
     ],
     "correctAnswer": "John Bardeen",
     "promptTr": "Hem transistor hem de süperiletkenlik kuramı için Nobel Fizik Ödülü alan bilim insanı kimdir?",
     "answersTr": [
       "Walter Brattain",
       "William Shockley",
-      "Robert Noyce",
-      "John Bardeen"
+      "John Bardeen",
+      "Robert Noyce"
     ],
     "correctAnswerTr": "John Bardeen",
     "explanation": "Bardeen 1956'da transistor, 1972'de BCS süperiletkenlik kuramıyla ödül aldı ve fizikte iki Nobel kazanan tek kişi oldu. Brattain ile Shockley yalnız 1956 ödülünü paylaştı; Noyce tümleşik devre çalışmalarıyla anılır.",
@@ -4152,16 +4152,16 @@
     "category": "Teknolojî",
     "prompt": "Belavbûna makîneya çapê di sedsala 15an de bi taybetî çi erzan kir?",
     "answers": [
-      "Cam",
       "Pirtûk",
+      "Cam",
       "Kinc",
       "Kaxez"
     ],
     "correctAnswer": "Pirtûk",
     "promptTr": "15. yüzyılda baskı makinesinin yayılması özellikle neyi ucuzlattı?",
     "answersTr": [
-      "Cam",
       "Kitap",
+      "Cam",
       "Giysi",
       "Kâğıt"
     ],
@@ -4188,16 +4188,16 @@
     "answers": [
       "André-Marie Ampère",
       "Georg Ohm",
-      "Michael Faraday",
-      "Alessandro Volta"
+      "Alessandro Volta",
+      "Michael Faraday"
     ],
     "correctAnswer": "Alessandro Volta",
     "promptTr": "1800'de sürekli akım veren ilk pili kim yaptı?",
     "answersTr": [
       "André-Marie Ampère",
       "Georg Ohm",
-      "Michael Faraday",
-      "Alessandro Volta"
+      "Alessandro Volta",
+      "Michael Faraday"
     ],
     "correctAnswerTr": "Alessandro Volta",
     "explanation": "Volta çinko ve bakır levhaları tuzlu bezle üst üste dizerek kesintisiz akım üretti; bu yığın kimyasal enerjiyi elektriğe çeviren ilk kaynaktı. Ohm direnç bağıntısını, Ampère akımı, Faraday indüksiyonu inceledi.",
@@ -4221,16 +4221,16 @@
     "prompt": "Kî di sala 1831ê de nîşan da ku magnetek tevgerî di têlekê de cereyan çêdike?",
     "answers": [
       "James Clerk Maxwell",
-      "Heinrich Hertz",
       "Michael Faraday",
+      "Heinrich Hertz",
       "Hans Christian Ørsted"
     ],
     "correctAnswer": "Michael Faraday",
     "promptTr": "1831'de hareket eden bir mıknatısın telde akım doğurduğunu kim gösterdi?",
     "answersTr": [
       "James Clerk Maxwell",
-      "Heinrich Hertz",
       "Michael Faraday",
+      "Heinrich Hertz",
       "Hans Christian Ørsted"
     ],
     "correctAnswerTr": "Michael Faraday",
@@ -4256,16 +4256,16 @@
     "answers": [
       "Rudolf Diesel",
       "Nikolaus Otto",
-      "George Stephenson",
-      "James Watt"
+      "James Watt",
+      "George Stephenson"
     ],
     "correctAnswer": "James Watt",
     "promptTr": "Güç birimi watt hangi mühendisin adından gelir?",
     "answersTr": [
       "Rudolf Diesel",
       "Nikolaus Otto",
-      "George Stephenson",
-      "James Watt"
+      "James Watt",
+      "George Stephenson"
     ],
     "correctAnswerTr": "James Watt",
     "explanation": "Watt, buhar makinesine ayrı bir yoğuşturucu ekleyerek verimini büyük ölçüde artırdı; güç birimi onun anısına adlandırıldı. Otto ve Diesel içten yanmalı motorlarla, Stephenson lokomotifle anılır.",
@@ -4288,16 +4288,16 @@
     "category": "Teknolojî",
     "prompt": "Motora elektrîkê enerjiya elektrîkê vediguherîne kîjan cûre enerjiyê?",
     "answers": [
-      "Enerjiya kîmyewî",
       "Enerjiya mekanîkî",
+      "Enerjiya kîmyewî",
       "Enerjiya ronahiyê",
       "Enerjiya nukleerî"
     ],
     "correctAnswer": "Enerjiya mekanîkî",
     "promptTr": "Elektrik motoru elektrik enerjisini hangi enerjiye çevirir?",
     "answersTr": [
-      "Kimyasal enerjiye",
       "Mekanik enerjiye",
+      "Kimyasal enerjiye",
       "Işık enerjisine",
       "Nükleer enerjiye"
     ],
@@ -4324,16 +4324,16 @@
     "answers": [
       "Transformator",
       "Kondansator",
-      "Rezîstans",
-      "Jenerator"
+      "Jenerator",
+      "Rezîstans"
     ],
     "correctAnswer": "Jenerator",
     "promptTr": "Bir santralde dönme hareketini elektriğe çeviren aygıt hangisidir?",
     "answersTr": [
       "Transformatör",
       "Kondansatör",
-      "Direnç",
-      "Jeneratör"
+      "Jeneratör",
+      "Direnç"
     ],
     "correctAnswerTr": "Jeneratör",
     "explanation": "Jeneratörde döndürülen sargı manyetik alan içinde indüksiyon akımı üretir. Transformatör gerilimi değiştirir, kondansatör yük depolar, direnç ise akımı sınırlar.",
@@ -4357,16 +4357,16 @@
     "prompt": "Li gorî qanûna Ohm, voltaj bi kîjan hesabê tê dîtin?",
     "answers": [
       "V = I ÷ R",
-      "V = R ÷ I",
       "V = I × R",
+      "V = R ÷ I",
       "V = I × R²"
     ],
     "correctAnswer": "V = I × R",
     "promptTr": "Ohm yasasına göre gerilim nasıl bulunur?",
     "answersTr": [
       "V = I ÷ R",
-      "V = R ÷ I",
       "V = I × R",
+      "V = R ÷ I",
       "V = I × R²"
     ],
     "correctAnswerTr": "V = I × R",
@@ -4392,16 +4392,16 @@
     "answers": [
       "Germahiya kûrahiya erdê",
       "Tîrêja rojê",
-      "Herikîna avê",
-      "Tevgera hewayê"
+      "Tevgera hewayê",
+      "Herikîna avê"
     ],
     "correctAnswer": "Tevgera hewayê",
     "promptTr": "Rüzgâr türbini elektrik üretmek için hangi kaynağın enerjisini kullanır?",
     "answersTr": [
       "Yerin derinlerindeki ısıyı",
       "Güneş ışığını",
-      "Suyun akışını",
-      "Havanın hareketini"
+      "Havanın hareketini",
+      "Suyun akışını"
     ],
     "correctAnswerTr": "Havanın hareketini",
     "explanation": "Esen havanın kinetik enerjisi kanatları döndürür, mil de jeneratörü çevirir. Su akışı hidroelektrikte, yer ısısı jeotermalde, güneş ışığı ise panellerde kullanılır.",
@@ -4424,18 +4424,18 @@
     "category": "Teknolojî",
     "prompt": "Hucreyên fotovoltaîk ên panelên rojê bi piranî ji kîjan maddeyê têne çêkirin?",
     "answers": [
-      "Sîlîkon",
       "Sifir",
       "Alumînyûm",
-      "Zînk"
+      "Zînk",
+      "Sîlîkon"
     ],
     "correctAnswer": "Sîlîkon",
     "promptTr": "Güneş panellerindeki fotovoltaik hücreler çoğunlukla hangi malzemeden yapılır?",
     "answersTr": [
-      "Silisyum",
       "Bakır",
       "Alüminyum",
-      "Çinko"
+      "Çinko",
+      "Silisyum"
     ],
     "correctAnswerTr": "Silisyum",
     "explanation": "Silisyum yarı iletkendir; ışık soğurulunca elektronları serbest kalır ve devrede akım doğar. Bakır ile alüminyum yalnız iletken, çinko ise pil ve kaplama malzemesidir.",
@@ -4459,16 +4459,16 @@
     "prompt": "Di santrala hîdroelektrîkê de ava li pişt bendavê di destpêkê de kîjan enerjiyê hildigire?",
     "answers": [
       "Enerjiya kîmyewî",
-      "Enerjiya germî ya hawirdorê",
       "Enerjiya potansiyel",
+      "Enerjiya germî ya hawirdorê",
       "Enerjiya ronahiyê"
     ],
     "correctAnswer": "Enerjiya potansiyel",
     "promptTr": "Hidroelektrik santralde baraj gölündeki su başlangıçta hangi enerjiyi taşır?",
     "answersTr": [
       "Kimyasal enerjiyi",
-      "Çevrenin ısı enerjisini",
       "Potansiyel enerjiyi",
+      "Çevrenin ısı enerjisini",
       "Işık enerjisini"
     ],
     "correctAnswerTr": "Potansiyel enerjiyi",
@@ -4492,18 +4492,18 @@
     "category": "Teknolojî",
     "prompt": "Makîneyeke sade hêza pêwîst kêm dike; lê di berdêla wê de çi zêde dibe?",
     "answers": [
-      "Dûrahiya rêwîtiya hêzê",
       "Kara ku tê kirin",
       "Enerjiya ku tê xerckirin",
-      "Girseya barê"
+      "Girseya barê",
+      "Dûrahiya rêwîtiya hêzê"
     ],
     "correctAnswer": "Dûrahiya rêwîtiya hêzê",
     "promptTr": "Basit bir makine gereken kuvveti azaltır; karşılığında ne artar?",
     "answersTr": [
-      "Kuvvetin aldığı yol",
       "Yapılan iş",
       "Harcanan toplam enerji",
-      "Yükün kütlesi"
+      "Yükün kütlesi",
+      "Kuvvetin aldığı yol"
     ],
     "correctAnswerTr": "Kuvvetin aldığı yol",
     "explanation": "İş, kuvvet ile yolun çarpımıdır; makine kuvveti küçültürken aynı işi yapabilmek için yolu uzatır. Sürtünme yoksa toplam iş ve enerji değişmez, yükün kütlesi de aynı kalır.",
@@ -4528,16 +4528,16 @@
     "answers": [
       "Frekansa cereyanê",
       "Aliyê cereyanê",
-      "Cûreya têla derbasker",
-      "Asta voltajê"
+      "Asta voltajê",
+      "Cûreya têla derbasker"
     ],
     "correctAnswer": "Asta voltajê",
     "promptTr": "Transformatör elektrik şebekesinde özellikle neyi değiştirir?",
     "answersTr": [
       "Akımın frekansını",
       "Akımın yönünü",
-      "İletken telin cinsini",
-      "Gerilim düzeyini"
+      "Gerilim düzeyini",
+      "İletken telin cinsini"
     ],
     "correctAnswerTr": "Gerilim düzeyini",
     "explanation": "İki sargı arasındaki sarım sayısı oranı gerilimi yükseltir ya da düşürür; frekans aynı kalır. Yön çevirme doğrultucunun işidir, iletken cinsi ise tesisatın kurulumunda belirlenir.",
@@ -4560,18 +4560,18 @@
     "category": "Teknolojî",
     "prompt": "Ji van maddeyan kîjan ji bo têlên elektrîkê baştirîn derbasker e?",
     "answers": [
-      "Sifir",
       "Cam",
       "Lastîk",
-      "Dar"
+      "Dar",
+      "Sifir"
     ],
     "correctAnswer": "Sifir",
     "promptTr": "Elektrik telleri için bu maddelerden hangisi en iyi iletkendir?",
     "answersTr": [
-      "Bakır",
       "Cam",
       "Lastik",
-      "Ahşap"
+      "Ahşap",
+      "Bakır"
     ],
     "correctAnswerTr": "Bakır",
     "explanation": "Bakırda serbest elektronlar boldur, bu yüzden akımı az kayıpla taşır. Cam, lastik ve ahşap yalıtkandır; zaten akımı durdurmak için kullanılırlar.",
@@ -4595,16 +4595,16 @@
     "prompt": "Hêza elektrîkî ya amûrekê bi kîjan pirdankê tê hesibandin?",
     "answers": [
       "Voltaj ÷ cereyan",
-      "Cereyan × berxwedan",
       "Voltaj × cereyan",
+      "Cereyan × berxwedan",
       "Voltaj × berxwedan"
     ],
     "correctAnswer": "Voltaj × cereyan",
     "promptTr": "Bir aygıtın elektriksel gücü hangi çarpımla bulunur?",
     "answersTr": [
       "Gerilim ÷ akım",
-      "Akım × direnç",
       "Gerilim × akım",
+      "Akım × direnç",
       "Gerilim × direnç"
     ],
     "correctAnswerTr": "Gerilim × akım",
@@ -4628,18 +4628,18 @@
     "category": "Teknolojî",
     "prompt": "Di çerxeke rêzî de ji bo her hêmanekê çi wekhev dimîne?",
     "answers": [
-      "Cereyana ku diherike",
       "Voltaja her hêmanê",
       "Hêza her hêmanê",
-      "Berxwedana her hêmanê"
+      "Berxwedana her hêmanê",
+      "Cereyana ku diherike"
     ],
     "correctAnswer": "Cereyana ku diherike",
     "promptTr": "Seri bağlı bir devrede her eleman için ne aynı kalır?",
     "answersTr": [
-      "Geçen akım",
       "Eleman gerilimi",
       "Eleman gücü",
-      "Eleman direnci"
+      "Eleman direnci",
+      "Geçen akım"
     ],
     "correctAnswerTr": "Geçen akım",
     "explanation": "Seri devrede yük için tek bir yol vardır, bu yüzden akım her noktada eşittir; gerilim ise dirençlerin oranına göre bölüşülür. Paralel bağlantıda tam tersine gerilim ortak olur.",
@@ -4664,16 +4664,16 @@
     "answers": [
       "Ji bo bilindkirina voltajê",
       "Ji bo hilanîna enerjiyê",
-      "Ji bo nizmkirina frekansê",
-      "Ji bo birîna cereyana zêde"
+      "Ji bo birîna cereyana zêde",
+      "Ji bo nizmkirina frekansê"
     ],
     "correctAnswer": "Ji bo birîna cereyana zêde",
     "promptTr": "Sigorta bir elektrik devresine ne için konur?",
     "answersTr": [
       "Gerilimi yükseltmek için",
       "Enerji depolamak için",
-      "Frekansı düşürmek için",
-      "Aşırı akımı kesmek için"
+      "Aşırı akımı kesmek için",
+      "Frekansı düşürmek için"
     ],
     "correctAnswerTr": "Aşırı akımı kesmek için",
     "explanation": "Sigortadaki ince tel belirli bir akımın üstünde ısınıp erir ve devreyi açar; böylece kablolar yanmaz. Gerilim yükseltmek transformatörün, enerji depolamak pilin işidir.",
@@ -4696,18 +4696,18 @@
     "category": "Teknolojî",
     "prompt": "Di santrala germî ya komirê de tirbîn rasterast bi çi tê zivirandin?",
     "answers": [
-      "Hilma bin zextê",
       "Dûmana germ a komirê",
       "Ava sar",
-      "Bayê derve"
+      "Bayê derve",
+      "Hilma bin zextê"
     ],
     "correctAnswer": "Hilma bin zextê",
     "promptTr": "Kömürlü ısıl santralde türbini doğrudan ne döndürür?",
     "answersTr": [
-      "Basınçlı su buharı",
       "Kömürden çıkan sıcak duman",
       "Soğuk su",
-      "Dışarıdaki rüzgâr"
+      "Dışarıdaki rüzgâr",
+      "Basınçlı su buharı"
     ],
     "correctAnswerTr": "Basınçlı su buharı",
     "explanation": "Kömür suyu kaynatır, yüksek basınçlı buhar türbin kanatlarına çarparak mili döndürür. Duman bacadan atılan atıktır; soğuk su ise buharı yoğuşturmak için ayrı bir devrede dolaşır.",
@@ -4730,16 +4730,16 @@
     "category": "Teknolojî",
     "prompt": "Pîlek dema kar dike enerjiya kîmyewî vediguherîne çi?",
     "answers": [
-      "Enerjiya germî ya rasterast",
       "Enerjiya elektrîkî",
+      "Enerjiya germî ya rasterast",
       "Enerjiya ronahiyê",
       "Enerjiya dengî"
     ],
     "correctAnswer": "Enerjiya elektrîkî",
     "promptTr": "Bir pil çalışırken kimyasal enerjiyi neye çevirir?",
     "answersTr": [
-      "Doğrudan ısı enerjisine",
       "Elektrik enerjisine",
+      "Doğrudan ısı enerjisine",
       "Işık enerjisine",
       "Ses enerjisine"
     ],
@@ -4766,16 +4766,16 @@
     "answers": [
       "Bi demê re kêm dibe",
       "Bi demê re zêde dibe",
-      "Bi demê re bi tevahî ji holê radibe",
-      "Tenê şeklê xwe diguhere"
+      "Tenê şeklê xwe diguhere",
+      "Bi demê re bi tevahî ji holê radibe"
     ],
     "correctAnswer": "Tenê şeklê xwe diguhere",
     "promptTr": "Enerjinin korunumu yasasına göre kapalı bir sistemde enerji ne olur?",
     "answersTr": [
       "Zamanla azalır",
       "Zamanla artar",
-      "Zamanla tümüyle ortadan kalkar",
-      "Yalnız biçim değiştirir"
+      "Yalnız biçim değiştirir",
+      "Zamanla tümüyle ortadan kalkar"
     ],
     "correctAnswerTr": "Yalnız biçim değiştirir",
     "explanation": "Toplam miktar sabit kalır; enerji yalnız bir türden ötekine geçer, örneğin harekete ya da ısıya. Sürtünmede enerji yok olmaz, düşük sıcaklıkta ısı olarak dağılır ve iş yapmaya elverişsizleşir.",
@@ -4798,16 +4798,16 @@
     "category": "Teknolojî",
     "prompt": "Çerxeke diranî ya piçûk çerxeke mezin dizivirîne; li ser çerxa mezin çi çêdibe?",
     "answers": [
-      "Hem lez hem tork zêde dibin",
       "Lez kêm dibe, tork zêde dibe",
+      "Hem lez hem tork zêde dibin",
       "Hem lez hem tork kêm dibin",
       "Lez zêde dibe, tork kêm dibe"
     ],
     "correctAnswer": "Lez kêm dibe, tork zêde dibe",
     "promptTr": "Küçük bir dişli büyük bir dişliyi döndürünce büyük dişlide ne olur?",
     "answersTr": [
-      "Hem hız hem tork artar",
       "Hız azalır, tork artar",
+      "Hem hız hem tork artar",
       "Hem hız hem tork azalır",
       "Hız artar, tork azalır"
     ],
@@ -4832,18 +4832,18 @@
     "category": "Teknolojî",
     "prompt": "Cereyana alternatîf ji cereyana rasterast bi kîjan taybetmendiyê cuda dibe?",
     "answers": [
-      "Aliyê wê bi rêkûpêk diguhere",
       "Tenê di têlên ji sifir hatine çêkirin de diherike",
       "Voltaja wê her tim sifir e",
-      "Tenê ji pîlan tê wergirtin"
+      "Tenê ji pîlan tê wergirtin",
+      "Aliyê wê bi rêkûpêk diguhere"
     ],
     "correctAnswer": "Aliyê wê bi rêkûpêk diguhere",
     "promptTr": "Alternatif akımı doğru akımdan ayıran özellik nedir?",
     "answersTr": [
-      "Yönünün düzenli değişmesi",
       "Yalnız bakırdan yapılmış tellerde akması",
       "Geriliminin hep sıfır olması",
-      "Yalnız pillerden elde edilmesi"
+      "Yalnız pillerden elde edilmesi",
+      "Yönünün düzenli değişmesi"
     ],
     "correctAnswerTr": "Yönünün düzenli değişmesi",
     "explanation": "Alternatif akımda gerilim saniyede onlarca kez işaret değiştirir, bu yüzden akım ileri geri salınır; doğru akımda ise yön sabittir. Piller doğru akım verir ve her iki akım da aynı iletkenlerden geçebilir.",
@@ -4866,16 +4866,16 @@
     "category": "Teknolojî",
     "prompt": "Yekîneya pîvana cereyana elektrîkê çi ye?",
     "answers": [
-      "Volt",
       "Amper",
+      "Volt",
       "Ohm",
       "Wat"
     ],
     "correctAnswer": "Amper",
     "promptTr": "Elektrik akımının ölçü birimi nedir?",
     "answersTr": [
-      "Volt",
       "Amper",
+      "Volt",
       "Ohm",
       "Watt"
     ],
@@ -4902,16 +4902,16 @@
     "answers": [
       "Ji ber ku têl hingê sivik dibin",
       "Ji bo ku frekans neyê guhertin",
-      "Ji bo ku amûrên malê zûtir bixebitin",
-      "Ji ber ku windabûna germî kêm dibe"
+      "Ji ber ku windabûna germî kêm dibe",
+      "Ji bo ku amûrên malê zûtir bixebitin"
     ],
     "correctAnswer": "Ji ber ku windabûna germî kêm dibe",
     "promptTr": "Elektrik uzun iletim hatlarında neden çok yüksek gerilimle gönderilir?",
     "answersTr": [
       "Teller böylece hafiflediği için",
       "Frekans değişmesin diye",
-      "Ev aygıtları hızlansın diye",
-      "Isı kaybı azaldığı için"
+      "Isı kaybı azaldığı için",
+      "Ev aygıtları hızlansın diye"
     ],
     "correctAnswerTr": "Isı kaybı azaldığı için",
     "explanation": "Aynı gücü yüksek gerilimle taşımak akımı küçültür; kayıp akımın karesiyle arttığından ısı olarak yitirilen enerji büyük ölçüde düşer. Kablonun ağırlığı ve şebeke frekansı bu seçimle belirlenmez.",
@@ -4934,16 +4934,16 @@
     "category": "Teknolojî",
     "prompt": "Panela rojê ronahiya rojê rasterast vediguherîne çi?",
     "answers": [
-      "Enerjiya kîmyewî ya hilanîn",
       "Enerjiya elektrîkî",
+      "Enerjiya kîmyewî ya hilanîn",
       "Enerjiya nukleerî",
       "Enerjiya dengî"
     ],
     "correctAnswer": "Enerjiya elektrîkî",
     "promptTr": "Güneş paneli gün ışığını doğrudan neye çevirir?",
     "answersTr": [
-      "Depolanmış kimyasal enerjiye",
       "Elektrik enerjisine",
+      "Depolanmış kimyasal enerjiye",
       "Nükleer enerjiye",
       "Ses enerjisine"
     ],
@@ -4968,18 +4968,18 @@
     "category": "Teknolojî",
     "prompt": "Di sala 1903an de yekem firîna bi motor û bi kontrol kê pêk anî?",
     "answers": [
-      "Birayên Wright",
       "Birayên Montgolfier",
       "Birayên Lumière",
-      "Otto Lilienthal"
+      "Otto Lilienthal",
+      "Birayên Wright"
     ],
     "correctAnswer": "Birayên Wright",
     "promptTr": "1903'te motorlu ve kontrollü ilk uçuşu kim gerçekleştirdi?",
     "answersTr": [
-      "Wright kardeşler",
       "Montgolfier kardeşler",
       "Lumière kardeşler",
-      "Otto Lilienthal"
+      "Otto Lilienthal",
+      "Wright kardeşler"
     ],
     "correctAnswerTr": "Wright kardeşler",
     "explanation": "Wright kardeşler Kuzey Carolina'daki Kitty Hawk'ta motorlu uçaklarıyla kısa ama yönlendirilebilir bir uçuş yaptı. Lilienthal motorsuz planörlerle süzülmüştü, Montgolfier'ler balonla uçmuştu, Lumière'ler ise sinemayla anılır.",
@@ -5002,16 +5002,16 @@
     "category": "Teknolojî",
     "prompt": "Sala 1957an, yekem peykê çêkirî yê ku li dora Erdê geriya kîjan bû?",
     "answers": [
-      "Explorer 1",
       "Sputnik 1",
+      "Explorer 1",
       "Vostok 1",
       "Luna 2"
     ],
     "correctAnswer": "Sputnik 1",
     "promptTr": "1957'de Dünya çevresinde dolanan ilk yapay uydu hangisidir?",
     "answersTr": [
-      "Explorer 1",
       "Sputnik 1",
+      "Explorer 1",
       "Vostok 1",
       "Luna 2"
     ],
@@ -5038,16 +5038,16 @@
     "answers": [
       "Michael Collins",
       "Yuri Gagarin",
-      "Buzz Aldrin",
-      "Neil Armstrong"
+      "Neil Armstrong",
+      "Buzz Aldrin"
     ],
     "correctAnswer": "Neil Armstrong",
     "promptTr": "1969'da Ay yüzeyinde yürüyen ilk insan kimdir?",
     "answersTr": [
       "Michael Collins",
       "Yuri Gagarin",
-      "Buzz Aldrin",
-      "Neil Armstrong"
+      "Neil Armstrong",
+      "Buzz Aldrin"
     ],
     "correctAnswerTr": "Neil Armstrong",
     "explanation": "Apollo 11'in komutanı olan Armstrong, Aldrin'den birkaç dakika önce merdivenden indi. Collins ana kapsülde yörüngede kaldı; Gagarin 1961'de uzaya çıkan ilk insandı ama Ay'a gitmedi.",
@@ -5070,18 +5070,18 @@
     "category": "Teknolojî",
     "prompt": "Yekem mirovê ku di sala 1961ê de çû fezayê kî bû?",
     "answers": [
-      "Yuri Gagarin",
       "Alan Shepard",
       "John Glenn",
-      "Valentina Tereshkova"
+      "Valentina Tereshkova",
+      "Yuri Gagarin"
     ],
     "correctAnswer": "Yuri Gagarin",
     "promptTr": "1961'de uzaya çıkan ilk insan kimdir?",
     "answersTr": [
-      "Yuri Gagarin",
       "Alan Shepard",
       "John Glenn",
-      "Valentina Tereşkova"
+      "Valentina Tereşkova",
+      "Yuri Gagarin"
     ],
     "correctAnswerTr": "Yuri Gagarin",
     "explanation": "Gagarin, Vostok 1 kapsülüyle Dünya çevresinde bir tur attı. Shepard aynı yıl çok daha kısa bir sıçrama uçuşu yaptı, Glenn 1962'de yörüngeye çıktı, Tereşkova ise 1963'te uzaya giden ilk kadın oldu.",
@@ -5105,16 +5105,16 @@
     "prompt": "Roket di valahiya fezayê de çawa pêş de diçe?",
     "answers": [
       "Bi palpiştkirina li ser hewayê",
-      "Bi kişandina qada magnetîk",
       "Bi avêtina gazan ber bi paş",
+      "Bi kişandina qada magnetîk",
       "Bi hêza kaşkirina Heyvê"
     ],
     "correctAnswer": "Bi avêtina gazan ber bi paş",
     "promptTr": "Roket uzay boşluğunda nasıl ilerler?",
     "answersTr": [
       "Havaya yaslanarak",
-      "Manyetik alanı geriye doğru çekerek",
       "Gazları geriye püskürterek",
+      "Manyetik alanı geriye doğru çekerek",
       "Ay'ın çekim kuvvetiyle"
     ],
     "correctAnswerTr": "Gazları geriye püskürterek",
@@ -5138,16 +5138,16 @@
     "category": "Teknolojî",
     "prompt": "Peykên geostasyoner li ser Ekvatorê li derdora kîjan bilindahiyê digerin?",
     "answers": [
-      "Nêzîkî 400 km",
       "Nêzîkî 36.000 km",
+      "Nêzîkî 400 km",
       "Nêzîkî 2.000 km",
       "Nêzîkî 150.000 km"
     ],
     "correctAnswer": "Nêzîkî 36.000 km",
     "promptTr": "Yer durağan uydular Ekvator üzerinde yaklaşık hangi yükseklikte döner?",
     "answersTr": [
-      "Yaklaşık 400 km",
       "Yaklaşık 36.000 km",
+      "Yaklaşık 400 km",
       "Yaklaşık 2.000 km",
       "Yaklaşık 150.000 km"
     ],
@@ -5173,16 +5173,16 @@
     "prompt": "Peykek çima li orbîtê dimîne?",
     "answers": [
       "Ji ber ku li wê bilindahiyê kişandin tune ye",
-      "Ji ber ku ji hewayê sivîktir e",
       "Ji ber ku leza wê ya aliyî bi kişandinê re hevseng e",
+      "Ji ber ku ji hewayê sivîktir e",
       "Ji ber ku motorên wê bi berdewamî û bêrawestan dixebitin"
     ],
     "correctAnswer": "Ji ber ku leza wê ya aliyî bi kişandinê re hevseng e",
     "promptTr": "Bir uydu neden yörüngede kalır?",
     "answersTr": [
       "O yükseklikte çekim bulunmadığı için",
-      "Havadan hafif olduğu için",
       "Yanal hızı çekimle dengelendiği için",
+      "Havadan hafif olduğu için",
       "Motorları hiç durmadan çalıştığı için"
     ],
     "correctAnswerTr": "Yanal hızı çekimle dengelendiği için",
@@ -5206,18 +5206,18 @@
     "category": "Teknolojî",
     "prompt": "Hêza hilkişînê ya balafirê bi giranî ji ber çi çêdibe?",
     "answers": [
-      "Ji ber cudahiya zextê li ser û bin baskan",
       "Ji ber ku balafir ji hewaya derdorê sivîktir e",
       "Ji ber germahiya motorê",
-      "Ji ber zivirîna Erdê"
+      "Ji ber zivirîna Erdê",
+      "Ji ber cudahiya zextê li ser û bin baskan"
     ],
     "correctAnswer": "Ji ber cudahiya zextê li ser û bin baskan",
     "promptTr": "Uçağı yukarı kaldıran kuvvet başlıca neden doğar?",
     "answersTr": [
-      "Kanadın alt ve üst basınç farkından",
       "Uçak çevresindeki havadan hafif olduğu için",
       "Motorun sıcaklığı yüzünden",
-      "Dünya'nın dönmesinden"
+      "Dünya'nın dönmesinden",
+      "Kanadın alt ve üst basınç farkından"
     ],
     "correctAnswerTr": "Kanadın alt ve üst basınç farkından",
     "explanation": "Kanadın üstünden akan hava daha hızlı gider ve orada basınç düşer; alttaki yüksek basınç kanadı yukarı iter. Balonlar çevrelerindeki havadan hafif oldukları için yükselir, uçaklar ise havadan ağırdır.",
@@ -5241,16 +5241,16 @@
     "prompt": "Di sala 1783yan de li Fransayê balona hewaya germ kê firand?",
     "answers": [
       "Birayên Wright",
-      "Ferdinand von Zeppelin",
       "Birayên Montgolfier",
+      "Ferdinand von Zeppelin",
       "Louis Blériot"
     ],
     "correctAnswer": "Birayên Montgolfier",
     "promptTr": "1783'te Fransa'da sıcak hava balonunu kimler uçurdu?",
     "answersTr": [
       "Wright kardeşler",
-      "Ferdinand von Zeppelin",
       "Montgolfier kardeşler",
+      "Ferdinand von Zeppelin",
       "Louis Blériot"
     ],
     "correctAnswerTr": "Montgolfier kardeşler",
@@ -5274,16 +5274,16 @@
     "category": "Teknolojî",
     "prompt": "Ji bo ku tiştek ji kişandina Erdê bi tevahî xilas bibe, leza wê divê nêzîkî çend be?",
     "answers": [
-      "3 km/s",
       "11,2 km/s",
+      "3 km/s",
       "7,9 km/s",
       "30 km/s"
     ],
     "correctAnswer": "11,2 km/s",
     "promptTr": "Bir cismin Dünya'nın çekiminden tümüyle kurtulması için hızı yaklaşık ne olmalıdır?",
     "answersTr": [
-      "3 km/s",
       "11,2 km/s",
+      "3 km/s",
       "7,9 km/s",
       "30 km/s"
     ],
@@ -5309,16 +5309,16 @@
     "prompt": "Şopên lingan ên li ser rûyê Heyvê çima demeke pir dirêj dimînin?",
     "answers": [
       "Ji ber ku toza wir şil e",
-      "Ji ber ku germahî pir nizm e",
       "Ji ber ku ba û baran li wir tune ne",
+      "Ji ber ku germahî pir nizm e",
       "Ji ber ku kişandina wê pir bihêz e"
     ],
     "correctAnswer": "Ji ber ku ba û baran li wir tune ne",
     "promptTr": "Ay yüzeyindeki ayak izleri neden çok uzun süre kalır?",
     "answersTr": [
       "Oradaki toz nemli olduğu için",
-      "Sıcaklık çok düşük olduğu için",
       "Rüzgâr ve yağmur olmadığı için",
+      "Sıcaklık çok düşük olduğu için",
       "Çekimi çok güçlü olduğu için"
     ],
     "correctAnswerTr": "Rüzgâr ve yağmur olmadığı için",
@@ -5342,18 +5342,18 @@
     "category": "Teknolojî",
     "prompt": "Modula heyvî ya Apollo 11ê ku di 1969an de daket bi çi navî hat binavkirin?",
     "answers": [
-      "Eagle",
       "Columbia",
       "Falcon",
-      "Challenger"
+      "Challenger",
+      "Eagle"
     ],
     "correctAnswer": "Eagle",
     "promptTr": "Apollo 11'in 1969'da inen ay modülünün adı neydi?",
     "answersTr": [
-      "Eagle",
       "Columbia",
       "Falcon",
-      "Challenger"
+      "Challenger",
+      "Eagle"
     ],
     "correctAnswerTr": "Eagle",
     "explanation": "İniş aracının adı Eagle, yörüngede kalan komuta modülünün adı ise Columbia'ydı. Falcon Apollo 15'in, Challenger Apollo 17'nin iniş araçlarının adıdır.",
@@ -5377,16 +5377,16 @@
     "prompt": "Kîjan roket astronotên Apollo di salên 1960 û 1970yî de birin ber bi Heyvê?",
     "answers": [
       "Soyuz",
-      "Atlas",
       "Saturn V",
+      "Atlas",
       "Titan II"
     ],
     "correctAnswer": "Saturn V",
     "promptTr": "Apollo astronotlarını 1960 ve 1970'lerde Ay'a hangi roket taşıdı?",
     "answersTr": [
       "Soyuz",
-      "Atlas",
       "Saturn V",
+      "Atlas",
       "Titan II"
     ],
     "correctAnswerTr": "Saturn V",
@@ -5412,16 +5412,16 @@
     "answers": [
       "Nêzîkî 12 saet û nîv",
       "Nêzîkî 24 saet",
-      "Nêzîkî 8 deqîqe",
-      "Nêzîkî 90 deqîqe"
+      "Nêzîkî 90 deqîqe",
+      "Nêzîkî 8 deqîqe"
     ],
     "correctAnswer": "Nêzîkî 90 deqîqe",
     "promptTr": "Uluslararası Uzay İstasyonu Dünya çevresindeki bir turu kaç dakikada tamamlar?",
     "answersTr": [
       "Yaklaşık 12 buçuk saat",
       "Yaklaşık 24 saat",
-      "Yaklaşık 8 dakika",
-      "Yaklaşık 90 dakika"
+      "Yaklaşık 90 dakika",
+      "Yaklaşık 8 dakika"
     ],
     "correctAnswerTr": "Yaklaşık 90 dakika",
     "explanation": "İstasyon yaklaşık 400 km yükseklikte saatte 28 bin kilometre hızla dolanır; bu da mürettebat için günde on altı gün doğuşu demektir. Yirmi dört saatlik tur ancak çok daha yüksekteki yer durağan yörüngede olur.",
@@ -5445,16 +5445,16 @@
     "prompt": "Sînorê Kármán, ku gelek caran wek destpêka fezayê tê pejirandin, li kîjan bilindahiyê ye?",
     "answers": [
       "10 km",
-      "50 km",
       "100 km",
+      "50 km",
       "500 km"
     ],
     "correctAnswer": "100 km",
     "promptTr": "Uzayın başlangıcı sayılan Kármán çizgisi hangi yükseklikte kabul edilir?",
     "answersTr": [
       "10 km",
-      "50 km",
       "100 km",
+      "50 km",
       "500 km"
     ],
     "correctAnswerTr": "100 km",
@@ -5480,16 +5480,16 @@
     "answers": [
       "Bi pîvana hêz û aliyê qada magnetîk a Erdê",
       "Bi wênegirtina ji jor ve",
-      "Bi bihîstina dengê radyoya herêmî",
-      "Bi pîvana dema gihîştina sînyalên peykan"
+      "Bi pîvana dema gihîştina sînyalên peykan",
+      "Bi bihîstina dengê radyoya herêmî"
     ],
     "correctAnswer": "Bi pîvana dema gihîştina sînyalên peykan",
     "promptTr": "GPS sistemi bir aygıtın konumunu nasıl belirler?",
     "answersTr": [
       "Dünya'nın manyetik alanının şiddetini ölçerek",
       "Yukarıdan fotoğraf çekerek",
-      "Yerel radyo sesini dinleyerek",
-      "Uydu sinyallerinin varış süresini ölçerek"
+      "Uydu sinyallerinin varış süresini ölçerek",
+      "Yerel radyo sesini dinleyerek"
     ],
     "correctAnswerTr": "Uydu sinyallerinin varış süresini ölçerek",
     "explanation": "Alıcı, en az dört uydudan gelen sinyalin yolda geçirdiği süreyi ölçer ve bulduğu uzaklıkları kesiştirerek konumu hesaplar. Manyetik alan yalnız yön verir, konum vermez; GPS uyduları fotoğraf da çekmez.",
@@ -5513,16 +5513,16 @@
     "prompt": "Du sondeyên Voyager ku di sala 1977an de hatin şandin bi sereke armanca kîjan cismên ezmanî bûn?",
     "answers": [
       "Gerstêrkên bihişk ên hundir",
-      "Asteroîdên kembera navîn",
       "Gerstêrkên dêw ên derve",
+      "Asteroîdên kembera navîn",
       "Kometên demdirêj"
     ],
     "correctAnswer": "Gerstêrkên dêw ên derve",
     "promptTr": "1977'de yollanan iki Voyager sondasının asıl hedefi hangi gök cisimleriydi?",
     "answersTr": [
       "İçteki kayaç gezegenler",
-      "Kuşaktaki asteroitler",
       "Dıştaki dev gezegenler",
+      "Kuşaktaki asteroitler",
       "Uzun dönemli kuyruklu yıldızlar"
     ],
     "correctAnswerTr": "Dıştaki dev gezegenler",
@@ -5546,16 +5546,16 @@
     "category": "Teknolojî",
     "prompt": "Roketên fezayê çima ji çend qonaxan têne çêkirin?",
     "answers": [
-      "Ji bo ku bêtir sotemenî bikişînin",
       "Ji bo ku giraniya vala bê avêtin",
+      "Ji bo ku bêtir sotemenî bikişînin",
       "Ji bo ku çêkirina wan hêsan bibe",
       "Ji bo ku ji dûr ve baştir bên dîtin"
     ],
     "correctAnswer": "Ji bo ku giraniya vala bê avêtin",
     "promptTr": "Uzay roketleri neden birden çok kademeden yapılır?",
     "answersTr": [
-      "Daha çok yakıt taşımak için",
       "Boşalan ağırlığı atmak için",
+      "Daha çok yakıt taşımak için",
       "Yapımı kolaylaşsın diye",
       "Uzaktan iyi görünsünler diye"
     ],
@@ -5582,16 +5582,16 @@
     "answers": [
       "Baran",
       "Ba",
-      "Ewr",
-      "Berf"
+      "Berf",
+      "Ewr"
     ],
     "correctAnswer": "Berf",
     "promptTr": "Türkçedeki \"kar\" sözcüğünün Kurmancî karşılığı hangisidir?",
     "answersTr": [
       "Baran",
       "Ba",
-      "Ewr",
-      "Berf"
+      "Berf",
+      "Ewr"
     ],
     "correctAnswerTr": "Berf",
     "explanation": "Berf, gökten yağan kar demektir. Baran yağmur, ba rüzgâr, ewr ise buluttur; dördü de hava olaylarıyla ilgili olduğu için sık karıştırılır.",
@@ -5614,16 +5614,16 @@
     "category": "Ziman",
     "prompt": "Li ser sifreyê \"nan\" heye. Ev peyv bi tirkî çi ye?",
     "answers": [
-      "Süt",
       "Ekmek",
+      "Süt",
       "Et",
       "Peynir"
     ],
     "correctAnswer": "Ekmek",
     "promptTr": "Sofrada \"nan\" var. Bu kelimenin Türkçesi nedir?",
     "answersTr": [
-      "Süt",
       "Ekmek",
+      "Süt",
       "Et",
       "Peynir"
     ],
@@ -5648,18 +5648,18 @@
     "category": "Ziman",
     "prompt": "Navdêra \"mal\" mê ye. Ji bo wateya \"evim\" kîjan form rast e?",
     "answers": [
-      "mala min",
       "malê min",
       "malên min",
-      "malek min"
+      "malek min",
+      "mala min"
     ],
     "correctAnswer": "mala min",
     "promptTr": "\"Mal\" adı dişildir. \"Evim\" anlamı için doğru biçim hangisidir?",
     "answersTr": [
-      "mala min",
       "malê min",
       "malên min",
-      "malek min"
+      "malek min",
+      "mala min"
     ],
     "correctAnswerTr": "mala min",
     "explanation": "Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden \"mala min\" denir. -ê eril tekile, -ên çoğula aittir; \"malek\" ise belirsiz tekildir.",
@@ -5682,16 +5682,16 @@
     "category": "Ziman",
     "prompt": "Cînavka \"hûn\" bi tirkî çi ye?",
     "answers": [
-      "Biz",
       "Siz",
+      "Biz",
       "Onlar",
       "Sen"
     ],
     "correctAnswer": "Siz",
     "promptTr": "\"Hûn\" zamirinin Türkçe karşılığı nedir?",
     "answersTr": [
-      "Biz",
       "Siz",
+      "Biz",
       "Onlar",
       "Sen"
     ],
@@ -5718,16 +5718,16 @@
     "answers": [
       "29",
       "26",
-      "33",
-      "31"
+      "31",
+      "33"
     ],
     "correctAnswer": "31",
     "promptTr": "Kurmancî alfabesinde toplam kaç harf vardır?",
     "answersTr": [
       "29",
       "26",
-      "33",
-      "31"
+      "31",
+      "33"
     ],
     "correctAnswerTr": "31",
     "explanation": "Latin temelli Kurmancî alfabesinde 8 ünlü ve 23 ünsüz olmak üzere 31 harf bulunur. 29 Türk, 26 ise İngiliz alfabesinin harf sayısıdır.",
@@ -5750,16 +5750,16 @@
     "category": "Ziman",
     "prompt": "Du peyvên cuda yên bi heman wateyê, ji hev re çi tên gotin?",
     "answers": [
-      "Dijwate",
       "Hevwate",
+      "Dijwate",
       "Hevdeng",
       "Peyva deynkirî"
     ],
     "correctAnswer": "Hevwate",
     "promptTr": "Aynı anlama gelen iki farklı kelimeye ne denir?",
     "answersTr": [
-      "Zıt anlamlı",
       "Eş anlamlı",
+      "Zıt anlamlı",
       "Eş sesli",
       "Alıntı kelime"
     ],
@@ -5784,18 +5784,18 @@
     "category": "Ziman",
     "prompt": "Rengê \"kesk\" di tirkî de kîjan reng e?",
     "answers": [
-      "Yeşil",
       "Sarı",
       "Mavi",
-      "Kırmızı"
+      "Kırmızı",
+      "Yeşil"
     ],
     "correctAnswer": "Yeşil",
     "promptTr": "\"Kesk\" rengi Türkçede hangi renktir?",
     "answersTr": [
-      "Yeşil",
       "Sarı",
       "Mavi",
-      "Kırmızı"
+      "Kırmızı",
+      "Yeşil"
     ],
     "correctAnswerTr": "Yeşil",
     "explanation": "Kesk yeşil demektir. Sarı zer, mavi şîn, kırmızı ise sordur; dördü de temel renk adı olduğu için aynı kavram sınıfındadır.",
@@ -5818,16 +5818,16 @@
     "category": "Ziman",
     "prompt": "Kîjan hevok wateya \"Ekmeği yedim\" bi rêziman rast dide?",
     "answers": [
-      "Ez nan xwar",
       "Min nan xwar",
+      "Ez nan xwar",
       "Ez nan dixwim",
       "Min nan dixwe"
     ],
     "correctAnswer": "Min nan xwar",
     "promptTr": "\"Ekmeği yedim\" anlamını dilbilgisi açısından doğru veren cümle hangisidir?",
     "answersTr": [
-      "Ez nan xwar",
       "Min nan xwar",
+      "Ez nan xwar",
       "Ez nan dixwim",
       "Min nan dixwe"
     ],
@@ -5854,16 +5854,16 @@
     "answers": [
       "Abla",
       "Teyze",
-      "Nine",
-      "Anne"
+      "Anne",
+      "Nine"
     ],
     "correctAnswer": "Anne",
     "promptTr": "Ailede \"dayik\" kimi belirtir?",
     "answersTr": [
       "Abla",
       "Teyze",
-      "Nine",
-      "Anne"
+      "Anne",
+      "Nine"
     ],
     "correctAnswerTr": "Anne",
     "explanation": "Dayik, kısa biçimiyle dê, anne demektir. Teyze xaltî, nine dapîr olarak geçer; hepsi kadın akraba adı olduğu için karıştırılabilir.",
@@ -5886,18 +5886,18 @@
     "category": "Ziman",
     "prompt": "Kîjan form wateya \"kitaplarım\" bi kurmancî rast dide?",
     "answers": [
-      "pirtûkên min",
       "pirtûka min",
       "pirtûkan min",
-      "pirtûkek min"
+      "pirtûkek min",
+      "pirtûkên min"
     ],
     "correctAnswer": "pirtûkên min",
     "promptTr": "\"Kitaplarım\" anlamını doğru veren biçim hangisidir?",
     "answersTr": [
-      "pirtûkên min",
       "pirtûka min",
       "pirtûkan min",
-      "pirtûkek min"
+      "pirtûkek min",
+      "pirtûkên min"
     ],
     "correctAnswerTr": "pirtûkên min",
     "explanation": "Çoğul izafe eki -ên'dir. \"Pirtûka min\" tekil dişil biçimdir, \"pirtûkek\" bir kitap demektir, \"pirtûkan\" ise tek başına izafe kuramaz.",
@@ -5921,16 +5921,16 @@
     "prompt": "Di hefteyekê de çend roj hene?",
     "answers": [
       "Beş",
-      "Altı",
       "Yedi",
+      "Altı",
       "Sekiz"
     ],
     "correctAnswer": "Yedi",
     "promptTr": "Bir haftada kaç gün vardır?",
     "answersTr": [
       "Beş",
-      "Altı",
       "Yedi",
+      "Altı",
       "Sekiz"
     ],
     "correctAnswerTr": "Yedi",
@@ -5954,16 +5954,16 @@
     "category": "Ziman",
     "prompt": "Kurmancî û Soranî ji bo zimanê kurdî çi ne?",
     "answers": [
-      "Du alfabe",
       "Du zarava",
+      "Du alfabe",
       "Du hevok",
       "Du deng"
     ],
     "correctAnswer": "Du zarava",
     "promptTr": "Kurmancî ve Soranî, Kürt dili açısından nedir?",
     "answersTr": [
-      "İki alfabe",
       "İki lehçe",
+      "İki alfabe",
       "İki cümle",
       "İki ses"
     ],
@@ -5989,16 +5989,16 @@
     "prompt": "Hevoka \"Ez diçim\" çawa tê neyînîkirin?",
     "answers": [
       "Ez neçim",
-      "Ez nediçim",
       "Ez naçim",
+      "Ez nediçim",
       "Ez biçim"
     ],
     "correctAnswer": "Ez naçim",
     "promptTr": "\"Ez diçim\" cümlesi nasıl olumsuz yapılır?",
     "answersTr": [
       "Ez neçim",
-      "Ez nediçim",
       "Ez naçim",
+      "Ez nediçim",
       "Ez biçim"
     ],
     "correctAnswerTr": "Ez naçim",
@@ -6022,18 +6022,18 @@
     "category": "Ziman",
     "prompt": "Ajalê ku bi tirkî \"at\" e, bi kurmancî çi ye?",
     "answers": [
-      "Hesp",
       "Ker",
       "Ga",
-      "Bizin"
+      "Bizin",
+      "Hesp"
     ],
     "correctAnswer": "Hesp",
     "promptTr": "\"At\" hayvanının Kurmancî adı hangisidir?",
     "answersTr": [
-      "Hesp",
       "Ker",
       "Ga",
-      "Bizin"
+      "Bizin",
+      "Hesp"
     ],
     "correctAnswerTr": "Hesp",
     "explanation": "Bizin, Türkçede \"keçi\" demektir.",
@@ -6057,16 +6057,16 @@
     "prompt": "Peyva \"kulîlk\" ji çend kîteyan pêk tê?",
     "answers": [
       "Çar",
-      "Yek",
       "Du",
+      "Yek",
       "Sê"
     ],
     "correctAnswer": "Du",
     "promptTr": "\"Kulîlk\" kelimesi kaç heceden oluşur?",
     "answersTr": [
       "Dört",
-      "Bir",
       "İki",
+      "Bir",
       "Üç"
     ],
     "correctAnswerTr": "İki",
@@ -6090,16 +6090,16 @@
     "category": "Ziman",
     "prompt": "Dema ku roj diçe ava, ji wê demê re bi kurmancî çi tê gotin?",
     "answers": [
-      "Sibe",
       "Êvar",
+      "Sibe",
       "Nîvro",
       "Şev"
     ],
     "correctAnswer": "Êvar",
     "promptTr": "Güneşin battığı vakte Kurmancîde ne denir?",
     "answersTr": [
-      "Sibe",
       "Êvar",
+      "Sibe",
       "Nîvro",
       "Şev"
     ],
@@ -6125,16 +6125,16 @@
     "prompt": "Ji bo wateya \"evde\" kîjan bikaranîn rast e?",
     "answers": [
       "ji malê",
-      "bi malê",
       "li malê",
+      "bi malê",
       "ser malê"
     ],
     "correctAnswer": "li malê",
     "promptTr": "\"Evde\" anlamı için doğru kullanım hangisidir?",
     "answersTr": [
       "ji malê",
-      "bi malê",
       "li malê",
+      "bi malê",
       "ser malê"
     ],
     "correctAnswerTr": "li malê",
@@ -6158,18 +6158,18 @@
     "category": "Ziman",
     "prompt": "Peyva \"derî\" bi tirkî çi ye?",
     "answers": [
-      "Kapı",
       "Pencere",
       "Duvar",
-      "Çatı"
+      "Çatı",
+      "Kapı"
     ],
     "correctAnswer": "Kapı",
     "promptTr": "\"Derî\" kelimesinin Türkçesi nedir?",
     "answersTr": [
-      "Kapı",
       "Pencere",
       "Duvar",
-      "Çatı"
+      "Çatı",
+      "Kapı"
     ],
     "correctAnswerTr": "Kapı",
     "explanation": "Derî kapı demektir. Duvar dîwar, çatı banî olarak geçer; pencere ise Kurmancîde de aynı biçimde söylenir. Hepsi ev bölümü adıdır.",
@@ -6193,16 +6193,16 @@
     "prompt": "Forma fermanî ya lêkera \"xwendin\" ji bo yekjimar kîjan e?",
     "answers": [
       "xwend",
-      "dixwîne",
       "bixwîne",
+      "dixwîne",
       "xwendiye"
     ],
     "correctAnswer": "bixwîne",
     "promptTr": "\"Xwendin\" fiilinin tekil emir biçimi hangisidir?",
     "answersTr": [
       "xwend",
-      "dixwîne",
       "bixwîne",
+      "dixwîne",
       "xwendiye"
     ],
     "correctAnswerTr": "bixwîne",
@@ -6226,16 +6226,16 @@
     "category": "Ziman",
     "prompt": "Bi kurmancî ji \"yıldız\"ê re çi tê gotin?",
     "answers": [
-      "Heyv",
       "Stêrk",
+      "Heyv",
       "Roj",
       "Ewr"
     ],
     "correctAnswer": "Stêrk",
     "promptTr": "\"Yıldız\" için Kurmancîde ne denir?",
     "answersTr": [
-      "Heyv",
       "Stêrk",
+      "Heyv",
       "Roj",
       "Ewr"
     ],
@@ -6261,16 +6261,16 @@
     "prompt": "Peyveke ku ji zimanekî din hatibe girtin, jê re çi tê gotin?",
     "answers": [
       "Hevwate",
-      "Kîte",
       "Peyva deynkirî",
+      "Kîte",
       "Dijwate"
     ],
     "correctAnswer": "Peyva deynkirî",
     "promptTr": "Başka bir dilden alınmış kelimeye ne denir?",
     "answersTr": [
       "Eş anlamlı",
-      "Hece",
       "Alıntı kelime",
+      "Hece",
       "Zıt anlamlı"
     ],
     "correctAnswerTr": "Alıntı kelime",
@@ -6294,18 +6294,18 @@
     "category": "Ziman",
     "prompt": "Kîjan navdêr di kurmancî de nêr e?",
     "answers": [
-      "Nan",
       "Mal",
       "Roj",
-      "Şev"
+      "Şev",
+      "Nan"
     ],
     "correctAnswer": "Nan",
     "promptTr": "Kurmancîde hangi ad erildir?",
     "answersTr": [
-      "Nan",
       "Mal",
       "Roj",
-      "Şev"
+      "Şev",
+      "Nan"
     ],
     "correctAnswerTr": "Nan",
     "explanation": "Eril olduğu için izafede \"nanê germ\" denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.",
@@ -6328,18 +6328,18 @@
     "category": "Ziman",
     "prompt": "Di hevoka \"Ez ... dibînim\" de ji bo \"seni\" kîjan cînavk rast e?",
     "answers": [
-      "te",
       "tu",
       "ew",
-      "wî"
+      "wî",
+      "te"
     ],
     "correctAnswer": "te",
     "promptTr": "\"Ez ... dibînim\" cümlesinde \"seni\" için hangi zamir gelir?",
     "answersTr": [
-      "te",
       "tu",
       "ew",
-      "wî"
+      "wî",
+      "te"
     ],
     "correctAnswerTr": "te",
     "explanation": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. \"Tu\" yalın öznedir, \"wî\" eril üçüncü kişi, \"ew\" ise yalın üçüncü kişidir.",
@@ -6362,16 +6362,16 @@
     "category": "Ziman",
     "prompt": "Rengê \"reş\" bi tirkî çi ye?",
     "answers": [
-      "Beyaz",
       "Siyah",
+      "Beyaz",
       "Yeşil",
       "Sarı"
     ],
     "correctAnswer": "Siyah",
     "promptTr": "\"Reş\" rengi Türkçede nedir?",
     "answersTr": [
-      "Beyaz",
       "Siyah",
+      "Beyaz",
       "Yeşil",
       "Sarı"
     ],
@@ -6398,16 +6398,16 @@
     "answers": [
       "Malbata tirkî",
       "Malbata samî",
-      "Malbata fîno-ugrî",
-      "Malbata hindû-ewropî"
+      "Malbata hindû-ewropî",
+      "Malbata fîno-ugrî"
     ],
     "correctAnswer": "Malbata hindû-ewropî",
     "promptTr": "Kürtçe hangi dil ailesinde yer alır?",
     "answersTr": [
       "Türk dilleri",
       "Sami dilleri",
-      "Fin-Ugor dilleri",
-      "Hint-Avrupa dilleri"
+      "Hint-Avrupa dilleri",
+      "Fin-Ugor dilleri"
     ],
     "correctAnswerTr": "Hint-Avrupa dilleri",
     "explanation": "Kürtçe, Hint-Avrupa ailesinin İran kolundandır ve Farsçayla akrabadır. Arapça Sami, Türkçe Türk dilleri, Macarca ise Fin-Ugor ailesindendir.",
@@ -6430,16 +6430,16 @@
     "category": "Ziman",
     "prompt": "Lêkera \"çûn\" bi pêşgira di- ji bo kesê sêyem ê yekjimar çawa tê?",
     "answers": [
-      "diçim",
       "diçe",
+      "diçim",
       "diçin",
       "diçî"
     ],
     "correctAnswer": "diçe",
     "promptTr": "\"Çûn\" fiili di- önekiyle tekil üçüncü kişide nasıl olur?",
     "answersTr": [
-      "diçim",
       "diçe",
+      "diçim",
       "diçin",
       "diçî"
     ],
@@ -6464,18 +6464,18 @@
     "category": "Ziman",
     "prompt": "Peyva \"şîr\" li ser sifreyê çi ye?",
     "answers": [
-      "Süt",
       "Bal",
       "Yoğurt",
-      "Yağ"
+      "Yağ",
+      "Süt"
     ],
     "correctAnswer": "Süt",
     "promptTr": "Sofradaki \"şîr\" nedir?",
     "answersTr": [
-      "Süt",
       "Bal",
       "Yoğurt",
-      "Yağ"
+      "Yağ",
+      "Süt"
     ],
     "correctAnswerTr": "Süt",
     "explanation": "Şîr süttür. Bal hingiv, yoğurt mast, yağ ise rûn olarak geçer; dördü de süt sofrasında bulunduğu için birbirine yakın şıklardır.",
@@ -6498,16 +6498,16 @@
     "category": "Ziman",
     "prompt": "Alfabeya kurmancî çend tîpên dengdêr dihewîne?",
     "answers": [
-      "Şeş",
       "Heşt",
+      "Şeş",
       "Deh",
       "Pênc"
     ],
     "correctAnswer": "Heşt",
     "promptTr": "Kurmancî alfabesi kaç sesli harf içerir?",
     "answersTr": [
-      "Altı",
       "Sekiz",
+      "Altı",
       "On",
       "Beş"
     ],
@@ -6533,16 +6533,16 @@
     "prompt": "Heywanê malê yê ku mişkan digire, bi kurmancî çi ye?",
     "answers": [
       "Kûçik",
-      "Mişk",
       "Pisîk",
+      "Mişk",
       "Rovî"
     ],
     "correctAnswer": "Pisîk",
     "promptTr": "Fare yakalayan ev hayvanı Kurmancîde nedir?",
     "answersTr": [
       "Kûçik",
-      "Mişk",
       "Pisîk",
+      "Mişk",
       "Rovî"
     ],
     "correctAnswerTr": "Pisîk",
@@ -6566,18 +6566,18 @@
     "category": "Ziman",
     "prompt": "Ji bo wateya \"odanın içinde\" kîjan avanî rast e?",
     "answers": [
-      "di odeyê de",
       "li odeyê ser",
       "ji odeyê de",
-      "bi odeyê re"
+      "bi odeyê re",
+      "di odeyê de"
     ],
     "correctAnswer": "di odeyê de",
     "promptTr": "\"Odanın içinde\" anlamı için doğru yapı hangisidir?",
     "answersTr": [
-      "di odeyê de",
       "li odeyê ser",
       "ji odeyê de",
-      "bi odeyê re"
+      "bi odeyê re",
+      "di odeyê de"
     ],
     "correctAnswerTr": "di odeyê de",
     "explanation": "Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik \"di ... de\" ile kurulur; \"bi ... re\" birliktelik, \"ji\" ise ayrılma bildirir.",
@@ -6601,16 +6601,16 @@
     "prompt": "Alfabeya latînî ya kurmancî di sala 1932yan de bi kîjan kovarê belav bû?",
     "answers": [
       "Roja Nû",
-      "Nûbihar",
       "Hawar",
+      "Nûbihar",
       "Bîrnebûn"
     ],
     "correctAnswer": "Hawar",
     "promptTr": "Kurmancînin Latin alfabesi 1932'de hangi dergiyle yayıldı?",
     "answersTr": [
       "Roja Nû",
-      "Nûbihar",
       "Hawar",
+      "Nûbihar",
       "Bîrnebûn"
     ],
     "correctAnswerTr": "Hawar",
@@ -6634,16 +6634,16 @@
     "category": "Ziman",
     "prompt": "Di hevoka \"Ez ji ... hez dikim\" de ji bo wateya \"çocukları\" kîjan form tê?",
     "answers": [
-      "zarok",
       "zarokan",
+      "zarok",
       "zarokek",
       "zarokên"
     ],
     "correctAnswer": "zarokan",
     "promptTr": "\"Ez ji ... hez dikim\" cümlesinde \"çocukları\" için hangi biçim gelir?",
     "answersTr": [
-      "zarok",
       "zarokan",
+      "zarok",
       "zarokek",
       "zarokên"
     ],
@@ -6669,16 +6669,16 @@
     "prompt": "Endama ku pê tê dîtin, bi kurmancî çi ye?",
     "answers": [
       "Guh",
-      "Dev",
       "Çav",
+      "Dev",
       "Poz"
     ],
     "correctAnswer": "Çav",
     "promptTr": "Görme organının Kurmancî adı nedir?",
     "answersTr": [
       "Guh",
-      "Dev",
       "Çav",
+      "Dev",
       "Poz"
     ],
     "correctAnswerTr": "Çav",
@@ -6702,18 +6702,18 @@
     "category": "Ziman",
     "prompt": "Di rêzimanê de peyva ku kar û tevgerê nîşan dide çi ye?",
     "answers": [
-      "Lêker",
       "Navdêr",
       "Rengdêr",
-      "Cînavk"
+      "Cînavk",
+      "Lêker"
     ],
     "correctAnswer": "Lêker",
     "promptTr": "Dilbilgisinde iş ve oluş bildiren söz türü hangisidir?",
     "answersTr": [
-      "Fiil",
       "Ad",
       "Sıfat",
-      "Zamir"
+      "Zamir",
+      "Fiil"
     ],
     "correctAnswerTr": "Fiil",
     "explanation": "Fiil iş, oluş ve durumu anlatır: çûn, xwarin, kirin. Ad varlığı, sıfat niteliği gösterir; zamir ise adın yerine geçer.",
@@ -6737,16 +6737,16 @@
     "prompt": "Hevoka \"Ezê biçim\" kîjan demê nîşan dide?",
     "answers": [
       "Dema borî",
-      "Fermanî",
       "Dema bê",
+      "Fermanî",
       "Daxwazî"
     ],
     "correctAnswer": "Dema bê",
     "promptTr": "\"Ezê biçim\" cümlesi hangi zamanı gösterir?",
     "answersTr": [
       "Geçmiş zaman",
-      "Emir kipi",
       "Gelecek zaman",
+      "Emir kipi",
       "İstek kipi"
     ],
     "correctAnswerTr": "Gelecek zaman",
@@ -6770,16 +6770,16 @@
     "category": "Ziman",
     "prompt": "Peyva tirkî ya \"pencere\" ji kîjan zimanî hatiye wergirtin?",
     "answers": [
-      "Ji erebî",
       "Ji farisî",
+      "Ji erebî",
       "Ji fransî",
       "Ji yewnanî"
     ],
     "correctAnswer": "Ji farisî",
     "promptTr": "Türkçedeki \"pencere\" kelimesi hangi dilden alınmıştır?",
     "answersTr": [
-      "Arapçadan",
       "Farsçadan",
+      "Arapçadan",
       "Fransızcadan",
       "Yunancadan"
     ],
@@ -6805,16 +6805,16 @@
     "prompt": "Amûra ku pê tê nivîsandin bi kurmancî çi ye?",
     "answers": [
       "Pirtûk",
-      "Kaxez",
       "Qelem",
+      "Kaxez",
       "Mase"
     ],
     "correctAnswer": "Qelem",
     "promptTr": "Yazmak için kullanılan araç Kurmancîde nedir?",
     "answersTr": [
       "Pirtûk",
-      "Kaxez",
       "Qelem",
+      "Kaxez",
       "Mase"
     ],
     "correctAnswerTr": "Qelem",
@@ -6838,18 +6838,18 @@
     "category": "Ziman",
     "prompt": "Peyva pirsyarî ya \"kengî\" li ser çi disekine?",
     "answers": [
-      "Dem",
       "Cih",
       "Kes",
-      "Sedem"
+      "Sedem",
+      "Dem"
     ],
     "correctAnswer": "Dem",
     "promptTr": "\"Kengî\" soru sözcüğü neyi sorar?",
     "answersTr": [
-      "Zaman",
       "Yer",
       "Kişi",
-      "Sebep"
+      "Sebep",
+      "Zaman"
     ],
     "correctAnswerTr": "Zaman",
     "explanation": "Kengî \"ne zaman\" demektir ve zamanı sorar. Yeri \"li ku\", kişiyi \"kî\", sebebi ise \"çima\" sorar; her biri farklı bir öge arar.",
@@ -6873,16 +6873,16 @@
     "prompt": "Peyva kurmancî \"çiya\" di tirkî de rasterast çi ye?",
     "answers": [
       "Ova",
-      "Nehir",
       "Dağ",
+      "Nehir",
       "Orman"
     ],
     "correctAnswer": "Dağ",
     "promptTr": "Kurmancî \"çiya\" sözcüğünün Türkçe doğrudan karşılığı nedir?",
     "answersTr": [
       "Ova",
-      "Nehir",
       "Dağ",
+      "Nehir",
       "Orman"
     ],
     "correctAnswerTr": "Dağ",
@@ -6906,16 +6906,16 @@
     "category": "Ziman",
     "prompt": "Ji bo wateya \"O kadın mektup yazdı\" kîjan hevok rast e?",
     "answers": [
-      "Ew name nivîsî",
       "Wê name nivîsî",
+      "Ew name nivîsî",
       "Wê nameyê dinivîse",
       "Ew nameyê nivîsî"
     ],
     "correctAnswer": "Wê name nivîsî",
     "promptTr": "\"O kadın mektup yazdı\" anlamı için hangi cümle doğrudur?",
     "answersTr": [
-      "Ew name nivîsî",
       "Wê name nivîsî",
+      "Ew name nivîsî",
       "Wê nameyê dinivîse",
       "Ew nameyê nivîsî"
     ],
@@ -6942,16 +6942,16 @@
     "answers": [
       "Xal",
       "Met",
-      "Bapîr",
-      "Ap"
+      "Ap",
+      "Bapîr"
     ],
     "correctAnswer": "Ap",
     "promptTr": "Kişinin babasının erkek kardeşine Kurmancîde ne denir?",
     "answersTr": [
       "Xal",
       "Met",
-      "Bapîr",
-      "Ap"
+      "Ap",
+      "Bapîr"
     ],
     "correctAnswerTr": "Ap",
     "explanation": "Ap, bazı yörelerde mam, amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
@@ -6974,16 +6974,16 @@
     "category": "Ziman",
     "prompt": "Berhevoka peyvên zimanekî bi wateyên wan re çi ye?",
     "answers": [
-      "Rêziman",
       "Ferheng",
+      "Rêziman",
       "Hevok",
       "Alfabe"
     ],
     "correctAnswer": "Ferheng",
     "promptTr": "Bir dilin kelimelerini anlamlarıyla birlikte toplayan eser nedir?",
     "answersTr": [
-      "Dilbilgisi",
       "Sözlük",
+      "Dilbilgisi",
       "Cümle",
       "Alfabe"
     ],
@@ -7008,18 +7008,18 @@
     "category": "Ziman",
     "prompt": "Navdêra \"sêv\" mê ye. Wateya \"kırmızı elma\" çawa tê nivîsîn?",
     "answers": [
-      "sêva sor",
       "sêv sor",
       "sêvê sor",
-      "sêvên sor"
+      "sêvên sor",
+      "sêva sor"
     ],
     "correctAnswer": "sêva sor",
     "promptTr": "\"Sêv\" adı dişildir. \"Kırmızı elma\" nasıl yazılır?",
     "answersTr": [
-      "sêva sor",
       "sêv sor",
       "sêvê sor",
-      "sêvên sor"
+      "sêvên sor",
+      "sêva sor"
     ],
     "correctAnswerTr": "sêva sor",
     "explanation": "Sıfat adı izafe ekiyle izler; dişil tekil ad -a alır. Eksiz kuruluş olmaz, -ê eril tekile, -ên ise çoğula aittir.",
@@ -7042,16 +7042,16 @@
     "category": "Ziman",
     "prompt": "Roja piştî Duşemê bi kurmancî çi ye?",
     "answers": [
-      "Çarşem",
       "Sêşem",
+      "Çarşem",
       "Pêncşem",
       "Şemî"
     ],
     "correctAnswer": "Sêşem",
     "promptTr": "Kurmancîde Duşem'den sonraki gün hangisidir?",
     "answersTr": [
-      "Çarşem",
       "Sêşem",
+      "Çarşem",
       "Pêncşem",
       "Şemî"
     ],
@@ -7078,16 +7078,16 @@
     "answers": [
       "Hevwate",
       "Dijwate",
-      "Peyva deynkirî",
-      "Hevdeng"
+      "Hevdeng",
+      "Peyva deynkirî"
     ],
     "correctAnswer": "Hevdeng",
     "promptTr": "Türkçedeki \"yüz\" hem surat hem 100 demektir. Bu duruma ne denir?",
     "answersTr": [
       "Eş anlamlılık",
       "Zıt anlamlılık",
-      "Alıntı kelime",
-      "Eş seslilik"
+      "Eş seslilik",
+      "Alıntı kelime"
     ],
     "correctAnswerTr": "Eş seslilik",
     "explanation": "Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi ters kavramlardır.",
@@ -7110,18 +7110,18 @@
     "category": "Ziman",
     "prompt": "Li ser sifreyê \"goşt\" heye. Ev xwarin bi tirkî çi tê gotin?",
     "answers": [
-      "Et",
       "Balık",
       "Ekmek",
-      "Çorba"
+      "Çorba",
+      "Et"
     ],
     "correctAnswer": "Et",
     "promptTr": "Sofrada \"goşt\" var. Bu yiyeceğe Türkçede ne denir?",
     "answersTr": [
-      "Et",
       "Balık",
       "Ekmek",
-      "Çorba"
+      "Çorba",
+      "Et"
     ],
     "correctAnswerTr": "Et",
     "explanation": "Goşt et demektir. Balık masî, ekmek nan, çorba ise şorbe olarak geçer; dördü de yemek adı olduğu için aynı kavram sınıfındadır.",
@@ -7145,16 +7145,16 @@
     "prompt": "Hevoka bi wateya \"bana söyle\" bi kurmancî çawa tê avakirin?",
     "answers": [
       "li min bêje",
-      "bi min bêje",
       "ji min re bêje",
+      "bi min bêje",
       "di min bêje"
     ],
     "correctAnswer": "ji min re bêje",
     "promptTr": "\"Bana söyle\" cümlesi Kurmancîde nasıl kurulur?",
     "answersTr": [
       "li min bêje",
-      "bi min bêje",
       "ji min re bêje",
+      "bi min bêje",
       "di min bêje"
     ],
     "correctAnswerTr": "ji min re bêje",
@@ -7178,16 +7178,16 @@
     "category": "Ziman",
     "prompt": "Ji bo xwedîtiya nêr, wateya \"onun kitabı\" kîjan form e?",
     "answers": [
-      "pirtûka wê",
       "pirtûka wî",
+      "pirtûka wê",
       "pirtûkên wî",
       "pirtûka wan"
     ],
     "correctAnswer": "pirtûka wî",
     "promptTr": "Eril sahiplik için \"onun kitabı\" hangi biçimdir?",
     "answersTr": [
-      "pirtûka wê",
       "pirtûka wî",
+      "pirtûka wê",
       "pirtûkên wî",
       "pirtûka wan"
     ],
@@ -7214,16 +7214,16 @@
     "answers": [
       "Hirç",
       "Rovî",
-      "Kew",
-      "Gur"
+      "Gur",
+      "Kew"
     ],
     "correctAnswer": "Gur",
     "promptTr": "Sürü hâlinde gezen, koyunun düşmanı yabani hayvan nedir?",
     "answersTr": [
       "Hirç",
       "Rovî",
-      "Kew",
-      "Gur"
+      "Gur",
+      "Kew"
     ],
     "correctAnswerTr": "Gur",
     "explanation": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; ilk üçü yabani memeli, sonuncusu kuş adıdır.",
@@ -7246,16 +7246,16 @@
     "category": "Ziman",
     "prompt": "Di hevoka \"Ez dixwazim ku ez ...\" de lêkera \"çûn\" çawa tê?",
     "answers": [
-      "diçim",
       "biçim",
+      "diçim",
       "çûm",
       "naçim"
     ],
     "correctAnswer": "biçim",
     "promptTr": "\"Ez dixwazim ku ez ...\" cümlesinde \"çûn\" fiili nasıl gelir?",
     "answersTr": [
-      "diçim",
       "biçim",
+      "diçim",
       "çûm",
       "naçim"
     ],
