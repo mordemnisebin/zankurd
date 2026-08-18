@@ -8,31 +8,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bir web sitesine erişmek için hangi protokol kullanılır?
 -    A) FTP
 -    B) SMTP
--    C) SSH
-- ✅ D) HTTP
-**Doğru:** D) HTTP
+- ✅ C) HTTP
+-    D) SSH
+**Doğru:** C) HTTP
 **Açıklama:** HTTP (Hypertext Transfer Protocol) web sitesi dosyalarının aktarımı için kullanılır. FTP dosyalar için, SMTP e-posta için ve SSH uzaktan erişim içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/HTTP
 
 ## ds_teknoloji_0002  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr ji bo girêdana du torên cuda tê bikaranîn?
 **TR:** İki farklı ağı birbirine bağlamak için hangi cihaz kullanılır?
--    A) Switch
-- ✅ B) Router
+- ✅ A) Router
+-    B) Switch
 -    C) Hub
 -    D) Modem
-**Doğru:** B) Router
+**Doğru:** A) Router
 **Açıklama:** Router (yönlendirici) iki farklı ağı birbirine bağlar ve verileri aralarında yönlendirir. Switch yalnızca yerel ağ içinde bağlantı kurar.
 **Kaynak:** https://en.wikipedia.org/wiki/Router_(computing)
 
 ## ds_teknoloji_0004  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan teknolojî ji bo şîfrekirina daneyan di navbera du aliyan de tê bikaranîn?
 **TR:** İki taraf arasındaki verileri şifrelemek için hangi teknoloji kullanılır?
--    A) HTML
-- ✅ B) SSL/TLS
+- ✅ A) SSL/TLS
+-    B) HTML
 -    C) CSS
 -    D) JavaScript
-**Doğru:** B) SSL/TLS
+**Doğru:** A) SSL/TLS
 **Açıklama:** SSL/TLS, sunucu ve istemci arasındaki verileri koruyan şifreleme protokolleridir. HTML, CSS ve JavaScript web sitesi oluşturma dilleridir, şifreleme protokolleri değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transport_Layer_Security
 
@@ -40,10 +40,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan teknolojî ji bo şîfrekirina daneyan di navbera malper û gerokê de tê bikaranîn?
 **TR:** Web sitesi ile tarayıcı arasındaki verileri şifrelemek için hangi teknoloji kullanılır?
 -    A) FTP
--    B) SMTP
-- ✅ C) TLS
+- ✅ B) TLS
+-    C) SMTP
 -    D) DNS
-**Doğru:** C) TLS
+**Doğru:** B) TLS
 **Açıklama:** TLS (Transport Layer Security), tarayıcı ile web sitesi arasındaki veriyi şifreler; HTTPS de TLS kullanır. Öncülü SSL artık kullanım dışıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Transport_Layer_Security
 
@@ -52,20 +52,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bilgisayarlar arasında verileri güvenilir bir şekilde iletmek için hangi protokol kullanılır?
 -    A) UDP
 -    B) IP
--    C) ICMP
-- ✅ D) TCP
-**Doğru:** D) TCP
+- ✅ C) TCP
+-    D) ICMP
+**Doğru:** C) TCP
 **Açıklama:** TCP (İletim Kontrol Protokolü), tüm paketlerin hedefe ulaştığını doğruladığı için verileri güvenilir bir şekilde iletmek için kullanılır. UDP güvenilir değildir, IP adresleme ve ICMP hata mesajları içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Transmission_Control_Protocol
 
 ## ds_teknoloji_0018  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan protokol ji bo veguhestina daneyan bi awayekî lez û bez tê bikaranîn, lê ne pêbawer e?
 **TR:** Verileri hızlı bir şekilde iletmek için hangi protokol kullanılır, ancak güvenilir değildir?
-- ✅ A) UDP
--    B) TCP
--    C) IP
--    D) HTTP
-**Doğru:** A) UDP
+-    A) TCP
+-    B) IP
+-    C) HTTP
+- ✅ D) UDP
+**Doğru:** D) UDP
 **Açıklama:** UDP (Kullanıcı Veri Birimi Protokolü), verileri hızlı bir şekilde iletmek için kullanılır, ancak tüm paketlerin hedefe ulaşacağını garanti etmez. TCP güvenilirdir, IP adresleme ve HTTP web siteleri içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/User_Datagram_Protocol
 
@@ -73,21 +73,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan protokol ji bo veguhestina daneyan di navbera server û klîentê de bi awayekî ewle tê bikaranîn, lê ne ji bo malperan e?
 **TR:** Sunucu ve istemci arasında verileri güvenli bir şekilde iletmek için hangi protokol kullanılır, ancak web siteleri için değildir?
 -    A) HTTP
--    B) SMTP
-- ✅ C) SFTP
+- ✅ B) SFTP
+-    C) SMTP
 -    D) POP3
-**Doğru:** C) SFTP
+**Doğru:** B) SFTP
 **Açıklama:** SFTP (SSH Dosya Aktarım Protokolü), dosyaları güvenli bir şekilde aktarmak için kullanılır. HTTP web siteleri, SMTP e-posta gönderme ve POP3 e-posta alma içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol
 
 ## ds_teknoloji_0047  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan protokol ji bo veguhestina daneyan di navbera server û klîentê de bi ewlehî tê bikaranîn, lê ne ji bo malperan e?
 **TR:** Sunucu ve istemci arasında verileri güvenli bir şekilde iletmek için hangi protokol kullanılır, ancak web siteleri için değildir?
-- ✅ A) SFTP
--    B) HTTP
--    C) FTP
--    D) SMTP
-**Doğru:** A) SFTP
+-    A) HTTP
+-    B) FTP
+-    C) SMTP
+- ✅ D) SFTP
+**Doğru:** D) SFTP
 **Açıklama:** SFTP (SSH Dosya Aktarım Protokolü), dosyaları sunucu ve istemci arasında güvenli bir şekilde iletir, ancak web siteleri için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol
 
@@ -96,9 +96,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sunucu ve istemci arasında verileri güvenli bir şekilde iletmek için hangi protokol kullanılır?
 -    A) UDP
 -    B) ICMP
--    C) ARP
-- ✅ D) TLS
-**Doğru:** D) TLS
+- ✅ C) TLS
+-    D) ARP
+**Doğru:** C) TLS
 **Açıklama:** TLS (Transport Layer Security), sunucu ve istemci arasındaki verileri şifreler ve güvenlik sağlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Transport_Layer_Security
 
@@ -106,21 +106,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan protokol ji bo veguhestina daneyan di navbera torên cuda de bi ewlehî tê bikaranîn?
 **TR:** Farklı ağlar arasında verileri güvenli bir şekilde iletmek için hangi protokol kullanılır?
 -    A) HTTP
--    B) FTP
-- ✅ C) IPsec
+- ✅ B) IPsec
+-    C) FTP
 -    D) SMTP
-**Doğru:** C) IPsec
+**Doğru:** B) IPsec
 **Açıklama:** IPsec, farklı ağlar arasındaki verileri şifreleyen ve güvenlik sağlayan bir protokoldür.
 **Kaynak:** https://en.wikipedia.org/wiki/IPsec
 
 ## ds_teknoloji_0035  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan protokol ji bo veguhestina e-nameyan bi ewlehî tê bikaranîn?
 **TR:** E-postaları güvenli bir şekilde iletmek için hangi protokol kullanılır?
--    A) HTTP
-- ✅ B) SMTPS
+- ✅ A) SMTPS
+-    B) HTTP
 -    C) FTP
 -    D) SNMP
-**Doğru:** B) SMTPS
+**Doğru:** A) SMTPS
 **Açıklama:** SMTPS e-postaları şifreleyerek iletir, bu nedenle SMTP'den daha güvenlidir.
 **Kaynak:** https://en.wikipedia.org/wiki/SMTPS
 
@@ -129,31 +129,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi cihaz, bir web sitesinin IP adresini alan adından sağlar?
 -    A) Web server
 -    B) Mail server
--    C) Proxy server
-- ✅ D) DNS server
-**Doğru:** D) DNS server
+- ✅ C) DNS server
+-    D) Proxy server
+**Doğru:** C) DNS server
 **Açıklama:** DNS (Alan Adı Sistemi) sunucusu, alan adını (örneğin: wikipedia.org) bilgisayarın erişebileceği IP adresine dönüştürür. Web sunucusu web sitelerini gönderir, e-posta sunucusu e-postaları yönetir ve vekil sunucu verileri istemci ile sunucu arasında iletir.
 **Kaynak:** https://en.wikipedia.org/wiki/Domain_Name_System
 
 ## ds_teknoloji_0007  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan protokol ji bo gihîştina pelan ji ser dûr ve tê bikaranîn?
 **TR:** Uzaktaki dosyalara erişmek için hangi protokol kullanılır?
--    A) HTTP
-- ✅ B) FTP
+- ✅ A) FTP
+-    B) HTTP
 -    C) SMTP
 -    D) POP3
-**Doğru:** B) FTP
+**Doğru:** A) FTP
 **Açıklama:** FTP (Dosya Aktarım Protokolü), bilgisayarlar arasında dosya aktarmak için kullanılır. HTTP web siteleri, SMTP e-posta göndermek ve POP3 e-posta almak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/File_Transfer_Protocol
 
 ## ds_teknoloji_0008  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di torê de, kîjan cîhaz ji bo girêdana gelek komputeran di nav tora herêmî de tê bikaranîn?
 **TR:** Bir ağda, yerel ağdaki birçok bilgisayarı bağlamak için hangi cihaz kullanılır?
-- ✅ A) Switch
--    B) Router
--    C) Modem
--    D) Firewall
-**Doğru:** A) Switch
+-    A) Router
+-    B) Modem
+-    C) Firewall
+- ✅ D) Switch
+**Doğru:** D) Switch
 **Açıklama:** Anahtar (Switch), yerel ağda (LAN) birçok bilgisayarı birbirine bağlar ve verileri aralarında iletir. Yönlendirici ağları bağlamak, modem internet bağlantısı kurmak ve güvenlik duvarı koruma sağlamak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Network_switch
 
@@ -161,21 +161,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di torê de, kîjan cîhaz ji bo birêvebirina trafîka daneyan di navbera torên cuda de tê bikaranîn?
 **TR:** Ağda, farklı ağlar arasındaki veri trafiğini yönetmek için hangi cihaz kullanılır?
 -    A) Switch
--    B) Modem
-- ✅ C) Router
+- ✅ B) Router
+-    C) Modem
 -    D) Hub
-**Doğru:** C) Router
+**Doğru:** B) Router
 **Açıklama:** Yönlendirici, farklı ağları bağlamak ve trafiği yönetmek için kullanılır. Anahtar yerel ağda, modem internet için, hub ise cihazları bağlamak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Router_(computing)
 
 ## ds_teknoloji_0164  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di torê de, kîjan cîhaz ji bo girêdana komputeran di nav tora herêmî de tê bikaranîn?
 **TR:** Ağda, yerel ağdaki bilgisayarları bağlamak için hangi cihaz kullanılır?
-- ✅ A) Switch
--    B) Router
--    C) Modem
--    D) Firewall
-**Doğru:** A) Switch
+-    A) Router
+-    B) Modem
+-    C) Firewall
+- ✅ D) Switch
+**Doğru:** D) Switch
 **Açıklama:** Anahtar, yerel ağdaki bilgisayarları bağlar. Yönlendirici ağları bağlar, Modem interneti sağlar, Güvenlik Duvarı ise koruma sağlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Network_switch
 
@@ -184,20 +184,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sunucudan e-posta almak için hangi protokol kullanılır?
 -    A) SMTP
 -    B) HTTP
--    C) FTP
-- ✅ D) POP3
-**Doğru:** D) POP3
+- ✅ C) POP3
+-    D) FTP
+**Doğru:** C) POP3
 **Açıklama:** POP3 (Posta Ofisi Protokolü 3), sunucudan e-posta almak için kullanılır. SMTP e-posta göndermek, HTTP web siteleri ve FTP dosyalar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Post_Office_Protocol
 
 ## ds_teknoloji_0010  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan teknolojî ji bo girêdana bêtêl a înternetê tê bikaranîn?
 **TR:** Kablosuz internet bağlantısı için hangi teknoloji kullanılır?
-- ✅ A) Wi-Fi
--    B) Ethernet
--    C) Fiber optic
--    D) Coaxial cable
-**Doğru:** A) Wi-Fi
+-    A) Ethernet
+-    B) Fiber optic
+-    C) Coaxial cable
+- ✅ D) Wi-Fi
+**Doğru:** D) Wi-Fi
 **Açıklama:** Wi-Fi, radyo dalgalarıyla internet bağlantısı sağlayan kablosuz bir teknolojidir. Ethernet, fiber optik ve koaksiyel kablo ise kablolu bağlantılardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Wi-Fi
 
@@ -206,86 +206,86 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ağı dış saldırılardan korumak için hangi cihaz kullanılır?
 -    A) Switch
 -    B) Router
--    C) Hub
-- ✅ D) Firewall
-**Doğru:** D) Firewall
+- ✅ C) Firewall
+-    D) Hub
+**Doğru:** C) Firewall
 **Açıklama:** Güvenlik duvarı (Firewall), korunan ağı dış saldırılardan korur ve ağ trafiğini kontrol eder. Anahtar, yönlendirici ve hub veri bağlantısı ve yönlendirmesi içindir, koruma için değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Firewall_(computing)
 
 ## ds_teknoloji_0029  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr ji bo parastina komputerê ji nermalava xirab tê bikaranîn?
 **TR:** Bilgisayarı kötü amaçlı yazılımlardan korumak için hangi cihaz kullanılır?
-- ✅ A) Antîvîrus
--    B) Browser
--    C) Server
--    D) Router
-**Doğru:** A) Antîvîrus
+-    A) Browser
+-    B) Server
+-    C) Router
+- ✅ D) Antîvîrus
+**Doğru:** D) Antîvîrus
 **Açıklama:** Antivirüs, virüsler ve truva atları gibi kötü amaçlı yazılımları tespit eder ve bunları bilgisayardan kaldırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Antivirus_software
 
 ## ds_teknoloji_0015  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan protokol ji bo girêdana bi serverê ji dûr ve û birêvebirina wê tê bikaranîn?
 **TR:** Bir sunucuya uzaktan bağlanmak ve onu yönetmek için hangi protokol kullanılır?
-- ✅ A) SSH
--    B) HTTP
--    C) FTP
--    D) SMTP
-**Doğru:** A) SSH
+-    A) HTTP
+-    B) FTP
+-    C) SMTP
+- ✅ D) SSH
+**Doğru:** D) SSH
 **Açıklama:** SSH (Güvenli Kabuk), sunucuya uzaktan güvenli giriş ve yönetim için kullanılır. HTTP web siteleri, FTP dosyalar ve SMTP e-postalar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Secure_Shell
 
 ## ds_teknoloji_0019  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr ji bo veguhestina daneyan di navbera torên cuda de tê bikaranîn?
 **TR:** Farklı ağlar arasında veri iletmek için hangi cihaz kullanılır?
--    A) Switch
-- ✅ B) Gateway
+- ✅ A) Gateway
+-    B) Switch
 -    C) Hub
 -    D) Repeater
-**Doğru:** B) Gateway
+**Doğru:** A) Gateway
 **Açıklama:** Ağ geçidi (Gateway), farklı ağlar arasında veri iletmek için kullanılır ve farklı protokolleri dönüştürür. Anahtar yerel ağda bağlantı kurar, hub verileri tüm taraflara gönderir ve tekrarlayıcı sinyali güçlendirir.
 **Kaynak:** https://en.wikipedia.org/wiki/Gateway_(telecommunications)
 
 ## ds_teknoloji_0027  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan protokol ji bo şîfrekirina daneyan di navbera malper û gerokê de tê bikaranîn?
 **TR:** Web sitesi ve tarayıcı arasındaki verileri şifrelemek için hangi protokol kullanılır?
--    A) HTTP
-- ✅ B) HTTPS
+- ✅ A) HTTPS
+-    B) HTTP
 -    C) FTP
 -    D) SMTP
-**Doğru:** B) HTTPS
+**Doğru:** A) HTTPS
 **Açıklama:** HTTPS, web sitesi ve tarayıcı arasındaki verileri şifreler, bu nedenle HTTP'den daha güvenlidir.
 **Kaynak:** https://en.wikipedia.org/wiki/HTTPS
 
 ## ds_teknoloji_0038  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di torê de, kîjan rêbaz ji bo parastina daneyan ji êrîşên derve tê bikaranîn?
 **TR:** Ağda, verileri dış saldırılardan korumak için hangi yöntem kullanılır?
-- ✅ A) Firewall
--    B) Antîvîrus
--    C) VPN
--    D) Proxy
-**Doğru:** A) Firewall
+-    A) Antîvîrus
+-    B) VPN
+-    C) Proxy
+- ✅ D) Firewall
+**Doğru:** D) Firewall
 **Açıklama:** Firewall verileri dış saldırılardan korur ve ağ trafiğini kontrol eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Firewall_(computing)
 
 ## ds_teknoloji_0033  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner tê bikaranîn?
 **TR:** Kullanıcının dijital kimliği için hangi teknoloji kullanılır?
-- ✅ A) Sertîfîkaya dîjîtal
--    B) Îmzeya dîjîtal
--    C) Token
--    D) Şîfre
-**Doğru:** A) Sertîfîkaya dîjîtal
+-    A) Îmzeya dîjîtal
+-    B) Token
+-    C) Şîfre
+- ✅ D) Sertîfîkaya dîjîtal
+**Doğru:** D) Sertîfîkaya dîjîtal
 **Açıklama:** Dijital sertifika, kullanıcının veya sunucunun kimliğini doğrular ve veri güvenliği için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Public_key_certificate
 
 ## ds_teknoloji_0049  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner bi karanîna taybetmendiyên laşî tê bikaranîn?
 **TR:** Fiziksel özellikleri kullanarak kullanıcının dijital kimliğini doğrulamak için hangi teknoloji kullanılır?
-- ✅ A) Biometric
--    B) Şîfre
--    C) OTP
--    D) Kilîta ewlehiyê
-**Doğru:** A) Biometric
+-    A) Şîfre
+-    B) OTP
+-    C) Kilîta ewlehiyê
+- ✅ D) Biometric
+**Doğru:** D) Biometric
 **Açıklama:** Biyometrik, kullanıcının parmak izi veya yüzü gibi fiziksel özelliklerini kimlik doğrulama için kullanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Biometrics
 
@@ -294,9 +294,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ağda, şifre güvenliğini ölçmek için hangi ölçü kullanılır?
 -    A) Reng
 -    B) Dema çêkirinê
--    C) Hejmara tîpên mezin
-- ✅ D) Dirêjahî
-**Doğru:** D) Dirêjahî
+- ✅ C) Dirêjahî
+-    D) Hejmara tîpên mezin
+**Doğru:** C) Dirêjahî
 **Açıklama:** Şifrenin uzunluğu güvenliğini artırır; uzun şifrelerin kırılması daha zordur.
 **Kaynak:** https://en.wikipedia.org/wiki/Password_strength
 
@@ -304,10 +304,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di torê de, kîjan rêje ji bo pîvana leza veguhestina daneyan tê bikaranîn?
 **TR:** Ağda, veri iletim hızını ölçmek için hangi ölçü kullanılır?
 -    A) Latency
--    B) Jitter
-- ✅ C) Bandwidth
+- ✅ B) Bandwidth
+-    C) Jitter
 -    D) Windabûna paketan
-**Doğru:** C) Bandwidth
+**Doğru:** B) Bandwidth
 **Açıklama:** Bant genişliği, ağdaki veri iletim hızıdır; ağın hızını gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bandwidth_(computing)
 
@@ -316,9 +316,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şifrelemede, şifrelenmiş veriler için hangi terim kullanılır?
 -    A) Plaintext
 -    B) Cleartext
--    C) Hash
-- ✅ D) Ciphertext
-**Doğru:** D) Ciphertext
+- ✅ C) Ciphertext
+-    D) Hash
+**Doğru:** C) Ciphertext
 **Açıklama:** Ciphertext şifrelenmiş veridir; yetkisiz kişiler için okunamaz.
 **Kaynak:** https://en.wikipedia.org/wiki/Ciphertext
 
@@ -326,21 +326,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di torê de, kîjan têgeh ji bo pêvajoya ku navnîşana IP-ê ji navê domênê tê peydakirin tê bikaranîn?
 **TR:** Ağda, IP adresinin alan adından elde edildiği süreç için hangi terim kullanılır?
 -    A) HTTP
--    B) FTP
-- ✅ C) DNS
+- ✅ B) DNS
+-    C) FTP
 -    D) SMTP
-**Doğru:** C) DNS
+**Doğru:** B) DNS
 **Açıklama:** DNS (Alan Adı Sistemi), IP adresini alan adından elde eder. HTTP web için, FTP dosyalar için, SMTP e-postalar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Domain_Name_System
 
 ## ds_teknoloji_0041  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan rêbaz ji bo rastkirina nasnameya bikarhêner bi du qonaxan tê bikaranîn?
 **TR:** Kullanıcı kimliğini iki aşamalı olarak doğrulamak için hangi yöntem kullanılır?
--    A) SSO
-- ✅ B) 2FA
+- ✅ A) 2FA
+-    B) SSO
 -    C) Kodê vegerandinê
 -    D) Şîfreya tenê
-**Doğru:** B) 2FA
+**Doğru:** A) 2FA
 **Açıklama:** 2FA (İki Faktörlü Kimlik Doğrulama), kimlik doğrulamak için iki aşama kullanır, güvenliği artırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Multi-factor_authentication
 
@@ -348,32 +348,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûr ji bo şîfrekirina daneyan di navbera du aliyan de tê bikaranîn?
 **TR:** İki taraf arasındaki verileri şifrelemek için hangi araç kullanılır?
 -    A) Proxy
--    B) Tunela SSH
-- ✅ C) VPN
+- ✅ B) VPN
+-    C) Tunela SSH
 -    D) DNS
-**Doğru:** C) VPN
+**Doğru:** B) VPN
 **Açıklama:** VPN (Sanal Özel Ağ), iki taraf arasındaki verileri şifreler ve güvenlik sağlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Virtual_private_network
 
 ## ds_teknoloji_0073  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe komek nirxan tê bikaranîn?
 **TR:** Programlamada, bir değerler kümesi olabilen bir değeri saklamak için hangi kavram kullanılır?
-- ✅ A) Kom
--    B) Guherbar
--    C) Xelek
--    D) Şert
-**Doğru:** A) Kom
+-    A) Guherbar
+-    B) Xelek
+-    C) Şert
+- ✅ D) Kom
+**Doğru:** D) Kom
 **Açıklama:** Küme (set), programlamada bir değerler kümesi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Set_(abstract_data_type)
 
 ## ds_teknoloji_0066  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di bernamekirinê de, kîjan têgeh ji bo hilanîna komek nirxan bêyî dubarekirinê tê bikaranîn?
 **TR:** Programlamada, tekrarsız bir değerler kümesini saklamak için hangi kavram kullanılır?
-- ✅ A) Kom
--    B) Guherbar
--    C) Xelek
--    D) Şert
-**Doğru:** A) Kom
+-    A) Guherbar
+-    B) Xelek
+-    C) Şert
+- ✅ D) Kom
+**Doğru:** D) Kom
 **Açıklama:** Küme (set), programlamada tekrarsız bir değerler kümesini saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak kümeleri saklamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Set_(abstract_data_type)
 
@@ -381,10 +381,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe rast an derew tê bikaranîn?
 **TR:** Programlamada, doğru veya yanlış olabilen bir değeri saklamak için hangi kavram kullanılır?
 -    A) Guherbar
--    B) Xelek
-- ✅ C) Mantiqî
+- ✅ B) Mantiqî
+-    C) Xelek
 -    D) Şert
-**Doğru:** C) Mantiqî
+**Doğru:** B) Mantiqî
 **Açıklama:** Mantıksal (logical), programlamada doğru veya yanlış olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak mantıksal değerleri saklamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Boolean_data_type
 
@@ -392,10 +392,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn?
 **TR:** Programlamada, bir karakter dizisi olabilen bir değeri saklamak için hangi kavram kullanılır?
 -    A) Guherbar
--    B) Xelek
-- ✅ C) Nivîs
+- ✅ B) Nivîs
+-    C) Xelek
 -    D) Şert
-**Doğru:** C) Nivîs
+**Doğru:** B) Nivîs
 **Açıklama:** Metin (text), programlamada bir karakter dizisi olabilen bir değeri saklamak için kullanılır. Değişken, döngü ve koşul ise diğer kavramlardır ancak metin saklamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/String_(computer_science)
 
@@ -404,20 +404,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Programlamada, bir dizi komutu bir isim altında toplamak için hangi terim kullanılır?
 -    A) Guherbar
 -    B) Xelek
--    C) Şert
-- ✅ D) Fonksiyon
-**Doğru:** D) Fonksiyon
+- ✅ C) Fonksiyon
+-    D) Şert
+**Doğru:** C) Fonksiyon
 **Açıklama:** Fonksiyon, programlamada bir dizi komutu bir isim altında toplamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak komutları gruplamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Function_(computer_programming)
 
 ## ds_teknoloji_0060  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya rast an derew tê bikaranîn?
 **TR:** Programlamada, doğru veya yanlış değerini saklamak için hangi terim kullanılır?
--    A) Guherbar
-- ✅ B) Boolean
+- ✅ A) Boolean
+-    B) Guherbar
 -    C) Xelek
 -    D) Şert
-**Doğru:** B) Boolean
+**Doğru:** A) Boolean
 **Açıklama:** Boolean, programlamada doğru veya yanlış değerini saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak doğru/yanlış değerlerini saklamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Boolean_data_type
 
@@ -425,10 +425,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di bernamekirinê de, ji bo hilanîna navnîşek nirxan di bîra komputerê de kîjan têgeh tê bikaranîn?
 **TR:** Programlamada, bilgisayar belleğinde bir değerler listesi saklamak için hangi terim kullanılır?
 -    A) Guherbar
--    B) Xelek
-- ✅ C) Array
+- ✅ B) Array
+-    C) Xelek
 -    D) Şert
-**Doğru:** C) Array
+**Doğru:** B) Array
 **Açıklama:** Dizi, programlamada bilgisayar belleğinde bir değerler listesi saklamak için kullanılır. Değişken, döngü ve koşul diğer terimlerdir ancak liste saklamak için kullanılmazlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Array_(data_structure)
 
@@ -436,10 +436,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di bingeha daneyan de, kîjan ziman ji bo pirsyarkirina daneyan tê bikaranîn?
 **TR:** Veritabanında, verileri sorgulamak için hangi dil kullanılır?
 -    A) HTML
--    B) CSS
-- ✅ C) SQL
+- ✅ B) SQL
+-    C) CSS
 -    D) HTTP
-**Doğru:** C) SQL
+**Doğru:** B) SQL
 **Açıklama:** SQL, ilişkisel veritabanını yönetmek için standart dildir ve veri sorgulamayı da içerir.
 **Kaynak:** https://en.wikipedia.org/wiki/SQL
 
@@ -448,9 +448,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Veritabanında, veritabanını yönetmek ve kullanıcı haklarını kontrol etmek için hangi dil kullanılır?
 -    A) Python
 -    B) Java
--    C) C++
-- ✅ D) SQL
-**Doğru:** D) SQL
+- ✅ C) SQL
+-    D) C++
+**Doğru:** C) SQL
 **Açıklama:** SQL yalnızca sorgulama için değil, aynı zamanda veritabanı yapısını ve kullanıcı haklarını yönetmek için de kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/SQL
 
@@ -458,10 +458,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di bingeha daneyan de, kîjan têgeh ji bo kêmkirina dubarekirina daneyan tê bikaranîn?
 **TR:** Veritabanında, veri tekrarını azaltmak için hangi kavram kullanılır?
 -    A) Denormalîzasyon
--    B) Indekskirin
-- ✅ C) Normalîzasyon
+- ✅ B) Normalîzasyon
+-    C) Indekskirin
 -    D) Partîsyonkirin
-**Doğru:** C) Normalîzasyon
+**Doğru:** B) Normalîzasyon
 **Açıklama:** Normalizasyon, veri tekrarını azaltmak ve veri bütünlüğünü iyileştirmek için veritabanını organize etme sürecidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Database_normalization
 
@@ -470,9 +470,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Veritabanında, veri aramayı hızlandırmak için hangi kavram kullanılır?
 -    A) Trigger
 -    B) Nêrîn
--    C) Stored Procedure
-- ✅ D) Indeks
-**Doğru:** D) Indeks
+- ✅ C) Indeks
+-    D) Stored Procedure
+**Doğru:** C) Indeks
 **Açıklama:** İndeksler, tablolardaki veri aramasını hızlandıran veri yapılarıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Database_index
 
@@ -480,32 +480,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di bingeha daneyan de, kîjan têgeh ji bo otomatîk kirina çalakiyekê dema ku bûyerek diqewime tê bikaranîn?
 **TR:** Veritabanında, bir olay meydana geldiğinde bir eylemi otomatikleştirmek için hangi kavram kullanılır?
 -    A) Indeks
--    B) Nêrîn
-- ✅ C) Trigger
+- ✅ B) Trigger
+-    C) Nêrîn
 -    D) Stored Procedure
-**Doğru:** C) Trigger
+**Doğru:** B) Trigger
 **Açıklama:** Tetikleyici, belirli bir olay meydana geldiğinde (ekleme, güncelleme gibi) etkinleştirilen otomatik bir koddur.
 **Kaynak:** https://en.wikipedia.org/wiki/Database_trigger
 
 ## ds_teknoloji_0091  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di bingeha daneyan de, kîjan têgeh ji bo berhevkirina daneyan ji çend tabloyan di pirsyarkirinekê de tê bikaranîn?
 **TR:** Veritabanında, bir sorguda birden çok tablodan veri birleştirmek için hangi kavram kullanılır?
-- ✅ A) JOIN
--    B) SELECT
--    C) INSERT
--    D) DELETE
-**Doğru:** A) JOIN
+-    A) SELECT
+-    B) INSERT
+-    C) DELETE
+- ✅ D) JOIN
+**Doğru:** D) JOIN
 **Açıklama:** JOIN, SQL'de bir koşula göre birden çok tablodan veri birleştirmek için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Join_(SQL)
 
 ## ds_teknoloji_0093  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Di bingeha daneyan de, kîjan têgeh ji bo kêmkirina mezinahiya bingeha daneyan tê bikaranîn?
 **TR:** Veritabanlarında, veritabanı boyutunu küçültmek için kullanılan kavram hangisidir?
-- ✅ A) Kompresyon
--    B) Indekskirin
--    C) Normalîzasyon
--    D) Partîsyonkirin
-**Doğru:** A) Kompresyon
+-    A) Indekskirin
+-    B) Normalîzasyon
+-    C) Partîsyonkirin
+- ✅ D) Kompresyon
+**Doğru:** D) Kompresyon
 **Açıklama:** Sıkıştırma, çeşitli sıkıştırma teknikleri kullanarak veritabanı boyutunu küçültür.
 **Kaynak:** https://en.wikipedia.org/wiki/Data_compression
 
@@ -513,10 +513,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan strukturê daneyan bi prensîba LIFO dixebite?
 **TR:** Hangi veri yapısı LIFO prensibiyle çalışır?
 -    A) Peldank (Queue)
--    B) Lîsteya girêdayî
-- ✅ C) Stêk (Stack)
+- ✅ B) Stêk (Stack)
+-    C) Lîsteya girêdayî
 -    D) Dara binerd
-**Doğru:** C) Stêk (Stack)
+**Doğru:** B) Stêk (Stack)
 **Açıklama:** Yığın, LIFO prensibini izler, yani son giren ilk çıkar, tıpkı bir tabak yığını gibi.
 **Kaynak:** https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
 
@@ -525,9 +525,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Veri yapılarında, her öğenin iki bağlantıya (önceki ve sonraki) sahip olduğu bir liste için hangi kavram kullanılır?
 -    A) Lîsteya yekgirêdayî
 -    B) Stêk
--    C) Dara binerd
-- ✅ D) Lîsteya duqat-girêdayî
-**Doğru:** D) Lîsteya duqat-girêdayî
+- ✅ C) Lîsteya duqat-girêdayî
+-    D) Dara binerd
+**Doğru:** C) Lîsteya duqat-girêdayî
 **Açıklama:** Çift bağlı liste, her öğede iki bağlantı içerir: biri önceki öğeye, diğeri sonraki öğeye.
 **Kaynak:** https://en.wikipedia.org/wiki/Doubly_linked_list
 
@@ -536,31 +536,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Veri yapılarında, öğelerin yalnızca baştan eklendiği ve çıkarıldığı bir liste için hangi kavram kullanılır?
 -    A) Peldank (Queue)
 -    B) Lîsteya girêdayî
--    C) Dara binerd
-- ✅ D) Stêk (Stack)
-**Doğru:** D) Stêk (Stack)
+- ✅ C) Stêk (Stack)
+-    D) Dara binerd
+**Doğru:** C) Stêk (Stack)
 **Açıklama:** Yığın, öğeleri yalnızca baştan ekler ve çıkarır, LIFO prensibiyle çalışır.
 **Kaynak:** https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
 
 ## ds_teknoloji_0086  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element li dawiyê tê zêdekirin û ji serî tê jêbirin tê bikaranîn?
 **TR:** Veri yapılarında, öğelerin sona eklendiği ve baştan çıkarıldığı bir liste için hangi kavram kullanılır?
--    A) Stêk (Stack)
-- ✅ B) Peldank (Queue)
+- ✅ A) Peldank (Queue)
+-    B) Stêk (Stack)
 -    C) Lîsteya girêdayî
 -    D) Dara binerd
-**Doğru:** B) Peldank (Queue)
+**Doğru:** A) Peldank (Queue)
 **Açıklama:** Kuyruk, FIFO prensibini izler: ilk giren ilk çıkar.
 **Kaynak:** https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 
 ## ds_teknoloji_0088  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element li gorî rêzekê têne rêzkirin tê bikaranîn?
 **TR:** Veri yapılarında, öğelerin belirli bir sıraya göre dizildiği bir liste için hangi kavram kullanılır?
--    A) Lîsteya girêdayî
-- ✅ B) Lîsteya rêzkirî
+- ✅ A) Lîsteya rêzkirî
+-    B) Lîsteya girêdayî
 -    C) Ferhengok
 -    D) Stêk
-**Doğru:** B) Lîsteya rêzkirî
+**Doğru:** A) Lîsteya rêzkirî
 **Açıklama:** Sıralı liste, öğeleri alfabetik veya sayısal gibi belirli bir sıraya göre tutar.
 **Kaynak:** https://en.wikipedia.org/wiki/List_(abstract_data_type)
 
@@ -568,32 +568,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element bi rêbazek FIFO têne birêvebirin tê bikaranîn?
 **TR:** Veri yapılarında, elemanların FIFO yöntemiyle yönetildiği bir liste için kullanılan kavram hangisidir?
 -    A) Stêk (Stack)
--    B) Lîsteya girêdayî
-- ✅ C) Peldank (Queue)
+- ✅ B) Peldank (Queue)
+-    C) Lîsteya girêdayî
 -    D) Dara binerd
-**Doğru:** C) Peldank (Queue)
+**Doğru:** B) Peldank (Queue)
 **Açıklama:** Kuyruk, FIFO ilkesini izler, yani ilk giren ilk çıkar.
 **Kaynak:** https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 
 ## ds_teknoloji_0096  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element bi rêbazek LIFO têne birêvebirin tê bikaranîn?
 **TR:** Veri yapılarında, elemanların LIFO yöntemiyle yönetildiği bir liste için kullanılan kavram hangisidir?
--    A) Peldank (Queue)
-- ✅ B) Stêk (Stack)
+- ✅ A) Stêk (Stack)
+-    B) Peldank (Queue)
 -    C) Lîsteya girêdayî
 -    D) Graf
-**Doğru:** B) Stêk (Stack)
+**Doğru:** A) Stêk (Stack)
 **Açıklama:** Yığın, LIFO ilkesini izler, yani son giren ilk çıkar.
 **Kaynak:** https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
 
 ## ds_teknoloji_0098  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di strukturên daneyan de, kîjan têgeh ji bo daran tê bikaranîn ku her girê wê herî zêde du zarok hene?
 **TR:** Veri yapılarında, her düğümünün en fazla iki çocuğu olabilen ağaç için kullanılan kavram hangisidir?
-- ✅ A) Dara duduyî
--    B) Graf
--    C) Lîsteya girêdayî
--    D) Ferhengok
-**Doğru:** A) Dara duduyî
+-    A) Graf
+-    B) Lîsteya girêdayî
+-    C) Ferhengok
+- ✅ D) Dara duduyî
+**Doğru:** D) Dara duduyî
 **Açıklama:** İkili ağaç, her düğümün en fazla iki çocuğa sahip olduğu bir ağaç türüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Binary_tree
 
@@ -601,10 +601,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan pergalê xebitandinê ji aliyê şîrketa Microsoft ve hatiye çêkirin?
 **TR:** Hangi işletim sistemi Microsoft şirketi tarafından oluşturulmuştur?
 -    A) Linux
--    B) Android
-- ✅ C) Windows
+- ✅ B) Windows
+-    C) Android
 -    D) macOS
-**Doğru:** C) Windows
+**Doğru:** B) Windows
 **Açıklama:** Windows, Microsoft tarafından oluşturulmuştur. Linux açık kaynaklı bir işletim sistemidir, Android Google tarafından ve macOS Apple tarafından oluşturulmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Microsoft_Windows
 
@@ -612,10 +612,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan pergalê xebitandinê ji aliyê şîrketa Apple ve ji bo komputerên Mac hatiye çêkirin?
 **TR:** Apple şirketi tarafından Mac bilgisayarlar için hangi işletim sistemi oluşturulmuştur?
 -    A) Linux
--    B) Windows
-- ✅ C) macOS
+- ✅ B) macOS
+-    C) Windows
 -    D) Android
-**Doğru:** C) macOS
+**Doğru:** B) macOS
 **Açıklama:** macOS, Apple tarafından Mac bilgisayarlar için oluşturulmuş bir işletim sistemidir. BSD'den geliştirilmiştir ve grafik arayüzüyle tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/MacOS
 
@@ -624,20 +624,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Genellikle sunucular için kullanılan ve kaynağı açık olan işletim sistemi hangisidir?
 -    A) Windows
 -    B) macOS
--    C) iOS
-- ✅ D) Linux
-**Doğru:** D) Linux
+- ✅ C) Linux
+-    D) iOS
+**Doğru:** C) Linux
 **Açıklama:** Linux, genellikle sunucular için kullanılan açık kaynaklı bir işletim sistemidir. Küresel bir topluluk tarafından geliştirilir ve birçok farklı cihaza uyarlanır.
 **Kaynak:** https://en.wikipedia.org/wiki/Linux
 
 ## ds_teknoloji_0107  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan pergalê xebitandinê bi gelemperî li ser komputerên ku ji bo kar û nivîsgehê têne bikaranîn tê sazkirin?
 **TR:** Genellikle iş ve ofis için kullanılan bilgisayarlara hangi işletim sistemi kurulur?
-- ✅ A) Windows
--    B) Android
--    C) iOS
--    D) Tizen
-**Doğru:** A) Windows
+-    A) Android
+-    B) iOS
+-    C) Tizen
+- ✅ D) Windows
+**Doğru:** D) Windows
 **Açıklama:** Windows, birçok iş yazılımıyla uyumlu olduğu için genellikle ofis bilgisayarlarına kurulur. Android ve iOS telefonlar içindir ve Tizen televizyonlar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Microsoft_Windows
 
@@ -645,43 +645,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di komputerê de, kîjan beş wekî "mejiyê" komputerê tê hesibandin?
 **TR:** Bilgisayarda, hangi parça bilgisayarın "beyni" olarak kabul edilir?
 -    A) Hard disk
--    B) RAM
-- ✅ C) CPU
+- ✅ B) CPU
+-    C) RAM
 -    D) Karta grafîkê
-**Doğru:** C) CPU
+**Doğru:** B) CPU
 **Açıklama:** CPU (Merkezi İşlem Birimi), tüm komutları işlediği ve bilgisayarın çalışmasını kontrol ettiği için bilgisayarın beyni olarak kabul edilir. RAM geçici bellektir, sabit disk kalıcı depolamadır ve ekran kartı görüntüler içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Central_processing_unit
 
 ## ds_teknoloji_0106  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan cîhaz ji bo hilanîna daneyan bi awayekî daîmî tê bikaranîn?
 **TR:** Verileri kalıcı olarak depolamak için hangi cihaz kullanılır?
-- ✅ A) Hard disk
--    B) RAM
--    C) CPU
--    D) Karta dengê
-**Doğru:** A) Hard disk
+-    A) RAM
+-    B) CPU
+-    C) Karta dengê
+- ✅ D) Hard disk
+**Doğru:** D) Hard disk
 **Açıklama:** Sabit disk, verileri kalıcı olarak depolamak için kullanılır. RAM, bilgisayar kapatıldığında boşalan geçici bellektir, CPU işlem yapar ve ses kartı ses içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Hard_disk_drive
 
 ## ds_teknoloji_0111  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan pergalê xebitandinê ji bo serverên webê yên herî zêde tê bikaranîn?
 **TR:** Web sunucuları için en çok hangi işletim sistemi kullanılır?
--    A) Windows
-- ✅ B) Linux
+- ✅ A) Linux
+-    B) Windows
 -    C) macOS
 -    D) Android
-**Doğru:** B) Linux
+**Doğru:** A) Linux
 **Açıklama:** Linux, açık kaynaklı, istikrarlı ve birçok şirket tarafından desteklenen bir işletim sistemi olduğu için web sunucuları için en çok kullanılır. Sunucular için çok esnektir.
 **Kaynak:** https://en.wikipedia.org/wiki/Linux
 
 ## ds_teknoloji_0110  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan beşê komputerê ji bo hilanîna daneyan dema ku komputer vekirî ye tê bikaranîn?
 **TR:** Bilgisayar açıkken verileri depolamak için bilgisayarın hangi parçası kullanılır?
--    A) Hard disk
-- ✅ B) RAM
+- ✅ A) RAM
+-    B) Hard disk
 -    C) CPU
 -    D) Karta torê
-**Doğru:** B) RAM
+**Doğru:** A) RAM
 **Açıklama:** RAM (Rastgele Erişimli Bellek), bilgisayar açıkken verileri depolamak için kullanılır. Hızlı okunup yazılabilen geçici bir bellektir, ancak bilgisayar kapatıldığında boşalır.
 **Kaynak:** https://en.wikipedia.org/wiki/Random-access_memory
 
@@ -689,21 +689,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan beşê komputerê ji bo nîşandana wêneyan li ser ekranê tê bikaranîn?
 **TR:** Görüntüleri ekranda göstermek için bilgisayarın hangi parçası kullanılır?
 -    A) CPU
--    B) RAM
-- ✅ C) Karta grafîkê
+- ✅ B) Karta grafîkê
+-    C) RAM
 -    D) Hard disk
-**Doğru:** C) Karta grafîkê
+**Doğru:** B) Karta grafîkê
 **Açıklama:** Ekran kartı (GPU), görüntüleri ekranda göstermek için kullanılır. Görüntüleri işler ve ekrana gönderir. CPU genel işlemi yapar, RAM geçici bellektir ve sabit disk kalıcı depolamadır.
 **Kaynak:** https://en.wikipedia.org/wiki/Graphics_processing_unit
 
 ## ds_teknoloji_0124  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan beşê komputerê ji bo hilanîna daneyan bi awayekî demkî dema ku bername tê xebitandin tê bikaranîn?
 **TR:** Bir program çalıştırıldığında verileri geçici olarak depolamak için bilgisayarın hangi parçası kullanılır?
-- ✅ A) RAM
--    B) Hard disk
--    C) CPU
--    D) Karta torê
-**Doğru:** A) RAM
+-    A) Hard disk
+-    B) CPU
+-    C) Karta torê
+- ✅ D) RAM
+**Doğru:** D) RAM
 **Açıklama:** RAM (Rastgele Erişimli Bellek), bir program çalıştırıldığında verileri geçici olarak depolamak için kullanılır. CPU'nun hızlıca erişebilmesi için verileri kısa bir süre tutar. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Random-access_memory
 
@@ -712,31 +712,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bilgisayarı internete bağlamak için hangi cihaz kullanılır?
 -    A) Karta dengê
 -    B) Karta grafîkê
--    C) Karta bîrê
-- ✅ D) Karta torê
-**Doğru:** D) Karta torê
+- ✅ C) Karta torê
+-    D) Karta bîrê
+**Doğru:** C) Karta torê
 **Açıklama:** Ağ Kartı (Ağ Arayüz Kartı), bilgisayarı internete bağlamak için kullanılır. Bilgisayar ve ağ arasında veri iletir. Ses kartı ses için, ekran kartı görüntüler için ve bellek kartı bellek depolamak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Network_interface_controller
 
 ## ds_teknoloji_0116  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan cîhaz ji bo zêdekirina bîra komputerê tê bikaranîn?
 **TR:** Bilgisayarın belleğini artırmak için hangi cihaz kullanılır?
-- ✅ A) RAM
--    B) Hard disk
--    C) CPU
--    D) Karta torê
-**Doğru:** A) RAM
+-    A) Hard disk
+-    B) CPU
+-    C) Karta torê
+- ✅ D) RAM
+**Doğru:** D) RAM
 **Açıklama:** RAM (Rastgele Erişimli Bellek), bilgisayarın belleğini artırmak için kullanılır. RAM eklemek, bilgisayarın hızını artırır çünkü bilgisayar geçici bellekte daha fazla veri tutabilir. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Random-access_memory
 
 ## ds_teknoloji_0126  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di makîneya fêrbûnê de, kîjan têgeh ji bo daneyên ku ji bo perwerdekirina modelê têne bikaranîn tê gotin?
 **TR:** Makine öğrenmesinde, modeli eğitmek için kullanılan verilere hangi kavram denir?
--    A) Daneyên ceribandinê
-- ✅ B) Daneyên perwerdeyê
+- ✅ A) Daneyên perwerdeyê
+-    B) Daneyên ceribandinê
 -    C) Daneyên rastkirinê
 -    D) Daneyên hilberînê
-**Doğru:** B) Daneyên perwerdeyê
+**Doğru:** A) Daneyên perwerdeyê
 **Açıklama:** Eğitim verileri, modelin öğrendiği ve parametrelerini buna göre ayarladığı veri kümesidir. Test verileri, modelin performansını değerlendirmek için kullanılır, öğrenme için değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Training,_validation,_and_test_data_sets
 
@@ -744,43 +744,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di makîneya fêrbûnê de, kîjan têgeh ji bo pîvana ku model çiqas baş li ser daneyên nû yên nedîtî performansê dide tê bikaranîn?
 **TR:** Makine öğrenmesinde, modelin görmediği yeni veriler üzerinde ne kadar iyi performans gösterdiğini ölçmek için hangi kavram kullanılır?
 -    A) Leza modelê
--    B) Mezinahiya modelê
-- ✅ C) Rastbûna modelê
+- ✅ B) Rastbûna modelê
+-    C) Mezinahiya modelê
 -    D) Nexşeya modelê
-**Doğru:** C) Rastbûna modelê
+**Doğru:** B) Rastbûna modelê
 **Açıklama:** Model doğruluğu (accuracy), modelin tüm tahminlere karşı doğru tahminlerinin oranıdır. Bu ölçüt, modelin daha önce görmediği verilere ne kadar iyi doğru tahminler yapabildiğini gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Accuracy_and_precision
 
 ## ds_teknoloji_0137  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di makîneya fêrbûnê de, kîjan têgeh ji bo rewşa ku model ji daneyên perwerdeyê pir baş fêr dibe lê ji daneyên nû re baş performansê nade tê bikaranîn?
 **TR:** Makine öğrenmesinde, modelin eğitim verilerinden çok iyi öğrendiği ancak yeni verilere iyi performans gösteremediği durum için hangi kavram kullanılır?
--    A) Kêm-fêrbûn
-- ✅ B) Zêde-fêrbûn
+- ✅ A) Zêde-fêrbûn
+-    B) Kêm-fêrbûn
 -    C) Rast-fêrbûn
 -    D) Çewt-fêrbûn
-**Doğru:** B) Zêde-fêrbûn
+**Doğru:** A) Zêde-fêrbûn
 **Açıklama:** Aşırı öğrenme (overfitting), modelin eğitim verilerine aşırı uyum sağladığı ve görmediği yeni verilere karşı performansının düştüğü bir durumdur. Bunun nedeni, modelin eğitim verilerindeki gürültüyü ve özel özellikleri de öğrenmesidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Overfitting
 
 ## ds_teknoloji_0138  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di makîneya fêrbûnê de, kîjan têgeh ji bo rewşa ku model nikare ji daneyên perwerdeyê jî bi awayekî rast fêr bibe tê bikaranîn?
 **TR:** Makine öğrenmesinde, modelin eğitim verilerinden bile doğru bir şekilde öğrenemediği durum için hangi kavram kullanılır?
-- ✅ A) Kêm-fêrbûn
--    B) Zêde-fêrbûn
--    C) Rast-fêrbûn
--    D) Bê-fêrbûn
-**Doğru:** A) Kêm-fêrbûn
+-    A) Zêde-fêrbûn
+-    B) Rast-fêrbûn
+-    C) Bê-fêrbûn
+- ✅ D) Kêm-fêrbûn
+**Doğru:** D) Kêm-fêrbûn
 **Açıklama:** Eksik öğrenme (underfitting), modelin çok basit olduğu ve verilerin yapısını doğru bir şekilde yakalayamadığı bir durumdur. Bu durumda, modelin performansı hem eğitim verilerinde hem de yeni verilerde düşüktür.
 **Kaynak:** https://en.wikipedia.org/wiki/Overfitting
 
 ## ds_teknoloji_0140  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di makîneya fêrbûnê de, kîjan têgeh ji bo koma daneyan ku ji bo nirxandina performansa modelê ya dawî tê bikaranîn tê gotin?
 **TR:** Makine öğrenmesinde, modelin nihai performansını değerlendirmek için kullanılan veri kümesine ne ad verilir?
--    A) Daneyên perwerdeyê
-- ✅ B) Daneyên ceribandinê
+- ✅ A) Daneyên ceribandinê
+-    B) Daneyên perwerdeyê
 -    C) Daneyên rastkirinê
 -    D) Daneyên hilberînê
-**Doğru:** B) Daneyên ceribandinê
+**Doğru:** A) Daneyên ceribandinê
 **Açıklama:** Test verileri (test data), modelin nihai performansını değerlendirmek için kullanılan veri kümesidir. Modelin eğitim aşamasında hiç görmediği bu veriler, modelin yeni veriler üzerindeki doğruluğunu ölçmek için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Training,_validation,_and_test_data_sets
 
@@ -788,10 +788,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di hişmendiya çêkirîyê de, kîjan têgeh ji bo pêvajoya ku model bi ceribandin û xeletiyê fêr dibe û xelatê distîne tê bikaranîn?
 **TR:** Yapay zekada, modelin deneme yanılma yoluyla öğrendiği ve ödül aldığı süreç için hangi kavram kullanılır?
 -    A) Fêrbûna bi çavdêrî
--    B) Fêrbûna bi veguhastinê
-- ✅ C) Fêrbûna bi xurtkirinê
+- ✅ B) Fêrbûna bi xurtkirinê
+-    C) Fêrbûna bi veguhastinê
 -    D) Fêrbûna bi kûrkirinê
-**Doğru:** C) Fêrbûna bi xurtkirinê
+**Doğru:** B) Fêrbûna bi xurtkirinê
 **Açıklama:** Pekiştirmeli öğrenme (reinforcement learning), modelin (ajan) eylemleriyle ödül veya ceza aldığı ve bu sonuçlardan öğrenerek stratejisini geliştirdiği bir öğrenme türüdür. Bu yöntem genellikle oyunlarda ve robotikte kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Reinforcement_learning
 
@@ -800,20 +800,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Derin öğrenmede, görüntüleri işlemek için genellikle hangi yapı kullanılır?
 -    A) Tora neuralî ya pêşverû
 -    B) Tora neuralî ya dubare
--    C) Tora neuralî ya belavbûyî
-- ✅ D) Tora neuralî ya konvulsiyonî
-**Doğru:** D) Tora neuralî ya konvulsiyonî
+- ✅ C) Tora neuralî ya konvulsiyonî
+-    D) Tora neuralî ya belavbûyî
+**Doğru:** C) Tora neuralî ya konvulsiyonî
 **Açıklama:** Evrişimli sinir ağı (CNN) özellikle görüntü işleme için tasarlanmıştır. Evrişim katmanlarını kullanarak kenarlar ve şekiller gibi görsel özellikleri görüntülerden çıkarır ve görüntü tanıma için çok etkilidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Convolutional_neural_network
 
 ## ds_teknoloji_0135  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di fêrbûna kûr de, kîjan têgeh ji bo pêvajoya ku model bi rêya qatên neuralî ve daneyan ji bo derxistina taybetmendiyan derbas dike tê bikaranîn?
 **TR:** Derin öğrenmede, modelin özellikleri çıkarmak için verileri sinir ağı katmanlarından geçirdiği süreç için hangi kavram kullanılır?
-- ✅ A) Veguhestina pêşverû
--    B) Veguhestina paşverû
--    C) Veguhestina alî
--    D) Veguhestina navxweyî
-**Doğru:** A) Veguhestina pêşverû
+-    A) Veguhestina paşverû
+-    B) Veguhestina alî
+-    C) Veguhestina navxweyî
+- ✅ D) Veguhestina pêşverû
+**Doğru:** D) Veguhestina pêşverû
 **Açıklama:** İleri yayılım (forward propagation), giriş verilerinin sinir ağının katmanlarından geçtiği ve her katmanda nihai çıktı oluşana kadar dönüştürüldüğü süreçtir. Bu süreç, modelin tahminlerini hesaplamanın temelidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Backpropagation
 
@@ -821,10 +821,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di fêrbûna kûr de, kîjan rêbaz ji bo sererastkirina parametreyên modelê li gorî xeletiya hilberînê tê bikaranîn?
 **TR:** Derin öğrenmede, çıktı hatasına göre model parametrelerini düzeltmek için hangi yöntem kullanılır?
 -    A) Veguhestina pêşverû
--    B) Veguhestina rastkirinê
-- ✅ C) Veguhestina paşverû
+- ✅ B) Veguhestina paşverû
+-    C) Veguhestina rastkirinê
 -    D) Veguhestina çewtkirinê
-**Doğru:** C) Veguhestina paşverû
+**Doğru:** B) Veguhestina paşverû
 **Açıklama:** Geri yayılım (backpropagation), modelin tahmini ile doğru sonuç arasındaki hatanın hesaplandığı ve bu hatanın son katmandan ilk katmana doğru yayıldığı bir yöntemdir. Bu süreçte, hatayı azaltmak için model parametreleri düzeltilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Backpropagation
 
@@ -832,32 +832,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di fêrbûna kûr de, kîjan têgeh ji bo rêjeya ku di her gavê de parametreyên modelê têne sererast kirin tê bikaranîn?
 **TR:** Derin öğrenmede, her adımda model parametrelerinin ne kadar düzeltildiğini belirten kavram hangisidir?
 -    A) Rêjeya pêşbîniyê
--    B) Rêjeya xeletiyê
-- ✅ C) Rêjeya fêrbûnê
+- ✅ B) Rêjeya fêrbûnê
+-    C) Rêjeya xeletiyê
 -    D) Rêjeya lezê
-**Doğru:** C) Rêjeya fêrbûnê
+**Doğru:** B) Rêjeya fêrbûnê
 **Açıklama:** Öğrenme oranı (learning rate), her adımda model parametrelerinin ne kadar değiştirileceğini belirten bir ölçüttür. Büyük bir öğrenme oranı büyük değişikliklere neden olabilir ve model en iyi çözümü kaçırabilir, küçük bir oran ise öğrenmenin yavaşlamasına neden olabilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Learning_rate
 
 ## ds_teknoloji_0141  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di fêrbûna kûr de, kîjan têgeh ji bo pêvajoya ku tê de model bi awayekî otomatîk taybetmendiyên ji daneyan derdixe tê bikaranîn?
 **TR:** Derin öğrenmede, modelin verilerden otomatik olarak özellikler çıkardığı süreç için hangi kavram kullanılır?
-- ✅ A) Derxistina taybetmendiyan
--    B) Veguhestina taybetmendiyan
--    C) Rastkirina taybetmendiyan
--    D) Hilberîna taybetmendiyan
-**Doğru:** A) Derxistina taybetmendiyan
+-    A) Veguhestina taybetmendiyan
+-    B) Rastkirina taybetmendiyan
+-    C) Hilberîna taybetmendiyan
+- ✅ D) Derxistina taybetmendiyan
+**Doğru:** D) Derxistina taybetmendiyan
 **Açıklama:** Özellik çıkarımı (feature extraction), modelin ham verilerden temel özellikleri otomatik olarak çıkardığı süreçtir. Derin öğrenmede, bu süreç sinir ağı katmanlarıyla yapılır ve manuel özellik çıkarımı ihtiyacını ortadan kaldırır.
 **Kaynak:** https://en.wikipedia.org/wiki/Feature_engineering
 
 ## ds_teknoloji_0149  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fêrbûna kûr de, kîjan têgeh ji bo pêvajoya ku tê de model bi awayekî serbixwe ji daneyan fêr dibe û avahiya daneyan kifş dike tê bikaranîn?
 **TR:** Derin öğrenmede, modelin verilerden bağımsız olarak öğrenip veri yapısını keşfettiği süreç için kullanılan kavram hangisidir?
--    A) Fêrbûna bi çavdêrî
-- ✅ B) Fêrbûna bêçavdêrî
+- ✅ A) Fêrbûna bêçavdêrî
+-    B) Fêrbûna bi çavdêrî
 -    C) Fêrbûna bi xurtkirinê
 -    D) Fêrbûna bi veguhastinê
-**Doğru:** B) Fêrbûna bêçavdêrî
+**Doğru:** A) Fêrbûna bêçavdêrî
 **Açıklama:** Denetimsiz öğrenme (unsupervised learning), modelin etiketsiz verilerden öğrenip verilerdeki yapıyı veya düzeni keşfettiği bir süreçtir. Bu yöntem, örüntüleri bulmak ve verileri gruplamak için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Unsupervised_learning
 
@@ -866,9 +866,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bir web sayfası oluşturmak için hangi işaretleme dili kullanılır?
 -    A) SQL
 -    B) Python
--    C) PHP
-- ✅ D) HTML
-**Doğru:** D) HTML
+- ✅ C) HTML
+-    D) PHP
+**Doğru:** C) HTML
 **Açıklama:** HTML, web sayfalarının yapısını oluşturmak için kullanılan işaretleme dilidir. SQL veritabanları için, Python ve PHP ise programlama dilleridir.
 **Kaynak:** https://en.wikipedia.org/wiki/HTML
 
@@ -876,54 +876,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di navnîşana URL-ê de, kîjan beş protokola tê bikaranîn nîşan dide?
 **TR:** Bir URL adresinde, kullanılan protokolü hangi bölüm gösterir?
 -    A) www
--    B) ku
-- ✅ C) https
+- ✅ B) https
+-    C) ku
 -    D) html
-**Doğru:** C) https
+**Doğru:** B) https
 **Açıklama:** URL'de protokol, "https" gibi başta yazılır ve kaynağa erişim yöntemini belirtir. "www" web sitesi adresidir, "ku" dil veya ülkedir, "html" ise dosya formatıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/URL
 
 ## ds_teknoloji_0154  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di geroka webê de, kîjan ziman ji bo şêwazdana rûpelan tê bikaranîn?
 **TR:** Web tarayıcısında, sayfaları stilize etmek için hangi dil kullanılır?
-- ✅ A) CSS
--    B) HTML
--    C) JavaScript
--    D) XML
-**Doğru:** A) CSS
+-    A) HTML
+-    B) JavaScript
+-    C) XML
+- ✅ D) CSS
+**Doğru:** D) CSS
 **Açıklama:** CSS (Basamaklı Stil Sayfaları) web sayfalarını stilize etmek için kullanılır. HTML yapıyı, JavaScript işlevselliği, XML ise verileri düzenler.
 **Kaynak:** https://en.wikipedia.org/wiki/CSS
 
 ## ds_teknoloji_0165  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di navnîşana webê de, kîjan pêvek ji bo nîşankirina rûpelekê ya taybet tê bikaranîn?
 **TR:** Web adresinde, belirli bir sayfayı işaretlemek için hangi ek kullanılır?
-- ✅ A) Path
--    B) Protocol
--    C) Domain
--    D) Port
-**Doğru:** A) Path
+-    A) Protocol
+-    B) Domain
+-    C) Port
+- ✅ D) Path
+**Doğru:** D) Path
 **Açıklama:** Yol (path), URL'de belirli bir sayfanın konumunu gösterir. Protokol erişim yöntemi, Alan Adı web sitesi adresi, Bağlantı Noktası ise iletişim kapısıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/URL
 
 ## ds_teknoloji_0175  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di navnîşana webê de, kîjan beş ji bo nîşankirina malperê tê bikaranîn?
 **TR:** Web adresinde, web sitesini belirtmek için hangi bölüm kullanılır?
--    A) Path
-- ✅ B) Domain
+- ✅ A) Domain
+-    B) Path
 -    C) Protocol
 -    D) Port
-**Doğru:** B) Domain
+**Doğru:** A) Domain
 **Açıklama:** URL'deki alan adı web sitesini belirtir. Yol sayfayı, Protokol erişim yöntemini, Port ise iletişim kapısını gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Domain_name
 
 ## ds_teknoloji_0168  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di webê de, kîjan têgeh ji bo veguhestina rûpelekê ji navnîşanekê bo navnîşaneke din tê bikaranîn?
 **TR:** Web'de, bir sayfanın bir adresten başka bir adrese aktarılması için hangi kavram kullanılır?
-- ✅ A) Redirect
--    B) Request
--    C) Response
--    D) Cache
-**Doğru:** A) Redirect
+-    A) Request
+-    B) Response
+-    C) Cache
+- ✅ D) Redirect
+**Doğru:** D) Redirect
 **Açıklama:** Yönlendirme, bir sayfanın bir adresten başka bir adrese aktarılmasıdır. İstek talep, Yanıt cevap, Önbellek ise geçici saklamadır.
 **Kaynak:** https://en.wikipedia.org/wiki/URL_redirection
 
@@ -932,9 +932,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ağda, ağı dış saldırılardan korumak için hangi cihaz kullanılır?
 -    A) Router
 -    B) Switch
--    C) Modem
-- ✅ D) Firewall
-**Doğru:** D) Firewall
+- ✅ C) Firewall
+-    D) Modem
+**Doğru:** C) Firewall
 **Açıklama:** Güvenlik Duvarı, ağı dış saldırılardan korumak için kullanılır. Yönlendirici ağları bağlar, Anahtar yerel ağı, Modem ise interneti sağlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Firewall_(computing)
 
@@ -942,21 +942,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di têlefonekî jîr de, kîjan beş ji bo hilanîna wêneyan û pelan tê bikaranîn?
 **TR:** Akıllı telefonda, görüntülerin ve dosyaların saklanması için hangi bölüm kullanılır?
 -    A) Bîra xebitandinê
--    B) Pêvajoyê
-- ✅ C) Bîra hundirîn
+- ✅ B) Bîra hundirîn
+-    C) Pêvajoyê
 -    D) Bataryayê
-**Doğru:** C) Bîra hundirîn
+**Doğru:** B) Bîra hundirîn
 **Açıklama:** Dahili bellek (depolama), görüntülerin, dosyaların ve uygulamaların kalıcı olarak saklanması için kullanılır. RAM geçicidir, işlemci hesaplamaları yapar ve pil enerji sağlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Smartphone
 
 ## ds_teknoloji_0187  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di têlefonekî jîr de, kîjan sepan ji bo guhdarîkirina muzîkê tê bikaranîn?
 **TR:** Akıllı telefonda müzik dinlemek için hangi uygulama kullanılır?
--    A) Gmail
-- ✅ B) Spotify
+- ✅ A) Spotify
+-    B) Gmail
 -    C) Google Maps
 -    D) Calculator
-**Doğru:** B) Spotify
+**Doğru:** A) Spotify
 **Açıklama:** Spotify, internet üzerinden müzik dinlemek için kullanılan bir uygulamadır. Gmail e-postalar içindir, Google Maps haritalar içindir ve hesap makinesi hesaplar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Spotify
 
@@ -965,20 +965,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Akıllı telefonda görüntülerin gösterilmesi için hangi bölüm kullanılır?
 -    A) Bataryayê
 -    B) Pêvajoyê
--    C) Bîra hundirîn
-- ✅ D) Ekranê
-**Doğru:** D) Ekranê
+- ✅ C) Ekranê
+-    D) Bîra hundirîn
+**Doğru:** C) Ekranê
 **Açıklama:** Ekran, görüntülerin ve metinlerin gösterilmesi için kullanılır. Pil enerji sağlar, işlemci hesaplamaları yapar ve dahili bellek verileri saklar.
 **Kaynak:** https://en.wikipedia.org/wiki/Smartphone
 
 ## ds_teknoloji_0191  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di têlefonekî jîr de, kîjan teknolojî ji bo cihnasiyê tê bikaranîn?
 **TR:** Akıllı telefonda konum belirleme için hangi teknoloji kullanılır?
--    A) Bluetooth
-- ✅ B) GPS
+- ✅ A) GPS
+-    B) Bluetooth
 -    C) NFC
 -    D) Wi-Fi
-**Doğru:** B) GPS
+**Doğru:** A) GPS
 **Açıklama:** GPS (Küresel Konumlandırma Sistemi) konum belirleme için kullanılır. Bluetooth kısa mesafe iletişim içindir, NFC yakın ödemeler içindir ve Wi-Fi internet içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Global_Positioning_System
 
@@ -986,21 +986,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di têlefonekî jîr de, kîjan sepan ji bo wergirtina nûçeyan tê bikaranîn?
 **TR:** Akıllı telefonda haber almak için hangi uygulama kullanılır?
 -    A) Calculator
--    B) Compass
-- ✅ C) BBC News
+- ✅ B) BBC News
+-    C) Compass
 -    D) Flashlight
-**Doğru:** C) BBC News
+**Doğru:** B) BBC News
 **Açıklama:** BBC News haber almak için kullanılan bir uygulamadır. Hesap makinesi hesaplar içindir, pusula yön bulma içindir ve fener ışık içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/BBC_News
 
 ## ds_teknoloji_0197  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di têlefonekî jîr de, kîjan beş ji bo kişandina wêneyan tê bikaranîn?
 **TR:** Akıllı telefonda görüntü çekmek için hangi bölüm kullanılır?
--    A) Mîkrofon
-- ✅ B) Kamera
+- ✅ A) Kamera
+-    B) Mîkrofon
 -    C) Speaker
 -    D) Sensora tiliyan
-**Doğru:** B) Kamera
+**Doğru:** A) Kamera
 **Açıklama:** Kamera görüntü çekmek için kullanılır. Mikrofon ses içindir, hoparlör ses vermek içindir ve parmak izi sensörü kimlik doğrulama içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Camera_phone
 
@@ -1008,43 +1008,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan sepan ji bo şandina peyamên nivîskî bi înternetê tê bikaranîn?
 **TR:** İnternet üzerinden yazılı mesaj göndermek için hangi uygulama kullanılır?
 -    A) Photoshop
--    B) Excel
-- ✅ C) WhatsApp
+- ✅ B) WhatsApp
+-    C) Excel
 -    D) VLC
-**Doğru:** C) WhatsApp
+**Doğru:** B) WhatsApp
 **Açıklama:** WhatsApp, internet üzerinden yazılı mesaj, ses ve görüntü göndermek için kullanılan bir uygulamadır. Photoshop görüntüler içindir, Excel tablolar içindir ve VLC video oynatmak içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/WhatsApp
 
 ## ds_teknoloji_0190  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan sepan ji bo şandina e-nameyan li ser têlefonê tê bikaranîn?
 **TR:** Telefonda e-posta göndermek için hangi uygulama kullanılır?
-- ✅ A) Gmail
--    B) Instagram
--    C) TikTok
--    D) Snapchat
-**Doğru:** A) Gmail
+-    A) Instagram
+-    B) TikTok
+-    C) Snapchat
+- ✅ D) Gmail
+**Doğru:** D) Gmail
 **Açıklama:** Gmail, e-posta göndermek için kullanılan bir uygulamadır. Instagram, TikTok ve Snapchat sosyal medya içindir, e-posta için değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Gmail
 
 ## ds_teknoloji_0179  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo barkirina sepanan li ser têlefonekî Android, kîjan dikan tê bikaranîn?
 **TR:** Android telefona uygulama indirmek için hangi mağaza kullanılır?
-- ✅ A) Google Play
--    B) App Store
--    C) Steam
--    D) Epic Games
-**Doğru:** A) Google Play
+-    A) App Store
+-    B) Steam
+-    C) Epic Games
+- ✅ D) Google Play
+**Doğru:** D) Google Play
 **Açıklama:** Google Play, Android cihazlara uygulama indirmek için kullanılan bir mağazadır. App Store Apple'ındır, Steam ve Epic Games bilgisayar oyunları içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Google_Play
 
 ## ds_teknoloji_0180  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan teknolojî ji bo têkiliya bêtêl a li ser dûrahiya kurt di navbera têlefon û guhikan de tê bikaranîn?
 **TR:** Telefon ve kulaklık arasında kısa mesafeli kablosuz iletişim için hangi teknoloji kullanılır?
--    A) Wi-Fi
-- ✅ B) Bluetooth
+- ✅ A) Bluetooth
+-    B) Wi-Fi
 -    C) NFC
 -    D) GPS
-**Doğru:** B) Bluetooth
+**Doğru:** A) Bluetooth
 **Açıklama:** Bluetooth, telefon ve kulaklık gibi kısa mesafeli kablosuz iletişim için kullanılan bir teknolojidir. Wi-Fi internet içindir, NFC yakın ödemeler içindir ve GPS konum belirleme içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bluetooth
 
@@ -1052,32 +1052,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh ji bo nermalava ku li ser têlefonê tê sazkirin û karekî taybet dike tê bikaranîn?
 **TR:** Telefona kurulan ve belirli bir işi yapan yazılım için hangi terim kullanılır?
 -    A) Pêvajoyê
--    B) Bataryayê
-- ✅ C) Sepan
+- ✅ B) Sepan
+-    C) Bataryayê
 -    D) Ekranê
-**Doğru:** C) Sepan
+**Doğru:** B) Sepan
 **Açıklama:** Uygulama (app), telefona kurulan ve mesajlaşma veya oyun gibi belirli bir işi yapan yazılımdır. İşlemci, pil ve ekran donanım parçalarıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Mobile_app
 
 ## ds_teknoloji_0194  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgeh ji bo pêvajoya ku têlefon bi komputerê ve tê girêdan û daneyan vediguhezîne tê bikaranîn?
 **TR:** Telefonun bilgisayara bağlanıp veri aktardığı süreç için hangi terim kullanılır?
-- ✅ A) USB
--    B) HDMI
--    C) Ethernet
--    D) VGA
-**Doğru:** A) USB
+-    A) HDMI
+-    B) Ethernet
+-    C) VGA
+- ✅ D) USB
+**Doğru:** D) USB
 **Açıklama:** USB (Evrensel Seri Veri Yolu) telefonu bilgisayara bağlamak ve veri aktarmak için kullanılır. HDMI video içindir, Ethernet ağ içindir ve VGA ekran içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/USB
 
 ## ds_teknoloji_0196  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan teknolojî ji bo veguhestina daneyan bi leza bilind di navbera têlefon û torê de tê bikaranîn?
 **TR:** Telefon ve ağ arasında yüksek hızda veri aktarımı için hangi teknoloji kullanılır?
-- ✅ A) 5G
--    B) Bluetooth
--    C) NFC
--    D) Infrared
-**Doğru:** A) 5G
+-    A) Bluetooth
+-    B) NFC
+-    C) Infrared
+- ✅ D) 5G
+**Doğru:** D) 5G
 **Açıklama:** 5G, ağda yüksek hızda veri aktarımı için kullanılan bir teknolojidir. Bluetooth kısa mesafe içindir, NFC yakın ödemeler içindir ve kızılötesi kısa mesafe iletişim içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/5G
 
@@ -1085,10 +1085,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo barkirina lîstikan li ser têlefonê, kîjan sepan tê bikaranîn?
 **TR:** Telefona oyun indirmek için hangi uygulama kullanılır?
 -    A) Gmail
--    B) Maps
-- ✅ C) Google Play Games
+- ✅ B) Google Play Games
+-    C) Maps
 -    D) Photos
-**Doğru:** C) Google Play Games
+**Doğru:** B) Google Play Games
 **Açıklama:** Google Play Games, Android cihazlara oyun indirmek için kullanılan bir uygulamadır. Gmail e-postalar içindir, Haritalar haritalar içindir ve Fotoğraflar fotoğraflar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Google_Play_Games
 
@@ -1097,53 +1097,53 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Metinleri bir dilden başka bir dile çevirmek için hangi uygulama kullanılır?
 -    A) Calculator
 -    B) Compass
--    C) Flashlight
-- ✅ D) Google Translate
-**Doğru:** D) Google Translate
+- ✅ C) Google Translate
+-    D) Flashlight
+**Doğru:** C) Google Translate
 **Açıklama:** Google Çeviri, metinleri bir dilden başka bir dile çevirmek için kullanılan bir uygulamadır. Hesap Makinesi hesaplar içindir, pusula yön bulmak içindir ve el feneri ışık içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Google_Translate
 
 ## ds_teknoloji_0205  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di sala 1945an de, kîjan kes pêşniyar kir ku bername û daneyan di heman bîra komputerê de bêne hilanîn?
 **TR:** 1945'te programların ve verilerin aynı bilgisayar belleğinde saklanmasını öneren kişi kimdir?
--    A) Alan Turing
-- ✅ B) John von Neumann
+- ✅ A) John von Neumann
+-    B) Alan Turing
 -    C) Konrad Zuse
 -    D) Bill Gates
-**Doğru:** B) John von Neumann
+**Doğru:** A) John von Neumann
 **Açıklama:** John von Neumann, 1945'te programların ve verilerin aynı bilgisayar belleğinde saklanmasını önerdi; bu, von Neumann mimarisi olarak bilinir. Turing ve Zuse de bu alanda önemlidir, ancak bu kavramı kapsamlı bir şekilde von Neumann ortaya koymuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/John_von_Neumann
 
 ## ds_teknoloji_0206  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan kes di sala 1843an de yekem algorîtmayê ji bo makîneya Analytical Engine nivîsand?
 **TR:** 1843'te Analitik Motor için ilk algoritmayı yazan kişi kimdir?
-- ✅ A) Ada Lovelace
--    B) Charles Babbage
--    C) Alan Turing
--    D) Grace Hopper
-**Doğru:** A) Ada Lovelace
+-    A) Charles Babbage
+-    B) Alan Turing
+-    C) Grace Hopper
+- ✅ D) Ada Lovelace
+**Doğru:** D) Ada Lovelace
 **Açıklama:** Ada Lovelace, 1843'te Analitik Motor için ilk bilgisayar programı olarak kabul edilen bir algoritma yazdı. Babbage makineyi tasarladı, ancak algoritmayı Lovelace yazdı. Turing ve Hopper daha sonra geldi.
 **Kaynak:** https://en.wikipedia.org/wiki/Ada_Lovelace
 
 ## ds_teknoloji_0207  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Di sala 1937an de kê nîşan da ku cebra Boole dikare li ser çerxên guhêrbar (switching) were sepandin?
 **TR:** 1937'de Boole cebrinin anahtarlama devrelerine uygulanabileceğini kim gösterdi?
--    A) Alan Turing
-- ✅ B) Claude Shannon
+- ✅ A) Claude Shannon
+-    B) Alan Turing
 -    C) John Bardeen
 -    D) George Boole
-**Doğru:** B) Claude Shannon
+**Doğru:** A) Claude Shannon
 **Açıklama:** Claude Shannon, yüksek lisans tezinde sinyal iletiminin Boole cebri ile modellenebileceğini gösterdi ve bu, modern dijital tasarımın temelini attı. Turing, Bardeen ve Boole de önemlidir, ancak bu ilişkiyi Shannon ortaya koymuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Claude_Shannon
 
 ## ds_teknoloji_0214  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan zanyarê komputerê di sala 1989an de World Wide Web îcad kir?
 **TR:** 1989'da World Wide Web'i icat eden bilgisayar bilimci kimdir?
-- ✅ A) Tim Berners-Lee
--    B) Vint Cerf
--    C) Robert Kahn
--    D) Marc Andreessen
-**Doğru:** A) Tim Berners-Lee
+-    A) Vint Cerf
+-    B) Robert Kahn
+-    C) Marc Andreessen
+- ✅ D) Tim Berners-Lee
+**Doğru:** D) Tim Berners-Lee
 **Açıklama:** Tim Berners-Lee, 1989'da modern internetin temeli olan World Wide Web'i icat etti. Vint Cerf ve Robert Kahn TCP/IP protokollerini geliştirdi, ancak Web, Berners-Lee'ye aittir. Andreessen ise Mosaic tarayıcısını yaptı.
 **Kaynak:** https://en.wikipedia.org/wiki/Tim_Berners-Lee
 
@@ -1152,9 +1152,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 1991'de Linux'u açık kaynaklı bir işletim sistemi olarak kim yayınladı?
 -    A) Richard Stallman
 -    B) Bill Gates
--    C) Steve Jobs
-- ✅ D) Linus Torvalds
-**Doğru:** D) Linus Torvalds
+- ✅ C) Linus Torvalds
+-    D) Steve Jobs
+**Doğru:** C) Linus Torvalds
 **Açıklama:** Linus Torvalds, 1991'de birçok açık kaynaklı işletim sisteminin temeli olan Linux'u yayınladı. Stallman GNU projesini geliştirdi, ancak Linux çekirdeği Torvalds'a aittir. Gates ve Jobs da bu alanda önemlidir, ancak Linux ile ilgileri yoktur.
 **Kaynak:** https://en.wikipedia.org/wiki/Linus_Torvalds
 
@@ -1162,21 +1162,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têlefona jîr a yekem di sala 2007an de ji aliyê Apple ve hate derxistin?
 **TR:** 2007'de Apple tarafından çıkarılan ilk akıllı telefon hangisidir?
 -    A) Android
--    B) BlackBerry
-- ✅ C) iPhone
+- ✅ B) iPhone
+-    C) BlackBerry
 -    D) Nokia N95
-**Doğru:** C) iPhone
+**Doğru:** B) iPhone
 **Açıklama:** iPhone, 2007'de Apple tarafından çıkarıldı ve modern dokunmatik ekranlı ilk akıllı telefon olarak kabul edilir. Android daha sonra Google tarafından geliştirildi. BlackBerry ve Nokia N95 de akıllı telefonlardı, ancak iPhone yeni bir standart belirledi.
 **Kaynak:** https://en.wikipedia.org/wiki/IPhone_(1st_generation)
 
 ## ds_teknoloji_0220  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan asîstanê dengî yê yekem di sala 2011ê de ji aliyê Apple ve hate derxistin?
 **TR:** 2011'de Apple tarafından çıkarılan ilk sesli asistan hangisidir?
--    A) Alexa
-- ✅ B) Siri
+- ✅ A) Siri
+-    B) Alexa
 -    C) Google Assistant
 -    D) Cortana
-**Doğru:** B) Siri
+**Doğru:** A) Siri
 **Açıklama:** Siri, 2011'de iPhone 4S ile çıkarıldı ve yaygın olarak bilinen ilk sesli asistan olarak kabul edilir. Alexa Amazon'dan, Google Asistan ise daha sonra geliştirildi. Cortana da Microsoft'tandı.
 **Kaynak:** https://en.wikipedia.org/wiki/Siri
 
@@ -1184,10 +1184,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan modela zimanê mezin a ji aliyê OpenAI ve di sala 2022an de hate derxistin?
 **TR:** OpenAI tarafından 2022'de çıkarılan büyük dil modeli hangisidir?
 -    A) LaMDA
--    B) BERT
-- ✅ C) ChatGPT
+- ✅ B) ChatGPT
+-    C) BERT
 -    D) GPT-2
-**Doğru:** C) ChatGPT
+**Doğru:** B) ChatGPT
 **Açıklama:** ChatGPT, 2022'de OpenAI tarafından çıkarıldı ve büyük dil modellerinin popülerleşmesine neden oldu. LaMDA ve BERT Google'a aittir. GPT-2 de OpenAI'ye aittir, ancak 2019'da çıkarıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/ChatGPT
 
@@ -1196,20 +1196,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** 2023'te Vision Pro adlı ilk bilgisayarı hangi şirket tanıttı?
 -    A) Meta
 -    B) Microsoft
--    C) Samsung
-- ✅ D) Apple
-**Doğru:** D) Apple
+- ✅ C) Apple
+-    D) Samsung
+**Doğru:** C) Apple
 **Açıklama:** Apple, 2023'te karma gerçeklik bilgisayarı olan Vision Pro'yu tanıttı. Meta da bu alanda önemlidir, ancak Vision Pro özellikle Apple'a aittir. Microsoft ve Samsung da bu alanda denemeler yaptı, ancak bu isimle değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Apple_Vision_Pro
 
 ## ds_teknoloji_0228  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo destnîşankirina cihê rast ê li ser rûyê Erdê, kîjan pergal peykên taybet bi kar tîne?
 **TR:** Dünya üzerindeki kesin konumu belirlemek için hangi sistem özel uydular kullanır?
-- ✅ A) GPS
--    B) Wi-Fi
--    C) Bluetooth
--    D) Radar
-**Doğru:** A) GPS
+-    A) Wi-Fi
+-    B) Bluetooth
+-    C) Radar
+- ✅ D) GPS
+**Doğru:** D) GPS
 **Açıklama:** GPS (Küresel Konumlandırma Sistemi), Dünya üzerindeki kesin konumu belirlemek için bir dizi uydu kullanır. Wi-Fi, Bluetooth ve radar bu amaç için kullanılmaz.
 **Kaynak:** https://en.wikipedia.org/wiki/Global_Positioning_System
 
@@ -1218,9 +1218,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Uçakların ve gemilerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla hangi uydu kullanılır?
 -    A) Peyka ragihandinê
 -    B) Peyka meteorolojîk
--    C) Peyka keşfê
-- ✅ D) Peyka GPSê
-**Doğru:** D) Peyka GPSê
+- ✅ C) Peyka GPSê
+-    D) Peyka keşfê
+**Doğru:** C) Peyka GPSê
 **Açıklama:** GPS uyduları, uçakların, gemilerin ve otomobillerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla kullanılır. İletişim, meteoroloji ve keşif uyduları ise başka amaçlar için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Global_Positioning_System
 
@@ -1228,43 +1228,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyk ji bo destnîşankirina cihê rast ê li ser rûyê Erdê ji bo rêveçûna otomobîlan tê bikaranîn?
 **TR:** Otomobillerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla hangi uydu kullanılır?
 -    A) Peyka ragihandinê
--    B) Peyka meteorolojîk
-- ✅ C) Peyka GPSê
+- ✅ B) Peyka GPSê
+-    C) Peyka meteorolojîk
 -    D) Peyka keşfê
-**Doğru:** C) Peyka GPSê
+**Doğru:** B) Peyka GPSê
 **Açıklama:** GPS uyduları, otomobillerin, uçakların ve gemilerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla kullanılır. İletişim, meteoroloji ve keşif uyduları ise başka amaçlar için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Global_Positioning_System
 
 ## ds_teknoloji_0248  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan peyk ji bo destnîşankirina cihê rast ê li ser rûyê Erdê ji bo rêveçûna keştiyan tê bikaranîn?
 **TR:** Gemilerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla hangi uydu kullanılır?
-- ✅ A) Peyka GPSê
--    B) Peyka ragihandinê
--    C) Peyka meteorolojîk
--    D) Peyka keşfê
-**Doğru:** A) Peyka GPSê
+-    A) Peyka ragihandinê
+-    B) Peyka meteorolojîk
+-    C) Peyka keşfê
+- ✅ D) Peyka GPSê
+**Doğru:** D) Peyka GPSê
 **Açıklama:** GPS uyduları, gemilerin, uçakların ve otomobillerin navigasyonu için Dünya yüzeyindeki kesin konumu belirlemek amacıyla kullanılır. İletişim, meteoroloji ve keşif uyduları ise başka amaçlar için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Global_Positioning_System
 
 ## ds_teknoloji_0251  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo pîvana hêza elektrîkê di nav têlekê de, kîjan yekeyê pîvanê tê bikaranîn?
 **TR:** Bir teldeki elektrik akımının şiddetini ölçmek için hangi ölçü birimi kullanılır?
-- ✅ A) Amper
--    B) Volt
--    C) Ohm
--    D) Watt
-**Doğru:** A) Amper
+-    A) Volt
+-    B) Ohm
+-    C) Watt
+- ✅ D) Amper
+**Doğru:** D) Amper
 **Açıklama:** Amper, bir telden her saniye ne kadar elektrik yükü geçtiğini ölçer. Volt potansiyel farkıdır, Ohm direnci ölçer ve Watt ise toplam güçtür.
 **Kaynak:** https://en.wikipedia.org/wiki/Ampere
 
 ## ds_teknoloji_0252  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan pêkhate di çerxa elektrîkê de berxwedana herikîna elektronan zêde dike?
 **TR:** Elektrik devresinde elektron akışına karşı direnci artıran bileşen hangisidir?
--    A) Kondansator
-- ✅ B) Resistor
+- ✅ A) Resistor
+-    B) Kondansator
 -    C) Dîod
 -    D) Transistor
-**Doğru:** B) Resistor
+**Doğru:** A) Resistor
 **Açıklama:** Direnç, özellikle devredeki elektrik akımını azaltmak ve voltaj seviyesini kontrol etmek için tasarlanmıştır. Kondansatör enerji depolar, diyot akımı yalnızca tek yönde geçirir, transistör ise anahtar veya amplifikatör olarak çalışır.
 **Kaynak:** https://en.wikipedia.org/wiki/Resistor
 
@@ -1272,10 +1272,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan pêkhate di çerxa elektrîkê de herikîna elektrîkê tenê di yek alî de derbas dike?
 **TR:** Elektrik devresinde elektrik akımını yalnızca tek yönde geçiren bileşen hangisidir?
 -    A) Resistor
--    B) Kondansator
-- ✅ C) Dîod
+- ✅ B) Dîod
+-    C) Kondansator
 -    D) Transistor
-**Doğru:** C) Dîod
+**Doğru:** B) Dîod
 **Açıklama:** Diyot, elektrik akımını yalnızca tek yönde geçiren ve diğer yönde engelleyen yarı iletken bir bileşendir. Direnç akımı azaltır, kondansatör enerji depolar ve transistör ise anahtar veya amplifikatör olarak çalışır.
 **Kaynak:** https://en.wikipedia.org/wiki/Diode
 
@@ -1284,20 +1284,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Fizikte, bir cismin hızındaki değişime karşı gösterdiği direnç için kullanılan kavram nedir?
 -    A) Giranî
 -    B) Girse
--    C) Momentûm
-- ✅ D) Inertiya
-**Doğru:** D) Inertiya
+- ✅ C) Inertiya
+-    D) Momentûm
+**Doğru:** C) Inertiya
 **Açıklama:** Eylemsizlik, bir cismin hareket durumundaki değişime karşı direnç gösterme özelliğidir. Kütle bir cisimdeki madde miktarıdır, ağırlık yerçekimi kuvvetidir ve momentum ise kütle ile hızın çarpımıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Inertia
 
 ## ds_teknoloji_0260  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fîzîkê de, têgeha ku ji bo pîvana leza veguherîna enerjiyê tê bikaranîn çi ye?
 **TR:** Fizikte, enerji dönüşüm hızını ölçmek için kullanılan kavram nedir?
-- ✅ A) Hêz (Power)
--    B) Kar
--    C) Leza ronahiyê
--    D) Enerjî
-**Doğru:** A) Hêz (Power)
+-    A) Kar
+-    B) Leza ronahiyê
+-    C) Enerjî
+- ✅ D) Hêz (Power)
+**Doğru:** D) Hêz (Power)
 **Açıklama:** Güç, fizikte birim zamanda yapılan iş veya enerji dönüşüm hızı olarak tanımlanır. İş, dönüştürülen enerji miktarıdır, kuvvet itme veya çekmedir ve enerji ise iş yapabilme yeteneğidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Power_(physics)
 
@@ -1305,10 +1305,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di fîzîkê de, têgeha ku ji bo pîvana mîqdara madeyê di tiştekî de tê bikaranîn çi ye?
 **TR:** Fizikte, bir cisimdeki madde miktarını ölçmek için kullanılan kavram nedir?
 -    A) Giranî
--    B) Inertiya
-- ✅ C) Girse
+- ✅ B) Girse
+-    C) Inertiya
 -    D) Momentûm
-**Doğru:** C) Girse
+**Doğru:** B) Girse
 **Açıklama:** Kütle, bir cisimdeki madde miktarıdır ve kilogram ile ölçülür. Ağırlık yerçekimi kuvvetidir, eylemsizlik hareket değişimine karşı dirençtir ve momentum ise kütle ile hızın çarpımıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Mass
 
@@ -1317,9 +1317,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Fizikte, bir cisim üzerindeki yerçekimi kuvvetini ölçmek için kullanılan kavram nedir?
 -    A) Girse
 -    B) Inertiya
--    C) Momentûm
-- ✅ D) Giranî
-**Doğru:** D) Giranî
+- ✅ C) Giranî
+-    D) Momentûm
+**Doğru:** C) Giranî
 **Açıklama:** Ağırlık, bir cismin kütlesine bağlı olarak üzerine etki eden yerçekimi kuvvetidir. Kütle madde miktarıdır, eylemsizlik hareket değişimine karşı dirençtir ve momentum ise kütle ile hızın çarpımıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Weight
 
@@ -1328,20 +1328,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Fizikte, kütle ve hızın çarpımını ölçmek için kullanılan kavram nedir?
 -    A) Giranî
 -    B) Girse
--    C) Inertiya
-- ✅ D) Momentûm
-**Doğru:** D) Momentûm
+- ✅ C) Momentûm
+-    D) Inertiya
+**Doğru:** C) Momentûm
 **Açıklama:** Momentum, bir cismin kütlesi ile hızının çarpımıdır ve p = mv olarak hesaplanır. Ağırlık yerçekimi kuvvetidir, kütle madde miktarıdır ve eylemsizlik ise hareket değişimine karşı dirençtir.
 **Kaynak:** https://en.wikipedia.org/wiki/Momentum
 
 ## ds_teknoloji_0273  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di fîzîkê de, têgeha ku ji bo pîvana leza guherîna lezê tê bikaranîn çi ye?
 **TR:** Fizikte, hızın değişim oranını ölçmek için kullanılan kavram nedir?
-- ✅ A) Lezbûn
--    B) Lez
--    C) Hêz
--    D) Kar
-**Doğru:** A) Lezbûn
+-    A) Lez
+-    B) Hêz
+-    C) Kar
+- ✅ D) Lezbûn
+**Doğru:** D) Lezbûn
 **Açıklama:** İvme (acceleration), birim zamandaki hız değişim oranıdır. Hız, birim zamanda kat edilen mesafedir; kuvvet, itme veya çekmedir; iş ise kuvvet ve mesafenin ürünüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Acceleration
 
@@ -1349,21 +1349,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan qanûnê fîzîkê diyar dike ku ji bo her çalakiyekê bertekeke wekhev û berevajî heye?
 **TR:** Her etkiye karşı eşit ve zıt bir tepki olduğunu belirten fizik yasası hangisidir?
 -    A) Qanûna Newton a yekem
--    B) Qanûna Newton a duyem
-- ✅ C) Qanûna Newton a sêyem
+- ✅ B) Qanûna Newton a sêyem
+-    C) Qanûna Newton a duyem
 -    D) Qanûna gravîtasyona gerdûnî
-**Doğru:** C) Qanûna Newton a sêyem
+**Doğru:** B) Qanûna Newton a sêyem
 **Açıklama:** Newton'un üçüncü yasası, her etkiye karşı eşit ve zıt bir tepki olduğunu belirtir. Birinci yasa eylemsizlikle ilgilidir, ikinci yasa kuvvet, kütle ve ivme arasındaki ilişkiyi belirtir ve kütleçekim yasası ise kütleler arasındaki çekimi açıklar.
 **Kaynak:** https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion
 
 ## ds_teknoloji_0263  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan qanûnê fîzîkê diyar dike ku enerjî nayê afirandin û nayê windakirin, lê tenê dikare were guherandin?
 **TR:** Enerjinin yoktan var edilemeyeceğini ve yok edilemeyeceğini, yalnızca dönüştürülebileceğini belirten fizik yasası hangisidir?
-- ✅ A) Qanûna termodînamîkê ya yekem
--    B) Qanûna Newton a yekem
--    C) Qanûna termodînamîkê ya duyem
--    D) Qanûna gravîtasyona gerdûnî
-**Doğru:** A) Qanûna termodînamîkê ya yekem
+-    A) Qanûna Newton a yekem
+-    B) Qanûna termodînamîkê ya duyem
+-    C) Qanûna gravîtasyona gerdûnî
+- ✅ D) Qanûna termodînamîkê ya yekem
+**Doğru:** D) Qanûna termodînamîkê ya yekem
 **Açıklama:** Termodinamiğin birinci yasası, enerjinin korunumu yasası olarak da bilinir ve enerjinin yoktan var edilemeyeceğini veya yok edilemeyeceğini, yalnızca dönüştürülebileceğini belirtir. Termodinamiğin ikinci yasası entropi ile ilgilidir ve Newton yasaları ise hareket ve kuvvetlerle ilgilidir.
 **Kaynak:** https://en.wikipedia.org/wiki/First_law_of_thermodynamics
 
@@ -1372,9 +1372,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bir teldeki elektrik akımının voltajla doğru, dirençle ters orantılı olduğunu belirten fizik yasası hangisidir?
 -    A) Qanûna Kirchhoff a yekem
 -    B) Qanûna Kirchhoff a duyem
--    C) Qanûna Faraday
-- ✅ D) Qanûna Ohm
-**Doğru:** D) Qanûna Ohm
+- ✅ C) Qanûna Ohm
+-    D) Qanûna Faraday
+**Doğru:** C) Qanûna Ohm
 **Açıklama:** Ohm Yasası, bir teldeki elektrik akımının (I) voltajla (V) doğru ve dirençle (R) ters orantılı olduğunu belirtir: I = V/R. Kirchhoff yasaları devre analizi için kullanılır ve Faraday yasası ise elektromanyetik indüksiyonla ilgilidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ohm%27s_law
 
@@ -1382,10 +1382,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di çerxa elektrîkê de, kîjan pêkhate dikare enerjiya elektrîkê di zeviyek elektrîkê de bi demkî hilîne?
 **TR:** Elektrik devresinde, elektrik enerjisini bir elektrik alanında geçici olarak depolayabilen bileşen hangisidir?
 -    A) Resistor
--    B) Induktor
-- ✅ C) Kondansator
+- ✅ B) Kondansator
+-    C) Induktor
 -    D) Transformator
-**Doğru:** C) Kondansator
+**Doğru:** B) Kondansator
 **Açıklama:** Kondansatör, elektrik enerjisini iki plakası arasındaki elektrik alanında depolar ve daha sonra serbest bırakabilir. Direnç enerjiyi ısı olarak harcar, indüktör enerjiyi manyetik alanda depolar ve transformatör ise voltajı değiştirir.
 **Kaynak:** https://en.wikipedia.org/wiki/Capacitor
 
@@ -1393,10 +1393,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di çerxa elektrîkê de, kîjan pêkhate dikare voltaja elektrîkê veguherîne astek din?
 **TR:** Elektrik devresinde, elektrik voltajını başka bir seviyeye dönüştürebilen bileşen hangisidir?
 -    A) Resistor
--    B) Kondansator
-- ✅ C) Transformator
+- ✅ B) Transformator
+-    C) Kondansator
 -    D) Induktor
-**Doğru:** C) Transformator
+**Doğru:** B) Transformator
 **Açıklama:** Transformatör, elektromanyetik indüksiyon ile AC elektrik voltajını daha yüksek veya daha düşük bir seviyeye dönüştürür. Direnç akımı azaltır, kondansatör enerji depolar ve indüktör ise enerjiyi manyetik alanda depolar.
 **Kaynak:** https://en.wikipedia.org/wiki/Transformer
 
@@ -1404,10 +1404,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan celebê pêlê ji bo veguhestina deng hewceyê navgînekê ye?
 **TR:** Sesin iletilmesi için bir ortama ihtiyaç duyan dalga türü hangisidir?
 -    A) Pêla elektromagnetîk
--    B) Pêla ronahiyê
-- ✅ C) Pêla mekanîk
+- ✅ B) Pêla mekanîk
+-    C) Pêla ronahiyê
 -    D) Pêla radyoyê
-**Doğru:** C) Pêla mekanîk
+**Doğru:** B) Pêla mekanîk
 **Açıklama:** Ses dalgaları gibi mekanik dalgalar, yayılmak için hava, su veya katı gibi bir ortama ihtiyaç duyar. Elektromanyetik dalgalar, ışık ve radyo dalgaları boşlukta da yayılabilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Mechanical_wave
 
@@ -1416,9 +1416,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Boşlukta yayılabilen ve iletim için bir ortama ihtiyaç duymayan dalga türü hangisidir?
 -    A) Pêla deng
 -    B) Pêla mekanîk
--    C) Pêla avê
-- ✅ D) Pêla elektromagnetîk
-**Doğru:** D) Pêla elektromagnetîk
+- ✅ C) Pêla elektromagnetîk
+-    D) Pêla avê
+**Doğru:** C) Pêla elektromagnetîk
 **Açıklama:** Işık ve radyo dalgaları gibi elektromanyetik dalgalar, elektrik ve manyetik alanlardan oluştukları için boşlukta yayılabilirler. Ses, mekanik ve su dalgaları yayılmak için bir ortama ihtiyaç duyar.
 **Kaynak:** https://en.wikipedia.org/wiki/Electromagnetic_radiation
 
@@ -1426,10 +1426,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan celebê enerjiyê di navika atomê de tê hilanîn?
 **TR:** Atom çekirdeğinde depolanan enerji türü hangisidir?
 -    A) Enerjiya kîmyayî
--    B) Enerjiya germî
-- ✅ C) Enerjiya nukleer
+- ✅ B) Enerjiya nukleer
+-    C) Enerjiya germî
 -    D) Enerjiya mekanîk
-**Doğru:** C) Enerjiya nukleer
+**Doğru:** B) Enerjiya nukleer
 **Açıklama:** Nükleer enerji, atom çekirdeğinde depolanır ve nükleer reaksiyonlar sırasında açığa çıkar. Kimyasal enerji kimyasal bağlardadır, termal enerji sıcaklıkla ilgilidir ve mekanik enerji ise cisimlerin hareketi veya konumuyla ilgilidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nuclear_energy
 
@@ -1438,9 +1438,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yalnızca kendisine ve bire bölünebilen sayıya Kürtçe'de ne denir?
 -    A) Hejmara cot
 -    B) Hejmara giştpîvan
--    C) Hejmara rasyonel
-- ✅ D) Hejmara seretayî
-**Doğru:** D) Hejmara seretayî
+- ✅ C) Hejmara seretayî
+-    D) Hejmara rasyonel
+**Doğru:** C) Hejmara seretayî
 **Açıklama:** Asal sayı yalnızca kendisine ve bire bölünebilir. Örneğin 2, 3, 5 ve 7'nin hepsi asal sayılardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Prime_number
 
@@ -1448,43 +1448,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan hejmar di navbera 1 û 100 de hejmara seretayî ye?
 **TR:** 1 ile 100 arasında hangi sayı asal sayıdır?
 -    A) 15
--    B) 21
-- ✅ C) 23
+- ✅ B) 23
+-    C) 21
 -    D) 27
-**Doğru:** C) 23
+**Doğru:** B) 23
 **Açıklama:** 23 yalnızca 1'e ve kendisine bölünebildiği için asal sayıdır. 15, 21 ve 27 diğer sayılara da bölünebilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Prime_number
 
 ## ds_teknoloji_0281  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan têgeh di matematîkê de ji bo rêjeya di navbera dora çember û pîvana wê ya herî zêde tê bikaranîn?
 **TR:** Matematikte bir çemberin çevresinin en geniş ölçüsüne (çapına) oranı için hangi kavram kullanılır?
--    A) Euler
-- ✅ B) Pi
+- ✅ A) Pi
+-    B) Euler
 -    C) Fibonacci
 -    D) Pisagor
-**Doğru:** B) Pi
+**Doğru:** A) Pi
 **Açıklama:** Pi (π), bir çemberin çevresinin çapına oranıdır. Sonsuz bir sayıdır ve yaklaşık olarak 3.14159'dur.
 **Kaynak:** https://en.wikipedia.org/wiki/Pi
 
 ## ds_teknoloji_0286  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan têgeh di matematîkê de ji bo jimara ku ji hejmareke din re tê zêdekirin da ku encam sifir be tê bikaranîn?
 **TR:** Matematikte, başka bir sayıya eklendiğinde sonucu sıfır yapan sayı için hangi kavram kullanılır?
-- ✅ A) Hejmara berevajî
--    B) Hejmara çendbûyî
--    C) Hejmara rasyonel
--    D) Hejmara mutleq
-**Doğru:** A) Hejmara berevajî
+-    A) Hejmara çendbûyî
+-    B) Hejmara rasyonel
+-    C) Hejmara mutleq
+- ✅ D) Hejmara berevajî
+**Doğru:** D) Hejmara berevajî
 **Açıklama:** Ters sayı (toplamsal ters), kendisiyle toplandığında sonucu sıfır yapan sayıdır. Örneğin, 5'in tersi -5'tir.
 **Kaynak:** https://en.wikipedia.org/wiki/Additive_inverse
 
 ## ds_teknoloji_0283  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan hejmar di rêza Fibonacci de piştî 21 tê?
 **TR:** Fibonacci dizisinde 21'den sonra hangi sayı gelir?
--    A) 25
-- ✅ B) 34
+- ✅ A) 34
+-    B) 25
 -    C) 28
 -    D) 42
-**Doğru:** B) 34
+**Doğru:** A) 34
 **Açıklama:** Fibonacci dizisinde her sayı, kendisinden önceki iki sayının toplamıdır. 13 ve 21'den sonraki sayı 34'tür (13+21=34).
 **Kaynak:** https://en.wikipedia.org/wiki/Fibonacci_number
 
@@ -1493,9 +1493,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Matematikte hangi sayı sıfır sayısıdır?
 -    A) 1
 -    B) -1
--    C) 10
-- ✅ D) 0
-**Doğru:** D) 0
+- ✅ C) 0
+-    D) 10
+**Doğru:** C) 0
 **Açıklama:** Sıfır, negatif ve pozitif sayılar arasında yer alan sayıdır. Toplama işleminin etkisiz elemanıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/0
 
@@ -1504,9 +1504,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Geometride, bir çembere tek bir noktada değen doğru için hangi kavram kullanılır?
 -    A) Kêş
 -    B) Nîvçap
--    C) Çap
-- ✅ D) Tanget
-**Doğru:** D) Tanget
+- ✅ C) Tanget
+-    D) Çap
+**Doğru:** C) Tanget
 **Açıklama:** Teğet (tangent), bir çembere tek bir noktada değen doğrudur. Genellikle açıların oluşturulmasında kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Tangent
 
