@@ -1755,9 +1755,9 @@
     "prompt": "Di wêjeya kurdî de \"dîwan\" çi tê wateyê?",
     "answers": [
       "Forma helbestî ya çîrokî bi beytên qafiyedar",
-      "Dîwana xwe ya helbestên sofîyane",
+      "Helbesta kurt a çar rêzikî",
       "Berhevoka helbestên helbestvanekî",
-      "Kovarên çand û wêjeyê"
+      "Berhevoka gotinên pêşiyan"
     ],
     "correctAnswer": "Berhevoka helbestên helbestvanekî",
     "explanation": "Divan, bir şairin şiirlerinin genelde kafiyeye göre düzenlenmiş toplamıdır.",
@@ -1773,8 +1773,8 @@
     "promptTr": "Kürt edebiyatında \"dîwan\" ne anlama gelir?",
     "answersTr": [
       "Kafiyeli beyitlerle kurulan anlatı şiiri biçimi",
-      "Bir şairin tasavvufi şiirlerinden oluşan kitap",
       "Bir şairin şiirlerinin derlemesi",
+      "Bir şairin tasavvufi şiirlerinden oluşan kitap",
       "Kültür ve edebiyat dergileri"
     ],
     "correctAnswerTr": "Bir şairin şiirlerinin derlemesi"
@@ -1878,10 +1878,10 @@
     "category": "Edebiyat",
     "prompt": "Berhema \"Nûbihara Biçûkan\" a Ehmedê Xanî çi ye?",
     "answers": [
-      "perwerdehiya klasîk û perwerdekirina helbestvanan",
+      "mesnewiya evînê ya Mem û Zînê",
       "ferhengeke helbestî ya kurdî-erebî ji bo zarokan",
-      "yek ji şanonivîsên damezrîner ên şanoya kurdî",
-      "yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî"
+      "dîwaneke helbestên sofîyane",
+      "destaneke gelêrî ya li ser Memê Alan"
     ],
     "correctAnswer": "ferhengeke helbestî ya kurdî-erebî ji bo zarokan",
     "explanation": "Nûbihara Biçûkan, çocuklara öğretmek için manzum yazılmış Kürtçe-Arapça sözlüktür.",
@@ -1896,8 +1896,8 @@
     },
     "promptTr": "Ehmedê Xanî'nin \"Nûbihara Biçûkan\" adlı eseri nedir?",
     "answersTr": [
-      "klasik eğitim ve şairlerin yetiştirilmesi",
       "çocuklar için manzum Kürtçe-Arapça sözlük",
+      "klasik eğitim ve şairlerin yetiştirilmesi",
       "Kürt tiyatrosunun kurucu oyun yazarlarından biri",
       "divan yazan ilk Kürt kadın tarihçi ve şair"
     ],
@@ -4350,15 +4350,15 @@
     "category": "Edebiyat",
     "prompt": "Elî Herîrî di wêjeya kurdî de bi çi tê nasîn?",
     "answers": [
-      "Dîwana xwe ya helbestên sofîyane",
-      "Lihevhatina dengên dawiya rêzikan",
-      "Berhevoka helbestên helbestvanekî",
+      "Romannivîsê yekem ê kurdî",
+      "Damezrînerê kovara Hawarê",
+      "Zimannasê rêzimana kurmancî",
       "Helbestvanekî klasîk ê pêşîn"
     ],
     "correctAnswer": "Helbestvanekî klasîk ê pêşîn",
-    "explanation": "Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.",
-    "explanationKu": "Elî Herîrî (sedsala 15-16em) wek yek ji pêşiyên helbesta klasîk a kurdî tê hesibandin.",
-    "explanationTr": "Elî Herîrî (15-16. yy), klasik Kürt şiirinin öncülerinden sayılır.",
+    "explanation": "Elî Herîrî, klasik Kürt şiirinin ilk adlarından sayılır. Yaşadığı dönem kaynaklara göre değişir; kesin bir yüzyıl vermek doğru olmaz.",
+    "explanationKu": "Elî Herîrî ji navên pêşîn ên helbesta klasîk a kurdî tê hesibandin. Dema jiyana wî li gorî çavkaniyan diguhere.",
+    "explanationTr": "Elî Herîrî, klasik Kürt şiirinin ilk adlarından sayılır. Yaşadığı dönem kaynaklara göre değişir; kesin bir yüzyıl vermek doğru olmaz.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4368,10 +4368,10 @@
     },
     "promptTr": "Elî Herîrî, Kürt edebiyatında neyle tanınır?",
     "answersTr": [
-      "Tasavvufi şiirlerden oluşan divanı",
       "Dize sonlarındaki seslerin uyumu",
       "Bir şairin şiirlerinden derleme",
-      "Öncü klasik şairlerden biri olması"
+      "Öncü klasik şairlerden biri olması",
+      "Tasavvufi şiirlerden oluşan divanı"
     ],
     "correctAnswerTr": "Öncü klasik şairlerden biri olması"
   },
@@ -4382,10 +4382,10 @@
     "category": "Edebiyat",
     "prompt": "Berhema \"Rewşenbîr\" an kovarên edebî yên kurdî bi giştî çi rol lîstin?",
     "answers": [
-      "Helbestên xwe yên li ser xweza û teyran",
-      "Berhevoka helbestên helbestvanekî",
+      "Berhevkirina destanên devkî yên gelêrî",
+      "Wergerandina berhemên klasîk bo erebî",
       "Pêşxistina zimanê nivîskî yê kurdî",
-      "Dîwana xwe ya helbestên sofîyane"
+      "Amadekirina ferhengên dibistanê"
     ],
     "correctAnswer": "Pêşxistina zimanê nivîskî yê kurdî",
     "explanation": "Edebiyat dergileri, yazılı Kürtçenin standartlaşması ve gelişmesinde başrol oynadı.",
@@ -4400,9 +4400,9 @@
     },
     "promptTr": "\"Rewşenbîr\" ve Kürtçe edebiyat dergileri genel olarak hangi rolü oynadı?",
     "answersTr": [
-      "Doğa ve kuşlar üzerine şiirler yazması",
       "Bir şairin şiirlerinden derleme",
       "Kürtçe yazı dilinin geliştirilmesi",
+      "Doğa ve kuşlar üzerine şiirler yazması",
       "Tasavvufi şiirlerden oluşan divanı"
     ],
     "correctAnswerTr": "Kürtçe yazı dilinin geliştirilmesi"
@@ -6815,9 +6815,9 @@
     "prompt": "Di wêjeya kurdî de \"medrese\" çi rol lîst?",
     "answers": [
       "perwerdehiya klasîk û perwerdekirina helbestvanan",
-      "lihevhatina dengên dawiya rêzikan",
-      "romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin",
-      "yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî"
+      "belavkirina çapkirin û weşangeriyê",
+      "veguhastina devkî ya destanan ji nifşî bo nifşî",
+      "piştgiriya seraya mîran ji hunermendan re"
     ],
     "correctAnswer": "perwerdehiya klasîk û perwerdekirina helbestvanan",
     "explanation": "Klasik Kürt şairlerinin çoğu medreselerde yetişti.",
@@ -6974,10 +6974,10 @@
     "category": "Edebiyat",
     "prompt": "Di klasîkên kurdî de \"mesnewî\" çi ye?",
     "answers": [
-      "belavbûna alfabeya kurdî ya bi bingehê latînî",
-      "helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî",
+      "helbesta çar rêzikî ya bi qafiyeya yekgirtî",
+      "berhevoka helbestên helbestvanekî",
       "forma helbestî ya çîrokî bi beytên qafiyedar",
-      "zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî"
+      "helbesta azad a bêyî pîvan û qafiye"
     ],
     "correctAnswer": "forma helbestî ya çîrokî bi beytên qafiyedar",
     "explanation": "Mem û Zîn mesnevi biçiminde yazılmıştır.",
@@ -6992,9 +6992,9 @@
     },
     "promptTr": "Kürt klasiklerinde \"mesnevî\" nedir?",
     "answersTr": [
-      "Latin temelli Kürt alfabesinin yayılması",
       "kuşların diliyle yazan ünlü Kürt şair",
       "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi",
+      "Latin temelli Kürt alfabesinin yayılması",
       "Kürtçe gramer kitapları yazan dilbilimci ve yazar"
     ],
     "correctAnswerTr": "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi"
@@ -7066,9 +7066,9 @@
     "category": "Edebiyat",
     "prompt": "\"Zembîlfiroş\" di wêjeya kurdî de çi ye?",
     "answers": [
-      "Mela Ehmedê Xasî",
-      "Dîwana xwe ya helbestên sofîyane",
-      "şevbêrkên wêjeyî",
+      "Destaneke şer a li ser mîrektiyan",
+      "Berhevokeke gotinên pêşiyan",
+      "Mesnewiyeke perwerdehiyê ya ji bo zarokan",
       "Destaneke evînî ya gelêrî"
     ],
     "correctAnswer": "Destaneke evînî ya gelêrî",
@@ -7084,10 +7084,10 @@
     },
     "promptTr": "\"Zembîlfiroş\" Kürt edebiyatında nedir?",
     "answersTr": [
-      "Mela Ehmedê Xasî",
       "Tasavvufi şiirlerden oluşan divanı",
       "Edebî gece toplantıları",
-      "Halk arasında bir aşk destanı"
+      "Halk arasında bir aşk destanı",
+      "Mela Ehmedê Xasî"
     ],
     "correctAnswerTr": "Halk arasında bir aşk destanı"
   },
@@ -7099,9 +7099,9 @@
     "prompt": "Wergera berhemên cîhanî bo kurdî çima girîng tê dîtin?",
     "answers": [
       "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
-      "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
-      "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca",
-      "belavbûna alfabeya kurdî ya bi bingehê latînî"
+      "Berhemên kurdî li derve dide naskirin",
+      "Ji bo dibistanan pirtûkên fermî amade dike",
+      "Alfabeya latînî li şûna ya erebî datîne"
     ],
     "correctAnswer": "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
     "explanation": "Çeviri yeni kavramlar getirir ve yazılı dili geliştirir.",
