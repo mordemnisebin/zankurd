@@ -45,14 +45,14 @@ void main() {
   test('oynanabilir soru sayısı beklenen değerde', () {
     expect(
       loaded.length,
-      3094,
+      3085,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
     );
     expect(
       playable.length,
-      3041,
+      3033,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -75,7 +75,7 @@ void main() {
     }
 
     expect(byReason, {
-      'reviewStatus=${ReviewStatus.needsReview}': 38,
+      'reviewStatus=${ReviewStatus.needsReview}': 37,
       'reviewStatus=${ReviewStatus.rejected}': 15,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });

@@ -105,7 +105,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 46,
+      "expectedRecordCount": 45,
       "notes": "Approved community questions bundled with the app",
       "columns": {
         "id": "id",
@@ -2222,7 +2222,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 97,
+      "expectedRecordCount": 96,
       "notes": "Her kayıt doğrudan açılmış kurumsal kaynağa dayanır; provenance verified_external_pool_2026_08 altında.",
       "columns": {
         "id": "id",
@@ -2353,7 +2353,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 972,
+      "expectedRecordCount": 965,
       "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
       "columns": {
         "id": "id",
