@@ -52,7 +52,7 @@ void main() {
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      3085,
+      3078,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

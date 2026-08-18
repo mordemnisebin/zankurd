@@ -12,7 +12,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 1000,
-      "expectedRecordCount": 1360,
+      "expectedRecordCount": 1354,
       "notes": "Bundled JSON loaded by QuestionBankLoader",
       "columns": {
         "id": "id",
@@ -43,7 +43,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 990,
-      "expectedRecordCount": 297,
+      "expectedRecordCount": 296,
       "notes": "Approved editorial questions bundled with the app",
       "columns": {
         "id": "id",
