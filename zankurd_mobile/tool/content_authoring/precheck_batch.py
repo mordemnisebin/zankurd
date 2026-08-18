@@ -238,6 +238,42 @@ def main(path: str, check_urls: bool = False, write_clean: str | None = None) ->
         else:
             print(f"doğru cevap dağılımı dengeli: {dagilim}")
 
+    # Neredeyse aynı soru, farklı "doğru" cevap: oyuncu birinde doğru
+    # yaptığını öbüründe yanlış yapar ve haklı olarak güvenini yitirir.
+    # Kanonik kopya denetimi bunu göremez, çünkü cümleler birebir aynı değil
+    # — yalnız çekirdek sözcükleri ortak. (Çand partisinde "dawetên kurdan de
+    # kîjan amûra muzîkê" iki kez soruldu; cevaplar Tembûr ve Def.)
+    STOP = {"kîjan", "çi", "di", "de", "ya", "yê", "ku", "ji", "bo", "tê",
+            "bikaranîn", "e", "ye", "li", "û", "der", "wateya", "peyv"}
+
+    def core(text: str) -> frozenset:
+        words = {w for w in re.findall(r"\w+", norm(text)) if len(w) > 3}
+        return frozenset(words - STOP)
+
+    cores: dict[frozenset, tuple[int, str, str]] = {}
+    contradictions = []
+    for i, row in enumerate(rows, start=2):
+        key = core(row.get("prompt", ""))
+        if len(key) < 3:
+            continue
+        for seen, (line, rid, answer) in cores.items():
+            overlap = len(key & seen) / max(len(key | seen), 1)
+            if overlap >= 0.75:
+                mine = row.get(f"option_{row.get('correct_option','').lower()}", "")
+                if norm(mine) and norm(mine) != norm(answer):
+                    contradictions.append(
+                        f"{rid} ↔ {(row.get('id') or '?').strip()}: "
+                        f"«{answer}» vs «{mine}»")
+                break
+        else:
+            cores[key] = (i, (row.get("id") or "?").strip(),
+                          row.get(f"option_{row.get('correct_option','').lower()}", ""))
+    if contradictions:
+        print(f"UYARI: {len(contradictions)} çelişkili soru çifti "
+              f"(benzer soru, farklı doğru cevap):")
+        for line in contradictions[:8]:
+            print(f"   {line}")
+
     # Aynı çeldirici bütün partide dolaşıyorsa sorular birbirinin kopyası
     # gibi hissettirir ve şıklar inandırıcılığını yitirir.
     fillers = Counter()
