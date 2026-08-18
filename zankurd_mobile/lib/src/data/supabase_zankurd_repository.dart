@@ -661,6 +661,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
     try {
       if (client.auth.currentUser == null) {
@@ -673,6 +675,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {
           'p_category_name': category,
           'p_seconds_per_question': secondsPerQuestion,
+          'p_question_count': questionCount,
+          'p_entry_fee': entryFee,
         },
       );
       final snapshot = _requiredJsonObject(response, 'create_online_room');
@@ -682,10 +686,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final canonicalCategory = _requiredString(snapshot, const [
         'category_name',
       ]);
-      final questionCount = _requiredInt(snapshot, const ['question_count']);
+      final serverQuestionCount = _requiredInt(snapshot, const ['question_count']);
       final serverSeconds = _requiredInt(snapshot, const [
         'seconds_per_question',
       ]);
+      final serverEntryFee = snapshot['entry_fee'] != null
+          ? (snapshot['entry_fee'] as num).toInt()
+          : entryFee;
 
       final players = await _loadRoomPlayersById(roomId);
       return GameRoom(
@@ -695,8 +702,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         category: canonicalCategory,
         players: players,
         status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
-        questionCount: questionCount,
+        questionCount: serverQuestionCount,
         secondsPerQuestion: serverSeconds,
+        entryFee: serverEntryFee,
         hostId: hostId,
       );
     } catch (error, stack) {
@@ -753,6 +761,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       secondsPerQuestion:
           (room['seconds_per_question'] as int?) ??
           GameRoom.defaultSecondsPerQuestion,
+      entryFee: (room['entry_fee'] as num?)?.toInt() ?? 0,
     );
 
     // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
@@ -776,7 +785,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final row = await client
         .from('rooms')
         .select(
-          'id, code, host_id, question_count, seconds_per_question, status, '
+          'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
           'categories(name)',
         )
         .eq('id', roomId)
@@ -795,6 +804,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       secondsPerQuestion:
           (row['seconds_per_question'] as num?)?.toInt() ??
           GameRoom.defaultSecondsPerQuestion,
+      entryFee: (row['entry_fee'] as num?)?.toInt() ?? 0,
       hostId: row['host_id'] as String?,
     );
   }

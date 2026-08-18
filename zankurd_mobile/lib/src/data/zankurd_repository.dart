@@ -182,6 +182,8 @@ abstract class ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   });
   Future<GameRoom> joinOnlineRoom(String code);
 

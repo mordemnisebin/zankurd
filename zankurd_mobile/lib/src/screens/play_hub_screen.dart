@@ -67,12 +67,40 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   Future<void> _createOnlineRoom() async {
     if (_roomActionLoading) return;
-    final seconds = await _pickRoomDuration();
-    if (seconds == null || !mounted) return; // kullanıcı sayfayı kapattı
+
+    List<String> availableCategories = widget.repository.categories;
+    try {
+      final serverCats = await widget.repository.loadMatchmakingCategories();
+      if (serverCats.isNotEmpty) availableCategories = serverCats;
+    } catch (_) {}
+
+    int coinBalance = 0;
+    try {
+      coinBalance = await widget.repository.loadCoinBalance();
+    } catch (_) {}
+
+    if (!mounted) return;
+
+    final config = await showModalBottomSheet<_CustomRoomConfig>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetCtx) => _CustomRoomBottomSheet(
+        availableCategories: availableCategories,
+        coinBalance: coinBalance,
+      ),
+    );
+
+    if (config == null || !mounted) return;
+
     setState(() => _roomActionLoading = true);
     try {
       final room = await widget.repository.createOnlineRoom(
-        secondsPerQuestion: seconds,
+        category: config.category,
+        secondsPerQuestion: config.duration,
+        questionCount: config.questionCount,
+        entryFee: config.entryFee,
       );
       if (!mounted) return;
       AnalyticsService.instance.logActivationStep('room_created');
@@ -86,84 +114,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
     }
-  }
-
-  /// Oda kurucusunun her soru için tanımlı süreyi seçmesini sağlar. Bu ayar
-  /// yalnızca UI'da eksikti — repository/DB katmanı zaten `secondsPerQuestion`
-  /// alanını destekliyordu (2026-07-21 denetiminde bulunan boşluk).
-  Future<int?> _pickRoomDuration() async {
-    // Tek kaynak modeldir: UI ayrıca 15 sn sunuyordu ama bu değer
-    // GameRoom.allowedSecondsPerQuestion içinde yok ve canlı denetimde
-    // görülen uzun sorular için okunamayacak kadar kısa (2026-07-22).
-    const options = GameRoom.allowedSecondsPerQuestion;
-    var selected = GameRoom.defaultSecondsPerQuestion;
-
-    return showModalBottomSheet<int>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      backgroundColor: Colors.transparent,
-      builder: (sheetCtx) {
-        return StatefulBuilder(
-          builder: (sheetCtx, setSheetState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                left: AppSpacing.page,
-                right: AppSpacing.page,
-                bottom:
-                    MediaQuery.viewInsetsOf(sheetCtx).bottom + AppSpacing.page,
-              ),
-              child: AppPanel(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.t(K.secondsPerQuestion),
-                      style: AppTypography.heading1.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      context.t(K.secondsPerQuestionNote),
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textSubColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Wrap(
-                      spacing: AppSpacing.sm,
-                      runSpacing: AppSpacing.sm,
-                      children: [
-                        for (final seconds in options)
-                          ChoiceChip(
-                            key: ValueKey('room-duration-$seconds'),
-                            label: Text(
-                              '$seconds ${context.t(K.secondsShortUnit)}',
-                            ),
-                            selected: selected == seconds,
-                            onSelected: (_) =>
-                                setSheetState(() => selected = seconds),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: () => Navigator.of(sheetCtx).pop(selected),
-                        child: Text(context.t(K.openRoom)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
   }
 
   void _openRoom(GameRoom room) {
@@ -578,6 +528,262 @@ class _RoomCodeInputFormatter extends TextInputFormatter {
     return TextEditingValue(
       text: normalized,
       selection: TextSelection.collapsed(offset: normalized.length),
+    );
+  }
+}
+
+class _CustomRoomConfig {
+  const _CustomRoomConfig({
+    required this.category,
+    required this.duration,
+    required this.questionCount,
+    required this.entryFee,
+  });
+
+  final String category;
+  final int duration;
+  final int questionCount;
+  final int entryFee;
+}
+
+class _CustomRoomBottomSheet extends StatefulWidget {
+  const _CustomRoomBottomSheet({
+    required this.availableCategories,
+    required this.coinBalance,
+  });
+
+  final List<String> availableCategories;
+  final int coinBalance;
+
+  @override
+  State<_CustomRoomBottomSheet> createState() => _CustomRoomBottomSheetState();
+}
+
+class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
+  late String _selectedCategory;
+  int _selectedDuration = GameRoom.defaultSecondsPerQuestion;
+  int _selectedQuestionCount = 10;
+  int _selectedEntryFee = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCategory = widget.availableCategories.firstOrNull ?? 'Ziman';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hasEnoughCoins = widget.coinBalance >= _selectedEntryFee;
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        left: AppSpacing.page,
+        right: AppSpacing.page,
+        bottom: MediaQuery.viewInsetsOf(context).bottom + AppSpacing.page,
+      ),
+      child: AppPanel(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1E4FA6).withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                  ),
+                  child: const Icon(
+                    AppIcons.gamepad,
+                    color: Color(0xFF1E4FA6),
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    context.t(K.customRoomTitle),
+                    style: AppTypography.heading1.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // Kategori Seçimi
+            Text(
+              context.t(K.selectCategory),
+              style: AppTypography.bodyLarge.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppTheme.textPrimaryColor(context),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              children: [
+                for (final cat in widget.availableCategories)
+                  ChoiceChip(
+                    key: ValueKey('custom-room-cat-$cat'),
+                    label: Text(cat),
+                    selected: _selectedCategory == cat,
+                    onSelected: (_) => setState(() => _selectedCategory = cat),
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // Soru Sayısı Seçimi
+            Text(
+              context.t(K.questionCountLabel),
+              style: AppTypography.bodyLarge.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppTheme.textPrimaryColor(context),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              children: [
+                for (final count in GameRoom.allowedQuestionCounts)
+                  ChoiceChip(
+                    key: ValueKey('custom-room-count-$count'),
+                    label: Text('$count ${context.t(K.soru)}'),
+                    selected: _selectedQuestionCount == count,
+                    onSelected: (_) =>
+                        setState(() => _selectedQuestionCount = count),
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // Soru Başına Süre
+            Text(
+              context.t(K.secondsPerQuestion),
+              style: AppTypography.bodyLarge.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppTheme.textPrimaryColor(context),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              children: [
+                for (final seconds in GameRoom.allowedDurations)
+                  ChoiceChip(
+                    key: ValueKey('custom-room-duration-$seconds'),
+                    label: Text('$seconds ${context.t(K.secondsShortUnit)}'),
+                    selected: _selectedDuration == seconds,
+                    onSelected: (_) =>
+                        setState(() => _selectedDuration = seconds),
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // Bahis / Giriş Ücreti
+            // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
+            // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
+            // (`home_room_failures_test` yakaladı). `spaceBetween` tek
+            // başına taşmayı önlemez — çocuklar doğal boyutlarını ister.
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Text(
+                    context.t(K.entryFeeLabel),
+                    style: AppTypography.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Flexible(
+                  child: Text(
+                    context.t(K.yourBalance, {
+                      'coins': widget.coinBalance.toString(),
+                    }),
+                    textAlign: TextAlign.end,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              children: [
+                for (final fee in GameRoom.allowedEntryFees)
+                  ChoiceChip(
+                    key: ValueKey('custom-room-fee-$fee'),
+                    label: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (fee > 0) ...[
+                          const Icon(
+                            AppIcons.coins,
+                            size: 14,
+                            color: Color(0xFFD4AF37),
+                          ),
+                          const SizedBox(width: 4),
+                        ],
+                        Text(
+                          fee == 0
+                              ? context.t(K.freeEntry)
+                              : '$fee ${context.t(K.coinWord)}',
+                        ),
+                      ],
+                    ),
+                    selected: _selectedEntryFee == fee,
+                    onSelected: (_) => setState(() => _selectedEntryFee = fee),
+                  ),
+              ],
+            ),
+            if (!hasEnoughCoins) ...[
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                context.t(K.insufficientCoins),
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.wrong,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+            const SizedBox(height: AppSpacing.lg),
+
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: !hasEnoughCoins
+                    ? null
+                    : () {
+                        Navigator.of(context).pop(
+                          _CustomRoomConfig(
+                            category: _selectedCategory,
+                            duration: _selectedDuration,
+                            questionCount: _selectedQuestionCount,
+                            entryFee: _selectedEntryFee,
+                          ),
+                        );
+                      },
+                child: Text(context.t(K.openRoom)),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -565,6 +565,8 @@ void main() {
     expect(httpClient.requestBodies.single, {
       'p_category_name': 'Ziman',
       'p_seconds_per_question': 20,
+      'p_question_count': 10,
+      'p_entry_fee': 0,
     });
   });
 

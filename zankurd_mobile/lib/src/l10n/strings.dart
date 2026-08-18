@@ -2361,6 +2361,88 @@ class Tr {
       'ku': 'Moda zarokan vekirî ye — lêgerîna hevalan girtî ye.',
       'tr': 'Çocuk modu açık — arkadaş arama kapalı.',
     },
+
+    // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────
+    K.customRoomTitle: {
+      'ku': 'Odeya Taybet Ava Bike',
+      'tr': 'Özel Oda Oluştur',
+    },
+    K.selectCategory: {
+      'ku': 'Kategoriyê Hilbijêre',
+      'tr': 'Kategori Seç',
+    },
+    K.questionCountLabel: {
+      'ku': 'Hejmara Pirsan',
+      'tr': 'Soru Sayısı',
+    },
+    K.entryFeeLabel: {
+      'ku': 'Xerca Ketinê (Bahîs)',
+      'tr': 'Giriş Ücreti (Bahis)',
+    },
+    K.freeEntry: {
+      'ku': 'Bêpere (0)',
+      'tr': 'Ücretsiz (0)',
+    },
+    K.insufficientCoins: {
+      'ku': 'Zêrên te têrê nakin!',
+      'tr': 'Yetersiz Coin!',
+    },
+    K.entryFeeRequired: {
+      'ku': 'Ji bo vê odeyê {amount} zêr pêwîst e.',
+      'tr': 'Bu oda için {amount} coin gerekiyor.',
+    },
+    K.rematch: {
+      'ku': 'Dîsa Bilîze (Rovanj)',
+      'tr': 'Rövanş İste',
+    },
+    K.rematchWaiting: {
+      'ku': 'Li benda bersiva hevrikê ye…',
+      'tr': 'Rakibin cevabı bekleniyor…',
+    },
+    K.rematchAccepted: {
+      'ku': 'Hevrik rovanj qebûl kir!',
+      'tr': 'Rakip rövanşı kabul etti!',
+    },
+    K.rematchDeclined: {
+      'ku': 'Hevrik derket an qebûl nekir.',
+      'tr': 'Rakip ayrıldı veya reddetti.',
+    },
+    K.comboMultiplier: {
+      'ku': 'Kombo x{count}!',
+      'tr': 'Kombo x{count}!',
+    },
+    K.streakFire: {
+      'ku': 'Pêt vedaye!',
+      'tr': 'Alev Aldın!',
+    },
+    K.opponentAnswered: {
+      'ku': 'Hevrik bersiv da!',
+      'tr': 'Rakip cevapladı!',
+    },
+    K.yourTurnFast: {
+      'ku': 'Lez be!',
+      'tr': 'Hızlı ol!',
+    },
+    K.reactionBravo: {
+      'ku': 'Destxweş!',
+      'tr': 'Tebrikler!',
+    },
+    K.reactionGoodLuck: {
+      'ku': 'Serkeftin!',
+      'tr': 'Başarılar!',
+    },
+    K.reactionFast: {
+      'ku': 'Lez be!',
+      'tr': 'Hızlı ol!',
+    },
+    K.reactionSmiley: {
+      'ku': 'Kêfxweşî!',
+      'tr': 'Gülümse!',
+    },
+    K.reactionFire: {
+      'ku': 'Agir!',
+      'tr': 'Harika!',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -3428,4 +3510,26 @@ class K {
   static const allExplanations = 'result.allExplanations';
   static const allExplanationsHint = 'result.allExplanations.hint';
   static const correctAnswerLabel = 'result.correctAnswer';
+
+  // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────
+  static const customRoomTitle = 'play.customRoom.title';
+  static const selectCategory = 'play.selectCategory';
+  static const questionCountLabel = 'play.questionCount.label';
+  static const entryFeeLabel = 'play.entryFee.label';
+  static const freeEntry = 'play.entryFee.free';
+  static const insufficientCoins = 'play.insufficientCoins';
+  static const entryFeeRequired = 'play.entryFee.required';
+  static const rematch = 'result.rematch';
+  static const rematchWaiting = 'result.rematch.waiting';
+  static const rematchAccepted = 'result.rematch.accepted';
+  static const rematchDeclined = 'result.rematch.declined';
+  static const comboMultiplier = 'quiz.comboMultiplier';
+  static const streakFire = 'quiz.streakFire';
+  static const opponentAnswered = 'quiz.opponentAnswered';
+  static const yourTurnFast = 'quiz.yourTurnFast';
+  static const reactionBravo = 'room.reaction.bravo';
+  static const reactionGoodLuck = 'room.reaction.goodLuck';
+  static const reactionFast = 'room.reaction.fast';
+  static const reactionSmiley = 'room.reaction.smiley';
+  static const reactionFire = 'room.reaction.fire';
 }

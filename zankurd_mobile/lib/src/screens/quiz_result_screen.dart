@@ -42,6 +42,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
+import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Seri kararının sonucu.
@@ -155,6 +156,34 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
   bool _ackAttempted = false;
+  bool _rematchLoading = false;
+
+  Future<void> _requestRematch() async {
+    if (_rematchLoading) return;
+    setState(() => _rematchLoading = true);
+    try {
+      final newRoom = await widget.repository.createOnlineRoom(
+        category: widget.room.category,
+        secondsPerQuestion: widget.room.secondsPerQuestion,
+        questionCount: widget.room.questionCount,
+        entryFee: widget.room.entryFee,
+      );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          RoomScreen(repository: widget.repository, initialRoom: newRoom),
+        ),
+      );
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'rematch create room failed');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
+    } finally {
+      if (mounted) setState(() => _rematchLoading = false);
+    }
+  }
 
   @override
   void initState() {
@@ -1532,6 +1561,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                         ),
                       ),
                       const SizedBox(width: 10),
+                      if (isOnlineRoom)
+                        _ResultSideAction(
+                          key: const ValueKey('result-rematch-button'),
+                          icon: AppIcons.arrowsRotate,
+                          label: context.t(K.rematch),
+                          onTap: _rematchLoading ? null : _requestRematch,
+                        ),
                       if (wrongRecords.isNotEmpty)
                         _ResultSideAction(
                           key: const ValueKey('result-play-again-button'),
