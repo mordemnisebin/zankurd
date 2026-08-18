@@ -838,7 +838,7 @@
   {
     "id": "offline_0652",
     "category": "Edebiyat",
-    "prompt": "Wêneya \"çîrok\" kîjan cureyê vegotinê nîşan dide?",
+    "prompt": "Peyva \"çîrok\" bi tirkî çi ye?",
     "answers": [
       "takvim",
       "hikâye",
@@ -852,7 +852,7 @@
     "difficulty": 1,
     "explanationTr": "\"çîrok\" Kurmancîde hikâye/anlatı anlamına gelir.",
     "explanationKu": "Peyva \"çîrok\" cureyekî vegotinê nîşan dide: bûyerên ku tên gotin an nivîsandin.",
-    "promptTr": "\"çîrok\" görseli hangi anlatı türünü gösterir?",
+    "promptTr": "\"çîrok\" sözcüğünün Türkçesi nedir?",
     "answersTr": [
       "takvim",
       "hikâye",
@@ -1572,9 +1572,9 @@
     "category": "Edebiyat",
     "prompt": "Kovara \"Hawar\" kê derxist?",
     "answers": [
-      "Rojnameya Nû",
-      "Ehmedê Xanî",
-      "axaftina bi hev re",
+      "Kamûran Alî Bedirxan",
+      "Mela Ehmedê Xasî",
+      "Osman Sebrî",
       "Celadet Alî Bedirxan"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
@@ -1584,9 +1584,9 @@
     "promptTr": "\"Hawar\" dergisini kim çıkardı?",
     "answersTr": [
       "Rojnameya Nû",
+      "Celadet Alî Bedirxan",
       "Ehmedê Xanî",
-      "karşılıklı konuşma",
-      "Celadet Alî Bedirxan"
+      "karşılıklı konuşma"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },
@@ -1618,9 +1618,9 @@
     "category": "Edebiyat",
     "prompt": "Alfabeya Kurmancî ya Latînî kê amade kir?",
     "answers": [
-      "teyran (kuşlarla)",
-      "axaftina bi hev re",
-      "Melayê Cizîrî",
+      "Kamûran Alî Bedirxan",
+      "Mela Ehmedê Xasî",
+      "Qedrîcan",
       "Celadet Alî Bedirxan"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
@@ -1630,9 +1630,9 @@
     "promptTr": "Latin temelli Kurmancî alfabesini kim hazırladı?",
     "answersTr": [
       "teyran (kuşlar)",
+      "Celadet Alî Bedirxan",
       "karşılıklı konuşma",
-      "Melayê Cizîrî",
-      "Celadet Alî Bedirxan"
+      "Melayê Cizîrî"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },
@@ -2678,10 +2678,10 @@
     "category": "Edebiyat",
     "prompt": "Kovara \"Hawar\" ya ku beşdarî kurdiya nûjen kiriye li kîjan bajarî derketiye?",
     "answers": [
-      "Tahran",
+      "Tehran",
       "Şam",
-      "İstanbul",
-      "Bağdat"
+      "Stenbol",
+      "Bexda"
     ],
     "correctAnswer": "Şam",
     "explanation": "Hawar dergisi, Celadet Alî Bedirxan tarafından Şam'da (Suriye) yayımlanmıştır.",
@@ -10217,24 +10217,24 @@
   {
     "id": "offline_9207",
     "category": "Edebiyat",
-    "prompt": "Têgiha \"Ronahî dergisi\" çi pêk tîne?",
+    "prompt": "Kovara \"Ronahî\" çi bû?",
     "answers": [
-      "ku navên girîng ên helbesta kurdî ya klasîk in",
-      "helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire",
-      "kovara wêjeyî ya ku li Şamê bi alfabeya latînî derket",
-      "ji ber ku gelek nivîskar li derveyî welêt berhem didin"
+      "rojnameya kurdî ya yekem a ku li Qahîreyê derket",
+      "kovara ku li Erîvanê bi alfabeya krîlî dihat çapkirin",
+      "kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket",
+      "kovara zanistî ya ku li Bexdayê bi erebî derdiket"
     ],
-    "correctAnswer": "kovara wêjeyî ya ku li Şamê bi alfabeya latînî derket",
+    "correctAnswer": "kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket",
     "explanation": "\"Ronahî dergisi\": Şam'da Latin alfabesiyle çıkarılan edebi dergi.",
     "type": "multipleChoice",
     "difficulty": 1,
     "explanationKu": "\"Kovara Ronahî\": kovara wêjeyî ya ku li Şamê bi tîpên latînî derket.",
     "explanationTr": "\"Ronahî dergisi\": Şam'da Latin alfabesiyle çıkarılan edebi dergi.",
-    "promptTr": "\"Ronahî dergisi\" kavramı neyi ifade eder?",
+    "promptTr": "\"Ronahî\" dergisi neydi?",
     "answersTr": [
-      "klasik Kürt şiirinin önemli adları olması",
       "klasik Kürt edebiyatında önemli yer tutan şair",
       "Şam'da Latin alfabesiyle çıkan edebiyat dergisi",
+      "klasik Kürt şiirinin önemli adları olması",
       "birçok yazarın ülke dışında eser vermesi"
     ],
     "correctAnswerTr": "Şam'da Latin alfabesiyle çıkan edebiyat dergisi"
@@ -10242,27 +10242,27 @@
   {
     "id": "offline_9215",
     "category": "Edebiyat",
-    "prompt": "Kîjan têgiha \"çîrok\" rast şirove dike?",
+    "prompt": "Kîjan cureya vegotinê bi gelemperî kurt e û li ser bûyerek an çend bûyeran e?",
     "answers": [
-      "helbest",
-      "hikaye",
-      "kahire",
-      "destan"
+      "Helbest",
+      "Çîrok",
+      "Destan",
+      "Şano"
     ],
-    "correctAnswer": "hikaye",
-    "explanation": "\"çîrok\" = \"hikâye\". Mînak: Dapîran bi şev ji zarokan re çîrok digotin.",
+    "correctAnswer": "Çîrok",
+    "explanation": "Çîrok (hikâye) kısa anlatı türüdür; destan uzun ve manzum, şano sahne için yazılır.",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationKu": "\"çîrok\" = \"hikâye\". Mînak: Dapîran bi şev ji zarokan re çîrok digotin.",
+    "explanationKu": "Çîrok cureya vegotinê ya kurt e; destan dirêj û bi helbest e, şano ji bo dikê tê nivîsandin.",
     "explanationTr": "\"çîrok\" = \"hikâye\". Örnek: Nineler geceleri çocuklara hikâye anlatırdı.",
-    "promptTr": "\"çîrok\" kelimesini hangisi doğru açıklar?",
+    "promptTr": "Hangi anlatı türü genellikle kısadır ve bir ya da birkaç olayı konu alır?",
     "answersTr": [
-      "şiir",
-      "hikaye",
-      "kahire",
-      "destan"
+      "Şiir",
+      "Hikâye",
+      "Destan",
+      "Tiyatro"
     ],
-    "correctAnswerTr": "hikaye"
+    "correctAnswerTr": "Hikâye"
   },
   {
     "id": "offline_9227",
@@ -10294,12 +10294,12 @@
     "category": "Edebiyat",
     "prompt": "Dema \"diyalog\" tê gotin, çi tê xwestin?",
     "answers": [
-      "kahramanlık anlatısı",
-      "karşılıklı konuşma",
-      "tek kişilik uzun konuşma",
-      "olayların geçtiği yer"
+      "vegotina lehengiyê",
+      "axaftina bi hev re",
+      "axaftina dirêj a kesekî tenê",
+      "cihê ku bûyer tê de diqewime"
     ],
-    "correctAnswer": "karşılıklı konuşma",
+    "correctAnswer": "axaftina bi hev re",
     "explanation": "\"diyalog\" di şanoyê de bingeh e; bêyî wê leheng nayê naskirin.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -10319,12 +10319,12 @@
     "category": "Edebiyat",
     "prompt": "Li jêr ji bo \"roman\" ya rast kîjan e?",
     "answers": [
-      "Ehmedê Xanî",
-      "Melayê Bateyî",
-      "vegotina dirêj",
-      "Feqiyê Teyran"
+      "helbesteke kurt a bi qafiye",
+      "berhevoka gotinên pêşiyan",
+      "vegotina dirêj a bi pexşan",
+      "lîstika ku ji bo dikê tê nivîsandin"
     ],
-    "correctAnswer": "vegotina dirêj",
+    "correctAnswer": "vegotina dirêj a bi pexşan",
     "explanation": "\"roman\" vegotineke dirêj e. Mînak: Romana kurdî ya yekem \"Şivanê Kurmanca\" ye (1935).",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -10332,21 +10332,21 @@
     "explanationTr": "\"roman\" uzun bir anlatıdır. Örnek: İlk Kürt romanı \"Şivanê Kurmanca\"dır (1935).",
     "promptTr": "Aşağıdakilerden hangisi \"roman\" için doğrudur?",
     "answersTr": [
-      "Ehmedê Xanî",
-      "Melayê Bateyî",
-      "uzun anlatı",
-      "Feqiyê Teyran"
+      "kısa ve kafiyeli şiir",
+      "atasözü derlemesi",
+      "düzyazıyla yazılan uzun anlatı",
+      "sahne için yazılan oyun"
     ],
-    "correctAnswerTr": "uzun anlatı"
+    "correctAnswerTr": "düzyazıyla yazılan uzun anlatı"
   },
   {
     "id": "offline_9287",
     "category": "Edebiyat",
     "prompt": "\"karakter\" di mijara wêjeyê de çi vedibêje?",
     "answers": [
-      "Siyabend û Xecê",
-      "xweza û teyr",
-      "Melayê Cizîrî",
+      "cihê ku bûyer diqewime",
+      "ramana sereke ya berhemê",
+      "dengê ku çîrokê radigihîne",
       "kesayeta vegotinê"
     ],
     "correctAnswer": "kesayeta vegotinê",
@@ -10358,9 +10358,9 @@
     "explanationTr": "\"karakter\" olayların üzerinden geçtiği kişidir. Örnek: Mem ile Zîn iki ana karakterdir.",
     "promptTr": "Edebiyat alanında \"karakter\" neyi anlatır?",
     "answersTr": [
-      "Siyabend û Xecê",
-      "doğa ve kuşlar",
-      "Melayê Cizîrî",
+      "olayın geçtiği yer",
+      "eserin ana fikri",
+      "hikâyeyi aktaran ses",
       "anlatının kişisi"
     ],
     "correctAnswerTr": "anlatının kişisi"
@@ -10420,24 +10420,24 @@
     "category": "Edebiyat",
     "prompt": "Ji aliyê Edebiyatê ve ji bo \"Mem û Zîn\" îfadeya rast kîjan e?",
     "answers": [
-      "ku navên girîng ên helbesta kurdî ya klasîk in",
-      "helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê",
-      "destana evînê ya herî mezin a wêjeya klasîk a kurdî",
-      "helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî"
+      "berhevoka helbestên sofîyane yên Melayê Cizîrî",
+      "romana kurdî ya nûjen a ku li Ermenistanê hat çapkirin",
+      "mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye",
+      "ferhenga helbestî ya kurdî-erebî ya ji bo zarokan"
     ],
-    "correctAnswer": "destana evînê ya herî mezin a wêjeya klasîk a kurdî",
-    "explanation": "\"Mem û Zîn\": Ehmedê Xanî'nin 1695'te yazdığı, Kürt klasik edebiyatının başyapıtı sayılan aşk mesnevisi.",
+    "correctAnswer": "mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye",
+    "explanation": "\"Mem û Zîn\": Ehmedê Xanî'nin 1695'te yazdığı klasik aşk mesnevisi.",
     "type": "multipleChoice",
     "difficulty": 1,
     "promptTr": "Edebiyat açısından \"Mem û Zîn\" için doğru ifade hangisidir?",
     "answersTr": [
+      "Kürt klasik edebiyatının en büyük aşk destanı",
       "klasik Kürt şiirinin önemli isimleri olmaları",
       "Rojhilatê Kurdistan'ın ünlü modern şair ve yazarı",
-      "Kürt klasik edebiyatının en büyük aşk destanı",
       "Kürt edebiyatının en eski klasik rubai şairi"
     ],
     "correctAnswerTr": "Kürt klasik edebiyatının en büyük aşk destanı",
-    "explanationTr": "\"Mem û Zîn\": Ehmedê Xanî'nin 1695'te yazdığı, Kürt klasik edebiyatının başyapıtı sayılan aşk mesnevisi."
+    "explanationTr": "\"Mem û Zîn\": Ehmedê Xanî'nin 1695'te yazdığı klasik aşk mesnevisi."
   },
   {
     "id": "offline_9408",
@@ -10517,11 +10517,11 @@
   {
     "id": "offline_9434",
     "category": "Edebiyat",
-    "prompt": "\"Riya Taza gazetesi\" çawa tê pênasekirin?",
+    "prompt": "Rojnameya \"Riya Taza\" çawa tê pênasekirin?",
     "answers": [
-      "damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist",
-      "nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca",
-      "Mem û Zîn",
+      "rojnameya kurdî ya ku li Stenbolê bi osmanî derket",
+      "kovara wêjeyî ya ku li Şamê bi latînî derket",
+      "rojnameya ku li Bexdayê ji aliyê dewletê ve dihat weşandin",
       "rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin"
     ],
     "correctAnswer": "rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin",
@@ -10530,12 +10530,12 @@
     "difficulty": 4,
     "explanationKu": "\"Rojnameya Riya Taza\": rojnameya kurdî ya ku bi salan li Rewanê hat çapkirin.",
     "explanationTr": "\"Riya Taza gazetesi\": Erivan'da uzun yıllar basılan Kürtçe gazete.",
-    "promptTr": "\"Riya Taza gazetesi\" nasıl tanımlanır?",
+    "promptTr": "\"Riya Taza\" gazetesi nasıl tanımlanır?",
     "answersTr": [
-      "Hawar dergisini çıkaran edebi ekolün kurucusu",
       "Şivanê Kurmanca adlı ilk Kürtçe romanın yazarı",
       "Mem û Zîn",
-      "Erivan'da yıllarca basılan Kürtçe gazete"
+      "Erivan'da yıllarca basılan Kürtçe gazete",
+      "Hawar dergisini çıkaran edebi ekolün kurucusu"
     ],
     "correctAnswerTr": "Erivan'da yıllarca basılan Kürtçe gazete"
   },
@@ -10545,9 +10545,9 @@
     "prompt": "Ji bo \"Xanî Mektebi\" ravekirina herî dirust kîjan e?",
     "answers": [
       "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
-      "akademîsyenê ku li ser ziman û wêjeya kurdî dixebite",
-      "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de",
-      "zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî"
+      "tevgera ku bi kovara Hawarê re li Şamê pêk hat",
+      "dibistana helbesta klasîk a ku li derdora Babanê geş bû",
+      "tevgera romannivîsiyê ya ku li Ermenistanê dest pê kir"
     ],
     "correctAnswer": "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
     "explanation": "\"Xanî Mektebi\": Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol.",
@@ -10569,23 +10569,23 @@
     "category": "Edebiyat",
     "prompt": "Têgiha \"vebêj\" çi pêk tîne?",
     "answers": [
-      "hikayeyi aktaran ses",
-      "teyran (kuşlarla)",
-      "Kürtçe (Kurmancî)",
-      "Dîwana xwe ya klasîk"
+      "dengê ku çîrokê vedibêje",
+      "kesayeta sereke ya çîrokê",
+      "cihê ku bûyer tê de diqewime",
+      "ramana sereke ya berhemê"
     ],
-    "correctAnswer": "hikayeyi aktaran ses",
+    "correctAnswer": "dengê ku çîrokê vedibêje",
     "explanation": "\"anlatıcı\": hikayeyi aktaran ses.",
     "type": "multipleChoice",
     "difficulty": 3,
     "promptTr": "\"vebêj\" terimi neyi ifade eder?",
     "answersTr": [
-      "hikayeyi aktaran ses",
-      "teyran (kuşlarla)",
-      "Kürtçe (Kurmancî)",
-      "kendi klasik divanı"
+      "hikâyeyi aktaran ses",
+      "hikâyenin baş kişisi",
+      "olayların geçtiği yer",
+      "eserin ana fikri"
     ],
-    "correctAnswerTr": "hikayeyi aktaran ses"
+    "correctAnswerTr": "hikâyeyi aktaran ses"
   },
   {
     "id": "offline_9473",
@@ -10692,10 +10692,10 @@
     "category": "Edebiyat",
     "prompt": "\"Ferhad û Şîrîn\" di mijara wêjeyê de çi vedibêje?",
     "answers": [
-      "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
+      "destana şer a li ser mîrektiyên kurdan",
       "çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin",
-      "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî",
-      "yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî"
+      "berhevoka gotinên pêşiyan a ku ji devkî hat nivîsandin",
+      "lîstika şanoyî ya yekem a bi kurmancî"
     ],
     "correctAnswer": "çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin",
     "explanation": "\"Ferhad û Şîrîn\": Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.",
@@ -10705,8 +10705,8 @@
     "explanationTr": "\"Ferhad û Şîrîn\": Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.",
     "promptTr": "\"Ferhad û Şîrîn\" edebiyat konusunda neyi ifade eder?",
     "answersTr": [
-      "Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol",
       "Kürt sözlü geleneğinde de anlatılan klasik aşk hikâyesi",
+      "Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol",
       "Şerefname ve Mem û Zîn'i Soranîye çeviren yazar",
       "Kürt edebiyatının en eski klasik şairlerinden biri"
     ],
@@ -10717,22 +10717,22 @@
     "category": "Edebiyat",
     "prompt": "Kîjan têgiha \"Nûbihara Biçukan\" rast şirove dike?",
     "answers": [
-      "ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir",
-      "zêdekirina xuyabûna kurdî di nivîs, weşan, perwerde û hilberîna dîjîtal de",
-      "yekem ferhenga kurdî ya ku Ehmedê Xanî nivîsî",
-      "bi weşandina yekem rojnameya kurdî, Kurdistanê re girêdayî ye"
+      "mesnewiya evînê ya klasîk a Ehmedê Xanî",
+      "berhevoka helbestên sofîyane yên Melayê Cizîrî",
+      "ferhenga helbestî ya kurdî-erebî ya ji bo zarokan",
+      "destana gelêrî ya li ser Memê Alan"
     ],
-    "correctAnswer": "yekem ferhenga kurdî ya ku Ehmedê Xanî nivîsî",
-    "explanation": "\"Nûbihara Biçukan\": Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.",
+    "correctAnswer": "ferhenga helbestî ya kurdî-erebî ya ji bo zarokan",
+    "explanation": "\"Nûbihara Biçûkan\": Ehmedê Xanî'nin çocuklar için yazdığı manzum Kürtçe-Arapça sözlük.",
     "type": "multipleChoice",
     "difficulty": 4,
     "explanationKu": "\"Nûbihara Biçûkan\": ferhenga kurdî ya yekem a ku Ehmedê Xanî nivîsî.",
     "explanationTr": "\"Nûbihara Biçukan\": Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.",
     "promptTr": "Hangi seçenek \"Nûbihara Biçukan\" terimini doğru açıklar?",
     "answersTr": [
-      "Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol",
       "Kürtçenin yazıda, yayında, eğitimde ve dijital üretimde görünürlüğünün artması",
       "Ehmedê Xanî'nin yazdığı ilk Kürtçe sözlük",
+      "Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol",
       "ilk Kürtçe gazete olan Kurdistan'ın yayımlanmasıyla ilgilidir"
     ],
     "correctAnswerTr": "Ehmedê Xanî'nin yazdığı ilk Kürtçe sözlük"
@@ -10742,12 +10742,12 @@
     "category": "Edebiyat",
     "prompt": "Têgiha \"kafiye\" çi pêk tîne?",
     "answers": [
-      "Dengbêjler",
-      "Kürdistan",
-      "Mem û Zîn",
-      "ses uyumu"
+      "pîvana kîteyên rêzikê",
+      "ramana sereke ya helbestê",
+      "dubarekirina peyvekê di destpêkê de",
+      "lihevhatina dengên dawiya rêzikan"
     ],
-    "correctAnswer": "ses uyumu",
+    "correctAnswer": "lihevhatina dengên dawiya rêzikan",
     "explanation": "\"kafiye\" dengan li dawiya rêzan li hev tîne û ezberkirinê hêsan dike.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -10755,24 +10755,24 @@
     "explanationTr": "\"kafiye\" dize sonlarındaki sesleri uyumlu kılar ve ezberlemeyi kolaylaştırır.",
     "promptTr": "\"kafiye\" terimi neyi ifade eder?",
     "answersTr": [
-      "Dengbêjler",
-      "Kürdistan",
-      "Mem û Zîn",
-      "ses uyumu"
+      "dizenin hece ölçüsü",
+      "şiirin ana fikri",
+      "baştaki sözcük tekrarı",
+      "dize sonlarındaki ses uyuşması"
     ],
-    "correctAnswerTr": "ses uyumu"
+    "correctAnswerTr": "dize sonlarındaki ses uyuşması"
   },
   {
     "id": "offline_9623",
     "category": "Edebiyat",
     "prompt": "Derbarê \"tema\" de vebijêrka rast kîjan e?",
     "answers": [
-      "Mem û Zîn",
-      "ramana sereke",
-      "tiştonek",
-      "vegotina dirêj"
+      "bûyera sereke ya vegotinê",
+      "ramana sereke ya berhemê",
+      "kesayeta sereke ya çîrokê",
+      "cihê ku bûyer diqewime"
     ],
-    "correctAnswer": "ramana sereke",
+    "correctAnswer": "ramana sereke ya berhemê",
     "explanation": "\"tema\" ne bûyer e; ew ramana ku li pişt bûyeran radiweste ye.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -10780,12 +10780,12 @@
     "explanationTr": "\"tema\" olay değildir; olayların ardında duran düşüncedir.",
     "promptTr": "\"tema\" hakkında doğru seçenek hangisidir?",
     "answersTr": [
-      "Mem û Zîn",
-      "ana düşünce",
-      "bir nesne",
-      "uzun anlatı"
+      "anlatının ana olayı",
+      "eserin ana fikri",
+      "hikâyenin baş kişisi",
+      "olayın geçtiği yer"
     ],
-    "correctAnswerTr": "ana düşünce"
+    "correctAnswerTr": "eserin ana fikri"
   },
   {
     "id": "offline_9625",
@@ -10868,9 +10868,9 @@
     "prompt": "Ji bo \"Ekola Hawarê\" ravekirina herî dirust kîjan e?",
     "answers": [
       "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir",
-      "yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî",
-      "çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin",
-      "helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî"
+      "dibistana helbesta klasîk a ku li Babanê geş bû",
+      "tevgera romannivîsiyê ya ku li Erîvanê pêk hat",
+      "ekola ramanî ya ku Ehmedê Xanî dest pê kir"
     ],
     "correctAnswer": "tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir",
     "explanation": "\"Hawar Ekolü\": Kürt aydınlanmasını ve Latin alfabesini yayan edebi akım.",
@@ -10892,16 +10892,16 @@
     "category": "Edebiyat",
     "prompt": "Di zanîna wêjeyê de der barê \"Şêrko Bêkes\" de ya rast kîjan e?",
     "answers": [
-      "rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin",
-      "helbestvanê mezin ê ku şêwaza azad anî helbesta kurdî",
+      "helbestvanê klasîk ê dîwana Babanê",
       "pêşengê nûjenbûnê di helbesta kurdî ya soranî de",
-      "kovara wêjeyî ya ku li Şamê bi alfabeya latînî derket"
+      "romannivîsê yekem ê kurdî yê nûjen",
+      "damezrînerê kovara Hawarê"
     ],
-    "correctAnswer": "helbestvanê mezin ê ku şêwaza azad anî helbesta kurdî",
-    "explanation": "\"Şêrko Bêkes\": Kürt şiirine serbest tarzı getiren büyük şair.",
+    "correctAnswer": "pêşengê nûjenbûnê di helbesta kurdî ya soranî de",
+    "explanation": "Şêrko Bêkes, Sorani Kürt şiirinin öncü yenilikçilerindendir. Serbest şiirin Sorani edebiyatındaki ilk açılımı ise 1930'larda Abdulla Goran ile anılır.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "\"Şêrko Bêkes\": helbestvanê mezin ê ku şêwaza azad anî helbesta kurdî.",
+    "explanationKu": "Şêrko Bêkes ji pêşengên nûjenbûnê yên helbesta kurdî ya soranî ye. Vebûna yekem a helbesta azad di soranî de bi Ebdulla Goran ve tê bibîranîn.",
     "explanationTr": "\"Şêrko Bêkes\": Kürt şiirine serbest tarzı getiren büyük şair.",
     "promptTr": "Edebiyat bilgisinde \"Şêrko Bêkes\" hakkında doğru olan hangisidir?",
     "answersTr": [
@@ -10942,10 +10942,10 @@
     "category": "Edebiyat",
     "prompt": "Berhema bi navê \"Şivanê Kurmanca\" çi ye?",
     "answers": [
-      "Zimanê nivîskî fireh dike û peyvsaziyê dewlemend dike",
+      "yekem berhevoka çîrokên kurdî ya ku di 1913an de derket",
       "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
-      "helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî",
-      "helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê"
+      "destana gelêrî ya ku di 1898an de hat tomarkirin",
+      "ferhenga kurdî-erebî ya ku di 1683an de hat nivîsandin"
     ],
     "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
     "explanation": "\"Şivanê Kurmanca\": Erebê Şemo'nun 1935'te basılan ve ilk modern Kürtçe roman sayılan eseri; sonradan \"Şivanê Kurd\" adıyla da bilinir.",
@@ -10967,17 +10967,17 @@
     "category": "Edebiyat",
     "prompt": "Di zanîna Edebiyatê de derbarê \"Nalî\" de ya rast kîjan e?",
     "answers": [
-      "helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî",
-      "ji ber ku xebatên ziman û alfabeyê belav kir",
-      "akademîsyenê ku li ser ziman û wêjeya kurdî dixebite",
-      "yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî"
+      "yek ji helbestvanên sereke yên dibistana klasîk a Babanê",
+      "damezrînerê ekola wêjeyî ya kovara Hawarê",
+      "nivîskarê yekem romana kurdî ya nûjen",
+      "zimannasê ku rêzimana kurmancî nivîsî"
     ],
-    "correctAnswer": "helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî",
-    "explanation": "\"Nalî\": Soranice klasik şiirin kurucu adlarından divan şairi.",
+    "correctAnswer": "yek ji helbestvanên sereke yên dibistana klasîk a Babanê",
+    "explanation": "\"Nalî\": Soranice klasik şiirin Baban okulunun başlıca adlarından divan şairi.",
     "type": "multipleChoice",
     "difficulty": 2,
     "explanationKu": "\"Nalî\": helbestvanê dîwanê yê herî mezin ê ekola klasîk a soranî.",
-    "explanationTr": "\"Nalî\": Soranice klasik şiirin kurucu adlarından divan şairi.",
+    "explanationTr": "\"Nalî\": Soranice klasik şiirin Baban okulunun başlıca adlarından divan şairi.",
     "promptTr": "Edebiyat bilgisinde \"Nalî\" hakkında doğru olan hangisidir?",
     "answersTr": [
       "Sorani klasik şiir okulunun en büyük divan şairi",
@@ -11192,10 +11192,10 @@
     "category": "Edebiyat",
     "prompt": "Ji aliyê wêjeyê ve ji bo \"Dîwana Melayê Cizîrî\" gotina rast kîjan e?",
     "answers": [
-      "helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû",
-      "helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê",
+      "mesnewiya evînê ya ku Ehmedê Xanî nivîsandiye",
+      "berhevoka çîrokên gelêrî yên herêma Botanê",
       "dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne",
-      "kovara wêjeyî ya ku li Şamê bi alfabeya latînî derket"
+      "ferhenga helbestî ya kurdî-erebî ya ji bo zarokan"
     ],
     "correctAnswer": "dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne",
     "explanation": "\"Dîwana Melayê Cizîrî\": mistik aşk ve felsefe içeren meşhur şiir divanı.",
@@ -11205,9 +11205,9 @@
     "explanationTr": "\"Dîwana Melayê Cizîrî\": mistik aşk ve felsefe içeren meşhur şiir divanı.",
     "promptTr": "Edebiyat açısından \"Dîwana Melayê Cizîrî\" için doğru ifade hangisidir?",
     "answersTr": [
-      "Colemêrg mîrliğinde yetişen klasik divan şairi",
       "Rojhilatê Kurdistanê'nin ünlü modern şair ve yazarı",
       "mistik aşk ve felsefe içeren ünlü şiir divanı",
+      "Colemêrg mîrliğinde yetişen klasik divan şairi",
       "Şam'da Latin alfabesiyle çıkan edebiyat dergisi"
     ],
     "correctAnswerTr": "mistik aşk ve felsefe içeren ünlü şiir divanı"

@@ -352,24 +352,24 @@
   {
     "id": "visual_2026_08_07_0011",
     "category": "Edebiyat",
-    "prompt": "Di wêneyê de qelemek li ser kaxezeke vala ya hê nenivîsandî ye. Xisleta ku helbestê ji pexşanê vediqetîne bi giranî çi ye?",
+    "prompt": "Di wêneyê de qelemek li ser kaxezeke vala ye. Helbest bi giranî bi kîjan yekeyên avanî tê rêzkirin?",
     "answers": [
-      "Bi rêzikên kurt û bi ahenga dengan tê hûnandin",
-      "Bi paragrafên dirêj û bêyî rêzikan tê nivîsîn",
-      "Bi diyalogên li ser dikê û bi perdeyan tê dabeşkirin",
-      "Bi bûyerên rojane û bi jêderan tê tomarkirin"
+      "Bi rêzik û bendan",
+      "Bi paragraf û beşan",
+      "Bi perde û dîmenan",
+      "Bi bendên qanûnî"
     ],
-    "correctAnswer": "Bi rêzikên kurt û bi ahenga dengan tê hûnandin",
-    "promptTr": "Görselde henüz yazılmamış boş bir kâğıdın üzerinde bir kalem duruyor. Şiiri düz yazıdan ayıran temel özellik nedir?",
+    "correctAnswer": "Bi rêzik û bendan",
+    "promptTr": "Görselde boş bir kâğıt üzerinde bir kalem var. Şiir çoğunlukla hangi yapısal birimlerle düzenlenir?",
     "answersTr": [
-      "Kısa dizelerle ve ses ahengiyle örülür",
-      "Uzun paragraflarla, dizelere bölünmeden yazılır",
-      "Sahne diyaloglarıyla ve perdelere bölünür",
-      "Günlük olaylarla ve kaynaklarla kaydedilir"
+      "Dize ve bentlerle",
+      "Paragraf ve bölümlerle",
+      "Perde ve sahnelerle",
+      "Yasa maddeleriyle"
     ],
-    "correctAnswerTr": "Kısa dizelerle ve ses ahengiyle örülür",
-    "explanation": "Şiir dize ve bentler halinde örülür; ses ahengi, ölçü ve uyak orada anlam kadar önemlidir. Düz yazı cümle ve paragraflarla akar, sahne diyaloğu ise tiyatroya aittir.",
-    "explanationKu": "Helbest bi rêzik û bendan tê hûnandin; ahenga dengan, kêş û qafiye tê de bi qasî wateyê giring in. Pexşan bi hevok û paragrafan diherike, diyaloga dikê jî ya şanoyê ye.",
+    "correctAnswerTr": "Dize ve bentlerle",
+    "explanation": "Şiir dize (rêzik) ve bentlerle düzenlenir; düzyazı paragraflarla, tiyatro perde ve sahnelerle. Serbest şiir ölçü/kafiye taşımayabilir, bu yüzden ayrım ses ahengiyle değil yapı birimiyle kurulur.",
+    "explanationKu": "Helbest bi rêzik û bendan tê rêzkirin; pexşan bi paragrafan, şano bi perde û dîmenan. Helbesta azad dibe ku pîvan û qafiye nehebe.",
     "explanationTr": "Şiir dize ve bentler halinde örülür; ses ahengi, ölçü ve uyak orada anlam kadar önemlidir. Düz yazı cümle ve paragraflarla akar, sahne diyaloğu ise tiyatroya aittir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/helbest.webp",
