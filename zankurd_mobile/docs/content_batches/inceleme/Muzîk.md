@@ -1824,8 +1824,8 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 -    A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
 -    B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
 -    C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
-- ✅ D) sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin
-**Doğru:** D) sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin
+- ✅ D) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
+**Doğru:** D) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
 **Açıklama:** "tembûr": Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli saz.
 **Kaynak:** —
 
@@ -2281,7 +2281,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_curated_21251  ·  zorluk 2  ·  offline
-**KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan'?
+**KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan'?
 **TR:** Hangi terim şu açıklamayla bilinir: "özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı"?
 -    A) Meryem Xan
 -    B) Koma Wetan
@@ -2296,9 +2296,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzik dersi için hangi seçenek "tembûr" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
 -    B) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
-- ✅ C) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+- ✅ C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 -    D) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
-**Doğru:** C) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+**Doğru:** C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 **Açıklama:** "tembûr" için doğru açıklama şudur: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.
 **Kaynak:** —
 
@@ -2318,7 +2318,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzik dersi için hangi seçenek "erbane" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
 -    B) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
--    C) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+-    C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 - ✅ D) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
 **Doğru:** D) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
 **Açıklama:** "erbane" için doğru açıklama şudur: Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı.
@@ -2338,7 +2338,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_curated_21304  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "bilûr" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "bilûr" teriminin açıklamasını doğru biçimde tamamlar?
--    A) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+-    A) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 -    B) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
 - ✅ C) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
 -    D) şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin
@@ -2362,7 +2362,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzik dersi için hangi seçenek "lîrîka klaman" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
 -    B) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
--    C) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+-    C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 - ✅ D) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
 **Doğru:** D) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
 **Açıklama:** "lîrîka klaman" için doğru açıklama şudur: aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı.
@@ -2385,7 +2385,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 - ✅ A) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
 -    B) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
 -    C) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
--    D) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+-    D) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 **Doğru:** A) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
 **Açıklama:** "Şakiro" için doğru açıklama şudur: "Dengbêjlerin Şahı" diye bilinen, eşsiz sese sahip büyük dengbêj.
 **Kaynak:** —
@@ -2427,7 +2427,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "Meryem Xan" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "Meryem Xan" teriminin açıklamasını doğru biçimde tamamlar?
 - ✅ A) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
--    B) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+-    B) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 -    C) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
 -    D) şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin
 **Doğru:** A) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
@@ -2492,7 +2492,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_curated_21475  ·  zorluk 5  ·  offline
 **KU:** Têgeha "heyran" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "heyran" terimi hangi açıklamayla daha iyi anlaşılır?
--    A) amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan
+-    A) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 -    B) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
 - ✅ C) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
 -    D) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
@@ -2557,7 +2557,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_0045  ·  zorluk 4  ·  offline
-**KU:** Rast e an şaş e: Têgeha "Meryem Xan" tê vê wateyê: amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan.
+**KU:** Rast e an şaş e: Têgeha "Meryem Xan" tê vê wateyê: amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan.
 **TR:** Doğru mu yanlış mı: "Meryem Xan" terimi şu anlama gelir: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.
 -    A) Rast
 - ✅ B) Şaş
@@ -2647,7 +2647,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_0117  ·  zorluk 4  ·  offline
-**KU:** Rast e an şaş e: Têgeha "lîrîka klaman" tê vê wateyê: amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan.
+**KU:** Rast e an şaş e: Têgeha "lîrîka klaman" tê vê wateyê: amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan.
 **TR:** Doğru mu yanlış mı: "lîrîka klaman" terimi şu anlama gelir: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.
 -    A) Rast
 - ✅ B) Şaş
@@ -2656,7 +2656,7 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **Kaynak:** —
 
 ## offline_tf_0132  ·  zorluk 3  ·  offline
-**KU:** Rast e an şaş e: Têgeha "tembûr" tê vê wateyê: amûra muzîkê ya herî pîroz û kevnar a kurdî ku bi taybetî di civatên olî de tê lêdan.
+**KU:** Rast e an şaş e: Têgeha "tembûr" tê vê wateyê: amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan.
 **TR:** Doğru mu yanlış mı: "tembûr" terimi şu anlama gelir: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.
 - ✅ A) Rast
 -    B) Şaş
