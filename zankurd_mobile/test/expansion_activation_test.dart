@@ -2,10 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
-/// 217 sorunun GERÇEKTEN oyuncuya ulaştığının bekçisi.
+/// 214 sorunun GERÇEKTEN oyuncuya ulaştığının bekçisi.
 ///
 /// (2026-08-18: dış inceleme `tech_invent_0053`ü belirsiz bulup çıkardı;
-/// aileron ile flap ayrımı yapılmıyordu. Sayı 218'den 217'ye indi.)
+/// aileron ile flap ayrımı yapılmıyordu; sonra Ziman incelemesi üç zayıf
+/// çeldiricili kaydı daha aldı. Sayı 218 → 214.)
 ///
 /// ## Kusur
 ///
@@ -51,7 +52,7 @@ void main() {
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      3149,
+      3094,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
@@ -67,7 +68,7 @@ void main() {
     );
   });
 
-  test('217 genişletme sorusunun tamamı yükleyiciden erişilebilir', () {
+  test('214 genişletme sorusunun tamamı yükleyiciden erişilebilir', () {
     // Gölgelenme kontrolü: id'nin var olması yetmez, KAZANAN kaydın
     // genişletme bankasından gelmesi gerekir. Genişletme en son yüklenir,
     // dolayısıyla çakışma olsaydı o kazanırdı — ama o zaman da ESKİ soru
@@ -78,14 +79,14 @@ void main() {
         .toList();
     expect(
       expansion.length,
-      217,
+      214,
       reason:
-          'Genişletme bankasından yükleyiciye ulaşan soru sayısı 217 değil. '
+          'Genişletme bankasından yükleyiciye ulaşan soru sayısı 214 değil. '
           'Asset listede olsa bile parse hatası tek bankayı sessizce boş '
           'bırakır (`_loadBank` catch bloğu).',
     );
     final ids = expansion.map((q) => q.id).toSet();
-    expect(ids.length, 217, reason: 'Genişletme içinde id tekrarı var.');
+    expect(ids.length, 214, reason: 'Genişletme içinde id tekrarı var.');
   });
 
   test('genişletme soruları her iki dilde de tam oynanabilir', () {

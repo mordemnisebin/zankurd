@@ -12,7 +12,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 1000,
-      "expectedRecordCount": 1370,
+      "expectedRecordCount": 1360,
       "notes": "Bundled JSON loaded by QuestionBankLoader",
       "columns": {
         "id": "id",
@@ -43,7 +43,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 990,
-      "expectedRecordCount": 299,
+      "expectedRecordCount": 297,
       "notes": "Approved editorial questions bundled with the app",
       "columns": {
         "id": "id",
@@ -74,7 +74,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 985,
-      "expectedRecordCount": 217,
+      "expectedRecordCount": 214,
       "notes": "Bilingual KU+TR, deterministically rebuilt 2026-08-06",
       "columns": {
         "id": "id",
@@ -2353,7 +2353,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 1012,
+      "expectedRecordCount": 972,
       "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
       "columns": {
         "id": "id",

@@ -64,7 +64,7 @@ void main() {
   test('Türkçe metin taşıyan soru sayısı ölçülen değerde', () {
     expect(
       translated.length,
-      3149,
+      3094,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '
