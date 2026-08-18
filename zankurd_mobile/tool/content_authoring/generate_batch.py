@@ -129,7 +129,7 @@ def extract(text: str) -> list[dict]:
     return [item for item in parsed if isinstance(item, dict)]
 
 
-def to_row(item: dict, category: str, index: int = 0) -> list[str] | None:
+def to_row(item: dict, category: str, index: int, prefix: str) -> list[str] | None:
     """JSON kaydını kapının beklediği 16 alanlık satıra çevirir.
 
     Doğru cevabın KONUMU burada dengelenir. Model bunu promptla yapamıyor:
@@ -145,6 +145,11 @@ def to_row(item: dict, category: str, index: int = 0) -> list[str] | None:
     if len(options) != 4:
         return None
 
+    # ID modelden ALINMAZ: her parti numaralandırmaya 0001'den başlıyor ve
+    # aynı dosyaya yazılan ikinci parti baştan sona `duplicate_id` düşüyordu
+    # (ilk gerçek koşuda 60 satırın 54'ü). Sıra dosyanın kendisinden gelir.
+    row_id = f"{prefix}{index + 1:04d}"
+
     letter = str(item.get("correct", "")).strip().upper()
     if letter not in "ABCD" or not letter:
         return None
@@ -157,7 +162,7 @@ def to_row(item: dict, category: str, index: int = 0) -> list[str] | None:
     letter = "ABCD"[target]
 
     return [
-        str(item.get("id", "")).strip(),
+        row_id,
         "ku-kmr",
         category,
         str(item.get("prompt", "")).strip(),
@@ -198,7 +203,9 @@ def main() -> int:
     if out.exists():
         with out.open(newline="", encoding="utf-8") as handle:
             start_index = max(0, sum(1 for _ in handle) - 1)
-    written = [r for r in (to_row(item, args.category, start_index + i)
+    slug = re.sub(r"[^a-z]", "", args.category.lower().translate(SLUG))
+    prefix = f"ds_{slug}_"
+    written = [r for r in (to_row(item, args.category, start_index + i, prefix)
                            for i, item in enumerate(rows)) if r]
     if not written:
         print("HATA: JSON ayrıştırıldı ama hiçbir kayıt dört şık taşımıyor")

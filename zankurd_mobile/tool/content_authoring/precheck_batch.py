@@ -240,6 +240,16 @@ def main(path: str, check_urls: bool = False) -> int:
         print("UYARI: aşırı tekrar eden çeldiriciler: "
               + ", ".join(f"{v} ({n}x)" for v, n in overused))
 
+    # Bir satır hem satır kurallarından hem URL denetiminden düşebilir;
+    # ikisi ayrı ayrı sayılınca "temiz" eksiye iniyordu.
+    merged: dict[int, tuple[int, str, list[str]]] = {}
+    for line, rid, reasons in problems:
+        if line in merged:
+            merged[line][2].extend(reasons)
+        else:
+            merged[line] = (line, rid, list(reasons))
+    problems = [merged[k] for k in sorted(merged)]
+
     print(f"satır: {len(rows)}   sorunlu: {len(problems)}   temiz: {len(rows) - len(problems)}")
     if problems:
         counts = Counter(r for _, _, reasons in problems for r in reasons)
