@@ -60,42 +60,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt kültüründe dengbêj özellikle neyle tanınır?
 -    A) Nivîskar
 -    B) Wênesaz
--    C) Mimar
-- ✅ D) Stranbêj û vegêran
-**Doğru:** D) Stranbêj û vegêran
+- ✅ C) Stranbêj û vegêran
+-    D) Mimar
+**Doğru:** C) Stranbêj û vegêran
 **Açıklama:** Dengbêj, Kürt kültüründe şarkıları ve hikâyeleri sözlü olarak aktaran şarkıcı ve hikâye anlatıcısıdır. Yazar, ressam veya mimar değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0002  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kilam di kevneşopiya dengbêjiyê de bi piranî bi kîjan awayî tê vegotin?
 **TR:** Dengbêjlik geleneğinde kilamlar çoğunlukla nasıl icra edilir?
--    A) Bi piyanoyê
-- ✅ B) Bi dengê bilind û bê amûr
+- ✅ A) Bi dengê bilind û bê amûr
+-    B) Bi piyanoyê
 -    C) Bi gîtarê
 -    D) Bi dahol û zirneyê
-**Doğru:** B) Bi dengê bilind û bê amûr
+**Doğru:** A) Bi dengê bilind û bê amûr
 **Açıklama:** Kilamlar geleneksel olarak yüksek sesle ve enstrümansız söylenir. Dengbêj kilamı sadece sesiyle söyler, piyano, gitar veya davul ve zurnayla değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0003  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan bajar wekî navenda kevneşopiya dengbêjiyê tê hesibandin?
 **TR:** Hangi şehir dengbêjlik geleneğinin merkezi olarak kabul edilir?
-- ✅ A) Amed
--    B) Stenbol
--    C) Qahîre
--    D) Tahran
-**Doğru:** A) Amed
+-    A) Stenbol
+-    B) Qahîre
+-    C) Tahran
+- ✅ D) Amed
+**Doğru:** D) Amed
 **Açıklama:** Diyarbakır, dengbêjlik geleneğinin merkezi olarak kabul edilir. İstanbul, Kahire ve Tahran bu geleneğin merkezleri değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0004  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Dengbêj bi piranî kilamên xwe li ser kîjan mijaran dibêjin?
 **TR:** Dengbêjler kilamlarını çoğunlukla hangi konularda söylerler?
--    A) Astronomî
-- ✅ B) Evîn, dîrok û şer
+- ✅ A) Evîn, dîrok û şer
+-    B) Astronomî
 -    C) Matematîk
 -    D) Teknolojî
-**Doğru:** B) Evîn, dîrok û şer
+**Doğru:** A) Evîn, dîrok û şer
 **Açıklama:** Dengbêjler kilamlarını çoğunlukla aşk, tarih ve savaş hakkında söylerler. Bu konular dengbêjlik geleneğinde merkezidir, astronomi, matematik veya teknoloji değil.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
@@ -104,31 +104,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dengbêjler kilamlarını çoğunlukla nerede söylerler?
 -    A) Di şanoyan de
 -    B) Di konseran de
--    C) Di radyoyê de
-- ✅ D) Di civatan de
-**Doğru:** D) Di civatan de
+- ✅ C) Di civatan de
+-    D) Di radyoyê de
+**Doğru:** C) Di civatan de
 **Açıklama:** Dengbêjler kilamlarını çoğunlukla toplantılarda söylerler. Tiyatro, konser ve radyo, dengbêjliğin geleneksel mekânları değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0015  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Dengbêj bi piranî kilamên xwe ji bo kîjan armancê dibêjin?
 **TR:** Dengbêjler kilamlarını çoğunlukla hangi amaçla söylerler?
--    A) Ji bo dansê
-- ✅ B) Ji bo vegotina dîrokê
+- ✅ A) Ji bo vegotina dîrokê
+-    B) Ji bo dansê
 -    C) Ji bo reklamê
 -    D) Ji bo fêrbûna ziman
-**Doğru:** B) Ji bo vegotina dîrokê
+**Doğru:** A) Ji bo vegotina dîrokê
 **Açıklama:** Dengbêjler kilamlarını çoğunlukla tarih anlatmak için söylerler. Dans, reklam ve dil öğrenmek dengbêjliğin temel amaçları değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0023  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Dengbêj bi piranî kilamên xwe bi kîjan awayî ji bîranînê dibêjin?
 **TR:** Dengbêjler kilamlarını çoğunlukla nasıl ezberden söylerler?
--    A) Bi nivîsê
-- ✅ B) Bi ezber
+- ✅ A) Bi ezber
+-    B) Bi nivîsê
 -    C) Bi notan
 -    D) Bi amûran
-**Doğru:** B) Bi ezber
+**Doğru:** A) Bi ezber
 **Açıklama:** Dengbêjler kilamlarını çoğunlukla ezberleyerek söylerler. Kilamlarını yazarak, notalarla veya enstrümanlarla söylemezler.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
@@ -136,21 +136,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûr di performansa dengbêjiyê de bi gelemperî tê bikaranîn?
 **TR:** Dengbêjlik performansında genellikle hangi enstrüman kullanılır?
 -    A) Tembûr
--    B) Keman
-- ✅ C) Ti amûrek nîne
+- ✅ B) Ti amûrek nîne
+-    C) Keman
 -    D) Ney
-**Doğru:** C) Ti amûrek nîne
+**Doğru:** B) Ti amûrek nîne
 **Açıklama:** Dengbêjlik performansında genellikle hiçbir enstrüman kullanılmaz; dengbêj kilamı sadece sesiyle söyler. Tembur, keman ve ney dengbêjlere özgü enstrümanlar değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0006  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Dengbêjî wekî kevneşopiyek devkî çima girîng e?
 **TR:** Dengbêjlik sözlü bir gelenek olarak neden önemlidir?
-- ✅ A) Dîrok û çanda Kurdî diparêze
--    B) Amûrên nûjen çêdike
--    C) Zimanên biyanî hîn dike
--    D) Muzîka populer pêş dixe
-**Doğru:** A) Dîrok û çanda Kurdî diparêze
+-    A) Amûrên nûjen çêdike
+-    B) Zimanên biyanî hîn dike
+-    C) Muzîka populer pêş dixe
+- ✅ D) Dîrok û çanda Kurdî diparêze
+**Doğru:** D) Dîrok û çanda Kurdî diparêze
 **Açıklama:** Dengbêjlik sözlü bir gelenek olarak Kürt tarihini ve kültürünü korur. Modern enstrümanlar üretmez, yabancı diller öğretmez ve popüler müziği geliştirmez.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
@@ -159,9 +159,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dengbêjlik geleneğinde kilamlar çoğunlukla hangi dilde söylenir?
 -    A) Tirkî
 -    B) Farisî
--    C) Erebî
-- ✅ D) Kurmancî
-**Doğru:** D) Kurmancî
+- ✅ C) Kurmancî
+-    D) Erebî
+**Doğru:** C) Kurmancî
 **Açıklama:** Dengbêjlik geleneğinde kilamlar çoğunlukla Kürtçe (Kurmanci) söylenir. Türkçe, Farsça ve Arapça bu geleneğin ana dili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
@@ -169,21 +169,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kilam di kevneşopiya dengbêjiyê de bi piranî çawa tên veguhastin?
 **TR:** Dengbêjlik geleneğinde kilamlar çoğunlukla nasıl kaydedilir/aktarılır?
 -    A) Bi tîpên erebî tê nivîsandin
--    B) Bi notan tê nivîsandin
-- ✅ C) Bi devkî tê vegotin
+- ✅ B) Bi devkî tê vegotin
+-    C) Bi notan tê nivîsandin
 -    D) Bi tîpên latînî tê nivîsandin
-**Doğru:** C) Bi devkî tê vegotin
+**Doğru:** B) Bi devkî tê vegotin
 **Açıklama:** Dengbêjlik geleneğinde kilamlar çoğunlukla yazıyla değil, sözlü olarak aktarılır. Arap harfleriyle, notalarla veya Latin harfleriyle yazılmaz.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
 ## ds_muzik_0017  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Dengbêjî di nav çanda Kurdî de bi piranî wekî çi tê dîtin?
 **TR:** Dengbêjlik Kürt kültüründe çoğunlukla ne olarak görülür?
--    A) Nûjeniyek teknolojîk
-- ✅ B) Mîrateyek çandî
+- ✅ A) Mîrateyek çandî
+-    B) Nûjeniyek teknolojîk
 -    C) Reklamek bazirganî
 -    D) Modeyek demkî
-**Doğru:** B) Mîrateyek çandî
+**Doğru:** A) Mîrateyek çandî
 **Açıklama:** Dengbêjlik Kürt kültüründe kültürel bir miras olarak görülür. Teknolojik bir yenilik, ticari bir reklam veya geçici bir moda değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
@@ -191,10 +191,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Dengbêjî di nav çanda Kurdî de bi piranî ji bo kîjan nifşî tê vegotin?
 **TR:** Dengbêjlik Kürt kültüründe çoğunlukla hangi nesil için icra edilir?
 -    A) Ji bo ciwanan
--    B) Ji bo zarokan
-- ✅ C) Ji bo hemû nifşan
+- ✅ B) Ji bo hemû nifşan
+-    C) Ji bo zarokan
 -    D) Ji bo pîran
-**Doğru:** C) Ji bo hemû nifşan
+**Doğru:** B) Ji bo hemû nifşan
 **Açıklama:** Dengbêjlik Kürt kültüründe tüm nesiller için icra edilir. Sadece gençler, çocuklar veya yaşlılar için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dengb%C3%AAj
 
@@ -203,9 +203,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tembur çoğunlukla hangi müzik kültüründe ana enstrümandır?
 -    A) Çanda Almanî
 -    B) Çanda Japonî
--    C) Çanda Brezîlyayî
-- ✅ D) Çanda Kurdî
-**Doğru:** D) Çanda Kurdî
+- ✅ C) Çanda Kurdî
+-    D) Çanda Brezîlyayî
+**Doğru:** C) Çanda Kurdî
 **Açıklama:** Tembûr, Kürt müziğinin köklü telli çalgılarındandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
@@ -213,10 +213,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Tembûr bi piranî di kîjan çandê de wekî amûreke pîroz tê dîtin?
 **TR:** Tembur çoğunlukla hangi kültürde kutsal bir çalgı olarak görülür?
 -    A) Di çanda Almanî de
--    B) Di çanda Japonî de
-- ✅ C) Di çanda Kurdî de
+- ✅ B) Di çanda Kurdî de
+-    C) Di çanda Japonî de
 -    D) Di çanda Brezîlyayî de
-**Doğru:** C) Di çanda Kurdî de
+**Doğru:** B) Di çanda Kurdî de
 **Açıklama:** Tembur, Kürt kültüründe özellikle Aleviler arasında kutsal bir çalgı olarak görülür.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
@@ -225,9 +225,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tembur çoğunlukla hangi müzik türünde kullanılır?
 -    A) Muzîka rock
 -    B) Muzîka jazz
--    C) Muzîka elektronîk
-- ✅ D) Muzîka gelêrî
-**Doğru:** D) Muzîka gelêrî
+- ✅ C) Muzîka gelêrî
+-    D) Muzîka elektronîk
+**Doğru:** C) Muzîka gelêrî
 **Açıklama:** Tembur çoğunlukla Kürt halk müziğinde kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
@@ -236,42 +236,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Tembur çoğunlukla hangi bölgede kullanılır?
 -    A) Herêma Alpê
 -    B) Herêma Amazonê
--    C) Herêma Antarktîkayê
-- ✅ D) Herêma Kurdistanê
-**Doğru:** D) Herêma Kurdistanê
+- ✅ C) Herêma Kurdistanê
+-    D) Herêma Antarktîkayê
+**Doğru:** C) Herêma Kurdistanê
 **Açıklama:** Tembur çoğunlukla Kürdistan bölgesi ve çevresinde kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
 ## ds_muzik_0027  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr ji famîleya nefesan e û ji darikê tê çêkirin?
 **TR:** Hangi enstrüman nefesli ailedendir ve ağaçtan yapılır?
-- ✅ A) Bilûr
--    B) Tembûr
--    C) Def
--    D) Zirne
-**Doğru:** A) Bilûr
+-    A) Tembûr
+-    B) Def
+-    C) Zirne
+- ✅ D) Bilûr
+**Doğru:** D) Bilûr
 **Açıklama:** Bilûr, ağaçtan yapılan nefesli bir enstrümandır ve Kürt müziğinde özel bir yere sahiptir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bilur
 
 ## ds_muzik_0081  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr ji famîleya nefesan e û di muzîka kurdî de tê bikaranîn?
 **TR:** Hangi enstrüman nefesli ailesindendir ve Kürt müziğinde kullanılır?
--    A) Tembûr
-- ✅ B) Bilûr
+- ✅ A) Bilûr
+-    B) Tembûr
 -    C) Def
 -    D) Keman
-**Doğru:** B) Bilûr
+**Doğru:** A) Bilûr
 **Açıklama:** Kaval, tahtadan yapılan nefesli bir enstrümandır ve Kürt müziğinde önemli bir yere sahiptir. Çoğunlukla aşk ve hüzünlü türkülerde çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaval
 
 ## ds_muzik_0029  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Zirne bi piranî li kû derê tê lêdan?
 **TR:** Zirne çoğunlukla nerede çalınır?
--    A) Di nivîsgehan de
-- ✅ B) Di dîlan û şahiyan de
+- ✅ A) Di dîlan û şahiyan de
+-    B) Di nivîsgehan de
 -    C) Di pirtûkxaneyan de
 -    D) Di dibistanan de
-**Doğru:** B) Di dîlan û şahiyan de
+**Doğru:** A) Di dîlan û şahiyan de
 **Açıklama:** Zirne, sesi yüksek bir enstrümandır ve çoğunlukla halk düğünlerinde ve şenliklerinde çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
@@ -279,10 +279,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Tembûr bi gelemperî çend têlên wê hene?
 **TR:** Temburun genellikle kaç teli vardır?
 -    A) Pênc têl
--    B) Heft têl
-- ✅ C) Sê têl
+- ✅ B) Sê têl
+-    C) Heft têl
 -    D) Neh têl
-**Doğru:** C) Sê têl
+**Doğru:** B) Sê têl
 **Açıklama:** Klasik Kürt temburu çoğunlukla üç tellidir, ancak başka varyasyonları da mevcuttur.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
@@ -291,9 +291,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bilûr hangi yöntemle çalınır?
 -    A) Bi tiliyan
 -    B) Bi kevanê
--    C) Bi çakûç
-- ✅ D) Bi nefesê
-**Doğru:** D) Bi nefesê
+- ✅ C) Bi nefesê
+-    D) Bi çakûç
+**Doğru:** C) Bi nefesê
 **Açıklama:** Bilûr nefesli bir enstrüman olduğu için nefesle çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bilur
 
@@ -301,65 +301,65 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Zirne bi piranî li gel kîjan amûrê tê lêdan?
 **TR:** Zirne çoğunlukla hangi enstrümanla birlikte çalınır?
 -    A) Tembûr
--    B) Bilûr
-- ✅ C) Def
+- ✅ B) Def
+-    C) Bilûr
 -    D) Keman
-**Doğru:** C) Def
+**Doğru:** B) Def
 **Açıklama:** Zirne, güçlü bir ritim elde etmek için çoğunlukla def ile birlikte çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
 ## ds_muzik_0035  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Bilûr bi piranî ji çi tê çêkirin?
 **TR:** Kaval çoğunlukla neyden yapılır?
--    A) Ji hesinî
-- ✅ B) Ji darikê
+- ✅ A) Ji darikê
+-    B) Ji hesinî
 -    C) Ji plastîk
 -    D) Ji camê
-**Doğru:** B) Ji darikê
+**Doğru:** A) Ji darikê
 **Açıklama:** Geleneksel kaval ağaçtan yapılır, ancak bazı modern versiyonları plastikten de yapılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bilur
 
 ## ds_muzik_0037  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Zirne bi piranî di kîjan çandê de tê bikaranîn?
 **TR:** Zurna çoğunlukla hangi kültürde kullanılır?
-- ✅ A) Çanda Rojhilata Navîn
--    B) Çanda Skandînavyayê
--    C) Çanda Amerîkaya Başûr
--    D) Çanda Awistralyayê
-**Doğru:** A) Çanda Rojhilata Navîn
+-    A) Çanda Skandînavyayê
+-    B) Çanda Amerîkaya Başûr
+-    C) Çanda Awistralyayê
+- ✅ D) Çanda Rojhilata Navîn
+**Doğru:** D) Çanda Rojhilata Navîn
 **Açıklama:** Zurna çoğunlukla Orta Doğu ve Anadolu kültüründe kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
 ## ds_muzik_0045  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Zirne bi piranî di kîjan demê de tê lêdan?
 **TR:** Zurna çoğunlukla hangi zamanlarda çalınır?
-- ✅ A) Di rojên cejnê de
--    B) Di rojên xemgîniyê de
--    C) Di rojên xebatê de
--    D) Di rojên xewê de
-**Doğru:** A) Di rojên cejnê de
+-    A) Di rojên xemgîniyê de
+-    B) Di rojên xebatê de
+-    C) Di rojên xewê de
+- ✅ D) Di rojên cejnê de
+**Doğru:** D) Di rojên cejnê de
 **Açıklama:** Zurna çoğunlukla bayram ve kutlama günlerinde çalınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
 ## ds_muzik_0038  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Tembûr bi piranî bi kîjan awayî tê lêdan?
 **TR:** Tembur çoğunlukla nasıl çalınır?
-- ✅ A) Bi tiliyan
--    B) Bi kevanê
--    C) Bi çakûç
--    D) Bi nefesê
-**Doğru:** A) Bi tiliyan
+-    A) Bi kevanê
+-    B) Bi çakûç
+-    C) Bi nefesê
+- ✅ D) Bi tiliyan
+**Doğru:** D) Bi tiliyan
 **Açıklama:** Tembur, parmaklarla çalınan telli bir çalgıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
 ## ds_muzik_0039  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Bilûr bi piranî di kîjan celebê muzîkê de tê bikaranîn?
 **TR:** Kaval çoğunlukla hangi müzik türünde kullanılır?
--    A) Muzîka rock
-- ✅ B) Muzîka gelêrî
+- ✅ A) Muzîka gelêrî
+-    B) Muzîka rock
 -    C) Muzîka jazz
 -    D) Muzîka elektronîk
-**Doğru:** B) Muzîka gelêrî
+**Doğru:** A) Muzîka gelêrî
 **Açıklama:** Kaval çoğunlukla Kürt halk müziğinde kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bilur
 
@@ -367,10 +367,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bilûr bi piranî di kîjan herêmê de tê bikaranîn?
 **TR:** Kaval çoğunlukla hangi bölgede kullanılır?
 -    A) Herêma Alpê
--    B) Herêma Amazonê
-- ✅ C) Herêma Kurdistanê
+- ✅ B) Herêma Kurdistanê
+-    C) Herêma Amazonê
 -    D) Herêma Antarktîkayê
-**Doğru:** C) Herêma Kurdistanê
+**Doğru:** B) Herêma Kurdistanê
 **Açıklama:** Kaval çoğunlukla Kürdistan bölgesi ve çevresinde kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bilur
 
@@ -379,31 +379,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kaval çoğunlukla hangi kültürde kullanılır?
 -    A) Çanda Almanî
 -    B) Çanda Japonî
--    C) Çanda Brezîlyayî
-- ✅ D) Çanda Kurdî
-**Doğru:** D) Çanda Kurdî
+- ✅ C) Çanda Kurdî
+-    D) Çanda Brezîlyayî
+**Doğru:** C) Çanda Kurdî
 **Açıklama:** Kaval çoğunlukla Kürt kültüründe kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bilur
 
 ## ds_muzik_0041  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Zirne bi piranî ji çi tê çêkirin?
 **TR:** Zurna çoğunlukla neyden yapılır?
--    A) Ji hesinî
-- ✅ B) Ji darikê
+- ✅ A) Ji darikê
+-    B) Ji hesinî
 -    C) Ji plastîk
 -    D) Ji camê
-**Doğru:** B) Ji darikê
+**Doğru:** A) Ji darikê
 **Açıklama:** Zurna çoğunlukla ağaçtan yapılır, ancak bazı versiyonları metalden de yapılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
 ## ds_muzik_0052  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr di muzîka kurdî de bi piranî ji bo dîlanan tê bikaranîn?
 **TR:** Kürt müziğinde hangi çalgı çoğunlukla halaylar için kullanılır?
--    A) Bilûr
-- ✅ B) Zirne
+- ✅ A) Zirne
+-    B) Bilûr
 -    C) Tembûr
 -    D) Def
-**Doğru:** B) Zirne
+**Doğru:** A) Zirne
 **Açıklama:** Zurna, def ile birlikte halaylarda çalınır, çünkü yüksek ve güçlü sesi kutlamalar için uygundur.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
@@ -411,21 +411,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di opera de stranbêj bi piranî bi kîjan awayî stranan dibêjin?
 **TR:** Operada şarkıcılar çoğunlukla nasıl şarkı söyler?
 -    A) Bi dengê normal
--    B) Bi dengê nizm
-- ✅ C) Bi dengê bilind
+- ✅ B) Bi dengê bilind
+-    C) Bi dengê nizm
 -    D) Bi dengê xweş
-**Doğru:** C) Bi dengê bilind
+**Doğru:** B) Bi dengê bilind
 **Açıklama:** Operada şarkıcılar, seslerinin salonda güçlü bir şekilde duyulması için yüksek sesle ve özel bir teknikle şarkı söylerler.
 **Kaynak:** https://en.wikipedia.org/wiki/Opera
 
 ## ds_muzik_0054  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan celeb stran bi piranî ji bo zarokan tê gotin?
 **TR:** Hangi tür şarkı çoğunlukla çocuklar için söylenir?
-- ✅ A) Strana lorîkê
--    B) Strana dîlanê
--    C) Strana şînê
--    D) Strana evînê
-**Doğru:** A) Strana lorîkê
+-    A) Strana dîlanê
+-    B) Strana şînê
+-    C) Strana evînê
+- ✅ D) Strana lorîkê
+**Doğru:** D) Strana lorîkê
 **Açıklama:** Ninni, çocukların uyuması ve sakinleşmesi için söylenir. Diğer şarkılar yetişkinler içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lullaby
 
@@ -433,32 +433,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûr bi têlên xwe tê lêdan û di muzîka kurdî de navdar e?
 **TR:** Hangi çalgı telleriyle çalınır ve Kürt müziğinde ünlüdür?
 -    A) Bilûr
--    B) Def
-- ✅ C) Tembûr
+- ✅ B) Tembûr
+-    C) Def
 -    D) Zirne
-**Doğru:** C) Tembûr
+**Doğru:** B) Tembûr
 **Açıklama:** Tembur telli bir çalgıdır ve Kürt müziğinde ana çalgılardan biridir. Kaval üflemeli, def vurmalıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Temb%C3%BBr
 
 ## ds_muzik_0056  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan celeb muzîk bi piranî li gel reqasê tê lêdan?
 **TR:** Hangi müzik türü çoğunlukla dansla birlikte çalınır?
--    A) Muzîka şînê
-- ✅ B) Muzîka dîlanê
+- ✅ A) Muzîka dîlanê
+-    B) Muzîka şînê
 -    C) Muzîka klasîk
 -    D) Muzîka rockê
-**Doğru:** B) Muzîka dîlanê
+**Doğru:** A) Muzîka dîlanê
 **Açıklama:** Halay müziği dans ve eğlence için çalınır. Yas müziği hüzünlüdür, klasik müzik ciddidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dance_music
 
 ## ds_muzik_0064  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan celeb muzîk bi piranî li gel govendê tê lêdan?
 **TR:** Hangi müzik türü çoğunlukla govend (halay) ile birlikte çalınır?
-- ✅ A) Muzîka dîlanê
--    B) Muzîka şînê
--    C) Muzîka klasîk
--    D) Muzîka cazê
-**Doğru:** A) Muzîka dîlanê
+-    A) Muzîka şînê
+-    B) Muzîka klasîk
+-    C) Muzîka cazê
+- ✅ D) Muzîka dîlanê
+**Doğru:** D) Muzîka dîlanê
 **Açıklama:** Halay müziği govend ve dans için çalınır. Yas müziği hüzün içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Folk_dance
 
@@ -467,9 +467,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi müzik türü çoğunlukla çocuklar için söylenir?
 -    A) Dîlan
 -    B) Dengbêjî
--    C) Heyran
-- ✅ D) Lorî
-**Doğru:** D) Lorî
+- ✅ C) Lorî
+-    D) Heyran
+**Doğru:** C) Lorî
 **Açıklama:** Ninni, çoğunlukla çocuklar için söylenen bir müzik türüdür. Yumuşak ve hoş ritmiyle bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lullaby
 
@@ -477,21 +477,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan celeb muzîk bi piranî di nav kurdan de ji bo xemgîniyê tê gotin?
 **TR:** Hangi müzik türü Kürtler arasında çoğunlukla hüzün için söylenir?
 -    A) Dîlan
--    B) Lorî
-- ✅ C) Kilam
+- ✅ B) Kilam
+-    C) Lorî
 -    D) Zikir
-**Doğru:** C) Kilam
+**Doğru:** B) Kilam
 **Açıklama:** Kilam, Kürtler arasında çoğunlukla hüzün için söylenen bir müzik türüdür. Yumuşak ritmiyle bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
 ## ds_muzik_0227  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan celeb muzîk bi piranî ji bo şînê tê gotin?
 **TR:** Hangi müzik türü çoğunlukla yas için söylenir?
--    A) Strana dîlanê
-- ✅ B) Strana xemgîn
+- ✅ A) Strana xemgîn
+-    B) Strana dîlanê
 -    C) Strana zarokan
 -    D) Strana evînê
-**Doğru:** B) Strana xemgîn
+**Doğru:** A) Strana xemgîn
 **Açıklama:** Hüzünlü şarkı çoğunlukla yas için söylenir. Halay şarkısı düğün içindir, çocuk şarkısı çocuklar içindir ve aşk şarkısı da aşk içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Folk_music
 
@@ -500,9 +500,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi çalgı çoğunlukla elektronik müzikte kullanılır?
 -    A) Sentor
 -    B) Tembûr
--    C) Bilûr
-- ✅ D) Sentezîzer
-**Doğru:** D) Sentezîzer
+- ✅ C) Sentezîzer
+-    D) Bilûr
+**Doğru:** C) Sentezîzer
 **Açıklama:** Sentezleyici elektronik bir çalgıdır ve elektronik müzikte kullanılır. Tembur ve kaval akustik çalgılardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Synthesizer
 
@@ -511,31 +511,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi çalgı çoğunlukla klasik orkestrada kullanılır?
 -    A) Tembûr
 -    B) Bilûr
--    C) Def
-- ✅ D) Keman
-**Doğru:** D) Keman
+- ✅ C) Keman
+-    D) Def
+**Doğru:** C) Keman
 **Açıklama:** Keman, klasik orkestrada ana çalgılardan biridir. Tembur ve def halk müziğinde kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Violin
 
 ## ds_muzik_0079  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr bi piranî di muzîka kurdî de ji bo dîlanan tê bikaranîn?
 **TR:** Hangi enstrüman Kürt müziğinde çoğunlukla düğünler için kullanılır?
-- ✅ A) Zirne
--    B) Tembûr
--    C) Bilûr
--    D) Def
-**Doğru:** A) Zirne
+-    A) Tembûr
+-    B) Bilûr
+-    C) Def
+- ✅ D) Zirne
+**Doğru:** D) Zirne
 **Açıklama:** Zurna, Kürt düğün ve halaylarında çalınan nefesli bir enstrümandır. Yüksek ve etkileyici sesi eğlenceler için uygundur.
 **Kaynak:** https://en.wikipedia.org/wiki/Zurna
 
 ## ds_muzik_0083  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kevneşopiya kurdî de kîjan amûr bi awazên şivanan ve tê naskirin?
 **TR:** Kürt geleneğinde hangi çalgı çoban ezgileriyle özdeşleşmiştir?
--    A) Def
-- ✅ B) Bilûr
+- ✅ A) Bilûr
+-    B) Def
 -    C) Zirne
 -    D) Dahol
-**Doğru:** B) Bilûr
+**Doğru:** A) Bilûr
 **Açıklama:** Bilûr, çoban geleneğiyle özdeşleşmiş üflemeli bir çalgıdır. Def, zurna ve davul ise düğün ve halay çalgılarıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kaval
 
@@ -543,10 +543,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûr bi piranî di muzîka gelêrî ya kurdî de tê bikaranîn?
 **TR:** Hangi enstrüman çoğunlukla Kürt halk müziğinde kullanılır?
 -    A) Piyano
--    B) Saksafon
-- ✅ C) Tembûr
+- ✅ B) Tembûr
+-    C) Saksafon
 -    D) Sentezîzer
-**Doğru:** C) Tembûr
+**Doğru:** B) Tembûr
 **Açıklama:** Bağlama Kürt halk müziğinde ana bir enstrümandır. Piyano ve saksafon batı müziğindedir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_music
 
@@ -555,20 +555,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi türkü çoğunlukla düğünler için söylenir?
 -    A) Strana şînê
 -    B) Strana lorîkê
--    C) Strana dînî
-- ✅ D) Strana dîlanê
-**Doğru:** D) Strana dîlanê
+- ✅ C) Strana dîlanê
+-    D) Strana dînî
+**Doğru:** C) Strana dîlanê
 **Açıklama:** Düğün türküsü eğlence ve dans için söylenir. Ninni ise çocuklar içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Folk_music
 
 ## ds_muzik_0076  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Şivan Perwer bi piranî bi kîjan amûrê stranên xwe dibêje?
 **TR:** Şivan Perwer şarkılarını çoğunlukla hangi enstrümanla söyler?
--    A) Bilûr
-- ✅ B) Tembûr
+- ✅ A) Tembûr
+-    B) Bilûr
 -    C) Def
 -    D) Zirne
-**Doğru:** B) Tembûr
+**Doğru:** A) Tembûr
 **Açıklama:** Şivan Perwer, Kürt müziğinin ünlü bir sanatçısı olarak bilinir ve şarkılarını çoğunlukla bağlamayla söyler. Bağlama Kürt müziğinde ana bir enstrümandır.
 **Kaynak:** https://en.wikipedia.org/wiki/%C5%9Eivan_Perwer
 
@@ -577,20 +577,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi sanatçı "Dengbêjlerin Şahı" olarak bilinir?
 -    A) Karapetê Xaço
 -    B) Reso
--    C) Meryem Xan
-- ✅ D) Şakiro
-**Doğru:** D) Şakiro
+- ✅ C) Şakiro
+-    D) Meryem Xan
+**Doğru:** C) Şakiro
 **Açıklama:** Şakiro, "Dengbêjlerin Şahı" olarak bilinir. Güçlü sesi ve tarihi türküleriyle halk arasında ünlüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/%C5%9Eakiro
 
 ## ds_muzik_0101  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, nîşana ku bilindahiya dengan diyar dike çi ye?
 **TR:** Müzikte, seslerin yüksekliğini gösteren işaret nedir?
-- ✅ A) Not
--    B) Rîtm
--    C) Melodî
--    D) Aheng
-**Doğru:** A) Not
+-    A) Rîtm
+-    B) Melodî
+-    C) Aheng
+- ✅ D) Not
+**Doğru:** D) Not
 **Açıklama:** Nota müzikte sesin işaretidir ve seslerin yüksekliğini ve süresini belirtir. Ritim, melodi ve armoni de müziğin öğeleridir ancak seslerin yüksekliği notalarla gösterilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Musical_note
 
@@ -599,31 +599,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzikte iki sesin uzaklığını belirten kavram nedir?
 -    A) Pîvan
 -    B) Tempo
--    C) Deng
-- ✅ D) Navber
-**Doğru:** D) Navber
+- ✅ C) Navber
+-    D) Deng
+**Doğru:** C) Navber
 **Açıklama:** Aralık müzikte iki ses arasındaki mesafedir. Ölçü zaman oranı, tempo müziğin hızı ve ses de seslerin doğasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Interval_(music)
 
 ## ds_muzik_0103  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, rêjdana dengan li gorî demê çi ye?
 **TR:** Müzikte, seslerin zamana göre dizilişi nedir?
-- ✅ A) Rîtm
--    B) Not
--    C) Navber
--    D) Aheng
-**Doğru:** A) Rîtm
+-    A) Not
+-    B) Navber
+-    C) Aheng
+- ✅ D) Rîtm
+**Doğru:** D) Rîtm
 **Açıklama:** Ritim müzikte seslerin zamana göre dizilişidir. Nota seslerin işaretidir, aralık sesler arasındaki mesafedir ve armoni de seslerin uyumudur.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
 ## ds_muzik_0202  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, rêjdana dengan li gorî demê çi tê gotin?
 **TR:** Müzikte, seslerin zamana göre dizilişine ne denir?
--    A) Ahenk
-- ✅ B) Rîtm
+- ✅ A) Rîtm
+-    B) Ahenk
 -    C) Melodî
 -    D) Armonî
-**Doğru:** B) Rîtm
+**Doğru:** A) Rîtm
 **Açıklama:** Ritim, seslerin zamana göre dizilişidir. Armoni seslerin birlikte uyumunu, melodi seslerin sırasını ve armoni de seslerin uyumunu ifade eder.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
@@ -632,31 +632,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzikte, birkaç sesin birlikte çalınması durumunda hangi terim kullanılır?
 -    A) Melodî
 -    B) Rîtm
--    C) Tempo
-- ✅ D) Armonî
-**Doğru:** D) Armonî
+- ✅ C) Armonî
+-    D) Tempo
+**Doğru:** C) Armonî
 **Açıklama:** Armoni müzikte birkaç sesin birlikte çalınması durumunda kullanılır. Melodi seslerin dizisidir, ritim zamanın dizilişidir ve tempo da müziğin hızıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Harmony
 
 ## ds_muzik_0105  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, rêzika dengan ku bi hev re têne gotin çi ye?
 **TR:** Müzikte, birlikte söylenen seslerin dizisi nedir?
--    A) Aheng
-- ✅ B) Melodî
+- ✅ A) Melodî
+-    B) Aheng
 -    C) Rîtm
 -    D) Pîvan
-**Doğru:** B) Melodî
+**Doğru:** A) Melodî
 **Açıklama:** Melodi, zaman içinde art arda dizilen ses/perde dizisidir. Eşzamanlı seslerin birlikteliği ise armonidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Melody
 
 ## ds_muzik_0106  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, leza ku bi piranî bi "beats per minute" tê pîvan çi ye?
 **TR:** Müzikte, çoğunlukla "dakikadaki vuruş" ile ölçülen hız nedir?
-- ✅ A) Tempo
--    B) Rîtm
--    C) Aheng
--    D) Melodî
-**Doğru:** A) Tempo
+-    A) Rîtm
+-    B) Aheng
+-    C) Melodî
+- ✅ D) Tempo
+**Doğru:** D) Tempo
 **Açıklama:** Tempo müzikte müziğin hızıdır ve çoğunlukla "dakikadaki vuruş" ile ölçülür. Ritim seslerin dizilişidir, armoni seslerin uyumudur ve melodi de seslerin dizisidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tempo
 
@@ -665,20 +665,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzikte, müziğin hızını belirtmek için hangi terim kullanılır?
 -    A) Rîtm
 -    B) Aheng
--    C) Melodî
-- ✅ D) Tempo
-**Doğru:** D) Tempo
+- ✅ C) Tempo
+-    D) Melodî
+**Doğru:** C) Tempo
 **Açıklama:** Tempo, müzikte müziğin hızını belirtmek için kullanılır. Ritim seslerin düzenli akışıdır, armoni seslerin uyumudur ve melodi ise seslerin dizilişidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tempo
 
 ## ds_muzik_0110  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, kîjan têgîn ji bo nîşankirina rêjdana dengan tê bikaranîn?
 **TR:** Müzikte, seslerin düzenli akışını belirtmek için hangi terim kullanılır?
-- ✅ A) Rîtm
--    B) Tempo
--    C) Aheng
--    D) Melodî
-**Doğru:** A) Rîtm
+-    A) Tempo
+-    B) Aheng
+-    C) Melodî
+- ✅ D) Rîtm
+**Doğru:** D) Rîtm
 **Açıklama:** Ritim, müzikte seslerin düzenli akışını belirtmek için kullanılır. Tempo müziğin hızıdır, armoni seslerin uyumudur ve melodi ise seslerin dizilişidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
@@ -687,86 +687,86 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzikte, seslerin dizilişini belirtmek için hangi terim kullanılır?
 -    A) Aheng
 -    B) Rîtm
--    C) Tempo
-- ✅ D) Melodî
-**Doğru:** D) Melodî
+- ✅ C) Melodî
+-    D) Tempo
+**Doğru:** C) Melodî
 **Açıklama:** Melodi, müzikte seslerin dizilişini belirtmek için kullanılır. Armoni seslerin uyumudur, ritim zamansal akıştır ve tempo ise müziğin hızıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Melody
 
 ## ds_muzik_0218  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, kîjan têgîn ji bo nîşankirina leza muzîkê tê bikaranîn?
 **TR:** Müzikte, seslerin hızını belirtmek için hangi terim kullanılır?
-- ✅ A) Tempo
--    B) Rîtm
--    C) Armonî
--    D) Melodî
-**Doğru:** A) Tempo
+-    A) Rîtm
+-    B) Armonî
+-    C) Melodî
+- ✅ D) Tempo
+**Doğru:** D) Tempo
 **Açıklama:** Tempo, seslerin hızını belirtmek için kullanılır. Ritim zamanı, armoni uyumu ve melodi de seslerin sırasını gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tempo
 
 ## ds_muzik_0220  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, kîjan têgîn ji bo nîşankirina hevahengiya çend dengan tê bikaranîn?
 **TR:** Müzikte, birden fazla sesin uyumunu belirtmek için hangi terim kullanılır?
--    A) Rîtm
-- ✅ B) Armonî
+- ✅ A) Armonî
+-    B) Rîtm
 -    C) Tempo
 -    D) Melodî
-**Doğru:** B) Armonî
+**Doğru:** A) Armonî
 **Açıklama:** Armoni, birden fazla sesin uyumunu belirtmek için kullanılır. Ritim zamanı, tempo hızı ve melodi ise seslerin dizilişini gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Harmony
 
 ## ds_muzik_0222  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di muzîkê de, kîjan têgîn ji bo nîşankirina bilindahiya taybet a dengan tê bikaranîn?
 **TR:** Müzikte, seslerin belirli yüksekliğini belirtmek için hangi terim kullanılır?
-- ✅ A) Pitch
--    B) Rîtm
--    C) Tempo
--    D) Armonî
-**Doğru:** A) Pitch
+-    A) Rîtm
+-    B) Tempo
+-    C) Armonî
+- ✅ D) Pitch
+**Doğru:** D) Pitch
 **Açıklama:** Pitch, seslerin belirli yüksekliğini belirtmek için kullanılır. Ritim zamanı, tempo hızı ve armoni ise seslerin uyumunu gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Pitch_(music)
 
 ## ds_muzik_0127  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Wolfgang Amadeus Mozart di kîjan welatî de ji dayik bûye?
 **TR:** Wolfgang Amadeus Mozart hangi ülkede doğmuştur?
--    A) Almanya
-- ✅ B) Awistirya
+- ✅ A) Awistirya
+-    B) Almanya
 -    C) Fransa
 -    D) Îtalya
-**Doğru:** B) Awistirya
+**Doğru:** A) Awistirya
 **Açıklama:** Mozart, 1756 yılında o dönem Kutsal Roma İmparatorluğu'nun bir parçası olan ve günümüzde Avusturya'da bulunan Salzburg şehrinde doğmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
 
 ## ds_muzik_0131  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Wolfgang Amadeus Mozart di kîjan salê de wefat kiriye?
 **TR:** Wolfgang Amadeus Mozart hangi yılda vefat etmiştir?
--    A) 1809
-- ✅ B) 1791
+- ✅ A) 1791
+-    B) 1809
 -    C) 1756
 -    D) 1827
-**Doğru:** B) 1791
+**Doğru:** A) 1791
 **Açıklama:** Mozart, 5 Aralık 1791'de Viyana'da 35 yaşında vefat etmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
 
 ## ds_muzik_0134  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Wolfgang Amadeus Mozart di kîjan salê de ji dayik bûye?
 **TR:** Wolfgang Amadeus Mozart hangi yılda doğmuştur?
--    A) 1770
-- ✅ B) 1756
+- ✅ A) 1756
+-    B) 1770
 -    C) 1791
 -    D) 1732
-**Doğru:** B) 1756
+**Doğru:** A) 1756
 **Açıklama:** Mozart, 27 Ocak 1756'da Salzburg'da doğmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
 
 ## ds_muzik_0145  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Wolfgang Amadeus Mozart di kîjan welatî de wefat kiriye?
 **TR:** Wolfgang Amadeus Mozart hangi ülkede vefat etmiştir?
-- ✅ A) Awistirya
--    B) Almanya
--    C) Fransa
--    D) Îtalya
-**Doğru:** A) Awistirya
+-    A) Almanya
+-    B) Fransa
+-    C) Îtalya
+- ✅ D) Awistirya
+**Doğru:** D) Awistirya
 **Açıklama:** Mozart, 5 Aralık 1791'de Avusturya'nın Viyana şehrinde vefat etmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
 
@@ -775,31 +775,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ludwig van Beethoven en çok hangi müzik türüyle tanınır?
 -    A) Muzîka pop
 -    B) Muzîka elektronîk
--    C) Muzîka cazê
-- ✅ D) Muzîka klasîk
-**Doğru:** D) Muzîka klasîk
+- ✅ C) Muzîka klasîk
+-    D) Muzîka cazê
+**Doğru:** C) Muzîka klasîk
 **Açıklama:** Beethoven, klasik müziğin en büyük bestecilerinden biridir ve en çok ünlü senfonileri ve sonatlarıyla tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Ludwig_van_Beethoven
 
 ## ds_muzik_0139  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ludwig van Beethoven di serî de bi kîjan senfonî tê naskirin?
 **TR:** Ludwig van Beethoven en çok hangi senfonisiyle tanınır?
--    A) Senfonî 1
-- ✅ B) Senfonî 5
+- ✅ A) Senfonî 5
+-    B) Senfonî 1
 -    C) Senfonî 3
 -    D) Senfonî 6
-**Doğru:** B) Senfonî 5
+**Doğru:** A) Senfonî 5
 **Açıklama:** Beethoven, "da-da-da-dum" başlangıcıyla bilinen ünlü 5. Senfonisiyle en çok tanınır.
 **Kaynak:** https://en.wikipedia.org/wiki/Symphony_No._5_(Beethoven)
 
 ## ds_muzik_0146  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Ludwig van Beethoven di serî de bi kîjan opera tê naskirin?
 **TR:** Ludwig van Beethoven en çok hangi operasıyla tanınır?
--    A) Don Giovanni
-- ✅ B) Fidelio
+- ✅ A) Fidelio
+-    B) Don Giovanni
 -    C) The Magic Flute
 -    D) The Creation
-**Doğru:** B) Fidelio
+**Doğru:** A) Fidelio
 **Açıklama:** Beethoven sadece bir opera yazmıştır, adı "Fidelio"dur ve en ünlü operalarından biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Fidelio
 
@@ -807,10 +807,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan bestekarê klasîk bi opera xwe ya "The Magic Flute" tê naskirin?
 **TR:** Hangi klasik besteci "The Magic Flute" operasıyla tanınır?
 -    A) Ludwig van Beethoven
--    B) Joseph Haydn
-- ✅ C) Wolfgang Amadeus Mozart
+- ✅ B) Wolfgang Amadeus Mozart
+-    C) Joseph Haydn
 -    D) Franz Schubert
-**Doğru:** C) Wolfgang Amadeus Mozart
+**Doğru:** B) Wolfgang Amadeus Mozart
 **Açıklama:** Mozart, "The Magic Flute" (Die Zauberflöte) operasını 1791'de yazmıştır ve bu opera onun en ünlü operalarından biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Magic_Flute
 
@@ -819,20 +819,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Joseph Haydn başlıca kaç senfoni yazmıştır?
 -    A) 41
 -    B) 9
--    C) 32
-- ✅ D) 104
-**Doğru:** D) 104
+- ✅ C) 104
+-    D) 32
+**Doğru:** C) 104
 **Açıklama:** Haydn yaklaşık 104 senfoni yazmıştır ve bu nedenle "senfoninin babası" olarak bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
 ## ds_muzik_0147  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Joseph Haydn di serî de bi kîjan cureyê muzîkê tê naskirin?
 **TR:** Joseph Haydn en çok hangi müzik türüyle tanınır?
-- ✅ A) Senfonî
--    B) Opera
--    C) Caz
--    D) Rock
-**Doğru:** A) Senfonî
+-    A) Opera
+-    B) Caz
+-    C) Rock
+- ✅ D) Senfonî
+**Doğru:** D) Senfonî
 **Açıklama:** Haydn en çok ünlü senfonileriyle tanınır ve "Senfoninin Babası" olarak anılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
@@ -841,9 +841,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ludwig van Beethoven hangi şehirde doğmuştur?
 -    A) Viyana
 -    B) Salzburg
--    C) Leipzig
-- ✅ D) Bonn
-**Doğru:** D) Bonn
+- ✅ C) Bonn
+-    D) Leipzig
+**Doğru:** C) Bonn
 **Açıklama:** Beethoven, 17 Aralık 1770'te günümüzde Almanya'da bulunan Bonn şehrinde doğmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Ludwig_van_Beethoven
 
@@ -852,9 +852,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ludwig van Beethoven hangi yılda vefat etmiştir?
 -    A) 1791
 -    B) 1809
--    C) 1770
-- ✅ D) 1827
-**Doğru:** D) 1827
+- ✅ C) 1827
+-    D) 1770
+**Doğru:** C) 1827
 **Açıklama:** Beethoven, 26 Mart 1827'de Viyana'da vefat etmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ludwig_van_Beethoven
 
@@ -863,9 +863,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ludwig van Beethoven hangi yılda doğmuştur?
 -    A) 1756
 -    B) 1732
--    C) 1791
-- ✅ D) 1770
-**Doğru:** D) 1770
+- ✅ C) 1770
+-    D) 1791
+**Doğru:** C) 1770
 **Açıklama:** Beethoven, 17 Aralık 1770'te Bonn'da doğmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Ludwig_van_Beethoven
 
@@ -873,21 +873,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ludwig van Beethoven di kîjan welatî de wefat kiriye?
 **TR:** Ludwig van Beethoven hangi ülkede vefat etmiştir?
 -    A) Almanya
--    B) Fransa
-- ✅ C) Awistirya
+- ✅ B) Awistirya
+-    C) Fransa
 -    D) Îtalya
-**Doğru:** C) Awistirya
+**Doğru:** B) Awistirya
 **Açıklama:** Beethoven, 26 Mart 1827'de Avusturya'nın Viyana şehrinde vefat etmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Ludwig_van_Beethoven
 
 ## ds_muzik_0133  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan bestekarê klasîk bi navê "Bavê Senfoniyê" tê naskirin?
 **TR:** Hangi klasik besteci "Senfoninin Babası" olarak bilinir?
--    A) Wolfgang Amadeus Mozart
-- ✅ B) Joseph Haydn
+- ✅ A) Joseph Haydn
+-    B) Wolfgang Amadeus Mozart
 -    C) Ludwig van Beethoven
 -    D) Franz Schubert
-**Doğru:** B) Joseph Haydn
+**Doğru:** A) Joseph Haydn
 **Açıklama:** Joseph Haydn, yazdığı çok sayıda senfoni ve bu form üzerindeki etkisi nedeniyle "Senfoninin Babası" olarak bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
@@ -896,9 +896,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi klasik besteci "Klasik Müziğin Babası" olarak bilinir?
 -    A) Wolfgang Amadeus Mozart
 -    B) Ludwig van Beethoven
--    C) Franz Schubert
-- ✅ D) Joseph Haydn
-**Doğru:** D) Joseph Haydn
+- ✅ C) Joseph Haydn
+-    D) Franz Schubert
+**Doğru:** C) Joseph Haydn
 **Açıklama:** Joseph Haydn, klasik müzik formları üzerindeki etkisi nedeniyle "Klasik Müziğin Babası" olarak bilinir.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
@@ -907,9 +907,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Joseph Haydn hangi yılda vefat etmiştir?
 -    A) 1791
 -    B) 1827
--    C) 1756
-- ✅ D) 1809
-**Doğru:** D) 1809
+- ✅ C) 1809
+-    D) 1756
+**Doğru:** C) 1809
 **Açıklama:** Haydn, 31 Mayıs 1809'da Viyana'da vefat etmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
@@ -917,32 +917,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Joseph Haydn di kîjan welatî de ji dayik bûye?
 **TR:** Joseph Haydn hangi ülkede doğmuştur?
 -    A) Almanya
--    B) Fransa
-- ✅ C) Awistirya
+- ✅ B) Awistirya
+-    C) Fransa
 -    D) Îtalya
-**Doğru:** C) Awistirya
+**Doğru:** B) Awistirya
 **Açıklama:** Haydn, 1732 yılında Avusturya'nın Rohrau şehrinde doğmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
 ## ds_muzik_0142  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Wolfgang Amadeus Mozart di serî de bi kîjan cureyê muzîkê tê naskirin?
 **TR:** Wolfgang Amadeus Mozart en çok hangi müzik türüyle tanınır?
--    A) Senfonî
-- ✅ B) Opera
+- ✅ A) Opera
+-    B) Senfonî
 -    C) Caz
 -    D) Rock
-**Doğru:** B) Opera
+**Doğru:** A) Opera
 **Açıklama:** Mozart en çok ünlü opera ve senfonileriyle tanınır, ancak opera onun en önemli türlerinden biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
 
 ## ds_muzik_0149  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Wolfgang Amadeus Mozart di serî de bi kîjan formê muzîkê tê naskirin?
 **TR:** Wolfgang Amadeus Mozart en çok hangi müzik formuyla tanınır?
-- ✅ A) Opera
--    B) Senfonî
--    C) Caz
--    D) Rock
-**Doğru:** A) Opera
+-    A) Senfonî
+-    B) Caz
+-    C) Rock
+- ✅ D) Opera
+**Doğru:** D) Opera
 **Açıklama:** Mozart en çok ünlü opera ve senfonileriyle tanınır, ancak opera onun en önemli formlarından biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
 
@@ -951,20 +951,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Caz hangi şehirde doğmuştur?
 -    A) New York
 -    B) Chicago
--    C) Los Angeles
-- ✅ D) New Orleans
-**Doğru:** D) New Orleans
+- ✅ C) New Orleans
+-    D) Los Angeles
+**Doğru:** C) New Orleans
 **Açıklama:** Caz 20. yüzyılın başında New Orleans'ta, Afroamerikan toplulukların blues ve ragtime birikiminden doğdu.
 **Kaynak:** https://en.wikipedia.org/wiki/Jazz
 
 ## ds_muzik_0152  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Blues bi piranî ji kîjan herêmê derketiye?
 **TR:** Blues müziği büyük ölçüde hangi bölgeden ortaya çıkmıştır?
-- ✅ A) Ji başûrê Dewletên Yekbûyî
--    B) Ji bakurê Dewletên Yekbûyî
--    C) Ji rojhilatê Dewletên Yekbûyî
--    D) Ji rojavayê Dewletên Yekbûyî
-**Doğru:** A) Ji başûrê Dewletên Yekbûyî
+-    A) Ji bakurê Dewletên Yekbûyî
+-    B) Ji rojhilatê Dewletên Yekbûyî
+-    C) Ji rojavayê Dewletên Yekbûyî
+- ✅ D) Ji başûrê Dewletên Yekbûyî
+**Doğru:** D) Ji başûrê Dewletên Yekbûyî
 **Açıklama:** Blues, 19. yüzyılın sonlarında ABD'nin güneyinde, özellikle Mississippi eyaletinde Afro-Amerikan müziğinden ortaya çıkmıştır. Bu müzik, hayatın acılarından ve zorluklarından doğmuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Blues
 
@@ -972,10 +972,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan amûra bayî bûye sembola muzîka cazê?
 **TR:** Caz müziğinin simgesi hâline gelmiş üflemeli çalgı hangisidir?
 -    A) Tembûr
--    B) Bilûr
-- ✅ C) Saksafon
+- ✅ B) Saksafon
+-    C) Bilûr
 -    D) Zirne
-**Doğru:** C) Saksafon
+**Doğru:** B) Saksafon
 **Açıklama:** Saksofon, cazın erken döneminden bu yana türün simge çalgısıdır. Tembûr, bilûr ve zurna Kürt halk müziğinin çalgılarıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Saxophone
 
@@ -983,10 +983,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Salên 1920yî li Dewletên Yekbûyî bi navê kîjan celebê muzîkê tên bibîranîn?
 **TR:** 1920'ler ABD'de hangi müzik türünün adıyla anılır?
 -    A) Rock
--    B) Pop
-- ✅ C) Jazz
+- ✅ B) Jazz
+-    C) Pop
 -    D) Hip-hop
-**Doğru:** C) Jazz
+**Doğru:** B) Jazz
 **Açıklama:** 1920'ler ABD'de "Caz Çağı" (Jazz Age) adıyla anılır; dönemin adı yazar F. Scott Fitzgerald'a mal edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Jazz_Age
 
@@ -995,31 +995,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi sanatçı "Rock and Roll"un Kralı' olarak bilinir?
 -    A) Chuck Berry
 -    B) Little Richard
--    C) Buddy Holly
-- ✅ D) Elvis Presley
-**Doğru:** D) Elvis Presley
+- ✅ C) Elvis Presley
+-    D) Buddy Holly
+**Doğru:** C) Elvis Presley
 **Açıklama:** Elvis Presley, "Rock and Roll"un Kralı' olarak bilinir. 1935'te doğmuş ve "Heartbreak Hotel" gibi ünlü rock and roll şarkılarıyla tanınmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Elvis_Presley
 
 ## ds_muzik_0168  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan hunermend wekî "King of Pop" tê naskirin?
 **TR:** Hangi sanatçı "Popun Kralı" olarak bilinir?
-- ✅ A) Michael Jackson
--    B) Elvis Presley
--    C) Prince
--    D) Madonna
-**Doğru:** A) Michael Jackson
+-    A) Elvis Presley
+-    B) Prince
+-    C) Madonna
+- ✅ D) Michael Jackson
+**Doğru:** D) Michael Jackson
 **Açıklama:** Michael Jackson, "Popun Kralı" olarak bilinir. 1958'de doğmuş ve "Thriller" gibi ünlü pop şarkılarıyla tanınmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Michael_Jackson
 
 ## ds_muzik_0159  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan strana navdar a popê ji aliyê Michael Jackson ve tê naskirin?
 **TR:** Michael Jackson'ın bilinen ünlü pop şarkısı hangisidir?
--    A) Like a Virgin
-- ✅ B) Thriller
+- ✅ A) Thriller
+-    B) Like a Virgin
 -    C) I Will Always Love You
 -    D) Respect
-**Doğru:** B) Thriller
+**Doğru:** A) Thriller
 **Açıklama:** Michael Jackson, "Thriller" şarkısıyla çok ünlü olmuştur. Bu şarkı 1982'de çıkmış ve müzik tarihinin en ünlü şarkılarından biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Thriller_(song)
 
@@ -1027,21 +1027,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan hunermend wekî "Queen of Soul" tê naskirin?
 **TR:** Hangi sanatçı "Ruhun Kraliçesi" olarak bilinir?
 -    A) Whitney Houston
--    B) Diana Ross
-- ✅ C) Aretha Franklin
+- ✅ B) Aretha Franklin
+-    C) Diana Ross
 -    D) Tina Turner
-**Doğru:** C) Aretha Franklin
+**Doğru:** B) Aretha Franklin
 **Açıklama:** Aretha Franklin, "Ruhun Kraliçesi" olarak bilinir. 1942'de doğmuş ve "Respect" gibi ünlü soul şarkılarıyla tanınmıştır.
 **Kaynak:** https://en.wikipedia.org/wiki/Aretha_Franklin
 
 ## ds_muzik_0162  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan celeb muzîkê di salên 1990yan de li Seattle derketiye?
 **TR:** 1990'larda Seattle'da hangi müzik türü ortaya çıkmıştır?
-- ✅ A) Grunge
--    B) Pop
--    C) Hip-hop
--    D) Country
-**Doğru:** A) Grunge
+-    A) Pop
+-    B) Hip-hop
+-    C) Country
+- ✅ D) Grunge
+**Doğru:** D) Grunge
 **Açıklama:** Grunge, 1980'larda Seattle'da ortaya çıkmıştır. Bu müzik türü rock'tan türemiştir ve ağır gitarları ve hüzünlü sesleriyle tanınır. 1990'larda ana akıma yayıldı.
 **Kaynak:** https://en.wikipedia.org/wiki/Grunge
 
@@ -1049,21 +1049,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan strana navdar a cazê ji aliyê Louis Armstrong ve tê naskirin?
 **TR:** Louis Armstrong'un bilinen ünlü caz şarkısı hangisidir?
 -    A) My Way
--    B) Fly Me to the Moon
-- ✅ C) What a Wonderful World
+- ✅ B) What a Wonderful World
+-    C) Fly Me to the Moon
 -    D) Take Five
-**Doğru:** C) What a Wonderful World
+**Doğru:** B) What a Wonderful World
 **Açıklama:** Louis Armstrong, "What a Wonderful World" şarkısıyla çok ünlü olmuştur. Bu şarkı 1967'de çıkmış ve cazın klasiklerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/What_a_Wonderful_World
 
 ## ds_muzik_0165  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan amûr di navenda muzîka bluesê de ye?
 **TR:** Blues müziğinin merkezinde yer alan çalgı hangisidir?
--    A) Piyano
-- ✅ B) Gîtar
+- ✅ A) Gîtar
+-    B) Piyano
 -    C) Baterî
 -    D) Keman
-**Doğru:** B) Gîtar
+**Doğru:** A) Gîtar
 **Açıklama:** Gitar, blues geleneğinin merkezindeki çalgıdır; tel bükme ve slide teknikleri türün sesini kurar.
 **Kaynak:** https://en.wikipedia.org/wiki/Blues
 
@@ -1072,9 +1072,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi müzik grubu "Bohemian Rhapsody" şarkısıyla ünlü olmuştur?
 -    A) Led Zeppelin
 -    B) Pink Floyd
--    C) The Doors
-- ✅ D) Queen
-**Doğru:** D) Queen
+- ✅ C) Queen
+-    D) The Doors
+**Doğru:** C) Queen
 **Açıklama:** Queen, "Bohemian Rhapsody" şarkısıyla çok ünlü olmuştur. Bu şarkı 1975'te çıkmış ve müzik tarihinin en ünlü şarkılarından biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bohemian_Rhapsody
 
@@ -1083,9 +1083,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** The Rolling Stones'un bilinen ünlü rock şarkısı hangisidir?
 -    A) Hey Jude
 -    B) Stairway to Heaven
--    C) Hotel California
-- ✅ D) (I Can't Get No) Satisfaction
-**Doğru:** D) (I Can't Get No) Satisfaction
+- ✅ C) (I Can't Get No) Satisfaction
+-    D) Hotel California
+**Doğru:** C) (I Can't Get No) Satisfaction
 **Açıklama:** The Rolling Stones, "(I Can"t Get No) Satisfaction' şarkısıyla çok ünlü olmuştur. Bu şarkı 1965'te çıkmış ve rock'ın klasiklerinden biri olarak kabul edilir.
 **Kaynak:** https://en.wikipedia.org/wiki/(I_Can%27t_Get_No)_Satisfaction
 
@@ -1093,10 +1093,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di hilberîna popa nûjen de kîjan amûra elektronîk roleke sereke dilîze?
 **TR:** Modern pop üretiminde başrolü hangi elektronik çalgı üstlenir?
 -    A) Tembûr
--    B) Bilûr
-- ✅ C) Sentezker
+- ✅ B) Sentezker
+-    C) Bilûr
 -    D) Zirne
-**Doğru:** C) Sentezker
+**Doğru:** B) Sentezker
 **Açıklama:** 1980'lerden bu yana sentezleyici, pop prodüksiyonunun temel ses kaynağıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Synthesizer
 
@@ -1105,9 +1105,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Operada şarkıcılar çoğunlukla nasıl şarkı söyler?
 -    A) Bi mikrofonê
 -    B) Bi kasetê
--    C) Bi radyoyê
-- ✅ D) Bê mikrofon
-**Doğru:** D) Bê mikrofon
+- ✅ C) Bê mikrofon
+-    D) Bi radyoyê
+**Doğru:** C) Bê mikrofon
 **Açıklama:** Operada şarkıcılar çoğunlukla mikrofonsuz şarkı söyler. Bunun nedeni, seslerinin doğal ve güçlü olması ve opera salonlarındaki akustiğin iyi olmasıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Opera
 
@@ -1115,10 +1115,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Senfonî bi piranî ji bo çi tê nivîsandin?
 **TR:** Senfoni çoğunlukla ne için yazılır?
 -    A) Piyanoyê
--    B) Kemançeyê
-- ✅ C) Orkestrayê
+- ✅ B) Orkestrayê
+-    C) Kemançeyê
 -    D) Tembûrê
-**Doğru:** C) Orkestrayê
+**Doğru:** B) Orkestrayê
 **Açıklama:** Senfoni çoğunlukla orkestra için bestelenir. Orkestra; yaylı, nefesli ve vurmalı çalgılar gibi birçok enstrümandan oluşur.
 **Kaynak:** https://en.wikipedia.org/wiki/Symphony
 
@@ -1127,20 +1127,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Operada, tek sesli şarkı için hangi kelime kullanılır?
 -    A) Koros
 -    B) Rîtm
--    C) Melodî
-- ✅ D) Arya
-**Doğru:** D) Arya
+- ✅ C) Arya
+-    D) Melodî
+**Doğru:** C) Arya
 **Açıklama:** Arya, operada tek bir solist için yazılmış bağımsız vokal parçadır; orkestra eşliği bulunur.
 **Kaynak:** https://en.wikipedia.org/wiki/Aria
 
 ## ds_muzik_0179  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan bestekar bi opera xwe ya "The Magic Flute" tê naskirin?
 **TR:** Hangi besteci "The Magic Flute" operasıyla tanınır?
--    A) Joseph Haydn
-- ✅ B) Wolfgang Amadeus Mozart
+- ✅ A) Wolfgang Amadeus Mozart
+-    B) Joseph Haydn
 -    C) Ludwig van Beethoven
 -    D) Johann Sebastian Bach
-**Doğru:** B) Wolfgang Amadeus Mozart
+**Doğru:** A) Wolfgang Amadeus Mozart
 **Açıklama:** Wolfgang Amadeus Mozart, "The Magic Flute" (Die Zauberflöte) operasıyla tanınır. Bu opera 1791 yılında bestelenmiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/The_Magic_Flute
 
@@ -1149,9 +1149,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi besteci "Carmen" operasıyla tanınır?
 -    A) Wolfgang Amadeus Mozart
 -    B) Ludwig van Beethoven
--    C) Giuseppe Verdi
-- ✅ D) Georges Bizet
-**Doğru:** D) Georges Bizet
+- ✅ C) Georges Bizet
+-    D) Giuseppe Verdi
+**Doğru:** C) Georges Bizet
 **Açıklama:** Georges Bizet, "Carmen" operasıyla tanınır. Bu opera 1875 yılında bestelenmiştir ve en ünlü Fransız operalarından biridir.
 **Kaynak:** https://en.wikipedia.org/wiki/Carmen
 
@@ -1160,42 +1160,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Senfoni çoğunlukla kaç bölümden oluşur?
 -    A) Sê beşan
 -    B) Du beşan
--    C) Pênc beşan
-- ✅ D) Çar beşan
-**Doğru:** D) Çar beşan
+- ✅ C) Çar beşan
+-    D) Pênc beşan
+**Doğru:** C) Çar beşan
 **Açıklama:** Senfoni çoğunlukla dört bölümden oluşur. Bu bölümler hızlarıyla birbirinden ayrılır: birincisi hızlı, ikincisi yavaş, üçüncüsü dans ve dördüncüsü hızlıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Symphony
 
 ## ds_muzik_0200  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di senfoniyê de, kîjan amûr bi piranî di beşa têlan de cih digire û bi kemanê re dişibe?
 **TR:** Senfonide, hangi enstrüman çoğunlukla yaylı bölümde yer alır ve kemana benzer?
--    A) Bilûr
-- ✅ B) Viyola
+- ✅ A) Viyola
+-    B) Bilûr
 -    C) Tembûr
 -    D) Def
-**Doğru:** B) Viyola
+**Doğru:** A) Viyola
 **Açıklama:** Senfonide, viyola çoğunlukla yaylı bölümde yer alır ve kemana benzer. Viyola, kemandan daha büyüktür ve sesi daha derindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Viola
 
 ## ds_muzik_0182  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di operayê de, kîjan peyv ji bo koma stranbêjan tê bikaranîn?
 **TR:** Operada, şarkıcılar topluluğu için hangi kelime kullanılır?
-- ✅ A) Koros
--    B) Arya
--    C) Solîst
--    D) Rîtm
-**Doğru:** A) Koros
+-    A) Arya
+-    B) Solîst
+-    C) Rîtm
+- ✅ D) Koros
+**Doğru:** D) Koros
 **Açıklama:** Operada, şarkıcılar topluluğu için koro kullanılır. Koro çoğunlukla halkın veya topluluğun duygularını göstermek için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Choir
 
 ## ds_muzik_0195  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di operayê de, kîjan peyv ji bo strana çar stranbêjan tê bikaranîn?
 **TR:** Operada, dört şarkıcının söylediği şarkı için hangi kelime kullanılır?
--    A) Trio
-- ✅ B) Kuartet
+- ✅ A) Kuartet
+-    B) Trio
 -    C) Dûet
 -    D) Arya
-**Doğru:** B) Kuartet
+**Doğru:** A) Kuartet
 **Açıklama:** Operada, dört şarkıcının söylediği şarkı için kuartet kullanılır. Kuartet çoğunlukla operadaki dört kahraman arasındaki ilişkiyi göstermek için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Quartet
 
@@ -1203,21 +1203,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan bestekar bi navê "Bavê Senfoniyê" tê naskirin?
 **TR:** Hangi besteci "Senfoninin Babası" olarak bilinir?
 -    A) Wolfgang Amadeus Mozart
--    B) Ludwig van Beethoven
-- ✅ C) Joseph Haydn
+- ✅ B) Joseph Haydn
+-    C) Ludwig van Beethoven
 -    D) Johann Sebastian Bach
-**Doğru:** C) Joseph Haydn
+**Doğru:** B) Joseph Haydn
 **Açıklama:** Joseph Haydn, "Senfoninin Babası" olarak bilinir. Yaklaşık 104 senfoni bestelemiştir ve bu form onun elinde büyük gelişme göstermiştir.
 **Kaynak:** https://en.wikipedia.org/wiki/Joseph_Haydn
 
 ## ds_muzik_0203  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgîn bilindahiya dengan di muzîkê de diyar dike?
 **TR:** Müzikte hangi terim seslerin yüksekliğini ifade eder?
-- ✅ A) Pitch
--    B) Rîtm
--    C) Tempo
--    D) Dînamîk
-**Doğru:** A) Pitch
+-    A) Rîtm
+-    B) Tempo
+-    C) Dînamîk
+- ✅ D) Pitch
+**Doğru:** D) Pitch
 **Açıklama:** Pitch, seslerin yüksekliğini ifade eder. Ritim zamanı, tempo hızı ve dinamik de seslerin gücünü gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Pitch_(music)
 
@@ -1225,21 +1225,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di muzîkê de, hevahengiya dengan ku bi hev re têne lêdan çi ye?
 **TR:** Müzikte, birlikte çalınan seslerin uyumu nedir?
 -    A) Melodî
--    B) Rîtm
-- ✅ C) Armonî
+- ✅ B) Armonî
+-    C) Rîtm
 -    D) Kontrpuan
-**Doğru:** C) Armonî
+**Doğru:** B) Armonî
 **Açıklama:** Armoni, birlikte çalınan seslerin uyumudur. Melodi seslerin sırası, ritim zaman ve kontrpuan da melodilerin birleşimidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Harmony
 
 ## ds_muzik_0205  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgîn leza muzîkê bi piranî bi "beats per minute" pîvan dike?
 **TR:** Hangi terim müziğin hızını çoğunlukla "dakikadaki vuruş" ile ölçer?
--    A) Rîtm
-- ✅ B) Tempo
+- ✅ A) Tempo
+-    B) Rîtm
 -    C) Metre
 -    D) Dinamîk
-**Doğru:** B) Tempo
+**Doğru:** A) Tempo
 **Açıklama:** Tempo, müziğin hızını "dakikadaki vuruş" ölçüsüyle ifade eder. Ritim seslerin dizilişi, metre zamanın ölçüsü ve dinamik de seslerin gücüdür.
 **Kaynak:** https://en.wikipedia.org/wiki/Tempo
 
@@ -1247,43 +1247,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgîn ji bo nîşankirina leza muzîkê tê bikaranîn?
 **TR:** Müziğin hızını belirtmek için hangi terim kullanılır?
 -    A) Nota
--    B) Rîtm
-- ✅ C) Tempo
+- ✅ B) Tempo
+-    C) Rîtm
 -    D) Dînamîk
-**Doğru:** C) Tempo
+**Doğru:** B) Tempo
 **Açıklama:** Tempo, müziğin hızını belirtmek için kullanılır. Nota yüksekliği, ritim zamanı ve dinamik de seslerin gücünü gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tempo
 
 ## ds_muzik_0213  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan têgîn ji bo nîşankirina hevahengiya dengan tê bikaranîn?
 **TR:** Seslerin uyumunu belirtmek için hangi terim kullanılır?
--    A) Rîtm
-- ✅ B) Armonî
+- ✅ A) Armonî
+-    B) Rîtm
 -    C) Tempo
 -    D) Nota
-**Doğru:** B) Armonî
+**Doğru:** A) Armonî
 **Açıklama:** Armoni, seslerin uyumunu belirtmek için kullanılır. Ritim zamanı, tempo hızı ve nota da yüksekliği gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Harmony
 
 ## ds_muzik_0219  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan têgîn ji bo nîşankirina rêjdana dengan bi demê re tê bikaranîn?
 **TR:** Seslerin zaman içindeki akışını belirtmek için hangi terim kullanılır?
-- ✅ A) Rîtm
--    B) Tempo
--    C) Armonî
--    D) Melodî
-**Doğru:** A) Rîtm
+-    A) Tempo
+-    B) Armonî
+-    C) Melodî
+- ✅ D) Rîtm
+**Doğru:** D) Rîtm
 **Açıklama:** Ritim, seslerin zaman içindeki akışını belirtmek için kullanılır. Tempo hızı, armoni uyumu ve melodi ise seslerin dizilişini gösterir.
 **Kaynak:** https://en.wikipedia.org/wiki/Rhythm
 
 ## edit_muzik_0001  ·  zorluk 1  ·  editorial
 **KU:** "Dengbêj" kî ye?
 **TR:** "Dengbêj" kimdir?
--    A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
-- ✅ B) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
+- ✅ A) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
+-    B) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
 -    C) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
 -    D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
-**Doğru:** B) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
+**Doğru:** A) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
 **Açıklama:** Dengbêj, enstrümansız, yalnız sesiyle kilam ve hikâye aktaran anlatıcıdır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1292,42 +1292,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Saz" adıyla da bilinen telli Kürt çalgısı hangisidir?
 -    A) Bilûr
 -    B) Def
--    C) Zirne
-- ✅ D) Tembûr
-**Doğru:** D) Tembûr
+- ✅ C) Tembûr
+-    D) Zirne
+**Doğru:** C) Tembûr
 **Açıklama:** Tembûr telli bir çalgıdır ve Kürt müziğinde merkezi yer tutar.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0003  ·  zorluk 1  ·  editorial
 **KU:** "Bilûr" cureyekî çi amûrê ye?
 **TR:** "Bilûr" ne tür bir çalgıdır?
--    A) Amûra têlî
-- ✅ B) Amûra pifê
+- ✅ A) Amûra pifê
+-    B) Amûra têlî
 -    C) Amûra lêdanê
 -    D) Amûra elektronîk
-**Doğru:** B) Amûra pifê
+**Doğru:** A) Amûra pifê
 **Açıklama:** Bilûr (kaval) üflemeli bir çalgıdır, genelde kamış veya ağaçtan yapılır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0004  ·  zorluk 2  ·  editorial
 **KU:** "Dahol û zirne" bi gelemperî di kîjan rewşê de tên lêxistin?
 **TR:** Davul ve zurna genellikle hangi durumda çalınır?
-- ✅ A) Dawet û govendê
--    B) Rêûresma şînê
--    C) Dersên dibistanê
--    D) Nimêja sibehê
-**Doğru:** A) Dawet û govendê
+-    A) Rêûresma şînê
+-    B) Dersên dibistanê
+-    C) Nimêja sibehê
+- ✅ D) Dawet û govendê
+**Doğru:** D) Dawet û govendê
 **Açıklama:** Davul ve zurna, düğün ve halayın klasik ikilisidir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0005  ·  zorluk 3  ·  editorial
 **KU:** Şivan Perwer bi giştî bi çi tê nasîn?
 **TR:** Şivan Perwer genel olarak neyle tanınır?
--    A) Koma stranbêj û muzîkjenan
-- ✅ B) Stranbêjiya kurdî ya nûjen û siyasî
+- ✅ A) Stranbêjiya kurdî ya nûjen û siyasî
+-    B) Koma stranbêj û muzîkjenan
 -    C) Dengbêjeke jin a navdar a sedsala 20em
 -    D) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
-**Doğru:** B) Stranbêjiya kurdî ya nûjen û siyasî
+**Doğru:** A) Stranbêjiya kurdî ya nûjen û siyasî
 **Açıklama:** Şivan Perwer ünlü Kürt sanatçıdır; yurtsever şarkıları tüm Kürdistan'a yayıldı.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1336,31 +1336,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt müziğinde "kilam" nedir?
 -    A) Reqsa komî
 -    B) Amûreke têlî
--    C) Cureyekî xwarinê
-- ✅ D) Stranên dirêj ên çîrokî
-**Doğru:** D) Stranên dirêj ên çîrokî
+- ✅ C) Stranên dirêj ên çîrokî
+-    D) Cureyekî xwarinê
+**Doğru:** C) Stranên dirêj ên çîrokî
 **Açıklama:** Kilam genelde bir hikâye anlatır: aşk, savaş, göç ya da yas.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0007  ·  zorluk 4  ·  editorial
 **KU:** Ayşe Şan di dîroka muzîka kurdî de çima girîng e?
 **TR:** Ayşe Şan, Kürt müziği tarihinde neden önemlidir?
--    A) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
-- ✅ B) yek ji dengên jin ên pêşeng ê muzîka kurdî ye
+- ✅ A) yek ji dengên jin ên pêşeng ê muzîka kurdî ye
+-    B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
 -    C) yekem hunermenda kurd a jin a ku plak dagirt
 -    D) sazê rîtmê yê ku bi zirneyê re tê lêxistin
-**Doğru:** B) yek ji dengên jin ên pêşeng ê muzîka kurdî ye
+**Doğru:** A) yek ji dengên jin ên pêşeng ê muzîka kurdî ye
 **Açıklama:** Ayşe Şan (1938-1996), zor koşullarda Kürt müziğinin en etkili kadın seslerinden biri oldu.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0008  ·  zorluk 4  ·  editorial
 **KU:** "Lawik" di muzîka kurdî de bi giştî çi ye?
 **TR:** Kürt müziğinde "lawik" genel olarak nedir?
-- ✅ A) Cureyekî kilamê yê bi gelemperî evîndar
--    B) Yek ji dengên jin ên pêşeng ê muzîka kurdî ye
--    C) Belavbûna cîhanî ya stran û tomarkirinê
--    D) Bi tiliyan an bi mizrabê
-**Doğru:** A) Cureyekî kilamê yê bi gelemperî evîndar
+-    A) Yek ji dengên jin ên pêşeng ê muzîka kurdî ye
+-    B) Belavbûna cîhanî ya stran û tomarkirinê
+-    C) Bi tiliyan an bi mizrabê
+- ✅ D) Cureyekî kilamê yê bi gelemperî evîndar
+**Doğru:** D) Cureyekî kilamê yê bi gelemperî evîndar
 **Açıklama:** Lawik bir kilam türüdür; çoğunlukla aşk ve hasret üzerinedir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1377,21 +1377,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Koma Mizgîn, Koma Amed û Koma Dengê Azadî bi giştî çi ne?
 **TR:** Koma Mizgîn, Koma Amed ve Koma Dengê Azadî genel olarak nedir?
 -    A) Rojnameyên kurdî
--    B) Partiyên siyasî
-- ✅ C) Komên muzîka kurdî ya nûjen
+- ✅ B) Komên muzîka kurdî ya nûjen
+-    C) Partiyên siyasî
 -    D) Weşanxaneyên pirtûkan
-**Doğru:** C) Komên muzîka kurdî ya nûjen
+**Doğru:** B) Komên muzîka kurdî ya nûjen
 **Açıklama:** Bu "kom"lar 1990'larda toplu ve politik Kürt müziğini geliştirdi.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0012  ·  zorluk 1  ·  editorial
 **KU:** Peyva "stran" bi Tirkî çi tê wateyê?
 **TR:** "Stran" sözcüğü Türkçede ne demektir?
-- ✅ A) şarkı
--    B) dans
--    C) saz
--    D) ses
-**Doğru:** A) şarkı
+-    A) dans
+-    B) saz
+-    C) ses
+- ✅ D) şarkı
+**Doğru:** D) şarkı
 **Açıklama:** "Stran" Türkçede "şarkı/türkü" demektir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1400,9 +1400,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Erbane" ne tür bir çalgıdır?
 -    A) Avaz û qalibê kilamê
 -    B) Reqsa gelêrî ya komî
--    C) Bûyerên şer û berxwedanê
-- ✅ D) Amûra lêdanê ya wek def
-**Doğru:** D) Amûra lêdanê ya wek def
+- ✅ C) Amûra lêdanê ya wek def
+-    D) Bûyerên şer û berxwedanê
+**Doğru:** C) Amûra lêdanê ya wek def
 **Açıklama:** Erbane (def), deri kaplı vurmalı bir çalgıdır; dini ve halk müziğinde kullanılır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1410,21 +1410,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Zirne" cureyekî çi amûrê ye?
 **TR:** "Zirne" ne tür bir çalgıdır?
 -    A) Amûra têlî
--    B) Amûra lêdanê
-- ✅ C) Amûra pifê
+- ✅ B) Amûra pifê
+-    C) Amûra lêdanê
 -    D) Amûra kevanî
-**Doğru:** C) Amûra pifê
+**Doğru:** B) Amûra pifê
 **Açıklama:** Zurna yüksek sesli üflemeli çalgıdır; davulla birlikte çalınır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0015  ·  zorluk 3  ·  editorial
 **KU:** "Heyranok" di muzîka kurdî de bi giştî çi ye?
 **TR:** Kürt müziğinde "heyranok" genel olarak nedir?
-- ✅ A) stranên kurt ên bi gelemperî evîndar
--    B) avaza ku ji rêzbûna dengan pêk tê
--    C) stranbêjî an lêxistina bi tenê ya hunermendekî
--    D) navê yekem koma rocka kurdî di dîrokê de
-**Doğru:** A) stranên kurt ên bi gelemperî evîndar
+-    A) avaza ku ji rêzbûna dengan pêk tê
+-    B) stranbêjî an lêxistina bi tenê ya hunermendekî
+-    C) navê yekem koma rocka kurdî di dîrokê de
+- ✅ D) stranên kurt ên bi gelemperî evîndar
+**Doğru:** D) stranên kurt ên bi gelemperî evîndar
 **Açıklama:** Heyranok kısa ezgilerdir, sık sık soru-cevap biçiminde söylenir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1432,21 +1432,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Meryem Xan di muzîka kurdî de kî ye?
 **TR:** Meryem Xan Kürt müziğinde kimdir?
 -    A) Nivîskareke romanên dîrokî yên sedsala 20em
--    B) Damezrînera kovareke edebî ya Stenbolê
-- ✅ C) Dengbêjeke jin a navdar a sedsala 20em
+- ✅ B) Dengbêjeke jin a navdar a sedsala 20em
+-    C) Damezrînera kovareke edebî ya Stenbolê
 -    D) Lêdera yekem a jin a tembûrê li Amedê
-**Doğru:** C) Dengbêjeke jin a navdar a sedsala 20em
+**Doğru:** B) Dengbêjeke jin a navdar a sedsala 20em
 **Açıklama:** Meryem Xan (1904-1949) en tanınmış kadın dengbêjlerdendir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0017  ·  zorluk 3  ·  editorial
 **KU:** Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?
 **TR:** Erivan Radyosu Kürt müziği için neden önemlidir?
--    A) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
-- ✅ B) ji salên 1950î ve stranên kurdî belav kir
+- ✅ A) ji salên 1950î ve stranên kurdî belav kir
+-    B) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
 -    C) veguhastina muzîkal a bi têkiliya hoste-şagird
 -    D) edeta ku ji muzîkjenan re pere tê avêtin
-**Doğru:** B) ji salên 1950î ve stranên kurdî belav kir
+**Doğru:** A) ji salên 1950î ve stranên kurdî belav kir
 **Açıklama:** Erivan Radyosu'nun Kürtçe yayını, dengbêj arşivinin ana kaynağı oldu.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1454,21 +1454,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva "deng" bi Tirkî çi tê wateyê?
 **TR:** "Deng" sözcüğü Türkçede ne demektir?
 -    A) söz
--    B) saz
-- ✅ C) ses
+- ✅ B) ses
+-    C) saz
 -    D) şarkı
-**Doğru:** C) ses
+**Doğru:** B) ses
 **Açıklama:** "Deng" Türkçede "ses" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_muzik_0019  ·  zorluk 5  ·  editorial
 **KU:** Di dengbêjiyê de "kilamên şer" bi giştî li ser çi ne?
 **TR:** Dengbêjlikte "kilamên şer" genel olarak ne üzerinedir?
-- ✅ A) Bûyerên şer û berxwedanê
--    B) Avaz û qalibê kilamê
--    C) Awayê stranbêjiya bi kom
--    D) Dawet û govendê
-**Doğru:** A) Bûyerên şer û berxwedanê
+-    A) Avaz û qalibê kilamê
+-    B) Awayê stranbêjiya bi kom
+-    C) Dawet û govendê
+- ✅ D) Bûyerên şer û berxwedanê
+**Doğru:** D) Bûyerên şer û berxwedanê
 **Açıklama:** Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1484,11 +1484,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## edit_muzik_0021  ·  zorluk 3  ·  editorial
 **KU:** "Şeştar" an amûrên têlî yên kurdî bi giştî çawa tên lêxistin?
 **TR:** "Şeştar" ya da Kürt telli çalgıları genel olarak nasıl çalınır?
-- ✅ A) Bi tiliyan an bi mizrabê
--    B) Dawet û govendê
--    C) Koma stranbêj û muzîkjenan
--    D) Awayê stranbêjiya bi kom
-**Doğru:** A) Bi tiliyan an bi mizrabê
+-    A) Dawet û govendê
+-    B) Koma stranbêj û muzîkjenan
+-    C) Awayê stranbêjiya bi kom
+- ✅ D) Bi tiliyan an bi mizrabê
+**Doğru:** D) Bi tiliyan an bi mizrabê
 **Açıklama:** Şeştar, tembûr ve saz parmakla ya da mızrapla çalınır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1497,20 +1497,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürt müziğinde "stranbêj" sözcüğü kimin için kullanılır?
 -    A) Kesê ku amûrê çêdike
 -    B) Kesê ku reqsê hîn dike
--    C) Kesê ku helbestê dinivîse
-- ✅ D) Kesa ku stranan dibêje
-**Doğru:** D) Kesa ku stranan dibêje
+- ✅ C) Kesa ku stranan dibêje
+-    D) Kesê ku helbestê dinivîse
+**Doğru:** C) Kesa ku stranan dibêje
 **Açıklama:** "Stranbêj", "stran" ve "bêj" (söylemek) sözcüklerinden oluşur.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0023  ·  zorluk 4  ·  editorial
 **KU:** Di muzîka kurdî de "makam" an "avaz" çi diyar dike?
 **TR:** Kürt müziğinde "makam" ya da "avaz" neyi belirtir?
-- ✅ A) Qalibê dengî yê stranê
--    B) Hejmara stranbêjan
--    C) Dirêjahiya dawetê
--    D) Navê amûrê
-**Doğru:** A) Qalibê dengî yê stranê
+-    A) Hejmara stranbêjan
+-    B) Dirêjahiya dawetê
+-    C) Navê amûrê
+- ✅ D) Qalibê dengî yê stranê
+**Doğru:** D) Qalibê dengî yê stranê
 **Açıklama:** Avaz, şarkının üzerine kurulduğu makam kalıbıdır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1518,21 +1518,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dawetên kurdî de reqsa komî bi gelemperî bi kîjan amûran tê meşandin?
 **TR:** Kürt düğünlerinde toplu dans genellikle hangi çalgılarla yürütülür?
 -    A) Tembûr û bilûr
--    B) Piano û gîtar
-- ✅ C) Dahol û zirne
+- ✅ B) Dahol û zirne
+-    C) Piano û gîtar
 -    D) Erbane û ney
-**Doğru:** C) Dahol û zirne
+**Doğru:** B) Dahol û zirne
 **Açıklama:** Davul ve zurna, yüksek sesiyle açık hava halayına uygundur.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0025  ·  zorluk 5  ·  editorial
 **KU:** Di kilamên dengbêjan de "vegotin" çima girîng e?
 **TR:** Dengbêj kilamlarında anlatı neden önemlidir?
-- ✅ A) Kilam çîrokeke dîrokî diguhezîne
--    B) Tenê ahenga dengî girîng e
--    C) Reqs pê re tê kirin
--    D) Amûr pê re tên lêxistin
-**Doğru:** A) Kilam çîrokeke dîrokî diguhezîne
+-    A) Tenê ahenga dengî girîng e
+-    B) Reqs pê re tê kirin
+-    C) Amûr pê re tên lêxistin
+- ✅ D) Kilam çîrokeke dîrokî diguhezîne
+**Doğru:** D) Kilam çîrokeke dîrokî diguhezîne
 **Açıklama:** Dengbêjlik hem müzik hem sözlü arşivdir: olaylar kilamla korunur.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1541,20 +1541,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Kilam" sözcüğü Türkçede genel olarak ne demektir?
 -    A) dans
 -    B) saz
--    C) düğün
-- ✅ D) türkü
-**Doğru:** D) türkü
+- ✅ C) türkü
+-    D) düğün
+**Doğru:** C) türkü
 **Açıklama:** "Kilam", hikâye anlatan uzun ezgilerdir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0027  ·  zorluk 4  ·  editorial
 **KU:** Di muzîka kurdî ya nûjen de "kom" çi ye?
 **TR:** Modern Kürt müziğinde "kom" nedir?
-- ✅ A) Koma stranbêj û muzîkjenan
--    B) Bûyerên şer û berxwedanê
--    C) Stranên kurt ên bi gelemperî evîndar
--    D) Kilam çîrokeke dîrokî diguhezîne
-**Doğru:** A) Koma stranbêj û muzîkjenan
+-    A) Bûyerên şer û berxwedanê
+-    B) Stranên kurt ên bi gelemperî evîndar
+-    C) Kilam çîrokeke dîrokî diguhezîne
+- ✅ D) Koma stranbêj û muzîkjenan
+**Doğru:** D) Koma stranbêj û muzîkjenan
 **Açıklama:** "Kom", birlikte söyleyip çalan topluluktur; 1990'ların toplu müziği bununla anılır.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1572,20 +1572,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dengbêjlikte yöresel "şêwe" ne demektir?
 -    A) cureyekî kilamê yê bi gelemperî evîndar
 -    B) kesa ku bi giştî stranan dibêje
--    C) edeta ku ji muzîkjenan re pere tê avêtin
-- ✅ D) awayê gotinê yê taybetî yê herêmekê
-**Doğru:** D) awayê gotinê yê taybetî yê herêmekê
+- ✅ C) awayê gotinê yê taybetî yê herêmekê
+-    D) edeta ku ji muzîkjenan re pere tê avêtin
+**Doğru:** C) awayê gotinê yê taybetî yê herêmekê
 **Açıklama:** Her yöre — Serhed, Botan, Behdinan — kendi dengbêj üslubuna sahiptir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0030  ·  zorluk 3  ·  editorial
 **KU:** Di stranên zarokan ên kurdî de "lorî" çi ye?
 **TR:** Kürtçe çocuk şarkılarında "lorî" nedir?
-- ✅ A) Strana razanê
--    B) Strana dawetê
--    C) Kilama şer
--    D) Strana cejnê
-**Doğru:** A) Strana razanê
+-    A) Strana dawetê
+-    B) Kilama şer
+-    C) Strana cejnê
+- ✅ D) Strana razanê
+**Doğru:** D) Strana razanê
 **Açıklama:** Lorî (ninni), çocuğu uyutmak için söylenir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
@@ -1594,31 +1594,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Diaspora Kürt müziği genel olarak neyi etkiledi?
 -    A) Komên muzîka kurdî ya nûjen
 -    B) veguhastina muzîkal a bi têkiliya hoste-şagird
--    C) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
-- ✅ D) Belavbûna cîhanî ya stran û tomarkirinê
-**Doğru:** D) Belavbûna cîhanî ya stran û tomarkirinê
+- ✅ C) Belavbûna cîhanî ya stran û tomarkirinê
+-    D) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+**Doğru:** C) Belavbûna cîhanî ya stran û tomarkirinê
 **Açıklama:** Diaspora yeni stüdyo, yayın ve festivaller getirdi; şarkılar dünyaya yayıldı.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## edit_muzik_0032  ·  zorluk 2  ·  editorial
 **KU:** Peyva "govend" bi Tirkî çi tê wateyê?
 **TR:** "Govend" sözcüğü Türkçede ne demektir?
-- ✅ A) halay
--    B) şarkı
--    C) saz
--    D) düğün
-**Doğru:** A) halay
+-    A) şarkı
+-    B) saz
+-    C) düğün
+- ✅ D) halay
+**Doğru:** D) halay
 **Açıklama:** "Govend" Türkçede "halay" demektir.
 **Kaynak:** Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)
 
 ## offline_0873  ·  zorluk 2  ·  offline
 **KU:** Di muzîka kurdî de rîtm bi çi re têkildar e?
 **TR:** Kürt müziğinde ritim neyle ilgilidir?
--    A) bilindbûna dengê stranê
-- ✅ B) lêdana rêkûpêk
+- ✅ A) lêdana rêkûpêk
+-    B) bilindbûna dengê stranê
 -    C) hejmara amûrên di komê de
 -    D) dirêjahiya stranê
-**Doğru:** B) lêdana rêkûpêk
+**Doğru:** A) lêdana rêkûpêk
 **Açıklama:** Ritim düzenli vuruştur: zaman eşit parçalara bölünür ve şarkı ile halay bu bölünmenin üzerine kurulur. Kürt müziğinde bu vuruşu çoğunlukla davul belirler, halay da ona göre döner.
 **Kaynak:** —
 
@@ -1627,20 +1627,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Dahol û zirne" genellikle nerede çalınır?
 -    A) li bazaran
 -    B) li dibistanan
--    C) li nexweşxaneyan
-- ✅ D) li dawetan
-**Doğru:** D) li dawetan
+- ✅ C) li dawetan
+-    D) li nexweşxaneyan
+**Doğru:** C) li dawetan
 **Açıklama:** Davul-zurna düğün ve şenliklerin müziğidir.
 **Kaynak:** —
 
 ## offline_2183  ·  zorluk 4  ·  offline
 **KU:** Evdalê Zeynikê di kîjan sedsalê de jiya?
 **TR:** Evdalê Zeynikê hangi yüzyılda yaşadı?
-- ✅ A) 19.
--    B) 17.
--    C) 20.
--    D) 15.
-**Doğru:** A) 19.
+-    A) 17.
+-    B) 20.
+-    C) 15.
+- ✅ D) 19.
+**Doğru:** D) 19.
 **Açıklama:** Büyük dengbêj Evdalê Zeynikê 19. yüzyılda yaşadı.
 **Kaynak:** —
 
@@ -1649,31 +1649,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Şarkıları söyleyip sunan kişiye Kürtçede ne ad verilir?
 -    A) bestekar
 -    B) deflêder
--    C) reqas
-- ✅ D) stranbêj
-**Doğru:** D) stranbêj
+- ✅ C) stranbêj
+-    D) reqas
+**Doğru:** C) stranbêj
 **Açıklama:** Şarkı söyleyen kişiye "stranbêj" denir.
 **Kaynak:** —
 
 ## offline_2199  ·  zorluk 5  ·  offline
 **KU:** Stranbêj Hesen Zîrek ji kîjan perçeyê Kurdistanê bû?
 **TR:** Şarkıcı Hesen Zîrek Kurdistanê'nin hangi parçasındandı?
-- ✅ A) Rojhilatê Kurdistanê
--    B) Bakurê Kurdistanê
--    C) Rojavayê Kurdistanê
--    D) Başûrê Kurdistanê
-**Doğru:** A) Rojhilatê Kurdistanê
+-    A) Bakurê Kurdistanê
+-    B) Rojavayê Kurdistanê
+-    C) Başûrê Kurdistanê
+- ✅ D) Rojhilatê Kurdistanê
+**Doğru:** D) Rojhilatê Kurdistanê
 **Açıklama:** Hesen Zîrek Rojhilat'taki Bokan'da doğdu ve yüzlerce halk şarkısı kaydetti.
 **Kaynak:** —
 
 ## offline_2201  ·  zorluk 5  ·  offline
 **KU:** Kawîs Axa bi çi navdar e?
 **TR:** Kawîs Axa ne ile ünlüdür?
--    A) sazçêkeriyê
-- ✅ B) dengbêjiyê
+- ✅ A) dengbêjiyê
+-    B) sazçêkeriyê
 -    C) derhêneriyê
 -    D) wênesaziyê
-**Doğru:** B) dengbêjiyê
+**Doğru:** A) dengbêjiyê
 **Açıklama:** Kawîs Axa dengbêjliğiyle ünlüdür — kilamları çalgısız ve ezbere söyleyen sözlü gelenek. Saz yapımcılığı, yönetmenlik ve ressamlık ayrı sanatlardır.
 **Kaynak:** —
 
@@ -1690,10 +1690,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji cihê ku dengbêj lê dicivin û distirên re çi tê gotin?
 **TR:** Dengbêjlerin toplanıp söylediği yere ne denir?
 -    A) Sûriye
--    B) Tembûr
-- ✅ C) Dîwan
+- ✅ B) Dîwan
+-    C) Tembûr
 -    D) Meydan
-**Doğru:** C) Dîwan
+**Doğru:** B) Dîwan
 **Açıklama:** Dengbêjlerin toplanıp sırayla söylediği ortama "dîwan" denir; dengbêj dîwanı akşam kurulur.
 **Kaynak:** —
 
@@ -1701,10 +1701,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Erbane" kîjan cureyê amûrê ye?
 **TR:** "Erbane" hangi çalgı türündendir?
 -    A) têlî
--    B) kevanî
-- ✅ C) lêdanê
+- ✅ B) lêdanê
+-    C) kevanî
 -    D) pifê
-**Doğru:** C) lêdanê
+**Doğru:** B) lêdanê
 **Açıklama:** Erbane (def), çerçeveli/zilli bir vurmalı çalgıdır.
 **Kaynak:** —
 
@@ -1712,10 +1712,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Govend" di bingehê de çalakiyeke çawa ye?
 **TR:** "Govend" temelde nasıl bir etkinliktir?
 -    A) xwendina helbestê
--    B) strana kesane
-- ✅ C) reqsa gelêrî ya komî
+- ✅ B) reqsa gelêrî ya komî
+-    C) strana kesane
 -    D) pêşandana şanoyê
-**Doğru:** C) reqsa gelêrî ya komî
+**Doğru:** B) reqsa gelêrî ya komî
 **Açıklama:** Govend, el ele tutuşularak oynanan toplu bir halk dansıdır.
 **Kaynak:** —
 
@@ -1723,32 +1723,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Amûrên bi şêwaza "Mey" dikevin kîjan komê?
 **TR:** "Mey" gibi çalgılar hangi gruba girer?
 -    A) têlî
--    B) kevanî
-- ✅ C) pifê
+- ✅ B) pifê
+-    C) kevanî
 -    D) lêdanê
-**Doğru:** C) pifê
+**Doğru:** B) pifê
 **Açıklama:** Mey, kamıştan yapılan üflemeli bir çalgıdır.
 **Kaynak:** —
 
 ## offline_2801  ·  zorluk 3  ·  offline
 **KU:** Govend, dengbêjî û kilam bi hev re çi pêk tînin?
 **TR:** Govend, dengbêjlik ve kilam birlikte neyi oluşturur?
-- ✅ A) Mîrateya muzîk-çanda kurdî
--    B) Kevneşopiya cazê ya Amerîkaya Bakur
--    C) Muzîka klasîk a rojava
--    D) Pîşesaziya popa nûjen
-**Doğru:** A) Mîrateya muzîk-çanda kurdî
+-    A) Kevneşopiya cazê ya Amerîkaya Bakur
+-    B) Muzîka klasîk a rojava
+-    C) Pîşesaziya popa nûjen
+- ✅ D) Mîrateya muzîk-çanda kurdî
+**Doğru:** D) Mîrateya muzîk-çanda kurdî
 **Açıklama:** Govend, dengbêjlik ve kilam birlikte zengin bir Kürt müzik-kültür mirasını oluşturur.
 **Kaynak:** —
 
 ## offline_2825  ·  zorluk 3  ·  offline
 **KU:** "Kilam, stran û lawik" bi hevpariyê wek kî tê naskirin?
 **TR:** "Kilam, stran ve lawik" ortaklaşa ne diye bilinir?
--    A) ji bo pitikan
-- ✅ B) cureyên avazên kurdî
+- ✅ A) cureyên avazên kurdî
+-    B) ji bo pitikan
 -    C) mîrateya çandî ya devkî
 -    D) bê amûr (a capella)
-**Doğru:** B) cureyên avazên kurdî
+**Doğru:** A) cureyên avazên kurdî
 **Açıklama:** Kilam, stran ve lawik, Kürt sözlü-müzikal geleneğinin ezgi türleridir.
 **Kaynak:** —
 
@@ -1757,9 +1757,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "serhad ezgileri" ile ne kastedilir?
 -    A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
 -    B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
--    C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
-- ✅ D) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
-**Doğru:** D) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+- ✅ C) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+-    D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+**Doğru:** C) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
 **Açıklama:** "serhad ezgileri": Kars, Ağrı ve Van yöresine özgü lirik müzik tarzı.
 **Kaynak:** —
 
@@ -1767,10 +1767,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Li jêr ji bo "dibistana dengbêjiyê" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "dengbêjlik okulu" için doğrudur?
 -    A) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
--    B) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
-- ✅ C) veguhastina muzîkal a bi têkiliya hoste-şagird
+- ✅ B) veguhastina muzîkal a bi têkiliya hoste-şagird
+-    C) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
 -    D) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
-**Doğru:** C) veguhastina muzîkal a bi têkiliya hoste-şagird
+**Doğru:** B) veguhastina muzîkal a bi têkiliya hoste-şagird
 **Açıklama:** "dengbêjlik okulu": usta-çırak ilişkisiyle yürüyen müzikal aktarım.
 **Kaynak:** —
 
@@ -1779,20 +1779,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi seçenek "zurna" anlamına gelir?
 -    A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
 -    B) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
--    C) stranbêjî an lêxistina bi tenê ya hunermendekî
-- ✅ D) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
-**Doğru:** D) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+- ✅ C) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+-    D) stranbêjî an lêxistina bi tenê ya hunermendekî
+**Doğru:** C) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
 **Açıklama:** "zurna": yüksek sesli, açık havada çalınan nefesli çalgı.
 **Kaynak:** —
 
 ## offline_10344  ·  zorluk 1  ·  offline
 **KU:** Koma Kardeş Türküler çi ye?
 **TR:** Kardeş Türküler topluluğu nedir?
--    A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
-- ✅ B) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+- ✅ A) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+-    B) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
 -    C) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
 -    D) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
-**Doğru:** B) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+**Doğru:** A) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
 **Açıklama:** "Kardeş Türküler": Kürt müziğini çok kültürlü ortamda icra eden grup.
 **Kaynak:** —
 
@@ -1801,9 +1801,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "melodi" hakkında doğru seçenek hangisidir?
 -    A) awayê stranbêjiya bi kom
 -    B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
--    C) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
-- ✅ D) avaza ku ji rêzbûna dengan pêk tê
-**Doğru:** D) avaza ku ji rêzbûna dengan pêk tê
+- ✅ C) avaza ku ji rêzbûna dengan pêk tê
+-    D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+**Doğru:** C) avaza ku ji rêzbûna dengan pêk tê
 **Açıklama:** "melodî": seslerin ardışık dizilmesiyle oluşan ezgi.
 **Kaynak:** —
 
@@ -1812,9 +1812,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "makam" ile ne kastedilir?
 -    A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
 -    B) hunermendê ku bayê rock û caz anî muzîka kurdî
--    C) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
-- ✅ D) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
-**Doğru:** D) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+- ✅ C) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+-    D) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+**Doğru:** C) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
 **Açıklama:** "makam": Türk ve Kürt müziğinde ezgisel yapıyı belirleyen sistem.
 **Kaynak:** —
 
@@ -1823,31 +1823,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "tembûr" hakkında doğru seçenek hangisidir?
 -    A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
 -    B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
--    C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
-- ✅ D) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
-**Doğru:** D) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
+- ✅ C) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
+-    D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+**Doğru:** C) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
 **Açıklama:** "tembûr": Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli saz.
 **Kaynak:** —
 
 ## offline_10427  ·  zorluk 2  ·  offline
 **KU:** Bi "hîran" çi tê xwestin?
 **TR:** "hîran" ile ne kastedilir?
-- ✅ A) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
--    B) lêdanên birêkûpêk ên ku bingeha muzîkê ne
--    C) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
--    D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
-**Doğru:** A) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
+-    A) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+-    B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+-    C) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+- ✅ D) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
+**Doğru:** D) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
 **Açıklama:** "hîran": Kürt halk müziğinde bir başka ezgi tarzı.
 **Kaynak:** —
 
 ## offline_10433  ·  zorluk 1  ·  offline
 **KU:** Li jêr ji bo "Aram Tigran" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "Aram Tigran" için doğrudur?
--    A) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
-- ✅ B) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+- ✅ A) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+-    B) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
 -    C) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
 -    D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
-**Doğru:** B) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+**Doğru:** A) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
 **Açıklama:** "Aram Tigran": Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen.
 **Kaynak:** —
 
@@ -1855,32 +1855,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan vebijêrk tê wateya "lawik"?
 **TR:** Hangi seçenek "lawik" anlamına gelir?
 -    A) hunermendê ku bayê rock û caz anî muzîka kurdî
--    B) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
-- ✅ C) cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin
+- ✅ B) cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin
+-    C) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
 -    D) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
-**Doğru:** C) cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin
+**Doğru:** B) cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin
 **Açıklama:** "lawik": daha çok aşk ve hasret üzerine söylenen lirik kilam türü.
 **Kaynak:** —
 
 ## offline_10480  ·  zorluk 1  ·  offline
 **KU:** Dema "awazên Botanê" tê gotin, çi tê xwestin?
 **TR:** "botan ezgileri" dendiğinde ne kastedilir?
--    A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
-- ✅ B) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+- ✅ A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+-    B) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
 -    C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
 -    D) hunermendê ku bayê rock û caz anî muzîka kurdî
-**Doğru:** B) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+**Doğru:** A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
 **Açıklama:** "botan ezgileri": Şırnak ve Cizre yöresinin ritmik ve makamsal müziği.
 **Kaynak:** —
 
 ## offline_10498  ·  zorluk 1  ·  offline
 **KU:** Kîjan di Muzîkê de têgiha "Koma Amed" rast bi cih dike?
 **TR:** Müzikte "Koma Amed" kavramını doğru yerleştiren hangisidir?
-- ✅ A) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
--    B) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
--    C) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
--    D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
-**Doğru:** A) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+-    A) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+-    B) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
+-    C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+- ✅ D) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+**Doğru:** D) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
 **Açıklama:** "Koma Amed": 90'larda Kürt müziğinde devrim yapan alternatif müzik grubu.
 **Kaynak:** —
 
@@ -1888,21 +1888,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan kesê/a "Aynur Dogan" rast dide nasîn?
 **TR:** "Aynur Doğan" kişisini doğru tanıtan hangisidir?
 -    A) hunermendê ku bayê rock û caz anî muzîka kurdî
--    B) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
-- ✅ C) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+- ✅ B) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+-    C) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
 -    D) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
-**Doğru:** C) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+**Doğru:** B) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
 **Açıklama:** "Aynur Doğan": modern dönemde Kürt halk müziğini icra eden sanatçı.
 **Kaynak:** —
 
 ## offline_10547  ·  zorluk 4  ·  offline
 **KU:** Derbarê "Erdewan Zaxoyî" de ya rast kîjan e?
 **TR:** "Erdewan Zaxoyî" hakkında doğru olan hangisidir?
-- ✅ A) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
--    B) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
--    C) veguhastina muzîkal a bi têkiliya hoste-şagird
--    D) sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin
-**Doğru:** A) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
+-    A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+-    B) veguhastina muzîkal a bi têkiliya hoste-şagird
+-    C) sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin
+- ✅ D) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
+**Doğru:** D) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
 **Açıklama:** "Erdewan Zaxoyî": Bahdinan bölgesinin sevilen devrimci müzisyeni.
 **Kaynak:** —
 
@@ -1911,20 +1911,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "nota" hakkında en doğru bilgi hangisidir?
 -    A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
 -    B) strana destanî an evînî ya ku dengbêj dibêjin
--    C) yekem hunermenda kurd a jin a ku plak dagirt
-- ✅ D) nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn
-**Doğru:** D) nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn
+- ✅ C) nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn
+-    D) yekem hunermenda kurd a jin a ku plak dagirt
+**Doğru:** C) nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn
 **Açıklama:** "nota": müziği kağıda dökmek için kullanılan evrensel işaretler.
 **Kaynak:** —
 
 ## offline_10572  ·  zorluk 2  ·  offline
 **KU:** Li jêr ji bo "Hasan Cizrawî" kîjan rast e?
 **TR:** Aşağıdakilerden hangisi "Hasan Cizrawî" için doğrudur?
-- ✅ A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
--    B) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
--    C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
--    D) stranbêjî an lêxistina bi tenê ya hunermendekî
-**Doğru:** A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
+-    A) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+-    B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+-    C) stranbêjî an lêxistina bi tenê ya hunermendekî
+- ✅ D) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
+**Doğru:** D) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
 **Açıklama:** "Hasan Cizrawî": erken dönem Kürt müziği kayıtlarını yapan dengbêj.
 **Kaynak:** —
 
@@ -1933,20 +1933,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "şevbêrk müziği" ifadesinin doğru karşılığı hangisidir?
 -    A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
 -    B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
--    C) veguhastina muzîkal a bi têkiliya hoste-şagird
-- ✅ D) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
-**Doğru:** D) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+- ✅ C) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+-    D) veguhastina muzîkal a bi têkiliya hoste-şagird
+**Doğru:** C) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
 **Açıklama:** "şevbêrk müziği": kış gecesi sohbetlerinde icra edilen sözlü müzik.
 **Kaynak:** —
 
 ## offline_10615  ·  zorluk 1  ·  offline
 **KU:** Derbarê "Meryem Xan" de ya rast kîjan e?
 **TR:** "Meryem Xan" hakkında doğru olan hangisidir?
-- ✅ A) yekem hunermenda kurd a jin a ku plak dagirt
--    B) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
--    C) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
--    D) strana destanî an evînî ya ku dengbêj dibêjin
-**Doğru:** A) yekem hunermenda kurd a jin a ku plak dagirt
+-    A) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+-    B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+-    C) strana destanî an evînî ya ku dengbêj dibêjin
+- ✅ D) yekem hunermenda kurd a jin a ku plak dagirt
+**Doğru:** D) yekem hunermenda kurd a jin a ku plak dagirt
 **Açıklama:** "Meryem Xan": Kürt müziğinde plak dolduran ilk Kürt kadın sanatçı.
 **Kaynak:** —
 
@@ -1955,20 +1955,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aram Tîgran kimdir?
 -    A) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
 -    B) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
--    C) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan
-- ✅ D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
-**Doğru:** D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+- ✅ C) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+-    D) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan
+**Doğru:** C) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
 **Açıklama:** "Aram Tigran": Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen.
 **Kaynak:** —
 
 ## offline_10715  ·  zorluk 1  ·  offline
 **KU:** "Mihemed Taha Akreyî" bi kîjan aliyê xwe ve tê nasîn?
 **TR:** "Mihemed Taha Akreyî" hangi yönüyle tanınır?
-- ✅ A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
--    B) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
--    C) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
--    D) yekem hunermenda kurd a jin a ku plak dagirt
-**Doğru:** A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+-    A) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+-    B) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+-    C) yekem hunermenda kurd a jin a ku plak dagirt
+- ✅ D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+**Doğru:** D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
 **Açıklama:** "Mihemed Taha Akreyî": Bahdinan bölgesinin popüler klasik halk sanatçısı.
 **Kaynak:** —
 
@@ -1977,9 +1977,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "şabaş geleneği" ne demektir?
 -    A) veguhastina muzîkal a bi têkiliya hoste-şagird
 -    B) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
--    C) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
-- ✅ D) edeta ku ji muzîkjenan re pere tê avêtin
-**Doğru:** D) edeta ku ji muzîkjenan re pere tê avêtin
+- ✅ C) edeta ku ji muzîkjenan re pere tê avêtin
+-    D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+**Doğru:** C) edeta ku ji muzîkjenan re pere tê avêtin
 **Açıklama:** "şabaş geleneği": müzisyenlere para atarak taltif etme adeti.
 **Kaynak:** —
 
@@ -1987,54 +1987,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Karapetê Xaço" wek kî tê naskirin?
 **TR:** "Karapetê Xaço" kim olarak bilinir?
 -    A) strana destanî an evînî ya ku dengbêj dibêjin
--    B) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
-- ✅ C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+- ✅ B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+-    C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
 -    D) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
-**Doğru:** C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+**Doğru:** B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
 **Açıklama:** "Karapetê Xaço": Kürt sözlü müziğini derleyen Ermeni asıllı dengbêj.
 **Kaynak:** —
 
 ## offline_10878  ·  zorluk 1  ·  offline
 **KU:** "Kardeş Türküler" tê çi wateyê?
 **TR:** "Kardeş Türküler" ne anlama gelir?
-- ✅ A) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
--    B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
--    C) stranbêjî an lêxistina bi tenê ya hunermendekî
--    D) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
-**Doğru:** A) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+-    A) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+-    B) stranbêjî an lêxistina bi tenê ya hunermendekî
+-    C) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+- ✅ D) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+**Doğru:** D) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
 **Açıklama:** "Kardeş Türküler": Kürt müziğini çok kültürlü ortamda icra eden grup.
 **Kaynak:** —
 
 ## offline_10882  ·  zorluk 4  ·  offline
 **KU:** "strana Zembîlfiroş" çi îfade dike?
 **TR:** "strana Zembîlfiroş" neyi ifade eder?
-- ✅ A) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
--    B) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
--    C) hunermendê ku bayê rock û caz anî muzîka kurdî
--    D) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
-**Doğru:** A) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+-    A) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+-    B) hunermendê ku bayê rock û caz anî muzîka kurdî
+-    C) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+- ✅ D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+**Doğru:** D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
 **Açıklama:** "strana Zembîlfiroş": efsaneyi anlatan meşhur geleneksel kilam.
 **Kaynak:** —
 
 ## offline_10926  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê Muzîkê ve ji bo "Mihemed Şêxo" îfadeya rast kîjan e?
 **TR:** Müzik açısından "Mihemed Şêxo" için doğru ifade hangisidir?
--    A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
-- ✅ B) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+- ✅ A) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+-    B) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
 -    C) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
 -    D) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
-**Doğru:** B) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+**Doğru:** A) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
 **Açıklama:** "Mihemed Şêxo": Kürt halkının ulusal duygularını seslendiren ozan.
 **Kaynak:** —
 
 ## offline_10930  ·  zorluk 2  ·  offline
 **KU:** Têgiha "Mala Dengbêjan" çi pêk tîne?
 **TR:** "dengbêj evi" kavramı neyi ifade eder?
-- ✅ A) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
--    B) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan
--    C) strana destanî an evînî ya ku dengbêj dibêjin
--    D) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
-**Doğru:** A) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
+-    A) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan
+-    B) strana destanî an evînî ya ku dengbêj dibêjin
+-    C) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+- ✅ D) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
+**Doğru:** D) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
 **Açıklama:** "dengbêj evi": Van ve Diyarbakır'da dengbêjlerin dinlendiği kültürel mekan.
 **Kaynak:** —
 
@@ -2043,31 +2043,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "koro" tanımına uyan hangisidir?
 -    A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
 -    B) hunermendê naskirî yê muzîka kurdî
--    C) navê yekem koma rocka kurdî di dîrokê de
-- ✅ D) awayê stranbêjiya bi kom
-**Doğru:** D) awayê stranbêjiya bi kom
+- ✅ C) awayê stranbêjiya bi kom
+-    D) navê yekem koma rocka kurdî di dîrokê de
+**Doğru:** C) awayê stranbêjiya bi kom
 **Açıklama:** "koro": topluluk halinde şarkı söyleme biçimi.
 **Kaynak:** —
 
 ## offline_10962  ·  zorluk 3  ·  offline
 **KU:** "stranên Şakiro" tê çi wateyê?
 **TR:** "stranên Şakiro" ne anlama gelir?
-- ✅ A) kilamên destanî yên dirêj ên ku Şakiro digot
--    B) hunermendê ku vegotina devkî ya bi avaz dike
--    C) yekem hunermenda kurd a jin a ku plak dagirt
--    D) strana destanî an evînî ya ku dengbêj dibêjin
-**Doğru:** A) kilamên destanî yên dirêj ên ku Şakiro digot
+-    A) hunermendê ku vegotina devkî ya bi avaz dike
+-    B) yekem hunermenda kurd a jin a ku plak dagirt
+-    C) strana destanî an evînî ya ku dengbêj dibêjin
+- ✅ D) kilamên destanî yên dirêj ên ku Şakiro digot
+**Doğru:** D) kilamên destanî yên dirêj ên ku Şakiro digot
 **Açıklama:** "şakiro stranları": Şakiro'nun seslendirdiği uzun soluklu destansı kilamlar.
 **Kaynak:** —
 
 ## offline_10963  ·  zorluk 3  ·  offline
 **KU:** "Ciwan Haco" çawa divê bê fêmkirin?
 **TR:** "Ciwan Haco" nasıl anlaşılmalıdır?
--    A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
-- ✅ B) hunermendê ku bayê rock û caz anî muzîka kurdî
+- ✅ A) hunermendê ku bayê rock û caz anî muzîka kurdî
+-    B) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
 -    C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
 -    D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
-**Doğru:** B) hunermendê ku bayê rock û caz anî muzîka kurdî
+**Doğru:** A) hunermendê ku bayê rock û caz anî muzîka kurdî
 **Açıklama:** "Ciwan Haco": Kürt müziğine rock ve caz esintileri getiren sanatçı.
 **Kaynak:** —
 
@@ -2075,32 +2075,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Bi "stran" çi tê xwestin?
 **TR:** "stran" ile ne kastedilir?
 -    A) fîqa şivanan (kaval)
--    B) defa bi zengil (tef)
-- ✅ C) stran an awaza kurdî
+- ✅ B) stran an awaza kurdî
+-    C) defa bi zengil (tef)
 -    D) cureyên kilamên gelêrî
-**Doğru:** C) stran an awaza kurdî
+**Doğru:** B) stran an awaza kurdî
 **Açıklama:** "stran": Kürtçe şarkı veya melodi.
 **Kaynak:** —
 
 ## offline_11068  ·  zorluk 4  ·  offline
 **KU:** Li jêr ji bo "awazên Behdînî" ya rast kîjan e?
 **TR:** Aşağıdakilerden hangisi "Behdînî ezgileri" için doğrudur?
-- ✅ A) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
--    B) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
--    C) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
--    D) hunermendê ku bayê rock û caz anî muzîka kurdî
-**Doğru:** A) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+-    A) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
+-    B) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+-    C) hunermendê ku bayê rock û caz anî muzîka kurdî
+- ✅ D) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+**Doğru:** D) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
 **Açıklama:** "behedînî ezgileri": Duhok ve Zaho yöresine has müzikal tarz.
 **Kaynak:** —
 
 ## offline_11107  ·  zorluk 4  ·  offline
 **KU:** Di zanîna Muzîkê de derbarê "kemençe" de ya rast kîjan e?
 **TR:** Müzik bilgisinde "kemençe" hakkında doğru olan hangisidir?
-- ✅ A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
--    B) dengê efsanewî yê muzîka klasîk a Behdînan
--    C) lêdanên birêkûpêk ên ku bingeha muzîkê ne
--    D) kesa ku bi giştî stranan dibêje
-**Doğru:** A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+-    A) dengê efsanewî yê muzîka klasîk a Behdînan
+-    B) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+-    C) kesa ku bi giştî stranan dibêje
+- ✅ D) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+**Doğru:** D) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
 **Açıklama:** "kemençe": Kürt coğrafyasında da çalınan yaylı çalgı.
 **Kaynak:** —
 
@@ -2108,10 +2108,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Derbarê "Şakiro" de ravekirina rast kîjan e?
 **TR:** "Şakiro" hakkında doğru açıklama hangisidir?
 -    A) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
--    B) stranbêjî an lêxistina bi tenê ya hunermendekî
-- ✅ C) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+- ✅ B) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+-    C) stranbêjî an lêxistina bi tenê ya hunermendekî
 -    D) avaza ku ji rêzbûna dengan pêk tê
-**Doğru:** C) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+**Doğru:** B) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
 **Açıklama:** "Şakiro": Kürtlerin "şahê dengbêjan" dediği güçlü ses.
 **Kaynak:** —
 
@@ -2119,43 +2119,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di dîrokê de "Şivan Perwer" kî ye?
 **TR:** Tarihte "Şivan Perwer" kimdir?
 -    A) yekem hunermenda kurd a jin a ku plak dagirt
--    B) kilamên destanî yên dirêj ên ku Şakiro digot
-- ✅ C) hunermendê ku muzîka kurdî gihande dîwanên navneteweyî
+- ✅ B) hunermendê ku muzîka kurdî gihande dîwanên navneteweyî
+-    C) kilamên destanî yên dirêj ên ku Şakiro digot
 -    D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
-**Doğru:** C) hunermendê ku muzîka kurdî gihande dîwanên navneteweyî
+**Doğru:** B) hunermendê ku muzîka kurdî gihande dîwanên navneteweyî
 **Açıklama:** "Şivan Perwer": Kürt müziğini uluslararası sahnelere taşıyan, sürgünde de üretmeyi sürdüren sanatçı.
 **Kaynak:** —
 
 ## offline_11127  ·  zorluk 1  ·  offline
 **KU:** Ji bo Muzîkê derbarê "Koma Wetan" de vebijêrka rast kîjan e?
 **TR:** Müzik açısından "Koma Wetan" hakkında doğru seçenek hangisidir?
-- ✅ A) navê yekem koma rocka kurdî di dîrokê de
--    B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
--    C) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
--    D) sazê rîtmê yê ku bi zirneyê re tê lêxistin
-**Doğru:** A) navê yekem koma rocka kurdî di dîrokê de
+-    A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+-    B) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+-    C) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+- ✅ D) navê yekem koma rocka kurdî di dîrokê de
+**Doğru:** D) navê yekem koma rocka kurdî di dîrokê de
 **Açıklama:** "Koma Wetan": tarihteki ilk Kürtçe rock grubunun adı.
 **Kaynak:** —
 
 ## offline_11136  ·  zorluk 2  ·  offline
 **KU:** Derbarê "ritim" de vebijêrka rast kîjan e?
 **TR:** "ritim" hakkında doğru seçenek hangisidir?
--    A) avaza ku ji rêzbûna dengan pêk tê
-- ✅ B) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+- ✅ A) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+-    B) avaza ku ji rêzbûna dengan pêk tê
 -    C) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
 -    D) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
-**Doğru:** B) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+**Doğru:** A) lêdanên birêkûpêk ên ku bingeha muzîkê ne
 **Açıklama:** "ritim": müziğin temelini oluşturan düzenli vuruşlar.
 **Kaynak:** —
 
 ## offline_11143  ·  zorluk 3  ·  offline
 **KU:** Berambera rast a biwêja "stranbêj" kîjan e?
 **TR:** "stranbêj" ifadesinin doğru karşılığı hangisidir?
--    A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
-- ✅ B) kesa ku bi giştî stranan dibêje
+- ✅ A) kesa ku bi giştî stranan dibêje
+-    B) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
 -    C) avaza ku ji rêzbûna dengan pêk tê
 -    D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
-**Doğru:** B) kesa ku bi giştî stranan dibêje
+**Doğru:** A) kesa ku bi giştî stranan dibêje
 **Açıklama:** "stranbêj": genel olarak şarkı okuyan, seslendiren kişi.
 **Kaynak:** —
 
@@ -2164,9 +2164,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "kilam" hakkında doğru seçenek hangisidir?
 -    A) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
 -    B) hunermendê ku bayê rock û caz anî muzîka kurdî
--    C) yekem hunermenda kurd a jin a ku plak dagirt
-- ✅ D) strana destanî an evînî ya ku dengbêj dibêjin
-**Doğru:** D) strana destanî an evînî ya ku dengbêj dibêjin
+- ✅ C) strana destanî an evînî ya ku dengbêj dibêjin
+-    D) yekem hunermenda kurd a jin a ku plak dagirt
+**Doğru:** C) strana destanî an evînî ya ku dengbêj dibêjin
 **Açıklama:** "kilam": dengbêjlerin söylediği destansı veya aşk temalı şarkı.
 **Kaynak:** —
 
@@ -2175,20 +2175,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "makama dengbêjan" kavramı neyi ifade eder?
 -    A) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
 -    B) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
--    C) stranbêjî an lêxistina bi tenê ya hunermendekî
-- ✅ D) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
-**Doğru:** D) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+- ✅ C) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+-    D) stranbêjî an lêxistina bi tenê ya hunermendekî
+**Doğru:** C) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
 **Açıklama:** "makama dengbêjan": kilamların okunduğu serbest ritimli vokal tarzı.
 **Kaynak:** —
 
 ## offline_11200  ·  zorluk 2  ·  offline
 **KU:** Derbarê "dahol" de ravekirina rast kîjan e?
 **TR:** "dahol" hakkında doğru açıklama hangisidir?
--    A) dengê efsanewî yê muzîka klasîk a Behdînan
-- ✅ B) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+- ✅ A) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+-    B) dengê efsanewî yê muzîka klasîk a Behdînan
 -    C) bêyî amûr û bi avaza xweberî
 -    D) avaza ku ji rêzbûna dengan pêk tê
-**Doğru:** B) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+**Doğru:** A) sazê rîtmê yê ku bi zirneyê re tê lêxistin
 **Açıklama:** "dahol": zurna ile birlikte çalınan ritim sazı.
 **Kaynak:** —
 
@@ -2197,31 +2197,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "defbaz" ile ne kastedilir?
 -    A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
 -    B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
--    C) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
-- ✅ D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
-**Doğru:** D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+- ✅ C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+-    D) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+**Doğru:** C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
 **Açıklama:** "defbaz": erbane veya defi ustalıkla çalan ritim sanatçısı.
 **Kaynak:** —
 
 ## offline_11294  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê Muzîkê ve ji bo "erbane" îfadeya rast kîjan e?
 **TR:** Müzik açısından "erbane" için doğru ifade hangisidir?
-- ✅ A) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
--    B) veguhastina muzîkal a bi têkiliya hoste-şagird
--    C) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
--    D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
-**Doğru:** A) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
+-    A) veguhastina muzîkal a bi têkiliya hoste-şagird
+-    B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+-    C) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+- ✅ D) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
+**Doğru:** D) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
 **Açıklama:** "erbane": halk müziğinde yaygın olarak çalınan zilli tef.
 **Kaynak:** —
 
 ## offline_11326  ·  zorluk 2  ·  offline
 **KU:** Kîjan pênase bi "muzîka kirmanckî" re li hev tê?
 **TR:** Hangi tanım "kirmanckî (zaza) müziği" ile örtüşür?
--    A) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
-- ✅ B) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+- ✅ A) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+-    B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
 -    C) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
 -    D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
-**Doğru:** B) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+**Doğru:** A) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
 **Açıklama:** "zaza müziği": Dersim ve Bingöl yöresinde icra edilen Kürtçe müzik.
 **Kaynak:** —
 
@@ -2229,10 +2229,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "solo" di mijara muzîkê de çi vedibêje?
 **TR:** Müzik alanında "solo" neyi anlatır?
 -    A) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
--    B) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
-- ✅ C) stranbêjî an lêxistina bi tenê ya hunermendekî
+- ✅ B) stranbêjî an lêxistina bi tenê ya hunermendekî
+-    C) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
 -    D) amûra arpî ya ku li Mezopotamyaya kevnar û di muzîka kurdî de hat bikaranîn
-**Doğru:** C) stranbêjî an lêxistina bi tenê ya hunermendekî
+**Doğru:** B) stranbêjî an lêxistina bi tenê ya hunermendekî
 **Açıklama:** "solo": tek bir sanatçının şarkı söylemesi veya çalması.
 **Kaynak:** —
 
@@ -2241,9 +2241,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Koma Amed nedir?
 -    A) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
 -    B) hunermendê ku bayê rock û caz anî muzîka kurdî
--    C) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
-- ✅ D) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
-**Doğru:** D) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+- ✅ C) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+-    D) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+**Doğru:** C) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
 **Açıklama:** "Koma Amed": 90'larda Kürt müziğinde devrim yapan alternatif müzik grubu.
 **Kaynak:** —
 
@@ -2252,31 +2252,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "heyran" hakkında en doğru bilgi hangisidir?
 -    A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
 -    B) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
--    C) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
-- ✅ D) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
-**Doğru:** D) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+- ✅ C) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+-    D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+**Doğru:** C) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
 **Açıklama:** "heyran": Serhat bölgesinde yaygın olan bir Kürt halk ezgisi türü.
 **Kaynak:** —
 
 ## offline_11420  ·  zorluk 1  ·  offline
 **KU:** Ji aliyê Muzîkê ve ji bo "muzîka govendê" îfadeya rast kîjan e?
 **TR:** Müzik açısından "govend müziği" için doğru ifade hangisidir?
-- ✅ A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
--    B) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
--    C) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
--    D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
-**Doğru:** A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+-    A) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+-    B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+-    C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+- ✅ D) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+**Doğru:** D) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
 **Açıklama:** "govend müziği": halaylarda çalınan hareketli ve ritmik halk şarkıları.
 **Kaynak:** —
 
 ## offline_11431  ·  zorluk 4  ·  offline
 **KU:** Kîjan vebijêrk tê wateya "dengbêj"?
 **TR:** Hangi seçenek "dengbêj" anlamına gelir?
-- ✅ A) hunermendê ku vegotina devkî ya bi avaz dike
--    B) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
--    C) sazê rîtmê yê ku bi zirneyê re tê lêxistin
--    D) bêyî amûr û bi avaza xweberî
-**Doğru:** A) hunermendê ku vegotina devkî ya bi avaz dike
+-    A) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+-    B) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+-    C) bêyî amûr û bi avaza xweberî
+- ✅ D) hunermendê ku vegotina devkî ya bi avaz dike
+**Doğru:** D) hunermendê ku vegotina devkî ya bi avaz dike
 **Açıklama:** "dengbêj": ezgili sözlü anlatım yapan sanatçı.
 **Kaynak:** —
 
@@ -2285,9 +2285,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: "özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı"?
 -    A) Meryem Xan
 -    B) Koma Wetan
--    C) Hasan Cizrawî
-- ✅ D) tembûr
-**Doğru:** D) tembûr
+- ✅ C) tembûr
+-    D) Hasan Cizrawî
+**Doğru:** C) tembûr
 **Açıklama:** "tembûr" şu anlama gelir: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.
 **Kaynak:** —
 
@@ -2295,10 +2295,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "tembûr" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "tembûr" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
--    B) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
-- ✅ C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+- ✅ B) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+-    C) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
 -    D) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
-**Doğru:** C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+**Doğru:** B) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
 **Açıklama:** "tembûr" için doğru açıklama şudur: özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı.
 **Kaynak:** —
 
@@ -2307,9 +2307,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: "Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı"?
 -    A) bilûr
 -    B) Koma Wetan
--    C) Meryem Xan
-- ✅ D) erbane
-**Doğru:** D) erbane
+- ✅ C) erbane
+-    D) Meryem Xan
+**Doğru:** C) erbane
 **Açıklama:** "erbane" şu anlama gelir: Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı.
 **Kaynak:** —
 
@@ -2318,9 +2318,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzik dersi için hangi seçenek "erbane" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
 -    B) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
--    C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
-- ✅ D) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
-**Doğru:** D) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
+- ✅ C) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
+-    D) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+**Doğru:** C) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
 **Açıklama:** "erbane" için doğru açıklama şudur: Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı.
 **Kaynak:** —
 
@@ -2329,9 +2329,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: "hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı"?
 -    A) lîrîka klaman
 -    B) tembûr
--    C) lawik
-- ✅ D) bilûr
-**Doğru:** D) bilûr
+- ✅ C) bilûr
+-    D) lawik
+**Doğru:** C) bilûr
 **Açıklama:** "bilûr" şu anlama gelir: hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı.
 **Kaynak:** —
 
@@ -2339,10 +2339,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "bilûr" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "bilûr" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
--    B) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
-- ✅ C) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
+- ✅ B) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
+-    C) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
 -    D) şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin
-**Doğru:** C) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
+**Doğru:** B) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
 **Açıklama:** "bilûr" için doğru açıklama şudur: hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı.
 **Kaynak:** —
 
@@ -2351,9 +2351,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: "aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı"?
 -    A) strana razanê
 -    B) lêdana rêkûpêk
--    C) dawet û govendê
-- ✅ D) lîrîka klaman
-**Doğru:** D) lîrîka klaman
+- ✅ C) lîrîka klaman
+-    D) dawet û govendê
+**Doğru:** C) lîrîka klaman
 **Açıklama:** "lîrîka klaman" şu anlama gelir: aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı.
 **Kaynak:** —
 
@@ -2362,9 +2362,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Müzik dersi için hangi seçenek "lîrîka klaman" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
 -    B) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
--    C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
-- ✅ D) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
-**Doğru:** D) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
+- ✅ C) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
+-    D) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+**Doğru:** C) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
 **Açıklama:** "lîrîka klaman" için doğru açıklama şudur: aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı.
 **Kaynak:** —
 
@@ -2373,42 +2373,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: ""Dengbêjlerin Şahı" diye bilinen, eşsiz sese sahip büyük dengbêj"?
 -    A) lîrîka klaman
 -    B) bilûr
--    C) Meryem Xan
-- ✅ D) Şakiro
-**Doğru:** D) Şakiro
+- ✅ C) Şakiro
+-    D) Meryem Xan
+**Doğru:** C) Şakiro
 **Açıklama:** "Şakiro" şu anlama gelir: "Dengbêjlerin Şahı" diye bilinen, eşsiz sese sahip büyük dengbêj.
 **Kaynak:** —
 
 ## offline_curated_21354  ·  zorluk 4  ·  offline
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "Şakiro" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "Şakiro" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
--    B) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
--    C) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
--    D) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
-**Doğru:** A) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
+-    A) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
+-    B) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
+-    C) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+- ✅ D) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
+**Doğru:** D) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
 **Açıklama:** "Şakiro" için doğru açıklama şudur: "Dengbêjlerin Şahı" diye bilinen, eşsiz sese sahip büyük dengbêj.
 **Kaynak:** —
 
 ## offline_curated_21376  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine'?
 **TR:** Hangi terim şu açıklamayla bilinir: "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri"?
--    A) Meryem Xan
-- ✅ B) Hasan Cizrawî
+- ✅ A) Hasan Cizrawî
+-    B) Meryem Xan
 -    C) heyran
 -    D) lawik
-**Doğru:** B) Hasan Cizrawî
+**Doğru:** A) Hasan Cizrawî
 **Açıklama:** "Hasan Cizrawî" şu anlama gelir: Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri.
 **Kaynak:** —
 
 ## offline_curated_21379  ·  zorluk 5  ·  offline
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "Hasan Cizrawî" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "Hasan Cizrawî" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
--    B) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
--    C) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
--    D) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
-**Doğru:** A) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
+-    A) avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin
+-    B) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
+-    C) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
+- ✅ D) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
+**Doğru:** D) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
 **Açıklama:** "Hasan Cizrawî" için doğru açıklama şudur: Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri.
 **Kaynak:** —
 
@@ -2417,75 +2417,75 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: "sesini plağa kaydeden ilk Kürt kadın şarkıcı"?
 -    A) Şakiro
 -    B) bilûr
--    C) lîrîka klaman
-- ✅ D) Meryem Xan
-**Doğru:** D) Meryem Xan
+- ✅ C) Meryem Xan
+-    D) lîrîka klaman
+**Doğru:** C) Meryem Xan
 **Açıklama:** "Meryem Xan" şu anlama gelir: sesini plağa kaydeden ilk Kürt kadın şarkıcı.
 **Kaynak:** —
 
 ## offline_curated_21404  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "Meryem Xan" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "Meryem Xan" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
--    B) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
--    C) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
--    D) şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin
-**Doğru:** A) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
+-    A) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
+-    B) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
+-    C) şêwazê muzîka dengbêjiyê yê ku li ser lehengiya mêran û şeran tê gotin
+- ✅ D) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
+**Doğru:** D) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
 **Açıklama:** "Meryem Xan" için doğru açıklama şudur: sesini plağa kaydeden ilk Kürt kadın şarkıcı.
 **Kaynak:** —
 
 ## offline_curated_21426  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê"?
 **TR:** Hangi terim şu açıklamayla bilinir: "70'li yıllarda ortaya çıkan ilk Kürt rock grubu"?
--    A) bilûr
-- ✅ B) Koma Wetan
+- ✅ A) Koma Wetan
+-    B) bilûr
 -    C) Meryem Xan
 -    D) Şakiro
-**Doğru:** B) Koma Wetan
+**Doğru:** A) Koma Wetan
 **Açıklama:** "Koma Wetan" şu anlama gelir: 70'li yıllarda ortaya çıkan ilk Kürt rock grubu.
 **Kaynak:** —
 
 ## offline_curated_21429  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "Koma Wetan" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "Koma Wetan" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
--    B) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
--    C) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
--    D) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
-**Doğru:** A) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
+-    A) dengbêjê mezin ê ku wekî "Şahê Dengbêjan" tê naskirin û xwedî dengekî bêhempa bû
+-    B) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
+-    C) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
+- ✅ D) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
+**Doğru:** D) koma yekem a muzîka rock a kurdî ya ku di salên 70an de derketibû holê
 **Açıklama:** "Koma Wetan" için doğru açıklama şudur: 70'li yıllarda ortaya çıkan ilk Kürt rock grubu.
 **Kaynak:** —
 
 ## offline_curated_21446  ·  zorluk 4  ·  offline
 **KU:** Koma Wetan di muzîka kurdî de bi çi tê nasîn?
 **TR:** Koma Wetan, Kürt müziğinde neyle tanınır?
-- ✅ A) Koma yekem a muzîka rock a kurdî
--    B) Koma yekem a muzîka klasîk a kurdî
--    C) Korek a stranên dînî yên kurdî
--    D) Koma yekem a muzîka jazz a kurdî
-**Doğru:** A) Koma yekem a muzîka rock a kurdî
+-    A) Koma yekem a muzîka klasîk a kurdî
+-    B) Korek a stranên dînî yên kurdî
+-    C) Koma yekem a muzîka jazz a kurdî
+- ✅ D) Koma yekem a muzîka rock a kurdî
+**Doğru:** D) Koma yekem a muzîka rock a kurdî
 **Açıklama:** "Koma Wetan" şu anlama gelir: 70'li yıllarda ortaya çıkan ilk Kürt rock grubu.
 **Kaynak:** —
 
 ## offline_curated_21451  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye"?
 **TR:** Hangi terim şu açıklamayla bilinir: "çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı"?
--    A) bilûr
-- ✅ B) lawik
+- ✅ A) lawik
+-    B) bilûr
 -    C) Meryem Xan
 -    D) erbane
-**Doğru:** B) lawik
+**Doğru:** A) lawik
 **Açıklama:** "lawik" şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.
 **Kaynak:** —
 
 ## offline_curated_21454  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa muzîk kîjan vebijark ravekirina têgeha "lawik" bi awayekî rast temam dike?
 **TR:** Müzik dersi için hangi seçenek "lawik" teriminin açıklamasını doğru biçimde tamamlar?
--    A) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
-- ✅ B) şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye
+- ✅ A) şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye
+-    B) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
 -    C) amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e
 -    D) amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin
-**Doğru:** B) şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye
+**Doğru:** A) şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye
 **Açıklama:** "lawik" için doğru açıklama şudur: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.
 **Kaynak:** —
 
@@ -2493,10 +2493,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Têgeha "heyran" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "heyran" terimi hangi açıklamayla daha iyi anlaşılır?
 -    A) amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan
--    B) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
-- ✅ C) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
+- ✅ B) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
+-    C) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
 -    D) yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine
-**Doğru:** C) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
+**Doğru:** B) klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin
 **Açıklama:** "heyran" şu anlama gelir: özellikle kadınların söylediği Serhat yöresi aşk kilamları.
 **Kaynak:** —
 
@@ -2505,9 +2505,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi terim şu açıklamayla bilinir: "özellikle kadınların söylediği Serhed yöresi aşk kilamları"?
 -    A) tembûr
 -    B) Şakiro
--    C) Hasan Cizrawî
-- ✅ D) heyran
-**Doğru:** D) heyran
+- ✅ C) heyran
+-    D) Hasan Cizrawî
+**Doğru:** C) heyran
 **Açıklama:** "heyran" şu anlama gelir: özellikle kadınların söylediği Serhat yöresi aşk kilamları.
 **Kaynak:** —
 
@@ -2966,20 +2966,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Geleneksel dengbêj kilamlarını neden çalgı kullanmadan söyler?
 -    A) ji ber ku amûr li her herêmê cuda bûn
 -    B) ji ber ku kilam tenê bi şev dihatin gotin
--    C) ji ber ku amûr di dawetan de qedexe bûn
-- ✅ D) ji ber ku giranî li ser peyv û vegotinê ye
-**Doğru:** D) ji ber ku giranî li ser peyv û vegotinê ye
+- ✅ C) ji ber ku giranî li ser peyv û vegotinê ye
+-    D) ji ber ku amûr di dawetan de qedexe bûn
+**Doğru:** C) ji ber ku giranî li ser peyv û vegotinê ye
 **Açıklama:** Kilam bir hikâye anlatır ve her sözcüğün anlaşılması gerekir; çalgı olmadan dengbêj ritmi duyguya göre yavaşlatıp hızlandırabilir.
 **Kaynak:** —
 
 ## offline_muz_2002  ·  zorluk 1  ·  offline
 **KU:** Kîjan ji van amûran bi lêdanê deng nade?
 **TR:** Bu çalgılardan hangisi vurularak ses vermez?
-- ✅ A) bilûr
--    B) def
--    C) dahol
--    D) erbane
-**Doğru:** A) bilûr
+-    A) def
+-    B) dahol
+-    C) erbane
+- ✅ D) bilûr
+**Doğru:** D) bilûr
 **Açıklama:** Def, dahol ve erbane vurularak ses verir; dahol bunların en büyüğüdür ve iki değnekle çalınır. Bilûr ise üflenerek çalınır.
 **Kaynak:** —
 
@@ -2987,21 +2987,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Sergovend di govendê de çi dike?
 **TR:** Sergovend halayda ne yapar?
 -    A) stranên dawetê ji bo bûk û zava dibêje
--    B) amûrên têlî berî govendê ahengdar dike
-- ✅ C) rêzê dibe pêş û destmalê dihejîne
+- ✅ B) rêzê dibe pêş û destmalê dihejîne
+-    C) amûrên têlî berî govendê ahengdar dike
 -    D) dahol û zirneyê li hev tîne
-**Doğru:** C) rêzê dibe pêş û destmalê dihejîne
+**Doğru:** B) rêzê dibe pêş û destmalê dihejîne
 **Açıklama:** Sergovend halayın hızını belirler: adımlar onun çekişine göre yavaşlar ya da hızlanır.
 **Kaynak:** —
 
 ## offline_muz_2004  ·  zorluk 4  ·  offline
 **KU:** Radyoya Erîvanê di kîjan salî de ji nû ve dest bi weşana kurdî kir?
 **TR:** Erivan Radyosu hangi yılda yeniden Kürtçe yayına başladı?
-- ✅ A) 1955
--    B) 1938
--    C) 1946
--    D) 1965
-**Doğru:** A) 1955
+-    A) 1938
+-    B) 1946
+-    C) 1965
+- ✅ D) 1955
+**Doğru:** D) 1955
 **Açıklama:** Kürtçe programlar 1930'larda da vardı ama kapatılmıştı; dönüşle birlikte pek çok Serhed dengbêji ilk kez kayda geçti.
 **Kaynak:** —
 
@@ -3010,20 +3010,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi özellik lawiki savaş kilamlarından ayırır?
 -    A) hejmara amûrên muzîkê
 -    B) herêma ku tê de tê gotin
--    C) dirêjahiya kilamê
-- ✅ D) mijara wî ya evînî û kesane
-**Doğru:** D) mijara wî ya evînî û kesane
+- ✅ C) mijara wî ya evînî û kesane
+-    D) dirêjahiya kilamê
+**Doğru:** C) mijara wî ya evînî û kesane
 **Açıklama:** Lawik aşk ve hasret üzerinedir; savaş kilamları baskın ve direnişi anlatır. İkisi de aynı divanda söylenir, ama ezgileri bir değildir.
 **Kaynak:** —
 
 ## offline_muz_2006  ·  zorluk 5  ·  offline
 **KU:** Berî ku tomarkirina bi kaset û plakê belav bibe, kilamên dengbêjan çawa ji nifşekî derbasî nifşê din dibûn?
 **TR:** Kaset ve plak kaydı yaygınlaşmadan önce dengbêj kilamları kuşaktan kuşağa nasıl geçerdi?
-- ✅ A) bi guhdarî û ezberkirinê li dîwanan
--    B) bi arşîvên dibistanên fermî
--    C) bi weşana televîzyonên herêmî
--    D) bi notayên di pirtûkan de
-**Doğru:** A) bi guhdarî û ezberkirinê li dîwanan
+-    A) bi arşîvên dibistanên fermî
+-    B) bi weşana televîzyonên herêmî
+-    C) bi notayên di pirtûkan de
+- ✅ D) bi guhdarî û ezberkirinê li dîwanan
+**Doğru:** D) bi guhdarî û ezberkirinê li dîwanan
 **Açıklama:** Çırak yıllarca divanda dinlerdi; bu yüzden her yöre aynı kilamın kendi varyantını korudu.
 **Kaynak:** —
 
@@ -3031,21 +3031,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Şêwaza dengbêjiyê ya Serhedê bi taybetî li dora kîjan deveran geş bûye?
 **TR:** Serhed dengbêjlik üslubu özellikle hangi yöreler çevresinde gelişmiştir?
 -    A) Silêmanî, Kerkûk û Hewlêr
--    B) Duhok û Amêdî
-- ✅ C) Agirî, Qers û Mûş
+- ✅ B) Agirî, Qers û Mûş
+-    C) Duhok û Amêdî
 -    D) Cizîr û Şirnex
-**Doğru:** C) Agirî, Qers û Mûş
+**Doğru:** B) Agirî, Qers û Mûş
 **Açıklama:** "Serhed" bir yöre adıdır ve kuzeyin dağlık sınırı anlamına gelir; Botan ve Behdinan üslupları onun güneyinde kalır, ezgileri de farklıdır.
 **Kaynak:** —
 
 ## offline_muz_2008  ·  zorluk 5  ·  offline
 **KU:** Helbesta ku paşê bû sirûda neteweyî ya kurdan ji aliyê kîjan helbestvanî ve hatiye nivîsandin?
 **TR:** Sonradan Kürtlerin millî marşı olan şiiri hangi şair yazmıştır?
-- ✅ A) Dildar
--    B) Feqiyê Teyran
--    C) Melayê Cizîrî
--    D) Cegerxwîn
-**Doğru:** A) Dildar
+-    A) Feqiyê Teyran
+-    B) Melayê Cizîrî
+-    C) Cegerxwîn
+- ✅ D) Dildar
+**Doğru:** D) Dildar
 **Açıklama:** Şiir 1938'de hapishanede yazıldı; sonra bestelendi ve 1946'da Mahabad Cumhuriyeti'nde kabul edildi.
 **Kaynak:** —
 
@@ -3054,20 +3054,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ayşe Şan ile Meryem Xan Kürt müziği tarihinde hangi yönleriyle birbirine benzer?
 -    A) herdu jî li Radyoya Erîvanê xebitîn
 -    B) herdu jî damezrînerên komeke muzîkê bûn
--    C) herdu jî muzîkjenên tembûrê bûn
-- ✅ D) herdu jî stranbêjên jin ên pêşeng bûn
-**Doğru:** D) herdu jî stranbêjên jin ên pêşeng bûn
+- ✅ C) herdu jî stranbêjên jin ên pêşeng bûn
+-    D) herdu jî muzîkjenên tembûrê bûn
+**Doğru:** C) herdu jî stranbêjên jin ên pêşeng bûn
 **Açıklama:** Meryem Xan Bağdat'ta, Ayşe Şan Diyarbakır'da işe başladı; kadın sesinin az duyulduğu bir dönemde ikisi de kendinden sonrakilere yol açtı.
 **Kaynak:** —
 
 ## offline_muz_2010  ·  zorluk 1  ·  offline
 **KU:** Bilûr bi gelemperî ji çi tê çêkirin?
 **TR:** Bilûr genellikle neyden yapılır?
-- ✅ A) qamîş an dar
--    B) hesin an sifir
--    C) kevir an şûşe
--    D) çerm an hestî
-**Doğru:** A) qamîş an dar
+-    A) hesin an sifir
+-    B) kevir an şûşe
+-    C) çerm an hestî
+- ✅ D) qamîş an dar
+**Doğru:** D) qamîş an dar
 **Açıklama:** Kurutulmuş kamış yumuşak bir ses verir; bu yüzden çoban çoğunlukla kavalını kendi eliyle yapar.
 **Kaynak:** —
 
@@ -3119,11 +3119,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## restore_2026_08_07_0009  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Amûra lêdanê ya mezin a ku bi du daran tê lêxistin û pir caran bi zurneyê re li derve tê lêxistin çi ye?
 **TR:** İki değnekle çalınan ve çoğunlukla zurnayla birlikte açık havada çalınan büyük vurmalı çalgı hangisidir?
--    A) bilûr
-- ✅ B) dahol
+- ✅ A) dahol
+-    B) bilûr
 -    C) tembûr
 -    D) erbane
-**Doğru:** B) dahol
+**Doğru:** A) dahol
 **Açıklama:** Dahol yüksek ses çıkarır ve halayın vuruşunu belirler; bu yüzden zurnayla birlikte meydanlarda çalınır. Bilûr üflemeli, tembûr telli, erbane ise el defidir.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
@@ -3131,21 +3131,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Amûra bayê ya bi dengê bilind ku li meydanan bi dahol re tê lêxistin çi ye?
 **TR:** Meydanlarda davulla birlikte çalınan, yüksek sesli üflemeli çalgı hangisidir?
 -    A) bilûr
--    B) tembûr
-- ✅ C) zurna
+- ✅ B) zurna
+-    C) tembûr
 -    D) dahol
-**Doğru:** C) zurna
+**Doğru:** B) zurna
 **Açıklama:** Zurnanın sesi keskin ve yüksektir; bu yüzden açık havada uzaktan duyulur ve halaya uygundur. Bilûr çobanların yumuşak sesli kavalı, tembûr telli, dahol ise vurmalı çalgıdır.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
 ## restore_2026_08_07_0011  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Awaza dirêj a dengbêjan a ku bûyerek an çîrokek vedibêje bi kîjan navî tê nasîn?
 **TR:** Dengbêjlerin bir olayı ya da hikâyeyi anlatan uzun ezgisi hangi adla bilinir?
-- ✅ A) kilam
--    B) govend
--    C) şabaş
--    D) metelok
-**Doğru:** A) kilam
+-    A) govend
+-    B) şabaş
+-    C) metelok
+- ✅ D) kilam
+**Doğru:** D) kilam
 **Açıklama:** Kilam uzun sözleriyle bir olayı ya da hikâyeyi anlatır ve çalgısız söylenir; toplumun sözlü belleğini taşır. Govend toplu halk oyunu, şabaş para hediyesi, metelok ise atasözüdür.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
@@ -3154,20 +3154,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kilam ile halay şarkıları arasındaki temel fark nedir?
 -    A) Kilam bi zurneyê tê gotin, stranên govendê bêdeng in
 -    B) Kilam tenê ji hêla jinan ve tê gotin
--    C) Kilam tenê di dawetan de tê gotin
-- ✅ D) Kilam çîrokê vedibêje, stranên govendê rîtmî ne
-**Doğru:** D) Kilam çîrokê vedibêje, stranên govendê rîtmî ne
+- ✅ C) Kilam çîrokê vedibêje, stranên govendê rîtmî ne
+-    D) Kilam tenê di dawetan de tê gotin
+**Doğru:** C) Kilam çîrokê vedibêje, stranên govendê rîtmî ne
 **Açıklama:** Kilam uzundur, serbest ritimlidir ve bir olayı anlatır; halay şarkıları kısa ve hızlıdır, oyunun ritme ihtiyacı olduğu için vuruşa göre söylenir. İkisi de müzik kültüründe yan yana yaşar.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
 ## restore_2026_08_07_0013  ·  zorluk 2  ·  restore_2026_08_07
 **KU:** Amûra bayê ya şivanan a ji qamîş an dar ku bi dengekî nerm tê lêxistin çi ye?
 **TR:** Kamıştan ya da ağaçtan yapılan, yumuşak sesle çalınan çoban üflemeli çalgısı hangisidir?
-- ✅ A) bilûr
--    B) dahol
--    C) erbane
--    D) zurna
-**Doğru:** A) bilûr
+-    A) dahol
+-    B) erbane
+-    C) zurna
+- ✅ D) bilûr
+**Doğru:** D) bilûr
 **Açıklama:** Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.
 **Kaynak:** internal:restore_batch_2026_08_07 — terim tanımları editorial/offline bankalarındaki onaylı açıklamalarla aynı
 
@@ -3176,20 +3176,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Görselde vurmalı bir çalgının kasnağına çiftler hâlinde metal pullar yerleştirilmiş. Bu metal pullar çalarken ne yapar?
 -    A) Çermê amûrê li çarçoveyê zexm digirin
 -    B) Bilindahiya dengê çerm nizimtir dikin
--    C) Giraniya amûrê li ser destan sivik dikin
-- ✅ D) Bi her lêdanê re dengekî zingînî derdixin
-**Doğru:** D) Bi her lêdanê re dengekî zingînî derdixin
+- ✅ C) Bi her lêdanê re dengekî zingînî derdixin
+-    D) Giraniya amûrê li ser destan sivik dikin
+**Doğru:** C) Bi her lêdanê re dengekî zingînî derdixin
 **Açıklama:** Metal pullar kasnak içinde serbestçe döner; her vuruşta titreşerek deri sesine çınlayan bir tını ekler. Deriyi germek için değildirler ve çalgının ağırlığını değiştirmezler; deri kasnağın kendisiyle gerilir.
 **Kaynak:** —
 
 ## visual_2026_08_07_0017  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Di wêneyê de jin amûreke lêdanê ya gilover a bi çermekî tenê digirin. Ev amûr bi kîjan awayî tê lêxistin?
 **TR:** Görselde kadınlar tek deri gerilmiş yuvarlak bir vurmalı çalgı tutuyor. Bu çalgı hangi yolla çalınır?
-- ✅ A) Bi tilî û pelkên herdu destan
--    B) Bi du daran ji herdu aliyên çerm
--    C) Bi darekê û bi tenê destekê
--    D) Bi firçeyên têlî yên nerm
-**Doğru:** A) Bi tilî û pelkên herdu destan
+-    A) Bi du daran ji herdu aliyên çerm
+-    B) Bi darekê û bi tenê destekê
+-    C) Bi firçeyên têlî yên nerm
+- ✅ D) Bi tilî û pelkên herdu destan
+**Doğru:** D) Bi tilî û pelkên herdu destan
 **Açıklama:** Erbane bir elle tutulur ve iki elin parmakları ile avuçlarıyla deriye vurularak çalınır; bu yüzden ince ve hızlı vuruşlara elverişlidir. Tokmakla çalınan çalgı dahol'dur, telli fırçalar ise caz müziğinde trampet üzerinde kullanılır.
 **Kaynak:** —
 
@@ -3197,31 +3197,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di wêneyê de du amûrên bi stûyê dirêj û laşê kûr ên wek hêkê li ser kursiyan hene. Deng ji vî celebê amûran çawa derdikeve?
 **TR:** Görselde uzun saplı, derin ve armut gövdeli iki çalgı sandalyelere dayanmış duruyor. Bu tür bir çalgıdan ses nasıl çıkar?
 -    A) Têlên wê bi kevanekî tên xişandin û lerizandin
--    B) Hewa tê pifkirin û ji lûleyê deng çêdibe
-- ✅ C) Têlên wê bi tilî an bi mizrabê tên kişandin
+- ✅ B) Têlên wê bi tilî an bi mizrabê tên kişandin
+-    C) Hewa tê pifkirin û ji lûleyê deng çêdibe
 -    D) Bi lêdana li ser çermekî girtî deng çêdibe
-**Doğru:** C) Têlên wê bi tilî an bi mizrabê tên kişandin
+**Doğru:** B) Têlên wê bi tilî an bi mizrabê tên kişandin
 **Açıklama:** Bunlar telli çalgılardır: sapları uzun, gövdeleri derindir. Ses ancak teller parmakla ya da mızrapla çekildiğinde doğar; derin gövde bu titreşimi büyütüp duyulur kılar.
 **Kaynak:** —
 
 ## visual_2026_08_07_0019  ·  zorluk 2  ·  visual_2026_08_07
 **KU:** Wêne rûpeleke notayan a li ser klavyeyekê nîşan dide. Ew komika xêzên hevterîb ên ku not li ser wan tên danîn ji çend xêzan pêk tê?
 **TR:** Görselde bir piyano klavyesinin üzerine konmuş nota sayfası var. Notaların üzerine yazıldığı paralel çizgi öbeği kaç çizgiden oluşur?
-- ✅ A) Pênc xêz
--    B) Sê xêz
--    C) Çar xêz
--    D) Şeş xêz
-**Doğru:** A) Pênc xêz
+-    A) Sê xêz
+-    B) Çar xêz
+-    C) Şeş xêz
+- ✅ D) Pênc xêz
+**Doğru:** D) Pênc xêz
 **Açıklama:** Müzik, beş paralel çizgi ve aralarındaki dört boşluktan oluşan porte üzerine yazılır. Nota başının bu çizgilerdeki yeri sesin ince mi kalın mı olduğunu gösterir.
 **Kaynak:** —
 
 ## visual_2026_08_07_0020  ·  zorluk 3  ·  visual_2026_08_07
 **KU:** Di wêneyê de komek stranbêj bi hev re distirên. Gava di heman gavê de çend dengên ji hev cuda lê lihevhatî bi hev re tên gotin, navê vê hevbûna dengan çi ye?
 **TR:** Görselde bir topluluk birlikte şarkı söylüyor. Aynı anda, birbirinden farklı ama birbiriyle uyuşan sesler birlikte söylendiğinde bu ses birlikteliğine ne ad verilir?
--    A) Melodî
-- ✅ B) Harmonî
+- ✅ A) Harmonî
+-    B) Melodî
 -    C) Rîtm
 -    D) Tempo
-**Doğru:** B) Harmonî
+**Doğru:** A) Harmonî
 **Açıklama:** Armoni, aynı anda söylenen ve birbiriyle uyuşan farklı seslerin birlikteliğidir. Melodi seslerin peş peşe dizilişi, ritim zamanın bölünüşü, tempo ise icranın hızıdır.
 **Kaynak:** —

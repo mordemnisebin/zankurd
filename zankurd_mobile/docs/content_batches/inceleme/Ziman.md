@@ -6,11 +6,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## ds_ziman_0002  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv di kurmancî de bi awayekî rast bi izafeya mê hatiye nivîsandin?
 **TR:** Hangi kelime Kurmanci'de dişil izafe ile doğru bir şekilde yazılmıştır?
-- ✅ A) dêya min
--    B) dîya min
--    C) dîha min
--    D) dêha min
-**Doğru:** A) dêya min
+-    A) dîya min
+-    B) dîha min
+-    C) dêha min
+- ✅ D) dêya min
+**Doğru:** D) dêya min
 **Açıklama:** Ünlü harfle biten dişil isimler için izafe "-ya" dır. "Dê" (anne) "-ya" ile birleşerek "dêya" olur.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -19,31 +19,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmancî) 21 sayısı için hangi yazım şekli doğrudur?
 -    A) bîst yek
 -    B) bîstûyek
--    C) bîst û yekem
-- ✅ D) bîst û yek
-**Doğru:** D) bîst û yek
+- ✅ C) bîst û yek
+-    D) bîst û yekem
+**Doğru:** C) bîst û yek
 **Açıklama:** Kürtçede (Kurmancî) 21-29 arası sayılar "bîst û yek", "bîst û du" vb. şeklinde yazılır. "Bîst û yekem" sıra sayısıdır, basit sayı değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_alphabets
 
 ## ds_ziman_0176  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, ji bo "ji ber ku" wateya kîjan peyva jêrîn e?
 **TR:** Kürtçede (Kurmancî) "ji ber ku" (çünkü) anlamına gelen aşağıdaki kelimelerden hangisidir?
--    A) loma
-- ✅ B) lewra
+- ✅ A) lewra
+-    B) loma
 -    C) dîsa
 -    D) paşê
-**Doğru:** B) lewra
+**Doğru:** A) lewra
 **Açıklama:** "Lewra", "ji ber ku" veya "çimkî" anlamında kullanılır. "Loma" sonucu belirtir, "dîsa" tekrarı ve "paşê" ise zamanı belirtir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0188  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, ji bo "always" kîjan peyv tê bikaranîn?
 **TR:** Kürtçede (Kurmancî) "her zaman" için hangi kelime kullanılır?
--    A) carinan
-- ✅ B) hertim
+- ✅ A) hertim
+-    B) carinan
 -    C) tu car
 -    D) niha
-**Doğru:** B) hertim
+**Doğru:** A) hertim
 **Açıklama:** "Hertim", Kürtçede (Kurmancî) "always" anlamına gelir. "Carinan" "sometimes", "tu car" "never" ve "niha" ise "now" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -52,42 +52,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmanci'de "kitêb" (dişil) için hangi izafe dizilimi doğrudur?
 -    A) kitêbê min
 -    B) kitêbên min
--    C) kitêbî min
-- ✅ D) kitêba min
-**Doğru:** D) kitêba min
+- ✅ C) kitêba min
+-    D) kitêbî min
+**Doğru:** C) kitêba min
 **Açıklama:** "Kitêb" dişil bir isimdir, bu yüzden izafesi "-a" dır. "Kitêba min" "benim kitabım" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0007  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, kîjan rêzika izafeyê ji bo "mêr" (nêr) rast e?
 **TR:** Kurmanci'de "mêr" (eril) için hangi izafe dizilimi doğrudur?
--    A) mêra min
-- ✅ B) mêrê min
+- ✅ A) mêrê min
+-    B) mêra min
 -    C) mêrên min
 -    D) mêri min
-**Doğru:** B) mêrê min
+**Doğru:** A) mêrê min
 **Açıklama:** "Mêr" eril bir isimdir, bu yüzden izafesi "-ê" dır. "Mêrê min" "kocam" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0009  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, kîjan rêzika izafeyê ji bo "dê" (mê) rast e?
 **TR:** Kürtçede (Kurmanci), "dê" (dişil) için hangi izafe eki doğrudur?
-- ✅ A) dêya min
--    B) dêa min
--    C) dêê min
--    D) dêyê min
-**Doğru:** A) dêya min
+-    A) dêa min
+-    B) dêê min
+-    C) dêyê min
+- ✅ D) dêya min
+**Doğru:** D) dêya min
 **Açıklama:** "Dê" ünlüyle bittiği için izafe eki "-ya" olur. "Dêya min", "my mother" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0010  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, kîjan rêzika izafeyê ji bo "bav" (nêr) rast e?
 **TR:** Kürtçede (Kurmanci), "bav" (eril) için hangi izafe eki doğrudur?
--    A) bava min
-- ✅ B) bavê min
+- ✅ A) bavê min
+-    B) bava min
 -    C) bavên min
 -    D) bavî min
-**Doğru:** B) bavê min
+**Doğru:** A) bavê min
 **Açıklama:** "Bav" ünsüzle biter ve erildir, bu yüzden izafe eki "-ê" olur. "Bavê min", "my father" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -96,20 +96,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmanci), "xwişk" (dişil) için hangi izafe eki doğrudur?
 -    A) xwişkê min
 -    B) xwişkên min
--    C) xwişkî min
-- ✅ D) xwişka min
-**Doğru:** D) xwişka min
+- ✅ C) xwişka min
+-    D) xwişkî min
+**Doğru:** C) xwişka min
 **Açıklama:** "Xwişk" dişil bir isimdir, bu yüzden izafe eki "-a" olur. "Xwişka min", "my sister" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0012  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, kîjan rêzika izafeyê ji bo "bira" (nêr) rast e?
 **TR:** Kürtçede (Kurmanci), "bira" (eril) için hangi izafe eki doğrudur?
--    A) biraa min
-- ✅ B) birayê min
+- ✅ A) birayê min
+-    B) biraa min
 -    C) biraê min
 -    D) biraî min
-**Doğru:** B) birayê min
+**Doğru:** A) birayê min
 **Açıklama:** "Bira" ünlüyle biter ve erildir, bu yüzden izafe eki "-yê" olur. "Birayê min", "my brother" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -117,10 +117,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kurmancî de, kîjan rêzika izafeyê ji bo "kitêb" (mê) ya pirjimar rast e?
 **TR:** Kürtçede (Kurmanci), "kitêb" (dişil) kelimesinin çoğulu için hangi izafe eki doğrudur?
 -    A) kitêba min
--    B) kitêbê min
-- ✅ C) kitêbên min
+- ✅ B) kitêbên min
+-    C) kitêbê min
 -    D) kitêbî min
-**Doğru:** C) kitêbên min
+**Doğru:** B) kitêbên min
 **Açıklama:** "Kitêb" dişil bir isimdir, ancak çoğulda izafe eki "-ên" olur. "Kitêbên min", "my books" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -128,54 +128,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo kiryarekê ku dê di pêşerojê de biqewime, em kîjan demê bi kar tînin?
 **TR:** Gelecekte gerçekleşecek bir eylem için hangi zamanı kullanırız?
 -    A) Dema borî
--    B) Dema niha
-- ✅ C) Dema bê
+- ✅ B) Dema bê
+-    C) Dema niha
 -    D) Dema raborî
-**Doğru:** C) Dema bê
+**Doğru:** B) Dema bê
 **Açıklama:** Gelecek zaman, gelecekte gerçekleşecek eylemler için kullanılır. Kurmanci'de bu zaman "ê" veya "dê" yardımcı fiili ve mastar ile kurulur, örn. "ez ê biçim" veya "ew dê bê".
 **Kaynak:** https://en.wikipedia.org/wiki/Future_tense
 
 ## ds_ziman_0034  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo kiryarekê ku dê biqewime, kîjan hevok rast e?
 **TR:** Gelecekte gerçekleşecek bir eylem için hangi cümle doğrudur?
-- ✅ A) Ez ê werim
--    B) Ez hatim
--    C) Ez tême
--    D) Ez hatibûm
-**Doğru:** A) Ez ê werim
+-    A) Ez hatim
+-    B) Ez tême
+-    C) Ez hatibûm
+- ✅ D) Ez ê werim
+**Doğru:** D) Ez ê werim
 **Açıklama:** "Ez ê werim" cümlesi gelecek zamandır çünkü "ê" yardımcı fiili ve fiilin mastarı ile kurulmuştur. "Ez hatim" geçmiş zaman, "ez tême" şimdiki zaman ve "ez hatibûm" ise geçmiş zamanın hikayesidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Future_tense
 
 ## ds_ziman_0029  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, kîjan forma lêkerê ji bo dema niha ya berdewam e?
 **TR:** Kürtçede (Kurmanci), şimdiki zaman (süreklilik) için hangi fiil formu doğrudur?
--    A) Ez çûm
-- ✅ B) Ez diçim
+- ✅ A) Ez diçim
+-    B) Ez çûm
 -    C) Ezê biçim
 -    D) Ez çûbûm
-**Doğru:** B) Ez diçim
+**Doğru:** A) Ez diçim
 **Açıklama:** "Ez diçim" formu, şu an devam eden eylemi gösteren şimdiki zaman (süreklilik) formudur. "Ez çûm" geçmiş zaman, "ezê biçim" gelecek zaman ve "ez çûbûm" ise geçmiş zamanın hikayesidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Present_continuous
 
 ## ds_ziman_0031  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, dema bê bi kîjan alîkariyê tê avakirin?
 **TR:** Kürtçede (Kurmanci), gelecek zaman hangi yardımcı fiille kurulur?
-- ✅ A) Bi lêkera "dê" an "ê"
--    B) Bi lêkera "bûn"
--    C) Bi lêkera "kirin"
--    D) Bi lêkera "hatin"
-**Doğru:** A) Bi lêkera "dê" an "ê"
+-    A) Bi lêkera "bûn"
+-    B) Bi lêkera "kirin"
+-    C) Bi lêkera "hatin"
+- ✅ D) Bi lêkera "dê" an "ê"
+**Doğru:** D) Bi lêkera "dê" an "ê"
 **Açıklama:** Kurmanci'de gelecek zaman, "dê" veya "ê" yardımcı fiili ve fiilin mastarı ile kurulur, örn. "ez ê bixwim" veya "ew dê bêje". "bûn", "kirin" ve "hatin" fiilleri diğer yapılar için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Future_tense
 
 ## ds_ziman_0044  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de, dema bê ya lêkera "kirin" çawa ye?
 **TR:** Kürtçede (Kurmanci), "kirin" fiilinin gelecek zamanı nasıldır?
--    A) Ez dikim
-- ✅ B) Ez ê bikim
+- ✅ A) Ez ê bikim
+-    B) Ez dikim
 -    C) Ez kirim
 -    D) Ez kiribûm
-**Doğru:** B) Ez ê bikim
+**Doğru:** A) Ez ê bikim
 **Açıklama:** "kirin" fiilinin gelecek zamanı "ez ê bikim" formuyla gösterilir. "Ez dikim" şimdiki zaman, "ez kirim" geçmiş zaman ve "ez kiribûm" ise geçmiş zamanın hikayesidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Future_tense
 
@@ -183,32 +183,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan hevok di dema bê de ye?
 **TR:** Hangi cümle gelecek zamandadır?
 -    A) Me xwar
--    B) Em dixwin
-- ✅ C) Em ê bixwin
+- ✅ B) Em ê bixwin
+-    C) Em dixwin
 -    D) Me xwariye
-**Doğru:** C) Em ê bixwin
+**Doğru:** B) Em ê bixwin
 **Açıklama:** "Em ê bixwin" cümlesi gelecek zamandır çünkü "ê" yardımcı fiili ve fiilin mastarı ile kurulmuştur. "Me xwar" geçmiş zaman, "em dixwin" şimdiki zaman ve "me xwariye" ise belirli geçmiş zamandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Future_tense
 
 ## ds_ziman_0038  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Ji bo kiryarekê ku berê qediyaye û hê jî bandora wê heye, em kîjan demê bi kar tînin?
 **TR:** Daha önce tamamlanmış ve etkisi hala devam eden bir eylem için hangi zamanı kullanırız?
--    A) Dema borî ya sade
-- ✅ B) Dema borî ya temam
+- ✅ A) Dema borî ya temam
+-    B) Dema borî ya sade
 -    C) Dema niha ya berdewam
 -    D) Dema bê ya berdewam
-**Doğru:** B) Dema borî ya temam
+**Doğru:** A) Dema borî ya temam
 **Açıklama:** Belirli geçmiş zaman (veya hikaye geçmiş zamanı), daha önce tamamlanmış ancak etkisi hala devam eden eylemler için kullanılır. Kurmanci'de bu, "-îye" veya "-iye" ekiyle kurulur, örn. "ez hatime" veya "ew çûye".
 **Kaynak:** https://en.wikipedia.org/wiki/Present_perfect
 
 ## ds_ziman_0045  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan hevok di dema borî ya temam de ye?
 **TR:** Hangi cümle belirli geçmiş zamandadır?
-- ✅ A) Me xwariye
--    B) Me dixwar
--    C) Me xwar
--    D) Em ê bixwin
-**Doğru:** A) Me xwariye
+-    A) Me dixwar
+-    B) Me xwar
+-    C) Em ê bixwin
+- ✅ D) Me xwariye
+**Doğru:** D) Me xwariye
 **Açıklama:** "Me xwariye" cümlesi, tamamlanmış eylemi ve etkisini gösteren belirli geçmiş zamandır. "Me dixwar" geçmiş zamanda süreklilik, "me xwar" basit geçmiş zaman ve "em ê bixwin" gelecek zamandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Present_perfect
 
@@ -217,9 +217,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmanci), "I saw the man" için hangi cümle doğrudur?
 -    A) Ez zilamî dibînim.
 -    B) Min zilamî dît.
--    C) Ez zilam dîtim.
-- ✅ D) Min zilam dît.
-**Doğru:** D) Min zilam dît.
+- ✅ C) Min zilam dît.
+-    D) Ez zilam dîtim.
+**Doğru:** C) Min zilam dît.
 **Açıklama:** Kurmanci'de, geçişli fiillerin geçmiş zamanı ergatif yapıyla kurulur. Özne oblik formdadır (min) ve nesne yalın formda kalır (zilam). Fiil de nesneyle uyumludur, bu yüzden "min zilam dît" doğrudur.
 **Kaynak:** https://en.wikipedia.org/wiki/Ergative_case
 
@@ -227,10 +227,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo tiştekî ku em tê de xwarinê çêdikin, em çi dibêjin?
 **TR:** İçinde yemek yaptığımız şeye ne deriz?
 -    A) ode
--    B) zewq
-- ✅ C) metbex
+- ✅ B) metbex
+-    C) zewq
 -    D) hewş
-**Doğru:** C) metbex
+**Doğru:** B) metbex
 **Açıklama:** Mutfak, yemek pişirme ve hazırlamanın ana yeridir. Oda, zevk ve avlu yemek yapmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kitchen
 
@@ -239,20 +239,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kapıyı açıp kapattığımız şey hangi kelimedir?
 -    A) pirtûk
 -    B) qelem
--    C) kaxez
-- ✅ D) mifte
-**Doğru:** D) mifte
+- ✅ C) mifte
+-    D) kaxez
+**Doğru:** C) mifte
 **Açıklama:** Anahtar, kapıları ve kilitleri açıp kapatmak için kullanılır. Kitap, kalem ve kağıt bunun için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lock_and_key
 
 ## ds_ziman_0084  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo rûniştina li ser, em çi bi kar tînin?
 **TR:** Oturmak için ne kullanırız?
-- ✅ A) kursî
--    B) mase
--    C) nivîn
--    D) derî
-**Doğru:** A) kursî
+-    A) mase
+-    B) nivîn
+-    C) derî
+- ✅ D) kursî
+**Doğru:** D) kursî
 **Açıklama:** Sandalye oturmak için yapılmıştır. Masa, yatak ve kapı oturmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Chair
 
@@ -260,10 +260,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyva kurmancî ji bo "keça birayê mirov" tê bikaranîn?
 **TR:** Kürtçede "kişinin erkek kardeşinin kızı" için hangi kelime kullanılır?
 -    A) Xwarzê
--    B) Keçmet
-- ✅ C) Birazê
+- ✅ B) Birazê
+-    C) Keçmet
 -    D) Pismam
-**Doğru:** C) Birazê
+**Doğru:** B) Birazê
 **Açıklama:** "Birazê" kişinin erkek kardeşinin kızı için kullanılır. "Xwarzê" kız kardeşin kızı içindir, "pismam" ise babanın erkek kardeşinin oğlu içindir. Kız kardeşin çocukları için "xwarzî/xwarzê" kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Niece
 
@@ -272,20 +272,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Büyük" veya "iri" anlamında hangi Kürtçe kelime kullanılır?
 -    A) piçûk
 -    B) kin
--    C) zirav
-- ✅ D) mezin
-**Doğru:** D) mezin
+- ✅ C) mezin
+-    D) zirav
+**Doğru:** C) mezin
 **Açıklama:** "Mezin", Kürtçede (Kurmancî) "big" veya "great" anlamında kullanılır. "Piçûk" bunun zıttıdır, "kin" uzunluk için ve "zirav" ise kalınlık için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_1176  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyva kurmancî ji bo "dayika bav" tê bikaranîn?
 **TR:** Kürtçede "babanın annesi" için hangi kelime kullanılır?
-- ✅ A) Dapîr
--    B) Xatûn
--    C) Xalojin
--    D) Dayik
-**Doğru:** A) Dapîr
+-    A) Xatûn
+-    B) Xalojin
+-    C) Dayik
+- ✅ D) Dapîr
+**Doğru:** D) Dapîr
 **Açıklama:** "Dapîr" Kürtçede babanın annesi veya annenin annesi için kullanılır. "Xatûn" saygı duyulan kadın içindir, "xalojin" ise dayının karısı içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Grandparent
 
@@ -294,20 +294,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede "annenin babası" için hangi kelime kullanılır?
 -    A) Xal
 -    B) Ap
--    C) Kurmet
-- ✅ D) Bapîr
-**Doğru:** D) Bapîr
+- ✅ C) Bapîr
+-    D) Kurmet
+**Doğru:** C) Bapîr
 **Açıklama:** "Bapîr" Kürtçede babanın babası veya annenin babası için kullanılır. "Xal" annenin erkek kardeşi içindir, "ap" ise babanın erkek kardeşi içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Grandparent
 
 ## ds_ziman_0187  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv ji bo "today" di kurmancî de tê bikaranîn?
 **TR:** "Bugün" için Kürtçede (Kurmancî) hangi kelime kullanılır?
-- ✅ A) îro
--    B) duh
--    C) sibê
--    D) şev
-**Doğru:** A) îro
+-    A) duh
+-    B) sibê
+-    C) şev
+- ✅ D) îro
+**Doğru:** D) îro
 **Açıklama:** "Îro", Kürtçede (Kurmancî) "today" anlamına gelir. "Duh" "yesterday", "sibê" "tomorrow" ve "şev" ise "night" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -316,9 +316,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Dün" için Kürtçede (Kurmancî) hangi kelime kullanılır?
 -    A) îro
 -    B) sibê
--    C) êvarî
-- ✅ D) duh
-**Doğru:** D) duh
+- ✅ C) duh
+-    D) êvarî
+**Doğru:** C) duh
 **Açıklama:** "Duh", Kürtçede (Kurmancî) "yesterday" anlamına gelir. "Îro" "today", "sibê" "tomorrow" ve "êvarî" ise "evening" anlamına gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -326,32 +326,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyv bi tîpa "q"ê tê nivîsîn?
 **TR:** Hangi kelime "q" harfiyle yazılır?
 -    A) Kelek
--    B) Gul
-- ✅ C) Qelem
+- ✅ B) Qelem
+-    C) Gul
 -    D) Zer
-**Doğru:** C) Qelem
+**Doğru:** B) Qelem
 **Açıklama:** "Qelem" (Kalem) kelimesi "q" harfiyle başlar. "Kelek" "k" ile, "Gul" (Gül) "g" ile ve "Zer" (Sarı) "z" ile yazılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_alphabets
 
 ## ds_ziman_0231  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv bi tîpa "ş"ê tê nivîsîn?
 **TR:** Hangi kelime "ş" harfiyle yazılır?
-- ✅ A) Şev
--    B) Roj
--    C) Av
--    D) Erd
-**Doğru:** A) Şev
+-    A) Roj
+-    B) Av
+-    C) Erd
+- ✅ D) Şev
+**Doğru:** D) Şev
 **Açıklama:** "Şev" (Gece) kelimesi "ş" harfiyle başlar. "Roj" (Gün) "r" ile, "Av" (Su) "a" ile ve "Erd" (Toprak) "e" ile yazılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_alphabets
 
 ## ds_ziman_0233  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv bi tîpa "r"ê tê nivîsîn?
 **TR:** Hangi kelime "r" harfiyle yazılır?
-- ✅ A) Roj
--    B) Şev
--    C) Av
--    D) Erd
-**Doğru:** A) Roj
+-    A) Şev
+-    B) Av
+-    C) Erd
+- ✅ D) Roj
+**Doğru:** D) Roj
 **Açıklama:** "Roj" (Gün) kelimesi "r" harfiyle başlar. "Şev" (Gece) "ş" ile, "Av" (Su) "a" ile ve "Erd" (Toprak) "e" ile yazılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_alphabets
 
@@ -359,10 +359,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan avahî îzafeya mê a yekjimar e?
 **TR:** Hangi yapı dişil tekil izafedir?
 -    A) Malê
--    B) Malên
-- ✅ C) Mala
+- ✅ B) Mala
+-    C) Malên
 -    D) Malek
-**Doğru:** C) Mala
+**Doğru:** B) Mala
 **Açıklama:** "Mala" dişil tekil izafedir. Kurmancicede, dişil bir isim bir sıfatla bağlandığında "-a" izafesi kullanılır. Örnek: "mala mezin" (büyük ev).
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -371,9 +371,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancicede şu anda gerçekleşen bir eylem için şimdiki zaman ne kullanılır?
 -    A) got
 -    B) dibêjit
--    C) bêje
-- ✅ D) dibêje
-**Doğru:** D) dibêje
+- ✅ C) dibêje
+-    D) bêje
+**Doğru:** C) dibêje
 **Açıklama:** Kurmanci şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, "dibêje" gibi. "Got" geçmiş zamandır, "dibêjit" yanlıştır ve "bêje" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -381,10 +381,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kurmancî de dema niha ji bo lêkera "xwendin" çi ye?
 **TR:** Kurmancicede "xwendin" fiili için şimdiki zaman nedir?
 -    A) xwend
--    B) bixwîne
-- ✅ C) dixwîne
+- ✅ B) dixwîne
+-    C) bixwîne
 -    D) dixwend
-**Doğru:** C) dixwîne
+**Doğru:** B) dixwîne
 **Açıklama:** "Xwendin" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "dixwîne" doğrudur. "Xwend" geçmiş zaman, "bixwîne" emir kipi ve "dixwend" sürekli geçmiş zamandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -393,9 +393,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancicede "nivîsîn" fiili için şimdiki zaman nasıl yazılır?
 -    A) nivîsand
 -    B) binivîse
--    C) dinivîsand
-- ✅ D) dinivîse
-**Doğru:** D) dinivîse
+- ✅ C) dinivîse
+-    D) dinivîsand
+**Doğru:** C) dinivîse
 **Açıklama:** "Nivîsîn" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "dinivîse" doğrudur. "Nivîsand" geçmiş zaman, "binivîse" emir kipi ve "dinivîsand" sürekli geçmiş zamandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -403,10 +403,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kurmancî de dema niha ji bo lêkera "dan" çi ye?
 **TR:** Kurmancicede "dan" fiili için şimdiki zaman nedir?
 -    A) da
--    B) dida
-- ✅ C) dide
+- ✅ B) dide
+-    C) dida
 -    D) bide
-**Doğru:** C) dide
+**Doğru:** B) dide
 **Açıklama:** "Dan" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "dide" doğrudur. "Da" geçmiş zaman, "dida" sürekli geçmiş zaman ve "bide" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -415,31 +415,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancicede "kirin" fiili için şimdiki zaman nasıl yazılır?
 -    A) kir
 -    B) dikir
--    C) bike
-- ✅ D) dike
-**Doğru:** D) dike
+- ✅ C) dike
+-    D) bike
+**Doğru:** C) dike
 **Açıklama:** "Kirin" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "dike" doğrudur. "Kir" geçmiş zaman, "dikir" sürekli geçmiş zaman ve "bike" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_1036  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de dema niha ji bo lêkera "vekirin" çi ye?
 **TR:** Kurmancicede "vekirin" fiili için şimdiki zaman nedir?
--    A) vekir
-- ✅ B) vedike
+- ✅ A) vedike
+-    B) vekir
 -    C) vedikir
 -    D) veke
-**Doğru:** B) vedike
+**Doğru:** A) vedike
 **Açıklama:** "Vekirin" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "vedike" doğrudur. "Vekir" geçmiş zaman, "vedikir" sürekli geçmiş zaman ve "veke" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_1038  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de dema niha ji bo lêkera "şandin" çawa tê nivîsîn?
 **TR:** Kurmancicede "şandin" fiili için şimdiki zaman nasıl yazılır?
--    A) şand
-- ✅ B) dişîne
+- ✅ A) dişîne
+-    B) şand
 -    C) dişand
 -    D) bişîne
-**Doğru:** B) dişîne
+**Doğru:** A) dişîne
 **Açıklama:** "Şandin" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "dişîne" doğrudur. "Şand" geçmiş zaman, "dişand" sürekli geçmiş zaman ve "bişîne" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -447,10 +447,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan form ji bo dema niha ya kurmancî rast e?
 **TR:** Kurmanci şimdiki zaman için hangi form doğrudur?
 -    A) ez çûm
--    B) ez diçûm
-- ✅ C) ez diçim
+- ✅ B) ez diçim
+-    C) ez diçûm
 -    D) ez herim
-**Doğru:** C) ez diçim
+**Doğru:** B) ez diçim
 **Açıklama:** "Çûn" fiilinin şimdiki zamanı "ez diçim" ile söylenir. "Ez çûm" geçmiş zaman, "ez diçûm" sürekli geçmiş zaman ve "ez herim" istek kipi gelecek zamandır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -459,31 +459,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Hatin" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?
 -    A) hat
 -    B) dihat
--    C) bê
-- ✅ D) tê
-**Doğru:** D) tê
+- ✅ C) tê
+-    D) bê
+**Doğru:** C) tê
 **Açıklama:** "Hatin" fiilinin şimdiki zamanı "tê" ile söylenir. "Hat" geçmiş zaman, "dihat" sürekli geçmiş zaman ve "bê" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0035  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan form ji bo dema niha ya kurmancî ya "girtin" rast e?
 **TR:** "Girtin" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?
-- ✅ A) digire
--    B) girt
--    C) digirt
--    D) bigire
-**Doğru:** A) digire
+-    A) girt
+-    B) digirt
+-    C) bigire
+- ✅ D) digire
+**Doğru:** D) digire
 **Açıklama:** "Girtin" fiilinin şimdiki zamanı "di-" öneki ve "-e" son ekiyle oluşturulur, bu yüzden "digire" doğrudur. "Girt" geçmiş zaman, "digirt" sürekli geçmiş zaman ve "bigire" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
 ## ds_ziman_0039  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan form ji bo dema niha ya kurmancî ya "anîn" rast e?
 **TR:** "Anîn" fiilinin Kurmanci şimdiki zamanı için hangi form doğrudur?
--    A) anî
-- ✅ B) tîne
+- ✅ A) tîne
+-    B) anî
 -    C) dianî
 -    D) bîne
-**Doğru:** B) tîne
+**Doğru:** A) tîne
 **Açıklama:** "Anîn" fiilinin şimdiki zamanı "tîne" ile söylenir. "Anî" geçmiş zaman, "dianî" sürekli geçmiş zaman ve "bîne" emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -491,10 +491,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan hevok dema niha ya kurmancî nîşan dide?
 **TR:** Hangi cümle Kurmanci şimdiki zamanı gösterir?
 -    A) Ew nanî xwar
--    B) Ew nanî dixwar
-- ✅ C) Ew nanî dixwe
+- ✅ B) Ew nanî dixwe
+-    C) Ew nanî dixwar
 -    D) Ew nanî bixwe
-**Doğru:** C) Ew nanî dixwe
+**Doğru:** B) Ew nanî dixwe
 **Açıklama:** "Ew nanî dixwe" cümlesi şimdiki zamandır, çünkü "xwarin" fiili "di-" öneki ve "-e" son ekiyle kullanılmıştır. Diğerleri geçmiş zaman, sürekli geçmiş zaman ve emir kipidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurmanji
 
@@ -503,31 +503,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Hangi cümle Kürtçede (Kurmanci) "güzel" sıfatını doğru kullanır?
 -    A) Ev keçik xweşik in.
 -    B) Ev keçik xweşik im.
--    C) Ev keçik xweşik î.
-- ✅ D) Ev keçik xweşik e.
-**Doğru:** D) Ev keçik xweşik e.
+- ✅ C) Ev keçik xweşik e.
+-    D) Ev keçik xweşik î.
+**Doğru:** C) Ev keçik xweşik e.
 **Açıklama:** Kürtçede (Kurmanci) sıfatlar isimle uyumludur. Dişil tekil için "xweşik e" doğrudur. "Î" sen içindir, "im" ben içindir, "in" ise çoğul içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0211  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan hevok di kurmancî de rengdêra "nû" bi awayê rast bi kar tîne?
 **TR:** Hangi cümle Kürtçede (Kurmanci) "yeni" sıfatını doğru kullanır?
-- ✅ A) Ev pirtûk nû ye.
--    B) Ev pirtûk nû ne.
--    C) Ev pirtûk nû me.
--    D) Ev pirtûk nû yî.
-**Doğru:** A) Ev pirtûk nû ye.
+-    A) Ev pirtûk nû ne.
+-    B) Ev pirtûk nû me.
+-    C) Ev pirtûk nû yî.
+- ✅ D) Ev pirtûk nû ye.
+**Doğru:** D) Ev pirtûk nû ye.
 **Açıklama:** Kürtçede (Kurmanci) sıfatlar isimle uyumludur. Tekil için "nû ye" doğrudur. "Yî" sen içindir, "me" ben içindir, "ne" ise çoğul içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0278  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan hevok di kurmancî de bi awayê erênî hatiye nivîsîn?
 **TR:** Kurmanccada hangi cümle olumlu biçimde yazılmıştır?
--    A) Ew naçe bajêr
-- ✅ B) Ew diçe bajêr
+- ✅ A) Ew diçe bajêr
+-    B) Ew naçe bajêr
 -    C) Ew naçe malê
 -    D) Ew naçe dibistanê
-**Doğru:** B) Ew diçe bajêr
+**Doğru:** A) Ew diçe bajêr
 **Açıklama:** "Ew diçe bajêr" cümlesi olumludur çünkü "diçe" fiili olumlu biçimde kullanılmıştır. Diğerleri "na-" öneki ile olumsuzdur.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -536,53 +536,53 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmanci) "bi" ve "di" arasındaki fark nedir?
 -    A) Herdu jî tenê cih nîşan didin
 -    B) "di" amûrê, "bi" cihê nîşan dide
--    C) Herdu jî tenê demê nîşan didin
-- ✅ D) "bi" amûrê, "di" cihê nîşan dide
-**Doğru:** D) "bi" amûrê, "di" cihê nîşan dide
+- ✅ C) "bi" amûrê, "di" cihê nîşan dide
+-    D) Herdu jî tenê demê nîşan didin
+**Doğru:** C) "bi" amûrê, "di" cihê nîşan dide
 **Açıklama:** "Bi" genellikle aracı veya yöntemi belirtirken, "di" bir şeyin bulunduğu yeri belirtir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_grammar
 
 ## ds_ziman_0078  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Kîjan hevok oblik hâlê bi kar tîne?
 **TR:** Hangi cümle oblik hali kullanır?
--    A) Ez diçim malê
-- ✅ B) Min pirtûk da wî
+- ✅ A) Min pirtûk da wî
+-    B) Ez diçim malê
 -    C) Ew li malê ye
 -    D) Em bi hev re diçin
-**Doğru:** B) Min pirtûk da wî
+**Doğru:** A) Min pirtûk da wî
 **Açıklama:** "Ona" bu cümlede oblik haldir çünkü fiilin nesnesi ona bağlıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_grammar
 
 ## ds_ziman_1084  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "li ser" çi nîşan dide?
 **TR:** Kürtçede "li ser" neyi belirtir?
-- ✅ A) Cihê jorîn
--    B) Cihê jêrîn
--    C) Cihê hundir
--    D) Cihê derve
-**Doğru:** A) Cihê jorîn
+-    A) Cihê jêrîn
+-    B) Cihê hundir
+-    C) Cihê derve
+- ✅ D) Cihê jorîn
+**Doğru:** D) Cihê jorîn
 **Açıklama:** "Li ser", "üzerinde" veya "üstünde" anlamına gelir ve üst konumu belirtir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_grammar
 
 ## ds_ziman_0094  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "li gel" çi nîşan dide?
 **TR:** Kürtçede "li gel" neyi belirtir?
--    A) Cihê jorîn
-- ✅ B) Hevaltî an pê re bûn
+- ✅ A) Hevaltî an pê re bûn
+-    B) Cihê jorîn
 -    C) Cihê jêrîn
 -    D) Sedem
-**Doğru:** B) Hevaltî an pê re bûn
+**Doğru:** A) Hevaltî an pê re bûn
 **Açıklama:** "Li gel", "... ile birlikte" veya "... ile" anlamına gelir ve arkadaşlığı/birlikteliği belirtir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_grammar
 
 ## ds_ziman_1101  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo rûniştina malê, kîjan mobîlya bi gelemperî tê bikaranîn?
 **TR:** Evde oturmak için genellikle hangi mobilya kullanılır?
-- ✅ A) Kursî
--    B) Mase
--    C) Dolab
--    D) Nivîn
-**Doğru:** A) Kursî
+-    A) Mase
+-    B) Dolab
+-    C) Nivîn
+- ✅ D) Kursî
+**Doğru:** D) Kursî
 **Açıklama:** Sandalye oturmak içindir; masa, dolap ve yatak da mobilyadır ancak oturmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Chair
 
@@ -591,53 +591,53 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Mutfakta, bir şeyleri kesmek için hangi alet kullanılır?
 -    A) Kefçî
 -    B) Çetel
--    C) Sênî
-- ✅ D) Kêr
-**Doğru:** D) Kêr
+- ✅ C) Kêr
+-    D) Sênî
+**Doğru:** C) Kêr
 **Açıklama:** Bıçak kesmek içindir; kaşık, çatal ve tabak yemek ve servis içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Knife
 
 ## ds_ziman_0107  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv ji bo cihê ku mirov tê de xwe dişo ye?
 **TR:** Hangi kelime insanın içinde yıkandığı yerdir?
-- ✅ A) Serşok
--    B) Dolab
--    C) Mase
--    D) Nivîn
-**Doğru:** A) Serşok
+-    A) Dolab
+-    B) Mase
+-    C) Nivîn
+- ✅ D) Serşok
+**Doğru:** D) Serşok
 **Açıklama:** Banyo yıkanma yeridir; dolap, masa ve yatak yıkanmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bathroom
 
 ## ds_ziman_1115  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv ji bo cihê ku mirov tê de xwarinê çêdike ye?
 **TR:** Hangi kelime insanın içinde yemek yaptığı yerdir?
--    A) Odeya rûniştinê
-- ✅ B) Metbex
+- ✅ A) Metbex
+-    B) Odeya rûniştinê
 -    C) Serşok
 -    D) Dolab
-**Doğru:** B) Metbex
+**Doğru:** A) Metbex
 **Açıklama:** Mutfak yemek yapma yeridir; oturma odası, banyo ve dolap yapmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kitchen
 
 ## ds_ziman_0119  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv ji bo cihê ku mirov tê de xwarinê dixwe ye?
 **TR:** Hangi kelime, insanın yemek yediği yeri ifade eder?
-- ✅ A) Odeya xwarinê
--    B) Serşok
--    C) Dolab
--    D) Nivîn
-**Doğru:** A) Odeya xwarinê
+-    A) Serşok
+-    B) Dolab
+-    C) Nivîn
+- ✅ D) Odeya xwarinê
+**Doğru:** D) Odeya xwarinê
 **Açıklama:** Yemek odası yemek yemek içindir; banyo, dolap ve yatak yemek yemek için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Dining_room
 
 ## ds_ziman_1104  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo pijandina xwarinê, kîjan amûr di metbexê de tê bikaranîn?
 **TR:** Yemek pişirmek için mutfakta hangi alet kullanılır?
-- ✅ A) Firneq
--    B) Televîzyon
--    C) Komputer
--    D) Pirtûk
-**Doğru:** A) Firneq
+-    A) Televîzyon
+-    B) Komputer
+-    C) Pirtûk
+- ✅ D) Firneq
+**Doğru:** D) Firneq
 **Açıklama:** Fırın pişirmek içindir; televizyon, bilgisayar ve kitap pişirmek için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Oven
 
@@ -645,21 +645,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan tişt ji bo vexwarina avê tê bikaranîn?
 **TR:** Su içmek için hangi nesne kullanılır?
 -    A) Berş
--    B) Sênî
-- ✅ C) Kûp
+- ✅ B) Kûp
+-    C) Sênî
 -    D) Tepsi
-**Doğru:** C) Kûp
+**Doğru:** B) Kûp
 **Açıklama:** Bardak içmek içindir; kova, tabak ve tepsi diğer şeyler içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Cup
 
 ## ds_ziman_1106  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di hundirê malê de, kîjan cih ji bo xwarinê tê bikaranîn?
 **TR:** Evin içinde, yemek yemek için hangi yer kullanılır?
--    A) Serşok
-- ✅ B) Metbex
+- ✅ A) Metbex
+-    B) Serşok
 -    C) Odeya razanê
 -    D) Bexçe
-**Doğru:** B) Metbex
+**Doğru:** A) Metbex
 **Açıklama:** Mutfak yemek yapma ve yeme yeridir; banyo, yatak odası ve bahçe yemek için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kitchen
 
@@ -667,32 +667,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo girtina tiştan di dolabê de, kîjan tişt tê bikaranîn?
 **TR:** Dolapta eşyaları tutmak için hangi nesne kullanılır?
 -    A) Kursî
--    B) Mase
-- ✅ C) Ref
+- ✅ B) Ref
+-    C) Mase
 -    D) Nivîn
-**Doğru:** C) Ref
+**Doğru:** B) Ref
 **Açıklama:** Raf eşya tutmak içindir; sandalye, masa ve yatak saklamak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Shelf_(storage)
 
 ## ds_ziman_1109  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan tişt ji bo ronahiyê di malê de tê bikaranîn?
 **TR:** Evde aydınlatma için hangi nesne kullanılır?
--    A) Mase
-- ✅ B) Lamb
+- ✅ A) Lamb
+-    B) Mase
 -    C) Dolab
 -    D) Ref
-**Doğru:** B) Lamb
+**Doğru:** A) Lamb
 **Açıklama:** Lamba aydınlatma içindir; masa, dolap ve raf aydınlatma için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lamp
 
 ## ds_ziman_0110  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di malê de, kîjan cih ji bo rûniştina mêvanan tê bikaranîn?
 **TR:** Evde, misafirlerin oturması için hangi yer kullanılır?
--    A) Serşok
-- ✅ B) Odeya rûniştinê
+- ✅ A) Odeya rûniştinê
+-    B) Serşok
 -    C) Dolab
 -    D) Metbex
-**Doğru:** B) Odeya rûniştinê
+**Doğru:** A) Odeya rûniştinê
 **Açıklama:** Oturma odası misafirler içindir; banyo, dolap ve mutfak misafirler için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Living_room
 
@@ -700,10 +700,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di malê de, kîjan cih ji bo hilanîna xwarinan tê bikaranîn?
 **TR:** Evde, yiyecekleri saklamak için hangi yer kullanılır?
 -    A) Serşok
--    B) Odeya razanê
-- ✅ C) Dolaba xwarinê
+- ✅ B) Dolaba xwarinê
+-    C) Odeya razanê
 -    D) Bexçe
-**Doğru:** C) Dolaba xwarinê
+**Doğru:** B) Dolaba xwarinê
 **Açıklama:** Yiyecek dolabı yiyecek saklamak içindir; banyo, yatak odası ve bahçe saklamak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Pantry
 
@@ -711,10 +711,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di malê de, kîjan cih ji bo hilanîna kincan tê bikaranîn?
 **TR:** Evde, kıyafetleri saklamak için hangi yer kullanılır?
 -    A) Metbex
--    B) Serşok
-- ✅ C) Dolaba kincan
+- ✅ B) Dolaba kincan
+-    C) Serşok
 -    D) Bexçe
-**Doğru:** C) Dolaba kincan
+**Doğru:** B) Dolaba kincan
 **Açıklama:** Elbise dolabı kıyafetler içindir; mutfak, banyo ve bahçe kıyafetler için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wardrobe
 
@@ -723,20 +723,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Yeri temizlemek için hangi alet kullanılır?
 -    A) Kêr
 -    B) Çetel
--    C) Kefçî
-- ✅ D) Mijk
-**Doğru:** D) Mijk
+- ✅ C) Mijk
+-    D) Kefçî
+**Doğru:** C) Mijk
 **Açıklama:** Süpürge temizlik içindir; bıçak, çatal ve kaşık yemek içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Broom
 
 ## ds_ziman_0112  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di metbexê de, kîjan tişt ji bo danîna xwarinê tê bikaranîn?
 **TR:** Mutfakta, yemek koymak için hangi nesne kullanılır?
-- ✅ A) Sênî
--    B) Kûp
--    C) Berş
--    D) Kêr
-**Doğru:** A) Sênî
+-    A) Kûp
+-    B) Berş
+-    C) Kêr
+- ✅ D) Sênî
+**Doğru:** D) Sênî
 **Açıklama:** Tabak yemek koymak içindir; bardak, kova ve bıçak diğer şeyler içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Plate_(dishware)
 
@@ -744,10 +744,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di metbexê de, kîjan tişt ji bo pijandina nan tê bikaranîn?
 **TR:** Mutfakta, ekmek pişirmek için hangi nesne kullanılır?
 -    A) Televîzyon
--    B) Komputer
-- ✅ C) Firneq
+- ✅ B) Firneq
+-    C) Komputer
 -    D) Pirtûk
-**Doğru:** C) Firneq
+**Doğru:** B) Firneq
 **Açıklama:** Fırın ekmek pişirmek içindir; televizyon, bilgisayar ve kitap pişirme için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Oven
 
@@ -755,10 +755,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan tişt ji bo vekirina deriyê malê tê bikaranîn?
 **TR:** Evin kapısını açmak için hangi nesne kullanılır?
 -    A) Kûp
--    B) Sênî
-- ✅ C) Mifte
+- ✅ B) Mifte
+-    C) Sênî
 -    D) Kursî
-**Doğru:** C) Mifte
+**Doğru:** B) Mifte
 **Açıklama:** Anahtar kapı açmak içindir; bardak, tabak ve sandalye açmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Key_(lock)
 
@@ -767,20 +767,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kitap koymak için hangi mobilya kullanılır?
 -    A) Kursî
 -    B) Mase
--    C) Nivîn
-- ✅ D) Dolaba pirtûkan
-**Doğru:** D) Dolaba pirtûkan
+- ✅ C) Dolaba pirtûkan
+-    D) Nivîn
+**Doğru:** C) Dolaba pirtûkan
 **Açıklama:** Kitap dolabı kitaplar içindir; sandalye, masa ve yatak kitaplar için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Bookshelf
 
 ## ds_ziman_0117  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan tişt ji bo pîvana demê di malê de tê bikaranîn?
 **TR:** Evde zamanı ölçmek için hangi nesne kullanılır?
-- ✅ A) Seyet
--    B) Mase
--    C) Dolab
--    D) Ref
-**Doğru:** A) Seyet
+-    A) Mase
+-    B) Dolab
+-    C) Ref
+- ✅ D) Seyet
+**Doğru:** D) Seyet
 **Açıklama:** Saat zamanı ölçmek içindir; masa, dolap ve raf zamanı ölçmek için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Clock
 
@@ -788,21 +788,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di serşokê de, kîjan tişt ji bo şuştina destan tê bikaranîn?
 **TR:** Banyoda, elleri yıkamak için hangi nesne kullanılır?
 -    A) Kûp
--    B) Sênî
-- ✅ C) Sabûn
+- ✅ B) Sabûn
+-    C) Sênî
 -    D) Kêr
-**Doğru:** C) Sabûn
+**Doğru:** B) Sabûn
 **Açıklama:** Sabun yıkamak içindir; testi, sini ve bıçak yıkamak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Soap
 
 ## ds_ziman_0120  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Ji bo ronahiya derve, kîjan tişt tê bikaranîn?
 **TR:** Dışarıyı aydınlatmak için hangi nesne kullanılır?
-- ✅ A) Çira
--    B) Mase
--    C) Dolab
--    D) Ref
-**Doğru:** A) Çira
+-    A) Mase
+-    B) Dolab
+-    C) Ref
+- ✅ D) Çira
+**Doğru:** D) Çira
 **Açıklama:** Lamba dışarıyı aydınlatmak içindir; masa, dolap ve raf aydınlatma için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Lantern
 
@@ -811,20 +811,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Çay yapmak için hangi nesne kullanılır?
 -    A) Kûp
 -    B) Sênî
--    C) Kêr
-- ✅ D) Çaydan
-**Doğru:** D) Çaydan
+- ✅ C) Çaydan
+-    D) Kêr
+**Doğru:** C) Çaydan
 **Açıklama:** Çaydanlık çay yapmak içindir; testi, sini ve bıçak çay yapmak için değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Teapot
 
 ## ds_ziman_0125  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan ajal bi şev dizivire û di rojê de xwe vedişêre?
 **TR:** Hangi hayvan gece dolaşır ve gündüz kendini gizler?
-- ✅ A) şevrevînk
--    B) rovî
--    C) ker
--    D) berx
-**Doğru:** A) şevrevînk
+-    A) rovî
+-    B) ker
+-    C) berx
+- ✅ D) şevrevînk
+**Doğru:** D) şevrevînk
 **Açıklama:** Yarasa, gece aktif olan ve gündüz kendini gizleyen bir hayvandır. Tilki de gece dolaşır ancak gündüz de görülür; eşek ve kuzu ise gündüz aktif olan evcil hayvanlardır.
 **Kaynak:** https://en.wikipedia.org/wiki/Bat
 
@@ -832,21 +832,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kurmancî de peyva "dar" ji bo çi tê bikaranîn?
 **TR:** Kürtçede "dar" kelimesi ne için kullanılır?
 -    A) ajalek e ku difire
--    B) çiyayekî bilind
-- ✅ C) riwekek e ku fêkî dide
+- ✅ B) riwekek e ku fêkî dide
+-    C) çiyayekî bilind
 -    D) cureyekî avê
-**Doğru:** C) riwekek e ku fêkî dide
+**Doğru:** B) riwekek e ku fêkî dide
 **Açıklama:** "Dar" kelimesi Kürtçede, elma ağacı gibi gövdeli büyük bitkiler için kullanılır. O bir hayvan, dağ veya su değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Tree
 
 ## ds_ziman_0128  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "av" çi ye?
 **TR:** Kürtçede "av" (su) nedir?
-- ✅ A) şilek e ku ji bo jiyanê pêwîst e
--    B) tiştekî hişk e ku di erdê de ye
--    C) ajalek e ku di avê de dijî
--    D) riwekek e ku li ber avê şîn dibe
-**Doğru:** A) şilek e ku ji bo jiyanê pêwîst e
+-    A) tiştekî hişk e ku di erdê de ye
+-    B) ajalek e ku di avê de dijî
+-    C) riwekek e ku li ber avê şîn dibe
+- ✅ D) şilek e ku ji bo jiyanê pêwîst e
+**Doğru:** D) şilek e ku ji bo jiyanê pêwîst e
 **Açıklama:** Su, insanların, hayvanların ve bitkilerin yaşamı için gerekli olan bir sıvıdır. Katı değildir, bir hayvan veya bitki değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Water
 
@@ -855,31 +855,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede "roj" (gün/güneş) kelimesi ne anlama gelir?
 -    A) heyv
 -    B) stêrk
--    C) ewr
-- ✅ D) tara rojê
-**Doğru:** D) tara rojê
+- ✅ C) tara rojê
+-    D) ewr
+**Doğru:** C) tara rojê
 **Açıklama:** "Roj" kelimesi Kürtçede hem güneş hem de 24 saatlik zaman dilimlerinden biri (gün) anlamında kullanılır. Ay, yıldız veya bulut değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Sun
 
 ## ds_ziman_0131  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan ajal xwe bi avê ve girêdide û di avê de dijî?
 **TR:** Hangi hayvan suya bağımlıdır ve suda yaşar?
-- ✅ A) masî
--    B) çivîk
--    C) mar
--    D) kûsî
-**Doğru:** A) masî
+-    A) çivîk
+-    B) mar
+-    C) kûsî
+- ✅ D) masî
+**Doğru:** D) masî
 **Açıklama:** Balık, suda yaşayan ve suya bağımlı olan bir hayvandır. Kuş uçar, yılan karada yaşar ve kaplumbağa hem karada hem suda yaşar ancak balık her zaman suda yaşar.
 **Kaynak:** https://en.wikipedia.org/wiki/Fish
 
 ## ds_ziman_0134  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de peyva "ba" çi ye?
 **TR:** Kürtçede "ba" (rüzgar) nedir?
--    A) ava ku diherrike
-- ✅ B) hewayê ku diherrike
+- ✅ A) hewayê ku diherrike
+-    B) ava ku diherrike
 -    C) erdê ku diheje
 -    D) agirê ku dişewite
-**Doğru:** B) hewayê ku diherrike
+**Doğru:** A) hewayê ku diherrike
 **Açıklama:** Kürtçede rüzgar, hareket eden havadır. Su, toprak veya ateş değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Wind
 
@@ -887,43 +887,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan ajal bi piranî di çol û beyaran de dijî?
 **TR:** Hangi hayvan çoğunlukla çöl ve kırsal alanlarda yaşar?
 -    A) ker
--    B) mih
-- ✅ C) hêştir
+- ✅ B) hêştir
+-    C) mih
 -    D) ga
-**Doğru:** C) hêştir
+**Doğru:** B) hêştir
 **Açıklama:** Deve, çoğunlukla çöl ve kırsal alanlarda yaşayan ve orada kullanılan bir hayvandır. Eşek, koyun ve sığır da köylerde beslenir ancak deve onlardan daha çok çölle ilişkilidir.
 **Kaynak:** https://en.wikipedia.org/wiki/Camel
 
 ## ds_ziman_0136  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "daristan" çi ye?
 **TR:** Kürtçede "daristan" (orman) nedir?
-- ✅ A) cihê ku dar lê pir in
--    B) cihê ku av lê pir e
--    C) cihê ku çiya lê bilind in
--    D) cihê ku bajar lê mezin in
-**Doğru:** A) cihê ku dar lê pir in
+-    A) cihê ku av lê pir e
+-    B) cihê ku çiya lê bilind in
+-    C) cihê ku bajar lê mezin in
+- ✅ D) cihê ku dar lê pir in
+**Doğru:** D) cihê ku dar lê pir in
 **Açıklama:** Orman, içinde çok sayıda ağaç bulunan yerdir. Suyun, dağların veya şehirlerin yeri değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Forest
 
 ## ds_ziman_0138  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de peyva "xew" çi wateyê dide?
 **TR:** Kürtçede "xew" kelimesi ne anlama gelir?
-- ✅ A) nivistina mirovan
--    B) revîna ajalan
--    C) xwarina riwekan
--    D) vexwarina avê
-**Doğru:** A) nivistina mirovan
+-    A) revîna ajalan
+-    B) xwarina riwekan
+-    C) vexwarina avê
+- ✅ D) nivistina mirovan
+**Doğru:** D) nivistina mirovan
 **Açıklama:** Xew, Kürtçede uyuma durumudur. Kaçmak, yemek veya içmek değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Sleep
 
 ## ds_ziman_0139  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Kîjan peyv ji bo ajalê ku di nav daran de dijî û difire?
 **TR:** Ağaçlarda yaşayan ve uçan hayvan için hangi kelime kullanılır?
--    A) mar
-- ✅ B) çivîk
+- ✅ A) çivîk
+-    B) mar
 -    C) masî
 -    D) kûsî
-**Doğru:** B) çivîk
+**Doğru:** A) çivîk
 **Açıklama:** Kuş, uçan ve ağaçlarda yaşayan bir hayvandır. Yılan, balık ve kaplumbağa uçmaz, bu yüzden doğru cevap kuştur.
 **Kaynak:** https://en.wikipedia.org/wiki/Bird
 
@@ -931,32 +931,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kurmancî de "erd" çi ye?
 **TR:** Kürtçede "erd" nedir?
 -    A) ezmanê ku li jor e
--    B) avê ku diherrike
-- ✅ C) rûyê ku em lê dijîn
+- ✅ B) rûyê ku em lê dijîn
+-    C) avê ku diherrike
 -    D) agirê ku dişewite
-**Doğru:** C) rûyê ku em lê dijîn
+**Doğru:** B) rûyê ku em lê dijîn
 **Açıklama:** Erd, Kürtçede üzerinde yaşadığımız yüzeydir. Gökyüzü, su veya ateş değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Earth
 
 ## ds_ziman_0142  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de peyva "baran" çi ye?
 **TR:** Kürtçede "baran" kelimesi nedir?
--    A) ba ku diherrike
-- ✅ B) ava ku ji ezman dikeve
+- ✅ A) ava ku ji ezman dikeve
+-    B) ba ku diherrike
 -    C) berfa ku dihele
 -    D) ewrê ku diçe
-**Doğru:** B) ava ku ji ezman dikeve
+**Doğru:** A) ava ku ji ezman dikeve
 **Açıklama:** Baran, Kürtçede gökten düşen sudur. Rüzgar, kar veya bulut değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Rain
 
 ## ds_ziman_0150  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de hejmara 7 çawa tê nivîsîn?
 **TR:** Kürtçede 7 sayısı nasıl yazılır?
--    A) heşt
-- ✅ B) heft
+- ✅ A) heft
+-    B) heşt
 -    C) neh
 -    D) şeş
-**Doğru:** B) heft
+**Doğru:** A) heft
 **Açıklama:** Kürtçede 7 sayısı "heft"tir. "Heşt" 8, "neh" 9 ve "şeş" 6'dır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -965,9 +965,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede hangi sayı "bîst" olarak yazılır?
 -    A) 30
 -    B) 40
--    C) 50
-- ✅ D) 20
-**Doğru:** D) 20
+- ✅ C) 20
+-    D) 50
+**Doğru:** C) 20
 **Açıklama:** "Bîst" Kürtçede 20 sayısıdır. 30 "sî", 40 "çil" ve 50 "pêncî"dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -976,9 +976,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancîde "nehem" kaçıncı sırayı gösterir?
 -    A) 10
 -    B) 11
--    C) 12
-- ✅ D) Nehemîn (9.)
-**Doğru:** D) Nehemîn (9.)
+- ✅ C) Nehemîn (9.)
+-    D) 12
+**Doğru:** C) Nehemîn (9.)
 **Açıklama:** "Nehem" sıra sayısıdır: neh + em. Sayı olarak dokuz "neh"tir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -987,31 +987,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancîde "pêncem" kaçıncı sırayı gösterir?
 -    A) 6
 -    B) 7
--    C) 8
-- ✅ D) Pêncemîn (5.)
-**Doğru:** D) Pêncemîn (5.)
+- ✅ C) Pêncemîn (5.)
+-    D) 8
+**Doğru:** C) Pêncemîn (5.)
 **Açıklama:** "Pêncem" sıra sayısıdır: pênc + em. Sayı olarak beş "pênc"tir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0152  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de hejmara 100 çawa tê nivîsîn?
 **TR:** Kürtçede 100 sayısı nasıl yazılır?
-- ✅ A) sed
--    B) hez
--    C) milyon
--    D) deh
-**Doğru:** A) sed
+-    A) hez
+-    B) milyon
+-    C) deh
+- ✅ D) sed
+**Doğru:** D) sed
 **Açıklama:** Kürtçede 100 sayısı "sed"tir. "hezar" 1000, "milyon" 1000000 ve "deh" 10'dur.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0153  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de hejmara 4 çawa tê nivîsîn?
 **TR:** Kürtçede 4 sayısı nasıl yazılır?
--    A) pênc
-- ✅ B) çar
+- ✅ A) çar
+-    B) pênc
 -    C) sê
 -    D) du
-**Doğru:** B) çar
+**Doğru:** A) çar
 **Açıklama:** Kürtçede 4 sayısı "çar"dır. "Pênc" 5, "sê" 3 ve "du" 2'dir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1019,10 +1019,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di kurmancî de ji bo kurê xwişka mirov kîjan peyv tê bikaranîn?
 **TR:** Kürtçede kişinin kız kardeşinin oğlu için hangi kelime kullanılır?
 -    A) Pismam
--    B) Birazî
-- ✅ C) Xwarza
+- ✅ B) Xwarza
+-    C) Birazî
 -    D) Kurmet
-**Doğru:** C) Xwarza
+**Doğru:** B) Xwarza
 **Açıklama:** "Xwarza" kişinin kız kardeşinin oğlu için söylenir. "Pismam" babanın erkek kardeşinin oğlu içindir, "birazî" ise kişinin erkek veya kız kardeşinin oğlu içindir, ancak "xwarza" özellikle kız kardeşin oğlu içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Nephew
 
@@ -1031,31 +1031,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmanccada geçmiş zamanı sormak için hangi soru kelimesi kullanılır?
 -    A) Çi
 -    B) Kî
--    C) Çima
-- ✅ D) Kengî
-**Doğru:** D) Kengî
+- ✅ C) Kengî
+-    D) Çima
+**Doğru:** C) Kengî
 **Açıklama:** Kurmanccada "kengî" kelimesi zamanı sormak için kullanılır ve geçmiş zaman da buna dahildir. "Çi" nesneler için, "kî" kişiler için ve "çima" sebep için kullanılır.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_1193  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de ji bo zarokên bira û xwişkan kîjan peyv tê bikaranîn?
 **TR:** Kürtçede (Kurmanci) erkek ve kız kardeşlerin çocuklarına ne denir?
--    A) Nevî
-- ✅ B) Birazî
+- ✅ A) Birazî
+-    B) Nevî
 -    C) Xwarzê
 -    D) Kurmet
-**Doğru:** B) Birazî
+**Doğru:** A) Birazî
 **Açıklama:** "Birazî", erkek kardeşin çocuğu için kullanılır. "Nevî" oğul ve kızın çocukları, "xwarzê" ise özellikle kız kardeşin kızıdır.
 **Kaynak:** https://en.wikipedia.org/wiki/Nephew
 
 ## ds_ziman_0183  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de ji bo kurê apê mirov kîjan peyv tê bikaranîn?
 **TR:** Kürtçede kişinin amcasının oğlu için hangi kelime kullanılır?
--    A) Xwarza
-- ✅ B) Pismam
+- ✅ A) Pismam
+-    B) Xwarza
 -    C) Birazî
 -    D) Kurmet
-**Doğru:** B) Pismam
+**Doğru:** A) Pismam
 **Açıklama:** "Pismam" kişinin amcasının (babanın erkek kardeşi) oğlu için kullanılır. "Xwarza" kız kardeşin oğlu içindir, "birazî" ise kişinin erkek veya kız kardeşinin oğlu içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Cousin
 
@@ -1064,9 +1064,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede bilinçli ve anlayışlı hareket eden bir kişi için hangi sıfat kullanılır?
 -    A) xwerû
 -    B) tembel
--    C) hêdî
-- ✅ D) zîrek
-**Doğru:** D) zîrek
+- ✅ C) zîrek
+-    D) hêdî
+**Doğru:** C) zîrek
 **Açıklama:** "Zîrek" (zeki) sıfatı Kürtçede anlayışlı ve aktif kişiler için kullanılır. "Tembel" (tembel) ve "hêdî" (yavaş) bunun zıttıdır, "xwerû" (saf) ise farklı bir anlama sahiptir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1075,20 +1075,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede kişinin erkek kardeşinin karısına ne denir?
 -    A) Bûk
 -    B) Dê
--    C) Xwişk
-- ✅ D) Jinbira
-**Doğru:** D) Jinbira
+- ✅ C) Jinbira
+-    D) Xwişk
+**Doğru:** C) Jinbira
 **Açıklama:** "Jinbira" kişinin erkek kardeşinin karısı için kullanılır. "Bûk" kişinin oğlunun karısı içindir, "dê" anne içindir, "xwişk" ise kişinin kız kardeşi içindir.
 **Kaynak:** https://en.wikipedia.org/wiki/Sister-in-law
 
 ## ds_ziman_0206  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de ji bo kesekî ku bi lez tevdigere kîjan rengdêr tê bikaranîn?
 **TR:** Kürtçede (Kurmanci) hızlı hareket eden biri için hangi sıfat kullanılır?
-- ✅ A) lezgîn
--    B) hêdî
--    C) tembel
--    D) xwerû
-**Doğru:** A) lezgîn
+-    A) hêdî
+-    B) tembel
+-    C) xwerû
+- ✅ D) lezgîn
+**Doğru:** D) lezgîn
 **Açıklama:** "Lezgîn" sıfatı Kürtçede (Kurmanci) hızlı ve çevik kişiler için kullanılır. "Hêdî" ve "tembel" zıttıdır, "xwerû" ise farklı bir anlama gelir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1097,9 +1097,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmanci) bilgisi ve uzmanlığı az olan biri için hangi sıfat kullanılır?
 -    A) fehim
 -    B) xwendevan
--    C) zanistvan
-- ✅ D) nezan
-**Doğru:** D) nezan
+- ✅ C) nezan
+-    D) zanistvan
+**Doğru:** C) nezan
 **Açıklama:** "Nezan" sıfatı Kürtçede (Kurmanci) bilgisiz kişiler için kullanılır. "Fehim" zıttıdır, "xwendevan" ve "zanistvan" ise isimdir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1107,32 +1107,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan peyva kurmancî bi tîpa "X" dest pê dike?
 **TR:** Hangi Kürtçe kelime "X" harfiyle başlar?
 -    A) Kur
--    B) Gul
-- ✅ C) Xanî
+- ✅ B) Xanî
+-    C) Gul
 -    D) Zar
-**Doğru:** C) Xanî
+**Doğru:** B) Xanî
 **Açıklama:** "Xanî" (ev) kelimesi, Kürtçenin gırtlaktan gelen "x" sesi olan X harfiyle başlar. "Kur" (oğul), "gul" (gül) ve "zar" (çocuk) ise K, G ve Z harfleriyle başlar.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_alphabets
 
 ## ds_ziman_0254  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "destê xwe ji tiştekî kişandin" bi wateya çi ye?
 **TR:** Kürtçede (Kurmanci) "destê xwe ji tiştekî kişandin" ne anlama gelir?
--    A) wê tiştî bi dest xistin
-- ✅ B) wê tiştî berdan
+- ✅ A) wê tiştî berdan
+-    B) wê tiştî bi dest xistin
 -    C) wê tiştî girtin
 -    D) wê tiştî vekirin
-**Doğru:** B) wê tiştî berdan
+**Doğru:** A) wê tiştî berdan
 **Açıklama:** "Destê xwe ji tiştekî kişandin" Kurmanci'de bırakmak veya vazgeçmek anlamına gelir. Bu deyim, elini çekmenin gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0256  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "çavên xwe vekirin" bi wateya xwe ya mecazî çi ye?
 **TR:** Kürtçede (Kurmanci) "çavên xwe vekirin" deyiminin mecazi anlamı nedir?
-- ✅ A) hişyar bûn
--    B) xewê ji xwe re anîn
--    C) tiştekî nû dîtin
--    D) girîn
-**Doğru:** A) hişyar bûn
+-    A) xewê ji xwe re anîn
+-    B) tiştekî nû dîtin
+-    C) girîn
+- ✅ D) hişyar bûn
+**Doğru:** D) hişyar bûn
 **Açıklama:** "Çavên xwe vekirin" Kurmanci'de mecazi anlamda uyanık olmak veya dikkatli olmak demektir. Bu deyim, gözleri açmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1140,21 +1140,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Gotina "xwe avêtin ber bayî" di kurmancî de ji bo kîjan rewşê tê bikaranîn?
 **TR:** Kürtçede (Kurmanci) "xwe avêtin ber bayî" deyimi hangi durum için kullanılır?
 -    A) ji bo bazdanê
--    B) ji bo revê
-- ✅ C) ji bo xwe spartina qederê
+- ✅ B) ji bo xwe spartina qederê
+-    C) ji bo revê
 -    D) ji bo xwe veşartinê
-**Doğru:** C) ji bo xwe spartina qederê
+**Doğru:** B) ji bo xwe spartina qederê
 **Açıklama:** "Xwe avêtin ber bayî" Kurmanci'de kaderine razı olmak veya kendini kaderine bırakmak anlamına gelir. Bu deyim, kendini atmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0258  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "serê xwe li keviran xistin" bi wateya çi ye?
 **TR:** Kürtçede (Kurmanci) "serê xwe li keviran xistin" ne anlama gelir?
-- ✅ A) ji bo tiştekî pir xebitîn
--    B) ji bo tiştekî pir girîn
--    C) ji bo tiştekî pir kenîn
--    D) ji bo tiştekî pir razan
-**Doğru:** A) ji bo tiştekî pir xebitîn
+-    A) ji bo tiştekî pir girîn
+-    B) ji bo tiştekî pir kenîn
+-    C) ji bo tiştekî pir razan
+- ✅ D) ji bo tiştekî pir xebitîn
+**Doğru:** D) ji bo tiştekî pir xebitîn
 **Açıklama:** "Serê xwe li keviran xistin" Kurmanci'de bir şey için çok çalışmak veya zahmet çekmek anlamına gelir. Bu deyim, başını vurmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1163,31 +1163,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmanci) "gotinên xwe dan hev" ne anlama gelir?
 -    A) gotinên xwe dubare kirin
 -    B) gotinên xwe jibîr kirin
--    C) gotinên xwe biguherandin
-- ✅ D) gotinên xwe bi cih anîn
-**Doğru:** D) gotinên xwe bi cih anîn
+- ✅ C) gotinên xwe bi cih anîn
+-    D) gotinên xwe biguherandin
+**Doğru:** C) gotinên xwe bi cih anîn
 **Açıklama:** "Gotinên xwe dan hev" Kurmanci'de sözünü tutmak veya dediğini yapmak anlamına gelir. Bu deyim, söz vermenin gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0261  ·  zorluk 3  ·  deepseek_2026_08_18
 **KU:** Gotina "xwe li ser lingan sekinandin" di kurmancî de ji bo kîjan rewşê tê bikaranîn?
 **TR:** Kürtçede (Kurmanci) "xwe li ser lingan sekinandin" deyimi hangi durum için kullanılır?
-- ✅ A) ji bo xwe amade kirin
--    B) ji bo xwe veşartin
--    C) ji bo xwe nîşan dan
--    D) ji bo xwe parastin
-**Doğru:** A) ji bo xwe amade kirin
+-    A) ji bo xwe veşartin
+-    B) ji bo xwe nîşan dan
+-    C) ji bo xwe parastin
+- ✅ D) ji bo xwe amade kirin
+**Doğru:** D) ji bo xwe amade kirin
 **Açıklama:** "Xwe li ser lingan sekinandin" Kurmanci'de kendini hazırlamak veya kendini hazır hale getirmek anlamına gelir. Bu deyim, durmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0265  ·  zorluk 2  ·  deepseek_2026_08_18
 **KU:** Gotina "xwe li ber xwe girtin" di kurmancî de ji bo kîjan rewşê tê bikaranîn?
 **TR:** Kürtçede (Kurmanci) "xwe li ber xwe girtin" deyimi hangi durum için kullanılır?
--    A) ji bo xwe azad kirin
-- ✅ B) ji bo xwe kontrol kirin
+- ✅ A) ji bo xwe kontrol kirin
+-    B) ji bo xwe azad kirin
 -    C) ji bo xwe veşartin
 -    D) ji bo xwe nîşan dan
-**Doğru:** B) ji bo xwe kontrol kirin
+**Doğru:** A) ji bo xwe kontrol kirin
 **Açıklama:** "Xwe li ber xwe girtin" Kurmanci'de kendini kontrol etmek veya kendini tutmak anlamına gelir. Bu deyim, kendini tutmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1196,20 +1196,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçede (Kurmanci) "devê xwe vekirin" deyiminin mecazi anlamı nedir?
 -    A) xwarin xwarin
 -    B) kenîn
--    C) girîn
-- ✅ D) axaftin
-**Doğru:** D) axaftin
+- ✅ C) axaftin
+-    D) girîn
+**Doğru:** C) axaftin
 **Açıklama:** "Devê xwe vekirin" Kurmanci'de mecazi anlamda konuşmak veya konuşmaya başlamak demektir. Bu deyim, ağzını açmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
 ## ds_ziman_0272  ·  zorluk 1  ·  deepseek_2026_08_18
 **KU:** Di kurmancî de "devê xwe girtin" bi wateya xwe ya mecazî çi ye?
 **TR:** Kürtçede (Kurmanci) "devê xwe girtin" deyiminin mecazi anlamı nedir?
--    A) axaftin
-- ✅ B) bêdeng bûn
+- ✅ A) bêdeng bûn
+-    B) axaftin
 -    C) kenîn
 -    D) girîn
-**Doğru:** B) bêdeng bûn
+**Doğru:** A) bêdeng bûn
 **Açıklama:** "Devê xwe girtin" Kurmanci'de mecazi anlamda sessiz olmak veya konuşmamak demektir. Bu deyim, ağzını kapatmanın gerçek anlamıyla ilgili değildir.
 **Kaynak:** https://en.wikipedia.org/wiki/Kurdish_language
 
@@ -1217,10 +1217,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Alfabeya Kurdî ya latînî ji çend tîpan pêk tê?
 **TR:** Kürtçe Latin alfabesi kaç harften oluşur?
 -    A) 29
--    B) 26
-- ✅ C) 31
+- ✅ B) 31
+-    C) 26
 -    D) 34
-**Doğru:** C) 31
+**Doğru:** B) 31
 **Açıklama:** Kürtçe Latin alfabesi 31 harften oluşur: 8 sesli, 23 sessiz.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1229,20 +1229,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî Latin alfabesi kim tarafından sistemleştirildi?
 -    A) Ehmedê Xanî
 -    B) Melayê Cizîrî
--    C) Şerefxanê Bidlîsî
-- ✅ D) Celadet Alî Bedirxan
-**Doğru:** D) Celadet Alî Bedirxan
+- ✅ C) Celadet Alî Bedirxan
+-    D) Şerefxanê Bidlîsî
+**Doğru:** C) Celadet Alî Bedirxan
 **Açıklama:** Celadet Ali Bedirhan 1930'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
 ## edit_ziman_0003  ·  zorluk 1  ·  editorial
 **KU:** Di alfabeya kurdî ya latînî de çend dengdêr (vowel) hene?
 **TR:** Kürtçe Latin alfabesinde kaç sesli harf (dengdêr) vardır?
--    A) 5
-- ✅ B) 8
+- ✅ A) 8
+-    B) 5
 -    C) 6
 -    D) 10
-**Doğru:** B) 8
+**Doğru:** A) 8
 **Açıklama:** Kürtçedeki sesliler şunlardır: a, e, ê, i, î, o, u, û.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1251,9 +1251,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de isim, sıfata ya da başka bir isme neyle bağlanır?
 -    A) Daçek
 -    B) Cînav
--    C) Bêjeya pirsê
-- ✅ D) Veqetandek (izafe)
-**Doğru:** D) Veqetandek (izafe)
+- ✅ C) Veqetandek (izafe)
+-    D) Bêjeya pirsê
+**Doğru:** C) Veqetandek (izafe)
 **Açıklama:** İzafe (veqetandek) ismi sıfata veya başka bir isme bağlar: "kitêba min", "mala mezin".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1261,10 +1261,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de peyva "jin" ji kîjan zayendê ye?
 **TR:** Kurmancî'de "jin" sözcüğü hangi cinstendir?
 -    A) Nêr
--    B) Bêzayend
-- ✅ C) Mê
+- ✅ B) Mê
+-    C) Bêzayend
 -    D) Herdu jî
-**Doğru:** C) Mê
+**Doğru:** B) Mê
 **Açıklama:** Kurmancî'de her isim bir cinsiyet alır; "jin" dişildir, bu yüzden izafesi "-a" olur: "jina baş".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1273,20 +1273,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de bükünlü (oblique) durumun çoğul eki hangisidir?
 -    A) -ek
 -    B) -ê
--    C) -ne
-- ✅ D) -an
-**Doğru:** D) -an
+- ✅ C) -an
+-    D) -ne
+**Doğru:** C) -an
 **Açıklama:** Bükünlü (oblique) durumda çoğul isimler "-an" alır: "Ez pirtûkan dixwînim".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
 ## edit_ziman_0007  ·  zorluk 2  ·  editorial
 **KU:** Lêkera "kirin" di dema niha de ji bo kesê sêyemîn ê yekjimar çawa tê kişandin?
 **TR:** "Kirin" fiili şimdiki zamanda üçüncü tekil kişi için nasıl çekilir?
--    A) Ew kir
-- ✅ B) Ew dike
+- ✅ A) Ew dike
+-    B) Ew kir
 -    C) Ew bike
 -    D) Ew kiriye
-**Doğru:** B) Ew dike
+**Doğru:** A) Ew dike
 **Açıklama:** Şimdiki zaman "di-" ön ekiyle kurulur: di- + k(ir) + -e = dike.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1295,9 +1295,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "ergatîf" ne demektir?
 -    A) Xwendin (dibistan: cihê xwendinê)
 -    B) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
--    C) Belavkirina alfabeya latînî ya kurdî
-- ✅ D) Di dema borî ya lêkerên gerguhêz de bikerê tewandî
-**Doğru:** D) Di dema borî ya lêkerên gerguhêz de bikerê tewandî
+- ✅ C) Di dema borî ya lêkerên gerguhêz de bikerê tewandî
+-    D) Belavkirina alfabeya latînî ya kurdî
+**Doğru:** C) Di dema borî ya lêkerên gerguhêz de bikerê tewandî
 **Açıklama:** Ergatif: geçmiş zamanda geçişli fiillerde özne büküme girer ve fiil nesneye göre çekimlenir — "Min pirtûk xwend".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1305,10 +1305,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva "rojname" ji kîjan du peyvan pêk tê?
 **TR:** "Rojname" sözcüğü hangi iki sözcükten oluşur?
 -    A) Ro + jname
--    B) Rojan + me
-- ✅ C) Roj + name
+- ✅ B) Roj + name
+-    C) Rojan + me
 -    D) Roja + nem
-**Doğru:** C) Roj + name
+**Doğru:** B) Roj + name
 **Açıklama:** "Roj" (gün) ve "name" (yazı) birleşir: günlük yazı, yani gazete.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1317,20 +1317,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "av" sözcüğü Türkçede ne demektir?
 -    A) ateş
 -    B) ekmek
--    C) taş
-- ✅ D) su
-**Doğru:** D) su
+- ✅ C) su
+-    D) taş
+**Doğru:** C) su
 **Açıklama:** "Av" Türkçede "su" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0011  ·  zorluk 1  ·  editorial
 **KU:** Peyva Kurmancî "hesp" bi Tirkî çi tê wateyê?
 **TR:** Kurmancî "hesp" sözcüğü Türkçede ne demektir?
-- ✅ A) at
--    B) köpek
--    C) kuş
--    D) koyun
-**Doğru:** A) at
+-    A) köpek
+-    B) kuş
+-    C) koyun
+- ✅ D) at
+**Doğru:** D) at
 **Açıklama:** "Hesp" Türkçede "at" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1338,21 +1338,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva Kurmancî "zanîn" bi Tirkî çi tê wateyê?
 **TR:** Kurmancî "zanîn" sözcüğü Türkçede ne demektir?
 -    A) görmek
--    B) gitmek
-- ✅ C) bilmek
+- ✅ B) bilmek
+-    C) gitmek
 -    D) almak
-**Doğru:** C) bilmek
+**Doğru:** B) bilmek
 **Açıklama:** "Zanîn" Türkçede "bilmek" demektir; uygulamanın adı da bu "zan" kökünden gelir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0013  ·  zorluk 2  ·  editorial
 **KU:** Hevwateya peyva "dilgeş" di Kurmancî de kîjan e?
 **TR:** Kurmancî'de "dilgeş" sözcüğünün eş anlamlısı hangisidir?
-- ✅ A) Şa
--    B) Xemgîn
--    C) Westiyayî
--    D) Tirsonek
-**Doğru:** A) Şa
+-    A) Xemgîn
+-    B) Westiyayî
+-    C) Tirsonek
+- ✅ D) Şa
+**Doğru:** D) Şa
 **Açıklama:** "Dilgeş" ve "şa" ikisi de neşeli/sevinçli anlamına gelir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1361,20 +1361,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "germ" sözcüğünün zıt anlamlısı hangisidir?
 -    A) Nerm
 -    B) Tarî
--    C) Giran
-- ✅ D) Sar
-**Doğru:** D) Sar
+- ✅ C) Sar
+-    D) Giran
+**Doğru:** C) Sar
 **Açıklama:** "Germ" (sıcak) ile "sar" (soğuk) zıt anlamlıdır.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0015  ·  zorluk 4  ·  editorial
 **KU:** Di Kurmancî de "daçek" (preposition/postposition) çi ye?
 **TR:** Kurmancî'de "daçek" (edat) nedir?
-- ✅ A) Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin
--    B) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
--    C) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
--    D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
-**Doğru:** A) Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin
+-    A) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+-    B) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
+-    C) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+- ✅ D) Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin
+**Doğru:** D) Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin
 **Açıklama:** Edatlar isimle cümlenin diğer öğeleri arasındaki ilişkiyi belirtir: "li malê", "bi destan".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1382,10 +1382,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de "raweya fermanî" ya lêkera "hatin" ji bo kesê duyemîn ê yekjimar kîjan e?
 **TR:** Kurmancî'de "hatin" fiilinin ikinci tekil kişi için emir kipi (raweya fermanî) hangisidir?
 -    A) Hat
--    B) Tê
-- ✅ C) Were
+- ✅ B) Were
+-    C) Tê
 -    D) Hatiye
-**Doğru:** C) Were
+**Doğru:** B) Were
 **Açıklama:** "Hatin" fiilinin emir kipi "were" (sen) ve "werin" (siz) şeklindedir.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1402,10 +1402,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kovara "Hawar" bi taybetî ji bo çi girîng e?
 **TR:** "Hawar" dergisi özellikle neden önemlidir?
 -    A) Weşandina romana yekem a kurdî
--    B) Amadekirina ferhenga mezin a kurdî
-- ✅ C) Belavkirina alfabeya latînî ya kurdî
+- ✅ B) Belavkirina alfabeya latînî ya kurdî
+-    C) Amadekirina ferhenga mezin a kurdî
 -    D) Tomarkirina stranên dengbêjên Serhedê
-**Doğru:** C) Belavkirina alfabeya latînî ya kurdî
+**Doğru:** B) Belavkirina alfabeya latînî ya kurdî
 **Açıklama:** Hawar (1932, Şam) Kürtçe Latin alfabesini yaydı ve modern Kürtçenin okulu oldu.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1414,9 +1414,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "min" ile "ez" arasındaki fark nedir?
 -    A) Herdu jî heman in
 -    B) "Min" pirjimar e
--    C) "Ez" tenê di dema borî de tê bikaranîn
-- ✅ D) "Ez" rewşa xwerû, "min" rewşa tewandî ye
-**Doğru:** D) "Ez" rewşa xwerû, "min" rewşa tewandî ye
+- ✅ C) "Ez" rewşa xwerû, "min" rewşa tewandî ye
+-    D) "Ez" tenê di dema borî de tê bikaranîn
+**Doğru:** C) "Ez" rewşa xwerû, "min" rewşa tewandî ye
 **Açıklama:** "Ez diçim" (yalın) ama "Min got" (bükünlü) — durum, fiilin zamanına ve geçişliliğine göre değişir.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1424,21 +1424,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva Kurmancî "dar" bi Tirkî çi tê wateyê?
 **TR:** Kurmancî "dar" sözcüğü Türkçede ne demektir?
 -    A) taş
--    B) yol
-- ✅ C) ağaç
+- ✅ B) ağaç
+-    C) yol
 -    D) kapı
-**Doğru:** C) ağaç
+**Doğru:** B) ağaç
 **Açıklama:** "Dar" Türkçede "ağaç" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0022  ·  zorluk 1  ·  editorial
 **KU:** Peyva Kurmancî "nan" bi Tirkî çi tê wateyê?
 **TR:** Kurmancî "nan" sözcüğü Türkçede ne demektir?
-- ✅ A) ekmek
--    B) tuz
--    C) şeker
--    D) et
-**Doğru:** A) ekmek
+-    A) tuz
+-    B) şeker
+-    C) et
+- ✅ D) ekmek
+**Doğru:** D) ekmek
 **Açıklama:** "Nan" Türkçede "ekmek" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1447,31 +1447,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'deki "deh" sayısı rakamla kaçtır?
 -    A) 7
 -    B) 12
--    C) 20
-- ✅ D) 10
-**Doğru:** D) 10
+- ✅ C) 10
+-    D) 20
+**Doğru:** C) 10
 **Açıklama:** Temel sayılar: yek, du, sê, çar, pênc, şeş, heft, heşt, neh, deh (10).
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0025  ·  zorluk 3  ·  editorial
 **KU:** Di Kurmancî de "-ek" wek paşgir çi diyar dike?
 **TR:** Kurmancî'de "-ek" eki neyi gösterir?
--    A) cînavkên kesane
-- ✅ B) nebinavkirîbûn (yek/bir)
+- ✅ A) nebinavkirîbûn (yek/bir)
+-    B) cînavkên kesane
 -    C) kesê ku karekî dike
 -    D) lêkera gerguhêz
-**Doğru:** B) nebinavkirîbûn (yek/bir)
+**Doğru:** A) nebinavkirîbûn (yek/bir)
 **Açıklama:** "Pirtûkek" bir kitap demektir; belirsizlik ekidir.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
 ## edit_ziman_0027  ·  zorluk 4  ·  editorial
 **KU:** Di hevoka "Min ew dît" de lêker li gorî kê tê kişandin?
 **TR:** "Min ew dît" cümlesinde fiil neye göre çekilir?
--    A) Li gorî bikerê (min)
-- ✅ B) Li gorî bireserê (ew)
+- ✅ A) Li gorî bireserê (ew)
+-    B) Li gorî bikerê (min)
 -    C) Li gorî demê
 -    D) Li gorî zayendê
-**Doğru:** B) Li gorî bireserê (ew)
+**Doğru:** A) Li gorî bireserê (ew)
 **Açıklama:** Geçmiş zamanda geçişli fiil nesneye göre çekimlenir — bu ergatifliğin özelliğidir.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1479,32 +1479,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva "xwendegeh" ji kîjan koka lêkerê tê?
 **TR:** "Xwendegeh" sözcüğü hangi fiil kökünden gelir?
 -    A) Gotin
--    B) Xwarin
-- ✅ C) Xwendin
+- ✅ B) Xwendin
+-    C) Xwarin
 -    D) Nivîsîn
-**Doğru:** C) Xwendin
+**Doğru:** B) Xwendin
 **Açıklama:** "Xwendegeh" (okul), "xwendin" (okumak) kökü ve yer eki "-geh"ten oluşur.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0029  ·  zorluk 3  ·  editorial
 **KU:** Paşgira "-istan/-stan" di peyvên wek "Kurdistan" de çi diyar dike?
 **TR:** "Kurdistan" gibi sözcüklerdeki "-istan/-stan" eki neyi gösterir?
-- ✅ A) Cih / war
--    B) Kesayet
--    C) Dem
--    D) Hejmar
-**Doğru:** A) Cih / war
+-    A) Kesayet
+-    B) Dem
+-    C) Hejmar
+- ✅ D) Cih / war
+**Doğru:** D) Cih / war
 **Açıklama:** "-stan" yer ekidir: Kürtlerin yurdu.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0030  ·  zorluk 4  ·  editorial
 **KU:** Di Kurmancî de cudahiya "tu" û "hûn" çi ye?
 **TR:** Kurmancî'de "tu" ile "hûn" arasındaki fark nedir?
--    A) Herdu jî pirjimar in
-- ✅ B) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
+- ✅ A) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
+-    B) Herdu jî pirjimar in
 -    C) "Tu" tenê ji bo jinan e
 -    D) "Hûn" tenê di nivîsê de tê bikaranîn
-**Doğru:** B) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
+**Doğru:** A) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
 **Açıklama:** "Tu" tekil, "hûn" çoğul ya da saygı ifadesidir.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1513,9 +1513,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de istek kipi (raweya bilanî) hangi ön ekle kurulur?
 -    A) di-
 -    B) na-
--    C) ne-
-- ✅ D) bi-
-**Doğru:** D) bi-
+- ✅ C) bi-
+-    D) ne-
+**Doğru:** C) bi-
 **Açıklama:** İstek kipi "bi-" ile kurulur: "ez biçim" (gideyim).
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1523,10 +1523,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Nîşana neyîniyê ya dema niha di Kurmancî de kîjan e?
 **TR:** Kurmancî'de şimdiki zamanın olumsuzluk eki hangisidir?
 -    A) ne-
--    B) bi-
-- ✅ C) na-
+- ✅ B) na-
+-    C) bi-
 -    D) di-
-**Doğru:** C) na-
+**Doğru:** B) na-
 **Açıklama:** Şimdiki zaman "na-" ile olumsuzlanır: "ez naçim" (gitmiyorum).
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1542,11 +1542,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## edit_ziman_0034  ·  zorluk 3  ·  editorial
 **KU:** Peyva "xwendekar" bi Tirkî çi tê wateyê?
 **TR:** "Xwendekar" sözcüğü Türkçede ne demektir?
-- ✅ A) öğrenci
--    B) öğretmen
--    C) okul
--    D) kitap
-**Doğru:** A) öğrenci
+-    A) öğretmen
+-    B) okul
+-    C) kitap
+- ✅ D) öğrenci
+**Doğru:** D) öğrenci
 **Açıklama:** "Xwendekar" Türkçede "öğrenci" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1555,9 +1555,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "çav" sözcüğü Türkçede ne demektir?
 -    A) kulak
 -    B) burun
--    C) el
-- ✅ D) göz
-**Doğru:** D) göz
+- ✅ C) göz
+-    D) el
+**Doğru:** C) göz
 **Açıklama:** "Çav" Türkçede "göz" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1565,10 +1565,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva Kurmancî "dest" bi Tirkî çi tê wateyê?
 **TR:** Kurmancî "dest" sözcüğü Türkçede ne demektir?
 -    A) ayak
--    B) baş
-- ✅ C) el
+- ✅ B) el
+-    C) baş
 -    D) sırt
-**Doğru:** C) el
+**Doğru:** B) el
 **Açıklama:** "Dest" Türkçede "el" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1577,20 +1577,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "zarok" sözcüğü Türkçede ne demektir?
 -    A) yaşlı
 -    B) komşu
--    C) misafir
-- ✅ D) çocuk
-**Doğru:** D) çocuk
+- ✅ C) çocuk
+-    D) misafir
+**Doğru:** C) çocuk
 **Açıklama:** "Zarok" Türkçede "çocuk" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0038  ·  zorluk 2  ·  editorial
 **KU:** Peyva Kurmancî "spas" bi Tirkî çi tê wateyê?
 **TR:** Kurmancî "spas" sözcüğü Türkçede ne demektir?
--    A) merhaba
-- ✅ B) teşekkür
+- ✅ A) teşekkür
+-    B) merhaba
 -    C) hoşça kal
 -    D) lütfen
-**Doğru:** B) teşekkür
+**Doğru:** A) teşekkür
 **Açıklama:** "Spas" Türkçede "teşekkür"dür; "spas dikim" = teşekkür ederim.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1599,20 +1599,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "dirêj" sözcüğünün zıt anlamlısı hangisidir?
 -    A) Fireh
 -    B) Giran
--    C) Nerm
-- ✅ D) Kurt
-**Doğru:** D) Kurt
+- ✅ C) Kurt
+-    D) Nerm
+**Doğru:** C) Kurt
 **Açıklama:** "Dirêj" (uzun) ile "kurt" (kısa) zıt anlamlıdır.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0040  ·  zorluk 3  ·  editorial
 **KU:** Di Kurmancî de "ez dixwazim" hevoka çi demê ye?
 **TR:** Kurmancî'de "ez dixwazim" hangi zamanın cümlesidir?
-- ✅ A) Dema niha
--    B) Dema borî
--    C) Dema bê
--    D) Raweya fermanî
-**Doğru:** A) Dema niha
+-    A) Dema borî
+-    B) Dema bê
+-    C) Raweya fermanî
+- ✅ D) Dema niha
+**Doğru:** D) Dema niha
 **Açıklama:** "di-" ön eki şimdiki zamanı gösterir: "ez dixwazim".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1621,20 +1621,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "dergehvan" gibi sözcüklerdeki "-van" eki neyi gösterir?
 -    A) cînavkên tewandî
 -    B) rênivîsa Hawarê
--    C) Zayend: "-ê" nêr, "-a" mê
-- ✅ D) Kesê ku karekî dike
-**Doğru:** D) Kesê ku karekî dike
+- ✅ C) Kesê ku karekî dike
+-    D) Zayend: "-ê" nêr, "-a" mê
+**Doğru:** C) Kesê ku karekî dike
 **Açıklama:** "-van" fail ekidir: dergehvan (kapıcı), stranvan, hunervan.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
 ## edit_ziman_0042  ·  zorluk 4  ·  editorial
 **KU:** Di Kurmancî de "were" û "biçe" kîjan raweyê nîşan didin?
 **TR:** Kurmancî'de "were" ve "biçe" hangi kipi gösterir?
-- ✅ A) Raweya fermanî
--    B) Raweya bilanî
--    C) Dema borî
--    D) Dema bê
-**Doğru:** A) Raweya fermanî
+-    A) Raweya bilanî
+-    B) Dema borî
+-    C) Dema bê
+- ✅ D) Raweya fermanî
+**Doğru:** D) Raweya fermanî
 **Açıklama:** İkisi de emirdir: "were" (gel), "biçe" (git).
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1642,21 +1642,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de "min got" û "ez gotim" — kîjan rast e?
 **TR:** Kurmancî'de "min got" ile "ez gotim" — hangisi doğrudur?
 -    A) "Ez gotim" rast e
--    B) Herdu jî rast in
-- ✅ C) "Min got" rast e
+- ✅ B) "Min got" rast e
+-    C) Herdu jî rast in
 -    D) Herdu jî şaş in
-**Doğru:** C) "Min got" rast e
+**Doğru:** B) "Min got" rast e
 **Açıklama:** "Gotin" geçişlidir; geçmiş zamanda özne büküme girer: "min got".
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
 ## edit_ziman_0044  ·  zorluk 5  ·  editorial
 **KU:** Di Kurmancî de cudahiya "-ê" û "-a" ya veqetandekê çi ye?
 **TR:** Kurmancî'de izafedeki "-ê" ile "-a" arasındaki fark nedir?
-- ✅ A) Zayend: "-ê" nêr, "-a" mê
--    B) Hejmar: "-ê" yekjimar, "-a" pirjimar
--    C) Dem: "-ê" borî, "-a" niha
--    D) Rewş: "-ê" xwerû, "-a" tewandî
-**Doğru:** A) Zayend: "-ê" nêr, "-a" mê
+-    A) Hejmar: "-ê" yekjimar, "-a" pirjimar
+-    B) Dem: "-ê" borî, "-a" niha
+-    C) Rewş: "-ê" xwerû, "-a" tewandî
+- ✅ D) Zayend: "-ê" nêr, "-a" mê
+**Doğru:** D) Zayend: "-ê" nêr, "-a" mê
 **Açıklama:** "Bavê min" (eril) ama "diya min" (dişil) — izafe cinsiyeti gösterir.
 **Kaynak:** Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)
 
@@ -1665,20 +1665,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Hevîr" sözcüğü Türkçede ne demektir?
 -    A) peynir
 -    B) tuz
--    C) yağ
-- ✅ D) hamur
-**Doğru:** D) hamur
+- ✅ C) hamur
+-    D) yağ
+**Doğru:** C) hamur
 **Açıklama:** "Hevîr" Türkçede "hamur" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
 ## edit_ziman_0046  ·  zorluk 3  ·  editorial
 **KU:** Hevwateya peyva "westiyayî" di Kurmancî de kîjan e?
 **TR:** Kurmancî'de "westiyayî" sözcüğünün eş anlamlısı hangisidir?
-- ✅ A) Betilî
--    B) Kêfxweş
--    C) Bilez
--    D) Nexweş
-**Doğru:** A) Betilî
+-    A) Kêfxweş
+-    B) Bilez
+-    C) Nexweş
+- ✅ D) Betilî
+**Doğru:** D) Betilî
 **Açıklama:** "Westiyayî" ve "betilî" ikisi de yorgunluk anlamındadır.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1696,9 +1696,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Heyv" sözcüğü Türkçede ne demektir?
 -    A) güneş
 -    B) yıldız
--    C) gök
-- ✅ D) ay
-**Doğru:** D) ay
+- ✅ C) ay
+-    D) gök
+**Doğru:** C) ay
 **Açıklama:** "Heyv" Türkçede "ay" demektir.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1706,10 +1706,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva "zanîngeh" ji kîjan beşan pêk tê?
 **TR:** "Zanîngeh" sözcüğü hangi parçalardan oluşur?
 -    A) Zan + îng
--    B) Za + nîngeh
-- ✅ C) Zanîn + geh (cih)
+- ✅ B) Zanîn + geh (cih)
+-    C) Za + nîngeh
 -    D) Zanî + gehîn
-**Doğru:** C) Zanîn + geh (cih)
+**Doğru:** B) Zanîn + geh (cih)
 **Açıklama:** "Geh" yer ekidir: bilgi yeri, üniversite.
 **Kaynak:** Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)
 
@@ -1718,42 +1718,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Türkçedeki "kar" sözcüğünün Kurmancî karşılığı hangisidir?
 -    A) Baran
 -    B) Ba
--    C) Ewr
-- ✅ D) Berf
-**Doğru:** D) Berf
+- ✅ C) Berf
+-    D) Ewr
+**Doğru:** C) Berf
 **Açıklama:** Berf, gökten yağan kar demektir. Baran yağmur, ba rüzgâr, ewr ise buluttur; dördü de hava olaylarıyla ilgili olduğu için sık karıştırılır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=09f12b52b440b17f
 
 ## ziman_x_0002  ·  zorluk 1  ·  expansion_2026_08
 **KU:** Li ser sifreyê "nan" heye. Ev peyv bi tirkî çi ye?
 **TR:** Sofrada "nan" var. Bu kelimenin Türkçesi nedir?
--    A) Süt
-- ✅ B) Ekmek
+- ✅ A) Ekmek
+-    B) Süt
 -    C) Et
 -    D) Peynir
-**Doğru:** B) Ekmek
+**Doğru:** A) Ekmek
 **Açıklama:** Nan, un ve sudan yapılan ekmektir. Süt şîr, et goşt, peynir penîr olarak geçer; hepsi temel besin adı olduğu için şıklar aynı sınıftandır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=8922f3eb54c05d3e
 
 ## ziman_x_0003  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Navdêra "mal" mê ye. Ji bo wateya "evim" kîjan form rast e?
 **TR:** "Mal" adı dişildir. "Evim" anlamı için doğru biçim hangisidir?
-- ✅ A) mala min
--    B) malê min
--    C) malên min
--    D) malek min
-**Doğru:** A) mala min
+-    A) malê min
+-    B) malên min
+-    C) malek min
+- ✅ D) mala min
+**Doğru:** D) mala min
 **Açıklama:** Kurmancîde izafe eki tekil dişil adlarda -a olur, bu yüzden "mala min" denir. -ê eril tekile, -ên çoğula aittir; "malek" ise belirsiz tekildir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=d444b33565bb1421
 
 ## ziman_x_0004  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Cînavka "hûn" bi tirkî çi ye?
 **TR:** "Hûn" zamirinin Türkçe karşılığı nedir?
--    A) Biz
-- ✅ B) Siz
+- ✅ A) Siz
+-    B) Biz
 -    C) Onlar
 -    D) Sen
-**Doğru:** B) Siz
+**Doğru:** A) Siz
 **Açıklama:** Hûn, çoğul ikinci kişiyi yani "siz" anlamına gelir. "Biz" em, "onlar" ew, "sen" ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=7a6263db28f9d1ac
 
@@ -1762,42 +1762,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî alfabesinde toplam kaç harf vardır?
 -    A) 29
 -    B) 26
--    C) 33
-- ✅ D) 31
-**Doğru:** D) 31
+- ✅ C) 31
+-    D) 33
+**Doğru:** C) 31
 **Açıklama:** Latin temelli Kurmancî alfabesinde 8 ünlü ve 23 ünsüz olmak üzere 31 harf bulunur. 29 Türk, 26 ise İngiliz alfabesinin harf sayısıdır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=e3c63fe13b6bb6fe
 
 ## ziman_x_0006  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Du peyvên cuda yên bi heman wateyê, ji hev re çi tên gotin?
 **TR:** Aynı anlama gelen iki farklı kelimeye ne denir?
--    A) Dijwate
-- ✅ B) Hevwate
+- ✅ A) Hevwate
+-    B) Dijwate
 -    C) Hevdeng
 -    D) Peyva deynkirî
-**Doğru:** B) Hevwate
+**Doğru:** A) Hevwate
 **Açıklama:** Eş anlamlı sözcükler farklı yazılır, aynı anlamı taşır: yıl ile sene gibi. Zıt anlamlı karşıtlığı, eş sesli ise aynı yazılışta farklı anlamı gösterir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=f18a109725505f7d
 
 ## ziman_x_0007  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Rengê "kesk" di tirkî de kîjan reng e?
 **TR:** "Kesk" rengi Türkçede hangi renktir?
-- ✅ A) Yeşil
--    B) Sarı
--    C) Mavi
--    D) Kırmızı
-**Doğru:** A) Yeşil
+-    A) Sarı
+-    B) Mavi
+-    C) Kırmızı
+- ✅ D) Yeşil
+**Doğru:** D) Yeşil
 **Açıklama:** Kesk yeşil demektir. Sarı zer, mavi şîn, kırmızı ise sordur; dördü de temel renk adı olduğu için aynı kavram sınıfındadır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=1653ee18f97f081b
 
 ## ziman_x_0008  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Kîjan hevok wateya "Ekmeği yedim" bi rêziman rast dide?
 **TR:** "Ekmeği yedim" anlamını dilbilgisi açısından doğru veren cümle hangisidir?
--    A) Ez nan xwar
-- ✅ B) Min nan xwar
+- ✅ A) Min nan xwar
+-    B) Ez nan xwar
 -    C) Ez nan dixwim
 -    D) Min nan dixwe
-**Doğru:** B) Min nan xwar
+**Doğru:** A) Min nan xwar
 **Açıklama:** Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden "ez" yerine "min" gelir. "Ez nan dixwim" ise ekmek yiyorum demektir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=da1ea5e56a3bef83
 
@@ -1806,20 +1806,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Ailede "dayik" kimi belirtir?
 -    A) Abla
 -    B) Teyze
--    C) Nine
-- ✅ D) Anne
-**Doğru:** D) Anne
+- ✅ C) Anne
+-    D) Nine
+**Doğru:** C) Anne
 **Açıklama:** Dayik, kısa biçimiyle dê, anne demektir. Teyze xaltî, nine dapîr olarak geçer; hepsi kadın akraba adı olduğu için karıştırılabilir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=26007fd35204f05c
 
 ## ziman_x_0010  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Kîjan form wateya "kitaplarım" bi kurmancî rast dide?
 **TR:** "Kitaplarım" anlamını doğru veren biçim hangisidir?
-- ✅ A) pirtûkên min
--    B) pirtûka min
--    C) pirtûkan min
--    D) pirtûkek min
-**Doğru:** A) pirtûkên min
+-    A) pirtûka min
+-    B) pirtûkan min
+-    C) pirtûkek min
+- ✅ D) pirtûkên min
+**Doğru:** D) pirtûkên min
 **Açıklama:** Çoğul izafe eki -ên'dir. "Pirtûka min" tekil dişil biçimdir, "pirtûkek" bir kitap demektir, "pirtûkan" ise tek başına izafe kuramaz.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=f5e360d55efe78c3
 
@@ -1827,21 +1827,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di hefteyekê de çend roj hene?
 **TR:** Bir haftada kaç gün vardır?
 -    A) Beş
--    B) Altı
-- ✅ C) Yedi
+- ✅ B) Yedi
+-    C) Altı
 -    D) Sekiz
-**Doğru:** C) Yedi
+**Doğru:** B) Yedi
 **Açıklama:** Heft yedidir. Beş pênc, altı şeş, sekiz heşttir; şeş ile heşt sesçe yakın olduğu için sık karıştırılır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=dd0eb3c806b3700d
 
 ## ziman_x_0012  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Kurmancî û Soranî ji bo zimanê kurdî çi ne?
 **TR:** Kurmancî ve Soranî, Kürt dili açısından nedir?
--    A) Du alfabe
-- ✅ B) Du zarava
+- ✅ A) Du zarava
+-    B) Du alfabe
 -    C) Du hevok
 -    D) Du deng
-**Doğru:** B) Du zarava
+**Doğru:** A) Du zarava
 **Açıklama:** İkisi aynı dilin iki lehçesidir; söz varlığı büyük ölçüde ortaktır ama ses ve çekim farkları vardır. Yazı sistemi ayrı bir konudur.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=0114b3d5e11cbbbf
 
@@ -1849,21 +1849,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevoka "Ez diçim" çawa tê neyînîkirin?
 **TR:** "Ez diçim" cümlesi nasıl olumsuz yapılır?
 -    A) Ez neçim
--    B) Ez nediçim
-- ✅ C) Ez naçim
+- ✅ B) Ez naçim
+-    C) Ez nediçim
 -    D) Ez biçim
-**Doğru:** C) Ez naçim
+**Doğru:** B) Ez naçim
 **Açıklama:** Bildirme kipinde di- öneki yerini na- ekine bırakır: diçim olumsuzda naçim olur. "Neçim" ile "biçim" istek kipine aittir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=c3bc6d41b5498d39
 
 ## ziman_x_0014  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Ajalê ku bi tirkî "at" e, bi kurmancî çi ye?
 **TR:** "At" hayvanının Kurmancî adı hangisidir?
-- ✅ A) Hesp
--    B) Ker
--    C) Ga
--    D) Bizin
-**Doğru:** A) Hesp
+-    A) Ker
+-    B) Ga
+-    C) Bizin
+- ✅ D) Hesp
+**Doğru:** D) Hesp
 **Açıklama:** Bizin, Türkçede "keçi" demektir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=4fac4b938812d68c
 
@@ -1871,21 +1871,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva "kulîlk" ji çend kîteyan pêk tê?
 **TR:** "Kulîlk" kelimesi kaç heceden oluşur?
 -    A) Çar
--    B) Yek
-- ✅ C) Du
+- ✅ B) Du
+-    C) Yek
 -    D) Sê
-**Doğru:** C) Du
+**Doğru:** B) Du
 **Açıklama:** Hece sayısı ünlü sayısına eşittir. Bu sözcükte u ve î olmak üzere iki ünlü vardır: ku-lîlk. Ünsüz yığını hece sayısını artırmaz.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=580f38aa96048d7b
 
 ## ziman_x_0016  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Dema ku roj diçe ava, ji wê demê re bi kurmancî çi tê gotin?
 **TR:** Güneşin battığı vakte Kurmancîde ne denir?
--    A) Sibe
-- ✅ B) Êvar
+- ✅ A) Êvar
+-    B) Sibe
 -    C) Nîvro
 -    D) Şev
-**Doğru:** B) Êvar
+**Doğru:** A) Êvar
 **Açıklama:** Êvar günbatımı vaktidir. Sibe sabahı, nîvro öğleni, şev ise karanlık saatlerin tamamını anlatır; dördü de gün bölümü adıdır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=e97d91c45500e354
 
@@ -1893,21 +1893,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo wateya "evde" kîjan bikaranîn rast e?
 **TR:** "Evde" anlamı için doğru kullanım hangisidir?
 -    A) ji malê
--    B) bi malê
-- ✅ C) li malê
+- ✅ B) li malê
+-    C) bi malê
 -    D) ser malê
-**Doğru:** C) li malê
+**Doğru:** B) li malê
 **Açıklama:** Bulunma anlamını "li" daçeki verir. "Ji" ayrılma yani -den, "bi" araç yani ile anlamındadır; "ser" tek başına daçek olarak kullanılmaz.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=19d07dfecf159749
 
 ## ziman_x_0018  ·  zorluk 1  ·  expansion_2026_08
 **KU:** Peyva "derî" bi tirkî çi ye?
 **TR:** "Derî" kelimesinin Türkçesi nedir?
-- ✅ A) Kapı
--    B) Pencere
--    C) Duvar
--    D) Çatı
-**Doğru:** A) Kapı
+-    A) Pencere
+-    B) Duvar
+-    C) Çatı
+- ✅ D) Kapı
+**Doğru:** D) Kapı
 **Açıklama:** Derî kapı demektir. Duvar dîwar, çatı banî olarak geçer; pencere ise Kurmancîde de aynı biçimde söylenir. Hepsi ev bölümü adıdır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=0d444f33cb14e34d
 
@@ -1915,21 +1915,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Forma fermanî ya lêkera "xwendin" ji bo yekjimar kîjan e?
 **TR:** "Xwendin" fiilinin tekil emir biçimi hangisidir?
 -    A) xwend
--    B) dixwîne
-- ✅ C) bixwîne
+- ✅ B) bixwîne
+-    C) dixwîne
 -    D) xwendiye
-**Doğru:** C) bixwîne
+**Doğru:** B) bixwîne
 **Açıklama:** Emir kipi bi- öneki ve fiil köküyle kurulur: bi + xwîn + e. "Dixwîne" o okuyor, "xwend" geçmiş kök, "xwendiye" ise bitmiş geçmiştir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=be16172d03ddeb89
 
 ## ziman_x_0021  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Bi kurmancî ji "yıldız"ê re çi tê gotin?
 **TR:** "Yıldız" için Kurmancîde ne denir?
--    A) Heyv
-- ✅ B) Stêrk
+- ✅ A) Stêrk
+-    B) Heyv
 -    C) Roj
 -    D) Ewr
-**Doğru:** B) Stêrk
+**Doğru:** A) Stêrk
 **Açıklama:** Stêrk yıldız demektir. Heyv ay, roj hem güneş hem gün, ewr ise buluttur; hepsi gökyüzüyle ilgili olduğu için birlikte öğrenilir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=eff3781fc0db50ea
 
@@ -1937,43 +1937,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyveke ku ji zimanekî din hatibe girtin, jê re çi tê gotin?
 **TR:** Başka bir dilden alınmış kelimeye ne denir?
 -    A) Hevwate
--    B) Kîte
-- ✅ C) Peyva deynkirî
+- ✅ B) Peyva deynkirî
+-    C) Kîte
 -    D) Dijwate
-**Doğru:** C) Peyva deynkirî
+**Doğru:** B) Peyva deynkirî
 **Açıklama:** Diller birbirinden sözcük alır; bunlara alıntı ya da ödünç kelime denir. Türkçedeki kalem Arapçadan, vapur Fransızcadan gelmiştir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=dd6194147bd5e25b
 
 ## ziman_x_0023  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Kîjan navdêr di kurmancî de nêr e?
 **TR:** Kurmancîde hangi ad erildir?
-- ✅ A) Nan
--    B) Mal
--    C) Roj
--    D) Şev
-**Doğru:** A) Nan
+-    A) Mal
+-    B) Roj
+-    C) Şev
+- ✅ D) Nan
+**Doğru:** D) Nan
 **Açıklama:** Eril olduğu için izafede "nanê germ" denir. Mal, roj ve şev dişildir: mala me, roja yekşemê, şeva sar. Cinsiyet izafe ekinden anlaşılır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=f39f4e92a9cbd37e
 
 ## ziman_x_0025  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Di hevoka "Ez ... dibînim" de ji bo "seni" kîjan cînavk rast e?
 **TR:** "Ez ... dibînim" cümlesinde "seni" için hangi zamir gelir?
-- ✅ A) te
--    B) tu
--    C) ew
--    D) wî
-**Doğru:** A) te
+-    A) tu
+-    B) ew
+-    C) wî
+- ✅ D) te
+**Doğru:** D) te
 **Açıklama:** Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. "Tu" yalın öznedir, "wî" eril üçüncü kişi, "ew" ise yalın üçüncü kişidir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=9b7e50bddf8ff259
 
 ## ziman_x_0026  ·  zorluk 1  ·  expansion_2026_08
 **KU:** Rengê "reş" bi tirkî çi ye?
 **TR:** "Reş" rengi Türkçede nedir?
--    A) Beyaz
-- ✅ B) Siyah
+- ✅ A) Siyah
+-    B) Beyaz
 -    C) Yeşil
 -    D) Sarı
-**Doğru:** B) Siyah
+**Doğru:** A) Siyah
 **Açıklama:** Reş siyah demektir; beyaz spî, yeşil kesk, sarı ise zerdir. Reş ile spî birbirinin karşıtı olduğu için ikisi birlikte öğretilir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=d41797b1854b40a1
 
@@ -1982,42 +1982,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kürtçe hangi dil ailesinde yer alır?
 -    A) Malbata tirkî
 -    B) Malbata samî
--    C) Malbata fîno-ugrî
-- ✅ D) Malbata hindû-ewropî
-**Doğru:** D) Malbata hindû-ewropî
+- ✅ C) Malbata hindû-ewropî
+-    D) Malbata fîno-ugrî
+**Doğru:** C) Malbata hindû-ewropî
 **Açıklama:** Kürtçe, Hint-Avrupa ailesinin İran kolundandır ve Farsçayla akrabadır. Arapça Sami, Türkçe Türk dilleri, Macarca ise Fin-Ugor ailesindendir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=8ebad7eaf40acbd2
 
 ## ziman_x_0028  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Lêkera "çûn" bi pêşgira di- ji bo kesê sêyem ê yekjimar çawa tê?
 **TR:** "Çûn" fiili di- önekiyle tekil üçüncü kişide nasıl olur?
--    A) diçim
-- ✅ B) diçe
+- ✅ A) diçe
+-    B) diçim
 -    C) diçin
 -    D) diçî
-**Doğru:** B) diçe
+**Doğru:** A) diçe
 **Açıklama:** Kişi ekleri sırasıyla -im, -î, -e, -in biçimindedir; üçüncü tekilde -e gelir. "Diçim" ben, "diçî" sen, "diçin" ise çoğul kişiler içindir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=a2d45a1aa4782f7f
 
 ## ziman_x_0029  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Peyva "şîr" li ser sifreyê çi ye?
 **TR:** Sofradaki "şîr" nedir?
-- ✅ A) Süt
--    B) Bal
--    C) Yoğurt
--    D) Yağ
-**Doğru:** A) Süt
+-    A) Bal
+-    B) Yoğurt
+-    C) Yağ
+- ✅ D) Süt
+**Doğru:** D) Süt
 **Açıklama:** Şîr süttür. Bal hingiv, yoğurt mast, yağ ise rûn olarak geçer; dördü de süt sofrasında bulunduğu için birbirine yakın şıklardır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=ed43a6204a155288
 
 ## ziman_x_0030  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Alfabeya kurmancî çend tîpên dengdêr dihewîne?
 **TR:** Kurmancî alfabesi kaç sesli harf içerir?
--    A) Şeş
-- ✅ B) Heşt
+- ✅ A) Heşt
+-    B) Şeş
 -    C) Deh
 -    D) Pênc
-**Doğru:** B) Heşt
+**Doğru:** A) Heşt
 **Açıklama:** Ünlüler a, e, ê, i, î, o, u, û olmak üzere sekizdir; geri kalan 23 harf ünsüzdür. Ünlüsüz hece kurulamadığı için bu sayı önemlidir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=f518b8294c1df961
 
@@ -2025,21 +2025,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Heywanê malê yê ku mişkan digire, bi kurmancî çi ye?
 **TR:** Fare yakalayan ev hayvanı Kurmancîde nedir?
 -    A) Kûçik
--    B) Mişk
-- ✅ C) Pisîk
+- ✅ B) Pisîk
+-    C) Mişk
 -    D) Rovî
-**Doğru:** C) Pisîk
+**Doğru:** B) Pisîk
 **Açıklama:** Pisîk kedidir. Kûçik köpek, mişk fare, rovî ise tilkidir; dördü de memeli hayvan adı olduğu için şıklar aynı sınıftandır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=fab475a2f80bb38f
 
 ## ziman_x_0032  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Ji bo wateya "odanın içinde" kîjan avanî rast e?
 **TR:** "Odanın içinde" anlamı için doğru yapı hangisidir?
-- ✅ A) di odeyê de
--    B) li odeyê ser
--    C) ji odeyê de
--    D) bi odeyê re
-**Doğru:** A) di odeyê de
+-    A) li odeyê ser
+-    B) ji odeyê de
+-    C) bi odeyê re
+- ✅ D) di odeyê de
+**Doğru:** D) di odeyê de
 **Açıklama:** Kurmancîde bazı daçekler iki parçalıdır ve adı ortalar. İçindelik "di ... de" ile kurulur; "bi ... re" birliktelik, "ji" ise ayrılma bildirir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=89ef2cb92ebc7f42
 
@@ -2047,21 +2047,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Alfabeya latînî ya kurmancî di sala 1932yan de bi kîjan kovarê belav bû?
 **TR:** Kurmancînin Latin alfabesi 1932'de hangi dergiyle yayıldı?
 -    A) Roja Nû
--    B) Nûbihar
-- ✅ C) Hawar
+- ✅ B) Hawar
+-    C) Nûbihar
 -    D) Bîrnebûn
-**Doğru:** C) Hawar
+**Doğru:** B) Hawar
 **Açıklama:** Celadet Alî Bedirxan bu alfabeyi 1932'de Şam'da çıkardığı dergide kullandı; alfabe de o yüzden derginin adıyla anılır. Diğerleri sonraki yayınlardır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=a3a37ce5cc2cecd0
 
 ## ziman_x_0034  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Di hevoka "Ez ji ... hez dikim" de ji bo wateya "çocukları" kîjan form tê?
 **TR:** "Ez ji ... hez dikim" cümlesinde "çocukları" için hangi biçim gelir?
--    A) zarok
-- ✅ B) zarokan
+- ✅ A) zarokan
+-    B) zarok
 -    C) zarokek
 -    D) zarokên
-**Doğru:** B) zarokan
+**Doğru:** A) zarokan
 **Açıklama:** Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an'dır. "Zarokên" izafe biçimidir, ardından bir niteleyici ya da sahip ister.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=42975251d9395c8d
 
@@ -2069,21 +2069,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Endama ku pê tê dîtin, bi kurmancî çi ye?
 **TR:** Görme organının Kurmancî adı nedir?
 -    A) Guh
--    B) Dev
-- ✅ C) Çav
+- ✅ B) Çav
+-    C) Dev
 -    D) Poz
-**Doğru:** C) Çav
+**Doğru:** B) Çav
 **Açıklama:** Çav gözdür. Guh kulak, dev ağız, poz ise burundur; dördü de baştaki organ adıdır ama yalnız biri görmeyle ilgilidir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=c94d77e128f9c4c7
 
 ## ziman_x_0036  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Di rêzimanê de peyva ku kar û tevgerê nîşan dide çi ye?
 **TR:** Dilbilgisinde iş ve oluş bildiren söz türü hangisidir?
-- ✅ A) Lêker
--    B) Navdêr
--    C) Rengdêr
--    D) Cînavk
-**Doğru:** A) Lêker
+-    A) Navdêr
+-    B) Rengdêr
+-    C) Cînavk
+- ✅ D) Lêker
+**Doğru:** D) Lêker
 **Açıklama:** Fiil iş, oluş ve durumu anlatır: çûn, xwarin, kirin. Ad varlığı, sıfat niteliği gösterir; zamir ise adın yerine geçer.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=fd5ac391ce7fb471
 
@@ -2091,21 +2091,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevoka "Ezê biçim" kîjan demê nîşan dide?
 **TR:** "Ezê biçim" cümlesi hangi zamanı gösterir?
 -    A) Dema borî
--    B) Fermanî
-- ✅ C) Dema bê
+- ✅ B) Dema bê
+-    C) Fermanî
 -    D) Daxwazî
-**Doğru:** C) Dema bê
+**Doğru:** B) Dema bê
 **Açıklama:** Gelecek zaman, kişi zamirine eklenen ê ile ve bi- önekli fiille kurulur. Emir yalnız bi- ister, geçmiş zamanda ise fiil kökü değişir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=67e16d94ff2e72b6
 
 ## ziman_x_0039  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Peyva tirkî ya "pencere" ji kîjan zimanî hatiye wergirtin?
 **TR:** Türkçedeki "pencere" kelimesi hangi dilden alınmıştır?
--    A) Ji erebî
-- ✅ B) Ji farisî
+- ✅ A) Ji farisî
+-    B) Ji erebî
 -    C) Ji fransî
 -    D) Ji yewnanî
-**Doğru:** B) Ji farisî
+**Doğru:** A) Ji farisî
 **Açıklama:** Bu sözcük Farsça pencere biçiminden gelir. Türkçeye Arapçadan kitap, Fransızcadan vapur, Yunancadan ise liman geçmiştir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=351872f5b71f4289
 
@@ -2113,21 +2113,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Amûra ku pê tê nivîsandin bi kurmancî çi ye?
 **TR:** Yazmak için kullanılan araç Kurmancîde nedir?
 -    A) Pirtûk
--    B) Kaxez
-- ✅ C) Qelem
+- ✅ B) Qelem
+-    C) Kaxez
 -    D) Mase
-**Doğru:** C) Qelem
+**Doğru:** B) Qelem
 **Açıklama:** Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; hepsi yazı ortamıyla ilgilidir ama yalnız biri yazma aracıdır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=58cd3d9789063b7a
 
 ## ziman_x_0041  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Peyva pirsyarî ya "kengî" li ser çi disekine?
 **TR:** "Kengî" soru sözcüğü neyi sorar?
-- ✅ A) Dem
--    B) Cih
--    C) Kes
--    D) Sedem
-**Doğru:** A) Dem
+-    A) Cih
+-    B) Kes
+-    C) Sedem
+- ✅ D) Dem
+**Doğru:** D) Dem
 **Açıklama:** Kengî "ne zaman" demektir ve zamanı sorar. Yeri "li ku", kişiyi "kî", sebebi ise "çima" sorar; her biri farklı bir öge arar.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=7309cb2c24696481
 
@@ -2135,21 +2135,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva kurmancî "çiya" di tirkî de rasterast çi ye?
 **TR:** Kurmancî "çiya" sözcüğünün Türkçe doğrudan karşılığı nedir?
 -    A) Ova
--    B) Nehir
-- ✅ C) Dağ
+- ✅ B) Dağ
+-    C) Nehir
 -    D) Orman
-**Doğru:** C) Dağ
+**Doğru:** B) Dağ
 **Açıklama:** Çiya dağ demektir. Ova deşt, nehir çem ya da robar, orman ise daristan olarak geçer; dördü de coğrafya terimidir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=ae625eab6967373f
 
 ## ziman_x_0044  ·  zorluk 5  ·  expansion_2026_08
 **KU:** Ji bo wateya "O kadın mektup yazdı" kîjan hevok rast e?
 **TR:** "O kadın mektup yazdı" anlamı için hangi cümle doğrudur?
--    A) Ew name nivîsî
-- ✅ B) Wê name nivîsî
+- ✅ A) Wê name nivîsî
+-    B) Ew name nivîsî
 -    C) Wê nameyê dinivîse
 -    D) Ew nameyê nivîsî
-**Doğru:** B) Wê name nivîsî
+**Doğru:** A) Wê name nivîsî
 **Açıklama:** Geçmiş zamanda geçişli fiilin öznesi bükümlü hâle girer: ew biçimi wê olur. Nesne yalın kalır ve fiil nesneye göre çekilir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=7427fca497bdf6b7
 
@@ -2158,42 +2158,42 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kişinin babasının erkek kardeşine Kurmancîde ne denir?
 -    A) Xal
 -    B) Met
--    C) Bapîr
-- ✅ D) Ap
-**Doğru:** D) Ap
+- ✅ C) Ap
+-    D) Bapîr
+**Doğru:** C) Ap
 **Açıklama:** Ap, bazı yörelerde mam, amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=cc75eeb89a6d43e2
 
 ## ziman_x_0046  ·  zorluk 2  ·  expansion_2026_08
 **KU:** Berhevoka peyvên zimanekî bi wateyên wan re çi ye?
 **TR:** Bir dilin kelimelerini anlamlarıyla birlikte toplayan eser nedir?
--    A) Rêziman
-- ✅ B) Ferheng
+- ✅ A) Ferheng
+-    B) Rêziman
 -    C) Hevok
 -    D) Alfabe
-**Doğru:** B) Ferheng
+**Doğru:** A) Ferheng
 **Açıklama:** Sözlük, sözcükleri anlamlarıyla sıralar. Dilbilgisi kuralları anlatır, alfabe harf dizisidir, cümle ise anlamlı söz birliğidir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=7e820f9a4f3d7d90
 
 ## ziman_x_0047  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Navdêra "sêv" mê ye. Wateya "kırmızı elma" çawa tê nivîsîn?
 **TR:** "Sêv" adı dişildir. "Kırmızı elma" nasıl yazılır?
-- ✅ A) sêva sor
--    B) sêv sor
--    C) sêvê sor
--    D) sêvên sor
-**Doğru:** A) sêva sor
+-    A) sêv sor
+-    B) sêvê sor
+-    C) sêvên sor
+- ✅ D) sêva sor
+**Doğru:** D) sêva sor
 **Açıklama:** Sıfat adı izafe ekiyle izler; dişil tekil ad -a alır. Eksiz kuruluş olmaz, -ê eril tekile, -ên ise çoğula aittir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=38802b5c4390f07e
 
 ## ziman_x_0048  ·  zorluk 3  ·  expansion_2026_08
 **KU:** Roja piştî Duşemê bi kurmancî çi ye?
 **TR:** Kurmancîde Duşem'den sonraki gün hangisidir?
--    A) Çarşem
-- ✅ B) Sêşem
+- ✅ A) Sêşem
+-    B) Çarşem
 -    C) Pêncşem
 -    D) Şemî
-**Doğru:** B) Sêşem
+**Doğru:** A) Sêşem
 **Açıklama:** Gün adları sayılardan türer: du iki, sê üç, çar dört, pênc beş. Bu sıra bilindiğinde hangi günün hangisini izlediği kolayca çıkarılır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=f89f74765007feb9
 
@@ -2202,20 +2202,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Türkçedeki "yüz" hem surat hem 100 demektir. Bu duruma ne denir?
 -    A) Hevwate
 -    B) Dijwate
--    C) Peyva deynkirî
-- ✅ D) Hevdeng
-**Doğru:** D) Hevdeng
+- ✅ C) Hevdeng
+-    D) Peyva deynkirî
+**Doğru:** C) Hevdeng
 **Açıklama:** Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi ters kavramlardır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=32dd251a19e3dc8b
 
 ## ziman_x_0050  ·  zorluk 1  ·  expansion_2026_08
 **KU:** Li ser sifreyê "goşt" heye. Ev xwarin bi tirkî çi tê gotin?
 **TR:** Sofrada "goşt" var. Bu yiyeceğe Türkçede ne denir?
-- ✅ A) Et
--    B) Balık
--    C) Ekmek
--    D) Çorba
-**Doğru:** A) Et
+-    A) Balık
+-    B) Ekmek
+-    C) Çorba
+- ✅ D) Et
+**Doğru:** D) Et
 **Açıklama:** Goşt et demektir. Balık masî, ekmek nan, çorba ise şorbe olarak geçer; dördü de yemek adı olduğu için aynı kavram sınıfındadır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=a25322942688cadb
 
@@ -2223,21 +2223,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevoka bi wateya "bana söyle" bi kurmancî çawa tê avakirin?
 **TR:** "Bana söyle" cümlesi Kurmancîde nasıl kurulur?
 -    A) li min bêje
--    B) bi min bêje
-- ✅ C) ji min re bêje
+- ✅ B) ji min re bêje
+-    C) bi min bêje
 -    D) di min bêje
-**Doğru:** C) ji min re bêje
+**Doğru:** B) ji min re bêje
 **Açıklama:** Yönelme anlamı iki parçalı "ji ... re" daçekiyle verilir. "Li" bulunma, "bi" araç, "di ... de" ise içindelik bildirir.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=a98cdb4970535972
 
 ## ziman_x_0052  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Ji bo xwedîtiya nêr, wateya "onun kitabı" kîjan form e?
 **TR:** Eril sahiplik için "onun kitabı" hangi biçimdir?
--    A) pirtûka wê
-- ✅ B) pirtûka wî
+- ✅ A) pirtûka wî
+-    B) pirtûka wê
 -    C) pirtûkên wî
 -    D) pirtûka wan
-**Doğru:** B) pirtûka wî
+**Doğru:** A) pirtûka wî
 **Açıklama:** İzafe eki adın cinsiyetine, zamir ise sahibin cinsiyetine bakar. Kitap dişil olduğu için -a gelir; eril sahip wî, dişil wê, çoğul ise wan olur.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=4b907cd04b6d5174
 
@@ -2246,20 +2246,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Sürü hâlinde gezen, koyunun düşmanı yabani hayvan nedir?
 -    A) Hirç
 -    B) Rovî
--    C) Kew
-- ✅ D) Gur
-**Doğru:** D) Gur
+- ✅ C) Gur
+-    D) Kew
+**Doğru:** C) Gur
 **Açıklama:** Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; ilk üçü yabani memeli, sonuncusu kuş adıdır.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=bfcb23468cc66829
 
 ## ziman_x_0055  ·  zorluk 4  ·  expansion_2026_08
 **KU:** Di hevoka "Ez dixwazim ku ez ..." de lêkera "çûn" çawa tê?
 **TR:** "Ez dixwazim ku ez ..." cümlesinde "çûn" fiili nasıl gelir?
--    A) diçim
-- ✅ B) biçim
+- ✅ A) biçim
+-    B) diçim
 -    C) çûm
 -    D) naçim
-**Doğru:** B) biçim
+**Doğru:** A) biçim
 **Açıklama:** İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. "Diçim" bildirme, "çûm" geçmiş, "naçim" ise olumsuzdur.
 **Kaynak:** internal:expansion_2026_08/ziman_x#gate=validate_batch.py#hash=00c1fa82db23c0e7
 
@@ -2426,22 +2426,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_0005  ·  zorluk 1  ·  offline
 **KU:** Di wêneya ku têgiha "av" nîşan dide de, wateya rast kîjan e?
 **TR:** "av" kavramını gösteren görselde doğru anlam hangisidir?
-- ✅ A) su
--    B) ateş
--    C) ben
--    D) ev
-**Doğru:** A) su
+-    A) ateş
+-    B) ben
+-    C) ev
+- ✅ D) su
+**Doğru:** D) su
 **Açıklama:** "av" "su" demektir.
 **Kaynak:** —
 
 ## offline_0010  ·  zorluk 2  ·  offline
 **KU:** Nîşana wêneyê: "roj". Wateya wê çi ye?
 **TR:** Görsel ipucu: "roj". Bu sözcük ne anlama gelir?
--    A) yüz
-- ✅ B) gün/güneş
+- ✅ A) gün/güneş
+-    B) yüz
 -    C) sözcük
 -    D) duygu/his
-**Doğru:** B) gün/güneş
+**Doğru:** A) gün/güneş
 **Açıklama:** "roj" "gün/güneş" demektir.
 **Kaynak:** —
 
@@ -2457,22 +2457,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_0015  ·  zorluk 3  ·  offline
 **KU:** Wêne "mal" dibêje — wateya rast kîjan e?
 **TR:** Görsel "mal" diyor — doğru anlam hangisi?
-- ✅ A) ev
--    B) şev
--    C) teşt
--    D) su
-**Doğru:** A) ev
+-    A) şev
+-    B) teşt
+-    C) su
+- ✅ D) ev
+**Doğru:** D) ev
 **Açıklama:** "mal" "ev" demektir.
 **Kaynak:** —
 
 ## offline_0016  ·  zorluk 2  ·  offline
 **KU:** Wateya Tirkî ya peyva "pirtûk" kîjan e?
 **TR:** "pirtûk" sözcüğünün Türkçe karşılığı hangisidir?
--    A) siyah
-- ✅ B) kitap
+- ✅ A) kitap
+-    B) siyah
 -    C) çocuk
 -    D) türkü
-**Doğru:** B) kitap
+**Doğru:** A) kitap
 **Açıklama:** Doğru anlam: "pirtûk": "kitap".
 **Kaynak:** —
 
@@ -2480,10 +2480,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wêneya "pirtûk" tê çi wateyê?
 **TR:** "pirtûk" görseli ne anlama gelir?
 -    A) beyaz
--    B) klasör
-- ✅ C) kitap
+- ✅ B) kitap
+-    C) klasör
 -    D) soğuk
-**Doğru:** C) kitap
+**Doğru:** B) kitap
 **Açıklama:** "pirtûk" "kitap" demektir.
 **Kaynak:** —
 
@@ -2492,20 +2492,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Görsel ipucu: "zanîn". Bu sözcük ne anlama gelir?
 -    A) Gelmek
 -    B) Okumak
--    C) Yazmak
-- ✅ D) Bilmek
-**Doğru:** D) Bilmek
+- ✅ C) Bilmek
+-    D) Yazmak
+**Doğru:** C) Bilmek
 **Açıklama:** "zanîn" "bilmek" demektir.
 **Kaynak:** —
 
 ## offline_0030  ·  zorluk 1  ·  offline
 **KU:** Wêneya "hatin" tê çi wateyê?
 **TR:** "hatin" görseli ne anlama gelir?
-- ✅ A) gelmek
--    B) yoğurt
--    C) were!
--    D) yukarı
-**Doğru:** A) gelmek
+-    A) yoğurt
+-    B) were!
+-    C) yukarı
+- ✅ D) gelmek
+**Doğru:** D) gelmek
 **Açıklama:** "hatin" "gelmek" demektir.
 **Kaynak:** —
 
@@ -2513,54 +2513,54 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wêneya "dil" tê çi wateyê?
 **TR:** "dil" görseli ne anlama gelir?
 -    A) nasılsın?
--    B) teşekkür
-- ✅ C) kalp/gönül
+- ✅ B) kalp/gönül
+-    C) teşekkür
 -    D) su içmek
-**Doğru:** C) kalp/gönül
+**Doğru:** B) kalp/gönül
 **Açıklama:** "dil" "kalp" demektir; "gönül" anlamında da kullanılır. Türkçedeki "dil" ise Kurmancîde "ziman"dır.
 **Kaynak:** —
 
 ## offline_0045  ·  zorluk 4  ·  offline
 **KU:** Wêneya "heval": berambera Tirkî ya rast kîjan e?
 **TR:** "heval" görseli: doğru Türkçe karşılık hangisi?
-- ✅ A) arkadaş
--    B) şehir
--    C) kitap
--    D) yol
-**Doğru:** A) arkadaş
+-    A) şehir
+-    B) kitap
+-    C) yol
+- ✅ D) arkadaş
+**Doğru:** D) arkadaş
 **Açıklama:** "heval" "arkadaş" demektir.
 **Kaynak:** —
 
 ## offline_0050  ·  zorluk 2  ·  offline
 **KU:** Wêneya "bajar" tê çi wateyê?
 **TR:** "bajar" görseli ne anlama gelir?
--    A) su
-- ✅ B) şehir
+- ✅ A) şehir
+-    B) su
 -    C) kitap
 -    D) dağ
-**Doğru:** B) şehir
+**Doğru:** A) şehir
 **Açıklama:** "bajar" "şehir" demektir.
 **Kaynak:** —
 
 ## offline_0055  ·  zorluk 1  ·  offline
 **KU:** Wêne "nan" dibêje — wateya rast kîjan e?
 **TR:** Görsel "nan" diyor — doğru anlam hangisi?
-- ✅ A) ekmek
--    B) yol
--    C) su
--    D) kadın
-**Doğru:** A) ekmek
+-    A) yol
+-    B) su
+-    C) kadın
+- ✅ D) ekmek
+**Doğru:** D) ekmek
 **Açıklama:** "nan" "ekmek" demektir.
 **Kaynak:** —
 
 ## offline_0060  ·  zorluk 2  ·  offline
 **KU:** Ev wêne ji bo "rê" e: berambera rast kîjan e?
 **TR:** Bu görsel "rê" için: doğru karşılık hangisi?
--    A) leğen
-- ✅ B) yol
+- ✅ A) yol
+-    B) leğen
 -    C) ben
 -    D) eski
-**Doğru:** B) yol
+**Doğru:** A) yol
 **Açıklama:** "rê" "yol" demektir.
 **Kaynak:** —
 
@@ -2569,9 +2569,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "teşekkür" Kurmancî'de nasıl söylenir?
 -    A) roj
 -    B) mal
--    C) av
-- ✅ D) spas
-**Doğru:** D) spas
+- ✅ C) spas
+-    D) av
+**Doğru:** C) spas
 **Açıklama:** Doğru eşleştirme: "teşekkür": "spas".
 **Kaynak:** —
 
@@ -2580,9 +2580,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "spas" görseli ne anlama gelir?
 -    A) yumurta
 -    B) dört
--    C) öğrenmek
-- ✅ D) teşekkür
-**Doğru:** D) teşekkür
+- ✅ C) teşekkür
+-    D) öğrenmek
+**Doğru:** C) teşekkür
 **Açıklama:** "spas" "teşekkür" demektir.
 **Kaynak:** —
 
@@ -2590,21 +2590,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevwateya "güzel/iyi" bi Kurmancî çi ye?
 **TR:** "güzel/iyi" karşılığı Kurmancî'de hangi sözcüktür?
 -    A) sar
--    B) hatin
-- ✅ C) xweş
+- ✅ B) xweş
+-    C) hatin
 -    D) nan
-**Doğru:** C) xweş
+**Doğru:** B) xweş
 **Açıklama:** "xweş" = "güzel/iyi". Örnek: Hava bugün çok güzel.
 **Kaynak:** —
 
 ## offline_0070  ·  zorluk 4  ·  offline
 **KU:** Wêne "xweş" dibêje — wateya rast kîjan e?
 **TR:** Görsel "xweş" diyor — doğru anlam hangisi?
--    A) soğuk
-- ✅ B) güzel/iyi
+- ✅ A) güzel/iyi
+-    B) soğuk
 -    C) gelmek
 -    D) ekmek
-**Doğru:** B) güzel/iyi
+**Doğru:** A) güzel/iyi
 **Açıklama:** "xweş" "güzel/iyi" demektir.
 **Kaynak:** —
 
@@ -2613,31 +2613,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Görseldeki "sar" ne anlama gelir?
 -    A) sıcak
 -    B) kadın
--    C) arkadaş
-- ✅ D) soğuk
-**Doğru:** D) soğuk
+- ✅ C) soğuk
+-    D) arkadaş
+**Doğru:** C) soğuk
 **Açıklama:** "sar" "soğuk" demektir.
 **Kaynak:** —
 
 ## offline_0076  ·  zorluk 1  ·  offline
 **KU:** Peyva Kurmancî "biçûk" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "biçûk" sözcüğü Türkçede ne demektir?
--    A) ekmek
-- ✅ B) küçük
+- ✅ A) küçük
+-    B) ekmek
 -    C) siyah
 -    D) aşağı
-**Doğru:** B) küçük
+**Doğru:** A) küçük
 **Açıklama:** "biçûk" = "küçük". Örnek: Evimiz küçük ama sıcak.
 **Kaynak:** —
 
 ## offline_0080  ·  zorluk 1  ·  offline
 **KU:** Wêne "biçûk" dibêje — wateya rast kîjan e?
 **TR:** Görsel "biçûk" diyor — doğru anlam hangisi?
--    A) kitap
-- ✅ B) küçük
+- ✅ A) küçük
+-    B) kitap
 -    C) ağaç
 -    D) arkadaş
-**Doğru:** B) küçük
+**Doğru:** A) küçük
 **Açıklama:** "biçûk" "küçük" demektir.
 **Kaynak:** —
 
@@ -2646,9 +2646,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "kevin" sözcüğünün Türkçe karşılığı hangisidir?
 -    A) soru
 -    B) rast
--    C) aile
-- ✅ D) eski
-**Doğru:** D) eski
+- ✅ C) eski
+-    D) aile
+**Doğru:** C) eski
 **Açıklama:** "kevin" kelimesi "eski" demektir.
 **Kaynak:** —
 
@@ -2664,44 +2664,44 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_0085  ·  zorluk 2  ·  offline
 **KU:** Di wêneya ku têgiha "kevin" nîşan dide de, wateya rast kîjan e?
 **TR:** "kevin" kavramını gösteren görselde doğru anlam hangisi?
-- ✅ A) eski
--    B) rast
--    C) elma
--    D) ağız
-**Doğru:** A) eski
+-    A) rast
+-    B) elma
+-    C) ağız
+- ✅ D) eski
+**Doğru:** D) eski
 **Açıklama:** "kevin" "eski" demektir.
 **Kaynak:** —
 
 ## offline_0090  ·  zorluk 3  ·  offline
 **KU:** Di wêneya ku têgiha "îro" nîşan dide de, wateya rast kîjan e?
 **TR:** "îro" kavramını gösteren görselde doğru anlam hangisi?
--    A) küçük
-- ✅ B) bugün
+- ✅ A) bugün
+-    B) küçük
 -    C) soğuk
 -    D) kitap
-**Doğru:** B) bugün
+**Doğru:** A) bugün
 **Açıklama:** "îro" "bugün" demektir.
 **Kaynak:** —
 
 ## offline_0095  ·  zorluk 4  ·  offline
 **KU:** Nîşana wêneyê: "duh". Wateya wê çi ye?
 **TR:** Görsel ipucu: "duh". Bu sözcük ne anlama gelir?
-- ✅ A) dün
--    B) i̇yi
--    C) göz
--    D) bugün
-**Doğru:** A) dün
+-    A) i̇yi
+-    B) göz
+-    C) bugün
+- ✅ D) dün
+**Doğru:** D) dün
 **Açıklama:** "duh" "dün" demektir.
 **Kaynak:** —
 
 ## offline_0105  ·  zorluk 1  ·  offline
 **KU:** Wêneya "zarok": berambera Tirkî ya rast kîjan e?
 **TR:** "zarok" görseli: doğru Türkçe karşılık hangisi?
--    A) kardeş
-- ✅ B) çocuk
+- ✅ A) çocuk
+-    B) kardeş
 -    C) soğuk
 -    D) büyük
-**Doğru:** B) çocuk
+**Doğru:** A) çocuk
 **Açıklama:** "zarok" "çocuk" demektir.
 **Kaynak:** —
 
@@ -2709,10 +2709,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wêneya "xwendekar" tê çi wateyê?
 **TR:** "xwendekar" görseli ne anlama gelir?
 -    A) bir
--    B) ergatif
-- ✅ C) öğrenci
+- ✅ B) öğrenci
+-    C) ergatif
 -    D) üç
-**Doğru:** C) öğrenci
+**Doğru:** B) öğrenci
 **Açıklama:** "xwendekar" "öğrenci" demektir.
 **Kaynak:** —
 
@@ -2721,20 +2721,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "rast" sözcüğünün Türkçe karşılığı hangisidir?
 -    A) siyah
 -    B) büyük
--    C) kitap
-- ✅ D) doğru
-**Doğru:** D) doğru
+- ✅ C) doğru
+-    D) kitap
+**Doğru:** C) doğru
 **Açıklama:** "rast" hem "doğru" hem "sağ" anlamına gelir. Örnek: Cevabın doğru.
 **Kaynak:** —
 
 ## offline_0115  ·  zorluk 3  ·  offline
 **KU:** Peyva "rast" bi Tirkî çi tê gotin?
 **TR:** "rast" sözcüğü Türkçede ne demektir?
-- ✅ A) doğru
--    B) yanlış
--    C) yavaş
--    D) sessiz
-**Doğru:** A) doğru
+-    A) yanlış
+-    B) yavaş
+-    C) sessiz
+- ✅ D) doğru
+**Doğru:** D) doğru
 **Açıklama:** "rast" Türkçede "doğru" demektir.
 **Kaynak:** —
 
@@ -2742,10 +2742,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva Kurmancî "pir" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "pir" sözcüğü Türkçede ne demektir?
 -    A) ben
--    B) az
-- ✅ C) çok
+- ✅ B) çok
+-    C) az
 -    D) min
-**Doğru:** C) çok
+**Doğru:** B) çok
 **Açıklama:** Doğru anlam: "pir": "çok".
 **Kaynak:** —
 
@@ -2753,21 +2753,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di wêneya ku têgiha "pir" nîşan dide de, wateya rast kîjan e?
 **TR:** "pir" kavramını gösteren görselde doğru anlam hangisi?
 -    A) beş
--    B) dün
-- ✅ C) çok
+- ✅ B) çok
+-    C) dün
 -    D) min
-**Doğru:** C) çok
+**Doğru:** B) çok
 **Açıklama:** "pir" "çok" demektir.
 **Kaynak:** —
 
 ## offline_0121  ·  zorluk 2  ·  offline
 **KU:** Peyva Kurmancî "destpêk" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "destpêk" sözcüğü Türkçede ne demektir?
-- ✅ A) Başlangıç
--    B) Ben iyiyim
--    C) Dokuz
--    D) Nasılsın?
-**Doğru:** A) Başlangıç
+-    A) Ben iyiyim
+-    B) Dokuz
+-    C) Nasılsın?
+- ✅ D) Başlangıç
+**Doğru:** D) Başlangıç
 **Açıklama:** "destpêk" = "başlangıç". Örnek: Hikâyenin başlangıcı çok güzeldi.
 **Kaynak:** —
 
@@ -2775,21 +2775,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Erê" û "na" bi Tirkî çi ne?
 **TR:** "Erê" ve "na" Türkçede ne demektir?
 -    A) var ve yok
--    B) az ve çok
-- ✅ C) evet ve hayır
+- ✅ B) evet ve hayır
+-    C) az ve çok
 -    D) gel ve git
-**Doğru:** C) evet ve hayır
+**Doğru:** B) evet ve hayır
 **Açıklama:** "erê" evet, "na" hayır demektir.
 **Kaynak:** —
 
 ## offline_2020  ·  zorluk 1  ·  offline
 **KU:** "Havîn" bi Tirkî çi ye?
 **TR:** "Havîn" Türkçede hangi mevsimdir?
-- ✅ A) yaz
--    B) sonbahar
--    C) kış
--    D) ilkbahar
-**Doğru:** A) yaz
+-    A) sonbahar
+-    B) kış
+-    C) ilkbahar
+- ✅ D) yaz
+**Doğru:** D) yaz
 **Açıklama:** "havîn" = "yaz". Örnek: Yazın köye gideriz.
 **Kaynak:** —
 
@@ -2797,21 +2797,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Neyîniya (olumsuz) "ez dizanim" çi ye?
 **TR:** "Ez dizanim" cümlesinin olumsuz biçimi hangisidir?
 -    A) ez nadizanim
--    B) ez ne dizanim
-- ✅ C) ez nizanim
+- ✅ B) ez nizanim
+-    C) ez ne dizanim
 -    D) ne ez dizanim
-**Doğru:** C) ez nizanim
+**Doğru:** B) ez nizanim
 **Açıklama:** "zanîn" fiilinin olumsuzu özel biçimde "nizanim" olur.
 **Kaynak:** —
 
 ## offline_2027  ·  zorluk 3  ·  offline
 **KU:** Fermana (emir kipi) lêkera "hatin" çi ye?
 **TR:** "Hatin" fiilinin emir kipi hangisidir?
--    A) here!
-- ✅ B) were!
+- ✅ A) were!
+-    B) here!
 -    C) bixwe!
 -    D) rûne!
-**Doğru:** B) were!
+**Doğru:** A) were!
 **Açıklama:** "hatin" (gelmek) fiilinin emir kipi "were!" (gel!) olur.
 **Kaynak:** —
 
@@ -2819,10 +2819,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hejmara "deh" bi Tirkî çi ye?
 **TR:** "Deh" sayısı Türkçede hangisidir?
 -    A) iki
--    B) beş
-- ✅ C) on
+- ✅ B) on
+-    C) beş
 -    D) yüz
-**Doğru:** C) on
+**Doğru:** B) on
 **Açıklama:** "deh" kelimesi "on" anlamına gelir.
 **Kaynak:** —
 
@@ -2831,9 +2831,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "Pênc" sayısı Türkçede hangisidir?
 -    A) altı
 -    B) dört
--    C) dokuz
-- ✅ D) beş
-**Doğru:** D) beş
+- ✅ C) beş
+-    D) dokuz
+**Doğru:** C) beş
 **Açıklama:** "pênc" = "beş". Örnek: İnsanın elinde beş parmak vardır.
 **Kaynak:** —
 
@@ -2860,75 +2860,75 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî ve Soranî, hangi dilin iki önemli lehçesi olarak bilinir?
 -    A) Rusça
 -    B) Arapça
--    C) Yunanca
-- ✅ D) Kürtçe
-**Doğru:** D) Kürtçe
+- ✅ C) Kürtçe
+-    D) Yunanca
+**Doğru:** C) Kürtçe
 **Açıklama:** Kurmancî ve Soranî, Kürtçe denildiğinde en yaygın iki ana lehçe/standart olarak öne çıkar.
 **Kaynak:** —
 
 ## offline_2232  ·  zorluk 3  ·  offline
 **KU:** Kurmancî bi piranî bi kîjan pergala nivîsandinê tê nivîsandin?
 **TR:** Kurmancî çoğunlukla hangi yazı sistemiyle yazılır?
--    A) Arap temelli Kürt alfabesi
-- ✅ B) Latin kökenli Hawar alfabesi
+- ✅ A) Latin kökenli Hawar alfabesi
+-    B) Arap temelli Kürt alfabesi
 -    C) Çivi yazısı
 -    D) Japon kana sistemi
-**Doğru:** B) Latin kökenli Hawar alfabesi
+**Doğru:** A) Latin kökenli Hawar alfabesi
 **Açıklama:** Kurmancî, özellikle Türkiye ve Suriye bağlamında Latin temelli Hawar alfabesiyle yaygınlaşmıştır.
 **Kaynak:** —
 
 ## offline_2233  ·  zorluk 3  ·  offline
 **KU:** Soranî li Iraq û Îranê bi piranî bi kîjan pergala nivîsê tê nivîsandin?
 **TR:** Soranî, Irak ve İran'da çoğunlukla hangi yazı sistemiyle yazılır?
-- ✅ A) Arap temelli Kürt alfabesi
--    B) Latin kökenli Hawar alfabesi
--    C) Runik yazı
--    D) Gürcü alfabesi
-**Doğru:** A) Arap temelli Kürt alfabesi
+-    A) Latin kökenli Hawar alfabesi
+-    B) Runik yazı
+-    C) Gürcü alfabesi
+- ✅ D) Arap temelli Kürt alfabesi
+**Doğru:** D) Arap temelli Kürt alfabesi
 **Açıklama:** Soranî, Irak ve İran’da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.
 **Kaynak:** —
 
 ## offline_2237  ·  zorluk 2  ·  offline
 **KU:** Di kurdî de peyva "heval" bi giştî tê çi wateyê?
 **TR:** Kürtçede "heval" sözcüğü genel olarak ne anlama gelir?
--    A) Teşekkürler
-- ✅ B) Arkadaş/yoldaş
+- ✅ A) Arkadaş/yoldaş
+-    B) Teşekkürler
 -    C) Erkek kardeş
 -    D) Gelecek zaman
-**Doğru:** B) Arkadaş/yoldaş
+**Doğru:** A) Arkadaş/yoldaş
 **Açıklama:** Heval, gündelik kullanımda arkadaş; siyasal-kolektif bağlamda yoldaş anlamında kullanılır.
 **Kaynak:** —
 
 ## offline_2241  ·  zorluk 4  ·  offline
 **KU:** Di xebatên naskirina axaftina kurdî de projeya Jira di kîjan qadê de wek mînak tê nîşandan?
 **TR:** Kürtçe konuşma tanıma çalışmalarında Jira projesi hangi alanda örnek olarak gösterilir?
-- ✅ A) korpusa axaftinê û pergala naskirina dengî ya kurdiya navîn
--    B) paşgirên tewandinê
--    C) navên cih û welatan
--    D) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
-**Doğru:** A) korpusa axaftinê û pergala naskirina dengî ya kurdiya navîn
+-    A) paşgirên tewandinê
+-    B) navên cih û welatan
+-    C) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+- ✅ D) korpusa axaftinê û pergala naskirina dengî ya kurdiya navîn
+**Doğru:** D) korpusa axaftinê û pergala naskirina dengî ya kurdiya navîn
 **Açıklama:** Jira, Merkezî Kürtçe için konuşma korpusu ve büyük sözvarlıklı konuşma tanıma çalışması olarak sunulmuştur.
 **Kaynak:** —
 
 ## offline_2417  ·  zorluk 2  ·  offline
 **KU:** "Agir" tê çi wateyê?
 **TR:** "Agir" ne anlama gelir?
--    A) Eski
-- ✅ B) Ateş
+- ✅ A) Ateş
+-    B) Eski
 -    C) Ekmek
 -    D) Elma
-**Doğru:** B) Ateş
+**Doğru:** A) Ateş
 **Açıklama:** "agir" = "ateş". Örnek: Ateş ısıtır ama yakar da.
 **Kaynak:** —
 
 ## offline_2507  ·  zorluk 2  ·  offline
 **KU:** Di Kurmancî de "heft" kîjan hejmar e?
 **TR:** Kurmancî'de "heft" hangi sayıdır?
-- ✅ A) Yedi
--    B) Dokuz
--    C) On
--    D) Beş
-**Doğru:** A) Yedi
+-    A) Dokuz
+-    B) On
+-    C) Beş
+- ✅ D) Yedi
+**Doğru:** D) Yedi
 **Açıklama:** "heft" = "yedi". Örnek: Hafta yedi günden oluşur.
 **Kaynak:** —
 
@@ -2936,43 +2936,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "Çiya" tê çi wateyê?
 **TR:** "Çiya" ne anlama gelir?
 -    A) Ova
--    B) Nehir
-- ✅ C) Dağ
+- ✅ B) Dağ
+-    C) Nehir
 -    D) Göl
-**Doğru:** C) Dağ
+**Doğru:** B) Dağ
 **Açıklama:** "Çiya" dağ demektir (ör. Çiyayê Agirî = Ağrı Dağı).
 **Kaynak:** —
 
 ## offline_2596  ·  zorluk 2  ·  offline
 **KU:** Di Kurmancî de "goşt" tê çi wateyê?
 **TR:** Kurmancî'de "goşt" ne anlama gelir?
--    A) At
-- ✅ B) Et
+- ✅ A) Et
+-    B) At
 -    C) Ateş
 -    D) Su
-**Doğru:** B) Et
+**Doğru:** A) Et
 **Açıklama:** "Goşt" Türkçede "et" demektir; Kürt yemeklerinde sıkça geçer.
 **Kaynak:** —
 
 ## offline_2599  ·  zorluk 2  ·  offline
 **KU:** Di Kurmancî de "mast" tê çi wateyê?
 **TR:** Kurmancî'de "mast" ne anlama gelir?
-- ✅ A) Yoğurt
--    B) Bal
--    C) Peynir
--    D) Tereyağı
-**Doğru:** A) Yoğurt
+-    A) Bal
+-    B) Peynir
+-    C) Tereyağı
+- ✅ D) Yoğurt
+**Doğru:** D) Yoğurt
 **Açıklama:** "mast" = "yoğurt". Örnek: Yoğurttan ayran yapılır.
 **Kaynak:** —
 
 ## offline_2625  ·  zorluk 3  ·  offline
 **KU:** Di Kurmancî de lêkera "çûn" tê çi wateyê?
 **TR:** Kurmancî'de "çûn" fiili ne anlama gelir?
--    A) Gelmek
-- ✅ B) Gitmek
+- ✅ A) Gitmek
+-    B) Gelmek
 -    C) Yemek
 -    D) Görmek
-**Doğru:** B) Gitmek
+**Doğru:** A) Gitmek
 **Açıklama:** "çûn" = "gitmek". Örnek: Eve gidiyorum.
 **Kaynak:** —
 
@@ -2980,10 +2980,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de "dîtin" tê çi wateyê?
 **TR:** Kurmancî'de "dîtin" ne anlama gelir?
 -    A) Vermek
--    B) Gitmek
-- ✅ C) Görmek
+- ✅ B) Görmek
+-    C) Gitmek
 -    D) Duymak
-**Doğru:** C) Görmek
+**Doğru:** B) Görmek
 **Açıklama:** "dîtin" = "görmek". Örnek: Onu çarşıda gördüm.
 **Kaynak:** —
 
@@ -2992,9 +2992,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "kirin" fiili ne anlama gelir?
 -    A) Hafıza/akıl
 -    B) Evet ve hayır
--    C) Gelecek zaman
-- ✅ D) Yapmak/etmek
-**Doğru:** D) Yapmak/etmek
+- ✅ C) Yapmak/etmek
+-    D) Gelecek zaman
+**Doğru:** C) Yapmak/etmek
 **Açıklama:** "Kirin" yapmak/etmek demektir.
 **Kaynak:** —
 
@@ -3002,21 +3002,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de "bîst" kîjan hejmar e?
 **TR:** Kurmancî'de "bîst" hangi sayıdır?
 -    A) Vatan/ülke
--    B) Güzel/iyi
-- ✅ C) Yirmi
+- ✅ B) Yirmi
+-    C) Güzel/iyi
 -    D) Sabah/yarın
-**Doğru:** C) Yirmi
+**Doğru:** B) Yirmi
 **Açıklama:** "Bîst" yirmi demektir.
 **Kaynak:** —
 
 ## offline_2722  ·  zorluk 3  ·  offline
 **KU:** Di Kurmancî de "zer" kîjan reng e?
 **TR:** Kurmancî'de "zer" hangi renktir?
--    A) Kırmızı
-- ✅ B) Sarı
+- ✅ A) Sarı
+-    B) Kırmızı
 -    C) Yeşil
 -    D) Siyah
-**Doğru:** B) Sarı
+**Doğru:** A) Sarı
 **Açıklama:** "zer" = "sarı". Örnek: Buğday yazın sararır.
 **Kaynak:** —
 
@@ -3025,9 +3025,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "nivîsîn" ne anlama gelir?
 -    A) Okumak
 -    B) Çizmek
--    C) Silmek
-- ✅ D) Yazmak
-**Doğru:** D) Yazmak
+- ✅ C) Yazmak
+-    D) Silmek
+**Doğru:** C) Yazmak
 **Açıklama:** "Nivîsîn" yazmak demektir.
 **Kaynak:** —
 
@@ -3035,10 +3035,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de "aştî" tê çi wateyê?
 **TR:** Kurmancî'de "aştî" ne anlama gelir?
 -    A) Öfke
--    B) Savaş
-- ✅ C) Barış
+- ✅ B) Barış
+-    C) Savaş
 -    D) Korku
-**Doğru:** C) Barış
+**Doğru:** B) Barış
 **Açıklama:** "aştî" = "barış". Örnek: Savaştan sonra barış geldi.
 **Kaynak:** —
 
@@ -3047,9 +3047,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'de "bîr" ne anlama gelir?
 -    A) teşekkürler
 -    B) ben iyiyim
--    C) iyi günler
-- ✅ D) hafıza/akıl
-**Doğru:** D) hafıza/akıl
+- ✅ C) hafıza/akıl
+-    D) iyi günler
+**Doğru:** C) hafıza/akıl
 **Açıklama:** "Bîr" hafıza/akıl anlamına gelir (ör. bîr anîn = hatırlamak).
 **Kaynak:** —
 
@@ -3057,10 +3057,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Di Kurmancî de "kar" tê çi wateyê?
 **TR:** Kurmancî'de "kar" ne anlama gelir?
 -    A) Oyun
--    B) Uyku
-- ✅ C) İş
+- ✅ B) İş
+-    C) Uyku
 -    D) Tatil
-**Doğru:** C) İş
+**Doğru:** B) İş
 **Açıklama:** "kar" kelimesi "İş" anlamına gelir.
 **Kaynak:** —
 
@@ -3068,10 +3068,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva Kurmancî "dê" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "dê" kelimesi Türkçede ne demektir?
 -    A) yol
--    B) hava
-- ✅ C) anne
+- ✅ B) anne
+-    C) hava
 -    D) kapı
-**Doğru:** C) anne
+**Doğru:** B) anne
 **Açıklama:** Doğru anlam: "dê": "anne".
 **Kaynak:** —
 
@@ -3080,9 +3080,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "aslan" demek için Kurmancîde hangi kelime kullanılır?
 -    A) çav
 -    B) por
--    C) di-
-- ✅ D) şêr
-**Doğru:** D) şêr
+- ✅ C) şêr
+-    D) di-
+**Doğru:** C) şêr
 **Açıklama:** Doğru eşleştirme: "aslan": "şêr".
 **Kaynak:** —
 
@@ -3091,20 +3091,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "derî" (Kurmancî) Türkçede hangi anlama gelir?
 -    A) kaya
 -    B) rast
--    C) ateş
-- ✅ D) kapı
-**Doğru:** D) kapı
+- ✅ C) kapı
+-    D) ateş
+**Doğru:** C) kapı
 **Açıklama:** "derî" = "kapı". Örnek: Kapı açık, buyur.
 **Kaynak:** —
 
 ## offline_5030  ·  zorluk 3  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "yaşlı/ihtiyar" ye?
 **TR:** Aşağıdaki Kurmancî kelimelerden hangisi "yaşlı/ihtiyar" anlamına gelir?
--    A) jin
-- ✅ B) pîr
+- ✅ A) pîr
+-    B) jin
 -    C) îro
 -    D) poz
-**Doğru:** B) pîr
+**Doğru:** A) pîr
 **Açıklama:** "pîr" = "yaşlı". Örnek: Babaannem yaşlı ama hâlâ çalışıyor.
 **Kaynak:** —
 
@@ -3129,11 +3129,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_5041  ·  zorluk 2  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "okumak" ye?
 **TR:** Aşağıdaki Kurmancî kelimelerden hangisi "okumak" anlamına gelir?
--    A) nanxane
-- ✅ B) xwendin
+- ✅ A) xwendin
+-    B) nanxane
 -    C) ad/isim
 -    D) kursî
-**Doğru:** B) xwendin
+**Doğru:** A) xwendin
 **Açıklama:** "xwendin" hem "okumak" hem "öğrenim görmek" anlamına gelir. Örnek: Bir kitap okuyorum.
 **Kaynak:** —
 
@@ -3141,10 +3141,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevwateya "ateş" bi Kurmancî çi ye?
 **TR:** "ateş" kelimesinin Kurmancî karşılığı nedir?
 -    A) çiya
--    B) gund
-- ✅ C) agir
+- ✅ B) agir
+-    C) gund
 -    D) xweş
-**Doğru:** C) agir
+**Doğru:** B) agir
 **Açıklama:** "agir" = "ateş". Örnek: Gece ateşi köylüleri çevresinde topladı.
 **Kaynak:** —
 
@@ -3162,31 +3162,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Aşağıdaki Kurmancî kelimelerden hangisi "kalp/gönül" anlamına gelir?
 -    A) biçûk
 -    B) dar
--    C) gül
-- ✅ D) dil
-**Doğru:** D) dil
+- ✅ C) dil
+-    D) gül
+**Doğru:** C) dil
 **Açıklama:** "dil" = "kalp". Örnek: Kalbim hızlı atıyor.
 **Kaynak:** —
 
 ## offline_5094  ·  zorluk 1  ·  offline
 **KU:** "şev" (Kurmancî) bi Tirkî kîjan wateyê digire?
 **TR:** "şev" (Kurmancî) Türkçede hangi anlama gelir?
-- ✅ A) gece
--    B) baba
--    C) hava
--    D) okul
-**Doğru:** A) gece
+-    A) baba
+-    B) hava
+-    C) okul
+- ✅ D) gece
+**Doğru:** D) gece
 **Açıklama:** "şev" kelimesi "gece" demektir.
 **Kaynak:** —
 
 ## offline_5095  ·  zorluk 3  ·  offline
 **KU:** Hevwateya "okul/akademi" bi Kurmancî çi ye?
 **TR:** "okul/akademi" kelimesinin Kurmancî karşılığı nedir?
--    A) Dokuz
-- ✅ B) Xwendegeh
+- ✅ A) Xwendegeh
+-    B) Dokuz
 -    C) Pazartesi
 -    D) Sekiz
-**Doğru:** B) Xwendegeh
+**Doğru:** A) Xwendegeh
 **Açıklama:** "xwendegeh" = "okul". Örnek: Köyün okulunda yalnız iki sınıf vardı.
 **Kaynak:** —
 
@@ -3204,20 +3204,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "heval" kelimesi Türkçede ne demektir?
 -    A) yumurta
 -    B) pencere
--    C) ekmek
-- ✅ D) arkadaş
-**Doğru:** D) arkadaş
+- ✅ C) arkadaş
+-    D) ekmek
+**Doğru:** C) arkadaş
 **Açıklama:** Doğru anlam: "heval": "arkadaş".
 **Kaynak:** —
 
 ## offline_5143  ·  zorluk 2  ·  offline
 **KU:** "welat" (Kurmancî) bi Tirkî kîjan wateyê digire?
 **TR:** "welat" (Kurmancî) Türkçede hangi anlama gelir?
--    A) yazmak
-- ✅ B) ülke/vatan
+- ✅ A) ülke/vatan
+-    B) yazmak
 -    C) ez nizanim
 -    D) kız kardeş
-**Doğru:** B) ülke/vatan
+**Doğru:** A) ülke/vatan
 **Açıklama:** "welat" kelimesi "ülke/vatan" demektir.
 **Kaynak:** —
 
@@ -3251,11 +3251,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_5188  ·  zorluk 2  ·  offline
 **KU:** Wateya Tirkî ya peyva "kaxiz" kîjan e?
 **TR:** "kaxiz" kelimesinin Türkçe anlamı hangisidir?
-- ✅ A) kağıt
--    B) here!
--    C) doğru
--    D) yazmak
-**Doğru:** A) kağıt
+-    A) here!
+-    B) doğru
+-    C) yazmak
+- ✅ D) kağıt
+**Doğru:** D) kağıt
 **Açıklama:** "kaxiz" = "kâğıt". Örnek: Adı kâğıda yazdım.
 **Kaynak:** —
 
@@ -3264,9 +3264,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "xanî" kelimesinin Türkçe anlamı hangisidir?
 -    A) yol
 -    B) kapı
--    C) pencere
-- ✅ D) bina/ev
-**Doğru:** D) bina/ev
+- ✅ C) bina/ev
+-    D) pencere
+**Doğru:** C) bina/ev
 **Açıklama:** Doğru anlam: "xanî": "bina/ev".
 **Kaynak:** —
 
@@ -3292,10 +3292,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wateya Tirkî ya peyva "kal" kîjan e?
 **TR:** "kal" kelimesinin Türkçe anlamı hangisidir?
 -    A) baba
--    B) hava
-- ✅ C) dede
+- ✅ B) dede
+-    C) hava
 -    D) rast
-**Doğru:** C) dede
+**Doğru:** B) dede
 **Açıklama:** "kal" kelimesi "dede" demektir.
 **Kaynak:** —
 
@@ -3304,20 +3304,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "göz" demek için Kurmancîde hangi kelime kullanılır?
 -    A) di-
 -    B) kar
--    C) mal
-- ✅ D) çav
-**Doğru:** D) çav
+- ✅ C) çav
+-    D) mal
+**Doğru:** C) çav
 **Açıklama:** Doğru eşleştirme: "göz": "çav".
 **Kaynak:** —
 
 ## offline_5236  ·  zorluk 1  ·  offline
 **KU:** Ji bo gotina "yol" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "yol" demek için Kurmancîde hangi kelime kullanılır?
--    A) el
-- ✅ B) rê
+- ✅ A) rê
+-    B) el
 -    C) av
 -    D) ay
-**Doğru:** B) rê
+**Doğru:** A) rê
 **Açıklama:** Doğru eşleştirme: "yol": "rê".
 **Kaynak:** —
 
@@ -3326,20 +3326,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "reng" kelimesi Türkçede ne demektir?
 -    A) kitap
 -    B) kaya
--    C) defter
-- ✅ D) renk
-**Doğru:** D) renk
+- ✅ C) renk
+-    D) defter
+**Doğru:** C) renk
 **Açıklama:** "reng" kelimesi "renk" demektir.
 **Kaynak:** —
 
 ## offline_5264  ·  zorluk 4  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "kapı" ye?
 **TR:** Aşağıdaki Kurmancî kelimelerden hangisi "kapı" anlamına gelir?
-- ✅ A) derî
--    B) bîrge
--    C) bira
--    D) dev
-**Doğru:** A) derî
+-    A) bîrge
+-    B) bira
+-    C) dev
+- ✅ D) derî
+**Doğru:** D) derî
 **Açıklama:** "derî" = "kapı". Örnek: Okulun kapısı sabah açılır.
 **Kaynak:** —
 
@@ -3357,20 +3357,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "sevmek" kelimesinin Kurmancî karşılığı nedir?
 -    A) xwarin
 -    B) bihîstin
--    C) rêvekirin
-- ✅ D) hezkirin
-**Doğru:** D) hezkirin
+- ✅ C) hezkirin
+-    D) rêvekirin
+**Doğru:** C) hezkirin
 **Açıklama:** "hez kirin" = "sevmek". Örnek: Kürt müziğini severim.
 **Kaynak:** —
 
 ## offline_5297  ·  zorluk 1  ·  offline
 **KU:** Peyva Kurmancî "malbat" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "malbat" kelimesi Türkçede ne demektir?
-- ✅ A) aile
--    B) hava
--    C) türkü
--    D) eski
-**Doğru:** A) aile
+-    A) hava
+-    B) türkü
+-    C) eski
+- ✅ D) aile
+**Doğru:** D) aile
 **Açıklama:** "malbat" = "aile". Örnek: Ailemiz altı kişiden oluşur.
 **Kaynak:** —
 
@@ -3388,9 +3388,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "gelmek" Kurmancîde nasıl söylenir?
 -    A) rabûn
 -    B) kursî
--    C) ciwan
-- ✅ D) hatin
-**Doğru:** D) hatin
+- ✅ C) hatin
+-    D) ciwan
+**Doğru:** C) hatin
 **Açıklama:** "hatin" = "gelmek". Örnek: Misafirler akşamdan önce geldi.
 **Kaynak:** —
 
@@ -3416,10 +3416,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "işitmek" ye?
 **TR:** Aşağıdaki Kurmancî kelimelerden hangisi "işitmek" anlamına gelir?
 -    A) mamoste
--    B) komputer
-- ✅ C) bihîstin
+- ✅ B) bihîstin
+-    C) komputer
 -    D) dibistan
-**Doğru:** C) bihîstin
+**Doğru:** B) bihîstin
 **Açıklama:** "bihîstin" = "işitmek". Örnek: Sesini işittim.
 **Kaynak:** —
 
@@ -3446,20 +3446,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "rûniştin" kelimesi Türkçede ne demektir?
 -    A) öğrenci
 -    B) pencere
--    C) kırmızı
-- ✅ D) oturmak
-**Doğru:** D) oturmak
+- ✅ C) oturmak
+-    D) kırmızı
+**Doğru:** C) oturmak
 **Açıklama:** "rûniştin" kelimesi "oturmak" demektir.
 **Kaynak:** —
 
 ## offline_5391  ·  zorluk 4  ·  offline
 **KU:** Ji bo gotina "doğru" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "doğru" demek için Kurmancîde hangi kelime kullanılır?
-- ✅ A) rast
--    B) kal
--    C) baran
--    D) reng
-**Doğru:** A) rast
+-    A) kal
+-    B) baran
+-    C) reng
+- ✅ D) rast
+**Doğru:** D) rast
 **Açıklama:** "rast" = "doğru". Örnek: Söylediğin doğru.
 **Kaynak:** —
 
@@ -3495,20 +3495,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "mamoste" (Kurmancî) Türkçede hangi anlama gelir?
 -    A) altı
 -    B) baba
--    C) baş/kafa
-- ✅ D) öğretmen
-**Doğru:** D) öğretmen
+- ✅ C) öğretmen
+-    D) baş/kafa
+**Doğru:** C) öğretmen
 **Açıklama:** Doğru anlam: "mamoste": "öğretmen".
 **Kaynak:** —
 
 ## offline_5448  ·  zorluk 2  ·  offline
 **KU:** Wateya Tirkî ya peyva "wêne" kîjan e?
 **TR:** "wêne" kelimesinin Türkçe anlamı hangisidir?
-- ✅ A) resim/fotoğraf
--    B) Arkadaş/yoldaş
--    C) yaşlı/ihtiyar
--    D) Latin (Hawar)
-**Doğru:** A) resim/fotoğraf
+-    A) Arkadaş/yoldaş
+-    B) yaşlı/ihtiyar
+-    C) Latin (Hawar)
+- ✅ D) resim/fotoğraf
+**Doğru:** D) resim/fotoğraf
 **Açıklama:** "wêne" hem "resim" hem "fotoğraf" anlamına gelir. Örnek: Köyün fotoğrafları duvarda asılı.
 **Kaynak:** —
 
@@ -3517,9 +3517,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "ağız" kelimesinin Kurmancî karşılığı nedir?
 -    A) poz
 -    B) şêr
--    C) deh
-- ✅ D) dev
-**Doğru:** D) dev
+- ✅ C) dev
+-    D) deh
+**Doğru:** C) dev
 **Açıklama:** "dev" = "ağız". Örnek: Gözlerinle değil, ağzınla söyle.
 **Kaynak:** —
 
@@ -3553,11 +3553,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_5514  ·  zorluk 1  ·  offline
 **KU:** Peyva Kurmancî "jin" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "jin" kelimesi Türkçede ne demektir?
-- ✅ A) kadın
--    B) doğru
--    C) küçük
--    D) nehir
-**Doğru:** A) kadın
+-    A) doğru
+-    B) küçük
+-    C) nehir
+- ✅ D) kadın
+**Doğru:** D) kadın
 **Açıklama:** "jin" kelimesi "kadın" demektir.
 **Kaynak:** —
 
@@ -3565,10 +3565,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Ji bo gotina "Kürt" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "Kürt" demek için Kurmancîde hangi kelime kullanılır?
 -    A) deşt
--    B) xweş
-- ✅ C) kurd
+- ✅ B) kurd
+-    C) xweş
 -    D) hesp
-**Doğru:** C) kurd
+**Doğru:** B) kurd
 **Açıklama:** "kurd" = "Kürt". Örnek: Kürtler Kurmancî, Soranî ve Zazakî konuşur.
 **Kaynak:** —
 
@@ -3576,21 +3576,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "dil" (Kurmancî) bi Tirkî kîjan wateyê digire?
 **TR:** "dil" (Kurmancî) Türkçede hangi anlama gelir?
 -    A) el
--    B) göz
-- ✅ C) kalp/gönül
+- ✅ B) kalp/gönül
+-    C) göz
 -    D) konuşmak
-**Doğru:** C) kalp/gönül
+**Doğru:** B) kalp/gönül
 **Açıklama:** "dil" yalnız organ değildir; "gönül" anlamını da taşır. Örnek: Kendi gönlüyle geldi.
 **Kaynak:** —
 
 ## offline_5542  ·  zorluk 2  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "arkadaş" ye?
 **TR:** Aşağıdaki Kurmancî kelimelerden hangisi "arkadaş" anlamına gelir?
-- ✅ A) heval
--    B) hevîr
--    C) nivîn
--    D) kursî
-**Doğru:** A) heval
+-    A) hevîr
+-    B) nivîn
+-    C) kursî
+- ✅ D) heval
+**Doğru:** D) heval
 **Açıklama:** "heval" = "arkadaş". Örnek: Arkadaş dar günde belli olur.
 **Kaynak:** —
 
@@ -3633,33 +3633,33 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_5599  ·  zorluk 2  ·  offline
 **KU:** Hevwateya "kalkmak" bi Kurmancî çi ye?
 **TR:** "kalkmak" sözcüğünün Kurmancî karşılığı nedir?
--    A) nivîn
-- ✅ B) rabûn
+- ✅ A) rabûn
+-    B) nivîn
 -    C) siyah
 -    D) diçim
-**Doğru:** B) rabûn
+**Doğru:** A) rabûn
 **Açıklama:** "rabûn" = "kalkmak". Örnek: Gün doğmadan kalkarız.
 **Kaynak:** —
 
 ## offline_5604  ·  zorluk 1  ·  offline
 **KU:** Di Kurmancî de peyva "bav" bi Tirkî çi ye?
 **TR:** Kurmancî'deki "bav" sözcüğü Türkçede ne demektir?
--    A) eski
-- ✅ B) baba
+- ✅ A) baba
+-    B) eski
 -    C) dede
 -    D) ağız
-**Doğru:** B) baba
+**Doğru:** A) baba
 **Açıklama:** "bav" kelimesi "baba" demektir.
 **Kaynak:** —
 
 ## offline_5606  ·  zorluk 5  ·  offline
 **KU:** Ji bo ronahî û hewayê li dîwarê tê vekirin; bi Tirkî kîjan e?
 **TR:** Işık ve hava için duvara açılır; Türkçesi hangisidir?
-- ✅ A) pencere
--    B) ad/isim
--    C) beş
--    D) kitap
-**Doğru:** A) pencere
+-    A) ad/isim
+-    B) beş
+-    C) kitap
+- ✅ D) pencere
+**Doğru:** D) pencere
 **Açıklama:** Bu tanım evlerdeki pencereyi anlatır.
 **Kaynak:** —
 
@@ -3668,9 +3668,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "baba" sözcüğünün Kurmancî karşılığı nedir?
 -    A) nan
 -    B) îro
--    C) çem
-- ✅ D) bav
-**Doğru:** D) bav
+- ✅ C) bav
+-    D) çem
+**Doğru:** C) bav
 **Açıklama:** "bav" = "baba". Örnek: Baba ve oğul birlikte tarlaya gitti.
 **Kaynak:** —
 
@@ -3695,22 +3695,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_5638  ·  zorluk 3  ·  offline
 **KU:** Ji bo gotina "şehir" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "şehir" demek için Kurmancî'de hangi sözcük kullanılır?
-- ✅ A) bajar
--    B) ciwan
--    C) beyaz
--    D) siyah
-**Doğru:** A) bajar
+-    A) ciwan
+-    B) beyaz
+-    C) siyah
+- ✅ D) bajar
+**Doğru:** D) bajar
 **Açıklama:** "bajar" = "şehir". Örnek: Diyarbakır eski bir şehirdir.
 **Kaynak:** —
 
 ## offline_5644  ·  zorluk 5  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "el" ye?
 **TR:** Bunlardan hangisi anlamı "el" olan Kurmancî sözcüktür?
--    A) heval
-- ✅ B) dest
+- ✅ A) dest
+-    B) heval
 -    C) bira
 -    D) kal
-**Doğru:** B) dest
+**Doğru:** A) dest
 **Açıklama:** Doğru eşleştirme: "el": "dest".
 **Kaynak:** —
 
@@ -3737,20 +3737,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "ay" sözcüğünün Kurmancî karşılığı nedir?
 -    A) rast
 -    B) deşt
--    C) derî
-- ✅ D) heyv
-**Doğru:** D) heyv
+- ✅ C) heyv
+-    D) derî
+**Doğru:** C) heyv
 **Açıklama:** Doğru eşleştirme: "ay": "heyv".
 **Kaynak:** —
 
 ## offline_5699  ·  zorluk 5  ·  offline
 **KU:** Ji bo gotina "yazmak" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "yazmak" demek için Kurmancî'de hangi sözcük kullanılır?
--    A) xwendegeh
-- ✅ B) nivîsandin
+- ✅ A) nivîsandin
+-    B) xwendegeh
 -    C) roj baş
 -    D) roj
-**Doğru:** B) nivîsandin
+**Doğru:** A) nivîsandin
 **Açıklama:** "nivîsandin" = "yazmak". Örnek: Köyün hikâyelerini yazdı.
 **Kaynak:** —
 
@@ -3766,11 +3766,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_5713  ·  zorluk 2  ·  offline
 **KU:** Ji bo gotina "dede" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "dede" demek için Kurmancî'de hangi sözcük kullanılır?
--    A) îro
-- ✅ B) kal
+- ✅ A) kal
+-    B) îro
 -    C) şêr
 -    D) çiya
-**Doğru:** B) kal
+**Doğru:** A) kal
 **Açıklama:** Doğru eşleştirme: "dede": "kal".
 **Kaynak:** —
 
@@ -3805,21 +3805,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** "rabûn" (Kurmancî) bi Tirkî kîjan wateyê digire?
 **TR:** "rabûn" (Kurmancî) Türkçede hangi anlama gelir?
 -    A) pencere
--    B) beş
-- ✅ C) kalkmak
+- ✅ B) kalkmak
+-    C) beş
 -    D) öğrenci
-**Doğru:** C) kalkmak
+**Doğru:** B) kalkmak
 **Açıklama:** Doğru anlam: "rabûn": "kalkmak".
 **Kaynak:** —
 
 ## offline_5790  ·  zorluk 1  ·  offline
 **KU:** Ji bo gotina "görmek" di Kurmancî de kîjan peyv tê bikaranîn?
 **TR:** "görmek" demek için Kurmancî'de hangi sözcük kullanılır?
-- ✅ A) dîtin
--    B) biçûk
--    C) dapîr
--    D) ziman
-**Doğru:** A) dîtin
+-    A) biçûk
+-    B) dapîr
+-    C) ziman
+- ✅ D) dîtin
+**Doğru:** D) dîtin
 **Açıklama:** Doğru eşleştirme: "görmek": "dîtin".
 **Kaynak:** —
 
@@ -3828,20 +3828,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** "gece" demek için Kurmancî'de hangi sözcük kullanılır?
 -    A) sabah
 -    B) i̇yi
--    C) teşt
-- ✅ D) şev
-**Doğru:** D) şev
+- ✅ C) şev
+-    D) teşt
+**Doğru:** C) şev
 **Açıklama:** Doğru eşleştirme: "gece": "şev".
 **Kaynak:** —
 
 ## offline_5805  ·  zorluk 5  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "aile" ye?
 **TR:** Bunlardan hangisi anlamı "aile" olan Kurmancî sözcüktür?
-- ✅ A) malbat
--    B) helbest
--    C) kilam
--    D) azadî
-**Doğru:** A) malbat
+-    A) helbest
+-    B) kilam
+-    C) azadî
+- ✅ D) malbat
+**Doğru:** D) malbat
 **Açıklama:** "malbat" = "aile". Örnek: Ailemiz her akşam birlikte yemek yer.
 **Kaynak:** —
 
@@ -3850,9 +3850,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'deki "baran" sözcüğü Türkçede ne demektir?
 -    A) okumak
 -    B) yoğurt
--    C) gelmek
-- ✅ D) yağmur
-**Doğru:** D) yağmur
+- ✅ C) yağmur
+-    D) gelmek
+**Doğru:** C) yağmur
 **Açıklama:** "baran" kelimesi "yağmur" demektir.
 **Kaynak:** —
 
@@ -3860,10 +3860,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Wateya Tirkî ya peyva "kurd" kîjan e?
 **TR:** "kurd" sözcüğünün Türkçe anlamı hangisidir?
 -    A) eski
--    B) tarih
-- ✅ C) kürt
+- ✅ B) kürt
+-    C) tarih
 -    D) küçük
-**Doğru:** C) kürt
+**Doğru:** B) kürt
 **Açıklama:** "kurd" = "Kürt". Örnek: Kürtler dört ülkede yaşar.
 **Kaynak:** —
 
@@ -3899,20 +3899,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bunlardan hangisi anlamı "ülke/vatan" olan Kurmancî sözcüktür?
 -    A) beyaz
 -    B) stran
--    C) nivîn
-- ✅ D) welat
-**Doğru:** D) welat
+- ✅ C) welat
+-    D) nivîn
+**Doğru:** C) welat
 **Açıklama:** "welat" = "ülke/vatan". Örnek: Yirmi yıl sonra ülkesine döndü.
 **Kaynak:** —
 
 ## offline_5894  ·  zorluk 5  ·  offline
 **KU:** "nivîn" (Kurmancî) bi Tirkî kîjan wateyê digire?
 **TR:** "nivîn" (Kurmancî) Türkçede hangi anlama gelir?
-- ✅ A) yatak
--    B) kapı
--    C) masa
--    D) burun
-**Doğru:** A) yatak
+-    A) kapı
+-    B) masa
+-    C) burun
+- ✅ D) yatak
+**Doğru:** D) yatak
 **Açıklama:** "nivîn" kelimesi "yatak" demektir.
 **Kaynak:** —
 
@@ -3921,9 +3921,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Bunlardan hangisi anlamı "yatak" olan Kurmancî sözcüktür?
 -    A) jin
 -    B) rast
--    C) beyaz
-- ✅ D) nivîn
-**Doğru:** D) nivîn
+- ✅ C) nivîn
+-    D) beyaz
+**Doğru:** C) nivîn
 **Açıklama:** "nivîn" = "yatak". Örnek: Yatak yere serili.
 **Kaynak:** —
 
@@ -3931,21 +3931,21 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevwateya "bina/ev" bi Kurmancî çi ye?
 **TR:** "bina/ev" sözcüğünün Kurmancî karşılığı nedir?
 -    A) reng
--    B) gel
-- ✅ C) xanî
+- ✅ B) xanî
+-    C) gel
 -    D) rast
-**Doğru:** C) xanî
+**Doğru:** B) xanî
 **Açıklama:** "xanî" = "ev". Örnek: Evleri köyün başındadır.
 **Kaynak:** —
 
 ## offline_5903  ·  zorluk 3  ·  offline
 **KU:** Kîjan ji van peyva Kurmancî ye ku wateya wê "bugün" ye?
 **TR:** Bunlardan hangisi anlamı "bugün" olan Kurmancî sözcüktür?
--    A) dar
-- ✅ B) îro
+- ✅ A) îro
+-    B) dar
 -    C) gul
 -    D) dil
-**Doğru:** B) îro
+**Doğru:** A) îro
 **Açıklama:** "îro" = "bugün". Örnek: Bugün okula gitmiyoruz.
 **Kaynak:** —
 
@@ -3953,10 +3953,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Peyva Kurmancî "nivîsandin" bi Tirkî çi tê gotin?
 **TR:** Kurmancî "nivîsandin" sözcüğüne Türkçede ne denir?
 -    A) bilmek
--    B) rüzgar
-- ✅ C) yazmak
+- ✅ B) yazmak
+-    C) rüzgar
 -    D) üç
-**Doğru:** C) yazmak
+**Doğru:** B) yazmak
 **Açıklama:** "nivîsandin" kelimesi "yazmak" demektir.
 **Kaynak:** —
 
@@ -3965,9 +3965,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî "çem" sözcüğüne Türkçede ne denir?
 -    A) dağ
 -    B) yol
--    C) burun
-- ✅ D) nehir
-**Doğru:** D) nehir
+- ✅ C) nehir
+-    D) burun
+**Doğru:** C) nehir
 **Açıklama:** Doğru anlam: "çem": "nehir".
 **Kaynak:** —
 
@@ -3984,32 +3984,32 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Hevwateya "renk" bi Kurmancî çi ye?
 **TR:** "renk" sözcüğünün Kurmancî karşılığı nedir?
 -    A) av
--    B) dar
-- ✅ C) reng
+- ✅ B) reng
+-    C) dar
 -    D) kevir
-**Doğru:** C) reng
+**Doğru:** B) reng
 **Açıklama:** "reng" = "renk". Örnek: Kürt bayrağının renkleri kırmızı, sarı ve yeşildir.
 **Kaynak:** —
 
 ## offline_5930  ·  zorluk 1  ·  offline
 **KU:** "kanî" (Kurmancî) bi Tirkî kîjan wateyê digire?
 **TR:** "kanî" (Kurmancî) Türkçede hangi anlama gelir?
--    A) Hint-Avrupa
-- ✅ B) çeşme/pınar
+- ✅ A) çeşme/pınar
+-    B) Hint-Avrupa
 -    C) Kız (çocuğu)
 -    D) Yirmi
-**Doğru:** B) çeşme/pınar
+**Doğru:** A) çeşme/pınar
 **Açıklama:** Doğru anlam: "kanî": "çeşme/pınar".
 **Kaynak:** —
 
 ## offline_5933  ·  zorluk 1  ·  offline
 **KU:** Hevwateya "masa" bi Kurmancî çi ye?
 **TR:** "masa" sözcüğünün Kurmancî karşılığı nedir?
--    A) derî
-- ✅ B) mase
+- ✅ A) mase
+-    B) derî
 -    C) text
 -    D) kursî
-**Doğru:** B) mase
+**Doğru:** A) mase
 **Açıklama:** Doğru eşleştirme: "masa": "mase".
 **Kaynak:** —
 
@@ -4018,9 +4018,9 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Kurmancî'deki "teşt" sözcüğü Türkçede ne demektir?
 -    A) diçim
 -    B) küçük
--    C) doğru
-- ✅ D) leğen
-**Doğru:** D) leğen
+- ✅ C) leğen
+-    D) doğru
+**Doğru:** C) leğen
 **Açıklama:** "teşt" = "leğen". Örnek: Çamaşırlar leğende yıkanır.
 **Kaynak:** —
 
@@ -4036,11 +4036,11 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_curated_20001  ·  zorluk 2  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide'?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı"?
-- ✅ A) ergatîf
--    B) paşgirên tewandinê
--    C) cînavkên tewandî
--    D) daçekên hevedudanî
-**Doğru:** A) ergatîf
+-    A) paşgirên tewandinê
+-    B) cînavkên tewandî
+-    C) daçekên hevedudanî
+- ✅ D) ergatîf
+**Doğru:** D) ergatîf
 **Açıklama:** "ergatîf" şu anlama gelir: geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı.
 **Kaynak:** —
 
@@ -4049,53 +4049,53 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dil dersi için hangi seçenek "ergatîf" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
 -    B) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
--    C) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
-- ✅ D) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
-**Doğru:** D) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
+- ✅ C) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
+-    D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+**Doğru:** C) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
 **Açıklama:** "ergatîf" için doğru açıklama şudur: geçişli fiillerin öznesini geçmiş zamanda bükümlü gösteren dilbilgisi yapısı.
 **Kaynak:** —
 
 ## offline_curated_20026  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi"?
-- ✅ A) tewandin
--    B) cînavkên tewandî
--    C) rênivîsa Hawarê
--    D) ezafe
-**Doğru:** A) tewandin
+-    A) cînavkên tewandî
+-    B) rênivîsa Hawarê
+-    C) ezafe
+- ✅ D) tewandin
+**Doğru:** D) tewandin
 **Açıklama:** "tewandin" şu anlama gelir: ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi.
 **Kaynak:** —
 
 ## offline_curated_20029  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa ziman kîjan vebijark ravekirina têgeha "tewandin" bi awayekî rast temam dike?
 **TR:** Dil dersi için hangi seçenek "tewandin" teriminin açıklamasını doğru biçimde tamamlar?
-- ✅ A) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
--    B) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
--    C) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
--    D) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
-**Doğru:** A) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+-    A) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
+-    B) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
+-    C) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+- ✅ D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+**Doğru:** D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
 **Açıklama:** "tewandin" için doğru açıklama şudur: ad ya da zamirlerin cümledeki rolüne göre ek değiştirmesi.
 **Kaynak:** —
 
 ## offline_curated_20051  ·  zorluk 4  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi"?
-- ✅ A) ezafe
--    B) tewandin
--    C) cînavkên kesane
--    D) rênivîsa Hawarê
-**Doğru:** A) ezafe
+-    A) tewandin
+-    B) cînavkên kesane
+-    C) rênivîsa Hawarê
+- ✅ D) ezafe
+**Doğru:** D) ezafe
 **Açıklama:** "ezafe" şu anlama gelir: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.
 **Kaynak:** —
 
 ## offline_curated_20054  ·  zorluk 2  ·  offline
 **KU:** Ji bo dersa ziman kîjan vebijark ravekirina têgeha "ezafe" bi awayekî rast temam dike?
 **TR:** Dil dersi için hangi seçenek "ezafe" teriminin açıklamasını doğru biçimde tamamlar?
--    A) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
-- ✅ B) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
+- ✅ A) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
+-    B) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
 -    C) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
 -    D) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
-**Doğru:** B) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
+**Doğru:** A) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
 **Açıklama:** "ezafe" için doğru açıklama şudur: adları birbirine bağlayan dişil (a) ve eril (ê) tamlama ilişkisi.
 **Kaynak:** —
 
@@ -4103,43 +4103,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne?
 **TR:** Hangi terim şu açıklamayla tanımlanır: büküm almış "min, te, wî, wê, me, we, wan" gibi zamirler?
 -    A) ergatîf
--    B) ezafe
-- ✅ C) cînavkên tewandî
+- ✅ B) cînavkên tewandî
+-    C) ezafe
 -    D) daçekên hevedudanî
-**Doğru:** C) cînavkên tewandî
+**Doğru:** B) cînavkên tewandî
 **Açıklama:** "cînavkên tewandî" şu anlama gelir: büküm (tewandin) almış "min, te, wî, wê, me, we, wan" gibi zamirler.
 **Kaynak:** —
 
 ## offline_curated_20079  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa ziman kîjan vebijark ravekirina têgeha "cînavkên tewandî" bi awayekî rast temam dike?
 **TR:** Dil dersi için hangi seçenek "cînavkên tewandî" teriminin açıklamasını doğru biçimde tamamlar?
--    A) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
-- ✅ B) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
+- ✅ A) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
+-    B) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
 -    C) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
 -    D) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
-**Doğru:** B) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
+**Doğru:** A) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
 **Açıklama:** "cînavkên tewandî" için doğru açıklama şudur: büküm (tewandin) almış "min, te, wî, wê, me, we, wan" gibi zamirler.
 **Kaynak:** —
 
 ## offline_curated_20100  ·  zorluk 5  ·  offline
 **KU:** Têgeha "daçekên hevedudanî" bi kîjan ravekirinê çêtir tê fêmkirin?
 **TR:** "daçekên hevedudanî" terimi hangi açıklamayla daha iyi anlaşılır?
-- ✅ A) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
--    B) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
--    C) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
--    D) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
-**Doğru:** A) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
+-    A) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+-    B) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+-    C) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+- ✅ D) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
+**Doğru:** D) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
 **Açıklama:** "daçekên hevedudanî" şu anlama gelir: yer ilişkilerini gösteren "di... de, bi... re, ji... re" gibi sözcükler.
 **Kaynak:** —
 
 ## offline_curated_20101  ·  zorluk 1  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin'?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "yer ilişkilerini gösteren "di... de, bi... re, ji... re" gibi sözcükler"?
--    A) cînavkên kesane
-- ✅ B) daçekên hevedudanî
+- ✅ A) daçekên hevedudanî
+-    B) cînavkên kesane
 -    C) ezafe
 -    D) rênivîsa Hawarê
-**Doğru:** B) daçekên hevedudanî
+**Doğru:** A) daçekên hevedudanî
 **Açıklama:** "daçekên hevedudanî" şu anlama gelir: yer ilişkilerini gösteren "di... de, bi... re, ji... re" gibi sözcükler.
 **Kaynak:** —
 
@@ -4147,43 +4147,43 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê'?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller"?
 -    A) ergatîf
--    B) rênivîsa Hawarê
-- ✅ C) lêkera gerguhêz
+- ✅ B) lêkera gerguhêz
+-    C) rênivîsa Hawarê
 -    D) tewandin
-**Doğru:** C) lêkera gerguhêz
+**Doğru:** B) lêkera gerguhêz
 **Açıklama:** "lêkera gerguhêz" şu anlama gelir: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.
 **Kaynak:** —
 
 ## offline_curated_20129  ·  zorluk 5  ·  offline
 **KU:** Ji bo dersa ziman kîjan vebijark ravekirina têgeha "lêkera gerguhêz" bi awayekî rast temam dike?
 **TR:** Dil dersi için hangi seçenek "lêkera gerguhêz" teriminin açıklamasını doğru biçimde tamamlar?
--    A) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
-- ✅ B) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
+- ✅ A) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
+-    B) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
 -    C) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
 -    D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
-**Doğru:** B) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
+**Doğru:** A) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
 **Açıklama:** "lêkera gerguhêz" için doğru açıklama şudur: anlamını tamamlamak için bükümlü nesneye ihtiyaç duyan fiiller.
 **Kaynak:** —
 
 ## offline_curated_20151  ·  zorluk 3  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: 'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin'?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "Celadet Bedirxan"ın hazırladığı Latin harfli Kürt alfabesi sistemi'?
--    A) lêkera gerguhêz
-- ✅ B) rênivîsa Hawarê
+- ✅ A) rênivîsa Hawarê
+-    B) lêkera gerguhêz
 -    C) daçekên hevedudanî
 -    D) cînavkên kesane
-**Doğru:** B) rênivîsa Hawarê
+**Doğru:** A) rênivîsa Hawarê
 **Açıklama:** "rênivîsa Hawarê" şu anlama gelir: Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi.
 **Kaynak:** —
 
 ## offline_curated_20154  ·  zorluk 1  ·  offline
 **KU:** Ji bo dersa ziman kîjan vebijark ravekirina têgeha "rênivîsa Hawarê" bi awayekî rast temam dike?
 **TR:** Dil dersi için hangi seçenek "rênivîsa Hawarê" teriminin açıklamasını doğru biçimde tamamlar?
--    A) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
-- ✅ B) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+- ✅ A) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+-    B) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
 -    C) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
 -    D) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
-**Doğru:** B) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+**Doğru:** A) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
 **Açıklama:** "rênivîsa Hawarê" için doğru açıklama şudur: Celadet Bedirxan'ın hazırladığı Latin harfli Kürt alfabesi sistemi.
 **Kaynak:** —
 
@@ -4191,10 +4191,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn?
 **TR:** Hangi terim şu açıklamayla tanımlanır: kişiler için kullanılan "ez, tu, ew, em, hûn, ew" gibi göstericiler?
 -    A) lêkera gerguhêz
--    B) cînavkên tewandî
-- ✅ C) cînavkên kesane
+- ✅ B) cînavkên kesane
+-    C) cînavkên tewandî
 -    D) paşgirên tewandinê
-**Doğru:** C) cînavkên kesane
+**Doğru:** B) cînavkên kesane
 **Açıklama:** "cînavkên kesane" şu anlama gelir: kişiler için kullanılan "ez, tu, ew, em, hûn, ew" gibi göstericiler.
 **Kaynak:** —
 
@@ -4203,31 +4203,31 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dil dersi için hangi seçenek "cînavkên kesane" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
 -    B) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
--    C) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
-- ✅ D) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
-**Doğru:** D) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
+- ✅ C) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
+-    D) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
+**Doğru:** C) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
 **Açıklama:** "cînavkên kesane" için doğru açıklama şudur: kişiler için kullanılan "ez, tu, ew, em, hûn, ew" gibi göstericiler.
 **Kaynak:** —
 
 ## offline_curated_20201  ·  zorluk 5  ·  offline
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide"?
 **TR:** Hangi terim şu açıklamayla tanımlanır: "çok uzak bir geçmişte olan eylemi gösteren fiil yapısı"?
--    A) lêkera gerguhêz
-- ✅ B) dema borî ya dûr
+- ✅ A) dema borî ya dûr
+-    B) lêkera gerguhêz
 -    C) cînavkên kesane
 -    D) daçekên hevedudanî
-**Doğru:** B) dema borî ya dûr
+**Doğru:** A) dema borî ya dûr
 **Açıklama:** "dema borî ya dûr" şu anlama gelir: çok uzak bir geçmişte olan eylemi gösteren fiil yapısı.
 **Kaynak:** —
 
 ## offline_curated_20204  ·  zorluk 3  ·  offline
 **KU:** Ji bo dersa ziman kîjan vebijark ravekirina têgeha "dema borî ya dûr" bi awayekî rast temam dike?
 **TR:** Dil dersi için hangi seçenek "dema borî ya dûr" teriminin açıklamasını doğru biçimde tamamlar?
--    A) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
-- ✅ B) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+- ✅ A) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+-    B) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
 -    C) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
 -    D) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
-**Doğru:** B) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+**Doğru:** A) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
 **Açıklama:** "dema borî ya dûr" için doğru açıklama şudur: çok uzak bir geçmişte olan eylemi gösteren fiil yapısı.
 **Kaynak:** —
 
@@ -4235,10 +4235,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kîjan têgeh bi vê ravekirinê tê nasîn: "hêmanên wekî "-î, -ê, -an' ku di tewandina navdêran de cih digirin'?
 **TR:** Şu açıklamayla hangi terim tanımlanır: "adların bükümünde yer alan -î, -ê, -an gibi ekler"?
 -    A) dema borî ya dûr
--    B) cînavkên kesane
-- ✅ C) paşgirên tewandinê
+- ✅ B) paşgirên tewandinê
+-    C) cînavkên kesane
 -    D) ezafe
-**Doğru:** C) paşgirên tewandinê
+**Doğru:** B) paşgirên tewandinê
 **Açıklama:** "paşgirên tewandinê" şu anlama gelir: adların bükümünde yer alan "-î, -ê, -an" gibi ekler.
 **Kaynak:** —
 
@@ -4247,20 +4247,20 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **TR:** Dil dersi için hangi seçenek "paşgirên tewandinê" teriminin açıklamasını doğru biçimde tamamlar?
 -    A) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
 -    B) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
--    C) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
-- ✅ D) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
-**Doğru:** D) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
+- ✅ C) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
+-    D) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+**Doğru:** C) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
 **Açıklama:** "paşgirên tewandinê" için doğru açıklama şudur: adların bükümünde yer alan "-î, -ê, -an" gibi ekler.
 **Kaynak:** —
 
 ## offline_curated_30013  ·  zorluk 1  ·  offline
 **KU:** Peyva "fermo" di Tirkî de tê çi wateyê?
 **TR:** "Fermo" sözcüğü Türkçede ne anlama gelir?
--    A) Lütfen
-- ✅ B) Buyurun
+- ✅ A) Buyurun
+-    B) Lütfen
 -    C) Teşekkürler
 -    D) Özür dilerim
-**Doğru:** B) Buyurun
+**Doğru:** A) Buyurun
 **Açıklama:** Kurmancîde "buyurun" için "fermo" kullanılır.
 **Kaynak:** —
 
@@ -4286,10 +4286,10 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 **KU:** Kesek dema derbasî êvarê dibe silav dide te; tu jî bi heman peyva silavê bersivê didî. Ev peyv çi ye?
 **TR:** Akşam olurken biri seni selamlıyor; sen de aynı selam sözcüğüyle karşılık veriyorsun. Bu sözcük nedir?
 -    A) Spas, ez baş im
--    B) Rojbaş
-- ✅ C) Êvarbaş
+- ✅ B) Êvarbaş
+-    C) Rojbaş
 -    D) Şevbaş
-**Doğru:** C) Êvarbaş
+**Doğru:** B) Êvarbaş
 **Açıklama:** Biri "êvarbaş" dediğinde aynı şekilde "êvarbaş" diye karşılık verilir.
 **Kaynak:** —
 
@@ -4485,22 +4485,22 @@ açıklama / kaynak adresi / zorluk / hangi bankadan geldiği.
 ## offline_9104  ·  zorluk 2  ·  offline
 **KU:** Peyva "nav" di rêzimanê de kîjan cureya peyvê nîşan dide?
 **TR:** "Nav" sözcüğü dilbilgisinde hangi sözcük türünü gösterir?
-- ✅ A) Navdêr
--    B) Lêker
--    C) Rengdêr
--    D) Hoker
-**Doğru:** A) Navdêr
+-    A) Lêker
+-    B) Rengdêr
+-    C) Hoker
+- ✅ D) Navdêr
+**Doğru:** D) Navdêr
 **Açıklama:** "Nav" ismi gösterir: varlığı, kişiyi ya da kavramı adlandıran sözcük türü. Fiil eylemi, sıfat niteliği, zarf ise durumu belirtir.
 **Kaynak:** —
 
 ## offline_9105  ·  zorluk 1  ·  offline
 **KU:** Di avahiya vegotinekê de "destpêk" kîjan beş e?
 **TR:** Bir anlatının yapısında "destpêk" (giriş) hangi bölümdür?
--    A) Beşa dawî ya ku encam tê girtin
-- ✅ B) Beşa ewil a ku mijar tê danasîn
+- ✅ A) Beşa ewil a ku mijar tê danasîn
+-    B) Beşa dawî ya ku encam tê girtin
 -    C) Beşa navîn a ku bûyer pêş dikeve
 -    D) Beşa ku çavkanî tên rêzkirin
-**Doğru:** B) Beşa ewil a ku mijar tê danasîn
+**Doğru:** A) Beşa ewil a ku mijar tê danasîn
 **Açıklama:** Destpêk, konuyu okura tanıtan ilk bölümdür. Sonuç bölümü kapanışı yapar, gelişme bölümü olayları ilerletir.
 **Kaynak:** —
 
