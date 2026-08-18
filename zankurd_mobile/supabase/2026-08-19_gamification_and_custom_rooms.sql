@@ -157,6 +157,16 @@ begin
   insert into public.room_players (room_id, player_id, is_ready)
   values (v_room_id, v_uid, true);
 
+  -- Giriş ücretini BURADA düş. Kontrol tek başına yetmez: ödül tarafı
+  -- kazanana `entry_fee * 2` yazıyor, yani ücret hiç tahsil edilmezse her
+  -- ücretli maç yoktan `2 x entry_fee` jeton BASAR ve döngü sınırsız
+  -- zenginleşmeye açılır. Düşme oda yaratıldıktan sonra yapılır ki oda
+  -- kurulamazsa oyuncudan para gitmesin (hepsi tek transaction içinde).
+  if p_entry_fee > 0 then
+    insert into public.coin_transactions (player_id, amount, reason)
+    values (v_uid, -p_entry_fee, 'room_entry_fee');
+  end if;
+
   delete from public.matchmaking_queue mq
   where mq.player_id = v_uid
     and mq.room_id is null;
@@ -273,6 +283,13 @@ begin
 
   insert into public.room_players (room_id, player_id, is_ready)
   values (v_room.id, v_uid, false);
+
+  -- Katılan oyuncunun ücreti de burada düşer; iki taraf da ödemezse havuz
+  -- diye bir şey olmaz, yalnız ödül olur.
+  if v_room.entry_fee > 0 then
+    insert into public.coin_transactions (player_id, amount, reason)
+    values (v_uid, -v_room.entry_fee, 'room_entry_fee');
+  end if;
 
   return json_build_object(
     'room_id', v_room.id,
