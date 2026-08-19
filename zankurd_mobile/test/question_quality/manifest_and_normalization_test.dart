@@ -26,6 +26,33 @@ void main() {
       File('tool/question_quality/source_manifest.json').readAsStringSync(),
     );
 
+    test('gate sources have live expectedRecordCount and no parse errors', () {
+      final failures = <String>[];
+      for (final source in manifest.sources) {
+        if (!source.gateIncluded ||
+            source.expectedRecordCount == null ||
+            source.path == null) {
+          continue;
+        }
+        final file = File(source.path!);
+        expect(file.existsSync(), isTrue, reason: '${source.id} dosyası yok');
+        final result = readSource(
+          source,
+          file,
+          repositoryRelativePath: source.path!,
+        );
+        if (result.stats.parseErrors != 0 ||
+            result.stats.read != source.expectedRecordCount) {
+          failures.add(
+            '${source.id} expected '
+            '${source.expectedRecordCount}, read ${result.stats.read}'
+            '${result.stats.parseErrors != 0 ? ', parseErrors ${result.stats.parseErrors}' : ''}',
+          );
+        }
+      }
+      expect(failures, isEmpty, reason: failures.join('\n'));
+    });
+
     test('candidate pool sources never enter the release gate', () {
       final pool = manifest.sources
           .where((source) => source.role == SourceRole.candidatePool)
