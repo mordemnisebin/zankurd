@@ -21,13 +21,6 @@
   "soru": "Fîlmê \"Klama Dayîka Min\" xelata fîlmê herî baş li kîjan festîvalê wergirt?"
  },
  {
-  "id": "offline_2455",
-  "banka": "offline_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "\"Cejna Newrozê\" tê çi wateyê?"
- },
- {
   "id": "offline_6841",
   "banka": "offline_questions.json",
   "kusur": "uzunluk_sizmasi",
@@ -47,13 +40,6 @@
   "kusur": "bicim_sizmasi",
   "ayrinti": "yalnız doğru şık sayı taşıyor",
   "soru": "\"Mikdat Mithat Bedirxan\" çawa divê bê fêmkirin?"
- },
- {
-  "id": "offline_8367",
-  "banka": "offline_questions.json",
-  "kusur": "uzunluk_sizmasi",
-  "ayrinti": "doğru 46 krk, en uzun çeldirici 16",
-  "soru": "Ji aliyê erdnîgariyê ve \"gol\" çi ye?"
  },
  {
   "id": "offline_9529",
