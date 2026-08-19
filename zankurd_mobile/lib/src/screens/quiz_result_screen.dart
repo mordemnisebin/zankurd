@@ -156,11 +156,37 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
   bool _ackAttempted = false;
-  bool _rematchLoading = false;
+  bool _newRoomLoading = false;
 
-  Future<void> _requestRematch() async {
-    if (_rematchLoading) return;
-    setState(() => _rematchLoading = true);
+  Future<void> _openNewRoom() async {
+    if (_newRoomLoading) return;
+    if (widget.room.entryFee > 0) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(context.t(K.newRoomAction)),
+          content: Text(
+            context.t(
+              K.newRoomFeeConfirm,
+              {'amount': '${widget.room.entryFee}'},
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(context.t(K.cancel)),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: Text(context.t(K.continueAction)),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true || !mounted) return;
+    }
+
+    setState(() => _newRoomLoading = true);
     try {
       final newRoom = await widget.repository.createOnlineRoom(
         category: widget.room.category,
@@ -175,13 +201,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ),
       );
     } catch (e, s) {
-      ErrorReporter.record(e, s, reason: 'rematch create room failed');
+      ErrorReporter.record(e, s, reason: 'new room create failed');
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
     } finally {
-      if (mounted) setState(() => _rematchLoading = false);
+      if (mounted) setState(() => _newRoomLoading = false);
     }
   }
 
@@ -1563,10 +1589,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       const SizedBox(width: 10),
                       if (isOnlineRoom)
                         _ResultSideAction(
-                          key: const ValueKey('result-rematch-button'),
-                          icon: AppIcons.arrowsRotate,
-                          label: context.t(K.rematch),
-                          onTap: _rematchLoading ? null : _requestRematch,
+                          key: const ValueKey('result-new-room-button'),
+                          icon: AppIcons.circlePlus,
+                          label: context.t(K.newRoom),
+                          onTap: _newRoomLoading ? null : _openNewRoom,
                         ),
                       if (wrongRecords.isNotEmpty)
                         _ResultSideAction(

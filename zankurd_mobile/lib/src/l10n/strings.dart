@@ -2391,6 +2391,18 @@ class Tr {
       'ku': 'Ji bo vê odeyê {amount} zêr pêwîst e.',
       'tr': 'Bu oda için {amount} coin gerekiyor.',
     },
+    K.newRoom: {
+      'ku': 'Odeya Nû',
+      'tr': 'Yeni Oda',
+    },
+    K.newRoomAction: {
+      'ku': 'Odeya Nû Ava Bike',
+      'tr': 'Yeni Oda Kur',
+    },
+    K.newRoomFeeConfirm: {
+      'ku': 'Ji bo vê odeyê {amount} zêr ji hesabê te tê girtin. Tu dixwazî bidomînî?',
+      'tr': 'Bu yeni oda için hesabınızdan {amount} jeton kesilecektir. Devam etmek istiyor musunuz?',
+    },
     K.rematch: {
       'ku': 'Dîsa Bilîze (Rovanj)',
       'tr': 'Rövanş İste',
@@ -3519,6 +3531,9 @@ class K {
   static const freeEntry = 'play.entryFee.free';
   static const insufficientCoins = 'play.insufficientCoins';
   static const entryFeeRequired = 'play.entryFee.required';
+  static const newRoom = 'play.newRoom';
+  static const newRoomAction = 'play.newRoomAction';
+  static const newRoomFeeConfirm = 'play.newRoomFeeConfirm';
   static const rematch = 'result.rematch';
   static const rematchWaiting = 'result.rematch.waiting';
   static const rematchAccepted = 'result.rematch.accepted';

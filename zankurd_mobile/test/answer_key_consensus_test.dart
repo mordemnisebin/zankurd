@@ -109,6 +109,11 @@ void main() {
       // Kralkızı Barajı Dicle havzasındaki Maden Çayı üzerindedir; model
       // aynı havzadaki daha bilindik Batman Çayı'nı seçiyor.
       'ds_cografya_0235': 'Çemê Madenê',
+      // Buhar makinesinin ilk önemli SANAYİ kullanımı kömür madenlerinden
+      // su pompalamaktı (Newcomen, ardından Watt — Science Museum Group,
+      // "Haydock Colliery Steam Engine"). Tekstil sonra geldi; model
+      // "Sanayi Devrimi = tekstil" kısayolunu izleyip yanılıyor.
+      'ds_dirok_0231': 'Ji bo pompekirina avê ji kanan',
     };
 
     final contradicting = <String>[];
