@@ -1,94 +1,50 @@
-# Büyük medya ve çıktı klasörleri
-görseller/
-Pirs_apk_extracted/
-output/
-*.zip
-
-# Başka bir ajan/araç tarafından proje içine yazılan oturum log'ları
-# (üretim kodu değil; repo dışına taşınması gerekir ama şimdilik yok sayılıyor)
-zankurd_mobile/bash_events/
-zankurd_mobile/conversations/
-
-# Kök seviyedeki oturum ekran görüntüleri (ürün asset'i değil)
-/tour-*.jpeg
-/live-*.jpeg
-/fazA-*.jpeg
-/fazB-*.jpeg
-/pirs_*.jpg
-/zankurd.png
-
-# Mobil ve test araçlarının bağımlılıkları/önbellekleri
-.playwright-mcp/
-.agents/
-.claude/
-.codex/
-.vscode/
-
-# Eğer varsa sanal ortam klasörleri
-venv/
-# Ortam değişkenleri ve gizli dosyalar
-.env
-.env.*
-!.env.example
-# .env.deploy (FTP şifresi içerir) — deploy-to-hostinger.sh yerelde okur.
-.env.deploy
-# Oturum artıkları ve yerel araç dizinleri
-.serena/
-.playwright-cli/
-pirs_dump.xml
-/pirs_*.png
-
-# Repo dışı kalması gereken tasarım inceleme ve audit araçları
-audit/
-design_review/
-phase1-desktop-current.png
-**/test/golden/failures/
-/.worktrees/
-
-.aider*
-
-# macOS klasor metadata cop dosyalari
+# macOS
 .DS_Store
-**/.DS_Store
 
-# Python derleme cache
-__pycache__/
-*.pyc
-
-# Node bağımlılıkları ve araç çıktıları.
-# `sky_bird/` 74 MB'lık bir `node_modules` taşıyor ve `git status` her
-# çağrıda onunla doluyordu; kaynağın kendisi bilerek görünür bırakıldı —
-# ayrı bir repoya mı taşınacak yoksa buraya mı commit edilecek, bu karar
-# ürün sahibinin (2026-08-16).
-node_modules/
-**/node_modules/
-**/test-results/
-**/playwright-report/
-
-# Supabase CLI'nin yerel çalışma artığı. Ortama özgü bağlantı bilgisi
-# tutar; kökte de mobil klasörde de üretilir. `.branches` da aynı sınıfta:
-# yerel stack'in o anki dal adını tutar, paylaşılacak bir şey değildir.
-supabase/.temp/
-**/supabase/.temp/
-supabase/.branches/
-**/supabase/.branches/
-
-# Denetim kanıtları: ekran görüntüleri, build/test logları, ham veri dökümleri.
-# Diskte kalır (raporlar buraya yol verir) ama git'e GİRMEZ — hem 36 MB'lık
-# ikili yığın, hem de logların içinde ortama özgü yollar ve kimlikler var.
-# Yedeği: ~/Documents/ZanKurd-Backups/zankurd-audit-*.tar.gz
-audit_artifacts/
-
-# Başka araçların proje içine yazdığı çalışma klasörleri (2026-08-19).
-# Üretim kodu değil; 63M + 3.7M yer kaplıyorlar ve her oturumda değişiyorlar.
+# Ajan araçlarının makineye özgü çalışma dosyaları.
+#
+# Bunlar ZanKurd'a ait değil: başka araçların kendi kılavuzları, oturum
+# durumları, beceri kurulumları ve mutlak ev dizini yolları taşıyan
+# ayarları. Depo HERKESE AÇIK; `git add -A` ile süpürülüp yayımlanmasınlar
+# (2026-08-19'da bir kez oldu: `AGENTS.md`e başka bir aracın yerel ayarı
+# ve `/Users/<ad>/...` yolları eklenmişti, push'tan önce temizlendi).
+.cluster/
+.openclaw/
+.agents/
 .mimosa/
+SOUL.md
+IDENTITY.md
+USER.md
+TOOLS.md
+HEARTBEAT.md
+
+# Yerel araç ayarları
+.claude/settings.local.json
+.claude/launch.json
+
+# Ayrı projeler ve üretilmiş çıktılar.
+#
+# `sky_bird` bu depoda duruyor ama ZanKurd değil ve kendi bağımlılık
+# ağacını taşıyor: `git add -A` 2026-08-19'da 3286 dosya / 734 bin
+# satırın çoğunu buradan süpürdü (sadece `node_modules/lodash` 628
+# dosya). Uzakta hiç bulunmuyordu, push öncesi geri alındı. Ayrı
+# versiyonlanacaksa kendi deposu ve kendi .gitignore'u olmalı.
+sky_bird/
+
+# Başka araçların plan/rapor çıktıları; içlerinde mutlak ev dizini
+# yolları var.
 .superpowers/
 .zcode/
-zankurd_mobile/.mimosa/
-
-# Üretilmiş rapor/plan/spec dosyaları. AGENTS.md kuralı: bulgular testte,
-# commit gövdesinde ve kod yorumunda yaşar — yeni rapor dosyası üretilmez.
 docs/superpowers/
+audit_artifacts/
 
-# Bu repoya ait olmayan ayrı bir proje (node_modules dahil 83M).
-sky_bird/
+# Supabase CLI'nin yerel durum dosyaları.
+#
+# `.temp/pooler-url` tam Postgres bağlantı adresini, `.temp/project-ref`
+# proje kimliğini taşıyor. Depo herkese açık; bunlar makineye özgü CLI
+# durumudur, proje kaynağı değil.
+supabase/.temp/
+supabase/.branches/
+
+# Üretilmiş değerlendirme çıktısı
+zankurd-proje-degerlendirmesi.html

@@ -439,12 +439,19 @@ class _StatTile extends StatelessWidget {
     required this.value,
     required this.color,
     required this.icon,
+    this.count,
+    this.countPrefix = '',
   });
 
   final String label;
   final String value;
   final Color color;
   final IconData icon;
+
+  /// Sayısal değer; verildiğinde değer `RollingCount` ile sayarak çıkar.
+  /// `value` bu durumda yalnız geri düşüş olarak kalır (ör. "—").
+  final int? count;
+  final String countPrefix;
 
   @override
   Widget build(BuildContext context) {
@@ -490,16 +497,27 @@ class _StatTile extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.xxs),
-            Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.toneOnSurface(context, color),
-                fontSize: 17,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
+            count != null
+                ? RollingCount(
+                    value: count!,
+                    prefix: countPrefix,
+                    maxLines: 1,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.toneOnSurface(context, color),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  )
+                : Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.toneOnSurface(context, color),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
             Text(
               label,
               maxLines: 1,
@@ -755,46 +773,23 @@ class _UnifiedRewardsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(AppIcons.medal, color: AppTheme.gold),
-              const SizedBox(width: 8),
-              // Başlık + sayaç + düğme büyük yazıda satırı taşırıyordu;
-              // başlık artık kalan genişliği alır (2026-07-26).
-              Expanded(
-                child: Text(
-                  Tr.forKu(K.basarilar, isKu),
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17,
-                  ),
-                ),
+          // "Başarılar X/Y" düz bir sayaç çipiydi; dokulu bir ilerleme taşısın.
+          // `MissionProgressCard` ilerlemeyi ödül diliyle çizer; "tümüne bak"
+          // eylemi kartın kendisine bağlanır (2026-08-19).
+          GestureDetector(
+            onTap: () => _showAllSheet(context),
+            child: MissionProgressCard(
+              title: Tr.forKu(K.basarilar, isKu),
+              current: totalUnlocked,
+              target: totalAll,
+              accent: AppTheme.gold,
+              icon: AppIcons.medal,
+              reward: Icon(
+                AppIcons.chevronRight,
+                color: AppTheme.textMutedColor(context),
+                size: 16,
               ),
-              InkWell(
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                onTap: () => _showAllSheet(context),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RewardToken(
-                        kind: RewardKind.rank,
-                        value: '$totalUnlocked / $totalAll',
-                        compact: true,
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        AppIcons.chevronRight,
-                        color: AppTheme.textMutedColor(context),
-                        size: 16,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 12),
           // Yatay kaydırma: önce başarımlar, sonra rozetler

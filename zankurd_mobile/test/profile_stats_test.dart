@@ -36,6 +36,11 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
+    // Cevaplanan soru sayısı artık `RollingCount` ile sayarak çıkıyor; sayım
+    // hedefe ulaşsın diye etiket bulunduktan sonra bir tur daha pompalanır
+    // (2026-08-19).
+    await tester.pump(const Duration(milliseconds: 1200));
+
     expect(find.text('Cevaplanan Soru'), findsOneWidget);
     expect(find.text('2'), findsWidgets);
     expect(find.text('Oyun'), findsNothing);

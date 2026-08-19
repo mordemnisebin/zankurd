@@ -8,6 +8,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
@@ -173,6 +174,28 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Premium yüzeyi: kesişen bant motifi. `band` kilim
+                      // dilinde "kutlama ve premium"u taşır; paywall bunu
+                      // kullanan ilk yüzey (2026-08-19).
+                      const SizedBox(
+                        height: 26,
+                        width: double.infinity,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomPaint(
+                                painter: KilimPainter(
+                                  motif: KilimMotif.band,
+                                  color: AppTheme.gold,
+                                  opacity: 0.30,
+                                  count: 8,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
                       // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı
                       // değer önerisini ÜÇ kez söylüyordu — üstteki
                       // `ScreenIdentityHeader` ("Premium / ZanKurd'u
