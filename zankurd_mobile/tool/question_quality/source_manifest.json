@@ -2353,7 +2353,7 @@
       "gateIncluded": true,
       "productionLike": true,
       "precedence": 980,
-      "expectedRecordCount": 984,
+      "expectedRecordCount": 1025,
       "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
       "columns": {
         "id": "id",
