@@ -10,8 +10,10 @@ import '../models/avatar_identity.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/player.dart';
+import '../widgets/kilim_progress_bar.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
+import '../widgets/roj_mascot.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -1298,11 +1300,27 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         ),
       );
     }
-    return Center(
-      child: Column(
-        key: const ValueKey('matchmaking-waiting-state'),
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Column(
+                  key: const ValueKey('matchmaking-waiting-state'),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Zana maskotu — arama anında "thinking", eşleşme bulununca "celebrate"
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                      child: RojMascot(
+                        size: 56,
+                        mood: _found ? RojMood.celebrate : RojMood.thinking,
+                      ),
+                    ),
           if (_categoryName != null) ...[
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
@@ -1327,7 +1345,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: AppSpacing.lg),
+          ] else ...[
+            const SizedBox(height: AppSpacing.xs),
           ],
           // Matching Animation View
           SizedBox(
@@ -1641,17 +1661,40 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               ],
             ),
           ),
-          const SizedBox(height: 40),
+          if (!_found) ...[
+            const SizedBox(height: AppSpacing.md),
+            SizedBox(
+              width: 180,
+              child: AnimatedBuilder(
+                animation: _pulseController,
+                builder: (context, child) {
+                  final reduce = ReducedMotionProvider.isReducedIn(context) ||
+                      isFlutterTestEnvironment;
+                  final val = reduce
+                      ? 0.65
+                      : (0.35 + 0.45 * _pulseController.value);
+                  return KilimProgressBar(
+                    value: val,
+                    height: 8,
+                    color: AppTheme.brand,
+                    trackColor: AppTheme.surfaceHiColor(context),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ] else ...[
+            const SizedBox(height: AppSpacing.xl),
+          ],
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
               status,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: AppTypography.heading2.copyWith(
                 color: _found
                     ? AppTheme.correct
                     : AppTheme.textPrimaryColor(context),
-                fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -1661,9 +1704,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             Text(
               context.t(K.startingSoon),
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: AppTypography.bodyMedium.copyWith(
                 color: AppTheme.gold,
-                fontSize: 14,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -1692,9 +1734,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                       // ötekini yalanlıyordu.
                       ? '$_secondsElapsed çirke'
                       : '$_secondsElapsed saniye',
-                  style: TextStyle(
+                  style: AppTypography.caption.copyWith(
                     color: AppTheme.textSubColor(context),
-                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -1734,6 +1775,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           ],
         ],
       ),
+    ),
+    ),
+    ),
+    );
+    },
     );
   }
 }

@@ -15,6 +15,8 @@ import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
+import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 /// Eşleştirme iptalinin gerçekten çağrıldığını izleyen sahte depo.
 class _TrackingRepository extends MockZanKurdRepository {
@@ -778,6 +780,40 @@ void main() {
     );
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'arama ekrani RojMascot ve KilimProgressBar bilesenlerini gosterir',
+    (tester) async {
+      // 4.2 Gorsel Kimlik: Bekleme ekrani olu zaman olmaktan cikarilir;
+      // RojMascot thinking modunda ve KilimProgressBar arama dokusuyla cizilir.
+      final repository = _TrackingRepository();
+      tester.view.physicalSize = const Size(480, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        _shell(MatchmakingScreen(repository: repository)),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.pump();
+
+      // Arama ekrani aktif
+      expect(
+        find.byKey(const ValueKey('matchmaking-waiting-state')),
+        findsOneWidget,
+      );
+
+      // RojMascot (Zana maskotu) ve KilimProgressBar mevcut
+      expect(find.byType(RojMascot), findsOneWidget);
+      expect(find.byType(KilimProgressBar), findsOneWidget);
+
+      // Ekranı kaldır: temiz unmount
+      await tester.pumpWidget(_shell(const SizedBox()));
+      await tester.pumpAndSettle();
+    },
+  );
 }
 
 /// Ağ tamamen kopmuş oyuncu: ne kuyruğa girebiliyor ne de çıkabiliyor.

@@ -23,6 +23,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/arena_kit.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
