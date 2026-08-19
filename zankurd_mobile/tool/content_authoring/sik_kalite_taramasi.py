@@ -32,9 +32,30 @@ import unicodedata
 from collections import Counter, defaultdict
 
 
-def normalize(text: str) -> str:
+def normalize_prompt(text: str) -> str:
+    """Soru metni karşılaştırması için gevşek normalleştirme.
+
+    Noktalama burada anlam taşımaz: "Newroz nedir?" ile "Newroz nedir"
+    aynı sorudur.
+    """
     text = unicodedata.normalize("NFKD", (text or "").casefold())
     return re.sub(r"[^\w]+", " ", text).strip()
+
+
+def normalize_option(text: str) -> str:
+    """Şık karşılaştırması için DAR normalleştirme — yalnız kasa ve boşluk.
+
+    İlk sürüm burada da noktalamayı siliyordu ve üç sahte bulgu üretti:
+    `V = I × R` ile `V = I ÷ R` ikisi birden `v i r` oluyor, `1` ile `-1`
+    ikisi birden `1` oluyordu (2026-08-19). Bu şıklarda işaretin KENDİSİ
+    anlamın tamamıdır; silmek şıkları eşitler.
+
+    Kusur yalnız sahte bulgu üretmedi: bu üç kayıt "gözden kaçması
+    imkânsız" sayılıp `spark_denetim.py`nin kontrol kümesine kondu ve
+    araç, onları bildirmediği için DÜRÜST bir dönüşü "kayıtlar okunmamış"
+    diye reddetti. Yanlış bir denetçi, denetçisizlikten kötüdür.
+    """
+    return " ".join((text or "").casefold().split())
 
 
 def has_digit(text: str) -> bool:
@@ -63,7 +84,7 @@ def scan(questions: list, source: str) -> list:
             add(question, "bos_alan", "soru ya da doğru cevap boş")
             continue
 
-        by_prompt[normalize(prompt)].append(question.get("id"))
+        by_prompt[normalize_prompt(prompt)].append(question.get("id"))
 
         # Yazılı cevap ve sıralama soruları şık taşımaz; şık kuralları
         # onlara uygulanmaz, yoksa her biri sahte bulgu üretir.
@@ -91,7 +112,7 @@ def scan(questions: list, source: str) -> list:
             add(question, "anahtar_yok", f"doğru cevap şıklarda yok: {correct!r}")
             continue
 
-        normalized = [normalize(a) for a in answers]
+        normalized = [normalize_option(a) for a in answers]
         duplicates = [t for t, n in Counter(normalized).items() if n > 1]
         if duplicates:
             add(question, "ayni_sik", f"tekrar eden şık: {duplicates[0]!r}")

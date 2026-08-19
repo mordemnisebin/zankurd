@@ -140,20 +140,6 @@
   "soru": "Êrîşa phishing bi giranî çawa dixebite?"
  },
  {
-  "id": "tech_invent_0019",
-  "banka": "expansion_2026_08_questions.json",
-  "kusur": "ayni_sik",
-  "ayrinti": "tekrar eden şık: 'v i r'",
-  "soru": "Li gorî qanûna Ohm, voltaj bi kîjan hesabê tê dîtin?"
- },
- {
-  "id": "tech_invent_0026",
-  "banka": "expansion_2026_08_questions.json",
-  "kusur": "ayni_sik",
-  "ayrinti": "tekrar eden şık: 'voltaj cereyan'",
-  "soru": "Hêza elektrîkî ya amûrekê bi kîjan pirdankê tê hesibandin?"
- },
- {
   "id": "sf_tech_0013",
   "banka": "source_first_2026_08_questions.json",
   "kusur": "uzunluk_sizmasi",
@@ -215,13 +201,6 @@
   "kusur": "bicim_sizmasi",
   "ayrinti": "yalnız doğru şık sayı taşıyor",
   "soru": "Kîjan teknolojî ji bo veguhestina daneyan bi leza bilind di navbera têlefon û torê de tê b"
- },
- {
-  "id": "ds_teknoloji_0288",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "ayni_sik",
-  "ayrinti": "tekrar eden şık: '1'",
-  "soru": "Kîjan hejmar di matematîkê de hejmara sifir e?"
  },
  {
   "id": "ds_sinema_0261",

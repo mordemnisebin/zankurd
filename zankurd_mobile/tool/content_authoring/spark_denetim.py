@@ -19,10 +19,22 @@ raporu hiç okumaz; dönen bulguları bankanın kendisiyle karşılaştırır.
 2. **Kod geçerliliği** — `kusur` kapalı listeden mi.
 3. **İçerik tutarlılığı** — bulgunun iddiası kayda uyuyor mu (ör.
    `ayni_sik` diyorsa şıklarda gerçekten tekrar var mı).
-4. **Kontrol kümesi** — `sik_kalite_taramasi.py` makineyle bulunan ve
-   GÖZDEN KAÇMASI imkânsız kusurları biliyor (birebir aynı iki şık,
-   doğru cevabın şıklarda hiç olmaması). Ajana bu liste VERİLMEZ. Dönen
-   bulgular bunların hiçbirini içermiyorsa ajan kayıtları okumamıştır.
+4. **Kapsam** — ajan her banka için kaç kayıt okuduğunu beyan eder;
+   beyan bankanın gerçek boyutuyla karşılaştırılır. En sağlam sinyal
+   budur çünkü örnek büyüklüğünden bağımsızdır: 1155 kayıtlık bir
+   dosya için "909 okudum" demek, işin eksik olduğunun tartışmasız
+   kanıtıdır. İlk koşumda Spark tam olarak bunu yaptı (2026-08-19).
+
+5. **Kontrol kümesi** — makineyle bulunmuş, dikkatli bir okumada
+   kaçırılması zor kusurlar. Ajana verilmez.
+
+   Bu ölçüt YUMUŞAK tutulur ve tek başına iş reddettirmez. İlk sürümde
+   sertti ve dürüst bir dönüşü haksız yere reddetti: kontrol kümesi
+   `ayni_sik` bulgularından kuruluydu, o bulguların üçü de taramanın
+   kendi normalleştirme kusurundan doğan sahte bulgulardı (`V = I × R`
+   ile `V = I ÷ R` aynı sayılıyordu). Ajan onları bildirmemekte
+   haklıydı; araç yine de "kayıtlar okunmamış" dedi. Bir denetçinin
+   kendi ölçütü yanlışsa, denetçisizlikten kötüdür.
 5. **Şablon kokusu** — notlar birbirinin kopyasıysa iş üretilmiş değil,
    doldurulmuştur.
 """
@@ -59,14 +71,42 @@ def load_bank() -> dict:
 
 
 def control_set() -> set:
-    """Gözden kaçması imkânsız kusurlar — ajana verilmez, dönüşü sınar."""
+    """Kaçırılması zor kusurlar — ajana verilmez, dönüşü sınar.
+
+    Yalnız NESNEL olarak doğrulanabilir sınıflar kullanılır: iki kaydın
+    aynı soruyu sorması, doğru cevabın şıklarda hiç bulunmaması. Öznel
+    sınıflar (uzunluk/biçim sızması) buraya girmez — onlar eşik
+    meselesidir ve bir ajanın farklı karar vermesi kusur değildir.
+    """
     path = pathlib.Path("docs/content_batches/sik_kalite_bulgulari.json")
     if not path.exists():
         return set()
-    return {
-        f["id"] for f in json.loads(path.read_text(encoding="utf-8"))
-        if f["kusur"] in {"ayni_sik", "anahtar_yok"}
-    }
+    ids = set()
+    for finding in json.loads(path.read_text(encoding="utf-8")):
+        if finding["kusur"] not in {"tekrar_soru", "anahtar_yok", "ayni_sik"}:
+            continue
+        ids.add(finding["id"])
+        # `tekrar_soru` eşin ikinci kimliğini ayrıntıya yazar; ajan
+        # çiftin hangi ucunu bildirdiyse sayılmalı.
+        ids.update(re.findall(r"\b[a-z_]+_\d{3,4}\b", finding["ayrinti"]))
+    return ids
+
+
+def coverage() -> list:
+    """Ajanın beyan ettiği okuma sayısını bankanın gerçeğiyle karşılaştırır."""
+    path = pathlib.Path("docs/content_batches/spark_bulgular/_ozet.json")
+    if not path.exists():
+        return []
+    declared = json.loads(path.read_text(encoding="utf-8"))
+    rows = []
+    for entry in declared:
+        asset = pathlib.Path("assets/data") / entry.get("banka", "")
+        if not asset.exists():
+            rows.append((entry.get("banka"), None, entry.get("okunan_kayit")))
+            continue
+        actual = len(json.loads(asset.read_text(encoding="utf-8")))
+        rows.append((entry["banka"], actual, entry.get("okunan_kayit")))
+    return rows
 
 
 def main() -> int:
@@ -117,6 +157,9 @@ def main() -> int:
     repeated_notes = [n for n, c in Counter(notes).items() if n and c > 2]
 
     caught = control & set(ids)
+    gaps = [(name, actual, read) for name, actual, read in coverage()
+            if actual is None or read is None or read != actual]
+
     print(f"bulgu: {len(findings)}   banka: {len(bank)} kayıt")
     print(f"  geçersiz kimlik      : {len(bad_id)}")
     print(f"  geçersiz kusur kodu  : {len(bad_code)}")
@@ -125,6 +168,13 @@ def main() -> int:
     print(f"  şablon not           : {len(repeated_notes)} kalıp")
     if control:
         print(f"  kontrol kümesi       : {len(caught)}/{len(control)} yakalandı")
+    cov = coverage()
+    if not cov:
+        print("  kapsam beyanı        : YOK (_ozet.json yazılmamış)")
+    else:
+        print(f"  kapsam açığı         : {len(gaps)}/{len(cov)} banka")
+        for name, actual, read in gaps[:6]:
+            print(f"    {name}: beyan {read}, gerçek {actual}")
 
     for label, rows in (("geçersiz kimlik", bad_id[:5]),
                         ("geçersiz kod", bad_code[:5]),
@@ -134,14 +184,22 @@ def main() -> int:
 
     print()
     problems = len(bad_id) + len(bad_code) + len(mismatch)
-    if control and not caught:
-        print("SONUÇ: GÜVENİLMEZ — makineyle bulunmuş, gözden kaçması")
-        print("imkânsız kusurların hiçbiri dönmemiş. Kayıtlar okunmamış.")
-        return 2
+    if not cov:
+        print("SONUÇ: EKSİK — kapsam beyanı yok. Bulgular tutarlı olabilir")
+        print("ama işin bankanın TAMAMINI kapsadığı doğrulanamıyor.")
+        return 3
+    if gaps:
+        print("SONUÇ: EKSİK — beyan edilen okuma bankanın boyutunu")
+        print("tutmuyor. Bulgular geçerli olabilir; iş yarım.")
+        return 3
     if problems > max(3, len(findings) * 0.05):
         print("SONUÇ: GÜVENİLMEZ — bulguların %5'inden fazlası bankayla")
         print("uyuşmuyor. Elden geçirmeden önce iş yeniden istenmeli.")
         return 2
+    if control and not caught:
+        print("UYARI: kaçırılması zor kusurların hiçbiri dönmemiş.")
+        print("Tek başına ret sebebi değil — ölçüt küçük ve yanılabilir —")
+        print("ama elden geçirirken derinliği sorgula.\n")
     print("SONUÇ: elden geçirmeye uygun. Bulgular bankayla tutarlı;")
     print("kalanı insan kararıdır — bu araç doğruluğu değil, İŞİN")
     print("gerçekten yapıldığını denetler.")
