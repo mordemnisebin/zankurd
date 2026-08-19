@@ -1,0 +1,616 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+116 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_sinema_0080] Sînema
+S: Rêzbûna kronolojîk a xelatên girîng ên fîlmên kurdî di kîjan vebijêrkê de rast e?
+A) Yol (1982) -> Dema Hespên Serxweş (2000) -> Kûsî Jî Difirin (2004) -> Klama Dayîka Min (2014) B) Dema Hespên Serxweş (2000) -> Yol (1982) -> Klama Dayîka Min (2014) -> Kûsî Jî Difirin (2004) C) Kûsî Jî Difirin (2004) -> Yol (1982) -> Dema Hespên Serxweş (2000) -> Klama Dayîka Min (2014) D) Klama Dayîka Min (2014) -> Kûsî Jî Difirin (2004) -> Dema Hespên Serxweş (2000) -> Yol (1982)
+✓ Yol (1982) -> Dema Hespên Serxweş (2000) -> Kûsî Jî Difirin (2004) -> Klama Dayîka Min (2014)
+
+[ds_sinema_0223] Sînema
+S: Kîjan derhênerê amerîkî fîlma "The Godfather Part II" derxist?
+A) Francis Ford Coppola B) Martin Scorsese C) Steven Spielberg D) Quentin Tarantino
+✓ Francis Ford Coppola
+
+[ds_sinema_0082] Sînema
+S: Kîjan derhênerê îngilîz fîlma "The Lodger: A Story of the London Fog" derxist?
+A) Michael Powell B) Alfred Hitchcock C) David Lean D) Carol Reed
+✓ Alfred Hitchcock
+
+[ds_sinema_0084] Sînema
+S: Kîjan derhênerê rûs fîlma "The Man with a Movie Camera" derxist?
+A) Sergei Eisenstein B) Vsevolod Pudovkin C) Alexander Dovzhenko D) Dziga Vertov
+✓ Dziga Vertov
+
+[ds_sinema_0086] Sînema
+S: Kîjan derhênerê japonî fîlma "Rashomon" derxist?
+A) Kenji Mizoguchi B) Yasujirō Ozu C) Masaki Kobayashi D) Akira Kurosawa
+✓ Akira Kurosawa
+
+[ds_sinema_0088] Sînema
+S: Kîjan derhênera amerîkî fîlma "The Hurt Locker" derxist?
+A) Sofia Coppola B) Kathryn Bigelow C) Ava DuVernay D) Greta Gerwig
+✓ Kathryn Bigelow
+
+[ds_sinema_0090] Sînema
+S: Kîjan derhênerê polonî fîlma "The Pianist" derxist?
+A) Andrzej Wajda B) Krzysztof Kieślowski C) Paweł Pawlikowski D) Roman Polanski
+✓ Roman Polanski
+
+[ds_sinema_0094] Sînema
+S: Kîjan derhênerê îranî fîlma "A Separation" derxist?
+A) Asghar Farhadi B) Abbas Kiarostami C) Jafar Panahi D) Mohsen Makhmalbaf
+✓ Asghar Farhadi
+
+[ds_sinema_0096] Sînema
+S: Kîjan derhênerê meksîkî fîlma "Birdman" derxist?
+A) Alfonso Cuarón B) Guillermo del Toro C) Carlos Reygadas D) Alejandro González Iñárritu
+✓ Alejandro González Iñárritu
+
+[ds_sinema_0100] Sînema
+S: Kîjan derhênerê amerîkî fîlma "Schindler"s List' derxist?
+A) Martin Scorsese B) Francis Ford Coppola C) Steven Spielberg D) George Lucas
+✓ Steven Spielberg
+
+[ds_sinema_0102] Sînema
+S: Kîjan têgeha sînemayê ji bo rêza wêneyan a ku piştî kişandinê tê birîn û li hev tê zeliqandin tê bikaranîn?
+A) Senaryo B) Montaj C) Kadraj D) Diyalog
+✓ Montaj
+
+[ds_sinema_0107] Sînema
+S: Kîjan têgeha sînemayê ji bo rêbaza ku tê de kameraya ji cihê xwe diçe û wêneyê dişopîne tê bikaranîn?
+A) Kadra sabît B) Kadra statîk C) Kadra rast D) Kadra tevger
+✓ Kadra tevger
+
+[ds_sinema_0109] Sînema
+S: Kîjan têgeha sînemayê ji bo pêvajoya hilbijartina wêneyan û lihevxistina wan ji bo çêkirina fîlmekî tê bikaranîn?
+A) Kadraj B) Senaryo C) Diyalog D) Montaj
+✓ Montaj
+
+[ds_sinema_0115] Sînema
+S: Kîjan têgeha sînemayê ji bo rêbaza ku tê de kamera bi tevgera xwe re wêneyekî nû çêdike tê bikaranîn?
+A) Kadra tevger B) Kadra statîk C) Kadra sabît D) Kadra rast
+✓ Kadra tevger
+
+[ds_sinema_0104] Sînema
+S: Di fîlmekî de, kîjan kes berpirsiyarê biryara cihê kamerayê û tevgera aktoran e?
+A) Senarîst B) Montajker C) Kameraman D) Derhêner
+✓ Derhêner
+
+[ds_sinema_0110] Sînema
+S: Di fîlmekî de, kîjan kes berpirsiyarê nivîsandina çîrok û diyalogan e?
+A) Derhêner B) Montajker C) Senarîst D) Kameraman
+✓ Senarîst
+
+[ds_sinema_0118] Sînema
+S: Di fîlmekî de, kîjan kes berpirsiyarê birîna wêneyan û lihevxistina wan e?
+A) Derhêner B) Senarîst C) Kameraman D) Montajker
+✓ Montajker
+
+[ds_sinema_0127] Sînema
+S: Kîjan derhênerê îtalyan fîlma "Bicycle Thieves" derxistiye?
+A) Vittorio De Sica B) Federico Fellini C) Roberto Rossellini D) Luchino Visconti
+✓ Vittorio De Sica
+
+[ds_sinema_0128] Sînema
+S: Fîlma "Rome, Open City" a ku yek ji destpêkên neorealîzma îtalyan e, ji aliyê kîjan derhênerî ve hatiye kişandin?
+A) Michelangelo Antonioni B) Roberto Rossellini C) Pier Paolo Pasolini D) Bernardo Bertolucci
+✓ Roberto Rossellini
+
+[ds_sinema_0130] Sînema
+S: Kîjan fîlmê François Truffaut yek ji fîlmên destpêkê yên Pêla Nû ya Fransî ye?
+A) Breathless B) Last Year at Marienbad C) Hiroshima mon amour D) The 400 Blows
+✓ The 400 Blows
+
+[ds_sinema_0132] Sînema
+S: Fîlma "Breathless" (À bout de souffle) a Jean-Luc Godard di kîjan salê de derketiye?
+A) 1955 B) 1965 C) 1970 D) 1960
+✓ 1960
+
+[ds_sinema_0138] Sînema
+S: Fîlma "The 400 Blows" a François Truffaut çîroka kîjan kesî vedibêje?
+A) Kesekî mezin ê dewlemend B) Xortekî bi navê Antoine Doinel C) Jinekî bi navê Gelsomina D) Mêrekî bi navê Zampanò
+✓ Xortekî bi navê Antoine Doinel
+
+[ds_sinema_0139] Sînema
+S: Kîjan derhênerê îtalyan fîlma "Umberto D." derxistiye?
+A) Federico Fellini B) Roberto Rossellini C) Luchino Visconti D) Vittorio De Sica
+✓ Vittorio De Sica
+
+[ds_sinema_0140] Sînema
+S: Fîlma "Breathless" a Jean-Luc Godard bi kîjan teknîkê tê nasîn?
+A) Teknîka "jump cut" B) Teknîka "long take" C) Teknîka "slow motion" D) Teknîka "stop motion"
+✓ Teknîka "jump cut"
+
+[ds_sinema_0172] Sînema
+S: Fîlma "Breathless" a Jean-Luc Godard di kîjan salê de derket?
+A) 1958 B) 1962 C) 1964 D) 1960
+✓ 1960
+
+[ds_sinema_0141] Sînema
+S: Kîjan fîlmê Roberto Rossellini yek ji fîlmên destpêkê yên neorealîzma îtalyan e?
+A) Rome, Open City B) Bicycle Thieves C) La dolce vita D) The 400 Blows
+✓ Rome, Open City
+
+[ds_sinema_0143] Sînema
+S: Fîlma "Bicycle Thieves" a Vittorio De Sica çîroka kîjan kesan vedibêje?
+A) Jinekî û keça wê B) Xortekî û hevala wî C) Bavekî û kurê wî D) Mêrekî û jina wî
+✓ Bavekî û kurê wî
+
+[ds_sinema_0156] Sînema
+S: Fîlma "Bicycle Thieves" a Vittorio De Sica di kîjan salê de derket?
+A) 1944 B) 1946 C) 1950 D) 1948
+✓ 1948
+
+[ds_sinema_0144] Sînema
+S: Kîjan derhênerê fransî fîlma "Jules and Jim" derxistiye?
+A) Jean-Luc Godard B) François Truffaut C) Alain Resnais D) Claude Chabrol
+✓ François Truffaut
+
+[ds_sinema_0150] Sînema
+S: Kîjan fîlmê Jean-Luc Godard yek ji fîlmên herî navdar ên Pêla Nû ya Fransî ye?
+A) Breathless B) The 400 Blows C) Jules and Jim D) Hiroshima mon amour
+✓ Breathless
+
+[ds_sinema_0151] Sînema
+S: Kîjan derhênerê amerîkî di sala 1972an de fîlma "The Godfather" derxist?
+A) Stanley Kubrick B) Francis Ford Coppola C) Martin Scorsese D) Steven Spielberg
+✓ Francis Ford Coppola
+
+[ds_sinema_0152] Sînema
+S: Fîlma "Schindler"s List' a Steven Spielberg di kîjan salê de derket?
+A) 1990 B) 1995 C) 1998 D) 1993
+✓ 1993
+
+[ds_sinema_0160] Sînema
+S: Fîlma "Psycho" a Alfred Hitchcock di kîjan salê de derket?
+A) 1958 B) 1962 C) 1964 D) 1960
+✓ 1960
+
+[ds_sinema_0168] Sînema
+S: Fîlma "The Birth of a Nation" a D.W. Griffith di kîjan salê de derket?
+A) 1915 B) 1913 C) 1917 D) 1919
+✓ 1915
+
+[ds_sinema_0176] Sînema
+S: Fîlma "Spirited Away" a Hayao Miyazaki di kîjan salê de derket?
+A) 1997 B) 2001 C) 2004 D) 2008
+✓ 2001
+
+[ds_sinema_0177] Sînema
+S: Kîjan stûdyoya animasyonê fîlma "Toy Story" ya yekem derxist?
+A) DreamWorks B) Blue Sky Studios C) Pixar D) Illumination
+✓ Pixar
+
+[ds_sinema_0178] Sînema
+S: Di animasyona "The Lion King" de, kîjan karakter bavê Simba ye?
+A) Mufasa B) Scar C) Timon D) Zazu
+✓ Mufasa
+
+[ds_sinema_0179] Sînema
+S: Kîjan derhêner fîlma belgesel a "Waltz with Bashir" derxist?
+A) Werner Herzog B) Errol Morris C) Ari Folman D) Michael Moore
+✓ Ari Folman
+
+[ds_sinema_0185] Sînema
+S: Di animasyona "The Incredibles" de, kîjan karakter navê wî yê rastî Bob Parr e?
+A) Dash B) Mr. Incredible C) Frozone D) Syndrome
+✓ Mr. Incredible
+
+[ds_sinema_0186] Sînema
+S: Kîjan derhênerê belgeselê fîlma "Grizzly Man" li ser jiyana Timothy Treadwell derxist?
+A) Ken Burns B) Errol Morris C) Werner Herzog D) Alex Gibney
+✓ Werner Herzog
+
+[ds_sinema_0187] Sînema
+S: Di animasyona "Frozen" de, kîjan karakter xwişka Elsa ye?
+A) Anna B) Kristoff C) Olaf D) Hans
+✓ Anna
+
+[ds_sinema_0188] Sînema
+S: Fîlma belgesel a "An Inconvenient Truth" a ku li ser guherîna avhewayê ye, ji aliyê kîjan kesî ve hatiye pêşkêşkirin?
+A) Barack Obama B) Bill Clinton C) Al Gore D) John Kerry
+✓ Al Gore
+
+[ds_sinema_0189] Sînema
+S: Di animasyona "Up" de, kîjan karakter zarokekî biçûk e ku bi Carl Fredricksen re diçe Amerîkaya Başûr?
+A) Dug B) Russell C) Kevin D) Charles Muntz
+✓ Russell
+
+[ds_sinema_0191] Sînema
+S: Di animasyona "Ratatouille" de, kîjan karakter mişkekî ku xwesteka wî ya xwarinçêkirinê ye?
+A) Linguini B) Colette C) Remy D) Anton Ego
+✓ Remy
+
+[ds_sinema_0193] Sînema
+S: Di animasyona "Moana" de, kîjan karakter xwedawenda giravê ye ku Maui dilê wê dizî?
+A) Maui B) Te Fiti C) Moana D) Tamatoa
+✓ Te Fiti
+
+[ds_sinema_0194] Sînema
+S: Fîlma belgesel a "Senna" li ser jiyana kîjan ajokarê yarîşê ye?
+A) Ayrton Senna B) Michael Schumacher C) Alain Prost D) Niki Lauda
+✓ Ayrton Senna
+
+[ds_sinema_0195] Sînema
+S: Di animasyona "Zootopia" de, kîjan karakter rovî ye ku bi polîsa Judy Hopps re xebat dike?
+A) Chief Bogo B) Nick Wilde C) Flash D) Clawhauser
+✓ Nick Wilde
+
+[ds_sinema_0196] Sînema
+S: Kîjan belgeselvanê fransî fîlma "Shoah" li ser Holokostê derxist?
+A) Marcel Ophüls B) Leni Riefenstahl C) Alain Resnais D) Claude Lanzmann
+✓ Claude Lanzmann
+
+[ds_sinema_0197] Sînema
+S: Di animasyona "Coco" de, kîjan karakter lawikê ku dixwaze bibe muzîkjen e?
+A) Héctor B) Miguel C) Ernesto de la Cruz D) Dante
+✓ Miguel
+
+[ds_sinema_0200] Sînema
+S: Kîjan belgeselvanê amerîkî fîlma "The Act of Killing" derxist?
+A) Joshua Oppenheimer B) Adam Curtis C) Nick Broomfield D) Louis Theroux
+✓ Joshua Oppenheimer
+
+[ds_sinema_0201] Sînema
+S: Kîjan derhênerê amerîkî fîlma "Pulp Fiction" di sala 1994an de derxist?
+A) Steven Spielberg B) Quentin Tarantino C) Martin Scorsese D) Francis Ford Coppola
+✓ Quentin Tarantino
+
+[ds_sinema_0202] Sînema
+S: Fîlma "The Godfather" a Francis Ford Coppola di kîjan salê de derket?
+A) 1968 B) 1975 C) 1980 D) 1972
+✓ 1972
+
+[ds_sinema_0203] Sînema
+S: Kîjan derhênerê japonî fîlma "Seven Samurai" derxist?
+A) Hayao Miyazaki B) Akira Kurosawa C) Yasujirō Ozu D) Takashi Miike
+✓ Akira Kurosawa
+
+[ds_sinema_0204] Sînema
+S: Di fîlma "Pulp Fiction" de, kîjan aktor rola Jules Winnfield lîstiye?
+A) Samuel L. Jackson B) John Travolta C) Bruce Willis D) Uma Thurman
+✓ Samuel L. Jackson
+
+[ds_sinema_0208] Sînema
+S: Di fîlma "Schindler"s List' a Steven Spielberg de, kîjan aktor rola Oskar Schindler lîstiye?
+A) Ben Kingsley B) Liam Neeson C) Ralph Fiennes D) Daniel Day-Lewis
+✓ Liam Neeson
+
+[ds_sinema_0210] Sînema
+S: Fîlma "Rashomon" a Akira Kurosawa di kîjan salê de derket?
+A) 1945 B) 1955 C) 1950 D) 1960
+✓ 1950
+
+[ds_sinema_0212] Sînema
+S: Di fîlma "Citizen Kane" a Orson Welles de, kîjan peyva dawîn a Charles Foster Kane ye?
+A) Xanadu B) Rosebud C) Power D) Love
+✓ Rosebud
+
+[ds_sinema_0216] Sînema
+S: Fîlma "Gone with the Wind" di kîjan salê de derket?
+A) 1935 B) 1945 C) 1939 D) 1950
+✓ 1939
+
+[ds_sinema_0222] Sînema
+S: Di fîlma "The Shawshank Redemption" de, kîjan aktor rola Andy Dufresne lîstiye?
+A) Morgan Freeman B) Tim Robbins C) Bob Gunton D) William Sadler
+✓ Tim Robbins
+
+[ds_sinema_0249] Sînema
+S: Kîjan têgeh ji bo nîşandana bûyerekê ya ku di pêşerojê de qewimiye tê bikaranîn?
+A) Flashback B) Pêşketin C) Flashforward D) Epîlog
+✓ Flashforward
+
+[ds_teknoloji_0001] Teknolojî
+S: Ji bo gihîştina malperekê, kîjan protokol tê bikaranîn?
+A) FTP B) SMTP C) SSH D) HTTP
+✓ HTTP
+
+[ds_teknoloji_0002] Teknolojî
+S: Kîjan amûr ji bo girêdana du torên cuda tê bikaranîn?
+A) Switch B) Router C) Hub D) Modem
+✓ Router
+
+[ds_teknoloji_0004] Teknolojî
+S: Armanca sereke ya protokola TLS di bikaranîna şîfrekirina asîmetrîk û sîmetrîk de bi hev re çi ye?
+A) Tenê ji bo kontrolkirina navnîşana IP ya bikarhêner bêyî şîfrekirina daneyan B) Guhertina mifteya ewle bi asîmetrîk û veguhestina lezgîn a daneyan bi sîmetrîk C) Hemû daneyan bi awayekî bê şîfre di tora herêmî de veguhestin D) Zêdekirina qebareya pakêtên torê ji bo xebata zûtir a routeran
+✓ Guhertina mifteya ewle bi asîmetrîk û veguhestina lezgîn a daneyan bi sîmetrîk
+
+[ds_teknoloji_0156] Teknolojî
+S: Kîjan teknolojî ji bo şîfrekirina daneyan di navbera malper û gerokê de tê bikaranîn?
+A) FTP B) SMTP C) TLS D) DNS
+✓ TLS
+
+[ds_teknoloji_0017] Teknolojî
+S: Cudahiya bingehîn a kontrola herikînê di navbera protokola TCP û UDP de çi ye?
+A) TCP tenê di tora bêtêl de dixebite, UDP tenê bi kabloyên optîk tê bikaranîn B) TCP qet şaşiyan kontrol nake, lê UDP her pakêtê du caran kontrol dike C) TCP tenê ji bo deng tê bikaranîn, UDP ji bo pelên mezin ên nivîsê tê sepandin D) TCP bi pejirandina pakêtan veguhestineke ewle dike, UDP bê pejirandin û lezgîn dişîne
+✓ TCP bi pejirandina pakêtan veguhestineke ewle dike, UDP bê pejirandin û lezgîn dişîne
+
+[ds_teknoloji_0018] Teknolojî
+S: Kîjan protokol ji bo veguhestina daneyan bi awayekî lez û bez tê bikaranîn, lê ne pêbawer e?
+A) UDP B) TCP C) IP D) HTTP
+✓ UDP
+
+[ds_teknoloji_0024] Teknolojî
+S: Kîjan protokol ji bo veguhestina daneyan di navbera server û klîentê de bi awayekî ewle tê bikaranîn, lê ne ji bo malperan e?
+A) HTTP B) SMTP C) SFTP D) POP3
+✓ SFTP
+
+[ds_teknoloji_0047] Teknolojî
+S: Kîjan protokol ji bo veguhestina daneyan di navbera server û klîentê de bi ewlehî tê bikaranîn, lê ne ji bo malperan e?
+A) SFTP B) HTTP C) FTP D) SMTP
+✓ SFTP
+
+[ds_teknoloji_0039] Teknolojî
+S: Kîjan protokol ji bo veguhestina daneyan bi awayekî ewle di navbera server û klîentê de tê bikaranîn?
+A) UDP B) ICMP C) ARP D) TLS
+✓ TLS
+
+[ds_teknoloji_0043] Teknolojî
+S: Kîjan protokol ji bo veguhestina daneyan di navbera torên cuda de bi ewlehî tê bikaranîn?
+A) HTTP B) FTP C) IPsec D) SMTP
+✓ IPsec
+
+[ds_teknoloji_0035] Teknolojî
+S: Kîjan protokol ji bo veguhestina e-nameyan bi ewlehî tê bikaranîn?
+A) HTTP B) SMTPS C) FTP D) SNMP
+✓ SMTPS
+
+[ds_teknoloji_0006] Teknolojî
+S: Di pirsiyariya DNS de rola "Recursive Resolver" û "Authoritative Name Server" çawa ji hev vediqete?
+A) Resolver tenê navnîşanên MAC tomar dike, Authoritative daneyên HTTP dişîne B) Resolver tenê di komputerên kesane de heye, Authoritative routera herêmî ye C) Resolver geroka înternetê bixwe ye, Authoritative kerta tora bêtêl e D) Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire
+✓ Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire
+
+[ds_teknoloji_0007] Teknolojî
+S: Kîjan protokol ji bo gihîştina pelan ji ser dûr ve tê bikaranîn?
+A) HTTP B) FTP C) SMTP D) POP3
+✓ FTP
+
+[ds_teknoloji_0008] Teknolojî
+S: Di torê de, kîjan cîhaz ji bo girêdana gelek komputeran di nav tora herêmî de tê bikaranîn?
+A) Switch B) Router C) Modem D) Firewall
+✓ Switch
+
+[ds_teknoloji_0158] Teknolojî
+S: Di torê de, kîjan cîhaz ji bo birêvebirina trafîka daneyan di navbera torên cuda de tê bikaranîn?
+A) Switch B) Modem C) Router D) Hub
+✓ Router
+
+[ds_teknoloji_0164] Teknolojî
+S: Di torê de, kîjan cîhaz ji bo girêdana komputeran di nav tora herêmî de tê bikaranîn?
+A) Switch B) Router C) Modem D) Firewall
+✓ Switch
+
+[ds_teknoloji_0009] Teknolojî
+S: Kîjan protokol ji bo wergirtina e-nameyan ji serverê tê bikaranîn?
+A) SMTP B) HTTP C) FTP D) POP3
+✓ POP3
+
+[ds_teknoloji_0010] Teknolojî
+S: Kîjan teknolojî ji bo girêdana bêtêl a înternetê tê bikaranîn?
+A) Wi-Fi B) Ethernet C) Fiber optic D) Coaxial cable
+✓ Wi-Fi
+
+[ds_teknoloji_0012] Teknolojî
+S: Kîjan amûr ji bo parastina torê ji êrîşên derve tê bikaranîn?
+A) Switch B) Router C) Hub D) Firewall
+✓ Firewall
+
+[ds_teknoloji_0029] Teknolojî
+S: Kîjan amûr ji bo parastina komputerê ji nermalava xirab tê bikaranîn?
+A) Antîvîrus B) Browser C) Server D) Router
+✓ Antîvîrus
+
+[ds_teknoloji_0015] Teknolojî
+S: Kîjan protokol ji bo girêdana bi serverê ji dûr ve û birêvebirina wê tê bikaranîn?
+A) SSH B) HTTP C) FTP D) SMTP
+✓ SSH
+
+[ds_teknoloji_0019] Teknolojî
+S: Kîjan amûr ji bo veguhestina daneyan di navbera torên cuda de tê bikaranîn?
+A) Switch B) Gateway C) Hub D) Repeater
+✓ Gateway
+
+[ds_teknoloji_0027] Teknolojî
+S: Kîjan protokol ji bo şîfrekirina daneyan di navbera malper û gerokê de tê bikaranîn?
+A) HTTP B) HTTPS C) FTP D) SMTP
+✓ HTTPS
+
+[ds_teknoloji_0038] Teknolojî
+S: Di torê de, kîjan rêbaz ji bo parastina daneyan ji êrîşên derve tê bikaranîn?
+A) Firewall B) Antîvîrus C) VPN D) Proxy
+✓ Firewall
+
+[ds_teknoloji_0033] Teknolojî
+S: Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner tê bikaranîn?
+A) Sertîfîkaya dîjîtal B) Îmzeya dîjîtal C) Token D) Şîfre
+✓ Sertîfîkaya dîjîtal
+
+[ds_teknoloji_0049] Teknolojî
+S: Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner bi karanîna taybetmendiyên laşî tê bikaranîn?
+A) Biometric B) Şîfre C) OTP D) Kilîta ewlehiyê
+✓ Biometric
+
+[ds_teknoloji_0034] Teknolojî
+S: Di torê de, kîjan rêje ji bo pîvana ewlekariya şîfreyê tê bikaranîn?
+A) Reng B) Dema çêkirinê C) Hejmara tîpên mezin D) Dirêjahî
+✓ Dirêjahî
+
+[ds_teknoloji_0044] Teknolojî
+S: Di torê de, kîjan rêje ji bo pîvana leza veguhestina daneyan tê bikaranîn?
+A) Latency B) Jitter C) Bandwidth D) Windabûna paketan
+✓ Bandwidth
+
+[ds_teknoloji_0036] Teknolojî
+S: Di şîfrekirinê de, kîjan têgeh ji bo daneyên ku hatine şîfrekirin tê bikaranîn?
+A) Plaintext B) Cleartext C) Hash D) Ciphertext
+✓ Ciphertext
+
+[ds_teknoloji_0173] Teknolojî
+S: Di torê de, kîjan têgeh ji bo pêvajoya ku navnîşana IP-ê ji navê domênê tê peydakirin tê bikaranîn?
+A) HTTP B) FTP C) DNS D) SMTP
+✓ DNS
+
+[ds_teknoloji_0041] Teknolojî
+S: Kîjan rêbaz ji bo rastkirina nasnameya bikarhêner bi du qonaxan tê bikaranîn?
+A) SSO B) 2FA C) Kodê vegerandinê D) Şîfreya tenê
+✓ 2FA
+
+[ds_teknoloji_0045] Teknolojî
+S: Kîjan amûr ji bo şîfrekirina daneyan di navbera du aliyan de tê bikaranîn?
+A) Proxy B) Tunela SSH C) VPN D) DNS
+✓ VPN
+
+[ds_teknoloji_0073] Teknolojî
+S: Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe komek nirxan tê bikaranîn?
+A) Kom B) Guherbar C) Xelek D) Şert
+✓ Kom
+
+[ds_teknoloji_0066] Teknolojî
+S: Di bernamekirinê de, kîjan têgeh ji bo hilanîna komek nirxan bêyî dubarekirinê tê bikaranîn?
+A) Kom B) Guherbar C) Xelek D) Şert
+✓ Kom
+
+[ds_teknoloji_0068] Teknolojî
+S: Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe rast an derew tê bikaranîn?
+A) Guherbar B) Xelek C) Mantiqî D) Şert
+✓ Mantiqî
+
+[ds_teknoloji_0071] Teknolojî
+S: Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn?
+A) Guherbar B) Xelek C) Nivîs D) Şert
+✓ Nivîs
+
+[ds_teknoloji_0054] Teknolojî
+S: Di bernamekirinê de, kîjan têgeh ji bo komkirina komek fermanan di bin navekî de tê bikaranîn?
+A) Guherbar B) Xelek C) Şert D) Fonksiyon
+✓ Fonksiyon
+
+[ds_teknoloji_0060] Teknolojî
+S: Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya rast an derew tê bikaranîn?
+A) Guherbar B) Boolean C) Xelek D) Şert
+✓ Boolean
+
+[ds_teknoloji_0055] Teknolojî
+S: Di bernamekirinê de, ji bo hilanîna navnîşek nirxan di bîra komputerê de kîjan têgeh tê bikaranîn?
+A) Guherbar B) Xelek C) Array D) Şert
+✓ Array
+
+[ds_teknoloji_0076] Teknolojî
+S: Di bingeha daneyan de, kîjan ziman ji bo pirsyarkirina daneyan tê bikaranîn?
+A) HTML B) CSS C) SQL D) HTTP
+✓ SQL
+
+[ds_teknoloji_0081] Teknolojî
+S: Di bingeha daneyan de, kîjan ziman ji bo birêvebirina bingeha daneyan û kontrolkirina mafên bikarhêneran tê bikaranîn?
+A) Python B) Java C) C++ D) SQL
+✓ SQL
+
+[ds_teknoloji_0083] Teknolojî
+S: Di bingeha daneyan de, kîjan têgeh ji bo kêmkirina dubarekirina daneyan tê bikaranîn?
+A) Denormalîzasyon B) Indekskirin C) Normalîzasyon D) Partîsyonkirin
+✓ Normalîzasyon
+
+[ds_teknoloji_0087] Teknolojî
+S: Di bingeha daneyan de, kîjan têgeh ji bo bilezkirina lêgerîna daneyan tê bikaranîn?
+A) Trigger B) Nêrîn C) Stored Procedure D) Indeks
+✓ Indeks
+
+[ds_teknoloji_0089] Teknolojî
+S: Di bingeha daneyan de, kîjan têgeh ji bo otomatîk kirina çalakiyekê dema ku bûyerek diqewime tê bikaranîn?
+A) Indeks B) Nêrîn C) Trigger D) Stored Procedure
+✓ Trigger
+
+[ds_teknoloji_0091] Teknolojî
+S: Di bingeha daneyan de, kîjan têgeh ji bo berhevkirina daneyan ji çend tabloyan di pirsyarkirinekê de tê bikaranîn?
+A) JOIN B) SELECT C) INSERT D) DELETE
+✓ JOIN
+
+[ds_teknoloji_0093] Teknolojî
+S: Di bingeha daneyan de, kîjan têgeh ji bo kêmkirina mezinahiya bingeha daneyan tê bikaranîn?
+A) Kompresyon B) Indekskirin C) Normalîzasyon D) Partîsyonkirin
+✓ Kompresyon
+
+[ds_teknoloji_0077] Teknolojî
+S: Kîjan strukturê daneyan bi prensîba LIFO dixebite?
+A) Peldank (Queue) B) Lîsteya girêdayî C) Stêk (Stack) D) Dara binerd
+✓ Stêk (Stack)
+
+[ds_teknoloji_0082] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku her element xwediyê du girêdanan e (berê û paşê) tê bikaranîn?
+A) Lîsteya yekgirêdayî B) Stêk C) Dara binerd D) Lîsteya duqat-girêdayî
+✓ Lîsteya duqat-girêdayî
+
+[ds_teknoloji_0084] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element tenê ji serî tê zêdekirin û jêbirin tê bikaranîn?
+A) Peldank (Queue) B) Lîsteya girêdayî C) Dara binerd D) Stêk (Stack)
+✓ Stêk (Stack)
+
+[ds_teknoloji_0086] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element li dawiyê tê zêdekirin û ji serî tê jêbirin tê bikaranîn?
+A) Stêk (Stack) B) Peldank (Queue) C) Lîsteya girêdayî D) Dara binerd
+✓ Peldank (Queue)
+
+[ds_teknoloji_0088] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element li gorî rêzekê têne rêzkirin tê bikaranîn?
+A) Lîsteya girêdayî B) Lîsteya rêzkirî C) Ferhengok D) Stêk
+✓ Lîsteya rêzkirî
+
+[ds_teknoloji_0094] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element bi rêbazek FIFO têne birêvebirin tê bikaranîn?
+A) Stêk (Stack) B) Lîsteya girêdayî C) Peldank (Queue) D) Dara binerd
+✓ Peldank (Queue)
+
+[ds_teknoloji_0096] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo navnîşek ku element bi rêbazek LIFO têne birêvebirin tê bikaranîn?
+A) Peldank (Queue) B) Stêk (Stack) C) Lîsteya girêdayî D) Graf
+✓ Stêk (Stack)
+
+[ds_teknoloji_0098] Teknolojî
+S: Di strukturên daneyan de, kîjan têgeh ji bo daran tê bikaranîn ku her girê wê herî zêde du zarok hene?
+A) Dara duduyî B) Graf C) Lîsteya girêdayî D) Ferhengok
+✓ Dara duduyî
+
+[ds_teknoloji_0101] Teknolojî
+S: Kîjan pergalê xebitandinê ji aliyê şîrketa Microsoft ve hatiye çêkirin?
+A) Linux B) Android C) Windows D) macOS
+✓ Windows
+
+[ds_teknoloji_0103] Teknolojî
+S: Kîjan pergalê xebitandinê ji aliyê şîrketa Apple ve ji bo komputerên Mac hatiye çêkirin?
+A) Linux B) Windows C) macOS D) Android
+✓ macOS

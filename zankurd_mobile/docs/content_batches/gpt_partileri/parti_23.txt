@@ -1,0 +1,611 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+115 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_dirok_0228] Dîrok
+S: Kîjan kesayetî makîneya hilmê ya pêşkeftî di sala 1769'an de çêkir?
+A) Richard Arkwright B) Samuel Crompton C) Edmund Cartwright D) James Watt
+✓ James Watt
+
+[ds_dirok_0229] Dîrok
+S: Di Şoreşa Pîşesaziyê de kîjan bûyerê bû sedema zêdebûna bajaran?
+A) Zêdebûna çandiniyê B) Koçberiya gundiyan bo kargehan C) Kêmbûna nifûsê D) Pêşketina karwanan
+✓ Koçberiya gundiyan bo kargehan
+
+[ds_dirok_0231] Dîrok
+S: Makîneya bihûrê pêşî ji bo çi di pîşesaziyê de hat bikaranîn?
+A) Ji bo pompekirina avê ji kanan B) Ji bo rêsandina tekstîlê C) Ji bo veguhastina trênê D) Ji bo çapkirina rojnameyan
+✓ Ji bo pompekirina avê ji kanan
+
+[ds_dirok_0233] Dîrok
+S: Di Şoreşa Pîşesaziyê de kîjan çîna civakî ya nû derket holê?
+A) Çîna esilzadeyan B) Çîna cotkaran C) Çîna karkeran D) Çîna keşîşan
+✓ Çîna karkeran
+
+[ds_dirok_0241] Dîrok
+S: Kîjan makîneya çandiniyê berhemdariya hesadê zêde kir?
+A) Xerata destan B) Aşê bayê C) Makîneya hesadê D) Kelûpelê hûnandinê
+✓ Makîneya hesadê
+
+[ds_dirok_0247] Dîrok
+S: Di Şoreşa Pîşesaziyê de kîjan welatê Ewropayê wekî navenda darayî ya cîhanê derket pêş?
+A) Fransa B) Brîtanya C) Hollanda D) Spanya
+✓ Brîtanya
+
+[ds_dirok_0249] Dîrok
+S: Kîjan pêvajo para kar bi destan di hilberînê de kêm kir?
+A) Pîşesaziya makîneyan B) Pîşesaziya çandiniyê C) Pîşesaziya keştiyan D) Pîşesaziya madenê
+✓ Pîşesaziya makîneyan
+
+[ds_dirok_0230] Dîrok
+S: Kîjan wesayît di sedsala 19an de veguhastina bejahiyê guhert?
+A) Balafiran B) Tirimpêlan C) Keştiyên bazirganiyê D) Trênan
+✓ Trênan
+
+[ds_dirok_0232] Dîrok
+S: Kîjan prosesa ku pola bi awayekî erzan dihat hilberandin di sala 1856'an de hate îcad kirin?
+A) Prosesa Siemens B) Prosesa Gilchrist C) Prosesa Bessemer D) Prosesa Martin
+✓ Prosesa Bessemer
+
+[ds_dirok_0234] Dîrok
+S: Kîjan bûyer di sala 1811'an de li Brîtanyayê qewimî û tê de karkeran makîneyan hilweşandin?
+A) Serhildana Chartîstan B) Serhildana Luddîtan C) Serhildana Swing D) Serhildana Peterloo
+✓ Serhildana Luddîtan
+
+[ds_dirok_0236] Dîrok
+S: Kîjan kesayetî di sala 1776'an de pirtûka "Lêkolîna li ser Dewlemendiya Neteweyan" nivîsand?
+A) Adam Smith B) David Ricardo C) Karl Marx D) John Stuart Mill
+✓ Adam Smith
+
+[ds_dirok_0240] Dîrok
+S: Kîjan bajarê Brîtanyayê di Şoreşa Pîşesaziyê de wekî navenda tekstîlê dihat zanîn?
+A) Londra B) Manchester C) Edinburgh D) Dublin
+✓ Manchester
+
+[ds_dirok_0242] Dîrok
+S: Kê di 1814an de lokomotîfa "Blücher" çêkir?
+A) Isambard Brunel B) Robert Trevithick C) Richard Trevithick D) George Stephenson
+✓ George Stephenson
+
+[ds_dirok_0246] Dîrok
+S: Kîjan keşfê di warê ragihandinê de di Şoreşa Pîşesaziyê de pêşket?
+A) Telgraf B) Telefon C) Radyo D) Televîzyon
+✓ Telgraf
+
+[ds_dirok_0248] Dîrok
+S: Kîjan kesayetî di sala 1793'an de makîneya pembûyê ya ku ji bo veqetandina pembûyê dihat bikaranîn îcad kir?
+A) Eli Whitney B) Samuel Slater C) Francis Cabot Lowell D) John Kay
+✓ Eli Whitney
+
+[ds_dirok_0250] Dîrok
+S: Dîroka devkî ji bo lêkolîna dîrokê çima girîng e?
+A) Ji ber ku ew tenê bûyerên siyasî vedikole B) Ji ber ku ew agahiyên ku di belgeyan de tune ne diparêze C) Ji ber ku ew bi taybetî li ser şeran dinivîse D) Ji ber ku ew tenê li ser padîşahan diaxive
+✓ Ji ber ku ew agahiyên ku di belgeyan de tune ne diparêze
+
+[ds_dirok_0251] Dîrok
+S: Kîjan rêbaz di lêkolîna dîroka devkî de herî zêde tê bikaranîn?
+A) Analîza statîstîkî B) Kolana arkeolojîk C) Ceribandina laboratûwarê D) Hevpeyvîna bi şahidan re
+✓ Hevpeyvîna bi şahidan re
+
+[ds_dirok_0261] Dîrok
+S: Di dîroka devkî de, kîjan têgeh ji bo ravekirina bandora kesayetiya lêkolîner li ser hevpeyvînê tê bikaranîn?
+A) Transkrîpsiyon B) Refleksîvîte C) Arşîv D) Metodolojî
+✓ Refleksîvîte
+
+[ds_dirok_0272] Dîrok
+S: Di dîroka devkî de, kîjan têgeh ji bo ravekirina pêvajoya guherandina çîrokê di nav nifşan de tê bikaranîn?
+A) Veguherîna çîrokê B) Transkrîpsiyon C) Refleksîvîte D) Arşîvkirin
+✓ Veguherîna çîrokê
+
+[ds_dirok_0265] Dîrok
+S: Di dîroka devkî de, kîjan pirsgirêk ji ber ziman û wergeran derdikeve?
+A) Zêdebûna agahiyan B) Kêmasiya şahidan C) Zêdebûna belgeyan D) Wendabûna wateyê di wergerê de
+✓ Wendabûna wateyê di wergerê de
+
+[ds_dirok_0252] Dîrok
+S: Di dîroka devkî de, kîjan têgeh ji bo ravekirina alîgiriya çîrokbêj tê bikaranîn?
+A) Subjektîvîte B) Objektîvîte C) Neutralîte D) Rastî
+✓ Subjektîvîte
+
+[ds_dirok_0267] Dîrok
+S: Di dîroka devkî de, kîjan têgeh ji bo ravekirina bîranînên kolektîf tê bikaranîn?
+A) Bîra kesane B) Bîra dîrokî C) Bîra fermî D) Bîra civakî
+✓ Bîra civakî
+
+[ds_dirok_0274] Dîrok
+S: Di dîroka devkî de, kîjan qonax ji bo parastina agahiyan ji bo nifşên pêşerojê tê kirin?
+A) Amadekirina pirsan B) Analîz C) Arşîvkirin D) Weşandin
+✓ Arşîvkirin
+
+[ds_dirok_0253] Dîrok
+S: Çima dîroknasên nûjen ji bo dîroka devkî qîmetê didin?
+A) Ji ber ku ew bûyerên kevnar bi awayekî objektîf dinivîse B) Ji ber ku ew dengê komên ku di dîroka fermî de têne paşguh kirin radigihîne C) Ji ber ku ew tenê li ser dîroka leşkerî disekine D) Ji ber ku ew bi taybetî li ser aboriyê dinivîse
+✓ Ji ber ku ew dengê komên ku di dîroka fermî de têne paşguh kirin radigihîne
+
+[ds_dirok_0254] Dîrok
+S: Di lêkolîna dîroka devkî de, kîjan pirsên ji bo berhevkirina agahiyan herî bi bandor in?
+A) Pirsên girtî yên ku bersiva erê an na dixwazin B) Pirsên ku tenê bi dîrokên rast re têkildar in C) Pirsên vekirî yên ku çîrokbêj azad dihêlin D) Pirsên ku bi zanistiya siyasî ve girêdayî ne
+✓ Pirsên vekirî yên ku çîrokbêj azad dihêlin
+
+[ds_dirok_0263] Dîrok
+S: Di lêkolîna dîroka devkî de, kîjan qonax piştî hevpeyvînê tê?
+A) Amadekirina pirsan B) Dîtina şahidan C) Kolana arşîvan D) Transkrîpsiyon û analîz
+✓ Transkrîpsiyon û analîz
+
+[ds_dirok_0255] Dîrok
+S: Kîjan zanyar wekî pêşengê dîroka devkî ya nûjen tê zanîn?
+A) Herodotus B) Allan Nevins C) Thucydides D) Leopold von Ranke
+✓ Allan Nevins
+
+[ds_dirok_0259] Dîrok
+S: Li gorî dîroknasan, dîroka devkî di kîjan serdemê de wekî rêbazek akademîk hate qebûl kirin?
+A) Di sedsala 18'an de B) Di sedsala 19'an de C) Di nîvê sedsala 20'an de D) Di destpêka sedsala 21'an de
+✓ Di nîvê sedsala 20'an de
+
+[ds_dirok_0260] Dîrok
+S: Kîjan berhem wek yek ji dîroknivîsên kurdî yên herî berfireh ên destpêkê tê nasîn?
+A) Mem û Zîn B) Dîroka Kurdistanê C) Cejna Azadiyê D) Şerefname
+✓ Şerefname
+
+[ds_dirok_0264] Dîrok
+S: Kîjan rêbaz ji bo rastbûna agahiyên dîroka devkî zêde dike?
+A) Berhevkirina gelek çavkaniyan B) Bikaranîna yek çavkaniyê C) Tenê guhdarîkirina çîrokbêj D) Nivîsandina bêyî kontrolê
+✓ Berhevkirina gelek çavkaniyan
+
+[ds_dirok_0271] Dîrok
+S: Kîjan rêbaz di dîroka devkî de ji bo kêmkirina şaşbîriyan tê bikaranîn?
+A) Berhevdana agahiyan bi belgeyên nivîskî re B) Bikaranîna tenê çavkaniyeke tekane C) Paşguhkirina bîranînên bersivderan D) Zêdekirina pirsên girtî yên erê/na
+✓ Berhevdana agahiyan bi belgeyên nivîskî re
+
+[ds_dirok_0275] Dîrok
+S: Tora bazirganiyê ya Riya Hevirmêş bi piranî bi kîjan xanedanê ve tê girêdan?
+A) Xanedana Ming B) Xanedana Han C) Xanedana Qing D) Xanedana Tang
+✓ Xanedana Han
+
+[ds_dirok_0293] Dîrok
+S: Ewlehiya Riya Hevirmêş di kîjan serdemê de bi "Pax Mongolica" ve zêde bû?
+A) Serdema Kevir B) Serdema Bronz C) Serdema Mongol D) Serdema Nûjen
+✓ Serdema Mongol
+
+[ds_dirok_0276] Dîrok
+S: Kîjan welat wekî destpêka Riya Îpekê tê zanîn?
+A) Hindistan B) Misir C) Yewnanistan D) Çîn
+✓ Çîn
+
+[ds_dirok_0277] Dîrok
+S: Riya Hevirmêş navê xwe ji kîjan berhemê digire?
+A) Zêr B) Hevrîşim C) Qehwe D) Çerm
+✓ Hevrîşim
+
+[ds_dirok_0280] Dîrok
+S: Kîjan bajar yek ji navendên sereke yên Riya Hevirmêş bû?
+A) Parîs B) Semerkand C) London D) Berlîn
+✓ Semerkand
+
+[ds_dirok_0287] Dîrok
+S: Di Riya Îpekê de kîjan rêbazê veguhestinê dihat bikaranîn?
+A) Karwanên deveyan B) Trenên elektrîkê C) Balafirên bazirganî D) Keştiyên buharê
+✓ Karwanên deveyan
+
+[ds_dirok_0291] Dîrok
+S: Di Riya Îpekê de kîjan tişt ji Çînê dihat?
+A) Hevrîşim B) Zêr C) Qehwe D) Şekir
+✓ Hevrîşim
+
+[ds_dirok_0294] Dîrok
+S: Di Riya Îpekê de kîjan tişt ji Hindistanê dihat?
+A) Biharat B) Hevrîşim C) Çerm D) Zêr
+✓ Biharat
+
+[ds_dirok_0278] Dîrok
+S: Riya Îpekê di navbera kîjan herêman de dirêj bû?
+A) Hindistan û Afrîka B) Rûsya û Amerîka C) Japonya û Awistralya D) Çîn û Ewropa
+✓ Çîn û Ewropa
+
+[ds_dirok_0282] Dîrok
+S: Kîjan kesayetî bi Riya Îpekê re têkildar e?
+A) Julius Caesar B) Napoleon C) Alexander Mezin D) Marko Polo
+✓ Marko Polo
+
+[ds_dirok_0289] Dîrok
+S: Kîjan bajarê Kurdistanê li ser riyên bazirganiyê yên navbera Anatolya û Mezopotamyayê navendek bû?
+A) Stenbol B) Qahîre C) Şam D) Amed
+✓ Amed
+
+[ds_dirok_0295] Dîrok
+S: Kîjan riya deryayî di bazirganiya Ewropa-Hindistanê de girîngî bi dest xist?
+A) Rêya Pasîfîkê B) Rêya Kapê Hêvîyê Baş C) Rêya Atlantîkê D) Rêya Arktîkê
+✓ Rêya Kapê Hêvîyê Baş
+
+[ds_dirok_0298] Dîrok
+S: Kîjan ol ji Hindistanê ber bi Asyaya Navîn û Çînê ve li ser Riya Hevirmêş belav bû?
+A) Xiristiyanî B) Budîzm C) Cihûtî D) Zerdeştî
+✓ Budîzm
+
+[ds_edebiyat_0076] Edebiyat
+S: Di destana Gilgameş de, Gilgameş ji bo çi li riya nemiriyê digere?
+A) Ji bo ku bibe padîşah B) Ji bo ku cîhanê bigire C) Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya D) Ji bo ku xwedayan bibîne
+✓ Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya
+
+[ds_edebiyat_0078] Edebiyat
+S: Di destana Îlyadayê de, kîjan lehenga yekem car tê nasîn?
+A) Hektor B) Aşîl C) Odîseus D) Agamemnon
+✓ Aşîl
+
+[ds_edebiyat_0088] Edebiyat
+S: Di destana "Îlyadayê" de, kîjan lehenga yekem car tê nasîn?
+A) Aşîl B) Hektor C) Odîseus D) Agamemnon
+✓ Aşîl
+
+[ds_edebiyat_0079] Edebiyat
+S: Kîjan çîrok di nav "Hezar û Yek Şev" de derbas dibe?
+A) Çîroka Gilgameş B) Çîroka Sindbad C) Çîroka Beowulf D) Çîroka Kalevala
+✓ Çîroka Sindbad
+
+[ds_edebiyat_0081] Edebiyat
+S: Kîjan kesayet di destana "Şahname" ya Fîrdewsî de cih digire?
+A) Gilgameş B) Aşîl C) Rustem D) Beowulf
+✓ Rustem
+
+[ds_edebiyat_0082] Edebiyat
+S: Di destana "Beowulf" de, Beowulf bi kîjan dijmin re şer dike?
+A) Grendel B) Aşîl C) Rustem D) Odîseus
+✓ Grendel
+
+[ds_edebiyat_0084] Edebiyat
+S: Di destana "Odîseya" de, Odîseus çi demê vedigere malê?
+A) Piştî şerê Troyayê B) Piştî mirina xwe C) Piştî ku bibe padîşah D) Piştî ku cîhanê bigire
+✓ Piştî şerê Troyayê
+
+[ds_edebiyat_0085] Edebiyat
+S: Kîjan berhem destaneke neteweyî ya Îraniyan e?
+A) Kalevala B) Şahname C) Îlyada D) Beowulf
+✓ Şahname
+
+[ds_edebiyat_0086] Edebiyat
+S: Di destana "Gilgameş" de, Enkîdu kî ye?
+A) Dijminê Gilgameş B) Padîşahê Urukê C) Xwedayekî D) Hevalê Gilgameş
+✓ Hevalê Gilgameş
+
+[ds_edebiyat_0101] Edebiyat
+S: Di romana "Madame Bovary" de, Emma Bovary bi kîjan taybetmendiyê tê nasîn?
+A) Nexweşiya romantîk û nerazîbûna xwe B) Dilsoziya xwe ya ji mêrê xwe re C) Jiyana xwe ya hêsan a gundî D) Karê xwe yê bijîşkiyê
+✓ Nexweşiya romantîk û nerazîbûna xwe
+
+[ds_edebiyat_0102] Edebiyat
+S: Kîjan roman ji aliyê Fyodor Dostoyevskî ve hatiye nivîsandin?
+A) Sava û Aşitî B) Anna Karenina C) Tawan û Ceza D) Karderî
+✓ Tawan û Ceza
+
+[ds_edebiyat_0103] Edebiyat
+S: Di romana "Sava û Aşitî" ya Lev Tolstoy de, kîjan bûyer dîrokî wek paşxaneyê tê bikaranîn?
+A) Şerê cîhanî yê yekem B) Şerê Napoleon ê li Rûsyayê C) Şoreşa Fransî D) Şerê navxweyî yê Amerîkayê
+✓ Şerê Napoleon ê li Rûsyayê
+
+[ds_edebiyat_0105] Edebiyat
+S: Di romana "Anna Karenina" de, Anna ji ber çi têk diçe?
+A) Ji ber mirina mêrê xwe B) Ji ber karê xwe yê siyasî C) Ji ber koçberiya xwe D) Ji ber evîna xwe ya qedexe
+✓ Ji ber evîna xwe ya qedexe
+
+[ds_edebiyat_0106] Edebiyat
+S: Kîjan roman ji aliyê Charles Dickens ve hatiye nivîsandin?
+A) Mîzrab B) Hêviyên Mezin C) Bekirê Londonê D) Karderî
+✓ Hêviyên Mezin
+
+[ds_edebiyat_0107] Edebiyat
+S: Di romana "Mîzrab" (The Hunchback of Notre-Dame) de, Quasimodo li kû dijî?
+A) Di katedrala Notre-Dame de B) Di qesra padîşah de C) Di birca Londonê de D) Di keleha Parisê de
+✓ Di katedrala Notre-Dame de
+
+[ds_edebiyat_0108] Edebiyat
+S: Kîjan roman ji aliyê Emily Brontë ve hatiye nivîsandin?
+A) Jane Eyre B) Bilindahiyên Wuthering C) Pîrika D) Hêviyên Mezin
+✓ Bilindahiyên Wuthering
+
+[ds_edebiyat_0109] Edebiyat
+S: Di romana "Jane Eyre" de, Jane beriya ku here Thornfieldê li ku dixebite?
+A) Li nexweşxaneyekê B) Li maleke gundan C) Li kargehekê D) Li dibistanekê
+✓ Li dibistanekê
+
+[ds_edebiyat_0110] Edebiyat
+S: Kîjan roman ji aliyê Victor Hugo ve hatiye nivîsandin?
+A) Sefîl B) Sava û Aşitî C) Tawan û Ceza D) Karderî
+✓ Sefîl
+
+[ds_edebiyat_0111] Edebiyat
+S: Di romana "Les Misérables" de, kîjan kesayet ji ber nanê dizî tê girtin?
+A) Cosette B) Javert C) Jean Valjean D) Marius
+✓ Jean Valjean
+
+[ds_edebiyat_0112] Edebiyat
+S: Kîjan roman ji aliyê Herman Melville ve hatiye nivîsandin?
+A) Pîrika B) Moby-Dick C) Jane Eyre D) Wuthering Heights
+✓ Moby-Dick
+
+[ds_edebiyat_0113] Edebiyat
+S: Di romana "Moby-Dick" de, kaptan Ahab ji bo çi li Moby-Dick digere?
+A) Ji bo zanistê B) Ji bo dewlemendiyê C) Ji bo tolhildanê D) Ji bo navdariyê
+✓ Ji bo tolhildanê
+
+[ds_edebiyat_0114] Edebiyat
+S: Kîjan roman ji aliyê Mark Twain ve hatiye nivîsandin?
+A) Huckleberry Finn B) Oliver Twist C) David Copperfield D) Pîrika
+✓ Huckleberry Finn
+
+[ds_edebiyat_0115] Edebiyat
+S: Di romana "Huckleberry Finn" de, kîjan kesayet koleyekî reviyayî ye?
+A) Tom Sawyer B) Pap C) Jim D) Judge Thatcher
+✓ Jim
+
+[ds_edebiyat_0116] Edebiyat
+S: Kîjan roman ji aliyê Leo Tolstoy ve hatiye nivîsandin?
+A) Moby-Dick B) Anna Karenina C) Madame Bovary D) Jane Eyre
+✓ Anna Karenina
+
+[ds_edebiyat_0119] Edebiyat
+S: Di romana "Oliver Twist" de, Oliver li kîjan bajarî dijî?
+A) London B) Parîs C) New York D) Dublin
+✓ London
+
+[ds_edebiyat_0121] Edebiyat
+S: Di romana "Tawan û Ceza" de, Raskolnikov ji ber çi tawanekê dike?
+A) Ji ber xizanîyê B) Ji ber tolhildanê C) Ji ber zexta civakê D) Ji ber teoriya xwe ya felsefî
+✓ Ji ber teoriya xwe ya felsefî
+
+[ds_edebiyat_0122] Edebiyat
+S: Kîjan roman ji aliyê Gustave Flaubert ve hatiye nivîsandin?
+A) Madame Bovary B) Anna Karenina C) Oliver Twist D) Pîrika
+✓ Madame Bovary
+
+[ds_edebiyat_0182] Edebiyat
+S: Kîjan roman ji aliyê Gustave Flaubert ve hatiye nivîsandin û wek mînaka realîzmê tê naskirin?
+A) Les Misérables B) Moby-Dick C) Oliver Twist D) Madame Bovary
+✓ Madame Bovary
+
+[ds_edebiyat_0123] Edebiyat
+S: Di romana "Bilindahiyên Wuthering" de, Mr. Earnshaw Heathcliff li kîjan bajarî dibîne?
+A) Ji Londonê B) Ji Dublinê C) Ji Edinburghê D) Ji Liverpoolê
+✓ Ji Liverpoolê
+
+[ds_edebiyat_0124] Edebiyat
+S: Kîjan roman ji aliyê Charlotte Brontë ve hatiye nivîsandin?
+A) Bilindahiyên Wuthering B) Jane Eyre C) Pîrika D) Madame Bovary
+✓ Jane Eyre
+
+[ds_edebiyat_0126] Edebiyat
+S: William Shakespeare di kîjan sedsalê de ji dayik bûye?
+A) Sedsala 16an B) Sedsala 14an C) Sedsala 15an D) Sedsala 17an
+✓ Sedsala 16an
+
+[ds_edebiyat_0127] Edebiyat
+S: Kîjan berhem ji aliyê William Shakespeare ve hatiye nivîsandin?
+A) Dîwana Mem û Zîn B) Şahname C) Hamlet D) Îlyada
+✓ Hamlet
+
+[ds_edebiyat_0128] Edebiyat
+S: Di Shakespeare de, çi tê wateya "To be or not to be"?
+A) Jiyan an mirin B) Evîn an nefret C) Şer an aşitî D) Xewn an rastî
+✓ Jiyan an mirin
+
+[ds_edebiyat_0129] Edebiyat
+S: "Romeo" di kîjan berhema Shakespeare de cih digire?
+A) Macbeth B) King Lear C) Othello D) Romeo û Juliet
+✓ Romeo û Juliet
+
+[ds_edebiyat_0137] Edebiyat
+S: Kîjan kesayet di Shakespeare de bi navê "Juliet" tê naskirin?
+A) Keça King Lear B) Jina Macbeth C) Evîndara Romeo D) Xwişka Hamlet
+✓ Evîndara Romeo
+
+[ds_edebiyat_0130] Edebiyat
+S: Berhema Shakespeare ya bi navê "Macbeth" ji kîjan cureya wêjeyî ye?
+A) Komîdî B) Trajedî C) Dîrok D) Pastoral
+✓ Trajedî
+
+[ds_edebiyat_0132] Edebiyat
+S: Berhema Shakespeare ya bi navê "King Lear" ji kîjan cureya wêjeyî ye?
+A) Komîdî B) Dîrok C) Romance D) Trajedî
+✓ Trajedî
+
+[ds_edebiyat_0136] Edebiyat
+S: Berhema Shakespeare ya bi navê "A Midsummer Night's Dream" ji kîjan cureya wêjeyî ye?
+A) Komîdî B) Trajedî C) Dîrok D) Pastoral
+✓ Komîdî
+
+[ds_edebiyat_0138] Edebiyat
+S: Berhema Shakespeare ya bi navê "The Merchant of Venice" ji kîjan cureya wêjeyî ye?
+A) Komîdî B) Trajedî C) Dîrok D) Romance
+✓ Komîdî
+
+[ds_edebiyat_0133] Edebiyat
+S: Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa evîna du ciwanan dike?
+A) Hamlet B) Macbeth C) Othello D) Romeo û Juliet
+✓ Romeo û Juliet
+
+[ds_edebiyat_0141] Edebiyat
+S: Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa du malbatên dijmin dike?
+A) Hamlet B) Macbeth C) Othello D) Romeo û Juliet
+✓ Romeo û Juliet
+
+[ds_edebiyat_0145] Edebiyat
+S: Kîjan berhem ji aliyê Shakespeare ve hatiye nivîsandin û behsa bazirganekî bi navê Antonio dike?
+A) The Merchant of Venice B) A Midsummer Night's Dream C) Much Ado About Nothing D) The Tempest
+✓ The Merchant of Venice
+
+[ds_edebiyat_0134] Edebiyat
+S: Di Shakespeare de, kîjan kesayet bi navê "Hamlet" tê naskirin?
+A) Mîrê Danîmarkayê B) Padîşahê Îngilistanê C) Generalê Romayê D) Bazirganê Venedîkê
+✓ Mîrê Danîmarkayê
+
+[ds_edebiyat_0146] Edebiyat
+S: Di Shakespeare de, kîjan kesayet bi navê "Prospero" tê naskirin?
+A) Mîrê Danîmarkayê B) Generalê Romayê C) Bazirganê Venedîkê D) Sihirbazê The Tempest
+✓ Sihirbazê The Tempest
+
+[ds_edebiyat_0151] Edebiyat
+S: Di helbesta klasîk a Kurmancî de, ji lihevhatina dengên dawiya rêzikan re çi tê gotin?
+A) Kafiye B) Îmge C) Metn D) Serhatî
+✓ Kafiye
+
+[ds_edebiyat_0160] Edebiyat
+S: Di helbesta klasîk a Kurmancî de, kîjan têgeh ji bo rêzkirina dengan tê bikaranîn?
+A) Îmge B) Rîtim C) Metn D) Serhatî
+✓ Rîtim
+
+[ds_edebiyat_0157] Edebiyat
+S: Di helbesta Ehmedê Xanî de, kîjan hêman ji bo pîvana kêşeyê tê bikaranîn?
+A) Metr B) Kafiye C) Îmge D) Rîwayet
+✓ Metr
+
+[ds_edebiyat_0179] Edebiyat
+S: Kîjan nivîskar bi berhema xwe ya "Faust" ve tê naskirin?
+A) Charles Dickens B) Johann Wolfgang von Goethe C) Fyodor Dostoyevskî D) Mark Twain
+✓ Johann Wolfgang von Goethe
+
+[ds_edebiyat_0180] Edebiyat
+S: Realîzm di kîjan sedsalê de wekî tevgereke edebî derket pêş?
+A) Sedsala 18an B) Sedsala 20an C) Sedsala 19an D) Sedsala 17an
+✓ Sedsala 19an
+
+[ds_edebiyat_0181] Edebiyat
+S: Di edebiyata realîzmê de, kîjan hêman zêde tê dîtin?
+A) Rastiya rojane B) Xeyalên berfireh C) Mîtolojî D) Efsaneyên dîrokî
+✓ Rastiya rojane
+
+[ds_edebiyat_0186] Edebiyat
+S: Modernîzm di kîjan sedsalê de wekî tevgereke edebî derket holê?
+A) Sedsala 19an B) Sedsala 18an C) Sedsala 20an D) Sedsala 21an
+✓ Sedsala 20an
+
+[ds_edebiyat_0187] Edebiyat
+S: Di edebiyata modernîzmê de, kîjan hêman zêde tê dîtin?
+A) Rastiya objektîf B) Şikandina rêzikên kevneşopî C) Zimanê sade D) Dîroka xêzî
+✓ Şikandina rêzikên kevneşopî
+
+[ds_edebiyat_0188] Edebiyat
+S: Kîjan roman ji aliyê James Joyce ve hatiye nivîsandin û wek mînaka modernîzmê tê naskirin?
+A) Madame Bovary B) Moby-Dick C) Ulysses D) War and Peace
+✓ Ulysses
+
+[ds_edebiyat_0189] Edebiyat
+S: Di romana "Ulysses" de, kîjan teknîk zêde tê bikaranîn?
+A) Herika hişê B) Rêzika kronolojîk C) Zimanê helbestî D) Diyalogên dirêj
+✓ Herika hişê
+
+[ds_edebiyat_0190] Edebiyat
+S: Kîjan roman ji aliyê Virginia Woolf ve hatiye nivîsandin û wek mînaka modernîzmê tê naskirin?
+A) Ulysses B) Mrs Dalloway C) The Great Gatsby D) One Hundred Years of Solitude
+✓ Mrs Dalloway
+
+[ds_edebiyat_0191] Edebiyat
+S: Di romana "Mrs Dalloway" de, kîjan mijar zêde tê dîtin?
+A) Şer û pevçûn B) Aborî û bazirganî C) Xweza û çiya D) Hiş û bîranîn
+✓ Hiş û bîranîn
+
+[ds_edebiyat_0192] Edebiyat
+S: Kîjan berhem ji aliyê Franz Kafka ve hatiye nivîsandin û wek mînaka modernîzmê tê naskirin?
+A) Ulysses B) Madame Bovary C) The Metamorphosis D) Les Misérables
+✓ The Metamorphosis
+
+[ds_edebiyat_0193] Edebiyat
+S: Di berhema "The Metamorphosis" de, kîjan bûyer diqewime?
+A) Emma Bovary dimire B) Odîseus vedigere malê C) Gilgameş dibe padîşah D) Gregor Samsa dibe kêzikek
+✓ Gregor Samsa dibe kêzikek
+
+[ds_edebiyat_0202] Edebiyat
+S: Kîjan nivîskara şîlî di sala 1945an de bû jina yekem a Amerîkaya Latîn a ku Xelata Nobelê ya Edebiyatê wergirt?
+A) Gabriela Mistral B) Selma Lagerlöf C) Pearl S. Buck D) Nadine Gordimer
+✓ Gabriela Mistral
+
+[ds_edebiyat_0203] Edebiyat
+S: Di sala 1954an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Amerîkî re hat dayîn?
+A) William Faulkner B) Ernest Hemingway C) John Steinbeck D) T.S. Eliot
+✓ Ernest Hemingway
+
+[ds_edebiyat_0204] Edebiyat
+S: Kîjan nivîskarê Kolombiyayî di sala 1982an de Xelata Nobelê ya Edebiyatê wergirt?
+A) Mario Vargas Llosa B) Jorge Luis Borges C) Pablo Neruda D) Gabriel García Márquez
+✓ Gabriel García Márquez
+
+[ds_edebiyat_0206] Edebiyat
+S: Di sala 2016an de Xelata Nobelê ya Edebiyatê ji kîjan stranbêj û nivîskarê Amerîkî re hat dayîn?
+A) Leonard Cohen B) Bruce Springsteen C) Paul Simon D) Bob Dylan
+✓ Bob Dylan
+
+[ds_edebiyat_0207] Edebiyat
+S: Kîjan nivîskara Alman di sala 2009an de Xelata Nobelê ya Edebiyatê wergirt?
+A) Herta Müller B) Elfriede Jelinek C) Günter Grass D) Peter Handke
+✓ Herta Müller
+
+[ds_edebiyat_0210] Edebiyat
+S: Di sala 2003an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Afrîkaya Başûr re hat dayîn?
+A) Nadine Gordimer B) Wole Soyinka C) Doris Lessing D) J.M. Coetzee
+✓ J.M. Coetzee
+
+[ds_edebiyat_0211] Edebiyat
+S: Kîjan nivîskarê Mîsrî di sala 1988an de bû yekem nivîskarê Ereb ku Xelata Nobelê ya Edebiyatê wergirt?
+A) Taha Hussein B) Nizar Qabbani C) Naguib Mahfouz D) Adonis
+✓ Naguib Mahfouz
+
+[ds_edebiyat_0213] Edebiyat
+S: Kîjan nivîskara Îngilîz di sala 2007an de Xelata Nobelê ya Edebiyatê wergirt?
+A) Doris Lessing B) V.S. Naipaul C) Harold Pinter D) Kazuo Ishiguro
+✓ Doris Lessing
+
+[ds_edebiyat_0214] Edebiyat
+S: Di sala 2021an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Tanzaniyayî re hat dayîn?
+A) Ngũgĩ wa Thiong'o B) Chinua Achebe C) Abdulrazak Gurnah D) Wole Soyinka
+✓ Abdulrazak Gurnah
+
+[ds_edebiyat_0218] Edebiyat
+S: Di sala 1998an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Portekîzî re hat dayîn?
+A) Fernando Pessoa B) Eça de Queiroz C) Miguel Torga D) José Saramago
+✓ José Saramago
+
+[ds_edebiyat_0220] Edebiyat
+S: Di sala 1961an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Yugoslavî re hat dayîn?
+A) Miroslav Krleža B) Miloš Crnjanski C) Ivo Andrić D) Danilo Kiš
+✓ Ivo Andrić
+
+[ds_edebiyat_0221] Edebiyat
+S: Kîjan nivîskarê Îrlandî di sala 1923an de Xelata Nobelê ya Edebiyatê wergirt?
+A) Samuel Beckett B) George Bernard Shaw C) James Joyce D) W.B. Yeats
+✓ W.B. Yeats
+
+[ds_edebiyat_0222] Edebiyat
+S: Di sala 1969an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskarê Îrlandî re hat dayîn?
+A) W.B. Yeats B) Samuel Beckett C) George Bernard Shaw D) Seamus Heaney
+✓ Samuel Beckett

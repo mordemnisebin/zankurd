@@ -1,0 +1,686 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+130 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_edebiyat_0224] Edebiyat
+S: Di sala 1991an de Xelata Nobelê ya Edebiyatê ji kîjan nivîskara Afrîkaya Başûr re hat dayîn?
+A) J.M. Coetzee B) Nadine Gordimer C) Doris Lessing D) Chimamanda Ngozi Adichie
+✓ Nadine Gordimer
+
+[ds_edebiyat_0226] Edebiyat
+S: Di çîroka Kurdî ya klasîk de, kîjan ajel bi xapandinê tê nasîn?
+A) gur B) hirç C) kûsî D) rovî
+✓ rovî
+
+[ds_edebiyat_0227] Edebiyat
+S: Kîjan berhem ji aliyê La Fontaine ve hatiye nivîsandin û tê de ajel bi zaravayê mirovan dipeyivin?
+A) Çîrokên Grimm B) Fablên La Fontaine C) Hezar û Yek Şev D) Şahname
+✓ Fablên La Fontaine
+
+[ds_edebiyat_0234] Edebiyat
+S: Di fabla "Kûsî û Dûpişk" de, dûpişk çima kûsî diqelişîne?
+A) ji ber ku ew xwezaya wî ye B) ji ber ku kûsî wî aciz kir C) ji ber ku ew birçî bû D) ji ber ku ew bi kûsî re dijmin bû
+✓ ji ber ku ew xwezaya wî ye
+
+[ds_edebiyat_0241] Edebiyat
+S: Di fabla "Şêr û Rovî" de, gava roviyê şêr cara sêyem dît çi kir?
+A) Reviya û xwe veşart B) Ji tirsan ket erdê C) Ji şêr re xwarin anî D) Çû ba wî û pê re axivî
+✓ Çû ba wî û pê re axivî
+
+[ds_edebiyat_0243] Edebiyat
+S: Di fabla "Gur û Rovî" de, gur gef li rovî dixwe ku eger guh nede wê çi bike?
+A) Wê wî ji hêlînê derxe B) Wê wî bide şêr C) Wê wî bixwe D) Wê wî bike xulamê xwe yê hertimî
+✓ Wê wî bixwe
+
+[ds_muzik_0001] Muzîk
+S: Cudahiya sereke ya di navbera cureyên dengbêjiyê "Kilam" û "Lawik/Heyranok" de çi ye?
+A) Kilam li ser dîrok û şeran bi awayekî resîtatîf e; Lawik li ser evîn û hestan e B) Kilam tenê bi tembûrê tê gotin, Lawik tenê bi def û zirneyê tê lêdan C) Kilam tenê ji bo zarokan e, Lawik tenê di şînan de tê xwendin D) Kilam bi zimanê erebî ye, Lawik tenê bi zaravayê hewramî ye
+✓ Kilam li ser dîrok û şeran bi awayekî resîtatîf e; Lawik li ser evîn û hestan e
+
+[ds_muzik_0002] Muzîk
+S: Bandora herî mezin a dîrokî ya Radyoya Êrîvanê (beşa kurdî, 1955) li ser muzîka kurdî çi bû?
+A) Qedexekirina hemû amûrên nûjen û tenê bikaranîna bilûrê B) Veguhestina hemû stranên kurdî bo zimanên ewropî di radyoyê de C) Qeydkirina dengbêjên herêmî û afirandina arşîveke hevpar a dengî D) Tekane organîzekirina konseran li bajarên Ewropayê
+✓ Qeydkirina dengbêjên herêmî û afirandina arşîveke hevpar a dengî
+
+[ds_muzik_0003] Muzîk
+S: Kîjan bajar wekî navenda kevneşopiya dengbêjiyê tê hesibandin?
+A) Stenbol B) Amed C) Qahîre D) Tahran
+✓ Amed
+
+[ds_muzik_0004] Muzîk
+S: Dengbêj bi piranî kilamên xwe li ser kîjan mijaran dibêjin?
+A) Astronomî B) Matematîk C) Evîn, dîrok û şer D) Teknolojî
+✓ Evîn, dîrok û şer
+
+[ds_muzik_0009] Muzîk
+S: Dengbêj bi piranî kilamên xwe li kû derê dibêjin?
+A) Di civatan de B) Di şanoyan de C) Di konseran de D) Di radyoyê de
+✓ Di civatan de
+
+[ds_muzik_0015] Muzîk
+S: Dengbêj bi piranî kilamên xwe ji bo kîjan armancê dibêjin?
+A) Ji bo dansê B) Ji bo reklamê C) Ji bo vegotina dîrokê D) Ji bo fêrbûna ziman
+✓ Ji bo vegotina dîrokê
+
+[ds_muzik_0023] Muzîk
+S: Dengbêj bi piranî kilamên xwe bi kîjan awayî ji bîranînê dibêjin?
+A) Bi nivîsê B) Bi notan C) Bi ezber D) Bi amûran
+✓ Bi ezber
+
+[ds_muzik_0005] Muzîk
+S: Kîjan amûr di performansa dengbêjiyê de bi gelemperî tê bikaranîn?
+A) Tembûr B) Keman C) Ney D) Ti amûrek nîne
+✓ Ti amûrek nîne
+
+[ds_muzik_0006] Muzîk
+S: Dengbêjî wekî kevneşopiyek devkî çima girîng e?
+A) Amûrên nûjen çêdike B) Dîrok û çanda Kurdî diparêze C) Zimanên biyanî hîn dike D) Muzîka populer pêş dixe
+✓ Dîrok û çanda Kurdî diparêze
+
+[ds_muzik_0008] Muzîk
+S: Kilam di nav kevneşopiya dengbêjiyê de bi piranî bi kîjan zimanî tê gotin?
+A) Kurmancî B) Tirkî C) Farisî D) Erebî
+✓ Kurmancî
+
+[ds_muzik_0011] Muzîk
+S: Kilam di kevneşopiya dengbêjiyê de bi piranî çawa tên veguhastin?
+A) Bi tîpên erebî tê nivîsandin B) Bi notan tê nivîsandin C) Bi tîpên latînî tê nivîsandin D) Bi devkî tê vegotin
+✓ Bi devkî tê vegotin
+
+[ds_muzik_0017] Muzîk
+S: Dengbêjî di nav çanda Kurdî de bi piranî wekî çi tê dîtin?
+A) Nûjeniyek teknolojîk B) Reklamek bazirganî C) Mîrateyek çandî D) Modeyek demkî
+✓ Mîrateyek çandî
+
+[ds_muzik_0021] Muzîk
+S: Dengbêjî di nav çanda Kurdî de bi piranî ji bo kîjan nifşî tê vegotin?
+A) Ji bo ciwanan B) Ji bo zarokan C) Ji bo pîran D) Ji bo hemû nifşan
+✓ Ji bo hemû nifşan
+
+[ds_muzik_0026] Muzîk
+S: Cudahiya sereke ya di navbera ekola dengbêjiyê ya "Serhedê" û ya "Botanê" de di kîjan şêwazê de ye?
+A) Serhed bi dengê bilind û lîrîk-epîk e; Botan bêhtir rîtmîk û bi kontrola henaseyê ye B) Serhed tenê bi piyanoyê tê gotin, Botan tenê bi kemançeyê tê lêdan C) Serhed tenê ji bo mêran e, Botan tenê ji aliyê zarokan ve tê vegotin D) Serhed li ser mîtolojiya yewnanî ye, Botan tenê li ser nêçîrvaniyê ye
+✓ Serhed bi dengê bilind û lîrîk-epîk e; Botan bêhtir rîtmîk û bi kontrola henaseyê ye
+
+[ds_muzik_0042] Muzîk
+S: Tembûr bi piranî di kîjan çandê de wekî amûreke pîroz tê dîtin?
+A) Di çanda Almanî de B) Di çanda Japonî de C) Di çanda Brezîlyayî de D) Di çanda Kurdî de
+✓ Di çanda Kurdî de
+
+[ds_muzik_0046] Muzîk
+S: Tembûr bi piranî di kîjan celebê muzîkê de tê bikaranîn?
+A) Muzîka gelêrî B) Muzîka rock C) Muzîka jazz D) Muzîka elektronîk
+✓ Muzîka gelêrî
+
+[ds_muzik_0050] Muzîk
+S: Tembûr bi piranî di kîjan herêmê de tê bikaranîn?
+A) Herêma Kurdistanê B) Herêma Alpê C) Herêma Amazonê D) Herêma Antarktîkayê
+✓ Herêma Kurdistanê
+
+[ds_muzik_0027] Muzîk
+S: Kîjan amûr ji famîleya nefesan e û ji darikê tê çêkirin?
+A) Tembûr B) Bilûr C) Def D) Zirne
+✓ Bilûr
+
+[ds_muzik_0081] Muzîk
+S: Kîjan amûr ji famîleya nefesan e û di muzîka kurdî de tê bikaranîn?
+A) Tembûr B) Def C) Bilûr D) Keman
+✓ Bilûr
+
+[ds_muzik_0029] Muzîk
+S: Zirne bi piranî li kû derê tê lêdan?
+A) Di nivîsgehan de B) Di pirtûkxaneyan de C) Di dîlan û şahiyan de D) Di dibistanan de
+✓ Di dîlan û şahiyan de
+
+[ds_muzik_0030] Muzîk
+S: Tembûr bi gelemperî çend têlên wê hene?
+A) Pênc têl B) Heft têl C) Neh têl D) Sê têl
+✓ Sê têl
+
+[ds_muzik_0031] Muzîk
+S: Bilûr bi kîjan rêbazê tê lêdan?
+A) Bi nefesê B) Bi tiliyan C) Bi kevanê D) Bi çakûç
+✓ Bi nefesê
+
+[ds_muzik_0033] Muzîk
+S: Zirne bi piranî li gel kîjan amûrê tê lêdan?
+A) Tembûr B) Bilûr C) Keman D) Def
+✓ Def
+
+[ds_muzik_0035] Muzîk
+S: Bilûr bi piranî ji çi tê çêkirin?
+A) Ji hesinî B) Ji plastîk C) Ji darikê D) Ji camê
+✓ Ji darikê
+
+[ds_muzik_0037] Muzîk
+S: Zirne bi piranî di kîjan çandê de tê bikaranîn?
+A) Çanda Skandînavyayê B) Çanda Rojhilata Navîn C) Çanda Amerîkaya Başûr D) Çanda Awistralyayê
+✓ Çanda Rojhilata Navîn
+
+[ds_muzik_0045] Muzîk
+S: Zirne bi piranî di kîjan demê de tê lêdan?
+A) Di rojên xemgîniyê de B) Di rojên cejnê de C) Di rojên xebatê de D) Di rojên xewê de
+✓ Di rojên cejnê de
+
+[ds_muzik_0038] Muzîk
+S: Tembûr bi piranî bi kîjan awayî tê lêdan?
+A) Bi kevanê B) Bi tiliyan C) Bi çakûç D) Bi nefesê
+✓ Bi tiliyan
+
+[ds_muzik_0039] Muzîk
+S: Bilûr bi piranî di kîjan celebê muzîkê de tê bikaranîn?
+A) Muzîka rock B) Muzîka jazz C) Muzîka gelêrî D) Muzîka elektronîk
+✓ Muzîka gelêrî
+
+[ds_muzik_0043] Muzîk
+S: Bilûr bi piranî di kîjan herêmê de tê bikaranîn?
+A) Herêma Alpê B) Herêma Amazonê C) Herêma Antarktîkayê D) Herêma Kurdistanê
+✓ Herêma Kurdistanê
+
+[ds_muzik_0047] Muzîk
+S: Bilûr bi piranî di kîjan çandê de tê bikaranîn?
+A) Çanda Kurdî B) Çanda Almanî C) Çanda Japonî D) Çanda Brezîlyayî
+✓ Çanda Kurdî
+
+[ds_muzik_0041] Muzîk
+S: Zirne bi piranî ji çi tê çêkirin?
+A) Ji hesinî B) Ji plastîk C) Ji darikê D) Ji camê
+✓ Ji darikê
+
+[ds_muzik_0052] Muzîk
+S: Kîjan amûr di muzîka kurdî de bi piranî ji bo dîlanan tê bikaranîn?
+A) Bilûr B) Tembûr C) Zirne D) Def
+✓ Zirne
+
+[ds_muzik_0053] Muzîk
+S: Di opera de stranbêj bi piranî bi kîjan awayî stranan dibêjin?
+A) Bi dengê normal B) Bi dengê nizm C) Bi dengê xweş D) Bi dengê bilind
+✓ Bi dengê bilind
+
+[ds_muzik_0054] Muzîk
+S: Kîjan celeb stran bi piranî ji bo zarokan tê gotin?
+A) Strana dîlanê B) Strana lorîkê C) Strana şînê D) Strana evînê
+✓ Strana lorîkê
+
+[ds_muzik_0055] Muzîk
+S: Kîjan amûr bi têlên xwe tê lêdan û di muzîka kurdî de navdar e?
+A) Bilûr B) Def C) Zirne D) Tembûr
+✓ Tembûr
+
+[ds_muzik_0056] Muzîk
+S: Kîjan celeb muzîk bi piranî li gel reqasê tê lêdan?
+A) Muzîka şînê B) Muzîka klasîk C) Muzîka dîlanê D) Muzîka rockê
+✓ Muzîka dîlanê
+
+[ds_muzik_0064] Muzîk
+S: Kîjan celeb muzîk bi piranî li gel govendê tê lêdan?
+A) Muzîka şînê B) Muzîka dîlanê C) Muzîka klasîk D) Muzîka cazê
+✓ Muzîka dîlanê
+
+[ds_muzik_0087] Muzîk
+S: Kîjan celeb muzîk bi piranî ji bo zarokan tê gotin?
+A) Lorî B) Dîlan C) Dengbêjî D) Heyran
+✓ Lorî
+
+[ds_muzik_0099] Muzîk
+S: Kîjan celeb muzîk bi piranî di nav kurdan de ji bo xemgîniyê tê gotin?
+A) Dîlan B) Lorî C) Zikir D) Kilam
+✓ Kilam
+
+[ds_muzik_0227] Muzîk
+S: Kîjan celeb muzîk bi piranî ji bo şînê tê gotin?
+A) Strana dîlanê B) Strana zarokan C) Strana xemgîn D) Strana evînê
+✓ Strana xemgîn
+
+[ds_muzik_0063] Muzîk
+S: Kîjan amûr bi piranî di muzîka elektronîk de tê bikaranîn?
+A) Sentezîzer B) Sentor C) Tembûr D) Bilûr
+✓ Sentezîzer
+
+[ds_muzik_0061] Muzîk
+S: Kîjan amûr bi piranî di orkestraya klasîk de tê bikaranîn?
+A) Keman B) Tembûr C) Bilûr D) Def
+✓ Keman
+
+[ds_muzik_0079] Muzîk
+S: Kîjan amûr bi piranî di muzîka kurdî de ji bo dîlanan tê bikaranîn?
+A) Tembûr B) Zirne C) Bilûr D) Def
+✓ Zirne
+
+[ds_muzik_0083] Muzîk
+S: Di kevneşopiya kurdî de kîjan amûr bi awazên şivanan ve tê naskirin?
+A) Def B) Zirne C) Bilûr D) Dahol
+✓ Bilûr
+
+[ds_muzik_0071] Muzîk
+S: Kîjan amûr bi piranî di muzîka gelêrî ya kurdî de tê bikaranîn?
+A) Piyano B) Saksafon C) Sentezîzer D) Tembûr
+✓ Tembûr
+
+[ds_muzik_0066] Muzîk
+S: Kîjan stran bi piranî ji bo dîlanê tê gotin?
+A) Strana dîlanê B) Strana şînê C) Strana lorîkê D) Strana dînî
+✓ Strana dîlanê
+
+[ds_muzik_0076] Muzîk
+S: Şivan Perwer bi piranî bi kîjan amûrê stranên xwe dibêje?
+A) Bilûr B) Def C) Tembûr D) Zirne
+✓ Tembûr
+
+[ds_muzik_0082] Muzîk
+S: Kîjan hunermend bi navê "Şahê Dengbêjan" tê naskirin?
+A) Şakiro B) Karapetê Xaço C) Reso D) Meryem Xan
+✓ Şakiro
+
+[ds_muzik_0101] Muzîk
+S: Di muzîkê de, nîşana ku bilindahiya dengan diyar dike çi ye?
+A) Rîtm B) Not C) Melodî D) Aheng
+✓ Not
+
+[ds_muzik_0102] Muzîk
+S: Di muzîkê de têgeha ku dûrahiya du dengan diyar dike çi ye?
+A) Navber B) Pîvan C) Tempo D) Deng
+✓ Navber
+
+[ds_muzik_0103] Muzîk
+S: Di muzîkê de, rêjdana dengan li gorî demê çi ye?
+A) Not B) Rîtm C) Navber D) Aheng
+✓ Rîtm
+
+[ds_muzik_0202] Muzîk
+S: Di muzîkê de, rêjdana dengan li gorî demê çi tê gotin?
+A) Ahenk B) Melodî C) Rîtm D) Armonî
+✓ Rîtm
+
+[ds_muzik_0104] Muzîk
+S: Di muzîkê de, dema ku çend dengan bi hev re têne lêdan, kîjan têgîn tê bikaranîn?
+A) Armonî B) Melodî C) Rîtm D) Tempo
+✓ Armonî
+
+[ds_muzik_0105] Muzîk
+S: Di muzîkê de, rêzika dengan ku bi hev re têne gotin çi ye?
+A) Aheng B) Rîtm C) Melodî D) Pîvan
+✓ Melodî
+
+[ds_muzik_0106] Muzîk
+S: Di muzîkê de, leza ku bi piranî bi "beats per minute" tê pîvan çi ye?
+A) Rîtm B) Tempo C) Aheng D) Melodî
+✓ Tempo
+
+[ds_muzik_0109] Muzîk
+S: Di muzîkê de, kîjan têgîn ji bo nîşankirina leza muzîkê tê bikaranîn?
+A) Tempo B) Rîtm C) Aheng D) Melodî
+✓ Tempo
+
+[ds_muzik_0110] Muzîk
+S: Di muzîkê de, kîjan têgîn ji bo nîşankirina rêjdana dengan tê bikaranîn?
+A) Tempo B) Rîtm C) Aheng D) Melodî
+✓ Rîtm
+
+[ds_muzik_0112] Muzîk
+S: Di muzîkê de, kîjan têgîn ji bo nîşankirina rêzika dengan tê bikaranîn?
+A) Melodî B) Aheng C) Rîtm D) Tempo
+✓ Melodî
+
+[ds_muzik_0218] Muzîk
+S: Di muzîkê de, kîjan têgîn ji bo nîşankirina leza muzîkê tê bikaranîn?
+A) Rîtm B) Tempo C) Armonî D) Melodî
+✓ Tempo
+
+[ds_muzik_0220] Muzîk
+S: Di muzîkê de, kîjan têgîn ji bo nîşankirina hevahengiya çend dengan tê bikaranîn?
+A) Rîtm B) Tempo C) Armonî D) Melodî
+✓ Armonî
+
+[ds_muzik_0222] Muzîk
+S: Di muzîkê de, kîjan têgîn ji bo nîşankirina bilindahiya taybet a dengan tê bikaranîn?
+A) Rîtm B) Pitch C) Tempo D) Armonî
+✓ Pitch
+
+[ds_muzik_0127] Muzîk
+S: Wolfgang Amadeus Mozart di kîjan welatî de ji dayik bûye?
+A) Almanya B) Fransa C) Awistirya D) Îtalya
+✓ Awistirya
+
+[ds_muzik_0131] Muzîk
+S: Wolfgang Amadeus Mozart di kîjan salê de wefat kiriye?
+A) 1809 B) 1756 C) 1791 D) 1827
+✓ 1791
+
+[ds_muzik_0134] Muzîk
+S: Wolfgang Amadeus Mozart di kîjan salê de ji dayik bûye?
+A) 1770 B) 1791 C) 1756 D) 1732
+✓ 1756
+
+[ds_muzik_0145] Muzîk
+S: Wolfgang Amadeus Mozart di kîjan welatî de wefat kiriye?
+A) Almanya B) Awistirya C) Fransa D) Îtalya
+✓ Awistirya
+
+[ds_muzik_0128] Muzîk
+S: Ludwig van Beethoven di serî de bi kîjan cureyê muzîkê tê naskirin?
+A) Muzîka klasîk B) Muzîka pop C) Muzîka elektronîk D) Muzîka cazê
+✓ Muzîka klasîk
+
+[ds_muzik_0139] Muzîk
+S: Ludwig van Beethoven di serî de bi kîjan senfonî tê naskirin?
+A) Senfonî 1 B) Senfonî 3 C) Senfonî 5 D) Senfonî 6
+✓ Senfonî 5
+
+[ds_muzik_0146] Muzîk
+S: Ludwig van Beethoven di serî de bi kîjan opera tê naskirin?
+A) Don Giovanni B) The Magic Flute C) Fidelio D) The Creation
+✓ Fidelio
+
+[ds_muzik_0129] Muzîk
+S: Kîjan bestekarê klasîk bi opera xwe ya "The Magic Flute" tê naskirin?
+A) Ludwig van Beethoven B) Joseph Haydn C) Franz Schubert D) Wolfgang Amadeus Mozart
+✓ Wolfgang Amadeus Mozart
+
+[ds_muzik_0130] Muzîk
+S: Joseph Haydn di serî de çend senfonî nivîsîne?
+A) 104 B) 41 C) 9 D) 32
+✓ 104
+
+[ds_muzik_0147] Muzîk
+S: Joseph Haydn di serî de bi kîjan cureyê muzîkê tê naskirin?
+A) Opera B) Senfonî C) Caz D) Rock
+✓ Senfonî
+
+[ds_muzik_0132] Muzîk
+S: Ludwig van Beethoven di kîjan bajarî de ji dayik bûye?
+A) Bonn B) Viyana C) Salzburg D) Leipzig
+✓ Bonn
+
+[ds_muzik_0135] Muzîk
+S: Ludwig van Beethoven di kîjan salê de wefat kiriye?
+A) 1827 B) 1791 C) 1809 D) 1770
+✓ 1827
+
+[ds_muzik_0143] Muzîk
+S: Ludwig van Beethoven di kîjan salê de ji dayik bûye?
+A) 1770 B) 1756 C) 1732 D) 1791
+✓ 1770
+
+[ds_muzik_0150] Muzîk
+S: Ludwig van Beethoven di kîjan welatî de wefat kiriye?
+A) Almanya B) Fransa C) Îtalya D) Awistirya
+✓ Awistirya
+
+[ds_muzik_0133] Muzîk
+S: Kîjan bestekarê klasîk bi navê "Bavê Senfoniyê" tê naskirin?
+A) Wolfgang Amadeus Mozart B) Ludwig van Beethoven C) Joseph Haydn D) Franz Schubert
+✓ Joseph Haydn
+
+[ds_muzik_0144] Muzîk
+S: Kîjan bestekarê klasîk bi navê "Bavê Muzîka Klasîk" tê naskirin?
+A) Joseph Haydn B) Wolfgang Amadeus Mozart C) Ludwig van Beethoven D) Franz Schubert
+✓ Joseph Haydn
+
+[ds_muzik_0137] Muzîk
+S: Joseph Haydn di kîjan salê de wefat kiriye?
+A) 1809 B) 1791 C) 1827 D) 1756
+✓ 1809
+
+[ds_muzik_0141] Muzîk
+S: Joseph Haydn di kîjan welatî de ji dayik bûye?
+A) Almanya B) Fransa C) Îtalya D) Awistirya
+✓ Awistirya
+
+[ds_muzik_0142] Muzîk
+S: Wolfgang Amadeus Mozart di serî de bi kîjan cureyê muzîkê tê naskirin?
+A) Senfonî B) Caz C) Opera D) Rock
+✓ Opera
+
+[ds_muzik_0149] Muzîk
+S: Wolfgang Amadeus Mozart di serî de bi kîjan formê muzîkê tê naskirin?
+A) Senfonî B) Opera C) Caz D) Rock
+✓ Opera
+
+[ds_muzik_0151] Muzîk
+S: Caz li kîjan bajarî ji dayik bûye?
+A) New Orleans B) New York C) Chicago D) Los Angeles
+✓ New Orleans
+
+[ds_muzik_0152] Muzîk
+S: Blues bi piranî ji kîjan herêmê derketiye?
+A) Ji bakurê Dewletên Yekbûyî B) Ji başûrê Dewletên Yekbûyî C) Ji rojhilatê Dewletên Yekbûyî D) Ji rojavayê Dewletên Yekbûyî
+✓ Ji başûrê Dewletên Yekbûyî
+
+[ds_muzik_0153] Muzîk
+S: Kîjan amûra bayî bûye sembola muzîka cazê?
+A) Tembûr B) Bilûr C) Zirne D) Saksafon
+✓ Saksafon
+
+[ds_muzik_0155] Muzîk
+S: Salên 1920yî li Dewletên Yekbûyî bi navê kîjan celebê muzîkê tên bibîranîn?
+A) Rock B) Pop C) Hip-hop D) Jazz
+✓ Jazz
+
+[ds_muzik_0156] Muzîk
+S: Kîjan hunermend wekî "King of Rock and Roll" tê naskirin?
+A) Elvis Presley B) Chuck Berry C) Little Richard D) Buddy Holly
+✓ Elvis Presley
+
+[ds_muzik_0168] Muzîk
+S: Kîjan hunermend wekî "King of Pop" tê naskirin?
+A) Elvis Presley B) Michael Jackson C) Prince D) Madonna
+✓ Michael Jackson
+
+[ds_muzik_0159] Muzîk
+S: Kîjan strana navdar a popê ji aliyê Michael Jackson ve tê naskirin?
+A) Like a Virgin B) I Will Always Love You C) Thriller D) Respect
+✓ Thriller
+
+[ds_muzik_0161] Muzîk
+S: Kîjan hunermend wekî "Queen of Soul" tê naskirin?
+A) Whitney Houston B) Diana Ross C) Tina Turner D) Aretha Franklin
+✓ Aretha Franklin
+
+[ds_muzik_0162] Muzîk
+S: Kîjan celeb muzîkê di salên 1990yan de li Seattle derketiye?
+A) Pop B) Grunge C) Hip-hop D) Country
+✓ Grunge
+
+[ds_muzik_0163] Muzîk
+S: Kîjan strana navdar a cazê ji aliyê Louis Armstrong ve tê naskirin?
+A) My Way B) Fly Me to the Moon C) Take Five D) What a Wonderful World
+✓ What a Wonderful World
+
+[ds_muzik_0165] Muzîk
+S: Kîjan amûr di navenda muzîka bluesê de ye?
+A) Piyano B) Baterî C) Gîtar D) Keman
+✓ Gîtar
+
+[ds_muzik_0166] Muzîk
+S: Kîjan koma muzîkê bi strana xwe ya "Bohemian Rhapsody" navdar bû?
+A) Queen B) Led Zeppelin C) Pink Floyd D) The Doors
+✓ Queen
+
+[ds_muzik_0170] Muzîk
+S: Kîjan strana navdar a rockê ji aliyê The Rolling Stones ve tê naskirin?
+A) (I Can't Get No) Satisfaction B) Hey Jude C) Stairway to Heaven D) Hotel California
+✓ (I Can't Get No) Satisfaction
+
+[ds_muzik_0172] Muzîk
+S: Di hilberîna popa nûjen de kîjan amûra elektronîk roleke sereke dilîze?
+A) Tembûr B) Bilûr C) Zirne D) Sentezker
+✓ Sentezker
+
+[ds_muzik_0176] Muzîk
+S: Di operayê de stranbêj bi piranî bi kîjan awayî stranan dibêjin?
+A) Bê mikrofon B) Bi mikrofonê C) Bi kasetê D) Bi radyoyê
+✓ Bê mikrofon
+
+[ds_muzik_0177] Muzîk
+S: Senfonî bi piranî ji bo çi tê nivîsandin?
+A) Piyanoyê B) Kemançeyê C) Tembûrê D) Orkestrayê
+✓ Orkestrayê
+
+[ds_muzik_0178] Muzîk
+S: Di operayê de, kîjan peyv ji bo strana yekdeng tê bikaranîn?
+A) Arya B) Koros C) Rîtm D) Melodî
+✓ Arya
+
+[ds_muzik_0179] Muzîk
+S: Kîjan bestekar bi opera xwe ya "The Magic Flute" tê naskirin?
+A) Joseph Haydn B) Ludwig van Beethoven C) Wolfgang Amadeus Mozart D) Johann Sebastian Bach
+✓ Wolfgang Amadeus Mozart
+
+[ds_muzik_0190] Muzîk
+S: Kîjan bestekar bi opera xwe ya "Carmen" tê naskirin?
+A) Georges Bizet B) Wolfgang Amadeus Mozart C) Ludwig van Beethoven D) Giuseppe Verdi
+✓ Georges Bizet
+
+[ds_muzik_0180] Muzîk
+S: Senfonî bi piranî ji çend beşan pêk tê?
+A) Çar beşan B) Sê beşan C) Du beşan D) Pênc beşan
+✓ Çar beşan
+
+[ds_muzik_0200] Muzîk
+S: Di senfoniyê de, kîjan amûr bi piranî di beşa têlan de cih digire û bi kemanê re dişibe?
+A) Bilûr B) Tembûr C) Viyola D) Def
+✓ Viyola
+
+[ds_muzik_0182] Muzîk
+S: Di operayê de, kîjan peyv ji bo koma stranbêjan tê bikaranîn?
+A) Arya B) Koros C) Solîst D) Rîtm
+✓ Koros
+
+[ds_muzik_0195] Muzîk
+S: Di operayê de, kîjan peyv ji bo strana çar stranbêjan tê bikaranîn?
+A) Trio B) Dûet C) Kuartet D) Arya
+✓ Kuartet
+
+[ds_muzik_0183] Muzîk
+S: Kîjan bestekar bi navê "Bavê Senfoniyê" tê naskirin?
+A) Wolfgang Amadeus Mozart B) Ludwig van Beethoven C) Johann Sebastian Bach D) Joseph Haydn
+✓ Joseph Haydn
+
+[ds_muzik_0203] Muzîk
+S: Kîjan têgîn bilindahiya dengan di muzîkê de diyar dike?
+A) Rîtm B) Pitch C) Tempo D) Dînamîk
+✓ Pitch
+
+[ds_muzik_0204] Muzîk
+S: Di muzîkê de, hevahengiya dengan ku bi hev re têne lêdan çi ye?
+A) Melodî B) Rîtm C) Kontrpuan D) Armonî
+✓ Armonî
+
+[ds_muzik_0205] Muzîk
+S: Kîjan têgîn leza muzîkê bi piranî bi "beats per minute" pîvan dike?
+A) Rîtm B) Metre C) Tempo D) Dinamîk
+✓ Tempo
+
+[ds_muzik_0211] Muzîk
+S: Kîjan têgîn ji bo nîşankirina leza muzîkê tê bikaranîn?
+A) Nota B) Rîtm C) Dînamîk D) Tempo
+✓ Tempo
+
+[ds_muzik_0213] Muzîk
+S: Kîjan têgîn ji bo nîşankirina hevahengiya dengan tê bikaranîn?
+A) Rîtm B) Tempo C) Armonî D) Nota
+✓ Armonî
+
+[ds_muzik_0219] Muzîk
+S: Kîjan têgîn ji bo nîşankirina rêjdana dengan bi demê re tê bikaranîn?
+A) Tempo B) Rîtm C) Armonî D) Melodî
+✓ Rîtm
+
+[ds_sinema_0032] Sînema
+S: Cudahiya sereke ya di navbera fîlmên "Yol" û "Sürü" yên "Yılmaz Güney" de çi ye?
+A) Yol rewşa girtîgehê û derketina îznê, Sürü hilweşîna feodalîzmê û koçberiyê vedibêje B) Yol li derveyî welat hatiye kişandin, Sürü tenê li bajarê Stenbolê hatiye çêkirin C) Yol li ser komediyê hatiye avakirin, Sürü belgenameyeke dîrokî ya serdema kevn e D) Yol fîlmeke bêdeng e, Sürü yekem fîlma bi deng a derhêner e
+✓ Yol rewşa girtîgehê û derketina îznê, Sürü hilweşîna feodalîzmê û koçberiyê vedibêje
+
+[ds_sinema_0037] Sînema
+S: Hêmana sereke ya ku fîlma "Kûsî Jî Difirin" ji fîlma "Dema Hespên Serxweş" a Bahman Ghobadi cuda dike çi ye?
+A) Li gundekî bêdeng jiyana mamosteyekî nûhatî û têkiliyên wî yên malbatî B) Li Ewropayê jiyana koçberên ciwan û zehmetiyên entegrasyona wan C) Li ser dîroka kevnar a şaristaniya Mezopotamyayê vegotineke mîtolojîk D) Li kampa penaberan komkirina mayînan û bandora derûnî ya şerê li ser zarokan
+✓ Li kampa penaberan komkirina mayînan û bandora derûnî ya şerê li ser zarokan
+
+[ds_sinema_0045] Sînema
+S: Di fîlma "Klama Dayîka Min" (Erol Mintaş) de diya ku ji Tarlabaşiyê hatiye koçberkirin li kîjan tiştî digere?
+A) Malbateke dewlemend ku alîkariya wan a aborî bike B) Zêrên kevn ên ku di gund de di bin erdê de mane C) Klamek winda û bîra çandî ya cihê ku lê jiya ye D) Pasaporta nû ji bo koçkirina ber bi derveyî welat
+✓ Klamek winda û bîra çandî ya cihê ku lê jiya ye
+
+[ds_sinema_0048] Sînema
+S: Fîlma "Cîran" a Mano Xelîl li ser kîjan rastiya dîrokî û sînoran hatiye avakirin?
+A) Şerê cîhanî yê yekem û hilweşîna împaratoriyên kevnar B) Pêşketina teknolojiya nûjen di qada çandiniyê de C) Parvebûna sînoran û polîtîkaya asîmîlasyonê ya li ser zarokan D) Koça mezin a ber bi bajarên Ewropayê di salên heştêyan de
+✓ Parvebûna sînoran û polîtîkaya asîmîlasyonê ya li ser zarokan
+
+[ds_sinema_0053] Sînema
+S: Kîjan derhênera kurd fîlma "Dort Augen" derxistiye?
+A) Nizamettin Ariç B) Hiner Saleem C) Mahmut Kaya D) Yüksel Yavuz
+✓ Yüksel Yavuz
+
+[ds_sinema_0106] Sînema
+S: Di kîjan salê de fîlma yekem a bi navê "La Sortie de l"usine Lumière à Lyon' ji aliyê Auguste û Louis Lumière ve hate kişandin?
+A) 1905 B) 1915 C) 1925 D) 1895
+✓ 1895
+
+[ds_sinema_0112] Sînema
+S: Di kîjan salê de fîlma "The Jazz Singer" a ku yekem fîlma bi deng e, derket?
+A) 1937 B) 1927 C) 1947 D) 1957
+✓ 1927
+
+[ds_sinema_0087] Sînema
+S: Di kîjan salê de fîlma "Bicycle Thieves" a Vittorio De Sica derket?
+A) 1950 B) 1948 C) 1946 D) 1952
+✓ 1948
+
+[ds_sinema_0099] Sînema
+S: Di kîjan salê de fîlma "The Bicycle Thief" a Vittorio De Sica derket?
+A) 1947 B) 1949 C) 1948 D) 1950
+✓ 1948
+
+[ds_sinema_0085] Sînema
+S: Di kîjan salê de fîlma "Gone with the Wind" derket?
+A) 1940 B) 1939 C) 1938 D) 1941
+✓ 1939
+
+[ds_sinema_0091] Sînema
+S: Di kîjan salê de fîlma "Citizen Kane" a Orson Welles derket?
+A) 1941 B) 1942 C) 1940 D) 1943
+✓ 1941
+
+[ds_sinema_0089] Sînema
+S: Di kîjan salê de fîlma "The Godfather" a Francis Ford Coppola derket?
+A) 1971 B) 1973 C) 1974 D) 1972
+✓ 1972
+
+[ds_sinema_0077] Sînema
+S: Fîlma "The Jazz Singer" ku derbasbûna bo sînemaya bi deng lez kir, di kîjan salê de derket?
+A) 1929 B) 1931 C) 1927 D) 1925
+✓ 1927

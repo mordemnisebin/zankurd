@@ -1,0 +1,656 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+124 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds26_cinema_0035] Sînema
+S: Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekî de berhev dike çi ye?
+A) sînematografî B) montaj C) mise-en-scène D) senaryo
+✓ mise-en-scène
+
+[ds26_cinema_0087] Sînema
+S: Xelatên Oscarê cara yekem di kîjan salê de hatin pêşkêşkirin?
+A) 1919 B) 1939 C) 1929 D) 1949
+✓ 1929
+
+[ds26_cinema_0089] Sînema
+S: Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?
+A) Festîvala Venedîkê B) Festîvala Cannesê C) Festîvala Berlînê D) Festîvala Torontoyê
+✓ Festîvala Cannesê
+
+[ds26_cinema_0090] Sînema
+S: Kîjan festîvala fîlman a herî kevn a cîhanê ye?
+A) Festîvala Cannesê B) Festîvala Berlînê C) Festîvala Venedîkê D) Festîvala Lokarnoyê
+✓ Festîvala Venedîkê
+
+[ds26_cinema_0109] Sînema
+S: Festîvala Cannesê di kîjan welatî de tê lidarxistin?
+A) Îtalya B) Fransa C) Spanya D) Swîsre
+✓ Fransa
+
+[ds26_cinema_0111] Sînema
+S: Fîlma ku di merasima yekem a Oscarê de xelata Fîlmê ya Herî Baş wergirt çi ye?
+A) The Jazz Singer B) Citizen Kane C) Wings D) Gone with the Wind
+✓ Wings
+
+[ds26_cinema_0113] Sînema
+S: Kîjan saziya ku Oscarê dide di sala 1927'an de hate damezrandin?
+A) Cannes Film Society B) AMPAS C) British Academy (BAFTA) D) Tribeca Institute
+✓ AMPAS
+
+[grok26_tech_core_0040] Teknolojî
+S: HTTP koda 404 bi gelemperî çi tê wateya?
+A) Çavkanî nehat dîtin B) Hemû tişt serkeftî ye C) Pêwîstî bi têketinê heye D) Server veguherî
+✓ Çavkanî nehat dîtin
+
+[grok26_tech_core_0071] Teknolojî
+S: Hejmara dual 1010 di dehî de çend e?
+A) 5 B) 10 C) 8 D) 12
+✓ 10
+
+[sf_cin_0001] Sînema
+S: Li gorî ferhenga zimanê fîlmê, di montajê de wate bi giranî ji ku derdikeve?
+A) Ji dirêjahiya giştî ya fîlmê B) Ji hevahengiya rengên kincan C) Ji şêwaza kesane ya derhêner D) Ji têkiliya di navbera dîmenan de
+✓ Ji têkiliya di navbera dîmenan de
+
+[sf_cin_0002] Sînema
+S: Di teknîka "deep focus" de çi tê bidestxistin?
+A) Tenê paşxaneya dûr zelal dibe B) Nêzîk û dûr bi hev re zelal dibin C) Rengên dîmenê hemû winda dibin D) Leza dîmenê pir hêdî dibe
+✓ Nêzîk û dûr bi hev re zelal dibin
+
+[sf_cin_0003] Sînema
+S: Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?
+A) 1932 B) 1946 C) 1951 D) 1955
+✓ 1932
+
+[sf_cin_0004] Sînema
+S: Xelata "Şêrê Zêrîn" ji bo fîlmê herî baş di kîjan salê de hate danîn?
+A) 1932 B) 1949 C) 1936 D) 1968
+✓ 1949
+
+[sf_cin_0005] Sînema
+S: Fîlmê yekem ê ku di dîroka Festîvala Venedîkê de hate nîşandan kîjan e?
+A) The Cabinet of Dr. Caligari B) The Birth of a Nation C) Battleship Potemkin D) Dr. Jekyll and Mr. Hyde
+✓ Dr. Jekyll and Mr. Hyde
+
+[sf_cin_0006] Sînema
+S: Pêşbaziya fermî cara yekem di kîjan salê de ket nav festîvalê?
+A) 1932 B) 1934 C) 1949 D) 1937
+✓ 1934
+
+[sf_cin_0007] Sînema
+S: Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?
+A) 1936 B) 1934 C) 1932 D) 1949
+✓ 1936
+
+[sf_cin_0008] Sînema
+S: Edîsyona yekem li ku hate lidarxistin?
+A) Li salona Palazzo del Cinema B) Li terasa Hotel Excelsior C) Li meydana Piazza San Marco D) Li sahneya Teatro La Fenice
+✓ Li terasa Hotel Excelsior
+
+[sf_cin_0009] Sînema
+S: La Biennale di Venezia di kîjan salê de hate damezrandin?
+A) 1932 B) 1949 C) 1980 D) 1895
+✓ 1895
+
+[sf_cin_0010] Sînema
+S: Pêşangeha Hunerî ya Navneteweyî ya yekem di kîjan salê de hate lidarxistin?
+A) 1895 B) 1932 C) 1980 D) 1999
+✓ 1895
+
+[sf_cin_0011] Sînema
+S: Pêşangeha Mîmarî ya Navneteweyî ya yekem di kîjan salê de pêk hat?
+A) 1949 B) 1932 C) 1980 D) 1999
+✓ 1980
+
+[sf_cin_0012] Sînema
+S: Dans di kîjan salê de beşdarî La Biennale bû?
+A) 1895 B) 1999 C) 1932 D) 1980
+✓ 1999
+
+[sf_cin_0013] Sînema
+S: Derhênerê fîlmê "À bout de souffle" (1960) kî ye?
+A) François Truffaut B) Claude Chabrol C) Jean-Luc Godard D) Alain Resnais
+✓ Jean-Luc Godard
+
+[sf_cin_0014] Sînema
+S: Fîlmê "À bout de souffle" di kîjan salê de derket?
+A) 1960 B) 1954 C) 1966 D) 1972
+✓ 1960
+
+[sf_cin_0015] Sînema
+S: Derhênerê fîlmê "Battleship Potemkin" kî ye?
+A) Dziga Vertov B) Lev Kuleshov C) Sergei M. Eisenstein D) Vsevolod Pudovkin
+✓ Sergei M. Eisenstein
+
+[sf_cin_0016] Sînema
+S: Fîlmê "Battleship Potemkin" di kîjan salê de derket?
+A) 1919 B) 1925 C) 1922 D) 1929
+✓ 1925
+
+[sf_cin_0017] Sînema
+S: Derhênerê fîlmê "Metropolis" (1927) kî ye?
+A) F. W. Murnau B) Robert Wiene C) Fritz Lang D) G. W. Pabst
+✓ Fritz Lang
+
+[sf_cin_0018] Sînema
+S: Fîlmê "Metropolis" (1927) hilberîna kîjan welatî ye?
+A) Almanya B) Fransa C) Îtalya D) Sovyet
+✓ Almanya
+
+[sf_cin_0019] Sînema
+S: Derhênerê fîlmê "Nosferatu" (1922) kî ye?
+A) Fritz Lang B) Robert Wiene C) F. W. Murnau D) Paul Wegener
+✓ F. W. Murnau
+
+[sf_cin_0020] Sînema
+S: Fîlmê "Nosferatu" di kîjan salê de derket?
+A) 1916 B) 1919 C) 1927 D) 1922
+✓ 1922
+
+[sf_cin_0021] Sînema
+S: Derhênerê fîlmê "Tokyo Story" (1953) kî ye?
+A) Akira Kurosawa B) Kenji Mizoguchi C) Yasujirō Ozu D) Masaki Kobayashi
+✓ Yasujirō Ozu
+
+[sf_cin_0022] Sînema
+S: Fîlmê "Tokyo Story" hilberîna kîjan welatî ye?
+A) Çîn B) Kore C) Taywan D) Japonya
+✓ Japonya
+
+[sf_cin_0023] Sînema
+S: Derhênerê fîlmê "Pather Panchali" (1955) kî ye?
+A) Ritwik Ghatak B) Satyajit Ray C) Mrinal Sen D) Guru Dutt
+✓ Satyajit Ray
+
+[sf_cin_0024] Sînema
+S: Fîlmê "Pather Panchali" hilberîna kîjan welatî ye?
+A) Bangladeş B) Pakistan C) Sri Lanka D) Hindistan
+✓ Hindistan
+
+[sf_cin_0025] Sînema
+S: Derhênerê fîlmê "Bicycle Thieves" kî ye?
+A) Roberto Rossellini B) Luchino Visconti C) Vittorio De Sica D) Federico Fellini
+✓ Vittorio De Sica
+
+[sf_cin_0026] Sînema
+S: Fîlmê "Bicycle Thieves" hilberîna kîjan welatî ye?
+A) Fransa B) Îspanya C) Yewnanistan D) Îtalya
+✓ Îtalya
+
+[sf_cin_0027] Sînema
+S: Derhênerê fîlmê "Citizen Kane" kî ye?
+A) John Ford B) Orson Welles C) Howard Hawks D) Frank Capra
+✓ Orson Welles
+
+[sf_cin_0028] Sînema
+S: Fîlmê "Citizen Kane" hilberîna kîjan welatî ye?
+A) Brîtanya B) Kanada C) Awistralya D) DYA
+✓ DYA
+
+[sf_cin_0029] Sînema
+S: Derhênerê fîlmê "Das Cabinet des Dr. Caligari" kî ye?
+A) Fritz Lang B) F. W. Murnau C) Robert Wiene D) G. W. Pabst
+✓ Robert Wiene
+
+[sf_cin_0030] Sînema
+S: Derhênerê fîlmê "Rashomon" kî ye?
+A) Yasujirō Ozu B) Kenji Mizoguchi C) Mikio Naruse D) Akira Kurosawa
+✓ Akira Kurosawa
+
+[sf_cin_0031] Sînema
+S: Fîlmê "Rashomon" di kîjan salê de derket?
+A) 1950 B) 1935 C) 1961 D) 1972
+✓ 1950
+
+[sf_cin_0032] Sînema
+S: Derhênerê fîlmê "The 400 Blows" kî ye?
+A) Jean-Luc Godard B) Claude Chabrol C) François Truffaut D) Éric Rohmer
+✓ François Truffaut
+
+[sf_cin_0033] Sînema
+S: Fîlmê "The 400 Blows" hilberîna kîjan welatî ye?
+A) Fransa B) Belçîka C) Swîsre D) Portekîz
+✓ Fransa
+
+[sf_cin_0034] Sînema
+S: Fîlmê "Seven Samurai" di kîjan salê de derket?
+A) 1948 B) 1963 C) 1970 D) 1954
+✓ 1954
+
+[sf_cin_0035] Sînema
+S: Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?
+A) 1951 B) 1932 C) 1946 D) 1968
+✓ 1951
+
+[sf_cin_0036] Sînema
+S: Xelata herî girîng a Berlinaleyê kîjan e?
+A) Şêrê Zêrîn B) Palmiyeya Zêrîn C) Hirça Zêrîn D) Ayiyê Zêrîn
+✓ Hirça Zêrîn
+
+[sf_cin_0037] Sînema
+S: Derhênerê fîlmê "Persona" kî ye?
+A) Ingmar Bergman B) Lars von Trier C) Roy Andersson D) Victor Sjöström
+✓ Ingmar Bergman
+
+[sf_cin_0038] Sînema
+S: Fîlmê "Persona" hilberîna kîjan welatî ye?
+A) Norwec B) Danîmarka C) Fînlanda D) Swêd
+✓ Swêd
+
+[sf_cin_0039] Sînema
+S: Derhênerê fîlmê "8½" kî ye?
+A) Federico Fellini B) Michelangelo Antonioni C) Luchino Visconti D) Pier Paolo Pasolini
+✓ Federico Fellini
+
+[sf_cin_0040] Sînema
+S: Fîlmê "8½" di kîjan salê de derket?
+A) 1949 B) 1963 C) 1955 D) 1958
+✓ 1963
+
+[sf_cin_0041] Sînema
+S: Derhênerê fîlmê "The Godfather" kî ye?
+A) Martin Scorsese B) Sidney Lumet C) Sam Peckinpah D) Francis Ford Coppola
+✓ Francis Ford Coppola
+
+[sf_cin_0042] Sînema
+S: Fîlmê "The Godfather" di kîjan salê de derket?
+A) 1965 B) 1972 C) 1969 D) 1980
+✓ 1972
+
+[sf_cin_0043] Sînema
+S: Derhênerê fîlmê "Vertigo" kî ye?
+A) Alfred Hitchcock B) Billy Wilder C) John Huston D) Otto Preminger
+✓ Alfred Hitchcock
+
+[sf_cin_0044] Sînema
+S: Fîlmê "Vertigo" di kîjan salê de derket?
+A) 1944 B) 1958 C) 1951 D) 1966
+✓ 1958
+
+[sf_cin_0045] Sînema
+S: Fîlmê "Sunrise A Song of Two Humans" di kîjan salê de derket?
+A) 1935 B) 1941 C) 1919 D) 1927
+✓ 1927
+
+[sf_cin_0046] Sînema
+S: Derhênerê fîlmê "Man with a Movie Camera" kî ye?
+A) Sergei Eisenstein B) Dziga Vertov C) Lev Kuleshov D) Vsevolod Pudovkin
+✓ Dziga Vertov
+
+[sf_cin_0047] Sînema
+S: Fîlmê "Man with a Movie Camera" di kîjan salê de derket?
+A) 1929 B) 1917 C) 1938 D) 1945
+✓ 1929
+
+[sf_cin_0048] Sînema
+S: Derhênerê fîlmê "Mirror" kî ye?
+A) Sergei Parajanov B) Andrei Tarkovsky C) Larisa Shepitko D) Andrei Konchalovsky
+✓ Andrei Tarkovsky
+
+[sf_cin_0049] Sînema
+S: Fîlmê "Mirror" di kîjan salê de derket?
+A) 1962 B) 1988 C) 1953 D) 1975
+✓ 1975
+
+[sf_cin_0050] Sînema
+S: Derhênerê fîlmê "In the Mood for Love" kî ye?
+A) Wong Kar Wai B) John Woo C) Tsai Ming-liang D) Hou Hsiao-hsien
+✓ Wong Kar Wai
+
+[sf_cin_0051] Sînema
+S: Fîlmê "In the Mood for Love" di kîjan salê de derket?
+A) 1988 B) 1994 C) 2000 D) 2008
+✓ 2000
+
+[sf_cin_0052] Sînema
+S: Derhênerê fîlmê "Come and See" kî ye?
+A) Andrei Tarkovsky B) Elem Klimov C) Nikita Mikhalkov D) Sergei Bondarchuk
+✓ Elem Klimov
+
+[sf_cin_0053] Sînema
+S: Derhênerê fîlmê "Close-up" kî ye?
+A) Mohsen Makhmalbaf B) Jafar Panahi C) Abbas Kiarostami D) Asghar Farhadi
+✓ Abbas Kiarostami
+
+[sf_cin_0054] Sînema
+S: Fîlmê "Close-up" hilberîna kîjan welatî ye?
+A) Îran B) Tirkiye C) Iraq D) Efxanistan
+✓ Îran
+
+[sf_geo_0001] Cografya
+S: Di dîrokê de çend okyanûsên bi nav hebûn?
+A) Sê B) Pênc C) Çar D) Şeş
+✓ Çar
+
+[sf_geo_0002] Cografya
+S: Kîjan okyanûs wek okyanûsa pêncem tê naskirin?
+A) Okyanûsa Hindî B) Okyanûsa Başûr C) Okyanûsa Atlas D) Okyanûsa Aram
+✓ Okyanûsa Başûr
+
+[sf_geo_0003] Cografya
+S: Sînorên Okyanûsa Başûr di kîjan salê de ji IHOyê re hatin pêşniyarkirin?
+A) 1982 B) 1994 C) 2000 D) 2010
+✓ 2000
+
+[sf_geo_0004] Cografya
+S: Li gorî NOAAyê, ji hêla fizîkî ve li cîhanê çend okyanûs hene?
+A) Tenê yek okyanûsa gerdûnî B) Çar okyanûsên cuda C) Pênc okyanûsên cuda D) Sê okyanûsên cuda
+✓ Tenê yek okyanûsa gerdûnî
+
+[sf_nat_0001] Cografya
+S: Li gorî USGSê, ji sedî çend ava cîhanê di okyanûsan de ye?
+A) Ji sedî 30 B) Ji sedî 50 C) Ji sedî 96 D) Ji sedî 71
+✓ Ji sedî 96
+
+[sf_nat_0002] Cografya
+S: Ava okyanûsê çawa ye?
+A) Bêtam e B) Şor e C) Şêrîn e D) Tirş e
+✓ Şor e
+
+[sf_nat_0003] Cografya
+S: Bi enerjiya rojê ava şil vediguhere çi?
+A) Berfê B) Qeşayê C) Hilmê D) Xwêyê
+✓ Hilmê
+
+[sf_nat_0004] Cografya
+S: Ewr bi giranî ji çi pêk tên?
+A) Ji ava di hewayê de B) Ji xweliyê C) Ji dûmanê D) Ji qumê
+✓ Ji ava di hewayê de
+
+[sf_nat_0005] Cografya
+S: Di sîstema rojê de çend gerstêrk hene?
+A) Şeş B) Heft C) Heşt D) Neh
+✓ Heşt
+
+[sf_nat_0006] Cografya
+S: Gerstêrka herî mezin a sîstema rojê kîjan e?
+A) Saturn B) Jupiter C) Neptun D) Mars
+✓ Jupiter
+
+[sf_nat_0007] Cografya
+S: Gerstêrka herî germ a sîstema rojê kîjan e?
+A) Jupiter B) Merkur C) Venus D) Mars
+✓ Venus
+
+[sf_nat_0008] Cografya
+S: Sîstema rojê berî nêzîkî çend milyar salan pêk hat?
+A) 4.6 milyar B) 2.4 milyar C) 13.8 milyar D) 8.2 milyar
+✓ 4.6 milyar
+
+[sf_nat_0009] Cografya
+S: Cîhan di çend rojan de li dora rojê yek car digere?
+A) 30 roj B) 24 roj C) 365.25 roj D) 687 roj
+✓ 365.25 roj
+
+[sf_nat_0010] Cografya
+S: Zivirîna Cîhanê ya li dora xwe çend saetan didome?
+A) 12 saet B) 48 saet C) 6 saet D) 23.9 saet
+✓ 23.9 saet
+
+[sf_nat_0011] Cografya
+S: Cîhan çend heyvên xwe hene?
+A) Du B) Sê C) Yek D) Çar
+✓ Yek
+
+[sf_nat_0012] Cografya
+S: Nêzîkî ji sedî çend rûyê Cîhanê bi okyanûsê pêçayî ye?
+A) Ji sedî 30 B) Ji sedî 50 C) Ji sedî 90 D) Ji sedî 71
+✓ Ji sedî 71
+
+[sf_nat_0013] Cografya
+S: Li gorî NASAyê, ji sedî çend ê atmosfera Cîhanê oksîjen e?
+A) Ji sedî 50 B) Ji sedî 21 C) Ji sedî 78 D) Ji sedî 5
+✓ Ji sedî 21
+
+[sf_nat_0014] Cografya
+S: Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?
+A) Oksîjen B) Karbondîoksît C) Argon D) Nîtrojen
+✓ Nîtrojen
+
+[sf_nat_0015] Cografya
+S: Li gorî USGSê, okyanûs ji sedî çend ava Cîhanê digirin?
+A) Ji sedî 71 B) Ji sedî 50 C) Ji sedî 96.5 D) Ji sedî 30
+✓ Ji sedî 96.5
+
+[sf_nat_0016] Cografya
+S: Piraniya ava şêrîn a Cîhanê li ku ye?
+A) Di golan de B) Di çeman de C) Di baranê de D) Di qeşa û cemedan de
+✓ Di qeşa û cemedan de
+
+[sf_nat_0017] Cografya
+S: Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?
+A) 150.000 km B) 384.400 km C) 1.740 km D) 12.000 km
+✓ 384.400 km
+
+[sf_nat_0018] Cografya
+S: Heyv di çend rojan de li dora Cîhanê yek car digere?
+A) 7 roj B) 14 roj C) 365 roj D) 27 roj
+✓ 27 roj
+
+[sf_nat_0019] Cografya
+S: Cihê herî kûr ê okyanûsê bi çi navî tê nasîn?
+A) Mariana Rise B) Pacific Basin C) Challenger Deep D) Atlas Trench
+✓ Challenger Deep
+
+[sf_nat_0020] Cografya
+S: Navê Challenger Deepê ji ku tê?
+A) Ji navê zanyarekî B) Ji navê giravekê C) Ji navê welatekî D) Ji navê keştiyekê
+✓ Ji navê keştiyekê
+
+[sf_tech_0007] Teknolojî
+S: Kurtenivîsa "URL" li ser çi tê avakirin?
+A) Universal Reading Language B) Uniform Resource Locator C) Unique Router Link D) Upper Range Layer
+✓ Uniform Resource Locator
+
+[sf_tech_0008] Teknolojî
+S: URL bi giranî çi diyar dike?
+A) Rengê rûpelê B) Mezinahiya wêneyan C) Dema xwendinê D) Navnîşana çavkaniyekê
+✓ Navnîşana çavkaniyekê
+
+[sf_tech_0010] Teknolojî
+S: Di HTTPê de peyama "200 OK" çi nîşan dide?
+A) Girêdan hat birîn B) Rûpel hat guhertin C) Daxwaz hat qebûlkirin D) Navnîşan çewt e
+✓ Daxwaz hat qebûlkirin
+
+[sf_tech_0012] Teknolojî
+S: Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?
+A) Na, êdî mecbûr nayên pêşniyarkirin B) Erê, her dem mecbûr in C) Tenê ji bo bankan mecbûr in D) Tenê ji bo e-nameyê mecbûr in
+✓ Na, êdî mecbûr nayên pêşniyarkirin
+
+[sf_tech_0013] Teknolojî
+S: "Passphrase" çi ye?
+A) Yek tîpa dubarekirî B) Hejmarek bi tenê C) Çend peyvên rastîn ên li hev hatî D) Navê bikarhêner
+✓ Çend peyvên rastîn ên li hev hatî
+
+[sf_tech_0014] Teknolojî
+S: Çima şîfreya yekseb li gelek malperan xeter e?
+A) Ji ber ku malper hêdî dibin B) Ger yek malper bikeve destan, hemû hesab dikevin xetereyê C) Ji ber ku bîranîn zehmet e D) Ji ber ku înternet zêde tê bikaranîn
+✓ Ger yek malper bikeve destan, hemû hesab dikevin xetereyê
+
+[visual_2026_08_07_0001] Çand
+S: Wêne mêrekî nîşan dide ku destê xwe daniye ser guhê xwe û bi dengekî bilind kilamekê dibêje. Kilamên dengbêjan bi kevneşopî çawa têne pêşkêşkirin?
+A) Bi zurne û def a li ber govendê B) Bi tembûr û bilûrê bi hev re C) Bi koroyeke ji gelek stranbêjan D) Bi tenê dengê mirov, bê amûr
+✓ Bi tenê dengê mirov, bê amûr
+
+[visual_2026_08_07_0002] Çand
+S: Di wêneyê de çay ji kesekî nû gihîştî re tê dirêjkirin. Di kurmancî de xwediyê malê bi kîjan gotinê kesê ku li ber derî peyda dibe pêşwazî dike?
+A) Bi xatirê te B) Bi xêr hatî C) Serê te sax be D) Roj li te xweş
+✓ Bi xêr hatî
+
+[visual_2026_08_07_0003] Çand
+S: Di wêneyê de cilên kevneşopî xuya dikin. Qumaşê dirêj û fireh ê ku di cilê mêran ê kevneşopî de çend caran li dora navtengê tê pêçandin, bi kîjan navî tê nasîn?
+A) şûtik B) kolos C) kiras D) elek
+✓ şûtik
+
+[visual_2026_08_07_0004] Dîrok
+S: Wêne belgeyên destnivîs ên kevn nîşan dide. Dîroknas di lêkolînên xwe de cihekî taybet didin belgeyên weha. Sedema vê yekê çi ye?
+A) Ew ji bo dersên dibistanê hatine amadekirin B) Ew di dema bûyerê de hatine çêkirin C) Ew ji zanyarên îro re hatine kurtkirin D) Ew ji gelek pirtûkên nû hatine berhevkirin
+✓ Ew di dema bûyerê de hatine çêkirin
+
+[visual_2026_08_07_0005] Dîrok
+S: Di wêneyê de kalek bîranînên xwe vedibêje û gotinên wî tên tomarkirin. Ev şêwaza lêkolînê bi taybetî ji bo kîjan rewşê girîng e?
+A) Ji bo civakên ku belgeyên wan pir zêde ne B) Ji bo bûyerên ku bi hejmaran tên pîvandin C) Ji bo demên ku şahidên wan nemane D) Ji bo civakên ku bîra wan neketiye arşîvan
+✓ Ji bo civakên ku bîra wan neketiye arşîvan
+
+[visual_2026_08_07_0006] Dîrok
+S: Qûmsaeta di wêneyê de derbasbûna demê dipîve. Dîroknas jî bûyeran li gorî demê rêz dikin. Ev rêzkirin berî her tiştî çi diyar dike?
+A) Kîjan bûyer ji ya din girîngtir e B) Kîjan bûyer berî ya din qewimiye C) Kîjan bûyer bêtir hatiye nivîsandin D) Kîjan bûyer li dever firehtir belav bûye
+✓ Kîjan bûyer berî ya din qewimiye
+
+[visual_2026_08_07_0007] Dîrok
+S: Di kolandina arkeolojîk a wêneyê de ax tebeqe bi tebeqe hatiye rakirin. Di rewşeke asayî de tebeqeyên jêrîn li gorî yên jorîn çawa ne?
+A) Ji yên jorîn kevntir in B) Ji yên jorîn nûtir in C) Bi yên jorîn re hevdem in D) Ji yên jorîn stûrtir in
+✓ Ji yên jorîn kevntir in
+
+[visual_2026_08_07_0008] Dîrok
+S: Wêne komeke ku bi barên xwe ve ber bi niştecihiyeke dûr ve dimeşe nîşan dide. Di dîrokê de cihguhertineke bi vî rengî ji hereketa demsalî ya koçeran bi çi tê cudakirin?
+A) Bi tevahî bêyî heywan û barên giran pêk tê B) Vegera demsalî ya bo heman cihî çênabe C) Her tim di demsala zivistanê de tê kirin D) Di nav sînorên yek gundî de tê sînordarkirin
+✓ Vegera demsalî ya bo heman cihî çênabe
+
+[visual_2026_08_07_0009] Dîrok
+S: Wêne gundekî çiyayî yê bi xaniyên keviran û bi ajelên kedîkirî nîşan dide. Derbasbûna mirovan ji jiyaneke gerok bo jiyaneke wiha ya domdar bi giranî bi kîjan pêşketinê ve girêdayî ye?
+A) Kifşkirina metalên bihagiran ên kanan B) Belavbûna çapxane û pirtûkên çapkirî C) Avakirina keştiyên mezin ên deryayî D) Destpêkirina çandinî û hilanîna genim
+✓ Destpêkirina çandinî û hilanîna genim
+
+[visual_2026_08_07_0010] Dîrok
+S: Wêne bazareke nixumandî nîşan dide ku bazirgan û kirrûbirên ji deverên cuda tê de tên cem hev. Gava du civak bi salan bi vî awayî têkilî datînin, di zimanên wan de bi piranî çi diqewime?
+A) Peyvên nû ji hev tên girtin û bi kar tên B) Rêzimana herdu zimanan dibe yek rêziman C) Zimanê ku kêmtir tê axaftin yekser winda dibe D) Dengên herdu zimanan ji nişka ve diguherin
+✓ Peyvên nû ji hev tên girtin û bi kar tên
+
+[visual_2026_08_07_0011] Edebiyat
+S: Di wêneyê de qelemek li ser kaxezeke vala ye. Helbest bi giranî bi kîjan yekeyên avanî tê rêzkirin?
+A) Bi paragraf û beşan B) Bi perde û dîmenan C) Bi rêzik û bendan D) Bi bendên qanûnî
+✓ Bi rêzik û bendan
+
+[visual_2026_08_07_0012] Edebiyat
+S: Wêne kitêbeke stûr û girtî nîşan dide. Berhemeke dirêj a pexşanî bi gelemperî li perçeyên li pey hev tê dabeşkirin; ev perçe çi tên navandin?
+A) Perde B) Beş C) Malik D) Kîte
+✓ Beş
+
+[visual_2026_08_07_0013] Edebiyat
+S: Wêne helbesteke bi destxet hatiye nivîsandin nîşan dide. Di helbestê de lihevhatina dengên li dawiya rêzikan çi tê navandin?
+A) Kîte B) Rêzik C) Qafiye D) Malik
+✓ Qafiye
+
+[visual_2026_08_07_0014] Edebiyat
+S: Wêne kesekî nîşan dide ku bi mîkrofonê diaxive û tiştekî digihîne guhdaran. Di çîrok û romanan de dengê ku bûyeran ji xwendevan re radigihîne çi tê navandin?
+A) Vebêj B) Nivîskar C) Rexnegir D) Leheng
+✓ Vebêj
+
+[visual_2026_08_07_0015] Cografya
+S: Wêne axeke vekirî ya bêriwek nîşan dide. Dema ba û av tebeqeya jorîn a vê axê ji cihê wê hildigirin û dibin cihekî din, ev pêvajoya xwezayî çi tê navandin?
+A) Buharbûn B) Kondensasyon C) Erozyon D) Volkanîzm
+✓ Erozyon
+
+[visual_2026_08_07_0016] Muzîk
+S: Di wêneyê de li ser çarçoveya amûreke lêdanê pelikên metalî yên cot hatine bicihkirin. Ev pelikên metalî di dema lêdanê de çi dikin?
+A) Çermê amûrê li çarçoveyê zexm digirin B) Bi her lêdanê re dengekî zingînî derdixin C) Bilindahiya dengê çerm nizimtir dikin D) Giraniya amûrê li ser destan sivik dikin
+✓ Bi her lêdanê re dengekî zingînî derdixin
+
+[visual_2026_08_07_0017] Muzîk
+S: Di wêneyê de jin amûreke lêdanê ya gilover a bi çermekî tenê digirin. Ev amûr bi kîjan awayî tê lêxistin?
+A) Bi du daran ji herdu aliyên çerm B) Bi darekê û bi tenê destekê C) Bi tilî û pelkên herdu destan D) Bi firçeyên têlî yên nerm
+✓ Bi tilî û pelkên herdu destan
+
+[visual_2026_08_07_0018] Muzîk
+S: Di wêneyê de du amûrên bi stûyê dirêj û laşê kûr ên wek hêkê li ser kursiyan hene. Deng ji vî celebê amûran çawa derdikeve?
+A) Têlên wê bi tilî an bi mizrabê tên kişandin B) Têlên wê bi kevanekî tên xişandin û lerizandin C) Hewa tê pifkirin û ji lûleyê deng çêdibe D) Bi lêdana li ser çermekî girtî deng çêdibe
+✓ Têlên wê bi tilî an bi mizrabê tên kişandin
+
+[visual_2026_08_07_0019] Muzîk
+S: Wêne rûpeleke notayan a li ser klavyeyekê nîşan dide. Ew komika xêzên hevterîb ên ku not li ser wan tên danîn ji çend xêzan pêk tê?
+A) Sê xêz B) Çar xêz C) Pênc xêz D) Şeş xêz
+✓ Pênc xêz
+
+[visual_2026_08_07_0020] Muzîk
+S: Di wêneyê de komek stranbêj bi hev re distirên. Gava di heman gavê de çend dengên ji hev cuda lê lihevhatî bi hev re tên gotin, navê vê hevbûna dengan çi ye?
+A) Melodî B) Rîtm C) Tempo D) Harmonî
+✓ Harmonî
+
+[restore_2026_08_07_0001] Çand
+S: Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?
+A) metelok B) kelaş C) hewran D) şabaş
+✓ şabaş
+
+[restore_2026_08_07_0002] Çand
+S: Pêlava kurdî ya kevneşopî ya ku bi tayan tê hûnandin bi kîjan navî tê nasîn?
+A) şûtik B) kelaş C) kolos D) elek
+✓ kelaş
+
+[restore_2026_08_07_0003] Çand
+S: Di kurmancî de gotina kurt a pêşiyan ku ezmûneke civakî bi çend peyvan vedibêje çi ye?
+A) metelok B) şabaş C) mêvanperwerî D) govend
+✓ metelok
+
+[restore_2026_08_07_0004] Çand
+S: Çadira reş a ji mûyê bizinan ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?
+A) kelaş B) reşmal C) şûtik D) metelok
+✓ reşmal
+
+[restore_2026_08_07_0005] Dîrok
+S: Hejmara yekem a "Rojnameya Kurdistan" (1898) li kîjan bajarî derket?
+A) Şam B) Stenbol C) Bexda D) Qahîre
+✓ Qahîre
+
+[restore_2026_08_07_0006] Dîrok
+S: "Şerefname", dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?
+A) Ehmedê Xanî B) Şerefxanê Bidlîsî C) Mîqdat Mîdhad Bedirxan D) Feqiyê Teyran
+✓ Şerefxanê Bidlîsî
+
+[restore_2026_08_07_0007] Cografya
+S: Çiyayê Cûdî li kîjan perçeyê Kurdistanê ye?
+A) Bakurê Kurdistanê B) Rojavayê Kurdistanê C) Başûrê Kurdistanê D) Rojhilatê Kurdistanê
+✓ Bakurê Kurdistanê
+
+[restore_2026_08_07_0008] Cografya
+S: Deşta Amedê bi kîjan taybetmendiya axa xwe ji deştên derdorê vediqete?
+A) axa şor a bêber B) axa bazaltî ya berdar C) axa qûmî ya hişk D) axa çiyayî ya kevirîn
+✓ axa bazaltî ya berdar
+
+[restore_2026_08_07_0009] Muzîk
+S: Amûra lêdanê ya mezin a ku bi du daran tê lêxistin û pir caran bi zurneyê re li derve tê lêxistin çi ye?
+A) bilûr B) tembûr C) erbane D) dahol
+✓ dahol
+
+[restore_2026_08_07_0010] Muzîk
+S: Amûra bayê ya bi dengê bilind ku li meydanan bi dahol re tê lêxistin çi ye?
+A) zurna B) bilûr C) tembûr D) dahol
+✓ zurna
+
+[restore_2026_08_07_0011] Muzîk
+S: Awaza dirêj a dengbêjan a ku bûyerek an çîrokek vedibêje bi kîjan navî tê nasîn?
+A) govend B) şabaş C) kilam D) metelok
+✓ kilam

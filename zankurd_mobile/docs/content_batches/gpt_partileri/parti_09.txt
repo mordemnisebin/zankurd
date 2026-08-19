@@ -1,0 +1,341 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+61 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[offline_11143] Muzîk
+S: Berambera rast a biwêja "stranbêj" kîjan e?
+A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan" B) avaza ku ji rêzbûna dengan pêk tê C) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje D) kesa ku bi giştî stranan dibêje
+✓ kesa ku bi giştî stranan dibêje
+
+[offline_11154] Muzîk
+S: Derbarê "kilam" de vebijêrka rast kîjan e?
+A) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike B) strana destanî an evînî ya ku dengbêj dibêjin C) hunermendê ku bayê rock û caz anî muzîka kurdî D) yekem hunermenda kurd a jin a ku plak dagirt
+✓ strana destanî an evînî ya ku dengbêj dibêjin
+
+[offline_11180] Muzîk
+S: Têgiha "makama dengbêjan" çi pêk tîne?
+A) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan B) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin C) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê D) stranbêjî an lêxistina bi tenê ya hunermendekî
+✓ şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+
+[offline_11200] Muzîk
+S: Derbarê "dahol" de ravekirina rast kîjan e?
+A) dengê efsanewî yê muzîka klasîk a Behdînan B) bêyî amûr û bi avaza xweberî C) avaza ku ji rêzbûna dengan pêk tê D) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+✓ sazê rîtmê yê ku bi zirneyê re tê lêxistin
+
+[offline_11227] Muzîk
+S: Bi "defbaz" çi tê xwestin?
+A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê B) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir D) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+✓ hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+
+[offline_11294] Muzîk
+S: Ji aliyê Muzîkê ve ji bo "erbane" îfadeya rast kîjan e?
+A) veguhastina muzîkal a bi têkiliya hoste-şagird B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin C) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+✓ erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
+
+[offline_11326] Muzîk
+S: Kîjan pênase bi "muzîka kirmanckî" re li hev tê?
+A) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir B) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike C) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan D) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+✓ muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+
+[offline_11366] Muzîk
+S: "solo" di mijara muzîkê de çi vedibêje?
+A) stranbêjî an lêxistina bi tenê ya hunermendekî B) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin C) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn D) amûra arpî ya ku li Mezopotamyaya kevnar û di muzîka kurdî de hat bikaranîn
+✓ stranbêjî an lêxistina bi tenê ya hunermendekî
+
+[offline_11371] Muzîk
+S: Koma Amed çi ye?
+A) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin B) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir C) hunermendê ku bayê rock û caz anî muzîka kurdî D) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+✓ koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+
+[offline_11383] Muzîk
+S: Derbarê "heyran" de agahiya herî rast kîjan e?
+A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin B) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e C) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+✓ cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+
+[offline_11420] Muzîk
+S: Ji aliyê Muzîkê ve ji bo "muzîka govendê" îfadeya rast kîjan e?
+A) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin C) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+✓ stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+
+[offline_11431] Muzîk
+S: Kîjan vebijêrk tê wateya "dengbêj"?
+A) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê B) sazê rîtmê yê ku bi zirneyê re tê lêxistin C) hunermendê ku vegotina devkî ya bi avaz dike D) bêyî amûr û bi avaza xweberî
+✓ hunermendê ku vegotina devkî ya bi avaz dike
+
+[offline_11493] Paradigma
+S: Kîjan vebijêrk tê wateya "hevgirtina demokratîk"?
+A) awayê xwerêveberî û rêxistinbûna gel B) beşdariya civaka herêmî di pêvajoyên biryarê de C) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê D) yekîtiya wekhev a beşên cuda yên bindest
+✓ yekîtiya wekhev a beşên cuda yên bindest
+
+[offline_11511] Paradigma
+S: "hiyerarşî" bi awayekî rast çawa tê ravekirin?
+A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de B) ne tenê sembolîk, lê di asta rêxistinî û saziyî de C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike D) beşdariya civaka herêmî di pêvajoyên biryarê de
+✓ rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+
+[offline_11517] Paradigma
+S: Der barê "pîşesaziya ekolojîk" de ji bo paradîgmayê bijardeya rast kîjan e?
+A) yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye B) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê C) qadên xwerêxistina civakî yên derveyî dewletê D) hevpariya nasnameyan bêyî zora dewletê
+✓ awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+
+[offline_11538] Paradigma
+S: Dema "pîvana azadiyê" tê gotin, çi tê xwestin?
+A) organeke hevrêzî û biryarê ya li ser komînan B) reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye C) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan D) belgeya destûrî ya ku prensîbên damezrîner û bingehên rêveberiyê diyar dike
+✓ pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+
+[offline_11543] Paradigma
+S: "jiyana hevpar a azad" çawa tê pênasekirin?
+A) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê C) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e D) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
+✓ jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
+
+[offline_11556] Paradigma
+S: "peymana civakî" tê çi wateyê?
+A) metna damezrîner a hevbeş a kanton û komînan B) pergaleke li ser bingeha jiyana komînal û hevgirtinê C) mafê civakê yê xwe parastin û xwerêxistinê D) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+✓ metna damezrîner a hevbeş a kanton û komînan
+
+[offline_11584] Paradigma
+S: Têgiha "komîn" çi pêk tîne?
+A) organeke hevrêzî û biryarê ya li ser komînan B) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê C) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike D) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+✓ yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+
+[offline_11587] Paradigma
+S: Derbarê "azadîxwaziya zayendî" de agahiya herî rast kîjan e?
+A) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike B) beşdariya civaka herêmî di pêvajoyên biryarê de C) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî D) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+✓ prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+
+[offline_11588] Paradigma
+S: "hêza exlaqî" çi îfade dike?
+A) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de C) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+✓ şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+
+[offline_11597] Paradigma
+S: Bi "rexneya patriyarkayê" çi tê xwestin?
+A) eşkerekirina avahiya pergala serdestiya zilaman B) federasyoneke ne-dewletgir a li ser bingeha binî C) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye D) yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye
+✓ eşkerekirina avahiya pergala serdestiya zilaman
+
+[offline_11599] Paradigma
+S: Têgiha "aboriya komûnal" çi pêk tîne?
+A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e B) biryargirtina rasterast a gel bêyî nûneran C) ne tenê sembolîk, lê di asta rêxistinî û saziyî de D) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+✓ aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+
+[offline_11605] Paradigma
+S: Der barê "konfederalîzma demokratîk" de bijardeya rast kîjan e?
+A) modeleke rêveberiya civakî ya derveyî dewletê B) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê C) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê D) têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de
+✓ modeleke rêveberiya civakî ya derveyî dewletê
+
+[offline_11624] Paradigma
+S: "azadiya jinê" çi îfade dike?
+A) krîzên ekolojî, jin û demokrasiyê B) azadiya jinê, ekolojî û demokrasî C) dibistana lêgerîna zanist û jiyaneke alternatîf D) pîvana herî bingehîn a azadbûna civakî
+✓ pîvana herî bingehîn a azadbûna civakî
+
+[offline_11649] Paradigma
+S: Ji bo "meclis" pênaseya derbasdar kîjan e?
+A) avahiyeke dewletê ya yekreng û sînoran pîroz dike B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de C) organeke hevrêzî û biryarê ya li ser komînan D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+✓ organeke hevrêzî û biryarê ya li ser komînan
+
+[offline_11713] Paradigma
+S: "civaka exlaqî-polîtîk" bi awayekî rast çawa tê ravekirin?
+A) xeteke pêşketina komînal a gelan a ne-dewletgir B) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike D) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
+✓ civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
+
+[offline_11728] Paradigma
+S: Li jêr ji bo "dewleta netewe" ya rast kîjan e?
+A) organeke hevrêzî û biryarê ya li ser komînan B) reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye C) avahiyeke dewletê ya yekreng û sînoran pîroz dike D) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+✓ avahiyeke dewletê ya yekreng û sînoran pîroz dike
+
+[offline_11779] Paradigma
+S: Der barê "modernîteya kapîtalîst" de ji bo paradîgmayê bijardeya rast kîjan e?
+A) komîteya ku gel li taxan û gundan biryaran dide B) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike D) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
+✓ sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+
+[offline_11782] Paradigma
+S: Kîjan têgeha "tekelparêzî" di nav paradîgmayê de rast bi cih dike?
+A) krîza navendîbûna aborî û siyasî ya destekî yekane B) federasyoneke ne-dewletgir a li ser bingeha binî C) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye D) dibistana lêgerîna zanist û jiyaneke alternatîf
+✓ krîza navendîbûna aborî û siyasî ya destekî yekane
+
+[offline_11789] Paradigma
+S: Derbarê "Akademiya Modernîteya Demokratîk" de kîjan rast e?
+A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan B) dibistana lêgerîna zanist û jiyaneke alternatîf C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de D) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+✓ dibistana lêgerîna zanist û jiyaneke alternatîf
+
+[offline_11792] Paradigma
+S: Derbarê "zanistiya demokratîk" de kîjan rast e?
+A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e B) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne C) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike D) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+✓ têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+
+[offline_11813] Paradigma
+S: Ji bo "netewa demokratîk" pênaseya derbasdar kîjan e?
+A) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne B) belgeya ku prensîbên hevjiyana civakê diyar dike C) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike D) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+✓ hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+
+[offline_11820] Paradigma
+S: "civaka sivîl" di mijara paradîgmayê de çi vedibêje?
+A) milkiyeta axê û amûran a gişî civakê B) qadên xwerêxistina civakî yên derveyî dewletê C) yekîneya bingehîn a hevgirtinê ya aboriya komînal D) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+✓ qadên xwerêxistina civakî yên derveyî dewletê
+
+[offline_11838] Paradigma
+S: Derbarê "şaristaniya demokratîk" de ravekirina rast kîjan e?
+A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan B) ji ber ku têkiliya civak-xweza bi rexneya desthilatdarî û aboriyê ve tevî hev vedihewîne C) ji ber ku ji bo pratîka perwerdehiyê fêrbûneke ewle, analîtîk û demokratîk armanc kirî ye D) xeteke pêşketina komînal a gelan a ne-dewletgir
+✓ xeteke pêşketina komînal a gelan a ne-dewletgir
+
+[offline_11846] Paradigma
+S: Têgiha "kantona demokratîk" çi pêk tîne?
+A) li seranserê cîhanê bûye sembola azadiya jinê B) pergaleke civakî ku zilamî serdest dike û jinê tepser dike C) metna damezrîner a hevbeş a kanton û komînan D) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+✓ yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+
+[offline_11864] Paradigma
+S: Kîjan li gorî pênaseya "konfederalîzma demokratîk" ye?
+A) federasyoneke ne-dewletgir a li ser bingeha binî B) mafê civakê yê xweparastin û xwerêxistinê C) pîvana herî bingehîn a azadbûna civakî D) eşkerekirina avahiya pergala serdestiya zilaman
+✓ federasyoneke ne-dewletgir a li ser bingeha binî
+
+[offline_11870] Paradigma
+S: Kîjan têgeha "ekolojiya civakî" di nav paradîgmayê de rast bi cih dike?
+A) avahiyeke dewletê ya yekreng û sînoran pîroz dike B) ne tenê sembolîk, lê di asta rêxistinî û saziyî de C) zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike D) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+✓ zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike
+
+[offline_11886] Paradigma
+S: Derbarê "peymana civakî" de vebijêrka rast kîjan e?
+A) avahiyeke dewletê ya yekreng û sînoran pîroz dike B) dîtina azadiya jinê wek bingeha azadiya civakî C) belgeya ku prensîbên hevjiyana civakê diyar dike D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+✓ belgeya ku prensîbên hevjiyana civakê diyar dike
+
+[offline_11893] Paradigma
+S: Li jêr kîjan têgiha "civaka ekolojîk" rave dike?
+A) hevpariya nasnameyan bêyî zora dewletê B) yekîtiya wekhev a beşên cuda yên bindest C) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî D) li seranserê cîhanê bûye sembola azadiya jinê
+✓ civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
+
+[offline_11917] Paradigma
+S: Li jêr kîjan têgiha "eşseroktî" rave dike?
+A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de B) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire C) têgihiştina mirov a ku ew parçeyekî xwezayê ye D) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+✓ pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+
+[offline_11957] Paradigma
+S: Dema "zayenda civakî" tê gotin, çi tê xwestin?
+A) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye B) krîza navendîbûna aborî û siyasî ya destekî yekane C) kapitalist moderniteye alternatif yaşam sistemi D) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+✓ rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+
+[offline_11996] Paradigma
+S: "antîkapîtalîzm" çi îfade dike?
+A) ku rêxistinbûna demokratîk tenê bi dewleta navendî re sînordar nîne B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de D) nêrîna ku li dora zanista jinê û rexneya baviksalariyê pêş dikeve
+✓ helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+
+[offline_12036] Paradigma
+S: Ji aliyê paradîgmayê ve ji bo "pîşesazîparêzî" gotina rast kîjan e?
+A) têkiliya di navbera serdestiyê û xerakirina xwezayê de B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê C) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî D) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
+✓ modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
+
+[offline_12069] Paradigma
+S: Dema "milkiyeta komûnal" tê gotin, çi tê xwestin?
+A) pîvana herî bingehîn a azadbûna civakî B) azadiya jinê, ekolojî û demokrasî C) eşkerekirina avahiya pergala serdestiya zilaman D) milkiyeta axê û amûran a gişî civakê
+✓ milkiyeta axê û amûran a gişî civakê
+
+[offline_12073] Paradigma
+S: Derbarê "akademiyên jinan" de kîjan rast e?
+A) têgihiştina mirov a ku ew parçeyekî xwezayê ye B) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê C) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin D) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+✓ dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
+
+[offline_12122] Paradigma
+S: Derbarê "patriyarka" de vebijêrka rast kîjan e?
+A) nîzameke wekhev a bêyî serdestî û mêtinkirinê B) li seranserê cîhanê bûye sembola azadiya jinê C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+✓ pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+
+[offline_12261] Paradigma
+S: "civaka bêhiyerarşî" tê çi wateyê?
+A) têkiliya di navbera serdestiyê û xerakirina xwezayê de B) biryargirtina rasterast a gel bêyî nûneran C) yekîtiya wekhev a beşên cuda yên bindest D) nîzameke wekhev a bêyî serdestî û mêtinkirinê
+✓ nîzameke wekhev a bêyî serdestî û mêtinkirinê
+
+[offline_12291] Paradigma
+S: "politîkbûn" bi awayekî rast çawa tê ravekirin?
+A) organeke hevrêzî û biryarê ya li ser komînan B) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê C) belgeya ku prensîbên hevjiyana civakê diyar dike D) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+✓ xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+
+[offline_12331] Paradigma
+S: Derbarê "demokrasiya rasterast" de agahiya herî rast kîjan e?
+A) biryargirtina rasterast a gel bêyî nûneran B) têkiliya di navbera serdestiyê û xerakirina xwezayê de C) beşdariya civaka herêmî di pêvajoyên biryarê de D) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+✓ biryargirtina rasterast a gel bêyî nûneran
+
+[offline_12344] Paradigma
+S: "kooperatîfvanî" çawa divê bê fêmkirin?
+A) federasyoneke ne-dewletgir a li ser bingeha binî B) yekîneya bingehîn a hevgirtinê ya aboriya komînal C) pergaleke li ser bingeha jiyana komînal û hevgirtinê D) krîza navendîbûna aborî û siyasî ya destekî yekane
+✓ yekîneya bingehîn a hevgirtinê ya aboriya komînal
+
+[offline_12366] Paradigma
+S: Derbarê "parastina rewa" de ravekirina rast kîjan e?
+A) pergaleke li ser bingeha jiyana komînal û hevgirtinê B) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê C) mafê civakê yê xwe parastin û xwerêxistinê D) milkiyeta axê û amûran a gişî civakê
+✓ mafê civakê yê xwe parastin û xwerêxistinê
+
+[offline_12391] Paradigma
+S: "şaristaniya dewletparêz" tê çi wateyê?
+A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e B) xeteke pêşketina komînal a gelan a ne-dewletgir C) beşdariya civaka herêmî di pêvajoyên biryarê de D) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+✓ xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+
+[offline_12401] Paradigma
+S: Li jêr ji bo "komunalîzma demokratîk" kîjan rast e?
+A) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê B) pergaleke li ser bingeha jiyana komînal û hevgirtinê C) krîza navendîbûna aborî û siyasî ya destekî yekane D) dibistana lêgerîna zanist û jiyaneke alternatîf
+✓ pergaleke li ser bingeha jiyana komînal û hevgirtinê
+
+[offline_12660] Siyaset
+S: "aştiya civakî" çawa tê pênasekirin?
+A) Ji ber ku wek şerta azadbûna civakê bi tevahî tê hesibandin B) Hevjiyana aram a komên etnîkî û baweriyê yên cuda C) Rêzikên qanûnî û gavên entegrasyona demokratîk D) Nîqaşa konfederalîzma demokratîk û netewa demokratîk
+✓ Hevjiyana aram a komên etnîkî û baweriyê yên cuda
+
+[offline_12703] Siyaset
+S: "komîsyona rastiyê" bi awayekî rast çawa tê ravekirin?
+A) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike B) danûstandin, reforma demokratîk û misogerkirina mafan C) hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî D) statûya xweseriyê û biryargirtinê li herêmê
+✓ komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
+
+[offline_12742] Siyaset
+S: Kîjan têgiha "demokrasiya temsîlî" rast şirove dike?
+A) pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin B) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de C) diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan D) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
+✓ pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin
+
+[offline_12743] Siyaset
+S: "demokrasiya herêmî" çi îfade dike?
+A) platforma hevbeş a aştiyê ya komên muxalif ên cuda B) beşdariya rasterast û berdewam a ji binî pêş dixe C) girtina biryaran li yekîneyên herî nêzî gel D) parastina komên ku ji piraniyê cuda ne
+✓ girtina biryaran li yekîneyên herî nêzî gel
+
+[offline_12745] Siyaset
+S: "demokrasiya pirreng" tê çi wateyê?
+A) qebûlkirina wekhev a nasname û baweriyên cuda B) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin C) hevgirtina wekhev û piştgir a gelên cuda D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+✓ avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+
+[offline_12758] Siyaset
+S: Kîjan pênase bi "siyaseta demokratîk" re li hev tê?
+A) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê B) hevgirtina wekhev û piştgir a gelên cuda C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+✓ awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
+
+[offline_12760] Siyaset
+S: Di zanîna siyasetê de der barê "xweseriya demokratîk" de ya rast kîjan e?
+A) statûya xweseriyê û biryargirtinê li herêmê B) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre D) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
+✓ statûya xweseriyê û biryargirtinê li herêmê

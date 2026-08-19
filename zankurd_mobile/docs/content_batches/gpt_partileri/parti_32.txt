@@ -1,0 +1,316 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+56 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_teknoloji_0357] Teknolojî
+S: Di sîstemên belavbûyî de ji bo bidestxistina hevgirtina xurt a kûorûmê (Quorum Consistency), kîjan şerta matematîkî divê pêk were?
+A) W + R = N (Komên xwendin û nivîsandinê divê qet hevdu di sîstemê de nebînin) B) W + R > N (Komên xwendin û nivîsandinê her tim herî kêm di yek girêkê de li hev dikevin) C) W * R < N (Hejmara xwendinan divê her tim ji ya nivîsandinan pir kêmtir be) D) W - R = 1 (Tenê yek pêşkêşker dikare di heman demê de bersiva daxwazan bide)
+✓ W + R > N (Komên xwendin û nivîsandinê her tim herî kêm di yek girêkê de li hev dikevin)
+
+[ds_teknoloji_0358] Teknolojî
+S: Komkerên çopê yên nûjen ên wekî ZGC û Shenandoah çawa dema rawestandina pergalê (Stop-The-World) dadixin bin milîçirkeyekê?
+A) Bi meşandina qonaxên nîşankirin û veguhestina tiştan a hemdem bi riya astengkerên bîrgehê (Load-Barriers) B) Bi qedexekirina bikaranîna zêdetirî 1 GB bîrgeha RAMê di hemû cureyên sepanan de C) Bi girtina pêvajoyê heta ku hemû tiştên bêkêr di bîrgehê de bi temamî bên hilweşandin D) Bi veguhastina hemû operasyonên Garbage Collection bo ser dîska derve ya sîstemê
+✓ Bi meşandina qonaxên nîşankirin û veguhestina tiştan a hemdem bi riya astengkerên bîrgehê (Load-Barriers)
+
+[ds_ziman_1228] Ziman
+S: Di kurmancî de di dema borî ya lêkerên gerguhêz de çima kirde di rûyê tewandî de tê bikaranîn lê lêker li gorî bireserê dikişe?
+A) Ji ber ku di kurmancî de lêker her tim bi cînavê xwerû re tê girêdan B) Ji ber ku pergala ergatîf dixebite û lihevkirina lêkerê bi bireserê re çêdibe C) Ji ber ku hemû lêkerên dema borî bixweber dibin lêkerên negerguhêz D) Ji ber ku bireser her tim ji aliyê rêzimanî ve dikeve pêşiya kirdeyê
+✓ Ji ber ku pergala ergatîf dixebite û lihevkirina lêkerê bi bireserê re çêdibe
+
+[ds_ziman_1229] Ziman
+S: Di hevokên "Te ez dîtim" û "Min tu dîtî" de sedema guherîna qertafên dawiya lêkera "dîtin" çi ye?
+A) Kirdeyê hevokê li gorî heza xwe qertafên cînavî li lêkerê zêde dike B) Di kurmancî de zayenda kirdeyê rasterast dawiya lêkerê diyar dike C) Lêkera dîtin di her du rewşan de jî wekî lêkera negerguhêz dixebite D) Di dema borî de lêkera gerguhêz li gorî kesê bireserê qertafa kesane digire
+✓ Di dema borî de lêkera gerguhêz li gorî kesê bireserê qertafa kesane digire
+
+[ds_ziman_1230] Ziman
+S: Di hevoka "Wî sêv xwarin" de çima lêkera "xwarin" bi paşgira pirjimariyê qediya ye?
+A) Biresera hevokê "sêv" pirjimar e û lêker li gorî wê pirjimar bûye B) Kirdeya hevokê "wî" nîşana gelek kesan di nav xwe de dihewîne C) Dema borî ya çîrokî her tim lêkerê bi awayê pirjimar nîşan dide D) Lêkera xwarin tenê bi qertafa pirjimariyê dikare wateyê bide
+✓ Biresera hevokê "sêv" pirjimar e û lêker li gorî wê pirjimar bûye
+
+[ds_ziman_1231] Ziman
+S: Kîjan hevok qaîdeya ergatîfê ya di navbera lêkerên gerguhêz û negerguhêz de bi awayekî rast nîşan dide?
+A) Min çûm bajêr, lê ez li wir hevalê xwe dît B) Ez çûm bajêr, lê ez li wir hevalê xwe dît C) Ez çûm bajêr, lê min li wir hevalê xwe dît D) Min çûm bajêr, lê min li wir hevalê xwe dîtim
+✓ Ez çûm bajêr, lê min li wir hevalê xwe dît
+
+[ds_ziman_1232] Ziman
+S: Di dema borî ya çîrokî de ji bo lêkera negerguhêz a "hatin" û lêkera gerguhêz a "xwendin" kîjan cot rast e?
+A) Min hatibûm / Ez xwendibûm B) Ez hatibûm / Min xwendibû C) Min hatibû / Ez xwendibû D) Ez hatibû / Min xwendibûm
+✓ Ez hatibûm / Min xwendibû
+
+[ds_ziman_1233] Ziman
+S: Cudahiya rêzimanî ya di navbera lêkera hevedudanî ya bi "kirin" û ya bi "bûn" de di dema borî de çi ye?
+A) Her du lêker jî di dema borî de her tim bê tewang tên bikaranîn B) Lêkerên bi "bûn" tenê di dema bê de qertafên ergatîfê qebûl dikin C) Lêkerên bi "kirin" gerguhêz in û ditewin, yên bi "bûn" negerguhêz in D) Lêkerên bi "kirin" her tim pêwîstî bi cînavên xwerû yên mê dibînin
+✓ Lêkerên bi "kirin" gerguhêz in û ditewin, yên bi "bûn" negerguhêz in
+
+[ds_ziman_1234] Ziman
+S: Di hevoka neyînî ya dema borî de kîjan vebijêrk li gorî rêzimana kurmancî rast hatiye nivîsandin?
+A) Min pirtûk nexwend / Ez neçûm zanîngehê B) Ez pirtûk nexwendim / Min neçûm zanîngehê C) Min pirtûk naxwînim / Ez naçim zanîngehê D) Ez pirtûk nexwend / Min neçû zanîngehê
+✓ Min pirtûk nexwend / Ez neçûm zanîngehê
+
+[ds_ziman_1235] Ziman
+S: Di kurmancî de pergala ergatîf di kîjan deman de derbas dibe û di kîjan deman de derbas nabe?
+A) Di hemû deman de bi heman awayî bêyî guherîn derbas dibe B) Tenê di dema bê de heye, di demên borî û niha de bi tevahî radibe C) Di demên borî de derbas dibe, lê di dema niha û dema bê de derbas nabe D) Tenê di lêkerên negerguhêz ên dema niha de tê sepandin
+✓ Di demên borî de derbas dibe, lê di dema niha û dema bê de derbas nabe
+
+[ds_ziman_1236] Ziman
+S: Di hevoka "Wê hevalên xwe dîtin" de lihevkirina lêkerê li gorî kîjan rêgezê ye?
+A) Lêker li gorî kirdeya mê "wê" bi paşgira tewangê ya mê hatiye guhertin B) Lêker li gorî biresera pirjimar "hevalên xwe" bi qertafa "-in" hatiye kişandin C) Lêker serbixwe ye û tenê ji ber hebûna cînavê vegerok qertaf girtiye D) Lêker bi awayekî şaş hatiye kişandin ji ber ku kirde yekjimar e
+✓ Lêker li gorî biresera pirjimar "hevalên xwe" bi qertafa "-in" hatiye kişandin
+
+[ds_ziman_1237] Ziman
+S: Dema ku tîpa dawî ya navdêran dengdêr be, veqetandeka binavkirî ya mê û nêr çawa diguhere?
+A) Ji bo mê dibe "-ê" û ji bo nêr dibe "-î" B) Ji bo her du zayendan tenê dibe "-ên" C) Ji bo mê dibe "-ya" û ji bo nêr dibe "-yê" D) Ji bo mê dibe "-a" û ji bo nêr dibe "-ê"
+✓ Ji bo mê dibe "-ya" û ji bo nêr dibe "-yê"
+
+[ds_ziman_1238] Ziman
+S: Di kurmancî de veqetandeka nebinavkirî (îzafeya ne diyar) ji bo navdêrên mê, nêr û pirjimar kîjan e?
+A) Mê: -eke / Nêr: -ekî / Pirjimar: -ine (an -ne) B) Mê: -a / Nêr: -ê / Pirjimar: -ên C) Mê: -ê / Nêr: -î / Pirjimar: -an D) Mê: -ek / Nêr: -ek / Pirjimar: -ek
+✓ Mê: -eke / Nêr: -ekî / Pirjimar: -ine (an -ne)
+
+[ds_ziman_1239] Ziman
+S: Di îzafeya zincîrî de (mînak: deriyê odeya xaniyê me) qertafên îzafeyê li gorî kîjan rêgezê tên rêzkirin?
+A) Hemû navdêr tenê li gorî zayenda navdêra yekem a di serî de tên tewandin B) Tenê navdêra dawî qertafa îzafeyê digire û yên din xwerû dimînin C) Her navdêr li gorî zayend û hejmara xwe bi peyva piştî xwe re tê girêdan D) Di îzafeya zincîrî de zayenda mê ji bo hemû peyvan dibe nêr
+✓ Her navdêr li gorî zayend û hejmara xwe bi peyva piştî xwe re tê girêdan
+
+[ds_ziman_1240] Ziman
+S: Di hevoka "Mirovê ku do hat hevalê min e" de peyva "mirovê" çima veqetandeka nêr girtiye?
+A) Ji ber ku peyva mirov her tim di rewşa tewandî ya mê de dimîne B) Ji ber ku di kurmancî de berî cînavê "ku" tenê tîpa "ê" tê nivîsandin C) Ji ber ku peyva heval di dawiya hevokê de wekî bireser hatiye destnîşankirin D) Ji ber ku bi rêya veqetandekê bi hevalbenda "ku" re têkiliya ravekê ava dike
+✓ Ji ber ku bi rêya veqetandekê bi hevalbenda "ku" re têkiliya ravekê ava dike
+
+[ds_ziman_1241] Ziman
+S: Di navbera nîşandana nêzîk û ya dûr de li gel veqetandeka binavkirî kîjan rêzik rast e?
+A) Ev pirtûkê han / Ew xaniyek han B) Ev pirtûkên hanê / Ew xaniyê wan C) Ev pirtûka hanê / Ew xaniyê han D) Ev pirtûkeke han / Ew xaniyan han
+✓ Ev pirtûka hanê / Ew xaniyê han
+
+[ds_ziman_1242] Ziman
+S: Di tewanga navdêrên mê yên yekjimar de kîjan qertaf tê bikaranîn?
+A) Qertafa "-î" (mînak: pirtûk -> pirtûkî) B) Qertafa "-an" (mînak: pirtûk -> pirtûkan) C) Qertafa "-a" (mînak: pirtûk -> pirtûka) D) Qertafa "-ê" (mînak: pirtûk -> pirtûkê)
+✓ Qertafa "-ê" (mînak: pirtûk -> pirtûkê)
+
+[ds_ziman_1243] Ziman
+S: Di tewanga navdêrên nêr ên yekjimar de kîjan qertaf tê bikaranîn?
+A) Qertafa "-ê" (mînak: heval -> hevalê) B) Qertafa "-î" (mînak: heval -> hevalî) C) Qertafa "-an" (mînak: heval -> hevalan) D) Qertafa "-a" (mînak: heval -> hevala)
+✓ Qertafa "-î" (mînak: heval -> hevalî)
+
+[ds_ziman_1244] Ziman
+S: Di tewanga navdêran a pirjimariyê de ferqa zayenda mê û nêr çawa ye?
+A) Ji bo mê "-ên" tê bikaranîn û ji bo nêr tenê "-ûn" tê danîn B) Ji bo mê qertafa "-at" tê û ji bo nêr qertafa "-ên" dimîne C) Zayenda mê dibe yekjimar lê ya nêr her tim pirjimar dimîne D) Cudahiya zayendê winda dibe û ji bo her duyan jî qertafa "-an" tê
+✓ Cudahiya zayendê winda dibe û ji bo her duyan jî qertafa "-an" tê
+
+[ds_ziman_1245] Ziman
+S: Di bangkirina kesan de (bangawezî) qertafên bangê ji bo nêr, mê û pirjimar kîjan in?
+A) Nêr: -î / Mê: -a / Pirjimar: -an B) Nêr: -ê / Mê: -î / Pirjimar: -ên C) Nêr: -o / Mê: -ê / Pirjimar: -no D) Nêr: -u / Mê: -i / Pirjimar: -en
+✓ Nêr: -o / Mê: -ê / Pirjimar: -no
+
+[ds_ziman_1246] Ziman
+S: Cînavên kesane yên xwerû û tewandî di kîjan rêzê de bi awayekî rast hatine berawirdkirin?
+A) Ez->me / Tu->we / Ew->wan / Em->min / Hûn->te / Ew->wî B) Ez->te / Tu->min / Ew->wê / Em->we / Hûn->me / Ew->wan C) Ez->wî / Tu->wê / Ew->min / Em->wan / Hûn->te / Ew->me D) Ez->min / Tu->te / Ew->wî, wê / Em->me / Hûn->we / Ew->wan
+✓ Ez->min / Tu->te / Ew->wî, wê / Em->me / Hûn->we / Ew->wan
+
+[ds_ziman_1247] Ziman
+S: Di hevoka "Ez li ser maseyê pirtûkan dibînim" de peyva "maseyê" ji ber çi tewiyaye?
+A) Ji ber ku di vê hevokê de wekî kirdeyê sereke hatiye destnîşankirin B) Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî "li ser ..." C) Ji ber ku lêkera dîtin di dema niha de her tim navdêran ditewîne D) Ji ber ku peyva mase navdêreke nêr e û li pêşiya bireserê ye
+✓ Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî "li ser ..."
+
+[ds_ziman_1248] Ziman
+S: Di daçekên çerçoveyî (çevre edatlar) de ji bo wateya hundirîn a cihî kîjan cot tê bikaranîn?
+A) Ji ... re (mînak: ji heval re) B) Bi ... ve (mînak: bi derî ve) C) Li ... re (mînak: li ser re) D) Di ... de (mînak: di xênî de, di dil de)
+✓ Di ... de (mînak: di xênî de, di dil de)
+
+[ds_ziman_1249] Ziman
+S: Cudahiya wateyî ya di navbera daçeka "ji ... re" û "ji ... ve" de çi ye?
+A) "Ji ... re" tenê ji bo amûran e; "ji ... ve" tenê ji bo dema bê ye B) Her du daçek jî yek wateyê didin û li şûna hev bê cudahî tên danîn C) "Ji ... re" bo araste û sûdwergirtinê ye; "ji ... ve" bo destpêk û jêderê ye D) "Ji ... re" navdêrê dike pirjimar lê "ji ... ve" dike yekjimar
+✓ "Ji ... re" bo araste û sûdwergirtinê ye; "ji ... ve" bo destpêk û jêderê ye
+
+[ds_ziman_1250] Ziman
+S: Di daçeka "bi ... re" û "bi ... ve" de kîjan vebijêrk cudahiya hevaltî û pêvebûnê rast nîşan dide?
+A) "Bi ... re" tenê ji bo dema borî ye, "bi ... ve" ji bo dema niha ye B) "Bi ... re" neyîniyê çêdike, "bi ... ve" erêniyê diyar dike C) Her du daçek jî tenê ji bo navên hejmaran tên bikaranîn D) "Bi ... re" hevaltî/tevgerê nîşan dide, "bi ... ve" pêvebûn/girêdanê nîşan dide
+✓ "Bi ... re" hevaltî/tevgerê nîşan dide, "bi ... ve" pêvebûn/girêdanê nîşan dide
+
+[ds_ziman_1251] Ziman
+S: Daçeka "bêyî" di hevokê de çawa dixebite û navdêr an cînavê piştî xwe dixe kîjan rewşê?
+A) Bêparbûnê nîşan dide û peyva piştî xwe dixe rûyê tewandî (mînak: bêyî min) B) Yekbûnê nîşan dide û peyva piştî xwe her tim dixe rûyê xwerû C) Tenê bi lêkerên dema borî re tê û cînavan bi tevahî radike D) Wateya pirjimariyê li peyvê zêde dike bêyî ku tewang çêbibe
+✓ Bêparbûnê nîşan dide û peyva piştî xwe dixe rûyê tewandî (mînak: bêyî min)
+
+[ds_ziman_1252] Ziman
+S: Di kurmancî de dema bê bi kîjan amûrên rêzimanî û formên lêkerê tê avakirin?
+A) Tenê bi zêdekirina qertafa "-in" li ser koka lêkera dema borî B) Bi guherandina cînavên xwerû bo cînavên nebinavkirî C) Bi daçeka "ê / dê" û forma guncaw a lêkerê (mînak: ez ê herim) D) Tenê bi lêkera alîkar a "bûn" bêyî ti qertafên din
+✓ Bi daçeka "ê / dê" û forma guncaw a lêkerê (mînak: ez ê herim)
+
+[ds_ziman_1253] Ziman
+S: Gava pêşgireke lêkerî ya wekî "ve-" an "ra-" li lêkerê zêde bibe, qertafa reweştê ya "bi-" çawa diguhere?
+A) Qertafa "bi-" dikeve û pêşgir rasterast li ser gopika lêkerê rûdine B) Qertafa "bi-" dubare dibe û di navbera her du pêşgiran de dimîne C) Pêşgira lêkerî radibe û tenê qertafa "bi-" li ser lêkerê dimîne D) Lêker bixweber dibe lêkereke negerguhêz a dema borî
+✓ Qertafa "bi-" dikeve û pêşgir rasterast li ser gopika lêkerê rûdine
+
+[ds_ziman_1254] Ziman
+S: Di lêkera "vekirin" de pêşgira "ve-" çi cure guherîneke wateyî li ser lêkera "kirin"ê çêdike?
+A) Lêkerê tenê ji aliyê rêzimanî ve dike lêkereke dema borî B) Wateya lêkerê dike neyînî û wekî qertafa "ne-" dixebite C) Lêkerê ji lêkera gerguhêz vediguherîne lêkera negerguhêz D) Wateya vebûn, dubarebûn an berevajîkirina girtinê lê zêde dike
+✓ Wateya vebûn, dubarebûn an berevajîkirina girtinê lê zêde dike
+
+[ds_ziman_1255] Ziman
+S: Di kurmancî de lêkera gerguhêz bi rêya kîjan lêkera alîkar dibe lêkera lêkerveger (pasîf / passive)?
+A) Bi alîkariya lêkera "hatin" û jêdera lêkerê (mînak: hate dîtin) B) Bi zêdekirina qertafa "-andin" li ser koka lêkera negerguhêz C) Tenê bi guherandina cînavê xwerû bo cînavê tewandî D) Bi anîna lêkera "çûn" li pêşiya forma dema niha
+✓ Bi alîkariya lêkera "hatin" û jêdera lêkerê (mînak: hate dîtin)
+
+[ds_ziman_1256] Ziman
+S: Di kurmancî de paşgira "-andin" li ser koka lêkeran kîjan guherîna rêzimanî çêdike?
+A) Lêkerên dema borî vediguherîne lêkerên dema niha B) Hemû lêkerên gerguhêz bixweber dike navdêrên mê C) Lêkerên negerguhêz dike lêkerên gerguhêz û xurtdar (faktîtîf) D) Lêkerê ji aliyê wateyê ve dike hevokeke neyînî
+✓ Lêkerên negerguhêz dike lêkerên gerguhêz û xurtdar (faktîtîf)
+
+[ds_ziman_1257] Ziman
+S: Di hevoka mercî ya nediyar (irrealis) de avahiya lêkeran di kîjan vebijêrkê de rast e?
+A) Heke te bigota, ez ê bihatama B) Heke tu dibêjî, ez têm wir C) Heke te got, ez ê bêm D) Heke tu bêjî, min dîtibû
+✓ Heke te bigota, ez ê bihatama
+
+[ds_ziman_1258] Ziman
+S: Alfabeya Hawarê ya ku ji aliyê Celadet Alî Bedirxan ve di 1932an de hate amadekirin ji çend tîpan pêk tê?
+A) Ji 29 tîpan (8 dengdêr û 21 dengdar) B) Ji 32 tîpan (7 dengdêr û 25 dengdar) C) Ji 34 tîpan (9 dengdêr û 25 dengdar) D) Ji 31 tîpan (8 dengdêr û 23 dengdar)
+✓ Ji 31 tîpan (8 dengdêr û 23 dengdar)
+
+[ds_ziman_1259] Ziman
+S: Di alfabeya kurmancî de kîjan koma dengdêran wekî dengdêrên dirêj tên qebûlkirin?
+A) A, Ê, Î, O, Û B) A, E, I, U, O C) E, I, U, Ê, Î D) Ê, Î, I, U, Û
+✓ A, Ê, Î, O, Û
+
+[ds_ziman_1260] Ziman
+S: Kîjan tîp di alfabeya Hawarê de heye lê di alfabeya tirkî de nîne?
+A) Tîpa "b" B) Tîpa "x" C) Tîpa "d" D) Tîpa "m"
+✓ Tîpa "x"
+
+[ds_ziman_1261] Ziman
+S: Di dengnasiya kurmancî de tîpên cotdeng ên wekî "ç, k, p, t" xwedî kîjan taybetmendiya fonetîk in?
+A) Tenê di dawiya peyvan de tên guhertin û dibin dengdêr B) Di kurmancî de ti carî li pêşiya dengdêran cih nagirin C) Her tim bi tîpa "h"yê re wekî dîgraf tên xwendin D) Cudahiya bêhnkêşî (aspirated) û nebêhnkêşî (non-aspirated) ya watedar
+✓ Cudahiya bêhnkêşî (aspirated) û nebêhnkêşî (non-aspirated) ya watedar
+
+[ds_ziman_1262] Ziman
+S: Di zimanê kurmancî de dema ku du dengdêr digihîjin hev, kîjan tîpa navberê dikeve navbera wan?
+A) Tîpa "n" (mînak: xanî -> xanînê min) B) Tîpa "y" (mînak: xanî -> xaniyê min) C) Tîpa "s" (mînak: xanî -> xanîsê min) D) Tîpa "r" (mînak: xanî -> xanîrê min)
+✓ Tîpa "y" (mînak: xanî -> xaniyê min)
+
+[ds_ziman_1263] Ziman
+S: Di navbera zaravayê kurmancî û soranî de cudahiya sereke ya di warê zayenda rêzimanî de çi ye?
+A) Kurmancî zayenda mê û nêr diparêze, lê di soranî de zayend rabûye B) Soranî sê zayendan diparêze lê di kurmancî de qet zayend nîne C) Di her du zaravayan de jî sîstema zayendê bi tevahî wekhev e D) Zayend tenê di soranî de heye û di kurmancî de tenê di lêkeran de ye
+✓ Kurmancî zayenda mê û nêr diparêze, lê di soranî de zayend rabûye
+
+[ds_ziman_1264] Ziman
+S: Cudahiya nîşandana kesê di dema niha de di navbera kurmancî û soranî de kîjan e?
+A) Kurmancî tenê "bi-" bi kar tîne, lê soranî tenê "mi-" bi kar tîne B) Kurmancî pêşgira "di-" bi kar tîne, lê soranî pêşgira "de-" bi kar tîne C) Soranî qet pêşgiran bi kar naîne lê kurmancî tenê paşgiran datîne D) Kurmancî pêşgira "me-" bi kar tîne, soranî qertafa "-ox" bi kar tîne
+✓ Kurmancî pêşgira "di-" bi kar tîne, lê soranî pêşgira "de-" bi kar tîne
+
+[ds_ziman_1265] Ziman
+S: Di navbera kurmancî û zazakî (kirmanckî) de kîjan ji van taybetmendiyên rêzimanî hevpar e?
+A) Bi tevahî nebûna ti tewangê di navbera navdêran de B) Bikaranîna heman alfabeya erebî ya bê dengdêr C) Bikaranîna pêşgira "de-" ji bo hemû demên borî D) Parastina zayenda mê û nêr û hebûna sîstema ergatîfê
+✓ Parastina zayenda mê û nêr û hebûna sîstema ergatîfê
+
+[ds_ziman_1266] Ziman
+S: Di kurmancî de paşgira "-xane" (mînak: pirtûkxane, nexweşxane) ji bo çi cure peyvsaziyê tê bikaranîn?
+A) Ji bo çêkirina lêkerên negerguhêz ji rengdêran B) Ji bo çêkirina navên cih û mekanan li ser navdêran C) Tenê ji bo çêkirina pirjimariya navdêrên nêr D) Ji bo nîşandana amûrên pîşesaziyê yên biçûk
+✓ Ji bo çêkirina navên cih û mekanan li ser navdêran
+
+[ds_ziman_1267] Ziman
+S: Di kurmancî de paşgira "-dar" di peyvên wekî "avdar", "birîndar", "dildar" de çi cure wateyê ava dike?
+A) Xwedîtî, hilgirtin an hebûna wê taybetmendiyê nîşan dide B) Neyînîbûn û tunebûna wê rewşê diyar dike C) Peyvê dike lêkereke gerguhêz a dema borî D) Tenê ji bo naskirina navên pîşeyên nûjen e
+✓ Xwedîtî, hilgirtin an hebûna wê taybetmendiyê nîşan dide
+
+[ds_ziman_1268] Ziman
+S: Paşgira "-van" di peyvên wekî "baxçevan", "şivan", "pasewan" de çi cure peyvan çêdike?
+A) Tenê navên amûrên ku di kar de tên bikaranîn B) Navên pîşe, berpirsiyarî û kesên ku wî karî dikin C) Navên cihên erdnîgarî yên ku av lê heye D) Rengdêrên ku biçûkbûn û hezkirinê nîşan didin
+✓ Navên pîşe, berpirsiyarî û kesên ku wî karî dikin
+
+[ds_ziman_1269] Ziman
+S: Di kurmancî de paşgira "-tî / -atî" (mînak: hevaltî, mirovatî) çi cure navdêran çêdike?
+A) Tenê navên madî yên ku bi destan tên girtin B) Lêkerên xurtdar ên ku di dema bê de tên bikaranîn C) Cînavên vegerok ên ku li şûna kirdeyê rûdinên D) Navdêrên razber (abstrakt) ên têgehî û peywendiyê
+✓ Navdêrên razber (abstrakt) ên têgehî û peywendiyê
+
+[ds_ziman_1270] Ziman
+S: Pêşgira neyîniyê ya "bê-" di peyvên wekî "bêdeng", "bêxew", "bêaqil" de çawa dixebite?
+A) Ji navdêran rengdêrên bêparbûn û tunebûnê ava dike B) Hemû rengdêran vediguherîne lêkerên dema niha C) Tenê li ser lêkerên borî zêde dibe û wan dike mê D) Peyvê dike navdêreke pirjimar a binavkirî
+✓ Ji navdêran rengdêrên bêparbûn û tunebûnê ava dike
+
+[ds_ziman_1271] Ziman
+S: Di kurmancî de paşgira "-ik" an "-ok" (mînak: zarok, keçik, xanîk) çi cure fonksiyonekê pêk tîne?
+A) Peyvê dike lêkereke dema borî ya gerguhêz B) Zayenda peyvê her tim ji mê diguhere bo nêr C) Wateya biçûkkirin, hezkirin an taybetmendiyê lê zêde dike D) Tenê ji bo hejmartina tiştên giran tê bikaranîn
+✓ Wateya biçûkkirin, hezkirin an taybetmendiyê lê zêde dike
+
+[ds_ziman_1272] Ziman
+S: Rêzkirina giştî ya hêmanên hevokê (Word Order) di zimanê kurmancî de çawa ye?
+A) Lêker + Kirde + Bireser (VSO: Lêker her tim di destpêkê de ye) B) Kirde + Bireser + Lêker (SOV: Kirde li pêşiyê, lêker li dawiyê ye) C) Bireser + Lêker + Kirde (OVS: Bireser her tim li pêşiya hevokê ye) D) Lêker + Bireser + Kirde (VOS: Kirde her tim li dawiya hevokê ye)
+✓ Kirde + Bireser + Lêker (SOV: Kirde li pêşiyê, lêker li dawiyê ye)
+
+[ds_ziman_1273] Ziman
+S: Di hevokên hevedudanî yên bi lêkera "karîn" (mînak: Ez dikarim bixwînim) lêkera duyem di kîjan modê de tê kişandin?
+A) Di dema borî ya sade de bêyî ti pêşgir B) Tenê wekî jêdera xwerû ya bi paşgira "-in" C) Di moda daxwazî/subjunktîf de bi qertafa "bi-" D) Di forma neyînî ya berdewam a bi "ne-"
+✓ Di moda daxwazî/subjunktîf de bi qertafa "bi-"
+
+[ds_ziman_1274] Ziman
+S: Di kurmancî de lêkerên negerguhêz ên ku di dema niha de koka wan diguhere (mînak: çûn -> diçe, hatin -> tê) bi çi tên binavkirin?
+A) Lêkerên nerêkûpêk (irregular verbs) B) Lêkerên hevedudanî yên hevrêz C) Lêkerên faktîtîf ên xurtdar D) Lêkerên pasîf ên vegerok
+✓ Lêkerên nerêkûpêk (irregular verbs)
+
+[ds_ziman_1275] Ziman
+S: Cînavê vegerok ê "xwe" di hevokê de li şûna kîjan hêmanan rûdine û taybetmendiya wê ya zayendî çi ye?
+A) Ji bo mê dibe "xweya" û ji bo nêr dibe "xweyê" B) Tenê ji bo kesê sêyem ê nêr ê yekjimar tê bikaranîn C) Ji bo hemû kes û zayendan neguherbar e û li şûna xwediyê xwe rûdine D) Di dema borî de bi tevahî qertafa tewangê digire
+✓ Ji bo hemû kes û zayendan neguherbar e û li şûna xwediyê xwe rûdine
+
+[ds_ziman_1276] Ziman
+S: Di biwêja kurdî ya "çavê wî lê bar bû" de wateya mecazî ya peyva "barbûn" çi ye?
+A) Bi giranî barkirina eşyayan B) Çavnebarî kirin an çav lê man C) Dîtina hevalekî kevn piştî salan D) Ji bîrkirina tiştekî giring
+✓ Çavnebarî kirin an çav lê man
+
+[ds_ziman_1277] Ziman
+S: Di gotina pêşiyan a "Dîwar kerr e, lê xwedî guh e" de armanca sereke ya vegotinê çi ye?
+A) Xurtbûn û aramiya avahiyên kevnar B) Pêwîstiya lêkirina dîwarên bilind bo gundan C) Hişyariya veşartina raz û gotinên nepenî D) Zehmetiya axaftina bi mirovên kerr re
+✓ Hişyariya veşartina raz û gotinên nepenî
+
+[ds_ziman_1278] Ziman
+S: Di kurmancî de kîjan paşgir ji bo çêkirina hejmarên rêzkirî (ordinal numbers) tê bikaranîn?
+A) Paşgira "-em" an "-emîn" (mînak: yekem, duyemîn) B) Paşgira "-an" an "-ên" (mînak: yekan, duyên) C) Paşgira "-ek" an "-ik" (mînak: yekek, duyik) D) Paşgira "-dar" an "-yar" (mînak: yekdar, duyar)
+✓ Paşgira "-em" an "-emîn" (mînak: yekem, duyemîn)
+
+[ds_ziman_1279] Ziman
+S: Gava du navdêr bi hevdudanî wateyeke hevbeş ava dikin (mînak: şevûroj, dêûbav), ev sazî bi çi tê binavkirin?
+A) Navdêrên razber ên xwedîtiyê B) Hevalbendên gerguhêz ên dema niha C) Navdêrên hevedudanî yên hevrêz (dvandva) D) Daçekên çerçoveyî yên cîh û demê
+✓ Navdêrên hevedudanî yên hevrêz (dvandva)
+
+[ds_ziman_1280] Ziman
+S: Di kurmancî de cînavên nîşandanê yên xwerû "ev / ew" di rewşa tewandî ya yekjimar û pirjimar de çawa diguherin?
+A) Vê/Vî (pirjimar: Vên) û Wê/Wî (pirjimar: Wên) B) Vî/Va (pirjimar: Vana) û Wî/Wa (pirjimar: Wana) C) Ve/Vi (pirjimar: Vanê) û We/Wi (pirjimar: Wanê) D) Vî/Vê (pirjimar: Van) û Wî/Wê (pirjimar: Wan)
+✓ Vî/Vê (pirjimar: Van) û Wî/Wê (pirjimar: Wan)
+
+[ds_ziman_1281] Ziman
+S: Di kurmancî de ji bo peyvên hevdeng (homonyms) kîjan mînak rast e?
+A) Kitêb (pirtûka xwendinê) û Name (peyama nivîskî) B) Gund (cihê jiyanê) û Bajar (navenda mezin) C) Şîr (şîrê vexwarinê / şîrê tûj) D) Roj (çavkaniya ronahiyê) û Heyv (satelîta erdê)
+✓ Şîr (şîrê vexwarinê / şîrê tûj)

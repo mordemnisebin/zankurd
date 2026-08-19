@@ -1,0 +1,641 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+121 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[tech_core_0042] Teknolojî
+S: Sedema sereke ya sazkirina nûvekirinên ewlehiyê çi ye?
+A) Ji bo girtina qulikên naskirî yên nermalavê B) Ji bo ku ekran ronîtir û rengên wê zelaltir bibin C) Ji bo kêmkirina cihê dîskê D) Ji bo guhertina zimanê pergalê
+✓ Ji bo girtina qulikên naskirî yên nermalavê
+
+[tech_core_0043] Teknolojî
+S: Feydeya sereke ya rêvebirê şîfreyan çi ye?
+A) Leza înternetê zêde dike B) Vîrus û bernameyên fesadî ji pergalê radike C) Ji bo her hesabê şîfreyeke cuda û xurt hiltîne D) Pelên mezin piçûk dike
+✓ Ji bo her hesabê şîfreyeke cuda û xurt hiltîne
+
+[tech_core_0044] Teknolojî
+S: Risk di tora Wi-Fi ya giştî de çi ye?
+A) Kesên din dikarin trafîka neşîfrekirî bibînin B) Bataryaya amûrê zû diqede C) Pelên li ser dîskê bixweber tên jêbirin D) Ekran hêdî hêdî tarî dibe
+✓ Kesên din dikarin trafîka neşîfrekirî bibînin
+
+[tech_core_0045] Teknolojî
+S: Kîjan nîşan e-nameyekê gumanbar dike?
+A) Bikaranîna zimanekî fermî B) Hebûna logoya sazîyê C) Şandin di roja xebatê de D) Daxwaza lezgîn a tikandina girêdanekê
+✓ Daxwaza lezgîn a tikandina girêdanekê
+
+[tech_core_0046] Teknolojî
+S: Şîfrekirina daneyan çi peyda dike?
+A) Daneyan bêyî mifteya rast nexwendî dike B) Daneyan piçûktir dike C) Daneyan zûtir vediguhêze D) Daneyan bixweber li ser gelek amûran zêde dike
+✓ Daneyan bêyî mifteya rast nexwendî dike
+
+[tech_core_0047] Teknolojî
+S: Nermalava fesadî ya bi navê ransomware çi dike?
+A) Leza torê dişkîne B) Rengên ekranê diguherîne C) Pelan şîfre dike û ji bo vekirinê pere dixwaze D) Bernameyan bixweber nûve dike
+✓ Pelan şîfre dike û ji bo vekirinê pere dixwaze
+
+[tech_core_0048] Teknolojî
+S: Kîjan rêbaza gava duyem li hember phishingê xurttir e?
+A) Mifteya ewlehiyê ya fizîkî B) Koda bi SMSê tê C) Koda bi e-nameyê tê D) Pirsa ewlehiyê ya kesane
+✓ Mifteya ewlehiyê ya fizîkî
+
+[tech_core_0049] Teknolojî
+S: Zirara bikaranîna heman şîfreyê li gelek malperan çi ye?
+A) Şîfre bi demê re bixweber dirêjtir û tevlihevtir dibe B) Malper hêdîtir vedibin C) Gerok şîfreyê ji bîr dike D) Derketina daneyan a li yek malperê hesaban vedike
+✓ Derketina daneyan a li yek malperê hesaban vedike
+
+[tech_core_0050] Teknolojî
+S: Dîwarê agir (firewall) di torê de çi dike?
+A) Trafîka têketî û derketî li gorî rêzikan fîltre dike B) Pelên jêbirî vedigerîne C) Şîfreyên qels xurt dike D) Vîrusên li ser dîskê dibîne û qerantîne dike
+✓ Trafîka têketî û derketî li gorî rêzikan fîltre dike
+
+[tech_core_0051] Teknolojî
+S: Nîşana kilîtê ya li kêleka navnîşanê di gerokê de çi piştrast dike?
+A) Malper ji aliyê dewletê ve hatiye pejirandin B) Girêdan şîfrekirî ye C) Agahiya li ser malperê rast e D) Malper ji vîrusan paqij e
+✓ Girêdan şîfrekirî ye
+
+[tech_core_0052] Teknolojî
+S: Çima divê kopiya ewlehiyê ji dem bi dem bi vegerandinê bê ceribandin?
+A) Ji ber ku pelên di kopiyê de bi demê re mezintir dibin B) Ji ber ku şîfre her mehê diguhere C) Ji ber ku dîsk bi ceribandinê zûtir dibe D) Ji ber ku kopiyeke xerabûyî tenê hingê xuya dibe
+✓ Ji ber ku kopiyeke xerabûyî tenê hingê xuya dibe
+
+[tech_core_0053] Teknolojî
+S: Gava kesek bi têlefonê şîfreya hesabê ji te dixwaze, tevgera rast çi ye?
+A) Nîvê şîfreyê jê re gotin B) Nedan û bi kanaleke fermî ya naskirî piştrastkirin C) Şîfreyê guhertin û paşê ya nû bi têlefonê jê re gotin D) Şîfreyê bi peyamekê şandin
+✓ Nedan û bi kanaleke fermî ya naskirî piştrastkirin
+
+[tech_core_0054] Teknolojî
+S: Xetereya vekirina pêveka e-nameyeke nenas çi ye?
+A) Nermalava fesadî li ser amûrê tê sazkirin B) Bataryaya têlefonê zû diqede C) E-name bixweber tê jêbirin D) Navnîşana IPê diguhere
+✓ Nermalava fesadî li ser amûrê tê sazkirin
+
+[tech_core_0055] Teknolojî
+S: Şîfrekirina serî-bi-serî çi tê wateyê?
+A) Tenê server dikare peyaman bixwîne B) Tenê şander û wergir dikarin peyaman bixwînin C) Peyam tenê bi girêdana zexm tên şandin D) Peyam piştî demekê bixweber tên jêbirin
+✓ Tenê şander û wergir dikarin peyaman bixwînin
+
+[tech_invent_0001] Teknolojî
+S: Di derdora sala 1450an de li Ewrûpayê makîneya çapê ya bi tîpên tevger kî pêş xist?
+A) Johannes Gutenberg B) Nicolaus Copernicus C) Isaac Newton D) Leonardo da Vinci
+✓ Johannes Gutenberg
+
+[tech_invent_0002] Teknolojî
+S: Di sala 1876an de patenta telefonê bi navê kê hat qeydkirin?
+A) Wilhelm Conrad Röntgen B) Samuel Morse C) Guglielmo Marconi D) Alexander Graham Bell
+✓ Alexander Graham Bell
+
+[tech_invent_0003] Teknolojî
+S: Transîstor di sala 1947an de li kîjan laboratûwarê hat pêşxistin?
+A) Bell Labs B) Laboratûwara Cavendish C) Laboratûwara Los Alamos D) CERN
+✓ Bell Labs
+
+[tech_invent_0004] Teknolojî
+S: Di 1879an de li Amerîkayê ampûla elektrîkê ya ku demeke dirêj dişewitî kê pêş xist?
+A) Nikola Tesla B) Michael Faraday C) Thomas Edison D) Alessandro Volta
+✓ Thomas Edison
+
+[tech_invent_0005] Teknolojî
+S: Rêbaza wênekêşiyê ya ku di sala 1839an de li Fransayê hat ragihandin bi navê kê tê nasîn?
+A) Louis Daguerre B) George Eastman C) Joseph Swan D) Auguste Lumière
+✓ Louis Daguerre
+
+[tech_invent_0006] Teknolojî
+S: Gutenberg çapxaneya xwe ya bi tîpên tevger li kîjan bajarê Almanyayê damezrand?
+A) Köln B) Nürnberg C) Frankfurt D) Mainz
+✓ Mainz
+
+[tech_invent_0007] Teknolojî
+S: Amûra fonograf a ku dengê tomarkirî ji nû ve dilîze di sala 1877an de ji aliyê kê ve hat çêkirin?
+A) Thomas Edison B) Emile Berliner C) Werner von Siemens D) Guglielmo Marconi
+✓ Thomas Edison
+
+[tech_invent_0008] Teknolojî
+S: Transîstora yekem a sala 1947an ji kîjan maddeya nîv-derbasker hat çêkirin?
+A) Sîlîkon B) Selenyûm C) Germanyûm D) Galyûm arsenît
+✓ Germanyûm
+
+[tech_invent_0009] Teknolojî
+S: Alfabeya xet û xalan a ku di telegrafê de tê bikaranîn bi navê kîjan dahêner tê nasîn?
+A) Samuel Morse B) Charles Wheatstone C) Alexander Graham Bell D) Thomas Edison
+✓ Samuel Morse
+
+[tech_invent_0010] Teknolojî
+S: Di sala 1895an de tîrêjên X kî keşf kir?
+A) Henri Becquerel B) Wilhelm Röntgen C) Marie Curie D) J.J. Thomson
+✓ Wilhelm Röntgen
+
+[tech_invent_0011] Teknolojî
+S: Di sala 1901ê de yekem sînyala radyoyî ya di ser Atlantîkê re ji aliyê kê ve hat wergirtin?
+A) Guglielmo Marconi B) Heinrich Hertz C) Nikola Tesla D) Alexander Graham Bell
+✓ Guglielmo Marconi
+
+[tech_invent_0012] Teknolojî
+S: Kîjan zanyar hem ji bo transîstorê hem jî ji bo teoriya supernaqilbariyê Xelata Nobelê ya Fizîkê wergirt?
+A) Walter Brattain B) John Bardeen C) William Shockley D) Robert Noyce
+✓ John Bardeen
+
+[tech_invent_0013] Teknolojî
+S: Belavbûna makîneya çapê di sedsala 15an de bi taybetî çi erzan kir?
+A) Cam B) Kinc C) Kaxez D) Pirtûk
+✓ Pirtûk
+
+[tech_invent_0014] Teknolojî
+S: Pîla yekem a ku di sala 1800î de cereyanek berdewam da kî çêkir?
+A) André-Marie Ampère B) Alessandro Volta C) Georg Ohm D) Michael Faraday
+✓ Alessandro Volta
+
+[tech_invent_0015] Teknolojî
+S: Kî di sala 1831ê de nîşan da ku magnetek tevgerî di têlekê de cereyan çêdike?
+A) Michael Faraday B) James Clerk Maxwell C) Heinrich Hertz D) Hans Christian Ørsted
+✓ Michael Faraday
+
+[tech_invent_0016] Teknolojî
+S: Yekîneya hêzê ya bi navê wat ji navê kîjan endezyarî tê?
+A) Rudolf Diesel B) James Watt C) Nikolaus Otto D) George Stephenson
+✓ James Watt
+
+[tech_invent_0017] Teknolojî
+S: Motora elektrîkê enerjiya elektrîkê vediguherîne kîjan cûre enerjiyê?
+A) Enerjiya kîmyewî B) Enerjiya ronahiyê C) Enerjiya nukleerî D) Enerjiya mekanîkî
+✓ Enerjiya mekanîkî
+
+[tech_invent_0018] Teknolojî
+S: Di santralekê de kîjan cîhaz tevgera dorînê dike elektrîk?
+A) Transformator B) Jenerator C) Kondansator D) Rezîstans
+✓ Jenerator
+
+[tech_invent_0019] Teknolojî
+S: Li gorî qanûna Ohm, voltaj bi kîjan hesabê tê dîtin?
+A) V = I × R B) V = I ÷ R C) V = R ÷ I D) V = I × R²
+✓ V = I × R
+
+[tech_invent_0020] Teknolojî
+S: Tirbîna bayê enerjiya kîjan çavkaniyê digire da ku elektrîkê çêbike?
+A) Germahiya kûrahiya erdê B) Tevgera hewayê C) Tîrêja rojê D) Herikîna avê
+✓ Tevgera hewayê
+
+[tech_invent_0021] Teknolojî
+S: Hucreyên fotovoltaîk ên panelên rojê bi piranî ji kîjan maddeyê têne çêkirin?
+A) Sifir B) Alumînyûm C) Sîlîkon D) Zînk
+✓ Sîlîkon
+
+[tech_invent_0022] Teknolojî
+S: Di santrala hîdroelektrîkê de ava li pişt bendavê di destpêkê de kîjan enerjiyê hildigire?
+A) Enerjiya potansiyel B) Enerjiya kîmyewî C) Enerjiya germî ya hawirdorê D) Enerjiya ronahiyê
+✓ Enerjiya potansiyel
+
+[tech_invent_0023] Teknolojî
+S: Makîneyeke sade hêza pêwîst kêm dike; lê di berdêla wê de çi zêde dibe?
+A) Kara ku tê kirin B) Enerjiya ku tê xerckirin C) Dûrahiya rêwîtiya hêzê D) Girseya barê
+✓ Dûrahiya rêwîtiya hêzê
+
+[tech_invent_0024] Teknolojî
+S: Transformator di tora elektrîkê de bi taybetî çi diguherîne?
+A) Frekansa cereyanê B) Asta voltajê C) Aliyê cereyanê D) Cûreya têla derbasker
+✓ Asta voltajê
+
+[tech_invent_0025] Teknolojî
+S: Ji van maddeyan kîjan ji bo têlên elektrîkê baştirîn derbasker e?
+A) Cam B) Lastîk C) Sifir D) Dar
+✓ Sifir
+
+[tech_invent_0026] Teknolojî
+S: Hêza elektrîkî ya amûrekê bi kîjan pirdankê tê hesibandin?
+A) Voltaj × cereyan B) Voltaj ÷ cereyan C) Cereyan × berxwedan D) Voltaj × berxwedan
+✓ Voltaj × cereyan
+
+[tech_invent_0027] Teknolojî
+S: Di çerxeke rêzî de ji bo her hêmanekê çi wekhev dimîne?
+A) Voltaja her hêmanê B) Hêza her hêmanê C) Cereyana ku diherike D) Berxwedana her hêmanê
+✓ Cereyana ku diherike
+
+[tech_invent_0028] Teknolojî
+S: Sîgorta di çerxeke elektrîkê de ji bo çi tê danîn?
+A) Ji bo bilindkirina voltajê B) Ji bo birîna cereyana zêde C) Ji bo hilanîna enerjiyê D) Ji bo nizmkirina frekansê
+✓ Ji bo birîna cereyana zêde
+
+[tech_invent_0029] Teknolojî
+S: Di santrala germî ya komirê de tirbîn rasterast bi çi tê zivirandin?
+A) Dûmana germ a komirê B) Ava sar C) Hilma bin zextê D) Bayê derve
+✓ Hilma bin zextê
+
+[tech_invent_0030] Teknolojî
+S: Pîlek dema kar dike enerjiya kîmyewî vediguherîne çi?
+A) Enerjiya germî ya rasterast B) Enerjiya ronahiyê C) Enerjiya dengî D) Enerjiya elektrîkî
+✓ Enerjiya elektrîkî
+
+[tech_invent_0031] Teknolojî
+S: Li gorî qanûna parastina enerjiyê, di pergaleke girtî de enerjî çi dibe?
+A) Bi demê re kêm dibe B) Tenê şeklê xwe diguhere C) Bi demê re zêde dibe D) Bi demê re bi tevahî ji holê radibe
+✓ Tenê şeklê xwe diguhere
+
+[tech_invent_0032] Teknolojî
+S: Çerxeke diranî ya piçûk çerxeke mezin dizivirîne; li ser çerxa mezin çi çêdibe?
+A) Hem lez hem tork zêde dibin B) Hem lez hem tork kêm dibin C) Lez zêde dibe, tork kêm dibe D) Lez kêm dibe, tork zêde dibe
+✓ Lez kêm dibe, tork zêde dibe
+
+[tech_invent_0033] Teknolojî
+S: Cereyana alternatîf ji cereyana rasterast bi kîjan taybetmendiyê cuda dibe?
+A) Tenê di têlên ji sifir hatine çêkirin de diherike B) Voltaja wê her tim sifir e C) Aliyê wê bi rêkûpêk diguhere D) Tenê ji pîlan tê wergirtin
+✓ Aliyê wê bi rêkûpêk diguhere
+
+[tech_invent_0034] Teknolojî
+S: Yekîneya pîvana cereyana elektrîkê çi ye?
+A) Volt B) Ohm C) Wat D) Amper
+✓ Amper
+
+[tech_invent_0035] Teknolojî
+S: Çima elektrîk di xetên veguhastinê yên dûr de bi voltajeke pir bilind tê şandin?
+A) Ji ber ku têl hingê sivik dibin B) Ji ber ku windabûna germî kêm dibe C) Ji bo ku frekans neyê guhertin D) Ji bo ku amûrên malê zûtir bixebitin
+✓ Ji ber ku windabûna germî kêm dibe
+
+[tech_invent_0036] Teknolojî
+S: Panela rojê ronahiya rojê rasterast vediguherîne çi?
+A) Enerjiya kîmyewî ya hilanîn B) Enerjiya nukleerî C) Enerjiya dengî D) Enerjiya elektrîkî
+✓ Enerjiya elektrîkî
+
+[tech_invent_0037] Teknolojî
+S: Di sala 1903an de yekem firîna bi motor û bi kontrol kê pêk anî?
+A) Birayên Montgolfier B) Birayên Lumière C) Birayên Wright D) Otto Lilienthal
+✓ Birayên Wright
+
+[tech_invent_0038] Teknolojî
+S: Sala 1957an, yekem peykê çêkirî yê ku li dora Erdê geriya kîjan bû?
+A) Explorer 1 B) Vostok 1 C) Luna 2 D) Sputnik 1
+✓ Sputnik 1
+
+[tech_invent_0039] Teknolojî
+S: Di 1969an de yekem kesê ku li ser rûyê Heyvê meşiya kî bû?
+A) Michael Collins B) Neil Armstrong C) Yuri Gagarin D) Buzz Aldrin
+✓ Neil Armstrong
+
+[tech_invent_0040] Teknolojî
+S: Yekem mirovê ku di sala 1961ê de çû fezayê kî bû?
+A) Alan Shepard B) John Glenn C) Yuri Gagarin D) Valentina Tereshkova
+✓ Yuri Gagarin
+
+[tech_invent_0041] Teknolojî
+S: Roket di valahiya fezayê de çawa pêş de diçe?
+A) Bi avêtina gazan ber bi paş B) Bi palpiştkirina li ser hewayê C) Bi kişandina qada magnetîk D) Bi hêza kaşkirina Heyvê
+✓ Bi avêtina gazan ber bi paş
+
+[tech_invent_0042] Teknolojî
+S: Peykên geostasyoner li ser Ekvatorê li derdora kîjan bilindahiyê digerin?
+A) Nêzîkî 400 km B) Nêzîkî 2.000 km C) Nêzîkî 150.000 km D) Nêzîkî 36.000 km
+✓ Nêzîkî 36.000 km
+
+[tech_invent_0043] Teknolojî
+S: Peykek çima li orbîtê dimîne?
+A) Ji ber ku leza wê ya aliyî bi kişandinê re hevseng e B) Ji ber ku li wê bilindahiyê kişandin tune ye C) Ji ber ku ji hewayê sivîktir e D) Ji ber ku motorên wê bi berdewamî û bêrawestan dixebitin
+✓ Ji ber ku leza wê ya aliyî bi kişandinê re hevseng e
+
+[tech_invent_0044] Teknolojî
+S: Hêza hilkişînê ya balafirê bi giranî ji ber çi çêdibe?
+A) Ji ber ku balafir ji hewaya derdorê sivîktir e B) Ji ber germahiya motorê C) Ji ber cudahiya zextê li ser û bin baskan D) Ji ber zivirîna Erdê
+✓ Ji ber cudahiya zextê li ser û bin baskan
+
+[tech_invent_0045] Teknolojî
+S: Di sala 1783yan de li Fransayê balona hewaya germ kê firand?
+A) Birayên Montgolfier B) Birayên Wright C) Ferdinand von Zeppelin D) Louis Blériot
+✓ Birayên Montgolfier
+
+[tech_invent_0046] Teknolojî
+S: Ji bo ku tiştek ji kişandina Erdê bi tevahî xilas bibe, leza wê divê nêzîkî çend be?
+A) 3 km/s B) 7,9 km/s C) 30 km/s D) 11,2 km/s
+✓ 11,2 km/s
+
+[tech_invent_0047] Teknolojî
+S: Şopên lingan ên li ser rûyê Heyvê çima demeke pir dirêj dimînin?
+A) Ji ber ku ba û baran li wir tune ne B) Ji ber ku toza wir şil e C) Ji ber ku germahî pir nizm e D) Ji ber ku kişandina wê pir bihêz e
+✓ Ji ber ku ba û baran li wir tune ne
+
+[tech_invent_0048] Teknolojî
+S: Modula heyvî ya Apollo 11ê ku di 1969an de daket bi çi navî hat binavkirin?
+A) Columbia B) Falcon C) Eagle D) Challenger
+✓ Eagle
+
+[tech_invent_0049] Teknolojî
+S: Kîjan roket astronotên Apollo di salên 1960 û 1970yî de birin ber bi Heyvê?
+A) Saturn V B) Soyuz C) Atlas D) Titan II
+✓ Saturn V
+
+[tech_invent_0050] Teknolojî
+S: Qereqola Fezayê ya Navneteweyî gereke li dora Erdê di çend deqîqeyan de diqedîne?
+A) Nêzîkî 12 saet û nîv B) Nêzîkî 90 deqîqe C) Nêzîkî 24 saet D) Nêzîkî 8 deqîqe
+✓ Nêzîkî 90 deqîqe
+
+[tech_invent_0051] Teknolojî
+S: Sînorê Kármán, ku gelek caran wek destpêka fezayê tê pejirandin, li kîjan bilindahiyê ye?
+A) 100 km B) 10 km C) 50 km D) 500 km
+✓ 100 km
+
+[tech_invent_0052] Teknolojî
+S: Pergala GPSê cihê amûrekê çawa diyar dike?
+A) Bi pîvana hêz û aliyê qada magnetîk a Erdê B) Bi pîvana dema gihîştina sînyalên peykan C) Bi wênegirtina ji jor ve D) Bi bihîstina dengê radyoya herêmî
+✓ Bi pîvana dema gihîştina sînyalên peykan
+
+[tech_invent_0054] Teknolojî
+S: Du sondeyên Voyager ku di sala 1977an de hatin şandin bi sereke armanca kîjan cismên ezmanî bûn?
+A) Gerstêrkên dêw ên derve B) Gerstêrkên bihişk ên hundir C) Asteroîdên kembera navîn D) Kometên demdirêj
+✓ Gerstêrkên dêw ên derve
+
+[tech_invent_0055] Teknolojî
+S: Roketên fezayê çima ji çend qonaxan têne çêkirin?
+A) Ji bo ku bêtir sotemenî bikişînin B) Ji bo ku çêkirina wan hêsan bibe C) Ji bo ku ji dûr ve baştir bên dîtin D) Ji bo ku giraniya vala bê avêtin
+✓ Ji bo ku giraniya vala bê avêtin
+
+[ziman_x_0001] Ziman
+S: Kîjan peyva kurmancî tê wateya "kar"a tirkî?
+A) Baran B) Berf C) Ba D) Ewr
+✓ Berf
+
+[ziman_x_0002] Ziman
+S: Li ser sifreyê "nan" heye. Ev peyv bi tirkî çi ye?
+A) Süt B) Et C) Peynir D) Ekmek
+✓ Ekmek
+
+[ziman_x_0003] Ziman
+S: Navdêra "mal" mê ye. Ji bo wateya "evim" kîjan form rast e?
+A) malê min B) malên min C) mala min D) malek min
+✓ mala min
+
+[ziman_x_0004] Ziman
+S: Cînavka "hûn" bi tirkî çi ye?
+A) Biz B) Onlar C) Sen D) Siz
+✓ Siz
+
+[ziman_x_0005] Ziman
+S: Di alfabeya kurmancî de bi giştî çend tîp hene?
+A) 29 B) 31 C) 26 D) 33
+✓ 31
+
+[ziman_x_0006] Ziman
+S: Du peyvên cuda yên bi heman wateyê, ji hev re çi tên gotin?
+A) Dijwate B) Hevdeng C) Peyva deynkirî D) Hevwate
+✓ Hevwate
+
+[ziman_x_0007] Ziman
+S: Rengê "kesk" di tirkî de kîjan reng e?
+A) Sarı B) Mavi C) Yeşil D) Kırmızı
+✓ Yeşil
+
+[ziman_x_0008] Ziman
+S: Kîjan hevok wateya "Ekmeği yedim" bi rêziman rast dide?
+A) Ez nan xwar B) Ez nan dixwim C) Min nan dixwe D) Min nan xwar
+✓ Min nan xwar
+
+[ziman_x_0009] Ziman
+S: Di malbatê de "dayik" kê nîşan dide?
+A) Abla B) Anne C) Teyze D) Nine
+✓ Anne
+
+[ziman_x_0010] Ziman
+S: Kîjan form wateya "kitaplarım" bi kurmancî rast dide?
+A) pirtûka min B) pirtûkan min C) pirtûkên min D) pirtûkek min
+✓ pirtûkên min
+
+[ziman_x_0011] Ziman
+S: Di hefteyekê de çend roj hene?
+A) Yedi B) Beş C) Altı D) Sekiz
+✓ Yedi
+
+[ziman_x_0012] Ziman
+S: Kurmancî û Soranî ji bo zimanê kurdî çi ne?
+A) Du alfabe B) Du hevok C) Du deng D) Du zarava
+✓ Du zarava
+
+[ziman_x_0013] Ziman
+S: Hevoka "Ez diçim" çawa tê neyînîkirin?
+A) Ez naçim B) Ez neçim C) Ez nediçim D) Ez biçim
+✓ Ez naçim
+
+[ziman_x_0014] Ziman
+S: Ajalê ku bi tirkî "at" e, bi kurmancî çi ye?
+A) Ker B) Ga C) Hesp D) Bizin
+✓ Hesp
+
+[ziman_x_0015] Ziman
+S: Peyva "kulîlk" ji çend kîteyan pêk tê?
+A) Du B) Çar C) Yek D) Sê
+✓ Du
+
+[ziman_x_0016] Ziman
+S: Dema ku roj diçe ava, ji wê demê re bi kurmancî çi tê gotin?
+A) Sibe B) Nîvro C) Şev D) Êvar
+✓ Êvar
+
+[ziman_x_0017] Ziman
+S: Ji bo wateya "evde" kîjan bikaranîn rast e?
+A) li malê B) ji malê C) bi malê D) ser malê
+✓ li malê
+
+[ziman_x_0018] Ziman
+S: Peyva "derî" bi tirkî çi ye?
+A) Pencere B) Duvar C) Kapı D) Çatı
+✓ Kapı
+
+[ziman_x_0020] Ziman
+S: Forma fermanî ya lêkera "xwendin" ji bo yekjimar kîjan e?
+A) bixwîne B) xwend C) dixwîne D) xwendiye
+✓ bixwîne
+
+[ziman_x_0021] Ziman
+S: Bi kurmancî ji "yıldız"ê re çi tê gotin?
+A) Heyv B) Roj C) Ewr D) Stêrk
+✓ Stêrk
+
+[ziman_x_0022] Ziman
+S: Peyveke ku ji zimanekî din hatibe girtin, jê re çi tê gotin?
+A) Peyva deynkirî B) Hevwate C) Kîte D) Dijwate
+✓ Peyva deynkirî
+
+[ziman_x_0023] Ziman
+S: Kîjan navdêr di kurmancî de nêr e?
+A) Mal B) Roj C) Nan D) Şev
+✓ Nan
+
+[ziman_x_0025] Ziman
+S: Di hevoka "Ez ... dibînim" de ji bo "seni" kîjan cînavk rast e?
+A) tu B) ew C) te D) wî
+✓ te
+
+[ziman_x_0026] Ziman
+S: Rengê "reş" bi tirkî çi ye?
+A) Beyaz B) Yeşil C) Sarı D) Siyah
+✓ Siyah
+
+[ziman_x_0027] Ziman
+S: Kurdî di kîjan malbata zimanan de cih digire?
+A) Malbata tirkî B) Malbata hindû-ewropî C) Malbata samî D) Malbata fîno-ugrî
+✓ Malbata hindû-ewropî
+
+[ziman_x_0028] Ziman
+S: Lêkera "çûn" bi pêşgira di- ji bo kesê sêyem ê yekjimar çawa tê?
+A) diçim B) diçin C) diçî D) diçe
+✓ diçe
+
+[ziman_x_0029] Ziman
+S: Peyva "şîr" li ser sifreyê çi ye?
+A) Bal B) Yoğurt C) Süt D) Yağ
+✓ Süt
+
+[ziman_x_0030] Ziman
+S: Alfabeya kurmancî çend tîpên dengdêr dihewîne?
+A) Şeş B) Deh C) Pênc D) Heşt
+✓ Heşt
+
+[ziman_x_0031] Ziman
+S: Heywanê malê yê ku mişkan digire, bi kurmancî çi ye?
+A) Pisîk B) Kûçik C) Mişk D) Rovî
+✓ Pisîk
+
+[ziman_x_0032] Ziman
+S: Ji bo wateya "odanın içinde" kîjan avanî rast e?
+A) li odeyê ser B) ji odeyê de C) di odeyê de D) bi odeyê re
+✓ di odeyê de
+
+[ziman_x_0033] Ziman
+S: Alfabeya latînî ya kurmancî di sala 1932yan de bi kîjan kovarê belav bû?
+A) Hawar B) Roja Nû C) Nûbihar D) Bîrnebûn
+✓ Hawar
+
+[ziman_x_0034] Ziman
+S: Di hevoka "Ez ji ... hez dikim" de ji bo wateya "çocukları" kîjan form tê?
+A) zarok B) zarokek C) zarokên D) zarokan
+✓ zarokan
+
+[ziman_x_0035] Ziman
+S: Endama ku pê tê dîtin, bi kurmancî çi ye?
+A) Çav B) Guh C) Dev D) Poz
+✓ Çav
+
+[ziman_x_0036] Ziman
+S: Di rêzimanê de peyva ku kar û tevgerê nîşan dide çi ye?
+A) Navdêr B) Rengdêr C) Lêker D) Cînavk
+✓ Lêker
+
+[ziman_x_0037] Ziman
+S: Hevoka "Ezê biçim" kîjan demê nîşan dide?
+A) Dema bê B) Dema borî C) Fermanî D) Daxwazî
+✓ Dema bê
+
+[ziman_x_0039] Ziman
+S: Peyva tirkî ya "pencere" ji kîjan zimanî hatiye wergirtin?
+A) Ji erebî B) Ji fransî C) Ji yewnanî D) Ji farisî
+✓ Ji farisî
+
+[ziman_x_0040] Ziman
+S: Amûra ku pê tê nivîsandin bi kurmancî çi ye?
+A) Qelem B) Pirtûk C) Kaxez D) Mase
+✓ Qelem
+
+[ziman_x_0041] Ziman
+S: Peyva pirsyarî ya "kengî" li ser çi disekine?
+A) Cih B) Kes C) Dem D) Sedem
+✓ Dem
+
+[ziman_x_0042] Ziman
+S: Peyva kurmancî "çiya" di tirkî de rasterast çi ye?
+A) Dağ B) Ova C) Nehir D) Orman
+✓ Dağ
+
+[ziman_x_0044] Ziman
+S: Ji bo wateya "O kadın mektup yazdı" kîjan hevok rast e?
+A) Ew name nivîsî B) Wê nameyê dinivîse C) Ew nameyê nivîsî D) Wê name nivîsî
+✓ Wê name nivîsî
+
+[ziman_x_0045] Ziman
+S: Birayê bavê mirov bi kurmancî çi ye?
+A) Xal B) Ap C) Met D) Bapîr
+✓ Ap
+
+[ziman_x_0046] Ziman
+S: Berhevoka peyvên zimanekî bi wateyên wan re çi ye?
+A) Rêziman B) Hevok C) Alfabe D) Ferheng
+✓ Ferheng
+
+[ziman_x_0047] Ziman
+S: Navdêra "sêv" mê ye. Wateya "kırmızı elma" çawa tê nivîsîn?
+A) sêv sor B) sêvê sor C) sêva sor D) sêvên sor
+✓ sêva sor
+
+[ziman_x_0048] Ziman
+S: Roja piştî Duşemê bi kurmancî çi ye?
+A) Çarşem B) Pêncşem C) Şemî D) Sêşem
+✓ Sêşem
+
+[ziman_x_0049] Ziman
+S: Peyva tirkî ya "yüz" hem rû hem 100 e. Ev rewş çi ye?
+A) Hevwate B) Hevdeng C) Dijwate D) Peyva deynkirî
+✓ Hevdeng
+
+[ziman_x_0050] Ziman
+S: Li ser sifreyê "goşt" heye. Ev xwarin bi tirkî çi tê gotin?
+A) Balık B) Ekmek C) Et D) Çorba
+✓ Et
+
+[ziman_x_0051] Ziman
+S: Hevoka bi wateya "bana söyle" bi kurmancî çawa tê avakirin?
+A) ji min re bêje B) li min bêje C) bi min bêje D) di min bêje
+✓ ji min re bêje
+
+[ziman_x_0052] Ziman
+S: Ji bo xwedîtiya nêr, wateya "onun kitabı" kîjan form e?
+A) pirtûka wê B) pirtûkên wî C) pirtûka wan D) pirtûka wî
+✓ pirtûka wî
+
+[ziman_x_0054] Ziman
+S: Heywanê çolê yê ku bi kerî digere û dijberê pez e, çi ye?
+A) Hirç B) Gur C) Rovî D) Kew
+✓ Gur
+
+[ziman_x_0055] Ziman
+S: Di hevoka "Ez dixwazim ku ez ..." de lêkera "çûn" çawa tê?
+A) diçim B) çûm C) naçim D) biçim
+✓ biçim
+
+[ds26_cinema_0001] Sînema
+S: Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?
+A) planê nêzîk (yakın çekim) B) planê dûr (uzak çekim) C) planê navîn (orta çekim) D) plana damezrîner (establishing shot)
+✓ planê nêzîk (yakın çekim)
+
+[ds26_cinema_0002] Sînema
+S: Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?
+A) planê nêzîk (yakın çekim) B) planê serpîrî (baş üstü çekim) C) çapa cemidî (freeze frame) D) plana damezrîner (establishing shot)
+✓ plana damezrîner (establishing shot)
+
+[ds26_cinema_0005] Sînema
+S: Qutbûna ku di nav dîmenekî de ji nişkê ve demê dide pêşerojê an paşerojê çi ye?
+A) fade out (vedimirîn) B) dissolve (tevlîhevî) C) jump cut (qutbûna ji nişkê) D) pan (gerandina panoramîk)
+✓ jump cut (qutbûna ji nişkê)
