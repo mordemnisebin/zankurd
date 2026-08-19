@@ -172,11 +172,15 @@ List<AuditIssue> runChecks(
         'Explanation is missing or very short.',
       );
     }
-    if (record.sourceTitle == null || record.sourceTitle!.trim().isEmpty) {
+    final sourceTitleMissing =
+        record.sourceTitle == null || record.sourceTitle!.trim().isEmpty;
+    final sourceUrlMissing =
+        record.sourceUrl == null || record.sourceUrl!.trim().isEmpty;
+    if (sourceTitleMissing && sourceUrlMissing) {
       add(
         'missing_source_metadata',
         Severity.warning,
-        'Source metadata is missing.',
+        'Source title and URL are both missing.',
       );
     }
   }
