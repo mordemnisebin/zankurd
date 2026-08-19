@@ -390,6 +390,15 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// TTS cihazda Kürtçe destekliyor mu? False ise buton gizlenir.
   final bool canListen;
 
+  /// Bir şıkkın alabileceği en büyük ASGARİ yükseklik.
+  ///
+  /// 48 pt erişilebilir dokunma hedefinin tabanı; 88 pt ise tek satırlık
+  /// bir şıkkın rahat nefes aldığı üst sınır. Arası bütçeye göre esner.
+  static const double _maxOptionHeight = 88;
+
+  /// Tavandan artan alanın şık başına eklenebilecek en büyük payı.
+  static const double _maxExtraGap = 18;
+
   /// Bir metnin verili genişlikte kaplayacağı yüksekliği ölçer.
   ///
   /// Şıkların bütçesi "kalan alan" olduğu için soru metninin yüksekliği
@@ -534,7 +543,41 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                     final raw =
                         (answersBudget - itemGap * answers.length) /
                         answers.length;
-                    if (raw >= 48) perOption = raw;
+                    // TAVAN: kalan alan şıkları sınırsız şişiremez.
+                    //
+                    // Bütçe yalnız bölünüyordu ve uzun telefonda kısa
+                    // şıklar 105 pt'lik kutulara dönüşüyordu — tek satır
+                    // metin, altında ve üstünde avuç dolusu boşluk. Dokunma
+                    // hedefi 48 pt'te zaten karşılanıyor; ötesi okunurluğa
+                    // hiçbir şey katmıyor, yalnız ekranı yiyor. Doğru
+                    // cevap kutusu kaldırılınca serbest kalan alan da
+                    // buraya akacaktı ve kutular daha da şişecekti
+                    // (2026-08-19, uygulama sahibinin bildirimi).
+                    //
+                    // Sınırlanan `minHeight` olduğu için UZUN şıklar yine
+                    // büyüyebilir: iki üç satırlık bir şık tavanı kendi
+                    // içeriğiyle aşar, kırpılmaz.
+                    if (raw >= 48) perOption = min(raw, _maxOptionHeight);
+                  }
+
+                  // Tavandan artan alan şıkların ARASINA dağıtılır.
+                  //
+                  // Yalnız tavan konsaydı artan alan kartın altında tek
+                  // parça bir boşluk olarak kalırdı: şıklar yukarıda
+                  // toplanır, altta avuç dolusu boşluk durur ve kart
+                  // yarım kalmış gibi okunurdu. Aralara bölününce aynı
+                  // alan "nefes" olur. Ek payın da tavanı var; sınırsız
+                  // olsaydı iki şıklı doğru-yanlış sorularında şıklar
+                  // ekranın iki ucuna savrulurdu.
+                  var effectiveGap = itemGap;
+                  if (perOption != null && answersBudget != null) {
+                    final used = (perOption + itemGap) * answers.length;
+                    final leftover = answersBudget - used;
+                    if (leftover > 0) {
+                      effectiveGap =
+                          itemGap +
+                          min(leftover / answers.length, _maxExtraGap);
+                    }
                   }
                   final twoColumn =
                       isCompact &&
@@ -557,7 +600,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                           key: answered && answer == question.correctAnswer
                               ? correctAnswerKey
                               : null,
-                          padding: EdgeInsets.only(bottom: itemGap),
+                          padding: EdgeInsets.only(bottom: effectiveGap),
                           child: perOption == null
                               ? _buildAnswerButton(index, answer)
                               : AnimatedContainer(
@@ -599,10 +642,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 },
               ),
             ),
-            _ExplanationBox(
+            _AnswerRevealFallback(
               question: question,
               isKu: context.isKu,
-              visible: showExplanation,
+              visible:
+                  showExplanation && needsAnswerRevealFallback(question.type),
               revealKey: showExplanation ? explanationKey : null,
             ),
           ],
@@ -1072,8 +1116,50 @@ class _TinyTag extends StatelessWidget {
 /// (bkz. `_AllExplanationsCard`).
 ///
 /// Şablon/boş açıklamada kutu yine hiç açılmaz.
-class _ExplanationBox extends StatelessWidget {
-  const _ExplanationBox({
+/// Bu soru türünde doğru cevabı açan YEDEK bir kutu gerekir mi?
+///
+/// Türlerin çoğu cevabı kendi gösterir ve yedek gereksizdir:
+///
+/// * çoktan seçmeli / doğru-yanlış / görsel — doğru şık yeşile döner ve
+///   üzerine tik gelir, seçilen yanlış şık kırmızıya döner ve çarpı alır;
+/// * boşluk doldurma — bileşen sonucun altına "Doğru cevap: X" yazar.
+///
+/// Kelime sıralama göstermez: cevap verilince girdi kilitlenir ve doğru
+/// dizilim hiçbir yerde görünmez. Yedek kutu yalnız orada çizilir.
+///
+/// `switch` TÜKENMİŞ yazılır, `default` ya da `!=` zinciriyle değil.
+/// Gerekçe: enum'a yeni bir soru türü eklendiğinde analizör burada
+/// derlemeyi durdurur ve ekleyeni "bu tür cevabını kendi gösteriyor mu?"
+/// sorusuna cevap vermeye zorlar. Varsayılanı olan bir ifade, yeni türü
+/// sessizce bir tarafa atardı — `de45f05` sonrası tam olarak bu oldu ve
+/// 15 soru geri bildirimsiz kaldı; hepsi topluluk bankasındaydı, ekran
+/// turu onları basmıyor, kimse görmedi.
+bool needsAnswerRevealFallback(QuestionType type) => switch (type) {
+  QuestionType.multipleChoice ||
+  QuestionType.trueFalse ||
+  QuestionType.visual ||
+  QuestionType.fillInBlank => false,
+  QuestionType.wordOrdering => true,
+};
+
+/// Doğru cevabı, cevap alanı onu göstermiyorsa gösteren YEDEK kutu.
+///
+/// ## Niçin çoğu soruda artık görünmüyor
+///
+/// Kutu bir zamanlar açıklama METNİNİ basıyordu. Açıklamalar 2026-07-26'da
+/// tur sonuna alındı (bkz. `lesson_explanation_test`) ve metin kaldırıldı;
+/// geriye doğru cevabı TEKRAR eden bir kabuk kaldı. Çoktan seçmelide
+/// oyuncu zaten yeşil şıkkı ve üzerindeki tiki görüyor, altındaki kutu
+/// aynı şeyi ikinci kez söylüyor ve ekranın kıt olan dikey alanını
+/// kaplıyordu (2026-08-19, uygulama sahibinin bildirimi).
+///
+/// Kutu SİLİNMEDİ çünkü kelime sıralama sorularında doğru dizilimi açan
+/// tek yer burası; silinseydi o türde oyuncu yanlış yaptığında doğrusunu
+/// hiç göremezdi. Aynı boşluk `de45f05` sonrası bir kez oluştu ve 15
+/// soruda sessizce yaşadı — topluluk bankasındaydılar ve ekran turu
+/// onları basmıyor.
+class _AnswerRevealFallback extends StatelessWidget {
+  const _AnswerRevealFallback({
     required this.question,
     required this.isKu,
     required this.visible,
@@ -1093,13 +1179,6 @@ class _ExplanationBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Kutu adını `de45f05`ten önce hak ediyordu: o zaman açıklama metnini
-    // basıyordu. Açıklamalar tur sonuna alınınca metin kaldırıldı ama
-    // **görünürlük koşulu** kaldı — kutu, artık göstermediği bir alan boş
-    // diye tümden gizleniyordu. Açıklaması olmayan 15 soruda oyuncu şıkkı
-    // işaretliyor ve hiçbir geri bildirim görmüyordu: doğru cevabı bile.
-    // Sessizdi, çünkü o 15 sorunun hepsi topluluk bankasındaydı ve
-    // ekran turu onları basmıyor.
     return AnimatedSize(
       key: revealKey,
       duration: const Duration(milliseconds: 350),
