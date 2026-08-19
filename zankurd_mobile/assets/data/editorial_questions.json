@@ -230,10 +230,10 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de \"ergatîf\" çi tê wateyê?",
     "answers": [
-      "Xwendin (dibistan: cihê xwendinê)",
-      "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye",
+      "Di dema niha de lêker bi biker re hevaheng dibe",
+      "Navdêr li gorî zayendê tê dabeşkirin",
       "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
-      "Belavkirina alfabeya latînî ya kurdî"
+      "Di lêkerên negerguhêz de biker her tim tewandî ye"
     ],
     "correctAnswer": "Di dema borî ya lêkerên gerguhêz de bikerê tewandî",
     "explanation": "Ergatif: geçmiş zamanda geçişli fiillerde özne büküme girer ve fiil nesneye göre çekimlenir — \"Min pirtûk xwend\".",
@@ -248,10 +248,10 @@
     },
     "promptTr": "Kurmancî'de \"ergatîf\" ne demektir?",
     "answersTr": [
-      "Okuma (dibistan: okuma yeri)",
-      "\"Tu\" tekil, \"hûn\" çoğul/saygı biçimidir",
+      "Şimdiki zamanda fiilin özneyle uyum göstermesi",
+      "İsimlerin cinsiyete göre ayrılması",
       "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi",
-      "Kürtçe Latin alfabesinin yaygınlaştırılması"
+      "Geçişsiz fiillerde öznenin her zaman büküme girmesi"
     ],
     "correctAnswerTr": "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi"
   },
@@ -1151,9 +1151,9 @@
     "prompt": "Peymana Sevrê (1920) ji bo kurdan çima tê gotin ku girîng e?",
     "answers": [
       "Ji bo herêmeke kurdî ya xweser madde dihewand",
-      "bandorkirina civakan li hev",
-      "mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir",
-      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan"
+      "Ji bo dewleteke kurdî ya serbixwe yekser sînor diyarkir",
+      "Hemû herêmên kurdî xiste bin rêveberiya yek dewletê",
+      "Mîrektiyên kurdî wek dewletên serbixwe nas kir"
     ],
     "correctAnswer": "Ji bo herêmeke kurdî ya xweser madde dihewand",
     "explanation": "Sevr, Kürtler için olası bir özerklik maddesi içeriyordu ancak antlaşma uygulanmadı.",
@@ -1169,9 +1169,9 @@
     "promptTr": "Sevr Antlaşması (1920) Kürtler açısından neden önemli sayılır?",
     "answersTr": [
       "Özerk bir Kürt bölgesi için madde içermesi",
-      "Toplumların birbirini etkilemesi",
-      "Rewandiz merkezli, askerî güç toplayan emirlik",
-      "Suriye Kürtlerinin 1962 sayımı sonrası vatansızlığı"
+      "Bağımsız bir Kürt devletinin sınırlarını doğrudan belirlemesi",
+      "Bütün Kürt bölgelerini tek bir devletin yönetimine vermesi",
+      "Kürt emirliklerini bağımsız devletler olarak tanıması"
     ],
     "correctAnswerTr": "Özerk bir Kürt bölgesi için madde içermesi"
   },
@@ -3875,9 +3875,9 @@
     "prompt": "Peymana Zuhabê (Qesr-î Şîrîn, 1639) ji bo kurdan çima girîng e?",
     "answers": [
       "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin",
-      "herêma dîrokî ya li dora Dîcle û Feratê",
-      "mîrektiya kurd a girîng a bi navenda Cizîrê",
-      "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de"
+      "Sînorê dewleteke kurdî ya serbixwe bi fermî hate diyarkirin",
+      "Hemû herêmên kurdî bi tevahî ketin bin desthilata Sefewiyan",
+      "Mîrektiyên kurdî ji her du împaratoriyan serbixwe hatin naskirin"
     ],
     "correctAnswer": "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin",
     "explanation": "1639 antlaşması Osmanlı-Safevi sınırını çizdi ve Kürt bölgesini ikiye böldü.",
@@ -3890,14 +3890,14 @@
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
     },
-    "promptTr": "Zuhab (Qesr-î Şîrîn, 1639) Antlaşması Kürtler için neden önemlidir?",
+    "promptTr": "Zuhab (Kasr-ı Şirin, 1639) Antlaşması Kürtler için neden önemlidir?",
     "answersTr": [
-      "Kürt bölgesi Osmanlı ile Safevîler arasında bölündü",
-      "Dicle ile Fırat çevresindeki tarihî bölgedir",
-      "Cizîr merkezli önemli bir Kürt emirliğidir",
-      "Amed'in eski çağlardaki tarihî adı ve kalesidir"
+      "Kürt bölgesinin Osmanlı ile Safevîler arasında bölünmesi",
+      "Bağımsız bir Kürt devletinin sınırlarının resmen belirlenmesi",
+      "Bütün Kürt bölgelerinin tamamen Safevî yönetimine girmesi",
+      "Kürt emirliklerinin iki imparatorluktan bağımsız tanınması"
     ],
-    "correctAnswerTr": "Kürt bölgesi Osmanlı ile Safevîler arasında bölündü"
+    "correctAnswerTr": "Kürt bölgesinin Osmanlı ile Safevîler arasında bölünmesi"
   },
   {
     "type": "multipleChoice",
@@ -3939,9 +3939,9 @@
     "prompt": "\"Xoybûn\" çi bû?",
     "answers": [
       "Rêxistineke siyasî ya kurdan a salên 1920î",
-      "navendîbûn û rêveberiya rasterast",
-      "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de",
-      "lêkolîna borî bi rêya bermahiyên maddî"
+      "Rêxistineke çandî ya kurdan a salên 1950î",
+      "Partiyeke siyasî ya ku piştî 1960î li Iraqê hate damezrandin",
+      "Komelayeke xwendekarî ya kurdan a dawiya sedsala 19an"
     ],
     "correctAnswer": "Rêxistineke siyasî ya kurdan a salên 1920î",
     "explanation": "Xoybûn 1927'de Suriye'de kuruldu.",
@@ -3957,9 +3957,9 @@
     "promptTr": "\"Xoybûn\" neydi?",
     "answersTr": [
       "1920'li yılların bir Kürt siyasi örgütü",
-      "merkezileşme ve doğrudan yönetim",
-      "Amed kalesinin eski çağdaki tarihî adı",
-      "maddi kalıntılar yoluyla geçmişi araştırma"
+      "1950'li yılların bir Kürt kültür örgütü",
+      "1960 sonrasında Irak'ta kurulan bir siyasi parti",
+      "19. yüzyıl sonlarında kurulan bir Kürt öğrenci topluluğu"
     ],
     "correctAnswerTr": "1920'li yılların bir Kürt siyasi örgütü"
   },
@@ -3998,12 +3998,12 @@
     "category": "Dîrok",
     "prompt": "Di dîroka nûjen de \"Kurdên Sor\" (Sûriye) bi çi têkildar e?",
     "answers": [
-      "serokê bihêz ê mîrektiya Soranê yê bi leqeba kor",
-      "peymana ku sînorê Osmanî û Sefewî diyar kir",
-      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
-      "Ji bo herêmeke kurdî ya xweser madde dihewand"
+      "Tevgera çandî ya kurdan li Sûriyeyê di salên 1930î de",
+      "Koçberiya kurdan ji Sûriyeyê ber bi Iraqê ve di salên 1950î de",
+      "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962an",
+      "Damezrandina rêveberiyeke kurdî li Sûriyeyê di salên 1940î de"
     ],
-    "correctAnswer": "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962yan",
+    "correctAnswer": "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962an",
     "explanation": "1962 Cezire sayımı yüz binlerce Kürdü vatansız bıraktı.",
     "explanationKu": "Serjimara 1962yan li Cizîrê bi sed hezaran kurd bêwelat hiştin.",
     "explanationTr": "1962 Cezire sayımı yüz binlerce Kürdü vatansız bıraktı.",
@@ -4016,12 +4016,12 @@
     },
     "promptTr": "Modern tarihte \"Kurdên Sor\" (Suriye) neyle ilgilidir?",
     "answersTr": [
-      "Soran emirliğinin kör lakaplı güçlü lideri",
-      "Osmanlı-Safevi sınırını belirleyen antlaşma",
-      "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı",
-      "Özerk bir Kürt bölgesi için madde içermesi"
+      "1930'larda Suriye'deki Kürt kültür hareketiyle",
+      "1950'lerde Kürtlerin Suriye'den Irak'a göçüyle",
+      "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığıyla",
+      "1940'larda Suriye'de bir Kürt yönetimi kurulmasıyla"
     ],
-    "correctAnswerTr": "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığı"
+    "correctAnswerTr": "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığıyla"
   },
   {
     "type": "multipleChoice",
@@ -4031,9 +4031,9 @@
     "prompt": "Qelaya Hewlêrê bi çi taybetî tê nasîn?",
     "answers": [
       "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê",
-      "weşanger û ronakbîrê ku alfabeya kurdî pêş xist",
-      "dewleta mezin a ku Selahedînê Eyûbî damezrand",
-      "peymana ku sînorê Osmanî û Sefewî diyar kir"
+      "Navenda yekem a împaratoriya Medan bû",
+      "Di sedsala 20an de ji nû ve bi tevahî hate avakirin",
+      "Tenê wek keleheke leşkerî ya bê niştecih hate bikaranîn"
     ],
     "correctAnswer": "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê",
     "explanation": "Erbil Kalesi 2014'te UNESCO Dünya Mirası listesine girdi.",
@@ -4048,12 +4048,12 @@
     },
     "promptTr": "Hewlêr (Erbil) Kalesi hangi özelliğiyle tanınır?",
     "answersTr": [
-      "Dünyanın en eski sürekli yerleşim yerlerinden biri",
-      "Kürt alfabesini geliştiren yayıncı ve aydın",
-      "Selahedînê Eyûbî'nin kurduğu büyük devlet",
-      "Osmanlı-Safevi sınırını belirleyen antlaşma"
+      "Dünyanın en eski sürekli yerleşim yerlerinden biri olmasıyla",
+      "Med İmparatorluğu'nun ilk başkenti olmasıyla",
+      "20. yüzyılda bütünüyle yeniden inşa edilmesiyle",
+      "Yalnızca yerleşimsiz bir askerî kale olarak kullanılmasıyla"
     ],
-    "correctAnswerTr": "Dünyanın en eski sürekli yerleşim yerlerinden biri"
+    "correctAnswerTr": "Dünyanın en eski sürekli yerleşim yerlerinden biri olmasıyla"
   },
   {
     "type": "multipleChoice",
@@ -4250,10 +4250,10 @@
     "category": "Cografya",
     "prompt": "Çemê Firat ji kîjan herêmê diherike?",
     "answers": [
-      "gola tektonîk a di sînorên Elezîzê de",
-      "nebat û dara tîpîk a çiyayên Kurdistanê",
+      "Çiyayên Zagrosê",
+      "Çiyayên Torosê",
       "Çiyayên rojhilatê Anatolyayê",
-      "Girseya çiyayî ya nêzî Çemê Xerzan"
+      "Çiyayên Qefqasyayê"
     ],
     "correctAnswer": "Çiyayên rojhilatê Anatolyayê",
     "explanation": "Fırat, Doğu Anadolu dağlarından doğar ve Basra Körfezi'ne dökülür.",
@@ -4268,10 +4268,10 @@
     },
     "promptTr": "Fırat Nehri hangi bölgeden kaynağını alır?",
     "answersTr": [
-      "Elezîz sınırları içindeki tektonik göl",
-      "Kürdistan dağlarının tipik bitki ve ağacı",
+      "Zagros Dağları",
+      "Toros Dağları",
       "Doğu Anadolu'nun yüksek dağları",
-      "Xerzan Çayı yakınındaki dağ kütlesi"
+      "Kafkas Dağları"
     ],
     "correctAnswerTr": "Doğu Anadolu'nun yüksek dağları"
   },
@@ -4754,12 +4754,12 @@
     "category": "Siyaset",
     "prompt": "\"Kurdên Feylî\" bi giştî li kîjan herêmê dijîn?",
     "answers": [
-      "Sînorê Iraq-Îranê, herêma Bexda û Îlamê",
-      "Amed û derdora wê",
-      "Mezopotamyaya jorîn",
-      "Kafkasya (Gence-Anî)"
+      "Bexda, Îlam û sînorê Iraq-Îranê",
+      "Amed, Mêrdîn û derdora Botanê",
+      "Hewlêr, Dihok û derdora Musilê",
+      "Gence, Erîvan û derdora Anîyê"
     ],
-    "correctAnswer": "Sînorê Iraq-Îranê, herêma Bexda û Îlamê",
+    "correctAnswer": "Bexda, Îlam û sînorê Iraq-Îranê",
     "explanation": "Feyli Kürtler Şii Kürtlerdir; 1980'de yüz binlercesi Irak'tan sürüldü.",
     "explanationKu": "Feylî kurdên şîî ne; di 1980î de bi sed hezaran ji Iraqê hatin dersînorkirin.",
     "explanationTr": "Feyli Kürtler Şii Kürtlerdir; 1980'de yüz binlercesi Irak'tan sürüldü.",
@@ -4772,12 +4772,12 @@
     },
     "promptTr": "\"Feylî Kürtler\" genel olarak hangi bölgede yaşar?",
     "answersTr": [
-      "Irak-İran sınırı, Bağdat ve Îlam",
-      "Amed ve çevre bölgeler",
-      "Yukarı Mezopotamya bölgesi",
-      "Kafkasya bölgesi (Gence-Anî)"
+      "Bağdat, İlam ve Irak-İran sınırında",
+      "Diyarbakır, Mardin ve Botan çevresinde",
+      "Erbil, Duhok ve Musul çevresinde",
+      "Gence, Erivan ve Ani çevresinde"
     ],
-    "correctAnswerTr": "Irak-İran sınırı, Bağdat ve Îlam"
+    "correctAnswerTr": "Bağdat, İlam ve Irak-İran sınırında"
   },
   {
     "type": "multipleChoice",
@@ -6332,7 +6332,7 @@
     "difficulty": 3,
     "id": "edit_edebiyat_0020",
     "category": "Edebiyat",
-    "prompt": "Melayê Cizîrî li kîjan bajarî jiya?",
+    "prompt": "Mela Ehmed, ku yek ji helbestvanên klasîk ên kurdî ye, li kîjan bajarî jiya?",
     "answers": [
       "Hewlêr",
       "Wan",
@@ -6350,14 +6350,14 @@
       "sourceReference": "Ehmedê Xanî, Mem û Zîn (1692); Mehmed Uzun, Kürt Edebiyatına Giriş; Melayê Cizîrî, Dîwan",
       "qualityVersion": 2
     },
-    "promptTr": "Melayê Cizîrî hangi şehirde yaşadı?",
+    "promptTr": "Klasik Kürt şairlerinden Mela Ehmed hangi şehirde yaşadı?",
     "answersTr": [
-      "Hewlêr",
-      "Wan",
+      "Erbil",
+      "Van",
       "Şam",
-      "Cizîr"
+      "Cizre"
     ],
-    "correctAnswerTr": "Cizîr"
+    "correctAnswerTr": "Cizre"
   },
   {
     "type": "multipleChoice",

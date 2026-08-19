@@ -7,20 +7,6 @@
   "soru": "Selahedînê Eyûbî bi taybetî bi çi tê nasîn?"
  },
  {
-  "id": "edit_dirok_0021",
-  "banka": "editorial_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "\"Xoybûn\" çi bû?"
- },
- {
-  "id": "edit_dirok_0023",
-  "banka": "editorial_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Di dîroka nûjen de \"Kurdên Sor\" (Sûriye) bi çi têkildar e?"
- },
- {
   "id": "edit_muzik_0017",
   "banka": "editorial_questions.json",
   "kusur": "bicim_sizmasi",
@@ -28,18 +14,18 @@
   "soru": "Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?"
  },
  {
-  "id": "edit_siyaset_0014",
-  "banka": "editorial_questions.json",
-  "kusur": "uzunluk_sizmasi",
-  "ayrinti": "doğru 39 krk, en uzun çeldirici 20",
-  "soru": "\"Kurdên Feylî\" bi giştî li kîjan herêmê dijîn?"
- },
- {
   "id": "edit_sinema_0007",
   "banka": "editorial_questions.json",
   "kusur": "uzunluk_sizmasi",
   "ayrinti": "doğru 31 krk, en uzun çeldirici 18",
   "soru": "Fîlmê \"Klama Dayîka Min\" xelata fîlmê herî baş li kîjan festîvalê wergirt?"
+ },
+ {
+  "id": "offline_2455",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "\"Cejna Newrozê\" tê çi wateyê?"
  },
  {
   "id": "offline_6841",
@@ -56,18 +42,18 @@
   "soru": "Li jêr kîjan têgiha \"Peymana Lozanê\" rave dike?"
  },
  {
-  "id": "offline_7383",
-  "banka": "offline_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Kîjan li gorî pênaseya \"Mahabad Cumhuriyeti\" ye?"
- },
- {
   "id": "offline_7643",
   "banka": "offline_questions.json",
   "kusur": "bicim_sizmasi",
   "ayrinti": "yalnız doğru şık sayı taşıyor",
   "soru": "\"Mikdat Mithat Bedirxan\" çawa divê bê fêmkirin?"
+ },
+ {
+  "id": "offline_8367",
+  "banka": "offline_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 46 krk, en uzun çeldirici 16",
+  "soru": "Ji aliyê erdnîgariyê ve \"gol\" çi ye?"
  },
  {
   "id": "offline_9529",
@@ -105,20 +91,6 @@
   "soru": "Yekem fîlmê animasyonê yê dirêj ê stûdyoya Walt Disney, ku sala 1937an derket, kîjan e?"
  },
  {
-  "id": "tech_core_0039",
-  "banka": "expansion_2026_08_questions.json",
-  "kusur": "uzunluk_sizmasi",
-  "ayrinti": "doğru 59 krk, en uzun çeldirici 35",
-  "soru": "Êrîşa phishing bi giranî çawa dixebite?"
- },
- {
-  "id": "sf_tech_0013",
-  "banka": "source_first_2026_08_questions.json",
-  "kusur": "uzunluk_sizmasi",
-  "ayrinti": "doğru 33 krk, en uzun çeldirici 19",
-  "soru": "\"Passphrase\" çi ye?"
- },
- {
   "id": "ds_dirok_0028",
   "banka": "deepseek_2026_08_18_questions.json",
   "kusur": "bicim_sizmasi",
@@ -138,13 +110,6 @@
   "kusur": "uzunluk_sizmasi",
   "ayrinti": "doğru 30 krk, en uzun çeldirici 17",
   "soru": "Di dîroka devkî de, kîjan pirsgirêk ji ber ziman û wergeran derdikeve?"
- },
- {
-  "id": "ds_edebiyat_0076",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "uzunluk_sizmasi",
-  "ayrinti": "doğru 51 krk, en uzun çeldirici 24",
-  "soru": "Di destana Gilgameş de, Gilgameş ji bo çi li riya nemiriyê digere?"
  },
  {
   "id": "ds_sinema_0130",
@@ -196,24 +161,10 @@
   "soru": "Mijara sereke ya ku derhênerên jin ên kurd (mînak: Bêrîvan Bînevşa, Özlem Yaşar) tînin roj"
  },
  {
-  "id": "ds_sinema_0290",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "uzunluk_sizmasi",
-  "ayrinti": "doğru 91 krk, en uzun çeldirici 54",
-  "soru": "Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji \"çiya û gund\" ber bi \"ba"
- },
- {
   "id": "ds_dirok_0312",
   "banka": "deepseek_2026_08_18_questions.json",
   "kusur": "bicim_sizmasi",
   "ayrinti": "yalnız doğru şık sayı taşıyor",
   "soru": "Serhildana Ebdurehman Paşayê Baban (1806) di dîroka mîrektiyên kurd de çima xwedî cihekî g"
- },
- {
-  "id": "ds_dirok_0338",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Piştî Şerê Kendavê di sala 1991ê de, biryara 688an a Neteweyên Yekbûyî kîjan qonaxa nû vek"
  }
 ]
