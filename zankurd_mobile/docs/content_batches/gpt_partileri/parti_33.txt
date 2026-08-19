@@ -1,0 +1,121 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+17 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_ziman_1282] Ziman
+S: Di hevoka "Min xwest ez biçim" de sedema ku lêkera duyem ketiye moda daxwaziyê (subjunktîf) çi ye?
+A) Hemû hevokên dema borî lêkera duyem her tim dikin dema bê B) Ji ber ku cînavê duyem xwerû ye lêkera duyem dibe negerguhêz C) Ji ber ku di navbera her du lêkeran de ti daçek nehatiye bikaranîn D) Lêkera daxwazê "xwestin" li ser lêkera duyem pêwîstiya guman an daxwazê çêdike
+✓ Lêkera daxwazê "xwestin" li ser lêkera duyem pêwîstiya guman an daxwazê çêdike
+
+[ds_ziman_1283] Ziman
+S: Di kurmancî de ferqa di navbera lêkera hevedudanî ya "dest pê kirin" û "dest jê berdan" de ji aliyê daçekê ve çi ye?
+A) Her du lêker jî tenê bi daçeka "tê" (di wê de) tên avakirin B) Di ya yekem de daçeka "pê" (bi wê), di ya duyem de "jê" (ji wê) hatiye bikaranîn C) Di ya yekem de ti daçek nîne lê di ya duyem de daçeka cîhî heye D) Daçek tenê ji bo çêkirina neyîniyê di lêkera duyem de heye
+✓ Di ya yekem de daçeka "pê" (bi wê), di ya duyem de "jê" (ji wê) hatiye bikaranîn
+
+[ds_ziman_1284] Ziman
+S: Di kurmancî de paşgira "-ok" gava li ser lêkerekê zêde dibe (mînak: tirs -> tirsok, ken -> kenok), çi cure peyvê çêdike?
+A) Lêkereke gerguhêz a ku tenê di dema bê de tê gotin B) Navdêreke erdnîgarî ya ku mekanê bûyerê diyar dike C) Cînavekî pirsyarî yê ku li şûna tiştan rûdine D) Rengdêra ku xasiyet an zêdebûna wî reftarî nîşan dide
+✓ Rengdêra ku xasiyet an zêdebûna wî reftarî nîşan dide
+
+[ds_ziman_1285] Ziman
+S: Di kurmancî de rengdêrên hevedudanî yên ku bi pêşgira "xweş-" (mînak: xweşmêr, xweşnav, xweşbext) çêdibin çi nîşan didin?
+A) Tunebûn û neyîniya wî navdêrî diyar dikin B) Tenê mezinahiya laşî ya heyberan destnîşan dikin C) Qencî, rûmet û çêtiya wê xisletê nîşan didin D) Peyvê dikin amûreke teknîkî ya çandiniyê
+✓ Qencî, rûmet û çêtiya wê xisletê nîşan didin
+
+[ds_ziman_1286] Ziman
+S: Di lêkera "hilgirtin" de pêşgira "hil-" kîjan araste û tevgerê li lêkerê zêde dike?
+A) Tevgera ber bi jêr ve û binaxkirinê B) Tenê dubarekirina çalakiyê di heman astê de C) Neyînîkirina eylemê û rawestandina kar D) Tevgera ber bi jor ve (rakirin an hildan)
+✓ Tevgera ber bi jor ve (rakirin an hildan)
+
+[ds_ziman_1287] Ziman
+S: Di lêkera "daxistin" de pêşgira "da-" kîjan arasteyê nîşan dide?
+A) Tevgera ji hundir ber bi derve ve B) Tevgera ji jor ber bi jêr ve (danîn an daxistin) C) Tevgera ber bi jor ve, hilkişîn û firîn D) Tenê sekinandin û rawestandina domdar
+✓ Tevgera ji jor ber bi jêr ve (danîn an daxistin)
+
+[ds_ziman_1288] Ziman
+S: Di kurmancî de peyva "ziman" bixwe ji aliyê zayenda rêzimanî ve çi ye û kîjan veqetandekê digire?
+A) Navdêreke mê ye û veqetandeka "-a" digire (zimana me) B) Navdêreke bêzayend e û tenê veqetandeka "-ên" digire C) Tenê di pirjimariyê de dibe navdêreke mê D) Navdêreke nêr e û veqetandeka "-ê" digire (zimanê me)
+✓ Navdêreke nêr e û veqetandeka "-ê" digire (zimanê me)
+
+[ds_ziman_1289] Ziman
+S: Di kurmancî de peyva "roj" (hem bi wateya heva germ hem jî rojên hefteyê) xwedî kîjan zayendê ye?
+A) Navdêreke nêr e û veqetandeka "-ê" digire (rojê nû) B) Di wateya rojê de nêr e lê di ya tavê de bêzayend e C) Navdêreke mê ye û veqetandeka "-a" digire (roja nû) D) Tenê di hevokên dema borî de dibe navdêreke nêr
+✓ Navdêreke mê ye û veqetandeka "-a" digire (roja nû)
+
+[ds_ziman_1290] Ziman
+S: Di navbera "hevalê min" û "hevala min" de kîjan cudahî rasterast zayenda heval destnîşan dike?
+A) "Hevalê" nîşana pirjimariyê ye, "hevala" nîşana yekjimariyê ye B) Her du jî wekhev in lê yek di dema borî de tê bikaranîn C) "Hevalê" tenê ji bo hevalên dûr e, "hevala" ji bo hevalên nêzîk e D) "Hevalê" nîşana hevalê nêr e, "hevala" nîşana hevala mê ye
+✓ "Hevalê" nîşana hevalê nêr e, "hevala" nîşana hevala mê ye
+
+[ds_ziman_1291] Ziman
+S: Di kurmancî de rengdêra nîşandanê ya dûr ji bo yekjimar û pirjimar kîjan e?
+A) Yekjimar: Ew / Pirjimar: Ew (di tewangê de: Wî/Wê û Wan) B) Yekjimar: Ev / Pirjimar: Ev (di tewangê de: Vî/Vê û Van) C) Yekjimar: Ha / Pirjimar: Ha (di tewangê de: Hî û Han) D) Yekjimar: Wa / Pirjimar: Wa (di tewangê de: Wî û Win)
+✓ Yekjimar: Ew / Pirjimar: Ew (di tewangê de: Wî/Wê û Wan)
+
+[ds_ziman_1292] Ziman
+S: Di lêkera "rakirin" de pêşgira "ra-" di kîjan wateyê de tevgerê nîşan dide?
+A) Binaxkirina tiştekî di kûrahiya erdê de B) Tenê derxistina kesekî ji derveyî welat C) Ji erdê bilindkirin, betalkirin an rakirina aliyekî D) Guherandina zimanê nivîskî bo dengî
+✓ Ji erdê bilindkirin, betalkirin an rakirina aliyekî
+
+[ds_ziman_1293] Ziman
+S: Di kurmancî de dema ku cînavê pirsê yê "kîjan" ji bo navdêreke mê ya yekjimar tê bikaranîn, qertafa wê çawa ye?
+A) Kîjan pirtûk (an kîjana wan gava tenê be) B) Tenê kîjanî tê gotin û qet nayê guhertin C) Her tim bi qertafa pirjimariyê dibe kîjanan D) Ji bo mê her tim dibe kîjanê pirtûk
+✓ Kîjan pirtûk (an kîjana wan gava tenê be)
+
+[ds_ziman_1294] Ziman
+S: Di hevoka "Min nanê xwe xwar" û "Wî nanê xwe xwar" de çima cînavê vegerok ê "xwe" neguherî ye?
+A) Ji ber ku lêkera xwarin tenê rê dide cînavên yekjimar B) Ji ber ku nan navdêreke nêr e û cînavan bêbandor dike C) Ji ber ku her du hevok jî di dema niha de hatine avakirin D) Ji ber ku "xwe" ji bo hemû kesan cînavê xwedîtiyê yê gerdûnî ye
+✓ Ji ber ku "xwe" ji bo hemû kesan cînavê xwedîtiyê yê gerdûnî ye
+
+[ds_ziman_1295] Ziman
+S: Di kurmancî de paşgira "-istan" (mînak: daristan, gulistan, Kurdistan) ji bo çi cure peyvan çêdike?
+A) Navên herêm, welat an cihên ku tiştek lê pir zêde ye B) Rengdêrên neyînî yên ku kêmtiyê nîşan didin C) Lêkerên dema borî yên ku bi lez qediyane D) Tenê amûrên muzîkê yên kevnar ên herêmî
+✓ Navên herêm, welat an cihên ku tiştek lê pir zêde ye
+
+[ds_ziman_1296] Ziman
+S: Di hevoka "Min pênûsek da hevalê xwe yê hêja" de peyva "yê" çima hatiye bikaranîn?
+A) Ji ber ku pênûs navdêreke mê ye û li pêşiya hevokê rûniştiye B) Ji ber ku lêkera dan her tim pêdivî bi du veqetandekên nêr dibîne C) Ji ber ku rengdêra "hêja" bi navdêra nêr a tewandî "hevalê xwe" ve girêdide D) Ji ber ku cînavê "xwe" tenê bi qertafa "yê" dikare were tewandin
+✓ Ji ber ku rengdêra "hêja" bi navdêra nêr a tewandî "hevalê xwe" ve girêdide
+
+[ds_ziman_1297] Ziman
+S: Di kurmancî de ferqa navdêrên hevedudanî yên hevedest (mînak: serok, serdest, pêşeng) li ser kîjan pêkhateyê ava dibe?
+A) Bi rêya organên laş (ser, dest, pê) û hevgirtina bi paşgir an rengdêran re B) Tenê bi rêya lêkerên dema bê yên ku bi paşgira "-in" qediyane C) Bi dabeşkirina navên rojan li ser navên heftê û mehan D) Tenê bi guherandina tîpên dengdêr bo dengdarên req
+✓ Bi rêya organên laş (ser, dest, pê) û hevgirtina bi paşgir an rengdêran re
+
+[ds_ziman_1298] Ziman
+S: Di rêzimana kurmancî de çima di hevoka "Ez pirtûkê dixwînim" de "pirtûkê" tewiyaye lê di "Min pirtûk xwend" de "pirtûk" xwerû maye?
+A) Lêkera xwendin di dema niha de negerguhêz e lê di dema borî de gerguhêz e B) Ji ber ku zayenda pirtûkê di dema niha de mê ye lê di dema borî de dibe nêr C) Ev guherîn tenê ji bo xweşbêjiya dengan e û ti têkiliya wê bi rêzimanê re nîne D) Dema niha nominatîf-akuzatîf e (bireser ditewe), dema borî ergatîf e (bireser xwerû dimîne)
+✓ Dema niha nominatîf-akuzatîf e (bireser ditewe), dema borî ergatîf e (bireser xwerû dimîne)

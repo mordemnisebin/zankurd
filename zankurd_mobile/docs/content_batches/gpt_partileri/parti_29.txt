@@ -1,0 +1,271 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+47 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_sinema_0259] Sînema
+S: Di fîlma "Jîn" (2013) a Reha Erdem de têkiliya keça ciwan a li daristanê bi sirûşt û ajalan re çi nîşan dide?
+A) Kariyera jinekê ya di warê biyolojiya deryayî de B) Nêçîrvaniya profesyonel a ji bo qezenckirina dirav C) Xebata çandiniyê ya nûjen di zeviyên mezin de D) Bêgunehiya sirûştê li hemberî tundûtûjî û xirabiya şerê mirovan
+✓ Bêgunehiya sirûştê li hemberî tundûtûjî û xirabiya şerê mirovan
+
+[ds_sinema_0260] Sînema
+S: Rêzbûna dîrokî ya derketina van fîlmên girîng ên sînemaya kurdî di kîjan vebijêrkê de rast e?
+A) Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021) B) Min Dît (2009) -> Yol (1982) -> Cîran (2021) -> Bêkes (2012) C) Bêkes (2012) -> Yol (1982) -> Min Dît (2009) -> Cîran (2021) D) Yol (1982) -> Cîran (2021) -> Min Dît (2009) -> Bêkes (2012)
+✓ Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)
+
+[ds_sinema_0261] Sînema
+S: Belgefîlma "5 No'lu Cezaevi" (2009) a Çayan Demirel li ser kîjan rastiya dîrokî hatiye avakirin?
+A) Girtîgehên serdema navîn ên li welatên Ewropaya Bakur B) Dîroka avakirina zindana Alcatrazê ya li Amerîkayê C) Trawma, êşkence û berxwedana li Girtîgeha Leşkerî ya Amedê ya piştî darbeya 1980î D) Jiyana girtiyên şerê cîhanî yê duyem li Asyayê
+✓ Trawma, êşkence û berxwedana li Girtîgeha Leşkerî ya Amedê ya piştî darbeya 1980î
+
+[ds_sinema_0262] Sînema
+S: Di fîlma "Memories on Stone" (Bîranînên li ser kevir, 2014) a Shawkat Amin Korki de, mijara fîlmê li ser çi ye?
+A) Çêkirina fîlmekî tirsnak li ser kevirên mîtolojîk li Misrê B) Zehmetiyên çêkirina fîlmekî li ser Komkujiya Enfalê li Başûrê Kurdistanê C) Bazirganiya kevirên mermer di navbera şîrketên navneteweyî de D) Lêkolîna arkeolojîk li ser nivîsên bîzansiyan li Stenbolê
+✓ Zehmetiyên çêkirina fîlmekî li ser Komkujiya Enfalê li Başûrê Kurdistanê
+
+[ds_sinema_0263] Sînema
+S: Festîvala Navneteweyî ya Fîlman a Duhokê (Duhok IFF) çi roleke sereke di sînemaya kurdî de dilîze?
+A) Tenê nîşandana fîlmên anîmasyonê yên ku ji bo televîzyonê hatine çêkirin B) Firotina kamerayên kevn ji bo kanalên nûçeyan C) Komkirina sînemagerên her çar perçeyan û diyasporayê û piştgirîkirina projeyên nû D) Qedexekirina lîstikvanên biyanî ji bo fîlmên herêmî
+✓ Komkirina sînemagerên her çar perçeyan û diyasporayê û piştgirîkirina projeyên nû
+
+[ds_sinema_0264] Sînema
+S: Di fîlma "Zer" (2017) a "Kazım Öz" de, rêwîtiya ciwanekî ji New Yorkê ber bi Dêrsimê ve çi rave dike?
+A) Lêgerîna li strana kalikê xwe û vedîtina rastiya komkujiya 1938an a Dêrsimê B) Ji bo kirîna zeviyên çandiniyê vegera gundê bavê xwe C) Ji bo çêkirina kargeheke nû ya çêkirina kincan D) Ji bo fêrbûna zimanê îngilîzî ji mamosteyên biyanî
+✓ Lêgerîna li strana kalikê xwe û vedîtina rastiya komkujiya 1938an a Dêrsimê
+
+[ds_sinema_0265] Sînema
+S: Fîlma "Ji bo Azadiyê" (The End Will Be Spectacular, 2019) a Ersin Çelik li ser kîjan bûyerên dîrokî ye?
+A) Şerê Cîhanî yê Yekem di navbera artêşên Ewropayê de B) Avakirina Yekîtiya Ewropayê li Brukselê di salên pêncîyan de C) Berxwedana taxa Sûrê ya Amedê ya di zivistana 2015-2016an de D) Şoreşa Fransayê ya li dijî padîşahiyê di sala 1789an de
+✓ Berxwedana taxa Sûrê ya Amedê ya di zivistana 2015-2016an de
+
+[ds_sinema_0266] Sînema
+S: Di fîlma "Kleine Freiheit" (A Little Bit of Freedom, 2003) a "Yüksel Yavuz" de, mijara sereke çi ye?
+A) Jiyana mîrekî kevnar ê li qesra Colemêrgê di sedsala 17an de B) Hevaltiya du ciwanên penaber ên kurd û tirk li taxa St. Pauli ya Hamburgê C) Pêşbirkeke motorsîkletan li daristanên Afrîkayê D) Çîroka derketina keştiyeke fezayê ber bi gerstêrka Marsê
+✓ Hevaltiya du ciwanên penaber ên kurd û tirk li taxa St. Pauli ya Hamburgê
+
+[ds_sinema_0267] Sînema
+S: Fîlma "Babamın Kanatları" bi lîstikvaniya "Menderes Samancılar" kîjan pirsgirêka civakî tîne ziman?
+A) Gera tûrîstên dewlemend li ser peravên deryayê B) Pêşketina şîrketên komputerê di qada firotina serhêl de C) Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber D) Perwerdehiya pîlotên balafiran di akademiyên leşkerî de
+✓ Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber
+
+[ds_sinema_0268] Sînema
+S: Fîlma "Vodka Lemon" (2003) a Hiner Saleem li ku derê hatiye kişandin û kîjan civakê nîşan dide?
+A) Li gundekî Ermenistanê di nav kurdên êzdî de piştî hilweşîna Sovyetê B) Li navenda bajarê Londonê di nav karsazên îngilîz de C) Li daristanên Brezîlyayê di nav êlên xwecihî de D) Li giravên Yewnanistanê di nav tûrîstên havînê de
+✓ Li gundekî Ermenistanê di nav kurdên êzdî de piştî hilweşîna Sovyetê
+
+[ds_sinema_0269] Sînema
+S: Sînemaya nûjen a kurdî çima bi piranî ji çîrok û motîfên dengbêjiyê sûd werdigire?
+A) Ji ber ku mûzîka dengbêjiyê bi hêsanî bi piyanoyê tê guhertin B) Ji ber ku qanûnên sînemayê bikaranîna zimanên din qedexe dike C) Ji ber ku bîra dîrokî û çavkaniya herî xurt a dramatîk a nivîskî-devkî ye D) Ji ber ku di dengbêjiyê de tenê qala çîrokên zanistî tê kirin
+✓ Ji ber ku bîra dîrokî û çavkaniya herî xurt a dramatîk a nivîskî-devkî ye
+
+[ds_sinema_0270] Sînema
+S: Di gelek fîlmên sînemaya kurdî de bikaranîna dîmenên "çiyayên asê û rêyên berfê" ji aliyê zimanê sînemayê ve çi îfade dike?
+A) Tenê wekî reklamkirina werzişa skiyê ji bo tûrîzma zivistanê B) Wekî qada çêkirina kargehên mezin ên tekstîlê li serê çiya C) Ji bo nîşandana rêyên trênê yên lezgîn di navbera bajaran de D) Hem wekî sitargeha parastinê hem jî wekî astengiya herî giran a fîzîkî û sînoran
+✓ Hem wekî sitargeha parastinê hem jî wekî astengiya herî giran a fîzîkî û sînoran
+
+[ds_sinema_0271] Sînema
+S: Di fîlma "Yol" de kîjan dîmena trajîk a di nav berfê de şert û mercên giran ên zivistanê û zextên civakî tîne cem hev?
+A) Serkeftina wî ya di pêşbirka bezê ya navneteweyî de B) Dîtina hespekî spî yê bi per li serê lûtkeya çiyê C) Mirina jina wî Zînê ya di nav sermayê de û hewldana rizgarkirina wê ya derengmayî D) Gihîştina wî ya bi balafirê ber bi paytexta Fransayê
+✓ Mirina jina wî Zînê ya di nav sermayê de û hewldana rizgarkirina wê ya derengmayî
+
+[ds_sinema_0272] Sînema
+S: Bikaranîna "bêdengiyê" (silence) di fîlmên sînemagerên kurd de çima wekî amûreke xurt a zimanê fîlmê tê dîtin?
+A) Ji ber ku mîkrofonên fîlmçêkirinê di wan deman de têrê nedikirin B) Ji ber ku lîstikvanan zimanê hev fêm nedikirin di dema kişandinê de C) Ji bo kêmkirina lêçûna fîlmê di qada tomarkirina deng de D) Dema ku ziman û peyv qedexe bin, bêdengî dibe qîrîna herî xurt a hest û êşê
+✓ Dema ku ziman û peyv qedexe bin, bêdengî dibe qîrîna herî xurt a hest û êşê
+
+[ds_sinema_0273] Sînema
+S: Rêzbûna pêşketina şêwaza sînemayî ya "Yılmaz Güney" ji sînemaya populer ber bi sînemaya rexneyî di kîjan rêzê de rast e?
+A) Yol (1982) -> Umut (1970) -> Çîrokên Çirkin Kral (salên 60î) -> Sürü (1978) B) Çîrokên Çirkin Kral (salên 60î) -> Umut (1970) -> Sürü (1978) -> Yol (1982) C) Sürü (1978) -> Yol (1982) -> Umut (1970) -> Çîrokên Çirkin Kral (salên 60î) D) Umut (1970) -> Yol (1982) -> Sürü (1978) -> Çîrokên Çirkin Kral (salên 60î)
+✓ Çîrokên Çirkin Kral (salên 60î) -> Umut (1970) -> Sürü (1978) -> Yol (1982)
+
+[ds_sinema_0274] Sînema
+S: Fîlma "Kobanî" (2022) a Özlem Yaşar çawa hate kişandin û kîjan şêwaza xwerû pêk anî?
+A) Li studyoyên Hollywoodê bi lîstikvanên profesyonel ên rojavayî hate kişandin B) Tenê bi dîmenên arşîvê yên ji televîzyonên nûçeyan hate berhevkirin C) Wekî fîlmeke anîmasyonê ya du-dîmenî ji bo televîzyona zarokan hate amadekirin D) Li bajarê Kobanî bixwe bi şervan û şêniyên ku şer jiyane re hate çêkirin
+✓ Li bajarê Kobanî bixwe bi şervan û şêniyên ku şer jiyane re hate çêkirin
+
+[ds_sinema_0275] Sînema
+S: Di fîlma "Fotoğraf" (2001) a "Kazım Öz" de, rêwîtiya di otobusê de ya du ciwanên ji du bereyên dijber çi sembolîze dike?
+A) Pêşbirkeke bazirganiyê ya ji bo firotina kincên nûjen li Stenbolê B) Dizîna kamerayeke kevnar ji pirtûkxaneyeke zanîngehê C) Nêzîkbûna însanî ya du xortan beriya ku rastiya şer wan li hemberî hev bike dijmin D) Hevaltiya du tûrîstên ku dixwazin biçin çiyayên Alpan li Ewropayê
+✓ Nêzîkbûna însanî ya du xortan beriya ku rastiya şer wan li hemberî hev bike dijmin
+
+[ds_sinema_0276] Sînema
+S: Mijara sereke ya ku derhênerên jin ên kurd (mînak: Bêrîvan Bînevşa, Özlem Yaşar) tînin rojeva sînemayê çi ye?
+A) Tenê şîretên çêkirina xwarinên gelerî di televîzyonan de B) Bazirganiya kincên modayê li bajarên mezin ên cîhanê C) Dîroka şerên kevnar ên bê hebûna jinan di civakê de D) Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de
+✓ Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de
+
+[ds_sinema_0277] Sînema
+S: Sînemagerên kurd ên diyasporayê (mînak: li Almanya, Swêd, Swîsre) çima di fîlmên xwe de pirsa "nasnameya ducarî" derdixin pêş?
+A) Ji ber ku zimanê wan ê dayikê qet nayê bîra wan B) Ji ber aloziya di navbera çanda zikmakî û çanda welatê nû yê ku lê dijîn C) Ji ber ku fîlmên wan tenê ji bo şîrketên geştiyariyê têne çêkirin D) Ji bo ku lîstikvanên biyanî fêrî lîstikvaniya kurdî bibin
+✓ Ji ber aloziya di navbera çanda zikmakî û çanda welatê nû yê ku lê dijîn
+
+[ds_sinema_0278] Sînema
+S: Di fîlma "Bîranînên li ser kevir" de dîmenê lîstikvana ku malbata wê nahêle bilîze çi nîşan dide?
+A) Kêmbûna mûçeyê lîstikvanan di şîrketên sînemayê de B) Nebûna kincên lîstikvaniyê di studyoyên herêmî de C) Daxwaza lîstikvanê ya ji bo çûyîna Amerîkayê ya bi lezgînî D) Zextên civakî û kevneşopiyên ku li dijî lîstikvaniya jinê di sînemayê de radibin
+✓ Zextên civakî û kevneşopiyên ku li dijî lîstikvaniya jinê di sînemayê de radibin
+
+[ds_sinema_0279] Sînema
+S: Fîlma kurt a "Ax" (Toprak, 1999) a "Kazım Öz" çîroka kalekî li gundekî valakirî çawa vedibêje?
+A) Şahiya cejnekê ya li gundekî qelebalix bi mûzîk û reqsan B) Dîroka avakirina bendaveke mezin li ser rûbarê Firatê C) Tenêtiya giran a mirovekî ku xaka xwe bernade li hemberî hilweşîn û bêdengiyê D) Pêşbirkeke çandiniyê di navbera cotkarên herêmê de
+✓ Tenêtiya giran a mirovekî ku xaka xwe bernade li hemberî hilweşîn û bêdengiyê
+
+[ds_sinema_0280] Sînema
+S: Di dîroka bajarên Kurdistanê de (wekî Amed, Hewlêr, Silêmanî) salên 1960 û 70î sînema çi fonksiyonek dilîst?
+A) Tenê baregeheke leşkerî ya ji bo perwerdeya efseran B) Bazarên sergirtî yên firotina genim û arvan C) Nexweşxaneyên taybet ên ji bo dermankirina nexweşiyan D) Qada sereke ya hevdîtina civakî, çandî û naskirina sînemaya cîhanê
+✓ Qada sereke ya hevdîtina civakî, çandî û naskirina sînemaya cîhanê
+
+[ds_sinema_0281] Sînema
+S: Di fîlma "Gava Dibe Tarî" an belgefîlmên li ser zarokên kolanê çi rastî tê ragihandin?
+A) Bandora kûr a koçberiya neçarî û zextên aborî li ser zaroktiya li bajaran B) Pêşketina zanistî ya zarokan di dibistanên taybet ên teknolojiyê de C) Gera havînê ya zarokan li peravên deryayê yên Ewropayê D) Fêrbûna zimanê latînî ji bo xwendina pirtûkên kevnar
+✓ Bandora kûr a koçberiya neçarî û zextên aborî li ser zaroktiya li bajaran
+
+[ds_sinema_0282] Sînema
+S: Mûzîka fîlmê di sînemaya Bahman Ghobadi de (wekî mûzîkên Hossein Alizadeh) çima xwedî cihekî stratejîk e?
+A) Ji ber ku lîstikvanan di fîlmê de qet neaxivîne û tenê mûzîk heye B) Ji bo firotina kasetan li dikanên mûzîkê yên Amerîkayê C) Deng û awazên gelerî wekî karakterekî duyem ê sereke yê fîlmê tev li çîrokê dibin D) Ji ber ku qanûnên fîlmçêkirinê bikaranîna dengê zindî qedexe dikin
+✓ Deng û awazên gelerî wekî karakterekî duyem ê sereke yê fîlmê tev li çîrokê dibin
+
+[ds_sinema_0283] Sînema
+S: Sînemaya serbixwe ya kurdî ya salên 2000î bi piranî li ser kîjan platformên belavkirinê jiyaye?
+A) Festîvalên navneteweyî, hefteyên fîlman ên serbixwe û qadên çandî B) Kanalên fermî yên televîzyonên dewletê yên bi budçeyên mezin C) Rêxistinên bazirganî yên firotina vîdyoyan li balafirgehan D) Tenê dikanên firotina pirtûkan li gundên biçûk
+✓ Festîvalên navneteweyî, hefteyên fîlman ên serbixwe û qadên çandî
+
+[ds_sinema_0284] Sînema
+S: Di sînemaya "Yılmaz Güney" de di fîlma "Ağıt" (1971) de metafora qaçaqçiyan çi nîşan dide?
+A) Karsazên dewlemend ên ku li bendera Stenbolê keştiyan digirin B) Lîstikvanên şanoyê yên ku li Parîsê perwerdehiyê dibînin C) Zanyarên ku li çolê li bermayiyên dîrokî digerin D) Mirovên ku di navbera zilm, bêçaretî û xiyanetê de asê mane
+✓ Mirovên ku di navbera zilm, bêçaretî û xiyanetê de asê mane
+
+[ds_sinema_0285] Sînema
+S: Di sînemaya kurdî de fîlmên ku li ser gundên Êzdiyan hatine çêkirin bi piranî kîjan mijarê radixin ber çavan?
+A) Parastina baweriya kevnar, fermanên dîrokî û girêdana bi xaka Şengalê re B) Avakirina balafirgehên nûjen li deştên berfireh C) Guhertina kincên gelerî bi kincên fezayê yên nû D) Bazirganiya zêran di navbera welatên Asyayê de
+✓ Parastina baweriya kevnar, fermanên dîrokî û girêdana bi xaka Şengalê re
+
+[ds_sinema_0286] Sînema
+S: Di fîlmên Bahman Ghobadi de çima "têlên strîdar" (dikenli teller) di gelek dîmenan de dubare dibin?
+A) Tenê ji bo xemilandina dîmenên kamerayê di dema rojavabûnê de B) Ji ber ku gundiyan tenê bi têlên hesinî malên xwe çêdikirin C) Ji bo nîşandana parçebûna erdnîgarî û qutbûna malbatan a ji ber sînoran D) Wekî amûreke masîvaniyê ya li ser rûbarên çiyayî
+✓ Ji bo nîşandana parçebûna erdnîgarî û qutbûna malbatan a ji ber sînoran
+
+[ds_sinema_0287] Sînema
+S: Derhênerên kurd çima di fîlmên xwe de pir caran xelkê herêmî (ne profesyonel) wekî lîstikvan hildibijêrin?
+A) Ji bo gihandina hestê rasteqîn, reftara xwezayî û parastina zaravayê resen B) Ji ber ku lîstikvanên profesyonel qet fêrî zimanên herêmî nabin C) Ji bo qedexekirina sînemaya biyanî li seranserê cîhanê D) Ji ber ku lîstikvaniya profesyonel di qanûnan de hatiye qedexekirin
+✓ Ji bo gihandina hestê rasteqîn, reftara xwezayî û parastina zaravayê resen
+
+[ds_sinema_0288] Sînema
+S: Di fîlma "14 Tîrmeh" (14 Temmuz, 2017) a Haşim Aydemir de, zimanê dîtbarî li ser kîjan şêwazê ava dibe?
+A) Dîmenên geş ên peravên deryayê bi mûzîka şad B) Gera li nav muzexaneyên mezin ên Ewropayê bi hevalan re C) Fîlmeke komedî ya li ser jiyana karsazên li otêlên luks D) Klosterfobiya zindanê, êşa giran a laşî û biryardariya îradeya mirov
+✓ Klosterfobiya zindanê, êşa giran a laşî û biryardariya îradeya mirov
+
+[ds_sinema_0289] Sînema
+S: Rola "Şerif Gören" di sînemaya Tirkiyeyê û fîlma "Yol" de çi bû?
+A) Derhênerê ku senaryo û rêberiya Yılmaz Güney a ji girtîgehê li ser sehneyê bi cih anî B) Mûzîkjenê ku tenê strana dawî ya fîlmê bi piyanoyê çêkir C) Lîstikvanê sereke yê ku di fîlmê de rola parêzer lîst D) Karsazê ku fîlm tenê li Amerîkayê belav kir
+✓ Derhênerê ku senaryo û rêberiya Yılmaz Güney a ji girtîgehê li ser sehneyê bi cih anî
+
+[ds_sinema_0290] Sînema
+S: Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji "çiya û gund" ber bi "bajarên mezin" ve çi nîşan dide?
+A) Qedexebûna çandiniyê li hemû gundên cîhanê B) Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de C) Bikaranîna tenê trênên bilez ji aliyê hemû gundiyan ve D) Hebûna hemû kamerayan tenê li navendên bazirganiyê
+✓ Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de
+
+[ds_sinema_0291] Sînema
+S: Kîjan ji van derhênerên navdar bi fîlmên xwe yên mînak "Cîran", "Zer" û "Klama Dayîka Min" di qada sînemayê de cîh girtine?
+A) Alfred Hitchcock, Steven Spielberg û George Lucas B) Federico Fellini, Jean-Luc Godard û Ingmar Bergman C) Akira Kurosawa, Hayao Miyazaki û Yasujiro Ozu D) Mano Xelîl, Kazım Öz û Erol Mintaş
+✓ Mano Xelîl, Kazım Öz û Erol Mintaş
+
+[ds_sinema_0292] Sînema
+S: Di fîlma "Dema Hespên Serxweş" de çima navê fîlmê wekî "Serxweş" hatiye binavkirin?
+A) Ji ber ku hesp li zozanan giyayên bi jehr dixwin û nexweş dikevin B) Ji bo ku di sermayê de karibin li ber xwe bidin alkol didan hespan da ku narelin C) Wekî henekekê ji bo pêkenîna zarokên li gund di cejnan de D) Ji ber ku qaçaxçiyan alkol li ser pişta hespan firotibû bajêr
+✓ Ji bo ku di sermayê de karibin li ber xwe bidin alkol didan hespan da ku narelin
+
+[ds_sinema_0293] Sînema
+S: Di sînemaya Bahman Ghobadi de fîlma "Turtles Can Fly" (Kûsî jî difirin) li ser kîjan herêm û serdemê hatiye çêkirin?
+A) Li ser sînorê Tirkiye-Iraqê di dema ketina rejîma Saddam de (2003) B) Li çolên Efrîqayê di dema Şerê Cîhanî yê Duyem de C) Li bajarê Parîsê di nav xwendekarên salên şêstî de D) Li giravên Japonyayê piştî erdheja mezin a sala 1995an
+✓ Li ser sînorê Tirkiye-Iraqê di dema ketina rejîma Saddam de (2003)
+
+[ds_dirok_0299] Dîrok
+S: Peymana Sevrê (1920) û Peymana Lozanê (1923) ji aliyê statuya kurdan ve bi çi ji hev cuda dibin?
+A) Herduyan jî dewleteke kurdî ya serbixwe pêşnîyar kir B) Herduyan jî statuya kurdan bi tevahî paşguh kir C) Sevrê xala xweseriyê ya kurdan dihewand; Lozanê ew nehewand D) Lozanê xweseriya kurdan misoger kir; Sevrê wê red kir
+✓ Sevrê xala xweseriyê ya kurdan dihewand; Lozanê ew nehewand
+
+[ds_dirok_0300] Dîrok
+S: Şerefxanê Bidlîsî di sala 1597an de pirtûka xwe ya navdar "Şerefname" çima bi zimanê farisî nivîsand?
+A) Zimanê kurdî di wê serdemê de bi fermana padîşah hatibû qedexekirin B) Şerefxan tenê zimanê farisî dizanibû û bi kurdî nizanibû biaxive C) Di wê serdemê de zimanê dîroknivîsî û dîplomasiyê yê herêmê farisî bû D) Pirtûk tenê ji bo xwendevanên hindî û efxanî hatibû nivîsandin
+✓ Di wê serdemê de zimanê dîroknivîsî û dîplomasiyê yê herêmê farisî bû
+
+[ds_dirok_0301] Dîrok
+S: Piştî hilweşîna mîrektiyên kurd di nîveka sedsala 19an de, kîjan hêza civakî di serkêşiya civakê de derket pêş?
+A) Şêx û rêberên terîqetên dînî yên mîna Neqşebendî û Qadirî B) Bazirganên mezin ên ku ji bajarên Ewropayê vegeriyabûn C) Partiyên siyasî yên nûjen ên ku li bajaran hatibûn damezrandin D) Zanîngeh û saziyên akademîk ên herêmî yên serbixwe
+✓ Şêx û rêberên terîqetên dînî yên mîna Neqşebendî û Qadirî
+
+[ds_dirok_0302] Dîrok
+S: Di sala 1514an de piştî Şerê Çaldiranê, di navbera Împaratoriya Osmanî û mîrên kurd de kîjan sîstema îdarî pêk hat?
+A) Hilweşandina hemû desthilatên herêmî û girêdana rasterast bi navendê ve B) Avakirina parlamena hevpar a herêmî li bajarê Amedê C) Sîstema mîrektiyên xweser û hikûmetên xwedî destûra navxweyî D) Dabeşkirina herêmê bi ser parêzgarên ku ji Balkanê dihatin şandin
+✓ Sîstema mîrektiyên xweser û hikûmetên xwedî destûra navxweyî
+
+[ds_dirok_0303] Dîrok
+S: Sedema sereke ya ku rojnameya "Kurdistan" (1898) navenda çapkirina xwe ji Qahîreyê bar kir Ewropayê çi bû?
+A) Nebûna çapxaneyan û kêmxwendina zimanê kurdî li bajarê Qahîreyê B) Zext û zora dîplomatîk a qesra Osmanî li ser rêveberiya Misrê C) Daxwaza nivîskaran ji bo fêrbûna zimanên biyanî li Fransayê D) Şerê navxweyî yê ku di wê serdemê de li bakurê Afrîkayê qewimî
+✓ Zext û zora dîplomatîk a qesra Osmanî li ser rêveberiya Misrê
+
+[ds_dirok_0304] Dîrok
+S: Sedema sereke ya navneteweyî ya hilweşîna Komara Kurdistanê li Mehabadê (1946) çi bû?
+A) Êrîşa rasterast a hêzên hevalbend ên Brîtanya û Fransayê li dijî bajêr B) Bikaranîna çekên atomî ji aliyê dewleta Îranê ve li dijî komarê C) Vekişîna hêzên Sovyetê ji Îranê piştî peymana petrolê ya bi Tehranê re D) Koçkirina tevahiya gelê Mehabadê ber bi welatên Ewropayê ve
+✓ Vekişîna hêzên Sovyetê ji Îranê piştî peymana petrolê ya bi Tehranê re
+
+[ds_dirok_0305] Dîrok
+S: Mîr Celadet Alî Bedirxan dema kovara "Hawar"ê derxist (1932), çima alfabeya latînî tercîh kir?
+A) Ji ber fonetîka zimanê kurdî û pêdiviya nûjenkirina perwerdehiyê B) Ji ber ku alfabeya erebî bi temamî li Rojhilata Navîn hatibû qedexekirin C) Ji bo ku kovar tenê ji aliyê xwendevanên ewropî ve were fêmkirin D) Bi fermana fermî ya dewleta Fransayê ya li ser mandateriya Sûriyê
+✓ Ji ber fonetîka zimanê kurdî û pêdiviya nûjenkirina perwerdehiyê
+
+[ds_dirok_0306] Dîrok
+S: Tevgera Şêx Ubeydullahê Nehrî (1880) bi kîjan taybetmendiya xwe ji serhildanên beriya xwe cuda dibe?
+A) Tenê ji bo kêmkirina bacên çandiniyê li gundên herêmî derketibû B) Yekem car ji aliyê leşkerên biyanî yên ewropî ve hatibû birêvebirin C) Cara yekem daxwaza yekîtiyeke berfireh a neteweyî li hemberî du dewletan kir D) Armanca wê tenê parastina sînorên deryayî yên împaratoriyê bû
+✓ Cara yekem daxwaza yekîtiyeke berfireh a neteweyî li hemberî du dewletan kir
+
+[ds_dirok_0307] Dîrok
+S: Piştî tevgera 1925an, bi rêya "Plana Îslahata Şerqê" kîjan polîtîka li herêmê hate meşandin?
+A) Dayîna mafên xweseriyê û vekirina dibistanên fermî yên kurdî B) Sîstema mufetîşiyên giştî, qedexekirina ziman û koçberkirina bi zorê C) Dabeşkirina zeviyên mezin li ser cotkarên xizan bi awayekî bêpere D) Avakirina kargehên pîşesaziyê û vekirina zanîngehên herêmî
+✓ Sîstema mufetîşiyên giştî, qedexekirina ziman û koçberkirina bi zorê
+
+[ds_dirok_0308] Dîrok
+S: Dewleta Merwaniyan (983-1085) ji aliyê navenda desthilatdariyê ve ji Şedadiyan çawa cuda dibe?
+A) Merwanî li Qahîreyê bûn; Şedadî li Bexdayê desthilatdar bûn B) Merwanî li Xorasana Îranê bûn; Şedadî li Şamê serwer bûn C) Merwanî li Amed û Meyafariqînê bûn; Şedadî li Gence û Aniyê hukum dikirin D) Merwanî li Stenbolê bûn; Şedadî li bajarê Mûsilê bi cih bûn
+✓ Merwanî li Amed û Meyafariqînê bûn; Şedadî li Gence û Aniyê hukum dikirin
+
+[ds_dirok_0309] Dîrok
+S: Serkeftina Selahedînê Eyûbî ya di Şerê Hîtînê de (1187) kîjan encama dîrokî ya mezin bi xwe re anî?
+A) Qudis ji destê Xaçperestan derket û kete bin kontrola Eyûbiyan B) Şerê Cîhanî yê Yekem bi peymaneke aştiyê bi dawî bû C) Împaratoriya Bîzansê bi temamî hilweşiya û împaratorî qediya D) Hemû keştiyên deryayî yên deryaya Spî ji aliyê leşkeran ve hatin şewitandin
+✓ Qudis ji destê Xaçperestan derket û kete bin kontrola Eyûbiyan
+
+[ds_dirok_0310] Dîrok
+S: Cemiyeta Xoybûnê (1927) ji aliyê pêkhateya xwe ve kîjan taybetmendiya nû anî tevgera kurdî?
+A) Tenê ji xwendekarên zanîngehan pêk dihat û qet têkiliya wê bi eşîran re nîbû B) Tifaqa rêxistinî ya di navbera rewşenbîrên modern û serokên eşîran de C) Yekem partiya karkeran bû ku li kargehên mezin ên bajaran ava bûbû D) Rêxistineke leşkerî ya fermî bû ku girêdayî dewleta Fransayê dixebitî
+✓ Tifaqa rêxistinî ya di navbera rewşenbîrên modern û serokên eşîran de

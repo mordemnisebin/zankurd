@@ -1,0 +1,336 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+60 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[offline_12771] Siyaset
+S: Têgiha "hevpeymaniyên demokratîk" çi pêk tîne?
+A) platforma hevbeş a aştiyê ya komên muxalif ên cuda B) hêza ji navendekê bo yekîneyên herêmî belavkirin C) daxwaza misogeriya destûrî û naskirina mafên çandî D) mafê parastinê li dadgehên serbixwe û bêalî
+✓ platforma hevbeş a aştiyê ya komên muxalif ên cuda
+
+[offline_12774] Siyaset
+S: "lihevkirina demokratîk" tê çi wateyê?
+A) parastina mafan bi qanûnê B) wek pirsgirêka nasname, ziman, statû û mafan C) mafê birêvebirina bûçe û xizmetên herêmî bi xwe D) hevkombûna aliyan li ser berjewendiya hevbeş
+✓ hevkombûna aliyan li ser berjewendiya hevbeş
+
+[offline_12776] Siyaset
+S: Têgiha "lihevkirina civakî" çi pêk tîne?
+A) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de B) awayekî xwepêşandana aştiyane ya li dijî qanûnên bêadalet C) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane D) di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de
+✓ gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane
+
+[offline_12779] Siyaset
+S: Bi "mafê statuyê" çi tê xwestin?
+A) nîqaşa konfederalîzma demokratîk û netewa demokratîk B) qebûlkirina wekhev a nasname û baweriyên cuda C) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê D) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
+✓ mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe
+
+[offline_12780] Siyaset
+S: Derbarê "muxalefeta civakî" de vebijêrka rast kîjan e?
+A) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî B) demokrasiya herêmî, azadiya jinê, ekolojî û pirrengî C) mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe D) rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî
+✓ rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî
+
+[offline_12818] Siyaset
+S: Derbarê "beşdariya rasterast" de ravekirina rast kîjan e?
+A) nûnertiya wekhev a jin-mêr û rêveberiya hevbeş B) hevkombûna aliyan li ser berjewendiya hevbeş C) beşdariya rasterast a gel di biryarên siyasî de D) meclîsên gel ên ku biryarên herêmî lê tên girtin
+✓ beşdariya rasterast a gel di biryarên siyasî de
+
+[offline_12832] Siyaset
+S: "Çareseriya aştiyane" çawa tê pênasekirin?
+A) prensîba parvekirina wekhev a çavkanî û mafan B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê C) daxwaza misogeriya destûrî û naskirina mafên çandî D) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+✓ îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+
+[offline_12875] Siyaset
+S: Îfadeya ku têgiha "veqetandina hêzan" rast vedibêje kîjan e?
+A) danûstandin, reforma demokratîk û misogerkirina mafan B) hevjiyana aram a komên etnîkî û baweriyê yên cuda C) rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî D) serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî
+✓ serbixwebûna hêzên qanûndanînê, cîbicîkirinê û dadwerî
+
+[offline_12882] Siyaset
+S: Derbarê "pêvajoya aştiyê" de vebijêrka rast kîjan e?
+A) mafê parastinê li dadgehên serbixwe û bêalî B) hêza ji navendekê bo yekîneyên herêmî belavkirin C) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê D) pergaleke ku jin di partiyan de wekhev xwedî deng in
+✓ qonaxa bidawîkirina rewşa pevçûnê bi diyalogê
+
+[offline_12891] Siyaset
+S: Di zanîna siyasetê de der barê "daxwaza statuyê" de ya rast kîjan e?
+A) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê B) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan C) parastina komên ku ji piraniyê cuda ne D) daxwaza misogeriya destûrî û naskirina mafên çandî
+✓ daxwaza misogeriya destûrî û naskirina mafên çandî
+
+[offline_12899] Siyaset
+S: Ji bo "ademî-navendîbûn" ravekirina herî dirust kîjan e?
+A) hêza ji navendekê bo yekîneyên herêmî belavkirin B) wek her du sosyalîzma reel û kapîtalîzmê red dike C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê D) prensîba parvekirina wekhev a çavkanî û mafan
+✓ hêza ji navendekê bo yekîneyên herêmî belavkirin
+
+[offline_12946] Siyaset
+S: Derbarê "dadgehkirina dadperwer" de vebijêrka rast kîjan e?
+A) platforma hevbeş a aştiyê ya komên muxalif ên cuda B) daxwaza misogeriya destûrî û naskirina mafên çandî C) jiyana bi hev re ya nasname û baweriyên cuda D) mafê parastinê li dadgehên serbixwe û bêalî
+✓ mafê parastinê li dadgehên serbixwe û bêalî
+
+[offline_12954] Siyaset
+S: Kîjan pênase bi "beşdariya siyasî" re li hev tê?
+A) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe B) statûya xweseriyê û biryargirtinê li herêmê C) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de D) mafê gerdûnî yê civakê ê jiyana bêyî şer
+✓ tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
+
+[offline_12961] Siyaset
+S: Der barê "meclîsên herêmî" de ji bo siyasetê bijardeya rast kîjan e?
+A) wek pirsgirêka nasname, ziman, statû û mafan B) meclîsên gel ên ku biryarên herêmî lê tên girtin C) kanalên lêgerîna maf li meclîsê û li kolanan D) mafê gelan ê perwerdehiyê bi zimanê xwe
+✓ meclîsên gel ên ku biryarên herêmî lê tên girtin
+
+[offline_12981] Siyaset
+S: Derbarê "perwerdehiya bi zimanê zikmakî" de vebijêrka rast kîjan e?
+A) mafê gelan ê perwerdehiyê bi zimanê xwe B) hemwelatîbûna wekhev û naskirina mafan C) girtina biryaran li yekîneyên herî nêzî gel D) meclîsên gel ên ku biryarên herêmî lê tên girtin
+✓ mafê gelan ê perwerdehiyê bi zimanê xwe
+
+[offline_12985] Siyaset
+S: Derbarê "demokrasiya radîkal" de vebijêrka rast kîjan e?
+A) nîqaşa konfederalîzma demokratîk û netewa demokratîk B) demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire C) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin D) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
+✓ demokrasiyeke ku beşdariya rasterast a ji binî pêşî lê digire
+
+[offline_12989] Siyaset
+S: "xweseriya îdarî" çawa divê bê fêmkirin?
+A) ji bo veguhastina nasname û çandê ji nifşekî bo yê din B) beşdariya rasterast û berdewam a ji binî pêş dixe C) mafê birêvebirina bûçe û xizmetên herêmî bi xwe D) mafê parastinê li dadgehên serbixwe û bêalî
+✓ mafê birêvebirina bûçe û xizmetên herêmî bi xwe
+
+[offline_13040] Siyaset
+S: Ji bo "mafên hindikahiyan" ravekirina herî dirust kîjan e?
+A) platforma hevbeş a aştiyê ya komên muxalif ên cuda B) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan C) parastina komên ku ji piraniyê cuda ne D) hêza ji navendekê bo yekîneyên herêmî belavkirin
+✓ parastina komên ku ji piraniyê cuda ne
+
+[offline_13117] Siyaset
+S: "exlaqê siyasî" tê çi wateyê?
+A) prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de B) hilweşandina avahiya rêxistinî û bidawîkirina têkoşîna çekdarî C) danûstandin, reforma demokratîk û misogerkirina mafan D) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
+✓ prensîbên rastgoyî û pêşiyê dayîna berjewendiya civakî di siyasetê de
+
+[offline_13122] Siyaset
+S: Ji aliyê Siyasetê ve ji bo "mafê aştiyê" îfadeya rast kîjan e?
+A) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî B) mafê gerdûnî yê civakê ê jiyana bêyî şer C) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre D) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+✓ mafê gerdûnî yê civakê ê jiyana bêyî şer
+
+[offline_13124] Siyaset
+S: Derbarê "mafê zimanê zikmakî" de ya rast a zanîn çi ye?
+A) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de B) mafê gerdûnî yê civakê ê jiyana bêyî şer C) tevlêbûna rêveberiyê bi rêya komele û înîsiyatîfan D) banga danîna çekan û hilweşandina avahiya rêxistinî
+✓ bikaranîna zimanê zikmakî di qadên fermî û gelemperî de
+
+[offline_13129] Siyaset
+S: Kîjan pênase bi "rêveberiya herêmî" re li hev tê?
+A) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de B) mafê gerdûnî yê civakê ê jiyana bêyî şer C) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê D) qebûlkirina wekhev a nasname û baweriyên cuda
+✓ rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
+
+[offline_13169] Siyaset
+S: "dadperweriya civakî" tê çi wateyê?
+A) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê C) banga danîna çekan û hilweşandina avahiya rêxistinî D) prensîba parvekirina wekhev a çavkanî û mafan
+✓ prensîba parvekirina wekhev a çavkanî û mafan
+
+[offline_13252] Siyaset
+S: "mafên mirovan" di mijara siyasetê de çi vedibêje?
+A) parastina komên ku ji piraniyê cuda ne B) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e C) awayekî xwepêşandana aştiyane ya li dijî qanûnên bêadalet D) prensîba parvekirina wekhev a çavkanî û mafan
+✓ mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e
+
+[offline_13382] Siyaset
+S: Derbarê "îtaetsiziya sivîl" de ya rast a zanîn çi ye?
+A) gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane B) mafên gerdûnî yên ku her kes ji dayikbûnê xwedî wan e C) redkirina eşkere û bêşiddet a qanûnekê, bi binpêkirina wê ji bo guhertinê D) diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan
+✓ redkirina eşkere û bêşiddet a qanûnekê, bi binpêkirina wê ji bo guhertinê
+
+[offline_13390] Siyaset
+S: Derbarê "meşruiyet" de ya rast a zanîn çi ye?
+A) banga danîna çekan û hilweşandina avahiya rêxistinî B) prensîba parvekirina wekhev a çavkanî û mafan C) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re D) parastina komên ku ji piraniyê cuda ne
+✓ guncaniya rêveberiyê bi razîbûna gel û hiqûqê re
+
+[offline_13394] Siyaset
+S: "xweseriya siyasî" bi awayekî rast çawa tê ravekirin?
+A) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe B) qebûlkirina wekhev a nasname û baweriyên cuda C) bikaranîna zimanê zikmakî di qadên fermî û gelemperî de D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+✓ desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+
+[offline_13486] Siyaset
+S: Ji aliyê siyasetê ve ji bo "mafê xwerêveberiyê" gotina rast kîjan e?
+A) statûya xweseriyê û biryargirtinê li herêmê B) banga danîna çekan û hilweşandina avahiya rêxistinî C) pergaleke ku gel tenê bi hilbijartinan beşdarî rêveberiyê dibe D) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
+✓ mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
+
+[offline_13600] Siyaset
+S: Derbarê "pergala meclîsan" de agahiya herî rast kîjan e?
+A) pergaleke ku biryar bi rêya meclîsên gel tên girtin B) guncaniya rêveberiyê bi razîbûna gel û hiqûqê re C) destûreke azadîxwaz a ku hemû beşên cuda vedihewîne D) îrada çareserkirina pevçûnan bi diyalogê li şûna çekan
+✓ pergaleke ku biryar bi rêya meclîsên gel tên girtin
+
+[offline_13604] Siyaset
+S: Îfadeya ku têgiha "mafên demokratîk" rast vedibêje kîjan e?
+A) qonaxa bidawîkirina rewşa pevçûnê bi diyalogê B) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê C) daxwaza misogeriya destûrî û naskirina mafên çandî D) di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de
+✓ mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+
+[offline_13649] Siyaset
+S: Ji bo Siyasetê derbarê "eşseroktî" de vebijêrka rast kîjan e?
+A) Meclîs, xwerêxistin û danûstandin B) belgeyeke damezrîner a ku mafên bingehîn rêz dike C) pergaleke nûnertiya wekhev a di rêveberiyê de ye D) Avahiyên siyasî yên Kurdan û şaredarî
+✓ pergaleke nûnertiya wekhev a di rêveberiyê de ye
+
+[offline_13729] Siyaset
+S: Derbarê "danûstandin" de ravekirina rast kîjan e?
+A) nûnertiya wekhev a jin-mêr û rêveberiya hevbeş B) xwerêveberiyeke ku dewletê derbas dike û alternatîfa wê ye C) bi azadiya jinê û xwerêveberiya pirreng D) rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
+✓ rêbaza çareserkirina pirsgirêkan bi rêya diyalogê
+
+[offline_13745] Siyaset
+S: Derbarê "pirrengî" de agahiya herî rast kîjan e?
+A) rêzikên qanûnî û gavên entegrasyona demokratîk B) qebûlkirina wekhev a nasname û baweriyên cuda C) nîqaşa konfederalîzma demokratîk û netewa demokratîk D) hevgirtina wekhev û piştgir a gelên cuda
+✓ qebûlkirina wekhev a nasname û baweriyên cuda
+
+[offline_13790] Siyaset
+S: Kîjan pênase bi "muxalefeta demokratîk" re li hev tê?
+A) xwerêveberiyeke ku dewletê derbas dike û alternatîfa wê ye B) meclîsên gel ên ku biryarên herêmî lê tên girtin C) kanalên lêgerîna maf li meclîsê û li kolanan D) parastina mafan bi qanûnê
+✓ kanalên lêgerîna maf li meclîsê û li kolanan
+
+[offline_curated_20001] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide'?
+A) paşgirên tewandinê B) cînavkên tewandî C) ergatîf D) daçekên hevedudanî
+✓ ergatîf
+
+[offline_curated_20004] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "ergatîf" bi awayekî rast temam dike?
+A) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne B) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide C) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+✓ avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
+
+[offline_curated_20026] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: "guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de"?
+A) cînavkên tewandî B) rênivîsa Hawarê C) tewandin D) ezafe
+✓ tewandin
+
+[offline_curated_20029] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "tewandin" bi awayekî rast temam dike?
+A) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin B) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê C) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de D) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+✓ guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+
+[offline_curated_20051] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: "têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide"?
+A) tewandin B) cînavkên kesane C) ezafe D) rênivîsa Hawarê
+✓ ezafe
+
+[offline_curated_20054] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "ezafe" bi awayekî rast temam dike?
+A) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide B) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin C) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn D) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
+✓ têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide
+
+[offline_curated_20076] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne?
+A) cînavkên tewandî B) ergatîf C) ezafe D) daçekên hevedudanî
+✓ cînavkên tewandî
+
+[offline_curated_20079] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "cînavkên tewandî" bi awayekî rast temam dike?
+A) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin B) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin C) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide D) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
+✓ cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne
+
+[offline_curated_20100] Ziman
+S: Têgeha "daçekên hevedudanî" bi kîjan ravekirinê çêtir tê fêmkirin?
+A) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de B) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide C) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin D) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+✓ peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin
+
+[offline_curated_20101] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: 'peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin'?
+A) cînavkên kesane B) ezafe C) rênivîsa Hawarê D) daçekên hevedudanî
+✓ daçekên hevedudanî
+
+[offline_curated_20126] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: 'lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê'?
+A) lêkera gerguhêz B) ergatîf C) rênivîsa Hawarê D) tewandin
+✓ lêkera gerguhêz
+
+[offline_curated_20129] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "lêkera gerguhêz" bi awayekî rast temam dike?
+A) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin B) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin C) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de D) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
+✓ lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê
+
+[offline_curated_20151] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: 'pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin'?
+A) lêkera gerguhêz B) daçekên hevedudanî C) cînavkên kesane D) rênivîsa Hawarê
+✓ rênivîsa Hawarê
+
+[offline_curated_20154] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "rênivîsa Hawarê" bi awayekî rast temam dike?
+A) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide B) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide C) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn D) pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+✓ pergala alfabeya kurdî ya bi tîpên latînî ku ji aliyê Celadet Bedirxan ve hatibû amadekirin
+
+[offline_curated_20176] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn?
+A) cînavkên kesane B) lêkera gerguhêz C) cînavkên tewandî D) paşgirên tewandinê
+✓ cînavkên kesane
+
+[offline_curated_20179] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "cînavkên kesane" bi awayekî rast temam dike?
+A) peyvên wekî "di... de, bi... re, ji... re" ku têkiliyên cih nîşan didin B) cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn C) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin D) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide
+✓ cînavkên wekî "ez, tu, ew, em, hûn, ew" ên ku bo kesan tên bikaranîn
+
+[offline_curated_20201] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: "avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide"?
+A) lêkera gerguhêz B) cînavkên kesane C) daçekên hevedudanî D) dema borî ya dûr
+✓ dema borî ya dûr
+
+[offline_curated_20204] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "dema borî ya dûr" bi awayekî rast temam dike?
+A) cînavkên wekî "min, te, wî, wê, me, we, wan" ku di bin tewandinê de ne B) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide C) têkiliya veqetandeka mê (a) û nêr (ê) ya ku navdêran bi hev ve girê dide D) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+✓ avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+
+[offline_curated_20226] Ziman
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: "hêmanên wekî "-î, -ê, -an' ku di tewandina navdêran de cih digirin'?
+A) paşgirên tewandinê B) dema borî ya dûr C) cînavkên kesane D) ezafe
+✓ paşgirên tewandinê
+
+[offline_curated_20229] Ziman
+S: Ji bo dersa ziman kîjan vebijark ravekirina têgeha "paşgirên tewandinê" bi awayekî rast temam dike?
+A) lêkerên ku hewcedariya wan bi bireserê tewandî heye bo temamkirina wateyê B) hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin C) avahiya rêzimanî ya ku kirdeya lêkerên gerguhêz di dema borî de tewandî nîşan dide D) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+✓ hêmanên wekî "-î, -ê, -an" ku di tewandina navdêran de cih digirin
+
+[offline_curated_20251] Edebiyat
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin'?
+A) Melayê Cizîrî B) Ehmedê Xanî C) kovara Hawarê D) Helbesta Azad
+✓ Melayê Cizîrî
+
+[offline_curated_20254] Edebiyat
+S: Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Melayê Cizîrî" bi awayekî rast temam dike?
+A) helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin B) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin C) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye D) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
+✓ helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin
+
+[offline_curated_20276] Edebiyat
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: helbestvanê klasîk ê ku bi berhema "Şêx Sen'an" û axaftina bi çûkan re navdar e?
+A) şevbêrkên wêjeyî B) Feqiyê Teyran C) Arabê Şamo D) Cegerxwîn
+✓ Feqiyê Teyran
+
+[offline_curated_20279] Edebiyat
+S: Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Feqiyê Teyran" bi awayekî rast temam dike?
+A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye B) helbestvanê klasîk ê ku bi berhema "Şêx Sen"an' û axaftina bi çûkan re navdar e C) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye D) helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû
+✓ helbestvanê klasîk ê ku bi berhema "Şêx Sen"an' û axaftina bi çûkan re navdar e
+
+[offline_curated_20304] Edebiyat
+S: Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha "Ehmedê Xanî" bi awayekî rast temam dike?
+A) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye B) kovara edebî û çandî ya ku di sala 1932an de li Şamê bi destê Bedirxaniyan derketiye C) nivîskarê romana "Şivanê Kurd" ku wekî romana yekem a kurdî tê qebûlkirin D) nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
+✓ nivîskarê destana nemir a "Mem û Zîn" ku hîmê ramanî yê kurdewariyê daniye
+
+[offline_curated_20326] Edebiyat
+S: Kîjan têgeh bi vê ravekirinê tê nasîn: "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye"?
+A) Melayê Bateyî B) Ehmedê Xanî C) Mehmed Uzun D) Melayê Cizîrî
+✓ Melayê Bateyî

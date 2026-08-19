@@ -1,0 +1,671 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+127 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_dirok_0027] Dîrok
+S: Kîjan kesayetî Hawar derxist û rêvebir?
+A) Nûredîn Zaza B) Celadet Alî Bedirxan C) Qedrîcan D) Osman Sebrî
+✓ Celadet Alî Bedirxan
+
+[ds_dirok_0028] Dîrok
+S: Sedema sereke ya ku kovara "Hawar" (1932) li Şamê derket û ne li Stenbol an Amedê çi bû?
+A) Rewşa siyasî ya piştî 1925an û qedexekirina rêxistin û weşanên kurdî li Tirkiyeyê B) Li Şamê hebûna zankoyeke mezin a fîlolojiya zimanên rojhilatî C) Daxwaza Fransiyan ji bo avakirina televîzyona nû ya erebî li herêmê D) Nebûna makîneyên çapxaneyê li bajarên din ên herêmê
+✓ Rewşa siyasî ya piştî 1925an û qedexekirina rêxistin û weşanên kurdî li Tirkiyeyê
+
+[ds_dirok_0029] Dîrok
+S: Hawar di sala çendan de dest pê kir?
+A) 1925 B) 1932 C) 1943 D) 1950
+✓ 1932
+
+[ds_dirok_0031] Dîrok
+S: Hawar ji bilî kovarê, di warê çi de jî girîng bû?
+A) Çandina genim B) Avakirina rêyan C) Çêkirina çekan D) Alfabeya Kurdî
+✓ Alfabeya Kurdî
+
+[ds_dirok_0032] Dîrok
+S: Bedirxan Paşa di kîjan sedsalê de li herêma Cizîrê hukum dikir?
+A) Sedsala 18an B) Sedsala 19an C) Sedsala 20an D) Sedsala 17an
+✓ Sedsala 19an
+
+[ds_dirok_0033] Dîrok
+S: Piştî hilweşandina Mîrektiya Botan a Bedirxan Paşa (1847) di civaka kurd de kîjan guherîna desthilatê çêbû?
+A) Desthilata mîran lawaz bû û şêxên terîqetan di qada civakî de derketin pêş B) Hemû herêm rasterast bêyî pirsgirêk kete bin sîstema nûjen a parlamenê C) Mîrektiyên nû yên mezin li Şam û Helebê hatin avakirin D) Zimanê kurdî di saziyên fermî de wekî zimanê yekem hate pejirandin
+✓ Desthilata mîran lawaz bû û şêxên terîqetan di qada civakî de derketin pêş
+
+[ds_dirok_0035] Dîrok
+S: Hawar çend hejmar bi giştî derketin?
+A) 23 B) 30 C) 57 D) 100
+✓ 57
+
+[ds_dirok_0036] Dîrok
+S: Celadet Alî Bedirxan xebata rêzimana kurmancî bi kê re amade kir?
+A) Roger Lescot B) Vladimir Minorsky C) Basil Nikitin D) Thomas Bois
+✓ Roger Lescot
+
+[ds_dirok_0037] Dîrok
+S: Hawar çi cure kovar bû?
+A) Kovara zanistî B) Kovara sporê C) Kovara aborî D) Kovara edebî û çandî
+✓ Kovara edebî û çandî
+
+[ds_dirok_0038] Dîrok
+S: Bedirxan Paşa bi kîjan navî jî tê zanîn?
+A) Bedirxan Beg B) Mîr Bedir C) Xan Bedir D) Begê Bedir
+✓ Bedirxan Beg
+
+[ds_dirok_0040] Dîrok
+S: Hawar di kîjan welatî de hate weşandin?
+A) Tirkiye B) Iraq C) Sûriye D) Îran
+✓ Sûriye
+
+[ds_dirok_0041] Dîrok
+S: Bedirxan Paşa li dijî kîjan dewletê serhildan kir?
+A) Împaratoriya Osmanî B) Împaratoriya Farisî C) Împaratoriya Rûsî D) Împaratoriya Brîtanî
+✓ Împaratoriya Osmanî
+
+[ds_dirok_0043] Dîrok
+S: Hawar ji bo kîjan alfabeyê wek çavkaniya sereke tê zanîn?
+A) Alfabeya Erebî ya Kurdî B) Alfabeya Kirîlî ya Kurdî C) Alfabeya Tirkî D) Alfabeya Latînî ya Kurdî
+✓ Alfabeya Latînî ya Kurdî
+
+[ds_dirok_0045] Dîrok
+S: Celadet Alî Bedirxan di kîjan bajarî de hatiye dinyayê?
+A) Şam B) Qahîre C) Stenbol D) Bexda
+✓ Stenbol
+
+[ds_dirok_0046] Dîrok
+S: Hawar di kîjan salê de rawestiya?
+A) 1945 B) 1943 C) 1950 D) 1938
+✓ 1943
+
+[ds_dirok_0048] Dîrok
+S: Hawar bi kîjan awayî hate weşandin?
+A) Bi alfabeya Erebî B) Bi alfabeya Kirîlî C) Bi alfabeya Îbranî D) Bi alfabeya Latînî
+✓ Bi alfabeya Latînî
+
+[ds_dirok_0049] Dîrok
+S: Bedirxan Paşa di kîjan sala de derbasî dinyayê bû?
+A) 1875 B) 1868 C) 1880 D) 1850
+✓ 1868
+
+[ds_dirok_0050] Dîrok
+S: Kîjan kesayetî bi navê Hawarê ve têkildar e?
+A) Qedrîcan B) Nûredîn Zaza C) Celadet Alî Bedirxan D) Osman Sebrî
+✓ Celadet Alî Bedirxan
+
+[ds_dirok_0052] Dîrok
+S: Kîjan zimanê herî kevn a nivîskî ya ku ji Mezopotamyayê hatiye dîtin?
+A) Akkadî B) Sumerî C) Elamî D) Aramî
+✓ Sumerî
+
+[ds_dirok_0053] Dîrok
+S: Kîjan kesayetî qanûnên navdar ên Babîlê çêkirin?
+A) Sargon B) Naram-Sîn C) Gudea D) Hamûrabî
+✓ Hamûrabî
+
+[ds_dirok_0054] Dîrok
+S: Di serdema kîjan şaristaniyê de nivîsîna bi tîpên çivîk (cuneiform) pêş ket?
+A) Babîlî B) Sumerî C) Asûrî D) Akkadî
+✓ Sumerî
+
+[ds_dirok_0055] Dîrok
+S: Kîjan bajarê Sumeriyan wekî navenda perestgeha girîng a Enlil dihat naskirin?
+A) Nippur B) Ur C) Uruk D) Lagash
+✓ Nippur
+
+[ds_dirok_0072] Dîrok
+S: Kîjan bajarê Sumeriyan wekî navenda perestgeha Inanna dihat naskirin?
+A) Ur B) Nippur C) Eridu D) Uruk
+✓ Uruk
+
+[ds_dirok_0056] Dîrok
+S: Kîjan împaratoriya Mezopotamyayê yekem car yekîtiya siyasî ya herêmê ava kir?
+A) Sumer B) Babîl C) Akkad D) Asûr
+✓ Akkad
+
+[ds_dirok_0057] Dîrok
+S: Li gorî vegotina kevneşopî, kîjan padîşahê Babîlê baxçeyên daleqandî ava kirin?
+A) Nebukadnezar II B) Hamûrabî C) Sargon D) Aşurbanipal
+✓ Nebukadnezar II
+
+[ds_dirok_0058] Dîrok
+S: Kîjan bajarê Mezopotamyayê paytexta împaratoriya Asûrê bû?
+A) Babîl B) Ur C) Nînova D) Uruk
+✓ Nînova
+
+[ds_dirok_0059] Dîrok
+S: Kîjan padîşahê Akkadê împaratoriya yekem a dinyayê ava kir?
+A) Naram-Sîn B) Sargon C) Rimush D) Manishtushu
+✓ Sargon
+
+[ds_dirok_0060] Dîrok
+S: Kîjan şaristaniya Mezopotamyayê ji bo îcadkirina çerxê tê naskirin?
+A) Akkadî B) Babîlî C) Sumerî D) Asûrî
+✓ Sumerî
+
+[ds_dirok_0061] Dîrok
+S: Babîl di kîjan serdemê de bû navenda stêrnasî û matematîkê ya herêmê?
+A) Serdema Paleo-Babîl B) Serdema Sumerî C) Serdema Akkadî D) Serdema Neo-Babîl
+✓ Serdema Neo-Babîl
+
+[ds_dirok_0071] Dîrok
+S: Dewleta Neo-Babîlî ji aliyê kîjan hêzê ve hat bidawîkirin?
+A) Asûrî B) Farisî (Hexamenişî) C) Akkadî D) Sumerî
+✓ Farisî (Hexamenişî)
+
+[ds_dirok_0062] Dîrok
+S: Kîjan padîşahê Asûrê pirtûkxaneya navdar a Nînovayê ava kir?
+A) Sargon II B) Sennacherib C) Aşurbanipal D) Tiglath-Pileser III
+✓ Aşurbanipal
+
+[ds_dirok_0064] Dîrok
+S: Kîjan destkeftiya Sumeriyan ji bo çandiniyê bû sedema pêşketina şaristaniyê?
+A) Çerx B) Nivîsîn C) Avdanî D) Metal
+✓ Avdanî
+
+[ds_dirok_0065] Dîrok
+S: Kîjan padîşahê Babîlê qanûnên ku bi navê wî têne zanîn nivîsand?
+A) Nebukadnezar I B) Nabopolassar C) Marduk-zakir-shumi D) Hamûrabî
+✓ Hamûrabî
+
+[ds_dirok_0066] Dîrok
+S: Di kîjan serdemê de împaratoriya Akkadê ket xwarê?
+A) Piştî mirina Sargon B) Piştî Naram-Sîn C) Piştî Gudea D) Piştî Hamûrabî
+✓ Piştî Naram-Sîn
+
+[ds_dirok_0067] Dîrok
+S: Kîjan bajarê Mezopotamyayê wekî navenda bazirganiya deryayî dihat naskirin?
+A) Uruk B) Eridu C) Lagash D) Ur
+✓ Ur
+
+[ds_dirok_0091] Dîrok
+S: Kîjan bajarê Mezopotamyayê wekî navenda perestgeha Enlil dihat naskirin?
+A) Babîl B) Ur C) Nîppur D) Eridu
+✓ Nîppur
+
+[ds_dirok_0068] Dîrok
+S: Di serdema Babîla Kevn de zimanê nivîsê yê fermî çi bû?
+A) Sumerî B) Aramî C) Elamî D) Akkadî
+✓ Akkadî
+
+[ds_dirok_0069] Dîrok
+S: Kîjan padîşahê Asûrê Nînova ava kir wekî paytexta xwe?
+A) Sennacherib B) Sargon II C) Tiglath-Pileser III D) Esarhaddon
+✓ Sennacherib
+
+[ds_dirok_0073] Dîrok
+S: Kîjan padîşahê Akkadê xwe wek xweda da naskirin?
+A) Sargon B) Naram-Sîn C) Rimush D) Manishtushu
+✓ Naram-Sîn
+
+[ds_dirok_0075] Dîrok
+S: Med împaratoriyê di kîjan serdemê de li Rojhilata Navîn hukum kiriye?
+A) Sedsalên 5an û 4an berî zayînê B) Sedsalên 2an û 3an piştî zayînê C) Sedsalên 10an û 11an piştî zayînê D) Sedsalên 7an û 6an berî zayînê
+✓ Sedsalên 7an û 6an berî zayînê
+
+[ds_dirok_0076] Dîrok
+S: Kîjan bajarê Medan wekî paytexta wan dihat zanîn?
+A) Babilon B) Ekbatan C) Nînova D) Persepolis
+✓ Ekbatan
+
+[ds_dirok_0081] Dîrok
+S: Kîjan qanûnên navdar ên Babîlê di sedsala 18'an berî zayînê de hatin nivîsandin?
+A) Qanûnên Nînovayê B) Qanûnên Ekbatanê C) Qanûnên Hammurabi D) Qanûnên Persepolisê
+✓ Qanûnên Hammurabi
+
+[ds_dirok_0082] Dîrok
+S: Di kîjan şer de Medan û Babîliyan bi hev re Asûr hilweşandin?
+A) Şerê Karkemîşê B) Şerê Nînovayê C) Şerê Megîdoyê D) Şerê Salamînê
+✓ Şerê Nînovayê
+
+[ds_dirok_0084] Dîrok
+S: Kîjan împaratorî piştî hilweşandina Medan li herêmê derket holê?
+A) Împaratoriya Seleukî B) Împaratoriya Efxanî C) Împaratoriya Sasaniyan D) Împaratoriya Hexamenişî
+✓ Împaratoriya Hexamenişî
+
+[ds_dirok_0085] Dîrok
+S: Kîjan bajarê kevn ê ku li Kurdistanê bû, navenda împaratoriya Medan bû?
+A) Babîl B) Ekbatan C) Nînova D) Ur
+✓ Ekbatan
+
+[ds_dirok_0090] Dîrok
+S: Di kîjan serdemê de Medan bi împaratoriya Hexamenişî re têkildar bûn?
+A) Sedsala 3'yan piştî zayînê B) Sedsala 1'ê piştî zayînê C) Sedsala 6'an berî zayînê D) Sedsala 9'an berî zayînê
+✓ Sedsala 6'an berî zayînê
+
+[ds_dirok_0096] Dîrok
+S: Kîjan padîşahê Asûrê Nînova wekî paytexta xwe ava kir?
+A) Aşurbanipal B) Sennacherib C) Sargon D) Hammurabi
+✓ Sennacherib
+
+[ds_dirok_0108] Dîrok
+S: Bedirxan Paşa di bin desthilatdariya kîjan dewletê de bû?
+A) Împaratoriya Osmanî B) Împaratoriya Sefewî C) Împaratoriya Qacar D) Împaratoriya Rûsî
+✓ Împaratoriya Osmanî
+
+[ds_dirok_0109] Dîrok
+S: Mîrektiya Hakkariyê bi giranî ji aliyê kîjan kesayetiyan ve dihat birêvebirin?
+A) Mîrên Botan B) Mîrên Soran C) Mîrên Babanê D) Mîrên Hakkariyê
+✓ Mîrên Hakkariyê
+
+[ds_dirok_0114] Dîrok
+S: Bedirxan Paşa piştî têkçûna serhildana xwe li kîjan giravê hate sirgûnkirin?
+A) Girît B) Qibris C) Ryodos D) Sakiz
+✓ Girît
+
+[ds_dirok_0115] Dîrok
+S: Mîrektiya Hakkariyê di kîjan navbera salan de hebû?
+A) Di navbera 1500 û 1850'an de B) Di navbera 1400 û 1847'an de C) Di navbera 1600 û 1900'an de D) Di navbera 1700 û 1920'an de
+✓ Di navbera 1400 û 1847'an de
+
+[ds_dirok_0116] Dîrok
+S: Kîjan mîrê Botanê bi navê Mîrê Cizîrê jî tê zanîn?
+A) Mîr Mihemed B) Şerefxanê Bidlîsî C) Xanê Lepzêrîn D) Bedirxan Paşa
+✓ Bedirxan Paşa
+
+[ds_dirok_0124] Dîrok
+S: Kîjan mîrektiya kurdan di sedsala 16'an de li herêma Hakkariyê hukum dikir?
+A) Mîrektiya Botanê B) Mîrektiya Babanê C) Mîrektiya Soran D) Mîrektiya Hakkariyê
+✓ Mîrektiya Hakkariyê
+
+[ds_dirok_0125] Dîrok
+S: Kurdistan gazeteya ewil a kurdan di kîjan salê de li Qahîreyê derket?
+A) 1908 B) 1898 C) 1918 D) 1928
+✓ 1898
+
+[ds_dirok_0126] Dîrok
+S: Kîjan kesayetî Kurdistan rojnameya ewil derxist?
+A) Celadet Alî Bedirxan B) Hesen Cemil Paşa C) Emîn Alî Bedirxan D) Mîqdad Mîdhat Bedirxan
+✓ Mîqdad Mîdhat Bedirxan
+
+[ds_dirok_0127] Dîrok
+S: Kurdistan rojnameyê di kîjan bajarî de dest bi weşanê kir?
+A) Stenbol B) Bexda C) Qahîre D) Şam
+✓ Qahîre
+
+[ds_dirok_0128] Dîrok
+S: Rojnameya Kurdistanê bi kîjan zaravayê kurdî derdiket?
+A) Tirkî B) Erebî C) Farisî D) Kurmancî
+✓ Kurmancî
+
+[ds_dirok_0129] Dîrok
+S: Di sala çendan de Kurdistan rojnameyê weşana xwe rawestand?
+A) 1905 B) 1902 C) 1910 D) 1915
+✓ 1902
+
+[ds_dirok_0130] Dîrok
+S: Kurdistan rojnameya ewil a kurdan di kîjan serdemê de derket?
+A) Serdema Sefewî B) Serdema Memlûkan C) Serdema Osmanî D) Serdema Emevîyan
+✓ Serdema Osmanî
+
+[ds_dirok_0131] Dîrok
+S: Kurdistan rojnameyê ji bo kîjan armancê hate derxistin?
+A) Parastina nasnameya kurdî B) Belavkirina îslamê C) Piştgiriya dewleta Osmanî D) Pêşxistina zimanê tirkî
+✓ Parastina nasnameya kurdî
+
+[ds_dirok_0145] Dîrok
+S: Kurdistan rojnameyê ji bo kîjan gelî hate derxistin?
+A) Gelê ereb B) Gelê tirk C) Gelê faris D) Gelê kurd
+✓ Gelê kurd
+
+[ds_dirok_0133] Dîrok
+S: Kurdistan rojnameyê di kîjan warî de bandor li ser kurdan kir?
+A) Hişyariya neteweyî B) Bazirganiya navneteweyî C) Çandiniyê D) Pîşesaziyê
+✓ Hişyariya neteweyî
+
+[ds_dirok_0141] Dîrok
+S: Kurdistan rojnameyê di kîjan warî de wek yekem tê zanîn?
+A) Yekem rojnameya erebî B) Yekem rojnameya kurdî C) Yekem rojnameya tirkî D) Yekem rojnameya farisî
+✓ Yekem rojnameya kurdî
+
+[ds_dirok_0146] Dîrok
+S: Kurdistan rojnameyê di kîjan warî de bû sedema pêşketinê?
+A) Pêşketina çand û edebiyata erebî B) Pêşketina çand û edebiyata tirkî C) Pêşketina çand û edebiyata kurdî D) Pêşketina çand û edebiyata farisî
+✓ Pêşketina çand û edebiyata kurdî
+
+[ds_dirok_0134] Dîrok
+S: Hejmara yekem a rojnameya Kurdistanê li kîjan bajarî hat çapkirin?
+A) Qahîre B) Stenbol C) Şam D) Cenevre
+✓ Qahîre
+
+[ds_dirok_0135] Dîrok
+S: Rojnameya Kurdistanê li kîjan bajaran hat weşandin?
+A) Stenbol, Îzmîr û Bursa B) Tehran, Bexda û Şam C) Qahîre, Cenevre û London D) Moskova, Erîvan û Tiflîs
+✓ Qahîre, Cenevre û London
+
+[ds_dirok_0136] Dîrok
+S: Kurdistan rojnameya ewil ji aliyê kîjan malbatê ve hate derxistin?
+A) Malbata Babanan B) Malbata Bedirxaniyan C) Malbata Soran D) Malbata Hakkariyê
+✓ Malbata Bedirxaniyan
+
+[ds_dirok_0137] Dîrok
+S: Kurdistan rojnameyê di kîjan çarçoveyê de derket?
+A) Rojnameyeke olî B) Rojnameyeke zanistî C) Rojnameyeke neteweyî D) Rojnameyeke werzişî
+✓ Rojnameyeke neteweyî
+
+[ds_dirok_0148] Dîrok
+S: Kurdistan rojnameyê di kîjan çarçoveyê de wek yekem tê qebûlkirin?
+A) Çapemeniya erebî B) Çapemeniya kurdî C) Çapemeniya tirkî D) Çapemeniya farisî
+✓ Çapemeniya kurdî
+
+[ds_dirok_0142] Dîrok
+S: Kurdistan rojnameyê ji aliyê kîjan kesayetên kurd ve hate birêvebirin?
+A) Mîqdad Mîdhat û Ebdurehman Bedirxan B) Celadet û Kamiran Bedirxan C) Hesen Cemil û Qedrî Cemil D) Sureyya û Mehmed Bedirxan
+✓ Mîqdad Mîdhat û Ebdurehman Bedirxan
+
+[ds_dirok_0143] Dîrok
+S: Hejmara yekem a rojnameya Kurdistanê di kîjan salê de derket?
+A) 1908 B) 1920 C) 1898 D) 1940
+✓ 1898
+
+[ds_dirok_0144] Dîrok
+S: Kurdistan rojnameyê bi kîjan tîpan dihat nivîsandin?
+A) Tîpên erebî B) Tîpên latînî C) Tîpên kîrîlî D) Tîpên çînî
+✓ Tîpên erebî
+
+[ds_dirok_0150] Dîrok
+S: Şerê Cîhanê yê Yekem di kîjan sala de dest pê kir?
+A) 1912 B) 1916 C) 1918 D) 1914
+✓ 1914
+
+[ds_dirok_0151] Dîrok
+S: Kîjan şer di navbera 1939 û 1945'an de li çaraliyê cîhanê pêk hat?
+A) Şerê Cîhanê yê Duyem B) Şerê Cîhanê yê Yekem C) Şerê Sar D) Şerê Koreyê
+✓ Şerê Cîhanê yê Duyem
+
+[ds_dirok_0152] Dîrok
+S: Peymana ku piştî Şerê Cîhanê yê Yekem aştiya bi Almanyayê saz kir kîjan e?
+A) Peymana Lozanê B) Peymana Sevrê C) Peymana Versayê D) Peymana Berlînê
+✓ Peymana Versayê
+
+[ds_dirok_0153] Dîrok
+S: Di Şerê Cîhanê yê Duyem de kîjan bûyer bû sedema ketina Dewletên Yekbûyî yên Amerîkayê (DYA) nav şer?
+A) Şerê Pearl Harborê B) Dagirkirina Polonyayê C) Şerê Stalingradê D) Dagirkirina Fransayê
+✓ Şerê Pearl Harborê
+
+[ds_dirok_0165] Dîrok
+S: Di Şerê Cîhanê yê Duyem de kîjan şer bû xaleka zivirînê li eniya Rojhilat?
+A) Şerê Stalingradê B) Şerê Moskowê C) Şerê Kurskê D) Şerê Leningradê
+✓ Şerê Stalingradê
+
+[ds_dirok_0155] Dîrok
+S: Kîjan şer di sala 1066'an de li Îngilîstanê qewimî?
+A) Şerê Hastingsê B) Şerê Trafalgarê C) Şerê Waterlooê D) Şerê Azincourtê
+✓ Şerê Hastingsê
+
+[ds_dirok_0156] Dîrok
+S: Şerê Waterlooê di kîjan sala de pêk hat?
+A) 1805 B) 1812 C) 1815 D) 1820
+✓ 1815
+
+[ds_dirok_0157] Dîrok
+S: Di kîjan serdemê de Şerê Sed Salan qewimî?
+A) Sedsala 14'an û 15'an B) Sedsala 12'an û 13'an C) Sedsala 13'an û 14'an D) Sedsala 15'an û 16'an
+✓ Sedsala 14'an û 15'an
+
+[ds_dirok_0158] Dîrok
+S: Kîjan şerê navdar di navbera Yewnanistan û Persiyayê de li derdora 490'an berî zayînê qewimî?
+A) Şerê Termopîlê B) Şerê Salamîsê C) Şerê Plateaê D) Şerê Maratonê
+✓ Şerê Maratonê
+
+[ds_dirok_0188] Dîrok
+S: Kîjan şerê navdar di navbera Romayê û Kartacayê de qewimî?
+A) Şerên Medî B) Şerên Yewnanî C) Şerên Pûnîk D) Şerên Galî
+✓ Şerên Pûnîk
+
+[ds_dirok_0159] Dîrok
+S: Şerê Termopîlê di navbera kîjan hêzan de qewimî?
+A) Romayî û Kartacayan B) Yewnan û Persan C) Mongol û Çîniyan D) Osmanî û Sefewiyan
+✓ Yewnan û Persan
+
+[ds_dirok_0160] Dîrok
+S: Di Şerê Cîhanê yê Yekem de kîjan koma welatan wekî "Hêzên Navendî" dihat naskirin?
+A) Fransa, Brîtanya, Rûsya B) DYA, Îtalya, Japon C) Almanya, Awistirya-Mecaristan, Osmanî D) Çîn, Hindistan, Brezîlya
+✓ Almanya, Awistirya-Mecaristan, Osmanî
+
+[ds_dirok_0161] Dîrok
+S: Kîjan şer di sala 1805'an de qewimî û tê de Napoleon artêşa Rûs û Awistirî têk bir?
+A) Şerê Austerlitzê B) Şerê Jenaê C) Şerê Borodinoê D) Şerê Leipzigê
+✓ Şerê Austerlitzê
+
+[ds_dirok_0162] Dîrok
+S: Şerê Verdunê di kîjan sala de qewimî?
+A) 1914 B) 1915 C) 1916 D) 1917
+✓ 1916
+
+[ds_dirok_0163] Dîrok
+S: Kîjan şerê deryayî di 1805'an de qewimî û tê de Horatio Nelson artêşa deryayî ya Brîtanî birêvebir?
+A) Şerê Jutlandê B) Şerê Trafalgarê C) Şerê Lepantoê D) Şerê Midwayê
+✓ Şerê Trafalgarê
+
+[ds_dirok_0164] Dîrok
+S: Şerê Jutlandê di navbera kîjan hêzên deryayî de qewimî?
+A) DYA û Japon B) Fransa û Îtalya C) Brîtanya û Almanya D) Rûsya û Osmanî
+✓ Brîtanya û Almanya
+
+[ds_dirok_0166] Dîrok
+S: Operasyona ku wek "D-Day" tê nasîn û di 6ê Hezîrana 1944an de pêk hat kîjan e?
+A) Şerê Bulge B) Derketina Normandiyayê C) Şerê Anzio D) Şerê Monte Cassino
+✓ Derketina Normandiyayê
+
+[ds_dirok_0167] Dîrok
+S: Şerê Bulgeyê di kîjan salê de qewimî?
+A) 1944 B) 1943 C) 1945 D) 1946
+✓ 1944
+
+[ds_dirok_0168] Dîrok
+S: Kîjan şerê navdar di sedsala 3'an a berî zayînê de qewimî û tê de Hannibal artêşa Romayê têk bir?
+A) Şerê Zamaê B) Şerê Cannaeê C) Şerê Trebiaê D) Şerê Trasimenê
+✓ Şerê Cannaeê
+
+[ds_dirok_0169] Dîrok
+S: Şerê Zamaê di navbera kîjan hêzan de qewimî?
+A) Yewnanistan û Persiya B) Makedonya û Roma C) Kartaca û Yewnanistan D) Kartaca û Roma
+✓ Kartaca û Roma
+
+[ds_dirok_0170] Dîrok
+S: Di sala 1453'an de kîjan bûyera mezin qewimî ku bandor li ser dîroka Ewropayê kir?
+A) Dagirkirina Konstantînopolîsê B) Dagirkirina Romayê C) Dagirkirina Parîsê D) Dagirkirina Viyanayê
+✓ Dagirkirina Konstantînopolîsê
+
+[ds_dirok_0172] Dîrok
+S: Şerê Cîhanê yê Duyem di kîjan salê de bi dawî bû?
+A) 1945 B) 1944 C) 1946 D) 1947
+✓ 1945
+
+[ds_dirok_0173] Dîrok
+S: Kîjan şer di navbera 1950 û 1953'an de li Nîvgirava Koreyê qewimî?
+A) Şerê Viyetnamê B) Şerê Koreyê C) Şerê Çîn-Japonê D) Şerê Rûs-Japonê
+✓ Şerê Koreyê
+
+[ds_dirok_0174] Dîrok
+S: Şerê Viyetnamê di kîjan salê de bi dawî bû?
+A) 1973 B) 1974 C) 1976 D) 1975
+✓ 1975
+
+[ds_dirok_0175] Dîrok
+S: Li gorî kevneşopiya romî, kîjan bajar di sala 753an berî zayînê de hat avakirin?
+A) Atîna B) Roma C) Sparta D) Korînt
+✓ Roma
+
+[ds_dirok_0176] Dîrok
+S: Kîjan kesayetî wek yekem împaratorê Romayê tê zanîn?
+A) Augustus B) Jules Cesar C) Neron D) Kaligula
+✓ Augustus
+
+[ds_dirok_0177] Dîrok
+S: Di kîjan sedsalê de Împaratoriya Romayê ya Rojava ket?
+A) Sedsala 3'an B) Sedsala 5'an C) Sedsala 4'an D) Sedsala 6'an
+✓ Sedsala 5'an
+
+[ds_dirok_0183] Dîrok
+S: Di kîjan sedsalê de Împaratoriya Bîzansê ji aliyê Osmaniyan ve hate hilweşandin?
+A) Sedsala 14'an B) Sedsala 16'an C) Sedsala 17'an D) Sedsala 15'an
+✓ Sedsala 15'an
+
+[ds_dirok_0193] Dîrok
+S: Di kîjan sedsalê de Împaratoriya Persiyayê ya Hexamenişî ji aliyê Îskenderê Mezin ve hate hilweşandin?
+A) Sedsala 5'an berî zayînê B) Sedsala 4'an berî zayînê C) Sedsala 3'an berî zayînê D) Sedsala 6'an berî zayînê
+✓ Sedsala 4'an berî zayînê
+
+[ds_dirok_0199] Dîrok
+S: Di kîjan sedsalê de Împaratoriya Romayê bû du parçe?
+A) Sedsala 4'an B) Sedsala 3'an C) Sedsala 5'an D) Sedsala 6'an
+✓ Sedsala 4'an
+
+[ds_dirok_0178] Dîrok
+S: Peymana ku bi texmînî di sala 449an berî zayînê de aştiya di navbera Atîna û Faris de saz kir kîjan e?
+A) Peymana Antalkidas B) Peymana Nikias C) Peymana Kallias D) Peymana Apamea
+✓ Peymana Kallias
+
+[ds_dirok_0179] Dîrok
+S: Di Şerê Thermopylae de kîjan padîşahê Spartan artêşa xwe birêvebir?
+A) Leonidas B) Xerxes C) Themistocles D) Pericles
+✓ Leonidas
+
+[ds_dirok_0180] Dîrok
+S: Kîjan fîlozofê Yewnanî şagirtê Platon bû?
+A) Sokrates B) Aristoteles C) Epikuros D) Herakleitos
+✓ Aristoteles
+
+[ds_dirok_0181] Dîrok
+S: Di kîjan sala de Pompeii ji ber teqîna çiyayê Vesuvius hate veşartin?
+A) 79 B) 64 C) 98 D) 117
+✓ 79
+
+[ds_dirok_0182] Dîrok
+S: Kîjan kesayetî wek "Bavê Dîrokê" tê zanîn?
+A) Homeros B) Herodotos C) Thukydides D) Hesiodos
+✓ Herodotos
+
+[ds_dirok_0185] Dîrok
+S: Kîjan împaratorê Romayê dîwarê ku bi navê wî tê zanîn li Brîtanyayê ava kir?
+A) Trajan B) Marcus Aurelius C) Hadrian D) Septimius Severus
+✓ Hadrian
+
+[ds_dirok_0186] Dîrok
+S: Di kîjan sala de Jules Cesar ji aliyê senatoran ve hate kuştin?
+A) 49 berî zayînê B) 27 berî zayînê C) 31 berî zayînê D) 44 berî zayînê
+✓ 44 berî zayînê
+
+[ds_dirok_0187] Dîrok
+S: Kî piştî şerê navxweyî li Romayê desthilata dîktatoriyê ya bêsînor girt?
+A) Gaius Marius B) Lucius Cornelius Sulla C) Pompey D) Cato
+✓ Lucius Cornelius Sulla
+
+[ds_dirok_0189] Dîrok
+S: Di kîjan sala de Împaratoriya Romayê ya Rojava bi dawî bû?
+A) 410 B) 476 C) 455 D) 507
+✓ 476
+
+[ds_dirok_0190] Dîrok
+S: Kîjan kesayetî wek "Bavê Tibê" tê zanîn?
+A) Galen B) Aristoteles C) Hippokrates D) Pythagoras
+✓ Hippokrates
+
+[ds_dirok_0191] Dîrok
+S: Di kîjan sala de Xanedana Ptolemaîk a Mîsirê ji aliyê Romayê ve hate hilweşandin?
+A) 44 berî zayînê B) 27 berî zayînê C) 14 berî zayînê D) 30 berî zayînê
+✓ 30 berî zayînê
+
+[ds_dirok_0192] Dîrok
+S: Kîjan şerê navdar di sala 216'an berî zayînê de qewimî û tê de Hannibal artêşa Romayê têk bir?
+A) Şerê Zama B) Şerê Cannae C) Şerê Trebia D) Şerê Trasimene
+✓ Şerê Cannae
+
+[ds_dirok_0194] Dîrok
+S: Kîjan kesayetî wek "Bavê Komediya" tê zanîn?
+A) Sophokles B) Aristophanes C) Euripides D) Aiskhylos
+✓ Aristophanes
+
+[ds_dirok_0197] Dîrok
+S: Di kîjan sala de şerê navdar ê Actium qewimî?
+A) 31 berî zayînê B) 27 berî zayînê C) 44 berî zayînê D) 49 berî zayînê
+✓ 31 berî zayînê
+
+[ds_dirok_0201] Dîrok
+S: Kîjan keşfvan di sala 1492'an de gihîşt Amerîkayê?
+A) Vasco da Gama B) Ferdinand Magellan C) James Cook D) Christopher Columbus
+✓ Christopher Columbus
+
+[ds_dirok_0204] Dîrok
+S: Di serdema keşfên deryayî de kîjan welatê Ewropayê yekem bû ku rêya deryayî ya Hindistanê dît?
+A) Portûgal B) Spanya C) Fransa D) Îngilîstan
+✓ Portûgal
+
+[ds_dirok_0208] Dîrok
+S: Kîjan gerok di 1500î de Brezîlya ji bo Portûgalê îdia kir?
+A) Vasco da Gama B) Pedro Álvares Cabral C) Fernando Magellan D) Bartolomeu Dias
+✓ Pedro Álvares Cabral
+
+[ds_dirok_0220] Dîrok
+S: Di serdema keşfên deryayî de kîjan keşfvanê Portûgalî yekem car derbasî Kapê Hêvîyê Baş bû?
+A) Vasco da Gama B) Pedro Álvares Cabral C) Diogo Cão D) Bartolomeu Dias
+✓ Bartolomeu Dias
+
+[ds_dirok_0205] Dîrok
+S: Kîjan keşfvanê Îtalyan bi navê Amerîkayê ve têkildar e?
+A) Marco Polo B) John Cabot C) Giovanni da Verrazzano D) Amerigo Vespucci
+✓ Amerigo Vespucci
+
+[ds_dirok_0206] Dîrok
+S: Di sala 1519'an de kîjan keşfvan dest bi sefera yekem a dinyayê kir?
+A) Hernán Cortés B) Ferdinand Magellan C) Francisco Pizarro D) Juan Sebastián Elcano
+✓ Ferdinand Magellan
+
+[ds_dirok_0218] Dîrok
+S: Di sala 1519'an de kîjan keşfvanê Spanyolî dest bi dagirkirina Meksîkayê kir?
+A) Francisco Pizarro B) Hernán Cortés C) Vasco Núñez de Balboa D) Pedro de Valdivia
+✓ Hernán Cortés
+
+[ds_dirok_0211] Dîrok
+S: Kîjan gerok di 1497an de bi navê Îngilîstanê gihîşt peravên Amerîkaya Bakur?
+A) Walter Raleigh B) Henry Hudson C) Francis Drake D) John Cabot
+✓ John Cabot
+
+[ds_dirok_0222] Dîrok
+S: Di sala 1533'an de kîjan kesayetê Spanyolî Împaratoriya Înkan hilweşand?
+A) Hernán Cortés B) Diego de Almagro C) Pedro de Valdivia D) Francisco Pizarro
+✓ Francisco Pizarro
+
+[ds_dirok_0225] Dîrok
+S: Şoreşa Pîşesaziyê di kîjan welatî de dest pê kir?
+A) Fransa B) Almanya C) Brîtanya D) Îtalya
+✓ Brîtanya
+
+[ds_dirok_0226] Dîrok
+S: Kîjan makîne di destpêka Şoreşa Pîşesaziyê de ji bo ristinê hate îcad kirin?
+A) Makîneya hilmê B) Jenny ya ristinê C) Makîneya çapê D) Tevnvê ya mekanîk
+✓ Jenny ya ristinê

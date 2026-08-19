@@ -1,0 +1,806 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+154 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[offline_2556] Cografya
+S: Herêma Behdînan bi piranî li kîjan perçeyê Kurdistanê ye?
+A) Bakurê Kurdistanê B) Rojavayê Kurdistanê C) Rojhilatê Kurdistanê D) Başûrê Kurdistanê
+✓ Başûrê Kurdistanê
+
+[offline_2565] Çand
+S: Di çanda Kurdî de "mîr" tê çi wateyê?
+A) Bey/yönetici B) Mast/dew C) Şîn (ağıt) D) Özgür eş yaşam
+✓ Bey/yönetici
+
+[offline_2578] Dîrok
+S: Kîjan wek yek ji gelên antîk ên bav û kalên Kurdan tê bibîranîn?
+A) Mayalar B) Medler C) Romalılar D) Vikingler
+✓ Medler
+
+[offline_2584] Edebiyat
+S: Romanên Kurdî yên pêşîn bi piranî di kîjan serdemê de derketine?
+A) sedsala 12em B) sedsala 17em C) sedsala 20em D) sedsala 15em
+✓ sedsala 20em
+
+[offline_2594] Paradigma
+S: Li şûna "peymana civakî" paradîgma çi pêşniyar dike?
+A) beşdariya rasterast û xwerêxistin ya civakê B) azadiya jinê, ekolojî û demokrasî C) ji jêr ber bi jor ve, bi awayekî beşdar D) demokrasî, azadiya jinê û ekolojî
+✓ beşdariya rasterast û xwerêxistin ya civakê
+
+[offline_2596] Ziman
+S: Di Kurmancî de "goşt" tê çi wateyê?
+A) Et B) At C) Ateş D) Su
+✓ Et
+
+[offline_2599] Ziman
+S: Di Kurmancî de "mast" tê çi wateyê?
+A) Bal B) Peynir C) Tereyağı D) Yoğurt
+✓ Yoğurt
+
+[offline_2606] Çand
+S: Biwêja "Bav û kal" çi îfade dike?
+A) Komşular B) Misafirler C) Atalar/ecdat D) Çocuklar
+✓ Atalar/ecdat
+
+[offline_2610] Dîrok
+S: Newroz bi kîjan demsal û mehê re têkildar e?
+A) havîn / Tîrmeh B) bihar / Adar C) zivistan / Berfanbar D) payîz / Îlon
+✓ bihar / Adar
+
+[offline_2625] Ziman
+S: Di Kurmancî de lêkera "çûn" tê çi wateyê?
+A) Gitmek B) Gelmek C) Yemek D) Görmek
+✓ Gitmek
+
+[offline_2628] Ziman
+S: Di Kurmancî de "dîtin" tê çi wateyê?
+A) Vermek B) Görmek C) Gitmek D) Duymak
+✓ Görmek
+
+[offline_2629] Ziman
+S: Di Kurmancî de lêkera "kirin" tê çi wateyê?
+A) Hafıza/akıl B) Evet ve hayır C) Yapmak/etmek D) Gelecek zaman
+✓ Yapmak/etmek
+
+[offline_2638] Dîrok
+S: "Hesenwayhîler" li kîjan herêmê hukim kiriye, xanedaneke Kurd e?
+A) Kafkasya (derdora Gence-Aniyê) B) Şerefxan (mîrê Bidlîsê) C) tevgera neteweyî ya kurdên Iraqê D) rojavayê Îranê / derdora Zagrosê
+✓ rojavayê Îranê / derdora Zagrosê
+
+[offline_2639] Dîrok
+S: Di efsaneya Newrozê de Dehak wek kesekî çawa tê vegotin?
+A) dadgerekî zana B) padîşahekî/tîranekî zalim C) leşkerekî mêrxas D) bazirganekî comerd
+✓ padîşahekî/tîranekî zalim
+
+[offline_2644] Cografya
+S: "Erzirom" bilêvkirina Kurdî-herêmî ya kîjan bajarî ye?
+A) Kars B) Erzincan C) Erzurum D) Ağrı
+✓ Erzurum
+
+[offline_2653] Siyaset
+S: "Pirrengî" di neteweya demokratîk de çi misoger dike?
+A) koma xebatê ya li ser mijarekê B) rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî C) di qadên wek rêveberiya herêmî, perwerdehî û aboriyê de D) jiyana bi hev re ya nasname û baweriyên cuda
+✓ jiyana bi hev re ya nasname û baweriyên cuda
+
+[offline_2658] Ziman
+S: Di Kurmancî de "bîst" kîjan hejmar e?
+A) Vatan/ülke B) Yirmi C) Güzel/iyi D) Sabah/yarın
+✓ Yirmi
+
+[offline_2666] Çand
+S: Di Kurmancî de "bav" tê çi wateyê?
+A) Amca B) Baba C) Dede D) Anne
+✓ Baba
+
+[offline_2668] Dîrok
+S: Selahaddînê Eyûbî li kîjan bajarî ji dayik bûye?
+A) Bağdat B) Tikrit C) Kahire D) İstanbul
+✓ Tikrit
+
+[offline_2669] Dîrok
+S: Eyyubiyan kîjan bajaran ji bo demek dirêj wek navend bi kar anîne?
+A) Pekîn û Tokyo B) Madrîd û Lîzbon C) Qahîre û Şam D) Roma û Atîna
+✓ Qahîre û Şam
+
+[offline_2674] Edebiyat
+S: Cigerxwîn berhemên xwe bi kîjan zimanî nivîsandiye?
+A) Tirkî (bi devoka Stenbolê) B) Erebî (ya klasîk) C) Farisî (ya klasîk) D) Kurdî (Kurmancî)
+✓ Kurdî (Kurmancî)
+
+[offline_2682] Paradigma
+S: "Civaka Ekolojîk" ji civaka pîşesaziyê bi kîjan aliyê ve cuda dibe?
+A) Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne B) Geşkirina hişmendiya civakî û ramana azad C) Li seranserê cîhanê bûye sembola azadiya jinê D) Mafê civakê yê xweparastin û xwerêxistinê
+✓ Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
+
+[offline_2692] Çand
+S: Serokatiya olî ya civaka Êzidî bi kevneşopî ji aliyê kê ve tê meşandin?
+A) Mifta / Kilît B) Mîr û Bavê Şêx C) çîrokan vedibêje D) birinca bi baharat
+✓ Mîr û Bavê Şêx
+
+[offline_2696] Dîrok
+S: Peymana ku şûna Sevrê girt û statuya Kurdan tê de tune kîjan e?
+A) 1923 B) 1960 C) lozan (1923) D) sedsala 19em
+✓ lozan (1923)
+
+[offline_2699] Edebiyat
+S: Mehmed Uzun berhemên xwe bi piranî bi kîjan zimanî nivîsandiye?
+A) Swêdî (zimanê welatê sirgûnê) B) Erebî (ya klasîk) C) Farisî (ya klasîk) D) Kurdî (Kurmancî)
+✓ Kurdî (Kurmancî)
+
+[offline_2705] Cografya
+S: "Çiyayê Sîpan" nêzîkî kîjan golê ye?
+A) Gola Wanê B) Gola Egîrdîrê C) Gola Xwê D) Gola Beyşehîrê
+✓ Gola Wanê
+
+[offline_2710] Siyaset
+S: Di paradîgmayê de mafê "Zimanê zikmakî" herî zêde bi çi re tê têkildarkirin?
+A) Li asta herêmî/deverî B) Hebûna çandî û nasname C) Ji komînên herêmî heta meclîsên jorîn D) Hevgirtin û azadiya jinan
+✓ Hebûna çandî û nasname
+
+[offline_2722] Ziman
+S: Di Kurmancî de "zer" kîjan reng e?
+A) Sarı B) Kırmızı C) Yeşil D) Siyah
+✓ Sarı
+
+[offline_2724] Çand
+S: Di çanda gelêrî ya Kurdî de girîngiya ku ji çiyayan re tê dayîn herî zêde bi çi tê ravekirin?
+A) Îranî û gelek gelên din (wek Newrozê) B) govend tê girtin û li ser agir tê banzdan C) berxwedana li dijî zilmê û ji nû ve jidayikbûn D) bi jiyana di erdnîgariya çiyayî de di dirêjahiya dîrokê de
+✓ bi jiyana di erdnîgariya çiyayî de di dirêjahiya dîrokê de
+
+[offline_2727] Dîrok
+S: Selahaddînê Eyûbî piştî kîjan şerî Qudsê vegerand?
+A) Şerê Hittînê (1187) B) mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da C) 1960 D) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
+✓ Şerê Hittînê (1187)
+
+[offline_2741] Siyaset
+S: "Aştî û siyaseta demokratîk" kîjan rêbazê red dike?
+A) kota jinan B) tundî û ferzkirin C) di meclîs û komûnên herêmî de D) hevgirtin û azadiya jinan
+✓ tundî û ferzkirin
+
+[offline_2749] Ziman
+S: Di Kurmancî de "nivîsîn" tê çi wateyê?
+A) Okumak B) Çizmek C) Yazmak D) Silmek
+✓ Yazmak
+
+[offline_2780] Ziman
+S: Di Kurmancî de "aştî" tê çi wateyê?
+A) Öfke B) Barış C) Savaş D) Korku
+✓ Barış
+
+[offline_2782] Çand
+S: Di Êzidîtiyê de kevneşopiya duakirina ber bi rojê ve çi nîşan dide?
+A) pîroziya ku ji ronahî/rojê re tê dayîn B) Melek Tawis û motîfa ronahî/rojê C) bi çanda rojane re girêdayî ye D) xurtkirina girêdanên civakî
+✓ pîroziya ku ji ronahî/rojê re tê dayîn
+
+[offline_2787] Edebiyat
+S: Wêjeya devkî ya kurdî ji nifşî bo nifşî kî hilgirtiye?
+A) Askerler B) Denizciler C) Dengbêjler D) Ehmedê Xanî
+✓ Dengbêjler
+
+[offline_2790] Cografya
+S: "Euphrates" navê din ê kîjan çem e?
+A) Aras B) Ren C) Fırat D) Dicle
+✓ Fırat
+
+[offline_2801] Muzîk
+S: Govend, dengbêjî û kilam bi hev re çi pêk tînin?
+A) Kevneşopiya cazê ya Amerîkaya Bakur B) Muzîka klasîk a rojava C) Pîşesaziya popa nûjen D) Mîrateya muzîk-çanda kurdî
+✓ Mîrateya muzîk-çanda kurdî
+
+[offline_2803] Ziman
+S: Di Kurmancî de "bîr" tê çi wateyê?
+A) teşekkürler B) ben iyiyim C) hafıza/akıl D) iyi günler
+✓ hafıza/akıl
+
+[offline_2804] Ziman
+S: Di Kurmancî de "kar" tê çi wateyê?
+A) Oyun B) İş C) Uyku D) Tatil
+✓ İş
+
+[offline_2811] Dîrok
+S: Di dîroka kurdî de piştî "serdema mîrektiyan" kîjan pêvajo hatiye jiyîn?
+A) dewleta mezin a ku Selahedînê Eyûbî damezrand B) mîrektiya kurd a bihêz a bi navenda Silêmaniyê C) mîrektiya kurd a girîng a bi navenda Cizîrê D) navendîbûn û rêveberiya rasterast
+✓ navendîbûn û rêveberiya rasterast
+
+[offline_2818] Cografya
+S: Navên "Cizîr û Botan" bi kîjan herêma dîrokî ve tên bibîranîn?
+A) Hîlala Bibereket/Mezopotamya B) Herêma Kurdistanê ya Iraqê C) çiyayên li erdnîgariya kurdî D) herêma Botan/Cizîrê
+✓ herêma Botan/Cizîrê
+
+[offline_2820] Paradigma
+S: "Modernîteya Demokratîk" derbaskirina kîjan sê krîzan armanc dike?
+A) pirsgirêkên borsa, dewîz û faîzê B) krîzên ekolojî, jin û demokrasiyê C) pirsgirêkên werzîş, huner û turîzmê D) krîzên trafîk, enflasyon û bêkariyê
+✓ krîzên ekolojî, jin û demokrasiyê
+
+[offline_2823] Siyaset
+S: "Çareseriya demokratîk" kîjan nirxan pêşanî dike?
+A) sînor, ordû û ala B) wekhevî, azadî û aştî C) hiyerarşî, dewlemendî û hêz D) pêşbazî, qezenc û xwedîtî
+✓ wekhevî, azadî û aştî
+
+[offline_2825] Muzîk
+S: "Kilam, stran û lawik" bi hevpariyê wek kî tê naskirin?
+A) cureyên avazên kurdî B) ji bo pitikan C) mîrateya çandî ya devkî D) bê amûr (a capella)
+✓ cureyên avazên kurdî
+
+[offline_2826] Dîrok
+S: "Şerefname" ji aliyê kê ve hatiye nivîsandin?
+A) serokê Komara Mehabadê B) Mesud Barzani C) YNK (Yekîtiya Nîştimanî ya Kurdistanê) D) Şerefxan (mîrê Bidlîsê)
+✓ Şerefxan (mîrê Bidlîsê)
+
+[offline_5012] Ziman
+S: Peyva Kurmancî "dê" bi Tirkî çi tê gotin?
+A) yol B) anne C) hava D) kapı
+✓ anne
+
+[offline_5016] Ziman
+S: Ji bo gotina "aslan" di Kurmancî de kîjan peyv tê bikaranîn?
+A) çav B) por C) şêr D) di-
+✓ şêr
+
+[offline_5019] Ziman
+S: "derî" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) kaya B) rast C) kapı D) ateş
+✓ kapı
+
+[offline_5030] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "yaşlı/ihtiyar" ye?
+A) pîr B) jin C) îro D) poz
+✓ pîr
+
+[offline_5035] Ziman
+S: Wateya Tirkî ya "stêrk" "yıldız" e?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5039] Ziman
+S: Wateya Tirkî ya "wêne" "ses" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5041] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "okumak" ye?
+A) xwendin B) nanxane C) ad/isim D) kursî
+✓ xwendin
+
+[offline_5063] Ziman
+S: Hevwateya "ateş" bi Kurmancî çi ye?
+A) çiya B) agir C) gund D) xweş
+✓ agir
+
+[offline_5067] Ziman
+S: Rast e an şaş e: Kurmancî "hesp" = "at".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5090] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "kalp/gönül" ye?
+A) biçûk B) dar C) dil D) gül
+✓ dil
+
+[offline_5094] Ziman
+S: "şev" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) baba B) hava C) okul D) gece
+✓ gece
+
+[offline_5095] Ziman
+S: Hevwateya "okul/akademi" bi Kurmancî çi ye?
+A) Xwendegeh B) Dokuz C) Pazartesi D) Sekiz
+✓ Xwendegeh
+
+[offline_5099] Ziman
+S: Di Kurmancî de dema "mase" tê gotin, "sandalye" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5106] Ziman
+S: Peyva Kurmancî "heval" bi Tirkî çi tê gotin?
+A) yumurta B) pencere C) arkadaş D) ekmek
+✓ arkadaş
+
+[offline_5143] Ziman
+S: "welat" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) ülke/vatan B) yazmak C) ez nizanim D) kız kardeş
+✓ ülke/vatan
+
+[offline_5158] Ziman
+S: Wateya Tirkî ya "berf" "ateş" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5168] Ziman
+S: Wateya Tirkî ya "kûçik" "kedi" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5174] Ziman
+S: Wateya Tirkî ya "ba" "yağmur" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5188] Ziman
+S: Wateya Tirkî ya peyva "kaxiz" kîjan e?
+A) here! B) doğru C) yazmak D) kağıt
+✓ kağıt
+
+[offline_5202] Ziman
+S: Wateya Tirkî ya peyva "xanî" kîjan e?
+A) yol B) kapı C) bina/ev D) pencere
+✓ bina/ev
+
+[offline_5204] Ziman
+S: Wateya Tirkî ya "pirtûk" "bilmek" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5208] Ziman
+S: Rast e an şaş e: Kurmancî "zarok" = "öğrenci".
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5221] Ziman
+S: Wateya Tirkî ya peyva "kal" kîjan e?
+A) baba B) dede C) hava D) rast
+✓ dede
+
+[offline_5225] Ziman
+S: Ji bo gotina "göz" di Kurmancî de kîjan peyv tê bikaranîn?
+A) di- B) kar C) çav D) mal
+✓ çav
+
+[offline_5236] Ziman
+S: Ji bo gotina "yol" di Kurmancî de kîjan peyv tê bikaranîn?
+A) rê B) el C) av D) ay
+✓ rê
+
+[offline_5260] Ziman
+S: Peyva Kurmancî "reng" bi Tirkî çi tê gotin?
+A) kitap B) kaya C) renk D) defter
+✓ renk
+
+[offline_5264] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "kapı" ye?
+A) bîrge B) bira C) dev D) derî
+✓ derî
+
+[offline_5268] Ziman
+S: Rast e an şaş e: Kurmancî "pisîk" = "kedi".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5270] Ziman
+S: Hevwateya "sevmek" bi Kurmancî çi ye?
+A) xwarin B) bihîstin C) hezkirin D) rêvekirin
+✓ hezkirin
+
+[offline_5297] Ziman
+S: Peyva Kurmancî "malbat" bi Tirkî çi tê gotin?
+A) hava B) türkü C) eski D) aile
+✓ aile
+
+[offline_5301] Ziman
+S: Rast e an şaş e: Kurmancî "şêr" = "aslan".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5305] Ziman
+S: Bi Kurmancî "gelmek" çi ye?
+A) rabûn B) kursî C) hatin D) ciwan
+✓ hatin
+
+[offline_5307] Ziman
+S: Di Kurmancî de dema "av" tê gotin, "gün/güneş" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5314] Ziman
+S: Wateya Tirkî ya "ba" "rüzgar" e?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5325] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "işitmek" ye?
+A) mamoste B) bihîstin C) komputer D) dibistan
+✓ bihîstin
+
+[offline_5364] Ziman
+S: Di Kurmancî de dema "derî" tê gotin, "pencere" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5381] Ziman
+S: Rast e an şaş e: Kurmancî "zanîn" = "bilmek".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5386] Ziman
+S: Peyva Kurmancî "rûniştin" bi Tirkî çi tê gotin?
+A) öğrenci B) pencere C) oturmak D) kırmızı
+✓ oturmak
+
+[offline_5391] Ziman
+S: Ji bo gotina "doğru" di Kurmancî de kîjan peyv tê bikaranîn?
+A) kal B) baran C) reng D) rast
+✓ rast
+
+[offline_5394] Ziman
+S: Rast e an şaş e: Kurmancî "deng" = "ses".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5427] Ziman
+S: Di Kurmancî de dema "nan" tê gotin, "ekmek" tê xwestin?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5433] Ziman
+S: Wateya Tirkî ya "destpêk" "ağaç" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5440] Ziman
+S: "mamoste" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) altı B) baba C) öğretmen D) baş/kafa
+✓ öğretmen
+
+[offline_5448] Ziman
+S: Wateya Tirkî ya peyva "wêne" kîjan e?
+A) Arkadaş/yoldaş B) yaşlı/ihtiyar C) Latin (Hawar) D) resim/fotoğraf
+✓ resim/fotoğraf
+
+[offline_5459] Ziman
+S: Hevwateya "ağız" bi Kurmancî çi ye?
+A) poz B) şêr C) dev D) deh
+✓ dev
+
+[offline_5465] Ziman
+S: Rast e an şaş e: Kurmancî "agir" = "ateş".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5475] Ziman
+S: Wateya Tirkî ya "deşt" "kaya" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5499] Ziman
+S: Di Kurmancî de dema "nanpêj" tê gotin, "fırıncı" tê xwestin?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5514] Ziman
+S: Peyva Kurmancî "jin" bi Tirkî çi tê gotin?
+A) doğru B) küçük C) nehir D) kadın
+✓ kadın
+
+[offline_5524] Ziman
+S: Ji bo gotina "Kürt" di Kurmancî de kîjan peyv tê bikaranîn?
+A) deşt B) kurd C) xweş D) hesp
+✓ kurd
+
+[offline_5531] Ziman
+S: "dil" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) el B) kalp/gönül C) göz D) konuşmak
+✓ kalp/gönül
+
+[offline_5542] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "arkadaş" ye?
+A) hevîr B) nivîn C) kursî D) heval
+✓ heval
+
+[offline_5557] Ziman
+S: Peyva "kaxiz" tê wateya "resim/fotoğraf".
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5565] Ziman
+S: Wateya Tirkî ya "jin" "kadın" e?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5591] Ziman
+S: Rast e an şaş e: Kurmancî "xwendekar" = "doğru".
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5593] Ziman
+S: Rast e an şaş e: Kurmancî "çav" = "burun".
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5599] Ziman
+S: Hevwateya "kalkmak" bi Kurmancî çi ye?
+A) rabûn B) nivîn C) siyah D) diçim
+✓ rabûn
+
+[offline_5604] Ziman
+S: Di Kurmancî de peyva "bav" bi Tirkî çi ye?
+A) baba B) eski C) dede D) ağız
+✓ baba
+
+[offline_5606] Ziman
+S: Ji bo ronahî û hewayê li dîwarê tê vekirin; bi Tirkî kîjan e?
+A) ad/isim B) beş C) kitap D) pencere
+✓ pencere
+
+[offline_5622] Ziman
+S: Hevwateya "baba" bi Kurmancî çi ye?
+A) nan B) îro C) bav D) çem
+✓ bav
+
+[offline_5631] Ziman
+S: Di Kurmancî de dema "şev" tê gotin, "deniz" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5632] Ziman
+S: Wateya Tirkî ya "şêr" "köpek" e?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5638] Ziman
+S: Ji bo gotina "şehir" di Kurmancî de kîjan peyv tê bikaranîn?
+A) ciwan B) beyaz C) siyah D) bajar
+✓ bajar
+
+[offline_5644] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "el" ye?
+A) dest B) heval C) bira D) kal
+✓ dest
+
+[offline_5675] Ziman
+S: Rast e an şaş e: Kurmancî "pê" = "baş/kafa".
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5676] Ziman
+S: Di Kurmancî de dema "diran" tê gotin, "saç" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5685] Ziman
+S: Hevwateya "ay" bi Kurmancî çi ye?
+A) rast B) deşt C) heyv D) derî
+✓ heyv
+
+[offline_5699] Ziman
+S: Ji bo gotina "yazmak" di Kurmancî de kîjan peyv tê bikaranîn?
+A) nivîsandin B) xwendegeh C) roj baş D) roj
+✓ nivîsandin
+
+[offline_5707] Ziman
+S: Rast e an şaş e: Kurmancî "hewa" = "hava".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5713] Ziman
+S: Ji bo gotina "dede" di Kurmancî de kîjan peyv tê bikaranîn?
+A) kal B) îro C) şêr D) çiya
+✓ kal
+
+[offline_5719] Ziman
+S: Peyva "ax" tê wateya "toprak".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5722] Ziman
+S: Di Kurmancî de dema "ziman" tê gotin, "okul" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5733] Ziman
+S: Di Kurmancî de dema "cîhan" tê gotin, "dünya" tê xwestin?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5748] Ziman
+S: "rabûn" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) pencere B) kalkmak C) beş D) öğrenci
+✓ kalkmak
+
+[offline_5790] Ziman
+S: Ji bo gotina "görmek" di Kurmancî de kîjan peyv tê bikaranîn?
+A) biçûk B) dapîr C) ziman D) dîtin
+✓ dîtin
+
+[offline_5796] Ziman
+S: Ji bo gotina "gece" di Kurmancî de kîjan peyv tê bikaranîn?
+A) sabah B) i̇yi C) şev D) teşt
+✓ şev
+
+[offline_5805] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "aile" ye?
+A) helbest B) kilam C) azadî D) malbat
+✓ malbat
+
+[offline_5813] Ziman
+S: Di Kurmancî de peyva "baran" bi Tirkî çi ye?
+A) okumak B) yoğurt C) yağmur D) gelmek
+✓ yağmur
+
+[offline_5832] Ziman
+S: Wateya Tirkî ya peyva "kurd" kîjan e?
+A) eski B) kürt C) tarih D) küçük
+✓ kürt
+
+[offline_5834] Ziman
+S: Di Kurmancî de dema "pir" tê gotin, "başlangıç" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5848] Ziman
+S: Di Kurmancî de dema "welat" tê gotin, "dünya" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5876] Ziman
+S: Di Kurmancî de dema "bajar" tê gotin, "şehir" tê xwestin?
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5886] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "ülke/vatan" ye?
+A) beyaz B) stran C) welat D) nivîn
+✓ welat
+
+[offline_5894] Ziman
+S: "nivîn" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) kapı B) masa C) burun D) yatak
+✓ yatak
+
+[offline_5897] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "yatak" ye?
+A) jin B) rast C) nivîn D) beyaz
+✓ nivîn
+
+[offline_5900] Ziman
+S: Hevwateya "bina/ev" bi Kurmancî çi ye?
+A) reng B) xanî C) gel D) rast
+✓ xanî
+
+[offline_5903] Ziman
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "bugün" ye?
+A) îro B) dar C) gul D) dil
+✓ îro
+
+[offline_5912] Ziman
+S: Peyva Kurmancî "nivîsandin" bi Tirkî çi tê gotin?
+A) bilmek B) yazmak C) rüzgar D) üç
+✓ yazmak
+
+[offline_5916] Ziman
+S: Peyva Kurmancî "çem" bi Tirkî çi tê gotin?
+A) dağ B) yol C) nehir D) burun
+✓ nehir
+
+[offline_5920] Ziman
+S: Rast e an şaş e: Kurmancî "çûn" = "gitmek".
+A) Rast B) Şaş
+✓ Rast
+
+[offline_5926] Ziman
+S: Hevwateya "renk" bi Kurmancî çi ye?
+A) av B) reng C) dar D) kevir
+✓ reng
+
+[offline_5930] Ziman
+S: "kanî" (Kurmancî) bi Tirkî kîjan wateyê digire?
+A) çeşme/pınar B) Hint-Avrupa C) Kız (çocuğu) D) Yirmi
+✓ çeşme/pınar
+
+[offline_5933] Ziman
+S: Hevwateya "masa" bi Kurmancî çi ye?
+A) mase B) derî C) text D) kursî
+✓ mase
+
+[offline_5934] Ziman
+S: Di Kurmancî de peyva "teşt" bi Tirkî çi ye?
+A) diçim B) küçük C) leğen D) doğru
+✓ leğen
+
+[offline_5941] Ziman
+S: Di Kurmancî de dema "derya" tê gotin, "yıldız" tê xwestin?
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_5969] Çand
+S: Kîjan vebijêrk tê wateya "şahmaran"?
+A) şêwaza jiyana koçerî û rîtma reqsê B) reqsa gelêrî ya kevneşopî ya sê-pêyî C) ji bo vegotina ku devkî an ji ber tê veguhastin D) fîgura mîtolojîk a çanda rojhilat
+✓ fîgura mîtolojîk a çanda rojhilat
+
+[offline_6020] Çand
+S: Ji aliyê Çandê ve ji bo "govendên herêmî" îfadeya rast kîjan e?
+A) tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî B) mêvanperwerî û daxwaza avakirina têkiliyê C) govend tê girtin û li ser agir tê banzdan D) reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
+✓ reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
+
+[offline_6042] Çand
+S: Peyva "pêncşem" bi tirkî çi ye?
+A) Perşembe B) Çarşamba C) Cuma D) Cumartesi
+✓ Perşembe
+
+[offline_6053] Çand
+S: Derbarê "şal û şapik" de ravekirina rast kîjan e?
+A) cilûbergê kevneşopî yê mêran B) amûra kevneşopî ya dişibe bilûrê C) çanda pêşkêşkirina dew û avê D) vejîna xwezayê û bereket
+✓ cilûbergê kevneşopî yê mêran
+
+[offline_6059] Çand
+S: Ji bo "hewran" pênaseya derbasdar kîjan e?
+A) "Nû" (nû) + "roj" (roj) B) Girêdanên civak û malbatê C) çêkirina kevneşopî ya konê ji mûyî D) hatina biharê û nûbûn
+✓ çêkirina kevneşopî ya konê ji mûyî
+
+[offline_6067] Çand
+S: Derbarê "çilkez" de ya rast a zanîn çi ye?
+A) îlahiyên olî/nivîsarên pîroz ên devkî B) sembola çandî û bîranîna rengan C) modela kevneşopî ya rêsê porê kurdî D) tûrikê hunandî yê ji bo hilgirtina xwarinê
+✓ modela kevneşopî ya rêsê porê kurdî
+
+[offline_6083] Çand
+S: Peyva "destmal" bi tirkî çi ye?
+A) halı B) mendil C) yastık D) battaniye
+✓ mendil
+
+[offline_6093] Çand
+S: Ji bo "tûrik" pênaseya derbasdar kîjan e?
+A) tûra hûnandî ya ku xwarin tê de tê hilgirtin B) şivantiya kevneşopî û zanîna xwezayê C) cejna berdana beran û ajaldariyê D) çîrok û kilam/stran
+✓ tûra hûnandî ya ku xwarin tê de tê hilgirtin
+
+[offline_6117] Çand
+S: Derbarê "nanê tenûrê" de kîjan rast e?
+A) berxwedana li dijî zilmê û ji nû ve jidayikbûn B) nanê ku li dîwarê firna axî tê pehtin C) xwarina sebzeyê ya bi tirş/goşt an yaxnî D) vegotina bûyerên balkêş ên jiyayî
+✓ nanê ku li dîwarê firna axî tê pehtin
+
+[offline_6136] Çand
+S: Kîjan têgiha "koçerî" rast şirove dike?
+A) îlahiyên olî/nivîsarên pîroz ên devkî B) hesinkarê ku li dijî zilmê rabû C) vegotina ku ji nifşî bo nifşî hatiye veguhastin D) jiyana ku bi demsalan di navbera zozan û warî de digere
+✓ jiyana ku bi demsalan di navbera zozan û warî de digere
+
+[offline_6182] Çand
+S: "memê alan" çi îfade dike?
+A) xwarina kevneşopî ya ku bi mirîşk û birincê tê çêkirin B) vegotina gelêrî ya kurdî ya destanî C) ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê D) ji ber ku bîra çandî, wêje, vegotina devkî û aîdiyetê hildigire
+✓ vegotina gelêrî ya kurdî ya destanî
+
+[offline_6189] Çand
+S: Îfadeya ku têgiha "cîranî" rast vedibêje kîjan e?
+A) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin B) peywendiya alîkariya di navbera malên nêzîk de C) Melek Tawis û motîfa ronahî/rojê D) cejna berdana beran û ajaldariyê
+✓ peywendiya alîkariya di navbera malên nêzîk de
+
+[offline_6206] Çand
+S: "dengbêj" çawa tê pênasekirin?
+A) xurtkirina girêdanên civakî B) vegotina devkî û çîroka bi avaz C) amûra kevneşopî ya dişibe bilûrê D) ji bo vegotina ku devkî an ji ber tê veguhastin
+✓ vegotina devkî û çîroka bi avaz
+
+[offline_6260] Çand
+S: Kîjan pênase bi "Newroz" re li hev tê?
+A) "Nû" (nû) + "roj" (roj) B) Melek Tavus (Tawûsî Melek) C) hatina biharê û nûbûn D) keça û kurê apê (pismam)
+✓ hatina biharê û nûbûn

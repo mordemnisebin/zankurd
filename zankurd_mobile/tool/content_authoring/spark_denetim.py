@@ -92,27 +92,54 @@ def control_set() -> set:
     return ids
 
 
-def coverage() -> list:
-    """Ajanın beyan ettiği okuma sayısını bankanın gerçeğiyle karşılaştırır."""
-    path = pathlib.Path("docs/content_batches/spark_bulgular/_ozet.json")
-    if not path.exists():
-        return []
-    declared = json.loads(path.read_text(encoding="utf-8"))
+def coverage(folder: pathlib.Path) -> list:
+    """Beyan edilen okuma sayısını gerçekle karşılaştırır.
+
+    İki akış var ve ikisi de desteklenir:
+
+    * **Banka akışı** (dosya erişimi olan ajan) — `_ozet.json` içinde
+      banka başına `okunan_kayit`.
+    * **Parti akışı** (sohbet ekranına yapıştırma) — her parti dönüşünün
+      sonundaki `{"_okunan": N}`, o partinin soru sayısıyla karşılaştırılır.
+
+    Parti akışı daha sıkıdır: kapsam banka başına değil parti başına
+    ölçülür, dolayısıyla eksik okuma nerede olduğu belli olur.
+    """
     rows = []
-    for entry in declared:
-        asset = pathlib.Path("assets/data") / entry.get("banka", "")
-        if not asset.exists():
-            rows.append((entry.get("banka"), None, entry.get("okunan_kayit")))
+
+    summary = folder / "_ozet.json"
+    if summary.exists():
+        for entry in json.loads(summary.read_text(encoding="utf-8")):
+            asset = pathlib.Path("assets/data") / entry.get("banka", "")
+            actual = (len(json.loads(asset.read_text(encoding="utf-8")))
+                      if asset.exists() else None)
+            rows.append((entry.get("banka"), actual, entry.get("okunan_kayit")))
+
+    batches = pathlib.Path("docs/content_batches/gpt_partileri")
+    for file in sorted(folder.glob("parti_*.json")):
+        source = batches / (file.stem + ".txt")
+        if not source.exists():
+            rows.append((file.stem, None, None))
             continue
-        actual = len(json.loads(asset.read_text(encoding="utf-8")))
-        rows.append((entry["banka"], actual, entry.get("okunan_kayit")))
+        # Partideki soru sayısı: satır başındaki [kimlik] etiketleri.
+        # Başlıktaki JSON örneği de `[` ile başlar; kimlik deseni
+        # tırnak içermediği için o satır eşleşmez.
+        actual = len(re.findall(r"^\[([A-Za-z0-9_\-]+)\]", 
+                                source.read_text(encoding="utf-8"), re.M))
+        declared = None
+        for item in json.loads(file.read_text(encoding="utf-8")):
+            if isinstance(item, dict) and "_okunan" in item:
+                declared = item["_okunan"]
+        rows.append((file.stem, actual, declared))
     return rows
 
 
 def main() -> int:
     bank = load_bank()
     control = control_set()
-    folder = pathlib.Path("docs/content_batches/spark_bulgular")
+    folder = pathlib.Path(
+        sys.argv[1] if len(sys.argv) > 1
+        else "docs/content_batches/spark_bulgular")
     if not folder.exists() or not any(folder.glob("*.json")):
         print("bulgu dosyası yok: " + str(folder))
         return 1
@@ -127,7 +154,9 @@ def main() -> int:
         if not isinstance(data, list):
             print(f"{file.name}: dizi bekleniyordu")
             return 1
-        findings.extend(data)
+        # `{"_okunan": N}` bir bulgu değil, kapsam beyanıdır.
+        findings.extend(
+            x for x in data if not (isinstance(x, dict) and "_okunan" in x))
 
     for finding in findings:
         qid = finding.get("id")
@@ -157,7 +186,8 @@ def main() -> int:
     repeated_notes = [n for n, c in Counter(notes).items() if n and c > 2]
 
     caught = control & set(ids)
-    gaps = [(name, actual, read) for name, actual, read in coverage()
+    cov = coverage(folder)
+    gaps = [(name, actual, read) for name, actual, read in cov
             if actual is None or read is None or read != actual]
 
     print(f"bulgu: {len(findings)}   banka: {len(bank)} kayıt")
@@ -168,7 +198,6 @@ def main() -> int:
     print(f"  şablon not           : {len(repeated_notes)} kalıp")
     if control:
         print(f"  kontrol kümesi       : {len(caught)}/{len(control)} yakalandı")
-    cov = coverage()
     if not cov:
         print("  kapsam beyanı        : YOK (_ozet.json yazılmamış)")
     else:

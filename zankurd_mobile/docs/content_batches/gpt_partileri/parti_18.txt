@@ -1,0 +1,576 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+108 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[offline_muz_2009] Muzîk
+S: Ayşe Şan û Meryem Xan di dîroka muzîka kurdî de bi kîjan aliyê xwe dişibin hev?
+A) herdu jî li Radyoya Erîvanê xebitîn B) herdu jî stranbêjên jin ên pêşeng bûn C) herdu jî damezrînerên komeke muzîkê bûn D) herdu jî muzîkjenên tembûrê bûn
+✓ herdu jî stranbêjên jin ên pêşeng bûn
+
+[offline_muz_2010] Muzîk
+S: Bilûr bi gelemperî ji çi tê çêkirin?
+A) hesin an sifir B) kevir an şûşe C) qamîş an dar D) çerm an hestî
+✓ qamîş an dar
+
+[offline_muz_2011] Muzîk
+S: Kilamên dengbêjan bi rîtmeke azad tên gotin, ne bi pîvaneke demê ya diyarkirî.
+A) Rast B) Şaş
+✓ Rast
+
+[offline_muz_2012] Muzîk
+S: Zirne amûreke têlî ye û bi mizrabê tê lêxistin.
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_muz_2013] Muzîk
+S: Meryem Xanê di salên 1940î de li Radyoya Bexdayê stranên xwe tomar kirin.
+A) Rast B) Şaş
+✓ Rast
+
+[offline_muz_2014] Muzîk
+S: Hesen Zîrekî stranên xwe bi zaravayê kurmancî gotine.
+A) Rast B) Şaş
+✓ Şaş
+
+[offline_muz_2015] Muzîk
+S: Ciwan Haco di stranên xwe de deng û awazên rock û cazê bi kar tîne.
+A) Rast B) Şaş
+✓ Rast
+
+[offline_9101] Çand
+S: Motîfên kilimê çawa çêdibin?
+A) Piştî hûnandinê, bi derziyê tên dirûtin B) Bi qalibê darîn li ser kilimê tên çapkirin C) Bi firçe û boyaxê li ser rûyê kilimê tên nexşandin D) Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
+✓ Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
+
+[offline_9102] Edebiyat
+S: Destan bi kevneşopî çawa digihîje nifşên nû?
+A) Bi rojnameyên hefteyî yên çapkirî B) Bi devkî, bi vegotin û gotina bi awaz C) Bi lîstikên sehneyê yên bi dekor D) Bi nameyên di navbera bajaran de
+✓ Bi devkî, bi vegotin û gotina bi awaz
+
+[offline_9103] Çand
+S: Di govendê de govendger çawa li hev girêdayî ne?
+A) Her kes bi tenê û ji hev dûr dilîze B) Du bi du, rû bi rû li hember hev radiwestin C) Rûniştî, tenê bi destan lê didin D) Destên hev digirin û rêz an nîvçember çêdikin
+✓ Destên hev digirin û rêz an nîvçember çêdikin
+
+[offline_9104] Ziman
+S: Peyva "nav" di rêzimanê de kîjan cureya peyvê nîşan dide?
+A) Lêker B) Rengdêr C) Navdêr D) Hoker
+✓ Navdêr
+
+[offline_9105] Ziman
+S: Di avahiya vegotinekê de "destpêk" kîjan beş e?
+A) Beşa dawî ya ku encam tê girtin B) Beşa navîn a ku bûyer pêş dikeve C) Beşa ku çavkanî tên rêzkirin D) Beşa ewil a ku mijar tê danasîn
+✓ Beşa ewil a ku mijar tê danasîn
+
+[cinema_0001] Sînema
+S: Di komeka fîlmekî de kî lîstikvanan bi rê ve dibe û biryara dawî ya hunerî dide?
+A) Derhêner B) Sazkerê dengî C) Berpirsê kostuman D) Alîkarê ronahiyê
+✓ Derhêner
+
+[cinema_0002] Sînema
+S: Di 28ê Kanûna Pêşîn a 1895an de li Parîsê yekem pêşandana fîlman a bi bilêt ji aliyê kîjan birayan ve hat lidarxistin?
+A) Birayên Warner B) Birayên Skladanowsky C) Birayên Lumière D) Birayên Pathé
+✓ Birayên Lumière
+
+[cinema_0003] Sînema
+S: Fîlmê "Rashomon" ê ku sala 1951ê li Venedîkê Şêrê Zêrîn wergirt, ji aliyê kîjan derhênerî ve hat kişandin?
+A) Akira Kurosawa B) Yasujirô Ozu C) Kenji Mizoguchi D) Nagisa Ôshima
+✓ Akira Kurosawa
+
+[cinema_0004] Sînema
+S: Ji bo dîmenê ku rûyê lîstikvanî perdeyê tije dike, di zimanê sînemayê de kîjan têgeh tê bikaranîn?
+A) Plana giştî B) Plana navîn C) Plana dûr D) Plana nêzîk
+✓ Plana nêzîk
+
+[cinema_0005] Sînema
+S: Nûbûna sereke ya fîlmê 1927an "The Jazz Singer" di dîroka sînemayê de çi bû?
+A) Diyaloga hevaheng a bi deng B) Karanîna pêşîn a Technicolorê C) Yekem fîlmê sê-alîkî D) Yekem animasyona dirêj
+✓ Diyaloga hevaheng a bi deng
+
+[cinema_0006] Sînema
+S: Fîlmê "Yol" ê ku sala 1982yan Palme d'Or wergirt, senaryoya wî ji aliyê kê ve hat nivîsîn?
+A) Şerîf Gören B) Zekî Ökten C) Yilmaz Güney D) Atif Yilmaz
+✓ Yilmaz Güney
+
+[cinema_0007] Sînema
+S: Kî ji hev-girêdana dîmenên kişandî û rêza dawî ya wan berpirsiyar e?
+A) Montajkar B) Derhênerê dîmenê C) Berpirsê dekorê D) Nivîskarê senaryoyê
+✓ Montajkar
+
+[cinema_0008] Sînema
+S: Dîmena navdar a pêpelûkên Odessayê di kîjan fîlmê Sergey Eisenstein ê 1925an de derbas dibe?
+A) Oktobre B) Grev C) Îvanê Tirsnak D) Keştiya Şer Potemkin
+✓ Keştiya Şer Potemkin
+
+[cinema_0009] Sînema
+S: Kîjan derhênerî fîlmê "Kış Uykusu" kişand, ku sala 2014an li Cannesê Palme d'Or wergirt?
+A) Nurî Bîlge Ceylan B) Zekî Demîrkubuz C) Reha Erdem D) Yeşîm Ustaoglu
+✓ Nurî Bîlge Ceylan
+
+[cinema_0010] Sînema
+S: Dîmenek ku bêyî qutkirinê bi kişandineke domdar tê tomarkirin, çi tê navandin?
+A) Montaja paralel B) Plan-sekans C) Fondu D) Qutkirina xwêrû
+✓ Plan-sekans
+
+[cinema_0011] Sînema
+S: Fîlmê 1902yan "Le Voyage dans la Lune" ku bi hîleyên dîmenî yên pêşîn navdar e, berhema kê ye?
+A) Edwin S. Porter B) Louis Feuillade C) Émile Cohl D) Georges Méliès
+✓ Georges Méliès
+
+[cinema_0012] Sînema
+S: Navê "Bollywood" ji bo pîşesaziya fîlmên hindî yên kîjan bajarî tê bikaranîn?
+A) Kolkata B) Mumbai C) Çennaî D) Delhî
+✓ Mumbai
+
+[cinema_0013] Sînema
+S: Fîlmê ku bûyer û mirovên rastîn bêyî senaryoyeke çîrokî tomar dike, di kîjan cûreyê de ye?
+A) Belgefîlm B) Zanistî-xeyalî C) Animasyon D) Muzîkal
+✓ Belgefîlm
+
+[cinema_0014] Sînema
+S: Fîlmê 1948an "Ladri di biciclette" (Duzê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?
+A) Ekspresyonîzma almanî B) Neorealîzma îtalî C) Dogme 95 D) Sînemaya Nû ya Almanî
+✓ Neorealîzma îtalî
+
+[cinema_0015] Sînema
+S: Rêzefîlma Apu bi berhema 1955an "Pather Panchali" dest pê dike; derhênerê wê kî ye?
+A) Ritwik Ghatak B) Mrinal Sen C) Guru Dutt D) Satyajit Ray
+✓ Satyajit Ray
+
+[cinema_0016] Sînema
+S: Berî kişandinê plansaziya dîmenan bi rêzeyeke wêneyên xêzkirî tê amadekirin; navê vê amrazê çi ye?
+A) Sînopsîs B) Storyboard C) Senaryoya teknîkî D) Lîsteya kişandinê
+✓ Storyboard
+
+[cinema_0017] Sînema
+S: Fîlmê 1920yî "Kabîneya Doktor Caligari" bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?
+A) Ekspresyonîzma almanî B) Realîzma poetîk C) Sînema-çav D) Film noir a fransî
+✓ Ekspresyonîzma almanî
+
+[cinema_0018] Sînema
+S: Fîlmê 2000î "Demê ku Hesp Serxweş Dibin" ku li Cannesê Caméra d'Or wergirt, ji kîjan derhênerî ye?
+A) Hîner Salêm B) Bahman Ghobadî C) Cafer Panahî D) Mohsen Mexmelbaf
+✓ Bahman Ghobadî
+
+[cinema_0019] Sînema
+S: Dengên wek gavan an vekirina derî yên ku piştî kişandinê li stûdyoyê ji nû ve tên çêkirin, çi tên navandin?
+A) Muzîka fîlmî B) Dublaj C) Dengê rasterast D) Dengên foley
+✓ Dengên foley
+
+[cinema_0020] Sînema
+S: Kîjan lîstikvan û derhêner bi karakterê "Serserê Piçûk" ê dema sînemaya bêdeng tê nasîn?
+A) Charlie Chaplin B) Buster Keaton C) Harold Lloyd D) Roscoe Arbuckle
+✓ Charlie Chaplin
+
+[cinema_0021] Sînema
+S: Derhênerê swêdî yê fîlmê 1957an "Det sjunde inseglet" (Mohra Heftemîn) kî ye?
+A) Victor Sjöström B) Bo Widerberg C) Ingmar Bergman D) Jan Troell
+✓ Ingmar Bergman
+
+[cinema_0022] Sînema
+S: Kî diyalog û avahiya çîroka fîlmekî li ser kaxezê datîne?
+A) Montajkar B) Senarîst C) Derhênerê dîmenê D) Berpirsê dekorê
+✓ Senarîst
+
+[cinema_0023] Sînema
+S: Kîjan festîvala fîlman a navneteweyî ya sereke di sala 1932yan de, berî yên din, hat damezrandin?
+A) Cannes B) Berlînale C) Venedîk D) Karlovy Vary
+✓ Venedîk
+
+[cinema_0024] Sînema
+S: Krîza afirînerî ya derhênerekî di fîlmê 1963yan "8½" de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?
+A) Federico Fellini B) Luchino Visconti C) Michelangelo Antonioni D) Pier Paolo Pasolini
+✓ Federico Fellini
+
+[cinema_0025] Sînema
+S: Di standarda klasîk a sînemaya 35 mm de di saniyeyekê de çend kadro tên nîşandan?
+A) 16 B) 30 C) 24 D) 48
+✓ 24
+
+[cinema_0026] Sînema
+S: Fîlmê 1959an "Les 400 coups" ku destpêka Tevgera Nû ya Fransî tê hesibandin, ji kê ye?
+A) Jean-Luc Godard B) François Truffaut C) Claude Chabrol D) Jean-Pierre Melville
+✓ François Truffaut
+
+[cinema_0027] Sînema
+S: Kîjan derhêner sala 1964an bi fîlmê "Susuz Yaz" li Berlînê Hirça Zêrîn wergirt?
+A) Lütfî Ö. Akad B) Atif Yilmaz C) Metîn Erksan D) Halît Refîg
+✓ Metîn Erksan
+
+[cinema_0028] Sînema
+S: Dîmenê ku tê de kamera rasterast ji jor ve li cihê bûyerê dinêre, çi tê navandin?
+A) Plana çavê teyr B) Plana ji jêr C) Plana hemwaz D) Plana xwar
+✓ Plana çavê teyr
+
+[cinema_0029] Sînema
+S: Yekem fîlmê animasyonê yê dirêj ê stûdyoya Walt Disney, ku sala 1937an derket, kîjan e?
+A) Pînokyo B) Fantasia C) Sipîberf û Heft Cûceyan D) Dumbo
+✓ Sipîberf û Heft Cûceyan
+
+[cinema_0030] Sînema
+S: Derhênerê senegalî yê ku bi fîlmê 1966an "La Noire de…" tê nasîn kî ye?
+A) Djibril Diop Mambéty B) Souleymane Cissé C) Med Hondo D) Ousmane Sembène
+✓ Ousmane Sembène
+
+[cinema_0031] Sînema
+S: Kî budçeya fîlmekî peyda dike û pêvajoya berhemanînê birêve dibe?
+A) Derhêner B) Senarîst C) Berhemhêner D) Montajkar
+✓ Berhemhêner
+
+[cinema_0032] Sînema
+S: Manîfestoya "Dogme 95" ku qedexeyên tund li ronahiya sûnî û muzîka lêzêdekirî danî, li kîjan welatî hat ragihandin?
+A) Awistirya B) Norwêc C) Hollanda D) Danîmarka
+✓ Danîmarka
+
+[cinema_0033] Sînema
+S: Derhênerê hongkongî yê fîlmê 2000î "In the Mood for Love" kî ye?
+A) John Woo B) Wong Kar-waî C) Tsui Hark D) Ann Hui
+✓ Wong Kar-waî
+
+[cinema_0034] Sînema
+S: Dîmenê destpêkê yê ku cih û dema sekansekê dide nasîn, çi tê navandin?
+A) Plana berevajî B) Plana detayê C) Plana subjektîf D) Plana danasînê
+✓ Plana danasînê
+
+[cinema_0035] Sînema
+S: Kûrahiya zeviyê ya berfireh bi fîlmê 1941ê "Citizen Kane" navdar bû; derhênerê wî kî ye?
+A) Howard Hawks B) John Ford C) Orson Welles D) Billy Wilder
+✓ Orson Welles
+
+[cinema_0036] Sînema
+S: Sala 2010an li Berlînê Hirça Zêrîn ji fîlmê "Bal" re hat dayîn; derhênerê vî fîlmî kî ye?
+A) Derviş Zaîm B) Özcan Alper C) Kazim Öz D) Semîh Kaplanoglu
+✓ Semîh Kaplanoglu
+
+[cinema_0037] Sînema
+S: Cûreyê fîlmî yê ku li rojavayê Amerîkayê ya sedsala 19an, bi kovboy û şerên sînoran derbas dibe kîjan e?
+A) Melodram B) Western C) Film noir D) Trîler
+✓ Western
+
+[cinema_0038] Sînema
+S: Kîjan kovara fransî di salên 1950î de nêrîna "derhêner nivîskarê fîlmî ye" belav kir?
+A) Sight and Sound B) Positif C) Variety D) Cahiers du cinéma
+✓ Cahiers du cinéma
+
+[cinema_0039] Sînema
+S: Palme d'Or a sala 2019an ji fîlmê "Parasite" re hat dayîn; ev fîlm ji kîjan welatî ye?
+A) Japonya B) Çîn C) Koreya Başûr D) Taywan
+✓ Koreya Başûr
+
+[cinema_0040] Sînema
+S: Dengê ku çavkaniya wî di cîhana çîroka fîlmî de heye, wek radyoyeke di odeyê de, çi tê navandin?
+A) Dengê off B) Muzîka lêzêdekirî C) Vegotina derveyî D) Dengê dîegetîk
+✓ Dengê dîegetîk
+
+[cinema_0041] Sînema
+S: Dîmena duşê ya fîlmê 1960î "Psycho" berhema kîjan derhênerî ye?
+A) Alfred Hitchcock B) Henri-Georges Clouzot C) Otto Preminger D) Robert Aldrich
+✓ Alfred Hitchcock
+
+[cinema_0042] Sînema
+S: Fîlmê 2003yan "Vodka Lemon" ji kîjan derhênerê kurd e?
+A) Bahman Ghobadî B) Kazim Öz C) Hîner Salêm D) Mano Xelîl
+✓ Hîner Salêm
+
+[cinema_0043] Sînema
+S: Di sînemayê de şeklê çarçoveya dîmenê bi kîjan pîvanê tê diyarkirin?
+A) Rêjeya firehî û bilindahiyê B) Hejmara kadroyên ku di saniyeyekê de tên nîşandan C) Kûrahiya zeviya di navbera pêş û paş de D) Asta bilindbûna dengê tomarkirî
+✓ Rêjeya firehî û bilindahiyê
+
+[cinema_0044] Sînema
+S: Ceribandina ku nîşan da wateya heman dîmenê rû li gorî dîmenê pê re diguhere, bi navê kê tê zanîn?
+A) Dziga Vertov B) Vsevolod Pudovkin C) Aleksandr Dovjenko D) Lev Kuleşov
+✓ Lev Kuleşov
+
+[cinema_0045] Sînema
+S: Di sînemaya tirkî de navê "Yeşilçam" behsa çi dike?
+A) Pîşesaziya fîlman a Îstenbolê B) Festîvaleke fîlman li Anqereyê C) Xelateke sînemayê ya salane D) Kovareke sînemayê ya kevn
+✓ Pîşesaziya fîlman a Îstenbolê
+
+[cinema_0046] Sînema
+S: Du bûyerên ku di heman demê de li cihên cuda diqewimin bi dor tên nîşandan; ev şêwaza montajê çi ye?
+A) Montaja domdar B) Elipsa demî C) Montaja paralel D) Fondu ya zincîrî
+✓ Montaja paralel
+
+[cinema_0047] Sînema
+S: Di merasîma yekem a Oscarê de (1929), xelata berhema herî baş ji bo kîjan fîlmî hat dayîn?
+A) Wings B) The Broadway Melody C) Sunrise D) The Jazz Singer
+✓ Wings
+
+[cinema_0048] Sînema
+S: Derhênerê spanî yê ku bi fîlmê xwe yê 1999an "Dayika Min" Oscara fîlmê biyanî wergirt kî ye?
+A) Carlos Saura B) Luis Buñuel C) Alejandro Amenábar D) Pedro Almodóvar
+✓ Pedro Almodóvar
+
+[cinema_0049] Sînema
+S: Dema ku kamera li ser rêyekê bi lîstikvanî re dilive, ev tevger çi tê navandin?
+A) Travelling B) Nêzîkkirina optîk C) Çerxa serdakî D) Çerxa berwarî
+✓ Travelling
+
+[cinema_0050] Sînema
+S: Derhênerê fîlmê 1979an "Stalker" ê ku li Yekîtiya Sovyetê hat kişandin kî ye?
+A) Sergey Parajanov B) Andrey Tarkovskî C) Elem Klimov D) Nikita Mihalkov
+✓ Andrey Tarkovskî
+
+[cinema_0051] Sînema
+S: Kîjan derhêner sala 2004an bi fîlmê "Gegen die Wand" li Berlînê Hirça Zêrîn wergirt?
+A) Ferzan Özpetek B) Thomas Arslan C) Yüksel Yavuz D) Fatîh Akin
+✓ Fatîh Akin
+
+[cinema_0052] Sînema
+S: Di zimanê Hitchcock de, tişta ku lehengan dide tevgerê lê bi xwe ne girîng e, çi tê navandin?
+A) Deus ex machina B) MacGuffin C) Vegera paşve D) Mîzansen
+✓ MacGuffin
+
+[cinema_0053] Sînema
+S: Palme d'Or a 1997an çû fîlmê "Ta'm-e Guilass"; ev berhem ya kîjan derhênerê îranî ye?
+A) Abbas Kiarostamî B) Asghar Ferhadî C) Macîd Macîdî D) Daryûş Mehrcûî
+✓ Abbas Kiarostamî
+
+[cinema_0054] Sînema
+S: Amûra "Kinetoscope" ku fîlm tenê ji bo temaşevanekî bi qulikekê nîşan dida, li kîjan laboratûvarê hat pêşxistin?
+A) Laboratûvara Lumière B) Laboratûvara Edison C) Stûdyoya Pathé D) Enstîtuya Marey
+✓ Laboratûvara Edison
+
+[cinema_0055] Sînema
+S: Fîlmê 1999an "Güneşe Yolculuk" ji kîjan derhênerî ye?
+A) Zekî Demîrkubuz B) Handan Îpekçî C) Serdar Akar D) Yeşîm Ustaoglu
+✓ Yeşîm Ustaoglu
+
+[tech_core_0001] Teknolojî
+S: Yek bayt ji çend bîtan pêk tê?
+A) 4 bît B) 6 bît C) 16 bît D) 8 bît
+✓ 8 bît
+
+[tech_core_0002] Teknolojî
+S: Kîjan parçeyê kompîterê fermanên bernameyan bi cih tîne û wek "mejî" tê nasîn?
+A) Pêvajoker (CPU) B) Dîska hişk C) Karta grafîkê D) Çavkaniya enerjiyê
+✓ Pêvajoker (CPU)
+
+[tech_core_0003] Teknolojî
+S: Gava ceryana kompîterê tê birîn, naveroka kîjan bîrê winda dibe?
+A) Dîska hişk B) Bîra SSD C) Bîra RAM D) Bîra USB
+✓ Bîra RAM
+
+[tech_core_0004] Teknolojî
+S: Kîjan yekîneya daneyê ji megabaytê mezintir e?
+A) Gîgabayt B) Kilobayt C) Bayt D) Bît
+✓ Gîgabayt
+
+[tech_core_0005] Teknolojî
+S: Windows, Linux û macOS mînakên kîjan cureyê nermalavê ne?
+A) Gerokên înternetê B) Bernameyên antîvîrus C) Zimanên bernamesaziyê D) Pergalên xebitandinê
+✓ Pergalên xebitandinê
+
+[tech_core_0006] Teknolojî
+S: Hejmara binary 1100 di pergala dehanî de dibe çi?
+A) 12 B) 6 C) 10 D) 14
+✓ 12
+
+[tech_core_0007] Teknolojî
+S: Taybetiya ku SSDyê ji dîska hişk a klasîk cuda dike çi ye?
+A) Bi dîskên zivirok ên magnetîk dixebite B) Gava ceryan biqete dane jê tên jêbirin C) Parçeyên wê yên tevger tune ne D) Tenê ji bo bernameyên grafîkê hatiye çêkirin
+✓ Parçeyên wê yên tevger tune ne
+
+[tech_core_0008] Teknolojî
+S: Bi sê bîtan çend nirxên cuda dikarin bên nîşandan?
+A) 8 B) 3 C) 6 D) 7
+✓ 8
+
+[tech_core_0009] Teknolojî
+S: Bîra cache ji bo çi tê bikaranîn?
+A) Ji bo hilanîna domdar a pelên mezin ên vîdyoyê B) Ji bo zelaltirkirina wêneyê ekranê C) Ji bo bêtêlkirina girêdana înternetê D) Ji bo gihandina zû ya daneyên pir tên xwestin
+✓ Ji bo gihandina zû ya daneyên pir tên xwestin
+
+[tech_core_0010] Teknolojî
+S: Pergala hexadecimal ji çend sembolên cuda pêk tê?
+A) 16 B) 8 C) 10 D) 32
+✓ 16
+
+[tech_core_0011] Teknolojî
+S: Kîjan amûr agahiyê dixe nav kompîterê?
+A) Çaper B) Klavye C) Bilindgoh D) Ekran
+✓ Klavye
+
+[tech_core_0012] Teknolojî
+S: Hejmara dehanî 13 di pergala binary de çawa tê nivîsandin?
+A) 1011 B) 1110 C) 1001 D) 1101
+✓ 1101
+
+[tech_core_0013] Teknolojî
+S: Têgeha "nermalav" çi vedibêje?
+A) Parçeyên fizîkî yên ku mirov dikare bi dest bigire B) Bername û fermanên ku li ser kompîterê dixebitin C) Kabloyên ku amûran bi hev ve girê didin D) Enerjiya elektrîkê ya ku kompîter dixwe
+✓ Bername û fermanên ku li ser kompîterê dixebitin
+
+[tech_core_0014] Teknolojî
+S: Kîjan bîr bi giranî tenê ji bo xwendinê ye û naveroka xwe bêyî ceryan diparêze?
+A) ROM B) RAM C) Cache D) Bîra virtual
+✓ ROM
+
+[tech_core_0015] Teknolojî
+S: Yekîneya gigahertz (GHz) di pêvajokeran de çi dipîve?
+A) Mezinahiya bîra hilanînê ya li ser dîska hişk B) Hejmara çerxên demjimêrê di çirkeyekê de C) Hejmara pelên vekirî D) Asta germahiya kompîterê
+✓ Hejmara çerxên demjimêrê di çirkeyekê de
+
+[tech_core_0016] Teknolojî
+S: Paşgira pelê (wek .txt an .jpg) bi giştî çi diyar dike?
+A) Mezinahiya pelê bi bayt, kilobayt an megabaytan B) Dîroka çêkirina pelê C) Cihê ku pel lê hatiye hilanîn D) Cureya naverokê û bernameya ku wê vedike
+✓ Cureya naverokê û bernameya ku wê vedike
+
+[tech_core_0017] Teknolojî
+S: Sedema sereke ya derbasbûna ji pergalên 32-bit bo 64-bit çi bû?
+A) Mezinkirina ekranan B) Bikaranîna bîreke sereke ya pir mezintir C) Kurtkirina kabloyan D) Piçûkkirina pelên nivîsê û belgeyên ofîsê
+✓ Bikaranîna bîreke sereke ya pir mezintir
+
+[tech_core_0018] Teknolojî
+S: Dema kompîter vedibe, kîjan nermalav berî pergala xebitandinê dixebite?
+A) Firmware (BIOS/UEFI) B) Geroka înternetê ya standard C) Bernameya antîvîrus D) Edîtora nivîsê
+✓ Firmware (BIOS/UEFI)
+
+[tech_core_0019] Teknolojî
+S: Nirxa dehanî ya hejmara binary 11111111 çi ye?
+A) 127 B) 255 C) 128 D) 254
+✓ 255
+
+[tech_core_0020] Teknolojî
+S: Erka sereke ya pergala DNSê çi ye?
+A) Pelên mezin şîfre dike B) Leza girêdanê zêde dike C) Navên malperan vediguherîne navnîşanên IPê D) E-nameyên nexwestî berî gihîştina qutîkê digire
+✓ Navên malperan vediguherîne navnîşanên IPê
+
+[tech_core_0021] Teknolojî
+S: HTTPS bi çi awayî ji HTTPê cuda dibe?
+A) Danûstandin bi şîfrekirinê tê parastin B) Rûpel zûtir tên barkirin C) Rûpel bêyî wêne tên nîşandan D) Tenê li ser têlefonan dixebite
+✓ Danûstandin bi şîfrekirinê tê parastin
+
+[tech_core_0022] Teknolojî
+S: Navnîşana IPê di torê de çi diyar dike?
+A) Cureya gerokê û pergala xebitandinê B) Leza girêdanê C) Nasnameya hejmarî ya amûrê D) Mezinahiya pelê
+✓ Nasnameya hejmarî ya amûrê
+
+[tech_core_0023] Teknolojî
+S: Bluetooth li gorî Wi-Fiyê bi giranî ji bo çi tê tercîhkirin?
+A) Ji bo veguhastina daneyan di navbera bajaran de B) Ji bo girêdana amûrên nêzîk bi enerjiyeke kêm C) Ji bo belavkirina înternetê li tevahiya avahiyê D) Ji bo girêdana serverên navneteweyî
+✓ Ji bo girêdana amûrên nêzîk bi enerjiyeke kêm
+
+[tech_core_0024] Teknolojî
+S: Koda 404 ya HTTPê çi tê wateyê?
+A) Server zêde bar girtiye B) Daxwaz bi serkeftî hat temamkirin C) Çavkanî li ser server nehat dîtin D) Bikarhêner xwedî destûr nîne
+✓ Çavkanî li ser server nehat dîtin
+
+[tech_core_0025] Teknolojî
+S: Kîjan protokol ji bo şandina e-nameyan tê bikaranîn?
+A) SMTP B) IMAP C) POP3 D) FTP
+✓ SMTP
+
+[tech_core_0026] Teknolojî
+S: Çerez (cookie) di gerokê de bi giranî ji bo çi tê bikaranîn?
+A) Ji bo zêdekirina leza pêvajoker B) Ji bo şîfrekirina trafîka ku di torê re derbas dibe C) Ji bo bîranîna rewşa bikarhêner D) Ji bo çapkirina rûpelan
+✓ Ji bo bîranîna rewşa bikarhêner
+
+[tech_core_0027] Teknolojî
+S: Erka router (rêker) di tora malê de çi ye?
+A) Daneyên amûrên li ser torê bi awayekî domdar hiltîne B) Trafîka navbera tora malê û derve birêve dibe C) Ekranê bi înternetê ve girê dide D) Ji bo bikarhêner şîfreyan çêdike
+✓ Trafîka navbera tora malê û derve birêve dibe
+
+[tech_core_0028] Teknolojî
+S: Cudahiya sereke ya di navbera TCP û UDPyê de çi ye?
+A) TCP tenê wêne, UDP tenê nivîs vediguhêze B) TCP bêtêl e, UDP bi kablo ye C) TCP gihandina rêzdar piştrast dike, UDP nake D) TCP şîfre dike, UDP navnîşan diguherîne
+✓ TCP gihandina rêzdar piştrast dike, UDP nake
+
+[tech_core_0029] Teknolojî
+S: Kîjan ziman avaniya rûpelên webê pênase dike?
+A) HTML B) CSS C) SQL D) Python
+✓ HTML
+
+[tech_core_0030] Teknolojî
+S: Navnîşaneke IPv4 ji çend bîtan pêk tê?
+A) 8 B) 32 C) 16 D) 128
+✓ 32
+
+[tech_core_0031] Teknolojî
+S: Di navnîşana e-nameyê de sembola @ çi ji hev vediqetîne?
+A) Sernav û naveroka nameyê B) Şîfre û navê bikarhêner C) Dîrok û demjimêra şandinê D) Navê bikarhêner û navê domainê
+✓ Navê bikarhêner û navê domainê
+
+[tech_core_0032] Teknolojî
+S: Gava navnîşanek di qada BCCyê de tê nivîsandin, çi diqewime?
+A) Name piştî demekê tê şandin B) Name bixweber tê şîfrekirin C) Wergirên din wê navnîşanê nabînin D) Name du caran tê şandin
+✓ Wergirên din wê navnîşanê nabînin
+
+[tech_core_0033] Teknolojî
+S: Li gorî bendika 5 GHz, bendika 2.4 GHz a Wi-Fiyê çi taybetî nîşan dide?
+A) Kêmtir dûr diçe lê zûtir e B) Tenê bi kabloyê dixebite C) Tenê ji bo çaperan hatiye çêkirin D) Dûrtir digihîje lê hêdîtir e
+✓ Dûrtir digihîje lê hêdîtir e
+
+[tech_core_0034] Teknolojî
+S: Modem di girêdana înternetê de çi dike?
+A) Şîfreyan diparêze B) Sînyalê ji formekê bo ya din vediguherîne C) Pelên bikarhêner li ser dîska xwe ya hundirîn tomar dike D) Rûpelan çap dike
+✓ Sînyalê ji formekê bo ya din vediguherîne
+
+[tech_core_0035] Teknolojî
+S: Têgeha "latency" di torê de çi dipîve?
+A) Hejmara amûrên girêdayî B) Mezinahiya giştî ya pelên hatine daxistin C) Hejmara malperên vekirî D) Dema ku dane heta bigihîje derbas dike
+✓ Dema ku dane heta bigihîje derbas dike
+
+[tech_core_0036] Teknolojî
+S: Di modela xerîdar-server de erka serverê çi ye?
+A) Ji malperên din re bi domdarî daxwazan dişîne B) Tenê wêneyan hilberîne C) Daxwazan werdigire û bersivê vedigerîne D) Kabloyên torê dirêj dike
+✓ Daxwazan werdigire û bersivê vedigerîne
+
+[tech_core_0037] Teknolojî
+S: Porta standard a trafîka HTTPSê kîjan e?
+A) 21 B) 80 C) 25 D) 443
+✓ 443
+
+[tech_core_0038] Teknolojî
+S: Piştrastkirina du gavî ewlehiyê çawa zêde dike?
+A) Şîfreyê dirêjtir dike B) Ji bilî şîfreyê belgeyeke duyem dixwaze C) Girêdanê zûtir dike D) E-nameyan bixweber şîfre dike
+✓ Ji bilî şîfreyê belgeyeke duyem dixwaze
+
+[tech_core_0039] Teknolojî
+S: Êrîşa phishing bi giranî çawa dixebite?
+A) Bi qutkirina ceryana serveran B) Bi bilindkirina germahiya pêvajoker C) Bi guhertina rengên malperê D) Bi peyamên sexte yên xwe wek çavkaniyeke pêbawer nîşandidin
+✓ Bi peyamên sexte yên xwe wek çavkaniyeke pêbawer nîşandidin
+
+[tech_core_0040] Teknolojî
+S: Kîjan taybetî şîfreyekê li hember texmînkirinê xurttir dike?
+A) Dirêjahiya zêde û tevliheviya karakteran B) Bikaranîna paşnavê malbatê C) Bikaranîna dîroka jidayikbûnê D) Bikaranîna heman şîfreyê li her malperê û hesabê
+✓ Dirêjahiya zêde û tevliheviya karakteran
+
+[tech_core_0041] Teknolojî
+S: Çima divê kopiyeke ewlehiyê li cihekî fizîkî yê din bê hilanîn?
+A) Ji ber ku wisa pel piçûktir dibin B) Ji ber ku wisa şîfre ne hewce ye C) Ji ber ku wisa înternet zûtir dibe D) Ji ber ku agir an dizî nikare her duyan bibe
+✓ Ji ber ku agir an dizî nikare her duyan bibe

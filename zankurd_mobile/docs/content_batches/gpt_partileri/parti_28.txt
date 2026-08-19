@@ -1,0 +1,351 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+63 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_cand_0228] Çand
+S: Di cejna Newrozê de, kîjan tişt bi gelemperî tê amadekirin?
+A) xwarinên sar B) xwarinên taybet C) xwarinên bêxwê D) xwarinên hişk
+✓ xwarinên taybet
+
+[ds_cand_0229] Çand
+S: Kîjan cejn bi gelemperî ji bo dawiya meha Remezanê tê pîrozkirin?
+A) Cejna Remezanê B) Cejna Qurbanê C) Newroz D) Sersal
+✓ Cejna Remezanê
+
+[ds_cand_0233] Çand
+S: Kîjan cejn bi gelemperî ji bo bîranîna îbrahîm pêxember tê pîrozkirin?
+A) Cejna Remezanê B) Newroz C) Sersal D) Cejna Qurbanê
+✓ Cejna Qurbanê
+
+[ds_cand_0237] Çand
+S: Kîjan cejn bi gelemperî ji bo destpêka biharê tê pîrozkirin?
+A) Newroz B) Cejna Remezanê C) Cejna Qurbanê D) Sersal
+✓ Newroz
+
+[ds_cand_0241] Çand
+S: Kîjan cejn bi gelemperî ji bo bîranîna bûyera qurbaniyê tê pîrozkirin?
+A) Cejna Qurbanê B) Cejna Remezanê C) Newroz D) Sersal
+✓ Cejna Qurbanê
+
+[ds_cand_0245] Çand
+S: Kîjan cejn bi gelemperî ji bo pîrozkirina rojiyê tê pîrozkirin?
+A) Cejna Qurbanê B) Cejna Remezanê C) Newroz D) Sersal
+✓ Cejna Remezanê
+
+[ds_cand_0230] Çand
+S: Di cejna Qurbanê de, kîjan heywan bi gelemperî tê serjêkirin?
+A) mirîşk B) pez C) masî D) ker
+✓ pez
+
+[ds_cand_0238] Çand
+S: Di cejna Qurbanê de, kîjan tişt bi gelemperî tê belavkirin?
+A) xurma B) nan C) goşt D) şîr
+✓ goşt
+
+[ds_cand_0246] Çand
+S: Di cejna Qurbanê de, kîjan kes bi gelemperî qurbanî dike?
+A) zarok B) serokê malê C) jin D) mêvan
+✓ serokê malê
+
+[ds_cand_0231] Çand
+S: Kîjan cejn bi gelemperî di dawiya meha Remezanê de tê pîrozkirin?
+A) Cejna Remezanê B) Cejna Qurbanê C) Newroz D) Sersal
+✓ Cejna Remezanê
+
+[ds_cand_0239] Çand
+S: Cejna Remezanê di kîjan meha kamerî de tê pîrozkirin?
+A) Meha Remezanê B) Meha Şewalê C) Meha Muherremê D) Meha Zîlhicceyê
+✓ Meha Şewalê
+
+[ds_cand_0243] Çand
+S: Kîjan cejn bi gelemperî di meha Zilhicceyê de tê pîrozkirin?
+A) Cejna Remezanê B) Newroz C) Cejna Qurbanê D) Sersal
+✓ Cejna Qurbanê
+
+[ds_cand_0247] Çand
+S: Kîjan cejn bi gelemperî di meha Şewalê de tê pîrozkirin?
+A) Cejna Qurbanê B) Newroz C) Sersal D) Cejna Remezanê
+✓ Cejna Remezanê
+
+[ds_cand_0232] Çand
+S: Di Newrozê de kîjan sê reng bi hev re tên bikaranîn?
+A) Reş, spî û gewr B) Sor, kesk û zer C) Şîn, mor û qehweyî D) Spî, şîn û pembe
+✓ Sor, kesk û zer
+
+[ds_cand_0234] Çand
+S: Di meha Remezanê de rojî bi gelemperî bi kîjan xwarinê tê vekirin?
+A) goşt B) xurma C) masî D) nan
+✓ xurma
+
+[ds_cand_0242] Çand
+S: Di cejna Remezanê de, kîjan tişt bi gelemperî tê dayîn?
+A) zekata fitreyê B) goşt C) nan D) şîr
+✓ zekata fitreyê
+
+[ds_cand_0240] Çand
+S: Di Newrozê de, kîjan tişt bi gelemperî tê vêxistin?
+A) av B) ax C) hewa D) agir
+✓ agir
+
+[ds_cand_0278] Çand
+S: Di çîroka kurdî ya "Zembîlfiroş" de, qehreman bi kîjan karî ve mijûl e?
+A) Firotina zembîlan B) Çêkirina xalîçeyan C) Ristina hiriyê D) Çandina genim
+✓ Firotina zembîlan
+
+[ds_cand_0280] Çand
+S: Di çîroka "Kawayê Hesinker" de, Kawa li dijî kîjan zordar serî hildide?
+A) Efrîdûn B) Dehak C) Cemşîd D) Rustem
+✓ Dehak
+
+[ds_cand_0296] Çand
+S: Di çîroka "Kawayê Hesinker" de, Kawa bi kîjan awayî serî hildide?
+A) Bi şûrê B) Bi kêrê C) Bi çakûçê D) Bi rimê
+✓ Bi çakûçê
+
+[ds_cand_0285] Çand
+S: Di "Mem û Zîn" de Zîn ji kê hez dike?
+A) Mem B) Zîn C) Beko D) Tacdîn
+✓ Mem
+
+[ds_cand_0297] Çand
+S: Di çîroka "Mem û Zîn" de, evîn bi kîjan awayî bi dawî dibe?
+A) Bi trajediyê B) Bi zewacê C) Bi hevberdanê D) Bi koçberiyê
+✓ Bi trajediyê
+
+[ds_edebiyat_0223] Edebiyat
+S: Kîjan nivîskarê nîjeryayî di sala 1986an de bû afrîkiyê yekem ê ku Xelata Nobelê ya Edebiyatê wergirt?
+A) Ben Okri B) Chimamanda Ngozi Adichie C) Ngũgĩ wa Thiong'o D) Wole Soyinka
+✓ Wole Soyinka
+
+[ds_muzik_0228] Muzîk
+S: Di kevneşopiya dengbêjiyê de cudahiya sereke ya di navbera "kilam" û "lawik" de ji aliyê mijar û rîtmê ve çi ye?
+A) Kilam tenê bi tembûrê tê gotin; lawik tenê bi def û zirneyê tê lêdan B) Kilam tenê ji bo zarokan e; lawik tenê di şîn û şînan de tê gotin C) Kilam bîra dîrokî û şeran bi şêwaza resîtatîf vedibêje; lawik stranên lîrîk ên evînê ne D) Kilam bi zimanê erebî ye; lawik tenê bi zaravayê goranî tê gotin
+✓ Kilam bîra dîrokî û şeran bi şêwaza resîtatîf vedibêje; lawik stranên lîrîk ên evînê ne
+
+[ds_muzik_0229] Muzîk
+S: Bandora sereke ya dîrokî ya beşa kurdî ya Radyoya Êrîvanê (1955) li ser bîra muzîka kurdî çi bû?
+A) Qeydkirina kilamên devkî bi orkestrasyonê û belavkirina wan a li seranserê herêmê B) Qedexekirina amûrên gelerî û tenê bikaranîna mûzîka klasîk a rûsî C) Tenê çêkirina operayên bi zimanê ermenkî li ser dîroka kevnar D) Rakirina kevneşopiya dengbêjiyê û anîna mûzîka elektronîk a rojavayî
+✓ Qeydkirina kilamên devkî bi orkestrasyonê û belavkirina wan a li seranserê herêmê
+
+[ds_muzik_0230] Muzîk
+S: Di vegotina dengbêjiyê de taybetmendiya sereke ya ku ekola "Serhedê" ji ekola "Botanê" cuda dike çi ye?
+A) Li Serhedê tenê amûra piyanoyê heye; li Botanê tenê gîtar tê bikaranîn B) Li Serhedê qêrîn û dengê girtî yê bilind serdest e; li Botanê melîzma û henas Control heye C) Li Serhedê stran tenê bi tirkî ne; li Botanê tenê bi farisî tên gotin D) Li Serhedê tenê jin dibêjin; li Botanê dengbêjî tenê ya mêran e
+✓ Li Serhedê qêrîn û dengê girtî yê bilind serdest e; li Botanê melîzma û henas Control heye
+
+[ds_muzik_0231] Muzîk
+S: Di mûzîka kurdî de amûra "şimşal"ê (bilûr) li gorî "duduk" an "mey"ê ji aliyê pêkhateya fîzîkî ve çawa tê cudakirin?
+A) Şimşal bi têlên hevrîşimê tê lêdan; mey ji çermê ajalan tê çêkirin B) Şimşal tenê di mûzîka dêrê de heye; mey amûra şerê kevnar e C) Şimşal amûreke bi bişkok e; mey mîna piyanoyê bi klavyeyê dixebite D) Şimşal ji lûleya metal an hestî ya bê zimanik e; mey xwedî qemîşekî duçipî yê fireh e
+✓ Şimşal ji lûleya metal an hestî ya bê zimanik e; mey xwedî qemîşekî duçipî yê fireh e
+
+[ds_muzik_0232] Muzîk
+S: Rîtma govendê ya "Şêxanî" di mûzîka kurdî de ji aliyê pîvana demê ve bi piranî li ser kîjan pîvanê ava dibe?
+A) Li ser pîvana yekreng a 2/4an a bê ti aksakî û rawestek B) Li ser pîvana polîrîtmîk a 13/16an a bê rawesteka navberê C) Li ser pîvana aksak a 6/8 an 10/8an bi rawestekên giraniyê D) Li ser pîvana valsê ya 3/4an a bê hestê govendê û xewle
+✓ Li ser pîvana aksak a 6/8 an 10/8an bi rawestekên giraniyê
+
+[ds_muzik_0233] Muzîk
+S: Di dîroka tomarkirina mûzîka kurdî de rola Meryem Xanê ya li Bexdayê (salên 1930î) çima wekî xaleke werçerxanê tê dîtin?
+A) Yekem jina ku li Zanîngeha Sorbonneyê beşa etnomuzîkê qedandiye B) Yekem kesa ku notayên stranên Botanê bi piyanoyê nivîsandine C) Yekem derhênera ku fîlmeke mûzîkal a li ser dengbêjiyê çêkiriye D) Yekem jina kurd e ku li ser plakên qewanê kilam û stranên kurdî tomar kirine
+✓ Yekem jina kurd e ku li ser plakên qewanê kilam û stranên kurdî tomar kirine
+
+[ds_muzik_0234] Muzîk
+S: Di mûzîka Êzdiyan de rola "Qewl" û "Qewlvan" ji kilamên dengbêjiyê yên klasîk bi çi awayî cuda dibe?
+A) Qewl tenê stranên şahiyan e û di govendê de bi def û zirneyê têne qîrîn B) Qewl metnên pîroz ên dînî ne û bi amûrên def û şibabê bi awayekî ayînî tên xwendin C) Qewl tenê helbestên nivîskî yên li ser evîndariya nûjen in D) Qewl bi zimanê latînî tên xwendin û di nav gel de nayên zanîn
+✓ Qewl metnên pîroz ên dînî ne û bi amûrên def û şibabê bi awayekî ayînî tên xwendin
+
+[ds_muzik_0235] Muzîk
+S: Amûra "Def" (Erbene) di ayînên terîqetên Qadirî û Rifaî de çima zincîrên biçûk (xilxal) li hundirê xwe digire?
+A) Ji bo ku giraniya amûrê kêm bike û girtina wê hêsantir bibe B) Ji bo ku çermê defê ji şilbûnê û ziwabûnê biparêze C) Ji bo ku dengê defê kêm bike da ku kes nebihîze D) Ji bo ku di dema lêdanê de dengê şirîn û şerqînekê bide û atmosferê zindî bike
+✓ Ji bo ku di dema lêdanê de dengê şirîn û şerqînekê bide û atmosferê zindî bike
+
+[ds_muzik_0236] Muzîk
+S: Sedema sereke ya ku Şakiro di nav dengbêjan de bi navê "Kewê Ribat" tê nasîn çi bû?
+A) Ji ber ku her tim bi tembûra sê-têlî kilamên xwe digot B) Ji ber ku pirtûka yekem a li ser dengbêjiyê wî çap kiribû C) Dengê wî yê zîz, dirêjkişandina nefesê û motîfên xurt ên xwendina kilamê D) Ji ber ku li seranserê cîhanê tenê bi şev kilam digot
+✓ Dengê wî yê zîz, dirêjkişandina nefesê û motîfên xurt ên xwendina kilamê
+
+[ds_muzik_0237] Muzîk
+S: Rêzbûna dîrokî ya stasyonên radyoyê yên ku mûzîka kurdî weşandine di kîjan vebijêrkê de rast e?
+A) Radyoya Êrîvanê (1955) -> Radyoya Bexdayê (1939) -> Radyoya Kirmaşanê (1960) B) Radyoya Kirmaşanê (1960) -> Radyoya Êrîvanê (1955) -> Radyoya Bexdayê (1939) C) Radyoya Bexdayê (1939) -> Radyoya Kirmaşanê (1960) -> Radyoya Êrîvanê (1955) D) Radyoya Bexdayê (1939) -> Radyoya Êrîvanê (1955) -> Radyoya Kirmaşanê (1960)
+✓ Radyoya Bexdayê (1939) -> Radyoya Êrîvanê (1955) -> Radyoya Kirmaşanê (1960)
+
+[ds_muzik_0238] Muzîk
+S: Di mûzîka kurdî de kîjan ji van taybetmendiyan nîşan dide ku sîstema makamî ji ya klasîk a rojavayî cuda ye?
+A) Tenê bikaranîna pîvana 4/4an û nebûna tu cureyên guherîna deng B) Bikaranîna dengên navber (koma/mîkrotonal) li ser teşeyên herêmî û melodiyên azad C) Nivîsandina hemû berheman tenê li ser notaya piyanoya klasîk D) Qedexebûna dengê mirov û tenê bikaranîna amûrên bîflûtê
+✓ Bikaranîna dengên navber (koma/mîkrotonal) li ser teşeyên herêmî û melodiyên azad
+
+[ds_muzik_0239] Muzîk
+S: Destana "Memê Alan" di kevneşopiya dengbêjiyê de ji kilamên şer ên wekî "Derwêşê Evdî" bi kîjan aliyê xwe vediqete?
+A) Memê Alan tenê bi defê tê gotin; Derwêşê Evdî tenê bi kemançeyê tê lêdan B) Memê Alan bi zimanê erebî ye; Derwêşê Evdî tenê bi zimanê farisî ye C) Memê Alan tenê ji bo zarokan e; Derwêşê Evdî straneke govendê ye D) Memê Alan çîrok û destana mîtolojîk e; Derwêşê Evdî li ser bûyereke dîrokî û eşîrî ye
+✓ Memê Alan çîrok û destana mîtolojîk e; Derwêşê Evdî li ser bûyereke dîrokî û eşîrî ye
+
+[ds_muzik_0240] Muzîk
+S: Dengbêj di nav civaka kurd a beriya sedsala 20an de ji bilî mûzîkê kîjan rola sereke ya civakî dilîstin?
+A) Bîra devkî ya dîrokê, nûçegihanî di navbera herêman de û parastina ziman B) Tenê bazirganiya hespan û firotina xalîçeyên herêmî li bazaran C) Birêvebirina artêşên leşkerî û çêkirina çekên hesinî D) Nivîsandina qanûnên dadgehên fermî yên dewletên mezin
+✓ Bîra devkî ya dîrokê, nûçegihanî di navbera herêman de û parastina ziman
+
+[ds_muzik_0241] Muzîk
+S: Di salên 1990î de bandora koman ên wekî "Koma Dengê Azadî" û "Koma Amed" li ser mûzîka nûjen a kurdî çi bû?
+A) Rakirina zimanê kurdî û tenê gotina stranên îngilîzî B) Qedexekirina tembûrê û tenê bikaranîna mûzîka elektronîk a bê peyv C) Tenê xwendina metnên dînî yên serdema navîn li mizgeftan D) Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re
+✓ Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re
+
+[ds_muzik_0242] Muzîk
+S: Di Radyoya Êrîvanê de kîjan hunermend wekî amûrjenê "mey û bilûrê" tê naskirin, ne wekî dengbêj?
+A) Egîdê Cimo B) Karapêtê Xaço C) Aram Tîgran D) Şeroyê Biro
+✓ Egîdê Cimo
+
+[ds_muzik_0243] Muzîk
+S: Taybetmendiya mûzîkal a sereke ya Aram Tîgran a ku di nava mûzîka kurdî de cihekî cuda dide wî çi ye?
+A) Tenê gotina stranên bê amûr bi dengê bilind li serê çiyayan B) Bikaranîna piyanoyê wekî tekane amûra di hemû stranên xwe de C) Stranbêjiya bi amûra ûdê û yekkirina çandên ermenî, kurdî û asûrî D) Çêkirina tenê stranên marşî yên leşkerî bê melodiyên lîrîk
+✓ Stranbêjiya bi amûra ûdê û yekkirina çandên ermenî, kurdî û asûrî
+
+[ds_muzik_0244] Muzîk
+S: Cureya strana lîrîk a bi navê "Heyranok" bi taybetî aîdî kîjan herêma Kurdistanê ye?
+A) Herêma Colemêrg û Behdînanê B) Herêma Efrîn û Helebê C) Herêma Qers û Erzeromê D) Herêma Kirmaşan û Îlamê
+✓ Herêma Colemêrg û Behdînanê
+
+[ds_muzik_0245] Muzîk
+S: Di salên 1970 û 1980î de şêwaza mûzîkî ya Şivan Perwer çima di nava civakê de bû sedema werçerxanekê?
+A) Mûzîka caz a amerîkî wergerand kurdî û tenê bi saksafonê lê da B) Tenê stranên dînî li dêrên Ewropayê got û ji polîtîkayê dûr ma C) Hemû amûrên têlî red kirin û tenê bi defê konseran da D) Kilamên kevneşopî bi tembûrê re bi awayekî şoreşgerî û polîtîk ji nû ve ava kir
+✓ Kilamên kevneşopî bi tembûrê re bi awayekî şoreşgerî û polîtîk ji nû ve ava kir
+
+[ds_muzik_0246] Muzîk
+S: Di nav cureyên strana kurdî de "Payîzok" di kîjan demsalê û li ser kîjan mijarê tê gotin?
+A) Di payîzê de dema vegera ji zozanan li ser xatirxwestin û xemgîniyê B) Di biharê de di dema Newrozê de tenê ji bo govendên lezgîn C) Di havînê de di dema çinîna genim de wekî strana şahiyê D) Di zivistanê de tenê di dema nêçîra berfê de bi qêrîn
+✓ Di payîzê de dema vegera ji zozanan li ser xatirxwestin û xemgîniyê
+
+[ds_muzik_0247] Muzîk
+S: Cureya mûzîkê ya bi navê "Siyaçeman" a li herêma Hewramanê bi kîjan taybetmendiya xwe ya dengî tê naskirin?
+A) Bi orkestraya senfonîk a mezin a bi kemanên klasîk B) Tenê bi gîtara elektronîk û rîtmên rojavayî C) Bi şêwaza zîz a gelerî ya ji qirikê û bê amûr di nav çiyayan de D) Bi koro û dengên zarokan ên bi awayê sirûdê
+✓ Bi şêwaza zîz a gelerî ya ji qirikê û bê amûr di nav çiyayan de
+
+[ds_muzik_0248] Muzîk
+S: Taybetmendiya sereke ya stranên Mihemed Şêxo ya ku wî li Rojavayê Kurdistanê kir sembol çi bû?
+A) Yekkirina helbestên neteweyî yên Cegerxwîn bi melodiyên xemgîn ên tembûrê re B) Tenê çêkirina mûzîka dansê ya ji bo şahiyên dewlemendan C) Bikaranîna teknolojiya dîjîtal a kompîturê di salên pêncîyan de D) Wergerandina stranên pop ên fransî bo zaravayê soranî
+✓ Yekkirina helbestên neteweyî yên Cegerxwîn bi melodiyên xemgîn ên tembûrê re
+
+[ds_muzik_0249] Muzîk
+S: Karapêtê Xaço di dîroka dengbêjiya kurdî de çima wekî pireke çandî ya bêhempa tê hesibandin?
+A) Yekem kes bû ku kilamên kurdî li Amerîkayê di pirtûkxaneyekê de çap kir B) Tenê li ser zimanê rûsî berhemên folklorîk nivîsandin C) Hostayê yekem ê çêkirina tembûrên elektronîk bû li Ewropayê D) Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parast
+✓ Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parast
+
+[ds_muzik_0250] Muzîk
+S: Di mûzîka gelêrî ya kurdî de strana bi navê "Narînk" di kîjan qonaxa jiyanê de tê gotin?
+A) Di dema birina bûkê û dawetan de ji aliyê jinan ve B) Di dema şînê de ji bo kesên ku di şer de mirine C) Di dema çinîna zeviyan de ji aliyê mêran ve D) Di dema nêçîra li çiyayan de ji bo nîşandana rê
+✓ Di dema birina bûkê û dawetan de ji aliyê jinan ve
+
+[ds_muzik_0251] Muzîk
+S: Stranên bi navê "Kilamên Kar" (wekî stranên teşîristinê û bîrê) di çanda jinên kurd de çi armancê pêk tînin?
+A) Tenê ji bo ragihandina nûçeyên şer di navbera eşîran de B) Sivikkirina giraniya karê rojane bi hevahengiya rîtmîk a tevgeran re C) Ji bo fêrkirina zimanên biyanî ji zarokên gund re D) Wekî qanûnên fermî yên ji bo firotina berhemên çandiniyê
+✓ Sivikkirina giraniya karê rojane bi hevahengiya rîtmîk a tevgeran re
+
+[ds_muzik_0252] Muzîk
+S: Kîjan ji van rêzbûnan serdema dengbêjên navdar ên Serhedê ji ya herî kevn ber bi ya nûtir rast nîşan dide?
+A) Şakiro -> Evdalê Zeynikê -> Reso B) Reso -> Şakiro -> Evdalê Zeynikê C) Şakiro -> Reso -> Evdalê Zeynikê D) Evdalê Zeynikê -> Reso -> Şakiro
+✓ Evdalê Zeynikê -> Reso -> Şakiro
+
+[ds_muzik_0253] Muzîk
+S: Di destan û kilamên Evdalê Zeynikê de motîfa "Quling" (Turna) çi sembolîze dike?
+A) Tenê nêçîra goşt di dema birçîbûnê de li deşta Rewanê B) Peyamnêriya di navbera warên dûr de, azadî û xemgîniya dilê dengbêj C) Şerê di navbera împaratoriyan de û qedexeya bazirganiyê D) Dewlemendiya feodalîzmê û zêrên mîran ên li qesran
+✓ Peyamnêriya di navbera warên dûr de, azadî û xemgîniya dilê dengbêj
+
+[ds_muzik_0254] Muzîk
+S: Di mûzîka gelerî de cudahiya bikaranîna "Dohol û Zirne" li gorî "Tembûr"ê di kîjan qadê de diyar dibe?
+A) Dohol û zirne ji bo qadên vekirî û govendê ye; tembûr ji bo civatên girtî û guhdarîkirinê ye B) Dohol tenê di şînan de tê lêdan; tembûr tenê di govendên lezgîn de ye C) Dohol ji aliyê jinan ve tê lêdan; tembûr tenê ji bo leşkeran e D) Dohol bi elektrîkê dixebite; tembûr amûreke bê deng e
+✓ Dohol û zirne ji bo qadên vekirî û govendê ye; tembûr ji bo civatên girtî û guhdarîkirinê ye
+
+[ds_muzik_0255] Muzîk
+S: Taybetmendiya bêhempa ya Hesen Zîrek di mûzîka kurdî (beşa Rojhilat û Başûr) de çi bû?
+A) Tenê xwendina notayên klasîk ên rojavayî li Radyoya Londonê B) Bêhejmar stran bi afirandina melodî û helbestên serbixwe yên di heman kêliyê de (bê amadekarî) C) Tenê çêkirina stranên bi zimanê îngilîzî ji bo sînemaya Hollywoodê D) Bikaranîna tenê piyanoyê di hemû qeydên xwe yên li Silêmaniyê de
+✓ Bêhejmar stran bi afirandina melodî û helbestên serbixwe yên di heman kêliyê de (bê amadekarî)
+
+[ds_muzik_0256] Muzîk
+S: Avakirina "Mala Dengbêjan" li Amedê (2007) çi bandor li ser parastina mûzîka devkî kir?
+A) Qedexekirina hemû tomarkirinên dengî û vegerandina sîstema kevn B) Tenê perwerdekirina lîstikvanên fîlmên sînemayê yên rojavayî C) Girtina hemû qadên govendê li seranserê herêmê D) Dengbêjî ji civatên gundewar derxist û kire mîrateyeke çandî ya fermî û tomarkirî
+✓ Dengbêjî ji civatên gundewar derxist û kire mîrateyeke çandî ya fermî û tomarkirî
+
+[ds_muzik_0257] Muzîk
+S: Di mûzîka kurdî ya klasîk a herêma Urmiye û Şino de, şêwaza "Beyt" çawa tê vegotin?
+A) Tenê bi gîtara spanî û bê ti vegotina çîrokê B) Bi amûra tembûra sê-têlî û li ser çîrokên evînî û lehengiyê bi rîtma taybet C) Bi orkestraya boriyên hesinî ya bê peyv D) Tenê di dema maçên werzişê de wekî sirûda klûban
+✓ Bi amûra tembûra sê-têlî û li ser çîrokên evînî û lehengiyê bi rîtma taybet
+
+[ds_muzik_0258] Muzîk
+S: Ciwan Haco di salên 1980 û 1990î de bi albûmên mîna "Gula Sor" û "Dûrî" çi nûbûn anî mûzîka kurdî?
+A) Yekkirina helbestên kurdî bi şêwazên Rock, Pop û Jazz ên nûjen re B) Tenê gotina kilamên dengbêjiyê bi şêwaza bê amûr a sedsala 18an C) Qedexekirina amûrên rojavayî û tenê lêdana zirneyê D) Gotina stranên kurdî bi rîtma klasîk a koro ya dêrê
+✓ Yekkirina helbestên kurdî bi şêwazên Rock, Pop û Jazz ên nûjen re
+
+[ds_sinema_0250] Sînema
+S: Di fîlma "Umut" (1970) a "Yılmaz Güney" de, hêmana ku wê ji sînemaya Yeşilçamê ya serdema xwe cuda dike çi ye?
+A) Tenê bikaranîna kamerayên rengîn û bandorên taybet ên teknolojîk B) Li şûna çîrokên melodramatîk ên xeyalî, realîzma civakî ya xizanî û bêçaretiyê nîşan dide C) Kişandina hemû dîmenan li welatên Ewropayê bi lîstikvanên biyanî D) Çêkirina fîlmeke komedî ya xwerû ya ji bo şahiya malbatê
+✓ Li şûna çîrokên melodramatîk ên xeyalî, realîzma civakî ya xizanî û bêçaretiyê nîşan dide
+
+[ds_sinema_0251] Sînema
+S: Fîlma "Yol" di sala 1982an de dema ku Xelata Palmiyeya Zêrîn a Cannesê wergirt, çima ji aliyê derhêneriyê ve bûyereke bêhempa bû?
+A) Fîlma yekem bû ku bi tevahî bi zimanê îngilîzî li Amerîkayê hate çêkirin B) Tenê bi alîkariya mûzîkjenên operaya Parîsê hate amadekirin C) Yekem fîlm bû ku hemû lîstikvanên wê xelatên şexsî yên Cannesê girtin D) Senaryo û derhêneriya wê di girtîgehê de ji aliyê Yılmaz Güney ve hate xêzkirin û bi rêya Şerif Gören hate kişandin
+✓ Senaryo û derhêneriya wê di girtîgehê de ji aliyê Yılmaz Güney ve hate xêzkirin û bi rêya Şerif Gören hate kişandin
+
+[ds_sinema_0252] Sînema
+S: Di fîlma "Dema Hespên Serxweş" de metafora "serxweşkirina hespan bi meyê" ji aliyê sînemayî ve çi nîşan dide?
+A) Kêfxweşî û cejnek gundewarî ya salane ya li herêma Hewramanê B) Zehmetiya giran a sirûştê û zordariya sînor a ku heywanan jî neçarî serxweşiyê dike ji bo karibin bar bibin C) Nîşandana bazirganiya dewlemend a hespên nijdî li bazara navneteweyî D) Teknîkeke werzîşî ya ji bo bezandina hespan di pêşbirkên herêmî de
+✓ Zehmetiya giran a sirûştê û zordariya sînor a ku heywanan jî neçarî serxweşiyê dike ji bo karibin bar bibin
+
+[ds_sinema_0253] Sînema
+S: Di fîlma "My Sweet Pepper Land" (2013) a Hiner Saleem de, kîjan şêwaza sînemayê bi erdnîgariya Kurdistanê re hatiye lihevanîn?
+A) Şêwaza Western a nûjen bi mijara desthilata qanûnê û têkoşîna jinekê re B) Şêwaza fîlmên tirsnak ên gotîk ên sedsala 19an C) Mûzîkala klasîk a Hollywoodê ya bi dansên komî D) Sînemaya belgefîlmê ya zanistî ya li ser feleknasiyê
+✓ Şêwaza Western a nûjen bi mijara desthilata qanûnê û têkoşîna jinekê re
+
+[ds_sinema_0254] Sînema
+S: Fîlma "Bahoz" (Fırtına, 2008) a "Kazım Öz" li ser kîjan rastiya civakî ya salên 1990î disekine?
+A) Jiyana gundiyên ku tenê bi masîvaniyê re mijûl dibin li Deryaya Reş B) Têkoşîna nasnameyê û polîtîkîbûna xwendekarên zanîngehê yên kurd li Stenbolê C) Dîroka şerê Çanakkaleyê di sala 1915an de D) Pêşketina karsazên mezin di qada bazirganiya otomobîlan de
+✓ Têkoşîna nasnameyê û polîtîkîbûna xwendekarên zanîngehê yên kurd li Stenbolê
+
+[ds_sinema_0255] Sînema
+S: Sînemaya "Ali Kemal Çınar" (mînak: Veşartî, Gênco) di nav sînemaya kurdî de bi kîjan zimanê şêwazî tê naskirin?
+A) Fîlmên bi budçeyên mîlyon dolarî yên bi efektên şer ên giran B) Belgefîlmên dîrokî yên li ser serdema împaratoriyên kevnar C) Fîlmên anîmasyonê yên sê-dîmenî yên ji bo zarokan D) Minimalîzma li malê, mîzaha absurd û hêmanên fantastîk ên li nav jiyana rojane
+✓ Minimalîzma li malê, mîzaha absurd û hêmanên fantastîk ên li nav jiyana rojane
+
+[ds_sinema_0256] Sînema
+S: Di fîlma "Bêkes" (2012) a Karzan Kader de, motîvasyona sereke ya du birayên êtîm çi ye?
+A) Ji bo dîtina xezîneyeke zêr di nav kelheyeke kevn de digerin B) Ji bo dîtina lehengê xwe Superman û rizgarbûnê dixwazin biçin Amerîkayê C) Dixwazin bibin efserên leşkerî di artêşa herêmî de D) Ji bo fêrbûna zimanê çînî dixwazin biçin Asyayê
+✓ Ji bo dîtina lehengê xwe Superman û rizgarbûnê dixwazin biçin Amerîkayê
+
+[ds_sinema_0257] Sînema
+S: Di fîlma "Kirasê Reş" û fîlmên li ser karesata Helebceyê de, kîjan dîmen wekî sembola gerdûnî ya êşê tê bikaranîn?
+A) Dîmena bavê ku zaroka xwe hembêz kiriye û li ber derî jiyana xwe ji dest daye (Umerê Xawer) B) Dîmena govendeke şahiyê ya li ber kela Hewlêrê bi defê C) Dîmena firotina otomobîlan li kolanên Bexdayê di nîvê rojê de D) Dîmena rêwîtiya bi keştiyê ya li ser Deryaya Spî
+✓ Dîmena bavê ku zaroka xwe hembêz kiriye û li ber derî jiyana xwe ji dest daye (Umerê Xawer)
+
+[ds_sinema_0258] Sînema
+S: Fîlma "Min Dît" (2009) a Miraz Bezar kîjan xelata dîrokî li Festîvala Fîlman a Porteqala Zêrîn a Antalyayê girt?
+A) Xelata yekem a ji bo fîlmên anîmasyona komputerê wergirt B) Yekem fîlma bi kurdî bû ku xelatên sereke yên juriyê û lîstikvaniyê wergirt C) Xelata fîlma herî kurt a bê peyv wergirt D) Xelata mûzîkala klasîk a bi zimanê îtalî wergirt
+✓ Yekem fîlma bi kurdî bû ku xelatên sereke yên juriyê û lîstikvaniyê wergirt

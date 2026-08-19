@@ -1,0 +1,356 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+64 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[offline_9473] Edebiyat
+S: "Arabê Şamo" di mijara wêjeyê de çi vedibêje?
+A) nivîskar û ramanwerê navdar ê berhema Mem û Zîn B) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî C) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn D) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+✓ nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+
+[offline_9474] Edebiyat
+S: Der barê "Abdulla Goran" de ji bo wêjeyê bijardeya rast kîjan e?
+A) yek ji şanonivîsên damezrîner ên şanoya kurdî B) pêşengê nûjenbûnê di helbesta kurdî ya soranî de C) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin D) belavbûna alfabeya kurdî ya bi bingehê latînî
+✓ pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+
+[offline_9529] Edebiyat
+S: Kîjan têgeha "Şivanê Kurd" di nav wêjeyê de rast bi cih dike?
+A) destana evînê ya herî mezin a wêjeya klasîk a kurdî B) helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye C) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê D) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+✓ yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+
+[offline_9552] Edebiyat
+S: Di zanîna wêjeyê de der barê "Masture Erdelan" de ya rast kîjan e?
+A) yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne C) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî D) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+✓ yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî
+
+[offline_9579] Edebiyat
+S: "Ferhad û Şîrîn" di mijara wêjeyê de çi vedibêje?
+A) destana şer a li ser mîrektiyên kurdan B) berhevoka gotinên pêşiyan a ku ji devkî hat nivîsandin C) lîstika şanoyî ya yekem a bi kurmancî D) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
+✓ çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
+
+[offline_9594] Edebiyat
+S: Kîjan têgiha "Nûbihara Biçukan" rast şirove dike?
+A) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan B) mesnewiya evînê ya klasîk a Ehmedê Xanî C) berhevoka helbestên sofîyane yên Melayê Cizîrî D) destana gelêrî ya li ser Memê Alan
+✓ ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+
+[offline_9612] Edebiyat
+S: Têgiha "kafiye" çi pêk tîne?
+A) pîvana kîteyên rêzikê B) lihevhatina dengên dawiya rêzikan C) ramana sereke ya helbestê D) dubarekirina peyvekê di destpêkê de
+✓ lihevhatina dengên dawiya rêzikan
+
+[offline_9623] Edebiyat
+S: Derbarê "tema" de vebijêrka rast kîjan e?
+A) bûyera sereke ya vegotinê B) kesayeta sereke ya çîrokê C) cihê ku bûyer diqewime D) ramana sereke ya berhemê
+✓ ramana sereke ya berhemê
+
+[offline_9625] Edebiyat
+S: "Osman Sabri" wek kî tê naskirin?
+A) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê B) nîşandana nirxa ziman û yekîtiya kurdî C) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne D) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+✓ yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+
+[offline_9668] Edebiyat
+S: Kîjan li gorî pênaseya "destana Dewrêşê Evdî" ye?
+A) yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî B) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin C) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+✓ yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
+
+[offline_9716] Edebiyat
+S: Derbarê "Hêmin Mukriyanî" de ya rast kîjan e?
+A) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist B) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê C) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire D) damezrîner û pêşengê romana kurdî ya nûjen
+✓ helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+
+[offline_9724] Edebiyat
+S: Ji bo "Ekola Hawarê" ravekirina herî dirust kîjan e?
+A) dibistana helbesta klasîk a ku li Babanê geş bû B) tevgera romannivîsiyê ya ku li Erîvanê pêk hat C) tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir D) ekola ramanî ya ku Ehmedê Xanî dest pê kir
+✓ tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir
+
+[offline_9730] Edebiyat
+S: Di zanîna wêjeyê de der barê "Şêrko Bêkes" de ya rast kîjan e?
+A) helbestvanê klasîk ê dîwana Babanê B) romannivîsê yekem ê kurdî yê nûjen C) damezrînerê kovara Hawarê D) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+✓ pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+
+[offline_9749] Edebiyat
+S: Ji bo Edebiyatê derbarê "Qanadê Kurdo" de vebijêrka rast kîjan e?
+A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen B) ji ber ku xebatên ziman û alfabeyê belav kir C) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+✓ akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
+
+[offline_9754] Edebiyat
+S: Berhema bi navê "Şivanê Kurmanca" çi ye?
+A) yekem berhevoka çîrokên kurdî ya ku di 1913an de derket B) destana gelêrî ya ku di 1898an de hat tomarkirin C) ferhenga kurdî-erebî ya ku di 1683an de hat nivîsandin D) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+✓ yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+
+[offline_9778] Edebiyat
+S: Di zanîna Edebiyatê de derbarê "Nalî" de ya rast kîjan e?
+A) damezrînerê ekola wêjeyî ya kovara Hawarê B) nivîskarê yekem romana kurdî ya nûjen C) yek ji helbestvanên sereke yên dibistana klasîk a Babanê D) zimannasê ku rêzimana kurmancî nivîsî
+✓ yek ji helbestvanên sereke yên dibistana klasîk a Babanê
+
+[offline_9918] Edebiyat
+S: Kîjan têgeha "Evdirehîm Rehmî Hekarî" di nav wêjeyê de rast bi cih dike?
+A) nîşandana nirxa ziman û yekîtiya kurdî B) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist C) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya D) yek ji şanonivîsên damezrîner ên şanoya kurdî
+✓ yek ji şanonivîsên damezrîner ên şanoya kurdî
+
+[offline_9936] Edebiyat
+S: Ji bo Edebiyatê derbarê "Qedrîcan" de vebijêrka rast kîjan e?
+A) nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye B) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî C) ji ber ku xebatên ziman û alfabeyê belav kir D) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
+✓ nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye
+
+[offline_9942] Edebiyat
+S: "Pertew Begê Hkarî" bi kîjan aliyê xwe ve tê nasîn?
+A) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne C) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû D) ji ber ku gelek nivîskar li derveyî welêt berhem didin
+✓ helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
+
+[offline_9950] Edebiyat
+S: Di dîrokê de "Melayê Bateyî" kî ye?
+A) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca B) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî C) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî D) belavbûna alfabeya kurdî ya bi bingehê latînî
+✓ helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+
+[offline_9953] Edebiyat
+S: Harisê Bidlîsî kî ye?
+A) çîrok, destan û vegotinên dengbêjan B) nivîskar û ramanwerê navdar ê berhema Mem û Zîn C) yek ji şanonivîsên damezrîner ên şanoya kurdî D) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+✓ helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+
+[offline_10002] Edebiyat
+S: "Kamuran Bedirxan" tê çi wateyê?
+A) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî C) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite D) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire
+✓ zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+
+[offline_10045] Edebiyat
+S: Der barê "Melayê Cizîrî" de ji bo wêjeyê bijardeya rast kîjan e?
+A) vegotina devkî û veguhastina çîroka bi avaz B) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî C) belavbûna alfabeya kurdî ya bi bingehê latînî D) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
+✓ helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+
+[offline_10071] Edebiyat
+S: Ji aliyê Edebiyatê ve ji bo "Elî Herîrî" îfadeya rast kîjan e?
+A) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî C) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+✓ yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
+
+[offline_10074] Edebiyat
+S: Ji aliyê wêjeyê ve ji bo "Dîwana Melayê Cizîrî" gotina rast kîjan e?
+A) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne B) mesnewiya evînê ya ku Ehmedê Xanî nivîsandiye C) berhevoka çîrokên gelêrî yên herêma Botanê D) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+✓ dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+
+[offline_10104] Edebiyat
+S: "Yaşar Kemal" çi îfade dike?
+A) romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin B) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû C) ji ber ku gelek nivîskar li derveyî welêt berhem didin D) damezrîner û pêşengê romana kurdî ya nûjen
+✓ romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin
+
+[offline_10228] Edebiyat
+S: "destan" çawa divê bê fêmkirin?
+A) helbesta klasîk a kurdî B) xwendekarê medreseyê / feqî C) helbesta tesewufî (dîwan) D) vegotina lehengiyê
+✓ vegotina lehengiyê
+
+[offline_10237] Edebiyat
+S: Peyva "helbest" bi Tirkî çi tê gotin?
+A) şiir B) roman C) deneme D) oyun
+✓ şiir
+
+[offline_10314] Muzîk
+S: Bi "awazên Serhedê" çi tê xwestin?
+A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê B) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+✓ şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+
+[offline_10320] Muzîk
+S: Li jêr ji bo "dibistana dengbêjiyê" kîjan rast e?
+A) veguhastina muzîkal a bi têkiliya hoste-şagird B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin C) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin D) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+✓ veguhastina muzîkal a bi têkiliya hoste-şagird
+
+[offline_10333] Muzîk
+S: Kîjan vebijêrk tê wateya "zurna"?
+A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide D) stranbêjî an lêxistina bi tenê ya hunermendekî
+✓ amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+
+[offline_10344] Muzîk
+S: Koma Kardeş Türküler çi ye?
+A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan B) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman C) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike D) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+✓ koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+
+[offline_10372] Muzîk
+S: Derbarê "melodî" de vebijêrka rast kîjan e?
+A) awayê stranbêjiya bi kom B) avaza ku ji rêzbûna dengan pêk tê C) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+✓ avaza ku ji rêzbûna dengan pêk tê
+
+[offline_10379] Muzîk
+S: Bi "makam" çi tê xwestin?
+A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin B) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike C) hunermendê ku bayê rock û caz anî muzîka kurdî D) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+✓ pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+
+[offline_10423] Muzîk
+S: Derbarê "tembûr" de vebijêrka rast kîjan e?
+A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê B) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin C) amûra pifê ya bidengê bilind a ku li derve tê lêxistin D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+✓ sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
+
+[offline_10427] Muzîk
+S: Bi "hîran" çi tê xwestin?
+A) lêdanên birêkûpêk ên ku bingeha muzîkê ne B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin C) şêwazeke din a avazê di muzîka gelêrî ya kurdî de D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+✓ şêwazeke din a avazê di muzîka gelêrî ya kurdî de
+
+[offline_10433] Muzîk
+S: Li jêr ji bo "Aram Tigran" kîjan rast e?
+A) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+✓ muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+
+[offline_10463] Muzîk
+S: Kîjan vebijêrk tê wateya "lawik"?
+A) cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin B) hunermendê ku bayê rock û caz anî muzîka kurdî C) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e D) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
+✓ cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin
+
+[offline_10480] Muzîk
+S: Dema "awazên Botanê" tê gotin, çi tê xwestin?
+A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin B) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin C) hunermendê ku bayê rock û caz anî muzîka kurdî D) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+✓ muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+
+[offline_10498] Muzîk
+S: Kîjan di Muzîkê de têgiha "Koma Amed" rast bi cih dike?
+A) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin B) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin C) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+✓ koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+
+[offline_10537] Muzîk
+S: Kîjan kesê/a "Aynur Dogan" rast dide nasîn?
+A) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike B) hunermendê ku bayê rock û caz anî muzîka kurdî C) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê D) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+✓ hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+
+[offline_10547] Muzîk
+S: Derbarê "Erdewan Zaxoyî" de ya rast kîjan e?
+A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan" B) veguhastina muzîkal a bi têkiliya hoste-şagird C) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan D) sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin
+✓ muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
+
+[offline_10566] Muzîk
+S: Derbarê "nota" de agahiya herî rast kîjan e?
+A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin B) nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn C) strana destanî an evînî ya ku dengbêj dibêjin D) yekem hunermenda kurd a jin a ku plak dagirt
+✓ nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn
+
+[offline_10572] Muzîk
+S: Li jêr ji bo "Hasan Cizrawî" kîjan rast e?
+A) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir C) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin D) stranbêjî an lêxistina bi tenê ya hunermendekî
+✓ dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
+
+[offline_10606] Muzîk
+S: Berambera rast a biwêja "muzîka şevbêrkê" kîjan e?
+A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir D) veguhastina muzîkal a bi têkiliya hoste-şagird
+✓ muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+
+[offline_10615] Muzîk
+S: Derbarê "Meryem Xan" de ya rast kîjan e?
+A) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin C) yekem hunermenda kurd a jin a ku plak dagirt D) strana destanî an evînî ya ku dengbêj dibêjin
+✓ yekem hunermenda kurd a jin a ku plak dagirt
+
+[offline_10656] Muzîk
+S: Aram Tîgran kî ye?
+A) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin B) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin C) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin D) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan
+✓ muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+
+[offline_10715] Muzîk
+S: "Mihemed Taha Akreyî" bi kîjan aliyê xwe ve tê nasîn?
+A) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin B) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê C) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan D) yekem hunermenda kurd a jin a ku plak dagirt
+✓ hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+
+[offline_10813] Muzîk
+S: "kevneşopiya şabaşê" tê çi wateyê?
+A) veguhastina muzîkal a bi têkiliya hoste-şagird B) edeta ku ji muzîkjenan re pere tê avêtin C) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan" D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+✓ edeta ku ji muzîkjenan re pere tê avêtin
+
+[offline_10827] Muzîk
+S: "Karapetê Xaço" wek kî tê naskirin?
+A) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir B) strana destanî an evînî ya ku dengbêj dibêjin C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin D) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+✓ dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+
+[offline_10878] Muzîk
+S: "Kardeş Türküler" tê çi wateyê?
+A) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin B) stranbêjî an lêxistina bi tenê ya hunermendekî C) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike D) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+✓ koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+
+[offline_10882] Muzîk
+S: "strana Zembîlfiroş" çi îfade dike?
+A) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e B) hunermendê ku bayê rock û caz anî muzîka kurdî C) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje D) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+✓ kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+
+[offline_10926] Muzîk
+S: Ji aliyê Muzîkê ve ji bo "Mihemed Şêxo" îfadeya rast kîjan e?
+A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin B) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike C) amûra pifê ya bidengê bilind a ku li derve tê lêxistin D) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+✓ dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+
+[offline_10930] Muzîk
+S: Têgiha "Mala Dengbêjan" çi pêk tîne?
+A) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan B) strana destanî an evînî ya ku dengbêj dibêjin C) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin D) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+✓ cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
+
+[offline_10939] Muzîk
+S: Kîjan li gorî pênaseya "koro" ye?
+A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin B) awayê stranbêjiya bi kom C) hunermendê naskirî yê muzîka kurdî D) navê yekem koma rocka kurdî di dîrokê de
+✓ awayê stranbêjiya bi kom
+
+[offline_10962] Muzîk
+S: "stranên Şakiro" tê çi wateyê?
+A) hunermendê ku vegotina devkî ya bi avaz dike B) yekem hunermenda kurd a jin a ku plak dagirt C) kilamên destanî yên dirêj ên ku Şakiro digot D) strana destanî an evînî ya ku dengbêj dibêjin
+✓ kilamên destanî yên dirêj ên ku Şakiro digot
+
+[offline_10963] Muzîk
+S: "Ciwan Haco" çawa divê bê fêmkirin?
+A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin D) hunermendê ku bayê rock û caz anî muzîka kurdî
+✓ hunermendê ku bayê rock û caz anî muzîka kurdî
+
+[offline_11013] Muzîk
+S: Bi "stran" çi tê xwestin?
+A) stran an awaza kurdî B) fîqa şivanan (kaval) C) defa bi zengil (tef) D) cureyên kilamên gelêrî
+✓ stran an awaza kurdî
+
+[offline_11068] Muzîk
+S: Li jêr ji bo "awazên Behdînî" ya rast kîjan e?
+A) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê B) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike C) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê D) hunermendê ku bayê rock û caz anî muzîka kurdî
+✓ şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+
+[offline_11107] Muzîk
+S: Di zanîna Muzîkê de derbarê "kemençe" de ya rast kîjan e?
+A) dengê efsanewî yê muzîka klasîk a Behdînan B) lêdanên birêkûpêk ên ku bingeha muzîkê ne C) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin D) kesa ku bi giştî stranan dibêje
+✓ amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+
+[offline_11123] Muzîk
+S: Derbarê "Şakiro" de ravekirina rast kîjan e?
+A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan" B) şêwazeke din a avazê di muzîka gelêrî ya kurdî de C) stranbêjî an lêxistina bi tenê ya hunermendekî D) avaza ku ji rêzbûna dengan pêk tê
+✓ dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+
+[offline_11125] Muzîk
+S: Di dîrokê de "Şivan Perwer" kî ye?
+A) hunermendê ku muzîka kurdî gihande dîwanên navneteweyî B) yekem hunermenda kurd a jin a ku plak dagirt C) kilamên destanî yên dirêj ên ku Şakiro digot D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+✓ hunermendê ku muzîka kurdî gihande dîwanên navneteweyî
+
+[offline_11127] Muzîk
+S: Ji bo Muzîkê derbarê "Koma Wetan" de vebijêrka rast kîjan e?
+A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin B) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê C) navê yekem koma rocka kurdî di dîrokê de D) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+✓ navê yekem koma rocka kurdî di dîrokê de
+
+[offline_11136] Muzîk
+S: Derbarê "ritim" de vebijêrka rast kîjan e?
+A) avaza ku ji rêzbûna dengan pêk tê B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin C) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin D) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+✓ lêdanên birêkûpêk ên ku bingeha muzîkê ne

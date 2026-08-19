@@ -1,0 +1,786 @@
+Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
+150 soru var. Görevin bunların KALİTESİNİ denetlemek.
+
+Her soru için şu kusurları ara. Parantezdekiler çıktıda kullanacağın
+kodlardır; başka kod uydurma.
+
+1. yanlis_anahtar     — ✓ ile işaretli cevap gerçekte yanlış.
+2. birden_fazla_dogru — birden çok şık savunulabilir biçimde doğru.
+3. mugla              — soru tek bir doğru cevaba işaret etmiyor;
+                        tarih, kapsam ya da ölçüt belirsiz.
+4. uydurma_olgu       — sorunun DAYANDIĞI önerme yanlış: olmayan bir
+                        ödül, olmayan bir yayın, yanlış atfedilmiş eser.
+                        Şıklardan bağımsız; soru kökünün kendisi yalan.
+5. celdirici_sacma    — yanlış şıklar ciddiye alınamayacak kadar
+                        alakasız; soru okunmadan bilinir.
+6. cevap_sizdiran     — doğru şık biçimiyle kendini ele veriyor: tek
+                        başına farklı kalıpta, tek başına ayrıntılı, ya
+                        da soru kökündeki bir kelimeyi tekrar ediyor.
+7. kategori_yanlis    — soru bulunduğu kategoriye ait değil.
+8. dil_hatasi         — Kurmancî metinde Hawar alfabesi dışı harf
+                        (ı, ğ, ö, ü, İ), ya da şıklar Kurmancî yerine
+                        Türkçe yazılmış.
+9. tekrar             — bu partideki başka bir soruyla aynı olgu.
+
+ÇIKTI: yalnız JSON dizisi, başka hiçbir şey yazma.
+
+[{"id":"...","kusur":["mugla"],"not":"niçin kusurlu, somut","oneri":"düzeltme"}]
+
+Kurallar:
+- Kusursuz bulduğun soruyu YAZMA. Liste yalnız bulgulardır.
+- `not` somut olsun. "Kalitesiz", "geliştirilmeli" işe yaramaz —
+  hangi şıkkın niçin sorunlu olduğunu söyle.
+- Emin değilsen yazma. Şişirilmiş liste gerçek kusurları görünmez kılar.
+- Sonuna şunu ekle: {"_okunan": <bu partide incelediğin soru sayısı>}
+
+SORULAR:
+
+[ds_cand_0036] Çand
+S: Di dawetên kurdan de, kîjan amûra muzîkê bi gelemperî tê lêxistin?
+A) Piyano B) Def C) Keman D) Gîtar
+✓ Def
+
+[ds_cand_0041] Çand
+S: Di dawetên kurdan de, kîjan amûra muzîkê bi gelemperî bi tembûrê re tê lêxistin?
+A) Piyano B) Keman C) Def D) Gîtar
+✓ Def
+
+[ds_cand_0077] Çand
+S: Kîjan amûra muzîkê bi gelemperî di govendê de tê bikaranîn?
+A) Piyano B) Gîtar C) Keman D) Tembûr
+✓ Tembûr
+
+[ds_cand_0086] Çand
+S: Di govendê de, kîjan amûra muzîkê ya biçûk bi gelemperî tê lêxistin?
+A) Erbane B) Bilûr C) Tembûr D) Zirne
+✓ Erbane
+
+[ds_cand_0090] Çand
+S: Kîjan amûra muzîkê ya ku ji qamîşan tê çêkirin di govendê de tê bikaranîn?
+A) Tembûr B) Bilûr C) Def D) Erbane
+✓ Bilûr
+
+[ds_cand_0096] Çand
+S: Kîjan amûra muzîkê ya ku bi têlan tê lêxistin di govendê de tê bikaranîn?
+A) Bilûr B) Def C) Erbane D) Tembûr
+✓ Tembûr
+
+[ds_cand_0157] Çand
+S: Kîjan amûra têldar di muzîka govendê ya kurdî de tê bikaranîn?
+A) Keman B) Pîyano C) Gîtar D) Tembûr
+✓ Tembûr
+
+[ds_cand_0155] Çand
+S: Kutilk çi ye?
+A) Şorbeyeke nîskê B) Xwarinek bi hevîrê savarê û navika goştê C) Nanê ku li tenûrê tê pehtin D) Şîraniya ku bi rûn û şekir tê çêkirin
+✓ Xwarinek bi hevîrê savarê û navika goştê
+
+[ds_cand_1169] Çand
+S: Di çanda kurdî de, kîjan tişt bi gelemperî ji mêvanan re tê pêşkêş kirin?
+A) Şerab û penîr B) Çay û nan C) Qehwe û hingiv D) Av û xwê
+✓ Çay û nan
+
+[ds_cand_0269] Çand
+S: Di çanda kurdî de, kîjan kes bi gelemperî ji zarokan re çîrokan dibêje?
+A) Dayik B) Bav C) Dapîr D) Xwişk
+✓ Dapîr
+
+[ds_cand_0265] Çand
+S: Di çanda kurdî de, kîjan xwarin bi gelemperî ji bo dayika ku pitik kiriye tê çêkirin?
+A) Kutilk B) Birinç C) Nan D) Şorbe
+✓ Şorbe
+
+[ds_cand_0178] Çand
+S: Di ristina hiriyê de kîjan amûr tê bikaranîn?
+A) Mekîk B) Dûzen C) Teşî D) Şûjîn
+✓ Teşî
+
+[ds_cand_0181] Çand
+S: Di dokumaya kurdî de, kîjan materyal bi gelemperî tê bikaranîn?
+A) Pembû B) Hirî C) Hevrîşim D) Ketan
+✓ Hirî
+
+[ds_cand_0197] Çand
+S: Di dokumaya kurdî de, kîjan navê amûrê ye ku ji bo ristina hirî tê bikaranîn?
+A) Mekîk B) Dûzen C) Teşî D) Şûjîn
+✓ Teşî
+
+[ds_cand_0190] Çand
+S: Di çanda kurdî de, kilîm bi gelemperî ji kîjan materyalî tê çêkirin?
+A) Pembû B) Hevrîşim C) Ketan D) Hirî
+✓ Hirî
+
+[ds_cand_0205] Çand
+S: Kîjan cejn bi qurbanîkirina heywanan tê pîrozkirin?
+A) Cejna Remezanê B) Cejna Qurbanê C) Newroz D) Cejna Mîladê
+✓ Cejna Qurbanê
+
+[ds_cand_0207] Çand
+S: Cejna Qurbanê di kîjan meha hicrî de tê pîrozkirin?
+A) Meha Remezanê B) Meha Zilhecê C) Meha Zilqedê D) Meha Şewalê
+✓ Meha Zilhecê
+
+[ds_cand_0209] Çand
+S: Kîjan cejn bi bîranîna Îbrahîm û kurê wî ve girêdayî ye?
+A) Cejna Remezanê B) Newroz C) Cejna Mîladê D) Cejna Qurbanê
+✓ Cejna Qurbanê
+
+[ds_ziman_0018] Ziman
+S: Kîjan avahî îzafeya mê a yekjimar e?
+A) Malê B) Malên C) Malek D) Mala
+✓ Mala
+
+[ds_ziman_0026] Ziman
+S: Di kurmancî de dema niha ji bo kiryara ku niha diqewime çi tê bikaranîn?
+A) dibêje B) got C) dibêjit D) bêje
+✓ dibêje
+
+[ds_ziman_1028] Ziman
+S: Di kurmancî de dema niha ji bo lêkera "xwendin" çi ye?
+A) xwend B) bixwîne C) dixwend D) dixwîne
+✓ dixwîne
+
+[ds_ziman_0030] Ziman
+S: Di kurmancî de dema niha ji bo lêkera "nivîsîn" çawa tê nivîsîn?
+A) dinivîse B) nivîsand C) binivîse D) dinivîsand
+✓ dinivîse
+
+[ds_ziman_0032] Ziman
+S: Di kurmancî de dema niha ji bo lêkera "dan" çi ye?
+A) da B) dida C) bide D) dide
+✓ dide
+
+[ds_ziman_1034] Ziman
+S: Di kurmancî de dema niha ji bo lêkera "kirin" çawa tê nivîsîn?
+A) dike B) kir C) dikir D) bike
+✓ dike
+
+[ds_ziman_1036] Ziman
+S: Di kurmancî de dema niha ji bo lêkera "vekirin" çi ye?
+A) vekir B) vedikir C) vedike D) veke
+✓ vedike
+
+[ds_ziman_1038] Ziman
+S: Di kurmancî de dema niha ji bo lêkera "şandin" çawa tê nivîsîn?
+A) şand B) dişand C) dişîne D) bişîne
+✓ dişîne
+
+[ds_ziman_0027] Ziman
+S: Kîjan form ji bo dema niha ya kurmancî rast e?
+A) ez çûm B) ez diçûm C) ez herim D) ez diçim
+✓ ez diçim
+
+[ds_ziman_1031] Ziman
+S: Kîjan form ji bo dema niha ya kurmancî ya "hatin" rast e?
+A) tê B) hat C) dihat D) bê
+✓ tê
+
+[ds_ziman_0035] Ziman
+S: Kîjan form ji bo dema niha ya kurmancî ya "girtin" rast e?
+A) girt B) digire C) digirt D) bigire
+✓ digire
+
+[ds_ziman_0039] Ziman
+S: Kîjan form ji bo dema niha ya kurmancî ya "anîn" rast e?
+A) anî B) dianî C) tîne D) bîne
+✓ tîne
+
+[ds_ziman_1029] Ziman
+S: Kîjan hevok dema niha ya kurmancî nîşan dide?
+A) Ew nanî xwar B) Ew nanî dixwar C) Ew nanî bixwe D) Ew nanî dixwe
+✓ Ew nanî dixwe
+
+[ds_ziman_0203] Ziman
+S: Kîjan hevok di kurmancî de rengdêra "xweşik" bi awayê rast bi kar tîne?
+A) Ev keçik xweşik e. B) Ev keçik xweşik in. C) Ev keçik xweşik im. D) Ev keçik xweşik î.
+✓ Ev keçik xweşik e.
+
+[ds_ziman_0211] Ziman
+S: Kîjan hevok di kurmancî de rengdêra "nû" bi awayê rast bi kar tîne?
+A) Ev pirtûk nû ne. B) Ev pirtûk nû ye. C) Ev pirtûk nû me. D) Ev pirtûk nû yî.
+✓ Ev pirtûk nû ye.
+
+[ds_ziman_0278] Ziman
+S: Kîjan hevok di kurmancî de bi awayê erênî hatiye nivîsîn?
+A) Ew naçe bajêr B) Ew naçe malê C) Ew diçe bajêr D) Ew naçe dibistanê
+✓ Ew diçe bajêr
+
+[ds_ziman_1076] Ziman
+S: Di kurmancî de "bi" û "di" çi cudahî heye?
+A) "bi" amûrê, "di" cihê nîşan dide B) Herdu jî tenê cih nîşan didin C) "di" amûrê, "bi" cihê nîşan dide D) Herdu jî tenê demê nîşan didin
+✓ "bi" amûrê, "di" cihê nîşan dide
+
+[ds_ziman_0078] Ziman
+S: Kîjan hevok oblik hâlê bi kar tîne?
+A) Ez diçim malê B) Ew li malê ye C) Min pirtûk da wî D) Em bi hev re diçin
+✓ Min pirtûk da wî
+
+[ds_ziman_1084] Ziman
+S: Di kurmancî de "li ser" çi nîşan dide?
+A) Cihê jêrîn B) Cihê jorîn C) Cihê hundir D) Cihê derve
+✓ Cihê jorîn
+
+[ds_ziman_0094] Ziman
+S: Di kurmancî de "li gel" çi nîşan dide?
+A) Cihê jorîn B) Cihê jêrîn C) Hevaltî an pê re bûn D) Sedem
+✓ Hevaltî an pê re bûn
+
+[ds_ziman_1101] Ziman
+S: Ji bo rûniştina malê, kîjan mobîlya bi gelemperî tê bikaranîn?
+A) Mase B) Kursî C) Dolab D) Nivîn
+✓ Kursî
+
+[ds_ziman_1102] Ziman
+S: Di metbexê de, kîjan amûr ji bo birîna tiştan tê bikaranîn?
+A) Kêr B) Kefçî C) Çetel D) Sênî
+✓ Kêr
+
+[ds_ziman_0107] Ziman
+S: Kîjan peyv ji bo cihê ku mirov tê de xwe dişo ye?
+A) Dolab B) Serşok C) Mase D) Nivîn
+✓ Serşok
+
+[ds_ziman_1115] Ziman
+S: Kîjan peyv ji bo cihê ku mirov tê de xwarinê çêdike ye?
+A) Odeya rûniştinê B) Serşok C) Metbex D) Dolab
+✓ Metbex
+
+[ds_ziman_0119] Ziman
+S: Kîjan peyv ji bo cihê ku mirov tê de xwarinê dixwe ye?
+A) Serşok B) Odeya xwarinê C) Dolab D) Nivîn
+✓ Odeya xwarinê
+
+[ds_ziman_1104] Ziman
+S: Ji bo pijandina xwarinê, kîjan amûr di metbexê de tê bikaranîn?
+A) Televîzyon B) Firneq C) Komputer D) Pirtûk
+✓ Firneq
+
+[ds_ziman_1105] Ziman
+S: Kîjan tişt ji bo vexwarina avê tê bikaranîn?
+A) Berş B) Sênî C) Tepsi D) Kûp
+✓ Kûp
+
+[ds_ziman_1106] Ziman
+S: Di hundirê malê de, kîjan cih ji bo xwarinê tê bikaranîn?
+A) Serşok B) Odeya razanê C) Metbex D) Bexçe
+✓ Metbex
+
+[ds_ziman_0108] Ziman
+S: Ji bo girtina tiştan di dolabê de, kîjan tişt tê bikaranîn?
+A) Kursî B) Mase C) Nivîn D) Ref
+✓ Ref
+
+[ds_ziman_1109] Ziman
+S: Kîjan tişt ji bo ronahiyê di malê de tê bikaranîn?
+A) Mase B) Dolab C) Lamb D) Ref
+✓ Lamb
+
+[ds_ziman_0110] Ziman
+S: Di malê de, kîjan cih ji bo rûniştina mêvanan tê bikaranîn?
+A) Serşok B) Dolab C) Odeya rûniştinê D) Metbex
+✓ Odeya rûniştinê
+
+[ds_ziman_0114] Ziman
+S: Di malê de, kîjan cih ji bo hilanîna xwarinan tê bikaranîn?
+A) Serşok B) Odeya razanê C) Bexçe D) Dolaba xwarinê
+✓ Dolaba xwarinê
+
+[ds_ziman_0121] Ziman
+S: Di malê de, kîjan cih ji bo hilanîna kincan tê bikaranîn?
+A) Metbex B) Serşok C) Bexçe D) Dolaba kincan
+✓ Dolaba kincan
+
+[ds_ziman_1111] Ziman
+S: Kîjan amûr ji bo paqijkirina erdê tê bikaranîn?
+A) Mijk B) Kêr C) Çetel D) Kefçî
+✓ Mijk
+
+[ds_ziman_0112] Ziman
+S: Di metbexê de, kîjan tişt ji bo danîna xwarinê tê bikaranîn?
+A) Kûp B) Sênî C) Berş D) Kêr
+✓ Sênî
+
+[ds_ziman_0123] Ziman
+S: Di metbexê de, kîjan tişt ji bo pijandina nan tê bikaranîn?
+A) Televîzyon B) Komputer C) Pirtûk D) Firneq
+✓ Firneq
+
+[ds_ziman_0113] Ziman
+S: Kîjan tişt ji bo vekirina deriyê malê tê bikaranîn?
+A) Kûp B) Sênî C) Kursî D) Mifte
+✓ Mifte
+
+[ds_ziman_0116] Ziman
+S: Ji bo danîna pirtûkan, kîjan mobîlya tê bikaranîn?
+A) Dolaba pirtûkan B) Kursî C) Mase D) Nivîn
+✓ Dolaba pirtûkan
+
+[ds_ziman_0117] Ziman
+S: Kîjan tişt ji bo pîvana demê di malê de tê bikaranîn?
+A) Mase B) Seyet C) Dolab D) Ref
+✓ Seyet
+
+[ds_ziman_0118] Ziman
+S: Di serşokê de, kîjan tişt ji bo şuştina destan tê bikaranîn?
+A) Kûp B) Sênî C) Kêr D) Sabûn
+✓ Sabûn
+
+[ds_ziman_0120] Ziman
+S: Ji bo ronahiya derve, kîjan tişt tê bikaranîn?
+A) Mase B) Çira C) Dolab D) Ref
+✓ Çira
+
+[ds_ziman_0122] Ziman
+S: Kîjan tişt ji bo çêkirina çayê tê bikaranîn?
+A) Çaydan B) Kûp C) Sênî D) Kêr
+✓ Çaydan
+
+[ds_ziman_0125] Ziman
+S: Kîjan ajal bi şev dizivire û di rojê de xwe vedişêre?
+A) rovî B) şevrevînk C) ker D) berx
+✓ şevrevînk
+
+[ds_ziman_1126] Ziman
+S: Di kurmancî de peyva "dar" ji bo çi tê bikaranîn?
+A) ajalek e ku difire B) çiyayekî bilind C) cureyekî avê D) riwekek e ku fêkî dide
+✓ riwekek e ku fêkî dide
+
+[ds_ziman_0128] Ziman
+S: Di kurmancî de "av" çi ye?
+A) tiştekî hişk e ku di erdê de ye B) şilek e ku ji bo jiyanê pêwîst e C) ajalek e ku di avê de dijî D) riwekek e ku li ber avê şîn dibe
+✓ şilek e ku ji bo jiyanê pêwîst e
+
+[ds_ziman_0130] Ziman
+S: Di kurmancî de peyva "roj" çi wateyê dide?
+A) tara rojê B) heyv C) stêrk D) ewr
+✓ tara rojê
+
+[ds_ziman_0131] Ziman
+S: Kîjan ajal xwe bi avê ve girêdide û di avê de dijî?
+A) çivîk B) masî C) mar D) kûsî
+✓ masî
+
+[ds_ziman_0134] Ziman
+S: Di kurmancî de peyva "ba" çi ye?
+A) ava ku diherrike B) erdê ku diheje C) hewayê ku diherrike D) agirê ku dişewite
+✓ hewayê ku diherrike
+
+[ds_ziman_0135] Ziman
+S: Kîjan ajal bi piranî di çol û beyaran de dijî?
+A) ker B) mih C) ga D) hêştir
+✓ hêştir
+
+[ds_ziman_0136] Ziman
+S: Di kurmancî de "daristan" çi ye?
+A) cihê ku av lê pir e B) cihê ku dar lê pir in C) cihê ku çiya lê bilind in D) cihê ku bajar lê mezin in
+✓ cihê ku dar lê pir in
+
+[ds_ziman_0138] Ziman
+S: Di kurmancî de peyva "xew" çi wateyê dide?
+A) revîna ajalan B) nivistina mirovan C) xwarina riwekan D) vexwarina avê
+✓ nivistina mirovan
+
+[ds_ziman_0139] Ziman
+S: Kîjan peyv ji bo ajalê ku di nav daran de dijî û difire?
+A) mar B) masî C) çivîk D) kûsî
+✓ çivîk
+
+[ds_ziman_0140] Ziman
+S: Di kurmancî de "erd" çi ye?
+A) ezmanê ku li jor e B) avê ku diherrike C) agirê ku dişewite D) rûyê ku em lê dijîn
+✓ rûyê ku em lê dijîn
+
+[ds_ziman_0142] Ziman
+S: Di kurmancî de peyva "baran" çi ye?
+A) ba ku diherrike B) berfa ku dihele C) ava ku ji ezman dikeve D) ewrê ku diçe
+✓ ava ku ji ezman dikeve
+
+[ds_ziman_0150] Ziman
+S: Di kurmancî de hejmara 7 çawa tê nivîsîn?
+A) heşt B) neh C) heft D) şeş
+✓ heft
+
+[ds_ziman_0151] Ziman
+S: Kîjan hejmar di kurmancî de wek "bîst" tê nivîsîn?
+A) 20 B) 30 C) 40 D) 50
+✓ 20
+
+[ds_ziman_0154] Ziman
+S: Di kurmancî de "nehem" li kîjan rêza hejmarî tê?
+A) Nehemîn (9.) B) 10 C) 11 D) 12
+✓ Nehemîn (9.)
+
+[ds_ziman_0157] Ziman
+S: Di kurmancî de "pêncem" li kîjan rêza hejmarî tê?
+A) Pêncemîn (5.) B) 6 C) 7 D) 8
+✓ Pêncemîn (5.)
+
+[ds_ziman_0152] Ziman
+S: Di kurmancî de hejmara 100 çawa tê nivîsîn?
+A) hez B) sed C) milyon D) deh
+✓ sed
+
+[ds_ziman_0153] Ziman
+S: Di kurmancî de hejmara 4 çawa tê nivîsîn?
+A) pênc B) sê C) çar D) du
+✓ çar
+
+[ds_ziman_1177] Ziman
+S: Di kurmancî de ji bo kurê xwişka mirov kîjan peyv tê bikaranîn?
+A) Pismam B) Birazî C) Kurmet D) Xwarza
+✓ Xwarza
+
+[ds_ziman_0292] Ziman
+S: Di kurmancî de ji bo pirsîna dema borî kîjan peyva pirsyariyê tê bikaranîn?
+A) Kengî B) Çi C) Kî D) Çima
+✓ Kengî
+
+[ds_ziman_1193] Ziman
+S: Di kurmancî de ji bo zarokên bira û xwişkan kîjan peyv tê bikaranîn?
+A) Nevî B) Xwarzê C) Birazî D) Kurmet
+✓ Birazî
+
+[ds_ziman_0183] Ziman
+S: Di kurmancî de ji bo kurê apê mirov kîjan peyv tê bikaranîn?
+A) Xwarza B) Birazî C) Pismam D) Kurmet
+✓ Pismam
+
+[ds_ziman_0222] Ziman
+S: Di kurmancî de ji bo kesekî ku bi zanebûn û hişmendî tevdigere kîjan rengdêr tê bikaranîn?
+A) zîrek B) xwerû C) tembel D) hêdî
+✓ zîrek
+
+[ds_ziman_0179] Ziman
+S: Di kurmancî de ji bo jina birayê mirov çi tê gotin?
+A) Jinbira B) Bûk C) Dê D) Xwişk
+✓ Jinbira
+
+[ds_ziman_0206] Ziman
+S: Di kurmancî de ji bo kesekî ku bi lez tevdigere kîjan rengdêr tê bikaranîn?
+A) hêdî B) lezgîn C) tembel D) xwerû
+✓ lezgîn
+
+[ds_ziman_0210] Ziman
+S: Di kurmancî de ji bo kesekî ku zanîn û pisporiya wî kêm e kîjan rengdêr tê bikaranîn?
+A) nezan B) fehim C) xwendevan D) zanistvan
+✓ nezan
+
+[ds_ziman_1227] Ziman
+S: Kîjan peyva kurmancî bi tîpa "X" dest pê dike?
+A) Kur B) Gul C) Zar D) Xanî
+✓ Xanî
+
+[ds_ziman_0254] Ziman
+S: Di kurmancî de "destê xwe ji tiştekî kişandin" bi wateya çi ye?
+A) wê tiştî bi dest xistin B) wê tiştî girtin C) wê tiştî berdan D) wê tiştî vekirin
+✓ wê tiştî berdan
+
+[ds_ziman_0256] Ziman
+S: Di kurmancî de "çavên xwe vekirin" bi wateya xwe ya mecazî çi ye?
+A) xewê ji xwe re anîn B) hişyar bûn C) tiştekî nû dîtin D) girîn
+✓ hişyar bûn
+
+[ds_ziman_0257] Ziman
+S: Gotina "xwe avêtin ber bayî" di kurmancî de ji bo kîjan rewşê tê bikaranîn?
+A) ji bo bazdanê B) ji bo revê C) ji bo xwe veşartinê D) ji bo xwe spartina qederê
+✓ ji bo xwe spartina qederê
+
+[ds_ziman_0258] Ziman
+S: Di kurmancî de "serê xwe li keviran xistin" bi wateya çi ye?
+A) ji bo tiştekî pir girîn B) ji bo tiştekî pir xebitîn C) ji bo tiştekî pir kenîn D) ji bo tiştekî pir razan
+✓ ji bo tiştekî pir xebitîn
+
+[ds_ziman_0260] Ziman
+S: Di kurmancî de "gotinên xwe dan hev" bi wateya çi ye?
+A) gotinên xwe bi cih anîn B) gotinên xwe dubare kirin C) gotinên xwe jibîr kirin D) gotinên xwe biguherandin
+✓ gotinên xwe bi cih anîn
+
+[ds_ziman_0261] Ziman
+S: Gotina "xwe li ser lingan sekinandin" di kurmancî de ji bo kîjan rewşê tê bikaranîn?
+A) ji bo xwe veşartin B) ji bo xwe amade kirin C) ji bo xwe nîşan dan D) ji bo xwe parastin
+✓ ji bo xwe amade kirin
+
+[ds_ziman_0265] Ziman
+S: Gotina "xwe li ber xwe girtin" di kurmancî de ji bo kîjan rewşê tê bikaranîn?
+A) ji bo xwe azad kirin B) ji bo xwe veşartin C) ji bo xwe kontrol kirin D) ji bo xwe nîşan dan
+✓ ji bo xwe kontrol kirin
+
+[ds_ziman_0266] Ziman
+S: Di kurmancî de "devê xwe vekirin" bi wateya xwe ya mecazî çi ye?
+A) axaftin B) xwarin xwarin C) kenîn D) girîn
+✓ axaftin
+
+[ds_ziman_0272] Ziman
+S: Di kurmancî de "devê xwe girtin" bi wateya xwe ya mecazî çi ye?
+A) axaftin B) kenîn C) bêdeng bûn D) girîn
+✓ bêdeng bûn
+
+[ds_cand_0001] Çand
+S: Newroz çima di 21'ê adarê de tê pîrozkirin?
+A) Ji ber ku havîn dest pê dike B) Ji ber ku roj û şev wekhev in C) Ji ber ku zivistan dirêj dibe D) Ji ber ku baran zêde dibare
+✓ Ji ber ku roj û şev wekhev in
+
+[ds_cand_0002] Çand
+S: Di Newrozê de agir beramberî çi ye?
+A) Xemgîniyê B) Tirsê C) Paqijî û nûbûnê D) Bêhêvîtiyê
+✓ Paqijî û nûbûnê
+
+[ds_cand_0004] Çand
+S: Newroz bi kîjan zimanî tê wateya "roja nû"?
+A) Erebî B) Farisî C) Tirkî D) Îngilîzî
+✓ Farisî
+
+[ds_cand_0005] Çand
+S: Di Newrozê de çi tê amadekirin?
+A) Xwarinên taybet B) Cilên reş C) Mala vala D) Derya
+✓ Xwarinên taybet
+
+[ds_cand_0016] Çand
+S: Di Newrozê de çi tê şewitandin?
+A) Av B) Ba C) Agir D) Erd
+✓ Agir
+
+[ds_cand_0020] Çand
+S: Di Newrozê de çi tê xwarin?
+A) Xwarinên hişk B) Xwarinên sar C) Xwarinên taybet D) Xwarinên şor
+✓ Xwarinên taybet
+
+[ds_cand_0024] Çand
+S: Di Newrozê de çi tê kirin?
+A) Şer B) Xew C) Kar D) Dans
+✓ Dans
+
+[ds_cand_0006] Çand
+S: Kîjan welat Newrozê wekî betlaneya fermî pîroz dike?
+A) Îran B) Fransa C) Almanya D) Spanya
+✓ Îran
+
+[ds_cand_0007] Çand
+S: Newroz bi kê ve tê girêdan?
+A) Eskender B) Dara C) Cemşîd D) Zerdeşt
+✓ Cemşîd
+
+[ds_cand_1009] Çand
+S: Newroz di kîjan mehê de tê pîrozkirin?
+A) Nîsan B) Gulan C) Adar D) Hezîran
+✓ Adar
+
+[ds_cand_0011] Çand
+S: Newroz bi kîjan dînî ve tê girêdan?
+A) Îslam B) Xiristiyanî C) Cihûtî D) Zerdeştî
+✓ Zerdeştî
+
+[ds_cand_0012] Çand
+S: Di Newrozê de mirov çi dikin?
+A) Di bin erdê de dimînin B) Di ser agir re baz didin C) Diçin deryayê D) Diçin çiyayan
+✓ Di ser agir re baz didin
+
+[ds_cand_0018] Çand
+S: Di Newrozê de mirov çi li xwe dikin?
+A) Cilên kevn B) Cilên nû C) Cilên reş D) Cilên spî
+✓ Cilên nû
+
+[ds_cand_0013] Çand
+S: Newroz ji bo kê ye?
+A) Hemû mirovan B) Tenê kurdan C) Tenê farisan D) Tenê tirkên
+✓ Hemû mirovan
+
+[ds_cand_1015] Çand
+S: Newroz di kîjan rojê de tê pîrozkirin?
+A) 21'ê adarê B) 1'ê kanûnê C) 15'ê tebaxê D) 31'ê çiriya
+✓ 21'ê adarê
+
+[ds_cand_0019] Çand
+S: Newroz bi kîjan çandê ve girêdayî ye?
+A) Çanda farisî B) Çanda erebî C) Çanda tirkî D) Çanda îngilîzî
+✓ Çanda farisî
+
+[ds_cand_0021] Çand
+S: Newroz bi kîjan demsalê ve tê girêdan?
+A) Zivistanê B) Havînê C) Biharê D) Payîzê
+✓ Biharê
+
+[ds_cand_0046] Çand
+S: Kilama dengbêjî bi kevneşopî çawa tê gotin?
+A) Bi tembûrê B) Bi zirne û daholê C) Bê amûr, bi dengê tenê D) Bi kemanê
+✓ Bê amûr, bi dengê tenê
+
+[ds_cand_0050] Çand
+S: Di daweta kurdî de, kîjan çalakî bi gelemperî piştî xwarinê tê kirin?
+A) Xew B) Stran C) Axaftin D) Govend
+✓ Govend
+
+[ds_cand_0053] Çand
+S: Kîjan amûr bi gelemperî ji bo ristina hirî tê bikaranîn?
+A) Mekik B) Şûtik C) Teşî D) Nîvend
+✓ Teşî
+
+[ds_cand_0054] Çand
+S: Li kû xalîçeya kurdî bi gelemperî tê çêkirin?
+A) Li bajarên mezin B) Li malan C) Li fabrîqeyan D) Li dibistanan
+✓ Li malan
+
+[ds_cand_0055] Çand
+S: Kîjan reng di xalîçeyên kurdî de bi gelemperî tê bikaranîn?
+A) Şîn B) Zer C) Sor D) Kesk
+✓ Sor
+
+[ds_cand_0064] Çand
+S: Li kû kofî bi gelemperî tê li xwe kirin?
+A) Li ser serê mêran B) Li pişta mêran C) Li pişta jinan D) Li ser serê jinan
+✓ Li ser serê jinan
+
+[ds_cand_0071] Çand
+S: Kîjan amûr ji bo ristina hirî tê bikaranîn?
+A) Derzî B) Şûtik C) Teşî D) Mekik
+✓ Teşî
+
+[ds_cand_0079] Çand
+S: Li gorî kevneşopiya kurdî, govend bi gelemperî di kîjan demê de tê dans kirin?
+A) Di şînê de B) Di rojiyê de C) Di mirinê de D) Di dawetê de
+✓ Di dawetê de
+
+[ds_cand_0092] Çand
+S: Li gorî kevneşopiya kurdî, govend bi gelemperî li kû tê dans kirin?
+A) Li hundir, li ser xalîçeyê B) Li ser çîmenê C) Li ser kevir D) Li derve, li ser axê
+✓ Li derve, li ser axê
+
+[ds_cand_0081] Çand
+S: Di govenda kurdî de, dansvan bi gelemperî çawa destên xwe digirin?
+A) Li pişt xwe didin B) Li ser serê xwe dikin C) Di berîka xwe de dikin D) Bi hev ve girê didin
+✓ Bi hev ve girê didin
+
+[ds_cand_0084] Çand
+S: Kîjan amûra muzîkê ya kurdî bi gelemperî ji bo govendê tê bikaranîn û dişibe kemanê?
+A) Tembûr B) Zirna C) Kemançe D) Def
+✓ Kemançe
+
+[ds_cand_1090] Çand
+S: Kîjan amûra muzîkê ya kurdî bi gelemperî ji bo govendê tê bikaranîn û ji çerm tê çêkirin?
+A) Zirna B) Def C) Tembûr D) Kemançe
+✓ Def
+
+[ds_cand_0085] Çand
+S: Di govenda kurdî de, kîjan kes bi gelemperî rêzê didin dansvanan?
+A) Dengbêj B) Zirnazan C) Serokê govendê D) Mêvan
+✓ Serokê govendê
+
+[ds_cand_0094] Çand
+S: Di govenda kurdî de, kîjan amûra muzîkê bi gelemperî ji bo destpêkirina govendê tê bikaranîn?
+A) Tembûr B) Kemançe C) Bilûr D) Zirna
+✓ Zirna
+
+[ds_cand_0087] Çand
+S: Di govenda kurdî ya botan de, dansvan bi gelemperî çawa tevdigerin?
+A) Bi lez û bez B) Bi hêdî û bi rêz C) Bi bazdan D) Bi rûniştin
+✓ Bi hêdî û bi rêz
+
+[ds_cand_0097] Çand
+S: Li gorî kevneşopiya kurdî, kîjan dans bi gelemperî ji bo şîna û mirinê tê dans kirin?
+A) Govenda dawetê B) Govenda cejnê C) Govenda nûjen D) Govenda şînê
+✓ Govenda şînê
+
+[ds_cand_0099] Çand
+S: Di govenda kurdî ya herêmên cuda de, kîjan amûra muzîkê bi gelemperî tê bikaranîn?
+A) Tembûr B) Zirna C) Hemî jorîn D) Def
+✓ Hemî jorîn
+
+[ds_cand_0101] Çand
+S: Kîjan xwarina kurdî bi hevîrê savarê û goştê hûrkirî tê çêkirin?
+A) Birinç B) Şorbeya nîskê C) Fasûlî D) Kutilk
+✓ Kutilk
+
+[ds_cand_0127] Çand
+S: Kurmancî de "Destê vala bi serê xwe ve nayê" ev gotin çi dide zanîn?
+A) Divê mirov bi destê vala neçe serdana kesî B) Divê mirov bi tena serê xwe kar bike C) Divê mirov ji kesên din re alîkariyê bike D) Divê mirov her dem bi destê xwe ve be
+✓ Divê mirov bi destê vala neçe serdana kesî
+
+[ds_cand_0151] Çand
+S: Di çanda kurdî de, dema mêvanek tê malê, kîjan tişt bi gelemperî ji wî re tê pêşkêş kirin?
+A) Qehwe û nan B) Şerab û penîr C) Çay û şekir D) Hingiv û rûn
+✓ Çay û şekir
+
+[ds_cand_0159] Çand
+S: Di çanda kurdî de, dema mêvanek tê, kîjan tişt bi gelemperî tê kirin?
+A) Derî tê girtin B) Çira tê vemirandin C) Mizgeft tê xwendin D) Xwarin tê amadekirin
+✓ Xwarin tê amadekirin
+
+[ds_cand_1165] Çand
+S: Di çanda kurdî de, dema mêvanek tê, kîjan tişt bi gelemperî nayê kirin?
+A) Xwarin tê amadekirin B) Çay tê vexwarin C) Sohbet tê kirin D) Derî tê girtin
+✓ Derî tê girtin
+
+[ds_cand_0186] Çand
+S: Di çanda kurdî de, dema koçberiyê, kîjan tişt bi gelemperî li ser pişta ajalên bar tê barkirin?
+A) Xalîçe B) Çadir C) Nan D) Av
+✓ Çadir
+
+[ds_cand_0251] Çand
+S: Di çanda kurdî de, dema pitikek tê dinyayê, kîjan tişt bi gelemperî tê kirin?
+A) Şîna girî B) Koçberî C) Rojîgirtin D) Şahî û pîrozbahî
+✓ Şahî û pîrozbahî
+
+[ds_cand_0263] Çand
+S: Di çanda kurdî de, dema pitik tê dinyayê, kîjan kes bi gelemperî mizgîniyê dide malbatê?
+A) Dayik B) Bav C) Xwişk D) Pîrik
+✓ Pîrik
+
+[ds_cand_0271] Çand
+S: Di çanda kurdî de, dema zarok dest bi meşê dike, kîjan tişt bi gelemperî tê kirin?
+A) Şîn B) Rojî C) Koçberî D) Şahî
+✓ Şahî
+
+[ds_cand_1178] Çand
+S: Koçberiya berbi zozanan di kîjan demsalê de dest pê dike?
+A) Bihar B) Havîn C) Payîz D) Zivistan
+✓ Bihar
+
+[ds_cand_0182] Çand
+S: Di havînê de, gundî bi gelemperî çawa li zozanan diçin?
+A) Bi peyan B) Bi traktorê C) Bi ker û hespan D) Bi otomobîlê
+✓ Bi ker û hespan
+
+[ds_cand_0184] Çand
+S: Di zozanan de, ajal bi gelemperî çi dixwin?
+A) Berû B) Kakil C) Giya D) Keskesor
+✓ Giya
+
+[ds_cand_0188] Çand
+S: Di zivistanê de, koçer bi gelemperî li ku dimînin?
+A) Li zozanan B) Li çiyayan C) Li bajaran D) Li deştan
+✓ Li deştan
+
+[ds_cand_0192] Çand
+S: Di havînê de, zozan bi gelemperî ji bo çi tên bikaranîn?
+A) Ji bo avdanê B) Ji bo xanî C) Ji bo çêrandinê D) Ji bo karxaneyê
+✓ Ji bo çêrandinê
+
+[ds_cand_0196] Çand
+S: Di zivistanê de, ajal bi gelemperî çi dixwin?
+A) Giya kesk B) Berû C) Kakil D) Giya hişk
+✓ Giya hişk
+
+[ds_cand_0200] Çand
+S: Di biharê de, koçer bi gelemperî ji kû derê dest pê dikin?
+A) Ji zozanan B) Ji çiyayan C) Ji deştan D) Ji bajaran
+✓ Ji deştan
+
+[ds_cand_0203] Çand
+S: Di xalîçeyên kurdî de, kîjan reng bi gelemperî ji bo xeml û nîşanan tê bikaranîn?
+A) Şîn B) Zer C) Reş D) Sor
+✓ Sor
+
+[ds_cand_0226] Çand
+S: Di Newrozê de, kîjan agir bi gelemperî tê vêxistin?
+A) agirê pîroz B) agirê tirsê C) agirê mirinê D) agirê xemê
+✓ agirê pîroz
+
+[ds_cand_0227] Çand
+S: Kîjan cejn bi gelemperî li ser 21ê Adarê tê pîrozkirin?
+A) Sersal B) Cejna Remezanê C) Newroz D) Cejna Qurbanê
+✓ Newroz
+
+[ds_cand_0235] Çand
+S: Kîjan cejn bi gelemperî li ser 10ê Zilhicceyê tê pîrozkirin?
+A) Cejna Remezanê B) Newroz C) Cejna Qurbanê D) Sersal
+✓ Cejna Qurbanê
