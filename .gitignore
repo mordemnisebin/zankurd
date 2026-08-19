@@ -43,8 +43,8 @@ audit_artifacts/
 # `.temp/pooler-url` tam Postgres bağlantı adresini, `.temp/project-ref`
 # proje kimliğini taşıyor. Depo herkese açık; bunlar makineye özgü CLI
 # durumudur, proje kaynağı değil.
-supabase/.temp/
-supabase/.branches/
+**/supabase/.temp/
+**/supabase/.branches/
 
 # Üretilmiş değerlendirme çıktısı
 zankurd-proje-degerlendirmesi.html
