@@ -1222,9 +1222,12 @@ extension _QuizScreenUI on _QuizScreenState {
                             // boşluksuz ve kaydırmasız bir ekran. Şık yükseklikleri
                             // `AnimatedContainer` ile değiştiği için geçiş sıçrama
                             // gibi değil, yer açılıyormuş gibi görünür.
+                            // Yedek kutu artık çoğu türde hiç çizilmiyor;
+                            // yerini ayırmak boş bir şerit bırakırdı.
                             _isLearningExperience &&
                             answered &&
-                            contentBudget != null,
+                            contentBudget != null &&
+                            needsAnswerRevealFallback(question.type),
                         onAnswer: _answer,
                         onListen: _listenCurrentQuestion,
                         canListen: _ttsCanListen,
@@ -1268,9 +1271,12 @@ extension _QuizScreenUI on _QuizScreenState {
                       // boşluksuz ve kaydırmasız bir ekran. Şık yükseklikleri
                       // `AnimatedContainer` ile değiştiği için geçiş sıçrama
                       // gibi değil, yer açılıyormuş gibi görünür.
+                      // Yedek kutu artık çoğu türde hiç çizilmiyor;
+                      // yerini ayırmak boş bir şerit bırakırdı.
                       _isLearningExperience &&
                       answered &&
-                      contentBudget != null,
+                      contentBudget != null &&
+                      needsAnswerRevealFallback(question.type),
                   onAnswer: _answer,
                   onListen: _listenCurrentQuestion,
                   canListen: _ttsCanListen,

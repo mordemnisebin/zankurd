@@ -156,8 +156,14 @@ void main() {
   ) async {
     await answerFirst(tester, QuizExperience.learning);
     expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsNothing);
-    // Doğru cevap yine anında görünür.
-    expect(find.text('Doğru cevap'), findsOneWidget);
+    // 2026-08-19: "Doğru cevap" kutusu çoktan seçmeli sorulardan
+    // kaldırıldı — doğru şık zaten yeşile dönüp tik alıyordu, kutu aynı
+    // bilgiyi ikinci kez söyleyip kıt olan dikey alanı kaplıyordu
+    // (uygulama sahibinin bildirimi). Kutu yalnız kelime sıralamada
+    // kalır; orada doğru dizilimi açan başka hiçbir şey yok
+    // (bkz. `needsAnswerRevealFallback`, `lesson_explanation_test`).
+    // Korunan asıl kural DEĞİŞMEDİ: açıklama METNİ tur içinde açılmaz.
+    expect(find.text('Doğru cevap'), findsNothing);
   });
 
   testWidgets('yarışma akışında da açıklama gösterilmez', (tester) async {
