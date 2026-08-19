@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
+import 'kilim_board.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/percent_format.dart';
 
@@ -16,6 +17,7 @@ class ShareResultCard extends StatelessWidget {
     required this.totalQuestions,
     required this.bestStreak,
     required this.category,
+    this.results = const [],
     super.key,
   });
 
@@ -25,6 +27,9 @@ class ShareResultCard extends StatelessWidget {
   final int totalQuestions;
   final int bestStreak;
   final String category;
+
+  /// Turun soru soru sonucu. Boşsa şerit çizilmez (eski çağıranlar).
+  final List<bool> results;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +100,33 @@ class ShareResultCard extends StatelessWidget {
               letterSpacing: 3,
             ),
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 20),
+
+          // Dokunan kilim.
+          //
+          // Kart bu satırdan önce yalnız SAYI paylaşıyordu: 340 puan,
+          // %70, 5 seri. Sayı paylaşılabilir bir nesne değildir — ne
+          // gören biri için bir şey ifade eder ne de paylaşanın turuna
+          // ait bir şey taşır; her turun kartı aynı görünür.
+          //
+          // Şerit turun kendisidir ve her turda başkadır. Wordle'ın
+          // ızgarasının yaptığı iş budur: paylaşılan şey skor değil,
+          // oyunun ŞEKLİdir. Burada o şekil kilim olarak söylenir,
+          // yani ZanKurd'a ait bir dille.
+          if (results.isNotEmpty) ...[
+            KilimBoard(
+              total: results.length,
+              currentIndex: results.length,
+              showCurrent: false,
+              height: 26,
+              // Koyu marka zemininde tema yüzeyi okunmaz; iz elle verilir
+              // (bkz. KilimBoard.trackColor).
+              trackColor: Colors.white.withValues(alpha: 0.12),
+              outlineColor: Colors.white.withValues(alpha: 0.25),
+              results: results,
+            ),
+            const SizedBox(height: 20),
+          ],
 
           // İstatistik satırı
           Row(
