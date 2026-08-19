@@ -116,9 +116,16 @@ def coverage(folder: pathlib.Path) -> list:
             rows.append((entry.get("banka"), actual, entry.get("okunan_kayit")))
 
     batches = pathlib.Path("docs/content_batches/gpt_partileri")
-    for file in sorted(folder.glob("parti_*.json")):
+    sources = sorted(batches.glob("*.txt"))
+    for file in sorted(folder.glob("*.json")):
+        if file.name == "_ozet.json":
+            continue
+        # Dönüş dosyası adıyla eşleşen parti; tek dosyalık akışta
+        # (TUM_SORULAR.txt) ad eşleşmez, tek kaynak varsa o kullanılır.
         source = batches / (file.stem + ".txt")
         if not source.exists():
+            source = sources[0] if len(sources) == 1 else None
+        if source is None:
             rows.append((file.stem, None, None))
             continue
         # Partideki soru sayısı: satır başındaki [kimlik] etiketleri.
