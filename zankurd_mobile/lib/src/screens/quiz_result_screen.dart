@@ -1346,31 +1346,51 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 // rozet yan yana sığmıyor ve kartın dışına
                                 // taşıyordu. `Wrap` sığmayanı alt satıra alır
                                 // (2026-07-26).
-                                Wrap(
-                                  alignment: WrapAlignment.center,
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: [
-                                    if (coinsAwarded > 0)
-                                      _ResultRewardChip(
-                                        icon: AppIcons.coins,
-                                        label:
-                                            '+$coinsAwarded${context.t(K.coinAbbrev)}',
-                                        color: AppTheme.gold,
-                                      ),
-                                    if (_earnedXP > 0)
-                                      _ResultRewardChip(
-                                        icon: AppIcons.bolt,
-                                        label: '+$_earnedXP XP',
-                                        // Koyu sonuç kartında accent (koyu
-                                        // yeşil) soluk kalıyordu; kazanım
-                                        // hissi için aydınlatılmış yeşil.
-                                        color: Color.alphaBlend(
-                                          Colors.white.withValues(alpha: 0.35),
-                                          AppTheme.accent,
+                                // Ödül rozetleri skor SAYIMI bittikten
+                                // sonra yerine oturur.
+                                //
+                                // Hepsi aynı anda beliriyordu: skor,
+                                // yıldızlar, kilim ve ödüller tek karede
+                                // gelince göz nereye bakacağını
+                                // bilmiyor ve kazanılan şey kaynayıp
+                                // gidiyordu. Ödül bir SONUÇtur; sonucu
+                                // sebebinden önce göstermek anlatıyı
+                                // tersine çevirir.
+                                //
+                                // Gecikme `Interval` ile verilir, ayrı
+                                // bir zamanlayıcıyla değil: `Timer` +
+                                // `setState` ekran erken kapatılırsa
+                                // ölü bir State'e dokunur ve bu ekran
+                                // zaten sonuç yazılırken kapatılabiliyor.
+                                _RewardEntrance(
+                                  child: Wrap(
+                                    alignment: WrapAlignment.center,
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    children: [
+                                      if (coinsAwarded > 0)
+                                        _ResultRewardChip(
+                                          icon: AppIcons.coins,
+                                          label:
+                                              '+$coinsAwarded${context.t(K.coinAbbrev)}',
+                                          color: AppTheme.gold,
                                         ),
-                                      ),
-                                  ],
+                                      if (_earnedXP > 0)
+                                        _ResultRewardChip(
+                                          icon: AppIcons.bolt,
+                                          label: '+$_earnedXP XP',
+                                          // Koyu sonuç kartında accent (koyu
+                                          // yeşil) soluk kalıyordu; kazanım
+                                          // hissi için aydınlatılmış yeşil.
+                                          color: Color.alphaBlend(
+                                            Colors.white.withValues(
+                                              alpha: 0.35,
+                                            ),
+                                            AppTheme.accent,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                                 // Günlük tavana varıldıysa SEBEBİ söyle.
                                 //
@@ -2494,6 +2514,45 @@ class _ExplanationEntry extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Ödül rozetlerini skor sayımından SONRA yerine oturtur.
+///
+/// Gecikme ayrı bir zamanlayıcı yerine `Interval` ile verilir: `Timer` +
+/// `setState` ikilisi ekran erken kapatıldığında ölü bir State'e dokunur
+/// ve sonuç ekranı tam da ödüller yazılırken kapatılabiliyor.
+///
+/// Hareket azaltma açıkken giriş animasyonu yapılmaz; rozetler doğrudan
+/// yerinde çizilir. Sağlayıcı yoksa (izole widget testleri) animasyon
+/// sessizce oynar — dekoratif bir davranış, ağacı eksik diye ekranı
+/// çökertmemeli.
+class _RewardEntrance extends StatelessWidget {
+  const _RewardEntrance({required this.child});
+
+  final Widget child;
+
+  /// Skor sayımının tipik süresi kadar beklenir (bkz. `RollingCount`).
+  static const _total = Duration(milliseconds: 1500);
+  static const _start = 0.62;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduced =
+        context.watch<ReducedMotionProvider?>()?.reduceMotion ?? false;
+    if (reduced) return child;
+
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: _total,
+      curve: const Interval(_start, 1, curve: Curves.easeOutBack),
+      builder: (context, value, child) => Opacity(
+        // `easeOutBack` 1'i aşar; opaklık kırpılmazsa assert atar.
+        opacity: value.clamp(0.0, 1.0),
+        child: Transform.scale(scale: value, child: child),
+      ),
+      child: child,
     );
   }
 }
