@@ -56,6 +56,7 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
+import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
 import '../../test/support/widget_test_helpers.dart';
 
 /// Uygulamanın her ekranını gerçek widget ağacıyla açıp PNG'ye basar.
@@ -98,10 +99,6 @@ final GlobalKey _boundaryKey = GlobalKey();
 /// koşucuda ölçü fontuyla — yani siyah kutu olarak — çiziliyordu
 /// (2026-07-26: oyun merkezi ve sıralama turda böyle görünüyordu).
 /// Uygulamada bir kusur değil, turun kendi kusuruydu.
-Widget _framed(Widget child) => RepaintBoundary(
-  key: _boundaryKey,
-  child: Material(type: MaterialType.transparency, child: child),
-);
 
 /// Görünüm boyutunu ayarlar.
 ///
@@ -150,6 +147,61 @@ String _flutterSdkRoot() {
 
 /// Tur sonucu ekranı için gerçekçi bir örnek: iki doğru bir yanlış, seri,
 /// coin ödülü ve tam açıklama listesi.
+/// Çevrimiçi 1v1 maç sonu galibiyet ekranı — kupa, 1v1 sıralaması ve "Yeni Oda" butonu.
+Widget _result1v1VictoryScreen() {
+  final repository = MockZanKurdRepository();
+  const room = GameRoom(
+    id: 'room-1v1-online',
+    name: '1vs1',
+    code: 'ZK-WINNER01',
+    category: 'Ziman',
+    players: [
+      Player(id: 'user', name: 'Ez', score: 320, state: Player.readyState),
+      Player(id: 'opp', name: 'Hevrik', score: 180, state: Player.readyState),
+    ],
+    status: RoomStatus.finished,
+    questionCount: 5,
+    entryFee: 25,
+  );
+  return QuizResultScreen(
+    repository: repository,
+    room: room,
+    score: 320,
+    correctCount: 4,
+    wrongCount: 1,
+    totalQuestions: 5,
+    bestStreak: 3,
+    coinsAwarded: 50,
+    opponents: const [
+      Player(id: 'opp', name: 'Hevrik', score: 180, state: Player.readyState),
+    ],
+    answerRecords: const [
+      AnswerRecord(
+        id: 'r1',
+        category: 'Ziman',
+        prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+        answers: ['su', 'ekmek', 'yol', 'dağ'],
+        correctAnswer: 'su',
+        selectedAnswer: 'su',
+        explanation: '«av» Türkçede «su» demektir.',
+        explanationKu: '«av» bi Tirkî dibe «su».',
+        explanationTr: '«av» Türkçede «su» demektir.',
+      ),
+      AnswerRecord(
+        id: 'r2',
+        category: 'Ziman',
+        prompt: 'Peyva «agir» bi Tirkî çi tê gotin?',
+        answers: ['ateş', 'su', 'hava', 'toprak'],
+        correctAnswer: 'ateş',
+        selectedAnswer: 'ateş',
+        explanation: '«agir» Türkçede «ateş» demektir.',
+        explanationKu: '«agir» bi Tirkî dibe «ateş».',
+        explanationTr: '«agir» Türkçede «ateş» demektir.',
+      ),
+    ],
+  );
+}
+
 Widget _resultScreen() {
   final repository = MockZanKurdRepository();
   final room = repository.createRoom();
@@ -202,6 +254,33 @@ Widget _resultScreen() {
   );
 }
 
+/// Turun kabuğu: `testShell` + görüntü sınırı.
+///
+/// Sınır (`RepaintBoundary`) MaterialApp'in DIŞINDA olmak zorunda. Eskiden
+/// `_framed` ile `home`un çevresine konuyordu; o kadraj modal sayfaları
+/// KAÇIRIYOR, çünkü `showModalBottomSheet` çocuğu Navigator overlay'ine
+/// çizer ve overlay `home`un üstünde durur. Oda kurma sheet'i tam olarak
+/// böyle bir sayfa — eski kabuğa boş bir oyun merkezi düşerdi.
+///
+/// Sağlayıcı listesi BURADA TEKRARLANMAZ: `testShell` neyi kuruyorsa tur da
+/// onu görmeli. İlk uygulama listeyi elle kopyalamıştı; kopya, testlerin
+/// gördüğü uygulamayla turun gösterdiği uygulamayı sessizce ayırır — turun
+/// tek işi "uygulama gerçekte neye benziyor" sorusuna cevap vermekken.
+Widget _tourShell({
+  required Widget child,
+  bool dark = false,
+  bool ku = false,
+}) {
+  return RepaintBoundary(
+    key: _boundaryKey,
+    child: testShell(
+      child: Material(type: MaterialType.transparency, child: child),
+      themeProvider: dark ? ThemeProvider(initialMode: ThemeMode.dark) : null,
+      languageProvider: ku ? kurmanciLang() : null,
+    ),
+  );
+}
+
 Future<void> _pump(
   WidgetTester tester,
   Widget child, {
@@ -210,10 +289,10 @@ Future<void> _pump(
 }) async {
   _applyViewport(tester, _size);
   await tester.pumpWidget(
-    testShell(
-      child: _framed(child),
-      themeProvider: dark ? (ThemeProvider(initialMode: ThemeMode.dark)) : null,
-      languageProvider: ku ? kurmanciLang() : null,
+    _tourShell(
+      child: child,
+      dark: dark,
+      ku: ku,
     ),
   );
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
@@ -1119,6 +1198,75 @@ void main() {
     );
     await _shoot(t, '89_settings_ku_dark');
   }, tags: ['preview']);
+
+  // ── 2026-08-19 Eklenen Yüzeyler ──────────────────────────────────
+  //
+  // 1. Oda kurma sheet'i (_CustomRoomBottomSheet) — kategori, soru sayısı,
+  //    süre ve jeton bahsi seçimleri. Açık/TR, karanlık ve Kurmancî.
+  testWidgets("90 oda kurma sheet'i", (t) async {
+    await _pump(t, PlayHubScreen(repository: repository));
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _shoot(t, '90_custom_room_sheet');
+  }, tags: ['preview']);
+
+  testWidgets("91 oda kurma sheet'i (karanlık)", (t) async {
+    await _pump(t, PlayHubScreen(repository: repository), dark: true);
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _shoot(t, '91_custom_room_sheet_dark');
+  }, tags: ['preview']);
+
+  testWidgets("92 oda kurma sheet'i (Kurmancî)", (t) async {
+    await _pump(t, PlayHubScreen(repository: repository), ku: true);
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _shoot(t, '92_custom_room_sheet_ku');
+  }, tags: ['preview']);
+
+  // 2. Uçuşan reaksiyon baloncukları — animasyon hâlinde yakalanır.
+  testWidgets('93 uçuşan reaksiyonlar', (t) async {
+    final controller = FloatingReactionController();
+    await _pump(
+      t,
+      FloatingReactionOverlay(
+        controller: controller,
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom(),
+        ),
+      ),
+    );
+    controller.triggerReaction('👏 Destxweş!', senderName: 'Berfin');
+    controller.triggerReaction('🔥 Agir!', senderName: 'Rojda');
+    controller.triggerReaction('⚡ Lez be!', senderName: 'Baran');
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 500));
+    await _shoot(t, '93_floating_reactions');
+  }, tags: ['preview']);
+
+  // 3. Çevrimiçi 1v1 maç sonu — galibiyet görünümü ve "Yeni Oda" düğmesi.
+  testWidgets('94 1v1 maç sonu (galibiyet)', (t) async {
+    await _pump(t, _result1v1VictoryScreen());
+    // Vakanın DERDİ "Yeni Oda" düğmesi; o düğme sayfanın altında ve ilk
+    // kadrajda görünmüyordu. Ekran görüntüsü, göstermek için var olduğu
+    // şeyi göstermezse tur o vakayı boşuna koşturur.
+    // `ensureVisible` YETMEZ: sonuç ekranı tembel kuran bir listedir ve
+    // eylem satırı henüz İNŞA EDİLMEMİŞTİR — bulucu hiçbir öğe bulamaz.
+    // Önce kaydırıp inşa ettirmek gerekir.
+    final action = find.byKey(const ValueKey('result-new-room-button'));
+    await t.scrollUntilVisible(
+      action,
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 400));
+    await _shoot(t, '94_result_1v1_win');
+  }, tags: ['preview']);
+
 }
 
 /// Teslim edilememiş bir 1v1 sonucu — kurtarma ekranının beslendiği veri.
