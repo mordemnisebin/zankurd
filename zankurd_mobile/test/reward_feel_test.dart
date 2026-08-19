@@ -35,10 +35,8 @@ void main() {
   group('sayarak çıkan skor', () {
     testWidgets('hedefe atlamaz, tırmanır', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: RollingCount(value: 400, style: const TextStyle()),
-          ),
+        const MaterialApp(
+          home: Scaffold(body: RollingCount(value: 400, style: TextStyle())),
         ),
       );
 
@@ -64,10 +62,8 @@ void main() {
       await tester.pumpWidget(
         ChangeNotifierProvider<ReducedMotionProvider>(
           create: (_) => ReducedMotionProvider(initialUserReduce: true),
-          child: MaterialApp(
-            home: Scaffold(
-              body: RollingCount(value: 400, style: const TextStyle()),
-            ),
+          child: const MaterialApp(
+            home: Scaffold(body: RollingCount(value: 400, style: TextStyle())),
           ),
         ),
       );

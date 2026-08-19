@@ -1670,6 +1670,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             totalQuestions: totalQuestions,
                             bestStreak: bestStreak,
                             category: room.category,
+                            results: [
+                              for (final record in answerRecords)
+                                record.isCorrect,
+                            ],
                           ),
                         ),
                     ],

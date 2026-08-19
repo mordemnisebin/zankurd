@@ -23,6 +23,7 @@ class ResultSharer {
     required int totalQuestions,
     required int bestStreak,
     required String category,
+    List<bool> results = const [],
   }) async {
     final accuracy = totalQuestions == 0
         ? 0
@@ -49,6 +50,7 @@ class ResultSharer {
           totalQuestions: totalQuestions,
           bestStreak: bestStreak,
           category: category,
+          results: results,
         ),
       );
     }
