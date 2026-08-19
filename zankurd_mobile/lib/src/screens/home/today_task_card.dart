@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/strings.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/kilim_progress_bar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Ana ekranın tek birincil eylemi: "bugün şunu yap".
@@ -99,15 +100,18 @@ class TodayTaskCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: 6,
-              backgroundColor: AppTheme.borderColor(context),
-              valueColor: const AlwaysStoppedAnimation<Color>(accent),
-            ),
-          ),
+          // Ana ekranın en çok bakılan ilerleme öğesi.
+          //
+          // Düz `LinearProgressIndicator`dı: doğru bilgiyi veriyordu ama
+          // her uygulamadaki çubuktu. Uygulamanın kendi ilerleme dili
+          // (dolgunun üzerinde kilim dokuma izi) zaten vardı ve yalnız
+          // soru/seviye ekranlarında kullanılıyordu; kullanıcının günde
+          // ilk gördüğü çubuk kimliksiz kalıyordu (2026-08-19).
+          //
+          // Kilim TAHTASI değil çubuğu: tahta soru soru doğru/yanlış
+          // ister, burada yalnız kaç soru bitti bilgisi var. Olmayan
+          // veriyi ima eden bir görsel, sessizce yalan söyler.
+          KilimProgressBar(value: progress, height: 8, color: accent),
           const SizedBox(height: AppSpacing.sm),
           _StartButton(
             label: started

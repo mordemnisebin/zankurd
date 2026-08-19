@@ -8,6 +8,7 @@ import '../data/mistake_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/streak_panel.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -707,18 +708,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 },
               ),
               const SizedBox(height: 18),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  greeting,
-                  maxLines: 1,
-                  style: AppTypography.heading1.copyWith(
-                    color: Colors.white,
-                    fontSize: 23,
-                    fontWeight: FontWeight.w700,
+              // Zana selamlamada.
+              //
+              // Maskot uygulamanın her yerinde vardı ama ana ekranda
+              // yoktu; kullanıcının günde ilk gördüğü ekran kimliksiz
+              // açılıyordu. Ruh hâli seriye bağlı: seri sürüyorsa
+              // kutlar, kırıldıysa gülümser — durumu SÖYLEMEDEN gösterir
+              // ve seri rozeti zaten sayıyı yazıyor.
+              Row(
+                children: [
+                  RojMascot(
+                    size: 34,
+                    mood: _streak > 0 ? RojMood.celebrate : RojMood.happy,
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        greeting,
+                        maxLines: 1,
+                        style: AppTypography.heading1.copyWith(
+                          color: Colors.white,
+                          fontSize: 23,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 3),
               Text(
