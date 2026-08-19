@@ -61,5 +61,25 @@ void main() {
           '${packets.map((f) => f.uri.pathSegments.last).join(', ')}. '
           'Build numarası yükseltildiyse o build\'in paketi de üretilmeli.',
     );
+
+    final packet = File('docs/${matching.first}').readAsStringSync();
+
+    expect(
+      packet,
+      contains('Candidate build: $name ($build)'),
+      reason:
+          'Paketin güncel operasyonel bölümü pubspec\'teki aday build\'i '
+          'değil eski bir build\'i anlatıyor olabilir.',
+    );
+    expect(
+      packet,
+      contains('Before uploading build $build'),
+      reason: 'Upload öncesi gate metni güncel build numarasını taşımalı.',
+    );
+    expect(
+      packet,
+      contains('Upload the exact build $build'),
+      reason: 'Upload talimatı güncel build numarasını taşımalı.',
+    );
   });
 }

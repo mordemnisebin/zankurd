@@ -195,7 +195,7 @@ the abuse-report route: nisebinbawer47@gmail.com.
 
 ## Tested devices and release evidence
 
-- Candidate build: 1.9.2 (18). App Store Connect upload and Binary State are
+- Candidate build: 1.9.2 (20). App Store Connect upload and Binary State are
   intentionally left blank until this exact candidate is uploaded.
 - Build device family: iPhone and iPad; minimum iOS: 15.0.
 - Local production-config validation: passed without printing secrets.
@@ -207,7 +207,7 @@ the abuse-report route: nisebinbawer47@gmail.com.
 ## Privacy and App Store metadata gate
 
 The checked-in privacy manifest declares the data categories currently used by
-the app and declares no location collection. Before uploading build 18, the
+the app and declares no location collection. Before uploading build 20, the
 App Store Connect App Privacy answers must be compared with
 `docs/app_privacy_reconciliation_1.9.2_build15.md` (veri envanteri
 değişmedi; yalnız build numarası farklı). In particular, do not
@@ -227,7 +227,7 @@ open/licensed imagery. It does not claim ownership of third-party imagery.
 - Enter the current owner phone number and the confirmed support email in App
   Store Connect App Review Information; do not store private contact details
   in source control.
-- Upload the exact build 18 and reconcile App Privacy answers before sending
+- Upload the exact build 20 and reconcile App Privacy answers before sending
   it to review.
 - Capture a physical-device video beginning at launch and showing the guest
   flow, solo quiz, account deletion, subscription screen, user-generated chat,
