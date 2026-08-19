@@ -32370,5 +32370,1709 @@
     "explanation": "ZGC ve Shenandoah renkli işaretçiler ve Load Barrier'lar sayesinde nesne taşıma ve sıkıştırma işini uygulama iş parçacıklarıyla eşzamanlı yürütür.",
     "explanationKu": "ZGC tiştan di dema xebata bernamê de (concurrently) diguhezîne; eger bername dest bide tiştekî ku tê veguhastin, Load Barrier navnîşana wî nû dike.",
     "explanationTr": "ZGC ve Shenandoah renkli işaretçiler ve Load Barrier'lar sayesinde nesne taşıma ve sıkıştırma işini uygulama iş parçacıklarıyla eşzamanlı yürütür."
+  },
+  {
+    "id": "ds_ziman_1228",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de di dema borî ya lêkerên gerguhêz de çima kirde di rûyê tewandî de tê bikaranîn lê lêker li gorî bireserê dikişe?",
+    "promptTr": "Kurmancîde geçişli fiillerin geçmiş zamanında özne neden bükünlü halde kullanılırken fiil nesneye göre çekimlenir?",
+    "answers": [
+      "Ji ber ku di kurmancî de lêker her tim bi cînavê xwerû re tê girêdan",
+      "Ji ber ku pergala ergatîf dixebite û lihevkirina lêkerê bi bireserê re çêdibe",
+      "Ji ber ku hemû lêkerên dema borî bixweber dibin lêkerên negerguhêz",
+      "Ji ber ku bireser her tim ji aliyê rêzimanî ve dikeve pêşiya kirdeyê"
+    ],
+    "answersTr": [
+      "Kurmancîde fiil her zaman yalın zamirle bağlantılı kurulduğu için",
+      "Ergatif sistem işlediği ve fiil nesne ile uyum sağladığı için",
+      "Geçmiş zamandaki tüm fiiller kendiliğinden geçişsizleştiği için",
+      "Nesne dilbilgisi kuralları gereği her zaman öznenin önüne geçtiği için"
+    ],
+    "correctAnswer": "Ji ber ku pergala ergatîf dixebite û lihevkirina lêkerê bi bireserê re çêdibe",
+    "correctAnswerTr": "Ergatif sistem işlediği ve fiil nesne ile uyum sağladığı için",
+    "explanation": "Kurmancîde geçmiş zamanda geçişli fiillerde ergatif yapı işler; özne bükünlü zamir alırken fiil nesnenin şahıs ve sayısına uyar.",
+    "explanationTr": "Kurmancîde geçmiş zamanda geçişli fiillerde ergatif yapı işler; özne bükünlü zamir alırken fiil nesnenin şahıs ve sayısına uyar.",
+    "explanationKu": "Di lêkerên gerguhêz ên dema borî de qaîdeya ergatîfê tê sepandin; kirde ditewe û lêker li gorî kes û hejmara bireserê teşe digire."
+  },
+  {
+    "id": "ds_ziman_1229",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di hevokên \"Te ez dîtim\" û \"Min tu dîtî\" de sedema guherîna qertafên dawiya lêkera \"dîtin\" çi ye?",
+    "promptTr": "\"Te ez dîtim\" ve \"Min tu dîtî\" cümlelerinde \"dîtin\" fiilinin sonundaki eklerin değişme sebebi nedir?",
+    "answers": [
+      "Kirdeyê hevokê li gorî heza xwe qertafên cînavî li lêkerê zêde dike",
+      "Di kurmancî de zayenda kirdeyê rasterast dawiya lêkerê diyar dike",
+      "Lêkera dîtin di her du rewşan de jî wekî lêkera negerguhêz dixebite",
+      "Di dema borî de lêkera gerguhêz li gorî kesê bireserê qertafa kesane digire"
+    ],
+    "answersTr": [
+      "Cümlenin öznesi kendi isteğine göre fiile zamirsel ekler eklediği için",
+      "Kurmancîde öznenin cinsiyeti doğrudan fiilin son ekini belirlediği için",
+      "Dîtin fiili her iki kullanımda da geçişsiz bir fiil gibi işlev gördüğü için",
+      "Geçmiş zamanda geçişli fiil nesnenin şahsına göre kişi eki aldığı için"
+    ],
+    "correctAnswer": "Di dema borî de lêkera gerguhêz li gorî kesê bireserê qertafa kesane digire",
+    "correctAnswerTr": "Geçmiş zamanda geçişli fiil nesnenin şahsına göre kişi eki aldığı için",
+    "explanation": "Ergatif yapıda fiil nesneye uyar: \"ez\" birinci tekil olduğu için \"-im\", \"tu\" ikinci tekil olduğu için \"-î\" eki fiile gelir.",
+    "explanationTr": "Ergatif yapıda fiil nesneye uyar: \"ez\" birinci tekil olduğu için \"-im\", \"tu\" ikinci tekil olduğu için \"-î\" eki fiile gelir.",
+    "explanationKu": "Ji ber pergala ergatîfê, lêker li gorî biresera rasterast dikişe; loma bi \"ez\" re qertafa \"-im\" û bi \"tu\" re qertafa \"-î\" tê."
+  },
+  {
+    "id": "ds_ziman_1230",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka \"Wî sêv xwarin\" de çima lêkera \"xwarin\" bi paşgira pirjimariyê qediya ye?",
+    "promptTr": "\"Wî sêv xwarin\" cümlesinde \"xwarin\" fiilinin çoğul ekiyle bitmesinin sebebi nedir?",
+    "answers": [
+      "Biresera hevokê \"sêv\" pirjimar e û lêker li gorî wê pirjimar bûye",
+      "Kirdeya hevokê \"wî\" nîşana gelek kesan di nav xwe de dihewîne",
+      "Dema borî ya çîrokî her tim lêkerê bi awayê pirjimar nîşan dide",
+      "Lêkera xwarin tenê bi qertafa pirjimariyê dikare wateyê bide"
+    ],
+    "answersTr": [
+      "Cümlenin nesnesi olan \"sêv\" çoğuldur ve fiil ona uyarak çoğul çekimlenmiştir",
+      "Cümlenin öznesi olan \"wî\" zamiri bünyesinde birden çok kişiyi barındırdığı için",
+      "Hikaye geçmiş zaman kipi fiilleri her zaman çoğul biçimde gösterdiği için",
+      "Xwarin fiili anlamını sadece çoğul şahıs eki aldığında tamamlayabildiği için"
+    ],
+    "correctAnswer": "Biresera hevokê \"sêv\" pirjimar e û lêker li gorî wê pirjimar bûye",
+    "correctAnswerTr": "Cümlenin nesnesi olan \"sêv\" çoğuldur ve fiil ona uyarak çoğul çekimlenmiştir",
+    "explanation": "Geçmiş zamanlı geçişli cümlede \"sêv\" kelimesi çoğul anlamda kullanılmıştır ve fiil nesneye uyarak \"-in\" çoğul ekini almıştır.",
+    "explanationTr": "Geçmiş zamanlı geçişli cümlede \"sêv\" kelimesi çoğul anlamda kullanılmıştır ve fiil nesneye uyarak \"-in\" çoğul ekini almıştır.",
+    "explanationKu": "Di rêzimana kurmancî de dema ku bireser pirjimar be, lêkera gerguhêz a dema borî jî bi qertafa pirjimariyê \"-in\" xelas dibe."
+  },
+  {
+    "id": "ds_ziman_1231",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Kîjan hevok qaîdeya ergatîfê ya di navbera lêkerên gerguhêz û negerguhêz de bi awayekî rast nîşan dide?",
+    "promptTr": "Hangi cümle geçişli ve geçişsiz fiiller arasındaki ergatif kural farkını doğru örneklendirir?",
+    "answers": [
+      "Min çûm bajêr, lê ez li wir hevalê xwe dît",
+      "Ez çûm bajêr, lê ez li wir hevalê xwe dît",
+      "Ez çûm bajêr, lê min li wir hevalê xwe dît",
+      "Min çûm bajêr, lê min li wir hevalê xwe dîtim"
+    ],
+    "answersTr": [
+      "Min çûm bajêr, lê ez li wir hevalê xwe dît",
+      "Ez çûm bajêr, lê ez li wir hevalê xwe dît",
+      "Ez çûm bajêr, lê min li wir hevalê xwe dît",
+      "Min çûm bajêr, lê min li wir hevalê xwe dîtim"
+    ],
+    "correctAnswer": "Ez çûm bajêr, lê min li wir hevalê xwe dît",
+    "correctAnswerTr": "Ez çûm bajêr, lê min li wir hevalê xwe dît",
+    "explanation": "\"Çûn\" geçişsiz olduğundan özne yalın \"ez\" kalır; \"dîtin\" geçişli olduğundan geçmiş zamanda özne bükünlü \"min\" olur.",
+    "explanationTr": "\"Çûn\" geçişsiz olduğundan özne yalın \"ez\" kalır; \"dîtin\" geçişli olduğundan geçmiş zamanda özne bükünlü \"min\" olur.",
+    "explanationKu": "Ji ber ku lêkera \"çûn\" negerguhêz e kirde xwerû (ez) dimîne, lê lêkera \"dîtin\" gerguhêz e loma kirde ditewe (min)."
+  },
+  {
+    "id": "ds_ziman_1232",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di dema borî ya çîrokî de ji bo lêkera negerguhêz a \"hatin\" û lêkera gerguhêz a \"xwendin\" kîjan cot rast e?",
+    "promptTr": "Geçmişin hikayesi kipinde geçişsiz \"hatin\" ve geçişli \"xwendin\" fiilleri için hangi ikili çekim doğrudur?",
+    "answers": [
+      "Min hatibûm / Ez xwendibûm",
+      "Ez hatibûm / Min xwendibû",
+      "Min hatibû / Ez xwendibû",
+      "Ez hatibû / Min xwendibûm"
+    ],
+    "answersTr": [
+      "Min hatibûm / Ez xwendibûm",
+      "Ez hatibûm / Min xwendibû",
+      "Min hatibû / Ez xwendibû",
+      "Ez hatibû / Min xwendibûm"
+    ],
+    "correctAnswer": "Ez hatibûm / Min xwendibû",
+    "correctAnswerTr": "Ez hatibûm / Min xwendibû",
+    "explanation": "Geçişsiz \"hatin\" fiilinde özne yalın \"ez\" ve fiil \"hatibûm\" olur; geçişli \"xwendin\" fiilinde özne bükünlü \"min\" ve fiil \"xwendibû\" kalır.",
+    "explanationTr": "Geçişsiz \"hatin\" fiilinde özne yalın \"ez\" ve fiil \"hatibûm\" olur; geçişli \"xwendin\" fiilinde özne bükünlü \"min\" ve fiil \"xwendibû\" kalır.",
+    "explanationKu": "Di dema borî ya çîrokî de lêkera negerguhêz bi kirdeyê xwerû (ez hatibûm) û ya gerguhêz bi kirdeyê tewandî (min xwendibû) tê çêkirin."
+  },
+  {
+    "id": "ds_ziman_1233",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Cudahiya rêzimanî ya di navbera lêkera hevedudanî ya bi \"kirin\" û ya bi \"bûn\" de di dema borî de çi ye?",
+    "promptTr": "\"Kirin\" ve \"bûn\" yardımcı fiilleriyle kurulan bileşik fiiller arasındaki geçmiş zaman dilbilgisi farkı nedir?",
+    "answers": [
+      "Her du lêker jî di dema borî de her tim bê tewang tên bikaranîn",
+      "Lêkerên bi \"bûn\" tenê di dema bê de qertafên ergatîfê qebûl dikin",
+      "Lêkerên bi \"kirin\" gerguhêz in û ditewin, yên bi \"bûn\" negerguhêz in",
+      "Lêkerên bi \"kirin\" her tim pêwîstî bi cînavên xwerû yên mê dibînin"
+    ],
+    "answersTr": [
+      "Her iki fiil grubu da geçmiş zamanda daima bükünsüz olarak kullanılır",
+      "\"Bûn\" ile kurulan fiiller sadece gelecek zamanda ergatif eki kabul eder",
+      "\"Kirin\" ile yapılanlar geçişli olup ergatif ister, \"bûn\" ile yapılanlar geçişsizdir",
+      "\"Kirin\" ile yapılan fiiller daima dişil yalın zamirlere ihtiyaç duyar"
+    ],
+    "correctAnswer": "Lêkerên bi \"kirin\" gerguhêz in û ditewin, yên bi \"bûn\" negerguhêz in",
+    "correctAnswerTr": "\"Kirin\" ile yapılanlar geçişli olup ergatif ister, \"bûn\" ile yapılanlar geçişsizdir",
+    "explanation": "\"Çêkirin\" gibi \"kirin\" ile kurulanlar geçişlidir ve geçmişte fail bükülür; \"çêbûn\" gibi \"bûn\" ile kurulanlar geçişsizdir, fail yalındır.",
+    "explanationTr": "\"Çêkirin\" gibi \"kirin\" ile kurulanlar geçişlidir ve geçmişte fail bükülür; \"çêbûn\" gibi \"bûn\" ile kurulanlar geçişsizdir, fail yalındır.",
+    "explanationKu": "Lêkerên hevedudanî yên bi \"kirin\"ê di dema borî de pergala ergatîfê dixwazin, lê yên bi \"bûn\"ê negerguhêz in û kirdeyê xwerû digirin."
+  },
+  {
+    "id": "ds_ziman_1234",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka neyînî ya dema borî de kîjan vebijêrk li gorî rêzimana kurmancî rast hatiye nivîsandin?",
+    "promptTr": "Geçmiş zaman olumsuz cümlesinde Kurmancî dilbilgisine göre hangi seçenek doğru yazılmıştır?",
+    "answers": [
+      "Min pirtûk nexwend / Ez neçûm zanîngehê",
+      "Ez pirtûk nexwendim / Min neçûm zanîngehê",
+      "Min pirtûk naxwînim / Ez naçim zanîngehê",
+      "Ez pirtûk nexwend / Min neçû zanîngehê"
+    ],
+    "answersTr": [
+      "Min pirtûk nexwend / Ez neçûm zanîngehê",
+      "Ez pirtûk nexwendim / Min neçûm zanîngehê",
+      "Min pirtûk naxwînim / Ez naçim zanîngehê",
+      "Ez pirtûk nexwend / Min neçû zanîngehê"
+    ],
+    "correctAnswer": "Min pirtûk nexwend / Ez neçûm zanîngehê",
+    "correctAnswerTr": "Min pirtûk nexwend / Ez neçûm zanîngehê",
+    "explanation": "Geçmiş zaman olumsuzluğunda \"ne-\" öneki gelir; geçişli fiilde \"min nexwend\", geçişsiz fiilde \"ez neçûm\" şeklinde ergatif ayrım korunur.",
+    "explanationTr": "Geçmiş zaman olumsuzluğunda \"ne-\" öneki gelir; geçişli fiilde \"min nexwend\", geçişsiz fiilde \"ez neçûm\" şeklinde ergatif ayrım korunur.",
+    "explanationKu": "Di dema borî de qertafa neyîniyê \"ne-\" ye; di lêkera gerguhêz de kirde ditewe (min nexwend), di ya negerguhêz de xwerû ye (ez neçûm)."
+  },
+  {
+    "id": "ds_ziman_1235",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de pergala ergatîf di kîjan deman de derbas dibe û di kîjan deman de derbas nabe?",
+    "promptTr": "Kurmancîde ergatif sistem hangi zamanlarda geçerlidir ve hangi zamanlarda geçerli değildir?",
+    "answers": [
+      "Di hemû deman de bi heman awayî bêyî guherîn derbas dibe",
+      "Tenê di dema bê de heye, di demên borî û niha de bi tevahî radibe",
+      "Di demên borî de derbas dibe, lê di dema niha û dema bê de derbas nabe",
+      "Tenê di lêkerên negerguhêz ên dema niha de tê sepandin"
+    ],
+    "answersTr": [
+      "Tüm zamanlarda hiçbir değişiklik olmaksızın aynı şekilde geçerlidir",
+      "Yalnızca gelecek zamanda vardır, geçmiş ve şimdiki zamanlarda tamamen kalkar",
+      "Geçmiş zamanlarda geçerlidir, şimdiki ve gelecek zamanlarda geçerli değildir",
+      "Yalnızca şimdiki zamanın geçişsiz fiillerinde uygulanır"
+    ],
+    "correctAnswer": "Di demên borî de derbas dibe, lê di dema niha û dema bê de derbas nabe",
+    "correctAnswerTr": "Geçmiş zamanlarda geçerlidir, şimdiki ve gelecek zamanlarda geçerli değildir",
+    "explanation": "Bölünmüş ergatiflik (split ergativity) gereği Kurmancîde ergatiflik sadece geçmiş zaman kiplerinde görülür; şimdiki ve gelecek zamanda nominatif-akuzatiftir.",
+    "explanationTr": "Bölünmüş ergatiflik (split ergativity) gereği Kurmancîde ergatiflik sadece geçmiş zaman kiplerinde görülür; şimdiki ve gelecek zamanda nominatif-akuzatiftir.",
+    "explanationKu": "Ergatîfiya kurmancî ya dabeşkirî ye; tenê di demên borî de dixebite, di dema niha û ya bê de sîstema xwerû-tewandî ya berovajî heye."
+  },
+  {
+    "id": "ds_ziman_1236",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka \"Wê hevalên xwe dîtin\" de lihevkirina lêkerê li gorî kîjan rêgezê ye?",
+    "promptTr": "\"Wê hevalên xwe dîtin\" cümlesinde fiilin uyumu hangi kurala dayanmaktadır?",
+    "answers": [
+      "Lêker li gorî kirdeya mê \"wê\" bi paşgira tewangê ya mê hatiye guhertin",
+      "Lêker li gorî biresera pirjimar \"hevalên xwe\" bi qertafa \"-in\" hatiye kişandin",
+      "Lêker serbixwe ye û tenê ji ber hebûna cînavê vegerok qertaf girtiye",
+      "Lêker bi awayekî şaş hatiye kişandin ji ber ku kirde yekjimar e"
+    ],
+    "answersTr": [
+      "Fiil dişil özne olan \"wê\" zamirine uyarak dişil bükün ekiyle değişmiştir",
+      "Fiil çoğul nesne olan \"hevalên xwe\"ye uyarak \"-in\" çoğul eki almıştır",
+      "Fiil bağımsızdır ve yalnızca dönüşlü zamir bulunduğu için ek almıştır",
+      "Özne tekil olduğu için fiil bu cümlede yanlış çekimlenmiştir"
+    ],
+    "correctAnswer": "Lêker li gorî biresera pirjimar \"hevalên xwe\" bi qertafa \"-in\" hatiye kişandin",
+    "correctAnswerTr": "Fiil çoğul nesne olan \"hevalên xwe\"ye uyarak \"-in\" çoğul eki almıştır",
+    "explanation": "Geçmiş zamanlı geçişli cümlede özne \"wê\" bükünlüdür, nesne çoğul \"hevalên xwe\" olduğu için fiil çoğul eki \"-in\" alarak \"dîtin\" olmuştur.",
+    "explanationTr": "Geçmiş zamanlı geçişli cümlede özne \"wê\" bükünlüdür, nesne çoğul \"hevalên xwe\" olduğu için fiil çoğul eki \"-in\" alarak \"dîtin\" olmuştur.",
+    "explanationKu": "Di hevokên gerguhêz ên dema borî de lêker her tim bi bireserê re li hev dike; ji ber ku bireser pirjimar e lêker jî bûye \"dîtin\"."
+  },
+  {
+    "id": "ds_ziman_1237",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Dema ku tîpa dawî ya navdêran dengdêr be, veqetandeka binavkirî ya mê û nêr çawa diguhere?",
+    "promptTr": "İsimlerin son harfi ünlü olduğunda dişil ve eril belirli izafe ekleri nasıl değişir?",
+    "answers": [
+      "Ji bo mê dibe \"-ê\" û ji bo nêr dibe \"-î\"",
+      "Ji bo her du zayendan tenê dibe \"-ên\"",
+      "Ji bo mê dibe \"-ya\" û ji bo nêr dibe \"-yê\"",
+      "Ji bo mê dibe \"-a\" û ji bo nêr dibe \"-ê\""
+    ],
+    "answersTr": [
+      "Dişil için \"-ê\" ve eril için \"-î\" şeklini alır",
+      "Her iki cinsiyet için sadece \"-ên\" şeklini alır",
+      "Dişil için \"-ya\" ve eril için \"-yê\" şeklini alır",
+      "Dişil için \"-a\" ve eril için \"-ê\" şeklini alır"
+    ],
+    "correctAnswer": "Ji bo mê dibe \"-ya\" û ji bo nêr dibe \"-yê\"",
+    "correctAnswerTr": "Dişil için \"-ya\" ve eril için \"-yê\" şeklini alır",
+    "explanation": "Ünlüyle biten kelimelerde kaynaştırma \"y\" harfi girer: mase -> maseya min (dişil), mamoste -> mamosteyê min (eril).",
+    "explanationTr": "Ünlüyle biten kelimelerde kaynaştırma \"y\" harfi girer: mase -> maseya min (dişil), mamoste -> mamosteyê min (eril).",
+    "explanationKu": "Gava navdêr bi dengdêrekê biqede, dengê navberê yê \"y\" dikeve navberê û veqetandek dibin \"-ya\" (mê) û \"-yê\" (nêr)."
+  },
+  {
+    "id": "ds_ziman_1238",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de veqetandeka nebinavkirî (îzafeya ne diyar) ji bo navdêrên mê, nêr û pirjimar kîjan e?",
+    "promptTr": "Kurmancîde dişil, eril ve çoğul isimler için belirsiz izafe ekleri sırasıyla hangileridir?",
+    "answers": [
+      "Mê: -eke / Nêr: -ekî / Pirjimar: -ine (an -ne)",
+      "Mê: -a / Nêr: -ê / Pirjimar: -ên",
+      "Mê: -ê / Nêr: -î / Pirjimar: -an",
+      "Mê: -ek / Nêr: -ek / Pirjimar: -ek"
+    ],
+    "answersTr": [
+      "Dişil: -eke / Eril: -ekî / Çoğul: -ine (veya -ne)",
+      "Dişil: -a / Eril: -ê / Çoğul: -ên",
+      "Dişil: -ê / Eril: -î / Çoğul: -an",
+      "Dişil: -ek / Eril: -ek / Çoğul: -ek"
+    ],
+    "correctAnswer": "Mê: -eke / Nêr: -ekî / Pirjimar: -ine (an -ne)",
+    "correctAnswerTr": "Dişil: -eke / Eril: -ekî / Çoğul: -ine (veya -ne)",
+    "explanation": "Belirsiz izafede dişil isimler \"-eke\" (pirtûkeke baş), eril isimler \"-ekî\" (xaniyekî mezin), çoğullar \"-ine\" (zarokine jîr) alır.",
+    "explanationTr": "Belirsiz izafede dişil isimler \"-eke\" (pirtûkeke baş), eril isimler \"-ekî\" (xaniyekî mezin), çoğullar \"-ine\" (zarokine jîr) alır.",
+    "explanationKu": "Veqetandeka nebinavkirî ji bo mê \"-eke\" (jineke zana), ji bo nêr \"-ekî\" (mêrekî çê) û ji bo pirjimar \"-ine\" (zarokine çeleng) e."
+  },
+  {
+    "id": "ds_ziman_1239",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di îzafeya zincîrî de (mînak: deriyê odeya xaniyê me) qertafên îzafeyê li gorî kîjan rêgezê tên rêzkirin?",
+    "promptTr": "Zincirleme isim tamlamasında (ör: deriyê odeya xaniyê me) izafe ekleri hangi kurala göre sıralanır?",
+    "answers": [
+      "Hemû navdêr tenê li gorî zayenda navdêra yekem a di serî de tên tewandin",
+      "Tenê navdêra dawî qertafa îzafeyê digire û yên din xwerû dimînin",
+      "Her navdêr li gorî zayend û hejmara xwe bi peyva piştî xwe re tê girêdan",
+      "Di îzafeya zincîrî de zayenda mê ji bo hemû peyvan dibe nêr"
+    ],
+    "answersTr": [
+      "Bütün isimler yalnızca baştaki ilk ismin cinsiyetine göre ek alır",
+      "Yalnızca sondaki isim izafe eki alır ve diğer isimler yalın kalır",
+      "Her isim kendi cinsiyet ve sayısına göre kendisinden sonraki kelimeye bağlanır",
+      "Zincirleme tamlamada dişil cinsiyet tüm kelimeler için erile dönüşür"
+    ],
+    "correctAnswer": "Her navdêr li gorî zayend û hejmara xwe bi peyva piştî xwe re tê girêdan",
+    "correctAnswerTr": "Her isim kendi cinsiyet ve sayısına göre kendisinden sonraki kelimeye bağlanır",
+    "explanation": "Zincirleme tamlamada her öge kendi dilbilgisel cinsiyetine göre bağlanır: derî (eril: -yê), ode (dişil: -ya), xanî (eril: -yê).",
+    "explanationTr": "Zincirleme tamlamada her öge kendi dilbilgisel cinsiyetine göre bağlanır: derî (eril: -yê), ode (dişil: -ya), xanî (eril: -yê).",
+    "explanationKu": "Di îzafeya zincîrî de her navdêr zayenda xwe diparêze: \"derî\" nêr e (-yê), \"ode\" mê ye (-ya) û \"xanî\" nêr e (-yê) digire."
+  },
+  {
+    "id": "ds_ziman_1240",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di hevoka \"Mirovê ku do hat hevalê min e\" de peyva \"mirovê\" çima veqetandeka nêr girtiye?",
+    "promptTr": "\"Mirovê ku do hat hevalê min e\" cümlesinde \"mirovê\" kelimesi neden eril izafe eki almıştır?",
+    "answers": [
+      "Ji ber ku peyva mirov her tim di rewşa tewandî ya mê de dimîne",
+      "Ji ber ku di kurmancî de berî cînavê \"ku\" tenê tîpa \"ê\" tê nivîsandin",
+      "Ji ber ku peyva heval di dawiya hevokê de wekî bireser hatiye destnîşankirin",
+      "Ji ber ku bi rêya veqetandekê bi hevalbenda \"ku\" re têkiliya ravekê ava dike"
+    ],
+    "answersTr": [
+      "Mirov kelimesi her zaman dişil bükünlü halde bulunduğu için",
+      "Kurmancîde \"ku\" zamirinden önce yalnızca \"ê\" harfi yazılabildiği için",
+      "Cümle sonundaki heval kelimesi nesne olarak belirlendiği için",
+      "İzafe eki aracılığıyla \"ku\" ilgi zamiriyle niteleme bağı kurduğu için"
+    ],
+    "correctAnswer": "Ji ber ku bi rêya veqetandekê bi hevalbenda \"ku\" re têkiliya ravekê ava dike",
+    "correctAnswerTr": "İzafe eki aracılığıyla \"ku\" ilgi zamiriyle niteleme bağı kurduğu için",
+    "explanation": "\"Mirov\" eril bir isimdir; \"ku\" ile başlayan ilgi cümlesini bağlamak için eril izafe eki olan \"-ê\" ekini alır.",
+    "explanationTr": "\"Mirov\" eril bir isimdir; \"ku\" ile başlayan ilgi cümlesini bağlamak için eril izafe eki olan \"-ê\" ekini alır.",
+    "explanationKu": "Peyva \"mirov\" navdêreke nêr e; dema ku bi cînavê pêwendiyê \"ku\" re tê girêdan veqetandeka nêr a yekjimar \"-ê\" digire."
+  },
+  {
+    "id": "ds_ziman_1241",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di navbera nîşandana nêzîk û ya dûr de li gel veqetandeka binavkirî kîjan rêzik rast e?",
+    "promptTr": "Belirli izafe ile birlikte işaret sıfatlarının (yakın/uzak) kullanımında hangi kural doğrudur?",
+    "answers": [
+      "Ev pirtûkê han / Ew xaniyek han",
+      "Ev pirtûkên hanê / Ew xaniyê wan",
+      "Ev pirtûka hanê / Ew xaniyê han",
+      "Ev pirtûkeke han / Ew xaniyan han"
+    ],
+    "answersTr": [
+      "Ev pirtûkê han / Ew xaniyek han",
+      "Ev pirtûkên hanê / Ew xaniyê wan",
+      "Ev pirtûka hanê / Ew xaniyê han",
+      "Ev pirtûkeke han / Ew xaniyan han"
+    ],
+    "correctAnswer": "Ev pirtûka hanê / Ew xaniyê han",
+    "correctAnswerTr": "Ev pirtûka hanê / Ew xaniyê han",
+    "explanation": "İşaret yapısında isim cinsiyetine uygun izafe eki alır ve \"han/hanê\" pekiştirmesiyle kullanılır (ev pirtûka hanê / ew xaniyê han).",
+    "explanationTr": "İşaret yapısında isim cinsiyetine uygun izafe eki alır ve \"han/hanê\" pekiştirmesiyle kullanılır (ev pirtûka hanê / ew xaniyê han).",
+    "explanationKu": "Di nîşandanê de navdêr li gorî zayenda xwe veqetandekê digire û bi \"han/hanê\" re lihevhatina zayendî diparêze."
+  },
+  {
+    "id": "ds_ziman_1242",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di tewanga navdêrên mê yên yekjimar de kîjan qertaf tê bikaranîn?",
+    "promptTr": "Tekil dişil isimlerin bükün durumunda (hal çekiminde) hangi ek kullanılır?",
+    "answers": [
+      "Qertafa \"-î\" (mînak: pirtûk -> pirtûkî)",
+      "Qertafa \"-an\" (mînak: pirtûk -> pirtûkan)",
+      "Qertafa \"-a\" (mînak: pirtûk -> pirtûka)",
+      "Qertafa \"-ê\" (mînak: pirtûk -> pirtûkê)"
+    ],
+    "answersTr": [
+      "\"-î\" eki (örnek: pirtûk -> pirtûkî)",
+      "\"-an\" eki (örnek: pirtûk -> pirtûkan)",
+      "\"-a\" eki (örnek: pirtûk -> pirtûka)",
+      "\"-ê\" eki (örnek: pirtûk -> pirtûkê)"
+    ],
+    "correctAnswer": "Qertafa \"-ê\" (mînak: pirtûk -> pirtûkê)",
+    "correctAnswerTr": "\"-ê\" eki (örnek: pirtûk -> pirtûkê)",
+    "explanation": "Tekil dişil isimler bükün aldıklarında (edatla veya ergatif faillikte) sonlarına \"-ê\" eki alırlar.",
+    "explanationTr": "Tekil dişil isimler bükün aldıklarında (edatla veya ergatif faillikte) sonlarına \"-ê\" eki alırlar.",
+    "explanationKu": "Navdêrên mê yên yekjimar gava dikevin rewşa tewandî (bi daçekan re an di ergatîfê de) qertafa \"-ê\" digirin."
+  },
+  {
+    "id": "ds_ziman_1243",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di tewanga navdêrên nêr ên yekjimar de kîjan qertaf tê bikaranîn?",
+    "promptTr": "Tekil eril isimlerin bükün durumunda (hal çekiminde) hangi ek kullanılır?",
+    "answers": [
+      "Qertafa \"-ê\" (mînak: heval -> hevalê)",
+      "Qertafa \"-î\" (mînak: heval -> hevalî)",
+      "Qertafa \"-an\" (mînak: heval -> hevalan)",
+      "Qertafa \"-a\" (mînak: heval -> hevala)"
+    ],
+    "answersTr": [
+      "\"-ê\" eki (örnek: heval -> hevalê)",
+      "\"-î\" eki (örnek: heval -> hevalî)",
+      "\"-an\" eki (örnek: heval -> hevalan)",
+      "\"-a\" eki (örnek: heval -> hevala)"
+    ],
+    "correctAnswer": "Qertafa \"-î\" (mînak: heval -> hevalî)",
+    "correctAnswerTr": "\"-î\" eki (örnek: heval -> hevalî)",
+    "explanation": "Tekil eril isimler bükün aldıklarında (örneğin \"ji hevalî re\") sonlarına \"-î\" bükün ekini alırlar.",
+    "explanationTr": "Tekil eril isimler bükün aldıklarında (örneğin \"ji hevalî re\") sonlarına \"-î\" bükün ekini alırlar.",
+    "explanationKu": "Navdêrên nêr ên yekjimar dema dikevin rewşa tewangê, qertafa tewangê ya nêr \"-î\" digirin (ji hevalî re, ji xortî re)."
+  },
+  {
+    "id": "ds_ziman_1244",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di tewanga navdêran a pirjimariyê de ferqa zayenda mê û nêr çawa ye?",
+    "promptTr": "İsimlerin çoğul bükün durumunda dişil ve eril cinsiyet farkı nasıldır?",
+    "answers": [
+      "Ji bo mê \"-ên\" tê bikaranîn û ji bo nêr tenê \"-ûn\" tê danîn",
+      "Ji bo mê qertafa \"-at\" tê û ji bo nêr qertafa \"-ên\" dimîne",
+      "Zayenda mê dibe yekjimar lê ya nêr her tim pirjimar dimîne",
+      "Cudahiya zayendê winda dibe û ji bo her duyan jî qertafa \"-an\" tê"
+    ],
+    "answersTr": [
+      "Dişil için \"-ên\" kullanılırken eril için yalnızca \"-ûn\" konur",
+      "Dişil için \"-at\" eki gelirken eril için \"-ên\" eki kalır",
+      "Dişil cinsiyet tekilleşirken eril cinsiyet daima çoğul kalır",
+      "Cinsiyet farkı kalkar ve her ikisi için de \"-an\" eki gelir"
+    ],
+    "correctAnswer": "Cudahiya zayendê winda dibe û ji bo her duyan jî qertafa \"-an\" tê",
+    "correctAnswerTr": "Cinsiyet farkı kalkar ve her ikisi için de \"-an\" eki gelir",
+    "explanation": "Kurmancîde çoğullukta cinsiyet ayrımı nötrleşir; hem dişil hem eril çoğul bükünde \"-an\" ekini alır (jinan, mêran).",
+    "explanationTr": "Kurmancîde çoğullukta cinsiyet ayrımı nötrleşir; hem dişil hem eril çoğul bükünde \"-an\" ekini alır (jinan, mêran).",
+    "explanationKu": "Di zimanê kurmancî de di pirjimariyê de cudahiya nêr û mê namîne; her du zayend jî bi qertafa tewangê ya \"-an\"ê ditewin."
+  },
+  {
+    "id": "ds_ziman_1245",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di bangkirina kesan de (bangawezî) qertafên bangê ji bo nêr, mê û pirjimar kîjan in?",
+    "promptTr": "Hitap durumunda (vokatif) eril, dişil ve çoğul için hitap ekleri sırasıyla hangileridir?",
+    "answers": [
+      "Nêr: -î / Mê: -a / Pirjimar: -an",
+      "Nêr: -ê / Mê: -î / Pirjimar: -ên",
+      "Nêr: -o / Mê: -ê / Pirjimar: -no",
+      "Nêr: -u / Mê: -i / Pirjimar: -en"
+    ],
+    "answersTr": [
+      "Eril: -î / Dişil: -a / Çoğul: -an",
+      "Eril: -ê / Dişil: -î / Çoğul: -ên",
+      "Eril: -o / Dişil: -ê / Çoğul: -no",
+      "Eril: -u / Dişil: -i / Çoğul: -en"
+    ],
+    "correctAnswer": "Nêr: -o / Mê: -ê / Pirjimar: -no",
+    "correctAnswerTr": "Eril: -o / Dişil: -ê / Çoğul: -no",
+    "explanation": "Vokatif hitap ekleri erilde \"-o\" (Lawiko!), dişilde \"-ê\" (Keçikê!), çoğulda \"-no\" (Hevalno!) şeklindedir.",
+    "explanationTr": "Vokatif hitap ekleri erilde \"-o\" (Lawiko!), dişilde \"-ê\" (Keçikê!), çoğulda \"-no\" (Hevalno!) şeklindedir.",
+    "explanationKu": "Qertafên bangaweziyê di kurmancî de ji bo zayenda nêr \"-o\" (B觉rayo!), ji bo mê \"-ê\" (Xwişkê!) û ji bo pirjimar \"-no\" (Gelno!) ne."
+  },
+  {
+    "id": "ds_ziman_1246",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Cînavên kesane yên xwerû û tewandî di kîjan rêzê de bi awayekî rast hatine berawirdkirin?",
+    "promptTr": "Yalın ve bükünlü şahıs zamirleri hangi sırada doğru şekilde eşleştirilmiştir?",
+    "answers": [
+      "Ez->me / Tu->we / Ew->wan / Em->min / Hûn->te / Ew->wî",
+      "Ez->te / Tu->min / Ew->wê / Em->we / Hûn->me / Ew->wan",
+      "Ez->wî / Tu->wê / Ew->min / Em->wan / Hûn->te / Ew->me",
+      "Ez->min / Tu->te / Ew->wî, wê / Em->me / Hûn->we / Ew->wan"
+    ],
+    "answersTr": [
+      "Ez->me / Tu->we / Ew->wan / Em->min / Hûn->te / Ew->wî",
+      "Ez->te / Tu->min / Ew->wê / Em->we / Hûn->me / Ew->wan",
+      "Ez->wî / Tu->wê / Ew->min / Em->wan / Hûn->te / Ew->me",
+      "Ez->min / Tu->te / Ew->wî, wê / Em->me / Hûn->we / Ew->wan"
+    ],
+    "correctAnswer": "Ez->min / Tu->te / Ew->wî, wê / Em->me / Hûn->we / Ew->wan",
+    "correctAnswerTr": "Ez->min / Tu->te / Ew->wî, wê / Em->me / Hûn->we / Ew->wan",
+    "explanation": "Yalın zamirler (ez, tu, ew, em, hûn, ew) ile bükünlü zamirler (min, te, wî/wê, me, we, wan) birebir bu şekilde eşleşir.",
+    "explanationTr": "Yalın zamirler (ez, tu, ew, em, hûn, ew) ile bükünlü zamirler (min, te, wî/wê, me, we, wan) birebir bu şekilde eşleşir.",
+    "explanationKu": "Di kurmancî de berambera cînavên xwerû (ez, tu, ew, em, hûn, ew) cînavên tewandî yên (min, te, wî/wê, me, we, wan) ne."
+  },
+  {
+    "id": "ds_ziman_1247",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka \"Ez li ser maseyê pirtûkan dibînim\" de peyva \"maseyê\" ji ber çi tewiyaye?",
+    "promptTr": "\"Ez li ser maseyê pirtûkan dibînim\" cümlesinde \"maseyê\" kelimesi neden bükün almıştır?",
+    "answers": [
+      "Ji ber ku di vê hevokê de wekî kirdeyê sereke hatiye destnîşankirin",
+      "Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî \"li ser ...\"",
+      "Ji ber ku lêkera dîtin di dema niha de her tim navdêran ditewîne",
+      "Ji ber ku peyva mase navdêreke nêr e û li pêşiya bireserê ye"
+    ],
+    "answersTr": [
+      "Bu cümlede temel eylemi yapan özne olarak belirlendiği için",
+      "\"Li ser ...\" yer bildiren bileşik edatının etkisi altında kaldığı için",
+      "Dîtin fiili şimdiki zamanda tüm isimleri zorunlu olarak büktüğü için",
+      "Mase kelimesi eril bir isim olup nesnenin önünde yer aldığı için"
+    ],
+    "correctAnswer": "Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî \"li ser ...\"",
+    "correctAnswerTr": "\"Li ser ...\" yer bildiren bileşik edatının etkisi altında kaldığı için",
+    "explanation": "\"Mase\" dişil bir isimdir ve \"li ser\" edatının yönetimi altına girdiği için \"-ê\" bükün ekini almıştır.",
+    "explanationTr": "\"Mase\" dişil bir isimdir ve \"li ser\" edatının yönetimi altına girdiği için \"-ê\" bükün ekini almıştır.",
+    "explanationKu": "Peyva mê ya \"mase\" ji ber ku di bin bandora daçeka cîhî ya \"li ser\" de maye, tewiyaye û qertafa tewangê ya \"-ê\" girtiye."
+  },
+  {
+    "id": "ds_ziman_1248",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di daçekên çerçoveyî (çevre edatlar) de ji bo wateya hundirîn a cihî kîjan cot tê bikaranîn?",
+    "promptTr": "Çevre edatlarda (çerçove-daçek) içte bulunma anlamı için hangi edat çifti kullanılır?",
+    "answers": [
+      "Ji ... re (mînak: ji heval re)",
+      "Bi ... ve (mînak: bi derî ve)",
+      "Li ... re (mînak: li ser re)",
+      "Di ... de (mînak: di xênî de, di dil de)"
+    ],
+    "answersTr": [
+      "Ji ... re (örnek: ji heval re)",
+      "Bi ... ve (örnek: bi derî ve)",
+      "Li ... re (örnek: li ser re)",
+      "Di ... de (örnek: di xênî de, di dil de)"
+    ],
+    "correctAnswer": "Di ... de (mînak: di xênî de, di dil de)",
+    "correctAnswerTr": "Di ... de (örnek: di xênî de, di dil de)",
+    "explanation": "\"Di ... de\" çevre edatı bir mekanın veya kavramın içinde bulunmayı (lokatif/in-situ) ifade eder.",
+    "explanationTr": "\"Di ... de\" çevre edatı bir mekanın veya kavramın içinde bulunmayı (lokatif/in-situ) ifade eder.",
+    "explanationKu": "Daçeka çerçoveyî ya \"di ... de\" ji bo nîşandana hundirê mekanekî an têgehekê tê bikaranîn (di nav bajêr de)."
+  },
+  {
+    "id": "ds_ziman_1249",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Cudahiya wateyî ya di navbera daçeka \"ji ... re\" û \"ji ... ve\" de çi ye?",
+    "promptTr": "\"Ji ... re\" ve \"ji ... ve\" edat kalıpları arasındaki anlamsal fark nedir?",
+    "answers": [
+      "\"Ji ... re\" tenê ji bo amûran e; \"ji ... ve\" tenê ji bo dema bê ye",
+      "Her du daçek jî yek wateyê didin û li şûna hev bê cudahî tên danîn",
+      "\"Ji ... re\" bo araste û sûdwergirtinê ye; \"ji ... ve\" bo destpêk û jêderê ye",
+      "\"Ji ... re\" navdêrê dike pirjimar lê \"ji ... ve\" dike yekjimar"
+    ],
+    "answersTr": [
+      "\"Ji ... re\" sadece araç bildirir; \"ji ... ve\" sadece gelecek zaman içindir",
+      "Her iki edat da tamamen aynı anlamı taşır ve birbirinin yerine geçer",
+      "\"Ji ... re\" yönelme ve yararlanma bildirir; \"ji ... ve\" başlangıç ve köken bildirir",
+      "\"Ji ... re\" ismi çoğul yaparken \"ji ... ve\" ismi tekil yapar"
+    ],
+    "correctAnswer": "\"Ji ... re\" bo araste û sûdwergirtinê ye; \"ji ... ve\" bo destpêk û jêderê ye",
+    "correctAnswerTr": "\"Ji ... re\" yönelme ve yararlanma bildirir; \"ji ... ve\" başlangıç ve köken bildirir",
+    "explanation": "\"Ji ... re\" yönelme/datif (ona, birine), \"ji ... ve\" ise çıkış noktası/ablatif (oradan beri, tarafından) anlamı katar.",
+    "explanationTr": "\"Ji ... re\" yönelme/datif (ona, birine), \"ji ... ve\" ise çıkış noktası/ablatif (oradan beri, tarafından) anlamı katar.",
+    "explanationKu": "Daçeka \"ji ... re\" datîf e û aliyê wergir nîşan dide; \"ji ... ve\" ablatîf e û jêder an dema destpêkê destnîşan dike."
+  },
+  {
+    "id": "ds_ziman_1250",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di daçeka \"bi ... re\" û \"bi ... ve\" de kîjan vebijêrk cudahiya hevaltî û pêvebûnê rast nîşan dide?",
+    "promptTr": "\"Bi ... re\" ve \"bi ... ve\" edatlarında birliktelik ve bitişiklik/araç farkı hangi seçenekte doğrudur?",
+    "answers": [
+      "\"Bi ... re\" tenê ji bo dema borî ye, \"bi ... ve\" ji bo dema niha ye",
+      "\"Bi ... re\" neyîniyê çêdike, \"bi ... ve\" erêniyê diyar dike",
+      "Her du daçek jî tenê ji bo navên hejmaran tên bikaranîn",
+      "\"Bi ... re\" hevaltî/tevgerê nîşan dide, \"bi ... ve\" pêvebûn/girêdanê nîşan dide"
+    ],
+    "answersTr": [
+      "\"Bi ... re\" sadece geçmiş zaman içindir, \"bi ... ve\" şimdiki zaman içindir",
+      "\"Bi ... re\" olumsuzluk üretir, \"bi ... ve\" olumluluk ifade eder",
+      "Her iki edat da sadece sayı isimleriyle birlikte kullanılır",
+      "\"Bi ... re\" birliktelik/beraberlik bildirir, \"bi ... ve\" bitişiklik/bağlanma bildirir"
+    ],
+    "correctAnswer": "\"Bi ... re\" hevaltî/tevgerê nîşan dide, \"bi ... ve\" pêvebûn/girêdanê nîşan dide",
+    "correctAnswerTr": "\"Bi ... re\" birliktelik/beraberlik bildirir, \"bi ... ve\" bitişiklik/bağlanma bildirir",
+    "explanation": "\"Bi min re hat\" (Benimle geldi - birliktelik); \"Bi dîwêr ve kir\" (Duvara astı/tutturdu - bitişme/ilişme).",
+    "explanationTr": "\"Bi min re hat\" (Benimle geldi - birliktelik); \"Bi dîwêr ve kir\" (Duvara astı/tutturdu - bitişme/ilişme).",
+    "explanationKu": "\"Bi ... re\" hevaltiyê tîne zimên (bi wî re çûm), lê \"bi ... ve\" pêvebûn, zeliqandin an amûrê nîşan dide (bi darê ve kir)."
+  },
+  {
+    "id": "ds_ziman_1251",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Daçeka \"bêyî\" di hevokê de çawa dixebite û navdêr an cînavê piştî xwe dixe kîjan rewşê?",
+    "promptTr": "\"Bêyî\" edatı cümlede nasıl işler ve kendisinden sonra gelen isim veya zamiri hangi hale sokar?",
+    "answers": [
+      "Bêparbûnê nîşan dide û peyva piştî xwe dixe rûyê tewandî (mînak: bêyî min)",
+      "Yekbûnê nîşan dide û peyva piştî xwe her tim dixe rûyê xwerû",
+      "Tenê bi lêkerên dema borî re tê û cînavan bi tevahî radike",
+      "Wateya pirjimariyê li peyvê zêde dike bêyî ku tewang çêbibe"
+    ],
+    "answersTr": [
+      "Yoksunluk bildirir ve kendinden sonraki kelimeyi bükünlü hale sokar (ör: bêyî min)",
+      "Birliktelik bildirir ve kendinden sonraki kelimeyi daima yalın halde tutar",
+      "Sadece geçmiş zamanlı fiillerle gelir ve zamirleri tamamen ortadan kaldırır",
+      "Bükün oluşturmaksızın kelimeye sadece çoğulluk anlamı katar"
+    ],
+    "correctAnswer": "Bêparbûnê nîşan dide û peyva piştî xwe dixe rûyê tewandî (mînak: bêyî min)",
+    "correctAnswerTr": "Yoksunluk bildirir ve kendinden sonraki kelimeyi bükünlü hale sokar (ör: bêyî min)",
+    "explanation": "\"Bêyî\" (olmadan/sız) edatı ardındaki isim veya zamiri bükünlü hale (oblique) geçirir: \"bêyî te\", \"bêyî destûrê\".",
+    "explanationTr": "\"Bêyî\" (olmadan/sız) edatı ardındaki isim veya zamiri bükünlü hale (oblique) geçirir: \"bêyî te\", \"bêyî destûrê\".",
+    "explanationKu": "Daçeka bêparbûnê ya \"bêyî\" peyva piştî xwe ditewîne; loma em dibêjin \"bêyî min\", \"bêyî wî\" an \"bêyî zanyariyê\"."
+  },
+  {
+    "id": "ds_ziman_1252",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de dema bê bi kîjan amûrên rêzimanî û formên lêkerê tê avakirin?",
+    "promptTr": "Kurmancîde gelecek zaman hangi dilbilgisel araçlar ve fiil formlarıyla kurulur?",
+    "answers": [
+      "Tenê bi zêdekirina qertafa \"-in\" li ser koka lêkera dema borî",
+      "Bi guherandina cînavên xwerû bo cînavên nebinavkirî",
+      "Bi daçeka \"ê / dê\" û forma guncaw a lêkerê (mînak: ez ê herim)",
+      "Tenê bi lêkera alîkar a \"bûn\" bêyî ti qertafên din"
+    ],
+    "answersTr": [
+      "Geçmiş zaman fiil köküne yalnızca \"-in\" eki eklenerek",
+      "Yalın zamirlerin belirsiz zamirlere dönüştürülmesiyle",
+      "\"ê / dê\" edatı ve uygun fiil formuyla (örnek: ez ê herim)",
+      "Hiçbir ek olmaksızın sadece \"bûn\" yardımcı fiiliyle"
+    ],
+    "correctAnswer": "Bi daçeka \"ê / dê\" û forma guncaw a lêkerê (mînak: ez ê herim)",
+    "correctAnswerTr": "\"ê / dê\" edatı ve uygun fiil formuyla (örnek: ez ê herim)",
+    "explanation": "Kurmancîde gelecek zaman \"ê\" veya \"dê\" parçacığı ve fiilin istek/şimdiki zaman köküyle kurulur (Ez ê bixwînim).",
+    "explanationTr": "Kurmancîde gelecek zaman \"ê\" veya \"dê\" parçacığı ve fiilin istek/şimdiki zaman köküyle kurulur (Ez ê bixwînim).",
+    "explanationKu": "Dema bê bi dabeşeka \"ê / dê\" û gopika lêkerê ya dema niha an forma subjunktîfê (ez ê bixwînim, ew ê bê) tê çêkirin."
+  },
+  {
+    "id": "ds_ziman_1253",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Gava pêşgireke lêkerî ya wekî \"ve-\" an \"ra-\" li lêkerê zêde bibe, qertafa reweştê ya \"bi-\" çawa diguhere?",
+    "promptTr": "\"Ve-\" veya \"ra-\" gibi fiil önekleri fiile eklendiğinde dilek/istek kipi öneki olan \"bi-\" nasıl değişir?",
+    "answers": [
+      "Qertafa \"bi-\" dikeve û pêşgir rasterast li ser gopika lêkerê rûdine",
+      "Qertafa \"bi-\" dubare dibe û di navbera her du pêşgiran de dimîne",
+      "Pêşgira lêkerî radibe û tenê qertafa \"bi-\" li ser lêkerê dimîne",
+      "Lêker bixweber dibe lêkereke negerguhêz a dema borî"
+    ],
+    "answersTr": [
+      "\"bi-\" eki düşer ve önek doğrudan fiil kökünün başına yerleşir",
+      "\"bi-\" eki yinelenir ve iki önek arasında yer almaya devam eder",
+      "Fiil öneki düşer ve fiilin başında yalnızca \"bi-\" eki kalır",
+      "Fiil kendiliğinden geçmiş zamanlı geçişsiz bir fiile dönüşür"
+    ],
+    "correctAnswer": "Qertafa \"bi-\" dikeve û pêşgir rasterast li ser gopika lêkerê rûdine",
+    "correctAnswerTr": "\"bi-\" eki düşer ve önek doğrudan fiil kökünün başına yerleşir",
+    "explanation": "Önekli fiillerde (vekirin, rabûn) subjunktif eki \"bi-\" düşer: \"veke\" (ve-bi-ke değil), \"rabe\" (ra-bi-be değil).",
+    "explanationTr": "Önekli fiillerde (vekirin, rabûn) subjunktif eki \"bi-\" düşer: \"veke\" (ve-bi-ke değil), \"rabe\" (ra-bi-be değil).",
+    "explanationKu": "Di lêkerên pêşgirkî de gava forma subjunktîfê tê çêkirin, qertafa \"bi-\" dihele û nayê gotin (veke, rabe, daxe)."
+  },
+  {
+    "id": "ds_ziman_1254",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di lêkera \"vekirin\" de pêşgira \"ve-\" çi cure guherîneke wateyî li ser lêkera \"kirin\"ê çêdike?",
+    "promptTr": "\"Vekirin\" fiilindeki \"ve-\" öneki \"kirin\" fiilinin anlamında nasıl bir anlamsal dönüşüm yapar?",
+    "answers": [
+      "Lêkerê tenê ji aliyê rêzimanî ve dike lêkereke dema borî",
+      "Wateya lêkerê dike neyînî û wekî qertafa \"ne-\" dixebite",
+      "Lêkerê ji lêkera gerguhêz vediguherîne lêkera negerguhêz",
+      "Wateya vebûn, dubarebûn an berevajîkirina girtinê lê zêde dike"
+    ],
+    "answersTr": [
+      "Fiili yalnızca dilbilgisel açıdan geçmiş zamanlı bir fiil yapar",
+      "Fiilin anlamını olumsuzlaştırır ve \"ne-\" eki gibi işlev görür",
+      "Fiili geçişli bir fiilden geçişsiz bir fiile dönüştürür",
+      "Açılma, tekrarlanma veya kapanmanın tersi olma anlamını ekler"
+    ],
+    "correctAnswer": "Wateya vebûn, dubarebûn an berevajîkirina girtinê lê zêde dike",
+    "correctAnswerTr": "Açılma, tekrarlanma veya kapanmanın tersi olma anlamını ekler",
+    "explanation": "\"Ve-\" öneki fiillere açma, yeniden yapma veya geriye dönme anlamı katar (vekirin: açmak, vegerîn: dönmek, vexwarin: içmek).",
+    "explanationTr": "\"Ve-\" öneki fiillere açma, yeniden yapma veya geriye dönme anlamı katar (vekirin: açmak, vegerîn: dönmek, vexwarin: içmek).",
+    "explanationKu": "Pêşgira \"ve-\" wateya berfirehkirin, vekirin an dubarekirinê dide lêkeran (mînak: vekirin, vegotin, vegerîn)."
+  },
+  {
+    "id": "ds_ziman_1255",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de lêkera gerguhêz bi rêya kîjan lêkera alîkar dibe lêkera lêkerveger (pasîf / passive)?",
+    "promptTr": "Kurmancîde geçişli bir fiil hangi yardımcı fiil aracılığıyla edilgen (pasif) yapıya dönüştürülür?",
+    "answers": [
+      "Bi alîkariya lêkera \"hatin\" û jêdera lêkerê (mînak: hate dîtin)",
+      "Bi zêdekirina qertafa \"-andin\" li ser koka lêkera negerguhêz",
+      "Tenê bi guherandina cînavê xwerû bo cînavê tewandî",
+      "Bi anîna lêkera \"çûn\" li pêşiya forma dema niha"
+    ],
+    "answersTr": [
+      "\"Hatin\" yardımcı fiili ve fiilin mastarı aracılığıyla (ör: hate dîtin)",
+      "Geçişsiz fiil köküne \"-andin\" ettirgen eki eklenerek",
+      "Yalnızca yalın zamirin bükünlü zamire dönüştürülmesiyle",
+      "Şimdiki zaman kökünün önüne \"çûn\" fiili getirilerek"
+    ],
+    "correctAnswer": "Bi alîkariya lêkera \"hatin\" û jêdera lêkerê (mînak: hate dîtin)",
+    "correctAnswerTr": "\"Hatin\" yardımcı fiili ve fiilin mastarı aracılığıyla (ör: hate dîtin)",
+    "explanation": "Kurmancîde edilgen çatı \"hatin\" fiili ve asıl eylemin mastarı ile kurulur: \"Name hate nivîsandin\" (Mektup yazıldı).",
+    "explanationTr": "Kurmancîde edilgen çatı \"hatin\" fiili ve asıl eylemin mastarı ile kurulur: \"Name hate nivîsandin\" (Mektup yazıldı).",
+    "explanationKu": "Avahiya pasîf (lêkerveger) di kurmancî de bi lêkera alîkar a \"hatin\"ê û raderê (jêderê) tê sazkirin (hate dîtin, tên girtin)."
+  },
+  {
+    "id": "ds_ziman_1256",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de paşgira \"-andin\" li ser koka lêkeran kîjan guherîna rêzimanî çêdike?",
+    "promptTr": "Kurmancîde fiil köklerine gelen \"-andin\" eki nasıl bir dilbilgisel dönüşüm sağlar?",
+    "answers": [
+      "Lêkerên dema borî vediguherîne lêkerên dema niha",
+      "Hemû lêkerên gerguhêz bixweber dike navdêrên mê",
+      "Lêkerên negerguhêz dike lêkerên gerguhêz û xurtdar (faktîtîf)",
+      "Lêkerê ji aliyê wateyê ve dike hevokeke neyînî"
+    ],
+    "answersTr": [
+      "Geçmiş zamanlı fiilleri şimdiki zaman fiillerine dönüştürür",
+      "Bütün geçişli fiilleri kendiliğinden dişil isimlere çevirir",
+      "Geçişsiz fiilleri geçişli ve ettirgen (faktitif/nedensel) fiillere dönüştürür",
+      "Fiili anlamsal bakımdan olumsuz bir cümleye dönüştürür"
+    ],
+    "correctAnswer": "Lêkerên negerguhêz dike lêkerên gerguhêz û xurtdar (faktîtîf)",
+    "correctAnswerTr": "Geçişsiz fiilleri geçişli ve ettirgen (faktitif/nedensel) fiillere dönüştürür",
+    "explanation": "\"-andin\" eki geçişsiz kökleri geçişli/ettirgen yapar: gerîn (gezmek) -> gerandin (gezdirmek/yönetmek), revîn (kaçmak) -> revandin (kaçırmak).",
+    "explanationTr": "\"-andin\" eki geçişsiz kökleri geçişli/ettirgen yapar: gerîn (gezmek) -> gerandin (gezdirmek/yönetmek), revîn (kaçmak) -> revandin (kaçırmak).",
+    "explanationKu": "Paşgira \"-andin\"ê lêkerên întranzîtîv dike tranzîtîv ango lêkera gerguhêz a xurtdar çêdike (revîn -> revandin)."
+  },
+  {
+    "id": "ds_ziman_1257",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka mercî ya nediyar (irrealis) de avahiya lêkeran di kîjan vebijêrkê de rast e?",
+    "promptTr": "Gerçekleşmemiş şart (irrealis) cümlesinde fiil yapısı hangi seçenekte doğru kurulmuştur?",
+    "answers": [
+      "Heke te bigota, ez ê bihatama",
+      "Heke tu dibêjî, ez têm wir",
+      "Heke te got, ez ê bêm",
+      "Heke tu bêjî, min dîtibû"
+    ],
+    "answersTr": [
+      "Heke te bigota, ez ê bihatama",
+      "Heke tu dibêjî, ez têm wir",
+      "Heke te got, ez ê bêm",
+      "Heke tu bêjî, min dîtibû"
+    ],
+    "correctAnswer": "Heke te bigota, ez ê bihatama",
+    "correctAnswerTr": "Heke te bigota, ez ê bihatama",
+    "explanation": "Geçmişte gerçekleşmemiş şart kurgusunda şart yan cümleciğinde geçmiş istek (\"bigota\"), temel cümlede gelecek geçmiş (\"ê bihatama\") kullanılır.",
+    "explanationTr": "Geçmişte gerçekleşmemiş şart kurgusunda şart yan cümleciğinde geçmiş istek (\"bigota\"), temel cümlede gelecek geçmiş (\"ê bihatama\") kullanılır.",
+    "explanationKu": "Di merca nediyar a dema borî de forma daxwazî ya borî (bigota) û dema bê ya borî (ez ê bihatama) bi hevre tên bikaranîn."
+  },
+  {
+    "id": "ds_ziman_1258",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Alfabeya Hawarê ya ku ji aliyê Celadet Alî Bedirxan ve di 1932an de hate amadekirin ji çend tîpan pêk tê?",
+    "promptTr": "Celadet Alî Bedirxan tarafından 1932'de hazırlanan Hawar alfabesi toplam kaç harften oluşur?",
+    "answers": [
+      "Ji 29 tîpan (8 dengdêr û 21 dengdar)",
+      "Ji 32 tîpan (7 dengdêr û 25 dengdar)",
+      "Ji 34 tîpan (9 dengdêr û 25 dengdar)",
+      "Ji 31 tîpan (8 dengdêr û 23 dengdar)"
+    ],
+    "answersTr": [
+      "29 harften (8 ünlü ve 21 ünsüz)",
+      "32 harften (7 ünlü ve 25 ünsüz)",
+      "34 harften (9 ünlü ve 25 ünsüz)",
+      "31 harften (8 ünlü ve 23 ünsüz)"
+    ],
+    "correctAnswer": "Ji 31 tîpan (8 dengdêr û 23 dengdar)",
+    "correctAnswerTr": "31 harften (8 ünlü ve 23 ünsüz)",
+    "explanation": "Hawar Kürt Latin alfabesi 31 harften oluşur; 8 ünlü (a, e, ê, i, î, o, u, û) ve 23 ünsüz harf barındırır.",
+    "explanationTr": "Hawar Kürt Latin alfabesi 31 harften oluşur; 8 ünlü (a, e, ê, i, î, o, u, û) ve 23 ünsüz harf barındırır.",
+    "explanationKu": "Alfabeya Hawarê ya Celadet Bedirxan ji 31 tîpan pêk tê; 8 tîpên wê dengdêr û 23 tîpên wê jî dengdar in."
+  },
+  {
+    "id": "ds_ziman_1259",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di alfabeya kurmancî de kîjan koma dengdêran wekî dengdêrên dirêj tên qebûlkirin?",
+    "promptTr": "Kurmancî alfabesinde hangi ünlü grubu uzun ünlüler olarak kabul edilir?",
+    "answers": [
+      "A, Ê, Î, O, Û",
+      "A, E, I, U, O",
+      "E, I, U, Ê, Î",
+      "Ê, Î, I, U, Û"
+    ],
+    "answersTr": [
+      "A, Ê, Î, O, Û",
+      "A, E, I, U, O",
+      "E, I, U, Ê, Î",
+      "Ê, Î, I, U, Û"
+    ],
+    "correctAnswer": "A, Ê, Î, O, Û",
+    "correctAnswerTr": "A, Ê, Î, O, Û",
+    "explanation": "Kurmancîde 5 uzun ünlü (a, ê, î, o, û) ve 3 kısa ünlü (e, i, u) bulunmaktadır.",
+    "explanationTr": "Kurmancîde 5 uzun ünlü (a, ê, î, o, û) ve 3 kısa ünlü (e, i, u) bulunmaktadır.",
+    "explanationKu": "Di kurmancî de 5 dengdêrên dirêj (a, ê, î, o, û) û 3 dengdêrên kurt (e, i, u) hene."
+  },
+  {
+    "id": "ds_ziman_1260",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Kîjan tîp di alfabeya Hawarê de heye lê di alfabeya tirkî de nîne?",
+    "promptTr": "Hangi harf Hawar alfabesinde bulunur ama Türk alfabesinde bulunmaz?",
+    "answers": [
+      "Tîpa \"b\"",
+      "Tîpa \"x\"",
+      "Tîpa \"d\"",
+      "Tîpa \"m\""
+    ],
+    "answersTr": [
+      "\"b\" harfi",
+      "\"x\" harfi",
+      "\"d\" harfi",
+      "\"m\" harfi"
+    ],
+    "correctAnswer": "Tîpa \"x\"",
+    "correctAnswerTr": "\"x\" harfi",
+    "explanation": "Hawar alfabesinde \"q\", \"w\" ve \"x\" harfleri bulunur; bu üçü Türk alfabesinde yer almaz. \"b\", \"d\" ve \"m\" her iki alfabede de vardır.",
+    "explanationTr": "Hawar alfabesinde \"q\", \"w\" ve \"x\" harfleri bulunur; bu üçü Türk alfabesinde yer almaz. \"b\", \"d\" ve \"m\" her iki alfabede de vardır.",
+    "explanationKu": "Di alfabeya Hawarê de tîpên \"q\", \"w\" û \"x\" hene; ev her sê di alfabeya tirkî de nînin."
+  },
+  {
+    "id": "ds_ziman_1261",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di dengnasiya kurmancî de tîpên cotdeng ên wekî \"ç, k, p, t\" xwedî kîjan taybetmendiya fonetîk in?",
+    "promptTr": "Kurmancî fonolojisinde \"ç, k, p, t\" gibi patlamalı sesler hangi ayırt edici fonetik özelliğe sahiptir?",
+    "answers": [
+      "Tenê di dawiya peyvan de tên guhertin û dibin dengdêr",
+      "Di kurmancî de ti carî li pêşiya dengdêran cih nagirin",
+      "Her tim bi tîpa \"h\"yê re wekî dîgraf tên xwendin",
+      "Cudahiya bêhnkêşî (aspirated) û nebêhnkêşî (non-aspirated) ya watedar"
+    ],
+    "answersTr": [
+      "Sadece kelime sonunda değişime uğrayıp ünlüye dönüşme özelliği",
+      "Kurmancîde hiçbir zaman ünlü harflerin önünde yer almama kuralı",
+      "Her zaman \"h\" harfiyle birleşerek digraf şeklinde okunma kuralı",
+      "Anlam ayırt edici nefesli (aspirated) ve nefessiz (non-aspirated) karşıtlığı"
+    ],
+    "correctAnswer": "Cudahiya bêhnkêşî (aspirated) û nebêhnkêşî (non-aspirated) ya watedar",
+    "correctAnswerTr": "Anlam ayırt edici nefesli (aspirated) ve nefessiz (non-aspirated) karşıtlığı",
+    "explanation": "Kurmancîde ç, k, p, t seslerinde nefesli/sert (aspirated) ve nefessiz/yumuşak (non-aspirated) ayrımı anlam farkı yaratır (ker: eşek vs k'er: sağır).",
+    "explanationTr": "Kurmancîde ç, k, p, t seslerinde nefesli/sert (aspirated) ve nefessiz/yumuşak (non-aspirated) ayrımı anlam farkı yaratır (ker: eşek vs k'er: sağır).",
+    "explanationKu": "Di fonolojîya kurmancî de dengên ç, k, p, t du cure ne: req/bêhnkêş (p') û nerm/nebêhnkêş (p) ku wateya peyvê diguherînin."
+  },
+  {
+    "id": "ds_ziman_1262",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di zimanê kurmancî de dema ku du dengdêr digihîjin hev, kîjan tîpa navberê dikeve navbera wan?",
+    "promptTr": "Kurmancîde iki ünlü harf yan yana geldiğinde araya giren kaynaştırma ünsüzü hangisidir?",
+    "answers": [
+      "Tîpa \"n\" (mînak: xanî -> xanînê min)",
+      "Tîpa \"y\" (mînak: xanî -> xaniyê min)",
+      "Tîpa \"s\" (mînak: xanî -> xanîsê min)",
+      "Tîpa \"r\" (mînak: xanî -> xanîrê min)"
+    ],
+    "answersTr": [
+      "\"n\" harfi (örnek: xanî -> xanînê min)",
+      "\"y\" harfi (örnek: xanî -> xaniyê min)",
+      "\"s\" harfi (örnek: xanî -> xanîsê min)",
+      "\"r\" harfi (örnek: xanî -> xanîrê min)"
+    ],
+    "correctAnswer": "Tîpa \"y\" (mînak: xanî -> xaniyê min)",
+    "correctAnswerTr": "\"y\" harfi (örnek: xanî -> xaniyê min)",
+    "explanation": "Kurmancîde iki ünlünün çatışmasını önlemek için kaynaştırma sesi olarak \"y\" kullanılır (dê -> dêya min, çû -> çûye).",
+    "explanationTr": "Kurmancîde iki ünlünün çatışmasını önlemek için kaynaştırma sesi olarak \"y\" kullanılır (dê -> dêya min, çû -> çûye).",
+    "explanationKu": "Ji bo ku du dengdêr li pey hev nekevin xişrê, dengê navberê yê \"y\" dikeve navbera du dengdêran (mase-y-a min)."
+  },
+  {
+    "id": "ds_ziman_1263",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di navbera zaravayê kurmancî û soranî de cudahiya sereke ya di warê zayenda rêzimanî de çi ye?",
+    "promptTr": "Kurmancî ile Soranî lehçeleri arasında dilbilgisel cinsiyet (gender) konusundaki temel fark nedir?",
+    "answers": [
+      "Kurmancî zayenda mê û nêr diparêze, lê di soranî de zayend rabûye",
+      "Soranî sê zayendan diparêze lê di kurmancî de qet zayend nîne",
+      "Di her du zaravayan de jî sîstema zayendê bi tevahî wekhev e",
+      "Zayend tenê di soranî de heye û di kurmancî de tenê di lêkeran de ye"
+    ],
+    "answersTr": [
+      "Kurmancî dişil ve eril cinsiyeti korurken Soranîde gramatik cinsiyet kalkmıştır",
+      "Soranî üç cinsiyeti korurken Kurmancîde cinsiyet sistemi hiç yoktur",
+      "Her iki lehçede de gramatik cinsiyet kuralları bütünüyle aynıdır",
+      "Cinsiyet yalnızca Soranîde vardır, Kurmancîde ise sadece fiillerde görülür"
+    ],
+    "correctAnswer": "Kurmancî zayenda mê û nêr diparêze, lê di soranî de zayend rabûye",
+    "correctAnswerTr": "Kurmancî dişil ve eril cinsiyeti korurken Soranîde gramatik cinsiyet kalkmıştır",
+    "explanation": "Kurmancî ve Zazakîde eril/dişil cinsiyet sistemi ve bükün korunurken, Soranîde gramatik cinsiyet ayrımı nötrleşmiştir.",
+    "explanationTr": "Kurmancî ve Zazakîde eril/dişil cinsiyet sistemi ve bükün korunurken, Soranîde gramatik cinsiyet ayrımı nötrleşmiştir.",
+    "explanationKu": "Di kurmancî de zayenda mê û nêr di îzafe û tewangê de zindî ye; lê di soranî de ev cudahî rabûye û îzafe tenê bi \"-î\" çêdibe."
+  },
+  {
+    "id": "ds_ziman_1264",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Cudahiya nîşandana kesê di dema niha de di navbera kurmancî û soranî de kîjan e?",
+    "promptTr": "Şimdiki zaman bildiriminde Kurmancî ile Soranî arasındaki biçimsel önek farkı nedir?",
+    "answers": [
+      "Kurmancî tenê \"bi-\" bi kar tîne, lê soranî tenê \"mi-\" bi kar tîne",
+      "Kurmancî pêşgira \"di-\" bi kar tîne, lê soranî pêşgira \"de-\" bi kar tîne",
+      "Soranî qet pêşgiran bi kar naîne lê kurmancî tenê paşgiran datîne",
+      "Kurmancî pêşgira \"me-\" bi kar tîne, soranî qertafa \"-ox\" bi kar tîne"
+    ],
+    "answersTr": [
+      "Kurmancî sadece \"bi-\" kullanırken, Soranî sadece \"mi-\" kullanır",
+      "Kurmancî \"di-\" önekini kullanırken, Soranî \"de-\" önekini kullanır",
+      "Soranî hiç önek kullanmazken, Kurmancî sadece sonekler kullanır",
+      "Kurmancî \"me-\" önekini kullanırken, Soranî \"-ox\" ekini kullanır"
+    ],
+    "correctAnswer": "Kurmancî pêşgira \"di-\" bi kar tîne, lê soranî pêşgira \"de-\" bi kar tîne",
+    "correctAnswerTr": "Kurmancî \"di-\" önekini kullanırken, Soranî \"de-\" önekini kullanır",
+    "explanation": "Şimdiki zaman göstergesi olarak Kurmancîde \"di-\" (diçim, dixwînim), Soranîde ise \"de-\" (deçim, dexwênim) öneki kullanılır.",
+    "explanationTr": "Şimdiki zaman göstergesi olarak Kurmancîde \"di-\" (diçim, dixwînim), Soranîde ise \"de-\" (deçim, dexwênim) öneki kullanılır.",
+    "explanationKu": "Nîşana dema niha di kurmancî de pêşgira \"di-\" ye (diçim), lê di soranî de pêşgira \"de-\" ye (deçim)."
+  },
+  {
+    "id": "ds_ziman_1265",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di navbera kurmancî û zazakî (kirmanckî) de kîjan ji van taybetmendiyên rêzimanî hevpar e?",
+    "promptTr": "Kurmancî ile Zazakî (Kirmanckî) arasında aşağıdaki dilbilgisel özelliklerden hangisi ortaktır?",
+    "answers": [
+      "Bi tevahî nebûna ti tewangê di navbera navdêran de",
+      "Bikaranîna heman alfabeya erebî ya bê dengdêr",
+      "Bikaranîna pêşgira \"de-\" ji bo hemû demên borî",
+      "Parastina zayenda mê û nêr û hebûna sîstema ergatîfê"
+    ],
+    "answersTr": [
+      "İsimler arasında hiçbir bükün sisteminin bulunmaması",
+      "Ünlüsüz aynı Arap alfabesinin zorunlu kullanımı",
+      "Geçmiş zamanların tümü için \"de-\" önekinin kullanılması",
+      "Dişil ve eril cinsiyetin korunması ve ergatif sistemin varlığı"
+    ],
+    "correctAnswer": "Parastina zayenda mê û nêr û hebûna sîstema ergatîfê",
+    "correctAnswerTr": "Dişil ve eril cinsiyetin korunması ve ergatif sistemin varlığı",
+    "explanation": "Hem Kurmancî hem de Zazakî, arkaik İrani özellikleri koruyarak dilbilgisel cinsiyet (eril/dişil) ve geçmiş zaman ergatifliğini muhafaza etmiştir.",
+    "explanationTr": "Hem Kurmancî hem de Zazakî, arkaik İrani özellikleri koruyarak dilbilgisel cinsiyet (eril/dişil) ve geçmiş zaman ergatifliğini muhafaza etmiştir.",
+    "explanationKu": "Kurmancî û zazakî her du jî zayenda rêzimanî (nêr/mê), sîstema tewangê û rêzika ergatîfê di dema borî de diparêzin."
+  },
+  {
+    "id": "ds_ziman_1266",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de paşgira \"-xane\" (mînak: pirtûkxane, nexweşxane) ji bo çi cure peyvsaziyê tê bikaranîn?",
+    "promptTr": "Kurmancîde \"-xane\" soneki (ör: pirtûkxane, nexweşxane) ne tür bir sözcük türetimi için kullanılır?",
+    "answers": [
+      "Ji bo çêkirina lêkerên negerguhêz ji rengdêran",
+      "Ji bo çêkirina navên cih û mekanan li ser navdêran",
+      "Tenê ji bo çêkirina pirjimariya navdêrên nêr",
+      "Ji bo nîşandana amûrên pîşesaziyê yên biçûk"
+    ],
+    "answersTr": [
+      "Sıfatlardan geçişsiz fiiller türetmek için",
+      "İsimlerden yer ve mekan isimleri türetmek için",
+      "Yalnızca eril isimlerin çoğulunu yapmak için",
+      "Küçük sanayi ve mutfak aletlerini göstermek için"
+    ],
+    "correctAnswer": "Ji bo çêkirina navên cih û mekanan li ser navdêran",
+    "correctAnswerTr": "İsimlerden yer ve mekan isimleri türetmek için",
+    "explanation": "\"-xane\" eki mekan bildiren bileşik isimler türetir: pirtûk (kitap) -> pirtûkxane (kütüphane), çap (baskı) -> çapxane (matbaa).",
+    "explanationTr": "\"-xane\" eki mekan bildiren bileşik isimler türetir: pirtûk (kitap) -> pirtûkxane (kütüphane), çap (baskı) -> çapxane (matbaa).",
+    "explanationKu": "Paşgira \"-xane\"yê ji bo avakirina navên mekan û saziyan tê bikaranîn (nexweşxane, meyxane, çapxane)."
+  },
+  {
+    "id": "ds_ziman_1267",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de paşgira \"-dar\" di peyvên wekî \"avdar\", \"birîndar\", \"dildar\" de çi cure wateyê ava dike?",
+    "promptTr": "Kurmancîde \"-dar\" eki \"avdar\", \"birîndar\", \"dildar\" gibi kelimelerde nasıl bir anlamsal işlev görür?",
+    "answers": [
+      "Xwedîtî, hilgirtin an hebûna wê taybetmendiyê nîşan dide",
+      "Neyînîbûn û tunebûna wê rewşê diyar dike",
+      "Peyvê dike lêkereke gerguhêz a dema borî",
+      "Tenê ji bo naskirina navên pîşeyên nûjen e"
+    ],
+    "answersTr": [
+      "Sahiplik, taşıma veya o niteliği barındırma anlamı katar",
+      "Olumsuzluk ve o durumun yokluğunu ifade eder",
+      "Kelimeyi geçmiş zamanlı geçişli bir fiile dönüştürür",
+      "Yalnızca modern meslek isimlerini tanımlamaya yarar"
+    ],
+    "correctAnswer": "Xwedîtî, hilgirtin an hebûna wê taybetmendiyê nîşan dide",
+    "correctAnswerTr": "Sahiplik, taşıma veya o niteliği barındırma anlamı katar",
+    "explanation": "\"-dar\" eki \"sahip olan / barındıran\" sıfatları türetir: birîn (yara) -> birîndar (yaralı), dil (gönül) -> dildar (sevdalı).",
+    "explanationTr": "\"-dar\" eki \"sahip olan / barındıran\" sıfatları türetir: birîn (yara) -> birîndar (yaralı), dil (gönül) -> dildar (sevdalı).",
+    "explanationKu": "Paşgira \"-dar\"ê xwedîtî û hebûna têgehekê nîşan dide; rengdêrên wekî birîndar, dildar û zordar jê çêdibin."
+  },
+  {
+    "id": "ds_ziman_1268",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Paşgira \"-van\" di peyvên wekî \"baxçevan\", \"şivan\", \"pasewan\" de çi cure peyvan çêdike?",
+    "promptTr": "\"Baxçevan\", \"şivan\", \"pasewan\" kelimelerindeki \"-van\" soneki ne tür kelimeler türetir?",
+    "answers": [
+      "Tenê navên amûrên ku di kar de tên bikaranîn",
+      "Navên pîşe, berpirsiyarî û kesên ku wî karî dikin",
+      "Navên cihên erdnîgarî yên ku av lê heye",
+      "Rengdêrên ku biçûkbûn û hezkirinê nîşan didin"
+    ],
+    "answersTr": [
+      "Yalnızca işte kullanılan alet ve edavat isimleri",
+      "Meslek, sorumluluk ve o işi yürüten kişi isimleri",
+      "İçinde su bulunan coğrafi mekan isimleri",
+      "Küçültme ve sevgi bildiren niteleme sıfatları"
+    ],
+    "correctAnswer": "Navên pîşe, berpirsiyarî û kesên ku wî karî dikin",
+    "correctAnswerTr": "Meslek, sorumluluk ve o işi yürüten kişi isimleri",
+    "explanation": "\"-van\" eki meslek ve yapan kişi isimleri türetir: baxçe -> baxçevan (bahçıvan), şe -> şivan (çoban), rê -> rêvan (yolcu).",
+    "explanationTr": "\"-van\" eki meslek ve yapan kişi isimleri türetir: baxçe -> baxçevan (bahçıvan), şe -> şivan (çoban), rê -> rêvan (yolcu).",
+    "explanationKu": "Paşgira \"-van\"ê kesê ku karekî diparêze an bi rê ve dibe nîşan dide (mînak: nobedar/nobevan, şivan, baxçevan)."
+  },
+  {
+    "id": "ds_ziman_1269",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de paşgira \"-tî / -atî\" (mînak: hevaltî, mirovatî) çi cure navdêran çêdike?",
+    "promptTr": "Kurmancîde \"-tî / -atî\" eki (ör: hevaltî, mirovatî) ne tür isimler türetir?",
+    "answers": [
+      "Tenê navên madî yên ku bi destan tên girtin",
+      "Lêkerên xurtdar ên ku di dema bê de tên bikaranîn",
+      "Cînavên vegerok ên ku li şûna kirdeyê rûdinên",
+      "Navdêrên razber (abstrakt) ên têgehî û peywendiyê"
+    ],
+    "answersTr": [
+      "Yalnızca elle tutulan somut madde isimleri",
+      "Gelecek zamanda kullanılan ettirgen fiil gövdeleri",
+      "Öznenin yerine geçen dönüşlü zamir türevleri",
+      "Kavramsal ve ilişkisel soyut (abstrakt) isimler"
+    ],
+    "correctAnswer": "Navdêrên razber (abstrakt) ên têgehî û peywendiyê",
+    "correctAnswerTr": "Kavramsal ve ilişkisel soyut (abstrakt) isimler",
+    "explanation": "\"-tî / -atî\" eki somut isimlerden soyut kavram isimleri türetir: heval (arkadaş) -> hevaltî (arkadaşlık), mirov (insan) -> mirovatî (insanlık).",
+    "explanationTr": "\"-tî / -atî\" eki somut isimlerden soyut kavram isimleri türetir: heval (arkadaş) -> hevaltî (arkadaşlık), mirov (insan) -> mirovatî (insanlık).",
+    "explanationKu": "Paşgira \"-tî / -atî\"yê ji navdêr û rengdêran navên razber û têgehî çêdike (hevaltî, biratî, zanyarî/zanatî)."
+  },
+  {
+    "id": "ds_ziman_1270",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Pêşgira neyîniyê ya \"bê-\" di peyvên wekî \"bêdeng\", \"bêxew\", \"bêaqil\" de çawa dixebite?",
+    "promptTr": "\"Bêdeng\", \"bêxew\", \"bêaqil\" kelimelerindeki \"bê-\" yoksunluk öneki nasıl bir sözcük türetimi yapar?",
+    "answers": [
+      "Ji navdêran rengdêrên bêparbûn û tunebûnê ava dike",
+      "Hemû rengdêran vediguherîne lêkerên dema niha",
+      "Tenê li ser lêkerên borî zêde dibe û wan dike mê",
+      "Peyvê dike navdêreke pirjimar a binavkirî"
+    ],
+    "answersTr": [
+      "İsimlerden yoksunluk ve bulunmama bildiren sıfatlar türetir",
+      "Bütün sıfatları şimdiki zaman fiillerine dönüştürür",
+      "Sadece geçmiş zaman fiillerine gelip onları dişil yapar",
+      "Kelimeyi belirli bir çoğul isme dönüştürür"
+    ],
+    "correctAnswer": "Ji navdêran rengdêrên bêparbûn û tunebûnê ava dike",
+    "correctAnswerTr": "İsimlerden yoksunluk ve bulunmama bildiren sıfatlar türetir",
+    "explanation": "\"Bê-\" yoksunluk öneki isimlerin başına gelerek \"-siz/-sız\" anlamında niteleme sıfatları üretir (bêxew: uykusuz, bêtirs: korkusuz).",
+    "explanationTr": "\"Bê-\" yoksunluk öneki isimlerin başına gelerek \"-siz/-sız\" anlamında niteleme sıfatları üretir (bêxew: uykusuz, bêtirs: korkusuz).",
+    "explanationKu": "Pêşgira \"bê-\" dikeve serê navdêran û rengdêrên nebûn an bêparbûnê çêdike (bêdeng, bêhêvî, bêbext)."
+  },
+  {
+    "id": "ds_ziman_1271",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de paşgira \"-ik\" an \"-ok\" (mînak: zarok, keçik, xanîk) çi cure fonksiyonekê pêk tîne?",
+    "promptTr": "Kurmancîde \"-ik\" veya \"-ok\" sonekleri (ör: zarok, keçik, xanîk) ne tür bir işlev görür?",
+    "answers": [
+      "Peyvê dike lêkereke dema borî ya gerguhêz",
+      "Zayenda peyvê her tim ji mê diguhere bo nêr",
+      "Wateya biçûkkirin, hezkirin an taybetmendiyê lê zêde dike",
+      "Tenê ji bo hejmartina tiştên giran tê bikaranîn"
+    ],
+    "answersTr": [
+      "Kelimeyi geçmiş zamanlı geçişli bir fiile dönüştürür",
+      "Kelimenin cinsiyetini daima dişilden erile çevirir",
+      "Küçültme, sevgi veya belirgin bir nitelik anlamı katar",
+      "Yalnızca ağır nesnelerin sayımında kullanılır"
+    ],
+    "correctAnswer": "Wateya biçûkkirin, hezkirin an taybetmendiyê lê zêde dike",
+    "correctAnswerTr": "Küçültme, sevgi veya belirgin bir nitelik anlamı katar",
+    "explanation": "\"-ik\" ve \"-ok\" ekleri küçültme ve şefkat (diminutif) ekleridir: keçik (kızcağız/küçük kız), xanîk (küçük ev).",
+    "explanationTr": "\"-ik\" ve \"-ok\" ekleri küçültme ve şefkat (diminutif) ekleridir: keçik (kızcağız/küçük kız), xanîk (küçük ev).",
+    "explanationKu": "Paşgirên \"-ik\" û \"-ok\"ê paşgirên biçûkkirin û hezkirinê (dîmînûtîf) ne (mînak: çavên keçikê, xanîkê li ber çem)."
+  },
+  {
+    "id": "ds_ziman_1272",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Rêzkirina giştî ya hêmanên hevokê (Word Order) di zimanê kurmancî de çawa ye?",
+    "promptTr": "Kurmancîde temel cümle ögelerinin diziliş kuralı (Word Order) nasıldır?",
+    "answers": [
+      "Lêker + Kirde + Bireser (VSO: Lêker her tim di destpêkê de ye)",
+      "Kirde + Bireser + Lêker (SOV: Kirde li pêşiyê, lêker li dawiyê ye)",
+      "Bireser + Lêker + Kirde (OVS: Bireser her tim li pêşiya hevokê ye)",
+      "Lêker + Bireser + Kirde (VOS: Kirde her tim li dawiya hevokê ye)"
+    ],
+    "answersTr": [
+      "Fiil + Özne + Nesne (VSO: Fiil her zaman cümlenin başındadır)",
+      "Özne + Nesne + Fiil (SOV: Özne başta, fiil sonda yer alır)",
+      "Nesne + Fiil + Özne (OVS: Nesne her zaman cümlenin başındadır)",
+      "Fiil + Nesne + Özne (VOS: Özne her zaman cümlenin sonundadır)"
+    ],
+    "correctAnswer": "Kirde + Bireser + Lêker (SOV: Kirde li pêşiyê, lêker li dawiyê ye)",
+    "correctAnswerTr": "Özne + Nesne + Fiil (SOV: Özne başta, fiil sonda yer alır)",
+    "explanation": "Kurmancî bir SOV (Özne-Nesne-Yüklem) dilidir; temel cümlede eylemi yapan başta, fiil ise cümlenin sonunda yer alır.",
+    "explanationTr": "Kurmancî bir SOV (Özne-Nesne-Yüklem) dilidir; temel cümlede eylemi yapan başta, fiil ise cümlenin sonunda yer alır.",
+    "explanationKu": "Rêzmana kurmancî li ser sîstema SOV ava ye: pêşî kirde tê, paşê bireser û di dawiya hevokê de lêker cih digire."
+  },
+  {
+    "id": "ds_ziman_1273",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di hevokên hevedudanî yên bi lêkera \"karîn\" (mînak: Ez dikarim bixwînim) lêkera duyem di kîjan modê de tê kişandin?",
+    "promptTr": "\"Karîn\" fiiliyle kurulan yeterlilik yapılarında (ör: Ez dikarim bixwînim) ikinci fiil hangi kipte çekimlenir?",
+    "answers": [
+      "Di dema borî ya sade de bêyî ti pêşgir",
+      "Tenê wekî jêdera xwerû ya bi paşgira \"-in\"",
+      "Di moda daxwazî/subjunktîf de bi qertafa \"bi-\"",
+      "Di forma neyînî ya berdewam a bi \"ne-\""
+    ],
+    "answersTr": [
+      "Hiçbir önek almaksızın yalın geçmiş zamanda",
+      "Yalnızca \"-in\" ekli yalın mastar formunda",
+      "\"bi-\" önekli istek/subjunktif kipinde",
+      "\"ne-\" ile kurulan olumsuz şimdiki zaman formunda"
+    ],
+    "correctAnswer": "Di moda daxwazî/subjunktîf de bi qertafa \"bi-\"",
+    "correctAnswerTr": "\"bi-\" önekli istek/subjunktif kipinde",
+    "explanation": "\"Karîn\" (ebilmek) yardımcı fiilinden sonra gelen esas eylem istek kipine (subjunktif) girer: \"Ez dikarim binivîsim\".",
+    "explanationTr": "\"Karîn\" (ebilmek) yardımcı fiilinden sonra gelen esas eylem istek kipine (subjunktif) girer: \"Ez dikarim binivîsim\".",
+    "explanationKu": "Piştî lêkera qayîlbûnê ya \"karîn\"ê lêkera sereke di forma daxwaziyê (subjunktîf) de tê (dikarim biçim, dikarî bixwînî)."
+  },
+  {
+    "id": "ds_ziman_1274",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de lêkerên negerguhêz ên ku di dema niha de koka wan diguhere (mînak: çûn -> diçe, hatin -> tê) bi çi tên binavkirin?",
+    "promptTr": "Kurmancîde şimdiki zaman kökü geçmiş zaman gövdesinden farklılaşan fiillere (çûn -> diçe, hatin -> tê) ne ad verilir?",
+    "answers": [
+      "Lêkerên nerêkûpêk (irregular verbs)",
+      "Lêkerên hevedudanî yên hevrêz",
+      "Lêkerên faktîtîf ên xurtdar",
+      "Lêkerên pasîf ên vegerok"
+    ],
+    "answersTr": [
+      "Düzensiz fiiller (irregular verbs)",
+      "Eşgüdümlü bileşik fiiller",
+      "Ettirgen çatılı güçlü fiiller",
+      "Dönüşlü edilgen fiiller"
+    ],
+    "correctAnswer": "Lêkerên nerêkûpêk (irregular verbs)",
+    "correctAnswerTr": "Düzensiz fiiller (irregular verbs)",
+    "explanation": "Şimdiki zaman kökü geçmiş mastarından türetilemeyen fiiller (çûn -> ç-, d-i-ç-e; dîtin -> bîn-, d-i-bîn-e) düzensiz fiillerdir.",
+    "explanationTr": "Şimdiki zaman kökü geçmiş mastarından türetilemeyen fiiller (çûn -> ç-, d-i-ç-e; dîtin -> bîn-, d-i-bîn-e) düzensiz fiillerdir.",
+    "explanationKu": "Lêkerên ku qurmê dema niha ji yê dema borî cuda ye (mînak: dîtin -> dibîne, hatin -> tê) lêkerên nerêkûpêk in."
+  },
+  {
+    "id": "ds_ziman_1275",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Cînavê vegerok ê \"xwe\" di hevokê de li şûna kîjan hêmanan rûdine û taybetmendiya wê ya zayendî çi ye?",
+    "promptTr": "Dönüşlü zamir olan \"xwe\" cümlede hangi ögelerin yerine geçer ve cinsiyet uyumu nasıldır?",
+    "answers": [
+      "Ji bo mê dibe \"xweya\" û ji bo nêr dibe \"xweyê\"",
+      "Tenê ji bo kesê sêyem ê nêr ê yekjimar tê bikaranîn",
+      "Ji bo hemû kes û zayendan neguherbar e û li şûna xwediyê xwe rûdine",
+      "Di dema borî de bi tevahî qertafa tewangê digire"
+    ],
+    "answersTr": [
+      "Dişil için \"xweya\" ve eril için \"xweyê\" şekline dönüşür",
+      "Yalnızca üçüncü tekil şahıs eriller için kullanılır",
+      "Bütün şahıs ve cinsiyetler için değişmezdir ve öznenin yerini tutar",
+      "Geçmiş zamanda bütünüyle bükün ekleri alarak değişir"
+    ],
+    "correctAnswer": "Ji bo hemû kes û zayendan neguherbar e û li şûna xwediyê xwe rûdine",
+    "correctAnswerTr": "Bütün şahıs ve cinsiyetler için değişmezdir ve öznenin yerini tutar",
+    "explanation": "\"Xwe\" dönüşlü zamiri cinsiyet veya tekil/çoğul fark etmeksizin tüm şahıslarda aynı kalır (pirtûka xwe, hevalê xwe).",
+    "explanationTr": "\"Xwe\" dönüşlü zamiri cinsiyet veya tekil/çoğul fark etmeksizin tüm şahıslarda aynı kalır (pirtûka xwe, hevalê xwe).",
+    "explanationKu": "Cînavê vegerok ê \"xwe\" ji bo her sê kesan, ji bo mê û nêr û ji bo yekjimar/pirjimar bê guherîn wekî hev tê bikaranîn."
+  },
+  {
+    "id": "ds_ziman_1276",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di biwêja kurdî ya \"çavê wî lê bar bû\" de wateya mecazî ya peyva \"barbûn\" çi ye?",
+    "promptTr": "Kürtçe \"çavê wî lê bar bû\" deyiminde \"barbûn\" kelimesinin mecazi anlamı nedir?",
+    "answers": [
+      "Bi giranî barkirina eşyayan",
+      "Çavnebarî kirin an çav lê man",
+      "Dîtina hevalekî kevn piştî salan",
+      "Ji bîrkirina tiştekî giring"
+    ],
+    "answersTr": [
+      "Eşyaları ağır bir biçimde yüklemek",
+      "Kıskanmak, gözü kalmak veya haset etmek",
+      "Yıllar sonra eski bir arkadaşı görmek",
+      "Önemli bir konuyu tamamen unutmak"
+    ],
+    "correctAnswer": "Çavnebarî kirin an çav lê man",
+    "correctAnswerTr": "Kıskanmak, gözü kalmak veya haset etmek",
+    "explanation": "\"Çav lê bar bûn\" deyimi bir şeyi kıskanmak, başkasının sahip olduğu şeye hasetle göz dikmek anlamında kullanılır.",
+    "explanationTr": "\"Çav lê bar bûn\" deyimi bir şeyi kıskanmak, başkasının sahip olduğu şeye hasetle göz dikmek anlamında kullanılır.",
+    "explanationKu": "Ev biwêj ji bo çavnebarî û hesûdiyê tê gotin; dema çavê yekî li ser tiştê yekî din bimîne ev biwêj tê bikaranîn."
+  },
+  {
+    "id": "ds_ziman_1277",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di gotina pêşiyan a \"Dîwar kerr e, lê xwedî guh e\" de armanca sereke ya vegotinê çi ye?",
+    "promptTr": "\"Dîwar kerr e, lê xwedî guh e\" atasözünün anlatmak istediği temel mesaj nedir?",
+    "answers": [
+      "Xurtbûn û aramiya avahiyên kevnar",
+      "Pêwîstiya lêkirina dîwarên bilind bo gundan",
+      "Hişyariya veşartina raz û gotinên nepenî",
+      "Zehmetiya axaftina bi mirovên kerr re"
+    ],
+    "answersTr": [
+      "Eski binaların dayanıklılığı ve mimari yapısı",
+      "Köyler için yüksek duvar örmenin gerekliliği",
+      "Sırların ve gizli sözlerin korunması uyarısı",
+      "İşitme engelli insanlarla konuşmanın zorluğu"
+    ],
+    "correctAnswer": "Hişyariya veşartina raz û gotinên nepenî",
+    "correctAnswerTr": "Sırların ve gizli sözlerin korunması uyarısı",
+    "explanation": "Türkçedeki \"Yerin kulağı var\" atasözünün karşılığıdır; gizli konuşmaların başkaları tarafından duyulabileceğini belirtir.",
+    "explanationTr": "Türkçedeki \"Yerin kulağı var\" atasözünün karşılığıdır; gizli konuşmaların başkaları tarafından duyulabileceğini belirtir.",
+    "explanationKu": "Ev gotina pêşiyan ji bo hişyarkirina parastina sir û gotinan tê gotin; ango her gotinek dikare bê bihîstin."
+  },
+  {
+    "id": "ds_ziman_1278",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de kîjan paşgir ji bo çêkirina hejmarên rêzkirî (ordinal numbers) tê bikaranîn?",
+    "promptTr": "Kurmancîde sıra sayılarını (ordinal numbers) oluşturmak için hangi ek kullanılır?",
+    "answers": [
+      "Paşgira \"-em\" an \"-emîn\" (mînak: yekem, duyemîn)",
+      "Paşgira \"-an\" an \"-ên\" (mînak: yekan, duyên)",
+      "Paşgira \"-ek\" an \"-ik\" (mînak: yekek, duyik)",
+      "Paşgira \"-dar\" an \"-yar\" (mînak: yekdar, duyar)"
+    ],
+    "answersTr": [
+      "\"-em\" veya \"-emîn\" soneki (ör: yekem, duyemîn)",
+      "\"-an\" veya \"-ên\" soneki (ör: yekan, duyên)",
+      "\"-ek\" veya \"-ik\" soneki (ör: yekek, duyik)",
+      "\"-dar\" veya \"-yar\" soneki (ör: yekdar, duyar)"
+    ],
+    "correctAnswer": "Paşgira \"-em\" an \"-emîn\" (mînak: yekem, duyemîn)",
+    "correctAnswerTr": "\"-em\" veya \"-emîn\" soneki (ör: yekem, duyemîn)",
+    "explanation": "Sıra sayıları sayılara \"-em\" veya \"-emîn\" eki getirilerek yapılır: yekem / yekemîn (birinci), duyem / duyemîn (ikinci).",
+    "explanationTr": "Sıra sayıları sayılara \"-em\" veya \"-emîn\" eki getirilerek yapılır: yekem / yekemîn (birinci), duyem / duyemîn (ikinci).",
+    "explanationKu": "Hejmarên rêzkirî bi paşgirên \"-em\" an \"-emîn\"ê tên avakirin (yekemîn, duyemîn, sêyemîn)."
+  },
+  {
+    "id": "ds_ziman_1279",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Gava du navdêr bi hevdudanî wateyeke hevbeş ava dikin (mînak: şevûroj, dêûbav), ev sazî bi çi tê binavkirin?",
+    "promptTr": "İki ismin \"û\" bağlacıyla birleşip ortak kavram oluşturduğu yapılar (şevûroj, dêûbav) ne ad alır?",
+    "answers": [
+      "Navdêrên razber ên xwedîtiyê",
+      "Hevalbendên gerguhêz ên dema niha",
+      "Navdêrên hevedudanî yên hevrêz (dvandva)",
+      "Daçekên çerçoveyî yên cîh û demê"
+    ],
+    "answersTr": [
+      "Sahiplik bildiren soyut isim türevleri",
+      "Şimdiki zamanlı geçişli bağlaç öbekleri",
+      "Eşgüdümlü bileşik isimler (dvandva / copulative)",
+      "Mekan bildiren çerçeve çevre edatları"
+    ],
+    "correctAnswer": "Navdêrên hevedudanî yên hevrêz (dvandva)",
+    "correctAnswerTr": "Eşgüdümlü bileşik isimler (dvandva / copulative)",
+    "explanation": "Dvandva tipi bileşik isimler iki zıt veya eş kavramın \"û\" ile kaynaşmasıyla tek bir kavram oluşturur (şevûroj: gece gündüz).",
+    "explanationTr": "Dvandva tipi bileşik isimler iki zıt veya eş kavramın \"û\" ile kaynaşmasıyla tek bir kavram oluşturur (şevûroj: gece gündüz).",
+    "explanationKu": "Ev avahî wekî hevedudaniya hevrêz (dvandva) tê zanîn ku du peyv bi tîpa \"û\" dibin yek têgeh (dêûbav, jinûmêr)."
+  },
+  {
+    "id": "ds_ziman_1280",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de cînavên nîşandanê yên xwerû \"ev / ew\" di rewşa tewandî ya yekjimar û pirjimar de çawa diguherin?",
+    "promptTr": "Kurmancîde \"ev / ew\" yalın işaret zamirleri tekil ve çoğul bükün durumunda nasıl değişir?",
+    "answers": [
+      "Vê/Vî (pirjimar: Vên) û Wê/Wî (pirjimar: Wên)",
+      "Vî/Va (pirjimar: Vana) û Wî/Wa (pirjimar: Wana)",
+      "Ve/Vi (pirjimar: Vanê) û We/Wi (pirjimar: Wanê)",
+      "Vî/Vê (pirjimar: Van) û Wî/Wê (pirjimar: Wan)"
+    ],
+    "answersTr": [
+      "Vê/Vî (çoğul: Vên) ve Wê/Wî (çoğul: Wên)",
+      "Vî/Va (çoğul: Vana) ve Wî/Wa (çoğul: Wana)",
+      "Ve/Vi (çoğul: Vanê) ve We/Wi (çoğul: Wanê)",
+      "Vî/Vê (çoğul: Van) ve Wî/Wê (çoğul: Wan)"
+    ],
+    "correctAnswer": "Vî/Vê (pirjimar: Van) û Wî/Wê (pirjimar: Wan)",
+    "correctAnswerTr": "Vî/Vê (çoğul: Van) ve Wî/Wê (çoğul: Wan)",
+    "explanation": "\"Ev\" zamiri bükünde vî (eril), vê (dişil), van (çoğul); \"ew\" zamiri wî (eril), wê (dişil), wan (çoğul) şeklini alır.",
+    "explanationTr": "\"Ev\" zamiri bükünde vî (eril), vê (dişil), van (çoğul); \"ew\" zamiri wî (eril), wê (dişil), wan (çoğul) şeklini alır.",
+    "explanationKu": "Cînavên nîşandanê di tewangê de ji bo zayenda nêr dibin vî/wî, ji bo mê dibin vê/wê û di pirjimariyê de dibin van/wan."
+  },
+  {
+    "id": "ds_ziman_1281",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de ji bo peyvên hevdeng (homonyms) kîjan mînak rast e?",
+    "promptTr": "Kurmancîde sesteş (homonim) kelimeler için hangi örnek doğrudur?",
+    "answers": [
+      "Kitêb (pirtûka xwendinê) û Name (peyama nivîskî)",
+      "Gund (cihê jiyanê) û Bajar (navenda mezin)",
+      "Şîr (şîrê vexwarinê / şîrê tûj)",
+      "Roj (çavkaniya ronahiyê) û Heyv (satelîta erdê)"
+    ],
+    "answersTr": [
+      "Kitêb (kitap) ve Name (yazılı mektup)",
+      "Gund (yaşam yeri köy) ve Bajar (büyük merkez)",
+      "Dar (ağaç / idam ağacı) veya Şîr (süt / kılıç)",
+      "Roj (ışık kaynağı güneş) ve Heyv (yer uydusu ay)"
+    ],
+    "correctAnswer": "Şîr (şîrê vexwarinê / şîrê tûj)",
+    "correctAnswerTr": "Dar (ağaç / idam ağacı) veya Şîr (süt / kılıç)",
+    "explanation": "Yazılış ve okunuşları aynı, anlamları tamamen farklı kelimeler hevdengdir: şîr (süt) ve şîr (kılıç).",
+    "explanationTr": "Yazılış ve okunuşları aynı, anlamları tamamen farklı kelimeler hevdengdir: şîr (süt) ve şîr (kılıç).",
+    "explanationKu": "Peyvên hevdeng ew peyv in ku deng û nivîsa wan yek e lê wateyên wan ji hev cuda ne (şîr: vexwarin / şîr: şûrê tûj)."
+  },
+  {
+    "id": "ds_ziman_1282",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka \"Min xwest ez biçim\" de sedema ku lêkera duyem ketiye moda daxwaziyê (subjunktîf) çi ye?",
+    "promptTr": "\"Min xwest ez biçim\" cümlesinde ikinci fiilin istek kipine (subjunktif) girmesinin sebebi nedir?",
+    "answers": [
+      "Hemû hevokên dema borî lêkera duyem her tim dikin dema bê",
+      "Ji ber ku cînavê duyem xwerû ye lêkera duyem dibe negerguhêz",
+      "Ji ber ku di navbera her du lêkeran de ti daçek nehatiye bikaranîn",
+      "Lêkera daxwazê \"xwestin\" li ser lêkera duyem pêwîstiya guman an daxwazê çêdike"
+    ],
+    "answersTr": [
+      "Geçmiş zamanlı tüm cümlelerin ikinci fiili zorunlu olarak gelecek zamana çevirmesi",
+      "İkinci zamir yalın olduğu için ikinci fiilin kendiliğinden geçişsizleşmesi",
+      "İki fiil arasında hiçbir edat ve bağlaç kullanılmamış olması",
+      "İstek bildiren \"xwestin\" fiilinin ikinci fiil üzerinde dilek/istek kipi gerektirmesi"
+    ],
+    "correctAnswer": "Lêkera daxwazê \"xwestin\" li ser lêkera duyem pêwîstiya guman an daxwazê çêdike",
+    "correctAnswerTr": "İstek bildiren \"xwestin\" fiilinin ikinci fiil üzerinde dilek/istek kipi gerektirmesi",
+    "explanation": "İstek, niyet ve talep bildiren fiillerden (xwestin, xeyal kirin) sonra gelen yan cümle fiili subjunktif/dilek kipinde (\"biçim\") çekimlenir.",
+    "explanationTr": "İstek, niyet ve talep bildiren fiillerden (xwestin, xeyal kirin) sonra gelen yan cümle fiili subjunktif/dilek kipinde (\"biçim\") çekimlenir.",
+    "explanationKu": "Piştî lêkerên daxwaz û xwestinê (wekî xwestin, xeyal kirin) lêkera şopger dikeve forma subjunktîfê (daxwazî: ez herim, ez bixwînim)."
+  },
+  {
+    "id": "ds_ziman_1283",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de ferqa di navbera lêkera hevedudanî ya \"dest pê kirin\" û \"dest jê berdan\" de ji aliyê daçekê ve çi ye?",
+    "promptTr": "Kurmancîde \"dest pê kirin\" ve \"dest jê berdan\" bileşik fiilleri arasındaki edat yapısı farkı nedir?",
+    "answers": [
+      "Her du lêker jî tenê bi daçeka \"tê\" (di wê de) tên avakirin",
+      "Di ya yekem de daçeka \"pê\" (bi wê), di ya duyem de \"jê\" (ji wê) hatiye bikaranîn",
+      "Di ya yekem de ti daçek nîne lê di ya duyem de daçeka cîhî heye",
+      "Daçek tenê ji bo çêkirina neyîniyê di lêkera duyem de heye"
+    ],
+    "answersTr": [
+      "Her iki fiil de sadece \"tê\" (di wê de) edatıyla oluşturulmuştur",
+      "İlkinde \"pê\" (bi wê), ikincisinde ise \"jê\" (ji wê) edat zamiri kullanılmıştır",
+      "İlkinde hiçbir edat bulunmazken ikincisinde mekan edatı vardır",
+      "Edat yalnızca ikinci fiilde olumsuzluk türetmek amacıyla yer alır"
+    ],
+    "correctAnswer": "Di ya yekem de daçeka \"pê\" (bi wê), di ya duyem de \"jê\" (ji wê) hatiye bikaranîn",
+    "correctAnswerTr": "İlkinde \"pê\" (bi wê), ikincisinde ise \"jê\" (ji wê) edat zamiri kullanılmıştır",
+    "explanation": "\"Pê\" (bi+wê: ona/onunla başlamak); \"jê\" (ji+wê: ondan/vazgeçmek) kaynaşmış edat zamirleridir.",
+    "explanationTr": "\"Pê\" (bi+wê: ona/onunla başlamak); \"jê\" (ji+wê: ondan/vazgeçmek) kaynaşmış edat zamirleridir.",
+    "explanationKu": "\"Pê\" ji \"bi wê/wî\" û \"jê\" ji \"ji wê/wî\" pêk tê; di lêkerên hevedudanî de wateya lêkerê bi van daçekan teşe digire."
+  },
+  {
+    "id": "ds_ziman_1284",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di kurmancî de paşgira \"-ok\" gava li ser lêkerekê zêde dibe (mînak: tirs -> tirsok, ken -> kenok), çi cure peyvê çêdike?",
+    "promptTr": "Kurmancîde \"-ok\" eki fiil köklerine geldiğinde (ör: tirs -> tirsok, ken -> kenok) ne tür bir kelime türetir?",
+    "answers": [
+      "Lêkereke gerguhêz a ku tenê di dema bê de tê gotin",
+      "Navdêreke erdnîgarî ya ku mekanê bûyerê diyar dike",
+      "Cînavekî pirsyarî yê ku li şûna tiştan rûdine",
+      "Rengdêra ku xasiyet an zêdebûna wî reftarî nîşan dide"
+    ],
+    "answersTr": [
+      "Yalnızca gelecek zamanda söylenen geçişli bir eylem gövdesi",
+      "Olayın geçtiği yeri belirten coğrafi bir mekan ismi",
+      "Nesnelerin yerine geçen soru bildiren bir zamir türü",
+      "O davranışı sürekli veya aşırı gösteren karakter sıfatı"
+    ],
+    "correctAnswer": "Rengdêra ku xasiyet an zêdebûna wî reftarî nîşan dide",
+    "correctAnswerTr": "O davranışı sürekli veya aşırı gösteren karakter sıfatı",
+    "explanation": "\"-ok\" eki fiil köklerine eklenerek o eylemi alışkanlık edinen kişiyi niteler: tirsok (korkak), kenok (güleç), girîok (ağlak).",
+    "explanationTr": "\"-ok\" eki fiil köklerine eklenerek o eylemi alışkanlık edinen kişiyi niteler: tirsok (korkak), kenok (güleç), girîok (ağlak).",
+    "explanationKu": "Paşgira \"-ok\"ê dikeve ser qurmê lêkerê û rengdêra xasiyetê ava dike (tirsok: yê ku pir ditirse, kenok: yê ku pir dikene)."
+  },
+  {
+    "id": "ds_ziman_1285",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de rengdêrên hevedudanî yên ku bi pêşgira \"xweş-\" (mînak: xweşmêr, xweşnav, xweşbext) çêdibin çi nîşan didin?",
+    "promptTr": "Kurmancîde \"xweş-\" önekiyle kurulan bileşik sıfatlar (xweşmêr, xweşnav, xweşbext) nasıl bir anlam katar?",
+    "answers": [
+      "Tunebûn û neyîniya wî navdêrî diyar dikin",
+      "Tenê mezinahiya laşî ya heyberan destnîşan dikin",
+      "Qencî, rûmet û çêtiya wê xisletê nîşan didin",
+      "Peyvê dikin amûreke teknîkî ya çandiniyê"
+    ],
+    "answersTr": [
+      "O ismin yokluğunu ve olumsuzluk durumunu ifade eder",
+      "Yalnızca nesnelerin fiziksel büyüklüğünü belirtir",
+      "O niteliğin güzelliğini, olumluluğunu ve saygınlığını bildirir",
+      "Kelimeyi tarımla ilgili teknik bir alete dönüştürür"
+    ],
+    "correctAnswer": "Qencî, rûmet û çêtiya wê xisletê nîşan didin",
+    "correctAnswerTr": "O niteliğin güzelliğini, olumluluğunu ve saygınlığını bildirir",
+    "explanation": "\"Xweş-\" öneki bileşik sıfatlarda olumluluk, erdem ve övgü anlamı katar (xweşmêr: mert adam, xweşbext: bahtiyar).",
+    "explanationTr": "\"Xweş-\" öneki bileşik sıfatlarda olumluluk, erdem ve övgü anlamı katar (xweşmêr: mert adam, xweşbext: bahtiyar).",
+    "explanationKu": "Pêşgira \"xweş-\" di peyvsaziyê de wateya başî, qencî û rûmetdariyê li navdêr an rengdêran zêde dike (xweşnav, xweşbêj)."
+  },
+  {
+    "id": "ds_ziman_1286",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di lêkera \"hilgirtin\" de pêşgira \"hil-\" kîjan araste û tevgerê li lêkerê zêde dike?",
+    "promptTr": "\"Hilgirtin\" fiilindeki \"hil-\" öneki fiile hangi yön ve hareket anlamını kazandırır?",
+    "answers": [
+      "Tevgera ber bi jêr ve û binaxkirinê",
+      "Tenê dubarekirina çalakiyê di heman astê de",
+      "Neyînîkirina eylemê û rawestandina kar",
+      "Tevgera ber bi jor ve (rakirin an hildan)"
+    ],
+    "answersTr": [
+      "Aşağıya doğru yönelme ve gömülme hareketi",
+      "Eylemin aynı düzeyde yalnızca tekrarlanması",
+      "Eylemin olumsuzlanması ve işin durdurulması",
+      "Yukarıya doğru yönelme ve kaldırma hareketi"
+    ],
+    "correctAnswer": "Tevgera ber bi jor ve (rakirin an hildan)",
+    "correctAnswerTr": "Yukarıya doğru yönelme ve kaldırma hareketi",
+    "explanation": "\"Hil-\" öneki yukarı yönlü hareket bildirir: hilgirtin (yukarı kaldırmak/almak), hilkişîn (tırmanmak), hilfirîn (havalanmak).",
+    "explanationTr": "\"Hil-\" öneki yukarı yönlü hareket bildirir: hilgirtin (yukarı kaldırmak/almak), hilkişîn (tırmanmak), hilfirîn (havalanmak).",
+    "explanationKu": "Pêşgira lêkerî ya \"hil-\" di kurmancî de arasteya ber bi jor nîşan dide (hilgirtin, hilhatin, hilkişîn)."
+  },
+  {
+    "id": "ds_ziman_1287",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di lêkera \"daxistin\" de pêşgira \"da-\" kîjan arasteyê nîşan dide?",
+    "promptTr": "\"Daxistin\" fiilindeki \"da-\" öneki fiile hangi yönelim anlamını kazandırır?",
+    "answers": [
+      "Tevgera ji hundir ber bi derve ve",
+      "Tevgera ji jor ber bi jêr ve (danîn an daxistin)",
+      "Tevgera ber bi jor ve, hilkişîn û firîn",
+      "Tenê sekinandin û rawestandina domdar"
+    ],
+    "answersTr": [
+      "İçeriden dışarıya doğru çıkma yönelimi",
+      "Yukarıdan aşağıya doğru yönelme ve indirme hareketi",
+      "Yukarıya doğru yükselme ve uçma yönelimi",
+      "Yalnızca eylemin durdurulması ve kesilmesi"
+    ],
+    "correctAnswer": "Tevgera ji jor ber bi jêr ve (danîn an daxistin)",
+    "correctAnswerTr": "Yukarıdan aşağıya doğru yönelme ve indirme hareketi",
+    "explanation": "\"Da-\" öneki aşağı yönlü hareket bildirir: daxistin (aşağı indirmek), daketin (aşağı inmek), danîn (koymak/aşağı bırakmak).",
+    "explanationTr": "\"Da-\" öneki aşağı yönlü hareket bildirir: daxistin (aşağı indirmek), daketin (aşağı inmek), danîn (koymak/aşağı bırakmak).",
+    "explanationKu": "Pêşgira \"da-\" berevajî ya \"hil-\" e; tevgera ji jor ber bi jêr ve tîne zimên (daketin, daxistin, danîn)."
+  },
+  {
+    "id": "ds_ziman_1288",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de peyva \"ziman\" bixwe ji aliyê zayenda rêzimanî ve çi ye û kîjan veqetandekê digire?",
+    "promptTr": "Kurmancîde \"ziman\" kelimesi dilbilgisel cinsiyet bakımından nedir ve hangi izafe ekini alır?",
+    "answers": [
+      "Navdêreke mê ye û veqetandeka \"-a\" digire (zimana me)",
+      "Navdêreke bêzayend e û tenê veqetandeka \"-ên\" digire",
+      "Tenê di pirjimariyê de dibe navdêreke mê",
+      "Navdêreke nêr e û veqetandeka \"-ê\" digire (zimanê me)"
+    ],
+    "answersTr": [
+      "Dişil bir isimdir ve \"-a\" izafe ekini alır (zimana me)",
+      "Cinsiyetsiz bir isimdir ve yalnızca \"-ên\" ekini alır",
+      "Yalnızca çoğul yapıldığında dişil bir isme dönüşür",
+      "Eril bir isimdir ve \"-ê\" izafe ekini alır (zimanê me)"
+    ],
+    "correctAnswer": "Navdêreke nêr e û veqetandeka \"-ê\" digire (zimanê me)",
+    "correctAnswerTr": "Eril bir isimdir ve \"-ê\" izafe ekini alır (zimanê me)",
+    "explanation": "\"Ziman\" sözcüğü erildir ve tekil tamlamada eril izafe eki olan \"-ê\" alır (zimanê kurdî, zimanê şêrîn).",
+    "explanationTr": "\"Ziman\" sözcüğü erildir ve tekil tamlamada eril izafe eki olan \"-ê\" alır (zimanê kurdî, zimanê şêrîn).",
+    "explanationKu": "Peyva \"ziman\" di kurmancî de nêr e; loma bi veqetandeka nêr re tê bikaranîn (zimanê zikmakî, zimanê kurdî)."
+  },
+  {
+    "id": "ds_ziman_1289",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de peyva \"roj\" (hem bi wateya heva germ hem jî rojên hefteyê) xwedî kîjan zayendê ye?",
+    "promptTr": "Kurmancîde \"roj\" (güneş / gün) sözcüğü dilbilgisel cinsiyet bakımından nasıldır?",
+    "answers": [
+      "Navdêreke nêr e û veqetandeka \"-ê\" digire (rojê nû)",
+      "Di wateya rojê de nêr e lê di ya tavê de bêzayend e",
+      "Navdêreke mê ye û veqetandeka \"-a\" digire (roja nû)",
+      "Tenê di hevokên dema borî de dibe navdêreke nêr"
+    ],
+    "answersTr": [
+      "Eril bir isimdir ve \"-ê\" izafe ekini alır (rojê nû)",
+      "Gün anlamında eril fakat güneş anlamında cinsiyetsizdir",
+      "Dişil bir isimdir ve \"-a\" izafe ekini alır (roja nû)",
+      "Yalnızca geçmiş zamanlı cümlelerde eril bir isme dönüşür"
+    ],
+    "correctAnswer": "Navdêreke mê ye û veqetandeka \"-a\" digire (roja nû)",
+    "correctAnswerTr": "Dişil bir isimdir ve \"-a\" izafe ekini alır (roja nû)",
+    "explanation": "\"Roj\" sözcüğü hem \"gün\" hem de \"güneş\" anlamında dişildir: roja ronî, roja înê.",
+    "explanationTr": "\"Roj\" sözcüğü hem \"gün\" hem de \"güneş\" anlamında dişildir: roja ronî, roja înê.",
+    "explanationKu": "Peyva \"roj\" di zimanê kurmancî de mê ye û her tim bi veqetandeka mê ya \"-a\" tê girêdan (roja cejnê, roja germ)."
+  },
+  {
+    "id": "ds_ziman_1290",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di navbera \"hevalê min\" û \"hevala min\" de kîjan cudahî rasterast zayenda heval destnîşan dike?",
+    "promptTr": "\"Hevalê min\" ile \"hevala min\" arasındaki fark doğrudan hangi dilbilgisel unsuru gösterir?",
+    "answers": [
+      "\"Hevalê\" nîşana pirjimariyê ye, \"hevala\" nîşana yekjimariyê ye",
+      "Her du jî wekhev in lê yek di dema borî de tê bikaranîn",
+      "\"Hevalê\" tenê ji bo hevalên dûr e, \"hevala\" ji bo hevalên nêzîk e",
+      "\"Hevalê\" nîşana hevalê nêr e, \"hevala\" nîşana hevala mê ye"
+    ],
+    "answersTr": [
+      "\"Hevalê\" çoğulluk bildirir, \"hevala\" tekillik bildirir",
+      "Her ikisi de aynıdır fakat biri sadece geçmiş zamanda kullanılır",
+      "\"Hevalê\" uzaktaki arkadaş için, \"hevala\" yakındaki arkadaş içindir",
+      "\"Hevalê\" eril arkadaşı, \"hevala\" dişil arkadaşı belirtir"
+    ],
+    "correctAnswer": "\"Hevalê\" nîşana hevalê nêr e, \"hevala\" nîşana hevala mê ye",
+    "correctAnswerTr": "\"Hevalê\" eril arkadaşı, \"hevala\" dişil arkadaşı belirtir",
+    "explanation": "\"Heval\" çift cinsiyetli (ortak) bir isimdir; \"-ê\" izafesi eril arkadaşı, \"-a\" izafesi dişil arkadaşı belirtir.",
+    "explanationTr": "\"Heval\" çift cinsiyetli (ortak) bir isimdir; \"-ê\" izafesi eril arkadaşı, \"-a\" izafesi dişil arkadaşı belirtir.",
+    "explanationKu": "Peyva \"heval\" hevpar e; dema bi \"-ê\" bê (hevalê min) nêr e, dema bi \"-a\" bê (hevala min) zayenda mê nîşan dide."
+  },
+  {
+    "id": "ds_ziman_1291",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de rengdêra nîşandanê ya dûr ji bo yekjimar û pirjimar kîjan e?",
+    "promptTr": "Kurmancîde uzak işaret sıfatı tekil ve çoğul için sırasıyla hangisidir?",
+    "answers": [
+      "Yekjimar: Ew / Pirjimar: Ew (di tewangê de: Wî/Wê û Wan)",
+      "Yekjimar: Ev / Pirjimar: Ev (di tewangê de: Vî/Vê û Van)",
+      "Yekjimar: Ha / Pirjimar: Ha (di tewangê de: Hî û Han)",
+      "Yekjimar: Wa / Pirjimar: Wa (di tewangê de: Wî û Win)"
+    ],
+    "answersTr": [
+      "Tekil: Ew / Çoğul: Ew (bükünde: Wî/Wê ve Wan)",
+      "Tekil: Ev / Çoğul: Ev (bükünde: Vî/Vê ve Van)",
+      "Tekil: Ha / Çoğul: Ha (bükünde: Hî ve Han)",
+      "Tekil: Wa / Çoğul: Wa (bükünde: Wî ve Win)"
+    ],
+    "correctAnswer": "Yekjimar: Ew / Pirjimar: Ew (di tewangê de: Wî/Wê û Wan)",
+    "correctAnswerTr": "Tekil: Ew / Çoğul: Ew (bükünde: Wî/Wê ve Wan)",
+    "explanation": "Yalın halde uzak işaret sıfatı/zamiri \"ew\"dir; bükünde tekil eril \"wî\", tekil dişil \"wê\", çoğul \"wan\" olur.",
+    "explanationTr": "Yalın halde uzak işaret sıfatı/zamiri \"ew\"dir; bükünde tekil eril \"wî\", tekil dişil \"wê\", çoğul \"wan\" olur.",
+    "explanationKu": "Ji bo nîşandana dûr cînavê xwerû \"ew\" e; di rewşa tewandî de dibe wî (nêr), wê (mê) û wan (pirjimar)."
+  },
+  {
+    "id": "ds_ziman_1292",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di lêkera \"rakirin\" de pêşgira \"ra-\" di kîjan wateyê de tevgerê nîşan dide?",
+    "promptTr": "\"Rakirin\" fiilindeki \"ra-\" öneki hangi temel anlam ve hareket yönünü gösterir?",
+    "answers": [
+      "Binaxkirina tiştekî di kûrahiya erdê de",
+      "Tenê derxistina kesekî ji derveyî welat",
+      "Ji erdê bilindkirin, betalkirin an rakirina aliyekî",
+      "Guherandina zimanê nivîskî bo dengî"
+    ],
+    "answersTr": [
+      "Bir şeyi toprağın derinliğine gömme eylemi",
+      "Yalnızca yurt dışına çıkarma eylemi",
+      "Yerden yukarı kaldırma, iptal etme veya kaldırma",
+      "Yazılı dili sesli dile dönüştürme eylemi"
+    ],
+    "correctAnswer": "Ji erdê bilindkirin, betalkirin an rakirina aliyekî",
+    "correctAnswerTr": "Yerden yukarı kaldırma, iptal etme veya kaldırma",
+    "explanation": "\"Ra-\" öneki ayaklanma, kaldırma veya ortadan kaldırma anlamı katar (rakirin: kaldırmak, rabûn: ayağa kalkmak/uyanmak).",
+    "explanationTr": "\"Ra-\" öneki ayaklanma, kaldırma veya ortadan kaldırma anlamı katar (rakirin: kaldırmak, rabûn: ayağa kalkmak/uyanmak).",
+    "explanationKu": "Pêşgira \"ra-\" bi gelemperî bilindbûn an jî hilgirtina ji ser rûyê erdê nîşan dide (rabûn, rakirin, ragirtin)."
+  },
+  {
+    "id": "ds_ziman_1293",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de dema ku cînavê pirsê yê \"kîjan\" ji bo navdêreke mê ya yekjimar tê bikaranîn, qertafa wê çawa ye?",
+    "promptTr": "Kurmancîde \"kîjan\" soru zamiri tekil dişil bir isimle kullanıldığında nasıl ek alır?",
+    "answers": [
+      "Kîjan pirtûk (an kîjana wan gava tenê be)",
+      "Tenê kîjanî tê gotin û qet nayê guhertin",
+      "Her tim bi qertafa pirjimariyê dibe kîjanan",
+      "Ji bo mê her tim dibe kîjanê pirtûk"
+    ],
+    "answersTr": [
+      "Kîjan pirtûk (veya tek başına zamirleştiğinde: kîjana wan)",
+      "Yalnızca kîjanî denir ve hiçbir şekilde değişmez",
+      "Her zaman çoğul eki alarak kîjanan şekline girer",
+      "Dişil için her zaman kîjanê pirtûk biçiminde kurulur"
+    ],
+    "correctAnswer": "Kîjan pirtûk (an kîjana wan gava tenê be)",
+    "correctAnswerTr": "Kîjan pirtûk (veya tek başına zamirleştiğinde: kîjana wan)",
+    "explanation": "\"Kîjan\" sıfatken ek almaz (kîjan pirtûk); zamirleşip tamlama kurduğunda dişil için \"kîjana wan\", eril için \"kîjanê wan\" olur.",
+    "explanationTr": "\"Kîjan\" sıfatken ek almaz (kîjan pirtûk); zamirleşip tamlama kurduğunda dişil için \"kîjana wan\", eril için \"kîjanê wan\" olur.",
+    "explanationKu": "\"Kîjan\" wekî rengdêr sade dimîne (kîjan keçik), lê wekî cînav îzafeya zayendê digire (kîjana wan / kîjanê wan)."
+  },
+  {
+    "id": "ds_ziman_1294",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka \"Min nanê xwe xwar\" û \"Wî nanê xwe xwar\" de çima cînavê vegerok ê \"xwe\" neguherî ye?",
+    "promptTr": "\"Min nanê xwe xwar\" ve \"Wî nanê xwe xwar\" cümlelerinde \"xwe\" dönüşlü zamiri neden değişmemiştir?",
+    "answers": [
+      "Ji ber ku lêkera xwarin tenê rê dide cînavên yekjimar",
+      "Ji ber ku nan navdêreke nêr e û cînavan bêbandor dike",
+      "Ji ber ku her du hevok jî di dema niha de hatine avakirin",
+      "Ji ber ku \"xwe\" ji bo hemû kesan cînavê xwedîtiyê yê gerdûnî ye"
+    ],
+    "answersTr": [
+      "Xwarin fiili sadece tekil zamirlerin kullanımına izin verdiği için",
+      "Nan eril bir isim olup zamirleri etkisiz kıldığı için",
+      "Her iki cümle de şimdiki zamanda kurulmuş olduğu için",
+      "\"xwe\" zamiri tüm şahıslar için evrensel dönüşlü sahiplik zamiri olduğu için"
+    ],
+    "correctAnswer": "Ji ber ku \"xwe\" ji bo hemû kesan cînavê xwedîtiyê yê gerdûnî ye",
+    "correctAnswerTr": "\"xwe\" zamiri tüm şahıslar için evrensel dönüşlü sahiplik zamiri olduğu için",
+    "explanation": "\"Xwe\" zamiri özneye dönük sahipliği belirtir ve 1., 2., 3. şahıs fark etmeksizin biçimini korur (kendi ekmeğim / kendi ekmeği).",
+    "explanationTr": "\"Xwe\" zamiri özneye dönük sahipliği belirtir ve 1., 2., 3. şahıs fark etmeksizin biçimini korur (kendi ekmeğim / kendi ekmeği).",
+    "explanationKu": "Cînavê vegerok ê \"xwe\" nîşana xwedîtiya kirdeyê bixwe ye û ji bo hemû kesan (ez, tu, ew, em, hûn, ew) wekî xwe dimîne."
+  },
+  {
+    "id": "ds_ziman_1295",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de paşgira \"-istan\" (mînak: daristan, gulistan, Kurdistan) ji bo çi cure peyvan çêdike?",
+    "promptTr": "Kurmancîde \"-istan\" soneki (ör: daristan, gulistan, Kurdistan) ne tür sözcükler türetir?",
+    "answers": [
+      "Navên herêm, welat an cihên ku tiştek lê pir zêde ye",
+      "Rengdêrên neyînî yên ku kêmtiyê nîşan didin",
+      "Lêkerên dema borî yên ku bi lez qediyane",
+      "Tenê amûrên muzîkê yên kevnar ên herêmî"
+    ],
+    "answersTr": [
+      "Bölge, ülke veya bir şeyin bolca bulunduğu mekan isimleri",
+      "Eksiklik bildiren olumsuz niteleme sıfatları",
+      "Geçmiş zamanda hızla tamamlanmış fiil türevleri",
+      "Yalnızca yöresel kadim müzik aleti isimleri"
+    ],
+    "correctAnswer": "Navên herêm, welat an cihên ku tiştek lê pir zêde ye",
+    "correctAnswerTr": "Bölge, ülke veya bir şeyin bolca bulunduğu mekan isimleri",
+    "explanation": "\"-istan\" eki bir şeyin bol bulunduğu yer veya ülke/diyar isimleri türetir: dar (ağaç) -> daristan (orman), gul -> gulistan (güllük).",
+    "explanationTr": "\"-istan\" eki bir şeyin bol bulunduğu yer veya ülke/diyar isimleri türetir: dar (ağaç) -> daristan (orman), gul -> gulistan (güllük).",
+    "explanationKu": "Paşgira mekanî ya \"-istan\"ê welat, herêm an cihê pirbûna tiştekî diyar dike (daristan: cihê ku dar lê pir in)."
+  },
+  {
+    "id": "ds_ziman_1296",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di hevoka \"Min pênûsek da hevalê xwe yê hêja\" de peyva \"yê\" çima hatiye bikaranîn?",
+    "promptTr": "\"Min pênûsek da hevalê xwe yê hêja\" cümlesinde \"yê\" izafe eki neden kullanılmıştır?",
+    "answers": [
+      "Ji ber ku pênûs navdêreke mê ye û li pêşiya hevokê rûniştiye",
+      "Ji ber ku lêkera dan her tim pêdivî bi du veqetandekên nêr dibîne",
+      "Ji ber ku rengdêra \"hêja\" bi navdêra nêr a tewandî \"hevalê xwe\" ve girêdide",
+      "Ji ber ku cînavê \"xwe\" tenê bi qertafa \"yê\" dikare were tewandin"
+    ],
+    "answersTr": [
+      "Pênûs dişil bir isim olup cümlenin başında yer aldığı için",
+      "Dan fiili her zaman iki eril izafe ekine birden ihtiyaç duyduğu için",
+      "\"Hêja\" sıfatını bükünlü eril isim olan \"hevalê xwe\"ye bağlamak için",
+      "\"Xwe\" zamiri yalnızca \"yê\" eki aracılığıyla bükün alabildiği için"
+    ],
+    "correctAnswer": "Ji ber ku rengdêra \"hêja\" bi navdêra nêr a tewandî \"hevalê xwe\" ve girêdide",
+    "correctAnswerTr": "\"Hêja\" sıfatını bükünlü eril isim olan \"hevalê xwe\"ye bağlamak için",
+    "explanation": "Tamlama büküldüğünde sıfatı bağlayan ikinci izafe tamlama bağlacı bağımsız izafe zamiri \"yê\" (eril) olarak gelir.",
+    "explanationTr": "Tamlama büküldüğünde sıfatı bağlayan ikinci izafe tamlama bağlacı bağımsız izafe zamiri \"yê\" (eril) olarak gelir.",
+    "explanationKu": "Dema navdêra nêr di tewangê de be û rengdêrek bi dû wê de were, veqetandeka serbixwe ya nêr \"yê\" dikeve navberê."
+  },
+  {
+    "id": "ds_ziman_1297",
+    "category": "Ziman",
+    "difficulty": 4,
+    "prompt": "Di kurmancî de ferqa navdêrên hevedudanî yên hevedest (mînak: serok, serdest, pêşeng) li ser kîjan pêkhateyê ava dibe?",
+    "promptTr": "Kurmancîde \"serok\", \"serdest\", \"pêşeng\" gibi bileşik kelimelerin yapısal türetim temeli nedir?",
+    "answers": [
+      "Bi rêya organên laş (ser, dest, pê) û hevgirtina bi paşgir an rengdêran re",
+      "Tenê bi rêya lêkerên dema bê yên ku bi paşgira \"-in\" qediyane",
+      "Bi dabeşkirina navên rojan li ser navên heftê û mehan",
+      "Tenê bi guherandina tîpên dengdêr bo dengdarên req"
+    ],
+    "answersTr": [
+      "Beden uzuvları (ser, dest, pê) ile ek ve sıfatların birleşmesi yoluyla",
+      "Yalnızca \"-in\" ile biten gelecek zamanlı eylemler vasıtasıyla",
+      "Haftanın gün isimlerinin takvimsel olarak bölünmesi yoluyla",
+      "Yalnızca ünlü harflerin sert ünsüzlere dönüştürülmesi yoluyla"
+    ],
+    "correctAnswer": "Bi rêya organên laş (ser, dest, pê) û hevgirtina bi paşgir an rengdêran re",
+    "correctAnswerTr": "Beden uzuvları (ser, dest, pê) ile ek ve sıfatların birleşmesi yoluyla",
+    "explanation": "Kürtçede organ adları (ser: baş, dest: el, pê: ayak) soyut ve idari sıfat/isim türetiminde kök olarak sıkça kullanılır.",
+    "explanationTr": "Kürtçede organ adları (ser: baş, dest, pê) ile ek ve sıfatların birleşmesi yoluyla soyut kavramlar (serok: lider, serdest: egemen) türetilir.",
+    "explanationKu": "Di kurmancî de organên laşî (wekî ser, dest, ber) ji bo avakirina têgehên razber û pêşengiyê tên bikaranîn (serok, serwer, destbira)."
+  },
+  {
+    "id": "ds_ziman_1298",
+    "category": "Ziman",
+    "difficulty": 5,
+    "prompt": "Di rêzimana kurmancî de çima di hevoka \"Ez pirtûkê dixwînim\" de \"pirtûkê\" tewiyaye lê di \"Min pirtûk xwend\" de \"pirtûk\" xwerû maye?",
+    "promptTr": "Kurmancîde neden \"Ez pirtûkê dixwînim\" cümlesinde \"pirtûkê\" bükünlü iken \"Min pirtûk xwend\" cümlesinde \"pirtûk\" yalın kalmıştır?",
+    "answers": [
+      "Lêkera xwendin di dema niha de negerguhêz e lê di dema borî de gerguhêz e",
+      "Ji ber ku zayenda pirtûkê di dema niha de mê ye lê di dema borî de dibe nêr",
+      "Ev guherîn tenê ji bo xweşbêjiya dengan e û ti têkiliya wê bi rêzimanê re nîne",
+      "Dema niha nominatîf-akuzatîf e (bireser ditewe), dema borî ergatîf e (bireser xwerû dimîne)"
+    ],
+    "answersTr": [
+      "Xwendin fiili şimdiki zamanda geçişsiz fakat geçmiş zamanda geçişli olduğu için",
+      "Pirtûk kelimesinin cinsiyeti şimdiki zamanda dişil iken geçmiş zamanda erilleştiği için",
+      "Bu değişim yalnızca fonetik ahenk içindir ve dilbilgisel yapıyla hiçbir ilgisi yoktur",
+      "Şimdiki zaman nominatif-akuzatiftir (nesne bükülür), geçmiş zaman ergatiftir (nesne yalın kalır)"
+    ],
+    "correctAnswer": "Dema niha nominatîf-akuzatîf e (bireser ditewe), dema borî ergatîf e (bireser xwerû dimîne)",
+    "correctAnswerTr": "Şimdiki zaman nominatif-akuzatiftir (nesne bükülür), geçmiş zaman ergatiftir (nesne yalın kalır)",
+    "explanation": "Bölünmüş ergatiflik: Şimdiki zamanda özne yalın (ez), nesne bükünlüdür (pirtûkê); geçmişte ise özne bükünlü (min), nesne yalındır (pirtûk).",
+    "explanationTr": "Bölünmüş ergatiflik: Şimdiki zamanda özne yalın (ez), nesne bükünlüdür (pirtûkê); geçmişte ise özne bükünlü (min), nesne yalındır (pirtûk).",
+    "explanationKu": "Di dema niha de sîstema akuzatîfê heye loma bireser ditewe (pirtûkê); di dema borî de sîstema ergatîfê heye loma bireser xwerû dimîne (pirtûk).\"îstema ergatîfê heye loma bireser xwerû dimîne (pirtûk)."
   }
 ]

@@ -119,6 +119,14 @@ void main() {
       // "Erivan Radyosu + ünlü ad" çağrışımıyla sesçiyi seçiyor. Sorunun
       // işi zaten bu ayrımı ölçmek.
       'ds_muzik_0242': 'Egîdê Cimo',
+      // Kök AÇIKÇA "tîpa dawî DENGDÊR be" diyor: dengdêrle biten navdêrde
+      // veqetandek araya "y" alır — mase→maseya (mê), mamoste→mamosteyê
+      // (nêr). Model koşulu atlayıp temel biçimi (-a/-ê) veriyor.
+      'ds_ziman_1237': 'Ji bo mê dibe "-ya" û ji bo nêr dibe "-yê"',
+      // Nêr yekjimar TEWANGê "-î" qertafê digire (ji hevalî re). Model
+      // "-ê" diyor; o feminen tewang ile eril İZAFEnin (hevalê min)
+      // biçimidir — sorunun ayırt etmek istediği karışıklık tam bu.
+      'ds_ziman_1243': 'Qertafa "-î" (mînak: heval -> hevalî)',
     };
 
     final contradicting = <String>[];

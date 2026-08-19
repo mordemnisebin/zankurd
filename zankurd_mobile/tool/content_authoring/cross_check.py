@@ -107,6 +107,16 @@ def main(bank_path: str, out_path: str) -> int:
                 verdicts[qid] = index_by_id[qid]["answers"]["ABCD".index(letter)]
             else:
                 verdicts[qid] = "?"
+        # Modelin YANITINDA HİÇ GEÇMEYEN soru da "?" sayılır.
+        #
+        # Eskiden yalnız dönen kayıtlar yazılıyordu; model bir soruyu
+        # atlarsa o soru hükümsüz kalıyor, `answer_key_consensus_test`
+        # "çapraz doğrulamadan geçmemiş" diye düşüyor ve yeniden koşturmak
+        # da çare olmuyordu — model aynı soruyu yine atlıyor. Bekçi böylece
+        # kilitleniyordu (2026-08-19, ds_ziman_1260). Sorulmuş ama yanıt
+        # alınamamış olmak zaten "?"nin tanımıdır.
+        for question in chunk:
+            verdicts.setdefault(question["id"], "?")
         out.write_text(json.dumps(verdicts, ensure_ascii=False, indent=1),
                        encoding="utf-8")
         if index % (CHUNK * 10) == 0:
