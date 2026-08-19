@@ -1,48 +1,47 @@
-# Soru kalitesi denetimi — sohbet partileri
+# Soru kalitesi denetimi — tek dosya
 
-33 parti, her biri ~26.000 karakter. Her partinin başında talimat var;
-dosyanın tamamını olduğu gibi yapıştır, ayrıca bir şey yazmana gerek yok.
+`TUM_SORULAR.txt` — 3214 sorunun tamamı, ~712.000 karakter (~178.000
+token). Talimat dosyanın başında; olduğu gibi ver, ayrıca bir şey
+yazmana gerek yok.
 
-## Sıra önemli
+## Dönüşü nereye
 
-Partiler **riske göre** sıralı. İlk 21 parti, çapraz kontrolden hiç
-geçmemiş 2059 kaydı kapsıyor — bankanın %64'ü ve bilinen hataların
-yoğunlaştığı yer. İçlerinde de en eski bankalar önde.
+Cevap bir JSON dizisi olacak. Olduğu gibi şuraya kaydet:
 
-Yarıda bırakırsan iş boşa gitmez: sekizinci partide durursan en riskli
-~1100 kayıt denetlenmiş olur.
+    docs/content_batches/gpt_bulgular/tum.json
 
-## Dönüşü nereye koyacaksın
+Denetim:
 
-Her partinin cevabı bir JSON dizisi olacak. Olduğu gibi şuraya kaydet:
+    python3 tool/content_authoring/spark_denetim.py docs/content_batches/gpt_bulgular
 
-    docs/content_batches/gpt_bulgular/parti_01.json
-    docs/content_batches/gpt_bulgular/parti_02.json
-    ...
+Araç kimlikleri bankayla, iddiaları kayıtların gerçek içeriğiyle
+karşılaştırır ve dizinin sonundaki `{"_okunan": N}` beyanını 3214 ile
+karşılaştırır. "1200 okudum" diyen bir dönüş yakalanır.
 
-Dosya adı partiyle aynı numarayı taşısın. Ben o klasörü denetleyip
-bulguları elden geçireceğim.
+## Tek gerçek risk
 
-## Yapıştırma kutusu dosyaya çeviriyorsa
+Yapıştırma kutusu bu boyutu **dosya ekine** çevirebilir. Öyle olursa
+model metni okumak yerine bir sanal ortamda Python'la işler: sayar,
+örnekler, greple arar — ve 3214 sorunun hiçbiri okunmamış olur. Dönüşün
+kısa ve genel çıkması bunun işaretidir.
 
-Bazı sohbet kutuları uzun yapıştırmayı dosya ekine dönüştürür. Bu iş
-için kötüdür: model dosyayı okumak yerine bir sanal ortamda Python'la
-işler — sayar, örnekler, grepler. 3214 sorunun her birinin OKUNMASI
-gerekiyor.
+Öyle olduğunu düşünüyorsan haber ver; aynı içeriği partilere bölerim:
 
-Öyle oluyorsa partileri küçült:
+    python3 tool/content_authoring/gpt_partileri_uret.py 22000
 
-    python3 tool/content_authoring/gpt_partileri_uret.py 12000
+## Bilinmesi gerekenler
 
-Sayı, parti başına karakter bütçesidir. Küçültürsen parti sayısı artar.
+**Türkçe ikizler yok.** Eklenseydi dosya ~306.000 token olurdu ve
+çıktıya yer kalmazdı. Sorulan şey şıkların kalitesi; o Kurmancî
+kayıttan görülür. Çeviri kayması ayrı ve daha düşük öncelikli bir
+denetim — istenirse ayrı dosya üretilir.
 
-## Bilinmesi gereken
+**Doğru cevap ✓ ile işaretli.** Bu bir sınav değil, eleştiri görevi.
+Anahtarın kendisinin yanlış olduğu durum (`yanlis_anahtar`) da aranan
+kusurlar arasında. Kör sorma yöntemi `cross_check.py`nin işi ve ayrı
+duruyor.
 
-Türkçe ikizler bilerek dışarıda bırakıldı. Payı iki katına çıkarıp
-parti sayısını 33'ten 60'a taşıyordu. Sorulan şey şıkların kalitesi ve
-o Kurmancî kayıttan görülür; Türkçe çeviri kayması ayrı ve daha düşük
-öncelikli bir denetim.
-
-Doğru cevap ✓ ile işaretli. Bu bilerek: bu bir sınav değil, eleştiri
-görevi. Anahtarın kendisinin yanlış olduğu durumlar da (`yanlis_anahtar`)
-aranan kusurlar arasında.
+**Sıra riske göre.** Dosyanın başında çapraz kontrolden hiç geçmemiş
+2059 kayıt var (bankanın %64'ü), içlerinde en eski bankalar önde. Model
+yarıda bırakırsa ya da sona doğru dikkati düşerse, kaybedilen kısım en
+az riskli kısım olur.

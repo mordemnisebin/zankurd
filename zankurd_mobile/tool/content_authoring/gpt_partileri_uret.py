@@ -44,7 +44,14 @@ import sys
 # dosya yüklemek bu işi tam da kaçınmak istediğimiz yere götürür.
 # Kutu yine de dosyaya çeviriyorsa komuta küçük bir sayı ver:
 #   python3 tool/content_authoring/gpt_partileri_uret.py 12000
-BUDGET = int(sys.argv[1]) if len(sys.argv) > 1 else 22_000
+#
+# `tek` verilirse bölme yapılmaz, hepsi tek dosyaya yazılır. Bağlam
+# penceresi yeten bir modelde bütün bankayı bir arada görmek daha
+# iyidir: "tekrar" kusuru ancak iki soru AYNI bağlamdayken bulunur,
+# partilere bölünce parti sınırını aşan tekrarlar görünmez kalır.
+BUDGET = (10**9 if (len(sys.argv) > 1 and sys.argv[1] == "tek")
+          else int(sys.argv[1]) if len(sys.argv) > 1 else 22_000)
+SINGLE = len(sys.argv) > 1 and sys.argv[1] == "tek"
 OUT = pathlib.Path("docs/content_batches/gpt_partileri")
 
 BASLIK = """Aşağıda bir Kurmancî bilgi yarışması uygulamasının soru bankasından
@@ -109,6 +116,9 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.txt"):
         old.unlink()
+    single = OUT / "TUM_SORULAR.txt"
+    if single.exists():
+        single.unlink()
 
     def render(question):
         answers = question.get("answers") or []
@@ -134,7 +144,8 @@ def main() -> int:
     counts = []
     for number, chunk in enumerate(batches, start=1):
         body = BASLIK.format(n=len(chunk)) + "\n".join(chunk)
-        (OUT / f"parti_{number:02d}.txt").write_text(body, encoding="utf-8")
+        name = "TUM_SORULAR.txt" if SINGLE else f"parti_{number:02d}.txt"
+        (OUT / name).write_text(body, encoding="utf-8")
         counts.append(len(chunk))
         written += 1
 
