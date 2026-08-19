@@ -3691,33 +3691,33 @@
   {
     "id": "ds_dirok_0011",
     "category": "Dîrok",
-    "prompt": "Şerefname ji aliyê kîjan malbatê ve hatiye piştgirîkirin?",
+    "prompt": "Encama jeopolîtîk a herî sereke ya Peymana Qesrî Şîrîn (1639) li ser mîrektiyên kurd çi bû?",
     "answers": [
-      "Malbata Mîrên Bidlîsê",
-      "Malbata Osmanî",
-      "Malbata Sefewî",
-      "Malbata Memlûkan"
+      "Parvekirina fermî ya Kurdistanê di navbera Osmanî û Sefewiyan de",
+      "Hilweşîna yekcarî ya hemû mîrektiyan û derketina komaran",
+      "Avakirina yekîtiyeke serbixwe ya mîran li tevahiya herêmê",
+      "Qedexekirina bazirganiya hevrîşimê li seranserê Rojhilata Navîn"
     ],
-    "correctAnswer": "Malbata Mîrên Bidlîsê",
-    "explanation": "Şerefname, Bitlis Beyleri ailesi tarafından desteklenmiştir. Şerefhan Bitlisi de bu ailenin bir üyesiydi.",
+    "correctAnswer": "Parvekirina fermî ya Kurdistanê di navbera Osmanî û Sefewiyan de",
+    "explanation": "Peymana Qesrî Şîrîn di sala 1639an de sînorê fermî yê di navbera Împaratoriya Osmanî û ya Sefewî de diyar kir û erdnîgariya kurdan kir du parçe.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 5,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Sharafkhan_Bidlisi",
       "qualityVersion": 1
     },
-    "promptTr": "Şerefname hangi aile tarafından desteklenmiştir?",
+    "promptTr": "1639 Kasr-ı Şirin Antlaşması'nın Kürt mîrlikleri ve coğrafyası üzerindeki en temel jeopolitik sonucu neydi?",
     "answersTr": [
-      "Bitlis Beyleri Ailesi",
-      "Osmanlı Ailesi",
-      "Safevi Ailesi",
-      "Memluk Ailesi"
+      "Kürdistan coğrafyasının Osmanlı ve Safeviler arasında ilk resmi bölünüşü",
+      "Tüm mîrliklerin derhal yıkılması ve yeni cumhuriyetlerin kurulması",
+      "Bölgedeki tüm beyliklerin bağımsız ve tek bir çatı altında birleşmesi",
+      "Ortadoğu genelinde ipek ticaretinin tamamen yasaklanması"
     ],
-    "correctAnswerTr": "Bitlis Beyleri Ailesi",
-    "explanationKu": "Şerefname ji aliyê malbata Mîrên Bidlîsê ve hatiye piştgirîkirin. Şerefxanê Bidlîsî jî endamê vê malbatê bû.",
-    "explanationTr": "Şerefname, Bitlis Beyleri ailesi tarafından desteklenmiştir. Şerefhan Bitlisi de bu ailenin bir üyesiydi."
+    "correctAnswerTr": "Kürdistan coğrafyasının Osmanlı ve Safeviler arasında ilk resmi bölünüşü",
+    "explanationKu": "Peymana Qesrî Şîrîn di sala 1639an de sînorê fermî yê di navbera Împaratoriya Osmanî û ya Sefewî de diyar kir û erdnîgariya kurdan kir du parçe.",
+    "explanationTr": "Kasr-ı Şirin Antlaşması ile Osmanlı ve Safeviler arasındaki sınır resmileşmiş ve bölge ilk kez iki imparatorluk arasında bölünmüştür."
   },
   {
     "id": "ds_dirok_0012",
@@ -3939,33 +3939,33 @@
   {
     "id": "ds_dirok_0028",
     "category": "Dîrok",
-    "prompt": "Hawar di kîjan bajarî de hate weşandin?",
+    "prompt": "Sedema sereke ya ku kovara \"Hawar\" (1932) li Şamê derket û ne li Stenbol an Amedê çi bû?",
     "answers": [
-      "Şam",
-      "Stenbol",
-      "Qahîre",
-      "Bexda"
+      "Rewşa siyasî ya piştî 1925an û qedexekirina rêxistin û weşanên kurdî li Tirkiyeyê",
+      "Li Şamê hebûna zankoyeke mezin a fîlolojiya zimanên rojhilatî",
+      "Daxwaza Fransiyan ji bo avakirina televîzyona nû ya erebî li herêmê",
+      "Nebûna makîneyên çapxaneyê li bajarên din ên herêmê"
     ],
-    "correctAnswer": "Şam",
-    "explanation": "Hawar, Suriye'nin başkenti Şam'da yayımlandı. Celadet Alî Bedirxan, Türkiye'den göç ettikten sonra oraya yerleşmişti.",
+    "correctAnswer": "Rewşa siyasî ya piştî 1925an û qedexekirina rêxistin û weşanên kurdî li Tirkiyeyê",
+    "explanation": "Piştî Şoreşa Şêx Seîd zextên li ser ziman û çandê zêde bûn; malbata Bedirxaniyan li bin mandateriya Fransayê li Sûriyê xebatên çandî domandin.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Hawar_(magazine)",
       "qualityVersion": 1
     },
-    "promptTr": "Hawar hangi şehirde yayımlandı?",
+    "promptTr": "Mîr Celadet Bedirxan'ın \"Hawar\" dergisini (1932) İstanbul veya Diyarbakır yerine Şam'da çıkarmasının tarihsel sebebi neydi?",
     "answersTr": [
-      "Şam",
-      "İstanbul",
-      "Kahire",
-      "Bağdat"
+      "1925 sonrası siyasi şartlar ve Türkiye'de Kürtçe yayın ve örgütlenmenin yasaklanması",
+      "Şam'da doğu dilleri üzerine büyük bir filoloji üniversitesinin bulunması",
+      "Fransızların bölgede yeni bir Arapça televizyon kanalı kurma isteği",
+      "Bölgedeki diğer şehirlerde hiçbir matbaa makinesinin bulunmaması"
     ],
-    "correctAnswerTr": "Şam",
-    "explanationKu": "Hawar li Şamê, paytexta Sûriyeyê, hate weşandin. Celadet Alî Bedirxan piştî koçkirina ji Tirkiyeyê li wir bi cih bûbû.",
-    "explanationTr": "Hawar, Suriye'nin başkenti Şam'da yayımlandı. Celadet Alî Bedirxan, Türkiye'den göç ettikten sonra oraya yerleşmişti."
+    "correctAnswerTr": "1925 sonrası siyasi şartlar ve Türkiye'de Kürtçe yayın ve örgütlenmenin yasaklanması",
+    "explanationKu": "Piştî Şoreşa Şêx Seîd zextên li ser ziman û çandê zêde bûn; malbata Bedirxaniyan li bin mandateriya Fransayê li Sûriyê xebatên çandî domandin.",
+    "explanationTr": "1925 sonrası yasaklamalar nedeniyle aydınlar Suriye mandasına geçmiş ve Hawar dergisi Şam'da Latin alfabesiyle yayımlanmıştır."
   },
   {
     "id": "ds_dirok_0029",
@@ -4063,33 +4063,33 @@
   {
     "id": "ds_dirok_0033",
     "category": "Dîrok",
-    "prompt": "Piştî têkçûna serhildana Bedirxan Paşa, ew bi kîjan dewletê re têkildar bû?",
+    "prompt": "Piştî hilweşandina Mîrektiya Botan a Bedirxan Paşa (1847) di civaka kurd de kîjan guherîna desthilatê çêbû?",
     "answers": [
-      "Împaratoriya Osmanî",
-      "Împaratoriya Rûsî",
-      "Împaratoriya Brîtanî",
-      "Împaratoriya Fransî"
+      "Desthilata mîran lawaz bû û şêxên terîqetan di qada civakî de derketin pêş",
+      "Hemû herêm rasterast bêyî pirsgirêk kete bin sîstema nûjen a parlamenê",
+      "Mîrektiyên nû yên mezin li Şam û Helebê hatin avakirin",
+      "Zimanê kurdî di saziyên fermî de wekî zimanê yekem hate pejirandin"
     ],
-    "correctAnswer": "Împaratoriya Osmanî",
-    "explanation": "Bedirxan Paşa, Osmanlı İmparatorluğu'na karşı isyan etti, ancak yenilgiden sonra tutuklandı ve sürgüne gönderildi. Aslen bu devletin tebaasıydı.",
+    "correctAnswer": "Desthilata mîran lawaz bû û şêxên terîqetan di qada civakî de derketin pêş",
+    "explanation": "Bi polîtîkaya navendîbûnê ya Osmaniyan mîrektî hatin rakirin; valahiya desthilatê ji aliyê şêx û rêberên dînî ve hate tijîkirin.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 5,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Bedir_Khan_Beg",
       "qualityVersion": 1
     },
-    "promptTr": "Bedirxan Paşa'nın isyanının bastırılmasından sonra, o hangi devletle ilişkiliydi?",
+    "promptTr": "1847'de Bedirxan Paşa Mîrliğinin tasfiyesinden sonra yerel otoritede hangi yapısal değişim yaşandı?",
     "answersTr": [
-      "Osmanlı İmparatorluğu",
-      "Rus İmparatorluğu",
-      "Britanya İmparatorluğu",
-      "Fransız İmparatorluğu"
+      "Geleneksel mîrlik otoritesi yıkıldı ve tarikat şeyhleri toplumsal liderlikte öne çıktı",
+      "Bölge sorunsuz bir şekilde doğrudan modern parlamento sistemine bağlandı",
+      "Şam ve Halep merkezli yeni ve büyük mîrlikler kuruldu",
+      "Kürtçe resmi kurumlarda birinci eğitim dili olarak kabul edildi"
     ],
-    "correctAnswerTr": "Osmanlı İmparatorluğu",
-    "explanationKu": "Bedirxan Paşa li dijî Împaratoriya Osmanî serhildan kir, lê piştî têkçûnê hate girtin û sirgûn kirin. Ew bi eslê xwe ji vê dewletê bû.",
-    "explanationTr": "Bedirxan Paşa, Osmanlı İmparatorluğu'na karşı isyan etti, ancak yenilgiden sonra tutuklandı ve sürgüne gönderildi. Aslen bu devletin tebaasıydı."
+    "correctAnswerTr": "Geleneksel mîrlik otoritesi yıkıldı ve tarikat şeyhleri toplumsal liderlikte öne çıktı",
+    "explanationKu": "Bi polîtîkaya navendîbûnê ya Osmaniyan mîrektî hatin rakirin; valahiya desthilatê ji aliyê şêx û rêberên dînî ve hate tijîkirin.",
+    "explanationTr": "Osmanlı'nın merkezileşme politikasıyla mîrlikler tasfiye edilince doğan otorite boşluğunu şeyhler ve dini liderler doldurmuştur."
   },
   {
     "id": "ds_dirok_0035",
@@ -11596,64 +11596,64 @@
   {
     "id": "ds_muzik_0001",
     "category": "Muzîk",
-    "prompt": "Dengbêj di çanda Kurdî de bi taybetî ji bo çi tê naskirin?",
+    "prompt": "Cudahiya sereke ya di navbera cureyên dengbêjiyê \"Kilam\" û \"Lawik/Heyranok\" de çi ye?",
     "answers": [
-      "Stranbêj û vegêran",
-      "Nivîskar",
-      "Wênesaz",
-      "Mimar"
+      "Kilam li ser dîrok û şeran bi awayekî resîtatîf e; Lawik li ser evîn û hestan e",
+      "Kilam tenê bi tembûrê tê gotin, Lawik tenê bi def û zirneyê tê lêdan",
+      "Kilam tenê ji bo zarokan e, Lawik tenê di şînan de tê xwendin",
+      "Kilam bi zimanê erebî ye, Lawik tenê bi zaravayê hewramî ye"
     ],
-    "correctAnswer": "Stranbêj û vegêran",
-    "explanation": "Dengbêj, Kürt kültüründe şarkıları ve hikâyeleri sözlü olarak aktaran şarkıcı ve hikâye anlatıcısıdır. Yazar, ressam veya mimar değildir.",
+    "correctAnswer": "Kilam li ser dîrok û şeran bi awayekî resîtatîf e; Lawik li ser evîn û hestan e",
+    "explanation": "Kilam bîra dîrokî û qehremaniyan bi şêwaza resîtatîf vedibêje; lawik û heyranok stranên lîrîk ên li ser evînê ne.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Dengb%C3%AAj",
       "qualityVersion": 1
     },
-    "promptTr": "Kürt kültüründe dengbêj özellikle neyle tanınır?",
+    "promptTr": "Dengbêjlik geleneğindeki \"Kilam\" ile \"Lawik/Heyranok\" arasındaki tür ve içerik farkı nedir?",
     "answersTr": [
-      "Şarkıcı ve hikâye anlatıcısı",
-      "Yazar",
-      "Ressam",
-      "Mimar"
+      "Kilam tarihi ve epik olayları serbest ritimle anlatır; Lawik ve Heyranok aşk ve lirizmi işler",
+      "Kilam sadece bağlama ile söylenir, Lawik ise yalnızca davul zurna ile çalınır",
+      "Kilam sadece çocuk masalları içindir, Lawik ise yalnızca cenazelerde okunur",
+      "Kilam Arapça dilindedir, Lawik ise yalnızca Hewramî lehçesinde söylenir"
     ],
-    "correctAnswerTr": "Şarkıcı ve hikâye anlatıcısı",
-    "explanationKu": "Dengbêj di çanda Kurdî de stranbêj û vegêran e ku kilam û çîrokan bi devkî radigihîne. Ew ne nivîskar, wênesaz an jî mimar e.",
-    "explanationTr": "Dengbêj, Kürt kültüründe şarkıları ve hikâyeleri sözlü olarak aktaran şarkıcı ve hikâye anlatıcısıdır. Yazar, ressam veya mimar değildir."
+    "correctAnswerTr": "Kilam tarihi ve epik olayları serbest ritimle anlatır; Lawik ve Heyranok aşk ve lirizmi işler",
+    "explanationKu": "Kilam bîra dîrokî û qehremaniyan bi şêwaza resîtatîf vedibêje; lawik û heyranok stranên lîrîk ên li ser evînê ne.",
+    "explanationTr": "Kilamlar tarihsel ve epik olayları serbest vezin ve anlatıyla aktarırken, lawik ve heyranoklar lirik aşk ve duygu şarkılarıdır."
   },
   {
     "id": "ds_muzik_0002",
     "category": "Muzîk",
-    "prompt": "Kilam di kevneşopiya dengbêjiyê de bi piranî bi kîjan awayî tê vegotin?",
+    "prompt": "Bandora herî mezin a dîrokî ya Radyoya Êrîvanê (beşa kurdî, 1955) li ser muzîka kurdî çi bû?",
     "answers": [
-      "Bi piyanoyê",
-      "Bi gîtarê",
-      "Bi dengê bilind û bê amûr",
-      "Bi dahol û zirneyê"
+      "Qedexekirina hemû amûrên nûjen û tenê bikaranîna bilûrê",
+      "Veguhestina hemû stranên kurdî bo zimanên ewropî di radyoyê de",
+      "Qeydkirina dengbêjên herêmî û afirandina arşîveke hevpar a dengî",
+      "Tekane organîzekirina konseran li bajarên Ewropayê"
     ],
-    "correctAnswer": "Bi dengê bilind û bê amûr",
-    "explanation": "Kilamlar geleneksel olarak yüksek sesle ve enstrümansız söylenir. Dengbêj kilamı sadece sesiyle söyler, piyano, gitar veya davul ve zurnayla değil.",
+    "correctAnswer": "Qeydkirina dengbêjên herêmî û afirandina arşîveke hevpar a dengî",
+    "explanation": "Radyoya Êrîvanê bi dengê Şeroyê Biro, Karapêtê Xaço, Egîdê Cimo û Meryem Xanê muzîka kurdî qeyd kir û gihand her çar perçeyan.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 5,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Dengb%C3%AAj",
       "qualityVersion": 1
     },
-    "promptTr": "Dengbêjlik geleneğinde kilamlar çoğunlukla nasıl icra edilir?",
+    "promptTr": "1955'te yayına başlayan Erivan Radyosu Kürtçe Servisi'nin müzik mirası üzerindeki en büyük tarihsel etkisi neydi?",
     "answersTr": [
-      "Piyanoyla",
-      "Gitarla",
-      "Yüksek sesle ve enstrümansız",
-      "Davul ve zurnayla"
+      "Tüm modern enstrümanları yasaklayıp sadece kaval kullanımına izin vermesi",
+      "Radyodaki tüm Kürtçe şarkıların Avrupa dillerine tercüme edilmesi",
+      "Sözlü dengbêj kilamlarını profesyonel kayıtlarla arşivleyip ortak hafıza yaratması",
+      "Avrupa şehirlerinde tek elden büyük konserler düzenlemesi"
     ],
-    "correctAnswerTr": "Yüksek sesle ve enstrümansız",
-    "explanationKu": "Kilam bi kevneşopî bi dengê bilind û bê amûr tê gotin. Dengbêj bi tenê dengan xwe kilamê dibêje, ne bi piyano, gîtar an jî dahol û zirneyê.",
-    "explanationTr": "Kilamlar geleneksel olarak yüksek sesle ve enstrümansız söylenir. Dengbêj kilamı sadece sesiyle söyler, piyano, gitar veya davul ve zurnayla değil."
+    "correctAnswerTr": "Sözlü dengbêj kilamlarını profesyonel kayıtlarla arşivleyip ortak hafıza yaratması",
+    "explanationKu": "Radyoya Êrîvanê bi dengê Şeroyê Biro, Karapêtê Xaço, Egîdê Cimo û Meryem Xanê muzîka kurdî qeyd kir û gihand her çar perçeyan.",
+    "explanationTr": "Erivan Radyosu sözlü mirası stüdyo kayıtlarıyla ölümsüzleştirmiş, tüm parçalara ulaştırarak ortak müzikal bellek oluşturmuştur."
   },
   {
     "id": "ds_muzik_0003",
@@ -11999,33 +11999,33 @@
   {
     "id": "ds_muzik_0026",
     "category": "Muzîk",
-    "prompt": "Tembûr bi piranî di kîjan çanda muzîkê de amûreke sereke ye?",
+    "prompt": "Cudahiya sereke ya di navbera ekola dengbêjiyê ya \"Serhedê\" û ya \"Botanê\" de di kîjan şêwazê de ye?",
     "answers": [
-      "Çanda Kurdî",
-      "Çanda Almanî",
-      "Çanda Japonî",
-      "Çanda Brezîlyayî"
+      "Serhed bi dengê bilind û lîrîk-epîk e; Botan bêhtir rîtmîk û bi kontrola henaseyê ye",
+      "Serhed tenê bi piyanoyê tê gotin, Botan tenê bi kemançeyê tê lêdan",
+      "Serhed tenê ji bo mêran e, Botan tenê ji aliyê zarokan ve tê vegotin",
+      "Serhed li ser mîtolojiya yewnanî ye, Botan tenê li ser nêçîrvaniyê ye"
     ],
-    "correctAnswer": "Çanda Kurdî",
-    "explanation": "Tembûr, Kürt müziğinin köklü telli çalgılarındandır.",
+    "correctAnswer": "Serhed bi dengê bilind û lîrîk-epîk e; Botan bêhtir rîtmîk û bi kontrola henaseyê ye",
+    "explanation": "Ekola Serhedê bi qêrîn û dengê bilind ê deşt û çiyayan navdar e; ya Botanê bi melodiyên nermtir û rîtmên taybet tê naskirin.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Temb%C3%BBr",
       "qualityVersion": 1
     },
-    "promptTr": "Tembur çoğunlukla hangi müzik kültüründe ana enstrümandır?",
+    "promptTr": "Serhed dengbêjlik ekolü ile Botan ekolü arasındaki temel icra ve üslup farkı nedir?",
     "answersTr": [
-      "Kürt kültürü",
-      "Alman kültürü",
-      "Japon kültürü",
-      "Brezilya kültürü"
+      "Serhed tiz, gırtlaktan ve lirik-epiktir; Botan daha ritmik ve nefes kontrolüne dayalıdır",
+      "Serhed sadece piyano eşliğinde, Botan ise kemençe ile icra edilir",
+      "Serhed yalnızca erkeklere özgüdür, Botan ise yalnızca çocuklarca söylenir",
+      "Serhed Yunan mitolojisini, Botan ise yalnızca avcılık öykülerini konu alır"
     ],
-    "correctAnswerTr": "Kürt kültürü",
-    "explanationKu": "Tembûr ji amûrên têldar ên kevnar ên muzîka kurdî ye.",
-    "explanationTr": "Tembûr, Kürt müziğinin köklü telli çalgılarındandır."
+    "correctAnswerTr": "Serhed tiz, gırtlaktan ve lirik-epiktir; Botan daha ritmik ve nefes kontrolüne dayalıdır",
+    "explanationKu": "Ekola Serhedê bi qêrîn û dengê bilind ê deşt û çiyayan navdar e; ya Botanê bi melodiyên nermtir û rîtmên taybet tê naskirin.",
+    "explanationTr": "Serhed ekolü tiz ve gırtlaktan gelen yankılı haykırışlarla öne çıkarken; Botan ekolü daha melizmatik ve ritmik nüanslar taşır."
   },
   {
     "id": "ds_muzik_0042",
@@ -15037,126 +15037,126 @@
   {
     "id": "ds_sinema_0032",
     "category": "Sînema",
-    "prompt": "Kîjan fîlmê Bahman Ghobadi di sala 2000î de derketiye?",
+    "prompt": "Cudahiya sereke ya di navbera fîlmên \"Yol\" û \"Sürü\" yên \"Yılmaz Güney\" de çi ye?",
     "answers": [
-      "A Time for Drunken Horses",
-      "Turtles Can Fly",
-      "Half Moon",
-      "No One Knows About Persian Cats"
+      "Yol rewşa girtîgehê û derketina îznê, Sürü hilweşîna feodalîzmê û koçberiyê vedibêje",
+      "Yol li derveyî welat hatiye kişandin, Sürü tenê li bajarê Stenbolê hatiye çêkirin",
+      "Yol li ser komediyê hatiye avakirin, Sürü belgenameyeke dîrokî ya serdema kevn e",
+      "Yol fîlmeke bêdeng e, Sürü yekem fîlma bi deng a derhêner e"
     ],
-    "correctAnswer": "A Time for Drunken Horses",
-    "explanation": "\"Sarhoş Atlar Zamanı\" filmi 2000 yılında gösterime girmiştir. Bu film Bahman Ghobadi'nin ilk uzun metrajlı filmidir ve İran-Irak sınırındaki Kürt çocuklarının hayatı hakkındadır.",
+    "correctAnswer": "Yol rewşa girtîgehê û derketina îznê, Sürü hilweşîna feodalîzmê û koçberiyê vedibêje",
+    "explanation": "Fîlma Yol derketina îznê ya girtiyan û zextên civakî vedibêje; Sürü jî hilweşîna aboriya koçeriyê û koça ber bi metropolê nîşan dide.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses",
       "qualityVersion": 1
     },
-    "promptTr": "Bahman Ghobadi'nin hangi filmi 2000 yılında gösterime girmiştir?",
+    "promptTr": "Yılmaz Güney'in \"Yol\" ve \"Sürü\" filmleri arasındaki temel anlatı farkı nedir?",
     "answersTr": [
-      "Sarhoş Atlar Zamanı",
-      "Kaplumbağalar da Uçar",
-      "Half Moon",
-      "Fars Kedilerini Kimse Bilmez"
+      "Yol sıkıyönetim dönemi bireysel tutsaklığı, Sürü ise feodal çözülüş ve göç trajedisini işler",
+      "Yol tamamen yurt dışında çekilmiş, Sürü ise sadece İstanbul'da çekilmiştir",
+      "Yol komedi türündedir, Sürü ise eski dönemi anlatan tarihi bir belgeseldir",
+      "Yol sessiz bir filmdir, Sürü ise yönetmenin ilk sesli filmidir"
     ],
-    "correctAnswerTr": "Sarhoş Atlar Zamanı",
-    "explanationKu": "Fîlma \"A Time for Drunken Horses\" di sala 2000î de derketiye. Ev fîlm yekem fîlma dirêj a Bahman Ghobadi ye û li ser jiyana zarokên kurd ên li ser sînorê Îran û Îraqê ye.",
-    "explanationTr": "\"Sarhoş Atlar Zamanı\" filmi 2000 yılında gösterime girmiştir. Bu film Bahman Ghobadi'nin ilk uzun metrajlı filmidir ve İran-Irak sınırındaki Kürt çocuklarının hayatı hakkındadır."
+    "correctAnswerTr": "Yol sıkıyönetim dönemi bireysel tutsaklığı, Sürü ise feodal çözülüş ve göç trajedisini işler",
+    "explanationKu": "Fîlma Yol derketina îznê ya girtiyan û zextên civakî vedibêje; Sürü jî hilweşîna aboriya koçeriyê û koça ber bi metropolê nîşan dide.",
+    "explanationTr": "Yol filmi izinli mahkumların toplumsal baskılar altındaki dramını, Sürü ise göçer hayvancılığın çöküşü ve metropole göç sürecini anlatır."
   },
   {
     "id": "ds_sinema_0037",
     "category": "Sînema",
-    "prompt": "Fîlma \"A Time for Drunken Horses\" a Bahman Ghobadi çîroka kîjan kesan vedibêje?",
+    "prompt": "Hêmana sereke ya ku fîlma \"Kûsî Jî Difirin\" ji fîlma \"Dema Hespên Serxweş\" a Bahman Ghobadi cuda dike çi ye?",
     "answers": [
-      "Muzîkjenên kurd",
-      "Leşkerên kurd",
-      "Gundiyên kurd",
-      "Zarokên êtîm ên kurd"
+      "Li gundekî bêdeng jiyana mamosteyekî nûhatî û têkiliyên wî yên malbatî",
+      "Li Ewropayê jiyana koçberên ciwan û zehmetiyên entegrasyona wan",
+      "Li ser dîroka kevnar a şaristaniya Mezopotamyayê vegotineke mîtolojîk",
+      "Li kampa penaberan komkirina mayînan û bandora derûnî ya şerê li ser zarokan"
     ],
-    "correctAnswer": "Zarokên êtîm ên kurd",
-    "explanation": "\"Sarhoş Atlar Zamanı\" filmi, İran-Irak sınırında yaşayan iki Kürt yetim kardeşin hikayesini anlatır. Kardeşlerden biri hastadır ve ağabeyi ona bir ilaç bulmaya çalışır.",
+    "correctAnswer": "Li kampa penaberan komkirina mayînan û bandora derûnî ya şerê li ser zarokan",
+    "explanation": "Kûsî Jî Difirin li ser sînorê Tirkiye-Iraqê di kampa penaberan de zarokên ku mayînan kom dikin û trawmayên şer nîşan dide.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 5,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses",
       "qualityVersion": 1
     },
-    "promptTr": "Bahman Ghobadi'nin \"Sarhoş Atlar Zamanı\" filmi kimlerin hikayesini anlatır?",
+    "promptTr": "Bahman Ghobadi'nin \"Kaplumbağalar da Uçar\" filmini \"Sarhoş Atlar Zamanı\"ndan tematik olarak ayıran belirleyici unsur nedir?",
     "answersTr": [
-      "Kürt müzisyenler",
-      "Kürt askerler",
-      "Kürt köylüler",
-      "Kürt yetim çocuklar"
+      "Sakin bir köyde yeni gelen bir öğretmenin ailevi ilişkilerini konu alması",
+      "Avrupa'daki genç göçmenlerin entegrasyon zorluklarını ve yaşamını anlatması",
+      "Mezopotamya'nın kadim tarihi üzerine mitolojik bir kurgu sunması",
+      "Mülteci kampında mayın toplayan çocukların savaş psikolojisini ele alması"
     ],
-    "correctAnswerTr": "Kürt yetim çocuklar",
-    "explanationKu": "Fîlma \"A Time for Drunken Horses\" çîroka du birayên êtîm ên kurd vedibêje ku li ser sînorê Îran û Îraqê dijîn. Yek ji birayan nexweş e û birayê wî yê mezin hewl dide ku dermanekî ji bo wî peyda bike.",
-    "explanationTr": "\"Sarhoş Atlar Zamanı\" filmi, İran-Irak sınırında yaşayan iki Kürt yetim kardeşin hikayesini anlatır. Kardeşlerden biri hastadır ve ağabeyi ona bir ilaç bulmaya çalışır."
+    "correctAnswerTr": "Mülteci kampında mayın toplayan çocukların savaş psikolojisini ele alması",
+    "explanationKu": "Kûsî Jî Difirin li ser sînorê Tirkiye-Iraqê di kampa penaberan de zarokên ku mayînan kom dikin û trawmayên şer nîşan dide.",
+    "explanationTr": "Kaplumbağalar da Uçar, Türkiye-Irak sınırındaki mülteci kampında mayın toplayarak hayata tutunan çocukların savaş travmasını işler."
   },
   {
     "id": "ds_sinema_0045",
     "category": "Sînema",
-    "prompt": "Bahman Ghobadi di kîjan fîlmê xwe de li ser jiyana zarokên êtîm ên kurd fîlm çêkiriye?",
+    "prompt": "Di fîlma \"Klama Dayîka Min\" (Erol Mintaş) de diya ku ji Tarlabaşiyê hatiye koçberkirin li kîjan tiştî digere?",
     "answers": [
-      "Turtles Can Fly",
-      "Half Moon",
-      "A Time for Drunken Horses",
-      "No One Knows About Persian Cats"
+      "Malbateke dewlemend ku alîkariya wan a aborî bike",
+      "Zêrên kevn ên ku di gund de di bin erdê de mane",
+      "Klamek winda û bîra çandî ya cihê ku lê jiya ye",
+      "Pasaporta nû ji bo koçkirina ber bi derveyî welat"
     ],
-    "correctAnswer": "A Time for Drunken Horses",
-    "explanation": "\"Sarhoş Atlar Zamanı\" filmi iki Kürt yetim kardeşin hikayesini anlatır. Bu film 2000 yılında gösterime girmiştir ve Bahman Ghobadi'nin ilk uzun metrajlı filmidir.",
+    "correctAnswer": "Klamek winda û bîra çandî ya cihê ku lê jiya ye",
+    "explanation": "Dayik Nîgarda li pey klamek ku di bîra wê de maye digere û ev lêgerîn sembola bîra windabûyî ya bajêr û çandê ye.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses",
       "qualityVersion": 1
     },
-    "promptTr": "Bahman Ghobadi hangi filminde Kürt yetim çocukların hayatı hakkında film yapmıştır?",
+    "promptTr": "Erol Mintaş'ın \"Annemin Şarkısı\" filminde kentsel dönüşümle taşınan annenin arayışı neyi simgeler?",
     "answersTr": [
-      "Kaplumbağalar da Uçar",
-      "Half Moon",
-      "Sarhoş Atlar Zamanı",
-      "Fars Kedilerini Kimse Bilmez"
+      "Kendilerine maddi yardım yapacak zengin bir aileyi",
+      "Köyde toprak altında saklanan eski altınları",
+      "Kaybolan bir kilamı ve yitirilen mekan aidiyetini",
+      "Yurt dışına göç etmek için gerekli yeni pasaportu"
     ],
-    "correctAnswerTr": "Sarhoş Atlar Zamanı",
-    "explanationKu": "Fîlma \"A Time for Drunken Horses\" çîroka du birayên êtîm ên kurd vedibêje. Ev fîlm di sala 2000î de derketiye û yekem fîlma dirêj a Bahman Ghobadi ye.",
-    "explanationTr": "\"Sarhoş Atlar Zamanı\" filmi iki Kürt yetim kardeşin hikayesini anlatır. Bu film 2000 yılında gösterime girmiştir ve Bahman Ghobadi'nin ilk uzun metrajlı filmidir."
+    "correctAnswerTr": "Kaybolan bir kilamı ve yitirilen mekan aidiyetini",
+    "explanationKu": "Dayik Nîgarda li pey klamek ku di bîra wê de maye digere û ev lêgerîn sembola bîra windabûyî ya bajêr û çandê ye.",
+    "explanationTr": "Nîgar anne hafızasındaki kilamın peşine düşer; bu arayış kaybolan kentsel hafıza ve kültürel kökleri temsil eder."
   },
   {
     "id": "ds_sinema_0048",
     "category": "Sînema",
-    "prompt": "Bahman Ghobadi di kîjan fîlmê xwe de li ser jiyana gundiyên kurd fîlm çêkiriye?",
+    "prompt": "Fîlma \"Cîran\" a Mano Xelîl li ser kîjan rastiya dîrokî û sînoran hatiye avakirin?",
     "answers": [
-      "Turtles Can Fly",
-      "Half Moon",
-      "A Time for Drunken Horses",
-      "No One Knows About Persian Cats"
+      "Şerê cîhanî yê yekem û hilweşîna împaratoriyên kevnar",
+      "Pêşketina teknolojiya nûjen di qada çandiniyê de",
+      "Parvebûna sînoran û polîtîkaya asîmîlasyonê ya li ser zarokan",
+      "Koça mezin a ber bi bajarên Ewropayê di salên heştêyan de"
     ],
-    "correctAnswer": "A Time for Drunken Horses",
-    "explanation": "\"Sarhoş Atlar Zamanı\" filmi, İran-Irak sınırındaki Kürt köylülerin hayatı hakkındadır. Bu film 2000 yılında gösterime girmiştir ve Bahman Ghobadi'nin ilk uzun metrajlı filmidir.",
+    "correctAnswer": "Parvebûna sînoran û polîtîkaya asîmîlasyonê ya li ser zarokan",
+    "explanation": "Cîran nîşan dide ka çawa sînor malbatan ji hev qut dikin û mamosteyekî rejîmê hewl dide zarokan asîmîle bike.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses",
       "qualityVersion": 1
     },
-    "promptTr": "Bahman Ghobadi hangi filminde Kürt köylülerin hayatı hakkında film yapmıştır?",
+    "promptTr": "Mano Xelîl'in \"Komşu\" (Cîran) filmi sınır köyü üzerinden hangi tarihsel olguyu işler?",
     "answersTr": [
-      "Kaplumbağalar da Uçar",
-      "Half Moon",
-      "Sarhoş Atlar Zamanı",
-      "Fars Kedilerini Kimse Bilmez"
+      "Birinci Dünya Savaşı ve eski imparatorlukların yıkılışını",
+      "Tarım alanında modern teknolojinin gelişimini ve etkisini",
+      "Sınır bölünmüşlüğünü ve çocuklara yönelik tektipleştirici eğitimi",
+      "Seksenli yıllarda Avrupa şehirlerine yapılan büyük göçü"
     ],
-    "correctAnswerTr": "Sarhoş Atlar Zamanı",
-    "explanationKu": "Fîlma \"A Time for Drunken Horses\" li ser jiyana gundiyên kurd ên li ser sînorê Îran û Îraqê ye. Ev fîlm di sala 2000î de derketiye û yekem fîlma dirêj a Bahman Ghobadi ye.",
-    "explanationTr": "\"Sarhoş Atlar Zamanı\" filmi, İran-Irak sınırındaki Kürt köylülerin hayatı hakkındadır. Bu film 2000 yılında gösterime girmiştir ve Bahman Ghobadi'nin ilk uzun metrajlı filmidir."
+    "correctAnswerTr": "Sınır bölünmüşlüğünü ve çocuklara yönelik tektipleştirici eğitimi",
+    "explanationKu": "Cîran nîşan dide ka çawa sînor malbatan ji hev qut dikin û mamosteyekî rejîmê hewl dide zarokan asîmîle bike.",
+    "explanationTr": "Cîran, yapay sınırların aileleri nasıl böldüğünü ve Baas rejiminin okuldaki asimilasyonist eğitim baskısını çocuk gözünden anlatır."
   },
   {
     "id": "ds_sinema_0053",
@@ -15440,33 +15440,33 @@
   {
     "id": "ds_sinema_0080",
     "category": "Sînema",
-    "prompt": "Kîjan derhênerê amerîkî fîlma \"The Birth of a Nation\" derxist?",
+    "prompt": "Rêzbûna kronolojîk a xelatên girîng ên fîlmên kurdî di kîjan vebijêrkê de rast e?",
     "answers": [
-      "D.W. Griffith",
-      "Cecil B. DeMille",
-      "Charlie Chaplin",
-      "Buster Keaton"
+      "Yol (1982) -> Dema Hespên Serxweş (2000) -> Kûsî Jî Difirin (2004) -> Klama Dayîka Min (2014)",
+      "Dema Hespên Serxweş (2000) -> Yol (1982) -> Klama Dayîka Min (2014) -> Kûsî Jî Difirin (2004)",
+      "Kûsî Jî Difirin (2004) -> Yol (1982) -> Dema Hespên Serxweş (2000) -> Klama Dayîka Min (2014)",
+      "Klama Dayîka Min (2014) -> Kûsî Jî Difirin (2004) -> Dema Hespên Serxweş (2000) -> Yol (1982)"
     ],
-    "correctAnswer": "D.W. Griffith",
-    "explanation": "D.W. Griffith, 1915'te gösterime giren ve sinema teknikleriyle bilinen bu tartışmalı filmin yönetmenidir.",
+    "correctAnswer": "Yol (1982) -> Dema Hespên Serxweş (2000) -> Kûsî Jî Difirin (2004) -> Klama Dayîka Min (2014)",
+    "explanation": "Yol di sala 1982an de Palmiyeya Zêrîn, Dema Hespên Serxweş di 2000an de Kamera Zêrîn a Cannesê wergirt.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/The_Birth_of_a_Nation",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi Amerikalı yönetmen \"The Birth of a Nation\" filmini çekmiştir?",
+    "promptTr": "Kürt temalı filmlerin uluslararası ödül alış sıralaması hangisinde kronolojik olarak doğrudur?",
     "answersTr": [
-      "D.W. Griffith",
-      "Cecil B. DeMille",
-      "Charlie Chaplin",
-      "Buster Keaton"
+      "Yol (1982) -> Sarhoş Atlar Zamanı (2000) -> Kaplumbağalar da Uçar (2004) -> Annemin Şarkısı (2014)",
+      "Sarhoş Atlar Zamanı (2000) -> Yol (1982) -> Annemin Şarkısı (2014) -> Kaplumbağalar da Uçar (2004)",
+      "Kaplumbağalar da Uçar (2004) -> Yol (1982) -> Sarhoş Atlar Zamanı (2000) -> Annemin Şarkısı (2014)",
+      "Annemin Şarkısı (2014) -> Kaplumbağalar da Uçar (2004) -> Sarhoş Atlar Zamanı (2000) -> Yol (1982)"
     ],
-    "correctAnswerTr": "D.W. Griffith",
-    "explanationKu": "D.W. Griffith derhênerê vî fîlmî yê nakokî ye ku di sala 1915an de derket û ji bo teknîkên xwe yên sînemayî tê zanîn.",
-    "explanationTr": "D.W. Griffith, 1915'te gösterime giren ve sinema teknikleriyle bilinen bu tartışmalı filmin yönetmenidir."
+    "correctAnswerTr": "Yol (1982) -> Sarhoş Atlar Zamanı (2000) -> Kaplumbağalar da Uçar (2004) -> Annemin Şarkısı (2014)",
+    "explanationKu": "Yol di sala 1982an de Palmiyeya Zêrîn, Dema Hespên Serxweş di 2000an de Kamera Zêrîn a Cannesê wergirt.",
+    "explanationTr": "Yol 1982'de Altın Palmiye, Sarhoş Atlar Zamanı 2000'de Cannes Altın Kamera ödülünü almıştır."
   },
   {
     "id": "ds_sinema_0223",
@@ -17362,33 +17362,33 @@
   {
     "id": "ds_teknoloji_0004",
     "category": "Teknolojî",
-    "prompt": "Kîjan teknolojî ji bo şîfrekirina daneyan di navbera du aliyan de tê bikaranîn?",
+    "prompt": "Armanca sereke ya protokola TLS di bikaranîna şîfrekirina asîmetrîk û sîmetrîk de bi hev re çi ye?",
     "answers": [
-      "HTML",
-      "SSL/TLS",
-      "CSS",
-      "JavaScript"
+      "Tenê ji bo kontrolkirina navnîşana IP ya bikarhêner bêyî şîfrekirina daneyan",
+      "Guhertina mifteya ewle bi asîmetrîk û veguhestina lezgîn a daneyan bi sîmetrîk",
+      "Hemû daneyan bi awayekî bê şîfre di tora herêmî de veguhestin",
+      "Zêdekirina qebareya pakêtên torê ji bo xebata zûtir a routeran"
     ],
-    "correctAnswer": "SSL/TLS",
-    "explanation": "SSL/TLS, sunucu ve istemci arasındaki verileri koruyan şifreleme protokolleridir. HTML, CSS ve JavaScript web sitesi oluşturma dilleridir, şifreleme protokolleri değildir.",
+    "correctAnswer": "Guhertina mifteya ewle bi asîmetrîk û veguhestina lezgîn a daneyan bi sîmetrîk",
+    "explanation": "Şîfrekirina asîmetrîk (RSA/ECC) mifteya rûniştinê bi ewlehî parve dike, piştre şîfrekirina sîmetrîk (AES) daneyan bi lez dişîne.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 5,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Transport_Layer_Security",
       "qualityVersion": 1
     },
-    "promptTr": "İki taraf arasındaki verileri şifrelemek için hangi teknoloji kullanılır?",
+    "promptTr": "TLS protokolünde asimetrik ve simetrik şifrelemenin birlikte kullanılmasının temel mimari amacı nedir?",
     "answersTr": [
-      "HTML",
-      "SSL/TLS",
-      "CSS",
-      "JavaScript"
+      "Veri şifrelemeden sadece kullanıcının IP adresini kontrol etmek",
+      "Güvenli anahtar değişimini asimetrikle, hızlı veri aktarımını simetrik şifrelemeyle yapmak",
+      "Yerel ağdaki tüm verileri şifresiz olarak doğrudan iletmek",
+      "Routerların daha hızlı çalışması için ağ paketlerinin boyutunu artırmak"
     ],
-    "correctAnswerTr": "SSL/TLS",
-    "explanationKu": "SSL/TLS protokolên şîfrekirinê ne ku daneyên di navbera server û klîentê de diparêzin. HTML, CSS û JavaScript zimanên avakirina malperê ne, ne protokolên şîfrekirinê ne.",
-    "explanationTr": "SSL/TLS, sunucu ve istemci arasındaki verileri koruyan şifreleme protokolleridir. HTML, CSS ve JavaScript web sitesi oluşturma dilleridir, şifreleme protokolleri değildir."
+    "correctAnswerTr": "Güvenli anahtar değişimini asimetrikle, hızlı veri aktarımını simetrik şifrelemeyle yapmak",
+    "explanationKu": "Şîfrekirina asîmetrîk (RSA/ECC) mifteya rûniştinê bi ewlehî parve dike, piştre şîfrekirina sîmetrîk (AES) daneyan bi lez dişîne.",
+    "explanationTr": "Asimetrik şifreleme oturum anahtarını güvenle iletir, sonrasında hızlı simetrik şifreleme veri akışını sağlar."
   },
   {
     "id": "ds_teknoloji_0156",
@@ -17424,33 +17424,33 @@
   {
     "id": "ds_teknoloji_0017",
     "category": "Teknolojî",
-    "prompt": "Kîjan protokol ji bo veguhestina daneyan di navbera komputeran de bi awayekî pêbawer tê bikaranîn?",
+    "prompt": "Cudahiya bingehîn a kontrola herikînê di navbera protokola TCP û UDP de çi ye?",
     "answers": [
-      "UDP",
-      "IP",
-      "ICMP",
-      "TCP"
+      "TCP tenê di tora bêtêl de dixebite, UDP tenê bi kabloyên optîk tê bikaranîn",
+      "TCP qet şaşiyan kontrol nake, lê UDP her pakêtê du caran kontrol dike",
+      "TCP tenê ji bo deng tê bikaranîn, UDP ji bo pelên mezin ên nivîsê tê sepandin",
+      "TCP bi pejirandina pakêtan veguhestineke ewle dike, UDP bê pejirandin û lezgîn dişîne"
     ],
-    "correctAnswer": "TCP",
-    "explanation": "TCP (İletim Kontrol Protokolü), tüm paketlerin hedefe ulaştığını doğruladığı için verileri güvenilir bir şekilde iletmek için kullanılır. UDP güvenilir değildir, IP adresleme ve ICMP hata mesajları içindir.",
+    "correctAnswer": "TCP bi pejirandina pakêtan veguhestineke ewle dike, UDP bê pejirandin û lezgîn dişîne",
+    "explanation": "TCP bi rêbaza 3-way handshake û kontrola pakêtan garantî dide ku dane bê kêmî diçin; UDP ji bo leza zêde pejirandinê naxwaze.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Transmission_Control_Protocol",
       "qualityVersion": 1
     },
-    "promptTr": "Bilgisayarlar arasında verileri güvenilir bir şekilde iletmek için hangi protokol kullanılır?",
+    "promptTr": "TCP ile UDP arasındaki temel akış kontrolü ve güvenilirlik farkı nedir?",
     "answersTr": [
-      "UDP",
-      "IP",
-      "ICMP",
-      "TCP"
+      "TCP sadece kablosuz ağda çalışır, UDP ise sadece optik kablolarda kullanılır",
+      "TCP hataları hiç denetlemez, UDP ise her paketi iki kez doğrular",
+      "TCP sadece ses iletiminde kullanılır, UDP ise büyük metin dosyalarında uygulanır",
+      "TCP paket onay mekanizmasıyla güvenilirlik sağlarken, UDP onaysız ve en düşük gecikmeyle iletir"
     ],
-    "correctAnswerTr": "TCP",
-    "explanationKu": "TCP (Transmission Control Protocol) ji bo veguhestina daneyan bi awayekî pêbawer tê bikaranîn, ji ber ku ew piştrast dike ku hemû pakêt digihîjin armancê. UDP ne pêbawer e, IP ji bo navnîşankirinê ye û ICMP ji bo peyamên çewtiyê ye.",
-    "explanationTr": "TCP (İletim Kontrol Protokolü), tüm paketlerin hedefe ulaştığını doğruladığı için verileri güvenilir bir şekilde iletmek için kullanılır. UDP güvenilir değildir, IP adresleme ve ICMP hata mesajları içindir."
+    "correctAnswerTr": "TCP paket onay mekanizmasıyla güvenilirlik sağlarken, UDP onaysız ve en düşük gecikmeyle iletir",
+    "explanationKu": "TCP bi rêbaza 3-way handshake û kontrola pakêtan garantî dide ku dane bê kêmî diçin; UDP ji bo leza zêde pejirandinê naxwaze.",
+    "explanationTr": "TCP 3'lü el sıkışma ile kayıpsız iletimi garanti eder; UDP ise canlı yayın ve oyun gibi düşük gecikme gerektiren alanlarda kullanılır."
   },
   {
     "id": "ds_teknoloji_0018",
@@ -17641,33 +17641,33 @@
   {
     "id": "ds_teknoloji_0006",
     "category": "Teknolojî",
-    "prompt": "Kîjan amûr navnîşana IP-ê ya malperekê ji navê domênê peyda dike?",
+    "prompt": "Di pirsiyariya DNS de rola \"Recursive Resolver\" û \"Authoritative Name Server\" çawa ji hev vediqete?",
     "answers": [
-      "Web server",
-      "Mail server",
-      "Proxy server",
-      "DNS server"
+      "Resolver tenê navnîşanên MAC tomar dike, Authoritative daneyên HTTP dişîne",
+      "Resolver tenê di komputerên kesane de heye, Authoritative routera herêmî ye",
+      "Resolver geroka înternetê bixwe ye, Authoritative kerta tora bêtêl e",
+      "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire"
     ],
-    "correctAnswer": "DNS server",
-    "explanation": "DNS (Alan Adı Sistemi) sunucusu, alan adını (örneğin: wikipedia.org) bilgisayarın erişebileceği IP adresine dönüştürür. Web sunucusu web sitelerini gönderir, e-posta sunucusu e-postaları yönetir ve vekil sunucu verileri istemci ile sunucu arasında iletir.",
+    "correctAnswer": "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire",
+    "explanation": "Recursive resolver li seranserê sîstema DNSê digere ta ku navnîşanê bibîne; Authoritative server jî çavkaniya resen a qeydên wî domênî ye.",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Domain_Name_System",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi cihaz, bir web sitesinin IP adresini alan adından sağlar?",
+    "promptTr": "DNS sorgusunda \"Recursive Resolver\" ile \"Authoritative Name Server\" arasındaki görev ayrımı nedir?",
     "answersTr": [
-      "Web sunucusu",
-      "E-posta sunucusu",
-      "Vekil sunucu",
-      "DNS sunucusu"
+      "Resolver yalnızca MAC adreslerini kaydeder, Authoritative HTTP verilerini iletir",
+      "Resolver yalnızca kişisel bilgisayarlarda bulunur, Authoritative yerel yönlendiricidir",
+      "Resolver web tarayıcısının kendisidir, Authoritative ise kablosuz ağ kartıdır",
+      "Resolver istemci adına tüm sunucuları gezer, Authoritative o domainin kesin IP kaydını tutar"
     ],
-    "correctAnswerTr": "DNS sunucusu",
-    "explanationKu": "DNS (Domain Name System) server navê domênê (mînak: wikipedia.org) vediguherîne navnîşana IP-ê ya ku komputer dikare tê bigihîje. Web server malperan dişîne, mail server e-nameyan birêve dibe û proxy server daneyan di navbera klîent û serverê de derbas dike.",
-    "explanationTr": "DNS (Alan Adı Sistemi) sunucusu, alan adını (örneğin: wikipedia.org) bilgisayarın erişebileceği IP adresine dönüştürür. Web sunucusu web sitelerini gönderir, e-posta sunucusu e-postaları yönetir ve vekil sunucu verileri istemci ile sunucu arasında iletir."
+    "correctAnswerTr": "Resolver istemci adına tüm sunucuları gezer, Authoritative o domainin kesin IP kaydını tutar",
+    "explanationKu": "Recursive resolver li seranserê sîstema DNSê digere ta ku navnîşanê bibîne; Authoritative server jî çavkaniya resen a qeydên wî domênî ye.",
+    "explanationTr": "Recursive resolver istemci adına kök ve TLD sunucuları dolaşır; Authoritative sunucu ise o alan adının nihai IP bilgisini barındırır."
   },
   {
     "id": "ds_teknoloji_0007",
@@ -21547,33 +21547,33 @@
   {
     "id": "ds_ziman_0002",
     "category": "Ziman",
-    "prompt": "Kîjan peyv di kurmancî de bi awayekî rast bi izafeya mê hatiye nivîsandin?",
+    "prompt": "Di hevoka \"Min kitêb xwend\" de çima kirde bûye \"min\" û lêker li gorî \"kitêb\" kişiyaye?",
     "answers": [
-      "dîya min",
-      "dêya min",
-      "dîha min",
-      "dêha min"
+      "Lêkera \"xwendin\" her tim negerguhêz e û cînavê xwerû dixwaze",
+      "Di dema borî ya lêkerên gerguhêz de rêzika ergatîf dixebite",
+      "Ji ber ku peyva \"kitêb\" navdêreke nêr e û di serê hevokê de ye",
+      "Ev hevok di dema bê de hatiye avakirin û kirde nayê guhertin"
     ],
-    "correctAnswer": "dêya min",
-    "explanation": "Ünlü harfle biten dişil isimler için izafe \"-ya\" dır. \"Dê\" (anne) \"-ya\" ile birleşerek \"dêya\" olur.",
+    "correctAnswer": "Di dema borî ya lêkerên gerguhêz de rêzika ergatîf dixebite",
+    "explanation": "Di kurmancî de di dema borî de ji bo lêkerên tranzîtîv (gerguhêz) sîstema ergatîf tê bikaranîn: kirde ditewe (min), lêker li gorî bireserê (kitêb) dikişe.",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 5,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Kurmanji",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi kelime Kurmanci'de dişil izafe ile doğru bir şekilde yazılmıştır?",
+    "promptTr": "\"Min kitêb xwend\" cümlesinde öznenin bükünlü \"min\" olup fiilin \"kitêb\"e göre çekimlenmesinin dilbilgisi kuralı nedir?",
     "answersTr": [
-      "dîya min",
-      "dêya min",
-      "dîha min",
-      "dêha min"
+      "\"Xwendin\" fiili her zaman geçişsizdir ve yalın zamir gerektirir",
+      "Geçişli fiillerin geçmiş zamanında ergatif yapı geçerlidir",
+      "\"Kitêb\" sözcüğü eril bir isim olduğu ve başta durduğu için",
+      "Bu cümle gelecek zamanda kurulduğu ve özne değişmediği için"
     ],
-    "correctAnswerTr": "dêya min",
-    "explanationKu": "Ji bo navdêrên mê yên ku bi dengdarekê diqedin, izafe \"-ya\" ye. \"Dê\" bi \"ya\" ve dibe \"dêya\".",
-    "explanationTr": "Ünlü harfle biten dişil isimler için izafe \"-ya\" dır. \"Dê\" (anne) \"-ya\" ile birleşerek \"dêya\" olur."
+    "correctAnswerTr": "Geçişli fiillerin geçmiş zamanında ergatif yapı geçerlidir",
+    "explanationKu": "Di kurmancî de di dema borî de ji bo lêkerên tranzîtîv (gerguhêz) sîstema ergatîf tê bikaranîn: kirde ditewe (min), lêker li gorî bireserê (kitêb) dikişe.",
+    "explanationTr": "Kurmancîde geçişli fiillerin geçmiş zamanlarında ergatif kural işler: özne bükünlü hâle geçer (min), fiil ise nesneye göre (kitêb) uyum sağlar."
   },
   {
     "id": "ds_cand_0033",
@@ -21764,33 +21764,33 @@
   {
     "id": "ds_ziman_0006",
     "category": "Ziman",
-    "prompt": "Di kurmancî de, kîjan rêzika izafeyê ji bo \"kitêb\" (mê) rast e?",
+    "prompt": "Di hevokên \"Ew ji malê derket\" û \"Wî sêv xwar\" de cudahiya cînavên \"Ew\" û \"Wî\" li ser çi ava dibe?",
     "answers": [
-      "kitêba min",
-      "kitêbê min",
-      "kitêbên min",
-      "kitêbî min"
+      "\"Derketin\" negerguhêz e (kirde xwerû ye), \"xwarin\" gerguhêz e (kirde tewandî ye)",
+      "\"Ew\" tenê ji bo mêyan tê bikaranîn, \"Wî\" tenê ji bo nêran e",
+      "Hevoka yekem di dema niha de ye, hevoka duyem di dema bê de ye",
+      "Her du lêker jî negerguhêz in lê zayenda peyvan ji hev cuda ye"
     ],
-    "correctAnswer": "kitêba min",
-    "explanation": "\"Kitêb\" dişil bir isimdir, bu yüzden izafesi \"-a\" dır. \"Kitêba min\" \"benim kitabım\" anlamına gelir.",
+    "correctAnswer": "\"Derketin\" negerguhêz e (kirde xwerû ye), \"xwarin\" gerguhêz e (kirde tewandî ye)",
+    "explanation": "Di dema borî de kirdeyê lêkera negerguhêz xwerû dimîne (Ew), lê kirdeyê lêkera gerguhêz ditewe (Wî).",
     "type": "multipleChoice",
-    "difficulty": 1,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Kurmanji",
       "qualityVersion": 1
     },
-    "promptTr": "Kurmanci'de \"kitêb\" (dişil) için hangi izafe dizilimi doğrudur?",
+    "promptTr": "\"Ew ji malê derket\" ve \"Wî sêv xwar\" cümlelerindeki \"Ew\" ve \"Wî\" zamir farkı hangi kurala dayanır?",
     "answersTr": [
-      "kitêba min",
-      "kitêbê min",
-      "kitêbên min",
-      "kitêbî min"
+      "\"Derketin\" geçişsizdir (özne yalındır), \"xwarin\" geçişlidir (özne bükünlüdür)",
+      "\"Ew\" sadece dişiller için, \"Wî\" ise sadece eriller için kullanılır",
+      "İlk cümle şimdiki zamanda, ikinci cümle ise gelecek zamandadır",
+      "Her iki fiil de geçişsizdir fakat kelimelerin cinsiyetleri farklıdır"
     ],
-    "correctAnswerTr": "kitêba min",
-    "explanationKu": "\"Kitêb\" navdêreke mê ye, ji ber vê yekê izafeya wê \"-a\" ye. \"Kitêba min\" tê wateya \"my book\".",
-    "explanationTr": "\"Kitêb\" dişil bir isimdir, bu yüzden izafesi \"-a\" dır. \"Kitêba min\" \"benim kitabım\" anlamına gelir."
+    "correctAnswerTr": "\"Derketin\" geçişsizdir (özne yalındır), \"xwarin\" geçişlidir (özne bükünlüdür)",
+    "explanationKu": "Di dema borî de kirdeyê lêkera negerguhêz xwerû dimîne (Ew), lê kirdeyê lêkera gerguhêz ditewe (Wî).",
+    "explanationTr": "Geçmiş zamanda geçişsiz fiillerin öznesi yalın (Ew), geçişli fiillerin öznesi ise bükünlü (Wî) zamir alır."
   },
   {
     "id": "ds_ziman_0007",
@@ -22074,33 +22074,33 @@
   {
     "id": "ds_ziman_0031",
     "category": "Ziman",
-    "prompt": "Di kurmancî de, dema bê bi kîjan alîkariyê tê avakirin?",
+    "prompt": "Di kurmancî de dema ku navdêreke mê ya yekjimar dikeve bin bandora daçekê (mînak: li ser...), kîjan qertafa tewangê digire?",
     "answers": [
-      "Bi lêkera \"bûn\"",
-      "Bi lêkera \"dê\" an \"ê\"",
-      "Bi lêkera \"kirin\"",
-      "Bi lêkera \"hatin\""
+      "Qertafa \"-î\" (mînak: li ser maseyî)",
+      "Qertafa \"-ê\" (mînak: li ser maseyê)",
+      "Qertafa \"-an\" (mînak: li ser maseyan)",
+      "Qertafa \"-ên\" (mînak: li ser maseyên)"
     ],
-    "correctAnswer": "Bi lêkera \"dê\" an \"ê\"",
-    "explanation": "Kurmanci'de gelecek zaman, \"dê\" veya \"ê\" yardımcı fiili ve fiilin mastarı ile kurulur, örn. \"ez ê bixwim\" veya \"ew dê bêje\". \"bûn\", \"kirin\" ve \"hatin\" fiilleri diğer yapılar için kullanılır.",
+    "correctAnswer": "Qertafa \"-ê\" (mînak: li ser maseyê)",
+    "explanation": "Navdêrên mê yên yekjimar di tewangê de qertafa \"-ê\" digirin (maseyê, pirtûkê, darê).",
     "type": "multipleChoice",
-    "difficulty": 2,
+    "difficulty": 4,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Future_tense",
       "qualityVersion": 1
     },
-    "promptTr": "Kürtçede (Kurmanci), gelecek zaman hangi yardımcı fiille kurulur?",
+    "promptTr": "Kurmancîde tekil dişil bir isim edat etkisine girdiğinde (ör. li ser...) hangi bükün ekini alır?",
     "answersTr": [
-      "\"bûn\" fiiliyle",
-      "\"dê\" veya \"ê\" fiiliyle",
-      "\"kirin\" fiiliyle",
-      "\"hatin\" fiiliyle"
+      "\"-î\" eki (örnek: li ser maseyî)",
+      "\"-ê\" eki (örnek: li ser maseyê)",
+      "\"-an\" eki (örnek: li ser maseyan)",
+      "\"-ên\" eki (örnek: li ser maseyên)"
     ],
-    "correctAnswerTr": "\"dê\" veya \"ê\" fiiliyle",
-    "explanationKu": "Dema bê di kurmancî de bi alîkariya lêkera \"dê\" an \"ê\" û radera lêkerê tê avakirin, wek \"ez ê bixwim\" an \"ew dê bêje\". Lêkerên \"bûn\", \"kirin\" û \"hatin\" ji bo avakirinên din tên bikaranîn.",
-    "explanationTr": "Kurmanci'de gelecek zaman, \"dê\" veya \"ê\" yardımcı fiili ve fiilin mastarı ile kurulur, örn. \"ez ê bixwim\" veya \"ew dê bêje\". \"bûn\", \"kirin\" ve \"hatin\" fiilleri diğer yapılar için kullanılır."
+    "correctAnswerTr": "\"-ê\" eki (örnek: li ser maseyê)",
+    "explanationKu": "Navdêrên mê yên yekjimar di tewangê de qertafa \"-ê\" digirin (maseyê, pirtûkê, darê).",
+    "explanationTr": "Tekil dişil isimler bükün durumunda (edat veya tamlama) \"-ê\" ekini alırlar."
   },
   {
     "id": "ds_ziman_0044",
