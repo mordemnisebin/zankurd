@@ -6,6 +6,7 @@ import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
@@ -194,6 +195,13 @@ class _StoryScreenState extends State<StoryScreen> {
               ),
             ],
           ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        // Hikâye anlatısı ile seçimler arasına tek kilim ayracı: "bölüm
+        // ayracı" semantiği (triangleRhythm). Motif bilgi taşır — anlatının
+        // bittiği, kararın başladığı yeri işaretler (2026-08-19).
+        const KilimDivider(
+          colors: [AppTheme.playGreen, AppTheme.gold],
         ),
         const SizedBox(height: AppSpacing.lg),
         if (node.isEnding)

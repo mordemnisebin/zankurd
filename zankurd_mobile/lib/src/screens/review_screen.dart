@@ -8,6 +8,7 @@ import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
@@ -64,6 +65,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       accent: AppTheme.cyan,
                       icon: AppIcons.squareCheck,
                       compact: true,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    // Özet başlığı ile doğru/yanlış şeridi arasına tek kilim
+                    // ayracı; "bölüm ayracı" semantiği (2026-08-19).
+                    const KilimDivider(
+                      colors: [AppTheme.cyan, AppTheme.gold],
                     ),
                     const SizedBox(height: AppSpacing.md),
                     _SummaryStrip(correct: correct, wrong: wrong, empty: empty),

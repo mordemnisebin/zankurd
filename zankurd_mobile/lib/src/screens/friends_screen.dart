@@ -7,6 +7,7 @@ import '../l10n/strings.dart';
 import '../models/friend.dart';
 import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
@@ -179,6 +180,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   subtitle: context.t(K.myFriendsSub),
                   accent: AppTheme.cyan,
                   icon: AppIcons.peopleGroup,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                // Arkadaş başlığının altına tek kilim ayracı; sosyal bağ
+                // bölümünü içerikten ayırır (2026-08-19).
+                const KilimDivider(
+                  colors: [AppTheme.cyan, AppTheme.gold],
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _buildSearchSection(ku),

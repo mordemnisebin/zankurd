@@ -69,11 +69,20 @@ Future<void> _pump(
       ),
     ),
   );
-  await tester.pump(const Duration(milliseconds: 600));
-  await tester.pump(const Duration(milliseconds: 600));
+  // Veri asenkron yüklenir; önce future çözülsün, sonra puan artık
+  // `RollingCount` ile saydığı için (tavan 1100ms) ve birinci basamak
+  // `KilimReveal` ile açıldığı için (1100ms) animasyonlar tamamlansın.
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 1300));
+  await tester.pump(const Duration(milliseconds: 100));
 }
 
 /// Podyum puanının çizildiği metin düğümü — tek satırda mı kaldı?
+///
+/// Puan artık `RollingCount` ile sayarak çıkıyor; bu bileşen tek satırı
+/// `maxLines: 1` ile garanti eder (eski düz `Text` gibi `softWrap: false`
+/// taşımaz — `maxLines: 1` zaten sarmayı kapatır). Bu yüzden bekçi
+/// `softWrap` yerine `maxLines`e bakar (2026-08-19).
 void _expectSingleLineScores(WidgetTester tester, String score) {
   final finder = find.text(score);
   expect(finder, findsWidgets, reason: 'puan $score hiç çizilmedi');
@@ -83,7 +92,6 @@ void _expectSingleLineScores(WidgetTester tester, String score) {
       1,
       reason: 'puan birden çok satıra bölünürse sayı anlamını kaybeder',
     );
-    expect(widget.softWrap, isFalse);
   }
 }
 
