@@ -83,6 +83,31 @@ var olmayan kusur ya da kaydın içeriğiyle uyuşmayan `not` yazma. Dönüşün
 makineyle denetlenecek: kimlikler bankayla, notlar kaydın gerçek
 içeriğiyle karşılaştırılacak ve tutmayan bulgular tümden atılacak.
 
+## Kapsam beyanı — ZORUNLU
+
+Bulgu dosyalarının yanına şunu da yaz:
+`docs/content_batches/spark_bulgular/_ozet.json`
+
+```json
+[
+  {"banka": "community_questions.json", "okunan_kayit": 44, "bulgu": 5},
+  {"banka": "offline_questions.json",   "okunan_kayit": 1347, "bulgu": 3}
+]
+```
+
+`okunan_kayit`, o dosyada GERÇEKTEN tek tek incelediğin kayıt sayısıdır;
+dosyanın boyutu değil. Bu iki sayı makineyle karşılaştırılacak ve
+tutmuyorsa iş yarım sayılacak.
+
+Bir bankayı tamamlayamadıysan **eksik sayıyı olduğu gibi yaz**. Yarım
+iş kabul edilir ve kaldığı yerden sürdürülür; tam sanılan yarım iş
+kabul edilmez, çünkü denetlenmemiş 400 kaydı denetlenmiş sanmak, hiç
+denetlememekten kötüdür.
+
+İlk koşumda (2026-08-19) `deepseek_2026_08_18_questions.json` için 909
+kayıt bildirildi; dosyada 1155 kayıt var. Aradaki 246 kayıt hiç
+görülmemişti ve bu, ancak sayılar karşılaştırıldığında ortaya çıktı.
+
 ## İlerleme
 
 Küçük bankalarla başla, `offline_questions.json` (1347 kayıt) en sona

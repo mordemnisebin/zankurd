@@ -1,0 +1,27 @@
+[
+  {
+    "id": "offline_0534",
+    "kusur": [
+      "celdirici_sacma"
+    ],
+    "not": "Sözlü tarih (dîroka devkî) tanım sorusunda çeldiriciler ('YNK (Yekîtiya Niştimanî ya Kurdistanê)', 'Derdora Colemêrg/Cizîrê') konuyla tamamen alakasızdır.",
+    "oneri": "Çeldiriciler diğer tarih metodolojileriyle (ör. dîroka nivîskî, arkeolojî, numîzmatîk) değiştirilmelidir."
+  },
+  {
+    "id": "offline_0543",
+    "kusur": [
+      "celdirici_sacma",
+      "tekrar"
+    ],
+    "not": "Mezopotamya coğrafi/tarihi tanım sorusunda 'YNK (Yekîtiya Niştimanî ya Kurdistanê)' alakasız bir çeldiricidir; ayrıca offline_0546 numaralı soruyla aynı tanımı sormaktadır.",
+    "oneri": "Çeldiriciler Bereketli Hilal, Nil Vadisi, İndus Havzası gibi antik coğrafi bölgelerle güncellenmeli ya da soru tekilleştirilmelidir."
+  },
+  {
+    "id": "offline_2826",
+    "kusur": [
+      "celdirici_sacma"
+    ],
+    "not": "'Şerefname' yazarını soran soruda şık olarak bir siyasi parti kısaltması ('YNK (Yekîtiya Nîştimanî ya Kurdistanê)') ve makam adı ('serokê Komara Mehabadê') yer almaktadır.",
+    "oneri": "Şıklar Ehmedê Xanî, Melayê Cizîrî, Feqiyê Teyran, Şerefxanê Bidlîsî şeklinde dönemin diğer klasik Kürt yazarlarıyla eşitlenmelidir."
+  }
+]
