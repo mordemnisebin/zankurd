@@ -686,7 +686,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final canonicalCategory = _requiredString(snapshot, const [
         'category_name',
       ]);
-      final serverQuestionCount = _requiredInt(snapshot, const ['question_count']);
+      final serverQuestionCount = _requiredInt(snapshot, const [
+        'question_count',
+      ]);
       final serverSeconds = _requiredInt(snapshot, const [
         'seconds_per_question',
       ]);
@@ -1639,9 +1641,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // (favorite_questions_screen.dart).
       if (unresolvedIds.isNotEmpty) {
         try {
-          final resolved = await _resolveServerFavoriteQuestions(
-            unresolvedIds,
-          );
+          final resolved = await _resolveServerFavoriteQuestions(unresolvedIds);
           byId.addAll(resolved);
         } catch (error, stack) {
           _recordError(
@@ -2879,7 +2879,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final bracket = await loadRealTournamentBracket();
     if (bracket == null) return _offline.loadTournamentStandings(limit: limit);
     final standings = _standingsFromBracket(bracket);
-    if (standings.isEmpty) return _offline.loadTournamentStandings(limit: limit);
+    if (standings.isEmpty) {
+      return _offline.loadTournamentStandings(limit: limit);
+    }
     return standings.take(limit).toList();
   }
 
@@ -2930,7 +2932,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
     }
 
-    const statusWeight = {'champion': 0, 'finalist': 1, 'active': 2, 'eliminated': 3};
+    const statusWeight = {
+      'champion': 0,
+      'finalist': 1,
+      'active': 2,
+      'eliminated': 3,
+    };
     final ids = names.keys.toList()
       ..sort((a, b) {
         final byStatus = (statusWeight[status[a]] ?? 2).compareTo(

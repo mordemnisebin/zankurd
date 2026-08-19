@@ -47,7 +47,10 @@ Widget _wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
     ChangeNotifierProvider(create: (_) => PremiumService.fallback()),
   ],
-  child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+  child: MaterialApp(
+    theme: AppTheme.light(),
+    home: Scaffold(body: child),
+  ),
 );
 
 void main() {

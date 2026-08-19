@@ -98,8 +98,11 @@ void main() {
           // Ayrım mekanik: sabitte harf/rakam varsa o bir CÜMLEDİR ve
           // kural işler; yalnız pictograph varsa gliftir ve geçilir.
           final hasText = literal.runes.any(
-            (r) => (r >= 0x30 && r <= 0x39) || (r >= 0x41 && r <= 0x5A) ||
-                (r >= 0x61 && r <= 0x7A) || (r >= 0xC0 && r < 0x2000),
+            (r) =>
+                (r >= 0x30 && r <= 0x39) ||
+                (r >= 0x41 && r <= 0x5A) ||
+                (r >= 0x61 && r <= 0x7A) ||
+                (r >= 0xC0 && r < 0x2000),
           );
           if (!hasText) continue;
           for (final rune in literal.runes) {

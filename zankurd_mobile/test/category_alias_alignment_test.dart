@@ -89,8 +89,13 @@ void main() {
         .map((e) => '${e.key} → ${e.value.join(", ")}')
         .toList();
 
-    expect(shared, isEmpty, reason: 'Paylaşılan alt kategori id\'leri:\n'
-        '${shared.join('\n')}');
+    expect(
+      shared,
+      isEmpty,
+      reason:
+          'Paylaşılan alt kategori id\'leri:\n'
+          '${shared.join('\n')}',
+    );
   });
 
   test('haritanın her anahtarı kanonik biçimdedir', () {
@@ -145,9 +150,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
-    final expected = SubcategoryConfig.forCategory('Dil')
-        .firstWhere((s) => s.id == 'reziman')
-        .nameTr;
+    final expected = SubcategoryConfig.forCategory(
+      'Dil',
+    ).firstWhere((s) => s.id == 'reziman').nameTr;
 
     expect(
       find.textContaining(expected),

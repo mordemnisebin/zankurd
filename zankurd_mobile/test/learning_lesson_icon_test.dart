@@ -24,48 +24,45 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 /// artık önce `icon_name`i, sonra `category`yi, en son mock slug
 /// eşleşmesini dener.
 void main() {
-  test(
-    '2026-07-06_lesson_seed.sql\'deki 15 gerçek dersin TAMAMI yedek '
-    'ikona düşmez',
-    () {
-      // seed dosyasındaki (slug, icon_name, category) üçlüleri birebir.
-      const realSeedLessons = [
-        ('silav-u-nasin', 'waving_hand', 'everyday'),
-        ('hejmar', 'numbers', 'everyday'),
-        ('cinavk', 'person', 'grammar'),
-        ('lekera-bun', 'link', 'grammar'),
-        ('newroz', 'local_fire_department', 'culture'),
-        ('dengbeji', 'music_note', 'culture'),
-        ('xwarinen-kurdi', 'restaurant', 'food'),
-        ('feki-u-sebze', 'eco', 'food'),
-        ('ajalen-male', 'pets', 'animals'),
-        ('ajalen-kovi', 'forest', 'animals'),
-        ('ciya-u-cem', 'landscape', 'geography'),
-        ('cih-u-war', 'map', 'geography'),
-        ('hesten-bingehin', 'favorite', 'emotions'),
-        ('rojen-hefteye', 'calendar_today', 'time'),
-        ('demsal', 'wb_sunny', 'time'),
-      ];
+  test('2026-07-06_lesson_seed.sql\'deki 15 gerçek dersin TAMAMI yedek '
+      'ikona düşmez', () {
+    // seed dosyasındaki (slug, icon_name, category) üçlüleri birebir.
+    const realSeedLessons = [
+      ('silav-u-nasin', 'waving_hand', 'everyday'),
+      ('hejmar', 'numbers', 'everyday'),
+      ('cinavk', 'person', 'grammar'),
+      ('lekera-bun', 'link', 'grammar'),
+      ('newroz', 'local_fire_department', 'culture'),
+      ('dengbeji', 'music_note', 'culture'),
+      ('xwarinen-kurdi', 'restaurant', 'food'),
+      ('feki-u-sebze', 'eco', 'food'),
+      ('ajalen-male', 'pets', 'animals'),
+      ('ajalen-kovi', 'forest', 'animals'),
+      ('ciya-u-cem', 'landscape', 'geography'),
+      ('cih-u-war', 'map', 'geography'),
+      ('hesten-bingehin', 'favorite', 'emotions'),
+      ('rojen-hefteye', 'calendar_today', 'time'),
+      ('demsal', 'wb_sunny', 'time'),
+    ];
 
-      for (final (slug, iconName, category) in realSeedLessons) {
-        final lesson = Lesson(
-          id: slug,
-          slug: slug,
-          titleKu: slug,
-          category: category,
-          iconName: iconName,
-        );
-        final icon = iconForLesson(lesson);
-        expect(
-          icon,
-          isNot(AppIcons.graduationCap),
-          reason:
-              '"$slug" (icon_name=$iconName, category=$category) yedek '
-              'ikona düştü — sunucunun gönderdiği alanlar kullanılmıyor',
-        );
-      }
-    },
-  );
+    for (final (slug, iconName, category) in realSeedLessons) {
+      final lesson = Lesson(
+        id: slug,
+        slug: slug,
+        titleKu: slug,
+        category: category,
+        iconName: iconName,
+      );
+      final icon = iconForLesson(lesson);
+      expect(
+        icon,
+        isNot(AppIcons.graduationCap),
+        reason:
+            '"$slug" (icon_name=$iconName, category=$category) yedek '
+            'ikona düştü — sunucunun gönderdiği alanlar kullanılmıyor',
+      );
+    }
+  });
 
   test('icon_name eşleşmesi category eşleşmesinden önceliklidir', () {
     // İki ders aynı kategoride ama FARKLI icon_name taşıyorsa farklı

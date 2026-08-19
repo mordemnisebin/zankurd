@@ -133,22 +133,21 @@ void main() {
   // `_buildEarnCoinCta`ydı. Bakiyesi 0'dan farklı bir oyuncu (ör. burada
   // 500 coin) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
   // bakiyeden bağımsız her zaman görünmeli ve çarka götürmeli.
-  testWidgets(
-    'çark girişi bakiye sıfır olmasa da görünür ve çarka götürür',
-    (tester) async {
-      final repository = _ShopRepository(coins: 500);
-      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
-      await tester.pumpAndSettle();
+  testWidgets('çark girişi bakiye sıfır olmasa da görünür ve çarka götürür', (
+    tester,
+  ) async {
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
 
-      final entry = find.byKey(const ValueKey('shop-spin-wheel-entry'));
-      expect(entry, findsOneWidget);
+    final entry = find.byKey(const ValueKey('shop-spin-wheel-entry'));
+    expect(entry, findsOneWidget);
 
-      await tester.tap(entry);
-      await tester.pumpAndSettle();
+    await tester.tap(entry);
+    await tester.pumpAndSettle();
 
-      expect(find.text('Günün Çarkı'), findsOneWidget);
-    },
-  );
+    expect(find.text('Günün Çarkı'), findsOneWidget);
+  });
 
   testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
     tester,

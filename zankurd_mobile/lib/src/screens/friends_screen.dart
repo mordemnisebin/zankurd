@@ -184,9 +184,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 const SizedBox(height: AppSpacing.md),
                 // Arkadaş başlığının altına tek kilim ayracı; sosyal bağ
                 // bölümünü içerikten ayırır (2026-08-19).
-                const KilimDivider(
-                  colors: [AppTheme.cyan, AppTheme.gold],
-                ),
+                const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
                 const SizedBox(height: AppSpacing.md),
                 _buildSearchSection(ku),
                 const SizedBox(height: 24),

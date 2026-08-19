@@ -69,9 +69,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     const SizedBox(height: AppSpacing.md),
                     // Özet başlığı ile doğru/yanlış şeridi arasına tek kilim
                     // ayracı; "bölüm ayracı" semantiği (2026-08-19).
-                    const KilimDivider(
-                      colors: [AppTheme.cyan, AppTheme.gold],
-                    ),
+                    const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
                     const SizedBox(height: AppSpacing.md),
                     _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
                     const SizedBox(height: 12),

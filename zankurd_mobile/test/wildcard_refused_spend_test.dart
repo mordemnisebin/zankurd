@@ -162,7 +162,8 @@ void main() {
     expect(
       repository.balanceReads,
       greaterThanOrEqualTo(2),
-      reason: 'Reddedilen harcamadan sonra bakiye yeniden okunmaya çalışılmadı.',
+      reason:
+          'Reddedilen harcamadan sonra bakiye yeniden okunmaya çalışılmadı.',
     );
     expect(
       tester.takeException(),

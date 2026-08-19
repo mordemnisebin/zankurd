@@ -117,18 +117,12 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
-      final hasGoldFrame = await _safeHasPurchased(
-        'avatar_frame_gold',
-      );
+      final hasGoldFrame = await _safeHasPurchased('avatar_frame_gold');
       // Neon çerçeve 2026-07-31'e kadar mağaza kataloğunda tanımlıydı ama
       // hiçbir yerde açılmıyordu: 600 coin ödeyen oyuncu karşılığında
       // hiçbir şey görmüyordu. Altın çerçevenin birebir aynı deseni.
-      final hasNeonFrame = await _safeHasPurchased(
-        'avatar_frame_neon',
-      );
-      final hasVipBadge = await _safeHasPurchased(
-        'profile_badge_vip',
-      );
+      final hasNeonFrame = await _safeHasPurchased('avatar_frame_neon');
+      final hasVipBadge = await _safeHasPurchased('profile_badge_vip');
 
       final masteryByCategory = {
         for (final cat in widget.repository.categories)

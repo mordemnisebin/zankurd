@@ -53,9 +53,14 @@ Future<void> _seedMistakes() async {
 /// Profil yüklenene kadar pompalar; yükleme bittiğinde sinyali [loaded]
 /// bulunur. `pumpAndSettle` kullanılmaz: profil mağaza yüklemeleri asenkron
 /// ve birbirine zincirli olduğu için sabit süreli tur daha güvenilirdir.
-Future<void> _pumpLoaded(WidgetTester tester, MockZanKurdRepository repo) async {
+Future<void> _pumpLoaded(
+  WidgetTester tester,
+  MockZanKurdRepository repo,
+) async {
   await tester.pumpWidget(
-    testShell(child: Scaffold(body: ProfileScreen(repository: repo))),
+    testShell(
+      child: Scaffold(body: ProfileScreen(repository: repo)),
+    ),
   );
   await tester.pump();
   final loaded = find.byType(MissionProgressCard);

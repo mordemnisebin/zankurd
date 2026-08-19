@@ -119,10 +119,7 @@ void main() {
       // Bilerek 2026-07-28 dosyasına DEĞİL, en yeni tanıma bakar — bu
       // sözleşmeyi ezen her yeni göç burada kırılır.
       final newest = newestDefinitionOf('search_profiles');
-      expect(
-        newest,
-        contains('p.player_tag = v_tag or p.display_name ilike'),
-      );
+      expect(newest, contains('p.player_tag = v_tag or p.display_name ilike'));
       expect(newest, contains('order by (p.player_tag = v_tag) desc'));
       // "ZK-4F7K", "zk 4f7k" ve "4F7K" aynı kodu aramalı: kod ekranda
       // önekle görünüyor, elle yazarken öneki beklemek gereksiz sürtünme.

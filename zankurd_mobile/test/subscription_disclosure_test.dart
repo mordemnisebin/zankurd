@@ -126,15 +126,18 @@ void main() {
   /// test kırılır ve paketteki cümle güncellenene kadar kırmızı kalır.
   group('incelemeci yolu', () {
     test('paywall yalnız bilinen iki ekrandan açılır', () {
-      final callers = Directory('lib')
-          .listSync(recursive: true)
-          .whereType<File>()
-          .where((file) => file.path.endsWith('.dart'))
-          .where((file) => !file.path.endsWith('paywall_screen.dart'))
-          .where((file) => file.readAsStringSync().contains('PaywallScreen('))
-          .map((file) => file.uri.pathSegments.last)
-          .toList()
-        ..sort();
+      final callers =
+          Directory('lib')
+              .listSync(recursive: true)
+              .whereType<File>()
+              .where((file) => file.path.endsWith('.dart'))
+              .where((file) => !file.path.endsWith('paywall_screen.dart'))
+              .where(
+                (file) => file.readAsStringSync().contains('PaywallScreen('),
+              )
+              .map((file) => file.uri.pathSegments.last)
+              .toList()
+            ..sort();
 
       expect(
         callers,

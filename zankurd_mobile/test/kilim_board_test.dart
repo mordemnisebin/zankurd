@@ -30,15 +30,17 @@ import 'package:zankurd_mobile/src/widgets/kilim_board.dart';
 
 Widget host(Widget child, {double width = 300}) => MaterialApp(
   theme: AppTheme.dark(),
-  home: Scaffold(body: Center(child: SizedBox(width: width, child: child))),
+  home: Scaffold(
+    body: Center(
+      child: SizedBox(width: width, child: child),
+    ),
+  ),
 );
 
 void main() {
   testWidgets('doğru cevap DOLU altın baklava dokur', (tester) async {
     await tester.pumpWidget(
-      host(
-        const KilimBoard(total: 4, currentIndex: 1, results: [true]),
-      ),
+      host(const KilimBoard(total: 4, currentIndex: 1, results: [true])),
     );
 
     expect(
@@ -51,16 +53,11 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      host(
-        const KilimBoard(total: 4, currentIndex: 1, results: [false]),
-      ),
+      host(const KilimBoard(total: 4, currentIndex: 1, results: [false])),
     );
 
     // Gedik: altının soluk tonunda bir ÇERÇEVE çizilir.
-    expect(
-      find.byType(KilimBoard),
-      paints..path(style: PaintingStyle.stroke),
-    );
+    expect(find.byType(KilimBoard), paints..path(style: PaintingStyle.stroke));
 
     // Ve hiçbir yerde uyarı kırmızısı DOLGUSU olmaz. Bu satır testin
     // asıl gövdesi: yeşil/kırmızıya geri dönüş buradan yakalanır.

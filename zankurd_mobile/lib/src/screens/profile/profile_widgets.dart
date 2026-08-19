@@ -830,8 +830,8 @@ class _UnifiedRewardsSection extends StatelessWidget {
                   // rozeti" değil, tanım listesinin ilk N elemanını
                   // gösteriyordu.
                   final badgeIndex = index - achievements.length;
-                  final data =
-                      BadgeService.badgeDefinitions[unlockedBadgeIds[badgeIndex]]!;
+                  final data = BadgeService
+                      .badgeDefinitions[unlockedBadgeIds[badgeIndex]]!;
                   final title = isKu
                       ? (data['titleKu'] ?? '')
                       : (data['titleTr'] ?? '');

@@ -108,7 +108,8 @@ RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
   if (message.contains('already in another live room')) {
     return RoomJoinFailureReason.alreadyInAnotherRoom;
   }
-  if (message.contains('Room not found') || message.contains('already started')) {
+  if (message.contains('Room not found') ||
+      message.contains('already started')) {
     return RoomJoinFailureReason.notFound;
   }
   return RoomJoinFailureReason.unknown;

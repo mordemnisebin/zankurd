@@ -41,22 +41,29 @@ void main() {
 
   /// En uzun Kurmancî istemli boşluk doldurma sorusu.
   QuizQuestion longestFillPrompt() {
-    final rows = (jsonDecode(
-      File('assets/data/fill_in_blank_2026_08_questions.json')
-          .readAsStringSync(),
-    ) as List).cast<Map<String, dynamic>>();
+    final rows =
+        (jsonDecode(
+                  File(
+                    'assets/data/fill_in_blank_2026_08_questions.json',
+                  ).readAsStringSync(),
+                )
+                as List)
+            .cast<Map<String, dynamic>>();
     final questions = rows.map(QuizQuestion.fromJson).toList();
-    questions.sort(
-      (a, b) => b.prompt.length.compareTo(a.prompt.length),
-    );
+    questions.sort((a, b) => b.prompt.length.compareTo(a.prompt.length));
     return questions.first;
   }
 
   /// En çok kelimeli cümle kurma sorusu.
   QuizQuestion wordiestSentence() {
-    final rows = (jsonDecode(
-      File('assets/data/sentence_building_questions.json').readAsStringSync(),
-    ) as List).cast<Map<String, dynamic>>();
+    final rows =
+        (jsonDecode(
+                  File(
+                    'assets/data/sentence_building_questions.json',
+                  ).readAsStringSync(),
+                )
+                as List)
+            .cast<Map<String, dynamic>>();
     final questions = rows.map(QuizQuestion.fromJson).toList();
     int words(QuizQuestion q) =>
         q.correctAnswer.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
@@ -159,9 +166,7 @@ void main() {
       await tester.ensureVisible(input2);
       await tester.enterText(input2, ' bi yanş e ');
       await tester.pump();
-      await tester.tap(
-        find.byKey(const ValueKey('fill-in-blank-submit')),
-      );
+      await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
       await tester.pumpAndSettle();
       expect(find.textContaining(fill.correctAnswer), findsWidgets);
 

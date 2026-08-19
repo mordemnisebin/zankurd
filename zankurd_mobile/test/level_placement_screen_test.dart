@@ -108,9 +108,7 @@ void main() {
         // soru `correctAnswerTr`yi çiziyor, ham `correctAnswer` (Kurmancî)
         // değil (content genişlemesinin getirdiği kapsama, 2026-08-15
         // birleştirmesi).
-        await tester.tap(
-          find.text(current.correctAnswerFor(isKu: false)).last,
-        );
+        await tester.tap(find.text(current.correctAnswerFor(isKu: false)).last);
       }
       await tester.pumpAndSettle();
     }

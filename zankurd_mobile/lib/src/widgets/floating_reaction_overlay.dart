@@ -28,12 +28,14 @@ class FloatingReactionOverlay extends StatefulWidget {
   final FloatingReactionController? controller;
 
   @override
-  State<FloatingReactionOverlay> createState() => _FloatingReactionOverlayState();
+  State<FloatingReactionOverlay> createState() =>
+      _FloatingReactionOverlayState();
 }
 
 class FloatingReactionController extends ChangeNotifier {
   final List<FloatingReactionBubble> _activeBubbles = [];
-  List<FloatingReactionBubble> get activeBubbles => List.unmodifiable(_activeBubbles);
+  List<FloatingReactionBubble> get activeBubbles =>
+      List.unmodifiable(_activeBubbles);
 
   void triggerReaction(String text, {String? senderName}) {
     final bubble = FloatingReactionBubble(
@@ -196,7 +198,10 @@ class _SingleAnimatedReactionBubbleState
             child: Opacity(
               opacity: _opacityAnimation.value,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: AppTheme.culturalBrandBg.withValues(alpha: 0.92),
                   borderRadius: BorderRadius.circular(20),

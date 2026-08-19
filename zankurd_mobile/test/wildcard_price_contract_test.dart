@@ -80,7 +80,8 @@ void main() {
 
     final entry = RegExp(r"when\s+'([a-z_]+)'\s+then\s+(\d+)");
     return {
-      for (final m in entry.allMatches(table)) m.group(1)!: int.parse(m.group(2)!),
+      for (final m in entry.allMatches(table))
+        m.group(1)!: int.parse(m.group(2)!),
     };
   }
 

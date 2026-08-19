@@ -63,7 +63,9 @@ void main() {
   ) async {
     UrlLauncherPlatform.instance = _NoAppCanHandleThis();
 
-    await tester.pumpWidget(testShell(child: linkHost('https://example.com/a')));
+    await tester.pumpWidget(
+      testShell(child: linkHost('https://example.com/a')),
+    );
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Kaynak'));
@@ -105,7 +107,9 @@ void main() {
     final launcher = _SucceedingLauncher();
     UrlLauncherPlatform.instance = launcher;
 
-    await tester.pumpWidget(testShell(child: linkHost('https://example.com/a')));
+    await tester.pumpWidget(
+      testShell(child: linkHost('https://example.com/a')),
+    );
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Kaynak'));

@@ -98,7 +98,10 @@ void main() {
 
     final conflicts = recipients.entries
         .where((e) => e.value.length > 1)
-        .map((e) => '${e.key}: ${e.value.join(" / ")} (${sources[e.key]!.join(", ")})')
+        .map(
+          (e) =>
+              '${e.key}: ${e.value.join(" / ")} (${sources[e.key]!.join(", ")})',
+        )
         .toList();
 
     expect(

@@ -78,27 +78,23 @@ void main() {
     expect(find.textContaining('pêşbirkê bike'), findsNothing);
   });
 
-  testWidgets(
-    'iOS giriş ekranı Google ve Apple seçeneklerini sunar',
-    (tester) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+  testWidgets('iOS giriş ekranı Google ve Apple seçeneklerini sunar', (
+    tester,
+  ) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-      await tester.pumpWidget(
-        testShell(
-          child: const SignInScreen(),
-          authProvider: GateAuthProvider(),
-        ),
-      );
-      await tester.pumpAndSettle();
-      debugDefaultTargetPlatformOverride = null;
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+    debugDefaultTargetPlatformOverride = null;
 
-      expect(find.text('Google ile giriş yap'), findsOneWidget);
-      expect(find.text('Apple ile giriş yap'), findsOneWidget);
-      expect(find.text('Misafir olarak devam et'), findsOneWidget);
-      expect(find.text('Veya e-posta ile'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    },
-  );
+    expect(find.text('Google ile giriş yap'), findsOneWidget);
+    expect(find.text('Apple ile giriş yap'), findsOneWidget);
+    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Veya e-posta ile'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets(
     'desteklenen giriş ekranında Apple seçeneği görünür ve akışı başlatır',
@@ -108,10 +104,7 @@ void main() {
 
       final authProvider = _AppleAuthProvider();
       await tester.pumpWidget(
-        testShell(
-          child: const SignInScreen(),
-          authProvider: authProvider,
-        ),
+        testShell(child: const SignInScreen(), authProvider: authProvider),
       );
       await tester.pumpAndSettle();
 

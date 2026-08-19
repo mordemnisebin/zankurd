@@ -43,9 +43,7 @@ void main() {
 
     expect(find.text('Berfin'), findsOneWidget);
 
-    await tester.tap(
-      find.byKey(const ValueKey('player-moderation-button')),
-    );
+    await tester.tap(find.byKey(const ValueKey('player-moderation-button')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('player-block-action')));
     await tester.pumpAndSettle();

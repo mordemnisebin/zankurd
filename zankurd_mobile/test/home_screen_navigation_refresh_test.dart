@@ -34,7 +34,9 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 ///    genel kategori listesi açılıyordu.
 Widget _wrap(Widget child, {bool isKu = true}) => MultiProvider(
   providers: [
-    ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang(isKu ? 'ku' : 'tr')),
+    ChangeNotifierProvider(
+      create: (_) => LanguageProvider()..setLang(isKu ? 'ku' : 'tr'),
+    ),
     ChangeNotifierProvider(create: (_) => AuthProvider.test()),
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
     // Ana ekran abonelik satırını `Consumer<PremiumService>` ile çiziyor;
@@ -92,29 +94,25 @@ void main() {
     });
   });
 
-  testWidgets(
-    'ilk açılışta sekmeye basmadan "Kaldığın yer" görünür',
-    (tester) async {
-      SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
-      await tester.pumpWidget(
-        _wrap(
-          HomeScreen(
-            repository: MockZanKurdRepository(),
-            onOpenCategories: () async {},
-          ),
+  testWidgets('ilk açılışta sekmeye basmadan "Kaldığın yer" görünür', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
+    await tester.pumpWidget(
+      _wrap(
+        HomeScreen(
+          repository: MockZanKurdRepository(),
+          onOpenCategories: () async {},
         ),
-      );
-      // `refreshSignal` hiç tetiklenmedi (widget'a hiç verilmedi) — bölüm
-      // yalnız initState'teki ilk yükten gelebilir.
-      await tester.pump(const Duration(seconds: 1));
+      ),
+    );
+    // `refreshSignal` hiç tetiklenmedi (widget'a hiç verilmedi) — bölüm
+    // yalnız initState'teki ilk yükten gelebilir.
+    await tester.pump(const Duration(seconds: 1));
 
-      expect(
-        find.byKey(const ValueKey('home-continue-section')),
-        findsOneWidget,
-      );
-      expect(find.text('Ziman'), findsOneWidget);
-    },
-  );
+    expect(find.byKey(const ValueKey('home-continue-section')), findsOneWidget);
+    expect(find.text('Ziman'), findsOneWidget);
+  });
 
   testWidgets(
     'ilerleme yokken ilk açılışta keşif daveti görünür (bölüm boş kalmaz)',
@@ -137,10 +135,7 @@ void main() {
         find.byKey(const ValueKey('home-browse-categories-row')),
         findsOneWidget,
       );
-      expect(
-        find.byKey(const ValueKey('home-continue-section')),
-        findsNothing,
-      );
+      expect(find.byKey(const ValueKey('home-continue-section')), findsNothing);
     },
   );
 
@@ -172,50 +167,48 @@ void main() {
       expect(
         genericOpened,
         isFalse,
-        reason:
-            'kategoriye özel geri çağırma varken genel listeye düşülmemeli',
+        reason: 'kategoriye özel geri çağırma varken genel listeye düşülmemeli',
       );
     },
   );
 
-  testWidgets(
-    'öğrenmeden dönünce ana ekran sekmeye basmadan tazelenir',
-    (tester) async {
-      final repo = _ControllableCoinRepository()..coinBalance = 10;
-      VoidCallback resumeLearning = () {};
-      await tester.pumpWidget(
-        _wrap(
-          HomeScreen(
-            repository: repo,
-            onOpenCategories: () async {},
-            onOpenLearning: () {
-              final completer = Completer<void>();
-              resumeLearning = () => completer.complete();
-              return completer.future;
-            },
-          ),
+  testWidgets('öğrenmeden dönünce ana ekran sekmeye basmadan tazelenir', (
+    tester,
+  ) async {
+    final repo = _ControllableCoinRepository()..coinBalance = 10;
+    VoidCallback resumeLearning = () {};
+    await tester.pumpWidget(
+      _wrap(
+        HomeScreen(
+          repository: repo,
+          onOpenCategories: () async {},
+          onOpenLearning: () {
+            final completer = Completer<void>();
+            resumeLearning = () => completer.complete();
+            return completer.future;
+          },
         ),
-      );
-      await tester.pump(const Duration(seconds: 1));
-      expect(find.text('10'), findsOneWidget);
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('10'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
-      await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
+    await tester.pump();
 
-      // Push hâlâ açıkken (Completer tamamlanmadan) bakiye değişse bile
-      // ana ekran henüz tazelenmemeli — asıl doğrulanan dönüş anı.
-      repo.coinBalance = 55;
-      resumeLearning();
-      await tester.pump();
-      await tester.pump();
+    // Push hâlâ açıkken (Completer tamamlanmadan) bakiye değişse bile
+    // ana ekran henüz tazelenmemeli — asıl doğrulanan dönüş anı.
+    repo.coinBalance = 55;
+    resumeLearning();
+    await tester.pump();
+    await tester.pump();
 
-      expect(
-        find.text('55'),
-        findsOneWidget,
-        reason:
-            'push tab-içi kaldığı için tek tazeleme fırsatı dönüş anıdır — '
-            'sekmeye tekrar basılmasını beklememeli',
-      );
-    },
-  );
+    expect(
+      find.text('55'),
+      findsOneWidget,
+      reason:
+          'push tab-içi kaldığı için tek tazeleme fırsatı dönüş anıdır — '
+          'sekmeye tekrar basılmasını beklememeli',
+    );
+  });
 }

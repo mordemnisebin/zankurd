@@ -334,9 +334,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
-      final joinAgain = find.byKey(
-        const ValueKey('tournament-join-new-cta'),
-      );
+      final joinAgain = find.byKey(const ValueKey('tournament-join-new-cta'));
       expect(joinAgain, findsOneWidget);
 
       await tester.tap(joinAgain);

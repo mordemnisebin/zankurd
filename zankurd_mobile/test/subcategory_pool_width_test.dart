@@ -40,33 +40,36 @@ void main() {
     expect(QuestionBankLoader.instance.allQuestions.length, greaterThan(2000));
   });
 
-  test('her görünür kategori×alt kategori×seviye tam tur uzunluğu verir', () async {
-    final repository = MockZanKurdRepository();
-    final failures = <String>[];
+  test(
+    'her görünür kategori×alt kategori×seviye tam tur uzunluğu verir',
+    () async {
+      final repository = MockZanKurdRepository();
+      final failures = <String>[];
 
-    for (final category in visibleCategories(repository.categories)) {
-      final subcategories = SubcategoryConfig.subcategories[category];
-      if (subcategories == null || subcategories.isEmpty) continue;
+      for (final category in visibleCategories(repository.categories)) {
+        final subcategories = SubcategoryConfig.subcategories[category];
+        if (subcategories == null || subcategories.isEmpty) continue;
 
-      for (final level in repository.levelsForCategory(category)) {
-        for (final sub in subcategories) {
-          final questions = await repository.loadLevelQuestions(
-            category: category,
-            difficultyMin: level.difficultyMin,
-            difficultyMax: level.difficultyMax,
-            subCategory: sub.id,
-            limit: level.questionCount,
-          );
-          if (questions.length < level.questionCount) {
-            failures.add(
-              '$category › ${sub.id} › seviye ${level.number}: '
-              '${questions.length}/${level.questionCount}',
+        for (final level in repository.levelsForCategory(category)) {
+          for (final sub in subcategories) {
+            final questions = await repository.loadLevelQuestions(
+              category: category,
+              difficultyMin: level.difficultyMin,
+              difficultyMax: level.difficultyMax,
+              subCategory: sub.id,
+              limit: level.questionCount,
             );
+            if (questions.length < level.questionCount) {
+              failures.add(
+                '$category › ${sub.id} › seviye ${level.number}: '
+                '${questions.length}/${level.questionCount}',
+              );
+            }
           }
         }
       }
-    }
 
-    expect(failures, isEmpty, reason: failures.join('\n'));
-  });
+      expect(failures, isEmpty, reason: failures.join('\n'));
+    },
+  );
 }

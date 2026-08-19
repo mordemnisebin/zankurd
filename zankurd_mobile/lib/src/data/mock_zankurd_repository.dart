@@ -407,9 +407,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int questionCount = 10,
     int entryFee = 0,
   }) async {
-    return createRoom(
-      category: category,
-    ).copyWith(
+    return createRoom(category: category).copyWith(
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,

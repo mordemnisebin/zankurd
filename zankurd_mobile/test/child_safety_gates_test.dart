@@ -46,9 +46,7 @@ void main() {
       // `ProviderNotFoundException` fırlatmadan çalışır. Doğrudan
       // `main.dart` giriş widget'ı (`ZanKurdApp`) kullanılıyor — sahte bir
       // alt küme değil, üretimdeki gerçek sağlayıcı ağacı.
-      await tester.pumpWidget(
-        ZanKurdApp(repository: MockZanKurdRepository()),
-      );
+      await tester.pumpWidget(ZanKurdApp(repository: MockZanKurdRepository()));
       await tester.pump(const Duration(milliseconds: 50));
 
       final context = tester.element(find.byType(MaterialApp));
@@ -74,9 +72,7 @@ void main() {
       expect(toggle.value, isFalse);
     });
 
-    testWidgets('açmak onay ister; vazgeçilirse kapalı kalır', (
-      tester,
-    ) async {
+    testWidgets('açmak onay ister; vazgeçilirse kapalı kalır', (tester) async {
       final repository = freshMockRepository();
       await tester.pumpWidget(
         testShell(child: SettingsScreen(repository: repository)),
@@ -172,10 +168,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const ValueKey('friends-search-panel')),
-        findsNothing,
-      );
+      expect(find.byKey(const ValueKey('friends-search-panel')), findsNothing);
       expect(
         find.byKey(const ValueKey('friends-search-blocked')),
         findsOneWidget,
@@ -208,9 +201,7 @@ void main() {
       );
     }
 
-    testWidgets('çocuk modu kapalıyken paylaş düğmesi görünür', (
-      tester,
-    ) async {
+    testWidgets('çocuk modu kapalıyken paylaş düğmesi görünür', (tester) async {
       await tester.pumpWidget(
         testShell(
           child: buildScreen(MockZanKurdRepository()),
@@ -225,10 +216,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const ValueKey('result-share-button')),
-        findsOneWidget,
-      );
+      expect(find.byKey(const ValueKey('result-share-button')), findsOneWidget);
     });
 
     testWidgets('çocuk modu açıkken paylaş düğmesi hiç çizilmez', (

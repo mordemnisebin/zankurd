@@ -37,64 +37,73 @@ void main() {
       expect(GameRoom.defaultSecondsPerQuestion, 20);
     });
 
-    test('MockZanKurdRepository creates custom online room with parameters', () async {
-      final repo = MockZanKurdRepository();
-      final room = await repo.createOnlineRoom(
-        category: 'Wêje',
-        secondsPerQuestion: 30,
-        questionCount: 15,
-        entryFee: 25,
-      );
+    test(
+      'MockZanKurdRepository creates custom online room with parameters',
+      () async {
+        final repo = MockZanKurdRepository();
+        final room = await repo.createOnlineRoom(
+          category: 'Wêje',
+          secondsPerQuestion: 30,
+          questionCount: 15,
+          entryFee: 25,
+        );
 
-      expect(room.category, 'Wêje');
-      expect(room.secondsPerQuestion, 30);
-      expect(room.questionCount, 15);
-      expect(room.entryFee, 25);
-    });
+        expect(room.category, 'Wêje');
+        expect(room.secondsPerQuestion, 30);
+        expect(room.questionCount, 15);
+        expect(room.entryFee, 25);
+      },
+    );
 
-    test('FloatingReactionController manages reaction bubbles and triggers listeners', () {
-      final controller = FloatingReactionController();
-      expect(controller.activeBubbles, isEmpty);
+    test(
+      'FloatingReactionController manages reaction bubbles and triggers listeners',
+      () {
+        final controller = FloatingReactionController();
+        expect(controller.activeBubbles, isEmpty);
 
-      controller.triggerReaction('👏 Destxweş!', senderName: 'Berfin');
-      expect(controller.activeBubbles.length, 1);
-      expect(controller.activeBubbles.first.text, '👏 Destxweş!');
-      expect(controller.activeBubbles.first.senderName, 'Berfin');
+        controller.triggerReaction('👏 Destxweş!', senderName: 'Berfin');
+        expect(controller.activeBubbles.length, 1);
+        expect(controller.activeBubbles.first.text, '👏 Destxweş!');
+        expect(controller.activeBubbles.first.senderName, 'Berfin');
 
-      final id = controller.activeBubbles.first.id;
-      controller.removeReaction(id);
-      expect(controller.activeBubbles, isEmpty);
-    });
+        final id = controller.activeBubbles.first.id;
+        controller.removeReaction(id);
+        expect(controller.activeBubbles, isEmpty);
+      },
+    );
 
-    test('Localization keys for gamification and custom rooms are present in both languages', () {
-      final keysToCheck = [
-        K.customRoomTitle,
-        K.selectCategory,
-        K.questionCountLabel,
-        K.entryFeeLabel,
-        K.freeEntry,
-        K.insufficientCoins,
-        K.entryFeeRequired,
-        K.newRoom,
-        K.newRoomAction,
-        K.newRoomFeeConfirm,
-        K.comboMultiplier,
-        K.streakFire,
-        K.opponentAnswered,
-        K.yourTurnFast,
-        K.reactionBravo,
-        K.reactionGoodLuck,
-        K.reactionFast,
-        K.reactionSmiley,
-        K.reactionFire,
-      ];
+    test(
+      'Localization keys for gamification and custom rooms are present in both languages',
+      () {
+        final keysToCheck = [
+          K.customRoomTitle,
+          K.selectCategory,
+          K.questionCountLabel,
+          K.entryFeeLabel,
+          K.freeEntry,
+          K.insufficientCoins,
+          K.entryFeeRequired,
+          K.newRoom,
+          K.newRoomAction,
+          K.newRoomFeeConfirm,
+          K.comboMultiplier,
+          K.streakFire,
+          K.opponentAnswered,
+          K.yourTurnFast,
+          K.reactionBravo,
+          K.reactionGoodLuck,
+          K.reactionFast,
+          K.reactionSmiley,
+          K.reactionFire,
+        ];
 
-      for (final key in keysToCheck) {
-        final ku = Tr.of(key, AppLanguage.ku);
-        final tr = Tr.of(key, AppLanguage.tr);
-        expect(ku.isNotEmpty, true, reason: '$key missing for ku');
-        expect(tr.isNotEmpty, true, reason: '$key missing for tr');
-      }
-    });
+        for (final key in keysToCheck) {
+          final ku = Tr.of(key, AppLanguage.ku);
+          final tr = Tr.of(key, AppLanguage.tr);
+          expect(ku.isNotEmpty, true, reason: '$key missing for ku');
+          expect(tr.isNotEmpty, true, reason: '$key missing for tr');
+        }
+      },
+    );
   });
 }

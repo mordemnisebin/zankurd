@@ -111,9 +111,7 @@ void main() {
     await _pump(tester, _Repo());
     expect(tester.takeException(), isNull);
 
-    final banner = tester.getRect(
-      find.byKey(const ValueKey('league-banner')),
-    );
+    final banner = tester.getRect(find.byKey(const ValueKey('league-banner')));
     final podium = tester.getRect(
       find.byKey(const ValueKey('leaderboard-podium')),
     );

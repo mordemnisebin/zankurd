@@ -64,9 +64,7 @@ void main() {
 
   test('istemcinin sunduğu ücret ve soru sayıları sunucununkiyle aynı', () {
     List<int> serverSet(String parameter) {
-      final match = RegExp(
-        '$parameter not in \\(([^)]*)\\)',
-      ).firstMatch(sql);
+      final match = RegExp('$parameter not in \\(([^)]*)\\)').firstMatch(sql);
       expect(match, isNotNull, reason: '$parameter kontrolü bulunamadı.');
       return match!
           .group(1)!

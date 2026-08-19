@@ -200,9 +200,7 @@ class _StoryScreenState extends State<StoryScreen> {
         // Hikâye anlatısı ile seçimler arasına tek kilim ayracı: "bölüm
         // ayracı" semantiği (triangleRhythm). Motif bilgi taşır — anlatının
         // bittiği, kararın başladığı yeri işaretler (2026-08-19).
-        const KilimDivider(
-          colors: [AppTheme.playGreen, AppTheme.gold],
-        ),
+        const KilimDivider(colors: [AppTheme.playGreen, AppTheme.gold]),
         const SizedBox(height: AppSpacing.lg),
         if (node.isEnding)
           FilledButton.icon(

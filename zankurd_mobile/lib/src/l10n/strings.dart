@@ -2367,46 +2367,27 @@ class Tr {
       'ku': 'Odeya Taybet Ava Bike',
       'tr': 'Özel Oda Oluştur',
     },
-    K.selectCategory: {
-      'ku': 'Kategoriyê Hilbijêre',
-      'tr': 'Kategori Seç',
-    },
-    K.questionCountLabel: {
-      'ku': 'Hejmara Pirsan',
-      'tr': 'Soru Sayısı',
-    },
+    K.selectCategory: {'ku': 'Kategoriyê Hilbijêre', 'tr': 'Kategori Seç'},
+    K.questionCountLabel: {'ku': 'Hejmara Pirsan', 'tr': 'Soru Sayısı'},
     K.entryFeeLabel: {
       'ku': 'Xerca Ketinê (Bahîs)',
       'tr': 'Giriş Ücreti (Bahis)',
     },
-    K.freeEntry: {
-      'ku': 'Bêpere (0)',
-      'tr': 'Ücretsiz (0)',
-    },
-    K.insufficientCoins: {
-      'ku': 'Zêrên te têrê nakin!',
-      'tr': 'Yetersiz Coin!',
-    },
+    K.freeEntry: {'ku': 'Bêpere (0)', 'tr': 'Ücretsiz (0)'},
+    K.insufficientCoins: {'ku': 'Zêrên te têrê nakin!', 'tr': 'Yetersiz Coin!'},
     K.entryFeeRequired: {
       'ku': 'Ji bo vê odeyê {amount} zêr pêwîst e.',
       'tr': 'Bu oda için {amount} coin gerekiyor.',
     },
-    K.newRoom: {
-      'ku': 'Odeya Nû',
-      'tr': 'Yeni Oda',
-    },
-    K.newRoomAction: {
-      'ku': 'Odeya Nû Ava Bike',
-      'tr': 'Yeni Oda Kur',
-    },
+    K.newRoom: {'ku': 'Odeya Nû', 'tr': 'Yeni Oda'},
+    K.newRoomAction: {'ku': 'Odeya Nû Ava Bike', 'tr': 'Yeni Oda Kur'},
     K.newRoomFeeConfirm: {
-      'ku': 'Ji bo vê odeyê {amount} zêr ji hesabê te tê girtin. Tu dixwazî bidomînî?',
-      'tr': 'Bu yeni oda için hesabınızdan {amount} jeton kesilecektir. Devam etmek istiyor musunuz?',
+      'ku':
+          'Ji bo vê odeyê {amount} zêr ji hesabê te tê girtin. Tu dixwazî bidomînî?',
+      'tr':
+          'Bu yeni oda için hesabınızdan {amount} jeton kesilecektir. Devam etmek istiyor musunuz?',
     },
-    K.rematch: {
-      'ku': 'Dîsa Bilîze (Rovanj)',
-      'tr': 'Rövanş İste',
-    },
+    K.rematch: {'ku': 'Dîsa Bilîze (Rovanj)', 'tr': 'Rövanş İste'},
     K.rematchWaiting: {
       'ku': 'Li benda bersiva hevrikê ye…',
       'tr': 'Rakibin cevabı bekleniyor…',
@@ -2419,42 +2400,15 @@ class Tr {
       'ku': 'Hevrik derket an qebûl nekir.',
       'tr': 'Rakip ayrıldı veya reddetti.',
     },
-    K.comboMultiplier: {
-      'ku': 'Kombo x{count}!',
-      'tr': 'Kombo x{count}!',
-    },
-    K.streakFire: {
-      'ku': 'Pêt vedaye!',
-      'tr': 'Alev Aldın!',
-    },
-    K.opponentAnswered: {
-      'ku': 'Hevrik bersiv da!',
-      'tr': 'Rakip cevapladı!',
-    },
-    K.yourTurnFast: {
-      'ku': 'Lez be!',
-      'tr': 'Hızlı ol!',
-    },
-    K.reactionBravo: {
-      'ku': 'Destxweş!',
-      'tr': 'Tebrikler!',
-    },
-    K.reactionGoodLuck: {
-      'ku': 'Serkeftin!',
-      'tr': 'Başarılar!',
-    },
-    K.reactionFast: {
-      'ku': 'Lez be!',
-      'tr': 'Hızlı ol!',
-    },
-    K.reactionSmiley: {
-      'ku': 'Kêfxweşî!',
-      'tr': 'Gülümse!',
-    },
-    K.reactionFire: {
-      'ku': 'Agir!',
-      'tr': 'Harika!',
-    },
+    K.comboMultiplier: {'ku': 'Kombo x{count}!', 'tr': 'Kombo x{count}!'},
+    K.streakFire: {'ku': 'Pêt vedaye!', 'tr': 'Alev Aldın!'},
+    K.opponentAnswered: {'ku': 'Hevrik bersiv da!', 'tr': 'Rakip cevapladı!'},
+    K.yourTurnFast: {'ku': 'Lez be!', 'tr': 'Hızlı ol!'},
+    K.reactionBravo: {'ku': 'Destxweş!', 'tr': 'Tebrikler!'},
+    K.reactionGoodLuck: {'ku': 'Serkeftin!', 'tr': 'Başarılar!'},
+    K.reactionFast: {'ku': 'Lez be!', 'tr': 'Hızlı ol!'},
+    K.reactionSmiley: {'ku': 'Kêfxweşî!', 'tr': 'Gülümse!'},
+    K.reactionFire: {'ku': 'Agir!', 'tr': 'Harika!'},
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.

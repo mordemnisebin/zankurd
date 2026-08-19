@@ -75,9 +75,7 @@ void main() {
 
       final result = await repo.logAnalyticsEvent('quiz_complete', null);
       expect(result, isTrue);
-      expect(httpClient.requestedPaths, [
-        '/rest/v1/rpc/log_analytics_event',
-      ]);
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/log_analytics_event']);
     });
 
     test('setEnabled(false) statik bayrağı da kapatır', () async {

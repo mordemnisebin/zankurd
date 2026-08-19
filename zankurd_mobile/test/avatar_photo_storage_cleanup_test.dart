@@ -91,52 +91,46 @@ void main() {
     );
   });
 
-  test(
-    'silme gerçekten fotoğraf kaldırıldığında YA DA bu oturumda yeni '
-    'yüklenip vazgeçildiğinde yapılıyor',
-    () {
-      final src = File(
-        'lib/src/screens/avatar_editor_screen.dart',
-      ).readAsStringSync();
-      expect(
-        src,
-        contains(
-          '_identity.photoUrl == null &&\n'
-          '          (_hadPhotoOnOpen || _uploadedNewPhotoThisSession)',
-        ),
-        reason:
-            '2026-08-14 denetimi: `_hadPhotoOnOpen` yalnız ekran açılırken '
-            'ZATEN kayıtlı fotoğrafı kapsar. Kullanıcı hiç fotoğrafsız '
-            'açıp bu oturumda YENİ bir fotoğraf yükleyip sonra kaldırırsa '
-            '(silmeden kaydederse) eski koşul hep false kalır, silme '
-            'çağrısı hiç gitmez — nesne herkese açık kovada yetim kalır.',
-      );
-    },
-  );
+  test('silme gerçekten fotoğraf kaldırıldığında YA DA bu oturumda yeni '
+      'yüklenip vazgeçildiğinde yapılıyor', () {
+    final src = File(
+      'lib/src/screens/avatar_editor_screen.dart',
+    ).readAsStringSync();
+    expect(
+      src,
+      contains(
+        '_identity.photoUrl == null &&\n'
+        '          (_hadPhotoOnOpen || _uploadedNewPhotoThisSession)',
+      ),
+      reason:
+          '2026-08-14 denetimi: `_hadPhotoOnOpen` yalnız ekran açılırken '
+          'ZATEN kayıtlı fotoğrafı kapsar. Kullanıcı hiç fotoğrafsız '
+          'açıp bu oturumda YENİ bir fotoğraf yükleyip sonra kaldırırsa '
+          '(silmeden kaydederse) eski koşul hep false kalır, silme '
+          'çağrısı hiç gitmez — nesne herkese açık kovada yetim kalır.',
+    );
+  });
 
-  test(
-    'kaydedilmeden ekrandan ayrılmak (geri tuşu vb.) bu oturumda '
-    'yüklenen fotoğrafı temizler',
-    () {
-      // `dispose()`, kaydetmeden kapatılan (geri tuşu, kaydırma —
-      // hepsi dispose'u tetikler) senaryoyu kapsar: `_save()` hiç
-      // çalışmamışsa bu oturumda yüklenen fotoğraf sunucudaki profile
-      // hiç yazılmamıştır ama depoda durmaya devam eder (2026-08-14
-      // denetimi).
-      final src = File(
-        'lib/src/screens/avatar_editor_screen.dart',
-      ).readAsStringSync();
-      final dispose = RegExp(
-        r'void dispose\(\) \{(.*?)\n  \}',
-        dotAll: true,
-      ).firstMatch(src);
-      expect(dispose, isNotNull, reason: 'dispose() geçersiz kılınmamış');
-      final body = dispose!.group(1)!;
-      expect(body, contains('_uploadedNewPhotoThisSession'));
-      expect(body, contains('!_savedSuccessfully'));
-      expect(body, contains('deleteAvatarPhoto()'));
-    },
-  );
+  test('kaydedilmeden ekrandan ayrılmak (geri tuşu vb.) bu oturumda '
+      'yüklenen fotoğrafı temizler', () {
+    // `dispose()`, kaydetmeden kapatılan (geri tuşu, kaydırma —
+    // hepsi dispose'u tetikler) senaryoyu kapsar: `_save()` hiç
+    // çalışmamışsa bu oturumda yüklenen fotoğraf sunucudaki profile
+    // hiç yazılmamıştır ama depoda durmaya devam eder (2026-08-14
+    // denetimi).
+    final src = File(
+      'lib/src/screens/avatar_editor_screen.dart',
+    ).readAsStringSync();
+    final dispose = RegExp(
+      r'void dispose\(\) \{(.*?)\n  \}',
+      dotAll: true,
+    ).firstMatch(src);
+    expect(dispose, isNotNull, reason: 'dispose() geçersiz kılınmamış');
+    final body = dispose!.group(1)!;
+    expect(body, contains('_uploadedNewPhotoThisSession'));
+    expect(body, contains('!_savedSuccessfully'));
+    expect(body, contains('deleteAvatarPhoto()'));
+  });
 
   test('mock depo silme çağrısını kaydediyor', () async {
     final repo = MockZanKurdRepository();

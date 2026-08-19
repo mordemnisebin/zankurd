@@ -266,11 +266,7 @@ Widget _resultScreen() {
 /// onu görmeli. İlk uygulama listeyi elle kopyalamıştı; kopya, testlerin
 /// gördüğü uygulamayla turun gösterdiği uygulamayı sessizce ayırır — turun
 /// tek işi "uygulama gerçekte neye benziyor" sorusuna cevap vermekken.
-Widget _tourShell({
-  required Widget child,
-  bool dark = false,
-  bool ku = false,
-}) {
+Widget _tourShell({required Widget child, bool dark = false, bool ku = false}) {
   return RepaintBoundary(
     key: _boundaryKey,
     child: testShell(
@@ -288,13 +284,7 @@ Future<void> _pump(
   bool ku = false,
 }) async {
   _applyViewport(tester, _size);
-  await tester.pumpWidget(
-    _tourShell(
-      child: child,
-      dark: dark,
-      ku: ku,
-    ),
-  );
+  await tester.pumpWidget(_tourShell(child: child, dark: dark, ku: ku));
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
   await tester.pump();
@@ -1266,7 +1256,6 @@ void main() {
     await t.pump(const Duration(milliseconds: 400));
     await _shoot(t, '94_result_1v1_win');
   }, tags: ['preview']);
-
 }
 
 /// Teslim edilememiş bir 1v1 sonucu — kurtarma ekranının beslendiği veri.

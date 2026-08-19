@@ -216,44 +216,43 @@ void main() {
       );
     });
 
-    testWidgets(
-      'Kurmancî arayüzde Google bağlama hatası Kurmancîye çevrilir',
-      (tester) async {
-        // 2026-08-14 denetimi: `_linkGoogleAccount` hatayı
-        // `translateAuthError`dan geçirmeden basıyordu — Kurmancî
-        // kullanıcı sunucunun Türkçe metnini görüyordu. Hemen üstteki
-        // test (Türkçe arayüz) hâlâ ham Türkçe metni bekliyor —
-        // `translateAuthError` Türkçe arayüzde metni değiştirmeden
-        // döndürür, bu yüzden o test bu düzeltmeyle bozulmadı.
-        final guestAuth = _GuestAuthProviderWithGoogleLink(
-          googleLinkSucceeds: false,
-          googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
-        );
-        await tester.pumpWidget(
-          _wrapWithProviders(
-            ProfileScreen(repository: MockZanKurdRepository()),
-            guestAuth,
-            isKu: true,
-          ),
-        );
-        await tester.pumpAndSettle();
-        await _openGuestUpgradeDialog(tester, isKu: true);
+    testWidgets('Kurmancî arayüzde Google bağlama hatası Kurmancîye çevrilir', (
+      tester,
+    ) async {
+      // 2026-08-14 denetimi: `_linkGoogleAccount` hatayı
+      // `translateAuthError`dan geçirmeden basıyordu — Kurmancî
+      // kullanıcı sunucunun Türkçe metnini görüyordu. Hemen üstteki
+      // test (Türkçe arayüz) hâlâ ham Türkçe metni bekliyor —
+      // `translateAuthError` Türkçe arayüzde metni değiştirmeden
+      // döndürür, bu yüzden o test bu düzeltmeyle bozulmadı.
+      final guestAuth = _GuestAuthProviderWithGoogleLink(
+        googleLinkSucceeds: false,
+        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+      );
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          guestAuth,
+          isKu: true,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester, isKu: true);
 
-        await tester.tap(find.text('Bi Google ve Girêde'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Bi Google ve Girêde'));
+      await tester.pumpAndSettle();
 
-        expect(guestAuth.googleLinkCalled, isTrue);
-        expect(
-          find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
-          findsNothing,
-          reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
-        );
-        expect(
-          find.text('Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.'),
-          findsOneWidget,
-        );
-      },
-    );
+      expect(guestAuth.googleLinkCalled, isTrue);
+      expect(
+        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        findsNothing,
+        reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
+      );
+      expect(
+        find.text('Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.'),
+        findsOneWidget,
+      );
+    });
   });
 
   group('GuestGoogleLink — hata çevirisi (AuthProvider)', () {

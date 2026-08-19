@@ -48,7 +48,9 @@ int learningRecommendedIndex({
   required int placementIndex,
 }) {
   if (completedLessonIds.isEmpty) return placementIndex;
-  return lessons.indexWhere((lesson) => !completedLessonIds.contains(lesson.id));
+  return lessons.indexWhere(
+    (lesson) => !completedLessonIds.contains(lesson.id),
+  );
 }
 
 /// Öğrenme konusunu (`Lesson.category`) soru bankası kategorisine çevirir.
@@ -963,7 +965,6 @@ class _LessonCard extends StatelessWidget {
       ),
     );
   }
-
 }
 
 /// Sunucunun gönderdiği Material ikon adı (`icon_name`, ör. `numbers`,
@@ -1102,10 +1103,7 @@ class _LearningPathNode extends StatelessWidget {
             left: 26 + (index.isEven ? 0.0 : 8.0),
             bottom: AppSpacing.xs,
           ),
-          child: Opacity(
-            opacity: locked ? 0.62 : 1.0,
-            child: child,
-          ),
+          child: Opacity(opacity: locked ? 0.62 : 1.0, child: child),
         ),
       ],
     );
@@ -1136,10 +1134,7 @@ class _KilimPathDiamond extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppTheme.gold,
             borderRadius: BorderRadius.circular(3),
-            border: Border.all(
-              color: const Color(0xFFD97706),
-              width: 1.2,
-            ),
+            border: Border.all(color: const Color(0xFFD97706), width: 1.2),
             boxShadow: [
               BoxShadow(
                 color: AppTheme.gold.withValues(alpha: 0.35),
@@ -1150,11 +1145,7 @@ class _KilimPathDiamond extends StatelessWidget {
           ),
           child: Transform.rotate(
             angle: -math.pi / 4,
-            child: const Icon(
-              AppIcons.check,
-              size: 10,
-              color: Colors.white,
-            ),
+            child: const Icon(AppIcons.check, size: 10, color: Colors.white),
           ),
         ),
       );
@@ -1170,10 +1161,7 @@ class _KilimPathDiamond extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppTheme.brand,
             borderRadius: BorderRadius.circular(3),
-            border: Border.all(
-              color: Colors.white,
-              width: 1.5,
-            ),
+            border: Border.all(color: Colors.white, width: 1.5),
             boxShadow: [
               BoxShadow(
                 color: AppTheme.brand.withValues(alpha: 0.45),
@@ -1258,10 +1246,7 @@ class _MasteryGoal extends StatelessWidget {
                     ? AppTheme.gold
                     : AppTheme.surfaceHiColor(context),
                 borderRadius: BorderRadius.circular(3),
-                border: Border.all(
-                  color: AppTheme.gold,
-                  width: 1.2,
-                ),
+                border: Border.all(color: AppTheme.gold, width: 1.2),
               ),
               child: Transform.rotate(
                 angle: -math.pi / 4,

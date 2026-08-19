@@ -71,7 +71,8 @@ void main() {
 
     final offenders = <String>[];
     for (final question in all) {
-      final answers = (question['answers'] as List?)?.cast<Object?>() ?? const [];
+      final answers =
+          (question['answers'] as List?)?.cast<Object?>() ?? const [];
       final lazy = answers
           .where((a) => lazyDistractor.hasMatch('$a'.trim()))
           .length;

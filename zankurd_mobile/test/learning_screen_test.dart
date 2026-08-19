@@ -43,8 +43,7 @@ class _RetryableSlidesRepository extends MockZanKurdRepository {
 /// taklit eder.
 class _NoLessonsRepository extends MockZanKurdRepository {
   @override
-  Future<List<Lesson>> loadLessonsByCategory(String category) async =>
-      const [];
+  Future<List<Lesson>> loadLessonsByCategory(String category) async => const [];
 }
 
 const _testLesson = Lesson(

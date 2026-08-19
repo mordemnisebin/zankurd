@@ -462,9 +462,9 @@ class SyncManager {
           _failedItems
             ..clear()
             ..addAll(
-              decodedFailed
-                  .whereType<Map>()
-                  .map((item) => Map<String, dynamic>.from(item)),
+              decodedFailed.whereType<Map>().map(
+                (item) => Map<String, dynamic>.from(item),
+              ),
             );
         }
       }
@@ -620,8 +620,7 @@ class SyncManager {
   static Future<void> _removeStoredFailedQueueForUser(
     String userId, {
     SharedPreferences? prefs,
-  }) =>
-      _removeStorageKeyDurably(_failedQueueKeyForUser(userId), prefs: prefs);
+  }) => _removeStorageKeyDurably(_failedQueueKeyForUser(userId), prefs: prefs);
 
   static Future<void> _removeStorageKeyDurably(
     String key, {

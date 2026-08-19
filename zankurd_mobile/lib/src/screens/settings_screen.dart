@@ -390,18 +390,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: AppTheme.borderColor(context),
                     ),
                     Consumer<ChildSafetyProvider>(
-                      builder: (context, childSafety, _) =>
-                          _SettingsToggleRow(
-                            icon: AppIcons.shield,
-                            color: AppTheme.violet,
-                            title: context.t(K.childSafetyMode),
-                            subtitle: context.t(K.childSafetyModeSub),
-                            trailing: Switch(
-                              key: const ValueKey('child-safety-switch'),
-                              value: childSafety.enabled,
-                              onChanged: _toggleChildSafety,
-                            ),
-                          ),
+                      builder: (context, childSafety, _) => _SettingsToggleRow(
+                        icon: AppIcons.shield,
+                        color: AppTheme.violet,
+                        title: context.t(K.childSafetyMode),
+                        subtitle: context.t(K.childSafetyModeSub),
+                        trailing: Switch(
+                          key: const ValueKey('child-safety-switch'),
+                          value: childSafety.enabled,
+                          onChanged: _toggleChildSafety,
+                        ),
+                      ),
                     ),
                   ],
                 ),
