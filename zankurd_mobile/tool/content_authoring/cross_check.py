@@ -107,6 +107,17 @@ def main(bank_path: str, out_path: str) -> int:
                 verdicts[qid] = index_by_id[qid]["answers"]["ABCD".index(letter)]
             else:
                 verdicts[qid] = "?"
+        # İstek TAMAMEN başarısızsa hiçbir şey yazma.
+        #
+        # İlk düzeltme burada koşulsuz "?" yazıyordu ve kendi kuyruğuna
+        # bastı: ağ/kota hatasıyla düşen bir parti de "?" alıyor, `pending`
+        # onu bir daha hiç sormuyordu. 77 soru tek bir başarısız koşuda
+        # kalıcı olarak hükümsüz kaldı (2026-08-19). Yalnız model
+        # GERÇEKTEN yanıt verdiyse eksikler "?" sayılır.
+        if not answers:
+            print("  parti atlandı, sonraki koşuda yeniden sorulacak")
+            continue
+
         # Modelin YANITINDA HİÇ GEÇMEYEN soru da "?" sayılır.
         #
         # Eskiden yalnız dönen kayıtlar yazılıyordu; model bir soruyu
