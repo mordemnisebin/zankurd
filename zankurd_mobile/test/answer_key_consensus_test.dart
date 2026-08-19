@@ -114,6 +114,11 @@ void main() {
       // "Haydock Colliery Steam Engine"). Tekstil sonra geldi; model
       // "Sanayi Devrimi = tekstil" kısayolunu izleyip yanılıyor.
       'ds_dirok_0231': 'Ji bo pompekirina avê ji kanan',
+      // Egîdê Cimo ("Mîrê Bilûrê") Erivan Radyosu'nun bilûr/mey
+      // ÇALGICISIDIR; Karapêtê Xaço aynı radyonun DENGBÊJİDİR. Model
+      // "Erivan Radyosu + ünlü ad" çağrışımıyla sesçiyi seçiyor. Sorunun
+      // işi zaten bu ayrımı ölçmek.
+      'ds_muzik_0242': 'Egîdê Cimo',
     };
 
     final contradicting = <String>[];
