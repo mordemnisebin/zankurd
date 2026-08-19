@@ -30954,5 +30954,1421 @@
     "explanation": "Molla Selim ve Seyyid Ali önderliğindeki 1913 Bitlis İsyanı, İttihatçıların otoriter merkezileşme ve dini-yerel yapıları tasfiye politikalarına karşı patlak vermiştir.",
     "explanationTr": "Molla Selim ve Seyyid Ali önderliğindeki 1913 Bitlis İsyanı, İttihatçıların otoriter merkezileşme ve dini-yerel yapıları tasfiye politikalarına karşı patlak vermiştir.",
     "explanationKu": "Serhildana Bidlîsê bertekek li hemberî navendîbûn û zextên tund ên rêveberiya Îtihadparêzan bû."
+  },
+  {
+    "id": "ds_teknoloji_0300",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Sedema sereke ya ku protokola HTTP/3 li şûna TCP derbasî ser protokola QUIC (UDP) bû çi ye?",
+    "promptTr": "HTTP/3 protokolünün TCP yerine QUIC (UDP) protokolüne geçmesinin temel mimari gerekçesi nedir?",
+    "answers": [
+      "Ji bo nehêştina pirsgirêka sekinîna rêzê ya di asta veguhestina TCP de",
+      "Ji bo rakirina pêdiviya şîfrekirina daneyan a di asta pêwendiya torê de",
+      "Ji bo zêdekirina qebareya serî ya her pakêta daneyê ya di torê de",
+      "Ji bo astengkirina hemû daxwazên paralel ên di navbera du cîhazan de"
+    ],
+    "answersTr": [
+      "TCP taşıma katmanındaki satır başı tıkanıklığı sorununu tamamen çözmek",
+      "Ağ bağlantısı seviyesindeki veri şifreleme gereksinimini ortadan kaldırmak",
+      "Ağdaki her veri paketinin taşıdığı başlık boyutunu bilinçli artırmak",
+      "İki cihaz arasındaki tüm paralel akış taleplerini tamamen engellemek"
+    ],
+    "correctAnswer": "Ji bo nehêştina pirsgirêka sekinîna rêzê ya di asta veguhestina TCP de",
+    "correctAnswerTr": "TCP taşıma katmanındaki satır başı tıkanıklığı sorununu tamamen çözmek",
+    "explanation": "HTTP/2'de tek bir TCP paket kaybı tüm akışları kilitlerken (Head-of-Line Blocking), QUIC her akışı bağımsız yöneterek gecikmeyi önler.",
+    "explanationKu": "Di HTTP/2 de windabûna pakêtekê di asta TCP de hemû herikînan dida sekinandin; QUIC bi serbixwekirina herikînan vê pirsgirêkê çareser dike.",
+    "explanationTr": "HTTP/2'de tek bir TCP paket kaybı tüm akışları kilitlerken (Head-of-Line Blocking), QUIC her akışı bağımsız yöneterek gecikmeyi önler."
+  },
+  {
+    "id": "ds_teknoloji_0301",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di algorîtmaya \"Consistent Hashing\" de rola çêkirina girêkên xeyalî (virtual nodes) çi ye?",
+    "promptTr": "\"Consistent Hashing\" algoritmasında sanal düğümler (virtual nodes) kullanılmasının temel amacı nedir?",
+    "answers": [
+      "Ji bo lezkirina şîfrekirina mifteyên veşartî yên di bîrgeha sereke de",
+      "Ji bo kêmkirina hejmara servîsên ku di sîstemê de bi awayekî çalak dixebitin",
+      "Ji bo qedexekirina zêdekirina pêşkêşkerên nû di dema xebata sîstemê de",
+      "Ji bo dabeşkirina hevseng a daneyan li ser hemû pêşkêşkerên sîstemê"
+    ],
+    "answersTr": [
+      "Ana bellek üzerinde tutulan gizli anahtarların şifrelenmesini hızlandırmak",
+      "Sistemde aktif olarak çalışan servislerin toplam sayısını azaltmak",
+      "Sistemin çalışma anında yeni fiziksel sunucu eklenmesini yasaklamak",
+      "Verilerin tüm sunucular arasında dengeli ve homojen dağılmasını sağlamak"
+    ],
+    "correctAnswer": "Ji bo dabeşkirina hevseng a daneyan li ser hemû pêşkêşkerên sîstemê",
+    "correctAnswerTr": "Verilerin tüm sunucular arasında dengeli ve homojen dağılmasını sağlamak",
+    "explanation": "Sanal düğümler, hash halkasındaki veri dağılımını homojenleştirerek bazı sunucuların aşırı yüklenmesini (hotspot) engeller.",
+    "explanationKu": "Girêkên xeyalî nahêlin ku hin pêşkêşker bi barê zêde yê daneyan ve bên dagirtin û belavbûna daneyan hevseng dikin.",
+    "explanationTr": "Sanal düğümler, hash halkasındaki veri dağılımını homojenleştirerek bazı sunucuların aşırı yüklenmesini (hotspot) engeller."
+  },
+  {
+    "id": "ds_teknoloji_0302",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Ji bo sîstemên ku leza nivîsandinê pir lê zêde ye, çima binesaziya \"LSM-Tree\" ji \"B-Tree\" guncawtir e?",
+    "promptTr": "Yazma yoğunluklu sistemlerde \"LSM-Tree\" yapısının \"B-Tree\" yapısına kıyasla daha verimli olmasının temel sebebi nedir?",
+    "answers": [
+      "Nivîsandinê di bîrgehê de kom dike û bi awayekî rêzbarî li dîskê zêde dike",
+      "Pêdiviya kontrolkirina yekparçeyiya daneyan di sîstemê de bi tevahî radike",
+      "Dîskê qet bi kar naîne û hemû daneyan tenê di bîrgeha sereke de dihêle",
+      "Pêvajoya xwendina daneyan ji hemû mekanîzmayên din zûtir dike"
+    ],
+    "answersTr": [
+      "Yazmaları bellekte toplayıp diske sıralı olarak ardışık bloklar halinde yazması",
+      "Sistemdeki veri bütünlüğü kontrollerini ve kilit mekanizmalarını tamamen kaldırması",
+      "Diski hiç kullanmayıp tüm verileri yalnızca geçici ana bellekte tutması",
+      "Veri okuma operasyonlarını diğer tüm mekanizmalardan çok daha hızlı kılması"
+    ],
+    "correctAnswer": "Nivîsandinê di bîrgehê de kom dike û bi awayekî rêzbarî li dîskê zêde dike",
+    "correctAnswerTr": "Yazmaları bellekte toplayıp diske sıralı olarak ardışık bloklar halinde yazması",
+    "explanation": "LSM-Tree rastgele yazma isteklerini bellekte sıralayıp diske sıralı (sequential) yazarak I/O darboğazını aşar.",
+    "explanationKu": "LSM-Tree nivîsandinên rasthatî vediguherîne nivîsandina rêzbarî (sequential write) a li ser dîskê û performansa nivîsandinê bilind dike.",
+    "explanationTr": "LSM-Tree rastgele yazma isteklerini bellekte sıralayıp diske sıralı (sequential) yazarak I/O darboğazını aşar."
+  },
+  {
+    "id": "ds_teknoloji_0303",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di protokola TLS 1.3 de kîjan guherîna sereke bûye sedema kêmkirina derengmayîna destpêkirina girêdanê?",
+    "promptTr": "TLS 1.3 protokolünde el sıkışma gecikmesini azaltan en önemli yapısal değişiklik nedir?",
+    "answers": [
+      "Bikaranîna algorîtmayên şîfrekirina kevnar ên wekî MD5 û DES di girêdanê de",
+      "Rakirina sertîfîkayên ewlehiyê ji qonaxa destpêkê ya naskirina aliyan",
+      "Kêmkirina qonaxên destpêkê bo yek gerê (1-RTT) an jî sifir gerê (0-RTT)",
+      "Veguhastina hemû pêwendiyan bi awayekî zelal bêyî pejirandina klîentê"
+    ],
+    "answersTr": [
+      "Bağlantı esnasında MD5 ve DES gibi eski şifreleme algoritmalarını kullanması",
+      "Tarafların doğrulanması aşamasındaki güvenlik sertifikalarını tamamen kaldırması",
+      "El sıkışma tur sayısını tek tura (1-RTT) veya sıfır tura (0-RTT) indirmesi",
+      "Tüm istemci doğrulama süreçlerini devre dışı bırakıp şifresiz aktarıma geçmesi"
+    ],
+    "correctAnswer": "Kêmkirina qonaxên destpêkê bo yek gerê (1-RTT) an jî sifir gerê (0-RTT)",
+    "correctAnswerTr": "El sıkışma tur sayısını tek tura (1-RTT) veya sıfır tura (0-RTT) indirmesi",
+    "explanation": "TLS 1.3 anahtar değişimi ve parametre müzakeresini tek bir mesajda birleştirerek el sıkışmayı 1-RTT'ye düşürür.",
+    "explanationKu": "TLS 1.3 bi hevgirtina pevguhertina mifteyan û danûstandina parametreyan re dema destpêkirina ewle ya girêdanê nîvî kêm kir.",
+    "explanationTr": "TLS 1.3 anahtar değişimi ve parametre müzakeresini tek bir mesajda birleştirerek el sıkışmayı 1-RTT'ye düşürür."
+  },
+  {
+    "id": "ds_teknoloji_0304",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di algorîtmaya lihevkirinê ya Raft de, mekanîzmaya sereke ya ji bo rêgirtina li dubendiya dengan (split vote) çi ye?",
+    "promptTr": "Raft mutabakat algoritmasında oy bölünmesini (split vote) önleyen temel mekanizma nedir?",
+    "answers": [
+      "Bikaranîna demjimêrên hilbijartinê yên rasthatî ji bo her berendamî",
+      "Hilbijartina pêşkêşkerê xwedî navnîşana IP ya herî piçûk wekî rêber",
+      "Destnîşankirina rêberekî neguherbar di dema sazkirina sîstemê de",
+      "Şandina hemû dengan bi rêya girêdaneke fîzîkî ya rasterast û taybet"
+    ],
+    "answersTr": [
+      "Her aday için rastgele belirlenen seçim zaman aşımı sürelerinin kullanılması",
+      "En küçük IP adresine sahip olan sunucunun otomatik olarak lider seçilmesi",
+      "Sistem kurulumu sırasında tek ve değişmez bir liderin atanmış olması",
+      "Tüm oylama paketlerinin sadece doğrudan fiziksel hatlar üzerinden iletilmesi"
+    ],
+    "correctAnswer": "Bikaranîna demjimêrên hilbijartinê yên rasthatî ji bo her berendamî",
+    "correctAnswerTr": "Her aday için rastgele belirlenen seçim zaman aşımı sürelerinin kullanılması",
+    "explanation": "Rastgele seçim zaman aşımları (150-300ms) sayesinde bir düğüm diğerlerinden önce aday olur ve oyların bölünmesi engellenir.",
+    "explanationKu": "Dema ku sînorê demê rasthatî be (randomized election timeout), pêşkêşkerek berî yên din dibe berendam û piraniya dengan digire.",
+    "explanationTr": "Rastgele seçim zaman aşımları (150-300ms) sayesinde bir düğüm diğerlerinden önce aday olur ve oyların bölünmesi engellenir."
+  },
+  {
+    "id": "ds_teknoloji_0305",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di protokola hevgirtina bîrgeha lezgîn a MESI de, rewşa \"Invalid\" derbasî kîjan rewşê dibe dema ku dane ji nû ve bên xwendin û di navendên din de nebin?",
+    "promptTr": "MESI önbellek tutarlılık protokolünde, \"Invalid\" durumundaki bir satır okunup başka hiçbir çekirdekte bulunmadığında hangi duruma geçer?",
+    "answers": [
+      "Derbasî rewşa \"Modified\" dibe û rasterast li ser dîskê tê nivîsandin",
+      "Her tim di rewşa \"Shared\" de dimîne bêyî guhertina parametreyan",
+      "Rasterast tê jêbirin û pêvajo ji destpêkê ve ji nû ve tê meşandin",
+      "Derbasî rewşa \"Exclusive\" dibe ji ber ku tenê di yek bîrgehê de heye"
+    ],
+    "answersTr": [
+      "Hemen \"Modified\" durumuna geçer ve doğrudan ana belleğe geri yazılır",
+      "Her koşulda parametreleri değişmeden \"Shared\" durumunda sabit kalır",
+      "Doğrudan bellekten silinir ve ilgili işlem sıfırdan yeniden başlatılır",
+      "Yalnızca o çekirdekte bulunduğu ve temiz olduğu için \"Exclusive\" durumuna geçer"
+    ],
+    "correctAnswer": "Derbasî rewşa \"Exclusive\" dibe ji ber ku tenê di yek bîrgehê de heye",
+    "correctAnswerTr": "Yalnızca o çekirdekte bulunduğu ve temiz olduğu için \"Exclusive\" durumuna geçer",
+    "explanation": "Okunan önbellek satırı başka hiçbir çekirdekte yoksa ve bellekle uyumluysa \"Exclusive\" (Özel) durumunu alır.",
+    "explanationKu": "Heke rêza xwendî di navendên din de tune be dibe Exclusive; heke di navendeke din de hebe dibe Shared.",
+    "explanationTr": "Okunan önbellek satırı başka hiçbir çekirdekte yoksa ve bellekle uyumluysa \"Exclusive\" (Özel) durumunu alır."
+  },
+  {
+    "id": "ds_teknoloji_0306",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Kêmasiya ewlehiyê ya \"Spectre\" xwe dispêre kîjan taybetmendiya mîmariya nûjen a pêvajoyeran (CPU)?",
+    "promptTr": "\"Spectre\" güvenlik açığı modern işlemci mimarilerinin hangi temel performans özelliğini istismar eder?",
+    "answers": [
+      "Pêşbîniya çiqilan (branch prediction) û meşandina texmînî ya fermanan",
+      "Sîstema girtina germiyê û daxistina leza frekansa navendên pêvajoyê",
+      "Bikaranîna navnîşanên bîrgehê yên statîk di dema xebata bernamen de",
+      "Rakirina bîrgeha lezgîn a asta yekem ji bo kêmkirina lêçûna fîzîkî"
+    ],
+    "answersTr": [
+      "Dallanma tahmini (branch prediction) ve spekülatif komut yürütme mekanizmasını",
+      "İşlemci çekirdeklerinin aşırı ısınmayı önleyen dinamik frekans kısma sistemini",
+      "Programların çalışması sırasında statik bellek adresleme mantığının seçilmesini",
+      "Fiziksel maliyeti düşürmek amacıyla birinci seviye L1 önbelleğin kaldırılmasını"
+    ],
+    "correctAnswer": "Pêşbîniya çiqilan (branch prediction) û meşandina texmînî ya fermanan",
+    "correctAnswerTr": "Dallanma tahmini (branch prediction) ve spekülatif komut yürütme mekanizmasını",
+    "explanation": "Spectre, işlemcinin spekülatif olarak yürüttüğü dallanma komutlarının önbellekte bıraktığı izleri yan kanal analiziyle okur.",
+    "explanationKu": "Spectre bi xwendina texmînî ya fermanan daneyên nepenî tîne bîrgeha lezgîn û bi riya kanala alî (side-channel) wan derdixe holê.",
+    "explanationTr": "Spectre, işlemcinin spekülatif olarak yürüttüğü dallanma komutlarının önbellekte bıraktığı izleri yan kanal analiziyle okur."
+  },
+  {
+    "id": "ds_teknoloji_0307",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Fikrên bingehîn ên mekanîzmaya komkirina çopê ya bi nifşan (Generational Garbage Collection) xwe dispêre çi?",
+    "promptTr": "Kuşaksal Çöp Toplama (Generational Garbage Collection) mimarisinin dayandığı temel ampirik hipotez nedir?",
+    "answers": [
+      "Hemû tiştên di bîrgehê de hatine çêkirin heta dawiya bernameyê dijîn",
+      "Tiştên kevn ji yên nû zûtir tên jêbirin ji ber ku bîrgehê dagir dikin",
+      "Piranîya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin",
+      "Bîrgeha çalak her tim bi awayekî wekhev di navbera tiştan de tê parvekirin"
+    ],
+    "answersTr": [
+      "Bellekte tahsis edilen tüm nesnelerin program sonuna kadar yaşamaya devam etmesi",
+      "Eski nesnelerin belleği tıkamaması için yenilerden daha hızlı silinmesi gerekliliği",
+      "Yeni oluşturulan nesnelerin büyük çoğunluğunun ömrünün çok kısa olması",
+      "Aktif bellek alanının her zaman nesneler arasında eşit boyutta bölünmesi"
+    ],
+    "correctAnswer": "Piranîya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin",
+    "correctAnswerTr": "Yeni oluşturulan nesnelerin büyük çoğunluğunun ömrünün çok kısa olması",
+    "explanation": "Zayıf Kuşaksal Hipotez'e göre nesnelerin çoğu tahsis edildikten hemen sonra ölür; bu yüzden genç kuşak (Young/Eden) sık taranır.",
+    "explanationKu": "Li gorî vê hîpotezê (Weak Generational Hypothesis), tiştên nû zû dimirin; ji ber vê yekê tenê kontrolkirina qada ciwan (Eden) lêçûnê kêm dike.",
+    "explanationTr": "Zayıf Kuşaksal Hipotez'e göre nesnelerin çoğu tahsis edildikten hemen sonra ölür; bu yüzden genç kuşak (Young/Eden) sık taranır."
+  },
+  {
+    "id": "ds_teknoloji_0308",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Teorema PACELC di sîstemên belavbûyî de kîjan aliyê ku di Teorema CAP de kêm dima temam dike?",
+    "promptTr": "Dağıtık sistemlerde PACELC teoremi, CAP teoreminde eksik kalan hangi operasyonel durumu modeller?",
+    "answers": [
+      "Rewşa ku dabeşbûna torê tune be, danûstandina di navbera derengmayîn û hevgirtinê de",
+      "Têkçûna fîzîkî ya qabloyên optîk di navbera welatên cuda yên cîhanê de",
+      "Qedexekirina bikaranîna zimanên bernamesaziyê yên bi tîpên dînamîk di servîsan de",
+      "Bikaranîna algorîtmayên şîfrekirinê tenê di asta sepanên mobîl de"
+    ],
+    "answersTr": [
+      "Ağ bölümlenmesi (partition) yokken gecikme (latency) ile tutarlılık (consistency) dengesini",
+      "Kıtalararası optik kabloların fiziksel kopması durumunda sunucuların elektriğini kesmeyi",
+      "Mikroservis mimarilerinde dinamik tipli programlama dillerinin kullanımını yasaklamayı",
+      "Kriptografik şifreleme algoritmalarının sadece mobil uygulamalar düzeyinde ele alınmasını"
+    ],
+    "correctAnswer": "Rewşa ku dabeşbûna torê tune be, danûstandina di navbera derengmayîn û hevgirtinê de",
+    "correctAnswerTr": "Ağ bölümlenmesi (partition) yokken gecikme (latency) ile tutarlılık (consistency) dengesini",
+    "explanation": "PACELC: Bir bölümlenme (P) anında A veya C seçilir; aksi durumda (Else) ise Gecikme (L) ile Tutarlılık (C) arasında seçim yapılır.",
+    "explanationKu": "PACELC dibêje: Heke Partition hebe Availability an Consistency (PA/PC); Elsewhere (wekî din) Latency an Consistency (EL/EC).",
+    "explanationTr": "PACELC: Bir bölümlenme (P) anında A veya C seçilir; aksi durumda (Else) ise Gecikme (L) ile Tutarlılık (C) arasında seçim yapılır."
+  },
+  {
+    "id": "ds_teknoloji_0309",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Cudahiya herî girîng a demjimêrên vektorî (Vector Clocks) li gorî demjimêrên Lamport çi ye?",
+    "promptTr": "Vektör saatlerinin (Vector Clocks) Lamport mantıksal saatlerine kıyasla en kritik fonksiyonel farkı nedir?",
+    "answers": [
+      "Bikaranîna sîstema GPS ji bo hevdengkirina dema rastîn a li ser erdê",
+      "Pêwîstnebûna şandina tu zanyariyan di navbera girêkên torê yên sîstemê de",
+      "Kêmkirina qebareya peyaman bi awayekî ku tenê yek bît agahî bişîne",
+      "Kapasîteya naskirina bûyerên ku bi awayekî hemdem (concurrent) qewimîne"
+    ],
+    "answersTr": [
+      "Yeryüzündeki atomik saatler ile GPS üzerinden nanosaniyelik mutlak zaman senkronu kurması",
+      "Dağıtık sistemdeki düğümler arasında hiçbir durum veya sayaç bilgisi iletmeme zorunluluğu",
+      "Mesaj başlıklarının boyutunu her zaman tek bir bite düşürerek bant genişliğini koruması",
+      "Birbirine nedensel bağı olmayan eşzamanlı (concurrent) olayları tespit edebilmesi"
+    ],
+    "correctAnswer": "Kapasîteya naskirina bûyerên ku bi awayekî hemdem (concurrent) qewimîne",
+    "correctAnswerTr": "Birbirine nedensel bağı olmayan eşzamanlı (concurrent) olayları tespit edebilmesi",
+    "explanation": "Lamport saatleri iki olayın eşzamanlı mı yoksa nedensel mi olduğunu ayırt edemezken, Vektör saatleri eşzamanlılığı (causal concurrency) tam belirler.",
+    "explanationKu": "Demjimêrên Lamport tenê rêzbûneke qismî ava dikin lê nikarin bêjin du bûyer hemdem in an na; demjimêrên vektorî vê nakokiyê diyar dikin.",
+    "explanationTr": "Lamport saatleri iki olayın eşzamanlı mı yoksa nedensel mi olduğunu ayırt edemezken, Vektör saatleri eşzamanlılığı (causal concurrency) tam belirler."
+  },
+  {
+    "id": "ds_teknoloji_0310",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di bangewaziya sîstemê ya \"fork()\" de mekanîzmaya \"Copy-on-Write\" (CoW) çawa sûdê dide xebata bîrgehê?",
+    "promptTr": "İşletim sistemlerindeki \"fork()\" çağrısında \"Copy-on-Write\" (CoW) mekanizması bellek kullanımını nasıl optimize eder?",
+    "answers": [
+      "Rûpelên bîrgehê tenê dema ku pêvajoyek hewl bide wan biguherîne tên kopîkirin",
+      "Hemû bîrgeha pêvajoya dê di heman kêliyê de bi tevahî ji bo zarok tê kopîkirin",
+      "Pêvajoya nû ji bîrgeha sereke bêpar dihêle û tenê dîskê wekî bîrgeh bi kar tîne",
+      "Destûra guhertina daneyan di pêvajoya zarok de bi awayekî mayînde asteng dike"
+    ],
+    "answersTr": [
+      "Fiziksel bellek sayfalarını yalnızca süreçlerden biri yazma işlemi yaptığında kopyalayarak",
+      "Üst sürecin tüm fiziksel belleğini alt süreç için anında ve eksiksiz olarak çoğaltarak",
+      "Alt süreci ana bellekten tamamen mahrum bırakıp yalnızca ikincil diski kullanmaya zorlayarak",
+      "Alt sürecin bellekteki verilere müdahale etmesini kalıcı izinlerle tamamen engelleyerek"
+    ],
+    "correctAnswer": "Rûpelên bîrgehê tenê dema ku pêvajoyek hewl bide wan biguherîne tên kopîkirin",
+    "correctAnswerTr": "Fiziksel bellek sayfalarını yalnızca süreçlerden biri yazma işlemi yaptığında kopyalayarak",
+    "explanation": "Copy-on-Write sayesinde sayfalar salt-okunur paylaşılır; fiziksel kopyalama sadece süreçlerden biri sayfayı değiştirmeye kalktığında gerçekleşir.",
+    "explanationKu": "CoW nahêle bîrgeh bêhûde were kopîkirin; rûpel wekî \"tenê xwendin\" tên parvekirin heta ku nivîsandinek çêbibe.",
+    "explanationTr": "Copy-on-Write sayesinde sayfalar salt-okunur paylaşılır; fiziksel kopyalama sadece süreçlerden biri sayfayı değiştirmeye kalktığında gerçekleşir."
+  },
+  {
+    "id": "ds_teknoloji_0311",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Çima di bin hejmareke pir zêde ya girêdanan de mekanîzmaya \"epoll\" ji \"select\" an \"poll\" pir bi bandortir e?",
+    "promptTr": "Yüksek bağlantı sayısına sahip sunucularda Linux \"epoll\" mekanizmasının \"select/poll\"a göre üstün olmasının temel nedeni nedir?",
+    "answers": [
+      "Hemû girêdanên torê bêyî kontrolkirina çewtiyan rasterast qebûl dike",
+      "Tenê çalakiyên amade vedigerîne li şûna ku hemû lîsteyê bi O(N) kontrol bike",
+      "Hejmara herî zêde ya girêdanan bi 1024an re sînordar dike ji bo ewlehiyê",
+      "Her girêdanê di nav xelekek cuda ya fîzîkî ya pêvajoyê de bi cih dike"
+    ],
+    "answersTr": [
+      "Ağdan gelen tüm paketleri hiçbir hata kontrolünden geçirmeden doğrudan onaylaması",
+      "Tüm tanımlayıcı listesini O(N) taramak yerine sadece hazır olan olayları O(1) döndürmesi",
+      "Güvenlik gerekçesiyle eşzamanlı soket sayısını sabit 1024 dosya tanımlayıcısı ile sınırlaması",
+      "Her gelen bağlantı için işletim sisteminde bağımsız bir fiziksel işlem kanalı açması"
+    ],
+    "correctAnswer": "Tenê çalakiyên amade vedigerîne li şûna ku hemû lîsteyê bi O(N) kontrol bike",
+    "correctAnswerTr": "Tüm tanımlayıcı listesini O(N) taramak yerine sadece hazır olan olayları O(1) döndürmesi",
+    "explanation": "Select/poll her çağrıda tüm dosya tanıtıcılarını O(N) tararken, epoll kernel içi hazır olay kuyruğu sayesinde O(1) maliyetle döner.",
+    "explanationKu": "Select/poll her carî tevahiya lîsteyê O(N) kontrol dike; epoll bi riya qeydkirina di navikê (kernel) de tenê yên çalak O(1) vedigerîne.",
+    "explanationTr": "Select/poll her çağrıda tüm dosya tanıtıcılarını O(N) tararken, epoll kernel içi hazır olay kuyruğu sayesinde O(1) maliyetle döner."
+  },
+  {
+    "id": "ds_teknoloji_0312",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Cudahiya bingehîn a armancê di navbera \"Two-Phase Locking\" (2PL) û \"Two-Phase Commit\" (2PC) de çi ye?",
+    "promptTr": "\"Two-Phase Locking\" (2PL) ile \"Two-Phase Commit\" (2PC) arasındaki temel amaç ve kapsam farkı nedir?",
+    "answers": [
+      "2PL tenê di tora bêtêl de dixebite, 2PC tenê di bîrgeha RAMê de derbasdar e",
+      "2PL pêvajoya xwendinê şîfre dike, 2PC pêvajoya nivîsandinê jê dibe",
+      "2PL protokoleke nûjen a înternetê ye, 2PC standardeke ewlehiya dîskan e",
+      "2PL ji bo hevgirtina danûstandinên hemdem e, 2PC ji bo pejirandina belavbûyî ye"
+    ],
+    "answersTr": [
+      "2PL yalnızca kablosuz ağlarda çalışır, 2PC ise sadece tek makinenin RAM belleğinde geçerlidir",
+      "2PL veri okuma işlemlerini şifreler, 2PC ise diskteki yazma işlemlerini tamamen siler",
+      "2PL modern bir internet aktarım protokolüdür, 2PC ise fiziksel disk donanım standardıdır",
+      "2PL eşzamanlılık kontrolü ve serileştirme sağlar, 2PC dağıtık mutabakatı ve atomikliği yönetir"
+    ],
+    "correctAnswer": "2PL ji bo hevgirtina danûstandinên hemdem e, 2PC ji bo pejirandina belavbûyî ye",
+    "correctAnswerTr": "2PL eşzamanlılık kontrolü ve serileştirme sağlar, 2PC dağıtık mutabakatı ve atomikliği yönetir",
+    "explanation": "2PL bir veritabanında serileştirilebilirliği (izolasyon) sağlamak için kilitleri yönetir; 2PC ise dağıtık düğümler arasında atomik onay sağlar.",
+    "explanationKu": "2PL rê nade ku danûstandinên li ser heman daneyê li hev bikevin (concurrency); 2PC garantî dike ku di hemû pêşkêşkeran de danûstandin temam bibe (atomicity).",
+    "explanationTr": "2PL bir veritabanında serileştirilebilirliği (izolasyon) sağlamak için kilitleri yönetir; 2PC ise dağıtık düğümler arasında atomik onay sağlar."
+  },
+  {
+    "id": "ds_teknoloji_0313",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Çima krîptografiya çiqilên elîptîk (ECC) li gorî RSA di asta heman ewlehiyê de bêtir tê tercîhkirin?",
+    "promptTr": "Eliptik Eğri Kriptografisinin (ECC) aynı güvenlik seviyesinde RSA'ya kıyasla tercih edilmesinin temel avantajı nedir?",
+    "answers": [
+      "Pêdiviya kontrolkirina îmzeya dîjîtal bi tevahî ji holê radike",
+      "Bi mezinahiya mifteyên pir piçûktir heman asta ewlehiyê pêk tîne",
+      "Tenê bi rêya hejmarên cot dixebite û çewtiyên hesabkirinê tune dike",
+      "Şîfrekirina asîmetrîk vediguherîne şîfrekirina sîmetrîk a hêsan"
+    ],
+    "answersTr": [
+      "Dijital imza doğrulama gereksinimini ve matematiksel kanıt süreçlerini kaldırması",
+      "Çok daha küçük anahtar boyutlarıyla eşdeğer seviyede kriptografik güvenlik sağlaması",
+      "Yalnızca çift sayılarla işlem yaparak donanımsal hesaplama hatalarını sıfırlaması",
+      "Asimetrik şifreleme mekanizmasını tamamen simetrik basit bir yapıya dönüştürmesi"
+    ],
+    "correctAnswer": "Bi mezinahiya mifteyên pir piçûktir heman asta ewlehiyê pêk tîne",
+    "correctAnswerTr": "Çok daha küçük anahtar boyutlarıyla eşdeğer seviyede kriptografik güvenlik sağlaması",
+    "explanation": "ECC 256-bit anahtarla RSA 3072-bit seviyesinde güvenlik sunarak bellek, işlem gücü ve bant genişliği tasarrufu sağlar.",
+    "explanationKu": "Mifteyeke 256-bît a ECC ewlehiya mifteyeke 3072-bît a RSA pêşkêş dike; ev jî hejmartina kêm û kêmkirina qebareya pakêtan peyda dike.",
+    "explanationTr": "ECC 256-bit anahtarla RSA 3072-bit seviyesinde güvenlik sunarak bellek, işlem gücü ve bant genişliği tasarrufu sağlar."
+  },
+  {
+    "id": "ds_teknoloji_0314",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di nivîsandina algorîtmayên krîptografîk de armanca bikaranîna rêbaza \"Constant-Time\" çi ye?",
+    "promptTr": "Kriptografik yazılımlarda \"Constant-Time\" (Sabit Zamanlı) kod yazımının temel güvenlik amacı nedir?",
+    "answers": [
+      "Ji bo rêgirtina li êrîşên kanala alî yên li ser bingeha pîvandina demê",
+      "Ji bo zêdekirina leza hesabkirinê li ser her cûre pêvajoyera kevn",
+      "Ji bo kêmkirina enerjiya ku ji aliyê pîlê cîhazê ve tê xerckirin",
+      "Ji bo hêsankirina xwendina koda çavkaniyê ji aliyê bernameçêkeran ve"
+    ],
+    "answersTr": [
+      "Çalışma süresi farklılıklarından anahtar sızdıran zamanlama saldırılarını (timing attack) önlemek",
+      "Her türlü eski donanım ve işlemci üzerinde matematiksel hesaplama hızını artırmak",
+      "Cihazın bataryası tarafından harcanan toplam elektrik enerjisini minimize etmek",
+      "Kaynak kodun diğer geliştiriciler tarafından okunmasını ve hata ayıklanmasını kolaylaştırmak"
+    ],
+    "correctAnswer": "Ji bo rêgirtina li êrîşên kanala alî yên li ser bingeha pîvandina demê",
+    "correctAnswerTr": "Çalışma süresi farklılıklarından anahtar sızdıran zamanlama saldırılarını (timing attack) önlemek",
+    "explanation": "Zamanlama analizinde (Timing Attack) şifre çözme süresindeki mikrosaniyelik farklardan gizli anahtar çıkarılmasını engellemek için kod sabit sürede çalışmalıdır.",
+    "explanationKu": "Heke dema hesabkirinê li gorî mifteya veşartî biguhere, êrîşkar bi pîvandina dema bersivê dikare mifteyê derxe.",
+    "explanationTr": "Zamanlama analizinde (Timing Attack) şifre çözme süresindeki mikrosaniyelik farklardan gizli anahtar çıkarılmasını engellemek için kod sabit sürede çalışmalıdır."
+  },
+  {
+    "id": "ds_teknoloji_0315",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di mekanîzmaya baldarîyê ya Transformeran de (Self-Attention), aloziya hejmartinê li gorî dirêjahiya rêzê (N) çawa zêde dibe?",
+    "promptTr": "Transformer mimarisindeki standart Öz-Dikkat (Self-Attention) mekanizmasının hesaplama karmaşıklığı dizi uzunluğuna (N) göre nasıl ölçeklenir?",
+    "answers": [
+      "Bi awayekî xêzî O(N) dimîne bêyî ku girêdayî hejmara nîşanan be",
+      "Bi awayekî çargoşeyî O(N^2) zêde dibe ji ber berhevdana her nîşanekê bi yên din re",
+      "Bi awayekî logarîtmîk O(log N) kêm dibe dema ku rêz dirêjtir dibe",
+      "Bi awayekî sabît O(1) dimîne ji ber ku bîrgeha GPU rasterast tê parvekirin"
+    ],
+    "answersTr": [
+      "Belirteç sayısından bağımsız olarak doğrusal O(N) seviyesinde sabit kalır",
+      "Her belirtecin diğer tüm belirteçlerle eşleşmesi sebebiyle karesel O(N^2) olarak artar",
+      "Dizi uzadıkça dikkat matrisi logaritmik O(log N) ölçeğinde küçülerek hızlanır",
+      "GPU paralel çekirdekleri sayesinde girdi boyutundan bağımsız O(1) sabit kalır"
+    ],
+    "correctAnswer": "Bi awayekî çargoşeyî O(N^2) zêde dibe ji ber berhevdana her nîşanekê bi yên din re",
+    "correctAnswerTr": "Her belirtecin diğer tüm belirteçlerle eşleşmesi sebebiyle karesel O(N^2) olarak artar",
+    "explanation": "Self-attention matris çarpımında (Q x K^T) N uzunluğundaki dizinin her elemanı diğeriyle karşılaştırıldığı için karmaşıklık O(N^2) olur.",
+    "explanationKu": "Di mekanîzmaya QK^T de her nîşan (token) bi hemû nîşanên din re tê berhevdan, lewma hejmara operasyonan O(N^2) ye.",
+    "explanationTr": "Self-attention matris çarpımında (Q x K^T) N uzunluğundaki dizinin her elemanı diğeriyle karşılaştırıldığı için karmaşıklık O(N^2) olur."
+  },
+  {
+    "id": "ds_teknoloji_0316",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di hilberandina modelên ziman ên mezin (LLM) de feydeya sereke ya binesaziya \"KV-Cache\" çi ye?",
+    "promptTr": "Büyük Dil Modellerinde (LLM) metin üretimi (inference) sırasında \"KV-Cache\" kullanılmasının temel amacı nedir?",
+    "answers": [
+      "Ji bo kêmkirina hejmara parametreyên giştî yên modela ziman",
+      "Ji bo guhertina giraniyên modelê di dema bersivdana bikarhêner de",
+      "Ji bo jêbirina nîşanên nehewce ji nav bîrgeha lezgîn a grafîkê",
+      "Ji bo nehesibandina dubare ya vektorên Key û Value yên nîşanên berê"
+    ],
+    "answersTr": [
+      "Dil modelinin diskte kapladığı toplam ağırlık ve parametre sayısını kalıcı azaltmak",
+      "Kullanıcıya yanıt üretildiği anda modelin temel ağırlıklarını dinamik güncellemek",
+      "Gereksiz görülen belirteçleri grafik kartı belleğinden çalışma anında silmek",
+      "Önceki belirteçlere ait Key ve Value tensörlerinin her adımda yeniden hesaplanmasını önlemek"
+    ],
+    "correctAnswer": "Ji bo nehesibandina dubare ya vektorên Key û Value yên nîşanên berê",
+    "correctAnswerTr": "Önceki belirteçlere ait Key ve Value tensörlerinin her adımda yeniden hesaplanmasını önlemek",
+    "explanation": "KV-Cache önceki tokenların Key/Value vektörlerini GPU belleğinde saklayarak her yeni token üretiminde tüm bağlamı baştan hesaplama yükünü ortadan kaldırır.",
+    "explanationKu": "KV-Cache vektorên berê di bîrgehê de digire; di her gava nû de tenê hesabê nîşana dawî tê kirin û lez zêde dibe.",
+    "explanationTr": "KV-Cache önceki tokenların Key/Value vektörlerini GPU belleğinde saklayarak her yeni token üretiminde tüm bağlamı baştan hesaplama yükünü ortadan kaldırır."
+  },
+  {
+    "id": "ds_teknoloji_0317",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Ji bo çareserkirina rewşa asêbûnê (Deadlock), rêbaza şikandina şerta \"Circular Wait\" xwe dispêre çi?",
+    "promptTr": "İşletim sistemlerinde kilitlenme (Deadlock) durumunu önlemek için \"Dairesel Bekleme\" (Circular Wait) şartı nasıl kırılır?",
+    "answers": [
+      "Bi qedexekirina bikaranîna zêdetirî yek pêvajoyê di tevahiya sîstemê de",
+      "Bi diyarkirina rêzikeke sabît a jimareyî ji bo bidestxistina hemû çavkaniyan",
+      "Bi rakirina hemû kilîtên ewlehiyê ji ser çavkaniyên parvekirî yên sîstemê",
+      "Bi zêdekirina leza saeta pêvajoyera navendî ya li ser dayikwerîkê"
+    ],
+    "answersTr": [
+      "Sistem genelinde aynı anda birden fazla sürecin çalışmasını tamamen yasaklayarak",
+      "Tüm sistem kaynaklarına hiyerarşik bir sıra numarası verip kilitleri bu sırayla talep ederek",
+      "Paylaşılan tüm kaynaklar üzerindeki karşılıklı dışlama ve kilitleri tamamen kaldırarak",
+      "İşlemcinin saat frekansını artırarak kilitlenme analizinin daha hızlı bitmesini sağlayarak"
+    ],
+    "correctAnswer": "Bi diyarkirina rêzikeke sabît a jimareyî ji bo bidestxistina hemû çavkaniyan",
+    "correctAnswerTr": "Tüm sistem kaynaklarına hiyerarşik bir sıra numarası verip kilitleri bu sırayla talep ederek",
+    "explanation": "Kaynaklara küresel bir sıra numarası atanıp kilitlerin sadece artan sırayla talep edilmesi zorunlu tutulursa dairesel bekleme döngüsü oluşamaz.",
+    "explanationKu": "Heke hemû pêvajo çavkaniyan bi heman rêzika hiyerarşîk bixwazin, çerxa daxwazan nayê avakirin û deadlock çênabe.",
+    "explanationTr": "Kaynaklara küresel bir sıra numarası atanıp kilitlerin sadece artan sırayla talep edilmesi zorunlu tutulursa dairesel bekleme döngüsü oluşamaz."
+  },
+  {
+    "id": "ds_teknoloji_0318",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Dema ku di bîrgeha lezgîn a wergerandina navnîşanan de (TLB) rûpel neyê dîtin (TLB miss), mekanîzmaya MMU çi dike?",
+    "promptTr": "Sanal bellek yönetiminde TLB ıskalaması (TLB miss) meydana geldiğinde MMU donanımı adresi çözmek için ne yapar?",
+    "answers": [
+      "Di tabloyên rûpelan (Page Tables) ên di bîrgehê de digere da ku navnîşana fîzîkî bibîne",
+      "Pêvajoyê di cih de diqedîne û peyameke şaşiyê dişîne bo pergala xebitandinê",
+      "Hemû daneyên bîrgeha fîzîkî li ser dîskê dinivîse û pêvajoyê ji nû ve dest pê dike",
+      "Navnîşana bîrgehê ya daxwazkirî bêyî kontrolkirinê wekî navnîşana fîzîkî dipejirîne"
+    ],
+    "answersTr": [
+      "Ana bellekteki sayfa tablolarında hiyerarşik tarama (Page Table Walk) yaparak fiziksel adresi bulur",
+      "İlgili süreci anında sonlandırıp işletim sistemine ölümcül bellek ihlali hatası fırlatır",
+      "Fiziksel belleğin tüm içeriğini takas alanına yazıp süreci sıfırdan yeniden başlatır",
+      "Talep edilen sanal bellek adresini doğrulamadan doğrudan fiziksel adres kabul eder"
+    ],
+    "correctAnswer": "Di tabloyên rûpelan (Page Tables) ên di bîrgehê de digere da ku navnîşana fîzîkî bibîne",
+    "correctAnswerTr": "Ana bellekteki sayfa tablolarında hiyerarşik tarama (Page Table Walk) yaparak fiziksel adresi bulur",
+    "explanation": "TLB ıskalandığında MMU donanımı bellek tablosunu hiyerarşik olarak tarar (Page Table Walk), adresi TLB'ye yazar ve komutu yineler.",
+    "explanationKu": "Dema TLB miss çêbibe, donavêja MMU bi riya \"Page Table Walk\" navnîşana fîzîkî dibîne û TLBê nû dike.",
+    "explanationTr": "TLB ıskalandığında MMU donanımı bellek tablosunu hiyerarşik olarak tarar (Page Table Walk), adresi TLB'ye yazar ve komutu yineler."
+  },
+  {
+    "id": "ds_teknoloji_0319",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Armanca sereke ya protokola DNSSEC di sîstema navên domênan de çi ye?",
+    "promptTr": "Alan adı sisteminde DNSSEC protokolünün sağladığı temel güvenlik garantisi nedir?",
+    "answers": [
+      "Şîfrekirina tevahiya naveroka malperan ji bo nehêştina dîtina bikarhêneran",
+      "Pejirandina orjînalbûn û yekparçeyiya bersivên DNS bi riya îmzeyên dîjîtal",
+      "Zêdekirina leza bersivdana pêşkêşkeran bi riya rakirina qeydên nehewce",
+      "Astengkirina bikaranîna navnîşanên IPv6 di navbera klîent û serveran de"
+    ],
+    "answersTr": [
+      "Web sitelerinin tüm içeriğini şifreleyerek üçüncü tarafların görmesini engellemek",
+      "DNS yanıtlarının kaynağını ve veri bütünlüğünü kriptografik dijital imzalarla doğrulamak",
+      "Gereksiz DNS kayıtlarını silerek sunucuların sorgu yanıtlama hızını artırmak",
+      "İstemci ile sunucu arasındaki tüm IPv6 adres yönlendirmelerini kısıtlamak"
+    ],
+    "correctAnswer": "Pejirandina orjînalbûn û yekparçeyiya bersivên DNS bi riya îmzeyên dîjîtal",
+    "correctAnswerTr": "DNS yanıtlarının kaynağını ve veri bütünlüğünü kriptografik dijital imzalarla doğrulamak",
+    "explanation": "DNSSEC, DNS yanıtlarını dijital olarak imzalayarak DNS önbellek zehirlemesi (Cache Poisoning) ve sahte yönlendirmeleri engeller.",
+    "explanationKu": "DNSSEC bi îmzeyên krîptografîk rê li ber xapandina DNSê (DNS Spoofing / Cache Poisoning) digire.",
+    "explanationTr": "DNSSEC, DNS yanıtlarını dijital olarak imzalayarak DNS önbellek zehirlemesi (Cache Poisoning) ve sahte yönlendirmeleri engeller."
+  },
+  {
+    "id": "ds_teknoloji_0320",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Cudahiya bingehîn a kontrola qerebalixiyê ya BBR ji algorîtmayên kevneşopî yên wekî CUBIC çi ye?",
+    "promptTr": "Google tarafından geliştirilen BBR tıkanıklık kontrol algoritmasının CUBIC gibi geleneksel algoritmalardan temel farkı nedir?",
+    "answers": [
+      "Her carî qebareya pencereyê nîvî kêm dike gava ku daneyek bi serkeftî biçe",
+      "Tenê di torên ku leza wan di bin 1 Mbps de ye bi awayekî çalak dixebite",
+      "Li şûna windabûna pakêtan, leza herî zêde û dema derengmayînê ya herî kêm dipîve",
+      "Pêdiviya pejirandina pakêtên ACK di protokola TCP de bi temamî radike"
+    ],
+    "answersTr": [
+      "Her başarılı paket iletiminde tıkanıklık penceresi boyutunu otomatik olarak yarıya indirmesi",
+      "Yalnızca hızı 1 Mbps altında olan son derece yavaş ağlarda çalışacak şekilde tasarlanmış olması",
+      "Paket kaybına odaklanmak yerine darboğaz bant genişliği ve minimum RTT süresini modellemesi",
+      "TCP protokolündeki paket alındı (ACK) onay mekanizmasını tamamen devre dışı bırakması"
+    ],
+    "correctAnswer": "Li şûna windabûna pakêtan, leza herî zêde û dema derengmayînê ya herî kêm dipîve",
+    "correctAnswerTr": "Paket kaybına odaklanmak yerine darboğaz bant genişliği ve minimum RTT süresini modellemesi",
+    "explanation": "CUBIC paket kaybını tıkanıklık sanıp pencereyi daraltırken, BBR gerçek darboğaz kapasitesini (BtlBw) ve minimum RTT'yi sürekli ölçer.",
+    "explanationKu": "Algorîtmayên kevn windabûna pakêtê wekî qerebalixî dihesibandin; BBR asta herî baş a tora fîzîkî (Bottleneck Bandwidth û RTT) dipîve.",
+    "explanationTr": "CUBIC paket kaybını tıkanıklık sanıp pencereyi daraltırken, BBR gerçek darboğaz kapasitesini (BtlBw) ve minimum RTT'yi sürekli ölçer."
+  },
+  {
+    "id": "ds_teknoloji_0321",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di motorên databasê de qeydkirina \"Write-Ahead Logging\" (WAL) çawa mayîndebûna (Durability) daneyan misoger dike?",
+    "promptTr": "Veritabanı motorlarında \"Write-Ahead Logging\" (WAL) mekanizması verilerin kalıcılığını (Durability) nasıl garanti altına alır?",
+    "answers": [
+      "Guhertinan berî ku li ser rûpelên sereke yên dîskê binivîse, di pelekî rêzbar de tomar dike",
+      "Hemû daneyan berî nivîsandinê di bîrgeha lezgîn a navenda pêvajoyê de jê dibe",
+      "Pêvajoya nivîsandinê tenê di dema girtina databasê de carekê pêk tîne",
+      "Destûra vegerandina şaşiyan nade û di rewşa têkçûnê de hemû daneyan jê dibe"
+    ],
+    "answersTr": [
+      "Değişiklikleri ana veri sayfalarına yazmadan önce diske ardışık bir log dosyasına kaydederek",
+      "Yazma işlemi başlamadan önce tüm verileri işlemci önbelleğinden tamamen temizleyerek",
+      "Diske yazma operasyonunu yalnızca veritabanı kapatıldığı anda topluca gerçekleştirerek",
+      "Hata kurtarma mekanizmalarını devre dışı bırakıp çökme anında veritabanını sıfırlayarak"
+    ],
+    "correctAnswer": "Guhertinan berî ku li ser rûpelên sereke yên dîskê binivîse, di pelekî rêzbar de tomar dike",
+    "correctAnswerTr": "Değişiklikleri ana veri sayfalarına yazmadan önce diske ardışık bir log dosyasına kaydederek",
+    "explanation": "WAL, transaction onaylanmadan önce değişiklik kaydını ardışık loga yazıp diske boşaltır (fsync); çökme anında veri kaybı önlenir.",
+    "explanationKu": "WAL misoger dike ku heke elektrîk qut bibe jî, daneyên pejirandî ji pelê logê dikarin bên vegerandin berî ku rûpelên sereke bên nûkirin.",
+    "explanationTr": "WAL, transaction onaylanmadan önce değişiklik kaydını ardışık loga yazıp diske boşaltır (fsync); çökme anında veri kaybı önlenir."
+  },
+  {
+    "id": "ds_teknoloji_0322",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di pêvajoyera ku fermanan li derveyî rêzê dimeşîne (Out-of-Order Execution), rola \"Reorder Buffer\" (ROB) çi ye?",
+    "promptTr": "Sırasız komut yürüten (Out-of-Order) işlemcilerde \"Reorder Buffer\" (ROB) biriminin temel görevi nedir?",
+    "answers": [
+      "Hemû fermanên şaş ji nav bîrgeha pêvajoyê derdixe bêyî agahdarkirina pergalê",
+      "Leza frekansa navendên pêvajoyê li gorî germahiya sîstemê saz dike",
+      "Fermanên ku li derveyî rêzê hatine temamkirin, li gorî rêza orjînal bi dawî dike",
+      "Fermanên matematîkî vediguherîne fermanên xwendin û nivîsandina bîrgehê"
+    ],
+    "answersTr": [
+      "Hatalı dallanma tahminlerini tespit edip donanım saat frekansını anında düşürmek",
+      "İşlemci çekirdeklerinin frekansını sistem sıcaklığına göre dinamik olarak ayarlamak",
+      "Sırasız tamamlanan komutların durumunu orijinal program sırasına göre kesinleştirmek (in-order commit)",
+      "Aritmetik mantık komutlarını doğrudan bellek okuma ve yazma işlemlerine dönüştürmek"
+    ],
+    "correctAnswer": "Fermanên ku li derveyî rêzê hatine temamkirin, li gorî rêza orjînal bi dawî dike",
+    "correctAnswerTr": "Sırasız tamamlanan komutların durumunu orijinal program sırasına göre kesinleştirmek (in-order commit)",
+    "explanation": "ROB, komutlar spekülatif veya sırasız tamamlansa bile programın mantıksal durumunu orijinal sıralamayla kaydeder (in-order retire).",
+    "explanationKu": "ROB garantî dike ku tevî ku ferman bi awayekî serbixwe û zû bên hesabkirin jî, encamên wan li gorî rêza orjînal tên pejirandin.",
+    "explanationTr": "ROB, komutlar spekülatif veya sırasız tamamlansa bile programın mantıksal durumunu orijinal sıralamayla kaydeder (in-order retire)."
+  },
+  {
+    "id": "ds_teknoloji_0323",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Struktura daneyan a \"Bloom Filter\" kîjan encama teqez ji bo hebûna hêmanekê garantî dike?",
+    "promptTr": "\"Bloom Filter\" veri yapısı bir elemanın kümede varlığı konusunda hangi kesin matematiksel garantiyi verir?",
+    "answers": [
+      "Heke bêje \"heye\" teqez heye; lê heke bêje \"tune ye\" teqez şaşiyek heye",
+      "Heke bêje \"tune ye\" teqez tune ye; lê heke bêje \"heye\" dibe ku şaşiyek hebe",
+      "Hem ji bo hebûnê hem ji bo nebûnê her tim encamên sedî sed rast dide",
+      "Tenê dikare hejmara giştî ya hêmanan bêyî kontrolkirina wan nîşan bide"
+    ],
+    "answersTr": [
+      "Eleman için \"var\" diyorsa kesinlikle vardır; \"yok\" diyorsa kesinlikle yanlış negatif içerir",
+      "Eleman için \"yok\" diyorsa kesinlikle yoktur; \"var\" diyorsa yanlış pozitif (false positive) olabilir",
+      "Hem varlık hem yokluk sorgularında her zaman yüzde yüz kesin ve hatasız sonuç üretir",
+      "Elemanların varlığını denetleyemez, sadece kümedeki toplam eleman sayısını sayar"
+    ],
+    "correctAnswer": "Heke bêje \"tune ye\" teqez tune ye; lê heke bêje \"heye\" dibe ku şaşiyek hebe",
+    "correctAnswerTr": "Eleman için \"yok\" diyorsa kesinlikle yoktur; \"var\" diyorsa yanlış pozitif (false positive) olabilir",
+    "explanation": "Bloom Filter sıfır False Negative garantisi verir: \"Yok\" diyorsa kesinlikle yoktur; ancak hash çakışması sebebiyle \"Var\" yanıtında False Positive olabilir.",
+    "explanationKu": "Bloom Filter tu carî \"False Negative\" nade; heke bersiv neyînî be ew hêman teqez di komê de nîne.",
+    "explanationTr": "Bloom Filter sıfır False Negative garantisi verir: \"Yok\" diyorsa kesinlikle yoktur; ancak hash çakışması sebebiyle \"Var\" yanıtında False Positive olabilir."
+  },
+  {
+    "id": "ds_teknoloji_0324",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Gava ku protokola pevguhertina mifteyan a Diffie-Hellman bêyî pejirandina nasnameyê were bikaranîn, rastî kîjan êrîşê tê?",
+    "promptTr": "Kimlik doğrulama mekanizması olmadan kullanılan Diffie-Hellman anahtar değişimi hangi temel saldırıya karşı tamamen savunmasızdır?",
+    "answers": [
+      "Êrîşa dagirtina bîrgeha lezgîn bi riya fermanên dubare",
+      "Êrîşa şikandina fîzîkî ya çîpên şîfrekirinê yên li ser amûrê",
+      "Êrîşa kesê di navberê de (Man-in-the-Middle Attack)",
+      "Êrîşa guhertina navnîşana MAC a amûra wergir di torê de"
+    ],
+    "answersTr": [
+      "Aşırı önbellek doldurma ve bellek tüketme saldırısına",
+      "Cihaz üzerindeki donanımsal kripto çiplerini kırma saldırısına",
+      "Araya girme saldırısına (Man-in-the-Middle Attack)",
+      "Yerel ağdaki alıcı cihazın MAC adresini taklit etme saldırısına"
+    ],
+    "correctAnswer": "Êrîşa kesê di navberê de (Man-in-the-Middle Attack)",
+    "correctAnswerTr": "Araya girme saldırısına (Man-in-the-Middle Attack)",
+    "explanation": "Diffie-Hellman kimlik doğrulaması içermediği için araya giren saldırgan her iki tarafla ayrı anahtar oluşturup trafiği çözebilir (MitM).",
+    "explanationKu": "Diffie-Hellman tenê mifteyê çêdike lê nasnameyê piştrast nake; êrîşkar dikare di navberê de du mifteyên cuda saz bike.",
+    "explanationTr": "Diffie-Hellman kimlik doğrulaması içermediği için araya giren saldırgan her iki tarafla ayrı anahtar oluşturup trafiği çözebilir (MitM)."
+  },
+  {
+    "id": "ds_teknoloji_0325",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Cudahiya sereke ya di navbera êrîşên XSS û CSRF de di qada ewlehiya sepanên webê de çi ye?",
+    "promptTr": "Web güvenliğinde XSS (Cross-Site Scripting) ile CSRF (Cross-Site Request Forgery) saldırıları arasındaki temel fark nedir?",
+    "answers": [
+      "XSS koda xerab di gerokê de dimeşîne, CSRF baweriya gerokê ya bi malperê bi kar tîne",
+      "XSS tenê li ser serverê dixebite, CSRF tenê li ser amûrên mobîl bandor dike",
+      "XSS ji bo şikandina şîfreyan e, CSRF ji bo rawestandina fîzîkî ya pêşkêşker e",
+      "XSS protokoleke nû ya ewlehiyê ye, CSRF mekanîzmayeke şîfrekirina daneyan e"
+    ],
+    "answersTr": [
+      "XSS kurbanın tarayıcısında zararlı JS çalıştırır, CSRF ise kullanıcının oturum haklarını yetkisiz istekte kullanır",
+      "XSS yalnızca sunucu tarafında çalışır, CSRF ise sadece mobil cihazlarda veri hırsızlığı yapar",
+      "XSS doğrudan veritabanı şifresini kırar, CSRF ise fiziksel sunucunun enerjisini kesmeye yöneliktir",
+      "XSS modern bir kimlik doğrulama protokolüdür, CSRF ise açık anahtarlı şifreleme algoritmasıdır"
+    ],
+    "correctAnswer": "XSS koda xerab di gerokê de dimeşîne, CSRF baweriya gerokê ya bi malperê bi kar tîne",
+    "correctAnswerTr": "XSS kurbanın tarayıcısında zararlı JS çalıştırır, CSRF ise kullanıcının oturum haklarını yetkisiz istekte kullanır",
+    "explanation": "XSS kullanıcının tarayıcısında kod çalıştırmayı hedefler; CSRF ise kullanıcının tarayıcısındaki aktif oturumu kullanarak sahte istek göndertir.",
+    "explanationKu": "Di XSS de koda êrîşkar di nav geroka bikarhêner de tê meşandin; di CSRF de daxwazeke nexwestî bi riya destûrên heyî yên bikarhêner tê şandin.",
+    "explanationTr": "XSS kullanıcının tarayıcısında kod çalıştırmayı hedefler; CSRF ise kullanıcının tarayıcısındaki aktif oturumu kullanarak sahte istek göndertir."
+  },
+  {
+    "id": "ds_teknoloji_0326",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Feydeya sereke ya berhevkirina JIT (Just-In-Time) li gorî berhevkirina AOT (Ahead-Of-Time) çi ye?",
+    "promptTr": "JIT (Just-In-Time) derleyicilerin AOT (Ahead-Of-Time) derleyicilere kıyasla sağladığı en büyük optimizasyon avantajı nedir?",
+    "answers": [
+      "Qet hewcenekirina bîrgeha RAMê di dema meşandina bernameyê de",
+      "Destpêkirina bernameyê her tim ji hemû bernameyên din zûtir dike",
+      "Bikaranîna agahiyên profîla dema xebatê ji bo çêtirkirina koda makîneyê",
+      "Rakirina pêdiviya hemû pêvajoyên kontrolkirina tîpên guherbaran"
+    ],
+    "answersTr": [
+      "Program çalışırken hiçbir şekilde RAM ve geçici bellek alanı kullanmaması",
+      "Tüm uygulamalarda ilk açılış ve başlama süresini AOT derlemeye göre daha hızlı kılması",
+      "Çalışma zamanı profil verilerini (PGO) kullanarak koda özel dinamik optimizasyon yapabilmesi",
+      "Değişken türlerini ve bellek güvenliği denetimlerini tamamen devre dışı bırakması"
+    ],
+    "correctAnswer": "Bikaranîna agahiyên profîla dema xebatê ji bo çêtirkirina koda makîneyê",
+    "correctAnswerTr": "Çalışma zamanı profil verilerini (PGO) kullanarak koda özel dinamik optimizasyon yapabilmesi",
+    "explanation": "JIT çalışma anında sık çalışan kod bloklarını (hot spots) ve gerçek veri tiplerini izleyerek CPU'ya özel mikro-optimizasyonlar uygular.",
+    "explanationKu": "JIT di dema xebatê de dibîne ka kîjan beşên kodê germ in (hot spots) û wan rasterast li gorî rewşa heyî ya pêvajoyê çêtir dike.",
+    "explanationTr": "JIT çalışma anında sık çalışan kod bloklarını (hot spots) ve gerçek veri tiplerini izleyerek CPU'ya özel mikro-optimizasyonlar uygular."
+  },
+  {
+    "id": "ds_teknoloji_0327",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Sedema sereke ya çêbûna diyardeya \"Write Amplification\" di dîskên SSD de çi ye?",
+    "promptTr": "SSD disklerde görülen \"Write Amplification\" (Yazma Büyütmesi) olgusunun temel donanımsal sebebi nedir?",
+    "answers": [
+      "Bikaranîna bîrgeha lezgîn a navendî li şûna çîpên bîrgeha flash a mayînde",
+      "Daneyên di asta rûpelan de tên nivîsandin lê di asta blokan de tên paqijkirin",
+      "Qedexekirina nivîsandina zêdetirî yek pelekî di heman deqîqeyê de",
+      "Kêmkirina leza ragihandina kabloya SATA di dema veguhastina pelan de"
+    ],
+    "answersTr": [
+      "Kalıcı NAND flash yongaları yerine yalnızca geçici uçucu belleklerin kullanılması",
+      "Verilerin sayfa (page) düzeyinde yazılmasına karşın ancak blok (block) düzeyinde silinebilmesi",
+      "Diske aynı dakika içinde birden fazla dosya yazılmasının donanımsal engellenmesi",
+      "Büyük dosya transferleri sırasında SATA/NVMe arayüzünün veri hızını sınırlaması"
+    ],
+    "correctAnswer": "Daneyên di asta rûpelan de tên nivîsandin lê di asta blokan de tên paqijkirin",
+    "correctAnswerTr": "Verilerin sayfa (page) düzeyinde yazılmasına karşın ancak blok (block) düzeyinde silinebilmesi",
+    "explanation": "NAND flash bellekte yazma işlemi sayfa bazında yapılırken silme işlemi blok bazında yapılır; bu durum çöp toplama sırasında ekstra yazmaya yol açar.",
+    "explanationKu": "NAND flash nikare rasterast li ser rûpelekî binivîse berî ku bloka wî paqij bike; ev jî dibe sedema xwendin û ji nû ve nivîsandina daneyan.",
+    "explanationTr": "NAND flash bellekte yazma işlemi sayfa bazında yapılırken silme işlemi blok bazında yapılır; bu durum çöp toplama sırasında ekstra yazmaya yol açar."
+  },
+  {
+    "id": "ds_teknoloji_0328",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di pêvajoyera pîplînê de (Pipelining), rêbaza \"Operand Forwarding\" kîjan pirsgirêkê çareser dike?",
+    "promptTr": "İşlemci boru hattında (Pipelining) \"Operand Forwarding\" (Bypass) tekniği hangi donanımsal tehlikeyi (hazard) çözer?",
+    "answers": [
+      "Xetereya binesaziyê ya ji ber nebûna yekîneya hesabkirina matematîkî",
+      "Zêdebûna germahiya navenda pêvajoyê di dema lîstina lîstikên giran de",
+      "Sekinîna ji ber xetereya daneyan (Data Hazard) bi şandina rasterast a encamê",
+      "Rakirina pêdiviya bîrgeha lezgîn a asta duyem (L2 Cache) ji ser çîpê"
+    ],
+    "answersTr": [
+      "İşlemcide yeterli aritmetik mantık birimi bulunmamasından kaynaklanan yapısal donanım tehlikesini",
+      "Ağır grafiksel işlem yükü altında çekirdek sıcaklığının aniden yükselmesi tehlikesini",
+      "Hesaplanan sonucu yazma aşamasını beklemeden doğrudan bir sonraki komuta aktararak Data Hazard sorununu",
+      "İkinci seviye L2 önbellek gereksinimini mikroişlemci mimarisinden tamamen kaldırma sorununu"
+    ],
+    "correctAnswer": "Sekinîna ji ber xetereya daneyan (Data Hazard) bi şandina rasterast a encamê",
+    "correctAnswerTr": "Hesaplanan sonucu yazma aşamasını beklemeden doğrudan bir sonraki komuta aktararak Data Hazard sorununu",
+    "explanation": "Operand Forwarding, ALU çıktısını register'a yazılmasını beklemeden bir sonraki komutun girişine besleyerek RAW (Read-After-Write) gecikmesini önler.",
+    "explanationKu": "Forwarding nahêle ku fermanek li benda qonaxa Write-Back bimîne; encam ji derketina ALU rasterast diçe fermana duyem.",
+    "explanationTr": "Operand Forwarding, ALU çıktısını register'a yazılmasını beklemeden bir sonraki komutun girişine besleyerek RAW (Read-After-Write) gecikmesini önler."
+  },
+  {
+    "id": "ds_teknoloji_0329",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di binesaziya konteyneran a Linuxê de rola \"cgroups\" û \"namespaces\" çawa ji hev vediqete?",
+    "promptTr": "Linux konteyner altyapısında \"cgroups\" ile \"namespaces\" arasındaki işlevsel fark nedir?",
+    "answers": [
+      "cgroups sînorê çavkaniyan saz dike, namespaces dîmen û dîtina sîstemê veqetîne",
+      "cgroups ji bo şîfrekirinê ye, namespaces ji bo parastina agirbesta torê ye",
+      "cgroups pergala pelan ava dike, namespaces leza pêvajoyera sereke kontrol dike",
+      "cgroups tenê di asta bikarhêner de ye, namespaces tenê di asta BIOSê de dixebite"
+    ],
+    "answersTr": [
+      "cgroups kaynak kullanımını sınırlar, namespaces ise süreçlerin sistem kaynaklarına dair görünümünü izole eder",
+      "cgroups dosya şifrelemesini yönetir, namespaces ise ağ güvenlik duvarı kurallarını denetler",
+      "cgroups disk dosya sistemini biçimlendirir, namespaces ise merkezi işlemci saat hızını düzenler",
+      "cgroups kullanıcı arayüzü düzeyinde çalışır, namespaces ise yalnızca donanım BIOS katmanında geçerlidir"
+    ],
+    "correctAnswer": "cgroups sînorê çavkaniyan saz dike, namespaces dîmen û dîtina sîstemê veqetîne",
+    "correctAnswerTr": "cgroups kaynak kullanımını sınırlar, namespaces ise süreçlerin sistem kaynaklarına dair görünümünü izole eder",
+    "explanation": "Namespaces süreçlerin PID, ağ ve mount noktası gibi sistem bileşenlerini izole görmesini sağlar; cgroups ise CPU, RAM ve I/O tüketimini sınırlar.",
+    "explanationKu": "Namespaces veqetandina çavkaniyan (PID, NET, MNT) peyda dike; cgroups jî mîqdara CPU, RAM û I/O sînordar dike.",
+    "explanationTr": "Namespaces süreçlerin PID, ağ ve mount noktası gibi sistem bileşenlerini izole görmesini sağlar; cgroups ise CPU, RAM ve I/O tüketimini sınırlar."
+  },
+  {
+    "id": "ds_teknoloji_0330",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Sê taybetmendiyên bingehîn ên matematîkî yên delîlên zanîna sifir (Zero-Knowledge Proofs) çi ne?",
+    "promptTr": "Sıfır Bilgi İspatlarının (Zero-Knowledge Proofs) sağlaması gereken üç temel matematiksel aksiyom nedir?",
+    "answers": [
+      "Lezbûnî (Velocity), Berfirehî (Volume) û Rastbûnî (Veracity)",
+      "Tamî (Completeness), Durustî (Soundness) û Zanîna Sifir (Zero-Knowledge)",
+      "Nepenyarî (Confidentiality), Yekparçeyî (Integrity) û Destpêrî (Availability)",
+      "Atomîkî (Atomicity), Hevgirtin (Consistency) û Mayîndebûn (Durability)"
+    ],
+    "answersTr": [
+      "Hız (Velocity), Hacim (Volume) ve Veri Doğruluğu (Veracity)",
+      "Eksiksizlik (Completeness), Sağlamlık (Soundness) ve Sıfır Bilgi (Zero-Knowledge)",
+      "Gizlilik (Confidentiality), Bütünlük (Integrity) ve Erişilebilirlik (Availability)",
+      "Bölünemezlik (Atomicity), Tutarlılık (Consistency) ve Kalıcılık (Durability)"
+    ],
+    "correctAnswer": "Tamî (Completeness), Durustî (Soundness) û Zanîna Sifir (Zero-Knowledge)",
+    "correctAnswerTr": "Eksiksizlik (Completeness), Sağlamlık (Soundness) ve Sıfır Bilgi (Zero-Knowledge)",
+    "explanation": "ZKP protokolleri Eksiksizlik (doğru bilgi kanıtlanır), Sağlamlık (yanıltıcı kanıt reddedilir) ve Sıfır Bilgi (ekstra veri sızmaz) koşullarını sağlamalıdır.",
+    "explanationKu": "Completeness: îspata rast tê pejirandin; Soundness: îspata şaş nayê pejirandin; Zero-Knowledge: ji bilî rastiya îdiayê tu zanyarî nayê eşkerekirin.",
+    "explanationTr": "ZKP protokolleri Eksiksizlik (doğru bilgi kanıtlanır), Sağlamlık (yanıltıcı kanıt reddedilir) ve Sıfır Bilgi (ekstra veri sızmaz) koşullarını sağlamalıdır."
+  },
+  {
+    "id": "ds_teknoloji_0331",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di modelên AI de armanca guhertina formata hejmaran (Quantization ji FP16 bo INT4) çi ye?",
+    "promptTr": "Yapay zeka modellerinde ağırlık kuantizasyonunun (FP16'dan INT4'e) sağladığı en temel sistem kazanımı nedir?",
+    "answers": [
+      "Zêdekirina hejmara parametreyên veşartî yên di tebeqeyên navxweyî yên modelê de",
+      "Rakirina pêdiviya perwerdekirina modelê bi riya daneyên nû yên bikarhêneran",
+      "Veguhastina modelê bo algorîtmayeke klasîk a darên biryargirtinê (Decision Trees)",
+      "Kêmkirina qebareya bîrgeha VRAMê û lezkirina derbaskirina daneyan di GPU de"
+    ],
+    "answersTr": [
+      "Modelin iç katmanlarındaki gizli parametre ve nöron sayısını donanımsal olarak artırmak",
+      "Modelin yeni kullanıcı verileriyle yeniden eğitilmesi gereksinimini tamamen kaldırmak",
+      "Derin öğrenme modelini klasik karar ağacı (Decision Tree) algoritmasına dönüştürmek",
+      "VRAM bellek gereksinimini ve bellek bant genişliği darboğazını ciddi oranda azaltmak"
+    ],
+    "correctAnswer": "Kêmkirina qebareya bîrgeha VRAMê û lezkirina derbaskirina daneyan di GPU de",
+    "correctAnswerTr": "VRAM bellek gereksinimini ve bellek bant genişliği darboğazını ciddi oranda azaltmak",
+    "explanation": "Ağırlıkların 4 bite düşürülmesi bellek kaplamasını 4 kat azaltır ve bellek bant genişliği (memory bandwidth) darboğazını hafifletir.",
+    "explanationKu": "Kuantîzasyon hewcedariya bîrgehê kêm dike û rê dide ku modelên mezin li ser çîpên piçûktir bixebitin.",
+    "explanationTr": "Ağırlıkların 4 bite düşürülmesi bellek kaplamasını 4 kat azaltır ve bellek bant genişliği (memory bandwidth) darboğazını hafifletir."
+  },
+  {
+    "id": "ds_teknoloji_0332",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di astên veqetandina databasê de (Isolation Levels), kîjan ast rê li ber hemû pirsgirêkên \"Dirty Read\", \"Non-Repeatable Read\" û \"Phantom Read\" digire?",
+    "promptTr": "Veritabanı izolasyon seviyelerinden hangisi \"Dirty Read\", \"Non-Repeatable Read\" ve \"Phantom Read\" anomalilerinin tamamını engeller?",
+    "answers": [
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable",
+      "Read Uncommitted"
+    ],
+    "answersTr": [
+      "Read Committed",
+      "Repeatable Read",
+      "Serializable",
+      "Read Uncommitted"
+    ],
+    "correctAnswer": "Serializable",
+    "correctAnswerTr": "Serializable",
+    "explanation": "Serializable seviyesi işlemleri sanki ardışık çalışıyormuş gibi izole ederek Phantom Read dahil tüm anomalileri engeller.",
+    "explanationKu": "Serializable asta herî bilind a veqetandinê ye ku danûstandinan mîna ku yek li pey ya din bimeşin bi rê ve dibe.",
+    "explanationTr": "Serializable seviyesi işlemleri sanki ardışık çalışıyormuş gibi izole ederek Phantom Read dahil tüm anomalileri engeller."
+  },
+  {
+    "id": "ds_teknoloji_0333",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Kêmasiya sereke ya algorîtmaya paqijkirina bîrgehê ya \"Reference Counting\" çi ye?",
+    "promptTr": "\"Reference Counting\" (Referans Sayma) çöp toplama algoritmasının çözemediği en temel yapısal sorun nedir?",
+    "answers": [
+      "Pêdiviya girtina tevahiya pergalê (Stop-The-World) ji bo her tiştê nû heye",
+      "Tenê di zimanên ku berhevkerê wan tune ye dikare bi awayekî çalak bixebite",
+      "Ji bo her xebitandinê divê hemû bîrgeha dîskê carekê bi tevahî were xwendin",
+      "Nikare çerxên referansê yên girtî (Cyclic References) nas bike û paqij bike"
+    ],
+    "answersTr": [
+      "Oluşturulan her yeni nesnede tüm sistemi durduran (Stop-The-World) duraklatma yapması",
+      "Sadece derleyicisi bulunmayan yorumlamalı betik dillerinde çalışabilme kısıtlaması",
+      "Her çöp toplama adımında tüm sabit diskin içeriğini sıfırdan okuma zorunluluğu",
+      "Birbirini referans gösteren döngüsel nesneleri (Cyclic References) tespit edip silememesi"
+    ],
+    "correctAnswer": "Nikare çerxên referansê yên girtî (Cyclic References) nas bike û paqij bike",
+    "correctAnswerTr": "Birbirini referans gösteren döngüsel nesneleri (Cyclic References) tespit edip silememesi",
+    "explanation": "İki nesne birbirini gösterdiğinde referans sayaçları hiçbir zaman sıfıra inmez; bu döngüsel bellek sızıntısını çözmek için ekstra tarayıcı gerekir.",
+    "explanationKu": "Dema du tişt nîşanî hev bidin (A->B û B->A), hejmara referansên wan qet nabe sifir û di bîrgehê de dimînin.",
+    "explanationTr": "İki nesne birbirini gösterdiğinde referans sayaçları hiçbir zaman sıfıra inmez; bu döngüsel bellek sızıntısını çözmek için ekstra tarayıcı gerekir."
+  },
+  {
+    "id": "ds_teknoloji_0334",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di girêdanên P2P de (mînak: WebRTC), ferqa sereke di navbera STUN û TURN de çi ye?",
+    "promptTr": "WebRTC ve P2P bağlantılarda STUN ile TURN sunucuları arasındaki temel işlev farkı nedir?",
+    "answers": [
+      "STUN daneyan şîfre dike, TURN mifteyên veşartî ji bo herdu aliyan çêdike",
+      "STUN navnîşana giştî fêr dike, TURN dema girêdana rasterast têk biçe daneyan vediguhêze",
+      "STUN tenê ji bo vîdyoyê ye, TURN tenê ji bo peyamên kurt ên nivîskî tê bikaranîn",
+      "STUN di asta tora herêmî de ye, TURN tenê di navbera welatan de pêwendî saz dike"
+    ],
+    "answersTr": [
+      "STUN verileri uçtan uca şifreler, TURN ise taraflar arasındaki ortak anahtarları üretir",
+      "STUN istemcinin dış IP/portunu bulmasını sağlar, TURN ise doğrudan P2P kurulamadığında trafiği aktarır",
+      "STUN yalnızca görüntülü görüşmeler içindir, TURN ise sadece kısa metin mesajlarında kullanılır",
+      "STUN yerel ağ düzeyinde çalışır, TURN ise sadece kıtalararası veri yönlendirmesini denetler"
+    ],
+    "correctAnswer": "STUN navnîşana giştî fêr dike, TURN dema girêdana rasterast têk biçe daneyan vediguhêze",
+    "correctAnswerTr": "STUN istemcinin dış IP/portunu bulmasını sağlar, TURN ise doğrudan P2P kurulamadığında trafiği aktarır",
+    "explanation": "STUN NAT arkasındaki genel IP/portu keşfeder; doğrudan P2P bağlantı engellendiğinde ise TURN bir aktarıcı (relay) olarak veriyi iletir.",
+    "explanationKu": "Heke NAT pir tund be (Symmetric NAT) rasterast P2P nabe; wê demê TURN wekî pirek hemû pakêtan bi ser xwe re dişîne.",
+    "explanationTr": "STUN NAT arkasındaki genel IP/portu keşfeder; doğrudan P2P bağlantı engellendiğinde ise TURN bir aktarıcı (relay) olarak veriyi iletir."
+  },
+  {
+    "id": "ds_teknoloji_0335",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di şîfrekirina RSA de sedema bikaranîna rêbaza dagirtinê ya OAEP (Optimal Asymmetric Encryption Padding) çi ye?",
+    "promptTr": "RSA şifreleme standardında OAEP (Optimal Asymmetric Encryption Padding) kullanılmasının temel amacı nedir?",
+    "answers": [
+      "Ji bo kurtkirina dirêjahiya mifteya giştî ya ku ji aliyê bikarhêner ve tê parvekirin",
+      "Ji bo zêdekirina leza deşîfrekirina daneyan di pêvajoyên matematîkî yên pêşkeftî de",
+      "Ji bo girtina pêwendiyên nehewce yên ku di navbera gerok û serverê de derdikevin",
+      "Ji bo rêgirtina li êrîşên li ser bingeha hilbijartina metna şîfrekirî (Chosen-Ciphertext)"
+    ],
+    "answersTr": [
+      "Kullanıcı tarafından paylaşılan açık anahtarın toplam bit uzunluğunu donanımsal kısaltmak",
+      "Gelişmiş matematiksel kütüphanelerdeki asimetrik şifre çözme hızını maksimuma çıkarmak",
+      "Web tarayıcısı ile sunucu arasındaki gereksiz TCP bağlantılarını otomatik olarak kapatmak",
+      "Seçilmiş şifreli metin saldırılarını (Chosen-Ciphertext) ve deterministik şifrelemeyi önlemek"
+    ],
+    "correctAnswer": "Ji bo rêgirtina li êrîşên li ser bingeha hilbijartina metna şîfrekirî (Chosen-Ciphertext)",
+    "correctAnswerTr": "Seçilmiş şifreli metin saldırılarını (Chosen-Ciphertext) ve deterministik şifrelemeyi önlemek",
+    "explanation": "Yalın RSA deterministiktir; OAEP rastgelelik ve Feistel tabanlı dolgu ekleyerek CCA2 (uyarlamalı seçilmiş şifreli metin) saldırılarını engeller.",
+    "explanationKu": "RSA ya sade (Textbook RSA) determinîstîk e; OAEP bi zêdekirina hejmarên rasthatî şîfreyê ji êrîşên wekî Bleichenbacher diparêze.",
+    "explanationTr": "Yalın RSA deterministiktir; OAEP rastgelelik ve Feistel tabanlı dolgu ekleyerek CCA2 (uyarlamalı seçilmiş şifreli metin) saldırılarını engeller."
+  },
+  {
+    "id": "ds_teknoloji_0336",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Cudahiya di navbera polîtîkayên guhertina bîrgeha lezgîn a LRU û LFU de li ser kîjan pîvanê ye?",
+    "promptTr": "Önbellek tahliye algoritmalarından LRU ile LFU arasındaki temel çalışma mantığı farkı nedir?",
+    "answers": [
+      "LRU tenê pelên mezin jê dibe, LFU tenê daneyên nivîskî yên piçûk ji bîrgehê derdixe",
+      "LRU bîrgeha fîzîkî bi kar nayne, LFU tenê li ser pêvajoyên pergalê disekine",
+      "LRU li dema herî dawî ya bikaranînê dinêre, LFU li hejmara dubarebûna bikaranînê dinêre",
+      "LRU şîfrekirinê ferz dike, LFU hemû daneyan bêyî parastin di bîrgehê de dihêle"
+    ],
+    "answersTr": [
+      "LRU sadece büyük dosyaları tahliye eder, LFU ise yalnızca küçük metin verilerini siler",
+      "LRU fiziksel RAM kullanmadan çalışır, LFU ise yalnızca işletim sistemi süreçlerini izler",
+      "LRU en son erişim zamanına (yeniliğe), LFU ise toplam erişim frekansına (sıklığa) bakar",
+      "LRU verilere şifreleme şartı getirirken, LFU tüm verileri korumasız önbellekte saklar"
+    ],
+    "correctAnswer": "LRU li dema herî dawî ya bikaranînê dinêre, LFU li hejmara dubarebûna bikaranînê dinêre",
+    "correctAnswerTr": "LRU en son erişim zamanına (yeniliğe), LFU ise toplam erişim frekansına (sıklığa) bakar",
+    "explanation": "LRU (Least Recently Used) en uzun süredir erişilmeyen satırı siler; LFU (Least Frequently Used) ise erişim sayacı en düşük olanı tahliye eder.",
+    "explanationKu": "LRU (Least Recently Used) daneya ku ji zû ve nehatiye xwendin davêje; LFU (Least Frequently Used) ya ku herî kêm hatiye xwendin davêje.",
+    "explanationTr": "LRU (Least Recently Used) en uzun süredir erişilmeyen satırı siler; LFU (Least Frequently Used) ise erişim sayacı en düşük olanı tahliye eder."
+  },
+  {
+    "id": "ds_teknoloji_0337",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di bernamesaziya pir-mijarî de (Multithreading), pirsgirêka \"False Sharing\" di bîrgehê de çawa çêdibe?",
+    "promptTr": "Çok iş parçacıklı (multithreaded) programlamada \"False Sharing\" (Sahte Paylaşım) performans sorunu nasıl ortaya çıkar?",
+    "answers": [
+      "Dema ku du mijar di heman demê de hewl bidin heman dosyeyê ji ser dîskê jê bibin",
+      "Dema ku bîrgeha RAMê ji bo hemû pêvajoyan bi awayekî şaş were hejmartin",
+      "Dema ku sîstem nekare navnîşana torê ya cîhaza derve bi awayekî rast nas bike",
+      "Dema guherbarên serbixwe yên mijarên cuda di heman xeta bîrgeha lezgîn de bin"
+    ],
+    "answersTr": [
+      "İki iş parçacığının aynı anda aynı dosyayı fiziksel diskten silmeye çalışması durumunda",
+      "RAM belleğin işletim sistemi tarafından yanlışlıkla tüm süreçlere ortak yazılmasıyla",
+      "Ağ bağdaştırıcısının gelen paketlerdeki hedef MAC adreslerini çözememesi neticesinde",
+      "Farklı iş parçacıklarının kullandığı bağımsız değişkenlerin aynı önbellek satırında (cache line) yer almasıyla"
+    ],
+    "correctAnswer": "Dema guherbarên serbixwe yên mijarên cuda di heman xeta bîrgeha lezgîn de bin",
+    "correctAnswerTr": "Farklı iş parçacıklarının kullandığı bağımsız değişkenlerin aynı önbellek satırında (cache line) yer almasıyla",
+    "explanation": "İki çekirdek birbirinden bağımsız değişkenleri güncellese bile değişkenler aynı 64 baytlık cache line içindeyse sürekli geçersiz kılma trafiği oluşur.",
+    "explanationKu": "Her çend mijar dest bidin guherbarên cuda jî, ji ber ku di yek xetê (64 bayt) de ne, navend her carî xeta hevgirtinê betal dikin.",
+    "explanationTr": "İki çekirdek birbirinden bağımsız değişkenleri güncellese bile değişkenler aynı 64 baytlık cache line içindeyse sürekli geçersiz kılma trafiği oluşur."
+  },
+  {
+    "id": "ds_teknoloji_0338",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Armanca mekanîzmaya \"Route Flap Damping\" di protokola BGP de çi ye?",
+    "promptTr": "BGP yönlendirme protokolünde \"Route Flap Damping\" mekanizmasının temel amacı nedir?",
+    "answers": [
+      "Ji bo zêdekirina qebareya pakêtên ku di navbera welatan de tên şandin",
+      "Ji bo rawestandina belavbûna rêyên torê yên ku timî vedibin û tên girtin",
+      "Ji bo kontrolkirina leza şîfrekirina daneyan di asta serîlêdanê de",
+      "Ji bo jêbirina hemû tabloyên rêberiyê di dema qutbûna elektrîkê de"
+    ],
+    "answersTr": [
+      "Kıtalararası iletilen BGP paketlerinin boyutunu donanımsal olarak büyütmek",
+      "Sürekli açılıp kapanarak kararsızlık yaratan rotaların (flapping) anonsunu geçici olarak bastırmak",
+      "Uygulama katmanında gerçekleşen veri şifreleme ve sıkıştırma hızını denetlemek",
+      "Elektrik kesintisi durumunda tüm küresel yönlendirme tablolarını sıfırlamak"
+    ],
+    "correctAnswer": "Ji bo rawestandina belavbûna rêyên torê yên ku timî vedibin û tên girtin",
+    "correctAnswerTr": "Sürekli açılıp kapanarak kararsızlık yaratan rotaların (flapping) anonsunu geçici olarak bastırmak",
+    "explanation": "Sürekli açılıp kapanan (flap eden) kararsız BGP rotaları cezalandırılıp bastırılarak küresel yönlendiricilerin CPU aşırı yükü önlenir.",
+    "explanationKu": "Heke rêyek timî biçe û were, BGP cezayekê dide wê û heta demekê anonsa wê nake da ku routerên cîhanê westiyayî nebin.",
+    "explanationTr": "Sürekli açılıp kapanan (flap eden) kararsız BGP rotaları cezalandırılıp bastırılarak küresel yönlendiricilerin CPU aşırı yükü önlenir."
+  },
+  {
+    "id": "ds_teknoloji_0339",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di pirsiyariyên analîtîk de (OLAP), çima depokirina stûnî (Columnar Storage) ji ya rêzbarî (Row-oriented) çêtir e?",
+    "promptTr": "Analitik sorgularda (OLAP) sütun bazlı depolamanın (Columnar) satır bazlı depolamaya göre çok daha hızlı olmasının temel sebebi nedir?",
+    "answers": [
+      "Pêdiviya kontrolkirina kilîtên ewlehiyê di dema nivîsandina daneyan de radike",
+      "Hemû daneyan bêyî parvekirina li ser dîskê tenê di bîrgeha L1 de diparêze",
+      "Rê dide ku danûstandinên bankingê yên OLTP di heman kêliyê de bên kirin",
+      "Tenê stûnên pêwîst ji dîskê dixwîne û li ser stûnan şidandineke pir bilind peyda dike"
+    ],
+    "answersTr": [
+      "Veri yazma işlemleri sırasında güvenlik kilitlerini ve indeksleri tamamen devre dışı bırakması",
+      "Tüm analitik verileri diske kaydetmeden doğrudan işlemcinin L1 önbelleğinde saklaması",
+      "OLTP tabanlı bankacılık işlemlerinin aynı anda hatasız çalışmasını sağlaması",
+      "Yalnızca sorguda adı geçen sütunları diskten okuması ve aynı tür veride çok yüksek sıkıştırma sağlaması"
+    ],
+    "correctAnswer": "Tenê stûnên pêwîst ji dîskê dixwîne û li ser stûnan şidandineke pir bilind peyda dike",
+    "correctAnswerTr": "Yalnızca sorguda adı geçen sütunları diskten okuması ve aynı tür veride çok yüksek sıkıştırma sağlaması",
+    "explanation": "Sütun odaklı depolama (Parquet vb.) sadece sorgulanan sütunları diskten okur ve homojen veri yapısı sayesinde yüksek sıkıştırma sunar.",
+    "explanationKu": "Di stûnî de tenê qadên têkildar tên xwendin û ji ber ku dane ji heman tîpê ne, bi algorîtmayên wekî Parquet pir baş tên şidandin.",
+    "explanationTr": "Sütun odaklı depolama (Parquet vb.) sadece sorgulanan sütunları diskten okur ve homojen veri yapısı sayesinde yüksek sıkıştırma sunar."
+  },
+  {
+    "id": "ds_teknoloji_0340",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di sîstemên ku nakokiya nivîsandinê lê pir kêm e, feydeya \"Optimistic Concurrency Control\" (OCC) çi ye?",
+    "promptTr": "Çakışmanın (contention) az olduğu veritabanlarında İyimser Eşzamanlılık Kontrolünün (OCC) Kötümser Kilitlemeye (Pessimistic) göre avantajı nedir?",
+    "answers": [
+      "Bêyî girtina kilîtan dixebite û di dema qedandinê de guhertoya daneyê kontrol dike",
+      "Hemû daneyan berî xwendinê ji bo hemû bikarhêneran bi awayekî mayînde digire",
+      "Di dema têkçûnê de pêdiviya vegerandina daneyan ji sîstemê bi tevahî radike",
+      "Tenê rê dide bikarhênerekî yekane ku di heman demê de serî li databasê bide"
+    ],
+    "answersTr": [
+      "Kilit mekanizması maliyetini kaldırıp sadece onay (commit) anında sürüm çakışması denetlemesi",
+      "Okuma öncesinde tüm tabloyu diğer kullanıcılara kilitleyerek veri tutarlılığını zorlaması",
+      "İşlem iptal edildiğinde (rollback) verilerin eski haline getirilmesi gereksinimini kaldırması",
+      "Veritabanına aynı anda yalnızca tek bir istemcinin sorgu atmasına izin vermesi"
+    ],
+    "correctAnswer": "Bêyî girtina kilîtan dixebite û di dema qedandinê de guhertoya daneyê kontrol dike",
+    "correctAnswerTr": "Kilit mekanizması maliyetini kaldırıp sadece onay (commit) anında sürüm çakışması denetlemesi",
+    "explanation": "OCC kilit maliyetinden kaçınır; işlemler veriyi okuyup değiştirir ve yalnızca commit anında çakışma (versiyon kontrolü) olup olmadığına bakar.",
+    "explanationKu": "OCC dema xwendinê kilît nadeyne; tenê berî commitê kontrol dike ka guhertoyek din hatiye nivîsandin an na (version check).",
+    "explanationTr": "OCC kilit maliyetinden kaçınır; işlemler veriyi okuyup değiştirir ve yalnızca commit anında çakışma (versiyon kontrolü) olup olmadığına bakar."
+  },
+  {
+    "id": "ds_teknoloji_0341",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Girêdanên bermayî (Residual Connections / Skip Connections) di ResNet de çawa pirsgirêka windabûna gradyanê çareser dikin?",
+    "promptTr": "ResNet mimarisindeki artık bağlantılar (Residual / Skip Connections) derin ağlardaki kaybolan gradyan sorununu nasıl çözer?",
+    "answers": [
+      "Hejmara giştî ya tebeqeyên torê kêm dike da ku kûrahî nebe sedema şaşiyan",
+      "Hemû fonksiyonên aktîvasyonê yên ne-xêzî ji nav tebeqeyên modelê derdixe",
+      "Hesabkirina paşveçûnê (Backpropagation) bi tevahî bi algorîtmayeke din diguherîne",
+      "Bi riya fonksiyona nasnameyê f(x)+x rê dide ku gradyan rasterast ber bi paş ve biherike"
+    ],
+    "answersTr": [
+      "Derinliğin getirdiği karmaşıklığı önlemek için toplam katman sayısını otomatik azaltarak",
+      "Modeldeki tüm doğrusal olmayan aktivasyon fonksiyonlarını kaldırıp düzleştirerek",
+      "Geriye yayılım (Backpropagation) algoritmasını tamamen devre dışı bırakarak",
+      "f(x)+x özdeşlik bağlantısıyla gradyanların ara katmanlarda sönümlenmeden doğrudan geriye akmasını sağlayarak"
+    ],
+    "correctAnswer": "Bi riya fonksiyona nasnameyê f(x)+x rê dide ku gradyan rasterast ber bi paş ve biherike",
+    "correctAnswerTr": "f(x)+x özdeşlik bağlantısıyla gradyanların ara katmanlarda sönümlenmeden doğrudan geriye akmasını sağlayarak",
+    "explanation": "Artık bağlantıda d(f(x)+x)/dx = df/dx + 1 olduğundan, gradyanlar geriye doğru yayılırken türev çarpanı 1 eklenerek sıfırlanmaktan (vanishing) kurtulur.",
+    "explanationKu": "Di dema backpropagation de, derîveya x dibe 1; ev yek nahêle ku gradyan di tebeqeyên pir kûr de bibe sifir.",
+    "explanationTr": "Artık bağlantıda d(f(x)+x)/dx = df/dx + 1 olduğundan, gradyanlar geriye doğru yayılırken türev çarpanı 1 eklenerek sıfırlanmaktan (vanishing) kurtulur."
+  },
+  {
+    "id": "ds_teknoloji_0342",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Mekanîzmaya \"Zero-Copy\" (mînak: sendfile) çawa veguhestina pelan li ser torê bilez dike?",
+    "promptTr": "\"Zero-Copy\" (ör. sendfile) ağ veri transferi mimarisi performansı nasıl maksimize eder?",
+    "answers": [
+      "Daneyan rasterast ji bîrgeha navikê (kernel buffer) bêyî çûna qada bikarhêner dişîne qerta torê",
+      "Pêdiviya veguhestina pakêtên torê bi riya kabloyên fîzîkî yên navendî radike",
+      "Daneyan berî şandinê jê dibe da ku qebareya wan di bîrgehê de sifir bibe",
+      "Tenê dema ku sîstem girtî be pelan di navbera pêşkêşkeran de parve dike"
+    ],
+    "answersTr": [
+      "Verileri kullanıcı alanına (user-space) kopyalamadan doğrudan çekirdek tamponundan ağ bağdaştırıcısına aktararak",
+      "Ağ paketlerinin fiziksel kablolar ve yönlendiriciler üzerinden iletilme gereksinimini kaldırarak",
+      "Dosya aktarımı başlamadan önce kaynak veriyi silip boyutu sıfıra indirgeyerek",
+      "Yalnızca sunucu kapatıldığı anda diskten belleğe doğrudan veri okuması yaparak"
+    ],
+    "correctAnswer": "Daneyan rasterast ji bîrgeha navikê (kernel buffer) bêyî çûna qada bikarhêner dişîne qerta torê",
+    "correctAnswerTr": "Verileri kullanıcı alanına (user-space) kopyalamadan doğrudan çekirdek tamponundan ağ bağdaştırıcısına aktararak",
+    "explanation": "Zero-Copy, veriyi diskten page cache'e ve oradan kullanıcı alanına kopyalamak yerine DMA ile doğrudan soket tamponuna iletir.",
+    "explanationKu": "Zero-copy kopîkirina bêwate ya di navbera user-space û kernel-space de radike û rasterast bi DMA daneyan dide NICê.",
+    "explanationTr": "Zero-Copy, veriyi diskten page cache'e ve oradan kullanıcı alanına kopyalamak yerine DMA ile doğrudan soket tamponuna iletir."
+  },
+  {
+    "id": "ds_teknoloji_0343",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di binesaziya mifteya giştî de (PKI), feydeya \"OCSP Stapling\" li gorî CRL ya kevneşopî çi ye?",
+    "promptTr": "Açık Anahtar Altyapısında (PKI) \"OCSP Stapling\" mekanizmasının geleneksel CRL yöntemine göre temel avantajı nedir?",
+    "answers": [
+      "Klîent neçar dimîne ku her carî pelên mezin ên lîsteya betalkirinê daxîne",
+      "Destûra betalkirina sertîfîkayên ewlehiyê ji aliyê saziyên fermî ve radike",
+      "Server bersiva derbasdariya sertîfîkayê bi îmzekirî bi xwe digihîne klîentê",
+      "Tenê di torên herêmî de pêwendiyên bê şîfre ji bo klîentan gengaz dike"
+    ],
+    "answersTr": [
+      "İstemcinin her bağlantıda megabaytlarca boyuttaki iptal listesini (CRL) indirme zorunluluğu",
+      "Sertifika otoritelerinin geçersiz kılınan sertifikaları iptal etme yetkisini kaldırması",
+      "Sunucunun sertifika geçerlilik kanıtını CA'dan alıp istemciye el sıkışmada doğrudan sunması",
+      "Yalnızca yerel ağlarda şifresiz veri aktarımına izin veren bir güvenlik istisnası olması"
+    ],
+    "correctAnswer": "Server bersiva derbasdariya sertîfîkayê bi îmzekirî bi xwe digihîne klîentê",
+    "correctAnswerTr": "Sunucunun sertifika geçerlilik kanıtını CA'dan alıp istemciye el sıkışmada doğrudan sunması",
+    "explanation": "OCSP Stapling sayesinde sunucu, CA'dan aldığı zaman damgalı geçerlilik yanıtını TLS el sıkışmasına iliştirir; istemci CA'ya ek sorgu atmaz.",
+    "explanationKu": "OCSP Stapling barê ser saziya CA kêm dike û nahêle ku gerok ji bo her girêdanê biçe ji CA bipirse ka sertîfîka betal e an na.",
+    "explanationTr": "OCSP Stapling sayesinde sunucu, CA'dan aldığı zaman damgalı geçerlilik yanıtını TLS el sıkışmasına iliştirir; istemci CA'ya ek sorgu atmaz."
+  },
+  {
+    "id": "ds_teknoloji_0344",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di mîmariya mîkroservîsan de çima şêwaza \"Saga Pattern\" ji danûstandinên 2PC guncawtir e?",
+    "promptTr": "Mikroservis mimarilerinde uzun süren dağıtık işlemlerde 2PC yerine \"Saga Pattern\" tercih edilmesinin ana nedeni nedir?",
+    "answers": [
+      "Kilîtkirina çavkaniyan a demdirêj radike û bi rêze-bûyer û gavên telafîker dixebite",
+      "Pêdiviya kontrolkirina yekparçeyiya daneyan di navbera servîsan de tune dike",
+      "Hemû servîsan neçar dike ku heman databasa têkildar a navendî bi kar bînin",
+      "Her danûstandinê tenê bi şandina e-nameyekê di navbera pêşkêşkeran de temam dike"
+    ],
+    "answersTr": [
+      "Uzun süreli küresel kilitleri ortadan kaldırıp yerel işlemler ve telafi adımlarıyla (compensating) çalışması",
+      "Servisler arasındaki veri bütünlüğü ve şema uyumu gereksinimlerini tamamen yok sayması",
+      "Tüm bağımsız mikroservisleri tek bir merkezi ilişkisel veritabanını paylaşmaya zorlaması",
+      "Tüm dağıtık işlemleri servisler arasında e-posta mesajlaşmasıyla tamamlaması"
+    ],
+    "correctAnswer": "Kilîtkirina çavkaniyan a demdirêj radike û bi rêze-bûyer û gavên telafîker dixebite",
+    "correctAnswerTr": "Uzun süreli küresel kilitleri ortadan kaldırıp yerel işlemler ve telafi adımlarıyla (compensating) çalışması",
+    "explanation": "Saga paterni küresel kilit koymaz; her servis kendi yerel transaction'ını yürütür ve hata anında telafi edici (compensating) geri alma adımları tetiklenir.",
+    "explanationKu": "2PC hemû pergalê heta dawiyê kilit dike (blocking); Saga her gavekê bi serbixwe temam dike û heke şaşiyek çêbibe gava telafîkirinê dimeşîne.",
+    "explanationTr": "Saga paterni küresel kilit koymaz; her servis kendi yerel transaction'ını yürütür ve hata anında telafi edici (compensating) geri alma adımları tetiklenir."
+  },
+  {
+    "id": "ds_teknoloji_0345",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Mekanîzmaya \"Stack Canary\" çawa rê li ber êrîşên dagirtina bîrgeha stakê (Buffer Overflow) digire?",
+    "promptTr": "\"Stack Canary\" mekanizması bellek yığını taşması (Buffer Overflow) saldırılarını nasıl tespit edip engeller?",
+    "answers": [
+      "Hemû kodên cîbicîkirinê ji nav bîrgeha sereke derdixe û dişîne ser qerta dengî",
+      "Destûra banga ti fonksiyonan di zimanê C de bêyî şîfrekirina wan nade",
+      "Pêvajoyê neçar dike ku her saniyeyê carekê bîrgeha RAMê ji nû ve saz bike",
+      "Nirxekî veşartî datîne berî navnîşana vegerê û berî derketina fonksiyonê kontrol dike"
+    ],
+    "answersTr": [
+      "Yürütülebilir tüm komutları ana bellekten çıkarıp ses kartının geçici belleğine taşıyarak",
+      "C programlama dilinde şifrelenmemiş fonksiyon çağrısı yapılmasını derleme anında engelleyerek",
+      "İşletim sistemini her saniye ana bellek adresleme haritasını sıfırdan yeniden oluşturmaya zorlayarak",
+      "Dönüş adresinin hemen önüne rastgele bir değer koyup fonksiyon bitiminde değerin bozulup bozulmadığına bakarak"
+    ],
+    "correctAnswer": "Nirxekî veşartî datîne berî navnîşana vegerê û berî derketina fonksiyonê kontrol dike",
+    "correctAnswerTr": "Dönüş adresinin hemen önüne rastgele bir değer koyup fonksiyon bitiminde değerin bozulup bozulmadığına bakarak",
+    "explanation": "Stack Canary, yerel değişkenler ile dönüş adresi arasına rastgele bir değer yerleştirir; taşma durumunda bu değer değişirse program çökertilerek istismar önlenir.",
+    "explanationKu": "Heke êrîşkar hewl bide navnîşana vegerê (return address) biguherîne, nirxa canary xera dibe û pergal pêvajoyê di cih de radiwestîne.",
+    "explanationTr": "Stack Canary, yerel değişkenler ile dönüş adresi arasına rastgele bir değer yerleştirir; taşma durumunda bu değer değişirse program çökertilerek istismar önlenir."
+  },
+  {
+    "id": "ds_teknoloji_0346",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Cudahiya sereke ya hevsengkera barê (Load Balancer) ya Asta 4 û Asta 7 çi ye?",
+    "promptTr": "Katman 4 (L4) ile Katman 7 (L7) Yük Dengeleyiciler (Load Balancer) arasındaki temel mimari fark nedir?",
+    "answers": [
+      "Asta 4 tenê li gorî IP/Portê bi rê ve dibe, Asta 7 li gorî naveroka HTTP û URLê bi rê ve dibe",
+      "Asta 4 tenê ji bo e-nameyan e, Asta 7 tenê ji bo veguhestina pelên vîdyoyê tê sepandin",
+      "Asta 4 şîfrekirina tevahî pêk tîne, Asta 7 hemû daneyan bi awayekî şaş jê dibe",
+      "Asta 4 tenê di kabloyên optîk de dixebite, Asta 7 tenê di tora bêtêl de derbasdar e"
+    ],
+    "answersTr": [
+      "L4 paketleri sadece IP/TCP portuna göre yönlendirirken, L7 HTTP başlığı, cookie ve URL içeriğine göre yönlendirir",
+      "L4 sadece e-posta sunucularını dengeler, L7 ise yalnızca video akış servislerinde kullanılabilir",
+      "L4 tüm trafiği zorunlu olarak şifreler, L7 ise yönlendirdiği paketlerin içeriğini siler",
+      "L4 yalnızca fiber optik kablolarda çalışır, L7 ise sadece kablosuz ağ yapılarında geçerlidir"
+    ],
+    "correctAnswer": "Asta 4 tenê li gorî IP/Portê bi rê ve dibe, Asta 7 li gorî naveroka HTTP û URLê bi rê ve dibe",
+    "correctAnswerTr": "L4 paketleri sadece IP/TCP portuna göre yönlendirirken, L7 HTTP başlığı, cookie ve URL içeriğine göre yönlendirir",
+    "explanation": "L4 taşıma katmanında (IP:Port) paket inceler; L7 ise uygulama katmanında HTTP başlıkları, URI ve çerezleri ayrıştırarak akıllı yönlendirme yapar.",
+    "explanationKu": "Asta 4 (Transport) zûtir e ji ber ku li naverokê nanêre; Asta 7 (Application) dikare daxwazan li gorî rêya URLê (mînak: /api, /images) parve bike.",
+    "explanationTr": "L4 taşıma katmanında (IP:Port) paket inceler; L7 ise uygulama katmanında HTTP başlıkları, URI ve çerezleri ayrıştırarak akıllı yönlendirme yapar."
+  },
+  {
+    "id": "ds_teknoloji_0347",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di mîmariya \"Event Sourcing\" de rewşa heyî ya sîstemê (state) çawa tê bidestxistin?",
+    "promptTr": "\"Event Sourcing\" mimarisinde bir nesnenin veya sistemin güncel durumu (state) nasıl elde edilir?",
+    "answers": [
+      "Bi xwendina yek qeyda herî dawî ya ku di tabloyeke statîk a SQLê de maye",
+      "Bi texmînkirina encamê bi riya modelekî fêrbûna makîneyê ya hêsan",
+      "Bi jinûve-meşandina hemû bûyerên dîrokî yên ku heta niha li pey hev qewimîne",
+      "Bi girtina kopiyeke fîzîkî ya hemû bîrgeha RAMê li ser dîskeke derve"
+    ],
+    "answersTr": [
+      "Klasik bir SQL tablosundaki son güncellenmiş tek bir satırın doğrudan okunmasıyla",
+      "Basit bir makine öğrenmesi tahmin algoritması ile geçmiş durumun kestirilmesiyle",
+      "Sistemde o ana kadar gerçekleşmiş tüm değişmez olayların (events) sırayla yeniden oynatılmasıyla",
+      "Tüm ana belleğin harici bir manyetik banda fiziksel olarak kopyalanmasıyla"
+    ],
+    "correctAnswer": "Bi jinûve-meşandina hemû bûyerên dîrokî yên ku heta niha li pey hev qewimîne",
+    "correctAnswerTr": "Sistemde o ana kadar gerçekleşmiş tüm değişmez olayların (events) sırayla yeniden oynatılmasıyla",
+    "explanation": "Event Sourcing durumun kendisini değil, durumu değiştiren tüm olayları değişmez bir log olarak tutar; güncel durum olayların yeniden oynatılmasıyla (replay) üretilir.",
+    "explanationKu": "Event Sourcing rewşa dawî ranagire; hemû guherînan wekî bûyerên neguherbar tomar dike û ji nû ve meşandina wan rewşa dawî dide.",
+    "explanationTr": "Event Sourcing durumun kendisini değil, durumu değiştiren tüm olayları değişmez bir log olarak tutar; güncel durum olayların yeniden oynatılmasıyla (replay) üretilir."
+  },
+  {
+    "id": "ds_teknoloji_0348",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Felsefeya sereke ya mîmariya pêvajoyeran a RISC li gorî CISC li ser çi hatiye avakirin?",
+    "promptTr": "RISC işlemci mimarisinin CISC mimarisine kıyasla benimsediği temel tasarım felsefesi nedir?",
+    "answers": [
+      "Bikaranîna fermanên sade û yek-mezinahî yên ku di yek dewrê de bi dawî dibin",
+      "Zêdekirina fermanên tevlihev ên ku gelek operasyonên bîrgehê bi hev re dikin",
+      "Rakirina hemû qeydkeran (registers) ji nav pêvajoyê û girêdana bi RAMê re",
+      "Tenê bikaranîna zimanên şirovekirî yên wekî Python di asta donavêjê de"
+    ],
+    "answersTr": [
+      "Tek saat döngüsünde çalışan sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
+      "Tek bir komutla birden fazla karmaşık bellek ve aritmetik işlemini birleştirmek",
+      "İşlemci içerisindeki tüm yazmaçları (register) kaldırıp doğrudan RAM'e bağlanmak",
+      "Donanım mikroişlemci seviyesinde yalnızca yorumlanan yüksek seviyeli dilleri çalıştırmak"
+    ],
+    "correctAnswer": "Bikaranîna fermanên sade û yek-mezinahî yên ku di yek dewrê de bi dawî dibin",
+    "correctAnswerTr": "Tek saat döngüsünde çalışan sabit uzunluklu basit komutlar ve Load/Store mimarisi kullanmak",
+    "explanation": "RISC sade, sabit uzunluklu komutlar ve ayrık Load/Store mimarisiyle boru hattı verimini artırır; CISC ise değişken uzunluklu karmaşık komutlar içerir.",
+    "explanationKu": "RISC fermanan hêsan dike da ku pîplîn hêsantir bibe û her ferman di yek dewrê de bimeşe; operasyonên bîrgehê tenê bi Load/Store tên kirin.",
+    "explanationTr": "RISC sade, sabit uzunluklu komutlar ve ayrık Load/Store mimarisiyle boru hattı verimini artırır; CISC ise değişken uzunluklu karmaşık komutlar içerir."
+  },
+  {
+    "id": "ds_teknoloji_0349",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di dabeşkirina daneyan de (Sharding), xetera sereke ya dabeşkirina li ser bingeha rêzê (Range-based) çi ye?",
+    "promptTr": "Veritabanı parçalamada (Sharding) aralık tabanlı (Range-based) bölümlendirmenin en büyük riski nedir?",
+    "answers": [
+      "Nebûna derfeta lêgerîna daneyan bi awayekî rêzbarî li ser sîstemê",
+      "Pêdiviya şîfrekirina hemû parçeyan bi mifteyên asîmetrîk ên cuda",
+      "Zêdebûna hejmara parçeyan bi awayekî bêsînor di heman kêliyê de",
+      "Komnebûna hevseng a daneyan û çêbûna xala germ a barê zêde (Hotspot)"
+    ],
+    "answersTr": [
+      "Sistem üzerinde sıralı aralık sorgularının (range query) hiçbir şekilde yapılamaması",
+      "Tüm veri parçalarının birbirinden bağımsız asimetrik anahtarlarla şifrelenme zorunluluğu",
+      "Veritabanı parçalarının sayısının saniyeler içinde kontrolsüz şekilde sonsuza çoğalması",
+      "Verilerin belirli bir aralıkta birikmesiyle tek bir parçanın aşırı yüklenmesi (Hotspot oluşumu)"
+    ],
+    "correctAnswer": "Komnebûna hevseng a daneyan û çêbûna xala germ a barê zêde (Hotspot)",
+    "correctAnswerTr": "Verilerin belirli bir aralıkta birikmesiyle tek bir parçanın aşırı yüklenmesi (Hotspot oluşumu)",
+    "explanation": "Aralık tabanlı parçalamada (ör. artan zaman damgaları) tüm yeni yazma trafiği en son parçaya yığılarak darboğaz (Hotspot) yaratır.",
+    "explanationKu": "Heke mifteya parçakirinê li ser bingeha demê be (mînak: timestamp), hemû nivîsandinên nû diçin ser heman perçeyê û pêşkêşker tengav dibe.",
+    "explanationTr": "Aralık tabanlı parçalamada (ör. artan zaman damgaları) tüm yeni yazma trafiği en son parçaya yığılarak darboğaz (Hotspot) yaratır."
+  },
+  {
+    "id": "ds_teknoloji_0350",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di hilanîna şîfreyan de rola zêdekirina \"Salt\" a krîptografîk çi ye?",
+    "promptTr": "Parola saklama güvenliğinde kriptografik \"Tuz\" (Salt) kullanımının temel amacı nedir?",
+    "answers": [
+      "Ji bo bêkêrkirina tabloyên pêş-hesibandî yên rengîn (Rainbow Tables)",
+      "Ji bo kurttirkirina dirêjahiya şîfreyê da ku di bîrgehê de cîh negire",
+      "Ji bo veguhestina şîfreyê bi awayekî zelal di navbera gerok û serverê de",
+      "Ji bo hêsankirina dîtina şîfreyê dema ku bikarhêner wê ji bîr bike"
+    ],
+    "answersTr": [
+      "Önceden hesaplanmış gökkuşağı tabloları (Rainbow Tables) ile yapılan sözlük saldırılarını engellemek",
+      "Kullanıcının belirlediği parolanın toplam uzunluğunu veritabanında yer kaplamaması için kısaltmak",
+      "Parolayı sunucu ile istemci arasında hiçbir güvenlik katmanı olmadan düz metin göndermek",
+      "Kullanıcı parolasını unuttuğunda sistem yöneticisinin parolayı kolayca çözebilmesini sağlamak"
+    ],
+    "correctAnswer": "Ji bo bêkêrkirina tabloyên pêş-hesibandî yên rengîn (Rainbow Tables)",
+    "correctAnswerTr": "Önceden hesaplanmış gökkuşağı tabloları (Rainbow Tables) ile yapılan sözlük saldırılarını engellemek",
+    "explanation": "Salt, her kullanıcıya özgü rastgele bir veri ekleyerek aynı parolaların aynı hash değerini üretmesini ve Rainbow Table saldırılarını önler.",
+    "explanationKu": "Salt ji bo her bikarhênerekî zincîreke rasthatî lê zêde dike; ev jî nahêle heman şîfre xwedî heman nirxa hash be.",
+    "explanationTr": "Salt, her kullanıcıya özgü rastgele bir veri ekleyerek aynı parolaların aynı hash değerini üretmesini ve Rainbow Table saldırılarını önler."
+  },
+  {
+    "id": "ds_teknoloji_0351",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di zimanên ku xwedî Garbage Collector in de (mînak: Java, Go), herî zêde kêmasiya bîrgehê (Memory Leak) çawa çêdibe?",
+    "promptTr": "Otomatik Çöp Toplayıcısı (GC) bulunan dillerde (ör. Java, Go) bellek sızıntısı (Memory Leak) en yaygın olarak nasıl gerçekleşir?",
+    "answers": [
+      "Pêvajoyera navendî dema fermanên zimanê makîneyê şaş şîrove dike",
+      "Tiştên ku êdî nayên bikaranîn hîn jî ji aliyê referansên statîk ve tên girtin",
+      "Dîska fîzîkî ji ber qutbûna elektrîkê bîrgeha lezgîn paqij nake",
+      "Modela ewlehiyê ya ziman destûrê dide bikaranîna rasterast a nîşanderên azad"
+    ],
+    "answersTr": [
+      "Merkezi işlemcinin mikro kod yürütürken bellek adreslerini donanımsal olarak birbirine karıştırması",
+      "Artık ihtiyaç duyulmayan nesnelere statik alanlar veya olay dinleyicileri üzerinden hala referans verilmesi",
+      "Fiziksel depolama aygıtının ani elektrik kesintisinde işletim sistemi takas alanını sıfırlamaması",
+      "Programlama dilinin tür güvenliği mekanizmasını kapatıp ham bellek işaretçilerini serbest bırakması"
+    ],
+    "correctAnswer": "Tiştên ku êdî nayên bikaranîn hîn jî ji aliyê referansên statîk ve tên girtin",
+    "correctAnswerTr": "Artık ihtiyaç duyulmayan nesnelere statik alanlar veya olay dinleyicileri üzerinden hala referans verilmesi",
+    "explanation": "GC Root tarafından doğrudan veya dolaylı olarak referans gösterilen (ör. statik koleksiyonlar, açık listener'lar) nesneler kullanılmasalar bile GC tarafından silinemez.",
+    "explanationKu": "GC tenê tiştên ku tu girêdana wan bi rehê re (GC Root) tune be paqij dike; heke referansek bimîne nikare wê jê bibe.",
+    "explanationTr": "GC Root tarafından doğrudan veya dolaylı olarak referans gösterilen (ör. statik koleksiyonlar, açık listener'lar) nesneler kullanılmasalar bile GC tarafından silinemez."
+  },
+  {
+    "id": "ds_teknoloji_0352",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Mekanîzmaya \"SYN Cookies\" di protokola TCP de çawa rê li ber êrîşên \"SYN Flood\" digire?",
+    "promptTr": "TCP protokolünde \"SYN Cookies\" mekanizması \"SYN Flood\" DoS saldırılarını nasıl savuşturur?",
+    "answers": [
+      "Hemû daxwazên nû yên TCP ji aliyê serverê ve bi awayekî otomatîk têne redkirin",
+      "Navnîşana IP ya her bikarhênerekî di navendeke navneteweyî de qeyd dike",
+      "Pêwendiyê rasterast vediguherîne protokola UDP ya bê pejirandin",
+      "Bêyî veqetandina bîrgehê di serverê de, agahiyan di hejmara rêzê ya SYN-ACK de şîfre dike"
+    ],
+    "answersTr": [
+      "Ağdan gelen tüm yeni TCP el sıkışma taleplerini sunucu güvenliği için otomatik reddederek",
+      "Bağlanan her istemcinin IP adresini merkezi bir uluslararası güvenlik veritabanına kaydederek",
+      "Bağlantıyı el sıkışma aşamasını beklemeden doğrudan UDP protokolüne dönüştürerek",
+      "Sunucuda bağlantı durumu (TCB) açmayıp parametreleri SYN-ACK sıra numarasına kriptografik kodlayarak"
+    ],
+    "correctAnswer": "Bêyî veqetandina bîrgehê di serverê de, agahiyan di hejmara rêzê ya SYN-ACK de şîfre dike",
+    "correctAnswerTr": "Sunucuda bağlantı durumu (TCB) açmayıp parametreleri SYN-ACK sıra numarasına kriptografik kodlayarak",
+    "explanation": "SYN Cookies sayesinde sunucu yarı-açık bağlantı tablosunda (SYN queue) bellek ayırmaz; el sıkışma durumunu ACK numarasından çözer.",
+    "explanationKu": "Server heta ku pakêta dawî ya ACK ji klîentê neyê bîrgehê terxan nake; bi vî awayî bîrgeha wê tijî nabe.",
+    "explanationTr": "SYN Cookies sayesinde sunucu yarı-açık bağlantı tablosunda (SYN queue) bellek ayırmaz; el sıkışma durumunu ACK numarasından çözer."
+  },
+  {
+    "id": "ds_teknoloji_0353",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di binesaziya GraphQL de kêşeya zêdebûna pirsiyariyan (N+1 Problem) bi çi awayî tê çareserkirin?",
+    "promptTr": "GraphQL mimarisinde ilişkisel veri sorgularken ortaya çıkan N+1 problemini çözmek için hangi standart mekanizma kullanılır?",
+    "answers": [
+      "Bi rakirina hemû têkiliyên navxweyî yên di navbera şemayên databasê de",
+      "Bi komkirin û taloqkirina daxwazan bi riya şêwaza \"DataLoader\"",
+      "Bi veguhastina hemû servîsan bo protokola SOAP ya kevnar",
+      "Bi sînordarkirina hejmara bikarhêneran di heman deqîqeyê de"
+    ],
+    "answersTr": [
+      "Veritabanı şemaları arasındaki tüm yabancı anahtar (FK) ilişkilerini tamamen kaldırarak",
+      "İstekleri toplu halde gruplayıp önbelleğe alan \"DataLoader\" (batching/caching) deseniyle",
+      "Tüm web servislerini eski SOAP ve XML tabanlı mimarilere geri dönüştürerek",
+      "Aynı dakika içinde API'ye istek atan istemci sayısını tek bir oturumla sınırlayarak"
+    ],
+    "correctAnswer": "Bi komkirin û taloqkirina daxwazan bi riya şêwaza \"DataLoader\"",
+    "correctAnswerTr": "İstekleri toplu halde gruplayıp önbelleğe alan \"DataLoader\" (batching/caching) deseniyle",
+    "explanation": "DataLoader deseni tek tek yapılan sorguları tek bir event loop döngüsünde toplar (batching) ve tek bir SQL \"IN (...)\" sorgusuna dönüştürür.",
+    "explanationKu": "DataLoader daxwazên cuda yên ji bo heman tabloyê kom dike û bi yek pirsiyariya SQLê (WHERE id IN (...)) hemûyan tîne.",
+    "explanationTr": "DataLoader deseni tek tek yapılan sorguları tek bir event loop döngüsünde toplar (batching) ve tek bir SQL \"IN (...)\" sorgusuna dönüştürür."
+  },
+  {
+    "id": "ds_teknoloji_0354",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Çima di fêrbûna kûr de (Deep Learning) çîpên GPU li gorî CPUyên klasîk pir bi leztir in?",
+    "promptTr": "Derin öğrenme modellerinin eğitilmesinde ve çalıştırılmasında GPU'ların CPU'lara kıyasla devasa hız farkı yaratmasının temel nedeni nedir?",
+    "answers": [
+      "Bi hezaran navendên piçûk hene ku operasyonên matrisan bi paralelî (SIMD) dikin",
+      "Xwedî bîrgeha lezgîn a asta L1 ya pir mezintir in li gorî navendên CPUyê",
+      "Tenê zimanên bernamesaziyê yên statîk rasterast di asta mîkrokodê de dimeşînin",
+      "Pêdiviya wan bi tu sîstemên sarkirinê yên fîzîkî di dema xebatê de nîne"
+    ],
+    "answersTr": [
+      "Binlerce küçük çekirdekle matris ve tensör çarpımlarını devasa paralel (SIMD) yürütebilmesi",
+      "CPU çekirdeklerine göre çok daha devasa L1 ve L2 önbellek hiyerarşisi barındırması",
+      "Tüm statik programlama dillerini mikroişlemci seviyesinde doğrudan yorumlayabilmesi",
+      "Çalışma esnasında hiçbir şekilde fiziksel veya sıvı soğutma sistemine ihtiyaç duymaması"
+    ],
+    "correctAnswer": "Bi hezaran navendên piçûk hene ku operasyonên matrisan bi paralelî (SIMD) dikin",
+    "correctAnswerTr": "Binlerce küçük çekirdekle matris ve tensör çarpımlarını devasa paralel (SIMD) yürütebilmesi",
+    "explanation": "CPU az sayıda güçlü çekirdekle sıralı işlemlerde düşük gecikmeye odaklanırken, GPU binlerce çekirdekle matris işlemlerini yüksek paralellikte çözer.",
+    "explanationKu": "CPU ji bo latency û karên rêzbarî hatiye çêkirin; GPU ji bo throughput û hesibandina paralel a bi hezaran hejmaran hatiye mîmarkirin.",
+    "explanationTr": "CPU az sayıda güçlü çekirdekle sıralı işlemlerde düşük gecikmeye odaklanırken, GPU binlerce çekirdekle matris işlemlerini yüksek paralellikte çözer."
+  },
+  {
+    "id": "ds_teknoloji_0355",
+    "category": "Teknolojî",
+    "difficulty": 4,
+    "prompt": "Di sîstemên belavbûyî de hevgirtina \"Read-After-Write Consistency\" kîjan garantiyê dide bikarhêner?",
+    "promptTr": "Dağıtık sistemlerde \"Read-After-Write Consistency\" (Yazdıktan Sonra Okuma Tutarlılığı) kullanıcıya hangi garantiyi sağlar?",
+    "answers": [
+      "Hemû bikarhênerên din di heman saniyeyê de guhertina nû bê derengmayîn dibînin",
+      "Bikarhêner her tim guhertoya herî dawî ya ku wî bi xwe nû nivîsandiye dibîne",
+      "Daneyên nivîsandî qet li ser dîskê nayên tomarkirin ji bo lezkirina xwendinê",
+      "Destûra xwendina daneyan ji bo kesên derveyî pergalê bi awayekî giştî tê dayîn"
+    ],
+    "answersTr": [
+      "Sistemdeki diğer tüm bağımsız kullanıcıların bu güncellemeyi sıfır gecikmeyle anında görmesi",
+      "Kullanıcının kendi yaptığı bir güncellemeyi hemen ardından okuduğunda kesinlikle görebilmesi",
+      "Yazılan yeni verilerin disk üzerine kaydedilmeden doğrudan ağdan silinmesi garantisi",
+      "Sistem dışındaki yetkisiz üçüncü taraflara tüm veritabanını okuma izninin açılması"
+    ],
+    "correctAnswer": "Bikarhêner her tim guhertoya herî dawî ya ku wî bi xwe nû nivîsandiye dibîne",
+    "correctAnswerTr": "Kullanıcının kendi yaptığı bir güncellemeyi hemen ardından okuduğunda kesinlikle görebilmesi",
+    "explanation": "Replica lag nedeniyle kullanıcının kendi profilinde yaptığı değişikliği hemen ardından görememesi sorununu engeller; kendi yazmasını garanti okutur.",
+    "explanationKu": "Ev hevgirtin garantî dike ku bikarhêner rastî derengmayîna kopiyên din (replica lag) neyê gava ku rûpela xwe nû dike.",
+    "explanationTr": "Replica lag nedeniyle kullanıcının kendi profilinde yaptığı değişikliği hemen ardından görememesi sorununu engeller; kendi yazmasını garanti okutur."
+  },
+  {
+    "id": "ds_teknoloji_0356",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Mekanîzmaya ASLR (Address Space Layout Randomization) di asta pergala xebitandinê de çawa pêşî li êrîşkar digire?",
+    "promptTr": "İşletim sistemi düzeyindeki ASLR (Address Space Layout Randomization) mekanizması bellek istismarlarını nasıl engeller?",
+    "answers": [
+      "Hemû bîrgeha fîzîkî ya RAMê di navbera pêvajoyan de bi mifteyên veşartî şîfre dike",
+      "Destûra xebitandina bîrgeha derve ya ku bi riya USB hatiye girêdan bi temamî radike",
+      "Pêvajoyan neçar dike ku hemû navnîşanên xwe yên xeyalî di nav pelekî de tomar bikin",
+      "Cihê stak, hîp û pirtûkxaneyan di bîrgehê de di her destpêkirinê de bi awayekî rasthatî diguherîne"
+    ],
+    "answersTr": [
+      "Fiziksel RAM belleğin tamamını süreçler arasında donanımsal asimetrik anahtarlarla şifreleyerek",
+      "USB üzerinden bağlanan harici depolama aygıtlarının yürütülebilir kod çalıştırmasını engelleyerek",
+      "Süreçleri sanal bellek adres haritalarını herkese açık bir metin dosyasında yayınlamaya zorlayarak",
+      "Yığın (stack), öbek (heap) ve kütüphane adreslerini her çalıştırmada rastgele konumlara yerleştirerek"
+    ],
+    "correctAnswer": "Cihê stak, hîp û pirtûkxaneyan di bîrgehê de di her destpêkirinê de bi awayekî rasthatî diguherîne",
+    "correctAnswerTr": "Yığın (stack), öbek (heap) ve kütüphane adreslerini her çalıştırmada rastgele konumlara yerleştirerek",
+    "explanation": "ASLR bellek segmentlerinin başlangıç adreslerini rastgele belirleyerek saldırganın buffer overflow veya ROP zinciri oluşturmasını zorlaştırır.",
+    "explanationKu": "ASLR nahêle êrîşkar bizanibe koda xeternak an navnîşana fonksiyonê (mînak: system()) li kîjan navnîşanê ye.",
+    "explanationTr": "ASLR bellek segmentlerinin başlangıç adreslerini rastgele belirleyerek saldırganın buffer overflow veya ROP zinciri oluşturmasını zorlaştırır."
+  },
+  {
+    "id": "ds_teknoloji_0357",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Di sîstemên belavbûyî de ji bo bidestxistina hevgirtina xurt a kûorûmê (Quorum Consistency), kîjan şerta matematîkî divê pêk were?",
+    "promptTr": "Dağıtık sistemlerde güçlü kvorum tutarlılığı (Strong Quorum) sağlamak için okuma (R), yazma (W) ve düğüm sayısı (N) arasındaki matematiksel kural nedir?",
+    "answers": [
+      "W + R = N (Komên xwendin û nivîsandinê divê qet hevdu di sîstemê de nebînin)",
+      "W + R > N (Komên xwendin û nivîsandinê her tim herî kêm di yek girêkê de li hev dikevin)",
+      "W * R < N (Hejmara xwendinan divê her tim ji ya nivîsandinan pir kêmtir be)",
+      "W - R = 1 (Tenê yek pêşkêşker dikare di heman demê de bersiva daxwazan bide)"
+    ],
+    "answersTr": [
+      "W + R = N (Okuma ve yazma kümelerinin sistem genelinde birbirinden tamamen ayrık olması)",
+      "W + R > N (Yazma ve okuma kvorum kümelerinin en az bir ortak güncel düğümde kesişmesi)",
+      "W * R < N (Okuma operasyonlarının toplam sayısının yazma sayısından daima küçük kalması)",
+      "W - R = 1 (Aynı anda yalnızca tek bir sunucunun istemci isteklerine yanıt verebilmesi)"
+    ],
+    "correctAnswer": "W + R > N (Komên xwendin û nivîsandinê her tim herî kêm di yek girêkê de li hev dikevin)",
+    "correctAnswerTr": "W + R > N (Yazma ve okuma kvorum kümelerinin en az bir ortak güncel düğümde kesişmesi)",
+    "explanation": "Güvercin Yuvası İlkesi gereği W + R > N olduğunda okuma kumesi ile yazma kümesi en az bir düğümde kesişir ve en son sürüm kesin okunur.",
+    "explanationKu": "Gava W + R > N be, di nav koma xwendinê de herî kêm yek girêk heye ku guhertoya herî dawî ya nivîsandinê wergirtiye.",
+    "explanationTr": "Güvercin Yuvası İlkesi gereği W + R > N olduğunda okuma kumesi ile yazma kümesi en az bir düğümde kesişir ve en son sürüm kesin okunur."
+  },
+  {
+    "id": "ds_teknoloji_0358",
+    "category": "Teknolojî",
+    "difficulty": 5,
+    "prompt": "Komkerên çopê yên nûjen ên wekî ZGC û Shenandoah çawa dema rawestandina pergalê (Stop-The-World) dadixin bin milîçirkeyekê?",
+    "promptTr": "ZGC ve Shenandoah gibi ultra düşük gecikmeli çöp toplayıcılar Stop-The-World duraklamalarını milisaniyenin altına nasıl indirir?",
+    "answers": [
+      "Bi meşandina qonaxên nîşankirin û veguhestina tiştan a hemdem bi riya astengkerên bîrgehê (Load-Barriers)",
+      "Bi qedexekirina bikaranîna zêdetirî 1 GB bîrgeha RAMê di hemû cureyên sepanan de",
+      "Bi girtina pêvajoyê heta ku hemû tiştên bêkêr di bîrgehê de bi temamî bên hilweşandin",
+      "Bi veguhastina hemû operasyonên Garbage Collection bo ser dîska derve ya sîstemê"
+    ],
+    "answersTr": [
+      "İşaretleme ve nesne taşıma evrelerini uygulama çalışırken eşzamanlı yürüten bellek bariyerleri (Load-Barriers) kullanarak",
+      "Tüm kurumsal uygulamalarda RAM kullanımını donanımsal olarak maksimum 1 GB ile sınırlayarak",
+      "Bellekteki tüm nesneler tamamen temizlenene kadar ana işletim sistemi çekirdeğini dondurarak",
+      "Çöp toplama işlemlerinin tamamını ana bellekten çıkarıp yavaş harici disklere devrederek"
+    ],
+    "correctAnswer": "Bi meşandina qonaxên nîşankirin û veguhestina tiştan a hemdem bi riya astengkerên bîrgehê (Load-Barriers)",
+    "correctAnswerTr": "İşaretleme ve nesne taşıma evrelerini uygulama çalışırken eşzamanlı yürüten bellek bariyerleri (Load-Barriers) kullanarak",
+    "explanation": "ZGC ve Shenandoah renkli işaretçiler ve Load Barrier'lar sayesinde nesne taşıma ve sıkıştırma işini uygulama iş parçacıklarıyla eşzamanlı yürütür.",
+    "explanationKu": "ZGC tiştan di dema xebata bernamê de (concurrently) diguhezîne; eger bername dest bide tiştekî ku tê veguhastin, Load Barrier navnîşana wî nû dike.",
+    "explanationTr": "ZGC ve Shenandoah renkli işaretçiler ve Load Barrier'lar sayesinde nesne taşıma ve sıkıştırma işini uygulama iş parçacıklarıyla eşzamanlı yürütür."
   }
 ]
