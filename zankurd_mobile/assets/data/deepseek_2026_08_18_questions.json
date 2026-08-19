@@ -29970,5 +29970,989 @@
     "explanation": "Fîlm beriya êrîşa Amerîkayê ya li ser Iraqê (2003) jiyana zarokên kampa penaberan vedibêje.",
     "explanationKu": "Fîlm beriya êrîşa Amerîkayê ya li ser Iraqê (2003) jiyana zarokên kampa penaberan vedibêje.",
     "explanationTr": "Film, 2003 Irak Savaşı'nın hemen öncesinde sınır kampında yaşayan çocukların gözünden savaşı anlatır."
+  },
+  {
+    "id": "ds_dirok_0299",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Peymana Sevrê (1920) û Peymana Lozanê (1923) ji aliyê statuya kurdan ve bi çi ji hev cuda dibin?",
+    "promptTr": "Sevr (1920) ile Lozan (1923) antlaşmaları Kürtlerin statüsü açısından nasıl ayrışır?",
+    "answers": [
+      "Herduyan jî dewleteke kurdî ya serbixwe pêşnîyar kir",
+      "Herduyan jî statuya kurdan bi tevahî paşguh kir",
+      "Sevrê xala xweseriyê ya kurdan dihewand; Lozanê ew nehewand",
+      "Lozanê xweseriya kurdan misoger kir; Sevrê wê red kir"
+    ],
+    "answersTr": [
+      "İkisi de bağımsız bir Kürt devleti öngörüyordu",
+      "İkisi de Kürtlerin statüsünü tümüyle görmezden geldi",
+      "Sevr Kürtlere özerklik maddesi içeriyordu; Lozan içermedi",
+      "Lozan Kürtlere özerkliği güvence altına aldı; Sevr reddetti"
+    ],
+    "correctAnswer": "Sevrê xala xweseriyê ya kurdan dihewand; Lozanê ew nehewand",
+    "correctAnswerTr": "Sevr Kürtlere özerklik maddesi içeriyordu; Lozan içermedi",
+    "explanation": "Sevr Antlaşması Kürt bölgeleri için özerklik ve bağımsızlık maddeleri (madde 62-64) içeriyordu ancak yürürlüğe girmedi; 1923 Lozan Antlaşması ise Kürtlere özel bir statü tanımadı.",
+    "explanationTr": "Sevr Antlaşması Kürt bölgeleri için özerklik ve bağımsızlık maddeleri (madde 62-64) içeriyordu ancak yürürlüğe girmedi; 1923 Lozan Antlaşması ise Kürtlere özel bir statü tanımadı.",
+    "explanationKu": "Peymana Sevrê ji bo herêmên kurdan xalên xweseriyê dihewand, lê nehate meşandin; Peymana Lozanê statuyeke taybet neda kurdan."
+  },
+  {
+    "id": "ds_dirok_0300",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Şerefxanê Bidlîsî di sala 1597an de pirtûka xwe ya navdar \"Şerefname\" çima bi zimanê farisî nivîsand?",
+    "promptTr": "Şerefxanê Bidlîsî 1597'de yazdığı ünlü eseri \"Şerefname\"yi neden Farsça kaleme almıştır?",
+    "answers": [
+      "Zimanê kurdî di wê serdemê de bi fermana padîşah hatibû qedexekirin",
+      "Şerefxan tenê zimanê farisî dizanibû û bi kurdî nizanibû biaxive",
+      "Di wê serdemê de zimanê dîroknivîsî û dîplomasiyê yê herêmê farisî bû",
+      "Pirtûk tenê ji bo xwendevanên hindî û efxanî hatibû nivîsandin"
+    ],
+    "answersTr": [
+      "Kürtçe o dönemde padişah fermanıyla tamamen yasaklanmıştı",
+      "Şerefxan sadece Farsça biliyordu ve Kürtçe konuşamıyordu",
+      "O dönemde bölgenin ortak tarih yazımı ve saray diplomasisi dili Farsçaydı",
+      "Kitap sadece Hint ve Afgan okurlar için özel olarak yazılmıştı"
+    ],
+    "correctAnswer": "Di wê serdemê de zimanê dîroknivîsî û dîplomasiyê yê herêmê farisî bû",
+    "correctAnswerTr": "O dönemde bölgenin ortak tarih yazımı ve saray diplomasisi dili Farsçaydı",
+    "explanation": "16. yüzyılda Ortadoğu ve saray çevrelerinde prestijli tarih ve edebiyat dili Farsça olduğu için Şerefxan eserini Farsça yazmıştır.",
+    "explanationTr": "16. yüzyılda Ortadoğu ve saray çevrelerinde prestijli tarih ve edebiyat dili Farsça olduğu için Şerefxan eserini Farsça yazmıştır.",
+    "explanationKu": "Di sedsala 16an de zimanê hevpar ê dîrok û qesran farisî bû, lewma Şerefname bi vî zimanî hate nivîsandin."
+  },
+  {
+    "id": "ds_dirok_0301",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Piştî hilweşîna mîrektiyên kurd di nîveka sedsala 19an de, kîjan hêza civakî di serkêşiya civakê de derket pêş?",
+    "promptTr": "19. yüzyılın ortalarında Kürt mîrliklerinin tasfiyesinden sonra doğan otorite boşluğunda hangi toplumsal güç öne çıktı?",
+    "answers": [
+      "Şêx û rêberên terîqetên dînî yên mîna Neqşebendî û Qadirî",
+      "Bazirganên mezin ên ku ji bajarên Ewropayê vegeriyabûn",
+      "Partiyên siyasî yên nûjen ên ku li bajaran hatibûn damezrandin",
+      "Zanîngeh û saziyên akademîk ên herêmî yên serbixwe"
+    ],
+    "answersTr": [
+      "Nakşibendi ve Kadiri gibi dini tarikatların şeyhleri ve önderleri",
+      "Avrupa şehirlerinden dönen büyük ticaret burjuvazisi",
+      "Şehirlerde yeni kurulmuş olan modern siyasi partiler",
+      "Bölgede kurulan bağımsız üniversiteler ve akademik kurumlar"
+    ],
+    "correctAnswer": "Şêx û rêberên terîqetên dînî yên mîna Neqşebendî û Qadirî",
+    "correctAnswerTr": "Nakşibendi ve Kadiri gibi dini tarikatların şeyhleri ve önderleri",
+    "explanation": "Osmanlı'nın merkezileşme politikasıyla mîrlikler dağıtılınca yerel adalet ve liderlik boşluğunu tarikat şeyhleri doldurdu.",
+    "explanationTr": "Osmanlı'nın merkezileşme politikasıyla mîrlikler dağıtılınca yerel adalet ve liderlik boşluğunu tarikat şeyhleri doldurdu.",
+    "explanationKu": "Bi rakirina mîrektiyan re valahiya desthilatê ji aliyê şêxên terîqetan ve hate tijîkirin."
+  },
+  {
+    "id": "ds_dirok_0302",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Di sala 1514an de piştî Şerê Çaldiranê, di navbera Împaratoriya Osmanî û mîrên kurd de kîjan sîstema îdarî pêk hat?",
+    "promptTr": "1514 Çaldıran Savaşı sonrası İdris-i Bitlisi arabuluculuğunda Osmanlı ile Kürt mîrleri arasında hangi idari sistem kuruldu?",
+    "answers": [
+      "Hilweşandina hemû desthilatên herêmî û girêdana rasterast bi navendê ve",
+      "Avakirina parlamena hevpar a herêmî li bajarê Amedê",
+      "Sîstema mîrektiyên xweser û hikûmetên xwedî destûra navxweyî",
+      "Dabeşkirina herêmê bi ser parêzgarên ku ji Balkanê dihatin şandin"
+    ],
+    "answersTr": [
+      "Tüm yerel güçlerin yıkılarak doğrudan merkeze bağlanması",
+      "Diyarbakır merkezli ortak bir bölgesel parlamentonun açılması",
+      "İçişlerinde özerk \"hükümet\" ve \"yurtluk-ocaklık\" statülü mîrlik sistemi",
+      "Bölgenin tamamen Balkanlardan atanan valilere paylaştırılması"
+    ],
+    "correctAnswer": "Sîstema mîrektiyên xweser û hikûmetên xwedî destûra navxweyî",
+    "correctAnswerTr": "İçişlerinde özerk \"hükümet\" ve \"yurtluk-ocaklık\" statülü mîrlik sistemi",
+    "explanation": "Çaldıran sonrası Kürt beyliklerine içişlerinde serbestlik tanıyan hükümet ve ocaklık sancak statüsü verildi.",
+    "explanationTr": "Çaldıran sonrası Kürt beyliklerine içişlerinde serbestlik tanıyan hükümet ve ocaklık sancak statüsü verildi.",
+    "explanationKu": "Piştî şer, mîrektiyên kurd di karên xwe yên navxweyî de serbixwe man û bi sîstema hikûmetê hatin birêvebirin."
+  },
+  {
+    "id": "ds_dirok_0303",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Sedema sereke ya ku rojnameya \"Kurdistan\" (1898) navenda çapkirina xwe ji Qahîreyê bar kir Ewropayê çi bû?",
+    "promptTr": "1898'de çıkan ilk Kürt gazetesi \"Kurdistan\"ın Kahire'den Avrupa şehirlerine taşınmasının temel sebebi neydi?",
+    "answers": [
+      "Nebûna çapxaneyan û kêmxwendina zimanê kurdî li bajarê Qahîreyê",
+      "Zext û zora dîplomatîk a qesra Osmanî li ser rêveberiya Misrê",
+      "Daxwaza nivîskaran ji bo fêrbûna zimanên biyanî li Fransayê",
+      "Şerê navxweyî yê ku di wê serdemê de li bakurê Afrîkayê qewimî"
+    ],
+    "answersTr": [
+      "Kahire'de hiçbir matbaanın bulunmaması ve Kürtçe okur olmaması",
+      "Osmanlı Sarayı'nın Mısır Hıdivliği üzerindeki diplomatik baskısı ve sansür",
+      "Yazarların Fransa'da yabancı dil öğrenme isteği ve tercihi",
+      "O dönemde Kuzey Afrika'da patlak veren büyük iç savaş"
+    ],
+    "correctAnswer": "Zext û zora dîplomatîk a qesra Osmanî li ser rêveberiya Misrê",
+    "correctAnswerTr": "Osmanlı Sarayı'nın Mısır Hıdivliği üzerindeki diplomatik baskısı ve sansür",
+    "explanation": "II. Abdülhamid yönetiminin baskıları sonucu Mikdad Midhat ve Abdurrahman Bedirxan gazeteyi Cenevre, Londra ve Folkestone'a taşımak zorunda kaldı.",
+    "explanationTr": "II. Abdülhamid yönetiminin baskıları sonucu Mikdad Midhat ve Abdurrahman Bedirxan gazeteyi Cenevre, Londra ve Folkestone'a taşımak zorunda kaldı.",
+    "explanationKu": "Ji ber zextên siltanê osmanî, rojname neçar ma navenda xwe bibe bajarên Ewropayê yên mîna Cenevre û Londonê."
+  },
+  {
+    "id": "ds_dirok_0304",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Sedema sereke ya navneteweyî ya hilweşîna Komara Kurdistanê li Mehabadê (1946) çi bû?",
+    "promptTr": "1946'da kurulan Mahabad Kürt Cumhuriyeti'nin yıkılmasında uluslararası belirleyici jeopolitik etken neydi?",
+    "answers": [
+      "Êrîşa rasterast a hêzên hevalbend ên Brîtanya û Fransayê li dijî bajêr",
+      "Bikaranîna çekên atomî ji aliyê dewleta Îranê ve li dijî komarê",
+      "Vekişîna hêzên Sovyetê ji Îranê piştî peymana petrolê ya bi Tehranê re",
+      "Koçkirina tevahiya gelê Mehabadê ber bi welatên Ewropayê ve"
+    ],
+    "answersTr": [
+      "İngiltere ve Fransa ordularının doğrudan şehre askeri çıkarma yapması",
+      "İran ordusunun cumhuriyete karşı atom silahı kullanması",
+      "Sovyetler Birliği'nin Tahran ile petrol anlaşması yapıp Kızıl Ordu'yu çekmesi",
+      "Mahabad halkının tamamının aniden Avrupa ülkelerine göç etmesi"
+    ],
+    "correctAnswer": "Vekişîna hêzên Sovyetê ji Îranê piştî peymana petrolê ya bi Tehranê re",
+    "correctAnswerTr": "Sovyetler Birliği'nin Tahran ile petrol anlaşması yapıp Kızıl Ordu'yu çekmesi",
+    "explanation": "Sovyetler'in İran Başbakanı Kavam ile petrol imtiyazı anlaşması yapıp çekilmesi, Mahabad'ın Tahran ordusu karşısında yalnız kalarak yıkılmasına yol açtı.",
+    "explanationTr": "Sovyetler'in İran Başbakanı Kavam ile petrol imtiyazı anlaşması yapıp çekilmesi, Mahabad'ın Tahran ordusu karşısında yalnız kalarak yıkılmasına yol açtı.",
+    "explanationKu": "Piştî ku leşkerên Yekîtiya Sovyetê ji ber peymana petrolê vekişiyan, Komara Mehabadê bê piştgirî ma û hilweşiya."
+  },
+  {
+    "id": "ds_dirok_0305",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Mîr Celadet Alî Bedirxan dema kovara \"Hawar\"ê derxist (1932), çima alfabeya latînî tercîh kir?",
+    "promptTr": "Mîr Celadet Alî Bedirxan 1932'de \"Hawar\" dergisini yayımlarken Latin alfabesini seçmesinin temel amacı neydi?",
+    "answers": [
+      "Ji ber fonetîka zimanê kurdî û pêdiviya nûjenkirina perwerdehiyê",
+      "Ji ber ku alfabeya erebî bi temamî li Rojhilata Navîn hatibû qedexekirin",
+      "Ji bo ku kovar tenê ji aliyê xwendevanên ewropî ve were fêmkirin",
+      "Bi fermana fermî ya dewleta Fransayê ya li ser mandateriya Sûriyê"
+    ],
+    "answersTr": [
+      "Kürtçenin ses yapısına uygunluk ve modern eğitim standardı oluşturma",
+      "Arap alfabesinin Ortadoğu genelinde tamamen yasaklanmış olması",
+      "Derginin yalnızca Avrupalı araştırmacılar tarafından anlaşılmasını istemesi",
+      "Fransa mandasının bu konuda çıkardığı zorunlu resmi kararname"
+    ],
+    "correctAnswer": "Ji ber fonetîka zimanê kurdî û pêdiviya nûjenkirina perwerdehiyê",
+    "correctAnswerTr": "Kürtçenin ses yapısına uygunluk ve modern eğitim standardı oluşturma",
+    "explanation": "Celadet Bedirxan, Kürtçenin zengin sesli harflerini tam karşılayan, fonetik ve pratik bir alfabe oluşturmak için Latin harflerini uyarlamıştır.",
+    "explanationTr": "Celadet Bedirxan, Kürtçenin zengin sesli harflerini tam karşılayan, fonetik ve pratik bir alfabe oluşturmak için Latin harflerini uyarlamıştır.",
+    "explanationKu": "Celadet Bedirxan ji bo ku dengên kurdî bi awayekî hêsan û fonetîk werin nivîsandin alfabeya latînî bi kar anî."
+  },
+  {
+    "id": "ds_dirok_0306",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Tevgera Şêx Ubeydullahê Nehrî (1880) bi kîjan taybetmendiya xwe ji serhildanên beriya xwe cuda dibe?",
+    "promptTr": "1880 Şeyh Ubeydullah Nehri hareketi kendisinden önceki yerel isyanlardan hangi yönüyle ayrılır?",
+    "answers": [
+      "Tenê ji bo kêmkirina bacên çandiniyê li gundên herêmî derketibû",
+      "Yekem car ji aliyê leşkerên biyanî yên ewropî ve hatibû birêvebirin",
+      "Cara yekem daxwaza yekîtiyeke berfireh a neteweyî li hemberî du dewletan kir",
+      "Armanca wê tenê parastina sînorên deryayî yên împaratoriyê bû"
+    ],
+    "answersTr": [
+      "Sadece yerel köylerdeki tarım vergilerinin indirilmesi amacıyla çıkması",
+      "Tarihte ilk kez yabancı Avrupalı subaylar tarafından komuta edilmesi",
+      "İlk kez iki devlete (Osmanlı ve Kaçar) karşı birleşik ulusal birlik talep etmesi",
+      "Amacının sadece imparatorluğun deniz sınırlarını korumakla sınırlı olması"
+    ],
+    "correctAnswer": "Cara yekem daxwaza yekîtiyeke berfireh a neteweyî li hemberî du dewletan kir",
+    "correctAnswerTr": "İlk kez iki devlete (Osmanlı ve Kaçar) karşı birleşik ulusal birlik talep etmesi",
+    "explanation": "Şeyh Ubeydullah, aşiret sınırlarını aşarak hem Osmanlı hem Kaçar idaresindeki Kürtleri birleştirip bağımsız/özerk bir yönetim kurmayı hedefleyen ilk modern hareket sayılır.",
+    "explanationTr": "Şeyh Ubeydullah, aşiret sınırlarını aşarak hem Osmanlı hem Kaçar idaresindeki Kürtleri birleştirip bağımsız/özerk bir yönetim kurmayı hedefleyen ilk modern hareket sayılır.",
+    "explanationKu": "Tevgera Şêx Ubeydullah ji bo yekîtiya kurdan a li hemberî her du împaratoriyan pêngaveke neteweyî ya mezin bû."
+  },
+  {
+    "id": "ds_dirok_0307",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Piştî tevgera 1925an, bi rêya \"Plana Îslahata Şerqê\" kîjan polîtîka li herêmê hate meşandin?",
+    "promptTr": "1925 Şeyh Said Hareketi sonrası hazırlanan \"Şark Islahat Planı\" ile bölgede hangi yönetim modeli uygulandı?",
+    "answers": [
+      "Dayîna mafên xweseriyê û vekirina dibistanên fermî yên kurdî",
+      "Sîstema mufetîşiyên giştî, qedexekirina ziman û koçberkirina bi zorê",
+      "Dabeşkirina zeviyên mezin li ser cotkarên xizan bi awayekî bêpere",
+      "Avakirina kargehên pîşesaziyê û vekirina zanîngehên herêmî"
+    ],
+    "answersTr": [
+      "Bölgeye geniş özerklik tanınması ve resmi Kürtçe okulların açılması",
+      "Umumi Müfettişlikler sistemi, dilde yasaklar ve zorunlu iskan politikası",
+      "Büyük arazilerin topraksız köylülere bedelsiz olarak dağıtılması",
+      "Ağır sanayi fabrikalarının kurulması ve yerel üniversitelerin açılması"
+    ],
+    "correctAnswer": "Sîstema mufetîşiyên giştî, qedexekirina ziman û koçberkirina bi zorê",
+    "correctAnswerTr": "Umumi Müfettişlikler sistemi, dilde yasaklar ve zorunlu iskan politikası",
+    "explanation": "Şark Islahat Planı (1925) ile Umumi Müfettişlikler kuruldu, kamu alanında Kürtçe yasaklandı ve ileri gelen ailelere zorunlu iskan uygulandı.",
+    "explanationTr": "Şark Islahat Planı (1925) ile Umumi Müfettişlikler kuruldu, kamu alanında Kürtçe yasaklandı ve ileri gelen ailelere zorunlu iskan uygulandı.",
+    "explanationKu": "Bi vê planê re mufetîşiyên giştî hatin damezrandin, qedexeyên li ser ziman zêde bûn û malbatên navdar hatin sirgûnkirin."
+  },
+  {
+    "id": "ds_dirok_0308",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Dewleta Merwaniyan (983-1085) ji aliyê navenda desthilatdariyê ve ji Şedadiyan çawa cuda dibe?",
+    "promptTr": "Merwani Devleti (983-1085) hükmettiği coğrafi merkez bakımından Şeddadilerden nasıl ayrılır?",
+    "answers": [
+      "Merwanî li Qahîreyê bûn; Şedadî li Bexdayê desthilatdar bûn",
+      "Merwanî li Xorasana Îranê bûn; Şedadî li Şamê serwer bûn",
+      "Merwanî li Amed û Meyafariqînê bûn; Şedadî li Gence û Aniyê hukum dikirin",
+      "Merwanî li Stenbolê bûn; Şedadî li bajarê Mûsilê bi cih bûn"
+    ],
+    "answersTr": [
+      "Mervaniler Kahire'deydi; Şeddadiler Bağdat merkezli hüküm sürdü",
+      "Mervaniler Horasan bölgesindeydi; Şeddadiler Şam merkezliydi",
+      "Mervaniler Diyarbakır-Silvan merkezliydi; Şeddadiler Gence ve Ani merkezli hükmetti",
+      "Mervaniler İstanbul'daydı; Şeddadiler Musul şehrinde yerleşikti"
+    ],
+    "correctAnswer": "Merwanî li Amed û Meyafariqînê bûn; Şedadî li Gence û Aniyê hukum dikirin",
+    "correctAnswerTr": "Mervaniler Diyarbakır-Silvan merkezliydi; Şeddadiler Gence ve Ani merkezli hükmetti",
+    "explanation": "Mervaniler Diyarbekir ve Silvan merkezli zengin bir emirlik kurarken, Şeddadiler Kafkasya'da Gence, Dvin ve Ani'de hüküm sürmüştür.",
+    "explanationTr": "Mervaniler Diyarbakır ve Silvan merkezli zengin bir emirlik kurarken, Şeddadiler Kafkasya'da Gence, Dvin ve Ani'de hüküm sürmüştür.",
+    "explanationKu": "Merwanî li Amed û Silîvayê serwer bûn, lê Şedadî li herêma Qefqasyayê li Gence û Aniyê hukum dikirin."
+  },
+  {
+    "id": "ds_dirok_0309",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Serkeftina Selahedînê Eyûbî ya di Şerê Hîtînê de (1187) kîjan encama dîrokî ya mezin bi xwe re anî?",
+    "promptTr": "Selahaddin Eyyubi'nin 1187 Hıttin Savaşı zaferinin en önemli tarihi sonucu ne oldu?",
+    "answers": [
+      "Qudis ji destê Xaçperestan derket û kete bin kontrola Eyûbiyan",
+      "Şerê Cîhanî yê Yekem bi peymaneke aştiyê bi dawî bû",
+      "Împaratoriya Bîzansê bi temamî hilweşiya û împaratorî qediya",
+      "Hemû keştiyên deryayî yên deryaya Spî ji aliyê leşkeran ve hatin şewitandin"
+    ],
+    "answersTr": [
+      "Kudüs Haçlıların elinden geri alınarak Eyyubi hakimiyetine girdi",
+      "Birinci Dünya Savaşı kapsamlı bir barış anlaşmasıyla bitti",
+      "Bizans İmparatorluğu tamamen yıkılarak tarihe karıştı",
+      "Akdeniz'deki tüm donanma gemileri askerler tarafından yakıldı"
+    ],
+    "correctAnswer": "Qudis ji destê Xaçperestan derket û kete bin kontrola Eyûbiyan",
+    "correctAnswerTr": "Kudüs Haçlıların elinden geri alınarak Eyyubi hakimiyetine girdi",
+    "explanation": "Hıttin Savaşı'nda Haçlı ordusunu yenen Selahaddin Eyyubi, 88 yıllık Haçlı işgaline son vererek Kudüs'ü geri almıştır.",
+    "explanationTr": "Hıttin Savaşı'nda Haçlı ordusunu yenen Selahaddin Eyyubi, 88 yıllık Haçlı işgaline son vererek Kudüs'ü geri almıştır.",
+    "explanationKu": "Bi serkeftina Hîtînê re serdema serweriya xaçperestan a li Qudsê bi dawî bû û bajar hate azadkirin."
+  },
+  {
+    "id": "ds_dirok_0310",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Cemiyeta Xoybûnê (1927) ji aliyê pêkhateya xwe ve kîjan taybetmendiya nû anî tevgera kurdî?",
+    "promptTr": "1927'de kurulan Xoybûn Cemiyeti örgütsel yapısı bakımından Kürt hareketine hangi yeni niteliği kazandırdı?",
+    "answers": [
+      "Tenê ji xwendekarên zanîngehan pêk dihat û qet têkiliya wê bi eşîran re nîbû",
+      "Tifaqa rêxistinî ya di navbera rewşenbîrên modern û serokên eşîran de",
+      "Yekem partiya karkeran bû ku li kargehên mezin ên bajaran ava bûbû",
+      "Rêxistineke leşkerî ya fermî bû ku girêdayî dewleta Fransayê dixebitî"
+    ],
+    "answersTr": [
+      "Yalnızca üniversite öğrencilerinden oluşup aşiretleri tamamen dışlaması",
+      "Modern aydınlar ile aşiret/askeri liderlerin ilk organize ittifakı olması",
+      "Şehirlerdeki büyük fabrikalarda kurulan ilk işçi ve emekçi partisi olması",
+      "Fransız ordusuna doğrudan bağlı olarak çalışan resmi bir askeri lejyon olması"
+    ],
+    "correctAnswer": "Tifaqa rêxistinî ya di navbera rewşenbîrên modern û serokên eşîran de",
+    "correctAnswerTr": "Modern aydınlar ile aşiret/askeri liderlerin ilk organize ittifakı olması",
+    "explanation": "Beyrut'ta kurulan Xoybûn, Bedirxaniler gibi modern aydınlar ile Ağrı İsyanı'nı yürüten yerel askeri önderleri tek örgütte birleştirdi.",
+    "explanationTr": "Beyrut'ta kurulan Xoybûn, Bedirxaniler gibi modern aydınlar ile Ağrı İsyanı'nı yürüten yerel askeri önderleri tek örgütte birleştirdi.",
+    "explanationKu": "Xoybûnê rewşenbîrên bajêr û serokên eşîran di bin banê rêxistineke hevpar a neteweyî de anîn cem hev."
+  },
+  {
+    "id": "ds_dirok_0311",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Peymana Cezayîrê ya sala 1975an çawa bû sedema têkçûna rêkeftina xweseriyê ya 1970yî li Başûr?",
+    "promptTr": "1975 Cezayir Antlaşması, Irak'taki 1970 Özerklik Anlaşması sürecinin fiilen çökmesine nasıl yol açtı?",
+    "answers": [
+      "Dewleta Iraqê bi temamî teslîmî hêzên pêşmerge yên li çiyayan bû",
+      "Neteweyên Yekbûyî biryar da ku hemû çekên giran ji herêmê derxîne",
+      "Herêm bi fermî tevlî axa dewleta Siûdiyê hate kirin",
+      "Şahê Îranê li hemberî Şetulerreb piştgiriya xwe ya bo kurdan rawestand"
+    ],
+    "answersTr": [
+      "Irak ordusunun dağlardaki peşmerge güçlerine tamamen teslim olmasıyla",
+      "Birleşmiş Milletler'in bölgedeki tüm ağır silahları toplama kararıyla",
+      "Bölgenin resmi olarak Suudi Arabistan topraklarına bağlanmasıyla",
+      "İran Şahı'nın Şattülarap sınır tavizi karşılığı Kürtlere yardımı kesmesiyle"
+    ],
+    "correctAnswer": "Şahê Îranê li hemberî Şetulerreb piştgiriya xwe ya bo kurdan rawestand",
+    "correctAnswerTr": "İran Şahı'nın Şattülarap sınır tavizi karşılığı Kürtlere yardımı kesmesiyle",
+    "explanation": "Saddam ile Şah'ın Şattülarap anlaşması sonrası sınır kapatıldı; lojistik ve askeri destek kesilince 1975'te eylül devrimi kesintiye uğradı.",
+    "explanationTr": "Saddam ile Şah'ın Şattülarap anlaşması sonrası sınır kapatıldı; lojistik ve askeri destek kesilince 1975'te eylül devrimi kesintiye uğradı.",
+    "explanationKu": "Bi peymana Cezayîrê re Îranê piştgiriya xwe birî û rê li ber têkçûna tevgerê vekir."
+  },
+  {
+    "id": "ds_dirok_0312",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Serhildana Ebdurehman Paşayê Baban (1806) di dîroka mîrektiyên kurd de çima xwedî cihekî girîng e?",
+    "promptTr": "1806 Baban Mîrliği (Abdurrahman Paşa) isyanı Kürt mîrlikleri tarihinde neden önemli bir dönüm noktasıdır?",
+    "answers": [
+      "Dawîn şerê mezin ê li dijî hêzên dagirker ên Romayê bû",
+      "Serhildaneke aborî bû ku tenê ji bo bacên gomrukê yên bajêr derketibû",
+      "Yekem berteka çekdarî ya sedsala 19an bû li dijî navendîbûna Osmaniyan",
+      "Yekem serhildana xwendekaran bû ku li zanîngeha Bexdayê dest pê kiribû"
+    ],
+    "answersTr": [
+      "Kadim Roma işgal güçlerine karşı verilen son büyük askeri meydan savaşı olması",
+      "Yalnızca şehir içi gümrük vergilerinin düşürülmesini amaçlayan iktisadi bir protesto olması",
+      "Osmanlı merkezileşme politikasına karşı 19. yüzyıl mîrlik isyanlarının ilk dalgası olması",
+      "Bağdat Üniversitesi'nde başlayan ilk organize öğrenci boykotu niteliği taşıması"
+    ],
+    "correctAnswer": "Yekem berteka çekdarî ya sedsala 19an bû li dijî navendîbûna Osmaniyan",
+    "correctAnswerTr": "Osmanlı merkezileşme politikasına karşı 19. yüzyıl mîrlik isyanlarının ilk dalgası olması",
+    "explanation": "Bağdat Valisi'nin Baban mîrlerinin iç işlerine müdahalesi sonucu başlayan isyan, 19. yüzyıldaki mîrlik dirençlerinin başlangıcı sayılır.",
+    "explanationTr": "Bağdat Valisi'nin Baban mîrlerinin iç işlerine müdahalesi sonucu başlayan isyan, 19. yüzyıldaki mîrlik dirençlerinin başlangıcı sayılır.",
+    "explanationKu": "Serhildana Babanan di sedsala 19an de pêngava yekem a li dijî destwerdana waliyên osmanî bû."
+  },
+  {
+    "id": "ds_dirok_0313",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Girîngiya dîrokî ya pêşgotina Ehmedê Xanî ya di \"Mem û Zîn\"ê de (1692) li ser çi ye?",
+    "promptTr": "Ehmedê Xanî'nin \"Mem û Zîn\" (1692) eserindeki manzum önsözün tarihi ve siyasi önemi nedir?",
+    "answers": [
+      "Ravekirina rêzikên bazirganiya hevrîşimê ya li ser Rêya Hevrîşimê",
+      "Şîretên li ser çandiniya berhemdar a li zozan û geliyên herêmê",
+      "Pesindana desthilatdariya padîşahên herêmî yên serdema kevnar",
+      "Rexneya li ser nebûna yekîtiya mîran û dabeşbûna di navbera du dewletan de"
+    ],
+    "answersTr": [
+      "İpek Yolu üzerindeki kervan ticaretinin gümrük kurallarını açıklaması",
+      "Yayla ve vadilerdeki tarımsal verimliliği artırma yöntemlerini anlatması",
+      "Eski çağlardaki bölge hükümdarlarının mutlak otoritesini övmesi",
+      "Kürt mîrlerinin birliksizliğini ve iki imparatorluk arasındaki bölünmüşlüğü eleştirmesi"
+    ],
+    "correctAnswer": "Rexneya li ser nebûna yekîtiya mîran û dabeşbûna di navbera du dewletan de",
+    "correctAnswerTr": "Kürt mîrlerinin birliksizliğini ve iki imparatorluk arasındaki bölünmüşlüğü eleştirmesi",
+    "explanation": "Xanî, önsözde Kürt beylerinin ittifak kuramamasını ve Osmanlı-Safevi arasında sıkışmasını açıkça eleştiren ilk düşünürlerdendir.",
+    "explanationTr": "Xanî, önsözde Kürt beylerinin ittifak kuramamasını ve Osmanlı-Safevi arasında sıkışmasını açıkça eleştiren ilk düşünürlerdendir.",
+    "explanationKu": "Ehmedê Xanî di pêşgotina xwe de gazincan ji bêtifaqiya mîran dike û banga yekîtiyê li gelê xwe dike."
+  },
+  {
+    "id": "ds_dirok_0314",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Di Konferansa Aştiyê ya Parîsê de (1919) Şerîf Paşa kîjan rola dîplomatîk lîst?",
+    "promptTr": "1919 Paris Barış Konferansı'nda Şerif Paşa'nın üstlendiği temel diplomatik misyon neydi?",
+    "answers": [
+      "Fermandariya hemû leşkerên hevalbend ên li herêma rojhilat kir",
+      "Nûnertiya daxwazên maf û serxwebûna kurdan li pêşberî hêzên cîhanî kir",
+      "Peymana teslîmbûnê ya dewleta Osmanî bi tenê îmze kir",
+      "Rêveberiya aborî ya bankên navneteweyî li herêmê girt ser xwe"
+    ],
+    "answersTr": [
+      "Doğu cephesindeki tüm müttefik orduların başkomutanlığını yürüttü",
+      "Uluslararası güçler nezdinde Kürtlerin kendi kaderini tayin ve temsil hakkını savundu",
+      "Osmanlı İmparatorluğu'nun teslimiyet anlaşmasını tek başına imzaladı",
+      "Bölgedeki uluslararası bankaların mali yönetim kurulunu üstlendi"
+    ],
+    "correctAnswer": "Nûnertiya daxwazên maf û serxwebûna kurdan li pêşberî hêzên cîhanî kir",
+    "correctAnswerTr": "Uluslararası güçler nezdinde Kürtlerin kendi kaderini tayin ve temsil hakkını savundu",
+    "explanation": "Kürt Teali Cemiyeti temsilcisi olarak Paris'e giden Şerif Paşa, haritalar ve muhtıralar sunarak Kürt haklarını ilk kez uluslararası bir masada savundu.",
+    "explanationTr": "Kürt Teali Cemiyeti temsilcisi olarak Paris'e giden Şerif Paşa, haritalar ve muhtıralar sunarak Kürt haklarını ilk kez uluslararası bir masada savundu.",
+    "explanationKu": "Şerîf Paşa li Parîsê bi dîplomatên navneteweyî re hevdîtin kirin û daxwazên gelê kurd pêşkêş kirin."
+  },
+  {
+    "id": "ds_dirok_0315",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Armanca sereke ya rapora \"Ziya Gökalp\" a bi navê \"Kürt Aşiretleri Hakkında Sosyolojik Tetkikler\" (1922) çi bû?",
+    "promptTr": "Ziya Gökalp'in \"Kürt Aşiretleri Hakkında Sosyolojik Tetkikler\" (1922) araştırmasının temel hedefi neydi?",
+    "answers": [
+      "Parastina zimanê kurdî û pêşxistina wêjeya klasîk a herêmê",
+      "Avakirina sîstema aborî ya xweser ji bo cotkarên herêmê",
+      "Nivîsandina dîroka serbixwe ya mîrektiyên kevnar ên serdema navîn",
+      "Naskirina pêkhateya eşîran ji bo diyarkirina polîtîkayên rêveberî û asîmîlasyonê"
+    ],
+    "answersTr": [
+      "Kürtçenin lehçelerini koruma altına alıp klasik edebiyatı geliştirmek",
+      "Bölge çiftçileri için bağımsız ve yerel bir tarım ekonomisi kurmak",
+      "Orta Çağ Kürt mîrliklerinin bağımsız tarih yazımını tamamlamak",
+      "Aşiret yapılarını inceleyerek yeni devlet için yönetim ve asimilasyon stratejisi sunmak"
+    ],
+    "correctAnswer": "Naskirina pêkhateya eşîran ji bo diyarkirina polîtîkayên rêveberî û asîmîlasyonê",
+    "correctAnswerTr": "Aşiret yapılarını inceleyerek yeni devlet için yönetim ve asimilasyon stratejisi sunmak",
+    "explanation": "Gökalp, Cumhuriyet kurulurken bölge aşiretlerinin sosyolojik yapısını raporlayarak devletin tek-ulus politikalarına veri hazırlamıştır.",
+    "explanationTr": "Gökalp, Cumhuriyet kurulurken bölge aşiretlerinin sosyolojik yapısını raporlayarak devletin tek-ulus politikalarına veri hazırlamıştır.",
+    "explanationKu": "Ev rapor ji bo ku dewlet civaka eşîran ji nêz ve binase û li gorî wê polîtîkayên xwe diyar bike hate amadekirin."
+  },
+  {
+    "id": "ds_dirok_0316",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Cemiyeta Azadiyê (1923, bi serokatiya Xalid Begê Cibirî) ji rêxistinên beriya xwe bi çi cuda dibû?",
+    "promptTr": "1923'te kurulan Azadî Cemiyeti (Cibranlı Halit Bey önderliğinde) önceki örgütlerden nasıl ayrışıyordu?",
+    "answers": [
+      "Tenê li derveyî welat bi awayekî qanûnî û wekî klûbeke sporê dixebitî",
+      "Rêxistineke dînî bû ku tenê ji bo avakirina medreseyan xebat dimeşand",
+      "Bi awayekî veşartî ji aliyê efserên leşkerî û serokên herêmî ve hatibû avakirin",
+      "Girêdayî partiyên desthilatdar ên li paytexta Stenbolê bû"
+    ],
+    "answersTr": [
+      "Yalnızca yurt dışında yasal bir gençlik ve spor kulübü olarak faaliyet yürütmesi",
+      "Sadece yeni medreseler açmayı hedefleyen dini bir yardım derneği olması",
+      "Kürt subaylar ve yerel liderler tarafından gizli/askeri bir teşkilat olarak kurulması",
+      "İstanbul'daki iktidar partilerine resmi olarak göbekten bağlı bulunması"
+    ],
+    "correctAnswer": "Bi awayekî veşartî ji aliyê efserên leşkerî û serokên herêmî ve hatibû avakirin",
+    "correctAnswerTr": "Kürt subaylar ve yerel liderler tarafından gizli/askeri bir teşkilat olarak kurulması",
+    "explanation": "Azadî, İstanbul merkezli cemiyetlerden farklı olarak doğrudan bölgedeki ordu subayları ve aşiret liderlerinin kurduğu illegal bir kadro örgütüydü.",
+    "explanationTr": "Azadî, İstanbul merkezli cemiyetlerden farklı olarak doğrudan bölgedeki ordu subayları ve aşiret liderlerinin kurduğu illegal bir kadro örgütüydü.",
+    "explanationKu": "Cemiyeta Azadiyê li herêmê ji aliyê efserên leşkerî û rêberên herêmî ve bi awayekî nehênî hate birêxistinkirin."
+  },
+  {
+    "id": "ds_dirok_0317",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Taktîka leşkerî ya Îhsan Nûrî Paşa ya di Berxwedana Agiriyê de (1927-1930) çi bû?",
+    "promptTr": "İhsan Nuri Paşa'nın Ağrı İsyanı'nda (1927-1930) uyguladığı temel askeri strateji neydi?",
+    "answers": [
+      "Tenê şerê gerîlla yê takekesî bêyî ti navend û fermandariyekê",
+      "Bikaranîna keştiyên şer ên li ser Gola Wanê li dijî hêzên esmanî",
+      "Teslîmkirina hemû çekan û meşandina xebatên tenê dîplomatîk",
+      "Bikaranîna perwerdehiya leşkerî ya nûjen û avakirina xetên parastinê li çiyê"
+    ],
+    "answersTr": [
+      "Hiçbir merkez ve hiyerarşi olmadan tamamen dağınık gerilla taktiği izlemek",
+      "Van Gölü'ndeki savaş gemileriyle hava saldırılarına karşı koymak",
+      "Tüm silahları teslim edip sadece diplomatik temaslarla sonuç aramaya çalışmak",
+      "Modern askeri nizamı aşiret kuvvetlerine uygulayıp dağda tahkimatlı hatlar kurmak"
+    ],
+    "correctAnswer": "Bikaranîna perwerdehiya leşkerî ya nûjen û avakirina xetên parastinê li çiyê",
+    "correctAnswerTr": "Modern askeri nizamı aşiret kuvvetlerine uygulayıp dağda tahkimatlı hatlar kurmak",
+    "explanation": "Eski bir Osmanlı kurmay subayı olan İhsan Nuri Paşa, aşiret savaşçılarını düzenli ordu disipliniyle eğiterek Ağrı Dağı'nda mevzi savaşı yürütmüştür.",
+    "explanationTr": "Eski bir Osmanlı kurmay subayı olan İhsan Nuri Paşa, aşiret savaşçılarını düzenli ordu disipliniyle eğiterek Ağrı Dağı'nda mevzi savaşı yürütmüştür.",
+    "explanationKu": "Îhsan Nûrî Paşa zanîna xwe ya leşkerî li çiyê bi kar anî û hêzên berxwedanê bi rêkûpêk birêxistin kir."
+  },
+  {
+    "id": "ds_dirok_0318",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Qanûna Tunceliyê ya sala 1935an beriya Operasyona Dêrsimê ya 1937-1938an kîjan guherîna hiqûqî anî?",
+    "promptTr": "1937-38 Dersim Harekâtı öncesinde çıkarılan 1935 Tunceli Kanunu nasıl bir hukuki rejim getirdi?",
+    "answers": [
+      "Hemû zevî bi awayekî azad li ser xelkê herêmê hatin parvekirin",
+      "Bajar kire bin rêveberiya parêzgarê leşkerî yê xwedî desthilatên awarte",
+      "Ji bo herêmê mafê hilbijartina parlamena xweser hate nasîn",
+      "Hemû qereqolên leşkerî ji herêmê hatin derxistin û sîvîlîzasyon pêş ket"
+    ],
+    "answersTr": [
+      "Tüm tarım arazilerini yerel halka bedelsiz ve eşit şekilde devretti",
+      "Bölgeyi olağanüstü geniş yetkilerle donatılmış askeri bir korgeneral valiliğine bağladı",
+      "Bölge halkına kendi yerel meclisini serbestçe seçme özerkliği tanıdı",
+      "Bölgedeki tüm askeri karakolları kaldırarak tam sivil yönetime geçti"
+    ],
+    "correctAnswer": "Bajar kire bin rêveberiya parêzgarê leşkerî yê xwedî desthilatên awarte",
+    "correctAnswerTr": "Bölgeyi olağanüstü geniş yetkilerle donatılmış askeri bir korgeneral valiliğine bağladı",
+    "explanation": "2884 sayılı Tunceli Kanunu ile il idaresi Korgeneral Abdullah Alpdoğan'a bağlandı; idam, sürgün ve yargı yetkileri tek elde toplandı.",
+    "explanationTr": "2884 sayılı Tunceli Kanunu ile il idaresi Korgeneral Abdullah Alpdoğan'a bağlandı; idam, sürgün ve yargı yetkileri tek elde toplandı.",
+    "explanationKu": "Bi vê qanûnê re desthilatên dadwerî û rêveberiyê yên awarte dan destê qumandarê leşkerî."
+  },
+  {
+    "id": "ds_dirok_0319",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Di sedsala 16an de piştî kêmkirina xetereya Sefewiyan, helwesta Împaratoriya Osmanî li hemberî mîrektiyên kurd çawa guherî?",
+    "promptTr": "16. yüzyılın sonlarında Safevi tehdidi azaldıkça Osmanlı'nın Kürt mîrliklerine yaklaşımı nasıl evrildi?",
+    "answers": [
+      "Hemû mîrektî kirin dewletên serbixwe yên xwedî sînorên fermî",
+      "Bacên herêmî bi temamî betal kirin û xweseriya wan zêdetir kirin",
+      "Paytexta împaratoriyê ji Stenbolê veguhast bajarê Amedê",
+      "Gave bi gave hewl da desthilatdariya xweser a mîran kêm bike û navendî bike"
+    ],
+    "answersTr": [
+      "Tüm beylikleri uluslararası tanınmış bağımsız devletler haline getirdi",
+      "Bölgedeki tüm vergileri tamamen kaldırıp özerklik sınırlarını genişletti",
+      "İmparatorluk başkentini İstanbul'dan Diyarbakır kalesine taşıdı",
+      "Mîrlerin iç özerkliğini kademeli olarak kısıtlayıp merkeze bağlama çabaları başladı"
+    ],
+    "correctAnswer": "Gave bi gave hewl da desthilatdariya xweser a mîran kêm bike û navendî bike",
+    "correctAnswerTr": "Mîrlerin iç özerkliğini kademeli olarak kısıtlayıp merkeze bağlama çabaları başladı",
+    "explanation": "Doğu sınırı güvenliğe kavuştukça Osmanlı yönetimi mîrliklerin özerk yapısını bozup klasik beylerbeyliği sistemine entegre etmeye çalıştı.",
+    "explanationTr": "Doğu sınırı güvenliğe kavuştukça Osmanlı yönetimi mîrliklerin özerk yapısını bozup klasik beylerbeyliği sistemine entegre etmeye çalıştı.",
+    "explanationKu": "Dema metirsiya şer kêm bû, dewleta osmanî hewl da kontrola xwe ya navendî li ser mîrektiyan zêde bike."
+  },
+  {
+    "id": "ds_dirok_0320",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Dema ku Ebdulkerîm Qasim di sala 1958an de li Iraqê hate ser desthilatê, di destûra bingehîn de kîjan xal hate bicihkirin?",
+    "promptTr": "1958 Irak İhtilali sonrası Abdülkerim Kasım döneminde hazırlanan geçici anayasada Kürtler için hangi hüküm yer aldı?",
+    "answers": [
+      "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+      "Zimanê kurdî wekî tekane zimanê fermî yê tevahiya dewletê hate ragihandin",
+      "Hemû partiyên siyasî yên herêmî bi temamî hatin qedexekirin",
+      "Herêmên kurdan ji axa dewleta Iraqê bi temamî hatin veqetandin"
+    ],
+    "answersTr": [
+      "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
+      "Kürtçenin ülkedeki tek ve mutlak resmi devlet dili ilan edilmesi",
+      "Bölgedeki tüm siyasi partilerin ve örgütlerin süresiz kapatılması",
+      "Kürt bölgelerinin Irak devlet sınırlarından tamamen çıkarılması"
+    ],
+    "correctAnswer": "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+    "correctAnswerTr": "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
+    "explanation": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
+    "explanationTr": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
+    "explanationKu": "Di destûra 1958an de şirîkatiya ereb û kurdan a di avakirina Iraqê de bi awayekî fermî hate qebûlkirin."
+  },
+  {
+    "id": "ds_dirok_0321",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Damezrandina Malên Çanda Rojhilat ên Şoreşger (DDKO, 1969) di dîroka siyasî de kîjan qonaxa nû nîşan da?",
+    "promptTr": "1969'da kurulan DDKO (Devrimci Doğu Kültür Ocakları) Türkiye'deki Kürt siyasal mücadelesinde hangi niteliksel değişimi başlattı?",
+    "answers": [
+      "Yekem car hêzên çekdar ên fermî yên herêmê li dijî dewletê ava bûn",
+      "Hemû kovar û weşanên tirkî li bajaran ji aliyê xwendekaran ve hatin qedexekirin",
+      "Partiyeke nû ya karsazan ji bo veberhênanên aborî hate damezrandin",
+      "Ciwanên kurd cara yekem bi rêxistineke serbixwe û qanûnî nasnameya xwe parastin"
+    ],
+    "answersTr": [
+      "Bölgedeki ilk düzenli askeri ordunun kurularak cephe savaşı başlatması",
+      "Şehirlerdeki tüm Türkçe gazete ve dergilerin öğrenciler tarafından boykot edilmesi",
+      "Bölgeye yabancı sermaye çekmek amacıyla ilk iş insanları derneğinin kurulması",
+      "Kürt aydın ve gençliğinin Türk solundan ayrılarak ilk kez kendi bağımsız yasal örgütlenmesini kurması"
+    ],
+    "correctAnswer": "Ciwanên kurd cara yekem bi rêxistineke serbixwe û qanûnî nasnameya xwe parastin",
+    "correctAnswerTr": "Kürt aydın ve gençliğinin Türk solundan ayrılarak ilk kez kendi bağımsız yasal örgütlenmesini kurması",
+    "explanation": "DDKO, Kürt gençlerinin ve aydınlarının kimlik, dil ve Doğu sorununu kendi öz örgütlülükleriyle kamusal alana taşıdığı ilk yasal çatı oldu.",
+    "explanationTr": "DDKO, Kürt gençlerinin ve aydınlarının kimlik, dil ve Doğu sorununu kendi öz örgütlülükleriyle kamusal alana taşıdığı ilk yasal çatı oldu.",
+    "explanationKu": "DDKO bû yekem saziya qanûnî ya xweser ku ciwanên kurd tê de li ser nasname û mafên xwe xebitîn."
+  },
+  {
+    "id": "ds_dirok_0322",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Cemiyeta Teawûn û Tereqiya Kurd a ku di sala 1908an de hate damezrandin, kîjan rola sereke lîst?",
+    "promptTr": "İkinci Meşrutiyet'in ilanıyla 1908'de İstanbul'da kurulan Kürt Teavün ve Terakki Cemiyeti'nin temel tarihi işlevi neydi?",
+    "answers": [
+      "Li paytextê bi rêya klûb û rojnameyê dest bi rêxistinbûna modern a sivîl kir",
+      "Fermandariya leşkerî ya hemû eşîrên çekdar ên sînor girt ser milê xwe",
+      "Peymanên bazirganiyê bi dewletên rojavayî re bi awayekî fermî îmze kir",
+      "Zanîngeha yekem a fîlolojiya zimanên rojhilat li Qahîreyê vekir"
+    ],
+    "answersTr": [
+      "Başkentte dernek ve gazete yoluyla modern sivil örgütlenme ve kültürel aydınlanmayı başlatması",
+      "Sınırdaki tüm Hamidiye aşiret alaylarının tek elden başkomutanlığını üstlenmesi",
+      "Batılı büyükelçiliklerle resmi ikili ticaret ve gümrük anlaşmaları imzalaması",
+      "Kahire'de Doğu Dilleri Filolojisi üzerine ilk bağımsız üniversiteyi açması"
+    ],
+    "correctAnswer": "Li paytextê bi rêya klûb û rojnameyê dest bi rêxistinbûna modern a sivîl kir",
+    "correctAnswerTr": "Başkentte dernek ve gazete yoluyla modern sivil örgütlenme ve kültürel aydınlanmayı başlatması",
+    "explanation": "1908'de Seyyid Abdülkadir ve Bedirxaniler öncülüğünde kurulan cemiyet, dergisi ve mektebiyle modern Kürt sivil hareketinin öncüsü oldu.",
+    "explanationTr": "1908'de Seyyid Abdülkadir ve Bedirxaniler öncülüğünde kurulan cemiyet, dergisi ve mektebiyle modern Kürt sivil hareketinin öncüsü oldu.",
+    "explanationKu": "Ev cemiyet li Stenbolê bi weşana rojnameyê û vekirina dibistanê re bû bingeha xebatên rewşenbîrî yên nûjen."
+  },
+  {
+    "id": "ds_dirok_0323",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Xanedana Rewadiyan (Revvadî) di sedsalên 10 û 11an de li kîjan herêmê hukum dikir?",
+    "promptTr": "10. ve 11. yüzyıllarda hüküm süren Kürt kökenli Revvadi (Rawadi) Hanedanlığı hangi coğrafi merkezde egemenlik kurdu?",
+    "answers": [
+      "Li peravên deryaya Reş û derdora bajarê Trabzonê",
+      "Li başûrê Yemenê û peravên deryaya Sor",
+      "Li herêma Azerbaycanê û derdora bajarê Tewrêz û Meraxeyê",
+      "Li giravên deryaya Egeyê li rojavayê Anatolyayê"
+    ],
+    "answersTr": [
+      "Karadeniz kıyılarında Trabzon ve Rize çevresinde",
+      "Güney Yemen ve Kızıldeniz kıyı şeridinde",
+      "Azerbaycan bölgesinde Tebriz ve Meraga merkezli coğrafyada",
+      "Batı Anadolu'daki Ege adaları ve limanlarında"
+    ],
+    "correctAnswer": "Li herêma Azerbaycanê û derdora bajarê Tewrêz û Meraxeyê",
+    "correctAnswerTr": "Azerbaycan bölgesinde Tebriz ve Meraga merkezli coğrafyada",
+    "explanation": "Revvadiler, Azerbaycan ve Güney Kafkasya'da Tebriz merkezli hüküm sürmüş ve Şeddadilerle çağdaş bir hanedandır.",
+    "explanationTr": "Revvadiler, Azerbaycan ve Güney Kafkasya'da Tebriz merkezli hüküm sürmüş ve Şeddadilerle çağdaş bir hanedandır.",
+    "explanationKu": "Rewadî li herêma Azerbaycanê li derdora Tewrêzê hikûmeteke bihêz a serdema navîn bûn."
+  },
+  {
+    "id": "ds_dirok_0324",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Xanedana Hesenkeweyhî (Hasanveyhî, sedsala 10an) ji aliyê erdnîgarî ve li kîjan herêmê serwer bû?",
+    "promptTr": "10. yüzyılda kurulan Hasanveyhi (Hesenkêwî) Devleti hangi coğrafi sahada hüküm sürdü?",
+    "answers": [
+      "Li herêma Zagrosê li derdora Dînewar, Şarezûr û Hemedanê",
+      "Li deşta Nînovayê li derdora bajarê Mûsilê û Şingalê",
+      "Li peravên deryaya Xezerê li nêzîkî bajarê Bakûyê",
+      "Li rojavayê Anatolyayê li derdora bajarê Îzmîrê"
+    ],
+    "answersTr": [
+      "Zagros Dağları hattında Dinever, Şehrizor ve Hemedan çevresinde",
+      "Ninova ovasında Musul ve Sincar şehirleri etrafında",
+      "Hazar Denizi kıyılarında Bakü ve Derbent yakınlarında",
+      "Batı Anadolu kıyılarında İzmir ve Manisa düzlüklerinde"
+    ],
+    "correctAnswer": "Li herêma Zagrosê li derdora Dînewar, Şarezûr û Hemedanê",
+    "correctAnswerTr": "Zagros Dağları hattında Dinever, Şehrizor ve Hemedan çevresinde",
+    "explanation": "Hasanveyh bin Hüseyin tarafından kurulan emirlik, Cibal ve Zagros bölgesinde yarım asırdan fazla istikrar ve bayındırlık sağladı.",
+    "explanationTr": "Hasanveyh bin Hüseyin tarafından kurulan emirlik, Cibal ve Zagros bölgesinde yarım asırdan fazla istikrar ve bayındırlık sağladı.",
+    "explanationKu": "Hesenkeweyhî li çiyayên Zagrosê li herêma Dînewar û Şarezûrê hukumdar bûn."
+  },
+  {
+    "id": "ds_dirok_0325",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Sedema vegera Şerefxanê Bidlîsî ji dewleta Sefewiyan bo cem Osmaniyan di sala 1578an de çi bû?",
+    "promptTr": "Şerefxanê Bidlîsî'nin 1578'de Safevi hizmetinden ayrılarak Osmanlı'ya dönmesinin temel sebebi neydi?",
+    "answers": [
+      "Hilweşîna temamî ya paytexta Qezwînê ji ber erhejên mezin ên sirûştî",
+      "Daxwaza wî ya ji bo fêrbûna zimanên ewropî li dibistanên paytextê",
+      "Qedexekirina nivîsandina pirtûkên dîrokî ji aliyê şahê nû yê Îranê ve",
+      "Zextên li hemberî wî li Îranê û biryara Sultan Muradê Sêyem a qebûlkirina mîrektiya Bidlîsê"
+    ],
+    "answersTr": [
+      "Safevi başkenti Kazvin'in şiddetli bir depremle tamamen yerle bir olması",
+      "İstanbul'daki medreselerde yabancı Batı dilleri eğitimi alma kararı",
+      "Yeni Safevi şahının sarayda tarih kitabı yazılmasını tamamen yasaklaması",
+      "İran sarayındaki entrikalar ve III. Murad'ın ata yurdu Bitlis Mîrliğini kendisine iade etmesi"
+    ],
+    "correctAnswer": "Zextên li hemberî wî li Îranê û biryara Sultan Muradê Sêyem a qebûlkirina mîrektiya Bidlîsê",
+    "correctAnswerTr": "İran sarayındaki entrikalar ve III. Murad'ın ata yurdu Bitlis Mîrliğini kendisine iade etmesi",
+    "explanation": "Şah Tahmasb sonrası Safevi sarayında hedef haline gelen Şerefxan, III. Murad'ın Bitlis beyliğini iade fermanı üzerine Osmanlı'ya geçmiştir.",
+    "explanationTr": "Şah Tahmasb sonrası Safevi sarayında hedef haline gelen Şerefxan, III. Murad'ın Bitlis beyliğini iade fermanı üzerine Osmanlı'ya geçmiştir.",
+    "explanationKu": "Ji ber xeterên li qesra Sefewiyan û fermana vegerandina Mîrektiya Bidlîsê, Şerefxan vegeriya cem Osmaniyan."
+  },
+  {
+    "id": "ds_dirok_0326",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Fermana Tanzîmatê ya sala 1839an ji aliyê îdarî ve çawa bandor li mîrektiyên kurd kir?",
+    "promptTr": "1839 Tanzimat Fermanı ile başlayan Osmanlı idari reformları Kürt mîrliklerini nasıl etkiledi?",
+    "answers": [
+      "Bi rakirina sîstema xweser xwest bac û leşkeriyê rasterast bixe bin kontrola navendê",
+      "Hemû mîrektiyên herêmî kirin eyaletên serbixwe yên xwedî destûrên fermî",
+      "Bacên çandiniyê yên mîran ji bo bîst salan bi temamî efû kir",
+      "Rêveberiya hemû leşkerên herêmê da destê mîrên Botan û Babanê"
+    ],
+    "answersTr": [
+      "Geleneksel özerkliği kaldırıp vergi ve askerliği doğrudan merkez bürokrasiye bağlayarak",
+      "Bölgedeki tüm beyliklere uluslararası garantörlüklü anayasal bağımsızlık vererek",
+      "Yerel mîrlerin tarım vergilerini süresiz kaldırıp mali muafiyet tanıyarak",
+      "Bölgedeki bütün ordu komutasını tamamen Botan ve Baban mîrlerine devrederek"
+    ],
+    "correctAnswer": "Bi rakirina sîstema xweser xwest bac û leşkeriyê rasterast bixe bin kontrola navendê",
+    "correctAnswerTr": "Geleneksel özerkliği kaldırıp vergi ve askerliği doğrudan merkez bürokrasiye bağlayarak",
+    "explanation": "Tanzimat fermanı merkeze bağlı mülki idareyi getirdi; bu durum yerel mîrlerin yetkilerini kısıtlayarak mîrlik isyanlarını tetikledi.",
+    "explanationTr": "Tanzimat fermanı merkeze bağlı mülki idareyi getirdi; bu durum yerel mîrlerin yetkilerini kısıtlayarak mîrlik isyanlarını tetikledi.",
+    "explanationKu": "Tanzîmatê xwest desthilatdariya navendî xurt bike û sîstema kevn a mîran gav bi gav rake."
+  },
+  {
+    "id": "ds_dirok_0327",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Tevgera Koçgiriyê ya sala 1921ê ji aliyê daxwazên xwe yên siyasî ve li ser çi ava bûbû?",
+    "promptTr": "1921 Koçgiri Hareketi siyasal talepleri açısından hangi temel hedefe dayanıyordu?",
+    "answers": [
+      "Tenê ji bo betalkirina bacên ajaldariyê yên serdema şer derketibû",
+      "Daxwaza vegerandina sîstema padîşahiyê ya kevnar a Osmaniyan dikir",
+      "Li ser bingeha xalên Peymana Sevrê ji bo herêmê daxwaza xweseriyê dikir",
+      "Ji bo tevlîbûna axa Komara Fransayê serî hildabû"
+    ],
+    "answersTr": [
+      "Yalnızca savaş yıllarında konulan hayvan vergilerinin iptalini istemek",
+      "Eski Osmanlı padişahlık mutlakiyetini geri getirmeyi hedeflemek",
+      "Sevr Antlaşması hükümlerine dayanarak TBMM hükümetinden yerel özerklik talep etmek",
+      "Fransız mandasına bağlanmak amacıyla doğrudan askeri eylem başlatmak"
+    ],
+    "correctAnswer": "Li ser bingeha xalên Peymana Sevrê ji bo herêmê daxwaza xweseriyê dikir",
+    "correctAnswerTr": "Sevr Antlaşması hükümlerine dayanarak TBMM hükümetinden yerel özerklik talep etmek",
+    "explanation": "Koçgiri önderleri Ankara Hükümeti'ne telgraflar çekerek Sevr'deki özerklik maddelerinin bölgede uygulanmasını istemiştir.",
+    "explanationTr": "Koçgiri önderleri Ankara Hükümeti'ne telgraflar çekerek Sevr'deki özerklik maddelerinin bölgede uygulanmasını istemiştir.",
+    "explanationKu": "Koçgirî bi daxwaza naskirina mafên xweseriyê yên herêmî li hemberî hikûmeta Enqereyê dest pê kir."
+  },
+  {
+    "id": "ds_dirok_0328",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Peymana Nihênî ya Sykes-Picot (1916) erdnîgariya herêmê li ser kîjan hîmî dabeş kir?",
+    "promptTr": "1916 Sykes-Picot Gizli Antlaşması Ortadoğu ve bölge coğrafyasını hangi temel esasa göre paylaştı?",
+    "answers": [
+      "Li ser berjewendiyên petrol, rêyên bazirganiyê û herêmên bandora Brîtanya û Fransayê",
+      "Li ser daxwaza gelên herêmê û encamên referandûmên demokratîk ên giştî",
+      "Li gorî parastina sînorên dîrokî yên mîrektiyên kevnar ên serdema navîn",
+      "Bi armanca avakirina dewletên neteweyî yên serbixwe ji bo her gelekî"
+    ],
+    "answersTr": [
+      "İngiltere ve Fransa'nın petrol, liman ve stratejik nüfuz alanı çıkarlarına göre",
+      "Bölge halklarının talepleri ve demokratik halk oylaması sonuçlarına göre",
+      "Orta Çağ Kürt ve Arap mîrliklerinin tarihi sınırlarını koruma esasına göre",
+      "Bölgedeki her etnik gruba bağımsız birer ulus devlet kurma amacıyla"
+    ],
+    "correctAnswer": "Li ser berjewendiyên petrol, rêyên bazirganiyê û herêmên bandora Brîtanya û Fransayê",
+    "correctAnswerTr": "İngiltere ve Fransa'nın petrol, liman ve stratejik nüfuz alanı çıkarlarına göre",
+    "explanation": "İngiltere ve Fransa, bölgeyi halkların iradesini yok sayarak kendi sömürge ve petrol çıkarları doğrultusunda yapay hatlarla bölmüştür.",
+    "explanationTr": "İngiltere ve Fransa, bölgeyi halkların iradesini yok sayarak kendi sömürge ve petrol çıkarları doğrultusunda yapay hatlarla bölmüştür.",
+    "explanationKu": "Peymana Sykes-Picot li gorî berjewendiyên emperyalîst sînorên nû yên çêkirî li herêmê ava kirin."
+  },
+  {
+    "id": "ds_dirok_0329",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Piştî Şerê Osmanî û Rûsî yê 1828-1829an, helwesta eşîrên kurd ên li ser sînor çawa bû?",
+    "promptTr": "1828-1829 Osmanlı-Rus Savaşı sonrasında Kafkasya sınırındaki Kürt aşiretlerinin jeopolitik konumu nasıl değişti?",
+    "answers": [
+      "Hemû eşîr ji herêmên çiyayî koçî bajarên deryaya Spî bûn",
+      "Eşîran dev ji çekên xwe berdan û tenê bi bazirganiya hesin re mijûl bûn",
+      "Sînor bi temamî ji aliyê dîwarên bilind ên kevirî ve hate girtin",
+      "Eşîr di navbera du împaratoriyan de bûn xwedî girîngiyeke mezin a stratejîk"
+    ],
+    "answersTr": [
+      "Bütün aşiretler dağlık bölgelerden Akdeniz kıyı kentlerine topluca göç etti",
+      "Aşiretler silahlarını teslim ederek yalnızca maden ticaretiyle uğraşmaya başladı",
+      "Sınır boyları tamamen yüksek taş duvarlar örülerek geçişlere kapatıldı",
+      "Aşiretler iki imparatorluk arasındaki sınır güvenliğinde kritik stratejik aktör haline geldi"
+    ],
+    "correctAnswer": "Eşîr di navbera du împaratoriyan de bûn xwedî girîngiyeke mezin a stratejîk",
+    "correctAnswerTr": "Aşiretler iki imparatorluk arasındaki sınır güvenliğinde kritik stratejik aktör haline geldi",
+    "explanation": "Rusya'nın Kafkaslara inmesiyle sınır aşiretleri (Revan, Serhat) iki güç arasında askeri ve diplomatik denge unsuru oldu.",
+    "explanationTr": "Rusya'nın Kafkaslara inmesiyle sınır aşiretleri (Revan, Serhat) iki güç arasında askeri ve diplomatik denge unsuru oldu.",
+    "explanationKu": "Bi nêzîkbûna Rûsyayê re rola leşkerî û stratejîk a eşîrên li ser sînor gelekî zêde bû."
+  },
+  {
+    "id": "ds_dirok_0330",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Taybetmendiya leşkerî û aborî ya Mîrektiya Soran a di serdema Mîr Mihemed de (Mîrê Kor, 1830î) çi bû?",
+    "promptTr": "Mîr Mihemed (Mîrê Kor) döneminde Soran Mîrliği'nin (1830'lar) öne çıkan en radikal kurumsal atılımı neydi?",
+    "answers": [
+      "Çêkirina kargehên çek û topan û derxistina diravên serbixwe li ser navê xwe",
+      "Kirîna hemû keştiyên şer ji dewleta Rûsyayê ji bo deryaya Wanê",
+      "Bikaranîna balafirên nûjen ên serdemê di parastina kela Rewandizê de",
+      "Qedexekirina bazirganiya bi hemû bajarên cîran re li seranserê herêmê"
+    ],
+    "answersTr": [
+      "Kendi adına para bastırıp yerel tophane ve düzenli ordu kurması",
+      "Van Gölü donanması için Rusya'dan büyük buharlı savaş gemileri satın alması",
+      "Revanduz Kalesi savunmasında dönemin modern askeri uçaklarını kullanması",
+      "Bölgedeki tüm komşu şehirlerle ticari ilişkileri tamamen yasaklaması"
+    ],
+    "correctAnswer": "Çêkirina kargehên çek û topan û derxistina diravên serbixwe li ser navê xwe",
+    "correctAnswerTr": "Kendi adına para bastırıp yerel tophane ve düzenli ordu kurması",
+    "explanation": "Mîrê Kor, Revanduz'da top dökümhanesi (Usta Receb) kurmuş, sikke bastırmış ve geniş bir düzenli ordu örgütlemiştir.",
+    "explanationTr": "Mîrê Kor, Revanduz'da top dökümhanesi (Usta Receb) kurmuş, sikke bastırmış ve geniş bir düzenli ordu örgütlemiştir.",
+    "explanationKu": "Mîr Mihemed li Rewandizê kargeha topan ava kir, dirav lêda û artêşeke mezin ava kir."
+  },
+  {
+    "id": "ds_dirok_0331",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Tevgerên Barzan ên di salên 1943-1945an de ji bo damezrandina Komara Mehabadê (1946) kîjan sûda rasterast anîn?",
+    "promptTr": "1943-1945 Barzan hareketlerinin Mahabad Kürt Cumhuriyeti'nin (1946) kuruluşuna doğrudan katkısı ne oldu?",
+    "answers": [
+      "Hemû firokeyên şer ên pêwîst ji aliyê eşîra Barzan ve ji derve hatin anîn",
+      "Mele Mistefa Barzanî û pêşmergeyên xwe bûn bingeha hêza leşkerî ya komarê",
+      "Sîstema aborî ya komarê tenê bi rêya bazirganiya petrola Barzan pêk hat",
+      "Hemû qanûnên destûra komarê ji aliyê rûspiyên Barzan ve hatin nivîsandin"
+    ],
+    "answersTr": [
+      "Gerekli tüm savaş uçaklarının Barzan aşireti tarafından yurt dışından temin edilmesi",
+      "Mustafa Barzani ve silahlı güçlerinin İran'a geçerek cumhuriyetin askeri omurgasını oluşturması",
+      "Cumhuriyetin mali bütçesinin tamamen Barzan petrol gelirleriyle finanse edilmesi",
+      "Cumhuriyet anayasasının tüm maddelerinin yalnızca Barzan ileri gelenlerince yazılması"
+    ],
+    "correctAnswer": "Mele Mistefa Barzanî û pêşmergeyên xwe bûn bingeha hêza leşkerî ya komarê",
+    "correctAnswerTr": "Mustafa Barzani ve silahlı güçlerinin İran'a geçerek cumhuriyetin askeri omurgasını oluşturması",
+    "explanation": "Irak'taki çatışmalardan sonra Doğu Kürdistan'a geçen Barzani ve peşmergeleri, Mahabad ordusunun en tecrübeli savunma gücü oldu.",
+    "explanationTr": "Irak'taki çatışmalardan sonra Doğu Kürdistan'a geçen Barzani ve peşmergeleri, Mahabad ordusunun en tecrübeli savunma gücü oldu.",
+    "explanationKu": "Mele Mistefa Barzanî û hêza wî ya leşkerî parastina Komara Mehabadê girtin ser milê xwe."
+  },
+  {
+    "id": "ds_dirok_0332",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Sedema sereke ya destpêkirina Şoreşa Îlonê ya sala 1961ê li Başûr çi bû?",
+    "promptTr": "1961'de başlayan 11 Eylül Devrimi'nin patlak vermesindeki en temel siyasi kırılma neydi?",
+    "answers": [
+      "Daxwaza tevlîbûna herêmê bi axa dewleta Tirkiyeyê re di wê serdemê de",
+      "Hilweşandina hemû zeviyên çandiniyê ji ber sermaya zêde ya zivistanê",
+      "Biryara Neteweyên Yekbûyî ya ji bo girtina hemû deriyên sînorî yên herêmê",
+      "Paşveçûna hikûmeta Bexdayê ji sozên xwe yên destûrî û êrîşên li dijî herêmê"
+    ],
+    "answersTr": [
+      "Kürt liderliğinin bölgeyi Türkiye Cumhuriyeti topraklarına bağlama talebi",
+      "Şiddetli kış şartları nedeniyle bölgedeki tüm tarım arazilerinin yok olması",
+      "Birleşmiş Milletler'in bölgedeki bütün sınır kapılarını kapatma kararı alması",
+      "Bağdat hükümetinin anayasal ortaklık sözlerinden cayması ve askeri operasyonlar başlatması"
+    ],
+    "correctAnswer": "Paşveçûna hikûmeta Bexdayê ji sozên xwe yên destûrî û êrîşên li dijî herêmê",
+    "correctAnswerTr": "Bağdat hükümetinin anayasal ortaklık sözlerinden cayması ve askeri operasyonlar başlatması",
+    "explanation": "Abdülkerim Kasım'ın 1958 Anayasası'ndaki ortaklık vaatlerini terk edip aşiretleri kışkırtması ve köyleri bombalamasıyla 1961 isyanı başladı.",
+    "explanationTr": "Abdülkerim Kasım'ın 1958 Anayasası'ndaki ortaklık vaatlerini terk edip aşiretleri kışkırtması ve köyleri bombalamasıyla 1961 isyanı başladı.",
+    "explanationKu": "Qasim sozên xwe yên destûrî bicîh neanîn û êrîş bir ser herêmê; vî tiştî şoreşa Îlonê da destpêkirin."
+  },
+  {
+    "id": "ds_dirok_0333",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Kovara \"Jîn\"ê ya ku di salên 1918-1919an de li Stenbolê derket, ji aliyê ramana siyasî ve çi diparast?",
+    "promptTr": "1918-1919 yıllarında İstanbul'da yayımlanan \"Jîn\" dergisinin öne çıkardığı temel siyasal tez neydi?",
+    "answers": [
+      "Parastina yekîtiya bê şert û merc a bi desthilatdariya mutleq a siltan re",
+      "Mafê çarenûsa gelan a li gorî Prensîbên Wîlson û mafên neteweyî yên kurdan",
+      "Koçkirina hemû rewşenbîran ji Rojhilata Navîn ber bi Amerîkayê ve",
+      "Qedexekirina perwerdehiya bi zimanê zikmakî li dibistanên herêmê"
+    ],
+    "answersTr": [
+      "Padişahın mutlak otoritesine kayıtsız şartsız bağlılığın korunması tezi",
+      "Wilson İlkeleri çerçevesinde ulusların kendi kaderini tayin ve temsil hakkı",
+      "Bütün aydın ve yazarların Ortadoğu'dan Amerika'ya göç etmesi fikri",
+      "Bölge okullarında anadilde eğitimin tamamen yasaklanması gerekliliği"
+    ],
+    "correctAnswer": "Mafê çarenûsa gelan a li gorî Prensîbên Wîlson û mafên neteweyî yên kurdan",
+    "correctAnswerTr": "Wilson İlkeleri çerçevesinde ulusların kendi kaderini tayin ve temsil hakkı",
+    "explanation": "Kürdistan Teali Cemiyeti'nin yayın organı olan Jîn dergisi, I. Dünya Savaşı sonrasında Wilson İlkeleri'ne dayanarak Kürtlerin meşru haklarını savunmuştur.",
+    "explanationTr": "Kürdistan Teali Cemiyeti'nin yayın organı olan Jîn dergisi, I. Dünya Savaşı sonrasında Wilson İlkeleri'ne dayanarak Kürtlerin meşru haklarını savunmuştur.",
+    "explanationKu": "Kovara Jînê daxwazên neteweyî yên kurdan li ser bingeha prensîbên navneteweyî anîn ziman."
+  },
+  {
+    "id": "ds_dirok_0334",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Di Siyasetname û Seyahetnameya Ewliya Çelebî ya sedsala 17an de mîrektiyên kurd çawa hatine teswîrkirin?",
+    "promptTr": "17. yüzyılda Evliya Çelebi'nin Seyahatnamesi'nde Kürt mîrlikleri (özellikle Bitlis ve Cizre) nasıl tasvir edilmiştir?",
+    "answers": [
+      "Wekî desthilatên xweser ên xwedî qesr, artêş û protokolên taybet ên mîran",
+      "Wekî gundên xizan ên bê rêveberî ku tu têkiliya wan bi cîhanê re tune bû",
+      "Wekî eyaletên ku tenê ji aliyê karmendên rojavayî ve dihatin birêvebirin",
+      "Wekî herêmên vala yên ku qet mirov û jiyan lê peyda nedibû"
+    ],
+    "answersTr": [
+      "Geniş sarayları, düzenli askeri alayları ve kendi protokolü olan özerk hanedanlar olarak",
+      "Dış dünya ile hiçbir bağı olmayan idaresiz ve yoksul dağ köyleri olarak",
+      "Yalnızca Batılı elçilerin atadığı bürokratlarca yönetilen sömürge eyaletleri olarak",
+      "Hiçbir yerleşimin ve insanın bulunmadığı tamamen ıssız tampon araziler olarak"
+    ],
+    "correctAnswer": "Wekî desthilatên xweser ên xwedî qesr, artêş û protokolên taybet ên mîran",
+    "correctAnswerTr": "Geniş sarayları, düzenli askeri alayları ve kendi protokolü olan özerk hanedanlar olarak",
+    "explanation": "Evliya Çelebi, Bitlis Mîri Abdal Han'ın sarayını, kütüphanesini, hazinesini ve askeri teşrifatını hayranlıkla anlatmıştır.",
+    "explanationTr": "Evliya Çelebi, Bitlis Mîri Abdal Han'ın sarayını, kütüphanesini, hazinesini ve askeri teşrifatını hayranlıkla anlatmıştır.",
+    "explanationKu": "Ewliya Çelebî di pirtûka xwe de behsa dewlemendî, artêş û qesrên mîrên kurd bi taybetî Mîr Ebdal dike."
+  },
+  {
+    "id": "ds_dirok_0335",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Dadgehên Îstiqlalê yên Şerqê (1925) piştî serhildanê kîjan rola sereke lîstin?",
+    "promptTr": "1925 sonrası faaliyet gösteren Şark İstiklal Mahkemeleri bölgede hangi temel işlevi yerine getirdi?",
+    "answers": [
+      "Diyarkirina mûçeyên xebatkarên şaredariyan û çêkirina rêyên trênê",
+      "Cezakirina rêberên tevgerê û pêkanîna sirgûnkirina malbatên wan ber bi rojava ve",
+      "Birêvebirina hilbijartinên giştî yên azad li hemû bajarên herêmê",
+      "Avakirina kargehên nû yên tekstîlê li bajarên Diyarbekir û Wanê"
+    ],
+    "answersTr": [
+      "Belediye memurlarının maaşlarını belirleyip demiryolu hatları inşa etmek",
+      "Hareket önderlerini yargılayıp ileri gelen aileleri batı vilayetlerine zorunlu iskana tabi tutmak",
+      "Bölgedeki bütün şehirlerde serbest ve bağımsız genel seçimler düzenlemek",
+      "Diyarbakır ve Van merkezli yeni tekstil ve sanayi fabrikaları açmak"
+    ],
+    "correctAnswer": "Cezakirina rêberên tevgerê û pêkanîna sirgûnkirina malbatên wan ber bi rojava ve",
+    "correctAnswerTr": "Hareket önderlerini yargılayıp ileri gelen aileleri batı vilayetlerine zorunlu iskana tabi tutmak",
+    "explanation": "Şark İstiklal Mahkemesi, Şeyh Said ve arkadaşlarını idam etmiş, yüzlerce aşiret reisi ve aileyi batıya sürgüne göndermiştir.",
+    "explanationTr": "Şark İstiklal Mahkemesi, Şeyh Said ve arkadaşlarını idam etmiş, yüzlerce aşiret reisi ve aileyi batıya sürgüne göndermiştir.",
+    "explanationKu": "Dadgehên Îstiqlalê rêberên tevgerê darizandin û bi hezaran kes sirgûnî bajarên rojava kirin."
+  },
+  {
+    "id": "ds_dirok_0336",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Dewleta Hesenkeweyhî (Hasanveyhî) di bin serweriya Bûweyhiyan de kîjan pêşketina aborî û ewlehiyê ava kiribû?",
+    "promptTr": "Hasanveyhi Devleti Büveyhiler döneminde Zagros ticaret yollarında hangi kurumsal başarıyı sağladı?",
+    "answers": [
+      "Bikaranîna yekem diravên kaxezî yên li seranserê cîhana îslamî",
+      "Çêkirina keştiyên mezin ên deryayî li ser çemên biçûk ên çiyayî",
+      "Qedexekirina herikîna bazirganan di navbera bajarên herêmê de",
+      "Parastina rêyên bazirganiyê yên karwanan û avakirina pire û keleyên xurt"
+    ],
+    "answersTr": [
+      "İslam dünyasında kâğıt parayı tedavüle sokan ilk devlet mekanizmasını kurması",
+      "Dağlık nehirler üzerinde büyük açık deniz ticaret filoları inşa etmesi",
+      "Şehirlerarası kervan geçişlerini ve tüccar seyahatlerini tamamen yasaklaması",
+      "Kervan yollarının asayişini sağlayıp köprüler, hanlar ve sağlam kaleler inşa etmesi"
+    ],
+    "correctAnswer": "Parastina rêyên bazirganiyê yên karwanan û avakirina pire û keleyên xurt",
+    "correctAnswerTr": "Kervan yollarının asayişini sağlayıp köprüler, hanlar ve sağlam kaleler inşa etmesi",
+    "explanation": "İbn Miskeveyh'in aktardığına göre Hasanveyh, hac ve ticaret yollarını eşkıyalardan arındırıp kaleler, köprüler ve camiler yaptırmıştır.",
+    "explanationTr": "İbn Miskeveyh'in aktardığına göre Hasanveyh, hac ve ticaret yollarını eşkıyalardan arındırıp kaleler, köprüler ve camiler yaptırmıştır.",
+    "explanationKu": "Hesenkeweyhî rêyên karwanan parastin û li seranserê herêmê pire û kela xurt ava kirin."
+  },
+  {
+    "id": "ds_dirok_0337",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "prompt": "Armanca sereke ya operasyonên Enfalê (1988) yên rejîma Baasê li dijî gelê kurd çi bû?",
+    "promptTr": "Baas rejiminin 1988 Enfal Harekâtı ile ulaşmak istediği temel stratejik hedef neydi?",
+    "answers": [
+      "Tenê girtina çend serokên partiyan bêyî têkdana jiyana gundiyan",
+      "Valkirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
+      "Pêşxistina çandiniya nûjen bi rêya belavkirina tovên berhemdar li gundan",
+      "Avakirina xetên nû yên trenê di navbera Silêmanî û Helebê de"
+    ],
+    "answersTr": [
+      "Köylere dokunmaksızın yalnızca birkaç parti yöneticisini tutuklamak",
+      "Kırsalı boşaltmak, peşmerge lojistiğini kesmek ve direnişi katliamla kırmak",
+      "Kırsalda yüksek verimli tohumlar dağıtarak tarımı modernleştirmek",
+      "Süleymaniye ile Halep arasına yeni demiryolu bağlantısı kurmak"
+    ],
+    "correctAnswer": "Valkirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
+    "correctAnswerTr": "Kırsalı boşaltmak, peşmerge lojistiğini kesmek ve direnişi katliamla kırmak",
+    "explanation": "Ali Hasan el-Mecid komutasındaki Enfal operasyonlarında binlerce köy yok edildi, kimyasal silahlar kullanıldı ve 100 bini aşkın sivil katledildi.",
+    "explanationTr": "Ali Hasan el-Mecid komutasındaki Enfal operasyonlarında binlerce köy yok edildi, kimyasal silahlar kullanıldı ve 100 bini aşkın sivil katledildi.",
+    "explanationKu": "Operasyonên Enfalê ji bo xirakirin û valakirina gundan û komkujiya xelkê kurd hate meşandin."
+  },
+  {
+    "id": "ds_dirok_0338",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Piştî Şerê Kendavê di sala 1991ê de, biryara 688an a Neteweyên Yekbûyî kîjan qonaxa nû vekir?",
+    "promptTr": "1991 Körfez Savaşı sonrası BM Güvenlik Konseyi'nin 688 sayılı kararı bölgede nasıl bir dönüm noktası oldu?",
+    "answers": [
+      "Avakirina herêma dije-firoke (36emîn Paralel) û hêsankirina damezrandina Herêma Kurdistanê",
+      "Dabeşkirina tevahiya axa Iraqê di navbera dewletên cîran ên herêmê de",
+      "Qedexekirina vegera penaberan ber bi mal û warên wan ên li herêmê",
+      "Girêdana rasterast a hemû çavkaniyên petrolê bi bankên Ewropayê ve"
+    ],
+    "answersTr": [
+      "36. Paralel üzerinde uçuşa yasak bölge kurularak Federe Kürdistan'ın temellerinin atılması",
+      "Irak topraklarının tamamen bölgedeki komşu ülkeler arasında paylaştırılması",
+      "Dağlara sığınan yüzbinlerce mültecinin köylerine dönüşünün yasaklanması",
+      "Bölgedeki bütün petrol gelirlerinin doğrudan Avrupa bankalarına bağlanması"
+    ],
+    "correctAnswer": "Avakirina herêma dije-firoke (36emîn Paralel) û hêsankirina damezrandina Herêma Kurdistanê",
+    "correctAnswerTr": "36. Paralel üzerinde uçuşa yasak bölge kurularak Federe Kürdistan'ın temellerinin atılması",
+    "explanation": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
+    "explanationTr": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
+    "explanationKu": "Bi vê biryarê re herêma qedexeya hewayî hate avakirin û rê li ber avakirina statuya xweser a Başûr vebû."
+  },
+  {
+    "id": "ds_dirok_0339",
+    "category": "Dîrok",
+    "difficulty": 5,
+    "prompt": "Serhildana Bidlîsê ya sala 1913an (bi serkêşiya Mela Selîm) li dijî kîjan polîtîkayê derketibû holê?",
+    "promptTr": "1913 Bitlis İsyanı (Molla Selim önderliğinde) İttihat ve Terakki'nin hangi politikalarına tepki olarak gelişti?",
+    "answers": [
+      "Li dijî damezrandina rêxistinên mafên mirovan li bajarê Wanê",
+      "Li dijî polîtîkayên navendîbûn û zextên neteweperest ên Îtihad û Teraqiyê",
+      "Ji ber daxwaza zêdekirina qereqolên leşkerî yên dewletê li herêmê",
+      "Ji bo tevlîkirina bajêr bi axa împaratoriya Awistirya-Macaristanê re"
+    ],
+    "answersTr": [
+      "Van şehrinde uluslararası insan hakları derneklerinin kurulmasına karşı",
+      "İttihat ve Terakki'nin katı Türkçü merkezileşme ve yerel medrese/ulema karşıtı baskılarına",
+      "Bölgedeki devlet askeri karakollarının sayısının artırılması talebiyle",
+      "Bitlis şehrini Avusturya-Macaristan İmparatorluğu sınırlarına katmak amacıyla"
+    ],
+    "correctAnswer": "Li dijî polîtîkayên navendîbûn û zextên neteweperest ên Îtihad û Teraqiyê",
+    "correctAnswerTr": "İttihat ve Terakki'nin katı Türkçü merkezileşme ve yerel medrese/ulema karşıtı baskılarına",
+    "explanation": "Molla Selim ve Seyyid Ali önderliğindeki 1913 Bitlis İsyanı, İttihatçıların otoriter merkezileşme ve dini-yerel yapıları tasfiye politikalarına karşı patlak vermiştir.",
+    "explanationTr": "Molla Selim ve Seyyid Ali önderliğindeki 1913 Bitlis İsyanı, İttihatçıların otoriter merkezileşme ve dini-yerel yapıları tasfiye politikalarına karşı patlak vermiştir.",
+    "explanationKu": "Serhildana Bidlîsê bertekek li hemberî navendîbûn û zextên tund ên rêveberiya Îtihadparêzan bû."
   }
 ]
