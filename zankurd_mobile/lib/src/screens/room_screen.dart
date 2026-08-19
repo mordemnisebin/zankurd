@@ -10,6 +10,8 @@ import '../models/player.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -633,35 +635,93 @@ class _RoomScreenState extends State<RoomScreen> {
                                   ),
                                   const SizedBox(height: AppSpacing.xxs),
 
-                                  // Brand hero — deep green (not generic blue Material)
+                                  // Brand hero — cultural deep green with subtle kilim motifs
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                       AppRadius.card,
                                     ),
                                     child: Stack(
                                       children: [
+                                        // Background subtle kilim pattern
+                                        const Positioned.fill(
+                                          child: CustomPaint(
+                                            painter: KilimPainter(
+                                              motif: KilimMotif.diamond,
+                                              color: Colors.white,
+                                              opacity: 0.05,
+                                              count: 8,
+                                            ),
+                                          ),
+                                        ),
                                         AppPanel(
                                           gradient: const LinearGradient(
                                             begin: Alignment.topLeft,
                                             end: Alignment.bottomRight,
                                             colors: [
-                                              AppTheme.playCyan,
-                                              Color(0xFF168E8A),
+                                              AppTheme.culturalBrandBg,
+                                              Color(0xFF0F3D2C),
                                             ],
                                           ),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                context.t(K.privateRoom),
-                                                style: AppTypography.caption
-                                                    .copyWith(
-                                                      color: Colors.white
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              AppSpacing.xs + 2,
+                                                          vertical: 3,
+                                                        ),
+                                                    decoration: BoxDecoration(
+                                                      color: AppTheme.gold
                                                           .withValues(
-                                                            alpha: 0.75,
+                                                            alpha: 0.20,
                                                           ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            AppRadius.xs,
+                                                          ),
+                                                      border: Border.all(
+                                                        color: AppTheme.gold
+                                                            .withValues(
+                                                              alpha: 0.35,
+                                                            ),
+                                                      ),
                                                     ),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        const Icon(
+                                                          AppIcons.star,
+                                                          color: AppTheme.gold,
+                                                          size: 12,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 4,
+                                                        ),
+                                                        Text(
+                                                          context.t(
+                                                            K.privateRoom,
+                                                          ),
+                                                          style: AppTypography
+                                                              .caption
+                                                              .copyWith(
+                                                                color: AppTheme
+                                                                    .gold,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                fontSize: 11,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                               const SizedBox(
                                                 height: AppSpacing.xs,
@@ -684,13 +744,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 runSpacing: AppSpacing.xs,
                                                 children: [
                                                   _Pill(
-                                                    // Ham kategori kimliği
-                                                    // gösteriliyordu: TR
-                                                    // arayüzde oda "Ziman",
-                                                    // kategori sekmesinde ise
-                                                    // aynı kategori "Dil"
-                                                    // görünüyordu (2026-07-22
-                                                    // canlı UX denetimi).
                                                     label:
                                                         CategoryNames.localized(
                                                           room.category,
@@ -699,14 +752,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                                     icon: AppIcons.tableCells,
                                                   ),
                                                   _Pill(
-                                                    // 2026-08-14 görsel
-                                                    // denetimi: "sn" sabit
-                                                    // kodlanmıştı,
-                                                    // Kurmancî ekranda da
-                                                    // aynen basılıyordu —
-                                                    // play_hub_screen.dart'ta
-                                                    // düzeltilen aynı kusur,
-                                                    // burada gözden kaçmış.
                                                     label:
                                                         '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
                                                     icon: AppIcons.stopwatch,
@@ -728,9 +773,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                                       label: context.t(K.host),
                                                       icon: AppIcons.star,
                                                     ),
-                                                  // Guest tarafında da mêvandar bilgisi
-                                                  // görünsün: host'ta 3 çip, guest'te 2
-                                                  // çip kalıyordu (bilgi asimetrisi).
                                                   if (!isHost)
                                                     _Pill(
                                                       label: context.t(
@@ -748,7 +790,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               const SizedBox(
                                                 height: AppSpacing.md,
                                               ),
-                                              // Large invite code for sharing
+                                              // Large invite code for sharing with kilim border (Jackbox style hero)
                                               Material(
                                                 color: Colors.transparent,
                                                 child: InkWell(
@@ -761,17 +803,10 @@ class _RoomScreenState extends State<RoomScreen> {
                                                   ),
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                        AppRadius.sm,
+                                                        AppRadius.card,
                                                       ),
                                                   child: Container(
                                                     width: double.infinity,
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal:
-                                                              AppSpacing.md,
-                                                          vertical:
-                                                              AppSpacing.md,
-                                                        ),
                                                     decoration: BoxDecoration(
                                                       color: Colors.white
                                                           .withValues(
@@ -779,94 +814,175 @@ class _RoomScreenState extends State<RoomScreen> {
                                                           ),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                            AppRadius.sm,
+                                                            AppRadius.card,
                                                           ),
+                                                      border: Border.all(
+                                                        color: AppTheme.gold
+                                                            .withValues(
+                                                              alpha: 0.40,
+                                                            ),
+                                                        width: 1.5,
+                                                      ),
                                                       boxShadow: [
                                                         BoxShadow(
                                                           color: Colors.black
                                                               .withValues(
-                                                                alpha: 0.12,
+                                                                alpha: 0.16,
                                                               ),
-                                                          blurRadius: 12,
+                                                          blurRadius: 16,
                                                           offset: const Offset(
                                                             0,
-                                                            4,
+                                                            6,
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                    child: Row(
+                                                    child: Column(
                                                       children: [
-                                                        Expanded(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                context.t(
-                                                                  K.roomCodeTapCopy,
+                                                        // Top kilim accent band
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              const BorderRadius.vertical(
+                                                                top: Radius.circular(
+                                                                  AppRadius
+                                                                          .card -
+                                                                      1.5,
                                                                 ),
-                                                                style: AppTypography
-                                                                    .caption
-                                                                    .copyWith(
-                                                                      color: AppTheme
-                                                                          .lightTextSub,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
+                                                              ),
+                                                          child: KilimDivider(
+                                                            colors: [
+                                                              AppTheme.gold
+                                                                  .withValues(
+                                                                    alpha: 0.5,
+                                                                  ),
+                                                              AppTheme.brand
+                                                                  .withValues(
+                                                                    alpha: 0.4,
+                                                                  ),
+                                                              AppTheme.gold
+                                                                  .withValues(
+                                                                    alpha: 0.5,
+                                                                  ),
+                                                            ],
+                                                            height: 6,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.fromLTRB(
+                                                                AppSpacing.md,
+                                                                AppSpacing.sm,
+                                                                AppSpacing.md,
+                                                                AppSpacing.md,
+                                                              ),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        const Icon(
+                                                                          AppIcons
+                                                                              .copy,
+                                                                          size:
+                                                                              13,
+                                                                          color:
+                                                                              AppTheme.brand,
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          width:
+                                                                              4,
+                                                                        ),
+                                                                        Expanded(
+                                                                          child: Text(
+                                                                            context.t(
+                                                                              K.roomCodeTapCopy,
+                                                                            ),
+                                                                            maxLines:
+                                                                                1,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style: AppTypography.caption.copyWith(
+                                                                              color: AppTheme.lightTextSub,
+                                                                              fontWeight: FontWeight.w700,
+                                                                              fontSize: 12,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
                                                                     ),
+                                                                    const SizedBox(
+                                                                      height: 6,
+                                                                    ),
+                                                                    FittedBox(
+                                                                      fit: BoxFit
+                                                                          .scaleDown,
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .centerLeft,
+                                                                      child: Text(
+                                                                        room.code,
+                                                                        key: const ValueKey(
+                                                                          'room-code',
+                                                                        ),
+                                                                        maxLines:
+                                                                            1,
+                                                                        softWrap:
+                                                                            false,
+                                                                        style: AppTypography.display.copyWith(
+                                                                          color:
+                                                                              AppTheme.culturalBrandBg,
+                                                                          letterSpacing:
+                                                                              4,
+                                                                          fontWeight:
+                                                                              FontWeight.w900,
+                                                                          fontSize:
+                                                                              28,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
-                                                              const SizedBox(
-                                                                height: 4,
-                                                              ),
-                                                              FittedBox(
-                                                                fit: BoxFit
-                                                                    .scaleDown,
-                                                                alignment: Alignment
-                                                                    .centerLeft,
-                                                                child: Text(
-                                                                  room.code,
-                                                                  key: const ValueKey(
-                                                                    'room-code',
-                                                                  ),
-                                                                  maxLines: 1,
-                                                                  softWrap:
-                                                                      false,
-                                                                  style: AppTypography.display.copyWith(
+                                                              Container(
+                                                                width: 44,
+                                                                height: 44,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                decoration: BoxDecoration(
+                                                                  color: AppTheme
+                                                                      .brand
+                                                                      .withValues(
+                                                                        alpha:
+                                                                            0.10,
+                                                                      ),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                        AppRadius
+                                                                            .sm,
+                                                                      ),
+                                                                  border: Border.all(
                                                                     color: AppTheme
-                                                                        .playCyan,
-                                                                    letterSpacing:
-                                                                        3,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w900,
+                                                                        .brand
+                                                                        .withValues(
+                                                                          alpha:
+                                                                              0.25,
+                                                                        ),
                                                                   ),
+                                                                ),
+                                                                child: const Icon(
+                                                                  AppIcons.copy,
+                                                                  color: AppTheme
+                                                                      .brand,
+                                                                  size: 20,
                                                                 ),
                                                               ),
                                                             ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          width: 40,
-                                                          height: 40,
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration: BoxDecoration(
-                                                            color: AppTheme
-                                                                .playCyan
-                                                                .withValues(
-                                                                  alpha: 0.12,
-                                                                ),
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  AppRadius.sm,
-                                                                ),
-                                                          ),
-                                                          child: const Icon(
-                                                            AppIcons.copy,
-                                                            color: AppTheme
-                                                                .playCyan,
                                                           ),
                                                         ),
                                                       ],
@@ -991,7 +1107,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                                       ),
                                                 ),
                                           )
-                                        else
+                                        else ...[
                                           for (
                                             var i = 0;
                                             i < visiblePlayers.length;
@@ -1025,6 +1141,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                                 );
                                               },
                                             ),
+                                          if (visiblePlayers.length < 2)
+                                            _WaitingPlayerTile(isKu: ku),
+                                        ],
                                         if (room.players.length < 2) ...[
                                           const SizedBox(height: AppSpacing.sm),
                                           // Tek inline şerit: davet ipucu (başlatma
@@ -1624,6 +1743,7 @@ class _PlayerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isReady = player.state == Player.readyState;
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.xs),
       padding: const EdgeInsets.all(AppSpacing.sm),
@@ -1633,33 +1753,69 @@ class _PlayerTile extends StatelessWidget {
         border: Border.all(
           color: isHost
               ? AppTheme.gold.withValues(alpha: 0.45)
-              : AppTheme.playCyan.withValues(alpha: 0.22),
+              : (isReady
+                    ? AppTheme.correct.withValues(alpha: 0.35)
+                    : AppTheme.borderColor(context)),
         ),
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: AppTheme.playCyan.withValues(alpha: 0.16),
-            child: Text(
-              '$rank',
-              style: AppTypography.caption.copyWith(
-                // Sıra rakamı kendi renginin %16'lık dairesinde
-                // yazılıyordu: koyu temada 2.15:1 (2026-07-27).
-                color: AppColors.onAccentTint(context, AppTheme.playCyan),
-                fontWeight: FontWeight.w700,
-                fontSize: 13,
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              PlayerAvatar(
+                radius: 19,
+                photoUrl: player.avatarUrl,
+                iconId: player.avatarIcon,
+                colorHex: player.avatarColor,
+                frameId: player.avatarFrame,
+                displayName: _displayName(context),
               ),
-            ),
+              Positioned(
+                right: -2,
+                bottom: -2,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: isHost
+                        ? AppTheme.gold
+                        : AppTheme.surfaceHiColor(context),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppTheme.borderColor(context),
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    '$rank',
+                    style: AppTypography.caption.copyWith(
+                      color: isHost
+                          ? Colors.black87
+                          : AppTheme.textPrimaryColor(context),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.sm - 2),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Flexible(
+                    // `Expanded`, `Flexible` DEĞİL.
+                    //
+                    // `Flexible` gevşek sığdırır: metin doğal boyunu alır
+                    // ve ev sahibi rozetine yer BIRAKMAZ. Uzun adla rozet
+                    // birlikteyken satır 7 px taşıyordu (2026-08-19).
+                    // `Expanded` adı kısaltıp üç noktaya düşürür, rozet
+                    // kendi boyunu korur.
+                    Expanded(
                       child: Text(
                         _displayName(context),
                         maxLines: 1,
@@ -1672,34 +1828,70 @@ class _PlayerTile extends StatelessWidget {
                     ),
                     if (isHost) ...[
                       const SizedBox(width: AppSpacing.xxs),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.gold.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(AppRadius.xs),
-                        ),
-                        child: Text(
-                          Tr.forKu(K.host, isKu),
-                          style: AppTypography.caption.copyWith(
-                            color: AppColors.onAccentTint(
-                              context,
-                              AppTheme.gold,
+                      // Rozet de küçülebilmeli.
+                      //
+                      // Yalnız adı `Expanded` yapmak yetmedi: dar kutuda
+                      // ad sıfıra iner ama sabit genişlikli rozet kendi
+                      // boyunda kalıp satırı 7 px taşırıyordu. `Flexible`
+                      // + üç nokta, rozetin de yer vermesini sağlar.
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppTheme.gold.withValues(alpha: 0.18),
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
+                          ),
+                          child: Text(
+                            Tr.forKu(K.host, isKu),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.caption.copyWith(
+                              color: AppColors.onAccentTint(
+                                context,
+                                AppTheme.gold,
+                              ),
                             ),
-                            fontSize: 10,
                           ),
                         ),
                       ),
                     ],
                   ],
                 ),
-                Text(
-                  _localizedState(player.state),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      width: 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isReady
+                            ? AppTheme.correct
+                            : AppTheme.textMutedColor(context),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: Text(
+                        _localizedState(player.state),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.caption.copyWith(
+                          color: isReady
+                              ? AppColors.readableAccent(
+                                  context,
+                                  AppTheme.correct,
+                                )
+                              : AppTheme.textMutedColor(context),
+                          fontWeight: isReady
+                              ? FontWeight.w700
+                              : FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -1715,10 +1907,9 @@ class _PlayerTile extends StatelessWidget {
                 ),
               ),
               Text(
-                '${player.streak} ${isKu ? "zincîr" : "seri"}',
+                '${player.streak} ${context.t(K.streakLabel).toLowerCase()}',
                 style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
-                  fontSize: 11,
                 ),
               ),
             ],
@@ -1738,6 +1929,109 @@ class _PlayerTile extends StatelessWidget {
             isSelf: isSelf,
             compact: true,
             onBlocked: onBlocked,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Henüz katılmamış 2. oyuncu için boş slot kartı.
+class _WaitingPlayerTile extends StatelessWidget {
+  const _WaitingPlayerTile({required this.isKu});
+
+  /// Bekçinin tutunacağı çapa.
+  ///
+  /// Metinle aramak işe yaramıyor: "Henüz yok" (`K.statPending`) oda
+  /// ekranında başka yerde de geçiyor ve `findsOneWidget` iki eşleşme
+  /// bulup düşüyordu. Anahtar, iddiayı bu kutunun İÇİNE hapseder.
+  static const anchorKey = ValueKey('room-waiting-slot');
+
+  final bool isKu;
+
+  @override
+  Widget build(BuildContext context) {
+    final isLight = AppTheme.isLight(context);
+    return Container(
+      key: anchorKey,
+      margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: AppSpacing.sm - 2,
+      ),
+      decoration: BoxDecoration(
+        color: isLight
+            ? Colors.black.withValues(alpha: 0.02)
+            : Colors.white.withValues(alpha: 0.03),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border.all(
+          color: AppTheme.borderColor(context).withValues(alpha: 0.7),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isLight
+                  ? Colors.black.withValues(alpha: 0.04)
+                  : Colors.white.withValues(alpha: 0.06),
+              border: Border.all(
+                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+              ),
+            ),
+            child: const Center(
+              child: Icon(AppIcons.userPlus, size: 16, color: AppTheme.gold),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.t(K.waitingOpponent),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textSubColor(context),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                // Alt satırdaki ikinci "Henüz yok" KALDIRILDI.
+                //
+                // Kutu aynı iki kelimeyi iki kez basıyordu: hem burada
+                // hem sağdaki rozette. Rozet kum saati ikonu taşıdığı
+                // için daha çok şey söylüyor; alt satır yalnız yer
+                // kaplıyordu. Aynı kusur soru ekranında da vardı
+                // ("doğru cevap" kutusu karonun söylediğini tekrar
+                // ediyordu) ve aynı gerekçeyle çözüldü.
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.xs + 2,
+              vertical: 4,
+            ),
+            decoration: BoxDecoration(
+              color: AppTheme.gold.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(AppIcons.hourglass, size: 11, color: AppTheme.gold),
+                const SizedBox(width: 4),
+                Text(
+                  context.t(K.statPending),
+                  style: AppTypography.caption.copyWith(
+                    color: AppColors.onAccentTint(context, AppTheme.gold),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -584,8 +584,8 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                       Text(
                         context.t(K.wheelWonPlus, {'amount': '$amount'}),
                         style: TextStyle(
-                          color: AppTheme.bg.withValues(alpha: 0.88),
-                          fontWeight: FontWeight.w700,
+                          color: AppTheme.bg.withValues(alpha: 0.95),
+                          fontWeight: FontWeight.w800,
                           fontSize: 16,
                         ),
                       ),

@@ -310,7 +310,7 @@ class _ProfileHeroCard extends StatelessWidget {
                       const Icon(
                         AppIcons.medal,
                         color: AppTheme.gold,
-                        size: 22,
+                        size: 20,
                       ),
                       const SizedBox(width: AppSpacing.xxs),
                       Flexible(
@@ -320,21 +320,16 @@ class _ProfileHeroCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyLarge.copyWith(
                             color: Colors.white,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.xs),
-                      Flexible(
-                        child: Text(
-                          '$xpInLevel / $xpNeeded XP',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.end,
-                          style: AppTypography.caption.copyWith(
-                            color: Colors.white.withValues(alpha: 0.74),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                      RewardToken(
+                        kind: RewardKind.xp,
+                        value: '$xpInLevel / $xpNeeded',
+                        compact: true,
+                        onSolid: true,
                       ),
                     ],
                   ),
@@ -467,15 +462,32 @@ class _StatTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 28,
-              height: 28,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.iconTileBg(context, color),
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-              ),
-              child: Icon(icon, color: color, size: 16),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 28,
+                  height: 28,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.iconTileBg(context, color),
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
+                  ),
+                  child: Icon(icon, color: color, size: 16),
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Transform.rotate(
+                  angle: 0.785398,
+                  child: Container(
+                    width: 5,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.45),
+                      borderRadius: BorderRadius.circular(1),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: AppSpacing.xxs),
             Text(
@@ -485,6 +497,7 @@ class _StatTile extends StatelessWidget {
               style: AppTypography.bodyLarge.copyWith(
                 color: AppColors.toneOnSurface(context, color),
                 fontSize: 17,
+                fontWeight: FontWeight.w900,
               ),
             ),
             Text(
@@ -758,29 +771,27 @@ class _UnifiedRewardsSection extends StatelessWidget {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () => _showAllSheet(context),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: const Size(44, 44),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '$totalUnlocked/$totalAll',
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontWeight: FontWeight.w800,
+              InkWell(
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                onTap: () => _showAllSheet(context),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RewardToken(
+                        kind: RewardKind.rank,
+                        value: '$totalUnlocked / $totalAll',
+                        compact: true,
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      AppIcons.chevronRight,
-                      color: AppTheme.textMutedColor(context),
-                      size: 16,
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      Icon(
+                        AppIcons.chevronRight,
+                        color: AppTheme.textMutedColor(context),
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

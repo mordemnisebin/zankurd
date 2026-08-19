@@ -1065,24 +1065,160 @@ class _LearningPathNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = completed
-        ? AppTheme.playGreen
+    final connectorColor = completed
+        ? AppTheme.gold
         : current
         ? AppTheme.brand
-        : AppTheme.borderColor(context);
+        : AppTheme.borderColor(context).withValues(alpha: 0.35);
+
     return Stack(
       children: [
+        // Dikey dokuma yolu bağlantı çizgisi
         Positioned(
-          left: 27,
+          left: 9,
           top: 0,
           bottom: 0,
-          child: Container(width: 3, color: color.withValues(alpha: 0.45)),
+          child: Container(
+            width: 2.5,
+            decoration: BoxDecoration(
+              color: connectorColor,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
         ),
+        // Baklava düğüm (Kilim diamond node)
+        Positioned(
+          left: 2,
+          top: 22,
+          child: _KilimPathDiamond(
+            completed: completed,
+            current: current,
+            locked: locked,
+          ),
+        ),
+        // Kart içeriği
         Padding(
-          padding: EdgeInsets.only(left: index.isEven ? 0 : AppSpacing.lg),
-          child: Opacity(opacity: locked ? 0.58 : 1, child: child),
+          padding: EdgeInsets.only(
+            left: 26 + (index.isEven ? 0.0 : 8.0),
+            bottom: AppSpacing.xs,
+          ),
+          child: Opacity(
+            opacity: locked ? 0.62 : 1.0,
+            child: child,
+          ),
         ),
       ],
+    );
+  }
+}
+
+/// Ders yolundaki kültürel kilim baklava düğümü.
+class _KilimPathDiamond extends StatelessWidget {
+  const _KilimPathDiamond({
+    required this.completed,
+    required this.current,
+    required this.locked,
+  });
+
+  final bool completed;
+  final bool current;
+  final bool locked;
+
+  @override
+  Widget build(BuildContext context) {
+    if (completed) {
+      // Tamamlanan: Altın dolgulu baklava düğüm
+      return Transform.rotate(
+        angle: math.pi / 4,
+        child: Container(
+          width: 17,
+          height: 17,
+          decoration: BoxDecoration(
+            color: AppTheme.gold,
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(
+              color: const Color(0xFFD97706),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.gold.withValues(alpha: 0.35),
+                blurRadius: 4,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Transform.rotate(
+            angle: -math.pi / 4,
+            child: const Icon(
+              AppIcons.check,
+              size: 10,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (current) {
+      // Aktif/Sıradaki: Parlayan marka rengi baklava
+      return Transform.rotate(
+        angle: math.pi / 4,
+        child: Container(
+          width: 17,
+          height: 17,
+          decoration: BoxDecoration(
+            color: AppTheme.brand,
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(
+              color: Colors.white,
+              width: 1.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.brand.withValues(alpha: 0.45),
+                blurRadius: 6,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Container(
+              width: 4,
+              height: 4,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Kilitli: Şeffaf / tema kenarlıklı sessiz baklava
+    return Transform.rotate(
+      angle: math.pi / 4,
+      child: Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: AppTheme.surfaceHiColor(context),
+          borderRadius: BorderRadius.circular(2.5),
+          border: Border.all(
+            color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+            width: 1.2,
+          ),
+        ),
+        child: Transform.rotate(
+          angle: -math.pi / 4,
+          child: Icon(
+            AppIcons.lock,
+            size: 8,
+            color: AppTheme.textMutedColor(context),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -1095,29 +1231,77 @@ class _MasteryGoal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: const ValueKey('learning-mastery-goal'),
-      margin: const EdgeInsets.only(top: AppSpacing.xs),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppTheme.gold.withValues(alpha: completed ? 0.20 : 0.09),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
-      ),
-      child: Row(
-        children: [
-          const Icon(AppIcons.medal, color: AppTheme.gold),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Text(
-              context.t(K.categoryMasteryGoal),
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppTheme.textPrimaryColor(context),
+    return Stack(
+      children: [
+        Positioned(
+          left: 9,
+          top: 0,
+          bottom: 24,
+          child: Container(
+            width: 2.5,
+            decoration: BoxDecoration(
+              color: AppTheme.gold.withValues(alpha: completed ? 1.0 : 0.4),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 2,
+          top: 14,
+          child: Transform.rotate(
+            angle: math.pi / 4,
+            child: Container(
+              width: 17,
+              height: 17,
+              decoration: BoxDecoration(
+                color: completed
+                    ? AppTheme.gold
+                    : AppTheme.surfaceHiColor(context),
+                borderRadius: BorderRadius.circular(3),
+                border: Border.all(
+                  color: AppTheme.gold,
+                  width: 1.2,
+                ),
+              ),
+              child: Transform.rotate(
+                angle: -math.pi / 4,
+                child: Icon(
+                  AppIcons.medal,
+                  size: 9,
+                  color: completed ? Colors.white : AppTheme.gold,
+                ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 26),
+          child: Container(
+            key: const ValueKey('learning-mastery-goal'),
+            margin: const EdgeInsets.only(top: AppSpacing.xs),
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              color: AppTheme.gold.withValues(alpha: completed ? 0.20 : 0.09),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
+            ),
+            child: Row(
+              children: [
+                const Icon(AppIcons.medal, color: AppTheme.gold),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    context.t(K.categoryMasteryGoal),
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

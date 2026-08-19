@@ -13,6 +13,7 @@ import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../widgets/app_state.dart';
 import '../widgets/roj_mascot.dart';
+import '../widgets/rolling_count.dart';
 import '../widgets/screen_identity_header.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -742,9 +743,9 @@ class _ShopScreenState extends State<ShopScreen> {
                       size: 18,
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      '$_coinBalance ${context.t(K.coinWord).toLowerCase()}',
-                      maxLines: 1,
+                    RollingCount(
+                      value: _coinBalance,
+                      suffix: ' ${context.t(K.coinWord).toLowerCase()}',
                       style: AppTypography.caption.copyWith(
                         color: AppTheme.textPrimaryColor(context),
                         fontWeight: FontWeight.w800,

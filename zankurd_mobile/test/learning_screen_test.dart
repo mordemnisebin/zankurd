@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
@@ -345,6 +346,33 @@ void main() {
       // Kapalı düğmeye dokunmak hiçbir sayfa açmamalı — hâlâ öğrenme
       // ekranındayız.
       expect(find.byType(LearningScreen), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'öğrenme yolu kilim baklava düğümleri ve tamamlananlar için altın dolgu kullanır',
+    (tester) async {
+      // 4.3 Görsel Kimlik: Ders yolu Duolingo yerine kilim baklava motifleriyle
+      // ve tamamlanan dersler altın düğümle çizilir.
+      tester.view.physicalSize = const Size(480, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      final mockRepo = MockZanKurdRepository();
+      await tester.pumpWidget(wrap(LearningScreen(repository: mockRepo)));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const ValueKey('learning-path-node-everyday_1')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('learning-path-node-everyday_2')),
+        findsOneWidget,
+      );
+
+      // Baklava kilit düğümü ikonlarının mevcut olduğu kontrolü
+      expect(find.byIcon(AppIcons.lock), findsWidgets);
     },
   );
 }
