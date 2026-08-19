@@ -2744,20 +2744,20 @@
     "category": "Teknolojî",
     "prompt": "\"Passphrase\" çi ye?",
     "answers": [
-      "Çend peyvên rastîn ên li hev hatî",
-      "Yek tîpa dubarekirî",
-      "Hejmarek bi tenê",
-      "Navê bikarhêner"
+      "Rêzek ji çend peyvên cuda yên bi hev ve girêdayî",
+      "Rêzek ji yek tîpê ku gelek caran tê dubarekirin",
+      "Rêzek ku tenê ji hejmarên li pey hev pêk tê",
+      "Navê bikarhêner ku wek şîfre tê bikaranîn"
     ],
-    "correctAnswer": "Çend peyvên rastîn ên li hev hatî",
+    "correctAnswer": "Rêzek ji çend peyvên cuda yên bi hev ve girêdayî",
     "promptTr": "\"Passphrase\" nedir?",
     "answersTr": [
-      "Birleştirilmiş birkaç gerçek sözcük",
-      "Tekrarlanan tek harf",
-      "Yalnızca bir sayı",
-      "Kullanıcı adı"
+      "Birbiriyle birleştirilmiş birkaç farklı sözcükten oluşan ifade",
+      "Tek bir harfin çok kez tekrarlandığı bir dizi",
+      "Yalnızca ardışık sayılardan oluşan bir dizi",
+      "Parola olarak kullanılan kullanıcı adı"
     ],
-    "correctAnswerTr": "Birleştirilmiş birkaç gerçek sözcük",
+    "correctAnswerTr": "Birbiriyle birleştirilmiş birkaç farklı sözcükten oluşan ifade",
     "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir tê bîrîn hem dirêjtir e.",
     "explanationTr": "Passphrase birkaç gerçek sözcüğü birleştirir; hem akılda kalıcı hem daha uzundur.",
     "difficulty": 2,
@@ -2777,20 +2777,20 @@
     "category": "Teknolojî",
     "prompt": "Çima şîfreya yekseb li gelek malperan xeter e?",
     "answers": [
-      "Ji ber ku malper hêdî dibin",
-      "Ji ber ku bîranîn zehmet e",
-      "Ji ber ku înternet zêde tê bikaranîn",
-      "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê"
+      "Ji ber ku malper dikarin bi heman şîfreyê hêdîtir bibin",
+      "Ji ber ku şîfreyek li gelek cihan bîranîna wê dijwartir dike",
+      "Ji ber ku bikaranîna heman şîfreyê trafîka înternetê zêde dike",
+      "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê"
     ],
-    "correctAnswer": "Ger yek malper bikeve destan, hemû hesab dikevin xetereyê",
+    "correctAnswer": "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê",
     "promptTr": "Aynı parolayı birçok sitede kullanmak neden risklidir?",
     "answersTr": [
-      "Siteler yavaşladığı için",
-      "Hatırlaması zor olduğu için",
-      "İnternet çok kullanıldığı için",
-      "Bir site ele geçerse tüm hesaplar tehlikeye girer"
+      "Aynı parola siteleri teknik olarak yavaşlatabildiği için",
+      "Tek parolayı birçok yerde kullanmak hatırlamayı zorlaştırdığı için",
+      "Aynı parola kullanımı internet trafiğini artırdığı için",
+      "Bir hesabın ele geçirilmesi diğer hesapları da tehlikeye atabildiği için"
     ],
-    "correctAnswerTr": "Bir site ele geçerse tüm hesaplar tehlikeye girer",
+    "correctAnswerTr": "Bir hesabın ele geçirilmesi diğer hesapları da tehlikeye atabildiği için",
     "explanationKu": "Ger şîfreya heman li malperekê bikeve destan, hemû hesabên bi wê şîfreyê dikevin xetereyê.",
     "explanationTr": "Aynı parola bir sitede ele geçerse, o parolayı kullanan tüm hesaplar tehlikeye girer.",
     "difficulty": 2,

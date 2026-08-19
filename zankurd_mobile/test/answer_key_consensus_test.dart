@@ -87,6 +87,21 @@ void main() {
     // Buraya bir kayıt eklemek, kaynağını yazmayı gerektirir. Liste kısa
     // kalmalı; uzarsa bekçi anlamını yitirir.
     const reviewedOverrides = <String, String>{
+      // Aşağıdaki üçünde ANLAM değişmedi, şıkkın METNİ değişti; çapraz
+      // kontrol hükümleri metin sakladığı için eskidi (2026-08-19, dış
+      // kalite denetimi). Hükümler yanlış değil, adres değiştirdi.
+      //
+      // Şıkkın kendi adını sorudan tekrar etmesi cevabı ele veriyordu;
+      // yer adı kaldırıldı. Hakkarî ile Colemêrg aynı yerdir.
+      'ds_dirok_0109': 'Mîrên xwecihî yên herêmê',
+      // Soru kökü "Hakkari" diyor ve doğru şık da "Hakkariyê"ydi —
+      // okumadan bilinirdi. Kurmancî adı Colemêrg kullanıldı.
+      'ds_dirok_0124': 'Mîrektiya Colemêrgê',
+      // Aynı olgu (uçuşa yasak bölge) fiil cümlesi olarak yeniden
+      // yazıldı; "Herêma Kurdistanê"nin kurulması BM 688'in doğrudan
+      // hükmü değildi, o ibare çıkarıldı.
+      'ds_dirok_0338':
+          'Herêma dije-firoke li bakur ava kir û vegera penaberan hêsantir kir',
       // Zirne (zurna) geleneksel olarak DAHOL (davul) eşliğinde çalınır;
       // bankanın kendi üç kaydı da böyle diyor (edit_muzik_0004,
       // edit_muzik_0024, offline_2178). Kayıt "Def" işaretliydi ve

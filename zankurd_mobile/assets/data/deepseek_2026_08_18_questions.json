@@ -2792,7 +2792,7 @@
   {
     "id": "ds_cografya_0204",
     "category": "Cografya",
-    "prompt": "Li Bakurê Kurdistanê kîjan bajar xwedî nifûsa parêzgehê ya herî mezin e?",
+    "prompt": "Ji nav van vebijêrkan kîjan yek navê Kurdî yê bajara ku bi navê Diyarbekir jî tê zanîn e?",
     "answers": [
       "Wan",
       "Riha",
@@ -2809,14 +2809,14 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Diyarbakır",
       "qualityVersion": 1
     },
-    "promptTr": "Kuzey Kürdistan'da il nüfusu en yüksek olan şehir hangisidir?",
+    "promptTr": "Aşağıdakilerden hangisi Diyarbakır'ın Kürtçe adıdır?",
     "answersTr": [
       "Van",
       "Urfa",
       "Mardin",
-      "Diyarbakır"
+      "Amed"
     ],
-    "correctAnswerTr": "Diyarbakır",
+    "correctAnswerTr": "Amed",
     "explanationKu": "Amed (Diyarbekir) li Bakurê Kurdistanê bajarê herî qelebalix e. Wan, Riha û Mêrdîn jî bajarên mezin in lê Amed ji hemûyan mezintir e.",
     "explanationTr": "Diyarbakır, Kuzey Kürdistan'ın en kalabalık şehridir. Van, Urfa ve Mardin de büyük şehirlerdir, ancak Diyarbakır hepsinden büyüktür."
   },
@@ -5148,14 +5148,14 @@
   {
     "id": "ds_dirok_0109",
     "category": "Dîrok",
-    "prompt": "Mîrektiya Hakkariyê bi giranî ji aliyê kîjan kesayetiyan ve dihat birêvebirin?",
+    "prompt": "Mîrektiya Colemêrgê bi giranî ji aliyê kîjan kesayetiyan ve dihat birêvebirin?",
     "answers": [
-      "Mîrên Botan",
-      "Mîrên Hakkariyê",
-      "Mîrên Soran",
+      "Mîrên Botanê",
+      "Mîrên xwecihî yên herêmê",
+      "Mîrên Soranê",
       "Mîrên Babanê"
     ],
-    "correctAnswer": "Mîrên Hakkariyê",
+    "correctAnswer": "Mîrên xwecihî yên herêmê",
     "explanation": "Hakkari Emirliği, Hakkari Emirleri olarak bilinen yerel emirler tarafından yönetiliyordu.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -5165,14 +5165,14 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Hakkari_(historical_region)",
       "qualityVersion": 1
     },
-    "promptTr": "Hakkari Emirliği büyük ölçüde hangi kişilikler tarafından yönetiliyordu?",
+    "promptTr": "Hakkari Emirliği büyük ölçüde hangi kişiler tarafından yönetiliyordu?",
     "answersTr": [
-      "Botan Emirleri",
-      "Hakkari Emirleri",
-      "Soran Emirleri",
-      "Baban Emirleri"
+      "Botan emirleri",
+      "Bölgenin yerel emirleri",
+      "Soran emirleri",
+      "Baban emirleri"
     ],
-    "correctAnswerTr": "Hakkari Emirleri",
+    "correctAnswerTr": "Bölgenin yerel emirleri",
     "explanationKu": "Mîrektiya Hakkariyê ji aliyê mîrên herêmî yên ku bi navê Mîrên Hakkariyê dihatin naskirin ve dihat birêvebirin.",
     "explanationTr": "Hakkari Emirliği, Hakkari Emirleri olarak bilinen yerel emirler tarafından yönetiliyordu."
   },
@@ -5272,14 +5272,14 @@
   {
     "id": "ds_dirok_0124",
     "category": "Dîrok",
-    "prompt": "Kîjan mîrektiya kurdan di sedsala 16'an de li herêma Hakkariyê hukum dikir?",
+    "prompt": "Kîjan mîrektiya kurdan di sedsala 16an de li herêma çiyayî ya di navbera Wan û Musilê de hukum dikir?",
     "answers": [
       "Mîrektiya Botanê",
-      "Mîrektiya Hakkariyê",
+      "Mîrektiya Colemêrgê",
       "Mîrektiya Babanê",
-      "Mîrektiya Soran"
+      "Mîrektiya Soranê"
     ],
-    "correctAnswer": "Mîrektiya Hakkariyê",
+    "correctAnswer": "Mîrektiya Colemêrgê",
     "explanation": "Hakkari Emirliği, 16. yüzyılda Hakkari bölgesinde hüküm sürdü ve Osmanlılar ile Safeviler arasında önemli bir rol oynadı.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -5289,7 +5289,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Hakkari_(historical_region)",
       "qualityVersion": 1
     },
-    "promptTr": "16. yüzyılda Hakkari bölgesinde hüküm süren Kürt emirliği hangisidir?",
+    "promptTr": "16. yüzyılda Van ile Musul arasındaki dağlık bölgede hüküm süren Kürt emirliği hangisidir?",
     "answersTr": [
       "Botan Emirliği",
       "Hakkari Emirliği",
@@ -7721,7 +7721,7 @@
   {
     "id": "ds_dirok_0241",
     "category": "Dîrok",
-    "prompt": "Kîjan makîneya çandiniyê berhemdariya hesadê zêde kir?",
+    "prompt": "Kîjan makîneya çandiniyê karê birîn û berhevkirina genim bi lez kir?",
     "answers": [
       "Makîneya hesadê",
       "Xerata destan",
@@ -7738,14 +7738,14 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Agricultural_Revolution",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi tarım makinesi hasat verimliliğini artırdı?",
+    "promptTr": "Hangi tarım makinesi ekini biçme ve toplama işini hızlandırdı?",
     "answersTr": [
-      "Biçerdöver (hasat makinesi)",
+      "Biçerdöver",
       "El sabanı",
       "Yel değirmeni",
       "Dokuma tezgâhı"
     ],
-    "correctAnswerTr": "Biçerdöver (hasat makinesi)",
+    "correctAnswerTr": "Biçerdöver",
     "explanationKu": "Makîneyên hesadê hewcedariya kar kêm kirin û berhemdarî zêde kirin.",
     "explanationTr": "Mekanik hasat makineleri tarımda işgücü ihtiyacını azaltıp verimi artırdı. Ürün rotasyonu da üretimi artıran ayrı bir yeniliktir."
   },
@@ -8155,7 +8155,7 @@
   {
     "id": "ds_dirok_0272",
     "category": "Dîrok",
-    "prompt": "Di dîroka devkî de, kîjan têgeh ji bo ravekirina pêvajoya guherandina çîrokê di nav nifşan de tê bikaranîn?",
+    "prompt": "Di dîroka devkî de, kîjan têgeh pêvajoya ku vegotin di nav nifşan de dibe cuda rave dike?",
     "answers": [
       "Transkrîpsiyon",
       "Refleksîvîte",
@@ -8172,14 +8172,14 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Oral_history",
       "qualityVersion": 1
     },
-    "promptTr": "Sözlü tarihte, hikayenin nesiller arasında değişim sürecini tanımlamak için hangi terim kullanılır?",
+    "promptTr": "Sözlü tarihte anlatının kuşaklar arasında farklılaşması sürecini hangi terim tanımlar?",
     "answersTr": [
       "Transkripsiyon",
       "Dönüşümsellik",
-      "Hikayenin dönüşümü",
+      "Hikâyenin dönüşümü",
       "Arşivleme"
     ],
-    "correctAnswerTr": "Hikayenin dönüşümü",
+    "correctAnswerTr": "Hikâyenin dönüşümü",
     "explanationKu": "Veguherîna çîrokê tê wateya ku çîrok bi demê re û di nav nifşan de diguhere; ev jî ji bo dîroka devkî xaleke girîng e ku divê were hesab kirin.",
     "explanationTr": "Hikayenin dönüşümü, hikayenin zamanla ve nesiller arasında değişmesi anlamına gelir; bu da sözlü tarih için dikkate alınması gereken önemli bir noktadır."
   },
@@ -8964,9 +8964,9 @@
     "prompt": "Di destana Gilgameş de, Gilgameş ji bo çi li riya nemiriyê digere?",
     "answers": [
       "Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya",
-      "Ji bo ku bibe padîşah",
-      "Ji bo ku cîhanê bigire",
-      "Ji bo ku xwedayan bibîne"
+      "Ji ber ku dixwest hêza xwe wek padîşah zêde bike",
+      "Ji ber ku dixwest welatên dûr dagir bike û navdar bibe",
+      "Ji ber ku dixwest xwedayan bibîne û ji wan şîretan bistîne"
     ],
     "correctAnswer": "Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya",
     "explanation": "Enkidu'nun ölümü Gılgamış'a kendi ölümlülüğünü gösterir; bundan sonra ölümden kaçmanın yolunu, ebedî yaşamı arar. Arayış Enkidu'yu diriltmek için değildir.",
@@ -8978,12 +8978,12 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh",
       "qualityVersion": 1
     },
-    "promptTr": "Gılgamış Destanı'nda Gılgamış ölümsüzlüğün peşinde neden arar?",
+    "promptTr": "Gılgamış Destanı'nda Gılgamış ölümsüzlüğün peşine neden düşer?",
     "answersTr": [
       "Enkidu'nun ölümünden sonra kendi ölümünden korktuğu için",
-      "Kral olmak için",
-      "Dünyayı fethetmek için",
-      "Tanrıları görmek için"
+      "Kral olarak gücünü daha da artırmak istediği için",
+      "Uzak ülkeleri fethedip ün kazanmak istediği için",
+      "Tanrıları görüp onlardan öğüt almak istediği için"
     ],
     "correctAnswerTr": "Enkidu'nun ölümünden sonra kendi ölümünden korktuğu için",
     "explanationKu": "Mirina Enkîdu mirovbûna Gilgameş nîşanî wî dide; piştî wê ew li riya revîna ji mirinê digere, ne ji bo vejandina Enkîdu.",
@@ -9364,7 +9364,7 @@
   {
     "id": "ds_edebiyat_0107",
     "category": "Edebiyat",
-    "prompt": "Di romana \"Mîzrab\" (The Hunchback of Notre-Dame) de, Quasimodo li kû dijî?",
+    "prompt": "Di romana Victor Hugo ya ku behsa Quasimodo dike de, ew li kû dijî?",
     "answers": [
       "Di qesra padîşah de",
       "Di katedrala Notre-Dame de",
@@ -9381,7 +9381,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/The_Hunchback_of_Notre-Dame",
       "qualityVersion": 1
     },
-    "promptTr": "\"Notre Dame\"ın Kamburu' romanında Quasimodo nerede yaşar?",
+    "promptTr": "Victor Hugo'nun Quasimodo'yu konu alan romanında Quasimodo nerede yaşar?",
     "answersTr": [
       "Kralın sarayında",
       "Notre Dame Katedrali'nde",
@@ -9922,7 +9922,7 @@
   {
     "id": "ds_edebiyat_0129",
     "category": "Edebiyat",
-    "prompt": "\"Romeo\" di kîjan berhema Shakespeare de cih digire?",
+    "prompt": "Kîjan trajediya Shakespeare behsa du evîndarên ciwan ji du malbatên dijber li Verona dike?",
     "answers": [
       "Macbeth",
       "King Lear",
@@ -9939,7 +9939,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Romeo_and_Juliet",
       "qualityVersion": 1
     },
-    "promptTr": "\"Romeo\" Shakespeare'in hangi eserinde yer alır?",
+    "promptTr": "Shakespeare'in hangi trajedisi Verona'da düşman iki aileden gelen iki genç âşığı konu alır?",
     "answersTr": [
       "Macbeth",
       "Kral Lear",
@@ -11162,7 +11162,7 @@
   {
     "id": "ds_edebiyat_0227",
     "category": "Edebiyat",
-    "prompt": "Kîjan berhem ji aliyê La Fontaine ve hatiye nivîsandin û tê de ajel bi zaravayê mirovan dipeyivin?",
+    "prompt": "Kîjan berhem komeke fablan e ya nivîskarekî Fransî yê sedsala 17an ku tê de ajel bi taybetiyên mirovan dipeyivin?",
     "answers": [
       "Çîrokên Grimm",
       "Fablên La Fontaine",
@@ -11179,7 +11179,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Jean_de_La_Fontaine",
       "qualityVersion": 1
     },
-    "promptTr": "La Fontaine tarafından yazılan ve hayvanların insan diliyle konuştuğu eser hangisidir?",
+    "promptTr": "Hayvanların insan özellikleriyle konuşturulduğu, 17. yüzyıl Fransız yazarına ait fabl topluluğu hangisidir?",
     "answersTr": [
       "Grimm Masalları",
       "La Fontaine Masalları",
@@ -11348,7 +11348,7 @@
   {
     "id": "ds_muzik_0003",
     "category": "Muzîk",
-    "prompt": "Kîjan bajar wekî navenda kevneşopiya dengbêjiyê tê hesibandin?",
+    "prompt": "Mala Dengbêjan a ku wek navendeke girîng a kevneşopiya dengbêjiyê tê naskirin li kîjan bajarî ye?",
     "answers": [
       "Stenbol",
       "Amed",
@@ -11365,7 +11365,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Dengb%C3%AAj",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi şehir dengbêjlik geleneğinin merkezi olarak kabul edilir?",
+    "promptTr": "Dengbêjlik geleneğinin önemli kurumlarından Mala Dengbêjan hangi şehirdedir?",
     "answersTr": [
       "İstanbul",
       "Diyarbakır",
@@ -11720,7 +11720,7 @@
   {
     "id": "ds_muzik_0042",
     "category": "Muzîk",
-    "prompt": "Tembûr bi piranî di kîjan çandê de wekî amûreke pîroz tê dîtin?",
+    "prompt": "Di kevneşopiya Yarsan/Ehlê Heq de tembûr wek amûreke pîroz tê dîtin; ev kevneşopî di nav kîjan çandê de tê cihkirin?",
     "answers": [
       "Di çanda Almanî de",
       "Di çanda Japonî de",
@@ -11737,14 +11737,14 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Temb%C3%BBr",
       "qualityVersion": 1
     },
-    "promptTr": "Tembur çoğunlukla hangi kültürde kutsal bir çalgı olarak görülür?",
+    "promptTr": "Yarsan/Ehl-i Hak geleneğinde tembur kutsal bir çalgı olarak görülür; bu gelenek hangi kültürle ilişkilidir?",
     "answersTr": [
-      "Alman kültüründe",
-      "Japon kültüründe",
-      "Brezilya kültüründe",
-      "Kürt kültüründe"
+      "Alman kültürüyle",
+      "Japon kültürüyle",
+      "Brezilya kültürüyle",
+      "Kürt kültürüyle"
     ],
-    "correctAnswerTr": "Kürt kültüründe",
+    "correctAnswerTr": "Kürt kültürüyle",
     "explanationKu": "Tembûr di çanda Kurdî de bi taybetî di nav elewiyan de wekî amûreke pîroz tê dîtin.",
     "explanationTr": "Tembur, Kürt kültüründe özellikle Aleviler arasında kutsal bir çalgı olarak görülür."
   },
@@ -11875,7 +11875,7 @@
   {
     "id": "ds_muzik_0030",
     "category": "Muzîk",
-    "prompt": "Tembûr bi gelemperî çend têlên wê hene?",
+    "prompt": "Tembûra kevneşopiya Yarsan/Ehlê Heqê bi gelemperî çend têlên wê hene?",
     "answers": [
       "Pênc têl",
       "Heft têl",
@@ -11892,7 +11892,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Temb%C3%BBr",
       "qualityVersion": 1
     },
-    "promptTr": "Temburun genellikle kaç teli vardır?",
+    "promptTr": "Yarsan/Ehl-i Hak geleneğindeki temburun genellikle kaç teli vardır?",
     "answersTr": [
       "Beş tel",
       "Yedi tel",
@@ -12588,7 +12588,7 @@
   {
     "id": "ds_muzik_0066",
     "category": "Muzîk",
-    "prompt": "Kîjan stran bi piranî ji bo dîlanê tê gotin?",
+    "prompt": "Kîjan stran bi piranî di şahî û dawetan de ji bo govendê tê gotin?",
     "answers": [
       "Strana şînê",
       "Strana dîlanê",
@@ -12605,12 +12605,12 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Folk_music",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi türkü çoğunlukla düğünler için söylenir?",
+    "promptTr": "Hangi türkü çoğunlukla düğün ve toplu danslarda söylenir?",
     "answersTr": [
       "Ağıt",
       "Düğün türküsü",
       "Ninni",
-      "Dini türkü"
+      "Dinî türkü"
     ],
     "correctAnswerTr": "Düğün türküsü",
     "explanationKu": "Strana dîlanê ji bo şahiyê û reqasê tê gotin. Strana lorîkê ji bo zarokan e.",
@@ -13425,7 +13425,7 @@
   {
     "id": "ds_muzik_0144",
     "category": "Muzîk",
-    "prompt": "Kîjan bestekarê klasîk bi navê \"Bavê Muzîka Klasîk\" tê naskirin?",
+    "prompt": "Kîjan bestekarê klasîk bi leqeba Bavê Semfoniyê tê naskirin?",
     "answers": [
       "Wolfgang Amadeus Mozart",
       "Joseph Haydn",
@@ -13442,7 +13442,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Joseph_Haydn",
       "qualityVersion": 1
     },
-    "promptTr": "Hangi klasik besteci \"Klasik Müziğin Babası\" olarak bilinir?",
+    "promptTr": "Hangi klasik besteci Senfoninin Babası lakabıyla bilinir?",
     "answersTr": [
       "Wolfgang Amadeus Mozart",
       "Joseph Haydn",
@@ -28484,22 +28484,22 @@
     "id": "ds_sinema_0290",
     "category": "Sînema",
     "difficulty": 5,
-    "prompt": "Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji \"çiya û gund\" ber bi \"bajarên mezin\" ve çi nîşan dide?",
-    "promptTr": "2010 sonrası Kürt sinemasında mekanın kırdan metropole kayması hangi sosyolojik değişimi gösterir?",
+    "prompt": "Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji çiya û gund ber bi bajarên mezin ve çi nîşan dide?",
+    "promptTr": "2010 sonrası Kürt sinemasında mekânın kırdan metropole kayması hangi sosyolojik değişimi gösterir?",
     "answers": [
-      "Qedexebûna çandiniyê li hemû gundên cîhanê",
-      "Bikaranîna tenê trênên bilez ji aliyê hemû gundiyan ve",
+      "Vegera temam a jiyana gundan û kêmkirina rola bajaran di çîrokên nû de",
+      "Bêbandorbûna koçberiyê û domandina heman têkiliyên kevn ên gundî li metropolan",
       "Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de",
-      "Hebûna hemû kamerayan tenê li navendên bazirganiyê"
+      "Tenê guhertina teknîkên kişandina fîlmê bê têkiliyek bi jiyana civakî re"
     ],
     "answersTr": [
-      "Tüm dünyadaki köylerde geleneksel tarımın tamamen yasaklanmış olmasını",
-      "Bölgedeki tüm köylülerin yalnızca yüksek hızlı trenlerle seyahat etmeye başlamasını",
-      "Zorunlu göçün sonucu olarak metropolde büyüyen yeni kuşakların kentsel kimlik arayışını",
-      "Film kameralarının yalnızca lüks alışveriş merkezlerinde bulunmasını"
+      "Köy yaşamına bütünüyle dönüşü ve yeni anlatılarda kentlerin önemini yitirmesini",
+      "Göçün etkisiz kalmasını ve eski köy ilişkilerinin metropollerde aynen sürmesini",
+      "Göç gerçeğini, metropollerde büyüyen yeni kuşakları ve kentte kimlik arayışını",
+      "Yalnızca çekim tekniklerinin değişmesini ve bunun toplumsal yaşamla ilgisiz olmasını"
     ],
     "correctAnswer": "Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de",
-    "correctAnswerTr": "Zorunlu göçün sonucu olarak metropolde büyüyen yeni kuşakların kentsel kimlik arayışını",
+    "correctAnswerTr": "Göç gerçeğini, metropollerde büyüyen yeni kuşakları ve kentte kimlik arayışını",
     "explanation": "Nifşên nû yên derhêneran êdî çîrokên bajêr, koçberî û jiyana rojane ya metropolan dikin fîlm.",
     "explanationKu": "Nifşên nû yên derhêneran êdî çîrokên bajêr, koçberî û jiyana rojane ya metropolan dikin fîlm.",
     "explanationTr": "Yeni kuşak sinemacılar kentsel dönüşüm, göçmenlik ve metropoldeki aidiyet krizlerini merkeze almaktadır."
@@ -29423,19 +29423,19 @@
     "prompt": "Di Seyahetnameya Ewliya Çelebî ya sedsala 17an de mîrektiyên kurd çawa hatine teswîrkirin?",
     "promptTr": "17. yüzyıl Evliya Çelebi Seyahatnamesi'nde Kürt mîrlikleri nasıl betimlenmiştir?",
     "answers": [
-      "Wekî gundên xizan ên bê rêveberî ku tu têkiliya wan bi cîhanê re tune bû",
+      "Wekî yekîneyên herêmî yên di bin kontrola teng a navendê de û bê protokola xwe",
       "Wekî desthilatên xweser ên xwedî qesr, artêş û protokolên taybet ên mîran",
-      "Wekî eyaletên ku tenê ji aliyê karmendên rojavayî ve dihatin birêvebirin",
-      "Wekî herêmên vala yên ku qet mirov û jiyan lê peyda nedibû"
+      "Wekî navendên bazirganiyê yên ku rola leşkerî û siyasî ya wan pir kêm bû",
+      "Wekî eşîretên koçer ên bê navendên bajarî û bê avahiyên rêveberiyê"
     ],
     "answersTr": [
-      "Dış dünya ile hiçbir bağı olmayan idaresiz ve yoksul dağ köyleri olarak",
-      "Geniş sarayları, düzenli askeri alayları ve kendi protokolü olan özerk hanedanlar olarak",
-      "Yalnızca Batılı elçilerin atadığı bürokratlarca yönetilen sömürge eyaletleri olarak",
-      "Hiçbir yerleşimin ve insanın bulunmadığı tamamen ıssız tampon araziler olarak"
+      "Merkezin sıkı denetimi altındaki ve kendi protokolü olmayan yerel birimler olarak",
+      "Sarayları, askerî güçleri ve mîrlere özgü protokolleri olan özerk hanedanlar olarak",
+      "Askerî ve siyasî rolü çok sınırlı ticaret merkezleri olarak",
+      "Kent merkezi ve idarî yapıları bulunmayan göçebe aşiretler olarak"
     ],
     "correctAnswer": "Wekî desthilatên xweser ên xwedî qesr, artêş û protokolên taybet ên mîran",
-    "correctAnswerTr": "Geniş sarayları, düzenli askeri alayları ve kendi protokolü olan özerk hanedanlar olarak",
+    "correctAnswerTr": "Sarayları, askerî güçleri ve mîrlere özgü protokolleri olan özerk hanedanlar olarak",
     "explanation": "Evliya Çelebi, Bitlis Mîri Abdal Han'ın sarayını, kütüphanesini, hazinesini ve askeri teşrifatını hayranlıkla anlatmıştır.",
     "explanationTr": "Evliya Çelebi, Bitlis Mîri Abdal Han'ın sarayını, kütüphanesini, hazinesini ve askeri teşrifatını hayranlıkla anlatmıştır.",
     "explanationKu": "Ewliya Çelebî di pirtûka xwe de behsa dewlemendî, artêş û qesrên mîrên kurd bi taybetî Mîr Ebdal dike."
@@ -29516,22 +29516,22 @@
     "id": "ds_dirok_0338",
     "category": "Dîrok",
     "difficulty": 5,
-    "prompt": "Piştî Şerê Kendavê di sala 1991ê de, biryara 688an a Neteweyên Yekbûyî kîjan qonaxa nû vekir?",
-    "promptTr": "1991 Körfez Savaşı sonrası BM Güvenlik Konseyi'nin 688 sayılı kararı bölgede nasıl bir dönüm noktası oldu?",
+    "prompt": "Piştî Şerê Kendavê û piştî biryara 688an di sala 1991ê de, koalîsyonê li bakurê Iraqê kîjan gav avêt?",
+    "promptTr": "1991 Körfez Savaşı ve 688 sayılı BM kararının ardından koalisyon güçleri Kuzey Irak'ta hangi adımı attı?",
     "answers": [
-      "Dabeşkirina tevahiya axa Iraqê di navbera dewletên cîran ên herêmê de",
-      "Avakirina herêma dije-firoke (36emîn Paralel) û hêsankirina damezrandina Herêma Kurdistanê",
-      "Qedexekirina vegera penaberan ber bi mal û warên wan ên li herêmê",
-      "Girêdana rasterast a hemû çavkaniyên petrolê bi bankên Ewropayê ve"
+      "Sînorên navdewletî yên Iraqê ji nû ve bi fermî guhert",
+      "Herêma dije-firoke li bakur ava kir û vegera penaberan hêsantir kir",
+      "Hemû rêveberiyên herêmî bi fermî betal kir",
+      "Kontrola hemû dergehên sînorî rasterast girt destê xwe"
     ],
     "answersTr": [
-      "Irak topraklarının tamamen bölgedeki komşu ülkeler arasında paylaştırılması",
-      "36. Paralel üzerinde uçuşa yasak bölge kurularak Federe Kürdistan'ın temellerinin atılması",
-      "Dağlara sığınan yüzbinlerce mültecinin köylerine dönüşünün yasaklanması",
-      "Bölgedeki bütün petrol gelirlerinin doğrudan Avrupa bankalarına bağlanması"
+      "Irak'ın uluslararası sınırlarını resmen yeniden belirledi",
+      "Kuzeyde uçuşa yasak bölge oluşturup mültecilerin dönüşünü kolaylaştırdı",
+      "Bütün bölgesel yönetimleri resmen feshetti",
+      "Bütün sınır kapılarının denetimini doğrudan devraldı"
     ],
-    "correctAnswer": "Avakirina herêma dije-firoke (36emîn Paralel) û hêsankirina damezrandina Herêma Kurdistanê",
-    "correctAnswerTr": "36. Paralel üzerinde uçuşa yasak bölge kurularak Federe Kürdistan'ın temellerinin atılması",
+    "correctAnswer": "Herêma dije-firoke li bakur ava kir û vegera penaberan hêsantir kir",
+    "correctAnswerTr": "Kuzeyde uçuşa yasak bölge oluşturup mültecilerin dönüşünü kolaylaştırdı",
     "explanation": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
     "explanationTr": "BM 688 sayılı kararıyla kurulan güvenli bölge (Çekiç Güç), Saddam ordusunun saldırılarını durdurmuş ve 1992'de Federe Kürdistan parlamentosunun kurulmasını sağlamıştır.",
     "explanationKu": "Bi vê biryarê re herêma qedexeya hewayî hate avakirin û rê li ber avakirina statuya xweser a Başûr vebû."

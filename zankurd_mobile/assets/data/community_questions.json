@@ -69,10 +69,10 @@
     "prompt": "Nisêbîn navçeya kîjan bajarî ye?",
     "promptTr": "Nisêbîn (Nusaybin) hangi ile bağlı bir ilçedir?",
     "answers": [
-      "Mardin",
-      "Diyarbakır",
-      "Şırnak",
-      "Batman"
+      "Mêrdîn",
+      "Amed",
+      "Şirnex",
+      "Êlih"
     ],
     "answersTr": [
       "Mardin",
@@ -80,7 +80,7 @@
       "Şırnak",
       "Batman"
     ],
-    "correctAnswer": "Mardin",
+    "correctAnswer": "Mêrdîn",
     "correctAnswerTr": "Mardin",
     "explanation": "Nisêbîn (Nusaybin) Suriye sınırında bir ilçedir ve Mardin'e bağlıdır.",
     "explanationKu": "Nisêbîn navçeyeke li ser sînorê Sûriyeyê ye û bi Mêrdînê ve girêdayî ye.",
@@ -997,13 +997,13 @@
     "difficulty": 2,
     "id": "comm_sin_0101",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Yol\" di sala 1982'an de li Cannesê kîjan xelat wergirt?",
+    "prompt": "Fîlmê \"Yol\" di sala 1982an de li Cannesê kîjan xelat wergirt?",
     "promptTr": "\"Yol\" filmi 1982'de Cannes'da hangi ödülü kazandı?",
     "answers": [
-      "Jüri Özel Ödülü",
-      "En İyi Yönetmen",
-      "Altın Palmiye",
-      "Altın Ayı"
+      "Xelata Taybet a Jûriyê",
+      "Xelata Derhênerê Herî Baş",
+      "Palmeya Zêrîn",
+      "Hirça Zêrîn"
     ],
     "answersTr": [
       "Jüri Özel Ödülü",
@@ -1011,7 +1011,7 @@
       "Altın Palmiye",
       "Altın Ayı"
     ],
-    "correctAnswer": "Altın Palmiye",
+    "correctAnswer": "Palmeya Zêrîn",
     "correctAnswerTr": "Altın Palmiye",
     "explanation": "Yılmaz Güney'in senaryosunu yazdığı \"Yol\", 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
     "explanationKu": "\"Yol\", ku senaryoya wê ji hêla Yilmaz Guney ve hatibû nivîsandin, di Festîvala Cannesê ya 1982'an de Palmiya Zêrîn wergirt.",
