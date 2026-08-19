@@ -937,6 +937,21 @@ class _DuelScoreHeader extends StatelessWidget {
               ),
             ],
           ),
+          // Halat çekme: puan FARKI okunmadan görülsün.
+          //
+          // Başlık iki skoru da yazıyordu ("120 pts" / "80 pts") ama
+          // öndelik iki sayıyı okuyup çıkarmayı gerektiriyordu; süre
+          // işlerken kimse bunu yapmıyor ve düello tek kişilik bir tura
+          // benziyordu. Çubuk aynı bilgiyi tek bakışta verir ve rakip
+          // puan aldığında sınır KAYAR — rakibin varlığı ancak
+          // hareketle hissedilir, sabit bir sayıyla değil.
+          const SizedBox(height: AppSpacing.xs),
+          _DuelTugBar(
+            playerScore: player.score,
+            opponentScore: opponent.score,
+            playerColor: playerColor ?? AppTheme.brand,
+            opponentColor: opponentColor ?? AppTheme.playCyan,
+          ),
           if (player.streak > 0 || opponent.streak > 0) ...[
             const SizedBox(height: AppSpacing.xs),
             Row(
@@ -1410,6 +1425,94 @@ class _OpponentWaitingOverlay extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Kaybedenin payı hiç sıfırlanmaz.
+///
+/// Ham oran kullanılsaydı 0-0'da çubuk tanımsız, ezici galibiyette ise
+/// TEK renk olurdu; tek renkli çubuk "rakip yok" diye okunur ve tam da
+/// göstermek istediği şeyi siler. Uçlarda ince bir şerit bırakmak
+/// "eziliyorsun" ile "yalnızsın" arasındaki farkı korur.
+const double duelTugFloor = 0.08;
+
+/// Halat çekme çubuğunda oyuncunun payı (0..1).
+///
+/// Ayrı bir işlev: kural (uçlarda taban, berabere başlangıçta orta)
+/// çizimden bağımsız olarak denetlenebilsin. Gövdeye gömülü olsaydı
+/// yalnız 1v1 ağacının tamamı kurularak sınanabilirdi.
+double duelTugShare(int playerScore, int opponentScore) {
+  final total = playerScore + opponentScore;
+  if (total <= 0) return 0.5;
+  return (playerScore / total).clamp(duelTugFloor, 1 - duelTugFloor);
+}
+
+/// Düelloda öndeliği gösteren halat çekme çubuğu.
+///
+/// Sınır, puan payına göre kayar: ortadaki çentiğin solunda kalırsan
+/// gerisin, sağında kalırsa öndesin. Çentik olmadan sınırın yeri tek
+/// başına bir şey söylemiyor — neye göre orada olduğu belirsiz kalıyordu.
+class _DuelTugBar extends StatelessWidget {
+  const _DuelTugBar({
+    required this.playerScore,
+    required this.opponentScore,
+    required this.playerColor,
+    required this.opponentColor,
+  });
+
+  final int playerScore;
+  final int opponentScore;
+  final Color playerColor;
+  final Color opponentColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final share = duelTugShare(playerScore, opponentScore);
+
+    return SizedBox(
+      key: const ValueKey('duel-tug-bar'),
+      height: 8,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.5, end: share),
+              duration: const Duration(milliseconds: 420),
+              curve: Curves.easeOutCubic,
+              builder: (context, value, _) => Row(
+                children: [
+                  Expanded(
+                    flex: (value * 1000).round(),
+                    child: ColoredBox(
+                      color: playerColor,
+                      child: const SizedBox(height: 8),
+                    ),
+                  ),
+                  Expanded(
+                    flex: ((1 - value) * 1000).round(),
+                    child: ColoredBox(
+                      color: opponentColor,
+                      child: const SizedBox(height: 8),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Başabaş çentiği.
+          Container(
+            width: 2,
+            height: 12,
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceColor(context),
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+        ],
       ),
     );
   }
