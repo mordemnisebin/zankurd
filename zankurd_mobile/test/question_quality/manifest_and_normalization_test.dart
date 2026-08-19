@@ -7,6 +7,7 @@ import '../../tool/question_quality/src/checks.dart';
 import '../../tool/question_quality/src/manifest.dart';
 import '../../tool/question_quality/src/models.dart';
 import '../../tool/question_quality/src/normalization.dart';
+import '../../tool/question_quality/src/source_readers.dart';
 
 void main() {
   test('gerçek depodaki bütün soru kaynakları manifestte sınıflandırılır', () {
@@ -18,6 +19,88 @@ void main() {
     ).where((candidate) => manifest.resolve(candidate.path).isUnknown);
 
     expect(unknown.map((candidate) => candidate.path), isEmpty);
+  });
+
+  group('release gate source model (gerçek manifest)', () {
+    final manifest = SourceManifest.fromJsonString(
+      File('tool/question_quality/source_manifest.json').readAsStringSync(),
+    );
+
+    test('candidate pool sources never enter the release gate', () {
+      final pool = manifest.sources
+          .where((source) => source.role == SourceRole.candidatePool)
+          .toList();
+      expect(pool, isNotEmpty);
+      for (final source in pool) {
+        expect(
+          source.gateIncluded,
+          isFalse,
+          reason:
+              'candidate_pool ${source.id} release gate\'e dahil edilmemeli '
+              '(olgusal denetim tamamlanmadan)',
+        );
+      }
+    });
+
+    test(
+      'deepseek expansion candidate keeps review-only model and mapping',
+      () {
+        final source = manifest.sources.firstWhere(
+          (item) => item.id == 'deepseek_expansion_2026_08_18',
+        );
+        expect(source.role, SourceRole.candidatePool);
+        expect(source.parser, 'csv');
+        expect(source.canonicalGroup, 'candidate_questions');
+        expect(source.reportIncluded, isTrue);
+        expect(source.gateIncluded, isFalse);
+        expect(source.productionLike, isFalse);
+        expect(source.columns, {
+          'id': 'id',
+          'locale': 'language_code',
+          'category': 'category_key',
+          'prompt': 'prompt',
+          'optionA': 'option_a',
+          'optionB': 'option_b',
+          'optionC': 'option_c',
+          'optionD': 'option_d',
+          'correct': 'correct_option',
+          'explanation': 'explanation',
+          'difficulty': 'difficulty',
+          'sourceUrl': 'source_url',
+          'status': 'publication_status',
+        });
+      },
+    );
+  });
+
+  group('candidate csv parser mapping', () {
+    final manifest = SourceManifest.fromJsonString(
+      File('tool/question_quality/source_manifest.json').readAsStringSync(),
+    );
+    final source = manifest.sources.firstWhere(
+      (item) => item.id == 'deepseek_expansion_2026_08_18',
+    );
+    const csvPath = 'docs/content_batches/aday_2026_08_18.csv';
+
+    test('reads the real candidate CSV through the manifest mapping', () {
+      final result = readSource(
+        source,
+        File(csvPath),
+        repositoryRelativePath: csvPath,
+      );
+
+      expect(result.stats.parseErrors, 0);
+      expect(result.records, isNotEmpty);
+
+      final first = result.records.first;
+      expect(first.sourceRecordId, isNotEmpty);
+      expect(first.prompt, isNotEmpty);
+      expect(first.category, isNotEmpty);
+      expect(first.options, hasLength(4));
+      expect(first.correctOptionText, isNotEmpty);
+      expect(first.difficulty, isNotNull);
+      expect(first.status, 'approved');
+    });
   });
 
   group('source manifest', () {

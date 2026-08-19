@@ -2337,10 +2337,25 @@
       "parser": "csv",
       "canonicalGroup": "candidate_questions",
       "reportIncluded": true,
-      "gateIncluded": true,
+      "gateIncluded": false,
       "productionLike": false,
       "precedence": 10,
-      "notes": "Yapısal denetim ve kaynak URL canlılığı geçildi; olgusal denetim BEKLİYOR"
+      "notes": "Yapısal denetim ve kaynak URL canlılığı geçildi; olgusal denetim BEKLİYOR",
+      "columns": {
+        "id": "id",
+        "locale": "language_code",
+        "category": "category_key",
+        "prompt": "prompt",
+        "optionA": "option_a",
+        "optionB": "option_b",
+        "optionC": "option_c",
+        "optionD": "option_d",
+        "correct": "correct_option",
+        "explanation": "explanation",
+        "difficulty": "difficulty",
+        "sourceUrl": "source_url",
+        "status": "publication_status"
+      }
     },
     {
       "id": "deepseek_2026_08_18",
