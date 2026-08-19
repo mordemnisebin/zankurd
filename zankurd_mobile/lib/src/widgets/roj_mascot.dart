@@ -14,6 +14,14 @@ enum RojMood {
 
   /// Düşünceli: boş durumlar için sempatik "hmm" ifadesi.
   thinking,
+
+  /// Üzgün: yanlış cevap anı.
+  ///
+  /// Kasıtlı olarak HAFİF tutulur — kaşları çatılmaz, gözler kısılmaz.
+  /// Yanlış cevap zaten cezalandırılıyor (seri kırılır, puan gelmez);
+  /// maskotun da suçlaması öğrenme uygulamasında bırakma sebebidir.
+  /// Zana burada üzülür, azarlamaz.
+  sad,
 }
 
 /// Zana — uygulamanın maskotu. Dış varlık/asset kullanmaz: imza motifi olan
@@ -117,6 +125,7 @@ class _RojMascotPainter extends CustomPainter {
         }
       case RojMood.happy:
       case RojMood.thinking:
+      case RojMood.sad:
         final dot = Paint()..color = AppTheme.brandDeep;
         canvas.drawCircle(Offset(center.dx - eyeDx, eyeY), faceR * 0.09, dot);
         canvas.drawCircle(Offset(center.dx + eyeDx, eyeY), faceR * 0.09, dot);
@@ -157,10 +166,27 @@ class _RojMascotPainter extends CustomPainter {
           Offset(center.dx + faceR * 0.10, mouthY - faceR * 0.06),
           ink,
         );
+      case RojMood.sad:
+        // Ters yay: elipsin ÜST yarısı (pi..2pi) aşağı bakan bir ağız
+        // verir. Yay merkezi ağız çizgisinin biraz altına konur, yoksa
+        // çene hizasında yüzen bir çizgi gibi duruyor.
+        canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(center.dx, mouthY + faceR * 0.14),
+            width: faceR * 0.62,
+            height: faceR * 0.45,
+          ),
+          math.pi * 1.15,
+          math.pi * 0.7,
+          false,
+          ink,
+        );
     }
 
-    // Yanaklar: iki küçük sıcak nokta.
-    if (mood != RojMood.thinking) {
+    // Yanaklar: iki küçük sıcak nokta. Düşünen ve üzgün hâlde
+    // bırakılır — neşeli yanaklar üzgün ağızla çelişip ifadeyi
+    // okunmaz kılıyor.
+    if (mood != RojMood.thinking && mood != RojMood.sad) {
       final cheek = Paint()
         ..color = AppTheme.pirsOrangeStart.withValues(alpha: 0.55);
       canvas.drawCircle(

@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/kilim_board.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -52,15 +53,22 @@ void main() {
             .first,
       );
       final decoration = option.decoration! as BoxDecoration;
-      // Light idle: açık kart + şık kimlik rengi kenarlık.
+      // Sahne idle: KOYU kart + şık kimlik rengi kenarlık.
+      //
+      // Bu beklenti 2026-08-19'da açık tema değerlerinden (#FFFFFF/#F7F4EE,
+      // alfa 0.45) çevrildi. Soru ekranı artık uygulama temasından bağımsız
+      // olarak `AppTheme.stage` ile koyudur; gerekçe o sabitin belgesinde.
+      // Test SİLİNMEDİ çünkü koruduğu şey renk değeri değil kuraldır:
+      // cevaplanmamış şık nötr yüzey taşır ve yalnız kenarlığından kimlik
+      // alır. Kural sahne altında da geçerli, yalnız değerleri değişti.
       expect(decoration.gradient!.colors, const [
-        Color(0xFFFFFFFF),
-        Color(0xFFF7F4EE),
+        AppTheme.surfaceHi,
+        AppTheme.surface,
       ]);
       final optionColor = AppTheme.answerOptionColors[i % 4];
       expect(
         (decoration.border! as Border).top.color,
-        optionColor.withValues(alpha: 0.45),
+        optionColor.withValues(alpha: 0.55),
       );
     }
   });
@@ -136,27 +144,48 @@ void main() {
     expect(button.style?.backgroundColor?.resolve({}), AppTheme.brand);
   });
 
-  testWidgets('aktif soru segmenti brand bekler', (tester) async {
+  // Eski adı: "aktif soru segmenti brand bekler". Şerit 2026-08-19'da
+  // yuvarlak hap segmentlerinden kilim tahtasına (`KilimBoard`) geçti;
+  // hap arayan iddia artık boşa düşerdi. Korunan kural aynı: şerit turun
+  // KAYDINI tutar — kaçıncı sorudayız ve hangileri doğruydu. Kaydın
+  // doğruluğu bileşenin aldığı değerlerden okunur; boyanan pikselden
+  // değil, çünkü piksel testte platform yazı tipine/ölçeğine bağlıdır.
+  testWidgets('kilim tahtası turun kaydını taşır', (tester) async {
     final repository = MockZanKurdRepository();
+    final questions = repository.questions.take(3).toList();
     await tester.pumpWidget(
       wrap(
         QuizScreen(
           repository: repository,
           room: repository.createRoom(),
-          questions: repository.questions.take(3).toList(),
+          questions: questions,
           enableTimer: false,
         ),
       ),
     );
     await tester.pumpAndSettle();
 
-    final segments = tester
-        .widgetList<AnimatedContainer>(find.byType(AnimatedContainer))
-        .where((c) {
-          final deco = c.decoration;
-          return deco is BoxDecoration && deco.color == AppTheme.brand;
-        });
-    expect(segments, isNotEmpty);
+    KilimBoard board() => tester.widget<KilimBoard>(
+      find.byKey(const ValueKey('quiz-progress-bar')),
+    );
+
+    expect(board().total, questions.length);
+    expect(board().currentIndex, 0);
+    expect(board().results, isEmpty, reason: 'tur başında hiçbir iplik yok');
+
+    await tester.tap(
+      find
+          .ancestor(
+            of: find.text(questions.first.correctAnswer),
+            matching: find.byType(InkWell),
+          )
+          .first,
+    );
+    await tester.pumpAndSettle();
+
+    expect(board().results, [
+      true,
+    ], reason: 'doğru cevap tahtaya altın baklava olarak dokunur');
   });
 
   testWidgets('şık kartı katı 3D gölge taşımaz', (tester) async {
