@@ -87,6 +87,14 @@ void main() {
     // Buraya bir kayıt eklemek, kaynağını yazmayı gerektirir. Liste kısa
     // kalmalı; uzarsa bekçi anlamını yitirir.
     const reviewedOverrides = <String, String>{
+      // Zirne (zurna) geleneksel olarak DAHOL (davul) eşliğinde çalınır;
+      // bankanın kendi üç kaydı da böyle diyor (edit_muzik_0004,
+      // edit_muzik_0024, offline_2178). Kayıt "Def" işaretliydi ve
+      // "Dahol" şıklarda bile yoktu; dış kalite denetimi yakaladı ve şık
+      // listesi düzeltildi (2026-08-19). Çapraz kontrol hükmü düzeltme
+      // ÖNCESİNE ait: model o zamanki dört şık içinden "Def"i seçmişti,
+      // çünkü doğru cevap listede yoktu. Hüküm eskimiştir, yanlış değil.
+      'ds_muzik_0033': 'Dahol',
       // Şerefxan adını Bidlîs mîrektiyêndan alır ama orada doğmadı: 1543'te
       // Qum yakınlarındaki Karahrud'da doğdu (Encyclopaedia Iranica,
       // "BEDLĪSĪ, ŠARAF-AL-DĪN KHAN"). Model adına bakıp "Bidlîs" diyor.

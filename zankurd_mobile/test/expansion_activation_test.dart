@@ -2,11 +2,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
-/// 214 sorunun GERÇEKTEN oyuncuya ulaştığının bekçisi.
+/// 211 sorunun GERÇEKTEN oyuncuya ulaştığının bekçisi.
 ///
 /// (2026-08-18: dış inceleme `tech_invent_0053`ü belirsiz bulup çıkardı;
 /// aileron ile flap ayrımı yapılmıyordu; sonra Ziman incelemesi üç zayıf
-/// çeldiricili kaydı daha aldı. Sayı 218 → 214.)
+/// çeldiricili kaydı daha aldı. Sayı 218 → 214; 2026-08-19 tekrar ayıklaması üç kayıt daha aldı, 211.)
+///
+///
+/// **2026-08-19 güncellemesi.** Dış bir kalite denetimi bankalar arası
+/// 199 tekrar kümesi buldu (aynı olguyu soran ayrı kayıtlar; "agir"ın
+/// anlamı üç ayrı soruda, Gola Wanê'nin tanımı iki ayrı soruda). Her
+/// kümeden biri bırakılıp 294 kayıt elendi — silinenlerin tamamı
+/// `docs/content_batches/ayiklanan_tekrarlar.json` içinde. Aşağıdaki
+/// sayılar o ayıklamayla güncellendi; bekçinin işi DEĞİŞMEDİ, ölçtüğü
+/// bankanın boyutu değişti.
 ///
 /// ## Kusur
 ///
@@ -52,7 +61,7 @@ void main() {
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      3259,
+      2965,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
@@ -68,7 +77,7 @@ void main() {
     );
   });
 
-  test('214 genişletme sorusunun tamamı yükleyiciden erişilebilir', () {
+  test('211 genişletme sorusunun tamamı yükleyiciden erişilebilir', () {
     // Gölgelenme kontrolü: id'nin var olması yetmez, KAZANAN kaydın
     // genişletme bankasından gelmesi gerekir. Genişletme en son yüklenir,
     // dolayısıyla çakışma olsaydı o kazanırdı — ama o zaman da ESKİ soru
@@ -79,14 +88,14 @@ void main() {
         .toList();
     expect(
       expansion.length,
-      214,
+      211,
       reason:
-          'Genişletme bankasından yükleyiciye ulaşan soru sayısı 214 değil. '
+          'Genişletme bankasından yükleyiciye ulaşan soru sayısı 211 değil. '
           'Asset listede olsa bile parse hatası tek bankayı sessizce boş '
           'bırakır (`_loadBank` catch bloğu).',
     );
     final ids = expansion.map((q) => q.id).toSet();
-    expect(ids.length, 214, reason: 'Genişletme içinde id tekrarı var.');
+    expect(ids.length, 211, reason: 'Genişletme içinde id tekrarı var.');
   });
 
   test('genişletme soruları her iki dilde de tam oynanabilir', () {

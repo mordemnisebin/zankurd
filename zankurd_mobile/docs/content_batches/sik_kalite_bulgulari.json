@@ -84,39 +84,11 @@
   "soru": "Kîjan di Muzîkê de têgiha \"Koma Amed\" rast bi cih dike?"
  },
  {
-  "id": "offline_11371",
-  "banka": "offline_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Koma Amed çi ye?"
- },
- {
-  "id": "offline_curated_20354",
-  "banka": "offline_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \"kovara Hawarê\" bi awayekî rast tema"
- },
- {
   "id": "offline_curated_20679",
   "banka": "offline_questions.json",
   "kusur": "bicim_sizmasi",
   "ayrinti": "yalnız doğru şık sayı taşıyor",
   "soru": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \"Rojnameya Kurdistan\" bi awayekî rast t"
- },
- {
-  "id": "offline_curated_20729",
-  "banka": "offline_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \"Peymana Lozanê\" bi awayekî rast temam "
- },
- {
-  "id": "offline_curated_21429",
-  "banka": "offline_questions.json",
-  "kusur": "bicim_sizmasi",
-  "ayrinti": "yalnız doğru şık sayı taşıyor",
-  "soru": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \"Koma Wetan\" bi awayekî rast temam dike"
  },
  {
   "id": "offline_tek_0070",
@@ -243,26 +215,5 @@
   "kusur": "bicim_sizmasi",
   "ayrinti": "yalnız doğru şık sayı taşıyor",
   "soru": "Piştî Şerê Kendavê di sala 1991ê de, biryara 688an a Neteweyên Yekbûyî kîjan qonaxa nû vek"
- },
- {
-  "id": "ds_edebiyat_0078",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "tekrar_soru",
-  "ayrinti": "aynı soru metni: ds_edebiyat_0088",
-  "soru": "di destana i lyadaye de ki jan lehenga yekem car te nasi n"
- },
- {
-  "id": "ds_muzik_0109",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "tekrar_soru",
-  "ayrinti": "aynı soru metni: ds_muzik_0218",
-  "soru": "di muzi ke de ki jan te gi n ji bo ni s ankirina leza muzi ke te bikarani n"
- },
- {
-  "id": "ds_cand_0009",
-  "banka": "deepseek_2026_08_18_questions.json",
-  "kusur": "tekrar_soru",
-  "ayrinti": "aynı soru metni: ds_cand_0015",
-  "soru": "ki jan efsane bi newroze ve gire dayi ye"
  }
 ]
