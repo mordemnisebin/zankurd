@@ -1,0 +1,289 @@
+[
+ {
+  "id": "edit_dirok_0003",
+  "banka": "editorial_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Selahedînê Eyûbî bi taybetî bi çi tê nasîn?"
+ },
+ {
+  "id": "edit_dirok_0021",
+  "banka": "editorial_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "\"Xoybûn\" çi bû?"
+ },
+ {
+  "id": "edit_dirok_0023",
+  "banka": "editorial_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Di dîroka nûjen de \"Kurdên Sor\" (Sûriye) bi çi têkildar e?"
+ },
+ {
+  "id": "edit_muzik_0017",
+  "banka": "editorial_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?"
+ },
+ {
+  "id": "edit_siyaset_0014",
+  "banka": "editorial_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 39 krk, en uzun çeldirici 20",
+  "soru": "\"Kurdên Feylî\" bi giştî li kîjan herêmê dijîn?"
+ },
+ {
+  "id": "edit_sinema_0007",
+  "banka": "editorial_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 31 krk, en uzun çeldirici 18",
+  "soru": "Fîlmê \"Klama Dayîka Min\" xelata fîlmê herî baş li kîjan festîvalê wergirt?"
+ },
+ {
+  "id": "offline_6841",
+  "banka": "offline_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 23 krk, en kısa çeldirici 57",
+  "soru": "\"reşmal\" çawa divê bê fêmkirin?"
+ },
+ {
+  "id": "offline_7242",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Li jêr kîjan têgiha \"Peymana Lozanê\" rave dike?"
+ },
+ {
+  "id": "offline_7383",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan li gorî pênaseya \"Mahabad Cumhuriyeti\" ye?"
+ },
+ {
+  "id": "offline_7643",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "\"Mikdat Mithat Bedirxan\" çawa divê bê fêmkirin?"
+ },
+ {
+  "id": "offline_9529",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan têgeha \"Şivanê Kurd\" di nav wêjeyê de rast bi cih dike?"
+ },
+ {
+  "id": "offline_10498",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan di Muzîkê de têgiha \"Koma Amed\" rast bi cih dike?"
+ },
+ {
+  "id": "offline_11371",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Koma Amed çi ye?"
+ },
+ {
+  "id": "offline_curated_20354",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Ji bo dersa edebiyat kîjan vebijark ravekirina têgeha \"kovara Hawarê\" bi awayekî rast tema"
+ },
+ {
+  "id": "offline_curated_20679",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \"Rojnameya Kurdistan\" bi awayekî rast t"
+ },
+ {
+  "id": "offline_curated_20729",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \"Peymana Lozanê\" bi awayekî rast temam "
+ },
+ {
+  "id": "offline_curated_21429",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Ji bo dersa muzîk kîjan vebijark ravekirina têgeha \"Koma Wetan\" bi awayekî rast temam dike"
+ },
+ {
+  "id": "offline_tek_0070",
+  "banka": "offline_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Deng bi gelemperî bi kîjan cureyê dosyayê tê tomarkirin?"
+ },
+ {
+  "id": "cinema_0029",
+  "banka": "expansion_2026_08_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 23 krk, en uzun çeldirici 8",
+  "soru": "Yekem fîlmê animasyonê yê dirêj ê stûdyoya Walt Disney, ku sala 1937an derket, kîjan e?"
+ },
+ {
+  "id": "tech_core_0039",
+  "banka": "expansion_2026_08_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 59 krk, en uzun çeldirici 35",
+  "soru": "Êrîşa phishing bi giranî çawa dixebite?"
+ },
+ {
+  "id": "tech_invent_0019",
+  "banka": "expansion_2026_08_questions.json",
+  "kusur": "ayni_sik",
+  "ayrinti": "tekrar eden şık: 'v i r'",
+  "soru": "Li gorî qanûna Ohm, voltaj bi kîjan hesabê tê dîtin?"
+ },
+ {
+  "id": "tech_invent_0026",
+  "banka": "expansion_2026_08_questions.json",
+  "kusur": "ayni_sik",
+  "ayrinti": "tekrar eden şık: 'voltaj cereyan'",
+  "soru": "Hêza elektrîkî ya amûrekê bi kîjan pirdankê tê hesibandin?"
+ },
+ {
+  "id": "sf_tech_0013",
+  "banka": "source_first_2026_08_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 33 krk, en uzun çeldirici 19",
+  "soru": "\"Passphrase\" çi ye?"
+ },
+ {
+  "id": "ds_dirok_0028",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Sedema sereke ya ku kovara \"Hawar\" (1932) li Şamê derket û ne li Stenbol an Amedê çi bû?"
+ },
+ {
+  "id": "ds_dirok_0071",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 19 krk, en uzun çeldirici 6",
+  "soru": "Dewleta Neo-Babîlî ji aliyê kîjan hêzê ve hat bidawîkirin?"
+ },
+ {
+  "id": "ds_dirok_0265",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 30 krk, en uzun çeldirici 17",
+  "soru": "Di dîroka devkî de, kîjan pirsgirêk ji ber ziman û wergeran derdikeve?"
+ },
+ {
+  "id": "ds_edebiyat_0076",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 51 krk, en uzun çeldirici 24",
+  "soru": "Di destana Gilgameş de, Gilgameş ji bo çi li riya nemiriyê digere?"
+ },
+ {
+  "id": "ds_sinema_0130",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan fîlmê François Truffaut yek ji fîlmên destpêkê yên Pêla Nû ya Fransî ye?"
+ },
+ {
+  "id": "ds_teknoloji_0009",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan protokol ji bo wergirtina e-nameyan ji serverê tê bikaranîn?"
+ },
+ {
+  "id": "ds_teknoloji_0041",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan rêbaz ji bo rastkirina nasnameya bikarhêner bi du qonaxan tê bikaranîn?"
+ },
+ {
+  "id": "ds_teknoloji_0196",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Kîjan teknolojî ji bo veguhestina daneyan bi leza bilind di navbera têlefon û torê de tê b"
+ },
+ {
+  "id": "ds_teknoloji_0288",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "ayni_sik",
+  "ayrinti": "tekrar eden şık: '1'",
+  "soru": "Kîjan hejmar di matematîkê de hejmara sifir e?"
+ },
+ {
+  "id": "ds_sinema_0261",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Belgefîlma \"5 No'lu Cezaevi\" (2009) a Çayan Demirel li ser kîjan rastiya dîrokî hatiye ava"
+ },
+ {
+  "id": "ds_sinema_0264",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Di fîlma \"Zer\" (2017) a \"Kazım Öz\" de, rêwîtiya ciwanekî ji New Yorkê ber bi Dêrsimê ve çi"
+ },
+ {
+  "id": "ds_sinema_0276",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 90 krk, en uzun çeldirici 56",
+  "soru": "Mijara sereke ya ku derhênerên jin ên kurd (mînak: Bêrîvan Bînevşa, Özlem Yaşar) tînin roj"
+ },
+ {
+  "id": "ds_sinema_0290",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "uzunluk_sizmasi",
+  "ayrinti": "doğru 91 krk, en uzun çeldirici 54",
+  "soru": "Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji \"çiya û gund\" ber bi \"ba"
+ },
+ {
+  "id": "ds_dirok_0312",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Serhildana Ebdurehman Paşayê Baban (1806) di dîroka mîrektiyên kurd de çima xwedî cihekî g"
+ },
+ {
+  "id": "ds_dirok_0338",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "bicim_sizmasi",
+  "ayrinti": "yalnız doğru şık sayı taşıyor",
+  "soru": "Piştî Şerê Kendavê di sala 1991ê de, biryara 688an a Neteweyên Yekbûyî kîjan qonaxa nû vek"
+ },
+ {
+  "id": "ds_edebiyat_0078",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "tekrar_soru",
+  "ayrinti": "aynı soru metni: ds_edebiyat_0088",
+  "soru": "di destana i lyadaye de ki jan lehenga yekem car te nasi n"
+ },
+ {
+  "id": "ds_muzik_0109",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "tekrar_soru",
+  "ayrinti": "aynı soru metni: ds_muzik_0218",
+  "soru": "di muzi ke de ki jan te gi n ji bo ni s ankirina leza muzi ke te bikarani n"
+ },
+ {
+  "id": "ds_cand_0009",
+  "banka": "deepseek_2026_08_18_questions.json",
+  "kusur": "tekrar_soru",
+  "ayrinti": "aynı soru metni: ds_cand_0015",
+  "soru": "ki jan efsane bi newroze ve gire dayi ye"
+ }
+]
