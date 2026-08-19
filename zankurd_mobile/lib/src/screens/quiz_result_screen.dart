@@ -25,6 +25,8 @@ import '../models/player.dart';
 import '../models/room.dart';
 import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
+import '../widgets/kilim_board.dart';
+import '../widgets/rolling_count.dart';
 import '../widgets/kilim_reveal.dart';
 import '../theme/app_theme.dart';
 import '../utils/percent_format.dart';
@@ -166,10 +168,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         builder: (ctx) => AlertDialog(
           title: Text(context.t(K.newRoomAction)),
           content: Text(
-            context.t(
-              K.newRoomFeeConfirm,
-              {'amount': '${widget.room.entryFee}'},
-            ),
+            context.t(K.newRoomFeeConfirm, {
+              'amount': '${widget.room.entryFee}',
+            }),
           ),
           actions: [
             TextButton(
@@ -686,7 +687,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // doğru/toplam, yanıt süreleri) burada değerlendirilirler.
     final badgeService = await BadgeService.load();
     await badgeService.evaluateStreakBadges(streak);
-    await badgeService.evaluateQuestionBadges(achievementStore.answeredQuestions);
+    await badgeService.evaluateQuestionBadges(
+      achievementStore.answeredQuestions,
+    );
     await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
     if (totalQuestions > 0) {
       final totalResponseMs = answerRecords.fold<int>(
@@ -1265,11 +1268,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xxs),
-                                // BIG score number
-                                Text(
-                                  '$score',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                // BIG score number — sayarak çıkar.
+                                //
+                                // Skor birden beliriyordu; kazanma anının
+                                // tamamı tek karede bitiyor ve geriye
+                                // okunacak bir sayı kalıyordu. Tırmanışı
+                                // izlemek kazanmanın kendisidir (bkz.
+                                // `RollingCount`). Hareket azaltma açıkken
+                                // sayım yapılmaz.
+                                RollingCount(
+                                  key: const ValueKey('result-score-count'),
+                                  value: score,
                                   style: AppTypography.display.copyWith(
                                     color: Colors.white,
                                     fontSize: 72,
@@ -1287,6 +1296,47 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   style: AppTypography.bodyMedium.copyWith(
                                     color: Colors.white.withValues(alpha: 0.72),
                                     fontSize: 13,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                // Turda dokunan kilim.
+                                //
+                                // Sonuç ekranı doğru SAYISINI söylüyordu
+                                // ("%70 doğruluk") ama turun kendisini
+                                // göstermiyordu: hangi soruda takıldığı,
+                                // seri mi tutturduğu yoksa dağınık mı
+                                // gittiği tek bakışta okunmuyordu. Şerit
+                                // soru ekranındakiyle AYNI nesnedir; oyuncu
+                                // tur boyunca onun dokunuşunu izler,
+                                // burada bitmiş hâlini görür.
+                                //
+                                // `showCurrent` kapalı: tur bitti, "sıradaki
+                                // soru" vurgusu yalan olurdu.
+                                //
+                                // Renkler hero'ya göre elle verilir; tema
+                                // yüzeyi turuncunun üstünde boş baklavayı
+                                // dolu gibi gösteriyor (bkz. KilimBoard.
+                                // trackColor).
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.sm,
+                                  ),
+                                  child: KilimBoard(
+                                    key: const ValueKey('result-kilim-board'),
+                                    total: totalQuestions,
+                                    currentIndex: totalQuestions,
+                                    showCurrent: false,
+                                    height: 18,
+                                    trackColor: Colors.white.withValues(
+                                      alpha: 0.16,
+                                    ),
+                                    outlineColor: Colors.white.withValues(
+                                      alpha: 0.30,
+                                    ),
+                                    results: [
+                                      for (final record in answerRecords)
+                                        record.isCorrect,
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.md),
@@ -1605,7 +1655,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       // sağlayıcı eskiden kayıtlı olmadığı ve hiçbir ekran
                       // okumadığı için bu kapı hiç çalışmıyordu (2026-08-14
                       // denetimi).
-                      if (context.watch<ChildSafetyProvider>().allowExternalShare)
+                      if (context
+                          .watch<ChildSafetyProvider>()
+                          .allowExternalShare)
                         _ResultSideAction(
                           key: const ValueKey('result-share-button'),
                           icon: AppIcons.shareNodes,

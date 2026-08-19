@@ -35,6 +35,8 @@ class KilimBoard extends StatelessWidget {
     required this.results,
     this.height = 22,
     this.showCurrent = true,
+    this.trackColor,
+    this.outlineColor,
     super.key,
   });
 
@@ -51,6 +53,18 @@ class KilimBoard extends StatelessWidget {
 
   /// Sonuç ekranında tur bitmiştir; "sıradaki soru" vurgusu anlamsızdır.
   final bool showCurrent;
+
+  /// Dokunmamış baklavaların rengi. Verilmezse tema yüzeyi kullanılır.
+  ///
+  /// Renkli bir zeminin (sonuç ekranının turuncu hero'su) üstünde tema
+  /// yüzeyi açık kaldığı için boş baklavalar dolu gibi okunuyor ve
+  /// "hiç cevaplamadın" ile "hepsini bildin" aynı görünüyordu. Aynı
+  /// tuzağa `KilimProgressBar` 2026-07-25'te düşmüştü; ders buraya da
+  /// geçirildi. Renkli zeminde çağıran taraf yarı saydam bir iz vermeli.
+  final Color? trackColor;
+
+  /// Boş baklavanın konturu. Renkli zeminde saydam geçilebilir.
+  final Color? outlineColor;
 
   /// Motifin okunabildiği asgari baklava genişliği.
   ///
@@ -72,8 +86,8 @@ class KilimBoard extends StatelessWidget {
             total: total,
             currentIndex: showCurrent ? currentIndex : -1,
             results: results,
-            trackColor: AppTheme.surfaceHiColor(context),
-            outlineColor: AppTheme.borderColor(context),
+            trackColor: trackColor ?? AppTheme.surfaceHiColor(context),
+            outlineColor: outlineColor ?? AppTheme.borderColor(context),
           ),
         ),
       ),
