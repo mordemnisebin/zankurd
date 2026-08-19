@@ -45,14 +45,22 @@ void main() {
   test('oynanabilir soru sayısı beklenen değerde', () {
     expect(
       loaded.length,
-      3259,
+
+      // 2026-08-19: dış kalite denetimi bankalar arası 199 tekrar
+      // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
+      // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
+      // Bekçinin işi değişmedi, saydığı banka küçüldü.
+      2965,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
     );
     expect(
       playable.length,
-      3208,
+      // 3208 -> 2914: tekrar ayıklaması 294 kayıt aldı, hepsi
+      // oynanabilir kayıtlardı (engellenenlerin dağılımı değişmedi,
+      // aşağıdaki test onu ayrıca sabitliyor).
+      2914,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

@@ -64,7 +64,12 @@ void main() {
   test('Türkçe metin taşıyan soru sayısı ölçülen değerde', () {
     expect(
       translated.length,
-      3259,
+
+      // 2026-08-19: dış kalite denetimi bankalar arası 199 tekrar
+      // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
+      // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
+      // Bekçinin işi değişmedi, saydığı banka küçüldü.
+      2965,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '
