@@ -40,7 +40,8 @@ import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
-import '../widgets/kilim_progress_bar.dart';
+import '../widgets/kilim_board.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
@@ -1678,132 +1679,141 @@ class _QuizScreenState extends State<QuizScreen>
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmExit();
       },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
-          //
-          // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
-          // oluyordu: o tur **karışık kategorilidir**, oda ise varsayılan
-          // 'Ziman' ile kurulur. Ekranın tepesinde "Ziman" yazarken ilk
-          // soru "Çand" etiketiyle geliyordu (2026-07-27, canlı gezinti).
-          //
-          // Turun kendi adı varsa (günün dersi, yarışma) o gösterilir;
-          // yoksa kategoriye düşülür.
-          title: Text(_roundTitle(context)),
-          actions: [
-            if (_isMultiplayer)
+      // Sahne: soru ekranı uygulama temasından bağımsız olarak koyudur.
+      // Gerekçe ve niçin tek noktadan sarıldığı `AppTheme.stage`
+      // belgesinde.
+      child: Theme(
+        data: AppTheme.stage,
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
+            //
+            // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
+            // oluyordu: o tur **karışık kategorilidir**, oda ise varsayılan
+            // 'Ziman' ile kurulur. Ekranın tepesinde "Ziman" yazarken ilk
+            // soru "Çand" etiketiyle geliyordu (2026-07-27, canlı gezinti).
+            //
+            // Turun kendi adı varsa (günün dersi, yarışma) o gösterilir;
+            // yoksa kategoriye düşülür.
+            title: Text(_roundTitle(context)),
+            actions: [
+              if (_isMultiplayer)
+                IconButton(
+                  key: const ValueKey('quiz-reaction-menu-button'),
+                  onPressed: () => _showLiveReactionMenu(context),
+                  tooltip: context.t(K.chat),
+                  icon: const Icon(AppIcons.faceSmile),
+                ),
               IconButton(
-                key: const ValueKey('quiz-reaction-menu-button'),
-                onPressed: () => _showLiveReactionMenu(context),
-                tooltip: context.t(K.chat),
-                icon: const Icon(AppIcons.faceSmile),
+                onPressed: _toggleFavorite,
+                tooltip: favoriteActionLabel,
+                icon: Icon(
+                  AppIcons.bookmark,
+                  semanticLabel: favoriteActionLabel,
+                ),
               ),
-            IconButton(
-              onPressed: _toggleFavorite,
-              tooltip: favoriteActionLabel,
-              icon: Icon(AppIcons.bookmark, semanticLabel: favoriteActionLabel),
-            ),
-            IconButton(
-              onPressed: _reportQuestion,
-              tooltip: context.t(K.reportAction),
-              icon: const Icon(AppIcons.triangleExclamation),
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            // Turnuva/versus bandı: rakip adı + tur bilgisi (UI-only).
-            if (widget.versusBannerText != null)
-              SafeArea(
-                bottom: false,
-                child: _VersusBanner(text: widget.versusBannerText!),
+              IconButton(
+                onPressed: _reportQuestion,
+                tooltip: context.t(K.reportAction),
+                icon: const Icon(AppIcons.triangleExclamation),
               ),
-            Expanded(
-              child: QuizTutorialOverlay(
-                isKu: _isKu,
-                timerKey: _timerTargetKey,
-                answerAreaKey: _answerAreaKey,
-                comboKey: _comboKey,
-                wildcardKey: _wildcardKey,
-                nextButtonKey: _nextButtonKey,
-                onReady: _handleTutorialReady,
-                timerSeconds: widget.room.secondsPerQuestion,
-                timed: _usesTimer,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: AppTheme.backgroundGradient(context),
-                  ),
-                  child: Stack(
-                    children: [
-                      SafeArea(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            final useCompactLandscapeLayout =
-                                _useCompactLandscapeLayout(
-                                  constraints.maxWidth,
-                                  constraints.maxHeight,
-                                );
-                            if (useCompactLandscapeLayout) {
-                              return _buildCompactLandscapeLayout();
-                            }
-                            return _buildPortraitLayout();
-                          },
-                        ),
-                      ),
-                      // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
-                      // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
-                      // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
-                      // görsel QA bulgusu).
-                      if (_usesTimer && !answered)
-                        CriticalVignette(animation: _timerController),
-                      WrongFlash(trigger: _shakeTrigger),
-                      if (_showAnswerBurst)
-                        ConfettiOverlay(
-                          particleCount: 24,
-                          duration: const Duration(milliseconds: 900),
-                          onFinished: () {
-                            setState(() {
-                              _showAnswerBurst = false;
-                            });
-                          },
-                        ),
-                      if (_showConfetti)
-                        ConfettiOverlay(
-                          onFinished: () {
-                            setState(() {
-                              _showConfetti = false;
-                            });
-                          },
-                        ),
-                      if ((_serverReadyWaiting && !answered) ||
-                          (_needsOpponentReadyGate &&
-                              !_opponentClientReady &&
-                              !_questionFlowStarted))
-                        _OpponentWaitingOverlay(isKu: _isKu),
-                      // Canlı çok oyunculu reaksiyon baloncukları.
-                      //
-                      // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
-                      // gibi `FloatingReactionOverlay`e devredilir. Elde
-                      // yazılan sürüm `_SingleAnimatedReactionBubble`ı
-                      // çağırıyordu; o sınıf `floating_reaction_overlay.dart`
-                      // içinde `_` önekli, yani dosya dışından görünmez —
-                      // kod derlenmiyordu. Tek çizim yolu olması ayrıca
-                      // animasyon süresi/eğrisi iki ekranda ayrışmasın diye.
-                      Positioned.fill(
-                        child: IgnorePointer(
-                          child: FloatingReactionOverlay(
-                            controller: _reactionController,
-                            child: const SizedBox.expand(),
+            ],
+          ),
+          body: Column(
+            children: [
+              // Turnuva/versus bandı: rakip adı + tur bilgisi (UI-only).
+              if (widget.versusBannerText != null)
+                SafeArea(
+                  bottom: false,
+                  child: _VersusBanner(text: widget.versusBannerText!),
+                ),
+              Expanded(
+                child: QuizTutorialOverlay(
+                  isKu: _isKu,
+                  timerKey: _timerTargetKey,
+                  answerAreaKey: _answerAreaKey,
+                  comboKey: _comboKey,
+                  wildcardKey: _wildcardKey,
+                  nextButtonKey: _nextButtonKey,
+                  onReady: _handleTutorialReady,
+                  timerSeconds: widget.room.secondsPerQuestion,
+                  timed: _usesTimer,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.backgroundGradient(context),
+                    ),
+                    child: Stack(
+                      children: [
+                        SafeArea(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              final useCompactLandscapeLayout =
+                                  _useCompactLandscapeLayout(
+                                    constraints.maxWidth,
+                                    constraints.maxHeight,
+                                  );
+                              if (useCompactLandscapeLayout) {
+                                return _buildCompactLandscapeLayout();
+                              }
+                              return _buildPortraitLayout();
+                            },
                           ),
                         ),
-                      ),
-                    ],
+                        // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
+                        // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
+                        // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
+                        // görsel QA bulgusu).
+                        if (_usesTimer && !answered)
+                          CriticalVignette(animation: _timerController),
+                        WrongFlash(trigger: _shakeTrigger),
+                        if (_showAnswerBurst)
+                          ConfettiOverlay(
+                            particleCount: 24,
+                            duration: const Duration(milliseconds: 900),
+                            onFinished: () {
+                              setState(() {
+                                _showAnswerBurst = false;
+                              });
+                            },
+                          ),
+                        if (_showConfetti)
+                          ConfettiOverlay(
+                            onFinished: () {
+                              setState(() {
+                                _showConfetti = false;
+                              });
+                            },
+                          ),
+                        if ((_serverReadyWaiting && !answered) ||
+                            (_needsOpponentReadyGate &&
+                                !_opponentClientReady &&
+                                !_questionFlowStarted))
+                          _OpponentWaitingOverlay(isKu: _isKu),
+                        // Canlı çok oyunculu reaksiyon baloncukları.
+                        //
+                        // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
+                        // gibi `FloatingReactionOverlay`e devredilir. Elde
+                        // yazılan sürüm `_SingleAnimatedReactionBubble`ı
+                        // çağırıyordu; o sınıf `floating_reaction_overlay.dart`
+                        // içinde `_` önekli, yani dosya dışından görünmez —
+                        // kod derlenmiyordu. Tek çizim yolu olması ayrıca
+                        // animasyon süresi/eğrisi iki ekranda ayrışmasın diye.
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            child: FloatingReactionOverlay(
+                              controller: _reactionController,
+                              child: const SizedBox.expand(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

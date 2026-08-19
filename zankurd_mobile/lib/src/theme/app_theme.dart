@@ -973,6 +973,24 @@ class AppTheme {
     );
   }
 
+  /// Soru ekranının SAHNE teması — uygulama teması ne olursa olsun koyu.
+  ///
+  /// Uygulamanın geri kalanı bir belge gibi okunur ve kullanıcının açık/
+  /// karanlık tercihine uyar. Soru ekranı ise bir belge değil, bir andır:
+  /// süre işler, seri kırılır, rakip cevap verir. Sinema salonu gibi
+  /// karartmak dikkati soruya toplar ve altın kilim ipliğini tek parlak
+  /// öğe hâline getirir — açık krem zeminde altın kayboluyordu.
+  ///
+  /// Tek noktadan uygulanır: gövde `Theme` ile sarılınca `isLight` ve ona
+  /// dayanan bütün renk yardımcıları (`surfaceColor`, `borderColor`,
+  /// `QuizOptionTile` gradyanları) kendiliğinden koyu değerlere döner.
+  /// Bileşen bileşen renk geçmek gerekmez; geçilseydi ilk eklenen yeni
+  /// şık türü sessizce açık temada kalırdı.
+  ///
+  /// Her karede `dark()` çağırmak `ThemeData` kurulumunu tekrarlar; sabit
+  /// olduğu için bir kez üretilir.
+  static final ThemeData stage = dark();
+
   static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,

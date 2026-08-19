@@ -314,60 +314,69 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   Widget _buildProgressBar(BuildContext context) {
-    final total = widget.questions.length;
-    // Uzun setlerde nokta şeridi sıkışır; klasik bara geri dön.
-    if (total > 15) {
-      return TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0, end: (index + 1) / total),
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeOutCubic,
-        builder: (_, value, _) => KilimProgressBar(value: value, height: 8),
-      );
-    }
-    // Yarışma şeridi: her soru bir segment — doğru yeşil, yanlış kırmızı
-    // dolar; aktif soru vurgulu bekler. Renk anlamı tooltip + semantics
-    // ile açıklanır (kırmızı segment "yanlış cevap" demektir).
+    // Tur kaydı artık kilim tahtasıdır: her soru bir baklava, doğru cevap
+    // altın iplik, yanlış cevap motifte bir gedik.
+    //
+    // Eskiden yeşil/kırmızı yuvarlak çubuklardı. Bilgi aynıydı ama iki
+    // kusuru vardı: (1) uygulamanın kilim görsel dili yalnız onboarding ve
+    // sonuç gibi nadiren görülen ekranlarda duruyordu, kullanıcının her
+    // soruda baktığı bu şerit kimliksizdi; (2) yeşil/kırmızı ayrımı renk
+    // körlüğünde ve gri tonlamada kayboluyordu — şerit paylaşılabilir bir
+    // nesneye dönüştüğü için bu artık teorik bir kusur değil.
+    // Uzun set davranışı `KilimBoard` içinde: baklava okunmayacak kadar
+    // daralınca oran şeridine düşer.
     return Semantics(
       label: context.t(K.progressLegend),
       child: Tooltip(
         message: context.t(K.progressLegendShort),
         child: Row(
-          // Bu satır İLERLEME ÇUBUĞU. Anahtarı bir zamanlar
-          // `quiz-wildcard-row`du ve iki test onunla "joker satırı ekranda"
-          // diye iddia ediyordu; ilerleme çubuğu her zaman ekranda olduğu
-          // için o iki iddia hiçbir şey korumuyordu (2026-08-12 denetimi).
-          key: const ValueKey('quiz-progress-bar'),
           children: [
-            for (var i = 0; i < total; i++) ...[
-              Expanded(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOutCubic,
-                  height: i == index ? 8 : 6,
-                  decoration: BoxDecoration(
-                    color: i < answerRecords.length
-                        ? (answerRecords[i].isCorrect
-                              ? AppTheme.correct
-                              : AppTheme.wrong)
-                        : i == index
-                        ? AppTheme.brand
-                        : AppTheme.surfaceHiColor(context),
-                    borderRadius: BorderRadius.circular(99),
-                    boxShadow: i == index
-                        ? [
-                            BoxShadow(
-                              color: AppTheme.brand.withValues(alpha: 0.45),
-                              blurRadius: 6,
-                            ),
-                          ]
-                        : null,
-                  ),
-                ),
+            _buildZana(),
+            const SizedBox(width: 10),
+            Expanded(
+              child: KilimBoard(
+                // Anahtar KORUNUR. Bir zamanlar `quiz-wildcard-row`du ve iki test
+                // onunla "joker satırı ekranda" diye iddia ediyordu; ilerleme
+                // çubuğu her zaman ekranda olduğu için o iki iddia hiçbir şey
+                // korumuyordu (2026-08-12 denetimi).
+                key: const ValueKey('quiz-progress-bar'),
+                total: widget.questions.length,
+                currentIndex: index,
+                results: [for (final record in answerRecords) record.isCorrect],
               ),
-              if (i != total - 1) const SizedBox(width: 4),
-            ],
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Zana, tur boyunca şeridin başında durur ve cevaba tepki verir.
+  ///
+  /// Maskot uygulamada vardı ama onboarding, mağaza ve liderlik gibi
+  /// kullanıcının bir kez uğradığı ekranlara sıkışmıştı; oyunun geçtiği
+  /// yerde hiç görünmüyordu. Bir maskotun işi karşılama ekranını
+  /// süslemek değil, döngünün içinde tepki vermektir — Duolingo'nun
+  /// Duo'su tam olarak bunu yapar.
+  ///
+  /// Gerilim tutuşu (`_suspense`) sırasında ifade DEĞİŞMEZ: sonuç henüz
+  /// açıklanmamışken maskotun sevinmesi ya da üzülmesi cevabı ele verir
+  /// ve gerilimi bozar.
+  Widget _buildZana() {
+    final adjudication = _currentAnswerAdjudication;
+    final mood = (!answered || _suspense || adjudication == null)
+        ? RojMood.thinking
+        : adjudication
+        ? RojMood.celebrate
+        : RojMood.sad;
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 220),
+      transitionBuilder: (child, animation) =>
+          ScaleTransition(scale: animation, child: child),
+      child: RojMascot(
+        key: ValueKey('quiz-zana-${mood.name}'),
+        size: 26,
+        mood: mood,
       ),
     );
   }
