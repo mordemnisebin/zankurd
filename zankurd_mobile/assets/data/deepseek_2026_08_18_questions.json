@@ -28170,5 +28170,1805 @@
     "explanation": "Nijeryalı oyun yazarı ve şair Wole Soyinka, 1986'da Nobel Edebiyat Ödülü'nü kazandı ve ödülü alan ilk Afrikalı yazar oldu.",
     "explanationTr": "Nijeryalı oyun yazarı ve şair Wole Soyinka, 1986'da Nobel Edebiyat Ödülü'nü kazandı ve ödülü alan ilk Afrikalı yazar oldu.",
     "explanationKu": "Nivîskar û helbestvanê nîjeryayî Wole Soyinka di 1986an de Xelata Nobelê ya Edebiyatê wergirt û bû nivîskarê afrîkî yê yekem ê ku ew xelat standiye."
+  },
+  {
+    "id": "ds_muzik_0228",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di kevneşopiya dengbêjiyê de cudahiya sereke ya di navbera \"kilam\" û \"lawik\" de ji aliyê mijar û rîtmê ve çi ye?",
+    "promptTr": "Dengbêjlik geleneğindeki \"kilam\" ile \"lawik\" arasındaki tür ve içerik farkı nedir?",
+    "answers": [
+      "Kilam tenê bi tembûrê tê gotin; lawik tenê bi def û zirneyê tê lêdan",
+      "Kilam tenê ji bo zarokan e; lawik tenê di şîn û şînan de tê gotin",
+      "Kilam bîra dîrokî û şeran bi şêwaza resîtatîf vedibêje; lawik stranên lîrîk ên evînê ne",
+      "Kilam bi zimanê erebî ye; lawik tenê bi zaravayê goranî tê gotin"
+    ],
+    "answersTr": [
+      "Kilam sadece bağlama ile söylenir; lawik yalnızca davul zurna ile çalınır",
+      "Kilam sadece çocuk masalları içindir; lawik yalnızca cenazelerde okunur",
+      "Kilam tarihi ve epik olayları serbest ritimle anlatır; lawik aşk ve lirizmi işler",
+      "Kilam Arapça dilindedir; lawik ise yalnızca Goranî lehçesinde söylenir"
+    ],
+    "correctAnswer": "Kilam bîra dîrokî û şeran bi şêwaza resîtatîf vedibêje; lawik stranên lîrîk ên evînê ne",
+    "correctAnswerTr": "Kilam tarihi ve epik olayları serbest ritimle anlatır; lawik aşk ve lirizmi işler",
+    "explanation": "Kilam bîra dîrokî û qehremaniyan bi awayekî resîtatîf vedibêje; lawik û heyranok stranên lîrîk ên li ser evînê ne.",
+    "explanationKu": "Kilam bîra dîrokî û qehremaniyan bi awayekî resîtatîf vedibêje; lawik û heyranok stranên lîrîk ên li ser evînê ne.",
+    "explanationTr": "Kilamlar tarihsel ve epik olayları serbest vezin ve anlatıyla aktarırken, lawik ve heyranoklar lirik aşk ve duygu şarkılarıdır."
+  },
+  {
+    "id": "ds_muzik_0229",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Bandora sereke ya dîrokî ya beşa kurdî ya Radyoya Êrîvanê (1955) li ser bîra muzîka kurdî çi bû?",
+    "promptTr": "1955'te yayına başlayan Erivan Radyosu Kürtçe Servisi'nin müzik mirası üzerindeki en büyük tarihsel etkisi neydi?",
+    "answers": [
+      "Qeydkirina kilamên devkî bi orkestrasyonê û belavkirina wan a li seranserê herêmê",
+      "Qedexekirina amûrên gelerî û tenê bikaranîna mûzîka klasîk a rûsî",
+      "Tenê çêkirina operayên bi zimanê ermenkî li ser dîroka kevnar",
+      "Rakirina kevneşopiya dengbêjiyê û anîna mûzîka elektronîk a rojavayî"
+    ],
+    "answersTr": [
+      "Sözlü dengbêj kilamlarını profesyonel kayıtlarla arşivleyip ortak hafıza yaratması",
+      "Geleneksel enstrümanları yasaklayıp sadece Rus klasik müziğini çalması",
+      "Kadim tarih üzerine sadece Ermenice operalar hazırlaması",
+      "Dengbêjlik geleneğini kaldırıp yerine batı elektronik müziğini getirmesi"
+    ],
+    "correctAnswer": "Qeydkirina kilamên devkî bi orkestrasyonê û belavkirina wan a li seranserê herêmê",
+    "correctAnswerTr": "Sözlü dengbêj kilamlarını profesyonel kayıtlarla arşivleyip ortak hafıza yaratması",
+    "explanation": "Radyoya Êrîvanê kilamên devkî bi awayekî profesyonel qeyd kirin û mûzîka kurdî li herêmê belav kir.",
+    "explanationKu": "Radyoya Êrîvanê kilamên devkî bi awayekî profesyonel qeyd kirin û mûzîka kurdî li herêmê belav kir.",
+    "explanationTr": "Erivan Radyosu sözlü mirası stüdyo kayıtlarıyla ölümsüzleştirmiş ve ortak müzikal bellek oluşturmuştur."
+  },
+  {
+    "id": "ds_muzik_0230",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Di vegotina dengbêjiyê de taybetmendiya sereke ya ku ekola \"Serhedê\" ji ekola \"Botanê\" cuda dike çi ye?",
+    "promptTr": "Serhed dengbêjlik ekolü ile Botan ekolü arasındaki temel icra ve üslup farkı nedir?",
+    "answers": [
+      "Li Serhedê tenê amûra piyanoyê heye; li Botanê tenê gîtar tê bikaranîn",
+      "Li Serhedê qêrîn û dengê girtî yê bilind serdest e; li Botanê melîzma û henas Control heye",
+      "Li Serhedê stran tenê bi tirkî ne; li Botanê tenê bi farisî tên gotin",
+      "Li Serhedê tenê jin dibêjin; li Botanê dengbêjî tenê ya mêran e"
+    ],
+    "answersTr": [
+      "Serhed'de sadece piyano çalınır; Botan'da yalnızca gitar kullanılır",
+      "Serhed tiz, gırtlaktan ve lirik-epiktir; Botan daha ritmik ve nefes kontrolüne dayalıdır",
+      "Serhed'de şarkılar sadece Türkçe; Botan'da ise yalnızca Farsça söylenir",
+      "Serhed'de yalnızca kadınlar; Botan'da ise dengbêjlik yalnızca erkeklerce yapılır"
+    ],
+    "correctAnswer": "Li Serhedê qêrîn û dengê girtî yê bilind serdest e; li Botanê melîzma û henas Control heye",
+    "correctAnswerTr": "Serhed tiz, gırtlaktan ve lirik-epiktir; Botan daha ritmik ve nefes kontrolüne dayalıdır",
+    "explanation": "Ekola Serhedê bi dengê bilind ê epîk navdar e; ya Botanê bi melodiyên nermtir û kontrola henaseyê tê naskirin.",
+    "explanationKu": "Ekola Serhedê bi dengê bilind ê epîk navdar e; ya Botanê bi melodiyên nermtir û kontrola henaseyê tê naskirin.",
+    "explanationTr": "Serhed ekolü tiz haykırışlarla öne çıkarken Botan ekolü melizmatik nüanslar ve nefes kontrolü taşır."
+  },
+  {
+    "id": "ds_muzik_0231",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di mûzîka kurdî de amûra \"şimşal\"ê (bilûr) li gorî \"duduk\" an \"mey\"ê ji aliyê pêkhateya fîzîkî ve çawa tê cudakirin?",
+    "promptTr": "Kürt müziğinde \"şimşal\" (kaval) enstrümanı yapısal olarak \"mey / duduk\"ten nasıl ayrılır?",
+    "answers": [
+      "Şimşal bi têlên hevrîşimê tê lêdan; mey ji çermê ajalan tê çêkirin",
+      "Şimşal tenê di mûzîka dêrê de heye; mey amûra şerê kevnar e",
+      "Şimşal amûreke bi bişkok e; mey mîna piyanoyê bi klavyeyê dixebite",
+      "Şimşal ji lûleya metal an hestî ya bê zimanik e; mey xwedî qemîşekî duçipî yê fireh e"
+    ],
+    "answersTr": [
+      "Şimşal ipek tellerle çalınır; mey ise hayvan derisinden gerilerek yapılır",
+      "Şimşal sadece kilise müziğinde bulunur; mey ise eski savaşlarda kullanılan bir silahtır",
+      "Şimşal tuşlu bir enstrümandır; mey ise piyano gibi klavyeyle çalışır",
+      "Şimşal kamışsız açık metal/kemik borudur; mey ise çift kamışlı geniş bir ağızlığa sahiptir"
+    ],
+    "correctAnswer": "Şimşal ji lûleya metal an hestî ya bê zimanik e; mey xwedî qemîşekî duçipî yê fireh e",
+    "correctAnswerTr": "Şimşal kamışsız açık metal/kemik borudur; mey ise çift kamışlı geniş bir ağızlığa sahiptir",
+    "explanation": "Şimşal bê qemîş e û ji hestî an metalê tê çêkirin; mey xwedî qemîşekî duçipî ye.",
+    "explanationKu": "Şimşal bê qemîş e û ji hestî an metalê tê çêkirin; mey xwedî qemîşekî duçipî ye.",
+    "explanationTr": "Şimşal dilsiz ve kamışsız doğrudan üflenen bir borudur; mey ise çift kamışlı yapısıyla karakteristik sesini üretir."
+  },
+  {
+    "id": "ds_muzik_0232",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Rîtma govendê ya \"Şêxanî\" di mûzîka kurdî de ji aliyê pîvana demê ve bi piranî li ser kîjan pîvanê ava dibe?",
+    "promptTr": "Kürt müziğindeki \"Şêxanî\" halay ritmi usul yapısı bakımından genellikle hangi ölçüdedir?",
+    "answers": [
+      "Li ser pîvana yekreng a 2/4an a bê ti aksakî û rawestek",
+      "Li ser pîvana polîrîtmîk a 13/16an a bê rawesteka navberê",
+      "Li ser pîvana aksak a 6/8 an 10/8an bi rawestekên giraniyê",
+      "Li ser pîvana valsê ya 3/4an a bê hestê govendê û xewle"
+    ],
+    "answersTr": [
+      "Hiçbir durak ve aksaklık içermeyen tekdüze 2/4'lük usulde",
+      "Ara durak barındırmayan poliritmik 13/16'lık usulde",
+      "Aksak vuruşlu 6/8 veya 10/8'lik ağır ve senkoplu usulde",
+      "Halay hissi taşımayan vals biçimindeki 3/4'lük usulde"
+    ],
+    "correctAnswer": "Li ser pîvana aksak a 6/8 an 10/8an bi rawestekên giraniyê",
+    "correctAnswerTr": "Aksak vuruşlu 6/8 veya 10/8'lik ağır ve senkoplu usulde",
+    "explanation": "Govenda Şêxanî bi piranî bi rîtmên aksak ên 6/8 an 10/8an bi giraniyek tê lîstin.",
+    "explanationKu": "Govenda Şêxanî bi piranî bi rîtmên aksak ên 6/8 an 10/8an bi giraniyek tê lîstin.",
+    "explanationTr": "Şêxanî halayı kendine has aksak adımları ve 6/8 veya 10/8'lik ağırlığı ile bilinir."
+  },
+  {
+    "id": "ds_muzik_0233",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di dîroka tomarkirina mûzîka kurdî de rola Meryem Xanê ya li Bexdayê (salên 1930î) çima wekî xaleke werçerxanê tê dîtin?",
+    "promptTr": "1930'lu yıllarda Bağdat'ta kayıt yapan Meryem Xan'ın Kürt müzik tarihindeki dönüm noktası rolü nedir?",
+    "answers": [
+      "Yekem jina ku li Zanîngeha Sorbonneyê beşa etnomuzîkê qedandiye",
+      "Yekem kesa ku notayên stranên Botanê bi piyanoyê nivîsandine",
+      "Yekem derhênera ku fîlmeke mûzîkal a li ser dengbêjiyê çêkiriye",
+      "Yekem jina kurd e ku li ser plakên qewanê kilam û stranên kurdî tomar kirine"
+    ],
+    "answersTr": [
+      "Sorbonne Üniversitesi'nde etnomüzikoloji bölümünü bitiren ilk kadındır",
+      "Botan şarkılarını piyanoyla notaya döken ilk kişidir",
+      "Dengbêjlik üzerine ilk müzikal filmi çeken kadın yönetmendir",
+      "Taş plaklara Kürtçe kilam ve şarkı kaydeden ilk kadın sanatçıdır"
+    ],
+    "correctAnswer": "Yekem jina kurd e ku li ser plakên qewanê kilam û stranên kurdî tomar kirine",
+    "correctAnswerTr": "Taş plaklara Kürtçe kilam ve şarkı kaydeden ilk kadın sanatçıdır",
+    "explanation": "Meryem Xan li Bexdayê li ser plakên Odeon û Baidaphonê yekem car dengê jina kurd qeyd kir.",
+    "explanationKu": "Meryem Xan li Bexdayê li ser plakên Odeon û Baidaphonê yekem car dengê jina kurd qeyd kir.",
+    "explanationTr": "Meryem Xan, Bağdat'ta taş plaklara kayıt yaparak kadın sesini profesyonel müzik arşivine kazandıran ilk sanatçıdır."
+  },
+  {
+    "id": "ds_muzik_0234",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Di mûzîka Êzdiyan de rola \"Qewl\" û \"Qewlvan\" ji kilamên dengbêjiyê yên klasîk bi çi awayî cuda dibe?",
+    "promptTr": "Êzdî müziğindeki \"Qewl\" geleneği klasik dengbêj kilamlarından hangi yönüyle ayrılır?",
+    "answers": [
+      "Qewl tenê stranên şahiyan e û di govendê de bi def û zirneyê têne qîrîn",
+      "Qewl metnên pîroz ên dînî ne û bi amûrên def û şibabê bi awayekî ayînî tên xwendin",
+      "Qewl tenê helbestên nivîskî yên li ser evîndariya nûjen in",
+      "Qewl bi zimanê latînî tên xwendin û di nav gel de nayên zanîn"
+    ],
+    "answersTr": [
+      "Qewller yalnızca düğün şarkılarıdır ve halayda davul zurna ile söylenir",
+      "Qewller kutsal dini metinlerdir ve def ile şibab eşliğinde ayinsel tarzda icra edilir",
+      "Qewller modern aşk üzerine yazılmış serbest şiirlerden ibarettir",
+      "Qewller Latince okunur ve halk arasında hiç bilinmez"
+    ],
+    "correctAnswer": "Qewl metnên pîroz ên dînî ne û bi amûrên def û şibabê bi awayekî ayînî tên xwendin",
+    "correctAnswerTr": "Qewller kutsal dini metinlerdir ve def ile şibab eşliğinde ayinsel tarzda icra edilir",
+    "explanation": "Qewl metnên dînî yên pîroz in û ji aliyê qewlvanan ve bi def û şibabê têne gotin.",
+    "explanationKu": "Qewl metnên dînî yên pîroz in û ji aliyê qewlvanan ve bi def û şibabê têne gotin.",
+    "explanationTr": "Qewl, Êzdî inancının kutsal dini ilahileridir ve ayinlerde def ve şibab (kaval) eşliğinde okunur."
+  },
+  {
+    "id": "ds_muzik_0235",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Amûra \"Def\" (Erbene) di ayînên terîqetên Qadirî û Rifaî de çima zincîrên biçûk (xilxal) li hundirê xwe digire?",
+    "promptTr": "Tasavvufi ayinlerde kullanılan erbane/def çalgısının içindeki çıngırak ve halkaların işlevi nedir?",
+    "answers": [
+      "Ji bo ku giraniya amûrê kêm bike û girtina wê hêsantir bibe",
+      "Ji bo ku çermê defê ji şilbûnê û ziwabûnê biparêze",
+      "Ji bo ku dengê defê kêm bike da ku kes nebihîze",
+      "Ji bo ku di dema lêdanê de dengê şirîn û şerqînekê bide û atmosferê zindî bike"
+    ],
+    "answersTr": [
+      "Enstrümanın ağırlığını azaltıp elde tutulmasını kolaylaştırmak",
+      "Def derisini nemden ve kurumaktan korumak",
+      "Defin sesini tamamen keserek duyulmasını engellemek",
+      "Vuruş anında ritmik çıngırtı sesi üreterek zikir atmosferini yoğunlaştırmak"
+    ],
+    "correctAnswer": "Ji bo ku di dema lêdanê de dengê şirîn û şerqînekê bide û atmosferê zindî bike",
+    "correctAnswerTr": "Vuruş anında ritmik çıngırtı sesi üreterek zikir atmosferini yoğunlaştırmak",
+    "explanation": "Xilxalên erbeneyê di zikrê de dengekî taybet derdixin û ahenga rîtmê zêde dikin.",
+    "explanationKu": "Xilxalên erbeneyê di zikrê de dengekî taybet derdixin û ahenga rîtmê zêde dikin.",
+    "explanationTr": "Erbanenin içindeki metal halkalar zikir ritmine çıngırtı ekleyerek manevi atmosferi güçlendirir."
+  },
+  {
+    "id": "ds_muzik_0236",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Sedema sereke ya ku Şakiro di nav dengbêjan de bi navê \"Kewê Ribat\" tê nasîn çi bû?",
+    "promptTr": "Dengbêj Şakiro'nun \"Kewê Ribat\" (Keklik Şahı) unvanıyla anılmasının temel ses özelliği nedir?",
+    "answers": [
+      "Ji ber ku her tim bi tembûra sê-têlî kilamên xwe digot",
+      "Ji ber ku pirtûka yekem a li ser dengbêjiyê wî çap kiribû",
+      "Dengê wî yê zîz, dirêjkişandina nefesê û motîfên xurt ên xwendina kilamê",
+      "Ji ber ku li seranserê cîhanê tenê bi şev kilam digot"
+    ],
+    "answersTr": [
+      "Kilamlarını her zaman üç telli bağlama eşliğinde söylemesi",
+      "Dengbêjlik üzerine ilk yazılı kitabı yayımlamış olması",
+      "Tiz ve gür sesi, olağanüstü nefes kontrolü ve melodik nağmeleri",
+      "Tüm dünyada kilamlarını yalnızca gece vakti icra etmesi"
+    ],
+    "correctAnswer": "Dengê wî yê zîz, dirêjkişandina nefesê û motîfên xurt ên xwendina kilamê",
+    "correctAnswerTr": "Tiz ve gür sesi, olağanüstü nefes kontrolü ve melodik nağmeleri",
+    "explanation": "Şakiro ji ber heza dengê xwe yê bilind û kontrola bêhempa ya nefesê wekî Kewê Ribat dihate binavkirin.",
+    "explanationKu": "Şakiro ji ber heza dengê xwe yê bilind û kontrola bêhempa ya nefesê wekî Kewê Ribat dihate binavkirin.",
+    "explanationTr": "Şakiro olağanüstü nefes gücü ve geniş ses aralığı sayesinde \"Kewê Ribat\" (Rabat Kekliği) olarak anılmıştır."
+  },
+  {
+    "id": "ds_muzik_0237",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Rêzbûna dîrokî ya stasyonên radyoyê yên ku mûzîka kurdî weşandine di kîjan vebijêrkê de rast e?",
+    "promptTr": "Kürtçe müzik yayını yapan radyo istasyonlarının kronolojik yayın başlangıç sırası hangisinde doğrudur?",
+    "answers": [
+      "Radyoya Êrîvanê (1955) -> Radyoya Bexdayê (1939) -> Radyoya Kirmaşanê (1960)",
+      "Radyoya Kirmaşanê (1960) -> Radyoya Êrîvanê (1955) -> Radyoya Bexdayê (1939)",
+      "Radyoya Bexdayê (1939) -> Radyoya Kirmaşanê (1960) -> Radyoya Êrîvanê (1955)",
+      "Radyoya Bexdayê (1939) -> Radyoya Êrîvanê (1955) -> Radyoya Kirmaşanê (1960)"
+    ],
+    "answersTr": [
+      "Erivan Radyosu (1955) -> Bağdat Radyosu (1939) -> Kirmanşah Radyosu (1960)",
+      "Kirmanşah Radyosu (1960) -> Erivan Radyosu (1955) -> Bağdat Radyosu (1939)",
+      "Bağdat Radyosu (1939) -> Kirmanşah Radyosu (1960) -> Erivan Radyosu (1955)",
+      "Bağdat Radyosu (1939) -> Erivan Radyosu (1955) -> Kirmanşah Radyosu (1960)"
+    ],
+    "correctAnswer": "Radyoya Bexdayê (1939) -> Radyoya Êrîvanê (1955) -> Radyoya Kirmaşanê (1960)",
+    "correctAnswerTr": "Bağdat Radyosu (1939) -> Erivan Radyosu (1955) -> Kirmanşah Radyosu (1960)",
+    "explanation": "Pêşî beşa kurdî ya Bexdayê (1939), piştre Êrîvan (1955) û piştre Kirmaşan (1960) dest bi weşanê kirin.",
+    "explanationKu": "Pêşî beşa kurdî ya Bexdayê (1939), piştre Êrîvan (1955) û piştre Kirmaşan (1960) dest bi weşanê kirin.",
+    "explanationTr": "Önce Bağdat Radyosu (1939), ardından Erivan Radyosu (1955) ve Kirmanşah Radyosu (1960) Kürtçe yayına başlamıştır."
+  },
+  {
+    "id": "ds_muzik_0238",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di mûzîka kurdî de kîjan ji van taybetmendiyan nîşan dide ku sîstema makamî ji ya klasîk a rojavayî cuda ye?",
+    "promptTr": "Kürt halk müziğindeki makamsal ses sistemini Batı klasik tampere sisteminden ayıran temel fark nedir?",
+    "answers": [
+      "Tenê bikaranîna pîvana 4/4an û nebûna tu cureyên guherîna deng",
+      "Bikaranîna dengên navber (koma/mîkrotonal) li ser teşeyên herêmî û melodiyên azad",
+      "Nivîsandina hemû berheman tenê li ser notaya piyanoya klasîk",
+      "Qedexebûna dengê mirov û tenê bikaranîna amûrên bîflûtê"
+    ],
+    "answersTr": [
+      "Sadece 4/4'lük ölçü kullanılması ve hiçbir ses değişiminin olmaması",
+      "Mikrotonal (koma) ses aralıklarının ve serbest ritimli makam icralarının bulunması",
+      "Tüm eserlerin sadece Batı piyano notasyonuyla yazılması",
+      "İnsan sesinin yasaklanıp sadece flüt ailesinin kullanılması"
+    ],
+    "correctAnswer": "Bikaranîna dengên navber (koma/mîkrotonal) li ser teşeyên herêmî û melodiyên azad",
+    "correctAnswerTr": "Mikrotonal (koma) ses aralıklarının ve serbest ritimli makam icralarının bulunması",
+    "explanation": "Mûzîka kurdî xwedî perdeyên mîkrotonal e ku di sîstema rojavayî de nînin.",
+    "explanationKu": "Mûzîka kurdî xwedî perdeyên mîkrotonal e ku di sîstema rojavayî de nînin.",
+    "explanationTr": "Kürt müziğindeki ses dizileri koma (mikrotonal) aralıklar içerir ve Batı tampere sistemine tam oturmaz."
+  },
+  {
+    "id": "ds_muzik_0239",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Destana \"Memê Alan\" di kevneşopiya dengbêjiyê de ji kilamên şer ên wekî \"Derwêşê Evdî\" bi kîjan aliyê xwe vediqete?",
+    "promptTr": "\"Memê Alan\" destanı ile \"Derwêşê Evdî\" kilamı arasındaki temel anlatı farkı nedir?",
+    "answers": [
+      "Memê Alan tenê bi defê tê gotin; Derwêşê Evdî tenê bi kemançeyê tê lêdan",
+      "Memê Alan bi zimanê erebî ye; Derwêşê Evdî tenê bi zimanê farisî ye",
+      "Memê Alan tenê ji bo zarokan e; Derwêşê Evdî straneke govendê ye",
+      "Memê Alan çîrok û destana mîtolojîk e; Derwêşê Evdî li ser bûyereke dîrokî û eşîrî ye"
+    ],
+    "answersTr": [
+      "Memê Alan sadece defle okunur; Derwêşê Evdî yalnızca kemançe ile çalınır",
+      "Memê Alan Arapça okunur; Derwêşê Evdî ise yalnızca Farsça söylenir",
+      "Memê Alan yalnızca çocuk masalıdır; Derwêşê Evdî ise hızlı bir halay şarkısıdır",
+      "Memê Alan mitolojik kökenli kurgusal bir destandır; Derwêşê Evdî ise somut bir tarihsel savaşa dayanır"
+    ],
+    "correctAnswer": "Memê Alan çîrok û destana mîtolojîk e; Derwêşê Evdî li ser bûyereke dîrokî û eşîrî ye",
+    "correctAnswerTr": "Memê Alan mitolojik kökenli kurgusal bir destandır; Derwêşê Evdî ise somut bir tarihsel savaşa dayanır",
+    "explanation": "Memê Alan destaneke kevnar a hestiyar e; Derwêşê Evdî li ser şerê dîrokî yê Milan û Kîkan e.",
+    "explanationKu": "Memê Alan destaneke kevnar a hestiyar e; Derwêşê Evdî li ser şerê dîrokî yê Milan û Kîkan e.",
+    "explanationTr": "Memê Alan köklü bir mitolojik halk destanıdır; Derwêşê Evdî ise 18. yüzyıldaki somut bir aşiret savaşına dayanır."
+  },
+  {
+    "id": "ds_muzik_0240",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Dengbêj di nav civaka kurd a beriya sedsala 20an de ji bilî mûzîkê kîjan rola sereke ya civakî dilîstin?",
+    "promptTr": "20. yüzyıl öncesi Kürt toplumunda dengbêjlerin müzik dışındaki en temel toplumsal işlevi neydi?",
+    "answers": [
+      "Bîra devkî ya dîrokê, nûçegihanî di navbera herêman de û parastina ziman",
+      "Tenê bazirganiya hespan û firotina xalîçeyên herêmî li bazaran",
+      "Birêvebirina artêşên leşkerî û çêkirina çekên hesinî",
+      "Nivîsandina qanûnên dadgehên fermî yên dewletên mezin"
+    ],
+    "answersTr": [
+      "Sözlü tarih aktarımı, bölgeler arası haber taşıyıcılığı ve dilin korunması",
+      "Pazarlarda yalnızca at ticareti ve halı satıcılığı yapmak",
+      "Büyük askeri orduları yönetmek ve demir silahlar üretmek",
+      "Merkezi devletlerin resmi mahkeme kanunlarını yazmak"
+    ],
+    "correctAnswer": "Bîra devkî ya dîrokê, nûçegihanî di navbera herêman de û parastina ziman",
+    "correctAnswerTr": "Sözlü tarih aktarımı, bölgeler arası haber taşıyıcılığı ve dilin korunması",
+    "explanation": "Dengbêj ne tenê hunermend bûn; ew dîroknas û nûçegihanên civakê yên devkî bûn.",
+    "explanationKu": "Dengbêj ne tenê hunermend bûn; ew dîroknas û nûçegihanên civakê yên devkî bûn.",
+    "explanationTr": "Dengbêjler yazının yaygın olmadığı çağlarda hem sözlü tarihçi hem de bölgeler arası haber aktarıcısıydılar."
+  },
+  {
+    "id": "ds_muzik_0241",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di salên 1990î de bandora koman ên wekî \"Koma Dengê Azadî\" û \"Koma Amed\" li ser mûzîka nûjen a kurdî çi bû?",
+    "promptTr": "1990'lı yıllarda Koma Dengê Azadî ve Koma Amed gibi müzik gruplarının Kürt müziğindeki yapısal yeniliği neydi?",
+    "answers": [
+      "Rakirina zimanê kurdî û tenê gotina stranên îngilîzî",
+      "Qedexekirina tembûrê û tenê bikaranîna mûzîka elektronîk a bê peyv",
+      "Tenê xwendina metnên dînî yên serdema navîn li mizgeftan",
+      "Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re"
+    ],
+    "answersTr": [
+      "Kürtçe dilini bırakıp yalnızca İngilizce rock şarkıları seslendirmek",
+      "Bağlamayı yasaklayıp yalnızca sözsüz elektronik tekno müzik yapmak",
+      "Yalnızca camilerde ortaçağ dini ilahilerini koro halinde okumak",
+      "Geleneksel halk melodilerini çokseslilik ve modern Batı enstrümanlarıyla sentezlemek"
+    ],
+    "correctAnswer": "Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re",
+    "correctAnswerTr": "Geleneksel halk melodilerini çokseslilik ve modern Batı enstrümanlarıyla sentezlemek",
+    "explanation": "Koman di salên 90î de mûzîka kurdî bi rêbazên nûjen û polîfonîk ji nû ve ava kirin.",
+    "explanationKu": "Koman di salên 90î de mûzîka kurdî bi rêbazên nûjen û polîfonîk ji nû ve ava kirin.",
+    "explanationTr": "90'lar grup müziği halk türkülerini bas, gitar, flüt ve çoksesli koro düzenlemeleriyle çağdaş bir çizgiye taşımıştır."
+  },
+  {
+    "id": "ds_muzik_0242",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Di Radyoya Êrîvanê de kîjan hunermend wekî amûrjenê \"mey û bilûrê\" tê naskirin, ne wekî dengbêj?",
+    "promptTr": "Erivan Radyosu'nda mey ve kaval (bilûr) ÇALGICISI olarak tanınan sanatçı kimdir — dengbêj olarak değil?",
+    "answers": [
+      "Egîdê Cimo",
+      "Karapêtê Xaço",
+      "Aram Tîgran",
+      "Şeroyê Biro"
+    ],
+    "answersTr": [
+      "Egîdê Cimo",
+      "Karapêtê Xaço",
+      "Aram Tîgran",
+      "Şeroyê Biro"
+    ],
+    "correctAnswer": "Egîdê Cimo",
+    "correctAnswerTr": "Egîdê Cimo",
+    "explanation": "Egîdê Cimo (\"Mîrê Bilûrê\") Erivan Radyosu'nda onlarca yıl bilûr ve mey çaldı. Karapêtê Xaço ise çalgıcı değil, dengbêjdir.",
+    "explanationKu": "Egîdê Cimo (\"Mîrê Bilûrê\") bi dehan salan di Radyoya Êrîvanê de bilûr û mey lêxist. Karapêtê Xaço ne amûrjen, dengbêj bû.",
+    "explanationTr": "Egîdê Cimo (\"Mîrê Bilûrê\") Erivan Radyosu'nda onlarca yıl bilûr ve mey çaldı. Karapêtê Xaço ise çalgıcı değil, dengbêjdir."
+  },
+  {
+    "id": "ds_muzik_0243",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Taybetmendiya mûzîkal a sereke ya Aram Tîgran a ku di nava mûzîka kurdî de cihekî cuda dide wî çi ye?",
+    "promptTr": "Aram Tîgran'ın Kürt müziğindeki üslubunu özgün kılan en belirgin çalgı ve icra özelliği nedir?",
+    "answers": [
+      "Tenê gotina stranên bê amûr bi dengê bilind li serê çiyayan",
+      "Bikaranîna piyanoyê wekî tekane amûra di hemû stranên xwe de",
+      "Stranbêjiya bi amûra ûdê û yekkirina çandên ermenî, kurdî û asûrî",
+      "Çêkirina tenê stranên marşî yên leşkerî bê melodiyên lîrîk"
+    ],
+    "answersTr": [
+      "Dağ başlarında hiçbir çalgı olmadan yalnızca çıplak sesle haykırması",
+      "Tüm şarkılarında tek çalgı olarak yalnızca klasik piyanoyu kullanması",
+      "Ud çalgısı eşliğinde şarkı söylemesi ve Ermeni, Kürt, Asuri müzik mirasını sentezlemesi",
+      "Hiçbir lirik melodi olmadan yalnızca askeri marşlar bestelemesi"
+    ],
+    "correctAnswer": "Stranbêjiya bi amûra ûdê û yekkirina çandên ermenî, kurdî û asûrî",
+    "correctAnswerTr": "Ud çalgısı eşliğinde şarkı söylemesi ve Ermeni, Kürt, Asuri müzik mirasını sentezlemesi",
+    "explanation": "Aram Tîgran bi ûda xwe ya taybet stranên kurdî bi ahengeke nerm got û pirek di navbera gelan de ava kir.",
+    "explanationKu": "Aram Tîgran bi ûda xwe ya taybet stranên kurdî bi ahengeke nerm got û pirek di navbera gelan de ava kir.",
+    "explanationTr": "Aram Tîgran ud çalarak söylediği yumuşak vokaliyle Kürtçe şarkılara farklı ve zengin bir makam boyutu kazandırmıştır."
+  },
+  {
+    "id": "ds_muzik_0244",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Cureya strana lîrîk a bi navê \"Heyranok\" bi taybetî aîdî kîjan herêma Kurdistanê ye?",
+    "promptTr": "\"Heyranok\" adı verilen lirik aşk ve doğa ezgileri özellikle hangi coğrafi yöreye aittir?",
+    "answers": [
+      "Herêma Colemêrg û Behdînanê",
+      "Herêma Efrîn û Helebê",
+      "Herêma Qers û Erzeromê",
+      "Herêma Kirmaşan û Îlamê"
+    ],
+    "answersTr": [
+      "Hakkari ve Behdînan yöresi",
+      "Afrin ve Halep yöresi",
+      "Kars ve Erzurum yöresi",
+      "Kirmanşah ve İlam yöresi"
+    ],
+    "correctAnswer": "Herêma Colemêrg û Behdînanê",
+    "correctAnswerTr": "Hakkari ve Behdînan yöresi",
+    "explanation": "Heyranok bi piranî stranên lîrîk ên evînî yên herêma Colemêrg, Gever û Behdînanê ne.",
+    "explanationKu": "Heyranok bi piranî stranên lîrîk ên evînî yên herêma Colemêrg, Gever û Behdînanê ne.",
+    "explanationTr": "Heyranok, Hakkari ve Behdînan dağlık coğrafyasında gençler ve aşıklar tarafından söylenen lirik türkülerdir."
+  },
+  {
+    "id": "ds_muzik_0245",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di salên 1970 û 1980î de şêwaza mûzîkî ya Şivan Perwer çima di nava civakê de bû sedema werçerxanekê?",
+    "promptTr": "1970'li ve 80'li yıllarda Şivan Perwer'in müziğini kitleler nezdinde çığır açıcı kılan temel etken neydi?",
+    "answers": [
+      "Mûzîka caz a amerîkî wergerand kurdî û tenê bi saksafonê lê da",
+      "Tenê stranên dînî li dêrên Ewropayê got û ji polîtîkayê dûr ma",
+      "Hemû amûrên têlî red kirin û tenê bi defê konseran da",
+      "Kilamên kevneşopî bi tembûrê re bi awayekî şoreşgerî û polîtîk ji nû ve ava kir"
+    ],
+    "answersTr": [
+      "Amerikan caz müziğini Kürtçeye uyarlayıp yalnızca saksafonla çalması",
+      "Yalnızca kiliselerde ilahiler söyleyip toplumsal konulardan tamamen uzak durması",
+      "Tüm telli çalgıları reddedip konserlerini yalnızca çıplak defle vermesi",
+      "Geleneksel kilam formunu bağlamayla buluşturup politik ve epik bir uyanış dili haline getirmesi"
+    ],
+    "correctAnswer": "Kilamên kevneşopî bi tembûrê re bi awayekî şoreşgerî û polîtîk ji nû ve ava kir",
+    "correctAnswerTr": "Geleneksel kilam formunu bağlamayla buluşturup politik ve epik bir uyanış dili haline getirmesi",
+    "explanation": "Şivan Perwer dengbêjî û tembûr bi helbestên nûjen û hestên neteweyî re kir yek û kire xwedî bandoreke mezin.",
+    "explanationKu": "Şivan Perwer dengbêjî û tembûr bi helbestên nûjen û hestên neteweyî re kir yek û kire xwedî bandoreke mezin.",
+    "explanationTr": "Şivan Perwer dengbêjlik anlatısını tembûr ve epik sözlerle buluşturarak modern bir halk ozanlığı ekolü yaratmıştır."
+  },
+  {
+    "id": "ds_muzik_0246",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Di nav cureyên strana kurdî de \"Payîzok\" di kîjan demsalê û li ser kîjan mijarê tê gotin?",
+    "promptTr": "Kürt halk edebiyatında \"Payîzok\" adı verilen türküler hangi mevsimde ve hangi temayla söylenir?",
+    "answers": [
+      "Di payîzê de dema vegera ji zozanan li ser xatirxwestin û xemgîniyê",
+      "Di biharê de di dema Newrozê de tenê ji bo govendên lezgîn",
+      "Di havînê de di dema çinîna genim de wekî strana şahiyê",
+      "Di zivistanê de tenê di dema nêçîra berfê de bi qêrîn"
+    ],
+    "answersTr": [
+      "Sonbaharda yayladan köye dönüşte ayrılık, hüzün ve veda temasıyla",
+      "İlkbaharda Newroz bayramında yalnızca hızlı halaylar eşliğinde",
+      "Yazın buğday hasadı sırasında yalnızca neşe ve eğlence amacıyla",
+      "Kışın karlı dağlarda avlanma sırasında yön bulma haykırışıyla"
+    ],
+    "correctAnswer": "Di payîzê de dema vegera ji zozanan li ser xatirxwestin û xemgîniyê",
+    "correctAnswerTr": "Sonbaharda yayladan köye dönüşte ayrılık, hüzün ve veda temasıyla",
+    "explanation": "Payîzok dema ku koçer ji zozanan dadikevin li ser xatirxwestin û sarbûna hewayê têne gotin.",
+    "explanationKu": "Payîzok dema ku koçer ji zozanan dadikevin li ser xatirxwestin û sarbûna hewayê têne gotin.",
+    "explanationTr": "Payîzok, sonbaharda yaylalardan ayrılış hüznünü ve doğanın sararmasını anlatan sonbahar şarkılarıdır."
+  },
+  {
+    "id": "ds_muzik_0247",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Cureya mûzîkê ya bi navê \"Siyaçeman\" a li herêma Hewramanê bi kîjan taybetmendiya xwe ya dengî tê naskirin?",
+    "promptTr": "Hewraman bölgesine özgü \"Siyaçeman\" ezgi biçiminin en belirleyici icra tekniği nedir?",
+    "answers": [
+      "Bi orkestraya senfonîk a mezin a bi kemanên klasîk",
+      "Tenê bi gîtara elektronîk û rîtmên rojavayî",
+      "Bi şêwaza zîz a gelerî ya ji qirikê û bê amûr di nav çiyayan de",
+      "Bi koro û dengên zarokan ên bi awayê sirûdê"
+    ],
+    "answersTr": [
+      "Klasik kemanların yer aldığı büyük bir senfoni orkestrasıyla",
+      "Yalnızca elektro gitar ve modern batı ritimleriyle",
+      "Dağlarda enstrümansız olarak gırtlaktan çıkarılan tiz ve yankılı seslerle",
+      "Yalnızca çocuk korolarının marş biçimindeki sesleriyle"
+    ],
+    "correctAnswer": "Bi şêwaza zîz a gelerî ya ji qirikê û bê amûr di nav çiyayan de",
+    "correctAnswerTr": "Dağlarda enstrümansız olarak gırtlaktan çıkarılan tiz ve yankılı seslerle",
+    "explanation": "Siyaçeman hunera dengî ya hewramî ye ku bê amûr bi dengekî kûr ji qirikê tê derxistin.",
+    "explanationKu": "Siyaçeman hunera dengî ya hewramî ye ku bê amûr bi dengekî kûr ji qirikê tê derxistin.",
+    "explanationTr": "Siyaçeman, Hewraman dağlarında hiçbir çalgı kullanılmadan özel bir gırtlak tekniğiyle söylenen kadim ezgilerdir."
+  },
+  {
+    "id": "ds_muzik_0248",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Taybetmendiya sereke ya stranên Mihemed Şêxo ya ku wî li Rojavayê Kurdistanê kir sembol çi bû?",
+    "promptTr": "Mihemed Şêxo'yu Rojava ve genel Kürt müziğinde sembolleştiren en temel sanatsal bileşim neydi?",
+    "answers": [
+      "Yekkirina helbestên neteweyî yên Cegerxwîn bi melodiyên xemgîn ên tembûrê re",
+      "Tenê çêkirina mûzîka dansê ya ji bo şahiyên dewlemendan",
+      "Bikaranîna teknolojiya dîjîtal a kompîturê di salên pêncîyan de",
+      "Wergerandina stranên pop ên fransî bo zaravayê soranî"
+    ],
+    "answersTr": [
+      "Cegerxwîn'in ulusal şiirlerini bağlamanın hüzünlü ve etkileyici melodileriyle buluşturması",
+      "Yalnızca zengin düğünleri için hafif dans müzikleri üretmesi",
+      "1950'li yıllarda ilk dijital bilgisayar sentezleyicilerini kullanması",
+      "Fransız pop şarkılarını Soranice lehçesine tercüme edip seslendirmesi"
+    ],
+    "correctAnswer": "Yekkirina helbestên neteweyî yên Cegerxwîn bi melodiyên xemgîn ên tembûrê re",
+    "correctAnswerTr": "Cegerxwîn'in ulusal şiirlerini bağlamanın hüzünlü ve etkileyici melodileriyle buluşturması",
+    "explanation": "Mihemed Şêxo helbestên Cegerxwîn û şairên kurd bi dengekî xemgîn û tembûrê kir malê hemû gel.",
+    "explanationKu": "Mihemed Şêxo helbestên Cegerxwîn û şairên kurd bi dengekî xemgîn û tembûrê kir malê hemû gel.",
+    "explanationTr": "Mihemed Şêxo, Cegerxwîn gibi şairlerin dizelerini kendine has buğulu sesi ve tembûruyla hafızalara kazımıştır."
+  },
+  {
+    "id": "ds_muzik_0249",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Karapêtê Xaço di dîroka dengbêjiya kurdî de çima wekî pireke çandî ya bêhempa tê hesibandin?",
+    "promptTr": "Dengbêj Karapêtê Xaço'nun Kürt sözlü müzik tarihindeki benzersiz köprü rolü nedir?",
+    "answers": [
+      "Yekem kes bû ku kilamên kurdî li Amerîkayê di pirtûkxaneyekê de çap kir",
+      "Tenê li ser zimanê rûsî berhemên folklorîk nivîsandin",
+      "Hostayê yekem ê çêkirina tembûrên elektronîk bû li Ewropayê",
+      "Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parast"
+    ],
+    "answersTr": [
+      "Kürtçe kilamları Amerika'da bir kütüphanede ilk kez nota kitabı olarak basması",
+      "Yalnızca Rusça dilinde folklorik müzik incelemeleri kaleme alması",
+      "Avrupa'da elektro bağlama üreten ilk luthier ustası olması",
+      "Ermeni kökenli olup Serhed ve Botan'ın en eski kilamlarını kusursuz bir Kurmancî ile koruyup aktarması"
+    ],
+    "correctAnswer": "Ermeniyek bû ku kilamên herî kevn ên Serhed û Botanê bi kurmanciyeke resen parast",
+    "correctAnswerTr": "Ermeni kökenli olup Serhed ve Botan'ın en eski kilamlarını kusursuz bir Kurmancî ile koruyup aktarması",
+    "explanation": "Karapêtê Xaço bi eslê xwe ermenî bû lê wekî dengbêjekî mezin kilamên dîrokî yên kurdî gihandin nifşên nû.",
+    "explanationKu": "Karapêtê Xaço bi eslê xwe ermenî bû lê wekî dengbêjekî mezin kilamên dîrokî yên kurdî gihandin nifşên nû.",
+    "explanationTr": "Karapêtê Xaço, Ermeni kökenli bir dengbêj olarak Serhed kilamlarını en saf haliyle Erivan Radyosu üzerinden geleceğe taşımıştır."
+  },
+  {
+    "id": "ds_muzik_0250",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Di mûzîka gelêrî ya kurdî de strana bi navê \"Narînk\" di kîjan qonaxa jiyanê de tê gotin?",
+    "promptTr": "Geleneksel Kürt kadın sözlü kültüründe \"Narînk\" adı verilen ezgiler hangi törende söylenir?",
+    "answers": [
+      "Di dema birina bûkê û dawetan de ji aliyê jinan ve",
+      "Di dema şînê de ji bo kesên ku di şer de mirine",
+      "Di dema çinîna zeviyan de ji aliyê mêran ve",
+      "Di dema nêçîra li çiyayan de ji bo nîşandana rê"
+    ],
+    "answersTr": [
+      "Düğünlerde gelin çıkarma ve kına merasimi sırasında kadınlar tarafından",
+      "Savaşta hayatını kaybedenler için düzenlenen taziye evlerinde",
+      "Ekin hasadı sırasında tarlalarda erkek işçiler tarafından",
+      "Dağlarda avcılık sırasında yön bulmak ve haberleşmek için"
+    ],
+    "correctAnswer": "Di dema birina bûkê û dawetan de ji aliyê jinan ve",
+    "correctAnswerTr": "Düğünlerde gelin çıkarma ve kına merasimi sırasında kadınlar tarafından",
+    "explanation": "Narînk stranên jinan ên dawetê ne ku di dema xemilandina bûkê de têne gotin.",
+    "explanationKu": "Narînk stranên jinan ên dawetê ne ku di dema xemilandina bûkê de têne gotin.",
+    "explanationTr": "Narînk, düğünlerde gelin hazırlanırken ve baba evinden uğurlanırken kadınların söylediği duygusal kına türküleridir."
+  },
+  {
+    "id": "ds_muzik_0251",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Stranên bi navê \"Kilamên Kar\" (wekî stranên teşîristinê û bîrê) di çanda jinên kurd de çi armancê pêk tînin?",
+    "promptTr": "Kürt kadın kültüründeki \"İş Şarkıları\"nın (yün eğirme, değirmen ezgileri) temel işlevi nedir?",
+    "answers": [
+      "Tenê ji bo ragihandina nûçeyên şer di navbera eşîran de",
+      "Sivikkirina giraniya karê rojane bi hevahengiya rîtmîk a tevgeran re",
+      "Ji bo fêrkirina zimanên biyanî ji zarokên gund re",
+      "Wekî qanûnên fermî yên ji bo firotina berhemên çandiniyê"
+    ],
+    "answersTr": [
+      "Aşiretler arasındaki savaş haberlerini diğer köylere ulaştırmak",
+      "El hareketleriyle ritmik uyum sağlayarak ağır günlük iş yükünü hafifletmek",
+      "Köydeki küçük çocuklara yabancı dillerin kurallarını öğretmek",
+      "Tarım ürünlerinin pazarda satışını düzenleyen resmi kuralları bildirmek"
+    ],
+    "correctAnswer": "Sivikkirina giraniya karê rojane bi hevahengiya rîtmîk a tevgeran re",
+    "correctAnswerTr": "El hareketleriyle ritmik uyum sağlayarak ağır günlük iş yükünü hafifletmek",
+    "explanation": "Stranên karê jinan (teşî, meşk) rîtma xebatê bi melodiyan hêsan dikirin.",
+    "explanationKu": "Stranên karê jinan (teşî, meşk) rîtma xebatê bi melodiyan hêsan dikirin.",
+    "explanationTr": "Kadın iş şarkıları (yün eğirme, yayık dövme) bedensel hareketlerin ritmiyle işin yorgunluğunu hafifletme işlevi görür."
+  },
+  {
+    "id": "ds_muzik_0252",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Kîjan ji van rêzbûnan serdema dengbêjên navdar ên Serhedê ji ya herî kevn ber bi ya nûtir rast nîşan dide?",
+    "promptTr": "Serhed ekolünün büyük dengbêjlerinin kronolojik kuşak sıralaması hangisinde doğrudur?",
+    "answers": [
+      "Şakiro -> Evdalê Zeynikê -> Reso",
+      "Reso -> Şakiro -> Evdalê Zeynikê",
+      "Şakiro -> Reso -> Evdalê Zeynikê",
+      "Evdalê Zeynikê -> Reso -> Şakiro"
+    ],
+    "answersTr": [
+      "Şakiro -> Evdalê Zeynikê -> Reso",
+      "Reso -> Şakiro -> Evdalê Zeynikê",
+      "Şakiro -> Reso -> Evdalê Zeynikê",
+      "Evdalê Zeynikê -> Reso -> Şakiro"
+    ],
+    "correctAnswer": "Evdalê Zeynikê -> Reso -> Şakiro",
+    "correctAnswerTr": "Evdalê Zeynikê -> Reso -> Şakiro",
+    "explanation": "Evdalê Zeynikê di sedsala 19an de, şagirtê wî Reso di sedsala 20an de û Şakiro jî şagirtê Reso bû.",
+    "explanationKu": "Evdalê Zeynikê di sedsala 19an de, şagirtê wî Reso di sedsala 20an de û Şakiro jî şagirtê Reso bû.",
+    "explanationTr": "Evdalê Zeynikê ekolün piri, Reso onun takipçisi, Şakiro ise Reso'nun çırağı olarak bu silsileyi sürdürmüştür."
+  },
+  {
+    "id": "ds_muzik_0253",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di destan û kilamên Evdalê Zeynikê de motîfa \"Quling\" (Turna) çi sembolîze dike?",
+    "promptTr": "Evdalê Zeynikê'nin kilamlarında sıkça seslendiği \"Quling\" (Turna) motifi neyi simgeler?",
+    "answers": [
+      "Tenê nêçîra goşt di dema birçîbûnê de li deşta Rewanê",
+      "Peyamnêriya di navbera warên dûr de, azadî û xemgîniya dilê dengbêj",
+      "Şerê di navbera împaratoriyan de û qedexeya bazirganiyê",
+      "Dewlemendiya feodalîzmê û zêrên mîran ên li qesran"
+    ],
+    "answersTr": [
+      "Rewan ovasında kıtlık zamanı avlanan bir av hayvanı etini",
+      "Uzak diyarlar arasında haber taşıyıcılığı, özgürlük ve dengbêjin içsel hüznünü",
+      "İmparatorluklar arasındaki sınır savaşlarını ve ticaret ambargosunu",
+      "Feodal beylerin saraylarındaki altın ve mücevher zenginliğini"
+    ],
+    "correctAnswer": "Peyamnêriya di navbera warên dûr de, azadî û xemgîniya dilê dengbêj",
+    "correctAnswerTr": "Uzak diyarlar arasında haber taşıyıcılığı, özgürlük ve dengbêjin içsel hüznünü",
+    "explanation": "Quling di kilamên Evdal de sembola gihandina silavan bo warên dûr û bêçaretiya çavên korbûyî ye.",
+    "explanationKu": "Quling di kilamên Evdal de sembola gihandina silavan bo warên dûr û bêçaretiya çavên korbûyî ye.",
+    "explanationTr": "Evdalê Zeynikê körlük ve yalnızlık döneminde turnayı (quling) dert ortağı ve uzaklara selam götüren bir sırdaş bilmiştir."
+  },
+  {
+    "id": "ds_muzik_0254",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Di mûzîka gelerî de cudahiya bikaranîna \"Dohol û Zirne\" li gorî \"Tembûr\"ê di kîjan qadê de diyar dibe?",
+    "promptTr": "Geleneksel icrada \"Davul-Zurna\" ile \"Tembûr / Bağlama\" çalgılarının kullanım alanı farkı nedir?",
+    "answers": [
+      "Dohol û zirne ji bo qadên vekirî û govendê ye; tembûr ji bo civatên girtî û guhdarîkirinê ye",
+      "Dohol tenê di şînan de tê lêdan; tembûr tenê di govendên lezgîn de ye",
+      "Dohol ji aliyê jinan ve tê lêdan; tembûr tenê ji bo leşkeran e",
+      "Dohol bi elektrîkê dixebite; tembûr amûreke bê deng e"
+    ],
+    "answersTr": [
+      "Davul-zurna açık hava ve halay içindir; tembûr ise kapalı meclisler ve dinleme içindir",
+      "Davul yalnızca cenazelerde çalınır; tembûr ise yalnızca hızlı halaylarda kullanılır",
+      "Davul kadınlarca çalınır; tembûr ise yalnızca ordu askerlerine mahsustur",
+      "Davul elektrikle çalışır; tembûr ise tamamen sessiz bir eğitim aletidir"
+    ],
+    "correctAnswer": "Dohol û zirne ji bo qadên vekirî û govendê ye; tembûr ji bo civatên girtî û guhdarîkirinê ye",
+    "correctAnswerTr": "Davul-zurna açık hava ve halay içindir; tembûr ise kapalı meclisler ve dinleme içindir",
+    "explanation": "Dohol û zirne amûrên derve yên govendê ne; tembûr amûra şevbihêrk û odeyên civatê ye.",
+    "explanationKu": "Dohol û zirne amûrên derve yên govendê ne; tembûr amûra şevbihêrk û odeyên civatê ye.",
+    "explanationTr": "Davul ve zurna yüksek ses gücüyle açık hava düğün ve halaylarında; tembûr ise oda meclislerinde içsel dinletilerde kullanılır."
+  },
+  {
+    "id": "ds_muzik_0255",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Taybetmendiya bêhempa ya Hesen Zîrek di mûzîka kurdî (beşa Rojhilat û Başûr) de çi bû?",
+    "promptTr": "Hesen Zîrek'in Kürt müzik tarihindeki en hayranlık uyandırıcı bestecilik yeteneği neydi?",
+    "answers": [
+      "Tenê xwendina notayên klasîk ên rojavayî li Radyoya Londonê",
+      "Bêhejmar stran bi afirandina melodî û helbestên serbixwe yên di heman kêliyê de (bê amadekarî)",
+      "Tenê çêkirina stranên bi zimanê îngilîzî ji bo sînemaya Hollywoodê",
+      "Bikaranîna tenê piyanoyê di hemû qeydên xwe yên li Silêmaniyê de"
+    ],
+    "answersTr": [
+      "Londra Radyosu'nda yalnızca Batı klasik müzik notalarını seslendirmesi",
+      "Stüdyo anında irticalen (doğaçlama) yüzlerce yepyeni beste ve söz üretebilmesi",
+      "Hollywood sineması için yalnızca İngilizce pop şarkıları bestelemesi",
+      "Süleymaniye'deki tüm kayıtlarında tek çalgı olarak piyanoyu kullanması"
+    ],
+    "correctAnswer": "Bêhejmar stran bi afirandina melodî û helbestên serbixwe yên di heman kêliyê de (bê amadekarî)",
+    "correctAnswerTr": "Stüdyo anında irticalen (doğaçlama) yüzlerce yepyeni beste ve söz üretebilmesi",
+    "explanation": "Hesen Zîrek xwedî qabiliyeteke mezin a bêtevger (irtîcalî) çêkirina stran û melodiyan bû.",
+    "explanationKu": "Hesen Zîrek xwedî qabiliyeteke mezin a bêtevger (irtîcalî) çêkirina stran û melodiyan bû.",
+    "explanationTr": "Hesen Zîrek nota veya yazı bilmeden stüdyoya girip o anda doğaçlama olarak yüzlerce ölümsüz beste üretmiştir."
+  },
+  {
+    "id": "ds_muzik_0256",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Avakirina \"Mala Dengbêjan\" li Amedê (2007) çi bandor li ser parastina mûzîka devkî kir?",
+    "promptTr": "Diyarbakır'da 2007'de açılan \"Mala Dengbêjan\"ın (Dengbêj Evi) sözlü müzik mirasına en somut katkısı ne oldu?",
+    "answers": [
+      "Qedexekirina hemû tomarkirinên dengî û vegerandina sîstema kevn",
+      "Tenê perwerdekirina lîstikvanên fîlmên sînemayê yên rojavayî",
+      "Girtina hemû qadên govendê li seranserê herêmê",
+      "Dengbêjî ji civatên gundewar derxist û kire mîrateyeke çandî ya fermî û tomarkirî"
+    ],
+    "answersTr": [
+      "Tüm ses kayıtlarını yasaklayıp ses cihazlarının kullanımını durdurması",
+      "Yalnızca batılı sinema filmleri için oyuncu yetiştiren bir kurs olması",
+      "Bölgedeki tüm açık hava halay meydanlarının kapatılmasını sağlaması",
+      "Dengbêjliği köy odalarından çıkarıp kurumsal, kayıt altına alınan bir şehir mirasına dönüştürmesi"
+    ],
+    "correctAnswer": "Dengbêjî ji civatên gundewar derxist û kire mîrateyeke çandî ya fermî û tomarkirî",
+    "correctAnswerTr": "Dengbêjliği köy odalarından çıkarıp kurumsal, kayıt altına alınan bir şehir mirasına dönüştürmesi",
+    "explanation": "Mala Dengbêjan bû mekanekî fermî ku dengbêjên pîr dengê xwe lê tomar bikin û pêşkêşî xelkê bikin.",
+    "explanationKu": "Mala Dengbêjan bû mekanekî fermî ku dengbêjên pîr dengê xwe lê tomar bikin û pêşkêşî xelkê bikin.",
+    "explanationTr": "Dengbêj Evi, kaybolma tehlikesindeki sözlü kültürü mekanlaştırarak yeni kuşakların ve araştırmacıların erişimine açmıştır."
+  },
+  {
+    "id": "ds_muzik_0257",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "prompt": "Di mûzîka kurdî ya klasîk a herêma Urmiye û Şino de, şêwaza \"Beyt\" çawa tê vegotin?",
+    "promptTr": "Urmiye ve Şino yöresi Kürt klasik müziğinde \"Beyt\" (Beytbêjî) anlatı formu nasıl icra edilir?",
+    "answers": [
+      "Tenê bi gîtara spanî û bê ti vegotina çîrokê",
+      "Bi amûra tembûra sê-têlî û li ser çîrokên evînî û lehengiyê bi rîtma taybet",
+      "Bi orkestraya boriyên hesinî ya bê peyv",
+      "Tenê di dema maçên werzişê de wekî sirûda klûban"
+    ],
+    "answersTr": [
+      "Yalnızca İspanyol klasik gitarıyla ve hiçbir söz söylenmeden",
+      "Tembûr/bağlama eşliğinde epik ve aşk destanlarının özel bir makam ve vezinle anlatılmasıyla",
+      "Sözsüz olarak yalnızca üflemeli bando boruları orkestrasıyla",
+      "Yalnızca futbol maçlarında spor kulübü marşı olarak söylenmesiyle"
+    ],
+    "correctAnswer": "Bi amûra tembûra sê-têlî û li ser çîrokên evînî û lehengiyê bi rîtma taybet",
+    "correctAnswerTr": "Tembûr/bağlama eşliğinde epik ve aşk destanlarının özel bir makam ve vezinle anlatılmasıyla",
+    "explanation": "Beytbêjên Rojhilat destan û beytên xwe bi hevaltiya tembûrê bi rîtmeke taybet dibêjin.",
+    "explanationKu": "Beytbêjên Rojhilat destan û beytên xwe bi hevaltiya tembûrê bi rîtmeke taybet dibêjin.",
+    "explanationTr": "Beytbêjler (Beyt okuyucuları) destanları tembûr eşliğinde kendine has melodik ve ritmik bir üslupla seslendirirler."
+  },
+  {
+    "id": "ds_muzik_0258",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "prompt": "Ciwan Haco di salên 1980 û 1990î de bi albûmên mîna \"Gula Sor\" û \"Dûrî\" çi nûbûn anî mûzîka kurdî?",
+    "promptTr": "Ciwan Haco'nun 1980 ve 90'larda yayımladığı albümlerin Kürt müziğine getirdiği en temel yenilik neydi?",
+    "answers": [
+      "Yekkirina helbestên kurdî bi şêwazên Rock, Pop û Jazz ên nûjen re",
+      "Tenê gotina kilamên dengbêjiyê bi şêwaza bê amûr a sedsala 18an",
+      "Qedexekirina amûrên rojavayî û tenê lêdana zirneyê",
+      "Gotina stranên kurdî bi rîtma klasîk a koro ya dêrê"
+    ],
+    "answersTr": [
+      "Kürtçe lirik şiirleri modern Rock, Pop ve Caz armonisiyile birleştirmesi",
+      "18. yüzyıl üslubuyla hiçbir çalgı kullanmadan çıplak sesle kilam söylemesi",
+      "Batı enstrümanlarını tamamen dışlayıp yalnızca zurna çalması",
+      "Kürtçe şarkıları yalnızca klasik kilise korosu ilahi ritimleriyle seslendirmesi"
+    ],
+    "correctAnswer": "Yekkirina helbestên kurdî bi şêwazên Rock, Pop û Jazz ên nûjen re",
+    "correctAnswerTr": "Kürtçe lirik şiirleri modern Rock, Pop ve Caz armonisiyile birleştirmesi",
+    "explanation": "Ciwan Haco mûzîka kurdî bi şêwazên nûjen ên wekî rock û bluesê xemiland û şêwazeke nû afirand.",
+    "explanationKu": "Ciwan Haco mûzîka kurdî bi şêwazên nûjen ên wekî rock û bluesê xemiland û şêwazeke nû afirand.",
+    "explanationTr": "Ciwan Haco geleneksel sınırları aşarak Kürtçe sözleri rock, pop ve caz ritimleriyle buluşturan öncü sanatçıdır."
+  },
+  {
+    "id": "ds_sinema_0250",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Umut\" (1970) a \"Yılmaz Güney\" de, hêmana ku wê ji sînemaya Yeşilçamê ya serdema xwe cuda dike çi ye?",
+    "promptTr": "Yılmaz Güney'in \"Umut\" (1970) filmini dönemin geleneksel Yeşilçam sinemasından ayıran temel fark nedir?",
+    "answers": [
+      "Tenê bikaranîna kamerayên rengîn û bandorên taybet ên teknolojîk",
+      "Li şûna çîrokên melodramatîk ên xeyalî, realîzma civakî ya xizanî û bêçaretiyê nîşan dide",
+      "Kişandina hemû dîmenan li welatên Ewropayê bi lîstikvanên biyanî",
+      "Çêkirina fîlmeke komedî ya xwerû ya ji bo şahiya malbatê"
+    ],
+    "answersTr": [
+      "Yalnızca renkli kameralar ve dijital özel efektler kullanması",
+      "Hayali melodramlar yerine yoksulluk ve çaresizliği çıplak toplumsal gerçekçilikle işlemesi",
+      "Tüm sahnelerin yabancı oyuncularla Avrupa ülkelerinde çekilmiş olması",
+      "Yalnızca aile eğlencesine yönelik hafif bir durum komedisi olması"
+    ],
+    "correctAnswer": "Li şûna çîrokên melodramatîk ên xeyalî, realîzma civakî ya xizanî û bêçaretiyê nîşan dide",
+    "correctAnswerTr": "Hayali melodramlar yerine yoksulluk ve çaresizliği çıplak toplumsal gerçekçilikle işlemesi",
+    "explanation": "Umut destpêka sînemaya realîst a civakî ye ku derdê mirovê hejar bê maske nîşan dide.",
+    "explanationKu": "Umut destpêka sînemaya realîst a civakî ye ku derdê mirovê hejar bê maske nîşan dide.",
+    "explanationTr": "Umut filmi, Yeşilçam'ın pembe melodram kalıplarını kırarak Türkiye ve Ortadoğu sinemasında gerçekçi sinemanın mihenk taşı olmuştur."
+  },
+  {
+    "id": "ds_sinema_0251",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Fîlma \"Yol\" di sala 1982an de dema ku Xelata Palmiyeya Zêrîn a Cannesê wergirt, çima ji aliyê derhêneriyê ve bûyereke bêhempa bû?",
+    "promptTr": "\"Yol\" filmi 1982'de Cannes'da Altın Palmiye aldığında, yönetmenlik ve yapım süreci açısından neden benzersizdi?",
+    "answers": [
+      "Fîlma yekem bû ku bi tevahî bi zimanê îngilîzî li Amerîkayê hate çêkirin",
+      "Tenê bi alîkariya mûzîkjenên operaya Parîsê hate amadekirin",
+      "Yekem fîlm bû ku hemû lîstikvanên wê xelatên şexsî yên Cannesê girtin",
+      "Senaryo û derhêneriya wê di girtîgehê de ji aliyê Yılmaz Güney ve hate xêzkirin û bi rêya Şerif Gören hate kişandin"
+    ],
+    "answersTr": [
+      "Tamamen İngilizce dilinde Amerika'da çekilen ilk bağımsız film olması",
+      "Yalnızca Paris Operası müzisyenlerinin desteğiyle bir haftada bitirilmesi",
+      "Tüm oyuncularının Cannes'da ayrı ayrı en iyi oyuncu ödülü kazanması",
+      "Yılmaz Güney senaryo ve çekim planlarını cezaevinden yönetmiş, sahada Şerif Gören çekmiştir"
+    ],
+    "correctAnswer": "Senaryo û derhêneriya wê di girtîgehê de ji aliyê Yılmaz Güney ve hate xêzkirin û bi rêya Şerif Gören hate kişandin",
+    "correctAnswerTr": "Yılmaz Güney senaryo ve çekim planlarını cezaevinden yönetmiş, sahada Şerif Gören çekmiştir",
+    "explanation": "Yılmaz Güney ji girtîgehê fîlm bi hûrgilî bi rê ve bir û Şerif Gören li qadê fîlm kişand.",
+    "explanationKu": "Yılmaz Güney ji girtîgehê fîlm bi hûrgilî bi rê ve bir û Şerif Gören li qadê fîlm kişand.",
+    "explanationTr": "Yılmaz Güney İmralı cezaevinden sahne sahne talimat vererek Şerif Gören'e çektirmiş, kurgusunu İsviçre ve Fransa'da tamamlamıştır."
+  },
+  {
+    "id": "ds_sinema_0252",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Dema Hespên Serxweş\" de metafora \"serxweşkirina hespan bi meyê\" ji aliyê sînemayî ve çi nîşan dide?",
+    "promptTr": "\"Sarhoş Atlar Zamanı\" filminde katırlara alkol içirilmesi metaforu sinematik olarak neyi simgeler?",
+    "answers": [
+      "Kêfxweşî û cejnek gundewarî ya salane ya li herêma Hewramanê",
+      "Zehmetiya giran a sirûştê û zordariya sînor a ku heywanan jî neçarî serxweşiyê dike ji bo karibin bar bibin",
+      "Nîşandana bazirganiya dewlemend a hespên nijdî li bazara navneteweyî",
+      "Teknîkeke werzîşî ya ji bo bezandina hespan di pêşbirkên herêmî de"
+    ],
+    "answersTr": [
+      "Hewraman bölgesinde her yıl düzenlenen neşeli bir köy panayırı geleneğini",
+      "Sınır ve doğa koşullarının ağırlığını ve hayvanların dahi uyuşturularak yürütülebildiği çaresizliği",
+      "Uluslararası pazarda yapılan zengin safkan yarış atı ticaretini",
+      "Yerel at yarışlarında atların daha hızlı koşmasını sağlayan geleneksel bir yöntemi"
+    ],
+    "correctAnswer": "Zehmetiya giran a sirûştê û zordariya sînor a ku heywanan jî neçarî serxweşiyê dike ji bo karibin bar bibin",
+    "correctAnswerTr": "Sınır ve doğa koşullarının ağırlığını ve hayvanların dahi uyuşturularak yürütülebildiği çaresizliği",
+    "explanation": "Li ser sînorê sar ê çiyayî hesp tenê bi vexwarina alkolê karibin di berfê de bimeşin; ev sembola jiyana giran e.",
+    "explanationKu": "Li ser sînorê sar ê çiyayî hesp tenê bi vexwarina alkolê karibin di berfê de bimeşin; ev sembola jiyana giran e.",
+    "explanationTr": "Dondurucu sınır kaçakçılığı koşullarında katırların soğuğa dayanabilmesi için alkolle uyuşturulması, coğrafyanın trajedisini simgeler."
+  },
+  {
+    "id": "ds_sinema_0253",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di fîlma \"My Sweet Pepper Land\" (2013) a Hiner Saleem de, kîjan şêwaza sînemayê bi erdnîgariya Kurdistanê re hatiye lihevanîn?",
+    "promptTr": "Hiner Saleem'in \"Tatlı Biber Diyarım\" filminde Kürt coğrafyası hangi sinema türünün estetiğiyle harmanlanmıştır?",
+    "answers": [
+      "Şêwaza Western a nûjen bi mijara desthilata qanûnê û têkoşîna jinekê re",
+      "Şêwaza fîlmên tirsnak ên gotîk ên sedsala 19an",
+      "Mûzîkala klasîk a Hollywoodê ya bi dansên komî",
+      "Sînemaya belgefîlmê ya zanistî ya li ser feleknasiyê"
+    ],
+    "answersTr": [
+      "Modern Western türü estetiğiyle kanunsuz sınır kasabası ve kadın mücadelesi",
+      "19. yüzyıl gotik korku ve vampir filmleri estetiğiyle",
+      "Büyük kalabalık dansların yer aldığı klasik Hollywood müzikaliyle",
+      "Uzay ve gökbilim üzerine yapılan bilimsel belgesel sinemasıyla"
+    ],
+    "correctAnswer": "Şêwaza Western a nûjen bi mijara desthilata qanûnê û têkoşîna jinekê re",
+    "correctAnswerTr": "Modern Western türü estetiğiyle kanunsuz sınır kasabası ve kadın mücadelesi",
+    "explanation": "Hiner Saleem şêwaza fîlmên Westernê bi çîroka polîsekî dilpak û mamosteyeke jin li ser sînor girê dide.",
+    "explanationKu": "Hiner Saleem şêwaza fîlmên Westernê bi çîroka polîsekî dilpak û mamosteyeke jin li ser sînor girê dide.",
+    "explanationTr": "Hiner Saleem, sınır kasabasındaki feodal ağalık ile hukuk arayışını çağdaş bir Kürt Western estetiğiyle beyaz perdeye taşımıştır."
+  },
+  {
+    "id": "ds_sinema_0254",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Fîlma \"Bahoz\" (Fırtına, 2008) a \"Kazım Öz\" li ser kîjan rastiya civakî ya salên 1990î disekine?",
+    "promptTr": "Kazım Öz'ün \"Bahoz\" (Fırtına, 2008) filmi 90'lı yılların hangi toplumsal kırılmasını konu edinir?",
+    "answers": [
+      "Jiyana gundiyên ku tenê bi masîvaniyê re mijûl dibin li Deryaya Reş",
+      "Têkoşîna nasnameyê û polîtîkîbûna xwendekarên zanîngehê yên kurd li Stenbolê",
+      "Dîroka şerê Çanakkaleyê di sala 1915an de",
+      "Pêşketina karsazên mezin di qada bazirganiya otomobîlan de"
+    ],
+    "answersTr": [
+      "Karadeniz'de yalnızca balıkçılıkla geçinen kıyı köylülerinin yaşamını",
+      "İstanbul üniversitelerindeki Kürt gençliğinin kimlik arayışı ve politikleşme sürecini",
+      "1915 yılındaki Çanakkale Savaşı'nın cephe gerisi lojistiğini",
+      "Büyükşehirlerde otomobil ticareti yapan holdinglerin yükselişini"
+    ],
+    "correctAnswer": "Têkoşîna nasnameyê û polîtîkîbûna xwendekarên zanîngehê yên kurd li Stenbolê",
+    "correctAnswerTr": "İstanbul üniversitelerindeki Kürt gençliğinin kimlik arayışı ve politikleşme sürecini",
+    "explanation": "Bahoz çîroka ciwanên zanîngehê yên salên 90î û hewldana wan a parastina nasnameya kurdî nîşan dide.",
+    "explanationKu": "Bahoz çîroka ciwanên zanîngehê yên salên 90î û hewldana wan a parastina nasnameya kurdî nîşan dide.",
+    "explanationTr": "Bahoz, 90'lı yıllarda taşradan metropol üniversitelerine gelen gençlerin kimlik çatışması ve politik bilinçlenme sürecini anlatır."
+  },
+  {
+    "id": "ds_sinema_0255",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Sînemaya \"Ali Kemal Çınar\" (mînak: Veşartî, Gênco) di nav sînemaya kurdî de bi kîjan zimanê şêwazî tê naskirin?",
+    "promptTr": "Ali Kemal Çınar sineması (Veşartî, Gênco) Kürt sinemasında hangi biçimsel üslupla öne çıkar?",
+    "answers": [
+      "Fîlmên bi budçeyên mîlyon dolarî yên bi efektên şer ên giran",
+      "Belgefîlmên dîrokî yên li ser serdema împaratoriyên kevnar",
+      "Fîlmên anîmasyonê yên sê-dîmenî yên ji bo zarokan",
+      "Minimalîzma li malê, mîzaha absurd û hêmanên fantastîk ên li nav jiyana rojane"
+    ],
+    "answersTr": [
+      "Milyon dolarlık bütçelerle çekilen büyük savaş efektleri ve çatışma sahneleriyle",
+      "Eski imparatorluklar dönemini canlandıran tarihi belgesel üslubuyla",
+      "Tamamen çocuklara yönelik üç boyutlu dijital animasyon tekniğiyle",
+      "Düşük bütçeli ev ortamı, absürt mizah ve gündelik hayatın içine giren fantastik öğelerle"
+    ],
+    "correctAnswer": "Minimalîzma li malê, mîzaha absurd û hêmanên fantastîk ên li nav jiyana rojane",
+    "correctAnswerTr": "Düşük bütçeli ev ortamı, absürt mizah ve gündelik hayatın içine giren fantastik öğelerle",
+    "explanation": "Ali Kemal Çınar bi budçeyên biçûk fîlmên fantastîk û absurd ên li nav malbatê dikişîne.",
+    "explanationKu": "Ali Kemal Çınar bi budçeyên biçûk fîlmên fantastîk û absurd ên li nav malbatê dikişîne.",
+    "explanationTr": "Ali Kemal Çınar, Diyarbakır'da ev ortamında çektiği absürt mizah ve fantastik süper kahraman temalarıyla özgün bir dil kurmuştur."
+  },
+  {
+    "id": "ds_sinema_0256",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Bêkes\" (2012) a Karzan Kader de, motîvasyona sereke ya du birayên êtîm çi ye?",
+    "promptTr": "Karzan Kader'in \"Bêkes\" (2012) filminde iki yetim kardeşin çıktığı yolculuğun temel amacı nedir?",
+    "answers": [
+      "Ji bo dîtina xezîneyeke zêr di nav kelheyeke kevn de digerin",
+      "Ji bo dîtina lehengê xwe Superman û rizgarbûnê dixwazin biçin Amerîkayê",
+      "Dixwazin bibin efserên leşkerî di artêşa herêmî de",
+      "Ji bo fêrbûna zimanê çînî dixwazin biçin Asyayê"
+    ],
+    "answersTr": [
+      "Eski bir kalede gömülü altın hazineyi arayıp zengin olmak",
+      "Sinemada gördükleri Süpermen'i bulup kendilerini kurtarmasını istemek için Amerika'ya gitmek",
+      "Bölgesel orduda subay rütbesine yükselmek için başkente kaçmak",
+      "Çince öğrenip Asya ülkelerinde ticaret yapmak amacıyla yola çıkmak"
+    ],
+    "correctAnswer": "Ji bo dîtina lehengê xwe Superman û rizgarbûnê dixwazin biçin Amerîkayê",
+    "correctAnswerTr": "Sinemada gördükleri Süpermen'i bulup kendilerini kurtarmasını istemek için Amerika'ya gitmek",
+    "explanation": "Zana û Dana piştî dîtina fîlma Superman li ser kerê xwe bi hêviya Amerîkayê dikevin rê.",
+    "explanationKu": "Zana û Dana piştî dîtina fîlma Superman li ser kerê xwe bi hêviya Amerîkayê dikevin rê.",
+    "explanationTr": "Bêkes, Saddam dönemi iki kardeşin sinema deliğinden izledikleri Süpermen'e ulaşma hayaliyle eşek sırtındaki yolculuğunu anlatır."
+  },
+  {
+    "id": "ds_sinema_0257",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di fîlma \"Kirasê Reş\" û fîlmên li ser karesata Helebceyê de, kîjan dîmen wekî sembola gerdûnî ya êşê tê bikaranîn?",
+    "promptTr": "Halepçe katliamını konu alan sinema eserlerinde evrensel acının görsel sembolü olarak hangi sahne öne çıkar?",
+    "answers": [
+      "Dîmena bavê ku zaroka xwe hembêz kiriye û li ber derî jiyana xwe ji dest daye (Umerê Xawer)",
+      "Dîmena govendeke şahiyê ya li ber kela Hewlêrê bi defê",
+      "Dîmena firotina otomobîlan li kolanên Bexdayê di nîvê rojê de",
+      "Dîmena rêwîtiya bi keştiyê ya li ser Deryaya Spî"
+    ],
+    "answersTr": [
+      "Ömer Xawer'in bebeğini kucağına sararak kapı eşiğinde can verdiği sessiz an",
+      "Erbil Kalesi önünde düğün halayı çeken kalabalıkların neşeli sahnesi",
+      "Gündüz vakti Bağdat caddelerinde araba satışı yapan esnafın sahnesi",
+      "Akdeniz üzerinde lüks bir gemiyle tatile çıkan yolcuların sahnesi"
+    ],
+    "correctAnswer": "Dîmena bavê ku zaroka xwe hembêz kiriye û li ber derî jiyana xwe ji dest daye (Umerê Xawer)",
+    "correctAnswerTr": "Ömer Xawer'in bebeğini kucağına sararak kapı eşiğinde can verdiği sessiz an",
+    "explanation": "Wêneyê Umerê Xawer û hembêzkirina dergûşa wî bû sembola herî gerdûnî ya jenosîda kîmyewî ya Helebceyê.",
+    "explanationKu": "Wêneyê Umerê Xawer û hembêzkirina dergûşa wî bû sembola herî gerdûnî ya jenosîda kîmyewî ya Helebceyê.",
+    "explanationTr": "Ömer Xawer'in kucağındaki bebeğiyle donup kaldığı fotoğraf karesi, Halepçe trajedisinin tüm dünyadaki görsel hafızasıdır."
+  },
+  {
+    "id": "ds_sinema_0258",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Fîlma \"Min Dît\" (2009) a Miraz Bezar kîjan xelata dîrokî li Festîvala Fîlman a Porteqala Zêrîn a Antalyayê girt?",
+    "promptTr": "Miraz Bezar'ın \"Min Dît\" (2009) filmi Antalya Altın Portakal Film Festivali'nde hangi tarihi başarıya imza attı?",
+    "answers": [
+      "Xelata yekem a ji bo fîlmên anîmasyona komputerê wergirt",
+      "Yekem fîlma bi kurdî bû ku xelatên sereke yên juriyê û lîstikvaniyê wergirt",
+      "Xelata fîlma herî kurt a bê peyv wergirt",
+      "Xelata mûzîkala klasîk a bi zimanê îtalî wergirt"
+    ],
+    "answersTr": [
+      "Festival tarihinde bilgisayar animasyonu dalında ilk ödülü kazandı",
+      "Ana yarışmada ödül kazanan ve ana dili Kürtçe olan ilk uzun metraj film oldu",
+      "Hiçbir diyalog içermeyen en kısa deneysel film ödülünü aldı",
+      "İtalyanca opera müziği dalında uluslararası jüri özel ödülü kazandı"
+    ],
+    "correctAnswer": "Yekem fîlma bi kurdî bû ku xelatên sereke yên juriyê û lîstikvaniyê wergirt",
+    "correctAnswerTr": "Ana yarışmada ödül kazanan ve ana dili Kürtçe olan ilk uzun metraj film oldu",
+    "explanation": "Min Dît li Antalyayê xelatên Xelata Taybet a Juriyê û Muzîka Herî Baş wergirt û deriyê sînemaya kurdî vekir.",
+    "explanationKu": "Min Dît li Antalyayê xelatên Xelata Taybet a Juriyê û Muzîka Herî Baş wergirt û deriyê sînemaya kurdî vekir.",
+    "explanationTr": "Min Dît, Altın Portakal'da yarışan ve ödül alan ilk Kürtçe film olarak Türkiye sinema tarihinde önemli bir eşik oldu."
+  },
+  {
+    "id": "ds_sinema_0259",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di fîlma \"Jîn\" (2013) a Reha Erdem de têkiliya keça ciwan a li daristanê bi sirûşt û ajalan re çi nîşan dide?",
+    "promptTr": "Reha Erdem'in \"Jîn\" (2013) filminde genç kızın doğa ve hayvanlarla kurduğu ilişki neyi simgeler?",
+    "answers": [
+      "Kariyera jinekê ya di warê biyolojiya deryayî de",
+      "Nêçîrvaniya profesyonel a ji bo qezenckirina dirav",
+      "Xebata çandiniyê ya nûjen di zeviyên mezin de",
+      "Bêgunehiya sirûştê li hemberî tundûtûjî û xirabiya şerê mirovan"
+    ],
+    "answersTr": [
+      "Genç bir kadının deniz biyolojisi alanında kariyer yapma çabasını",
+      "Para kazanmak amacıyla vahşi hayvanları avlayan bir avcılık öyküsünü",
+      "Geniş tarım arazilerinde modern sera yöntemleriyle üretim yapmayı",
+      "İnsanların yürüttüğü acımasız savaşa karşı doğanın masumiyet ve sığınağını"
+    ],
+    "correctAnswer": "Bêgunehiya sirûştê li hemberî tundûtûjî û xirabiya şerê mirovan",
+    "correctAnswerTr": "İnsanların yürüttüğü acımasız savaşa karşı doğanın masumiyet ve sığınağını",
+    "explanation": "Fîlma Jîn nîşan dide ka çawa ajal û daristan ji şerê mirovan paqijtir in û dibin penageha keçikê.",
+    "explanationKu": "Fîlma Jîn nîşan dide ka çawa ajal û daristan ji şerê mirovan paqijtir in û dibin penageha keçikê.",
+    "explanationTr": "Jîn, savaşın vahşetinden kaçan genç bir kızın doğanın kucağında bulduğu masumiyeti masalsı bir dille işler."
+  },
+  {
+    "id": "ds_sinema_0260",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Rêzbûna dîrokî ya derketina van fîlmên girîng ên sînemaya kurdî di kîjan vebijêrkê de rast e?",
+    "promptTr": "Aşağıdaki önemli sinema yapımlarının vizyon ve yapım yılı sıralaması hangisinde kronolojik olarak doğrudur?",
+    "answers": [
+      "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
+      "Min Dît (2009) -> Yol (1982) -> Cîran (2021) -> Bêkes (2012)",
+      "Bêkes (2012) -> Yol (1982) -> Min Dît (2009) -> Cîran (2021)",
+      "Yol (1982) -> Cîran (2021) -> Min Dît (2009) -> Bêkes (2012)"
+    ],
+    "answersTr": [
+      "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
+      "Min Dît (2009) -> Yol (1982) -> Cîran (2021) -> Bêkes (2012)",
+      "Bêkes (2012) -> Yol (1982) -> Min Dît (2009) -> Cîran (2021)",
+      "Yol (1982) -> Cîran (2021) -> Min Dît (2009) -> Bêkes (2012)"
+    ],
+    "correctAnswer": "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
+    "correctAnswerTr": "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
+    "explanation": "Yol di 1982an de, Min Dît di 2009an de, Bêkes di 2012an de û Cîran di 2021ê de derketine.",
+    "explanationKu": "Yol di 1982an de, Min Dît di 2009an de, Bêkes di 2012an de û Cîran di 2021ê de derketine.",
+    "explanationTr": "Yol (1982), Min Dît (2009), Bêkes (2012) ve Cîran (2021) şeklinde tarihsel bir gelişim çizgisi izler."
+  },
+  {
+    "id": "ds_sinema_0261",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Belgefîlma \"5 No'lu Cezaevi\" (2009) a Çayan Demirel li ser kîjan rastiya dîrokî hatiye avakirin?",
+    "promptTr": "Çayan Demirel'in \"5 No'lu Cezaevi\" (2009) belgeseli hangi tarihsel gerçekliğe tanıklık eder?",
+    "answers": [
+      "Girtîgehên serdema navîn ên li welatên Ewropaya Bakur",
+      "Dîroka avakirina zindana Alcatrazê ya li Amerîkayê",
+      "Trawma, êşkence û berxwedana li Girtîgeha Leşkerî ya Amedê ya piştî darbeya 1980î",
+      "Jiyana girtiyên şerê cîhanî yê duyem li Asyayê"
+    ],
+    "answersTr": [
+      "Kuzey Avrupa ülkelerinde ortaçağda inşa edilen şato zindanlarının mimarisini",
+      "Amerika'daki ünlü Alcatraz adası hapishanesinin kaçış hikayelerini",
+      "12 Eylül 1980 askeri darbesi sonrası Diyarbakır 5 No'lu Askeri Cezaevi'ndeki işkence ve tanıklıkları",
+      "İkinci Dünya Savaşı sırasında Asya cephesindeki esir kamplarının yaşamını"
+    ],
+    "correctAnswer": "Trawma, êşkence û berxwedana li Girtîgeha Leşkerî ya Amedê ya piştî darbeya 1980î",
+    "correctAnswerTr": "12 Eylül 1980 askeri darbesi sonrası Diyarbakır 5 No'lu Askeri Cezaevi'ndeki işkence ve tanıklıkları",
+    "explanation": "5 No'lu Cezaevi bi rêya şahidên zindî zilm û êşkenceyên li zindana Amedê ya piştî 1980î radixe ber çavan.",
+    "explanationKu": "5 No'lu Cezaevi bi rêya şahidên zindî zilm û êşkenceyên li zindana Amedê ya piştî 1980î radixe ber çavan.",
+    "explanationTr": "Belgesel, 12 Eylül askeri darbesi sonrası Diyarbakır Cezaevi'nde yaşanan insanlık dışı uygulamaları doğrudan tanıkların ağzından belgeler."
+  },
+  {
+    "id": "ds_sinema_0262",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Memories on Stone\" (Bîranînên li ser kevir, 2014) a Shawkat Amin Korki de, mijara fîlmê li ser çi ye?",
+    "promptTr": "Shawkat Amin Korki'nin \"Taşa Kazınmış Hatıralar\" (2014) filminin meta-anlatı konusu nedir?",
+    "answers": [
+      "Çêkirina fîlmekî tirsnak li ser kevirên mîtolojîk li Misrê",
+      "Zehmetiyên çêkirina fîlmekî li ser Komkujiya Enfalê li Başûrê Kurdistanê",
+      "Bazirganiya kevirên mermer di navbera şîrketên navneteweyî de",
+      "Lêkolîna arkeolojîk li ser nivîsên bîzansiyan li Stenbolê"
+    ],
+    "answersTr": [
+      "Mısır piramitlerindeki mitolojik yazıtlar üzerine çekilen bir korku filmi serüveni",
+      "Saddam rejimi sonrası Enfal Soykırımı üzerine film çekmeye çalışan bir ekibin karşılaştığı toplumsal zorluklar",
+      "Uluslararası inşaat şirketleri arasındaki mermer ve taş ticareti rekabeti",
+      "İstanbul'daki Bizans dönemi taş yazıtları üzerine yapılan arkeolojik kazılar"
+    ],
+    "correctAnswer": "Zehmetiyên çêkirina fîlmekî li ser Komkujiya Enfalê li Başûrê Kurdistanê",
+    "correctAnswerTr": "Saddam rejimi sonrası Enfal Soykırımı üzerine film çekmeye çalışan bir ekibin karşılaştığı toplumsal zorluklar",
+    "explanation": "Fîlm derdê sînemagerên ku dixwazin li ser enfalê fîlmekî çêbikin lê rastî astengiyên civakî tên nîşan dide.",
+    "explanationKu": "Fîlm derdê sînemagerên ku dixwazin li ser enfalê fîlmekî çêbikin lê rastî astengiyên civakî tên nîşan dide.",
+    "explanationTr": "Film, Enfal katliamı hakkında film çekmek isteyen iki çocukluk arkadaşının bürokrasi ve toplumsal tabularla mücadelesini anlatır."
+  },
+  {
+    "id": "ds_sinema_0263",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Festîvala Navneteweyî ya Fîlman a Duhokê (Duhok IFF) çi roleke sereke di sînemaya kurdî de dilîze?",
+    "promptTr": "Uluslararası Duhok Film Festivali'nin (Duhok IFF) Kürt sineması sektöründeki ana işlevi nedir?",
+    "answers": [
+      "Tenê nîşandana fîlmên anîmasyonê yên ku ji bo televîzyonê hatine çêkirin",
+      "Firotina kamerayên kevn ji bo kanalên nûçeyan",
+      "Komkirina sînemagerên her çar perçeyan û diyasporayê û piştgirîkirina projeyên nû",
+      "Qedexekirina lîstikvanên biyanî ji bo fîlmên herêmî"
+    ],
+    "answersTr": [
+      "Yalnızca televizyon kanallarında yayınlanan çizgi filmleri ödüllendirmek",
+      "Haber kanallarına ikinci el stüdyo ve kamera ekipmanı temin etmek",
+      "Dört parça ve diasporadaki Kürt sinemacıları dünya sinemasıyla buluşturup ortak yapımları fonlamak",
+      "Bölgedeki bağımsız filmlerde yabancı oyuncu ve yönetmenleri yasaklamak"
+    ],
+    "correctAnswer": "Komkirina sînemagerên her çar perçeyan û diyasporayê û piştgirîkirina projeyên nû",
+    "correctAnswerTr": "Dört parça ve diasporadaki Kürt sinemacıları dünya sinemasıyla buluşturup ortak yapımları fonlamak",
+    "explanation": "Festîvala Duhokê sînemagerên kurd û yên cîhanê tîne cem hev û dibe pira hevberhemanînê.",
+    "explanationKu": "Festîvala Duhokê sînemagerên kurd û yên cîhanê tîne cem hev û dibe pira hevberhemanînê.",
+    "explanationTr": "Duhok Film Festivali, uluslararası standartlarda yarışma ve ortak yapım marketiyle Kürt sinemasının en önemli buluşma merkezidir."
+  },
+  {
+    "id": "ds_sinema_0264",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Zer\" (2017) a \"Kazım Öz\" de, rêwîtiya ciwanekî ji New Yorkê ber bi Dêrsimê ve çi rave dike?",
+    "promptTr": "Kazım Öz'ün \"Zer\" (2017) filminde New York'tan Dersim'e uzanan arayışın tarihsel odağı nedir?",
+    "answers": [
+      "Lêgerîna li strana kalikê xwe û vedîtina rastiya komkujiya 1938an a Dêrsimê",
+      "Ji bo kirîna zeviyên çandiniyê vegera gundê bavê xwe",
+      "Ji bo çêkirina kargeheke nû ya çêkirina kincan",
+      "Ji bo fêrbûna zimanê îngilîzî ji mamosteyên biyanî"
+    ],
+    "answersTr": [
+      "Nenesinin fısıldadığı türkünün (Zer) peşine düşerek 1938 Dersim Katliamı'nın köklerine ulaşmak",
+      "Büyük tarım arazileri satın almak için dede köyüne yatırım yapmak",
+      "Metropolde modern bir hazır giyim ve tekstil fabrikası kurmak",
+      "Yabancı dil öğretmenlerinden ileri düzey İngilizce eğitimi almak"
+    ],
+    "correctAnswer": "Lêgerîna li strana kalikê xwe û vedîtina rastiya komkujiya 1938an a Dêrsimê",
+    "correctAnswerTr": "Nenesinin fısıldadığı türkünün (Zer) peşine düşerek 1938 Dersim Katliamı'nın köklerine ulaşmak",
+    "explanation": "Jan ji bo kilama dapîra xwe ya bi navê Zer dikeve rê û digihîje heqîqeta qirkirina 1938an.",
+    "explanationKu": "Jan ji bo kilama dapîra xwe ya bi navê Zer dikeve rê û digihîje heqîqeta qirkirina 1938an.",
+    "explanationTr": "Jan, ninesinin ölüm döşeğinde söylediği türkünün izini sürerek Amerika'dan Dersim dağlarına uzanan bir kök arayışına girer."
+  },
+  {
+    "id": "ds_sinema_0265",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Fîlma \"Ji bo Azadiyê\" (The End Will Be Spectacular, 2019) a Ersin Çelik li ser kîjan bûyerên dîrokî ye?",
+    "promptTr": "Ersin Çelik'in \"Ji bo Azadiyê\" (2019) filmi hangi tarihsel süreci beyaz perdeye aktarır?",
+    "answers": [
+      "Şerê Cîhanî yê Yekem di navbera artêşên Ewropayê de",
+      "Avakirina Yekîtiya Ewropayê li Brukselê di salên pêncîyan de",
+      "Berxwedana taxa Sûrê ya Amedê ya di zivistana 2015-2016an de",
+      "Şoreşa Fransayê ya li dijî padîşahiyê di sala 1789an de"
+    ],
+    "answersTr": [
+      "Avrupa cephesinde Birinci Dünya Savaşı sırasındaki siper mücadelelerini",
+      "1950'li yıllarda Brüksel'de Avrupa Birliği'nin kuruluş antlaşmalarını",
+      "2015-2016 kışında Diyarbakır'ın tarihi Sûr ilçesinde yaşanan hendek ve barikat çatışmalarını",
+      "1789 yılında Paris'te kraliyete karşı başlayan Fransız İhtilali sürecini"
+    ],
+    "correctAnswer": "Berxwedana taxa Sûrê ya Amedê ya di zivistana 2015-2016an de",
+    "correctAnswerTr": "2015-2016 kışında Diyarbakır'ın tarihi Sûr ilçesinde yaşanan hendek ve barikat çatışmalarını",
+    "explanation": "Fîlm berxwedana ciwanan a li nav taxa kevnar a Sûrê ya Amedê nîşan dide.",
+    "explanationKu": "Fîlm berxwedana ciwanan a li nav taxa kevnar a Sûrê ya Amedê nîşan dide.",
+    "explanationTr": "Film, 2015-2016 yıllarında Diyarbakır Sur ilçesindeki çatışmaları orada bulunan gençlerin günlüklerine dayanarak canlandırır."
+  },
+  {
+    "id": "ds_sinema_0266",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Kleine Freiheit\" (A Little Bit of Freedom, 2003) a \"Yüksel Yavuz\" de, mijara sereke çi ye?",
+    "promptTr": "Yüksel Yavuz'un \"Kleine Freiheit\" (2003) filminde Hamburg'da geçen temanın özü nedir?",
+    "answers": [
+      "Jiyana mîrekî kevnar ê li qesra Colemêrgê di sedsala 17an de",
+      "Hevaltiya du ciwanên penaber ên kurd û tirk li taxa St. Pauli ya Hamburgê",
+      "Pêşbirkeke motorsîkletan li daristanên Afrîkayê",
+      "Çîroka derketina keştiyeke fezayê ber bi gerstêrka Marsê"
+    ],
+    "answersTr": [
+      "17. yüzyılda Hakkari sarayında yaşayan bir mirin taht kavgaları",
+      "Hamburg'un St. Pauli semtinde kaçak yaşayan Kürt genci Baran ile Türk genci Kaan'ın dostluğu",
+      "Afrika çöllerinde düzenlenen uluslararası motosiklet dayanıklılık rallisi",
+      "Mars gezegenine insanlı yolculuk yapan bir uzay mekiği mürettebatının öyküsü"
+    ],
+    "correctAnswer": "Hevaltiya du ciwanên penaber ên kurd û tirk li taxa St. Pauli ya Hamburgê",
+    "correctAnswerTr": "Hamburg'un St. Pauli semtinde kaçak yaşayan Kürt genci Baran ile Türk genci Kaan'ın dostluğu",
+    "explanation": "Yüksel Yavuz li Almanyayê penaberiya neyasayî û hestên mirovan ên li derveyî sînoran vedibêje.",
+    "explanationKu": "Yüksel Yavuz li Almanyayê penaberiya neyasayî û hestên mirovan ên li derveyî sînoran vedibêje.",
+    "explanationTr": "Yüksel Yavuz göçmenlik, sınırdışı edilme korkusu ve önyargıları aşan insan ilişkilerini St. Pauli sokaklarında işler."
+  },
+  {
+    "id": "ds_sinema_0267",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Fîlma \"Babamın Kanatları\" bi lîstikvaniya \"Menderes Samancılar\" kîjan pirsgirêka civakî tîne ziman?",
+    "promptTr": "Kıvanç Sezer'in yönettiği \"Babamın Kanatları\" filmi hangi yakıcı toplumsal sorunu merkeze alır?",
+    "answers": [
+      "Gera tûrîstên dewlemend li ser peravên deryayê",
+      "Pêşketina şîrketên komputerê di qada firotina serhêl de",
+      "Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber",
+      "Perwerdehiya pîlotên balafiran di akademiyên leşkerî de"
+    ],
+    "answersTr": [
+      "Lüks kıyı otellerinde tatil yapan yabancı turistlerin maceralarını",
+      "İnternet üzerinden satış yapan teknoloji şirketlerinin büyümesini",
+      "İnşaat sektöründeki iş cinayetlerini ve taşradan gelen işçilerin güvencesizliğini",
+      "Askeri havacılık akademisinde savaş pilotu yetiştirme aşamalarını"
+    ],
+    "correctAnswer": "Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber",
+    "correctAnswerTr": "İnşaat sektöründeki iş cinayetlerini ve taşradan gelen işçilerin güvencesizliğini",
+    "explanation": "Karkerê bi navê Îbrahîm bi penceşêrê ketiye û li înşata luks hewl dide ji bo malbata xwe tezmînatê bihêle.",
+    "explanationKu": "Karkerê bi navê Îbrahîm bi penceşêrê ketiye û li înşata luks hewl dide ji bo malbata xwe tezmînatê bihêle.",
+    "explanationTr": "Film, lüks toplu konut şantiyelerinde çalışan ve ölümcül hastalığa yakalanan inşaat işçisi İbrahim'in çaresizliğini anlatır."
+  },
+  {
+    "id": "ds_sinema_0268",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Fîlma \"Vodka Lemon\" (2003) a Hiner Saleem li ku derê hatiye kişandin û kîjan civakê nîşan dide?",
+    "promptTr": "Hiner Saleem'in \"Vodka Lemon\" (2003) filmi nerede geçer ve hangi topluluğun yaşamını anlatır?",
+    "answers": [
+      "Li gundekî Ermenistanê di nav kurdên êzdî de piştî hilweşîna Sovyetê",
+      "Li navenda bajarê Londonê di nav karsazên îngilîz de",
+      "Li daristanên Brezîlyayê di nav êlên xwecihî de",
+      "Li giravên Yewnanistanê di nav tûrîstên havînê de"
+    ],
+    "answersTr": [
+      "Sovyet sonrası Ermenistan'ın karlı bir Êzdî köyünde yalnızlık ve dayanışmayı",
+      "Londra finans merkezinde çalışan genç borsa simsarlarının hayatını",
+      "Amazon yağmur ormanlarında yaşayan yerli kabilelerin geleneklerini",
+      "Yunan adalarında yaz sezonunda çalışan otel personelinin ilişkilerini"
+    ],
+    "correctAnswer": "Li gundekî Ermenistanê di nav kurdên êzdî de piştî hilweşîna Sovyetê",
+    "correctAnswerTr": "Sovyet sonrası Ermenistan'ın karlı bir Êzdî köyünde yalnızlık ve dayanışmayı",
+    "explanation": "Vodka Lemon li gundekî sar ê Ermenistanê evîna du mirovên temenmezin ên kurd bi mîzah nîşan dide.",
+    "explanationKu": "Vodka Lemon li gundekî sar ê Ermenistanê evîna du mirovên temenmezin ên kurd bi mîzah nîşan dide.",
+    "explanationTr": "Vodka Lemon, Sovyetler Birliği'nin dağılması sonrası Kafkasya'daki yoksul bir Êzdî köyündeki sıcak insan ilişkilerini kara mizahla aktarır."
+  },
+  {
+    "id": "ds_sinema_0269",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Sînemaya nûjen a kurdî çima bi piranî ji çîrok û motîfên dengbêjiyê sûd werdigire?",
+    "promptTr": "Çağdaş Kürt sineması senaryolarında neden sık sık dengbêj anlatılarından ve figürlerinden beslenir?",
+    "answers": [
+      "Ji ber ku mûzîka dengbêjiyê bi hêsanî bi piyanoyê tê guhertin",
+      "Ji ber ku qanûnên sînemayê bikaranîna zimanên din qedexe dike",
+      "Ji ber ku bîra dîrokî û çavkaniya herî xurt a dramatîk a nivîskî-devkî ye",
+      "Ji ber ku di dengbêjiyê de tenê qala çîrokên zanistî tê kirin"
+    ],
+    "answersTr": [
+      "Dengbêj ezgilerinin piyano eşliğinde kolayca pop müziğe dönüştürülebilmesi için",
+      "Sinema kanunlarının diğer dillerde senaryo yazılmasını kesinlikle yasaklaması için",
+      "Yazılı arşiv boşluğunu dolduran en köklü toplumsal hafıza ve dramatik anlatı kaynağı olduğu için",
+      "Dengbêjlik metinlerinde yalnızca modern astronomi ve fen bilimlerinin anlatılması için"
+    ],
+    "correctAnswer": "Ji ber ku bîra dîrokî û çavkaniya herî xurt a dramatîk a nivîskî-devkî ye",
+    "correctAnswerTr": "Yazılı arşiv boşluğunu dolduran en köklü toplumsal hafıza ve dramatik anlatı kaynağı olduğu için",
+    "explanation": "Dengbêjî kaniya sereke ya çîrok, serpêhatî û hestên dîrokî yên gelê kurd e.",
+    "explanationKu": "Dengbêjî kaniya sereke ya çîrok, serpêhatî û hestên dîrokî yên gelê kurd e.",
+    "explanationTr": "Dengbêjlik geleneği, tarihsel olayları ve insan trajedilerini sözlü olarak bugüne taşıyan en zengin senaryo hazinesidir."
+  },
+  {
+    "id": "ds_sinema_0270",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di gelek fîlmên sînemaya kurdî de bikaranîna dîmenên \"çiyayên asê û rêyên berfê\" ji aliyê zimanê sînemayê ve çi îfade dike?",
+    "promptTr": "Kürt sinemasında sarp karlı dağlar ve geçitler sinematografik bir mekan olarak neyi simgeler?",
+    "answers": [
+      "Tenê wekî reklamkirina werzişa skiyê ji bo tûrîzma zivistanê",
+      "Wekî qada çêkirina kargehên mezin ên tekstîlê li serê çiya",
+      "Ji bo nîşandana rêyên trênê yên lezgîn di navbera bajaran de",
+      "Hem wekî sitargeha parastinê hem jî wekî astengiya herî giran a fîzîkî û sînoran"
+    ],
+    "answersTr": [
+      "Bölgede kış turizmini ve kayak spor tesislerini tanıtma amacını",
+      "Dağ doruklarında kurulacak modern tekstil fabrikalarını göstermeyi",
+      "Şehirler arasında çalışan yüksek hızlı tren hatlarının güzergahını",
+      "Hem koruyucu ve sığınılan bir kalkanı hem de aşılması gereken çetin sınır engelini"
+    ],
+    "correctAnswer": "Hem wekî sitargeha parastinê hem jî wekî astengiya herî giran a fîzîkî û sînoran",
+    "correctAnswerTr": "Hem koruyucu ve sığınılan bir kalkanı hem de aşılması gereken çetin sınır engelini",
+    "explanation": "Çiya di sînemaya kurdî de hem penageh e hem jî mekanê zehmetî û derbaskirina sînoran e.",
+    "explanationKu": "Çiya di sînemaya kurdî de hem penageh e hem jî mekanê zehmetî û derbaskirina sînoran e.",
+    "explanationTr": "Dağ motifi hem tarihsel bir sığınak hem de kaçakçılık ve göç yollarındaki ölümcül fiziksel engelleri temsil eder."
+  },
+  {
+    "id": "ds_sinema_0271",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di fîlma \"Yol\" de kîjan dîmena trajîk a di nav berfê de şert û mercên giran ên zivistanê û zextên civakî tîne cem hev?",
+    "promptTr": "\"Yol\" filminde Tarık Akan'ın canlandırdığı Şivan karakterinin karlı dağlardaki trajik sahnesi nedir?",
+    "answers": [
+      "Serkeftina wî ya di pêşbirka bezê ya navneteweyî de",
+      "Dîtina hespekî spî yê bi per li serê lûtkeya çiyê",
+      "Mirina jina wî Zînê ya di nav sermayê de û hewldana rizgarkirina wê ya derengmayî",
+      "Gihîştina wî ya bi balafirê ber bi paytexta Fransayê"
+    ],
+    "answersTr": [
+      "Uluslararası kış maratonunda birinci gelerek madalya kazandığı an",
+      "Dağın zirvesinde kanatlı beyaz bir at bularak gökyüzüne uçtuğu an",
+      "Donmak üzere olan eşi Zînê'yi tipi altında sırtında taşıyarak kurtarmaya çalıştığı sahne",
+      "Özel bir helikopterle Fransa'nın başkenti Paris'e güvenle indiği sahne"
+    ],
+    "correctAnswer": "Mirina jina wî Zînê ya di nav sermayê de û hewldana rizgarkirina wê ya derengmayî",
+    "correctAnswerTr": "Donmak üzere olan eşi Zînê'yi tipi altında sırtında taşıyarak kurtarmaya çalıştığı sahne",
+    "explanation": "Dîmena Şivan û Zînê ya li ser çiyayê berfî nîşana bêçaretiya mirov li hemberî qanûnên feodal e.",
+    "explanationKu": "Dîmena Şivan û Zînê ya li ser çiyayê berfî nîşana bêçaretiya mirov li hemberî qanûnên feodal e.",
+    "explanationTr": "Şivan'ın töre baskısıyla cezalandırılan eşini tipi altında sırtında taşıdığı sahne, dünya sinema tarihinin en çarpıcı dramatik anlarındandır."
+  },
+  {
+    "id": "ds_sinema_0272",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Bikaranîna \"bêdengiyê\" (silence) di fîlmên sînemagerên kurd de çima wekî amûreke xurt a zimanê fîlmê tê dîtin?",
+    "promptTr": "Kürt yönetmenlerin filmlerinde uzun sessizlik anlarını dramatik bir araç olarak kullanmalarının nedeni nedir?",
+    "answers": [
+      "Ji ber ku mîkrofonên fîlmçêkirinê di wan deman de têrê nedikirin",
+      "Ji ber ku lîstikvanan zimanê hev fêm nedikirin di dema kişandinê de",
+      "Ji bo kêmkirina lêçûna fîlmê di qada tomarkirina deng de",
+      "Dema ku ziman û peyv qedexe bin, bêdengî dibe qîrîna herî xurt a hest û êşê"
+    ],
+    "answersTr": [
+      "Setteki mikrofon ve ses kayıt cihazlarının teknik açıdan yetersiz olması",
+      "Oyuncuların çekim sırasında birbirlerinin lehçelerini hiç anlamaması",
+      "Ses tasarımcılarına ödenecek stüdyo bütçesini kısmak amacıyla",
+      "Dilin ve sözün yasaklandığı ortamlarda sessizliğin en güçlü çığlık ve anlatım aracına dönüşmesi"
+    ],
+    "correctAnswer": "Dema ku ziman û peyv qedexe bin, bêdengî dibe qîrîna herî xurt a hest û êşê",
+    "correctAnswerTr": "Dilin ve sözün yasaklandığı ortamlarda sessizliğin en güçlü çığlık ve anlatım aracına dönüşmesi",
+    "explanation": "Bêdengî di sînemayê de ciyê peyvên ku nayên gotin digire û kûraniya trawmayê nîşan dide.",
+    "explanationKu": "Bêdengî di sînemayê de ciyê peyvên ku nayên gotin digire û kûraniya trawmayê nîşan dide.",
+    "explanationTr": "Baskılanmış dillerde sessizlik bir eksiklik değil; konuşulamayanların ve travmanın sinematik bir manifestosudur."
+  },
+  {
+    "id": "ds_sinema_0273",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Rêzbûna pêşketina şêwaza sînemayî ya \"Yılmaz Güney\" ji sînemaya populer ber bi sînemaya rexneyî di kîjan rêzê de rast e?",
+    "promptTr": "Yılmaz Güney'in popüler kahramanlık filmlerinden politik başyapıtlara evrilen sinema serüveni hangi sırada doğrudur?",
+    "answers": [
+      "Yol (1982) -> Umut (1970) -> Çîrokên Çirkin Kral (salên 60î) -> Sürü (1978)",
+      "Çîrokên Çirkin Kral (salên 60î) -> Umut (1970) -> Sürü (1978) -> Yol (1982)",
+      "Sürü (1978) -> Yol (1982) -> Umut (1970) -> Çîrokên Çirkin Kral (salên 60î)",
+      "Umut (1970) -> Yol (1982) -> Sürü (1978) -> Çîrokên Çirkin Kral (salên 60î)"
+    ],
+    "answersTr": [
+      "Yol (1982) -> Umut (1970) -> Çirkin Kral dönemi (60'lar) -> Sürü (1978)",
+      "Çirkin Kral dönemi (60'lar) -> Umut (1970) -> Sürü (1978) -> Yol (1982)",
+      "Sürü (1978) -> Yol (1982) -> Umut (1970) -> Çirkin Kral dönemi (60'lar)",
+      "Umut (1970) -> Yol (1982) -> Sürü (1978) -> Çirkin Kral dönemi (60'lar)"
+    ],
+    "correctAnswer": "Çîrokên Çirkin Kral (salên 60î) -> Umut (1970) -> Sürü (1978) -> Yol (1982)",
+    "correctAnswerTr": "Çirkin Kral dönemi (60'lar) -> Umut (1970) -> Sürü (1978) -> Yol (1982)",
+    "explanation": "Yılmaz Güney pêşî di fîlmên macera de lîst, bi Umutê kete sînemaya realîst û bi Sürü û Yolê gihîşt asta cîhanî.",
+    "explanationKu": "Yılmaz Güney pêşî di fîlmên macera de lîst, bi Umutê kete sînemaya realîst û bi Sürü û Yolê gihîşt asta cîhanî.",
+    "explanationTr": "Yılmaz Güney Yeşilçam yıldızlığından Umut ile gerçekçi sinemaya adım atmış, Sürü ve Yol ile dünya sineması zirvesine çıkmıştır."
+  },
+  {
+    "id": "ds_sinema_0274",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Fîlma \"Kobanî\" (2022) a Özlem Yaşar çawa hate kişandin û kîjan şêwaza xwerû pêk anî?",
+    "promptTr": "Özlem Yaşar'ın yönettiği \"Kobanî\" (2022) filminin prodüksiyonunu benzersiz kılan temel özellik neydi?",
+    "answers": [
+      "Li studyoyên Hollywoodê bi lîstikvanên profesyonel ên rojavayî hate kişandin",
+      "Tenê bi dîmenên arşîvê yên ji televîzyonên nûçeyan hate berhevkirin",
+      "Wekî fîlmeke anîmasyonê ya du-dîmenî ji bo televîzyona zarokan hate amadekirin",
+      "Li bajarê Kobanî bixwe bi şervan û şêniyên ku şer jiyane re hate çêkirin"
+    ],
+    "answersTr": [
+      "Hollywood film stüdyolarında batılı yıldız oyuncularla dijital ortamda çekilmesi",
+      "Sadece haber bültenlerindeki televizyon arşiv görüntülerinin kurgulanmasıyla",
+      "Çocuk kanalları için iki boyutlu çizgi animasyon olarak hazırlanmasıyla",
+      "Kobanê şehrinin yıkıntıları arasında bizzat o direnişi yaşayan halk ve savaşçılarla çekilmesi"
+    ],
+    "correctAnswer": "Li bajarê Kobanî bixwe bi şervan û şêniyên ku şer jiyane re hate çêkirin",
+    "correctAnswerTr": "Kobanê şehrinin yıkıntıları arasında bizzat o direnişi yaşayan halk ve savaşçılarla çekilmesi",
+    "explanation": "Fîlma Kobanî li heman kolanên ku berxwedan lê çêbûye bi şahidên zindî re hate kişandin.",
+    "explanationKu": "Fîlma Kobanî li heman kolanên ku berxwedan lê çêbûye bi şahidên zindî re hate kişandin.",
+    "explanationTr": "Film, 2014-2015 IŞİD kuşatmasını bizzat o sokaklarda çarpışan kadın ve erkek savaşçıların katılımıyla canlandırmıştır."
+  },
+  {
+    "id": "ds_sinema_0275",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di fîlma \"Fotoğraf\" (2001) a \"Kazım Öz\" de, rêwîtiya di otobusê de ya du ciwanên ji du bereyên dijber çi sembolîze dike?",
+    "promptTr": "Kazım Öz'ün \"Fotoğraf\" (2001) filminde aynı otobüste yan yana oturan iki gencin yolculuğu neyi anlatır?",
+    "answers": [
+      "Pêşbirkeke bazirganiyê ya ji bo firotina kincên nûjen li Stenbolê",
+      "Dizîna kamerayeke kevnar ji pirtûkxaneyeke zanîngehê",
+      "Nêzîkbûna însanî ya du xortan beriya ku rastiya şer wan li hemberî hev bike dijmin",
+      "Hevaltiya du tûrîstên ku dixwazin biçin çiyayên Alpan li Ewropayê"
+    ],
+    "answersTr": [
+      "İstanbul'da modern konfeksiyon ürünleri satmak için yarışan iki tüccarı",
+      "Üniversite kütüphanesinden çalınan antika bir fotoğraf makinesinin gizemini",
+      "Savaşın tarafı olacaklarını bilmeden yolculuk eden iki gencin ortak insani kırılganlığını",
+      "Avrupa Alplerine tatile giden iki yabancı turistin yol maceralarını"
+    ],
+    "correctAnswer": "Nêzîkbûna însanî ya du xortan beriya ku rastiya şer wan li hemberî hev bike dijmin",
+    "correctAnswerTr": "Savaşın tarafı olacaklarını bilmeden yolculuk eden iki gencin ortak insani kırılganlığını",
+    "explanation": "Ali û Faruk di heman otobusê de hevaltiyê dikin lê yek dibe gerîla û yê din leşker.",
+    "explanationKu": "Ali û Faruk di heman otobusê de hevaltiyê dikin lê yek dibe gerîla û yê din leşker.",
+    "explanationTr": "Film, aynı otobüste yolculuk eden ve biri gerillaya diğeri askere giden iki gencin kesişen trajik kaderini işler."
+  },
+  {
+    "id": "ds_sinema_0276",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Mijara sereke ya ku derhênerên jin ên kurd (mînak: Bêrîvan Bînevşa, Özlem Yaşar) tînin rojeva sînemayê çi ye?",
+    "promptTr": "Kürt kadın yönetmenlerin (Bêrîvan Bînevşa, Özlem Yaşar) sinema anlatılarında öne çıkardığı temel eksen nedir?",
+    "answers": [
+      "Tenê şîretên çêkirina xwarinên gelerî di televîzyonan de",
+      "Bazirganiya kincên modayê li bajarên mezin ên cîhanê",
+      "Dîroka şerên kevnar ên bê hebûna jinan di civakê de",
+      "Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de"
+    ],
+    "answersTr": [
+      "Televizyon programlarında geleneksel mutfak tarifleri sunumu",
+      "Dünya metropollerinde lüks moda ve mankenlik ajansı rekabeti",
+      "Kadınların tamamen dışlandığı eski erkek savaş tarihinin övgüsü",
+      "Feodal baskılara karşı kadının özgürleşme mücadelesi ve toplumsal dönüşümdeki öncü rolü"
+    ],
+    "correctAnswer": "Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de",
+    "correctAnswerTr": "Feodal baskılara karşı kadının özgürleşme mücadelesi ve toplumsal dönüşümdeki öncü rolü",
+    "explanation": "Derhênerên jin nasnameya jinê û rola wan a çalak di şoreş û civakê de tînin ser ekranê.",
+    "explanationKu": "Derhênerên jin nasnameya jinê û rola wan a çalak di şoreş û civakê de tînin ser ekranê.",
+    "explanationTr": "Kürt kadın sinemacılar hem eril tahakküme karşı kadın direnişini hem de savaş ve barıştaki dönüştürücü gücü merkeze alırlar."
+  },
+  {
+    "id": "ds_sinema_0277",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Sînemagerên kurd ên diyasporayê (mînak: li Almanya, Swêd, Swîsre) çima di fîlmên xwe de pirsa \"nasnameya ducarî\" derdixin pêş?",
+    "promptTr": "Avrupa diasporasında üretim yapan Kürt sinemacılar neden filmlerinde sık sık \"çifte kimlik\" krizini işler?",
+    "answers": [
+      "Ji ber ku zimanê wan ê dayikê qet nayê bîra wan",
+      "Ji ber aloziya di navbera çanda zikmakî û çanda welatê nû yê ku lê dijîn",
+      "Ji ber ku fîlmên wan tenê ji bo şîrketên geştiyariyê têne çêkirin",
+      "Ji bo ku lîstikvanên biyanî fêrî lîstikvaniya kurdî bibin"
+    ],
+    "answersTr": [
+      "Ana dillerini ve geçmişlerini tamamen unuttuklarını kanıtlamak için",
+      "Köklerin ait olduğu ana vatan ile yaşanılan göçmen ülkesinin kültürel gerilimi arasında kalındığı için",
+      "Filmleri yalnızca uluslararası turizm acentelerine tanıtım amacıyla çektikleri için",
+      "Avrupalı tiyatro oyuncularına zorunlu oryantal oyunculuk dersleri vermek için"
+    ],
+    "correctAnswer": "Ji ber aloziya di navbera çanda zikmakî û çanda welatê nû yê ku lê dijîn",
+    "correctAnswerTr": "Köklerin ait olduğu ana vatan ile yaşanılan göçmen ülkesinin kültürel gerilimi arasında kalındığı için",
+    "explanation": "Di diyasporayê de nifşên nû di navbera du kulturan de li nasnameya xwe digerin.",
+    "explanationKu": "Di diyasporayê de nifşên nû di navbera du kulturan de li nasnameya xwe digerin.",
+    "explanationTr": "Diaspora sineması göçmen kuşakların uyum, aidiyet, kökler ve çokkültürlülük eksenindeki kimlik arayışlarını ele alır."
+  },
+  {
+    "id": "ds_sinema_0278",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Bîranînên li ser kevir\" de dîmenê lîstikvana ku malbata wê nahêle bilîze çi nîşan dide?",
+    "promptTr": "\"Taşa Kazınmış Hatıralar\" filminde kadın oyuncunun ailesi tarafından engellenmesi sahnesi neyi eleştirir?",
+    "answers": [
+      "Kêmbûna mûçeyê lîstikvanan di şîrketên sînemayê de",
+      "Nebûna kincên lîstikvaniyê di studyoyên herêmî de",
+      "Daxwaza lîstikvanê ya ji bo çûyîna Amerîkayê ya bi lezgînî",
+      "Zextên civakî û kevneşopiyên ku li dijî lîstikvaniya jinê di sînemayê de radibin"
+    ],
+    "answersTr": [
+      "Sinema sektöründe figüranlara ödenen telif ücretlerinin düşüklüğünü",
+      "Yerel film stüdyolarında dönem kıyafetleri kostüm eksikliğini",
+      "Başrol oyuncusunun acil vize alıp Hollywood'a kaçma arzusunu",
+      "Toplumsal önyargıların ve muhafazakar aile yapısının kadının sanat üretimine çıkardığı engelleri"
+    ],
+    "correctAnswer": "Zextên civakî û kevneşopiyên ku li dijî lîstikvaniya jinê di sînemayê de radibin",
+    "correctAnswerTr": "Toplumsal önyargıların ve muhafazakar aile yapısının kadının sanat üretimine çıkardığı engelleri",
+    "explanation": "Sinema di civaka feodal de hîn jî bi zehmetî tê qebûlkirin û jin ji bo lîstikvaniyê rastî zextan tên.",
+    "explanationKu": "Sinema di civaka feodal de hîn jî bi zehmetî tê qebûlkirin û jin ji bo lîstikvaniyê rastî zextan tên.",
+    "explanationTr": "Film, savaş travmasını anlatırken bile kadının kamera karşısına geçmesini tabulaştıran ataerkil zihniyeti hicveder."
+  },
+  {
+    "id": "ds_sinema_0279",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Fîlma kurt a \"Ax\" (Toprak, 1999) a \"Kazım Öz\" çîroka kalekî li gundekî valakirî çawa vedibêje?",
+    "promptTr": "Kazım Öz'ün \"Ax\" (Toprak, 1999) kısa filminde boşaltılmış köyde tek başına kalan yaşlı adamın dramı nasıl anlatılır?",
+    "answers": [
+      "Şahiya cejnekê ya li gundekî qelebalix bi mûzîk û reqsan",
+      "Dîroka avakirina bendaveke mezin li ser rûbarê Firatê",
+      "Tenêtiya giran a mirovekî ku xaka xwe bernade li hemberî hilweşîn û bêdengiyê",
+      "Pêşbirkeke çandiniyê di navbera cotkarên herêmê de"
+    ],
+    "answersTr": [
+      "Kalabalık bir köy düğününde çalınan neşeli ezgiler ve halaylarla",
+      "Fırat nehri üzerine kurulan dev hidroelektrik barajının inşaatıyla",
+      "Köyü yakılıp boşaltılmasına rağmen toprağını terk etmeyen bir ihtiyarın derin sessizliği ve yalnızlığıyla",
+      "Yöredeki zengin çiftçiler arasında düzenlenen organik tarım yarışıyla"
+    ],
+    "correctAnswer": "Tenêtiya giran a mirovekî ku xaka xwe bernade li hemberî hilweşîn û bêdengiyê",
+    "correctAnswerTr": "Köyü yakılıp boşaltılmasına rağmen toprağını terk etmeyen bir ihtiyarın derin sessizliği ve yalnızlığıyla",
+    "explanation": "Ax trajedîya gundên valakirî yên salên 90î bi rêya bêdengiya kalekî bi awayekî hostayî nîşan dide.",
+    "explanationKu": "Ax trajedîya gundên valakirî yên salên 90î bi rêya bêdengiya kalekî bi awayekî hostayî nîşan dide.",
+    "explanationTr": "Ax, 90'larda yakılan köylerin hüznünü boşaltılmış evlerin arasında toprağına tutunan ihtiyar Zelo üzerinden anlatır."
+  },
+  {
+    "id": "ds_sinema_0280",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di dîroka bajarên Kurdistanê de (wekî Amed, Hewlêr, Silêmanî) salên 1960 û 70î sînema çi fonksiyonek dilîst?",
+    "promptTr": "1960'lı ve 70'li yıllarda Diyarbakır, Erbil ve Süleymaniye gibi şehirlerde sinema salonlarının işlevi neydi?",
+    "answers": [
+      "Tenê baregeheke leşkerî ya ji bo perwerdeya efseran",
+      "Bazarên sergirtî yên firotina genim û arvan",
+      "Nexweşxaneyên taybet ên ji bo dermankirina nexweşiyan",
+      "Qada sereke ya hevdîtina civakî, çandî û naskirina sînemaya cîhanê"
+    ],
+    "answersTr": [
+      "Yalnızca askeri garnizon subaylarının eğitildiği kapalı askeri karargah",
+      "Köylülerin buğday ve un çuvallarını depoladığı kapalı toptancı hali",
+      "Salgın hastalıkların tedavi edildiği karantina ve sağlık merkezleri",
+      "Şehir halkının sosyalleştiği, entelektüel buluşmaların ve dünya sinemasının izlendiği ana kamusal alan"
+    ],
+    "correctAnswer": "Qada sereke ya hevdîtina civakî, çandî û naskirina sînemaya cîhanê",
+    "correctAnswerTr": "Şehir halkının sosyalleştiği, entelektüel buluşmaların ve dünya sinemasının izlendiği ana kamusal alan",
+    "explanation": "Salonên sînemayê di wan salan de navendên zindî yên çand û ronakbîriya bajaran bûn.",
+    "explanationKu": "Salonên sînemayê di wan salan de navendên zindî yên çand û ronakbîriya bajaran bûn.",
+    "explanationTr": "Yazlık ve kışlık sinema salonları, o dönemde şehirlerin en canlı kültürel nefes alma ve modernleşme mekanlarıydı."
+  },
+  {
+    "id": "ds_sinema_0281",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di fîlma \"Gava Dibe Tarî\" an belgefîlmên li ser zarokên kolanê çi rastî tê ragihandin?",
+    "promptTr": "Diyarbakır sokak çocuklarını konu alan belgesel ve kurmaca filmlerde işlenen temel sosyolojik olgu nedir?",
+    "answers": [
+      "Bandora kûr a koçberiya neçarî û zextên aborî li ser zaroktiya li bajaran",
+      "Pêşketina zanistî ya zarokan di dibistanên taybet ên teknolojiyê de",
+      "Gera havînê ya zarokan li peravên deryayê yên Ewropayê",
+      "Fêrbûna zimanê latînî ji bo xwendina pirtûkên kevnar"
+    ],
+    "answersTr": [
+      "Zorunlu köy boşaltmaları sonucu kente göç eden ailelerin çocuklarının yaşadığı travma ve sokak yaşamı",
+      "Çocukların özel teknoloji kolejlerinde üstün başarı gösterip yazılım üretmesi",
+      "Yaz aylarında Avrupa sahillerinde yelkencilik eğitimi alan çocukların kampı",
+      "Tarihi el yazmalarını okumak için çocuklara verilen eski Latince dil dersleri"
+    ],
+    "correctAnswer": "Bandora kûr a koçberiya neçarî û zextên aborî li ser zaroktiya li bajaran",
+    "correctAnswerTr": "Zorunlu köy boşaltmaları sonucu kente göç eden ailelerin çocuklarının yaşadığı travma ve sokak yaşamı",
+    "explanation": "Zarokên ku bi koçberiyê hatine bajêr di kolanan de li hemberî xizaniyê têdikoşin.",
+    "explanationKu": "Zarokên ku bi koçberiyê hatine bajêr di kolanan de li hemberî xizaniyê têdikoşin.",
+    "explanationTr": "90'lardaki zorunlu göç dalgası, kent varoşlarında mendil satan, ayakkabı boyayan çocukların dramını doğurmuştur."
+  },
+  {
+    "id": "ds_sinema_0282",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Mûzîka fîlmê di sînemaya Bahman Ghobadi de (wekî mûzîkên Hossein Alizadeh) çima xwedî cihekî stratejîk e?",
+    "promptTr": "Bahman Ghobadi sinemasında (Hossein Alizadeh gibi ustaların) film müziklerinin dramatik işlevi nedir?",
+    "answers": [
+      "Ji ber ku lîstikvanan di fîlmê de qet neaxivîne û tenê mûzîk heye",
+      "Ji bo firotina kasetan li dikanên mûzîkê yên Amerîkayê",
+      "Deng û awazên gelerî wekî karakterekî duyem ê sereke yê fîlmê tev li çîrokê dibin",
+      "Ji ber ku qanûnên fîlmçêkirinê bikaranîna dengê zindî qedexe dikin"
+    ],
+    "answersTr": [
+      "Oyuncuların film boyunca hiç diyalog kurmayıp yalnızca fon müziği çalması",
+      "Yalnızca Amerikan müzik marketlerinde albüm satışı yaparak kâr elde etmek",
+      "Geleneksel enstrüman ve melodilerin adeta filmin canlı bir başrol karakteri gibi anlatıya katılması",
+      "Uluslararası sinema kurallarının diyalog yerine sadece müzik kullanımını zorunlu kılması"
+    ],
+    "correctAnswer": "Deng û awazên gelerî wekî karakterekî duyem ê sereke yê fîlmê tev li çîrokê dibin",
+    "correctAnswerTr": "Geleneksel enstrüman ve melodilerin adeta filmin canlı bir başrol karakteri gibi anlatıya katılması",
+    "explanation": "Mûzîk di fîlmên Ghobadi de tenê fon nîne; ew hest, serpêhatî û zimanê sereke yê fîlmê ye.",
+    "explanationKu": "Mûzîka di fîlmên Ghobadi de tenê fon nîne; ew hest, serpêhatî û zimanê sereke yê fîlmê ye.",
+    "explanationTr": "Ghobadi filmlerinde def, kaval ve tembûr gibi otantik sesler diyalogların ötesinde bir anlatıcı rolü üstlenir."
+  },
+  {
+    "id": "ds_sinema_0283",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Sînemaya serbixwe ya kurdî ya salên 2000î bi piranî li ser kîjan platformên belavkirinê jiyaye?",
+    "promptTr": "2000'li yıllarda bağımsız Kürt sinemasının seyirciyle buluştuğu ana dağıtım ve gösterim alanları hangileriydi?",
+    "answers": [
+      "Festîvalên navneteweyî, hefteyên fîlman ên serbixwe û qadên çandî",
+      "Kanalên fermî yên televîzyonên dewletê yên bi budçeyên mezin",
+      "Rêxistinên bazirganî yên firotina vîdyoyan li balafirgehan",
+      "Tenê dikanên firotina pirtûkan li gundên biçûk"
+    ],
+    "answersTr": [
+      "Uluslararası film festivalleri, bağımsız gösterimler ve yerel kültür merkezleri",
+      "Büyük bütçeli ana akım devlet televizyonlarının resmi prime-time kuşakları",
+      "Havaalanlarında lüks turistlere satış yapan ticari video stantları",
+      "Küçük köylerde açılan yerel kırtasiye ve bakkal dükkanları"
+    ],
+    "correctAnswer": "Festîvalên navneteweyî, hefteyên fîlman ên serbixwe û qadên çandî",
+    "correctAnswerTr": "Uluslararası film festivalleri, bağımsız gösterimler ve yerel kültür merkezleri",
+    "explanation": "Ji ber nebûna sîstema sînemayên fermî, fîlmên kurdî bi rêya festîvalan li cîhanê belav bûn.",
+    "explanationKu": "Ji ber nebûna sîstema sînemayên fermî, fîlmên kurdî bi rêya festîvalan li cîhanê belav bûn.",
+    "explanationTr": "Dağıtım tekelleri nedeniyle vizyon şansı bulamayan filmler festivaller ve bağımsız gösterimlerle izleyiciye ulaşmıştır."
+  },
+  {
+    "id": "ds_sinema_0284",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di sînemaya \"Yılmaz Güney\" de di fîlma \"Ağıt\" (1971) de metafora qaçaqçiyan çi nîşan dide?",
+    "promptTr": "Yılmaz Güney'in \"Ağıt\" (1971) filminde kaçakçılık yapan dağ insanlarının trajedisi neyi yansıtır?",
+    "answers": [
+      "Karsazên dewlemend ên ku li bendera Stenbolê keştiyan digirin",
+      "Lîstikvanên şanoyê yên ku li Parîsê perwerdehiyê dibînin",
+      "Zanyarên ku li çolê li bermayiyên dîrokî digerin",
+      "Mirovên ku di navbera zilm, bêçaretî û xiyanetê de asê mane"
+    ],
+    "answersTr": [
+      "İstanbul limanında uluslararası lüks yük gemileri işleten zengin tüccarları",
+      "Paris'te konservatuvar eğitimi alan tiyatro oyuncularının prova süreçlerini",
+      "Çöl fırtınalarında tarihi kalıntı arayan yabancı arkeolog heyetlerini",
+      "Yoksulluk, devlet baskısı ve iç ihanet çemberinde sıkışıp kalan dağ insanlarının çaresizliğini"
+    ],
+    "correctAnswer": "Mirovên ku di navbera zilm, bêçaretî û xiyanetê de asê mane",
+    "correctAnswerTr": "Yoksulluk, devlet baskısı ve iç ihanet çemberinde sıkışıp kalan dağ insanlarının çaresizliğini",
+    "explanation": "Ağıt li ser sînor çîroka qaçaqçiyên ku ji aliyê pergala zordest û hevalên xwe ve têne xapandin vedibêje.",
+    "explanationKu": "Ağıt li ser sînor çîroka qaçaqçiyên ku ji aliyê pergala zordest û hevalên xwe ve têne xapandin vedibêje.",
+    "explanationTr": "Ağıt, dağlardaki kaçakçıların yoksulluk, kuşatma ve ihanetle örülü trajik dünyasını gerçekçi bir dille yansıtır."
+  },
+  {
+    "id": "ds_sinema_0285",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di sînemaya kurdî de fîlmên ku li ser gundên Êzdiyan hatine çêkirin bi piranî kîjan mijarê radixin ber çavan?",
+    "promptTr": "Êzdî toplumunu konu alan Kürt sineması yapımlarında öne çıkan temel tematik eksen nedir?",
+    "answers": [
+      "Parastina baweriya kevnar, fermanên dîrokî û girêdana bi xaka Şengalê re",
+      "Avakirina balafirgehên nûjen li deştên berfireh",
+      "Guhertina kincên gelerî bi kincên fezayê yên nû",
+      "Bazirganiya zêran di navbera welatên Asyayê de"
+    ],
+    "answersTr": [
+      "Kadim inancın korunması, tarihsel fermanların yaraları ve Şengal topraklarına bağlılık",
+      "Geniş ovalarda uluslararası kargo havalimanları inşa etme projeleri",
+      "Geleneksel kıyafetleri bırakıp fütüristik uzay giysilerine geçiş süreci",
+      "Asya ülkeleri arasında yapılan uluslararası altın ve pırlanta ticareti"
+    ],
+    "correctAnswer": "Parastina baweriya kevnar, fermanên dîrokî û girêdana bi xaka Şengalê re",
+    "correctAnswerTr": "Kadim inancın korunması, tarihsel fermanların yaraları ve Şengal topraklarına bağlılık",
+    "explanation": "Sînemaya li ser Êzdiyan balê dikişîne ser fermanên dîrokî û parastina nasname û baweriya wan.",
+    "explanationKu": "Sînemaya li ser Êzdiyan balê dikişîne ser fermanên dîrokî û parastina nasname û baweriya wan.",
+    "explanationTr": "Êzdî temalı filmler tarihsel katliamların yaralarını, kutsal mekanları ve inancın direnme gücünü işler."
+  },
+  {
+    "id": "ds_sinema_0286",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlmên Bahman Ghobadi de çima \"têlên strîdar\" (dikenli teller) di gelek dîmenan de dubare dibin?",
+    "promptTr": "Bahman Ghobadi filmlerinde kadraja sık sık giren \"dikenli teller\" görsel olarak neyi vurgular?",
+    "answers": [
+      "Tenê ji bo xemilandina dîmenên kamerayê di dema rojavabûnê de",
+      "Ji ber ku gundiyan tenê bi têlên hesinî malên xwe çêdikirin",
+      "Ji bo nîşandana parçebûna erdnîgarî û qutbûna malbatan a ji ber sînoran",
+      "Wekî amûreke masîvaniyê ya li ser rûbarên çiyayî"
+    ],
+    "answersTr": [
+      "Gün batımında kameraya estetik ve süslü bir ışık kırılması katmak için",
+      "Köy evlerinin yalnızca demir tellerle örülerek inşa edildiğini göstermek için",
+      "Yapay sınırların parçaladığı coğrafyayı ve ailelerin birbirinden koparılışını",
+      "Dağ nehirlerinde balık avlamak için kullanılan geleneksel bir yöntemi anlatmak için"
+    ],
+    "correctAnswer": "Ji bo nîşandana parçebûna erdnîgarî û qutbûna malbatan a ji ber sînoran",
+    "correctAnswerTr": "Yapay sınırların parçaladığı coğrafyayı ve ailelerin birbirinden koparılışını",
+    "explanation": "Têlên strîdar sembola sînorên çêkirî yên li Kurdistanê ne ku mirovan ji hev qut dikin.",
+    "explanationKu": "Têlên strîdar sembola sînorên çêkirî yên li Kurdistanê ne ku mirovan ji hev qut dikin.",
+    "explanationTr": "Dikenli teller, aynı halkı ve akrabaları birbirinden ayıran yapay sınırların trajedisini görselleştiren temel motiftir."
+  },
+  {
+    "id": "ds_sinema_0287",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Derhênerên kurd çima di fîlmên xwe de pir caran xelkê herêmî (ne profesyonel) wekî lîstikvan hildibijêrin?",
+    "promptTr": "Kürt yönetmenlerin filmlerinde profesyonel oyuncular yerine yerel halkı oynatmalarının temel sebebi nedir?",
+    "answers": [
+      "Ji bo gihandina hestê rasteqîn, reftara xwezayî û parastina zaravayê resen",
+      "Ji ber ku lîstikvanên profesyonel qet fêrî zimanên herêmî nabin",
+      "Ji bo qedexekirina sînemaya biyanî li seranserê cîhanê",
+      "Ji ber ku lîstikvaniya profesyonel di qanûnan de hatiye qedexekirin"
+    ],
+    "answersTr": [
+      "Duygusal sahiciliği, doğal mimikleri ve otantik yerel aksanı en yalın haliyle yakalamak",
+      "Profesyonel tiyatrocuların yerel şiveleri öğrenmesinin imkansız olması",
+      "Dünya genelinde yabancı sinema filmlerinin izlenmesini engellemek",
+      "Bölgedeki yerel yasalarda profesyonel oyunculuğun yasaklanmış olması"
+    ],
+    "correctAnswer": "Ji bo gihandina hestê rasteqîn, reftara xwezayî û parastina zaravayê resen",
+    "correctAnswerTr": "Duygusal sahiciliği, doğal mimikleri ve otantik yerel aksanı en yalın haliyle yakalamak",
+    "explanation": "Lîstikvanên xwezayî jiyana rasteqîn a herêmê bêyî çêkirinî dertînin ser ekranê.",
+    "explanationKu": "Lîstikvanên xwezayî jiyana rasteqîn a herêmê bêyî çêkirinî dertînin ser ekranê.",
+    "explanationTr": "Yılmaz Güney'den Ghobadi'ye uzanan gelenekte yerel oyuncular, yapmacıksız doğallıklarıyla sinemaya belgesel niteliğinde bir gerçekçilik katar."
+  },
+  {
+    "id": "ds_sinema_0288",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"14 Tîrmeh\" (14 Temmuz, 2017) a Haşim Aydemir de, zimanê dîtbarî li ser kîjan şêwazê ava dibe?",
+    "promptTr": "Haşim Aydemir'in \"14 Tîrmeh\" (2017) filminde cezaevi sahnelerindeki sinematografik dil neye dayanır?",
+    "answers": [
+      "Dîmenên geş ên peravên deryayê bi mûzîka şad",
+      "Gera li nav muzexaneyên mezin ên Ewropayê bi hevalan re",
+      "Fîlmeke komedî ya li ser jiyana karsazên li otêlên luks",
+      "Klosterfobiya zindanê, êşa giran a laşî û biryardariya îradeya mirov"
+    ],
+    "answersTr": [
+      "Güneşli deniz kıyılarında neşeli müzikler eşliğinde geçen tatil sahneleri",
+      "Avrupa'nın büyük sanat müzelerinde arkadaşlarla yapılan neşeli kültür turları",
+      "Lüks otellerde tatil yapan iş insanlarının hayatını anlatan eğlenceli bir komedi",
+      "Hücre klostrofobisi, ağır bedensel işkenceler ve insan iradesinin ölüm orucu direnişi"
+    ],
+    "correctAnswer": "Klosterfobiya zindanê, êşa giran a laşî û biryardariya îradeya mirov",
+    "correctAnswerTr": "Hücre klostrofobisi, ağır bedensel işkenceler ve insan iradesinin ölüm orucu direnişi",
+    "explanation": "14 Tîrmeh şertên giran ên zindana Amedê û berxwedana rojiya mirinê bi dîmenên girtî nîşan dide.",
+    "explanationKu": "14 Tîrmeh şertên giran ên zindana Amedê û berxwedana rojiya mirinê bi dîmenên girtî nîşan dide.",
+    "explanationTr": "Film, 14 Temmuz 1982 ölüm orucu sürecini hücrelerin boğucu karanlığı ve sarsıcı gerçekçilikle perdeye aktarır."
+  },
+  {
+    "id": "ds_sinema_0289",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Rola \"Şerif Gören\" di sînemaya Tirkiyeyê û fîlma \"Yol\" de çi bû?",
+    "promptTr": "Yönetmen Şerif Gören'in \"Yol\" filmindeki belirleyici tarihsel rolü neydi?",
+    "answers": [
+      "Derhênerê ku senaryo û rêberiya Yılmaz Güney a ji girtîgehê li ser sehneyê bi cih anî",
+      "Mûzîkjenê ku tenê strana dawî ya fîlmê bi piyanoyê çêkir",
+      "Lîstikvanê sereke yê ku di fîlmê de rola parêzer lîst",
+      "Karsazê ku fîlm tenê li Amerîkayê belav kir"
+    ],
+    "answersTr": [
+      "Yılmaz Güney'in cezaevinden yazdığı senaryoyu zorlu saha koşullarında başarıyla çeken yönetmen",
+      "Filmin sadece kapanış jeneriği müziğini piyanoyla besteleyen müzisyen",
+      "Filmde mahkumların avukatı rolünü canlandıran başrol tiyatrocusu",
+      "Filmin yalnızca Amerika'daki video dağıtım haklarını satın alan tüccar"
+    ],
+    "correctAnswer": "Derhênerê ku senaryo û rêberiya Yılmaz Güney a ji girtîgehê li ser sehneyê bi cih anî",
+    "correctAnswerTr": "Yılmaz Güney'in cezaevinden yazdığı senaryoyu zorlu saha koşullarında başarıyla çeken yönetmen",
+    "explanation": "Şerif Gören li gorî talîmatên Yılmaz Güney fîlma Yolê li gelek bajaran kişand.",
+    "explanationKu": "Şerif Gören li gorî talîmatên Yılmaz Güney fîlma Yolê li gelek bajaran kişand.",
+    "explanationTr": "Şerif Gören, sıkıyönetim baskısı altında Yılmaz Güney'in vizyonunu sahada kusursuz bir rejiyona dönüştürmüştür."
+  },
+  {
+    "id": "ds_sinema_0290",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji \"çiya û gund\" ber bi \"bajarên mezin\" ve çi nîşan dide?",
+    "promptTr": "2010 sonrası Kürt sinemasında mekanın kırdan metropole kayması hangi sosyolojik değişimi gösterir?",
+    "answers": [
+      "Qedexebûna çandiniyê li hemû gundên cîhanê",
+      "Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de",
+      "Bikaranîna tenê trênên bilez ji aliyê hemû gundiyan ve",
+      "Hebûna hemû kamerayan tenê li navendên bazirganiyê"
+    ],
+    "answersTr": [
+      "Tüm dünyadaki köylerde geleneksel tarımın tamamen yasaklanmış olmasını",
+      "Zorunlu göçün sonucu olarak metropolde büyüyen yeni kuşakların kentsel kimlik arayışını",
+      "Bölgedeki tüm köylülerin yalnızca yüksek hızlı trenlerle seyahat etmeye başlamasını",
+      "Film kameralarının yalnızca lüks alışveriş merkezlerinde bulunmasını"
+    ],
+    "correctAnswer": "Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de",
+    "correctAnswerTr": "Zorunlu göçün sonucu olarak metropolde büyüyen yeni kuşakların kentsel kimlik arayışını",
+    "explanation": "Nifşên nû yên derhêneran êdî çîrokên bajêr, koçberî û jiyana rojane ya metropolan dikin fîlm.",
+    "explanationKu": "Nifşên nû yên derhêneran êdî çîrokên bajêr, koçberî û jiyana rojane ya metropolan dikin fîlm.",
+    "explanationTr": "Yeni kuşak sinemacılar kentsel dönüşüm, göçmenlik ve metropoldeki aidiyet krizlerini merkeze almaktadır."
+  },
+  {
+    "id": "ds_sinema_0291",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Kîjan ji van derhênerên navdar bi fîlmên xwe yên mînak \"Cîran\", \"Zer\" û \"Klama Dayîka Min\" di qada sînemayê de cîh girtine?",
+    "promptTr": "\"Cîran\", \"Zer\" ve \"Klama Dayîka Min\" gibi önemli filmlerin yönetmen eşleşmesi hangisidir?",
+    "answers": [
+      "Alfred Hitchcock, Steven Spielberg û George Lucas",
+      "Federico Fellini, Jean-Luc Godard û Ingmar Bergman",
+      "Akira Kurosawa, Hayao Miyazaki û Yasujiro Ozu",
+      "Mano Xelîl, Kazım Öz û Erol Mintaş"
+    ],
+    "answersTr": [
+      "Alfred Hitchcock, Steven Spielberg ve George Lucas",
+      "Federico Fellini, Jean-Luc Godard ve Ingmar Bergman",
+      "Akira Kurosawa, Hayao Miyazaki ve Yasujiro Ozu",
+      "Mano Xelîl, Kazım Öz ve Erol Mintaş"
+    ],
+    "correctAnswer": "Mano Xelîl, Kazım Öz û Erol Mintaş",
+    "correctAnswerTr": "Mano Xelîl, Kazım Öz ve Erol Mintaş",
+    "explanation": "Cîran a Mano Xelîl, Zer a Kazım Öz û Klama Dayîka Min a Erol Mintaş e.",
+    "explanationKu": "Cîran a Mano Xelîl, Zer a Kazım Öz û Klama Dayîka Min a Erol Mintaş e.",
+    "explanationTr": "Cîran filmi Mano Xelîl, Zer filmi Kazım Öz, Klama Dayîka Min ise Erol Mintaş tarafından yönetilmiştir."
+  },
+  {
+    "id": "ds_sinema_0292",
+    "category": "Sînema",
+    "difficulty": 5,
+    "prompt": "Di fîlma \"Dema Hespên Serxweş\" de çima navê fîlmê wekî \"Serxweş\" hatiye binavkirin?",
+    "promptTr": "\"Sarhoş Atlar Zamanı\" filmine adını veren sarhoşluk durumu neye dayanır?",
+    "answers": [
+      "Ji ber ku hesp li zozanan giyayên bi jehr dixwin û nexweş dikevin",
+      "Ji bo ku di sermayê de karibin li ber xwe bidin alkol didan hespan da ku narelin",
+      "Wekî henekekê ji bo pêkenîna zarokên li gund di cejnan de",
+      "Ji ber ku qaçaxçiyan alkol li ser pişta hespan firotibû bajêr"
+    ],
+    "answersTr": [
+      "Yaylalarda otlayan atların zehirli dağ otları yiyerek hastalanmasına",
+      "Dondurucu soğukta donmamaları ve yürüyebilmeleri için katırların suyuna alkol karıştırılmasına",
+      "Köy çocuklarını bayramlarda eğlendirmek için yapılan geleneksel bir şakaya",
+      "Kaçakçıların at sırtında şehre kaçak içki taşıyarak ticaret yapmasına"
+    ],
+    "correctAnswer": "Ji bo ku di sermayê de karibin li ber xwe bidin alkol didan hespan da ku narelin",
+    "correctAnswerTr": "Dondurucu soğukta donmamaları ve yürüyebilmeleri için katırların suyuna alkol karıştırılmasına",
+    "explanation": "Qaçaxçî di nav berfê de alkolê dixin nav ava hespan da ku hesp ji sermayê nereqisin û bimeşin.",
+    "explanationKu": "Qaçaxçî di nav berfê de alkolê dixin nav ava hespan da ku hesp ji sermayê nereqisin û bimeşin.",
+    "explanationTr": "Sınır kaçakçıları dondurucu dağ geçitlerinde katırların donup kalmasını önlemek için sularına alkol katarlar."
+  },
+  {
+    "id": "ds_sinema_0293",
+    "category": "Sînema",
+    "difficulty": 4,
+    "prompt": "Di sînemaya Bahman Ghobadi de fîlma \"Turtles Can Fly\" (Kûsî jî difirin) li ser kîjan herêm û serdemê hatiye çêkirin?",
+    "promptTr": "Bahman Ghobadi'nin \"Kaplumbağalar da Uçar\" filmi hangi coğrafi bölge ve tarihsel dönemde geçer?",
+    "answers": [
+      "Li ser sînorê Tirkiye-Iraqê di dema ketina rejîma Saddam de (2003)",
+      "Li çolên Efrîqayê di dema Şerê Cîhanî yê Duyem de",
+      "Li bajarê Parîsê di nav xwendekarên salên şêstî de",
+      "Li giravên Japonyayê piştî erdheja mezin a sala 1995an"
+    ],
+    "answersTr": [
+      "2003 yılında ABD'nin Irak müdahalesi arifesinde Türkiye-Irak sınırındaki mülteci kampında",
+      "İkinci Dünya Savaşı sırasında Kuzey Afrika çöllerindeki askeri çatışmalarda",
+      "1968 olayları sırasında Paris'teki üniversite gençliğinin eylemlerinde",
+      "1995 büyük depremi sonrasında Japonya adalarındaki kurtarma çalışmalarında"
+    ],
+    "correctAnswer": "Li ser sînorê Tirkiye-Iraqê di dema ketina rejîma Saddam de (2003)",
+    "correctAnswerTr": "2003 yılında ABD'nin Irak müdahalesi arifesinde Türkiye-Irak sınırındaki mülteci kampında",
+    "explanation": "Fîlm beriya êrîşa Amerîkayê ya li ser Iraqê (2003) jiyana zarokên kampa penaberan vedibêje.",
+    "explanationKu": "Fîlm beriya êrîşa Amerîkayê ya li ser Iraqê (2003) jiyana zarokên kampa penaberan vedibêje.",
+    "explanationTr": "Film, 2003 Irak Savaşı'nın hemen öncesinde sınır kampında yaşayan çocukların gözünden savaşı anlatır."
   }
 ]
