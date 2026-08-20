@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -130,6 +132,102 @@ void main() {
       expect(find.text('Ziman'), findsNothing);
     },
   );
+
+  testWidgets('flashcard ön ve arka yüzü tek actionable semantics nodeudur', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: 'Açıklama metni burada.',
+      ),
+    ];
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+    await tester.tap(find.text('Hafıza Kartları'));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const ValueKey('review-flashcard'));
+    var data = tester.getSemantics(card).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Soru (Ön Yüz)'));
+    expect(data.label, contains('Hilbijêre'));
+    expect(data.label, contains('Cevabı görmek için dokun'));
+    expect(data.label, isNot(contains('Doğru Cevap')));
+    expect(find.bySemanticsLabel('Soru (Ön Yüz)'), findsNothing);
+
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+
+    data = tester.getSemantics(card).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Cevap (Arka Yüz)'));
+    expect(data.label, contains('Doğru Cevap:'));
+    expect(data.label, contains('Rast'));
+    expect(data.label, contains('Açıklama:'));
+    expect(data.label, contains('Açıklama metni burada.'));
+    expect(data.label, isNot(contains('Cevabı görmek için dokun')));
+    expect(find.bySemanticsLabel('Cevap (Arka Yüz)'), findsNothing);
+    semantics.dispose();
+  });
+
+  testWidgets('flashcard Kurmancî ön ve arka semantics güncellenir', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: 'Ravekirina testê.',
+      ),
+    ];
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => LanguageProvider()..setLang('ku'),
+          ),
+        ],
+        child: const MaterialApp(
+          home: ReviewScreen(records: records, room: _room),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Kartên Hînbûnê'));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const ValueKey('review-flashcard'));
+    var data = tester.getSemantics(card).getSemanticsData();
+    expect(data.label, contains('Pirs (Rû)'));
+    expect(data.label, contains('Ji bo dîtina bersivê bitikîne'));
+
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+
+    data = tester.getSemantics(card).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Bersiv (Pişt)'));
+    expect(data.label, contains('Bersiva Rast:'));
+    expect(data.label, contains('Ravekirina testê.'));
+    semantics.dispose();
+  });
 
   testWidgets('şık listesinde olmayan yazılı kullanıcı yanıtını gösterir', (
     tester,

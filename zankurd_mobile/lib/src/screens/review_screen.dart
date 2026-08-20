@@ -563,6 +563,37 @@ class _FlashcardViewState extends State<_FlashcardView> {
     }
   }
 
+  void _toggleFlip() {
+    setState(() => _isFlipped = !_isFlipped);
+  }
+
+  String _flashcardSemanticLabel(
+    BuildContext context,
+    AnswerRecord record,
+    String explanationText,
+  ) {
+    final isKu = context.isKu;
+    if (!_isFlipped) {
+      return [
+        Tr.forKu(K.flashcardFront, isKu),
+        record.prompt,
+        context.t(K.cevabiGormekIcinDokun),
+      ].join('. ');
+    }
+
+    final label = <String>[
+      Tr.forKu(K.flashcardBack, isKu),
+      context.t(K.dogruCevap),
+      record.correctAnswer,
+    ];
+    if (explanationText.isNotEmpty) {
+      label
+        ..add(context.t(K.aciklama))
+        ..add(explanationText);
+    }
+    return label.join('. ');
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.records.isEmpty) return const SizedBox.shrink();
@@ -587,43 +618,60 @@ class _FlashcardViewState extends State<_FlashcardView> {
                   color: AppTheme.textPrimaryColor(context),
                 ),
               ),
-              Text(
-                Tr.forKu(_isFlipped ? K.flashcardBack : K.flashcardFront, isKu),
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppTheme.textSubColor(context),
+              ExcludeSemantics(
+                child: Text(
+                  Tr.forKu(
+                    _isFlipped ? K.flashcardBack : K.flashcardFront,
+                    isKu,
+                  ),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppTheme.textSubColor(context),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        GestureDetector(
-          onTap: () => setState(() => _isFlipped = !_isFlipped),
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              final rotate = Tween(begin: math.pi, end: 0.0).animate(animation);
-              return AnimatedBuilder(
-                animation: rotate,
-                child: child,
-                builder: (context, child) {
-                  final isUnder = (ValueKey(_isFlipped) != child?.key);
-                  var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
-                  tilt *= isUnder ? -1.0 : 1.0;
-                  final value = isUnder
-                      ? math.min(rotate.value, math.pi / 2)
-                      : rotate.value;
-                  return Transform(
-                    transform: Matrix4.rotationY(value)..setEntry(3, 2, tilt),
-                    alignment: Alignment.center,
-                    child: child,
-                  );
-                },
-              );
-            },
-            child: _isFlipped
-                ? _buildBackCard(context, record, explanationText)
-                : _buildFrontCard(context, record),
+        Semantics(
+          key: const ValueKey('review-flashcard'),
+          container: true,
+          button: true,
+          enabled: true,
+          label: _flashcardSemanticLabel(context, record, explanationText),
+          excludeSemantics: true,
+          onTap: _toggleFlip,
+          child: GestureDetector(
+            onTap: _toggleFlip,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                final rotate = Tween(
+                  begin: math.pi,
+                  end: 0.0,
+                ).animate(animation);
+                return AnimatedBuilder(
+                  animation: rotate,
+                  child: child,
+                  builder: (context, child) {
+                    final isUnder = (ValueKey(_isFlipped) != child?.key);
+                    var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
+                    tilt *= isUnder ? -1.0 : 1.0;
+                    final value = isUnder
+                        ? math.min(rotate.value, math.pi / 2)
+                        : rotate.value;
+                    return Transform(
+                      transform: Matrix4.rotationY(value)..setEntry(3, 2, tilt),
+                      alignment: Alignment.center,
+                      child: child,
+                    );
+                  },
+                );
+              },
+              child: _isFlipped
+                  ? _buildBackCard(context, record, explanationText)
+                  : _buildFrontCard(context, record),
+            ),
           ),
         ),
         const SizedBox(height: 16),

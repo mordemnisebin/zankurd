@@ -369,6 +369,24 @@ class _LearningScreenState extends State<LearningScreen> {
   String _lessonTitle(Lesson lesson, bool ku) =>
       ku ? lesson.titleKu : (lesson.titleTr ?? lesson.titleKu);
 
+  String _lessonStateSemanticLabel(
+    BuildContext context,
+    Lesson lesson,
+    bool ku, {
+    required bool completed,
+    required bool current,
+    required bool locked,
+  }) {
+    final state = completed
+        ? context.t(K.dersTamamlandi)
+        : current
+        ? context.t(K.next)
+        : locked
+        ? context.t(K.locked)
+        : '';
+    return '${_lessonTitle(lesson, ku)}. $state';
+  }
+
   Widget _buildTopRecommendedLesson(BuildContext context, bool ku) {
     if (_currentLessons.isEmpty) return const SizedBox.shrink();
 
@@ -470,6 +488,14 @@ class _LearningScreenState extends State<LearningScreen> {
                 ku: ku,
                 completed: completed,
                 locked: locked,
+                semanticLabel: _lessonStateSemanticLabel(
+                  ctx,
+                  lessons[i],
+                  ku,
+                  completed: completed,
+                  current: current,
+                  locked: locked,
+                ),
                 onTap: locked ? () {} : () => _openLesson(lessons[i]),
               ),
             );

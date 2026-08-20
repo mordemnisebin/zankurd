@@ -186,6 +186,81 @@ void main() {
     },
   );
 
+  testWidgets('öğrenme yolu durumları Türkçe semantics ile adlandırılır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+    final semantics = tester.ensureSemantics();
+
+    await tester.binding.setSurfaceSize(const Size(390, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: _PlacementRepository({'placement-0'}))),
+    );
+    await tester.pumpAndSettle();
+
+    final completed = tester.getSemantics(
+      find.bySemanticsLabel('Ders 1. Ders tamamlandı'),
+    );
+    final current = tester.getSemantics(
+      find.bySemanticsLabel('Ders 2. Sonraki'),
+    );
+    final locked = tester.getSemantics(
+      find.bySemanticsLabel('Ders 3. Kilitli'),
+    );
+
+    expect(completed.getSemanticsData().flagsCollection.isButton, isTrue);
+    expect(
+      completed.getSemanticsData().hasAction(ui.SemanticsAction.tap),
+      isTrue,
+    );
+    expect(current.getSemanticsData().flagsCollection.isButton, isTrue);
+    expect(
+      current.getSemanticsData().hasAction(ui.SemanticsAction.tap),
+      isTrue,
+    );
+    expect(locked.getSemanticsData().flagsCollection.isButton, isFalse);
+    expect(
+      locked.getSemanticsData().hasAction(ui.SemanticsAction.tap),
+      isFalse,
+    );
+    semantics.dispose();
+  });
+
+  testWidgets('öğrenme yolu durumları Kurmancî semantics ile adlandırılır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+    final semantics = tester.ensureSemantics();
+
+    await tester.binding.setSurfaceSize(const Size(390, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      wrapKu(LearningScreen(repository: _PlacementRepository({'placement-0'}))),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Ders 1. Ders qediya!')),
+      isNotNull,
+    );
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Ders 2. Bidomîne')),
+      isNotNull,
+    );
+    final locked = tester.getSemantics(find.bySemanticsLabel('Ders 3. Girtî'));
+    expect(locked.getSemanticsData().flagsCollection.isButton, isFalse);
+    expect(
+      locked.getSemanticsData().hasAction(ui.SemanticsAction.tap),
+      isFalse,
+    );
+    semantics.dispose();
+  });
+
   testWidgets(
     'Navîn placement top öneriyi ve sakin seviye bağlamını gösterir',
     (tester) async {

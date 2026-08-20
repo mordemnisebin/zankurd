@@ -140,128 +140,141 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
 
   Widget _buildReady(BuildContext context, bool ku) {
     final surface = AppTheme.surfaceHiColor(context);
-    return ClipRRect(
+    final semanticLabel = [
+      Tr.forKu(K.todaysReviews, ku),
+      Tr.forKu(K.todaysReviewsCount, ku, {'count': '$_readyCount'}),
+      Tr.forKu(K.strengthenMemory, ku),
+    ].join('. ');
+    return Semantics(
       key: const ValueKey('todays-review-card'),
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: _startReview,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            decoration: BoxDecoration(
-              color: surface,
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-                width: 1.0,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+      container: true,
+      button: true,
+      enabled: true,
+      label: semanticLabel,
+      excludeSemantics: true,
+      onTap: _startReview,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: _startReview,
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            child: Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: BoxDecoration(
+                color: surface,
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                border: Border.all(
+                  color: AppTheme.borderColor(context).withValues(alpha: 0.5),
+                  width: 1.0,
                 ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 46,
-                      height: 46,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _accent.withValues(alpha: 0.18),
-                        border: Border.all(
-                          color: _accent.withValues(alpha: 0.4),
-                          width: 1.2,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 46,
+                        height: 46,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _accent.withValues(alpha: 0.18),
+                          border: Border.all(
+                            color: _accent.withValues(alpha: 0.4),
+                            width: 1.2,
+                          ),
+                        ),
+                        child: Icon(
+                          AppIcons.arrowsRotate,
+                          color: AppColors.onAccentTint(context, _accent),
+                          size: 24,
                         ),
                       ),
-                      child: Icon(
-                        AppIcons.arrowsRotate,
-                        color: AppColors.onAccentTint(context, _accent),
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm + 2),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 3,
-                                height: 13,
-                                decoration: AppTheme.sectionAccent(_accent),
-                              ),
-                              const SizedBox(width: 7),
-                              Flexible(
-                                child: Text(
-                                  Tr.forKu(K.todaysReviews, ku),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.caption.copyWith(
-                                    color: _accent,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 0.4,
+                      const SizedBox(width: AppSpacing.sm + 2),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 3,
+                                  height: 13,
+                                  decoration: AppTheme.sectionAccent(_accent),
+                                ),
+                                const SizedBox(width: 7),
+                                Flexible(
+                                  child: Text(
+                                    Tr.forKu(K.todaysReviews, ku),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTypography.caption.copyWith(
+                                      color: _accent,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 0.4,
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              Tr.forKu(K.todaysReviewsCount, ku, {
+                                'count': '$_readyCount',
+                              }),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.bodyLarge.copyWith(
+                                color: AppTheme.textPrimaryColor(context),
+                                fontWeight: FontWeight.w800,
+                                height: 1.2,
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            Tr.forKu(K.todaysReviewsCount, ku, {
-                              'count': '$_readyCount',
-                            }),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.bodyLarge.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                              height: 1.2,
                             ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            Tr.forKu(K.strengthenMemory, ku),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textMutedColor(context),
+                            const SizedBox(height: 2),
+                            Text(
+                              Tr.forKu(K.strengthenMemory, ku),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.caption.copyWith(
+                                color: AppTheme.textMutedColor(context),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Container(
-                      constraints: const BoxConstraints(minWidth: 34),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _accent,
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Text(
-                        '$_readyCount',
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: AppSpacing.xs),
+                      Container(
+                        constraints: const BoxConstraints(minWidth: 34),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _accent,
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                        ),
+                        child: Text(
+                          '$_readyCount',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

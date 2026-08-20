@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,6 +100,62 @@ void main() {
       'offline_0005',
       'offline_0010',
     });
+  });
+
+  testWidgets('hazır tekrar kartı tek birleşik button semantics taşır', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],
+    });
+    await pump(tester);
+
+    final data = tester
+        .getSemantics(find.byKey(const ValueKey('todays-review-card')))
+        .getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Bugünkü Tekrarlar'));
+    expect(data.label, contains('2 soru tekrara hazır'));
+    expect(data.label, contains('Hafızanı pekiştir'));
+    semantics.dispose();
+  });
+
+  testWidgets('hazır tekrar kartı Kurmancî birleşik semantics taşır', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: Scaffold(
+          body: TodaysReviewCard(
+            repository: MockZanKurdRepository(),
+            isKu: true,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final data = tester
+        .getSemantics(find.byKey(const ValueKey('todays-review-card')))
+        .getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Dubarekirinên Îro'));
+    expect(data.label, contains('1 pirs ji bo dubarekirinê amade ne'));
+    expect(data.label, contains('Bîranîna xwe xurt bike'));
+    semantics.dispose();
   });
 
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {
