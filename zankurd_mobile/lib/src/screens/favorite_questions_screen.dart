@@ -327,7 +327,9 @@ class _FavoriteQuestionTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
                       children: [
                         _TinyBadge(
                           label: CategoryNames.localized(
@@ -335,7 +337,6 @@ class _FavoriteQuestionTile extends StatelessWidget {
                             context.isKu,
                           ),
                         ),
-                        const SizedBox(width: 6),
                         _TinyBadge(
                           label: question.typeLabelLocalized(context.isKu),
                         ),

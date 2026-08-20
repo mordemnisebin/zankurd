@@ -736,23 +736,19 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                 for (final fee in GameRoom.allowedEntryFees)
                   ChoiceChip(
                     key: ValueKey('custom-room-fee-$fee'),
-                    label: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (fee > 0) ...[
-                          const Icon(
-                            AppIcons.coins,
-                            size: 14,
-                            color: Color(0xFFD4AF37),
-                          ),
-                          const SizedBox(width: 4),
-                        ],
-                        Text(
-                          fee == 0
-                              ? context.t(K.freeEntry)
-                              : '$fee ${context.t(K.coinWord)}',
-                        ),
-                      ],
+                    avatar: fee > 0
+                        ? const ExcludeSemantics(
+                            child: Icon(
+                              AppIcons.coins,
+                              size: 14,
+                              color: Color(0xFFD4AF37),
+                            ),
+                          )
+                        : null,
+                    label: Text(
+                      fee == 0
+                          ? context.t(K.freeEntry)
+                          : '$fee ${context.t(K.coinWord)}',
                     ),
                     selected: _selectedEntryFee == fee,
                     onSelected: (_) => setState(() => _selectedEntryFee = fee),
