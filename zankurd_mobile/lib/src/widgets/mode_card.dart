@@ -57,6 +57,7 @@ class ModeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPrimary = emphasis == ModeCardEmphasis.primary;
     final accentOnSurface = AppColors.readableAccent(context, accent);
+    final progressColor = isPrimary ? Colors.white : accentOnSurface;
     final titleColor = isPrimary
         ? Colors.white
         : AppTheme.textPrimaryColor(context);
@@ -95,6 +96,7 @@ class ModeCard extends StatelessWidget {
           );
     return Semantics(
       button: true,
+      enabled: !busy,
       label: '$title. $subtitle',
       onTap: busy ? null : onTap,
       child: ExcludeSemantics(
@@ -178,13 +180,13 @@ class ModeCard extends StatelessWidget {
                           ),
                           const SizedBox(width: AppSpacing.xs),
                           if (busy)
-                            const SizedBox(
+                            SizedBox(
                               width: 18,
                               height: 18,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
+                                  progressColor,
                                 ),
                               ),
                             )

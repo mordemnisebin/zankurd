@@ -161,4 +161,77 @@ void main() {
       }
     },
   );
+
+  testWidgets(
+    'busy mode cards keep readable progress contrast and disabled semantics',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 300));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      const cases = [
+        (emphasis: ModeCardEmphasis.secondary, accent: Color(0xFF1E4FA6)),
+        (emphasis: ModeCardEmphasis.event, accent: Color(0xFF9C6300)),
+        (emphasis: ModeCardEmphasis.primary, accent: Color(0xFFB31E3B)),
+      ];
+
+      for (final isDark in [false, true]) {
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: isDark ? AppTheme.dark() : AppTheme.light(),
+            home: Column(
+              children: [
+                for (final item in cases)
+                  ModeCard(
+                    key: ValueKey('${item.emphasis}-$isDark'),
+                    icon: Icons.bolt,
+                    accent: item.accent,
+                    title: '${item.emphasis} busy',
+                    subtitle: 'Loading',
+                    onTap: () {},
+                    busy: true,
+                    emphasis: item.emphasis,
+                  ),
+              ],
+            ),
+          ),
+        );
+        await tester.pump(const Duration(milliseconds: 100));
+
+        expect(tester.takeException(), isNull);
+        for (final item in cases) {
+          final key = ValueKey('${item.emphasis}-$isDark');
+          final card = find.byKey(key);
+          final spinner = find.descendant(
+            of: card,
+            matching: find.byType(CircularProgressIndicator),
+          );
+          expect(spinner, findsOneWidget, reason: '$key spinner');
+
+          final indicator = tester.widget<CircularProgressIndicator>(spinner);
+          final spinnerColor = indicator.valueColor!.value;
+          final expectedColor = item.emphasis == ModeCardEmphasis.primary
+              ? Colors.white
+              : AppColors.readableAccent(tester.element(card), item.accent);
+          expect(spinnerColor, expectedColor, reason: '$key color');
+          if (item.emphasis != ModeCardEmphasis.primary) {
+            expect(spinnerColor, isNot(Colors.white), reason: '$key color');
+          }
+
+          final data = tester.getSemantics(card).getSemanticsData();
+          expect(data.flagsCollection.isButton, isTrue, reason: '$key role');
+          expect(
+            data.flagsCollection.isEnabled,
+            ui.Tristate.isFalse,
+            reason: '$key disabled state',
+          );
+          expect(
+            data.hasAction(ui.SemanticsAction.tap),
+            isFalse,
+            reason: '$key tap disabled',
+          );
+          expect(tester.getRect(card).height, greaterThanOrEqualTo(44));
+        }
+      }
+    },
+  );
 }

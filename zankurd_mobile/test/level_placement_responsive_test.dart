@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ Widget _wrap({
   required bool isKu,
   required bool isDark,
   required double textScale,
+  Size size = const Size(390, 844),
 }) {
   return ChangeNotifierProvider<LanguageProvider>(
     key: ValueKey('language-$isKu-$isDark-$textScale'),
@@ -23,13 +25,20 @@ Widget _wrap({
       theme: isDark ? AppTheme.dark() : AppTheme.light(),
       home: MediaQuery(
         data: MediaQueryData(
-          size: const Size(390, 844),
+          size: size,
           textScaler: TextScaler.linear(textScale),
         ),
         child: LevelPlacementScreen(repository: MockZanKurdRepository()),
       ),
     ),
   );
+}
+
+void _expectInside(Rect inner, Rect outer, {required String reason}) {
+  expect(inner.left, greaterThanOrEqualTo(outer.left), reason: reason);
+  expect(inner.top, greaterThanOrEqualTo(outer.top), reason: reason);
+  expect(inner.right, lessThanOrEqualTo(outer.right), reason: reason);
+  expect(inner.bottom, lessThanOrEqualTo(outer.bottom), reason: reason);
 }
 
 void main() {
@@ -80,6 +89,88 @@ void main() {
           }
         }
       }
+    },
+  );
+
+  testWidgets(
+    'placement actions and title stay within real bounds without clipping',
+    (tester) async {
+      for (final size in [const Size(390, 844), const Size(360, 800)]) {
+        await tester.binding.setSurfaceSize(size);
+        for (final isKu in [false, true]) {
+          for (final isDark in [false, true]) {
+            for (final textScale in [1.0, 1.3, 2.0]) {
+              await tester.pumpWidget(
+                _wrap(
+                  isKu: isKu,
+                  isDark: isDark,
+                  textScale: textScale,
+                  size: size,
+                ),
+              );
+              await tester.pumpAndSettle();
+
+              final title = find.text(
+                isKu ? 'Asta xwe diyar bike' : 'Seviyeni belirle',
+              );
+              final skipLabel = isKu ? 'Paşê bike' : 'Şimdilik geç';
+              final isFullLabel = size.width == 390 && textScale == 1.0;
+              final action = find.byKey(
+                ValueKey(
+                  isFullLabel ? 'placement-skip' : 'placement-skip-compact',
+                ),
+              );
+
+              expect(tester.takeException(), isNull);
+              expect(find.byType(AppBar), findsOneWidget);
+              expect(title, findsOneWidget);
+              expect(action, findsOneWidget);
+
+              final viewport = Offset.zero & size;
+              final appBarRect = tester.getRect(find.byType(AppBar));
+              final titleRect = tester.getRect(title);
+              final actionRect = tester.getRect(action);
+              _expectInside(titleRect, viewport, reason: 'title viewport');
+              _expectInside(titleRect, appBarRect, reason: 'title appbar');
+              _expectInside(actionRect, viewport, reason: 'action viewport');
+              _expectInside(actionRect, appBarRect, reason: 'action appbar');
+
+              final data = tester.getSemantics(action).getSemanticsData();
+              expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+              expect(data.label, contains(skipLabel));
+              expect(actionRect.width, greaterThanOrEqualTo(44));
+              expect(actionRect.height, greaterThanOrEqualTo(44));
+
+              if (isFullLabel) {
+                final textFinder = find.descendant(
+                  of: action,
+                  matching: find.text(skipLabel),
+                );
+                expect(textFinder, findsOneWidget);
+                final paragraph = tester.renderObject<RenderParagraph>(
+                  textFinder,
+                );
+                expect(paragraph.didExceedMaxLines, isFalse);
+                final painter = TextPainter(
+                  text: paragraph.text,
+                  textDirection: Directionality.of(tester.element(textFinder)),
+                  textScaler: MediaQuery.textScalerOf(
+                    tester.element(textFinder),
+                  ),
+                )..layout();
+                expect(
+                  paragraph.textSize.width,
+                  greaterThanOrEqualTo(painter.width - 0.5),
+                  reason: 'full skip label must not be clipped',
+                );
+                final textRect = tester.getRect(textFinder);
+                _expectInside(textRect, actionRect, reason: 'skip text');
+              }
+            }
+          }
+        }
+      }
+      addTearDown(() => tester.binding.setSurfaceSize(null));
     },
   );
 
