@@ -936,6 +936,149 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
   }
 
+  static const _resultPrimaryActionStyle = TextStyle(
+    fontFamily: AppTypography.fontFamily,
+    fontWeight: FontWeight.w700,
+    fontSize: 15,
+  );
+
+  /// Primary CTA'nın tek satırda yan eylemlerle birlikte güvenle yaşayıp
+  /// yaşayamayacağını gerçek label genişliğiyle ölçer.
+  ///
+  /// Sabit bir cihaz breakpoint'i yerine mevcut genişlik + text scale
+  /// kullanılır. Dar veya büyük metinli düzende primary üstte tam genişlikte
+  /// kalır; yan eylemler aşağıdaki Wrap'e iner. Böylece ana label küçülmez,
+  /// kesilmez ve ekran okuyucu sırası da primary → secondary olarak korunur.
+  bool _shouldStackResultActions(
+    BuildContext context, {
+    required double availableWidth,
+    required String primaryLabel,
+    required int secondaryCount,
+  }) {
+    if (secondaryCount == 0) return false;
+
+    final painter = TextPainter(
+      text: TextSpan(
+        text: primaryLabel,
+        style: _resultPrimaryActionStyle.copyWith(
+          fontFamily: AppTypography.fontFamily,
+        ),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+
+    // Icon + gap + horizontal button padding. Bu chrome mevcut FilledButton
+    // anatomisinin güvenli üst sınırıdır; label'ın sığmadığı durumda
+    // breakpoint tahmini yapmak yerine ölçümü stacked karara dönüştürür.
+    const primaryChrome = 80.0;
+    const sideActionWidth = 76.0;
+    const actionGap = 10.0;
+    final primaryNeeded = painter.width + primaryChrome;
+    final secondaryNeeded = secondaryCount * sideActionWidth + actionGap;
+    return primaryNeeded + secondaryNeeded > availableWidth;
+  }
+
+  Widget _buildResultPrimaryAction({
+    required String key,
+    required String label,
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        boxShadow: AppTheme.glowShadow(
+          AppTheme.primaryCtaColor(context),
+          intensity: 0.28,
+        ),
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 54),
+        child: FilledButton.icon(
+          key: ValueKey(key),
+          style: FilledButton.styleFrom(
+            backgroundColor: AppTheme.primaryCtaColor(context),
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 54),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+            ),
+            elevation: 0,
+          ),
+          onPressed: onPressed,
+          icon: Icon(icon, size: 20),
+          label: Text(
+            label,
+            maxLines: 2,
+            softWrap: true,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.center,
+            style: _resultPrimaryActionStyle,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResultActions({
+    required String primaryKey,
+    required String primaryLabel,
+    required IconData primaryIcon,
+    required VoidCallback onPrimaryPressed,
+    required List<Widget> secondaryActions,
+  }) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final stack = _shouldStackResultActions(
+          context,
+          availableWidth: constraints.maxWidth,
+          primaryLabel: primaryLabel,
+          secondaryCount: secondaryActions.length,
+        );
+        final primary = _buildResultPrimaryAction(
+          key: primaryKey,
+          label: primaryLabel,
+          icon: primaryIcon,
+          onPressed: onPrimaryPressed,
+        );
+
+        if (stack) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              primary,
+              if (secondaryActions.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Wrap(
+                    alignment: WrapAlignment.end,
+                    spacing: 10,
+                    runSpacing: 8,
+                    children: secondaryActions,
+                  ),
+                ),
+              ],
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(child: primary),
+            if (secondaryActions.isNotEmpty) ...[
+              const SizedBox(width: 10),
+              ...secondaryActions,
+            ],
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final unanswered = (totalQuestions - correctCount - wrongCount).clamp(
@@ -967,6 +1110,51 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         context,
       ).push(AppRoute.to(ReviewScreen(records: records, room: room)));
     }
+
+    final primaryResultKey = wrongRecords.isNotEmpty
+        ? 'result-primary-review-mistakes'
+        : 'result-play-again-button';
+    final primaryResultLabel = wrongRecords.isNotEmpty
+        ? context.t(K.reviewMistakes)
+        : nextActionLabel;
+    final primaryResultIcon = wrongRecords.isNotEmpty
+        ? AppIcons.squareCheck
+        : nextActionIcon;
+    final secondaryResultActions = <Widget>[
+      if (isOnlineRoom)
+        _ResultSideAction(
+          key: const ValueKey('result-new-room-button'),
+          icon: AppIcons.circlePlus,
+          label: context.t(K.newRoom),
+          onTap: _newRoomLoading ? null : _openNewRoom,
+        ),
+      if (wrongRecords.isNotEmpty)
+        _ResultSideAction(
+          key: const ValueKey('result-play-again-button'),
+          icon: nextActionIcon,
+          label: nextActionLabel,
+          onTap: completeResultAction,
+        ),
+      // Çocuk modu açıkken dışa paylaşım hiç çizilmez — sağlayıcı eskiden
+      // kayıtlı olmadığı ve hiçbir ekran okumadığı için bu kapı hiç
+      // çalışmıyordu (2026-08-14 denetimi).
+      if (context.watch<ChildSafetyProvider>().allowExternalShare)
+        _ResultSideAction(
+          key: const ValueKey('result-share-button'),
+          icon: AppIcons.shareNodes,
+          label: context.t(K.share),
+          onTap: () => ResultSharer.share(
+            context,
+            isKu: context.isKu,
+            score: score,
+            correctCount: correctCount,
+            totalQuestions: totalQuestions,
+            bestStreak: bestStreak,
+            category: room.category,
+            results: [for (final record in answerRecords) record.isCorrect],
+          ),
+        ),
+    ];
 
     final is1v1 = opponents.length == 1;
     bool isWinner = false;
@@ -1598,105 +1786,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   const SizedBox(height: 16),
                   // ── Actions ──────────────────────────────────────────
                   const SizedBox(height: 12),
-                  // Yanlış varsa sıradaki en yararlı iş incelemedir; kusursuz
-                  // sonuçta ana eylem yeni tur olur. Seyrek kullanılan yollar
-                  // kapalı bir grupta tutularak karar yükü azaltılır.
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppRadius.md),
-                            boxShadow: AppTheme.glowShadow(
-                              AppTheme.primaryCtaColor(context),
-                              intensity: 0.28,
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: 54,
-                            child: FilledButton.icon(
-                              key: ValueKey(
-                                wrongRecords.isNotEmpty
-                                    ? 'result-primary-review-mistakes'
-                                    : 'result-play-again-button',
-                              ),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: AppTheme.primaryCtaColor(
-                                  context,
-                                ),
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.md,
-                                  ),
-                                ),
-                                elevation: 0,
-                              ),
-                              onPressed: wrongRecords.isNotEmpty
-                                  ? () => openReview(wrongRecords)
-                                  : completeResultAction,
-                              icon: Icon(
-                                wrongRecords.isNotEmpty
-                                    ? AppIcons.squareCheck
-                                    : nextActionIcon,
-                                size: 20,
-                              ),
-                              label: Text(
-                                wrongRecords.isNotEmpty
-                                    ? context.t(K.reviewMistakes)
-                                    : nextActionLabel,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      if (isOnlineRoom)
-                        _ResultSideAction(
-                          key: const ValueKey('result-new-room-button'),
-                          icon: AppIcons.circlePlus,
-                          label: context.t(K.newRoom),
-                          onTap: _newRoomLoading ? null : _openNewRoom,
-                        ),
-                      if (wrongRecords.isNotEmpty)
-                        _ResultSideAction(
-                          key: const ValueKey('result-play-again-button'),
-                          icon: nextActionIcon,
-                          label: nextActionLabel,
-                          onTap: completeResultAction,
-                        ),
-                      // Çocuk modu açıkken dışa paylaşım hiç çizilmez —
-                      // sağlayıcı eskiden kayıtlı olmadığı ve hiçbir ekran
-                      // okumadığı için bu kapı hiç çalışmıyordu (2026-08-14
-                      // denetimi).
-                      if (context
-                          .watch<ChildSafetyProvider>()
-                          .allowExternalShare)
-                        _ResultSideAction(
-                          key: const ValueKey('result-share-button'),
-                          icon: AppIcons.shareNodes,
-                          label: context.t(K.share),
-                          onTap: () => ResultSharer.share(
-                            context,
-                            isKu: context.isKu,
-                            score: score,
-                            correctCount: correctCount,
-                            totalQuestions: totalQuestions,
-                            bestStreak: bestStreak,
-                            category: room.category,
-                            results: [
-                              for (final record in answerRecords)
-                                record.isCorrect,
-                            ],
-                          ),
-                        ),
-                    ],
+                  _buildResultActions(
+                    primaryKey: primaryResultKey,
+                    primaryLabel: primaryResultLabel,
+                    primaryIcon: primaryResultIcon,
+                    onPrimaryPressed: wrongRecords.isNotEmpty
+                        ? () => openReview(wrongRecords)
+                        : completeResultAction,
+                    secondaryActions: secondaryResultActions,
                   ),
                   const SizedBox(height: 10),
                   Theme(
