@@ -279,6 +279,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             // yalnız birincil eylemde kalır.
             ModeCard(
               key: const ValueKey('play-hub-create-room'),
+              compact: true,
+              emphasis: ModeCardEmphasis.secondary,
               icon: AppIcons.circlePlus,
               // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
               // M24 notu playPink/playPurple'ı 2026-07-23'te "marka dışı"
@@ -296,6 +298,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             const SizedBox(height: AppSpacing.xs),
             ModeCard(
               key: const ValueKey('play-hub-join-room'),
+              compact: true,
+              emphasis: ModeCardEmphasis.secondary,
               icon: AppIcons.doorOpen,
               accent: const Color(0xFF04697C), // turkuaz — katılma
               title: context.t(K.joinByCode),
@@ -310,6 +314,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             const SizedBox(height: AppSpacing.sm),
             ModeCard(
               key: const ValueKey('play-hub-daily-contest'),
+              compact: true,
+              emphasis: ModeCardEmphasis.event,
               icon: AppIcons.bolt,
               // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
               accent: const Color(0xFF9C6300),
@@ -321,6 +327,8 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
             const SizedBox(height: AppSpacing.xs),
             ModeCard(
               key: const ValueKey('play-hub-tournament'),
+              compact: true,
+              emphasis: ModeCardEmphasis.event,
               icon: AppIcons.trophy,
               // Altın bir satır yukarıda "Günün Etkinliği"nde; turnuva
               // yeşil aksanı alır. Dört satır artık koyu yeşil ·

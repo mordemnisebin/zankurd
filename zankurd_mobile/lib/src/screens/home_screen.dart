@@ -417,6 +417,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             // rengini ve amblemini taşıyan bir mod kartı (2026-08-03).
             child: ModeCard(
               key: const ValueKey('home-lessons-row'),
+              compact: true,
+              emphasis: ModeCardEmphasis.secondary,
               icon: AppIcons.graduationCap,
               // Marka turuncusu DEĞİL: o ton birincil CTA'ya ayrılmış ve
               // hemen üstteki "Başla" düğmesi onu kullanıyor. Mod kartı da
@@ -432,6 +434,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           const SizedBox(height: AppSpacing.xs),
           ModeCard(
             key: const ValueKey('home-topic-picker'),
+            compact: true,
+            emphasis: ModeCardEmphasis.secondary,
             icon: AppIcons.bookOpen,
             // Altın yalnız ödül/ilerleme için ayrılmış; konu seçimi bir
             // öğrenme yüzeyi olduğu için safir ailesinden bir ton alır.
@@ -453,6 +457,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             key: const ValueKey('home-play-handoff'),
             child: ModeCard(
               key: const ValueKey('home-duel-row'),
+              compact: true,
+              emphasis: ModeCardEmphasis.secondary,
               icon: AppIcons.bolt,
               // Düello rekabet yüzeyi: madder ailesinden enerjik bir ton.
               accent: const Color(0xFFB31E3B),
