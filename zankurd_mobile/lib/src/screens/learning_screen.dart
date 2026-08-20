@@ -167,7 +167,10 @@ class _LearningScreenState extends State<LearningScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final unifiedScroll = MediaQuery.textScalerOf(context).scale(14) > 20;
+    final unifiedScroll =
+        MediaQuery.textScalerOf(context).scale(14) > 20 ||
+        MediaQuery.sizeOf(context).width < 380 ||
+        MediaQuery.sizeOf(context).height < 760;
     return Scaffold(
       extendBodyBehindAppBar: true,
       // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
@@ -234,6 +237,7 @@ class _LearningScreenState extends State<LearningScreen> {
                       isKu: ku,
                     ),
                   ),
+                  _buildTopRecommendedLesson(context, ku),
                   // Hikâye modu girişi (metin tabanlı, sessiz). Ünite başında mini
                   // rehber de buradan açılır.
                   Padding(
@@ -350,6 +354,62 @@ class _LearningScreenState extends State<LearningScreen> {
     );
   }
 
+  int _recommendedLessonIndex(List<Lesson> lessons) {
+    final placementIndex = PlacementScoring.recommendedStartIndex(
+      _placementLevel,
+      lessons.length,
+    );
+    return learningRecommendedIndex(
+      lessons: lessons,
+      completedLessonIds: _completedIds,
+      placementIndex: placementIndex,
+    );
+  }
+
+  String _lessonTitle(Lesson lesson, bool ku) =>
+      ku ? lesson.titleKu : (lesson.titleTr ?? lesson.titleKu);
+
+  Widget _buildTopRecommendedLesson(BuildContext context, bool ku) {
+    if (_currentLessons.isEmpty) return const SizedBox.shrink();
+
+    final index = _recommendedLessonIndex(_currentLessons);
+    if (index < 0 || index >= _currentLessons.length) {
+      return const SizedBox.shrink();
+    }
+
+    final lesson = _currentLessons[index];
+    final placementContext = _placementLevel != null && _completedIds.isEmpty
+        ? context.t(K.currentLevel, {
+            'name': ku ? _placementLevel!.labelKu : _placementLevel!.labelTr,
+          })
+        : null;
+    final semanticLabels = <String>[
+      context.t(K.recommendedForYou),
+      _lessonTitle(lesson, ku),
+    ];
+    if (placementContext != null) semanticLabels.add(placementContext);
+    final semanticLabel = semanticLabels.join('. ');
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.xs,
+        AppSpacing.page,
+        0,
+      ),
+      child: _LessonCard(
+        lesson: lesson,
+        ku: ku,
+        completed: false,
+        locked: false,
+        recommended: true,
+        supportingLabel: placementContext,
+        semanticLabel: semanticLabel,
+        onTap: () => _openLesson(lesson),
+      ),
+    );
+  }
+
   Widget _buildLessons(BuildContext context, bool ku, {bool embedded = false}) {
     return FutureBuilder<List<Lesson>>(
       future: _lessonsFuture,
@@ -380,16 +440,7 @@ class _LearningScreenState extends State<LearningScreen> {
             onAction: _loadLessons,
           );
         }
-        final placementIndex = PlacementScoring.recommendedStartIndex(
-          _placementLevel,
-          lessons.length,
-        );
-        final firstOpenIndex = learningRecommendedIndex(
-          lessons: lessons,
-          completedLessonIds: _completedIds,
-          placementIndex: placementIndex,
-        );
-        final recommendedIndex = firstOpenIndex;
+        final firstOpenIndex = _recommendedLessonIndex(lessons);
         return ListView.builder(
           shrinkWrap: embedded,
           physics: embedded ? const NeverScrollableScrollPhysics() : null,
@@ -419,25 +470,22 @@ class _LearningScreenState extends State<LearningScreen> {
                 ku: ku,
                 completed: completed,
                 locked: locked,
-                recommended: i == recommendedIndex,
-                onTap: () async {
-                  if (locked) return;
-                  await Navigator.of(context).push(
-                    AppRoute(
-                      page: LessonDetailScreen(
-                        lesson: lessons[i],
-                        repository: widget.repository,
-                      ),
-                    ),
-                  );
-                  _refreshCompleted();
-                },
+                onTap: locked ? () {} : () => _openLesson(lessons[i]),
               ),
             );
           },
         );
       },
     );
+  }
+
+  Future<void> _openLesson(Lesson lesson) async {
+    await Navigator.of(context).push(
+      AppRoute(
+        page: LessonDetailScreen(lesson: lesson, repository: widget.repository),
+      ),
+    );
+    _refreshCompleted();
   }
 
   Future<void> _openCategoryPractice() async {
@@ -797,6 +845,8 @@ class _LessonCard extends StatelessWidget {
     required this.locked,
     required this.onTap,
     this.recommended = false,
+    this.supportingLabel,
+    this.semanticLabel,
   });
 
   final Lesson lesson;
@@ -808,6 +858,8 @@ class _LessonCard extends StatelessWidget {
   /// Seviye belirlemeye göre önerilen başlangıç düğümü mü. Yalnız görsel bir
   /// işarettir; kilit/tamamlanma durumunu değiştirmez.
   final bool recommended;
+  final String? supportingLabel;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -830,6 +882,7 @@ class _LessonCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: AppPanel(
         onTap: locked ? null : onTap,
+        semanticLabel: semanticLabel,
         key: recommended && !completed
             ? const ValueKey("learning-next-step")
             : null,
@@ -883,6 +936,18 @@ class _LessonCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.caption.copyWith(color: subtitleColor),
                   ),
+                  if (supportingLabel != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      supportingLabel!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.caption.copyWith(
+                        color: subtitleColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                   if (recommended && !completed) ...[
                     const SizedBox(height: 6),
                     Container(

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -53,6 +54,34 @@ const _testLesson = Lesson(
   titleTr: 'Ders',
   category: 'everyday',
 );
+
+final _placementLessons = List<Lesson>.generate(
+  6,
+  (index) => Lesson(
+    id: 'placement-$index',
+    slug: 'placement-$index',
+    titleKu: 'Ders ${index + 1}',
+    titleTr: 'Ders ${index + 1}',
+    category: 'everyday',
+    order: index + 1,
+  ),
+);
+
+class _PlacementRepository extends MockZanKurdRepository {
+  _PlacementRepository(this.completedIds);
+
+  final Set<String> completedIds;
+
+  @override
+  Future<List<Lesson>> loadLessonsByCategory(String category) async {
+    return _placementLessons;
+  }
+
+  @override
+  Future<Set<String>> loadCompletedLessonIds() async {
+    return Set.of(completedIds);
+  }
+}
 
 void main() {
   test(
@@ -114,6 +143,116 @@ void main() {
     expect(find.text('Sana önerilen'), findsOneWidget);
   });
 
+  testWidgets(
+    'önerilen ders Today\'s Review\'dan sonra Story ve modlardan önce gelir',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      PlacementStore.resetInstance();
+      addTearDown(PlacementStore.resetInstance);
+      final semantics = tester.ensureSemantics();
+
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+
+      final nextStep = find.byKey(const ValueKey('learning-next-step'));
+      final story = find.byKey(const ValueKey('learning-story-entry'));
+      final practice = find.text('Soru çöz');
+
+      expect(nextStep, findsOneWidget);
+      expect(story, findsOneWidget);
+      expect(practice, findsOneWidget);
+      expect(
+        tester.getTopLeft(nextStep).dy,
+        lessThan(tester.getTopLeft(story).dy),
+      );
+      expect(
+        tester.getTopLeft(nextStep).dy,
+        lessThan(tester.getTopLeft(practice).dy),
+      );
+
+      final semanticsData = tester.getSemantics(nextStep).getSemanticsData();
+      expect(semanticsData.hasAction(ui.SemanticsAction.tap), isTrue);
+      expect(semanticsData.label, contains('Sana önerilen'));
+      expect(semanticsData.label, contains('Selamlaşma'));
+      semantics.dispose();
+
+      await tester.tap(nextStep);
+      await tester.pumpAndSettle();
+      expect(find.byType(LessonDetailScreen), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Navîn placement top öneriyi ve sakin seviye bağlamını gösterir',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.placement.v1.level': 'navin',
+      });
+      PlacementStore.resetInstance();
+      addTearDown(PlacementStore.resetInstance);
+
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: _PlacementRepository(const {}))),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('learning-next-step')),
+          matching: find.text('Ders 2'),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Mevcut seviyen: Orta'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('lesson-recommended-badge')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('learning-path-node-placement-1')),
+          matching: find.byKey(const ValueKey('lesson-recommended-badge')),
+        ),
+        findsNothing,
+      );
+    },
+  );
+
+  testWidgets('gerçek ilerlemede top öneri placement bağlamını kaldırır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.placement.v1.level': 'navin',
+    });
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+
+    await tester.pumpWidget(
+      wrap(
+        LearningScreen(
+          repository: _PlacementRepository({'placement-0', 'placement-1'}),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('learning-next-step')),
+        matching: find.text('Ders 3'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Mevcut seviyen: Orta'), findsNothing);
+    expect(find.text('Sana önerilen'), findsOneWidget);
+  });
+
   // Bu test AppBar başlığının yazı tipini ölçüyordu; başlık kaldırılınca
   // hedefsiz kaldı. Niyeti hâlâ geçerli — bir ekranda iki ayrı yazı tipi
   // görünmemeli (bkz. 2026-07-26: boyayıcı metinler sistem yazı tipine
@@ -166,7 +305,7 @@ void main() {
     // Arayüz Türkçe: ders adı da Türkçe listelenir. Kurmancî adı
     // ("Silavkirin") yalnız Kurmancî arayüzde görünür — bkz.
     // `test/lesson_title_language_test.dart` (2026-07-27).
-    expect(find.text('Selamlaşma'), findsOneWidget);
+    expect(find.text('Selamlaşma'), findsNWidgets(2));
     expect(
       find.byKey(const ValueKey('learning-path-node-everyday_1')),
       findsOneWidget,
