@@ -77,10 +77,15 @@ void main(List<String> args) {
         exitCode = 64;
         return;
       }
+      final createdDate = DateTime.now().toLocal().toIso8601String().substring(
+        0,
+        10,
+      );
       final next = AuditBaseline.fromSnapshot(
         snapshot: result.snapshot,
         manifestVersion: manifest.version,
         metrics: metrics,
+        createdDate: createdDate,
       );
       if (baselineFile.existsSync()) {
         final previous = AuditBaseline.fromJsonString(
