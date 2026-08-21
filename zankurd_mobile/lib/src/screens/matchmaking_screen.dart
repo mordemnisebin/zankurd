@@ -1302,6 +1302,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
     return LayoutBuilder(
       builder: (context, constraints) {
+        final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+        final identitySize = largeText ? 360.0 : 260.0;
+        final identityGap = largeText ? 8.0 : 24.0;
+
         return SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
@@ -1361,8 +1365,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                     ],
                     // Matching Animation View
                     SizedBox(
-                      width: 260,
-                      height: 260,
+                      width: identitySize,
+                      height: identitySize,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
@@ -1427,10 +1431,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                           // piksel sabit olduğu için sıkışacak yer var; taşan tek şey
                           // addır, o da tek satıra kırpılır.
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // User Avatar
-                              Flexible(
+                              Expanded(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -1463,8 +1467,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                     const SizedBox(height: 8),
                                     Text(
                                       _myName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: AppTheme.textPrimaryColor(
@@ -1504,7 +1509,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 24),
+                              SizedBox(width: identityGap),
                               // Eşleşme bulunduğunda VS altın renge döner ve
                               // yarışma programı hissiyle "punch" yapar.
                               TweenAnimationBuilder<double>(
@@ -1540,9 +1545,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 24),
+                              SizedBox(width: identityGap),
                               // Opponent Avatar (fades in or animated)
-                              Flexible(
+                              Expanded(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -1623,46 +1628,74 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                                     // mesaj yazmış birine long-press ya da ilk
                                     // 10'a girmiş birini liderlikten bildirmekti
                                     // (2026-08-06 denetimi).
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            !_found
-                                                ? '?'
-                                                : _opponentBlocked
-                                                ? context.t(K.chatBlocked)
-                                                : (_opponentName ?? ''),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: _found
-                                                  ? AppTheme.textPrimaryColor(
-                                                      context,
-                                                    )
-                                                  : AppTheme.textMutedColor(
-                                                      context,
-                                                    ),
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 13,
-                                            ),
+                                    if (largeText &&
+                                        _found &&
+                                        !_opponentBlocked) ...[
+                                      Text(
+                                        _opponentName ?? '',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.clip,
+                                        softWrap: true,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AppTheme.textPrimaryColor(
+                                            context,
                                           ),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
                                         ),
-                                        if (_found && !_opponentBlocked)
-                                          PlayerModerationButton(
-                                            repository: widget.repository,
-                                            playerId: _opponentId,
-                                            playerName: _opponentName ?? '',
-                                            compact: true,
-                                            onBlocked: () => setState(
-                                              () => _opponentBlocked = true,
+                                      ),
+                                      PlayerModerationButton(
+                                        repository: widget.repository,
+                                        playerId: _opponentId,
+                                        playerName: _opponentName ?? '',
+                                        compact: true,
+                                        onBlocked: () => setState(
+                                          () => _opponentBlocked = true,
+                                        ),
+                                      ),
+                                    ] else
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Flexible(
+                                            child: Text(
+                                              !_found
+                                                  ? '?'
+                                                  : _opponentBlocked
+                                                  ? context.t(K.chatBlocked)
+                                                  : (_opponentName ?? ''),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.clip,
+                                              softWrap: true,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: _found
+                                                    ? AppTheme.textPrimaryColor(
+                                                        context,
+                                                      )
+                                                    : AppTheme.textMutedColor(
+                                                        context,
+                                                      ),
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 13,
+                                              ),
                                             ),
                                           ),
-                                      ],
-                                    ),
+                                          if (_found && !_opponentBlocked)
+                                            PlayerModerationButton(
+                                              repository: widget.repository,
+                                              playerId: _opponentId,
+                                              playerName: _opponentName ?? '',
+                                              compact: true,
+                                              onBlocked: () => setState(
+                                                () => _opponentBlocked = true,
+                                              ),
+                                            ),
+                                        ],
+                                      ),
                                     const SizedBox(height: 4),
                                     Container(
                                       padding: const EdgeInsets.symmetric(

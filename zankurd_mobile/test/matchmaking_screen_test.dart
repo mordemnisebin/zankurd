@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -566,6 +567,57 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1600));
     await tester.pump();
   });
+
+  testWidgets(
+    'gercek eslesme buyuk metinde kimlik ve bilinmeyen seviye okunur kalir',
+    (tester) async {
+      final repository = _HiddenAnswerMatchRepository(
+        _RoomQuestionResult.empty,
+      );
+      addTearDown(tester.view.reset);
+      tester.view.physicalSize = const Size(360, 800);
+      tester.view.devicePixelRatio = 1;
+
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+          child: _shell(MatchmakingScreen(repository: repository)),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.pump();
+      await tester.pump();
+
+      final opponentText = tester.renderObject<RenderParagraph>(
+        find.text('Rojda'),
+      );
+      final levelText = tester.renderObject<RenderParagraph>(
+        find.text('Seviye bilinmiyor'),
+      );
+      expect(
+        opponentText.didExceedMaxLines,
+        isFalse,
+        reason:
+            'Rakip kimliği büyük metinde tek satırlık ellipsis ile '
+            'anlaşılmaz kalmamalı.',
+      );
+      expect(
+        tester.getRect(find.text('Seviye bilinmiyor')).width,
+        greaterThanOrEqualTo(96),
+        reason:
+            'Bilinmeyen seviye rozeti dar bir dikey parçaya '
+            'sıkışmamalı.',
+      );
+      expect(levelText.didExceedMaxLines, isFalse);
+      expect(find.text('Rojda'), findsOneWidget);
+      expect(find.text('Seviye bilinmiyor'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+
+      await tester.pump(const Duration(milliseconds: 1600));
+      await tester.pump();
+    },
+  );
 
   testWidgets(
     'hızlı eşleştirme sahte oda kurmaz, tam sunucu snapshotını kullanır',
