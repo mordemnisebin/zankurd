@@ -969,6 +969,7 @@ class _HeaderAction extends StatelessWidget {
       child: Semantics(
         button: true,
         label: semanticLabel,
+        onTap: onPressed,
         excludeSemantics: true,
         child: IconButton(
           key: valueKey,
