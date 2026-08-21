@@ -272,25 +272,34 @@ class _ReviewCard extends StatelessWidget {
                 top: Radius.circular(16),
               ),
             ),
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              runSpacing: 8,
               children: [
-                // Başlık şeridinin zemini rengin kendi %14'lük tonu; ham
-                // renk orada okunmuyordu ("DOĞRU" 2.59:1, "YANLIŞ" 3.13:1).
-                Icon(
-                  headerIcon,
-                  color: AppColors.onAccentTint(context, headerColor),
-                  size: 20,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Başlık şeridinin zemini rengin kendi %14'lük tonu; ham
+                    // renk orada okunmuyordu ("DOĞRU" 2.59:1, "YANLIŞ" 3.13:1).
+                    Icon(
+                      headerIcon,
+                      color: AppColors.onAccentTint(context, headerColor),
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        headerText,
+                        style: TextStyle(
+                          color: AppColors.onAccentTint(context, headerColor),
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  headerText,
-                  style: TextStyle(
-                    color: AppColors.onAccentTint(context, headerColor),
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                const Spacer(),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -607,8 +616,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runSpacing: 4,
             children: [
               Text(
                 '${_currentIndex + 1} / ${widget.records.length}',
@@ -675,8 +686,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
           ),
         ),
         const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          spacing: 12,
+          runSpacing: 8,
           children: [
             OutlinedButton.icon(
               onPressed: _currentIndex > 0 ? _prevCard : null,
@@ -750,11 +763,13 @@ class _FlashcardViewState extends State<_FlashcardView> {
             ),
           ),
           const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 6,
+            runSpacing: 4,
             children: [
               const Icon(AppIcons.arrowsRotate, size: 14, color: AppTheme.cyan),
-              const SizedBox(width: 6),
               Text(
                 context.t(K.cevabiGormekIcinDokun),
                 style: const TextStyle(
@@ -799,12 +814,14 @@ class _FlashcardViewState extends State<_FlashcardView> {
                 size: 20,
               ),
               const SizedBox(width: 8),
-              Text(
-                context.t(K.dogruCevap),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.correct,
+              Expanded(
+                child: Text(
+                  context.t(K.dogruCevap),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.correct,
+                  ),
                 ),
               ),
             ],
@@ -839,14 +856,16 @@ class _FlashcardViewState extends State<_FlashcardView> {
                   size: 18,
                 ),
                 const SizedBox(width: 6),
-                Text(
-                  // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
-                  // ilişiktirilmişti ("Ravahî / Açıklama:").
-                  context.t(K.aciklama),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.violet,
+                Expanded(
+                  child: Text(
+                    // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
+                    // ilişiktirilmişti ("Ravahî / Açıklama:").
+                    context.t(K.aciklama),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.violet,
+                    ),
                   ),
                 ),
               ],
