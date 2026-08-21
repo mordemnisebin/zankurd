@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,10 @@ import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class _TestFriendsRepository extends MockZanKurdRepository {
+  _TestFriendsRepository({this.requesterName = 'Diyar'});
+
+  final String requesterName;
+
   @override
   Future<List<Friend>> loadFriends() async {
     return [
@@ -48,7 +53,7 @@ class _TestFriendsRepository extends MockZanKurdRepository {
       FriendRequest(
         id: 'req1',
         fromUserId: 'friend-user-3',
-        fromUserName: 'Diyar',
+        fromUserName: requesterName,
         toUserId: 'user1',
         createdAt: DateTime.now(),
         status: 'pending',
@@ -159,6 +164,54 @@ void main() {
       expect(find.text('Odaya çağır'), findsNWidgets(2));
       expect(find.text('Oyna'), findsNothing);
     });
+
+    testWidgets(
+      'bekleyen istek karti buyuk metinde kimlik ve eylemleri korur',
+      (tester) async {
+        const requesterName = 'Berîvanê Zimanê Kurdî';
+        tester.view.physicalSize = const Size(360, 800);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+
+        await tester.pumpWidget(
+          MediaQuery(
+            data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+            child: MultiProvider(
+              providers: [
+                ChangeNotifierProvider<LanguageProvider>(
+                  create: (_) => LanguageProvider(initialLang: 'tr'),
+                ),
+                ChangeNotifierProvider<ChildSafetyProvider>(
+                  create: (_) => ChildSafetyProvider(),
+                ),
+              ],
+              child: MaterialApp(
+                home: FriendsScreen(
+                  repository: _TestFriendsRepository(
+                    requesterName: requesterName,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final requesterText = tester.renderObject<RenderParagraph>(
+          find.text(requesterName),
+        );
+        expect(
+          requesterText.didExceedMaxLines,
+          isFalse,
+          reason:
+              'Büyük metinde istek sahibinin kimliği ellipsis ile '
+              'kaybolmamalı; normal test boyutu bu kusuru sessiz bırakıyor.',
+        );
+        expect(find.text('Kabul'), findsOneWidget);
+        expect(find.byIcon(AppIcons.xmark), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets('oyuncu arama sonuclari ve ekleme akisi calisir', (
       tester,

@@ -619,58 +619,100 @@ class _FriendRequestCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: AppPanel(
         color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-        child: Row(
-          children: [
-            PlayerAvatar(radius: 24, displayName: request.fromUserName),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final textScale = MediaQuery.textScalerOf(context).scale(1);
+            final stackActions = constraints.maxWidth < 380 || textScale > 1.3;
+
+            if (stackActions) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    request.fromUserName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
+                  Row(
+                    children: [
+                      _buildAvatar(),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildRequestText(context)),
+                    ],
                   ),
-                  const SizedBox(height: 3),
-                  Text(
-                    context.t(K.wantsToBeFriend),
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                    ),
+                  const SizedBox(height: 10),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: _buildActions(context),
                   ),
                 ],
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: AppTheme.wrong.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(AppRadius.badge),
-              ),
-              child: IconButton(
-                onPressed: onReject,
-                tooltip: context.t(K.rejectAction),
-                icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
-              ),
-            ),
-            const SizedBox(width: 8),
-            FilledButton(
-              onPressed: onAccept,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.cyan,
-                foregroundColor: Colors.white,
-                elevation: 0,
-              ),
-              child: Text(context.t(K.acceptAction)),
-            ),
-          ],
+              );
+            }
+
+            return Row(
+              children: [
+                _buildAvatar(),
+                const SizedBox(width: 12),
+                Expanded(child: _buildRequestText(context)),
+                _buildActions(context),
+              ],
+            );
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildAvatar() {
+    return PlayerAvatar(radius: 24, displayName: request.fromUserName);
+  }
+
+  Widget _buildRequestText(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          request.fromUserName,
+          softWrap: true,
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          context.t(K.wantsToBeFriend),
+          softWrap: true,
+          style: AppTypography.caption.copyWith(
+            color: AppTheme.textMutedColor(context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActions(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: AppTheme.wrong.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppRadius.badge),
+          ),
+          child: IconButton(
+            onPressed: onReject,
+            tooltip: context.t(K.rejectAction),
+            icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
+          ),
+        ),
+        const SizedBox(width: 8),
+        FilledButton(
+          onPressed: onAccept,
+          style: FilledButton.styleFrom(
+            backgroundColor: AppTheme.cyan,
+            foregroundColor: Colors.white,
+            elevation: 0,
+          ),
+          child: Text(context.t(K.acceptAction)),
+        ),
+      ],
     );
   }
 }
