@@ -152,6 +152,30 @@ def scan(questions: list, source: str) -> list:
     return findings
 
 
+# Bekçi mandalı: bu sayının üstüne çıkan her koşu çıkış kodu 1 verir.
+#
+# ## Kusur
+#
+# 2026-08-22'ye kadar bu araç yalnız SAYIYOR, hiçbir şeyi bağlamıyordu.
+# 22 sızma bulgusu üç ay boyunca `sik_kalite_bulgulari.json` içinde
+# yazılı durdu ve kimse görmedi — çünkü araç 22 bulguyla da çıkış kodu 0
+# veriyordu. Ne CI, ne `flutter test`, ne de başka bir bekçi bu dosyayı
+# okuyor: bulgu üreten ama hüküm vermeyen bir denetçi, denetçisizlikle
+# aynı şeydir.
+#
+# ## Niçin sessiz kaldı
+#
+# Kusurun kendisi de sessizdi. Sızmanın belirtisi yanlış bir cevap değil,
+# fazla kolay bir sorudur: "yalnız doğru şık sayı taşıyor" ya da "doğru
+# şık çeldiricilerden belirgin uzun" diyen bir soru oynanabilir, doğru
+# anahtarlı ve iki dilde eksiksizdir. Bütün yapısal bekçiler onu
+# onaylar; yalnız oyuncu, soruyu okumadan da bilir.
+#
+# Mandal yalnız İNDİRİLİR. Yeni bir sızmayı kapatmadan bu sayıyı
+# yükseltmek, kusuru düzeltmek değil bekçiyi susturmaktır.
+FINDING_RATCHET = 0
+
+
 def main() -> int:
     manifest = pathlib.Path("lib/src/data/question_bank_assets.dart").read_text(
         encoding="utf-8")
@@ -174,6 +198,11 @@ def main() -> int:
     out.write_text(json.dumps(all_findings, ensure_ascii=False, indent=1),
                    encoding="utf-8")
     print(f"\n-> {out}")
+
+    if len(all_findings) > FINDING_RATCHET:
+        print(f"\nMANDAL DÜŞTÜ: {len(all_findings)} bulgu > "
+              f"{FINDING_RATCHET}. Sızan kayıtlar yukarıdaki dosyada.")
+        return 1
     return 0
 
 

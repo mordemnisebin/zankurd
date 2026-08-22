@@ -6621,10 +6621,10 @@
   "category": "Çand",
   "prompt": "\"reşmal\" çawa divê bê fêmkirin?",
   "answers": [
-   "Ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê",
-   "Ji ber ku di avhewaya çiyayî de xurtiya werzî û ewleyiya xwarinê peyda dike",
+   "Doşeka ji hiriya pez",
+   "Tenûra ku nan tê pijandin",
    "Konê ji mûyê bizina reş",
-   "Ji ber ku ezmûn û bîranînên di arşîvên fermî de nediyar tomar dike"
+   "Kembera zîv a jinan"
   ],
   "correctAnswer": "Konê ji mûyê bizina reş",
   "explanation": "\"reşmal\": siyah keçi kılından yapılan çadır.",
@@ -6634,10 +6634,10 @@
   "explanationTr": "\"reşmal\": siyah keçi kılından yapılan çadır.",
   "promptTr": "\"reşmal\" nasıl anlaşılmalıdır?",
   "answersTr": [
-   "Dil, kültür, yayıncılık, dayanışma ve kimlik aktarımı",
-   "Dağ ikliminde mevsimlik dayanıklılık ve gıda güvenliği sağladığı için",
+   "Koyun yününden yapılan yatak",
+   "Ekmek pişirilen tandır",
    "Kara keçi kılından yapılan çadır",
-   "Resmî arşivlerde görünmeyen deneyim ve anıları kaydettiği için"
+   "Kadınların gümüş kemeri"
   ],
   "correctAnswerTr": "Kara keçi kılından yapılan çadır"
  },
@@ -6942,9 +6942,9 @@
   "category": "Dîrok",
   "prompt": "Li jêr kîjan têgiha \"Peymana Lozanê\" rave dike?",
   "answers": [
-   "mîrektiya kurd a ku li başûrê Gola Wanê hukum kir",
-   "berhema dîroka kurdan a ku Şerefxan nivîsî",
-   "avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin",
+   "mîrektiya kurd a ku heta 1847an li başûrê Gola Wanê hukum kir",
+   "berhema dîroka kurdan a ku Şerefxan di 1597an de nivîsî",
+   "avahiya ku di 1864an de bi rêveberiya navendî ve hat girêdan",
    "peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand"
   ],
   "correctAnswer": "peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand",
@@ -6953,9 +6953,9 @@
   "difficulty": 2,
   "promptTr": "Aşağıdakilerden hangisi \"Lozan Antlaşması\" terimini açıklar?",
   "answersTr": [
-   "Wan Gölü'nün güneyinde hüküm süren Kürt beyliği",
-   "Şerefxan'ın yazdığı Kürt tarihi eseri",
-   "merkezî yönetime bağlanan / kaldırılan yapı",
+   "Wan Gölü'nün güneyinde 1847'ye dek hüküm süren Kürt beyliği",
+   "Şerefxan'ın 1597'de yazdığı Kürt tarihi eseri",
+   "1864'te merkezî yönetime bağlanan yapı",
    "Kürt coğrafyasını dört devlete bölen antlaşma"
   ],
   "correctAnswerTr": "Kürt coğrafyasını dört devlete bölen antlaşma"
@@ -7512,9 +7512,9 @@
   "category": "Dîrok",
   "prompt": "\"Mikdat Mithat Bedirxan\" çawa divê bê fêmkirin?",
   "answers": [
-   "tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir",
-   "efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir",
-   "çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin",
+   "tevgera neteweyî ya ku ji 1961an ve li Başûrê Kurdistanê dom kir",
+   "efserê ku di 1927an de bi navê Xoybûnê serokatiya leşkerî kir",
+   "çalakvana kurd a ku di 1974an de ji aliyê rejîma Iraqê ve hat îdamkirin",
    "kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist"
   ],
   "correctAnswer": "kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist",
@@ -7525,9 +7525,9 @@
   "explanationTr": "\"Mikdat Mithat Bedirxan\": 1898'de ilk Kürtçe gazete Kurdistan'ı çıkaran kişi.",
   "promptTr": "\"Mikdat Mithat Bedirxan\" nasıl anlaşılmalıdır?",
   "answersTr": [
-   "Güney Kürdistan'da uzun yıllar süren ulusal hareket",
-   "Hoybûn cemiyeti adına askerî liderlik yapan subay",
-   "Irak rejimi tarafından idam edilen Kürt kadın aktivist",
+   "1961'den beri Güney Kürdistan'da süren ulusal hareket",
+   "1927'de Hoybûn adına askerî liderlik yapan subay",
+   "1974'te Irak rejimi tarafından idam edilen Kürt kadın aktivist",
    "Kürdistan gazetesini çıkaran ilk Kürt gazeteci"
   ],
   "correctAnswerTr": "Kürdistan gazetesini çıkaran ilk Kürt gazeteci"
@@ -9472,10 +9472,10 @@
   "category": "Edebiyat",
   "prompt": "Kîjan têgeha \"Şivanê Kurd\" di nav wêjeyê de rast bi cih dike?",
   "answers": [
-   "destana evînê ya herî mezin a wêjeya klasîk a kurdî",
-   "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
+   "destana evînê ya ku di 1692an de hat nivîsandin",
+   "kovara wêjeyî ya ku di 1932an de li Şamê derket",
    "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
-   "helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê"
+   "rojnameya kurdî ya ku di 1898an de derket"
   ],
   "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
   "explanation": "\"Şivanê Kurd\": 1935 yılında basılan ilk modern Kürtçe roman.",
@@ -9485,10 +9485,10 @@
   "explanationTr": "\"Şivanê Kurd\": 1935 yılında basılan ilk modern Kürtçe roman.",
   "promptTr": "Hangi seçenek \"Şivanê Kurd\" terimini edebiyat içinde doğru konumlandırır?",
   "answersTr": [
-   "Kürt klasik edebiyatının en büyük aşk destanı",
-   "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
+   "1692'de yazılan aşk destanı",
+   "1932'de Şam'da çıkan edebiyat dergisi",
    "1935 yılında basılan ilk modern Kürtçe roman",
-   "Rojhilatê Kurdistan'ın ünlü modern şair ve yazarı"
+   "1898'de çıkan Kürtçe gazete"
   ],
   "correctAnswerTr": "1935 yılında basılan ilk modern Kürtçe roman"
  },
@@ -10375,9 +10375,9 @@
   "prompt": "Kîjan di Muzîkê de têgiha \"Koma Amed\" rast bi cih dike?",
   "answers": [
    "koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir",
-   "muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin",
-   "cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin",
-   "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin"
+   "muzîkjenê hoste yê ermenî yê ku ji salên 60î ve stranên kurdî digot",
+   "cihê çandî yê ku ji salên 80î ve li Amedê dengbêj lê tên guhdarîkirin",
+   "cureya muzîkê ya ku ji salên 70î ve li ser evînê tê gotin"
   ],
   "correctAnswer": "koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir",
   "explanation": "\"Koma Amed\": 90'larda Kürt müziğinde devrim yapan alternatif müzik grubu.",
@@ -10388,9 +10388,9 @@
   "promptTr": "Müzikte \"Koma Amed\" kavramını doğru yerleştiren hangisidir?",
   "answersTr": [
    "90'larda Kürt müziğinde değişim yaratan alternatif müzik grubu",
-   "Kürtçe şarkılarıyla tanınan Ermeni asıllı usta müzisyen",
-   "Wan ve Amed'de dengbêjlerin dinlendiği kültürel mekân",
-   "daha çok aşk ve yiğitlik üzerine söylenen müzik türü"
+   "60'lardan beri Kürtçe şarkılar söyleyen usta Ermeni müzisyen",
+   "80'lerden beri Amed'de dengbêjlerin dinlendiği kültürel mekân",
+   "70'lerden beri aşk üzerine söylenen müzik türü"
   ],
   "correctAnswerTr": "90'larda Kürt müziğinde değişim yaratan alternatif müzik grubu"
  },
@@ -14047,9 +14047,9 @@
   "category": "Dîrok",
   "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \"Rojnameya Kurdistan\" bi awayekî rast temam dike?",
   "answers": [
-   "rojnameya kurdî ya destpêkê ya ku li Silêmaniyê hat çapkirin",
-   "kovara kurdî ya yekem a bi alfabeya latînî",
-   "rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin",
+   "rojnameya kurdî ya ku di 1926an de li Silêmaniyê hat çapkirin",
+   "kovara kurdî ya bi alfabeya latînî ku di 1932an de derket",
+   "rojnameya kurdî ya ku ji 1930an ve li Erîvanê hat çapkirin",
    "rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket"
   ],
   "correctAnswer": "rojnameya kurdî ya yekem a ku di 1898an de li Qahîreyê derket",
@@ -14060,9 +14060,9 @@
   "explanationKu": "\"Rojnameya Kurdistan\": rojnameya kurdî ya yekem ku di 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve derket.",
   "promptTr": "Tarih dersi için hangi seçenek \"Rojnameya Kurdistan\" teriminin açıklamasını doğru biçimde tamamlar?",
   "answersTr": [
-   "Süleymaniye'de basılan erken dönem Kürtçe gazete",
-   "Latin alfabesiyle basılan ilk Kürtçe dergi",
-   "Erivan'da yıllarca basılan Kürtçe gazete",
+   "1926'da Süleymaniye'de basılan Kürtçe gazete",
+   "1932'de çıkan Latin alfabeli Kürtçe dergi",
+   "1930'dan beri Erivan'da basılan Kürtçe gazete",
    "1898'de Kahire'de çıkan ilk Kürtçe gazete"
   ],
   "correctAnswerTr": "1898'de Kahire'de çıkan ilk Kürtçe gazete"
@@ -24005,7 +24005,7 @@
   "prompt": "Deng bi gelemperî bi kîjan cureyê dosyayê tê tomarkirin?",
   "answers": [
    "MP3",
-   "HTML",
+   "HTML5",
    "JPG",
    "PDF"
   ],
@@ -24018,7 +24018,7 @@
   "promptTr": "Ses genellikle hangi dosya türüyle kaydedilir?",
   "answersTr": [
    "MP3",
-   "HTML",
+   "HTML5",
    "JPG",
    "PDF"
   ],

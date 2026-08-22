@@ -3724,9 +3724,9 @@
     "category": "Dîrok",
     "prompt": "Sedema sereke ya ku kovara \"Hawar\" (1932) li Şamê derket û ne li Stenbol an Amedê çi bû?",
     "answers": [
-      "Li Şamê hebûna zankoyeke mezin a fîlolojiya zimanên rojhilatî",
-      "Daxwaza Fransiyan ji bo avakirina televîzyona nû ya erebî li herêmê",
-      "Nebûna makîneyên çapxaneyê li bajarên din ên herêmê",
+      "Li Şamê di 1923an de vekirina zankoyeke fîlolojiya rojhilatî",
+      "Daxwaza Fransiyan ji bo damezrandina radyoyeke erebî di 1930an de",
+      "Nebûna makîneyên çapxaneyê li bajarên herêmê beriya 1932an",
       "Rewşa siyasî ya piştî 1925an û qedexekirina rêxistin û weşanên kurdî li Tirkiyeyê"
     ],
     "correctAnswer": "Rewşa siyasî ya piştî 1925an û qedexekirina rêxistin û weşanên kurdî li Tirkiyeyê",
@@ -3741,9 +3741,9 @@
     },
     "promptTr": "Mîr Celadet Bedirxan'ın \"Hawar\" dergisini (1932) İstanbul veya Diyarbakır yerine Şam'da çıkarmasının tarihsel sebebi neydi?",
     "answersTr": [
-      "Şam'da doğu dilleri üzerine büyük bir filoloji üniversitesinin bulunması",
-      "Fransızların bölgede yeni bir Arapça televizyon kanalı kurma isteği",
-      "Bölgedeki diğer şehirlerde hiçbir matbaa makinesinin bulunmaması",
+      "Şam'da 1923'te bir doğu filolojisi üniversitesinin açılması",
+      "Fransızların 1930'da bölgede Arapça bir radyo kurma isteği",
+      "1932 öncesinde bölgedeki şehirlerde matbaa makinesinin bulunmaması",
       "1925 sonrası siyasi şartlar ve Türkiye'de Kürtçe yayın ve örgütlenmenin yasaklanması"
     ],
     "correctAnswerTr": "1925 sonrası siyasi şartlar ve Türkiye'de Kürtçe yayın ve örgütlenmenin yasaklanması",
@@ -4593,9 +4593,9 @@
     "prompt": "Dewleta Neo-Babîlî ji aliyê kîjan hêzê ve hat bidawîkirin?",
     "answers": [
       "Farisî (Hexamenişî)",
-      "Asûrî",
-      "Akkadî",
-      "Sumerî"
+      "Asûrî (Neo-Asûrî)",
+      "Akkadî (Sargonî)",
+      "Sumerî (Ûrûk)"
     ],
     "correctAnswer": "Farisî (Hexamenişî)",
     "explanation": "MÖ 539'da Pers kralı Kyros Babil'i aldı ve Yeni Babil Devleti sona erdi. Kent büyük bir yıkım savaşı olmadan el değiştirdi.",
@@ -4610,9 +4610,9 @@
     "promptTr": "Yeni Babil Devleti hangi güç tarafından sona erdirildi?",
     "answersTr": [
       "Persler (Ahamenişler)",
-      "Asurlular",
-      "Akatlar",
-      "Sümerler"
+      "Asurlular (Yeni Asur)",
+      "Akatlar (Sargon hanedanı)",
+      "Sümerler (Uruk)"
     ],
     "correctAnswerTr": "Persler (Ahamenişler)",
     "explanationKu": "Di 539an berî zayînê de padîşahê faris Kyros Babîl girt û dewleta Neo-Babîlî bi dawî bû; bajar bêyî şerekî wêranker dest guhert.",
@@ -8188,10 +8188,10 @@
     "category": "Dîrok",
     "prompt": "Di dîroka devkî de, kîjan pirsgirêk ji ber ziman û wergeran derdikeve?",
     "answers": [
-      "Zêdebûna agahiyan",
+      "Zêdebûna agahiyan di arşîvan de",
       "Wendabûna wateyê di wergerê de",
-      "Kêmasiya şahidan",
-      "Zêdebûna belgeyan"
+      "Kêmasiya şahidan di gundan de",
+      "Zêdebûna belgeyan di pirtûkxaneyan de"
     ],
     "correctAnswer": "Wendabûna wateyê di wergerê de",
     "explanation": "Sözlü tarih bir dilden başka bir dile çevrildiğinde, anlatıcının özgün anlamı kaybolabilir veya değişebilir; bu da bilgilerin doğruluğunu azaltır.",
@@ -8205,10 +8205,10 @@
     },
     "promptTr": "Sözlü tarihte dil ve çevirilerden dolayı hangi sorun ortaya çıkar?",
     "answersTr": [
-      "Bilgilerin artması",
+      "Arşivlerde bilgilerin artması",
       "Çeviride anlamın kaybolması",
-      "Tanık eksikliği",
-      "Belgelerin artması"
+      "Köylerde tanık eksikliği",
+      "Kütüphanelerde belgelerin artması"
     ],
     "correctAnswerTr": "Çeviride anlamın kaybolması",
     "explanationKu": "Dema ku dîroka devkî ji zimanekî bi zimanekî din tê wergerandin, dibe ku wateya resen a çîrokbêj winda bibe an jî biguhere, ev jî rastbûna agahiyan kêm dike.",
@@ -15258,7 +15258,7 @@
     "answers": [
       "The 400 Blows",
       "Breathless",
-      "Last Year at Marienbad",
+      "Cléo from 5 to 7",
       "Hiroshima mon amour"
     ],
     "correctAnswer": "The 400 Blows",
@@ -15275,7 +15275,7 @@
     "answersTr": [
       "The 400 Blows",
       "Breathless",
-      "Last Year at Marienbad",
+      "Cléo from 5 to 7",
       "Hiroshima mon amour"
     ],
     "correctAnswerTr": "The 400 Blows",
@@ -16838,12 +16838,12 @@
     "prompt": "Kîjan protokol ji bo wergirtina e-nameyan ji serverê tê bikaranîn?",
     "answers": [
       "SMTP",
-      "HTTP",
+      "HTTP/2",
       "POP3",
       "FTP"
     ],
     "correctAnswer": "POP3",
-    "explanation": "POP3 (Posta Ofisi Protokolü 3), sunucudan e-posta almak için kullanılır. SMTP e-posta göndermek, HTTP web siteleri ve FTP dosyalar içindir.",
+    "explanation": "POP3 (Posta Ofisi Protokolü 3), sunucudan e-posta almak için kullanılır. SMTP e-posta göndermek, HTTP/2 web siteleri ve FTP dosyalar içindir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -16855,13 +16855,13 @@
     "promptTr": "Sunucudan e-posta almak için hangi protokol kullanılır?",
     "answersTr": [
       "SMTP",
-      "HTTP",
+      "HTTP/2",
       "POP3",
       "FTP"
     ],
     "correctAnswerTr": "POP3",
-    "explanationKu": "POP3 (Post Office Protocol 3) ji bo wergirtina e-nameyan ji serverê tê bikaranîn. SMTP ji bo şandina e-nameyan e, HTTP ji bo malperan û FTP ji bo pelan e.",
-    "explanationTr": "POP3 (Posta Ofisi Protokolü 3), sunucudan e-posta almak için kullanılır. SMTP e-posta göndermek, HTTP web siteleri ve FTP dosyalar içindir."
+    "explanationKu": "POP3 (Post Office Protocol 3) ji bo wergirtina e-nameyan ji serverê tê bikaranîn. SMTP ji bo şandina e-nameyan e, HTTP/2 ji bo malperan û FTP ji bo pelan e.",
+    "explanationTr": "POP3 (Posta Ofisi Protokolü 3), sunucudan e-posta almak için kullanılır. SMTP e-posta göndermek, HTTP/2 web siteleri ve FTP dosyalar içindir."
   },
   {
     "id": "ds_teknoloji_0010",
@@ -17240,7 +17240,7 @@
     "category": "Teknolojî",
     "prompt": "Kîjan rêbaz ji bo rastkirina nasnameya bikarhêner bi du qonaxan tê bikaranîn?",
     "answers": [
-      "SSO",
+      "OAuth 2.0",
       "Kodê vegerandinê",
       "Şîfreya tenê",
       "2FA"
@@ -17257,7 +17257,7 @@
     },
     "promptTr": "Kullanıcı kimliğini iki aşamalı olarak doğrulamak için hangi yöntem kullanılır?",
     "answersTr": [
-      "SSO",
+      "OAuth 2.0",
       "Kurtarma kodu",
       "Tek parola",
       "2FA"
@@ -19224,13 +19224,13 @@
     "category": "Teknolojî",
     "prompt": "Kîjan teknolojî ji bo veguhestina daneyan bi leza bilind di navbera têlefon û torê de tê bikaranîn?",
     "answers": [
-      "Bluetooth",
+      "Bluetooth 5.0",
       "NFC",
       "Infrared",
       "5G"
     ],
     "correctAnswer": "5G",
-    "explanation": "5G, ağda yüksek hızda veri aktarımı için kullanılan bir teknolojidir. Bluetooth kısa mesafe içindir, NFC yakın ödemeler içindir ve kızılötesi kısa mesafe iletişim içindir.",
+    "explanation": "5G, ağda yüksek hızda veri aktarımı için kullanılan bir teknolojidir. Bluetooth 5.0 kısa mesafe içindir, NFC yakın ödemeler içindir ve kızılötesi kısa mesafe iletişim içindir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -19241,14 +19241,14 @@
     },
     "promptTr": "Telefon ve ağ arasında yüksek hızda veri aktarımı için hangi teknoloji kullanılır?",
     "answersTr": [
-      "Bluetooth",
+      "Bluetooth 5.0",
       "NFC",
       "Kızılötesi",
       "5G"
     ],
     "correctAnswerTr": "5G",
-    "explanationKu": "5G teknolojiyek e ji bo veguhestina daneyan bi leza bilind di torê de. Bluetooth ji bo dûrahiya kurt e, NFC ji bo danûstandinên nêzîk e û infrared jî ji bo têkiliya kurt e.",
-    "explanationTr": "5G, ağda yüksek hızda veri aktarımı için kullanılan bir teknolojidir. Bluetooth kısa mesafe içindir, NFC yakın ödemeler içindir ve kızılötesi kısa mesafe iletişim içindir."
+    "explanationKu": "5G teknolojiyek e ji bo veguhestina daneyan bi leza bilind di torê de. Bluetooth 5.0 ji bo dûrahiya kurt e, NFC ji bo danûstandinên nêzîk e û infrared jî ji bo têkiliya kurt e.",
+    "explanationTr": "5G, ağda yüksek hızda veri aktarımı için kullanılan bir teknolojidir. Bluetooth 5.0 kısa mesafe içindir, NFC yakın ödemeler içindir ve kızılötesi kısa mesafe iletişim içindir."
   },
   {
     "id": "ds_teknoloji_0198",
@@ -27791,15 +27791,15 @@
     "prompt": "Belgefîlma \"5 No'lu Cezaevi\" (2009) a Çayan Demirel li ser kîjan rastiya dîrokî hatiye avakirin?",
     "promptTr": "Çayan Demirel'in \"5 No'lu Cezaevi\" (2009) belgeseli hangi tarihsel gerçekliğe tanıklık eder?",
     "answers": [
-      "Girtîgehên serdema navîn ên li welatên Ewropaya Bakur",
-      "Dîroka avakirina zindana Alcatrazê ya li Amerîkayê",
-      "Jiyana girtiyên şerê cîhanî yê duyem li Asyayê",
+      "Girtîgehên serdema navîn ên Ewropaya Bakur ên beriya 1500î",
+      "Dîroka zindana Alcatrazê ya ku di sedsala 20an de li Amerîkayê vebû",
+      "Jiyana girtiyên şerê cîhanî yê duyem di navbera 1941 û 1945an de",
       "Trawma, êşkence û berxwedana li Girtîgeha Leşkerî ya Amedê ya piştî darbeya 1980î"
     ],
     "answersTr": [
-      "Kuzey Avrupa ülkelerinde ortaçağda inşa edilen şato zindanlarının mimarisini",
-      "Amerika'daki ünlü Alcatraz adası hapishanesinin kaçış hikayelerini",
-      "İkinci Dünya Savaşı sırasında Asya cephesindeki esir kamplarının yaşamını",
+      "1500 öncesi Kuzey Avrupa'daki ortaçağ zindanları",
+      "Amerika'da 20. yüzyılda açılan Alcatraz hapishanesinin tarihi",
+      "1941-1945 arasında İkinci Dünya Savaşı esirlerinin yaşamı",
       "12 Eylül 1980 askeri darbesi sonrası Diyarbakır 5 No'lu Askeri Cezaevi'ndeki işkence ve tanıklıkları"
     ],
     "correctAnswer": "Trawma, êşkence û berxwedana li Girtîgeha Leşkerî ya Amedê ya piştî darbeya 1980î",
@@ -27863,16 +27863,16 @@
     "prompt": "Di fîlma \"Zer\" (2017) a \"Kazım Öz\" de, rêwîtiya ciwanekî ji New Yorkê ber bi Dêrsimê ve çi rave dike?",
     "promptTr": "Kazım Öz'ün \"Zer\" (2017) filminde New York'tan Dersim'e uzanan arayışın tarihsel odağı nedir?",
     "answers": [
-      "Ji bo kirîna zeviyên çandiniyê vegera gundê bavê xwe",
+      "Vegera gundê bavê xwe ya sala 2015an ji bo kirîna zeviyan",
       "Lêgerîna li strana kalikê xwe û vedîtina rastiya komkujiya 1938an a Dêrsimê",
-      "Ji bo çêkirina kargeheke nû ya çêkirina kincan",
-      "Ji bo fêrbûna zimanê îngilîzî ji mamosteyên biyanî"
+      "Damezrandina kargeheke kincan a nû di sala 2016an de",
+      "Fêrbûna îngilîzî di zanîngeheke New Yorkê de di 2014an de"
     ],
     "answersTr": [
-      "Büyük tarım arazileri satın almak için dede köyüne yatırım yapmak",
+      "2015'te tarla satın almak için baba köyüne dönüş",
       "Nenesinin fısıldadığı türkünün (Zer) peşine düşerek 1938 Dersim Katliamı'nın köklerine ulaşmak",
-      "Metropolde modern bir hazır giyim ve tekstil fabrikası kurmak",
-      "Yabancı dil öğretmenlerinden ileri düzey İngilizce eğitimi almak"
+      "2016'da yeni bir konfeksiyon atölyesi kurmak",
+      "2014'te bir New York üniversitesinde İngilizce öğrenmek"
     ],
     "correctAnswer": "Lêgerîna li strana kalikê xwe û vedîtina rastiya komkujiya 1938an a Dêrsimê",
     "correctAnswerTr": "Nenesinin fısıldadığı türkünün (Zer) peşine düşerek 1938 Dersim Katliamı'nın köklerine ulaşmak",
@@ -28152,15 +28152,15 @@
     "promptTr": "Kürt kadın yönetmenlerin (Bêrîvan Bînevşa, Özlem Yaşar) sinema anlatılarında öne çıkardığı temel eksen nedir?",
     "answers": [
       "Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de",
-      "Tenê şîretên çêkirina xwarinên gelerî di televîzyonan de",
-      "Bazirganiya kincên modayê li bajarên mezin ên cîhanê",
-      "Dîroka şerên kevnar ên bê hebûna jinan di civakê de"
+      "Tenê şîretên çêkirina xwarinên gelerî di bernameyên televîzyonê de",
+      "Bazirganiya kincên modayê û pêşbaziya mankeniyê li bajarên cîhanê",
+      "Dîroka şerên kevnar ên ku jin bi tevahî jê hatine derxistin"
     ],
     "answersTr": [
       "Feodal baskılara karşı kadının özgürleşme mücadelesi ve toplumsal dönüşümdeki öncü rolü",
-      "Televizyon programlarında geleneksel mutfak tarifleri sunumu",
-      "Dünya metropollerinde lüks moda ve mankenlik ajansı rekabeti",
-      "Kadınların tamamen dışlandığı eski erkek savaş tarihinin övgüsü"
+      "Televizyon programlarında yalnızca geleneksel yemek tarifleri",
+      "Dünya metropollerinde moda ticareti ve mankenlik rekabeti",
+      "Kadınların tamamen dışlandığı eski savaş tarihinin anlatımı"
     ],
     "correctAnswer": "Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de",
     "correctAnswerTr": "Feodal baskılara karşı kadının özgürleşme mücadelesi ve toplumsal dönüşümdeki öncü rolü",
@@ -28895,15 +28895,15 @@
     "prompt": "Serhildana Ebdurehman Paşayê Baban (1806) di dîroka mîrektiyên kurd de çima xwedî cihekî girîng e?",
     "promptTr": "1806 Baban Mîrliği (Abdurrahman Paşa) isyanı Kürt mîrlikleri tarihinde neden önemli bir dönüm noktasıdır?",
     "answers": [
-      "Dawîn şerê mezin ê li dijî hêzên dagirker ên Romayê bû",
-      "Serhildaneke aborî bû ku tenê ji bo bacên gomrukê yên bajêr derketibû",
-      "Yekem serhildana xwendekaran bû ku li zanîngeha Bexdayê dest pê kiribû",
+      "Dawîn şerê mezin ê sedsala 3an ê li dijî hêzên Romayê bû",
+      "Serhildaneke aborî ya sedsala 18an bû ku ji bo bacên gomrukê derketibû",
+      "Yekem serhildana xwendekaran a sedsala 20an bû ku li Bexdayê dest pê kir",
       "Yekem berteka çekdarî ya sedsala 19an bû li dijî navendîbûna Osmaniyan"
     ],
     "answersTr": [
-      "Kadim Roma işgal güçlerine karşı verilen son büyük askeri meydan savaşı olması",
-      "Yalnızca şehir içi gümrük vergilerinin düşürülmesini amaçlayan iktisadi bir protesto olması",
-      "Bağdat Üniversitesi'nde başlayan ilk organize öğrenci boykotu niteliği taşıması",
+      "3. yüzyılda Roma güçlerine karşı verilen son büyük savaş olması",
+      "18. yüzyılda yalnızca gümrük vergileri için çıkan iktisadi bir isyan",
+      "20. yüzyılda Bağdat'ta başlayan ilk öğrenci isyanı olması",
       "Osmanlı merkezileşme politikasına karşı 19. yüzyıl mîrlik isyanlarının ilk dalgası olması"
     ],
     "correctAnswer": "Yekem berteka çekdarî ya sedsala 19an bû li dijî navendîbûna Osmaniyan",

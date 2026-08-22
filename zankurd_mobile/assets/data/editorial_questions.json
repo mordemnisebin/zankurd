@@ -1086,10 +1086,10 @@
     "category": "Dîrok",
     "prompt": "Selahedînê Eyûbî bi taybetî bi çi tê nasîn?",
     "answers": [
-      "Damezrandina Împeratoriya Osmanî",
+      "Damezrandina Împeratoriya Osmanî di 1299an de",
       "Vegirtina Qudsê di 1187an de",
-      "Nivîsandina Mem û Zînê",
-      "Vedîtina alfabeya kurdî"
+      "Nivîsandina Mem û Zînê di 1692an de",
+      "Vedîtina alfabeya kurdî di 1932an de"
     ],
     "correctAnswer": "Vegirtina Qudsê di 1187an de",
     "explanation": "Kürt kökenli Selahaddin Eyyubi 1187'de Kudüs'ü aldı ve Eyyubi Devleti'ni kurdu.",
@@ -1104,10 +1104,10 @@
     },
     "promptTr": "Selahedînê Eyûbî özellikle neyle tanınır?",
     "answersTr": [
-      "Osmanlı İmparatorluğu'nu kurmasıyla",
+      "Osmanlı İmparatorluğu'nu 1299'da kurmasıyla",
       "1187'de Kudüs'ü almasıyla",
-      "Mem û Zîn'i yazmasıyla",
-      "Kürt alfabesini bulmasıyla"
+      "Mem û Zîn'i 1692'de yazmasıyla",
+      "Kürt alfabesini 1932'de bulmasıyla"
     ],
     "correctAnswerTr": "1187'de Kudüs'ü almasıyla"
   },
@@ -4600,13 +4600,13 @@
     "answers": [
       "şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin",
       "veguhastina muzîkal a bi têkiliya hoste-şagird",
-      "ji salên 1950î ve stranên kurdî belav kir",
+      "bi salan stranên kurdî li seranserê herêmê belav kir",
       "edeta ku ji muzîkjenan re pere tê avêtin"
     ],
-    "correctAnswer": "ji salên 1950î ve stranên kurdî belav kir",
-    "explanation": "Erivan Radyosu'nun Kürtçe yayını, dengbêj arşivinin ana kaynağı oldu.",
+    "correctAnswer": "bi salan stranên kurdî li seranserê herêmê belav kir",
+    "explanation": "Erivan Radyosu 1950'lerden bu yana Kürtçe yayın yaptı; arşivi dengbêj geleneğinin ana kaynağı oldu.",
     "explanationKu": "Weşana kurdî ya Radyoya Erîvanê bû çavkaniyeke sereke ya arşîva dengbêjiyê.",
-    "explanationTr": "Erivan Radyosu'nun Kürtçe yayını, dengbêj arşivinin ana kaynağı oldu.",
+    "explanationTr": "Erivan Radyosu 1950'lerden bu yana Kürtçe yayın yaptı; arşivi dengbêj geleneğinin ana kaynağı oldu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4618,10 +4618,10 @@
     "answersTr": [
       "kilamların söylendiği serbest ritimli ses üslubudur",
       "usta-çırak ilişkisiyle yürüyen müzikal aktarımdır",
-      "1950'lerden bu yana Kürtçe şarkıları yaydı",
+      "Kürtçe şarkıları yıllarca tüm bölgeye yaydı",
       "müzisyenlere para atma âdetidir"
     ],
-    "correctAnswerTr": "1950'lerden bu yana Kürtçe şarkıları yaydı"
+    "correctAnswerTr": "Kürtçe şarkıları yıllarca tüm bölgeye yaydı"
   },
   {
     "type": "multipleChoice",
@@ -8043,9 +8043,9 @@
     "prompt": "Fîlmê \"Klama Dayîka Min\" xelata fîlmê herî baş li kîjan festîvalê wergirt?",
     "answers": [
       "Festîvala Fîlman a Saraybosnayê",
-      "Festîvala Cannesê",
-      "Festîvala Berlînê",
-      "Festîvala Venedîkê"
+      "Festîvala Fîlman a Cannesê",
+      "Festîvala Fîlman a Berlînê",
+      "Festîvala Fîlman a Venedîkê"
     ],
     "correctAnswer": "Festîvala Fîlman a Saraybosnayê",
     "explanation": "Erol Mintaş'ın filmi 2014'te bu festivalde ana ödülü kazandı.",
@@ -8061,9 +8061,9 @@
     "promptTr": "\"Klama Dayîka Min\" filmi en iyi film ödülünü hangi festivalde aldı?",
     "answersTr": [
       "Saraybosna Film Festivali",
-      "Cannes Festivali",
-      "Berlin Festivali",
-      "Venedik Festivali"
+      "Cannes Film Festivali",
+      "Berlin Film Festivali",
+      "Venedik Film Festivali"
     ],
     "correctAnswerTr": "Saraybosna Film Festivali"
   },

@@ -924,23 +924,23 @@
   "answers": [
    "Pînokyo",
    "Sipîberf û Heft Cûceyan",
-   "Fantasia",
-   "Dumbo"
+   "Alîsa li Welatê Ecêban",
+   "Xatûn û Serserî"
   ],
   "correctAnswer": "Sipîberf û Heft Cûceyan",
   "promptTr": "Walt Disney stüdyosunun 1937'de gösterime giren ilk uzun metrajlı animasyon filmi hangisidir?",
   "answersTr": [
    "Pinokyo",
    "Pamuk Prenses ve Yedi Cüceler",
-   "Fantasia",
-   "Dumbo"
+   "Alis Harikalar Diyarında",
+   "Leydi ile Sokak Serserisi"
   ],
   "correctAnswerTr": "Pamuk Prenses ve Yedi Cüceler",
-  "explanation": "Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo ile Fantasia 1940, Dumbo ise 1941 yapımıdır.",
+  "explanation": "Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo 1940, Alis Harikalar Diyarında 1951, Leydi ile Sokak Serserisi ise 1955 yapımıdır.",
   "difficulty": 2,
   "type": "multipleChoice",
-  "explanationTr": "Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo ile Fantasia 1940, Dumbo ise 1941 yapımıdır.",
-  "explanationKu": "Yekem fîlmê dirêjmetraj ê stûdyoyê di dawiya sala 1937an de derket ser perdeyê û îsbat kir ku anîmasyona bi destan xêzkirî dikare vegotineke bi budceyeke mezin hilgire. \"Pinokyo\" û \"Fantasia\" ya sala 1940î ne, \"Dumbo\" jî ya sala 1941ê ye.",
+  "explanationTr": "Stüdyonun ilk uzun metrajı 1937 sonunda gösterime girdi ve el çizimi animasyonun büyük bütçeli bir anlatı taşıyabileceğini kanıtladı. Pinokyo 1940, Alis Harikalar Diyarında 1951, Leydi ile Sokak Serserisi ise 1955 yapımıdır.",
+  "explanationKu": "Yekem fîlmê dirêjmetraj ê stûdyoyê di dawiya sala 1937an de derket ser perdeyê û îsbat kir ku anîmasyona bi destan xêzkirî dikare vegotineke bi budceyeke mezin hilgire. \"Pînokyo\" ya sala 1940î ye, \"Alîsa li Welatê Ecêban\" ya 1951ê ye, \"Xatûn û Serserî\" jî ya 1955an e.",
   "metadata": {
    "dialect": "kurmanci",
    "sourceTitle": "Sînema: huner, dîrok û derhêner",

@@ -96,11 +96,15 @@ Ayrıntı `docs/KALAN_ISLER_GOREVI.md` bölüm 1. **DeepSeek API anahtarı
 gerekiyor ve bulutta yok** — bu madde bulut koşusunda YAPILAMAZ.
 Yerel oturum için bırakıldı.
 
-### A6 — [ ] İçerik: makine taramasının 22 sızma bulgusu
+### A6 — [x] İçerik: makine taramasının 22 sızma bulgusu
 `python3 tool/content_authoring/sik_kalite_taramasi.py` çalıştır
 (saf Python, Flutter gerektirmez). 16 biçim + 6 uzunluk sızması.
 Düzeltirken `docs/KALAN_ISLER_GOREVI.md` bölüm 2'deki bekçi tuzaklarını
 oku — orada üç testin birbirini nasıl kırdığı yazılı.
+
+**Sonuç:** 22 bulgunun 22'si kapandı, tarama 0 bulgu veriyor; düzeltme
+çeldirici tarafında yapıldı (tek istisna `edit_muzik_0017`) ve betiğe
+`FINDING_RATCHET = 0` mandalı eklendi — sızma geri gelirse çıkış kodu 1.
 
 ### A7 — [ ] Park edilmiş 77 soru
 `docs/content_batches/bekleyen_2026_08_19_cografya_cand_edebiyat.json`.
@@ -112,6 +116,24 @@ A5'e bağlı (çapraz kontrol gerekiyor). Bulutta yapılamaz.
 **Yalnız Flutter test koşulabiliyorsa** dokun; koşulamıyorsa dokunma.
 Küçük adım: tek bir bağımsız bölümü `part` dosyasına taşı, test koş,
 commit et. Büyük refactor YAPMA.
+
+### A9 — [ ] DeepSeek bankası kalite bekçilerine bağlı değil
+`test/all_banks_quality_test.dart` başlığında şu yazılı: "yeni bir kaynak
+eklendiğinde buraya da eklenir; listeye eklemeyi unutmak, kalite bekçisini
+o kaynak için sessizce kapatmaktır." `deepseek_2026_08_18_questions.json`
+(1298 soru) `banks` haritasında YOK — yalnız yükleyici sıra testinde
+geçiyor. Yani o bankada sorulan terim şık olabilir, doğru cevap gövdede
+yazabilir, şık yinelenebilir; hiçbiri düşmez. A6 koşusunda bulundu.
+Bankayı `banks` haritasına ekle ve düşen kuralları tek tek onar.
+**Flutter gerektirir** (test koşulmadan eklenmemeli).
+
+### A10 — [ ] `ds_sinema_0130` tür uyumsuzluğu
+Doğru şık `The 400 Blows` yıl-benzeri sayılır (`\b\d{3,4}\b`), üç
+çeldirici sayılmaz. `question_distractor_quality_test` bunu yakalardı ama
+yalnız offline bankasında koşuyor — A9 kapanınca bu da düşecek. Doğru
+şıkkın metnine dokunulamaz: `capraz_kontrol.json` hükmü onu metin olarak
+saklıyor. Çözüm çeldirici tarafında (ör. `Cléo de 5 à 7` yerine dört
+haneli sayı taşıyan bir Pêla Nû filmi).
 
 ---
 
@@ -137,3 +159,12 @@ commit et. Büyük refactor YAPMA.
 ## Koşu günlüğü
 
 Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
+
+- 2026-08-22 — Flutter YOK (`flutter --version` boş, `dart` yok), bu yüzden
+  Dart'a dokunulmadı; A6 yapıldı: 22 sızma bulgusunun 22'si JSON içerik
+  tarafında kapatıldı, taramaya mandal eklendi. Doğrulama `flutter test`
+  ile değil, dokunulan bekçilerin ölçütleri Python'da yeniden uygulanarak
+  yapıldı (HEAD ile karşılaştırma: hiçbiri kötüleşmedi, doğru cevap konum
+  dağılımı 160/169/189/184 aynı kaldı, uzunluk stratejilerinin en iyisi
+  %26,5 < %28). A5 ve A7 atlandı — DeepSeek anahtarı bulutta yok. A9 ve
+  A10 yeni açıldı.
