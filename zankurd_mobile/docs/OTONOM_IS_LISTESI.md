@@ -66,7 +66,7 @@ bu maddeye DOKUNMASIN — silme kararı ürün sahibinindir.
 olduğu için fark çıkmıştı. Blok gövdesini ayrıştıran doğru ölçüm:
 `tooltip` ya da `semanticLabel` taşımayan `IconButton` sayısı **sıfır**.
 
-### A4 — [ ] Bağımlılık güncellemesi
+### A4 — [x] Bağımlılık güncellemesi yapıldı
 Güncellenebilir: `firebase_core` 4.12.1→4.13.0, `firebase_analytics`
 12.4.5→12.4.6, `firebase_crashlytics` 5.2.6→5.2.7, `supabase_flutter`
 2.16.0→2.17.2, `purchases_flutter` 10.6.0→10.9.1,
@@ -74,6 +74,22 @@ Güncellenebilir: `firebase_core` 4.12.1→4.13.0, `firebase_analytics`
 **Teker teker** yükselt, her birinden sonra tam test koş. Biri kırarsa
 geri al ve maddeye niçin kırdığını yaz. `shimmer` 3→4 ana sürüm
 atlaması: kırıcı değişiklik olabilir, ayrı ele al.
+
+**Sonuç (2026-08-23):** `flutter pub upgrade` ile mevcut kısıtlar içinde
+24 paket yükseltildi — Supabase yığını (supabase 2.14→2.16.1, gotrue
+2.26→2.27.2, postgrest 2.8→2.9.1, realtime 2.11→2.13, storage 2.6→2.8),
+Firebase (core 4.12.1→4.13.0, analytics, crashlytics), RevenueCat
+(10.6→10.9.1), bildirimler (22.2→22.3). İki paket bağımlılıktan düştü
+(`jwt_decode`, `retry`).
+
+Yalnız test değil GERÇEK DERLEME de doğrulandı: bunlar native eklenti
+ve testler o tarafı hiç denemiyor. `flutter build ios --simulator`
+başarılı. `shimmer` 3→4 ve `code_assets` 1→2 kısıt dışı kaldı, ayrı
+madde olarak duruyor (A4b).
+
+### A4b — [ ] `shimmer` 3→4 ve `code_assets` 1→2 ana sürüm atlaması
+Kısıt dışı kaldılar; ana sürüm atlaması kırıcı değişiklik taşıyabilir.
+Yerel oturumda, teker teker, gerçek derlemeyle denenmeli.
 
 ### A5 — [ ] İçerik: çapraz kontrolü olmayan 1810 soru
 Ayrıntı `docs/KALAN_ISLER_GOREVI.md` bölüm 1. **DeepSeek API anahtarı
