@@ -135,6 +135,20 @@ yalnız offline bankasında koşuyor — A9 kapanınca bu da düşecek. Doğru
 saklıyor. Çözüm çeldirici tarafında (ör. `Cléo de 5 à 7` yerine dört
 haneli sayı taşıyan bir Pêla Nû filmi).
 
+### A11 — [ ] `question_quality/baseline.json` tam yenilenmeli
+A6 koşusunda baseline'ın YALNIZ `sourceFingerprints` alanı elle
+güncellendi (sha256, algoritma doğrulandı: dokunulmamış 7 dosyanın
+hash'i baseline'la birebir tuttu). `issueFingerprints` listesi 1846'da
+bırakıldı, çünkü onu üretmek `dart run tool/question_quality/
+question_quality_audit.dart baseline --accept-current-debt` ister ve o
+koşuda Dart yoktu.
+
+Sonucu: A6'nın GİDERMİŞ olabileceği uyarılar listede duruyor. Kapıyı
+gevşetmez (kapı yalnız yeni fingerprint'e ve sayı artışına bakar), ama
+temizlenmiş bir uyarı geri dönerse yakalanmaz. Flutter'lı ilk oturumda
+tam yenileme yapılmalı; `createdDate` de o zaman güncellenir (şimdilik
+bilerek 2026-08-20'de bırakıldı, çünkü baseline tam yenilenmedi).
+
 ---
 
 ## Bulut koşusunun uyacağı kurallar
@@ -155,6 +169,14 @@ haneli sayı taşıyan bir Pêla Nû filmi).
    yarım iş kabul edilmez.
 7. Kurmancî metinlerde yalnız Hawar alfabesi (`ı ğ ö ü İ` yok).
    Çeviri tek kaynaktan: `lib/src/l10n/strings.dart`.
+8. **Soru bankası JSON'una dokunduysan `tool/question_quality/
+   baseline.json` içindeki `sourceFingerprints` de güncellenmeli.** CI'daki
+   `question_quality_audit.dart gate` adımı her kaynak dosyanın sha256'sını
+   tutar ve içerik değişince "Gate source fingerprint changed" deyip
+   `flutter test`e sıra gelmeden düşer. A6 koşusu tam buna çarptı. Hash
+   `sha256(dosyanın ham baytları)`; Dart yoksa Python'da hesaplanabilir,
+   ama doğruluğunu önce DOKUNMADIĞIN dosyalarla sınayın — hash'leri
+   baseline'la tutmuyorsa varsayımın yanlıştır.
 
 ## Koşu günlüğü
 
