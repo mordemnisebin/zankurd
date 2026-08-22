@@ -190,3 +190,9 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   dağılımı 160/169/189/184 aynı kaldı, uzunluk stratejilerinin en iyisi
   %26,5 < %28). A5 ve A7 atlandı — DeepSeek anahtarı bulutta yok. A9 ve
   A10 yeni açıldı.
+- 2026-08-22 (devamı) — PR #3'te CI o koşuda koşulamayan doğrulamayı yaptı:
+  `analyze-and-test` YEŞİL (`dart analyze` temiz, `dart format` 619 dosyada
+  0 değişiklik, tüm test paketi geçti, ekran turu 92 görüntü üretti),
+  `build-android` yeşil. **A6 artık tam doğrulanmıştır; yeniden
+  denetlenmesine gerek yok.** Arada kalite kapısı parmak izinden düşmüştü,
+  78ae17d ile onarıldı (bkz. kural 8 ve A11).
