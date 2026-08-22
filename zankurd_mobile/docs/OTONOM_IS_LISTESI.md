@@ -28,23 +28,43 @@ uyarısı sıfır, dispose edilmeyen controller yok, 235 `mounted` koruması,
 Sıradaki açık maddeyi al. Bitirdiğinde satırı `[x]` yap, altına tek
 cümlelik sonuç ve commit kısa kimliğini yaz.
 
-### A1 — [ ] Supabase katmanında 60 sessiz hata yutma
-`lib/src/data/supabase_zankurd_repository.dart` içinde 60 `catch` bloğu
-`ErrorReporter`'a hiçbir şey bildirmiyor. Bu ağ katmanı: sessiz düşen bir
-istek, kullanıcıya boş ekran olarak görünür ve hiçbir yerde iz bırakmaz.
-Her birine `ErrorReporter.record(error, stack, reason: '<işlem_adı>')`
-ekle. Davranışı DEĞİŞTİRME — yalnız raporlama ekle.
-Bekçi: raporlamayan `catch` sayısını sabitleyen bir test yaz.
+### A1 — [x] ~~Supabase katmanında 60 sessiz hata yutma~~ YANLIŞ BULGU
+**Böyle bir kusur yok.** İlk ölçüm dosyadaki `catch` sayısını (61)
+`ErrorReporter` kelimesinin geçiş sayısıyla (1) karşılaştırıp aradaki
+farkı "sessiz" saymıştı. Gerçekte dosya `_recordError()` sarmalını
+kullanıyor ve o sarmal 1981. satırda `ErrorReporter.record`'a gidiyor.
 
-### A2 — [ ] Ölü kod: `ErrorDialog`
-`lib/src/widgets/error_dialog.dart` (66 satır) hiçbir yerden
-çağrılmıyor — `lib/`, `test/`, `tool/` üçünde de sıfır referans. Sil.
-Silmeden önce referans yokluğunu yeniden doğrula.
+Doğru ölçüm (2026-08-23): projede **294 catch bloğu, 24'ü raporlamıyor**
+— ve bakınca çoğu BİLEREK sessiz ve gerekçesi yorumda yazılı: Firebase
+yapılandırması olmayan platform, asset bulunamazsa boş listeye düşme,
+ya da hatayı `cleanupError`/`lastError` değişkeninde toplayıp sonra
+raporlama. Hata yönetimi sağlıklı.
 
-### A3 — [ ] Tooltip'siz 4 `IconButton`
-21 `IconButton`'ın 17'sinde `tooltip` var, 4'ünde yok. Ekran okuyucu
-kullanıcısı o dördünün ne yaptığını bilemez. Bul, `strings.dart`tan
-metin vererek ekle (metni ELLE yazma).
+Ders: kelime sayarak kusur ölçülmez. Bu madde neredeyse bir haftalık
+otomasyonu var olmayan bir işin peşine düşürüyordu.
+
+### A2 — [x] Ölü kod: `ErrorDialog` silindi
+66 satır, hiçbir yerden çağrılmıyordu. Tek "referansı"
+`tool/apply_rest_l10n.py` içindeydi; o betik kendi belgesinde "tek
+seferlik göç aracı" diyor ve o harita geçmişte ne değiştirdiğinin
+kaydı, canlı bağımlılık değil.
+
+Bekçisi `test/dead_widget_guard_test.dart`: `lib/src/widgets/` altında
+ne üründe ne testte adı geçen dosya kalamaz. Bekçi SINIF adını arar,
+dosya adını değil — dosya adıyla arayan ilk ölçüm dört dosyayı ölü
+sanmıştı, üçü yanlıştı.
+
+### A2b — [ ] Yalnız kendi testi olan iki widget — İNSAN KARARI
+`ColorfulActionCard` ve `BadgeCollectionSection` ürün kodunda hiç
+kullanılmıyor, yalnız üçer test dosyasında yaşıyorlar. Silmek testleri
+de götürür; ileride kullanılmak üzere bekliyor olabilirler. Bulut koşusu
+bu maddeye DOKUNMASIN — silme kararı ürün sahibinindir.
+
+### A3 — [x] ~~Tooltip'siz 4 IconButton~~ YANLIŞ BULGU
+**Böyle bir kusur yok.** İlk ölçüm `IconButton(` geçen satır sayısıyla
+`tooltip:` geçen satır sayısını karşılaştırmıştı; ikisi farklı satırlarda
+olduğu için fark çıkmıştı. Blok gövdesini ayrıştıran doğru ölçüm:
+`tooltip` ya da `semanticLabel` taşımayan `IconButton` sayısı **sıfır**.
 
 ### A4 — [ ] Bağımlılık güncellemesi
 Güncellenebilir: `firebase_core` 4.12.1→4.13.0, `firebase_analytics`
