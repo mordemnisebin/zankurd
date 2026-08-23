@@ -330,3 +330,6 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   değil). Geri alınacak madde yok. İçerik taraması 0 bulgu.
   Taranan alan: **test kapsamı boşlukları** (önceki iki koşu içeriğe
   bakmıştı). Bulgular A13 (kapandı) ve A14 (açık) olarak eklendi.
+  CI (7ff95dc) koşuyu doğruladı: analiz, biçim, kalite kapısı, kapsam
+  kapısı, tüm test paketi (9dk18sn) ve Android derlemesi yeşil. A13
+  **tam doğrulanmıştır**; yeniden denetlenmesine gerek yok.
