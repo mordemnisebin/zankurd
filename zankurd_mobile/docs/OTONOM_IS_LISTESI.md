@@ -127,13 +127,62 @@ yazabilir, şık yinelenebilir; hiçbiri düşmez. A6 koşusunda bulundu.
 Bankayı `banks` haritasına ekle ve düşen kuralları tek tek onar.
 **Flutter gerektirir** (test koşulmadan eklenmemeli).
 
-### A10 — [ ] `ds_sinema_0130` tür uyumsuzluğu
-Doğru şık `The 400 Blows` yıl-benzeri sayılır (`\b\d{3,4}\b`), üç
-çeldirici sayılmaz. `question_distractor_quality_test` bunu yakalardı ama
-yalnız offline bankasında koşuyor — A9 kapanınca bu da düşecek. Doğru
-şıkkın metnine dokunulamaz: `capraz_kontrol.json` hükmü onu metin olarak
-saklıyor. Çözüm çeldirici tarafında (ör. `Cléo de 5 à 7` yerine dört
-haneli sayı taşıyan bir Pêla Nû filmi).
+**İçerik tarafı ölçüldü (2026-08-23).** Yapısal beş kural Python'da
+Dart'a birebir yeniden yazılıp bankaya uygulandı (doğruluk sınavı:
+bekçili yedi bankada 0 bulgu). Deepseek bankasında sonuç: doğru cevap
+gövdede 0, cevapsız soru 0, yinelenen şık 0, **sorulan terim şık olarak
+duruyor: 1** — `ds_sinema_0193`, bu koşuda kapatıldı. Yani A9'un içerik
+borcu bitti; kalan iş Dart tarafındadır: haritaya ekleme + Python'da
+ölçülemeyen dil politikası kuralları (`offLanguageDistractors`,
+`answerIsGivenAwayByLanguage`, açıklama dili). Bankayı haritaya
+eklemeden önce **A12 yapılmalı**, yoksa yıl/tür ölçütü 12 yanlış alarm
+verir.
+
+### A10 — [x] ~~`ds_sinema_0130` tür uyumsuzluğu~~ YANLIŞ BULGU
+**İçerikte kusur yok; yanılan ölçüttür.** Maddenin önerdiği düzeltme
+(çeldiricileri dört haneli sayı taşıyan filmlerle değiştirmek) gerçek
+içeriği bozardı — A1 ve A3'ün dersi.
+
+Ölçüldü (2026-08-23): kural Python'da Dart'a birebir yeniden yazıldı
+(kritik ayrıntı: Dart RegExp'te `\w`/`\b` yalnız ASCII'dir, Python'da
+Unicode — bu yüzden `sala 1950î` iki dilde farklı sonuç verir). Doğruluk
+sınavı: bekçili yedi bankanın hepsinde 0 bulgu, yani CI'nin yeşiliyle
+birebir. Deepseek bankasında kural 12 soruya çarpıyor; **on ikisi de
+okundu, hiçbiri kuralın yazıldığı kusur değil.** Üç sızma biçimi:
+
+* sayı+birim şıkları — `0/45/90/180 derece` (yalnız 180 "yıl" sayılıyor)
+* çıplak sayı şıkları — `23/57/30/100` senfoni, `64/98/79/117` yılı
+* içinde sayı geçen özel ad ve uzun düzyazı — `The 400 Blows`,
+  `…sedsala 19an de…`
+
+Aynı ölçüt editoryal bankada 7, expansion'da 3, sourceFirst'te 2 yanlış
+alarm daha veriyor; onlar da aynı üç biçimden. Offline'ın temiz olması
+kuralın doğruluğunu göstermez — offline 2026-07-24'te tam bu ölçüte
+göre elle onarılmıştı.
+
+Kalan iş A12'ye taşındı.
+
+### A12 — [ ] Yıl/tür ölçütü keskinleştirilmeli (A9'un önkoşulu)
+`question_distractor_quality_test` içindeki `_isYearLike`, "içinde 3-4
+haneli sayı geçen" her şeyi tarih sayıyor. Kuralın niyeti ise başka:
+**tarih olan bir şık, tarih olmayan şıkların arasında durmasın** (özgün
+kusur: bir YER sorusunun şıklarında "16. yüzyıl" ve "20. yüzyıl").
+
+Öneri: ölçüt "içinde sayı var mı" değil "şıkkın KENDİSİ bir tarih
+ifadesi mi" olsun — çıplak sayılar tek sınıf sayılsın (hane sayısına
+bakılmadan), sayı+birim ve uzun düzyazı tarih sayılmasın, `berî zayînê`
+gibi belirteçler listeye eklensin, Kurmancî ek almış sayılar
+(`1970yî`, `1962an`, `5em`, `61ê`) ASCII `\b` yüzünden kaçmasın.
+
+Ölçütü GEVŞETME tuzağı: "yalnız doğru şık sayı taşıyorsa işaretle"
+biçimindeki teklik koşulu (bkz. `sik_kalite_taramasi.py`'nin
+`bicim_sizmasi` kuralı) özgün Urartû kusurunu YAKALAMAZ — orada iki
+çeldirici yüzyıldı, üçü değil. Keskinleştirme sınıflandırmada olmalı,
+teklikte değil.
+
+Doğrulama: keskinleştirilmiş ölçüt offline'da 0 vermeli (yoksa
+2026-07-24'ün 106 onarımı boşa gider) ve yukarıdaki 24 yanlış alarmın
+hepsini susturmalı. **Flutter gerektirir.**
 
 ### A11 — [ ] `question_quality/baseline.json` tam yenilenmeli
 A6 koşusunda baseline'ın YALNIZ `sourceFingerprints` alanı elle
@@ -196,3 +245,18 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   `build-android` yeşil. **A6 artık tam doğrulanmıştır; yeniden
   denetlenmesine gerek yok.** Arada kalite kapısı parmak izinden düşmüştü,
   78ae17d ile onarıldı (bkz. kural 8 ve A11).
+- 2026-08-23 — Flutter YOK, Dart'a dokunulmadı. A10 alındı ve **yanlış
+  bulgu** çıktı: kuralın 12 çarpmasının 12'si de ölçüt hatası, içerik
+  sağlam (kanıt maddede; ölçüt Dart'a birebir yeniden yazıldı ve bekçili
+  yedi bankada 0 vererek doğrulandı). Kalan iş A12 olarak açıldı. Ölçüm
+  sırasında A9'un içerik borcu da bitti: tek gerçek kusur
+  `ds_sinema_0193` (gövdede anılan «Moana» şık olarak da duruyordu),
+  düzeltildi ve KU açıklamadaki "xwedawenda volkanê" hatası da
+  giderildi (Te Fiti ada tanrıçasıdır). Bekçisi
+  `sik_kalite_taramasi.py`'ye `sorulan_terim_sik` sınıfı olarak eklendi
+  — kusur geri konunca çıkış kodu 1, kaldırılınca 0 diye sınandı — ve
+  tarayıcı ilk kez CI'ya bağlandı. `baseline.json`'daki deepseek parmak
+  izi kural 8 gereği yenilendi (yordam önce dokunulmamış 10 dosyayla
+  sınandı, 10'u da tuttu). A5/A7 yine atlandı: DeepSeek anahtarı
+  bulutta yok. Engel: `flutter test` koşulamadı, doğrulama Python'da
+  yeniden uygulanan ölçütlerle yapıldı.

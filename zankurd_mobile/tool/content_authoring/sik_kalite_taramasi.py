@@ -19,6 +19,7 @@ listeyi görmemesi, dönüşünü denetlemek için kullanılır (bkz.
 * `ayni_sik`        — iki şık birebir ya da normalleştirilince aynı
 * `uzunluk_sizmasi` — doğru şık diğerlerinden belirgin uzun/kısa
 * `bicim_sizmasi`   — yalnız doğru şık sayı/tarih taşıyor (ya da tersi)
+* `sorulan_terim_sik` — gövdede tırnakla anılan terim şık olarak da var
 * `sik_sayisi`      — dörtten az/çok şık
 * `anahtar_yok`     — doğru cevap şıklar arasında değil
 * `tekrar_soru`     — başka bir kayıtla neredeyse aynı soru metni
@@ -60,6 +61,12 @@ def normalize_option(text: str) -> str:
 
 def has_digit(text: str) -> bool:
     return any(ch.isdigit() for ch in text or "")
+
+
+# Gövdede tırnak içinde anılan terim. Ölçüt `all_banks_quality_test.dart`
+# içindeki kardeş bekçiyle BİREBİR aynı tutulur; iki bekçi aynı kusuru
+# farklı ölçerse hangisinin haklı olduğu tartışılır, kusur durur.
+QUOTED_TERM = re.compile(r"""[«'"]([^«»'"]{2,60})[»'"]""")
 
 
 def scan(questions: list, source: str) -> list:
@@ -107,6 +114,37 @@ def scan(questions: list, source: str) -> list:
         if len(answers) != 4:
             add(question, "sik_sayisi", f"{len(answers)} şık")
             continue
+
+        # Sorulan terim şık olarak da duruyor.
+        #
+        # ## Kusur
+        #
+        # 2026-08-23'te `ds_sinema_0193` böyleydi: gövde «Moana» filmini
+        # tırnak içinde anıyor, şıklardan biri de "Moana"ydı. Doğru cevap
+        # sızmıyordu (cevap "Te Fiti"), ama şık kümesi eserin ADINI bir
+        # KARAKTER gibi listeliyordu; okuyan kişi aynı sözcüğü iki ayrı
+        # anlamda görüyordu.
+        #
+        # ## Niçin sessiz kaldı
+        #
+        # Kural aslında YAZILI: `test/all_banks_quality_test.dart` içinde
+        # "hiçbir kaynakta sorulan terim şık olarak durmuyor" diye bir
+        # bekçi var. Ama o bekçi bankaları elle sayılmış bir haritadan
+        # okur ve `deepseek_2026_08_18_questions.json` o haritada YOKTUR
+        # (bkz. iş listesi A9). Yani kural, 1110 soruluk banka için hiç
+        # koşmadı. Bu tarama ise banka listesini
+        # `question_bank_assets.dart` manifestosundan okur — yeni bir
+        # banka eklendiğinde kendiliğinden kapsar. Kuralın burada da
+        # durmasının sebebi budur: elle tutulan liste unutulur, manifesto
+        # unutulmaz.
+        terms = {m.group(1).strip().casefold()
+                 for m in QUOTED_TERM.finditer(prompt)}
+        if terms:
+            for answer in answers:
+                if answer.strip().casefold() in terms:
+                    add(question, "sorulan_terim_sik",
+                        f"gövdede anılan terim şık olarak da duruyor: {answer!r}")
+                    break
 
         if correct not in answers:
             add(question, "anahtar_yok", f"doğru cevap şıklarda yok: {correct!r}")

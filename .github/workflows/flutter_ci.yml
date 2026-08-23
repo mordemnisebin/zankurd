@@ -60,6 +60,21 @@ jobs:
     - name: Check question quality regressions
       run: dart run tool/question_quality/question_quality_audit.dart gate
 
+    # Şık sızması taraması (saf Python, mandalı `FINDING_RATCHET = 0`).
+    #
+    # Niçin CI'da: bu araç 2026-08-22'ye kadar bulgu üretiyor ama hüküm
+    # vermiyordu; mandal o gün eklendi, ama mandalı çeken bir koşucu
+    # yoktu. Bulgusunu kimseye söylemeyen bir bekçi, tıpkı deponun
+    # kökünde durmayan bir CI dosyası gibi (bkz. bu dosyanın başlığı),
+    # yalnız varmış gibi görünür.
+    #
+    # Dart kalite kapısından ayrı durur: kapı elle sayılmış bir kaynak
+    # listesine bakar, bu tarama banka listesini
+    # `question_bank_assets.dart` manifestosundan okur — yeni eklenen bir
+    # bankayı kendiliğinden kapsar.
+    - name: Check option-leak scan (Python)
+      run: python3 tool/content_authoring/sik_kalite_taramasi.py
+
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
 

@@ -15971,11 +15971,11 @@
     "answers": [
       "Te Fiti",
       "Maui",
-      "Moana",
+      "Gramma Tala",
       "Tamatoa"
     ],
     "correctAnswer": "Te Fiti",
-    "explanation": "Te Fiti, \"Moana\" filminde ada tanrıçasıdır. Maui, Te Fiti'nin kalbini geri getirmek isteyen yarı tanrıdır, Moana yola çıkan bir kızdır ve Tamatoa dev bir yengeçtir.",
+    "explanation": "Te Fiti, \"Moana\" filminde ada tanrıçasıdır. Maui, Te Fiti'nin kalbini geri getirmek isteyen yarı tanrıdır, Gramma Tala Moana'nın büyükannesidir ve Tamatoa dev bir yengeçtir.",
     "type": "multipleChoice",
     "difficulty": 1,
     "metadata": {
@@ -15988,12 +15988,12 @@
     "answersTr": [
       "Te Fiti",
       "Maui",
-      "Moana",
+      "Gramma Tala",
       "Tamatoa"
     ],
     "correctAnswerTr": "Te Fiti",
-    "explanationKu": "Te Fiti xwedawenda volkanê ye di fîlma \"Moana\" de. Maui nîv-xwedawendekî ku dixwaze dilê Te Fiti vegerîne, Moana keçekî ku bi rê dikeve û Tamatoa kevjalekî devî ye.",
-    "explanationTr": "Te Fiti, \"Moana\" filminde ada tanrıçasıdır. Maui, Te Fiti'nin kalbini geri getirmek isteyen yarı tanrıdır, Moana yola çıkan bir kızdır ve Tamatoa dev bir yengeçtir."
+    "explanationKu": "Te Fiti xwedawenda giravê ye di fîlma \"Moana\" de. Maui nîv-xwedawendekî ku dixwaze dilê Te Fiti vegerîne, Gramma Tala dapîra Moana ye û Tamatoa kevjalekî devî ye.",
+    "explanationTr": "Te Fiti, \"Moana\" filminde ada tanrıçasıdır. Maui, Te Fiti'nin kalbini geri getirmek isteyen yarı tanrıdır, Gramma Tala Moana'nın büyükannesidir ve Tamatoa dev bir yengeçtir."
   },
   {
     "id": "ds_sinema_0194",

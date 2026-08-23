@@ -4,7 +4,7 @@
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/community_questions.json": "b281ec0405bc5d2cdded8b5e26ed19f831432b7639ac8e5c9b1d8b6c35db9182",
-    "assets/data/deepseek_2026_08_18_questions.json": "938b040c73b27e531238eb7b02a57115233ec33f4912b9bcadf3ab2691587fd8",
+    "assets/data/deepseek_2026_08_18_questions.json": "c8dafe959033dce919408c7af57376c4afbc97274a8752d2687ca3700b0befe5",
     "assets/data/editorial_questions.json": "a8ceeb3fee651cfeb48087daaae13e87a17b39a69b3976513e592a89d9760fa8",
     "assets/data/expansion_2026_08_questions.json": "858163af336c97ba8e6df44eb4333d52a73729044085b15fcc5cea63c3a95112",
     "assets/data/fill_in_blank_2026_08_questions.json": "70fb672dbc4710dabf98fb26c837944e8f3e4c4c15931986552e8335b0d67c9a",
