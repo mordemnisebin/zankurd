@@ -260,3 +260,10 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   sınandı, 10'u da tuttu). A5/A7 yine atlandı: DeepSeek anahtarı
   bulutta yok. Engel: `flutter test` koşulamadı, doğrulama Python'da
   yeniden uygulanan ölçütlerle yapıldı.
+- 2026-08-23 (devamı) — CI o koşuda koşulamayan doğrulamayı yaptı
+  (12198e3): `dart analyze` temiz, biçim denetimi temiz, kalite kapısı
+  geçti (yani parmak izi yenilemesi doğruydu), **tüm test paketi geçti**,
+  ekran turu basıldı. Yeni eklenen "Check option-leak scan (Python)"
+  adımı da yeşil — tarayıcı artık gerçekten bir kapı. `ds_sinema_0193`
+  düzeltmesi ve `sorulan_terim_sik` bekçisi **tam doğrulanmıştır**;
+  yeniden denetlenmesine gerek yok.
