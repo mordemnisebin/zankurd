@@ -219,11 +219,39 @@ def main() -> int:
         encoding="utf-8")
     assets = re.findall(r"'(assets/data/[^']+\.json)'", manifest)
 
+    # Kapsamın kendisi denetlenir — "0 bulgu" ile "0 soru tarandı" aynı
+    # ekrana aynı biçimde yazılır, ama biri temizlik biri körlüktür.
+    #
+    # Bu tarama tam da bir bekçinin sessizce kapsam dışı kalmasını
+    # yakalamak için yazılmıştı (bkz. A9: `all_banks_quality_test.dart`
+    # bankaları elle sayılmış bir haritadan okuyor ve deepseek bankası o
+    # haritada olmadığı için kural 1110 soru boyunca hiç koşmamıştı).
+    # Manifestoyu okumak o kusuru tekrarlamaktan korur ama iki yeni
+    # sessiz yol açar ve ikisi de aynı biçimde "0 bulgu" der:
+    #
+    #   * bir banka yeniden adlandırılır — manifestodaki yol tutmaz,
+    #     eski kod dosyayı sessizce ATLARDI (`if not exists: continue`);
+    #   * manifesto çift tırnağa geçer — desen hiçbir şey bulmaz,
+    #     `assets` boş kalır ve döngü hiç dönmez.
+    #
+    # İkisi de artık gürültüyle düşer. Kendi kapsamını doğrulamayan bir
+    # bekçi, kapsamı daraldığı gün en yüksek sesle "temiz" der.
+    if not assets:
+        print("KAPSAM YOK: manifestodan tek banka yolu çıkmadı — desen "
+              "`lib/src/data/question_bank_assets.dart` ile uyumsuz.")
+        return 1
+
+    eksik = [a for a in assets if not pathlib.Path(a).exists()]
+    if eksik:
+        print("KAPSAM EKSİK: manifestoda anılan banka diskte yok — "
+              "taranmadan geçilirdi:")
+        for a in eksik:
+            print(f"  {a}")
+        return 1
+
     all_findings = []
     for asset in assets:
         path = pathlib.Path(asset)
-        if not path.exists():
-            continue
         questions = json.loads(path.read_text(encoding="utf-8"))
         all_findings.extend(scan(questions, path.name))
 

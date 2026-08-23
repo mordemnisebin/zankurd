@@ -198,6 +198,57 @@ temizlenmiş bir uyarı geri dönerse yakalanmaz. Flutter'lı ilk oturumda
 tam yenileme yapılmalı; `createdDate` de o zaman güncellenir (şimdilik
 bilerek 2026-08-20'de bırakıldı, çünkü baseline tam yenilenmedi).
 
+### A13 — [x] Şık taraması kendi kapsamını denetlemiyordu
+`sik_kalite_taramasi.py` banka listesini manifestodan okur (A9'un elle
+sayılmış harita kusurunu tekrarlamamak için). Ama iki sessiz yol
+bırakmıştı ve ikisi de ekrana aynı cümleyi yazıyordu — «0 bulgu»:
+
+* `if not path.exists(): continue` — manifestoda anılan bir banka
+  yeniden adlandırılsa dosya sessizce ATLANIYORDU;
+* desen yalnız tek tırnaklı yol yakalıyor — manifesto çift tırnağa
+  geçse `assets` boş kalır, döngü hiç dönmez, tarama 0 soru tarar.
+
+Yani kapsam daraldığı gün bekçi en yüksek sesle "temiz" derdi. İkisi de
+artık `main()` başında gürültüyle düşüyor (`KAPSAM EKSİK` / `KAPSAM
+YOK`, çıkış kodu 1). Bekçinin bekçisi düşmanca sınandı: banka taşındı →
+1, manifesto çift tırnağa çevrildi → 1, ikisi geri alındı → 0.
+
+Ölçüldü (2026-08-23 akşam): kapsam ŞU AN tam — manifestodan 10 yol
+çıkıyor, 10'u da diskte, toplam 2920 soru taranıyor (bankasız tek
+`assets/data/*.json` dosyası `image_credits.json`, o banka değil).
+
+### A14 — [ ] Bot yarışı mantığı hiçbir testin iddiasında yok
+Akşam koşusunun test kapsamı taraması (2026-08-23): `lib/src/` altındaki
+188 dosyanın 14'ünün adı ne üründe test edilen bir dosyada ne de testte
+geçiyor. 14'ün 10'u dolaylı olarak *render edilebilir* (testi olan bir
+ekranın içinde duruyorlar), 4'ü koşullu import stub'ı. Geriye kalan
+gerçek boşluk bot mantığıdır: `BotOpponent`, `BotRace`, `BotNames`
+testlerde **sıfır** kez geçiyor.
+
+Bu boşluk özellikle sırıtıyor, çünkü `bot_opponent.dart:12` yapıcısı
+test için `Random?` iğnesi taşıyor — seam bilerek açılmış, kimse
+kullanmamış. Tohumlu `Random` ile bunların hepsi kesin olarak
+iddia edilebilir:
+
+* `bot_opponent.dart:27` — olasılık `skill - (difficulty-1)*0.07`,
+  `[0.15, 0.95]` aralığına kırpılır. skill 0.85 + zorluk 1 → 0.85;
+  zorluk 5 → 0.57; zorluk 12 → alt kırpma 0.15'e oturur.
+* `bot_opponent.dart:30-32` — seri ÖNCE artar, sonra puan yazılır:
+  ilk doğru 110 getirir, 100 değil. Bonus `clamp(0, 50)` ile 5.
+  doğrudan sonra sabitlenir (her doğru 150).
+* `bot_opponent.dart:34` — yanlış cevap seriyi sıfırlar ama
+  `correctCount`'a dokunmaz.
+* `bot_opponent.dart:48-53` — `BotRace.standard` havuzu karıp ilk üçü
+  alır: **üç adın farklı çıkması havuzda yineleme olmamasına bağlı** ve
+  havuz üçten kısalırsa `RangeError`. Bugün havuz 19 ad, yinelemesiz.
+* `bot_names.dart:10` — adlar oyuncuya görünen Kurmancî metindir;
+  kural 7 (yalnız Hawar) için hiçbir bekçi yok. Bugün 19 adın 19'u
+  temiz — yani test yazıldığında YEŞİL başlar, kırmızı değil.
+
+Son iki madde birer kusur DEĞİL; bugün ölçüldü ve tutuyorlar. Eksik
+olan, tuttuklarını yarın da söyleyecek bekçidir. **Flutter gerektirir**
+(test koşulmadan eklenmemeli).
+
 ---
 
 ## Bulut koşusunun uyacağı kurallar
@@ -267,3 +318,15 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   adımı da yeşil — tarayıcı artık gerçekten bir kapı. `ds_sinema_0193`
   düzeltmesi ve `sorulan_terim_sik` bekçisi **tam doğrulanmıştır**;
   yeniden denetlenmesine gerek yok.
+- 2026-08-23 (akşam denetimi) — Flutter YOK, Dart'a dokunulmadı. Sabah
+  koşusunun işi rapora değil işe bakılarak denetlendi ve **temiz
+  çıktı**: `ds_sinema_0193` düzeltmesi JSON'da gerçekten duruyor (KU
+  açıklama Hawar temiz, gövdedeki «giravê» ile artık tutarlı),
+  `sorulan_terim_sik` bekçisi gerçekten hüküm veriyor (kusur geri
+  konunca çıkış 1, kaldırılınca 0 diye bağımsız sınandı), ölçütü Dart
+  kardeşiyle (`all_banks_quality_test.dart:111`) birebir aynı,
+  `baseline.json`'daki 11 parmak izinin 11'i de yeniden hesaplanınca
+  tuttu, CI adımları gerçekten koştu (`flutter test` 8dk52sn — atlanmış
+  değil). Geri alınacak madde yok. İçerik taraması 0 bulgu.
+  Taranan alan: **test kapsamı boşlukları** (önceki iki koşu içeriğe
+  bakmıştı). Bulgular A13 (kapandı) ve A14 (açık) olarak eklendi.
