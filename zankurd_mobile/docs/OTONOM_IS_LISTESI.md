@@ -175,12 +175,23 @@ Bu bir içerik borcudur ve **uydurarak kapatılamaz**. Kayıtları yazan
 kaynak bilinince künye eklenir. O zamana kadar borç görünür kalsın —
 sessizce kapatmak, kaynaksız içeriği kaynaklı göstermek olur.
 
-### A8 — [ ] Dev dosyaların bölünmesi
+### A8 — [~] Dev dosyaların bölünmesi — ilk adım atıldı
 `quiz_screen.dart` 3784 satır, `supabase_zankurd_repository.dart` 3023,
 `quiz_result_screen.dart` 2655. Bunlar bakım riski ama çalışıyorlar.
 **Yalnız Flutter test koşulabiliyorsa** dokun; koşulamıyorsa dokunma.
 Küçük adım: tek bir bağımsız bölümü `part` dosyasına taşı, test koş,
 commit et. Büyük refactor YAPMA.
+
+**İlk adım atıldı (2026-08-24).** `quiz/quiz_layout_rules.dart` ayrıldı:
+iki sabit ve iki SAF işlev (`_useCompactLandscapeLayout`,
+`botOpponentDisplayName`). Hiçbiri `_QuizScreenState`e dokunmuyor, hepsi
+girdiden çıktı üretiyor — taşınması davranışı değiştiremez. Taşınan 56
+satırın 56'sı birebir aynı; tek satır kod değişmedi, yalnız yeri değişti.
+3784 → 3723.
+
+Kalan bölünme adımları aynı ölçütle seçilmeli: **önce duruma dokunmayan
+bloklar.** Durum okuyan bir bölümü taşımak refactor olur ve proje kuralı
+onu yasaklıyor.
 
 ### A9 — [x] DeepSeek bankası kalite bekçilerine bağlı değil
 `test/all_banks_quality_test.dart` başlığında şu yazılı: "yeni bir kaynak
