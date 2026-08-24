@@ -7,9 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/badge_service.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/room_message.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/badge_collection_section.dart';
-import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
 import 'package:zankurd_mobile/src/widgets/room_chat.dart';
 import 'package:zankurd_mobile/src/widgets/styled_button.dart';
 
@@ -30,66 +27,6 @@ void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     BadgeService.resetInstance();
-  });
-
-  testWidgets('colorful action card exposes one tappable semantic node', (
-    tester,
-  ) async {
-    var tapped = false;
-    final handle = tester.ensureSemantics();
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: ColorfulActionCard(
-            title: '1 vs 1',
-            subtitle: 'Hemen oyna',
-            icon: Icons.bolt_rounded,
-            colors: const [AppTheme.playPink, Color(0xFFFF6B70)],
-            onTap: () => tapped = true,
-          ),
-        ),
-      ),
-    );
-    await tester.pump();
-
-    final data = tester
-        .getSemantics(find.bySemanticsLabel('1 vs 1. Hemen oyna'))
-        .getSemanticsData();
-    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
-    expect(data.rect.height, greaterThanOrEqualTo(44));
-    expect(find.bySemanticsLabel('1 vs 1. Hemen oyna'), findsOneWidget);
-    tester.semantics.tap(find.semantics.byLabel('1 vs 1. Hemen oyna'));
-    expect(tapped, isTrue);
-    handle.dispose();
-  });
-
-  testWidgets('loading colorful action card is named and disabled', (
-    tester,
-  ) async {
-    final handle = tester.ensureSemantics();
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: ColorfulActionCard(
-            title: 'Günün Yarışması',
-            icon: Icons.emoji_events_rounded,
-            colors: const [AppTheme.brand, AppTheme.brandDeep],
-            loading: true,
-            onTap: () {},
-          ),
-        ),
-      ),
-    );
-    await tester.pump();
-
-    final data = tester
-        .getSemantics(find.bySemanticsLabel('Günün Yarışması'))
-        .getSemanticsData();
-    expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
-    expect(data.flagsCollection.isEnabled, ui.Tristate.isFalse);
-    expect(data.label, 'Günün Yarışması');
-    handle.dispose();
   });
 
   testWidgets('geometric gradient button exposes action and 44px target', (
@@ -144,26 +81,6 @@ void main() {
     expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
     expect(data.flagsCollection.isEnabled, ui.Tristate.isFalse);
     expect(data.label, 'Yükleniyor');
-    handle.dispose();
-  });
-
-  testWidgets('badge collection action keeps a 44px semantic target', (
-    tester,
-  ) async {
-    final handle = tester.ensureSemantics();
-    await tester.pumpWidget(
-      testShell(child: const Scaffold(body: BadgeCollectionSection())),
-    );
-    await tester.pumpAndSettle();
-
-    final button = find.byType(TextButton);
-    expect(button, findsOneWidget);
-    final data = tester.getSemantics(button).getSemanticsData();
-    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
-    expect(data.rect.width, greaterThanOrEqualTo(44));
-    expect(data.rect.height, greaterThanOrEqualTo(44));
-    expect(find.bySemanticsLabel('Tümü'), findsOneWidget);
     handle.dispose();
   });
 

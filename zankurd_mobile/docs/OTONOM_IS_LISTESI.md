@@ -54,11 +54,19 @@ ne üründe ne testte adı geçen dosya kalamaz. Bekçi SINIF adını arar,
 dosya adını değil — dosya adıyla arayan ilk ölçüm dört dosyayı ölü
 sanmıştı, üçü yanlıştı.
 
-### A2b — [ ] Yalnız kendi testi olan iki widget — İNSAN KARARI
+### A2b — [x] Yalnız kendi testi olan iki widget silindi
 `ColorfulActionCard` ve `BadgeCollectionSection` ürün kodunda hiç
-kullanılmıyor, yalnız üçer test dosyasında yaşıyorlar. Silmek testleri
-de götürür; ileride kullanılmak üzere bekliyor olabilirler. Bulut koşusu
-bu maddeye DOKUNMASIN — silme kararı ürün sahibinindir.
+kullanılmıyordu, yalnız kendi testlerinde yaşıyorlardı.
+
+**Karar (ürün sahibi, 2026-08-24): silinsin.** Uygulandı. İki widget
+dosyası ve onlara ayrılmış iki test dosyası kaldırıldı; üç paylaşılan
+testten de ilgili bloklar çıkarıldı.
+
+`kulturel_modern_home_test` içindeki `expect(find.byType(
+ColorfulActionCard), findsNothing)` iddiası da kaldırıldı — sınıfın
+kendisi yoksa o iddia zaten derlenmez, ve silinmiş olması ekranda
+bulunmamaktan daha güçlü bir garanti. Tekrarını `dead_widget_guard_test`
+koruyor.
 
 ### A3 — [x] ~~Tooltip'siz 4 IconButton~~ YANLIŞ BULGU
 **Böyle bir kusur yok.** İlk ölçüm `IconButton(` geçen satır sayısıyla

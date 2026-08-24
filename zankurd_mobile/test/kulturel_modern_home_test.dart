@@ -13,7 +13,6 @@ import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
 // Ana sayfa (2026-07-24 yenilemesi): ekran tek bir soruyu yanıtlar — "şimdi
@@ -80,7 +79,12 @@ void main() {
 
     // Kalabalık eski bloklar yok: karo ızgarası, teaser kartları, kopya
     // "Yarış"/"Kategoriler" girişleri.
-    expect(find.byType(ColorfulActionCard), findsNothing);
+    //
+    // `ColorfulActionCard` iddiası KALDIRILDI: sınıfın kendisi
+    // 2026-08-24'te silindi (ürün kodunda hiç kullanılmıyordu, yalnız
+    // kendi testlerinde yaşıyordu). Var olmayan bir sınıfın ekranda
+    // bulunmadığını iddia etmek gereksiz; silinmiş olması daha güçlü
+    // bir garanti ve `dead_widget_guard_test` onu koruyor.
     expect(find.byType(ZanaDailyCard), findsNothing);
     expect(find.bySemanticsLabel('Moda tarî/ronahî'), findsOneWidget);
   });
