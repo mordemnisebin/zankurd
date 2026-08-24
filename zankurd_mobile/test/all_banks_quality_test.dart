@@ -61,6 +61,15 @@ void main() {
       ),
       'visual': fromJson('assets/data/visual_2026_08_07_questions.json'),
       'restore': fromJson('assets/data/restore_2026_08_07_questions.json'),
+      // 2026-08-24 (A9): bu banka listede YOKTU. 1110 soru, bankanın
+      // en büyük tek kaynağı, ve kalite bekçilerinin hiçbiri ona
+      // bakmıyordu — sorulan terim şık olabilir, doğru cevap gövdede
+      // yazabilir, şık yinelenebilir, hiçbiri düşmezdi.
+      //
+      // Başlıktaki kural tam bunu söylüyordu ("listeye eklemeyi unutmak,
+      // kalite bekçisini o kaynak için sessizce kapatmaktır") ve banka
+      // 2026-08-18'de eklenirken unutulmuştu. Altı gün açık kaldı.
+      'deepseek': fromJson('assets/data/deepseek_2026_08_18_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -276,7 +285,28 @@ void main() {
     //
     // Kalan 8, Kurmancî özel ad ya da örnek sözcük taşıyan Türkçe
     // cümlelerdir (Mem û Zîn'i, Xoybûn, yek/du/sê…).
-    const ceiling = 8;
+    //
+    // 2026-08-24 (A9): deepseek bankası bekçilere bağlanınca 6 kayıt
+    // daha düştü ve tavan 8'den 14'e çıktı. **Altısı da aynı yanlış
+    // alarm sınıfı** — tek tek okunarak doğrulandı, körü körüne
+    // yükseltilmedi:
+    //
+    //   ds_dirok_0018     Şerefxanê Bidlîsî, Şerefname
+    //   ds_edebiyat_0127  Mem û Zîn, Ahmedê Xanî
+    //   ds_ziman_1256     gerîn → gerandin, revîn → revandin
+    //   ds_ziman_1266     pirtûk → pirtûkxane, çap → çapxane
+    //   ds_ziman_1269     heval → hevaltî, mirov → mirovatî
+    //   ds_ziman_1280     vî / vê / van, wî / wê / wan
+    //
+    // Hepsi düpedüz Türkçe cümle; içlerindeki Kurmancî sözcükler
+    // ÖRNEKTİR. Ziman kategorisinde bu kaçınılmaz: dilbilgisi eki
+    // anlatan bir açıklama örnek vermeden yazılamaz. Ölçer örnekleri
+    // sayıp cümleyi Kurmancî sanıyor.
+    //
+    // Tavan bir BORÇ sayacıdır, hedef değil. Büyümesi ancak her yeni
+    // kaydın burada gerekçesi yazılarak kabul edilir; gerekçesiz
+    // yükseltme bekçiyi sessizce kapatmaktır.
+    const ceiling = 14;
 
     final offenders = <String>[];
     banks.forEach((name, questions) {
@@ -478,6 +508,21 @@ void main() {
       'Medyatîkdemokrasî', 'dihundirîne', 'endamentên', 'rihevketa',
       'rêxistinbranî', 'peydexandî', 'alîserdestiyê', 'Rojê nû',
     ];
+    // Kuralın DİLBİLGİSİ sorularındaki istisnası.
+    //
+    // Bir dilbilgisi sorusu yanlış biçimi bilerek çeldiriciye koyar;
+    // öğretmenin yolu budur. `ds_ziman_1289` "roj" sözcüğünün cinsiyetini
+    // soruyor ve çeldiricilerden biri yanlış izafe ekini gösteriyor
+    // ("rojê nû"), doğru cevap ise doğrusunu öğretiyor ("roja nû").
+    // Kuralın belgesi zaten niyeti söylüyor: "oyuncuya uydurma sözcüğü
+    // DOĞRU CEVAP diye göstermek". Burada tam tersi oluyor.
+    //
+    // Muafiyet id ile veriliyor, sözcüğü listeden çıkararak değil:
+    // "Rojê nû" başka bir kayda kazara girerse yine yakalansın. Liste
+    // genişletilecekse gerekçesi buraya yazılmalı; gerekçesiz muafiyet
+    // bekçiyi sessizce kapatır.
+    const grammarExemptions = <String>{'deepseek/ds_ziman_1289'};
+
     const policy = ContentQualityPolicy();
 
     final offenders = <String>[];
@@ -485,6 +530,7 @@ void main() {
       for (final question in questions) {
         // Kuyrukta bekleyen kayıtlar oyuncuya çıkmaz; kural onlar için değil.
         if (!policy.isEligible(question.metadata)) continue;
+        if (grammarExemptions.contains('$name/${question.id}')) continue;
         final visible = [
           question.prompt,
           ...question.answers,

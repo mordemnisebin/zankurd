@@ -57,7 +57,7 @@ dependencies:
   flutter_tts: ^4.2.3
 
   # Shimmer skeleton loading (Sprint 1)
-  shimmer: ^3.0.0
+  shimmer: ^4.0.0
 
 
   # Paylaşım (Sprint 5'te kullanılacak)

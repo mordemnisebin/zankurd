@@ -95,7 +95,7 @@ ve testler o tarafı hiç denemiyor. `flutter build ios --simulator`
 başarılı. `shimmer` 3→4 ve `code_assets` 1→2 kısıt dışı kaldı, ayrı
 madde olarak duruyor (A4b).
 
-### A4b — [ ] `shimmer` 3→4 ve `code_assets` 1→2 ana sürüm atlaması
+### A4b — [x] `shimmer` 3→4 ve `code_assets` 1→2 ana sürüm atlaması
 Kısıt dışı kaldılar; ana sürüm atlaması kırıcı değişiklik taşıyabilir.
 Yerel oturumda, teker teker, gerçek derlemeyle denenmeli.
 
@@ -149,7 +149,7 @@ A5'e bağlı (çapraz kontrol gerekiyor). Bulutta yapılamaz.
 Küçük adım: tek bir bağımsız bölümü `part` dosyasına taşı, test koş,
 commit et. Büyük refactor YAPMA.
 
-### A9 — [ ] DeepSeek bankası kalite bekçilerine bağlı değil
+### A9 — [x] DeepSeek bankası kalite bekçilerine bağlı değil
 `test/all_banks_quality_test.dart` başlığında şu yazılı: "yeni bir kaynak
 eklendiğinde buraya da eklenir; listeye eklemeyi unutmak, kalite bekçisini
 o kaynak için sessizce kapatmaktır." `deepseek_2026_08_18_questions.json`
@@ -194,7 +194,7 @@ göre elle onarılmıştı.
 
 Kalan iş A12'ye taşındı.
 
-### A12 — [ ] Yıl/tür ölçütü keskinleştirilmeli (A9'un önkoşulu)
+### A12 — [x] Yıl/tür ölçütü keskinleştirilmeli (A9'un önkoşulu)
 `question_distractor_quality_test` içindeki `_isYearLike`, "içinde 3-4
 haneli sayı geçen" her şeyi tarih sayıyor. Kuralın niyeti ise başka:
 **tarih olan bir şık, tarih olmayan şıkların arasında durmasın** (özgün
@@ -300,7 +300,7 @@ YOK`, çıkış kodu 1). Bekçinin bekçisi düşmanca sınandı: banka taşınd
 çıkıyor, 10'u da diskte, toplam 2920 soru taranıyor (bankasız tek
 `assets/data/*.json` dosyası `image_credits.json`, o banka değil).
 
-### A14 — [ ] Bot yarışı mantığı hiçbir testin iddiasında yok
+### A14 — [x] Bot yarışı mantığı hiçbir testin iddiasında yok
 Akşam koşusunun test kapsamı taraması (2026-08-23): `lib/src/` altındaki
 188 dosyanın 14'ünün adı ne üründe test edilen bir dosyada ne de testte
 geçiyor. 14'ün 10'u dolaylı olarak *render edilebilir* (testi olan bir
@@ -441,6 +441,20 @@ ayrıca sınanıyor.
 ## Koşu günlüğü
 
 Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
+
+- **2026-08-24 (yerel, kalan işler)** — İnsan kararı bekleyen ve Flutter
+  isteyen maddelerin hepsi kapandı. A4b: `shimmer` 4.0.0 (gerçek iOS
+  derlemesiyle doğrulandı); `code_assets` geçişli bağımlılık çıktı,
+  yükseltilemez ve gerek yok. A9: deepseek bankası kalite bekçilerine
+  bağlandı ve hemen iki şey buldu — biri yanlış alarm (`ds_ziman_1289`
+  dilbilgisi sorusu, yanlış biçimi BİLEREK çeldiricide gösteriyor,
+  gerekçeli muafiyet), biri borç tavanı (8→14, altı kaydın altısı da tek
+  tek okunup yanlış alarm olduğu doğrulandı). A12: yıl/tür ölçütü
+  token-bazlı olarak Dart'a çevrildi ve kural artık BÜTÜN bankalara
+  uygulanıyor (önceden yalnız offline) — sıfır ihlal. A14: bot mantığına
+  sekiz bekçi yazıldı; `Random?` iğnesi on ay boyunca açık durup
+  kullanılmamıştı. A5'in kilidi de açıldı (kör parti araçları + ayrı
+  bulut rutini). 2492 test geçiyor.
 
 - **2026-08-24 (yerel, sıfırdan gözden geçirme)** — Uygulama simülatörde
   gezildi. Sayısal şıkların ekranda karışık sırada geldiği bulundu ve
