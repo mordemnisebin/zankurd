@@ -99,6 +99,11 @@ madde olarak duruyor (A4b).
 Kısıt dışı kaldılar; ana sürüm atlaması kırıcı değişiklik taşıyabilir.
 Yerel oturumda, teker teker, gerçek derlemeyle denenmeli.
 
+**Kapandı (2026-08-24, `5578cb6`).** `shimmer` 4.0.0'a çıkıldı ve gerçek iOS
+derlemesiyle doğrulandı; `code_assets` geçişli bağımlılık çıktı, doğrudan
+yükseltilemez ve gerek yok. Akşam denetimi `pubspec.yaml`da `^4.0.0` olduğunu
+doğruladı.
+
 ### A5 — [~] İçerik: çapraz kontrolü olmayan 1782 soru — KİLİT AÇILDI
 **DeepSeek artık kullanılamıyor** — anahtar duruyor ama kredi bitti
 (HTTP 402 Payment Required, 2026-08-24'te doğrulandı). Yani madde
@@ -214,6 +219,12 @@ borcu bitti; kalan iş Dart tarafındadır: haritaya ekleme + Python'da
 eklemeden önce **A12 yapılmalı**, yoksa yıl/tür ölçütü 12 yanlış alarm
 verir.
 
+**Kapandı (2026-08-24, `5578cb6`).** Banka `banks` haritasına eklendi ve iki
+şey buldu: `ds_ziman_1289` gerekçeli muafiyet (dilbilgisi sorusu yanlış biçimi
+BİLEREK çeldiricide gösteriyor), ve borç tavanı 8→14 (altı kaydın altısı da tek
+tek okunup yanlış alarm olduğu doğrulandı). Akşam denetimi haritadaki girdiyi
+(`all_banks_quality_test.dart:72`) ve muafiyeti (satır 535) doğruladı.
+
 ### A10 — [x] ~~`ds_sinema_0130` tür uyumsuzluğu~~ YANLIŞ BULGU
 **İçerikte kusur yok; yanılan ölçüttür.** Maddenin önerdiği düzeltme
 (çeldiricileri dört haneli sayı taşıyan filmlerle değiştirmek) gerçek
@@ -311,6 +322,18 @@ yoksa keskin ölçüt Dart testinde offline'ı kırar. Kalan Dart işi:
 `everyBankQuestion`'ı da bağla (şu an yalnız offline), bekçi belgesine
 niçini yaz, `flutter test` ile doğrula.
 
+**Kapandı (2026-08-24, `5578cb6`).** Kalan Dart işinin hepsi yapıldı:
+`_isDateExpression` token-bazlı olarak yazıldı
+(`question_distractor_quality_test.dart:34`) ve kural artık BÜTÜN bankalara
+uygulanıyor (`loadEveryBankFromJson`), bekçiye körlük kapısı da kondu
+(`everyBank.length > 2000` — banka yüklenemezse ihlal 0 çıkmasın diye).
+
+Akşam denetimi Dart ölçütünü satır satır Python'a taşıyıp bağımsız koştu:
+11 bankada 2997 sorunun **0'ı ihlal**. Bekçi boş da değil — ölçüt 60 şıkkı
+tarih, 10961'ini tarih-dışı sayıyor, özgün Urartû kusurunu hâlâ yakalıyor
+(`Wanê` ↔ `sedsala 16an` uyumsuz), ve `Maddeya 140î` / `The 400 Blows` /
+`180 derece` yanlış alarmlarını susturuyor.
+
 ### A11 — [x] `question_quality/baseline.json` tam yenilenmeli
 A6 koşusunda baseline'ın YALNIZ `sourceFingerprints` alanı elle
 güncellendi (sha256, algoritma doğrulandı: dokunulmamış 7 dosyanın
@@ -376,6 +399,14 @@ Son iki madde birer kusur DEĞİL; bugün ölçüldü ve tutuyorlar. Eksik
 olan, tuttuklarını yarın da söyleyecek bekçidir. **Flutter gerektirir**
 (test koşulmadan eklenmemeli).
 
+**Kapandı (2026-08-24, `5578cb6`).** `test/bot_opponent_test.dart` yazıldı;
+`Random?` iğnesi on ay sonra ilk kez kullanıldı. Akşam denetimi sekiz
+iddianın aritmetiğini kaynak kodla karşılaştırdı ve birebir tuttuğunu gördü:
+ilk doğru 110 (seri ÖNCE artıyor — `bot_opponent.dart:30-32`), beş doğru 650,
+altıncı yine 150 (`clamp(0, 50)` tavanı), yanlış seriyi sıfırlayıp
+`correctCount`a dokunmuyor, olasılık kırpması `[0.15, 0.95]` iki sınırdan da
+sınanmış. Havuz 19 ad, yinelemesiz ve Hawar temiz — ikisi de doğrulandı.
+
 ### A15 — [x] A12'nin açığa çıkardığı 2 tür-karışık soru (A12'nin önkoşulu)
 A12'nin keskinleştirilmiş tür ölçütü Python'da doğrulanınca offline'da
 iki soru offender kaldı — eski `\b\d{3,4}\b` kuralı bunları görmüyordu,
@@ -407,6 +438,69 @@ yol var, karar Flutter'lı/insan oturumunundur:
 
 Bu koşuda ikisi de yapılamadı (Flutter yok, DeepSeek yok); yalnız
 keşfedildi ve ölçüldü.
+
+**Kapandı (2026-08-24, `aa470f6`) — 1. yol seçildi, içerik onarıldı.** Çıplak
+yüzyıl çeldiricileri (`sedsala 16em`, `sedsala 19em`) aynı türden gerçek
+tanımlarla değiştirildi: hareket/yayın + yıl + yer. Ölçüt GEVŞETİLMEDİ, yani
+A12'nin sayım-koşulu uyarısına uyuldu.
+
+Akşam denetimi iki kaydı da JSON'dan okudu: dört şıkkın dördü de artık uzun
+betimleme, tür-tutarlı. Çeldiriciler uydurma değil gerçek olaylar (1925 Amed,
+1908 Stenbol, 1937 Dêrsim / 1932 Şam, 1913 ve 1908 Stenbol) ama soruya yanlış
+cevap — çeldiricinin işi bu. `is_date_expression` her iki kayıtta da artık 0
+ihlal veriyor.
+
+### A18 — [ ] Dokunma hedefi bekçisi 34 ekranın 3'üne bakıyor
+
+`meetsGuideline` çağrısı bütün depoda tek dosyada
+(`accessibility_guideline_test.dart`) ve yalnız üç ekranı geziyor: seviye
+sınavı, avatar düzenleyici, hikâye ekranı. `lib/src/screens/` altında 34 ekran
+dosyası var.
+
+Dosyanın KENDİ belgesi bunu 2026-07-31'de yazmış: *«Bekçinin kapsamı iki
+ekrandan ibaret olduğu sürece aynı kusur başka ekranlarda tekrar eder; liste bu
+yüzden büyüyor.»* Liste o gün ikiden üçe çıktı ve orada durdu.
+
+**Niçin sessiz kaldı.** Aynı dosyada dokuz ekran daha kuruluyor ve pump
+ediliyor (giriş, ana sayfa, oyun merkezi, kategoriler, öğrenme, profil,
+ayarlar, mağaza, premium) — ama yalnız `%200 metin ölçeğinde overflow etmez`
+testi için, yani tek iddiası `takeException() == null`. Ekranlar zaten
+kurulmuş halde duruyor; üstlerine `meetsGuideline` konmamış. Kapsam dar
+olduğu için değil, **var olan kapsamda iddia zayıf olduğu için** sessiz.
+
+**Kaynaktan ölçülen iki somut ihlal adayı** (Flutter yok, `flutter test`
+koşulamadı — sayılar sabitlerden hesaplandı, koşarak doğrulanmadı):
+
+* `lib/src/screens/sign_in_screen.dart:1269` — `_LanguageChip`, giriş
+  ekranının KU/TR dil düğmesi. `minHeight: 36` + dikey padding 6+6, metin
+  `bodyMedium` (fontSize 15 × height 1.5 = 22,5 px) → içerik 34,5 px, kırpma
+  **36,0 px**. Android 48 ve iOS 44 eşiğinin ikisinin de altında. Ekranda iki
+  kez çiziliyor (satır 346 ve 573).
+  Ağırlığı: bu düğme Kurmancî konuşan oyuncunun uygulamayı kendi diline
+  aldığı yer, ve giriş ekranında duruyor — yani ilk temas.
+* `lib/src/screens/onboarding_screen.dart:210` — «atla» düğmesi.
+  `minimumSize: Size.zero` + `tapTargetSize: MaterialTapTargetSize.shrinkWrap`
+  Flutter'ın 48 px'lik varsayılan genişletmesini AÇIKÇA kapatıyor; geriye
+  `caption` (12 × 1,35 = 16,2) + dikey padding 8+8 = **~32,2 px** kalıyor.
+  `OnboardingScreen` hiçbir a11y testinde geçmiyor.
+
+**Sabah koşusuna iş. Flutter gerektirir.**
+
+1. Zaten pump edilen dokuz ekrana `androidTapTargetGuideline`,
+   `iOSTapTargetGuideline` ve `labeledTapTargetGuideline` ekle. Bu bir tarama
+   değil, mevcut koşum takımına iddia eklemek — maliyeti düşük.
+2. Düşenleri tek tek oku. **Hepsini büyütme.** Düşen her hedef kusur değildir;
+   önce o boyutun belgelenmiş bir karar olup olmadığına bak (A16'da üç bekçi
+   tam böyle bir kararı koruyordu).
+3. Gerçek kusurları düzeltirken **görsel tasarımı bozma.** Doğru yol hapı
+   büyütmek değil, dokunma alanını büyütmek: `SizedBox`/`ConstrainedBox` ile
+   48'e sar ya da `tapTargetSize: MaterialTapTargetSize.padded` kullan. Pil
+   36 px görünmeye devam eder, parmak 48 px alan bulur.
+
+Tuzak: `meetsGuideline` yalnız o anda EKRANDA olan hedefleri görür. Sekmenin
+arkasında kalan, kaydırma dışındaki ya da koşullu çizilen bir düğme sessizce
+denetimin dışında kalır — «geçti» demek «o ekranın tamamı temiz» demek
+değildir. Kapsamın nerede bittiğini bekçinin belgesine yaz.
 
 ---
 
@@ -589,3 +683,29 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   **Not:** kural bir belge satırı olarak iki kez tutmadı; kalıcı çözüm
   ya baseline yenilemesini betikleştirmek ya da kapı hata mesajına
   "şu komutu koş" satırı eklemektir.
+- **2026-08-24 (akşam denetimi)** — Flutter YOK, Dart'a dokunulmadı. Günün
+  11 commit'i rapora değil işe bakılarak denetlendi ve **temiz çıktı**; geri
+  alınacak madde yok. Doğrulananlar: A4b (`shimmer ^4.0.0` pubspec'te),
+  A9 (deepseek `banks` haritasında + gerekçeli muafiyet yerinde),
+  A12 (Dart ölçütü satır satır Python'a taşınıp bağımsız koşuldu —
+  11 bankada 2997 soruda **0 ihlal**; bekçi boş değil: 60 şık tarih /
+  10961 tarih-dışı, Urartû kusuru hâlâ yakalanıyor, 24 yanlış alarm susmuş),
+  A14 (sekiz bot iddiasının aritmetiği kaynakla birebir: 110/650/+150,
+  kırpma sınırları, havuz 19 ad yinelemesiz + Hawar temiz),
+  A15 (iki kayıt JSON'dan okundu, dört şık da tür-tutarlı, çeldiriciler
+  uydurma değil), A7 (77 kayıt; Cografya 41 / Çand 29 / Edebiyat 7, zorluk
+  4-5; ÜÇ kayıt yerinin üçü de dolu; yeni bankada Hawar ihlali 0),
+  A8 (3723 satır; taşınan 62 satırın hepsi birebir aynı — eklenen tek şey
+  `part of` ve başlık yorumu), A16 (iki alt yazının ortak kelimesi 0, Hawar
+  temiz), A2b (iki widget dosyası gerçekten silinmiş, kalan referans yalnız
+  yorum). Kural 8: baseline'daki **12 parmak izinin 12'si** yeniden
+  hesaplanınca tuttu; `issueFingerprints` 1923, yani A7'nin 77 borcu doğru
+  yansımış; blocker/critical 0. İçerik taraması 0 bulgu.
+  Taranan alan: **erişilebilirlik** (önceki koşular içerik ve test kapsamına
+  bakmıştı). Bulgu A18 olarak açıldı — `meetsGuideline` 34 ekranın 3'üne
+  bakıyor, oysa dokuz ekran daha aynı dosyada zaten pump ediliyor.
+  **Engel:** Flutter yok, `dart analyze` ve `flutter test` koşulamadı;
+  bu oturumda GitHub MCP araçları da gelmediği için CI'nin günün
+  commit'lerini doğrulayıp doğrulamadığı GÖRÜLEMEDİ. Doğrulama Python'da
+  yeniden uygulanan ölçütlerle ve kaynak okumasıyla yapıldı. Sabah koşusu
+  CI'ya bakmalı. Commit yalnız durum dosyasını günceller.
