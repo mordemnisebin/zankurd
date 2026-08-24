@@ -138,9 +138,42 @@ oku — orada üç testin birbirini nasıl kırdığı yazılı.
 çeldirici tarafında yapıldı (tek istisna `edit_muzik_0017`) ve betiğe
 `FINDING_RATCHET = 0` mandalı eklendi — sızma geri gelirse çıkış kodu 1.
 
-### A7 — [ ] Park edilmiş 77 soru
-`docs/content_batches/bekleyen_2026_08_19_cografya_cand_edebiyat.json`.
-A5'e bağlı (çapraz kontrol gerekiyor). Bulutta yapılamaz.
+### A7 — [x] Park edilmiş 77 soru bankaya alındı
+**Alındı (2026-08-24).** Bekleme sebebi DeepSeek kredisiydi; çapraz
+kontrol koşuya taşınınca (A5) engel kalktı. Kayıtlar kör kontrol
+kuyruğuna girdi ve 1782 → 1859 oldu.
+
+Yeni banka: `assets/data/expansion_2026_08_19_questions.json`.
+Cografya 41, Çand 29, Edebiyat 7; hepsi zorluk 4-5 — tam da o üç
+kategorinin zorluk açığının olduğu yer (A4 tablosu).
+
+Alınmadan önce üç Hawar ihlali düzeltildi: `Grönland` → `Gronland`,
+`Föhn` → `Foehn`, ve Kurmancî gövdeye sızmış bir Türkçe parantez
+(`(toz şeytanı)`) kaldırıldı — Türkçe karşılık zaten `promptTr`de.
+Türkçe alanlardaki "Grönland" DOKUNULMADI; orada doğru yazım odur.
+
+**A9 dersi üç yerde birden uygulandı.** Yeni banka aynı commit'te
+şuraların hepsine kaydedildi: yükleyici manifesti, kalite bekçilerinin
+`banks` haritası, VE `tool/question_quality/source_manifest.json`.
+Sonuncusu unutulsaydı denetim onu `unknown` sayıp hiç bakmayacaktı —
+deepseek'in altı gün açıkta kalmasının sebebi tam buydu, yalnız üçüncü
+yer o zaman fark edilmemişti.
+
+**Kabul edilen borç: 77 `missing_source_metadata` uyarısı.** Kayıtların
+hiçbirinde kaynak başlığı ya da adresi yok. Uydurma kaynak YAZILMADI:
+olmayan bir kaynağı iddia etmek, hiç kaynak vermemekten kötüdür.
+Engelleyici ve kritik sayısı 0'da kaldı; borç `baseline.json`da
+1846 → 1923 olarak kayıtlı ve A17 olarak izleniyor.
+
+### A17 — [ ] 77 yeni sorunun kaynak künyesi eksik
+`expansion_2026_08_19` bankasındaki 77 kaydın hiçbirinde
+`metadata.sourceReference` ya da `sourceTitle` yok; kalite denetimi
+her biri için `missing_source_metadata` uyarısı veriyor (uyarı düzeyi,
+engelleyici değil).
+
+Bu bir içerik borcudur ve **uydurarak kapatılamaz**. Kayıtları yazan
+kaynak bilinince künye eklenir. O zamana kadar borç görünür kalsın —
+sessizce kapatmak, kaynaksız içeriği kaynaklı göstermek olur.
 
 ### A8 — [ ] Dev dosyaların bölünmesi
 `quiz_screen.dart` 3784 satır, `supabase_zankurd_repository.dart` 3023,

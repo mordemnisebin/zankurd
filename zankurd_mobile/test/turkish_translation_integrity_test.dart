@@ -69,7 +69,10 @@ void main() {
       // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
       // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
       // Bekçinin işi değişmedi, saydığı banka küçüldü.
-      2965,
+      // 2026-08-24: expansion_2026_08_19 bankası eklendi (77 soru).
+      // Kayıtlar FİZİKSEL olarak bankada ama `needsReview` olduğu
+      // için oyuncuya çıkmıyor; çapraz kontrolleri sırada (A5).
+      3042,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '

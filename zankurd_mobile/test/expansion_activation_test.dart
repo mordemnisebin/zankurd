@@ -61,7 +61,11 @@ void main() {
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      2965,
+
+      // 2026-08-24: expansion_2026_08_19 bankası eklendi (77 soru).
+      // Kayıtlar FİZİKSEL olarak bankada ama `needsReview` olduğu
+      // için oyuncuya çıkmıyor; çapraz kontrolleri sırada (A5).
+      3042,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

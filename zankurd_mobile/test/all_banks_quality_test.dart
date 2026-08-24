@@ -70,6 +70,11 @@ void main() {
       // kalite bekçisini o kaynak için sessizce kapatmaktır") ve banka
       // 2026-08-18'de eklenirken unutulmuştu. Altı gün açık kaldı.
       'deepseek': fromJson('assets/data/deepseek_2026_08_18_questions.json'),
+      // A9 dersi uygulandı: banka aynı commit'te kalite bekçilerine de
+      // bağlanıyor. Deepseek altı gün bağlanmadan kalmıştı.
+      'expansion0819': fromJson(
+        'assets/data/expansion_2026_08_19_questions.json',
+      ),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -90,31 +95,37 @@ void main() {
     });
   });
 
-  test('runtime yükleyici aynı sıra ve kapsamla on kaynağı birleştiriyor', () {
-    final expected = [
-      ...curatedQuestionBank,
-      ...fromJson('assets/data/sentence_building_questions.json'),
-      ...fromJson('assets/data/fill_in_blank_2026_08_questions.json'),
-      ...fromJson('assets/data/community_questions.json'),
-      ...fromJson('assets/data/editorial_questions.json'),
-      ...fromJson('assets/data/offline_questions.json'),
-      // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
-      // aynı id birden çok bankada varsa SONRAKİ kazanır.
-      ...fromJson('assets/data/expansion_2026_08_questions.json'),
-      ...fromJson('assets/data/source_first_2026_08_questions.json'),
-      // 2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine
-      // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
-      // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
-      ...fromJson('assets/data/visual_2026_08_07_questions.json'),
-      ...fromJson('assets/data/restore_2026_08_07_questions.json'),
-      // 2026-08-18: DeepSeek boru hattıyla eklenen 1298 iki dilli soru.
-      ...fromJson('assets/data/deepseek_2026_08_18_questions.json'),
-    ];
+  test(
+    'runtime yükleyici aynı sıra ve kapsamla on bir kaynağı birleştiriyor',
+    () {
+      final expected = [
+        ...curatedQuestionBank,
+        ...fromJson('assets/data/sentence_building_questions.json'),
+        ...fromJson('assets/data/fill_in_blank_2026_08_questions.json'),
+        ...fromJson('assets/data/community_questions.json'),
+        ...fromJson('assets/data/editorial_questions.json'),
+        ...fromJson('assets/data/offline_questions.json'),
+        // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
+        // aynı id birden çok bankada varsa SONRAKİ kazanır.
+        ...fromJson('assets/data/expansion_2026_08_questions.json'),
+        ...fromJson('assets/data/source_first_2026_08_questions.json'),
+        // 2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine
+        // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
+        // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
+        ...fromJson('assets/data/visual_2026_08_07_questions.json'),
+        ...fromJson('assets/data/restore_2026_08_07_questions.json'),
+        // 2026-08-18: DeepSeek boru hattıyla eklenen 1298 iki dilli soru.
+        ...fromJson('assets/data/deepseek_2026_08_18_questions.json'),
+        // 2026-08-19'da elden geçmiş ama çapraz kontrol yapılamadığı için
+        // beklemede kalan 77 soru; bekleme sebebi 2026-08-24'te kalktı.
+        ...fromJson('assets/data/expansion_2026_08_19_questions.json'),
+      ];
 
-    final runtime = QuestionBankLoader.instance.allQuestions;
-    expect(runtime, hasLength(expected.length));
-    expect(runtime.map((q) => q.id), equals(expected.map((q) => q.id)));
-  });
+      final runtime = QuestionBankLoader.instance.allQuestions;
+      expect(runtime, hasLength(expected.length));
+      expect(runtime.map((q) => q.id), equals(expected.map((q) => q.id)));
+    },
+  );
 
   test('hiçbir kaynakta sorulan terim şık olarak durmuyor', () {
     final quoted = RegExp(r'[«\x27"]([^«»\x27"]{2,60})[»\x27"]');
@@ -468,7 +479,7 @@ void main() {
           question.type.name,
           term.trim().toLowerCase(),
           question.correctAnswer.trim().toLowerCase(),
-        ].join(' ');
+        ].join('\u0000');
         groups.putIfAbsent(key, () => []).add(question.id);
       }
     });

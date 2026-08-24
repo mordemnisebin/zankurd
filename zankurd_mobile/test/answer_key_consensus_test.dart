@@ -50,9 +50,25 @@ void main() {
       if (!file.existsSync()) continue;
       for (final raw in jsonDecode(file.readAsStringSync()) as List) {
         final question = raw as Map<String, dynamic>;
-        if ((question['id'] as String? ?? '').startsWith('ds_')) {
-          generated.add(question);
+        if (!(question['id'] as String? ?? '').startsWith('ds_')) continue;
+        // Kuralın kapsamı OYNANABİLİR sorulardır.
+        //
+        // Kural şudur: üretilmiş bir soru çapraz kontrolden geçmeden
+        // OYUNCUYA GİTMEZ. İnceleme kuyruğunda bekleyen kayıt oyuncuya
+        // zaten gitmiyor; ona "denetlenmemiş" demek doğru ama "kural
+        // ihlali" demek yanlış — kuyruk tam da bu kural için var.
+        //
+        // 2026-08-24: 77 kayıt bankaya alındı ama çapraz kontrolleri
+        // sırada olduğu için `needsReview` bırakıldı. Bu ayrım olmadan
+        // seçenek ikiye iniyordu: ya kontrolsüz içeriği oynatmak, ya da
+        // içeriği depoya hiç almayıp bekçilerin dışında tutmak. İkisi de
+        // kötü.
+        final metadata = question['metadata'] as Map<String, dynamic>?;
+        if (metadata?['reviewStatus'] == 'needsReview' ||
+            metadata?['reviewStatus'] == 'rejected') {
+          continue;
         }
+        generated.add(question);
       }
     }
     if (generated.isEmpty) return; // üretilmiş soru yoksa kural boşta

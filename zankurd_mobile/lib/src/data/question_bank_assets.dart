@@ -67,4 +67,16 @@ const questionBankAssets = <String>[
   // hatalar az kaynaklı alanlarda kümeleniyor. Doğrulanmış dört yanlış
   // (Bedirxan'ın doğum yeri, Beşikçi, Zap-Kerkük, Şakiro) ayıklandı.
   'assets/data/deepseek_2026_08_18_questions.json',
+  // 2026-08-19'da elden geçmiş ama çapraz kontrol yapılamadığı için
+  // bankaya alınmamış 77 soru (Cografya 41, Çand 29, Edebiyat 7). Hepsi
+  // zorluk 4-5; tam da o üç kategorinin zorluk açığının olduğu yer.
+  //
+  // Bekleme sebebi ortadan kalktı: çapraz kontrol artık DeepSeek'e değil
+  // koşunun kendisine dayanıyor (bkz. `tool/content_authoring/
+  // kor_parti_uret.py`). Kayıtlar kör kontrol kuyruğuna girdi.
+  //
+  // Alınmadan önce üç Hawar ihlali düzeltildi: Grönland -> Gronland,
+  // Föhn -> Foehn, ve Kurmancî gövdeye sızmış bir Türkçe parantez
+  // ("toz şeytanı") kaldırıldı — Türkçe karşılık zaten `promptTr`de.
+  'assets/data/expansion_2026_08_19_questions.json',
 ];

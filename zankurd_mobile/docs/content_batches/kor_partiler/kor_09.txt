@@ -1,4 +1,4 @@
-Aşağıda 67 çoktan seçmeli soru var. Her biri için DOĞRU şıkkı seç.
+Aşağıda 144 çoktan seçmeli soru var. Her biri için DOĞRU şıkkı seç.
 
 - Yalnız JSON dizisi döndür, başka hiçbir şey yazma.
 - Biçim: [{"id":"...","cevap":"<şıkkın TAM METNİ>"}]
@@ -479,3 +479,542 @@ S: Gola Wanê li kîjan perçeyê Kurdistanê ye?
   B) Başûrê Kurdistanê
   C) Bakurê Kurdistanê
   D) Rojhilatê Kurdistanê
+
+[ds_cografya_0247]
+S: Çemê Dîcleyê û Çemê Firatê piştî ku li herêma Qurneyê digihîjin hev, di bin kîjan navî de diherikin kîjan kendavê?
+  A) Sîrwan - Deryaya Qezwînê
+  B) Kûra - Deryaya Reş
+  C) Şetulereb - Kendava Farsê
+  D) Aras - Kendava Umanê
+
+[ds_cografya_0248]
+S: Cudahiya sereke ya jeomorfolojîk a di navbera Gola Hêzarê û Gola Nemrûdê de çi ye?
+  A) Hêzar gola tektonîk e, Nemrûd gola kalderayê ya volkanîk e
+  B) Hêzar gola buzulî ye, Nemrûd gola kembera karstîk e
+  C) Hêzar gola setê ya çem e, Nemrûd gola tektonîk a kûr e
+  D) Hêzar gola çêkirî ye, Nemrûd gola sirûştî ya aluvyal e
+
+[ds_cografya_0249]
+S: Gola Wanê çima xwedî ava sodavî û şor e û wekî gola herî mezin a setê ya volkanîk tê zanîn?
+  A) Rêjeya baranê ji ya hemû herêmên cîran gelekî zêdetir bûye
+  B) Çemê Dîcleyê ava xwe bi temamî rijandiye nav vê newalê
+  C) Tektonîka Zagrosê ava deryayê rasterast kişandiye nav golê
+  D) Herka Nemrûdê pêşiya newala Mûşê girtiye û hewzeya wê girtî maye
+
+[ds_cografya_0250]
+S: Li Çiyayên Cîlo û Agiriyê hebûna cemedên serdemî (buzul) encama kîjan taybetmendiya erdnîgarî ye?
+  A) Bilindahiya zêde ya li ser xeta berfê ya herdemî
+  B) Nêzîkbûna wan a ber bi qiraxa Deryaya Reş ve
+  C) Kêmbûna zexta atmosferê ya li ser çolên germ
+  D) Hebûna daristanên berfireh li bilindahiyan
+
+[ds_cografya_0251]
+S: Cudahiya dema çandiniyê di navbera Deşta Herranê û Deşta Mûşê de bi kîjan sedema sereke tê ravekirin?
+  A) Cureyên kîmyewî yên axa her du deştan
+  B) Cudahiya bilindahî û germahiya giştî ya salane
+  C) Rêjeya gihîştina tora elektrîkê ya herêmê
+  D) Hejmara çemên ku li ser deştan diherikin
+
+[ds_cografya_0252]
+S: Çemê Arasê û Çemê Kûrayê avên xwe digihînin kîjan gola girtî ya mezin?
+  A) Gola Urmiyeyê ya şor
+  B) Deryaya Navîn (Spî)
+  C) Kendava Farsê ya germ
+  D) Deryaya Qezwînê (Xezer)
+
+[ds_cografya_0253]
+S: Bajarê dîrokî yê Amedê çima li ser binarê bazaltî yê li ser Çemê Dîcleyê hatiye avakirin?
+  A) Ji ber ku herêma herî nizm a ji bo çandiniya birincê bû
+  B) Ji bo parastina hêsan a leşkerî û nêzîkbûna çavkaniya avê
+  C) Ji bo dûrketina ji hemû rêyên bazirganiyê yên herêmî
+  D) Ji ber ku li ser xeta herikîna lavên germ ên nû bû
+
+[ds_cografya_0254]
+S: Di nexşerêya bi Projeksiyona Mercator de kîjan herêm ji mezinahiya xwe ya rasteqîn pir mezintir xuya dike?
+  A) Girava Gronlandê û herêmên cemserî
+  B) Herêma Ekwatorê û daristanên Kongo
+  C) Giravên Endonezyayê li başûr
+  D) Nîvgirava Erebistanê ya germ
+
+[ds_cografya_0255]
+S: Projeksiyona Gall-Peters bi çi armancê li hember projeksiyona klasîk a Mercator hate çêkirin?
+  A) Ji bo diyarkirina rêyên balafiran bi şêwaza herî kurt
+  B) Ji bo nîşandana rûberên rasteqîn ên parzemînên Afrîka û Başûr
+  C) Ji bo mezinkirina welatên Ewropayê li gorî Asyayê
+  D) Ji bo hêsankirina sefera deryageran li okyanûsan
+
+[ds_cografya_0256]
+S: Cudahiya di navbera dendika nifûsê ya erdnîgarî (arîtmetîk) û dendika fîzyolojîk de çi ye?
+  A) Arîtmetîk tenê jinan dijmêre, fîzyolojîk tenê karkerên bajêr digire nav xwe
+  B) Arîtmetîk li seranserê çolê ye, fîzyolojîk li herêmên berfê tê pîvan
+  C) Arîtmetîk nifûsa şevê ye, fîzyolojîk nifûsa rojane ya kar nîşan dide
+  D) Arîtmetîk li gorî tevahiya rûberê ye, fîzyolojîk li gorî qada çandiniyê ye
+
+[ds_cografya_0257]
+S: Çemê Zêyê Mezin (Zap) çima xwedî leza herikînê ya herî bilind û kapasîteya erozyonê ya bihêz e?
+  A) Bi temamî di nav deştên dûz û axa qûmî de derbas dibe
+  B) Xwedî xwarbûna (meyl) zêde û geliyên teng ên kûr ên Zagrosê ye
+  C) Rêjeya germahiyê li newala wê ji her derê bilindtir e
+  D) Li ser wê ti bendav an rêgiriyên avê nehatine çêkirin
+
+[ds_cografya_0258]
+S: Xeta Şikesteka Rojhilatê Anatolyayê (EAF) li kîjan herêmê bi Xeta Şikesteka Bakurê Anatolyayê (NAF) re digihîje hev?
+  A) Li herêma Qereyazî û Gola Wanê
+  B) Li Deşta Herranê li başûr
+  C) Li zozanên Cizîrê û Botanê
+  D) Li newala Çemê Dîcleyê li Amedê
+
+[ds_cografya_0259]
+S: Çemê Xabûrê (yê Dîcleyê) li nêzî kîjan bajarî dibe sînorê sirûştî yê herêmê û tevlî Dîcleyê dibe?
+  A) Li bakurê bajarê Agiriyê
+  B) Li nêzî Zaxo û Pêşxabûrê
+  C) Li deşta bilind a Çewlîgê
+  D) Li qiraxa Gola Urmiyeyê
+
+[ds_cografya_0260]
+S: Li herêmê sedema çêbûna avhewaya parzemînî ya hişk (karasal) li hember nêzîkbûna deryayan çi ye?
+  A) Nebûna çemên mezin li seranserê herêmê
+  B) Rûberên qûmî yên ku germê qet nagirin
+  C) Rêzeçiyayên bilind rê li ber hilma deryayê digirin
+  D) Kêmbûna radyasyona tavê di werzê havînê de
+
+[ds_cografya_0261]
+S: Barana orografîk (barana çiyayî) li herêmê li ser kîjan quntaran herî zêde dibare?
+  A) Li ser quntarên ku berê wan li bayê bi şilî ye
+  B) Li newalên kûr ên ku ba qet nakeve wan
+  C) Li ser quntarên bakur ên herdemî di bin siyê de
+  D) Li deştên dûz ên bêyî ti bilindahiyan
+
+[ds_cografya_0262]
+S: Li deştên başûrê herêmê sedema sereke ya kêmbûna daristanên xwezayî çi ye?
+  A) Zêdebûna cemedên zivistanê yên li ser deştan
+  B) Bikaranîna zêde ya kevirên granîtî di çandiniyê de
+  C) Evaporasyona (hilkişîna avê) zêde ya havînê û kêmbûna şiliyê
+  D) Nebûna nifûsa mirovan ji bo çandina daran
+
+[ds_cografya_0263]
+S: Li gundên çiyayî yên herêmê çêkirina zeviyên teraskirî (derenceyî) bi taybetî ji bo çi tê kirin?
+  A) Ji bo çêkirina cihên fireh ên ji bo firîna balafiran
+  B) Ji bo rawestandina erozyona axê û ragirtina ava baranê
+  C) Ji bo dîtina madenên bin erdê bi awayekî hêsantir
+  D) Ji bo parastina gund ji bayên germ ên havînê
+
+[ds_cografya_0264]
+S: Cudahiya zanistî ya di navbera têgeha "rewşa hewayê" û "avhewayê" (îklîm) de çi ye?
+  A) Rewşa hewayê tenê ji bo deryayê ye, avhewa tenê ji bo çiyê ye
+  B) Rewşa hewayê qet naguhere, avhewa her roj diguhere
+  C) Rewşa hewayê ya demkurt e, avhewa navîniya demdirêj e
+  D) Rewşa hewayê bi piyanoyê tê pîvan, avhewa bi termometreyê
+
+[ds_cografya_0265]
+S: Li herêma Zagrosê şikeft û dolînên kûr encama kîjan pêvajoya jeomorfolojîk in?
+  A) Helîna kîmyewî ya kevirên kilsî (karstîk)
+  B) Herikîna lavên bazaltî yên sarbûyî
+  C) Hilweşîna cemedên deryayî li deştan
+  D) Kevirbûna qûmên çolê bi bayên xurt
+
+[ds_cografya_0266]
+S: Sedema sereke ya antropojenîk (mirovî) ya kêmkirina ava Gola Urmiyeyê di van salên dawî de çi ye?
+  A) Kêmbûna radyasyona tavê ya li seranserê herêmê
+  B) Vekirina kanaleke mezin a ber bi Deryaya Spî ve
+  C) Avakirina bendavên zêde li ser çemên wê û çandiniya bêserûber
+  D) Zêdebûna hejmara masîgirên kevneşopî yên li ser golê
+
+[ds_cografya_0267]
+S: Çemên ku rejîma wan bi helîna berfê (nîval) ve girêdayî ye, herî zêde di kîjan werzê de digihîjin asta herî bilind a avê?
+  A) Di nîveka zivistanê ya herî sar de
+  B) Di biharê û destpêka havînê de
+  C) Di dawiya payîzê ya hişk de
+  D) Tenê di meha tebaxê ya germ de
+
+[ds_cografya_0268]
+S: Li Platoya Serhedê (Erzerom-Qers) li hember Deşta Herranê sedema dereng destpêkirina dema çandiniyê çi ye?
+  A) Kêmbûna madeyên organîk di axa çêrgehan de
+  B) Nêzîkbûna zêde ya ber bi çolên germ ên başûr
+  C) Bilindahiya zêde û dirêjbûna dema sermaya zivistanê
+  D) Nebûna tîrêjên tavê di werzê havînê de
+
+[ds_cografya_0269]
+S: Bayê "Foehn"ê dema ku ji ser çiyayan dadikeve newalên kûr çawa bandorê li germahî û şiliya hewayê dike?
+  A) Germahiyê zêde dike û hewayê hişk dike
+  B) Germahiyê kêm dike û baranê zêde dike
+  C) Hewayê dicemidîne û dibe sedema berfê
+  D) Ti guhertinekê di hewayê de çênake
+
+[ds_cografya_0270]
+S: Kanyona Çemê Botanê çima wekî yek ji kanyonên herî kûr û asê yên herêmê tê hesibandin?
+  A) Herikîna hêdî ya li ser deştên kumî yên bê kevir
+  B) Bilindbûna tektonîk û xurtiya kolandina avê ya li ser kevirên kilsî
+  C) Çêbûna bendavên xwezayî yên ji qeşayê li ber avê
+  D) Nebûna ti herikîna avê di werzê bihar û havînê de
+
+[ds_cografya_0271]
+S: Çemê Muradê li gorî Çemê Qerebila (Karasu) xwedî kîjan taybetmendiya hewzeyî ya sereke ye?
+  A) Tenê di nav golên volkanîk de bêyî derketinê diherike
+  B) Çemekî gelekî kurt e ku tenê di havînê de ava wê heye
+  C) Ava xwe rasterast bêyî Firatê dirijîne Deryaya Qezwînê
+  D) Mila herî dirêj e û xwedî qada hewzeya herî berfireh e
+
+[ds_cografya_0272]
+S: Erdhejên tektonîk li gorî erdhejên hilweşînê (karstîk) çima xwedî qada bandorê ya pir berfirehtir in?
+  A) Tenê li ser rûyê erdê di nav şikeftan de diqewimin
+  B) Ji ber çalakiya bayên xurt ên demsalî pêk tên
+  C) Di kûraniyên mezin ên şikestekên plakayan de enerjiyeke mezin dertê
+  D) Tenê li herêmên deryayî û li giravên biçûk çêdibin
+
+[ds_cografya_0273]
+S: Li deştên germ ên herêmê di nîvroya havînê de sedema çêbûna gêreweloşkên xweliyê çi ye?
+  A) Kêmbûna zexta hewayê ji ber barîna berfê ya li çiyayan
+  B) Herikîna sermayê ya ji deryayên bakur ber bi başûr
+  C) Hebûna daristanên pir çirr ên li dora deştê
+  D) Germbûna lezgîn a rûyê erdê û bilindbûna konveksîyonî ya hewayê
+
+[ds_cografya_0274]
+S: Sîstema çandiniya bejî (bêavî) li herêmê herî zêde bi kîjan berheman ve tê nasîn?
+  A) Pembû, birinc û mûz
+  B) Genim, ceh û nîsk
+  C) Çay, fistiqên şil û findiq
+  D) Qamîşê şekir û tûtina avî
+
+[ds_cografya_0275]
+S: Zozanên herêma Serhedê û Botanê di werzê havînê de çima ji bo ajaldariya koçerî guncaw in?
+  A) Nebûna ti zinar û çiyayan li tevahiya herêmê
+  B) Hebûna germiyana zêde ya ji bo çandiniya pembû
+  C) Dûrketina ji hemû çavkaniyên avê yên xwezayî
+  D) Hewaya hênik, çavkaniyên avê û giyayên hêşîn ên çêrgehan
+
+[ds_cografya_0276]
+S: Derbasgeha Zîxê (Zîgana) û ya Kopê di warê erdnîgariya aborî de xwedî kîjan rola dîrokî ne?
+  A) Tenê di navbera welatên Ewropayê de bazirganiyê dikin
+  B) Rêya çandiniya pembû ji bo zozanên sar vedikin
+  C) Bendera Deryaya Reş bi herêmên hundir û Rêya Hevrîşimê ve girêdidin
+  D) Têkiliya Kendava Farsê bi Okyanûsa Pasîfîk re saz dikin
+
+[ds_cografya_0277]
+S: Cudahiya kîmyewî ya di navbera ava Gola Urmiyeyê û Gola Wanê de çi ye?
+  A) Urmiye ava şêrîn a vexwarinê ye, Wan ava tehl a jehrî ye
+  B) Urmiye bi temamî ji petrolê pêk tê, Wan tenê ava berfê ye
+  C) Her du gol jî xwedî ava şêrîn a wekhev in û ti şorayî tê de nîne
+  D) Urmiye xwedî ava şor a klorûrî ye, Wan xwedî ava sodavî ya karbonatî ye
+
+[ds_cografya_0278]
+S: Çemê Sîrwanê (Diyala) ji Çiyayên Zagrosê dest pê dike û tevlî kîjan sîstema sereke ya avê dibe?
+  A) Li bakurê Wanê dikeve nav Gola Wanê
+  B) Li başûrê Bexdayê tevlî Çemê Dîcleyê dibe
+  C) Rasterast bêyî bendav diherike nav Deryaya Reş
+  D) Li herêma Rihayê tevlî Çemê Firatê dibe
+
+[ds_cografya_0279]
+S: Deştên tektonîk ên mîna Deşta Mûş û Çewlîgê di encama kîjan bûyera jeolojîk de peyda bûne?
+  A) Helîna zinarên kilsî yên mezin di bin ava deryayê de
+  B) Komkirina qûmên çolê ji aliyê bayên xurt ên başûr ve
+  C) Hilweşîna daran di serdemên qeşayê de li ser newalan
+  D) Daketina blokên erdê di navbera xetên şikestekan de (graben)
+
+[ds_cografya_0280]
+S: Bendavên mezin ên li ser Çemê Firat û Dîcleyê çawa bandorê li hevsengiya aluvyal a deltaya jêrîn dikin?
+  A) Axa bi bereket (aluvyon) li pişt bendavan digirin û xwarê xizan dikin
+  B) Herikîna avê bi temamî diguherînin ber bi Deryaya Spî ve
+  C) Avhewaya tevahiya Mezopotamyayê dikin cemserî û sar
+  D) Rêjeya barana salane li seranserê çiyayan kêm dikin
+
+[ds_cografya_0281]
+S: Şikeftên dîrokî yên Heskîfê li ser kîjan cureyê zinarên nerm hatine kolandin?
+  A) Zinarên granîtî yên herî req ên kûrahiya erdê
+  B) Zinarên bazaltî yên reş ên Çiyayê Qerecdaxê
+  C) Kevirên mermerê yên qerisî yên binê deryayan
+  D) Kilsên nerm ên kilsî û kevirên xîçî yên hewzeyê
+
+[ds_cografya_0282]
+S: Gundên herêmê li şûna navenda deştên nizm çima bi piranî li quntarên çiyayan hatine avakirin?
+  A) Parastina ji lehiyê, nêzîkbûna çavkaniyên avê û parastina zeviyên çandiniyê
+  B) Ji ber ku li serê çiyayan germahiya havînê ji her derê zêdetir e
+  C) Ji bo gihîştina hêsan a keştiyên deryayî yên bazirganiyê
+  D) Ji bo dûrketina ji hemû çavkaniyên daristanî yên herêmê
+
+[ds_cografya_0283]
+S: Projeksiyona konîk a kartografiyê herî zêde ji bo nexşekirina kîjan hêlîlaran guncaw e?
+  A) Tenê xeta Ekwatorê ya nizm
+  B) Tenê herêma Cemsera Bakur
+  C) Hêlîlarên navîn (orta enlemler)
+  D) Tenê rûberên okyanûsên kûr
+
+[ds_cografya_0284]
+S: Axa bazaltî ya derdora Qerecdaxê li gorî axên din ên herêmê xwedî kîjan taybetmendiya mîneralî ye?
+  A) Ji hesin, magnezyum û mîneralên volkanîk gelekî dewlemend e
+  B) Tenê ji xwêya spî û kilsa heliyayî pêk tê
+  C) Ti mîneralan di nav xwe de nagire û zû hişk dibe
+  D) Tenê ji kilsên asîdî yên avnegir ava bûye
+
+[ds_cografya_0285]
+S: Rêzeçiyayên Zagrosê çima ji bakur-rojava ber bi başûr-rojhilat ve dirêj dibin?
+  A) Herikîna avên okyanûsan ji rojava ber bi rojhilat
+  B) Kêmbûna zexta atmosferê ya li ser Çolê Erebistanê
+  C) Teqîna volkanên binê deryayê li Kendava Farsê
+  D) Zexta Plakaya Erebistanê ya li ser Plakaya Ewrasyayê
+
+[ds_cografya_0286]
+S: Li ser çiyayên herêmê bi zêdebûna bilindahiyê re qadên daristanan çawa diguherin?
+  A) Darên pelweşîn (berû) -> darên derzîkî -> çêrgehên alpîn
+  B) Çolên qûmî -> daristanên tropîkal -> mêweyên germ
+  C) Darên mûzê -> darên çamê -> baxçeyên firingiyan
+  D) Darên berûyê -> zeviyên pembû -> darên hejîran
+
+[ds_cografya_0287]
+S: Koçerên herêmê di destpêka werzê zivistanê de ji ber çi ji zozanên bilind dadikevin herêma Germiyanê?
+  A) Zêdebûna hewaya germ a li ser serê lûtkeyên çiyayan
+  B) Ji bo firotina hemû ajalan di bazarên Ewropayê de
+  C) Kewbûna sermayê, barîna berfa giran û xitîbûna çêrgehan
+  D) Dîtina kaniyên nû yên avê li ser lûtkeyên berfîn
+
+[ds_cand_1179]
+S: Di çanda koçeriyê de têgeha "Zozan" û "Germiyan" li gorî kîjan hewcedariya aborî û civakî hatiye damezrandin?
+  A) Tenê ji bo cejnên neteweyî guhertina bajêr
+  B) Ji bo bazirganiya deryayî ya di navbera dewletan de
+  C) Guhertina cihê ajalan a li gorî demsal û çêrgehan
+  D) Ji bo xwendina zarokan di dibistanên zivistanê de
+
+[ds_cand_1180]
+S: Di kevneşopiya koçerî û gundewariyê de rola "Bêrîvanê" çi ye?
+  A) Zilamê ku berpirsê ewlehiya konên zozanê ye
+  B) Kesê ku tenê kincên dawetê bi destan didûre
+  C) Dengbêjê ku kilamên şer di civatê de dibêje
+  D) Jina ku diçe dotina pez û çêkirina berhemên şîr
+
+[ds_cand_1181]
+S: Kincê neteweyî yê mêran ê bi navê "Şal û Şapik" ji kîjan madeya xwerû ya sirûştî tê çêkirin û taybetmendiya wê çi ye?
+  A) Ji hevrîşimê çînî yê tenik ku tenê di dawetan de tê lixwekirin
+  B) Ji mûyê bizina tiftîkê (maraz) ku havînê hênik û zivistanê germ digire
+  C) Ji pembûyê nerm ê ku tenê ji bo herêmên germ guncaw e
+  D) Ji çermê sewalan ê giran ku qet avê bernade hundir
+
+[ds_cand_1182]
+S: Di kincên kevneşopî yên jinên kurd de ferqa "Kiras-Fîstan" ji kincên din ên rojane çi ye?
+  A) Tenê ji kincên reş ên bê reng û bê nexş pêk tê
+  B) Tenê şalwarekî teng ê ji çermê hespan ê boyaxkirî ye
+  C) Tenê ji çarşefeke yek-parçe ya bê dirûn ava dibe
+  D) Kirasê jêrîn ê mil-dirêj (lewendî) û fîstanê rengîn ê qedîfe li ser
+
+[ds_cand_1183]
+S: Di kilîmên Hekarî û Wanê de motîfa "Gulsad" û "Gulhêzar" sembola çi ye?
+  A) Nîşaneya çekên leşkerî yên serdema kevnar
+  B) Tenê hejmara sewalên ku di zozanan de hene
+  C) Bereketa sirûştê, kulîlkên biharê û hezkirina malbatê
+  D) Nexşeya sînorên mîrektiyên kevn ên herêmê
+
+[ds_cand_1184]
+S: Nanê sêlê (nanê tenik) çima di jiyana koçeriyê de ji nanê tenûrê bêhtir tê tercîhkirin?
+  A) Ji bo pijandina nanê sêlê ti êzing nayên bikaranîn
+  B) Nanê sêlê tenê ji bo rojekê dimîne û zû xera dibe
+  C) Tenûr tenê di serê çiyayan de dikare bê çêkirin
+  D) Sêl sivik e, hêsan tê veguhastin û zû tê pijandin
+
+[ds_cand_1185]
+S: Xwarina şîrîn a bi navê "Şilikî" (an Şillikî) li kîjan herêmê wekî xwarina sereke ya mêvandariyê tê amadekirin?
+  A) Li deştên sar ên Qersê
+  B) Li herêma Riha û Amedê
+  C) Li qiraxa Deryaya Qezwînê
+  D) Li giravên başûrê Deryaya Egeyê
+
+[ds_cand_1186]
+S: Di kevneşopiya şînê de rola "Kilamên Şînê" (şîngêrî / qewlên miriyan) di civakê de çi ye?
+  A) Tenê ji bo cezakirina kesên ku nehatine sersaxiyê
+  B) Diyarkirina mîrateya maddî ya di navbera zarokan de
+  C) Pêşbirkek ji bo xelata herî bilind a dengbêjiyê
+  D) Parvekirina xemgîniya komî û bîranîna qenciyên mirî
+
+[ds_cand_1187]
+S: Di dawetên kevneşopî de kesên ku diçin anîna bûkê bi kîjan navî tên binavkirin?
+  A) Bêrîvan (dotinvan)
+  B) Pêşmerge (şervan)
+  C) Berbûk (şandeya bûkê)
+  D) Çawîş (cerdevan)
+
+[ds_cand_1188]
+S: Cudahiya rîtmîk û tevgerî ya di navbera govendên "Şêxanî" û "Giranî" de çi ye?
+  A) Giranî tenê bi rûniştî tê lîstin, Şêxanî tenê li ser hespan e
+  B) Giranî tenê bi jinan e, Şêxanî tenê lîstika zarokan e
+  C) Giranî ti caran bê def nabe, Şêxanî qet muzîkê naxwaze
+  D) Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û bi livdar e
+
+[ds_cand_1189]
+S: Di baweriya Êzdiyatiyê de cejna herî pîroz a ku wekî serê salê tê pîrozkirin kîjan e?
+  A) Cejna Qurbanê ya Payîzê
+  B) Çarşema Sor (Çarşema Serê Nîsanê)
+  C) Cejna Remezanê ya Mezin
+  D) Şeva Yeldayê ya Zivistanê
+
+[ds_cand_1190]
+S: Di baweriya Yarsaniyê (Kakeyî / Ehlê Heq) de amûra sereke ya pîroz a zikr û merasîmên olî kîjan e?
+  A) Zirna darîn a mezin
+  B) Piyanoya klasîk a rojavayî
+  C) Tembûr (Tembûra Yarsan)
+  D) Gitara spanî ya neh-têlî
+
+[ds_cand_1191]
+S: Di çanda Elewiyên herêma Dêrsimê de têgeha "Ziyaretgeh" behsa kîjan mekanên pîroz dike?
+  A) Kaniyên avê, darên kevnar, teht û gorekên pîroz ên sirûştê
+  B) Tenê qonaxên dewlemendan ên li navenda bajaran
+  C) Bazarên bazirganiyê yên ku di cejnan de vedibin
+  D) Kelehên leşkerî yên serdema şerên kevn ên navçeyê
+
+[ds_cand_1192]
+S: Kevneşopiya "Şevbihêrkê" di zivistanê de ji aliyê ragihandina çandî ve kîjan feydeya sereke dabû civakê?
+  A) Tenê fêrkirina zimanên biyanî ji bo bazirganiyê
+  B) Qedexekirina axaftinê di şevên dirêj ên zivistanê de
+  C) Tomarkirina dîjîtal a hemû kilam û stranên herêmê
+  D) Veguhastina destan, çîrok û bîra dîrokî ya ji nifşekî bo nifşê din
+
+[ds_cand_1193]
+S: Kevneşopiya "Kalo Gaxand" li herêma Dêrsimê di destpêka sala nû de kîjan rola hevgirtinê dileyize?
+  A) Komkirina xwarin û xelatan ji bo alîkariya malbatên hejar
+  B) Tenê çêkirina şerbeta şîrîn ji bo firotina li bazaran
+  C) Qedexekirina derketina derve di tevahiya meha çileyê de
+  D) Komkirina bacê ji bo dewletê di dawiya salê de
+
+[ds_cand_1194]
+S: Di govendên kurdî de kesê ku li serê rêzê govendê bi destmalê bi rê ve dibe bi kîjan navî tê naskirin?
+  A) Bêrîvan (dotinvan)
+  B) Berbûk (şande)
+  C) Sergovend (serkêş)
+  D) Dengbêj (bêjer)
+
+[ds_cand_1195]
+S: Penêrê Sîrikî (otlu peynir) ê Wanê çima piştî çêkirinê çend mehan di bin erdê de tê veşartin?
+  A) Ji bo havênbûna hênik, hevgirtina bîhnê û negirtina hewayê
+  B) Ji bo ku agirê binê erdê penêr zû biqelîne
+  C) Ji bo ku keda mirovan ji çavên dizan veşartî bimîne
+  D) Tenê ji bo ku rengê penêr ji spî veguhere reş
+
+[ds_cand_1196]
+S: Kevneşopiya "Kirîvatiyê" di civaka herêmê de xwedî kîjan peywira peywendiyên civakî ye?
+  A) Tenê peymaneke aborî ya ji bo kirîna zeviyên çandiniyê ye
+  B) Rêbazeke leşkerî ye ji bo hilbijartina serokê gund
+  C) Tenê cejnek e ku salê carekê bi lîstikan tê derbaskirin
+  D) Di navbera malbatên cuda de pêwendiyeke xurt a xizmantiya rûhî ava dike
+
+[ds_cand_1197]
+S: Kevneşopiya hevkariyê ya bi navê "Zibar" (an Îmece) di gundan de bi taybetî di kîjan karan de dihate bikaranîn?
+  A) Dirûna zeviyan, çêkirina xaniyan û berhevkirina berheman
+  B) Tenê di pêşbirkên bazdana hespan de ji bo betlaneyê
+  C) Tenê di dema nîqaşên siyasî yên li nav bajaran de
+  D) Di bazirganiya bi dewletên derve re li ser sînoran
+
+[ds_cand_1198]
+S: Di Mîrektiya Botanê de saziya "Medreseya Sor" a Cizîrê ji aliyê perwerdeyê ve xwedî kîjan taybetmendiya dualî bû?
+  A) Tenê perwerdeya leşkerî ya deryayî ji bo xortên herêmê dida
+  B) Tenê qursên bazirganiya hevrîşimê ya rojavayî dihundirand
+  C) Zanistên olî û felsefî li gel ziman û edebiyata kurdî bi hev re dihatin xwendin
+  D) Hemû cureyên xwendin û nivîsandina bi kurdî qedexe dikir
+
+[ds_cand_1199]
+S: Hunera destî ya bi navê "Telkarî" (zêrkerî û zîvkeriya bi têlên zirav) li kîjan bajarê herêmê wekî mîrateyeke hevpar tê nasîn?
+  A) Li Midyadê (Mêrdîn)
+  B) Li zozanên Qersê
+  C) Li gundên Çewlîgê
+  D) Li Deşta Mûşê
+
+[ds_cand_1200]
+S: Lîstika kevneşopî ya bi navê "Holê" (an Lîstika Golanê) ku li gundan bi daran dihate lîstin, dişibe kîjan werzişa nûjen?
+  A) Hokeya ser axê an golfê
+  B) Voleybola ser masê
+  C) Avjenî û melevaniyê
+  D) Tenîsa ser maseyê
+
+[ds_cand_1201]
+S: Di pizîşkiya gelêrî (dermanên kevnar) de ji bo birîn û êşan gihayê "Kewkurt" (çayê çiyê) û "Hingivê zozanan" çawa dihatin bikaranîn?
+  A) Tenê ji bo boyaxkirina dîwarên xaniyên nû
+  B) Ji bo nermkirina kevirên zeviyên çandiniyê
+  C) Ji bo paqijkirina birînan, kuxikê û zêdekirina aramiya laş
+  D) Tenê wekî xwarina hespan di dema zivistanê de
+
+[ds_cand_1202]
+S: Kevneşopiya "Meyrangêhê" (Seyrana biharê) ya di meha gulanê de ji aliyê civakî ve xwedî kîjan wateyê ye?
+  A) Tenê komkirina bacên salane ji bo axayên herêmê
+  B) Pêşwazîkirina zindîbûna sirûştê û xurtkirina têkiliyên hevaltiyê
+  C) Qedexekirina her cure lîstik û govendê li derve
+  D) Diyarkirina sînorên nû yên parêzgehan bi kevirên spî
+
+[ds_cand_1203]
+S: Di baweriyên kevnar ên herêmê de (mîna Êzdiyatî û Yarsaniyê) hejmara "7"an (Heft Milyaket / Heft Tan) sembola çi ye?
+  A) Tenê heft rojên ku di zivistanê de berf nabare
+  B) Heft padîşahên ku beriya zayînê şer kirine
+  C) Heft sirên pîroz ên rêveberiya gerdûnê û afirandinê
+  D) Tenê heft cureyên çandiniyê yên herêmê
+
+[ds_cand_1204]
+S: Çêkirina konên reş (reşmal) ji mûyê bizinê ji aliyê fîzîkî ve kîjan feydeya sereke dide koçeran?
+  A) Di baranê de mû diwerime û avê bernade, di germê de jî hewayê derbas dike
+  B) Her tim hundirê konê mîna cemedê sar dihêle di zivistanê de
+  C) Ti carî bi bayê xurt nahêle ku çadir li ser lingan bimîne
+  D) Tenê ronahiya tavê ya zêde dikişîne nav nivîn û odeyan
+
+[ds_cand_1205]
+S: Di "Dîwanxaneyên" kevneşopî de cîhê rûniştinê yê li serê malê (serê odê) li gorî kîjan pîvanê dihate diyarkirin?
+  A) Tenê li gorî leza hespê yê ku herî pêşîn hatiye
+  B) Tenê li gorî rengê kincên ku li xwe kirine
+  C) Li gorî temen, zanîn, mêvanperwerî û rûmeta kesayetiyê
+  D) Li gorî bejna herî dirêj di nav ciwanan de
+
+[ds_cand_1206]
+S: Kulavê (kepenek) şivanan ê ji hiriyê çima di şertên çol û çiyê de amûreke jiyanî ye?
+  A) Tenê wekî kincê fermî di dadgehan de tê lixwekirin
+  B) Hem ji baran û sermayê diparêze hem jî wekî doşek û nivîn tê bikaranîn
+  C) Tenê di bin avê de ji bo melevaniyê tê bikaranîn
+  D) Ji ber ku ji hesinê sivik hatiye çêkirin li dijî guleyan e
+
+[ds_cand_1207]
+S: Di çanda xwarinê ya herêmê de nanpêjî û parvekirina xwarinê çima wekî "heqê nan û xwê" (nankorî nekirin) tê binavkirin?
+  A) Tenê baca ku ji bo firotina xwêya gulan tê dayîn
+  B) Qanûna ku xwarina xwêyê di şîvê de qedexe dike
+  C) Mirovê ku bi yekî re xwarin xwariye divê ti carî îxanetê lê neke
+  D) Pêşbirkek ji bo çêkirina nanê herî mezin ê herêmê
+
+[ds_edebiyat_0244]
+S: Cudahiya sereke ya di navbera destana devkî ya "Memê Alan" û berhema nivîskî ya Ehmedê Xanî "Mem û Zîn" (1692) de çi ye?
+  A) Xanî çîroka gelêrî veguherandiye mesnewiyeke felsefî, tesewufî û nasnameyî
+  B) Xanî hemû lehengên destanê ji holê rakiriye û tenê behsa şerê dîrokî kiriye
+  C) Memê Alan bi alfabeya latînî hatiye nivîsandin lê Mem û Zîn tenê bi devkî ye
+  D) Mem û Zîn tenê lîstikeke şanoyê ya nûjen e ku di sedsala bîstan de hatiye nivîsandin
+
+[ds_edebiyat_0245]
+S: Di helbesta hevpar a di navbera Melayê Cizîrî û Feqiyê Teyran de mijara sereke ya nîqaşa wan çi bû?
+  A) Nîqaşa li ser bihayê genim û deştên çandiniyê
+  B) Diyarkirina rêzikên bazirganiya hevrîşimê li Cizîrê
+  C) Evîna heqîqî (îlahî), gerdûn û sirên nûra heqîqetê
+  D) Şerê di navbera împaratoriyên rojava û rojhilat de
+
+[ds_edebiyat_0246]
+S: Kovara "Hawar" (Şam, 1932) ji aliyê sîstema nivîsînê ve li hember rojnameya "Rêya Teze" (Êrîvan, 1930) xwedî kîjan cudahiya dîrokî bû?
+  A) Hawar tenê bi zimanê fransî derket, Rêya Teze tenê bi zimanê ermenî bû
+  B) Hawar bi alfabeya latînî derket, Rêya Teze bi kîrîlî ya wê serdemê
+  C) Hawar tenê kovareke wêneyî bû, Rêya Teze qet tiştek çap nedikir
+  D) Her du weşanan jî tenê alfabeya erebî ya kevn a osmanî bi kar dianîn
+
+[ds_edebiyat_0247]
+S: Romana Erebê Şemo ya bi navê "Şivanê Kurmanca" (1935) di dîroka edebiyata kurdî de çima wekî xaleke werçerxanê tê qebûlkirin?
+  A) Yekem pirtûka wergera helbestên fransî ye bo zimanê erebî
+  B) Yekem ferhenga termînolojiya bijîşkiyê ya li Rojhilata Navîn e
+  C) Yekem romana nûjen a kurdî ye ku bi zimanê kurmancî hatiye çapkirin
+  D) Tekane berhema şanoyê ya li ser çanda koçeriyê ya wê serdemê ye
+
+[ds_edebiyat_0248]
+S: Cegerxwîn di helbesta nûjen a kurdî de çawa rê li ber derbasbûna ji şêwaza klasîk ber bi ya civakî ve vekir?
+  A) Zimanê helbestê ji qalibên giran ên erûzê ber bi zimanê gel û têkoşîna civakî ve bir
+  B) Hemû cureyên helbestê qedexe kir û tenê çîrokên zarokan nivîsand
+  C) Helbest tenê bi zimanê latînî yê kevnar di nav dêran de xwend
+  D) Tenê behsa xwezaya Ewropayê kir û ji jiyana welêt bi temamî dûr ket
+
+[ds_edebiyat_0249]
+S: Di sedsala 19an de xebatên zimannasî yên Peter Lerch û wergerên pirtûkên pîroz (mîna yên Samuel Rhea) ji aliyê belgekirina zaravayan ve xwedî kîjan girîngiyê bûn?
+  A) Hemû zaravayên herêmê ji holê rakirin û tenê zimanekî nû çêkirin
+  B) Tenê ji bo bazirganiya deryayî rêzikên bacê yên nivîskî amade kirin
+  C) Metnên devkî yên Kurmancî, Zazakî û Soranî yên wê serdemê bi awayekî nivîskî tomar kirin
+  D) Nivîsandin û belavkirina pirtûkan di nav gel de bi temamî qedexe kirin
+
+[ds_edebiyat_0250]
+S: Nivîskar Mehmed Uzun di romanên xwe yên wekî "Siya Evînê" û "Rojek ji Rojên Evdalê Zeynikê" de kîjan peywira sereke ya edebî pêk anî?
+  A) Tenê pirtûkên felsefeya rojavayî bê guhertin wergerandin ser zimanê kurdî
+  B) Hemû çîrokên dengbêjan red kir û tenê behsa teknolojiya fezayê kir
+  C) Tenê helbestên kurt ên bê wate ji bo zarokên biçûk amade kirin
+  D) Bîra dîrokî û çanda devkî bi zimanekî nûjen û estetîk kire bingeha romana kurdî

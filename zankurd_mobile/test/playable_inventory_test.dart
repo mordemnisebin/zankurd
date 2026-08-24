@@ -50,7 +50,13 @@ void main() {
       // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
       // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
       // Bekçinin işi değişmedi, saydığı banka küçüldü.
-      2965,
+      // 2026-08-24: expansion_2026_08_19 (77 soru) eklendi. FİZİKSEL
+      // sayı arttı ama oynanabilir sayı ARTMADI — kayıtlar
+      // `needsReview` ve çapraz kontrolleri sırada (A5). Bu ayrım tam
+      // olarak bu testin varlık sebebi: iki sayının birlikte artması
+      // içeriğin gerçekten ulaştığını, yalnız fizikselin artması ise
+      // kuyrukta beklediğini söyler.
+      3042,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -83,7 +89,8 @@ void main() {
     }
 
     expect(byReason, {
-      'reviewStatus=${ReviewStatus.needsReview}': 37,
+      // 37 -> 114: expansion_2026_08_19'un 77 kaydı kuyrukta.
+      'reviewStatus=${ReviewStatus.needsReview}': 114,
       'reviewStatus=${ReviewStatus.rejected}': 14,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
