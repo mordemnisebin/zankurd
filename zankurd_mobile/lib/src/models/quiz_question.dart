@@ -299,12 +299,57 @@ class QuizQuestion {
       return List.unmodifiable(answers);
     }
 
+    // Şıkların tamamı SAYIYSA döndürme değil SIRALAMA uygulanır.
+    //
+    // Döndürme göreli sırayı korur, o yüzden bankada karışık duran
+    // sayılar ekranda da karışık kalıyordu: "Evdalê Zeynikê hangi
+    // yüzyılda yaşadı?" sorusu oyuncuya `20. / 19. / 15. / 17.` diye
+    // geliyordu (2026-08-24, simülatörden görüldü). Bankadaki 85 tam
+    // sayısal soruda 69'u böyleydi.
+    //
+    // Karışık sayı, soruyu zorlaştırmaz — okumayı zorlaştırır. Oyuncu
+    // olguyu düşünmek yerine dört sayıyı sıraya koymakla uğraşır. Bu,
+    // ölçmek istediğimiz şeye gürültü ekler.
+    //
+    // Konum dengesi KORUNUR: yön (artan/azalan) aynı kararlı tohumdan
+    // seçilir, dolayısıyla doğru cevap sorular arasında yine dört konuma
+    // dağılır. Denge tek soruda karıştırarak değil, sorular ARASINDA
+    // yön değiştirerek sağlanır — `question_bank_test` bunu ölçer.
+    final numeric = _numericValues(answers);
+    if (numeric != null) {
+      final pairs = [
+        for (var i = 0; i < answers.length; i++) (numeric[i], answers[i]),
+      ]..sort((a, b) => a.$1.compareTo(b.$1));
+      final descending = _stableAnswerOffset(answers.length).isEven;
+      final ordered = [for (final pair in pairs) pair.$2];
+      return List.unmodifiable(descending ? ordered.reversed : ordered);
+    }
+
     final rotated = List<String>.of(answers);
     final offset = _stableAnswerOffset(rotated.length);
     return List.unmodifiable([
       ...rotated.skip(offset),
       ...rotated.take(offset),
     ]);
+  }
+
+  /// Şıkların tamamı sayıysa sayısal değerleri, değilse `null`.
+  ///
+  /// "1932", "29", "20." gibi biçimler kabul edilir; sondaki nokta
+  /// sıra belirtir ("20." = yirminci) ve değeri değiştirmez. İçinde
+  /// harf ya da birim geçen ("29 tîp", "1932'de") şık sayısal SAYILMAZ:
+  /// orada sıralama anlamı bozabilir, çünkü metin sayıdan fazlasını
+  /// söylüyordur.
+  static List<num>? _numericValues(List<String> options) {
+    final values = <num>[];
+    for (final option in options) {
+      final trimmed = option.trim().replaceAll('.', '');
+      if (trimmed.isEmpty) return null;
+      final parsed = num.tryParse(trimmed);
+      if (parsed == null) return null;
+      values.add(parsed);
+    }
+    return values;
   }
 
   String optionKeyForAnswer(String answer) {

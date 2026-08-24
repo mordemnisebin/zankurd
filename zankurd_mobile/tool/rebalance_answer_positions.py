@@ -60,6 +60,34 @@ def offset(question_id, length=4):
     return 1 if value == 0 else value
 
 
+def is_numeric_option_set(answers):
+    """Şıkların tamamı sayı mı? `QuizQuestion._numericValues` ile aynı kural.
+
+    Sayısal şıklar 2026-08-24'ten beri döndürülmüyor, SIRALANIYOR (bkz.
+    `displayAnswers`). Bu araç onları yeniden yerleştiremez: konumları
+    değerin kendisinden çıkar. Denge kalan sorularla sağlanır.
+    """
+    for option in answers:
+        trimmed = str(option).strip().replace('.', '')
+        if not trimmed:
+            return False
+        try:
+            float(trimmed)
+        except ValueError:
+            return False
+    return True
+
+
+def numeric_displayed_index(answers, correct, question_id):
+    """Sayısal şıkta doğru cevabın SABİT gösterim konumu."""
+    values = sorted(range(len(answers)),
+                    key=lambda i: float(str(answers[i]).strip().replace('.', '')))
+    ordered = [answers[i] for i in values]
+    if offset(question_id, len(answers)) % 2 == 0:
+        ordered = list(reversed(ordered))
+    return ordered.index(correct)
+
+
 def displayed_index(question_id, stored_index, length=4):
     return (stored_index - offset(question_id, length)) % length
 
@@ -77,6 +105,11 @@ def main() -> int:
             if len(answers) != 4 or row.get('correctAnswer') not in answers:
                 continue
             stored = answers.index(row['correctAnswer'])
+            if is_numeric_option_set(row['answers']):
+                # Konumu değer belirler; sayılır ama TAŞINMAZ.
+                counts[numeric_displayed_index(
+                    row['answers'], row['correctAnswer'], row['id'])] += 1
+                continue
             counts[displayed_index(row['id'], stored)] += 1
             if row['id'].startswith(prefix):
                 movable.append(row)
