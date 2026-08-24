@@ -1890,6 +1890,20 @@ class Tr {
     K.homeLearningSection: {'ku': 'Rêyên hînbûnê', 'tr': 'Öğrenme yolları'},
     K.homeLearningPath: {'ku': 'Rêya dersan', 'tr': 'Ders yolu'},
     K.homeTopicPicker: {'ku': 'Mijar hilbijêre', 'tr': 'Konu seç'},
+    // Ana sayfada kategorilere iki kart açılıyor ve alt yazıları
+    // neredeyse aynıydı: "Bir kategori seç ve başla" ile "Bir konu seç
+    // ve başla". İkisi de aynı yere gidiyor ama NİYETLERİ farklı —
+    // bu kart tek konuda çalışmak için, aşağıdaki keşif satırı ise
+    // henüz hiçbir şeye başlamamış oyuncuya "hepsi burada" demek için.
+    // Metinler artık o farkı söylüyor (2026-08-24; A16).
+    K.homeTopicPickerSub: {
+      'ku': 'Di mijarekê de kûr bibe',
+      'tr': 'Tek konuda derinleş',
+    },
+    K.homeBrowseAllSub: {
+      'ku': 'Li hemûyan binêre, yekê biceribîne',
+      'tr': 'Hepsine göz at, birini dene',
+    },
     K.homeQuickDuel: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
     K.homeQuickDuelSub: {
       'ku': 'Hevrikekî bibîne · ~2 deqe',
@@ -3302,6 +3316,16 @@ class K {
   static const homeLearningSection = 'home.learning.section';
   static const homeLearningPath = 'home.learning.path';
   static const homeTopicPicker = 'home.topicPicker';
+
+  /// "Konu seç" kartının alt yazısı.
+  ///
+  /// Paylaşılan `categoriesSubtitle` yerine AYRI bir anahtar: o metin
+  /// `categories_tab` ve `matchmaking_screen` tarafından da kullanılıyor
+  /// ve orada doğru. Ayrım yalnız ana sayfa için gerekli.
+  static const homeTopicPickerSub = 'home.topicPickerSub';
+
+  /// Keşif satırının ("Tüm kategoriler") alt yazısı.
+  static const homeBrowseAllSub = 'home.browseAllSub';
   static const homeQuickDuel = 'home.quickDuel';
   static const homeQuickDuelSub = 'home.quickDuel.sub';
   static const homeGreeting = 'home.greeting';

@@ -441,7 +441,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             // öğrenme yüzeyi olduğu için safir ailesinden bir ton alır.
             accent: const Color(0xFF1E4FA6),
             title: context.t(K.homeTopicPicker),
-            subtitle: context.t(K.categoriesSubtitle),
+            // Paylaşılan `categoriesSubtitle` DEĞİL: o metin keşif
+            // satırınınkiyle neredeyse aynıydı ve iki kart aynı şeye
+            // benziyordu (bkz. `homeTopicPickerSub` belgesi).
+            subtitle: context.t(K.homeTopicPickerSub),
             onTap: _openCategories,
           ),
         ],

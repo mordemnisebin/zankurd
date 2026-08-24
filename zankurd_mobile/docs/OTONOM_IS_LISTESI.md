@@ -361,7 +361,7 @@ keşfedildi ve ölçüldü.
    ama doğruluğunu önce DOKUNMADIĞIN dosyalarla sınayın — hash'leri
    baseline'la tutmuyorsa varsayımın yanlıştır.
 
-### A16 — [ ] Ana sayfada kategorilere İKİ kapı — İNSAN KARARI
+### A16 — [x] Ana sayfada kategorilere İKİ kapı — metinler ayrıldı
 
 İki kart aynı işlevi (`_openCategories`) çağırıyor ve alt yazıları
 neredeyse aynı:
@@ -388,9 +388,23 @@ ve üçü de belgelenmiş bir kararı deviriyor:
 Üç ayrı karar bu düzeni şekillendirmiş. Hangi tarafın kalacağı ürün
 sahibinin kararıdır; kararı verilince bekçiler de birlikte güncellenir.
 
-Ara çözüm önerisi (karar beklerken): iki kartı KALDIRMADAN ayırmak —
-alt yazıları belirgin biçimde farklılaştırmak. Kullanıcının yaşadığı
-sorun "iki giriş" değil, "aynı şeye benzeyen iki giriş".
+**Karar (ürün sahibi, 2026-08-24): kartlar kalsın, metinler ayrılsın.**
+Uygulandı — iki kartın niyeti gerçekten farklı ve artık metinleri de öyle
+diyor:
+
+| Kart | Yeni alt yazı | Niyet |
+|---|---|---|
+| `home-topic-picker` | Tek konuda derinleş | odaklanma |
+| `home-browse-categories-row` | Hepsine göz at, birini dene | keşif |
+
+Paylaşılan `categoriesSubtitle` DEĞİŞTİRİLMEDİ: o metin `categories_tab`
+ve `matchmaking_screen` tarafından da kullanılıyor ve orada doğru. Ana
+sayfaya iki yeni anahtar eklendi.
+
+Bekçi `home_category_entries_distinct_test`: birebir eşitlik yetmiyor
+(eski hâlde de metinler farklıydı ama aynı şeyi söylüyorlardı), ortak
+kelime oranı %50'nin altında olmalı. Kurmancî tarafın Hawar temizliği de
+ayrıca sınanıyor.
 
 ## Koşu günlüğü
 

@@ -129,7 +129,10 @@ class ContinueSection extends StatelessWidget {
           icon: AppIcons.layerGroup,
           accent: AppTheme.brand,
           title: Tr.forKu(K.tumKategoriler, isKu),
-          subtitle: Tr.forKu(K.birKonuSecVe, isKu),
+          // `birKonuSecVe` DEĞİL: yukarıdaki "Konu seç" kartının alt
+          // yazısıyla neredeyse aynıydı. Bu satır keşif davetidir —
+          // metni de öyle demeli (bkz. `homeBrowseAllSub`).
+          subtitle: Tr.forKu(K.homeBrowseAllSub, isKu),
           onTap: onBrowseCategories,
         ),
       ],
