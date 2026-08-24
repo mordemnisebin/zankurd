@@ -434,3 +434,15 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   bulutta yok; A12/A15 tamamlanamadı, yalnız Python'da çözülüp
   belgelendi. Commit yalnız durum dosyasını günceller (kod/içeriğe
   dokunulmadı).
+- 2026-08-24 (A6 koşusunun PR gözcüsü) — `41aebd4` sayısal şıkları
+  sıralayıp sekiz bankayı değiştirdi ama `question_quality/baseline.json`
+  parmak izlerini yenilemedi; CI kapısı "Gate source fingerprint changed"
+  ile düştü ve `flutter test`e sıra gelmedi. Bu, aşağıdaki **8. kuralın
+  ikinci kez kaçırılması** — kural yazılı olmasına rağmen. Kapının verdiği
+  tek sebep buydu (blocker/critical artmamış, yeni issue fingerprint yok),
+  yani sıralama değişikliği kalite bakımından temiz. Parmak izleri
+  yenilendi; algoritma yine dokunulmamış dosyalarla sınandı (3 dosyanın
+  3'ünde hash baseline'la birebir tuttu). İçerik taraması 0 bulgu.
+  **Not:** kural bir belge satırı olarak iki kez tutmadı; kalıcı çözüm
+  ya baseline yenilemesini betikleştirmek ya da kapı hata mesajına
+  "şu komutu koş" satırı eklemektir.
