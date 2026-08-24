@@ -99,10 +99,34 @@ madde olarak duruyor (A4b).
 Kısıt dışı kaldılar; ana sürüm atlaması kırıcı değişiklik taşıyabilir.
 Yerel oturumda, teker teker, gerçek derlemeyle denenmeli.
 
-### A5 — [ ] İçerik: çapraz kontrolü olmayan 1810 soru
-Ayrıntı `docs/KALAN_ISLER_GOREVI.md` bölüm 1. **DeepSeek API anahtarı
-gerekiyor ve bulutta yok** — bu madde bulut koşusunda YAPILAMAZ.
-Yerel oturum için bırakıldı.
+### A5 — [~] İçerik: çapraz kontrolü olmayan 1782 soru — KİLİT AÇILDI
+**DeepSeek artık kullanılamıyor** — anahtar duruyor ama kredi bitti
+(HTTP 402 Payment Required, 2026-08-24'te doğrulandı). Yani madde
+DeepSeek'le ne bulutta ne yerelde yapılabilir.
+
+**Çözüm: iş sağlayıcıya değil KOŞUYA taşındı.** Bulut koşusunun kendisi
+zaten bir dil modeli oturumu; ona soruyu çıplak verip cevabını almak
+DeepSeek'e sormakla aynı sinyali üretir. İki yeni araç:
+
+* `tool/content_authoring/kor_parti_uret.py` — hükmü olmayan soruları
+  ~40k karakterlik partilere böler ve `correctAnswer` alanını partiye
+  HİÇ yazmaz. 1782 soru, 9 parti.
+* `tool/content_authoring/kor_cevap_karsilastir.py` — dönen cevapları
+  anahtarla karşılaştırır, `capraz_kontrol.json`a işler, çelişkileri
+  `celiskiler.json`a çıkarır.
+
+İkisi ayrı olduğu için cevabı veren taraf ile karşılaştıran taraf
+birbirini görmüyor — 2026-08-19'da bir çapraz kontrol dosyası tam bu
+ayrım olmadığı için bozulmuş, doğru cevabı kaydın kendisinden kopyalayan
+bir satır 55 hükmü çöpe atmıştı.
+
+Karşılaştırma aracı dört yolda da sınandı: doğru cevap, çelişki, "emin
+değil", ve şıklardan hiçbirine oturmayan uydurma metin (reddediliyor —
+yaklaşık eşleşmeyi kabul etmek hükmü uydurmak olurdu).
+
+Kalan iş: `docs/content_batches/kor_partiler/` altındaki 9 partiyi
+sırayla cevaplamak. Ayrı bir bulut rutini (`ZanKurd — kör çapraz
+kontrol`) bunu yürütüyor.
 
 ### A6 — [x] İçerik: makine taramasının 22 sızma bulgusu
 `python3 tool/content_authoring/sik_kalite_taramasi.py` çalıştır
@@ -243,7 +267,7 @@ yoksa keskin ölçüt Dart testinde offline'ı kırar. Kalan Dart işi:
 `everyBankQuestion`'ı da bağla (şu an yalnız offline), bekçi belgesine
 niçini yaz, `flutter test` ile doğrula.
 
-### A11 — [ ] `question_quality/baseline.json` tam yenilenmeli
+### A11 — [x] `question_quality/baseline.json` tam yenilenmeli
 A6 koşusunda baseline'ın YALNIZ `sourceFingerprints` alanı elle
 güncellendi (sha256, algoritma doğrulandı: dokunulmamış 7 dosyanın
 hash'i baseline'la birebir tuttu). `issueFingerprints` listesi 1846'da
@@ -308,7 +332,7 @@ Son iki madde birer kusur DEĞİL; bugün ölçüldü ve tutuyorlar. Eksik
 olan, tuttuklarını yarın da söyleyecek bekçidir. **Flutter gerektirir**
 (test koşulmadan eklenmemeli).
 
-### A15 — [ ] A12'nin açığa çıkardığı 2 tür-karışık soru (A12'nin önkoşulu)
+### A15 — [x] A12'nin açığa çıkardığı 2 tür-karışık soru (A12'nin önkoşulu)
 A12'nin keskinleştirilmiş tür ölçütü Python'da doğrulanınca offline'da
 iki soru offender kaldı — eski `\b\d{3,4}\b` kuralı bunları görmüyordu,
 çünkü doğru cevaptaki `sala 1921`/`sala 1898`'i de "tarih" sayıp

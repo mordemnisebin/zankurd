@@ -7191,9 +7191,9 @@
     "category": "Dîrok",
     "prompt": "Kîjan pênase bi \"Serhildana Koçgirî\" re li hev tê?",
     "answers": [
-      "sedsala 16em",
-      "helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî",
-      "sedsala 19em",
+      "serhildana kurdî ya ku di sala 1925 de li derdora Amedê pêş ket",
+      "komeleya kurdî ya ku di sala 1908 de li Stenbolê hat damezrandin",
+      "serhildana kurdî ya ku di sala 1937 de li derdora Dêrsimê pêş ket",
       "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket"
     ],
     "correctAnswer": "tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket",
@@ -7202,9 +7202,9 @@
     "difficulty": 3,
     "promptTr": "Hangi tanım \"Koçgiri İsyanı\" ile örtüşür?",
     "answersTr": [
-      "16. yüzyıl",
-      "17. yüzyılda Kürt aydınlanma fikrini yazan şair",
-      "19. yüzyıl",
+      "1925'te Diyarbakır yöresinde gelişen Kürt isyanı",
+      "1908'de İstanbul'da kurulan Kürt derneği",
+      "1937'de Dersim yöresinde gelişen Kürt isyanı",
       "1921'de Sivas yöresinde gelişen Kürt hareketi"
     ],
     "correctAnswerTr": "1921'de Sivas yöresinde gelişen Kürt hareketi"
@@ -7439,9 +7439,9 @@
     "category": "Dîrok",
     "prompt": "Dema \"Rojnameya Kurdistan\" tê gotin, çi tê xwestin?",
     "answers": [
-      "sedsala 16em",
-      "weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî",
-      "rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin",
+      "kovara kurdî ya ku di sala 1932 de li Şamê hat weşandin",
+      "kovara kurdî ya ku di sala 1913 de li Stenbolê hat weşandin",
+      "rojnameya kurdî ya ku di sala 1908 de li Stenbolê hat çapkirin",
       "rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin"
     ],
     "correctAnswer": "rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin",
@@ -7450,12 +7450,12 @@
     "difficulty": 1,
     "promptTr": "\"Kürdistan gazetesi\" denince ne kastedilir?",
     "answersTr": [
-      "16. yüzyıl",
-      "20. yüzyıl başında ulusal haklar üzerine yazan tarihî Kürt yayını",
-      "20. yüzyıl başında kurulan Kürt örgütü",
-      "1898'de Kahire'de basılan ilk Kürtçe gazete"
+      "1932'de Şam'da yayımlanan Kürt dergisi",
+      "1913'te İstanbul'da yayımlanan Kürt dergisi",
+      "1908'de İstanbul'da basılan Kürt gazetesi",
+      "1898'de Kahire'de basılan ilk Kürt gazetesi"
     ],
-    "correctAnswerTr": "1898'de Kahire'de basılan ilk Kürtçe gazete"
+    "correctAnswerTr": "1898'de Kahire'de basılan ilk Kürt gazetesi"
   },
   {
     "id": "offline_7605",
