@@ -184,6 +184,57 @@ Doğrulama: keskinleştirilmiş ölçüt offline'da 0 vermeli (yoksa
 2026-07-24'ün 106 onarımı boşa gider) ve yukarıdaki 24 yanlış alarmın
 hepsini susturmalı. **Flutter gerektirir.**
 
+**Python tarafı çözüldü ve doğrulandı (2026-08-24).** Ölçüt Python'da,
+Dart'a birebir çevrilebilir biçimde (token-bazlı, `\b`/`\d`/`\w`
+KULLANMADAN — A10 dersinden: Dart RegExp bunları ASCII sayar ve
+`Maddeya 140î` ile `5em`'i farklı sınıflar; token yaklaşımı tuzağı
+tümden atlar) yeniden yazıldı. Algoritma —
+`is_date_expression(şık)`, şıkkın KENDİSİ tarih ifadesi mi:
+
+1. Şıkı boşluktan token'lara böl, her token'ı sınıfla:
+   * **dateword** — `sal/sala/salan/salên/salî`, `sedsal/sedsala/
+     sedsalan/sedsalên`, `yüzyıl/yy`, `berî/piştî/zayîn/zayînê`, ve
+     dönem kısaltmaları `m.ö/b.z./p.z./y.y.`.
+   * **number_suffixed** — Kurmancî tarih/sıra eki (`an yî em yê î ê a
+     y`) almış sayı: `1930î`, `1962an`, `19-20em`, `5em`, `61ê`. Eki
+     soyunca saf sayı gövdesi kalıyorsa (`^\d+([\d.\-–/]*\d)?$`).
+   * **number_bare** — yalın sayı, eksiz: `57`, `100`, `443`, `1918`.
+   * **connector** — nötr edat/bağlaç (`û de di ya li ji the of...`),
+     yok sayılır.
+   * **content** — başka her şey (film adı, `Maddeya`, `derece`, `roj`,
+     betimleme sözcükleri).
+2. İçerikli tek bir token varsa → **tarih DEĞİL** (film adı, madde no,
+   uzun düzyazı böyle elenir).
+3. İçerik yoksa: bir dateword ya da number_suffixed varsa → **tarih**;
+   yalnız number_bare/connector ise → **tarih DEĞİL** (A12: çıplak sayı
+   tek sınıf, hane sayısına bakılmadan — `57`↔`100` uyumlu olur).
+
+Sonuç (`is_date_expression` tür kuralına takılıp, mevcut Dart testinin
+uyguladığı 4+ şıklı çok seçmeli sorularda ölçüldü):
+* **24 yanlış alarmın 24'ü sustu** (editorial 7, expansion 3,
+  sourceFirst 2, deepseek 12 — hepsi). `Maddeya 140î↔5em`, `180
+  derece↔0 derece`, `The 400 Blows↔Breathless`, `Salên 1970yî`,
+  `Berî zayînê`, `57↔100` dahil.
+* **editorial'daki `edit_edebiyat_0018` de tür-tutarlı bulundu** — dört
+  şık da zaman (`Di 1930î de`, `Berî 1900î` `number_suffixed` sayesinde
+  tarih sayıldı; eski kural `1930î`yi ASCII `\b` yüzünden kaçırıyordu).
+* **Özgün Urartû kusuru hâlâ yakalanıyor** (sentetik kayıt: doğru
+  `Wanê`↔`sedsala 16an` → offender). Keskinleştirme sınıflandırmada
+  yapıldı, teklik/sayım koşuluyla DEĞİL — A12'nin gevşetme uyarısına
+  uyuldu.
+
+**Ama offline 0 sağlanmadı: 2 soru KALDI** (`offline_7394`,
+`offline_7598`). Bunlar sınıflandırma hatası değil — eski kuralın
+körlüğü yüzünden gizli kalmış GERÇEK içerik durumları (bkz. A15). Eski
+kural doğru cevaptaki `sala 1921`/`sala 1898`'i `\b\d{4}\b` ile tarih
+sayıp `sedsala 16em` ile uyumlu görüyordu; keskin kural doğru cevabı
+(içerikli uzun betimleme) tarih-değil, `sedsala 16em`'i tarih sayınca
+uyumsuzluk açığa çıktı. **A12'yi Dart'a almadan önce A15 çözülmelidir**,
+yoksa keskin ölçüt Dart testinde offline'ı kırar. Kalan Dart işi:
+`_isYearLike`'ı bu `is_date_expression`'la değiştir, tür kuralına
+`everyBankQuestion`'ı da bağla (şu an yalnız offline), bekçi belgesine
+niçini yaz, `flutter test` ile doğrula.
+
 ### A11 — [ ] `question_quality/baseline.json` tam yenilenmeli
 A6 koşusunda baseline'ın YALNIZ `sourceFingerprints` alanı elle
 güncellendi (sha256, algoritma doğrulandı: dokunulmamış 7 dosyanın
@@ -248,6 +299,38 @@ iddia edilebilir:
 Son iki madde birer kusur DEĞİL; bugün ölçüldü ve tutuyorlar. Eksik
 olan, tuttuklarını yarın da söyleyecek bekçidir. **Flutter gerektirir**
 (test koşulmadan eklenmemeli).
+
+### A15 — [ ] A12'nin açığa çıkardığı 2 tür-karışık soru (A12'nin önkoşulu)
+A12'nin keskinleştirilmiş tür ölçütü Python'da doğrulanınca offline'da
+iki soru offender kaldı — eski `\b\d{3,4}\b` kuralı bunları görmüyordu,
+çünkü doğru cevaptaki `sala 1921`/`sala 1898`'i de "tarih" sayıp
+`sedsala 16em` çeldiricisiyle uyumlu görüyordu. İkisi de bir HAREKET /
+YAYIN tanımı soruyor ama şıklarının arasında salt bir yüzyıl duruyor:
+
+* `offline_7394` — «Serhildana Koçgirî»nin tanımı. Doğru = uzun
+  betimleme; çeldiricilerin 2/3'ü salt yüzyıl (`sedsala 16em`,
+  `sedsala 19em`). Doğru cevap tür-**azınlığında** → özgün Urartû
+  kusurunun aynısı, ciddi.
+* `offline_7598` — «Rojnameya Kurdistan» ne demek. Doğru + 2 çeldirici
+  uzun betimleme, yalnız `sedsala 16em` tür-yabancı. Doğru
+  **çoğunlukta** → çeldirici zayıf ama doğruyu ele vermiyor, yumuşak.
+
+Bu bir sınıflandırma sorunu DEĞİL, içerik sorunudur; A12'yi Dart'a
+almadan önce çözülmeli, yoksa keskin ölçüt offline testini kırar. İki
+yol var, karar Flutter'lı/insan oturumunundur:
+
+1. **İçeriği onar** — `sedsala 16em`/`sedsala 19em` çeldiricilerini aynı
+   türden (uzun betimleme) çeldiricilerle değiştir. **DeepSeek çapraz
+   kontrolü gerektirir** (bulutta yok); uydurma çeldirici KALAN_ISLER
+   0.1'in "sahte iş" tuzağıdır.
+2. **Ölçütü genişlet** — "doğru cevap çeldiricilerin tür-çoğunluğunda
+   ise affet" incelmesi `offline_7598`'i susturur ama `offline_7394`'ü
+   (doğru azınlıkta) yakalamaya devam eder. Bu bir sayım koşuludur;
+   A12 sayım-koşuluyla gevşetmeye karşı uyarıyor, o yüzden yalnız
+   Urartû regresyonu korunduğu kanıtlanarak eklenmeli.
+
+Bu koşuda ikisi de yapılamadı (Flutter yok, DeepSeek yok); yalnız
+keşfedildi ve ölçüldü.
 
 ---
 
@@ -333,3 +416,21 @@ Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
   CI (7ff95dc) koşuyu doğruladı: analiz, biçim, kalite kapısı, kapsam
   kapısı, tüm test paketi (9dk18sn) ve Android derlemesi yeşil. A13
   **tam doğrulanmıştır**; yeniden denetlenmesine gerek yok.
+- 2026-08-24 — Flutter YOK, Dart'a dokunulmadı; içerik taraması 0 bulgu
+  (regresyon temiz). A12 alındı: Dart parçası (test + `flutter test`)
+  bu ortamda yapılamaz ama en riskli parçası — ölçüt tasarımı ve
+  doğrulaması — saf Python'da TAM yapıldı. Eski `_isYearLike` tüm
+  bankalarda ASCII-sadık taklit edilip 24 yanlış alarm gerçek
+  örnekleriyle çıkarıldı (A12'nin dağılımıyla birebir tuttu: editorial
+  7, expansion 3, sourceFirst 2, deepseek 12). Keskinleştirilmiş
+  `is_date_expression` token-bazlı yazıldı (Dart'a birebir çevrilebilir,
+  `\b`/`\d` yok) ve doğrulandı: 24 yanlış alarmın 24'ü sustu,
+  `edit_edebiyat_0018` tür-tutarlı bulundu, özgün Urartû kusuru sentetik
+  kayıtta hâlâ yakalanıyor — keskinleştirme sınıflandırmada, sayım
+  koşuluyla DEĞİL (A12 uyarısına uyuldu). **offline 0 sağlanmadı**:
+  keskin ölçüt, eski kuralın körlüğü yüzünden gizli kalmış 2 gerçek
+  tür-karışık soru açığa çıkardı (`offline_7394`, `offline_7598`) — A15
+  olarak açıldı, A12'nin önkoşulu. Engel: `flutter test` ve DeepSeek
+  bulutta yok; A12/A15 tamamlanamadı, yalnız Python'da çözülüp
+  belgelendi. Commit yalnız durum dosyasını günceller (kod/içeriğe
+  dokunulmadı).
