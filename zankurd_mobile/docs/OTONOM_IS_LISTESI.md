@@ -361,9 +361,48 @@ keşfedildi ve ölçüldü.
    ama doğruluğunu önce DOKUNMADIĞIN dosyalarla sınayın — hash'leri
    baseline'la tutmuyorsa varsayımın yanlıştır.
 
+### A16 — [ ] Ana sayfada kategorilere İKİ kapı — İNSAN KARARI
+
+İki kart aynı işlevi (`_openCategories`) çağırıyor ve alt yazıları
+neredeyse aynı:
+
+| Kart | Başlık | Alt yazı |
+|---|---|---|
+| `home-topic-picker` | Konu seç | Bir kategori seç ve başla |
+| `home-browse-categories-row` | Tüm kategoriler | Bir konu seç ve başla |
+
+Ekranda ~500 px arayla duruyorlar ve ikincisi yalnız İLERLEME YOKKEN
+çiziliyor — yani yeni kullanıcıda, kafa karışıklığının en pahalı olduğu
+anda (2026-08-24, simülatörde görüldü).
+
+**Bulut koşusu bu maddeye DOKUNMASIN.** Her iki tarafı kaldırma denendi
+ve üçü de belgelenmiş bir kararı deviriyor:
+
+* `home_screen_navigation_refresh_test` — keşif daveti ilerleme yokken
+  görünmeli (2026-08-14: bölüm sessizce boş kalıyordu).
+* `home_play_hierarchy_test` — üç seçenek kartı `secondary` vurguda
+  olmalı; `home-topic-picker` adıyla sayılıyor.
+* `kulturel_modern_home_test` — öğrenme yolları ve yarış geçişi farklı
+  hedeflere gitmeli.
+
+Üç ayrı karar bu düzeni şekillendirmiş. Hangi tarafın kalacağı ürün
+sahibinin kararıdır; kararı verilince bekçiler de birlikte güncellenir.
+
+Ara çözüm önerisi (karar beklerken): iki kartı KALDIRMADAN ayırmak —
+alt yazıları belirgin biçimde farklılaştırmak. Kullanıcının yaşadığı
+sorun "iki giriş" değil, "aynı şeye benzeyen iki giriş".
+
 ## Koşu günlüğü
 
 Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
+
+- **2026-08-24 (yerel, sıfırdan gözden geçirme)** — Uygulama simülatörde
+  gezildi. Sayısal şıkların ekranda karışık sırada geldiği bulundu ve
+  düzeltildi (85 sorunun 69'u; bekçi `numeric_option_order_test`).
+  Ana sayfada kategorilere iki kapı olduğu bulundu; düzeltme iki kez
+  denendi, üç bekçi belgelenmiş kararları koruduğu için geri alındı ve
+  A16 olarak insan kararına bırakıldı. Taban ölçümündeki A1 ve A3
+  yanlış bulgu çıkmıştı, onlar da düzeltilmişti.
 
 - 2026-08-22 — Flutter YOK (`flutter --version` boş, `dart` yok), bu yüzden
   Dart'a dokunulmadı; A6 yapıldı: 22 sızma bulgusunun 22'si JSON içerik
