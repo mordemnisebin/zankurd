@@ -484,6 +484,71 @@ koşulamadı — sayılar sabitlerden hesaplandı, koşarak doğrulanmadı):
   `caption` (12 × 1,35 = 16,2) + dikey padding 8+8 = **~32,2 px** kalıyor.
   `OnboardingScreen` hiçbir a11y testinde geçmiyor.
 
+#### Kaynak taraması tamamlandı (2026-08-25) — iki aday doğru, ama sınıf daha geniş
+
+Yukarıdaki iki aday kaynakta doğrulandı. Tarama `lib/` altındaki 48 px
+altı BÜTÜN `BoxConstraints` kısıtlarını çıkardı ve **aynı sınıfta beş
+site daha** buldu. Araç kalıcı: `tool/a11y/tap_target_taramasi.py`
+(saf Python, Flutter gerektirmez; bekçisi `tap_target_taramasi_test.py`,
+10 test).
+
+**Asıl bulgu: 48 değil, 44 geleneği.** Kaynakta yerleşmiş bir 44 px
+kısıtı var ve yanına «Dokunma hedefi erişilebilirlik alt sınırının
+altına düşmemeli» (`player_moderation_button.dart:147`), «44pt'lik
+dokunma hedefi: denetimde 48dp altı hedefler ayrıca kusur olarak
+kaydedilmişti» (`leaderboard_screen.dart:1657`) diye yorum yazılmış.
+44 **iOS'un** alt sınırıdır; `androidTapTargetGuideline` 48 ister.
+Yani niyet doğru, sayı Android için eksik.
+
+**Niçin sessiz kaldığının ikinci katmanı.** Madde başında «kapsam dar
+değil, var olan kapsamda iddia zayıf» yazıyor ve bu doğru. Ama zayıf
+iddia tek başına açıklamıyor: kodu okuyan bir insan da yakalamıyordu,
+çünkü sayının yanında onu erişilebilirlik gereği diye SAVUNAN bir yorum
+duruyor. Yanlış sayı, doğru gerekçeyle korunmuş.
+
+**Genişletme kurtarır mı — sınıf ayrımı.** `IconButton`ın varsayılan
+`tapTargetSize`ı `padded`, yani `constraints` 44 dese de vuruş alanını
+48'e genişletir. `InkWell` ve `GestureDetector`da böyle bir mekanizma
+YOK. Bu yüzden 44'ler ikiye ayrılıyor:
+
+| Sınıf | Site | Hüküm |
+|---|---|---|
+| `IconButton` @44 | 3 site | genişletme kurtarıyor **olmalı** — doğrulanmadı |
+| `InkWell`/`GestureDetector` | 6 site (5'i yeni) | genişletme yok, kısıt ne derse hedef o |
+| `LinearProgressIndicator` | 13 site | çubuk kalınlığı, hedef değil — 13/13 elle doğrulandı |
+| dokunulmayan rozet/ayraç | 4 site | `onTap` yok, kusur değil |
+
+Sabah koşusunun bakacağı gerçek liste (hepsi `InkWell`/`GestureDetector`,
+hiçbiri genişletme almıyor):
+
+* `lib/src/screens/sign_in_screen.dart:1269` — 36×36, **ikisi de** düşer
+  (yukarıdaki birinci aday).
+* `lib/src/widgets/legal_links.dart:43` — 44×44, yalnız Android.
+* `lib/src/widgets/offline_banner.dart:68` — 44×44, yalnız Android.
+* `lib/src/widgets/styled_input.dart:240` — 44×44, yalnız Android.
+  (Tarama bunu `bilinmiyor` sayıyor: `GestureDetector` kısıttan SONRA
+  geliyor, geriye bakan pencere göremiyor. Elle sınıflandırıldı.)
+* `lib/src/screens/quiz/word_ordering_widget.dart:278` — 44, yalnız Android.
+* `lib/src/screens/settings_screen.dart:1395` — 46, yalnız Android.
+  46 «neredeyse 48» değildir; eşik keskin.
+
+**Tuzağın canlı örneği — «yeşil test» hiçbir şey kanıtlamıyor.**
+`level_placement_screen.dart` a11y bekçisinde ve `androidTapTargetGuideline`
+orada iddia ediliyor, test de yeşil. Bundan «demek ki 44'lük `IconButton`
+Android'i geçiyor» sonucu çıkarmak CAZİP ve YANLIŞ: o düğme
+(`placement-skip-compact`, satır 98) `useCompactSkip` dalında duruyor ve o
+dal `width < 380 || textScale > 1.05` ister. Bekçinin kurduğu yüzey
+800×600 ve ölçek 1.0 — dal HİÇ çizilmiyor. Maddenin kendi uyardığı tuzak
+(«`meetsGuideline` yalnız o anda EKRANDA olan hedefi görür») bu depoda
+zaten gerçekleşmiş durumda. Sabah koşusu o ekranı dar yüzeyde ya da
+yüksek metin ölçeğinde ayrıca pump etmeli.
+
+**Ölçülmedi:** Flutter bu koşuda yoktu. Yukarıdakilerin hepsi kaynaktaki
+sabitten okundu; hiçbiri çizilerek doğrulanmadı. Tarama gerçek pikseli
+bilmez — dış bir `SizedBox` ya da esneyen satır hedefi 48'in üstüne
+çıkarmış olabilir. Liste «kusur listesi» değil, **bakılacak yer
+listesidir**; hüküm `meetsGuideline`in.
+
 **Sabah koşusuna iş. Flutter gerektirir.**
 
 1. Zaten pump edilen dokuz ekrana `androidTapTargetGuideline`,
@@ -579,6 +644,30 @@ ayrıca sınanıyor.
 ## Koşu günlüğü
 
 Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
+
+- **2026-08-25 (bulut, A18 kaynak taraması)** — Açık iki maddenin ikisi de
+  bu ortamda kapatılamıyor: A17 içerik borcu (uydurularak kapatılamaz),
+  A18 Flutter ister. Kural 1 uyarınca A18'in ANALİZİ tamamlandı.
+  `tool/a11y/tap_target_taramasi.py` yazıldı (saf Python) ve `lib/`
+  altındaki 48 px altı bütün `BoxConstraints` kısıtları çıkarıldı: 31
+  sitede 35 bulgu (bir kısıt iki eksen verebiliyor). Maddedeki iki aday doğrulandı, **aynı sınıfta beş site daha**
+  bulundu. Asıl bulgu sayı değil gelenek: kaynak 44 px'e yerleşmiş ve
+  yanına «erişilebilirlik alt sınırı» yorumu yazılmış — 44 iOS'un sınırı,
+  Android 48 ister. Yanlış sayı doğru gerekçeyle korunduğu için insan
+  okuması da yakalamıyordu. `IconButton` (padded genişletme) ile
+  `InkWell`/`GestureDetector` (genişletme yok) ayrımı taramaya ve
+  bekçisine kodlandı; `LinearProgressIndicator` kalınlıkları elle 13/13
+  doğrulanıp ayıklandı. Sınıflandırıcının bekçisi
+  `tap_target_taramasi_test.py`, 10 test, geçiyor. Ayrıca bir varsayım
+  ÇÜRÜTÜLDÜ: `level_placement` a11y bekçisinde yeşil ama 44'lük
+  `IconButton`ı `useCompactSkip` dalında ve bekçinin 800×600/1.0
+  yüzeyinde o dal hiç çizilmiyor — «yeşil test onu doğruluyor» demek
+  yanlış olurdu. Önceki koşunun göremediği CI durumu bu oturumda
+  bakıldı: `flutter_ci.yml` dalın başında (`1230aa4`) **başarılı**.
+  **Yarım:** A18 kapanmadı, yalnız 1. ve 2. adımı için kesin liste
+  hazırlandı; düzeltme ve `meetsGuideline` genişletmesi Flutter ister.
+  **Engel:** Flutter/Dart yok; hiçbir Dart dosyasına dokunulmadı, hiçbir
+  sayı çizilerek ölçülmedi.
 
 - **2026-08-24 (yerel, kalan işler)** — İnsan kararı bekleyen ve Flutter
   isteyen maddelerin hepsi kapandı. A4b: `shimmer` 4.0.0 (gerçek iOS
