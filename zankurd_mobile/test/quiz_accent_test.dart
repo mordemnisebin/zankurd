@@ -8,7 +8,9 @@ import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/kilim_board.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -251,5 +253,48 @@ void main() {
     // (bkz. `needsAnswerRevealFallback`, `lesson_explanation_test`).
     // Korunan asıl kural DEĞİŞMEDİ: açıklama METNİ tur içinde açılmaz.
     expect(find.text('Doğru cevap'), findsNothing);
+  });
+
+  testWidgets('şıklar kilim tahtasına oturur ve Zana yüzdür', (tester) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+    });
+    final repository = MockZanKurdRepository();
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      wrap(
+        QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('quiz-answer-board')), findsOneWidget);
+    final boardPaint = tester.widget<CustomPaint>(
+      find.descendant(
+        of: find.byKey(const ValueKey('quiz-answer-board')),
+        matching: find.byType(CustomPaint),
+      ),
+    );
+    final painter = boardPaint.painter! as KilimPainter;
+    expect(painter.opacity, greaterThanOrEqualTo(0.20));
+    final thinking = tester.widget<RojMascot>(
+      find.byKey(const ValueKey('quiz-zana-thinking')),
+    );
+    expect(thinking.size, 44);
+    expect(thinking.mood, RojMood.thinking);
+
+    await tester.tap(find.text(question.correctAnswer));
+    await tester.pumpAndSettle();
+
+    final celebrate = tester.widget<RojMascot>(
+      find.byKey(const ValueKey('quiz-zana-celebrate')),
+    );
+    expect(celebrate.size, 56);
+    expect(celebrate.mood, RojMood.celebrate);
   });
 }

@@ -178,7 +178,7 @@ class QuizOptionTile extends StatelessWidget {
           ),
           child: InkWell(
             onTap: disabled ? null : onTap,
-            borderRadius: BorderRadius.circular(AppRadius.md),
+            borderRadius: BorderRadius.circular(18),
             // "Hareketi azalt" açıkken sarsıntı ve zıplama uygulanmaz.
             //
             // Sağlayıcı ve ayar zaten vardı ama bu iki animasyon onu hiç
@@ -243,7 +243,7 @@ class QuizOptionTile extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     gradient: gradient,
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderRadius: BorderRadius.circular(18),
                     border: Border.all(color: borderColor, width: 2.0),
                     boxShadow: isPressed
                         ? (correct

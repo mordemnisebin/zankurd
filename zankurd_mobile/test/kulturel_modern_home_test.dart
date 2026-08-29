@@ -74,7 +74,11 @@ void main() {
     // gösterilmesi ve eski kalabalık blokların geri gelmemesi. Sözleşme
     // aynen duruyor, yalnız bileşen değişti.
     expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-topic-picker')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('home-browse-categories-row')),
+      findsOneWidget,
+    );
     expect(find.byKey(const ValueKey('home-lessons-row')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-path-node-1')), findsOneWidget);
     expect(find.byType(ModeCard), findsWidgets);
@@ -122,7 +126,7 @@ void main() {
     expect(find.byType(LevelScreen), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('home-topic-picker')));
+    await tester.tap(find.byKey(const ValueKey('home-browse-categories-row')));
     await tester.tap(find.byKey(const ValueKey('home-duel-row')));
 
     expect((categories, play), (1, 1));

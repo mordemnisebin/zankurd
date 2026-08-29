@@ -457,7 +457,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
           color: AppTheme.textPrimaryColor(context),
           fontSize: _adaptivePromptSize(promptText, promptFontSize),
         );
-        final promptGap = isCompact ? AppSpacing.xs : AppSpacing.sm;
+        final promptGap = isCompact ? AppSpacing.sm : AppSpacing.md;
         // Dinleme düğmesi soru metninin yanında durur; ölçüm genişliği
         // ondan arta kalandır.
         final promptWidth =
@@ -621,23 +621,30 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                   }
 
                   if (!twoColumn) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        for (final (index, answer) in answers.indexed)
-                          item(index, answer),
-                      ],
+                    return _QuizAnswerBoard(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (final (index, answer) in answers.indexed)
+                            item(index, answer),
+                        ],
+                      ),
                     );
                   }
 
                   final itemWidth =
                       (areaConstraints.maxWidth - AppSpacing.xs) / 2;
-                  return Wrap(
-                    spacing: AppSpacing.xs,
-                    children: [
-                      for (final (index, answer) in answers.indexed)
-                        SizedBox(width: itemWidth, child: item(index, answer)),
-                    ],
+                  return _QuizAnswerBoard(
+                    child: Wrap(
+                      spacing: AppSpacing.xs,
+                      children: [
+                        for (final (index, answer) in answers.indexed)
+                          SizedBox(
+                            width: itemWidth,
+                            child: item(index, answer),
+                          ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -1591,6 +1598,44 @@ class _DuelTugBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(1),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Şıkların oturduğu tahta. Kilim şeritte değil burada zemin olur.
+///
+/// Sahne koyu olduğu için altın iplik açık kremde kayboluyordu; bu yüzden
+/// soru ekranı `AppTheme.stage` ile karartılır. Opaklık 0.10'dayken motif
+/// şıkların aralığında da okunmuyordu (2026-08-29, iPhone 17 Pro).
+/// Kenar dolgusu YOK: şık yüksekliği yerleşim bütçesine bağlı, ekstra
+/// çerçeve iki sütuna düşürüp CTA örtüşmesini kırıyordu.
+class _QuizAnswerBoard extends StatelessWidget {
+  const _QuizAnswerBoard({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      key: const ValueKey('quiz-answer-board'),
+      borderRadius: BorderRadius.circular(18),
+      child: Stack(
+        children: [
+          const Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: KilimPainter(
+                  motif: KilimMotif.diamond,
+                  color: AppTheme.gold,
+                  opacity: 0.22,
+                  count: 5,
+                ),
+              ),
+            ),
+          ),
+          child,
         ],
       ),
     );

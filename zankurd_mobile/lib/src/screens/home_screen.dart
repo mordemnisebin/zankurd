@@ -446,23 +446,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               played: _pathPlayed,
               isKu: ku,
               onOpen: _openLevelPath,
+              onBrowse: _openCategories,
             ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          ModeCard(
-            key: const ValueKey('home-topic-picker'),
-            compact: true,
-            emphasis: ModeCardEmphasis.secondary,
-            icon: AppIcons.bookOpen,
-            // Altın yalnız ödül/ilerleme için ayrılmış; konu seçimi bir
-            // öğrenme yüzeyi olduğu için safir ailesinden bir ton alır.
-            accent: const Color(0xFF1E4FA6),
-            title: context.t(K.homeTopicPicker),
-            // Paylaşılan `categoriesSubtitle` DEĞİL: o metin keşif
-            // satırınınkiyle neredeyse aynıydı ve iki kart aynı şeye
-            // benziyordu (bkz. `homeTopicPickerSub` belgesi).
-            subtitle: context.t(K.homeTopicPickerSub),
-            onTap: _openCategories,
           ),
         ],
       ),
@@ -487,19 +472,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () => widget.onOpenPlay?.call(),
             ),
           ),
-          // Dıştaki koşul BİLEREK yok: `ContinueSection` kendi içinde zaten
-          // "ilerleme varsa liste, yoksa keşif daveti" ayrımını yapıyor
-          // (bkz. `home_rows.dart` `_buildDiscovery`). Eskiden bölüm
-          // yalnız `_categoryProgress.any(ratio > 0)` doğruyken
-          // çiziliyordu — ilerleme boşken widget'ın kendi keşif dalı hiç
-          // ÇAĞRILMIYORDU, "Başlayalım" daveti asla görünmüyordu
-          // (2026-08-14 denetimi).
+          // `ContinueSection` yalnız gerçekten başlanmış kategorileri
+          // listeler; ilerleme yoksa çizilmez. Keşif ikinci kapı değil,
+          // ders yolunun içindeki "Tüm konular"dır.
           const SizedBox(height: AppSpacing.xs),
           ContinueSection(
             isKu: ku,
             entries: _categoryProgress,
             onOpenCategory: _openCategory,
-            onBrowseCategories: _openCategories,
           ),
           const SizedBox(height: AppSpacing.md),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
@@ -744,7 +724,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Row(
                 children: [
                   RojMascot(
-                    size: 34,
+                    key: const ValueKey('home-zana'),
+                    size: 56,
                     mood: _streak > 0 ? RojMood.celebrate : RojMood.happy,
                   ),
                   const SizedBox(width: 10),

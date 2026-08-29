@@ -41,6 +41,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/kilim_board.dart';
+import '../theme/kilim_motifs.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
@@ -3269,7 +3270,7 @@ class _QuizScreenState extends State<QuizScreen>
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
     if (!isTimeout && !isFlutterTestEnvironment) {
-      await Future.delayed(const Duration(milliseconds: 400));
+      await Future.delayed(const Duration(milliseconds: 520));
     }
     // Bekleme sırasında soru ilerlediyse (ör. hızlı "Piştre") sonucu
     // yeni soruya uygulama — eski cevabın skor bulaşmasını önler.

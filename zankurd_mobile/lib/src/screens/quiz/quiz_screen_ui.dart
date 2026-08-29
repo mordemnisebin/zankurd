@@ -369,13 +369,14 @@ extension _QuizScreenUI on _QuizScreenState {
         : adjudication
         ? RojMood.celebrate
         : RojMood.sad;
+    final size = mood == RojMood.thinking ? 44.0 : 56.0;
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 220),
       transitionBuilder: (child, animation) =>
           ScaleTransition(scale: animation, child: child),
       child: RojMascot(
         key: ValueKey('quiz-zana-${mood.name}'),
-        size: 26,
+        size: size,
         mood: mood,
       ),
     );
@@ -1199,7 +1200,7 @@ extension _QuizScreenUI on _QuizScreenState {
                     Expanded(
                       child: _QuestionTextAndAnswers(
                         promptText: promptText,
-                        promptFontSize: 20,
+                        promptFontSize: 22,
                         question: question,
                         selectedAnswer: selectedAnswer,
                         adjudicatedCorrect: _currentAnswerAdjudication,
@@ -1248,7 +1249,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 ],
                 _QuestionTextAndAnswers(
                   promptText: promptText,
-                  promptFontSize: compactLandscape ? 21 : (isCompact ? 21 : 25),
+                  promptFontSize: compactLandscape ? 24 : (isCompact ? 24 : 28),
                   question: question,
                   selectedAnswer: selectedAnswer,
                   adjudicatedCorrect: _currentAnswerAdjudication,

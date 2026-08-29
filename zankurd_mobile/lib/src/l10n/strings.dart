@@ -1895,13 +1895,11 @@ class Tr {
     K.homeLearningPath: {'ku': 'Rêya dersan', 'tr': 'Ders yolu'},
     K.homePathNext: {'ku': 'Pêngava te: {name}', 'tr': 'Sıradaki: {name}'},
     K.homePathTrack: {'ku': 'Rêya {category}', 'tr': '{category} yolu'},
+    K.homePathBrowse: {'ku': 'Hemû mijar', 'tr': 'Tüm konular'},
+    // Eski çift kapı metinleri. Ana sayfada artık ayrı "Konu seç" kartı
+    // yok; keşif `homePathBrowse` ile yolun içinden açılır. Anahtarlar
+    // defterde duruyor ki eski çeviri satırları kaybolmasın.
     K.homeTopicPicker: {'ku': 'Mijar hilbijêre', 'tr': 'Konu seç'},
-    // Ana sayfada kategorilere iki kart açılıyor ve alt yazıları
-    // neredeyse aynıydı: "Bir kategori seç ve başla" ile "Bir konu seç
-    // ve başla". İkisi de aynı yere gidiyor ama NİYETLERİ farklı —
-    // bu kart tek konuda çalışmak için, aşağıdaki keşif satırı ise
-    // henüz hiçbir şeye başlamamış oyuncuya "hepsi burada" demek için.
-    // Metinler artık o farkı söylüyor (2026-08-24; A16).
     K.homeTopicPickerSub: {
       'ku': 'Di mijarekê de kûr bibe',
       'tr': 'Tek konuda derinleş',
@@ -3325,6 +3323,10 @@ class K {
   static const homeLearningPath = 'home.learning.path';
   static const homePathNext = 'home.path.next';
   static const homePathTrack = 'home.path.track';
+
+  /// Ders yolundaki konu değiştirme. Ana sayfada ayrı bir "Konu seç"
+  /// kartı yok; keşif yolun içinden açılır.
+  static const homePathBrowse = 'home.path.browse';
   static const homeTopicPicker = 'home.topicPicker';
 
   /// "Konu seç" kartının alt yazısı.

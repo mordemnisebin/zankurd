@@ -128,10 +128,7 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 1));
 
-      expect(
-        find.byKey(const ValueKey('home-discover-section')),
-        findsOneWidget,
-      );
+      expect(find.byKey(const ValueKey('home-discover-section')), findsNothing);
       expect(
         find.byKey(const ValueKey('home-browse-categories-row')),
         findsOneWidget,
@@ -176,6 +173,11 @@ void main() {
   testWidgets('öğrenmeden dönünce ana ekran sekmeye basmadan tazelenir', (
     tester,
   ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final repo = _ControllableCoinRepository()..coinBalance = 10;
     await tester.pumpWidget(
       _wrap(HomeScreen(repository: repo, onOpenCategories: () async {})),

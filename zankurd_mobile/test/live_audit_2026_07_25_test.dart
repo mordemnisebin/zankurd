@@ -95,14 +95,10 @@ void main() {
   });
 
   group('Ana ekran "kaldığın yer" bölümü', () {
-    testWidgets('hiç ilerleme yokken kategori keşif satırı gösterilir', (
+    testWidgets('hiç ilerleme yokken sahte "kaldığın yer" listesi çizilmez', (
       tester,
     ) async {
-      // Belirti: hiç oynamamış kullanıcıya "Kaldığın yer" başlığı altında
-      // üç kategori "%0 · Henüz başlamadın" diye listeleniyordu. Kullanıcı
-      // hiçbir yerde kalmamıştı ve kategori listesine görünür bir giriş
-      // de yoktu.
-      var browsed = false;
+      // Keşif ders yolunun içinden açılır; bu bölüm ikinci kapı olmaz.
       await tester.pumpWidget(
         _shell(
           Scaffold(
@@ -116,7 +112,6 @@ void main() {
                   threshold: 10,
                 ),
               ],
-              onBrowseCategories: () => browsed = true,
             ),
           ),
         ),
@@ -124,12 +119,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Kaldığın yer'), findsNothing);
-      expect(find.text('Tüm kategoriler'), findsOneWidget);
-
-      await tester.tap(
-        find.byKey(const ValueKey('home-browse-categories-row')),
-      );
-      expect(browsed, isTrue);
+      expect(find.text('Tüm kategoriler'), findsNothing);
+      expect(find.byKey(const ValueKey('home-continue-section')), findsNothing);
     });
 
     testWidgets('ilerleme varsa yalnız başlanmış kategoriler listelenir', (
@@ -148,7 +139,6 @@ void main() {
                   threshold: 10,
                 ),
               ],
-              onBrowseCategories: () {},
             ),
           ),
         ),

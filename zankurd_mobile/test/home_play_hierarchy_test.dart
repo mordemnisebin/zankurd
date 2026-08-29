@@ -104,22 +104,22 @@ void main() {
             findsOneWidget,
           );
           _expectActionSemantics(tester, 'home-lessons-row');
-          for (final key in ['home-topic-picker', 'home-duel-row']) {
-            expect(find.byKey(ValueKey(key)), findsOneWidget);
-            expect(
-              tester.widget<ModeCard>(find.byKey(ValueKey(key))).emphasis,
-              ModeCardEmphasis.secondary,
-              reason: key,
-            );
-            final decoration = _modeDecoration(tester, key);
-            expect(decoration.gradient, isNull, reason: key);
-            expect(
-              decoration.boxShadow ?? const <BoxShadow>[],
-              isEmpty,
-              reason: key,
-            );
-            _expectActionSemantics(tester, key);
-          }
+          expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
+          expect(
+            find.byKey(const ValueKey('home-browse-categories-row')),
+            findsOneWidget,
+          );
+          expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+          expect(
+            tester
+                .widget<ModeCard>(find.byKey(const ValueKey('home-duel-row')))
+                .emphasis,
+            ModeCardEmphasis.secondary,
+          );
+          final decoration = _modeDecoration(tester, 'home-duel-row');
+          expect(decoration.gradient, isNull);
+          expect(decoration.boxShadow ?? const <BoxShadow>[], isEmpty);
+          _expectActionSemantics(tester, 'home-duel-row');
         }
       }
     },

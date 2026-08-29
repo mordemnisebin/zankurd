@@ -47,6 +47,7 @@ class HomeLevelPath extends StatelessWidget {
     required this.played,
     required this.isKu,
     required this.onOpen,
+    this.onBrowse,
     super.key,
   });
 
@@ -55,6 +56,9 @@ class HomeLevelPath extends StatelessWidget {
   final Set<int> played;
   final bool isKu;
   final VoidCallback onOpen;
+
+  /// Konu listesi. Ayrı bir "Konu seç" kartı yok; keşif yolun içinden.
+  final VoidCallback? onBrowse;
 
   @override
   Widget build(BuildContext context) {
@@ -77,116 +81,145 @@ class HomeLevelPath extends StatelessWidget {
         ? Tr.forKu(K.homeLearningPath, isKu)
         : Tr.forKu(K.homePathNext, isKu, {'name': nextTitle});
 
-    return Semantics(
-      key: const ValueKey('home-lessons-row'),
-      button: true,
-      label: label,
-      onTap: onOpen,
-      child: ExcludeSemantics(
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onOpen,
-            borderRadius: BorderRadius.circular(radius),
-            child: Ink(
-              decoration: BoxDecoration(
-                color: Color.alphaBlend(
-                  accent.withValues(alpha: 0.08),
-                  AppTheme.surfaceColor(context),
-                ),
-                borderRadius: BorderRadius.circular(radius),
-                border: Border.all(
-                  color: accentOnSurface.withValues(alpha: 0.28),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.md,
-                  AppSpacing.sm,
-                  AppSpacing.md,
-                  AppSpacing.md,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: Color.alphaBlend(
+            accent.withValues(alpha: 0.08),
+            AppTheme.surfaceColor(context),
+          ),
+          borderRadius: BorderRadius.circular(radius),
+          border: Border.all(color: accentOnSurface.withValues(alpha: 0.28)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.md,
+            AppSpacing.sm,
+            AppSpacing.md,
+            AppSpacing.md,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Semantics(
+                key: const ValueKey('home-lessons-row'),
+                button: true,
+                label: label,
+                onTap: onOpen,
+                child: ExcludeSemantics(
+                  child: InkWell(
+                    onTap: onOpen,
+                    borderRadius: BorderRadius.circular(radius),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CategoryEmblem(
-                          icon: CategoryVisuals.icon(category),
-                          color: accentOnSurface,
-                          onColor: accentOnSurface,
-                          size: 36,
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                Tr.forKu(K.homePathTrack, isKu, {
-                                  'category': CategoryNames.localized(
-                                    category,
-                                    isKu,
+                        Row(
+                          children: [
+                            CategoryEmblem(
+                              icon: CategoryVisuals.icon(category),
+                              color: accentOnSurface,
+                              onColor: accentOnSurface,
+                              size: 36,
+                            ),
+                            const SizedBox(width: AppSpacing.sm),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    Tr.forKu(K.homePathTrack, isKu, {
+                                      'category': CategoryNames.localized(
+                                        category,
+                                        isKu,
+                                      ),
+                                    }),
+                                    style: AppTypography.caption.copyWith(
+                                      color: accentOnSurface,
+                                      letterSpacing: 0.3,
+                                    ),
                                   ),
-                                }),
-                                style: AppTypography.caption.copyWith(
-                                  color: accentOnSurface,
-                                  letterSpacing: 0.3,
-                                ),
+                                  Text(
+                                    nextTitle == null
+                                        ? Tr.forKu(K.homeLearningPath, isKu)
+                                        : Tr.forKu(K.homePathNext, isKu, {
+                                            'name': nextTitle,
+                                          }),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTypography.subtitle.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppTheme.textPrimaryColor(context),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                nextTitle == null
-                                    ? Tr.forKu(K.homeLearningPath, isKu)
-                                    : Tr.forKu(K.homePathNext, isKu, {
-                                        'name': nextTitle,
-                                      }),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.subtitle.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  color: AppTheme.textPrimaryColor(context),
+                            ),
+                            Icon(
+                              AppIcons.chevronRight,
+                              color: accentOnSurface,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        Row(
+                          children: [
+                            for (var i = 0; i < levels.length; i++) ...[
+                              if (i > 0)
+                                Expanded(
+                                  child: Container(
+                                    height: 3,
+                                    margin: const EdgeInsets.only(bottom: 18),
+                                    color: played.contains(levels[i - 1].number)
+                                        ? homePathLevelColor(levels[i].number)
+                                        : AppTheme.borderColor(context),
+                                  ),
+                                ),
+                              _HomePathNode(
+                                level: levels[i],
+                                played: played.contains(levels[i].number),
+                                isNext: levels[i].number == next,
+                                locked: !isHomePathLevelUnlocked(
+                                  levels[i].number,
+                                  played,
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                        Icon(
-                          AppIcons.chevronRight,
-                          color: accentOnSurface,
-                          size: 18,
+                          ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Row(
-                      children: [
-                        for (var i = 0; i < levels.length; i++) ...[
-                          if (i > 0)
-                            Expanded(
-                              child: Container(
-                                height: 3,
-                                margin: const EdgeInsets.only(bottom: 18),
-                                color: played.contains(levels[i - 1].number)
-                                    ? homePathLevelColor(levels[i].number)
-                                    : AppTheme.borderColor(context),
-                              ),
-                            ),
-                          _HomePathNode(
-                            level: levels[i],
-                            played: played.contains(levels[i].number),
-                            isNext: levels[i].number == next,
-                            locked: !isHomePathLevelUnlocked(
-                              levels[i].number,
-                              played,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              if (onBrowse != null) ...[
+                const SizedBox(height: AppSpacing.xs),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton(
+                    key: const ValueKey('home-browse-categories-row'),
+                    onPressed: onBrowse,
+                    style: TextButton.styleFrom(
+                      visualDensity: VisualDensity.compact,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                      ),
+                      minimumSize: const Size(44, 36),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      foregroundColor: accentOnSurface,
+                    ),
+                    child: Text(
+                      Tr.forKu(K.homePathBrowse, isKu),
+                      style: AppTypography.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: accentOnSurface,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
       ),

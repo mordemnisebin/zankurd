@@ -93,6 +93,7 @@ void main() {
               played: const {1},
               isKu: false,
               onOpen: () {},
+              onBrowse: () {},
             ),
           ),
         ),
@@ -110,6 +111,10 @@ void main() {
     );
     expect(find.byKey(const ValueKey('home-path-node-1')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-path-node-5')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('home-browse-categories-row')),
+      findsOneWidget,
+    );
     expect(find.byIcon(Icons.circle), findsNothing);
     expect(find.byIcon(AppIcons.play), findsOneWidget);
   });
