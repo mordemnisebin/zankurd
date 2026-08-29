@@ -2,15 +2,22 @@
 
 ## Genel Bakış
 
-ZanKurd, Kurmancî (Kürtçe) bilgi yarışması uygulamasıdır. Flutter ile geliştirilmiş olup,
-Supabase backend ve Firebase entegrasyonu ile çalışır.
+ZanKurd, Kurmancî öncelikli bilgi yarışması ve öğrenme uygulamasıdır.
+Flutter, Supabase, Firebase ve RevenueCat ile çalışır.
+
+**Altın yol:** Öğren (günlük görev) → solo quiz → isteğe 1v1. Turnuva ve
+benzeri modlar Yarış sekmesinde ikinci katmandadır.
+
+Kabuk sekmeleri: Öğren, Yarış, Liderlik, Profil.
 
 ## Mimari Diyagram
 
 ```mermaid
 graph TB
-    subgraph UI["Kullanıcı Arayüzü (Screens)"]
-        HS[HomeScreen]
+    subgraph UI["Kullanıcı Arayüzü"]
+        AS[AppShell]
+        LH[LearnHome / HomeScreen]
+        PH[PlayHubScreen]
         QS[QuizScreen]
         PS[ProfileScreen]
         LS[LeaderboardScreen]
@@ -20,14 +27,17 @@ graph TB
     subgraph Providers["State Management (Provider)"]
         AP[AuthProvider]
         TP[ThemeProvider]
-        LP[LanguageProvider]
+        LP[LanguageProvider in l10n/lang.dart]
         SP[SoundProvider]
+        RM[ReducedMotionProvider]
+        CS[ChildSafetyProvider]
     end
 
     subgraph Services["Servisler"]
         ANS[AnalyticsService]
         NS[NotificationService]
         BS[BadgeService]
+        PRE[PremiumService]
     end
 
     subgraph Data["Veri Katmanı"]
@@ -38,7 +48,7 @@ graph TB
     end
 
     subgraph Stores["Yerel Depolar (SharedPreferences)"]
-        AS[AchievementStore]
+        AS2[AchievementStore]
         MS[MistakeStore]
         SS2[StreakStore]
         XS[XpStore]
@@ -51,6 +61,10 @@ graph TB
         FB[(Firebase)]
     end
 
+    AS --> LH
+    AS --> PH
+    AS --> LS
+    AS --> PS
     UI --> Providers
     UI --> Data
     UI --> Services
@@ -71,16 +85,17 @@ graph TB
 ## Katmanlar
 
 ### 1. UI Katmanı (`lib/src/screens/`)
-- **HomeScreen** — Ana sayfa, kategori seçimi, hızlı yarış
-- **QuizScreen** — Soru-cevap ekranı, zamanlayıcı, joker
-- **ProfileScreen** — Kullanıcı profili, istatistikler, rozetler, XP
+- **LearnHomeScreen / HomeScreen** — Günlük görev, ders yolu, konu seçimi
+- **PlayHubScreen** — 1v1 (birincil), oda, günlük etkinlik; turnuva ikinci katman
+- **QuizScreen** — Soru-cevap, zamanlayıcı, joker
+- **ProfileScreen** — İstatistik, rozet, XP, hesap
 - **LeaderboardScreen** — Anonim lider tablosu
-- **SettingsScreen** — Dil seçimi (KU/TR), tema geçişi, ses, oyuncu adı
+- **SettingsScreen** — Dil (KU/TR), tema, ses, oyuncu adı, güvenlik
 
 ### 2. State Management (`lib/src/providers/`)
 - **AuthProvider** — Supabase kimlik doğrulama
 - **ThemeProvider** — Aydınlık/Karanlık tema yönetimi
-- **LanguageProvider** — Kurmancî/Türkçe dil yönetimi
+- **LanguageProvider** — `lib/src/l10n/lang.dart` içinde; Kurmancî/Türkçe
 - **SoundProvider** — Ses efektleri açma/kapama (web'de sessizdir)
 - **ReducedMotionProvider** — Hareketi azalt (kullanıcı + sistem tercihi)
 - **PremiumService** — RevenueCat aboneliği (`ChangeNotifier`)
@@ -135,7 +150,7 @@ Uygulama Kurmancî (KU) ve Türkçe (TR) dillerini destekler:
 
 ## Tema Sistemi
 
-- `lib/src/theme/app_theme.dart` — Light ve Dark tema tanımları
-- `lib/src/providers/theme_provider.dart` — Tema durumunu yönetir
-- Glassmorphism: `lib/src/widgets/glass_panel.dart`
-- Renkler: Coral/Orange gradient, Indigo secondary, Gold accent
+- `lib/src/theme/app_theme.dart` — Light ve Dark
+- `lib/src/providers/theme_provider.dart`
+- Palet: koyu antrasit, derin yeşil, krem. Mercan yalnız birincil eylemde.
+  Altın yalnız ödül/premium. Cam paneli yok; `glass_panel.dart` kaldırıldı.

@@ -25,8 +25,11 @@ import '../models/quiz_question.dart';
 import '../services/premium_service.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
+import '../data/level_progress_store.dart';
 import 'home/today_task_card.dart';
+import 'home/home_level_path.dart';
 import 'home/home_rows.dart';
+import 'level_screen.dart';
 import '../widgets/app_row_card.dart';
 import '../widgets/mode_card.dart';
 import 'home/daily_missions_card.dart';
@@ -131,6 +134,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// "Kaldığın yer" listesi: en çok ilerlenen üç kategori.
   List<CategoryProgress> _categoryProgress = const [];
+  String _pathCategory = 'Ziman';
+  Set<int> _pathPlayed = const {};
   late AnimationController _loadAnimationController;
   String? _displayName;
   int _refreshCounter = 0;
@@ -194,6 +199,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// fırsatı bu dönüştür — bkz. [onOpenLearning] doc yorumu.
   Future<void> _openLearning() async {
     await widget.onOpenLearning?.call();
+    if (mounted) _handleRefreshSignal();
+  }
+
+  Future<void> _openLevelPath() async {
+    if (!mounted) return;
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(LevelScreen(repository: repo, category: _pathCategory)));
     if (mounted) _handleRefreshSignal();
   }
 
@@ -299,8 +312,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ? byCorrect
                 : a.category.compareTo(b.category);
           });
+      final started = entries.where((entry) => entry.ratio > 0).toList();
+      final category = homePathFocusCategory(
+        started: started,
+        categories: repo.categories,
+      );
+      final levelStore = await LevelProgressStore.load();
+      final played = {
+        for (var number = 1; number <= 5; number++)
+          if (levelStore.isPlayed(category, null, number)) number,
+      };
       if (mounted) {
-        setState(() => _categoryProgress = entries.take(3).toList());
+        setState(() {
+          _categoryProgress = entries.take(3).toList();
+          _pathCategory = category;
+          _pathPlayed = played;
+        });
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home mastery load failed');
@@ -413,22 +440,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           const SizedBox(height: AppSpacing.xs),
           KeyedSubtree(
             key: const ValueKey('home-learning-path'),
-            // Üç mod artık birbirinin aynı satır değil; her biri kendi
-            // rengini ve amblemini taşıyan bir mod kartı (2026-08-03).
-            child: ModeCard(
-              key: const ValueKey('home-lessons-row'),
-              compact: true,
-              emphasis: ModeCardEmphasis.secondary,
-              icon: AppIcons.graduationCap,
-              // Marka turuncusu DEĞİL: o ton birincil CTA'ya ayrılmış ve
-              // hemen üstteki "Başla" düğmesi onu kullanıyor. Mod kartı da
-              // aynı turuncuyu alınca ikisi yarışıyor ve CTA'nın "tek
-              // eylem rengi" olma özelliği kayboluyordu (2026-08-03 görsel
-              // denetimi). Ders yolu bir öğrenme yüzeyi; zümrüt ailesi.
-              accent: const Color(0xFF0E7A57),
-              title: context.t(K.homeLearningPath),
-              subtitle: context.t(K.homeLessonsSub),
-              onTap: _openLearning,
+            child: HomeLevelPath(
+              category: _pathCategory,
+              levels: repo.levelsForCategory(_pathCategory),
+              played: _pathPlayed,
+              isKu: ku,
+              onOpen: _openLevelPath,
             ),
           ),
           const SizedBox(height: AppSpacing.xs),

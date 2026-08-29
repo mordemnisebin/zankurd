@@ -55,58 +55,9 @@ import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 part 'quiz/quiz_layout_rules.dart';
+part 'quiz/quiz_session_types.dart';
 part 'quiz/quiz_widgets.dart';
 part 'quiz/quiz_screen_ui.dart';
-
-enum QuizExperience { learning, competition }
-
-/// Multiplayer quiz turlarının ortak faz durumu.
-enum _MultiplayerPhase {
-  /// Oyuncular cevap veriyor.
-  answering,
-
-  /// Cevap verildi, diğer oyuncu bekleniyor.
-  waiting,
-
-  /// İki oyuncu da cevapladı veya süre bitti; doğru cevap gösteriliyor.
-  reveal,
-}
-
-enum _OnlineResultPhase { idle, loading, retryableFailure }
-
-typedef _QuizCoinSettlement = ({
-  int coinsAwarded,
-  bool rewardQueued,
-  bool isDurable,
-  String ownerUserId,
-
-  /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
-  ///
-  /// Sonuç ekranı bunu ayırt edemezse oyuncuya "+0 jeton" gösterip
-  /// sebebini söylemez; sıfır tek başına belirsizdir.
-  bool dailyCapReached,
-});
-
-class _OpponentAnswer {
-  const _OpponentAnswer({required this.name, required this.answer});
-
-  final String name;
-  final String answer;
-}
-
-class _ResolvedResumeAnswer {
-  const _ResolvedResumeAnswer({
-    required this.answer,
-    required this.questionIndex,
-    required this.selectedAnswer,
-    required this.correctAnswer,
-  });
-
-  final ResumedAnswer answer;
-  final int questionIndex;
-  final String selectedAnswer;
-  final String correctAnswer;
-}
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -172,20 +123,24 @@ class _QuizScreenState extends State<QuizScreen>
   ///
   /// Oda, 1v1, günlük tur, bot yarışı ve turnuva her hâlükârda sayaçlı
   /// kalır: orada süre puanın parçasıdır.
-  bool get _isRewardNeutralSolo =>
-      !widget.is1v1 &&
-      !widget.dailyQuiz &&
-      !widget.botRace &&
-      (widget.practice || widget.room.id == null);
+  bool get _isRewardNeutralSolo => isRewardNeutralSoloQuiz(
+    is1v1: widget.is1v1,
+    dailyQuiz: widget.dailyQuiz,
+    botRace: widget.botRace,
+    practice: widget.practice,
+    roomId: widget.room.id,
+  );
 
   /// Kullanıcı tercihi build sırasında okunur; `_untimedPreference`
   /// `didChangeDependencies` içinde tazelenir (sağlayıcı yoksa `false`).
   bool _untimedPreference = false;
 
-  bool get _usesTimer =>
-      widget.enableTimer &&
-      !_isLearningExperience &&
-      !(_untimedPreference && _isRewardNeutralSolo);
+  bool get _usesTimer => quizUsesTimer(
+    enableTimer: widget.enableTimer,
+    isLearning: _isLearningExperience,
+    untimedPreference: _untimedPreference,
+    rewardNeutralSolo: _isRewardNeutralSolo,
+  );
 
   /// Analytics'te "hangi modda oynanıyor" ayrımı için (quiz_start event'i).
   String get _quizModeLabel {
@@ -1574,14 +1529,15 @@ class _QuizScreenState extends State<QuizScreen>
   ///
   /// Sıra: oda kodu (çevrimiçi) → turun adı → kategori → genel "yarış".
   String _roundTitle(BuildContext context) {
-    if (widget.room.id != null) {
-      return '${context.t(K.roomWord)} ${widget.room.code}';
-    }
-    final name = widget.room.name.trim();
-    // Varsayılan oda adı bir tur adı değil, depo sabitidir.
-    if (name.isNotEmpty && name != 'Hevalên Zanînê') return name;
-    if (widget.room.category.isEmpty) return context.t(K.raceWord);
-    return CategoryNames.localized(widget.room.category, context.isKu);
+    return quizRoundTitle(
+      roomId: widget.room.id,
+      roomCode: widget.room.code,
+      roomName: widget.room.name,
+      category: widget.room.category,
+      isKu: context.isKu,
+      roomWord: context.t(K.roomWord),
+      raceWord: context.t(K.raceWord),
+    );
   }
 
   @override

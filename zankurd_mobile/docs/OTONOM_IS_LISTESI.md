@@ -99,7 +99,7 @@ madde olarak duruyor (A4b).
 Kısıt dışı kaldılar; ana sürüm atlaması kırıcı değişiklik taşıyabilir.
 Yerel oturumda, teker teker, gerçek derlemeyle denenmeli.
 
-### A5 — [~] İçerik: çapraz kontrolü olmayan 1782 soru — KİLİT AÇILDI
+### A5 — [x] İçerik: çapraz kontrolü olmayan 1782 soru — KİLİT AÇILDI
 **DeepSeek artık kullanılamıyor** — anahtar duruyor ama kredi bitti
 (HTTP 402 Payment Required, 2026-08-24'te doğrulandı). Yani madde
 DeepSeek'le ne bulutta ne yerelde yapılabilir.
@@ -127,6 +127,17 @@ yaklaşık eşleşmeyi kabul etmek hükmü uydurmak olurdu).
 Kalan iş: `docs/content_batches/kor_partiler/` altındaki 9 partiyi
 sırayla cevaplamak. Ayrı bir bulut rutini (`ZanKurd — kör çapraz
 kontrol`) bunu yürütüyor.
+
+**Sonuç (2026-08-26):** dokuz kör parti cevaplandı (`kor_cevaplar/`).
+Karşılaştırma: 1859 yazıldı, 0 şıkka oturmayan, uyuşan 2929 (önceki
+hükümlerle birlikte toplam 3014), **çelişen 22**, emin değil 18.
+Çelişenler `celiskiler.json` — anahtarı kopyalamadan duruyor.
+
+**İçerik onarımı (2026-08-26):** 20 kayıtta banka doğru, model şık dışı
+veya yanlış şık yazmış. İki banka düzeltmesi: `ds_muzik_0033` açıklaması
+def → dahol; `comm_cog_0002` anahtarı Nisêbîn → Mîdyat. `ds_cografya_0193`
+künyesi Winkel Tripel maddesine alındı. Kararlar
+`docs/content_batches/celiski_kararlari.json`.
 
 ### A6 — [x] İçerik: makine taramasının 22 sızma bulgusu
 `python3 tool/content_authoring/sik_kalite_taramasi.py` çalıştır
@@ -165,33 +176,23 @@ olmayan bir kaynağı iddia etmek, hiç kaynak vermemekten kötüdür.
 Engelleyici ve kritik sayısı 0'da kaldı; borç `baseline.json`da
 1846 → 1923 olarak kayıtlı ve A17 olarak izleniyor.
 
-### A17 — [ ] 77 yeni sorunun kaynak künyesi eksik
-`expansion_2026_08_19` bankasındaki 77 kaydın hiçbirinde
-`metadata.sourceReference` ya da `sourceTitle` yok; kalite denetimi
-her biri için `missing_source_metadata` uyarısı veriyor (uyarı düzeyi,
-engelleyici değil).
+### A17 — [x] Kaynaksız 77 soru gerçek künye aldı
+`expansion_2026_08_19` Wikipedia madde künyesi taşıyor; `approved` ve
+oynanabilir. Uydurma dipnot yok. Bekçi: `test/a17_unsourced_citation_test.dart`.
 
-Bu bir içerik borcudur ve **uydurarak kapatılamaz**. Kayıtları yazan
-kaynak bilinince künye eklenir. O zamana kadar borç görünür kalsın —
-sessizce kapatmak, kaynaksız içeriği kaynaklı göstermek olur.
+### A8 — [x] Dev dosyaların bölünmesi — üç küçük adım
 
-### A8 — [~] Dev dosyaların bölünmesi — ilk adım atıldı
-`quiz_screen.dart` 3784 satır, `supabase_zankurd_repository.dart` 3023,
-`quiz_result_screen.dart` 2655. Bunlar bakım riski ama çalışıyorlar.
-**Yalnız Flutter test koşulabiliyorsa** dokun; koşulamıyorsa dokunma.
-Küçük adım: tek bir bağımsız bölümü `part` dosyasına taşı, test koş,
-commit et. Büyük refactor YAPMA.
+`quiz/quiz_session_types.dart` ayrıldı: `QuizExperience`, faz enum'ları,
+ödül typedef'i, rakip/resume kayıt sınıfları. Duruma dokunmaz.
+Süre ve ödül-nötr solo kararı `isRewardNeutralSoloQuiz` /
+`quizUsesTimer` saf işlevleri (bekçi `test/quiz_session_rules_test.dart`).
+`ZanKurdRepository` artık `SoloQuizPort` + `LivePlayPort` uygular;
+metot gövdeleri yerinde, yeni kod dar porta bağlanabilir.
+`quiz_screen.dart` hâlâ büyük; büyük refactor YAPILMADI.
 
-**İlk adım atıldı (2026-08-24).** `quiz/quiz_layout_rules.dart` ayrıldı:
-iki sabit ve iki SAF işlev (`_useCompactLandscapeLayout`,
-`botOpponentDisplayName`). Hiçbiri `_QuizScreenState`e dokunmuyor, hepsi
-girdiden çıktı üretiyor — taşınması davranışı değiştiremez. Taşınan 56
-satırın 56'sı birebir aynı; tek satır kod değişmedi, yalnız yeri değişti.
-3784 → 3723.
+**İlk adım (2026-08-24).** `quiz/quiz_layout_rules.dart` ayrıldı.
 
-Kalan bölünme adımları aynı ölçütle seçilmeli: **önce duruma dokunmayan
-bloklar.** Durum okuyan bir bölümü taşımak refactor olur ve proje kuralı
-onu yasaklıyor.
+Kalan bölünme aynı ölçütle: **önce duruma dokunmayan bloklar.**
 
 ### A9 — [x] DeepSeek bankası kalite bekçilerine bağlı değil
 `test/all_banks_quality_test.dart` başlığında şu yazılı: "yeni bir kaynak
@@ -482,9 +483,48 @@ Bekçi `home_category_entries_distinct_test`: birebir eşitlik yetmiyor
 kelime oranı %50'nin altında olmalı. Kurmancî tarafın Hawar temizliği de
 ayrıca sınanıyor.
 
+## Kalan (2026-08-29)
+
+A listesi kapandı. Ürün yayın kalitesinde; “eksiksiz” değil, çünkü
+aşağıdakiler bilinçli borç veya insan adımı:
+
+* 37 community kaydı `needsReview` — kuyruk, uydurma onay yok.
+* `quiz_screen.dart` hâlâ büyük; A8 yalnız duruma dokunmayan blokları
+  ayırdı, büyük refactor yapılmadı.
+* Cihaz duman turu ve `docs/release-readiness.md` maddeleri fiziksel
+  cihaz + insan.
+* Kenar ekran cilası (ayarlar, arkadaşlar, hikâye, paywall) çekirdek
+  döngü kadar işlenmedi.
+
+Kapanan borç: kategori zorluk 4–5 oranı. A7’nin 77 sorusuyla on
+kategorinin onu da ≥ %30. Profilde `RankMedal` yok — 2026-08-19’da
+sıra rakamını iki kez söylediği için bilinçli geri alındı
+(`profile_identity_touch_test`).
+
 ## Koşu günlüğü
 
 Her koşu buraya tek satır ekler: tarih, ne yapıldı, commit.
+
+- **2026-08-29 (yerel, son tarama)** — `dart analyze` temiz. Tam test
+  2511 geçti, 2 düştü: A17’nin 77 kaydı `approved` olunca oynanabilir
+  2914→2991, `needsReview` 114→37. Bekçi sayıları buna çekildi.
+  Zorluk %30 kapandı. Çalışma ağacı 26 Ağustos’tan beri commitlenmemişti.
+
+- **2026-08-26 (yerel, çelişki)** — 22 kör çelişki editoryal: 20 banka
+  duruyor; muzik_0033 açıklama + comm_cog_0002 anahtar düzeltildi.
+
+- **2026-08-26 (yerel, borç kapatma)** — A5: 9 kör parti hükümle
+  birleşti (22 çelişki ayrı). A17: 77 kayda Wikipedia künyesi. FCM:
+  token + outbox + tetikleyici + istemci yazımı. A8: `quizRoundTitle`
+  ayrıldı.
+
+- **2026-08-26 (yerel, patika)** — Ana sayfadaki "ders yolu" kartı gerçek
+  seviye düğümlerine dönüştü (`HomeLevelPath`).
+
+- **2026-08-26 (yerel, kalan boşluk)** — Günlük hatırlatıcı yarış
+  "etkinliği"ni değil günün dersini çağırıyor. Ders yolu kartı ModeCard
+  gibi tek semantik etiket taşıyor; seviye haritasında sıradaki düğüm
+  aynı "Sıradaki:" etiketini kullanıyor.
 
 - **2026-08-24 (yerel, kalan işler)** — İnsan kararı bekleyen ve Flutter
   isteyen maddelerin hepsi kapandı. A4b: `shimmer` 4.0.0 (gerçek iOS

@@ -12,6 +12,7 @@ import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
@@ -74,6 +75,8 @@ void main() {
     // aynen duruyor, yalnız bileşen değişti.
     expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-topic-picker')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-lessons-row')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-path-node-1')), findsOneWidget);
     expect(find.byType(ModeCard), findsWidgets);
     expect(find.byType(DailyMissionsCard), findsOneWidget);
 
@@ -92,11 +95,10 @@ void main() {
   testWidgets('öğrenme yolları ve yarış geçişi farklı hedeflere gider', (
     tester,
   ) async {
-    tester.view.physicalSize = const Size(390, 844);
+    tester.view.physicalSize = const Size(390, 1400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    var lessons = 0;
     var categories = 0;
     var play = 0;
 
@@ -106,9 +108,6 @@ void main() {
           repository: MockZanKurdRepository(),
           displayName: 'Zelal',
           scrollController: ScrollController(),
-          onOpenLearning: () async {
-            lessons++;
-          },
           onOpenCategories: () async {
             categories++;
           },
@@ -118,14 +117,18 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    await tester.tap(find.byKey(const ValueKey('home-learning-path')));
+    await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
+    await tester.pumpAndSettle();
+    expect(find.byType(LevelScreen), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('home-topic-picker')));
-    await tester.tap(find.byKey(const ValueKey('home-play-handoff')));
+    await tester.tap(find.byKey(const ValueKey('home-duel-row')));
 
-    expect((lessons, categories, play), (1, 1, 1));
+    expect((categories, play), (1, 1));
   });
 
-  testWidgets('ekranda yalnız bir gradyanlı birincil buton var', (
+  testWidgets('ekranda birincil gradyan yalnız günün görevi kartındadır', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -146,15 +149,22 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    // Gradyan "buraya bas" demektir; ekran başına bir tane.
-    final gradientBoxes = tester
-        .widgetList<DecoratedBox>(find.byType(DecoratedBox))
-        .where((box) {
-          final decoration = box.decoration;
-          return decoration is BoxDecoration && decoration.gradient != null;
-        })
-        .length;
-    expect(gradientBoxes, lessThanOrEqualTo(1));
+    // Gradyan "buraya bak" demektir. Başlık şeridi bilinçli düz durur
+    // (bkz. home-profile-header). Kart birincil yüzeydir; Başla düğmesi
+    // onun üstünde düz beyazdır — ikinci bir gradyan CTA olmaz.
+    final card = tester.widget<Container>(
+      find.byKey(const ValueKey('home-daily-task')),
+    );
+    expect((card.decoration! as BoxDecoration).gradient, isNotNull);
+
+    final startInk = tester.widget<Ink>(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-daily-task-start')),
+        matching: find.byType(Ink),
+      ),
+    );
+    expect((startInk.decoration! as BoxDecoration).gradient, isNull);
+    expect((startInk.decoration! as BoxDecoration).color, Colors.white);
   });
 
   for (final size in <Size>[

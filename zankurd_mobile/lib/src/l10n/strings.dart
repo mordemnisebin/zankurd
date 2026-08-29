@@ -386,8 +386,8 @@ class Tr {
     K.joinAction: {'ku': 'Tevlî bibe', 'tr': 'Katıl'},
     K.playTitle: {'ku': 'Pêşbazî', 'tr': 'Yarış'},
     K.playSubtitle: {
-      'ku': 'Rasterast dest pê bike an hevalan vexwîne.',
-      'tr': 'Hemen başla ya da arkadaşlarını çağır.',
+      'ku': 'Hevrikekî bibîne · bi qasî 2 deqeyan.',
+      'tr': 'Rakibini bul · yaklaşık 2 dakika.',
     },
     K.withFriends: {'ku': 'Bi hevalan re', 'tr': 'Arkadaşlarınla'},
     K.withFriendsSub: {
@@ -416,6 +416,11 @@ class Tr {
     K.tournamentSub: {
       'ku': 'Elemeya bi lîstikvanên rastî',
       'tr': 'Gerçek oyuncularla eleme',
+    },
+    K.playMore: {'ku': 'Zêdetir', 'tr': 'Daha fazla'},
+    K.playMoreSub: {
+      'ku': 'Kûpa û modên din li vir in.',
+      'tr': 'Turnuva ve diğer modlar burada.',
     },
     K.quickDuel: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
     K.quickDuelSub: {
@@ -1026,9 +1031,8 @@ class Tr {
     },
     K.yaris: {'ku': 'Pêşbaz', 'tr': 'Yarış'},
     K.huhuGununSorulukEtkinligi: {
-      'ku':
-          'Huhu! Çalakiya rojê ya 10 pirsan amade ye. Pêşketina xwe biceribîne!',
-      'tr': 'Huhu! Günün 10 soruluk etkinliği hazır. İlerlemeni ölç!',
+      'ku': 'Dersê rojane amade ye. Îro hîn bibe!',
+      'tr': 'Günün dersi hazır. Bugün öğrenmeye devam et!',
     },
     K.zanaDiyorKiYeni: {
       'ku': 'Zana Dibêje: Hevalek Nû',
@@ -1889,6 +1893,8 @@ class Tr {
     },
     K.homeLearningSection: {'ku': 'Rêyên hînbûnê', 'tr': 'Öğrenme yolları'},
     K.homeLearningPath: {'ku': 'Rêya dersan', 'tr': 'Ders yolu'},
+    K.homePathNext: {'ku': 'Pêngava te: {name}', 'tr': 'Sıradaki: {name}'},
+    K.homePathTrack: {'ku': 'Rêya {category}', 'tr': '{category} yolu'},
     K.homeTopicPicker: {'ku': 'Mijar hilbijêre', 'tr': 'Konu seç'},
     // Ana sayfada kategorilere iki kart açılıyor ve alt yazıları
     // neredeyse aynıydı: "Bir kategori seç ve başla" ile "Bir konu seç
@@ -1911,8 +1917,8 @@ class Tr {
     },
     K.homeGreeting: {'ku': '{greeting}, {name}!', 'tr': '{greeting}, {name}!'},
     K.homeMotto: {
-      'ku': 'Zanîn, ronahiya tarîtiyê ye.',
-      'tr': 'Bilgi, karanlığın aydınlığıdır.',
+      'ku': 'Her roj çend pirs. Ziman xurt dibe.',
+      'tr': 'Her gün birkaç soru. Dil güçlenir.',
     },
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
@@ -2628,6 +2634,8 @@ class K {
   static const tenQuestions = 'play.tenQuestions';
   static const tournament = 'play.tournament';
   static const tournamentSub = 'play.tournament.sub';
+  static const playMore = 'play.more';
+  static const playMoreSub = 'play.more.sub';
   static const quickDuel = 'play.quickDuel';
   static const quickDuelSub = 'play.quickDuel.sub';
   static const findOpponent = 'play.findOpponent';
@@ -3315,6 +3323,8 @@ class K {
   static const homeLessonsSub = 'home.lessons.sub';
   static const homeLearningSection = 'home.learning.section';
   static const homeLearningPath = 'home.learning.path';
+  static const homePathNext = 'home.path.next';
+  static const homePathTrack = 'home.path.track';
   static const homeTopicPicker = 'home.topicPicker';
 
   /// "Konu seç" kartının alt yazısı.

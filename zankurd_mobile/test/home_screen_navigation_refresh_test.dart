@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -12,6 +11,7 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 /// 2026-08-14 denetimi: Ana ekranın (`home_screen.dart`) dört bulgusu.
@@ -68,6 +68,7 @@ QuizQuestion _q(String id) => QuizQuestion(
 void main() {
   setUp(() {
     MasteryStore.resetInstance();
+    LevelProgressStore.resetInstance();
     SharedPreferences.setMockInitialValues({});
   });
 
@@ -176,32 +177,19 @@ void main() {
     tester,
   ) async {
     final repo = _ControllableCoinRepository()..coinBalance = 10;
-    VoidCallback resumeLearning = () {};
     await tester.pumpWidget(
-      _wrap(
-        HomeScreen(
-          repository: repo,
-          onOpenCategories: () async {},
-          onOpenLearning: () {
-            final completer = Completer<void>();
-            resumeLearning = () => completer.complete();
-            return completer.future;
-          },
-        ),
-      ),
+      _wrap(HomeScreen(repository: repo, onOpenCategories: () async {})),
     );
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('10'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
-    await tester.pump();
+    await tester.pumpAndSettle();
+    expect(find.byType(LevelScreen), findsOneWidget);
 
-    // Push hâlâ açıkken (Completer tamamlanmadan) bakiye değişse bile
-    // ana ekran henüz tazelenmemeli — asıl doğrulanan dönüş anı.
     repo.coinBalance = 55;
-    resumeLearning();
-    await tester.pump();
-    await tester.pump();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
 
     expect(
       find.text('55'),

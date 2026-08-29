@@ -41,6 +41,52 @@ void main() {
     expect(bar.value, closeTo(4 / 15, 0.001));
   });
 
+  testWidgets('günün görevi birincil gradyan yüzeydir, düz yedek kart değil', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light(),
+        home: Scaffold(
+          body: TodayTaskCard(
+            isKu: false,
+            loading: false,
+            onStart: () {},
+            done: 4,
+            total: 15,
+          ),
+        ),
+      ),
+    );
+
+    final card = tester.widget<Container>(
+      find.byKey(const ValueKey('home-daily-task')),
+    );
+    final decoration = card.decoration! as BoxDecoration;
+    expect(
+      decoration.gradient,
+      isA<LinearGradient>(),
+      reason:
+          'Ana eylem düz yüzeyde kalırsa Yarış kahramanının yanında sönük durur.',
+    );
+    expect(decoration.color, isNull);
+
+    final title = tester.widget<Text>(find.text('Günün dersi'));
+    expect(title.style?.color, Colors.white);
+
+    final bar = tester.widget<KilimProgressBar>(find.byType(KilimProgressBar));
+    expect(bar.color, Colors.white);
+    expect(bar.trackColor, isNotNull);
+
+    final startInk = tester.widget<Ink>(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-daily-task-start')),
+        matching: find.byType(Ink),
+      ),
+    );
+    expect((startInk.decoration! as BoxDecoration).color, Colors.white);
+  });
+
   testWidgets('ilerleme tahtası DEĞİL çubuk kullanılır', (tester) async {
     // Kasıtlı ayrım. Tahta (`KilimBoard`) soru soru doğru/yanlış ister;
     // burada yalnız "kaç soru bitti" bilgisi var. Tahtayı kullanmak

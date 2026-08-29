@@ -634,200 +634,208 @@ class _LevelNodeState extends State<_LevelNode> {
       enabled: !blocked,
       label: widget.locked
           ? (context.t(K.pKilitliOncekiSeviyeyi, {'p0': name}))
+          : widget.isNext
+          ? context.t(K.homePathNext, {'name': name})
           : name,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        clipBehavior: Clip.none,
-        children: [
-          // Saydamlığın altına opak bir daire konur.
-          //
-          // Kilitli düğüm %45 saydam çiziliyordu ve altındaki kesikli yol
-          // dairenin içinden geçip kilit ikonunun ortasından görünüyordu —
-          // düğüm çizgiyle çizilmiş gibi duruyordu (2026-07-27). Saydamlık
-          // kararı doğru (kilitli olan sönük okunmalı); eksik olan, sönmeyi
-          // sayfa zemininin üstünde yapmaktı.
-          if (widget.locked)
-            Container(
-              width: 76,
-              height: 76,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppTheme.bgOf(context),
+      child: ExcludeSemantics(
+        child: Stack(
+          alignment: Alignment.topCenter,
+          clipBehavior: Clip.none,
+          children: [
+            // Saydamlığın altına opak bir daire konur.
+            //
+            // Kilitli düğüm %45 saydam çiziliyordu ve altındaki kesikli yol
+            // dairenin içinden geçip kilit ikonunun ortasından görünüyordu —
+            // düğüm çizgiyle çizilmiş gibi duruyordu (2026-07-27). Saydamlık
+            // kararı doğru (kilitli olan sönük okunmalı); eksik olan, sönmeyi
+            // sayfa zemininin üstünde yapmaktı.
+            if (widget.locked)
+              Container(
+                width: 76,
+                height: 76,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppTheme.bgOf(context),
+                ),
               ),
-            ),
-          GestureDetector(
-            onTapDown: blocked ? null : (_) => setState(() => _pressed = true),
-            onTapUp: blocked
-                ? null
-                : (_) {
-                    setState(() => _pressed = false);
-                    widget.onTap();
-                  },
-            onTapCancel: blocked
-                ? null
-                : () => setState(() => _pressed = false),
-            // Kilitli düğüme dokunmak sessiz kalmaz: nedenini söyler.
-            onTap: widget.locked ? () => _explainLock(context) : null,
-            child: AnimatedScale(
-              scale: _pressed ? 0.93 : 1.0,
-              duration: const Duration(milliseconds: 100),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Opacity(
-                    // Saydamlık YALNIZ düğüm dairesine uygulanır.
-                    //
-                    // Önce bütün alt ağacı sarıyordu ve altındaki
-                    // etiket kartı da %45 saydam çiziliyordu: koyu
-                    // temada "Temel · 10 soru" okunabilirlik eşiğinin
-                    // altında kalıyordu (2026-07-30 ekran turu, 38/53).
-                    // Kilitli olduğu zaten dairenin sönük rengi ve
-                    // asma kilit ikonundan belli; oyuncunun hangi
-                    // seviyede kaç soru olduğunu okuyamaması ise
-                    // planlamasını engelliyordu.
-                    opacity: widget.locked ? 0.45 : 1.0,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: 76,
-                          height: 76,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                color,
-                                Color.alphaBlend(
-                                  Colors.black.withValues(alpha: 0.24),
+            GestureDetector(
+              onTapDown: blocked
+                  ? null
+                  : (_) => setState(() => _pressed = true),
+              onTapUp: blocked
+                  ? null
+                  : (_) {
+                      setState(() => _pressed = false);
+                      widget.onTap();
+                    },
+              onTapCancel: blocked
+                  ? null
+                  : () => setState(() => _pressed = false),
+              // Kilitli düğüme dokunmak sessiz kalmaz: nedenini söyler.
+              onTap: widget.locked ? () => _explainLock(context) : null,
+              child: AnimatedScale(
+                scale: _pressed ? 0.93 : 1.0,
+                duration: const Duration(milliseconds: 100),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Opacity(
+                      // Saydamlık YALNIZ düğüm dairesine uygulanır.
+                      //
+                      // Önce bütün alt ağacı sarıyordu ve altındaki
+                      // etiket kartı da %45 saydam çiziliyordu: koyu
+                      // temada "Temel · 10 soru" okunabilirlik eşiğinin
+                      // altında kalıyordu (2026-07-30 ekran turu, 38/53).
+                      // Kilitli olduğu zaten dairenin sönük rengi ve
+                      // asma kilit ikonundan belli; oyuncunun hangi
+                      // seviyede kaç soru olduğunu okuyamaması ise
+                      // planlamasını engelliyordu.
+                      opacity: widget.locked ? 0.45 : 1.0,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            width: 76,
+                            height: 76,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
                                   color,
+                                  Color.alphaBlend(
+                                    Colors.black.withValues(alpha: 0.24),
+                                    color,
+                                  ),
+                                ],
+                              ),
+                              border: Border.all(
+                                color: widget.played
+                                    ? AppTheme.gold
+                                    : Colors.white.withValues(
+                                        alpha: widget.isNext ? 0.9 : 0.55,
+                                      ),
+                                width: 3,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: color.withValues(
+                                    alpha: widget.isNext ? 0.32 : 0.20,
+                                  ),
+                                  blurRadius: widget.isNext ? 16 : 10,
+                                  offset: const Offset(0, 5),
+                                  spreadRadius: -2,
                                 ),
                               ],
                             ),
-                            border: Border.all(
-                              color: widget.played
-                                  ? AppTheme.gold
-                                  : Colors.white.withValues(
-                                      alpha: widget.isNext ? 0.9 : 0.55,
+                            child: widget.locked
+                                ? const Icon(
+                                    AppIcons.lock,
+                                    color: Colors.white,
+                                    size: 30,
+                                  )
+                                : isFinal
+                                ? const Icon(
+                                    AppIcons.trophy,
+                                    color: Colors.white,
+                                    size: 34,
+                                  )
+                                : Text(
+                                    '${widget.level.number}',
+                                    style: AppTypography.heading1.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w900,
                                     ),
-                              width: 3,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: color.withValues(
-                                  alpha: widget.isNext ? 0.32 : 0.20,
+                                  ),
+                          ),
+                          if (widget.played)
+                            Positioned(
+                              right: -2,
+                              top: -2,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  gradient: AppTheme.goldGradient,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1.5,
+                                  ),
                                 ),
-                                blurRadius: widget.isNext ? 16 : 10,
-                                offset: const Offset(0, 5),
-                                spreadRadius: -2,
+                                child: const Icon(
+                                  AppIcons.check,
+                                  color: Colors.white,
+                                  size: 14,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTheme.surfaceColor(context),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                        border: Border.all(
+                          color: color.withValues(alpha: 0.30),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            LevelNames.localized(
+                              widget.level.title,
+                              context.isKu,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                              fontSize: 13.5,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _DifficultyStars(
+                                filled: widget.level.difficultyMax.clamp(1, 5),
+                                color: color,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
+                                style: AppTypography.caption.copyWith(
+                                  color: AppTheme.textMutedColor(context),
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
-                          child: widget.locked
-                              ? const Icon(
-                                  AppIcons.lock,
-                                  color: Colors.white,
-                                  size: 30,
-                                )
-                              : isFinal
-                              ? const Icon(
-                                  AppIcons.trophy,
-                                  color: Colors.white,
-                                  size: 34,
-                                )
-                              : Text(
-                                  '${widget.level.number}',
-                                  style: AppTypography.heading1.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                        ),
-                        if (widget.played)
-                          Positioned(
-                            right: -2,
-                            top: -2,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                gradient: AppTheme.goldGradient,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: const Icon(
-                                AppIcons.check,
-                                color: Colors.white,
-                                size: 14,
-                              ),
-                            ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppTheme.surfaceColor(context),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                      border: Border.all(color: color.withValues(alpha: 0.30)),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          LevelNames.localized(
-                            widget.level.title,
-                            context.isKu,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13.5,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _DifficultyStars(
-                              filled: widget.level.difficultyMax.clamp(1, 5),
-                              color: color,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

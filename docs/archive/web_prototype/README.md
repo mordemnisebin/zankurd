@@ -5,7 +5,7 @@ This folder contains the React + Vite web prototype for ZanKurd. It is not the G
 The production mobile app lives in:
 
 ```text
-../zankurd_mobile
+../../zankurd_mobile
 ```
 
 ## Current Role

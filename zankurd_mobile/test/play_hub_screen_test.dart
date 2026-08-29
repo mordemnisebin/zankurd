@@ -72,6 +72,13 @@ void main() {
       find.byKey(const ValueKey('play-hub-daily-contest')),
       findsOneWidget,
     );
+    expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
+    // Turnuva bilinçli olarak kapalı: Kahoot/Duolingo’daki gibi ilk bakışta
+    // tek bir “oyna” ve günlük dönüş. Kapalı çocuk skipOffstage ile yok.
+    expect(find.byKey(const ValueKey('play-hub-tournament')), findsNothing);
+    await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
+    await tester.tap(find.byKey(const ValueKey('play-hub-more')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('play-hub-tournament')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-shop-card')), findsNothing);
     expect(find.text('Turnuva ve sıralama'), findsNothing);

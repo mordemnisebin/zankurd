@@ -30,6 +30,7 @@ class PlayHubScreen extends StatefulWidget {
 class _PlayHubScreenState extends State<PlayHubScreen> {
   bool _dailyLoading = false;
   bool _roomActionLoading = false;
+  bool _moreOpen = false;
 
   /// Oda kodu alanının denetleyicisi. Ömrü sayfaya değil EKRANA bağlıdır.
   ///
@@ -246,106 +247,140 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     return ColoredBox(
       color: AppTheme.bgOf(context),
       child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.page),
-          children: [
-            // Ekran altı eşit ağırlıkta satırdan oluşan bir menü gibi
-            // duruyordu; yeni kullanıcı hangisinin "asıl oyun" olduğunu
-            // seçemiyordu (2026-07-25 canlı denetimi). Artık tek birincil
-            // eylem (hızlı düello) ve altında iki adlandırılmış grup var.
-            ScreenIdentityHeader(
-              title: context.t(K.playTitle),
-              subtitle: context.t(K.playSubtitle),
-              accent: AppTheme.brand,
-              icon: AppIcons.gamepad,
-              compact: true,
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            _QuickDuelHero(
-              ku: ku,
-              onTap: () => Navigator.of(context).push(
-                AppRoute.to(MatchmakingScreen(repository: widget.repository)),
+        child: Material(
+          color: AppTheme.bgOf(context),
+          child: ListView(
+            padding: const EdgeInsets.all(AppSpacing.page),
+            children: [
+              // Ekran altı eşit ağırlıkta satırdan oluşan bir menü gibi
+              // duruyordu; yeni kullanıcı hangisinin "asıl oyun" olduğunu
+              // seçemiyordu (2026-07-25 canlı denetimi). Artık tek birincil
+              // eylem (hızlı düello) ve altında iki adlandırılmış grup var.
+              ScreenIdentityHeader(
+                title: context.t(K.playTitle),
+                subtitle: context.t(K.playSubtitle),
+                accent: AppTheme.brand,
+                icon: AppIcons.gamepad,
+                compact: true,
               ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            _PlaySectionHeading(
-              title: context.t(K.withFriends),
-              subtitle: context.t(K.withFriendsSub),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            // Rengîn (2026-08-04): dört satır birbirinin aynı beyaz kartıydı
-            // ve oyun merkezinin tamamı tek yeşil + tek turuncu ile
-            // çiziliyordu. Her mod artık kendi hue ailesini taşır; turuncu
-            // yalnız birincil eylemde kalır.
-            ModeCard(
-              key: const ValueKey('play-hub-create-room'),
-              compact: true,
-              emphasis: ModeCardEmphasis.secondary,
-              icon: AppIcons.circlePlus,
-              // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
-              // M24 notu playPink/playPurple'ı 2026-07-23'te "marka dışı"
-              // ilan etmiş, eşleşme ekranı 2026-07-31'de düzeltilmişti; ama
-              // kararın verildiği ekranın *kendisi* atlanmıştı. Oyun
-              // merkezinde dört satır yan yana duruyor, yani sapma en çok
-              // burada görünüyordu: mor ve pembe, turuncu-altın-yeşil
-              // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
-              accent: const Color(0xFF1E4FA6), // safir — kurma
-              title: context.t(K.createRoom),
-              subtitle: context.t(K.createRoomSub),
-              busy: _roomActionLoading,
-              onTap: _roomActionLoading ? null : _createOnlineRoom,
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            ModeCard(
-              key: const ValueKey('play-hub-join-room'),
-              compact: true,
-              emphasis: ModeCardEmphasis.secondary,
-              icon: AppIcons.doorOpen,
-              accent: const Color(0xFF04697C), // turkuaz — katılma
-              title: context.t(K.joinByCode),
-              subtitle: context.t(K.joinByCodeSub),
-              onTap: _showJoinSheet,
-            ),
-            const SizedBox(height: AppSpacing.md),
-            _PlaySectionHeading(
-              title: context.t(K.events),
-              subtitle: context.t(K.eventsSub),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            ModeCard(
-              key: const ValueKey('play-hub-daily-contest'),
-              compact: true,
-              emphasis: ModeCardEmphasis.event,
-              icon: AppIcons.bolt,
-              // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
-              accent: const Color(0xFF9C6300),
-              title: context.t(K.dailyContest),
-              subtitle: context.t(K.tenQuestions),
-              busy: _dailyLoading,
-              onTap: _dailyLoading ? null : _openDailyQuiz,
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            ModeCard(
-              key: const ValueKey('play-hub-tournament'),
-              compact: true,
-              emphasis: ModeCardEmphasis.event,
-              icon: AppIcons.trophy,
-              // Altın bir satır yukarıda "Günün Etkinliği"nde; turnuva
-              // yeşil aksanı alır. Dört satır artık koyu yeşil ·
-              // çamurlu turkuaz · altın · turuncu-yeşil — hepsi palet içinde,
-              // yine de birbirinden ayrılıyor.
-              accent: const Color(0xFF6A38BE), // ametist — turnuva
-              title: context.t(K.tournament),
-              subtitle: context.t(K.tournamentSub),
-              onTap: () => Navigator.of(context).push(
-                AppRoute.to(TournamentScreen(repository: widget.repository)),
+              const SizedBox(height: AppSpacing.sm),
+              _QuickDuelHero(
+                ku: ku,
+                onTap: () => Navigator.of(context).push(
+                  AppRoute.to(MatchmakingScreen(repository: widget.repository)),
+                ),
               ),
-            ),
-            // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
-            // sekmesinden, profilden ve kendi rotasından olmak üzere üç
-            // ayrı giriş vardı ve "burası neresi?" hissi yaratıyordu
-            // (2026-07-25 canlı denetimi). Tek ev profildeki HESAP bölümü.
-          ],
+              const SizedBox(height: AppSpacing.md),
+              _PlaySectionHeading(
+                title: context.t(K.withFriends),
+                subtitle: context.t(K.withFriendsSub),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              // Rengîn (2026-08-04): dört satır birbirinin aynı beyaz kartıydı
+              // ve oyun merkezinin tamamı tek yeşil + tek turuncu ile
+              // çiziliyordu. Her mod artık kendi hue ailesini taşır; turuncu
+              // yalnız birincil eylemde kalır.
+              ModeCard(
+                key: const ValueKey('play-hub-create-room'),
+                compact: true,
+                emphasis: ModeCardEmphasis.secondary,
+                icon: AppIcons.circlePlus,
+                // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
+                // M24 notu playPink/playPurple'ı 2026-07-23'te "marka dışı"
+                // ilan etmiş, eşleşme ekranı 2026-07-31'de düzeltilmişti; ama
+                // kararın verildiği ekranın *kendisi* atlanmıştı. Oyun
+                // merkezinde dört satır yan yana duruyor, yani sapma en çok
+                // burada görünüyordu: mor ve pembe, turuncu-altın-yeşil
+                // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
+                accent: const Color(0xFF1E4FA6), // safir — kurma
+                title: context.t(K.createRoom),
+                subtitle: context.t(K.createRoomSub),
+                busy: _roomActionLoading,
+                onTap: _roomActionLoading ? null : _createOnlineRoom,
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              ModeCard(
+                key: const ValueKey('play-hub-join-room'),
+                compact: true,
+                emphasis: ModeCardEmphasis.secondary,
+                icon: AppIcons.doorOpen,
+                accent: const Color(0xFF04697C), // turkuaz — katılma
+                title: context.t(K.joinByCode),
+                subtitle: context.t(K.joinByCodeSub),
+                onTap: _showJoinSheet,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              _PlaySectionHeading(
+                title: context.t(K.events),
+                subtitle: context.t(K.eventsSub),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              ModeCard(
+                key: const ValueKey('play-hub-daily-contest'),
+                compact: true,
+                emphasis: ModeCardEmphasis.event,
+                icon: AppIcons.bolt,
+                // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
+                accent: const Color(0xFF9C6300),
+                title: context.t(K.dailyContest),
+                subtitle: context.t(K.tenQuestions),
+                busy: _dailyLoading,
+                onTap: _dailyLoading ? null : _openDailyQuiz,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              // Turnuva ilk bakışta yok: benzer uygulamalarda indirme/tekrar
+              // sebebi "şimdi oyna" + günlük dönüş; eleme modu ikinci katman.
+              Semantics(
+                button: true,
+                label: '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
+                child: InkWell(
+                  key: const ValueKey('play-hub-more'),
+                  onTap: () => setState(() => _moreOpen = !_moreOpen),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.xs,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: _PlaySectionHeading(
+                            title: context.t(K.playMore),
+                            subtitle: context.t(K.playMoreSub),
+                          ),
+                        ),
+                        Icon(
+                          _moreOpen ? AppIcons.chevronUp : AppIcons.chevronDown,
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              if (_moreOpen) ...[
+                const SizedBox(height: AppSpacing.sm),
+                ModeCard(
+                  key: const ValueKey('play-hub-tournament'),
+                  compact: true,
+                  emphasis: ModeCardEmphasis.event,
+                  icon: AppIcons.trophy,
+                  accent: const Color(0xFF6A38BE),
+                  title: context.t(K.tournament),
+                  subtitle: context.t(K.tournamentSub),
+                  onTap: () => Navigator.of(context).push(
+                    AppRoute.to(
+                      TournamentScreen(repository: widget.repository),
+                    ),
+                  ),
+                ),
+              ],
+              // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
+              // sekmesinden, profilden ve kendi rotasından olmak üzere üç
+              // ayrı giriş vardı ve "burası neresi?" hissi yaratıyordu
+              // (2026-07-25 canlı denetimi). Tek ev profildeki HESAP bölümü.
+            ],
+          ),
         ),
       ),
     );

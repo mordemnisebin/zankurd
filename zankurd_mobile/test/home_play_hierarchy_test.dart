@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -75,6 +76,7 @@ void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     MasteryStore.resetInstance();
+    LevelProgressStore.resetInstance();
   });
 
   testWidgets(
@@ -93,11 +95,16 @@ void main() {
             findsOneWidget,
           );
           _expectActionSemantics(tester, 'home-daily-task-start');
-          for (final key in [
-            'home-lessons-row',
-            'home-topic-picker',
-            'home-duel-row',
-          ]) {
+          expect(
+            find.byKey(const ValueKey('home-lessons-row')),
+            findsOneWidget,
+          );
+          expect(
+            find.byKey(const ValueKey('home-path-node-1')),
+            findsOneWidget,
+          );
+          _expectActionSemantics(tester, 'home-lessons-row');
+          for (final key in ['home-topic-picker', 'home-duel-row']) {
             expect(find.byKey(ValueKey(key)), findsOneWidget);
             expect(
               tester.widget<ModeCard>(find.byKey(ValueKey(key))).emphasis,
@@ -133,16 +140,21 @@ void main() {
             find.byKey(const ValueKey('play-hub-quick-duel')),
             findsOneWidget,
           );
+          expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
+          _expectActionSemantics(tester, 'play-hub-more');
+          expect(
+            find.byKey(const ValueKey('play-hub-tournament')),
+            findsNothing,
+          );
           for (final key in [
             'play-hub-create-room',
             'play-hub-join-room',
             'play-hub-daily-contest',
-            'play-hub-tournament',
           ]) {
             expect(find.byKey(ValueKey(key)), findsOneWidget);
             expect(
               tester.widget<ModeCard>(find.byKey(ValueKey(key))).emphasis,
-              key == 'play-hub-daily-contest' || key == 'play-hub-tournament'
+              key == 'play-hub-daily-contest'
                   ? ModeCardEmphasis.event
                   : ModeCardEmphasis.secondary,
               reason: key,
@@ -156,6 +168,33 @@ void main() {
             );
             _expectActionSemantics(tester, key);
           }
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('play-hub-more')),
+          );
+          await tester.tap(find.byKey(const ValueKey('play-hub-more')));
+          await tester.pumpAndSettle();
+          expect(
+            find.byKey(const ValueKey('play-hub-tournament')),
+            findsOneWidget,
+          );
+          expect(
+            tester
+                .widget<ModeCard>(
+                  find.byKey(const ValueKey('play-hub-tournament')),
+                )
+                .emphasis,
+            ModeCardEmphasis.event,
+          );
+          final tournamentDecoration = _modeDecoration(
+            tester,
+            'play-hub-tournament',
+          );
+          expect(tournamentDecoration.gradient, isNull);
+          expect(
+            tournamentDecoration.boxShadow ?? const <BoxShadow>[],
+            isEmpty,
+          );
+          _expectActionSemantics(tester, 'play-hub-tournament');
           expect(tester.takeException(), isNull);
         }
       }

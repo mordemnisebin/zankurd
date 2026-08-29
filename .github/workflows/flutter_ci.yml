@@ -2,7 +2,7 @@
 #
 # 2026-07-31 denetimine kadar `zankurd_mobile/.github/workflows/` altındaydı.
 # GitHub Actions yalnızca deponun kökündeki `.github/workflows` dizinini okur,
-# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, 1103 test
+# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, testler
 # ve APK derlemesi hiçbir push'ta koşmuyordu — README ise yayın adımı olarak
 # "CI sonucunu doğrulayın" diyordu. Doğrulanacak bir CI yoktu.
 #
@@ -140,3 +140,24 @@ jobs:
         name: android-debug-apk
         path: zankurd_mobile/build/app/outputs/flutter-apk/app-debug.apk
         retention-days: 14
+
+  # İmzalı IPA insan adımı olarak kalır. Bu iş yalnız derlemenin
+  # kırılmadığını söyler; mağaza yüklemesi yapmaz.
+  build-ios:
+    runs-on: macos-latest
+    needs: analyze-and-test
+    if: github.event_name == 'push'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build iOS (debug, no codesign)
+      run: flutter build ios --debug --no-codesign
