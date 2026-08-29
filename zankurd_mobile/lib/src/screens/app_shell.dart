@@ -22,6 +22,7 @@ import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
+import '../services/push_token_sync.dart';
 import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
@@ -48,11 +49,13 @@ class AppShell extends StatefulWidget {
     required this.repository,
     this.connectivityMonitor,
     this.errorRecorder,
+    this.pushTokenSync,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ConnectivityMonitor? connectivityMonitor;
+  final PushTokenSync? pushTokenSync;
 
   /// Üretimde [ErrorReporter.record] kullanılır. Testlerde yalnız hata
   /// kaydının gerçekleştiğini gözlemlemek için değiştirilebilir.
@@ -146,6 +149,7 @@ class _AppShellState extends State<AppShell>
     _profileScrollController = ScrollController();
     _loadOnboardingState();
     _initConnectivity();
+    unawaited(widget.pushTokenSync?.sync());
   }
 
   @override
@@ -242,6 +246,7 @@ class _AppShellState extends State<AppShell>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
+      unawaited(widget.pushTokenSync?.sync());
     }
   }
 

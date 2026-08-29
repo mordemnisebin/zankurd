@@ -6,8 +6,8 @@
 	<array>
 		<string>Default</string>
 	</array>
-	<!-- FCM/APNs: Info.plist remote-notification tek başına yetmez; imza entitlement ister. -->
+	<!-- Store/TestFlight: development entitlement App Store push'unu düşürür. -->
 	<key>aps-environment</key>
-	<string>development</string>
+	<string>production</string>
 </dict>
 </plist>

@@ -1477,6 +1477,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return true;
   }
 
+  String? lastFcmToken;
+
+  @override
+  Future<void> setFcmToken(String token) async {
+    lastFcmToken = token;
+  }
+
   @override
   Future<bool> acceptFriendRequest(String requestId) async {
     return true;

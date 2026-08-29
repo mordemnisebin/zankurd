@@ -2516,6 +2516,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> setFcmToken(String token) async {
+    try {
+      await client.rpc<void>('set_fcm_token', params: {'p_token': token});
+    } catch (e, s) {
+      _recordError(e, s, reason: 'setFcmToken failed');
+    }
+  }
+
+  @override
   Future<bool> acceptFriendRequest(String requestId) async {
     try {
       final response = await client.rpc<dynamic>(

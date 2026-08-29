@@ -32,6 +32,8 @@ import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
+import 'src/services/push_token_sync.dart';
+import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
@@ -435,7 +437,15 @@ class ZanKurdApp extends StatelessWidget {
             // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
             // yüklendiği için splash hazır oluşunu asla geciktirmez.
             readiness: _warmUpShell(),
-            next: AppShell(repository: repository),
+            next: AppShell(
+              repository: repository,
+              pushTokenSync: PushTokenSync(
+                source: kIsWeb
+                    ? const NoopPushTokenSource()
+                    : const FirebasePushTokenSource(),
+                repository: repository,
+              ),
+            ),
           ),
           builder: (context, child) {
             // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ

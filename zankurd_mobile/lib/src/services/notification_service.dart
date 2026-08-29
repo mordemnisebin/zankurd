@@ -262,6 +262,9 @@ class NotificationService {
       await _localNotificationsPlugin.zonedSchedule(
         id: 0,
         title: 'ZanKurd',
+        // Altın yol öğrenmedir; yarış/etkinlik metni kullanıcıyı yanlış
+        // sekmeye çağırırdı. Gövde [K.huhuGununSorulukEtkinligi] ile
+        // ana sayfadaki günün dersine hizalıdır.
         body: Tr.forKu(K.huhuGununSorulukEtkinligi, isKu),
         scheduledDate: scheduledTime,
         notificationDetails: details,
@@ -293,12 +296,9 @@ class NotificationService {
   /// zamanlanabilir, dışarıdan tetiklenemez — yani bu metot ancak push
   /// (FCM) altyapısıyla işe yarar.
   ///
-  /// Altyapının yarısı hazır: `profiles.fcm_token` kolonu ve `set_fcm_token`
-  /// RPC'si var. Eksik olan sunucu tarafı gönderici (arkadaşlık isteği
-  /// eklendiğinde tetiklenen bir Edge Function ya da trigger). O gelene
-  /// kadar bu metot bilerek bağlanmadan duruyor; uygulama içindeki
-  /// görünürlüğü liderlik başlığındaki bekleyen istek rozeti sağlıyor
-  /// (2026-07-31 denetimi).
+  /// Yerel ön plan bildirimi. Üretimdeki asıl yol `push_outbox` +
+  /// `claim_push_outbox` (FCM). Bu metot uygulama açıkken yedek kalır
+  /// ve çağrılmaz; rozet `list_pending_friend_requests` ile gelir.
   Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {

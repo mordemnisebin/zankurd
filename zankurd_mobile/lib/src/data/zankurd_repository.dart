@@ -1,3 +1,4 @@
+// ignore_for_file: annotate_overrides
 import 'dart:typed_data';
 
 import '../models/avatar_identity.dart';
@@ -12,6 +13,8 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+
+part 'repository_ports.dart';
 
 /// Seri dondurma tahsilatının sonucu.
 ///
@@ -115,7 +118,7 @@ RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
   return RoomJoinFailureReason.unknown;
 }
 
-abstract class ZanKurdRepository {
+abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   List<String> get categories;
   List<QuizQuestion> get questions;
 
@@ -378,6 +381,9 @@ abstract class ZanKurdRepository {
 
   /// Arkadaş ekleme isteği gönder.
   Future<bool> addFriend(String friendId, String friendName);
+
+  /// Bu cihazın FCM token'ını sunucuya yazar. Push kuyruğu token'ı buradan okur.
+  Future<void> setFcmToken(String token);
 
   /// Arkadaş isteğini kabul et.
   Future<bool> acceptFriendRequest(String requestId);

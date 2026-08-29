@@ -78,6 +78,13 @@ void main() {
       },
     );
 
+    test('günlük hatırlatıcı günün dersi anahtarını kullanır', () {
+      expect(
+        File('lib/src/services/notification_service.dart').readAsStringSync(),
+        contains('K.huhuGununSorulukEtkinligi'),
+      );
+    });
+
     group('nextFireTime', () {
       test('hedef saat bugün geçmemişse bugünü döner', () async {
         final service = await NotificationService.load(
