@@ -24,9 +24,12 @@
   "explanationKu": "Çemê Dîcle û Firat li Qurneyê dibin yek û bi navê Şetulerebê diherikin Kendava Farsê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Shatt al-Arab — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Shatt_al-Arab",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -54,9 +57,12 @@
   "explanationKu": "Gola Hêzarê li ser xeta şikestekê bi awayekî tektonîk çêbûye, Gola Nemrûdê jî di kratera volkanîk de ava bûye.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Nemrut (volcano) — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Nemrut_(volcano)",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -84,9 +90,12 @@
   "explanationKu": "Lavên Çiyayê Nemrûdê berê herikîna avê girtin û hewzeya girtî bû sedema zêdebûna soda û xwêya golê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Lake Van — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Lake_Van",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -114,9 +123,12 @@
   "explanationKu": "Ji ber ku bilindahiya van çiyayan ji sînorê berfa herdemî zêdetir e, cemedên sirûştî lê peyda dibin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Mount Ararat — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Mount_Ararat",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -144,9 +156,12 @@
   "explanationKu": "Ji ber bilindahî û sermayê li Deşta Mûşê hilberîn dereng digihîje, lê li Deşta Herranê zû tê berhevkirin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Harran — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Harran",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -174,9 +189,12 @@
   "explanationKu": "Çemê Aras û Kûra digihîjin hev û ava xwe dirijînin Deryaya Qezwînê ku gola herî mezin a cîhanê ye.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kura (Caspian Sea) — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kura_(Caspian_Sea)",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -204,9 +222,12 @@
   "explanationKu": "Kela Amedê li ser kendala bilind a bazaltî ji bo parastina bajêr û kontrolkirina ava Dîcleyê hatiye danîn.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Diyarbakır — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Diyarbak%C4%B1r",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -234,9 +255,12 @@
   "explanationKu": "Di projeksiyona Mercator de qadên nêzîkî cemseran mîna Gronlandê ji qada xwe ya rastîn gelek mezintir tên nîşandan.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Mercator projection — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Mercator_projection",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -264,9 +288,12 @@
   "explanationKu": "Projeksiyona Gall-Peters rûbera parzemînên başûr bi awayekî hevseng û rast nîşan dide da ku mezinahiya wan kêm nebe.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Gall–Peters projection — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -294,9 +321,12 @@
   "explanationKu": "Dendika arîtmetîk nifûsê li gorî hemû erdê dipîve, lê ya fîzyolojîk hejmara mirovan li gorî zeviyên çandiniyê dihesibîne.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Population density — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Population_density",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -324,9 +354,12 @@
   "explanationKu": "Zêyê Mezin ji çiyayên bilind di nav geliyên kûr re bi şiyana xurt a herikînê diherike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Great Zab — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Great_Zab",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -354,9 +387,12 @@
   "explanationKu": "Her du şikestekên sereke yên erdhejê li Qereyazî / Gola Wanê nêzîkî hev dibin û li Qirlîovayê digihîjin hev.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "East Anatolian Fault — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/East_Anatolian_Fault",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -384,9 +420,12 @@
   "explanationKu": "Çemê Xabûrê di nav bajarê Zaxoyê re derbas dibe û li Pêşxabûrê digihîje ava Dîcleyê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Khabur (Tigris) — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Khabur_(Tigris)",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -414,9 +453,12 @@
   "explanationKu": "Çiyayên bilind nahêlin hewaya bi şilî ya deryayê derbasî aliyê hundir bibe, lewma hewa hişk û parzemînî dibe.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Continental climate — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Continental_climate",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -444,9 +486,12 @@
   "explanationKu": "Hewayê bi şilî dema rastî çiya tê bilind dibe, sar dibe û li quntarê pêşîn baraneke zêde dibarîne.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Orographic lift — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Orographic_lift",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -474,9 +519,12 @@
   "explanationKu": "Ji ber germahiya zêde ya havînê av zû dihele û hişkesalî nahêle daristanên xwezayî li deştan şîn bibin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Steppe — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Steppe",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -504,9 +552,12 @@
   "explanationKu": "Teraskirina zeviyan nahêle ku ava baranê axa bi xêr û bereketa çiyayan bişo û bibe xwarê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Terrace (earthworks) — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Terrace_(earthworks)",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -534,9 +585,12 @@
   "explanationKu": "Rewşa hewayê bûyerên rojane yên atmosferê ne, lê avhewa encama navînî ya gelek salan e.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Climate — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Climate",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -564,9 +618,12 @@
   "explanationKu": "Ava bin erdê kevirên kilsî dihelîne û di binê erdê de şikeft û çalên kûr ên karstîk çêdike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Karst — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Karst",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -594,9 +651,12 @@
   "explanationKu": "Çêkirina bendavan li ser çemên gola Urmiyeyê û kişandina ava bin erdê rê li ber ziwabûna golê vekir.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Lake Urmia — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Lake_Urmia",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -624,9 +684,12 @@
   "explanationKu": "Bi germbûna hewayê re berfa çiyayan di biharê de dihele û ava çeman digihîje asta herî bilind.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "River — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/River",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -654,9 +717,12 @@
   "explanationKu": "Ji ber bilindahiya zêde û sermaya dirêj a zivistanê, çandinî li herêma Serhedê dereng dest pê dike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Erzurum — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Erzurum",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -684,9 +750,12 @@
   "explanationKu": "Bayê Foehnê gava ji çiyê dadikeve newalê, hewayê germ dike û şiliya wê kêm dike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Foehn wind — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Foehn_wind",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -714,9 +783,12 @@
   "explanationKu": "Bilindbûna erdê û hêza kolandina avê geliyekî gelekî kûr û kendal di navbera çiyayan de çêkiriye.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Botan River — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Botan_River",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -744,9 +816,12 @@
   "explanationKu": "Çemê Muradê mila herî dirêj û xurt a Firatê ye ku ji Agiriyê dest pê dike û digihîje Kebanê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Murat River — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Murat_River",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -774,9 +849,12 @@
   "explanationKu": "Erdhejên tektonîk ji kûraniya erdê li ser xetên mezin ên şikestekan çêdibin û bandora wan digihîje herêmên gelekî dûr.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Earthquake — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Earthquake",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -804,9 +882,12 @@
   "explanationKu": "Rûyê erdê ji germê zû germ dibe û hewaya germ bi lez ber bi jor ve dikişe û gêreweloşkê çêdike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Dust devil — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Dust_devil",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -834,9 +915,12 @@
   "explanationKu": "Li zeviyên bêav genim, ceh û nîsk tên çandin ji ber ku hewcedariya wan bi avdana berdewam nîne.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Dryland farming — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Dryland_farming",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -864,9 +948,12 @@
   "explanationKu": "Li zozanan di havînê de hewa hênik e, av pir e û çêrgehên hêşîn ji bo sewalan gelekî bi xêr in.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Transhumance — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Transhumance",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -894,9 +981,12 @@
   "explanationKu": "Van derbasgehan benderên deryayê gihandine bajarên hundir û rê li ber bazirganiya dîrokî vekirine.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Zigana Pass — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Zigana_Pass",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -924,9 +1014,12 @@
   "explanationKu": "Ava Gola Urmiyeyê bi xwêya klorûrî pir şor e, lê ava Gola Wanê ji ber kevirên volkanîk bi sodaya karbonatî ye.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Lake Van — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Lake_Van",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -954,9 +1047,12 @@
   "explanationKu": "Çemê Sîrwanê di nav herêma Germiyan û Çiyayên Zagrosê re derbas dibe û li nêzî Bexdayê tevlî Dîcleyê dibe.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Diyala River — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Diyala_River",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -984,9 +1080,12 @@
   "explanationKu": "Di navbera şikestekên erdhejê de perçeyên erdê ketine xwarê û bi axa çeman ve bûne deştên berhemdar.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Graben — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Graben",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1014,9 +1113,12 @@
   "explanationKu": "Bendav rê li ber aluvyon û heriya bi xêr digirin, lewma zeviyên xwarê ji axa nû bêpar dimînin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Tigris–Euphrates river system — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Tigris%E2%80%93Euphrates_river_system",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1044,9 +1146,12 @@
   "explanationKu": "Kevirên kilsî yên nerm li Heskîfê rê dan ku mirov bi hêsanî bi hezaran şikeftan di nav zinaran de bikolin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Hasankeyf — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Hasankeyf",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1074,9 +1179,12 @@
   "explanationKu": "Quntarên çiyayan ji bo jiyanê ji lehiyê parastî ne, kaniyên avê lê hene û zeviyên deştê ji bo çandiniyê vala dimînin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Foothills — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Foothills",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1104,9 +1212,12 @@
   "explanationKu": "Projeksiyona konîk ji bo nexşeya hêlîlarên navîn (mîna herêma me) herî baş e ji ber ku şaşiyên rûberê kêm dike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Lambert conformal conic projection — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Lambert_conformal_conic_projection",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1134,9 +1245,12 @@
   "explanationKu": "Axa volkanîk a Qerecdaxê xwedî mîneralên bihêz ên hesin û magnezyumê ye û ji bo berhemdariyê gelekî dewlemend e.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Karaca Dağ — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Karaca_Da%C4%9F",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1164,9 +1278,12 @@
   "explanationKu": "Lihevketina plakaya Erebistanê û ya Ewrasyayê bû sedema çêbûna çiyayên Zagrosê di vê arasteyê de.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Zagros Mountains — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Zagros_Mountains",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1194,9 +1311,12 @@
   "explanationKu": "Her ku mirov bilind dibe hewa sar dibe; darên berûyê cihê xwe didin deviyên biçûk û çêrgehên alpîn.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Altitudinal zonation — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Altitudinal_zonation",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1224,9 +1344,12 @@
   "explanationKu": "Ji ber sermaya zivistanê û berfa stûr, ajal li zozanan nikarin biçêrin lewma dadikevin cihên germtir.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Transhumance — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Transhumance",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1254,9 +1377,12 @@
   "explanationKu": "Koçer di havînê de ji bo çêrgehên hêşîn diçin zozanan, di zivistanê de jî ji ber sermayê tên germiyanê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Transhumance — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Transhumance",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1284,9 +1410,12 @@
   "explanationKu": "Bêrîvan ew jin e ku serê sibê û êvarê diçe dotina pez û şîr dike penêr û rûn.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1314,9 +1443,12 @@
   "explanationKu": "Şal û şapik ji mûyê bizinê yê marazê tê raçandin û taybetmendiya wê ew e ku mirov ji germa û sermayê diparêze.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish clothing — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_clothing",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1344,9 +1476,12 @@
   "explanationKu": "Kirasê jinan ê xwedî lewendî û fîstanê rengîn ê li ser bejnê ji taybetmendiyên herî navdar ên kincên jinan e.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish clothing — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_clothing",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1374,9 +1509,12 @@
   "explanationKu": "Motîfên kilîman bi zimanê sembolan behsa şînbûna xwezayê, evîn û bereketa jiyana malbatê dikin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish rugs — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_rugs",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1404,9 +1542,12 @@
   "explanationKu": "Sêl ji ber ku sivik e koçer dikarin li ser hespan bar bikin û li her rawestgehê nanê xwe zû lê bipêjin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Saj bread — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Saj_bread",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1434,9 +1575,12 @@
   "explanationKu": "Şilikî şîraniyeke kevneşopî ye ku ji pelên tenik ên hevîr, gûz û doşavê ji bo mêvanên hêja tê çêkirin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish cuisine — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_cuisine",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1464,9 +1608,12 @@
   "explanationKu": "Kilamên şînê êşa dilê mirovên xemgîn bi hestên kûr radigihînin û rûmeta mirî di bîra civakê de zindî dihêlin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Lament — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Lament",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1494,9 +1641,12 @@
   "explanationKu": "Berbûk ew kes in ku ji bo anîna bûkê ji aliyê zava ve tên şandin da ku bi rêz û hurmet bûkê bînin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1524,9 +1674,12 @@
   "explanationKu": "Govenda Giranî bi hêdîkî û bi giranî dest pê dike, lê Şêxanî zindîtir e û livîna milan tê de zêde ye.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish dance — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_dance",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1554,9 +1707,12 @@
   "explanationKu": "Çarşema Sor di ola Êzdiyan de roja avabûna dinyayê û serê sala nû ya pîroz e.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Yazidi New Year — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Yazidi_New_Year",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1584,9 +1740,12 @@
   "explanationKu": "Tembûr di baweriya Yarsaniyê de pîroz e û di heyamên zikr û merasîmên olî de kelam pê tên xwendin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Yarsanism — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Yarsanism",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1614,9 +1773,12 @@
   "explanationKu": "Ziyaretgeh cihên pîroz ên xwezayê mîna kaniyên zelal, darên kal û quntarên pîroz in ku mirov daxwazên xwe li wir dikin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish Alevism — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_Alevism",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1644,9 +1806,12 @@
   "explanationKu": "Di şevbihêrkan de extiyar û dengbêjan çîrokên kevn digotin û ciwan fêrî ziman û çanda xwe dibûn.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1674,9 +1839,12 @@
   "explanationKu": "Di Kalo Gaxand de ciwan mal bi mal digerin, xwarinê berhev dikin û didin mirovên xizan da ku kêfxweş bibin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish Alevism — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_Alevism",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1704,9 +1872,12 @@
   "explanationKu": "Sergovend ew kes e ku li pêşiya govendê disekine, destmalê dihejîne û rîtma lîstikê saz dike.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Halay — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Halay",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1734,9 +1905,12 @@
   "explanationKu": "Penêr tê xistin nav kûpan û di bin erdê de bê hewa tê hiştin da ku bi bîhna gihayan xweş û kemilî bibe.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Otlu peynir — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Otlu_peynir",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1764,9 +1938,12 @@
   "explanationKu": "Kirîvatî di navbera malbatan de hevaltiyeke xurt û pîroz ava dike ku wekî biratiya rasteqîn tê parastin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1794,9 +1971,12 @@
   "explanationKu": "Zîbar hevkariya gundiyan e; dema karekî giran hebe tevahî tên alîkariyê û karê hev bi dilxweşî diqedînin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Imece — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Imece",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1824,9 +2004,12 @@
   "explanationKu": "Li Medreseya Sor hem zanistên dînî û astronomî hem jî helbest û zimanê kurdî bi awayekî bilind dihatin hînkirin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Cizre — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Cizre",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1854,9 +2037,12 @@
   "explanationKu": "Hunera Telkariyê bi hostatiya zîvkerên Midyadê bi têlên hûrik ên zîv tê çêkirin û li seranserê cîhanê navdar e.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Filigree — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Filigree",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1884,9 +2070,12 @@
   "explanationKu": "Lîstika Holê bi darên xwar û topeke darîn di navbera du koman de li zeviyên fireh dihate lîstin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1914,9 +2103,12 @@
   "explanationKu": "Gihayên dermanî yên çiyayan ji bo qenckirina nexweşiyan û birînan di nav gel de bi hûrbînî dihatin bikaranîn.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Herbal medicine — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Herbal_medicine",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1944,9 +2136,12 @@
   "explanationKu": "Seyranên biharê mirovan tînin ba hev da ku di nav sirûşta hêşîn de hezkirin û dostaniya xwe nû bikin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -1974,9 +2169,12 @@
   "explanationKu": "Di felsefeya van baweriyan de heft heyînên pîroz nîşaneya nizam û rêveberiya gerdûnê ne.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Yazidism — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Yazidism",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2004,9 +2202,12 @@
   "explanationKu": "Mûyê bizinê gava şil dibe dişêve û nahêle av derbas bibe, di germê de jî rê dide bayê hênik.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Black tent — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Black_tent",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2034,9 +2235,12 @@
   "explanationKu": "Di dîwanxaneyê de rûniştin bi rêz û edep e; serê odê ji bo rûspî, zana û mêvanên hêja tê veqetandin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish culture — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_culture",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2064,9 +2268,12 @@
   "explanationKu": "Kulav ji hiriya xurt tê kutan û nahêle serma û baran derbas bibe, şivan di çiyê de wekî nivîn jî bikar tînin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kepenek — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kepenek",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2094,9 +2301,12 @@
   "explanationKu": "Heqê nan û xwê tê wê wateyê ku gava te li ser sifreya yekî nan xwar, divê tu qet neheqî û îxanetê li wî nekî.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Bread and salt — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Bread_and_salt",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2124,9 +2334,12 @@
   "explanationKu": "Ehmedê Xanî çîroka Memê Alan bi zanyarî û felsefeya bilind nivîsand û kire berhemeke mezin a edebiyata klasîk.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Mem and Zin — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Mem_and_Zin",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2154,9 +2367,12 @@
   "explanationKu": "Mela û Feqî di helbestên xwe de behsa sirên evîna îlahî, ronahiya heqîqetê û gerdûnê kirine.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Melayê Cizîrî — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Melay%C3%AA_Ciz%C3%AEr%C3%AE",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2184,9 +2400,12 @@
   "explanationKu": "Kovara Hawarê bi pêşengiya Celadet Bedirxan alfabeya kurdî ya latînî ava kir û kire bingeha edebiyata nûjen.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Hawar (magazine) — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Hawar_(magazine)",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2214,9 +2433,12 @@
   "explanationKu": "Şivanê Kurmanca yekem romana kurdî ye ku bi awayekî nûjen û hostayî jiyana gelêrî aniye qada edebiyatê.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Erebê Şemo — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Ereb%C3%AA_%C5%9Eemo",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2244,9 +2466,12 @@
   "explanationKu": "Cegerxwîn helbest ji qesran derxist, kire zimanê xelkê xebatkar û bi peyvên zelal êş û hêviyên civakê anî ziman.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Cegerxwîn — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Cegerxw%C3%AEn",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2274,9 +2499,12 @@
   "explanationKu": "Ev xebat bûn sedem ku zargotina devkî û rêzimana zaravayên kurdî di pirtûkên zanistî de bêne tomarkirin.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Kurdish language — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_language",
+   "reviewedAt": "2026-08-26"
   }
  },
  {
@@ -2304,9 +2532,12 @@
   "explanationKu": "Mehmed Uzun dengbêjî û dîroka gelê xwe bi hostatî kire hewîrê romana nûjen û zimanê edebî dewlemend kir.",
   "type": "multipleChoice",
   "metadata": {
-   "reviewStatus": "needsReview",
+   "reviewStatus": "approved",
    "dialect": "Kurmancî",
-   "qualityVersion": 1
+   "qualityVersion": 1,
+   "sourceTitle": "Mehmed Uzun — Wikipedia",
+   "sourceReference": "https://en.wikipedia.org/wiki/Mehmed_Uzun",
+   "reviewedAt": "2026-08-26"
   }
  }
 ]

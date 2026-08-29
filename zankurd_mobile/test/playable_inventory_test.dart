@@ -50,12 +50,12 @@ void main() {
       // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
       // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
       // Bekçinin işi değişmedi, saydığı banka küçüldü.
-      // 2026-08-24: expansion_2026_08_19 (77 soru) eklendi. FİZİKSEL
-      // sayı arttı ama oynanabilir sayı ARTMADI — kayıtlar
-      // `needsReview` ve çapraz kontrolleri sırada (A5). Bu ayrım tam
-      // olarak bu testin varlık sebebi: iki sayının birlikte artması
-      // içeriğin gerçekten ulaştığını, yalnız fizikselin artması ise
-      // kuyrukta beklediğini söyler.
+      // 2026-08-24: expansion_2026_08_19 (77 soru) eklendi; o gün
+      // fiziksel arttı, oynanabilir artmadı — kayıtlar `needsReview`
+      // ve çapraz kontrol kuyruğundaydı. A17 (2026-08-26) künye
+      // verdi ve `approved` yaptı: oynanabilir 2914 → 2991. Bu
+      // bekçinin varlık sebebi tam bu ayrım: iki sayı birlikte artınca
+      // içerik gerçekten ulaşıyor.
       3042,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
@@ -63,10 +63,10 @@ void main() {
     );
     expect(
       playable.length,
-      // 3208 -> 2914: tekrar ayıklaması 294 kayıt aldı, hepsi
-      // oynanabilir kayıtlardı (engellenenlerin dağılımı değişmedi,
-      // aşağıdaki test onu ayrıca sabitliyor).
-      2914,
+      // 3208 -> 2914: tekrar ayıklaması 294 kayıt aldı.
+      // 2914 -> 2991: A17, expansion_2026_08_19'un 77 kaydını
+      // `approved` yaptı; oyuncuya ilk kez ulaşıyorlar.
+      2991,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -89,8 +89,9 @@ void main() {
     }
 
     expect(byReason, {
-      // 37 -> 114: expansion_2026_08_19'un 77 kaydı kuyrukta.
-      'reviewStatus=${ReviewStatus.needsReview}': 114,
+      // 114 -> 37: A17 expansion_2026_08_19'u kuyruktan çıkardı.
+      // Kalan 37 community kaydı; 14 rejected duruyor.
+      'reviewStatus=${ReviewStatus.needsReview}': 37,
       'reviewStatus=${ReviewStatus.rejected}': 14,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });

@@ -63,8 +63,7 @@ void main() {
       loaded.length,
 
       // 2026-08-24: expansion_2026_08_19 bankası eklendi (77 soru).
-      // Kayıtlar FİZİKSEL olarak bankada ama `needsReview` olduğu
-      // için oyuncuya çıkmıyor; çapraz kontrolleri sırada (A5).
+      // 2026-08-26 A17: künye aldı, `approved`, oynanabilir.
       3042,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '

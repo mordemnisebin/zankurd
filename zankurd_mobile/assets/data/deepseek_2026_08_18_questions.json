@@ -2521,13 +2521,13 @@
       "Projeksiyona Winkel Tripel"
     ],
     "correctAnswer": "Projeksiyona Winkel Tripel",
-    "explanation": "National Geographic 1995'te imza dünya haritalarında Robinson'u bırakıp Winkel Tripel projeksiyonuna geçti.",
+    "explanation": "National Geographic imza dünya haritalarında Robinson'u bırakıp Winkel Tripel'e geçti (dergi 1995; kurum standardı kaynaklarda 1998 diye de geçer). Cevap Robinson değil, Winkel Tripel'dir.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceReference": "https://en.wikipedia.org/wiki/Robinson_projection",
+      "sourceReference": "https://en.wikipedia.org/wiki/Winkel_tripel_projection",
       "qualityVersion": 1
     },
     "promptTr": "National Geographic 1995'ten beri dünya haritalarında hangi projeksiyonu kullanır?",
@@ -2538,8 +2538,8 @@
       "Winkel Tripel Projeksiyonu"
     ],
     "correctAnswerTr": "Winkel Tripel Projeksiyonu",
-    "explanationKu": "National Geographic di 1995an de ji Robinson derbasî projeksiyona Winkel Tripel bû.",
-    "explanationTr": "National Geographic 1995'te imza dünya haritalarında Robinson'u bırakıp Winkel Tripel projeksiyonuna geçti."
+    "explanationKu": "National Geographic ji Robinson derbasî projeksiyona Winkel Tripel bû; bersiv Robinson nîne.",
+    "explanationTr": "National Geographic imza dünya haritalarında Robinson'u bırakıp Winkel Tripel'e geçti (dergi 1995; kurum standardı kaynaklarda 1998 diye de geçer). Cevap Robinson değil, Winkel Tripel'dir."
   },
   {
     "id": "ds_cografya_0197",
@@ -11945,7 +11945,7 @@
       "Keman"
     ],
     "correctAnswer": "Dahol",
-    "explanation": "Zirne, güçlü bir ritim elde etmek için çoğunlukla def ile birlikte çalınır.",
+    "explanation": "Zirne, güçlü bir ritim elde etmek için çoğunlukla dahol (davul) ile birlikte çalınır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -11962,8 +11962,8 @@
       "Keman"
     ],
     "correctAnswerTr": "Davul",
-    "explanationKu": "Zirne bi piranî li gel def tê lêdan da ku rîtmek xurt peyda bibe.",
-    "explanationTr": "Zirne, güçlü bir ritim elde etmek için çoğunlukla def ile birlikte çalınır."
+    "explanationKu": "Zirne bi piranî li gel daholê (davul) tê lêdan da ku rîtmek xurt peyda bibe.",
+    "explanationTr": "Zirne, güçlü bir ritim elde etmek için çoğunlukla dahol (davul) ile birlikte çalınır."
   },
   {
     "id": "ds_muzik_0035",
