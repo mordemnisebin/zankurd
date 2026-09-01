@@ -66,7 +66,9 @@ void main() {
       // 3208 -> 2914: tekrar ayıklaması 294 kayıt aldı.
       // 2914 -> 2991: A17, expansion_2026_08_19'un 77 kaydını
       // `approved` yaptı; oyuncuya ilk kez ulaşıyorlar.
-      2991,
+      // 2991 -> 3000: 7 curated + Amed + YPJ. 12 sinema kaydı
+      // mevcut bankalarla yakın tekrar olduğu için kuyrukta kaldı.
+      3000,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -89,9 +91,10 @@ void main() {
     }
 
     expect(byReason, {
-      // 114 -> 37: A17 expansion_2026_08_19'u kuyruktan çıkardı.
-      // Kalan 37 community kaydı; 14 rejected duruyor.
-      'reviewStatus=${ReviewStatus.needsReview}': 37,
+      // 37 -> 28: 2026-09-02 yedi curated Kurmancî yeniden yazıldı;
+      // Amed ve YPJ kaynaklanıp onaylandı. 12 sinema kaydı mevcut
+      // bankalarla yakın tekrar; 16 künyesiz topluluk + 14 rejected duruyor.
+      'reviewStatus=${ReviewStatus.needsReview}': 28,
       'reviewStatus=${ReviewStatus.rejected}': 14,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });

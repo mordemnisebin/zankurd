@@ -22,6 +22,7 @@ import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/percent_format.dart';
 import '../utils/external_link.dart';
 
@@ -184,6 +185,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 compact: true,
               ),
               const SizedBox(height: AppSpacing.sm),
+              // Ayarlar listesini kimlik şeridinden ayırır; duvar kâğıdı değil.
+              const KilimDivider(
+                colors: [AppTheme.culturalBrandBg, AppTheme.gold],
+              ),
+              const SizedBox(height: AppSpacing.md),
               // ============ HESAP / ACCOUNT ============
               ScreenSectionLabel(
                 label: context.t(K.secAccount),

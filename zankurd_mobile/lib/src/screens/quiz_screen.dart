@@ -58,6 +58,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 part 'quiz/quiz_layout_rules.dart';
 part 'quiz/quiz_session_types.dart';
 part 'quiz/quiz_widgets.dart';
+part 'quiz/quiz_dialogs.dart';
 part 'quiz/quiz_screen_ui.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -1394,43 +1395,9 @@ class _QuizScreenState extends State<QuizScreen>
     try {
       final leave = await showDialog<bool>(
         context: context,
-        builder: (dialogContext) => AlertDialog(
-          backgroundColor: AppTheme.surfaceColor(context),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: AppTheme.borderColor(context)),
-          ),
-          // Kopya akışa göre değişir: öğrenme akışında kullanıcı "yarış"
-          // başlatmamıştı, ders başlatmıştı.
-          title: Text(
-            _isLearningExperience
-                ? context.t(K.leaveLessonQ)
-                : context.t(K.leaveRaceQ),
-          ),
-          content: Text(
-            _isMultiplayer
-                ? context.t(K.leaveOnlineMatchBody)
-                : _isLearningExperience
-                ? context.t(K.leaveLessonBody)
-                : context.t(K.leaveRaceBody),
-          ),
-          // Vurgu güvenli eylemdedir. Önceden "Çık" dolgulu birincil buton,
-          // "Devam Et" ise düz metindi: ilerlemeyi silen yıkıcı eylem, göz
-          // en çok oraya gittiği için varsayılan gibi duruyordu
-          // (2026-07-25 canlı denetimi).
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(dialogContext).colorScheme.error,
-              ),
-              child: Text(context.t(K.leaveAction)),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(context.t(K.continueAction)),
-            ),
-          ],
+        builder: (_) => _QuizExitDialog(
+          isLearning: _isLearningExperience,
+          isMultiplayer: _isMultiplayer,
         ),
       );
       if (leave != true ||
@@ -2303,21 +2270,7 @@ class _QuizScreenState extends State<QuizScreen>
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceColor(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
-        title: Text(context.t(K.matchForfeitedTitle)),
-        content: Text(context.t(bodyKey)),
-        actions: [
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(context.t(K.ok)),
-          ),
-        ],
-      ),
+      builder: (_) => _QuizForfeitDialog(bodyKey: bodyKey),
     );
     if (!mounted) return true;
     if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
@@ -3158,72 +3111,6 @@ class _QuizScreenState extends State<QuizScreen>
     };
   }
 
-  Widget _buildOnlineResultGate(BuildContext context) {
-    final loading = _onlineResultPhase == _OnlineResultPhase.loading;
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && !loading) {
-          _leaveOnlineResultGate();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(context.t(K.resultTitle)),
-        ),
-        body: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (loading)
-                    const CircularProgressIndicator()
-                  else
-                    Icon(
-                      _onlineResultOwnerChanged
-                          ? AppIcons.shield
-                          : AppIcons.cloud,
-                      size: 42,
-                      color: AppTheme.gold,
-                    ),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    context.t(
-                      loading
-                          ? K.resultRecoveryLoading
-                          : _onlineResultOwnerChanged
-                          ? K.resultRecoveryOwnerChanged
-                          : K.resultRecoveryFailed,
-                    ),
-                    textAlign: TextAlign.center,
-                    style: AppTypography.bodyLarge,
-                  ),
-                  if (!loading) ...[
-                    const SizedBox(height: AppSpacing.md),
-                    FilledButton.icon(
-                      onPressed: _retryOnlineResultGate,
-                      icon: const Icon(AppIcons.arrowsRotate),
-                      label: Text(context.t(K.retry)),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    TextButton.icon(
-                      onPressed: _leaveOnlineResultGate,
-                      icon: const Icon(AppIcons.house),
-                      label: Text(context.t(K.home)),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> _answer(String answer) async {
     if (answered) return;
     HapticFeedback.selectionClick();
@@ -3630,35 +3517,7 @@ class _QuizScreenState extends State<QuizScreen>
     );
     final reason = await showDialog<String>(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppTheme.surfaceColor(context),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: AppTheme.borderColor(context)),
-          ),
-          title: Text(context.t(K.reportQuestion)),
-          content: TextField(
-            controller: controller,
-            minLines: 2,
-            maxLines: 4,
-            decoration: InputDecoration(
-              labelText: context.t(K.reasonLabel),
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(context.t(K.cancel)),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(controller.text),
-              child: Text(context.t(K.sendAction)),
-            ),
-          ],
-        );
-      },
+      builder: (_) => _QuizReportDialog(controller: controller),
     );
     controller.dispose();
     if (reason == null) return;

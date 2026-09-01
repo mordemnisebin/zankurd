@@ -1292,7 +1292,7 @@ class _PedagogicalAnalyticsSectionState
                         ),
                       ),
                       child: Text(
-                        strongestCat,
+                        CategoryNames.localized(strongestCat, isKu),
                         style: AppTypography.bodyMedium.copyWith(
                           color: AppColors.onAccentTint(
                             context,
@@ -1343,7 +1343,7 @@ class _PedagogicalAnalyticsSectionState
                         ),
                       ),
                       child: Text(
-                        weakestCat,
+                        CategoryNames.localized(weakestCat, isKu),
                         style: AppTypography.bodyMedium.copyWith(
                           color: AppColors.readableAccent(
                             context,

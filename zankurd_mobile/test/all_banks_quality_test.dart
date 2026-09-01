@@ -501,7 +501,9 @@ void main() {
   //
   // * `curated_question_bank.dart`ın Paradigma/Siyaset kümesi — "Fakltîzm",
   //   "Demorkrasîxerbirîna", "Kîmoka zîvkirî", "Kom-xwebûn rêxistin". Yedi
-  //   soru inceleme kuyruğuna alındı (bkz. `_bozukKurmanciBekliyor`).
+  //   soru 2026-07-30 kuyruğa alındı; 2026-09-02 gerçek Kurmancîyle
+  //   yeniden yazılıp `approved` oldu. Uydurma sözcük listesi bekçi
+  //   olarak durur.
   // * `offline_questions.json` — "ava bile ne li ser qezencê": `bile` Türkçe
   //   sözcük, Kurmancî fiil `dibe`. Aynı bozuk şık 11 soruda tekrarlanıyordu
   //   ve birinde **doğru cevabın** içindeydi.

@@ -34,6 +34,40 @@ class _CapturingRepository extends MockZanKurdRepository {
 
 void main() {
   testWidgets(
+    'Türkçe oda kurucusu kategori etiketlerini yerelleştirir ama ham kimliği gönderir',
+    (tester) async {
+      final repository = _CapturingRepository();
+      await tester.pumpWidget(
+        testShell(child: PlayHubScreen(repository: repository)),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dil'), findsOneWidget);
+      expect(find.text('Kültür'), findsOneWidget);
+      expect(find.text('Tarih'), findsOneWidget);
+      expect(find.text('Ziman'), findsNothing);
+      expect(find.text('Çand'), findsNothing);
+      expect(find.text('Dîrok'), findsNothing);
+
+      await tester.tap(
+        find.byKey(const ValueKey('custom-room-cat-Dîrok')),
+      );
+      await tester.pump();
+
+      final openButton = find.text('Odayı Aç');
+      await tester.ensureVisible(openButton);
+      await tester.pump();
+      await tester.tap(openButton);
+      await tester.pumpAndSettle();
+
+      expect(repository.capturedCategory, 'Dîrok');
+    },
+  );
+
+  testWidgets(
     'oda kurucusu kategori, soru sayısı, süre ve giriş ücretini seçebilir ve seçim odaya uygulanır',
     (tester) async {
       final repository = _CapturingRepository();

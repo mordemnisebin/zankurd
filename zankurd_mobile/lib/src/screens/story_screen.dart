@@ -7,6 +7,7 @@ import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
+import '../widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
@@ -90,7 +91,7 @@ class _StoryScreenState extends State<StoryScreen> {
     final ku = context.isKu;
     return Scaffold(
       appBar: AppBar(
-        title: Text(ku ? widget.story.titleKu : widget.story.titleTr),
+        backgroundColor: Colors.transparent,
         actions: [
           if (widget.guide != null)
             IconButton(
@@ -134,6 +135,14 @@ class _StoryScreenState extends State<StoryScreen> {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.page),
       children: [
+        ScreenIdentityHeader(
+          title: ku ? widget.story.titleKu : widget.story.titleTr,
+          subtitle: context.t(K.storySubtitle),
+          accent: accent,
+          icon: AppIcons.bookOpen,
+          compact: true,
+        ),
+        const SizedBox(height: AppSpacing.md),
         if (_feedbackKu != null || _feedbackTr != null)
           Container(
             margin: const EdgeInsets.only(bottom: AppSpacing.md),

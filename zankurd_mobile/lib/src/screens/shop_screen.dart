@@ -346,6 +346,24 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  Future<void> _openSpinWheel() async {
+    await Navigator.of(context).push(
+      AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
+    );
+    if (!mounted) return;
+    await _refreshCoinBalance();
+  }
+
+  Future<void> _refreshCoinBalance() async {
+    try {
+      final balance = await widget.repository.loadCoinBalance();
+      if (!mounted) return;
+      setState(() => _coinBalance = balance);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'shop balance refresh failed');
+    }
+  }
+
   // ── Purchase confirmation dialog ──
   Future<void> _confirmPurchase(ShopItem item) async {
     final ku = context.isKu;
@@ -466,13 +484,9 @@ class _ShopScreenState extends State<ShopScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: TextButton.icon(
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.of(ctx).pop(false);
-                      Navigator.of(context).push(
-                        AppRoute<void>(
-                          page: SpinWheelScreen(repository: widget.repository),
-                        ),
-                      );
+                      await _openSpinWheel();
                     },
                     icon: const Icon(AppIcons.dice, size: 18),
                     label: Text(context.t(K.earnCoins)),
@@ -700,13 +714,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 color: AppTheme.textPrimaryColor(context),
               ),
               tooltip: context.t(K.wheelTitle),
-              onPressed: () {
-                Navigator.of(context).push(
-                  AppRoute<void>(
-                    page: SpinWheelScreen(repository: widget.repository),
-                  ),
-                );
-              },
+              onPressed: _openSpinWheel,
             ),
           ),
           // Dalga 5: devasa bakiye kartı yerine kompakt coin chip'i.
@@ -832,13 +840,7 @@ class _ShopScreenState extends State<ShopScreen> {
         child: InkWell(
           key: const ValueKey('shop-earn-coin-cta'),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          onTap: () {
-            Navigator.of(context).push(
-              AppRoute<void>(
-                page: SpinWheelScreen(repository: widget.repository),
-              ),
-            );
-          },
+          onTap: _openSpinWheel,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(

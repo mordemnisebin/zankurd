@@ -673,7 +673,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                 for (final cat in widget.availableCategories)
                   ChoiceChip(
                     key: ValueKey('custom-room-cat-$cat'),
-                    label: Text(cat),
+                    label: Text(CategoryNames.localized(cat, context.isKu)),
                     selected: _selectedCategory == cat,
                     onSelected: (_) => setState(() => _selectedCategory = cat),
                   ),

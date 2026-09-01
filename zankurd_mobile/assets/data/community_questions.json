@@ -24,9 +24,11 @@
     "explanationKu": "Amed (Diyarbekir) li herêma bakur a Kurdistanê ye û bajarê herî mezin ê wê herêmê tê hesibandin.",
     "explanationTr": "Amed (Diyarbakır) Kürdistan'ın kuzey bölgesindedir ve o bölgenin en büyük şehri sayılır.",
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
+      "sourceTitle": "Ansiklopedîk çavkanî (Encyclopaedia Britannica — Diyarbakir)",
+      "sourceReference": "https://www.britannica.com/place/Diyarbakir",
+      "reviewedAt": "2026-09-02",
       "qualityVersion": 2
     }
   },
@@ -986,9 +988,11 @@
     "explanationKu": "YPJ (Yekîneyên Parastina Jin) yekîneya jinan a li Rojava ye.",
     "explanationTr": "YPJ (Yekîneyên Parastina Jin) Rojava'daki kadın birliğidir.",
     "metadata": {
-      "reviewStatus": "needsReview",
+      "reviewStatus": "approved",
       "dialect": "Kurmancî",
-      "sourceTitle": "Topluluk katkısı",
+      "sourceTitle": "Kongra Star institutional publications + supporting research",
+      "sourceReference": "https://kongra-star.org/eng/about/; Cambridge History of the Kurds, Kurdish Women’s Freedom Movement chapter",
+      "reviewedAt": "2026-09-02",
       "qualityVersion": 2
     }
   },

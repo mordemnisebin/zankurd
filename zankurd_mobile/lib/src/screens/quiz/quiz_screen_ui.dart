@@ -1289,4 +1289,70 @@ extension _QuizScreenUI on _QuizScreenState {
       ),
     );
   }
+
+  Widget _buildOnlineResultGate(BuildContext context) {
+    final loading = _onlineResultPhase == _OnlineResultPhase.loading;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && !loading) {
+          _leaveOnlineResultGate();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(context.t(K.resultTitle)),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (loading)
+                    const CircularProgressIndicator()
+                  else
+                    Icon(
+                      _onlineResultOwnerChanged
+                          ? AppIcons.shield
+                          : AppIcons.cloud,
+                      size: 42,
+                      color: AppTheme.gold,
+                    ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    context.t(
+                      loading
+                          ? K.resultRecoveryLoading
+                          : _onlineResultOwnerChanged
+                          ? K.resultRecoveryOwnerChanged
+                          : K.resultRecoveryFailed,
+                    ),
+                    textAlign: TextAlign.center,
+                    style: AppTypography.bodyLarge,
+                  ),
+                  if (!loading) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    FilledButton.icon(
+                      onPressed: _retryOnlineResultGate,
+                      icon: const Icon(AppIcons.arrowsRotate),
+                      label: Text(context.t(K.retry)),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    TextButton.icon(
+                      onPressed: _leaveOnlineResultGate,
+                      icon: const Icon(AppIcons.house),
+                      label: Text(context.t(K.home)),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
