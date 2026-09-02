@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../data/zankurd_repository.dart';
+import '../models/referral_result.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
@@ -186,6 +189,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 // bölümünü içerikten ayırır (2026-08-19).
                 const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
                 const SizedBox(height: AppSpacing.md),
+                _buildInviteSection(ku),
+                const SizedBox(height: AppSpacing.md),
                 _buildSearchSection(ku),
                 const SizedBox(height: 24),
                 _buildRequestsSection(ku),
@@ -200,6 +205,181 @@ class _FriendsScreenState extends State<FriendsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInviteSection(bool ku) {
+    return AppPanel(
+      key: const ValueKey('friends-invite-panel'),
+      color: AppTheme.surfaceOf(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppTheme.gold.withValues(alpha: 0.16),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+                child: const Icon(AppIcons.coins, color: AppTheme.gold, size: 20),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.t(K.inviteFriends),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.textPrimaryColor(context),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      context.t(K.inviteSubtitle),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          FutureBuilder<String?>(
+            future: widget.repository.getPlayerTag(),
+            builder: (context, snapshot) {
+              final tag = snapshot.data;
+              return Row(
+                children: [
+                  if (tag != null && tag.isNotEmpty) ...[
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        key: const ValueKey('friends-share-code-button'),
+                        onPressed: () {
+                          HapticFeedback.selectionClick();
+                          final text = ku
+                              ? 'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: $tag. Tu jî were: https://zankurd.com'
+                              : "ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: $tag. Sen de katıl: https://zankurd.com";
+                          SharePlus.instance.share(ShareParams(text: text));
+                        },
+                        icon: const Icon(AppIcons.shareNodes, size: 16),
+                        label: Text(tag, style: const TextStyle(fontWeight: FontWeight.w700)),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.gold,
+                          side: const BorderSide(color: AppTheme.gold, width: 1.2),
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      key: const ValueKey('friends-enter-code-button'),
+                      onPressed: () => _showReferralDialog(ku),
+                      icon: const Icon(AppIcons.userPlus, size: 16),
+                      label: Text(context.t(K.enterReferralCode)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.brand,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showReferralDialog(bool ku) {
+    final controller = TextEditingController();
+    bool submitting = false;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (dialogContext, setDialogState) {
+            return AlertDialog(
+              backgroundColor: AppTheme.surfaceOf(dialogContext),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.card)),
+              title: Text(
+                context.t(K.enterReferralCode),
+                style: TextStyle(color: AppTheme.textPrimaryColor(dialogContext)),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.inviteSubtitle),
+                    style: TextStyle(fontSize: 13, color: AppTheme.textMutedColor(dialogContext)),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const ValueKey('referral-code-input'),
+                    controller: controller,
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: InputDecoration(
+                      hintText: context.t(K.referralCodeHint),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: submitting ? null : () => Navigator.of(dialogContext).pop(),
+                  child: Text(context.t(K.cancel)),
+                ),
+                ElevatedButton(
+                  key: const ValueKey('referral-code-submit'),
+                  onPressed: submitting
+                      ? null
+                      : () async {
+                          final code = controller.text.trim();
+                          if (code.isEmpty) return;
+                          setDialogState(() => submitting = true);
+                          final result = await widget.repository.redeemReferralCode(code);
+                          if (!dialogContext.mounted) return;
+                          Navigator.of(dialogContext).pop();
+                          if (!mounted) return;
+                          if (result.isSuccess) {
+                            HapticFeedback.mediumImpact();
+                            _showMessage(context.t(K.referralCodeApplied));
+                          } else {
+                            final msg = switch (result.status) {
+                              ReferralStatus.ownCode => context.t(K.cannotUseOwnCode),
+                              ReferralStatus.alreadyRedeemed => context.t(K.referralAlreadyUsed),
+                              ReferralStatus.notFound => context.t(K.invalidReferralCode),
+                              _ => context.t(K.searchFailed),
+                            };
+                            _showMessage(msg);
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(backgroundColor: AppTheme.brand, foregroundColor: Colors.white),
+                  child: submitting
+                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                      : Text(context.t(K.referralApplyAction)),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 

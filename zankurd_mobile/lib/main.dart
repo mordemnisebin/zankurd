@@ -361,6 +361,7 @@ class ZanKurdApp extends StatelessWidget {
   /// eski dinleyiciler sessizce kopar.
   ZanKurdApp({
     required this.repository,
+    this.home,
     AuthProvider? authProvider,
     LanguageProvider? languageProvider,
     ThemeProvider? themeProvider,
@@ -383,6 +384,7 @@ class ZanKurdApp extends StatelessWidget {
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
+  final Widget? home;
   final AuthProvider authProvider;
   final LanguageProvider languageProvider;
   final ThemeProvider themeProvider;
@@ -432,7 +434,7 @@ class ZanKurdApp extends StatelessWidget {
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
           navigatorObservers: [appRouteObserver, appPageRouteObserver],
-          home: SplashScreen(
+          home: home ?? SplashScreen(
             // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
             // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
             // yüklendiği için splash hazır oluşunu asla geciktirmez.

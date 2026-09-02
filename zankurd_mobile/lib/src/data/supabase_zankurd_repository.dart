@@ -16,6 +16,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
@@ -3027,6 +3028,47 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (e, stack) {
       _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
       return false;
+    }
+  }
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    try {
+      final response = await client.rpc(
+        'redeem_referral_code',
+        params: {'p_code': clean},
+      );
+      if (response is Map<String, dynamic>) {
+        final result = ReferralResult.fromMap(response);
+        if (result.isSuccess) {
+          unawaited(loadCoinBalance());
+        }
+        return result;
+      }
+      return const ReferralResult(
+        status: ReferralStatus.networkError,
+        message: 'Unexpected response format',
+      );
+    } catch (e, stack) {
+      _recordError(e, stack, reason: 'redeemReferralCode failed');
+      final msg = e.toString();
+      if (msg.contains('own_code') || msg.contains('Cannot use own code')) {
+        return const ReferralResult(status: ReferralStatus.ownCode);
+      }
+      if (msg.contains('already_redeemed') || msg.contains('already used')) {
+        return const ReferralResult(status: ReferralStatus.alreadyRedeemed);
+      }
+      if (msg.contains('code_not_found') || msg.contains('Invalid referral code')) {
+        return const ReferralResult(status: ReferralStatus.notFound);
+      }
+      return const ReferralResult(status: ReferralStatus.networkError);
     }
   }
 }

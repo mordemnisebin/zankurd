@@ -19,6 +19,7 @@ import '../game/speed_score.dart';
 import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
 import 'question_bank_loader.dart';
@@ -1655,5 +1656,37 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Mock: her zaman başarılı olarak dön.
     // Canlı ortamda Supabase 'suggested_questions' tablosuna yazılır.
     return true;
+  }
+
+  bool _mockReferralUsed = false;
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    if (_mockReferralUsed) {
+      return const ReferralResult(
+        status: ReferralStatus.alreadyRedeemed,
+        message: 'Already redeemed',
+      );
+    }
+    if (clean == 'ZK-TEST' || clean == 'ZK-ME') {
+      return const ReferralResult(
+        status: ReferralStatus.ownCode,
+        message: 'Cannot use own code',
+      );
+    }
+    _mockReferralUsed = true;
+    _mockCoins += 100;
+    return const ReferralResult(
+      status: ReferralStatus.success,
+      coinsAwarded: 100,
+      referrerName: 'ZanKurd Heval',
+    );
   }
 }

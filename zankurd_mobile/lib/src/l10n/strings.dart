@@ -789,6 +789,36 @@ class Tr {
     },
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.acceptAction: {'ku': 'Qebûl', 'tr': 'Kabul'},
+    K.inviteFriends: {'ku': 'Hevalan Vexwîne', 'tr': 'Arkadaşlarını Davet Et'},
+    K.inviteSubtitle: {
+      'ku': 'Koda xwe parve bike, her du alî jî 100 zêr bistînin!',
+      'tr': 'Kodunu paylaş, iki taraf da 100 coin kazansın!',
+    },
+    K.enterReferralCode: {'ku': 'Koda Vexwendinê', 'tr': 'Davet Kodu Gir'},
+    K.referralCodeHint: {'ku': 'Mînak: ZK-XXXX', 'tr': 'Örnek: ZK-XXXX'},
+    K.referralApplyAction: {'ku': 'Bi kar bîne', 'tr': 'Kullan'},
+    K.referralCodeApplied: {
+      'ku': 'Pîroz be! 100 zêr li hesabê te zêde bû.',
+      'tr': 'Tebrikler! Hesabına 100 coin eklendi.',
+    },
+    K.cannotUseOwnCode: {
+      'ku': 'Tu nikarî koda xwe bi kar bînî.',
+      'tr': 'Kendi kodunu kullanamazsın.',
+    },
+    K.referralAlreadyUsed: {
+      'ku': 'Te berê koda vexwendinê bi kar aniye.',
+      'tr': 'Daha önce bir davet kodu kullandın.',
+    },
+    K.invalidReferralCode: {
+      'ku': 'Ev kod nehat dîtin.',
+      'tr': 'Bu kod bulunamadı.',
+    },
+    K.copyCode: {'ku': 'Kopî bike', 'tr': 'Kopyala'},
+    K.codeCopied: {'ku': 'Kod hat kopîkirin!', 'tr': 'Kod kopyalandı!'},
+    K.shareRewardEarned: {
+      'ku': 'Parvekirina yekem a rojê: +25 zêr hat qezenckirin!',
+      'tr': 'Günün ilk paylaşımı: +25 coin kazanıldı!',
+    },
 
     // ── Çevrimiçi tur durum satırı ───────────────────────────────────
     K.answeredState: {'ku': 'Bersiv da', 'tr': 'Cevapladı'},
@@ -2818,6 +2848,18 @@ class K {
   static const wantsToBeFriend = 'friends.wantsToBeFriend';
   static const rejectAction = 'friends.reject';
   static const acceptAction = 'friends.accept';
+  static const inviteFriends = 'friends.inviteFriends';
+  static const inviteSubtitle = 'friends.inviteSubtitle';
+  static const enterReferralCode = 'friends.enterReferralCode';
+  static const referralCodeHint = 'friends.referralCodeHint';
+  static const referralApplyAction = 'friends.referralApplyAction';
+  static const referralCodeApplied = 'friends.referralCodeApplied';
+  static const cannotUseOwnCode = 'friends.cannotUseOwnCode';
+  static const referralAlreadyUsed = 'friends.referralAlreadyUsed';
+  static const invalidReferralCode = 'friends.invalidReferralCode';
+  static const copyCode = 'common.copyCode';
+  static const codeCopied = 'common.codeCopied';
+  static const shareRewardEarned = 'quiz.shareRewardEarned';
 
   // ── Çevrimiçi tur durum satırı ─────────────────────────────────────
   static const answeredState = 'match.answered';

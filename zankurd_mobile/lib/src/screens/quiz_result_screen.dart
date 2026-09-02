@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -1143,16 +1144,29 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           key: const ValueKey('result-share-button'),
           icon: AppIcons.shareNodes,
           label: context.t(K.share),
-          onTap: () => ResultSharer.share(
-            context,
-            isKu: context.isKu,
-            score: score,
-            correctCount: correctCount,
-            totalQuestions: totalQuestions,
-            bestStreak: bestStreak,
-            category: room.category,
-            results: [for (final record in answerRecords) record.isCorrect],
-          ),
+          onTap: () async {
+            await ResultSharer.share(
+              context,
+              isKu: context.isKu,
+              score: score,
+              correctCount: correctCount,
+              totalQuestions: totalQuestions,
+              bestStreak: bestStreak,
+              category: room.category,
+              results: [for (final record in answerRecords) record.isCorrect],
+            );
+            final earned = await ResultSharer.claimDailyShareReward();
+            if (earned && context.mounted) {
+              HapticFeedback.mediumImpact();
+              unawaited(repository.awardSpinCoins());
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(context.t(K.shareRewardEarned)),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
+            }
+          },
         ),
     ];
 

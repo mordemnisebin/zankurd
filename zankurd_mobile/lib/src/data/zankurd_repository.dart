@@ -13,6 +13,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 
 part 'repository_ports.dart';
 
@@ -530,4 +531,7 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     String? explanation,
     int difficulty = 3,
   });
+
+  /// Davet / referans kodunu kullanır ve ödül verir.
+  Future<ReferralResult> redeemReferralCode(String code);
 }

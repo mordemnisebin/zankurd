@@ -101,10 +101,10 @@ void main() {
       // Keşif ders yolunun içinden açılır; bu bölüm ikinci kapı olmaz.
       await tester.pumpWidget(
         _shell(
-          Scaffold(
+          const Scaffold(
             body: ContinueSection(
               isKu: false,
-              entries: const [
+              entries: [
                 CategoryProgress(category: 'Tarih', correct: 0, threshold: 10),
                 CategoryProgress(
                   category: 'Coğrafya',
@@ -128,10 +128,10 @@ void main() {
     ) async {
       await tester.pumpWidget(
         _shell(
-          Scaffold(
+          const Scaffold(
             body: ContinueSection(
               isKu: false,
-              entries: const [
+              entries: [
                 CategoryProgress(category: 'Tarih', correct: 4, threshold: 10),
                 CategoryProgress(
                   category: 'Coğrafya',
