@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/placement_store.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
@@ -56,7 +57,28 @@ void main() {
       final state = tester.state(find.byType(LevelPlacementScreen)) as dynamic;
       // ignore: avoid_dynamic_calls
       final current = state.currentQuestionForTest;
-      await tester.tap(find.text(current.correctAnswer).last);
+      // Şık dışı tiplerde (boşluk-doldurma, kelime-sıralama) doğru cevap
+      // dokunulabilir metin olarak çizilmez; sonuç yolunu tıkamamak için
+      // atlanır (kayıt yine tamamlanır).
+      // ignore: avoid_dynamic_calls
+      final type = current.type as QuestionType;
+      if (type == QuestionType.fillInBlank ||
+          type == QuestionType.wordOrdering) {
+        final skip = find.byKey(const ValueKey('placement-skip'));
+        if (skip.evaluate().isNotEmpty) {
+          await tester.tap(skip);
+        } else {
+          await tester.tap(
+            find.byKey(const ValueKey('placement-skip-compact')),
+          );
+        }
+      } else {
+        // UI yerelleştirilmiş metni çizer (`localized`); ham alan
+        // Kurmancî kalır ve Türkçe turda bulunamazdı.
+        // ignore: avoid_dynamic_calls
+        final localized = current.localized(isKu: false);
+        await tester.tap(find.text(localized.correctAnswer).last);
+      }
       await tester.pumpAndSettle();
     }
     expect(
@@ -88,7 +110,6 @@ void main() {
     await ready.markResolvedSM2('offline_0005', 5);
     expect(ready.count, 1); // tek çözümde mastered olmaz
   });
-
 
   testWidgets('Senaryo: hareket azaltma tercihi kalıcı', (tester) async {
     final motion = await ReducedMotionProvider.load();

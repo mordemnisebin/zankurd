@@ -29,7 +29,9 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
   }
 
-  testWidgets('Simülatör Canlı Tur: Tüm ekranları gez ve görsel doğrula', (tester) async {
+  testWidgets('Simülatör Canlı Tur: Tüm ekranları gez ve görsel doğrula', (
+    tester,
+  ) async {
     final repo = MockZanKurdRepository();
     final auth = AuthProvider.test(authenticated: true);
 
