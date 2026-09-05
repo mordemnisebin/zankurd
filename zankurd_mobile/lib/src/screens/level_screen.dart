@@ -556,6 +556,7 @@ class _LevelPath extends StatelessWidget {
                   top: i * _rowHeight,
                   width: 180,
                   child: _LevelNode(
+                    key: ValueKey('level-node-${levels[i].number}'),
                     level: levels[i],
                     disabled: disabled,
                     isKu: isKu,
@@ -576,6 +577,7 @@ class _LevelPath extends StatelessWidget {
 /// Yol üzerindeki tek seviye düğümü: gradyan daire + başlık/yıldız etiketi.
 class _LevelNode extends StatefulWidget {
   const _LevelNode({
+    super.key,
     required this.level,
     required this.disabled,
     required this.isKu,
