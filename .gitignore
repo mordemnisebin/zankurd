@@ -10,6 +10,7 @@
 # ve `/Users/<ad>/...` yolları eklenmişti, push'tan önce temizlendi).
 .cluster/
 .openclaw/
+.openclaw-attachments/
 .agents/
 .mimosa/
 SOUL.md
@@ -48,3 +49,6 @@ audit_artifacts/
 
 # Üretilmiş değerlendirme çıktısı
 zankurd-proje-degerlendirmesi.html
+
+# Yerel pentest/video-koruma raporları (makineye özgü, commit dışı)
+docs/smtanatomi-*.html
