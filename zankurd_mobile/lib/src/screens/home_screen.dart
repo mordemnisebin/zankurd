@@ -529,9 +529,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           //
           // Zaten abone olana gösterilmez: satın alınmış bir şeyi satmaya
           // devam etmek, ödemiş kullanıcıya reklam gibi görünür.
+          // Yapılandırma yoksa da gizlenir: ürünsüz paywall ölü sokaktır
+          // (2026-09-05 canlı turu).
           Consumer<PremiumService>(
             builder: (context, premium, _) {
-              if (premium.isPremium) return const SizedBox.shrink();
+              if (premium.isPremium || !AppConfig.hasRevenuecatConfig) {
+                return const SizedBox.shrink();
+              }
               return Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
                 child: AppRowCard(

@@ -36,11 +36,17 @@ import 'support/widget_test_helpers.dart';
 /// üçüncü bir başlık rozeti ise 320pt genişlikte rozet satırını taşırıyordu.
 void main() {
   setUp(() {
+    // Satın alınabilirlik kapısı derleme bayrağıdır; testte düğmeyle açılır.
+    AppConfig.debugHasRevenuecatConfig = true;
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed.user': true,
       'zankurd.navTour.seen': true,
     });
+  });
+
+  tearDown(() {
+    AppConfig.debugHasRevenuecatConfig = null;
   });
 
   Future<void> pumpHome(
@@ -106,6 +112,19 @@ void main() {
       reason:
           'Zaten abone olan kullanıcıya abonelik satılmaya devam ediliyor; '
           'ödemiş kullanıcı için bu bir reklamdır.',
+    );
+  });
+
+  testWidgets('yapılandırma yoksa ölü paywall girişi çizilmez', (tester) async {
+    // Ürünsüz derlemede (API anahtarı yok) giriş gizlenir: "çok yakında"
+    // vaat eden ölü sokak güven zedeler (2026-09-05 canlı turu).
+    AppConfig.debugHasRevenuecatConfig = false;
+    await pumpHome(tester);
+
+    expect(
+      find.byKey(const ValueKey('home-premium-row')),
+      findsNothing,
+      reason: 'Satın alınabilir ürün yokken satış satırı çiziliyor.',
     );
   });
 }

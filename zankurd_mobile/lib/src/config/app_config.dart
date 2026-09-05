@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 
-import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
+import 'package:flutter/foundation.dart'
+    show kDebugMode, kIsWeb, visibleForTesting;
 
 import 'release_config_validator.dart';
 
@@ -105,7 +106,16 @@ class AppConfig {
     return null;
   }
 
+  /// Testler derleme bayrağı veremediği için (`String.fromEnvironment`
+  /// derleme zamanıdır) satın alınabilirlik kapısını testte açıp
+  /// kapatan düğme. `null` = gerçek derleme değerini kullan.
+  /// Her test sonunda sıfırlanmalıdır (statik durum sızar).
+  @visibleForTesting
+  static bool? debugHasRevenuecatConfig;
+
   static bool get hasRevenuecatConfig {
+    final override = debugHasRevenuecatConfig;
+    if (override != null) return override;
     final platform = _revenueCatPlatform;
     return platform != null &&
         ReleaseConfigValidator.isSafeRevenueCatKey(

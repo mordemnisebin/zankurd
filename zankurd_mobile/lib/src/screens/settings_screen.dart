@@ -669,10 +669,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
               // devamı gibi görünüyor ve para kazandıran tek giriş noktası
               // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
-              const ScreenSectionLabel(label: 'Premium', accent: AppTheme.gold),
+              //
+              // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
+              // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
+              // satırını her zaman görür.
+              if (context.watch<PremiumService>().isPremium ||
+                  AppConfig.hasRevenuecatConfig) ...[
+                const ScreenSectionLabel(
+                  label: 'Premium',
+                  accent: AppTheme.gold,
+                ),
+              ],
               Consumer<PremiumService>(
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
+                  if (!isPremium && !AppConfig.hasRevenuecatConfig) {
+                    return const SizedBox.shrink();
+                  }
                   return AppPanel(
                     padding: EdgeInsets.zero,
                     child: InkWell(
