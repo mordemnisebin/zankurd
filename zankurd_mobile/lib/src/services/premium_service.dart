@@ -54,10 +54,10 @@ class PremiumIdentityQueue {
   }
 }
 
-/// Aylık abonelik altyapısı. Kullanıcının aktif `premium` entitlement'ı
-/// varsa reklamsız, detaylı istatistik, sınırsız joker gibi özellikler
-/// açılır. API anahtarı yoksa tüm premium özellikler kapalı kalır ve
-/// uygulama normal akışına devam eder.
+/// Aylık abonelik altyapısı. Aktif `premium` entitlement seri korumasını
+/// ve paywall'da vaat edilen destek/kozmetikleri açar. Reklam SDK'sı
+/// yoktur; joker hakkı bu bayrağa bağlı değildir. API anahtarı yoksa
+/// abonelik kapalı kalır ve uygulama normal akışına devam eder.
 ///
 /// Singleton; [load] çağrısı main() içinde yapılmalıdır.
 class PremiumService extends ChangeNotifier {

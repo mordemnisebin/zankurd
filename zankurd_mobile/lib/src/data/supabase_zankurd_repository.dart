@@ -3065,7 +3065,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (msg.contains('already_redeemed') || msg.contains('already used')) {
         return const ReferralResult(status: ReferralStatus.alreadyRedeemed);
       }
-      if (msg.contains('code_not_found') || msg.contains('Invalid referral code')) {
+      if (msg.contains('code_not_found') ||
+          msg.contains('Invalid referral code')) {
         return const ReferralResult(status: ReferralStatus.notFound);
       }
       return const ReferralResult(status: ReferralStatus.networkError);

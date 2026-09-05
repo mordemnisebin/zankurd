@@ -21,7 +21,6 @@ import 'src/l10n/lang.dart';
 import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
-import 'src/providers/child_safety_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
 import 'src/providers/untimed_mode_provider.dart';
 import 'src/utils/boot_step.dart';
@@ -193,7 +192,6 @@ Future<void> main() async {
       final reducedMotionFuture = ReducedMotionProvider.load();
       final untimedModeFuture = UntimedModeProvider.load();
       final analyticsConsentFuture = AnalyticsConsentProvider.load();
-      final childSafetyFuture = ChildSafetyProvider.load();
 
       // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
       // tercihleri. `AnalyticsService.initialize()` ve
@@ -221,7 +219,6 @@ Future<void> main() async {
           reducedMotionFuture,
           untimedModeFuture,
           analyticsConsentFuture,
-          childSafetyFuture,
         ]),
         reason: 'preferences load',
       );
@@ -260,11 +257,6 @@ Future<void> main() async {
         reason: 'AnalyticsConsentProvider load',
         fallback: AnalyticsConsentProvider.new,
       );
-      final childSafetyProvider = await bootStep(
-        childSafetyFuture,
-        reason: 'ChildSafetyProvider load',
-        fallback: ChildSafetyProvider.new,
-      );
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
       // hiçbiri uygulamanın açılmasını engellemez.
@@ -295,7 +287,6 @@ Future<void> main() async {
           reducedMotionProvider: reducedMotionProvider,
           untimedModeProvider: untimedModeProvider,
           analyticsConsentProvider: analyticsConsentProvider,
-          childSafetyProvider: childSafetyProvider,
           premiumService: premiumService,
         ),
       );
@@ -369,7 +360,6 @@ class ZanKurdApp extends StatelessWidget {
     ReducedMotionProvider? reducedMotionProvider,
     UntimedModeProvider? untimedModeProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
-    ChildSafetyProvider? childSafetyProvider,
     PremiumService? premiumService,
     super.key,
   }) : authProvider = authProvider ?? AuthProvider.test(),
@@ -380,7 +370,6 @@ class ZanKurdApp extends StatelessWidget {
        untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
-       childSafetyProvider = childSafetyProvider ?? ChildSafetyProvider(),
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
@@ -392,7 +381,6 @@ class ZanKurdApp extends StatelessWidget {
   final ReducedMotionProvider reducedMotionProvider;
   final UntimedModeProvider untimedModeProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
-  final ChildSafetyProvider childSafetyProvider;
   final PremiumService premiumService;
 
   @override
@@ -419,9 +407,6 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,
         ),
-        ChangeNotifierProvider<ChildSafetyProvider>.value(
-          value: childSafetyProvider,
-        ),
         ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],
       child: Consumer<ThemeProvider>(
@@ -434,21 +419,23 @@ class ZanKurdApp extends StatelessWidget {
           themeAnimationDuration: const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
           navigatorObservers: [appRouteObserver, appPageRouteObserver],
-          home: home ?? SplashScreen(
-            // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
-            // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
-            // yüklendiği için splash hazır oluşunu asla geciktirmez.
-            readiness: _warmUpShell(),
-            next: AppShell(
-              repository: repository,
-              pushTokenSync: PushTokenSync(
-                source: kIsWeb
-                    ? const NoopPushTokenSource()
-                    : const FirebasePushTokenSource(),
-                repository: repository,
+          home:
+              home ??
+              SplashScreen(
+                // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
+                // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
+                // yüklendiği için splash hazır oluşunu asla geciktirmez.
+                readiness: _warmUpShell(),
+                next: AppShell(
+                  repository: repository,
+                  pushTokenSync: PushTokenSync(
+                    source: kIsWeb
+                        ? const NoopPushTokenSource()
+                        : const FirebasePushTokenSource(),
+                    repository: repository,
+                  ),
+                ),
               ),
-            ),
-          ),
           builder: (context, child) {
             // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ
             // okunmuyordu. `ReducedMotionProvider`ın sınıf belgesi

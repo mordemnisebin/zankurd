@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../config/avatar_presets.dart';
 import '../game/avatar_frames.dart';
+import '../theme/app_icons.dart';
 import '../theme/app_theme.dart';
+import '../utils/player_identity.dart';
 
 /// Oyuncu avatarının TEK görsel kaynağı. Öncelik sırası:
 /// fotoğraf (photoUrl) > hazır ikon (iconId) > adın baş harfi.
@@ -129,7 +131,11 @@ class PlayerAvatar extends StatelessWidget {
   }
 
   Widget _iconOrLetter(Color bg) {
-    final icon = iconFor(iconId);
+    final icon =
+        iconFor(iconId) ??
+        (PlayerIdentity.isPlaceholderDisplayName(displayName)
+            ? AppIcons.user
+            : null);
     return ColoredBox(
       color: bg,
       child: Center(
