@@ -386,8 +386,8 @@ class Tr {
     K.joinAction: {'ku': 'Tevlî bibe', 'tr': 'Katıl'},
     K.playTitle: {'ku': 'Pêşbazî', 'tr': 'Yarış'},
     K.playSubtitle: {
-      'ku': 'Hevrikekî bibîne · bi qasî 2 deqeyan.',
-      'tr': 'Rakibini bul · yaklaşık 2 dakika.',
+      'ku': 'Ode, pêşbirk an çalakiya rojane.',
+      'tr': 'Oda, düello veya günlük etkinlik.',
     },
     K.withFriends: {'ku': 'Bi hevalan re', 'tr': 'Arkadaşlarınla'},
     K.withFriendsSub: {
@@ -1883,9 +1883,9 @@ class Tr {
     K.signOut: {'ku': 'Derkeve', 'tr': 'Çıkış Yap'},
     K.signOutConfirm: {
       'ku':
-          'Tu dixwazî ji hesabê xwe derkevî? XP û pêşketina hînbûnê ya li ser vê amûrê dê ji amûrê bên paqij kirin; daneyên serhêl ên hesabê te nayên jêbirin.',
+          'Tu dixwazî ji hesabê xwe derkevî? Ast û pêşketina hînbûnê ya li ser vê amûrê dê ji amûrê bên paqij kirin; daneyên serhêl ên hesabê te (tevlî xala rêzkirinê) nayên jêbirin.',
       'tr':
-          'Hesabından çıkmak istiyor musun? Bu cihazdaki XP ve öğrenme ilerlemen temizlenir; çevrimiçi hesap verilerin silinmez.',
+          'Hesabından çıkmak istiyor musun? Bu cihazdaki seviye çubuğu ve öğrenme ilerlemen temizlenir; çevrimiçi hesap verilerin (sıralama puanı dahil) silinmez.',
     },
     K.allMistakesWaiting: {
       'ku': 'Hemû pirsên şaş li benda dema dubarekirinê ne. Paşê biceribîne!',
@@ -1953,6 +1953,58 @@ class Tr {
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
     K.changeLanguage: {'ku': 'Ziman biguherîne', 'tr': 'Dili değiştir'},
     K.dailyLesson: {'ku': 'Dersa rojane', 'tr': 'Günün Dersi'},
+    K.learningGoalTitle: {
+      'ku': 'Îro tu dixwazî li ser çi bisekinî?',
+      'tr': 'Bugün neye odaklanmak istersin?',
+    },
+    K.learningGoalTitleCompact: {'ku': 'Armanca min', 'tr': 'Öğrenme amacım'},
+    K.learningGoalHint: {
+      'ku': 'Tu dikarî vê paşê ji mîhengan biguherînî.',
+      'tr': 'Bunu daha sonra ayarlardan değiştirebilirsin.',
+    },
+    K.learningGoalLearn: {
+      'ku': 'Kurmancî hîn bibim',
+      'tr': 'Kurmancî öğrenmek',
+    },
+    K.learningGoalCulture: {'ku': 'Çandê nas bikim', 'tr': 'Kültürü keşfetmek'},
+    K.outcomeTitle: {
+      'ku': 'Kurteya fêrbûna vê dorê',
+      'tr': 'Bu turdan öğrenme özeti',
+    },
+    K.outcomeStrong: {
+      'ku':
+          '{name}: ji {answered} pirsan {correct} rast. Ev tenê nîşana vê dorê ye.',
+      'tr':
+          '{name}: {answered} sorunun {correct}\'si doğru. Bu yalnızca bu turun sinyali.',
+    },
+    K.outcomeReview: {
+      'ku':
+          '{name}: di {answered} pirsan de {wrong} şaş. Van bersivan careke din bibîne.',
+      'tr':
+          '{name}: {answered} soruda {wrong} yanlış. Bu cevaplara yeniden bak.',
+    },
+    K.outcomeEmpty: {
+      'ku':
+          'Ji bo mijarekê encam derxînin hêj bersiv têr nînin. Bersivên şaş binêre û hîn bibersive.',
+      'tr':
+          'Konu sonucu çıkarmak için henüz yeterli cevap yok. Yanlışlarına bakıp birkaç soru daha çöz.',
+    },
+    K.outcomeReviewGeneric: {
+      'ku': 'Bersiva şaş binêre',
+      'tr': 'Yanlış cevabı gözden geçir',
+    },
+    K.outcomeReviewNamed: {
+      'ku': 'Bersivên şaş ên {name} binêre',
+      'tr': '{name} yanlışlarını gözden geçir',
+    },
+    K.storyCatalogTitle: {'ku': 'Çîrokên rojane', 'tr': 'Günlük hikâyeler'},
+    K.storyCatalogSub: {
+      'ku': 'Bi axaftinên kurt hîn bibe û ji cihê xwe bidomîne.',
+      'tr': 'Kısa konuşmalarla öğren, kaldığın yerden devam et.',
+    },
+    K.storyStatusDone: {'ku': 'Qediya', 'tr': 'Tamamlandı'},
+    K.storyStatusStart: {'ku': 'Dest pê bike', 'tr': 'Başla'},
+    K.storyStatusContinue: {'ku': 'Bidomîne', 'tr': 'Devam et'},
 
     // ── Seviye tespiti ────────────────────────────────────────────
     K.placementTitle: {'ku': 'Asta xwe diyar bike', 'tr': 'Seviyeni belirle'},
@@ -1993,7 +2045,10 @@ class Tr {
       'ku': '{count} kategorî — ziman, dîrok, çand…',
       'tr': '{count} kategori — dil, tarih, kültür…',
     },
-    K.onbDailyBullet: {'ku': 'Her roj pirsên nû', 'tr': 'Her gün yeni sorular'},
+    K.onbDailyBullet: {
+      'ku': 'Dersa rojane: bê dem, bi ravekirinê',
+      'tr': 'Günün dersi: süre yok, açıklamalı',
+    },
     K.onbCompeteTitle: {
       'ku': 'Pêşbirkê bike û bi ser keve',
       'tr': 'Yarış ve kazan',
@@ -2268,9 +2323,9 @@ class Tr {
     },
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 9 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast pûanên zêde dide.',
+          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 10 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast pûanên zêde dide.',
       'tr':
-          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 9 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
+          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 10 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
     },
     K.privacyBody: {
       'ku':
@@ -2285,10 +2340,8 @@ class Tr {
           'Kurmancî bilgi yarışması uygulaması — Kürt dili, kültürü, tarihi, edebiyatı, coğrafyası ve müziğini öğren, yarış.',
     },
     K.ttsKurdishLimited: {
-      'ku':
-          'Dengê kurdî li vê amûrê sînordar e; dibe ku dengekî din were bikaranîn.',
-      'tr':
-          'Bu cihazda Kürtçe ses sınırlı olabilir; yedek bir ses kullanılabilir.',
+      'ku': 'Li vê amûrê dengê Kurmancî tune ye. Xwendina bi deng neçalak e.',
+      'tr': 'Bu cihazda Kurmancî sesi bulunamadı. Sesli okuma kullanılamıyor.',
     },
 
     // ── Hikâye ekranı ─────────────────────────────────────────────
@@ -2387,29 +2440,6 @@ class Tr {
           'cevap görünür.',
     },
     K.correctAnswerLabel: {'ku': 'Bersiva rast', 'tr': 'Doğru cevap'},
-
-    // ── Çocuk modu ────────────────────────────────────────────────────
-    K.childSafetyMode: {'ku': 'Moda Zarokan', 'tr': 'Çocuk Modu'},
-    K.childSafetyModeSub: {
-      'ku': 'Lêgerîna hevalan û parvekirina derve digire',
-      'tr': 'Arkadaş aramayı ve dışa paylaşımı kapatır',
-    },
-    K.childSafetyConfirmTitle: {
-      'ku': 'Moda zarokan were vekirin?',
-      'tr': 'Çocuk modu açılsın mı?',
-    },
-    K.childSafetyConfirmBody: {
-      'ku':
-          'Vekirin lêgerîna heval û parvekirina encaman a derve digire. Ev '
-          'mîhengek amûrê ye; li aliyê pêşkêşkerê parastinek din tune.',
-      'tr':
-          'Açmak arkadaş aramayı ve sonuçları dışa paylaşmayı kapatır. Bu '
-          'yalnız cihaz ayarıdır; sunucu tarafında ek bir koruma yoktur.',
-    },
-    K.childSafetyFriendSearchBlocked: {
-      'ku': 'Moda zarokan vekirî ye — lêgerîna hevalan girtî ye.',
-      'tr': 'Çocuk modu açık — arkadaş arama kapalı.',
-    },
 
     // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────
     K.customRoomTitle: {
@@ -3390,6 +3420,22 @@ class K {
   static const languageCode = 'common.languageCode';
   static const changeLanguage = 'common.changeLanguage';
   static const dailyLesson = 'home.dailyLesson';
+  static const learningGoalTitle = 'learning.goal.title';
+  static const learningGoalTitleCompact = 'learning.goal.title.compact';
+  static const learningGoalHint = 'learning.goal.hint';
+  static const learningGoalLearn = 'learning.goal.learn';
+  static const learningGoalCulture = 'learning.goal.culture';
+  static const outcomeTitle = 'outcome.title';
+  static const outcomeStrong = 'outcome.strong';
+  static const outcomeReview = 'outcome.review';
+  static const outcomeEmpty = 'outcome.empty';
+  static const outcomeReviewGeneric = 'outcome.review.generic';
+  static const outcomeReviewNamed = 'outcome.review.named';
+  static const storyCatalogTitle = 'story.catalog.title';
+  static const storyCatalogSub = 'story.catalog.sub';
+  static const storyStatusDone = 'story.status.done';
+  static const storyStatusStart = 'story.status.start';
+  static const storyStatusContinue = 'story.status.continue';
 
   // ── Seviye tespiti ────────────────────────────────────────────
   static const placementTitle = 'placement.title';
@@ -3538,14 +3584,6 @@ class K {
   static const matchSemantics = 'tournament.match.semantics';
   static const matchFinished = 'tournament.match.finished';
   static const unknownPlayer = 'tournament.player.unknown';
-
-  // ── Çocuk modu ──────────────────────────────────────────────────
-  static const childSafetyMode = 'childSafety.mode';
-  static const childSafetyModeSub = 'childSafety.mode.sub';
-  static const childSafetyConfirmTitle = 'childSafety.confirm.title';
-  static const childSafetyConfirmBody = 'childSafety.confirm.body';
-  static const childSafetyFriendSearchBlocked =
-      'childSafety.friendSearch.blocked';
 
   // ── Görsel künyesi ─────────────────────────────────────────────────
   static const imageCredits = 'credits.images';

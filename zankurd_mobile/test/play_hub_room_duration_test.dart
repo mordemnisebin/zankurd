@@ -52,9 +52,7 @@ void main() {
       expect(find.text('Çand'), findsNothing);
       expect(find.text('Dîrok'), findsNothing);
 
-      await tester.tap(
-        find.byKey(const ValueKey('custom-room-cat-Dîrok')),
-      );
+      await tester.tap(find.byKey(const ValueKey('custom-room-cat-Dîrok')));
       await tester.pump();
 
       final openButton = find.text('Odayı Aç');

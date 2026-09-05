@@ -24,6 +24,13 @@ enum RojMood {
   sad,
 }
 
+/// Ana ekran selam maskotu: gece gülen güneş + «İyi Geceler» çelişmesin.
+RojMood greetingMascotMood({required int hour, required int streak}) {
+  if (streak > 0) return RojMood.celebrate;
+  if (hour >= 22 || hour < 5) return RojMood.thinking;
+  return RojMood.happy;
+}
+
 /// Zana — uygulamanın maskotu. Dış varlık/asset kullanmaz: imza motifi olan
 /// roj'dan (güneş) türetilmiş, kilim dilinde üçgen ışınlı geometrik bir
 /// karakterdir; tamamen CustomPaint ile çizilir.

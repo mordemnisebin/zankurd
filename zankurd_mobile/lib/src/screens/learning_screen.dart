@@ -8,8 +8,6 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/lesson.dart';
-import '../models/mini_guide.dart';
-import '../models/story.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -19,7 +17,9 @@ import 'story_screen.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -170,7 +170,11 @@ class _LearningScreenState extends State<LearningScreen> {
     final unifiedScroll =
         MediaQuery.textScalerOf(context).scale(14) > 20 ||
         MediaQuery.sizeOf(context).width < 380 ||
-        MediaQuery.sizeOf(context).height < 760;
+        MediaQuery.sizeOf(context).height < 760 ||
+        // Ders listesi kaydırılabilir değilse (henüz yüklenmedi, boş ya
+        // da hata) sabit sütun taşar: hikâye kataloğuyla birlikte üst
+        // bölüm ekrana sığmaz. Liste varken sabit araç düzeni korunur.
+        _currentLessons.isEmpty;
     return Scaffold(
       extendBodyBehindAppBar: true,
       // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
@@ -180,7 +184,7 @@ class _LearningScreenState extends State<LearningScreen> {
       // ekran turu, 55/56). Kimlik bandı kullanan on ekranın sekizi AppBar
       // başlığını zaten boş bırakıyor; aykırı olan buydu. Oyuncu hangi
       // sekmede olduğunu alt gezinme çubuğundan görüyor.
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -238,8 +242,8 @@ class _LearningScreenState extends State<LearningScreen> {
                     ),
                   ),
                   _buildTopRecommendedLesson(context, ku),
-                  // Hikâye modu girişi (metin tabanlı, sessiz). Ünite başında mini
-                  // rehber de buradan açılır.
+                  // Metin tabanlı günlük hikâyeler. Her kart kendi yerel
+                  // ilerlemesini gösterir ve dönüşte durumu yeniler.
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       AppSpacing.page,
@@ -247,24 +251,15 @@ class _LearningScreenState extends State<LearningScreen> {
                       AppSpacing.page,
                       0,
                     ),
-                    // Dar ekranlarda (360px) ikon+metin taşmasını önlemek için
-                    // tam genişlik: intrinsic genişlik dar viewport'ta sığmıyordu.
                     child: SizedBox(
+                      key: const ValueKey('learning-story-entry'),
                       width: double.infinity,
-                      child: OutlinedButton.icon(
-                        key: const ValueKey('learning-story-entry'),
-                        onPressed: () => Navigator.of(context).push(
+                      child: StoryCatalog(
+                        isKu: ku,
+                        onOpen: (story, guide) => Navigator.of(context).push(
                           AppRoute(
-                            page: StoryScreen(
-                              story: cayxaneStory,
-                              guide: cayxaneGuide,
-                            ),
+                            page: StoryScreen(story: story, guide: guide),
                           ),
-                        ),
-                        icon: const Icon(AppIcons.bookOpenReader, size: 18),
-                        label: Text(
-                          context.t(K.storyTeahouse),
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -1674,7 +1669,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Scaffold(
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         // Ders başlığı arayüz diline uyar; Kurmancî adı yedek kalır.
         title: Text(
           ku

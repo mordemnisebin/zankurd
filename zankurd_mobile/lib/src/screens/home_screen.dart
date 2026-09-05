@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../config/app_config.dart';
 import '../config/coin_prices.dart';
 import '../data/mistake_store.dart';
+import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
@@ -22,6 +23,7 @@ import '../data/daily_mission_store.dart';
 import '../data/achievement_store.dart';
 import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
+import '../models/learning_goal.dart';
 import '../services/premium_service.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
@@ -39,6 +41,7 @@ import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
+import '../widgets/learning_goal_chooser.dart';
 
 /// [MistakeStore.readyIds] içindeki kimlikleri gerçekten açılabilir
 /// (`playableQuestions`) sorularla kesiştirir.
@@ -136,6 +139,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<CategoryProgress> _categoryProgress = const [];
   String _pathCategory = 'Ziman';
   Set<int> _pathPlayed = const {};
+  LearningGoal? _learningGoal;
+  bool _learningGoalLoaded = false;
   late AnimationController _loadAnimationController;
   String? _displayName;
   int _refreshCounter = 0;
@@ -298,6 +303,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshProgress() async {
     try {
       final mastery = await MasteryStore.load();
+      final learningGoalStore = await LearningGoalStore.load();
       final entries =
           [
             for (final category in repo.categories)
@@ -313,9 +319,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 : a.category.compareTo(b.category);
           });
       final started = entries.where((entry) => entry.ratio > 0).toList();
-      final category = homePathFocusCategory(
-        started: started,
+      final category = recommendedCategoryForGoal(
+        goal: learningGoalStore.goal,
         categories: repo.categories,
+        startedCategories: [for (final entry in started) entry.category],
       );
       final levelStore = await LevelProgressStore.load();
       final played = {
@@ -325,6 +332,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       if (mounted) {
         setState(() {
           _categoryProgress = entries.take(3).toList();
+          _learningGoal = learningGoalStore.goal;
+          _learningGoalLoaded = true;
           _pathCategory = category;
           _pathPlayed = played;
         });
@@ -332,6 +341,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home mastery load failed');
     }
+  }
+
+  Future<void> _selectLearningGoal(LearningGoal goal) async {
+    final store = await LearningGoalStore.load();
+    await store.save(goal);
+    if (!mounted) return;
+    setState(() => _learningGoal = goal);
+    await _refreshProgress();
   }
 
   Future<void> _bootstrap() async {
@@ -431,6 +448,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
+          if (_learningGoalLoaded && _learningGoal == null) ...[
+            LearningGoalChooser(
+              key: const ValueKey('home-learning-goal-chooser'),
+              isKu: ku,
+              selected: null,
+              onSelected: _selectLearningGoal,
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           Text(
             context.t(K.homeLearningSection),
             style: AppTypography.heading2.copyWith(
@@ -726,7 +752,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   RojMascot(
                     key: const ValueKey('home-zana'),
                     size: 56,
-                    mood: _streak > 0 ? RojMood.celebrate : RojMood.happy,
+                    mood: isTest
+                        ? (_streak > 0 ? RojMood.celebrate : RojMood.happy)
+                        : greetingMascotMood(hour: hour, streak: _streak),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
@@ -1051,7 +1079,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       final questions = await repo.loadDailyQuestions(
         limit: firstSession ? 5 : 10,
       );
-      if (!mounted || questions.isEmpty) return;
+      if (!mounted) return;
+      if (questions.isEmpty) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.noQuestionsFound))));
+        return;
+      }
       if (firstSession) {
         AnalyticsService.instance.logActivationStep('first_quiz_started');
       }

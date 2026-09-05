@@ -164,6 +164,7 @@ void main() {
 
       expect(nextStep, findsOneWidget);
       expect(story, findsOneWidget);
+      expect(find.byKey(const ValueKey('story-catalog')), findsOneWidget);
       expect(practice, findsOneWidget);
       expect(
         tester.getTopLeft(nextStep).dy,

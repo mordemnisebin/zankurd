@@ -266,9 +266,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               const SizedBox(height: AppSpacing.sm),
               _QuickDuelHero(
                 ku: ku,
-                onTap: () => Navigator.of(context).push(
-                  AppRoute.to(MatchmakingScreen(repository: widget.repository)),
-                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    AppRoute.to(
+                      MatchmakingScreen(repository: widget.repository),
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: AppSpacing.md),
               _PlaySectionHeading(
@@ -296,7 +300,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 title: context.t(K.createRoom),
                 subtitle: context.t(K.createRoomSub),
                 busy: _roomActionLoading,
-                onTap: _roomActionLoading ? null : _createOnlineRoom,
+                onTap: _roomActionLoading
+                    ? null
+                    : () {
+                        _createOnlineRoom();
+                      },
               ),
               const SizedBox(height: AppSpacing.xs),
               ModeCard(
@@ -307,7 +315,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 accent: const Color(0xFF04697C), // turkuaz — katılma
                 title: context.t(K.joinByCode),
                 subtitle: context.t(K.joinByCodeSub),
-                onTap: _showJoinSheet,
+                onTap: () {
+                  _showJoinSheet();
+                },
               ),
               const SizedBox(height: AppSpacing.md),
               _PlaySectionHeading(
@@ -368,11 +378,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   accent: const Color(0xFF6A38BE),
                   title: context.t(K.tournament),
                   subtitle: context.t(K.tournamentSub),
-                  onTap: () => Navigator.of(context).push(
-                    AppRoute.to(
-                      TournamentScreen(repository: widget.repository),
-                    ),
-                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      AppRoute.to(
+                        TournamentScreen(repository: widget.repository),
+                      ),
+                    );
+                  },
                 ),
               ],
               // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
