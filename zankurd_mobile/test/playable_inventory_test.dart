@@ -29,6 +29,7 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// Bu bekçi farkı görünür kılar ve sabitler.
 ///
 /// 2026-08-18: DeepSeek boru hattıyla 1298 iki dilli soru eklendi (bkz. question_bank_assets.dart). Sayaç bilerek güncellendi.
+/// 2026-09-02: aynı banka olgusal hata yüzünden runtime'dan çıkarıldı (1110 kayıt).
 void main() {
   const policy = QuestionContentPolicy();
 
@@ -56,7 +57,9 @@ void main() {
       // verdi ve `approved` yaptı: oynanabilir 2914 → 2991. Bu
       // bekçinin varlık sebebi tam bu ayrım: iki sayı birlikte artınca
       // içerik gerçekten ulaşıyor.
-      3042,
+      // 2026-09-02: DeepSeek 1110 kayıt runtime'dan çıkarıldı
+      // (olgusal hata ~%5–8). Dosya durur; oyuncuya yüklenmez.
+      1932,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -68,7 +71,8 @@ void main() {
       // `approved` yaptı; oyuncuya ilk kez ulaşıyorlar.
       // 2991 -> 3000: 7 curated + Amed + YPJ. 12 sinema kaydı
       // mevcut bankalarla yakın tekrar olduğu için kuyrukta kaldı.
-      3000,
+      // 3000 -> 1890: DeepSeek karantinası (1110 oynanabilir kayıt).
+      1890,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

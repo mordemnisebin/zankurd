@@ -66,9 +66,8 @@ void main() {
       // bakmıyordu — sorulan terim şık olabilir, doğru cevap gövdede
       // yazabilir, şık yinelenebilir, hiçbiri düşmezdi.
       //
-      // Başlıktaki kural tam bunu söylüyordu ("listeye eklemeyi unutmak,
-      // kalite bekçisini o kaynak için sessizce kapatmaktır") ve banka
-      // 2026-08-18'de eklenirken unutulmuştu. Altı gün açık kaldı.
+      // 2026-09-02: oyuncuya yüklenmez (runtime karantina) ama dosya
+      // durduğu sürece kalite taraması kör kalmasın diye burada kalır.
       'deepseek': fromJson('assets/data/deepseek_2026_08_18_questions.json'),
       // A9 dersi uygulandı: banka aynı commit'te kalite bekçilerine de
       // bağlanıyor. Deepseek altı gün bağlanmadan kalmıştı.
@@ -114,10 +113,9 @@ void main() {
         // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
         ...fromJson('assets/data/visual_2026_08_07_questions.json'),
         ...fromJson('assets/data/restore_2026_08_07_questions.json'),
-        // 2026-08-18: DeepSeek boru hattıyla eklenen 1298 iki dilli soru.
-        ...fromJson('assets/data/deepseek_2026_08_18_questions.json'),
-        // 2026-08-19'da elden geçmiş ama çapraz kontrol yapılamadığı için
-        // beklemede kalan 77 soru; bekleme sebebi 2026-08-24'te kalktı.
+        // 2026-09-02: DeepSeek runtime'da yok; kalite taraması
+        // `banks['deepseek']` üzerinden dosyayı okumaya devam eder.
+        // 2026-08-19 genişletmesi (77 soru; A17 ile oynanabilir).
         ...fromJson('assets/data/expansion_2026_08_19_questions.json'),
       ];
 

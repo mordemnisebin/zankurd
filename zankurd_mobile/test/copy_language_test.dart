@@ -122,9 +122,9 @@ void main() {
       'Bi hevalan re pêşbirkê bike',
     );
     expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), contains('ode an kûpa'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('9 kategoriyan'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('10 kategoriyan'));
     expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('zêr didin'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('9 kategori'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('10 kategori'));
   });
 
   test('premium metni yalnız gerçekten verilen faydaları vaat eder', () {

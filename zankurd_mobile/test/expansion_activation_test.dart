@@ -64,7 +64,8 @@ void main() {
 
       // 2026-08-24: expansion_2026_08_19 bankası eklendi (77 soru).
       // 2026-08-26 A17: künye aldı, `approved`, oynanabilir.
-      3042,
+      // 2026-09-02: DeepSeek runtime karantinası, 3042 → 1932.
+      1932,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

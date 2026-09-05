@@ -45,7 +45,9 @@ void main() {
     // Üretilmiş sorular `ds_` önekiyle ayrılır; elle yazılmış editoryal
     // içerik bu kuralın dışındadır (onların denetimi insan incelemesidir).
     final generated = <Map<String, dynamic>>[];
-    for (final asset in questionBankAssets) {
+    const extraScan = ['assets/data/deepseek_2026_08_18_questions.json'];
+    final scan = {...questionBankAssets, ...extraScan};
+    for (final asset in scan) {
       final file = File(asset);
       if (!file.existsSync()) continue;
       for (final raw in jsonDecode(file.readAsStringSync()) as List) {

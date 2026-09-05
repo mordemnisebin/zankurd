@@ -37,7 +37,10 @@ void main() {
     // asset sessizce boş döner ve yalnız curated banka yüklenir. Test
     // ortamında gerçek bankalar `allQuestions` tetiklediğinde senkron
     // dosya okumayla gelir (bkz. question_bank_loader_io.dart).
-    expect(QuestionBankLoader.instance.allQuestions.length, greaterThan(2000));
+    // 2026-09-02 karantina: DeepSeek dalgası (~1110 kayıt) runtime
+    // listesinden çıkarıldı, toplam 1887'ye indi. Eşik kör bekçiyi
+    // engelleyecek kadar yüksek, karantinayı delmeyecek kadar düşük.
+    expect(QuestionBankLoader.instance.allQuestions.length, greaterThan(1000));
   });
 
   test(

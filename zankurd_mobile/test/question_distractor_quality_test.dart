@@ -187,9 +187,12 @@ void main() {
     // dokuz dosya daha eklendi ve kural kapsamı sessizce dar kaldı —
     // yeni bankalarda tür uyumsuz çeldirici eklemek serbestti (A12).
     final everyBank = loadEveryBankFromJson();
+    // 2026-09-02 karantina: DeepSeek dalgası (~1110 kayıt) runtime
+    // listesinden çıkarıldı, toplam 1887'ye indi. Eşik kör bekçiyi
+    // engelleyecek kadar yüksek, karantinayı delmeyecek kadar düşük.
     expect(
       everyBank.length,
-      greaterThan(2000),
+      greaterThan(1000),
       reason: 'Bekçi kör kalmasın: bankalar yüklenemediyse ihlal 0 çıkar.',
     );
     final offenders = <String>[];

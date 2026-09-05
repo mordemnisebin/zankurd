@@ -56,27 +56,11 @@ const questionBankAssets = <String>[
   // metelok, hewran, Şerefname, Rojnameya Kurdistan, Çiyayê Cûdî, Deşta
   // Amedê. Terim tanımları bankanın kendi onaylı açıklamalarıyla birebir.
   'assets/data/restore_2026_08_07_questions.json',
-  // 2026-08-18: DeepSeek ile üretilip iki aşamalı elemeden geçen 1299 soru.
-  // Üretim `tool/content_authoring/` altındaki boru hattıyla yapıldı; her
-  // satır önce yapısal denetimden (şık, açıklama, kaynak adresinin canlılığı,
-  // doğru cevabın konum dengesi) sonra projenin kendi kalite kapısından
-  // (`promote_question_bank.dart`) geçti. Türkçe ikizler ayrı bir çeviri
-  // aşamasında üretildi; iki dil eksiksiz olmayan kayıt hiç yazılmadı.
-  //
-  // Bilinen sınır: olgusal doğruluk örneklemle ölçüldü (~%5-8 hata) ve
-  // hatalar az kaynaklı alanlarda kümeleniyor. Doğrulanmış dört yanlış
-  // (Bedirxan'ın doğum yeri, Beşikçi, Zap-Kerkük, Şakiro) ayıklandı.
-  'assets/data/deepseek_2026_08_18_questions.json',
-  // 2026-08-19'da elden geçmiş ama çapraz kontrol yapılamadığı için
-  // bankaya alınmamış 77 soru (Cografya 41, Çand 29, Edebiyat 7). Hepsi
-  // zorluk 4-5; tam da o üç kategorinin zorluk açığının olduğu yer.
-  //
-  // Bekleme sebebi ortadan kalktı: çapraz kontrol artık DeepSeek'e değil
-  // koşunun kendisine dayanıyor (bkz. `tool/content_authoring/
-  // kor_parti_uret.py`). Kayıtlar kör kontrol kuyruğuna girdi.
-  //
-  // Alınmadan önce üç Hawar ihlali düzeltildi: Grönland -> Gronland,
-  // Föhn -> Foehn, ve Kurmancî gövdeye sızmış bir Türkçe parantez
-  // ("toz şeytanı") kaldırıldı — Türkçe karşılık zaten `promptTr`de.
+  // 2026-08-18 DeepSeek dalgası (~1110 kayıt) dosya olarak durur ama
+  // runtime listesinde YOKTUR: olgusal doğruluk örneklemle ~%5–8 hata
+  // verdi. Oyuncuya yanlış olgu öğretmek, sayıyı şişirmekten pahalıdır
+  // (2026-09-02 karantina). Yeniden almak için insan incelemesi + bu
+  // listeye bilinçli ekleme gerekir. Cevap anahtarı bekçisi dosyayı
+  // yine tarar.
   'assets/data/expansion_2026_08_19_questions.json',
 ];
