@@ -46,6 +46,7 @@ import '../widgets/roj_mascot.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';
 import 'quiz/quiz_option_tile.dart';
@@ -1515,7 +1516,7 @@ class _QuizScreenState extends State<QuizScreen>
     }
     if (_questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: zkAppBar(context),
         body: Container(
           decoration: BoxDecoration(
             gradient: AppTheme.backgroundGradient(context),
@@ -1557,7 +1558,8 @@ class _QuizScreenState extends State<QuizScreen>
         child: Builder(
           builder: (context) => Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: AppBar(
+            appBar: zkAppBar(
+              context,
               // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
               //
               // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
@@ -1603,7 +1605,6 @@ class _QuizScreenState extends State<QuizScreen>
                   child: QuizTutorialOverlay(
                     isKu: _isKu,
                     timerKey: _timerTargetKey,
-                    answerAreaKey: _answerAreaKey,
                     comboKey: _comboKey,
                     wildcardKey: _wildcardKey,
                     nextButtonKey: _nextButtonKey,

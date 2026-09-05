@@ -118,7 +118,7 @@ extension _QuizScreenUI on _QuizScreenState {
                                       context,
                                       layoutSize: layoutSize,
                                       showExplanation: showExpl,
-                                      timerKey: index == 0
+                                      timerKey: index == 0 && _usesTimer
                                           ? _timerTargetKey
                                           : null,
                                       answerAreaKey: index == 0
@@ -209,7 +209,9 @@ extension _QuizScreenUI on _QuizScreenState {
                           context,
                           layoutSize: layoutSize,
                           showExplanation: showExpl,
-                          timerKey: index == 0 ? _timerTargetKey : null,
+                          timerKey: index == 0 && _usesTimer
+                              ? _timerTargetKey
+                              : null,
                           answerAreaKey: index == 0 ? _answerAreaKey : null,
                           correctAnswerKey: _correctAnswerKey,
                           questionVisualReady: !_questionVisualReady
@@ -370,7 +372,7 @@ extension _QuizScreenUI on _QuizScreenState {
         ? RojMood.celebrate
         : RojMood.sad;
     final size = mood == RojMood.thinking ? 44.0 : 56.0;
-    return AnimatedSwitcher(
+    final mascot = AnimatedSwitcher(
       duration: const Duration(milliseconds: 220),
       transitionBuilder: (child, animation) =>
           ScaleTransition(scale: animation, child: child),
@@ -380,6 +382,10 @@ extension _QuizScreenUI on _QuizScreenState {
         mood: mood,
       ),
     );
+    if (!_usesTimer && index == 0) {
+      return KeyedSubtree(key: _timerTargetKey, child: mascot);
+    }
+    return mascot;
   }
 
   Widget _buildQuestionSwitcher(
@@ -1300,7 +1306,8 @@ extension _QuizScreenUI on _QuizScreenState {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar: zkAppBar(
+          context,
           automaticallyImplyLeading: false,
           title: Text(context.t(K.resultTitle)),
         ),
