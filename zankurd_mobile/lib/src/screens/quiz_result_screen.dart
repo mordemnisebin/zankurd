@@ -768,6 +768,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       totalQuestions: totalQuestions,
       xpEarned: earnedXP,
     );
+    // Huni: ilk 1v1 tamamlama Firebase'de ilk-oluşumla bölümlenir.
+    // Oda kimliği boşsa solo turdur, işaretlenmez.
+    if ((widget.room.id?.trim() ?? '').isNotEmpty) {
+      AnalyticsService.instance.logActivationStep('online_match_completed');
+    }
     if (newAchievements.any(
       (achievement) => achievement.id == AchievementIds.firstGame,
     )) {
