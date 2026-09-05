@@ -98,7 +98,9 @@ class KilimBoard extends StatelessWidget {
 
   String _semanticsLabel(BuildContext context) {
     final correct = results.where((result) => result).length;
-    return '$total sorudan ${results.length} cevaplandı, $correct doğru';
+    // Ekran-okuyucu etiketi de arayüz diliyle aynı olur: Kurmancî
+    // kipte Türkçe cümle, görme engelli kullanıcıya dil değiştirtiyordu.
+    return 'Ji $total pirsan ${results.length} hatin bersivandin, $correct rast';
   }
 }
 

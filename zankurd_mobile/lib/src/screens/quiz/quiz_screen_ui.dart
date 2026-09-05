@@ -1073,7 +1073,7 @@ extension _QuizScreenUI on _QuizScreenState {
     // Düşülenler: kartın alt/üst iç dolgusu, üstteki kategori/tip/sayaç
     // satırı ve onun altındaki boşluk. Kategori satırı 34pt'lik rozet
     // etrafında kurulu; 40 onu çiplerle birlikte kapsayan ölçüdür.
-    final cardPadding = (isCompact ? 10.0 : 16.0) * 2;
+    final cardPadding = (isCompact ? 8.0 : 16.0) * 2;
     final headerBlock = 40.0 + (isCompact ? 8.0 : 14.0);
     final double? contentBudget = minHeight == null
         ? null
@@ -1101,7 +1101,7 @@ extension _QuizScreenUI on _QuizScreenState {
       constraints: minHeight == null
           ? null
           : BoxConstraints(minHeight: minHeight),
-      padding: EdgeInsets.all(isCompact ? 10 : 16),
+      padding: EdgeInsets.all(isCompact ? 8 : 16),
       decoration: BoxDecoration(
         color: Color.alphaBlend(
           catColor.withValues(alpha: 0.07),

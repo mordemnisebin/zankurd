@@ -86,7 +86,10 @@ class QuizOptionTile extends StatelessWidget {
   /// için kaydırmak zorunda kalıyordu. Cevap öncesi kalan boşluk kusur
   /// değil, o panelin yeri.
   double _verticalPadding(BuildContext context) {
-    if (isCompact) return AppSpacing.xs;
+    // SE (667pt) gibi kısa ekranlarda dört uzun şık + soru kartı sığmıyor,
+    // D şıkkı kesik kalıyordu (2026-09-05, canlı gezinti: kesik karta iki
+    // dokunuş boşa gitti). Bir kademe daraltma ~32pt kazandırır.
+    if (isCompact) return AppSpacing.xxs;
     final height = MediaQuery.sizeOf(context).height;
     final roomy = optionCount <= 2;
     if (height >= 850) return roomy ? AppSpacing.xl + 12 : AppSpacing.lg;

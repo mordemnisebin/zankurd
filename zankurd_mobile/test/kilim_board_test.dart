@@ -94,6 +94,9 @@ void main() {
       ),
     );
 
-    expect(find.bySemanticsLabel('5 sorudan 3 cevaplandı, 2 doğru'), findsOne);
+    expect(
+      find.bySemanticsLabel('Ji 5 pirsan 3 hatin bersivandin, 2 rast'),
+      findsOne,
+    );
   });
 }
