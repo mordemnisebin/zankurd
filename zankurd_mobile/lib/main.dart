@@ -271,7 +271,7 @@ Future<void> main() async {
       startInBackground(premiumService.warmUp(), 'premium warmUp');
       if (analyticsConsentProvider.enabled) {
         startInBackground(
-          AnalyticsService.instance.initialize(),
+          AnalyticsService.instance.initialize(enabled: true),
           'analytics init',
         );
       }

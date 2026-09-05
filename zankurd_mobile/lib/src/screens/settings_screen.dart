@@ -166,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _setAnalyticsConsent(bool enabled) async {
     await context.read<AnalyticsConsentProvider>().setEnabled(enabled);
     if (enabled) {
-      await AnalyticsService.instance.initialize();
+      await AnalyticsService.instance.initialize(enabled: true);
     } else {
       await AnalyticsService.instance.disable();
     }
@@ -1608,8 +1608,8 @@ class _ExpandableSection extends StatelessWidget {
 
 /// Ayarlar > Seslendirme (TTS) bölümü. TtsService'i yükler; aç/kapa,
 /// konuşma hızı ve ses seviyesi kontrollerini gösterir. Cihazda Kürtçe
-/// seslendirme desteklenmiyorsa bir bilgi notu gösterir (kontroller yine
-/// çalışır; yedek dil sesi kullanılabilir).
+/// seslendirme desteklenmiyorsa durum açıkça gösterilir ve etkisiz ayarlar
+/// kapatılır.
 class _TtsSettingsSection extends StatefulWidget {
   const _TtsSettingsSection();
 
@@ -1665,6 +1665,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
     }
 
     final enabled = tts.isEnabled;
+    final canSpeak = tts.isKurdishAvailable;
     return AppPanel(
       padding: EdgeInsets.zero,
       child: Column(
@@ -1675,11 +1676,13 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
             title: context.t(K.ttsEnable),
             subtitle: context.t(K.ttsEnableSub),
             trailing: Switch(
-              value: enabled,
-              onChanged: (v) async {
-                await tts.setEnabled(v);
-                if (mounted) setState(() {});
-              },
+              value: enabled && canSpeak,
+              onChanged: canSpeak
+                  ? (v) async {
+                      await tts.setEnabled(v);
+                      if (mounted) setState(() {});
+                    }
+                  : null,
             ),
           ),
           if (!tts.isKurdishAvailable)
@@ -1710,7 +1713,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
                 ],
               ),
             ),
-          if (enabled) ...[
+          if (enabled && canSpeak) ...[
             Divider(
               height: 1,
               indent: 56,

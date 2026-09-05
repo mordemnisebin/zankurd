@@ -25,6 +25,7 @@ import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
 import '../models/learning_goal.dart';
 import '../services/premium_service.dart';
+import '../services/daily_question_selector.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
 import '../data/level_progress_store.dart';
@@ -448,7 +449,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
-          if (_learningGoalLoaded && _learningGoal == null) ...[
+          if (!_firstSession &&
+              _learningGoalLoaded &&
+              _learningGoal == null) ...[
             LearningGoalChooser(
               key: const ValueKey('home-learning-goal-chooser'),
               isKu: ku,
@@ -475,6 +478,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onBrowse: _openCategories,
             ),
           ),
+          // `ContinueSection` yalnız gerçekten başlanmış kategorileri
+          // listeler; ilerleme yoksa çizilmez. Keşif ikinci kapı değil,
+          // ders yolunun içindeki "Tüm konular"dır.
+          const SizedBox(height: AppSpacing.xs),
+          ContinueSection(
+            isKu: ku,
+            entries: _categoryProgress,
+            onOpenCategory: _openCategory,
+          ),
         ],
       ),
     );
@@ -497,15 +509,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               subtitle: context.t(K.homeQuickDuelSub),
               onTap: () => widget.onOpenPlay?.call(),
             ),
-          ),
-          // `ContinueSection` yalnız gerçekten başlanmış kategorileri
-          // listeler; ilerleme yoksa çizilmez. Keşif ikinci kapı değil,
-          // ders yolunun içindeki "Tüm konular"dır.
-          const SizedBox(height: AppSpacing.xs),
-          ContinueSection(
-            isKu: ku,
-            entries: _categoryProgress,
-            onOpenCategory: _openCategory,
           ),
           const SizedBox(height: AppSpacing.md),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
@@ -576,7 +579,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               AppSpacing.lg,
             ),
             sliver: SliverToBoxAdapter(
-              child: isWide
+              child: _firstSession
+                  ? primary
+                  : isWide
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1073,15 +1078,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// "Dersê rojane" kartı: karışık kategorili 10 soruluk günlük solo quiz.
+  /// "Dersê rojane" kartı: hedefe göre önceliklendirilmiş günlük solo quiz.
   /// (Kart 10 soru vaat eder; ders ağacına değil gerçek quize gider.)
   Future<void> _startDailyQuiz() async {
     if (_roomActionLoading) return;
     setState(() => _roomActionLoading = true);
     try {
       final firstSession = _firstSession;
-      final questions = await repo.loadDailyQuestions(
-        limit: firstSession ? 5 : 10,
+      // Ana ekran ilk çizildiğinde ilerleme ve hedef yüklemesi hâlâ sürüyor
+      // olabilir. Kullanıcı CTA'ya hemen dokunursa kalıcı hedefi yine de
+      // okuyup bu turun seçiminde kullan.
+      final goal = _learningGoalLoaded
+          ? _learningGoal
+          : (await LearningGoalStore.load()).goal;
+      final questionLimit = firstSession ? 5 : 10;
+      // Hedef seçilmişse, öncelikli kategorilerden seçim yapabilmek için
+      // günlük depodan daha geniş bir aday havuzu isteriz. Quiz yine 5/10
+      // soruda kalır; havuz küçükse saf seçici kalan sorularla doldurur.
+      final candidateLimit = goal == null ? questionLimit : questionLimit * 3;
+      final candidates = await repo.loadDailyQuestions(limit: candidateLimit);
+      final questions = selectDailyQuestionsForGoal(
+        candidates: candidates,
+        goal: goal,
+        limit: questionLimit,
       );
       if (!mounted) return;
       if (questions.isEmpty) {

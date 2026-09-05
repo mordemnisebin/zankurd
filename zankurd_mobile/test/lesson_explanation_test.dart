@@ -105,6 +105,25 @@ void main() {
     expect(find.text('Doğru cevap'), findsNothing);
   });
 
+  testWidgets('öğrenme modunda açıklama cevap ekranından açılabilir', (
+    tester,
+  ) async {
+    await pumpQuiz(tester, MockZanKurdRepository());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('ekmek'));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+    final explanationAction = find.byKey(
+      const ValueKey('quiz-view-explanation'),
+    );
+    expect(explanationAction, findsOneWidget);
+
+    await tester.tap(explanationAction);
+    await tester.pumpAndSettle();
+    expect(find.text('Açıklama'), findsOneWidget);
+    expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);
+  });
+
   testWidgets('açıklaması olmayan soruda da doğru cevap gösterilir', (
     tester,
   ) async {
@@ -191,6 +210,43 @@ void main() {
     expect(find.text('Turun açıklamaları'), findsOneWidget);
     expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);
     expect(find.text('«nan» Türkçede «ekmek» demektir.'), findsOneWidget);
+  });
+
+  testWidgets('öğrenme sonucu yarış başlığı kullanmaz', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final repository = MockZanKurdRepository();
+
+    await tester.pumpWidget(
+      testShell(
+        child: QuizResultScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          score: 100,
+          correctCount: 1,
+          wrongCount: 0,
+          totalQuestions: 1,
+          bestStreak: 1,
+          coinsAwarded: 0,
+          isLearningExperience: true,
+          answerRecords: const [
+            AnswerRecord(
+              id: 'learning-result-1',
+              category: 'Ziman',
+              prompt: 'Peyva «av» çi ye?',
+              answers: ['su', 'nan'],
+              correctAnswer: 'su',
+              selectedAnswer: 'su',
+              explanation: '«av» su ye.',
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Öğrenme tamamlandı'), findsOneWidget);
+    expect(find.text('Yarış tamamlandı'), findsNothing);
   });
 
   testWidgets('kelime sıralamada doğru cevap kutusu KALIR', (tester) async {

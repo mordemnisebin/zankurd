@@ -1,0 +1,10 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "time": 1788649992350,
+  "trace": "9206f68a6336441c895466be029625cc",
+  "data": {
+    "text": "**Visual Quality Review — Result: No concrete issues found**\n\n- No text overflow or clipping detected: all labels (\"PÊŞBÎRK QEDİYA\", \"196\", \"Zîman - %20 rastbûn\", stat pills, button text) fit within their containers.\n- No overlapping elements; the stars over the dark badge and pills on the purple card are intentional layering, not collisions.\n- Contrast is adequate throughout: white text on the purple gradient, dark text on the mint and white cards, and gray secondary text remain readable.\n- The low-opacity flag shape in the top-right of the purple card is a decorative watermark, not a legibility problem.\n- The partially visible card at the bottom (\"Zincîra rojane\") is scrollable content and was not counted as an error.\n\n**Conclusion:** The screen appears visually clean with no visible layout, clipping, or contrast defects.",
+    "tokens": 1699
+  }
+}

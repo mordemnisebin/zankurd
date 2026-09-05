@@ -116,6 +116,13 @@ void main() {
 
     expect(main, contains('if (analyticsConsentProvider.enabled)'));
     expect(settings, contains('analytics-consent-switch'));
-    expect(settings, contains('AnalyticsService.instance.initialize()'));
+    expect(
+      settings,
+      contains('AnalyticsService.instance.initialize(enabled: true)'),
+    );
+    expect(
+      main,
+      contains('AnalyticsService.instance.initialize(enabled: true)'),
+    );
   });
 }

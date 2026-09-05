@@ -53,7 +53,7 @@ void main() {
     final beforeRunApp = mainSource.substring(0, mainSource.indexOf('runApp('));
     for (final deferred in [
       'premiumService.warmUp()',
-      'AnalyticsService.instance.initialize()',
+      'AnalyticsService.instance.initialize(enabled: true)',
       'NotificationService.load()',
     ]) {
       expect(
@@ -66,7 +66,9 @@ void main() {
     expect(beforeRunApp, isNot(contains('await NotificationService.load()')));
     expect(
       beforeRunApp,
-      isNot(contains('await AnalyticsService.instance.initialize()')),
+      isNot(
+        contains('await AnalyticsService.instance.initialize(enabled: true)'),
+      ),
     );
     expect(mainSource, contains('startInBackground'));
   });

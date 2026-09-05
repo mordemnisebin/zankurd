@@ -1,0 +1,10 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "time": 1788649959057,
+  "trace": "1249a4a4361044bd8449752cb8bf2c18",
+  "data": {
+    "text": "**Visual Quality Review — Result: No critical defects found**\n\nConcrete issues detected:\n\n- **Minor: Icon/greeting mismatch** — The header shows a sun icon paired with \"İyi Geceler, Rojda!\" (Good evening). A moon icon would be semantically consistent; this is a visible inconsistency, though not overflow/clipping/contrast.\n\nChecked and found **no issues**:\n- No text overflow or clipping anywhere (labels, buttons, chips all fit their containers).\n- No overlapping elements (sidebar icons, top bar chips, path nodes 1–5, and the \"Tüm konular\" link are all cleanly separated).\n- Contrast is readable throughout: white text on dark green and orange cards is sufficient; inactive sidebar labels (Yarış, Liderlik, Profil) use standard muted styling but remain legible.\n\nOverall: the screen renders cleanly with only the sun icon vs. evening greeting as a minor visual-content inconsistency.",
+    "tokens": 3508
+  }
+}

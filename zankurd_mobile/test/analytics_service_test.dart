@@ -40,5 +40,20 @@ void main() {
     test('logThemeChange hatasız çalışır', () async {
       await AnalyticsService.instance.logThemeChange('dark');
     });
+
+    test('logMatchmakingWait hassas veri olmadan hatasız çalışır', () async {
+      await AnalyticsService.instance.logMatchmakingWait(
+        outcome: 'human',
+        waitSeconds: 12,
+      );
+    });
+
+    test('premium hunisi olayları hatasız çalışır', () async {
+      await AnalyticsService.instance.logPurchaseOutcome(
+        packageId: 'monthly',
+        outcome: 'success',
+      );
+      await AnalyticsService.instance.logRestoreOutcome('nothingFound');
+    });
   });
 }

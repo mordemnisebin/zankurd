@@ -19,6 +19,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
+import '../services/matchmaking_metrics.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_state.dart';
 import '../widgets/zk_back_button.dart';
@@ -59,9 +60,10 @@ Player? selectOpponentPlayer(
 }
 
 class MatchmakingScreen extends StatefulWidget {
-  const MatchmakingScreen({required this.repository, super.key});
+  const MatchmakingScreen({required this.repository, this.metrics, super.key});
 
   final ZanKurdRepository repository;
+  final MatchmakingMetrics? metrics;
 
   @override
   State<MatchmakingScreen> createState() => _MatchmakingScreenState();
@@ -145,10 +147,23 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   StreamSubscription? _matchmakingSub;
   Timer? _statusTimer;
   int _secondsElapsed = 0;
+  final Stopwatch _matchmakingClock = Stopwatch()..start();
+  late final MatchmakingMetrics _matchmakingMetrics;
 
   @override
   void initState() {
     super.initState();
+    _matchmakingMetrics =
+        widget.metrics ??
+        MatchmakingMetrics(
+          elapsed: () => _matchmakingClock.elapsed,
+          record: (parameters) {
+            AnalyticsService.instance.logMatchmakingWait(
+              outcome: parameters['outcome']! as String,
+              waitSeconds: parameters['wait_seconds']! as int,
+            );
+          },
+        );
     _radarController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 4),
@@ -227,8 +242,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final result = await repository.cancelMatchmaking();
       final roomId = _matchedRoomId(result);
       if (roomId != null) {
+        // Ekran kapanırken eşleşme cevabı geç geldiyse bekleme sonucu
+        // iptal değil, gerçek rakip eşleşmesidir.
+        _matchmakingMetrics.finish(MatchmakingOutcome.human);
         await repository.leaveOnlineRoom(_roomReference(roomId));
         joinTimedOut = false;
+      } else {
+        _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_dispose_cancel');
@@ -250,6 +270,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // şey yapmaz; çıkışı hemen ver, temizliği arka planda en iyi çaba
     // olarak sürdür.
     if (_cancelFailed) {
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       _matchmakingSub?.cancel();
       _matchmakingSub = null;
       _statusTimer?.cancel();
@@ -303,11 +324,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final result = await repository.cancelMatchmaking();
       final matchedRoomId = _matchedRoomId(result);
       if (matchedRoomId != null) {
+        _matchmakingMetrics.finish(MatchmakingOutcome.human);
         await repository.leaveOnlineRoom(_roomReference(matchedRoomId));
         joinTimedOut = false;
+      } else {
+        _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_cancel_and_pop');
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       _cancelFailed = true;
       if (mounted) {
         setState(() {
@@ -447,6 +472,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // sonra başlatılan aramada iptal hâlâ "ateşle-unut" kalır ve hayalet
     // kuyruğa karşı koruma sessizce kaybolurdu.
     _cancelFailed = false;
+    _matchmakingMetrics.start();
     AnalyticsService.instance.logActivationStep('matchmaking_started');
     // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
     // boşluğun ötesine taşınmasın diye burada, senkron olarak çözülür.
@@ -487,7 +513,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         // C-2: null-safe cast — Supabase schema hatası veya edge-case'de
         // String? null dönebilir; null ise navigasyon iptal edilir.
         final roomId = matchRes['room_id'] as String?;
-        if (roomId == null) return; // beklenmedik schema yanıtı
+        if (roomId == null) {
+          _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
+          return; // beklenmedik schema yanıtı
+        }
         final matchedRoom = await _loadMatchedRoom(roomId);
         if (!_isAttemptActive(attempt)) return;
         final opponent = selectOpponentPlayer(
@@ -525,7 +554,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             // C-2: null-safe cast — subscription yanıtı beklenmedik türde
             // olursa crash yerine sessizce çıkar.
             final roomId = entry['room_id'] as String?;
-            if (roomId == null) return;
+            if (roomId == null) {
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
+              return;
+            }
             try {
               // Fetch opponent display name
               String matchedName = opponentPlaceholder;
@@ -594,6 +626,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 stack,
                 reason: 'matchmaking_timeout_cancel',
               );
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               if (mounted) {
                 setState(() {
                   _found = false;
@@ -621,6 +654,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 stack,
                 reason: 'matchmaking_timeout_matched_room',
               );
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               if (mounted) {
                 setState(() {
                   _found = false;
@@ -657,6 +691,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 opponentLevel: botLevel,
               );
             } else {
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               _isCancelled = true;
               Navigator.of(context).pop();
             }
@@ -681,6 +716,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_start');
       if (!_isAttemptActive(attempt)) return;
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       _matchmakingSub?.cancel();
       _statusTimer?.cancel();
       setState(() {
@@ -820,6 +856,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     int? opponentLevel,
   }) async {
     if (!_isAttemptActive(attempt)) return;
+    _matchmakingMetrics.finish(
+      matchedRoom == null ? MatchmakingOutcome.bot : MatchmakingOutcome.human,
+    );
     AnalyticsService.instance.logActivationStep('matchmaking_matched');
     setState(() {
       _found = true;

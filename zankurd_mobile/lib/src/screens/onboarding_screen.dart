@@ -7,7 +7,6 @@ import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/kilim_reveal.dart';
-import '../widgets/roj_mascot.dart';
 import '../widgets/styled_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -245,42 +244,44 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         SizedBox(
                           height: compact ? AppSpacing.xs : AppSpacing.xs,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (var i = 0; i < pages.length; i++)
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 240),
-                                curve: Curves.easeInOut,
-                                width: i == _page ? 28 : 8,
-                                height: 8,
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: AppSpacing.xxs,
+                        if (pages.length > 1)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              for (var i = 0; i < pages.length; i++)
+                                AnimatedContainer(
+                                  duration: const Duration(milliseconds: 240),
+                                  curve: Curves.easeInOut,
+                                  width: i == _page ? 28 : 8,
+                                  height: 8,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.xxs,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    gradient: i == _page
+                                        ? AppTheme.accentGradient
+                                        : null,
+                                    color: i == _page
+                                        ? null
+                                        : AppTheme.borderColor(
+                                            context,
+                                          ).withValues(alpha: 0.6),
+                                    borderRadius: BorderRadius.circular(99),
+                                    boxShadow: i == _page
+                                        ? [
+                                            BoxShadow(
+                                              color: AppTheme
+                                                  .primaryGradientStart
+                                                  .withValues(alpha: 0.25),
+                                              blurRadius: 8,
+                                              offset: const Offset(0, 2),
+                                            ),
+                                          ]
+                                        : null,
+                                  ),
                                 ),
-                                decoration: BoxDecoration(
-                                  gradient: i == _page
-                                      ? AppTheme.accentGradient
-                                      : null,
-                                  color: i == _page
-                                      ? null
-                                      : AppTheme.borderColor(
-                                          context,
-                                        ).withValues(alpha: 0.6),
-                                  borderRadius: BorderRadius.circular(99),
-                                  boxShadow: i == _page
-                                      ? [
-                                          BoxShadow(
-                                            color: AppTheme.primaryGradientStart
-                                                .withValues(alpha: 0.25),
-                                            blurRadius: 8,
-                                            offset: const Offset(0, 2),
-                                          ),
-                                        ]
-                                      : null,
-                                ),
-                              ),
-                          ],
-                        ),
+                            ],
+                          ),
                         SizedBox(height: compact ? 8 : 10),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: buttonMaxWidth),
@@ -341,14 +342,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           context.t(K.onbCategoriesBullet, {'count': '$categoryCount'}),
           context.t(K.onbDailyBullet),
         ],
-      ),
-      _OnboardingData(
-        showMascotAccent: true,
-        icon: AppIcons.trophy,
-        color: AppTheme.playCyan,
-        title: context.t(K.onbCompeteTitle),
-        body: context.t(K.onbCompeteBody),
-        bullets: [context.t(K.onbDuelBullet), context.t(K.onbRewardBullet)],
       ),
     ];
   }
@@ -447,7 +440,6 @@ class _OnboardingData {
     required this.title,
     required this.body,
     this.bullets = const [],
-    this.showMascotAccent = false,
   });
 
   final IconData icon;
@@ -455,7 +447,6 @@ class _OnboardingData {
   final String title;
   final String body;
   final List<String> bullets;
-  final bool showMascotAccent;
 }
 
 class _OnboardingPage extends StatelessWidget {
@@ -529,13 +520,6 @@ class _OnboardingPage extends StatelessWidget {
                       iconSize: heroGlyphSize,
                     ),
                   ),
-                  // 2026-07-22 canlı UX denetimi: Roj maskot onboarding'e eklendi
-                  if (data.showMascotAccent)
-                    const Positioned(
-                      bottom: 12,
-                      left: 12,
-                      child: RojMascot(size: 40, mood: RojMood.celebrate),
-                    ),
                 ],
               ),
             ),

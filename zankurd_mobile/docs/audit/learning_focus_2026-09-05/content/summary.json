@@ -1,0 +1,30 @@
+{
+  "manifestVersion": 1,
+  "sourceCount": 12,
+  "unknownSourceCount": 0,
+  "missingProductionSourceCount": 0,
+  "reportPhysicalRecords": 3042,
+  "reportParsedRecords": 3000,
+  "reportCanonicalUniqueRecords": 3000,
+  "gatePhysicalRecords": 3042,
+  "gateParsedRecords": 3000,
+  "gateCanonicalUniqueRecords": 3000,
+  "crossSourceCopyGroups": 0,
+  "crossSourceDivergences": 0,
+  "severity": {
+    "blocker": 0,
+    "critical": 0,
+    "warning": 1846,
+    "info": 0
+  },
+  "gateSeverity": {
+    "blocker": 0,
+    "critical": 0,
+    "warning": 1846,
+    "info": 0
+  },
+  "checks": {
+    "missing_source_metadata": 1378,
+    "near_duplicate_candidate": 468
+  }
+}

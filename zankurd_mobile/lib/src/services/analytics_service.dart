@@ -10,8 +10,15 @@ class AnalyticsService {
 
   FirebaseAnalytics? _analytics;
 
-  /// Uygulama başlatıldığında çağrılır.
-  Future<void> initialize() async {
+  /// Uygulama başlatıldığında, yalnız açık rıza varsa çağrılır.
+  ///
+  /// `enabled` varsayılan olarak kapalıdır. Böylece bu servis yanlışlıkla
+  /// veya bir testten doğrudan çağrılsa bile ölçüm toplamaya başlamaz.
+  Future<void> initialize({bool enabled = false}) async {
+    if (!enabled) {
+      await disable();
+      return;
+    }
     if (_analytics != null) return;
     if (kIsWeb ||
         defaultTargetPlatform == TargetPlatform.android ||
@@ -82,12 +89,37 @@ class AnalyticsService {
   Future<void> logThemeChange(String theme) =>
       logEvent('theme_change', {'theme': theme});
 
+  /// Eşleştirme bekleme süresini anonim olarak kaydeder.
+  ///
+  /// Oda kodu, oyuncu adı, kullanıcı kimliği veya kategori gönderilmez;
+  /// yalnızca akış sonucu ve bekleme süresi tutulur.
+  Future<void> logMatchmakingWait({
+    required String outcome,
+    required int waitSeconds,
+  }) => logEvent('matchmaking_wait', {
+    'outcome': outcome,
+    'wait_seconds': waitSeconds,
+  });
+
   /// Paywall görüntülenme olayı.
   Future<void> logPaywallView() => logEvent('paywall_view');
 
   /// Başarılı satın alma olayı.
   Future<void> logPurchaseSuccess(String packageId) =>
       logEvent('purchase_success', {'package_id': packageId});
+
+  /// Paywall'da seçilen paket ve sonucun anonim hunisi.
+  Future<void> logPurchaseOutcome({
+    required String packageId,
+    required String outcome,
+  }) => logEvent('purchase_outcome', {
+    'package_id': packageId,
+    'outcome': outcome,
+  });
+
+  /// Geri yükleme akışının sonucu.
+  Future<void> logRestoreOutcome(String outcome) =>
+      logEvent('restore_outcome', {'outcome': outcome});
 
   /// Oturum açma olayı.
   Future<void> logSignIn(String method) =>

@@ -23,17 +23,99 @@ AnswerRecord _record(String id, String category, {required bool correct}) =>
       explanation: 'Şirove',
     );
 
-Widget _wrap(Widget child, {String language = 'tr'}) =>
-    ChangeNotifierProvider<LanguageProvider>(
-      create: (_) => LanguageProvider()..setLang(language),
-      child: MaterialApp(
-        theme: AppTheme.light(),
-        home: Scaffold(body: child),
-      ),
-    );
+Widget _wrap(
+  Widget child, {
+  String language = 'tr',
+  bool dark = false,
+  double textScale = 1,
+}) => ChangeNotifierProvider<LanguageProvider>(
+  create: (_) => LanguageProvider()..setLang(language),
+  child: MaterialApp(
+    theme: dark ? AppTheme.dark() : AppTheme.light(),
+    builder: (context, child) => MediaQuery(
+      data: MediaQuery.of(
+        context,
+      ).copyWith(textScaler: TextScaler.linear(textScale)),
+      child: child!,
+    ),
+    home: Scaffold(body: child),
+  ),
+);
 
 void main() {
+  testWidgets('tek doğru cevapta özet yanlış cevap varmış gibi yönlendirmez', (
+    tester,
+  ) async {
+    final outcome = LearningOutcome.fromRecords([
+      _record('1', 'Ziman', correct: true),
+    ]);
+    await tester.pumpWidget(
+      _wrap(LearningOutcomeCard(outcome: outcome, onReview: null)),
+    );
+    expect(find.text('1 cevap · 1 doğru · 0 yanlış'), findsOneWidget);
+    expect(find.textContaining('Yanlışlarına bakıp'), findsNothing);
+    expect(find.byKey(const ValueKey('learning-outcome-review')), findsNothing);
+  });
+
+  testWidgets('cevapsız sorular doğru yanlış özetinden ayrı gösterilir', (
+    tester,
+  ) async {
+    final outcome = LearningOutcome.fromRecords([
+      _record('1', '', correct: true),
+      const AnswerRecord(
+        id: '2',
+        category: 'Ziman',
+        prompt: 'Pirs',
+        answers: ['A', 'B'],
+        correctAnswer: 'A',
+        selectedAnswer: null,
+        explanation: 'Şirove',
+      ),
+    ]);
+    await tester.pumpWidget(
+      _wrap(LearningOutcomeCard(outcome: outcome, onReview: null)),
+    );
+    expect(find.text('1 cevap · 1 doğru · 0 yanlış'), findsOneWidget);
+    expect(find.text('1 soru cevapsız kaldı.'), findsOneWidget);
+  });
+
   setUp(() => SharedPreferences.setMockInitialValues({}));
+  for (final language in ['ku', 'tr']) {
+    for (final dark in [false, true]) {
+      testWidgets(
+        'öğrenme özeti 320px ve büyük yazıda okunur: $language dark=$dark',
+        (tester) async {
+          await tester.binding.setSurfaceSize(const Size(320, 568));
+          addTearDown(() => tester.binding.setSurfaceSize(null));
+          final outcome = LearningOutcome.fromRecords([
+            _record('z1', 'Ziman', correct: true),
+            _record('z2', 'Ziman', correct: true),
+            _record('d1', 'Dîrok', correct: false),
+            _record('d2', 'Dîrok', correct: false),
+          ]);
+          await tester.pumpWidget(
+            _wrap(
+              SingleChildScrollView(
+                child: LearningOutcomeCard(outcome: outcome, onReview: () {}),
+              ),
+              language: language,
+              dark: dark,
+              textScale: 2,
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('learning-outcome-review')),
+          );
+          expect(
+            find.byKey(const ValueKey('learning-outcome-review')).hitTestable(),
+            findsOneWidget,
+          );
+        },
+      );
+    }
+  }
 
   test('tek sorudan konu gücü ya da konu eksiği çıkarmaz', () {
     final outcome = LearningOutcome.fromRecords([
@@ -106,7 +188,7 @@ void main() {
     );
 
     expect(find.text('Kurteya fêrbûna vê dorê'), findsOneWidget);
-    expect(find.textContaining('Ji bo mijarekê'), findsOneWidget);
+    expect(find.textContaining('Ji bo nirxandina mijarekê'), findsOneWidget);
     expect(find.text('Bersiva şaş binêre'), findsOneWidget);
   });
 

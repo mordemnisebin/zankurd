@@ -507,6 +507,14 @@ class Tr {
     K.draw: {'ku': 'Beramberî!', 'tr': 'Berabere!'},
     K.youLost: {'ku': 'Te winda kir…', 'tr': 'Kaybettin…'},
     K.raceFinished: {'ku': 'Pêşbirk qediya', 'tr': 'Yarış tamamlandı'},
+    K.learningResultTitle: {
+      'ku': 'Fêrbûn temam bû',
+      'tr': 'Öğrenme tamamlandı',
+    },
+    K.learningResultHint: {
+      'ku': 'Bersivên vê dersê nîşana pêşketina te ne.',
+      'tr': 'Bu turdaki cevaplar öğrenme ilerlemeni gösterir.',
+    },
     K.resultTitle: {'ku': 'Encam', 'tr': 'Sonuç'},
     K.accuracyLower: {'ku': 'rastbûn', 'tr': 'doğruluk'},
     K.correct: {'ku': 'Rast', 'tr': 'Doğru'},
@@ -977,6 +985,19 @@ class Tr {
     K.kategoriUstaligi: {
       'ku': 'Ustalîya Kategoriyê',
       'tr': 'Kategori Ustalığı',
+    },
+    K.masteryEvidenceHint: {
+      'ku': 'Rêjeya pêşketinê bi bersivên rast û delîla fêrbûnê tê dîtin.',
+      'tr':
+          'İlerleme doğru cevaplardan, öğrenme kanıtı ise cevaplanan sorulardan okunur.',
+    },
+    K.masteryEvidenceLabel: {
+      'ku': 'Rast: {correct}/{answered} · %{accuracy}',
+      'tr': 'Doğru: {correct}/{answered} · %{accuracy}',
+    },
+    K.masteryEvidencePending: {
+      'ku': '{correct} bersivên rast · delîl hêj tune',
+      'tr': '{correct} doğru cevap · kanıt henüz yok',
     },
     K.baslangic: {'ku': 'Destpêkirin', 'tr': 'Başlangıç'},
     K.performansAnalizi: {
@@ -1971,6 +1992,14 @@ class Tr {
       'ku': 'Kurteya fêrbûna vê dorê',
       'tr': 'Bu turdan öğrenme özeti',
     },
+    K.outcomeCounts: {
+      'ku': '{answered} bersiv · {correct} rast · {wrong} şaş',
+      'tr': '{answered} cevap · {correct} doğru · {wrong} yanlış',
+    },
+    K.outcomeUnanswered: {
+      'ku': '{count} pirs bêbersiv man.',
+      'tr': '{count} soru cevapsız kaldı.',
+    },
     K.outcomeStrong: {
       'ku':
           '{name}: ji {answered} pirsan {correct} rast. Ev tenê nîşana vê dorê ye.',
@@ -1985,9 +2014,9 @@ class Tr {
     },
     K.outcomeEmpty: {
       'ku':
-          'Ji bo mijarekê encam derxînin hêj bersiv têr nînin. Bersivên şaş binêre û hîn bibersive.',
+          'Ji bo nirxandina mijarekê, hêj bersiv têr nînin. Bi çend pirsên din bidomîne.',
       'tr':
-          'Konu sonucu çıkarmak için henüz yeterli cevap yok. Yanlışlarına bakıp birkaç soru daha çöz.',
+          'Bir konuyu değerlendirmek için henüz yeterli cevap yok. Birkaç soru daha çözerek devam et.',
     },
     K.outcomeReviewGeneric: {
       'ku': 'Bersiva şaş binêre',
@@ -2431,6 +2460,8 @@ class Tr {
     K.imageCreditsSource: {'ku': 'Rûpela çavkaniyê', 'tr': 'Kaynak sayfası'},
     // ── Sonuç ekranı: toplu açıklamalar ──────────────────────────────
     K.allExplanations: {'ku': 'Şîroveyên turê', 'tr': 'Turun açıklamaları'},
+    K.explanationTitle: {'ku': 'Şîrove', 'tr': 'Açıklama'},
+    K.viewExplanation: {'ku': 'Şîrove bibîne', 'tr': 'Açıklamayı gör'},
     K.allExplanationsHint: {
       'ku':
           'Hemû şîrove li vir bi hev re ne — di dema turê de tenê bersiva '
@@ -2737,6 +2768,8 @@ class K {
   static const draw = 'result.draw';
   static const youLost = 'result.youLost';
   static const raceFinished = 'result.raceFinished';
+  static const learningResultTitle = 'result.learningTitle';
+  static const learningResultHint = 'result.learningHint';
   static const resultTitle = 'result.title';
   static const accuracyLower = 'result.accuracyLower';
   static const correct = 'result.correct';
@@ -2969,6 +3002,9 @@ class K {
   static const rozetler = 'screen.rozetler';
   static const birYarisTamamlaVe = 'screen.birYarisTamamlaVe';
   static const kategoriUstaligi = 'screen.kategoriUstaligi';
+  static const masteryEvidenceHint = 'screen.masteryEvidenceHint';
+  static const masteryEvidenceLabel = 'screen.masteryEvidenceLabel';
+  static const masteryEvidencePending = 'screen.masteryEvidencePending';
   static const baslangic = 'screen.baslangic';
   static const performansAnalizi = 'screen.performansAnalizi';
   static const kategorilereGorePerformans = 'screen.kategorilereGorePerformans';
@@ -3426,6 +3462,8 @@ class K {
   static const learningGoalLearn = 'learning.goal.learn';
   static const learningGoalCulture = 'learning.goal.culture';
   static const outcomeTitle = 'outcome.title';
+  static const outcomeCounts = 'outcome.counts';
+  static const outcomeUnanswered = 'outcome.unanswered';
   static const outcomeStrong = 'outcome.strong';
   static const outcomeReview = 'outcome.review';
   static const outcomeEmpty = 'outcome.empty';
@@ -3592,6 +3630,8 @@ class K {
 
   // ── Sonuç ekranı: toplu açıklamalar ────────────────────────────────
   static const allExplanations = 'result.allExplanations';
+  static const explanationTitle = 'result.explanationTitle';
+  static const viewExplanation = 'result.viewExplanation';
   static const allExplanationsHint = 'result.allExplanations.hint';
   static const correctAnswerLabel = 'result.correctAnswer';
 

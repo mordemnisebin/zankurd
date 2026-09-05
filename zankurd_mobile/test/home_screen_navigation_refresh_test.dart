@@ -159,6 +159,8 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 1));
 
+      await tester.ensureVisible(find.text('Ziman'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Ziman'));
       await tester.pump();
 

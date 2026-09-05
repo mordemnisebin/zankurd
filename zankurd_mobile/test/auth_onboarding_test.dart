@@ -426,9 +426,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Başla')).dy,
       lessThanOrEqualTo(390),
     );
     expect(tester.takeException(), isNull);
@@ -444,9 +444,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Başla')).dy,
       lessThanOrEqualTo(844),
     );
     expect(tester.takeException(), isNull);
@@ -474,9 +474,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AppLogo), findsOneWidget);
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Başla')).dy,
       lessThanOrEqualTo(800),
     );
     expect(tester.takeException(), isNull);
@@ -548,7 +548,7 @@ void main() {
     // Ana ekran tek bir soruyu yanıtlar: "şimdi ne yapmalıyım?"
     expect(find.text('Günün dersi'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
     // Yarış'a yalnız alt navigasyondan gidilir — ana ekranda kopyası yok.
     await tester.tap(find.byKey(const ValueKey('nav-play')));

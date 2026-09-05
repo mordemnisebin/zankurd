@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/config/app_config.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -36,12 +37,14 @@ import 'support/widget_test_helpers.dart';
 /// üçüncü bir başlık rozeti ise 320pt genişlikte rozet satırını taşırıyordu.
 void main() {
   setUp(() {
+    AchievementStore.resetInstance();
     // Satın alınabilirlik kapısı derleme bayrağıdır; testte düğmeyle açılır.
     AppConfig.debugHasRevenuecatConfig = true;
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       'zankurd.profileName.completed.user': true,
       'zankurd.navTour.seen': true,
+      'zankurd.achievements.unlocked': ['first_game'],
     });
   });
 

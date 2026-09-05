@@ -7,6 +7,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
@@ -63,6 +64,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   List<Package> _packages = [];
   bool _loading = true;
   bool _offeringsLoadFailed = false;
+  bool _paywallViewLogged = false;
 
   @override
   void initState() {
@@ -71,6 +73,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Future<void> _loadOfferings() async {
+    if (!_paywallViewLogged) {
+      _paywallViewLogged = true;
+      AnalyticsService.instance.logPaywallView();
+    }
     setState(() => _loading = true);
     final premium = context.read<PremiumService>();
     final pkgs = <Package>[];
@@ -97,7 +103,18 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   Future<void> _buy(Package pkg) async {
     final premium = context.read<PremiumService>();
+    final packageId = pkg.identifier;
+    AnalyticsService.instance.logEvent('paywall_purchase_started', {
+      'package_id': packageId,
+    });
     final outcome = await premium.purchasePackage(pkg);
+    AnalyticsService.instance.logPurchaseOutcome(
+      packageId: packageId,
+      outcome: outcome.name,
+    );
+    if (outcome == PurchaseOutcome.success) {
+      AnalyticsService.instance.logPurchaseSuccess(packageId);
+    }
     if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.success:
@@ -116,6 +133,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Future<void> _restore() async {
     final premium = context.read<PremiumService>();
     final outcome = await premium.restorePurchases();
+    AnalyticsService.instance.logRestoreOutcome(outcome.name);
     if (!mounted) return;
     switch (outcome) {
       case RestoreOutcome.restored:

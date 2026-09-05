@@ -656,6 +656,8 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                   showExplanation && needsAnswerRevealFallback(question.type),
               revealKey: showExplanation ? explanationKey : null,
             ),
+            if (showExplanation && answered)
+              _LearningExplanationAction(question: question),
           ],
         );
       },
@@ -719,6 +721,67 @@ class _QuestionTextAndAnswers extends StatelessWidget {
       return ShakeWrapper(trigger: 1, child: button);
     }
     return button;
+  }
+}
+
+/// Öğrenme modunda ritmi kesmeden açıklamaya cevap anında ulaşma yolu.
+/// Açıklama otomatik olarak uzun bir paragraf halinde açılmaz; kullanıcı
+/// isterse tek dokunuşla alttan okur.
+class _LearningExplanationAction extends StatelessWidget {
+  const _LearningExplanationAction({required this.question});
+
+  final QuizQuestion question;
+
+  @override
+  Widget build(BuildContext context) {
+    final explanation = question.getLocalizedExplanation(context.isKu).trim();
+    if (explanation.isEmpty) return const SizedBox.shrink();
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: TextButton.icon(
+        key: const ValueKey('quiz-view-explanation'),
+        onPressed: () {
+          showModalBottomSheet<void>(
+            context: context,
+            showDragHandle: true,
+            builder: (sheetContext) => SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(AppIcons.lightbulb, color: AppTheme.correct),
+                        const SizedBox(width: 8),
+                        Text(
+                          sheetContext.t(K.explanationTitle),
+                          style: AppTypography.heading2.copyWith(
+                            color: AppTheme.textPrimaryColor(sheetContext),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      explanation,
+                      style: AppTypography.bodyLarge.copyWith(
+                        color: AppTheme.textPrimaryColor(sheetContext),
+                        height: 1.45,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        icon: const Icon(AppIcons.lightbulb, size: 17),
+        label: Text(context.t(K.viewExplanation)),
+      ),
+    );
   }
 }
 

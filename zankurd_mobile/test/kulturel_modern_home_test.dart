@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
+import 'support/widget_test_helpers.dart' show freshMockRepository;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -39,6 +42,47 @@ Widget _wrap(Widget child) => MultiProvider(
 );
 
 void main() {
+  setUp(() {
+    freshMockRepository();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.achievements.unlocked': ['first_game'],
+    });
+  });
+
+  testWidgets(
+    'ilk oturumda ana görev önde kalır, tamamlanınca destek kartları açılır',
+    (tester) async {
+      final repo = freshMockRepository();
+      final refresh = ValueNotifier(0);
+      addTearDown(refresh.dispose);
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        _wrap(HomeScreen(repository: repo, refreshSignal: refresh)),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('home-daily-task-start')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
+      expect(find.byType(DailyMissionsCard), findsNothing);
+      expect(
+        find.byKey(const ValueKey('home-learning-goal-chooser')),
+        findsNothing,
+      );
+      final preferences = await SharedPreferences.getInstance();
+      await preferences.setStringList('zankurd.achievements.unlocked', [
+        'first_game',
+      ]);
+      AchievementStore.resetInstance();
+      refresh.value++;
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+      expect(find.byType(DailyMissionsCard), findsOneWidget);
+    },
+  );
+
   testWidgets('Ana sayfa tek birincil görev ve destek satırlarını gösterir', (
     tester,
   ) async {

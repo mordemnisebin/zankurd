@@ -14,6 +14,7 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/services/matchmaking_metrics.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
 import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
@@ -380,6 +381,134 @@ void main() {
       'matched',
     );
   });
+
+  testWidgets('gerçek rakip eşleşmesi bekleme metriğini bir kez kaydeder', (
+    tester,
+  ) async {
+    final elapsedValues = [
+      const Duration(seconds: 1),
+      const Duration(seconds: 5),
+    ];
+    final events = <Map<String, Object>>[];
+    final metrics = MatchmakingMetrics(
+      elapsed: () => elapsedValues.removeAt(0),
+      record: events.add,
+    );
+    final repository = _HiddenAnswerMatchRepository(
+      _RoomQuestionResult.failure,
+    );
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1501));
+
+    expect(events, [
+      {'outcome': 'human', 'wait_seconds': 4},
+    ]);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+
+  testWidgets('bot fallbackı bekleme metriğini bot sonucu olarak kaydeder', (
+    tester,
+  ) async {
+    final elapsedValues = [Duration.zero, const Duration(seconds: 20)];
+    final events = <Map<String, Object>>[];
+    final metrics = MatchmakingMetrics(
+      elapsed: () => elapsedValues.removeAt(0),
+      record: events.add,
+    );
+    final repository = _CancellationRaceRepository(
+      cancelResult: const {'status': 'cancelled'},
+    );
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump(const Duration(seconds: 20));
+    await tester.tap(find.text('Evet'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1501));
+
+    expect(events, [
+      {'outcome': 'bot', 'wait_seconds': 20},
+    ]);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+
+  testWidgets('timeoutta bot reddi bekleme metriğini iptal olarak kaydeder', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    final elapsedValues = [Duration.zero, const Duration(seconds: 20)];
+    final events = <Map<String, Object>>[];
+    final metrics = MatchmakingMetrics(
+      elapsed: () => elapsedValues.removeAt(0),
+      record: events.add,
+    );
+    final repository = _CancellationRaceRepository(
+      cancelResult: const {'status': 'cancelled'},
+    );
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump(const Duration(seconds: 20));
+    await tester.tap(find.text('Hayır'));
+    await tester.pumpAndSettle();
+
+    expect(events, [
+      {'outcome': 'cancelled', 'wait_seconds': 20},
+    ]);
+  });
+
+  testWidgets(
+    'kullanıcı iptali bekleme metriğini iptal sonucu olarak kaydeder',
+    (tester) async {
+      tester.view.physicalSize = const Size(480, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      final elapsedValues = [
+        const Duration(seconds: 2),
+        const Duration(seconds: 5),
+      ];
+      final events = <Map<String, Object>>[];
+      final metrics = MatchmakingMetrics(
+        elapsed: () => elapsedValues.removeAt(0),
+        record: events.add,
+      );
+      final repository = _TrackingRepository();
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.pump();
+      await tester.tap(find.text('İptal Et'));
+      await tester.pumpAndSettle();
+
+      expect(events, [
+        {'outcome': 'cancelled', 'wait_seconds': 3},
+      ]);
+    },
+  );
 
   testWidgets('seçim menüsü 1vs1 girişini ve rastgele eşleşmeyi gösterir', (
     tester,

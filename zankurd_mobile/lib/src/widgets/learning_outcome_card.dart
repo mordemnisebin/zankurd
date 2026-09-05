@@ -16,19 +16,30 @@ class LearningOutcome {
     required this.reviewWrong,
     required this.reviewAnswered,
     required this.reviewRecords,
+    required this.answered,
+    required this.correct,
+    required this.unanswered,
   });
 
   factory LearningOutcome.fromRecords(List<AnswerRecord> records) {
     final stats = <String, _TopicStats>{};
     final wrongRecords = <AnswerRecord>[];
+    var answered = 0;
+    var correct = 0;
+    var unanswered = 0;
 
     for (final record in records) {
-      if (record.isUnanswered) continue;
+      if (record.isUnanswered) {
+        unanswered++;
+        continue;
+      }
+      answered++;
+      if (record.isCorrect) correct++;
+      if (!record.isCorrect) wrongRecords.add(record);
       final category = record.category.trim();
       if (category.isEmpty) continue;
       final current = stats[category] ?? const _TopicStats();
       stats[category] = current.add(record.isCorrect);
-      if (!record.isCorrect) wrongRecords.add(record);
     }
 
     MapEntry<String, _TopicStats>? strongest;
@@ -72,6 +83,9 @@ class LearningOutcome {
       reviewWrong: review?.value.wrong ?? 0,
       reviewAnswered: review?.value.answered ?? 0,
       reviewRecords: selectedWrong,
+      answered: answered,
+      correct: correct,
+      unanswered: unanswered,
     );
   }
 
@@ -82,6 +96,9 @@ class LearningOutcome {
   final int reviewWrong;
   final int reviewAnswered;
   final List<AnswerRecord> reviewRecords;
+  final int answered;
+  final int correct;
+  final int unanswered;
 }
 
 class _TopicStats {
@@ -145,6 +162,29 @@ class LearningOutcomeCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
+          Text(
+            context.t(K.outcomeCounts, {
+              'answered': '${outcome.answered}',
+              'correct': '${outcome.correct}',
+              'wrong': '${outcome.answered - outcome.correct}',
+            }),
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppTheme.textPrimaryColor(context),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          if (outcome.unanswered > 0) ...[
+            const SizedBox(height: 4),
+            Text(
+              context.t(K.outcomeUnanswered, {
+                'count': '${outcome.unanswered}',
+              }),
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppTheme.textSubColor(context),
+              ),
+            ),
+          ],
+          const SizedBox(height: 8),
           if (strongestName != null)
             _OutcomeLine(
               icon: AppIcons.circleCheck,

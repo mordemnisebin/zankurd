@@ -85,6 +85,7 @@ class QuizResultScreen extends StatefulWidget {
     this.dailyCapReached = false,
     this.practice = false,
     this.dailyQuiz = false,
+    this.isLearningExperience = false,
     this.contestId,
     this.resultOwnerUserId,
     this.rewardSettlementState,
@@ -124,6 +125,7 @@ class QuizResultScreen extends StatefulWidget {
   final bool rewardQueued;
   final bool practice;
   final bool dailyQuiz;
+  final bool isLearningExperience;
   final String? contestId;
 
   /// Yalnız sunucudan geri kazanılan/tamamlanan online sonuç tesliminde
@@ -153,6 +155,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<Player> get opponents => widget.opponents;
   bool get practice => widget.practice;
   bool get dailyQuiz => widget.dailyQuiz;
+  bool get isLearningExperience => widget.isLearningExperience;
 
   int _dailyStreak = 0;
   List<Achievement> _newAchievements = const [];
@@ -706,7 +709,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     final masteryStore = await MasteryStore.load();
     final correctByCategory = <String, int>{};
+    final answeredByCategory = <String, int>{};
     for (final record in answerRecords) {
+      if (!record.isUnanswered) {
+        answeredByCategory[record.category] =
+            (answeredByCategory[record.category] ?? 0) + 1;
+      }
       if (record.isCorrect) {
         correctByCategory[record.category] =
             (correctByCategory[record.category] ?? 0) + 1;
@@ -716,6 +724,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     for (final entry in correctByCategory.entries) {
       final newLevel = await masteryStore.addCorrect(entry.key, entry.value);
       if (newLevel != null) promotions[entry.key] = newLevel;
+    }
+    for (final entry in answeredByCategory.entries) {
+      await masteryStore.recordAnswered(
+        entry.key,
+        entry.value,
+        correct: correctByCategory[entry.key] ?? 0,
+      );
     }
 
     final missionStore = await DailyMissionStore.load();
@@ -1242,7 +1257,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : AppTheme.wrong.withValues(alpha: 0.55))
         : AppTheme.brand.withValues(alpha: 0.45);
 
-    final headerTitle = is1v1
+    final headerTitle = isLearningExperience
+        ? context.t(K.learningResultTitle)
+        : is1v1
         ? (isWinner
               ? context.t(K.youWon)
               : isDraw
@@ -1250,7 +1267,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : context.t(K.youLost))
         : context.t(K.raceFinished);
 
-    final headerIcon = is1v1
+    final headerIcon = isLearningExperience
+        ? AppIcons.bookOpen
+        : is1v1
         ? (isWinner
               ? AppIcons.trophy
               : isDraw
@@ -1284,7 +1303,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ),
           ),
         ),
-        title: Text(context.t(K.resultTitle)),
+        title: Text(
+          context.t(
+            isLearningExperience ? K.learningResultTitle : K.resultTitle,
+          ),
+        ),
       ),
       body: Container(
         color: AppTheme.bgOf(context),
@@ -1510,6 +1533,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     fontSize: 13,
                                   ),
                                 ),
+                                if (isLearningExperience) ...[
+                                  const SizedBox(height: AppSpacing.xxs),
+                                  Text(
+                                    context.t(K.learningResultHint),
+                                    textAlign: TextAlign.center,
+                                    style: AppTypography.caption.copyWith(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.78,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                                 const SizedBox(height: AppSpacing.sm),
                                 // Turda dokunan kilim.
                                 //

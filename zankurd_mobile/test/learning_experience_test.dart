@@ -32,7 +32,11 @@ void main() {
     final source = File('lib/src/screens/home_screen.dart').readAsStringSync();
     final start = source.indexOf('Future<void> _startDailyQuiz()');
     expect(start, greaterThan(-1), reason: '_startDailyQuiz bulunamadı');
-    final body = source.substring(start, start + 1400);
+    final nextMethod = source.indexOf('\n  Future<void> ', start + 1);
+    final body = source.substring(
+      start,
+      nextMethod == -1 ? source.length : nextMethod,
+    );
 
     expect(
       body,

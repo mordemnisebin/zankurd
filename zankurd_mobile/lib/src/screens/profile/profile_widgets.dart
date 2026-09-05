@@ -914,6 +914,14 @@ class _MasterySection extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 5),
+          Text(
+            Tr.forKu(K.masteryEvidenceHint, isKu),
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textMutedColor(context),
+              height: 1.25,
+            ),
+          ),
           const SizedBox(height: 14),
           for (final cat in _categories)
             _MasteryRow(category: cat, store: store, isKu: isKu),
@@ -938,6 +946,8 @@ class _MasteryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final level = store.levelFor(category);
     final count = store.correctCount(category);
+    final answered = store.answeredCount(category);
+    final accuracy = store.accuracyPercent(category);
     final threshold = store.nextThreshold(category);
     final isMamoste = level == MasteryLevel.mamoste;
     final progress = isMamoste ? 1.0 : (count / threshold).clamp(0.0, 1.0);
@@ -1002,7 +1012,7 @@ class _MasteryRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 // Rubik U+2713 taşımıyor; onay işareti metin olarak
                 // yazıldığında sistem yazı tipine düşüyordu.
-                if (isMamoste)
+                if (isMamoste && accuracy == null)
                   Icon(
                     AppIcons.check,
                     size: 10,
@@ -1010,7 +1020,9 @@ class _MasteryRow extends StatelessWidget {
                   )
                 else
                   Text(
-                    '$count/$threshold',
+                    accuracy == null
+                        ? '$count/$threshold · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': '$count'})}'
+                        : '$count/$threshold · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': '$count', 'answered': '$answered', 'accuracy': '$accuracy'})}',
                     style: AppTypography.caption.copyWith(
                       color: AppTheme.textMutedColor(context),
                       fontSize: 10,

@@ -71,6 +71,29 @@ void main() {
       expect(store.correctCount('Ziman'), 15);
     });
 
+    test('cevap kanıtı doğru sayısından ayrı ve kalıcı tutulur', () async {
+      final store = await MasteryStore.load();
+      await store.addCorrect('Ziman', 3);
+      await store.recordAnswered('Ziman', 5, correct: 3);
+
+      expect(store.correctCount('Ziman'), 3);
+      expect(store.answeredCount('Ziman'), 5);
+      expect(store.accuracyPercent('Ziman'), 60);
+
+      MasteryStore.resetInstance();
+      final restored = await MasteryStore.load();
+      expect(restored.answeredCount('Ziman'), 5);
+      expect(restored.accuracyPercent('Ziman'), 60);
+    });
+
+    test('cevap kanıtı olmayan eski kayıt doğruluk iddiası üretmez', () async {
+      final store = await MasteryStore.load();
+      await store.addCorrect('Ziman', 20);
+
+      expect(store.answeredCount('Ziman'), 0);
+      expect(store.accuracyPercent('Ziman'), isNull);
+    });
+
     test('addCorrect seviye atlamamışsa null döner', () async {
       final store = await MasteryStore.load();
       final result = await store.addCorrect('Ziman', 5);
@@ -155,6 +178,8 @@ void main() {
       await store.clear();
       expect(store.correctCount('Ziman'), 0);
       expect(store.correctCount('Cand'), 0);
+      expect(store.answeredCount('Ziman'), 0);
+      expect(store.answeredCount('Cand'), 0);
 
       MasteryStore.resetInstance();
       final restored = await MasteryStore.load();
