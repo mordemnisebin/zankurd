@@ -38,9 +38,6 @@ class ReferralResult {
       'code_not_found' => ReferralStatus.notFound,
       _ => ReferralStatus.networkError,
     };
-    return ReferralResult(
-      status: status,
-      message: data['message'] as String?,
-    );
+    return ReferralResult(status: status, message: data['message'] as String?);
   }
 }

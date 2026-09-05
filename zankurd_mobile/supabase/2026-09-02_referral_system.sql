@@ -43,7 +43,7 @@ begin
   end if;
 
   -- Çağıranın profilini oku
-  select id, referred_by, player_tag, coins
+  select id, referred_by, player_tag
   into v_caller
   from public.profiles
   where id = v_user_id
@@ -69,7 +69,8 @@ begin
   where player_tag = v_clean_code
      or player_tag = 'ZK-' || v_clean_code
      or replace(player_tag, 'ZK-', '') = v_clean_code
-  limit 1;
+  limit 1
+  for update;
 
   if not found then
     return jsonb_build_object(
@@ -88,24 +89,16 @@ begin
     );
   end if;
 
-  -- Referansı kaydet
+  -- Referansı kaydet. Bakiye ledger toplamıdır; profiles.coins yazılmaz.
   update public.profiles
   set referred_by = v_referrer.id,
-      coins = coins + v_reward_amount,
       updated_at = now()
   where id = v_user_id;
 
-  -- Davet edene de ödül ver
-  update public.profiles
-  set coins = coins + v_reward_amount,
-      updated_at = now()
-  where id = v_referrer.id;
-
-  -- Muhasebe hareketleri (coin_transactions)
-  insert into public.coin_transactions (user_id, amount, reason, created_at)
+  insert into public.coin_transactions (player_id, amount, reason)
   values
-    (v_user_id, v_reward_amount, 'referral_welcome', now()),
-    (v_referrer.id, v_reward_amount, 'referral_invite', now());
+    (v_user_id, v_reward_amount, 'referral_welcome'),
+    (v_referrer.id, v_reward_amount, 'referral_invite');
 
   return jsonb_build_object(
     'success', true,

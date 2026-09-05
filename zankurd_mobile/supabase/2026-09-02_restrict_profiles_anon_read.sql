@@ -26,6 +26,7 @@ create policy "Profiles are readable by signed-in users"
 
 -- 3. anon rolünün doğrudan profiles tablosunu listeleme yetkisini kaldır
 revoke select on public.profiles from anon;
+revoke all on table public.profiles from anon;
 
 -- 4. FCM token zaten gizlenmişti, teyit et:
 revoke select (fcm_token) on public.profiles from anon, authenticated;

@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -127,9 +126,6 @@ void main() {
         ChangeNotifierProvider<LanguageProvider>(
           create: (_) => LanguageProvider(initialLang: 'tr'),
         ),
-        ChangeNotifierProvider<ChildSafetyProvider>(
-          create: (_) => ChildSafetyProvider(),
-        ),
       ],
       child: MaterialApp(home: FriendsScreen(repository: repository)),
     );
@@ -180,9 +176,6 @@ void main() {
               providers: [
                 ChangeNotifierProvider<LanguageProvider>(
                   create: (_) => LanguageProvider(initialLang: 'tr'),
-                ),
-                ChangeNotifierProvider<ChildSafetyProvider>(
-                  create: (_) => ChildSafetyProvider(),
                 ),
               ],
               child: MaterialApp(
@@ -265,9 +258,6 @@ void main() {
             providers: [
               ChangeNotifierProvider<LanguageProvider>(
                 create: (_) => LanguageProvider(initialLang: 'tr'),
-              ),
-              ChangeNotifierProvider<ChildSafetyProvider>(
-                create: (_) => ChildSafetyProvider(),
               ),
             ],
             child: MaterialApp(

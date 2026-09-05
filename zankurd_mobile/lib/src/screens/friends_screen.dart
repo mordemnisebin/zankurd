@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../data/zankurd_repository.dart';
+import '../config/feature_flags.dart';
 import '../models/referral_result.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
-import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
@@ -17,6 +16,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -163,7 +163,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -189,8 +189,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 // bölümünü içerikten ayırır (2026-08-19).
                 const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
                 const SizedBox(height: AppSpacing.md),
-                _buildInviteSection(ku),
-                const SizedBox(height: AppSpacing.md),
+                if (kReferralRewardsEnabled) ...[
+                  _buildInviteSection(ku),
+                  const SizedBox(height: AppSpacing.md),
+                ],
                 _buildSearchSection(ku),
                 const SizedBox(height: 24),
                 _buildRequestsSection(ku),
@@ -223,7 +225,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   color: AppTheme.gold.withValues(alpha: 0.16),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
-                child: const Icon(AppIcons.coins, color: AppTheme.gold, size: 20),
+                child: const Icon(
+                  AppIcons.coins,
+                  color: AppTheme.gold,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -270,12 +276,23 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           SharePlus.instance.share(ShareParams(text: text));
                         },
                         icon: const Icon(AppIcons.shareNodes, size: 16),
-                        label: Text(tag, style: const TextStyle(fontWeight: FontWeight.w700)),
+                        label: Text(
+                          tag,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppTheme.gold,
-                          side: const BorderSide(color: AppTheme.gold, width: 1.2),
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+                          side: const BorderSide(
+                            color: AppTheme.gold,
+                            width: 1.2,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                          ),
                         ),
                       ),
                     ),
@@ -290,8 +307,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.brand,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                        ),
                       ),
                     ),
                   ),
@@ -314,10 +336,14 @@ class _FriendsScreenState extends State<FriendsScreen> {
           builder: (dialogContext, setDialogState) {
             return AlertDialog(
               backgroundColor: AppTheme.surfaceOf(dialogContext),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.card)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadius.card),
+              ),
               title: Text(
                 context.t(K.enterReferralCode),
-                style: TextStyle(color: AppTheme.textPrimaryColor(dialogContext)),
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(dialogContext),
+                ),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -325,7 +351,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 children: [
                   Text(
                     context.t(K.inviteSubtitle),
-                    style: TextStyle(fontSize: 13, color: AppTheme.textMutedColor(dialogContext)),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppTheme.textMutedColor(dialogContext),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   TextField(
@@ -334,15 +363,22 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     textCapitalization: TextCapitalization.characters,
                     decoration: InputDecoration(
                       hintText: context.t(K.referralCodeHint),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
                     ),
                   ),
                 ],
               ),
               actions: [
                 TextButton(
-                  onPressed: submitting ? null : () => Navigator.of(dialogContext).pop(),
+                  onPressed: submitting
+                      ? null
+                      : () => Navigator.of(dialogContext).pop(),
                   child: Text(context.t(K.cancel)),
                 ),
                 ElevatedButton(
@@ -353,7 +389,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           final code = controller.text.trim();
                           if (code.isEmpty) return;
                           setDialogState(() => submitting = true);
-                          final result = await widget.repository.redeemReferralCode(code);
+                          final result = await widget.repository
+                              .redeemReferralCode(code);
                           if (!dialogContext.mounted) return;
                           Navigator.of(dialogContext).pop();
                           if (!mounted) return;
@@ -362,17 +399,33 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             _showMessage(context.t(K.referralCodeApplied));
                           } else {
                             final msg = switch (result.status) {
-                              ReferralStatus.ownCode => context.t(K.cannotUseOwnCode),
-                              ReferralStatus.alreadyRedeemed => context.t(K.referralAlreadyUsed),
-                              ReferralStatus.notFound => context.t(K.invalidReferralCode),
+                              ReferralStatus.ownCode => context.t(
+                                K.cannotUseOwnCode,
+                              ),
+                              ReferralStatus.alreadyRedeemed => context.t(
+                                K.referralAlreadyUsed,
+                              ),
+                              ReferralStatus.notFound => context.t(
+                                K.invalidReferralCode,
+                              ),
                               _ => context.t(K.searchFailed),
                             };
                             _showMessage(msg);
                           }
                         },
-                  style: ElevatedButton.styleFrom(backgroundColor: AppTheme.brand, foregroundColor: Colors.white),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.brand,
+                    foregroundColor: Colors.white,
+                  ),
                   child: submitting
-                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
                       : Text(context.t(K.referralApplyAction)),
                 ),
               ],
@@ -384,39 +437,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Widget _buildSearchSection(bool ku) {
-    // `ChildSafetyProvider` eskiden hiçbir ekrandan okunmuyordu — çocuk
-    // modu açılsa da kapansa da davranış aynı kalıyordu, ayarlardaki
-    // anahtar süs düğmesiydi (2026-08-14 denetimi). Bu ekran onun ilk
-    // gerçek kapısı: çocuk modu açıkken oyuncu arama kutusu hiç
-    // gösterilmez.
-    if (!context.watch<ChildSafetyProvider>().allowFriendSearch) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ScreenSectionLabel(
-            label: context.t(K.findFriend),
-            accent: AppTheme.cyan,
-          ),
-          const SizedBox(height: 12),
-          AppPanel(
-            key: const ValueKey('friends-search-blocked'),
-            color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-            child: Row(
-              children: [
-                const Icon(AppIcons.shield, color: AppTheme.cyan),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    context.t(K.childSafetyFriendSearchBlocked),
-                    style: TextStyle(color: AppTheme.textPrimaryColor(context)),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

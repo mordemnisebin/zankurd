@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -47,20 +48,13 @@ void main() {
     await tester.pumpAndSettle();
     await markScreen('03_leaderboard');
 
-    // 4. Arkadaşlar Ekranı (FriendsScreen) - Yeni Davet / Referans Kartı
+    // 4. Arkadaşlar Ekranı (FriendsScreen)
+    // Davet/100 coin kartı RPC basılana kadar gizli (`kReferralRewardsEnabled`).
     await tester.tap(find.byKey(const ValueKey('leaderboard-friends-button')));
     await tester.pumpAndSettle();
-    await markScreen('04_friends_referral');
+    await markScreen('04_friends');
 
-    // 5. Arkadaşlar Ekranı - Kod Girme Diyaloğu
-    await tester.tap(find.byKey(const ValueKey('friends-enter-code-button')));
-    await tester.pumpAndSettle();
-    await markScreen('05_referral_dialog');
-
-    // Diyaloğu kapat ve liderliğe dön
-    await tester.tap(find.text('Betal bike'));
-    await tester.pumpAndSettle();
-    await tester.pageBack();
+    await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
 
     // 6. Profil Sekmesi (ProfileScreen)
