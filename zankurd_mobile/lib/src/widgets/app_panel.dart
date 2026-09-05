@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
@@ -28,7 +26,7 @@ class AppPanel extends StatelessWidget {
   /// gorunumu/golgeyi bozmaz).
   final VoidCallback? onTap;
 
-  /// Kart öncelik tipi (primary / secondary / info / glass).
+  /// Kart öncelik tipi (primary / secondary / info).
   /// Gradient verilirse her zaman primary efekti uygulanır.
   final CardType cardType;
 
@@ -77,25 +75,6 @@ class AppPanel extends StatelessWidget {
   }
 
   Widget _buildPanel(BuildContext context, BorderRadius br) {
-    if (cardType == CardType.glass) {
-      return ClipRRect(
-        borderRadius: br,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: Container(
-            width: double.infinity,
-            padding: padding,
-            decoration: AppTheme.cardDecorationByType(
-              context,
-              type: CardType.glass,
-              radius: br.topLeft.x,
-            ),
-            child: child,
-          ),
-        ),
-      );
-    }
-
     if (gradient != null) {
       return Container(
         width: double.infinity,
