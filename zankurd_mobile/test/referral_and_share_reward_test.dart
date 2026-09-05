@@ -77,17 +77,18 @@ void main() {
       );
     }
 
-    testWidgets('RPC yokken 100 coin davet kartı çizilmez', (tester) async {
+    testWidgets('RPC varken 100 coin davet kartı çizilir', (tester) async {
       final repository = MockZanKurdRepository();
       await tester.pumpWidget(createWidget(repository));
       await tester.pumpAndSettle();
 
-      expect(find.byKey(const ValueKey('friends-invite-panel')), findsNothing);
+      // `redeem_referral_code` 2026-09-05'te canlıda; bayrak açık.
+      expect(find.byKey(const ValueKey('friends-invite-panel')), findsOneWidget);
       expect(
         find.byKey(const ValueKey('friends-enter-code-button')),
-        findsNothing,
+        findsOneWidget,
       );
-      expect(find.textContaining('100'), findsNothing);
+      expect(find.textContaining('100'), findsWidgets);
     });
   });
 }
