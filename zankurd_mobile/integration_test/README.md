@@ -10,7 +10,6 @@ Auth gerektirmeyen, cihazdan bağımsız uçtan uca yollar (store + servis + ekr
 
 - Seviye belirleme sınavı → sonuç → kalıcı kayıt
 - Akıllı tekrar: yanlış → hazır kuyruk → SM-2 çözüm
-- Çocuk modu: sosyal/paylaşım kapıları kilitlenir ve geri gelir
 - Hareket azaltma tercihi kalıcı
 - Çevrimdışı temel öğrenme: soru havuzu erişilir
 

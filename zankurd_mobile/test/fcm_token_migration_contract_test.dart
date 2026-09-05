@@ -27,7 +27,10 @@ void main() {
       contains('<string>production</string>'),
     );
     final pbx = File('ios/Runner.xcodeproj/project.pbxproj').readAsStringSync();
-    expect(pbx, contains('CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'));
+    expect(
+      pbx,
+      contains('CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'),
+    );
     expect(
       pbx,
       contains('CODE_SIGN_ENTITLEMENTS = Runner/Runner-Release.entitlements;'),

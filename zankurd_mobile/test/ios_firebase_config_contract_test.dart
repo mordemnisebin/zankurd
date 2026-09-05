@@ -23,20 +23,30 @@ void main() {
     expect(pbx, contains('path = "GoogleService-Info.plist";'));
   });
 
-  test('Debug development ve Release/Profile production entitlement kullanır', () {
-    expect(
-      File('ios/Runner/Runner.entitlements').readAsStringSync(),
-      contains('<string>development</string>'),
-    );
-    expect(
-      File('ios/Runner/Runner-Release.entitlements').readAsStringSync(),
-      contains('<string>production</string>'),
-    );
-    final pbx = File('ios/Runner.xcodeproj/project.pbxproj').readAsStringSync();
-    expect(pbx, contains('CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'));
-    expect(
-      pbx,
-      contains('CODE_SIGN_ENTITLEMENTS = Runner/Runner-Release.entitlements;'),
-    );
-  });
+  test(
+    'Debug development ve Release/Profile production entitlement kullanır',
+    () {
+      expect(
+        File('ios/Runner/Runner.entitlements').readAsStringSync(),
+        contains('<string>development</string>'),
+      );
+      expect(
+        File('ios/Runner/Runner-Release.entitlements').readAsStringSync(),
+        contains('<string>production</string>'),
+      );
+      final pbx = File(
+        'ios/Runner.xcodeproj/project.pbxproj',
+      ).readAsStringSync();
+      expect(
+        pbx,
+        contains('CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'),
+      );
+      expect(
+        pbx,
+        contains(
+          'CODE_SIGN_ENTITLEMENTS = Runner/Runner-Release.entitlements;',
+        ),
+      );
+    },
+  );
 }

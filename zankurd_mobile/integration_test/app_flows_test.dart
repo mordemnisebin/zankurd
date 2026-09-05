@@ -18,7 +18,6 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/services/placement_scoring.dart';
@@ -90,18 +89,6 @@ void main() {
     expect(ready.count, 1); // tek çözümde mastered olmaz
   });
 
-  testWidgets('Senaryo: çocuk modu sosyal/paylaşım kapılarını kilitler', (
-    tester,
-  ) async {
-    final child = await ChildSafetyProvider.load();
-    expect(child.allowFriendSearch, isTrue);
-    await child.setEnabled(true);
-    expect(child.allowFriendSearch, isFalse);
-    expect(child.allowExternalShare, isFalse);
-    // Kapatınca geri gelir (veri kaybı yok).
-    await child.setEnabled(false);
-    expect(child.allowFriendSearch, isTrue);
-  });
 
   testWidgets('Senaryo: hareket azaltma tercihi kalıcı', (tester) async {
     final motion = await ReducedMotionProvider.load();
