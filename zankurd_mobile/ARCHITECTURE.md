@@ -30,7 +30,6 @@ graph TB
         LP[LanguageProvider in l10n/lang.dart]
         SP[SoundProvider]
         RM[ReducedMotionProvider]
-        CS[ChildSafetyProvider]
     end
 
     subgraph Services["Servisler"]
@@ -109,7 +108,11 @@ graph TB
 - **ZanKurdRepository** — Soyut repository arayüzü
 - **SupabaseZanKurdRepository** — Supabase bağlantılı gerçek uygulama
 - **MockZanKurdRepository** — Test ve offline ortam için mock
-- **SyncManager** — Offline XP senkronizasyonu
+- **SyncManager** — Çevrimdışı kuyruk (XP sahte eşitlemesi yok)
+- **XP yazımı** — Cihaz `XPStore` seviye çubuğunu besler; sıralama
+  puanı `award_xp_delta` ile `profiles.xp`e yazılır
+  (`supabase/2026-09-02_award_xp_delta_write_restore.sql`). 2026-07-29
+  göçü tarihsel no-op olarak durur; yeniden çalıştırılmaz.
 
 ### 5. Yerel Depolar (`lib/src/data/`)
 - **AchievementStore** — Rozet ilerlemesi ve kilit açma durumu
@@ -153,4 +156,6 @@ Uygulama Kurmancî (KU) ve Türkçe (TR) dillerini destekler:
 - `lib/src/theme/app_theme.dart` — Light ve Dark
 - `lib/src/providers/theme_provider.dart`
 - Palet: koyu antrasit, derin yeşil, krem. Mercan yalnız birincil eylemde.
-  Altın yalnız ödül/premium. Cam paneli yok; `glass_panel.dart` kaldırıldı.
+  Altın yalnız ödül/premium. Cam paneli yok: `glass_panel.dart`,
+  `CardType.glass`, `glassDecoration` ve `AppPanel` BackdropFilter
+  kaldırıldı. Yeni ekranlar `primary` / `secondary` / `info` kullanır.

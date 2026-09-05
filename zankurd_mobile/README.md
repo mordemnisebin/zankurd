@@ -287,22 +287,10 @@ Google Play'de gizlilik politikası için `web/privacy.html` dosyası herkese a�
 
 ## Canlı Backend SQL Sırası
 
-Supabase SQL Editor'de en az şu dosyalar uygulanmış olmalıdır:
+Canlıya uygulanan dosyaların **tek** doğruluk kaynağı
+`supabase/applied.md` dosyasıdır. Tarihsiz kök SQL dosyalarını
+(`public_read_policies.sql`, `online_room_policies.sql` vb.) yeniden
+çalıştırma: sonraki tarihli göçlerin üzerine yazarlar.
 
-1. `supabase/public_read_policies.sql`
-2. `supabase/online_room_policies.sql`
-3. `supabase/online_game_sync.sql`
-4. `supabase/leaderboard_view.sql`
-5. `supabase/submit_answer_function.sql`
-6. `supabase/daily_spin_rpc.sql`
-7. `supabase/quiz_reward_rpc.sql`
-8. `supabase/coin_policies.sql`
-9. `supabase/delete_my_account_rpc.sql`
-10. `supabase/2026-07-29_release_readiness_hardening.sql`
-11. `supabase/2026-07-29_shop_purchase_integrity_fix.sql`
-
-Canlıya uygulanan dosyaların tek doğruluk kaynağı
-`supabase/applied.md` dosyasıdır; tarihsel SQL dosyaları yeni göçlerin
-üzerine yeniden çalıştırılmaz.
-
-Soru bankası temizliği için `supabase/dedupe_and_fix_questions.sql` ayrıca çalıştırılabilir.
+Yeni bir göç uyguladıktan sonra `applied.md` satırını güncelle; bekçi
+testleri dosya içeriğini kilitler, canlı katalog doğrulaması ayrıdır.

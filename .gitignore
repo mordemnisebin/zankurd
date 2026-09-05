@@ -50,5 +50,9 @@ audit_artifacts/
 # Üretilmiş değerlendirme çıktısı
 zankurd-proje-degerlendirmesi.html
 
+# Editoryal kuyruk boru hattı çıktıları (yeniden üretilebilir)
+zankurd_mobile/docs/audit/**/editorial_queue.csv
+zankurd_mobile/docs/audit/**/editorial_queue.json
+
 # Yerel pentest/video-koruma raporları (makineye özgü, commit dışı)
 docs/smtanatomi-*.html

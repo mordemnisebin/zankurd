@@ -3,17 +3,17 @@
 App Store ve Google Play için doğrulanmış yayın metinleri.
 
 Karakter sınırları başlıklarda yazılı ve metinler o sınırlara göre
-yazıldı. Sayılar 2026-07-27 durumudur; sürüm değişince güncelle:
+yazıldı. Sayılar 2026-09-02 durumudur; sürüm değişince güncelle:
 
 | Ne | Kaç |
 |---|---|
-| Yayınlanabilir benzersiz soru | 2.120 |
-| Kategori | 9 |
+| Yayınlanabilir benzersiz soru | 1.890 |
+| Kategori | 10 |
 | Kategori başına seviye | 5 |
 | Arayüz dili | Kurmancî, Türkçe |
 
 Sayı vermek iki ucu keskin: doğruysa güven verir, eskiyince yalan olur.
-Bu yüzden metinlerde yalnız "1.900'den fazla soru" gibi aşağı yuvarlanmış
+Bu yüzden metinlerde yalnız "1.800'den fazla soru" gibi aşağı yuvarlanmış
 biçimi kullan — banka büyüdükçe doğru kalır, küçülmedikçe yanlış olmaz.
 
 ## Mağaza ekran görüntüleri
@@ -67,7 +67,7 @@ ZanKurd — Kurmancî öğren
 ### Kısa açıklama (en fazla 80 karakter)
 
 ```
-Kurmancî öğren, sorularla yarış. 1.900'den fazla soru, 9 kategori.
+Kurmancî öğren, sorularla yarış. 1.800'den fazla soru, 10 kategori.
 ```
 
 (66 karakter)
@@ -77,7 +77,7 @@ Kurmancî öğren, sorularla yarış. 1.900'den fazla soru, 9 kategori.
 ```
 ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
 uygulamasıdır. Dil, tarih, edebiyat, müzik, coğrafya, kültür ve daha
-fazlası — 1.900'den fazla soru, dokuz kategori.
+fazlası — 1.800'den fazla soru, on kategori.
 
 NASIL İŞLER
 
@@ -106,9 +106,10 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 
 ÇEVRİMDIŞI
 
-Soruların tamamı cihazda. İnternet olmadan da oynarsın. XP ve öğrenme
-ilerlemen cihazda saklanır; çevrimiçi yarışlar, coin işlemleri ve hesap
-özellikleri internet gerektirir.
+Soruların tamamı cihazda. İnternet olmadan da oynarsın. Seviye çubuğun
+ve öğrenme ilerlemen cihazda saklanır. Sıralama puanın hesabına yazılır;
+çevrimiçi yarışlar, coin işlemleri ve hesap özellikleri internet
+gerektirir.
 
 ERİŞİLEBİLİRLİK
 
@@ -196,7 +197,7 @@ Kurmancî hîn bibe, pêş bikeve.
 ### Danasîna kurt / Kısa açıklama (80)
 
 ```
-Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.900 pirs, 9 kategorî.
+Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.800 pirs, 10 kategorî.
 ```
 
 (78 karakter)
@@ -205,7 +206,7 @@ Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.900 pirs, 9 kateg
 
 ```
 ZanKurd sepaneke zanînê ye ku hînbûna kurmancî dike pêşbirk. Ziman,
-dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.900 pirs, neh
+dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.800 pirs, deh
 kategorî.
 
 ÇAWA DIXEBITE
@@ -236,9 +237,10 @@ nivîsandin.
 
 BÊ ÎNTERNET
 
-Hemû pirs li ser amûrê ne. Bêyî înternetê jî tu dikarî bilîzî. XP û
-pêşketina hînbûnê li ser amûrê tên parastin; pêşbirkên serhêl, karên
-coinan û taybetmendiyên hesabê înternetê dixwazin.
+Hemû pirs li ser amûrê ne. Bêyî înternetê jî tu dikarî bilîzî. Ast û
+pêşketina hînbûnê li ser amûrê tên parastin. Xala rêzkirinê li ser
+hesabê tê nivîsandin; pêşbirkên serhêl, karên coinan û taybetmendiyên
+hesabê înternetê dixwazin.
 
 ZanKurd belaş e û reklam tê de tune. Ji bo yên ku dixwazin abonetiyek
 heye — parastina xweber a zincîrê û piştgirî ji projeyê re. Lîstik bi
