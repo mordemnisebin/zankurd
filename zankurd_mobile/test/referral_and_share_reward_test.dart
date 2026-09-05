@@ -83,7 +83,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // `redeem_referral_code` 2026-09-05'te canlıda; bayrak açık.
-      expect(find.byKey(const ValueKey('friends-invite-panel')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('friends-invite-panel')),
+        findsOneWidget,
+      );
       expect(
         find.byKey(const ValueKey('friends-enter-code-button')),
         findsOneWidget,
