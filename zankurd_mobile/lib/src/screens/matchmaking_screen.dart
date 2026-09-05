@@ -21,6 +21,7 @@ import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_state.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
@@ -965,7 +966,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       },
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
+        appBar: zkAppBar(
+          context,
           backgroundColor: Colors.transparent,
           elevation: 0,
           iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),

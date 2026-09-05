@@ -8,6 +8,7 @@ import '../models/story.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
@@ -90,7 +91,8 @@ class _StoryScreenState extends State<StoryScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Scaffold(
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         backgroundColor: Colors.transparent,
         actions: [
           if (widget.guide != null)

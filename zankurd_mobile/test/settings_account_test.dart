@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 import 'support/widget_test_helpers.dart';
 
 class _SignOutTrackingAuthProvider extends AuthProvider {
@@ -355,7 +356,7 @@ void main() {
     await tester.pump();
     await repository.deleteStarted.future;
 
-    await tester.pageBack();
+    await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
     repository.allowDelete.complete();
     await tester.pump();

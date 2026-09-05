@@ -15,6 +15,7 @@ import '../widgets/app_state.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -693,7 +694,8 @@ class _ShopScreenState extends State<ShopScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),

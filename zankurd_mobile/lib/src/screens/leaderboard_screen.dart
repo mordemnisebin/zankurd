@@ -21,6 +21,7 @@ import '../widgets/kilim_reveal.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/rolling_count.dart';
+import '../widgets/zk_back_button.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -547,14 +548,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 4, top: 4),
-                    child: IconButton(
+                    child: ZkBackButton(
                       key: const ValueKey('leaderboard-back'),
-                      icon: const Icon(Icons.arrow_back),
                       color: AppTheme.textPrimaryColor(context),
-                      tooltip: MaterialLocalizations.of(
-                        context,
-                      ).backButtonTooltip,
-                      onPressed: () => Navigator.of(context).maybePop(),
                     ),
                   ),
                 ),

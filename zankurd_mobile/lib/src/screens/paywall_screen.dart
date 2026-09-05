@@ -12,6 +12,7 @@ import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Yıllık fiyatın aya düşen karşılığı — Apple 3.1.2'nin "price per unit if
@@ -137,7 +138,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
       // yoktu; giren kullanıcı uygulamayı öldürmeden çıkamıyordu
       // (2026-07-25 canlı denetimi, iOS). Geri düğmesi uygulamanın geri
       // kalanıyla aynı yerde — AppBar'da — durur.
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         backgroundColor: AppTheme.bgOf(context),
         elevation: 0,
         scrolledUnderElevation: 0,

@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -87,7 +88,7 @@ Future<void> _spinAndReturn(
   await tester.pump();
   await tester.pump(const Duration(seconds: 5));
   await tester.pumpAndSettle();
-  await tester.pageBack();
+  await tester.tap(find.byType(ZkBackButton));
   await tester.pumpAndSettle();
 }
 
@@ -227,7 +228,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
-    await tester.pageBack();
+    await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
 
     expect(find.text('30 coin'), findsOneWidget);

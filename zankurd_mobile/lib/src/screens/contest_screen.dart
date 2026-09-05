@@ -13,6 +13,7 @@ import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/styled_button.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -114,7 +115,7 @@ class _ContestScreenState extends State<ContestScreen> {
       // kullanan on ekranın sekizi AppBar başlığını zaten boş bırakıyor;
       // aykırı olan buydu. (`review_screen` iki *farklı* başlık gösterir —
       // "Cevaplar" ve "Özet" — orada tekrar yok.)
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(

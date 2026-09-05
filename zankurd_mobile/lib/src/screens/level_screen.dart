@@ -7,6 +7,7 @@ import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_state.dart';
+import '../widgets/zk_back_button.dart';
 import '../widgets/kilim_progress_bar.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -75,7 +76,7 @@ class _LevelScreenState extends State<LevelScreen> {
               color: Colors.black26,
               shape: BoxShape.circle,
             ),
-            child: BackButton(
+            child: ZkBackButton(
               color: Colors.white,
               onPressed: () => Navigator.of(context).maybePop(),
             ),

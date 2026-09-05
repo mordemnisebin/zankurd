@@ -7,6 +7,7 @@ import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/external_link.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/zk_back_button.dart';
 
 /// Soru fotoğraflarının künyesi.
 ///
@@ -51,7 +52,7 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
   Widget build(BuildContext context) {
     final credits = _credits;
     return Scaffold(
-      appBar: AppBar(title: Text(context.t(K.imageCredits))),
+      appBar: zkAppBar(context, title: Text(context.t(K.imageCredits))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),

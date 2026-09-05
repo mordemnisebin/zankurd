@@ -16,6 +16,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -696,7 +697,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(

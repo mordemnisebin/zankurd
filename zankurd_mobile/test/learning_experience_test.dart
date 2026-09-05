@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -93,7 +94,7 @@ void main() {
 
     // Quiz ekranı bir rota olarak açıldığı için AppBar geri düğmesi var;
     // PopScope onu yakalayıp onay diyalogunu gösterir.
-    await tester.tap(find.byType(BackButton));
+    await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
   }
 

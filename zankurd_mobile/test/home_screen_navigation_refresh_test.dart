@@ -13,6 +13,7 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 /// 2026-08-14 denetimi: Ana ekranın (`home_screen.dart`) dört bulgusu.
 ///
@@ -185,16 +186,21 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('10'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(const ValueKey('home-lessons-row')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
     await tester.pumpAndSettle();
     expect(find.byType(LevelScreen), findsOneWidget);
 
     repo.coinBalance = 55;
-    await tester.pageBack();
+    await tester.ensureVisible(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
+    await tester.tap(find.byType(ZkBackButton));
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 1));
 
     expect(
-      find.text('55'),
+      find.text('55', skipOffstage: false),
       findsOneWidget,
       reason:
           'push tab-içi kaldığı için tek tazeleme fırsatı dönüş anıdır — '

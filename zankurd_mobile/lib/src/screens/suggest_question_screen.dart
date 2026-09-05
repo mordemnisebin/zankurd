@@ -6,6 +6,7 @@ import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kullanıcıların yeni soru önerebileceği ekran.
@@ -110,7 +111,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
       extendBodyBehindAppBar: true,
       // Başlık gövdedeki kimlik bloğunda zaten var ("ZanKurd'a soru öner");
       // AppBar'da tekrarı ekranın tepesinde iki başlık gösteriyordu.
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -424,7 +425,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   Widget _buildSuccessView(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.t(K.suggestTitle))),
+      appBar: zkAppBar(context, title: Text(context.t(K.suggestTitle))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),

@@ -4,6 +4,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -117,7 +118,7 @@ void main() {
       roomId: 'online-room-id',
     );
 
-    await tester.tap(find.byType(BackButton));
+    await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
 
     expect(find.text(_rootMarker), findsOneWidget);

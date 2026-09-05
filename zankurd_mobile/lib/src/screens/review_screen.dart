@@ -12,6 +12,7 @@ import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ReviewScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.t(K.answersTitle))),
+      appBar: zkAppBar(context, title: Text(context.t(K.answersTitle))),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(

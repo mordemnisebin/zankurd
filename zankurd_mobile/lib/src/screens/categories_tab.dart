@@ -11,6 +11,7 @@ import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
+import '../widgets/zk_back_button.dart';
 import 'subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
@@ -129,7 +130,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                     // ve ard arda gezilen üç ekranda üç farklı geri işareti
                     // görünüyordu (2026-07-25 canlı denetimi).
                     if (canPop)
-                      BackButton(
+                      ZkBackButton(
                         key: const ValueKey('categories-back-button'),
                         onPressed: () => Navigator.of(context).pop(),
                         color: AppTheme.textPrimaryColor(context),

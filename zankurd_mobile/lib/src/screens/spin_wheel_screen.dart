@@ -17,6 +17,7 @@ import '../utils/network_error.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/confetti_overlay.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SpinWheelScreen extends StatefulWidget {
@@ -275,7 +276,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.t(K.wheelTitle))),
+      appBar: zkAppBar(context, title: Text(context.t(K.wheelTitle))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),

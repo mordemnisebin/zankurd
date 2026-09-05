@@ -17,6 +17,7 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
@@ -256,7 +257,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),

@@ -9,6 +9,7 @@ import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/zk_back_button.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -42,7 +43,8 @@ class SubcategoryScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         backgroundColor: Colors.transparent,
         elevation: 0,
         // Geri oku her zaman renkli banner'ın üzerinde durur.

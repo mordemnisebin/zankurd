@@ -8,6 +8,7 @@ import '../models/quiz_question.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/zk_back_button.dart';
 
 /// Kısa, baskısız seviye belirleme sınavı.
 ///
@@ -90,7 +91,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     final useCompactSkip =
         MediaQuery.sizeOf(context).width < 380 || textScale > 1.05;
     return Scaffold(
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         title: Text(context.t(K.placementTitle)),
         actions: [
           if (_result == null)

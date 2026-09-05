@@ -11,6 +11,7 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -73,7 +74,8 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         actions: [
           IconButton(
             onPressed: _reload,
