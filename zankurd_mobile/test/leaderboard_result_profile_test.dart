@@ -8,7 +8,6 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -208,9 +207,6 @@ void main() {
           ChangeNotifierProvider<PremiumService>(
             create: (_) => PremiumService.fallback(),
           ),
-          ChangeNotifierProvider<ChildSafetyProvider>(
-            create: (_) => ChildSafetyProvider(),
-          ),
         ],
         child: MaterialApp(
           theme: AppTheme.dark(),
@@ -353,9 +349,6 @@ void main() {
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
           ChangeNotifierProvider<ReducedMotionProvider>(
             create: (_) => ReducedMotionProvider(),
-          ),
-          ChangeNotifierProvider<ChildSafetyProvider>(
-            create: (_) => ChildSafetyProvider(),
           ),
         ],
         child: MaterialApp(

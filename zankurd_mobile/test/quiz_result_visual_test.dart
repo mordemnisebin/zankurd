@@ -6,7 +6,6 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -17,9 +16,6 @@ Widget wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
     ChangeNotifierProvider<PremiumService>(
       create: (_) => PremiumService.fallback(),
-    ),
-    ChangeNotifierProvider<ChildSafetyProvider>(
-      create: (_) => ChildSafetyProvider(),
     ),
   ],
   child: MaterialApp(theme: AppTheme.light(), home: child),
@@ -37,9 +33,6 @@ Widget wrapResult(
     ),
     ChangeNotifierProvider<PremiumService>(
       create: (_) => PremiumService.fallback(),
-    ),
-    ChangeNotifierProvider<ChildSafetyProvider>(
-      create: (_) => ChildSafetyProvider(),
     ),
   ],
   child: MaterialApp(
@@ -179,9 +172,10 @@ Future<void> _expectReadablePrimaryReviewAction(
   await tester.pump(const Duration(seconds: 1));
 
   final action = find.byKey(const ValueKey('result-primary-review-mistakes'));
+  // Özet kartı eylemi katmanın altına itti; önce kaydırıp kur, sonra ölç.
+  await tester.scrollUntilVisible(action, 600);
+  await tester.pumpAndSettle();
   expect(action, findsOneWidget, reason: variant.name);
-  await tester.ensureVisible(action);
-  await tester.pump();
 
   final expectedLabel = Tr.forKu(K.reviewMistakes, variant.language == 'ku');
   final buttonSemantics = tester.getSemantics(action);
@@ -212,15 +206,21 @@ Future<void> _expectReadablePrimaryReviewAction(
   );
   expect(buttonRect.height, greaterThanOrEqualTo(54), reason: variant.name);
   final replay = find.byKey(const ValueKey('result-play-again-button'));
+  await tester.scrollUntilVisible(replay, 600);
+  await tester.pumpAndSettle();
   expect(replay, findsOneWidget, reason: variant.name);
+  // İkinci kaydırmadan sonra birincilin karesi bayat; aynı kareden ölç.
+  final freshPrimaryRect = tester.getRect(action);
   expect(
     tester.getRect(replay).top,
-    greaterThanOrEqualTo(buttonRect.bottom),
+    greaterThanOrEqualTo(freshPrimaryRect.bottom),
     reason:
         '${variant.name}: narrow result secondary action below primary olmalı',
   );
   expect(tester.takeException(), isNull, reason: variant.name);
 
+  await tester.scrollUntilVisible(action, 600);
+  await tester.pumpAndSettle();
   await tester.tap(action);
   await tester.pumpAndSettle();
   expect(find.byType(QuizResultScreen), findsNothing, reason: variant.name);
@@ -322,10 +322,12 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const ValueKey('result-primary-review-mistakes')),
-        findsOneWidget,
+      final primary = find.byKey(
+        const ValueKey('result-primary-review-mistakes'),
       );
+      await tester.scrollUntilVisible(primary, 600);
+      await tester.pumpAndSettle();
+      expect(primary, findsOneWidget);
       expect(
         find.byKey(const ValueKey('result-play-again-button')),
         findsOneWidget,

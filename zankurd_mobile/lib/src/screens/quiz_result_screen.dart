@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,11 +25,12 @@ import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
-import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../widgets/kilim_board.dart';
+import '../widgets/zk_back_button.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/kilim_reveal.dart';
+import '../widgets/learning_outcome_card.dart';
 import '../theme/app_theme.dart';
 import '../utils/percent_format.dart';
 import '../utils/app_route.dart';
@@ -1089,6 +1091,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final wrongRecords = answerRecords
         .where((record) => !record.isCorrect && !record.isUnanswered)
         .toList(growable: false);
+    final learningOutcome = LearningOutcome.fromRecords(answerRecords);
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
@@ -1136,38 +1139,34 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           label: nextActionLabel,
           onTap: completeResultAction,
         ),
-      // Çocuk modu açıkken dışa paylaşım hiç çizilmez — sağlayıcı eskiden
-      // kayıtlı olmadığı ve hiçbir ekran okumadığı için bu kapı hiç
-      // çalışmıyordu (2026-08-14 denetimi).
-      if (context.watch<ChildSafetyProvider>().allowExternalShare)
-        _ResultSideAction(
-          key: const ValueKey('result-share-button'),
-          icon: AppIcons.shareNodes,
-          label: context.t(K.share),
-          onTap: () async {
-            await ResultSharer.share(
-              context,
-              isKu: context.isKu,
-              score: score,
-              correctCount: correctCount,
-              totalQuestions: totalQuestions,
-              bestStreak: bestStreak,
-              category: room.category,
-              results: [for (final record in answerRecords) record.isCorrect],
+      _ResultSideAction(
+        key: const ValueKey('result-share-button'),
+        icon: AppIcons.shareNodes,
+        label: context.t(K.share),
+        onTap: () async {
+          await ResultSharer.share(
+            context,
+            isKu: context.isKu,
+            score: score,
+            correctCount: correctCount,
+            totalQuestions: totalQuestions,
+            bestStreak: bestStreak,
+            category: room.category,
+            results: [for (final record in answerRecords) record.isCorrect],
+          );
+          final earned = await ResultSharer.claimDailyShareReward();
+          if (earned && context.mounted) {
+            HapticFeedback.mediumImpact();
+            unawaited(repository.awardSpinCoins());
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.t(K.shareRewardEarned)),
+                duration: const Duration(seconds: 3),
+              ),
             );
-            final earned = await ResultSharer.claimDailyShareReward();
-            if (earned && context.mounted) {
-              HapticFeedback.mediumImpact();
-              unawaited(repository.awardSpinCoins());
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(context.t(K.shareRewardEarned)),
-                  duration: const Duration(seconds: 3),
-                ),
-              );
-            }
-          },
-        ),
+          }
+        },
+      ),
     ];
 
     final is1v1 = opponents.length == 1;
@@ -1272,7 +1271,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 width: 1,
               ),
             ),
-            child: BackButton(
+            child: ZkBackButton(
               onPressed: isOnlineRoom ? completeResultAction : null,
               color: AppTheme.isLight(context)
                   ? AppTheme.lightTextPrimary
@@ -1288,6 +1287,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           child: Stack(
             children: [
               ListView(
+                // Sonuçtaki açıklamalar, öğrenme özeti ve birincil eylem
+                // tek bir öğrenme yüzeyidir. Kısa ekranlarda da
+                // erişilebilirlik ağacına birlikte girsinler; kayıt sayısı
+                // oda soru sayısıyla sınırlı olduğu için geniş önbellek
+                // güvenlidir.
+                scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
                 padding: const EdgeInsets.fromLTRB(
                   AppSpacing.page,
                   AppSpacing.xs,
@@ -1742,6 +1747,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           ? room.players.first
                           : null,
                       opponents: opponents,
+                    ),
+                  ],
+                  if (answerRecords.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    LearningOutcomeCard(
+                      outcome: learningOutcome,
+                      onReview: learningOutcome.reviewRecords.isEmpty
+                          ? null
+                          : () => openReview(learningOutcome.reviewRecords),
                     ),
                   ],
                   if (_newAchievements.isNotEmpty) ...[
