@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # ZanKurd — kalan işler görevi
 
 Bu depoda çalışacaksın. **Önce bu dosyayı, sonra `docs/TASARIM_DEVAM_NOTU.md`

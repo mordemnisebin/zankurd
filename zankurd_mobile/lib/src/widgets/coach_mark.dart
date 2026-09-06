@@ -8,18 +8,14 @@ class CoachMarkStep {
   const CoachMarkStep({
     required this.targetKey,
     required this.icon,
-    required this.titleKu,
-    required this.titleTr,
-    required this.descriptionKu,
-    required this.descriptionTr,
+    required this.title,
+    required this.description,
   });
 
   final GlobalKey targetKey;
   final IconData icon;
-  final String titleKu;
-  final String titleTr;
-  final String descriptionKu;
-  final String descriptionTr;
+  final String title;
+  final String description;
 }
 
 /// Ekranın üstüne bindirilen, hedef widget'ı aydınlık bırakıp gerisini
@@ -297,7 +293,7 @@ class _CoachMarkBubble extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  isKu ? step.titleKu : step.titleTr,
+                  step.title,
                   style: TextStyle(
                     color: AppTheme.textPrimaryColor(context),
                     fontWeight: FontWeight.w800,
@@ -317,7 +313,7 @@ class _CoachMarkBubble extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            isKu ? step.descriptionKu : step.descriptionTr,
+            step.description,
             style: TextStyle(
               color: AppTheme.textSubColor(context),
               fontSize: 13.5,

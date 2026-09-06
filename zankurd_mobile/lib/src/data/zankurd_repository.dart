@@ -319,6 +319,7 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Bu çağrı oyuncuyu BEKLETMEZ ve hata fırlatmaz: XP'nin cihazdaki hâli
   /// zaten yazılmıştır, sunucu yazımı en iyi çabadır.
   Future<int> awardXp(int delta);
+  Future<int> awardRoomXp(String roomId);
 
   /// Oyuncunun görsel kimliğini (avatar/çerçeve/unvan) yükler.
   Future<AvatarIdentity> loadAvatarIdentity();

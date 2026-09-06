@@ -641,7 +641,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> reportQuestion(QuizQuestion question, String reason) async {}
+  Future<void> reportQuestion(QuizQuestion question, String reason) async {
+    reportedQuestions.add((id: question.id, reason: reason));
+  }
+
+  final reportedQuestions = <({String id, String reason})>[];
 
   @override
   Future<List<QuizQuestion>> loadFavoriteQuestions() async {
@@ -676,6 +680,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
     awardedXpTotal += delta;
     return awardedXpTotal;
   }
+
+  @override
+  Future<int> awardRoomXp(String roomId) async {
+    if (roomId.trim().isEmpty) return awardedXpTotal;
+    awardedRoomXpCalls.add(roomId);
+    return awardedXpTotal;
+  }
+
+  final awardedRoomXpCalls = <String>[];
 
   @override
   Future<int> awardSpinCoins() async {

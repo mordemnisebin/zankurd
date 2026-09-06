@@ -42,6 +42,7 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
       button: true,
       label: widget.label,
       enabled: isEnabled,
+      excludeSemantics: true,
       onTap: isEnabled ? widget.onPressed : null,
       child: MouseRegion(
         cursor: isEnabled ? SystemMouseCursors.click : SystemMouseCursors.basic,

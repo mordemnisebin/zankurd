@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # ZanKurd — Denetim Errata (2026-08-02)
 
 Bu dosya, **2026-08-01 tarihli Aşama 1 denetim raporlarındaki** iç çelişkileri

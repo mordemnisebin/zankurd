@@ -734,10 +734,16 @@ class _UnifiedRewardsSection extends StatelessWidget {
                               final data = entry.value;
                               return BadgeWidget(
                                 badgeId: entry.key,
-                                titleKu: data['titleKu'] ?? '',
-                                titleTr: data['titleTr'] ?? '',
-                                descriptionKu: data['descKu'] ?? '',
-                                descriptionTr: data['descTr'] ?? '',
+                                titleKu: BadgeService.titleFor(entry.key, isKu),
+                                titleTr: BadgeService.titleFor(entry.key, isKu),
+                                descriptionKu: BadgeService.descFor(
+                                  entry.key,
+                                  isKu,
+                                ),
+                                descriptionTr: BadgeService.descFor(
+                                  entry.key,
+                                  isKu,
+                                ),
                                 iconName: data['icon'] ?? 'badge',
                                 isUnlocked: badgeUnlocked.contains(entry.key),
                                 isKu: isKu,
@@ -830,11 +836,10 @@ class _UnifiedRewardsSection extends StatelessWidget {
                   // rozeti" değil, tanım listesinin ilk N elemanını
                   // gösteriyordu.
                   final badgeIndex = index - achievements.length;
-                  final data = BadgeService
-                      .badgeDefinitions[unlockedBadgeIds[badgeIndex]]!;
-                  final title = isKu
-                      ? (data['titleKu'] ?? '')
-                      : (data['titleTr'] ?? '');
+                  final title = BadgeService.titleFor(
+                    unlockedBadgeIds[badgeIndex],
+                    isKu,
+                  );
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Container(

@@ -30,12 +30,14 @@ graph TB
         LP[LanguageProvider in l10n/lang.dart]
         SP[SoundProvider]
         RM[ReducedMotionProvider]
+        AC[AnalyticsConsentProvider]
+        UM[UntimedModeProvider]
+        RA[RemoteAvailability]
     end
 
     subgraph Services["Servisler"]
         ANS[AnalyticsService]
         NS[NotificationService]
-        BS[BadgeService]
         PRE[PremiumService]
     end
 
@@ -53,6 +55,7 @@ graph TB
         XS[XpStore]
         MAS[MasteryStore]
         DMS[DailyMissionStore]
+        BD[BadgeService]
     end
 
     subgraph Backend["Backend"]
@@ -75,7 +78,7 @@ graph TB
     SM --> SUPA
 
     ANS --> FB
-    BS --> Stores
+    BD --> Stores
     NS --> FB
 
     Data --> Stores
@@ -97,14 +100,17 @@ graph TB
 - **LanguageProvider** — `lib/src/l10n/lang.dart` içinde; Kurmancî/Türkçe
 - **SoundProvider** — Ses efektleri açma/kapama (web'de sessizdir)
 - **ReducedMotionProvider** — Hareketi azalt (kullanıcı + sistem tercihi)
+- **AnalyticsConsentProvider** — Analitik ve Crashlytics rızası
+- **UntimedModeProvider** — Süresiz quiz
+- **RemoteAvailability** — Sunucu erişilebilirliği; sosyal yüzey kilidi
 - **PremiumService** — RevenueCat aboneliği (`ChangeNotifier`)
 
 ### 3. Servisler (`lib/src/services/`)
 - **AnalyticsService** — Anonim kullanım istatistikleri (Firebase Analytics)
 - **NotificationService** — Günlük hatırlatıcı bildirimleri
-- **BadgeService** — Genişletilmiş rozet/streak değerlendirmesi
 
 ### 4. Veri Katmanı (`lib/src/data/`)
+- **BadgeService** — `lib/src/data/badge_service.dart`; rozet tanımları `K.*`
 - **ZanKurdRepository** — Soyut repository arayüzü
 - **SupabaseZanKurdRepository** — Supabase bağlantılı gerçek uygulama
 - **MockZanKurdRepository** — Test ve offline ortam için mock

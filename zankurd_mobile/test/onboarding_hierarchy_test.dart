@@ -20,6 +20,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Başla'), findsOneWidget);
     expect(find.text('İleri'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Başla'));
     expect(completed, 1);
   });

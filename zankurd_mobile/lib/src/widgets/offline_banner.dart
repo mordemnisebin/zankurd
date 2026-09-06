@@ -6,10 +6,16 @@ import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
 
 class OfflineBanner extends StatelessWidget {
-  const OfflineBanner({required this.isOffline, this.onRetry, super.key});
+  const OfflineBanner({
+    required this.isOffline,
+    this.onRetry,
+    this.label,
+    super.key,
+  });
 
   final bool isOffline;
   final VoidCallback? onRetry;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +55,7 @@ class OfflineBanner extends StatelessWidget {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          context.t(K.offlineChecking),
+                          label ?? context.t(K.offlineChecking),
                           style: TextStyle(
                             color: foregroundColor,
                             fontSize: 13,

@@ -16,10 +16,9 @@ import 'lang.dart';
 ///
 /// ## Göç durumu
 ///
-/// `AGENTS.md` büyük refactor'ü yasakladığı için göç ekran ekran yapıldı ve
-/// 2026-07-26'da tamamlandı: `lib/` altında yalnız 3 satır içi kullanım
-/// kaldı ve üçü de bilinçli (biri bu belge yorumu, ikisi çeviri değil farklı
-/// veri alanı okuyan dallar — bkz. `test/l10n_migration_guard_test.dart`).
+/// `AGENTS.md` büyük refactor'ü yasakladığı için göç ekran ekran yapıldı.
+/// Kalan satır içi tavan `test/l10n_migration_guard_test.dart` içindedir;
+/// bu başlık o tavanla çelişmesin diye sayı yazmaz.
 ///
 /// Yeni kod **her zaman** `context.t(K.key)` kullanmalı; dili `BuildContext`
 /// yerine `bool isKu` olarak taşıyan yerler için [forKu] var. `context.s`
@@ -163,7 +162,7 @@ class Tr {
     K.deleteAccount: {'ku': 'Hesabê Min Jê Bibe', 'tr': 'Hesabımı Sil'},
     K.deleteAccountSub: {
       'ku': 'Profîl, zêr û pirsên tomarkirî tên jêbirin.',
-      'tr': 'Profil, coin ve kaydedilen soru verilerin silinir.',
+      'tr': 'Profil, jeton ve kaydedilen soru verilerin silinir.',
     },
     K.notifPermDenied: {
       'ku': 'Destûra agahdariyê tune ye',
@@ -495,7 +494,7 @@ class Tr {
     K.streakBreaking: {'ku': 'Zincîra te dişkê!', 'tr': 'Serin kırılıyor!'},
     K.streakFreezeAsk: {
       'ku': 'Zincîra te ya rojane dê sifir bibe. Bi {cost} zêr biparêze?',
-      'tr': 'Günlük serin sıfırlanacak. {cost} coin ile koru?',
+      'tr': 'Günlük serin sıfırlanacak. {cost} jeton ile koru?',
     },
     K.streakLetGo: {'ku': 'Na, bila here', 'tr': 'Hayır, sıfırlansın'},
     K.streakFreezeAction: {'ku': 'Biparêze ({cost})', 'tr': 'Koru ({cost})'},
@@ -710,7 +709,7 @@ class Tr {
       'ku':
           'Pêşniyara te hat hildan. Piştî pejirandinê, tu yê 50 zêr û xelata Rozeta Nivîskar qezenc bikî!',
       'tr':
-          'Soru önerin alındı! Onaylandıktan sonra 50 coin ve özel Yazar Rozeti kazanacaksın!',
+          'Soru önerin alındı! Onaylandıktan sonra 50 jeton ve özel Yazar Rozeti kazanacaksın!',
     },
     K.goBack: {'ku': 'Vegere', 'tr': 'Geri Dön'},
     K.requiredSuffix: {'ku': 'pêwîst e', 'tr': 'zorunlu'},
@@ -800,14 +799,14 @@ class Tr {
     K.inviteFriends: {'ku': 'Hevalan Vexwîne', 'tr': 'Arkadaşlarını Davet Et'},
     K.inviteSubtitle: {
       'ku': 'Koda xwe parve bike, her du alî jî 100 zêr bistînin!',
-      'tr': 'Kodunu paylaş, iki taraf da 100 coin kazansın!',
+      'tr': 'Kodunu paylaş, iki taraf da 100 jeton kazansın!',
     },
     K.enterReferralCode: {'ku': 'Koda Vexwendinê', 'tr': 'Davet Kodu Gir'},
     K.referralCodeHint: {'ku': 'Mînak: ZK-XXXX', 'tr': 'Örnek: ZK-XXXX'},
     K.referralApplyAction: {'ku': 'Bi kar bîne', 'tr': 'Kullan'},
     K.referralCodeApplied: {
       'ku': 'Pîroz be! 100 zêr li hesabê te zêde bû.',
-      'tr': 'Tebrikler! Hesabına 100 coin eklendi.',
+      'tr': 'Tebrikler! Hesabına 100 jeton eklendi.',
     },
     K.cannotUseOwnCode: {
       'ku': 'Tu nikarî koda xwe bi kar bînî.',
@@ -825,7 +824,7 @@ class Tr {
     K.codeCopied: {'ku': 'Kod hat kopîkirin!', 'tr': 'Kod kopyalandı!'},
     K.shareRewardEarned: {
       'ku': 'Parvekirina yekem a rojê: +25 zêr hat qezenckirin!',
-      'tr': 'Günün ilk paylaşımı: +25 coin kazanıldı!',
+      'tr': 'Günün ilk paylaşımı: +25 jeton kazanıldı!',
     },
 
     // ── Çevrimiçi tur durum satırı ───────────────────────────────────
@@ -892,7 +891,7 @@ class Tr {
     K.progressLevelLabel: {'ku': 'Ast', 'tr': 'Seviye'},
     K.streakFreezeAvailable: {'ku': 'Amade', 'tr': 'Kullanılabilir'},
     K.streakFreezeNotNeeded: {'ku': 'Ne hewce ye', 'tr': 'Gerekmiyor'},
-    K.streakFreezeNoCoins: {'ku': 'Pere têrê nake', 'tr': 'Coin yetersiz'},
+    K.streakFreezeNoCoins: {'ku': 'Pere têrê nake', 'tr': 'Jeton yetersiz'},
     K.streakFreezeApplying: {'ku': 'Tê sepandin', 'tr': 'Uygulanıyor'},
     K.streakFreezeApplied: {'ku': 'Hate parastin', 'tr': 'Korundu'},
     K.streakFreezeUncertain: {'ku': 'Encam ne diyar e', 'tr': 'Sonuç belirsiz'},
@@ -1249,11 +1248,11 @@ class Tr {
     },
     K.scoreWord: {'ku': 'Pûan', 'tr': 'Puan'},
     K.streakWord: {'ku': 'Zincîr', 'tr': 'Seri'},
-    K.coinWord: {'ku': 'Zêr', 'tr': 'Coin'},
+    K.coinWord: {'ku': 'Zêr', 'tr': 'jeton'},
     // Dar rozetlerde para biriminin kısaltması. Türkçede "coin"in `c`si;
     // Kurmancî'de "zêr"in `z`si. Sabit `c` yazıldığında Kurmancî oyuncu
     // fiyat rozetinde anlamsız bir harf görüyordu (2026-08-01).
-    K.coinAbbrev: {'ku': 'z', 'tr': 'c'},
+    K.coinAbbrev: {'ku': 'z', 'tr': 'j'},
     K.soloDailyCapReached: {
       'ku': 'Sînorê jetonan ê îro tije bû — sibê ji nû ve dest pê dike.',
       'tr': 'Bugünün jeton sınırına ulaştın — yarın sıfırlanır.',
@@ -1280,7 +1279,7 @@ class Tr {
     K.finishAction: {'ku': 'Biqedîne', 'tr': 'Bitir'},
     K.finishQuizHint: {
       'ku': 'Quizê biqedîne, zêr qezenc bike û jokeran veke',
-      'tr': 'Quizi bitir, coin kazan ve jokerleri aç',
+      'tr': 'Quizi bitir, jeton kazan ve jokerleri aç',
     },
     K.wildcardFiftyHint: {
       'ku': 'Du bersivên şaş tên jêbirin',
@@ -1335,7 +1334,7 @@ class Tr {
     K.wheelTitle: {'ku': 'Çerxa Rojê', 'tr': 'Günün Çarkı'},
     K.wheelRewardNote: {
       'ku': 'Xelat rasterast li hejmara zêrên te tê zêdekirin.',
-      'tr': 'Ödül doğrudan coin bakiyene eklenir.',
+      'tr': 'Ödül doğrudan jeton bakiyene eklenir.',
     },
     K.wheelOncePerDay: {
       'ku': 'Her roj carekê bizivirîne!',
@@ -1343,16 +1342,16 @@ class Tr {
     },
     K.wheelSub: {
       'ku': 'Zêr qezenc bike û zincîra xwe bidomîne',
-      'tr': 'Coin kazan ve serini sürdür',
+      'tr': 'Jeton kazan ve serini sürdür',
     },
     K.wheelWonAmount: {
       'ku': 'Te {amount} zêr qezenc kir!',
-      'tr': '{amount} coin kazandın!',
+      'tr': '{amount} jeton kazandın!',
     },
     K.congrats: {'ku': 'Pîroz be!', 'tr': 'Tebrikler!'},
     K.wheelWonPlus: {
       'ku': '+{amount} zêr qezenc kir!',
-      'tr': '+{amount} coin kazandın!',
+      'tr': '+{amount} jeton kazandın!',
     },
     K.wheelReady: {
       'ku': 'Mafê te yê îro amade ye',
@@ -1517,9 +1516,9 @@ class Tr {
     },
     K.yourBalance: {
       'ku': 'Hejmara zêrên te: {coins}',
-      'tr': 'Bakiyen: {coins} coin',
+      'tr': 'Bakiyen: {coins} jeton',
     },
-    K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Coin kazan'},
+    K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Jeton kazan'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'İptal'},
     K.rewardPending: {
       'ku': 'Girêdan tune — xelata te tê tomarkirin û paşê tê dayîn.',
@@ -1562,7 +1561,7 @@ class Tr {
     },
     K.championRewardGranted: {
       'ku': 'Pîroz be! Xelata şampiyoniyê: {coins} zêr',
-      'tr': 'Tebrikler! Şampiyonluk ödülün: {coins} coin',
+      'tr': 'Tebrikler! Şampiyonluk ödülün: {coins} jeton',
     },
     // 2026-08-14: skor sunucuya yazılamazsa hata yutuluyor, kullanıcı
     // maçının sessizce boşa gittiğini hiçbir yerde görmüyordu. Sunucu
@@ -1578,7 +1577,7 @@ class Tr {
     K.buyAction: {'ku': 'Bikire', 'tr': 'Satın Al'},
     K.buyItemForCoins: {
       'ku': '{item} bikire — {coins} zêr',
-      'tr': '{item} satın al — {coins} coin',
+      'tr': '{item} satın al — {coins} jeton',
     },
     K.insufficientBalance: {'ku': 'Zêrên te kêm in!', 'tr': 'Bakiye yetersiz!'},
     K.purchaseErrorTitle: {
@@ -1597,7 +1596,7 @@ class Tr {
     K.gotIt: {'ku': 'Fêm kir', 'tr': 'Anladım'},
     K.zeroBalanceHint: {
       'ku': 'Zêrên te 0 in — çerxa rojane bizivirîne û zêr qezenc bike!',
-      'tr': 'Bakiyen 0 — günlük çarkı çevir, coin kazan!',
+      'tr': 'Bakiyen 0 — günlük çarkı çevir, jeton kazan!',
     },
     K.shopEmpty: {
       'ku': 'Hîn tiştek di dukanê de tune.',
@@ -1605,7 +1604,7 @@ class Tr {
     },
     K.shopSubtitle: {
       'ku': 'Zêrên xwe bi aqilmendî bixercîne û profîla xwe xweştir bike',
-      'tr': 'Coinlerini akıllıca harca, profilini ve deneyimini güzelleştir',
+      'tr': 'Jetonlarını akıllıca harca, profilini ve deneyimini güzelleştir',
     },
     K.mostWanted: {'ku': 'YA HERÎ TÊ XWASTIN', 'tr': 'EN POPÜLER'},
     K.ownedLabel: {'ku': 'Yê te', 'tr': 'Sende'},
@@ -2092,7 +2091,7 @@ class Tr {
     },
     K.onbRewardBullet: {
       'ku': 'Xelat, zêr û joker',
-      'tr': 'Ödül, coin ve joker',
+      'tr': 'Ödül, jeton ve joker',
     },
     K.onbTagline: {
       'ku': 'Kurmancî hîn bibe, pêş bikeve.',
@@ -2146,7 +2145,7 @@ class Tr {
       'ku': 'Zincîra te ya rojane bixweber, bê zêr tê parastin.',
       // Virgülsüz hâlde "serin" sıfat gibi okunuyordu ("günlük serin
       // coin"); virgül özneyi ayırır (2026-07-27).
-      'tr': 'Günlük serin, coin harcamadan otomatik korunur.',
+      'tr': 'Günlük serin, jeton harcamadan otomatik korunur.',
     },
     K.paywallPerkSupport: {
       'ku': 'Piştgiriya ZanKurdê',
@@ -2354,13 +2353,13 @@ class Tr {
       'ku':
           '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 10 kategoriyan û 5 astan hilbijêre.\n• Joker 50/50: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast pûanên zêde dide.',
       'tr':
-          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 10 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve coin kazandırır; seri bonusu artırır.',
+          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 10 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve jeton kazandırır; seri bonusu artırır.',
     },
     K.privacyBody: {
       'ku':
-          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, navnîşana e-nameyê (heke tomar bibî), pûan, statîstîk û daneyên lîstik û hevberkirinê, hejmara zêran, pirsên tomarkirî, peyamên odeyê û pêşniyarên pirsan. XP, zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên parastin; dema tu derkevî ew ji amûrê tên paqij kirin. Di xetayan de tomarên teknîkî yên anonîm tên berhevkirin. Analîza bikaranînê tenê heke tu wê ji Mîheng > Nepenî û Daneyên ve vekî tê çalak kirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di tabloya pêşengan, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Hesab > Hesabê Min Jê Bibe.',
+          'ZanKurd ev daneyên serhêl tomar dike: navê lîstikvan, navnîşana e-nameyê (heke tomar bibî), pûan, statîstîk û daneyên lîstik û hevberkirinê, hejmara zêran, pirsên tomarkirî, peyamên odeyê û pêşniyarên pirsan. Asta herêmî, zincîr, şaşî û pêşketina hînbûnê li ser vê amûrê tên parastin; dema tu derkevî ew ji amûrê tên paqij kirin. Xala rêzkirinê li ser hesabê tê nivîsîn. Di xetayan de tomarên teknîkî yên anonîm û analîza bikaranînê tenê heke tu wê ji Mîheng > Nepenî û Daneyên ve vekî tê çalak kirin.\n\nDaneyên te nayên firotin û ji bo reklamê bi kesên sêyemîn re nayên parvekirin. Navê te di tabloya pêşengan, lêgerîna hevalan, daxwazên hevaltiyê û odeyên serhêl de xuya dibe.\n\nJi bo jêbirina hesabê û hemû daneyên serhêl: Mîheng > Hesab > Hesabê Min Jê Bibe.',
       'tr':
-          'ZanKurd şu çevrimiçi verileri saklar: oyuncu adı, e-posta adresi (kayıt olursan), oyun ve eşleştirme puanları, istatistikleri ve verileri, coin bakiyesi, kaydedilen sorular, oda mesajları ve soru önerileri. XP, seri, yanlışlar ve öğrenme ilerlemesi yalnız bu cihazda tutulur; çıkış yaptığında cihazdan temizlenir. Hatalarda anonim teknik çökme kayıtları toplanır. Kullanım analizi yalnız Ayarlar > Gizlilik ve Veri seçeneğini açarsan etkinleşir.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın liderlik tablosunda, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap > Hesabımı Sil.',
+          'ZanKurd şu çevrimiçi verileri saklar: oyuncu adı, e-posta adresi (kayıt olursan), oyun ve eşleştirme puanları, istatistikleri ve verileri, jeton bakiyesi, kaydedilen sorular, oda mesajları ve soru önerileri. Yerel seviye çubuğu, seri, yanlışlar ve öğrenme ilerlemesi yalnız bu cihazda tutulur; çıkış yaptığında cihazdan temizlenir. Sıralama puanın hesabına yazılır. Hatalarda anonim teknik çökme kayıtları ve kullanım analizi yalnız Ayarlar > Gizlilik ve Veri seçeneğini açarsan etkinleşir.\n\nVerilerin satılmaz ve üçüncü taraflarla pazarlama amaçlı paylaşılmaz. Adın liderlik tablosunda, arkadaş araması ve isteklerinde, ayrıca çevrimiçi odalarda görünür.\n\nHesabını ve tüm çevrimiçi verilerini kalıcı olarak silmek için: Ayarlar > Hesap > Hesabımı Sil.',
     },
     K.aboutBody: {
       'ku':
@@ -2479,15 +2478,15 @@ class Tr {
     },
     K.selectCategory: {'ku': 'Kategoriyê Hilbijêre', 'tr': 'Kategori Seç'},
     K.questionCountLabel: {'ku': 'Hejmara Pirsan', 'tr': 'Soru Sayısı'},
-    K.entryFeeLabel: {
-      'ku': 'Xerca Ketinê (Bahîs)',
-      'tr': 'Giriş Ücreti (Bahis)',
-    },
+    K.entryFeeLabel: {'ku': 'Xerca ketinê', 'tr': 'Katılım ücreti'},
     K.freeEntry: {'ku': 'Bêpere (0)', 'tr': 'Ücretsiz (0)'},
-    K.insufficientCoins: {'ku': 'Zêrên te têrê nakin!', 'tr': 'Yetersiz Coin!'},
+    K.insufficientCoins: {
+      'ku': 'Zêrên te têrê nakin!',
+      'tr': 'Yetersiz jeton!',
+    },
     K.entryFeeRequired: {
       'ku': 'Ji bo vê odeyê {amount} zêr pêwîst e.',
-      'tr': 'Bu oda için {amount} coin gerekiyor.',
+      'tr': 'Bu oda için {amount} jeton gerekiyor.',
     },
     K.newRoom: {'ku': 'Odeya Nû', 'tr': 'Yeni Oda'},
     K.newRoomAction: {'ku': 'Odeya Nû Ava Bike', 'tr': 'Yeni Oda Kur'},
@@ -2519,6 +2518,130 @@ class Tr {
     K.reactionFast: {'ku': 'Lez be!', 'tr': 'Hızlı ol!'},
     K.reactionSmiley: {'ku': 'Kêfxweşî!', 'tr': 'Gülümse!'},
     K.reactionFire: {'ku': 'Agir!', 'tr': 'Harika!'},
+
+    // ── Dürüstlük / sunucu yok ──────────────────────────────────────
+    K.serverUnreachableTitle: {
+      'ku': 'Pêşkêşkar negihîştbar e',
+      'tr': 'Sunucuya ulaşılamadı',
+    },
+    K.serverUnreachableBody: {
+      'ku':
+          'Pêşkêşkar negihîşt. Hînbûn bê înternet dixebite; ode, pêşbirk, rêzbendî û kûpa girtî ne.',
+      'tr':
+          'Sunucuya ulaşılamadı. Öğrenme çevrimdışı çalışır; oda, düello, liderlik ve turnuva kapalı.',
+    },
+    K.bootDegradedBody: {
+      'ku': 'Hin karên vekirinê dereng man. Naverok hîn tê barkirin.',
+      'tr':
+          'Bazı açılış adımları zamanında bitmedi. İçerik hâlâ yükleniyor olabilir.',
+    },
+    K.bankPartialWarning: {
+      'ku': 'Hin paketên pirsê nehatin barkirin. Naverok nîvco ye.',
+      'tr': 'Bazı soru paketleri yüklenemedi. İçerik eksik olabilir.',
+    },
+    K.bankEmptyTitle: {'ku': 'Pirs tune', 'tr': 'Soru yok'},
+    K.bankEmptyBody: {
+      'ku': 'Banka pirsê nehat barkirin.',
+      'tr': 'Soru bankası yüklenemedi.',
+    },
+    K.homeLoadFailedTitle: {
+      'ku': 'Naverok nehat barkirin',
+      'tr': 'Ana ekran yüklenemedi',
+    },
+    K.homeLoadFailedBody: {
+      'ku': 'Daneyên sereke nehatin xwendin. Dîsa biceribîne.',
+      'tr': 'Veriler okunamadı. Tekrar dene.',
+    },
+    K.quizTutorialTimerTitle: {'ku': 'Demjimêr + Bersiv', 'tr': 'Süre + Cevap'},
+    K.quizTutorialTimerBody: {
+      'ku':
+          '{seconds} çirkeyan de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
+      'tr':
+          '{seconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
+    },
+    K.quizTutorialUntimedTitle: {'ku': 'Bersivê hilbijêre', 'tr': 'Cevabı seç'},
+    K.quizTutorialUntimedBody: {
+      'ku':
+          'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî bersivê bersiva rast tê nîşandan; ravekirin li dawiya tûrê ne.',
+      'tr':
+          'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Cevaptan sonra doğru cevap gösterilir; açıklamalar turun sonunda.',
+    },
+    K.quizTutorialNextTitle: {
+      'ku': 'Rêz + Pirsa Din',
+      'tr': 'Seri + Sonraki Soru',
+    },
+    K.quizTutorialNextBody: {
+      'ku':
+          'Bersivên rast ên li pey hev rêzê mezin dikin û bonûs tînin. Piştî bersivê vir bitikîne û derbasî pirsa din bibe.',
+      'tr':
+          'Peş peşe doğru cevaplar serini büyütür, bonus kazandırır. Cevapladıktan sonra buradan sonraki soruya geç.',
+    },
+    K.ageGateLabel: {
+      'ku': 'Ez ji 13 salî mezintir im',
+      'tr': '13 yaşından büyüğüm',
+    },
+    K.ageGateBlocked: {
+      'ku': 'ZanKurd ji bo 13 salî û mezintir e.',
+      'tr': 'ZanKurd 13 yaş ve üzeri içindir.',
+    },
+    K.soloXpRankingNote: {
+      'ku':
+          'Xala rêzbendiyê li ser pêşkêşkarê tê sînorkirin; asta herêmî li ser amûrê dimîne.',
+      'tr':
+          'Sıralama puanı sunucuda sınırlanır; yerel seviye çubuğu cihazda kalır.',
+    },
+    K.referralGuestBlocked: {
+      'ku':
+          'Kodê davetê tenê ji bo hesabên piştrastkirî ye. Mêvan nikare bikar bîne.',
+      'tr':
+          'Davet kodu yalnız doğrulanmış hesaplar içindir. Misafir kullanamaz.',
+    },
+    K.imageCreditsEmpty: {'ku': 'Kûnye tune.', 'tr': 'Künye yok.'},
+    K.imageCreditsFailed: {
+      'ku': 'Kûnye nehatin barkirin.',
+      'tr': 'Künyeler yüklenemedi.',
+    },
+    K.badgeStreak30Title: {'ku': '30 Roj Li Pey Hev', 'tr': '30 Gün Streak'},
+    K.badgeStreak30Desc: {
+      'ku': 'Seriya rojane gihand 30 rojan.',
+      'tr': 'Günlük serini 30 güne taşıdın.',
+    },
+    K.badgeQuestions500Title: {'ku': '500 Pirs', 'tr': '500 Soru'},
+    K.badgeQuestions500Desc: {
+      'ku': 'Bi giştî 500 pirs bersiv da.',
+      'tr': 'Toplam 500 soruya cevap verdin.',
+    },
+    K.badgeQuestions1000Title: {'ku': '1000 Pirs', 'tr': '1000 Soru'},
+    K.badgeQuestions1000Desc: {
+      'ku': 'Bi giştî 1000 pirs bersiv da.',
+      'tr': 'Toplam 1000 soruya cevap verdin.',
+    },
+    K.badgePerfectTitle: {'ku': 'Lîstika Bêkêmasî', 'tr': 'Mükemmel Oyun'},
+    K.badgePerfectDesc: {
+      'ku': 'Di yek pêşbirkê de hemû pirsan rast bersiv da.',
+      'tr': 'Bir yarışta tüm soruları doğru cevapladın.',
+    },
+    K.badgeSpeedTitle: {'ku': 'Leztir', 'tr': 'Hız Canavarı'},
+    K.badgeSpeedDesc: {
+      'ku': 'Pêşbirkek di bin 60 çirkeyan de qedand.',
+      'tr': 'Bir yarışı 60 saniyenin altında bitirdin.',
+    },
+    K.catZiman: {'ku': 'Ziman', 'tr': 'Dil'},
+    K.catCand: {'ku': 'Çand', 'tr': 'Kültür'},
+    K.catDirok: {'ku': 'Dîrok', 'tr': 'Tarih'},
+    K.catEdebiyat: {'ku': 'Wêje', 'tr': 'Edebiyat'},
+    K.catCografya: {'ku': 'Erdnîgarî', 'tr': 'Coğrafya'},
+    K.catMuzik: {'ku': 'Muzîk', 'tr': 'Müzik'},
+    K.catSiyaset: {'ku': 'Siyaset', 'tr': 'Siyaset'},
+    K.catParadigma: {'ku': 'Paradîgma', 'tr': 'Paradigma'},
+    K.catTeknoloji: {'ku': 'Teknolojî', 'tr': 'Teknoloji'},
+    K.catSinema: {'ku': 'Sînema', 'tr': 'Sinema'},
+    K.catTevlihev: {'ku': 'Tevlihev', 'tr': 'Karışık'},
+    K.levelDestpek: {'ku': 'Destpêk', 'tr': 'Başlangıç'},
+    K.levelBingeh: {'ku': 'Bingeh', 'tr': 'Temel'},
+    K.levelNavin: {'ku': 'Navîn', 'tr': 'Orta'},
+    K.levelPesketi: {'ku': 'Pêşketî', 'tr': 'İleri'},
+    K.levelMamoste: {'ku': 'Mamoste', 'tr': 'Usta'},
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -2534,7 +2657,11 @@ class Tr {
   ]) {
     final entry = _table[key];
     assert(entry != null, 'Bilinmeyen metin anahtarı: $key');
-    if (entry == null) return key;
+    if (entry == null) {
+      // Release'te assert düşer; ham key yutmak ekranda teknik dize
+      // gösterir. Testler debug'da assert ile kırılır.
+      throw StateError('Bilinmeyen metin anahtarı: $key');
+    }
     final text = entry[language.code] ?? entry['ku'] ?? key;
     if (params == null || params.isEmpty) return text;
 
@@ -3659,4 +3786,51 @@ class K {
   static const reactionFast = 'room.reaction.fast';
   static const reactionSmiley = 'room.reaction.smiley';
   static const reactionFire = 'room.reaction.fire';
+
+  static const serverUnreachableTitle = 'status.serverUnreachable.title';
+  static const serverUnreachableBody = 'status.serverUnreachable.body';
+  static const bootDegradedBody = 'status.bootDegraded.body';
+  static const bankPartialWarning = 'home.bank.partial';
+  static const bankEmptyTitle = 'home.bank.empty.title';
+  static const bankEmptyBody = 'home.bank.empty.body';
+  static const homeLoadFailedTitle = 'home.loadFailed.title';
+  static const homeLoadFailedBody = 'home.loadFailed.body';
+  static const quizTutorialTimerTitle = 'quiz.tutorial.timer.title';
+  static const quizTutorialTimerBody = 'quiz.tutorial.timer.body';
+  static const quizTutorialUntimedTitle = 'quiz.tutorial.untimed.title';
+  static const quizTutorialUntimedBody = 'quiz.tutorial.untimed.body';
+  static const quizTutorialNextTitle = 'quiz.tutorial.next.title';
+  static const quizTutorialNextBody = 'quiz.tutorial.next.body';
+  static const ageGateLabel = 'nameGate.age.label';
+  static const ageGateBlocked = 'nameGate.age.blocked';
+  static const soloXpRankingNote = 'result.xp.rankingNote';
+  static const referralGuestBlocked = 'friends.referral.guestBlocked';
+  static const imageCreditsEmpty = 'credits.images.empty';
+  static const imageCreditsFailed = 'credits.images.failed';
+  static const badgeStreak30Title = 'badge.streak30.title';
+  static const badgeStreak30Desc = 'badge.streak30.desc';
+  static const badgeQuestions500Title = 'badge.q500.title';
+  static const badgeQuestions500Desc = 'badge.q500.desc';
+  static const badgeQuestions1000Title = 'badge.q1000.title';
+  static const badgeQuestions1000Desc = 'badge.q1000.desc';
+  static const badgePerfectTitle = 'badge.perfect.title';
+  static const badgePerfectDesc = 'badge.perfect.desc';
+  static const badgeSpeedTitle = 'badge.speed.title';
+  static const badgeSpeedDesc = 'badge.speed.desc';
+  static const catZiman = 'cat.ziman';
+  static const catCand = 'cat.cand';
+  static const catDirok = 'cat.dirok';
+  static const catEdebiyat = 'cat.edebiyat';
+  static const catCografya = 'cat.cografya';
+  static const catMuzik = 'cat.muzik';
+  static const catSiyaset = 'cat.siyaset';
+  static const catParadigma = 'cat.paradigma';
+  static const catTeknoloji = 'cat.teknoloji';
+  static const catSinema = 'cat.sinema';
+  static const catTevlihev = 'cat.tevlihev';
+  static const levelDestpek = 'level.destpek';
+  static const levelBingeh = 'level.bingeh';
+  static const levelNavin = 'level.navin';
+  static const levelPesketi = 'level.pesketi';
+  static const levelMamoste = 'level.mamoste';
 }

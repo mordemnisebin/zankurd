@@ -14,9 +14,11 @@ import 'package:zankurd_mobile/src/data/story_progress_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/l10n/material_locales.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
+import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/providers/untimed_mode_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -25,6 +27,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
+import 'package:zankurd_mobile/src/utils/boot_diagnostics.dart';
 
 /// `test/widget_test.dart` bölünmeden önce burada özel (private, `_` önekli)
 /// olan ortak test kurulumu — birden fazla test dosyası tarafından
@@ -90,6 +93,7 @@ Widget testShell({
   LanguageProvider? languageProvider,
   ThemeProvider? themeProvider,
   PremiumService? premiumService,
+  RemoteAvailability? remoteAvailability,
 }) {
   return MultiProvider(
     providers: [
@@ -115,6 +119,9 @@ Widget testShell({
       ChangeNotifierProvider<AnalyticsConsentProvider>(
         create: (_) => AnalyticsConsentProvider(),
       ),
+      ChangeNotifierProvider<RemoteAvailability>.value(
+        value: remoteAvailability ?? RemoteAvailability(reachable: true),
+      ),
       ChangeNotifierProvider<PremiumService>(
         create: (_) => premiumService ?? PremiumService.fallback(),
       ),
@@ -124,6 +131,9 @@ Widget testShell({
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: theme.mode,
+        locale: const Locale('tr'),
+        supportedLocales: AppMaterialLocales.supported,
+        localizationsDelegates: AppMaterialLocales.delegates,
         navigatorObservers: [appRouteObserver, appPageRouteObserver],
         home: child,
       ),
@@ -174,7 +184,6 @@ MockZanKurdRepository freshMockRepository() {
   SharedPreferences.setMockInitialValues({
     'zankurd.onboarding.seen': true,
     'zankurd.profileName.completed.user': true,
-    'zankurd.navTour.seen': true,
     'zankurd.quiz_tutorial.seen': true,
   });
   // Tekil örneği olan HER store sıfırlanır. Bu liste bir zamanlar dörttü ve
@@ -195,5 +204,6 @@ MockZanKurdRepository freshMockRepository() {
   StoryProgressStore.resetInstance();
   StreakStore.resetInstance();
   XPStore.resetInstance();
+  BootDiagnostics.instance.reset();
   return TestMockZanKurdRepository();
 }

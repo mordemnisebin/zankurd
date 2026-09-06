@@ -1,33 +1,30 @@
-# correct_option istemciye açık — bilinçli risk kaydı (2026-07-21 denetimi)
+# correct_option istemciye açık — tarihî risk kaydı (2026-07-21)
 
-## Durum
+> **TARİHÎ — kaynak değil.** Canlı durum `applied.md` ve 2026-07-22 /
+> 2026-09-06 göçleridir.
+
+## 2026-07-22 sonrası durum
+
+`questions` tablosunda doğrudan SELECT 2026-07-22
+(`2026-07-22_multiplayer_integrity_hardening.sql`, `REVOKE SELECT`) ile
+kapatıldı. Solo quiz offline bankadan beslenir. Online odalar
+`get_room_questions` RPC'si üzerinden gelir.
+
+## Kalan risk
+
+Reveal RPC `correct_option`'ı yalnız mevcut indeksten önceki sorularda
+veya oda `finished` iken döndürmelidir
+(`2026-09-06_get_room_questions_revealed.sql`). Canlıya basılmadan önce
+eski gövde mevcut sorunun harfini de verebilir.
+
+## 2026-07-21 notu (o günkü durum)
 
 `public_read_policies.sql` ile `questions` tablosu (onaylılar) `anon` dahil
-tüm istemcilere **`correct_option` kolonu dahil** okunabilir. Online 1v1 /
+tüm istemcilere **`correct_option` kolonu dahil** okunabiliyordu. Online 1v1 /
 odalarda `submit_answer` doğruluğu sunucuda hesaplasa da, hileci bir istemci
-REST API'den sorunun doğru cevabını maçtan önce okuyabilir.
+REST API'den sorunun doğru cevabını maçtan önce okuyabilirdi.
 
-## Neden şimdi kapatılmadı
-
-İstemci solo quiz akışında doğru cevabı yerelde göstermek için
-`correct_option`'ı bizzat SELECT ediyor
-(`supabase_zankurd_repository.dart:58`). Kolonu RLS/view ile gizlemek solo
-modu kırar. Doğru çözüm iki adımlı bir ürün değişikliği gerektirir:
-
-1. Solo quiz'i tamamen offline bankadan besle (zaten 3.147 soru gömülü).
-2. Online oda sorularını `correct_option`'sız bir view'dan servis et;
-   doğrulama yalnız `submit_answer` RPC'sinde kalsın.
-
-## Öneri (uygulanmadı)
-
-```sql
--- create view public.questions_public as
---   select id, category_id, prompt, option_a, option_b, option_c, option_d,
---          explanation, explanation_ku, explanation_tr, question_type,
---          image_url, difficulty
---   from public.questions where is_approved = true;
--- + istemcinin online modda bu view'ı kullanması, solo modda offline banka
-```
-
-Bu değişiklik istemci kodu ile eşzamanlı yapılmalı; tek başına SQL uygulanırsa
-solo online-kaynaklı quiz kırılır.
+O gün kapatılmama gerekçesi: istemci solo quiz akışında doğru cevabı yerelde
+göstermek için `correct_option`'ı bizzat SELECT ediyordu. Kolonu RLS/view ile
+gizlemek o zamanki solo yolu kırardı. Doğru çözüm iki adımdı ve sonradan
+yapıldı: solo offline banka; online `correct_option`'sız veya reveal-gated RPC.

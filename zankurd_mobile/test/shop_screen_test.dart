@@ -162,7 +162,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('500 coin'), findsOneWidget);
+    expect(find.text('500 jeton'), findsOneWidget);
     expect(find.text('Ekstra Çevirme'), findsOneWidget);
     expect(find.text('Altın Çerçeve'), findsOneWidget);
     expect(find.text('VIP Rozeti'), findsOneWidget);
@@ -174,7 +174,7 @@ void main() {
 
   // 2026-08-14 denetimi: çarka giden TEK yol, bakiye TAM 0 iken görünen
   // `_buildEarnCoinCta`ydı. Bakiyesi 0'dan farklı bir oyuncu (ör. burada
-  // 500 coin) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
+  // 500 jeton) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
   // bakiyeden bağımsız her zaman görünmeli ve çarka götürmeli.
   testWidgets('AppBar çarkı sonrası bakiye ve katalog state korunur', (
     tester,
@@ -186,14 +186,14 @@ void main() {
     await tester.pumpAndSettle();
 
     final initialCatalogReads = repository.hasPurchasedCalls;
-    expect(find.text('0 coin'), findsOneWidget);
+    expect(find.text('0 jeton'), findsOneWidget);
     await _spinAndReturn(tester, repository, 'shop-spin-wheel-entry');
 
-    expect(find.text('30 coin'), findsOneWidget);
+    expect(find.text('30 jeton'), findsOneWidget);
     expect(repository.hasPurchasedCalls, initialCatalogReads);
   });
 
-  testWidgets('bakiye 0 coin kazan CTA çarkı sonrası bakiyeyi yeniler', (
+  testWidgets('bakiye 0 jeton kazan CTA çarkı sonrası bakiyeyi yeniler', (
     tester,
   ) async {
     final repository = _SpinWheelShopRepository();
@@ -203,7 +203,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _spinAndReturn(tester, repository, 'shop-earn-coin-cta');
-    expect(find.text('30 coin'), findsOneWidget);
+    expect(find.text('30 jeton'), findsOneWidget);
   });
 
   testWidgets('yetersiz bakiye dialogundaki Coin kazan çarkı sonrası yeniler', (
@@ -215,11 +215,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120j'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Coin kazan'));
+    await tester.tap(find.text('Jeton kazan'));
     await tester.pumpAndSettle();
     await tester.pump();
     await tester.drag(find.byType(Scrollable), const Offset(0, -500));
@@ -231,7 +231,7 @@ void main() {
     await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
 
-    expect(find.text('30 coin'), findsOneWidget);
+    expect(find.text('30 jeton'), findsOneWidget);
   });
 
   testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
@@ -257,10 +257,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120j'));
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('120c'), matching: find.byType(FilledButton)),
+      find.ancestor(of: find.text('120j'), matching: find.byType(FilledButton)),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
     expect(
@@ -276,10 +276,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    // Ekstra çark 120c — bakiye 50c ile alınamamalı.
-    await tester.ensureVisible(find.text('120c'));
+    // Ekstra çark 120j — bakiye 50c ile alınamamalı.
+    await tester.ensureVisible(find.text('120j'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
     // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın Al' gri disabled
     // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
@@ -290,7 +290,7 @@ void main() {
       ),
     );
     expect(buyButton.onPressed, isNull);
-    expect(find.text('Coin kazan'), findsOneWidget);
+    expect(find.text('Jeton kazan'), findsOneWidget);
     expect(repository.spendReasons, isEmpty);
     expect(tester.takeException(), isNull);
   });
@@ -302,9 +302,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120j'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın Al"
     await tester.tap(find.text('Satın Al'));
@@ -313,7 +313,7 @@ void main() {
     expect(repository.spendReasons, ['purchase_spin_wheel_extra']);
     // 500 - 120 (yeni ekstra çevirme fiyatı) = 380
     expect(repository.coins, 380);
-    expect(find.text('380 coin'), findsOneWidget);
+    expect(find.text('380 jeton'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -330,7 +330,7 @@ void main() {
     expect(find.text('Sende'), findsOneWidget);
 
     // Purchased items cannot be re-purchased — no buy button shown
-    expect(find.text('480c'), findsNothing);
+    expect(find.text('480j'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -344,7 +344,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('120c'), findsOneWidget);
+    expect(find.text('120j'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -355,9 +355,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120j'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın Al"
     await tester.tap(find.text('Satın Al'));
@@ -450,7 +450,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
-    expect(find.text('500 coin'), findsOneWidget);
+    expect(find.text('500 jeton'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

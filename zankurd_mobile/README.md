@@ -7,6 +7,8 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 ## Ürün Kapsamı
 
 - Misafir/anonim giriş ve profil adı akışı
+- Ana yol: günlük görev ve solo quiz; 1v1 isteğe bağlı
+- Turnuva ve günün etkinliği Yarış sekmesinde ikinci katmandadır
 - Kurmanci/Türkçe arayüz geçişi (anahtar tabanlı kayıt: `lib/src/l10n/strings.dart`)
 - Aydınlık/Karanlık tema geçişi
 - Kategori ve seviye bazlı quiz
@@ -35,8 +37,10 @@ Detaylı mimari belgeler için [ARCHITECTURE.md](ARCHITECTURE.md) dosyasına bak
 - `lib/src/widgets/`: Ortak panel, rozet, kilim ve grafik bileşenleri
 - `lib/src/theme/`: Material 3 tema, antrasit/yeşil palet
 - `lib/src/l10n/`: Kurmancî/Türkçe anahtar tabanlı metinler (`strings.dart`, `lang.dart`)
-- `lib/src/services/`: Analitik, bildirim ve rozet servisleri
-- `lib/src/providers/`: Auth, Theme, Language ve Sound state management
+- `lib/src/services/`: Analitik ve bildirim servisleri
+- `lib/src/data/badge_service.dart`: Rozet tanımları ve kilit açma
+- `lib/src/providers/`: Auth, Theme, Language, Sound, AnalyticsConsent,
+  ReducedMotion, UntimedMode, RemoteAvailability
 - `supabase/`: Play sürümü için gereken SQL/RPC/policy dosyaları
 
 ## Geliştirme
@@ -47,6 +51,14 @@ flutter run -d chrome
 flutter run -d windows
 flutter run -d emulator-5554
 ```
+
+Web önizleme (üretim tanımlarıyla):
+
+```bash
+flutter run -d chrome --dart-define-from-file=.env.web.release.json
+```
+
+Web üretimde `PluginConnectivityMonitor` kullanılır; `AlwaysOnlineConnectivityMonitor` yalnız test içindir.
 
 Üretim derlemesi Supabase yapılandırmasının açıkça verilmesini zorunlu tutar:
 
@@ -165,9 +177,9 @@ doğrulamak için salt-okunur adjudication raporu üretilebilir:
 dart run tool/question_quality/adjudication/adjudication.dart report
 ```
 
-Çıktılar `docs/audit/question_quality/adjudication_2026-07-15/` altındadır.
-Komut soru kaynaklarını, baseline'ı veya source manifesti değiştirmez ve hiçbir
-kaydı otomatik düzeltilebilir olarak işaretlemez.
+Çıktılar `docs/audit/question_quality/adjudication_2026-07-15/` altına yazılır.
+Tarihî kaynak CSV yoksa rapor boş listeyle biter; komut kaynakları,
+baseline'ı veya source manifesti değiştirmez.
 
 Windows'ta Android/Gradle build öncesi geçici dizini ASCII bir yola alın:
 

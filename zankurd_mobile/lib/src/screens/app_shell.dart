@@ -12,9 +12,11 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/room.dart';
 import '../providers/auth_provider.dart';
+import '../providers/remote_availability.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/join_deep_link.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/offline_banner.dart';
 import 'learn_home_screen.dart';
@@ -208,7 +210,6 @@ class _AppShellState extends State<AppShell>
   ConnectivityMonitor get _connectivityMonitor {
     final monitor = widget.connectivityMonitor;
     if (monitor != null) return monitor;
-    if (kIsWeb) return const AlwaysOnlineConnectivityMonitor();
     return PluginConnectivityMonitor();
   }
 
@@ -353,7 +354,14 @@ class _AppShellState extends State<AppShell>
     if (!authProvider.isAuthenticated) {
       _profileCheckStarted = false;
       _profileCheckedUserId = null;
-      return const SignInScreen();
+      return Scaffold(
+        body: Column(
+          children: [
+            _statusBanner(context),
+            const Expanded(child: SignInScreen()),
+          ],
+        ),
+      );
     }
 
     // Kurtarma bağlantısı da normal bir oturum açar. Bu kapı olmadan
@@ -397,6 +405,7 @@ class _AppShellState extends State<AppShell>
     if (resumableUserId != null) {
       _scheduleRoomResumeCheck(resumableUserId);
     }
+    _scheduleJoinDeepLink();
 
     // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
     // pop edince beyaz boş sayfa oluşuyordu (2026-07-19 canlı denetim P1).
@@ -454,7 +463,7 @@ class _AppShellState extends State<AppShell>
       return Scaffold(
         body: Column(
           children: [
-            OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity),
+            _statusBanner(context),
             Expanded(
               child: Row(
                 children: [
@@ -472,12 +481,52 @@ class _AppShellState extends State<AppShell>
     return Scaffold(
       body: Column(
         children: [
-          OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity),
+          _statusBanner(context),
           Expanded(child: content),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(context, ku),
     );
+  }
+
+  Widget _statusBanner(BuildContext context) {
+    final remoteLocked = RemoteAvailability.socialLockedIn(context);
+    if (remoteLocked) {
+      return OfflineBanner(
+        isOffline: true,
+        label: context.t(K.serverUnreachableTitle),
+        onRetry: null,
+      );
+    }
+    return OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity);
+  }
+
+  bool _joinDeepLinkScheduled = false;
+
+  void _scheduleJoinDeepLink() {
+    if (_joinDeepLinkScheduled) return;
+    _joinDeepLinkScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_consumeJoinDeepLink());
+    });
+  }
+
+  Future<void> _consumeJoinDeepLink() async {
+    if (!mounted) return;
+    if (RemoteAvailability.socialLockedIn(context)) return;
+    final code = JoinDeepLink.consumeInitialRoute();
+    if (code == null) return;
+    try {
+      final room = await widget.repository.joinOnlineRoom(code);
+      if (!mounted) return;
+      await Navigator.of(context).push(
+        AppRoute.to(
+          RoomScreen(repository: widget.repository, initialRoom: room),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'join deep link failed');
+    }
   }
 
   Widget _buildTab(BuildContext context, int index) {

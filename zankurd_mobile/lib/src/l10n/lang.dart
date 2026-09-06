@@ -166,34 +166,34 @@ extension LangContext on BuildContext {
   }
 }
 
-/// Category names in both languages.
+/// Category names in both languages. Görünen ad [Tr] tablosundadır.
 class CategoryNames {
   /// Stable category IDs (also used as keys in stores / SQL).
-  static const Map<String, String> _kuToTr = {
-    'Ziman': 'Dil',
-    'Çand': 'Kültür',
-    'Dîrok': 'Tarih',
-    'Edebiyat': 'Edebiyat',
-    'Cografya': 'Coğrafya',
-    'Muzîk': 'Müzik',
-    'Siyaset': 'Siyaset',
-    'Paradigma': 'Paradigma',
-    'Teknolojî': 'Teknoloji',
-    'Sînema': 'Sinema',
-    'Tevlihev': 'Karışık',
+  static const Map<String, String> _keys = {
+    'Ziman': K.catZiman,
+    'Çand': K.catCand,
+    'Dîrok': K.catDirok,
+    'Edebiyat': K.catEdebiyat,
+    'Cografya': K.catCografya,
+    'Muzîk': K.catMuzik,
+    'Siyaset': K.catSiyaset,
+    'Paradigma': K.catParadigma,
+    'Teknolojî': K.catTeknoloji,
+    'Sînema': K.catSinema,
+    'Tevlihev': K.catTevlihev,
   };
 
-  /// Optional Kurmanci display labels (ID stays the map key).
-  static const Map<String, String> _kuDisplay = {
-    'Edebiyat': 'Wêje',
-    'Cografya': 'Erdnîgarî',
-    'Paradigma': 'Paradîgma',
-  };
+  static String tr(String kuName) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.of(key, AppLanguage.tr);
+  }
 
-  static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
-
-  static String localized(String kuName, bool isKu) =>
-      isKu ? (_kuDisplay[kuName] ?? kuName) : tr(kuName);
+  static String localized(String kuName, bool isKu) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.forKu(key, isKu);
+  }
 }
 
 /// Seviye adları veri katmanında Kurmancî sabit olarak tutulur (kimlik
@@ -204,18 +204,25 @@ class CategoryNames {
 class LevelNames {
   const LevelNames._();
 
-  static const Map<String, String> _kuToTr = {
-    'Destpêk': 'Başlangıç',
-    'Bingeh': 'Temel',
-    'Navîn': 'Orta',
-    'Pêşketî': 'İleri',
-    'Mamoste': 'Usta',
+  static const Map<String, String> _keys = {
+    'Destpêk': K.levelDestpek,
+    'Bingeh': K.levelBingeh,
+    'Navîn': K.levelNavin,
+    'Pêşketî': K.levelPesketi,
+    'Mamoste': K.levelMamoste,
   };
 
-  static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
+  static String tr(String kuName) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.of(key, AppLanguage.tr);
+  }
 
-  static String localized(String kuName, bool isKu) =>
-      isKu ? kuName : tr(kuName);
+  static String localized(String kuName, bool isKu) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.forKu(key, isKu);
+  }
 }
 
 // `QuizStrings` ve `CommonStrings` burada duruyordu: `Tr`/`K` kayıt

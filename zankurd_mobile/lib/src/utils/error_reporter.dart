@@ -8,8 +8,22 @@ import 'package:flutter/foundation.dart';
 class ErrorReporter {
   const ErrorReporter._();
 
-  static void record(Object error, StackTrace stack, {String? reason}) {
+  /// Ayarlar > Gizlilik kapalıyken Crashlytics yazılmaz.
+  /// [AnalyticsConsentProvider] ile aynı anahtar; döngüsel import yok.
+  static bool crashlyticsEnabled = false;
+
+  static Future<void> setCollectionEnabled(bool enabled) async {
+    crashlyticsEnabled = enabled;
     if (kIsWeb) return;
+    try {
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+        enabled,
+      );
+    } catch (_) {}
+  }
+
+  static void record(Object error, StackTrace stack, {String? reason}) {
+    if (kIsWeb || !crashlyticsEnabled) return;
     try {
       FirebaseCrashlytics.instance.recordError(error, stack, reason: reason);
     } catch (_) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
@@ -11,13 +13,16 @@ import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/streak_panel.dart';
+import '../data/question_bank_loader.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/boot_diagnostics.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/app_state.dart';
 import '../utils/test_environment.dart';
 import '../data/daily_mission_store.dart';
 import '../data/achievement_store.dart';
@@ -405,11 +410,39 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     double bottomContentPadding,
     bool isWide,
   ) {
+    final loader = QuestionBankLoader.instance;
+    if (loader.failedAssets.isNotEmpty && loader.allQuestions.isEmpty) {
+      return AppErrorState(
+        title: context.t(K.bankEmptyTitle),
+        message: context.t(K.bankEmptyBody),
+        retryLabel: context.t(K.retry),
+        onRetry: () {
+          unawaited(
+            loader.load().then((_) {
+              if (mounted) setState(() {});
+            }),
+          );
+        },
+      );
+    }
+
     final primary = _buildAnimatedCard(
       _heroFadeAnimation(0),
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (loader.failedAssets.isNotEmpty ||
+              BootDiagnostics.instance.hasFailures) ...[
+            Text(
+              loader.failedAssets.isNotEmpty
+                  ? context.t(K.bankPartialWarning)
+                  : context.t(K.bootDegradedBody),
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppTheme.textMutedColor(context),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+          ],
           TodayTaskCard(
             isKu: ku,
             loading: _roomActionLoading,

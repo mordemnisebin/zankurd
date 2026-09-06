@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
+import '../utils/error_reporter.dart';
 import '../utils/external_link.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/zk_back_button.dart';
@@ -28,6 +29,7 @@ class ImageCreditsScreen extends StatefulWidget {
 
 class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
   List<_Credit>? _credits;
+  Object? _loadError;
 
   @override
   void initState() {
@@ -36,16 +38,32 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
   }
 
   Future<void> _load() async {
-    final raw = await rootBundle.loadString('assets/data/image_credits.json');
-    final decoded = jsonDecode(raw) as Map<String, dynamic>;
-    final parsed =
-        decoded.entries
-            .map(
-              (entry) => _Credit.fromJson(entry.value as Map<String, dynamic>),
-            )
-            .toList()
-          ..sort((a, b) => a.title.compareTo(b.title));
-    if (mounted) setState(() => _credits = parsed);
+    try {
+      final raw = await rootBundle.loadString('assets/data/image_credits.json');
+      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      final parsed =
+          decoded.entries
+              .map(
+                (entry) =>
+                    _Credit.fromJson(entry.value as Map<String, dynamic>),
+              )
+              .toList()
+            ..sort((a, b) => a.title.compareTo(b.title));
+      if (mounted) {
+        setState(() {
+          _credits = parsed;
+          _loadError = null;
+        });
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'image credits load failed');
+      if (mounted) {
+        setState(() {
+          _credits = const [];
+          _loadError = error;
+        });
+      }
+    }
   }
 
   @override
@@ -71,10 +89,25 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    for (final credit in credits) ...[
-                      _CreditTile(credit: credit),
-                      const SizedBox(height: AppSpacing.xs),
-                    ],
+                    if (_loadError != null)
+                      Text(
+                        context.t(K.imageCreditsFailed),
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.wrong,
+                        ),
+                      )
+                    else if (credits.isEmpty)
+                      Text(
+                        context.t(K.imageCreditsEmpty),
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textMutedColor(context),
+                        ),
+                      )
+                    else
+                      for (final credit in credits) ...[
+                        _CreditTile(credit: credit),
+                        const SizedBox(height: AppSpacing.xs),
+                      ],
                   ],
                 ),
         ),

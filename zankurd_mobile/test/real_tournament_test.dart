@@ -295,7 +295,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(repository.championClaims, 1);
-    expect(find.textContaining('200 coin'), findsOneWidget);
+    expect(find.textContaining('200 jeton'), findsOneWidget);
     // `TournamentBracket.totalScore` hiçbir yolda doldurulmuyordu —
     // "Final skoru" her zaman 0 gösteriyordu. Skor zaten maçta duruyor
     // (playerOneScore: 900); ekran onu toplayıp göstermeli

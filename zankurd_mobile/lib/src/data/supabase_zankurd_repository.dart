@@ -1374,10 +1374,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // okuyor — aynı deseni burada da kullan.
       final ids = await loadBlockedPlayerIds();
       if (ids.isEmpty) return const [];
-      final profiles = await client
-          .from('profiles')
-          .select('id, display_name, player_tag')
-          .inFilter('id', ids.toList());
+      final profiles = await _fetchPublicProfiles(ids.toList());
       final byId = {for (final p in profiles) p['id'] as String: p};
       return ids.map((id) {
         final profile = byId[id];
@@ -1443,12 +1440,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
           if (missingProfileIds.isNotEmpty) {
             try {
-              final profiles = await client
-                  .from('profiles')
-                  .select(
-                    'id, display_name, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title',
-                  )
-                  .inFilter('id', missingProfileIds);
+              final profiles = await _fetchPublicProfiles(missingProfileIds);
               for (final p in profiles) {
                 final id = p['id'] as String;
                 _profileCache[id] = p;
@@ -1978,8 +1970,77 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  @override
+  Future<int> awardRoomXp(String roomId) async {
+    final id = roomId.trim();
+    if (id.isEmpty) return 0;
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      if (currentUserId?.trim() != user.id) return 0;
+      final response = await client.rpc<dynamic>(
+        'award_room_xp',
+        params: {'p_room_id': id},
+      );
+      if (response is int) return response;
+      if (response is num) return response.toInt();
+      return 0;
+    } on PostgrestException catch (error, stack) {
+      _recordError(
+        error,
+        stack,
+        reason: error.code == '42883'
+            ? 'award_room_xp missing — migration not applied yet'
+            : 'award_room_xp failed',
+      );
+      return 0;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'award_room_xp failed');
+      return 0;
+    }
+  }
+
   void _recordError(Object error, StackTrace stack, {String? reason}) {
     ErrorReporter.record(error, stack, reason: reason);
+  }
+
+  String _revealedCorrectAnswer(
+    Map<String, dynamic> row,
+    List<String> answers,
+  ) {
+    final opt = (row['correct_option'] as String?)?.trim().toUpperCase();
+    if (opt == null || opt.isEmpty) return '';
+    const letters = ['A', 'B', 'C', 'D'];
+    final index = letters.indexOf(opt);
+    if (index >= 0 && index < answers.length) return answers[index];
+    return '';
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchPublicProfiles(
+    List<String> ids,
+  ) async {
+    if (ids.isEmpty) return const [];
+    try {
+      final response = await client.rpc(
+        'get_public_profiles',
+        params: {'p_ids': ids},
+      );
+      if (response is List) {
+        return response.whereType<Map<String, dynamic>>().toList();
+      }
+      return const [];
+    } on PostgrestException catch (error, stack) {
+      if (error.code != '42883') {
+        _recordError(error, stack, reason: 'get_public_profiles failed');
+        rethrow;
+      }
+      return await client
+          .from('profiles')
+          .select(
+            'id, display_name, player_tag, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title',
+          )
+          .inFilter('id', ids);
+    }
   }
 
   int? _amountFromRpcResponse(Object? response) {
@@ -2238,7 +2299,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       category: row['category_name'] as String? ?? 'Ziman',
       prompt: row['prompt'] as String,
       answers: answers,
-      correctAnswer: '',
+      correctAnswer: _revealedCorrectAnswer(row, answers),
       explanation: '',
       type: _questionTypeFromRow(row),
       imageUrl: row['image_url'] as String?,

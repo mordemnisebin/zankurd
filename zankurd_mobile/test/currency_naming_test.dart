@@ -8,7 +8,7 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 ///
 /// ## Kusur
 ///
-/// Defterde `K.coinWord` zaten vardı (`ku: Zêr`, `tr: Coin`) ama mağaza
+/// Defterde `K.coinWord` zaten vardı (`ku: Zêr`, `tr: jeton`) ama mağaza
 /// ekranı iki yerde dizeyi sabit yazıyordu. Kurmancî mağazada başlık
 /// "Zêrên xwe bi aqilmendî bixercîne" derken sayaç "0 coin" diyordu; aynı
 /// ekranda para birimi iki ayrı adla anılıyordu.
@@ -22,7 +22,7 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 void main() {
   test('defterdeki para birimi adları doğru', () {
     expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
-    expect(Tr.of(K.coinWord, AppLanguage.tr), 'Coin');
+    expect(Tr.of(K.coinWord, AppLanguage.tr), 'jeton');
   });
 
   test('mağaza para birimini sabit yazmıyor', () {
@@ -51,7 +51,7 @@ void main() {
     // sabiti taşıyordu: mağaza kartı, sonuç ekranı coin rozeti ve joker
     // çubuğu.
     expect(Tr.of(K.coinAbbrev, AppLanguage.ku), 'z');
-    expect(Tr.of(K.coinAbbrev, AppLanguage.tr), 'c');
+    expect(Tr.of(K.coinAbbrev, AppLanguage.tr), 'j');
 
     const screens = [
       'lib/src/screens/shop_screen.dart',

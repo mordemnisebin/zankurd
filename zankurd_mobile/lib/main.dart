@@ -18,10 +18,12 @@ import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
+import 'src/l10n/material_locales.dart';
 import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
+import 'src/providers/remote_availability.dart';
 import 'src/providers/untimed_mode_provider.dart';
 import 'src/utils/boot_step.dart';
 import 'src/providers/sound_provider.dart';
@@ -134,12 +136,9 @@ Future<void> main() async {
       );
       try {
         if (firebaseReady && !kIsWeb) {
-          FlutterError.onError =
-              FirebaseCrashlytics.instance.recordFlutterFatalError;
-          PlatformDispatcher.instance.onError = (error, stack) {
-            FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-            return true;
-          };
+          await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+            false,
+          );
         }
       } catch (_) {
         // Firebase yapılandırması olmayan platformlarda sessizce devam et.
@@ -174,7 +173,7 @@ Future<void> main() async {
         authProvider = AuthProvider(Supabase.instance.client);
       } else {
         repository = MockZanKurdRepository();
-        authProvider = AuthProvider.test(authenticated: true);
+        authProvider = AuthProvider.test();
       }
 
       await bootStepVoid(
@@ -270,10 +269,28 @@ Future<void> main() async {
 
       startInBackground(premiumService.warmUp(), 'premium warmUp');
       if (analyticsConsentProvider.enabled) {
+        ErrorReporter.crashlyticsEnabled = true;
         startInBackground(
           AnalyticsService.instance.initialize(enabled: true),
           'analytics init',
         );
+        if (firebaseReady && !kIsWeb) {
+          try {
+            await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+              true,
+            );
+            FlutterError.onError =
+                FirebaseCrashlytics.instance.recordFlutterFatalError;
+            PlatformDispatcher.instance.onError = (error, stack) {
+              FirebaseCrashlytics.instance.recordError(
+                error,
+                stack,
+                fatal: true,
+              );
+              return true;
+            };
+          } catch (_) {}
+        }
       }
       startInBackground(NotificationService.load(), 'notifications load');
 
@@ -287,6 +304,7 @@ Future<void> main() async {
           reducedMotionProvider: reducedMotionProvider,
           untimedModeProvider: untimedModeProvider,
           analyticsConsentProvider: analyticsConsentProvider,
+          remoteAvailability: RemoteAvailability(reachable: remoteReady),
           premiumService: premiumService,
         ),
       );
@@ -360,6 +378,7 @@ class ZanKurdApp extends StatelessWidget {
     ReducedMotionProvider? reducedMotionProvider,
     UntimedModeProvider? untimedModeProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
+    RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
     super.key,
   }) : authProvider = authProvider ?? AuthProvider.test(),
@@ -370,6 +389,8 @@ class ZanKurdApp extends StatelessWidget {
        untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
+       remoteAvailability =
+           remoteAvailability ?? RemoteAvailability(reachable: true),
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
@@ -381,6 +402,7 @@ class ZanKurdApp extends StatelessWidget {
   final ReducedMotionProvider reducedMotionProvider;
   final UntimedModeProvider untimedModeProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
+  final RemoteAvailability remoteAvailability;
   final PremiumService premiumService;
 
   @override
@@ -407,17 +429,25 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,
         ),
+        ChangeNotifierProvider<RemoteAvailability>.value(
+          value: remoteAvailability,
+        ),
         ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) => MaterialApp(
+      child: Consumer2<ThemeProvider, ReducedMotionProvider>(
+        builder: (context, themeProvider, reducedMotion, _) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'ZanKurd',
           theme: AppTheme.light(),
           darkTheme: AppTheme.dark(),
           themeMode: themeProvider.mode,
-          themeAnimationDuration: const Duration(milliseconds: 600),
+          themeAnimationDuration: reducedMotion.reduceMotion
+              ? Duration.zero
+              : const Duration(milliseconds: 600),
           themeAnimationCurve: Curves.easeInOutCubic,
+          locale: const Locale('tr'),
+          supportedLocales: AppMaterialLocales.supported,
+          localizationsDelegates: AppMaterialLocales.delegates,
           navigatorObservers: [appRouteObserver, appPageRouteObserver],
           home:
               home ??

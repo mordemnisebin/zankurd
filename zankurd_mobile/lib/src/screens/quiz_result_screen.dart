@@ -760,7 +760,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     //
     // BEKLENMEZ: miktar cihazda zaten yazıldı, sunucu yazımı en iyi çabadır
     // ve sonucu ekranın akışını durdurmamalı. Miktarı sunucu sınırlar.
-    unawaited(repository.awardXp(earnedXP));
+    // Oda turunda XP sunucu skorundan yazılır; istemci delta göndermez.
+    final roomId = widget.room.id?.trim() ?? '';
+    if (roomId.isNotEmpty) {
+      unawaited(repository.awardRoomXp(roomId));
+    } else {
+      unawaited(repository.awardXp(earnedXP));
+    }
 
     // Doğru anda (yeterli quiz + iyi skor) bir kez mağaza değerlendirmesi iste.
     final accuracyPercent = totalQuestions == 0

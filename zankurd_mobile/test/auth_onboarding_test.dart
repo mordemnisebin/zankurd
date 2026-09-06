@@ -404,6 +404,8 @@ void main() {
     expect(find.text('Atla'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 

@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # ZanKurd — Aşama 3: Üretim Yapılandırması + Yüksek Riskli Aday Doğrulaması
 
 **Çalışma tarihi:** 2026-08-02

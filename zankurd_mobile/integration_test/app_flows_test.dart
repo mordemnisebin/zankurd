@@ -1,16 +1,14 @@
-// Uçtan uca akış senaryoları (integration_test).
+// Cihazsız uçtan uca akış.
 //
-// Gerçek cihazda/emülatörde çalıştırma:
-//   flutter test integration_test/app_flows_test.dart -d <device>
+//   flutter test integration_test/app_flows_test.dart
 //
-// Bu senaryolar auth gerektirmeyen, cihazdan bağımsız uçtan uca yolları
-// (store + servis + ekran) sürer; böylece CI'da ve gerçek cihazda aynı şekilde
-// çalışır. Tam onboarding→auth akışı gerçek cihaz smoke testi için README'ye
-// bakınız.
+// Binding `TestWidgetsFlutterBinding` — CI'da emülatör yok. 1v1 ve
+// RevenueCat gerçek cihaz ister; onlar nightly işaretlidir, her push'ta
+// koşmaz. Tam onboarding→auth akışı gerçek cihaz smoke testi için
+// README'ye bakınız.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +23,7 @@ import 'package:zankurd_mobile/src/services/placement_scoring.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  TestWidgetsFlutterBinding.ensureInitialized();
 
   Widget host(Widget child) => MultiProvider(
     providers: [

@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # ZanKurd — Gizlilik ve Veri Haritası
 
 **Denetim tarihi:** 2026-08-01 · **HEAD:** `5c79000` · **Sürüm:** 1.9.1+13

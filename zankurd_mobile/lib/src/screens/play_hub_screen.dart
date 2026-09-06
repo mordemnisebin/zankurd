@@ -5,6 +5,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/room.dart';
+import '../providers/remote_availability.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -242,6 +243,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final locked = RemoteAvailability.socialLockedIn(context);
     // 2026-07-24: karo ızgarası + gradyan panel yarışı bitti. Ekranda tek
     // gradyan var (hızlı düello), diğer modlar eşit ağırlıkta sade satır.
     return ColoredBox(
@@ -266,13 +268,15 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               const SizedBox(height: AppSpacing.sm),
               _QuickDuelHero(
                 ku: ku,
-                onTap: () {
-                  Navigator.of(context).push(
-                    AppRoute.to(
-                      MatchmakingScreen(repository: widget.repository),
-                    ),
-                  );
-                },
+                onTap: locked
+                    ? null
+                    : () {
+                        Navigator.of(context).push(
+                          AppRoute.to(
+                            MatchmakingScreen(repository: widget.repository),
+                          ),
+                        );
+                      },
               ),
               const SizedBox(height: AppSpacing.md),
               _PlaySectionHeading(
@@ -298,9 +302,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
                 accent: const Color(0xFF1E4FA6), // safir — kurma
                 title: context.t(K.createRoom),
-                subtitle: context.t(K.createRoomSub),
+                subtitle: locked
+                    ? context.t(K.serverUnreachableTitle)
+                    : context.t(K.createRoomSub),
                 busy: _roomActionLoading,
-                onTap: _roomActionLoading
+                onTap: locked || _roomActionLoading
                     ? null
                     : () {
                         _createOnlineRoom();
@@ -314,10 +320,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 icon: AppIcons.doorOpen,
                 accent: const Color(0xFF04697C), // turkuaz — katılma
                 title: context.t(K.joinByCode),
-                subtitle: context.t(K.joinByCodeSub),
-                onTap: () {
-                  _showJoinSheet();
-                },
+                subtitle: locked
+                    ? context.t(K.serverUnreachableTitle)
+                    : context.t(K.joinByCodeSub),
+                onTap: locked ? null : _showJoinSheet,
               ),
               const SizedBox(height: AppSpacing.md),
               _PlaySectionHeading(
@@ -333,9 +339,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
                 accent: const Color(0xFF9C6300),
                 title: context.t(K.dailyContest),
-                subtitle: context.t(K.tenQuestions),
+                subtitle: locked
+                    ? context.t(K.serverUnreachableTitle)
+                    : context.t(K.tenQuestions),
                 busy: _dailyLoading,
-                onTap: _dailyLoading ? null : _openDailyQuiz,
+                onTap: locked || _dailyLoading ? null : _openDailyQuiz,
               ),
               const SizedBox(height: AppSpacing.sm),
               // Turnuva ilk bakışta yok: benzer uygulamalarda indirme/tekrar
@@ -377,14 +385,18 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   icon: AppIcons.trophy,
                   accent: const Color(0xFF6A38BE),
                   title: context.t(K.tournament),
-                  subtitle: context.t(K.tournamentSub),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      AppRoute.to(
-                        TournamentScreen(repository: widget.repository),
-                      ),
-                    );
-                  },
+                  subtitle: locked
+                      ? context.t(K.serverUnreachableTitle)
+                      : context.t(K.tournamentSub),
+                  onTap: locked
+                      ? null
+                      : () {
+                          Navigator.of(context).push(
+                            AppRoute.to(
+                              TournamentScreen(repository: widget.repository),
+                            ),
+                          );
+                        },
                 ),
               ],
               // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
@@ -404,7 +416,7 @@ class _QuickDuelHero extends StatelessWidget {
   const _QuickDuelHero({required this.ku, required this.onTap});
 
   final bool ku;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

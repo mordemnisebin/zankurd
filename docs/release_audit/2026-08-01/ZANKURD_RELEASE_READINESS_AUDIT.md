@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # ZanKurd — Yayın Hazırlık Denetimi (Aşama 1: Kanıtlı, Salt Okunur)
 
 **Denetim tarihi:** 2026-08-01 / 2026-08-02 (yerel saat)

@@ -408,6 +408,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
                               ReferralStatus.notFound => context.t(
                                 K.invalidReferralCode,
                               ),
+                              ReferralStatus.notVerified => context.t(
+                                K.referralGuestBlocked,
+                              ),
                               _ => context.t(K.searchFailed),
                             };
                             _showMessage(msg);

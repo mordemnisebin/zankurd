@@ -171,7 +171,7 @@ void main() {
             final feeLabels = <String>[
               locale == 'ku' ? 'Bêpere (0)' : 'Ücretsiz (0)',
               for (final fee in [25, 50, 100])
-                '$fee ${locale == 'ku' ? 'Zêr' : 'Coin'}',
+                '$fee ${locale == 'ku' ? 'Zêr' : 'jeton'}',
             ];
             for (final label in feeLabels) {
               expect(

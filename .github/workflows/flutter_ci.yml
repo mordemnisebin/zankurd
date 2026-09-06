@@ -14,6 +14,9 @@ name: ZanKurd Flutter CI
 on:
   push:
   pull_request:
+  schedule:
+    # Nightly işaret: 1v1 / RevenueCat cihaz ister; her push'ta koşmaz.
+    - cron: '17 2 * * *'
 
 defaults:
   run:
@@ -77,6 +80,12 @@ jobs:
 
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
+
+    # Cihazsız uçtan uca akış (IntegrationTest değil). 1v1 ve RevenueCat
+    # gerçek cihaz ister; onlar aşağıda nightly işte işaretlenir, her
+    # push'ta koşmaz.
+    - name: Run device-less app flows
+      run: flutter test -d flutter-tester integration_test/app_flows_test.dart
 
     # Ekran turu her ana ekranı gerçek widget ağacıyla açıp PNG'ye basar.
     #
@@ -161,3 +170,15 @@ jobs:
 
     - name: Build iOS (debug, no codesign)
       run: flutter build ios --debug --no-codesign
+
+  # local_backend_1v1_test ve revenuecat_roundtrip_test cihaz ister.
+  # Bu iş yalnız nightly zamanlamasını işaretler; koşucu cihaz bağlamaz.
+  device-nightly-note:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Mark device-only integration tests
+      run: |
+        echo "integration_test/local_backend_1v1_test.dart cihaz ister."
+        echo "integration_test/revenuecat_roundtrip_test.dart cihaz ister."
+        echo "Her push'taki analyze-and-test bunları koşmaz."

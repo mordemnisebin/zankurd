@@ -4,6 +4,7 @@ import '../config/category_visibility.dart';
 import '../config/category_visuals.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/kilim_reveal.dart';
@@ -23,6 +24,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     with SingleTickerProviderStateMixin {
   final _controller = PageController();
   int _page = 0;
+  bool _ageConfirmed = false;
   late final AnimationController _brandController;
   late final Animation<double> _brandScale;
   late final Animation<double> _brandOpacity;
@@ -51,8 +53,21 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     super.dispose();
   }
 
+  void _completeIfAgeOk() {
+    if (!_ageConfirmed) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.ageGateBlocked))));
+      return;
+    }
+    widget.onComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      _brandController.value = 1;
+    }
     final pages = _pages(context);
     final last = _page == pages.length - 1;
     final isDark = !AppTheme.isLight(context);
@@ -197,7 +212,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     top: compact ? 0 : 2,
                                   ),
                                   child: TextButton(
-                                    onPressed: widget.onComplete,
+                                    onPressed: () => _completeIfAgeOk(),
                                     style: TextButton.styleFrom(
                                       foregroundColor: AppTheme.textMutedColor(
                                         context,
@@ -206,9 +221,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         horizontal: 16,
                                         vertical: 8,
                                       ),
-                                      minimumSize: Size.zero,
+                                      minimumSize: const Size(44, 44),
                                       tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
+                                          MaterialTapTargetSize.padded,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
                                           AppRadius.sm,
@@ -283,13 +298,31 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             ],
                           ),
                         SizedBox(height: compact ? 8 : 10),
+                        Material(
+                          color: Colors.transparent,
+                          child: CheckboxListTile(
+                            key: const ValueKey('onboarding-age-gate'),
+                            value: _ageConfirmed,
+                            onChanged: (value) =>
+                                setState(() => _ageConfirmed = value ?? false),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              context.t(K.ageGateLabel),
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: AppTheme.textPrimaryColor(context),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: compact ? 8 : 10),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: buttonMaxWidth),
                           child: SizedBox(
                             width: double.infinity,
                             child: GeometricGradientButton(
                               onPressed: last
-                                  ? widget.onComplete
+                                  ? _completeIfAgeOk
                                   : () {
                                       _controller.nextPage(
                                         duration: const Duration(
@@ -301,11 +334,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                               icon: last ? AppIcons.check : AppIcons.arrowRight,
                               label: last
                                   ? context.t(K.start)
-                                  // "Piştre" Kurmancî'de "sonra / daha
-                                  // sonra" demek; ileri götüren düğmede
-                                  // yanlış, üstelik sağ üstteki "Derbas
-                                  // bike" (atla) ile anlamca çakışıyordu
-                                  // (2026-07-25 canlı denetimi).
                                   : context.t(K.next),
                             ),
                           ),

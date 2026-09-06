@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
 
 /// Streak ve puan tabanlı rozet servisi.
@@ -10,44 +11,46 @@ class BadgeService {
   static const _storageKey = 'zankurd.badges.unlocked';
   static BadgeService? _instance;
 
-  /// Rozet tanımları: id → {titleKu, titleTr, descKu, descTr, icon}
+  /// Rozet tanımları: id → {titleKey, descKey, icon}. Metin [Tr] tablosunda.
   static const Map<String, Map<String, String>> badgeDefinitions = {
     'streak_30': {
-      'titleKu': '30 Roj Li Pey Hev',
-      'titleTr': '30 Gün Streak',
-      'descKu': 'Seriya rojane gihand 30 rojan.',
-      'descTr': 'Günlük serini 30 güne taşıdın.',
+      'titleKey': K.badgeStreak30Title,
+      'descKey': K.badgeStreak30Desc,
       'icon': 'emoji_events',
     },
     'questions_500': {
-      'titleKu': '500 Pirs',
-      'titleTr': '500 Soru',
-      'descKu': 'Bi giştî 500 pirs bersiv da.',
-      'descTr': 'Toplam 500 soruya cevap verdin.',
+      'titleKey': K.badgeQuestions500Title,
+      'descKey': K.badgeQuestions500Desc,
       'icon': 'workspace_premium',
     },
     'questions_1000': {
-      'titleKu': '1000 Pirs',
-      'titleTr': '1000 Soru',
-      'descKu': 'Bi giştî 1000 pirs bersiv da.',
-      'descTr': 'Toplam 1000 soruya cevap verdin.',
+      'titleKey': K.badgeQuestions1000Title,
+      'descKey': K.badgeQuestions1000Desc,
       'icon': 'military_tech',
     },
     'perfect_game': {
-      'titleKu': 'Lîstika Bêkêmasî',
-      'titleTr': 'Mükemmel Oyun',
-      'descKu': 'Di yek pêşbirkê de hemû pirsan rast bersiv da.',
-      'descTr': 'Bir yarışta tüm soruları doğru cevapladın.',
+      'titleKey': K.badgePerfectTitle,
+      'descKey': K.badgePerfectDesc,
       'icon': 'stars',
     },
     'speed_demon': {
-      'titleKu': 'Leztir',
-      'titleTr': 'Hız Canavarı',
-      'descKu': 'Pêşbirkek di bin 60 çirkeyan de qedand.',
-      'descTr': 'Bir yarışı 60 saniyenin altında bitirdin.',
+      'titleKey': K.badgeSpeedTitle,
+      'descKey': K.badgeSpeedDesc,
       'icon': 'speed',
     },
   };
+
+  static String titleFor(String id, bool isKu) {
+    final key = badgeDefinitions[id]?['titleKey'];
+    if (key == null) return '';
+    return Tr.forKu(key, isKu);
+  }
+
+  static String descFor(String id, bool isKu) {
+    final key = badgeDefinitions[id]?['descKey'];
+    if (key == null) return '';
+    return Tr.forKu(key, isKu);
+  }
 
   static Future<BadgeService> load() async {
     final cached = _instance;

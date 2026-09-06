@@ -101,7 +101,7 @@ void main() {
     await tester.pump(const Duration(seconds: 3));
 
     expect(repository.awardCalls, 1);
-    expect(find.textContaining('+50 coin kazandın'), findsOneWidget);
+    expect(find.textContaining('+50 jeton kazandın'), findsOneWidget);
     expect(find.text('Yarın tekrar gel!'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

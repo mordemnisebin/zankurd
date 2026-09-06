@@ -226,7 +226,6 @@ class SyncManager {
   }
 
   static ConnectivityMonitor _defaultConnectivityMonitor() {
-    if (kIsWeb) return const AlwaysOnlineConnectivityMonitor();
     return PluginConnectivityMonitor();
   }
 

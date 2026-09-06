@@ -4,6 +4,7 @@ enum ReferralStatus {
   alreadyRedeemed,
   ownCode,
   notFound,
+  notVerified,
   networkError,
 }
 
@@ -36,6 +37,7 @@ class ReferralResult {
       'already_redeemed' => ReferralStatus.alreadyRedeemed,
       'own_code' => ReferralStatus.ownCode,
       'code_not_found' => ReferralStatus.notFound,
+      'not_verified' => ReferralStatus.notVerified,
       _ => ReferralStatus.networkError,
     };
     return ReferralResult(status: status, message: data['message'] as String?);

@@ -9,6 +9,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   AnalyticsConsentProvider({bool initialEnabled = false})
     : _enabled = initialEnabled {
     isEnabled = initialEnabled;
+    ErrorReporter.crashlyticsEnabled = initialEnabled;
   }
 
   static const _storageKey = 'zankurd.analyticsConsent';
@@ -45,6 +46,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
     _enabled = value;
     isEnabled = value;
     notifyListeners();
+    await ErrorReporter.setCollectionEnabled(value);
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_storageKey, value);

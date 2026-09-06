@@ -33,6 +33,7 @@ abstract interface class SoloQuizPort {
     GameRoom? room,
   });
   Future<int> awardXp(int delta);
+  Future<int> awardRoomXp(String roomId);
   Future<List<Lesson>> loadLessonsByCategory(String category);
   Future<Map<String, dynamic>?> loadLesson(String lessonId);
   Future<List<LessonSlide>> loadLessonSlides(String lessonId);
