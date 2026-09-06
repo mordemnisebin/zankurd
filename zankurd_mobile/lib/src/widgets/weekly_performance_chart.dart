@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../l10n/strings.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 
@@ -28,6 +29,35 @@ class WeeklyPerformanceChart extends StatelessWidget {
       }
     });
 
+    final gridLineColor = AppTheme.borderColor(context).withValues(alpha: 0.5);
+    Widget chart(double progress) => SizedBox(
+      height: 160,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _ChartPainter(
+          history: history,
+          maxVal: maxVal,
+          progress: progress,
+          isKu: isKu,
+          gridLineColor: gridLineColor,
+          labelColor: mutedTextColor,
+          correctColor: AppTheme.correct,
+          wrongColor: AppTheme.wrong,
+        ),
+      ),
+    );
+
+    // Çubuk büyümesi süsüdür. Tercih açıkken ilk karede tam boyda
+    // durur; yoksa profilin en hareketli yüzeyi ayarı yok sayar.
+    final chartArea = ReducedMotionProvider.isReducedIn(context)
+        ? chart(1.0)
+        : TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0.0, end: 1.0),
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.easeOutQuart,
+            builder: (context, progress, child) => chart(progress),
+          );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,32 +79,7 @@ class WeeklyPerformanceChart extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        // Chart Area
-        TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: 0.0, end: 1.0),
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.easeOutQuart,
-          builder: (context, progress, child) {
-            return SizedBox(
-              height: 160,
-              width: double.infinity,
-              child: CustomPaint(
-                painter: _ChartPainter(
-                  history: history,
-                  maxVal: maxVal,
-                  progress: progress,
-                  isKu: isKu,
-                  gridLineColor: AppTheme.borderColor(
-                    context,
-                  ).withValues(alpha: 0.5),
-                  labelColor: mutedTextColor,
-                  correctColor: AppTheme.correct,
-                  wrongColor: AppTheme.wrong,
-                ),
-              ),
-            );
-          },
-        ),
+        chartArea,
       ],
     );
   }
