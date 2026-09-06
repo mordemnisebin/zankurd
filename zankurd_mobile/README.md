@@ -80,10 +80,12 @@ flutter run `
 
 ```powershell
 dart analyze
-flutter test --exclude-tags preview
+flutter test --coverage
 ```
 
-Kök analiz ZanKurd uygulama paketinin tamamını doğrular.
+Kök analiz ZanKurd uygulama paketinin tamamını doğrular. `preview` etiketli
+PNG üreticileri `tool/screenshots/` altındadır; varsayılan birim/widget
+koşusu onları içermez.
 
 ### Soru ekleme ve çıkarma
 

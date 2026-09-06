@@ -27,6 +27,25 @@ void main() {
     expect(File('../docs/release-readiness.md').existsSync(), isTrue);
   });
 
+  // README `flutter test --exclude-tags preview` diyordu; kök CI ise
+  // `flutter test --coverage` koşar. Preview üreticileri `test/` değil
+  // `tool/screenshots/` altındadır — exclude bayrağı yerel koşuyu
+  // CI'dan saptırıyor ve preview'in ana pakette olduğu izlenimini
+  // bırakıyordu.
+  test('README unit test command matches CI coverage step', () {
+    final readme = File('README.md').readAsStringSync();
+    final ci = File('../.github/workflows/flutter_ci.yml').readAsStringSync();
+
+    expect(ci, contains('flutter test --coverage'));
+    expect(readme, contains('flutter test --coverage'));
+    expect(readme, isNot(contains('--exclude-tags preview')));
+    expect(
+      readme,
+      contains('tool/screenshots'),
+      reason: 'preview üreticilerinin yeri README’de doğru yazılmalı.',
+    );
+  });
+
   test('mobile release guide matches the enforced configuration gate', () {
     final guide = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
 
