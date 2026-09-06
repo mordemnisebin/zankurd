@@ -37,10 +37,11 @@ Detaylı mimari belgeler için [ARCHITECTURE.md](ARCHITECTURE.md) dosyasına bak
 - `lib/src/widgets/`: Ortak panel, rozet, kilim ve grafik bileşenleri
 - `lib/src/theme/`: Material 3 tema, antrasit/yeşil palet
 - `lib/src/l10n/`: Kurmancî/Türkçe anahtar tabanlı metinler (`strings.dart`, `lang.dart`)
-- `lib/src/services/`: Analitik ve bildirim servisleri
+- `lib/src/services/`: Analitik, bildirim ve Premium (`premium_service.dart`)
 - `lib/src/data/badge_service.dart`: Rozet tanımları ve kilit açma
-- `lib/src/providers/`: Auth, Theme, Language, Sound, AnalyticsConsent,
+- `lib/src/providers/`: Auth, Theme, Sound, AnalyticsConsent,
   ReducedMotion, UntimedMode, RemoteAvailability
+  (LanguageProvider `lib/src/l10n/lang.dart` içindedir)
 - `supabase/`: Play sürümü için gereken SQL/RPC/policy dosyaları
 
 ## Geliştirme

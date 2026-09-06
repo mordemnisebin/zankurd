@@ -103,11 +103,12 @@ graph TB
 - **AnalyticsConsentProvider** — Analitik ve Crashlytics rızası
 - **UntimedModeProvider** — Süresiz quiz
 - **RemoteAvailability** — Sunucu erişilebilirliği; sosyal yüzey kilidi
-- **PremiumService** — RevenueCat aboneliği (`ChangeNotifier`)
 
 ### 3. Servisler (`lib/src/services/`)
 - **AnalyticsService** — Anonim kullanım istatistikleri (Firebase Analytics)
 - **NotificationService** — Günlük hatırlatıcı bildirimleri
+- **PremiumService** — `lib/src/services/premium_service.dart`; RevenueCat
+  aboneliği (`ChangeNotifier`)
 
 ### 4. Veri Katmanı (`lib/src/data/`)
 - **BadgeService** — `lib/src/data/badge_service.dart`; rozet tanımları `K.*`
