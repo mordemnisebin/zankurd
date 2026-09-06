@@ -10,6 +10,13 @@ class AnalyticsService {
 
   FirebaseAnalytics? _analytics;
 
+  /// Testlerin olay adını ölçmesi için; üretimde null kalır.
+  ///
+  /// Firebase test koşusunda bağlı değildir. Bu kanca olmadan
+  /// sarmalayıcılar "hatasız" görünür ama adı kimse doğrulamaz.
+  @visibleForTesting
+  void Function(String name, Map<String, Object>? parameters)? debugEventSink;
+
   /// Uygulama başlatıldığında, yalnız açık rıza varsa çağrılır.
   ///
   /// `enabled` varsayılan olarak kapalıdır. Böylece bu servis yanlışlıkla
@@ -50,6 +57,7 @@ class AnalyticsService {
   /// Özel olay kaydeder.
   Future<void> logEvent(String name, [Map<String, Object>? parameters]) async {
     debugPrint('[Analytics] $name ${parameters ?? ''}');
+    debugEventSink?.call(name, parameters);
     try {
       if (_analytics != null) {
         await _analytics!.logEvent(name: name, parameters: parameters);
